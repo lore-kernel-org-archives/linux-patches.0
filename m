@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B5047A0B5;
-	Tue, 16 Jun 2026 17:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD46478E53;
+	Tue, 16 Jun 2026 17:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630861; cv=none; b=MSC5BRH2dypmWu67n1LJJGLe9Y5UWHfheLjj+oEdja63HexxNDlnXeKlOngJjAUwLRMUAbXbE2AuAhJkZgy5Xe2L8pfWq8mFP+QcAalR5rZXEd1PWRZYLEKllAf7OncGQ/sgdj1IicVQdrCujmDnjW9BLEBtc/QFMmrotXlQIkc=
+	t=1781630867; cv=none; b=mnYOzKp6irag2uZ0dTbQDY22fCTxeMUscYgFI2wt4NU8Kilnmoj4lTtF3pU6Q8/k1AIivKK2gWtmrha/JblI5tgM02f172vT7mGX99nN98B2FkvxZyRbLBdvkJHt6o6V33QL++a/EzizhuEa35U004/E1Eatu50Hx0uHGHaH5jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630861; c=relaxed/simple;
-	bh=25s3xHdCeNRvJhO85nAFWpKILrYWwNLkYtEodExSu0E=;
+	s=arc-20240116; t=1781630867; c=relaxed/simple;
+	bh=QF37R6HY+yvUoVzLyFyp0iTLGyNxEKuHRobGQeqcL0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fevNnSx+qtBDnK6YR6RFBu+6HcFlY2DBNeEQ768CqE5xowgFTC5B7VeaUEeA7QFDYRcpQxQUO+eXCL9ssB4z/z8MvGlrxqdC7G2yX53/WVIcIxRqUMVpiVKLuiXdmOJLh+beDAIaeQsp9Gebc4jnzspEu/vcCEVBg8WZTUcbXRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KycdfJqk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VpVC4hZfs0o3ZlTdHQ78JGPvC488wb7CdPkk1jWCILZW10SQTabeYChqqnUZE5WxwNEbBiWHsX2u2yzIx11//Y8iZUr1h/mU1vHCT8EWTpdKObuE8/26U6auYk0CgE5YZDxYVsPxs03AxDUFehOSk5NnZwXkce9T7mCA8dovy/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHLWSyeJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KycdfJqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE841F000E9;
-	Tue, 16 Jun 2026 17:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHLWSyeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7161F000E9;
+	Tue, 16 Jun 2026 17:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630859;
-	bh=P5NSwa8wcyAghk9PkzZDXaUxFmw9zNj3lGIxAAcfBks=;
+	s=korg; t=1781630864;
+	bh=Tr8RXVdgfULstKpo4fjU3XgGqNBRMq/9DPFOCnfVfLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KycdfJqkASJWQ6s2R1YCJSEAjgo1VrFQ7gEy1bxDal8L5C8EpccqLfkEBnp0NYVvI
-	 ruLyahQyhICGlAM2JOcnP9hXJ0JqiZ0lCqJRPYyCkVuvA3etIpg6jxynmq0awkeAyG
-	 h2ZeTXIWe01GdZj7seroaJeU/Ypu4pgLqObLCICw=
+	b=zHLWSyeJ77iqO7jHk89QhGKVQFEitTE+8DLLNQv7u7iM0QYfdhBts1ce4/7TSJKLp
+	 45bkbGwaBjJ9LK4AMDbSwEKWYaM55eXmcdQl8Fxo7jO1NwGJ9dCKSucgQueMrkWDyc
+	 zPp8tDt3HIVSdoTu2X8xIWTPhvJjldNIdZuKbijk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Advait Dhamorikar <advaitd@mechasystems.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
+	Aldo Conte <aldocontelk@gmail.com>,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.1 111/522] iio: magnetometer: st_magn: fix default DRDY pin selection for LIS2MDL
-Date: Tue, 16 Jun 2026 20:24:18 +0530
-Message-ID: <20260616145131.143155189@linuxfoundation.org>
+Subject: [PATCH 6.1 112/522] iio: light: cm3323: fix reg_conf not being initialized correctly
+Date: Tue, 16 Jun 2026 20:24:19 +0530
+Message-ID: <20260616145131.189152446@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,60 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Advait Dhamorikar <advaitd@mechasystems.com>
+From: Aldo Conte <aldocontelk@gmail.com>
 
-commit 49f79cd28f1e3333cbe0d616ce59ead0b24bf34e upstream.
+commit 1f4f0bcc5255dec5c4c3a1551bf49d8c33b69b20 upstream.
 
-The device tree binding for st,lis2mdl does not support
-st,drdy-int-pin property. However, when no platform data is provided
-and the property is absent, the driver falls back to default_magn_pdata
-which hardcodes drdy_int_pin = 2. This causes
-`st_sensors_set_drdy_int_pin` to fail with -EINVAL because the LIS2MDL
-sensor settings have no INT2 DRDY mask defined.
+The code stores the return value of i2c_smbus_write_word_data()
+in data->reg_conf; however, this value represents the result
+of the write operation and not the value actually written to
+the configuration register. This meant that the contents of
+data->reg_conf did not truly reflect the contents
+of the hardware register.
 
-Fix this by checking the sensor's INT2 DRDY mask availability at
-probe time and selecting the appropriate default pin. Sensors that
-do not support INT2 DRDY will default to INT1, while all others
-retain the existing default of INT2.
+Instead, save the value of the register before the write
+and use this value in the I2C write.
 
-Fixes: 38934daf7b5c ("iio: magnetometer: st_magn: Provide default platform data")
-Signed-off-by: Advait Dhamorikar <advaitd@mechasystems.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
+The bug was found by code inspection: i2c_smbus_write_word_data()
+returns 0 on success, not the value written to the register.
+
+Tested using i2c-stub on a Raspberry Pi 3B running a custom 6.19.10
+kernel. Before loading the driver, the configuration register 0x00
+CM3323_CMD_CONF was populated with 0x0030 using
+`i2cset -y 11 0x10 0x00 0x0030 w`, encoding an integration time of 320ms
+in bits[6:4].
+
+Due to incorrect initialization of data->reg_conf in
+cm3323_init(), the print of integration_time returns 0.040000
+instead of the expected 0.320000. This happens because the read of the
+integration_time depends on cm3323_get_it_bits() that is based on the
+value of data->reg_conf, which is erroneously set to 0.
+
+With this fix applied, data->reg_conf correctly saves 0x0030 after init
+and the successive integration_time reports 0.320000 as expected.
+
+Fixes: 8b0544263761 ("iio: light: Add support for Capella CM3323 color sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aldo Conte <aldocontelk@gmail.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/st_magn_core.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iio/light/cm3323.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/magnetometer/st_magn_core.c
-+++ b/drivers/iio/magnetometer/st_magn_core.c
-@@ -504,6 +504,11 @@ static const struct st_sensors_platform_
- 	.drdy_int_pin = 2,
- };
+--- a/drivers/iio/light/cm3323.c
++++ b/drivers/iio/light/cm3323.c
+@@ -89,15 +89,14 @@ static int cm3323_init(struct iio_dev *i
  
-+/* LIS2MDL only supports DRDY on INT1 */
-+static const struct st_sensors_platform_data alt_magn_pdata = {
-+	.drdy_int_pin = 1,
-+};
-+
- static int st_magn_read_raw(struct iio_dev *indio_dev,
- 			struct iio_chan_spec const *ch, int *val,
- 							int *val2, long mask)
-@@ -626,8 +631,12 @@ int st_magn_common_probe(struct iio_dev
- 	mdata->current_fullscale = &mdata->sensor_settings->fs.fs_avl[0];
- 	mdata->odr = mdata->sensor_settings->odr.odr_avl[0].hz;
+ 	/* enable sensor and set auto force mode */
+ 	ret &= ~(CM3323_CONF_SD_BIT | CM3323_CONF_AF_BIT);
++	data->reg_conf = ret;
  
--	if (!pdata)
--		pdata = (struct st_sensors_platform_data *)&default_magn_pdata;
-+	if (!pdata) {
-+		if (mdata->sensor_settings->drdy_irq.int2.mask)
-+			pdata = (struct st_sensors_platform_data *)&default_magn_pdata;
-+		else
-+			pdata = (struct st_sensors_platform_data *)&alt_magn_pdata;
-+	}
+-	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, ret);
++	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, data->reg_conf);
+ 	if (ret < 0) {
+ 		dev_err(&data->client->dev, "Error writing reg_conf\n");
+ 		return ret;
+ 	}
  
- 	err = st_sensors_init_sensor(indio_dev, pdata);
- 	if (err < 0)
+-	data->reg_conf = ret;
+-
+ 	return 0;
+ }
+ 
 
 
