@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FF337DEBF;
-	Tue, 16 Jun 2026 16:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDFC35AC1E;
+	Tue, 16 Jun 2026 16:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626760; cv=none; b=sbjXAEXf1/9aMxk4Z1uEcfUbqGb7arACCjOjWwP6qC8MlPb0MvxHCtES07uPdHwTdyJkK5t1u99GPYpVVNH4aP7fYu9vjn2MVhKNJ9mhEUKU/GuPsmxGgxBOVZF4bagV6d2axeSZ59ugVj2sqJfNRPc2tnWiyaKPYUGTfDzBVz8=
+	t=1781626765; cv=none; b=g7Cx27bID5nlgYrYeW/cH6uId3oGc6xC/OuLcSqlD4gTBQ/woWZlv8SU/B/7ylqJT+FciRCaRf9VcMnwOYsnXpAGDqlleIB1Az96JwJx4Q7DiBejALybUPRBWhq2K3XyrZp+zQ+iuM8kZz5SpOtJU3lhpkFM0AIhkTh1sJt4frs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626760; c=relaxed/simple;
-	bh=oE4Xis7MnO8TQ4yuLllR4NZ4shnfMOrtt1PPlelwHMc=;
+	s=arc-20240116; t=1781626765; c=relaxed/simple;
+	bh=H3ylqDn7VvFP4JRa9keKA/RwbAcLgv2Fx30iC4IisiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlLarFkTItjdPINrd1DW4N+xioZ77RU+Ek57CUGMc38IaBMASRvCR7nMmEUqP8YH56fEj3KvPRoQro0yNHaerPfsb/eoR6eYGMyO4pCbgynC0LpEmJ93XeNXdmAgWUUHL7Dv9ZZF3CJYBM/tmrE0e6DIrUbc/SB9uQjXdfxpxiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6X0jSQl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xiv2IAbunvFv4yFUh2YG3sOKRe5ePHHA/pESpMVT/o6N6Wp8c2XeoJcQJbcU4ApSP53QtISxRmNgeI5rqtjTo4k46rdOC+nnlycSlLc2zDQAHS1isN9nd3SCgzq4BUNowviRkakLXdKGQoZcbU3lYhqZLjRWTN6Ku6qV+IkK958=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCfEeoiA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6X0jSQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540631F000E9;
-	Tue, 16 Jun 2026 16:19:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCfEeoiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B901F000E9;
+	Tue, 16 Jun 2026 16:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626759;
-	bh=9dGPpokWgJrPjX+CFbuXrsKyzOvaf41CeRyvfHEeTA0=;
+	s=korg; t=1781626764;
+	bh=uXWfakZ9MVCJ0NvhA2aHjSGMb8PVnLL72dOnEiWZS2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6X0jSQlvtH6lj2yQLpnvMKEJy/i1lPwF1I9DMHCEZ2ZMdhFxS0WuXBjtjMrSGzNg
-	 pBdQxmE/fkq3eCj1AGjTknd0GIdGhTWO16OT0HfqGYU3k9DF/NWO9pa5y5MHKaMfeq
-	 WIOagWDdiLeq+SRHbNQIEjs8TI1THw6gmZoRp2b0=
+	b=KCfEeoiA7JrhHXq+w+ixg2ZBSSQ0O1mGi4yMlHDZ9Xcc6m1JHQR8jSRKZ10gBqQiK
+	 ftTOBI0BiGrgOBFZCjjvJ4a+j2CDr8G9Ok+JQYcgTR+2KzFXr+dM3K7IqEmsXdyFpt
+	 CRjRK/3eml1G6RkyXAz6aCEwaytH7Qx8ABWNmmYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Oscar Maes <oscmaes92@gmail.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/261] pcnet32: stop holding device spin lock during napi_complete_done
-Date: Tue, 16 Jun 2026 20:27:49 +0530
-Message-ID: <20260616145046.494497613@linuxfoundation.org>
+Subject: [PATCH 6.12 032/261] net: Annotate sk->sk_write_space() for UDP SOCKMAP.
+Date: Tue, 16 Jun 2026 20:27:50 +0530
+Message-ID: <20260616145046.533521847@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -53,56 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Maes <oscmaes92@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 73bf3cca7de6a73f53b6a52dc3b1c82ae5667a4d ]
+[ Upstream commit b748765019fe9e9234660327090fc1a9665cdbdd ]
 
-napi_complete_done may call gro_flush_normal (though not currently, as GRO
-is unsupported at the moment), which may result in packet TX. This will
-eventually result in calling pcnet32_start_xmit - resulting in a deadlock
-while trying to re-acquire the already locked spin lock.
+UDP TX skb->destructor() is sock_wfree(), and UDP holds lock_sock()
+only for UDP_CORK / MSG_MORE sendmsg().
 
-It is safe to split the spinlock block into two, because the hardware
-registers are still protected from concurrent access, and the two blocks
-perform unrelated operations that don't need to happen atomically.
+Otherwise, sk->sk_write_space() may be read locklessly while SOCKMAP
+rewrites sk->sk_write_space().
 
-Fixes: 5b2ec6f2be51 ("pcnet32: use napi_complete_done()")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://patch.msgid.link/20260528140320.5556-1-oscmaes92@gmail.com
+Let's use WRITE_ONCE() and READ_ONCE() for sk->sk_write_space().
+
+Note that the write side is annotated by commit 2ef2b20cf4e0
+("net: annotate data-races around sk->sk_{data_ready,write_space}").
+
+Fixes: 7b98cd42b049 ("bpf: sockmap: Add UDP support")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://patch.msgid.link/20260529193941.3897256-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pcnet32.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/core/sock.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pcnet32.c b/drivers/net/ethernet/amd/pcnet32.c
-index 72db9f9e7beeae..81cb83caf62a15 100644
---- a/drivers/net/ethernet/amd/pcnet32.c
-+++ b/drivers/net/ethernet/amd/pcnet32.c
-@@ -1403,8 +1403,10 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
- 		pcnet32_restart(dev, CSR0_START);
- 		netif_wake_queue(dev);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 58f3f0d979540f..7b6ed7c85a58cc 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2591,8 +2591,12 @@ void sock_wfree(struct sk_buff *skb)
+ 	bool free;
+ 
+ 	if (!sock_flag(sk, SOCK_USE_WRITE_QUEUE)) {
++		void (*sk_write_space)(struct sock *sk);
++
++		sk_write_space = READ_ONCE(sk->sk_write_space);
++
+ 		if (sock_flag(sk, SOCK_RCU_FREE) &&
+-		    sk->sk_write_space == sock_def_write_space) {
++		    sk_write_space == sock_def_write_space) {
+ 			rcu_read_lock();
+ 			free = refcount_sub_and_test(len, &sk->sk_wmem_alloc);
+ 			sock_def_write_space_wfree(sk);
+@@ -2607,7 +2611,7 @@ void sock_wfree(struct sk_buff *skb)
+ 		 * after sk_write_space() call
+ 		 */
+ 		WARN_ON(refcount_sub_and_test(len - 1, &sk->sk_wmem_alloc));
+-		sk->sk_write_space(sk);
++		sk_write_space(sk);
+ 		len = 1;
  	}
-+	spin_unlock_irqrestore(&lp->lock, flags);
- 
- 	if (work_done < budget && napi_complete_done(napi, work_done)) {
-+		spin_lock_irqsave(&lp->lock, flags);
- 		/* clear interrupt masks */
- 		val = lp->a->read_csr(ioaddr, CSR3);
- 		val &= 0x00ff;
-@@ -1412,9 +1414,9 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
- 
- 		/* Set interrupt enable. */
- 		lp->a->write_csr(ioaddr, CSR0, CSR0_INTEN);
-+		spin_unlock_irqrestore(&lp->lock, flags);
- 	}
- 
--	spin_unlock_irqrestore(&lp->lock, flags);
- 	return work_done;
- }
- 
+ 	/*
 -- 
 2.53.0
 
