@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B3E466B5E;
-	Tue, 16 Jun 2026 18:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3813D810C;
+	Tue, 16 Jun 2026 18:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634452; cv=none; b=OPxn/IaV4jANQTwih9trJgJuWdLTNV0cBvN5kv1q8f5EzF2Csa4tG/70kudR6Z95KLgY6SZUI93xk0ZeNyRGkm9nW9+mtY9/8tJsyOPoWkDVmCciufEXGzDqy2uaWBKlxJ6WClXHEbear03V1A/LylZCkJDATbI1PTfbe72qqvs=
+	t=1781634458; cv=none; b=ZyKsbzBKHklueYtb0uz0aGSZgGuoj+kXlECt9hD6mVkUb7rtUN5geYJPQ9vET52RwlLUUQ+acpEPnDUU8GTOR2ipbMCU0eYIruwCacsMmGU8aIt7jJMXFc1366daUshllSpZh0/RsZDcEBpQ+Wzc4p9pXFQ/pUfzvjhCl8QFKYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634452; c=relaxed/simple;
-	bh=snLjWRPFpYZ1xwvvhR80OdWNjRZARunSEL5tUnHj8Qs=;
+	s=arc-20240116; t=1781634458; c=relaxed/simple;
+	bh=tBUx559aQ6c7TX7qnTFhWM8knFES8fSuC4Gft5ZjJIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sibXlLBhpf49moD/4UO2e0Ps3A9XLqWPvDjMAZZUjCANbZd7GTCufdKrwM1vBATjg9qSrx4lxjXUqqrlY1S3UEmvjg7ogKP67/4c4UgAg8VKwCXrEJOUxx14jz1A4MZAKWpLQCdIHFMCF7LbldL33/Vcuu0uq2z6c0oeuxR+qPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHPj5RRp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DB3q5NZH3tftyngSndep3UJ63Mgwx8Eembfm4YyU9B8awtne6dKB7ugG8RwzSSPEBhcMOvgj2qln2sExTnuXXmeP++dB43BZUMXBIk30Kl+gYz56+ciI8KytHwS351Tk53Sl6vm1f5/vax2xmzYdyBRH72gGkaqzKNDnMLm1L7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IktLh0Jj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHPj5RRp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E051F000E9;
-	Tue, 16 Jun 2026 18:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IktLh0Jj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E88D1F000E9;
+	Tue, 16 Jun 2026 18:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634451;
-	bh=qC5H0SdnztO1JWjjVTXkZqU8Uia6JKwCmLgF3o1g1tw=;
+	s=korg; t=1781634457;
+	bh=L8vlCADltDA0gK40WDfds5EJ9VwMyj0Sh+RVzotlUQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MHPj5RRpFSEVF2YVWjmHPIYeK7VH13Y715vc3C0lofUFomVfRvEAwPo9gGewfykNi
-	 2FTeyPbQp2NI3K+5mMRmo/mcJzhyiCs/bYTQ6YAwaxSXQEIfy4BiK+yEneoSwakuo3
-	 Ynj7fCgWHjnKKgqUF4W2QbZBKoxU8ESeFF7O94XE=
+	b=IktLh0JjM9KU+zSDBx4a82lk0IDMfa6qmkyjOyIfqQ7Rm4JbaycG7JJuKkIXIBvG4
+	 G3UkWEf9POOxJPDk4qsRM0TI5oOeU0uSC+jXXjCbTBzBM2TYwmTHON8c3DRLGUIABH
+	 7I/xmIH5WB9Zr/bqgugas9f1/R42Ah0PVz+cSgHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+	Tom Yan <tom.ty89@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 268/411] erofs: fix the out-of-bounds nameoff handling for trailing dirents
-Date: Tue, 16 Jun 2026 20:28:26 +0530
-Message-ID: <20260616145115.324914604@linuxfoundation.org>
+Subject: [PATCH 5.15 269/411] nvme: fix interpretation of DMRSL
+Date: Tue, 16 Jun 2026 20:28:27 +0530
+Message-ID: <20260616145115.382422751@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,92 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Tom Yan <tom.ty89@gmail.com>
 
-[ Upstream commit d18a3b5d337fa412a38e776e6b4b857a58836575 ]
+[ Upstream commit 1a86924e4f464757546d7f7bdc469be237918395 ]
 
-Currently we already have boundary-checks for nameoffs, but the trailing
-dirents are special since the namelens are calculated with strnlen()
-with unchecked nameoffs.
+DMRSLl is in the unit of logical blocks, while max_discard_sectors is
+in the unit of "linux sector".
 
-If a crafted EROFS has a trailing dirent with nameoff >= maxsize,
-maxsize - nameoff can underflow, causing strnlen() to read past the
-directory block.
-
-nameoff0 should also be verified to be a multiple of
-`sizeof(struct erofs_dirent)` as well [1].
-
-[1] https://sashiko.dev/#/patchset/20260416063511.3173774-1-hsiangkao%40linux.alibaba.com
-
-Fixes: 3aa8ec716e52 ("staging: erofs: add directory operations")
-Fixes: 33bac912840f ("staging: erofs: keep corrupted fs from crashing kernel in erofs_readdir()")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Closes: https://lore.kernel.org/r/A0FD7E0F-7558-49B0-8BC8-EB1ECDB2479A@outlook.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-[ replaced upstream `bsz` with `PAGE_SIZE` and `sizeof(*de)` with `sizeof(struct erofs_dirent)` ]
+Signed-off-by: Tom Yan <tom.ty89@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: 40f0496b617b ("nvme: respect NVME_QUIRK_DISABLE_WRITE_ZEROES when wzsl is set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/dir.c |   30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ drivers/nvme/host/core.c |    6 ++++--
+ drivers/nvme/host/nvme.h |    1 +
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/erofs/dir.c
-+++ b/fs/erofs/dir.c
-@@ -37,20 +37,18 @@ static int erofs_fill_dentries(struct in
- 		nameoff = le16_to_cpu(de->nameoff);
- 		de_name = (char *)dentry_blk + nameoff;
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1736,6 +1736,9 @@ static void nvme_config_discard(struct g
+ 	if (blk_queue_flag_test_and_set(QUEUE_FLAG_DISCARD, queue))
+ 		return;
  
--		/* the last dirent in the block? */
--		if (de + 1 >= end)
--			de_namelen = strnlen(de_name, maxsize - nameoff);
--		else
-+		/* non-trailing dirent in the directory block? */
-+		if (de + 1 < end)
- 			de_namelen = le16_to_cpu(de[1].nameoff) - nameoff;
-+		else if (maxsize <= nameoff)
-+			goto err_bogus;
-+		else
-+			de_namelen = strnlen(de_name, maxsize - nameoff);
++	if (ctrl->dmrsl && ctrl->dmrsl <= nvme_sect_to_lba(ns, UINT_MAX))
++		ctrl->max_discard_sectors = nvme_lba_to_sect(ns, ctrl->dmrsl);
++
+ 	blk_queue_max_discard_sectors(queue, ctrl->max_discard_sectors);
+ 	blk_queue_max_discard_segments(queue, ctrl->max_discard_segments);
  
--		/* a corrupted entry is found */
--		if (nameoff + de_namelen > maxsize ||
--		    de_namelen > EROFS_NAME_LEN) {
--			erofs_err(dir->i_sb, "bogus dirent @ nid %llu",
--				  EROFS_I(dir)->nid);
--			DBG_BUGON(1);
--			return -EFSCORRUPTED;
--		}
-+		/* a corrupted entry is found (including negative namelen) */
-+		if (!in_range32(de_namelen, 1, EROFS_NAME_LEN) ||
-+		    nameoff + de_namelen > maxsize)
-+			goto err_bogus;
+@@ -2948,8 +2951,7 @@ static int nvme_init_non_mdts_limits(str
  
- 		debug_one_dentry(d_type, de_name, de_namelen);
- 		if (!dir_emit(ctx, de_name, de_namelen,
-@@ -62,6 +60,10 @@ static int erofs_fill_dentries(struct in
- 	}
- 	*ofs = maxsize;
- 	return 0;
-+err_bogus:
-+	erofs_err(dir->i_sb, "bogus dirent @ nid %llu", EROFS_I(dir)->nid);
-+	DBG_BUGON(1);
-+	return -EFSCORRUPTED;
- }
+ 	if (id->dmrl)
+ 		ctrl->max_discard_segments = id->dmrl;
+-	if (id->dmrsl)
+-		ctrl->max_discard_sectors = le32_to_cpu(id->dmrsl);
++	ctrl->dmrsl = le32_to_cpu(id->dmrsl);
+ 	if (id->wzsl)
+ 		ctrl->max_zeroes_sectors = nvme_mps_to_sectors(ctrl, id->wzsl);
  
- static int erofs_readdir(struct file *f, struct dir_context *ctx)
-@@ -95,8 +97,8 @@ static int erofs_readdir(struct file *f,
- 
- 		nameoff = le16_to_cpu(de->nameoff);
- 
--		if (nameoff < sizeof(struct erofs_dirent) ||
--		    nameoff >= PAGE_SIZE) {
-+		if (!nameoff || nameoff >= PAGE_SIZE ||
-+		    (nameoff % sizeof(struct erofs_dirent))) {
- 			erofs_err(dir->i_sb,
- 				  "invalid de[0].nameoff %u @ nid %llu",
- 				  nameoff, EROFS_I(dir)->nid);
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -299,6 +299,7 @@ struct nvme_ctrl {
+ #endif
+ 	u16 crdt[3];
+ 	u16 oncs;
++	u32 dmrsl;
+ 	u16 oacs;
+ 	u16 nssa;
+ 	u16 nr_streams;
 
 
