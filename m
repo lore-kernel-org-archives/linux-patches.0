@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D566746AEEA;
-	Tue, 16 Jun 2026 15:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF0B46AEF0;
+	Tue, 16 Jun 2026 15:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625499; cv=none; b=IZMbNU84v7ZGe3OuA/XyqNzmOlOa2eN+GphF6D4vcb5TwkVmAgofPuVbXzAotXBN4SNYsx093U77wTOQGhrq6I+vhaSSs7zY4k8U/rDwvv7neTdAjYqoSAf/sTgxiO0fZASYPKN13AF9nMP7WkJD3VnXV61igbKhcUDUhZYkCvI=
+	t=1781625504; cv=none; b=hVkbekOB1TFTUQW1Y8SR7wsRQm+ej60DYOwgmyP/fi93K4ACJ9n6C0/ORgFbkfA7XsdcOZOXMe8Iczy/yoTklcGdrEygxGfqgNNIw+UD9dJ3yQT6KsirtAeNAgTDOgQ/BqSXoD4KXLBU3UAT36aLwoCqV9cpWyjq5dDaKAf8MOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625499; c=relaxed/simple;
-	bh=z2FpGc6HSgOHksXJnQWgnpB633a0eTE3+Gw48EnOasU=;
+	s=arc-20240116; t=1781625504; c=relaxed/simple;
+	bh=b0QsQUw5z0WQBkNPHjGOSR3FNU/evNWCS5b4wNfrgp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEHA1Bdhh6TWvlcnXt7joFXJ6A6+1fUlqpMbytz8zdXNFACkVeRN916+M4GTgelbtGqtB5ChAsno1OPKIWz3Fzg9qAxPAJ/zd1iiD5r8pWoKF0RYqmPM5aeEJ4H4/+tkoQeGRthMNnLA+7L3P2WUx38hM2urNyxY6XsDugV8944=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdeOFwzB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AnjtYcKSBNfBvXsa54hI3TM3uGNBRyjJx/jG9F8NEYiJ+r64mGqDCJ1Cx3pXaAa0xJguJ5EMeXYVRCaaElBJmcSN5sRDhxKoX5SUl+S1WkqA0sX/9EhnkyFbb98DS6nvCOb5RrWRdEYMNf9+By8AbcPmbtmiBOsrkTT9DB+svkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdeFdxS4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdeOFwzB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887541F00A3D;
-	Tue, 16 Jun 2026 15:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdeFdxS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED9C1F000E9;
+	Tue, 16 Jun 2026 15:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625498;
-	bh=G6eqeqWvMX8hx13b5PKmhg0tgWkNgnSk3ppVWYTXUtQ=;
+	s=korg; t=1781625503;
+	bh=wnb38xQSa9t9sQNQSEAZHDRq0PzbGolMI44K85S5L90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HdeOFwzBGEhUSv2qzJ6ShIKqRKqgub+BRU5L2IAOAtzArU/T0thpkbtUaiaKa7moW
-	 3BzDrJe1x0XrMf7JMsle8EYroPtkcimm90ecsWYC4TBpXIQgev3H6KU/RMkxMjw86B
-	 KGj9AbauKYGq1X7jXxnUpC8hF6bUg2mRw1nRyx4A=
+	b=MdeFdxS4wUcDB2IgLIDDZYqiP080MQHWS+XlkDqMdH6zKAeaEMCW9Fh7xy+pQMJo5
+	 OKdj95jgFat5w5kVTnMjnp6+3Kpf9WLgtXwI3CoS8xxkgGqOq7l67M5IV7NMbJXMEx
+	 EfF3J2NdRAwgslXgjN1/87R/qpdc+PzHBwFs92J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 122/325] rds: mark snapshot pages dirty in rds_info_getsockopt()
-Date: Tue, 16 Jun 2026 20:28:38 +0530
-Message-ID: <20260616145103.791167509@linuxfoundation.org>
+Subject: [PATCH 6.18 123/325] spi: rzv2h-rspi: Fix SPDR read access width for 16-bit RX
+Date: Tue, 16 Jun 2026 20:28:39 +0530
+Message-ID: <20260616145103.837164766@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,43 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 512db8267b73a220a64180d95ab5eebe7c4964a8 ]
+[ Upstream commit 310628484ef06f95c5589374fade917a5689787b ]
 
-rds_info_getsockopt() pins the destination user pages with FOLL_WRITE and
-the RDS_INFO_* producers memcpy the snapshot into them through
-kmap_atomic(). Because that copy goes through the kernel direct map, the
-dirty bit on the user PTE is never set, so unpin_user_pages() releases the
-pages without marking them dirty. A file-backed destination page can then
-be reclaimed without writeback, silently discarding the copied data.
+The RZ/V2H hardware manual (section 7.5.2.2.1) specifies that read access
+size for the SPI Data Register (SPDR) are fixed at 32 bits. The
+RZV2H_RSPI_RX macro for the 16-bit data path used readw(), violating
+this requirement.
 
-Use unpin_user_pages_dirty_lock() with make_dirty=true so the modified
-pages are marked dirty before they are unpinned.
+Switch to readl() for the 16-bit RX path to conform to the hardware
+specification.
 
-Fixes: a8c879a7ee98 ("RDS: Info and stats")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260608-rds_fix-v1-1-006c88543408@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8b61c8919dff ("spi: Add driver for the RZ/V2H(P) RSPI IP")
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Link: https://patch.msgid.link/20260610-rzv2h-rspi-v2-1-40c80b4a2c90@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/info.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-rzv2h-rspi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/rds/info.c b/net/rds/info.c
-index b6b46a8214a0a5..b3ee5f8238c44d 100644
---- a/net/rds/info.c
-+++ b/net/rds/info.c
-@@ -235,7 +235,7 @@ int rds_info_getsockopt(struct socket *sock, int optname, char __user *optval,
+diff --git a/drivers/spi/spi-rzv2h-rspi.c b/drivers/spi/spi-rzv2h-rspi.c
+index dcc431ba60a9e5..c981dd3c0dbab6 100644
+--- a/drivers/spi/spi-rzv2h-rspi.c
++++ b/drivers/spi/spi-rzv2h-rspi.c
+@@ -105,8 +105,9 @@ static inline void rzv2h_rspi_rx_##type(struct rzv2h_rspi_priv *rspi,	\
+ RZV2H_RSPI_TX(writel, u32)
+ RZV2H_RSPI_TX(writew, u16)
+ RZV2H_RSPI_TX(writeb, u8)
++/* The read access size for RSPI_SPDR is fixed at 32 bits */
+ RZV2H_RSPI_RX(readl, u32)
+-RZV2H_RSPI_RX(readw, u16)
++RZV2H_RSPI_RX(readl, u16)
+ RZV2H_RSPI_RX(readl, u8)
  
- out:
- 	if (pages)
--		unpin_user_pages(pages, nr_pages);
-+		unpin_user_pages_dirty_lock(pages, nr_pages, true);
- 	kfree(pages);
- 
- 	return ret;
+ static void rzv2h_rspi_reg_rmw(const struct rzv2h_rspi_priv *rspi,
 -- 
 2.53.0
 
