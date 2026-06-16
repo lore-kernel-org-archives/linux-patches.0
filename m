@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE4238C437;
-	Tue, 16 Jun 2026 18:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3D238C437;
+	Tue, 16 Jun 2026 18:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635420; cv=none; b=egjsVTLr7hb+CyQ55Kz5bw9avPF00Ejqx+DuuMjj/tDbHbrOxBARfCitUHmo/B54VWqhifcoBhEw9G7WLk2oKSy1T5QN8oh1ZJrOUXYat4tZmepyG1GiQASaazCueAMNc81R71xlgWEPfcyL10dSHyagONKnlyAmZa2umrOdRFY=
+	t=1781635425; cv=none; b=aMzaftfdR8T1qFM9DreNrrHiGLJJSWKL3D6vTMGu8IezXKU6SEQrDzXm5gmJsUTb0s27QW4ifJgk/Hw/TeN1TfGP93wfESFVI4SJ9MnKCBTHk+INsbK8XdnFIMsohiuEORS14h4Q1OSSoVsUMM8FMbsboRDDwqccvDhvDi2ehos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635420; c=relaxed/simple;
-	bh=deMYVEICQng7PfFFUcArKQiFC0dCTazGo4s1lS2ufGM=;
+	s=arc-20240116; t=1781635425; c=relaxed/simple;
+	bh=XzHrFc+8LOVByT2s/yHfzINsHiN3zkn5V91LK/IZKfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o3T21n2HoKrYodcCp3jrdDAse115wMfJCEJQ7HZ4QXLYo+l5AeZrDKzFsijY1O+teUwt7YdneapQcirtwgqX9900ySBhDTT7FisK41sBNLF7k4yBc8Wkd68URCKHzzadk3j4+HgJY+hHQz+bNQ7RB/Ut6UQSy90swdCZxkObcQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cp6o7iGX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tGlJxG46PDi+8w79oZsRBsAi965TpIUHkwKFKGXt+8DKvEwq74nuJ7TpHFyr+65c+/pDk3QujxrWq+U60sEDUsmexXICKFHiNtSYOCGLHc+mzBNelUqbUozi/LtCpHACzYCqpv8D3VPOyVlDsULdgk15SM3sHVAeuPN1uosjG9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJNaCRyV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cp6o7iGX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126AB1F000E9;
-	Tue, 16 Jun 2026 18:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJNaCRyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9336B1F000E9;
+	Tue, 16 Jun 2026 18:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635418;
-	bh=/Jz/MN3FKM2NgRTWAA6GEN9Ip60jTQmxVtlMbwULdq4=;
+	s=korg; t=1781635424;
+	bh=xIGB0chUp0eMl9kAVFkyKZOqvK4HdQ2oFTRR/6MOGdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cp6o7iGX9ucMtekrigpvmDMvur/nPTNA2eJBu8w3wt1PVhkoTXZelb3ZzBB/GczjI
-	 UCktCW9gsRryY+IO2LXMVoMCHSg/Ow8B1hRpt3wI6I6e/puPARRbvA5shuYvzxd3zZ
-	 sBKqAyZ/XoWFrzfS/4/1UKjPMGBu663wycTNT+Tw=
+	b=kJNaCRyVhENkiD//HBIu1i7yulP2BMPakJ9DbxhahjN2+3WulVU/LplBV4ZVpHuqd
+	 ZJ1HmS2Mm4/LKQconTk3RD0kIo7eQtLrVq8IQ7nOhFQkbPQdwh+WnJTuZ4EcNGRP+8
+	 jmYS3WeJ2UkhAw9ATlK3OoCU4eQZQDLHO4RXL+Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 044/342] iio: imu: st_lsm6dsx: fix stack leak in tagged FIFO buffer
-Date: Tue, 16 Jun 2026 20:25:40 +0530
-Message-ID: <20260616145050.313847838@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.10 045/342] usb: typec: ucsi: ccg: reject firmware images without a : record header
+Date: Tue, 16 Jun 2026 20:25:41 +0530
+Message-ID: <20260616145050.361269856@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -48,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
@@ -57,47 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit c9d8e9adaa63150ef7e833480b799d0bab83a276 upstream.
+commit d7486952bf74e546ee3748fb14b2d07881fa6273 upstream.
 
-The tagged FIFO path declares iio_buff on the stack with __aligned(8)
-but no initializer, but there is a hole in the structure, which will
-then leak to userspace as ST_LSM6DSX_SAMPLE_SIZE bytes (6) will be
-copied, but the space between that and the timestamp are not
-initialized.
+do_flash() locates the first .cyacd record with
 
-Commit c14edb4d0bdc ("iio:imu:st_lsm6dsx Fix alignment and data leak
-issues") moved the untagged FIFO path to a kzalloc'd buffer in hw->scan,
-but for the tagged path it only added the alignment qualifier and not
-the initializer :(
+	p = strnchr(fw->data, fw->size, ':');
+	while (p < eof) {
+		s = strnchr(p + 1, eof - p - 1, ':');
+		...
+	}
 
-Fix this by just zero-initializing the structure on the stack.
+If the firmware image contains no ':' byte,  strnchr() returns NULL.
+NULL compares less than the valid kernel pointer eof, so the loop body
+runs and strnchr() is called with p + 1 == (void *)1 and a length of
+roughly (unsigned long)eof, causing a wonderful crash.
 
-Cc: Lorenzo Bianconi <lorenzo@kernel.org>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: David Lechner <dlechner@baylibre.com>
-Cc: "Nuno Sá" <nuno.sa@analog.com>
-Cc: Andy Shevchenko <andy@kernel.org>
-Fixes: c14edb4d0bdc ("iio:imu:st_lsm6dsx Fix alignment and data leak issues")
+The not_signed_fw fallthrough earlier in do_flash() and the chip-state
+branches in ccg_fw_update_needed() allow an unsigned blob to reach this
+loop, so a root user who can place a crafted file under /lib/firmware
+and write the do_flash sysfs attribute can trigger the oops.
+
+Bail out with -EINVAL when the initial strnchr() returns NULL.
+
+Assisted-by: gkh_clanker_t1000
 Cc: stable <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Link: https://patch.msgid.link/2026051405-posture-shrill-7884@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-@@ -585,7 +585,7 @@ int st_lsm6dsx_read_tagged_fifo(struct s
- 	 * must be passed a buffer that is aligned to 8 bytes so
- 	 * as to allow insertion of a naturally aligned timestamp.
- 	 */
--	u8 iio_buff[ST_LSM6DSX_IIO_BUFF_SIZE] __aligned(8);
-+	u8 iio_buff[ST_LSM6DSX_IIO_BUFF_SIZE] __aligned(8) = { };
- 	u8 tag;
- 	bool reset_ts = false;
- 	int i, err, read_len;
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -1156,6 +1156,11 @@ not_signed_fw:
+ 	 *****************************************************************/
+ 
+ 	p = strnchr(fw->data, fw->size, ':');
++	if (!p) {
++		dev_err(dev, "Bad FW format: no ':' record header found\n");
++		err = -EINVAL;
++		goto release_mem;
++	}
+ 	while (p < eof) {
+ 		s = strnchr(p + 1, eof - p - 1, ':');
+ 
 
 
