@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C6047CC6C;
-	Tue, 16 Jun 2026 17:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F282A47AF71;
+	Tue, 16 Jun 2026 17:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630848; cv=none; b=AUpJKjAWUgX/PLcg/iaRQGkw4OPQpWS1QuH7XuKps85iKo0M9D6fDl9/rKJLXVJxoTL+IzpX4ausxOjSeHGY3qNj7p3vaXvXhRFL/qpDr+Gh0wfMC6l303pu44xRrdkE0+uEJs5FjFefEta8WCJvebF+3o1HvuGw7mqmU20DULQ=
+	t=1781630851; cv=none; b=VSKMbIkTbfYTM5Vvun5TsHh97x4t81UlktTU+tpM7aKpc32KfA/zmLoFczhjOAL4RWhWiOQL9CoQjek8GIWR2SAKHWomuxg1WXedT3InWsxOk71tUkfldrNLoXLq6FyQdfdAu9QECN+Mv50aN1qoLEd151p6FJDhZ0/mzC+VEns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630848; c=relaxed/simple;
-	bh=gGhzUGEGXSqtK+LwEUg3LoDVfi6ViA8L0xST8vCKPSE=;
+	s=arc-20240116; t=1781630851; c=relaxed/simple;
+	bh=uHw4LBAExPShWwRx1MDZKbUPUfCV+huoDWIS1qzhJ18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LmPHHxEyg5fyXumSx35jkFcnrW0KuY434gdwHXiiJoxS4EIFL5mpMQu3Pn3quGUjDSCJXanHGTLmRUowa+WkPBic36EAu8ClJmyps6Fd68Pd/CF2P1q+NJTIaRTw7V2gxajAxByGTLVgZ2ey2hIXOzvRnRq5Y+70bkmPM6248Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQmEpz3u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XHLeipCrIMqUwdVDiEO7oiKjXln9B5B8gTxBLmDtIxHZEQibvV6jR6jvixaoxXwNtFWr7ssHrdwDYk/7RVx6XbHdBdGNKl5039bgvNH+9zCsc9WtxYqBsaKHWDmAOoZqxVijO1jw/HFmfSpPIAzyQ125K1D0eHHfOgzy03ZFilQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApYVCxhK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQmEpz3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880961F000E9;
-	Tue, 16 Jun 2026 17:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApYVCxhK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989941F000E9;
+	Tue, 16 Jun 2026 17:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630844;
-	bh=5SM0LSG0fgG4fMJuyVL75SkNwRY8woNtxwuRgTdk4uA=;
+	s=korg; t=1781630849;
+	bh=TsX1tuCpTmDn7A9zyShBYtbgjgPyPGWv2sOj6B8wi9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hQmEpz3uQkJ9iUmEXd5N/xf6iSxHGCo+7w2cnfKpffkpC4novHev3FTubGWZNOlfw
-	 7E3Ay6yqJ+53RuIDdfkWuOqkWk9qQuhDqd4ByiIOwitVGb+QF0x6vY2BzFbfmiwaph
-	 NXclpHn2zipv5iV6XRUUzak7DpbpJ2SGZlmEvddI=
+	b=ApYVCxhKFb64HYf/JUgyfFJA/KnAKFOolNEdKZq37OvjKFb5k9synBhcCl8hJRo2S
+	 elfiC3tm97cmL2XW3VMS0so42Y9AkzanadgciVmTHhXvYqr11vh20Jvyy4sFyXLfwS
+	 3mdQzkks3GnmJinWJ6huclHxc5oxk9fO6DV+hFQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ben Hutchings <benh@debian.org>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH 6.1 100/522] parport: Fix race between port and client registration
-Date: Tue, 16 Jun 2026 20:24:07 +0530
-Message-ID: <20260616145130.603993159@linuxfoundation.org>
+	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.1 109/522] iio: ssp_sensors: cancel delayed work_refresh on remove
+Date: Tue, 16 Jun 2026 20:24:16 +0530
+Message-ID: <20260616145131.044162719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,109 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 
-commit ef15ccbb3e8640a723c42ad90eaf81d66ae02017 upstream.
+commit eedf7602fbd929e97e0c480da501dc7a34beb2a8 upstream.
 
-The parport subsystem registers port devices before they are fully
-initialised, resulting in a race condition where client drivers such
-as lp can attach to ports that are not completely initialised or even
-being torn down.
+The work_refresh may still be pending or running when the device is
+removed, cancel the delayed work_refresh in remove path.
 
-When the port and client drivers are built as modules and loaded
-around the same time during boot, this occasionally results in a
-crash.  I was able to make this happen reliably in a VM with a
-PC-style parallel port by patching parport_pc to fail probing:
-
-> --- a/drivers/parport/parport_pc.c
-> +++ b/drivers/parport/parport_pc.c
-> @@ -2069,7 +2069,7 @@ static struct parport *__parport_pc_probe_port(unsigned long int base,
->  	if (!p)
->  		goto out3;
->
-> -	base_res = request_region(base, 3, p->name);
-> +	base_res = NULL;
->  	if (!base_res)
->  		goto out4;
->
-
-and then running:
-
-    while true; do
-        modprobe lp & modprobe parport_pc
-	wait
-	rmmod lp parport_pc
-    done
-
-for a few seconds.
-
-In the long term I think port registration should be changed to put
-the call to device_add() inside parport_announce_port(), but since the
-latter currently cannot fail this will require changing all port
-drivers.
-
-For now, add a flag to indicate whether a port has been "announced"
-and only try to attach client drivers to ports when the flag is set.
-
-Fixes: 6fa45a226897 ("parport: add device-model to parport subsystem")
-Closes: https://bugs.debian.org/1130365
-Closes: https://lore.kernel.org/all/6ba903ad-9897-42bb-8c2d-337385cc3746@molgen.mpg.de/
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ben Hutchings <benh@debian.org>
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://patch.msgid.link/afo6uBv68GDevbMD@decadent.org.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 50dd64d57eee ("iio: common: ssp_sensors: Add sensorhub driver")
+Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parport/share.c |   11 +++++++++--
- include/linux/parport.h |    1 +
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/iio/common/ssp_sensors/ssp_dev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/parport/share.c
-+++ b/drivers/parport/share.c
-@@ -223,10 +223,14 @@ static void get_lowlevel_driver(void)
- static int port_check(struct device *dev, void *dev_drv)
- {
- 	struct parport_driver *drv = dev_drv;
-+	struct parport *port;
+--- a/drivers/iio/common/ssp_sensors/ssp_dev.c
++++ b/drivers/iio/common/ssp_sensors/ssp_dev.c
+@@ -590,6 +590,7 @@ static void ssp_remove(struct spi_device
+ 	ssp_clean_pending_list(data);
  
- 	/* only send ports, do not send other devices connected to bus */
--	if (is_parport(dev))
--		drv->match_port(to_parport_dev(dev));
-+	if (is_parport(dev)) {
-+		port = to_parport_dev(dev);
-+		if (test_bit(PARPORT_ANNOUNCED, &port->devflags))
-+			drv->match_port(port);
-+	}
- 	return 0;
- }
+ 	free_irq(data->spi->irq, data);
++	cancel_delayed_work_sync(&data->work_refresh);
  
-@@ -553,6 +557,7 @@ void parport_announce_port(struct parpor
- 		if (slave)
- 			attach_driver_chain(slave);
- 	}
-+	set_bit(PARPORT_ANNOUNCED, &port->devflags);
- 	mutex_unlock(&registration_lock);
- }
- EXPORT_SYMBOL(parport_announce_port);
-@@ -582,6 +587,8 @@ void parport_remove_port(struct parport
- 
- 	mutex_lock(&registration_lock);
- 
-+	clear_bit(PARPORT_ANNOUNCED, &port->devflags);
-+
- 	/* Spread the word. */
- 	detach_driver_chain(port);
- 
---- a/include/linux/parport.h
-+++ b/include/linux/parport.h
-@@ -245,6 +245,7 @@ struct parport {
- 
- 	unsigned long devflags;
- #define PARPORT_DEVPROC_REGISTERED	0
-+#define PARPORT_ANNOUNCED		1
- 	struct pardevice *proc_device;	/* Currently register proc device */
- 
- 	struct list_head full_list;
+ 	del_timer_sync(&data->wdt_timer);
+ 	cancel_work_sync(&data->work_wdt);
 
 
