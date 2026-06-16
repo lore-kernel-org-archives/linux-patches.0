@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EDF33AD9B;
-	Tue, 16 Jun 2026 16:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8E2466B4E;
+	Tue, 16 Jun 2026 16:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627972; cv=none; b=CkzIDlnAC49tdqXEVKAYbfAx1ad+Hj2c6X+GtPw16GvzwsqFW2x8tAZcyhfEIBBpHetn9zuPan8tAGTe3F/TzVGLLd4/74cWAa3XkPmEgfKIbpAmTaK3/A6x42qvFCNvFCpRK8TlkfismFqjYkoORSvOdlQLuEifmaQhu2xxv5A=
+	t=1781627978; cv=none; b=Yq2aEH+2L17saF+Yc7Q8o05zpOGLOdBLSVgo9eODOyxQ+eFnmMX+35Vtv9kqA7a+FunszPuo5r8ExTpd5LwzUCppuObLwnhbpcFw2RvjaLz8FbHBxUryEB0rvvojzjQxKWi7fp6+3E4L+6XTKL2LJwLvSYOcbpunXFFZGoAu1DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627972; c=relaxed/simple;
-	bh=PXXHP1nJn3qQJn4uQX0KD6bq+OdbS58IrW1UvoH4DS0=;
+	s=arc-20240116; t=1781627978; c=relaxed/simple;
+	bh=I+NqjtHfwrRyXV6GfuAZBW3wAHKavblB+g5S2vr/SSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egHS41ZvkvoMofnyo4cWcP1OssoXjVPThgVLt81V1rtlipwSlLsu5YH0y3J8h7dzr6PXgjSpWGzDH5LyjbtwLQVPaE/X9ff4vlRdUU9mdkw6+85pFJ2Tz5j8CrqWQ+ZabfaDyCBqtbGkmSasHukg9O2QFDTVIyi1oh9rinsRTqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8wWicFU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dYSrqDMdS8Kegw8XC6tN7L7jrHHIMosxMb7rfNll8Jp83GS2XboXs14DvAhXW5/zGopr5p93y8AFr5X2tEugMU9jRGteq+TocPXy2zpm+8LBsaI5ANoGuSsGWV+0iNsZ7WLgXnPUvCwaj1bJRYKndxLP+1FyVUgdaxfFmFj48eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDludqoH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8wWicFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106BB1F000E9;
-	Tue, 16 Jun 2026 16:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDludqoH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5841F000E9;
+	Tue, 16 Jun 2026 16:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627970;
-	bh=LpiffbeosrICumq9Nb5XlHDrfwXpKx/Ihsf1N0zAAmQ=;
+	s=korg; t=1781627976;
+	bh=kj0N2ZxOgWo/1MfOpSuoMdzltG2Ey+1z/+/2ZfwVub8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8wWicFUiRhQkoCZF+Angv53xXpxhDncBdUZqwFQS7ZhuXIPDh0NSSKiUnH0npvyy
-	 OpmqfkVykMCAb4xjZCr4iMcFE+vi59DPdPq/5Wh7KzthYiP2EWS3vBmtbiDsRDE710
-	 A6DUi3aXnh7fA8Lq+b/bJna+jJz3z6BcvQ4Upfk8=
+	b=lDludqoHvKbPS2fV6JTUY3z/Jfq2aCwmV81PuKMN21xRs4XkjX5Sh5/yPT2DH9IVh
+	 ZgrKk0DWw/bt/jNh5DvwWgpt830ljw4sVYofQ5CrWQ+M8u9cpft/JYvcLH+bi+XjT0
+	 KXA7aQxtOtxZnHDBqyWS0egHt6a5vag/CUDUsorg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 249/261] vsock/virtio: fix skb overhead accounting to preserve full buf_alloc
-Date: Tue, 16 Jun 2026 20:31:27 +0530
-Message-ID: <20260616145056.618295399@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Gyokhan Kochmarla <gyokhan@amazon.de>
+Subject: [PATCH 6.12 250/261] block: fix handling of dead zone write plugs
+Date: Tue, 16 Jun 2026 20:31:28 +0530
+Message-ID: <20260616145056.663049551@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -50,66 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit c6087c5aaad6d1b8be1a1a641e0a422218ade911 upstream.
+commit 836efd35c472d89c838d7b17ef339ddb3286ffc5 upstream.
 
-After commit 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb
-queue"), virtio_transport_inc_rx_pkt() subtracts per-skb overhead from
-buf_alloc when checking whether a new packet fits. This reduces the
-effective receive buffer below what the user configured via
-SO_VM_SOCKETS_BUFFER_SIZE, causing legitimate data packets to be
-silently dropped and applications that rely on the full buffer size
-to deadlock.
+Shin'ichiro reported hard to reproduce unaligned write errors with zoned
+block devices. Under normal operation conditions (e.g. running XFS on an
+SMR disk), these errors are nearly impossible to trigger. But using a
+"slow" kernel with many debug options enables and some specific use
+cases (e.g. fio zbd test case 46), the errors can be reproduced fairly
+easily.
 
-Also, the reduced space is not communicated to the remote peer, so
-its credit calculation accounts more credit than the receiver will
-actually accept, causing data loss (there is no retransmission).
+The unaligned write errors come from mishandling a valid reference
+counting pattern of zone write plugs. Such pattern triggers for instance
+if a process A writes a zone (not necessarilly to the full state),
+another process B immediately resets the zone and immediately following
+the completion of the zone reset, starts issuing writes to the zone.
+With such pattern, in some cases, the zone write plugs worker thread of
+the device may still be holding a reference to the zone write plug of
+the zone taken when process A was writing to the zone. The following
+zone reset from process B marks the zone as dead but does not remove the
+zone write plug from the device hash table as a reference to the plug
+still exist. Once process B starts issuing new writes, the zone write
+plug is seen as dead and the writes from process B are immediately
+failed, despite this write pattern being perfectly legal.
 
-With this approach we currently have failures in
-tools/testing/vsock/vsock_test.c. Test 18 sometimes fails, while
-test 22 always fails in this way:
-    18 - SOCK_STREAM MSG_ZEROCOPY...hash mismatch
+Fix this by allowing restoring a dead zone write plug to a live state if
+a write is issued to the zone when the zone is: marked as dead, empty
+and the write sector corresponds to the first sector of the zone (that
+is, the write is aligned to the zone write pointer). This is done with
+the new helper function disk_check_zone_wplug_dead(), which restores a
+dead zone write plug to a live state by clearing the BLK_ZONE_WPLUG_DEAD
+flag and restoring the initial reference to the zone write plug taken
+when the plug was added to the device hash table.
 
-    22 - SOCK_STREAM virtio credit update + SO_RCVLOWAT...send failed:
-    Resource temporarily unavailable
-
-Fix by allowing at most `buf_alloc * 2` as the total budget for payload
-plus skb overhead in virtio_transport_inc_rx_pkt(), similar to how
-SO_RCVBUF is doubled to reserve space for sk_buff metadata.
-This preserves the full buf_alloc for payload under normal operation,
-while still bounding the skb queue growth.
-
-With this patch, all tests in tools/testing/vsock/vsock_test.c are
-now passing again.
-
-Fixes: 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260518090656.134588-3-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Fixes: b7d4ffb51037 ("block: fix zone write plug removal")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://patch.msgid.link/20260513111129.108809-1-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ context conflict due to different line offsets in blk-zoned.c ]
+Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/vmw_vsock/virtio_transport_common.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -432,7 +432,14 @@ static bool virtio_transport_inc_rx_pkt(
- {
- 	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
+---
+ block/blk-zoned.c |   32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
+
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -517,6 +517,28 @@ static void disk_mark_zone_wplug_dead(st
+ 	}
+ }
  
--	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
-+	/* Allow at most buf_alloc * 2 total budget (payload + overhead),
-+	 * similar to how SO_RCVBUF is doubled to reserve space for sk_buff
-+	 * metadata. Check payload against buf_alloc to be sure the other
-+	 * peer is respecting the credit, and sk_buff overhead to bound
-+	 * queue growth.
++static inline bool disk_check_zone_wplug_dead(struct blk_zone_wplug *zwplug)
++{
++	if (!(zwplug->flags & BLK_ZONE_WPLUG_DEAD))
++		return false;
++
++	/*
++	 * If a new write is received right after a zone reset completes and
++	 * while the disk_zone_wplugs_worker() thread has not yet released the
++	 * reference on the zone write plug after processing the last write to
++	 * the zone, then the new write BIO will see the zone write plug marked
++	 * as dead. This case is however a false positive and a perfectly valid
++	 * pattern. In such case, restore the zone write plug to a live one.
 +	 */
-+	if ((u64)vvs->buf_used + len > vvs->buf_alloc ||
-+	    skb_overhead > vvs->buf_alloc)
- 		return false;
++	if (!zwplug->wp_offset && bio_list_empty(&zwplug->bio_list)) {
++		zwplug->flags &= ~BLK_ZONE_WPLUG_DEAD;
++		refcount_inc(&zwplug->ref);
++		return false;
++	}
++
++	return true;
++}
++
+ static void blk_zone_wplug_bio_work(struct work_struct *work);
  
- 	vvs->rx_bytes += len;
+ /*
+@@ -1037,12 +1059,12 @@ static bool blk_zone_wplug_handle_write(
+ 	}
+ 
+ 	/*
+-	 * If we got a zone write plug marked as dead, then the user is issuing
+-	 * writes to a full zone, or without synchronizing with zone reset or
+-	 * zone finish operations. In such case, fail the BIO to signal this
+-	 * invalid usage.
++	 * Check if we got a zone write plug marked as dead. If yes, then the
++	 * user is likely issuing writes to a full zone, or without
++	 * synchronizing with zone reset or zone finish operations. In such
++	 * case, fail the BIO to signal this invalid usage.
+ 	 */
+-	if (zwplug->flags & BLK_ZONE_WPLUG_DEAD) {
++	if (disk_check_zone_wplug_dead(zwplug)) {
+ 		spin_unlock_irqrestore(&zwplug->lock, flags);
+ 		disk_put_zone_wplug(zwplug);
+ 		bio_io_error(bio);
 
 
