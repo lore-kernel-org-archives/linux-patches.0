@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D284502F;
-	Tue, 16 Jun 2026 17:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D6B478E26;
+	Tue, 16 Jun 2026 17:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630663; cv=none; b=pd/HjPbEDkPUbETmyZ35RwD60I0eYWl/LRHNhLCMhkek96eq8mFF08WrhH7W3V1j89SW9e9LaRUoanpNLzz/tkIbDtcIbzpINfG+W9pEG0BYXvg2Rqlh24k9iwpS7xqgdHsabwdwPAl4h4rXGMpScYgGc1vfI4II/NuJXt0FKbw=
+	t=1781630669; cv=none; b=aRbTw3JdPXP7lG2jiLlrlMVtpN1a3hftC8WGn9oYhLin+0u60xjizmhpoVYojh/PRBcFkNqmSggoe6R8GD4NGvZKIrH4MXr4+Q1SVgxomCzTIuo/GQyZ9RfueTg983Y3podiRr3vuTgPWkDSeDHaedAnaZeiIf9bQrk7E7d914c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630663; c=relaxed/simple;
-	bh=DdSr0UUhfYUSY6UHUpXRYWTWy7E7xL3VQHIHO/XcIw4=;
+	s=arc-20240116; t=1781630669; c=relaxed/simple;
+	bh=jv9QqnvL2zGmbAWQgOUFgJmLqK2AJ911nWLDBfVc9pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kSjon+aanpb6fqnoeJwOjzWNoNZIQkKkZWVy2UITBDhqee0TA0qsiQY5UQ4CDflONMx4H72TrLl3EC2Rh6IMlPVG9fQAqmCfkvei3del/Kd+5LCn0SQzgOKbjrqpNxTgIpVyEauoKeGyrRdWMkc82ciwQQee3NKlTHP2X1H5SI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UV9xTVqd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JtE48gZ2nMcx1agoLfIKj8zq77S9Dom7a1b2YErGyLXy6DxblR6g2uCAAW4B4uDkuSRnhTQYMTAbJ2FoZODONTp7Rq0cYtekXih+OeM/gXhaHUDhs9Le0FBxyZFuyAQgIAHz6VIVRTdX8oTtTL+EvQx1X075DYc18hO2hB3vG2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PI2+kcml; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UV9xTVqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637A61F000E9;
-	Tue, 16 Jun 2026 17:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PI2+kcml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29C41F000E9;
+	Tue, 16 Jun 2026 17:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630662;
-	bh=tQ1u3lTXz79IbNoO32Vk6NkYwSbjU+lP9NFkEFdBXw4=;
+	s=korg; t=1781630667;
+	bh=SzIGnI6/zyUQNzUcec+oEH24BkiNtRMpZtaswPfcMUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UV9xTVqd3ts9FOqNHmpMDyTZlSLCXzn60sMgALWkRjvoEPRG+kHmB0aUsRr7BhivA
-	 l6k23bHM8mP3O1E2DyTcio255Ga5zZRr8eAEGqMAnwlShTbltKuRbVtpGy/OuuWPrc
-	 ZSqZXddPzzSef/3Rm8ZAVLk37C+GeNR3o+7rjEws=
+	b=PI2+kcmlIKQsnvISI1glKyIeQ3obcFl2agVJamMXKU3VOAgK7W6G43dQHQK8ROglf
+	 O+SIga3YsYgxWe8YHEBYtqcUqlQF7KcSIc+rYNSv+8W6cXB4cUSDmfJeG5NKTuOWkj
+	 JhFBjk/ToGN8vgQH6R83RKCTrGApybgdZhR/W2tI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Ben Hutchings <benh@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/522] drm/i915/psr: Apply Intel DPCD workaround when SDP on prior line used
-Date: Tue, 16 Jun 2026 20:23:40 +0530
-Message-ID: <20260616145129.255924829@linuxfoundation.org>
+Subject: [PATCH 6.1 074/522] Revert "RDMA/rxe: Fix double free in rxe_srq_from_init"
+Date: Tue, 16 Jun 2026 20:23:41 +0530
+Message-ID: <20260616145129.304548397@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -46,79 +44,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Ben Hutchings <benh@debian.org>
 
-commit 4703049f768fc1c1caac754134118bee1a3af189 upstream.
+This reverts commit d286f0d4e3ad3caf5f0e673cdad7bf89bf37d947, which
+was commit 0beefd0e15d962f497aad750b2d5e9c3570b66d1 upstream.  The
+backported version did not move but duplicated the problematic
+assignment, so it did not fix the bug.  A proper backport will follow.
 
-There is Intel specific workaround DPCD address containing workaround for
-case where SDP is on prior line. Apply this workaround according to values
-in the offset.
-
-Fixes: 61e887329e33 ("drm/i915/xelpd: Handle PSR2 SDP indication in the prior scanline")
-Cc: <stable@vger.kernel.org> # v5.15+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-4-jouni.hogander@intel.com
-(cherry picked from commit c3fe899fbeac86ea4a5ca9dd845b2cbc0da46249)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Signed-off-by: Ben Hutchings <benh@debian.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 27 +++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_srq.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 01fadf300ff679..3c5553b21fa894 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -818,6 +818,30 @@ static bool psr2_granularity_check(struct intel_dp *intel_dp,
- 	return true;
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+index 115ff5428f6cfb..02b39498c370d2 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -87,9 +87,6 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		}
+ 	}
+ 
+-	srq->rq.queue = q;
+-	init->attr.max_wr = srq->rq.max_wr;
+-
+ 	return 0;
  }
  
-+static bool apply_scanline_indication_wa(struct intel_dp *intel_dp,
-+					 struct intel_crtc_state *crtc_state)
-+{
-+	u8 early_scanline_support = intel_dp->intel_wa_dpcd &
-+		INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK;
-+
-+	if (intel_dp->edp_dpcd[0] >= DP_EDP_15)
-+		return true;
-+
-+	switch (early_scanline_support)	{
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1:
-+		crtc_state->req_psr2_sdp_prior_scanline = false;
-+		return false;
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE:
-+		return true;
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE:
-+		crtc_state->req_psr2_sdp_prior_scanline = false;
-+		return true;
-+	default:
-+		MISSING_CASE(early_scanline_support);
-+		return false;
-+	}
-+}
-+
- static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_dp,
- 							struct intel_crtc_state *crtc_state)
- {
-@@ -839,7 +863,8 @@ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_d
- 		return false;
- 
- 	crtc_state->req_psr2_sdp_prior_scanline = true;
--	return true;
-+
-+	return apply_scanline_indication_wa(intel_dp, crtc_state);
- }
- 
- static bool _compute_psr2_wake_times(struct intel_dp *intel_dp,
 -- 
 2.53.0
 
