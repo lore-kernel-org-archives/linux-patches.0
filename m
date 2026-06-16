@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B5546AEE1;
-	Tue, 16 Jun 2026 18:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D83A34FF79;
+	Tue, 16 Jun 2026 18:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635935; cv=none; b=ctud8tiGPR6GhITlF6zjO4GHx51LMdd33J5Eh8XwIe4c11x/96InB55FTMew2xcT5hDU0T3N6Jw4RsVluWqfMLoND7C8MkMZEEnIHQRmotj5I8ADxuGdqhav2xgB/xWHO4vKy9fz4WVTjlybqJe86/JKXP35Y68KVtn9kY7z06g=
+	t=1781635940; cv=none; b=BYqLeaqYd3BXL1VSgQHY8m4CDUhFybu2zeFoi8AhXgtQqKza59ueQ0PgDLDAeuNuIamB8nmKmKwYjnxDH5XbAQA2kIyn9W3YVVCCRepNITHB5uWO0eDjM0SwszAOQ3fONAZhmgJ+CDZLN9iXySd+VG2Gv7xzx4UX/08fqvI1BnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635935; c=relaxed/simple;
-	bh=jXEHEcko20YGFCnNG543Cf49U5p9x3Q3OcJcKDMQLYw=;
+	s=arc-20240116; t=1781635940; c=relaxed/simple;
+	bh=66AGBuMMOuz1xDNhP3CYCjnsW/AnUNCOeTnSzdEOmKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4KJE8wf0DeRdV5pkdkxcF/w/bsNx7ml8XjKJCpjC5gm+AQWqNA/audYarcrFUuoSsn6BSlsoPFX13v0RTiLm5YJBHYDhDFcnQf+zkT475YHdWI6ZkPgeW9L5zI8F8CfeFtSgA5Fp8jxiE8yJy5XM4rj4G1m3PaLjlPXLVAYbNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siMvzAMe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KDZD2E8UrR9Xh5ULFxh4yeg6CKpqNM3ylU1xsaIK70ydtj6ZV7vDcCLkrrjEIb8uV1f7KRSPlRTWc/Lf1olHnV+XqPMXzs15UUqKqhKfoj3/aDRVoNzbbutj8lfodc5/GuJXIzT55Zmw3MYXs7bVew2uc+MEdEG4UvEqelKgswQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWpLO4nG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siMvzAMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212681F000E9;
-	Tue, 16 Jun 2026 18:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWpLO4nG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7061F000E9;
+	Tue, 16 Jun 2026 18:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635934;
-	bh=W4lTSAWLbOqBcawSx8JzEdQcYpzMwQ3LIvGPVcWFDmA=;
+	s=korg; t=1781635939;
+	bh=oMvPFCQagkGy9suJkQSYzuc64uaFl4UxRcvKgIriZsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=siMvzAMeExvSpwe9u63CHQ/EEd/pR//lwW84jTpA1x+hGDCGdjCPDdG+dg56Y8iDV
-	 1fR2Spor4qyR6GJTgzKtsByXW9BPNujRXvQ6CLvosgMSWMkMQK8R3nVYHgBUkKcfri
-	 w629TaeYVb00TcM5f03Yqaplf5I5qzINTR76mO4Q=
+	b=lWpLO4nGHB/qqtCOiaT+k5PIyc/yYY+2qRRV41FgcnN9iwKQiUgU0yROhTG3adtOv
+	 94HMShvzngW6tVMvznlz8vB/R68GvExkuh7HQrjhtS5uiXwuPdkPV3schYgJWlKYmS
+	 32far1FzxuxhLCaQISOx5Pc4FhXZj//Y51dG6Atw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Thangaraj Samynathan <Thangaraj.s@microchip.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 143/342] net: lan743x: permit VLAN-tagged packets up to configured MTU
-Date: Tue, 16 Jun 2026 20:27:19 +0530
-Message-ID: <20260616145054.841455606@linuxfoundation.org>
+Subject: [PATCH 5.10 144/342] Bluetooth: RFCOMM: hold listener socket in rfcomm_connect_ind()
+Date: Tue, 16 Jun 2026 20:27:20 +0530
+Message-ID: <20260616145054.889719421@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,96 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 8173d22b211f615015f7b35f48ab11a6dd78dc99 ]
+[ Upstream commit 43c441edacf953b39517a44f5e5e10a93618b226 ]
 
-VLAN-tagged interfaces on lan743x devices were previously unreachable via
-SSH and failed to respond to large ping packets (e.g. "ping -s 1469" given
-MTU=1500). In these scenarios, "ethtool -S" reports non-zero "RX Oversize
-Frame Errors". According to Microchip AN2948, the MAC_RX FSE (VLAN field
-size enforcement) bit determines whether frames with VLAN tags exceeding
-the base MTU plus tag length are discarded.
+rfcomm_get_sock_by_channel() scans rfcomm_sk_list under the list lock,
+but returns the selected listener after dropping that lock without
+taking a reference. rfcomm_connect_ind() then locks the listener,
+queues a child socket on it, and may notify it after unlocking it.
 
-The driver must set the MAC_RX.FSE bit before setting MAC_RX.RXEN to allow
-VLAN-tagged frames up to the interface MTU, preventing them from being
-treated as oversized. As a result, both the base and VLAN-tagged interfaces
-can use the same MTU without receive errors.
+The buggy scenario involves two paths, with each column showing the
+order within that path:
 
-Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Thangaraj Samynathan <Thangaraj.s@microchip.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # lan7430 on arm64 (RevPi
-Link: https://patch.msgid.link/20260529210300.433135-1-davthompson@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+rfcomm_connect_ind():            listener close:
+  1. Find parent in              1. close() enters
+     rfcomm_get_sock_by_channel()   rfcomm_sock_release().
+  2. Drop rfcomm_sk_list.lock    2. rfcomm_sock_shutdown()
+     without pinning parent.        closes the listener.
+  3. Call lock_sock(parent) and  3. rfcomm_sock_kill()
+     bt_accept_enqueue(parent,      unlinks and puts parent.
+     sk, true).
+  4. Read parent flags and may   4. parent can be freed.
+     call sk_state_change().
+
+If close wins the race, parent can be freed before
+rfcomm_connect_ind() reaches lock_sock(), bt_accept_enqueue(), or the
+deferred-setup callback.
+
+Take a reference on the listener before leaving rfcomm_sk_list.lock.
+After lock_sock() succeeds, recheck that it is still in BT_LISTEN
+before queueing a child, cache the deferred-setup bit while the parent
+is locked, and drop the reference after the last parent use.
+
+KASAN reported a slab-use-after-free in lock_sock_nested() from
+rfcomm_connect_ind(), with the freeing stack going through
+rfcomm_sock_kill() and rfcomm_sock_release().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 32 +++++++++++++++++++
- drivers/net/ethernet/microchip/lan743x_main.h |  1 +
- 2 files changed, 33 insertions(+)
+ net/bluetooth/rfcomm/sock.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index 26a230c60efb70..f280fda24f7f07 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -799,6 +799,36 @@ static void lan743x_mac_set_address(struct lan743x_adapter *adapter,
- 		   "MAC address set to %pM\n", addr);
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index 2dcb70f49a68a5..faab36d54c5c5a 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -122,7 +122,7 @@ static struct sock *__rfcomm_get_listen_sock_by_addr(u8 channel, bdaddr_t *src)
  }
  
-+static void lan743x_mac_rx_enable_fse(struct lan743x_adapter *adapter)
-+{
-+	u32 mac_rx;
-+	bool rxen;
-+
-+	mac_rx = lan743x_csr_read(adapter, MAC_RX);
-+	if (mac_rx & MAC_RX_FSE_)
-+		return;
-+
-+	rxen = mac_rx & MAC_RX_RXEN_;
-+	if (rxen) {
-+		mac_rx &= ~MAC_RX_RXEN_;
-+		lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+		lan743x_csr_wait_for_bit(adapter, MAC_RX, MAC_RX_RXD_,
-+					 1, 1000, 20000, 100);
-+	}
-+
-+	/* Per AN2948, hardware prevents modification of the FSE bit while the
-+	 * MAC receiver is enabled (RXEN bit set). Use separate register write
-+	 * to assert the FSE bit before enabling the RXEN bit in MAC_RX
-+	 */
-+	mac_rx |= MAC_RX_FSE_;
-+	lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+
-+	if (rxen) {
-+		mac_rx |= MAC_RX_RXEN_;
-+		lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+	}
-+}
-+
- static int lan743x_mac_init(struct lan743x_adapter *adapter)
+ /* Find socket with channel and source bdaddr.
+- * Returns closest match.
++ * Returns closest match with an extra reference held.
+  */
+ static struct sock *rfcomm_get_sock_by_channel(int state, u8 channel, bdaddr_t *src)
  {
- 	bool mac_address_valid = true;
-@@ -838,6 +868,8 @@ static int lan743x_mac_init(struct lan743x_adapter *adapter)
- 	lan743x_mac_set_address(adapter, adapter->mac_address);
- 	ether_addr_copy(netdev->dev_addr, adapter->mac_address);
+@@ -136,15 +136,25 @@ static struct sock *rfcomm_get_sock_by_channel(int state, u8 channel, bdaddr_t *
  
-+	lan743x_mac_rx_enable_fse(adapter);
+ 		if (rfcomm_pi(sk)->channel == channel) {
+ 			/* Exact match. */
+-			if (!bacmp(&rfcomm_pi(sk)->src, src))
++			if (!bacmp(&rfcomm_pi(sk)->src, src)) {
++				sock_hold(sk);
+ 				break;
++			}
+ 
+ 			/* Closest match */
+-			if (!bacmp(&rfcomm_pi(sk)->src, BDADDR_ANY))
++			if (!bacmp(&rfcomm_pi(sk)->src, BDADDR_ANY)) {
++				if (sk1)
++					sock_put(sk1);
 +
- 	return 0;
- }
+ 				sk1 = sk;
++				sock_hold(sk1);
++			}
+ 		}
+ 	}
  
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
-index 2a40cc827b1872..3062c54faffd18 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.h
-+++ b/drivers/net/ethernet/microchip/lan743x_main.h
-@@ -118,6 +118,7 @@
- #define MAC_RX				(0x104)
- #define MAC_RX_MAX_SIZE_SHIFT_		(16)
- #define MAC_RX_MAX_SIZE_MASK_		(0x3FFF0000)
-+#define MAC_RX_FSE_			BIT(2)
- #define MAC_RX_RXD_			BIT(1)
- #define MAC_RX_RXEN_			BIT(0)
++	if (sk && sk1)
++		sock_put(sk1);
++
+ 	read_unlock(&rfcomm_sk_list.lock);
+ 
+ 	return sk ? sk : sk1;
+@@ -933,6 +943,7 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
+ {
+ 	struct sock *sk, *parent;
+ 	bdaddr_t src, dst;
++	bool defer_setup = false;
+ 	int result = 0;
+ 
+ 	BT_DBG("session %p channel %d", s, channel);
+@@ -946,6 +957,11 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
+ 
+ 	bh_lock_sock(parent);
+ 
++	if (parent->sk_state != BT_LISTEN)
++		goto done;
++
++	defer_setup = test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags);
++
+ 	/* Check for backlog size */
+ 	if (sk_acceptq_is_full(parent)) {
+ 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
+@@ -973,9 +989,11 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
+ done:
+ 	bh_unlock_sock(parent);
+ 
+-	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags))
++	if (defer_setup)
+ 		parent->sk_state_change(parent);
+ 
++	sock_put(parent);
++
+ 	return result;
+ }
  
 -- 
 2.53.0
