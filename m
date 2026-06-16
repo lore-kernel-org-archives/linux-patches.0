@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A78C3C6A2B;
-	Tue, 16 Jun 2026 16:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E443C6A2B;
+	Tue, 16 Jun 2026 16:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626169; cv=none; b=jii5OLAnkWZgnJQottLoXWs0zqG4bqoJI6cEz01BjBxomJiXDEYNFHzAfgmm7fnzWS1gNDyShSxRNc6EpB9Er6bIB8ao5GGM3fQrKEvmgtBnKTdGKmrEUY/rdHipl+ApIHYKQ1SqTT6UTPTeEmHyRgBdCnI0BV6qRmQBRyHBwEM=
+	t=1781626173; cv=none; b=GpKAoO8YU2m+PZo2gfTBpDuislnHHDi0dlURkzETIBHbOQ+vzYXEV0XFOwXUpL1wQi0fGtOUvK/qLtajZBSKVjlwHo7gyAW8tmrxNapr52o4j4H0T2DGbUqQWYHKILB3HTjWlY0nKoiDNkcNoljxwtu+G26pW1NvNhlRHX6e9/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626169; c=relaxed/simple;
-	bh=tLqa/Pa6mQAYijU69DP84bdtfguF2X4lBK7THBJkj24=;
+	s=arc-20240116; t=1781626173; c=relaxed/simple;
+	bh=zRAKgiSODwI7RCpuICPwdBGLjV7Xbz2Nu8SH/1q5sMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jeC3i53NpruyggsOH7C+sBe7Dh9HZ1drbCYIzWlBlOWQwkqn4QWVSaRVqLmYSHpUYWp2e7lML9hibug5SPMQ8FZ1+kuqyK9QE0gIZpiqQf16J1YdFA8mjRQtZK9rf0ULFlcwcqvRAzf4RmfenHJbifN0PBMdvNr/pBO1HznrJSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcNm/1Fb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CnkMpLl0BWb1jiCXV7QwzCxs4oJC5M6Wom0KStKYuicJjH2Kwj7hixeTW3b0qgztqyMNc4alXMV2TsHEY9/0rUEF5OxHsDJSvp+uinb23Mayt6UY2wMI3gMPWZPEs+Os2NNr6NK25rmW+32K0C7tVMG3J6lQzAHJaOFVurGQAxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UOhD+ayS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcNm/1Fb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68A61F00A3A;
-	Tue, 16 Jun 2026 16:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOhD+ayS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCFA1F000E9;
+	Tue, 16 Jun 2026 16:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626167;
-	bh=bppxtiP8ulfS3G/E2IUJ7RrtYzKe7jJH9/ukW8QPV0o=;
+	s=korg; t=1781626172;
+	bh=80elVvSWK2mUq0+yoyF6w0zEmTrKTUutAIgA4Hx2xUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AcNm/1FbhJmFg03oM/TIsUt1MZOIreIgripIlI8Com1QE7JgXPtBICcFujpTRid+j
-	 prFyXln6Zd+sY+6LEnoY6Vba2zDPJIrunViccZyGgG54kW03F4QtZmBSEy+UrosYTu
-	 TAIuT21TpS3SZAfo64g5yZ/CWghscvRsaKv1kcl4=
+	b=UOhD+aySRJK6ss+voohTdpaQNNo/sTR6psKiQdkeSGnKLlqt7clQ5fDnUZ8/WW/3J
+	 h/p8Bpo4qnSj3huYpykZMAmlW1DlREkxZIxQCyPKw7rt53F53q67PUV9BHpvmrJNMj
+	 0dGqQ2tOVv6YMS8i261+JczxX+HTMdOFhgKFEbUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.18 275/325] slimbus: qcom-ngd-ctrl: Fix up platform_driver registration
-Date: Tue, 16 Jun 2026 20:31:11 +0530
-Message-ID: <20260616145112.422030719@linuxfoundation.org>
+Subject: [PATCH 6.18 276/325] slimbus: qcom-ngd-ctrl: Fix probe error path ordering
+Date: Tue, 16 Jun 2026 20:31:12 +0530
+Message-ID: <20260616145112.474656681@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -54,92 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-commit 8663e8334d7b6007f5d8a4e5dd270246f35107a6 upstream.
+commit 2c22ff152d380ec3d3af099fa05d0ac5ca9b4c1e upstream.
 
-Device drivers should not invoke platform_driver_register()/unregister()
-in their probe and remove paths. They should further not rely on
-platform_driver_unregister() as their only means of "deleting" their
-child devices.
+qcom_slim_ngd_ctrl_probe() first registers the SSR callback then
+allocates the PDR context, as such the error path needs to come in
+opposite order to allow us to unroll each step.
 
-Introduce a helper to unregister the child device and move the
-platform_driver_register()/unregister() to module_init()/exit().
-
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Fixes: 16f14551d0df ("slimbus: qcom-ngd: cleanup in probe error path")
 Cc: stable@vger.kernel.org
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-3-srini@kernel.org
+Link: https://patch.msgid.link/20260530204421.116824-4-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |   36 +++++++++++++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ drivers/slimbus/qcom-ngd-ctrl.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 --- a/drivers/slimbus/qcom-ngd-ctrl.c
 +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1566,6 +1566,13 @@ static int of_qcom_slim_ngd_register(str
- 	return -ENODEV;
- }
- 
-+static void qcom_slim_ngd_unregister(struct qcom_slim_ngd_ctrl *ctrl)
-+{
-+	struct qcom_slim_ngd *ngd = ctrl->ngd;
-+
-+	platform_device_del(ngd->pdev);
-+}
-+
- static int qcom_slim_ngd_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -1668,7 +1675,6 @@ static int qcom_slim_ngd_ctrl_probe(stru
- 		goto err_pdr_lookup;
+@@ -1666,22 +1666,21 @@ static int qcom_slim_ngd_ctrl_probe(stru
+ 	if (IS_ERR(ctrl->pdr)) {
+ 		ret = dev_err_probe(dev, PTR_ERR(ctrl->pdr),
+ 				    "Failed to init PDR handle\n");
+-		goto err_pdr_alloc;
++		goto err_unregister_ssr;
  	}
  
--	platform_driver_register(&qcom_slim_ngd_driver);
+ 	pds = pdr_add_lookup(ctrl->pdr, "avs/audio", "msm/adsp/audio_pd");
+ 	if (IS_ERR(pds) && PTR_ERR(pds) != -EALREADY) {
+ 		ret = dev_err_probe(dev, PTR_ERR(pds), "pdr add lookup failed\n");
+-		goto err_pdr_lookup;
++		goto err_pdr_release;
+ 	}
+ 
  	return of_qcom_slim_ngd_register(dev, ctrl);
  
- err_pdr_alloc:
-@@ -1682,7 +1688,9 @@ err_pdr_lookup:
+-err_pdr_alloc:
+-	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
+-
+-err_pdr_lookup:
++err_pdr_release:
+ 	pdr_handle_release(ctrl->pdr);
++err_unregister_ssr:
++	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
  
- static void qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
- {
--	platform_driver_unregister(&qcom_slim_ngd_driver);
-+	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
-+
-+	qcom_slim_ngd_unregister(ctrl);
+ 	return ret;
  }
- 
- static void qcom_slim_ngd_remove(struct platform_device *pdev)
-@@ -1758,6 +1766,28 @@ static struct platform_driver qcom_slim_
- 	},
- };
- 
--module_platform_driver(qcom_slim_ngd_ctrl_driver);
-+static int qcom_slim_ngd_init(void)
-+{
-+	int ret;
-+
-+	ret = platform_driver_register(&qcom_slim_ngd_driver);
-+	if (ret)
-+		return ret;
-+
-+	ret = platform_driver_register(&qcom_slim_ngd_ctrl_driver);
-+	if (ret)
-+		platform_driver_unregister(&qcom_slim_ngd_driver);
-+
-+	return ret;
-+}
-+
-+static void qcom_slim_ngd_exit(void)
-+{
-+	platform_driver_unregister(&qcom_slim_ngd_ctrl_driver);
-+	platform_driver_unregister(&qcom_slim_ngd_driver);
-+}
-+
-+module_init(qcom_slim_ngd_init);
-+module_exit(qcom_slim_ngd_exit);
- MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("Qualcomm SLIMBus NGD controller");
 
 
