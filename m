@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016683AE1A2;
-	Tue, 16 Jun 2026 18:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A1C2C0261;
+	Tue, 16 Jun 2026 18:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635720; cv=none; b=BiRtCuRSWPeIk74QMorTWLHQex29t4Two0yRVVDbvY7cz+MfbFi5jNvf6qxoYB4wqA6Zoho+ud1sHBM4r+hc41o3OZ676AGUBPyM2Cdtkbz1p4Dqj5LayknrQUymIVYG3ZIepotYnAzd9KIeqMms5F0HnGMReCkmZObzr8wp/XY=
+	t=1781635725; cv=none; b=kSgRjfchMoWdHJbl1klFCji1k3zBeRBYAUUrpJIk1tgUXdA0CO40JobukXXyJNjmaPN/NPUZZV9MyLhx8qyTKBu26Rgo2u9Chq+q2a+ZRq/H9tkP0kf1eN7lfzUlqO9u02WrY1bxF4qec9fWYha2yFj3k/dYud38XZGdquQxEn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635720; c=relaxed/simple;
-	bh=DHA4SQIMLnvJ+X2xqPcIRxZr0JHYgaapNW07vZQc/3I=;
+	s=arc-20240116; t=1781635725; c=relaxed/simple;
+	bh=ug4WcTcMYjwhNWDv/CKyS9FeK3KNtNRHbU+HX9EiqvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOOxPoMZtIOSSGDo+BtmjnR1hXGFqM2xl4twxXTwpjsb+81dozpuAb88mWzenw0O+hL7DeVSxoDA65M9esEF9lbc8S9M3Zd7Ql9OVObgMTy2+P661BkBlTwd1Vdm3IWA2WUHF0jjaTnYq5l7yjjy0uGc8YEYArh74iOqzhEM/r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0LywBkh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZonSzEdDNmXd+wKYfAbzP+k9O15DeqKA0FgxOTw7nXo0Z2rV/5+NTZRtKDyRUTJaAmHBv4DPE89xsc3eKpuUgzpTUKc1h/PybmIh9szFM7rhUqh/B0LJvJeYvZux/jakQkSMU6/Sf9HyrZQlashWChOfLHBa7byMpEyOqJBlJZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sx/UgXDO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0LywBkh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007481F000E9;
-	Tue, 16 Jun 2026 18:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sx/UgXDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D628F1F000E9;
+	Tue, 16 Jun 2026 18:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635719;
-	bh=IQyu4QkQlMCsPVD3sKAGTvjqXmE6zuSt8cbTyfbegxc=;
+	s=korg; t=1781635724;
+	bh=JFVRgljtMcpg9b6F+MSRISwJGhi1jEw3xXRtJaqeA9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t0LywBkhqr/pWXAqQJmOrO7tTELKKS5AnZRVqip73QFh7LRI/LXB92zOa23z5Uezf
-	 NsjcK8dJngZEB9tF/IHOHfxDdDUSbUNkNY91HIj87NOfsur6N+PNzfIeds6siDwDyH
-	 XziB0fUsnjpw8jT7O39aNGtNSHtjorRFlp1EB7NY=
+	b=Sx/UgXDOJcAlJQ4ysRQkOHNp4Gx/DLMpOq0rZAu5wAkbYRv5MHG0XiCKeoJj5s8/A
+	 7GzlETX2nqkOVInlZy0mmYpY/zL8tfau93MEoqNZtvuOdd5XNrSGdgLnnvue91yl1U
+	 k/Fhabz/Q0eNNkOiXvGrnaVYlPmseooAiAnxDs2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 103/342] USB: serial: mct_u232: fix missing interrupt-in transfer sanity check
-Date: Tue, 16 Jun 2026 20:26:39 +0530
-Message-ID: <20260616145053.027516195@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 104/342] usb: gadget: net2280: Fix double free in probe error path
+Date: Tue, 16 Jun 2026 20:26:40 +0530
+Message-ID: <20260616145053.079163820@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -49,36 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 245aba83e3c288e176ed037a1f6b618b09e92ed8 upstream.
+commit c8547c74988e0b5f4cbb1b895e2a57aae084f070 upstream.
 
-Add the missing sanity check on the size of interrupt-in transfers to
-avoid parsing stale or uninitialised slab data (and leaking it to user
-space).
+usb_initialize_gadget() installs gadget_release() as the release
+callback for the embedded gadget device.  The struct net2280 instance is
+therefore released through gadget_release() when the gadget device's last
+reference is dropped.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+The probe error path calls net2280_remove(), which tears down the
+partially initialized device and drops the gadget reference with
+usb_put_gadget().  Calling kfree(dev) afterwards can free the same object
+again.
+
+Drop the explicit kfree() and let the gadget device release callback
+handle the final free.  This issue was found by a static analysis tool
+I am developing.
+
+Fixes: f770fbec4165 ("USB: UDC: net2280: Fix memory leaks")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260427153651.337846-1-lgs201920130244@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/mct_u232.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/gadget/udc/net2280.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/usb/serial/mct_u232.c
-+++ b/drivers/usb/serial/mct_u232.c
-@@ -545,6 +545,11 @@ static void mct_u232_read_int_callback(s
- 		goto exit;
- 	}
+--- a/drivers/usb/gadget/udc/net2280.c
++++ b/drivers/usb/gadget/udc/net2280.c
+@@ -3783,10 +3783,8 @@ static int net2280_probe(struct pci_dev
+ 	return 0;
  
-+	if (urb->actual_length < 2) {
-+		dev_warn_ratelimited(&port->dev, "short interrupt-in packet\n");
-+		goto exit;
-+	}
-+
- 	/*
- 	 * The interrupt-in pipe signals exceptional conditions (modem line
- 	 * signal changes and errors). data[0] holds MSR, data[1] holds LSR.
+ done:
+-	if (dev) {
++	if (dev)
+ 		net2280_remove(pdev);
+-		kfree(dev);
+-	}
+ 	return retval;
+ }
+ 
 
 
