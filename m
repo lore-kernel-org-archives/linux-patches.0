@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D167E43CEC7;
-	Tue, 16 Jun 2026 18:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95CC43CEC7;
+	Tue, 16 Jun 2026 18:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634545; cv=none; b=Wildgjmi8VIBmzDxls8ZnvblqnuOetLf6/5yMUktzE1iCQaTjMSyZNK910oNJasJGpuDZGkgAp/t2mbUcKLv/vX+93SdX/lwvFxzJJXMh32asBUzf2yW61q94jvpIB4UssRfPhLSoVwPpyiN7r/EDFs5YXQcYkOYPMkIUdsJ7zE=
+	t=1781634551; cv=none; b=dEOX0WqQZzfBXCPSgJDHoYmLzEr7XkiyM0Xi/Hx3TYe1xLr3Hd6uhjQ37spvD6ZHWa3LRlT6V8naqns7ldr29175VpN32NoFIu6UmDGufLBoEGCjLG2Ham+ZOlVo1WpZdnvQvJ6bU6I5LFId/3/QLLc+7Vrj9R2vlFI+loD59AQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634545; c=relaxed/simple;
-	bh=sDzYeqI6wGXxfmac8HkJ941LTLWBUP+1a2ZNGKi9UUQ=;
+	s=arc-20240116; t=1781634551; c=relaxed/simple;
+	bh=ap2ys/90FXsmSXGxreQGXHjggkYiFz3cMm73zzxXqV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgdP/H3gkMMjYtkqTExm7OvrmeiB+2eravUTERsa5BpCLvjnByo8o9ZoiIZp7rvwGFOXE1owsimreuiYaKaYoFwCqCnti3gQQhIrJGYjQMPeXaInXoyJ7jHyH3WVnblMjz9PAfJVN0Ox4ouumuGiQ5J/6+ziHvUvAlxoe/bHMrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/WpLSQ+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PgtCv1y+r7iRiKWlVrvSE1wn/egu59cTAr2UHvyUHRjywKPfzmPsX1tjKgqzJ1vPl0Cq2b6oBUSRbr2eqXmPQolMuNsz/BKCOBvDbLjy9wUb+XtMxUpv+Qvd9ePT14FVpKqmdul9nL8WTxKhiA2EBB9i0nU5+UolStkCXkYCgg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnm2UDvB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/WpLSQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A661C1F000E9;
-	Tue, 16 Jun 2026 18:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnm2UDvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA161F000E9;
+	Tue, 16 Jun 2026 18:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634543;
-	bh=vzVBhQbdHIPJWkwwg5DM/chiteG8MWi/Gczm69PD7RA=;
+	s=korg; t=1781634549;
+	bh=OKwlU8wT8Iws5Y01RSUSNn2fSYz3Z+EGAuwka7p0Q+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z/WpLSQ+4slWAyZjy8OqCufiSoA27OhgDEsG8e4TrOVQPWUnNMxJ3klmz4yR2/qa2
-	 NpzjuiNFGGCi3eFR+KZa9f7wnes8lkjwgk90s7pF3O5IQ47PDeheZD4PEw3kkpIYR9
-	 V//ABNe/FkP/Ic51HIoD4fpYNLXNUIZeeLLBOz3o=
+	b=nnm2UDvBpTf/T46lNgMQ4zxjMF6OEkH2sgxy2NQq8tLya9oYZXxU0KLZBQBHBETr3
+	 adtD6TPiAkR3ZEFskwhc0aMyUH8Im46HxhoV2ehDP5rPDHsu70MXPQIFCSx4cL3BSz
+	 m2Jj3kpVJQQf9LVT2AQdV5+tqg60yGNGLMxZTKgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d80abb5b890d39261e72@syzkaller.appspotmail.com,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 285/411] hfsplus: fix uninit-value by validating catalog record size
-Date: Tue, 16 Jun 2026 20:28:43 +0530
-Message-ID: <20260616145116.308476551@linuxfoundation.org>
+Subject: [PATCH 5.15 259/411] arm64/mm: Enable batched TLB flush in unmap_hotplug_range()
+Date: Tue, 16 Jun 2026 20:28:17 +0530
+Message-ID: <20260616145114.775113163@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,186 +56,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit b6b592275aeff184aa82fcf6abccd833fb71b393 ]
+[ Upstream commit 48478b9f791376b4b89018d7afdfd06865498f65 ]
 
-Syzbot reported a KMSAN uninit-value issue in hfsplus_strcasecmp(). The
-root cause is that hfs_brec_read() doesn't validate that the on-disk
-record size matches the expected size for the record type being read.
+During a memory hot remove operation, both linear and vmemmap mappings for
+the memory range being removed, get unmapped via unmap_hotplug_range() but
+mapped pages get freed only for vmemmap mapping. This is just a sequential
+operation where each table entry gets cleared, followed by a leaf specific
+TLB flush, and then followed by memory free operation when applicable.
 
-When mounting a corrupted filesystem, hfs_brec_read() may read less data
-than expected. For example, when reading a catalog thread record, the
-debug output showed:
+This approach was simple and uniform both for vmemmap and linear mappings.
+But linear mapping might contain CONT marked block memory where it becomes
+necessary to first clear out all entire in the range before a TLB flush.
+This is as per the architecture requirement. Hence batch all TLB flushes
+during the table tear down walk and finally do it in unmap_hotplug_range().
 
-  HFSPLUS_BREC_READ: rec_len=520, fd->entrylength=26
-  HFSPLUS_BREC_READ: WARNING - entrylength (26) < rec_len (520) - PARTIAL READ!
+Prior to this fix, it was hypothetically possible for a speculative access
+to a higher address in the contiguous block to fill the TLB with shattered
+entries for the entire contiguous range after a lower address had already
+been cleared and invalidated. Due to the table entries being shattered, the
+subsequent TLB invalidation for the higher address would not then clear the
+TLB entries for the lower address, meaning stale TLB entries could persist.
 
-hfs_brec_read() only validates that entrylength is not greater than the
-buffer size, but doesn't check if it's less than expected. It successfully
-reads 26 bytes into a 520-byte structure and returns success, leaving 494
-bytes uninitialized.
+Besides it also helps in improving the performance via TLBI range operation
+along with reduced synchronization instructions. The time spent executing
+unmap_hotplug_range() improved 97% measured over a 2GB memory hot removal
+in KVM guest.
 
-This uninitialized data in tmp.thread.nodeName then gets copied by
-hfsplus_cat_build_key_uni() and used by hfsplus_strcasecmp(), triggering
-the KMSAN warning when the uninitialized bytes are used as array indices
-in case_fold().
+This scheme is not applicable during vmemmap mapping tear down where memory
+needs to be freed and hence a TLB flush is required after clearing out page
+table entry.
 
-Fix by introducing hfsplus_brec_read_cat() wrapper that:
-1. Calls hfs_brec_read() to read the data
-2. Validates the record size based on the type field:
-   - Fixed size for folder and file records
-   - Variable size for thread records (depends on string length)
-3. Returns -EIO if size doesn't match expected
-
-For thread records, check against HFSPLUS_MIN_THREAD_SZ before reading
-nodeName.length to avoid reading uninitialized data at call sites that
-don't zero-initialize the entry structure.
-
-Also initialize the tmp variable in hfsplus_find_cat() as defensive
-programming to ensure no uninitialized data even if validation is
-bypassed.
-
-Reported-by: syzbot+d80abb5b890d39261e72@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d80abb5b890d39261e72
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Tested-by: syzbot+d80abb5b890d39261e72@syzkaller.appspotmail.com
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Tested-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Suggested-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Link: https://lore.kernel.org/all/20260120051114.1281285-1-kartikey406@gmail.com/ [v1]
-Link: https://lore.kernel.org/all/20260121063109.1830263-1-kartikey406@gmail.com/ [v2]
-Link: https://lore.kernel.org/all/20260212014233.2422046-1-kartikey406@gmail.com/ [v3]
-Link: https://lore.kernel.org/all/20260214002100.436125-1-kartikey406@gmail.com/T/ [v4]
-Link: https://lore.kernel.org/all/20260221061626.15853-1-kartikey406@gmail.com/T/ [v5]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260307010302.41547-1-kartikey406@gmail.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Stable-dep-of: 90c500e4fd83 ("hfsplus: fix held lock freed on hfsplus_fill_super()")
+Cc: Will Deacon <will@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Closes: https://lore.kernel.org/all/aWZYXhrT6D2M-7-N@willie-the-truck/
+Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
+Cc: stable@vger.kernel.org
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ replaced `__pte_clear()` with `pte_clear()` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/bfind.c      |   51 ++++++++++++++++++++++++++++++++++++++++++++++++
- fs/hfsplus/catalog.c    |    4 +--
- fs/hfsplus/dir.c        |    2 -
- fs/hfsplus/hfsplus_fs.h |    9 ++++++++
- fs/hfsplus/super.c      |    2 -
- 5 files changed, 64 insertions(+), 4 deletions(-)
+ arch/arm64/mm/mmu.c |   36 ++++++++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 16 deletions(-)
 
---- a/fs/hfsplus/bfind.c
-+++ b/fs/hfsplus/bfind.c
-@@ -287,3 +287,54 @@ out:
- 	fd->bnode = bnode;
- 	return res;
- }
-+
-+/**
-+ * hfsplus_brec_read_cat - read and validate a catalog record
-+ * @fd: find data structure
-+ * @entry: pointer to catalog entry to read into
-+ *
-+ * Reads a catalog record and validates its size matches the expected
-+ * size based on the record type.
-+ *
-+ * Returns 0 on success, or negative error code on failure.
-+ */
-+int hfsplus_brec_read_cat(struct hfs_find_data *fd, hfsplus_cat_entry *entry)
-+{
-+	int res;
-+	u32 expected_size;
-+
-+	res = hfs_brec_read(fd, entry, sizeof(hfsplus_cat_entry));
-+	if (res)
-+		return res;
-+
-+	/* Validate catalog record size based on type */
-+	switch (be16_to_cpu(entry->type)) {
-+	case HFSPLUS_FOLDER:
-+		expected_size = sizeof(struct hfsplus_cat_folder);
-+		break;
-+	case HFSPLUS_FILE:
-+		expected_size = sizeof(struct hfsplus_cat_file);
-+		break;
-+	case HFSPLUS_FOLDER_THREAD:
-+	case HFSPLUS_FILE_THREAD:
-+		/* Ensure we have at least the fixed fields before reading nodeName.length */
-+		if (fd->entrylength < HFSPLUS_MIN_THREAD_SZ) {
-+			pr_err("thread record too short (got %u)\n", fd->entrylength);
-+			return -EIO;
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -886,10 +886,14 @@ static void unmap_hotplug_pte_range(pmd_
+ 
+ 		WARN_ON(!pte_present(pte));
+ 		pte_clear(&init_mm, addr, ptep);
+-		flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+-		if (free_mapped)
++		if (free_mapped) {
++			/* CONT blocks are not supported in the vmemmap */
++			WARN_ON(pte_cont(pte));
++			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+ 			free_hotplug_page_range(pte_page(pte),
+ 						PAGE_SIZE, altmap);
 +		}
-+		expected_size = hfsplus_cat_thread_size(&entry->thread);
-+		break;
-+	default:
-+		pr_err("unknown catalog record type %d\n",
-+		       be16_to_cpu(entry->type));
-+		return -EIO;
-+	}
-+
-+	if (fd->entrylength != expected_size) {
-+		pr_err("catalog record size mismatch (type %d, got %u, expected %u)\n",
-+		       be16_to_cpu(entry->type), fd->entrylength, expected_size);
-+		return -EIO;
-+	}
-+
-+	return 0;
-+}
---- a/fs/hfsplus/catalog.c
-+++ b/fs/hfsplus/catalog.c
-@@ -194,12 +194,12 @@ static int hfsplus_fill_cat_thread(struc
- int hfsplus_find_cat(struct super_block *sb, u32 cnid,
- 		     struct hfs_find_data *fd)
++		/* unmap_hotplug_range() flushes TLB for !free_mapped */
+ 	} while (addr += PAGE_SIZE, addr < end);
+ }
+ 
+@@ -910,15 +914,14 @@ static void unmap_hotplug_pmd_range(pud_
+ 		WARN_ON(!pmd_present(pmd));
+ 		if (pmd_sect(pmd)) {
+ 			pmd_clear(pmdp);
+-
+-			/*
+-			 * One TLBI should be sufficient here as the PMD_SIZE
+-			 * range is mapped with a single block entry.
+-			 */
+-			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+-			if (free_mapped)
++			if (free_mapped) {
++				/* CONT blocks are not supported in the vmemmap */
++				WARN_ON(pmd_cont(pmd));
++				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
+ 				free_hotplug_page_range(pmd_page(pmd),
+ 							PMD_SIZE, altmap);
++			}
++			/* unmap_hotplug_range() flushes TLB for !free_mapped */
+ 			continue;
+ 		}
+ 		WARN_ON(!pmd_table(pmd));
+@@ -943,15 +946,12 @@ static void unmap_hotplug_pud_range(p4d_
+ 		WARN_ON(!pud_present(pud));
+ 		if (pud_sect(pud)) {
+ 			pud_clear(pudp);
+-
+-			/*
+-			 * One TLBI should be sufficient here as the PUD_SIZE
+-			 * range is mapped with a single block entry.
+-			 */
+-			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+-			if (free_mapped)
++			if (free_mapped) {
++				flush_tlb_kernel_range(addr, addr + PUD_SIZE);
+ 				free_hotplug_page_range(pud_page(pud),
+ 							PUD_SIZE, altmap);
++			}
++			/* unmap_hotplug_range() flushes TLB for !free_mapped */
+ 			continue;
+ 		}
+ 		WARN_ON(!pud_table(pud));
+@@ -981,6 +981,7 @@ static void unmap_hotplug_p4d_range(pgd_
+ static void unmap_hotplug_range(unsigned long addr, unsigned long end,
+ 				bool free_mapped, struct vmem_altmap *altmap)
  {
--	hfsplus_cat_entry tmp;
-+	hfsplus_cat_entry tmp = {0};
- 	int err;
- 	u16 type;
++	unsigned long start = addr;
+ 	unsigned long next;
+ 	pgd_t *pgdp, pgd;
  
- 	hfsplus_cat_build_key_with_cnid(sb, fd->search_key, cnid);
--	err = hfs_brec_read(fd, &tmp, sizeof(hfsplus_cat_entry));
-+	err = hfsplus_brec_read_cat(fd, &tmp);
- 	if (err)
- 		return err;
- 
---- a/fs/hfsplus/dir.c
-+++ b/fs/hfsplus/dir.c
-@@ -49,7 +49,7 @@ static struct dentry *hfsplus_lookup(str
- 	if (unlikely(err < 0))
- 		goto fail;
- again:
--	err = hfs_brec_read(&fd, &entry, sizeof(entry));
-+	err = hfsplus_brec_read_cat(&fd, &entry);
- 	if (err) {
- 		if (err == -ENOENT) {
- 			hfs_find_exit(&fd);
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -533,6 +533,15 @@ int hfsplus_submit_bio(struct super_bloc
- 		       void **data, int op, int op_flags);
- int hfsplus_read_wrapper(struct super_block *sb);
- 
-+static inline u32 hfsplus_cat_thread_size(const struct hfsplus_cat_thread *thread)
-+{
-+	return offsetof(struct hfsplus_cat_thread, nodeName) +
-+	       offsetof(struct hfsplus_unistr, unicode) +
-+	       be16_to_cpu(thread->nodeName.length) * sizeof(hfsplus_unichr);
-+}
+@@ -1002,6 +1003,9 @@ static void unmap_hotplug_range(unsigned
+ 		WARN_ON(!pgd_present(pgd));
+ 		unmap_hotplug_p4d_range(pgdp, addr, next, free_mapped, altmap);
+ 	} while (addr = next, addr < end);
 +
-+int hfsplus_brec_read_cat(struct hfs_find_data *fd, hfsplus_cat_entry *entry);
-+
- /*
-  * time helpers: convert between 1904-base and 1970-base timestamps
-  *
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -541,7 +541,7 @@ static int hfsplus_fill_super(struct sup
- 	err = hfsplus_cat_build_key(sb, fd.search_key, HFSPLUS_ROOT_CNID, &str);
- 	if (unlikely(err < 0))
- 		goto out_put_root;
--	if (!hfs_brec_read(&fd, &entry, sizeof(entry))) {
-+	if (!hfsplus_brec_read_cat(&fd, &entry)) {
- 		hfs_find_exit(&fd);
- 		if (entry.type != cpu_to_be16(HFSPLUS_FOLDER)) {
- 			err = -EIO;
++	if (!free_mapped)
++		flush_tlb_kernel_range(start, end);
+ }
+ 
+ static void free_empty_pte_table(pmd_t *pmdp, unsigned long addr,
 
 
