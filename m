@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF1F3D8105;
-	Tue, 16 Jun 2026 18:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892F63D8105;
+	Tue, 16 Jun 2026 18:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634143; cv=none; b=Xp55sfbtt4DB+XTKllwWOA/pMwbTsUODPXjuMKwHX4Hst/+JXcMvQ2vnIFK8Fw3wyHjdZfTNG7pvxtcN0Kp0eRvLNTjIV/EPiRAslp+D6tc90wHp1Lhe+g/PRo6zHLkofFwzhgFDBganBuxt7BOtaKLl70EDCCoTiGRBCzu06ts=
+	t=1781634148; cv=none; b=CXFXnfGBEbVE8yV/6w1dRq0xgxv1m5HuprwkEbqNvlwVsPWbQ7n86O4+CKIA8xQv6nyxxcr9fLTNyBTYuLsnas1Uvdv8X6z37LrwnNp8VqDDpUAXcQJuStVv3G+TkBGWRafTBdaAhe2svwzLViAPCXnAb83Fodg2FLx11Dlhwjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634143; c=relaxed/simple;
-	bh=RKUi84FQijCfTQAns8BZHmI6LsUhX6kEg7WwZM/qG6k=;
+	s=arc-20240116; t=1781634148; c=relaxed/simple;
+	bh=8xwW6XRRIJVQrocD7fGfVvhpTNYVJP0BxHuGCaPbdK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6C3GXaX4VjRo0a2BRXHLhv+dOo9Q4c16vdYa5JFFPNbQBohXE2UU+hP9EWhRWaBNru1JECznePin93JBFlF/IYms9Anbaycwsn/fdZKf3vKInSMX9tk1IICQIn9IT/4bGbl8JdRpkgOowPqkSzt3y8VkdnNU6p5EP/Xxc3MiQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COw7sUoP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tZRTm26eRHuOw1qYKh9X1m59ixsOtmFHbVsjQmhzPZb1gT+MKT1q5dQPJjk3sNzUZ0+wP5ka0hgbqbDkcI/plS1JAuGYCauBamuNp3O3Q/mpRx5z1QWiUuwTqA4mcLS0bjLgR5jPgiznUnpgn7CI4oRXx57p8IDXP+D9hbwMrIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMrb4JVp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COw7sUoP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFBE1F000E9;
-	Tue, 16 Jun 2026 18:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMrb4JVp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7123C1F000E9;
+	Tue, 16 Jun 2026 18:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634142;
-	bh=UrinH8DF6Bl1hWFd7Ztu8XvpgW1AhWjJ6lX+sf2MB+A=;
+	s=korg; t=1781634147;
+	bh=lJe5kHEghRH2OS1z21fYzozDYGcSvDBTyk1uz0BjzfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=COw7sUoPZWHxLjtrQwzyseU1i0rXpnFvgRSy130ngHfll705BDS8cHbo6jZmbNibq
-	 7VaDKlz3m8Ezy46/TXq0XR3tkqz7D2HiV0jp/VRlp12oqaqYnWOhW/NDbcZ9nd+ScG
-	 lTOoH2OS9lmKJ3a1RtNq0Yt7MvFg5KKZyuZ7P4oA=
+	b=gMrb4JVpcCfq2P0vRDfFOpetcvU/JCBRJm3MwS2aDA84PFU7zU01bBdS0npCkGyp4
+	 IF3SbuANAx7Ke6qEphxsdNgqotefO889gF2h18RdEX4R0hDmb//VbrEKOD0twzyLrb
+	 ENl1+HdJz0NMaJ8inxWBTd7nZ8Djh59/1Q+y702Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 199/411] net: mvpp2: build skb from XDP-adjusted data on XDP_PASS
-Date: Tue, 16 Jun 2026 20:27:17 +0530
-Message-ID: <20260616145111.299856043@linuxfoundation.org>
+Subject: [PATCH 5.15 200/411] drm/vc4: fix krealloc() memory leak
+Date: Tue, 16 Jun 2026 20:27:18 +0530
+Message-ID: <20260616145111.354025498@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -45,110 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Alexander A. Klimov <grandmaster@al2klimov.de>
 
-[ Upstream commit 77a6b90ce56bc982dcfa94229b8e28e6abb16e95 ]
+[ Upstream commit 5d563a5da8717629ae72f9eadf1e0e340bd1658b ]
 
-When an XDP program uses bpf_xdp_adjust_head() or bpf_xdp_adjust_tail()
-and then returns XDP_PASS, mvpp2 still builds the skb from fixed offsets
-derived from the original RX descriptor. Packet geometry changes made by
-the XDP program are therefore discarded before the skb reaches the stack.
+Don't just overwrite the original pointer passed to krealloc()
+with its return value without checking latter:
 
-Update rx_offset and rx_bytes from xdp.data and xdp.data_end for
-XDP_PASS. This makes skb_reserve() and skb_put() reflect the packet seen
-by XDP, and makes RX byte accounting for XDP_PASS follow the length of the
-skb passed to the network stack.
+    MEM = krealloc(MEM, SZ, GFP);
 
-Keep a separate rx_sync_size for page-pool recycling on skb allocation
-failure, which must stay tied to the received buffer range.
+If krealloc() returns NULL, that erases the pointer
+to the still allocated memory, hence leaks this memory.
+Instead, use a temporary variable, check it's not NULL
+and only then assign it to the original pointer:
 
-Non-PASS verdicts continue to account the descriptor length because no skb
-is passed up in those cases.
+    TMP = krealloc(MEM, SZ, GFP);
+    if (!TMP) return;
+    MEM = TMP;
 
-Fixes: 07dd0a7aae7f ("mvpp2: add basic XDP support")
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Link: https://patch.msgid.link/20260607134943.21996-5-mail@tk154.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+While on it, use krealloc_array().
+
+Fixes: 6d45c81d229d ("drm/vc4: Add support for branching in shader validation.")
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patch.msgid.link/20260606123817.37222-1-grandmaster@al2klimov.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/mvpp2/mvpp2_main.c   | 21 +++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/vc4/vc4_validate_shaders.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 04002548a46327..c4951eb88241b0 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3916,10 +3916,10 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		struct mvpp2_bm_pool *bm_pool;
- 		struct page_pool *pp = NULL;
- 		struct sk_buff *skb;
--		unsigned int frag_size;
-+		unsigned int frag_size, rx_sync_size;
- 		dma_addr_t dma_addr;
- 		phys_addr_t phys_addr;
--		int pool, rx_bytes, err, ret;
-+		int pool, rx_bytes, rx_offset, err, ret;
- 		struct page *page;
- 		void *data;
+diff --git a/drivers/gpu/drm/vc4/vc4_validate_shaders.c b/drivers/gpu/drm/vc4/vc4_validate_shaders.c
+index 7cf82b071de290..82543a23ec0638 100644
+--- a/drivers/gpu/drm/vc4/vc4_validate_shaders.c
++++ b/drivers/gpu/drm/vc4/vc4_validate_shaders.c
+@@ -288,15 +288,16 @@ static bool require_uniform_address_uniform(struct vc4_validated_shader_info *va
+ {
+ 	uint32_t o = validated_shader->num_uniform_addr_offsets;
+ 	uint32_t num_uniforms = validated_shader->uniforms_size / 4;
++	u32 *offsets;
  
-@@ -3932,6 +3932,8 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		rx_status = mvpp2_rxdesc_status_get(port, rx_desc);
- 		rx_bytes = mvpp2_rxdesc_size_get(port, rx_desc);
- 		rx_bytes -= MVPP2_MH_SIZE;
-+		rx_sync_size = rx_bytes + MVPP2_MH_SIZE;
-+		rx_offset = MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM;
- 		dma_addr = mvpp2_rxdesc_dma_addr_get(port, rx_desc);
+-	validated_shader->uniform_addr_offsets =
+-		krealloc(validated_shader->uniform_addr_offsets,
+-			 (o + 1) *
+-			 sizeof(*validated_shader->uniform_addr_offsets),
+-			 GFP_KERNEL);
+-	if (!validated_shader->uniform_addr_offsets)
++	offsets = krealloc_array(validated_shader->uniform_addr_offsets,
++				 o + 1,
++				 sizeof(*validated_shader->uniform_addr_offsets),
++				 GFP_KERNEL);
++	if (!offsets)
+ 		return false;
  
- 		pool = (rx_status & MVPP2_RXD_BM_POOL_ID_MASK) >>
-@@ -3947,7 +3949,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
++	validated_shader->uniform_addr_offsets = offsets;
+ 	validated_shader->uniform_addr_offsets[o] = num_uniforms;
+ 	validated_shader->num_uniform_addr_offsets++;
  
- 		dma_sync_single_range_for_cpu(dev->dev.parent, dma_addr,
- 					      MVPP2_SKB_HEADROOM,
--					      rx_bytes + MVPP2_MH_SIZE,
-+					      rx_sync_size,
- 					      dma_dir);
- 
- 		/* Buffer header not supported */
-@@ -3998,6 +4000,14 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 				continue;
- 			}
- 
-+			rx_sync_size = max_t(unsigned int, rx_sync_size,
-+					     xdp.data_end - xdp.data_hard_start -
-+					     MVPP2_SKB_HEADROOM);
-+
-+			/* Update offset and length to reflect any XDP adjustments. */
-+			rx_offset = xdp.data     - data;
-+			rx_bytes  = xdp.data_end - xdp.data;
-+
- 			metasize = xdp.data - xdp.data_meta;
- 		}
- 
-@@ -4006,8 +4016,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 			netdev_warn(port->dev, "skb build failed\n");
- 			if (pp) {
- 				page_pool_put_page(pp, virt_to_head_page(data),
--						   rx_bytes + MVPP2_MH_SIZE,
--						   true);
-+						   rx_sync_size, true);
- 			} else {
- 				dma_unmap_single_attrs(dev->dev.parent, dma_addr,
- 						       bm_pool->buf_size,
-@@ -4037,7 +4046,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		ps.rx_packets++;
- 		ps.rx_bytes += rx_bytes;
- 
--		skb_reserve(skb, MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM);
-+		skb_reserve(skb, rx_offset);
- 		skb_put(skb, rx_bytes);
- 		if (metasize)
- 			skb_metadata_set(skb, metasize);
 -- 
 2.53.0
 
