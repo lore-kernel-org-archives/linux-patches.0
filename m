@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224413CE4BA;
-	Tue, 16 Jun 2026 18:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122BF3CE4BA;
+	Tue, 16 Jun 2026 18:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633648; cv=none; b=RMTY3gaF6wJGgURl5x8H8yZafDTdaVlsKAO62cXlMbpI80Qkg4XDtq4d1GP1OTAoh5RTpKAxoz4MQYrYhKXbwWlIVf+W+Ot4esPAIhjoKP6KKMwzxrV/OqmJHkUnwh2c93MjTcDg4SYnQSlUfjINR69RQZ6iNX+34e1AQ1Z1KaE=
+	t=1781633653; cv=none; b=VKu52w+ifgeE32iFIVHV01mI3kVmBVNWuOoIouvrmsS/K2BA+dklfHosA2HmYutiMSc85ecS/4myCzN147ff5xwcx3WjjZEXEic9gx45IlAWJAcDss2m0BOBop38wk3odl1y29uDrsJ3jS8LfGHrFs4mUy8+hvn4+vMsrJcToJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633648; c=relaxed/simple;
-	bh=7A2DxV3LgL8yZdkiAjnCMfR62z2nXxA6nX2tgqJ03bo=;
+	s=arc-20240116; t=1781633653; c=relaxed/simple;
+	bh=ZFOz4wDD7dZar9Zf4FHSA5WS7vAwc9YxNNPWDCfr0qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NDPR3DUSSPCUti0/kGXKK927DbL2yCAFFbTRUG1LlvfJ/b/MNnHp/0JludrlOaQ9z+RCpaa0ZrLG9R1hycYXaI31p2AFjfq6U60/KawoJ3fiDxAZ50klrnwtkKa/+o13Ejnlfto0+y84XHwWPbyFMkZlGQvzuAGquju9dkeMyao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdxijG1A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=adex3Zfx90LM/LCI3Qz/5QiNgSqYIlTNqxl4AJPwTmLMDBW2U8kIW7hj0okeqG4Q8usYpWAuyg0UXb64Fz1zUXYu9M6HmtX7sLJE4wmARkfCiPi0uC7QHsLzv0qEkrtMBbtwgMcHWjBBewB6eJK7CXEIL0wnEkFHcnJgxQKVSWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMI8lMte; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdxijG1A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1201F000E9;
-	Tue, 16 Jun 2026 18:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMI8lMte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C277B1F000E9;
+	Tue, 16 Jun 2026 18:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633647;
-	bh=u6bprMsjU1zolLXLR2/K8Yc1FQruL8jzR9SF2VUiOT4=;
+	s=korg; t=1781633651;
+	bh=HMy+KdGiQbbeou65H2ua1JRx/fSzYg40JGn0OHSBs10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UdxijG1A9q3/dyZJPnAXDupfeDmunDt/GTXMq1cn4zqTjLMdyyt5XbudX1g/N4kbU
-	 Sa5Fz7C4w4X1km/LJny8Mn84JKfu3O8jQW4alHMuSW2BWbTQofRMM03n0ZieQaMQyo
-	 ZqKLUqRy6uwINh0Pu6GeZKL19RM+FfxTRyUrhYGY=
+	b=gMI8lMteukFordyRciT9s5KU88IUjF0jhtFkVGtMAxePRKiputvNTMzOKwkVnT10W
+	 +jslNA/7+J4ChfkJFCxOpgWvUIwHvzffUrhoCUHdck0gatEf+Dml3zPaninwHWYCux
+	 uI7eySM2LnJ8xddeYz9kcluH5i9vp3+CzT70SdQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 117/411] USB: serial: cypress_m8: validate interrupt packet headers
-Date: Tue, 16 Jun 2026 20:25:55 +0530
-Message-ID: <20260616145106.527604752@linuxfoundation.org>
+Subject: [PATCH 5.15 118/411] USB: serial: keyspan: fix missing indat transfer sanity check
+Date: Tue, 16 Jun 2026 20:25:56 +0530
+Message-ID: <20260616145106.580992962@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,86 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9f9bfc80c67f35a275820da7e83a35dface08281 upstream.
+commit ab8336a7e414f018430aa1af3a46944032f7ff96 upstream.
 
-cypress_read_int_callback() parses the interrupt-in buffer according to
-the selected Cypress packet format. Format 1 has a two-byte status/count
-header and format 2 has a one-byte combined status/count header. The
-usb-serial core sizes the interrupt-in buffer from the endpoint
-descriptor's wMaxPacketSize, and successful interrupt transfers can
-complete short when URB_SHORT_NOT_OK is not set.
+Add the missing sanity check on the size of usa49wg indat transfers to
+avoid parsing stale or uninitialised slab data.
 
-Check that the completed packet contains the selected header before
-reading it. Malformed short reports are ignored and the interrupt URB is
-resubmitted through the existing retry path, preventing out-of-bounds
-header-byte reads.
-
-KASAN report as below:
-KASAN slab-out-of-bounds in cypress_read_int_callback+0x240/0x7f0
-Read of size 1
-Call trace:
-  cypress_read_int_callback() (drivers/usb/serial/cypress_m8.c:1009)
-  __usb_hcd_giveback_urb()
-  dummy_timer()
-
-Fixes: 3416eaa1f8f8 ("USB: cypress_m8: Packet format is separate from characteristic size")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Fixes: 3416eaa1f8f8 ("USB: cypress_m8: Packet format is separate from characteristic size")
-Cc: stable@vger.kernel.org	# 2.6.26
-[ johan: use constants in header length sanity checks ]
+Fixes: 0ca1268e109a ("USB Serial Keyspan: add support for USA-49WG & USA-28XG")
+Cc: stable@vger.kernel.org	# 2.6.23
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cypress_m8.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/usb/serial/keyspan.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/serial/cypress_m8.c
-+++ b/drivers/usb/serial/cypress_m8.c
-@@ -1018,8 +1018,8 @@ static void cypress_read_int_callback(st
- 	char tty_flag = TTY_NORMAL;
- 	int bytes = 0;
- 	int result;
--	int i = 0;
- 	int status = urb->status;
-+	int i;
+--- a/drivers/usb/serial/keyspan.c
++++ b/drivers/usb/serial/keyspan.c
+@@ -1184,6 +1184,10 @@ static void usa49wg_indat_callback(struc
+ 	len = 0;
  
- 	switch (status) {
- 	case 0: /* success */
-@@ -1057,22 +1057,32 @@ static void cypress_read_int_callback(st
+ 	while (i < urb->actual_length) {
++		if (urb->actual_length - i < 3) {
++			dev_warn_ratelimited(&urb->dev->dev, "malformed indat packet\n");
++			break;
++		}
  
- 	spin_lock_irqsave(&priv->lock, flags);
- 	result = urb->actual_length;
-+	i = 0;
- 	switch (priv->pkt_fmt) {
- 	default:
- 	case packet_format_1:
- 		/* This is for the CY7C64013... */
-+		if (result < 2)
-+			break;
- 		priv->current_status = data[0] & 0xF8;
- 		bytes = data[1] + 2;
- 		i = 2;
- 		break;
- 	case packet_format_2:
- 		/* This is for the CY7C63743... */
-+		if (result < 1)
-+			break;
- 		priv->current_status = data[0] & 0xF8;
- 		bytes = (data[0] & 0x07) + 1;
- 		i = 1;
- 		break;
- 	}
- 	spin_unlock_irqrestore(&priv->lock, flags);
-+	if (i == 0) {
-+		dev_dbg(dev, "%s - short packet received: %d bytes\n",
-+			__func__, result);
-+		goto continue_read;
-+	}
- 	if (result < bytes) {
- 		dev_dbg(dev,
- 			"%s - wrong packet size - received %d bytes but packet said %d bytes\n",
+ 		/* Check port number from message */
+ 		if (data[i] >= serial->num_ports) {
 
 
