@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B2347A0C4;
-	Tue, 16 Jun 2026 17:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B28478E55;
+	Tue, 16 Jun 2026 17:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630246; cv=none; b=QG5TGyj8MpTILWTzPo/MKE4czusyX4GmaFt1y3b6Y4Gu4mT6SnCO+PmINOBOartO3xHk0HNKJA6Shk3LkgKx5/4eSyNqSFcrID2ZxEMHBDNA06KASeWcJPKWhrkdKwpJi1g//M+nZbZ/8hThgMWw143UF2X2tj8zgpdrG6oSZbE=
+	t=1781630251; cv=none; b=B16qNFlSKs2QpZCeCz/z2L5Y9AslDP6cyVHzw4QQdIcOG4zUPGvDsmfCkWpiTSZZLuPhVvnB90md1vrUn4Phu7GlTfAOWrSiQJubwnkl3eTkNksPIeeHcMvo5N/M9JgoAfNBMVWepPQtyDFuqKBhtW3DLZZzy96eKbi6FMgkm4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630246; c=relaxed/simple;
-	bh=kyY0XvP/320Rig/TXFYNFzljbu4wP2VhTWuxvRY3aXc=;
+	s=arc-20240116; t=1781630251; c=relaxed/simple;
+	bh=60qmcipv6CuNlcws3ZVZI7fwBcmdudbnNXPVJVcY5TA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9dXZhN066x4cmVV91kRKZFjbZdrH3h3DCH2yujDQcwW8YA1hpYwC5Gfv63bRt7RaNb5vcG/l3px9sKYsg9LKCVj0AlRkJCkompeiBiZEWTsHANJHg7j7E0NjVw/RT+xKj/TKpwOLP+BCrsj2Ji5WOceyqkKkYaNoE15JbnG7pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+xBIOJ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ok9j9j/3Wde082mH1N3es2bpOQkLKqyqda496Re9sPFlFri1a2UG+oS0VLwPGv5KxQK/sDMPYQvLBFbASXwLwePMeB6zaCvFcAvgdgzhCPD3dYBLbuZIXSVa3o1CMTfJpNQdy7EPQOyULheBvFe6z1RuH5X/6I8UdGwh12UOdQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWRaffkc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+xBIOJ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1231F00A3A;
-	Tue, 16 Jun 2026 17:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWRaffkc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74C21F000E9;
+	Tue, 16 Jun 2026 17:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630243;
-	bh=Mz9zGDjMGJm6fjMaQdv8J+j7fDvGS1b2WREIFCaWHrM=;
+	s=korg; t=1781630248;
+	bh=AbkOioVE9Ba0kBhavjXuKDcF94Y3Xsxb6k+H8oLtEAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V+xBIOJ9Ilbn3zcuObn913dpShcCl6SKyjMBKpx/MoTHfpe1ycRo5PFn6QP9tGUGH
-	 ihpk2DXiqz9rZA6HSbXbanSsGxb16sUosv5ws2Udg5WcSuneHL7plRORwZ0TgKXGKp
-	 PvBcVPRee0Ql8X/kX6GJ69HvVHi/XJOrtHdXLjf8=
+	b=nWRaffkcg0YBznEpe8MvE8rje1cA7p3uMd3+HT09LJ9k29+wetBv/uwHYbWlfe7/L
+	 OTVBcA8g0TvgAqLSLCe9UU5ZOzyq68bZekh8ZhKtE6MC6TDij65OcMFPbjwwdinhks
+	 fT+HEToZWJ1ayJUd1Xmvy2CEBqBpiY4uat+jIM1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 437/452] RDMA/umem: Fix truncation for block sizes >= 4G
-Date: Tue, 16 Jun 2026 20:31:04 +0530
-Message-ID: <20260616145139.568314810@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 438/452] net: bonding: fix use-after-free in bond_xmit_broadcast()
+Date: Tue, 16 Jun 2026 20:31:05 +0530
+Message-ID: <20260616145139.611832981@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,41 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 15fe76e23615f502d051ef0768f86babaf08746c ]
+commit 2884bf72fb8f03409e423397319205de48adca16 upstream.
 
-When the iommu is used the linearization of the mapping can give a single
-block that is very large split across multiple SG entries.
+bond_xmit_broadcast() reuses the original skb for the last slave
+(determined by bond_is_last_slave()) and clones it for others.
+Concurrent slave enslave/release can mutate the slave list during
+RCU-protected iteration, changing which slave is "last" mid-loop.
+This causes the original skb to be double-consumed (double-freed).
 
-When __rdma_block_iter_next() reassembles the split SG entries it is
-overflowing the 32 bit stack values and computed the wrong DMA addresses
-for blocks after the truncation.
+Replace the racy bond_is_last_slave() check with a simple index
+comparison (i + 1 == slaves_count) against the pre-snapshot slave
+count taken via READ_ONCE() before the loop.  This preserves the
+zero-copy optimization for the last slave while making the "last"
+determination stable against concurrent list mutations.
 
-Use the right types to hold DMA addresses.
+The UAF can trigger the following crash:
 
-Link: https://patch.msgid.link/r/1-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com
-Cc: stable@vger.kernel.org
-Fixes: a808273a495c ("RDMA/verbs: Add a DMA iterator to return aligned contiguous memory blocks")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+==================================================================
+BUG: KASAN: slab-use-after-free in skb_clone
+Read of size 8 at addr ffff888100ef8d40 by task exploit/147
+
+CPU: 1 UID: 0 PID: 147 Comm: exploit Not tainted 7.0.0-rc3+ #4 PREEMPTLAZY
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:123)
+ print_report (mm/kasan/report.c:379 mm/kasan/report.c:482)
+ kasan_report (mm/kasan/report.c:597)
+ skb_clone (include/linux/skbuff.h:1724 include/linux/skbuff.h:1792 include/linux/skbuff.h:3396 net/core/skbuff.c:2108)
+ bond_xmit_broadcast (drivers/net/bonding/bond_main.c:5334)
+ bond_start_xmit (drivers/net/bonding/bond_main.c:5567 drivers/net/bonding/bond_main.c:5593)
+ dev_hard_start_xmit (include/linux/netdevice.h:5325 include/linux/netdevice.h:5334 net/core/dev.c:3871 net/core/dev.c:3887)
+ __dev_queue_xmit (include/linux/netdevice.h:3601 net/core/dev.c:4838)
+ ip6_finish_output2 (include/net/neighbour.h:540 include/net/neighbour.h:554 net/ipv6/ip6_output.c:136)
+ ip6_finish_output (net/ipv6/ip6_output.c:208 net/ipv6/ip6_output.c:219)
+ ip6_output (net/ipv6/ip6_output.c:250)
+ ip6_send_skb (net/ipv6/ip6_output.c:1985)
+ udp_v6_send_skb (net/ipv6/udp.c:1442)
+ udpv6_sendmsg (net/ipv6/udp.c:1733)
+ __sys_sendto (net/socket.c:730 net/socket.c:742 net/socket.c:2206)
+ __x64_sys_sendto (net/socket.c:2209)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+ </TASK>
+
+Allocated by task 147:
+
+Freed by task 147:
+
+The buggy address belongs to the object at ffff888100ef8c80
+ which belongs to the cache skbuff_head_cache of size 224
+The buggy address is located 192 bytes inside of
+ freed 224-byte region [ffff888100ef8c80, ffff888100ef8d60)
+
+Memory state around the buggy address:
+ ffff888100ef8c00: fb fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff888100ef8c80: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff888100ef8d00: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+                                                    ^
+ ffff888100ef8d80: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+ ffff888100ef8e00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+Fixes: 4e5bd03ae346 ("net: bonding: fix bond_xmit_broadcast return value error bug")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260326075553.3960562-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/iter.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/bonding/bond_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/core/iter.c
-+++ b/drivers/infiniband/core/iter.c
-@@ -19,8 +19,8 @@ EXPORT_SYMBOL(__rdma_block_iter_start);
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -5349,7 +5349,7 @@ static netdev_tx_t bond_xmit_broadcast(s
+ 		if (!(bond_slave_is_up(slave) && slave->link == BOND_LINK_UP))
+ 			continue;
  
- bool __rdma_block_iter_next(struct ib_block_iter *biter)
- {
--	unsigned int block_offset;
--	unsigned int delta;
-+	dma_addr_t block_offset;
-+	dma_addr_t delta;
- 
- 	if (!biter->__sg_nents || !biter->__sg)
- 		return false;
+-		if (bond_is_last_slave(bond, slave)) {
++		if (i + 1 == slaves_count) {
+ 			skb2 = skb;
+ 			skb_used = true;
+ 		} else {
 
 
