@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AAD472798;
-	Tue, 16 Jun 2026 18:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69943CC303;
+	Tue, 16 Jun 2026 18:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636109; cv=none; b=T5sFNXLW642u82JdE94t10cqSoQKrHThYCke3U2NRBMqqDy9C2QKW1SK85csLoZu8QlBz0Y1+2fK5ouZjkCgl9R6v9EYw9IsPUmrIA5eQxzw0Nn1lTzdJ1sCgFOua64oSnsGOs1csr6Jc/n56HC0i7SZhRlKXWupVIIwXCGDImA=
+	t=1781636114; cv=none; b=TN5bSGMo2oH8ilzKBuWcnfKXyb4M5WVrsh8WNIb8lEA9w0w+DNoRaGdbtaiVjRp5mr/qMjhTkLj8xyfAmXGdIw+WjokGw+8zfDBLYUSiAaYYb2RrSoYpxfruV5DSJZGMFSek6+KrMFUDv3E9k53EfUdQSKXN9sncfRcCXuoB7c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636109; c=relaxed/simple;
-	bh=3tKCncAm767M4+3oO4t4ZxBl+Qs5zUrINgrQ5O5WGKA=;
+	s=arc-20240116; t=1781636114; c=relaxed/simple;
+	bh=Jg90f5M6pXt8XcA6S4V72x11HuJ0TqZD8OOi8Kp65Ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBqZLvHg0R0z4wx0i3/uH3hQyiynJblLqAx0MgYnLfFvgaVIUrLO08VBYGptjGzOwE/xSHnCJiptJGzltHIaDviOl205rneF1dZlhNyTzzUTh3WO08XdhnqqsgUimqj4Ktx3ITwUgLrCfufsNYt5py8rp85wit7xJL42Q4tq/0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lrJPgSD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CZ3kuV4yTxgLKc9sQRZaFGCeeNzArNyQazBbKX+rFvHK7ld0Sm5by/W8WbTVTuWw4CR8wplyh1iLxIRo+wShTrrk8CK53AJh5ewEaoq5NoVBfJ/yDe/SR3xYo4wkJ3PBVsDy92ZswSPhZ5S/6zAFcfk8/bx8dIdpCfnPpjNyr8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUgqca9I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lrJPgSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D591F000E9;
-	Tue, 16 Jun 2026 18:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUgqca9I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F0E1F000E9;
+	Tue, 16 Jun 2026 18:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636108;
-	bh=7CI9ayqbIvlIGc8aXhcjA7fTIDItIPf6PKDA7s0vIIw=;
+	s=korg; t=1781636113;
+	bh=5E1NXqp8nOT/FSmy/5xbAtK/M6K7suZoRvvgRQELDTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2lrJPgSDaM04uwM/wFpOpdVe2hvC7FXC1sT8c1dD4CC0sYBTTjKUVZmhUe2FzYcTW
-	 B0HMed++hy5PUBcsADOkSIJM0numMZ4JwyrAywJII/Ot2HJRig2ps1ueLEyQwTiud/
-	 nnE6TtCYjBK7EyYVMs/puVb6VSLGHxHv8qbSgE0g=
+	b=RUgqca9IfSiH2xLDILllGn8Zzk0fCU3DSeoKuXnFJxNFioBt6xujFH4F/4L3wR/PH
+	 EiCMqngVWvWwayEBtllyp+mZZSkqqmZ2ghh31rSEO0MpM6febuS9btdX+hEs1LfQWI
+	 1xZucaFcqQBzlwBZHcM2vxN8jxSaO4kcDEJZgCKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 177/342] net: mvpp2: sync RX data at the hardware packet offset
-Date: Tue, 16 Jun 2026 20:27:53 +0530
-Message-ID: <20260616145056.450977277@linuxfoundation.org>
+Subject: [PATCH 5.10 160/342] tap: free page on error paths in tap_get_user_xdp()
+Date: Tue, 16 Jun 2026 20:27:36 +0530
+Message-ID: <20260616145055.619341273@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,49 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 180235600934bef6add3be637c296d6cf3272e67 ]
+[ Upstream commit 3bcf7aec6a9d16438f2cec29f5d7c8d5b8edf9b2 ]
 
-mvpp2 programs the RX queue packet offset, so hardware writes received
-data at dma_addr + MVPP2_SKB_HEADROOM. The current CPU sync starts at
-dma_addr and only covers rx_bytes + MVPP2_MH_SIZE bytes, which syncs the
-unused headroom and misses the same number of bytes at the packet tail.
+tap_get_user_xdp() rejects a frame shorter than ETH_HLEN with -EINVAL,
+and returns -ENOMEM when build_skb() fails. Both paths jump to the err
+label without freeing the page that vhost_net_build_xdp() allocated for
+the frame. tap_sendmsg() discards the per-buffer return value and always
+returns 0, so vhost_tx_batch() takes the success path and never frees
+the page; each rejected frame in a batch leaks one page-frag chunk.
 
-On non-coherent DMA systems this can leave the CPU reading stale cache
-contents for the end of the received frame.
+Free the page on both error paths, before the skb is built. This is the
+tap counterpart of the same leak in tun_xdp_one().
 
-Use dma_sync_single_range_for_cpu() with MVPP2_SKB_HEADROOM as the range
-offset so the sync covers the Marvell header and packet data actually
-written by hardware.
-
-Fixes: e1921168bbd4 ("mvpp2: sync only the received frame")
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Link: https://patch.msgid.link/20260607134943.21996-2-mail@tk154.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0efac27791ee ("tap: accept an array of XDP buffs through sendmsg()")
+Fixes: ed7f2afdd0e0 ("tap: add missing verification for short frame")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260521163230.1478627-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit 3bcf7aec6a9d16438f2cec29f5d7c8d5b8edf9b2)
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/tap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index e4e80c2b1ce400..6d672afc73d500 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3588,9 +3588,10 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 			dma_dir = DMA_FROM_DEVICE;
- 		}
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index 18f19fc66c64fa..6f5c996d3ed234 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -1145,6 +1145,7 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+ 	int err, depth;
  
--		dma_sync_single_for_cpu(dev->dev.parent, dma_addr,
--					rx_bytes + MVPP2_MH_SIZE,
--					dma_dir);
-+		dma_sync_single_range_for_cpu(dev->dev.parent, dma_addr,
-+					      MVPP2_SKB_HEADROOM,
-+					      rx_bytes + MVPP2_MH_SIZE,
-+					      dma_dir);
+ 	if (unlikely(xdp->data_end - xdp->data < ETH_HLEN)) {
++		put_page(virt_to_head_page(xdp->data));
+ 		err = -EINVAL;
+ 		goto err;
+ 	}
+@@ -1154,6 +1155,7 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
  
- 		/* Buffer header not supported */
- 		if (rx_status & MVPP2_RXD_BUF_HDR)
+ 	skb = build_skb(xdp->data_hard_start, buflen);
+ 	if (!skb) {
++		put_page(virt_to_head_page(xdp->data));
+ 		err = -ENOMEM;
+ 		goto err;
+ 	}
 -- 
 2.53.0
 
