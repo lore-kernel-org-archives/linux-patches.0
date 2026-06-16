@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D408242B738;
-	Tue, 16 Jun 2026 15:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036EC42EEBB;
+	Tue, 16 Jun 2026 15:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622717; cv=none; b=iCvU9VaJ1oV6kVsQVWSbMsHA+2hb8d4sUqod2/jzqOQqkhrF18+S3haeiSOfUpBWyVjHSc58uEnsQKz8bUoqx2iakSTcTrPC6p9Gn93R/gTxpNlrzKO3Z5qT0I/258/OjptTBSf08TCv1gA3jEKnlv0YL7qiGarnrvlzVUm2bGY=
+	t=1781622724; cv=none; b=TVOlNPAWzQ0eunN0C3boARmJSB53xgCAvyujztZQgt5SCw0lJc3PH4IkbIkkd+NdQjQg8+fnDTW1QE8/92AeHAOwyOezEgrll3aRnCWKbKS2cyNs6BBxnAkTHSu5k2w7nonkmUqGDJ021WVQuGGhkzw4t9yB6Ti9Z3DPJZU+0hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622717; c=relaxed/simple;
-	bh=aX+Pf6+u+YVlmWwHL3+iVmvDmwho9g09QrB/IwJMaGc=;
+	s=arc-20240116; t=1781622724; c=relaxed/simple;
+	bh=d5zTGuBMHaYrxOSPQxQwg3bBbmoVBj2jzD7KwrbYvcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PY1dK53dK+uMKs/OoyMZJ56KZDm6Q6Z6o6wcffotD/4Hdx9deUP62XdbEJQolezQFItGG7cC4yQ8PddmvDGPMrGM/6bX7+MWm511lnlkwoi8RDoXQRhG3M/LSTtmyQHOPt53w2bZZqUEx+KgJs29oDS9hvkeWxn2Mwv9FjNxEZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj7nb+VU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DtvMbkSh2IH88f5SjiqNHs2nmyRCyBP7S7jbXp3VrGU3EWJ1Ls1il+1bKlpdrZ2zZkuP697mfHk0+/4giZn/Q4V01CM7rS/dutZUua0tYPRVdcLNzAXWGxPPkwTqsaXvgNdVxvWE/jLvbN6t0K16rmVW7LEzAd+7Va+bGljK/QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMR0SiHc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj7nb+VU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82511F000E9;
-	Tue, 16 Jun 2026 15:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMR0SiHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4891F000E9;
+	Tue, 16 Jun 2026 15:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622716;
-	bh=oSoZ3WbNHeMUu1DGMk3M3t1QX0V7Ih1P212Hnsqt0Io=;
+	s=korg; t=1781622722;
+	bh=I/gTRkHd4YSLLhJk+oARa4GuEhqIVusbrLAdm980a8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tj7nb+VUb3kfui2LFom/jwRydZa8Fp9hJp6cNkY4OXl28n8tkDn8QQQBvVGSDprWk
-	 ZP0PvIGMTI+wjsXI6quq8QdjATeMbnRfWed3/rvGNB+l4OpsuA6oD3QTxgRRETkOAK
-	 MnoGIRUnxQO7h+TdT4fdMrl0KsKuY+FEqD9xICcs=
+	b=jMR0SiHcBMcDdn+HytroiDWdAFrx4cT/pf37OkkQEDzFkEDNmfKVG1vz5EIAJUfnZ
+	 b+wYD7sFvDFIfQezxdge83Ii1gcy7ffW0HXq4ncNerk2rhaHtPDcoYbgwcSM56WK68
+	 eZ90RCWfbBrbiiQK175Y4roqPoGeAEgLohQIIHfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 008/378] soc: qcom: ice: Allow explicit votes on iface clock for ICE
-Date: Tue, 16 Jun 2026 20:23:59 +0530
-Message-ID: <20260616145110.219405525@linuxfoundation.org>
+Subject: [PATCH 7.0 017/378] wifi: iwlwifi: mvm: dont support the reset handshake for old firmwares
+Date: Tue, 16 Jun 2026 20:24:08 +0530
+Message-ID: <20260616145110.722933068@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -54,85 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 0d5dc5818191b55e4364d04b1b898a14a2ccac38 ]
+[ Upstream commit 0eaa1f245ac03ed0c6394159360532726f666811 ]
 
-Since Qualcomm inline-crypto engine (ICE) is now a dedicated driver
-de-coupled from the QCOM UFS driver, it explicitly votes for its required
-clocks during probe. For scenarios where the 'clk_ignore_unused' flag is
-not passed on the kernel command line, to avoid potential unclocked ICE
-hardware register access during probe the ICE driver should additionally
-vote on the 'iface' clock.
-Also update the suspend and resume callbacks to handle un-voting and voting
-on the 'iface' clock.
+-77.ucode doesn't contain the fixes for this flow it seems.
+Don't use the firmware reset handshake even if the firmware claims
+support for it.
 
-Fixes: 2afbf43a4aec6 ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-2-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 906d4eb84408 ("iwlwifi: support firmware reset handshake")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220600
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260529085453.9307b81d9b02.I21bba9e649f4cd0e35d3ea6cd97a03258be5832f@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ice.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-index b203bc685cadd2..bf4ab2d9e5c036 100644
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -108,6 +108,7 @@ struct qcom_ice {
- 	void __iomem *base;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+index ae177477b20127..384bed95835d74 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+@@ -1416,6 +1416,12 @@ iwl_op_mode_mvm_start(struct iwl_trans *trans, const struct iwl_rf_cfg *cfg,
+ 		fw_has_capa(&mvm->fw->ucode_capa,
+ 			    IWL_UCODE_TLV_CAPA_FW_RESET_HANDSHAKE);
  
- 	struct clk *core_clk;
-+	struct clk *iface_clk;
- 	bool use_hwkm;
- 	bool hwkm_init_complete;
- 	u8 hwkm_version;
-@@ -312,8 +313,13 @@ int qcom_ice_resume(struct qcom_ice *ice)
- 
- 	err = clk_prepare_enable(ice->core_clk);
- 	if (err) {
--		dev_err(dev, "failed to enable core clock (%d)\n",
--			err);
-+		dev_err(dev, "Failed to enable core clock: %d\n", err);
-+		return err;
-+	}
++	/* Those firmware versions claim to support the fw_reset_handshake
++	 * but they are buggy.
++	 */
++	if (IWL_UCODE_MAJOR(mvm->fw->ucode_ver) <= 77)
++		trans->conf.fw_reset_handshake = false;
 +
-+	err = clk_prepare_enable(ice->iface_clk);
-+	if (err) {
-+		dev_err(dev, "Failed to enable iface clock: %d\n", err);
- 		return err;
- 	}
- 	qcom_ice_hwkm_init(ice);
-@@ -323,6 +329,7 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
- 
- int qcom_ice_suspend(struct qcom_ice *ice)
- {
-+	clk_disable_unprepare(ice->iface_clk);
- 	clk_disable_unprepare(ice->core_clk);
- 	ice->hwkm_init_complete = false;
- 
-@@ -579,11 +586,17 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
- 	engine->core_clk = devm_clk_get_optional_enabled(dev, "ice_core_clk");
- 	if (!engine->core_clk)
- 		engine->core_clk = devm_clk_get_optional_enabled(dev, "ice");
-+	if (!engine->core_clk)
-+		engine->core_clk = devm_clk_get_optional_enabled(dev, "core");
- 	if (!engine->core_clk)
- 		engine->core_clk = devm_clk_get_enabled(dev, NULL);
- 	if (IS_ERR(engine->core_clk))
- 		return ERR_CAST(engine->core_clk);
- 
-+	engine->iface_clk = devm_clk_get_optional_enabled(dev, "iface");
-+	if (IS_ERR(engine->iface_clk))
-+		return ERR_CAST(engine->iface_clk);
-+
- 	if (!qcom_ice_check_supported(engine))
- 		return ERR_PTR(-EOPNOTSUPP);
- 
+ 	trans->conf.queue_alloc_cmd_ver =
+ 		iwl_fw_lookup_cmd_ver(mvm->fw,
+ 				      WIDE_ID(DATA_PATH_GROUP,
 -- 
 2.53.0
 
