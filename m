@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8224C425CEE;
-	Tue, 16 Jun 2026 16:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0201F4534B9;
+	Tue, 16 Jun 2026 16:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627268; cv=none; b=fCm6c6zwtMwbiWkn1TaOXux9zDZxcjjPp6QbDPqTquERtD2H5kAJNQUDQHhr3iTzIN3SL0nanrQRpG91I+zvZP6c7+id0Azwek0DfsAefxHm60dKVUB8osn9U/SVD9aY3rT8ZhAZjMQgZN8JBQnbhkDs8M9IkdBblsBe4JXqzTY=
+	t=1781627273; cv=none; b=gYcuqmmEX+Ulfrs+NVJ8hx7UlQQOVJyJWeosK3DbGbcphsZ6t5Ldq46I3kop2AQlqRnEJmSU7fYwfY7Nz9kME7EjCyo9aBTKqTDOPvXz9Z6lu9dCbt0t/RBdlB4f7UsyFjqeNp2QdfUZfGmSxJM91D6z6yNSwLw/lNRpWi3m/d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627268; c=relaxed/simple;
-	bh=Lhxa1oq8OHrOO2npTD1mKnhuJotkobs36diiDhaia0I=;
+	s=arc-20240116; t=1781627273; c=relaxed/simple;
+	bh=sGkUPqCTuQm1sq5U0jvmw4OxrT/EVl11kzUA30jpDZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ma90uf2InJN2RAWjBnlHrAPeWLKxH5/MIOaEc7H1RRbKlxsDNBfAfjDtiDgCeKlQtG2GxAdJA71+AqzMW77TMNGrQTyNdiMAATc5OWnZWMcM7EgSJ1I7qU9wTPqMC9Wk5v1EyhnyFQhZEcoVKmfZEL9JzeQNlgzvliFogHm2fr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU6Ws5/e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IUcLTUlNjGp0K9BzTAtVEeMuJnhSy+quL4KkdeWcbFYKZtn3Z/5zF/bPvtvaUAFtmrByMs7g2v7LZp8acSMzsAkpaiAWN3OTsbeE6deyaXPcNYN4+AgBE9qk+zj+1VuBca5yz/YDPIyBrvEQZTlX0bnjMhax5RAVPQ1GMqPTGUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbPk8C3+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU6Ws5/e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2720D1F000E9;
-	Tue, 16 Jun 2026 16:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbPk8C3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E1D1F000E9;
+	Tue, 16 Jun 2026 16:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627267;
-	bh=WfF8NBsZ54vVYs5lRQ+XAYkT3GBc2vKslkLDE5MMqFk=;
+	s=korg; t=1781627272;
+	bh=vROBRPhe1Qy8F1WaYQENg+9MNWj9kw59Osvp6fZJqAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xU6Ws5/eUQUfP8BJpCZyEYSlJDc0qoBU66JlZd1Ugr4LkKd2ZXAcXGwHJIyg6eCIM
-	 x/ocRXCvjrjh7I5g22uLYZTblDzg7YV/Gxg2fU4lWo6gRm+5NR5shwOYBvGoO3e1Qp
-	 QeIBSdGCyv/RLebYqDfkjKS0fvXvqTVEzL9noILE=
+	b=MbPk8C3+YpBHgPfxp2IfVhfYvZtLLwFtLDaQTQrpsqjpEaXX4TmD+4wyrY9TSS0NE
+	 Yt5dIWZDUgs2WZehWIxv3XOohOCY1RuxkQqsxcQlL2fJo7uE1aSkxc6I/MrngGtf4a
+	 QxRq0jT1u0AcJVFu/0/6Ym/a1AiE7X4npNtQP87c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.12 138/261] xfrm: espintcp: do not reuse an in-progress partial send
-Date: Tue, 16 Jun 2026 20:29:36 +0530
-Message-ID: <20260616145051.478521979@linuxfoundation.org>
+	Adrian Korwel <adriank20047@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 139/261] USB: serial: io_ti: fix heap overflow in get_manuf_info()
+Date: Tue, 16 Jun 2026 20:29:37 +0530
+Message-ID: <20260616145051.523729680@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -57,59 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Adrian Korwel <adriank20047@gmail.com>
 
-commit c381039ade2e161ab08c0eda73c4f8b9a7115928 upstream.
+commit 183c1076eca43bbb3e7bdf597456f91d81c73e74 upstream.
 
-espintcp keeps a single in-flight transmit in ctx->partial.
-Before building a new sk_msg, espintcp_sendmsg() first tries to flush
-that state through espintcp_push_msgs().
+get_manuf_info() reads le16_to_cpu(rom_desc->Size) bytes from the
+device I2C EEPROM into a buffer allocated with kmalloc_obj(), which
+is sizeof(struct edge_ti_manuf_descriptor) = 10 bytes.
 
-For blocking callers, espintcp_push_msgs() may return success even when
-the previous partial send is still pending. espintcp_sendmsg() would
-then reinitialize emsg->skmsg and reuse ctx->partial while the old
-transfer still owns that state.
+The Size field comes from the device and is only validated (in
+check_i2c_image()) to make sure the descriptor fits within
+TI_MAX_I2C_SIZE (16384 bytes), not against the destination buffer size.
+A malicious USB device can therefore set Size to any value up to 16377,
+causing a heap overflow of up to 16367 bytes when plugged into a host
+running this driver.
 
-Do not rebuild the send message when ctx->partial is still in progress.
-If espintcp_push_msgs() returns with emsg->len still set, fail the new
-send instead of overwriting the live partial state.
+valid_csum() is called after read_rom() and also iterates
+buffer[0..Size-1], compounding the out-of-bounds access.
 
-This is a memory-safety fix: reusing the live partial-send state can
-leave a stale offset attached to a new sk_msg and lead to an out-of-
-bounds read in the send path.
+Fix by rejecting descriptors with unexpected length before calling
+read_rom().
 
-tcp_sendmsg_locked() already handles waiting for send buffer memory, so
-the fix here is just to preserve espintcp's one-message-at-a-time
-transmit state.
-
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Korwel <adriank20047@gmail.com>
+[ johan: amend commit message; also check for short descriptors ]
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/espintcp.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/serial/io_ti.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -349,6 +349,10 @@ static int espintcp_sendmsg(struct sock
- 			err = -ENOBUFS;
- 		goto unlock;
+--- a/drivers/usb/serial/io_ti.c
++++ b/drivers/usb/serial/io_ti.c
+@@ -773,6 +773,12 @@ static int get_manuf_info(struct edgepor
  	}
-+	if (emsg->len) {
-+		err = -ENOBUFS;
-+		goto unlock;
-+	}
  
- 	sk_msg_init(&emsg->skmsg);
- 	while (1) {
+ 	/* Read the descriptor data */
++	if (le16_to_cpu(rom_desc->Size) != sizeof(struct edge_ti_manuf_descriptor)) {
++		dev_err(dev, "unexpected Edge descriptor length: %u\n",
++			le16_to_cpu(rom_desc->Size));
++		status = -EINVAL;
++		goto exit;
++	}
+ 	status = read_rom(serial, start_address+sizeof(struct ti_i2c_desc),
+ 					le16_to_cpu(rom_desc->Size), buffer);
+ 	if (status)
 
 
