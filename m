@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1731B332637;
-	Tue, 16 Jun 2026 16:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D370C453486;
+	Tue, 16 Jun 2026 16:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629170; cv=none; b=cCMDtlF7g8/2cMjg4dOyJKiuNnJQGRCD2enHQA1raiAiOeoRQF06vlW/JPD8NydWqRCaA82SL5TLjq5w9cT4AlTV/Zyq2h6NTd7M5RtpMEvfZQWUw4BcomP4GlmNP9V1UYfa2pJW+qCChuT/JPy3IGjhliUQJzywnNyxPIKGKEg=
+	t=1781629175; cv=none; b=IJa/y+Kty4kv0dpJeucDQJ9qLRNZvj9Mqu52UHIUZRY0jV1x8j+p9ahPX1qQwEbsbiZBAmsk4kOJm4qzSgsx6lDEl8SOBtpWFea610888DADdxRkS4D3u0CpbqilXtS3xJM64PpuOkEzF5tc295cG5Hc0pMWj2NmSyzcBmVhiMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629170; c=relaxed/simple;
-	bh=foVc5cCNAJFaURks3knyzd4asg2qubEfgupWf1FoKZ8=;
+	s=arc-20240116; t=1781629175; c=relaxed/simple;
+	bh=KQiTREFfa9LpYeYs+/OUArmwaA8Yf7OdXgzuqPSX8gE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3CdOePwMa2viLCPp2OkUu/ijNooEGaPtoLmymaxylIY9UUKQ3ouLmAMFgU1Kdz2iE7MteibA8pr3psi1H7NDlro3CvgDcsThODw/EKOgYQfmk/bpGM62ZFAI3JEXfFaxlUndWT+mItuPK5Z8wlkEZJ81VpuOcWBDwrMRqHU/co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXJGF6an; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQYZxmrsU+dNcq/C/fBrUNKmou+x4VX7ymE6tWGCb7Xvzg5JaQu7O026wSVCHGrp1HWtStGqpxYPNJ6y3k/5tSMCsWpd4OKgTy4UtrBKGmVJBl1D52OOVM3fw5Gq4k91cnJOQivlIogeeehwKfmfAXJiCIkIgatxlTVDto86bEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgH9pN9g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXJGF6an"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6B11F000E9;
-	Tue, 16 Jun 2026 16:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgH9pN9g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7557A1F000E9;
+	Tue, 16 Jun 2026 16:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629168;
-	bh=BtCK9ylNcvZDKypGyRTAPrkXCl0Z9xCO+vCultGwdUU=;
+	s=korg; t=1781629173;
+	bh=KEO4mNUcznzQ0I70oW4M28c99eIjdIPPZ+HNXdmEFvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sXJGF6anymmBzNmsHKeSAkTRIDGDonh2ikxDhp4rZSXiEzjvc2ZeRnlSanDZ8IM9Y
-	 YcYSuw0vO1dUaMGAnc9hzMtBgqiqkomi4XzIudjwADNNj9E7CDPUrNkNnp+mOBoQYK
-	 zqevos7STqp5ULSNdIhsnauGRK1Rk1k///xeBDvQ=
+	b=OgH9pN9g3rbuXI8uSckrrH2G8O31/t/VzzxHRdk8lk9/unoy0ZlRLV4+mXFaIyW+w
+	 W8hRJm8WUPf0URQpeDydqJGz3DQLvwUaMmXFBOrx1keP2LI1ovH/8SSCY6GWw064QX
+	 nDrOk1aVeBI71ScXYQ46nwjEzhG3UFjkSI7Hscw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/452] netfilter: synproxy: add mutex to guard hook reference counting
-Date: Tue, 16 Jun 2026 20:27:24 +0530
-Message-ID: <20260616145129.186402376@linuxfoundation.org>
+Subject: [PATCH 6.6 235/452] Bluetooth: bnep: reject short frames before parsing
+Date: Tue, 16 Jun 2026 20:27:42 +0530
+Message-ID: <20260616145130.040157811@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,111 +51,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 2fcba19caaeb2a33017459d3430f057967bb91b6 ]
+[ Upstream commit 6770d3a8acdf9151769180cc3710346c4cfbe6f0 ]
 
-As the synproxy infrastructure register netfilter hooks on-demand when a
-user adds the first iptables target or nftables expression, if done
-concurrently they can race each other.
+A BNEP peer can send a short BNEP SDU. bnep_rx_frame() reads the
+packet type byte immediately and, for control packets, reads the control
+opcode and setup UUID-size byte before proving that those bytes are
+present. bnep_rx_control() also dereferences the control opcode without
+rejecting an empty control payload.
 
-Introduce a mutex to serialize the refcount control blocks access from
-both frontends. While a per namespace mutex might be more efficient, it
-is not needed for target/expression like SYNPROXY.
+Use skb_pull_data() for the fixed fields in bnep_rx_frame() so a NULL
+return gates each dereference. Split the control handler so the frame
+path can pass an opcode that has already been pulled, and keep the
+byte-buffer wrapper for extension control payloads.
 
-Fixes: ad49d86e07a4 ("netfilter: nf_tables: Add synproxy support")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+For BNEP_SETUP_CONN_REQ, name the UUID-size byte before pulling the
+setup payload. struct bnep_setup_conn_req carries destination and source
+service UUIDs after that byte, each uuid_size bytes, so the parser now
+documents that tuple explicitly instead of leaving the pull length as an
+opaque multiplication.
+
+Validation reproduced this kernel report:
+KASAN slab-out-of-bounds in bnep_rx_frame.isra.0+0x130c/0x1790
+The buggy address belongs to the object at ffff88800c0f7908 which belongs
+to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes to the right of allocated 1-byte
+region [ffff88800c0f7908, ffff88800c0f7909)
+Read of size 1
+Call trace:
+  dump_stack_lvl+0xb3/0x140 (?:?)
+  print_address_description+0x57/0x3a0 (?:?)
+  bnep_rx_frame+0x130c/0x1790 (net/bluetooth/bnep/core.c:306)
+  print_report+0xb9/0x2b0 (?:?)
+  __virt_addr_valid+0x1ba/0x3a0 (?:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  kasan_addr_to_slab+0x21/0x60 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  process_one_work+0xfce/0x17e0 (kernel/workqueue.c:3200)
+  worker_thread+0x65c/0xe40 (?:?)
+  __kthread_parkme+0x184/0x230 (?:?)
+  kthread+0x35e/0x470 (?:?)
+  _raw_spin_unlock_irq+0x28/0x50 (?:?)
+  ret_from_fork+0x586/0x870 (?:?)
+  __switch_to+0x74f/0xdc0 (?:?)
+  ret_from_fork_asm+0x1a/0x30 (?:?)
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_synproxy_core.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ net/bluetooth/bnep/core.c | 57 ++++++++++++++++++++++++---------------
+ 1 file changed, 36 insertions(+), 21 deletions(-)
 
-diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
-index f5a52075691faa..500a90311ed505 100644
---- a/net/netfilter/nf_synproxy_core.c
-+++ b/net/netfilter/nf_synproxy_core.c
-@@ -21,6 +21,8 @@
- #include <net/netfilter/nf_conntrack_zones.h>
- #include <net/netfilter/nf_synproxy.h>
+diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
+index 9d804b08de88e0..45d0f84652fc60 100644
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -206,14 +206,11 @@ static int bnep_ctrl_set_mcfilter(struct bnep_session *s, u8 *data, int len)
+ 	return 0;
+ }
  
-+static DEFINE_MUTEX(synproxy_mutex);
+-static int bnep_rx_control(struct bnep_session *s, void *data, int len)
++static int bnep_rx_control_cmd(struct bnep_session *s, u8 cmd, void *data,
++			       int len)
+ {
+-	u8  cmd = *(u8 *)data;
+ 	int err = 0;
+ 
+-	data++;
+-	len--;
+-
+ 	switch (cmd) {
+ 	case BNEP_CMD_NOT_UNDERSTOOD:
+ 	case BNEP_SETUP_CONN_RSP:
+@@ -254,6 +251,14 @@ static int bnep_rx_control(struct bnep_session *s, void *data, int len)
+ 	return err;
+ }
+ 
++static int bnep_rx_control(struct bnep_session *s, void *data, int len)
++{
++	if (len < 1)
++		return -EILSEQ;
 +
- unsigned int synproxy_net_id;
- EXPORT_SYMBOL_GPL(synproxy_net_id);
- 
-@@ -768,26 +770,31 @@ static const struct nf_hook_ops ipv4_synproxy_ops[] = {
- 
- int nf_synproxy_ipv4_init(struct synproxy_net *snet, struct net *net)
++	return bnep_rx_control_cmd(s, *(u8 *)data, data + 1, len - 1);
++}
++
+ static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
  {
--	int err;
-+	int err = 0;
- 
-+	mutex_lock(&synproxy_mutex);
- 	if (snet->hook_ref4 == 0) {
- 		err = nf_register_net_hooks(net, ipv4_synproxy_ops,
- 					    ARRAY_SIZE(ipv4_synproxy_ops));
- 		if (err)
--			return err;
-+			goto out;
- 	}
- 
- 	snet->hook_ref4++;
--	return 0;
-+out:
-+	mutex_unlock(&synproxy_mutex);
-+	return err;
- }
- EXPORT_SYMBOL_GPL(nf_synproxy_ipv4_init);
- 
- void nf_synproxy_ipv4_fini(struct synproxy_net *snet, struct net *net)
+ 	struct bnep_ext_hdr *h;
+@@ -299,19 +304,26 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
  {
-+	mutex_lock(&synproxy_mutex);
- 	snet->hook_ref4--;
- 	if (snet->hook_ref4 == 0)
- 		nf_unregister_net_hooks(net, ipv4_synproxy_ops,
- 					ARRAY_SIZE(ipv4_synproxy_ops));
-+	mutex_unlock(&synproxy_mutex);
- }
- EXPORT_SYMBOL_GPL(nf_synproxy_ipv4_fini);
+ 	struct net_device *dev = s->dev;
+ 	struct sk_buff *nskb;
++	u8 *data;
+ 	u8 type, ctrl_type;
  
-@@ -1192,27 +1199,32 @@ static const struct nf_hook_ops ipv6_synproxy_ops[] = {
- int
- nf_synproxy_ipv6_init(struct synproxy_net *snet, struct net *net)
- {
--	int err;
-+	int err = 0;
+ 	dev->stats.rx_bytes += skb->len;
  
-+	mutex_lock(&synproxy_mutex);
- 	if (snet->hook_ref6 == 0) {
- 		err = nf_register_net_hooks(net, ipv6_synproxy_ops,
- 					    ARRAY_SIZE(ipv6_synproxy_ops));
- 		if (err)
--			return err;
-+			goto out;
- 	}
+-	type = *(u8 *) skb->data;
+-	skb_pull(skb, 1);
+-	ctrl_type = *(u8 *)skb->data;
++	data = skb_pull_data(skb, sizeof(type));
++	if (!data)
++		goto badframe;
++	type = *data;
  
- 	snet->hook_ref6++;
--	return 0;
-+out:
-+	mutex_unlock(&synproxy_mutex);
-+	return err;
- }
- EXPORT_SYMBOL_GPL(nf_synproxy_ipv6_init);
+ 	if ((type & BNEP_TYPE_MASK) >= sizeof(__bnep_rx_hlen))
+ 		goto badframe;
  
- void
- nf_synproxy_ipv6_fini(struct synproxy_net *snet, struct net *net)
- {
-+	mutex_lock(&synproxy_mutex);
- 	snet->hook_ref6--;
- 	if (snet->hook_ref6 == 0)
- 		nf_unregister_net_hooks(net, ipv6_synproxy_ops,
- 					ARRAY_SIZE(ipv6_synproxy_ops));
-+	mutex_unlock(&synproxy_mutex);
- }
- EXPORT_SYMBOL_GPL(nf_synproxy_ipv6_fini);
- #endif /* CONFIG_IPV6 */
+ 	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
+-		if (bnep_rx_control(s, skb->data, skb->len) < 0) {
++		data = skb_pull_data(skb, sizeof(ctrl_type));
++		if (!data)
++			goto badframe;
++		ctrl_type = *data;
++
++		if (bnep_rx_control_cmd(s, ctrl_type, skb->data, skb->len) < 0) {
+ 			dev->stats.tx_errors++;
+ 			kfree_skb(skb);
+ 			return 0;
+@@ -324,24 +336,27 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 
+ 		/* Verify and pull ctrl message since it's already processed */
+ 		switch (ctrl_type) {
+-		case BNEP_SETUP_CONN_REQ:
+-			/* Pull: ctrl type (1 b), len (1 b), data (len bytes) */
+-			if (!skb_pull(skb, 2 + *(u8 *)(skb->data + 1) * 2))
++		case BNEP_SETUP_CONN_REQ: {
++			u8 uuid_size;
++
++			/* Pull uuid_size and the dst/src service UUIDs. */
++			data = skb_pull_data(skb, sizeof(uuid_size));
++			if (!data)
++				goto badframe;
++			uuid_size = *data;
++			if (!skb_pull(skb, uuid_size + uuid_size))
+ 				goto badframe;
+ 			break;
++		}
+ 		case BNEP_FILTER_MULTI_ADDR_SET:
+-		case BNEP_FILTER_NET_TYPE_SET: {
+-			u8 *hdr;
+-
+-			/* Pull ctrl type (1 b) + len (2 b) */
+-			hdr = skb_pull_data(skb, 3);
+-			if (!hdr)
++		case BNEP_FILTER_NET_TYPE_SET:
++			/* Pull: len (2 b), data (len bytes) */
++			data = skb_pull_data(skb, sizeof(u16));
++			if (!data)
+ 				goto badframe;
+-			/* Pull data (len bytes); length is big-endian */
+-			if (!skb_pull(skb, get_unaligned_be16(&hdr[1])))
++			if (!skb_pull(skb, get_unaligned_be16(data)))
+ 				goto badframe;
+ 			break;
+-		}
+ 		default:
+ 			kfree_skb(skb);
+ 			return 0;
 -- 
 2.53.0
 
