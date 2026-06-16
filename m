@@ -1,40 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9FB47799B;
-	Tue, 16 Jun 2026 16:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3551744CF40;
+	Tue, 16 Jun 2026 16:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625825; cv=none; b=u0KEcCKFhmofmGvTGB/kdRxlN4UEg1L3M+j3+gd3MnznPmm/sUmWEnp3BW54ROIomhG4ZWDd/aIt+Em5PZ03Fv/GuyRXjAg5roIZEPC/PaikriMiO1E1aQCxqdJ+R7el2TZpdnXwt9Yin0C2t6xPEGYVZEqVC2F5BqEVj/mPjdA=
+	t=1781625831; cv=none; b=B2Mr2uzgxnYShqz6j6kw2gHbtHZ7s3lHyb/zhlBEr9od+9XVJ4DJE2QyLOafRpwG2jxt8SLBH0lUwgL6SgkhXoarOkfFhslsalgqCrxBFS9xGIFoQHAHsPQAaGHs1AFnMeNmLPVp+a2XMHDgdWbqSb7I35u26vjW8zh7SkeuGAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625825; c=relaxed/simple;
-	bh=XYR14RqGd9hYjbLlJvHEiPsGgq4TQMNIfvTIGYBUClg=;
+	s=arc-20240116; t=1781625831; c=relaxed/simple;
+	bh=M2L1jkDksnbzm6KSk2I/A24pzOW4T1GuW/+5vULVYv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h1BLLojNwKn09cYhb2ndGZChFCGL/1NnUuRao0/ykoAoRpY1lMGXtahLG9zD9Aksnxe5zpNr1TjpWABCy6dS8HMUy1yvDzM8sM6OJxOGtWr+95fWf3gJsd3j8X2APt7iaIh0Ens5qmFwoc2+Nrpq7zPTJfoHBPnZYcfT6SMzfzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSwq4/vG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lK6h/QmZmi/Tzi/bPqawTuhmi3DZICZrSRm+P/87kDgTt6fU7GSUjJ0SQZRFypsMjgqG74yPZ7r0op7eiKV32VOZJ07MbKsOCh4OQ5TmByuxFpSitb0NL78yW3E0dXWUTrR/BCkqeV0DzbNpe5s9W6cKChQLIw66KqgRt/O5Y3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBButCO+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSwq4/vG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F391F000E9;
-	Tue, 16 Jun 2026 16:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBButCO+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9171F000E9;
+	Tue, 16 Jun 2026 16:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625824;
-	bh=AwGpj3tXZdTf1drTq5BOXIUMkcoOhI2UIZKqihn/Yug=;
+	s=korg; t=1781625830;
+	bh=bOB28OeZuFWPX3h0iogA9kju60mBaupG4GztPBIWAFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eSwq4/vGUd4IWdwiCvlH1htCDe9jK5ep60E/Zz4ILHRhTOXMq3gkl+IBJfLOLbk3Z
-	 Dhf7qrU+0GC2+59TiG/9q4dUhIM9hHRmW0/b3Ib5y14BGJHIxhthgTnJWn/WZu9/qQ
-	 nuRceDDrFdkLnLkiktPpum3eHrROR2PCNwfsw5WA=
+	b=kBButCO+CSWJV5vxhc1h0etf2JBD2QHYdcrhfS43quzdPAHrtiIBu8CvVG9vdj5EC
+	 2lQe9/nyOydNBqaFmxgecKl8Q+9ZLycFg6MSNBzodurSz7ybFS6lctU82o/GirmmqB
+	 waQMrVko0sGXolxFy7tw1mjQgXRi3FqtA1fzjI7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	Leonard Foerster <foersleo@amazon.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Yin Tirui <yintirui@huawei.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Dev Jain <dev.jain@arm.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Chen Jun <chenjun102@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 184/325] mm/damon/ops-common: call folio_test_lru() after folio_get()
-Date: Tue, 16 Jun 2026 20:29:40 +0530
-Message-ID: <20260616145107.056842127@linuxfoundation.org>
+Subject: [PATCH 6.18 185/325] mm/huge_memory: update file PUD counter before folio_put()
+Date: Tue, 16 Jun 2026 20:29:41 +0530
+Message-ID: <20260616145107.114786014@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,57 +63,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Yin Tirui <yintirui@huawei.com>
 
-commit d6b8b02a27b3dd09ec12144322b3dac46d9bc9ef upstream.
+commit 40990c87a26e371594475acdc560c93cfae308a1 upstream.
 
-damon_get_folio() speculatively calls folio_test_lru() before
-folio_try_get().  The folio can get freed and reallocated to a tail page.
-In the case, VM_BUG_ON_PGFLAGS() in const_folio_flags() can be triggered.
-Remove the speculative call.
+__split_huge_pud_locked() updates the file/shmem RSS counter after
+dropping the PUD mapping's folio reference.  If folio_put() drops the last
+reference, mm_counter_file() can later read freed folio state via
+folio_test_swapbacked().
 
-Also mark folio_test_lru() check right after folio_try_get() success as no
-more unlikely.
+Move the counter update before folio_put().
 
-The race should be rare.  Also the problem can happen only if the kernel
-has enabled CONFIG_DEBUG_VM_PGFLAGS.  No real world report of this issue
-has been made so far.  This fix is based on only theoretical analysis.
-That said, a bug is a bug.  A similar issue was also fixed via commit
-3203b3ab0fcf ("mm/filemap: don't call folio_test_locked() without a
-reference in next_uptodate_folio()").  I don't expect this change will
-make a meaningful impact to DAMON performance in the real world, though I
-will be happy to be corrected from the real world reports.
-
-The issue was discovered [1] by Sashiko.
-
-
-Link: https://lore.kernel.org/20260525162256.8317-1-sj@kernel.org
-Link: https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org [1]
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: Leonard Foerster <foersleo@amazon.de>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org> # 5.15.x
+Link: https://lore.kernel.org/20260526101355.1984244-1-yintirui@huawei.com
+Fixes: dbe54153296d ("mm/huge_memory: add vmf_insert_folio_pud()")
+Signed-off-by: Yin Tirui <yintirui@huawei.com>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Acked-by: David Hildenbrand (arm) <david@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chen Jun <chenjun102@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/ops-common.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/huge_memory.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -32,9 +32,9 @@ struct folio *damon_get_folio(unsigned l
- 		return NULL;
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2759,9 +2759,9 @@ static void __split_huge_pud_locked(stru
+ 	if (!folio_test_referenced(folio) && pud_young(old_pud))
+ 		folio_set_referenced(folio);
+ 	folio_remove_rmap_pud(folio, page, vma);
+-	folio_put(folio);
+ 	add_mm_counter(vma->vm_mm, mm_counter_file(folio),
+ 		-HPAGE_PUD_NR);
++	folio_put(folio);
+ }
  
- 	folio = page_folio(page);
--	if (!folio_test_lru(folio) || !folio_try_get(folio))
-+	if (!folio_try_get(folio))
- 		return NULL;
--	if (unlikely(page_folio(page) != folio || !folio_test_lru(folio))) {
-+	if (unlikely(page_folio(page) != folio) || !folio_test_lru(folio)) {
- 		folio_put(folio);
- 		folio = NULL;
- 	}
+ void __split_huge_pud(struct vm_area_struct *vma, pud_t *pud,
 
 
