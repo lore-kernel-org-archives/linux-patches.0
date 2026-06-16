@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C3F43CEC7;
-	Tue, 16 Jun 2026 18:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82D143CEC7;
+	Tue, 16 Jun 2026 18:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635441; cv=none; b=agA+BN3YClHR4x7mtuAhQ46uXeAuYGhMTQBCHAtY6QY53nvrmD6OxGbqVd/HOt+5J9hjWL9yh7wriY77/jSD2JpXLlHG3pzmWhTnN9riZQ3q9yPcpGSP2W6YGx7DnJWOwkCZQpMqWY3snCfdExNF+fNrrJOaWgyfNXwzEE+/i3U=
+	t=1781635446; cv=none; b=XyyAUHrQw6RXlDUanIrDJGSjZA4SkDiWLrdrrhfUFZzmWIZqHHk/RB9mHokRjVLRZV12S780TWhhTDXyTwhG1zXPndH5qcgLjoQUP8nLWZieBrxZfsIQ4pj/A7c3hYZpOgOfksjbjf3T+42uZ3i8xywEtjb6z0V4hYQ2TwgD154=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635441; c=relaxed/simple;
-	bh=amlaw6Ptp1qfpoJYmWxWuSQRsXcSXz1Zs7VhecYnV9o=;
+	s=arc-20240116; t=1781635446; c=relaxed/simple;
+	bh=NNLVBZ4DcaND1o7cf85cato4hURKxvDMYaVy2XUF7AQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K18NK+wSFVupQBUYV7xRwEO/Xsu/WeKu9u4AtBDieEcKI95WUIZQxIGj51fiZHVcUobkaJur6cW04nbf259/XKlaqjdxK+fjz+nlHLDedeeuc/2nl3kvgmeiWya+s1IWKaSxUa91Q2PhedPj+AaCi8q/v5yNdEE8v/r0yufM7pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhQLKm2v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iAdYVis8T6PDU3h9meiZ7UutJwusZ8kCoYiIUBtBmGVagiWYYqeGSMsc5STg0kFaDcVG0sBwE1XnZHDZq5Sbc0Z2u3oS6dkJhcw836iQEE2B9BmREjoBFAE4PrbmdjZg0I3ppl0oqA6LcycF/K1FwGJ7Al3FdAw/2AhZXFhUHpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3wwEDfB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhQLKm2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FAC1F000E9;
-	Tue, 16 Jun 2026 18:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3wwEDfB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A0E1F00A3D;
+	Tue, 16 Jun 2026 18:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635440;
-	bh=katwKT6hhJHJVLxhhFQFnGuBS1j3BnDowZB7phGspUE=;
+	s=korg; t=1781635445;
+	bh=hWjBvFq7wBiOvawGMKP/D4vB5sGA/OYUBmuT8AOGIrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bhQLKm2v78pJ9vOthXgHcVtpCD0UHD9uZsjyPeXoN57WpcJVmYyW2i5+tcuuFMqri
-	 Sj8VuGg4/x75WfURkG2q+oUM1GyPBGCCR0ah4DCFA0StvXntMNS4qEXKUoqr2szbR9
-	 8/3qsZd1ey44XbnDH99+F1fen7PcJtEv9ETSICiw=
+	b=h3wwEDfBGmWzJgrYv7jF/c4ZcyISkY4WqDbWZl7950TN8wiJVcQ/urXjsr/ia2H+T
+	 vrU8kqI5x/4YBF1D9AGi/0/sJMchnQdw1rfQeoA3JlUgcqkNFSDHuTJQt7cX+abKu3
+	 CwdBb3y45nL+jq9q00njAfUlFCFUs4hj/xKGxysc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 048/342] usb: typec: wcove: dont write past struct pd_message in wcove_read_rx_buffer()
-Date: Tue, 16 Jun 2026 20:25:44 +0530
-Message-ID: <20260616145050.495191556@linuxfoundation.org>
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 017/342] net/smc: Do not re-initialize smc hashtables
+Date: Tue, 16 Jun 2026 20:25:13 +0530
+Message-ID: <20260616145049.081611478@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,79 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-commit 4af7ad0e6d7aa4403dbb1dac7b9659b0421efcaa upstream.
+[ Upstream commit 9e4389b0038781f19f97895186ed941ff8ac1678 ]
 
-wcove_read_rx_buffer() copies the PD RX FIFO into the caller's
-struct pd_message with
+INIT_HLIST_HEAD(&smc_v*_hashinfo.ht) are called after smc_nl_init(),
+proto_register() and sock_register(). This can lead to smc_v*_hashinfo.ht
+being reset even though hash entries already exist and are being used,
+possibly resulting in a corrupted list.
 
-	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++)
-		regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
+Remove unnecessary and dangerous re-initialisation of smc_v*_hashinfo.ht in
+smc_init(); it is implicitly initialised to zero anyhow. Add
+HLIST_HEAD_INIT to the definitions for clarity.
 
-which has two problems:
-
-USBC_RXINFO_RXBYTES() is a 5-bit field (max 31) while struct pd_message
-is 30 bytes (__le16 header + __le32 payload[PD_MAX_PAYLOAD], packed).
-The byte count latched in RXINFO is the number of bytes the port partner
-put on the wire, so a malicious partner that transmits a 31-byte frame
-can drive the loop one byte past the destination if the WCOVE BMC
-receiver does not enforce the PD object-count limit in hardware. The
-existing FIXME flagged this as unverified.
-
-Independently, regmap_read() takes an unsigned int * and stores a full
-unsigned int at the destination. Passing the byte pointer msg + i means
-each iteration writes four bytes; the high three are zero (val_bits is
-8) and are normally overwritten by the next iteration, but the final
-iteration's high bytes are not. With RXBYTES == 30 the i == 29 iteration
-already writes three zero bytes past msg, which sits on the IRQ thread's
-stack in wcove_typec_irq().
-
-Clamp the loop to sizeof(struct pd_message) and read each register into
-a local before storing only its low byte, so the copy can never exceed
-the destination regardless of what RXINFO reports.
-
-Assisted-by: gkh_clanker_t1000
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/2026051347-clustered-deflected-9543@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f16a7dd5cf27 ("smc: netlink interface for SMC sockets")
+Suggested-by: Halil Pasic <pasic@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Acked-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Link: https://patch.msgid.link/20260521145639.10317-1-wintera@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/wcove.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/smc/af_smc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/tcpm/wcove.c
-+++ b/drivers/usb/typec/tcpm/wcove.c
-@@ -443,9 +443,11 @@ static int wcove_start_toggling(struct t
- 	return regmap_write(wcove->regmap, USBC_CONTROL1, usbc_ctrl);
- }
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index d64cfd651c7a16..8e1e38bc0df4b0 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -71,10 +71,12 @@ static void smc_set_keepalive(struct sock *sk, int val)
  
--static int wcove_read_rx_buffer(struct wcove_typec *wcove, void *msg)
-+static int wcove_read_rx_buffer(struct wcove_typec *wcove,
-+				struct pd_message *msg)
- {
--	unsigned int info;
-+	unsigned int info, val, len;
-+	u8 *buf = (u8 *)msg;
- 	int ret;
- 	int i;
+ static struct smc_hashinfo smc_v4_hashinfo = {
+ 	.lock = __RW_LOCK_UNLOCKED(smc_v4_hashinfo.lock),
++	.ht = HLIST_HEAD_INIT,
+ };
  
-@@ -453,12 +455,13 @@ static int wcove_read_rx_buffer(struct w
- 	if (ret)
- 		return ret;
+ static struct smc_hashinfo smc_v6_hashinfo = {
+ 	.lock = __RW_LOCK_UNLOCKED(smc_v6_hashinfo.lock),
++	.ht = HLIST_HEAD_INIT,
+ };
  
--	/* FIXME: Check that USBC_RXINFO_RXBYTES(info) matches the header */
-+	len = min(USBC_RXINFO_RXBYTES(info), sizeof(*msg));
- 
--	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++) {
--		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
-+	for (i = 0; i < len; i++) {
-+		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, &val);
- 		if (ret)
- 			return ret;
-+		buf[i] = val;
+ int smc_hash_sk(struct sock *sk)
+@@ -2586,8 +2588,6 @@ static int __init smc_init(void)
+ 		pr_err("%s: sock_register fails with %d\n", __func__, rc);
+ 		goto out_proto6;
  	}
+-	INIT_HLIST_HEAD(&smc_v4_hashinfo.ht);
+-	INIT_HLIST_HEAD(&smc_v6_hashinfo.ht);
  
- 	return regmap_write(wcove->regmap, USBC_RXSTATUS,
+ 	rc = smc_ib_register_client();
+ 	if (rc) {
+-- 
+2.53.0
+
 
 
