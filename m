@@ -1,52 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE6C44DB64;
-	Tue, 16 Jun 2026 16:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80214508E4;
+	Tue, 16 Jun 2026 16:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626825; cv=none; b=sUP9s3IpQXuFgL4ukLBFSsZOiu4YG7dXshCqKfbnv+65IbZByZbCgDNbGssg91TXhHz8MY1xkMxKNH5HrUh3H5iMAB685AErQqBA9p/8SnlaFwE/vIG9GfvZaBvZjnBQGRt0O03OKrfyyFFxkspzbOrd9aQIwcKUqNsvoJCF4WM=
+	t=1781626830; cv=none; b=C+6bD3ucgcm852ZMki+CL6r+VtVGDFTPJYkIjXTz4daKdrOC90DaPAf+q6mN8xJDqLynYxaLEOOYN7nr6vPfu9JoScthJqtJj1/ohdcXuHC3tzYZlvKFFo2jhAhMqqlYUQKodQE785h+rDhiEjn3CMLMBlW56IGeCzcPpR3TTSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626825; c=relaxed/simple;
-	bh=GhaheBpkstUbwL/QXb0OOJVLFhSZ24ZZjfP8T209BlA=;
+	s=arc-20240116; t=1781626830; c=relaxed/simple;
+	bh=MEYFawXtpU1BUN6Tu/B5//sQz9gR5fskgjfqJMGH34Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVp8ihw89Szp9sAadkcIRTryet9iSKolbPn8C6rgiyJn+2Z7N0dcuAVvpa8BSaejFDeNE2idZPJPhsxYG5O+FwbUZj0rj3N/Ih4OMgkfVXqqEopAoeglqPScl/mws83GYbTpv33QPoub8G3brYgnEoIYa47yaE1xk78FeNXatkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7LZALu5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZDVkYlXADI6+U1+keQHO2tuXQBmlKErZ72iBPvp5Vyx6X2h9R/hgVzW90TXyoWVbSnF0Wg5QPge46tKvPK7Asdrr1fWPBUL7tQBwHmrtm86OvC8/m/nGn4MFQHTvSOQl3asswk0R1clgRae6mOuYLH2rNARPzkfqWUKCo4TdQgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VADd4W2n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7LZALu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A8D1F000E9;
-	Tue, 16 Jun 2026 16:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VADd4W2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780081F000E9;
+	Tue, 16 Jun 2026 16:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626824;
-	bh=AkkTVndk6vBfyKqcliCHNuoImqwDBSalwJWpkivIfm8=;
+	s=korg; t=1781626829;
+	bh=EbOwZKP+Ga2VqHy2UKzgVtdhVqrnM1kZktOTvYdrwGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y7LZALu5w/ebwIfKhGfDI6enSUyXlyow9q3SK4SssMytvurVJEzvv9MLizXitgV2l
-	 Jqcl+l4+9S//eChtEj9enNVWfDvEpakL3jR6uMcku4KTT+Som6E4SqB9C5E0DKefwE
-	 Wg+8/Rj4c2Ng18AKH2g0BBEc4Myj8ugoy/P4BVhE=
+	b=VADd4W2nkJvav2t939PldTPiDPYmi5spL3iD6Bf37ds/xpVsmrUXWnU3mWle/yBYV
+	 hX9DtaAh7oXsY1/2bcocXAL1cMMatDvh8RXB7/fkqcYTOX3ULK7xxUrsJE3AWQSk8i
+	 4wYqqI5fShcRIyl7pcEbnWUIqDrK9GTgdAialA20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Tamir Shahar <tamirthesis@gmail.com>,
-	Amit Klein <aksecurity@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/261] tcp: restrict SO_ATTACH_FILTER to priv users
-Date: Tue, 16 Jun 2026 20:28:36 +0530
-Message-ID: <20260616145048.700582604@linuxfoundation.org>
+Subject: [PATCH 6.12 061/261] signal: clear JOBCTL_PENDING_MASK for caller in zap_other_threads()
+Date: Tue, 16 Jun 2026 20:28:19 +0530
+Message-ID: <20260616145047.971968772@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -65,56 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit 5d39580f68e6ddeedd15e587282207489dfb3da2 ]
+[ Upstream commit 90918794a4e2c3b440f8fcf3847765a8b1d81b25 ]
 
-This patch restricts the use of SO_ATTACH_FILTER (cBPF) on TCP sockets
-to users with CAP_NET_ADMIN capability.
+When a multi-threaded process receives a stop signal (e.g., SIGSTOP),
+do_signal_stop() sets JOBCTL_STOP_PENDING and JOBCTL_STOP_CONSUME on all
+threads and sets signal->group_stop_count to the number of threads. If
+one of the threads concurrently calls execve(), de_thread() invokes
+zap_other_threads() to kill all other threads. zap_other_threads()
+aborts the pending group stop by resetting signal->group_stop_count to 0
+and clears the JOBCTL_PENDING_MASK for all other threads. However, it
+fails to clear the job control flags for the calling thread.
 
-This blocks potential side-channel attack where an unprivileged application
-attaches a filter to leak TCP sequence/acknowledgment numbers.
+When execve() completes, the calling thread returns to user mode and
+checks for pending signals. Seeing the stale JOBCTL_STOP_PENDING flag,
+it calls do_signal_stop(), which invokes task_participate_group_stop().
+Since JOBCTL_STOP_CONSUME is still set, it attempts to decrement the
+already-zero signal->group_stop_count, triggering a warning:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Tamir Shahar <tamirthesis@gmail.com>
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Song Liu <song@kernel.org>
-Cc: Yonghong Song <yonghong.song@linux.dev>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Stanislav Fomichev <sdf@fomichev.me>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+sig->group_stop_count == 0
+WARNING: CPU: 1 PID: 6475 at kernel/signal.c:373
+task_participate_group_stop+0x215/0x2d0
+Call Trace:
+ <TASK>
+ do_signal_stop+0x3be/0x5c0 kernel/signal.c:2619
+ get_signal+0xa8c/0x1330 kernel/signal.c:2884
+ arch_do_signal_or_restart+0xbc/0x840 arch/x86/kernel/signal.c:337
+ exit_to_user_mode_loop+0x8c/0x4d0 kernel/entry/common.c:98
+ do_syscall_64+0x33e/0xf80 arch/x86/entry/syscall_64.c:100
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+
+Fix this race condition by clearing the JOBCTL_PENDING_MASK for the
+calling thread in zap_other_threads(), ensuring it does not retain any
+stale job control state after the thread group is destroyed. This aligns
+with other functions that tear down a thread group and abort group
+stops, such as zap_process() and complete_signal(), which correctly
+clear these flags for all threads including the current one.
+
+Fixes: 39efa3ef3a37 ("signal: Use GROUP_STOP_PENDING to stop once for a single group stop")
+Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
+Reported-by: syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b109633ea805cac54a61
+Link: https://syzkaller.appspot.com/ai_job?id=d70208cc-862b-4fe3-bf02-3031e10cd0b3
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Link: https://patch.msgid.link/20260521142240.2973022-1-nogikh@google.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/signal.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 7b6ed7c85a58cc..4a09e780406fe8 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1455,6 +1455,11 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 	case SO_ATTACH_FILTER: {
- 		struct sock_fprog fprog;
+diff --git a/kernel/signal.c b/kernel/signal.c
+index 468b589c39e695..b832158a9c4608 100644
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -1371,6 +1371,7 @@ int zap_other_threads(struct task_struct *p)
+ 	int count = 0;
  
-+		if (sk_is_tcp(sk) &&
-+		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
-+			ret = -EPERM;
-+			break;
-+		}
- 		ret = copy_bpf_fprog_from_user(&fprog, optval, optlen);
- 		if (!ret)
- 			ret = sk_attach_filter(&fprog, sk);
+ 	p->signal->group_stop_count = 0;
++	task_clear_jobctl_pending(p, JOBCTL_PENDING_MASK);
+ 
+ 	for_other_threads(p, t) {
+ 		task_clear_jobctl_pending(t, JOBCTL_PENDING_MASK);
 -- 
 2.53.0
 
