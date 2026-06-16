@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0203DA7D4;
-	Tue, 16 Jun 2026 18:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB5632E13B;
+	Tue, 16 Jun 2026 18:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634671; cv=none; b=LBG/IjFHz7mZuLNAZmsKnolScGzE2N31KF5Q5+SKfktmghdpHTAu0WCWkdTUhl1DS4lffmETa3j8n0pLIRx//l1uGeUTB+TI2e2xTyUlWoX0ngS99b4cTtKU/iTpnQodkOzKwgDCcXeRjd3drQZii6+6VuBJlqxcXMXWnonr7yc=
+	t=1781634676; cv=none; b=eTK8wESTxqS5qS3uOMUOIkhtREaFr2il/2cBOJni0Zx4jxGy31REryv1bYKWOiwhDf4gszUfHor0mnTiri7c3a4YZxLBw8uIlg+tTNCg7oCA9hai0HLBMUJQ/Fz7RD5Yut7RY6Z97eJFV7eakN7tBTIeCOYIdrjvRWS37Z41PPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634671; c=relaxed/simple;
-	bh=XSBmGSRVMxbtXCR9bkcril/yypoLZQt/g1d9xPvSvmM=;
+	s=arc-20240116; t=1781634676; c=relaxed/simple;
+	bh=YteqI0JdaJUbsmTpg6C6ixOiCHUkRFqjSGrIQGyuafw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0aF0BmlD+2vYbgQWOJTLq9ml0UYLEB25M4+MOjagDqq07dMbarNEXG7NWD0voHoFltg7cMVE5OAzT30B/C13FoaJYxigxAaTDS+VCX0eSmLZFZPYlsd4MvAkZIA13xEDJ2vhBs+uNUafFyOX+f+D1TWTXEFDadSHaZ3uSXWLMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+7gOcCQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bu+4dR1sMRvrZnRZjZKuv6PKio/kXEeHsmNnRu/b0zdKMJ+GKaPgF6GB+WrZp/rdB3spkU76LlaO7X0uf5efXxkCLvJbLPV41bKbBVFTJePtwPRmsQyharbYqLyIRYxsTxq6L5LiGM9XzZ0+LgibV6nEIoZ4EsE5HoY9y6C0Duk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcYwT8pB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+7gOcCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADED31F000E9;
-	Tue, 16 Jun 2026 18:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcYwT8pB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D451F000E9;
+	Tue, 16 Jun 2026 18:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634669;
-	bh=/011M3hSNmKSqZTEmLVOKmpOFuNuLkpJkiVUwUpoHkE=;
+	s=korg; t=1781634675;
+	bh=YRcWNpYq/sxw+4RB6bNMmOPx4WPQkI8IVa0joWGzlkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M+7gOcCQaYRNGKVKzdSt9WOTVb+PpPRCZzN0C5zoQJgN3SeV7XmanlhiXYw0jPZph
-	 0kpAHrPf0EDT0Vjc45AlrPn9ejVIKqWPnITm8K7MKlfiCduaq8QrSvI55EMbeXAGcf
-	 UOPqdDHlkWzDASrxn1s7gLC4IMK508Gq7EZn/wOs=
+	b=bcYwT8pBbHFYesKrViPW7WEUaUzqWETE73OZIf74CKwUbLTHNTc/BQtf42AZiEGk7
+	 l02YD8nD4ri4HMLuYuF/XYNH8FH0EI5gb0hzbvoOtNHFCytOZ/0a8rXuHLHgz0BFuB
+	 YuN7Z6FS/Vsas20tL2qr7fyMkl6IdYZh8xLT3YLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kosiorek <mkosiorek121@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Masahisa Kojima <masahisa.kojima@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 310/411] xfrm: defensively unhash xfrm_state lists in __xfrm_state_delete
-Date: Tue, 16 Jun 2026 20:29:08 +0530
-Message-ID: <20260616145117.626734109@linuxfoundation.org>
+Subject: [PATCH 5.15 311/411] spi: syncuacer: fix controller deregistration
+Date: Tue, 16 Jun 2026 20:29:09 +0530
+Message-ID: <20260616145117.677652732@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,116 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Kosiorek <mkosiorek121@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 14acf9652e5690de3c7486c6db5fb8dafd0a32a3 ]
+[ Upstream commit 75d849c3452e9611de031db45b3149ba9a99035f ]
 
-KASAN reproduces a slab-use-after-free in __xfrm_state_delete()'s
-hlist_del_rcu calls under syzkaller load on linux-6.12.y stable
-(reproduced on 6.12.47, also reachable via the same code path on
-torvalds/master and on the ipsec tree). Nine unique signatures cluster
-in the xfrm_state lifecycle, the load-bearing one being:
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-  BUG: KASAN: slab-use-after-free in __hlist_del include/linux/list.h:990 [inline]
-  BUG: KASAN: slab-use-after-free in hlist_del_rcu include/linux/rculist.h:516 [inline]
-  BUG: KASAN: slab-use-after-free in __xfrm_state_delete net/xfrm/xfrm_state.c
-  Write of size 8 at addr ffff8881198bcb70 by task kworker/u8:9/435
-
-  Workqueue: netns cleanup_net
-  Call Trace:
-   __hlist_del / hlist_del_rcu
-   __xfrm_state_delete
-   xfrm_state_delete
-   xfrm_state_flush
-   xfrm_state_fini
-   ops_exit_list
-   cleanup_net
-
-The other observed signatures hit the same slab object from
-__xfrm_state_lookup, xfrm_alloc_spi, __xfrm_state_insert and an OOB
-write variant of __xfrm_state_delete, all on the byseq/byspi
-hash chains.
-
-__xfrm_state_delete() guards its byseq and byspi unhashes with
-value-based predicates:
-
-	if (x->km.seq)
-		hlist_del_rcu(&x->byseq);
-	if (x->id.spi)
-		hlist_del_rcu(&x->byspi);
-
-while everywhere else in the file (e.g. state_cache, state_cache_input)
-the safer hlist_unhashed() check is used. xfrm_alloc_spi() sets
-x->id.spi = newspi inside xfrm_state_lock and then immediately inserts
-into byspi, but a path that observes x->id.spi != 0 outside of
-xfrm_state_lock can still skip-or-hit the byspi unhash inconsistently
-with whether x is actually on the list. The same holds for x->km.seq
-versus byseq, and the bydst/bysrc unhashes have no predicate at all,
-so a second __xfrm_state_delete() on the same object writes through
-LIST_POISON pprev.
-
-The defensive change here:
-
-  - Use hlist_del_init_rcu() instead of hlist_del_rcu() on bydst,
-    bysrc, byseq and byspi so a second deletion is a no-op rather
-    than a write through LIST_POISON pprev. The byseq/byspi nodes
-    are already initialised in xfrm_state_alloc().
-  - Test hlist_unhashed() rather than the value predicate for
-    byseq/byspi, so the unhash decision tracks list state rather than
-    mutable scalar fields.
-
-Empirical verification: applied this patch on top of v6.12.47, rebuilt,
-and re-ran the same syzkaller harness for 1h16m on a previously-crashy
-configuration that produced ~100 hits each of slab-use-after-free
-Read in xfrm_alloc_spi / Read in __xfrm_state_lookup / Write in
-__xfrm_state_delete. After the patch, 7.1M execs across 32 VMs at
-~1550 exec/sec produced zero xfrm_state UAF/OOB hits. /proc/slabinfo
-confirms the xfrm_state slab is actively allocated and freed during
-the run (~143 KiB resident), so the fuzzer is still exercising those
-code paths -- they just no longer crash.
-
-Reproduction:
-
-  - Linux 6.12.47 x86_64 + KASAN_GENERIC + KASAN_INLINE + KCOV
-  - syzkaller @ 746545b8b1e4c3a128db8652b340d3df90ce61db
-  - 32 QEMU/KVM VMs x 2 vCPU on AWS c5.metal bare metal
-  - 9 unique signatures collected in ~9h, all within xfrm_state
-    lifecycle
-
-Fixes: fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
-Fixes: 7b4dc3600e48 ("[XFRM]: Do not add a state whose SPI is zero to the SPI hash.")
-Reported-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Tested-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-[ dropped state_cache/state_cache_input unhash hunks and xfrm_nat_keepalive_state_updated() call ]
+Fixes: b0823ee35cf9 ("spi: Add spi driver for Socionext SynQuacer platform")
+Cc: stable@vger.kernel.org	# 5.3
+Cc: Masahisa Kojima <masahisa.kojima@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-21-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ renamed spi_controller/host to spi_master/master and kept int return type with `return 0;` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_state.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/spi/spi-synquacer.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -681,12 +681,12 @@ int __xfrm_state_delete(struct xfrm_stat
- 		x->km.state = XFRM_STATE_DEAD;
- 		spin_lock(&net->xfrm.xfrm_state_lock);
- 		list_del(&x->km.all);
--		hlist_del_rcu(&x->bydst);
--		hlist_del_rcu(&x->bysrc);
--		if (x->km.seq)
--			hlist_del_rcu(&x->byseq);
--		if (x->id.spi)
--			hlist_del_rcu(&x->byspi);
-+		hlist_del_init_rcu(&x->bydst);
-+		hlist_del_init_rcu(&x->bysrc);
-+		if (!hlist_unhashed(&x->byseq))
-+			hlist_del_init_rcu(&x->byseq);
-+		if (!hlist_unhashed(&x->byspi))
-+			hlist_del_init_rcu(&x->byspi);
- 		net->xfrm.state_num--;
- 		spin_unlock(&net->xfrm.xfrm_state_lock);
+--- a/drivers/spi/spi-synquacer.c
++++ b/drivers/spi/spi-synquacer.c
+@@ -719,7 +719,7 @@ static int synquacer_spi_probe(struct pl
+ 	pm_runtime_set_active(sspi->dev);
+ 	pm_runtime_enable(sspi->dev);
+ 
+-	ret = devm_spi_register_master(sspi->dev, master);
++	ret = spi_register_master(master);
+ 	if (ret)
+ 		goto disable_pm;
+ 
+@@ -740,10 +740,16 @@ static int synquacer_spi_remove(struct p
+ 	struct spi_master *master = platform_get_drvdata(pdev);
+ 	struct synquacer_spi *sspi = spi_master_get_devdata(master);
+ 
++	spi_master_get(master);
++
++	spi_unregister_master(master);
++
+ 	pm_runtime_disable(sspi->dev);
+ 
+ 	clk_disable_unprepare(sspi->clk);
+ 
++	spi_master_put(master);
++
+ 	return 0;
+ }
  
 
 
