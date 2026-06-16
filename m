@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912FC379EFC;
-	Tue, 16 Jun 2026 16:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648E9379EFC;
+	Tue, 16 Jun 2026 16:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626438; cv=none; b=JN+GayM82mY+Eh8z71F6mVqpO5gO/6TLFhthSoygBeLRXKi2XthcSVKhk+DZ9ViBwkDqTf4U+EvkOGSBF/M87t3EMwXM3U7cfsxbwQXIFufgtdnKPGQxtttzBoe1T4mZ6Zt+j4W7R05tpMSMBI/NGOLY1ZX7kmsLtzxjRaWfGlw=
+	t=1781626444; cv=none; b=KftwsZ2kCzHH3WMg+FjCA2prAzwt8Myjx3txXBQzKM6aeviC1qgR8nu6cZQ7wfZvp88Hpr9HOJiOzLd99cOh/o+RZecjGJHDP+LOxvHNSXC+2shuUcZ+nyGcrIyUafWdB2zxc8ARoLX+dfHTvVv3nKFj3rN4okPPx1Kg9qX5vRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626438; c=relaxed/simple;
-	bh=8CksO32J4Atcytf3xa8vy1A5pp3XOTr/OysRwXcyEhQ=;
+	s=arc-20240116; t=1781626444; c=relaxed/simple;
+	bh=PWcIGTvnBbfu0fLKDidZqvdHeqxEN2h6tPqifH/zHBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EyI8E1mtt5JrKlsHk9rGLSWqdF9hdvffxs7EHgvIP0DSTo9Fzy35MCkEJIdNyclvEpv80UwYjM/4SI32qVD5vzQcjACY+jF/wPX+bBhQ14mNPmN7q5h+t5jX5yf8wxYRPsgSXZpzm1uYQYIiBFYnHneDlf8sM+1HJ7H+HngumT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bx5rvANm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=afrmkfDAQWyVk2TUICEIhT6h3hEbyAWfxWlovjQyMdM7+aC5BIZLJFNnnv6VKgivHOqc/YoOpwT389CaX+1aCtEwME03HW3X9tp6zU9KL8Wo6KB3ObiITX/Rg7Y1gan8qPNNCcPZC3fF9cwTvtjgynFKO07LzjEvRAmUY+96XWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJQymApL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bx5rvANm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABF21F000E9;
-	Tue, 16 Jun 2026 16:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJQymApL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE061F000E9;
+	Tue, 16 Jun 2026 16:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626437;
-	bh=cM7rZUUiMrpWFbQ5QzPEVWcxqVqaZhZX5PN4+aP1C+U=;
+	s=korg; t=1781626443;
+	bh=1S+7yP/jElnvEgPwAAwZtn90HzjbpoB2K6mK9T1oOZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bx5rvANmqu276MryqNSySjcf6jiXCBCYw9kGW8Ko/a+iIly9Hv8S7o3bbgJD8hGhR
-	 VNIoL3DOPl451tZRjx8KQSbzZdkXGxegxHDeXLaZ5OaO0Es1Iu6wy+/8eSVIT3KHAE
-	 y364UyLJK2IxU/jo/KSdGx7S3HJyNKbuPxkFH/NA=
+	b=mJQymApLRCY2f1OyivVN7GgoOBwdX6trmL8lhyTtkH1ocui4yCkRpqCyBdM75eHb6
+	 +kiVB8pJ9EVp1P+jQEcfgFf0PCHoTdF1Ng6oo6X7NLpSh7s3f6pq7/sYKcie9Py7oZ
+	 G5tQWPeczkQZf84BDugRUDbrXp6Gy+rftdZguE3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
 	Iago Toral Quiroga <itoral@igalia.com>,
 	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.18 288/325] drm/v3d: Fix global performance monitor reference counting
-Date: Tue, 16 Jun 2026 20:31:24 +0530
-Message-ID: <20260616145113.126515018@linuxfoundation.org>
+Subject: [PATCH 6.18 289/325] drm/v3d: Fix vaddr leak when indirect CSD has zeroed workgroups
+Date: Tue, 16 Jun 2026 20:31:25 +0530
+Message-ID: <20260616145113.178543767@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,80 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Maíra Canal <mcanal@igalia.com>
 
-commit 6bf7e2affc6e62da7add393d7f352d4040f5bc27 upstream.
+commit ae7676952790f421c40918e2586a2c9f12a682b6 upstream.
 
-In the SET_GLOBAL ioctl, v3d_perfmon_find() bumps the reference count on
-the perfmon it returns, but v3d_perfmon_set_global_ioctl() and
-v3d_perfmon_delete() fail to release that reference on several paths:
+v3d_rewrite_csd_job_wg_counts_from_indirect() maps both the indirect
+buffer and the workgroup buffer and is expected to release them before
+returning. When any of the workgroup counts read from the buffer is zero,
+the function bailed out early and skipped the cleanup, leaking the vaddr
+mappings of both BOs.
 
-  1. v3d_perfmon_set_global_ioctl() leaks the reference on its error
-     paths.
-
-  2. CLEAR_GLOBAL leaks both the find reference and the reference
-     previously stashed in v3d->global_perfmon by the SET_GLOBAL ioctl
-     that configured it.
-
-  3. Destroying a perfmon that is the current global perfmon leaks the
-     reference stashed by the SET_GLOBAL ioctl.
-
-Release each of these references explicitly.
+Jump to the cleanup path instead of returning directly, so the mappings
+are always dropped.
 
 Cc: stable@vger.kernel.org
-Fixes: c6eabbab359c ("drm/v3d: Add DRM_IOCTL_V3D_PERFMON_SET_GLOBAL")
+Fixes: 18b8413b25b7 ("drm/v3d: Create a CPU job extension for a indirect CSD job")
+Suggested-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
 Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260531-v3d-perfmon-lifetime-v2-1-60ed4485a203@igalia.com
+Link: https://patch.msgid.link/20260602-v3d-fix-indirect-csd-v4-1-654309e32bc0@igalia.com
 Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_perfmon.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/v3d/v3d_sched.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/v3d/v3d_perfmon.c
-+++ b/drivers/gpu/drm/v3d/v3d_perfmon.c
-@@ -313,8 +313,11 @@ static int v3d_perfmon_idr_del(int id, v
- 	if (perfmon == v3d->active_perfmon)
- 		v3d_perfmon_stop(v3d, perfmon, false);
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -428,7 +428,7 @@ v3d_rewrite_csd_job_wg_counts_from_indir
+ 	wg_counts = (uint32_t *)(bo->vaddr + indirect_csd->offset);
  
--	/* If the global perfmon is being destroyed, set it to NULL */
--	cmpxchg(&v3d->global_perfmon, perfmon, NULL);
-+	/* If the global perfmon is being destroyed, clean it and release
-+	 * the reference stashed in v3d_perfmon_set_global_ioctl().
-+	 */
-+	if (cmpxchg(&v3d->global_perfmon, perfmon, NULL) == perfmon)
-+		v3d_perfmon_put(perfmon);
+ 	if (wg_counts[0] == 0 || wg_counts[1] == 0 || wg_counts[2] == 0)
+-		return;
++		goto unmap_bo;
  
- 	v3d_perfmon_put(perfmon);
- 
-@@ -481,16 +484,27 @@ int v3d_perfmon_set_global_ioctl(struct
- 
- 	/* If the request is to clear the global performance monitor */
- 	if (req->flags & DRM_V3D_PERFMON_CLEAR_GLOBAL) {
--		if (!v3d->global_perfmon)
-+		struct v3d_perfmon *old;
-+
-+		/* DRM_V3D_PERFMON_CLEAR_GLOBAL doesn't check if
-+		 * v3d->global_perfmon == perfmon. Therefore, there
-+		 * is no need to keep perfmon's reference.
-+		 */
-+		v3d_perfmon_put(perfmon);
-+
-+		old = xchg(&v3d->global_perfmon, NULL);
-+		if (!old)
- 			return -EINVAL;
- 
--		xchg(&v3d->global_perfmon, NULL);
-+		v3d_perfmon_put(old);
- 
- 		return 0;
+ 	args->cfg[0] = wg_counts[0] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
+ 	args->cfg[1] = wg_counts[1] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
+@@ -453,6 +453,7 @@ v3d_rewrite_csd_job_wg_counts_from_indir
+ 		}
  	}
  
--	if (cmpxchg(&v3d->global_perfmon, NULL, perfmon))
-+	if (cmpxchg(&v3d->global_perfmon, NULL, perfmon)) {
-+		v3d_perfmon_put(perfmon);
- 		return -EBUSY;
-+	}
- 
- 	return 0;
++unmap_bo:
+ 	v3d_put_bo_vaddr(indirect);
+ 	v3d_put_bo_vaddr(bo);
  }
 
 
