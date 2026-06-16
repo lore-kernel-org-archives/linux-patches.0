@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E812D3D7D9D;
-	Tue, 16 Jun 2026 19:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C60134751B;
+	Tue, 16 Jun 2026 19:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636566; cv=none; b=Uk80YJHkrox5DO+y7hnThTBeoM+/Ud4BBre1Vmfb0nwud7UiRzxr21RtjEzxk6CAfy8fFtk4m3opm19fCZrM0OK8Brf0LdLCyyWyNVPSoHwL1s847K/bjND+U799PHQd5HS4JuXhQpw8cg0FB0UQp+I29S2YZ+rATgp/+8gi3Ho=
+	t=1781636572; cv=none; b=o5/gjCSvnZe6e1g0oa9Tb/vatqBSs94+v7qoJRMjI3L8z2eWL/IJUBl6dZTTRCfKOEGqe+wuSiM5vmSg021btlYbxrLBmI22MhHHjgzOJljc94sRsUMvhqwqqMvRBnCW3YusLarj5apbTX5c8AgvLjGXWuI6oqgy6bXWNVYv1uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636566; c=relaxed/simple;
-	bh=yh4c+7MfJ36ndHb3eURExj6TUMarhnbTt6QrIqIbD6s=;
+	s=arc-20240116; t=1781636572; c=relaxed/simple;
+	bh=zhe8+OrVYw/l468fKEMtHJqgLBqOeQh63cf1/RKRuFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUeJAaDchGV3hgCpd+VrjEzzRTVoGqXpm8102wfI+lxWmVEiyqFzgidqxr9ghSGJE5Pn7iOziEDAir7Re6XMqrcGDUtsxMVzm3pUOZHlIOerTnpPHqxlWpSOFlbbvOhpv3AucBb4P6fCkC7GHr55FyQ03wt+AVABUwIA+F50Hdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKC51MZu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a5TZOr8PoyY6vEYPqaJDwqZa7Hu6VkgP0b3Z6N3hpmF2FGTcB6WP8X5UHsl2PxOoUY69qVWCaLzVeWYSqdOk9o05z8pt2PzdzOQ9ZP/wsGWTU9aaAFPTeXvtF4/lEOf2mCOX35kGahw9wFqB1fmMC7fHfM2R/nSMkP6sAC5vBDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+pGVKT0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKC51MZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5E21F000E9;
-	Tue, 16 Jun 2026 19:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+pGVKT0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DDD1F000E9;
+	Tue, 16 Jun 2026 19:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636564;
-	bh=NOoruYMdwcYdbEzj1ddg8jfBNhMcN99XMTfPVIBOwkM=;
+	s=korg; t=1781636571;
+	bh=qgcxz12ptR7ZV3ASAmNdQ3gG/chXuDWyAAD9UTgPrUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GKC51MZuMFMKNnWdJgroAxUG6/AmUFhd4V64LXeKnilbzxEFUeYqQhtvzFJUofEq3
-	 XVvprqXcRINMoJftYdud3kPuyPlEbjRfZ/tStX4Ukw+oT/r9cjA6hqbd6Gtf6/v+DA
-	 WbhrO7TNh8hdsqFJP6slT1FlmcnCQQuIwi68ptng=
+	b=p+pGVKT0VWmso83nKCDGX44kUHG/dl/dLNLHFrYh/LedDxGkUCjvVeA6dACOwNpxz
+	 x5HqrEURDXxeNZOAZ6F4Iy3jTAxAUcNACkAHdiAn1PWL0rGC9a3A0jmp7a+N/drx8P
+	 fShuTWivV2Hy325Jc6unUdOk3NNoYDgYkWTfwOiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 264/342] mm/hugetlb_cma: round up per_node before logging it
-Date: Tue, 16 Jun 2026 20:29:20 +0530
-Message-ID: <20260616145100.562837094@linuxfoundation.org>
+Subject: [PATCH 5.10 265/342] fbcon: Avoid OOB font access if console rotation fails
+Date: Tue, 16 Jun 2026 20:29:21 +0530
+Message-ID: <20260616145100.612602846@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -54,76 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 8f5ce56b76303c55b78a87af996e2e0f8535f979 ]
+[ Upstream commit e4ef723d8975a2694cc90733a6b888a5e2841842 ]
 
-When the user requests a total hugetlb CMA size without per-node
-specification, hugetlb_cma_reserve() computes per_node from
-hugetlb_cma_size and the number of nodes that have memory
+Clear the font buffer if the reallocation during console rotation fails
+in fbcon_rotate_font(). The putcs implementations for the rotated buffer
+will return early in this case. See [1] for an example.
 
-        per_node = DIV_ROUND_UP(hugetlb_cma_size,
-                                nodes_weight(hugetlb_bootmem_nodes));
+Currently, fbcon_rotate_font() keeps the old buffer, which is too small
+for the rotated font. Printing to the rotated console with a high-enough
+character code will overflow the font buffer.
 
-The reservation loop later computes
+v2:
+- fix typos in commit message
 
-        size = round_up(min(per_node, hugetlb_cma_size - reserved),
-                          PAGE_SIZE << order);
-
-So the actually reserved per_node size is multiple of (PAGE_SIZE <<
-order), but the logged per_node is not rounded up, so it may be smaller
-than the actual reserved size.
-
-For example, as the existing comment describes, if a 3 GB area is
-requested on a machine with 4 NUMA nodes that have memory, 1 GB is
-allocated on the first three nodes, but the printed log is
-
-        hugetlb_cma: reserve 3072 MiB, up to 768 MiB per node
-
-Round per_node up to (PAGE_SIZE << order) before logging so that the
-printed log always matches the actual reserved size.  No functional change
-to the actual reservation size, as the following case analysis shows
-
-1. remaining (hugetlb_cma_size - reserved) >= rounded per_node
- - AS-IS: min() picks unrounded per_node;
-    round_up() returns rounded per_node
- - TO-BE: min() picks rounded per_node;
-    round_up() returns rounded per_node (no-op)
-2. remaining < unrounded per_node
- - AS-IS: min() picks remaining;
-    round_up() returns round_up(remaining)
- - TO-BE: min() picks remaining;
-    round_up() returns round_up(remaining)
-3. unrounded per_node <= remaining < rounded per_node
- - AS-IS: min() picks unrounded per_node;
-    round_up() returns rounded per_node
- - TO-BE: min() picks remaining;
-    round_up() returns round_up(remaining) equals rounded per_node
-
-Link: https://lore.kernel.org/20260422143353.852257-1-ekffu200098@gmail.com
-Fixes: cf11e85fc08c ("mm: hugetlb: optionally allocate gigantic hugepages using cma") # 5.7
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ applied the one-line `round_up` to `mm/hugetlb.c` ]
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
+Cc: stable@vger.kernel.org # v2.6.15+
+Link: https://elixir.bootlin.com/linux/v6.19/source/drivers/video/fbdev/core/fbcon_ccw.c#L144 # [1]
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ renamed `par` to `ops` to match the 6.12 local pointer name ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/core/fbcon_rotate.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5842,6 +5842,7 @@ void __init hugetlb_cma_reserve(int orde
- 	 * let's allocate 1 GB on first three nodes and ignore the last one.
- 	 */
- 	per_node = DIV_ROUND_UP(hugetlb_cma_size, nr_online_nodes);
-+	per_node = round_up(per_node, PAGE_SIZE << order);
- 	pr_info("hugetlb_cma: reserve %lu MiB, up to %lu MiB per node\n",
- 		hugetlb_cma_size / SZ_1M, per_node / SZ_1M);
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -46,6 +46,10 @@ static int fbcon_rotate_font(struct fb_i
+ 		info->fbops->fb_sync(info);
+ 
+ 	if (ops->fd_size < d_cellsize * len) {
++		kfree(ops->fontbuffer);
++		ops->fontbuffer = NULL;
++		ops->fd_size = 0;
++
+ 		dst = kmalloc_array(len, d_cellsize, GFP_KERNEL);
+ 
+ 		if (dst == NULL) {
+@@ -54,7 +58,6 @@ static int fbcon_rotate_font(struct fb_i
+ 		}
+ 
+ 		ops->fd_size = d_cellsize * len;
+-		kfree(ops->fontbuffer);
+ 		ops->fontbuffer = dst;
+ 	}
  
 
 
