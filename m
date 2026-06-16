@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938EF35292A;
-	Tue, 16 Jun 2026 18:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1559F35292A;
+	Tue, 16 Jun 2026 18:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633981; cv=none; b=WPsS6SNtfr3ec8c8lcbaZ/tAZYXq53y/rXj43tGOVw0RmbZoblLIHhXFm5a7XEm2dfkPVfiof6fBnodRrBe+JGICHFp86ZlKYqcCsoBUhXWLcGT4LEIPZ6PXXzqD7VpOLRs8ab17AA2z3keR1WTV/5u1YVIiI70Tg04NEbdCFUc=
+	t=1781633987; cv=none; b=XlQSGDl3W+64dz0Ih3BSlGaVGjEUHyK9jaNvY6EobrElySmF036z/bZGkJ1BukcOTAkOkbFKk8GyFKkvSR1mZiozcj3O+dAkqAm28JEszGiruXuBLXrKI5qeuueRNWSU13sE6OJvFRRvC1MoicS8nwCKR2zpe2Smy+qt2YRKf74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633981; c=relaxed/simple;
-	bh=sgXp11dCD13tuaEqMn+YKggoXzPDi0Zvgi9Wur7GdHE=;
+	s=arc-20240116; t=1781633987; c=relaxed/simple;
+	bh=eDmnEcqZp79ooBv488ETR5HRQ3+JValPZZa8F6IybS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3ztwBgLBdz1I7/ws6ce0W8E2ktF8ce0zfGRZLW9hRYw39Yqwl3QZ4yLHJiGP5h8Wf/+JGYhiUUy6IIpnDnQbk7NgZNOuzFiMHO5B//H51YhJ0ywbVUXOyfj18dpudhFzX3WK5vRi/tj1KJ58RSrNSuBeGPVD0LHXswjlqHcN80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUUz1wyg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pD1EOLwUUqEqX0XjL3GZ6yPJW0Vna1alNofqyUjzntWItH/MvXzfdinrfO/PBob7KCk8Oq7aDkLCDPLht8q4MKJ5w2BI+ZIlLIEIsVPl353d3678fgXNZ5ZzmHsecJ/diLb1Fj/ycgTE0Uhf+nAhpv5a5kFiVUZTgMv7nGz1fqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9xpbfIn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUUz1wyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7391F000E9;
-	Tue, 16 Jun 2026 18:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9xpbfIn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFABF1F000E9;
+	Tue, 16 Jun 2026 18:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633980;
-	bh=A+JLg9WZtin89emdSl1uROQGkhiBBWg5VZzgpuEiYHA=;
+	s=korg; t=1781633986;
+	bh=kKDrrGYLHcnxj9mGw1h42iLY8SycjLS2kJudY5Vva+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aUUz1wygggPIgXuYpd19EgVcNMpr/vr4YfkUytXxPIrbg+KQt+2O17BRC49lnuYp4
-	 SkyZIQMM7Bgid5675mVVefCaatIFo3QF2UJ6gQXJI/ftHD3IS1RTc4PvLZbXoYb5m4
-	 Tu2uznTHA6hEzX2QzDZYRaDoe0B8w0tJVshRkucE=
+	b=R9xpbfInANcbpKtMUfahT2oNebqrKolJUrxiUBMPIhodAfFR1PyKSiOGnZdvOfpfI
+	 DReTg0IootT3X81iOnUqj3Gu3uColYuDzH2R+V/vGiCK2Fll9ZU9lZlJ4XzY0WOF4H
+	 7ePWpPH+9TSIm2a460lH6XA054K7LQSijnRfWlPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Thangaraj Samynathan <Thangaraj.s@microchip.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 161/411] net: lan743x: permit VLAN-tagged packets up to configured MTU
-Date: Tue, 16 Jun 2026 20:26:39 +0530
-Message-ID: <20260616145109.063225340@linuxfoundation.org>
+Subject: [PATCH 5.15 179/411] KVM: arm64: Remove VPIPT I-cache handling
+Date: Tue, 16 Jun 2026 20:26:57 +0530
+Message-ID: <20260616145110.198216938@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,97 +54,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 8173d22b211f615015f7b35f48ab11a6dd78dc99 ]
+commit ced242ba9d7cb3571f6e0f165f643cb832d52148 upstream.
 
-VLAN-tagged interfaces on lan743x devices were previously unreachable via
-SSH and failed to respond to large ping packets (e.g. "ping -s 1469" given
-MTU=1500). In these scenarios, "ethtool -S" reports non-zero "RX Oversize
-Frame Errors". According to Microchip AN2948, the MAC_RX FSE (VLAN field
-size enforcement) bit determines whether frames with VLAN tags exceeding
-the base MTU plus tag length are discarded.
+We have some special handling for VPIPT I-cache in critical parts
+of the cache and TLB maintenance. Remove it.
 
-The driver must set the MAC_RX.FSE bit before setting MAC_RX.RXEN to allow
-VLAN-tagged frames up to the interface MTU, preventing them from being
-treated as oversized. As a result, both the base and VLAN-tagged interfaces
-can use the same MTU without receive errors.
-
-Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Thangaraj Samynathan <Thangaraj.s@microchip.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # lan7430 on arm64 (RevPi
-Link: https://patch.msgid.link/20260529210300.433135-1-davthompson@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20231204143606.1806432-2-maz@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
+[Mark: Backport to v5.15.y. VPIPT HW was never built; this is all dead code]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 32 +++++++++++++++++++
- drivers/net/ethernet/microchip/lan743x_main.h |  1 +
- 2 files changed, 33 insertions(+)
+ arch/arm64/include/asm/kvm_mmu.h |  4 ++--
+ arch/arm64/kvm/hyp/nvhe/tlb.c    | 35 --------------------------------
+ arch/arm64/kvm/hyp/vhe/tlb.c     | 13 ------------
+ 3 files changed, 2 insertions(+), 50 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index 49d40685136d46..8db83741aaa570 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -792,6 +792,36 @@ static void lan743x_mac_set_address(struct lan743x_adapter *adapter,
- 		   "MAC address set to %pM\n", addr);
+diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+index 02d37888774383..1733eb87c29fbb 100644
+--- a/arch/arm64/include/asm/kvm_mmu.h
++++ b/arch/arm64/include/asm/kvm_mmu.h
+@@ -207,8 +207,8 @@ static inline void __invalidate_icache_guest_page(void *va, size_t size)
+ 	if (icache_is_aliasing()) {
+ 		/* any kind of VIPT cache */
+ 		icache_inval_all_pou();
+-	} else if (is_kernel_in_hyp_mode() || !icache_is_vpipt()) {
+-		/* PIPT or VPIPT at EL2 (see comment in __kvm_tlb_flush_vmid_ipa) */
++	} else {
++		/* PIPT */
+ 		icache_inval_pou((unsigned long)va, (unsigned long)va + size);
+ 	}
+ }
+diff --git a/arch/arm64/kvm/hyp/nvhe/tlb.c b/arch/arm64/kvm/hyp/nvhe/tlb.c
+index d296d617f58963..291789df24e3ee 100644
+--- a/arch/arm64/kvm/hyp/nvhe/tlb.c
++++ b/arch/arm64/kvm/hyp/nvhe/tlb.c
+@@ -84,28 +84,6 @@ void __kvm_tlb_flush_vmid_ipa(struct kvm_s2_mmu *mmu,
+ 	dsb(ish);
+ 	isb();
+ 
+-	/*
+-	 * If the host is running at EL1 and we have a VPIPT I-cache,
+-	 * then we must perform I-cache maintenance at EL2 in order for
+-	 * it to have an effect on the guest. Since the guest cannot hit
+-	 * I-cache lines allocated with a different VMID, we don't need
+-	 * to worry about junk out of guest reset (we nuke the I-cache on
+-	 * VMID rollover), but we do need to be careful when remapping
+-	 * executable pages for the same guest. This can happen when KSM
+-	 * takes a CoW fault on an executable page, copies the page into
+-	 * a page that was previously mapped in the guest and then needs
+-	 * to invalidate the guest view of the I-cache for that page
+-	 * from EL1. To solve this, we invalidate the entire I-cache when
+-	 * unmapping a page from a guest if we have a VPIPT I-cache but
+-	 * the host is running at EL1. As above, we could do better if
+-	 * we had the VA.
+-	 *
+-	 * The moral of this story is: if you have a VPIPT I-cache, then
+-	 * you should be running with VHE enabled.
+-	 */
+-	if (icache_is_vpipt())
+-		icache_inval_all_pou();
+-
+ 	__tlb_switch_to_host(&cxt);
  }
  
-+static void lan743x_mac_rx_enable_fse(struct lan743x_adapter *adapter)
-+{
-+	u32 mac_rx;
-+	bool rxen;
-+
-+	mac_rx = lan743x_csr_read(adapter, MAC_RX);
-+	if (mac_rx & MAC_RX_FSE_)
-+		return;
-+
-+	rxen = mac_rx & MAC_RX_RXEN_;
-+	if (rxen) {
-+		mac_rx &= ~MAC_RX_RXEN_;
-+		lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+		lan743x_csr_wait_for_bit(adapter, MAC_RX, MAC_RX_RXD_,
-+					 1, 1000, 20000, 100);
-+	}
-+
-+	/* Per AN2948, hardware prevents modification of the FSE bit while the
-+	 * MAC receiver is enabled (RXEN bit set). Use separate register write
-+	 * to assert the FSE bit before enabling the RXEN bit in MAC_RX
-+	 */
-+	mac_rx |= MAC_RX_FSE_;
-+	lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+
-+	if (rxen) {
-+		mac_rx |= MAC_RX_RXEN_;
-+		lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+	}
-+}
-+
- static int lan743x_mac_init(struct lan743x_adapter *adapter)
+@@ -144,18 +122,5 @@ void __kvm_flush_vm_context(void)
  {
- 	bool mac_address_valid = true;
-@@ -831,6 +861,8 @@ static int lan743x_mac_init(struct lan743x_adapter *adapter)
- 	lan743x_mac_set_address(adapter, adapter->mac_address);
- 	eth_hw_addr_set(netdev, adapter->mac_address);
- 
-+	lan743x_mac_rx_enable_fse(adapter);
-+
- 	return 0;
+ 	dsb(ishst);
+ 	__tlbi(alle1is);
+-
+-	/*
+-	 * VIPT and PIPT caches are not affected by VMID, so no maintenance
+-	 * is necessary across a VMID rollover.
+-	 *
+-	 * VPIPT caches constrain lookup and maintenance to the active VMID,
+-	 * so we need to invalidate lines with a stale VMID to avoid an ABA
+-	 * race after multiple rollovers.
+-	 *
+-	 */
+-	if (icache_is_vpipt())
+-		asm volatile("ic ialluis");
+-
+ 	dsb(ish);
  }
- 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
-index a1226ab0fb4217..40351d38299aac 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.h
-+++ b/drivers/net/ethernet/microchip/lan743x_main.h
-@@ -118,6 +118,7 @@
- #define MAC_RX				(0x104)
- #define MAC_RX_MAX_SIZE_SHIFT_		(16)
- #define MAC_RX_MAX_SIZE_MASK_		(0x3FFF0000)
-+#define MAC_RX_FSE_			BIT(2)
- #define MAC_RX_RXD_			BIT(1)
- #define MAC_RX_RXEN_			BIT(0)
- 
+diff --git a/arch/arm64/kvm/hyp/vhe/tlb.c b/arch/arm64/kvm/hyp/vhe/tlb.c
+index 24cef9b87f9e9c..fc3fcd29ccc306 100644
+--- a/arch/arm64/kvm/hyp/vhe/tlb.c
++++ b/arch/arm64/kvm/hyp/vhe/tlb.c
+@@ -146,18 +146,5 @@ void __kvm_flush_vm_context(void)
+ {
+ 	dsb(ishst);
+ 	__tlbi(alle1is);
+-
+-	/*
+-	 * VIPT and PIPT caches are not affected by VMID, so no maintenance
+-	 * is necessary across a VMID rollover.
+-	 *
+-	 * VPIPT caches constrain lookup and maintenance to the active VMID,
+-	 * so we need to invalidate lines with a stale VMID to avoid an ABA
+-	 * race after multiple rollovers.
+-	 *
+-	 */
+-	if (icache_is_vpipt())
+-		asm volatile("ic ialluis");
+-
+ 	dsb(ish);
+ }
 -- 
 2.53.0
 
