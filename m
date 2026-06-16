@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E870F4502F;
-	Tue, 16 Jun 2026 16:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860D04502F;
+	Tue, 16 Jun 2026 16:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628837; cv=none; b=rxWJ7dLjPlj4bwjBP+SHjAAvMybbY9ykhkZhExqXjmM8JR/EVcjsmW9k8WlVYmVrqqmfE0jBsFj+k1EO6Wtx9orX+V5PzMhppQUgQyI7GGpKCxXJIl+c0OhQLuS94r5p2OU5E5clDmhdSmIIxhhWUIgEMv9Zjy1rSb0+5rDBXCo=
+	t=1781628843; cv=none; b=lODa19F15k180GOugY1BoGyRChjeDSw8s6t4HAwCwypxrV54YrbBnZFFqxjIrtWxJVzFcQcz5bOK4ZYAxpPGb7oO2/EOxzHLZ+lEzxiVuaIiq2XLkH+pgOI0wNAu1FaQy+3rjZ5aA9urjWgwSJUC4N9zp2K30ImYwuoDkDq8+YY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628837; c=relaxed/simple;
-	bh=hHxiL71WB90IE/NDsR3Usz6bE7DwP3NhsDKvk/i4zhw=;
+	s=arc-20240116; t=1781628843; c=relaxed/simple;
+	bh=Ne+HD3SgHY0VuGB6fJ67KkTjNGqaCpz1UgD3mOzVbvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aP5N7amPFdqVbRgE+Ya1knUH5VZ3yJjD3B9izY6hkZ/peJepVX74DHaqTjxjEaL7T1GWq2HtFX8yJWVfC0j2lHi1k8jJkRafhkKn1iFabaSMFG7nA8qHvk7UPt0pXRnLe2/F/FuA6r+p9pGmh4l7tQA8+1Y1IsE9RXJUb5lkido=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjsS/api; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uYQrSOBDhxr9CIZ71Hl/12fFnQFxsMuIZzpZoysVmMZAYlD621moSF955ZSm1oU9REwO0fDNjzrZYbkZGC3lvhchHRXYo9Vr4lwkKe55Tnb2FN0P4VRt8CyFBCy65FbwQyTYnb8Ujnq84q3u0+B/J+FNCkG7aRc4a787Q95tDmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=woNVJxem; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjsS/api"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD62D1F000E9;
-	Tue, 16 Jun 2026 16:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woNVJxem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709171F000E9;
+	Tue, 16 Jun 2026 16:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628836;
-	bh=pyEoPJmI6hEuhc1xLhfJRptDbgpRAPgglMc0XCfJeF4=;
+	s=korg; t=1781628842;
+	bh=UANzWeRwokRAttfqj9zMhHXk6S1OSJbOaxpkzbVOKKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VjsS/apiZbd1dOhw7W+tX71pXQU9IKFKzfzKcXg1nv3vaww8UzDkwFWfrqBkQyj7T
-	 9pf1/BV+yK+LtAfloCiptio+vBGmiFMw41vm482U+MEOPIUfeKSL5Z5D0BWpfbDUPJ
-	 yD9xSZW3bQS3wrD0zi850z79/TKwiUi5zXlzvF28=
+	b=woNVJxemcH8XIo0iSFqATgGB4WkHdkHe7HIHBvFmHtm4fRVn0NrWZpu9as5aQA0uJ
+	 aJ6LRKpZ+JiN7F5HmMiZ2+fADjEKPHP7IfH9YxBHe//4aCZ7IXF2DMoysJ1r/K8uis
+	 3yeHAiBgmDGs3BlSoWkA8aoNgt2/82CS0bndh1V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.6 171/452] thunderbolt: property: Reject dir_len < 4 to prevent size_t underflow
-Date: Tue, 16 Jun 2026 20:26:38 +0530
-Message-ID: <20260616145126.875564127@linuxfoundation.org>
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 172/452] scsi: fcoe: Reject FIP descriptors with zero fip_dlen in CVL walker
+Date: Tue, 16 Jun 2026 20:26:39 +0530
+Message-ID: <20260616145126.929478312@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,73 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit de21b59c29e31c5108ddc04210631bbfab81b997 upstream.
+commit 9eed1bd59937e6828b00d2f2dfef631d964f3636 upstream.
 
-On the non-root path, __tb_property_parse_dir() takes dir_len from
-entry->length (u16 widened to size_t).  Two distinct OOB conditions
-follow when entry->length < 4:
+drivers/scsi/fcoe/fcoe_ctlr.c::fcoe_ctlr_recv_clr_vlink() advanced the
+descriptor cursor by an attacker-supplied fip_dlen without ever
+requiring dlen >= sizeof(struct fip_desc) in the default branch.  The
+named descriptor cases (FIP_DT_MAC, FIP_DT_NAME, FIP_DT_VN_ID) checked
+their per-type minimum lengths, but a FIP_DT_NON_CRITICAL descriptor
+(fip_dtype >= 128, which the standard requires receivers to silently
+ignore) skipped that check entirely.
 
-1. The non-root path begins with kmemdup(&block[dir_offset],
-   sizeof(*dir->uuid), ...) which always reads 4 dwords from
-   dir_offset.  tb_property_entry_valid() only enforces
-   dir_offset + entry->length <= block_len, so a crafted entry
-   with dir_offset close to the end of the property block and
-   entry->length in 0..3 passes that gate but lets the UUID copy
-   run off the block (e.g. dir_offset = 497, dir_len = 3 in a
-   500-dword block reads block[497..501]).
+An unauthenticated L2 peer on the FCoE control VLAN could hang
+fcoe_ctlr_recv_work on an fcoe, qedf, or bnx2fc initiator indefinitely
+by emitting one FIP CVL frame whose single descriptor had fip_dtype ==
+FIP_DT_NON_CRITICAL and fip_dlen == 0: the cursor advanced zero bytes
+per iteration and the loop condition rlen >= sizeof(*desc) stayed true
+forever, blocking every subsequent FIP frame on that controller.
 
-2. After the kmemdup, content_len = dir_len - 4 underflows size_t
-   to ~SIZE_MAX, nentries becomes SIZE_MAX / 4, and the entry
-   walk runs OOB on each iteration until an entry fails
-   validation or the kernel oopses on an unmapped page.
+Tighten the outer dlen guard to also reject dlen < sizeof(struct
+fip_desc), so a malformed descriptor whose length cannot even cover the
+descriptor header is rejected before the switch.  This is the same
+lower-bound the named cases already apply and is the minimum scope that
+closes the loop.
 
-Reject dir_len < 4 on the non-root path *before* the UUID kmemdup,
-which closes both holes.
-
-Also move INIT_LIST_HEAD(&dir->properties) up to immediately after
-the dir allocation so the new error-return path (and the existing
-uuid-alloc failure path) calling tb_property_free_dir() sees a
-walkable list rather than the zero-initialized NULL next/prev that
-list_for_each_entry_safe() would oops on.
-
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+Fixes: 97c8389d54b9 ("[SCSI] fcoe, libfcoe: Add support for FIP. FCoE discovery and keep-alive.")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
+Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260518144307.2820961-1-michael.bommarito@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/property.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/scsi/fcoe/fcoe_ctlr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/property.c
-+++ b/drivers/thunderbolt/property.c
-@@ -174,10 +174,16 @@ static struct tb_property_dir *__tb_prop
- 	if (!dir)
- 		return NULL;
+--- a/drivers/scsi/fcoe/fcoe_ctlr.c
++++ b/drivers/scsi/fcoe/fcoe_ctlr.c
+@@ -1386,7 +1386,7 @@ static void fcoe_ctlr_recv_clr_vlink(str
  
-+	INIT_LIST_HEAD(&dir->properties);
-+
- 	if (is_root) {
- 		content_offset = dir_offset + 2;
- 		content_len = dir_len;
- 	} else {
-+		if (dir_len < 4) {
-+			tb_property_free_dir(dir);
-+			return NULL;
-+		}
- 		dir->uuid = kmemdup(&block[dir_offset], sizeof(*dir->uuid),
- 				    GFP_KERNEL);
- 		if (!dir->uuid) {
-@@ -191,8 +197,6 @@ static struct tb_property_dir *__tb_prop
- 	entries = (const struct tb_property_entry *)&block[content_offset];
- 	nentries = content_len / (sizeof(*entries) / 4);
- 
--	INIT_LIST_HEAD(&dir->properties);
--
- 	for (i = 0; i < nentries; i++) {
- 		struct tb_property *property;
- 
+ 	while (rlen >= sizeof(*desc)) {
+ 		dlen = desc->fip_dlen * FIP_BPW;
+-		if (dlen > rlen)
++		if (dlen < sizeof(*desc) || dlen > rlen)
+ 			goto err;
+ 		/* Drop CVL if there are duplicate critical descriptors */
+ 		if ((desc->fip_dtype < 32) &&
 
 
