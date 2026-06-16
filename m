@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3871D7995;
-	Tue, 16 Jun 2026 15:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E657D3ACA42;
+	Tue, 16 Jun 2026 15:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622318; cv=none; b=sxeV5foC05VYNmlxH96Au2NaR3TUPYQR5OA6XEIa3GxvOYyhqQ2JN4Ac265nkR9KpcTrNIm+kVIwcRhYwHK0ctzzXd1m6CwN2rGAYAcT9hbJM9VkcEE7GcK5nEEGOYI+9jvm7hGD5BbimOBWiz3AFabHvbpKS0WoTH5rhIsOBl0=
+	t=1781622324; cv=none; b=PktyG36nR7awk3gQ69UUdbZhLK1NO6bqSk/bWNgRtEgor/pA6nlMvtxAQNhGLNF7fF+m8Ns34+yAF9/WxeHW1v/HGTSxqelWI2LNWeHERtuGksGxFESxeku+Kg22CyQvlsl0C2OuRraH6dgOjJpRW/E0+mdAlZzn9jYPdS0cbI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622318; c=relaxed/simple;
-	bh=5pHw0KyEMxMspmFBPPGCHQ99ZRz1ZVB8PHyOsbsrJwY=;
+	s=arc-20240116; t=1781622324; c=relaxed/simple;
+	bh=TxIVv78UYuCRrwVrA9JmLSPHapawmrR4aoF4kDtpTbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IjRpVsgHdP3BobTOqsH409qKrtkDl7E7GkATM9hpOHT5iUd3/9I/h6s3Yfngf9vQ1qt3Q2+/sClurYVDGq2P1UwoqD1+v1a0oyw+sVkGEziXhseI9OJOKdYkScBD1aiKO94OuSOgZFCpus2jnE3Ly9OLskiQ6lU/rUMh1rd9VSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hjXG0Wg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UsiMkVMmJZEgbWShRwB7FGmI/KYbXSyKr1voQHaPQwxNEjJlDwJczlFlzYoexP6TxmOmq7jezfFsz9Rsy76MBrdtjdz3vbWSaJCk8WCD8IRHu417p9t82H5/Nw0ql3ifY0aYZx1WhnYTEy4Y44YYDJaJSj/dL2jzyWUA+Qiu+TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeZC0MQr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hjXG0Wg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37A01F000E9;
-	Tue, 16 Jun 2026 15:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeZC0MQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F222A1F000E9;
+	Tue, 16 Jun 2026 15:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622317;
-	bh=4QgrxuGf2w9tn11sPDGJcJM9J1/hfoOkddZwd9ioCfc=;
+	s=korg; t=1781622322;
+	bh=Y+pt4ENVo9y2wp3RM4lY5SVmRLZumn1iMoptSmGgnfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1hjXG0WgK976PIycZRu+6fMKhozQHmw8TTzc3szfFv2Ar78vLqP9UJtUufVi1XLoc
-	 HUMWAWi7pRYLLKDkC/d1knzjjLiozSU90YyW5Pj94kbKdHtLP357184PGSpbpqAWS8
-	 3ZM5XdkJeL9XtYIBjW0Pk+OUSJudmVHl9D6A5XLs=
+	b=jeZC0MQrVqUYEs9GNyMe69+ejRsk6SovGGaI7IVmTkMSxA4iC0yLSbtHJ9a0j7WjM
+	 b1rDpY3fTs31mY7iLaxylC2QeZ5DN0kwNEAYjWVaOc6CyjGAFRN06htT2ee+F652KV
+	 BHX9VkoSeVy2u7DnUcM6WbCJOWskv2mthTYPDXfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Davide Caratti <dcaratti@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/452] net/sched: cls_fw: fix NULL dereference of "old" filters before change()
-Date: Tue, 16 Jun 2026 20:23:49 +0530
-Message-ID: <20260616145117.922249950@linuxfoundation.org>
+Subject: [PATCH 5.15 002/411] net/sched: cls_fw: fix NULL dereference of "old" filters before change()
+Date: Tue, 16 Jun 2026 20:24:00 +0530
+Message-ID: <20260616145100.499825803@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
-References: <20260616145117.796205997@linuxfoundation.org>
+In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
+References: <20260616145100.376842714@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -147,10 +147,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
-index 2e5e8df5ca55c4..bc007bb47432cd 100644
+index a4ffee135c8557..60249d7b333af3 100644
 --- a/net/sched/cls_fw.c
 +++ b/net/sched/cls_fw.c
-@@ -74,9 +74,13 @@ TC_INDIRECT_SCOPE int fw_classify(struct sk_buff *skb,
+@@ -72,9 +72,13 @@ static int fw_classify(struct sk_buff *skb, const struct tcf_proto *tp,
  			}
  		}
  	} else {
