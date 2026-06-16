@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC9444E045;
-	Tue, 16 Jun 2026 16:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4D946AED1;
+	Tue, 16 Jun 2026 16:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628061; cv=none; b=tvHHDVc+ffnrypGpeR6RJK9HYnqh+ajjRcoNSbO0zcDylHLbvuLM+2mThHwxBra6XhsuKr0YDBnmP5r8AF6wAS+1G2Z6hEXhKc85Wb5SjtnQNeA+2VysS6fVNQfWEb0+ktKIApjq+LU5Re6gOGxW+KaPQghAUa95wYM0nbgTbdo=
+	t=1781628067; cv=none; b=S8/sLyCgNRUIBySoySACnCBxaxO/1yUcSv4juyItQVc6XUj+NZ+uEGQRq7yqohrIYfjgkn5+2GM46ogwElpDTXeOWoFMcM1eeost25FMlHKpem6SDG7nx8kuAQmaBiiWlZ6JI4/h5fFQow+RMmevO6nabANApOd3ww3qtoolnaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628061; c=relaxed/simple;
-	bh=GPy+/eFS1Ipz/7mde9VJ5s2FzN2itpt+wYPjjtGYkhs=;
+	s=arc-20240116; t=1781628067; c=relaxed/simple;
+	bh=tDXT5XrWWjH+26fHYYwGx0Cv24lypdu6QjqFd4VT4lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hy0zZfvjcANsWkygYtCTyywATwmQnuIaibFWpNOfU+So0TTRjWz4+AslzLxmCiKjM44g4mRXegUyex/qN6fTLxsDOxwECVoKr6bT94hDwZLne5mZsp37+zES15i/m/qA5B7S+xFBB3UUiLEQZojHofO3YMkMZHXBgzUc+e7ywTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIePmgqr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e0F+Itokv+voKYopn20ZsjSt5vFz9B/ctZe/h93nNKS7q606IXu+f5TBAjZV4/iQqXwqPtgAJx86TRccpebmPNYFVGoW3tmMc9g66gONvXm86JJLjetpLr2Pk7N9noTjyTRVJcVUbPfTZNrEeQZ/NiR0yALRIIf9Zk6x9wV4cM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9BrCZk+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIePmgqr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD3C1F000E9;
-	Tue, 16 Jun 2026 16:40:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9BrCZk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB7E1F000E9;
+	Tue, 16 Jun 2026 16:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628060;
-	bh=WcHTEkdUKxD052QxzuB3npXkqX3UnN+qg/hdBzP4XfM=;
+	s=korg; t=1781628066;
+	bh=ZoOyGimHNHl4w8aA9QscWXkZCkxtEfNBW+L4VCtwyek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WIePmgqr7wsYsuPpOs+zbSexG52BXp9QEa/mqCR7M6teU+eZL5sqZn3hD8dpfo7OR
-	 X69qUb5KuE0LixEj49h7j0p4BAVoinbIm1Tft8pwClac7e5rtwIWioMZ7tWvxaU3UA
-	 9gNAEJRCo7tHShVXZWENpuT/WfTUjz6XjDwYhvqo=
+	b=E9BrCZk+cjZH4+mbgH4Kbt92gx7MFcm+0e+tmbBEpgFHLpauKk8/JeQFoY4XeYp7h
+	 oiSGKM/XA2Fb05nqu39DecUaIIVKQaNQbg+as6TYymWEoAFbLZHFNgSls9D7mRZRcw
+	 AgXUzNA1zHBXAjQs6eyjiuKvz9wx0oO+FyVUhSGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf.kernel@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Jeffery <djeffery@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/452] net/iucv: fix locking in .getsockopt
-Date: Tue, 16 Jun 2026 20:24:11 +0530
-Message-ID: <20260616145119.118256984@linuxfoundation.org>
+Subject: [PATCH 6.6 025/452] scsi: core: Run queues for all non-SDEV_DEL devices from scsi_run_host_queues
+Date: Tue, 16 Jun 2026 20:24:12 +0530
+Message-ID: <20260616145119.171163150@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,85 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: David Jeffery <djeffery@redhat.com>
 
-[ Upstream commit 3589d20a666caf30ad100c960a2de7de390fce88 ]
+[ Upstream commit 7205b58702273baf21d6ba7992e6ba15852325f7 ]
 
-Mirror iucv_sock_setsockopt() and wrap the whole switch in
-lock_sock()/release_sock(). The pre-existing SO_MSGLIMIT-only lock
-becomes redundant and is removed.
+While a SCSI host is in a recovery state, scsi_mq_requeue_cmd() will not
+set the requeue list for a requeued command to be kicked in the future.
+The expectation is a call to scsi_run_host_queues() will kick all SCSI
+devices once the recovery state is cleared.
 
-Any AF_IUCV HIPER user can potentially crash the kernel by racing
-recvmsg() with getsockopt(SO_MSGSIZE): the SO_MSGSIZE arm dereferences
-iucv->hs_dev->mtu after iucv_sock_close() (called from the racing
-recvmsg()) has set hs_dev to NULL, producing a NULL pointer dereference
-oops.
+However, scsi_run_host_queues() uses shost_for_each_device() which uses
+scsi_device_get() and so will ignore devices in a partially removed
+state like SDEV_CANCEL. But these devices may also have requeued
+requests, leaving their requests stuck from not being kicked and causing
+the removal process of the device to hang.
 
-Suggested-by: Stanislav Fomichev <sdf.kernel@gmail.com>
-Fixes: 51363b8751a6 ("af_iucv: allow retrieval of maximum message size")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Tested-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260521-af_iucv_fix2-v1-1-f16b1c510aa9@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+scsi_run_host_queues() needs to run against more devices than the macro
+shost_for_each_device() allows. Instead of using the too limiting
+scsi_device_get() state checks, only ignore devices in SDEV_DEL state or
+when unable to acquire a reference. Attempt to run the queues for all
+other devices when scsi_run_host_queues() is called.
+
+Fixes: 8b566edbdbfb ("scsi: core: Only kick the requeue list if necessary")
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260515180941.9698-1-djeffery@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/scsi/scsi_lib.c | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index 0f660b1d3bd51c..e9a9bb0dee065a 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -1539,7 +1539,7 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
- 	struct sock *sk = sock->sk;
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	unsigned int val;
--	int len;
-+	int len, rc;
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index efd1f1d6e4e9b0..2268e540f28ae6 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -474,10 +474,33 @@ void scsi_requeue_run_queue(struct work_struct *work)
  
- 	if (level != SOL_IUCV)
- 		return -ENOPROTOOPT;
-@@ -1552,26 +1552,34 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
+ void scsi_run_host_queues(struct Scsi_Host *shost)
+ {
+-	struct scsi_device *sdev;
++	struct scsi_device *sdev, *prev = NULL;
++	unsigned long flags;
  
- 	len = min_t(unsigned int, len, sizeof(int));
- 
-+	rc = 0;
+-	shost_for_each_device(sdev, shost)
++	spin_lock_irqsave(shost->host_lock, flags);
++	__shost_for_each_device(sdev, shost) {
++		/*
++		 * Only skip devices so deep into removal they will never need
++		 * another kick to their queues. Thus scsi_device_get() cannot
++		 * be used as it would skip devices in SDEV_CANCEL state which
++		 * may need a queue kick.
++		 */
++		if (sdev->sdev_state == SDEV_DEL ||
++		    !get_device(&sdev->sdev_gendev))
++			continue;
++		spin_unlock_irqrestore(shost->host_lock, flags);
 +
-+	lock_sock(sk);
- 	switch (optname) {
- 	case SO_IPRMDATA_MSG:
- 		val = (iucv->flags & IUCV_IPRMDATA) ? 1 : 0;
- 		break;
- 	case SO_MSGLIMIT:
--		lock_sock(sk);
- 		val = (iucv->path != NULL) ? iucv->path->msglim	/* connected */
- 					   : iucv->msglimit;	/* default */
--		release_sock(sk);
- 		break;
- 	case SO_MSGSIZE:
--		if (sk->sk_state == IUCV_OPEN)
--			return -EBADFD;
-+		if (sk->sk_state == IUCV_OPEN) {
-+			rc = -EBADFD;
-+			break;
-+		}
- 		val = (iucv->hs_dev) ? iucv->hs_dev->mtu -
- 				sizeof(struct af_iucv_trans_hdr) - ETH_HLEN :
- 				0x7fffffff;
- 		break;
- 	default:
--		return -ENOPROTOOPT;
-+		rc = -ENOPROTOOPT;
-+		break;
- 	}
-+	release_sock(sk);
++		if (prev)
++			put_device(&prev->sdev_gendev);
+ 		scsi_run_queue(sdev->request_queue);
 +
-+	if (rc)
-+		return rc;
++		prev = sdev;
++
++		spin_lock_irqsave(shost->host_lock, flags);
++	}
++	spin_unlock_irqrestore(shost->host_lock, flags);
++	if (prev)
++		put_device(&prev->sdev_gendev);
+ }
  
- 	if (put_user(len, optlen))
- 		return -EFAULT;
+ static void scsi_uninit_cmd(struct scsi_cmnd *cmd)
 -- 
 2.53.0
 
