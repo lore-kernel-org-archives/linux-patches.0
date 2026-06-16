@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F45721C16A;
-	Tue, 16 Jun 2026 17:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDAF47CC63;
+	Tue, 16 Jun 2026 17:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630832; cv=none; b=PP4VbRILjUDicouRlaBeIiy7Tt2r9FBMNtXfp6ocU50wYQlk8j0FNUKg3T4wgw3C/LbIcmnENKlpDD0qmT93vXAisRk+6Rj/dttLLGUo+Rp2O9iDE+22k9RPCnWiolD3nSKLYGcVbi8ghRGQQJ66BlGXXmKveiKZlknOI0yZ7HQ=
+	t=1781630839; cv=none; b=skrRdS/PZhcorkocq62+CCvYUtUCYs3QTDE69bGSNNvYlSDMzxTs5ovzu735kncS8gAWrtbQdssVGtPUb4fk1V9hY87v/s/xtVIjTiZk17m0R3SxtKJSY+eWmdY2eh/Mb8RGC77xyheW+ly/r5PC13t/YUU7ZYsgMRR55kTEG20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630832; c=relaxed/simple;
-	bh=9LWZpixmByk9CTYaaqtBJABhTvNS+eBpqNliabfrydQ=;
+	s=arc-20240116; t=1781630839; c=relaxed/simple;
+	bh=wv1VihaZ0r/JH3VN1oFgAeFvGydBS6yxk4oRNE/Mfgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PP+6f+w/QR4bFSuUWKKy6wdR1OnxHCIDygAlNSnuolUfjVqT2LWK6liM2CtihwVENh2DZxLS/qvQeEcS4PALq7CEmC5yvkha5lnpyMiN1IKFe2Pub3+dtxAC1uqce3jsS3oIXcS9JOzpx94tV84rQjBzyJO4gDyuv6yoT8OjYYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clRuJi57; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=f7+3caQ9SSNUReirktrPPmd0cAjAdcWkBDhZMKLP7VPzQ7q+PAz3HwS/Do1I1iWI+2uU74/k2xk/+AvaVyrFx9ZMQII21tVq+zxibYzeDicjXp3rdvo3nI61n0Q8XVYx0Xzu30/dJDk32fbSgiBgs4yL2G+p33vkbnVvwRQAbFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/Y8L0xU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clRuJi57"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2899F1F000E9;
-	Tue, 16 Jun 2026 17:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/Y8L0xU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965F31F000E9;
+	Tue, 16 Jun 2026 17:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630829;
-	bh=R7yZvyKccgGroFVo2+Kzo3hLodanFb9yw/2D428p8lw=;
+	s=korg; t=1781630834;
+	bh=hqprzrcvLyALOVdLVsvaOH5OZrLZ7b5e8Po4mZyUj4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=clRuJi570/KUcqKSX6WXnuvswKqCb2j1ZlqzvSrZchkS3ISj/8onlarySZ4aZk1/Z
-	 Byv0ydFOZuNOp5brOZDm8oFTsgOtPC1YaQyl3IoUC4q9MUHkmqUZbga9e/7GXyFsA/
-	 GvLB5uzLmyPvc5JL0+/wVvTYRjsaVPrqv2kn35KQ=
+	b=L/Y8L0xUz3rkD7qYMfO/scNRvgN2yJg3BNALurw2Gy6qJXs7WyoHAadR6PyfjLqsf
+	 BLrtlGH/4i/CcvMiOqmDQRq/qyMp/o6xb+sjIypC4f8U2KjVL178CPuw/6XZOnF5mV
+	 EgNbsNmow+l//r2HjtHPkZkvzFSEmUuBtBk48Ygw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Arun R Murthy <arun.r.murthy@intel.com>,
-	Ben Kao <ben.kao@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/522] drm/dp: Add eDP 1.5 bit definition
-Date: Tue, 16 Jun 2026 20:23:38 +0530
-Message-ID: <20260616145129.150834378@linuxfoundation.org>
+Subject: [PATCH 6.1 072/522] drm/i915/psr: Read Intel DPCD workaround register
+Date: Tue, 16 Jun 2026 20:23:39 +0530
+Message-ID: <20260616145129.205875312@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -55,36 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Kandpal <suraj.kandpal@intel.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit 5dfc37a6b77bf6beedbd30d70184b54e1a08ccac upstream.
+commit f30bece421a4ae34359254e1dc2a187a42b6af9b upstream.
 
-Add the eDP revision bit value for 1.5.
+Read Intel DPCD workaround register and store it into
+intel_connector->dp.psr_caps. psr_caps was chosen as currently it contains
+only PSR workaround for PSR2 SDP on prior scanline implementation.
 
-Spec: eDPv1.5 Table 16-5
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Arun R Murthy <arun.r.murthy@intel.com>
-Tested-by: Ben Kao <ben.kao@intel.com>
-Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250206063253.2827017-2-suraj.kandpal@intel.com
 Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260515095756.2799483-3-jouni.hogander@intel.com
+(cherry picked from commit c48ff24d0f4ab7ad696b2d35ad64ce7e049c668c)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/display/drm_dp.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/display/intel_display_types.h | 1 +
+ drivers/gpu/drm/i915/display/intel_psr.c           | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/include/drm/display/drm_dp.h b/include/drm/display/drm_dp.h
-index b235d6833e27d9..7d3700490b68f0 100644
---- a/include/drm/display/drm_dp.h
-+++ b/include/drm/display/drm_dp.h
-@@ -955,6 +955,7 @@
- # define DP_EDP_14			    0x03
- # define DP_EDP_14a                         0x04    /* eDP 1.4a */
- # define DP_EDP_14b                         0x05    /* eDP 1.4b */
-+# define DP_EDP_15			    0x06    /* eDP 1.5 */
+diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
+index a8bf91a21cb246..a26c082bdc3289 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1637,6 +1637,7 @@ struct intel_dp {
+ 	u8 lttpr_phy_caps[DP_MAX_LTTPR_COUNT][DP_LTTPR_PHY_CAP_SIZE];
+ 	u8 fec_capable;
+ 	u8 pcon_dsc_dpcd[DP_PCON_DSC_ENCODER_CAP_SIZE];
++	u8 intel_wa_dpcd;
+ 	/* source rates */
+ 	int num_source_rates;
+ 	const int *source_rates;
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index a465b192931085..01fadf300ff679 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -31,6 +31,7 @@
+ #include "intel_crtc.h"
+ #include "intel_de.h"
+ #include "intel_display_types.h"
++#include "intel_dpcd.h"
+ #include "intel_dp_aux.h"
+ #include "intel_hdmi.h"
+ #include "intel_psr.h"
+@@ -388,6 +389,12 @@ void intel_psr_init_dpcd(struct intel_dp *intel_dp)
+ 			intel_dp_get_su_granularity(intel_dp);
+ 		}
+ 	}
++
++	if (intel_dp->psr.sink_psr2_support)
++		drm_dp_dpcd_read(&intel_dp->aux,
++				 INTEL_DPCD_INTEL_WA_REGISTER_CAPS,
++				 &intel_dp->intel_wa_dpcd,
++				 sizeof(intel_dp->intel_wa_dpcd));
+ }
  
- #define DP_EDP_GENERAL_CAP_1		    0x701
- # define DP_EDP_TCON_BACKLIGHT_ADJUSTMENT_CAP		(1 << 0)
+ static void intel_psr_enable_sink(struct intel_dp *intel_dp)
 -- 
 2.53.0
 
