@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2FD47799B;
-	Tue, 16 Jun 2026 16:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676CB46AED1;
+	Tue, 16 Jun 2026 16:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628098; cv=none; b=r/H5KnfZABYfG3IYly3rLkSxgCLyss60GMRs2molybGGUa/a1xlP4I9ZUj57YJH/Xn9W5/lh4rbi3CnDu8aeNklOPst6BjQ7Qy3auac5CuM8KwF92UCbu9Xtv8LOA4dZDmgY7EnmNcPMSiihNDyDtOppeeDt4WmYvLb3X7/tqOc=
+	t=1781628103; cv=none; b=SST7TcXBilMLFB/O24Zhj0HuySJB7J8v1u9J0R3cjSnQaXrhLQKTvAWSFvwigIsGd2WF/DxzTfMHr3GKesJeOwER7tqDUwY/QzNxUdyBTmN6Eu4IkQkH3ZL1EP04TXwukIzjpQFeEp7+vFzFuzooJFlKsDzcE4vJZuGd/Lokloc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628098; c=relaxed/simple;
-	bh=rcVqZXrPLx84MiAkBXpsfCX1DVrFlr3HPLcyMyJbWJk=;
+	s=arc-20240116; t=1781628103; c=relaxed/simple;
+	bh=V9uNMys/iv3KHZodYE9qv6maQMk+OrCUeDtxy+WLcvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fm0LmKkwTG7bMsA1gUQNCaO76QiMKKgYdxxWunGdIbwk4fQG5kBaoKhaU+ZKIgIAgEShSF9jMF5Ye7DP6V2epSz7ZZ1lNNrUXFqIqq1e0ocd9Z38RfX2GZjDk5WfRXZUWEwPEhOJfvk/XPnZSxZYpFCT4YNHZM/dt27BehoyOS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMbzRaYI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N0bYCxdhKA6ExeoleNzsGHTWsxo1XeWQ6Lvwkibe8EBR3b2j/f3B63td5V7tLNRbpXNMxP7zbGc+Bmaurp4zLwnqhJMAx9czBEnLFeSyj4dePa4yy0E4TCcYLaIeVcGygPlWWkfHgP4FiUyrrRyu/KUxaBsyI+m6TZwVKNGUMy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGAt3lpH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMbzRaYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F401F000E9;
-	Tue, 16 Jun 2026 16:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGAt3lpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DAC1F000E9;
+	Tue, 16 Jun 2026 16:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628096;
-	bh=lZANI4AiXVsEzhLfJbxLHOA8hAuAG/+ickzFoDghBDA=;
+	s=korg; t=1781628102;
+	bh=lFbEDvVhhEDxnY1pzIgFkOUs7ULAv5yc4ZSOtmu3EfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sMbzRaYIJbFjGM5jJh21iJyPwganSSUwckzLYq65RhQcyDzMBgpX6ySk6bJmJnla8
-	 k9KY00Ed7WrXc8Q7oL2EWVQhGu/Vm9vm2RDvIgpeF4lN9ucQqfwsLGxkZgCG5SFwG0
-	 jboz886NXg+baaOrsc5Np0QMuhwohxMpbFb5ZI9E=
+	b=wGAt3lpHqXHj90/amJRmW/+nQCe7W1hqzyNfa2dE1dNq53eU7BD3do7ZxlSqw7qEu
+	 sM/Ad0i1vDNYxO50FQlUOvxM4l/VaIvpZbnNlJHsEt24N3VdrpNlqpWkJP5iQ1sjVS
+	 Lw1m9XvMc5ES0uGof3fOc4uZo4EnakLQoU+2VVEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefano Brivio <sbrivio@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/452] tunnels: load network headers after skb_cow() in iptunnel_pmtud_build_icmp[v6]()
-Date: Tue, 16 Jun 2026 20:24:17 +0530
-Message-ID: <20260616145119.468722337@linuxfoundation.org>
+Subject: [PATCH 6.6 031/452] vxlan: do not reuse cached ip_hdr() value after skb_tunnel_check_pmtu()
+Date: Tue, 16 Jun 2026 20:24:18 +0530
+Message-ID: <20260616145119.534477481@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -54,82 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b4bc94353050b1fa7b702bd4c6600710dd926cff ]
+[ Upstream commit 7d9ef0cb271555d8cf39fefe6c981e1493b25ecf ]
 
-Sashiko found that iptunnel_pmtud_build_icmp() and
-iptunnel_pmtud_build_icmpv6() were caching ip_hdr() and ipv6_hdr()
-before an skb_cow() call which can reallocate skb->head.
+skb_tunnel_check_pmtu() can change skb->head.
 
-Fix this possible UAF by initializing the local variables
-after the skb_cow() call.
+Reusing old_iph afer skb_tunnel_check_pmtu() can cause an UAF.
 
-Remove skb_reset_network_header() calls which were not needed.
+Use instead ip_hdr(skb) as done in drivers/net/bareudp.c
+and drivers/net/geneve.c.
+
+Found by Sashiko.
 
 Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Link: https://patch.msgid.link/20260525201335.2361845-1-edumazet@google.com
+Link: https://patch.msgid.link/20260525203642.2389723-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel_core.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index 75e3d7501752df..5fb437f040ace7 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -194,7 +194,7 @@ EXPORT_SYMBOL_GPL(iptunnel_handle_offloads);
-  */
- static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
- {
--	const struct iphdr *iph = ip_hdr(skb);
-+	const struct iphdr *iph;
- 	struct icmphdr *icmph;
- 	struct iphdr *niph;
- 	struct ethhdr eh;
-@@ -208,7 +208,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 1a973dcf256127..958d3be4f99086 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2607,7 +2607,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 			goto out_unlock;
+ 		}
  
- 	skb_copy_bits(skb, skb_mac_offset(skb), &eh, ETH_HLEN);
- 	pskb_pull(skb, ETH_HLEN);
--	skb_reset_network_header(skb);
+-		tos = ip_tunnel_ecn_encap(tos, old_iph, skb);
++		tos = ip_tunnel_ecn_encap(tos, ip_hdr(skb), skb);
+ 		ttl = ttl ? : ip4_dst_hoplimit(&rt->dst);
+ 		err = vxlan_build_skb(skb, ndst, sizeof(struct iphdr),
+ 				      vni, md, flags, udp_sum);
+@@ -2670,7 +2670,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 			goto out_unlock;
+ 		}
  
- 	err = pskb_trim(skb, 576 - sizeof(*niph) - sizeof(*icmph));
- 	if (err)
-@@ -218,7 +217,7 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
- 	err = skb_cow(skb, sizeof(*niph) + sizeof(*icmph) + ETH_HLEN);
- 	if (err)
- 		return err;
--
-+	iph = ip_hdr(skb);
- 	icmph = skb_push(skb, sizeof(*icmph));
- 	*icmph = (struct icmphdr) {
- 		.type			= ICMP_DEST_UNREACH,
-@@ -290,7 +289,7 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
-  */
- static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
- {
--	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
-+	const struct ipv6hdr *ip6h;
- 	struct icmp6hdr *icmp6h;
- 	struct ipv6hdr *nip6h;
- 	struct ethhdr eh;
-@@ -305,7 +304,6 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
- 
- 	skb_copy_bits(skb, skb_mac_offset(skb), &eh, ETH_HLEN);
- 	pskb_pull(skb, ETH_HLEN);
--	skb_reset_network_header(skb);
- 
- 	err = pskb_trim(skb, IPV6_MIN_MTU - sizeof(*nip6h) - sizeof(*icmp6h));
- 	if (err)
-@@ -316,6 +314,7 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
- 	if (err)
- 		return err;
- 
-+	ip6h = ipv6_hdr(skb);
- 	icmp6h = skb_push(skb, sizeof(*icmp6h));
- 	*icmp6h = (struct icmp6hdr) {
- 		.icmp6_type		= ICMPV6_PKT_TOOBIG,
+-		tos = ip_tunnel_ecn_encap(tos, old_iph, skb);
++		tos = ip_tunnel_ecn_encap(tos, ip_hdr(skb), skb);
+ 		ttl = ttl ? : ip6_dst_hoplimit(ndst);
+ 		skb_scrub_packet(skb, xnet);
+ 		err = vxlan_build_skb(skb, ndst, sizeof(struct ipv6hdr),
 -- 
 2.53.0
 
