@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D3046AEDB;
-	Tue, 16 Jun 2026 16:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1869C425CEE;
+	Tue, 16 Jun 2026 16:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627320; cv=none; b=Wi8/U5+KcMAbViVU5eoqN9QtYokm/eQV3JNrB9gOtpJBpbUPRrrg7s+clAwkvg7gvYtloCV1JYaWFmn6b1Vo5sv206DB5cnB0E9xPwlP7oPT7M9GU1Mp55+UNp4Rs6FkI18V56fEth2Ev3BxhxJWeoVFV9eHQlhJ5fJkxfw5hBY=
+	t=1781627325; cv=none; b=iPJmdAuUwjv2xS5BVDrWDhu7oZVTekyy+NFUxhNg3qZKORODgyMKqMP4L/rl+/TPWn1F7WLU6w8JpFvMpzOqBFP68mV+zyaXSiFe3dtcb9MIN5mZW4Uh3A1d6bNecyfaJ2gnJBwMqbjomNViz4oZOzf7zMuLcKkC95Hp4W3dTls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627320; c=relaxed/simple;
-	bh=0EDSydluTAoyw72oaag/Y0v3Jv3apo5gIlxH1Sjl7+Y=;
+	s=arc-20240116; t=1781627325; c=relaxed/simple;
+	bh=XM2l4vO85xolr6Hq+XMNdgfFXxBYMchn8xoEl/RRuns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQDh8k+kVLv0ZBEfaEUz4UOa/0q0dFC/ixxQt7ws7/XtAnd7Q5wrx5OSVaW6aJ9LhZ3he7b8DPuW/Lgiw+s7KXHKdPXa75bRwuxakqQThpXFdx7mKQexCDBNYH8AoVVn49RZcKn8jXRHqA5p0Aj5nknm9s7L+ihbIh+38bEhhAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sV6nm8K2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hsPqFn55WZK8tGYixLf5+GEEwRAEQq3n5UDF7uSxDVxHNH1PLkwXHZsEPbFvewc5nKla4QOOYQNo4KrXBpytdNxG2QNHVbc5jD4LwN9FRnfVCybuDdCdREKDFvReI19Q30SBONJQin982a3p9kD8L2hAUtD0fzMu36869GouoYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFt9yiwL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sV6nm8K2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B691F000E9;
-	Tue, 16 Jun 2026 16:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFt9yiwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40541F000E9;
+	Tue, 16 Jun 2026 16:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627319;
-	bh=Khyfcu2Ale2x8AoRny7zQa1GX5AdtoMuCppO75Dgfmg=;
+	s=korg; t=1781627323;
+	bh=gSlshGAov9h22XXYcjMRm8S8M3pyonFAQXZv+WzAg5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sV6nm8K2+ONcGJueqdKaETZuLJWZqtnsidrwNA6a2FOuuIbKVC0ITPjgLbRYWwYj5
-	 LRZQVU+LEhI9jQ5+MVThasF7qJrW9VP+Wv5Npx4RYBYV8a6WC2tdWDeBTjIIsRWWHS
-	 ABzvuXDSaDF/06F7suOn+MbXGIZYhMA28T3Q/3S0=
+	b=lFt9yiwL3aI+BzUntLQeD4iDvvZluuKlVtU9sspXv34V/lnecTd1aGMj7ILIxCWY0
+	 I6nqQtYO9dmPvtDzq6brHnI5jVTYekzqoLnMTX5UJ/XksCzHjtQFwHTpWAV84tFSfz
+	 FQ5xD8ONIlBKAVlU8ZvF9+8pjrErpP6GQiTC/FTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Russell King <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.12 155/261] ARM: 9475/1: entry: use byte load for KASAN VMAP stack shadow
-Date: Tue, 16 Jun 2026 20:29:53 +0530
-Message-ID: <20260616145052.261066618@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 156/261] mptcp: fix retransmission loop when csum is enabled
+Date: Tue, 16 Jun 2026 20:29:54 +0530
+Message-ID: <20260616145052.308608554@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 77a1f6883dc6e837bb2cb30b9b02e2f94338e2c6 upstream.
+commit d1918b36edcaed0ec4ef6888b2358c6b1ddcff47 upstream.
 
-Commit 44e9a3bb76e5 ("ARM: 9430/1: entry: Do a dummy read from
-VMAP shadow") added a dummy read from the KASAN VMAP stack shadow in
-__switch_to(). The read uses ldr, but the KASAN shadow address is
-byte-granular and is not guaranteed to be word aligned.
+Sashiko noted that retransmission with csum enabled can actually
+transmit new data, but currently the relevant code does not update
+accordingly snd_nxt.
 
-ARMv5 faults unaligned word loads. With CONFIG_KASAN_VMALLOC and
-CONFIG_VMAP_STACK enabled, ARM926/VersatilePB crashes in __switch_to()
-with an alignment exception before reaching init.
+The may cause incoming ack drop and an endless retransmission loop.
 
-Use ldrb for the dummy shadow access. The code only needs to fault in the
-shadow mapping if the stack shadow is missing, so a byte load is sufficient
-and matches the granularity of KASAN shadow memory.
+Address the issue incrementing snd_nxt as needed.
 
-Fixes: 44e9a3bb76e5 ("ARM: 9430/1: entry: Do a dummy read from VMAP shadow")
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Fixes: 4e14867d5e91 ("mptcp: tune re-injections for csum enabled mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-2-856831229976@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/kernel/entry-armv.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/protocol.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm/kernel/entry-armv.S
-+++ b/arch/arm/kernel/entry-armv.S
-@@ -567,7 +567,7 @@ ENTRY(__switch_to)
- 	@ are using KASAN
- 	mov_l	r2, KASAN_SHADOW_OFFSET
- 	add	r2, r2, ip, lsr #KASAN_SHADOW_SCALE_SHIFT
--	ldr	r2, [r2]
-+	ldrb	r2, [r2]
- #endif
- #endif
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2810,6 +2810,10 @@ static void __mptcp_retrans(struct sock
+ 	msk->bytes_retrans += len;
+ 	dfrag->already_sent = max(dfrag->already_sent, len);
+ 
++	/* With csum enabled retransmission can send new data. */
++	if (after64(dfrag->already_sent + dfrag->data_seq, msk->snd_nxt))
++		WRITE_ONCE(msk->snd_nxt, dfrag->already_sent + dfrag->data_seq);
++
+ reset_timer:
+ 	mptcp_check_and_set_pending(sk);
  
 
 
