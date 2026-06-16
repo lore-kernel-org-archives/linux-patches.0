@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE143A5E91;
-	Tue, 16 Jun 2026 18:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EBB35292A;
+	Tue, 16 Jun 2026 18:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633856; cv=none; b=pn7UsyE3oKW7KG+HZTsT2p9vqXTNTl/WQoUTgwdlKJ+T7syN9klfG0s8YmnGq+iDzLvF/+GlCQ3q/folXtWP5Awh+1LyeOb+KO7L+tMmbqO9wJYRHQe6KM9AVYHZqyVEl+w5519Fon4bbPzdGzqJmsQDbGvnHeXINWIwk/W0hKs=
+	t=1781633861; cv=none; b=I01yn2F+Q93M55lR5oszqxc52vzQ1wC7uDuJ2SfravGIdyUfzIqsaJEokHAaQE6sKz2STLrEOdnE2Dw6W4KJ91pzzSgcQ3HOqL1ekI1VXA4qbekYu0HvKeMt6rmeUFMVVUXUNMlxQ+RqPmAlI0Pjz4ezAI8b/ehBkWxEQbMEMvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633856; c=relaxed/simple;
-	bh=egXqJMENRz7ELYfZy1aC1OoMdBt5PI+a2sedHLOMvTU=;
+	s=arc-20240116; t=1781633861; c=relaxed/simple;
+	bh=BgaXbzj+y4Vrh9kMj4Nims2v+LtW2T3OptOPAsg3bHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IK/BnZqmYQsqvvvVF/YATg2CZdUgUwx0FpOMIcXgNGUWYNhd1aWbTAaSBhBmZbY7F1VVjHMblZ3Qqn6oMFWpsavyTnefqt8KBFl9TzZK3FDrv2V1ZSDeC/NzZFEEFAafum2UBfTfub3UFkBfWPLqattOeWNPGiHt9bIgIpuFqp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGV5Uf5+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ETJhL2m5CBpvMMM+H37PpMq+jnA7Z+MgV7UW9IDgmMmbnLgU9OkqsnNdWj5mqGIpH2bR6QstDqlRlVAl0ZBKrCfrH7izVeAGnG9EkMppfGlW4iO6R5/urD987byI/H0V+X8g7JmUV51Ao8OJduTH/EMGvxlewOchuvYPTXVkXM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Om1nLRd9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGV5Uf5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EC31F000E9;
-	Tue, 16 Jun 2026 18:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Om1nLRd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E1761F000E9;
+	Tue, 16 Jun 2026 18:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633855;
-	bh=uBxFkdUuqLsKyyimFpJALU7cxEcfNUnU05r45PGReOc=;
+	s=korg; t=1781633860;
+	bh=Zgi42OoX/+KZuyxh+DSDt+LVvjfN/9vC5YEB8ArE/Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGV5Uf5+5aIcwJDBHzFwmn5Hs99kOcpq/duSAviFkccqtCRQWM/IRdHgU3tu88bEs
-	 /TQcuAOPwwGay8t4FqNDaMmLzEyOYSngJ64b8b4QAmysFM98xn6y2XGn57hdUw/D8z
-	 zb+LMSvMbhEDmF9/RGABN56asXKbI8J9oRm6/AyU=
+	b=Om1nLRd9psLrxO4Os4SJ/jSZvRZsr695F/9ozXxcBIRz0gBGaVZASfOuEmcq5nKSY
+	 8yB1y/jgen3n/OvmqxcUMZvR0Gn/u6qqdfB+OweysIshBBuNWY/RH8YITY9Fw/KuTl
+	 QYRJSAYBm78ZceUT3J43CUnnJoeRGepxzJHgT0GE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Alexander Aring <aahringo@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yicong Hui <yiconghui@gmail.com>,
+	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+	Liu Ying <victor.liu@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 157/411] 6lowpan: fix off-by-one in multicast context address compression
-Date: Tue, 16 Jun 2026 20:26:35 +0530
-Message-ID: <20260616145108.822981957@linuxfoundation.org>
+Subject: [PATCH 5.15 158/411] drm/imx: Fix three kernel-doc warnings in dcss-scaler.c
+Date: Tue, 16 Jun 2026 20:26:36 +0530
+Message-ID: <20260616145108.879167450@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -57,65 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Yicong Hui <yiconghui@gmail.com>
 
-[ Upstream commit 2a58899d11009bffc7b4b32a571858f381121837 ]
+[ Upstream commit ae0383e5a9a4b12d68c76c4769857def4665deff ]
 
-The second memcpy in lowpan_iphc_mcast_ctx_addr_compress() uses
-&data[1] as destination and &ipaddr->s6_addr[11] as source, but
-both should be offset by one: &data[2] and &ipaddr->s6_addr[12]
-respectively.
+Fix the following W=1 kerneldoc warnings by adding the missing parameter
+descriptions for @phase0_identity and @nn_interpolation in
+dcss_scaler_filter_design() and @phase0_identity in
+dcss_scaler_gaussian_filter()
 
-This off-by-one has two consequences:
-1. data[1] is overwritten with s6_addr[11], corrupting the RIID
-   field in the compressed multicast address
-2. data[5] is never written, so uninitialized kernel stack memory
-   is transmitted over the network via lowpan_push_hc_data(),
-   leaking kernel stack contents
+Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:173 function parameter 'phase0_identity' not described in 'dcss_scaler_gaussian_filter'
+Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:270 function parameter 'phase0_identity' not described in 'dcss_scaler_filter_design'
+Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:270 function parameter 'nn_interpolation' not described in 'dcss_scaler_filter_design'
 
-The correct inline data layout must match what the decompression
-function lowpan_uncompress_multicast_ctx_daddr() expects:
-  data[0..1] = s6_addr[1..2]  (flags/scope + RIID)
-  data[2..5] = s6_addr[12..15] (group ID)
-
-Also zero-initialize the data array as a defensive measure against
-similar bugs in the future.
-
-Fixes: 5609c185f24d ("6lowpan: iphc: add support for stateful compression")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Link: https://patch.msgid.link/20260527081806.42747-1-zhaoyz24@mails.tsinghua.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9021c317b770 ("drm/imx: Add initial support for DCSS on iMX8MQ")
+Signed-off-by: Yicong Hui <yiconghui@gmail.com>
+Reviewed-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Link: https://patch.msgid.link/20260406180013.2442096-1-yiconghui@gmail.com
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/6lowpan/iphc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/imx/dcss/dcss-scaler.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/6lowpan/iphc.c b/net/6lowpan/iphc.c
-index 52fad5dad9f715..d762c49e722fae 100644
---- a/net/6lowpan/iphc.c
-+++ b/net/6lowpan/iphc.c
-@@ -1086,12 +1086,12 @@ static u8 lowpan_iphc_mcast_ctx_addr_compress(u8 **hc_ptr,
- 					      const struct lowpan_iphc_ctx *ctx,
- 					      const struct in6_addr *ipaddr)
- {
--	u8 data[6];
-+	u8 data[6] = {};
- 
- 	/* flags/scope, reserved (RIID) */
- 	memcpy(data, &ipaddr->s6_addr[1], 2);
- 	/* group ID */
--	memcpy(&data[1], &ipaddr->s6_addr[11], 4);
-+	memcpy(&data[2], &ipaddr->s6_addr[12], 4);
- 	lowpan_push_hc_data(hc_ptr, data, 6);
- 
- 	return LOWPAN_IPHC_DAM_00;
+diff --git a/drivers/gpu/drm/imx/dcss/dcss-scaler.c b/drivers/gpu/drm/imx/dcss/dcss-scaler.c
+index 47852b9dd5eaa2..d2a89a99bd71cf 100644
+--- a/drivers/gpu/drm/imx/dcss/dcss-scaler.c
++++ b/drivers/gpu/drm/imx/dcss/dcss-scaler.c
+@@ -166,6 +166,7 @@ static int exp_approx_q(int x)
+  * dcss_scaler_gaussian_filter() - Generate gaussian prototype filter.
+  * @fc_q: fixed-point cutoff frequency normalized to range [0, 1]
+  * @use_5_taps: indicates whether to use 5 taps or 7 taps
++ * @phase0_identity: whether to override phase 0 coefficients with identity filter
+  * @coef: output filter coefficients
+  */
+ static void dcss_scaler_gaussian_filter(int fc_q, bool use_5_taps,
+@@ -262,7 +263,9 @@ static void dcss_scaler_nearest_neighbor_filter(bool use_5_taps,
+  * @src_length: length of input
+  * @dst_length: length of output
+  * @use_5_taps: 0 for 7 taps per phase, 1 for 5 taps
++ * @phase0_identity: whether to override phase 0 coefficients with identity filter
+  * @coef: output coefficients
++ * @nn_interpolation: whether to use nearest neighbor instead of gaussian filter
+  */
+ static void dcss_scaler_filter_design(int src_length, int dst_length,
+ 				      bool use_5_taps, bool phase0_identity,
 -- 
 2.53.0
 
