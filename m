@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2AD45348A;
-	Tue, 16 Jun 2026 16:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CE7466B4B;
+	Tue, 16 Jun 2026 16:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628636; cv=none; b=ombaKqSMxqTsFrdJsOZ+S6+TAdcitGscMV2hZ81LMLdvOZhJUR3RBtZU+o8kVxhQphHPN9Pazc9wXl6/ceE91CqZ6EO8bEoypdQ6RDWAGc3V1mMIIJabatMpeO+B03nPnqUJhhlXxb9rW333uSLLteSedkkJlYACFhnjV2OqD9o=
+	t=1781628642; cv=none; b=aSM+UITmy3zQWKOBKttuiOd9WRbGlAe6KyNnvDL4MGhyffObdtx2iwj1OpEXyzGA8mBUMSaxqRtQC0IHXHr/HTAbV7/DY5SaaKnGP+Go8/W5rf4MRRPZvqRRPU8vZVK7otMbaKAUrax4jEEiXFyAluI/PcnvcpYG6GOJCZpahYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628636; c=relaxed/simple;
-	bh=1wZ1+m8G95iHhnYFQ6DByiO/chFCgXegzvUqB34uJtQ=;
+	s=arc-20240116; t=1781628642; c=relaxed/simple;
+	bh=2yHt6t+x7BzCR8MZjiU+qU0jDGz5O7+DTnfo+RczACM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doMAZtkRMS4QyqGq/xobyS9/8ulBbh0QQZU5hN/Exnu5vKn91e0peKBOBZh7QCDkSixrc1YwoMX6x2snFeIzrPenu51WhKSn1xWipQwKU0/4uGg4DohFysazKj8Ebz9tNlS0M9xRo0mPvqMQM2gE1dXuOw0b3SzN2J9khNg0z7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3QgaMRL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r3+WciMopAFfG1nXEpWyX15hLi+Gws5LAOzEl1VZ86osTQL1g7GqzYHTuTLtyuUBC0MLqqjSoQmVvjcklAZXCL4LGNb6pRkuFmJE6KQgcDfbmYo/ijJFYAvmNQt29SR9lFzvYwlxoW5DMYcQrmS6cwQaDJD2EqgmV6/UeweSs44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kvh5/8oi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3QgaMRL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4521F000E9;
-	Tue, 16 Jun 2026 16:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kvh5/8oi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E431F00A3D;
+	Tue, 16 Jun 2026 16:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628635;
-	bh=bvOr7NQ8Wq1obU6MU1TOk3OrJ9TCFHUq8CiAvF1H5rY=;
+	s=korg; t=1781628641;
+	bh=nIHo+HT0QVAPFcBd7m06hz22Eb3GMVAllNqOmp06iI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a3QgaMRLJEioNLNKGIpnRf4V8Zj15tvijZhjsCYdHkJatD7ctkVtflBez3FTZGaHx
-	 4l/WNeypyrrRNKzys66apo37qZCYh+zHpM5NqICCDZf+y1M95mMsQy2aCmGNP9dZan
-	 PKx5AzLHcYgcxvsMYxHolmLfmGe9xzF/DRSRuKRY=
+	b=Kvh5/8oiBqd+tC8fM9Lzh837SjZfWFnPTQMwUovdmax5GavVF11vZOt1sxHmpaWtK
+	 u1AwTV3uHvERwSQ0VU8iMLvZpgbjQPnHNLGQXsAdtPzpbCyxvAlXGqsLPUyT7HXdUy
+	 pwYvyyBADgmoTKHxD25ucNN5vP4qptmU2bGHtq64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Lee Jones <lee@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.6 133/452] HID: wacom: Fix OOB write in wacom_hid_set_device_mode()
-Date: Tue, 16 Jun 2026 20:26:00 +0530
-Message-ID: <20260616145124.721167130@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	linux-kbuild@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.6 134/452] iommu, debugobjects: avoid gcc-16.1 section mismatch warnings
+Date: Tue, 16 Jun 2026 20:26:01 +0530
+Message-ID: <20260616145124.773030844@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,81 +55,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit c0a8899e02ddebd51e2589835182c239c2e224ae upstream.
+commit 4c9ad387aa2d6785299722e54224d34764edaeb3 upstream.
 
-wacom_hid_set_device_mode() currently assumes that the HID_DG_INPUTMODE
-usage is always located in the first field (field[0]) of the feature report.
-However, a device can specify HID_DG_INPUTMODE in a different field.
+gcc-16 has gained some more advanced inter-procedual optimization
+techniques that enable it to inline the dummy_tlb_add_page() and
+dummy_tlb_flush() function pointers into a specialized version of
+__arm_v7s_unmap:
 
-If HID_DG_INPUTMODE is in a field other than the first one and the first
-field has a report_count smaller than the usage_index of HID_DG_INPUTMODE,
-this leads to an out-of-bounds write to r->field[0]->value.
+WARNING: modpost: vmlinux: section mismatch in reference: __arm_v7s_unmap+0x2cc (section: .text) -> dummy_tlb_add_page (section: .init.text)
+ERROR: modpost: Section mismatches detected.
 
-Fix this by storing the field index of HID_DG_INPUTMODE in 'struct
-hid_data' during feature mapping.  In wacom_hid_set_device_mode(), use
-this stored field index to access the correct field and add bounds
-checks to ensure both the field index and the value index are within
-valid ranges before writing.
+>From what I can tell, the transformation is correct, as this is only
+called when __arm_v7s_unmap() is called from arm_v7s_do_selftests(),
+which is also __init. Since __arm_v7s_unmap() however is not __init,
+gcc cannot inline the inner function calls directly.
 
+In debug_objects_selftest(), the same thing happens. Both the
+caller and the leaf function are __init, but the IPA pulls
+it into a non-init one:
+
+WARNING: modpost: vmlinux: section mismatch in reference: lookup_object_or_alloc+0x7c (section: .text.lookup_object_or_alloc) -> is_static_object (section: .init.text)
+
+Marking the affected functions as not "__init" would reliably avoid this
+issue but is not a good solution because it removes an otherwise correct
+annotation. I tried marking the functions as 'noinline', but that ended
+up not covering all the affected configurations.
+
+With some more experimenting, I found that marking these functions as
+__attribute__((noipa)) is both logical and reliable.
+
+In order to keep the syntax readable, add a custom macro for this in
+include/linux/compiler_attributes.h next to other related macros and
+use it to annotate both files.
+
+Link: https://lore.kernel.org/all/abRB6g-48ZX6Yl2r@willie-the-truck/
+Cc: Will Deacon <will@kernel.org>
+Cc: Thomas Gleixner <tglx@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: linux-kbuild@vger.kernel.org
 Cc: stable@vger.kernel.org
-Fixes: 5ae6e89f7409 ("HID: wacom: implement the finger part of the HID generic handling")
-Tested-by: Ping Cheng <ping.cheng@wacom.com>
-Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Will Deacon <will@kernel.org>
+Acked-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |   13 ++++++++++---
- drivers/hid/wacom_wac.h |    1 +
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ drivers/iommu/io-pgtable-arm-v7s.c  |   18 ++++++++++++------
+ include/linux/compiler_attributes.h |   11 +++++++++++
+ lib/debugobjects.c                  |    2 +-
+ 3 files changed, 24 insertions(+), 7 deletions(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -341,6 +341,7 @@ static void wacom_feature_mapping(struct
+--- a/drivers/iommu/io-pgtable-arm-v7s.c
++++ b/drivers/iommu/io-pgtable-arm-v7s.c
+@@ -894,21 +894,27 @@ struct io_pgtable_init_fns io_pgtable_ar
  
- 		hid_data->inputmode = field->report->id;
- 		hid_data->inputmode_index = usage->usage_index;
-+		hid_data->inputmode_field_index = field->index;
- 		break;
+ static struct io_pgtable_cfg *cfg_cookie __initdata;
  
- 	case HID_UP_DIGITIZER:
-@@ -556,9 +557,14 @@ static int wacom_hid_set_device_mode(str
- 
- 	re = &(hdev->report_enum[HID_FEATURE_REPORT]);
- 	r = re->report_id_hash[hid_data->inputmode];
--	if (r) {
--		r->field[0]->value[hid_data->inputmode_index] = 2;
--		hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
-+	if (r && hid_data->inputmode_field_index >= 0 &&
-+	    hid_data->inputmode_field_index < r->maxfield) {
-+		struct hid_field *field = r->field[hid_data->inputmode_field_index];
-+
-+		if (field && hid_data->inputmode_index < field->report_count) {
-+			field->value[hid_data->inputmode_index] = 2;
-+			hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
-+		}
- 	}
- 	return 0;
+-static void __init dummy_tlb_flush_all(void *cookie)
++/*
++ * __noipa prevents gcc from turning indirect iommu_flush_ops calls
++ * into direct calls from a specialized __arm_v7s_unmap() that triggers
++ * a build time section mismatch assertion.
++ */
++static __noipa void __init dummy_tlb_flush_all(void *cookie)
+ {
+ 	WARN_ON(cookie != cfg_cookie);
  }
-@@ -2810,6 +2816,7 @@ static int wacom_probe(struct hid_device
- 		return error;
  
- 	wacom_wac->hid_data.inputmode = -1;
-+	wacom_wac->hid_data.inputmode_field_index = -1;
- 	wacom_wac->mode_report = -1;
+-static void __init dummy_tlb_flush(unsigned long iova, size_t size,
+-				   size_t granule, void *cookie)
++static __noipa void __init dummy_tlb_flush(unsigned long iova, size_t size,
++					   size_t granule, void *cookie)
+ {
+ 	WARN_ON(cookie != cfg_cookie);
+ 	WARN_ON(!(size & cfg_cookie->pgsize_bitmap));
+ }
  
- 	if (hid_is_usb(hdev)) {
---- a/drivers/hid/wacom_wac.h
-+++ b/drivers/hid/wacom_wac.h
-@@ -297,6 +297,7 @@ struct wacom_shared {
- struct hid_data {
- 	__s16 inputmode;	/* InputMode HID feature, -1 if non-existent */
- 	__s16 inputmode_index;	/* InputMode HID feature index in the report */
-+	__s16 inputmode_field_index; /* InputMode HID feature field index in the report */
- 	bool sense_state;
- 	bool inrange_state;
- 	bool invert_state;
+-static void __init dummy_tlb_add_page(struct iommu_iotlb_gather *gather,
+-				      unsigned long iova, size_t granule,
+-				      void *cookie)
++static __noipa void __init dummy_tlb_add_page(struct iommu_iotlb_gather *gather,
++					      unsigned long iova,
++					      size_t granule,
++					      void *cookie)
+ {
+ 	dummy_tlb_flush(iova, granule, granule, cookie);
+ }
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -384,6 +384,17 @@
+ #endif
+ 
+ /*
++ * Optional: not supported by clang
++ *
++ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-noipa
++ */
++#if __has_attribute(noipa)
++# define __noipa __attribute__((noipa))
++#else
++# define __noipa
++#endif
++
++/*
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-weak-function-attribute
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-weak-variable-attribute
+  */
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -1076,7 +1076,7 @@ struct self_test {
+ 
+ static __initconst const struct debug_obj_descr descr_type_test;
+ 
+-static bool __init is_static_object(void *addr)
++static __noipa bool __init is_static_object(void *addr)
+ {
+ 	struct self_test *obj = addr;
+ 
 
 
