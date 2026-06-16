@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC03449EC3;
-	Tue, 16 Jun 2026 16:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F99478E38;
+	Tue, 16 Jun 2026 16:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628652; cv=none; b=gdlKihYhcbT3c1wEd3mDFP7BVnKdfH7+mFJdnYuezQD8RHWx+1hQ9hDsqSv2qvxIK6rWeWBlAY+fF1AmHwEwyYugu4uLjcBPgbN+426vmR5g5ooOqhBIxHIlVG9mowoI4IAw9rAku4LQDA3p2xWLee8EVJbqXah3jCp9bDjiF1o=
+	t=1781628657; cv=none; b=eDK5w47B6KNoGLCtTwWg3fsXVADjpWN91JnAwAtw8T8AgFKDgl0xJeGvESk3MkLzaHFzqGW8gqvp2qicgtOa4+WQSz7pWUvtyyT3zl/fzvhbHuAi/u/QP0dYPLNdQlpO2tEvH9Y0b0NJg1vqcgSSZ/cUOJcs3iywh4mBQIwhzfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628652; c=relaxed/simple;
-	bh=N8g/nCKAOSA275N+7gcuvgdcPx8UQn9RzYTxrEog70g=;
+	s=arc-20240116; t=1781628657; c=relaxed/simple;
+	bh=PcWrrjKV/Uen6lMHC89LO8a9hXcd7K69lZLkf8NjpsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3v+YevKibxz+kqQ31RIoX5ShTkrM+SZQUf1KgU4rcBHKSTJ8oX8ajCfZwM0ukr7dgkVNo1b0uu+pEB7mVyT0rxOWK5Jw2nptv3lAWlh1MayyG0sswQmoTtZziqoI0SPKGqY9zeOufMssYVzkUjhwvWHDN1QK5Aw4jFbKVny7aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKEHk0jo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pGulizoZ37WZ9BM8e6cunqI6Xc2UVLlh9N1zvdvbdHIQBra4Rynfi4YE0O3eELDK/o/3/YajRMnYv/Y6ouXP5Op5F8sCqubqh1YtefN3jxxtBuuaeRTpPeOYn6GVcTyK2MZkWLXKmGlTgatAGtNuUvtKwGtcDxGilf59tuxUYaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzfRH3f5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKEHk0jo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215A01F000E9;
-	Tue, 16 Jun 2026 16:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzfRH3f5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE401F000E9;
+	Tue, 16 Jun 2026 16:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628651;
-	bh=eUsma5g1WYIxLLpribTLeno7upuPvucxRVWi1XLvCf8=;
+	s=korg; t=1781628656;
+	bh=uiFm2V/AormpjS5vkNjTjUBEd58G1T2qjyltvF4TilE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gKEHk0jo3XZEWdv0MX8VoFt25B4CcQj3UKthMbnHnchl6zjdiRqfN7o/4Akd56BqJ
-	 mLf7KRbWiGnyjwu7u2QIW6XmnprvF9ZyoAEf99uwDS42dP2tZF/3lCNiPVQb4JD1hU
-	 Ku6Ffkpxf/8zJuiYwLZFvfcHQStB9n8xPy7eLm8s=
+	b=mzfRH3f54anLVWV+KR4PGT9ONtTHDFfwJFRXUsGKDemL3t8XHO+rOKgRHtVdY0RaN
+	 761BT7i+j+92qPS3GyIO7ASeo1Rbi1o+smFGeDzvx6/iR78MJi7IvMSIpA9OlvNf2p
+	 RutGxORA7AMxBFxMLokKu9KkAnYLrGNBW7gSXLic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.6 136/452] xfrm: route MIGRATE notifications to callers netns
-Date: Tue, 16 Jun 2026 20:26:03 +0530
-Message-ID: <20260616145124.876333219@linuxfoundation.org>
+Subject: [PATCH 6.6 137/452] xfrm: ah: use skb_to_full_sk in async output callbacks
+Date: Tue, 16 Jun 2026 20:26:04 +0530
+Message-ID: <20260616145124.926573892@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,161 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 7e2a4f7ca0952820731ef7bdadfc9a9e9d3571b4 upstream.
+commit 79d8be262377f7112cfa3088dfc4142d5a2533f3 upstream.
 
-xfrm_send_migrate() in net/xfrm/xfrm_user.c and pfkey_send_migrate()
-in net/key/af_key.c both hardcode &init_net for the multicast that
-announces a successful XFRM_MSG_MIGRATE / SADB_X_MIGRATE.
+When AH output is offloaded to an asynchronous crypto provider
+(hardware accelerators such as AMD CCP, or a forced-async software
+shim used for testing), the digest completion fires
+ah_output_done() / ah6_output_done() on a workqueue.  The egress
+skb at that point may have been originated by a TCP listener
+sending a SYN-ACK, which sets skb->sk to a request_sock via
+skb_set_owner_edemux(); it may also have been originated by an
+inet_timewait_sock retransmit.  Neither is a full struct sock, and
+passing the raw skb->sk to xfrm_output_resume() then forwards a
+non-full socket through the rest of the xfrm output chain.
 
-XFRM_MSG_MIGRATE arrives on a per-netns NETLINK_XFRM socket, and the
-rest of the xfrm/af_key netlink path was made netns-aware in 2008.
-The other 14 multicast paths in xfrm_user.c route their event using
-xs_net(x), xp_net(xp) or sock_net(skb->sk); only the migrate path
-was missed.
+xfrm_output_resume() and its downstream consumers expect a full
+sk where they dereference at all.  The natural egress path
+through ah_output_done() does not crash today because the
+consumers that read past sock_common are either gated by
+sk_fullsock() or short-circuit on flags that are clear on a fresh
+request_sock; an exhaustive walk of the 50 most plausible
+consumers under sch_fq, dev_queue_xmit, netfilter, tc-egress and
+cgroup-egress BPF found no current unguarded deref.  The bug is
+still a real type confusion that future consumer changes could
+turn into a memory-corruption primitive.
 
-Two consequences of the init_net hardcoding:
+This is the same bug class fixed for ESP in commit 1620c88887b1
+("xfrm: Fix the usage of skb->sk").  Apply the analogous fix to
+AH: convert skb->sk to a full socket pointer (or NULL) via
+skb_to_full_sk() before handing it to xfrm_output_resume().
 
-  1. The notification (selector, old/new endpoint addresses, and the
-     km_address) is delivered to listeners on init_net's
-     XFRMNLGRP_MIGRATE / pfkey BROADCAST_ALL groups rather than on
-     the issuing netns. An IKE daemon running in init_net therefore
-     receives migration notifications originating from any other
-     netns on the host.
+The same async AH callbacks were touched recently for an
+independent ESN-related ICV layout bug in commit ec54093e6a8f
+("xfrm: ah: account for ESN high bits in async callbacks"); the
+sk type-confusion addressed here is orthogonal.  This patch is
+part of an ongoing audit of the AH callback paths; an ah_output
+ihl-validation hardening series is also currently under review on
+netdev.
 
-  2. An IKE daemon running inside a non-init netns and subscribed
-     to its own XFRMNLGRP_MIGRATE / pfkey groups never receives the
-     notification of its own migration. IKEv2 MOBIKE / address-update
-     handling inside a netns is silently broken.
+Reproduced under UML + KASAN + lockdep with a forced-async
+hmac(sha1) shim that registers at priority 9999 and wraps the
+sync in-tree hmac-sha1-lib.  With the shim loaded, ah_output_done
+runs on every SYN-ACK egress through a transport-mode AH SA and
+skb->sk arrives as a request_sock (TCP_NEW_SYN_RECV); after this
+patch, xfrm_output_resume() receives the listener (the result of
+sk_to_full_sk()) and consumer derefs land on full-sock fields as
+intended.
 
-Thread struct net through km_migrate() and the xfrm_mgr.migrate
-function pointer, drop the &init_net override in xfrm_send_migrate()
-and pfkey_send_migrate(), and pass the caller's net (already in
-scope in xfrm_migrate() via sock_net(skb->sk)) all the way down.
-struct xfrm_mgr is in-tree only and not exported as a stable API,
-so the function-pointer signature change is internal.
-
-pfkey_broadcast() is already netns-aware via net_generic(net,
-pfkey_net_id) since the pernet conversion. The five other
-pfkey_broadcast() callers in af_key.c already pass xs_net(x),
-sock_net(sk) or a per-netns net, so this only removes the
-&init_net outlier.
-
-Fixes: 5c79de6e79cd ("[XFRM]: User interface for handling XFRM_MSG_MIGRATE")
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+Fixes: 9ab1265d5231 ("xfrm: Use actual socket sk instead of skb socket for xfrm_output_resume")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/xfrm.h     |    3 ++-
- net/key/af_key.c       |    6 +++---
- net/xfrm/xfrm_policy.c |    2 +-
- net/xfrm/xfrm_state.c  |    4 ++--
- net/xfrm/xfrm_user.c   |    5 ++---
- 5 files changed, 10 insertions(+), 10 deletions(-)
+ net/ipv4/ah4.c |    2 +-
+ net/ipv6/ah6.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -608,6 +608,7 @@ struct xfrm_mgr {
- 					   const struct xfrm_migrate *m,
- 					   int num_bundles,
- 					   const struct xfrm_kmaddress *k,
-+					   struct net *net,
- 					   const struct xfrm_encap_tmpl *encap);
- 	bool			(*is_alive)(const struct km_event *c);
- };
-@@ -1772,7 +1773,7 @@ int xfrm_sk_policy_insert(struct sock *s
- #ifdef CONFIG_XFRM_MIGRATE
- int km_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
- 	       const struct xfrm_migrate *m, int num_bundles,
--	       const struct xfrm_kmaddress *k,
-+	       const struct xfrm_kmaddress *k, struct net *net,
- 	       const struct xfrm_encap_tmpl *encap);
- struct xfrm_state *xfrm_migrate_state_find(struct xfrm_migrate *m, struct net *net,
- 						u32 if_id);
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -3563,7 +3563,7 @@ static int set_ipsecrequest(struct sk_bu
- #ifdef CONFIG_NET_KEY_MIGRATE
- static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
- 			      const struct xfrm_migrate *m, int num_bundles,
--			      const struct xfrm_kmaddress *k,
-+			      const struct xfrm_kmaddress *k, struct net *net,
- 			      const struct xfrm_encap_tmpl *encap)
- {
- 	int i;
-@@ -3668,7 +3668,7 @@ static int pfkey_send_migrate(const stru
+--- a/net/ipv4/ah4.c
++++ b/net/ipv4/ah4.c
+@@ -143,7 +143,7 @@ static void ah_output_done(void *data, i
  	}
  
- 	/* broadcast migrate message to sockets */
--	pfkey_broadcast(skb, GFP_ATOMIC, BROADCAST_ALL, NULL, &init_net);
-+	pfkey_broadcast(skb, GFP_ATOMIC, BROADCAST_ALL, NULL, net);
+ 	kfree(AH_SKB_CB(skb)->tmp);
+-	xfrm_output_resume(skb->sk, skb, err);
++	xfrm_output_resume(skb_to_full_sk(skb), skb, err);
+ }
  
- 	return 0;
+ static int ah_output(struct xfrm_state *x, struct sk_buff *skb)
+--- a/net/ipv6/ah6.c
++++ b/net/ipv6/ah6.c
+@@ -337,7 +337,7 @@ static void ah6_output_done(void *data,
+ 	ah6_restore_hdrs(top_iph, iph_ext, extlen);
  
-@@ -3679,7 +3679,7 @@ err:
- #else
- static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
- 			      const struct xfrm_migrate *m, int num_bundles,
--			      const struct xfrm_kmaddress *k,
-+			      const struct xfrm_kmaddress *k, struct net *net,
- 			      const struct xfrm_encap_tmpl *encap)
- {
- 	return -ENOPROTOOPT;
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -4595,7 +4595,7 @@ int xfrm_migrate(const struct xfrm_selec
- 	}
+ 	kfree(AH_SKB_CB(skb)->tmp);
+-	xfrm_output_resume(skb->sk, skb, err);
++	xfrm_output_resume(skb_to_full_sk(skb), skb, err);
+ }
  
- 	/* Stage 5 - announce */
--	km_migrate(sel, dir, type, m, num_migrate, k, encap);
-+	km_migrate(sel, dir, type, m, num_migrate, k, net, encap);
- 
- 	xfrm_pol_put(pol);
- 
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2583,7 +2583,7 @@ EXPORT_SYMBOL(km_policy_expired);
- #ifdef CONFIG_XFRM_MIGRATE
- int km_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
- 	       const struct xfrm_migrate *m, int num_migrate,
--	       const struct xfrm_kmaddress *k,
-+	       const struct xfrm_kmaddress *k, struct net *net,
- 	       const struct xfrm_encap_tmpl *encap)
- {
- 	int err = -EINVAL;
-@@ -2594,7 +2594,7 @@ int km_migrate(const struct xfrm_selecto
- 	list_for_each_entry_rcu(km, &xfrm_km_list, list) {
- 		if (km->migrate) {
- 			ret = km->migrate(sel, dir, type, m, num_migrate, k,
--					  encap);
-+					  net, encap);
- 			if (!ret)
- 				err = ret;
- 		}
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2963,10 +2963,9 @@ out_cancel:
- 
- static int xfrm_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
- 			     const struct xfrm_migrate *m, int num_migrate,
--			     const struct xfrm_kmaddress *k,
-+			     const struct xfrm_kmaddress *k, struct net *net,
- 			     const struct xfrm_encap_tmpl *encap)
- {
--	struct net *net = &init_net;
- 	struct sk_buff *skb;
- 	int err;
- 
-@@ -2984,7 +2983,7 @@ static int xfrm_send_migrate(const struc
- #else
- static int xfrm_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
- 			     const struct xfrm_migrate *m, int num_migrate,
--			     const struct xfrm_kmaddress *k,
-+			     const struct xfrm_kmaddress *k, struct net *net,
- 			     const struct xfrm_encap_tmpl *encap)
- {
- 	return -ENOPROTOOPT;
+ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
 
 
