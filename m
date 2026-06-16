@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9B721C16A;
-	Tue, 16 Jun 2026 17:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BF947B429;
+	Tue, 16 Jun 2026 17:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631834; cv=none; b=DbVrAYRe+Bej+ZX0F9H0oF+Y48DIyNBTMa2Itrxvnby65gu1qCl7dRbigA+nTYrKtex37IQy6Z+RNdCt1m4vDynisiX/lquW2FI9dT4so0XkqUhtIPZKU+S5LmoBLuf6inTHPBMup4KGiXCaI6z+1T5/0G4xwDaTTEWoTSGPwy0=
+	t=1781631840; cv=none; b=fQ4e6DW+bz1D7nZL8QYLeJq0wqIGLWoQh11apUK3JJg4b9UJ0zu6Ar4MhmQHQO+kFTTCOQGKz7p+3mdZoli/X4v22jICmXQucPrs0c0dk6ALcp7rvtqs56FkU1K32uMX4oLRzbbs5KSe2T4Ue3z8eWIQcGDUM6jrbN/aBfYCPL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631834; c=relaxed/simple;
-	bh=9kUoKrBR/yOIH66fAAzfkBp64jgmPVlwxsqL3uuhacE=;
+	s=arc-20240116; t=1781631840; c=relaxed/simple;
+	bh=wOeE0D/acMrt5ko9ARABpGHRPx0Se7o/snK0TGBXJqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ch5ZT3Vp1+RHyGQHJzmuQXzps895CmviV9ih5GvEhtfxMAcz0eoKowA7R2yxD41gNoB+cRwCTMsJi/4dVh+UEooEJpe5KW52xG/AOjDujtXBGwOX65KNoRW7ayzs1kNPgcUJFZ8tx1lLCHFejBBIYBI3IP6WkXftuGtBTYu0mbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSPtfCIR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ccXSOQYpDuVslAuNpqKZ0uos2IiD20l5W7Uuly7RpiYyZLs/YPtgZ8IvfY1JtsA4N9DH6Nvizb4ekgFAZsD5BuKkUBUW5Jgafm2FnPI4rzjszSSKMEMnaSyEGr1Y4VUisrWUX1n+loZi4T37Twwsl6kWOD6c1BZ1NduGlL9rFLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jn6VU8d8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSPtfCIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B681F000E9;
-	Tue, 16 Jun 2026 17:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jn6VU8d8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84291F000E9;
+	Tue, 16 Jun 2026 17:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631832;
-	bh=vVc26K62YwMzrwrBQZTvvBUwlTZfVJrMunY8XpbGDbw=;
+	s=korg; t=1781631837;
+	bh=Ck9+W41Y8mwjmdmOmpRSMPfeFmrghcAh4AKxm0jdubo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSPtfCIR2JwfBHjCILeRhzjjULjPaOtNpzMbdFtox5akmsAjPcXOZKDMBoWFeuZru
-	 ScFr9XieviPJOAL2gsFBamJz/QURKUAF5Ts2ONFUDhnd2d73nwX1bxvOJLyr4ER3S7
-	 unyuGd1QjEMrFZJfRr5NFOqHqagc7/n4PB1fSbW8=
+	b=Jn6VU8d8UTEnRr3N4sIEhCV5gaQhUHEOOQaeun79Se0P/kz+FYlA7y014RW5riwc/
+	 Y4M9oGswvNGPVQfGS/SsLcnNWWg0up1U8o0T0yunjGHeJl2B2u3A7mSTLy6iYdnS7u
+	 6nQrHlRdQWgYIV2/3cir59JgXUT8Z4e+++JDR/M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 278/522] ALSA: timer: Fix UAF at snd_timer_user_params()
-Date: Tue, 16 Jun 2026 20:27:05 +0530
-Message-ID: <20260616145138.955648117@linuxfoundation.org>
+	=?UTF-8?q?Guillermo=20Rodr=C3=ADguez?= <guille.rodriguez@gmail.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.1 296/522] i2c: stm32f7: fix timing computation ignoring i2c-analog-filter
+Date: Tue, 16 Jun 2026 20:27:23 +0530
+Message-ID: <20260616145139.763741115@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -44,52 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Guillermo Rodríguez <guille.rodriguez@gmail.com>
 
-commit 053a401b592be424fea9d57c789f66cd5d8cec11 upstream.
+commit a124579c0763da7bc408f4cd7e8f606cadc94855 upstream.
 
-At releasing a timer object, e.g. when a userspace timer
-(CONFIG_SND_UTIMER) gets closed and snd_timer_free() is called, it
-tries to detach the timer instances and release the resources.
-However, it's still possible that other in-flight tasks are holding
-the timer instance where the to-be-deleted timer object is associated,
-and this may lead to racy accesses.
+stm32f7_i2c_compute_timing() uses i2c_dev->analog_filter to pick
+the analog filter delay, but i2c_dev->analog_filter is parsed from
+the "i2c-analog-filter" DT property only after the compute_timing
+loop in stm32f7_i2c_setup_timing(), so in practice the timing
+calculations always ignore the analog filter. On an STM32MP1 board
+with clock-frequency = <400000> and i2c-analog-filter set, measured
+SCL frequency was ~382 kHz.
 
-Fortunately, most of ioctls dealing with the timer instance list
-already have the protection with register_mutex, and this also avoids
-such races.  But, SNDRV_TIMER_IOCTL_PARAMS isn't protected, hence the
-concurrent ioctl may lead to use-after-free.
+This also affects (widens) the computed SDADEL range. At high bus
+clock speeds, this can select an SDADEL value that violates tVD;DAT
+(data valid time).
 
-This patch just adds the guard with register_mutex to protect
-snd_timer_user_params() for covering the code path as a quick
-workaround.  It's no hot-path but rather a rarely issued ioctl, so the
-performance penalty doesn't matter.
+Fix by parsing "i2c-analog-filter" before the compute_timing loop.
 
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Kyle Zeng <kylebot@openai.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260606161145.1933447-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 83c3408f7b9c ("i2c: stm32f7: support DT binding i2c-analog-filter")
+Signed-off-by: Guillermo Rodríguez <guille.rodriguez@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.13+
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260526091210.20383-1-guille.rodriguez@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/timer.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-stm32f7.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -1842,6 +1842,7 @@ static int snd_timer_user_params(struct
- 	struct snd_timer *t;
- 	int err;
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -679,6 +679,9 @@ static int stm32f7_i2c_setup_timing(stru
+ 	if (!of_property_read_bool(i2c_dev->dev->of_node, "i2c-digital-filter"))
+ 		i2c_dev->dnf_dt = STM32F7_I2C_DNF_DEFAULT;
  
-+	guard(mutex)(&register_mutex);
- 	tu = file->private_data;
- 	if (!tu->timeri)
- 		return -EBADFD;
++	i2c_dev->analog_filter = of_property_read_bool(i2c_dev->dev->of_node,
++						       "i2c-analog-filter");
++
+ 	do {
+ 		ret = stm32f7_i2c_compute_timing(i2c_dev, setup,
+ 						 &i2c_dev->timing);
+@@ -700,9 +703,6 @@ static int stm32f7_i2c_setup_timing(stru
+ 		return ret;
+ 	}
+ 
+-	i2c_dev->analog_filter = of_property_read_bool(i2c_dev->dev->of_node,
+-						       "i2c-analog-filter");
+-
+ 	dev_dbg(i2c_dev->dev, "I2C Speed(%i), Clk Source(%i)\n",
+ 		setup->speed_freq, setup->clock_src);
+ 	dev_dbg(i2c_dev->dev, "I2C Rise(%i) and Fall(%i) Time\n",
 
 
