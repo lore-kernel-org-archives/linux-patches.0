@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956AB21C16A;
-	Tue, 16 Jun 2026 17:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5476247AF6E;
+	Tue, 16 Jun 2026 17:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630937; cv=none; b=nFAJo75qnDMaMM95nwX2vj8qMvWwpPa/Y7e3waNs6ahaak0hBMPWafKj2eu5BRBjmkwv1U7WX/W2tybYphs8K20bUNgyd3LEL55u3mL6oPF8d/riiVOfLvKdKIA51kotLxUkWj2KjEaQBQAXJgf5EBQn/iC0EkITsEKF0sDwnkc=
+	t=1781630943; cv=none; b=HuBy7hXZFhTsgxXp0Mfl8/Xo+iKX5lZ9Q+rEM5bLz89O+LLClkouJxVzqZhPwfGJG1sjphDFjIrun1TzQ2o+8Qbfa42oLgET1hAlxjJlCl9TvqQOq36CMR6TyclLiumDebMotDh/Wb/oqirrfxz6dC6hHoqFNZfIYPItQuNivD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630937; c=relaxed/simple;
-	bh=9YCVXCMoLxuz237yDOPnAH09X9ST+ekTY0PWkp71Rzs=;
+	s=arc-20240116; t=1781630943; c=relaxed/simple;
+	bh=q5cfg1ZmJ7/jmgwNB8i74IIoLnnh49YvZ82ftUfIDU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDtit/hL8L1FsOXEnbsDXepuyUq0BVL+XDZuRTJiwOKGjQXaTpG4OnrcamzdaIfs+RHtP2yMt7C88j3w8otm6SIvMel9NF/gfkq1Dbq0hDZ2DA6KYxo/v+EpPLlJQ5nlECdnC65xgwXSemwlDxtpMbXTqpRwxuTuDOGX6J3KthU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLG0Jpej; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OgvoyDC2rhKmkMoi+4/Q5KYQmjmVcl/j0yRhQaxEV0sJ5t+9K1zh27zQ9E906YCdZhWpO3G40Q3sMiLwwB1PPwTpgA3FsVh49oBy3z2X7KAkuZ+XdZ/XP7JG76ndlD0ZAkAxeszV2QWMqegikeMUISixlZbE0KjfE6TdVytluEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMX5nfUf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLG0Jpej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FC31F00A3A;
-	Tue, 16 Jun 2026 17:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMX5nfUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2D31F000E9;
+	Tue, 16 Jun 2026 17:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630934;
-	bh=yCecfQqk+rYZoVLSThykgiunVIicjW0uJfrf2+cz98g=;
+	s=korg; t=1781630938;
+	bh=djzGkt9KzaaGH7TQn/qqI7hXVjdOLYY2x0WgpFt9do8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YLG0JpejwV2Ssu9MxVvITuk42UnNsZSmrBDaZqQMWrWHljDlcXSTagHSthijxUTh+
-	 GVoeal9SEEh2QBx6fh0cMtuNfIoX0QlscXYMWUL3tqD9bP/yuyufLvsCUYaTNcP9PV
-	 i1a+iRtbPfRu1I6FzylZ1kskYvn6YBHTP7dnQR1U=
+	b=uMX5nfUfBrNVvFr3A43BwCjnWfn68HSVzuLB2v103Dhd4jacUEB0nM5mhTQol9XIc
+	 9YWKXn8gOyverQXU+SzbD+m3XOw1499jfW6WWQisDnHmoe/Ojqnh/56uSZGP9yXXSq
+	 mcLFqK8gS0vV0wH4nry/TS6othGN1TBzC9imlrhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 124/522] ip6: vti: Use ip6_tnl.net in vti6_siocdevprivate().
-Date: Tue, 16 Jun 2026 20:24:31 +0530
-Message-ID: <20260616145131.793771608@linuxfoundation.org>
+	Qi Tang <tpluszz77@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 125/522] ipv6: validate extension header length before copying to cmsg
+Date: Tue, 16 Jun 2026 20:24:32 +0530
+Message-ID: <20260616145131.844315043@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,88 +51,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Qi Tang <tpluszz77@gmail.com>
 
-commit 8b484efd5cb4eeef9021a661e198edc5349dacf6 upstream.
+commit dd433671fef381fdaf7b530c631e6b782d66e224 upstream.
 
-After patch 1/2 in this series, vti6_update() unlinks and relinks
-the tunnel through t->net. vti6_siocdevprivate() still uses
-dev_net(dev) for the collision lookup. For a tunnel moved through
-IFLA_NET_NS_FD, dev_net(dev) is the new netns, not t->net.
+ip6_datagram_recv_specific_ctl() builds IPV6_{HOPOPTS,DSTOPTS,RTHDR}
+cmsgs (and their IPV6_2292* legacy counterparts) by trusting the
+on-wire hdrlen byte (ptr[1]) when computing the put_cmsg() length.
+The length was validated only at parse time (ipv6_parse_hopopts(),
+etc.).  An nftables payload-write expression can rewrite hdrlen after
+parsing and before the skb reaches recvmsg; the write itself is
+in-bounds but put_cmsg() then reads up to ((hdrlen+1) << 3) = 2040
+bytes from an 8-byte header.  nftables is reachable from an
+unprivileged user namespace, so this is an unprivileged
+slab-out-of-bounds read:
 
-SIOCCHGTUNNEL on a migrated tunnel then runs:
+  BUG: KASAN: slab-out-of-bounds in put_cmsg+0x3ac/0x540
+   put_cmsg+0x3ac/0x540
+   udpv6_recvmsg+0xca0/0x1250
+   sock_recvmsg+0xdf/0x190
+   ____sys_recvmsg+0x1b1/0x620
 
-  net = dev_net(dev)                    /* migrated netns */
-  t   = vti6_locate(net, &p1, false)    /* misses target in t->net */
-  ...
-  t   = netdev_priv(dev)
-  vti6_update(t, &p1, false)            /* mutates t->net's hash */
+Add ipv6_get_exthdr_len() which validates that at least two bytes
+are accessible before reading the hdrlen field, then checks the
+computed length against skb_tail_pointer(skb), returning 0 on
+failure.  Extension headers are kept in the linear skb area by
+pskb_may_pull() during input, so skb_tail_pointer() is the correct
+bound.
 
-A caller in the migrated netns picks params that match a tunnel
-in the creation netns. The lookup in dev_net(dev) finds nothing.
-vti6_update() prepends the migrated tunnel at the head of the
-creation netns hash bucket for those params. Later lookups in
-the creation netns resolve to the migrated device. xfrm receive
-delivers the matched packets through a device the caller controls.
+Use ipv6_get_exthdr_len() at all non-AH call sites: the five
+standalone cmsg blocks (HbH, 2292HbH, 2292DSTOPTS x2, 2292RTHDR)
+and the three standard cases in the extension-header walk loop
+(DSTOPTS, ROUTING, default).  AH retains an inline bounds check
+because its length formula differs ((ptr[1]+2)<<2).
 
-Reachable from an unprivileged user namespace (unshare --user
---map-root-user --net). Cross tenant scope on container hosts.
+The walk loop also gets a pre-read bounds check at the top to
+validate ptr before any case accesses ptr[0] or ptr[1].
 
-Switch the SIOCCHGTUNNEL path on a non fallback device to use
-t->net for the lookup. The lookup now matches the netns
-vti6_update() operates on.
+When the walk loop detects a corrupted header, return from the
+function instead of continuing to process later socket options.
 
-Also add ns_capable(self->net->user_ns, CAP_NET_ADMIN) before
-the lookup. The check at the top of the case is against
-dev_net(dev)->user_ns, which after migration is the attacker's
-netns. A caller there can pick params absent from self->net,
-the lookup returns NULL, t becomes self, and vti6_update()
-inserts the device into the creation netns hash. The new check
-requires CAP_NET_ADMIN in the creation netns user_ns too.
-
-SIOCADDTUNNEL and SIOCCHGTUNNEL on the fallback device keep
-dev_net(dev), which equals init_net there.
-
-Fixes: 61220ab34948 ("vti6: Enable namespace changing")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Suggested-by: Xiao Liang <shaw.leon@gmail.com>
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260521130555.3421684-3-maoyixie.tju@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260523143245.2281415-1-tpluszz77@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_vti.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/ipv6/datagram.c |   54 ++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 46 insertions(+), 8 deletions(-)
 
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -840,17 +840,24 @@ vti6_siocdevprivate(struct net_device *d
- 		if (p.proto != IPPROTO_IPV6  && p.proto != 0)
- 			break;
- 		vti6_parm_from_user(&p1, &p);
--		t = vti6_locate(net, &p1, cmd == SIOCADDTUNNEL);
- 		if (dev != ip6n->fb_tnl_dev && cmd == SIOCCHGTUNNEL) {
-+			struct ip6_tnl *self = netdev_priv(dev);
-+
-+			err = -EPERM;
-+			if (!ns_capable(self->net->user_ns, CAP_NET_ADMIN))
-+				break;
-+			t = vti6_locate(self->net, &p1, false);
- 			if (t) {
- 				if (t->dev != dev) {
- 					err = -EEXIST;
- 					break;
- 				}
- 			} else
--				t = netdev_priv(dev);
-+				t = self;
+--- a/net/ipv6/datagram.c
++++ b/net/ipv6/datagram.c
+@@ -616,6 +616,18 @@ void ip6_datagram_recv_common_ctl(struct
+ 	}
+ }
  
- 			err = vti6_update(t, &p1, false);
-+		} else {
-+			t = vti6_locate(net, &p1, cmd == SIOCADDTUNNEL);
- 		}
- 		if (t) {
- 			err = 0;
++static u16 ipv6_get_exthdr_len(const struct sk_buff *skb, const u8 *ptr)
++{
++	u16 len;
++
++	if (ptr + 2 > skb_tail_pointer(skb))
++		return 0;
++
++	len = (ptr[1] + 1) << 3;
++
++	return (len <= skb_tail_pointer(skb) - ptr) ? len : 0;
++}
++
+ void ip6_datagram_recv_specific_ctl(struct sock *sk, struct msghdr *msg,
+ 				    struct sk_buff *skb)
+ {
+@@ -642,7 +654,10 @@ void ip6_datagram_recv_specific_ctl(stru
+ 	/* HbH is allowed only once */
+ 	if (np->rxopt.bits.hopopts && (opt->flags & IP6SKB_HOPBYHOP)) {
+ 		u8 *ptr = nh + sizeof(struct ipv6hdr);
+-		put_cmsg(msg, SOL_IPV6, IPV6_HOPOPTS, (ptr[1]+1)<<3, ptr);
++		u16 len = ipv6_get_exthdr_len(skb, ptr);
++
++		if (len)
++			put_cmsg(msg, SOL_IPV6, IPV6_HOPOPTS, len, ptr);
+ 	}
+ 
+ 	if (opt->lastopt &&
+@@ -663,26 +678,37 @@ void ip6_datagram_recv_specific_ctl(stru
+ 			unsigned int len;
+ 			u8 *ptr = nh + off;
+ 
++			if (ptr + 2 > skb_tail_pointer(skb))
++				return;
++
+ 			switch (nexthdr) {
+ 			case IPPROTO_DSTOPTS:
+ 				nexthdr = ptr[0];
+-				len = (ptr[1] + 1) << 3;
++				len = ipv6_get_exthdr_len(skb, ptr);
++				if (!len)
++					return;
+ 				if (np->rxopt.bits.dstopts)
+ 					put_cmsg(msg, SOL_IPV6, IPV6_DSTOPTS, len, ptr);
+ 				break;
+ 			case IPPROTO_ROUTING:
+ 				nexthdr = ptr[0];
+-				len = (ptr[1] + 1) << 3;
++				len = ipv6_get_exthdr_len(skb, ptr);
++				if (!len)
++					return;
+ 				if (np->rxopt.bits.srcrt)
+ 					put_cmsg(msg, SOL_IPV6, IPV6_RTHDR, len, ptr);
+ 				break;
+ 			case IPPROTO_AH:
+ 				nexthdr = ptr[0];
+ 				len = (ptr[1] + 2) << 2;
++				if (ptr + len > skb_tail_pointer(skb))
++					return;
+ 				break;
+ 			default:
+ 				nexthdr = ptr[0];
+-				len = (ptr[1] + 1) << 3;
++				len = ipv6_get_exthdr_len(skb, ptr);
++				if (!len)
++					return;
+ 				break;
+ 			}
+ 
+@@ -704,19 +730,31 @@ void ip6_datagram_recv_specific_ctl(stru
+ 	}
+ 	if (np->rxopt.bits.ohopopts && (opt->flags & IP6SKB_HOPBYHOP)) {
+ 		u8 *ptr = nh + sizeof(struct ipv6hdr);
+-		put_cmsg(msg, SOL_IPV6, IPV6_2292HOPOPTS, (ptr[1]+1)<<3, ptr);
++		u16 len = ipv6_get_exthdr_len(skb, ptr);
++
++		if (len)
++			put_cmsg(msg, SOL_IPV6, IPV6_2292HOPOPTS, len, ptr);
+ 	}
+ 	if (np->rxopt.bits.odstopts && opt->dst0) {
+ 		u8 *ptr = nh + opt->dst0;
+-		put_cmsg(msg, SOL_IPV6, IPV6_2292DSTOPTS, (ptr[1]+1)<<3, ptr);
++		u16 len = ipv6_get_exthdr_len(skb, ptr);
++
++		if (len)
++			put_cmsg(msg, SOL_IPV6, IPV6_2292DSTOPTS, len, ptr);
+ 	}
+ 	if (np->rxopt.bits.osrcrt && opt->srcrt) {
+ 		struct ipv6_rt_hdr *rthdr = (struct ipv6_rt_hdr *)(nh + opt->srcrt);
+-		put_cmsg(msg, SOL_IPV6, IPV6_2292RTHDR, (rthdr->hdrlen+1) << 3, rthdr);
++		u16 len = ipv6_get_exthdr_len(skb, (u8 *)rthdr);
++
++		if (len)
++			put_cmsg(msg, SOL_IPV6, IPV6_2292RTHDR, len, rthdr);
+ 	}
+ 	if (np->rxopt.bits.odstopts && opt->dst1) {
+ 		u8 *ptr = nh + opt->dst1;
+-		put_cmsg(msg, SOL_IPV6, IPV6_2292DSTOPTS, (ptr[1]+1)<<3, ptr);
++		u16 len = ipv6_get_exthdr_len(skb, ptr);
++
++		if (len)
++			put_cmsg(msg, SOL_IPV6, IPV6_2292DSTOPTS, len, ptr);
+ 	}
+ 	if (np->rxopt.bits.rxorigdstaddr) {
+ 		struct sockaddr_in6 sin6;
 
 
