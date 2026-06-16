@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3BE43E4BA;
-	Tue, 16 Jun 2026 16:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3675446AF1D;
+	Tue, 16 Jun 2026 16:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627131; cv=none; b=U2klXLM+legrzAeiIwtYfEJNucznw2rbrDMFp2+UUhd/7+jPn+gOLEw5Qfi2LIGeG4ENu7sW6sVyCJaj82Licyj1zSdrXfSZ4WbLyb0XHIxhZvQaZifIrkMjmbFTNTJsTXNt/BgqptewvC7z6Qf3b7LCtjPqvYeZsq5GZ3cM71E=
+	t=1781627139; cv=none; b=At7ypPNCouRKPMN1qD/FVtyeA5KrkTNYF7G90y4hLjAKmEQKJ3mTewqemzN0FrF5sDBvX64/Nnf6zXloWgNWyigv2e/sEOeQ7oRwJAJZtZC5lMyPyXgU3D6G7fPQ9xBqErgbvGn5WvINDmfrPn6Nl3zy0FZbqozXIQZyvMG5wVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627131; c=relaxed/simple;
-	bh=m7eY3Z9YArHfN3BKXMI6x/CP1+MdSm7vPvjk3lEbeMo=;
+	s=arc-20240116; t=1781627139; c=relaxed/simple;
+	bh=m1tVhkoeSINQVe97koRWqn1ML+/3WXPT2I9fPpu4oUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ooUIS5aj/BeeskUZWStzi/DvzwGjuGWg5Sq2ZVbJx9hTIxkBeQIW/XspuDuTIaBrcKTavtXybtzKAkvuuFI8LGChDd0kYm1vWWu45565yUQ/FsXJQPU5jyu6NaDgtw7CHz4mTdUa0OifUBG6wTgIw5nMbSUWyzPveHzNkcmkG9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrE0fCgI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OB9QaDNm1P+bvBPiZJeMY0xkRlkoTUTLGela2lMeFUb0PzF1Q9evcKb6sd8cML9l3J6b1Q2MK5MOIjPxx19XfKT6yYI2RF09nM2/Nm2OwHWMCQYf+6Jk0glyzvS0jKDEhleWp3qVwBL2edAI0Wziz+jb/u6AisTXWyVrLbCd9ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQ3cDF7M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrE0fCgI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187391F000E9;
-	Tue, 16 Jun 2026 16:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQ3cDF7M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5451F000E9;
+	Tue, 16 Jun 2026 16:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627130;
-	bh=cJIBC/+YkZjwOFslUDUrq6QsYUrthSUj0mdmyUh/qb4=;
+	s=korg; t=1781627137;
+	bh=bNu9vumZaViLEyH49u/xbqD9Y+rHjVbw2Mx8ulM/zE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qrE0fCgI30UE3/1X6D5Za6AP1VZZ27FmFJgouNSIQ304pBoD9G01jPqn859J3pK8U
-	 +OcQ5ODp7DszbTI2DA2Hv7Xs0JTF9/s1ezljAZSr5SBhPdtaja1gUs5cVyCF08bpx7
-	 xqxnz1YyKt0n5l9zRYVDdWYTuMsNLzv8MZeTGuTI=
+	b=JQ3cDF7MCk99kn73hdKJrQCWo4DerIbZyS/lMuzBvLVC9t30eKutB59kLQI2yT1TX
+	 IFU+PJaY0xYlNXL3K3abbEQ3VrEbDC/2HyuBGfoA0uBIIUc3oNaXLSWKrrwNLvK8m5
+	 jOwQgVewCqbI1MEHAp07gOmmNn7Q75azJQSJ4WsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/261] netfilter: nf_conntrack: destroy stale expectfn expectations on unregister
-Date: Tue, 16 Jun 2026 20:28:56 +0530
-Message-ID: <20260616145049.581306411@linuxfoundation.org>
+	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>
+Subject: [PATCH 6.12 125/261] accel/ivpu: Add bounds checks for firmware log indices
+Date: Tue, 16 Jun 2026 20:29:23 +0530
+Message-ID: <20260616145050.872498239@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,149 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
 
-[ Upstream commit c3009418f9fa1dcb3eb86f4d8c92583537b5faa3 ]
+commit dd1311bcf0e62f0c515115f46a3813370f4a4bb1 upstream.
 
-NAT helpers such as nf_nat_h323 store a raw pointer to module text in
-exp->expectfn (e.g. ip_nat_q931_expect). nf_ct_helper_expectfn_unregister()
-only unlinks the callback descriptor and never walks the expectation table,
-so an expectation pending at module removal survives with a dangling
-exp->expectfn into freed module text.
+Add validation that read and write indices in the firmware log buffer
+are within valid bounds (< data_size) before using them. If
+out-of-bounds indices are encountered (from firmware), clamp them to
+safe values instead of proceeding with invalid offsets.
 
-When the expected connection arrives, init_conntrack() invokes
-exp->expectfn(), now a stale pointer into the unloaded module. Reproduced
-on a KASAN build by loading the H.323 helpers, creating a Q.931
-expectation, unloading nf_nat_h323, then connecting to the expected port:
+This prevents potential out-of-bounds buffer access when firmware
+supplies invalid log indices.
 
- Oops: int3: 0000 [#1] SMP KASAN NOPTI
- RIP: 0010:0xffffffffa06102d1
-  init_conntrack.isra.0 (net/netfilter/nf_conntrack_core.c:1862)
-  nf_conntrack_in (net/netfilter/nf_conntrack_core.c:2049)
-  ipv4_conntrack_local (net/netfilter/nf_conntrack_proto.c:223)
-  nf_hook_slow (net/netfilter/core.c:619)
-  __ip_local_out (net/ipv4/ip_output.c:120)
-  __tcp_transmit_skb (net/ipv4/tcp_output.c:1715)
-  tcp_connect (net/ipv4/tcp_output.c:4374)
-  tcp_v4_connect (net/ipv4/tcp_ipv4.c:345)
-  __sys_connect (net/socket.c:2167)
- Modules linked in: nf_conntrack_h323 [last unloaded: nf_nat_h323]
-
-Reaching the dangling state requires CAP_SYS_MODULE in the initial user
-namespace to remove a NAT helper that still has live expectations, so this
-is a robustness fix; leaving an expectation pointing at freed text is wrong
-regardless.
-
-Add nf_ct_helper_expectfn_destroy(), which walks the expectation table and
-drops every expectation whose ->expectfn matches the descriptor being torn
-down. Call it from each NAT helper's exit path after the existing RCU grace
-period, so no expectation outlives the code it points at and no extra
-synchronize_rcu() is introduced. With the fix, the same reproducer runs to
-completion without the Oops.
-
-Fixes: f587de0e2feb ("[NETFILTER]: nf_conntrack/nf_nat: add H.323 helper port")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1fc1251149a7 ("accel/ivpu: Refactor functions in ivpu_fw_log.c")
+Cc: stable@vger.kernel.org # v6.18+
+Signed-off-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
+Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Link: https://patch.msgid.link/20260529115842.135378-1-andrzej.kacprowski@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_conntrack_helper.h |  1 +
- net/ipv4/netfilter/nf_nat_h323.c            |  2 ++
- net/netfilter/nf_conntrack_helper.c         | 19 +++++++++++++++++++
- net/netfilter/nf_nat_core.c                 |  2 ++
- net/netfilter/nf_nat_sip.c                  |  1 +
- 5 files changed, 25 insertions(+)
+ drivers/accel/ivpu/ivpu_fw_log.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/net/netfilter/nf_conntrack_helper.h b/include/net/netfilter/nf_conntrack_helper.h
-index de2f956abf3480..24cf3d2d97450f 100644
---- a/include/net/netfilter/nf_conntrack_helper.h
-+++ b/include/net/netfilter/nf_conntrack_helper.h
-@@ -155,6 +155,7 @@ void nf_ct_helper_log(struct sk_buff *skb, const struct nf_conn *ct,
+diff --git a/drivers/accel/ivpu/ivpu_fw_log.c b/drivers/accel/ivpu/ivpu_fw_log.c
+index 337c906b0210..275baf844b56 100644
+--- a/drivers/accel/ivpu/ivpu_fw_log.c
++++ b/drivers/accel/ivpu/ivpu_fw_log.c
+@@ -98,6 +98,11 @@ static void fw_log_print_buffer(struct vpu_tracing_buffer_header *log, const cha
+ 	u32 log_start = only_new_msgs ? READ_ONCE(log->read_index) : 0;
+ 	u32 log_end = READ_ONCE(log->write_index);
  
- void nf_ct_helper_expectfn_register(struct nf_ct_helper_expectfn *n);
- void nf_ct_helper_expectfn_unregister(struct nf_ct_helper_expectfn *n);
-+void nf_ct_helper_expectfn_destroy(const struct nf_ct_helper_expectfn *n);
- struct nf_ct_helper_expectfn *
- nf_ct_helper_expectfn_find_by_name(const char *name);
- struct nf_ct_helper_expectfn *
-diff --git a/net/ipv4/netfilter/nf_nat_h323.c b/net/ipv4/netfilter/nf_nat_h323.c
-index faee20af485613..10e1b0837731b7 100644
---- a/net/ipv4/netfilter/nf_nat_h323.c
-+++ b/net/ipv4/netfilter/nf_nat_h323.c
-@@ -555,6 +555,8 @@ static void __exit nf_nat_h323_fini(void)
- 	nf_ct_helper_expectfn_unregister(&q931_nat);
- 	nf_ct_helper_expectfn_unregister(&callforwarding_nat);
- 	synchronize_rcu();
-+	nf_ct_helper_expectfn_destroy(&q931_nat);
-+	nf_ct_helper_expectfn_destroy(&callforwarding_nat);
- }
- 
- /****************************************************************************/
-diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
-index a715304a53d8c2..9150bcfd7ca83b 100644
---- a/net/netfilter/nf_conntrack_helper.c
-+++ b/net/netfilter/nf_conntrack_helper.c
-@@ -283,6 +283,25 @@ void nf_ct_helper_expectfn_unregister(struct nf_ct_helper_expectfn *n)
- }
- EXPORT_SYMBOL_GPL(nf_ct_helper_expectfn_unregister);
- 
-+static bool expect_iter_expectfn(struct nf_conntrack_expect *exp, void *data)
-+{
-+	const struct nf_ct_helper_expectfn *n = data;
++	if (log_start >= data_size)
++		log_start = 0;
++	if (log_end > data_size)
++		log_end = data_size;
 +
-+	/* Relies on registered expectfn descriptors having unique ->expectfn
-+	 * pointers, which holds for the in-tree NAT helpers.
-+	 */
-+	return exp->expectfn == n->expectfn;
-+}
-+
-+/* Destroy expectations still pointing at @n->expectfn; call after the
-+ * caller's RCU grace period so none outlives the (often modular) callback.
-+ */
-+void nf_ct_helper_expectfn_destroy(const struct nf_ct_helper_expectfn *n)
-+{
-+	nf_ct_expect_iterate_destroy(expect_iter_expectfn, (void *)n);
-+}
-+EXPORT_SYMBOL_GPL(nf_ct_helper_expectfn_destroy);
-+
- /* Caller should hold the rcu lock */
- struct nf_ct_helper_expectfn *
- nf_ct_helper_expectfn_find_by_name(const char *name)
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index 746acd124ea285..6ba7733355df39 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -1353,6 +1353,7 @@ static int __init nf_nat_init(void)
- 		RCU_INIT_POINTER(nf_nat_hook, NULL);
- 		nf_ct_helper_expectfn_unregister(&follow_master_nat);
- 		synchronize_net();
-+		nf_ct_helper_expectfn_destroy(&follow_master_nat);
- 		unregister_pernet_subsys(&nat_net_ops);
- 		kvfree(nf_nat_bysource);
- 	}
-@@ -1370,6 +1371,7 @@ static void __exit nf_nat_cleanup(void)
- 	RCU_INIT_POINTER(nf_nat_hook, NULL);
- 
- 	synchronize_net();
-+	nf_ct_helper_expectfn_destroy(&follow_master_nat);
- 	kvfree(nf_nat_bysource);
- 	unregister_pernet_subsys(&nat_net_ops);
- }
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index 9fbfc6bff0c221..00838c0cc5bb28 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -655,6 +655,7 @@ static void __exit nf_nat_sip_fini(void)
- 	RCU_INIT_POINTER(nf_nat_sip_hooks, NULL);
- 	nf_ct_helper_expectfn_unregister(&sip_nat);
- 	synchronize_rcu();
-+	nf_ct_helper_expectfn_destroy(&sip_nat);
- }
- 
- static const struct nf_nat_sip_hooks sip_hooks = {
+ 	if (log->wrap_count == log->read_wrap_count) {
+ 		if (log_end <= log_start) {
+ 			drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
 -- 
-2.53.0
+2.54.0
 
 
 
