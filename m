@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48285449EB0;
-	Tue, 16 Jun 2026 15:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F8644B69C;
+	Tue, 16 Jun 2026 15:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624841; cv=none; b=lX6EZ65AbSvE2hqUMQRp+s3qdkNmWkJzs/HRUebpu4wbViyTTt4/BlgwKFzVSvbz+Okmz4TWDmGyzTwcW3rnS4K8ifgOAW8N2QXSUrR7c3KVqlLbe71HoCv6PlBUVvuxHEHZnpkFy5y2/5bHUw6ksI8flPRG36HID7cO+zXQLpQ=
+	t=1781624848; cv=none; b=C1oGloDKtY+spW93cuOZ4jMP8ZnwILFeiQ6WEhCB+rl9LtAcXfpbpAd8P50jDohZfoa6r+mHDR2cgzFokMt5WnODUBr5ZgeWhO3BC7lD5ZPSkt2a+AVJ+df3rUvzPYwooLcLjBYYAjO7IVRdj7/jsW0gGpsNt+MLTEcDTMWbEnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624841; c=relaxed/simple;
-	bh=dcBIRsRqtxzis5k30StQ/a8lBfq61ar8a/kH0pQhXLQ=;
+	s=arc-20240116; t=1781624848; c=relaxed/simple;
+	bh=qP6hZLV/u6U5d0V5br6MJp4ZMcAyimaXV524ZEhUYlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlwC8GntzyMRVb3EQ2xAuoxDV7YqlLFoNdXd/IdVlXC2aOn8+vi9vQBhhtQWKc2JsvChfWn83nwzkS5eB3nkU4WZtrMkWiF7ROdqCG9+PmBVej2YS+dqnB7h6XTPcHSyrzf0BjRSOO3UHbYOc2dRYfNeR/zMp+UvDsOCQlzsFrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gP8dH9Aa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O+ij25DyiGDI0ZsvK2eINcmVhtGse7hTciTk8Qutwj77y8nw22rfsDqCOSWxTFmqX1NsqkVd9YWD4g+dWfSJHqf+rCrcNsG9rJP6W6Zk02EMLEbjPlJswlDbX4pCK95et5gxDOushOxjtkeGIydL1iRkd6umlEPgs2J9M9BN/2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+DwP2aS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gP8dH9Aa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BF31F000E9;
-	Tue, 16 Jun 2026 15:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+DwP2aS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955841F000E9;
+	Tue, 16 Jun 2026 15:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624840;
-	bh=AZdZEdnWvt/3MEWTEK66pl429iqsm3hbZt0NopzgCcI=;
+	s=korg; t=1781624846;
+	bh=ES9tGKqNE/s+PCvMY0Y81bM8+9jFxXaXfDW6J6fylKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gP8dH9AahcqiGvuBNhGs+BtIOsaa+QT3Dy7NL7rzr0FSRulgVTwqpck3+U5dYeN8y
-	 PyObBQgjv5HtGk/UkbeOfxPHvQPs3S2Jf32gxxsetZMmQc8XxjlrMltntjRDttOWyn
-	 poEVyXc+US2Ceob+6IWWyMcFveccUgPMuVYYHzQA=
+	b=m+DwP2aSVEDGkRXawgPzp5ocs034WqTxVD1YCkFVeL+6jzR+R3A/9FrYQchqfN8Rl
+	 zz4Dt1U09/0ZwlmROpdWGhCyy24+fXDs2ckjERcVT1LSooI9SOlRHTWlXQht8Ieevz
+	 nZjO+qS+0sBAwL6PMpr2gFutxBITN6CV5krEwGAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Simon Horman <horms@kernel.org>,
+	David Thompson <davthompson@nvidia.com>,
+	Thangaraj Samynathan <Thangaraj.s@microchip.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 037/325] net: garp: fix unsigned integer underflow in garp_pdu_parse_attr
-Date: Tue, 16 Jun 2026 20:27:13 +0530
-Message-ID: <20260616145059.585491858@linuxfoundation.org>
+Subject: [PATCH 6.18 038/325] net: lan743x: permit VLAN-tagged packets up to configured MTU
+Date: Tue, 16 Jun 2026 20:27:14 +0530
+Message-ID: <20260616145059.633404233@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -57,56 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 16e408e607a94b646fb14a2a98422c6877ae4b3c ]
+[ Upstream commit 8173d22b211f615015f7b35f48ab11a6dd78dc99 ]
 
-The receive-side GARP attribute parser computes dlen with reversed
-operands:
+VLAN-tagged interfaces on lan743x devices were previously unreachable via
+SSH and failed to respond to large ping packets (e.g. "ping -s 1469" given
+MTU=1500). In these scenarios, "ethtool -S" reports non-zero "RX Oversize
+Frame Errors". According to Microchip AN2948, the MAC_RX FSE (VLAN field
+size enforcement) bit determines whether frames with VLAN tags exceeding
+the base MTU plus tag length are discarded.
 
-        dlen = sizeof(*ga) - ga->len;
+The driver must set the MAC_RX.FSE bit before setting MAC_RX.RXEN to allow
+VLAN-tagged frames up to the interface MTU, preventing them from being
+treated as oversized. As a result, both the base and VLAN-tagged interfaces
+can use the same MTU without receive errors.
 
-ga->len is the on-wire attribute length and includes the GARP attribute
-header. For normal attributes with data, ga->len is larger than
-sizeof(*ga), so the subtraction underflows in unsigned arithmetic.
-
-The resulting value is later passed to garp_attr_lookup(), whose length
-argument is u8. After truncation, the parsed data length usually no
-longer matches the length stored for locally registered attributes, so
-received Join/Leave events are ignored. This breaks the GARP receive path
-for common attributes, such as GVRP VLAN registration attributes.
-
-Compute the data length as the attribute length minus the header length.
-
-Fixes: eca9ebac651f ("net: Add GARP applicant-only participant")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260527083200.42861-1-zhaoyz24@mails.tsinghua.edu.cn
+Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Thangaraj Samynathan <Thangaraj.s@microchip.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # lan7430 on arm64 (RevPi
+Link: https://patch.msgid.link/20260529210300.433135-1-davthompson@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/802/garp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan743x_main.c | 32 +++++++++++++++++++
+ drivers/net/ethernet/microchip/lan743x_main.h |  1 +
+ 2 files changed, 33 insertions(+)
 
-diff --git a/net/802/garp.c b/net/802/garp.c
-index 2d1ffc4d946266..c45abaff515364 100644
---- a/net/802/garp.c
-+++ b/net/802/garp.c
-@@ -453,7 +453,7 @@ static int garp_pdu_parse_attr(struct garp_applicant *app, struct sk_buff *skb,
- 	if (!pskb_may_pull(skb, ga->len))
- 		return -1;
- 	skb_pull(skb, ga->len);
--	dlen = sizeof(*ga) - ga->len;
-+	dlen = ga->len - sizeof(*ga);
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
+index 09d255e78f6cd1..ab2f3c92b3fa33 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -1212,6 +1212,36 @@ static void lan743x_mac_set_address(struct lan743x_adapter *adapter,
+ 		   "MAC address set to %pM\n", addr);
+ }
  
- 	if (attrtype > app->app->maxattr)
- 		return 0;
++static void lan743x_mac_rx_enable_fse(struct lan743x_adapter *adapter)
++{
++	u32 mac_rx;
++	bool rxen;
++
++	mac_rx = lan743x_csr_read(adapter, MAC_RX);
++	if (mac_rx & MAC_RX_FSE_)
++		return;
++
++	rxen = mac_rx & MAC_RX_RXEN_;
++	if (rxen) {
++		mac_rx &= ~MAC_RX_RXEN_;
++		lan743x_csr_write(adapter, MAC_RX, mac_rx);
++		lan743x_csr_wait_for_bit(adapter, MAC_RX, MAC_RX_RXD_,
++					 1, 1000, 20000, 100);
++	}
++
++	/* Per AN2948, hardware prevents modification of the FSE bit while the
++	 * MAC receiver is enabled (RXEN bit set). Use separate register write
++	 * to assert the FSE bit before enabling the RXEN bit in MAC_RX
++	 */
++	mac_rx |= MAC_RX_FSE_;
++	lan743x_csr_write(adapter, MAC_RX, mac_rx);
++
++	if (rxen) {
++		mac_rx |= MAC_RX_RXEN_;
++		lan743x_csr_write(adapter, MAC_RX, mac_rx);
++	}
++}
++
+ static int lan743x_mac_init(struct lan743x_adapter *adapter)
+ {
+ 	bool mac_address_valid = true;
+@@ -1251,6 +1281,8 @@ static int lan743x_mac_init(struct lan743x_adapter *adapter)
+ 	lan743x_mac_set_address(adapter, adapter->mac_address);
+ 	eth_hw_addr_set(netdev, adapter->mac_address);
+ 
++	lan743x_mac_rx_enable_fse(adapter);
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
+index 02a28b7091630d..b977256b742061 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.h
++++ b/drivers/net/ethernet/microchip/lan743x_main.h
+@@ -181,6 +181,7 @@
+ #define MAC_RX				(0x104)
+ #define MAC_RX_MAX_SIZE_SHIFT_		(16)
+ #define MAC_RX_MAX_SIZE_MASK_		(0x3FFF0000)
++#define MAC_RX_FSE_			BIT(2)
+ #define MAC_RX_RXD_			BIT(1)
+ #define MAC_RX_RXEN_			BIT(0)
+ 
 -- 
 2.53.0
 
