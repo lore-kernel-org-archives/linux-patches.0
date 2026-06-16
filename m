@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EEB466B4B;
-	Tue, 16 Jun 2026 16:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8764E47884C;
+	Tue, 16 Jun 2026 16:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629054; cv=none; b=R4PLNBL8zc36UVN9hMAFfi/CegtnuU4L2bP54Rh5KIWU6s2c6APwR+oZerVyLLOtrBQBX3s/ykvNPLKoTXOX2hvMLhdpNK2bLL4YwNBuVGwimg61hDfT3pMPyIflZQJnf71gvVWnpnIP9paOs9opS/P21kGPnBEHAH75KhRnWbw=
+	t=1781629060; cv=none; b=GdcZDnMSHccsrUBn5z55L+1V01U5IMYVEkYDeCOmqgt787VAH2arOvPmpVdwyGdU8H0BGCZSEF41TIu8KuU+2ucNWCs7WLLTreWwbYLOe6mb5ddv75j7+Re/SCRJ0ofz0DT868FE5cnYnnKhZ8nB8QFcRV3qqPdoS9LFUjnvO7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629054; c=relaxed/simple;
-	bh=pdxEX5zP8XEinWwpZgmK2C1qb8IRrphbPb8qGB8WeG0=;
+	s=arc-20240116; t=1781629060; c=relaxed/simple;
+	bh=WcLyp31VBuy6k77ub3m6NzHTN5jBUQC6cqM4t7kT/4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UU8yyKhhN+68U5UgCSt20XD/lYAf/eJIkjWxExLS6c69G8cx40XA6JxQWFSegOlbUdtrlt/7uD0+83lQXt9sCicJeuH8NHUqJkG4zGcqxWaO8YY1swt/zF0HnrbC9OFrBwxL0vn4CwWDWXFMY/1l4hBGc289p3JESP9zwXBpjU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyxwDExH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CGpQeUGDm82IZOG6dmxnlKqoggRHp0bgWWR4ztr03E2IGEKZUL37A4dwAlKmxpCyrQ2sjJr88BzoA8Y3HyEriHflla93Ij+LMj2WUtPsSWqBdHGRO+IyRvRpZ6FlrtIQ7pipgabG/4GrRyA1lsmqQYNs9UCBWxbIBD4Z681q3nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNcXykLu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyxwDExH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EA01F000E9;
-	Tue, 16 Jun 2026 16:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNcXykLu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F80A1F000E9;
+	Tue, 16 Jun 2026 16:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629053;
-	bh=Pd7JnGUar0/c3YHZXw+VgCtoe0Q4AZLFEb1sAwRNMB4=;
+	s=korg; t=1781629058;
+	bh=6RclnDSf596z6JPKyMh6iDO23O2gejo4Es3LO5Cd6+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyxwDExHSJuosQOWJqdzgIDgtfKBtobRGrNZdPtLj8NkTgKVBcfonKRjFKd0XuBYg
-	 2APq1DwMrTTSJWzrnbsqLwpuBFWfVd0iencCw5GFagUMVdnmCMXOcDM05Jg8ki6XHK
-	 DTJOxQd7okI0jE4GDnXBmlw+HTYPbbVmk992I1g8=
+	b=iNcXykLuTxqLyo7IVzPynJIN439eXCsRd68wpZAmB02nTIKL4kqqiMBCVRVrS0aQo
+	 dl0yJh3vNznYjiy7VeRXa0it8FIv9XL/ioP0JFM8MoX2wjVzoy/aUkZXfS7ikVXmaE
+	 msagPH0SM8zSK2f+X5nbf2XGc2mcfDyZu/2JdwSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Lin <leo@depthfirst.com>,
-	David Ahern <dahern@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	=?UTF-8?q?Nicol=C3=B2=20Coccia?= <n.coccia96@gmail.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 211/452] ipv6: mcast: Fix use-after-free when processing MLD queries
-Date: Tue, 16 Jun 2026 20:27:18 +0530
-Message-ID: <20260616145128.884895411@linuxfoundation.org>
+Subject: [PATCH 6.6 212/452] net/smc: fix sleep-inside-lock in __smc_setsockopt() causing local DoS
+Date: Tue, 16 Jun 2026 20:27:19 +0530
+Message-ID: <20260616145128.938061595@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -48,108 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Nicolò Coccia <n.coccia96@gmail.com>
 
-commit 791c91dc7a9dfb2457d5e29b8216a6484b9c4b40 upstream.
+commit a3fdd924d88c30b9f488636ce0e4696012cf5511 upstream.
 
-When processing an MLD query, a pointer to the multicast group address
-is retrieved when initially parsing the packet. This pointer is later
-dereferenced without being reloaded despite the fact that the skb header
-might have been reallocated following the pskb_may_pull() calls, leading
-to a use-after-free [1].
+A logic flaw in __smc_setsockopt() allows a local unprivileged user to
+cause a Denial of Service (DoS) by holding the socket lock indefinitely.
 
-Fix by copying the multicast group address when the packet is initially
-parsed.
+The function __smc_setsockopt() calls copy_from_sockptr() while holding
+lock_sock(sk). By passing a userfaultfd-monitored memory page (or
+FUSE-backed memory on systems where unprivileged userfaultfd is disabled)
+as the optval, an attacker can halt execution during the copy operation,
+keeping the lock held.
 
-[1]
-BUG: KASAN: slab-use-after-free in __mld_query_work (net/ipv6/mcast.c:1512)
-Read of size 8 at addr ffff8881154b8e90 by task kworker/4:1/118
+Combined with asynchronous tear-down operations like shutdown(), this
+exhausts the kernel wq (kworkers) and triggers the hung task watchdog.
 
-Workqueue: mld mld_query_work
-Call Trace:
-<TASK>
-dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-print_address_description.constprop.0 (mm/kasan/report.c:378)
-print_report (mm/kasan/report.c:482)
-kasan_report (mm/kasan/report.c:595)
-__mld_query_work (net/ipv6/mcast.c:1512)
-mld_query_work (net/ipv6/mcast.c:1563)
-process_one_work (kernel/workqueue.c:3314)
-worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-kthread (kernel/kthread.c:436)
-ret_from_fork (arch/x86/kernel/process.c:158)
-ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-</TASK>
+[  240.123456] INFO: task kworker/u8:2 blocked for more than 120 seconds.
+[  240.123489] Call Trace:
+[  240.123501]  smc_shutdown+...
+[  240.123512]  lock_sock_nested+...
 
-[...]
+This patch moves the user-space copy outside the lock_sock() critical
+section to prevent the issue.
 
-Freed by task 118:
-kasan_save_stack (mm/kasan/common.c:57)
-kasan_save_track (mm/kasan/common.c:78)
-kasan_save_free_info (mm/kasan/generic.c:584)
-__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
-kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6251 mm/slub.c:6566)
-pskb_expand_head (net/core/skbuff.c:2335)
-__pskb_pull_tail (net/core/skbuff.c:2878 (discriminator 4))
-__mld_query_work (net/ipv6/mcast.c:1495 (discriminator 1))
-mld_query_work (net/ipv6/mcast.c:1563)
-process_one_work (kernel/workqueue.c:3314)
-worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-kthread (kernel/kthread.c:436)
-ret_from_fork (arch/x86/kernel/process.c:158)
-ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Fixes: 97300b5fdfe2 ("[MCAST] IPv6: Check packet size when process Multicast")
-Reported-by: Leo Lin <leo@depthfirst.com>
-Reviewed-by: David Ahern <dahern@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260603101811.612594-1-idosch@nvidia.com
+Fixes: a6a6fe27bab4 ("net/smc: Dynamic control handshake limitation by socket options")
+Signed-off-by: Nicolò Coccia <n.coccia96@gmail.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Tested-by: Dust Li <dust.li@linux.alibaba.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/mcast.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/smc/af_smc.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -1392,9 +1392,9 @@ out:
- static void __mld_query_work(struct sk_buff *skb)
- {
- 	struct mld2_query *mlh2 = NULL;
--	const struct in6_addr *group;
- 	unsigned long max_delay;
- 	struct inet6_dev *idev;
-+	struct in6_addr group;
- 	struct ifmcaddr6 *ma;
- 	struct mld_msg *mld;
- 	int group_type;
-@@ -1426,8 +1426,8 @@ static void __mld_query_work(struct sk_b
- 		goto kfree_skb;
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -3048,18 +3048,17 @@ static int __smc_setsockopt(struct socke
  
- 	mld = (struct mld_msg *)icmp6_hdr(skb);
--	group = &mld->mld_mca;
--	group_type = ipv6_addr_type(group);
-+	group = mld->mld_mca;
-+	group_type = ipv6_addr_type(&group);
+ 	smc = smc_sk(sk);
  
- 	if (group_type != IPV6_ADDR_ANY &&
- 	    !(group_type&IPV6_ADDR_MULTICAST))
-@@ -1477,7 +1477,7 @@ static void __mld_query_work(struct sk_b
- 		}
- 	} else {
- 		for_each_mc_mclock(idev, ma) {
--			if (!ipv6_addr_equal(group, &ma->mca_addr))
-+			if (!ipv6_addr_equal(&group, &ma->mca_addr))
- 				continue;
- 			if (ma->mca_flags & MAF_TIMER_RUNNING) {
- 				/* gsquery <- gsquery && mark */
++	/* pre-fetch user data outside the lock */
++	if (optname == SMC_LIMIT_HS) {
++		if (optlen < sizeof(int))
++			return -EINVAL;
++		if (copy_from_sockptr(&val, optval, sizeof(int)))
++			return -EFAULT;
++	}
++
+ 	lock_sock(sk);
+ 	switch (optname) {
+ 	case SMC_LIMIT_HS:
+-		if (optlen < sizeof(int)) {
+-			rc = -EINVAL;
+-			break;
+-		}
+-		if (copy_from_sockptr(&val, optval, sizeof(int))) {
+-			rc = -EFAULT;
+-			break;
+-		}
+-
+ 		smc->limit_smc_hs = !!val;
+ 		rc = 0;
+ 		break;
 
 
