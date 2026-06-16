@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5F44779B3;
-	Tue, 16 Jun 2026 16:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D11813777E;
+	Tue, 16 Jun 2026 16:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628223; cv=none; b=OjnfZr/Xc09e2I3NT+pqm0qcfJtQoWWqDyNTLyFva/SdparQ7J6oj2teFe18K+PfuiYTpQtlrXRJLgnvxxil0bPc7EZgIKNLUxW+wUBnFDlZMiYVSDIyGaEr59/Wad2QQL49MgZ15JRRd7tRWBAQ1AFJ2cfC/1qQNP3VlyEHkts=
+	t=1781628228; cv=none; b=ofo4VA/7CRDt0QgJVE2q4GBRajespC7R4NJtTnWUJMH4f673ADYBeSQ3Uty73KAQMKQxsxBIfdTbrvw1wkdYL7QAYWpJdF6hHBg6+M0eQvO86P00VAKi2p+z8UgC0PIf74e7q5iddjGgaufsiq61khYbqXKsIyEu2Q1SWEGWKuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628223; c=relaxed/simple;
-	bh=GuhyRS0qofOZzdjEmN/NLkrJW2v3fKYxXSlyEU0N5Vk=;
+	s=arc-20240116; t=1781628228; c=relaxed/simple;
+	bh=d2bzyVSG2B4I5kmN7jtc4X+STVGEJ4w5v7UhSA/emGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e3TrOvCh7LZb0mY9V3WS2UbvTtZegVfMtatSH7zYYhgdxowymuZO9eTJnNlPvPV2aX/VjK+x72HRQEMpkRN/gYyTFOtegIP3W5480X7WMpv7RnHTVAZrI6j3DpZGY+a9TZSMrGt2uwp0syTzntzlJBJMJ+FB1GrrewbhyHBikkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKpWqzqI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qPOqS9+q3WaeyYMMeSsxCNvSboRekbPl/UYn29kfCJWcJVaBNBGdYwJ0qxr6rl/G01PUGkBNIAPyvM/gqRMyiJ45UHXOyFGRulvXUWPimARUdbjyGFxY+dvsQBDG9Sg9qcyrlNUrVbeWHjDvUwx+isiwHgy0dmGK86WC7/4+7Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9lVrzp7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKpWqzqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C441F000E9;
-	Tue, 16 Jun 2026 16:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9lVrzp7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9424A1F000E9;
+	Tue, 16 Jun 2026 16:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628222;
-	bh=tSKStehq33SO8jj56qsGz3zsKo9Fay618TltrBo24xg=;
+	s=korg; t=1781628227;
+	bh=6NKboUbeYnqlzDbJnDaW4LBDPtav4v0OkhxKrJ4Ep8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NKpWqzqIrWnQgAfaB7q95I8kyJmgOEBd8SCSmuRJCkOPH1I2CeqrOOCuIWj8yVA1F
-	 VvcWp9+pkZmZ2ddJad9/73zidorGnGR7eeoQKj4pw3wsOzNNEFVfiGwBmwwtl7YjQW
-	 oNDDPIt9roJJx23T0dymD8JJW5FXWrsv0n6dYL/k=
+	b=H9lVrzp7+FUmdeYUL9z4lR0wCO/3/tJcNnD+pMm8QTTnFpfoF470gYxFiUqcvRSoZ
+	 MXDFqhcNtv8Mcy0mfpVVjc6CVOLaueFmF3NuDDimrfw0FM3Bh2oFPmTv723OebAWz2
+	 WZCkYwYpvvO4yNVG1uz/CAR4kJ1AxAZAGV98QcL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/452] batman-adv: iv: recover OGM scheduling after forward packet error
-Date: Tue, 16 Jun 2026 20:24:42 +0530
-Message-ID: <20260616145120.856578335@linuxfoundation.org>
+Subject: [PATCH 6.6 056/452] batman-adv: tp_meter: avoid role confusion in tp_list
+Date: Tue, 16 Jun 2026 20:24:43 +0530
+Message-ID: <20260616145120.912078755@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -45,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -54,223 +53,192 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit aa3153bd139a6c48667dcd02608d3b2c80bff02c upstream.
+commit ff24f2ecfd94c07a2b89bac497433e3b23271cac upstream.
 
-When batadv_iv_ogm_schedule_buff() fails to allocate and queue a forward
-packet for OGM transmission, the work item that drives periodic OGM
-scheduling is never re-armed. This silently halts transmission of the
-node's own OGMs on the affected interface — only OGMs from other peers
-continue to be aggregated and forwarded.
+Session lookups in tp_list matched only on destination address (and
+optionally session ID), leaving role validation to the caller. If two
+sessions with the same other_end coexisted (one as sender, one as receiver)
+a lookup could silently return the wrong one, causing the caller's role to
+bail out early, potentially skipping necessary cleanup.
 
-Fix this by tracking whether batadv_iv_ogm_queue_add() (and transitively
-batadv_iv_ogm_aggregate_new()) successfully scheduled a forward packet.
-When scheduling fails, batadv_iv_ogm_schedule_buff() falls back to queuing
-a dedicated recovery work item (reschedule_work) that fires after one
-originator interval and calls batadv_iv_ogm_schedule() again.
+Move the role check into the lookup functions themselves so the correct
+entry is always returned, or none at all. Since batadv_tp_start()
+legitimately needs to detect any active session to a destination regardless
+of role, introduce a dedicated helper for that case rather than bending the
+existing lookup semantics.
 
 Cc: stable@kernel.org
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bat_iv_ogm.c | 76 +++++++++++++++++++++++++++----------
- net/batman-adv/types.h      |  3 ++
- 2 files changed, 60 insertions(+), 19 deletions(-)
+ net/batman-adv/tp_meter.c | 59 ++++++++++++++++++++++++---------------
+ 1 file changed, 36 insertions(+), 23 deletions(-)
 
-diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
-index 42b687c1a76807..b37c9fb178ae50 100644
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -223,6 +223,8 @@ static void batadv_iv_ogm_iface_disable(struct batadv_hard_iface *hard_iface)
- 	hard_iface->bat_iv.ogm_buff = NULL;
- 
- 	mutex_unlock(&hard_iface->bat_iv.ogm_buff_mutex);
-+
-+	cancel_delayed_work_sync(&hard_iface->bat_iv.reschedule_work);
- }
- 
- static void batadv_iv_ogm_iface_update_mac(struct batadv_hard_iface *hard_iface)
-@@ -527,8 +529,10 @@ batadv_iv_ogm_can_aggregate(const struct batadv_ogm_packet *new_bat_ogm_packet,
-  * @if_incoming: interface where the packet was received
-  * @if_outgoing: interface for which the retransmission should be considered
-  * @own_packet: true if it is a self-generated ogm
-+ *
-+ * Return: whether forward packet was scheduled
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 04a83d6be45bc0..bc3dc377f0bfd0 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -255,6 +255,7 @@ static void batadv_tp_batctl_error_notify(enum batadv_tp_meter_reason reason,
+  * batadv_tp_list_find() - find a tp_vars object in the global list
+  * @bat_priv: the bat priv with all the soft interface information
+  * @dst: the other endpoint MAC address to look for
++ * @role: role of the session
+  *
+  * Look for a tp_vars object matching dst as end_point and return it after
+  * having increment the refcounter. Return NULL is not found
+@@ -262,7 +263,8 @@ static void batadv_tp_batctl_error_notify(enum batadv_tp_meter_reason reason,
+  * Return: matching tp_vars or NULL when no tp_vars with @dst was found
   */
--static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
-+static bool batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
- 					int packet_len, unsigned long send_time,
- 					bool direct_link,
- 					struct batadv_hard_iface *if_incoming,
-@@ -552,13 +556,13 @@ static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
+ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
+-						  const u8 *dst)
++						  const u8 *dst,
++						  enum batadv_tp_meter_role role)
+ {
+ 	struct batadv_tp_vars *pos, *tp_vars = NULL;
  
- 	skb = netdev_alloc_skb_ip_align(NULL, skb_size);
- 	if (!skb)
--		return;
-+		return false;
- 
- 	forw_packet_aggr = batadv_forw_packet_alloc(if_incoming, if_outgoing,
- 						    queue_left, bat_priv, skb);
- 	if (!forw_packet_aggr) {
- 		kfree_skb(skb);
--		return;
-+		return false;
- 	}
- 
- 	forw_packet_aggr->skb->priority = TC_PRIO_CONTROL;
-@@ -580,6 +584,8 @@ static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
- 			  batadv_iv_send_outstanding_bat_ogm_packet);
- 
- 	batadv_forw_packet_ogmv1_queue(bat_priv, forw_packet_aggr, send_time);
-+
-+	return true;
- }
- 
- /* aggregate a new packet into the existing ogm packet */
-@@ -609,8 +615,10 @@ static void batadv_iv_ogm_aggregate(struct batadv_forw_packet *forw_packet_aggr,
-  * @if_outgoing: interface for which the retransmission should be considered
-  * @own_packet: true if it is a self-generated ogm
-  * @send_time: timestamp (jiffies) when the packet is to be sent
-+ *
-+ * Return: whether forward packet was scheduled
-  */
--static void batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
-+static bool batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
- 				    unsigned char *packet_buff,
- 				    int packet_len,
- 				    struct batadv_hard_iface *if_incoming,
-@@ -662,14 +670,16 @@ static void batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
- 		if (!own_packet && atomic_read(&bat_priv->aggregated_ogms))
- 			send_time += max_aggregation_jiffies;
- 
--		batadv_iv_ogm_aggregate_new(packet_buff, packet_len,
--					    send_time, direct_link,
--					    if_incoming, if_outgoing,
--					    own_packet);
-+		return batadv_iv_ogm_aggregate_new(packet_buff, packet_len,
-+						   send_time, direct_link,
-+						   if_incoming, if_outgoing,
-+						   own_packet);
- 	} else {
- 		batadv_iv_ogm_aggregate(forw_packet_aggr, packet_buff,
- 					packet_len, direct_link);
- 		spin_unlock_bh(&bat_priv->forw_bat_list_lock);
-+
-+		return true;
- 	}
- }
- 
-@@ -781,6 +791,8 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 	u32 seqno;
- 	u16 tvlv_len = 0;
- 	unsigned long send_time;
-+	bool reschedule = false;
-+	bool scheduled;
- 	int ret;
- 
- 	lockdep_assert_held(&hard_iface->bat_iv.ogm_buff_mutex);
-@@ -809,11 +821,8 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 						       ogm_buff_len,
- 						       BATADV_OGM_HLEN);
- 		if (ret < 0) {
--			/* OGMs must be queued even when the buffer allocation for
--			 * TVLVs failed. just fall back to the non-TVLV version
--			 */
--			ret = 0;
--			*ogm_buff_len = BATADV_OGM_HLEN;
-+			reschedule = true;
-+			goto out;
- 		}
- 
- 		tvlv_len = ret;
-@@ -835,8 +844,11 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 		/* OGMs from secondary interfaces are only scheduled on their
- 		 * respective interfaces.
- 		 */
--		batadv_iv_ogm_queue_add(bat_priv, *ogm_buff, *ogm_buff_len,
--					hard_iface, hard_iface, 1, send_time);
-+		scheduled = batadv_iv_ogm_queue_add(bat_priv, *ogm_buff, *ogm_buff_len,
-+						    hard_iface, hard_iface, 1, send_time);
-+		if (!scheduled)
-+			reschedule = true;
-+
- 		goto out;
- 	}
- 
-@@ -851,15 +863,28 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 		if (!kref_get_unless_zero(&tmp_hard_iface->refcount))
+@@ -271,6 +273,9 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
+ 		if (!batadv_compare_eth(pos->other_end, dst))
  			continue;
  
--		batadv_iv_ogm_queue_add(bat_priv, *ogm_buff,
--					*ogm_buff_len, hard_iface,
--					tmp_hard_iface, 1, send_time);
--
-+		scheduled = batadv_iv_ogm_queue_add(bat_priv, *ogm_buff,
-+						    *ogm_buff_len, hard_iface,
-+						    tmp_hard_iface, 1, send_time);
- 		batadv_hardif_put(tmp_hard_iface);
++		if (pos->role != role)
++			continue;
 +
-+		if (!scheduled && tmp_hard_iface == hard_iface)
-+			reschedule = true;
- 	}
- 	rcu_read_unlock();
+ 		/* most of the time this function is invoked during the normal
+ 		 * process..it makes sens to pay more when the session is
+ 		 * finished and to speed the process up during the measurement
+@@ -286,12 +291,33 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
+ 	return tp_vars;
+ }
  
- out:
-+	if (reschedule) {
-+		/* there was a failure scheduling the own forward packet.
-+		 * as result, the batadv_iv_send_outstanding_bat_ogm_packet()
-+		 * work item is no longer scheduled. it is therefore necessary
-+		 * to reschedule it manually
-+		 */
-+		queue_delayed_work(batadv_event_workqueue,
-+				   &hard_iface->bat_iv.reschedule_work,
-+				   msecs_to_jiffies(atomic_read(&bat_priv->orig_interval)));
++/**
++ * batadv_tp_list_active() - check if session from/to destination is ongoing
++ * @bat_priv: the bat priv with all the mesh interface information
++ * @dst: the other endpoint MAC address to look for
++ *
++ * Return: if matching session with @dst was found
++ */
++static bool batadv_tp_list_active(struct batadv_priv *bat_priv, const u8 *dst)
++	__must_hold(&bat_priv->tp_list_lock)
++{
++	struct batadv_tp_vars *tp_vars;
++
++	hlist_for_each_entry_rcu(tp_vars, &bat_priv->tp_list, list) {
++		if (batadv_compare_eth(tp_vars->other_end, dst))
++			return true;
 +	}
 +
- 	batadv_hardif_put(primary_if);
- }
- 
-@@ -874,6 +899,17 @@ static void batadv_iv_ogm_schedule(struct batadv_hard_iface *hard_iface)
- 	mutex_unlock(&hard_iface->bat_iv.ogm_buff_mutex);
- }
- 
-+static void batadv_iv_ogm_reschedule(struct work_struct *work)
-+{
-+	struct delayed_work *delayed_work = to_delayed_work(work);
-+	struct batadv_hard_iface *hard_iface;
-+
-+	hard_iface = container_of(delayed_work,
-+				  struct batadv_hard_iface,
-+				  bat_iv.reschedule_work);
-+	batadv_iv_ogm_schedule(hard_iface);
++	return false;
 +}
 +
  /**
-  * batadv_iv_orig_ifinfo_sum() - Get bcast_own sum for originator over interface
-  * @orig_node: originator which reproadcasted the OGMs directly
-@@ -2277,6 +2313,8 @@ batadv_iv_ogm_neigh_is_sob(struct batadv_neigh_node *neigh1,
- 
- static void batadv_iv_iface_enabled(struct batadv_hard_iface *hard_iface)
+  * batadv_tp_list_find_session() - find tp_vars session object in the global
+  *  list
+  * @bat_priv: the bat priv with all the soft interface information
+  * @dst: the other endpoint MAC address to look for
+  * @session: session identifier
++ * @role: role of the session
+  *
+  * Look for a tp_vars object matching dst as end_point, session as tp meter
+  * session and return it after having increment the refcounter. Return NULL
+@@ -301,7 +327,7 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
+  */
+ static struct batadv_tp_vars *
+ batadv_tp_list_find_session(struct batadv_priv *bat_priv, const u8 *dst,
+-			    const u8 *session)
++			    const u8 *session, enum batadv_tp_meter_role role)
  {
-+	INIT_DELAYED_WORK(&hard_iface->bat_iv.reschedule_work, batadv_iv_ogm_reschedule);
-+
- 	/* begin scheduling originator messages on that interface */
- 	batadv_iv_ogm_schedule(hard_iface);
- }
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index 957a70854157dc..d333f9dfec55d0 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -83,6 +83,9 @@ struct batadv_hard_iface_bat_iv {
- 	/** @ogm_seqno: OGM sequence number - used to identify each OGM */
- 	atomic_t ogm_seqno;
+ 	struct batadv_tp_vars *pos, *tp_vars = NULL;
  
-+	/** @reschedule_work: recover OGM schedule after schedule error */
-+	struct delayed_work reschedule_work;
+@@ -313,6 +339,9 @@ batadv_tp_list_find_session(struct batadv_priv *bat_priv, const u8 *dst,
+ 		if (memcmp(pos->session, session, sizeof(pos->session)) != 0)
+ 			continue;
+ 
++		if (pos->role != role)
++			continue;
 +
- 	/** @ogm_buff_mutex: lock protecting ogm_buff and ogm_buff_len */
- 	struct mutex ogm_buff_mutex;
- };
+ 		/* most of the time this function is invoked during the normal
+ 		 * process..it makes sense to pay more when the session is
+ 		 * finished and to speed the process up during the measurement
+@@ -671,13 +700,10 @@ static void batadv_tp_recv_ack(struct batadv_priv *bat_priv,
+ 
+ 	/* find the tp_vars */
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+-					      icmp->session);
++					      icmp->session, BATADV_TP_SENDER);
+ 	if (unlikely(!tp_vars))
+ 		return;
+ 
+-	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
+-		goto out;
+-
+ 	if (unlikely(batadv_tp_sender_stopped(tp_vars)))
+ 		goto out;
+ 
+@@ -986,10 +1012,8 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
+ 		return;
+ 	}
+ 
+-	tp_vars = batadv_tp_list_find(bat_priv, dst);
+-	if (tp_vars) {
++	if (batadv_tp_list_active(bat_priv, dst)) {
+ 		spin_unlock_bh(&bat_priv->tp_list_lock);
+-		batadv_tp_vars_put(tp_vars);
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 			   "Meter: test to or from the same node already ongoing, aborting\n");
+ 		batadv_tp_batctl_error_notify(BATADV_TP_REASON_ALREADY_ONGOING,
+@@ -1110,18 +1134,14 @@ void batadv_tp_stop(struct batadv_priv *bat_priv, const u8 *dst,
+ 	if (!orig_node)
+ 		return;
+ 
+-	tp_vars = batadv_tp_list_find(bat_priv, orig_node->orig);
++	tp_vars = batadv_tp_list_find(bat_priv, orig_node->orig, BATADV_TP_SENDER);
+ 	if (!tp_vars) {
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 			   "Meter: trying to interrupt an already over connection\n");
+ 		goto out_put_orig_node;
+ 	}
+ 
+-	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
+-		goto out_put_tp_vars;
+-
+ 	batadv_tp_sender_shutdown(tp_vars, return_value);
+-out_put_tp_vars:
+ 	batadv_tp_vars_put(tp_vars);
+ out_put_orig_node:
+ 	batadv_orig_node_put(orig_node);
+@@ -1377,7 +1397,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 		goto out_unlock;
+ 
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+-					      icmp->session);
++					      icmp->session, BATADV_TP_RECEIVER);
+ 	if (tp_vars)
+ 		goto out_unlock;
+ 
+@@ -1448,7 +1468,7 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 		}
+ 	} else {
+ 		tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+-						      icmp->session);
++						      icmp->session, BATADV_TP_RECEIVER);
+ 		if (!tp_vars) {
+ 			batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 				   "Unexpected packet from %pM!\n",
+@@ -1457,13 +1477,6 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 		}
+ 	}
+ 
+-	if (unlikely(tp_vars->role != BATADV_TP_RECEIVER)) {
+-		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+-			   "Meter: dropping packet: not expected (role=%u)\n",
+-			   tp_vars->role);
+-		goto out;
+-	}
+-
+ 	tp_vars->last_recv_time = jiffies;
+ 
+ 	/* if the packet is a duplicate, it may be the case that an ACK has been
 -- 
 2.53.0
 
