@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BF73D34AD;
-	Tue, 16 Jun 2026 17:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144D3169AD2;
+	Tue, 16 Jun 2026 17:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632172; cv=none; b=UJy0fZA0Z1MR/iLdPZC3wgvieqllxkUyMXVUv7s3qJ3bqfZUZx5qJRZRUoFGWeSjSs6oDzwkVqGgePBzb6txrAB2y0xYqrT5N5deNTXYESMIpz8CtB7fjZzJvhOM8MOboctXmxTdJ3a6LeBfVPQFMaYIcSYdwQfkuYpd/woIt7Q=
+	t=1781632178; cv=none; b=gcIsZUw7nwV5YdjiswUNcpyz1eOimu0ppe54UMKE9/7fPr80Y8lvZLIz4yH3RhfPRkd64j3hH6fSqqXZONJOAktMCBdP97T2G6HmL1hgtXcn7/9JbgPIw8A/Xywo/k6XZsGruQE21RvXTOt+KGZ7yscpgya/PyEbinPg0CAx9zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632172; c=relaxed/simple;
-	bh=OZyfNbKbqqihu8Ob8khTIb3LSQlKXmdsJAAmKJzGMrw=;
+	s=arc-20240116; t=1781632178; c=relaxed/simple;
+	bh=1HPGN62W/EalgbV6ETMnZ4ZbnQVG8k06oFt2Uamk9wY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rI5awFEBPYWeo7WRON5tIXfUH28Eha9qAj6ybxsoPYJHANH0nnT5B2V6TqGmHhGguF+wf9aD5X5q95B8DGjY1tTi8yjvv7r9yPPtDDhXcnSf55CcPH1si21eKS10stI2alkScXEDRPUcd7pZANThT8i8Cf9UTcxygggUJ3sB/m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pa+vlEMg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHEr0s6APlpcFCEpU/kvUNVWDdT+dT6yBzuYyXVZXOy19nv8eDIFO4R/nobej37+Sky6N7VuwsSpC36ljtO5fFd4EofKaIAsLdRzOd87IWe+zAfEUqxd+j0WsnVLDbacUf6cBL7DxInjD1ZHah8Ni0D7SQ452WLCAIuadK/gI0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TppApd9U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pa+vlEMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2430E1F00A3A;
-	Tue, 16 Jun 2026 17:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TppApd9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8E41F000E9;
+	Tue, 16 Jun 2026 17:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632171;
-	bh=ymwhCjvUtq1TF2FfnvtuPG3IUelqknuBfaoGIjVjF0g=;
+	s=korg; t=1781632176;
+	bh=AA9sM/lhyxA5xId0fr4XIkYBHYLQZTwhOvjRr3jkGjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pa+vlEMgMHFAUwAdRu7F6zSQgMgJrBh68g0O5f4UP9xuOWdukb28U7M7rkenjVf/z
-	 woMK20/gsHDbnKA9WwiVn92P5CgzLLuTtGWYLPc+dJUSDdxZJNBURx8TPA0DdQAkkF
-	 ib2fwhtQzvmIhnptmr2cyklYiechZIqrpscEyypY=
+	b=TppApd9U0vctKeC9XZPp7LY33Hnk6OGbynQB48yToddRV1qxdO8vSBBA/2Uwe3lUm
+	 y6XPb69l8eYxqWYBw/6PuQ7s3SiihNadcm7I+Tp4i0jrL7coSyLj887d+bEExJG4Q1
+	 1lEIzdIzzhUSiWAcLnkIERveKh0YPfMWu925iVw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 360/522] hfsplus: fix held lock freed on hfsplus_fill_super()
-Date: Tue, 16 Jun 2026 20:28:27 +0530
-Message-ID: <20260616145142.635023777@linuxfoundation.org>
+Subject: [PATCH 6.1 361/522] crypto: nx - Avoid -Wflex-array-member-not-at-end warning
+Date: Tue, 16 Jun 2026 20:28:28 +0530
+Message-ID: <20260616145142.680998475@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,139 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 
-[ Upstream commit 90c500e4fd83fa33c09bc7ee23b6d9cc487ac733 ]
+[ Upstream commit 1e6b251ce1759392666856908113dd5d7cea044d ]
 
-hfsplus_fill_super() calls hfs_find_init() to initialize a search
-structure, which acquires tree->tree_lock. If the subsequent call to
-hfsplus_cat_build_key() fails, the function jumps to the out_put_root
-error label without releasing the lock. The later cleanup path then
-frees the tree data structure with the lock still held, triggering a
-held lock freed warning.
+-Wflex-array-member-not-at-end is coming in GCC-14, and we are getting
+ready to enable it globally. So, we are deprecating flexible-array
+members in the middle of another structure.
 
-Fix this by adding the missing hfs_find_exit(&fd) call before jumping
-to the out_put_root error label. This ensures that tree->tree_lock is
-properly released on the error path.
+There is currently an object (`header`) in `struct nx842_crypto_ctx`
+that contains a flexible structure (`struct nx842_crypto_header`):
 
-The bug was originally detected on v6.13-rc1 using an experimental
-static analysis tool we are developing, and we have verified that the
-issue persists in the latest mainline kernel. The tool is specifically
-designed to detect memory management issues. It is currently under active
-development and not yet publicly available.
+struct nx842_crypto_ctx {
+	...
+        struct nx842_crypto_header header;
+        struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
+	...
+};
 
-We confirmed the bug by runtime testing under QEMU with x86_64 defconfig,
-lockdep enabled, and CONFIG_HFSPLUS_FS=y. To trigger the error path, we
-used GDB to dynamically shrink the max_unistr_len parameter to 1 before
-hfsplus_asc2uni() is called. This forces hfsplus_asc2uni() to naturally
-return -ENAMETOOLONG, which propagates to hfsplus_cat_build_key() and
-exercises the faulty error path. The following warning was observed
-during mount:
+So, in order to avoid ending up with a flexible-array member in the
+middle of another struct, we use the `struct_group_tagged()` helper to
+separate the flexible array from the rest of the members in the flexible
+structure:
 
-	=========================
-	WARNING: held lock freed!
-	7.0.0-rc3-00016-gb4f0dd314b39 #4 Not tainted
-	-------------------------
-	mount/174 is freeing memory ffff888103f92000-ffff888103f92fff, with a lock still held there!
-	ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
-	2 locks held by mount/174:
-	#0: ffff888103f960e0 (&type->s_umount_key#42/1){+.+.}-{4:4}, at: alloc_super.constprop.0+0x167/0xa40
-	#1: ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
+struct nx842_crypto_header {
+	struct_group_tagged(nx842_crypto_header_hdr, hdr,
 
-	stack backtrace:
-	CPU: 2 UID: 0 PID: 174 Comm: mount Not tainted 7.0.0-rc3-00016-gb4f0dd314b39 #4 PREEMPT(lazy)
-	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-	Call Trace:
-	<TASK>
-	dump_stack_lvl+0x82/0xd0
-	debug_check_no_locks_freed+0x13a/0x180
-	kfree+0x16b/0x510
-	? hfsplus_fill_super+0xcb4/0x18a0
-	hfsplus_fill_super+0xcb4/0x18a0
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? bdev_open+0x65f/0xc30
-	? srso_return_thunk+0x5/0x5f
-	? pointer+0x4ce/0xbf0
-	? trace_contention_end+0x11c/0x150
-	? __pfx_pointer+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? bdev_open+0x79b/0xc30
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? vsnprintf+0x6da/0x1270
-	? srso_return_thunk+0x5/0x5f
-	? __mutex_unlock_slowpath+0x157/0x740
-	? __pfx_vsnprintf+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? mark_held_locks+0x49/0x80
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? irqentry_exit+0x17b/0x5e0
-	? trace_irq_disable.constprop.0+0x116/0x150
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	get_tree_bdev_flags+0x302/0x580
-	? __pfx_get_tree_bdev_flags+0x10/0x10
-	? vfs_parse_fs_qstr+0x129/0x1a0
-	? __pfx_vfs_parse_fs_qstr+0x3/0x10
-	vfs_get_tree+0x89/0x320
-	fc_mount+0x10/0x1d0
-	path_mount+0x5c5/0x21c0
-	? __pfx_path_mount+0x10/0x10
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? kmem_cache_free+0x307/0x540
-	? user_path_at+0x51/0x60
-	? __x64_sys_mount+0x212/0x280
-	? srso_return_thunk+0x5/0x5f
-	__x64_sys_mount+0x212/0x280
-	? __pfx___x64_sys_mount+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? srso_return_thunk+0x5/0x5f
-	do_syscall_64+0x111/0x680
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7ffacad55eae
-	Code: 48 8b 0d 85 1f 0f 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 49 89 ca b8 a5 00 00 8
-	RSP: 002b:00007fff1ab55718 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
-	RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffacad55eae
-	RDX: 000055740c64e5b0 RSI: 000055740c64e630 RDI: 000055740c651ab0
-	RBP: 000055740c64e380 R08: 0000000000000000 R09: 0000000000000001
-	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-	R13: 000055740c64e5b0 R14: 000055740c651ab0 R15: 000055740c64e380
-	</TASK>
+		... the rest of the members
 
-After applying this patch, the warning no longer appears.
+	);
+        struct nx842_crypto_header_group group[];
+} __packed;
 
-Fixes: 89ac9b4d3d1a ("hfsplus: fix longname handling")
-CC: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Tested-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+With the change described above, we can now declare an object of the
+type of the tagged struct, without embedding the flexible array in the
+middle of another struct:
+
+struct nx842_crypto_ctx {
+	...
+        struct nx842_crypto_header_hdr header;
+        struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
+	...
+ } __packed;
+
+We also use `container_of()` whenever we need to retrieve a pointer to
+the flexible structure, through which we can access the flexible
+array if needed.
+
+So, with these changes, fix the following warning:
+
+In file included from drivers/crypto/nx/nx-842.c:55:
+drivers/crypto/nx/nx-842.h:174:36: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+  174 |         struct nx842_crypto_header header;
+      |                                    ^~~~~~
+
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: adb3faf2db1a ("crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/super.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/nx/nx-842.c |    6 ++++--
+ drivers/crypto/nx/nx-842.h |   10 ++++++----
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -539,8 +539,10 @@ static int hfsplus_fill_super(struct sup
- 	if (err)
- 		goto out_put_root;
- 	err = hfsplus_cat_build_key(sb, fd.search_key, HFSPLUS_ROOT_CNID, &str);
--	if (unlikely(err < 0))
-+	if (unlikely(err < 0)) {
-+		hfs_find_exit(&fd);
- 		goto out_put_root;
-+	}
- 	if (!hfsplus_brec_read_cat(&fd, &entry)) {
- 		hfs_find_exit(&fd);
- 		if (entry.type != cpu_to_be16(HFSPLUS_FOLDER)) {
+--- a/drivers/crypto/nx/nx-842.c
++++ b/drivers/crypto/nx/nx-842.c
+@@ -251,7 +251,9 @@ int nx842_crypto_compress(struct crypto_
+ 			  u8 *dst, unsigned int *dlen)
+ {
+ 	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
+-	struct nx842_crypto_header *hdr = &ctx->header;
++	struct nx842_crypto_header *hdr =
++				container_of(&ctx->header,
++					     struct nx842_crypto_header, hdr);
+ 	struct nx842_crypto_param p;
+ 	struct nx842_constraints c = *ctx->driver->constraints;
+ 	unsigned int groups, hdrsize, h;
+@@ -490,7 +492,7 @@ int nx842_crypto_decompress(struct crypt
+ 	}
+ 
+ 	memcpy(&ctx->header, src, hdr_len);
+-	hdr = &ctx->header;
++	hdr = container_of(&ctx->header, struct nx842_crypto_header, hdr);
+ 
+ 	for (n = 0; n < hdr->groups; n++) {
+ 		/* ignore applies to last group */
+--- a/drivers/crypto/nx/nx-842.h
++++ b/drivers/crypto/nx/nx-842.h
+@@ -157,9 +157,11 @@ struct nx842_crypto_header_group {
+ } __packed;
+ 
+ struct nx842_crypto_header {
+-	__be16 magic;		/* NX842_CRYPTO_MAGIC */
+-	__be16 ignore;		/* decompressed end bytes to ignore */
+-	u8 groups;		/* total groups in this header */
++	struct_group_tagged(nx842_crypto_header_hdr, hdr,
++		__be16 magic;		/* NX842_CRYPTO_MAGIC */
++		__be16 ignore;		/* decompressed end bytes to ignore */
++		u8 groups;		/* total groups in this header */
++	);
+ 	struct nx842_crypto_header_group group[];
+ } __packed;
+ 
+@@ -171,7 +173,7 @@ struct nx842_crypto_ctx {
+ 	u8 *wmem;
+ 	u8 *sbounce, *dbounce;
+ 
+-	struct nx842_crypto_header header;
++	struct nx842_crypto_header_hdr header;
+ 	struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
+ 
+ 	struct nx842_driver *driver;
 
 
