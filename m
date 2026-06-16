@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FA243E4BA;
-	Tue, 16 Jun 2026 15:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DD83264FF;
+	Tue, 16 Jun 2026 15:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622797; cv=none; b=GENBZQH2IZuc3vAwnZmXe3SYF0PsNanj5qtaogdo5/dulO/XB2B5drxly3NbPk1UY5k7CabuvOZf48WR6olpnlOEJj9v18hp2EFqz/XKGY7hJgnNFisjFyfs0XK55watZiJ+fPqxtMam6tfL3dobs+LpAhOgJWaOzsxvJRGYkGo=
+	t=1781622802; cv=none; b=gHB+u34M/9TCw5quwvXrV7uIEPzqQ47R47iH6rBt1JZrxpv6Pp8JwtXc+jLaJ8qV98ql2mAr1PDGpaNIWjXJ8fu75LUXH2wWyL618vl2upYyNbLtUI96alaABuuLIKgtG0rQzmtrTuoTzWiitw2AK8YS4hpSy6xVBqkKAY1ImrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622797; c=relaxed/simple;
-	bh=aSvY4EL0GO7moz/gMhmxQuHGgdiSNWriiXq0zbSO+DE=;
+	s=arc-20240116; t=1781622802; c=relaxed/simple;
+	bh=TI0H2KUrbAuYLQLR0bP619M4uhP7Ns+mOgtMbekfn8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IohZhG2SYeoAjK6Opb9dlVwEhBAL8eHFqAVfSiltRgsfgWD5KpYlGynCftEifzzkh9xL1PHsryuv//gj7DmCyJljbzn2iPg4eNkA7oLB2HoU9EpG+SdUGKzOWZ/hLKzgbfgoniSumWSHXr6W/M4yaMOeRojjO1rUs03+JMG+YEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwu5nYdn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J97eHu2uHsl78nYaRo4wcH1FWXDebeaRC2FHYy6ymX1KluOYZi6FQ8AGF5WdkHtiSWCaNrxp3wy0y0CXQtjYGTN54yvP27dXSiT9mD/PUlAhd5j4nn0JT2BZYL9xYe15uH55R/55KBN864vvkrprSD12F4L2CDgN8i15vRRuS0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Haz/iAQu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwu5nYdn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D541F00A3A;
-	Tue, 16 Jun 2026 15:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Haz/iAQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DB61F000E9;
+	Tue, 16 Jun 2026 15:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622796;
-	bh=hf+KA/4bQzq35xrguJE974rM8NJBoNq8hZAGpVL1lYk=;
+	s=korg; t=1781622800;
+	bh=3PPS5aTyep09Gv/ky9gwCWxqTw89Ub9pSVr+/z384e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wwu5nYdndW5gXBymx2vDGqBnFl8eYHeqaULodsqcckLxbCJm16fVw1VGrRToAN4AH
-	 Xk87/yOJoXfD6MCR12W7fqDZEc5DDHGI46exszJdRk9w0Lwd9IA2I2n/tXsnLlkX8F
-	 f7lgHWn6dk9EBV1Z2w3hZYpVOw5AXC+iOINJAyaA=
+	b=Haz/iAQuZNjqkNjlcko9GHqC7pqKwDBUhKwc7NwYpHnEDiqd5YkkCelqVQVp+rGot
+	 TiPHin4DJY3QPRKg50u6QXUzGGqNIS07pyeFvoj6pE9TkbW1m8CgnHfLhwi/lI4TW1
+	 eX4iP37RYVffAE4QYeDI5N686rBnMWpSMXGQpXiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Hui <yiconghui@gmail.com>,
-	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-	Liu Ying <victor.liu@nxp.com>,
+	syzbot+8e0622f6d9446420271f@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 030/378] drm/imx: Fix three kernel-doc warnings in dcss-scaler.c
-Date: Tue, 16 Jun 2026 20:24:21 +0530
-Message-ID: <20260616145111.446053255@linuxfoundation.org>
+Subject: [PATCH 7.0 031/378] wifi: mac80211: limit injected antenna index in ieee80211_parse_tx_radiotap
+Date: Tue, 16 Jun 2026 20:24:22 +0530
+Message-ID: <20260616145111.503332253@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,51 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Hui <yiconghui@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit ae0383e5a9a4b12d68c76c4769857def4665deff ]
+[ Upstream commit 6c0cf89f36ac0c0fd8687a4ccdce2efb23a9c663 ]
 
-Fix the following W=1 kerneldoc warnings by adding the missing parameter
-descriptions for @phase0_identity and @nn_interpolation in
-dcss_scaler_filter_design() and @phase0_identity in
-dcss_scaler_gaussian_filter()
+When parsing the radiotap header of an injected frame,
+ieee80211_parse_tx_radiotap() uses the IEEE80211_RADIOTAP_ANTENNA value
+directly as a shift count:
 
-Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:173 function parameter 'phase0_identity' not described in 'dcss_scaler_gaussian_filter'
-Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:270 function parameter 'phase0_identity' not described in 'dcss_scaler_filter_design'
-Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:270 function parameter 'nn_interpolation' not described in 'dcss_scaler_filter_design'
+	info->control.antennas |= BIT(*iterator.this_arg);
 
-Fixes: 9021c317b770 ("drm/imx: Add initial support for DCSS on iMX8MQ")
-Signed-off-by: Yicong Hui <yiconghui@gmail.com>
-Reviewed-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
-Link: https://patch.msgid.link/20260406180013.2442096-1-yiconghui@gmail.com
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
+*iterator.this_arg is an 8-bit value taken straight from the frame
+supplied by userspace, so BIT() can be asked to shift by up to 255. That
+is undefined behaviour on the unsigned long and is reported by UBSAN:
+
+  UBSAN: shift-out-of-bounds in net/mac80211/tx.c:2174:30
+  shift exponent 235 is too large for 64-bit type 'unsigned long'
+  Call Trace:
+   ieee80211_parse_tx_radiotap+0xadb/0x1950 net/mac80211/tx.c:2174
+   ieee80211_monitor_start_xmit+0xb1f/0x1250 net/mac80211/tx.c:2451
+   ...
+   packet_sendmsg+0x3eb6/0x50f0 net/packet/af_packet.c:3109
+
+info->control.antennas is a 2-bit bitmap (u8 antennas:2), so only antenna
+indices 0 and 1 can ever be represented. Ignore any larger value instead
+of shifting out of bounds.
+
+Reported-by: syzbot+8e0622f6d9446420271f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8e0622f6d9446420271f
+Fixes: ef246a1480cc ("wifi: mac80211: support antenna control in injection")
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260531011721.102941-1-kartikey406@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/dcss/dcss-scaler.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/tx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/imx/dcss/dcss-scaler.c b/drivers/gpu/drm/imx/dcss/dcss-scaler.c
-index 32c3f46b21daea..5c7f8d952ec1a1 100644
---- a/drivers/gpu/drm/imx/dcss/dcss-scaler.c
-+++ b/drivers/gpu/drm/imx/dcss/dcss-scaler.c
-@@ -166,6 +166,7 @@ static int exp_approx_q(int x)
-  * dcss_scaler_gaussian_filter() - Generate gaussian prototype filter.
-  * @fc_q: fixed-point cutoff frequency normalized to range [0, 1]
-  * @use_5_taps: indicates whether to use 5 taps or 7 taps
-+ * @phase0_identity: whether to override phase 0 coefficients with identity filter
-  * @coef: output filter coefficients
-  */
- static void dcss_scaler_gaussian_filter(int fc_q, bool use_5_taps,
-@@ -262,7 +263,9 @@ static void dcss_scaler_nearest_neighbor_filter(bool use_5_taps,
-  * @src_length: length of input
-  * @dst_length: length of output
-  * @use_5_taps: 0 for 7 taps per phase, 1 for 5 taps
-+ * @phase0_identity: whether to override phase 0 coefficients with identity filter
-  * @coef: output coefficients
-+ * @nn_interpolation: whether to use nearest neighbor instead of gaussian filter
-  */
- static void dcss_scaler_filter_design(int src_length, int dst_length,
- 				      bool use_5_taps, bool phase0_identity,
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index b7aedaab848386..d2ba2d81224f97 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2172,7 +2172,9 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+ 
+ 		case IEEE80211_RADIOTAP_ANTENNA:
+ 			/* this can appear multiple times, keep a bitmap */
+-			info->control.antennas |= BIT(*iterator.this_arg);
++			/* control.antennas is only a 2-bit bitmap */
++			if (*iterator.this_arg < 2)
++				info->control.antennas |= BIT(*iterator.this_arg);
+ 			break;
+ 
+ 		case IEEE80211_RADIOTAP_DATA_RETRIES:
 -- 
 2.53.0
 
