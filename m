@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D6E1D7995;
-	Tue, 16 Jun 2026 15:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1946137C912;
+	Tue, 16 Jun 2026 15:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622307; cv=none; b=ruv6nf9nxSiAYlRy5HoLI0Ww1nSIofcCojuB93/18zpFK7YrwqwRk+I5OH9TlfKY5z8BnnWekgoxVaE2KRhc+se7NJOSQvi4KE1ZwdKEjnH86iA9EhItjCP9c5peHtGVoen0KZ1dCnyZ/rE69yqlIbGpaMhowDvGlQYseAopmJ0=
+	t=1781622313; cv=none; b=Ke4Ki8ynXg/UoO+wGVVwTEmJ1a7KKL3P7M4GHVCq+ZV6GyglBpb22gS327k6gJQqwNWsBAUGGPE58RCkqIUCKi6nU95oRiLhCYip8vu8PRgyxgGiEdfij8ztqTtS/WcXtt4w8vlv+B1QEqgX9hbLKLpEn+H3p1Ph3PmrcPe0eSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622307; c=relaxed/simple;
-	bh=lCjkGqH+/Lay5HK4uzw1LAHc8Wq5d5YdmIoQiqb3qok=;
+	s=arc-20240116; t=1781622313; c=relaxed/simple;
+	bh=aIg1d4aElGmYPZV2SMtAD9ikx/h7SaT5h3fqe0bXDo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d11HkGjOy/wpSjxDThAEFGmYYqtt9bU3BtF3iIg2zCuSRHVqjRSbomzPlV7jVsA3uucOsujxjnvUyVJ2aD4WEoeeo9wQIHp/bRqZn+dIo6g6OL/TTMmm3Q+ikv7XDWFW10jCChPubiqxO+xwlClfrjnLLJuk2OaRihI3Aheceso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUfqpuUy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W/sz87eu5pOJ+fc4o3P7YI10lLTgQTZhHPg9zz4zQVOiX2Xqlb1P70lx8WgIibw2y4uX9s0M/dDu8d8l3KT/WuY8jSIWhtaNP8sdtXuDV9SJiU33KCACfSD4vLQItR4gSlen63Y8bsEYjO8Cz/5W2SZagQqJLKRHLGKa/VUIp2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbcS87Jd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUfqpuUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BB71F000E9;
-	Tue, 16 Jun 2026 15:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbcS87Jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085F41F000E9;
+	Tue, 16 Jun 2026 15:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622306;
-	bh=MpqnLX98evRFE7q9jzh7jcCrYLR17q+Q3sUxYIgb/lY=;
+	s=korg; t=1781622312;
+	bh=XV4fFavRPGMpwXjdvxhtF2b5fhC7g/qTjGmty89HpN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tUfqpuUysWuFIAFsudZbd15cNJd2RI6UuKFCprn8gyxvga2FKSE19kWN1kqGA2Kby
-	 oroDzbUDTrEUNlfj5ZpWxd6Gi8Lf6C40N4UtiHtFwYfJ498VdbFGQgH5UPlH074kE4
-	 hIKkko2V/nUQPb35HHEJBHytdPnnpX0KPpnQe1mk=
+	b=fbcS87JdhyXm0Tl7Ii91CqciUL1RVz/0W+DokLa5m7aOTrx4FZZHf50jG8Edgy68c
+	 rLjSPssZJUIh2LDNp2yqVjpI7ItIWo0atsQQ58aJGr+dIDis1oENKi7NJuRl9+pm/x
+	 XnH47Y7KbN0Kw66JSHqnagMm5IFoQwmMle9h2NiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/261] USB: serial: mct_u232: fix memory corruption with small endpoint
-Date: Tue, 16 Jun 2026 20:27:20 +0530
-Message-ID: <20260616145045.116421420@linuxfoundation.org>
+Subject: [PATCH 6.1 002/522] net/sched: cls_fw: fix NULL dereference of "old" filters before change()
+Date: Tue, 16 Jun 2026 20:22:29 +0530
+Message-ID: <20260616145125.455312601@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
-References: <20260616145044.869532709@linuxfoundation.org>
+In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
+References: <20260616145125.307082728@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,83 +48,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Davide Caratti <dcaratti@redhat.com>
 
-commit 915b36d701950503c4ea0f6e314b10868e59fce3 upstream.
+[ Upstream commit 65782b2db7321d5f97c16718c4c7f6c7205a56be ]
 
-The driver overrides the maximum transfer size for a specific device
-which only accepts 16 byte packets for its 32 byte bulk-out endpoint.
+Like pointed out by Sashiko [1], since commit ed76f5edccc9 ("net: sched:
+protect filter_chain list with filter_chain_lock mutex") TC filters are
+added to a shared block and published to datapath before their ->change()
+function is called. This is a problem for cls_fw: an invalid filter
+created with the "old" method can still classify some packets before it
+is destroyed by the validation logic added by Xiang.
+Therefore, insisting with repeated runs of the following script:
 
-Make sure to never increase the maximum transfer size to prevent slab
-corruption should a malicious device report a smaller endpoint max
-packet size than expected.
+ # ip link add dev crash0 type dummy
+ # ip link set dev crash0 up
+ # mausezahn  crash0 -c 100000 -P 10 \
+ > -A 4.3.2.1 -B 1.2.3.4 -t udp "dp=1234" -q &
+ # sleep 1
+ # tc qdisc add dev crash0 egress_block 1 clsact
+ # tc filter add block 1 protocol ip prio 1 matchall \
+ > action skbedit mark 65536 continue
+ # tc filter add block 1 protocol ip prio 2 fw
+ # ip link del dev crash0
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+can still make fw_classify() hit the WARN_ON() in [2]:
+
+ WARNING: ./include/net/pkt_cls.h:88 at fw_classify+0x244/0x250 [cls_fw], CPU#18: mausezahn/1399
+ Modules linked in: cls_fw(E) act_skbedit(E)
+ CPU: 18 UID: 0 PID: 1399 Comm: mausezahn Tainted: G            E       7.0.0-rc6-virtme #17 PREEMPT(full)
+ Tainted: [E]=UNSIGNED_MODULE
+ Hardware name: Red Hat KVM, BIOS 1.16.3-2.el9 04/01/2014
+ RIP: 0010:fw_classify+0x244/0x250 [cls_fw]
+ Code: 5c 49 c7 45 00 00 00 00 00 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 5b b8 ff ff ff ff 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 90 <0f> 0b 90 eb a0 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90
+ RSP: 0018:ffffd1b7026bf8a8 EFLAGS: 00010202
+ RAX: ffff8c5ac9c60800 RBX: ffff8c5ac99322c0 RCX: 0000000000000004
+ RDX: 0000000000000001 RSI: ffff8c5b74d7a000 RDI: ffff8c5ac8284f40
+ RBP: ffffd1b7026bf8d0 R08: 0000000000000000 R09: ffffd1b7026bf9b0
+ R10: 00000000ffffffff R11: 0000000000000000 R12: 0000000000010000
+ R13: ffffd1b7026bf930 R14: ffff8c5ac8284f40 R15: 0000000000000000
+ FS:  00007fca40c37740(0000) GS:ffff8c5b74d7a000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007fca40e822a0 CR3: 0000000005ca0001 CR4: 0000000000172ef0
+ Call Trace:
+  <TASK>
+  tcf_classify+0x17d/0x5c0
+  tc_run+0x9d/0x150
+  __dev_queue_xmit+0x2ab/0x14d0
+  ip_finish_output2+0x340/0x8f0
+  ip_output+0xa4/0x250
+  raw_sendmsg+0x147d/0x14b0
+  __sys_sendto+0x1cc/0x1f0
+  __x64_sys_sendto+0x24/0x30
+  do_syscall_64+0x126/0xf80
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ RIP: 0033:0x7fca40e822ba
+ Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
+ RSP: 002b:00007ffc248a42c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+ RAX: ffffffffffffffda RBX: 000055ef233289d0 RCX: 00007fca40e822ba
+ RDX: 000000000000001e RSI: 000055ef23328c30 RDI: 0000000000000003
+ RBP: 000055ef233289d0 R08: 00007ffc248a42d0 R09: 0000000000000010
+ R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000001e
+ R13: 00000000000186a0 R14: 0000000000000000 R15: 00007fca41043000
+  </TASK>
+ irq event stamp: 1045778
+ hardirqs last  enabled at (1045784): [<ffffffff864ec042>] __up_console_sem+0x52/0x60
+ hardirqs last disabled at (1045789): [<ffffffff864ec027>] __up_console_sem+0x37/0x60
+ softirqs last  enabled at (1045426): [<ffffffff874d48c7>] __alloc_skb+0x207/0x260
+ softirqs last disabled at (1045434): [<ffffffff874fe8f8>] __dev_queue_xmit+0x78/0x14d0
+
+Then, because of the value in the packet's mark, dereference on 'q->handle'
+with NULL 'q' occurs:
+
+ BUG: kernel NULL  pointer dereference, address: 0000000000000038
+ [...]
+ RIP: 0010:fw_classify+0x1fe/0x250 [cls_fw]
+ [...]
+
+Skip "old-style" classification on shared blocks, so that the NULL
+dereference is fixed and WARN_ON() is not hit anymore in the short
+lifetime of invalid cls_fw "old-style" filters.
+
+[1] https://sashiko.dev/#/patchset/20260331050217.504278-1-xmei5%40asu.edu
+[2] https://elixir.bootlin.com/linux/v7.0-rc6/source/include/net/pkt_cls.h#L86
+
+Fixes: faeea8bbf6e9 ("net/sched: cls_fw: fix NULL pointer dereference on shared blocks")
+Fixes: ed76f5edccc9 ("net: sched: protect filter_chain list with filter_chain_lock mutex")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/e39cbd3103a337f1e515d186fe697b4459d24757.1775661704.git.dcaratti@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/mct_u232.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ net/sched/cls_fw.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/serial/mct_u232.c b/drivers/usb/serial/mct_u232.c
-index d225d7c1455f4f..33d4bbc461be6a 100644
---- a/drivers/usb/serial/mct_u232.c
-+++ b/drivers/usb/serial/mct_u232.c
-@@ -378,6 +378,7 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
- {
- 	struct usb_serial *serial = port->serial;
- 	struct mct_u232_private *priv;
-+	u16 pid;
+diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
+index 366bcc960e43e6..979662292dced6 100644
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -72,9 +72,13 @@ static int fw_classify(struct sk_buff *skb, const struct tcf_proto *tp,
+ 			}
+ 		}
+ 	} else {
+-		struct Qdisc *q = tcf_block_q(tp->chain->block);
++		struct Qdisc *q;
  
- 	/* check first to simplify error handling */
- 	if (!serial->port[1] || !serial->port[1]->interrupt_in_urb) {
-@@ -385,6 +386,16 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
- 		return -ENODEV;
- 	}
- 
-+	/*
-+	 * Compensate for a hardware bug: although the Sitecom U232-P25
-+	 * device reports a maximum output packet size of 32 bytes,
-+	 * it seems to be able to accept only 16 bytes (and that's what
-+	 * SniffUSB says too...)
-+	 */
-+	pid = le16_to_cpu(serial->dev->descriptor.idProduct);
-+	if (pid == MCT_U232_SITECOM_PID)
-+		port->bulk_out_size = min(16, port->bulk_out_size);
+ 		/* Old method: classify the packet using its skb mark. */
++		if (tcf_block_shared(tp->chain->block))
++			return -1;
 +
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
-@@ -410,7 +421,6 @@ static void mct_u232_port_remove(struct usb_serial_port *port)
- 
- static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
- {
--	struct usb_serial *serial = port->serial;
- 	struct mct_u232_private *priv = usb_get_serial_port_data(port);
- 	int retval = 0;
- 	unsigned int control_state;
-@@ -418,15 +428,6 @@ static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
- 	unsigned char last_lcr;
- 	unsigned char last_msr;
- 
--	/* Compensate for a hardware bug: although the Sitecom U232-P25
--	 * device reports a maximum output packet size of 32 bytes,
--	 * it seems to be able to accept only 16 bytes (and that's what
--	 * SniffUSB says too...)
--	 */
--	if (le16_to_cpu(serial->dev->descriptor.idProduct)
--						== MCT_U232_SITECOM_PID)
--		port->bulk_out_size = 16;
--
- 	/* Do a defined restart: the normal serial device seems to
- 	 * always turn on DTR and RTS here, so do the same. I'm not
- 	 * sure if this is really necessary. But it should not harm
++		q = tcf_block_q(tp->chain->block);
+ 		if (id && (TC_H_MAJ(id) == 0 ||
+ 			   !(TC_H_MAJ(id ^ q->handle)))) {
+ 			res->classid = id;
 -- 
 2.53.0
 
