@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D982425CEE;
-	Tue, 16 Jun 2026 16:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FB139150B;
+	Tue, 16 Jun 2026 16:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627360; cv=none; b=J/4rGp6Gb9wfc5RX2mNb51gx4ZUmpSNyRpPB1DSzt1tbJwSA1xeAHv0A8eyGgCHHaN5XrJFMgWEyyc5jJ4SLvc1A/+fNAKOOn5c237hMb0N+ZCQxj8KtWrrXObLsYwycXtRe5Y1gaPvcUCQl3S5txvLKlnocVmiOQFd8n3I8GPI=
+	t=1781627369; cv=none; b=kvMvyeTaUnCHQA83i/Yes0nmro8wy/E2dHfLFVSeAlIjH+7ojNpHcbqA7DNh6EVmkEIepAZHFwTbMnznb2K4SxkJvjEdLf9LNncKvo9FSC0dmEJNJ8Ufs/vqIzXzvQOiFB1QjbgaA0BHsgYP4aHGQxBmrizgtQj48uxmQZQmMgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627360; c=relaxed/simple;
-	bh=fYYpAe/G0UcGPhORsYajpUKUKP1Sc6mMsJaxBwQ4cf4=;
+	s=arc-20240116; t=1781627369; c=relaxed/simple;
+	bh=zGlkR6+hfCW0sL9PT1pKpNl1nS2ZSE2Pu5B6EVD0kmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHYln+puwCZUzkzWg/QOtoDJEk5hiU4BXkvkx2Kz5fv0OnOIGWVF3nMGHrKmdkWOiqVFmKttEdnXwkxdcOeYBP6Sv53N7va+VwCJQCVXW9pCWnMIk9Bkhct9Tos9lvgyiP7w9TjrvieA/upqe0gAIbDjrs3uAEe+WI82lTwxIzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIqbTCTG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RIGrOYNyS5zTh+hBTWXm+5ulq3do62mo6q4tJLyXNWmKxTxJewrE9orrCoj5odTPx/N7ze2+8bZAOzqEiXbXJJY0qFuHovRlcLnrKwTI9YPar0PcgRyZP/Ar0pCaO6FBDhWPFwTwD1UYgK+IXcskqPs5X9x/gtUWKQRezg+0HJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfrzH4n/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIqbTCTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCBE1F000E9;
-	Tue, 16 Jun 2026 16:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfrzH4n/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869D21F000E9;
+	Tue, 16 Jun 2026 16:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627358;
-	bh=NvA2o5aYZ2ygYTLZFUY41sCvposuWY7gq58bNyVcrY8=;
+	s=korg; t=1781627368;
+	bh=P04Cte9YlZsHNxpr/aeUqoIS60DY7GhHmclo/YW4oUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WIqbTCTGz1LjhyttACWDTResMfKDxqSVbIi2WpvnSMewx+WY7yL+06NVl3bQ88JTV
-	 ISLCWLuV+URS+wRQrdecyoWecd0bCDaAFnfVq5pJxLn6E78p5v+eQGUWPrr8PYAmrO
-	 ptbgMAMxKHSQNWTkrZrz0QYZi1cjBz80H8/7gp1g=
+	b=MfrzH4n/8d6ZvyAUWhp2PiZsqyFCtazWoW50AJSN+8t5Cy5NBYWZT+O4lxLgUCid3
+	 Wa5X/PuHj7VXDs4MKMJqQUng3C5oxcjgbNUdCvAtaGW7cSsNZ1btgCZWm6ByNso4Nz
+	 SsyRmWMEJxthqJAXa8mRyIlDcSdmPY9F6gYjjNVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 162/261] wifi: nl80211: reject oversized EMA RNR lists
-Date: Tue, 16 Jun 2026 20:30:00 +0530
-Message-ID: <20260616145052.579309789@linuxfoundation.org>
+	Raf Dickson <rafdog35@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 163/261] vsock/vmci: fix sk_ack_backlog leak on failed handshake
+Date: Tue, 16 Jun 2026 20:30:01 +0530
+Message-ID: <20260616145052.624208791@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -55,45 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Raf Dickson <rafdog35@gmail.com>
 
-commit 4cd92957e8f8cc4ebfe8a5d4203c14c592fde6b1 upstream.
+commit c05fa14db43ebef3bd862ca9d073981c0358b3f0 upstream.
 
-nl80211_parse_rnr_elems() stores the parsed element count in a
-u8-backed cfg80211_rnr_elems::cnt field and uses that count to size
-the flexible array allocation.
+When vmci_transport_recv_connecting_server() returns an error,
+vmci_transport_recv_listen() calls vsock_remove_pending() but never
+calls sk_acceptq_removed(). This leaves sk_ack_backlog incremented
+permanently.
 
-Reject nested NL80211_ATTR_EMA_RNR_ELEMS input once the count reaches
-255, before incrementing it again. This keeps the parser aligned with
-the data structure it fills and matches the existing bound check used
-by nl80211_parse_mbssid_elems().
+Repeated handshake failures (malformed packets, queue pair alloc
+failure, event subscribe failure) cause sk_ack_backlog to climb
+toward sk_max_ack_backlog. Once it reaches the limit the listener
+permanently refuses all new connections with -ECONNREFUSED, a
+silent denial of service requiring a process restart to recover.
 
-Fixes: dbbb27e183b1 ("cfg80211: support RNR for EMA AP")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/20260529152542.1412734-1-n05ec@lzu.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The two existing sk_acceptq_removed() calls in af_vsock.c do not
+cover this path: line 764 checks vsock_is_pending() which returns
+false after vsock_remove_pending(), and line 1889 is only reached
+on successful accept().
+
+Fix by balancing sk_acceptq_added() with sk_acceptq_removed() on
+the error path.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Cc: stable@vger.kernel.org
+Signed-off-by: Raf Dickson <rafdog35@gmail.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260526104356.469928-1-rafdog35@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/vmw_vsock/vmci_transport.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -5591,6 +5591,9 @@ nl80211_parse_rnr_elems(struct wiphy *wi
- 		if (ret)
- 			return ERR_PTR(ret);
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -972,8 +972,10 @@ static int vmci_transport_recv_listen(st
+ 			err = -EINVAL;
+ 		}
  
-+		if (num_elems >= 255)
-+			return ERR_PTR(-EINVAL);
-+
- 		num_elems++;
- 	}
+-		if (err < 0)
++		if (err < 0) {
+ 			vsock_remove_pending(sk, pending);
++			sk_acceptq_removed(sk);
++		}
  
+ 		release_sock(pending);
+ 		vmci_transport_release_pending(pending);
 
 
