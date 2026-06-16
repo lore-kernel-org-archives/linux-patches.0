@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DCC3BE650;
-	Tue, 16 Jun 2026 16:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B19443E490;
+	Tue, 16 Jun 2026 16:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626459; cv=none; b=VZ8YvXvl5QFbHbH1TOncc6wnDgUuTlblhIoDKQk0SE/GYJQN3NR1vMs93m/RpgEq+Hs/ZBnb9/UHUFfZG46LjVNsqifQ2Hw0RGEEQc/IUagvZCsv4D2/AEzp35IzSQSCj6CC3kMKDXG1+5cE5V/ySyplQmKH8OF+WDKEbwPKlP8=
+	t=1781626465; cv=none; b=X4gP3S1GlTy3LbVJ92YsErcKxIoZta/D3FWpIXbGa/xMdlhHqEUImxRsCRoTxxghAkw+9lLaWYypDIFbaLePyiPUs5jwlKKKKrDscju93mLuZSrHxql9DC4UQUfbZs2LfUL/jzr9FX7V4fym3T9eOWpOa51YiIB/5A3M1mcF57U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626459; c=relaxed/simple;
-	bh=KhGJnAES7iqBw7FnmICDZHh0j6KaFvyQH3xaJr87EWU=;
+	s=arc-20240116; t=1781626465; c=relaxed/simple;
+	bh=sKhhsoP3QJGYkL63w2aYH9qMf4UL8QkQE5KzjZw8BZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Na6M/vm5uzmt7I+jhx3aqHfPvUj55siZaw/EMpidvRywwgjMLAFaMrEZScPC1H1k/X08MwemdbbGL+NMOWiZjkPU0mPD+f2Hip59ep61jcVPUsA1GVYSs/oMCDZJVUrbI9UK66bWIpEzZnX2eD6F5S+tioCz/MbaC5TIig+1eb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDIJsOJf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PlWByl9AmaK3NHESCyx1A008jCKZ2dV1koLe2EKoyp2RybdkfTfVJ+GC842SF7Vs6I7XhBOiqHh6eUajQ9EpO7ZJaZXwMaQj/OJD8jR1gh1+G3NXDRy6orOGsgj64YcWa0aYxhbeW75ZE9hFiwBoQdbbMdECQ9W06O8DJQXxiKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRk1ndyU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDIJsOJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DCA1F000E9;
-	Tue, 16 Jun 2026 16:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRk1ndyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138861F000E9;
+	Tue, 16 Jun 2026 16:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626458;
-	bh=LsNEOL5KvEjsyaQoUkDUibU/flXfH4w7AzxDCTehK1g=;
+	s=korg; t=1781626464;
+	bh=H63kXZU27rJsjzfhXodFUZQsW7MnXHvKTF7U+le00UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CDIJsOJfOi3QB0Z1ofoERLnKb8cHGtNrLFfKRFU+ngkS3WilTlMX6ZOGVfFEAS8Dx
-	 fyviedGmRvh+3AObOYhnnObajHW927wGRx833lwD5UQJNUdMQgkfZcEOAaeAZGYRTi
-	 sSFSXnSpQe5ZDUHarzp23BxWVFumA/Oy1rndPd2I=
+	b=gRk1ndyU0yylYcMr0VHQMK8s186195wDkZlQutoW7jSADU4uuy7QqC5AX93ck17EV
+	 eqqu1CD/xfLm5Xh/r9LcRWtEnukADJBx2oGbWp/CMiy6MzgilNFZrMETM71pEPNu6v
+	 hb4dCrF/PfktMmGsFTBzgapPIWT1j/u5+eHY1tT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	virtualization@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 318/325] vsock/virtio: fix potential unbounded skb queue
-Date: Tue, 16 Jun 2026 20:31:54 +0530
-Message-ID: <20260616145114.923242115@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 319/325] vsock/virtio: fix skb overhead accounting to preserve full buf_alloc
+Date: Tue, 16 Jun 2026 20:31:55 +0530
+Message-ID: <20260616145114.978788840@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,57 +44,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit 059b7dbd20a6f0c539a45ddff1573cb8946685b5 upstream.
+commit c6087c5aaad6d1b8be1a1a641e0a422218ade911 upstream.
 
-virtio_transport_inc_rx_pkt() checks vvs->rx_bytes + len > vvs->buf_alloc.
+After commit 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb
+queue"), virtio_transport_inc_rx_pkt() subtracts per-skb overhead from
+buf_alloc when checking whether a new packet fits. This reduces the
+effective receive buffer below what the user configured via
+SO_VM_SOCKETS_BUFFER_SIZE, causing legitimate data packets to be
+silently dropped and applications that rely on the full buffer size
+to deadlock.
 
-virtio_transport_recv_enqueue() skips coalescing for packets
-with VIRTIO_VSOCK_SEQ_EOM.
+Also, the reduced space is not communicated to the remote peer, so
+its credit calculation accounts more credit than the receiver will
+actually accept, causing data loss (there is no retransmission).
 
-If fed with packets with len == 0 and VIRTIO_VSOCK_SEQ_EOM,
-a very large number of packets can be queued
-because vvs->rx_bytes stays at 0.
+With this approach we currently have failures in
+tools/testing/vsock/vsock_test.c. Test 18 sometimes fails, while
+test 22 always fails in this way:
+    18 - SOCK_STREAM MSG_ZEROCOPY...hash mismatch
 
-Fix this by estimating the skb metadata size:
+    22 - SOCK_STREAM virtio credit update + SO_RCVLOWAT...send failed:
+    Resource temporarily unavailable
 
-	(Number of skbs in the queue) * SKB_TRUESIZE(0)
+Fix by allowing at most `buf_alloc * 2` as the total budget for payload
+plus skb overhead in virtio_transport_inc_rx_pkt(), similar to how
+SO_RCVBUF is doubled to reserve space for sk_buff metadata.
+This preserves the full buf_alloc for payload under normal operation,
+while still bounding the skb queue growth.
 
-Fixes: 077706165717 ("virtio/vsock: don't use skbuff state to account credit")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Cc: "Eugenio Pérez" <eperezma@redhat.com>
-Cc: virtualization@lists.linux.dev
-Link: https://patch.msgid.link/20260430122653.554058-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+With this patch, all tests in tools/testing/vsock/vsock_test.c are
+now passing again.
+
+Fixes: 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260518090656.134588-3-sgarzare@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/vmw_vsock/virtio_transport_common.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 --- a/net/vmw_vsock/virtio_transport_common.c
 +++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -425,7 +425,9 @@ static int virtio_transport_send_pkt_inf
- static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
- 					u32 len)
+@@ -427,7 +427,14 @@ static bool virtio_transport_inc_rx_pkt(
  {
--	if (vvs->buf_used + len > vvs->buf_alloc)
-+	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
-+
-+	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
+ 	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
+ 
+-	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
++	/* Allow at most buf_alloc * 2 total budget (payload + overhead),
++	 * similar to how SO_RCVBUF is doubled to reserve space for sk_buff
++	 * metadata. Check payload against buf_alloc to be sure the other
++	 * peer is respecting the credit, and sk_buff overhead to bound
++	 * queue growth.
++	 */
++	if ((u64)vvs->buf_used + len > vvs->buf_alloc ||
++	    skb_overhead > vvs->buf_alloc)
  		return false;
  
  	vvs->rx_bytes += len;
