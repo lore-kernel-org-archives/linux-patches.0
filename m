@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E55244B69C;
-	Tue, 16 Jun 2026 15:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200C5423A72;
+	Tue, 16 Jun 2026 15:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625315; cv=none; b=nm8y8AJgsVphvuWPcOnsiSBGWw595g0qQSRVkeakEBXBT1PZ5odbelxym5YOr5D5Ul04shmjl/w54hg31qkldYn0jiFW7NOV8aPOFeRvWa+FT3YHT+nXjsmtu++O2XfMqsvC2rX/mk9LqdysqDW1/ISHRMuOVJhMeLf7MT8E1iM=
+	t=1781625320; cv=none; b=F+f8aMVfuvbscfHDpW9K8EZtQNthaUSqAy12UR0txxfg2T0GyoBhxH7AVba7S599Qi32PTfsEax0YLq6d6oNfJQGsnoVYjEfTlQkRjxpqBwRiutR1BJbfelhmy1cmEdJ3dr0lnVRzBQhP2ESGWOBLapSxRRvTv3k7ZtfwHTuBJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625315; c=relaxed/simple;
-	bh=JApOTiSChiXd9+LuzNxRZkhOKw+T7i1IkyavjwnMsf4=;
+	s=arc-20240116; t=1781625320; c=relaxed/simple;
+	bh=IG8w7omnZFZAzukCaQoyVGlHZZu8CVWxA3TGfSAGd1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmzG5yb/l90HmHAM9YtIPbUuK0WBzTX6pYyr+084p/UEkFepj41Xn4MrChVhCGymUYgR0+MIk1pCQnRBkW1s5Rymc8WX7aEuNMCJ/wzgf6hov9jH3F71H5b0EGLjv54Z6EB69Dk+Eqpc5YM+y4RyhevELJVBVbpAXmxR+RMRstQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12AgqLcM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZyPdKmFsItH6RPccUZQdqeHCXwQdHlSyk8qfw4WGLrm8AqQLGYLVKlExGwVaMxoDNjVieKuzmY3aBCNFgxAgXB9lyyR8zYaAIQ5YJzq7jCCRyQcyrBLSSDQeyMRmOyThCJnO3x3zbiP+XNjdMtJ+rJ/895YkT2HzU1eEmHolyNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbAc/6Gz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12AgqLcM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254101F000E9;
-	Tue, 16 Jun 2026 15:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbAc/6Gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0C01F00A3A;
+	Tue, 16 Jun 2026 15:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625314;
-	bh=5HvcDoyVLCLTA2Jq55dN2pT3pQzM3mOL2ME26TkgF6Q=;
+	s=korg; t=1781625318;
+	bh=9XA7NtXLJkK9xhdDMNAjMTMas0EQm8JrPMfGcMJE2s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=12AgqLcMjOBmN+YfUnzMkyNKpsXoaWf5PdbYzrSsSKBkrXlLW/9kWtPqgEKFmQHD5
-	 WHjWAp6uS96xY0BxbybI5BtXtrjJiCYdUBI6yDMkBrzsGDuxhs66laNUsZd/6hdit0
-	 xW2MpszHsLg2QFwT5n+oNk5aUSCRb9ReyKLeSDns=
+	b=tbAc/6GzJB/Njl75haq7yLkDoswCXLDuf/QG8bXg/y70GKR8ZxvEVwtssLfzsXz+B
+	 be2saguHZOJ0IpCd6L6AIx8R40hGyWu1uMzrWcdjby5TQHDOfyILIlOH0E1tsokqFM
+	 ds1cUyCxCt1XgLfWfnnoivA08r06SBoM+6ascewc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 085/325] tap: free page on error paths in tap_get_user_xdp()
-Date: Tue, 16 Jun 2026 20:28:01 +0530
-Message-ID: <20260616145101.951716546@linuxfoundation.org>
+Subject: [PATCH 6.18 086/325] xfrm: iptfs: fix use-after-free on first_skb in __input_process_payload
+Date: Tue, 16 Jun 2026 20:28:02 +0530
+Message-ID: <20260616145101.998232653@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -49,61 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-[ Upstream commit 3bcf7aec6a9d16438f2cec29f5d7c8d5b8edf9b2 ]
+[ Upstream commit eb48730bb827d1550401a5d391903f9d90b493c8 ]
 
-tap_get_user_xdp() rejects a frame shorter than ETH_HLEN with -EINVAL,
-and returns -ENOMEM when build_skb() fails. Both paths jump to the err
-label without freeing the page that vhost_net_build_xdp() allocated for
-the frame. tap_sendmsg() discards the per-buffer return value and always
-returns 0, so vhost_tx_batch() takes the success path and never frees
-the page; each rejected frame in a batch leaks one page-frag chunk.
+__input_process_payload() stores first_skb into xtfs->ra_newskb under
+drop_lock when starting partial reassembly, then unlocks and breaks out
+of the processing loop. The post-loop check reads xtfs->ra_newskb
+without the lock to decide whether first_skb is still owned:
 
-Free the page on both error paths, before the skb is built. This is the
-tap counterpart of the same leak in tun_xdp_one().
+    if (first_skb && first_iplen && !defer && first_skb != xtfs->ra_newskb)
 
-Fixes: 0efac27791ee ("tap: accept an array of XDP buffs through sendmsg()")
-Fixes: ed7f2afdd0e0 ("tap: add missing verification for short frame")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260521163230.1478627-2-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit 3bcf7aec6a9d16438f2cec29f5d7c8d5b8edf9b2)
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Between spin_unlock and this read, a concurrent CPU running
+iptfs_reassem_cont() (or the drop_timer hrtimer) can complete
+reassembly, NULL xtfs->ra_newskb, and free the skb. The check then
+evaluates first_skb != NULL as true, and pskb_trim/ip_summed/consume_skb
+operate on the freed skb — a use-after-free in skbuff_head_cache.
+
+Replace the unlocked read with a local bool that records whether
+first_skb was handed to the reassembly state in the current call. The
+flag is set after the existing spin_unlock, before the break, using the
+pointer equality that is stable at that point (first_skb == skb iff
+first_skb was stored in ra_newskb).
+
+Fixes: 3f3339885fb3 ("xfrm: iptfs: add reusing received skb for the tunnel egress packet")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/xfrm/xfrm_iptfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index 6fd3b14273b374..b51ce7af1b20f9 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -1052,6 +1052,7 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
- 	int err, depth;
+diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
+index e11e4f7411fd25..3dbb9c2cf4d5f6 100644
+--- a/net/xfrm/xfrm_iptfs.c
++++ b/net/xfrm/xfrm_iptfs.c
+@@ -954,6 +954,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
+ 	u32 first_iplen, iphlen, iplen, remaining, tail;
+ 	u32 capturelen;
+ 	u64 seq;
++	bool first_skb_partial = false;
  
- 	if (unlikely(xdp->data_end - xdp->data < ETH_HLEN)) {
-+		put_page(virt_to_head_page(xdp->data));
- 		err = -EINVAL;
- 		goto err;
- 	}
-@@ -1061,6 +1062,7 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+ 	xtfs = x->mode_data;
+ 	net = xs_net(x);
+@@ -1161,6 +1162,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
  
- 	skb = build_skb(xdp->data_hard_start, buflen);
- 	if (!skb) {
-+		put_page(virt_to_head_page(xdp->data));
- 		err = -ENOMEM;
- 		goto err;
- 	}
+ 			spin_unlock(&xtfs->drop_lock);
+ 
++			first_skb_partial = (first_skb == skb);
+ 			break;
+ 		}
+ 
+@@ -1172,7 +1174,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
+ 		/* this should not happen from the above code */
+ 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINIPTFSERROR);
+ 
+-	if (first_skb && first_iplen && !defer && first_skb != xtfs->ra_newskb) {
++	if (first_skb && first_iplen && !defer && !first_skb_partial) {
+ 		/* first_skb is queued b/c !defer and not partial */
+ 		if (pskb_trim(first_skb, first_iplen)) {
+ 			/* error trimming */
 -- 
 2.53.0
 
