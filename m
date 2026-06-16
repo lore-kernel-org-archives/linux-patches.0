@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F2547A0D0;
-	Tue, 16 Jun 2026 16:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B85143E490;
+	Tue, 16 Jun 2026 16:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628980; cv=none; b=Bm4PX9pcAyCIQNAf/4JJdixHx2ewG7UDBdJttMkOYbh5MpQ5449U9oDvtMoEG4ZI7xZikAwX/RWvSMDxZCsRn092GTIYZC2/wi1QzgcZc70efb+7AYd2dairYOzkJlZXpOz84fxGsicH5nLFbwA+A9t/7KidFN3otC2n/5eDVTY=
+	t=1781628984; cv=none; b=Xx68z+frDgbVO5fUKezVyNh4CibBzvfWzUVKtPCY/ivi4ZXiHRFytg5pfPqlAiEaBJmX1LwCZ8ZkOS2MphODBjOjXVpSp4xX39uVYRFkMvPuWgM1XeG8SjFx04NnRWiI5kscP9Aaxk3+boIfHanA6m4tvLpkslDcZ+GfFi7frg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628980; c=relaxed/simple;
-	bh=pLl95MXFE0Td3bAHf3DfnAaHoZZ+WKwmGG2uRQc4/mQ=;
+	s=arc-20240116; t=1781628984; c=relaxed/simple;
+	bh=R5TabdYJvykaXapKgVokD0cC7F+5ECcXbifbQ29T0Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vbhg0OCFzG9eNPhtc3uM0nNyrOpm1XJxgK4uDMU9Y7djrZU7+baUs5AXJbJSFsP+USQ/HXmLiVe3GlN5iL3XTsolhW7aNJwMmUljo0OCqLvfiPX1ZylcIT0qcKa/kEcioqyvIWorc2ihWvOApkSPgIJp1yGU7KkxF2ExtvmSMOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg5Rcskz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oZE7w7spuJuLoNH2LUi15P4px2ANQfRCb/HRNRxQlXHLA3zJrr5yrXL058X/g/L98Cixu08U9TOORqUC/VMpYaYhlUSJYBEFxbYwF7T+24PlWs956NXLI5HWY5VvbJxbo945616NgrUvDX7aR52o/QEMLTnD2eZ2Gp7C9enZdM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ik3SH9Po; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg5Rcskz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329991F00A3D;
-	Tue, 16 Jun 2026 16:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ik3SH9Po"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766211F000E9;
+	Tue, 16 Jun 2026 16:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628975;
-	bh=FuPY7yhhazwo9DBlo9NGVTSU3tXSlbWYjWdjVuhh8kU=;
+	s=korg; t=1781628980;
+	bh=kUNWaw/koUEfYFkUzSEWzECGpiZ1k6UKK68ZdXr0tIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dg5Rcskz6ZdiEAA3yA9/uXZqKT5FWrgKkKcH3lDvfmNlALR6IkQ81KKerTR+DMlv6
-	 3p/qX1Ifq3OVCUSJvByV9Kf8DugezlW6yfWhjWIogJLd28mdNwPcB/ETsbViaS91kJ
-	 aqY1gKzfavdKaZfcvcsG/0N5DyEr9Y3FfcAYSwH4=
+	b=Ik3SH9PoNmCDp/uXijhfdL2q8kjDn60UE8eBqUbZX3XQOA3gzvUAhhaTMDpd9vkEJ
+	 BD7KZ7cLaVmJbMlXxOIuJb0RyOzxi7iJm/aKvT+/jJoSd88l9HQtgv8OxRV/BmUzzF
+	 GNpLHbTRC3iMbr3v3IF3aYbvu7eMQzO/1WlaxPtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/452] serial: dz: Convert to use a platform device
-Date: Tue, 16 Jun 2026 20:27:05 +0530
-Message-ID: <20260616145128.231176572@linuxfoundation.org>
+Subject: [PATCH 6.6 199/452] serial: zs: Convert to use a platform device
+Date: Tue, 16 Jun 2026 20:27:06 +0530
+Message-ID: <20260616145128.283391728@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,57 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 5d7a49d60b8fda66da60e240fd7315232fa1754f upstream.
+commit 7cac59d08a73cb866ec51a483a6f3fe0f531947c upstream.
 
 Prevent a crash from happening as the first serial port is initialised:
 
-  Console: switching to colour frame buffer device 160x64
-  tgafb: SFB+ detected, rev=0x02
-  fb0: Digital ZLX-E1 frame buffer device at 0x1e000000
-  DECstation DZ serial driver version 1.04
-  CPU 0 Unable to handle kernel paging request at virtual address 000000bc, epc == 8048b3a4, ra == 80470a78
+  Console: switching to mono frame buffer device 160x64
+  fb0: PMAG-AA frame buffer device at tc0
+  DECstation Z85C30 serial driver version 0.10
+  CPU 0 Unable to handle kernel paging request at virtual address 0000002c, epc == 803ab00c, ra == 803aafe0
   Oops[#1]:
-  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.19.0-dirty #35 NONE
-  $ 0   : 00000000 1000ac00 00000004 804707ac
-  $ 4   : 00000000 80e20850 80e20858 81000030
-  $ 8   : 00000000 8072c81c 00000008 fefefeff
-  $12   : 6c616972 00000006 80c5917f 69726420
-  $16   : 80e20800 00000000 808f8968 80e20800
-  $20   : 00000000 807f5a90 808b0094 808d3bc8
-  $24   : 00000018 80479030
-  $28   : 80c2e000 80c2fd70 00000069 80470a78
-  Hi    : 00000004
+  CPU: 0 PID: 1 Comm: swapper Not tainted 6.4.0-rc3-00031-g84a9582fd203-dirty #57
+  $ 0   : 00000000 10012c00 803aaeb0 00000000
+  $ 4   : 80e12f60 80e12f50 80e12f58 81000030
+  $ 8   : 00000000 805ff37c 00000000 33433538
+  $12   : 65732030 00000006 80c2915d 6c616972
+  $16   : 80e12f00 807b7630 00000000 00000000
+  $20   : 00000004 00000348 000001a0 807623b8
+  $24   : 00000018 00000000
+  $28   : 80c24000 80c25d60 8078b148 803aafe0
+  Hi    : 00000000
   Lo    : 00000000
-  epc   : 8048b3a4 __dev_fwnode+0x0/0xc
-  ra    : 80470a78 serial_base_ctrl_add+0xa0/0x168
-  Status: 1000ac04	IEp
-  Cause : 30000008 (ExcCode 02)
-  BadVA : 000000bc
-  PrId  : 00000220 (R3000)
+  epc   : 803ab00c serial_base_ctrl_add+0x78/0xf4
+  ra    : 803aafe0 serial_base_ctrl_add+0x4c/0xf4
+  Status: 10012c03	KERNEL EXL IE
+  Cause : 00000008 (ExcCode 02)
+  BadVA : 0000002c
+  PrId  : 00000440 (R4400SC)
   Modules linked in:
-  Process swapper/0 (pid: 1, threadinfo=(ptrval), task=(ptrval), tls=00000000)
-  Stack : 00400044 00400040 8046f4cc 00000000 808a6148 808a0000 808f8968 8086983c
-          808e0000 8046fc84 1000ac01 00000028 80e20700 802ba3f8 80e20700 80d34a94
-          80c1b900 80e20700 80e20700 80e20700 80e20700 80444650 00000000 00000000
-          00000000 807f5a90 808b0094 80447080 00400040 808e0000 80d34a94 808a6148
-          80d34a94 00000004 80e20700 00000000 8076974c 80469810 80c2fe3c 1000ac01
+  Process swapper (pid: 1, threadinfo=(ptrval), task=(ptrval), tls=00000000)
+  Stack : 80760000 00000cc0 00400044 00400040 803aa02c 80d61ab8 00000000 807b7630
+          80760000 807623b8 807b7628 803aa644 80386998 00000000 80e17780 80220f68
+          80e17780 80d61ab8 80c17d80 80e17780 80e17780 8063c798 80e17780 80383fa0
+          00000010 80e17780 00000000 80386998 807a0000 00000000 00400040 8038f848
+          807623b8 80d61ab8 00000004 80e17780 00000000 803a68e4 80c25e2c 803bb884
           ...
   Call Trace:
-  [<8048b3a4>] __dev_fwnode+0x0/0xc
-  [<80470a78>] serial_base_ctrl_add+0xa0/0x168
-  [<8046fc84>] serial_core_register_port+0x1c8/0x974
-  [<808c6af0>] dz_init+0x74/0xc8
-  [<800470e0>] do_one_initcall+0x44/0x2d4
-  [<808b111c>] kernel_init_freeable+0x258/0x308
-  [<8072e434>] kernel_init+0x20/0x114
-  [<80049cd0>] ret_from_kernel_thread+0x14/0x1c
+  [<803ab00c>] serial_base_ctrl_add+0x78/0xf4
+  [<803aa644>] serial_core_register_port+0x174/0x69c
+  [<8077e9ac>] zs_init+0xc8/0xfc
+  [<800404d4>] do_one_initcall+0x40/0x2ac
+  [<8076cecc>] kernel_init_freeable+0x1e4/0x270
+  [<80605bec>] kernel_init+0x20/0x108
+  [<800431e8>] ret_from_kernel_thread+0x14/0x1c
 
-  Code: 27bd0018  03e00008  2402ffea <8c8200bc> 03e00008  00000000  27bdffc0  afbe0038  afb30024
+  Code: 2442aeb0  ae120024  ae0200d0 <8c67002c> 50e00001  8c670000  3c06806e  3c05806e  afb30010
 
   ---[ end trace 0000000000000000 ]---
 
--- where a pointer is dereferenced that has been derived from a null
-pointer to the port's parent device.
+(report at the offending commit) -- where a pointer is dereferenced that
+has been derived from a null pointer to the port's parent device.
 
 Since no device is available with legacy probing and it's not anymore a
 preferable way to discover devices anyway, switch the driver to using a
@@ -111,9 +109,9 @@ handling accordingly and only request the actual span of addresses used
 within the slot, which will have had its resource already requested by
 generic platform device code.
 
-Use platform_driver_probe() not just because the DZ device is fixed with
+Use platform_driver_probe() not just because SCC devices are fixed with
 solder on board and not straightforward to remove, but foremost because
-the associated TTY's major device number is the same as used by the zs
+the associated TTY's major device number is the same as used by the dz
 driver and the first driver to claim it will prevent the other one from
 using it.  Either one DZ device or some SCC devices will be present in a
 given system but never both at a time, and therefore we want the major
@@ -125,339 +123,413 @@ hand the console over from the bootconsole much later in the bootstrap.
 The firmware console handler appears good enough though to work so late
 and in particular with interrupts enabled.
 
-Conversely only starting the console port so late lets the reset code
-fully utilise our delay handlers, so switch from udelay() to fsleep()
-for transmitter draining so as to avoid busy-waiting for an excessive
-amount of time.
+Since there is one way only remaining to reach zs_reset() now, remove
+the port initialisation marker as no longer needed and go through the
+channel reset unconditionally.
 
 Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
 Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Cc: stable@vger.kernel.org # needs to use .remove_new for <= 6.10
-Link: https://patch.msgid.link/alpine.DEB.2.21.2605062326540.46195@angie.orcam.me.uk
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062328480.46195@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/dec/platform.c |  55 ++++++++++++++++++-
- drivers/tty/serial/dz.c  | 116 +++++++++++++++++++--------------------
- 2 files changed, 110 insertions(+), 61 deletions(-)
+ arch/mips/dec/platform.c |  60 +++++++++++-
+ drivers/tty/serial/zs.c  | 192 +++++++++++++++------------------------
+ drivers/tty/serial/zs.h  |   1 -
+ 3 files changed, 129 insertions(+), 124 deletions(-)
 
 diff --git a/arch/mips/dec/platform.c b/arch/mips/dec/platform.c
-index c4fcb8c58e01ce..fdecc91ee22abb 100644
+index fdecc91ee22abb..723ce16cbfc0cc 100644
 --- a/arch/mips/dec/platform.c
 +++ b/arch/mips/dec/platform.c
-@@ -10,6 +10,13 @@
- #include <linux/mc146818rtc.h>
- #include <linux/platform_device.h>
+@@ -13,6 +13,7 @@
+ #include <asm/bootinfo.h>
  
-+#include <asm/bootinfo.h>
-+
-+#include <asm/dec/interrupts.h>
-+#include <asm/dec/kn01.h>
-+#include <asm/dec/kn02.h>
-+#include <asm/dec/system.h>
-+
- static struct resource dec_rtc_resources[] = {
- 	{
- 		.name = "rtc",
-@@ -30,11 +37,57 @@ static struct platform_device dec_rtc_device = {
- 	.num_resources = ARRAY_SIZE(dec_rtc_resources),
+ #include <asm/dec/interrupts.h>
++#include <asm/dec/ioasic_addrs.h>
+ #include <asm/dec/kn01.h>
+ #include <asm/dec/kn02.h>
+ #include <asm/dec/system.h>
+@@ -53,10 +54,37 @@ static struct platform_device *dec_dz_devices[] __initdata = {
+ 	&dec_dz_device,
  };
  
-+static struct resource dec_dz_resources[] = {
-+	{ .name = "dz", .flags = IORESOURCE_MEM, },
-+	{ .name = "dz", .flags = IORESOURCE_IRQ, },
++static struct resource dec_zs_resources[][2] = {
++	{
++		{ .name = "scc0", .flags = IORESOURCE_MEM, },
++		{ .name = "scc0", .flags = IORESOURCE_IRQ, },
++	},
++	{
++		{ .name = "scc1", .flags = IORESOURCE_MEM, },
++		{ .name = "scc1", .flags = IORESOURCE_IRQ, },
++	},
 +};
 +
-+static struct platform_device dec_dz_device = {
-+	.name = "dz",
-+	.id = PLATFORM_DEVID_NONE,
-+	.resource = dec_dz_resources,
-+	.num_resources = ARRAY_SIZE(dec_dz_resources),
-+};
-+
-+static struct platform_device *dec_dz_devices[] __initdata = {
-+	&dec_dz_device,
++static struct platform_device dec_zs_device[] = {
++	{
++		.name = "zs",
++		.id = 0,
++		.resource = dec_zs_resources[0],
++		.num_resources = ARRAY_SIZE(dec_zs_resources[0]),
++	},
++	{
++		.name = "zs",
++		.id = 1,
++		.resource = dec_zs_resources[1],
++		.num_resources = ARRAY_SIZE(dec_zs_resources[1]),
++	},
 +};
 +
  static int __init dec_add_devices(void)
  {
-+	int ret1, ret2;
-+	int num_dz;
-+	int irq, i;
-+
+-	int ret1, ret2;
+-	int num_dz;
++	struct platform_device *dec_zs_devices[ARRAY_SIZE(dec_zs_device)];
++	int ret1, ret2, ret3;
++	int num_dz, num_zs;
+ 	int irq, i;
+ 
  	dec_rtc_resources[0].start = RTC_PORT(0);
- 	dec_rtc_resources[0].end = RTC_PORT(0) + dec_kn_slot_size - 1;
--	return platform_device_register(&dec_rtc_device);
-+
+@@ -84,10 +112,36 @@ static int __init dec_add_devices(void)
+ 	}
+ 	num_dz = i;
+ 
 +	i = 0;
-+	irq = dec_interrupt[DEC_IRQ_DZ11];
-+	if (IS_ENABLED(CONFIG_32BIT) && irq >= 0) {
-+		resource_size_t base;
++	irq = dec_interrupt[DEC_IRQ_SCC0];
++	if (irq >= 0) {
++		resource_size_t base = dec_kn_slot_base + IOASIC_SCC0;
 +
-+		switch (mips_machtype) {
-+		case MACH_DS23100:
-+		case MACH_DS5100:
-+			base = dec_kn_slot_base + KN01_DZ11;
-+			break;
-+		default:
-+			base = dec_kn_slot_base + KN02_DZ11;
-+			break;
-+		}
-+		dec_dz_device.resource[0].start = base;
-+		dec_dz_device.resource[0].end = base + dec_kn_slot_size - 1;
-+		dec_dz_device.resource[1].start = irq;
-+		dec_dz_device.resource[1].end = irq;
++		dec_zs_device[i].resource[0].start = base;
++		dec_zs_device[i].resource[0].end = base + dec_kn_slot_size - 1;
++		dec_zs_device[i].resource[1].start = irq;
++		dec_zs_device[i].resource[1].end = irq;
++		dec_zs_devices[i] = &dec_zs_device[i];
 +		i++;
 +	}
-+	num_dz = i;
++	irq = dec_interrupt[DEC_IRQ_SCC1];
++	if (irq >= 0) {
++		resource_size_t base = dec_kn_slot_base + IOASIC_SCC1;
 +
-+	ret1 = platform_device_register(&dec_rtc_device);
-+	ret2 = IS_ENABLED(CONFIG_32BIT) ?
-+	       platform_add_devices(dec_dz_devices, num_dz) : 0;
-+	return ret1 ? ret1 : ret2;
++		dec_zs_device[i].resource[0].start = base;
++		dec_zs_device[i].resource[0].end = base + dec_kn_slot_size - 1;
++		dec_zs_device[i].resource[1].start = irq;
++		dec_zs_device[i].resource[1].end = irq;
++		dec_zs_devices[i] = &dec_zs_device[i];
++		i++;
++	}
++	num_zs = i;
++
+ 	ret1 = platform_device_register(&dec_rtc_device);
+ 	ret2 = IS_ENABLED(CONFIG_32BIT) ?
+ 	       platform_add_devices(dec_dz_devices, num_dz) : 0;
+-	return ret1 ? ret1 : ret2;
++	ret3 = platform_add_devices(dec_zs_devices, num_zs);
++	return ret1 ? ret1 : ret2 ? ret2 : ret3;
  }
  
  device_initcall(dec_add_devices);
-diff --git a/drivers/tty/serial/dz.c b/drivers/tty/serial/dz.c
-index 90231ec00ff070..08f2414bf1d92e 100644
---- a/drivers/tty/serial/dz.c
-+++ b/drivers/tty/serial/dz.c
-@@ -40,6 +40,7 @@
+diff --git a/drivers/tty/serial/zs.c b/drivers/tty/serial/zs.c
+index b58d5af0fdc35c..0e4471af1e9bd5 100644
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -56,6 +56,7 @@
  #include <linux/kernel.h>
- #include <linux/major.h>
  #include <linux/module.h>
+ #include <linux/major.h>
 +#include <linux/platform_device.h>
  #include <linux/serial.h>
  #include <linux/serial_core.h>
- #include <linux/sysrq.h>
-@@ -48,14 +49,6 @@
+ #include <linux/spinlock.h>
+@@ -66,10 +67,6 @@
  
  #include <linux/atomic.h>
- #include <linux/io.h>
--#include <asm/bootinfo.h>
--
+ 
 -#include <asm/dec/interrupts.h>
--#include <asm/dec/kn01.h>
--#include <asm/dec/kn02.h>
--#include <asm/dec/machtype.h>
--#include <asm/dec/prom.h>
+-#include <asm/dec/ioasic_addrs.h>
 -#include <asm/dec/system.h>
- 
- #include "dz.h"
- 
-@@ -65,7 +58,9 @@ MODULE_LICENSE("GPL");
- 
- 
- static char dz_name[] __initdata = "DECstation DZ serial driver version ";
--static char dz_version[] __initdata = "1.04";
-+static char dz_version[] __initdata = "1.05";
-+
-+#define DZ_IO_SIZE 0x20			/* IOMEM space size.  */
- 
- struct dz_port {
- 	struct dz_mux		*mux;
-@@ -81,6 +76,7 @@ struct dz_mux {
- };
- 
- static struct dz_mux dz_mux;
-+static struct uart_driver dz_reg;
- 
- static inline struct dz_port *to_dport(struct uart_port *uport)
- {
-@@ -565,7 +561,7 @@ static void dz_reset(struct dz_port *dport)
- 			iob();
- 			udelay(2);		/* 1.4us TRDY recovery.  */
- 		}
--		udelay(1200);			/* Transmitter drain.  */
-+		fsleep(1200);			/* Transmitter drain.  */
- 	}
- 
- 	dz_out(dport, DZ_CSR, DZ_CLR);
-@@ -682,14 +678,13 @@ static void dz_release_port(struct uart_port *uport)
- 
- 	map_guard = atomic_add_return(-1, &mux->map_guard);
- 	if (!map_guard)
--		release_mem_region(uport->mapbase, dec_kn_slot_size);
-+		release_mem_region(uport->mapbase, DZ_IO_SIZE);
- }
- 
- static int dz_map_port(struct uart_port *uport)
- {
- 	if (!uport->membase)
--		uport->membase = ioremap(uport->mapbase,
--						 dec_kn_slot_size);
-+		uport->membase = ioremap(uport->mapbase, DZ_IO_SIZE);
- 	if (!uport->membase) {
- 		printk(KERN_ERR "dz: Cannot map MMIO\n");
- 		return -ENOMEM;
-@@ -705,8 +700,7 @@ static int dz_request_port(struct uart_port *uport)
- 
- 	map_guard = atomic_add_return(1, &mux->map_guard);
- 	if (map_guard == 1) {
--		if (!request_mem_region(uport->mapbase, dec_kn_slot_size,
--					"dz")) {
-+		if (!request_mem_region(uport->mapbase, DZ_IO_SIZE, "dz")) {
- 			atomic_add(-1, &mux->map_guard);
- 			printk(KERN_ERR
- 			       "dz: Unable to reserve MMIO resource\n");
-@@ -717,7 +711,7 @@ static int dz_request_port(struct uart_port *uport)
- 	if (ret) {
- 		map_guard = atomic_add_return(-1, &mux->map_guard);
- 		if (!map_guard)
--			release_mem_region(uport->mapbase, dec_kn_slot_size);
-+			release_mem_region(uport->mapbase, DZ_IO_SIZE);
- 		return ret;
- 	}
- 	return 0;
-@@ -769,20 +763,15 @@ static const struct uart_ops dz_ops = {
- 	.verify_port	= dz_verify_port,
- };
- 
--static void __init dz_init_ports(void)
-+static int __init dz_probe(struct platform_device *pdev)
- {
--	static int first = 1;
--	unsigned long base;
-+	struct resource *mem_resource, *irq_resource;
- 	int line;
- 
--	if (!first)
--		return;
--	first = 0;
 -
--	if (mips_machtype == MACH_DS23100 || mips_machtype == MACH_DS5100)
--		base = dec_kn_slot_base + KN01_DZ11;
--	else
--		base = dec_kn_slot_base + KN02_DZ11;
+ #include "zs.h"
+ 
+ 
+@@ -79,7 +76,7 @@ MODULE_LICENSE("GPL");
+ 
+ 
+ static char zs_name[] __initdata = "DECstation Z85C30 serial driver version ";
+-static char zs_version[] __initdata = "0.10";
++static char zs_version[] __initdata = "0.11";
+ 
+ /*
+  * It would be nice to dynamically allocate everything that
+@@ -98,12 +95,8 @@ static char zs_version[] __initdata = "0.10";
+ 
+ #define to_zport(uport) container_of(uport, struct zs_port, port)
+ 
+-struct zs_parms {
+-	resource_size_t scc[ZS_NUM_SCCS];
+-	int irq[ZS_NUM_SCCS];
+-};
+-
+ static struct zs_scc zs_sccs[ZS_NUM_SCCS];
++static struct uart_driver zs_reg;
+ 
+ /*
+  * Set parameters in WR5, WR12, WR13 such as not to interfere
+@@ -838,16 +831,15 @@ static void zs_reset(struct zs_port *zport)
+ 
+ 	spin_lock_irqsave(&scc->zlock, flags);
+ 	irq = !irqs_disabled_flags(flags);
+-	if (!zport->initialised) {
+-		/* Reset the pointer first, just in case...  */
+-		read_zsreg(zport, R0);
+-		/* And let the current transmission finish.  */
+-		zs_line_drain(zport, irq);
+-		write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
+-		udelay(10);
+-		write_zsreg(zport, R9, 0);
+-		zport->initialised = 1;
+-	}
++
++	/* Reset the pointer first, just in case...  */
++	read_zsreg(zport, R0);
++	/* And let the current transmission finish.  */
++	zs_line_drain(zport, irq);
++	write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
++	udelay(10);
++	write_zsreg(zport, R9, 0);
++
+ 	load_zsregs(zport, zport->regs, irq);
+ 	spin_unlock_irqrestore(&scc->zlock, flags);
+ }
+@@ -1054,63 +1046,62 @@ static const struct uart_ops zs_ops = {
+ /*
+  * Initialize Z85C30 port structures.
+  */
+-static int __init zs_probe_sccs(void)
++static int __init zs_probe(struct platform_device *pdev)
+ {
+-	static int probed;
+-	struct zs_parms zs_parms;
+-	int chip, side, irq;
+-	int n_chips = 0;
++	struct resource *mem_resource, *irq_resource;
++	int chip, side;
+ 	int i;
+ 
+-	if (probed)
+-		return 0;
 +	mem_resource = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 +	irq_resource = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
 +	if (!mem_resource || !irq_resource)
 +		return -ENODEV;
  
- 	for (line = 0; line < DZ_NB_PORT; line++) {
- 		struct dz_port *dport = &dz_mux.dport[line];
-@@ -790,14 +779,33 @@ static void __init dz_init_ports(void)
- 
- 		dport->mux	= &dz_mux;
- 
--		uport->irq	= dec_interrupt[DEC_IRQ_DZ11];
+-	irq = dec_interrupt[DEC_IRQ_SCC0];
+-	if (irq >= 0) {
+-		zs_parms.scc[n_chips] = IOASIC_SCC0;
+-		zs_parms.irq[n_chips] = dec_interrupt[DEC_IRQ_SCC0];
+-		n_chips++;
+-	}
+-	irq = dec_interrupt[DEC_IRQ_SCC1];
+-	if (irq >= 0) {
+-		zs_parms.scc[n_chips] = IOASIC_SCC1;
+-		zs_parms.irq[n_chips] = dec_interrupt[DEC_IRQ_SCC1];
+-		n_chips++;
+-	}
+-	if (!n_chips)
+-		return -ENXIO;
+-
+-	probed = 1;
+-
+-	for (chip = 0; chip < n_chips; chip++) {
+-		spin_lock_init(&zs_sccs[chip].zlock);
+-		for (side = 0; side < ZS_NUM_CHAN; side++) {
+-			struct zs_port *zport = &zs_sccs[chip].zport[side];
+-			struct uart_port *uport = &zport->port;
+-
+-			zport->scc	= &zs_sccs[chip];
+-			zport->clk_mode	= 16;
+-
+-			uport->has_sysrq = IS_ENABLED(CONFIG_SERIAL_ZS_CONSOLE);
+-			uport->irq	= zs_parms.irq[chip];
+-			uport->uartclk	= ZS_CLOCK;
+-			uport->fifosize	= 1;
+-			uport->iotype	= UPIO_MEM;
+-			uport->flags	= UPF_BOOT_AUTOCONF;
+-			uport->ops	= &zs_ops;
+-			uport->line	= chip * ZS_NUM_CHAN + side;
+-			uport->mapbase	= dec_kn_slot_base +
+-					  zs_parms.scc[chip] +
+-					  (side ^ ZS_CHAN_B) * ZS_CHAN_IO_SIZE;
+-
+-			for (i = 0; i < ZS_NUM_REGS; i++)
+-				zport->regs[i] = zs_init_regs[i];
+-		}
++	chip = pdev->id;
++	spin_lock_init(&zs_sccs[chip].zlock);
++	for (side = 0; side < ZS_NUM_CHAN; side++) {
++		struct zs_port *zport = &zs_sccs[chip].zport[side];
++		struct uart_port *uport = &zport->port;
++
++		zport->scc	= &zs_sccs[chip];
++		zport->clk_mode	= 16;
++
 +		uport->dev	= &pdev->dev;
++		uport->has_sysrq = IS_ENABLED(CONFIG_SERIAL_ZS_CONSOLE);
 +		uport->irq	= irq_resource->start;
- 		uport->fifosize	= 1;
- 		uport->iotype	= UPIO_MEM;
- 		uport->flags	= UPF_BOOT_AUTOCONF;
- 		uport->ops	= &dz_ops;
- 		uport->line	= line;
--		uport->mapbase	= base;
-+		uport->mapbase	= mem_resource->start;
- 		uport->has_sysrq = IS_ENABLED(CONFIG_SERIAL_DZ_CONSOLE);
++		uport->uartclk	= ZS_CLOCK;
++		uport->fifosize	= 1;
++		uport->iotype	= UPIO_MEM;
++		uport->flags	= UPF_BOOT_AUTOCONF;
++		uport->ops	= &zs_ops;
++		uport->line	= chip * ZS_NUM_CHAN + side;
++		uport->mapbase	= mem_resource->start +
++				  (side ^ ZS_CHAN_B) * ZS_CHAN_IO_SIZE;
 +
-+		if (uart_add_one_port(&dz_reg, uport))
++		for (i = 0; i < ZS_NUM_REGS; i++)
++			zport->regs[i] = zs_init_regs[i];
++
++		if (uart_add_one_port(&zs_reg, uport))
 +			uport->dev = NULL;
-+	}
-+
-+	return 0;
-+}
-+
-+static void __exit dz_remove(struct platform_device *pdev)
-+{
-+	int line;
-+
-+	for (line = DZ_NB_PORT - 1; line >= 0; line--) {
-+		struct dz_port *dport = &dz_mux.dport[line];
-+		struct uart_port *uport = &dport->port;
-+
-+		if (uport->dev)
-+			uart_remove_one_port(&dz_reg, uport);
  	}
+ 
+ 	return 0;
  }
  
-@@ -880,21 +888,14 @@ static int __init dz_console_setup(struct console *co, char *options)
++static void __exit zs_remove(struct platform_device *pdev)
++{
++	int chip, side;
++
++	chip = pdev->id;
++	for (side = ZS_NUM_CHAN - 1; side >= 0; side--) {
++		struct zs_port *zport = &zs_sccs[chip].zport[side];
++		struct uart_port *uport = &zport->port;
++
++		if (uport->dev)
++			uart_remove_one_port(&zs_reg, uport);
++	}
++}
++
+ 
+ #ifdef CONFIG_SERIAL_ZS_CONSOLE
+ static void zs_console_putchar(struct uart_port *uport, unsigned char ch)
+@@ -1191,20 +1182,14 @@ static int __init zs_console_setup(struct console *co, char *options)
  	int bits = 8;
  	int parity = 'n';
  	int flow = 'n';
 -	int ret;
 -
--	ret = dz_map_port(uport);
+-	ret = zs_map_port(uport);
 -	if (ret)
 -		return ret;
 -
--	dz_reset(dport);
+-	zs_reset(zport);
  
-+	if (!dport->mux)
++	if (!zport->scc)
 +		return -ENODEV;
  	if (options)
  		uart_parse_options(options, &baud, &parity, &bits, &flow);
--
--	return uart_set_options(&dport->port, co, baud, parity, bits, flow);
-+	return uart_set_options(uport, co, baud, parity, bits, flow);
+ 	return uart_set_options(uport, co, baud, parity, bits, flow);
  }
  
--static struct uart_driver dz_reg;
- static struct console dz_console = {
+-static struct uart_driver zs_reg;
+ static struct console zs_console = {
  	.name	= "ttyS",
- 	.write	= dz_console_print,
-@@ -905,18 +906,6 @@ static struct console dz_console = {
- 	.data	= &dz_reg,
+ 	.write	= zs_console_write,
+@@ -1215,23 +1200,6 @@ static struct console zs_console = {
+ 	.data	= &zs_reg,
  };
  
--static int __init dz_serial_console_init(void)
+-/*
+- *	Register console.
+- */
+-static int __init zs_serial_console_init(void)
 -{
--	if (!IOASIC) {
--		dz_init_ports();
--		register_console(&dz_console);
--		return 0;
--	} else
--		return -ENXIO;
+-	int ret;
+-
+-	ret = zs_probe_sccs();
+-	if (ret)
+-		return ret;
+-	register_console(&zs_console);
+-
+-	return 0;
 -}
 -
--console_initcall(dz_serial_console_init);
+-console_initcall(zs_serial_console_init);
 -
- #define SERIAL_DZ_CONSOLE	&dz_console
+ #define SERIAL_ZS_CONSOLE	&zs_console
  #else
- #define SERIAL_DZ_CONSOLE	NULL
-@@ -932,25 +921,32 @@ static struct uart_driver dz_reg = {
- 	.cons			= SERIAL_DZ_CONSOLE,
+ #define SERIAL_ZS_CONSOLE	NULL
+@@ -1247,47 +1215,31 @@ static struct uart_driver zs_reg = {
+ 	.cons			= SERIAL_ZS_CONSOLE,
  };
  
-+static struct platform_driver dz_driver = {
-+	.remove_new = __exit_p(dz_remove),
-+	.driver = { .name = "dz" },
++static struct platform_driver zs_driver = {
++	.remove_new = __exit_p(zs_remove),
++	.driver = { .name = "zs" },
 +};
 +
- static int __init dz_init(void)
+ /* zs_init inits the driver. */
+ static int __init zs_init(void)
  {
--	int ret, i;
--
--	if (IOASIC)
--		return -ENXIO;
+-	int i, ret;
 +	int ret;
  
- 	printk("%s%s\n", dz_name, dz_version);
+ 	pr_info("%s%s\n", zs_name, zs_version);
  
--	dz_init_ports();
+-	/* Find out how many Z85C30 SCCs we have.  */
+-	ret = zs_probe_sccs();
+-	if (ret)
+-		return ret;
 -
- 	ret = uart_register_driver(&dz_reg);
+ 	ret = uart_register_driver(&zs_reg);
  	if (ret)
  		return ret;
-+	ret = platform_driver_probe(&dz_driver, dz_probe);
++	ret = platform_driver_probe(&zs_driver, zs_probe);
 +	if (ret)
-+		uart_unregister_driver(&dz_reg);
++		uart_unregister_driver(&zs_reg);
  
--	for (i = 0; i < DZ_NB_PORT; i++)
--		uart_add_one_port(&dz_reg, &dz_mux.dport[i].port);
-+	return ret;
-+}
- 
+-	for (i = 0; i < ZS_NUM_SCCS * ZS_NUM_CHAN; i++) {
+-		struct zs_scc *scc = &zs_sccs[i / ZS_NUM_CHAN];
+-		struct zs_port *zport = &scc->zport[i % ZS_NUM_CHAN];
+-		struct uart_port *uport = &zport->port;
+-
+-		if (zport->scc)
+-			uart_add_one_port(&zs_reg, uport);
+-	}
+-
 -	return 0;
-+static void __exit dz_exit(void)
-+{
-+	platform_driver_unregister(&dz_driver);
-+	uart_unregister_driver(&dz_reg);
++	return ret;
  }
  
- module_init(dz_init);
-+module_exit(dz_exit);
+ static void __exit zs_exit(void)
+ {
+-	int i;
+-
+-	for (i = ZS_NUM_SCCS * ZS_NUM_CHAN - 1; i >= 0; i--) {
+-		struct zs_scc *scc = &zs_sccs[i / ZS_NUM_CHAN];
+-		struct zs_port *zport = &scc->zport[i % ZS_NUM_CHAN];
+-		struct uart_port *uport = &zport->port;
+-
+-		if (zport->scc)
+-			uart_remove_one_port(&zs_reg, uport);
+-	}
+-
++	platform_driver_unregister(&zs_driver);
+ 	uart_unregister_driver(&zs_reg);
+ }
+ 
+diff --git a/drivers/tty/serial/zs.h b/drivers/tty/serial/zs.h
+index 8e51f847bc03f9..e0d3c189b33f66 100644
+--- a/drivers/tty/serial/zs.h
++++ b/drivers/tty/serial/zs.h
+@@ -22,7 +22,6 @@
+ struct zs_port {
+ 	struct zs_scc	*scc;			/* Containing SCC.  */
+ 	struct uart_port port;			/* Underlying UART.  */
+-	int		initialised;		/* For the console port.  */
+ 
+ 	int		clk_mode;		/* May be 1, 16, 32, or 64.  */
+ 
 -- 
 2.53.0
 
