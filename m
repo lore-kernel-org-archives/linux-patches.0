@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE5D43D4ED;
-	Tue, 16 Jun 2026 17:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF39332EC1;
+	Tue, 16 Jun 2026 17:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631315; cv=none; b=GzfbU42tPW/2zBeH0mwNqc3Sy4jaDFkI1dDg8BsYzvx2Pa+gDFhz8jRy+/4TAJOiCR+AX3hBWtR/6zVBOkXYmG0M126qYg4i5mYpfueiq9Kk/7DuWWtDRacnBeHY03hOkT4P1emZaMetJTHH8BPH3qntiSN0lv9tVoVOwqBGIFg=
+	t=1781631319; cv=none; b=GqIGl4vVZUFzQYslpQaQecwYuxHN8m+9cJb0Q5vIKkbtQd6eUoqjWTyBHChwd6x5aehqsDcHd4cVe/tO+lqhydWuzsz1kpi+AiLV7ambB6ntBPerZ4JPilkMHJMyUsz3uDkRYfTGooYL5kVID6NvV/ft+5KamHZKNBDlaSrOAVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631315; c=relaxed/simple;
-	bh=BTSKMD/XpvWPZCALagMfjf0s5G55M0jLjNawGJuar/w=;
+	s=arc-20240116; t=1781631319; c=relaxed/simple;
+	bh=f7jKSeSRQjPsFej3vptQOBynOUaN993iOpEq8mbEa34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvMNO2k15KkfGzrOZ9eUXZ/U/cwF4Y4pf0fwzOWyeBOC2wihUG+BP9GXplh6AnXooTJDM7s4jUHB9pEMTYuSoZmRcPDgoQUke8jVraap42k8j/z2IX1Rom580R5+54dkB2mzAU0rEcQGxIqIVkeJgnj16Bt9x6AvKEA3OrfnFBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3ydM+o5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HJnkx1e+my+2N/ciUFebhPnAGEWbr2/D1/wvX2h/cEaXdwMoWbjoZpPYlaeSCjMnu/phO7RqUtCoWuM6L0pXLpEnpr/oeq+Ckw555cHDDZsRDyOnKKwU0eyAv9lYyhg5WJHc+kMsIQWTAiYp7Ykm4YJgbwHLnkwsmKpfS2Eiqz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4PPYSq9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3ydM+o5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949961F000E9;
-	Tue, 16 Jun 2026 17:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4PPYSq9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F741F000E9;
+	Tue, 16 Jun 2026 17:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631313;
-	bh=voPSdx4E0nhbRQb+LtwUO78jo9qwWsUhHMJbwfAMhwU=;
+	s=korg; t=1781631318;
+	bh=Fv2qNwuWIlvxEBN1z5VMZjruRjda+TuGWk1rNIuo6l4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3ydM+o50E4u+qRenfdB+RykKP2i5GTofSVWENyniPaN4oxb6sZH4YSJvaJSdLkK2
-	 75wnVE5ijf1ERqAXUmlqYZRCJ03R4ya4GqTUii7YevqT++xxZNSKYirZ6QU2fmDf6N
-	 thXwgJ6yplTn5Hj9N6Erv7k95PH8IaJk1WPThX/0=
+	b=l4PPYSq9LxPst9iY220MrG3ErQpxBazDQoNtT83KNbpC64MlQKi3WGfGPcuHeDGJ7
+	 xbtcn0BUknjqvE/2OYxTjxh9nvpfHP0GrstfP75Jbz0oAwrT53CivG8krEGz9/CBam
+	 mj0d/PCV+bzDLqRjDAlSnWACxMun7maAL3xWPAjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
-	Ox Yeh <ox.yeh@mediatek.com>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 197/522] tee: optee: prevent use-after-free when the client exits before the supplicant
-Date: Tue, 16 Jun 2026 20:25:44 +0530
-Message-ID: <20260616145135.308751095@linuxfoundation.org>
+Subject: [PATCH 6.1 198/522] netfilter: xt_NFQUEUE: prefer raw_smp_processor_id
+Date: Tue, 16 Jun 2026 20:25:45 +0530
+Message-ID: <20260616145135.353970669@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,284 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 387a926ee166814611acecb960207fe2f3c4fd3e ]
+[ Upstream commit c6c5327dd18bec1e1bbf139b2cf5ae53608a9d30 ]
 
-Commit 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop") made the
-client wait as killable so it can be interrupted during shutdown or
-after a supplicant crash. This changes the original lifetime expectations:
-the client task can now terminate while the supplicant is still processing
-its request.
+With PREEMPT_RCU this triggers a splat because smp_processor_id() can be
+preempted while inside a RCU critical section. If xt_NFQUEUE target is
+invoked via nft_compat_eval() path, we are inside a RCU critical
+section.
 
-If the client exits first it removes the request from its queue and
-kfree()s it, while the request ID remains in supp->idr. A subsequent
-lookup on the supplicant path then dereferences freed memory, leading to
-a use-after-free.
+Just use the raw version instead.
 
-Serialise access to the request with supp->mutex:
-
-  * Hold supp->mutex in optee_supp_recv() and optee_supp_send() while
-    looking up and touching the request.
-  * Let optee_supp_thrd_req() notice that the client has terminated and
-    signal optee_supp_send() accordingly.
-
-With these changes the request cannot be freed while the supplicant still
-has a reference, eliminating the race.
-
-Fixes: 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop")
-Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Tested-by: Ox Yeh <ox.yeh@mediatek.com>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/optee/supp.c | 107 +++++++++++++++++++++++++++------------
- 1 file changed, 74 insertions(+), 33 deletions(-)
+ net/netfilter/xt_NFQUEUE.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tee/optee/supp.c b/drivers/tee/optee/supp.c
-index d0f397c9024201..2386bbd38ce78b 100644
---- a/drivers/tee/optee/supp.c
-+++ b/drivers/tee/optee/supp.c
-@@ -10,7 +10,11 @@
- struct optee_supp_req {
- 	struct list_head link;
+diff --git a/net/netfilter/xt_NFQUEUE.c b/net/netfilter/xt_NFQUEUE.c
+index 466da23e36ff47..b32d153e3a1862 100644
+--- a/net/netfilter/xt_NFQUEUE.c
++++ b/net/netfilter/xt_NFQUEUE.c
+@@ -91,7 +91,7 @@ nfqueue_tg_v3(struct sk_buff *skb, const struct xt_action_param *par)
  
-+	int id;
-+
- 	bool in_queue;
-+	bool processed;
-+
- 	u32 func;
- 	u32 ret;
- 	size_t num_params;
-@@ -19,6 +23,9 @@ struct optee_supp_req {
- 	struct completion c;
- };
+ 	if (info->queues_total > 1) {
+ 		if (info->flags & NFQ_FLAG_CPU_FANOUT) {
+-			int cpu = smp_processor_id();
++			int cpu = raw_smp_processor_id();
  
-+/* It is temporary request used for revoked pending request in supp->idr. */
-+#define INVALID_REQ_PTR ((struct optee_supp_req *)ERR_PTR(-EBADF))
-+
- void optee_supp_init(struct optee_supp *supp)
- {
- 	memset(supp, 0, sizeof(*supp));
-@@ -39,21 +46,23 @@ void optee_supp_release(struct optee_supp *supp)
- {
- 	int id;
- 	struct optee_supp_req *req;
--	struct optee_supp_req *req_tmp;
- 
- 	mutex_lock(&supp->mutex);
- 
--	/* Abort all request retrieved by supplicant */
-+	/* Abort all request */
- 	idr_for_each_entry(&supp->idr, req, id) {
- 		idr_remove(&supp->idr, id);
--		req->ret = TEEC_ERROR_COMMUNICATION;
--		complete(&req->c);
--	}
-+		/* Skip if request was already marked invalid */
-+		if (IS_ERR(req))
-+			continue;
- 
--	/* Abort all queued requests */
--	list_for_each_entry_safe(req, req_tmp, &supp->reqs, link) {
--		list_del(&req->link);
--		req->in_queue = false;
-+		/* For queued requests where supplicant has not seen it */
-+		if (req->in_queue) {
-+			list_del(&req->link);
-+			req->in_queue = false;
-+		}
-+
-+		req->processed = true;
- 		req->ret = TEEC_ERROR_COMMUNICATION;
- 		complete(&req->c);
- 	}
-@@ -100,8 +109,16 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
- 
- 	/* Insert the request in the request list */
- 	mutex_lock(&supp->mutex);
-+	req->id = idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
-+	if (req->id < 0) {
-+		mutex_unlock(&supp->mutex);
-+		kfree(req);
-+		return TEEC_ERROR_OUT_OF_MEMORY;
-+	}
-+
- 	list_add_tail(&req->link, &supp->reqs);
- 	req->in_queue = true;
-+	req->processed = false;
- 	mutex_unlock(&supp->mutex);
- 
- 	/* Tell an eventual waiter there's a new request */
-@@ -117,21 +134,43 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
- 	if (wait_for_completion_killable(&req->c)) {
- 		mutex_lock(&supp->mutex);
- 		if (req->in_queue) {
-+			/* Supplicant has not seen this request yet. */
-+			idr_remove(&supp->idr, req->id);
- 			list_del(&req->link);
- 			req->in_queue = false;
-+
-+			ret = TEEC_ERROR_COMMUNICATION;
-+		} else if (req->processed) {
-+			/*
-+			 * Supplicant has processed this request. Ignore the
-+			 * kill signal for now and submit the result. req is not
-+			 * in supp->reqs (removed by supp_pop_entry()) nor in
-+			 * supp->idr (removed by supp_pop_req()).
-+			 */
-+			ret = req->ret;
-+		} else {
-+			/*
-+			 * Supplicant is in the middle of processing this
-+			 * request. Replace req with INVALID_REQ_PTR so that
-+			 * the ID remains busy, causing optee_supp_send() to
-+			 * fail on the next call to supp_pop_req() with this ID.
-+			 */
-+			idr_replace(&supp->idr, INVALID_REQ_PTR, req->id);
-+			ret = TEEC_ERROR_COMMUNICATION;
- 		}
-+
- 		mutex_unlock(&supp->mutex);
--		req->ret = TEEC_ERROR_COMMUNICATION;
-+	} else {
-+		ret = req->ret;
- 	}
- 
--	ret = req->ret;
- 	kfree(req);
- 
- 	return ret;
- }
- 
- static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
--					      int num_params, int *id)
-+					      int num_params)
- {
- 	struct optee_supp_req *req;
- 
-@@ -153,10 +192,6 @@ static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
- 		return ERR_PTR(-EINVAL);
- 	}
- 
--	*id = idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
--	if (*id < 0)
--		return ERR_PTR(-ENOMEM);
--
- 	list_del(&req->link);
- 	req->in_queue = false;
- 
-@@ -214,7 +249,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
- 	struct optee *optee = tee_get_drvdata(teedev);
- 	struct optee_supp *supp = &optee->supp;
- 	struct optee_supp_req *req = NULL;
--	int id;
- 	size_t num_meta;
- 	int rc;
- 
-@@ -224,15 +258,11 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
- 
- 	while (true) {
- 		mutex_lock(&supp->mutex);
--		req = supp_pop_entry(supp, *num_params - num_meta, &id);
-+		req = supp_pop_entry(supp, *num_params - num_meta);
-+		if (req)
-+			break; /* Keep mutex held. */
- 		mutex_unlock(&supp->mutex);
- 
--		if (req) {
--			if (IS_ERR(req))
--				return PTR_ERR(req);
--			break;
--		}
--
- 		/*
- 		 * If we didn't get a request we'll block in
- 		 * wait_for_completion() to avoid needless spinning.
-@@ -245,6 +275,13 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
- 			return -ERESTARTSYS;
- 	}
- 
-+	/* supp->mutex held and req != NULL. */
-+
-+	if (IS_ERR(req)) {
-+		mutex_unlock(&supp->mutex);
-+		return PTR_ERR(req);
-+	}
-+
- 	if (num_meta) {
- 		/*
- 		 * tee-supplicant support meta parameters -> requsts can be
-@@ -252,13 +289,11 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
- 		 */
- 		param->attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT |
- 			      TEE_IOCTL_PARAM_ATTR_META;
--		param->u.value.a = id;
-+		param->u.value.a = req->id;
- 		param->u.value.b = 0;
- 		param->u.value.c = 0;
- 	} else {
--		mutex_lock(&supp->mutex);
--		supp->req_id = id;
--		mutex_unlock(&supp->mutex);
-+		supp->req_id = req->id;
- 	}
- 
- 	*func = req->func;
-@@ -266,6 +301,7 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
- 	memcpy(param + num_meta, req->param,
- 	       sizeof(struct tee_param) * req->num_params);
- 
-+	mutex_unlock(&supp->mutex);
- 	return 0;
- }
- 
-@@ -297,12 +333,17 @@ static struct optee_supp_req *supp_pop_req(struct optee_supp *supp,
- 	if (!req)
- 		return ERR_PTR(-ENOENT);
- 
-+	/* optee_supp_thrd_req() already returned to optee. */
-+	if (IS_ERR(req))
-+		goto failed_req;
-+
- 	if ((num_params - nm) != req->num_params)
- 		return ERR_PTR(-EINVAL);
- 
-+	*num_meta = nm;
-+failed_req:
- 	idr_remove(&supp->idr, id);
- 	supp->req_id = -1;
--	*num_meta = nm;
- 
- 	return req;
- }
-@@ -328,10 +369,9 @@ int optee_supp_send(struct tee_context *ctx, u32 ret, u32 num_params,
- 
- 	mutex_lock(&supp->mutex);
- 	req = supp_pop_req(supp, num_params, param, &num_meta);
--	mutex_unlock(&supp->mutex);
--
- 	if (IS_ERR(req)) {
--		/* Something is wrong, let supplicant restart. */
-+		mutex_unlock(&supp->mutex);
-+		/* Something is wrong, let supplicant handel it. */
- 		return PTR_ERR(req);
- 	}
- 
-@@ -355,9 +395,10 @@ int optee_supp_send(struct tee_context *ctx, u32 ret, u32 num_params,
- 		}
- 	}
- 	req->ret = ret;
--
-+	req->processed = true;
- 	/* Let the requesting thread continue */
- 	complete(&req->c);
-+	mutex_unlock(&supp->mutex);
- 
- 	return 0;
- }
+ 			queue = info->queuenum + cpu % info->queues_total;
+ 		} else {
 -- 
 2.53.0
 
