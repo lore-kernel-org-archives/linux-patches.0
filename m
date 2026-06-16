@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A38472767;
-	Tue, 16 Jun 2026 17:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEFA47799B;
+	Tue, 16 Jun 2026 17:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629258; cv=none; b=uDi1WySMB/0Bdbr1/VODdKvyEiyY+m6GS6ht1fqUy0Poovu3+Oh68tI1kwFsM0amOba/MwA55UvgNQ5CFv0as2nhp/GN37CHvzTW+9mFpgL3vgW6pU0I2IHIj1jz99wpLoXilev3hoyvCOTQp2QEwqmlQePSiHOTDG6I6wV8ZAo=
+	t=1781629263; cv=none; b=D7wjU33qQvHWV/6sp1JqS3nIftZ4UxyNHDVatT3Uz9Chzm2kYxuyf9rPahruDlqmR6dps8A5Fmta5UBRDz5AopBOLmriJ2C+b1oWuZEB4jy8ZNknNjaHD5hTphop2HXBOadWMV8MwFDxU0nIR88Vgfjnsi+jJ0iUs4C/sJeCZDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629258; c=relaxed/simple;
-	bh=pGmTxUEoVLyzvG/sDY9TIvtFt2SibNO7huQ/uZiWZfs=;
+	s=arc-20240116; t=1781629263; c=relaxed/simple;
+	bh=9B45uVSrcfM3A61UEFnylhr7t/6sqdKMsFqIJ+NzQRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RiUpzfpAbWykhfbDtcvSDv8edMpqzjW6LkvwhjTdJnf3DI/LKedgCsWrx7HyDupNfp2bRW+ecZDDrCAZ5ZMmTIC3f1kDncf9kobaEyEXeriTlhyLJ7hpknCOq2bfUt4BivyoevXnEcwQsuRFgH+O7vrF7f7BONoX2Z02RZ80Yr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jgw5+OJW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gsfgorz2Hm3qRwIdipflvj6z7GWprgwm70ShXCfxcZHQ6lITq5a0MQeziIIMcNBW1TYP5RfgevLAxzYR7KxYE2agRkUPVplSIBUsxorhwp3IVui3fE90XkUnQjQ3b6xeQ88c5QqJtM2PfFZ3lbXKUCnlv6rGmORFZ6dm73uSh8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JaBCOx/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jgw5+OJW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36CE1F000E9;
-	Tue, 16 Jun 2026 17:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JaBCOx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752FA1F000E9;
+	Tue, 16 Jun 2026 17:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629256;
-	bh=S2JVxdp16cuH4GrQ6FM+aa7b4DCuv9qVpL4Hqs+fYPE=;
+	s=korg; t=1781629262;
+	bh=O14JXKx7E77N3FduSLBxrv9vknf95Wr1gm36A9gSV/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jgw5+OJWQH/qGHsdgEa8eXVl/pHLxj33xUGYS5kbfggzA13ahaQ8x727RMuw9yEXT
-	 zti4d/x2sGLEF0IfU6gRJ0a3KjLmCRsIQ8v0dq/wQhb6CphZN2G27TmbclpfLX3vJA
-	 6xKR2SQ8G2DB0GbKut8gl2ZG3BtrULZfnZ+/UmqU=
+	b=2JaBCOx/zrfKPbV9Hc+gUz6B2lT2JCbYIBZp7DTVq9nK1UX69+fAzH6u01UWYGngR
+	 IJeVM0r0eyosKI+SV6HeDfGNcOTiCXs1shPHzNXTre47TgM2t/BK3OznzXK4akfObt
+	 u0Q5l3TRU/65zxJAke7zBri3qZ9oEtymyp9Hr7YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Florian Westphal <fw@strlen.de>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/452] ALSA: PCM: Fix wait queue list corruption in snd_pcm_drain() on linked streams
-Date: Tue, 16 Jun 2026 20:27:57 +0530
-Message-ID: <20260616145130.795001513@linuxfoundation.org>
+Subject: [PATCH 6.6 219/452] netfilter: nft_ct: bail out on template ct in get eval
+Date: Tue, 16 Jun 2026 20:27:26 +0530
+Message-ID: <20260616145129.281062381@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,63 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 88fe2e3658726cb21ff2dcf9770bf672f9b9d31b ]
+[ Upstream commit 3027ecbdb5fdf9200251c21d4818e4c447ef78e1 ]
 
-snd_pcm_drain() uses init_waitqueue_entry which does not clear
-entry.prev/next, and add_wait_queue with a conditional
-remove_wait_queue that is skipped when to_check is no longer
-in the group after concurrent UNLINK.  The orphaned wait entry
-remains on the unlinked substream sleep queue.  On the next
-drain iteration, add_wait_queue adds the entry to a new queue
-while still linked on the old one, corrupting both lists.  A
-subsequent wake_up dereferences NULL at the func pointer
-(mapped from the spinlock at offset 0 of the misinterpreted
-wait_queue_head_t), causing a kernel panic.
+I noticed this issue while looking at a historic syzbot report [1].
 
-Replace init_waitqueue_entry/add_wait_queue/conditional
-remove_wait_queue with init_wait_entry/prepare_to_wait/
-finish_wait.  init_wait_entry clears prev/next via
-INIT_LIST_HEAD on each iteration and sets
-autoremove_wake_function which auto-removes the entry on
-wake-up.  finish_wait safely handles both the already-removed
-and still-queued cases.
+A rule like the one below is enough to trigger the bug:
 
-Fixes: 9b1dbd69ba6f ("ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain")
-Signed-off-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-Link: https://patch.msgid.link/20260604142559.3840881-1-eilaimemedsnaimel@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+    table ip t {
+        chain pre {
+            type filter hook prerouting priority raw;
+            ct zone set 1
+            ct original saddr 1.2.3.4 accept
+        }
+    }
+
+The first expression attaches a per-cpu template ct via
+nft_ct_set_zone_eval() (nf_ct_tmpl_alloc -> kzalloc, tuple is all
+zero, nf_ct_l3num(ct) == 0). The next expression then calls
+nft_ct_get_eval() on the same skb, treats the template as a real ct
+and hits the 16-byte memcpy path. With dreg at NFT_REG32_15 this
+overflows past struct nft_regs on the kernel stack; with smaller
+dreg values it silently clobbers adjacent registers.
+
+Reject template ct at the eval entry and in nft_ct_get_fast_eval(),
+mirroring the check nft_ct_set_eval() already has. Additionally,
+bound the address copy in NFT_CT_SRC / NFT_CT_DST by priv->len
+instead of by nf_ct_l3num(ct): nf_ct_get_tuple() zeroes the tuple
+before pkt_to_tuple() fills in only the protocol-relevant leading
+bytes, so the trailing bytes of tuple->{src,dst}.u3.all are
+well-defined zero. priv->len is validated at rule load, so the
+copy size is now bounded by the destination register rather than
+by an untrusted field on the conntrack.
+
+[1]: https://syzkaller.appspot.com/bug?id=389cf09cb72926114fce90dc85a2c3231dcb647c
+
+Fixes: 45d9bcda21f4 ("netfilter: nf_tables: validate len in nft_validate_data_load()")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/netfilter/nft_ct.c      | 8 +++-----
+ net/netfilter/nft_ct_fast.c | 2 +-
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 214210c8747458..c1b7ee1f3e7463 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2180,9 +2180,8 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
- 		drain_no_period_wakeup = to_check->no_period_wakeup;
- 		drain_rate = to_check->rate;
- 		drain_bufsz = to_check->buffer_size;
--		init_waitqueue_entry(&wait, current);
--		set_current_state(TASK_INTERRUPTIBLE);
--		add_wait_queue(&to_check->sleep, &wait);
-+		init_wait_entry(&wait, 0);
-+		prepare_to_wait(&to_check->sleep, &wait, TASK_INTERRUPTIBLE);
- 		snd_pcm_stream_unlock_irq(substream);
- 		if (drain_no_period_wakeup)
- 			tout = MAX_SCHEDULE_TIMEOUT;
-@@ -2200,7 +2199,7 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
- 		group = snd_pcm_stream_group_ref(substream);
- 		snd_pcm_group_for_each_entry(s, substream) {
- 			if (s->runtime == to_check) {
--				remove_wait_queue(&to_check->sleep, &wait);
-+				finish_wait(&to_check->sleep, &wait);
- 				break;
- 			}
- 		}
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index 83c963e668ffe0..e83aa87a348e7d 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -78,7 +78,7 @@ static void nft_ct_get_eval(const struct nft_expr *expr,
+ 		break;
+ 	}
+ 
+-	if (ct == NULL)
++	if (!ct || nf_ct_is_template(ct))
+ 		goto err;
+ 
+ 	switch (priv->key) {
+@@ -180,12 +180,10 @@ static void nft_ct_get_eval(const struct nft_expr *expr,
+ 	tuple = &ct->tuplehash[priv->dir].tuple;
+ 	switch (priv->key) {
+ 	case NFT_CT_SRC:
+-		memcpy(dest, tuple->src.u3.all,
+-		       nf_ct_l3num(ct) == NFPROTO_IPV4 ? 4 : 16);
++		memcpy(dest, tuple->src.u3.all, priv->len);
+ 		return;
+ 	case NFT_CT_DST:
+-		memcpy(dest, tuple->dst.u3.all,
+-		       nf_ct_l3num(ct) == NFPROTO_IPV4 ? 4 : 16);
++		memcpy(dest, tuple->dst.u3.all, priv->len);
+ 		return;
+ 	case NFT_CT_PROTO_SRC:
+ 		nft_reg_store16(dest, (__force u16)tuple->src.u.all);
+diff --git a/net/netfilter/nft_ct_fast.c b/net/netfilter/nft_ct_fast.c
+index e684c8a9184877..ecf7b3a404be26 100644
+--- a/net/netfilter/nft_ct_fast.c
++++ b/net/netfilter/nft_ct_fast.c
+@@ -30,7 +30,7 @@ void nft_ct_get_fast_eval(const struct nft_expr *expr,
+ 		break;
+ 	}
+ 
+-	if (!ct) {
++	if (!ct || nf_ct_is_template(ct)) {
+ 		regs->verdict.code = NFT_BREAK;
+ 		return;
+ 	}
 -- 
 2.53.0
 
