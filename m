@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEFF2F12AE;
-	Tue, 16 Jun 2026 18:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD402F12AE;
+	Tue, 16 Jun 2026 18:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633253; cv=none; b=fFkg35is4qLiYRN0nZ77DiWiZM0h7KWm1c3Xyec9E/LI23B/prrV0TCmrGxEnyjSXBjPzygyXZ6ZjbNFOFOOjYMqFiHNCaRLSzLK/Cb1omFNYfSBVMCF275dDqASjZHgzuEIS5ccCJjGzicoaGt7Dvxe38IMq0+ZxghzPuouueQ=
+	t=1781633258; cv=none; b=Aduxhar1cxhiCD6RSLtRaxBsM+GUaPf6xfN5WFfT32IqP8SrUX6k3VYcPFbjq9QfNu3bTmY3//76TqtOhAIy28qShlRkqbvOCZxoJh+n891uq2x4l6/SHAL8ZQu2ncVA8Z2zJLd20ojqs0fBS/ib6HTUNRVrEjSYwqPLNJwRcz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633253; c=relaxed/simple;
-	bh=AU1wAzPX6LMP4r8kvnq4sh1oo2+c3G+69QQOZn2RNNM=;
+	s=arc-20240116; t=1781633258; c=relaxed/simple;
+	bh=pQbNO7W2phcLCZre9rvoNsg2QJQbjpEHTincNr+WZNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAUBulE3hWX/GtdGWpFK0auEAB7nhe0QOU/OIC6QMaXytkfb+C8XtB2SCV93reVCJXhszUA6D3RslPHjpWxpTpEXR+3D/vsoH9MmmX1wEYgVuc7JXBHeyNttWdRc1/f7FBOYU3+BfS59ZFZdJt/mX6EJFxOuI0O2e3TWVz1d2NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MSrm9Ap; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dtAoH6LKIXY+8r8CPuRuoJ+lS70KopeecK2A2y8TUszcliQijzGmlFZ4aCiR50/9jcI9EQT3htbdOAzU2mpQ+fJyxCnQ9r2aVYRAjDmsyE8lM9mrHGXLrMlzNnc+srGHso/q4xpiWSVX/8YXYiNyCaYrNV29uFGHBZvlD/vy3GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fq55/UZV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MSrm9Ap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AAE1F000E9;
-	Tue, 16 Jun 2026 18:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fq55/UZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F83C1F000E9;
+	Tue, 16 Jun 2026 18:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633252;
-	bh=1QQNInBB+UzOaQ/sMfaXaxWwBouSPdcRx14WC55fh8c=;
+	s=korg; t=1781633257;
+	bh=UIUHKkoW6agv5+iCFX4oSQAF0ieboa/i5Sn1oVCatuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1MSrm9ApBj9fWeGPL0k+UVoKKwuN31E/G8UFwXfv6k9QZzc+20AHJ01Cfr5m/ePu1
-	 Hz1cDgEgkwkiuUt0rzCUwjLLdXIo0E8efYEvFZZIjWTX85K91exgAxeQqsUz7gOl3X
-	 wef83e+PAHnM8BMkodKQE6MNcyNHSiRDBu1FAl54=
+	b=fq55/UZVW3gDwBuYKS5ZDQsmBOhPJPmtPCPLce/PsIcc8hpJe32Ssv3k8ghJTbnnQ
+	 JbUfKPrdWC6uIvWQmZwvyrrTkmte+AIxaAEwrRbmHqjfSMtNPqTWAF3xviOdnVy2O7
+	 57HqxElycmMBJrlyM7Dsenpqsistm+ivmThXmF0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/411] net: netlink: fix sending unassigned nsid after assigned one
-Date: Tue, 16 Jun 2026 20:24:14 +0530
-Message-ID: <20260616145101.246978164@linuxfoundation.org>
+Subject: [PATCH 5.15 043/411] batman-adv: tt: avoid empty VLAN responses
+Date: Tue, 16 Jun 2026 20:24:41 +0530
+Message-ID: <20260616145102.579070162@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,43 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 70f8592ee90585272018a725054b6eb2ab7e99ca ]
+commit fa1bd704940b5bcbc32c0b28db9167405c8ee5e0 upstream.
 
-If the current skb is not shared, it is re-used directly for all the
-sockets subscribed to the notification.  If we have remote all-nsid
-socket receiving a message first, then the 'nsid_is_set' will be
-set to 'true'.  If the nsid is NOT_ASSIGNED for the next socket in
-the list, the 'nsid_is_set' will remain 'true' and the negative value
-is be delivered to the user space.  All subsequent nsid values will be
-delivered as well, since there is no code path that sets the flag
-back to 'false'.
+The commit 16116dac2339 ("batman-adv: prevent TT request storms by not
+sending inconsistent TT TLVLs") added checks to the local (direct) TT
+response code. But the response can also be done indirectly by another node
+using the global TT state. To avoid such inconsistency states reported in
+the original fix, also avoid sending empty VLANs for replies from the
+global TT state.
 
-Fix that by always dropping the flag to 'false' first.
-
-Fixes: 7212462fa6fd ("netlink: don't send unknown nsid")
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://patch.msgid.link/20260520172317.175168-2-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@kernel.org
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
+[ Context, drop flex array dependency ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/batman-adv/translation-table.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 65eb164d00c40d..12e765fcbd747d 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1482,6 +1482,7 @@ static void do_one_broadcast(struct sock *sk,
- 		p->skb2 = NULL;
- 		goto out;
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 11c39a9ab90e46..e4d55b27f2551b 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -843,17 +843,19 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
+ 				   s32 *tt_len)
+ {
+ 	u16 num_vlan = 0;
+-	u16 num_entries = 0;
+ 	u16 tvlv_len = 0;
+ 	unsigned int change_offset;
+ 	struct batadv_tvlv_tt_vlan_data *tt_vlan;
+ 	struct batadv_orig_node_vlan *vlan;
++	u16 total_entries = 0;
+ 	u8 *tt_change_ptr;
++	int vlan_entries;
+ 
+ 	spin_lock_bh(&orig_node->vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
++		vlan_entries = atomic_read(&vlan->tt.num_entries);
++		total_entries += vlan_entries;
+ 		num_vlan++;
+-		num_entries += atomic_read(&vlan->tt.num_entries);
  	}
-+	NETLINK_CB(p->skb2).nsid_is_set = false;
- 	NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
- 	if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
- 		NETLINK_CB(p->skb2).nsid_is_set = true;
+ 
+ 	change_offset = sizeof(**tt_data);
+@@ -861,7 +863,7 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
+ 
+ 	/* if tt_len is negative, allocate the space needed by the full table */
+ 	if (*tt_len < 0)
+-		*tt_len = batadv_tt_len(num_entries);
++		*tt_len = batadv_tt_len(total_entries);
+ 
+ 	if (change_offset > U16_MAX || *tt_len > U16_MAX - change_offset) {
+ 		*tt_len = 0;
+@@ -882,14 +884,27 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
+ 	(*tt_data)->num_vlan = htons(num_vlan);
+ 
+ 	tt_vlan = (struct batadv_tvlv_tt_vlan_data *)(*tt_data + 1);
++	num_vlan = 0;
+ 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
++		vlan_entries = atomic_read(&vlan->tt.num_entries);
++		if (vlan_entries < 1)
++			continue;
++
+ 		tt_vlan->vid = htons(vlan->vid);
+ 		tt_vlan->crc = htonl(vlan->tt.crc);
+ 		tt_vlan->reserved = 0;
+ 
+ 		tt_vlan++;
++		num_vlan++;
+ 	}
+ 
++	/* recalculate in case number of VLANs reduced */
++	change_offset = sizeof(**tt_data);
++	change_offset += num_vlan * sizeof(*tt_vlan);
++	tvlv_len = *tt_len + change_offset;
++
++	(*tt_data)->num_vlan = htons(num_vlan);
++
+ 	tt_change_ptr = (u8 *)*tt_data + change_offset;
+ 	*tt_change = (struct batadv_tvlv_tt_change *)tt_change_ptr;
+ 
 -- 
 2.53.0
 
