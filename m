@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07303101A7;
-	Tue, 16 Jun 2026 17:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72B13101A7;
+	Tue, 16 Jun 2026 17:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631659; cv=none; b=tJ06MUnDdfoMliojjhF05wG7v1kP342z+a+bOloP1fBZZFyfnexFzuwXk0nqwalEqpZdrL0QeB1wgHYxPRpCua4lezaq0Mo4dv/myBCB05khPcocyu1NrZnutjy25yhLThwKILgZnlGSQ5TKN6jeDXNsAuYNS3CrnbuoHgt/6RA=
+	t=1781631665; cv=none; b=PS6/3L2eNg141IZ4oOkwLdhUxk/29qXKCnHKXtGKFO6RmMUTJqvkvs61Hr0EIXK0ZV2+Y+0KbtlTW18h74VB87zLauMp5xhoGB5dGWzz1NjFQj5hlvEyFxvQHqzTqkQLqqMfGJGs3jDr57PoPAleuLYLliCwV2r/ifX4bwlZ5Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631659; c=relaxed/simple;
-	bh=J+a0kVoT8cwSBR0vWPF63gMgENc+uk6tZDx1tuezCKM=;
+	s=arc-20240116; t=1781631665; c=relaxed/simple;
+	bh=YpHJXZz0LNhdl5Q4/psBhDM3CrynDCzWIQHM/eXttLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SaGpHmHgfUuDRvwp0WM/LJ5rbIkAhxDxdtiY6g6tMdxpdLtvFEBYz/b+7N2FueRzt9r4vYLU/cwGc7Hkqf6JIBkaoYxTJY/V6x288ss7BWJo6zPVzmRsFVUnhmIBJ5Vn+bOdPDhapRNELO6qcF+b8EOUQ6OWhCD/K4dUUyihgMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0q3aKYzG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QS3xxBim9pG7FYl33S7oQGqC2Q0/vOl9ZVP777Ie93/tXWQbGDOUr8iYgvCewVVkSalnzxLg1diD7bfKlAtKJYjBHhTBdbELYA0kwfBgXZ8F6vlvCll6zlxpbhP2BmeoJhNP/kbqdu1ZvQzTOe+6NvA3tPgwfxicSqx5EyOccTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNPmx2x/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0q3aKYzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15601F000E9;
-	Tue, 16 Jun 2026 17:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNPmx2x/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F9B1F000E9;
+	Tue, 16 Jun 2026 17:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631658;
-	bh=lsllaLAGqciFjez1d9kuXITow6/fZV9NUN6F9ReD++8=;
+	s=korg; t=1781631663;
+	bh=0AI1zpyTtRkNzkoGjfwbGg0vgM+HS83j4XUac2mJO5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0q3aKYzGoM6mIE7RrrGo9Q0Tcl2Xqe6n1mH5kt77we5iga+RWLjExKjISf+RGkFdD
-	 cu0CgB0w25A5W4FCHbU9cF1PS3av1CSFOlqUpkq1dfujMDkALq4dH8mN/c9/8QoA81
-	 EvgO8eFUUUs27Cg+JLLsQMYOwlUGgwmxNEKnWp0Q=
+	b=lNPmx2x/Xe59Uy7VYs59/srsRvdMukQXZBOf6hp/Vzc2s8kOYjp2NVEMd4HVbqrgW
+	 AKnAOB+7QG1NbCZaFIxsImbRuf/Tx8uoKKhrQsS68TQ+X/KellLHVPMvfyCHXb6zm3
+	 gyxJ+pNJQwRT+a+jm7SwfP9RYLSwaCSe5ZX67/10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Til Kaiser <mail@tk154.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 262/522] net: mvpp2: Add metadata support for xdp mode
-Date: Tue, 16 Jun 2026 20:26:49 +0530
-Message-ID: <20260616145138.199448516@linuxfoundation.org>
+Subject: [PATCH 6.1 263/522] net: mvpp2: refill RX buffers before XDP or skb use
+Date: Tue, 16 Jun 2026 20:26:50 +0530
+Message-ID: <20260616145138.245215436@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,79 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Til Kaiser <mail@tk154.de>
 
-[ Upstream commit 9a45e193c88a55a536d7fd0ebfa29823d588c2cf ]
+[ Upstream commit 5e8e2a9624df72fca7c736b2966b2cbf6c9c3ff6 ]
 
-Set metadata size building the skb from xdp_buff in mvpp2 driver
-mvpp2 driver sets xdp headroom to:
+The RX error path returns the current descriptor buffer to the hardware
+BM pool. That is only valid while the driver still owns the buffer.
 
-MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM
+mvpp2_rx_refill() can fail after the current buffer has been handed to
+XDP or attached to an skb. In those cases mvpp2_run_xdp() may have
+recycled, redirected, or queued the page for XDP_TX, and an skb free also
+retires the data buffer. Returning such a buffer to BM lets hardware DMA
+into memory that is no longer owned by the RX ring.
 
-where
+Refill the BM pool before handing the current buffer to XDP or to the
+skb. If the allocation fails there, drop the packet and return the
+still-owned current buffer to BM, preserving the pool depth. Once the
+refill succeeds, later local drops retire/free the current buffer instead
+of returning it to BM.
 
-MVPP2_MH_SIZE 2
-MVPP2_SKB_HEADROOM min(max(XDP_PACKET_HEADROOM, NET_SKB_PAD), 224)
-
-so the headroom is large enough to contain xdp_frame and xdp metadata.
-Please note this patch is just compiled tested.
-
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250318-mvneta-xdp-meta-v2-2-b6075778f61f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 07dd0a7aae7f ("mvpp2: add basic XDP support")
+Fixes: d6526926de73 ("net: mvpp2: fix memory leak in mvpp2_rx")
+Signed-off-by: Til Kaiser <mail@tk154.de>
+Link: https://patch.msgid.link/20260607134943.21996-4-mail@tk154.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 77a6b90ce56b ("net: mvpp2: build skb from XDP-adjusted data on XDP_PASS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ .../net/ethernet/marvell/mvpp2/mvpp2_main.c   | 43 +++++++++++--------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
 
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 8403fc4e9e7176..4c299d8bb2392c 100644
+index 4c299d8bb2392c..fc16e577a10376 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3915,13 +3915,13 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+@@ -3973,6 +3973,12 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 		else
+ 			frag_size = bm_pool->frag_size;
  
- 	while (rx_done < rx_todo) {
- 		struct mvpp2_rx_desc *rx_desc = mvpp2_rxq_next_desc_get(rxq);
-+		u32 rx_status, timestamp, metasize = 0;
- 		struct mvpp2_bm_pool *bm_pool;
- 		struct page_pool *pp = NULL;
- 		struct sk_buff *skb;
- 		unsigned int frag_size;
- 		dma_addr_t dma_addr;
- 		phys_addr_t phys_addr;
--		u32 rx_status, timestamp;
- 		int pool, rx_bytes, err, ret;
- 		struct page *page;
- 		void *data;
-@@ -3984,7 +3984,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 			xdp_init_buff(&xdp, bm_pool->frag_size, xdp_rxq);
- 			xdp_prepare_buff(&xdp, data,
- 					 MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM,
--					 rx_bytes, false);
-+					 rx_bytes, true);
++		err = mvpp2_rx_refill(port, bm_pool, pp, pool);
++		if (err) {
++			netdev_err(port->dev, "failed to refill BM pools\n");
++			goto err_drop_frame;
++		}
++
+ 		if (xdp_prog) {
+ 			struct xdp_rxq_info *xdp_rxq;
  
- 			ret = mvpp2_run_xdp(port, xdp_prog, &xdp, pp, &ps);
+@@ -3990,12 +3996,6 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
  
-@@ -4000,6 +4000,8 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 			if (ret) {
+ 				xdp_ret |= ret;
+-				err = mvpp2_rx_refill(port, bm_pool, pp, pool);
+-				if (err) {
+-					netdev_err(port->dev, "failed to refill BM pools\n");
+-					goto err_drop_frame;
+-				}
+-
+ 				ps.rx_packets++;
  				ps.rx_bytes += rx_bytes;
  				continue;
- 			}
-+
-+			metasize = xdp.data - xdp.data_meta;
+@@ -4007,8 +4007,21 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 		skb = build_skb(data, frag_size);
+ 		if (!skb) {
+ 			netdev_warn(port->dev, "skb build failed\n");
+-			goto err_drop_frame;
++			if (pp) {
++				page_pool_put_page(pp, virt_to_head_page(data),
++						   rx_bytes + MVPP2_MH_SIZE,
++						   true);
++			} else {
++				dma_unmap_single_attrs(dev->dev.parent, dma_addr,
++						       bm_pool->buf_size,
++						       DMA_FROM_DEVICE,
++						       DMA_ATTR_SKIP_CPU_SYNC);
++				mvpp2_frag_free(bm_pool, pp, data);
++			}
++			goto err_drop_frame_retired;
+ 		}
++		if (pp)
++			skb_mark_for_recycle(skb);
+ 
+ 		/* If we have RX hardware timestamping enabled, grab the
+ 		 * timestamp from the queue and convert.
+@@ -4019,16 +4032,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 					 skb_hwtstamps(skb));
  		}
  
- 		skb = build_skb(data, frag_size);
-@@ -4036,6 +4038,8 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+-		err = mvpp2_rx_refill(port, bm_pool, pp, pool);
+-		if (err) {
+-			netdev_err(port->dev, "failed to refill BM pools\n");
+-			dev_kfree_skb_any(skb);
+-			goto err_drop_frame;
+-		}
+-
+-		if (pp)
+-			skb_mark_for_recycle(skb);
+-		else
++		if (!pp)
+ 			dma_unmap_single_attrs(dev->dev.parent, dma_addr,
+ 					       bm_pool->buf_size, DMA_FROM_DEVICE,
+ 					       DMA_ATTR_SKIP_CPU_SYNC);
+@@ -4047,13 +4051,14 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 		continue;
  
- 		skb_reserve(skb, MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM);
- 		skb_put(skb, rx_bytes);
-+		if (metasize)
-+			skb_metadata_set(skb, metasize);
- 		skb->ip_summed = mvpp2_rx_csum(port, rx_status);
- 		skb->protocol = eth_type_trans(skb, dev);
+ err_drop_frame:
+-		dev->stats.rx_errors++;
+-		mvpp2_rx_error(port, rx_desc);
+ 		/* Return the buffer to the pool */
+ 		if (rx_status & MVPP2_RXD_BUF_HDR)
+ 			mvpp2_buff_hdr_pool_put(port, rx_desc, pool, rx_status);
+ 		else
+ 			mvpp2_bm_pool_put(port, pool, dma_addr, phys_addr);
++err_drop_frame_retired:
++		dev->stats.rx_errors++;
++		mvpp2_rx_error(port, rx_desc);
+ 	}
  
+ 	if (xdp_ret & MVPP2_XDP_REDIR)
 -- 
 2.53.0
 
