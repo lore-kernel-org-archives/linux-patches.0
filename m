@@ -1,41 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7006A32A3C9;
-	Tue, 16 Jun 2026 17:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932AC169AD2;
+	Tue, 16 Jun 2026 17:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632017; cv=none; b=ahOcWjT9c8PmfIHMQA3sxOgD7GCDoBSbgdek2QvknQwlQeigcsYGNvjy/0hTxLHWXRMygQm+dNaU/fyn3rLnICMjaufRviSpuNw4JJ//olF6JqbmQV+ZQWuUP7/oLDMHKVUNVyU9VitZwkmeHZlqm9+YtG4ehZVb5GbC4C9qIKA=
+	t=1781632021; cv=none; b=uFTUErXLVKwgPka29vJrbrccflq0+C9jDzhStgts2OpaClpvZbu2PJOBwhjKJHqFMbzhUSqoP38jEp4xCNm9uJg4q+CyuAX/8OxNx7hKcu1APr9RfgAlQY2ZS2z6oy6ItdylnNuUpP7+kznK5bdsH1TMYUzKOej/2nsqlZ/Grp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632017; c=relaxed/simple;
-	bh=PgjK+NSLI7clWy3j+HKaLCLEC2NK1GV49xQS3O1lpG8=;
+	s=arc-20240116; t=1781632021; c=relaxed/simple;
+	bh=N+u8SnqgqqHfGYtMZFUGyzX9lu2glj1rHuel5nlAmxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=txmIG9uJFbeptCqXBL38XjPEIjJ2cmYv65Qs90WYs13+H0+wyo5/LYxNLIpHc879P8uyf/C2c58tlZsFZeZbiPwz3M2PgDRIwV1Wx4RFz5zZOZFDQUOt1eqjA7+JvKBG6FIOeGD518Sl7vN18a+tBjEy9S6t1Bcd7EEi01JgmxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhc2VK1A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kT3sqdMfwBmkTl5BHOUaJPOR/ba1kn+PkMlaNZ9WJYPPW4qlHxiPHX6LgwEnWN36tai7wPIBHJ1exA2PLnWScxU3A9XgKgIpspHW469YAr3aH7KexDwYZ2mbewE+4vCmjNKA1xaQ4tdlllbtubS3UJmSdzsqnWhNIn7a+MGX/MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EmdsVfz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhc2VK1A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B561F000E9;
-	Tue, 16 Jun 2026 17:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EmdsVfz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E2C1F000E9;
+	Tue, 16 Jun 2026 17:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632014;
-	bh=9bi5iXuUG0g1wbh60r6gUQrKVLEs4TQDwjIvPNIdnMw=;
+	s=korg; t=1781632020;
+	bh=X8XC2p8hY3/tetbdECAxv+KMqP6olSeL+Ki56HLu3ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lhc2VK1AgTkT8LX52aK5+2DdO6+cWH0Giun54hrNm2UZtb6JkIghB/nxFuMS1v9mW
-	 e2MzlZK5Az7aEHvjIwRmWhrxJDYGrgLJM/VJ/RPOHQKS366vqGUGR0JQyGf4aSUaef
-	 f4LACfrodcSa+NcadiRTVSmGyesRZGUfowwup1eE=
+	b=2EmdsVfzo6a+WEhScNFazaNwVU2zifYI7I7XieKTyoX21zkvppDpXYHcms6BiDa1G
+	 SIkLcaLd7Jtz3IaCp8cT3GLVr5VuKAwirRIaE4eaK+tV+4iYz7poyS8SfcmDDzxPyB
+	 gyvzVAFNerRdnNEf8KnyIwukVaZtJuE5i4xB7hDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	Leonard Foerster <foersleo@amazon.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Yin Tirui <yintirui@huawei.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Dev Jain <dev.jain@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Chen Jun <chenjun102@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 329/522] mm/damon/ops-common: call folio_test_lru() after folio_get()
-Date: Tue, 16 Jun 2026 20:27:56 +0530
-Message-ID: <20260616145141.221061388@linuxfoundation.org>
+Subject: [PATCH 6.1 330/522] mm/huge_memory: update file PMD counter before folio_put()
+Date: Tue, 16 Jun 2026 20:27:57 +0530
+Message-ID: <20260616145141.266216848@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -54,60 +65,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Yin Tirui <yintirui@huawei.com>
 
-[ Upstream commit d6b8b02a27b3dd09ec12144322b3dac46d9bc9ef ]
+[ Upstream commit 8d878059924f12c1bc24556a92ec56add74de3c8 ]
 
-damon_get_folio() speculatively calls folio_test_lru() before
-folio_try_get().  The folio can get freed and reallocated to a tail page.
-In the case, VM_BUG_ON_PGFLAGS() in const_folio_flags() can be triggered.
-Remove the speculative call.
+__split_huge_pmd_locked() updates the file/shmem RSS counter after
+dropping the PMD mapping's folio reference.  If folio_put() drops the last
+reference, mm_counter_file() can later read freed folio state via
+folio_test_swapbacked().
 
-Also mark folio_test_lru() check right after folio_try_get() success as no
-more unlikely.
+Move the counter update before folio_put().
 
-The race should be rare.  Also the problem can happen only if the kernel
-has enabled CONFIG_DEBUG_VM_PGFLAGS.  No real world report of this issue
-has been made so far.  This fix is based on only theoretical analysis.
-That said, a bug is a bug.  A similar issue was also fixed via commit
-3203b3ab0fcf ("mm/filemap: don't call folio_test_locked() without a
-reference in next_uptodate_folio()").  I don't expect this change will
-make a meaningful impact to DAMON performance in the real world, though I
-will be happy to be corrected from the real world reports.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260525162256.8317-1-sj@kernel.org
-Link: https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org [1]
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: Leonard Foerster <foersleo@amazon.de>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org> # 5.15.x
+Link: https://lore.kernel.org/20260526101337.1984081-1-yintirui@huawei.com
+Fixes: fadae2953072 ("thp: use mm_file_counter to determine update which rss counter")
+Signed-off-by: Yin Tirui <yintirui@huawei.com>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Acked-by: David Hildenbrand (arm) <david@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chen Jun <chenjun102@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ changed folio API calls (folio_remove_rmap_pmd/mm_counter_file(folio)/folio_put) to page-based equivalents (page_remove_rmap/mm_counter_file(page)/put_page) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/ops-common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/huge_memory.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index 0b75a8d5c70684..cea4401e95a35e 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -23,10 +23,10 @@ struct page *damon_get_page(unsigned long pfn)
- {
- 	struct page *page = pfn_to_online_page(pfn);
- 
--	if (!page || !PageLRU(page) || !get_page_unless_zero(page))
-+	if (!page || !get_page_unless_zero(page))
- 		return NULL;
- 
--	if (unlikely(!PageLRU(page))) {
-+	if (!PageLRU(page)) {
- 		put_page(page);
- 		page = NULL;
- 	}
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 2c118713f77126..7023bdf4896055 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2085,7 +2085,9 @@ static void __split_huge_pmd_locked(struct vm_area_struct *vma, pmd_t *pmd,
+ 			if (!PageReferenced(page) && pmd_young(old_pmd))
+ 				SetPageReferenced(page);
+ 			page_remove_rmap(page, vma, true);
++			add_mm_counter(mm, mm_counter_file(page), -HPAGE_PMD_NR);
+ 			put_page(page);
++			return;
+ 		}
+ 		add_mm_counter(mm, mm_counter_file(page), -HPAGE_PMD_NR);
+ 		return;
 -- 
 2.53.0
 
