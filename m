@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4605E1E8320;
-	Tue, 16 Jun 2026 15:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA31C26B0A9;
+	Tue, 16 Jun 2026 15:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623361; cv=none; b=NXFZsGoS6xRjIZETemmX4k4WyT01EKoPO+Q4EV4sLkk7I6aTqW60wc2/2wSWJB+Vw/ok+zxhEsA6/AVytHjUXkOawYsdz699HJqVATQQ36O5qImpBz8PmzhbsqS9X7ZVaqVT6UMMuCwbi6V7kb6aF+ZKxy0Y/evO5OTMh0hBirs=
+	t=1781623366; cv=none; b=Y12KyA6xQ2+//hCzX+Qi+DFwcmLo3u17kJphrHKXSP0AeP0mDtCQ/oM/+HZNhJiYat3WTrTma013HWeKD1mz+pTcPmm0qK2QJBN0ujxS0mrL0F2zVC5I7avowHZpnjGZ66+ffkOwdp3h/hFfigrYmH34inzB7aV0oO1sBfCIWsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623361; c=relaxed/simple;
-	bh=SSrXw9dy/UfwtG45z2zDEkMDeGYGOL+jtF1kLFPTTkY=;
+	s=arc-20240116; t=1781623366; c=relaxed/simple;
+	bh=gJTyFlcZxJP2gKEooHNSt2QTqbyozHx+nmSUpXm/Mto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AcAXgzh6gzPGWRswY++hX7nobxMRz83fDT7wX7zQQPB2B87DlwUAIjpS/B5RloYGeGeziLG2HjBrVUczu4urBVGin1uW55qKk6dTMAt2gKk/njEQmq4HuRUukrTQl1m1FiRPh4EK524cVl8emYSdNXOJE1PQqqPqiEeotiEsTBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbdx2v4+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HEwXmpmrzuVva3MTU9rpFF/CB7uFovjgcsYolUeaaa/g3UFeigTar76OOsmU9I86Cv316SW1F0PPGGKPVO3cdFCXZGkPUG+nCsoawUbvAiR8YyWK+1iytN9FEcBTPF7OHUhCgs0MP14CwXWKhGzMQOUb897Ng63rpfbki0Cs5l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RzfBM9jl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbdx2v4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BCB1F000E9;
-	Tue, 16 Jun 2026 15:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzfBM9jl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4B51F000E9;
+	Tue, 16 Jun 2026 15:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623360;
-	bh=d/yICRG9Cb40rdoS9tirgvaR6uI1tByUQFRPPsyyIDA=;
+	s=korg; t=1781623365;
+	bh=nBAUxTZHFvIBLwCUXM3h6WmLxNXDyHishc8xTYstPkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fbdx2v4+YJWdMlm5CVroeekVoTW2L0IOs7ojvMSREop/aMn9yG0ebqYEaJCpoc40F
-	 wpqGNc6onhuQ2VCbvRo+DqHKYS8LY5TewgDQlwPvQsGYBId82yxlYd4+bsjcHKXlxs
-	 ieEW5dMT8rFrn/80dVJ1H+3+FPxD6FxDlKrQPanQ=
+	b=RzfBM9jljTq/wUZ6e2rSB2ytPm9qigEe5HNEv73hbMxTMyjvymX0+7dwySzcLMJOz
+	 sNIfOpqk1ofF4EJkllnl0uzZNK8z6GcZc+fp8Hb7tNxfzv74dmzYlCueT2qvasOr0S
+	 LJVwiJTeD+x0lTq+h7dtgTjkJaQAZazLTrkIC0p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Xin Long <lucien.xin@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 133/378] sctp: validate embedded INIT chunk and address list lengths in cookie
-Date: Tue, 16 Jun 2026 20:26:04 +0530
-Message-ID: <20260616145117.307552970@linuxfoundation.org>
+Subject: [PATCH 7.0 134/378] net: guard timestamp cmsgs to real error queue skbs
+Date: Tue, 16 Jun 2026 20:26:05 +0530
+Message-ID: <20260616145117.355784729@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,108 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 6f4c80a2a7e6d06753b89a578b710a2499a5e62b ]
+[ Upstream commit 1ee90b77b727df903033db873c75caac5c27ec98 ]
 
-sctp_unpack_cookie() only checked that the embedded INIT chunk length
-did not exceed the remaining cookie payload, but did not ensure that the
-INIT chunk is large enough to contain a complete INIT header.
+skb_is_err_queue() treats PACKET_OUTGOING as the sole marker for an skb
+from sk_error_queue. That assumption is not true for AF_PACKET sockets:
+outgoing packet taps are also delivered to packet sockets with
+skb->pkt_type == PACKET_OUTGOING, but their skb->cb is owned by AF_PACKET
+instead of struct sock_exterr_skb.
 
-A malformed COOKIE_ECHO can therefore carry a truncated INIT chunk whose
-length field is smaller than sizeof(struct sctp_init_chunk).  Later,
-sctp_process_init() accesses INIT parameters unconditionally, which may
-lead to out-of-bounds reads.
+If such an skb is received with timestamping enabled, the generic
+timestamp cmsg path can read AF_PACKET control-buffer state as
+sock_exterr_skb::opt_stats. With SO_RXQ_OVFL enabled, the packet drop
+counter overlaps opt_stats. An odd drop count makes the path emit
+SCM_TIMESTAMPING_OPT_STATS with skb->len and skb->data. For non-linear
+skbs this copies past the linear head and can trigger hardened usercopy or
+disclose adjacent heap contents.
 
-In addition, raw_addr_list_len is not fully validated against the
-remaining cookie payload. When cookie authentication is disabled, an
-attacker can supply an oversized raw_addr_list_len and cause
-sctp_raw_to_bind_addrs() to read beyond the end of the cookie. The
-address parser also lacks sufficient bounds checks for parameter headers
-and lengths, allowing malformed address parameters to trigger
-out-of-bounds reads.
+Keep skb_is_err_queue() local to net/socket.c, but make it verify that
+the PACKET_OUTGOING marker is paired with the sock_rmem_free destructor
+installed by sock_queue_err_skb(). AF_PACKET receive skbs use normal
+receive ownership and no longer pass as error-queue skbs, while legitimate
+sk_error_queue entries keep the PACKET_OUTGOING marker and sock_rmem_free
+ownership.
 
-Fix this by:
-
-- requiring the embedded INIT chunk length to be at least sizeof(struct
-  sctp_init_chunk);
-- validating that the INIT chunk and raw address list together fit
-  within the cookie payload;
-- verifying sufficient data exists for each address parameter header and
-  payload before parsing it.
-
-Note that sctp_verify_init() must be called after sctp_unpack_cookie()
-and before sctp_process_init() when cookie authentication is disabled.
-This will be addressed in a separate patch.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/75af23a89adf881a0895d511775e4770da367cbf.1780873427.git.lucien.xin@gmail.com
+Fixes: 8605330aac5a ("tcp: fix SCM_TIMESTAMPING_OPT_STATS for normal skbs")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260607021819.49698-1-kylebot@openai.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/bind_addr.c     | 11 ++++++++++-
- net/sctp/sm_make_chunk.c |  9 +++++++--
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ include/net/sock.h |  1 +
+ net/core/skbuff.c  |  6 +++---
+ net/socket.c       | 11 ++++++-----
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/net/sctp/bind_addr.c b/net/sctp/bind_addr.c
-index 75e3e61d494e0f..31737f144c7f03 100644
---- a/net/sctp/bind_addr.c
-+++ b/net/sctp/bind_addr.c
-@@ -275,6 +275,16 @@ int sctp_raw_to_bind_addrs(struct sctp_bind_addr *bp, __u8 *raw_addr_list,
- 		param = (struct sctp_paramhdr *)raw_addr_list;
- 		rawaddr = (union sctp_addr_param *)raw_addr_list;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 6c9a83016e9551..24aab97f1bcae7 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1853,6 +1853,7 @@ struct sk_buff *sock_omalloc(struct sock *sk, unsigned long size,
+ 			     gfp_t priority);
+ void skb_orphan_partial(struct sk_buff *skb);
+ void sock_rfree(struct sk_buff *skb);
++void sock_rmem_free(struct sk_buff *skb);
+ void sock_efree(struct sk_buff *skb);
+ #ifdef CONFIG_INET
+ void sock_edemux(struct sk_buff *skb);
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 9edad9b88433bb..6bee1a9d128bf2 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -5474,7 +5474,7 @@ int skb_cow_data(struct sk_buff *skb, int tailbits, struct sk_buff **trailer)
+ }
+ EXPORT_SYMBOL_GPL(skb_cow_data);
  
-+		if (addrs_len < sizeof(*param)) {
-+			retval = -EINVAL;
-+			goto out_err;
-+		}
-+		len = ntohs(param->length);
-+		if (addrs_len < len) {
-+			retval = -EINVAL;
-+			goto out_err;
-+		}
-+
- 		af = sctp_get_af_specific(param_type2af(param->type));
- 		if (unlikely(!af) ||
- 		    !af->from_addr_param(&addr, rawaddr, htons(port), 0)) {
-@@ -291,7 +301,6 @@ int sctp_raw_to_bind_addrs(struct sctp_bind_addr *bp, __u8 *raw_addr_list,
- 			goto out_err;
+-static void sock_rmem_free(struct sk_buff *skb)
++void sock_rmem_free(struct sk_buff *skb)
+ {
+ 	struct sock *sk = skb->sk;
  
- next:
--		len = ntohs(param->length);
- 		addrs_len -= len;
- 		raw_addr_list += len;
- 	}
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 9014b095f52ddb..51affa4fd396b7 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -1731,8 +1731,8 @@ struct sctp_association *sctp_unpack_cookie(
- 	struct sk_buff *skb = chunk->skb;
- 	struct sctp_cookie *bear_cookie;
- 	struct sctp_chunkhdr *ch;
-+	unsigned int len, chlen;
- 	enum sctp_scope scope;
--	unsigned int len;
- 	ktime_t kt;
+@@ -5483,8 +5483,8 @@ static void sock_rmem_free(struct sk_buff *skb)
  
- 	/* Header size is static data prior to the actual cookie, including
-@@ -1761,7 +1761,12 @@ struct sctp_association *sctp_unpack_cookie(
- 	bear_cookie = &cookie->c;
+ static void skb_set_err_queue(struct sk_buff *skb)
+ {
+-	/* pkt_type of skbs received on local sockets is never PACKET_OUTGOING.
+-	 * So, it is safe to (mis)use it to mark skbs on the error queue.
++	/* The error-queue test in skb_is_err_queue() matches this marker
++	 * with the sock_rmem_free destructor installed by sock_queue_err_skb().
+ 	 */
+ 	skb->pkt_type = PACKET_OUTGOING;
+ 	BUILD_BUG_ON(PACKET_OUTGOING == 0);
+diff --git a/net/socket.c b/net/socket.c
+index 05952188127f5b..86dc88f5b76983 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -792,12 +792,13 @@ EXPORT_SYMBOL(kernel_sendmsg);
  
- 	ch = (struct sctp_chunkhdr *)(bear_cookie + 1);
--	if (ntohs(ch->length) > len - fixed_size)
-+	chlen = ntohs(ch->length);
-+	if (chlen < sizeof(struct sctp_init_chunk))
-+		goto malformed;
-+	if (chlen > len - fixed_size)
-+		goto malformed;
-+	if (bear_cookie->raw_addr_list_len > len - fixed_size - chlen)
- 		goto malformed;
+ static bool skb_is_err_queue(const struct sk_buff *skb)
+ {
+-	/* pkt_type of skbs enqueued on the error queue are set to
+-	 * PACKET_OUTGOING in skb_set_err_queue(). This is only safe to do
+-	 * in recvmsg, since skbs received on a local socket will never
+-	 * have a pkt_type of PACKET_OUTGOING.
++	/* Error-queue skbs are marked as PACKET_OUTGOING in
++	 * skb_set_err_queue() and use the destructor installed by
++	 * sock_queue_err_skb(). PACKET_OUTGOING alone is not unique:
++	 * AF_PACKET outgoing taps use the same pkt_type.
+ 	 */
+-	return skb->pkt_type == PACKET_OUTGOING;
++	return skb->pkt_type == PACKET_OUTGOING &&
++	       skb->destructor == sock_rmem_free;
+ }
  
- 	/* Verify the cookie's MAC, if cookie authentication is enabled. */
+ /* On transmit, software and hardware timestamps are returned independently.
 -- 
 2.53.0
 
