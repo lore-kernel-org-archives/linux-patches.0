@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332C62F12AE;
-	Tue, 16 Jun 2026 18:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FEE2F12AE;
+	Tue, 16 Jun 2026 18:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633275; cv=none; b=i8dQ4f/yB5h+B3EF4CzYpNHAZwtwh2KMq2SGUykRtQzLGIo8hWHKKzEjNc5xQEKQfgToM04xUeMftCDlAxbhJgXIVOkLfVYldbdzENmVd+sSaq2bvcYf0HbaeREe+EIxEGMCrF2NQrfFrjQuvdOYwa8yWrtItK31adNg8mbgj9k=
+	t=1781633280; cv=none; b=pMfD4f/zmqVFW3+f26LDuRNIIYIYEUPhUWM1K5sQYIbofPULrQ5+6TVZDEEaZoCNIj4lags6zXUx/qKDj2HYcRrGvU+67zx4zgsYDWx90un7SL3XetC/QvdXawCwaFHGVk3eNLtd9qQFipOYjHLF0noyajK8hKhKgktUi1whyp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633275; c=relaxed/simple;
-	bh=A6Fxox/NqZIVeSdCJ0b3gYg14DaAEA9yjHU4FktHg6U=;
+	s=arc-20240116; t=1781633280; c=relaxed/simple;
+	bh=VVA5aCvsh/Q9ewFiv0yLCR+YHsoS+sAK3+qvd2iX0G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=En1/PgzR+14v8FG6tKPaAWPnHSE5a+VzJr64qHHqXoi9mfmZClRsVvXgnAKTDSunKk7Evo2ndMS00Roi37yAjBFC05nWd36WXkxkwGg1NMuu1eN0KSlUqY4wiwT2SoY91KU0oINgqw+uEW5DkMtkm/LZYBZc8cwnrX6MZypyv5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lApgwaGm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iiGkNzPBFHbKoe4WmOiKY0WD+1i37kMYjMrpEv+xbLIccVWvGryDNoqPzUH2UNZHRJj3YRjKnk5d/8yzqNL7j+N/dAWQ8R6YHQHmQSErQkIy3gZsCwZJwYfA4ghznCCp7AWSep0TNHMnFwNo3uJqjdaAShEaTlr/Uhdnzy9SPIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuGN3Aml; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lApgwaGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33D41F000E9;
-	Tue, 16 Jun 2026 18:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuGN3Aml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026411F000E9;
+	Tue, 16 Jun 2026 18:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633273;
-	bh=jMQJRcDpOIvQBVhTRw7+m1fe5snHMffgtENfv/SIJio=;
+	s=korg; t=1781633278;
+	bh=YB3FAeJbyKe3OSB0qHW9Uom86Ie2QzvlLf5+NTKSfjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lApgwaGmuao6ylXdq3xWxoZZgGS34hqEOe0uKwK77ezeGazM1qofJ7ZTdWPyu1bsq
-	 ylBMwiyywMcqrjU/R6v9ggQvG3Egjm2wBv+DX5hQIeEX+wxiOeEuVyVTSqMeRkWBPu
-	 +pLfewrecwTlTd79zUB5qnFhjOeGwYQG94mADjto=
+	b=RuGN3AmlfxcSL5HXZc/dFPqf+8Vq0/9PRA0vzc6P+JhdjTDbRgzg1ta8kAk+wl8dL
+	 bvY3KwCHiX1b7Caw3Xf9mQ+Yh5JMyIcQzrNduEi+5jBNWFconEUycUKlvMKjIm9RvE
+	 e52cPn8yMc/lcnLJFQClllRLJsZh3dzzHVvYumCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Suraj Kandpal <suraj.kandpal@intel.com>,
 	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/411] drm/i915/psr: Add defininitions for INTEL_WA_REGISTER_CAPS DPCD register
-Date: Tue, 16 Jun 2026 20:24:44 +0530
-Message-ID: <20260616145102.733760144@linuxfoundation.org>
+Subject: [PATCH 5.15 047/411] drm/i915/psr: Read Intel DPCD workaround register
+Date: Tue, 16 Jun 2026 20:24:45 +0530
+Message-ID: <20260616145102.784739318@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -55,65 +55,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Jouni Högander <jouni.hogander@intel.com>
 
-commit fbceb39b536e40c2f7cc47ab42037bb7c2b7ced9 upstream.
+commit f30bece421a4ae34359254e1dc2a187a42b6af9b upstream.
 
-EDP specification says:
+Read Intel DPCD workaround register and store it into
+intel_connector->dp.psr_caps. psr_caps was chosen as currently it contains
+only PSR workaround for PSR2 SDP on prior scanline implementation.
 
-"If either VSC SDP is unable to be transmitted 100 ns before the SU region,
-the Source device may optionally transmit the VSC SDP during the prior
-video scan line’s HBlank period There is a Intel specific drm dp register
-currently containing bits related how TCON can support PSR2 with SDP on
-prior line."
-
-Unfortunately many panels are having problems in implementing this. So
-there is a custom Intel specific DPCD register (INTEL_WA_REGISTER_CAPS) to
-figure out if this is properly implemented on a panel or if panel doesn't
-require that 100 ns delay before the SU region. Here are the definitions in
-this custom DPCD address:
-
-0 = Panel doesn't support SDP on prior line
-1 = Panel supports SDP on prior line
-2 = Panel doesn't have 100ns requirement
-3 = Reserved
-
-Add definitions for this new register and it's values into new header
-intel_dpcd.h.
-
-v2: add INTEL_DPCD_ prefix to definitions
-
-Bspec: 74741
 Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
 Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-2-jouni.hogander@intel.com
-(cherry picked from commit 1da1c9294825f08f622c473480d185680c2a3b75)
+Link: https://patch.msgid.link/20260515095756.2799483-3-jouni.hogander@intel.com
+(cherry picked from commit c48ff24d0f4ab7ad696b2d35ad64ce7e049c668c)
 Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dpcd.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
- create mode 100644 drivers/gpu/drm/i915/display/intel_dpcd.h
+ drivers/gpu/drm/i915/display/intel_display_types.h | 1 +
+ drivers/gpu/drm/i915/display/intel_psr.c           | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dpcd.h b/drivers/gpu/drm/i915/display/intel_dpcd.h
-new file mode 100644
-index 00000000000000..4aea5326f2ed48
---- /dev/null
-+++ b/drivers/gpu/drm/i915/display/intel_dpcd.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Copyright © 2026 Intel Corporation
-+ */
+diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
+index 90e055f0569940..ef4c280d2cb630 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1554,6 +1554,7 @@ struct intel_dp {
+ 	u8 lttpr_phy_caps[DP_MAX_LTTPR_COUNT][DP_LTTPR_PHY_CAP_SIZE];
+ 	u8 fec_capable;
+ 	u8 pcon_dsc_dpcd[DP_PCON_DSC_ENCODER_CAP_SIZE];
++	u8 intel_wa_dpcd;
+ 	/* source rates */
+ 	int num_source_rates;
+ 	const int *source_rates;
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 93d2fd4cd16b7c..aa00e062a2a6aa 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -30,6 +30,7 @@
+ #include "intel_atomic.h"
+ #include "intel_de.h"
+ #include "intel_display_types.h"
++#include "intel_dpcd.h"
+ #include "intel_dp_aux.h"
+ #include "intel_hdmi.h"
+ #include "intel_psr.h"
+@@ -363,6 +364,12 @@ void intel_psr_init_dpcd(struct intel_dp *intel_dp)
+ 			intel_dp_get_su_granularity(intel_dp);
+ 		}
+ 	}
 +
-+#ifndef __INTEL_DPCD_H__
-+#define __INTEL_DPCD_H__
-+
-+#define INTEL_DPCD_INTEL_WA_REGISTER_CAPS					0x3f0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK	REG_GENMASK(1, 0)
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1			0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE		1
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE		2
-+
-+#endif /* __INTEL_DPCD_H__ */
++	if (intel_dp->psr.sink_psr2_support)
++		drm_dp_dpcd_read(&intel_dp->aux,
++				 INTEL_DPCD_INTEL_WA_REGISTER_CAPS,
++				 &intel_dp->intel_wa_dpcd,
++				 sizeof(intel_dp->intel_wa_dpcd));
+ }
+ 
+ static void hsw_psr_setup_aux(struct intel_dp *intel_dp)
 -- 
 2.53.0
 
