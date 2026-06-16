@@ -1,38 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159BC15B998;
-	Tue, 16 Jun 2026 15:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B443342847F;
+	Tue, 16 Jun 2026 15:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625196; cv=none; b=BLiiUPhkYoU/ZSqX2nEJml61uy6VpKvmzhtfQxbs8XF++Ml0KBNhLkJtiIU7UhnTboJwtu+KdWRj0RbyYguZnOi4n9xvS2kxaMFGNKpc55jNmAzk48ieK+REH4JBPbW/w07vUl6Ys9Z8UAUYKFJrvNEbjsJDsFWTFFPdWL9bsjU=
+	t=1781625200; cv=none; b=uxPdSe+ZdIHKTRyBGOo9cuOzofeFOGrnrOA7jn61omiaxmTeQdu51I2KOcBUBT8Lv2KvaDk9ctcgHJ1NLU4mMEhnIswUYi3TGkuaDc0l8SYiExfWeSltkueJXn4jTlXBRYk1xLM8ErpMEZzFod4Rw7Jxm0Yc7ZALwtG1svT015I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625196; c=relaxed/simple;
-	bh=gP2JFt+3eg+MNaDxWLZoVOeFCHVfKEUGlpeOcofgAKw=;
+	s=arc-20240116; t=1781625200; c=relaxed/simple;
+	bh=lOHOxH6UXht5Gt2Z0Oyrbz7iJcOnL6x43Jyeoh2IsXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHuhTk9769NzvfYBgHmk4045qBadEV7SbSKJDCVDYbs8zfqNKcXWhy6TKCFPPJDh1ZZRfdwsOCqX/mEiQuwYDqrBh5JgT6T7ewt20MVkO0EtDZfbmqj2iwV8GRuqXNZG3ohNngPhGzTtM1ai3hvHFiJApKxJvAcF6GgW8WfuMzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7PUrE94; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CHyBC0+BAZodA59aG0uTtdslPPeNTNmgkCqpjzuFFpOxVR+htws55jFz4mfONf57GYlamglfhySZ+1Am3MSAN0DCComFdHOn9+Q7mkTDc6B04zuEgAHEL9B04yZKn7ZbV5MJQRLHdfQt8H231PlZdyAeP6XKBVyJWFD7QcSA7pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuKXBUqz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7PUrE94"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDE11F000E9;
-	Tue, 16 Jun 2026 15:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuKXBUqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FBE1F000E9;
+	Tue, 16 Jun 2026 15:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625195;
-	bh=ZCJmjEQzCyn5jgLG1zcfmaivmQvtuz7f3S9u1L4OYcw=;
+	s=korg; t=1781625199;
+	bh=yjcZv062jBe2DysJ1qCr+cHCs2MkFsb2jbyQmNqRRlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N7PUrE94wCJ1/Djw+l8SfUyO/R+/L7ELzZ+Km98WCHQUiuLIpOO8iF2xzyf+z1RS6
-	 NzzTMxiqmQ2Am41Ri4JbeJzaJCTyBz9cbB0gAlnuY9HKtDiQUUYITQkY4LoKyGLehY
-	 mW/mMa6/qsqthV8EiXP0RF8ai7OBvsi8XKMHPboI=
+	b=cuKXBUqzaNzHw51QYlfrZprozKVBPX8S8/7ypFKiJyG5rIgrv+4WrVNmpBP643ny2
+	 qtYws9WNN8N9iP9iHlvvfAqsK/3HNBbYzwtZ0OVxZvyiS1NV6Bko4gHU8Uu7G2VUdX
+	 i/V4hn/d9vIr2C2fsT3SsaK9nGnsh6wMIzHvj+Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Tamir Shahar <tamirthesis@gmail.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 096/325] ASoC: wm_adsp: Fix NULL dereference when removing firmware controls
-Date: Tue, 16 Jun 2026 20:28:12 +0530
-Message-ID: <20260616145102.472698612@linuxfoundation.org>
+Subject: [PATCH 6.18 097/325] tcp: restrict SO_ATTACH_FILTER to priv users
+Date: Tue, 16 Jun 2026 20:28:13 +0530
+Message-ID: <20260616145102.521142898@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,50 +65,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7d3fb78b550301e43fdc60312aed733069694426 ]
+[ Upstream commit 5d39580f68e6ddeedd15e587282207489dfb3da2 ]
 
-In wm_adsp_control_remove() check that the priv pointer is not NULL
-before attempting to cleanup what it points to.
+This patch restricts the use of SO_ATTACH_FILTER (cBPF) on TCP sockets
+to users with CAP_NET_ADMIN capability.
 
-When cs_dsp creates a control it calls wm_adsp_control_add_cb() so that
-wm_adsp can create its own private control data. There are two cases
-where private data is not created:
+This blocks potential side-channel attack where an unprivileged application
+attaches a filter to leak TCP sequence/acknowledgment numbers.
 
-1. The control is a SYSTEM control, so an ALSA control is not created.
-
-2. The codec driver has registered a control_add() callback that
-   hides the control, so wm_adsp_control_add() is not called.
-
-When cs_dsp_remove destroys its control list it calls
-wm_adsp_control_remove() for each control. But wm_adsp_control_remove()
-was attempting to cleanup the private data pointed to by cs_ctl->priv
-without checking the pointer for NULL.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 0700bc2fb94c ("ASoC: wm_adsp: Separate generic cs_dsp_coeff_ctl handling")
-Link: https://patch.msgid.link/20260604101244.1402862-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Tamir Shahar <tamirthesis@gmail.com>
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Eduard Zingerman <eddyz87@gmail.com>
+Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: Song Liu <song@kernel.org>
+Cc: Yonghong Song <yonghong.song@linux.dev>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: Stanislav Fomichev <sdf@fomichev.me>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm_adsp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/sock.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
-index 8782c331e92529..751a3c25e4f0b1 100644
---- a/sound/soc/codecs/wm_adsp.c
-+++ b/sound/soc/codecs/wm_adsp.c
-@@ -666,6 +666,9 @@ static void wm_adsp_control_remove(struct cs_dsp_coeff_ctl *cs_ctl)
- {
- 	struct wm_coeff_ctl *ctl = cs_ctl->priv;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 82470f59fa5c50..04fa0c18adc3e4 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1457,6 +1457,11 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 	case SO_ATTACH_FILTER: {
+ 		struct sock_fprog fprog;
  
-+	if (!ctl)
-+		return;
-+
- 	cancel_work_sync(&ctl->work);
- 
- 	kfree(ctl->name);
++		if (sk_is_tcp(sk) &&
++		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
++			ret = -EPERM;
++			break;
++		}
+ 		ret = copy_bpf_fprog_from_user(&fprog, optval, optlen);
+ 		if (!ret)
+ 			ret = sk_attach_filter(&fprog, sk);
 -- 
 2.53.0
 
