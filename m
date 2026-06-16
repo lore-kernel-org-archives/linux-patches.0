@@ -1,53 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6850F3C09E1;
-	Tue, 16 Jun 2026 18:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9659F3C09E1;
+	Tue, 16 Jun 2026 18:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633004; cv=none; b=oZ49w1p9FOu78r1Es3xf8fx5qoUqRxi1tfrha2KOfdL6wCVJcd7y5qXAHI1antvsW1JokmyBoKmrs+m0EfH+/jChg711kmrcNj0RHRjn3tW3yTLHuNucU7JecAw0MjZ+rHrV3uAZPov1Adw7WysTp5/4QJlzStMvtO1nD7Siwdk=
+	t=1781633009; cv=none; b=N0vR8JEFxwDnh3pc0SomyN9sV1b1Fe6r7gtOAr0xv83HoC+7xj3twtpQhMknBpdOAWtrJ6kX19K3T6X6Aw6ktzcgeDCYNp9MpC7fuqQ8kCdZOWjcR4Tz10bmHqtG9rRXBmt8EXzGyoMnV4vGTp/9mMRC3g1Oe0dsikLH2aD0Hs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633004; c=relaxed/simple;
-	bh=tQyJHr65FK7aPrhPbTU25vwvxPEWN2FiGdmOkO7iRL4=;
+	s=arc-20240116; t=1781633009; c=relaxed/simple;
+	bh=7oWkPXz9nx5b4BT3GXGi4qjnc1rzvXYkiLN/7r/O+xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNPv5+cwAPGyT46FidbauiryfxQqouuL43SXHAsrY0cIMw6BYaqy3DQttvkefGC9sZMTMh0YzSmz3Ii+Mb4UtqG+JKBYP8KtGDUCpMHQh8hOzP+ga7KDFRnt6MAvtQw519qd1uyU7COecNNo//xmn/oA2tZnQJ1wwha3kKEBsgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVtDBxLm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MjS3Rm0eGo4Zn0T8LJ0vuHeX45dOrjqjzwaWBq2QC7jDcWIJm+NLQX04bgEUJ08byvTgDmlJH5ZC4PFxKYIvHbMFjboPsgoOyN4vroLtvCDwm+8s82ZMukIFEG0biz2k9t0YbHDrWSHJYJenPtFuji/LHs1QjPkNiYFaB0e29es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ws34PB8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVtDBxLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7C71F00A3A;
-	Tue, 16 Jun 2026 18:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ws34PB8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D791F000E9;
+	Tue, 16 Jun 2026 18:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633003;
-	bh=oFc3LuetWF/xd7NBzhgo4SGtfAGa2CwoUBKIVmtJm8Y=;
+	s=korg; t=1781633008;
+	bh=8RshYHrpgObGXsppoDYQzOorbNdWzH7VORcRvDof7O0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zVtDBxLm62cCqpYB7gUfDY+732asCBiRTucAXYmrRXgToco3/FFMmgCmda6643JAF
-	 lcu57oZ/OA+PAx1xJAhvnAAdKhnMA/2WkYfrfQBKlBBql4heK/6vfl/qXl0ryU1ef6
-	 6s2MT9UZ+7RBOoUQufKpJ6A+p9c6IfyJhsIrL/cE=
+	b=ws34PB8/Qa398cvdYDBPk82xeZCRuNRgyXMipy6nTbQ3i5TxbArzvJWvVDrAjdkRy
+	 M76imigVlPAV1Ku4ciHJOoWAzh0I5wXvbgQFhO+1Fo7NOrzB5xrL5wvoHaEhW9T2ag
+	 rT59e5otBBWY2OepM7ZKwAHXE1BovEaGYxngF8CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jane Chu <jane.chu@oracle.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Chris Mason <clm@meta.com>,
-	David Hildenbrand <david@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	William Roche <william.roche@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 485/522] mm/memory-failure: fix missing ->mf_stats count in hugetlb poison
-Date: Tue, 16 Jun 2026 20:30:32 +0530
-Message-ID: <20260616145148.505966103@linuxfoundation.org>
+Subject: [PATCH 6.1 476/522] tty: serial: qcom-geni-serial: align #define values
+Date: Tue, 16 Jun 2026 20:30:23 +0530
+Message-ID: <20260616145148.105794363@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -66,208 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jane Chu <jane.chu@oracle.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit a148a2040191b12b45b82cb29c281cb3036baf90 ]
+[ Upstream commit 6cde11dbf4b65170eeefba48df730c93d75e01a3 ]
 
-When a newly poisoned subpage ends up in an already poisoned hugetlb
-folio, 'num_poisoned_pages' is incremented, but the per node ->mf_stats is
-not.  Fix the inconsistency by designating action_result() to update them
-both.
+Keep the #define symbols aligned for better readability.
 
-While at it, define __get_huge_page_for_hwpoison() return values in terms
-of symbol names for better readibility.  Also rename
-folio_set_hugetlb_hwpoison() to hugetlb_update_hwpoison() since the
-function does more than the conventional bit setting and the fact three
-possible return values are expected.
-
-Link: https://lkml.kernel.org/r/20260120232234.3462258-1-jane.chu@oracle.com
-Fixes: 18f41fa616ee ("mm: memory-failure: bump memory failure stats to pglist_data")
-Signed-off-by: Jane Chu <jane.chu@oracle.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Chris Mason <clm@meta.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Jiaqi Yan <jiaqiyan@google.com>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: William Roche <william.roche@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 3c2d42b8ee34 ("mm/memory-failure: fix hugetlb_lock AA deadlock in get_huge_page_for_hwpoison")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20221229155030.418800-5-brgl@bgdev.pl
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ca2584d841b6 ("serial: qcom-geni: fix UART_RX_PAR_EN bit position")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   71 +++++++++++++++++++++++++++++++---------------------
- 1 file changed, 43 insertions(+), 28 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |   60 +++++++++++++++++-----------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1730,12 +1730,22 @@ static unsigned long __free_raw_hwp_page
- 	return count;
- }
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -39,57 +39,57 @@
+ #define SE_UART_MANUAL_RFR		0x2ac
  
--static int hugetlb_set_page_hwpoison(struct page *hpage, struct page *page)
-+#define	MF_HUGETLB_FREED		0	/* freed hugepage */
-+#define	MF_HUGETLB_IN_USED		1	/* in-use hugepage */
-+#define	MF_HUGETLB_NON_HUGEPAGE		2	/* not a hugepage */
-+#define	MF_HUGETLB_FOLIO_PRE_POISONED	3	/* folio already poisoned */
-+#define	MF_HUGETLB_PAGE_PRE_POISONED	4	/* exact page already poisoned */
-+#define	MF_HUGETLB_RETRY		5	/* hugepage is busy, retry */
-+/*
-+ * Set hugetlb page as hwpoisoned, update page private raw hwpoison list
-+ * to keep track of the poisoned pages.
-+ */
-+static int hugetlb_update_hwpoison(struct page *hpage, struct page *page)
- {
- 	struct llist_head *head;
- 	struct raw_hwp_page *raw_hwp;
- 	struct llist_node *t, *tnode;
--	int ret = TestSetPageHWPoison(hpage) ? -EHWPOISON : 0;
-+	int ret = TestSetPageHWPoison(hpage) ? MF_HUGETLB_FOLIO_PRE_POISONED : 0;
+ /* SE_UART_TRANS_CFG */
+-#define UART_TX_PAR_EN		BIT(0)
+-#define UART_CTS_MASK		BIT(1)
++#define UART_TX_PAR_EN			BIT(0)
++#define UART_CTS_MASK			BIT(1)
  
- 	/*
- 	 * Once the hwpoison hugepage has lost reliable raw error info,
-@@ -1743,13 +1753,13 @@ static int hugetlb_set_page_hwpoison(str
- 	 * so skip to add additional raw error info.
- 	 */
- 	if (HPageRawHwpUnreliable(hpage))
--		return -EHWPOISON;
-+		return MF_HUGETLB_FOLIO_PRE_POISONED;
- 	head = raw_hwp_list_head(hpage);
- 	llist_for_each_safe(tnode, t, head->first) {
- 		struct raw_hwp_page *p = container_of(tnode, struct raw_hwp_page, node);
+ /* SE_UART_TX_STOP_BIT_LEN */
+-#define TX_STOP_BIT_LEN_1	0
+-#define TX_STOP_BIT_LEN_2	2
++#define TX_STOP_BIT_LEN_1		0
++#define TX_STOP_BIT_LEN_2		2
  
- 		if (p->page == page)
--			return -EHWPOISON;
-+			return MF_HUGETLB_PAGE_PRE_POISONED;
- 	}
+ /* SE_UART_RX_TRANS_CFG */
+-#define UART_RX_PAR_EN		BIT(3)
++#define UART_RX_PAR_EN			BIT(3)
  
- 	raw_hwp = kmalloc(sizeof(struct raw_hwp_page), GFP_ATOMIC);
-@@ -1804,41 +1814,38 @@ void hugetlb_clear_page_hwpoison(struct
+ /* SE_UART_RX_WORD_LEN */
+-#define RX_WORD_LEN_MASK	GENMASK(9, 0)
++#define RX_WORD_LEN_MASK		GENMASK(9, 0)
  
- /*
-  * Called from hugetlb code with hugetlb_lock held.
-- *
-- * Return values:
-- *   0             - free hugepage
-- *   1             - in-use hugepage
-- *   2             - not a hugepage
-- *   -EBUSY        - the hugepage is busy (try to retry)
-- *   -EHWPOISON    - the hugepage is already hwpoisoned
-  */
- int __get_huge_page_for_hwpoison(unsigned long pfn, int flags)
- {
- 	struct page *page = pfn_to_page(pfn);
- 	struct page *head = compound_head(page);
--	int ret = 2;	/* fallback to normal page handling */
- 	bool count_increased = false;
-+	int ret, rc;
+ /* SE_UART_RX_STALE_CNT */
+-#define RX_STALE_CNT		GENMASK(23, 0)
++#define RX_STALE_CNT			GENMASK(23, 0)
  
--	if (!PageHeadHuge(head))
-+	if (!PageHeadHuge(head)) {
-+		ret = MF_HUGETLB_NON_HUGEPAGE;
- 		goto out;
--
--	if (flags & MF_COUNT_INCREASED) {
--		ret = 1;
-+	} else if (flags & MF_COUNT_INCREASED) {
-+		ret = MF_HUGETLB_IN_USED;
- 		count_increased = true;
- 	} else if (HPageFreed(head)) {
--		ret = 0;
-+		ret = MF_HUGETLB_FREED;
- 	} else if (HPageMigratable(head)) {
--		ret = get_page_unless_zero(head);
--		if (ret)
-+		if (get_page_unless_zero(head)) {
-+			ret = MF_HUGETLB_IN_USED;
- 			count_increased = true;
-+		} else {
-+			ret = MF_HUGETLB_FREED;
-+		}
- 	} else {
--		ret = -EBUSY;
-+		ret = MF_HUGETLB_RETRY;
- 		if (!(flags & MF_NO_RETRY))
- 			goto out;
- 	}
+ /* SE_UART_TX_PARITY_CFG/RX_PARITY_CFG */
+-#define PAR_CALC_EN		BIT(0)
+-#define PAR_EVEN		0x00
+-#define PAR_ODD			0x01
+-#define PAR_SPACE		0x10
++#define PAR_CALC_EN			BIT(0)
++#define PAR_EVEN			0x00
++#define PAR_ODD				0x01
++#define PAR_SPACE			0x10
  
--	if (hugetlb_set_page_hwpoison(head, page)) {
--		ret = -EHWPOISON;
-+	rc = hugetlb_update_hwpoison(head, page);
-+	if (rc >= MF_HUGETLB_FOLIO_PRE_POISONED) {
-+		ret = rc;
- 		goto out;
- 	}
+ /* SE_UART_MANUAL_RFR register fields */
+-#define UART_MANUAL_RFR_EN	BIT(31)
+-#define UART_RFR_NOT_READY	BIT(1)
+-#define UART_RFR_READY		BIT(0)
++#define UART_MANUAL_RFR_EN		BIT(31)
++#define UART_RFR_NOT_READY		BIT(1)
++#define UART_RFR_READY			BIT(0)
  
-@@ -1854,6 +1861,12 @@ out:
-  * with basic operations like hugepage allocation/free/demotion.
-  * So some of prechecks for hwpoison (pinning, and testing/setting
-  * PageHWPoison) should be done in single hugetlb_lock range.
-+ * Returns:
-+ *	0		- not hugetlb, or recovered
-+ *	-EBUSY		- not recovered
-+ *	-EOPNOTSUPP	- hwpoison_filter'ed
-+ *	-EHWPOISON	- folio or exact page already poisoned
-+ *	-EFAULT		- kill_accessing_process finds current->mm null
-  */
- static int try_memory_failure_hugetlb(unsigned long pfn, int flags, int *hugetlb)
- {
-@@ -1865,23 +1878,25 @@ static int try_memory_failure_hugetlb(un
- 	*hugetlb = 1;
- retry:
- 	res = get_huge_page_for_hwpoison(pfn, flags);
--	if (res == 2) { /* fallback to normal page handling */
-+	if (res == MF_HUGETLB_NON_HUGEPAGE) { /* fallback to normal page handling */
- 		*hugetlb = 0;
- 		return 0;
--	} else if (res == -EHWPOISON) {
-+	} else if (res == MF_HUGETLB_FOLIO_PRE_POISONED ||
-+		   res == MF_HUGETLB_PAGE_PRE_POISONED) {
- 		pr_err("%#lx: already hardware poisoned\n", pfn);
-+		res = -EHWPOISON;
- 		if (flags & MF_ACTION_REQUIRED) {
- 			head = compound_head(p);
- 			res = kill_accessing_process(current, page_to_pfn(head), flags);
- 		}
- 		return res;
--	} else if (res == -EBUSY) {
-+	} else if (res == MF_HUGETLB_RETRY) {
- 		if (!(flags & MF_NO_RETRY)) {
- 			flags |= MF_NO_RETRY;
- 			goto retry;
- 		}
- 		action_result(pfn, MF_MSG_UNKNOWN, MF_IGNORED);
--		return res;
-+		return -EBUSY;
- 	}
+ /* UART M_CMD OP codes */
+-#define UART_START_TX		0x1
++#define UART_START_TX			0x1
+ /* UART S_CMD OP codes */
+-#define UART_START_READ		0x1
++#define UART_START_READ			0x1
  
- 	head = compound_head(p);
-@@ -1890,7 +1905,7 @@ retry:
- 	if (hwpoison_filter(p)) {
- 		hugetlb_clear_page_hwpoison(head);
- 		unlock_page(head);
--		if (res == 1)
-+		if (res == MF_HUGETLB_IN_USED)
- 			put_page(head);
- 		return -EOPNOTSUPP;
- 	}
-@@ -1899,7 +1914,7 @@ retry:
- 	 * Handling free hugepage.  The possible race with hugepage allocation
- 	 * or demotion can be prevented by PageHWPoison flag.
- 	 */
--	if (res == 0) {
-+	if (res == MF_HUGETLB_FREED) {
- 		unlock_page(head);
- 		if (__page_handle_poison(p) > 0) {
- 			page_ref_inc(p);
+-#define UART_OVERSAMPLING	32
+-#define STALE_TIMEOUT		16
+-#define DEFAULT_BITS_PER_CHAR	10
+-#define GENI_UART_CONS_PORTS	1
+-#define GENI_UART_PORTS		3
+-#define DEF_FIFO_DEPTH_WORDS	16
+-#define DEF_TX_WM		2
+-#define DEF_FIFO_WIDTH_BITS	32
+-#define UART_RX_WM		2
++#define UART_OVERSAMPLING		32
++#define STALE_TIMEOUT			16
++#define DEFAULT_BITS_PER_CHAR		10
++#define GENI_UART_CONS_PORTS		1
++#define GENI_UART_PORTS			3
++#define DEF_FIFO_DEPTH_WORDS		16
++#define DEF_TX_WM			2
++#define DEF_FIFO_WIDTH_BITS		32
++#define UART_RX_WM			2
+ 
+ /* SE_UART_LOOPBACK_CFG */
+-#define RX_TX_SORTED	BIT(0)
+-#define CTS_RTS_SORTED	BIT(1)
+-#define RX_TX_CTS_RTS_SORTED	(RX_TX_SORTED | CTS_RTS_SORTED)
++#define RX_TX_SORTED			BIT(0)
++#define CTS_RTS_SORTED			BIT(1)
++#define RX_TX_CTS_RTS_SORTED		(RX_TX_SORTED | CTS_RTS_SORTED)
+ 
+ /* UART pin swap value */
+-#define DEFAULT_IO_MACRO_IO0_IO1_MASK		GENMASK(3, 0)
++#define DEFAULT_IO_MACRO_IO0_IO1_MASK	GENMASK(3, 0)
+ #define IO_MACRO_IO0_SEL		0x3
+-#define DEFAULT_IO_MACRO_IO2_IO3_MASK		GENMASK(15, 4)
++#define DEFAULT_IO_MACRO_IO2_IO3_MASK	GENMASK(15, 4)
+ #define IO_MACRO_IO2_IO3_SWAP		0x4640
+ 
+ /* We always configure 4 bytes per FIFO word */
 
 
