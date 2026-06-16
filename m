@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A896E43DA2C;
-	Tue, 16 Jun 2026 15:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B095D44BC94;
+	Tue, 16 Jun 2026 15:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624131; cv=none; b=hng1hGqTriyLawQO70BdC86ZO5g8P5hXVkfUN0SnvgHdXEDQDmeytdL+b3WKYQ3YzhYl7vg7j6Dj7PAT8gzjzdERnfaDAsiPryZ6iXTBcBXFriJWeRRIZuhyHY5gAU6oa3315ju9xwfzZEVBF9Iaz9H27sVdS1cbBft2fLFDBAo=
+	t=1781624137; cv=none; b=kWZxeOfhbZbvZhDSCpIh5RBkWfCgOPpvm4/lJzfs2cMAfgCBjnFRQGv0expwsY0uflbwANfZmx/JnP1Ao7K5U0nbhA92AOvhRMPIo3xcu3a3VHvJerZDBo0+n82lRikxbBw7WYq4Udj9iK90rRqBg74GBcV5I5JmKsVz/pIrNa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624131; c=relaxed/simple;
-	bh=9Gd019rsNybPUSo2k1RMqvqsc0fxkvZ/yfiFT/fS4EM=;
+	s=arc-20240116; t=1781624137; c=relaxed/simple;
+	bh=rfwsQpjYVFX1KQacJTzVjWQWAEihAWci1JMlRo2Bfhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftLpViJeOT0obQ4CjynTXu7uzXRliuOIV+Rb6g6Zhe5UWUaaKkOzZi0O2wy9Qs17UrErZbkP7XJyiFAX9aP3CXYEVL/5VucP00zBXV+HU2TK8Zb/qBxkWG2lb4Q3JdAwjIZWR4hIpWmfO3sgJQtPzVqtA2xrxpQeRiBHGYec0wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQ2ncvlg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RIg/GcRsthFGdVB+nc+COgFJP5/y5yFhnj3kY84q5U90fCXHQQuRhcVpInu+/cqRmrWard3Uh01c7r9yXV8OOeZBXJyXoY1c5sTRUH6nbjotCYRk2IHh3356aDpLXxERQW6qUdzCTZ9l/X4ugo1gMaO84t8r10IDNR0tohWxwhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJgzkTEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQ2ncvlg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD8A1F000E9;
-	Tue, 16 Jun 2026 15:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJgzkTEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EF71F000E9;
+	Tue, 16 Jun 2026 15:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624130;
-	bh=NT38UhiihVPZgos/IJ43lzbnLFefT2ryXFWJDQbwd7I=;
+	s=korg; t=1781624136;
+	bh=v14IlF8yd/kxWzSGeplMgh5nH5lbHvJBLrYiIWVIpGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CQ2ncvlgnG27jYv340ebBWNlDR07oR32ZUEF/JwBAykH9NcpIBtsbQE5oKrcghb2k
-	 wPCQUVVaS9CGkLY8kd9tJeiLyWtQjPyKsDxfb9pS1iO2lmBhZTQEfDEEnXLIfjLZqe
-	 btQFFiiFuaZIGEZ+u1OVFzy/mvSkx10iCSz2WH+Y=
+	b=JJgzkTEBbtxnHCxSysR0MFU9ukvaVquQ9FStbts/Vg3vZAVpg3DTrI4xZT3DPebXs
+	 dN/dOY3X45SntzihSyLMpWQziKfrSZRd1ipBeQnJFut6cDf4crGAW5szoRnFj9tMcf
+	 ozj2xfJwYWDWMlYYMKkA8jaln/n0xUTgwDp/7IhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Harry Yoo <harry@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 280/378] memcg: use round-robin victim selection in refill_stock
-Date: Tue, 16 Jun 2026 20:28:31 +0530
-Message-ID: <20260616145124.848793756@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexander Dahl <ada@thorsis.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 7.0 281/378] memory: atmel-ebi: Allow deferred probing
+Date: Tue, 16 Jun 2026 20:28:32 +0530
+Message-ID: <20260616145124.901118143@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -55,62 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Alexander Dahl <ada@thorsis.com>
 
-commit c0cafe24d3f6534294c4b2bc2d47734ff7cbd313 upstream.
+commit 754d60ad1c91895be0bc7d771fbf9fb3c9448640 upstream.
 
-Harry Yoo reported that get_random_u32_below() is not safe to call in the
-nmi context and memcg charge draining can happen in nmi context.
+After removing of_platform_default_populate() calls the atmel-ebi driver
+was affected by deferred probing.  platform_driver_probe() is
+incompatible with deferred probing.  This led to atmel-ebi driver
+eventually not being probed on at91 sam9x60-curiosity and other sam9x60
+based boards.  Subsequently the nand-controller driver (nand-controller
+being a child node of ebi) on that platform was not probed and thus raw
+NAND flash was inaccessible, preventing devices to boot with rootfs on
+raw NAND flash (e.g. with UBI/UBIFS).
 
-More specifically get_random_u32_below() is neither reentrant- nor
-NMI-safe: it acquires a per-cpu local_lock via local_lock_irqsave() on the
-batched_entropy_u32 state.  An NMI that lands on a CPU mid-update of the
-ChaCha batch state and recurses into the random subsystem would corrupt
-that state.  The memcg_stock local_trylock prevents re-entry on the percpu
-stock itself, but cannot protect an unrelated subsystem's per-cpu lock.
-
-Replace the random pick with a per-cpu round-robin counter stored in
-memcg_stock_pcp and serialized by the same local_trylock that already
-guards cached[] and nr_pages[].  No atomics, no random calls, no extra
-locks needed.
-
-Link: https://lore.kernel.org/20260521223751.3794625-1-shakeel.butt@linux.dev
-Fixes: f735eebe55f8f ("memcg: multi-memcg percpu charge cache")
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reported-by: Harry Yoo <harry@kernel.org>
-Closes: https://lore.kernel.org/4e20f643-6983-4b6e-b12d-c6c4eb20ae0c@kernel.org/
-Acked-by: Harry Yoo (Oracle) <harry@kernel.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0b0f7e6539a7 ("ARM: at91: remove unnecessary of_platform_default_populate calls")
+Cc: stable@vger.kernel.org
+Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Alexander Dahl <ada@thorsis.com>
+Link: https://patch.msgid.link/20260429125930.844790-1-ada@thorsis.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/memory/atmel-ebi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -1799,6 +1799,7 @@ struct memcg_stock_pcp {
+diff --git a/drivers/memory/atmel-ebi.c b/drivers/memory/atmel-ebi.c
+index 8db970da9af9..1e8e8aba2542 100644
+--- a/drivers/memory/atmel-ebi.c
++++ b/drivers/memory/atmel-ebi.c
+@@ -628,10 +628,11 @@ static __maybe_unused int atmel_ebi_resume(struct device *dev)
+ static SIMPLE_DEV_PM_OPS(atmel_ebi_pm_ops, NULL, atmel_ebi_resume);
  
- 	struct work_struct work;
- 	unsigned long flags;
-+	uint8_t drain_idx;
+ static struct platform_driver atmel_ebi_driver = {
++	.probe = atmel_ebi_probe,
+ 	.driver = {
+ 		.name = "atmel-ebi",
+ 		.of_match_table	= atmel_ebi_id_table,
+ 		.pm = &atmel_ebi_pm_ops,
+ 	},
  };
- 
- static DEFINE_PER_CPU_ALIGNED(struct memcg_stock_pcp, memcg_stock) = {
-@@ -1982,7 +1983,9 @@ static void refill_stock(struct mem_cgro
- 	if (!success) {
- 		i = empty_slot;
- 		if (i == -1) {
--			i = get_random_u32_below(NR_MEMCG_STOCK);
-+			i = stock->drain_idx++;
-+			if (stock->drain_idx == NR_MEMCG_STOCK)
-+				stock->drain_idx = 0;
- 			drain_stock(stock, i);
- 		}
- 		css_get(&memcg->css);
+-builtin_platform_driver_probe(atmel_ebi_driver, atmel_ebi_probe);
++builtin_platform_driver(atmel_ebi_driver);
+-- 
+2.54.0
+
 
 
