@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D0D43E49D;
-	Tue, 16 Jun 2026 15:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1072243E4A8;
+	Tue, 16 Jun 2026 15:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623157; cv=none; b=WVCk8CshzfUKIEnMVn5tU1UigrtO6tkfJ4TnvwHCm41TsQP4Qwyr8wCJUCkMivD6MSPlC5mQJlTpTYt+8W2Dh7A9jcczuZEmUlY6sMMGYEpIibR29SgVt32EKeNxILcC3uAguHTbf9Blo+2VCQz7L7WlaZZoKSZHkNHUqkU3KfQ=
+	t=1781623163; cv=none; b=YMANRsk1UOGqaRCqlyRCXaQeSfwzExSePOv0xseqgFSG12eBexMhWApsD2wvBBArfUYHUBWHmx7b+fle8MHd4mRsFF0JD5UyN9XNi+tH1bKstTXstfpl0F8gGKc6Jpm/Akb4uiHW/jhsC50Hcvhq9EQ5riljaVRwJQxvC3HPkMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623157; c=relaxed/simple;
-	bh=p3sZAr/SyrMs3Y9Zg6GT+7tgEP6TWYNkZ2ZkKxRlAE4=;
+	s=arc-20240116; t=1781623163; c=relaxed/simple;
+	bh=Ega/VDBZG9TDgn0YQBU31PznhOFhm9gN9tA1qN/1NCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfsLqAUFwn9OHAhhE1K9KOPnOhfafSC/5TQR1/mZvkBSJsUQFtZNgs0kZPpuB0TygfxG6cQuQqGeQFS2B2toHZNCFXlllFseM1P6T61f8c9mbL9QxkEz3inCyLf0DfxzlFCk6rl92jlsKfBlh+h5pQaAoG6cKZgZKCceg0DUTXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1f36262; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TAXXw+pSQ/1ZCSi37lGB7/HauQuakmGM78ogRU+kP9YPEgvhCA2qTlR+DCkCv2irKfwyR5BLKJcPEqNpKpgTtsyBPv6SVwItPQuyW0A2it/3NyRQNhVgzqtZ4wegObbqCRC7evgpwxqN15uTt4kSY2G7sZ1auao+KtE60siFYR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0Y/olgW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1f36262"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBB81F000E9;
-	Tue, 16 Jun 2026 15:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0Y/olgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE8E1F000E9;
+	Tue, 16 Jun 2026 15:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623156;
-	bh=AeRLlcAGl0vs1ujdhh33h03sMlj+PVFoMKpWPv2N/WA=;
+	s=korg; t=1781623162;
+	bh=tReeCiwfSfVAphbR4uNQduo8d5XlLvNGRui48V+OqEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y1f36262pXNwmOnU4ikhgmjBfF85iCsNDhyQZx3vm8Qdl93oiZgpj1xVqfUzTXfe4
-	 buO+Mbv9juEhMRxNuHdiHyy5bNhzITYIn1vJFn6MxAWGg5w5sMbcn/yFj+sHf7QOTJ
-	 SI1lXBQfmNpPRnSKqCg7b6ecoA9L/wPD253AyMfU=
+	b=b0Y/olgWFAXRPSbSKNF9/IdnBLKGIwEoMydWvqKdlI/HTJWpxgP0FpX3hzRgprwWi
+	 KosOl97HQx09rLKeVOw4uwwAKfIEWU2tJAN+Lg72h9GPgNpoAMBF6YDXNn7cAQxwqc
+	 GDVlZujLYdcsGJiak9MkxuT4WiqswPMSlDdtnCJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Patel <ripatel@wii.dev>,
-	Paul Walmsley <pjw@kernel.org>,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 097/378] riscv: cfi: reject unknown flags in PR_SET_CFI
-Date: Tue, 16 Jun 2026 20:25:28 +0530
-Message-ID: <20260616145115.399443909@linuxfoundation.org>
+Subject: [PATCH 7.0 098/378] xfrm: iptfs: fix use-after-free on first_skb in __input_process_payload
+Date: Tue, 16 Jun 2026 20:25:29 +0530
+Message-ID: <20260616145115.483082193@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -45,78 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Patel <ripatel@wii.dev>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-[ Upstream commit 15b4155138505669d3d43d7692459ee8ea2a86e7 ]
+[ Upstream commit eb48730bb827d1550401a5d391903f9d90b493c8 ]
 
-prctl(PR_SET_CFI,PR_CFI_BRANCH_LANDING_PADS) silently ignored
-unknown control values. Only PR_CFI_{ENABLE,DISABLE,LOCK} should
-be permitted.
+__input_process_payload() stores first_skb into xtfs->ra_newskb under
+drop_lock when starting partial reassembly, then unlocks and breaks out
+of the processing loop. The post-loop check reads xtfs->ra_newskb
+without the lock to decide whether first_skb is still owned:
 
-This changes the behavior of the uABI (fails previously accepted bits
-with EINVAL).
+    if (first_skb && first_iplen && !defer && first_skb != xtfs->ra_newskb)
 
-Fixes: 08ee1559052b ("prctl: cfi: change the branch landing pad prctl()s to be more descriptive")
-Signed-off-by: Richard Patel <ripatel@wii.dev>
-Link: https://patch.msgid.link/20260518183918.322545-1-ripatel@wii.dev
-[pjw@kernel.org: change the patch description to note that although this is a uABI change, it does not break the uABI]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Between spin_unlock and this read, a concurrent CPU running
+iptfs_reassem_cont() (or the drop_timer hrtimer) can complete
+reassembly, NULL xtfs->ra_newskb, and free the skb. The check then
+evaluates first_skb != NULL as true, and pskb_trim/ip_summed/consume_skb
+operate on the freed skb — a use-after-free in skbuff_head_cache.
+
+Replace the unlocked read with a local bool that records whether
+first_skb was handed to the reassembly state in the current call. The
+flag is set after the existing spin_unlock, before the break, using the
+pointer equality that is stable at that point (first_skb == skb iff
+first_skb was stored in ra_newskb).
+
+Fixes: 3f3339885fb3 ("xfrm: iptfs: add reusing received skb for the tunnel egress packet")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/usercfi.h             | 1 +
- arch/riscv/kernel/usercfi.c                  | 3 +++
- tools/testing/selftests/riscv/cfi/cfitests.c | 6 ++++++
- 3 files changed, 10 insertions(+)
+ net/xfrm/xfrm_iptfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/usercfi.h b/arch/riscv/include/asm/usercfi.h
-index f56966edbf5c62..61ee02cee29720 100644
---- a/arch/riscv/include/asm/usercfi.h
-+++ b/arch/riscv/include/asm/usercfi.h
-@@ -50,6 +50,7 @@ void set_indir_lp_status(struct task_struct *task, bool enable);
- void set_indir_lp_lock(struct task_struct *task, bool lock);
+diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
+index 6c6bbc0405170c..f25504610d8b23 100644
+--- a/net/xfrm/xfrm_iptfs.c
++++ b/net/xfrm/xfrm_iptfs.c
+@@ -954,6 +954,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
+ 	u32 first_iplen, iphlen, iplen, remaining, tail;
+ 	u32 capturelen;
+ 	u64 seq;
++	bool first_skb_partial = false;
  
- #define PR_SHADOW_STACK_SUPPORTED_STATUS_MASK (PR_SHADOW_STACK_ENABLE)
-+#define PR_CFI_SUPPORTED_STATUS_MASK (PR_CFI_ENABLE | PR_CFI_DISABLE | PR_CFI_LOCK)
+ 	xtfs = x->mode_data;
+ 	net = xs_net(x);
+@@ -1161,6 +1162,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
  
- #else
+ 			spin_unlock(&xtfs->drop_lock);
  
-diff --git a/arch/riscv/kernel/usercfi.c b/arch/riscv/kernel/usercfi.c
-index 2c535737511dce..1ea86f21fbfa61 100644
---- a/arch/riscv/kernel/usercfi.c
-+++ b/arch/riscv/kernel/usercfi.c
-@@ -476,6 +476,9 @@ int arch_prctl_set_branch_landing_pad_state(struct task_struct *t, unsigned long
- 	if (!is_user_lpad_enabled())
- 		return -EINVAL;
++			first_skb_partial = (first_skb == skb);
+ 			break;
+ 		}
  
-+	if (state & ~PR_CFI_SUPPORTED_STATUS_MASK)
-+		return -EINVAL;
-+
- 	/* indirect branch tracking is locked and further can't be modified by user */
- 	if (is_indir_lp_locked(t))
- 		return -EINVAL;
-diff --git a/tools/testing/selftests/riscv/cfi/cfitests.c b/tools/testing/selftests/riscv/cfi/cfitests.c
-index 39d097b6881ff2..0e3943461e7d83 100644
---- a/tools/testing/selftests/riscv/cfi/cfitests.c
-+++ b/tools/testing/selftests/riscv/cfi/cfitests.c
-@@ -141,6 +141,12 @@ int main(int argc, char *argv[])
+@@ -1172,7 +1174,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
+ 		/* this should not happen from the above code */
+ 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINIPTFSERROR);
  
- 	ksft_print_msg("Starting risc-v tests\n");
- 
-+	/* Test unknown PR_CFI bits */
-+	ret = my_syscall5(__NR_prctl, PR_SET_CFI, PR_CFI_BRANCH_LANDING_PADS,
-+			  PR_CFI_ENABLE | 0xffff0, 0, 0);
-+	if (!ret)
-+		ksft_exit_fail_msg("PR_SET_CFI accepted reserved branch landing pad bits\n");
-+
- 	/*
- 	 * Landing pad test. Not a lot of kernel changes to support landing
- 	 * pads for user mode except lighting up a bit in senvcfg via a prctl.
+-	if (first_skb && first_iplen && !defer && first_skb != xtfs->ra_newskb) {
++	if (first_skb && first_iplen && !defer && !first_skb_partial) {
+ 		/* first_skb is queued b/c !defer and not partial */
+ 		if (pskb_trim(first_skb, first_iplen)) {
+ 			/* error trimming */
 -- 
 2.53.0
 
