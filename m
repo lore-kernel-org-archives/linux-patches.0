@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEC838F930;
-	Tue, 16 Jun 2026 17:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C566D33A9EB;
+	Tue, 16 Jun 2026 17:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630005; cv=none; b=dgDtst2g8sUzeJrFrrwnrceh9ysgj+Sb4+JP6DJ0fDNvzQoAsMXqcyzBj2oJL9qQ8UhguBynraY4ZefzfCL1gVNCy+7KqgmVXdDogc1mx6FAk5GWAyYjDkrNbjOH0Tyh22ywlLmhA6/DQjN9judVGDhkIxjzqq1vjV11uZ7xN0g=
+	t=1781630010; cv=none; b=GYnlCuIA8IuBVmlx7LF+MvUxM1uNwPVuO+8ISfznSz80XRlZcOqn/6sT1ZczUspJKAoGhHkiFb3LvK3EiC5isYCZS8F6Jf4nV2OsNTUrgFQsn0wUYzgbyaLjBDlw923KwDnCXWPXP0Xleq4PUruXNDd4LzKEkr6RS4ObZrin9G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630005; c=relaxed/simple;
-	bh=YBfkHjHL7PCxWTVrP6ljMxpUinIbSj8/AVZwOxTAhHs=;
+	s=arc-20240116; t=1781630010; c=relaxed/simple;
+	bh=eSAqxV/ZOT4nmZM8u/gCNiQhCiP18HJcwqAuE0YbR+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxeu6jQiY4nAxxZevXhZSRhITGUIMr/ru71yiNl2EOS+z/wmaMFjsyZhmBHewPhCYfZ0GVkyKhu0kCeW5tKhoqbQJiF+KJ5psgOsfLVfhlb3KSZqJnHvGnw/Tk/z9XAzmqGW9+qQ9v01S+r3XeQXNqGzTjVjvGWa8eV67WMZNbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSsqIMWZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r2uxiqyhQRhIFB8Lftg76tgBkm88H6U/52VL8t1TB0Bh3WxR3glwc7fLQYzdstFS0HF86ZyeAnovjBjXRNJa5G/rjDsNZnGMsnnAvzxlNlJ0jXdfps4QY7GVDpatiPclTWg3p58GN5CXAz8bhRgFf7GpMJRz5qKUF7JMnjnQSLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JedYAvoF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSsqIMWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502C01F000E9;
-	Tue, 16 Jun 2026 17:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JedYAvoF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B881F000E9;
+	Tue, 16 Jun 2026 17:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630004;
-	bh=my5ZAN1i//vr2g/5Js6LV9O1vmAJpg32FWUvKe+JFvI=;
+	s=korg; t=1781630009;
+	bh=ytjgjCsqC6X48ivAzQn5eOebks5EYbPYJq4/1AM9q64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JSsqIMWZ724lW4LEHBe52t66iXXAFZXgsTGUXcpJZ4diECFc1fiRgJaNhsV3ovaQr
-	 f2ehshDATOpyovH/fp7otDMeykQhv4rAH+NVQGcTLrBYBk0ryTZToG0+dFB9J0TKu5
-	 T8b7bVC3bVE7mCn/zmcWORKBrgCfcJI1BF+nDtn4=
+	b=JedYAvoFlS+KD4bJUE0EUNJVNHVBMXHCs6/HSORmh8Sp/Q5Ma8EI98OmXYpxLJ8lI
+	 def7EgjYgJDu0yhWTSAB/9KgTUCVKzBNU63D7JfIVYH0ZwWK/v1EqD5GMk8j+H4R8T
+	 Uk+X/g1nDwJNguSDFr4/YdYnpBpgfLWvyqg2rytI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 393/452] rxrpc: Fix RESPONSE packet verification to extract skb to a linear buffer
-Date: Tue, 16 Jun 2026 20:30:20 +0530
-Message-ID: <20260616145137.544238427@linuxfoundation.org>
+Subject: [PATCH 6.6 394/452] af_unix: Cache state->msg in unix_stream_read_generic().
+Date: Tue, 16 Jun 2026 20:30:21 +0530
+Message-ID: <20260616145137.591747118@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -58,189 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 8bfab4b6ffc2fe92da86300728fc8c3c7ebffb56 ]
+[ Upstream commit 8b77338eb2af74bb93986e4a8cfd86724168fe39 ]
 
-This improves the fix for CVE-2026-43500.
+In unix_stream_read_generic(), state->msg is fetched multiple times.
 
-Fix the verification of RESPONSE packets to avoid the problem of
-overwriting a RESPONSE packet sent via splice to a local address by
-extracting the contents of the UDP packet into a kmalloc'd linear buffer
-rather than decrypting the data in place in the sk_buff (which may corrupt
-the original buffer).
+Let's cache it in a local variable.
 
-Fixes: 24481a7f5733 ("rxrpc: Fix conn-level packet handling to unshare RESPONSE packets")
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Closes: https://lore.kernel.org/r/afKV2zGR6rrelPC7@v4bel/
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-Tested-by: Marc Dionne <marc.dionne@auristor.com>
-Link: https://patch.msgid.link/20260515230516.2718212-4-dhowells@redhat.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250702223606.1054680-6-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: be309f8eae8b ("af_unix: Fix UAF read of tail->len in unix_stream_data_wait()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/ar-internal.h |    5 +++--
- net/rxrpc/conn_event.c  |   30 ++++++++++++------------------
- net/rxrpc/insecure.c    |    5 +++--
- net/rxrpc/rxkad.c       |   29 ++++++++++-------------------
- 4 files changed, 28 insertions(+), 41 deletions(-)
+ net/unix/af_unix.c |   29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -267,8 +267,9 @@ struct rxrpc_security {
- 				    struct sk_buff *);
- 
- 	/* verify a response */
--	int (*verify_response)(struct rxrpc_connection *,
--			       struct sk_buff *);
-+	int (*verify_response)(struct rxrpc_connection *conn,
-+			       struct sk_buff *response_skb,
-+			       void *response, unsigned int len);
- 
- 	/* clear connection security */
- 	void (*clear)(struct rxrpc_connection *);
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -229,28 +229,22 @@ static void rxrpc_call_is_secure(struct
- static int rxrpc_verify_response(struct rxrpc_connection *conn,
- 				 struct sk_buff *skb)
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2714,20 +2714,21 @@ static int unix_stream_read_skb(struct s
+ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+ 				    bool freezable)
  {
-+	unsigned int len = skb->len - sizeof(struct rxrpc_wire_header);
-+	void *buffer;
- 	int ret;
+-	struct scm_cookie scm;
++	int noblock = state->flags & MSG_DONTWAIT;
+ 	struct socket *sock = state->socket;
++	struct msghdr *msg = state->msg;
+ 	struct sock *sk = sock->sk;
+-	struct unix_sock *u = unix_sk(sk);
+-	int copied = 0;
++	size_t size = state->size;
+ 	int flags = state->flags;
+-	int noblock = flags & MSG_DONTWAIT;
+ 	bool check_creds = false;
+-	int target;
++	struct scm_cookie scm;
++	unsigned int last_len;
++	struct unix_sock *u;
++	int copied = 0;
+ 	int err = 0;
+ 	long timeo;
++	int target;
+ 	int skip;
+-	size_t size = state->size;
+-	unsigned int last_len;
  
--	if (skb_cloned(skb) || skb_has_frag_list(skb) ||
--	    skb_has_shared_frag(skb)) {
--		/* Copy the packet if shared so that we can do in-place
--		 * decryption.
--		 */
--		struct sk_buff *nskb = skb_copy(skb, GFP_NOFS);
-+	buffer = kmalloc(len, GFP_NOFS);
-+	if (!buffer)
-+		return -ENOMEM;
+ 	if (unlikely(READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)) {
+ 		err = -EINVAL;
+@@ -2747,6 +2748,8 @@ static int unix_stream_read_generic(stru
  
--		if (nskb) {
--			rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
--			ret = conn->security->verify_response(conn, nskb);
--			rxrpc_free_skb(nskb, rxrpc_skb_put_response_copy);
--		} else {
--			/* OOM - Drop the packet. */
--			rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
--			ret = -ENOMEM;
--		}
--	} else {
--		ret = conn->security->verify_response(conn, skb);
--	}
-+	ret = skb_copy_bits(skb, sizeof(struct rxrpc_wire_header), buffer, len);
-+	if (ret < 0)
-+		goto out;
+ 	memset(&scm, 0, sizeof(scm));
  
-+	ret = conn->security->verify_response(conn, skb, buffer, len);
++	u = unix_sk(sk);
 +
-+out:
-+	kfree(buffer);
- 	return ret;
- }
- 
---- a/net/rxrpc/insecure.c
-+++ b/net/rxrpc/insecure.c
-@@ -47,9 +47,10 @@ static int none_respond_to_challenge(str
- }
- 
- static int none_verify_response(struct rxrpc_connection *conn,
--				struct sk_buff *skb)
-+				struct sk_buff *response_skb,
-+				void *response, unsigned int len)
- {
--	return rxrpc_abort_conn(conn, skb, RX_PROTOCOL_ERROR, -EPROTO,
-+	return rxrpc_abort_conn(conn, response_skb, RX_PROTOCOL_ERROR, -EPROTO,
- 				rxrpc_eproto_rxnull_response);
- }
- 
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -874,7 +874,6 @@ static int rxkad_decrypt_ticket(struct r
- 	*_expiry = 0;
- 
- 	ASSERT(server_key->payload.data[0] != NULL);
--	ASSERTCMP((unsigned long) ticket & 7UL, ==, 0);
- 
- 	memcpy(&iv, &server_key->payload.data[2], sizeof(iv));
- 
-@@ -1023,14 +1022,15 @@ unlock:
-  * verify a response
-  */
- static int rxkad_verify_response(struct rxrpc_connection *conn,
--				 struct sk_buff *skb)
-+				 struct sk_buff *skb,
-+				 void *buffer, unsigned int len)
- {
- 	struct rxkad_response *response;
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
- 	struct rxrpc_crypt session_key;
- 	struct key *server_key;
- 	time64_t expiry;
--	void *ticket = NULL;
-+	void *ticket;
- 	u32 version, kvno, ticket_len, level;
- 	__be32 csum;
- 	int ret, i;
-@@ -1053,13 +1053,8 @@ static int rxkad_verify_response(struct
+ 	/* Lock the socket to prevent queue disordering
+ 	 * while sleeps in memcpy_tomsg
+ 	 */
+@@ -2840,10 +2843,10 @@ unlock:
  		}
- 	}
  
--	ret = -ENOMEM;
--	response = kzalloc(sizeof(struct rxkad_response), GFP_NOFS);
--	if (!response)
--		goto error;
--
--	if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header),
--			  response, sizeof(*response)) < 0) {
-+	response = buffer;
-+	if (len < sizeof(*response)) {
- 		ret = rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
- 				       rxkad_abort_resp_short);
- 		goto error;
-@@ -1071,6 +1066,9 @@ static int rxkad_verify_response(struct
- 
- 	trace_rxrpc_rx_response(conn, sp->hdr.serial, version, kvno, ticket_len);
- 
-+	buffer	+= sizeof(*response);
-+	len	-= sizeof(*response);
+ 		/* Copy address just once */
+-		if (state->msg && state->msg->msg_name) {
+-			DECLARE_SOCKADDR(struct sockaddr_un *, sunaddr,
+-					 state->msg->msg_name);
+-			unix_copy_addr(state->msg, skb->sk);
++		if (msg && msg->msg_name) {
++			DECLARE_SOCKADDR(struct sockaddr_un *, sunaddr, msg->msg_name);
 +
- 	if (version != RXKAD_VERSION) {
- 		ret = rxrpc_abort_conn(conn, skb, RXKADINCONSISTENCY, -EPROTO,
- 				       rxkad_abort_resp_version);
-@@ -1090,13 +1088,8 @@ static int rxkad_verify_response(struct
- 	}
++			unix_copy_addr(msg, skb->sk);
+ 			sunaddr = NULL;
+ 		}
  
- 	/* extract the kerberos ticket and decrypt and decode it */
--	ret = -ENOMEM;
--	ticket = kmalloc(ticket_len, GFP_NOFS);
--	if (!ticket)
--		goto error;
--
--	if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header) + sizeof(*response),
--			  ticket, ticket_len) < 0) {
-+	ticket = buffer;
-+	if (ticket_len > len) {
- 		ret = rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
- 				       rxkad_abort_resp_short_tkt);
- 		goto error;
-@@ -1176,8 +1169,6 @@ static int rxkad_verify_response(struct
- 	ret = rxrpc_get_server_data_key(conn, &session_key, expiry, kvno);
+@@ -2916,8 +2919,8 @@ unlock:
+ 	} while (size);
  
- error:
--	kfree(ticket);
--	kfree(response);
- 	key_put(server_key);
- 	_leave(" = %d", ret);
- 	return ret;
+ 	mutex_unlock(&u->iolock);
+-	if (state->msg)
+-		scm_recv_unix(sock, state->msg, &scm, flags);
++	if (msg)
++		scm_recv_unix(sock, msg, &scm, flags);
+ 	else
+ 		scm_destroy(&scm);
+ out:
 
 
