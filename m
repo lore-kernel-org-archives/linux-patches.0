@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DC43D45CB;
-	Tue, 16 Jun 2026 18:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB723D091A;
+	Tue, 16 Jun 2026 18:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633409; cv=none; b=XEBAXO8hSizF/uJhIwOv6YkLt3wR17G1xaaDPRnvUF8ImQpneYcJ9XNS9O10ym+zCxvpXddBrwPLGX0A/oJD6x4iVRdeX4MXrt36jxdUX9me8gddt9gXEzTAvLdHVb4kRMUM1XUlVobbZk0OM3sOHP2FfTqyJ5wrskERRyaHtjs=
+	t=1781633414; cv=none; b=nc8BWcTfaYaR+8SAQtczs8OHhjFEmL+5/1NkKR1ciGJIWGbK+rV4MwbDPmnR9vaoSnWyGLvV0Z1jYaz3+R/DtU6O57BwvCTIVY7pg/hkyBennDYswyJWsnGVKhCbgQKwRMeknXFYQyhCoAYJKzjbHi9FjljeZHQMmr2LY9FOPVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633409; c=relaxed/simple;
-	bh=DFCRS+walDy4alBcIO1z/9PKdhPTvHuDzkRbaEn2iFI=;
+	s=arc-20240116; t=1781633414; c=relaxed/simple;
+	bh=eUhvbSBG/Rt9cElXMrtFnZVflHTFNuI8QhvLZ+y4/3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHpRlkPKXsan4q+ThK3ekJhEhMOAuX7XvBYrFcWCDuQ17oCO0rHtnr/OovdrPPytB9w6iNG0DMY85IeyFBtt+BVN0MYNRFYTS4Le+G0fo26HKWLOcmF5VnvuazKaitTjaJcenuNZjjYwlqj/iXu5RAGB72gPJ6hIoMax+cWN008=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+1lsBuu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uiNOBJJ52ia1H7/oDARkQlBxV/M3UtiBMOnoChekboiBTaL6csvgagxNyrOW5I3nVfdEPBuAD3bNdXpb72WqWeF/uWHxmZAeauUqb+lF7PJxfqs6PYY6FoWvoUmmfns/3rHlFrP+y7vMFmtJc/icQwlOx0/7hvamkcKU9dfToRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGV09fqf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+1lsBuu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016F51F000E9;
-	Tue, 16 Jun 2026 18:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGV09fqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167A41F000E9;
+	Tue, 16 Jun 2026 18:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633408;
-	bh=8ZFReDuDQXc/98EaBoxLs1ESGibrL9zqR+wzoUnyvXI=;
+	s=korg; t=1781633412;
+	bh=qmvxLqF5b6ZWYxU5+1wQskHAMjhlbETBVo9/LijALck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F+1lsBuuUySVXlBbghZ4nhiWNfmZTY7YJo/jjNGA4kKhpYFvDS0zeIR14+MD/gafk
-	 jcZ/InZIpH458NJEd8uNl3UQh+cpOe0DXeGsxF8ZRLGZsUCpfl8kMqS6R3ViOos54c
-	 +ij9vNhpURkx0aCtXtvVpbjcGDa/1oLb2ucRhzHM=
+	b=cGV09fqfZ+NSuzH6WUN4KA+wx/BlyCuDExcNV8nVxol22iKHxcwdu1KfDiLzEarXe
+	 ar0UXEiGuYHFAPLfTt2ZZ2QHKj65/cVJmgj8aVD2NhRhclpzluOKXiVD4rs37U+eR1
+	 wuBXfT3qNxgOpl8fkKr3fPmzIhALD9kzYyGPuIow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.15 073/411] iio: gyro: itg3200: fix i2c read into the wrong stack location
-Date: Tue, 16 Jun 2026 20:25:11 +0530
-Message-ID: <20260616145104.157660248@linuxfoundation.org>
+Subject: [PATCH 5.15 074/411] iio: ssp_sensors: cancel delayed work_refresh on remove
+Date: Tue, 16 Jun 2026 20:25:12 +0530
+Message-ID: <20260616145104.213563163@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,53 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 
-commit 6bdc3023d62ed5c7d591f0eb27a5adb37fb892ae upstream.
+commit eedf7602fbd929e97e0c480da501dc7a34beb2a8 upstream.
 
-itg3200_read_all_channels() takes `__be16 *buf' as a parameter and
-fills the i2c_msg destination as `(char *)&buf'. Since `buf' is the
-parameter (a pointer), `&buf' is the address of the local pointer
-slot on the stack of itg3200_read_all_channels(), not the address
-of the caller's scan buffer. The (char *) cast hides the type
-mismatch.
+The work_refresh may still be pending or running when the device is
+removed, cancel the delayed work_refresh in remove path.
 
-i2c_transfer() therefore writes ITG3200_SCAN_ELEMENTS * sizeof(s16)
-= 8 bytes into the parameter's stack slot, which is discarded when
-the function returns. The caller's scan buffer in
-itg3200_trigger_handler() is never written to, so
-iio_push_to_buffers_with_timestamp() pushes uninitialised stack
-contents to userspace via /dev/iio:deviceX every scan -- both a
-functional bug (no actual gyroscope or temperature data is
-delivered through the triggered buffer) and an information leak.
-
-The non-buffered read_raw() path is unaffected: it goes through
-itg3200_read_reg_s16() which uses `&out' on a local s16 value,
-where that is correct.
-
-Drop the spurious `&' so the i2c read writes into the caller's
-buffer.
-
-Fixes: 9dbf091da080 ("iio: gyro: Add itg3200")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Fixes: 50dd64d57eee ("iio: common: ssp_sensors: Add sensorhub driver")
+Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/itg3200_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/common/ssp_sensors/ssp_dev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/gyro/itg3200_buffer.c
-+++ b/drivers/iio/gyro/itg3200_buffer.c
-@@ -34,7 +34,7 @@ static int itg3200_read_all_channels(str
- 			.addr = i2c->addr,
- 			.flags = i2c->flags | I2C_M_RD,
- 			.len = ITG3200_SCAN_ELEMENTS * sizeof(s16),
--			.buf = (char *)&buf,
-+			.buf = (char *)buf,
- 		},
- 	};
+--- a/drivers/iio/common/ssp_sensors/ssp_dev.c
++++ b/drivers/iio/common/ssp_sensors/ssp_dev.c
+@@ -602,6 +602,7 @@ static int ssp_remove(struct spi_device
+ 	ssp_clean_pending_list(data);
  
+ 	free_irq(data->spi->irq, data);
++	cancel_delayed_work_sync(&data->work_refresh);
+ 
+ 	del_timer_sync(&data->wdt_timer);
+ 	cancel_work_sync(&data->work_wdt);
 
 
