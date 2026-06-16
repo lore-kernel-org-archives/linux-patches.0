@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9CD3D810C;
-	Tue, 16 Jun 2026 18:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1563CEBBD;
+	Tue, 16 Jun 2026 18:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636253; cv=none; b=pT7YQYeyeXqGU7/AX4TbV4OLJqb5LzNbxrQS8vELBR1VnSQInR07sFxEsQcvauELJJ4nw49arNbiX2BDbTN6cf0zQ6FkM2P829fBRUHxDa5ZiPXzwms8G7M1ifIoJDuNPcYxQOVJi5SnU519SWcs2JaCNWVMAg2R+CSec7655GQ=
+	t=1781636259; cv=none; b=Sn2PPu670XSoRyBaH+/YFGrBU2o26/a4f4xYo3hP/4H6BJeM5N4YpP4x92mmlj2RCy6onLpSDeK4ml8ivUh2KT3T8WeHLcaTA9hTIi/fRuzUay/MD5hhDrZcYIP0orddvP1i1z5l84BbSz0mvzIplYRRog8ErfEAlzIC6z+hGJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636253; c=relaxed/simple;
-	bh=VWOJVLvt/3xD1CwIMiKdO3RUtoiU6km89cVmShzA+ws=;
+	s=arc-20240116; t=1781636259; c=relaxed/simple;
+	bh=oOzCkgKYgj6TCIScV5m+ej3kTFF5CcCLYxOJ/+4pq84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYhD2pTEUWC+cuZFXqj/0q134Fhvpv5xKy0x8hvHAMl0fsYga10M+omD7lsktOJ27scR3jM8M6pLXX5cQSjDIh/iGsmormTyeF2IDwaXbIUwiBvplgRTkqSmtwOPEb6dhwy1d7cy64v0LMsVgvmMhZd4wnqJLZoLOal+IIFmccE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5pF87xd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F68GMt1g9k0YXsbB7RCJOYPlXc+gsPJ06eL+psALAcvZ3iN4VrRBVZIWcaVd8DHB21Ek1IncN/EDz3InTLhq1yVA6Z+ysxnr2AfCn7nSOO3bjbg7+amojyLwH4iJ27s0PEk/F22v6yQbJynE2yXTqlXIbr9TZwkB0KEU8++oC9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoX5y2ke; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5pF87xd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F281F000E9;
-	Tue, 16 Jun 2026 18:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoX5y2ke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41031F000E9;
+	Tue, 16 Jun 2026 18:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636252;
-	bh=G0aNp/txeBm9vgzuI1d0fDWM9S1lnunkdh6wpAGmFjY=;
+	s=korg; t=1781636257;
+	bh=uEndllCSgNh8aeop4dXKhAonfkCUPHJbfEt7Gpq4gP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k5pF87xdEtvve+K5rKFcHr/DpMERUIHTRqi/l4nOmwFdUw1YstIwF0Kv95AGxJloN
-	 yxJmDarCfrPf+/sieG/ojJ297M5jDYzubJywhL7xoW7YrqIMoUz0+FWFhCvNh7MAFV
-	 Fy10nH4njOtCvi0GiR8IboYBC0N/DDiZ8qHkBPpA=
+	b=NoX5y2keXVO3AKCY+AnaRYiGsTcY4KSwhAJEkjRdoOceZY4QGaA6vLCbiMWHk+Zvb
+	 s0jJs+wMuPu3LDYoHoyuXEaDa1+AQoF3ymMblcO/Z5Nebl3Gk0CUekWhjwZmiih8Q3
+	 A8nmLovSLeE3q9jAAZ0RuDRN/cb/FVoMQhGA28Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 186/342] ALSA: timer: Fix UAF at snd_timer_user_params()
-Date: Tue, 16 Jun 2026 20:28:02 +0530
-Message-ID: <20260616145056.846164724@linuxfoundation.org>
+	Jisheng Zhang <jszhang@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.10 204/342] mmc: sdhci: add signal voltage switch in sdhci_resume_host
+Date: Tue, 16 Jun 2026 20:28:20 +0530
+Message-ID: <20260616145057.681360258@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,46 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit 053a401b592be424fea9d57c789f66cd5d8cec11 upstream.
+commit f595e8e77a51eee35e331f69321766593a845ef2 upstream.
 
-At releasing a timer object, e.g. when a userspace timer
-(CONFIG_SND_UTIMER) gets closed and snd_timer_free() is called, it
-tries to detach the timer instances and release the resources.
-However, it's still possible that other in-flight tasks are holding
-the timer instance where the to-be-deleted timer object is associated,
-and this may lead to racy accesses.
+I met one suspend/resume issue with sdr104 capable sdio wifi card (with
+"keep-power-in-suspend" set in DT property):
+After resuming from suspend to ram, the sdio wifi card stops working.
+Further debug shows that although ios shows the sdio card is at sdr104
+mode, the voltage is still at 3V3. This is due to missing the calling
+of ->start_signal_voltage_switch() in sdhci_resume_host().
 
-Fortunately, most of ioctls dealing with the timer instance list
-already have the protection with register_mutex, and this also avoids
-such races.  But, SNDRV_TIMER_IOCTL_PARAMS isn't protected, hence the
-concurrent ioctl may lead to use-after-free.
+Fix this issue by adding ->start_signal_voltage_switch() in
+sdhci_resume_host(). This also matches what we do for
+sdhci_runtime_resume_host().
 
-This patch just adds the guard with register_mutex to protect
-snd_timer_user_params() for covering the code path as a quick
-workaround.  It's no hot-path but rather a rarely issued ioctl, so the
-performance penalty doesn't matter.
+Then the question is: why this issue hasn't reported and fixed for so
+long time. IMHO, several reasons: Some host controllers just kick off
+the runtime resume for system resume, so they benefit from the well
+supported runtime pm code; Some platforms just use the old sdio wifi
+card which doesn't need signal voltage switch at all, the default
+voltage is 3v3 after resuming.
 
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Kyle Zeng <kylebot@openai.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260606161145.1933447-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 6308d2905bd3 ("mmc: sdhci: add quirk for keeping card power during suspend")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/timer.c |    1 +
+ drivers/mmc/host/sdhci.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -1842,6 +1842,7 @@ static int snd_timer_user_params(struct
- 	struct snd_timer *t;
- 	int err;
- 
-+	guard(mutex)(&register_mutex);
- 	tu = file->private_data;
- 	if (!tu->timeri)
- 		return -EBADFD;
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -3756,6 +3756,7 @@ int sdhci_resume_host(struct sdhci_host
+ 		host->pwr = 0;
+ 		host->clock = 0;
+ 		host->reinit_uhs = true;
++		mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
+ 		mmc->ops->set_ios(mmc, &mmc->ios);
+ 	} else {
+ 		sdhci_init(host, (host->mmc->pm_flags & MMC_PM_KEEP_POWER));
 
 
