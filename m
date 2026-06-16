@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E32F3BFE5A;
-	Tue, 16 Jun 2026 18:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C563BFE5A;
+	Tue, 16 Jun 2026 18:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634338; cv=none; b=RkTcNq6Ab+TnN9s//bgicjytlw0XENirF7XoiaWpn94L2ZCTeVWe5mNWtDLThu+RNO9XJjZd2x0XbTc6urD0rE9M25UQN4oGj+AIykyRUI/UU9XOj1LvEOcAmMiYBdJoadXpLFdDFoTYBuM/s4Cml103G8GybafrorF9qwdNP/E=
+	t=1781634343; cv=none; b=DPoru3a/9mBGzo7IqP+GMcSoBNe7yWVlcux8BPZlfkGgPfWNGB7QAWNppxcQjs9Tnh3xivj7Q2p4NJ2dnylBryrgjcKvXuzzR4wDUfF+Xn0wS59UA9DQx1tn/YAbDFEAgDUu1aHp1ouWFrwY4XhQjbPgE4/A7pkjHjUPDvYYxv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634338; c=relaxed/simple;
-	bh=eir/PPOMxwPYXl38KXzhsi6X6Zgi/OGIXVs5pdgPhh8=;
+	s=arc-20240116; t=1781634343; c=relaxed/simple;
+	bh=X31JIQNPvjiIUmrfQRm9kD/dKaVouJ8ql/tskBSm04w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KIBF1my/pJyhFYdRkrqoUdmCPKKXbSsT9SpMJOCLEAZaWSWqL5Sdqood29FwP0PoEvnFrVAqEHR3yC97rXPm5ZOPO2H52EOejsXekc/S8qrqlZ7IY/gQ4qrwv9ZyIGvqS/Gl6KJo/dyCPcIwoNuMdRsAXofkEEXgh1TQeXecYSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKIOTTrC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ltBvcpqsw6o1aBMR7Hp2x46njoj0PHEmImiYNRKfRXh7YQGgnzuEBxq9yp463qwVcaRphq1aHF8qMg3gbR6pmeLcDIKM30f4F5RxeZ/vjer1aIwGu5roURF2/MOjp+EI2CWcp24G2UP/4/bK7kutvCwKBjMeKRNu69IxAOu5/c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cv9Mixip; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKIOTTrC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183D31F000E9;
-	Tue, 16 Jun 2026 18:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cv9Mixip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8E31F000E9;
+	Tue, 16 Jun 2026 18:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634337;
-	bh=vqPvO0rFebo6RyduTZl9Ba1bGXiirFi6e+bEZyh8y6M=;
+	s=korg; t=1781634342;
+	bh=JSnTTFQdW3oo123/Lg9Zx/Aam1kbF4VkF+Neld2/+hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aKIOTTrCyXuaSl7wAeelfCHgT+GwwDIDFyHEtEhyaeZPhq90T9eUR7ftUaWhBWMHU
-	 wHpwfPMOSgDcUTbC2P//ht/6hg7N+TQGgbQTZTKDTB/p4YtpkBzjJN3Psc6SzQoeeE
-	 kYB/iOVFhLKj3yOybQXC2XtQKVpHKwNGAtiN5Wp8=
+	b=cv9Mixip7u1PukJ0YK+aPJV4DVwOh7YeNPdUvP4yyJXHDdGRHUhVOL3PTrhU1YHfS
+	 Z8Gx3JO1R8fjs03htvkcA6rFmHUk3jgAn53I4ep4LEbORzuj6D45hcbECIwP3rUJcp
+	 PVokZl27OTaFvq4j2cUlntjPXCxvlK6v71N9Aeks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.15 246/411] fs/fcntl: fix SOFTIRQ-unsafe lock order in fasync signaling
-Date: Tue, 16 Jun 2026 20:28:04 +0530
-Message-ID: <20260616145114.030355589@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	Leonard Foerster <foersleo@amazon.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 247/411] mm/damon/ops-common: call folio_test_lru() after folio_get()
+Date: Tue, 16 Jun 2026 20:28:05 +0530
+Message-ID: <20260616145114.080876466@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,91 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: SeongJae Park <sj@kernel.org>
 
-commit 00633c4683828acd5256fa8d5163f440d74bbe71 upstream.
+[ Upstream commit d6b8b02a27b3dd09ec12144322b3dac46d9bc9ef ]
 
-A SOFTIRQ-safe to SOFTIRQ-unsafe lock order deadlock can occur in
-send_sigio() and send_sigurg() when a process group receives a signal.
+damon_get_folio() speculatively calls folio_test_lru() before
+folio_try_get().  The folio can get freed and reallocated to a tail page.
+In the case, VM_BUG_ON_PGFLAGS() in const_folio_flags() can be triggered.
+Remove the speculative call.
 
-When FASYNC is configured for a process group (PIDTYPE_PGID), both
-functions use read_lock(&tasklist_lock) to traverse the task list.
-However, they are frequently called from softirq context:
-- send_sigio() via input_inject_event -> kill_fasync
-- send_sigurg() via tcp_check_urg -> sk_send_sigurg (NET_RX_SOFTIRQ)
+Also mark folio_test_lru() check right after folio_try_get() success as no
+more unlikely.
 
-The deadlock is caused by the rwlock writer fairness mechanism:
-1. CPU 0 (process context) holds read_lock(&tasklist_lock) in do_wait().
-2. CPU 1 (process context) attempts write_lock(&tasklist_lock) in
-   fork() or exit() and spins, which blocks all new readers.
-3. CPU 0 is interrupted by a softirq (e.g., TCP URG packet reception).
-4. The softirq calls send_sigurg() and attempts to acquire
-   read_lock(&tasklist_lock), deadlocking because CPU 1 is waiting.
+The race should be rare.  Also the problem can happen only if the kernel
+has enabled CONFIG_DEBUG_VM_PGFLAGS.  No real world report of this issue
+has been made so far.  This fix is based on only theoretical analysis.
+That said, a bug is a bug.  A similar issue was also fixed via commit
+3203b3ab0fcf ("mm/filemap: don't call folio_test_locked() without a
+reference in next_uptodate_folio()").  I don't expect this change will
+make a meaningful impact to DAMON performance in the real world, though I
+will be happy to be corrected from the real world reports.
 
-Since PID hashing and do_each_pid_task() traversals are already
-RCU-protected, the read_lock on tasklist_lock is no longer strictly
-required for safe traversal. Fix this by replacing tasklist_lock with
-rcu_read_lock(), aligning the process group signaling path with the
-single-PID path. This also mitigates a potential remote denial of
-service vector via TCP URG packets.
+The issue was discovered [1] by Sashiko.
 
-Lockdep splat:
-=====================================================
-WARNING: SOFTIRQ-safe -> SOFTIRQ-unsafe lock order detected
-[...]
-Chain exists of:
-  &dev->event_lock --> &f_owner->lock --> tasklist_lock
-
-Possible interrupt unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(tasklist_lock);
-                           local_irq_disable();
-                           lock(&dev->event_lock);
-                           lock(&f_owner->lock);
-  <Interrupt>
-    lock(&dev->event_lock);
-
-*** DEADLOCK ***
-
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20260523135210.590928-1-w15303746062@163.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20260525162256.8317-1-sj@kernel.org
+Link: https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org [1]
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Fernand Sieber <sieberf@amazon.com>
+Cc: Leonard Foerster <foersleo@amazon.de>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fcntl.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/damon/vaddr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/fcntl.c
-+++ b/fs/fcntl.c
-@@ -801,11 +801,11 @@ void send_sigio(struct fown_struct *fown
- 			send_sigio_to_task(p, fown, fd, band, type);
- 		rcu_read_unlock();
- 	} else {
--		read_lock(&tasklist_lock);
-+		rcu_read_lock();
- 		do_each_pid_task(pid, type, p) {
- 			send_sigio_to_task(p, fown, fd, band, type);
- 		} while_each_pid_task(pid, type, p);
--		read_unlock(&tasklist_lock);
-+		rcu_read_unlock();
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 6d8036671e60e5..dbb0f0fb2e598c 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -383,10 +383,10 @@ static struct page *damon_get_page(unsigned long pfn)
+ {
+ 	struct page *page = pfn_to_online_page(pfn);
+ 
+-	if (!page || !PageLRU(page) || !get_page_unless_zero(page))
++	if (!page || !get_page_unless_zero(page))
+ 		return NULL;
+ 
+-	if (unlikely(!PageLRU(page))) {
++	if (!PageLRU(page)) {
+ 		put_page(page);
+ 		page = NULL;
  	}
-  out_unlock_fown:
- 	read_unlock_irqrestore(&fown->lock, flags);
-@@ -842,11 +842,11 @@ int send_sigurg(struct fown_struct *fown
- 			send_sigurg_to_task(p, fown, type);
- 		rcu_read_unlock();
- 	} else {
--		read_lock(&tasklist_lock);
-+		rcu_read_lock();
- 		do_each_pid_task(pid, type, p) {
- 			send_sigurg_to_task(p, fown, type);
- 		} while_each_pid_task(pid, type, p);
--		read_unlock(&tasklist_lock);
-+		rcu_read_unlock();
- 	}
-  out_unlock_fown:
- 	read_unlock_irqrestore(&fown->lock, flags);
+-- 
+2.53.0
+
 
 
