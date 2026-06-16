@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D85169AD2;
-	Tue, 16 Jun 2026 16:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EDA169AD2;
+	Tue, 16 Jun 2026 16:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628934; cv=none; b=myUvJo16wGNnAbOilJVHBM/6r5t0ZO0xeyON7bSlmrQxFzaSV1OWnfgouUhBFimQ855wJjJ1xnTbgbL8cfLYTo5HVerosKBreBoXQ5weRZdYNzEmSjgxmqicLQH2uEQnOr/5OhOfnY1Qv/ra4s0mVTYeQyVNGFgIH8OcOeyd29o=
+	t=1781628939; cv=none; b=YTdIOIFZraOuV9wNKXOq+Hwj69gczBthTDo4qrtZXpMWCskNKqj4ARrPPHvU8TFvfElu8bji1rWHfs30tp20Z/jNSLabyl3NDy0TWB/4DkWBoiOkJnwJpiWZVX01Dg2vfvBpLr6P68SS2/knocOXc/e3Oo+jaCk3riv+axTRa9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628934; c=relaxed/simple;
-	bh=f0eBdeCD8HlxBgDCqojFOc1OBcEb5TrlAMFR7I/3QCQ=;
+	s=arc-20240116; t=1781628939; c=relaxed/simple;
+	bh=StS3bzZGLOTLHbhtScqUlwvHJS79dvZGqNSEHnxiZAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q09zJ7I+4okho20We6z/nz5OM1w3h1KBL7JJdXcPDRJzBI+IcVhE/MBZi5k/v2eIatoed+ath+q51zKuyyauJaM/kdHNmEvuZbE7GWeCOFtoW0CNMUHaxHv/2FYnOySzRQAz/zfJxag0P/XpriA2Y0k7w8JXQKYUfeQsqQfnTJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oP9llEhI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RmR2vTe2oXdrjZtBbkmU8BKwvwgF7fczBkYZZJu0v/P5g2zUD/TJ/jxP61wMllxCA+3ZZmjWyFoYXWspWQsaWhgCFnzxjg3ToG/U/kAfQ2SjnMb9ySY7++oj1h+wEovPIm5MygFo8ETk+SfeRABuvsQjDIFgAte2Pd8k4QZmBKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCRfb03X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oP9llEhI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E241F000E9;
-	Tue, 16 Jun 2026 16:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCRfb03X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA82D1F000E9;
+	Tue, 16 Jun 2026 16:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628933;
-	bh=H3987/hhCYqTif3i6ClDkrkKPePcttRL0i65CtYBTQo=;
+	s=korg; t=1781628938;
+	bh=z34dSYW8Ioov80/niWCa16JS8xUwHWX++dfqeTZwhgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oP9llEhIXDRfsduJogS4E0/+xwVNlmwkl5i0ZhuNsGg3eoyK8QRcO/NEzTY+feyZc
-	 /1qUL2RgKnk2HfigDXZGybAyaX2mCk4wlI2u6uBqCWDQ8bSudDVwu1Ztyw6yzitdxe
-	 nOPhjiQeCvj0X/ITzZ29vt2erQ7B+wpamUgYrb/k=
+	b=fCRfb03Xn1B0O5xodlWMhP3R+xnC2RoCZ4v4kxB/1XY5P1pgy1XavaKrRDvrl9Spl
+	 eAy9J63tr1GmtztxcK66SOV2oE/U9Zihyz1Fqhw++0Uah4EbZ3rrp6O0L8EaIk9xc5
+	 TDZjOThSpHidtEfKNMuIYxeIt8CgeEci1k+3gUh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>
-Subject: [PATCH 6.6 190/452] serial: zs: Switch to using channel reset
-Date: Tue, 16 Jun 2026 20:26:57 +0530
-Message-ID: <20260616145127.817911269@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 191/452] USB: serial: cypress_m8: fix memory corruption with small endpoint
+Date: Tue, 16 Jun 2026 20:26:58 +0530
+Message-ID: <20260616145127.870165606@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -49,89 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Johan Hovold <johan@kernel.org>
 
-commit 8572955630f30948837088aa98bcbe0532d1ceac upstream.
+commit e1a9d791fd66ab2431b9e6f6f835823809869047 upstream.
 
-Switch the driver to using the channel reset rather than hardware reset,
-simplifying handling by removing an interference between channels that
-causes the other channel to become uninitialised afterwards.
+Make sure that the interrupt-out endpoint max packet size is at least
+eight bytes to avoid user-controlled slab corruption or NULL-pointer
+dereference should a malicious device report a smaller size.
 
-There is little difference between the two kinds of reset in terms of
-register settings that result, and we initialise the whole register set
-right away anyway.  However this prevents a hang from happening should
-the console output handler in the firmware try to access the other port
-whose transmitter has been disabled and line parameters messed up.
-
-For example this will happen if the keyboard port (port A) is chosen for
-the system console, unusually but not insanely for a headless system, as
-the port is wired to a standard DA-15 connector and an adapter can be
-easily made.  Or with the next change in place this would happen for the
-regular console port (port B), since the keyboard port (port A) will be
-initialised first.
-
-Just remove the unnecessary complication then, a channel reset is good
-enough.  We still need the initialisation marker, now per channel rather
-than per SCC, as for the console port zs_reset() will be called twice:
-once early on via zs_serial_console_init() for the console setup only,
-and then again via zs_config_port() as the port is associated with a TTY
-device.
-
-Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v2.6.23+
-Link: https://patch.msgid.link/alpine.DEB.2.21.2605062323430.46195@angie.orcam.me.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3416eaa1f8f8 ("USB: cypress_m8: Packet format is separate from characteristic size")
+Cc: stable@vger.kernel.org	# 2.6.26
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+[ johan: adjust context for 6.18 ]
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/zs.c |    7 ++++---
- drivers/tty/serial/zs.h |    2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/usb/serial/cypress_m8.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/tty/serial/zs.c
-+++ b/drivers/tty/serial/zs.c
-@@ -831,21 +831,22 @@ static void zs_shutdown(struct uart_port
- 
- static void zs_reset(struct zs_port *zport)
- {
-+	struct zs_port *zport_a = &zport->scc->zport[ZS_CHAN_A];
- 	struct zs_scc *scc = zport->scc;
- 	int irq;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&scc->zlock, flags);
- 	irq = !irqs_disabled_flags(flags);
--	if (!scc->initialised) {
-+	if (!zport->initialised) {
- 		/* Reset the pointer first, just in case...  */
- 		read_zsreg(zport, R0);
- 		/* And let the current transmission finish.  */
- 		zs_line_drain(zport, irq);
--		write_zsreg(zport, R9, FHWRES);
-+		write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
- 		udelay(10);
- 		write_zsreg(zport, R9, 0);
--		scc->initialised = 1;
-+		zport->initialised = 1;
+diff --git a/drivers/usb/serial/cypress_m8.c b/drivers/usb/serial/cypress_m8.c
+index 4c625e77da3a8f..f567617c8f2314 100644
+--- a/drivers/usb/serial/cypress_m8.c
++++ b/drivers/usb/serial/cypress_m8.c
+@@ -448,6 +448,14 @@ static int cypress_generic_port_probe(struct usb_serial_port *port)
+ 		return -ENODEV;
  	}
- 	load_zsregs(zport, zport->regs, irq);
- 	spin_unlock_irqrestore(&scc->zlock, flags);
---- a/drivers/tty/serial/zs.h
-+++ b/drivers/tty/serial/zs.h
-@@ -22,6 +22,7 @@
- struct zs_port {
- 	struct zs_scc	*scc;			/* Containing SCC.  */
- 	struct uart_port port;			/* Underlying UART.  */
-+	int		initialised;		/* For the console port.  */
  
- 	int		clk_mode;		/* May be 1, 16, 32, or 64.  */
- 
-@@ -41,7 +42,6 @@ struct zs_scc {
- 	struct zs_port	zport[2];
- 	spinlock_t	zlock;
- 	atomic_t	irq_guard;
--	int		initialised;
- };
- 
- #endif /* __KERNEL__ */
++	/*
++	 * The buffer must be large enough for the one or two-byte header (and
++	 * following data), but assume anything smaller than eight bytes is
++	 * broken.
++	 */
++	if (port->interrupt_out_size < 8)
++		return -EINVAL;
++
+ 	priv = kzalloc(sizeof(struct cypress_private), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+-- 
+2.53.0
+
 
 
