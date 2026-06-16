@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D24E3D45CB;
-	Tue, 16 Jun 2026 18:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D1B3D091A;
+	Tue, 16 Jun 2026 18:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633383; cv=none; b=FfphK816QB2G5YX6S4lDYAuaF1q9cdbLxCVTiOrYR/sbiervy6Zm1lYXuwl3litW2/1CAtzyPvVv/PvULaNNsQ3o8/tuqIZ5NzfGu6HO4MRRMtsbO1QfEIp9OZ3ygLI/etWypRpGhpQZCyJ5EdBsM2xIlU/KXXhfYATP2wREVUE=
+	t=1781633388; cv=none; b=LKpiA6SPoqqKYH9bBJGYI0pqOHXI/GcG8XilxGbRWDFfJvGu8hHzoLTgvSJS2sRnTAGbk6aEkgQvLUWfnDNUzM3O1z6GuvBT8N0INE+GLIYFXBeuo9vshI5MadaTmIlrJCTn7wzxatfvFrkKwvJQhU7H+f/SxEFJUznMdUWioWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633383; c=relaxed/simple;
-	bh=vraXheyRBc0RLyGaWcmVuj61ZZ/lsfs6GpPtVgSTagM=;
+	s=arc-20240116; t=1781633388; c=relaxed/simple;
+	bh=nCUmfZWyBM8ntZgoG/95lQ5QCTNHifVPm+W1uLHp26E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9zXynHVzZfg2H6mDuOEzD+aJlIo/ZmLfY3Db5+QwLaQHKk4d4kr2KRz87J/zsICy6EVYwP3yYsDTTX1V06y2vl86Yfn8LIcw81YguwJlTczWWBeYZUUefurDN+8o7UsypUmby3dBMlg18WVgfDxKMCullU7f8ka0im5TSna7ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKVKIOxJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XOo1YiEd8mg9XCTYzTKu18Bfrlr9gg8QbaqGEXAdVHRyV0ba6TPHvtccEhUiiqBGinZMjP5J/M9u5B33ADLB3X7kws+4XxGUpO0ljFISeo31A4WkvGTIiezqx5OFCosU194vEFUdssOZE6/EwGzlaWTMnqqI0qFXJQU1x3WmTVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoQH35LG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKVKIOxJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711ED1F000E9;
-	Tue, 16 Jun 2026 18:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoQH35LG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263E01F000E9;
+	Tue, 16 Jun 2026 18:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633382;
-	bh=BqUae3BRQv06aVvfiMbXTKRQkN3e1vuOqFME785CAfI=;
+	s=korg; t=1781633387;
+	bh=henLNC7xkL9XQyMLLrXpQe/XEEAwOw2QLqAw8gFM23w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MKVKIOxJBTJhDnT5LMRwAo/OpLlWioiFQ5CwBcGZ249a7uGQqn28rSf5rzD1Zd5re
-	 ShyUms4ivOzlsMYDNZk98Z53Z4jPDgoqcvma6CyoO5tZ3Qe75I6h+KZ7eSCXuDo5oz
-	 XF1bDBcOtJotcZqUSQ+CDzxfX/kCPuW7hIblkZIs=
+	b=CoQH35LGIBCQqBKZ40g6FTVNj8BQtSjVkjNREqhstr+Q139TIe7OyfIsQqnP2j69+
+	 Xf9J6fbrueeswpVhGd9O23cAag6DFw9+srKfO9a8evhiAlyTS6njOHGlyLprd2LnAN
+	 MbfVtlHRD+SUbgVSo11NIaoF6xCyKF+44tkhrnaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Zhu Yanjun <yanjun.Zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
-	Ben Hutchings <benh@debian.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/411] RDMA/rxe: Fix double free in rxe_srq_from_init
-Date: Tue, 16 Jun 2026 20:24:49 +0530
-Message-ID: <20260616145102.995640913@linuxfoundation.org>
+	Salah Triki <salah.triki@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 5.15 069/411] iio: dac: max5821: fix return value check in powerdown sync
+Date: Tue, 16 Jun 2026 20:25:07 +0530
+Message-ID: <20260616145103.950605511@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,68 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 0beefd0e15d962f497aad750b2d5e9c3570b66d1 upstream.
+commit d0a228d903425e653f18a4341e60c0538afb6d41 upstream.
 
-In rxe_srq_from_init(), the queue pointer 'q' is assigned to
-'srq->rq.queue' before copying the SRQ number to user space.
-If copy_to_user() fails, the function calls rxe_queue_cleanup()
-to free the queue, but leaves the now-invalid pointer in
-'srq->rq.queue'.
+The function max5821_sync_powerdown_mode() returned the result of
+i2c_master_send() directly. If a partial transfer occurred, it would
+be incorrectly treated as a success by the caller.
 
-The caller of rxe_srq_from_init() (rxe_create_srq) eventually
-calls rxe_srq_cleanup() upon receiving the error, which triggers
-a second rxe_queue_cleanup() on the same memory, leading to a
-double free.
+While the caller currently handles the positive return value of 2 as
+success, this patch refactors the function to return 0 on full success
+and -EIO on short writes. This ensures robust error handling for
+incomplete transfers and improves code maintainability by using
+sizeof(outbuf).
 
-The call trace looks like this:
-   kmem_cache_free+0x.../0x...
-   rxe_queue_cleanup+0x1a/0x30 [rdma_rxe]
-   rxe_srq_cleanup+0x42/0x60 [rdma_rxe]
-   rxe_elem_release+0x31/0x70 [rdma_rxe]
-   rxe_create_srq+0x12b/0x1a0 [rdma_rxe]
-   ib_create_srq_user+0x9a/0x150 [ib_core]
-
-Fix this by moving 'srq->rq.queue = q' after copy_to_user.
-
-Fixes: aae0484e15f0 ("IB/rxe: avoid srq memory leak")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://patch.msgid.link/20260112015412.29458-1-jiashengjiangcool@gmail.com
-Reviewed-by: Zhu Yanjun <yanjun.Zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-[bwh: Backported to 5.15: There was no assignment to init->attr.max_wr
- here; don't add it]
-Signed-off-by: Ben Hutchings <benh@debian.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 472988972737 ("iio: add support of the max5821")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/rxe/rxe_srq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/dac/max5821.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
-index eb1c4c3b3a7865..595d4e7b91d0b8 100644
---- a/drivers/infiniband/sw/rxe/rxe_srq.c
-+++ b/drivers/infiniband/sw/rxe/rxe_srq.c
-@@ -100,8 +100,6 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
- 		return -ENOMEM;
- 	}
+--- a/drivers/iio/dac/max5821.c
++++ b/drivers/iio/dac/max5821.c
+@@ -91,6 +91,7 @@ static int max5821_sync_powerdown_mode(s
+ 				       const struct iio_chan_spec *chan)
+ {
+ 	u8 outbuf[2];
++	int ret;
  
--	srq->rq.queue = q;
--
- 	err = do_mmap_info(rxe, uresp ? &uresp->mi : NULL, udata, q->buf,
- 			   q->buf_size, &q->ip);
- 	if (err) {
-@@ -118,6 +116,8 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
- 		}
- 	}
+ 	outbuf[0] = MAX5821_EXTENDED_COMMAND_MODE;
  
-+	srq->rq.queue = q;
+@@ -104,7 +105,13 @@ static int max5821_sync_powerdown_mode(s
+ 	else
+ 		outbuf[1] |= MAX5821_EXTENDED_POWER_UP;
+ 
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, sizeof(outbuf));
++	if (ret < 0)
++		return ret;
++	if (ret != sizeof(outbuf))
++		return -EIO;
 +
- 	return 0;
++	return 0;
  }
  
--- 
-2.53.0
-
+ static ssize_t max5821_write_dac_powerdown(struct iio_dev *indio_dev,
 
 
