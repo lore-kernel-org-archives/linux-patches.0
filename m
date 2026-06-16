@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C943CEBBD;
-	Tue, 16 Jun 2026 18:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E6A472798;
+	Tue, 16 Jun 2026 18:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636289; cv=none; b=rXnAntN954ISWkV4jyjqvkytp/I0YZyGlXfUX+Ylz8PnzH5nRXiXIgbSfSJlr7m7jQmFrG3t7aJNH7oBYtG5M+iIfQErA7XCM0v6n7lpTiqXv6ClKSwtCUhdR0pS13bQGA7R9ClNIwDGcReLMxF7WTM1nVmQ8yOy9x+V4rP9PlI=
+	t=1781636295; cv=none; b=awgB8kcxdQVoqOsH91T/ibVb6X44DqdmEzxmmhjei+jSk1NGJoel6n3iYcQvYDHY9WMPPYhna+OHudtdEKczPqlzjaHb0FnsOC7aXbB02XkSn12IFxGpIN9k7O0reGrdz2tZJZq89rQGnx8XiT1rB34Y4C/G6ZDxjlEmSukVGbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636289; c=relaxed/simple;
-	bh=qHIyqINDzfjL3S5ey6477VHaVNB3UNg+9XWrZdjahf8=;
+	s=arc-20240116; t=1781636295; c=relaxed/simple;
+	bh=G2TjFP4ld/qMLSi9ZbLdxoPYJ3rO2gOmDHDxzW3BMq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuYI8CD1/Br/cSSQa9Rjl1HTb0yvG+3V88Zo4lPeM2isvXZyVetSYnbeG8UBh3owLUu5s/3hqrSqk/4EJYmH/CtKH1gSarq497AWtrOcbqANUFZ+AqfggGpcmnS59QiJ/CtR91vPaSw7o61qDrybSwMJRfxzOn6wqeuKejFFovI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFOlxK5Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qw+2btNF4nIoSpzqwvwohes5zU5ZmSiPouGlMJAJNiOhcTcymw67AYUH4iLXpHtOdLDA+yYm8PIo9/r2N8MldGNdk2y2AFlMxMA0K9I1wKLKC/gFupw/nKA3YE+ZQSWNPFL4s9Gs5lVaQ77SP/EW72CCWYUsTism6gnFP+r0Wzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXs0ZuRN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFOlxK5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50BC1F000E9;
-	Tue, 16 Jun 2026 18:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXs0ZuRN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34D61F000E9;
+	Tue, 16 Jun 2026 18:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636288;
-	bh=H3JAv/3ckKYmTjrsahzGe1vhsKrWIi1qnxVEdiky6N0=;
+	s=korg; t=1781636293;
+	bh=eujMNA45xU47jpqNa+ARebpGVvpe8H2tq6tOpaMB65E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dFOlxK5Qa0bR0J6R3HWlHdq4DK7ZcF19CyCaV+7nD56I8I3f+yPYu1R8DByePE416
-	 LWI/mq5E64U+OsAbs1NRl8fLpeVGPI6rBO7Pm16vdEUsJQ572owIA5s7jepqun7ol1
-	 FEEf/S7KPiXEbjw4Rg+TrzKzznRo3+yaR8DToiLI=
+	b=WXs0ZuRN+Zt1UWwS9zxl2YqAa3O3JcIAgj/RftyoG+dDTFQbIVwET4iXzXtsAXlh8
+	 98POVKBtHqVxB9x1YWi26/vCHnan9Uik+xe4J+xS0cC0kioWxBLMbytJiCp37SCYZQ
+	 lG9b1EcPRw6MD4lX80H8Gk+rct8Blj2uFb62uf/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.10 210/342] thunderbolt: Limit XDomain response copy to actual frame size
-Date: Tue, 16 Jun 2026 20:28:26 +0530
-Message-ID: <20260616145057.957511207@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 211/342] drm/amd/display: Clamp HDMI HDCP2 rx_id_list read to buffer size
+Date: Tue, 16 Jun 2026 20:28:27 +0530
+Message-ID: <20260616145058.005032959@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,40 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 4db2bd2ed4785dbadaeeab9f4e346b21ac5fb8eb upstream.
+commit f0f3981c43b32cadfe373d636d9e9ca522bb3702 upstream.
 
-tb_xdomain_copy() copies req->response_size bytes from the received
-packet buffer regardless of the actual frame size.  When a short
-response arrives, this reads past the valid frame data in the DMA
-pool buffer into stale contents from previous transactions.
+[Why & How]
+During HDCP 2.x repeater authentication over HDMI, the driver reads the
+sink's RxStatus register and extracts a 10-bit message size field (max
+value 1023). This value is used as the read length for the ReceiverID
+list without being clamped to the size of the destination buffer
+rx_id_list[177]. A malicious HDMI repeater could advertise a message
+size larger than the buffer, causing an out-of-bounds write during the
+I2C read.
 
-Use the minimum of frame size and expected response size for the
-copy length.
+Clamp the read length in mod_hdcp_read_rx_id_list() to the size of the
+rx_id_list buffer, matching the approach already used in the DP branch.
 
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+Fixes: eff682f83c9c ("drm/amd/display: Add DDC handles for HDCP2.2")
+Assisted-by: Copilot:claude-opus-4.6
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 229212219e4247d9486f8ba41ef087358490be09)
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -81,7 +81,9 @@ static bool tb_xdomain_match(const struc
- static bool tb_xdomain_copy(struct tb_cfg_request *req,
- 			    const struct ctl_pkg *pkg)
- {
--	memcpy(req->response, pkg->buffer, req->response_size);
-+	size_t len = min_t(size_t, pkg->frame.size, req->response_size);
-+
-+	memcpy(req->response, pkg->buffer, len);
- 	req->result.err = 0;
- 	return true;
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
+@@ -533,7 +533,8 @@ enum mod_hdcp_status mod_hdcp_read_rx_id
+ 	} else {
+ 		status = read(hdcp, MOD_HDCP_MESSAGE_ID_READ_REPEATER_AUTH_SEND_RECEIVERID_LIST,
+ 				hdcp->auth.msg.hdcp2.rx_id_list,
+-				hdcp->auth.msg.hdcp2.rx_id_list_size);
++				MIN(hdcp->auth.msg.hdcp2.rx_id_list_size,
++				    sizeof(hdcp->auth.msg.hdcp2.rx_id_list)));
+ 	}
+ 	return status;
  }
 
 
