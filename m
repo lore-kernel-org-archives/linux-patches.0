@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644004502F;
-	Tue, 16 Jun 2026 17:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCE14502F;
+	Tue, 16 Jun 2026 17:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631273; cv=none; b=TlYII028Ihe0cPRJafx8FElL92kMt6FVGQc2NRQ656pwfDKQ5b07ACQkvcIurhUVA4oFfbSrM9PqVYgGxy5zMKL4kgfNBf2IkweKa3qVI/zmsOiffme2vOba58yFUquMUBLv0tiaqkQtW2Sy24sLwwrAgff2OegMH2oheyhOEo0=
+	t=1781631278; cv=none; b=onH1yy/MCoOGgWN/7MFVa4OuUNB1tgO+S6HC5Opw/8QdSQRtW+vf8pXkYdJ6J12mAIrUVlX2s6UF2IM/SfxJqqhXmJ6zG8Zt5Hlg2vpUe12PpnZ6ewFWso/Xu8E6ehb2AuEN9A+FbsaGD2mmmxCtSDqFObq/cwUeKpS6U3eihDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631273; c=relaxed/simple;
-	bh=rIk01If3zGovB6mqglFMrx7srlJnCQVLD+cdapVbRQY=;
+	s=arc-20240116; t=1781631278; c=relaxed/simple;
+	bh=s1+GeeiE1rj97AWzmcJy4t7JhD0NFbU1G05UAh6axL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcXzL1x617ymeNsUqyMpnUBBBD1Cd3j9zWaoDx+IKRYrhF7C/ea+AQMQe/Sbeqv9iU2BYAtJXT69gjSHcQFFk50FYmPqSZBE2OXQYL1hbmC/EGtmpO5EgHweWNtLB9dghTDBHjQSnQymoUP88E99K5i5c5HMm33cuJ3ZyyLWw/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xR/y7WPz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DVmMv4RN8pSZCcVqQD+u00pR2V8auCH37got000PoK15JJkLAuR96LoVgnu5r276/3VmDubweuMQJNVGevOew1iqpWJJWAXcW7J70f/2IN2EpKwSOg8D90qLj0LlVQ6YTzd7T3fdEaYtunRsXYBG8oqMuEhjLosrp3O26ZD0czQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mooiO0IE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xR/y7WPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C471F000E9;
-	Tue, 16 Jun 2026 17:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mooiO0IE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B654B1F000E9;
+	Tue, 16 Jun 2026 17:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631272;
-	bh=3ajYGecXNC6qJxGP57OFpMkQFOYchI+txjpjuI2kVI4=;
+	s=korg; t=1781631277;
+	bh=Eqn6QUsTOZ33Z+F+cylwJ1IgAEMPIUN+2Iap2mI/bSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xR/y7WPzOOJXQRcX8oalNZlY5EKj5EhKarPRAFNs4IBD9MDCnT8Ak6GCtPYO/Pja0
-	 mszwgI2j35WlxghZBhXQGqai0nLTA7STCBrl9AHJP/h38fW8YBBqxYSF+BusDI2cjA
-	 oDRnw/LnOWbquQw/I9QQakLl20GjAjl6PVOe/rbY=
+	b=mooiO0IErHn/45Fc1w2R6W3EVNgSC6LxRfsbb6YM2uZM2t2oQG35+eMJf/jn72Rqg
+	 /DtUPt2MP/wJNSFVzkjUlUbqmzhtol/6csx2ToSUq/n0/oXC4AMNeLnLXMEWLKfKjP
+	 D65hoNt4Q7OhUCAKZoDLH13PuxvdOwy2ZM9DyfiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Taeyang Lee <0wn@theori.io>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 190/522] bpf: Free reuseport cBPF prog after RCU grace period.
-Date: Tue, 16 Jun 2026 20:25:37 +0530
-Message-ID: <20260616145134.998150586@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.1 173/522] serial: fsl_lpuart: fix rx buffer and DMA map leaks in start_rx_dma
+Date: Tue, 16 Jun 2026 20:25:20 +0530
+Message-ID: <20260616145134.242796344@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,139 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
 
-[ Upstream commit 18fc650ccd7fe3376eca89203668cfb8268f60df ]
+commit 9a9254c4a2a3ca2b3da16d173f3b0dd01f397ff6 upstream.
 
-Eulgyu Kim reported the splat below with a repro. [0]
+lpuart_start_rx_dma() allocates sport->rx_ring.buf with kzalloc() and
+then maps a scatterlist via dma_map_sg().  On three subsequent error
+paths the function returns directly without releasing those resources:
 
-The repro sets up a UDP reuseport group with a cBPF prog and
-replaces it with a new one while another thread is sending
-a UDP packet to the group.
+  - when dma_map_sg() returns 0 (-EINVAL):
+      ring->buf is leaked.
+  - when dmaengine_slave_config() fails:
+      ring->buf and the DMA mapping are leaked.
+  - when dmaengine_prep_dma_cyclic() returns NULL:
+      ring->buf and the DMA mapping are leaked.
 
-The reuseport prog is freed by sk_reuseport_prog_free().
-bpf_prog_put() is called for "e"BPF prog to destruct through
-multiple stages while cBPF prog is freed immediately by
-bpf_release_orig_filter() and bpf_prog_free().
+The sole cleanup path, lpuart_dma_rx_free(), is only reached when
+lpuart_dma_rx_use is set, and the caller lpuart_rx_dma_startup() clears
+that flag on failure of lpuart_start_rx_dma().  So these resources are
+permanently leaked on every failure in this function.  Repeated port
+open/close or termios changes under error conditions will slowly consume
+memory and leave stale streaming DMA mappings behind.
 
-If a reuseport prog is detached from the setsockopt() path
-(reuseport_attach_prog() or reuseport_detach_prog()),
-sk_reuseport_prog_free() is called without waiting for RCU
-readers to complete, resulting in various bugs.
+Fix it by introducing two error labels that unmap the scatterlist and
+free the ring buffer as appropriate.  While here, replace the misleading
+-EFAULT (bad userspace pointer) returned when dmaengine_prep_dma_cyclic()
+fails with the more accurate -ENOMEM, matching how other dmaengine users
+in the tree treat this failure.
 
-Let's defer freeing the reuseport cBPF prog after one RCU
-grace period.
+No functional change on the success path.
 
-Note "e"BPF prog is safe as is unless the fast path starts
-to touch fields destroyed in bpf_prog_put_deferred() and
-__bpf_prog_put_noref().
-
-[0]:
-BUG: KASAN: vmalloc-out-of-bounds in reuseport_select_sock+0xedc/0x1220 net/core/sock_reuseport.c:596
-Read of size 4 at addr ffffc9000051e004 by task slowme/10208
-CPU: 6 UID: 1000 PID: 10208 Comm: slowme Not tainted 7.0.0-geb7ac95ff75e #32 PREEMPT(full)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- reuseport_select_sock+0xedc/0x1220 net/core/sock_reuseport.c:596
- udp4_lib_lookup2+0x3bc/0x950 net/ipv4/udp.c:495
- __udp4_lib_lookup+0x768/0xe20 net/ipv4/udp.c:723
- __udp4_lib_lookup_skb+0x297/0x390 net/ipv4/udp.c:752
- __udp4_lib_rcv+0x1312/0x2620 net/ipv4/udp.c:2752
- ip_protocol_deliver_rcu+0x282/0x440 net/ipv4/ip_input.c:207
- ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:241
- NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
- NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
- __netif_receive_skb_one_core net/core/dev.c:6181 [inline]
- __netif_receive_skb net/core/dev.c:6294 [inline]
- process_backlog+0xaa4/0x1960 net/core/dev.c:6645
- __napi_poll+0xae/0x340 net/core/dev.c:7709
- napi_poll net/core/dev.c:7772 [inline]
- net_rx_action+0x5d7/0xf50 net/core/dev.c:7929
- handle_softirqs+0x22b/0x870 kernel/softirq.c:622
- do_softirq+0x76/0xd0 kernel/softirq.c:523
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0xf8/0x130 kernel/softirq.c:450
- local_bh_enable include/linux/bottom_half.h:33 [inline]
- rcu_read_unlock_bh include/linux/rcupdate.h:924 [inline]
- __dev_queue_xmit+0x1dd7/0x3710 net/core/dev.c:4890
- neigh_output include/net/neighbour.h:556 [inline]
- ip_finish_output2+0xca9/0x1070 net/ipv4/ip_output.c:237
- NF_HOOK_COND include/linux/netfilter.h:307 [inline]
- ip_output+0x29f/0x450 net/ipv4/ip_output.c:438
- ip_send_skb+0x45/0xc0 net/ipv4/ip_output.c:1508
- udp_send_skb+0xb04/0x1510 net/ipv4/udp.c:1195
- udp_sendmsg+0x1a71/0x2350 net/ipv4/udp.c:1485
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg net/socket.c:742 [inline]
- __sys_sendto+0x554/0x680 net/socket.c:2206
- __do_sys_sendto net/socket.c:2213 [inline]
- __se_sys_sendto net/socket.c:2209 [inline]
- __x64_sys_sendto+0xde/0x100 net/socket.c:2209
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x160/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x415a2d
-Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f6bc31e41e8 EFLAGS: 00000212 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007f6bc31e4cdc RCX: 0000000000415a2d
-RDX: 0000000000000001 RSI: 00007f6bc31e421f RDI: 0000000000000003
-RBP: 00007f6bc31e4240 R08: 00007f6bc31e4220 R09: 0000000000000010
-R10: 0000000000000000 R11: 0000000000000212 R12: 00007f6bc31e46c0
-R13: ffffffffffffffb8 R14: 0000000000000000 R15: 00007ffc9b0d70b0
- </TASK>
-
-Fixes: 538950a1b752 ("soreuseport: setsockopt SO_ATTACH_REUSEPORT_[CE]BPF")
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20260426012647.3233119-1-kuniyu@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5887ad43ee02 ("tty: serial: fsl_lpuart: Use cyclic DMA for Rx")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260420135903.2062024-1-shitalkumar.gandhi@cambiumnetworks.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c | 15 ++++++++++++---
+ drivers/tty/serial/fsl_lpuart.c |   15 ++++++++++++---
  1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 0ea9ede2c44724..3628ea596050f0 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1643,15 +1643,24 @@ int sk_reuseport_attach_bpf(u32 ufd, struct sock *sk)
- 	return err;
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1298,7 +1298,8 @@ static inline int lpuart_start_rx_dma(st
+ 
+ 	if (!nent) {
+ 		dev_err(sport->port.dev, "DMA Rx mapping error\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_free_buf;
+ 	}
+ 
+ 	dma_rx_sconfig.src_addr = lpuart_dma_datareg_addr(sport);
+@@ -1310,7 +1311,7 @@ static inline int lpuart_start_rx_dma(st
+ 	if (ret < 0) {
+ 		dev_err(sport->port.dev,
+ 				"DMA Rx slave config failed, err = %d\n", ret);
+-		return ret;
++		goto err_unmap_sg;
+ 	}
+ 
+ 	sport->dma_rx_desc = dmaengine_prep_dma_cyclic(chan,
+@@ -1321,7 +1322,8 @@ static inline int lpuart_start_rx_dma(st
+ 				 DMA_PREP_INTERRUPT);
+ 	if (!sport->dma_rx_desc) {
+ 		dev_err(sport->port.dev, "Cannot prepare cyclic DMA\n");
+-		return -EFAULT;
++		ret = -ENOMEM;
++		goto err_unmap_sg;
+ 	}
+ 
+ 	sport->dma_rx_desc->callback = lpuart_dma_rx_complete;
+@@ -1339,6 +1341,13 @@ static inline int lpuart_start_rx_dma(st
+ 	}
+ 
+ 	return 0;
++
++err_unmap_sg:
++	dma_unmap_sg(chan->device->dev, &sport->rx_sgl, 1, DMA_FROM_DEVICE);
++err_free_buf:
++	kfree(ring->buf);
++	ring->buf = NULL;
++	return ret;
  }
  
-+static void sk_reuseport_prog_free_rcu(struct rcu_head *rcu)
-+{
-+	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
-+	struct bpf_prog *prog = aux->prog;
-+
-+	bpf_release_orig_filter(prog);
-+	bpf_prog_free(prog);
-+}
-+
- void sk_reuseport_prog_free(struct bpf_prog *prog)
- {
- 	if (!prog)
- 		return;
- 
--	if (prog->type == BPF_PROG_TYPE_SK_REUSEPORT)
--		bpf_prog_put(prog);
-+	if (bpf_prog_was_classic(prog))
-+		call_rcu(&prog->aux->rcu, sk_reuseport_prog_free_rcu);
- 	else
--		bpf_prog_destroy(prog);
-+		bpf_prog_put(prog);
- }
- 
- struct bpf_scratchpad {
--- 
-2.53.0
-
+ static void lpuart_dma_rx_free(struct uart_port *port)
 
 
