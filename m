@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12C2364024;
-	Tue, 16 Jun 2026 15:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F04A44CAE6;
+	Tue, 16 Jun 2026 15:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624828; cv=none; b=JNi1AprZsBUUgVt8HFcz9oMdjiA8wmQNGvpiVBTOyhl4CoV+PbZOB/UOFV2Cz+fJlDMhZXWu2zw5DlIpDI/uy47xCkf25VC9tCQzii/gvJ2z2Z/n6jF0GXF8OftRzS9FDHMdRbRnybIgue30qSQdKEBpzmhXsPgBkbugB/2TotQ=
+	t=1781624835; cv=none; b=seez/fYqgLFGPHTQ7Q5L8Z87Xu8Uyjy6Qp2wKny6SoWnXMEGbhaySDnwKoyrb2Zw/Lc7J0WDDqDjf0lu9KxtICP9hCj6IY+/hPBO+dxBQCPtua1TbiIk4Y4IGwxrplN3txUnSq6TQhGDeJClz9D1FY89dPYvAdC9ZeBX4DdHGBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624828; c=relaxed/simple;
-	bh=S9TlnESN08vtY9z31CRtWK8ZEG4aPTcutPc0kWNlhr4=;
+	s=arc-20240116; t=1781624835; c=relaxed/simple;
+	bh=g8GKQ/d5+42YF5SN3sbmobpSMOaoxXXHVGYkvYHTqEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dhGOsk31ssE0zRZnJnUyFnWDPYx9Hvi0TekZC2TKKws0numTRlaoA3tOPuLVZ1XZNHgOUE+CQlDPBjJa+8v2YZZZYFoLqdeYbqxnqvRqSAfCgMqYhclWw0J30Bx8mSVtb/Z1rmmgd1miSsglzF54syxSnluEvGBkY7plrS5pwFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yhx/FVa0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jm2lLguwFClk5NaDsg4FTRet7vgHNMSUNpoZRwV9gCfQMCDHjC1qU2P9XpuOqP/TCcqwFFYD3AocxRZFmw/AsxuGt7zJRxAjadwcay7EvACCLRklOaxJf7+mW2r9fY1kDBX8075qjyDyBtE9ttpHt7RA5I8gPwM/JBGQvKnCQi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvgRRNUS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yhx/FVa0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AA31F000E9;
-	Tue, 16 Jun 2026 15:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvgRRNUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E741F00A3A;
+	Tue, 16 Jun 2026 15:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624826;
-	bh=I0LXXBH2u/UP49x6FV8cLL3A9PG8c0EiDHPPhcNC6v8=;
+	s=korg; t=1781624833;
+	bh=RHvmn2cAGOW8Sz2tRBGUqlXR7ZCkV5ufivwoDBpb1YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yhx/FVa0fWL3sD2aYnwY3ZnGc49SlxsTEDTuTNpNIVp9fk3llk+kHJtzutuTP3NVQ
-	 1LfQJN/EdL+/dOPuWDn2JAgtTbxWfnnuSvdutG52PxxkUY6b7d1IMpmyK39jnEiL3K
-	 LQhzuAbcP1eWhb1EmDual1B6WBGAv04AjUSUpC04=
+	b=yvgRRNUSpqwrOebyBsZObPZVp2cZfJYlZ2AN41lzFRVnELEmdeXn+gRsJohAyuX4K
+	 thknJHXcVKFjNSAOgOBc0NixQRzaJw8kPzTXFKgZAc13xJ0VI9fpRmas8fo7hv6CjO
+	 sx99MrlbAn/hrC0zhnSGq4BUPpOnsbAORm95icQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+652670cf249077eb498b@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
+	Ox Yeh <ox.yeh@mediatek.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/325] hsr: Remove WARN_ONCE() in hsr_addr_is_self().
-Date: Tue, 16 Jun 2026 20:27:12 +0530
-Message-ID: <20260616145059.538412970@linuxfoundation.org>
+Subject: [PATCH 6.18 010/325] tee: optee: prevent use-after-free when the client exits before the supplicant
+Date: Tue, 16 Jun 2026 20:26:46 +0530
+Message-ID: <20260616145058.332404106@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,107 +53,284 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
 
-[ Upstream commit afd0f17ca46258cec3a5cc48b8df9327fe772490 ]
+[ Upstream commit 387a926ee166814611acecb960207fe2f3c4fd3e ]
 
-syzbot reported the warning [0] in hsr_addr_is_self(),
-whose assumption is simply wrong.
+Commit 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop") made the
+client wait as killable so it can be interrupted during shutdown or
+after a supplicant crash. This changes the original lifetime expectations:
+the client task can now terminate while the supplicant is still processing
+its request.
 
-hsr->self_node is cleared in hsr_del_self_node(), which
-is called from hsr_dellink().
+If the client exits first it removes the request from its queue and
+kfree()s it, while the request ID remains in supp->idr. A subsequent
+lookup on the supplicant path then dereferences freed memory, leading to
+a use-after-free.
 
-Since dev->rtnl_link_ops->dellink() is called before
-unregister_netdevice_many(), there is a window when
-user can find the device but without hsr->self_node.
+Serialise access to the request with supp->mutex:
 
-Let's remove WARN_ONCE() in hsr_addr_is_self().
+  * Hold supp->mutex in optee_supp_recv() and optee_supp_send() while
+    looking up and touching the request.
+  * Let optee_supp_thrd_req() notice that the client has terminated and
+    signal optee_supp_send() accordingly.
 
-[0]:
-HSR: No self node
-WARNING: net/hsr/hsr_framereg.c:39 at hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39, CPU#0: syz.4.16848/17220
-Modules linked in:
-CPU: 0 UID: 0 PID: 17220 Comm: syz.4.16848 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
-Tainted: [L]=SOFTLOCKUP
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
-RIP: 0010:hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39
-Code: 33 2f 41 0f b7 dd 89 ee 09 de 31 ff e8 c8 b4 c6 f6 09 dd 74 54 e8 0f b0 c6 f6 31 ed eb 53 e8 06 b0 c6 f6 48 8d 3d 2f 50 9c 04 <67> 48 0f b9 3a 31 ed eb 42 e8 c1 13 1f 00 89 c5 31 ff 89 c6 e8 96
-RSP: 0018:ffffc900041c70e0 EFLAGS: 00010283
-RAX: ffffffff8afdc6ca RBX: ffffffff8afdc4e6 RCX: 0000000000080000
-RDX: ffffc90010493000 RSI: 0000000000000948 RDI: ffffffff8f9a1700
-RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
-R10: ffffc900041c71e8 R11: fffff52000838e3f R12: dffffc0000000000
-R13: ffff888041f9e3c0 R14: ffff888086ee3802 R15: 0000000000000000
-FS:  00007f6fe985d6c0(0000) GS:ffff888126176000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f80bd437dac CR3: 0000000025096000 CR4: 00000000003526f0
-DR0: ffffffffffffffff DR1: 00000000000001f8 DR2: 0000000000000002
-DR3: ffffffffefffff15 DR6: 00000000ffff0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- check_local_dest net/hsr/hsr_forward.c:592 [inline]
- fill_frame_info net/hsr/hsr_forward.c:728 [inline]
- hsr_forward_skb+0xa11/0x2a80 net/hsr/hsr_forward.c:739
- hsr_dev_xmit+0x253/0x370 net/hsr/hsr_device.c:236
- __netdev_start_xmit include/linux/netdevice.h:5368 [inline]
- netdev_start_xmit include/linux/netdevice.h:5377 [inline]
- xmit_one net/core/dev.c:3888 [inline]
- dev_hard_start_xmit+0x2df/0x860 net/core/dev.c:3904
- __dev_queue_xmit+0x1428/0x3900 net/core/dev.c:4870
- neigh_output include/net/neighbour.h:556 [inline]
- ip_finish_output2+0xcec/0x10b0 net/ipv4/ip_output.c:237
- ip_send_skb net/ipv4/ip_output.c:1510 [inline]
- ip_push_pending_frames+0x8b/0x110 net/ipv4/ip_output.c:1530
- raw_sendmsg+0x1547/0x1a50 net/ipv4/raw.c:659
- sock_sendmsg_nosec net/socket.c:787 [inline]
- __sock_sendmsg net/socket.c:802 [inline]
- ____sys_sendmsg+0x7da/0x9c0 net/socket.c:2698
- ___sys_sendmsg+0x2a5/0x360 net/socket.c:2752
- __sys_sendmsg net/socket.c:2784 [inline]
- __do_sys_sendmsg net/socket.c:2789 [inline]
- __se_sys_sendmsg net/socket.c:2787 [inline]
- __x64_sys_sendmsg+0x1c3/0x2a0 net/socket.c:2787
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x15f/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f6feb62ce59
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f6fe985d028 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00007f6feb8a6090 RCX: 00007f6feb62ce59
-RDX: 0000000000000000 RSI: 0000200000000000 RDI: 0000000000000004
-RBP: 00007f6feb6c2d6f R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f6feb8a6128 R14: 00007f6feb8a6090 R15: 00007ffcf01cc488
- </TASK>
+With these changes the request cannot be freed while the supplicant still
+has a reference, eliminating the race.
 
-Fixes: f266a683a480 ("net/hsr: Better frame dispatch")
-Reported-by: syzbot+652670cf249077eb498b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a1a861e.b111c304.35cd64.0016.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260530064300.340793-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop")
+Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Tested-by: Ox Yeh <ox.yeh@mediatek.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_framereg.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/tee/optee/supp.c | 107 +++++++++++++++++++++++++++------------
+ 1 file changed, 74 insertions(+), 33 deletions(-)
 
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index 3a2a2fa7a0a396..bd2fbbc4420b29 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -52,10 +52,8 @@ bool hsr_addr_is_self(struct hsr_priv *hsr, unsigned char *addr)
+diff --git a/drivers/tee/optee/supp.c b/drivers/tee/optee/supp.c
+index d0f397c9024201..2386bbd38ce78b 100644
+--- a/drivers/tee/optee/supp.c
++++ b/drivers/tee/optee/supp.c
+@@ -10,7 +10,11 @@
+ struct optee_supp_req {
+ 	struct list_head link;
  
- 	rcu_read_lock();
- 	sn = rcu_dereference(hsr->self_node);
--	if (!sn) {
--		WARN_ONCE(1, "HSR: No self node\n");
-+	if (!sn)
- 		goto out;
++	int id;
++
+ 	bool in_queue;
++	bool processed;
++
+ 	u32 func;
+ 	u32 ret;
+ 	size_t num_params;
+@@ -19,6 +23,9 @@ struct optee_supp_req {
+ 	struct completion c;
+ };
+ 
++/* It is temporary request used for revoked pending request in supp->idr. */
++#define INVALID_REQ_PTR ((struct optee_supp_req *)ERR_PTR(-EBADF))
++
+ void optee_supp_init(struct optee_supp *supp)
+ {
+ 	memset(supp, 0, sizeof(*supp));
+@@ -39,21 +46,23 @@ void optee_supp_release(struct optee_supp *supp)
+ {
+ 	int id;
+ 	struct optee_supp_req *req;
+-	struct optee_supp_req *req_tmp;
+ 
+ 	mutex_lock(&supp->mutex);
+ 
+-	/* Abort all request retrieved by supplicant */
++	/* Abort all request */
+ 	idr_for_each_entry(&supp->idr, req, id) {
+ 		idr_remove(&supp->idr, id);
+-		req->ret = TEEC_ERROR_COMMUNICATION;
+-		complete(&req->c);
 -	}
++		/* Skip if request was already marked invalid */
++		if (IS_ERR(req))
++			continue;
  
- 	if (ether_addr_equal(addr, sn->macaddress_A) ||
- 	    ether_addr_equal(addr, sn->macaddress_B))
+-	/* Abort all queued requests */
+-	list_for_each_entry_safe(req, req_tmp, &supp->reqs, link) {
+-		list_del(&req->link);
+-		req->in_queue = false;
++		/* For queued requests where supplicant has not seen it */
++		if (req->in_queue) {
++			list_del(&req->link);
++			req->in_queue = false;
++		}
++
++		req->processed = true;
+ 		req->ret = TEEC_ERROR_COMMUNICATION;
+ 		complete(&req->c);
+ 	}
+@@ -100,8 +109,16 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
+ 
+ 	/* Insert the request in the request list */
+ 	mutex_lock(&supp->mutex);
++	req->id = idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
++	if (req->id < 0) {
++		mutex_unlock(&supp->mutex);
++		kfree(req);
++		return TEEC_ERROR_OUT_OF_MEMORY;
++	}
++
+ 	list_add_tail(&req->link, &supp->reqs);
+ 	req->in_queue = true;
++	req->processed = false;
+ 	mutex_unlock(&supp->mutex);
+ 
+ 	/* Tell an eventual waiter there's a new request */
+@@ -117,21 +134,43 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
+ 	if (wait_for_completion_killable(&req->c)) {
+ 		mutex_lock(&supp->mutex);
+ 		if (req->in_queue) {
++			/* Supplicant has not seen this request yet. */
++			idr_remove(&supp->idr, req->id);
+ 			list_del(&req->link);
+ 			req->in_queue = false;
++
++			ret = TEEC_ERROR_COMMUNICATION;
++		} else if (req->processed) {
++			/*
++			 * Supplicant has processed this request. Ignore the
++			 * kill signal for now and submit the result. req is not
++			 * in supp->reqs (removed by supp_pop_entry()) nor in
++			 * supp->idr (removed by supp_pop_req()).
++			 */
++			ret = req->ret;
++		} else {
++			/*
++			 * Supplicant is in the middle of processing this
++			 * request. Replace req with INVALID_REQ_PTR so that
++			 * the ID remains busy, causing optee_supp_send() to
++			 * fail on the next call to supp_pop_req() with this ID.
++			 */
++			idr_replace(&supp->idr, INVALID_REQ_PTR, req->id);
++			ret = TEEC_ERROR_COMMUNICATION;
+ 		}
++
+ 		mutex_unlock(&supp->mutex);
+-		req->ret = TEEC_ERROR_COMMUNICATION;
++	} else {
++		ret = req->ret;
+ 	}
+ 
+-	ret = req->ret;
+ 	kfree(req);
+ 
+ 	return ret;
+ }
+ 
+ static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
+-					      int num_params, int *id)
++					      int num_params)
+ {
+ 	struct optee_supp_req *req;
+ 
+@@ -153,10 +192,6 @@ static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+-	*id = idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
+-	if (*id < 0)
+-		return ERR_PTR(-ENOMEM);
+-
+ 	list_del(&req->link);
+ 	req->in_queue = false;
+ 
+@@ -214,7 +249,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 	struct optee *optee = tee_get_drvdata(teedev);
+ 	struct optee_supp *supp = &optee->supp;
+ 	struct optee_supp_req *req = NULL;
+-	int id;
+ 	size_t num_meta;
+ 	int rc;
+ 
+@@ -224,15 +258,11 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 
+ 	while (true) {
+ 		mutex_lock(&supp->mutex);
+-		req = supp_pop_entry(supp, *num_params - num_meta, &id);
++		req = supp_pop_entry(supp, *num_params - num_meta);
++		if (req)
++			break; /* Keep mutex held. */
+ 		mutex_unlock(&supp->mutex);
+ 
+-		if (req) {
+-			if (IS_ERR(req))
+-				return PTR_ERR(req);
+-			break;
+-		}
+-
+ 		/*
+ 		 * If we didn't get a request we'll block in
+ 		 * wait_for_completion() to avoid needless spinning.
+@@ -245,6 +275,13 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 			return -ERESTARTSYS;
+ 	}
+ 
++	/* supp->mutex held and req != NULL. */
++
++	if (IS_ERR(req)) {
++		mutex_unlock(&supp->mutex);
++		return PTR_ERR(req);
++	}
++
+ 	if (num_meta) {
+ 		/*
+ 		 * tee-supplicant support meta parameters -> requsts can be
+@@ -252,13 +289,11 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 		 */
+ 		param->attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT |
+ 			      TEE_IOCTL_PARAM_ATTR_META;
+-		param->u.value.a = id;
++		param->u.value.a = req->id;
+ 		param->u.value.b = 0;
+ 		param->u.value.c = 0;
+ 	} else {
+-		mutex_lock(&supp->mutex);
+-		supp->req_id = id;
+-		mutex_unlock(&supp->mutex);
++		supp->req_id = req->id;
+ 	}
+ 
+ 	*func = req->func;
+@@ -266,6 +301,7 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 	memcpy(param + num_meta, req->param,
+ 	       sizeof(struct tee_param) * req->num_params);
+ 
++	mutex_unlock(&supp->mutex);
+ 	return 0;
+ }
+ 
+@@ -297,12 +333,17 @@ static struct optee_supp_req *supp_pop_req(struct optee_supp *supp,
+ 	if (!req)
+ 		return ERR_PTR(-ENOENT);
+ 
++	/* optee_supp_thrd_req() already returned to optee. */
++	if (IS_ERR(req))
++		goto failed_req;
++
+ 	if ((num_params - nm) != req->num_params)
+ 		return ERR_PTR(-EINVAL);
+ 
++	*num_meta = nm;
++failed_req:
+ 	idr_remove(&supp->idr, id);
+ 	supp->req_id = -1;
+-	*num_meta = nm;
+ 
+ 	return req;
+ }
+@@ -328,10 +369,9 @@ int optee_supp_send(struct tee_context *ctx, u32 ret, u32 num_params,
+ 
+ 	mutex_lock(&supp->mutex);
+ 	req = supp_pop_req(supp, num_params, param, &num_meta);
+-	mutex_unlock(&supp->mutex);
+-
+ 	if (IS_ERR(req)) {
+-		/* Something is wrong, let supplicant restart. */
++		mutex_unlock(&supp->mutex);
++		/* Something is wrong, let supplicant handel it. */
+ 		return PTR_ERR(req);
+ 	}
+ 
+@@ -355,9 +395,10 @@ int optee_supp_send(struct tee_context *ctx, u32 ret, u32 num_params,
+ 		}
+ 	}
+ 	req->ret = ret;
+-
++	req->processed = true;
+ 	/* Let the requesting thread continue */
+ 	complete(&req->c);
++	mutex_unlock(&supp->mutex);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
