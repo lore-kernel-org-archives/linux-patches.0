@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33251E8320;
-	Tue, 16 Jun 2026 16:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030CE46AF02;
+	Tue, 16 Jun 2026 16:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627022; cv=none; b=tgczjpvaynPj5gslk6owqzcLBDpt6EyJgiyxhCwD5wpDEDtDaDyVdSPMTivlZEWVp8K5NtXSCtxlP7yrbQHkAEkCuHhLYvW/m0ll7L3AUcEWc62GaS27s6g7hxbJmp1VaD6e4QuJhi8lsyvuRr1r8kV2A5Qu/csNXAuIDHxkqfY=
+	t=1781627034; cv=none; b=Q+cY+TsxRhsShTQ9PYWKztu7zGNWAjSNzeTmwJR9tciaPwsaVPNQr5G9JqymWWjfdJKtpTTmlfgG7dkD4Jx3uIQODLdSWiwsQRCXAUjChiMmgyeMPBkCaoVpwP1V0G05Zt8XZyeVvnOp7TFU3+kqc9MoLdDldfYnzZtkAGFRiBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627022; c=relaxed/simple;
-	bh=d0kgvPDrst4wyULrA/zXa74PQvgFiWKBG33QfzMRBNI=;
+	s=arc-20240116; t=1781627034; c=relaxed/simple;
+	bh=IrxJuMra34XPHXpGP+BGE5tUgfZSc20Jg/a9mZ9X+X0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=StJBbqmvXgk0iz8i1fPp5nfQfQvUSxppoTeHDH2QjrrIwDAtAAJxfZrMiSAGUg9TFjdoMZLINnGqWMxgcSLpM1zthXqVLlVEZBzqJhivem1TmXG+9q0YCVhT8CpdodjkyMNvXVZj+rCqp7gKMjxynpQvFlSx55jQ3fceK34sU3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRz8fWqh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oBoGg5qJjTYakIsqIXOfjyF29YE//T9WacvmOFVBk6NuxNJRiTh2AAWck9iClD6SbstPkcx5hfGS80cUdXZqy2RszKk8ev1uZR5IiPAGPzrnpHpYeSfj7Zk8skn19tSSU7VyYJRHdewc8/PzSePjU5DKjradYICjPs8pOKdGuOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDhBp4K8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRz8fWqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9898C1F000E9;
-	Tue, 16 Jun 2026 16:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDhBp4K8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE181F000E9;
+	Tue, 16 Jun 2026 16:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627020;
-	bh=KC950CIoc20OHTxw66T6yaE3Y82+WyC13zW4+OXIq+4=;
+	s=korg; t=1781627032;
+	bh=T4TxMq67KxMxtWjaeG3CxhJtuBInT0qz8mVTTXyJGu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zRz8fWqhl4Mrnr+QAzGDVu9xcS0gPc9O4K09GpRVV0P2ufpcW1wxBQHrR87BoDIbj
-	 hol0GRKHV8T92oLALRwGnhAK0h5IWQ/MJzdf05Qn87FBFtG3owPagCT3hJ7X9g0Jcu
-	 trsmDPNSGO5KBfe86dTXhm/9CRG07/RUtQK9m5h0=
+	b=oDhBp4K8dACEUUx1+HzXh92JhPvPji3lBIMDEcsUa0/itTzjnhVYL/MkU4Hxm293G
+	 6hbDof2r9DmC7PXv+fMHEmhD350L7nYC5oeI2AhILDHRbQnARxcqcILuU7tV03uVnP
+	 2mK5LEmysQKF2c0aZgQJCe5YyMHI8A2M+C3wnTl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Mark Bundschuh <mkbund@amazon.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/261] netfilter: ctnetlink: ensure safe access to master conntrack
-Date: Tue, 16 Jun 2026 20:29:06 +0530
-Message-ID: <20260616145050.063454212@linuxfoundation.org>
+Subject: [PATCH 6.12 109/261] writeback: Avoid contention on wb->list_lock when switching inodes
+Date: Tue, 16 Jun 2026 20:29:07 +0530
+Message-ID: <20260616145050.111347590@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,219 +51,298 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit bffcaad9afdfe45d7fc777397d3b83c1e3ebffe5 ]
+[ Upstream commit e1b849cfa6b61f1c866a908c9e8dd9b5aaab820b ]
 
-Holding reference on the expectation is not sufficient, the master
-conntrack object can just go away, making exp->master invalid.
+There can be multiple inode switch works that are trying to switch
+inodes to / from the same wb. This can happen in particular if some
+cgroup exits which owns many (thousands) inodes and we need to switch
+them all. In this case several inode_switch_wbs_work_fn() instances will
+be just spinning on the same wb->list_lock while only one of them makes
+forward progress. This wastes CPU cycles and quickly leads to softlockup
+reports and unusable system.
 
-To access exp->master safely:
+Instead of running several inode_switch_wbs_work_fn() instances in
+parallel switching to the same wb and contending on wb->list_lock, run
+just one work item per wb and manage a queue of isw items switching to
+this wb.
 
-- Grab the nf_conntrack_expect_lock, this gets serialized with
-  clean_from_lists() which also holds this lock when the master
-  conntrack goes away.
-
-- Hold reference on master conntrack via nf_conntrack_find_get().
-  Not so easy since the master tuple to look up for the master conntrack
-  is not available in the existing problematic paths.
-
-This patch goes for extending the nf_conntrack_expect_lock section
-to address this issue for simplicity, in the cases that are described
-below this is just slightly extending the lock section.
-
-The add expectation command already holds a reference to the master
-conntrack from ctnetlink_create_expect().
-
-However, the delete expectation command needs to grab the spinlock
-before looking up for the expectation. Expand the existing spinlock
-section to address this to cover the expectation lookup. Note that,
-the nf_ct_expect_iterate_net() calls already grabs the spinlock while
-iterating over the expectation table, which is correct.
-
-The get expectation command needs to grab the spinlock to ensure master
-conntrack does not go away. This also expands the existing spinlock
-section to cover the expectation lookup too. I needed to move the
-netlink skb allocation out of the spinlock to keep it GFP_KERNEL.
-
-For the expectation events, the IPEXP_DESTROY event is already delivered
-under the spinlock, just move the delivery of IPEXP_NEW under the
-spinlock too because the master conntrack event cache is reached through
-exp->master.
-
-While at it, add lockdep notations to help identify what codepaths need
-to grab the spinlock.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ fix timer_delete -> del_timer in diff context lines since 8fa7292
-("treewide: Switch/rename to timer_delete[_sync]()") landed in 6.15 ]
-Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_core.h |  5 ++++
- net/netfilter/nf_conntrack_ecache.c       |  2 ++
- net/netfilter/nf_conntrack_expect.c       | 10 +++++++-
- net/netfilter/nf_conntrack_netlink.c      | 28 +++++++++++++++--------
- 4 files changed, 35 insertions(+), 10 deletions(-)
+ fs/fs-writeback.c                | 99 ++++++++++++++++++++------------
+ include/linux/backing-dev-defs.h |  4 ++
+ include/linux/writeback.h        |  2 +
+ mm/backing-dev.c                 |  5 ++
+ 4 files changed, 74 insertions(+), 36 deletions(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_core.h b/include/net/netfilter/nf_conntrack_core.h
-index 3384859a892101..8883575adcc1e7 100644
---- a/include/net/netfilter/nf_conntrack_core.h
-+++ b/include/net/netfilter/nf_conntrack_core.h
-@@ -83,6 +83,11 @@ void nf_conntrack_lock(spinlock_t *lock);
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 45e90338fbb2df..a8d21a5f354859 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -369,7 +369,8 @@ static struct bdi_writeback *inode_to_wb_and_lock_list(struct inode *inode)
+ }
  
- extern spinlock_t nf_conntrack_expect_lock;
+ struct inode_switch_wbs_context {
+-	struct rcu_work		work;
++	/* List of queued switching contexts for the wb */
++	struct llist_node	list;
  
-+static inline void lockdep_nfct_expect_lock_held(void)
+ 	/*
+ 	 * Multiple inodes can be switched at once.  The switching procedure
+@@ -379,7 +380,6 @@ struct inode_switch_wbs_context {
+ 	 * array embedded into struct inode_switch_wbs_context.  Otherwise
+ 	 * an inode could be left in a non-consistent state.
+ 	 */
+-	struct bdi_writeback	*new_wb;
+ 	struct inode		*inodes[];
+ };
+ 
+@@ -488,13 +488,11 @@ static bool inode_do_switch_wbs(struct inode *inode,
+ 	return switched;
+ }
+ 
+-static void inode_switch_wbs_work_fn(struct work_struct *work)
++static void process_inode_switch_wbs(struct bdi_writeback *new_wb,
++				     struct inode_switch_wbs_context *isw)
+ {
+-	struct inode_switch_wbs_context *isw =
+-		container_of(to_rcu_work(work), struct inode_switch_wbs_context, work);
+ 	struct backing_dev_info *bdi = inode_to_bdi(isw->inodes[0]);
+ 	struct bdi_writeback *old_wb = isw->inodes[0]->i_wb;
+-	struct bdi_writeback *new_wb = isw->new_wb;
+ 	unsigned long nr_switched = 0;
+ 	struct inode **inodep;
+ 
+@@ -554,6 +552,38 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
+ 	atomic_dec(&isw_nr_in_flight);
+ }
+ 
++void inode_switch_wbs_work_fn(struct work_struct *work)
 +{
-+	lockdep_assert_held(&nf_conntrack_expect_lock);
++	struct bdi_writeback *new_wb = container_of(work, struct bdi_writeback,
++						    switch_work);
++	struct inode_switch_wbs_context *isw, *next_isw;
++	struct llist_node *list;
++
++	/*
++	 * Grab out reference to wb so that it cannot get freed under us
++	 * after we process all the isw items.
++	 */
++	wb_get(new_wb);
++	while (1) {
++		list = llist_del_all(&new_wb->switch_wbs_ctxs);
++		/* Nothing to do? */
++		if (!list)
++			break;
++		/*
++		 * In addition to synchronizing among switchers, I_WB_SWITCH
++		 * tells the RCU protected stat update paths to grab the i_page
++		 * lock so that stat transfer can synchronize against them.
++		 * Let's continue after I_WB_SWITCH is guaranteed to be
++		 * visible.
++		 */
++		synchronize_rcu();
++
++		llist_for_each_entry_safe(isw, next_isw, list, list)
++			process_inode_switch_wbs(new_wb, isw);
++	}
++	wb_put(new_wb);
 +}
 +
- /* ctnetlink code shared by both ctnetlink and nf_conntrack_bpf */
- 
- static inline void __nf_ct_set_timeout(struct nf_conn *ct, u64 timeout)
-diff --git a/net/netfilter/nf_conntrack_ecache.c b/net/netfilter/nf_conntrack_ecache.c
-index 69948e1d6974e3..6526bdcca580fd 100644
---- a/net/netfilter/nf_conntrack_ecache.c
-+++ b/net/netfilter/nf_conntrack_ecache.c
-@@ -237,6 +237,8 @@ void nf_ct_expect_event_report(enum ip_conntrack_expect_events event,
- 	struct nf_ct_event_notifier *notify;
- 	struct nf_conntrack_ecache *e;
- 
-+	lockdep_nfct_expect_lock_held();
-+
- 	rcu_read_lock();
- 	notify = rcu_dereference(net->ct.nf_conntrack_event_cb);
- 	if (!notify)
-diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
-index f5c45989df5736..bb8b87f9ee50da 100644
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -51,6 +51,7 @@ void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
- 	struct net *net = nf_ct_exp_net(exp);
- 	struct nf_conntrack_net *cnet;
- 
-+	lockdep_nfct_expect_lock_held();
- 	WARN_ON(!master_help);
- 	WARN_ON(timer_pending(&exp->timeout));
- 
-@@ -118,6 +119,8 @@ nf_ct_exp_equal(const struct nf_conntrack_tuple *tuple,
- 
- bool nf_ct_remove_expect(struct nf_conntrack_expect *exp)
+ static bool inode_prepare_wbs_switch(struct inode *inode,
+ 				     struct bdi_writeback *new_wb)
  {
-+	lockdep_nfct_expect_lock_held();
+@@ -583,6 +613,13 @@ static bool inode_prepare_wbs_switch(struct inode *inode,
+ 	return true;
+ }
+ 
++static void wb_queue_isw(struct bdi_writeback *wb,
++			 struct inode_switch_wbs_context *isw)
++{
++	if (llist_add(&isw->list, &wb->switch_wbs_ctxs))
++		queue_work(isw_wq, &wb->switch_work);
++}
 +
- 	if (del_timer(&exp->timeout)) {
- 		nf_ct_unlink_expect(exp);
- 		nf_ct_expect_put(exp);
-@@ -177,6 +180,8 @@ nf_ct_find_expectation(struct net *net,
- 	struct nf_conntrack_expect *i, *exp = NULL;
- 	unsigned int h;
+ /**
+  * inode_switch_wbs - change the wb association of an inode
+  * @inode: target inode
+@@ -596,6 +633,7 @@ static void inode_switch_wbs(struct inode *inode, int new_wb_id)
+ 	struct backing_dev_info *bdi = inode_to_bdi(inode);
+ 	struct cgroup_subsys_state *memcg_css;
+ 	struct inode_switch_wbs_context *isw;
++	struct bdi_writeback *new_wb = NULL;
  
-+	lockdep_nfct_expect_lock_held();
-+
- 	if (!cnet->expect_count)
- 		return NULL;
+ 	/* noop if seems to be already in progress */
+ 	if (inode->i_state & I_WB_SWITCH)
+@@ -620,40 +658,34 @@ static void inode_switch_wbs(struct inode *inode, int new_wb_id)
+ 	if (!memcg_css)
+ 		goto out_free;
  
-@@ -459,6 +464,8 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
- 	unsigned int h;
- 	int ret = 0;
+-	isw->new_wb = wb_get_create(bdi, memcg_css, GFP_ATOMIC);
++	new_wb = wb_get_create(bdi, memcg_css, GFP_ATOMIC);
+ 	css_put(memcg_css);
+-	if (!isw->new_wb)
++	if (!new_wb)
+ 		goto out_free;
  
-+	lockdep_nfct_expect_lock_held();
-+
- 	if (!master_help) {
- 		ret = -ESHUTDOWN;
- 		goto out;
-@@ -515,8 +522,9 @@ int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
+-	if (!inode_prepare_wbs_switch(inode, isw->new_wb))
++	if (!inode_prepare_wbs_switch(inode, new_wb))
+ 		goto out_free;
  
- 	nf_ct_expect_insert(expect);
+ 	isw->inodes[0] = inode;
  
--	spin_unlock_bh(&nf_conntrack_expect_lock);
- 	nf_ct_expect_event_report(IPEXP_NEW, expect, portid, report);
-+	spin_unlock_bh(&nf_conntrack_expect_lock);
-+
- 	return 0;
- out:
- 	spin_unlock_bh(&nf_conntrack_expect_lock);
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index f51cdfba68fbdb..507f17722f375b 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3332,31 +3332,37 @@ static int ctnetlink_get_expect(struct sk_buff *skb,
- 	if (err < 0)
- 		return err;
+-	/*
+-	 * In addition to synchronizing among switchers, I_WB_SWITCH tells
+-	 * the RCU protected stat update paths to grab the i_page
+-	 * lock so that stat transfer can synchronize against them.
+-	 * Let's continue after I_WB_SWITCH is guaranteed to be visible.
+-	 */
+-	INIT_RCU_WORK(&isw->work, inode_switch_wbs_work_fn);
+-	queue_rcu_work(isw_wq, &isw->work);
++	wb_queue_isw(new_wb, isw);
+ 	return;
  
-+	skb2 = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
-+	if (!skb2)
-+		return -ENOMEM;
-+
-+	spin_lock_bh(&nf_conntrack_expect_lock);
- 	exp = nf_ct_expect_find_get(info->net, &zone, &tuple);
--	if (!exp)
-+	if (!exp) {
-+		spin_unlock_bh(&nf_conntrack_expect_lock);
-+		kfree_skb(skb2);
- 		return -ENOENT;
-+	}
+ out_free:
+ 	atomic_dec(&isw_nr_in_flight);
+-	if (isw->new_wb)
+-		wb_put(isw->new_wb);
++	if (new_wb)
++		wb_put(new_wb);
+ 	kfree(isw);
+ }
  
- 	if (cda[CTA_EXPECT_ID]) {
- 		__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
+-static bool isw_prepare_wbs_switch(struct inode_switch_wbs_context *isw,
++static bool isw_prepare_wbs_switch(struct bdi_writeback *new_wb,
++				   struct inode_switch_wbs_context *isw,
+ 				   struct list_head *list, int *nr)
+ {
+ 	struct inode *inode;
  
- 		if (id != nf_expect_get_id(exp)) {
- 			nf_ct_expect_put(exp);
-+			spin_unlock_bh(&nf_conntrack_expect_lock);
-+			kfree_skb(skb2);
- 			return -ENOENT;
- 		}
+ 	list_for_each_entry(inode, list, i_io_list) {
+-		if (!inode_prepare_wbs_switch(inode, isw->new_wb))
++		if (!inode_prepare_wbs_switch(inode, new_wb))
+ 			continue;
+ 
+ 		isw->inodes[*nr] = inode;
+@@ -677,6 +709,7 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ {
+ 	struct cgroup_subsys_state *memcg_css;
+ 	struct inode_switch_wbs_context *isw;
++	struct bdi_writeback *new_wb;
+ 	int nr;
+ 	bool restart = false;
+ 
+@@ -689,12 +722,12 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 
+ 	for (memcg_css = wb->memcg_css->parent; memcg_css;
+ 	     memcg_css = memcg_css->parent) {
+-		isw->new_wb = wb_get_create(wb->bdi, memcg_css, GFP_KERNEL);
+-		if (isw->new_wb)
++		new_wb = wb_get_create(wb->bdi, memcg_css, GFP_KERNEL);
++		if (new_wb)
+ 			break;
+ 	}
+-	if (unlikely(!isw->new_wb))
+-		isw->new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
++	if (unlikely(!new_wb))
++		new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
+ 
+ 	nr = 0;
+ 	spin_lock(&wb->list_lock);
+@@ -706,27 +739,21 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 	 * bandwidth restrictions, as writeback of inode metadata is not
+ 	 * accounted for.
+ 	 */
+-	restart = isw_prepare_wbs_switch(isw, &wb->b_attached, &nr);
++	restart = isw_prepare_wbs_switch(new_wb, isw, &wb->b_attached, &nr);
+ 	if (!restart)
+-		restart = isw_prepare_wbs_switch(isw, &wb->b_dirty_time, &nr);
++		restart = isw_prepare_wbs_switch(new_wb, isw, &wb->b_dirty_time,
++						 &nr);
+ 	spin_unlock(&wb->list_lock);
+ 
+ 	/* no attached inodes? bail out */
+ 	if (nr == 0) {
+ 		atomic_dec(&isw_nr_in_flight);
+-		wb_put(isw->new_wb);
++		wb_put(new_wb);
+ 		kfree(isw);
+ 		return restart;
  	}
  
--	skb2 = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
--	if (!skb2) {
--		nf_ct_expect_put(exp);
--		return -ENOMEM;
--	}
--
- 	rcu_read_lock();
- 	err = ctnetlink_exp_fill_info(skb2, NETLINK_CB(skb).portid,
- 				      info->nlh->nlmsg_seq, IPCTNL_MSG_EXP_NEW,
- 				      exp);
- 	rcu_read_unlock();
- 	nf_ct_expect_put(exp);
-+	spin_unlock_bh(&nf_conntrack_expect_lock);
+-	/*
+-	 * In addition to synchronizing among switchers, I_WB_SWITCH tells
+-	 * the RCU protected stat update paths to grab the i_page
+-	 * lock so that stat transfer can synchronize against them.
+-	 * Let's continue after I_WB_SWITCH is guaranteed to be visible.
+-	 */
+-	INIT_RCU_WORK(&isw->work, inode_switch_wbs_work_fn);
+-	queue_rcu_work(isw_wq, &isw->work);
++	wb_queue_isw(new_wb, isw);
+ 
+ 	return restart;
+ }
+diff --git a/include/linux/backing-dev-defs.h b/include/linux/backing-dev-defs.h
+index 2ad261082bba5f..c5c9d89c73edcc 100644
+--- a/include/linux/backing-dev-defs.h
++++ b/include/linux/backing-dev-defs.h
+@@ -152,6 +152,10 @@ struct bdi_writeback {
+ 	struct list_head blkcg_node;	/* anchored at blkcg->cgwb_list */
+ 	struct list_head b_attached;	/* attached inodes, protected by list_lock */
+ 	struct list_head offline_node;	/* anchored at offline_cgwbs */
++	struct work_struct switch_work;	/* work used to perform inode switching
++					 * to this wb */
++	struct llist_head switch_wbs_ctxs;	/* queued contexts for
++						 * writeback switching */
+ 
+ 	union {
+ 		struct work_struct release_work;
+diff --git a/include/linux/writeback.h b/include/linux/writeback.h
+index 641a057e041329..b6bf90a7052599 100644
+--- a/include/linux/writeback.h
++++ b/include/linux/writeback.h
+@@ -293,6 +293,8 @@ static inline void wbc_init_bio(struct writeback_control *wbc, struct bio *bio)
+ 		bio_associate_blkg_from_css(bio, wbc->wb->blkcg_css);
+ }
+ 
++void inode_switch_wbs_work_fn(struct work_struct *work);
 +
- 	if (err <= 0) {
- 		kfree_skb(skb2);
- 		return -ENOMEM;
-@@ -3403,22 +3409,26 @@ static int ctnetlink_del_expect(struct sk_buff *skb,
- 		if (err < 0)
- 			return err;
+ #else	/* CONFIG_CGROUP_WRITEBACK */
  
-+		spin_lock_bh(&nf_conntrack_expect_lock);
-+
- 		/* bump usage count to 2 */
- 		exp = nf_ct_expect_find_get(info->net, &zone, &tuple);
--		if (!exp)
-+		if (!exp) {
-+			spin_unlock_bh(&nf_conntrack_expect_lock);
- 			return -ENOENT;
-+		}
+ static inline void inode_attach_wb(struct inode *inode, struct folio *folio)
+diff --git a/mm/backing-dev.c b/mm/backing-dev.c
+index bf0594ceb3ff87..956a7e23b5d634 100644
+--- a/mm/backing-dev.c
++++ b/mm/backing-dev.c
+@@ -634,6 +634,7 @@ static void cgwb_release_workfn(struct work_struct *work)
+ 	wb_exit(wb);
+ 	bdi_put(bdi);
+ 	WARN_ON_ONCE(!list_empty(&wb->b_attached));
++	WARN_ON_ONCE(work_pending(&wb->switch_work));
+ 	call_rcu(&wb->rcu, cgwb_free_rcu);
+ }
  
- 		if (cda[CTA_EXPECT_ID]) {
- 			__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
- 
- 			if (id != nf_expect_get_id(exp)) {
- 				nf_ct_expect_put(exp);
-+				spin_unlock_bh(&nf_conntrack_expect_lock);
- 				return -ENOENT;
- 			}
- 		}
- 
- 		/* after list removal, usage count == 1 */
--		spin_lock_bh(&nf_conntrack_expect_lock);
- 		if (del_timer(&exp->timeout)) {
- 			nf_ct_unlink_expect_report(exp, NETLINK_CB(skb).portid,
- 						   nlmsg_report(info->nlh));
+@@ -710,6 +711,8 @@ static int cgwb_create(struct backing_dev_info *bdi,
+ 	wb->memcg_css = memcg_css;
+ 	wb->blkcg_css = blkcg_css;
+ 	INIT_LIST_HEAD(&wb->b_attached);
++	INIT_WORK(&wb->switch_work, inode_switch_wbs_work_fn);
++	init_llist_head(&wb->switch_wbs_ctxs);
+ 	INIT_WORK(&wb->release_work, cgwb_release_workfn);
+ 	set_bit(WB_registered, &wb->state);
+ 	bdi_get(bdi);
+@@ -840,6 +843,8 @@ static int cgwb_bdi_init(struct backing_dev_info *bdi)
+ 	if (!ret) {
+ 		bdi->wb.memcg_css = &root_mem_cgroup->css;
+ 		bdi->wb.blkcg_css = blkcg_root_css;
++		INIT_WORK(&bdi->wb.switch_work, inode_switch_wbs_work_fn);
++		init_llist_head(&bdi->wb.switch_wbs_ctxs);
+ 	}
+ 	return ret;
+ }
 -- 
 2.53.0
 
