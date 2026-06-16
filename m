@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AC344CF44;
-	Tue, 16 Jun 2026 16:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BA644DB6D;
+	Tue, 16 Jun 2026 16:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625783; cv=none; b=hXh+5vHkj892SwQSzjnSOBj/c8gYqN6Zw4OeMD8o3yZMNgQEXg5lg3gnNkBcfZd/etbXWeI0Zn6674/AC6AlPHxZN8jkgm2OUT0TyuEWKSUH0qEtriQ1e3crKe2ToOxIAfVDbCHYBFsk2X5Xm6dVO/RzVTuAChJycYkzqEgweFQ=
+	t=1781625789; cv=none; b=CMWE34HwGGEb7uW9Y8DqIWXxpQ6jkSWUM9D4mNBR0E1BpWA14cPRIgOEqxME/555AFjMQO7ncIfxxRYcKJwUd/4iBMVgnWLK8+L/spWqdjTVWPCszZGnS8I7RdxX9MJS1Rohm2Wpafh6Ffi8Zl+4yMcT4AB+/ymvYHIIE3Ip0/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625783; c=relaxed/simple;
-	bh=g4kUaDXkuWKkzsgZepw1NU+9uhkyYylBRpwCiBG4F8U=;
+	s=arc-20240116; t=1781625789; c=relaxed/simple;
+	bh=AIfPuUfrrz0E/iSL0E7tmd4j0c1FM2d5zWDpKkKKHQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHU2ZrBs5J+5osQzds4cgZoKzaJf5DA09iEjCs6AOnrc64IJ9Yc50auyihWxvDk2dQogPpydLFQSaOgdyFq8eTUDL3xBRiDek4cCvkOOavFTUgZ2QHlcdyh/uo1vi56b7PzPK4gCAsQFq/vocLZNtZDAkyS/6ztPIhsk7NbRMgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqyBlQeE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XZDjQp7kwVLdkxqQFyWsq09K6iIcM+Spiya/vtpkL11YBnlCrKc36iKPqJlAeBtJtM/YxA8CI1eFMXlXjY3kMF/tBXpDEQteH1a0rP0E4pSz0ZcjwWHCfO3sHinfSNCVtdMYuvsD85VMMlIPqKLg2j3O6VoW2j+MGyknaqSNgf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viG5SQkd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqyBlQeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6DF1F000E9;
-	Tue, 16 Jun 2026 16:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viG5SQkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9E41F000E9;
+	Tue, 16 Jun 2026 16:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625782;
-	bh=55q7SWwM1E0+tKa2hz0LM0o3pSUsLhXzrvvU0MxeWo0=;
+	s=korg; t=1781625788;
+	bh=kjr9ur1lYIdjDOlQ5meoCQJdMCYBg6et8mbP4rwcaqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cqyBlQeE9HgMZzi7zABtM0tr4Dq33iBVSaBZJVuaDbgYaa5IMBfctEouvlosPYR4y
-	 6zX0BMul1JOkTm4FjtEMZjL9MDvUJQ/T4xxm7B3ibrRCjxkwPbNYNhu23vjZ9gLmuw
-	 7xsdzWVWNNBlJwEGWeEy00zvdEzlPp27mf3wlLOc=
+	b=viG5SQkdEOslgamgFH34Poi/N3bDvkI8O3qGpAxTpER5yWSgFNjhWioRQK3J14lrm
+	 kppaf6NTm2h6bHzDVppJyE9SHXDmPWT2nneaamm6rjy3nnvwxyeLhOrcLBqYRFEFl0
+	 BaC3YYgyuavpGXmcsgln4uUG/lDwMF+AuIcL0/+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 179/325] ALSA: timer: Fix UAF at snd_timer_user_params()
-Date: Tue, 16 Jun 2026 20:29:35 +0530
-Message-ID: <20260616145106.792416970@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 206/325] wifi: nl80211: reject oversized EMA RNR lists
+Date: Tue, 16 Jun 2026 20:30:02 +0530
+Message-ID: <20260616145108.310926026@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,46 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-commit 053a401b592be424fea9d57c789f66cd5d8cec11 upstream.
+commit 4cd92957e8f8cc4ebfe8a5d4203c14c592fde6b1 upstream.
 
-At releasing a timer object, e.g. when a userspace timer
-(CONFIG_SND_UTIMER) gets closed and snd_timer_free() is called, it
-tries to detach the timer instances and release the resources.
-However, it's still possible that other in-flight tasks are holding
-the timer instance where the to-be-deleted timer object is associated,
-and this may lead to racy accesses.
+nl80211_parse_rnr_elems() stores the parsed element count in a
+u8-backed cfg80211_rnr_elems::cnt field and uses that count to size
+the flexible array allocation.
 
-Fortunately, most of ioctls dealing with the timer instance list
-already have the protection with register_mutex, and this also avoids
-such races.  But, SNDRV_TIMER_IOCTL_PARAMS isn't protected, hence the
-concurrent ioctl may lead to use-after-free.
+Reject nested NL80211_ATTR_EMA_RNR_ELEMS input once the count reaches
+255, before incrementing it again. This keeps the parser aligned with
+the data structure it fills and matches the existing bound check used
+by nl80211_parse_mbssid_elems().
 
-This patch just adds the guard with register_mutex to protect
-snd_timer_user_params() for covering the code path as a quick
-workaround.  It's no hot-path but rather a rarely issued ioctl, so the
-performance penalty doesn't matter.
-
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Kyle Zeng <kylebot@openai.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260606161145.1933447-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: dbbb27e183b1 ("cfg80211: support RNR for EMA AP")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/20260529152542.1412734-1-n05ec@lzu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/timer.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/nl80211.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -1791,6 +1791,7 @@ static int snd_timer_user_params(struct
- 	struct snd_timer *t;
- 	int err;
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -6079,6 +6079,9 @@ nl80211_parse_rnr_elems(struct wiphy *wi
+ 		if (ret)
+ 			return ERR_PTR(ret);
  
-+	guard(mutex)(&register_mutex);
- 	tu = file->private_data;
- 	if (!tu->timeri)
- 		return -EBADFD;
++		if (num_elems >= 255)
++			return ERR_PTR(-EINVAL);
++
+ 		num_elems++;
+ 	}
+ 
 
 
