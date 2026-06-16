@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB88943DA2C;
-	Tue, 16 Jun 2026 15:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6531843C05C;
+	Tue, 16 Jun 2026 15:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623132; cv=none; b=FgNarFkQ/htklUsfYJVAWDmf/e8RIuWoIhXfdAFMshfKoorsnqTllDfQpynXIsUfFr6TkBEWlSiC8MQXl759etMA76QcsHL8Zz+jTkBbuE5PBjMHwRNq5PqxzPH3oJs3Ut09IJ9veHVa5uCPenLbIO+oUChdBOugQjUUXlcTCc0=
+	t=1781623138; cv=none; b=RojsRBOqvu3G8FT5jbwW4pGQVp/Ve2Tqn80uCtxPso77jTzv5+mPiKgpTvInxjVXy7N27R0qmXc4PsrRq3OBLkDYAXuZftO/b9Ej0Mye89QWqwGv+MSlv96Vdq4azVLg/CFhqs/5aAxwgn0fwtTlX1MHHXimu3qEGSGbcLRwTwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623132; c=relaxed/simple;
-	bh=40Dcq+sBRMvaqBallhK+qaz48mFVm7avs6pGGafadf8=;
+	s=arc-20240116; t=1781623138; c=relaxed/simple;
+	bh=RnM8x/r/esLzHy7XJ8ZnggB/NkQ5IDYT/zYkdwet6W0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qlIecMkmzS57Gcm0wzsBi5NMhPBJXDniprYpaCjAbQvZwo4et+MSJm3A8BykojrOHSyfitodfdSBBY3yjU70xsqXBjzGCUNmZqz5Oqi+rdv+DG22WnWE2lD/3DlhJTvW4OZGBtI2I1ejOEzl51q7WjJmU3Zmq0jNlbuwhLr6BQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1CaYoiK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AVzjLyto24AS7kFIwyjaiXHQO9C3fBZvplTkv6t4tg0+UazTekya001aS10ns23FuTKiaY7pUmFd0RPIJnpsO7h2zy/DHPlKSv4gk3p/LcX3f39Fu5igoDEQ/YL4YzlJM1O6xVwXIgAD8Hsk/jnyJtdbFZFcQ9Epo2j5NMsq7ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRw9Cv/0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1CaYoiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836211F000E9;
-	Tue, 16 Jun 2026 15:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRw9Cv/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4194A1F000E9;
+	Tue, 16 Jun 2026 15:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623131;
-	bh=lVN3F2+qzIVdkisic/cm1QdBkhkewbwlKiMaOOM/kjA=;
+	s=korg; t=1781623137;
+	bh=RGcmIxo8zh5jI+dESpb2B0u//7RA8I7/4136Y6cyE1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o1CaYoiKnMNwZT6gahbf6hYenzV/SSY7jIQTYlcJPKKDGC/4TAC1Nf5OORVQtBVS7
-	 76QE+OQmge65/mc6Pa7pIPtfBjufFVe0y2tueQcLZRy7LP/2pqY5seQwoVeGD13Vqm
-	 pNrQ9Yv1kEPofTU/esOtjFFHqNvn8PlmXQP0asyA=
+	b=dRw9Cv/0FO8ps2H7aMg448tLp0nWQA7sUrxzLN1LnapZQn+eC06Mu94hl0+GCnFwk
+	 Cma4Unv4mbAXpJfvhH3g+4rm+SdNs8EdoOX1xJCuXgDTqSpa9+/vB8bB7OkGysL0zz
+	 Ruj0sffIj1SZdMdbZRaAGELaYa4LobNJsbHDJ7GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nam Cao <namcao@linutronix.de>,
 	Gabriele Monaco <gmonaco@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 093/378] tools/rv: Fix cleanup after failed trace setup
-Date: Tue, 16 Jun 2026 20:25:24 +0530
-Message-ID: <20260616145115.182229431@linuxfoundation.org>
+Subject: [PATCH 7.0 094/378] verification/rvgen: Fix options shared among commands
+Date: Tue, 16 Jun 2026 20:25:25 +0530
+Message-ID: <20260616145115.237573127@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,36 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 33ec2269a4155cad7e9e42c92327dcaa9aee59a7 ]
+[ Upstream commit 5f845ad706c0b394ae274e9a930044f78bef782e ]
 
-Currently if ikm_setup_trace_instance() fails, the tool returns without
-any cleanup, if rv was called with both -t and -r, this means the
-reactor is not going to be cleared.
+After rvgen was refactored to use subparsers, the common options (-a and
+-D) were left in the main parser. This meant that they needed to be
+called /before/ the subcommand and using them without subcommand was
+allowed. This is not the original intent.
 
-Jump to the cleanup label to restore the reactor if necessary.
+  rvgen -D "some description" container -n name
 
-Fixes: 6d60f89691fc9 ("tools/rv: Add in-kernel monitor interface")
+Define the options as parent in the subparsers to allow them to be used
+from both subcommands together with other options.
+
+  rvgen container -n name -D "some description"
+
+Fixes: 5270a0e3041c ("verification/dot2k: Replace is_container() hack with subparsers")
 Reviewed-by: Nam Cao <namcao@linutronix.de>
-Link: https://lore.kernel.org/r/20260514152055.229162-5-gmonaco@redhat.com
+Link: https://lore.kernel.org/r/20260514152055.229162-7-gmonaco@redhat.com
 Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/verification/rv/src/in_kernel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/verification/rvgen/__main__.py | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/verification/rv/src/in_kernel.c b/tools/verification/rv/src/in_kernel.c
-index e4f35940374f5a..e6dea4040f8f4c 100644
---- a/tools/verification/rv/src/in_kernel.c
-+++ b/tools/verification/rv/src/in_kernel.c
-@@ -810,7 +810,7 @@ int ikm_run_monitor(char *monitor_name, int argc, char **argv)
- 	if (config_trace) {
- 		inst = ikm_setup_trace_instance(nested_name);
- 		if (!inst)
--			return -1;
-+			goto out_free_instance;
- 	}
+diff --git a/tools/verification/rvgen/__main__.py b/tools/verification/rvgen/__main__.py
+index fa6fc1f4de2f7e..5198bccccd107b 100644
+--- a/tools/verification/rvgen/__main__.py
++++ b/tools/verification/rvgen/__main__.py
+@@ -17,14 +17,16 @@ if __name__ == '__main__':
+     import sys
  
- 	retval = ikm_enable(full_name);
+     parser = argparse.ArgumentParser(description='Generate kernel rv monitor')
+-    parser.add_argument("-D", "--description", dest="description", required=False)
+-    parser.add_argument("-a", "--auto_patch", dest="auto_patch",
++
++    parent_parser = argparse.ArgumentParser(add_help=False)
++    parent_parser.add_argument("-D", "--description", dest="description", required=False)
++    parent_parser.add_argument("-a", "--auto_patch", dest="auto_patch",
+                         action="store_true", required=False,
+                         help="Patch the kernel in place")
+ 
+     subparsers = parser.add_subparsers(dest="subcmd", required=True)
+ 
+-    monitor_parser = subparsers.add_parser("monitor")
++    monitor_parser = subparsers.add_parser("monitor", parents=[parent_parser])
+     monitor_parser.add_argument('-n', "--model_name", dest="model_name")
+     monitor_parser.add_argument("-p", "--parent", dest="parent",
+                                 required=False, help="Create a monitor nested to parent")
+@@ -34,7 +36,7 @@ if __name__ == '__main__':
+     monitor_parser.add_argument('-t', "--monitor_type", dest="monitor_type",
+                                 help=f"Available options: {', '.join(Monitor.monitor_types.keys())}")
+ 
+-    container_parser = subparsers.add_parser("container")
++    container_parser = subparsers.add_parser("container", parents=[parent_parser])
+     container_parser.add_argument('-n', "--model_name", dest="model_name", required=True)
+ 
+     params = parser.parse_args()
 -- 
 2.53.0
 
