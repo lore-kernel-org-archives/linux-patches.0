@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7680533688F;
-	Tue, 16 Jun 2026 16:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4465043E4BA;
+	Tue, 16 Jun 2026 16:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626724; cv=none; b=KNSo7u7J0+3U5TbY46r/Y1Di/OCRiVmz7v9r6sydb1DH/SFru/ad3KltAVWq/gEOcURMvE+femLXY2HCUFaUWgegYy1HYGDYN+FXj1x3oqy4K7bQGAPnCxfyKCnjZ+rH43Oo3wtg33v+Rb2aACxC7l++GOax/MSYA0IL6ZhEDjg=
+	t=1781626729; cv=none; b=a8DDmh2ldrjmAWtmvAq9jbm8qvvsu5IXrdX/d1vzvrPVN2kYuZhoH/jPYorjkYP5lWLgLXcfZzwMG/t02zvZslrPndknrDXqog2kmb25izhyFML1MWeFcGY2sFNcOwWyng9fNa2nA2IXsVZZrbY8NsOqGI/2o7DxD30PxoVn8LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626724; c=relaxed/simple;
-	bh=EzEGQv89A6csECx+/nFRYznaz9E74C1WaAAeoovpokc=;
+	s=arc-20240116; t=1781626729; c=relaxed/simple;
+	bh=whHCH0sO8r5zMQcDVCJM+IK8IP2r7yXiLo41A18/Nx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIYmNktT6NsIrYTn4HUVJSFSbEsrOjYjP23xg0yoHzMEFJ8sxrIK1m99gL3+YbDswwsIYjkekQV1OI7cDbxEWT9cdy9FBZYZ2/yTA1c7wgpslK3niby3Lpz5eWCyHx6oD7E8sYKfFSNykNHOibfwqHD/eGamuoxDZlPuQ9Ri9Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lijeUqDq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=okj/A4sd9GR/hkVvzvIaGfi/iyfMRYxjEaCMKvDSq1tnPxC+TMTQ3eV37wqbT2aHpyTdYMHj80AoTiU1zWej/LVSGTENXicdulXf3wvXtCWmK9iTGDTD/BquXsX/+YiXYeIqiMxC3ltvX9KFJ2P/6ncWHIvxA9xruEYjNW9+dNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BaItuaZC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lijeUqDq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB501F000E9;
-	Tue, 16 Jun 2026 16:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaItuaZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470231F000E9;
+	Tue, 16 Jun 2026 16:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626723;
-	bh=wbK4hqLmsXUfxraTQmz+IQoMk5AUX/mDqNarW7evRDQ=;
+	s=korg; t=1781626728;
+	bh=ZQS41QXP8InLel0W8jGMFBoluVtu83Pbc79E/8wgy+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lijeUqDqGeOmnAWbCSDi5QLXO1x65bpzde1tDw0rM+KdzCjf68Og7STWPg3yIAHGi
-	 6SoJOKDLaYQ0v9sHI3iOjgE6/I1hQPZWvPvj4a3pAoV/5GLmewgI8TAntfodEOa0QR
-	 NkF3JP//LLac8HOIvqcHXxz4Osn3hRTMDas8oN8c=
+	b=BaItuaZCcRhW4Gd6mg0ZzFVbdjDe4F/pRvOlVsRyjuQnjM4LJVOqOuEcXuv7d6cTC
+	 TkNGinZg112vqgXYZD/nG9t7nT3ILhMyIAxjyEBChkxEW1C7xQTXpmPhdqlWTpVmAY
+	 00AsK1gnUeNTaBOQ91XNKXBd1kdNzPwg+Tg2dZ/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Roulin <aroulin@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	syzbot+f13c19f75e1097abd116@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/261] vxlan: vnifilter: fix spurious notification on VNI update
-Date: Tue, 16 Jun 2026 20:28:14 +0530
-Message-ID: <20260616145047.753432827@linuxfoundation.org>
+Subject: [PATCH 6.12 057/261] ieee802154: 6lowpan: only accept IPv6 packets in lowpan_xmit()
+Date: Tue, 16 Jun 2026 20:28:15 +0530
+Message-ID: <20260616145047.799926376@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,53 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Roulin <aroulin@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 84683b5b60c7274e2c8f7f413d39d78d3db5540f ]
+[ Upstream commit 3a5f3f7aff18bcc36a57839cf50cf0cc8de707f3 ]
 
-When a VNI is re-added with the same attributes (e.g. same group or no
-group), vxlan_vni_update() sends a spurious RTM_NEWTUNNEL notification
-even though nothing changed.
+The aoe driver (or similar) generates a non-IPv6 packet
+(e.g., ETH_P_AOE) and queues it for transmission via dev_queue_xmit()
+on a 6LoWPAN interface (configured by the user or test case).
 
-The bug is that 'if (changed)' tests whether the pointer is non-NULL,
-not the bool value it points to. Since every caller passes a valid
-pointer, the condition is always true and the notification fires
-unconditionally.
+Since the packet is not IPv6, the 6LoWPAN header_ops->create function
+(lowpan_header_create or header_create) returns early without initializing
+the lowpan_addr_info structure in the skb headroom.
 
-Fix by dereferencing the pointer: 'if (*changed)'.
+In the transmit function (lowpan_xmit), the driver calls lowpan_header
+(or setup_header) which unconditionally copies and uses the lowpan_addr_info
+from the headroom, which contains uninitialized data.
 
-Reproducer:
+Fix this by dropping non IPv6 packets.
 
- # ip link add vxlan100 type vxlan dstport 4789 local 10.0.0.1 \
-      nolearning external vnifilter
- # ip link set vxlan100 up
- # bridge monitor vni &
- # bridge vni add vni 1000 dev vxlan100
- # bridge vni add vni 1000 dev vxlan100  # spurious notification
+A similar fix is needed in net/bluetooth/6lowpan.c bt_xmit().
 
-Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
-Signed-off-by: Andy Roulin <aroulin@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20260602185138.253265-3-aroulin@nvidia.com
+Fixes: 4dc315e267fe ("ieee802154: 6lowpan: move transmit functionality")
+Reported-by: syzbot+f13c19f75e1097abd116@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a1fd763.278b5b03.2bcf39.0049.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260603072955.4032221-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_vnifilter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ieee802154/6lowpan/tx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
-index 1ab78a8bb9e011..272fa31ef07454 100644
---- a/drivers/net/vxlan/vxlan_vnifilter.c
-+++ b/drivers/net/vxlan/vxlan_vnifilter.c
-@@ -671,7 +671,7 @@ static int vxlan_vni_update(struct vxlan_dev *vxlan,
- 	if (ret)
- 		return ret;
+diff --git a/net/ieee802154/6lowpan/tx.c b/net/ieee802154/6lowpan/tx.c
+index 0c07662b44c0ca..4df76ff50699ed 100644
+--- a/net/ieee802154/6lowpan/tx.c
++++ b/net/ieee802154/6lowpan/tx.c
+@@ -255,6 +255,11 @@ netdev_tx_t lowpan_xmit(struct sk_buff *skb, struct net_device *ldev)
  
--	if (changed)
-+	if (*changed)
- 		vxlan_vnifilter_notify(vxlan, vninode, RTM_NEWTUNNEL);
+ 	pr_debug("package xmit\n");
  
- 	return 0;
++	if (skb->protocol != htons(ETH_P_IPV6)) {
++		kfree_skb(skb);
++		return NET_XMIT_DROP;
++	}
++
+ 	WARN_ON_ONCE(skb->len > IPV6_MIN_MTU);
+ 
+ 	/* We must take a copy of the skb before we modify/replace the ipv6
 -- 
 2.53.0
 
