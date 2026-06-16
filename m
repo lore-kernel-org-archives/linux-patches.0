@@ -1,107 +1,103 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5556C38237F
-	for <patches@lists.linux.dev>; Tue, 16 Jun 2026 20:14:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5560F331EA5;
+	Tue, 16 Jun 2026 21:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781640859; cv=none; b=Wd64akvDJBolocAizreKa/CItov3AqePMOE4Oytor+ahRKAeBMGv3kgu2kk6faAX7R63UeiVoIZdwmCGDKPCdBugta3zJ9jzpQnsJRAtfQiEuOyf9eOcupnwg5cL2fFL50fGGR/DeV16p7Bc+TqzR3kkTyZv+eS/rJowF/PZiB4=
+	t=1781646672; cv=none; b=G61gv+bDtsrFjiO/Qwj+xIEIr6I1J6DR2Lv49JZHqEXHWS8QIKAuez5CcIbqLARdY0kUfWgN7IKQxGTtYDHL69BDPIpRFNp/Zntp15NgOky5+qfM2o7Y1i1v3Zyo0iUu0ErpPoBLEpwKpeGHDJTlyZmjoNdI3eF0vhFZZ5XrXEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781640859; c=relaxed/simple;
-	bh=Z4buY0yxNSj5ughbZXoco5xIDW6nysocSW3jyixQZKE=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=nmD6MfojKZNocz+0+AadsxjlgfyFlJyLG6cGmmXYtGgKZFOoQ/W/P51jdqtV9h6lr99wswTsoiXm0g9vXhgUPRKbJJllwS31QGs6XT2lUIRdo95C5S/AOF4ewbMJLfboWvW7cgrIRmV+qLFz1ffL36zLRBYxmMs5wjMpko6Sk0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q8Bijv/f; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q8Bijv/f"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-5176096116fso58907251cf.0
-        for <patches@lists.linux.dev>; Tue, 16 Jun 2026 13:14:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781640857; x=1782245657; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
-         :message-id:from:references:cc:to:subject:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GB1HLk2MsE4YXVeU3KtucQOegECld/8EB1fgDTQNKH8=;
-        b=Q8Bijv/f1iQeQVQu/rzpAmRyh7BZsQRevhtR7XakmxzIvfoV1XWO9AiwItPQQzgpph
-         o3oeDmETOFPZeHKgZvEVqpYMr5nLoK9j+dLIfzvi7rWUMV02VnovcHsw2QfMqGrnAqxT
-         jrETqT3PSzlb6W40A4Y9z86cvpO6p9rMdkSjREVlYqBtQNh2jULE0Hm+Hx6AqdfXxU1u
-         tI699L3pNjDmx8xZu10PmydnX4hIBeUw9swFcx0nN14HpAFYKwt1swadACKdkqkEqsQQ
-         m6/Q7uQg3Q1cgxyJ+48TMrlz49maNW7HHRsg167j473TmArSjV4dmv6Gv3XjiUyXauKe
-         yU1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781640857; x=1782245657;
-        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
-         :message-id:from:references:cc:to:subject:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GB1HLk2MsE4YXVeU3KtucQOegECld/8EB1fgDTQNKH8=;
-        b=j+3+zj3gon51mzVVlPisD6TlYRuPwHXeJA9kOFqQezXO7bSmBIJqqyu+g+X6iEZiow
-         g2ZCuLX6aWVFoJ1dPsTxsdhJQQHzF/FV31LQGO1S3WAJJLxzaWRTTmpV5CFEkXMiRIRd
-         OnDQHwQAZT+YpptOgBvl97vYhQ8DS1foNbxbRwiddbKiDXYgRDhPNUDLcedYR1Y2VcjD
-         utVynV2pmC8oV6mLIdtCIO4x7VkBRKc9AFCPSnNfXKpjrHM86lX92njRNbInhpBpjFH0
-         SbuQcwdvLAsRL3dEPbSGU6csc4k+bWAGy7t6zBC4sUw4CpZ7aVC7Fr1J2TmwMUfkACQ7
-         Fi5Q==
-X-Gm-Message-State: AOJu0YxS/RFAN7V4f+08bfLmRo3+3X1jMZlmcoytWd38mYO9b3SXqu8n
-	r1IP29zEUJhL0ifn5fNJeYdg1SwZxb4w/QKqOMeoZ+BzqZYa8NrDWxU=
-X-Gm-Gg: Acq92OHJ0f+wf2h/9F+IOAS+y4qjhJd/G8f3dKP7W5OvNNkc34D6cIUpfsy61yOD/Mn
-	ML5MdDaKAJkdI8iavwCgljxoOBfOy/ZADruxW+RBpH31okTUfM/l1BhKKzj8WURZVsvXAcNg4if
-	Lehg+FtAO+PrrSQ3pJ3WlQ0nni6MdXs1GzGfnwiSYkQ8hhSxrK8sQr7nYn+qL8qeQF5871l4A00
-	Xn358k6nVInDUTyhKeBwagg+4yrYp/y9Bu4nQ7T3HAqEcL45eQzhY1wdqrY3qEsVLcPvRdXAixm
-	ZcU51Lg3Pe4YA44+rVt8bACpMLVvXJF/X4AE5YW/a6ibzb8XNzMO0D1FqPFnMNxSUu0lKQlSl61
-	uK0gDg3kmdccApEogYJMGPlX6HrTfi0xJQ5PMzyqKvVathJXikokuN8g7FuXzOWTVm+2XbPIMC/
-	x45nchMHIS7OFQiDJlPA+7UBVxGWq+nflTjXUmFUvw0MivF4M9HVA=
-X-Received: by 2002:ac8:5fcf:0:b0:517:89d0:b8a9 with SMTP id d75a77b69052e-519a8ca24d1mr16762201cf.9.1781640857211;
-        Tue, 16 Jun 2026 13:14:17 -0700 (PDT)
-Received: from [120.7.1.23] (135-23-94-154.cpe.pppoe.ca. [135.23.94.154])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-517fb7dacdfsm156361931cf.20.2026.06.16.13.14.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 13:14:16 -0700 (PDT)
-Subject: Re: [PATCH 5.10 000/342] 5.10.259-rc1 review
+	s=arc-20240116; t=1781646672; c=relaxed/simple;
+	bh=J6L2JqZOEO4VGS8RMRp8G7XSv26WMiGleJNndBZ67j8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ClddRDY6saYZzkghQ2tyH6cK/ArUdq68tkc1J0QIdAIRdFRGNlZ6SqjIuZbE9m4BFNHGwaH4oR1y4RsIsxDPIHd8r9mE4KmyLuKAC8KfNMzQWFaessvonfHLScmCm6WEjYpR+i8unqsuRHyMdBGGP/sdYf6H1xmz+z+Q6W/IQKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wZazo-002r0l-00;
+	Tue, 16 Jun 2026 21:06:56 +0000
+Received: from ben by deadeye with local (Exim 4.99.3)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wZazm-00000006Vwl-2AId;
+	Tue, 16 Jun 2026 23:06:54 +0200
+Message-ID: <9125d5976feb09ef919f2a287b079843c7671325.camel@decadent.org.uk>
+Subject: Re: [PATCH 6.1 011/522] tools/bootconfig: Cleanup bootconfig footer
+ size calculations
+From: Ben Hutchings <ben@decadent.org.uk>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260616145048.348037099@linuxfoundation.org>
-From: Woody Suwalski <terraluna977@gmail.com>
-Message-ID: <88a6a3f4-7e7f-2818-1eb5-145838b9a957@gmail.com>
-Date: Tue, 16 Jun 2026 16:14:29 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101
- Firefox/128.0 SeaMonkey/2.53.23
+Cc: patches@lists.linux.dev, "Masami Hiramatsu (Google)"
+ <mhiramat@kernel.org>,  Sasha Levin <sashal@kernel.org>
+Date: Tue, 16 Jun 2026 23:06:49 +0200
+In-Reply-To: <20260616145125.946340231@linuxfoundation.org>
+References: <20260616145125.307082728@linuxfoundation.org>
+	 <20260616145125.946340231@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-lCR5RCChjejQim0VI15B"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.259 release.
-> There are 342 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 18 Jun 2026 14:49:57 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.259-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-Built for i386 and booted OK on a 32 bit laptop.
 
-Tested-by: Woody Suwalski <terraluna977@gmail.com>
+--=-lCR5RCChjejQim0VI15B
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, 2026-06-16 at 20:22 +0530, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>=20
+> ------------------
+>=20
+> From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+>=20
+> [ Upstream commit 26dda57695090e05c1a99c3e8f802f862d1ac474 ]
+>=20
+> There are many same pattern of 8 + BOOTCONFIG_MAGIC_LEN for calculating
+> the size of bootconfig footer. Use BOOTCONFIG_FOOTER_SIZE macro to
+> clean up those magic numbers.
+[...]
+
+This causes a regression in some configurations, fixed by commit
+729dc340a4ed "bootconfig: Fix negative seeks on 32-bit with LFS
+enabled".
+
+Ben.
+
+--=20
+Ben Hutchings
+For every complex problem
+there is a solution that is simple, neat, and wrong.
+
+--=-lCR5RCChjejQim0VI15B
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmoxuukACgkQ57/I7JWG
+EQl4+A//TuIeXRd0kdF3l5DYV417IjO2eo3WiKdbBGVJnHV1Odw9fVb9ETGQ+fiD
+IB3j/0FAjx7ejLy8jpq/eikH05+5lzjZ4/zbPw7EiTh6JkeG5bAoyGqlitJ7vCdQ
+AitMdv0ihF5yD6HczapV3S3jsowMp/4TFKKeYw2IVZ1RL2yCGKffQPuuBXYBcleK
+Qk3veEdGvAD57bwluFE9jaJpI+Av5/bHlVZUfxDAxDfF4evEIjt1GOPp8Oln/LqN
+D7b/MWI6o7RLkZPidPTcFu/ananuQyYaRVmn1N1vuqLBhH03VSsqN4xhNIA1uhrt
+sDdg/RC8Is0QGFa1xOWTgJqB7LXgnrie6lDZJ5DQHkV4hcyZzAO6wb8BrHj7oxFR
+CwFr8lenCWI9j7gcx7aYIssDKb48ErxaUTCO3BC7gLRjcRJJW/H2jO1M06gGNTsR
+g+S0daMXwSrDr8cKnlXbdFAKTKX+bPFc4n1NIstbaAnpbR6vv1S4bMyEhtJ0FNoo
+o0hdhU9F/VLM+wE8EYf/FvjzBkikPCMtkwwUqRk/d4pPZY5ZhaP/UVpbdjE+S4/9
+Z071Ee4kYylCeqHf/91AxqEpHBavJBjB+bOYvDahhdWUQGo0bS0T3JZcbgVH4Z1I
+F02FSix7y5KpbutIvI/ywuPMA9pSsmQVRXbjuCYB/LTls/t1fTc=
+=NR/Z
+-----END PGP SIGNATURE-----
+
+--=-lCR5RCChjejQim0VI15B--
