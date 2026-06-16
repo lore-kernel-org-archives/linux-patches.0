@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB2747B413;
-	Tue, 16 Jun 2026 16:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031404502F;
+	Tue, 16 Jun 2026 16:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628683; cv=none; b=uxUP2e2Bq0kAgdARHjORnEIiSOwpeffDWNRbD6FBC1Ph0c5WUwQXRYmJ9iO9ww5OhzhSolnCsCgOQgz7cTX0IqVTzaNEsEIjojcH6VQBn3YwSUqfGNkzO1/x7VIk+HBkYoBh0matlyinlArOSd+ruH0hTDjCyZ/G1Q+Q8QHdrrE=
+	t=1781628689; cv=none; b=r1MCNOMWdXizGzzT6/8KCrQgrA4njyVk+S5RFXB7aIqj6zh+fFQMH3m5yjR165fWm8mIQwGLI3CD89dZ7YG5hti4F5HHZH5fJtROyjjLV/VkIpC3sXrOcLj71DZFvAFufMN8cb79LHlI8oUzSVyIL9DHojWdA8YGorzn6X5MuwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628683; c=relaxed/simple;
-	bh=Gomifi3E6k8aPSWciNh8DId/zMwvYVy77x0+CsIKBzU=;
+	s=arc-20240116; t=1781628689; c=relaxed/simple;
+	bh=Tpe2QxTIPqGaMPj0jdiMXVbBSy91IFYilEsRS7sro3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NwbMMe1WISfrcNmy6hVUi5vW5mjQtrfykjHF73y5yB3zVsusgweuqjVgGN85RN/uCg02UPnvF5uq91WwVkPL4NhH7yHpPKQHQ3YDtGZtryGlbkFE2LMVcAATK/rKQB0WZy4Fu4Tmt7EpaTVFQ82JNieD+BOhROGXiRmzFkBYmCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHhVZibo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iTeKTkasydAYhkue92ByCTYZqclOV4aaxao/vL8tbl2qMFGQmk+mI6a4y5JO4KcRuFbqTc6wLUxfyT/j+mQVuLzsIAx38nbLmh+oRFN328ZK/DK/gHwykaCLoB7ZL42p00WourR1z6iLPoZbj3bRUWeJDsBSS/zdYAzh+8wi8RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFumuhSe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHhVZibo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C2C1F00A3A;
-	Tue, 16 Jun 2026 16:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFumuhSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBE61F000E9;
+	Tue, 16 Jun 2026 16:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628682;
-	bh=yv850TBymh2Pd1EcL6ne76N4DjdBlLdYBZpsmhIBQvI=;
+	s=korg; t=1781628687;
+	bh=mnZAQ1QcX6PGLgJ59rgrClcH4BOLE/jjflLjGsgdp9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xHhVZiboKgKUyINNPzlwU+fecj0U2058pRumWgDM1j1+LfuDlvFUM9yv0qxl1286p
-	 +ku/gDfWWVjrtZFk0YYRTq/nX5QcnAbDSPJMfBX9feuN5CMcDdaBh3Q21qG82eSUIT
-	 sZJ2WudY5VFabWertYqwd92fRelipG/1/Dd0PvOY=
+	b=OFumuhSepmKX+KaQPeawnccC4C6F8HEudqZjM+SD10B+pzeEBvBiSmpAWdbhhCvXk
+	 E3U8OQ8FbWDpj32y8X1LZ8vvYQZwahsgOg49nHmEEoIKYbEHeWvlw25057XJSEJkDn
+	 u26fcX7FjyPqswIH/qGA1pbcx8bC9OsUIW/qIKQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <malin89@huawei.com>,
-	Chenyuan Mi <michenyuan@huawei.com>,
-	Jingguo Tan <tanjingguo@huawei.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.6 141/452] xfrm: esp: restore combined single-frag length gate
-Date: Tue, 16 Jun 2026 20:26:08 +0530
-Message-ID: <20260616145125.119358450@linuxfoundation.org>
+	Qbeliw Tanaka <q.tanaka@gmx.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 142/452] Input: xpad - add "Nova 2 Lite" from GameSir
+Date: Tue, 16 Jun 2026 20:26:09 +0530
+Message-ID: <20260616145125.169800965@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,60 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jingguo Tan <tanjingguo@huawei.com>
+From: Qbeliw Tanaka <q.tanaka@gmx.com>
 
-commit dfa0d7b0ff1eb6b2c416b8fdb9b4f2cefba57a40 upstream.
+commit 1f6ac0f8441c48c4cc250141e1da8486c13512ba upstream.
 
-The ESP out-of-place fast path appends the trailer in esp_output_head()
-before esp_output_tail() allocates the destination page frag. The
-head-side gate currently checks skb->data_len and tailen separately, but
-the tail code allocates a single destination frag from the combined
-post-trailer skb->data_len.
+Add support for the gamepad "Nova 2 Lite" from GameSir, compatible with
+the Xbox 360 gamepad.
 
-Reject the page-frag fast path when the combined aligned length exceeds a
-page. Otherwise skb_page_frag_refill() may fall back to a single page while
-the destination sg still spans the combined skb->data_len.
-
-Restore this combined-length page gate for both IPv4 and IPv6.
-
-Fixes: 5bd8baab087d ("esp: limit skb_page_frag_refill use to a single page")
+Signed-off-by: Qbeliw Tanaka <q.tanaka@gmx.com>
+Link: https://patch.msgid.link/20260429.162040.930225048583399359.q.tanaka@gmx.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Lin Ma <malin89@huawei.com>
-Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
-Signed-off-by: Jingguo Tan <tanjingguo@huawei.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/esp4.c |    4 ++--
- net/ipv6/esp6.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/input/joystick/xpad.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -419,8 +419,8 @@ int esp_output_head(struct xfrm_state *x
- 			return err;
- 	}
- 
--	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
--	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
-+	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
-+	    PAGE_SIZE)
- 		goto cow;
- 
- 	if (!skb_cloned(skb)) {
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -454,8 +454,8 @@ int esp6_output_head(struct xfrm_state *
- 			return err;
- 	}
- 
--	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
--	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
-+	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
-+	    PAGE_SIZE)
- 		goto cow;
- 
- 	if (!skb_cloned(skb)) {
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -414,6 +414,7 @@ static const struct xpad_device {
+ 	{ 0x3285, 0x0662, "Nacon Revolution5 Pro", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0663, "Nacon Evol-X", 0, XTYPE_XBOXONE },
+ 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
++	{ 0x3537, 0x100f, "GameSir Nova 2 Lite", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
+ 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
+ 	{ 0x413d, 0x2104, "Black Shark Green Ghost Gamepad", 0, XTYPE_XBOX360 },
 
 
