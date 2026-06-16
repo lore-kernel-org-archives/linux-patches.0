@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1804944E045;
-	Tue, 16 Jun 2026 16:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5950244DB64;
+	Tue, 16 Jun 2026 16:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627893; cv=none; b=sReQBPZvtvw01GcTnWJZZecLPw5kSU+BCUllXF1U9pwhyircuUjDaYXv/mF3MQJhO3GaMbAVGJcN3dkCbhyOJtZYNhQbWOyPD8UBGUuan6I2brSWw+6wTg6nyVoo4Rr8+Brf/9WJ0ZLBIbrsU0+uVGBgqlFPi2jiBPNS7E28fIM=
+	t=1781627898; cv=none; b=XFoEAJidOlrwUHZLrTOaz+Ew8Ndd21wcy5ngDRidCkVXHS0KONlfWwYerHTJLguPFR2f7GLAu48ZgdIlS4m2SISsDCk/GmAgPzuBKU0z3/ZJCy5aMadMY5xKt6hX0uJQLWjR8vi3XhSsbMzvNWT72TAj091NwxWHgcVjqCNgKqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627893; c=relaxed/simple;
-	bh=AjB3u7d67bnzwNXT4xzFlpQ+LP2cFmzNWhaSYEBpD3A=;
+	s=arc-20240116; t=1781627898; c=relaxed/simple;
+	bh=mw6+8adpYCxI4MkWFP3pUS6PZYvwqYYK7/SQfADni3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKIGTLYF/llgkA2NliGqrUF5XQLIKMMpJUQTfujOY53zI0KdF1BXCfft4akXjnnLxFSeULX3xjpYl3okCethebl2m+2bhQfy3Q8DkFyMHfE3KiOG/TX18p/WrtMXEyyZN5LNK+QhDbQ/YR0BsNognwScMWGyCeH6OO6gBvxCNqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erRkvarT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gAZ1+Gwl3EIqHRIW9RUemFPVp3uAt3PZSRMMEMZktjRycbz7+sKcNkORqU0ULYtY5QeZwoexy+a9K31/ic5p23AYr61TMf/Waze8bKQN0PoIosXHQpTd5gzLyDAB/giymjqa4qATPu4Aj/MLmAaorPCx/959a/xs8qXcPgwD6Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlfgStCo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erRkvarT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AED1F000E9;
-	Tue, 16 Jun 2026 16:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlfgStCo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E151F000E9;
+	Tue, 16 Jun 2026 16:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627892;
-	bh=dp/4VjO1cYdbygV0RZ2CtUzHyQj9eZ+TiTKwi3j3xJw=;
+	s=korg; t=1781627897;
+	bh=070FqcNypqjkwZl79b1jJCsYV4eLWcMDaaMBacfIFlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=erRkvarTEHKx9pauoZ7TF9mf6L1ldeeAeYC1hP2NDdXgyngHjPSkAsAbptFoNBs3n
-	 zLWWaHr2F5omm6e5500h7ErTzZHAspM/5Rke7J/TEUY3krkOJ+BlJgyeakXI5VgJBa
-	 dkSOXFz9KmcH6oByOorrYUv4ghbfIhAMANYfhW5M=
+	b=ZlfgStCoZcu/EzFrN68khQzOcQDZeRhR2g64G677uW7tn5NL/ahwqGe7E/oijdRrN
+	 fCjJfu/IxVINChoEEb5baQ/oXeSlQa9jZC84oomMHHl4tcHO8ahc6940JmCo+wGknD
+	 4tC1o3MdRrjbKOeN3/NORwwKjNV8r4zaZcm1jsD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 214/261] slimbus: qcom-ngd-ctrl: Avoid ABBA on tx_lock/ctrl->lock
-Date: Tue, 16 Jun 2026 20:30:52 +0530
-Message-ID: <20260616145054.949815886@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 215/261] drm/amdkfd: fix NULL dereference in get_queue_ids()
+Date: Tue, 16 Jun 2026 20:30:53 +0530
+Message-ID: <20260616145054.995980552@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -50,76 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 55f2ea9ff83cc27a85526b14bc9b32f96a08d6ec upstream.
+commit 2bd550b547deabef98bd3b017ff743b7c34d3a6d upstream.
 
-During the SSR/PDR down notification the tx_lock is taken with the
-intent to provide synchronization with active DMA transfers.
+When usr_queue_id_array is NULL and num_queues is non-zero,
+get_queue_ids() returns NULL. The callers check only IS_ERR() on the
+return value; since IS_ERR(NULL) == false the check passes, and
+suspend_queues() calls q_array_invalidate() which immediately
+dereferences NULL while iterating num_queues times.
 
-But during this period qcom_slim_ngd_down() is invoked, which ends up in
-slim_report_absent(), which takes the slim_controller lock. In multiple
-other codepaths these two locks are taken in the opposite order (i.e.
-slim_controller then tx_lock).
+Userspace can trigger this via kfd_ioctl_set_debug_trap() by supplying
+num_queues > 0 with a zero queue_array_ptr, causing a kernel panic.
 
-The result is a lockdep splat, and a possible deadlock:
+A NULL usr_queue_id_array with num_queues == 0 is a legitimate no-op
+(q_array_invalidate never executes, and resume_queues already guards
+all queue_ids dereferences behind a NULL check). Return ERR_PTR(-EINVAL)
+only when num_queues is non-zero and the pointer is absent; both callers
+already propagate IS_ERR() returns correctly to userspace.
 
-  rprocctl/449 is trying to acquire lock:
-  ffff00009793e620 (&ctrl->lock){+.+.}-{4:4}, at: slim_report_absent (drivers/slimbus/core.c:322) slimbus
-
-  but task is already holding lock:
-  ffff00009793fb50 (&ctrl->tx_lock){+.+.}-{4:4}, at: qcom_slim_ngd_ssr_pdr_notify (drivers/slimbus/qcom-ngd-ctrl.c:1475) slim_qcom_ngd_ctrl
-
-  which lock already depends on the new lock.
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock(&ctrl->tx_lock);
-                                lock(&ctrl->lock);
-                                lock(&ctrl->tx_lock);
-   lock(&ctrl->lock);
-
-The assumption is that the comment refers to the desire to not call
-qcom_slim_ngd_exit_dma() while we have an ongoing DMA TX transaction.
-But any such transaction is initiated and completed within a single
-qcom_slim_ngd_xfer_msg().
-
-Prior to calling qcom_slim_ngd_exit_dma() the slim_controller is torn
-down, all child devices are notified that the slimbus is gone and the
-child devices are removed.
-
-Stop taking the tx_lock in qcom_slim_ngd_ssr_pdr_notify() to avoid the
-deadlock.
-
-Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
+Fixes: a70a93fa568b ("drm/amdkfd: add debug suspend and resume process queues operation")
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f165a82cdf503884bb1797771c61b2fcc72113d4)
 Cc: stable@vger.kernel.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-9-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1471,15 +1471,12 @@ static int qcom_slim_ngd_ssr_pdr_notify(
- 	switch (action) {
- 	case QCOM_SSR_BEFORE_SHUTDOWN:
- 	case SERVREG_SERVICE_STATE_DOWN:
--		/* Make sure the last dma xfer is finished */
--		mutex_lock(&ctrl->tx_lock);
- 		if (ctrl->state != QCOM_SLIM_NGD_CTRL_DOWN) {
- 			pm_runtime_get_noresume(ctrl->ctrl.dev);
- 			ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
- 			qcom_slim_ngd_down(ctrl);
- 			qcom_slim_ngd_exit_dma(ctrl);
- 		}
--		mutex_unlock(&ctrl->tx_lock);
- 		break;
- 	case QCOM_SSR_AFTER_POWERUP:
- 	case SERVREG_SERVICE_STATE_UP:
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -3195,7 +3195,7 @@ static void copy_context_work_handler (s
+ static uint32_t *get_queue_ids(uint32_t num_queues, uint32_t *usr_queue_id_array)
+ {
+ 	if (!usr_queue_id_array)
+-		return NULL;
++		return num_queues ? ERR_PTR(-EINVAL) : NULL;
+ 
+ 	if (num_queues > KFD_MAX_NUM_OF_QUEUES_PER_PROCESS)
+ 		return ERR_PTR(-EINVAL);
 
 
