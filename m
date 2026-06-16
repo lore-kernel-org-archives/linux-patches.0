@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553FC44CAF5;
-	Tue, 16 Jun 2026 16:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AB83C09F3;
+	Tue, 16 Jun 2026 16:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628497; cv=none; b=ewgcKlwkjLASy7afd4ZEglZEfmYiFHwssbrTtbyLjQgFBHX0OpyAiLSpkRx136SgWSpkG8tf854vfRhHuvwuZzucIG5C+qhyh18UFFh2WIBIACcQ34QMoRyIa9L9mSGcdybGLpsDoYVILmVD36OVUNCxTU/3sRYd9XsY2QhuHlY=
+	t=1781628502; cv=none; b=owes+Dv3Nkm396hEk6dJxSHkRVHz02a9AjxPEAe+B6H3PSKzp7otia8zKC/Lt6jk4+6U4y1kjdb8ln4CAx0xi9Qoo7QZwAHaWt6KmthzCWwMsFk6NcpzcNQsZFB4mxqAe4/ZX7RCPCrHUr4TDcNAyT19ZTfBh+BabX5uV2V8M+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628497; c=relaxed/simple;
-	bh=2BobDIupSuGxIih/crSHUbkdDnMLiewJFm7x2i7d+FE=;
+	s=arc-20240116; t=1781628502; c=relaxed/simple;
+	bh=oQEFOwgNzrQvkoAh2Vjs67xrusdDeaTEXsa8WQWP8UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jizmPAHWesT8Sw7CkWqc/NbGDDBgRSkuqbqi2UpX7R0QBdaqLtViqfguHaosKBHcr6tvppi317oAbcKuzW9BCvcDVctWQUPSCaH74mpT1GtEhlPG6w8Wa1tCCJo+w+SJIc32nEVqpZnnMRkG3zpl08lsZkqeGlabJ2T22y4K4pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDkCyWy4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NV00eEx71uIKCCYXOVAARw7Mh9nB692jnpNE02PhE6WherLoAaShP0q9S8qvHjnMN2BM4REdzQRnkhWQHnl0ajgj77k7MXfOIkSpZ2459cXj7Mls0Ga4YMWn+A8UT8GKLw7wL2d+8i963sosg5jp5TBlHkA6XaAdxAbEDFir91I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JljdT0j8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDkCyWy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41FF1F000E9;
-	Tue, 16 Jun 2026 16:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JljdT0j8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7671F000E9;
+	Tue, 16 Jun 2026 16:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628495;
-	bh=Xr3kQ2CZ4950ZX9aVY3kXNtgF3c2jbveRBrkAf2VwKI=;
+	s=korg; t=1781628501;
+	bh=soB1W5/qydvuk9qbgdTAXviZnMN52IUs72FjLsNrjoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QDkCyWy4N9Eee8mqrrOjF3ZDdlxRQEtTdQ5wgrDX8cLY1V8X0SB59wgxIje2Msr5i
-	 900+2wt2G4JTA1L0dSnK7bHzcA+Aqglpsovr4cWSk4gP+e/AiNvsXiEHm4axW6zdpZ
-	 EuVJCgZKDhwqhY2cksg/pOSMq+vSr08MBg16IAEQ=
+	b=JljdT0j8ezmZvJLnO7Xq9wLG0Qf9mj+5/sq7xGJww+Z0MYp/EPkkBlCM7f/V9kM/F
+	 +Jzhrgdg8bIGGkJVlzkOVTd1AsRW8Z+MARYQjNSz/MSxC7LNdkrTypONpI3iZaVyEQ
+	 LQhGRPHLTnFziQJwUGYBFLP45bugvwmMy4UL8bsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 105/452] KVM: arm64: PMU: Preserve AArch32 counter low bits
-Date: Tue, 16 Jun 2026 20:25:32 +0530
-Message-ID: <20260616145123.298520816@linuxfoundation.org>
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 106/452] KVM: SVM: Flush the current TLB when transitioning from xAVIC => x2AVIC
+Date: Tue, 16 Jun 2026 20:25:33 +0530
+Message-ID: <20260616145123.343980225@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,46 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 1750ad1388e03fb27068cd1f22c9c8b4590fe936 upstream.
+commit a9e18aa3263f356edae305e29830e5fe63d8597a upstream.
 
-AArch32 writes to PMU event counters cannot update the top 32 bits,
-even when PMUv3p5 makes the counters 64-bit. KVM therefore needs to
-preserve the existing high half and only update the low half written by
-the guest, unless the caller explicitly forces a full reset through
-PMCR.P.
+Flush the current TLB when xAVIC *or* x2AVIC is activated, as KVM is
+(apparently) responsible for purging TLB entries when transitioning from
+xAVIC to x2AVIC.  The APM says a whole lot of nothing about TLB flushing
+with respect to (x2)AVIC, but empirical data strongly suggests hardware
+also does a whole lot of nothing.
 
-The current code masks @val down to the old high half before taking
-lower_32_bits(val), which means the low half is always zero. As a
-result, AArch32 writes to event counters discard the guest-provided low
-32 bits instead of storing them.
+Failure to flush the TLB when enabling x2AVIC can lead to guest accesses
+to the APIC base address getting incorrectly redirected to the virtual
+APIC page.  The flaw most visibly manifests as failures in KVM-Unit-Test's
+verify_disabled_apic_mmio() testcase when x2APIC is enabled (though for
+reasons unknown, the test only reliably fails with EFI builds).
 
-Build the new value from the old high 32 bits and the low 32 bits of
-the value supplied by the guest.
-
-Fixes: 26d2d0594d70 ("KVM: arm64: PMU: Do not let AArch32 change the counters' top 32 bits")
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260526074640.791991-1-maqianga@uniontech.com
+Fixes: 0ccf3e7cb95a ("KVM: SVM: Flush the "current" TLB when activating AVIC")
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
 Cc: stable@vger.kernel.org
+Cc: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://patch.msgid.link/20260515171536.1841645-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/pmu-emul.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/avic.c |   35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -146,8 +146,8 @@ static void kvm_pmu_set_pmc_value(struct
- 		 * action is to use PMCR.P, which will reset them to
- 		 * 0 (the only use of the 'force' parameter).
- 		 */
--		val  = __vcpu_sys_reg(vcpu, reg) & GENMASK(63, 32);
--		val |= lower_32_bits(val);
-+		val = (__vcpu_sys_reg(vcpu, reg) & GENMASK(63, 32)) |
-+		      lower_32_bits(val);
- 	}
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -111,6 +111,35 @@ static void avic_activate_vmcb(struct vc
+ 	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
  
- 	__vcpu_sys_reg(vcpu, reg) = val;
+ 	/*
++	 * Flush the TLB when enabling (x2)AVIC and when transitioning between
++	 * xAVIC and x2AVIC, as the CPU may have inserted a TLB entry for the
++	 * "wrong" mapping.
++	 *
++	 * KVM uses a per-VM "scratch" page to back the APIC memslot, because
++	 * KVM also uses per-VM page tables *and* maintains the page table (NPT
++	 * or shadow page) mappings for said memslot even if one or more vCPUs
++	 * have their local APIC hardware-disabled or are in x2APIC mode, i.e.
++	 * even if one or more vCPUs' APIC MMIO BAR is effectively disabled.
++	 *
++	 * If xAVIC is fully enabled, hardware ignores the physical address in
++	 * KVM's page tables, i.e. in the leaf SPTE for the APIC memslot, and
++	 * instead redirects the access to the AVIC backing page, i.e. to the
++	 * vCPU's virtual APIC page.  If xAVIC is not enabled (APIC is either
++	 * hardware-disabled or in x2APIC mode), then guest accesses will use
++	 * the page table mapping verbatim, i.e. will access the per-VM scratch
++	 * page, as normal memory.
++	 *
++	 * In both cases, the CPU is allowed to cache TLB entries for the APIC
++	 * base GPA.  So, KVM needs to flush the TLB when enabling xAVIC, as
++	 * accesses need to be redirected to the virtual APIC page, but the TLB
++	 * may contain entries pointing at the scratch page.  KVM also needs to
++	 * flush the TLB when enabling x2AVIC, as accesses need to go to the
++	 * scratch page, but the TLB may contain entries tagged as xAVIC, i.e.
++	 * entries pointing to the vCPU's virtual APIC page.
++	 */
++	kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
++
++	/*
+ 	 * Note: KVM supports hybrid-AVIC mode, where KVM emulates x2APIC MSR
+ 	 * accesses, while interrupt injection to a running vCPU can be
+ 	 * achieved using AVIC doorbell.  KVM disables the APIC access page
+@@ -123,12 +152,6 @@ static void avic_activate_vmcb(struct vc
+ 		/* Disabling MSR intercept for x2APIC registers */
+ 		svm_set_x2apic_msr_interception(svm, false);
+ 	} else {
+-		/*
+-		 * Flush the TLB, the guest may have inserted a non-APIC
+-		 * mapping into the TLB while AVIC was disabled.
+-		 */
+-		kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
+-
+ 		/* Enabling MSR intercept for x2APIC registers */
+ 		svm_set_x2apic_msr_interception(svm, true);
+ 	}
 
 
