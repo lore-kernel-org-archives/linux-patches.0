@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F894657CF;
-	Tue, 16 Jun 2026 15:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2016644D686;
+	Tue, 16 Jun 2026 15:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625463; cv=none; b=ukj+iZQ7nxYRi3sIPYs3PLwTf/Di6gb1Xbo3DWk6X+L3OD/CYIdZN2ut1QiagBtl0SSbnq6ZKAtGBQl7gYuX+ryyb9XOFrNTjjP6/tbHVTlMUo8a06S7u6SLhA/Gem/IooBtplEaZau82gpu5asoOWcz/YEyioPbqj7jMcWG8Zs=
+	t=1781625470; cv=none; b=URFWMdXGSpzPxisyq97OlZO56A6IP5O3AMgyWC1lEjCaERQzJxXOFmIC9ICQtGuv+0Kg5G1PtHpGuTBy8hhD661nhCrLAcyfBjwc3VOIogbYcI4EKISl6Nfi1mCm8w0KQvm8XvIJyXik+p0aqImlzfhFFr7yhUcQa6AW8zwFO7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625463; c=relaxed/simple;
-	bh=Zp1Etvp3Jzn0crWdVoLBZg+ZC7eDMMQJC2OXeYS03PA=;
+	s=arc-20240116; t=1781625470; c=relaxed/simple;
+	bh=vgZ9qGtxv0VTAKDuMcEPtL9sHOuUq60GONqZb4upNsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyWwp+hOQ3mONVXTWCDmoq6gk2H802XAwhf9XziBgMFuLPHKnzxxlW6oFii0L/Dqzn3Q0QKEXIdDkKkujc0C9R5Ef1jBxDbEs02PZyHhBLOSVC7xvLuELac/ztkq6wsMgmNjDYXRUQQw9BDCdLc9abtt98rs5XeOT4iTOjXIETA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qf+b1sr/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mUxahe+8Gxc0qbAjaf4HEPJtz5ocCbNr13Px771RehBY+lhsR/k7me2/or8/1PmF76wjfi0v7Xgzt8WSWCCRXH7IU/oz7QqaEskNAnzgvyjd3Hfv18HJohwUE9ih/4SnmDY3bQFwXv8HB1QMg4VmWUrp1WJIG9qy9jlUhlUd+Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiHm5dMe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qf+b1sr/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DBF1F00A3D;
-	Tue, 16 Jun 2026 15:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiHm5dMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1951F000E9;
+	Tue, 16 Jun 2026 15:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625462;
-	bh=QJ7RSujnJkIqaUQG9kNZUOPtXmix6uMYGopnAqzsmZg=;
+	s=korg; t=1781625467;
+	bh=3FaTIOBMXzVYVHHFDS6qXeKJG6jqPSwIjEC2CtxSl4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qf+b1sr/hHaf3+kD9S4d/7HgCWTQFNlYcR7vfQKsyvwItvnmT7SDsHr/wGKK2841S
-	 dCwBGjmAkcopjeZktLPvq4xAgF6fIpBKHURl8XqkajXvwzKhBOiOWYzhn2rBYGo/rB
-	 zjxPByzaSwBnMPL2PSYzG5KvrUufTyUc9yiBbFQU=
+	b=GiHm5dMeyFLlf880zrFJef8584OkfOcbD6nwGt2vabx3Ny0Y+w6HJvR8ew/NN661o
+	 uPEZYveU/hyHY25Og89C9aE4CCmeFT/gI6S2vHe/kXabmmMwpw9xUpnZDeGftW6G0W
+	 k0TyGHDh9YL1R7pQgHyEJmyEEO6pAGoCJ928uEbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 146/325] accel/amdxdna: Fix mm_struct reference leak in aie2_populate_range()
-Date: Tue, 16 Jun 2026 20:29:02 +0530
-Message-ID: <20260616145105.001175206@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 147/325] netfilter: nft_tunnel: fix use-after-free on object destroy
+Date: Tue, 16 Jun 2026 20:29:03 +0530
+Message-ID: <20260616145105.046087269@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,52 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 2f41af638c92bac6f1f9275ea2d1901baef578f3 ]
+commit c32b26aaa2f9216520a38b3f4bfeec846eb3eb8a upstream.
 
-aie2_populate_range() jumps back to the again label without calling
-mmput(mm), leaking a reference to the mm_struct.
+nft_tunnel_obj_destroy() calls metadata_dst_free() which directly
+kfree()s the metadata_dst, ignoring the dst_entry refcount. Packets
+that took a reference via dst_hold() in nft_tunnel_obj_eval() and
+are still queued (e.g. in a netem qdisc) are left with a dangling
+pointer. When these packets are eventually dequeued, dst_release()
+operates on freed memory.
 
-Add the missing mmput() before jumping to again.
+Replace metadata_dst_free() with dst_release() so the metadata_dst
+is freed only after all references are dropped. The dst subsystem
+already handles metadata_dst cleanup in dst_destroy() when
+DST_METADATA is set.
 
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260610151127.2994185-1-lizhi.hou@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af308b94a2a4 ("netfilter: nf_tables: add tunnel support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nft_tunnel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index 4610f491f0881c..80de2906a26fcb 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -828,6 +828,7 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -702,7 +702,7 @@ static void nft_tunnel_obj_destroy(const
+ {
+ 	struct nft_tunnel_obj *priv = nft_obj_data(obj);
  
- 		if (ret == -EBUSY) {
- 			amdxdna_umap_put(mapp);
-+			mmput(mm);
- 			goto again;
- 		}
+-	metadata_dst_free(priv->md);
++	dst_release(&priv->md->dst);
+ }
  
-@@ -838,11 +839,13 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
- 	if (mmu_interval_read_retry(&mapp->notifier, mapp->range.notifier_seq)) {
- 		up_write(&xdna->notifier_lock);
- 		amdxdna_umap_put(mapp);
-+		mmput(mm);
- 		goto again;
- 	}
- 	mapp->invalid = false;
- 	up_write(&xdna->notifier_lock);
- 	amdxdna_umap_put(mapp);
-+	mmput(mm);
- 	goto again;
- 
- put_mm:
--- 
-2.53.0
-
+ static struct nft_object_type nft_tunnel_obj_type;
 
 
