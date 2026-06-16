@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14D642B738;
-	Tue, 16 Jun 2026 15:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222DB42B738;
+	Tue, 16 Jun 2026 15:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625035; cv=none; b=NOmYPqkHvjqlIgCvmYq0cQk6f1P5aBUVJduGtgVcoPlU958ZtPW0KQZpDo9uZMBOF9b+tWiuN3M1T8wUQuaflvqyBOCyhp8Q/Y4zZXtwXHaa9PPWLkIXVM6GsztsuaMITi6cH5HuiHsP+wHwR9Ji+KQ0uS0V2AYVigl4zZZOT+0=
+	t=1781625041; cv=none; b=KdHsGRgd9Fcqf7qHpye59ugIsudgFcVoOchSIqB0EYDd5Im3rEdTu7Z9dmm1Q2LjDWIRIbU3BYoqWfLAo6C96sgcwtSvNrgQ+J5QqbZmBFSacC6gu+c6BpU17kx5LK5tR03R1Z2hb4lVyzSygp2Ll+fB/yyYDeq9fXNGepbkJgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625035; c=relaxed/simple;
-	bh=mPRXQ9jIbmCToOroam8ZFW6wQ6kGa4oJAq53/3Eo3d8=;
+	s=arc-20240116; t=1781625041; c=relaxed/simple;
+	bh=3KLNo+TR4odpo3cJSviiIsEoxyMYyqQjBPOzXtR+EgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7qgwxn5A3DGXm5c5NFRvuKB01UnP0P8HW8dJzA8v9ay1SGD5LOuzkF/yNzVDzE222ihFKkwUXi0v4ZK0fCA+voOklGd7oFD7EXyOTYdBbxzJoZ0LHjw4Km1FiJFS53d40HmiUCC9VI0raTGPwDKlhHHWCqOXkeUEOHuq35jlFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jugQJubj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OPd86K9zAhkRa6YNgo2nyESrUQe53/2bwhWwtnSMl7QCz6QgYZIt0cxjcu4ZHxHjgAYEwC+EkRVQi+51DRbyEykWEogzf5C2hGEMy08krRLMEkH3UaMPFZ/7GlcPugBMk6sPnfDXbjEfL+ivHDzQ/m02CsutS80Gt0ZuFZ6BZIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYpN7VTD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jugQJubj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7A91F000E9;
-	Tue, 16 Jun 2026 15:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYpN7VTD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6EE1F000E9;
+	Tue, 16 Jun 2026 15:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625033;
-	bh=W/FgGoaaf59FMJQD3aL2XfOr4+Uygd4/3SqmxDWDMyQ=;
+	s=korg; t=1781625040;
+	bh=Mn1f1Ej3iNmaSDOv295fmNuXBFl94NMsqbrS55/fLa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jugQJubj86/A9fLYn3yAw5+1nVW/f6OJLhBvPRLzl0dqWBxkr7uXRawoNcmHa6vYN
-	 2cEVa+NwcZhqB3uWWPH+x/87sN5JxEfF3K/3itMB9QBiDC7SI4mGEzrGngX8huerJ+
-	 oLsC/sUlqjNYDegjzX6yRcqkEq3rJbGYIFK02wek=
+	b=kYpN7VTDBAY+DK3QoZ/2Sj0V1FP7SvfKsGmAFCHH3pbvKmmSWk3dCcJcROgRQC4q8
+	 g/C4RryYalyZAEq8nIlGPJpJcmI1ATwVa34bK1B77/PaU5EuVNELmzKFVCfD4HYAuf
+	 X7vtiRr/utWjLPyPgDYyZTDrlEMWP/39EQdjZCjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyq21@lenovo.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Roman Kisel <romank@linux.microsoft.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 067/325] sctp: purge outqueue on stale COOKIE-ECHO handling
-Date: Tue, 16 Jun 2026 20:27:43 +0530
-Message-ID: <20260616145101.041341065@linuxfoundation.org>
+Subject: [PATCH 6.18 068/325] Drivers: hv: VMBus protocol version 6.0
+Date: Tue, 16 Jun 2026 20:27:44 +0530
+Message-ID: <20260616145101.089925452@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -58,85 +53,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Roman Kisel <romank@linux.microsoft.com>
 
-[ Upstream commit e374b22e9b07b72a25909621464ff74096151bfb ]
+[ Upstream commit 6802d8af47d1dccd9a74a1f708fb9129244ef843 ]
 
-sctp_stream_update() is only invoked when the association is moved into
-COOKIE_WAIT during association setup/reconfiguration. In this path, the
-outbound stream scheduler state (stream->out_curr) is expected to be
-clean, since no user data should have been transmitted yet unless the
-state machine has already partially progressed.
+The confidential VMBus is supported starting from the protocol
+version 6.0 onwards.
 
-However, a corner case exists in sctp_sf_do_5_2_6_stale(): when a
-Stale Cookie ERROR is received, the association is rolled back from
-COOKIE_ECHOED to COOKIE_WAIT. In this scenario, user data may already
-have been queued and even bundled with the COOKIE-ECHO chunk.
+Provide the required definitions. No functional changes.
 
-During the rollback, sctp_stream_update() frees the old stream table
-and installs a new one, but it does not invalidate stream->out_curr.
-As a result, out_curr may still point to a freed sctp_stream_out
-entry from the previous stream state.
-
-Later, SCTP scheduler dequeue paths (FCFS, RR, PRIO, etc.) rely on
-stream->out_curr->ext, which can lead to use-after-free once the old
-stream state has been released via sctp_stream_free().
-
-This results in crashes such as (reported by Yuqi):
-
-  BUG: KASAN: slab-use-after-free in sctp_sched_fcfs_dequeue+0x13a/0x140
-  Read of size 8 at addr ff1100004d4d3208 by task mini_poc/9312
-  CPU: 1 UID: 1001 PID: 9312 Comm: mini_poc Not tainted
-     7.1.0-rc1-00305-gbd3a4795d574 #5 PREEMPT(full)
-   sctp_sched_fcfs_dequeue+0x13a/0x140
-   sctp_outq_flush+0x1603/0x33e0
-   sctp_do_sm+0x31c9/0x5d30
-   sctp_assoc_bh_rcv+0x392/0x6f0
-   sctp_inq_push+0x1db/0x270
-   sctp_rcv+0x138d/0x3c10
-
-Fix this by fully purging the association outqueue when handling the
-Stale Cookie case. This ensures all pending transmit and retransmit
-state is dropped, and any scheduler cached pointers are invalidated,
-making it safe to rebuild stream state during COOKIE_WAIT restart.
-
-Updating only stream->out_curr would be insufficient, since queued
-and retransmittable data would still reference the old stream state and
-trigger later use-after-free in dequeue paths.
-
-Fixes: 5bbbbe32a431 ("sctp: introduce stream scheduler foundations")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reported-by: Yuqi Xu <xuyq21@lenovo.com>
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/94318159b9052907a6cbb7256aee8b5f8dfbfccb.1780510304.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Roman Kisel <romank@linux.microsoft.com>
+Reviewed-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Stable-dep-of: c5c3ef8d49e1 ("Drivers: hv: vmbus: Provide option to skip VMBus unload on panic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/hv/hyperv_vmbus.h   |  2 ++
+ drivers/hv/vmbus_drv.c      | 12 +++++++
+ include/hyperv/hvgdk_mini.h |  1 +
+ include/linux/hyperv.h      | 69 +++++++++++++++++++++++++++----------
+ 4 files changed, 65 insertions(+), 19 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 8e89a870780c49..9b23c11cbb9ea4 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -2598,11 +2598,7 @@ static enum sctp_disposition sctp_sf_do_5_2_6_stale(
- 	 */
- 	sctp_add_cmd_sf(commands, SCTP_CMD_DEL_NON_PRIMARY, SCTP_NULL());
+diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
+index 0b450e53161e51..4a01797d485139 100644
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -333,6 +333,8 @@ extern const struct vmbus_channel_message_table_entry
  
--	/* If we've sent any data bundled with COOKIE-ECHO we will need to
--	 * resend
--	 */
--	sctp_add_cmd_sf(commands, SCTP_CMD_T1_RETRAN,
--			SCTP_TRANSPORT(asoc->peer.primary_path));
-+	sctp_add_cmd_sf(commands, SCTP_CMD_PURGE_OUTQUEUE, SCTP_NULL());
+ /* General vmbus interface */
  
- 	/* Cast away the const modifier, as we want to just
- 	 * rerun it through as a sideffect.
++bool vmbus_is_confidential(void);
++
+ struct hv_device *vmbus_device_create(const guid_t *type,
+ 				      const guid_t *instance,
+ 				      struct vmbus_channel *channel);
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 3ab62277b6be6c..6d2bf7a96aa638 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -57,6 +57,18 @@ static long __percpu *vmbus_evt;
+ int vmbus_irq;
+ int vmbus_interrupt;
+ 
++/*
++ * If the Confidential VMBus is used, the data on the "wire" is not
++ * visible to either the host or the hypervisor.
++ */
++static bool is_confidential;
++
++bool vmbus_is_confidential(void)
++{
++	return is_confidential;
++}
++EXPORT_SYMBOL_GPL(vmbus_is_confidential);
++
+ /*
+  * The panic notifier below is responsible solely for unloading the
+  * vmbus connection, which is necessary in a panic event.
+diff --git a/include/hyperv/hvgdk_mini.h b/include/hyperv/hvgdk_mini.h
+index 77abddfc750e40..7f730a0e54e611 100644
+--- a/include/hyperv/hvgdk_mini.h
++++ b/include/hyperv/hvgdk_mini.h
+@@ -260,6 +260,7 @@ union hv_hypervisor_version_info {
+ #define HYPERV_CPUID_VIRT_STACK_PROPERTIES	 0x40000082
+ /* Support for the extended IOAPIC RTE format */
+ #define HYPERV_VS_PROPERTIES_EAX_EXTENDED_IOAPIC_RTE	 BIT(2)
++#define HYPERV_VS_PROPERTIES_EAX_CONFIDENTIAL_VMBUS_AVAILABLE	 BIT(3)
+ 
+ #define HYPERV_HYPERVISOR_PRESENT_BIT		 0x80000000
+ #define HYPERV_CPUID_MIN			 0x40000005
+diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
+index 59826c89171c79..dfc516c1c7193f 100644
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -265,16 +265,18 @@ static inline u32 hv_get_avail_to_write_percent(
+  * Linux kernel.
+  */
+ 
+-#define VERSION_WS2008  ((0 << 16) | (13))
+-#define VERSION_WIN7    ((1 << 16) | (1))
+-#define VERSION_WIN8    ((2 << 16) | (4))
+-#define VERSION_WIN8_1    ((3 << 16) | (0))
+-#define VERSION_WIN10 ((4 << 16) | (0))
+-#define VERSION_WIN10_V4_1 ((4 << 16) | (1))
+-#define VERSION_WIN10_V5 ((5 << 16) | (0))
+-#define VERSION_WIN10_V5_1 ((5 << 16) | (1))
+-#define VERSION_WIN10_V5_2 ((5 << 16) | (2))
+-#define VERSION_WIN10_V5_3 ((5 << 16) | (3))
++#define VMBUS_MAKE_VERSION(MAJ, MIN)	((((u32)MAJ) << 16) | (MIN))
++#define VERSION_WS2008					VMBUS_MAKE_VERSION(0, 13)
++#define VERSION_WIN7					VMBUS_MAKE_VERSION(1, 1)
++#define VERSION_WIN8					VMBUS_MAKE_VERSION(2, 4)
++#define VERSION_WIN8_1					VMBUS_MAKE_VERSION(3, 0)
++#define VERSION_WIN10					VMBUS_MAKE_VERSION(4, 0)
++#define VERSION_WIN10_V4_1				VMBUS_MAKE_VERSION(4, 1)
++#define VERSION_WIN10_V5				VMBUS_MAKE_VERSION(5, 0)
++#define VERSION_WIN10_V5_1				VMBUS_MAKE_VERSION(5, 1)
++#define VERSION_WIN10_V5_2				VMBUS_MAKE_VERSION(5, 2)
++#define VERSION_WIN10_V5_3				VMBUS_MAKE_VERSION(5, 3)
++#define VERSION_WIN10_V6_0				VMBUS_MAKE_VERSION(6, 0)
+ 
+ /* Make maximum size of pipe payload of 16K */
+ #define MAX_PIPE_DATA_PAYLOAD		(sizeof(u8) * 16384)
+@@ -335,14 +337,22 @@ struct vmbus_channel_offer {
+ } __packed;
+ 
+ /* Server Flags */
+-#define VMBUS_CHANNEL_ENUMERATE_DEVICE_INTERFACE	1
+-#define VMBUS_CHANNEL_SERVER_SUPPORTS_TRANSFER_PAGES	2
+-#define VMBUS_CHANNEL_SERVER_SUPPORTS_GPADLS		4
+-#define VMBUS_CHANNEL_NAMED_PIPE_MODE			0x10
+-#define VMBUS_CHANNEL_LOOPBACK_OFFER			0x100
+-#define VMBUS_CHANNEL_PARENT_OFFER			0x200
+-#define VMBUS_CHANNEL_REQUEST_MONITORED_NOTIFICATION	0x400
+-#define VMBUS_CHANNEL_TLNPI_PROVIDER_OFFER		0x2000
++#define VMBUS_CHANNEL_ENUMERATE_DEVICE_INTERFACE		0x0001
++/*
++ * This flag indicates that the channel is offered by the paravisor, and must
++ * use encrypted memory for the channel ring buffer.
++ */
++#define VMBUS_CHANNEL_CONFIDENTIAL_RING_BUFFER			0x0002
++/*
++ * This flag indicates that the channel is offered by the paravisor, and must
++ * use encrypted memory for GPA direct packets and additional GPADLs.
++ */
++#define VMBUS_CHANNEL_CONFIDENTIAL_EXTERNAL_MEMORY		0x0004
++#define VMBUS_CHANNEL_NAMED_PIPE_MODE					0x0010
++#define VMBUS_CHANNEL_LOOPBACK_OFFER					0x0100
++#define VMBUS_CHANNEL_PARENT_OFFER						0x0200
++#define VMBUS_CHANNEL_REQUEST_MONITORED_NOTIFICATION	0x0400
++#define VMBUS_CHANNEL_TLNPI_PROVIDER_OFFER				0x2000
+ 
+ struct vmpacket_descriptor {
+ 	u16 type;
+@@ -621,6 +631,12 @@ struct vmbus_channel_relid_released {
+ 	u32 child_relid;
+ } __packed;
+ 
++/*
++ * Used by the paravisor only, means that the encrypted ring buffers and
++ * the encrypted external memory are supported
++ */
++#define VMBUS_FEATURE_FLAG_CONFIDENTIAL_CHANNELS	0x10
++
+ struct vmbus_channel_initiate_contact {
+ 	struct vmbus_channel_message_header header;
+ 	u32 vmbus_version_requested;
+@@ -630,7 +646,8 @@ struct vmbus_channel_initiate_contact {
+ 		struct {
+ 			u8	msg_sint;
+ 			u8	msg_vtl;
+-			u8	reserved[6];
++			u8	reserved[2];
++			u32 feature_flags; /* VMBus version 6.0 */
+ 		};
+ 	};
+ 	u64 monitor_page1;
+@@ -1003,6 +1020,10 @@ struct vmbus_channel {
+ 
+ 	/* boolean to control visibility of sysfs for ring buffer */
+ 	bool ring_sysfs_visible;
++	/* The ring buffer is encrypted */
++	bool co_ring_buffer;
++	/* The external memory is encrypted */
++	bool co_external_memory;
+ };
+ 
+ #define lock_requestor(channel, flags)					\
+@@ -1027,6 +1048,16 @@ u64 vmbus_request_addr_match(struct vmbus_channel *channel, u64 trans_id,
+ 			     u64 rqst_addr);
+ u64 vmbus_request_addr(struct vmbus_channel *channel, u64 trans_id);
+ 
++static inline bool is_co_ring_buffer(const struct vmbus_channel_offer_channel *o)
++{
++	return !!(o->offer.chn_flags & VMBUS_CHANNEL_CONFIDENTIAL_RING_BUFFER);
++}
++
++static inline bool is_co_external_memory(const struct vmbus_channel_offer_channel *o)
++{
++	return !!(o->offer.chn_flags & VMBUS_CHANNEL_CONFIDENTIAL_EXTERNAL_MEMORY);
++}
++
+ static inline bool is_hvsock_offer(const struct vmbus_channel_offer_channel *o)
+ {
+ 	return !!(o->offer.chn_flags & VMBUS_CHANNEL_TLNPI_PROVIDER_OFFER);
 -- 
 2.53.0
 
