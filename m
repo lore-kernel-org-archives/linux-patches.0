@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475A61E8320;
-	Tue, 16 Jun 2026 16:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9869546AF1B;
+	Tue, 16 Jun 2026 16:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627006; cv=none; b=q0c5GMWkvUuB8Tbtg15JtJtb1F7w1e6oSMc6EYHXVo65qY/5kX02Ee4oq46oqhDduS8e8tsPSJQPQr1uA7kWMTPNgLGDFokakozK+CyerBYUkpjxUucZ6mUFnkLnj9zzD3AsWmLkAGhutrYr07iYTjep1c/v+aOXi/LN1qs5F80=
+	t=1781627011; cv=none; b=HkbdrhukFxewE/K8oBidRArEWeYm2Qz0AbuVA+oN742umN7M6z88OC1uIohYNO+VDDhLKR/ASOWI8JE91qrcffe88COEYUxiePCwUL998rKVR6yg47ffu3c1KT3yqcSo+ds1x2nr8TGiEfFHisD3mjp8KtV23AoTn6hO7X3v9M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627006; c=relaxed/simple;
-	bh=U6NAyJ3FqyplKo2Yy70AAOyg/rzBYgtHGlFgDaZLPgw=;
+	s=arc-20240116; t=1781627011; c=relaxed/simple;
+	bh=sNrHu11c2nL9MWV5vDpeN6L/OZu3MnZE9sBknFGmQmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skbhbizMsa9w9bAmMP1CL4r2SrBKSRNf7wdg96gZqhsBxU2hBGdYp7lGg0Y5RCIrIdVajPP2NmLMFLuHWTz6biG9GQHJeJaX04obwYIwcin8Dm6lieXS/DoREPMEQkpoElXuugXXkN17FjRB8Ww0ZP4BvDKpmUjK562bR+cA3mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgWv+hSi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r/CYwTBsaIY9391LO1zDOtGj+EEuJ8kP5R0V2u96MstEyqIDIQsoxOCxVp5AARz0A1DoU4DUn1QIdcEhUt+d14mk0sModvtGR+vvD7iKrBmdThtHxmLfuOaQDRSgtV6eJDnY2MYh1obLOq07X/l7sHPzvTcSBCTHBIyZk+wCcuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YM5wUkHY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgWv+hSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA0E1F00A3A;
-	Tue, 16 Jun 2026 16:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YM5wUkHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5160F1F000E9;
+	Tue, 16 Jun 2026 16:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627005;
-	bh=GjmPS85KE2jR6RKkZuAefO717TXZlR6DB++fXuiwtb8=;
+	s=korg; t=1781627010;
+	bh=UMqpeRZWAN1ChiNHCg0eqi6dfmofJhHqfoRNKnBYSR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wgWv+hSiv2F4PGKLL5QzSa27cp/PChuVIwBbJc5isk8arxXsYGdrUZNMwtptH7fc3
-	 Q2RcDMSikbXlr/h3c5sE61CanCtTRbfCOBZb4+6AXPR7647oMAuS8d49WGBZ9tEpmA
-	 rUwePlnuuNOp1P0LmCXK3Fz6dvgmO3/GUzwXhqp4=
+	b=YM5wUkHYrk4cGMxcx/LU9BSJLZnwyWXKcZqPnXxEoO5nusl9y2Vp6rMNz9iYQ5cH+
+	 0Sj+lGpkBqy16f7s3WNol0MG/R+uOBxtBuqwmd0bv/ZHblEBGZGZHkz8sXqCGjYwA9
+	 T9LYvwZzlOEjSskwOqFMtpFrlbrpyYsPmkP2UZ8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	David Ahern <dahern@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/261] net: mvpp2: build skb from XDP-adjusted data on XDP_PASS
-Date: Tue, 16 Jun 2026 20:29:04 +0530
-Message-ID: <20260616145049.965323724@linuxfoundation.org>
+Subject: [PATCH 6.12 107/261] ipv6: Fix a potential NPD in cleanup_prefix_route()
+Date: Tue, 16 Jun 2026 20:29:05 +0530
+Message-ID: <20260616145050.011266364@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,104 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 77a6b90ce56bc982dcfa94229b8e28e6abb16e95 ]
+[ Upstream commit b70c687b7cf267fb08586667a3946c8851cad672 ]
 
-When an XDP program uses bpf_xdp_adjust_head() or bpf_xdp_adjust_tail()
-and then returns XDP_PASS, mvpp2 still builds the skb from fixed offsets
-derived from the original RX descriptor. Packet geometry changes made by
-the XDP program are therefore discarded before the skb reaches the stack.
+addrconf_get_prefix_route() can return the fib6_null_entry sentinel
+entry which has a NULL fib6_table pointer. Therefore, before setting the
+route's expiration time, check that we are not working with this entry,
+as otherwise a NPD will be triggered [1].
 
-Update rx_offset and rx_bytes from xdp.data and xdp.data_end for
-XDP_PASS. This makes skb_reserve() and skb_put() reflect the packet seen
-by XDP, and makes RX byte accounting for XDP_PASS follow the length of the
-skb passed to the network stack.
+Note that the other callers of addrconf_get_prefix_route() are not
+susceptible to this bug:
 
-Keep a separate rx_sync_size for page-pool recycling on skb allocation
-failure, which must stay tied to the received buffer range.
+1. addrconf_prefix_rcv(): Requests a route with the 'RTF_ADDRCONF |
+   RTF_PREFIX_RT' flags which are not set on fib6_null_entry.
 
-Non-PASS verdicts continue to account the descriptor length because no skb
-is passed up in those cases.
+2. modify_prefix_route(): Fixed by commit a747e02430df ("ipv6: avoid
+   possible NULL deref in modify_prefix_route()").
 
-Fixes: 07dd0a7aae7f ("mvpp2: add basic XDP support")
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Link: https://patch.msgid.link/20260607134943.21996-5-mail@tk154.de
+3. __ipv6_ifa_notify(): Calls ip6_del_rt() which specifically checks for
+   fib6_null_entry and returns an error.
+
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+[...]
+Call Trace:
+<TASK>
+__kasan_check_byte (mm/kasan/common.c:573)
+lock_acquire.part.0 (kernel/locking/lockdep.c:5842 (discriminator 1))
+_raw_spin_lock_bh (kernel/locking/spinlock.c:182 (discriminator 1))
+cleanup_prefix_route (net/ipv6/addrconf.c:1280)
+ipv6_del_addr (net/ipv6/addrconf.c:1342)
+inet6_addr_del.isra.0 (net/ipv6/addrconf.c:3119)
+inet6_rtm_deladdr (net/ipv6/addrconf.c:4812)
+rtnetlink_rcv_msg (net/core/rtnetlink.c:6997)
+netlink_rcv_skb (net/netlink/af_netlink.c:2555)
+netlink_unicast (net/netlink/af_netlink.c:1344)
+netlink_sendmsg (net/netlink/af_netlink.c:1899)
+__sock_sendmsg (net/socket.c:802 (discriminator 4))
+____sys_sendmsg (net/socket.c:2698)
+___sys_sendmsg (net/socket.c:2752)
+__sys_sendmsg (net/socket.c:2784)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+Fixes: 5eb902b8e719 ("net/ipv6: Remove expired routes with a separated list of routes.")
+Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Reviewed-by: David Ahern <dahern@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260609145448.768318-1-idosch@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/mvpp2/mvpp2_main.c   | 21 +++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ net/ipv6/addrconf.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 2c517f6ca39c40..325a3a657249df 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3932,10 +3932,10 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		struct mvpp2_bm_pool *bm_pool;
- 		struct page_pool *pp = NULL;
- 		struct sk_buff *skb;
--		unsigned int frag_size;
-+		unsigned int frag_size, rx_sync_size;
- 		dma_addr_t dma_addr;
- 		phys_addr_t phys_addr;
--		int pool, rx_bytes, err, ret;
-+		int pool, rx_bytes, rx_offset, err, ret;
- 		struct page *page;
- 		void *data;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index e104ec8efe1c0c..c6fcdb60dfee14 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1259,6 +1259,7 @@ static void
+ cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
+ 		     bool del_rt, bool del_peer)
+ {
++	struct net *net = dev_net(ifp->idev->dev);
+ 	struct fib6_table *table;
+ 	struct fib6_info *f6i;
  
-@@ -3948,6 +3948,8 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		rx_status = mvpp2_rxdesc_status_get(port, rx_desc);
- 		rx_bytes = mvpp2_rxdesc_size_get(port, rx_desc);
- 		rx_bytes -= MVPP2_MH_SIZE;
-+		rx_sync_size = rx_bytes + MVPP2_MH_SIZE;
-+		rx_offset = MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM;
- 		dma_addr = mvpp2_rxdesc_dma_addr_get(port, rx_desc);
+@@ -1267,9 +1268,10 @@ cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
+ 					ifp->idev->dev, 0, RTF_DEFAULT, true);
+ 	if (f6i) {
+ 		if (del_rt)
+-			ip6_del_rt(dev_net(ifp->idev->dev), f6i, false);
++			ip6_del_rt(net, f6i, false);
+ 		else {
+-			if (!(f6i->fib6_flags & RTF_EXPIRES)) {
++			if (f6i != net->ipv6.fib6_null_entry &&
++			    !(f6i->fib6_flags & RTF_EXPIRES)) {
+ 				table = f6i->fib6_table;
+ 				spin_lock_bh(&table->tb6_lock);
  
- 		pool = (rx_status & MVPP2_RXD_BM_POOL_ID_MASK) >>
-@@ -3963,7 +3965,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 
- 		dma_sync_single_range_for_cpu(dev->dev.parent, dma_addr,
- 					      MVPP2_SKB_HEADROOM,
--					      rx_bytes + MVPP2_MH_SIZE,
-+					      rx_sync_size,
- 					      dma_dir);
- 
- 		/* Buffer header not supported */
-@@ -4014,6 +4016,14 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 				continue;
- 			}
- 
-+			rx_sync_size = max_t(unsigned int, rx_sync_size,
-+					     xdp.data_end - xdp.data_hard_start -
-+					     MVPP2_SKB_HEADROOM);
-+
-+			/* Update offset and length to reflect any XDP adjustments. */
-+			rx_offset = xdp.data     - data;
-+			rx_bytes  = xdp.data_end - xdp.data;
-+
- 			metasize = xdp.data - xdp.data_meta;
- 		}
- 
-@@ -4025,8 +4035,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 			netdev_warn(port->dev, "skb build failed\n");
- 			if (pp) {
- 				page_pool_put_page(pp, virt_to_head_page(data),
--						   rx_bytes + MVPP2_MH_SIZE,
--						   true);
-+						   rx_sync_size, true);
- 			} else {
- 				dma_unmap_single_attrs(dev->dev.parent, dma_addr,
- 						       bm_pool->buf_size,
-@@ -4056,7 +4065,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		ps.rx_packets++;
- 		ps.rx_bytes += rx_bytes;
- 
--		skb_reserve(skb, MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM);
-+		skb_reserve(skb, rx_offset);
- 		skb_put(skb, rx_bytes);
- 		if (metasize)
- 			skb_metadata_set(skb, metasize);
 -- 
 2.53.0
 
