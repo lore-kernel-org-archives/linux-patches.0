@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93E73D47CE;
-	Tue, 16 Jun 2026 18:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45C93D88F2;
+	Tue, 16 Jun 2026 18:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633451; cv=none; b=Uw2Tgu0X5//O6RGXY+tx0CEgQypR7vd0wiyBlIDDFH1hdXUoLJF5OF9yw9B34cCe34kSCmzFzRDs+0wFjDXWwOZuBi0TPeZG5myb+7Gm9XmbQ+/3HX1UhnnG/7Ilo5KGEPRgr26DvWDT2vFlj44rLPLMc+F9YI653F3xd2COW4s=
+	t=1781633457; cv=none; b=KmNpMfjJYttL5UMCl+j4gITBK7yUSA9xYQjWK1lDLtwShBFNw7QMokmH1NoqQ2plDQjixC2CTqSqYEHBHK7TcIlhqhrOTwpjaDawGKMm2WEjvu2ndBK1+sZ+wtaYUtXb11EFbVbNbCnmW36IJ3O+84M5Q0QItB8B/xnsFNkfa/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633451; c=relaxed/simple;
-	bh=SRUJH3d2igwyUsXMyBOHKzVvjR3oL4Bn4pB4oXnMTWc=;
+	s=arc-20240116; t=1781633457; c=relaxed/simple;
+	bh=qU0biTERpHz1AKiw8uAA79ccZaCP8V+d16uumuzTQTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hoF2G/NOeBX24hte6UBDcls1zySs6cLrUszWR50uCgH4pVhOO7Dot+bVSGNyrcsYMSTLRuRuottnr2MHAqDtSXjBhiHAwU59FONso5WNs+sllJiRdlCbha59psj6wFfpIk8smQys4B6g06fFTMzBbSFmj8BFsjYs7vLfKyY4tMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQGYdWaA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BKYQ0g6I0egWHKhRU5jqhrWiGwD6SnaCuT4u7VuFVylzsP7sHtXuFDvND5Wi1phOtexQEMX6y3BVoVTIh2jsmQlge7ApR7XN3fE3cXKpMA9TN3O0O1rHhRfC8hRQ/u43UXAJSReUs6iHpBghmicv2YzXI2ZVwXosza09MkoWh48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGlmTHQ5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQGYdWaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A638B1F00A3D;
-	Tue, 16 Jun 2026 18:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGlmTHQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4B91F000E9;
+	Tue, 16 Jun 2026 18:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633450;
-	bh=32qzgMV7ImmH29JGKv4rgYaC9yCM/rjYEMpKdOL//cY=;
+	s=korg; t=1781633455;
+	bh=Yo4DkNUuelwMgnrQYMJWronwtR7CdP75RM3lCu7+5ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQGYdWaASYs0b1lLkuRag2ChDwDLtwpPx+rAXhVq7s0TcZ/l+crbD9O1O8JbeAiyr
-	 kOFuhwBkxVrh61wabqvRMs318Y6vepdynLf0kb+2xWUQujJSSSXG/IXjiDx1mwt/7t
-	 W3X/JDv4CuAKSPqaSBmeiVY/p1QQjlvh/IRHPirQ=
+	b=KGlmTHQ5RpOrckoYsKwqmQZ9iWzbjGeax0NdA/UjXRVJiQ4KCaNBq8kgb13Y/kCmu
+	 BPCcTI5Uf4/RVvVjV56mAKfnmOgNIC6JHG258E63EWyoGKwIaKreEZUpZrqXfPaz3r
+	 OmWPezuYHUFxvc58dAgyw/f9zFTteKwEX2KsCB7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Peter Chen <peter.chen@kernel.org>,
-	Yongchao Wu <yongchao.wu@autochips.com>
-Subject: [PATCH 5.15 080/411] usb: cdns3: gadget: fix request skipping after clearing halt
-Date: Tue, 16 Jun 2026 20:25:18 +0530
-Message-ID: <20260616145104.525852015@linuxfoundation.org>
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Peter Chen <peter.chen@cixtech.com>
+Subject: [PATCH 5.15 081/411] usb: cdns3: plat: fix unbalanced pm_runtime_forbid() call permanently leaks the runtime PM usage counter across bind/unbind cycles
+Date: Tue, 16 Jun 2026 20:25:19 +0530
+Message-ID: <20260616145104.577031844@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,67 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongchao Wu <yongchao.wu@autochips.com>
+From: Peter Chen <peter.chen@cixtech.com>
 
-commit c8778ff817a7047d6848fefba99dcb27b1bf01fe upstream.
+commit ae6f3b82324e4f39ad8443c9020787e6fc889637 upstream.
 
-According to the cdns3 datasheet, the EPRST (Endpoint Reset) command
-causes the DMA engine to reposition its internal pointer to the next
-Transfer Descriptor (TD) if it was already processing one.
+Call pm_runtime_allow(dev) conditionally at cdns3_plat_remove.
 
-This issue is consistently observed during the ADB identification
-process on macOS hosts, where the host issues a Clear_Halt. Although
-commit 4bf2dd65135a ("usb: cdns3: gadget: toggle cycle bit before reset
-endpoint") attempted to avoid DMA advance by toggling the cycle bit,
-trace logs show that on certain hosts like macOS, the DMA pointer
-(EP_TRADDR) still shifts after EPRST:
-
-  cdns3_ctrl_req: Clear Endpoint Feature(Halt ep1out)
-  cdns3_doorbell_epx: ep1out, ep_trbaddr f9c04030  <-- Should be f9c04000
-  cdns3_gadget_giveback: ep1out: req: ... length: 16384/16384
-
-As shown above, the DMA pointer jumped to the next TD, causing
-the controller to skip the initial TRBs of the request. This leads to
-data misalignment and ADB protocol hangs on macOS.
-
-Fix this by manually restoring the EP_TRADDR register to the starting
-physical address of the current request after the EPRST operation is
-complete.
-
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Fixes: f738957277ba ("usb: cdns3: Split core.c into cdns3-plat and core.c file")
 Cc: stable <stable@kernel.org>
-Cc: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260513160012.2547894-1-yongchao.wu@autochips.com
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-devicetree/agKaEePSFknhDBg2@nchen-desktop/T/#m21e1d9c1574eb127ce03c0c2a1a49002ce435b52
+Signed-off-by: Peter Chen <peter.chen@cixtech.com>
+Link: https://patch.msgid.link/20260513085310.2217547-3-peter.chen@cixtech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/cdns3-plat.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -2812,9 +2812,19 @@ int __cdns3_gadget_ep_clear_halt(struct
- 	priv_ep->flags &= ~(EP_STALLED | EP_STALL_PENDING);
+--- a/drivers/usb/cdns3/cdns3-plat.c
++++ b/drivers/usb/cdns3/cdns3-plat.c
+@@ -181,6 +181,9 @@ static int cdns3_plat_remove(struct plat
+ 	struct device *dev = cdns->dev;
  
- 	if (request) {
--		if (trb)
-+		if (trb) {
- 			*trb = trb_tmp;
- 
-+			/*
-+			 * Per datasheet, EPRST causes DMA to reposition to the next TD.
-+			 * Manually reset EP_TRADDR to the current TRB to prevent
-+			 * the hardware from skipping the interrupted request.
-+			 */
-+			writel(EP_TRADDR_TRADDR(priv_ep->trb_pool_dma +
-+						priv_req->start_trb * TRB_SIZE),
-+						&priv_dev->regs->ep_traddr);
-+		}
+ 	pm_runtime_get_sync(dev);
++	if (!(cdns->pdata && (cdns->pdata->quirks & CDNS3_DEFAULT_PM_RUNTIME_ALLOW)))
++		pm_runtime_allow(dev);
 +
- 		cdns3_rearm_transfer(priv_ep, 1);
- 	}
- 
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_put_noidle(dev);
+ 	cdns_remove(cdns);
 
 
