@@ -1,86 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B2838A70A;
-	Wed, 17 Jun 2026 10:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE84370AD6;
+	Wed, 17 Jun 2026 11:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781693558; cv=none; b=LUZQzyUnYcs8HV7it93aNnvM6Uea6PEGtWcZ+DNXHOBFC1zZjBoI8Abu3EAzZN6JXFdmJHWa3srUfIfl8vno7aKb+EP38DG+fTkxxVTdaD6uHEGlUBc3u7sqtKquRyvjh0UOHZVxeyAD4K23ARTujvDgfmU1zgOJEEsa8W/KhzM=
+	t=1781694479; cv=none; b=kjeGArxkuwuUYeXeAORLvBi9AVUKUbo0S09MyRSOyukW/1sFuuH3nO7Mnh8lA86wi2aJhtbT62fqEg6jm/XJymW91bfFGMlnpFKrhXFFgtQQJpl7IEju7Kcrxgwd5X3fqWdKWWBloakeKgyu4WaQhlUPTrFV+QvHJYm0MAGoDCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781693558; c=relaxed/simple;
-	bh=RzyRnT+ZdGYv8bl8mIGHHM0FXc9NpkE4ljb9Ulg+sPg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwpcQhAYVvLpNt8HJM7Ls5S6sRRcIQsSE1mdUam2OZc5FBeTnRmb6LeO0zq9oZYfEzO1O+aWUBENHhVLIf2SjndJmCGeWGErn9Np+mAJI6vsctFkeWlWXvTcIs4Db1LQ5j/4/dRHjpvOgJd+F65J+pS4A9T5wYPMzfGqh0AM7Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V6Smc0vS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781694479; c=relaxed/simple;
+	bh=t8E4VL5k1FCWK4bBsLA60HlUaTKskXgiRWXceTi/Z7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SYkfYBRqaGqTMdUGbcl2Qd4dprzdGTDzGflPI5nzMSNhVXlCIVuXwiUlF8S/6usluOXk4NrQuXQ6XNH5Kd8WVXQhG61Ysq/5VcAHIHD7y+PGxg4l+ZX8fQsM8fNJJP0BLZNqqJHPRNFI7NwRC3wNU5T5ZabhyL2CxxpfsQa6jog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLqJtmaf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V6Smc0vS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC61A1F000E9;
-	Wed, 17 Jun 2026 10:52:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLqJtmaf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8091F000E9;
+	Wed, 17 Jun 2026 11:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781693557;
-	bh=JZbqZkhOUyoGmziemqJI68Q1d31jAqXsJS2bmYS07Ss=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V6Smc0vSQ3yi2/gOE1t21X4E9plY3brvOYc4sauTy0VS0I8Bc4jQJqj7egk+3/6g4
-	 vPOyiASec3QFFQWv2EaRhKuCC6VGgklr8ELnUefRU9TIjTI2cMCUtzn0gRh4F4BvjX
-	 SfnL7ncz4R5ATdIFpxKJ1kIYAWMGUj0vaOL/GgKDd90eizPzfcvcL6ai1emaS9wO+8
-	 tLQVxJlZx/K0qxQhg/6aqF9UT9bLIrMc19fsLCJOUDYWdnZTLw1QxRBUGNEIbSE9EU
-	 aYmcObPRbIfP7AXm8khvNMHSdKSpmXrx6lZTE+RXpeYk4phH3O7CunwEWT8JqRzbHc
-	 F5hMR6z+35XCQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 7.1 0/8] 7.1.1-rc1 review
-Date: Wed, 17 Jun 2026 12:52:24 +0200
-Message-ID: <20260617105224.64682-1-ojeda@kernel.org>
-In-Reply-To: <20260616145523.335696673@linuxfoundation.org>
-References: <20260616145523.335696673@linuxfoundation.org>
+	s=k20260515; t=1781694477;
+	bh=t8E4VL5k1FCWK4bBsLA60HlUaTKskXgiRWXceTi/Z7g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=NLqJtmafqtIX3Tb8AE5w+R11U0MKcAWK4r/JDthJKBeBFww+/nhMWIF7Vcjo3XlrP
+	 C+sMhhL877RwyM+BGepimtw0NisPuB3Fe44rYPXiUZt9dVlwKN4VrqVF9me6YdDbHl
+	 pFFXT0/2ZIigetaxoFUza6yYSkGZgku//+clVHrXjPGOM3iNH3j6c9GZ2OoQTBrAiL
+	 VNnD6yyvKpw7cHJSzgO6M1+U/I2Q5KYWJMTWD6vE4mdDhWQ/4FmLOGMt9O6OYslvQT
+	 ZVS4vIGo6Gf6cZHxw6BlWAWXLCudd7RA3cuiRLh4h9rHyWFqgckeY4P/SUMhk1pdmH
+	 DcVGLtqx4J2yA==
+Date: Wed, 17 Jun 2026 13:07:50 +0200
+From: Christian Brauner <brauner@kernel.org>
+To: Joanne Koong <joannelkoong@gmail.com>
+Cc: Val Packett <val@packett.cool>, Al Viro <viro@zeniv.linux.org.uk>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Askar Safin <safinaskar@gmail.com>, linux-kernel@vger.kernel.org, 
+	linux-mm@kvack.org, linux-api@vger.kernel.org, netdev@vger.kernel.org, 
+	Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>, 
+	Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Pedro Falcato <pfalcato@suse.de>, Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev, 
+	linux-fsdevel@vger.kernel.org, Jan Kara <jack@suse.cz>, Steven Rostedt <rostedt@goodmis.org>, 
+	fuse-devel <fuse-devel@lists.linux.dev>, Bernd Schubert <bernd@bsbernd.com>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+Message-ID: <20260617-attest-gewechselt-tragik-7ed473860051@brauner>
+References: <20260531010107.1953702-1-safinaskar@gmail.com>
+ <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
+ <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
+ <20260601173325.GH2636677@ZenIV>
+ <83f05c55-efba-4bf5-abfe-d2ab0819e904@packett.cool>
+ <CAJnrk1Y9egYizkx1H9K0cqxSYuB+7vLvQbV7Tf4C5eHFqnnC-A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJnrk1Y9egYizkx1H9K0cqxSYuB+7vLvQbV7Tf4C5eHFqnnC-A@mail.gmail.com>
 
-On Tue, 16 Jun 2026 20:28:45 +0530 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 7.1.1 release.
-> There are 8 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 18 Jun 2026 14:55:16 +0000.
-> Anything received after that time might be too late.
+> After this patch, step b) is a straight copy which means step d)'s
+> fixup doesn't modify what's in the pipe. This could be fixed up in
+> libfuse to not depend on modify-after-vmsplice, but I don't think this
+> helps for applications using already-released libfuse versions. I
+> think this patch needs to be reverted.
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
-
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
-
-arm32 looks fine in a couple build tests apart from the known `rustdoc`
-1.85.0-only issue. UML looks OK in build testing apart from its known
-warnings.
-
-Thanks!
-
-Cheers,
-Miguel
+Note, nothing was merged. I deliberately kept in -next though for a long
+time to see how quickly we'd see regressions.
