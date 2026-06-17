@@ -1,167 +1,98 @@
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C303A7D98
-	for <patches@lists.linux.dev>; Tue, 16 Jun 2026 22:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5C327281D
+	for <patches@lists.linux.dev>; Wed, 17 Jun 2026 01:50:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781649113; cv=none; b=FDtrRTQLdNwn9R5SmvbvX8rimddw7SZc2vBO4WMN03/xj0NPsSvfxcACmiOwD2y5FebV0iV8xpUinEjOkPMTLwoDe/f3W0K7d3X1AVSSZ0upi+FNeK0xHUNCn71r46uTu8966SVuKhfeLdTLpF6ipEoCcMzrzPgGhkkFYV2oPHw=
+	t=1781661004; cv=none; b=ZTlv42dEFVsi29OzIgv9y2VLEcKMq7kXFxuaeQFS/MX+87Cd732k6DbEy+1GQwA46n6DU0+cJDtHzqrO+vVa9wUgBcYB3RCE/k95bpHZvkGmZH8R3PdL4+VdnZsBh25l5AZEyahd+TOyqJZjGkGTbCfIIz2oxET2gLS1fyjzJRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781649113; c=relaxed/simple;
-	bh=VU19L9VhBp29ZgoIzQqelLKNU3/ihAvyobAMFTRTZYY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZagFPbrIV/zdFfZEvoAAHtClrYk9FFaPKhiAVLfjjksiCXnKR7Kuca9d9Pm2g92OHhaiJJ+gNmczqQFqpWHOQ3B47FCSuHyiTgNedOprBeZ4QVuuPFhrbfaiBd8rPv9qBFycoHBZXs/yPhn0wZaM4fE2pOA+T89Cl1oo7HXAz0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=networkplumber.org; spf=pass smtp.mailfrom=networkplumber.org; dkim=pass (2048-bit key) header.d=networkplumber-org.20251104.gappssmtp.com header.i=@networkplumber-org.20251104.gappssmtp.com header.b=I1prZ9HC; arc=none smtp.client-ip=74.125.82.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=networkplumber.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=networkplumber.org
+	s=arc-20240116; t=1781661004; c=relaxed/simple;
+	bh=dCx5V185N3HE1JGlnEfJqL5fuNQagz0zMOkZsszboWQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uKfQdW9QQBO7LykF9QWaPAROeiDdLNnXyf2zGZpLdq+xPW7xqmvBbgGGIPFMBNI+D0MTiBu43MQ/RY+a4iBv0QORScRFRBdFUSKZp8w3vkCzFvrZacrvJiE4gh6HVF6EXs+aE8f89F44XwfhtmTUn7U7Ca5yNoafPPdNxoYsvW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=GuLdI+nc; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=networkplumber-org.20251104.gappssmtp.com header.i=@networkplumber-org.20251104.gappssmtp.com header.b="I1prZ9HC"
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-30bbb1bc064so2254158eec.1
-        for <patches@lists.linux.dev>; Tue, 16 Jun 2026 15:31:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="GuLdI+nc"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-befee9e5ef7so629186466b.0
+        for <patches@lists.linux.dev>; Tue, 16 Jun 2026 18:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=networkplumber-org.20251104.gappssmtp.com; s=20251104; t=1781649112; x=1782253912; darn=lists.linux.dev;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vEVRhG8WRFRWx8x2gQESmOcBj5/p+0wIVNBHGHrbrIs=;
-        b=I1prZ9HCC4PMG4zSQCPQaW+wkQTSxekgkIrkUmJSlYRubpYJA08MZy+xXKUV+yzShN
-         rhe9k4lEKTGwZcUXswkkInibHqQP2g7lkHNwtrvc/myRF3vjdagp+zbIu0buvdocn+4B
-         uv/jusmgNCggRSKD6Jw/VS2Mylo6DtnZGYU1OoP8HOLQZn9zquNBAkMBPwA5FbZknRid
-         AdXKQbEYlQEr6VnDXUK4f8e4I0chHOFej0+UrkNPmUAZHTTx2q68oeAkOPMPXk/n0rwK
-         1KeWldC0crPDr2jIDzhCOip8a0oCOkxxj5Xozx+a1MPhqMJKiV7vJtbUleEkn1pUCBse
-         Lo+w==
+        d=suse.com; s=google; t=1781661000; x=1782265800; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=p1JL9JOfxvhQp0InJJKfTeQK1sxHLgnnGK+RyeljDlI=;
+        b=GuLdI+nc+tGfOH0WLqkuaO07Ju/O8pjrbvZr0W4m3pUH01NbFBVvtOJM8SZNQBYRn6
+         /R4DSnPSTLp58Ff3pnsab6382pV/qYBAeeUtVn6U9yNy5b5bwxTZUnWja9fHHcG0/eTw
+         Yna+9EczsyYNylg7JsZ8q95yXzfkDN7BIYETN0w0vYP2H+yYQtzIOh20ZXtuBBM02xqw
+         g4DrXkCvpHyvdA/cxly4COgzjVvfbhI9D3dMSo6xWW5ZukML6Wg4+NVPeZxH3FFq50wY
+         pQXsuDHWrsmOdhvW99KppBECQfdLJz5HldQZJKn09bSLNLXT4WOB8HaaOaSxLsyRv7Cb
+         cnOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781649112; x=1782253912;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vEVRhG8WRFRWx8x2gQESmOcBj5/p+0wIVNBHGHrbrIs=;
-        b=ksQ/b2lehXWNCeTDyDO5I0zaUJhX+kJumgAXs5fqrSWG9AJ/cWIIv4JjrRerZnniib
-         2JDdXuZ3TR433BBXm2/IuwLb94WUInrJzDZrYDepxj/O4FVw/SSutXXRRZSBuWm66a1X
-         O0thDrlbZgY/vDe48KLRkc20vEA4YtwUq766j9Z+HWKtZGI4u9MYvkL3qz4n6haFVTis
-         nGXYdZ5WdtNkkUwXfsoyQ+Vr4zQyqkh1g6Pu1obr+OgH+UtstPsQKuCOZWeTxzXatqXb
-         O0BpCwUZeO622pJqEk/hU3uq0HRTFE0q2gvnBQV7y5BWuyUrUTEE1+Nzt8UTQjHxdJWK
-         pRNw==
-X-Forwarded-Encrypted: i=1; AFNElJ8/1k2jTD4m48RCoKvgaqx9v1U3ftHDk2QAK9aXUujU0L5T3Ibzle8bSV1Au6TVpv9Ok1PBJz4k@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw4u427NwnEeRijZdiIl7p8S1MCdcS3Hz87CQ5tnMCuHI817Nni
-	TPRrBkZUlv2wpKMgCdTmpz/m3f/JkaxVuE+TMtou2tpIa7Abi5QLX0IY5PobBSyrHqY=
-X-Gm-Gg: AfdE7cmlZJsnaPnphcqw+i5h3hNbhnNcBKcwxDnOel3ZB9tpcmWW/xcNt/D63CnAfBG
-	sKNgHjlVkbAl6HaNWHxsQzdTlTxIBI8Y1I+aWksNjBpnVgwKxAWOjQPudj2X3NeOKfopkBrAguj
-	3OFW/L5ZeB7NDI/OA65RMq6qeX0BztGB8vZOmdoQ/0Kn5s2OfQxniT5moJn5a/p5jbhE1wfzmPa
-	Ddp3qnZhTba5qFsfr997WOMTrVPOHyep9Vv/ZBynWHpPNLLTkwwFWz25lsralZaDFWsxOkNm2G2
-	BMX/Gwd6QD3pU6a/h2ln2eJjrXVBpNA+K+ag884vkWk+/wRZclEP50wIaisjAdAJd/H3cP+ANFf
-	wkkt6KagIAOf0fUz+uY1+N4nawRS9Dpd1/uvCfpq+v44D6f6IWV7lzWt5zJBrBmLZ2JhcISdwmA
-	vQgZG3Y075aU+nhtrDrPn4z32a7yjsHJz6DFxsAb1cCNg+dSXKKD8XwN3E1u1bvpU+2CeXiVXkK
-	6I=
-X-Received: by 2002:a05:7300:6ca7:b0:304:819f:502b with SMTP id 5a478bee46e88-30bc9ab09e6mr845994eec.9.1781649111684;
-        Tue, 16 Jun 2026 15:31:51 -0700 (PDT)
-Received: from phoenix.local (204-195-96-226.wavecable.com. [204.195.96.226])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30bbcb11310sm2679964eec.14.2026.06.16.15.31.50
+        d=1e100.net; s=20251104; t=1781661000; x=1782265800;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=p1JL9JOfxvhQp0InJJKfTeQK1sxHLgnnGK+RyeljDlI=;
+        b=spC0afUMXtw29YwPxD0hQnucWz+3jImAokRcw22IhehwMmjoHCXSVpmFn+j0HZCnst
+         g6NiYLWlpgGXHp40ruoFNrSKeiutE6SVjs4/N9aytcRT+8Z9KcLKBp9/0en9v2Kdl5D8
+         Vf1gGKrelqvxFQIyeoeMy5PlF6xM+MwrVX3PIVRNczHR//VFav1glAl3ILzbYkjZjS8X
+         +6pgv8TCakhm+cVEoNnh4M0ZZu5CGgJih6gdrZpd39EJlh3WvZLUqFUf7kicMPKXUW/s
+         FrFr1JpovqlTwd10EM0cM0ZL5hOCEmFsL1L/H9CUWkGeoabSVIF/zQadfZDVjgzoFFQS
+         n5rA==
+X-Forwarded-Encrypted: i=1; AFNElJ9hSnOp5yCqrbMsOIwZSVdSQmKXRj7eCtdE/+2BKyvv1K/5ocwu/0cQOVjL973tYd+m5x69rDeC@lists.linux.dev
+X-Gm-Message-State: AOJu0YycZ+G/nKXf7Y64xCuQaKrdsXfx/1ySDvnr2Dys3v593HlGZU8S
+	jZ0NDNP4hFKKCk0J4CZX+MsCLFDbqjIAdVtjEVeIBjMy1mkUGtHPJT6xUoxEdm9lEv8=
+X-Gm-Gg: Acq92OEWLVW66x8/chUn+IvklMA35sw90IrN2QZCRTU2o8sd+zXpfTe0E4uX+8VewXJ
+	fXsv3IwfQWSSvEUo3EZkX45mdwN+5Xg1pLRuCEJAvIBsfwhL4xr9dBhVU7zQ34edrPCY9MefWkh
+	BeDLxePQn3MgEIY+Xc/XksswJtpZET8351noj4SgJ00U3JI6YaW5IgdrIU6/xYUgoc69xw3zZI6
+	WM36CXNBlIIo9NjLCcOQAVCWjS60LFkoSl02qFxrNeTxyQGrH+frM9/fKc7dno9kxX4NPPTiZsb
+	cem+M8Uwngl87E43jXqDQ7nFj3TYJYh4ERlV5fFUMtSevZDNuco4iDB2rxhBWRLACjt/BbDv9+o
+	VAQwBKdok1alUM+L0lqd0haYpOM/83koaSlF0WoooZe93M9ZVo2X2xOPAJou1FVl+ng7bVXcIwC
+	FBLUynwhPXXtn20gzgQ4IcudlVQ0SYttA+2uguBw==
+X-Received: by 2002:a17:906:5a56:b0:bd5:2e64:aef0 with SMTP id a640c23a62f3a-c05a4814807mr85815466b.24.1781661000527;
+        Tue, 16 Jun 2026 18:50:00 -0700 (PDT)
+Received: from u94a (27-240-202-183.adsl.fetnet.net. [27.240.202.183])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c433078264sm144079715ad.65.2026.06.16.18.49.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2026 15:31:51 -0700 (PDT)
-Date: Tue, 16 Jun 2026 15:31:46 -0700
-From: Stephen Hemminger <stephen@networkplumber.org>
-To: Ben Hutchings <ben@decadent.org.uk>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, Ji-Soo Chung <jschung2@proton.me>, Gerlinde 
- <lrGerlinde@mailfence.com>, zyc zyc <zyc199902@zohomail.cn>, Manas Ghandat
-  <ghandatmanas@gmail.com>, Jamal Hadi Salim  <jhs@mojatatu.com>, Paolo
- Abeni <pabeni@redhat.com>, Sasha Levin  <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 033/522] net/sched: Revert "net/sched: Restrict
- conditions for adding duplicating netems to qdisc tree"
-Message-ID: <20260616153146.461b425c@phoenix.local>
-In-Reply-To: <cb2e59a48887f106a57c3fbef66d5a164b8e2f5f.camel@decadent.org.uk>
-References: <20260616145125.307082728@linuxfoundation.org>
-	<20260616145127.216541751@linuxfoundation.org>
-	<cb2e59a48887f106a57c3fbef66d5a164b8e2f5f.camel@decadent.org.uk>
+        Tue, 16 Jun 2026 18:49:59 -0700 (PDT)
+Date: Wed, 17 Jun 2026 09:49:43 +0800
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 7.0 000/378] 7.0.13-rc1 review
+Message-ID: <ajH8jaDln33RIQNy@u94a>
+References: <20260616145109.744539446@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/RosCjQZuwVCz_GAYjA0uSf/";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 
---Sig_/RosCjQZuwVCz_GAYjA0uSf/
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Tue, Jun 16, 2026 at 08:23:51PM +0530, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.13 release.
+> There are 378 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 18 Jun 2026 14:49:57 +0000.
+> Anything received after that time might be too late.
 
-On Wed, 17 Jun 2026 00:17:03 +0200
-Ben Hutchings <ben@decadent.org.uk> wrote:
+test_progs, test_progs-no_alu32, test_progs-cpuv4, test_maps,
+test_verifier in BPF selftests all passes[1] on x86_64.
 
-> On Tue, 2026-06-16 at 20:23 +0530, Greg Kroah-Hartman wrote:
-> > 6.1-stable review patch.  If anyone has any objections, please let me k=
-now.
-> >=20
-> > ------------------
-> >=20
-> > From: Jamal Hadi Salim <jhs@mojatatu.com>
-> >=20
-> > [ Upstream commit eda0b7f203bb166c98d1418b204135bd566ac83b ]
-> >=20
-> > This reverts commit ec8e0e3d7adef940cdf9475e2352c0680189d14e.
-> >=20
-> > The original patch rejects any tree containing two netems when
-> > either has duplication set, even when they sit on unrelated classes
-> > of the same classful parent. That broke configurations that have
-> > worked since netem was introduced.
-> >=20
-> > The re-entrancy problem the original commit was trying to solve is
-> > handled by later patch using tc_depth flag.
-> >=20
-> > Doing this revert will (re)expose the original bug with multiple
-> > netem duplication. When this patch is backported make sure =20
->                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > and get the full series. =20
->   ^^^^^^^^^^^^^^^^^^^^^^^
-> [...]
->=20
-> That whole series was applied as:
->=20
-> 98b34f3e8c34 net: Introduce skb tc depth field to track packet loops
-> eda0b7f203bb net/sched: Revert "net/sched: Restrict conditions for adding=
- duplicating netems to qdisc tree"
-> b213a4c6074f Revert "selftests/tc-testing: Add tests for restrictions on =
-netem duplication"
-> 9552b11e3eda net/sched: fix packet loop on netem when duplicate is on
-> db875221ab08 net/sched: Fix ethx:ingress -> ethy:egress -> ethx:ingress m=
-irred loop
-> a005fa5d7502 net/sched: act_mirred: Fix blockcast recursion bypass leadin=
-g to stack overflow
-> e80ad525fc7e net/sched: act_mirred: Fix return code in early mirred redir=
-ect error paths
-> d38dc56a0225 selftests/tc-testing: Add mirred test cases exercising loops
-> 0f6e00aa5f65 selftests/tc-testing: Add netem test case exercising loops
->=20
-> You included most of those in 6.12.93 and 7.0.12, but for the older
-> branches and 6.18 I'm only seeing this one.
->=20
-> Ben.
->=20
+Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-LGTM
-The important part is to pick up the packet loop detection in netem and mir=
-red
+1: https://github.com/shunghsiyu/libbpf/actions/runs/27647340765/job/81762433407
 
---Sig_/RosCjQZuwVCz_GAYjA0uSf/
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEn2/DRbBb5+dmuDyPgKd/YJXN5H4FAmoxztIACgkQgKd/YJXN
-5H5rQQ/9EqFJenoJAur59VabAcRXTLuA8lRW/OlsDkt9hwJyzJmZQsKEgKcWYfEs
-j3j3fLcdTq1VjVlFn1KlB4TDGSOqgIMGXNS9Pq2xJZBuZBIYZ58uq6sM0ys+W+6g
-sARfFmcsRwQh2C3j8Kv5qmEXukQ7LnHInQZMPuC1DnsBK1KYxhAmSNA7PUoNh9s9
-M91rhiIscfu3d8Qakh49JYsHMb8kn35brnJtYIE+qWFTS9f+QCMJRvdq7+EFt3qo
-nrCPduyKfeMMBCI5Tmi7h9jA8W58thSZ6CPApNdkoXjU6K6XLI9HvM5y/clVTk7F
-J1dE+LbTMixoSQJvom41mtQQaBk8m0st/xOM2oYzDkYLryYyNuuaWa6QMPDCEcwx
-BUqI1CvW8kf2mQjfU+rxsnUboI88YlwygIPN2+WuANMZ6dKg7YsGq6TyJdEqpAqe
-wwt67NQ7xrzDzt4Eh6UZzh6eO79LuPuw5lx501WueOWLWjmbhXVjpccqPaTmAKGO
-UTE7/s60yWnLWKWBzb24V4omkpeqBjn9BFPPvBbtwJimJXFUd5ZDNi1YotglkG63
-dQW7jhhfWI01zMBm444a9ypvvA2S/BpuGbedhr+1CGAdeCu9gsleHdBT+2xPYyf7
-drrS9ZPXBeLrCHHahsOQQ7TGmfgMyLl6/nl8cQL2XF5EF/6GE70=
-=Ynb8
------END PGP SIGNATURE-----
-
---Sig_/RosCjQZuwVCz_GAYjA0uSf/--
+[...]
