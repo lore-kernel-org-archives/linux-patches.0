@@ -1,82 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621DE3F7A97;
-	Wed, 17 Jun 2026 14:29:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577CA4A13A7
+	for <patches@lists.linux.dev>; Wed, 17 Jun 2026 16:30:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781706553; cv=none; b=i6mQpOo7NAk+35M6b5vlfQ3LSdST1iihHgxuyXGmgLF00/AKL/OsSVTBGmMk0LzdiyKXPdHathxhvo3/ew/AJiXBE0DhqvIqy62y2rI4rxtpy8Cwjv+Iw+4IUVE76OtS7iXua1SehEmcSaXNtzWOetQ7zmmZXnBzMc7WIvcR8bI=
+	t=1781713821; cv=none; b=eGnQzvkFEG/VCYUQLphzb0xaWVf628/vueTOeHMbADZnu0hAiaDjtGUOjVCLvQtUwJEBkqI8L9glKjaAvH/ZZdAc1H1DP+ATH7eUYQC3VaM4onZnTd5y0a+cqbEkWpN5EMEnv78vq1AMTplyx1zx3j/Pf4LTfjL259f3rQPW7ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781706553; c=relaxed/simple;
-	bh=/jFEeum7cabH6f5adwQKLkg8+APbV4GTNp3GLjNzae8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sFAhQKbXlhRYqO1tALNu5TQwxdbl6YWIhuUXn3uhHxYJaREf5uFX8lMFXp5Gbp5QNC2u34wH0L1Yu3v+WW1eYVpTx75ek52FIQmqUOAVjWAatqq7E1jNTsaC4apnFAEF648KeujmFRTqpfMkfXEZifBVsdlu0elfCZcwqDt/G/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MMG+oeOZ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781713821; c=relaxed/simple;
+	bh=hsewUNouosKGNpJS30V7SF+ZI6qWwdZuSjy4WguIEJ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Yam69bZRYC1OtDRrMXz1EWwqYYqUbPbA9HU9pEbYuH0ALkvpQ8jKKIThxsBS3ROd2GqT6eD3dgV71lxfPPn+bKjqhZCGKGbErfDpTS5QQo3MZXY27p5ohu6FJESyq0qdTbL0RdjAe4o1Y32wthyo3IGmX833Z+Jjivr+TPorSmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=M44nxz0v; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MMG+oeOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726B91F000E9;
-	Wed, 17 Jun 2026 14:29:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781706552;
-	bh=Ys5pPCaJd3TPOlqA6QLyisVRTVqI0cuhvJWAZEBiOP4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=MMG+oeOZlI89QiV7SJmi5c8q1U2g1/MB6brc8enq9zcuL7JR+Vu945Ki3Mca2gYkJ
-	 e3FgWHbwd0KCntrImxyo2fXO3+n/9AqFyYTsWcJhylq7XxJtDxh2FsKeCvapIxE4WB
-	 jD5FCkUhRaQ4mZsL5WEXHI8re9aVCeTPlJXTutleY6hvasdcbrNdjEUvcX4UYwJm9f
-	 Is6VsUyHxPIvJkYK2UO0777DyjLZZBcqUprpLH0pWiRYTd+bNAVravDxItBRoefack
-	 pyIwqVOaEgr0TyoZCdGJtmW1ZfTYt+2MXsyPN90gdDLu3L0H/GlAZpFkX6mpgBB/L7
-	 7sLm9zPNL2/kg==
-Date: Wed, 17 Jun 2026 15:29:05 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 5.15 000/410] 5.15.210-rc2 review
-Message-ID: <558118d1-5d7f-47cf-b01f-7cb0340b86a0@sirena.org.uk>
-References: <20260617080316.111043001@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="M44nxz0v"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-4629051c9d1so4151f8f.2
+        for <patches@lists.linux.dev>; Wed, 17 Jun 2026 09:30:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20251104; t=1781713814; x=1782318614; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i2Fz0gfXChJSjKov0DWWEtFMC4KgxCKir1jdmeKrCPA=;
+        b=M44nxz0v4IrAGbkWTolHdSzMQvDH0Ebt3N1StOM9fF+KcW7XmKCk3nQVMqKrD2XJ45
+         Dv3VZBd1Dnvol85xzPygPyLgJ5v6f+zwWumlHYeii2CcFKEvqSb8q+eCMfpXvA7BYDB4
+         uIlPhRAcslBc1NoLANLavf/GOID6AJo2aXvhfayFIFtmC4FkTCdazUJEqsBtH2/VMTIP
+         vM7iiZ5A9hmF1qzS17eA8mo7wYOy5h0VaU8wPig01Dxz7HYi4y83XT658y4D04ewkUc0
+         OtQzl6LUVVQo34Ri7CCatDhEF/I3B745eANFbTeiogHQvSjcW2rh7YqO287LDH0mnrd1
+         DvPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781713814; x=1782318614;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i2Fz0gfXChJSjKov0DWWEtFMC4KgxCKir1jdmeKrCPA=;
+        b=cHwvdrOstqoIcgxfOZoV3AHSXHvTSjZTKaR3sRFaoNnpgpTvezU/w9fv+S2utMBHuJ
+         P4DAIIRr4T8yfne0gzai62nRoIIHkWRcM8oh+/LbyXXNMdzGLRcCeXhDav79GRg497Cn
+         Qt37FBVEqjiKc8GfgBoTEuYFxmYriuas2Jt+2f61wbOVXLKT5sMCebvicCr9bq28mRe5
+         1Waa+gcvkIbttCkIpH7a8h1L6V9YgD0Ezm+zDwkzoWdhq6z0lBglnlGzaOgddI+7PgnL
+         ddyFHd0nhbxJ2kZ9mdF9e59fbKp4ilhH5gfrwEdT3qi9R3YqQpkWLPiQpsX3Yxv1TYd/
+         aLjw==
+X-Gm-Message-State: AOJu0YxP6lv01NCaIBuQ9akGq7nqWfaL2mpE8VLZzC4dlTjlRcnwsR8d
+	ubBH1Zjpzw4AGHbKeHnx/lRbWaCJ+syEWfKc8+hhGhNVYPq6K96QBUI=
+X-Gm-Gg: AfdE7cl1M+FxE06B6BMCSue3ecZp4Iis2A5jkoYnCet5fqkgBlWGXAn/0ncv9+nhSRY
+	b8wixsDRQsyxkg+Op4w6qLFbZooTJ3e/ijFDyURj6LnvZ8W1gc2ZVnZ3NX3uwpTJmoTKFUjVWhP
+	JjLazqJmTxt1IVCXDLoMwJqYRqPIzU7UaP/quDo+J27O4n/34dYOTXX42TwHL/YGzR89WrFALF0
+	6piyUH7jvBFFGz0Qek4oy53OLI4IisGT9RE7dov0iOKp4XignN+/xhFEiCVbGdJUUm9zVqALDal
+	YfNAZDPUyTX+HtkF6H4Mdxj9hLPgyzRmzmDVDpo86uMQuuiuk/KCBfcvC1DyzvN2j1cWfYdZImH
+	lJSwEe4Umnnur0EkQW+90MbDLtaLxb0gkcKOgqxrczXviRO4WkK3DPdRzSzpQbkeMzFveRJEe9E
+	L32bAVNRXFzh9ITmbYtTLGQ3P23kz/L9+dWn5Se56hrTRl0HvFS3I7ri8oEI1NfGQ2MCld0+ru9
+	rk=
+X-Received: by 2002:a5d:45cc:0:b0:45e:945b:276 with SMTP id ffacd0b85a97d-46237d5b277mr5616577f8f.20.1781713814234;
+        Wed, 17 Jun 2026 09:30:14 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2b4777.dip0.t-ipconnect.de. [91.43.71.119])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4606f26434dsm56803202f8f.1.2026.06.17.09.30.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jun 2026 09:30:13 -0700 (PDT)
+Message-ID: <96791227-acbc-4a38-b779-a4238f0c2061@googlemail.com>
+Date: Wed, 17 Jun 2026 18:30:12 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="a5jOam4bzOVJg+QJ"
-Content-Disposition: inline
-In-Reply-To: <20260617080316.111043001@linuxfoundation.org>
-X-Cookie: Absence makes the heart go wander.
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 000/452] 6.6.143-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260616145117.796205997@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
---a5jOam4bzOVJg+QJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Jun 17, 2026 at 01:33:49PM +0530, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.210 release.
-> There are 410 patches in this series, all will be posted as a response
+Am 16.06.2026 um 16:53 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.143 release.
+> There are 452 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
---a5jOam4bzOVJg+QJ
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoyrzEACgkQJNaLcl1U
-h9DvVQf+MkXn9MN9aRem6/JsRJh3TooMNVfzdjvvtkR3HcK3IGiL5I+NY/KFKCFe
-7vq3vylc+vJ/oHZyL2tCS7nn5g+Zvb+6RX/uQMGaMivA4KKO0QMKoYmd0zE9wA94
-slzbsvmOwq7MPrDfZD78lwZVs9kWt8Pnny1HvUF/DZ6LvJ8/ClsnapF3+WEYDRpQ
-hRBMvRRWb1dTOavKVwprVngYaUqIUZbyJuLnl7LDFrx/1Ggimp3mujallbQDee7/
-18bNLvPK0zY2w+YaqFFjlkQ/GMC15Y/TGCHZ7FoSPmNXhxAlcSlOHkNuRNYYowXF
-O8+m/i42GK4uWtn3POGlyX+J8i8EyA==
-=SCuh
------END PGP SIGNATURE-----
+Beste Grüße,
+Peter Schneider
 
---a5jOam4bzOVJg+QJ--
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
