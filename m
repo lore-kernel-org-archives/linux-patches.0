@@ -1,177 +1,182 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A0A368D50;
-	Fri, 19 Jun 2026 09:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6946B367F59;
+	Fri, 19 Jun 2026 09:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781862460; cv=none; b=ZoOigBGzGsIlhjonJc6bs0XaQWORHy2LKBAfPIYOJTPE5txAcMQxZXElcYd43vZoc/0KanQfXjJCaAa0N8Mr3WU8XOrBVWjkUh0AGS//Tm+iUL4S9418/fH+Kp7+IBrF3jmXs+qhRQFNLMftiygHruqqoVXtSpLBWb004wtm0K0=
+	t=1781862975; cv=none; b=dZDmjvwS1RBhUtu+xa4xk3JWVVjWaikfz7+jijPF8wmR5t/WrFHlzrUl87Hq9pZTQ6aR8ahDKdStlMy79kO4UpAnJNAewUiN10Hr1NVi/8xqlgJyFVK4QSc6kD7DRICJkywfZnNrq8B0kL9DKQmR2bgHHalOMI181hTqi0v5+RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781862460; c=relaxed/simple;
-	bh=ZjGZz97bts9x23vlxD6rAPcICjkxcr/8Lla/mojmJR8=;
+	s=arc-20240116; t=1781862975; c=relaxed/simple;
+	bh=BsgJwnB/nbLfAI8hzpc9mDJsBxbzXIhnEPJJm0gtd8E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gnqgl83wHMMV5y+Dt+HMMFEMgiVsrc1MD3qMzQ83PyUEZOycr/KSfekuXXzWl+wDvr7uLwZl3bx4P8s5jFGzea02UbyK+YBW/9h2sANnf6oReg0qom75xPWMDj+OD+/GeQoUd1DRyw7G/me+V7SzTA3o3aJDM0eESGnHX7bPECk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QtQL8jN; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=HdSDfd9j4RSOGd7Z2a308qFwuneP8F/iKe4kwDkRJEYgvngmn0V3aVmLVY0YJtGFGrze5TVfztqVZFR5YsD5B2Ksc4FU8XWmDeHvktTRNYweFVQQWUFZnMZeHbZ1pdtnZ+ucEZqXeRJb4zF6vBhPGfnx1nUajSDq9mm0SF37lxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3pWA95V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QtQL8jN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2921F1F000E9;
-	Fri, 19 Jun 2026 09:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3pWA95V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56941F000E9;
+	Fri, 19 Jun 2026 09:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781862453;
-	bh=QEMo0EZhEJJGpmMRR680Dyf19MrtzkD+WeDdFbsfCJM=;
+	s=korg; t=1781862968;
+	bh=RRAkZrz2NnBTdnmCperiOhBRhKw8kYvJMOVjYv7LxLs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=0QtQL8jNkm5I3ucIPQinQQGdPaz3Ybc+iWOD6GB7oN4OwgRDYV3O/owETstFnn/cf
-	 C0i08bdYbH1/4CFgd7YvZTsi+q5GsBT4mfGKei7w5qRaYBohWS56NA+lDfFF6oBuq+
-	 45991b9EPcNERKqkbxrxTl87EsAAdP7kOEW44l4w=
-Date: Fri, 19 Jun 2026 11:46:27 +0200
+	b=d3pWA95VK739UMks0oDjLHDM1BwctwLXmJJfjdV1kO4NDdTFkpIVX2MBt6ZXN5D/X
+	 xTDq8qDKkcO3xghvYaWvmp1fjVahwLDxO9fEwRNuYv74rqgS1vZrtcYr0igRQUp7G6
+	 fhN1PBXlf+32ROBPpDS6M7bvxgyfdg1ULr9ohF/M=
+Date: Fri, 19 Jun 2026 11:54:56 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>, Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>, Sasha Levin <sashal@kernel.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Robert Garcia <rob_garcia@163.com>, Sasha Levin <sashal@kernel.org>,
 	Vegard Nossum <vegard.nossum@oracle.com>
-Subject: Re: [PATCH 5.15 009/411] nfc: llcp: Fix use-after-free race in
- nfc_llcp_recv_cc()
-Message-ID: <2026061902-upside-resolute-a706@gregkh>
+Subject: Re: [PATCH 5.15 045/411] wifi: brcmfmac: fix use-after-free when
+ rescheduling brcmf_btcoex_info work
+Message-ID: <2026061929-appendage-daughter-66d4@gregkh>
 References: <20260616145100.376842714@linuxfoundation.org>
- <20260616145100.851905886@linuxfoundation.org>
- <65070920-961c-4567-badd-cd4b2f264e34@oracle.com>
+ <20260616145102.682627807@linuxfoundation.org>
+ <b24447af-a758-4ffa-95cf-4a5bcc4994d4@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <65070920-961c-4567-badd-cd4b2f264e34@oracle.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b24447af-a758-4ffa-95cf-4a5bcc4994d4@oracle.com>
 
-On Thu, Jun 18, 2026 at 10:56:13PM +0530, Harshit Mogalapalli wrote:
-> Hi Greg/Sasha,
-> 
+On Thu, Jun 18, 2026 at 11:48:35PM +0530, Harshit Mogalapalli wrote:
+> Hi Sasha and Greg,
 > 
 > On 16/06/26 20:24, Greg Kroah-Hartman wrote:
 > > 5.15-stable review patch.  If anyone has any objections, please let me know.
 > > 
 > > ------------------
 > > 
-> > From: Lee Jones <lee@kernel.org>
+> > From: Duoming Zhou <duoming@zju.edu.cn>
 > > 
-> > [ Upstream commit b493ea2765cc17cb8aa7e7544a4b6dcb05b6ed77 ]
+> > [ Upstream commit 9cb83d4be0b9b697eae93d321e0da999f9cdfcfc ]
 > > 
-> > A race condition exists in the NFC LLCP connection state machine where
-> > the connection acceptance packet (CC) can be processed concurrently with
-> > socket release.  This can lead to a use-after-free of the socket object.
+> > The brcmf_btcoex_detach() only shuts down the btcoex timer, if the
+> > flag timer_on is false. However, the brcmf_btcoex_timerfunc(), which
+> > runs as timer handler, sets timer_on to false. This creates critical
+> > race conditions:
 > > 
-> 
-> ^^ let's remember this: race between acceptance packet(receive) and socket
-> release.
-> 
-> > When nfc_llcp_recv_cc() moves the socket from the connecting_sockets
-> > list to the sockets list, it does so without holding the socket lock.
-> > If llcp_sock_release() is executing concurrently, it might have already
-> > unlinked the socket and dropped its references, which can result in
-> > nfc_llcp_recv_cc() linking a freed socket into the live list.
+> > 1.If brcmf_btcoex_detach() is called while brcmf_btcoex_timerfunc()
+> > is executing, it may observe timer_on as false and skip the call to
+> > timer_shutdown_sync().
 > > 
-> > Fix this by holding lock_sock() during the state transition and list
-> > movement in nfc_llcp_recv_cc().  After acquiring the lock, check if
-> > the socket is still hashed to ensure it hasn't already been unlinked
-> > and marked for destruction by the release path.  This aligns the locking
-> > pattern with recv_hdlc() and recv_disc().
+> > 2.The brcmf_btcoex_timerfunc() may then reschedule the brcmf_btcoex_info
+> > worker after the cancel_work_sync() has been executed, resulting in
+> > use-after-free bugs.
 > > 
-> > Fixes: a69f32af86e3 ("NFC: Socket linked list")
-> > Signed-off-by: Lee Jones <lee@kernel.org>
-> > Reviewed-by: Simon Horman <horms@kernel.org>
-> > Link: https://patch.msgid.link/20260429134115.3558604-2-lee@kernel.org
-> > Signed-off-by: David Heidelberg <david@ixit.cz>
+> > The use-after-free bugs occur in two distinct scenarios, depending on
+> > the timing of when the brcmf_btcoex_info struct is freed relative to
+> > the execution of its worker thread.
+> > 
+> > Scenario 1: Freed before the worker is scheduled
+> > 
+> > The brcmf_btcoex_info is deallocated before the worker is scheduled.
+> > A race condition can occur when schedule_work(&bt_local->work) is
+> > called after the target memory has been freed. The sequence of events
+> > is detailed below:
+> > 
+> > CPU0                           | CPU1
+> > brcmf_btcoex_detach            | brcmf_btcoex_timerfunc
+> >                                 |   bt_local->timer_on = false;
+> >    if (cfg->btcoex->timer_on)   |
+> >      ...                        |
+> >    cancel_work_sync();          |
+> >    ...                          |
+> >    kfree(cfg->btcoex); // FREE  |
+> >                                 |   schedule_work(&bt_local->work); // USE
+> > 
+> > Scenario 2: Freed after the worker is scheduled
+> > 
+> > The brcmf_btcoex_info is freed after the worker has been scheduled
+> > but before or during its execution. In this case, statements within
+> > the brcmf_btcoex_handler() — such as the container_of macro and
+> > subsequent dereferences of the brcmf_btcoex_info object will cause
+> > a use-after-free access. The following timeline illustrates this
+> > scenario:
+> > 
+> > CPU0                            | CPU1
+> > brcmf_btcoex_detach             | brcmf_btcoex_timerfunc
+> >                                  |   bt_local->timer_on = false;
+> >    if (cfg->btcoex->timer_on)    |
+> >      ...                         |
+> >    cancel_work_sync();           |
+> >    ...                           |   schedule_work(); // Reschedule
+> >                                  |
+> >    kfree(cfg->btcoex); // FREE   |   brcmf_btcoex_handler() // Worker
+> >    /*                            |     btci = container_of(....); // USE
+> >     The kfree() above could      |     ...
+> >     also occur at any point      |     btci-> // USE
+> >     during the worker's execution|
+> >     */                           |
+> > 
+> > To resolve the race conditions, drop the conditional check and call
+> > timer_shutdown_sync() directly. It can deactivate the timer reliably,
+> > regardless of its current state. Once stopped, the timer_on state is
+> > then set to false.
+> > 
+> > Fixes: 61730d4dfffc ("brcmfmac: support critical protocol API for DHCP")
+> > Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> > Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> > Link: https://patch.msgid.link/20250822050839.4413-1-duoming@zju.edu.cn
+> > Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+> > Signed-off-by: Robert Garcia <rob_garcia@163.com>
 > > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > > ---
-> >   net/nfc/llcp_core.c | 11 +++++++++++
-> >   1 file changed, 11 insertions(+)
+> >   drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c | 6 ++----
+> >   1 file changed, 2 insertions(+), 4 deletions(-)
 > > 
-> > diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-> > index e04634f22b49f4..c7de44637e0187 100644
-> > --- a/net/nfc/llcp_core.c
-> > +++ b/net/nfc/llcp_core.c
-> > @@ -1225,6 +1225,15 @@ static void nfc_llcp_recv_cc(struct nfc_llcp_local *local,
-> >   	sk = &llcp_sock->sk;
-> > +	lock_sock(sk);
-> > +
-> > +	/* Check if socket was destroyed whilst waiting for the lock */
-> > +	if (!sk_hashed(sk)) {
-> > +		release_sock(sk);
-> > +		nfc_llcp_sock_put(llcp_sock);
-> > +		return;
-> > +	}
-> > +
-> >   	/* Unlink from connecting and link to the client array */
-> >   	nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
-> >   	nfc_llcp_sock_link(&local->sockets, sk);
-> > @@ -1236,6 +1245,8 @@ static void nfc_llcp_recv_cc(struct nfc_llcp_local *local,
-> >   	sk->sk_state = LLCP_CONNECTED;
-> >   	sk->sk_state_change(sk);
-> > +	release_sock(sk);
-> > +
+> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+> > index f9f18ff451ea7c..f46e4090021777 100644
+> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+> > @@ -392,10 +392,8 @@ void brcmf_btcoex_detach(struct brcmf_cfg80211_info *cfg)
+> >   	if (!cfg->btcoex)
+> >   		return;
+> > -	if (cfg->btcoex->timer_on) {
+> > -		cfg->btcoex->timer_on = false;
+> > -		del_timer_sync(&cfg->btcoex->timer);
+> > -	}
+> > +	del_timer_sync(&cfg->btcoex->timer);
+> > +	cfg->btcoex->timer_on = false;
 > 
+> I ran an AI assisted backport review over the 5.15.210 queue. I think this
+> 5.15.y backport doesn;t really try to do the same thing like upstream. Why
+> so ?
 > 
-> I ran an AI assisted backport review over the 5.15.210 queue and then
-> checked this one manually. I think the 5.15.y backport of:
+> Upstream 9cb83d4be0b9 uses timer_shutdown_sync() before canceling the work
+> and freeing cfg->btcoex:
 > 
-> This backport is still incomplete.
+>         timer_shutdown_sync(&cfg->btcoex->timer);
+>         cfg->btcoex->timer_on = false;
+>         cancel_work_sync(&cfg->btcoex->work);
 > 
-> Upstream b493ea2765cc has the release-side list unlink covered by
-> lock_sock(sk):
+> The 5.15.y backport still uses del_timer_sync():
 > 
-> net/nfc/llcp_sock.c:    .release        = llcp_sock_release,
-> ^ release socket function
+>         del_timer_sync(&cfg->btcoex->timer);
+>         cfg->btcoex->timer_on = false;
+>         cancel_work_sync(&cfg->btcoex->work);
 > 
-> lets see: llcp_sock_release()
+> The timer code in this 5.15.y tree already documents that del_timer_sync()
+> cannot guarantee the timer is not rearmed by concurrent code, so the key
+> point is the difference between del_timer_sync() and timer_shutdown_sync().
 > 
->         lock_sock(sk);
-> 
->         if (sock->type == SOCK_RAW)
->                 nfc_llcp_sock_unlink(&local->raw_sockets, sk);
->         else if (sk->sk_state == LLCP_CONNECTING)
->                 nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
->         else
->                 nfc_llcp_sock_unlink(&local->sockets, sk);
-> 
->         release_sock(sk);
-> 
-> So unlinking happened within lock_sock()
-> 
-> But final 5.15.y still drops the socket lock before the unlink:
-> 
->         release_sock(sk);
-> 
->         if (sk->sk_state == LLCP_DISCONNECTING)
->                 return err;
-> 
->         if (sock->type == SOCK_RAW)
->                 nfc_llcp_sock_unlink(&local->raw_sockets, sk);
->         else if (sk->sk_state == LLCP_CONNECTING)
->                 nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
->         else
->                 nfc_llcp_sock_unlink(&local->sockets, sk);
-> 
->                 nfc_llcp_sock_unlink(&local->sockets, sk);
-> 
->         release_sock(sk);
-> 
-> The receive-side part of the patch now takes lock_sock(sk) and checks
-> sk_hashed(), but that only closes the race if release-side unlinking is
-> serialized by the same socket lock.
-> 
-> In 5.15.y there is still a window after release_sock(sk) and before the
-> unlink where nfc_llcp_recv_cc() can acquire the lock, see the socket as
-> hashed ? I think we don;'t have this backport: commit: a06b8044169f ("nfc:
-> llcp: protect nfc_llcp_sock_unlink() calls") in 5.15.y which might be needed
-> I think. This is only 5.18 +. Maybe we could queue up this for future stable
-> release ?
+> I think 5.15.y should directly use timer_shutdown_sync(), as we don't have
+> commit: 292a089d78d3 ("treewide: Convert del_timer*() to timer_shutdown*()")
+> in 5.15.y, thoughts ?
 
-Yes, odd, it's only queued up for 5.10.y, and the backport there doesn't
-apply here either.  Can someone provide a working copy for 5.15.y as
-well?
+I think this is the best that can be done unless someone wants to
+backport that mess of a timer conversion.  And note, I think I've
+rejected that backport already :)
 
 thanks,
 
