@@ -1,113 +1,72 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8FB397332
-	for <patches@lists.linux.dev>; Sat, 20 Jun 2026 16:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB2062809;
+	Sun, 21 Jun 2026 13:47:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781971578; cv=none; b=mP7wJFQbl7OF2/l7pXyroYvR6m/kQvrf495Cn1AJP7+qMpmP6+q6M4ZxQUywJUvyHh7CKmGTFaqjoqTMdB5baCE6h/UGuMiW1ZCdera+t9rSPKaJ++129Fdf3/KtAAYTB0eVFmwHXhco4oSVPQxdP3K+w9cRqMRyVf8/Ct7JHqA=
+	t=1782049672; cv=none; b=VnzTayFjV2NqzYmjEu2Y/SDU8iw/TuXJskeRWatoVp8dcGSp3jNWKcHkbBaK75iAYYsNvBsE3nrdAVEu3txQcSDEVXsm++iSLs+/nXu6NIrZY1Cr+u+tPXbw4tyWO3nEI8XizSDOdnZNuB76yUFxXnZpLDZc3IOyOE+wBsB0SYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781971578; c=relaxed/simple;
-	bh=GYBR2fRvLo9AbAN9kQirI7hsgpWWk1FF5QW309PUpCU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rrm7uz5HtHZdrZoAwDMWQvrym7fAPos02Qs2vObboj9rR+7tebSXBe/remVRxa2FmIi3D2or/9UMDVf3vESzrTAcCsxf5uuGEy+yW3rr+QKGgOeD674XcgdYAdnTxI2unmRLKo+fiMUVV/xtwwHdm3ecPWlN5dxpvMdfzbkbCEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mWcTprt2; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782049672; c=relaxed/simple;
+	bh=jTt+q7O5j3RA/6wGusIo+lg7UvlNzef6PG0kLb1kuuk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aI63rvlGgNKZJAhq4Y29Ll5PCKjSWZFRmBzu9pY8K8EJCKeThb/U+3s2tMJUNTwfakfH6/6L89T5MCHMmrZe2gjhAO3VquSkOUwNeykhiI/DHmHN3QtNeHQHoe8cRc6NV6G1CH7LV3B1Ak963oG98efn+GxFbkYL2chMNu54tcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ch0+rBHI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mWcTprt2"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-490b7866869so29336195e9.2
-        for <patches@lists.linux.dev>; Sat, 20 Jun 2026 09:06:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781971575; x=1782576375; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wwI3Ux2mpaIvVIB4hspGkGT9Oouh+sNJpjf3AsIcSBg=;
-        b=mWcTprt2P2+bdhZwLU26Zpi87tkVFqwACgNbw2p8iA4HVotzlPsw+zPyP8hTUK5dBH
-         7X5OHTi6kHhnNnec33PrgXrwwJpEYj0I/IaHPevjtanseD6YdPZQYej7gmTt76Ua0z1q
-         ZCQuNBiT5NFpj1TUosETKTfIGslPuQuo5r3J9ILYUlCVbM0oNUAFqevW8wx+aKdvWiCA
-         QuspP4p8q+LKRGf1fdIHS1q9VIkmZLBdtjSO+MAsZJsO2hYiG2hHhJKn07AWCi4GPyvj
-         pU+U8DICeVFeqoCwo5GhlqyU/BsBuCS2H1gXxYBL0Myiq6ys4Pex2ytaD7CdnPdK3f3Z
-         vuFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781971575; x=1782576375;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wwI3Ux2mpaIvVIB4hspGkGT9Oouh+sNJpjf3AsIcSBg=;
-        b=qVO/hXv3SdeZn/NrIAvAIoeboAZKyLjmzmY1EoYQOV5mI4Xs/X32Bw6c3McTVbopR0
-         8S9bznHXGuhG1I8rio/cEeZ2fx5VxCtuqsUMeT1+XsfecelPD6rN6zW3cpW1XvRE5Ar9
-         gnFvJ+8Y1Dkov/t3ID5kK8jYD6d0XfysnEuxIOVFMNILLB+zOlRldO7HIReOL6F+uC9k
-         CWUphkG1tL6VU10+uahkT01Uodxgz69HBvSW9djPELUBQf3S4AgO4bRQgQ1Hz6oWYfS5
-         4aUk/S8i6HjG46vIKZ7PBiw/XYoQyO7YHbfz28PhdolIwqmUsBlJGkA46GVsqRDM5Sni
-         MQgw==
-X-Gm-Message-State: AOJu0YzEn6Vwm8imV09kJmIeX+S8GUSM2AFZBMT8CMkRRLx64iM9SVpu
-	y9j1aBLy64OIKp6IPD//dMNpFLu8+ILyeEoflsqamDzr1avlSnDtViEH
-X-Gm-Gg: AfdE7cnFIfPJGprwz5TDSaViasP9ZYYHNsvd2jwUvK718QoSFAdbo0kvq9hGiZsVtqI
-	wkDQsjVJDACSXEojIsRBDwHIlKN5I+J3J6SjZhVffMbjb/MtC88+fAHyrGIyrwrTNHvnbV9ra+M
-	RORgOd6TR62U2qCL2KHK1kZ4q4K0evlAXwYg4t/O4vM5geF//415GIOz89ZpPWyYbcE332chRMi
-	+2Utp6Rb2nYfFb6g26o3x7vP692OJE1M/yYcLtQ6EhNhJLqWvF9gJ/Ipa3K/fgNn17E2IKmuL9i
-	IfIJdHHCs4qnZT8vsWJrq7TvEiaqjPjGdyVvrhR5V6F3QAbkqd+K0AjgPOL/lX1IEWJLfbMYgKY
-	+gpjax55MPFBfjcK+hme/fCY77pqbyBnYT/p5UiSXB1YJ/0gDftqBPQGyl+EI26DiHTTZfGzuBZ
-	upBSNc4eVGgy7O4D+8SeLO8IYFCNP5PQ==
-X-Received: by 2002:a05:600c:820c:b0:492:5030:5e7b with SMTP id 5b1f17b1804b1-49250305f4emr7110645e9.10.1781971574502;
-        Sat, 20 Jun 2026 09:06:14 -0700 (PDT)
-Received: from [192.168.1.21] ([41.249.60.166])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-492494497ffsm74121685e9.11.2026.06.20.09.06.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Jun 2026 09:06:11 -0700 (PDT)
-Message-ID: <989e0b69-8b00-4f6a-965f-1dcc370bee73@gmail.com>
-Date: Sat, 20 Jun 2026 17:06:09 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ch0+rBHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A277B1F000E9;
+	Sun, 21 Jun 2026 13:47:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782049671;
+	bh=Cwqlpih/3DV5Qn5DW47DcDxSY1IksWixUGqM+qr3+Z8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=ch0+rBHIetmXZJNAAfB5TZwrN3cxxw26iKks+93AsfZk6KFrHgkCM/qMXPMFUtUR9
+	 CMSmMYVjxfiex/66bHOEAVvJdUHEem7LcMI7gEc/c44LS70pfXqpB9Oddv84MIvxW7
+	 0zlsC6l0mFEt9MkRSUDOshaJjUvd06SoCccBWFTMJb7WMvgyI95569mlHXnI24MXK2
+	 cSgWhHlj+5k12U8/C5G48hdWUp5yfHxSoHt8EGim7w4nwHTLQfHErtAJMlAGqQPebg
+	 pPiyU7iHLGAxL+/MAPr8RhoMMMuytvD0eckc+D/sNabLOdwDfQTmPsI2Bsf9+iAFiV
+	 IIluiS7rZc1oA==
+From: Sasha Levin <sashal@kernel.org>
+To: stable@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Sasha Levin <sashal@kernel.org>,
+	patches@lists.linux.dev,
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>
+Subject: Re: [PATCH 6.12 125/307] batman-adv: tt: prevent TVLV entry number overflow
+Date: Sun, 21 Jun 2026 09:47:39 -0400
+Message-ID: <20260621133722.0001.sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <8696716.T7Z3S40VBb@sven-desktop>
+References: <20260607095727.647295505@linuxfoundation.org> <20260607095732.348045111@linuxfoundation.org> <8696716.T7Z3S40VBb@sven-desktop>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 000/378] 7.0.13-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260616145109.744539446@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+On Fri, Jun 19, 2026 at 06:54:33PM +0200, Sven Eckelmann wrote:
+> No real objection for 6.12. But it was missed in
+>
+> * 6.6: ...
+> * 6.1: ...
+>   - applied when using the correct order - no actual change in the patch
+> * 5.15:
+>   - it depends on the also missed patch (with context conflicts): ...
+> * 5.10:
+>   - it depends on the also missed patch (with context conflicts): ...
 
+Thanks Sven. Queued the missed backports for all four trees:
 
-On 6/16/2026 7:53 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.0.13 release.
-> There are 378 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 18 Jun 2026 14:49:57 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.13-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+  - 6.6 and 6.1: applied the single main fix directly.
+  - 5.15 and 5.10: applied the prerequisite 1e9fab756f83 ("batman-adv:
+    tt: reject oversized local TVLV buffers") first, then the main fix,
+    per the ordering you pointed to.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENEIRC:
+All four built cleanly.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-Florian
-
+Thanks,
+Sasha
