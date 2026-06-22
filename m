@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9470305684;
-	Sun, 21 Jun 2026 19:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD9412B94;
+	Mon, 22 Jun 2026 01:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782068998; cv=none; b=I5Av6N7hBIzcrYnAkVxBC3bB5XuvNgQISYG5vH5pcJ1PzWQGvOaH7QYGRcMZHbR4M4MQdwRkX7fmz8kGbGwJMJi3Ivna7iTnD1fP4wGFf06lQ2nVuKYNbS/7hlJAeXAI7/B7uPoJVHI6xLv7R7MITT5ESN5tVd744/RZ4PABJEk=
+	t=1782091563; cv=none; b=ds7hBUkyox8BktkWGlwyyCyiynPUnVzT6tZ7jwCZDtHwqxoQ2rUaXWy2xTvC372jqO4NdDxs9Ryf/H+tn66vslFyc6XOoGXRrTS57aZ9UBsVyqQYsuGVaKM/KCisEerF78ZdT3LAKy9h4lp7TBW8UTkxUaj/TN7VxZYUtjprAtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782068998; c=relaxed/simple;
-	bh=9M6/EZhFjrvseSERQnNrl2Rxu8Gt16x54QL3zfQ3CR0=;
+	s=arc-20240116; t=1782091563; c=relaxed/simple;
+	bh=FYXFG0/TfrGv4Al8kmRQ7eXUqLItVkQl0lZqAhBTFm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0NXBhCR9v3M+vP45/xx8l5wh+7x0glLfaogwOeaJs8/Z6bMKbXDnmoisnJGXxNCV4YIHoB3hlEbN2IYNzYEXu0Y4pGSTITwn5d5THKKc0izRDacQ5yUhCGeELT9LzGfTRbbNR9Nni24DFkGuiHF8APICjYR2ojv0vw8++p1oD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IbYjSYmF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IwuXh0xiz6/Q4vIQzxkf/Jlhg+TmkagnAXJJVS/ByUOoMnYzEBfJZFAl82ytLwT/yZM7lDhhtJwW03JweYZTpOHZ2Z/frnhN+my3WYZQ4pQkhaOoQPWKLxS/Tr0wuHxfsB/dGZD0dTuVHeXgq9rakShaUv0Ef0rhY0Jo/+qo03Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kFOwmDBj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IbYjSYmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5361F000E9;
-	Sun, 21 Jun 2026 19:09:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kFOwmDBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278651F000E9;
+	Mon, 22 Jun 2026 01:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782068996;
-	bh=8EjJuiCle17v1bI761iV9pQg/1bmN0Ic6hAHb2LFFUw=;
+	s=k20260515; t=1782091561;
+	bh=vBFFAv4vJY9m1MG+5W9luTeAXHDARWP5cNSg2vooz3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IbYjSYmFBrG9aUZAS0/FpdFFMCRtw6MpQe8XKwe6xj9YhOVTYsO+/ITfK684lQaoI
-	 +FsPrTqFRd3MPkXPLCoqKN+VmZqOf6xuJbPm9V1SqL8QUcNdr0dzT6b/5oJumgfy/h
-	 vVt4ITM4aj1jn9uEL92LAy8DyGitHLwKsIpHU9Xsz1s0aPusmTrE4iSbZnVPe6VcfW
-	 4Sho7jDJoymqlfNZZ5Bg9lK+X7VxCS5mriDKIlhgEQQW1qwOCbJT8o639VTLSw0oqV
-	 0spk4CWm1kP//yk5GJXSVTG4MepLhgPkHfFoIytOrkuuB60ap7l/dxUI5b7q1KKYTw
-	 6jOfNyfUPR7kw==
+	b=kFOwmDBjjR11fKsVXuVmgdhFZnKk7RG5CjEKiNFukgYAkoBi2WBKHMMFHKttLyVRg
+	 lBUVHP5I+5cJ2SoqWA+nFwfJSbcgIW2aDqylGEKMK6Y/R6sKc37T7g5fBJLuOG1//h
+	 YjIqw5IujmMTnv6wyoBuqBu5aEEmjPiST3jWnw9nODD8H/BAllPj49XRupC05KKy+7
+	 8h/AgwseMLDul5xdphUH689dFKka4bUa43vPqq/s3ZXsEEJnA6Gox3BpAabgwYU882
+	 roTFeFsUa0sBL2zF7ZAZjSSYrcrGzJ+1bny8h3H/CZSeoR+fRx7xlBIz0BVMX2wLJw
+	 JNgsBbIALVETw==
 From: Sasha Levin <sashal@kernel.org>
-To: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
-	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 6.1 208/522] net: Annotate sk->sk_write_space() for UDP SOCKMAP.
-Date: Sun, 21 Jun 2026 15:09:53 -0400
-Message-ID: <20260621190954.367456-1-sashal@kernel.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: Re: [PATCH 6.1 342/522] thermal: core: Fix thermal zone governor cleanup issues
+Date: Sun, 21 Jun 2026 21:25:58 -0400
+Message-ID: <20260621212034.0001.sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260621133722.0008.sashal@kernel.org>
-References: <20260616145125.307082728@linuxfoundation.org> <20260616145135.793184452@linuxfoundation.org> <6f805abf1f8b058c1b1241e8568d7539185145df.camel@decadent.org.uk> <2026061944-vaseline-essence-0008@gregkh> <20260621133722.0008.sashal@kernel.org>
+In-Reply-To: <42c2abbdfdd4ea8e234fbcfc4b37095ebd2c7b36.camel@decadent.org.uk>
+References: <42c2abbdfdd4ea8e234fbcfc4b37095ebd2c7b36.camel@decadent.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,14 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I'll either prepare a minimal hand-crafted backport of just the
-> WRITE_ONCE() annotation [...], or we can leave the read-side
-> annotation unpaired for now. Leaning towards the minimal hand-crafted
-> version; will follow up.
+On Sun, 2026-06-21 at 17:29 +0200, Ben Hutchings wrote:
+> > 	result = thermal_zone_create_device_groups(tz, mask);
+> > -	if (result)
+> > +	if (result) {
+> > +		thermal_set_governor(tz, NULL);
+> >  		goto remove_id;
+> > +	}
+>
+> The order of initialisation in thermal_zone_device_register_with_trips()
+> is quite different between 6.1 and mainline.  Clearing the governor here
+> doesn't make sense as the governor has not been set yet.
+>
+> The proper place for this in 6.1 seems to be in the failure path after
+> calling thermal_add_hwmon_sysfs().
 
-I've queued a backport of 2ef2b20cf4e0 ("net: annotate data-races around
-sk->sk_{data_ready,write_space}") for 6.1.
+Right... looks like it's just a noop.
 
--- 
+Although it seems that  the leak it's meant to plug is still covered on the
+affected path. When registration fails after thermal_add_hwmon_sysfs() (the
+path where the governor *has* been set), the unwind goes through
+device_unregister() -> put_device() -> thermal_release(), and the
+thermal_release() hunk in this same backport adds thermal_set_governor(tz,
+NULL) there:
+
+> > 		tz = to_thermal_zone(dev);
+> > 		thermal_zone_destroy_device_groups(tz);
+> > +		thermal_set_governor(tz, NULL);
+> > 		kfree(tz);
+
+That is the same put_device->release mechanism mainline relies on, so
+the governor is unbound before the thermal zone is freed and the leak
+does not occur.
+
+--
 Thanks,
 Sasha
