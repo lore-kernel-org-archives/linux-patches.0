@@ -1,170 +1,180 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB803CF200;
-	Tue, 23 Jun 2026 08:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03003CCFC2
+	for <patches@lists.linux.dev>; Tue, 23 Jun 2026 09:42:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782205201; cv=none; b=KSE1JrwrxPrDPBphjrDM8nU3EFJ4UpyioqnBpxFb4vTbz9G0NALMc68xx+6kaAeII6MFwYmL9zjQbpx1RezVK8NB+Lq0PMo7lmr41j+YSJu4g0Qer+UQWgHvhzGE3ewe7ieFxePt10xE3HVH3A/Y9qw+r9P7pF1qsx2XcIff/9E=
+	t=1782207766; cv=none; b=JS124Ll1uLiL8DaFNOT+gQox0swaBFfp7uT5u6V6h9RSzY/ReH3YVogS6wjZRs4/t40XhO6esRkyUzRnGqmaLqhGmVZF/FhZTP1Hy9e4c8puYdegl9FIOxyJNRb80hnIRxn85bKnA0fmQMHaV8YiXoNXRii0lp2SBkwRJkc94ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782205201; c=relaxed/simple;
-	bh=0GU9LIMJY50aIaiYHYc+NTnY9K6OdMdQEpFxEubWTJg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TrDfTKIBIGg+nsMi7qLMuX3/rezY4XJh3Fyh+eoMhoGTZGO5o3e2P4ZtPBIFbhqT5QriruPK4x9IxC7AiAadCntjhEhoV0uCItBB/6vE9tTxMTMLiCoOODApAhIdbNernvUAO+gRsjFlJWRrpIR9OCmKNAlvhiH2dJcuuWZYHo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZCddekKJ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782207766; c=relaxed/simple;
+	bh=B8aiSRXgNzNgIcTsqvlM+jiX5YYMrahhBOPApOswCwI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HUdWYfNaGBLL0/SIr0DOlh40/GrGbCD60d3PSmAS61DdzyJRPqkwf0kUWlI0Q3M8g3Ts32vZfSLuttuLu3Q4gUehugpuTZCp7cKmAP5OsfkDTtMsMv9g3+ncI2uJtNZ7Jws/rlJ7EApC5ptK3gWzvLj9D2qtVH+DM5eMfu5D7T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NX4mgLsS; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZCddekKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B271F000E9;
-	Tue, 23 Jun 2026 08:59:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782205195;
-	bh=CZJDMKie+kghBH4XpQ8XcibyOPE/XQSoQlDLMtsEl4U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ZCddekKJeKhGUvYTJgXy9VoBpK1WCBwH238B5Ov4bM/rLsaZmhsVB3PYh7W4Q1EKE
-	 6ILnKu1bv0n1xn54jX3aHNp+JzxMQUm5CKebOTP5r2qifBmSUj4O+LuNsy8GBwA7M8
-	 MiQazGMT1kWNjDHx35ledoiyrRVsAjmbdWO51zyyD7hGf44VB3jwpoj6J7cmTW7rRs
-	 SPOy360WTGEWlK8dGCqvKRFXp+sMLTsD6bDf+8x9c8U0wBhRWN0XC20ET9UCg98BPY
-	 Ua43fgAGAS6tgec2DXPOnz3b/NZYnd4OvIfHYLCkJToAZfIEy+gYKw4l9uuMPHCTRU
-	 y8HTEz5/Syhww==
-Received: from johan by xi.lan with local (Exim 4.99.3)
-	(envelope-from <johan@kernel.org>)
-	id 1wbwz3-00000000Zgb-0NSv;
-	Tue, 23 Jun 2026 10:59:53 +0200
-Date: Tue, 23 Jun 2026 10:59:53 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NX4mgLsS"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-490b9318997so37043155e9.2
+        for <patches@lists.linux.dev>; Tue, 23 Jun 2026 02:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782207763; x=1782812563; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3SJWx7Zgz0Pyhs4JZwrYmJyYWWMlxydwzpM41quzKVA=;
+        b=NX4mgLsS1blr6SjAbfyjGpXr79UvPCUmXtumz5FGzwHIJ2Gt+OlNQ9P2udxAYlChKM
+         P+qrL9ub1294UZc3bBiKXZu5hNyb4BNVHgx+mWbwbx6aKiwbv7h6B8QlUs+D8R6TjwGb
+         rFmVux4i9kaApoSg+1Xf3diCdOaEYIwh2EQGArlPRy5d9IcMeQTjn0JnDEoDsG6S6dWr
+         fAETAVXCoQRmOi4WNqqHFJe9CAI3acrCf2NeGNGUx56RxvGfLjZq1Ai5CdGrJcVMbrOZ
+         MG84agdqsFrB49x3TPvTHvhoP89HAE9HvCiQoqxa6golN/suSdG/lwjhIgyx7DkCS7ZS
+         7pgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782207763; x=1782812563;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3SJWx7Zgz0Pyhs4JZwrYmJyYWWMlxydwzpM41quzKVA=;
+        b=SH84lQq7ZRnv+7MX5GDFpWufsVVjeQKTd4OMsrlpIm1BvmvidbOXwnM2JUgv6ylu10
+         vywWACllpweqrHdxPbNt6dscnHxVJNUTtbZzdFa5VO66AvTx1/NvF+L3DP2ilPAZsXYh
+         hm58JtIpo2an4aPR2fMRhK2dkpQjcv9Tgqx1nrVu1HltY+n8hGWsjwSsZMI6NpLCRWnP
+         QLlyzcPOTlyUyMDGxiWAaLoKNwJIiRGbW0tl0o21zjHqu9iMryvbLbd80xB7kaS2SXly
+         IhIzp1pCPFcIXhBYD6ndKq3b4QzhRhYcJvKMledqMQfOgPjjRuzJjuMIUsRzguYEk3kU
+         jVCQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+4Yfwoc/ZzOJrJyCBKYC/AL0sSnMo1q/19zcuCBpbDc1E/P7UvGNYDVSqUpVCXKu5nQVPgCfgw@lists.linux.dev
+X-Gm-Message-State: AOJu0YyW6Qkcj+2qkdjkzD2jjnrp3e2DeaXGKx3HrRhJjGwhicLLKKEE
+	Wh9N5q3m7wSC3IphJculjgZ+RvuNDB6JCq65VNInh8U7qmf3xGQu+OAU
+X-Gm-Gg: AfdE7cnE3gifda9vxjJadFeryQYZpr96kIc/ngJJSTEgZCetsHZusz4UcfbuFsqRhB0
+	fNBSG137qOOE8kDzfMPNddxJsv6xeT3e6ECgXUg+IshQDqVkw5dDTF+nrDOq1PphlyKzVoHDaGI
+	v+BYmzTz5vqycIW4SPnklm9QbFf0hkEilyGD+f8cnAI7rDyf9GKkmQmRBdj+yr1iUeCvrDoT/fW
+	233hGXzfCRvGovl/xcWEH8Iv48SPFJZB0kQMB6rfSnSZaH/CxH5H/8jZG7F0v90gDmDX7/FWIe8
+	MXb3poP7CJaV5+qIi/Yhyp4gSHD2zwF8tyHc4+dts7YPXXWKRmEivOeWWI0rZCNZE/fUsw7lfxT
+	7XSWelzaVN2pK46MluSADGaWMPn4cNP5IwTr32Up7vo7tpgcNFQmQQ3I2ka5CpbKnBesJvC1phg
+	cGJyT8Vr/j
+X-Received: by 2002:a05:600c:8b8a:b0:492:2e48:81e6 with SMTP id 5b1f17b1804b1-4925b389b83mr30093645e9.4.1782207762970;
+        Tue, 23 Jun 2026 02:42:42 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-49249455302sm280248525e9.15.2026.06.23.02.42.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Jun 2026 02:42:42 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: avagin@gmail.com
+Cc: akpm@linux-foundation.org,
+	alexander@mihalicyn.com,
+	axboe@kernel.dk,
+	bernd@bsbernd.com,
+	brauner@kernel.org,
+	criu@lists.linux.dev,
+	david@kernel.org,
+	dhowells@redhat.com,
+	fuse-devel@lists.linux.dev,
+	hch@infradead.org,
+	jack@suse.cz,
+	joannelkoong@gmail.com,
+	linux-api@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	miklos@szeredi.hu,
+	netdev@vger.kernel.org,
 	patches@lists.linux.dev,
-	Masayuki Ohtake <masa-korg@dsn.okisemi.com>,
-	Ramanan Govindarajan <ramanan.govindarajan@oracle.com>,
-	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>,
-	Vegard Nossum <vegard.nossum@oracle.com>
-Subject: Re: [PATCH 5.15 323/411] spi: topcliff-pch: fix controller
- deregistration
-Message-ID: <ajpLCYZ3eQm5p64L@hovoldconsulting.com>
-References: <20260616145100.376842714@linuxfoundation.org>
- <20260616145118.324999322@linuxfoundation.org>
- <d23a21f0-95dd-4e0c-845e-2a54c50f44eb@oracle.com>
+	pfalcato@suse.de,
+	rostedt@goodmis.org,
+	safinaskar@gmail.com,
+	torvalds@linux-foundation.org,
+	val@packett.cool,
+	viro@zeniv.linux.org.uk,
+	willy@infradead.org
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+Date: Tue, 23 Jun 2026 12:42:11 +0300
+Message-ID: <20260623094211.1080873-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <CANaxB-xVCP5HSUNwphFrKPdW0Qh1pA33A6npac60WArkZMFt7w@mail.gmail.com>
+References: <CANaxB-xVCP5HSUNwphFrKPdW0Qh1pA33A6npac60WArkZMFt7w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d23a21f0-95dd-4e0c-845e-2a54c50f44eb@oracle.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jun 19, 2026 at 06:08:40PM +0530, Harshit Mogalapalli wrote:
-> Hi Greg/Sasha,
+Andrei Vagin <avagin@gmail.com>:
+> Actually, this change introduces a performance and functional
+> regression for CRIU.
 > 
-> On 16/06/26 20:29, Greg Kroah-Hartman wrote:
-> > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Johan Hovold <johan@kernel.org>
-> > 
-> > [ Upstream commit 5d6f477d6fc0767c57c5e1e6f55a1662820eef87 ]
-> > 
-> > Make sure to deregister the controller before disabling and releasing
-> > underlying resources like interrupts and DMA during driver unbind.
-> > 
+> Here is a brief overview of how CRIU currently dumps memory pages:
 > 
-> ^^ let us remember this -- deregister before releasing irqs.
+> CRIU injects a parasite code blob into the target process's address
+> space. The parasite invokes vmsplice() with the SPLICE_F_GIFT flag to
+> pin physical pages directly inside a pipe without copying them. The main
+> CRIU process then takes over from outside the target context, calling
+> splice() on the other end of the pipe to stream the data directly into
+> checkpoint image files or a remote network socket.
 > 
-> > Fixes: e8b17b5b3f30 ("spi/topcliff: Add topcliff platform controller hub (PCH) spi bus driver")
-> > Cc: stable@vger.kernel.org	# 2.6.37
-> > Cc: Masayuki Ohtake <masa-korg@dsn.okisemi.com>
-> > Signed-off-by: Johan Hovold <johan@kernel.org>
-> > Link: https://patch.msgid.link/20260414134319.978196-8-johan@kernel.org
-> > Signed-off-by: Mark Brown <broonie@kernel.org>
-> > [ renamed spi_controller_*(data->host) calls to spi_master_*(data->master) ]
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >   drivers/spi/spi-topcliff-pch.c |    7 ++++++-
-> >   1 file changed, 6 insertions(+), 1 deletion(-)
-> > 
-> > --- a/drivers/spi/spi-topcliff-pch.c
-> > +++ b/drivers/spi/spi-topcliff-pch.c
-> > @@ -1450,11 +1450,16 @@ static void pch_spi_pd_remove(struct pla
-> >   		free_irq(board_dat->pdev->irq, data);
-> >   	}
-> ^^^ let us remember this.
+> I ran a simple test that creates an anonymous mapping and touches every
+> page within it:
+> Without this patch, CRIU takes 9 seconds to dump the test process.
+> With this patch, It takes 18 seconds...
 > 
-> >   
-> > +	spi_master_get(data->master);
-> > +
-> > +	spi_unregister_master(data->master);
-> > +
-> >   	if (use_dma)
-> >   		pch_free_dma_buf(board_dat, data);
-> >   
-> >   	pci_iounmap(board_dat->pdev, data->io_remap_addr);
-> > -	spi_unregister_master(data->master);
-> > +
-> > +	spi_master_put(data->master);
-> >   }
+> Plus, it obviously introduces some memory overhead.
 > 
-> 
-> I ran an AI assisted backport review over the 5.15.210 queue and then
-> checked this one manually. I think the 5.15.y backport keeps the API 
-> mapping, but not the upstream teardown ordering.
-> 
-> Upstream 5d6f477d6fc0 unregisters the controller before the local teardown:
-> 
->          spi_controller_get(data->host);
-> 
->          spi_unregister_controller(data->host);
-> 
->          if (use_dma)
->                  pch_free_dma_buf(board_dat, data);
->          ...
->          pch_spi_free_resources(board_dat, data);
->          /* disable interrupts & free IRQ */
->          if (data->irq_reg_sts) {
->                  /* disable interrupts */
->                  pch_spi_setclr_reg(data->host, PCH_SPCR, 0, PCH_ALL);
->                  data->irq_reg_sts = false;
->                  free_irq(board_dat->pdev->irq, data);
->          }
-> 
-> 
-> In final 5.15.y, the equivalent spi_master_get()/spi_unregister_master()
-> still happens after queue/status teardown, pch_spi_free_resources(), IRQ
-> disable, and free_irq():
-> 
->          pch_spi_free_resources(board_dat, data);
->          if (data->irq_reg_sts) {
->                  pch_spi_setclr_reg(data->master, PCH_SPCR, 0, PCH_ALL);
->                  data->irq_reg_sts = false;
->                  free_irq(board_dat->pdev->irq, data);
->          }
-> 
->          spi_master_get(data->master);
-> 
->          spi_unregister_master(data->master);
-> 
-> The spi_master_* names are equivalent wrappers for the controller APIs 
-> in 5.15.y, but the call placement is still the old ordering. That leaves 
-> child SPI devices registered while the driver has already started 
-> tearing down controller resources.
-> 
-> I think for 5.15.y we should fix the backport by moving spi_master_get() 
-> and spi_unregister_master() before the local queue/resource/IRQ teardown 
-> in pch_spi_pd_remove(), thoughts?
+> If these changes are merged, we will need to completely rework the
+> memory dumping mechanism in CRIU. Using vmsplice() in this proposed form
+> no longer makes any sense for our architecture...
 
-I agree, this backport looks wrong.
+I just have read some docs for CRIU. I found this statement:
 
-This is probably an effect of
+> #### Why `splice` is Better:
+> *   **Consistency via COW**: The `SPLICE_F_GIFT` flag ensures that if the process modifies a "gifted" page after resuming, the kernel performs a **Copy-on-Write (COW)**. The pipe buffer > continues to hold the *original* version of the page as it existed at the moment of the `vmsplice()` call, ensuring a perfectly consistent snapshot of that page.
 
-	9d72732fe70c ("spi: topcliff-pch: fix use-after-free on unbind")
+This is wrong (with released kernels). I confirmed this by testing this on my current kernel (6.12.90).
 
-being backported before
+See the code in the end of this message.
 
-	9d72732fe70c ("spi: topcliff-pch: fix use-after-free on unbind")
+If you actually rely on mentioned consistency, then, it seems, CRIU is broken.
 
-due to the latter first failing to apply because of the SPI API rename.
+So, in fact, my patch actually brings consistency to CRIU. :)
 
-Johan
+-- 
+Askar Safin
+
+
+
+
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/uio.h>
+#include <sys/wait.h>
+#include <errno.h>
+
+int
+main (void)
+{
+    int p[2];
+    if (pipe (p) != 0)
+        abort ();
+    char buf[1] = {'a'};
+    struct iovec iov[] = {
+        {
+            .iov_base = buf,
+            .iov_len = 1,
+        }
+    };
+    // I pass "SPLICE_F_NONBLOCK | SPLICE_F_GIFT" here, because this is what criu passes
+    if (vmsplice (p[1], iov, 1, SPLICE_F_NONBLOCK | SPLICE_F_GIFT) != 1)
+        abort ();
+    if (close (p[1]) != 0)
+        abort ();
+    buf[0] = 'b';
+    char buf2[1];
+    if (read (p[0], buf2, 1) != 1)
+        abort ();
+    printf ("[%c]\n", buf2[0]); // Prints "b" as opposed to "a" on Linux 6.12.90
+    return 0;
+}
