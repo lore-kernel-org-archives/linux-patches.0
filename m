@@ -1,41 +1,41 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C9F3B9949;
-	Wed, 24 Jun 2026 09:37:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BFF92848A1
+	for <patches@lists.linux.dev>; Wed, 24 Jun 2026 09:37:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782293840; cv=none; b=X3HASNwlqXSjGVBywFgsQNJKpeL2m4wTcARRLB5h4OZi4wSV7u97Gvr679OnPv5sjBPb6/4AZ/Pyk7RW79zukQ2izh1PbL7uKFuasZlt489/jhkNXrYFckL1PCWXGTmAaEXzgxeshVVxk+xzmH7KAagVBvs2s9AQB+eClGDu49c=
+	t=1782293844; cv=none; b=IPb0XJKDJ7AEQt7xXOeimoO+iyI4n9Io0iC8enO9UyWYcx5l6bBJ/lb4AMx2m+WA/D4xubkSG1QUu+h+Rww1qhY7M2xr0yqraIo1Mf0UByvNGoZv71Vv8InZsy3lnMpjwXjc6VaIDzcSGDH9zQEm3GCqfnQN2rOqKS/SfCbzriU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782293840; c=relaxed/simple;
-	bh=tv9J4EnWkXedhmAx7yiXQV2KAa48b/rZoQTPFjRZRLg=;
+	s=arc-20240116; t=1782293844; c=relaxed/simple;
+	bh=1cqTBdcnChw8QnoeTxO6pHgP5ZdYyoFcPJLg3SKwsWw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=idea0MFGdUBgmS/yefq4la3Sy2H9ZmwlCSVBMSyd2ic5rYZAfSLznPUzhHKuMbLqQzuKS9mAuwOE6Eks13uu7Viza3Ul8WFdq4E5sfto7oP6cgsdjdLfJNZldw253PLqozw1nPqVRAoHsXIujmGlpAYzP7to5i5Me04jUIUA+PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03O5kptM; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=jePLFrtLI+Y69zHFOQqQ7pgdZQfM0x7LP2ZMfO7RYHWKfL9+15LRzdbTn183OdME4YGJIkcUo04s9Kg3wTCqNzCb9JI6lXhKWS37QRsmG9creTFQ2vF7KSuakC6k6OrPKA4/rZz/11oK9DB+0d6AJDCh+2OSGqPzaRmMlW2krMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=h8R8Z9jL; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03O5kptM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5E51F000E9;
-	Wed, 24 Jun 2026 09:37:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782293834;
-	bh=IRC3d8HiCXbhLck/u1YUWijHs/FB+fBPFMejEZTkaJ0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=03O5kptMlXN+XIIfTFw5XK17h3jEjzC0ucbYKlFdtACuBxA8Y+P4zJP1Z/atUc4gq
-	 n+HK7VLDhmHklk6yQxNeaD6USWZVJwL07gG2qv9zUDzEUq1BUcEhxaSBu+jbEuc47J
-	 7X45T3Sp3TXLwUWU1iGDKNsfx+PdaHNu9VxvcyVg=
-Date: Wed, 24 Jun 2026 11:36:02 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="h8R8Z9jL"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8FE842944;
+	Wed, 24 Jun 2026 02:37:12 -0700 (PDT)
+Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AAFEB3F632;
+	Wed, 24 Jun 2026 02:37:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1782293837; bh=1cqTBdcnChw8QnoeTxO6pHgP5ZdYyoFcPJLg3SKwsWw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=h8R8Z9jLg6U+gI89CL20iOYcQ4YrIl1lVhKH5zVgl2OLlQvpZrEobcT1HptU+7/bm
+	 okNAaryVuY3J+cbSDfMWLIiPlZRxqg3OI3ASdqJCK0Bxr75cKMmEIzriYn8YdSAPAu
+	 BYkdSmALk16mjhEatgu5Dbg0oFiPnxza895bdxvY=
+Date: Wed, 24 Jun 2026 10:37:12 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 To: Wentao Guan <guanwentao@uniontech.com>
-Cc: iklatzco <iklatzco@gmail.com>, 00107082 <00107082@163.com>,
-	patches <patches@lists.linux.dev>, peterz <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>, stable <stable@vger.kernel.org>,
-	"yeoreum.yun" <yeoreum.yun@arm.com>
+Cc: iklatzco@gmail.com, gregkh@linuxfoundation.org, 00107082@163.com,
+	patches@lists.linux.dev, peterz@infradead.org, sashal@kernel.org,
+	stable@vger.kernel.org
 Subject: Re: perf: Fix dangling cgroup pointer in cpuctx
-Message-ID: <2026062414-spry-reflux-1cd4@gregkh>
+Message-ID: <ajulSBVbBakh6NWu@e129823.arm.com>
 References: <20260616145120.525872058@linuxfoundation.org>
  <20260624080310.2502480-1-guanwentao@uniontech.com>
- <2026062455-obtrusive-sandbox-d6d1@gregkh>
- <tencent_62A2AD8F12114EBC582137F1@qq.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,50 +44,19 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <tencent_62A2AD8F12114EBC582137F1@qq.com>
+In-Reply-To: <20260624080310.2502480-1-guanwentao@uniontech.com>
 
-On Wed, Jun 24, 2026 at 05:27:56PM +0800, Wentao Guan wrote:
-> Hello,
+Hi, 
+
+> Hello, 
 > 
-> orginal patch commit 3b7a34aebbdf2a4b7295205bf0c654294283ec82,
-> perf: Fix dangling cgroup pointer in cpuctx delete
-> 'event->pending_disable = 1;' in __perf_remove_from_context(),
-> but the backport commit ae1ada0af16249a3ed15e33fa6719a6a2f96f537 did not.
+> I noticed your backport missed - 'event->pending_disable = 1;',
+> which different than upstream version, is that true?
 > 
-> [context different]
-> 25,26c19,20
-> <  kernel/events/core.c | 16 ++++------------
-> <  1 file changed, 4 insertions(+), 12 deletions(-)
-> ---
-> >  kernel/events/core.c | 21 ++++++---------------
-> >  1 file changed, 6 insertions(+), 15 deletions(-)
-> 29c23
-> < index 0ac83fc1cb5e3..132524d0297cb 100644
-> ---
-> > index 1cc98b9b3c0b4..d78608323916f 100644
-> 32c26
-> < @@ -2056,18 +2056,6 @@ list_del_event(struct perf_event *event, struct perf_event_context *ctx)
-> ---
-> > @@ -2120,18 +2120,6 @@ list_del_event(struct perf_event *event, struct perf_event_context *ctx)
-> 51c45,51
-> < @@ -2401,6 +2389,10 @@ __perf_remove_from_context(struct perf_event *event,
-> ---
-> > @@ -2488,11 +2476,14 @@ __perf_remove_from_context(struct perf_event *event,
-> >               state = PERF_EVENT_STATE_EXIT;
-> >       if (flags & DETACH_REVOKE)
-> >               state = PERF_EVENT_STATE_REVOKED;
-> > -     if (flags & DETACH_DEAD) {
-> > -             event->pending_disable = 1;
-> > +     if (flags & DETACH_DEAD)
-> 53c53,54
-> <       }
-> ---
-> > -     }
 
-I'm sorry, but I can't understand un-unified diffs, and diffs of diffs
-are a whole other level of toughness....  If you feel something was
-backported incorrectly, can you provide a patch to fix it up?
+Yes. I think it was missed otherwise for the DEAD event, it would have
+the middle OFF state.
 
-thanks,
-
-greg k-h
+-- 
+Sincerely,
+Yeoreum Yun
