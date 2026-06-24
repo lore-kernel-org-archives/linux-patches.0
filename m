@@ -1,113 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9534230ACEE;
-	Wed, 24 Jun 2026 16:30:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B09A33F5A9;
+	Wed, 24 Jun 2026 17:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782318613; cv=none; b=SNoiFlB2FOLP+M1q49g9M7dlBKnlMbNuiCVYWcJMYHR6X/fGZTgLKB5Me8D5dL5P0GO4SaELwUQJNImJQfIZQKrQSlq5Ae7RFtjWqehSEdD4CYW0BcBtAK5/XgZtmfAc5jA5MUhxJI0WlW51zXiDSITMxqic4iad2filYTSgLbg=
+	t=1782321250; cv=none; b=pgGD170ANKiNVIRx7B9iGt7l3rCg9sQMkxP+T8PK68tJE6sQ/zn2xZqCltFh8sjIwA910G43aPkYmgS0E8ZrT+BKxTiHXBNuWGjs2QZVWURst6xwupin/Bc9iNFxa+YKGL9SP+FkNkKUeVVFtLRzmRLhuNQd8r9BX7FbnwEhW0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782318613; c=relaxed/simple;
-	bh=/To/JJJKIU3LIEbSv13kJAVPlpEl3xbd49hOg9zjcVw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RS/BHXnoKGI0O5ottBJ9zYSC0iSNzYKHfSQu5vhA6HFvdkhcI2ntN87vhSDIUIAXKrFPwyvp85M1EtsxkhjlaYSW9HyL5Z4WAO13YTvTr4GNFELCZ/fMpjABTN8uEAdYgvgHfiOzQaa7OAMj/7RGWaecs5n3rsMM1MMn2G95NFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=od2yYyf/; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="od2yYyf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939161F00AC4;
-	Wed, 24 Jun 2026 16:30:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782318612;
-	bh=mbyuAlSoRh47aaPkX7JF2oGMTEIdF1Zcr15uiIt8usA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=od2yYyf/sl8pz4IJPQDnQOrhYkXrpXNEKFtjPgBBO8QmuXmuUJUW1LX14FDxlYUHS
-	 Kw2kXlsRYdoRkjieZwt375+G5/EYfc5MLvG0MXBfetqiJGWAU7reZ5yiJUSXhZyrRO
-	 V9QwT7TTke2/Ucc705VGL2T6GpiWzVWpsj62SWyo=
-Date: Wed, 24 Jun 2026 17:29:00 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Will Deacon <will@kernel.org>, Ben Hutchings <ben@decadent.org.uk>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, Sasha Levin <sashal@kernel.org>,
-	stable <stable@vger.kernel.org>, mark.rutland@arm.com
-Subject: Re: [PATCH 6.1 337/522] arm64/mm: Enable batched TLB flush in
- unmap_hotplug_range()
-Message-ID: <2026062451-bluff-coherent-672d@gregkh>
-References: <20260616145125.307082728@linuxfoundation.org>
- <20260616145141.584613180@linuxfoundation.org>
- <b0d5836032ce3135bfc473f6bff791306d086925.camel@decadent.org.uk>
- <ajqXWqiAol6Shdd6@willie-the-truck>
- <d2a633c8-496e-48e1-bfa0-a0fc75bd0a08@arm.com>
+	s=arc-20240116; t=1782321250; c=relaxed/simple;
+	bh=zOA+NRAC3fnoUFbbw5rsQgGbAmrqEGSkAVCK6P8mSvY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=RO8mdvbuTxBZ21vZY9DttUSOQFFJrd4LVVYO4T0QB9x8ZUq7zlxFL49lJyZr9WmFeSvOI7JnYDGs3ijUGRAkHov4K9jIawJ2iqqrOJxm2QNGyhjx4QIdpX6wfXGI9s85rw/azOeeL++b7Ou77LKdysJMhm7tdmmk3ed0SadB1R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wcRAR-0042vN-0z;
+	Wed, 24 Jun 2026 17:13:39 +0000
+Received: from ben by deadeye with local (Exim 4.99.3)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wcRAO-000000088WR-2hYd;
+	Wed, 24 Jun 2026 19:13:36 +0200
+Message-ID: <66cf4f95534aa5428a362857cf78dcb946c51672.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.15 323/411] spi: topcliff-pch: fix controller
+ deregistration
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Masayuki Ohtake <masa-korg@dsn.okisemi.com>, 
+ Johan Hovold <johan@kernel.org>, Mark Brown <broonie@kernel.org>, Sasha
+ Levin <sashal@kernel.org>
+Date: Wed, 24 Jun 2026 19:13:30 +0200
+In-Reply-To: <20260616145118.324999322@linuxfoundation.org>
+References: <20260616145100.376842714@linuxfoundation.org>
+	 <20260616145118.324999322@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-4Hbk2u6isj5YWtDERwLc"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d2a633c8-496e-48e1-bfa0-a0fc75bd0a08@arm.com>
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-On Wed, Jun 24, 2026 at 04:05:01PM +0100, Ryan Roberts wrote:
-> On 23/06/2026 15:25, Will Deacon wrote:
-> > On Sun, Jun 21, 2026 at 05:02:27PM +0200, Ben Hutchings wrote:
-> >> On Tue, 2026-06-16 at 20:28 +0530, Greg Kroah-Hartman wrote:
-> >>> 6.1-stable review patch.  If anyone has any objections, please let me know.
-> >>>
-> >>> ------------------
-> >>>
-> >>> From: Anshuman Khandual <anshuman.khandual@arm.com>
-> >>>
-> >>> [ Upstream commit 48478b9f791376b4b89018d7afdfd06865498f65 ]
-> >> [...]
-> >>> @@ -949,15 +953,14 @@ static void unmap_hotplug_pmd_range(pud_
-> >>>  		WARN_ON(!pmd_present(pmd));
-> >>>  		if (pmd_sect(pmd)) {
-> >>>  			pmd_clear(pmdp);
-> >>> -
-> >>> -			/*
-> >>> -			 * One TLBI should be sufficient here as the PMD_SIZE
-> >>> -			 * range is mapped with a single block entry.
-> >>> -			 */
-> >>> -			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
-> >>> -			if (free_mapped)
-> >>> +			if (free_mapped) {
-> >>> +				/* CONT blocks are not supported in the vmemmap */
-> >>> +				WARN_ON(pmd_cont(pmd));
-> >>> +				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
-> >>
-> >> It wasn't clear to me from the commit message why this now adds PMD_SIZE
-> >> rather than PAGE_SIZE.  It seems like this change is fine for Linux
-> >> 6.13+ with a CPU that supports TLB range flushing, but otherwise results
-> >> in unnecessarily executing multiple TLB invalidations at intervals of
-> >> the base page size.
-> > 
-> > Hmm, the commit message also makes very little sense to me and so I don't
-> > understand why this patch has us doing multiple TLB invalidations when
-> > we run into a !cont, block mapping at the PMD level. The old comment
-> > (which this patch removes) should still apply afaict.
-> > 
-> > Anshuman, Ryan, any ideas what's going on here?
-> 
-> I think this change was probably my fault; Given the API is called
-> flush_tlb_kernel_range() it seemed like an abuse/hack to pretend we are only
-> flushing the first PAGE_SIZE of the range. But as I understand it, even if the
-> HW shatters a block mapping into multiple TLB entries, all of the entries
-> relating to the block mapping will be invalidated if just one of them intersects
-> the TLBI range/address. So it should be safe to reapply this hack.
-> 
-> Although ideally I think it would be better if this API took a stride argument;
-> then intent is clear.
-> 
-> What's the best way to handle this? Submit a patch for mainline that reverts
-> this part, then get it backported to stable (implying this current patch will
-> have been applied to stable)?
 
-yes, that's probably the best way.
+--=-4Hbk2u6isj5YWtDERwLc
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-thanks,
+On Tue, 2026-06-16 at 20:29 +0530, Greg Kroah-Hartman wrote:
+> 5.15-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Johan Hovold <johan@kernel.org>
+>=20
+> [ Upstream commit 5d6f477d6fc0767c57c5e1e6f55a1662820eef87 ]
+[...]
 
-greg k-h
+Aside from the issue already pointed out with this backport, the fix is
+also missing from the 6.1 and 6.6 branches.
+
+Ben.
+
+--=20
+Ben Hutchings
+Anthony's Law of Force: Don't force it, get a larger hammer.
+
+--=-4Hbk2u6isj5YWtDERwLc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmo8EDsACgkQ57/I7JWG
+EQk39BAAkBvHYG5NgAUy6GD8EWNHQhti4b/CS3m8zb9pk56yFbzm6Bfwe77ScShD
+3psMgpOtazD/kBN56YEACPUp+iftg8+V9GTQ5MhX71LyAmDpdxd17Q7v/+mZsXUI
+cjf5rJH8Ed6bWPqgJgCPaL+4Y+tSdv41ydxqPcKfYMCpFWpKM2Yqm7qSK7cYZ+A1
+KN9SUenLZdaDp4wiJSkbUhr5to7xKh2CpJpLOeO6I+MMhkk/0gQ+YSkRJN8IOVZQ
+LA0OP21ZSKtu/h9AzCqImt77k1pnpvkGK18lov7y9Nib8yIhFF6M5TCFNWYL7+Zm
+1EmLa+iDC+/Qvnsc+snquja3kr7/OT6o30Gov/H7B1IOYK62WYVBWQIWcIV/Og3n
+gmg6Goo4sBNXLmKp4EYo5Jx59nPMen7yZPw92sjVdbHWwPuAjtWRDMzXeM1njmQo
+IEh58UJ+qhL31nHZwHWrUmT/KA4pEZ0c8NfXg+Jd1YumaYORQStboRT6+2S/3k9B
+yYc7lDWtWC6Cybh2tkgyhVkm29idgFFVBWiEfG0unWDkM4lf5LcLdgYvGlHF0znS
+wLjplfbzoTZ5vwP3gic9I8Sz2RVaJyNLNCIw2N+aIrs1h9Kd/mY4DOiAqoi1fAi/
+2Np2w5y1l75FApHPhhdYF5SKXWFYp7Sn0AvbO1l8BjBiqg+bFys=
+=ysk7
+-----END PGP SIGNATURE-----
+
+--=-4Hbk2u6isj5YWtDERwLc--
