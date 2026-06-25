@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1680F1E633C;
-	Thu, 25 Jun 2026 13:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF9226FD9B;
+	Thu, 25 Jun 2026 13:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393062; cv=none; b=MCGa48WWiUR2W5FsUGkrI3HX1BV6m7we+8wVc/nX7g3GIU6y8pLormtk8VRzWm83Q5x55mS6j5t84uM0P/RIK9MTW0UdIaqYqoChRlADdt1Mp4FKUoa7GSLquAkPdR7B+G5BfSGK+6F/zErfg/p1TuXp0SX2X46QfBHRUnq0vy4=
+	t=1782393065; cv=none; b=O/FaDGMeWSYLB6jwF0YQJGybrbN/n0yBMwHK3ua27SPqnZcXrPRhkDKpDa/T4ZlxFRHhi6XRiv6Ac/BFY/oPTNlFSPo+F2bVF+CZGOZXA7aBSXo9Cm7nMYb/NXsTwG4XqHbubu9TxrdQGyvtRC5dF2s8qiSK+ywMZO/Dh5g9jc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393062; c=relaxed/simple;
-	bh=JxP+HrLc20IkYWJcZLt8j/4+PNLRM46CuKxjkXi6FOc=;
+	s=arc-20240116; t=1782393065; c=relaxed/simple;
+	bh=F+gX7LW2fkLisHTWj40LltLQ4Yt5r046Zc10JCYSI+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HhPaxsDIZP08tNfrh7cfFpFX+sV/l+mpReXBEYpp/LHv7KY3OOuL1G0nmxvPw7GPF8+Pki56F8dPZ7D6MAabAiLBLI2iYQndEETPYgpi2RLrPSbQ/UliNUlMq2WUJTjtEw/vi8tR6G+oY5BlbGNHPCXQJKRVZvtRTpUuaSCFf4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MauiCgrQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OFavK0Z0JVzVbsKX7k4IV5vVqWNWjulh8SfJUXo7M4U2qtqTzHtL44Wt+pc+8j1MKjhzThn2lFkdd3ZieM32GpFa9vhM1KeMg2c97YsP8m3HRCGfgewx623XqZ3kPwUY2Np6M2fe5oV8ZM+ohLbeM3Y7MLyuflJvbJTTN4Wf9iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duNHEkFX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MauiCgrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575201F000E9;
-	Thu, 25 Jun 2026 13:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duNHEkFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A661F000E9;
+	Thu, 25 Jun 2026 13:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393061;
-	bh=Ou544/6FvvoIfxeGRIqAxkPhH8fSiSoDPAeUIg0jlpc=;
+	s=korg; t=1782393064;
+	bh=cITh/T+TNgD7ZH4/dKwx7Tkg3hS5U7o7KKfJEFOF5Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MauiCgrQoI+xQl1tgelX4qWqw7PlipB0IR61Cj971Ga536GlCxtvuvYwZ70e1z5bo
-	 MmVaxJBq6yo+X6tsZJ9t0a1NtN6dtXEJSYDaQ5SWK2G1Kz9rQu+tEn4gzbytBeO/yG
-	 5s3P022W6W66aILtImYIE4k/RsCQl52fK+XM/Pik=
+	b=duNHEkFXbhh7qTtXHaY43Ql6B6ioYA3LYszkVXKi3nTpv94nKhAeAG3BdiGa1ZZue
+	 q9hB2ZtyN8AGBBrE3zbKMdC5D6f98ugaIyV1oegs7lJKNsX/Key9WwkOJXy3oDJekv
+	 1G8CAEtcXx0pDHKIp0jJucE2ltWUG2EQ9hmYiWsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 7.0 45/49] serial: 8250_dw: unregister 8250 port if clk_notifier_register() fails
-Date: Thu, 25 Jun 2026 14:03:57 +0100
-Message-ID: <20260625125643.851493371@linuxfoundation.org>
+	Georgi Djakov <georgi.djakov@oss.qualcomm.com>,
+	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Richard Cheng <icheng@nvidia.com>,
+	David Hildenbrand <david@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 46/49] drivers/base/memory: set mem->altmap after successful device registration
+Date: Thu, 25 Jun 2026 14:03:58 +0100
+Message-ID: <20260625125643.993666818@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -50,46 +57,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Georgi Djakov <georgi.djakov@oss.qualcomm.com>
 
-commit 10fc708b4de7f86002d2d735a2dbf3b5b7f65692 upstream.
+commit a2b8d7827f48ee54a686cb80e4a1d0ff954ec42a upstream.
 
-dw8250_probe() registers the 8250 port via serial8250_register_8250_port()
-and then, if the device has a clock, registers a clock notifier. If
-clk_notifier_register() fails, probe returns the error but leaves the
-8250 port registered. The matching serial8250_unregister_port() lives
-in dw8250_remove(), which is not called when probe fails, so the port
-slot stays occupied until the device is rebound or the system is
-rebooted. The devm-allocated driver data is freed while the port still
-references it (via the saved private_data and serial_in/serial_out
-callbacks), so any access to that port slot before a rebind is a
-use-after-free hazard.
+If __add_memory_block() fails at xa_store() (under memory pressure for
+example), device_unregister() is called, which eventually triggers
+memory_block_release() with mem->altmap still set, causing a
+WARN_ON(mem->altmap).  This was triggered by modifying virtio-mem driver.
 
-Unregister the port on the clk_notifier_register() error path.
+Fix this by delaying the assignment of mem->altmap until after
+__add_memory_block() has succeeded.
 
-Fixes: cc816969d7b5 ("serial: 8250_dw: Fix common clocks usage race condition")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260514143746.23671-2-sozdayvek@gmail.com
+Link: https://lore.kernel.org/20260514092657.3057141-1-georgi.djakov@oss.qualcomm.com
+Fixes: 1a8c64e11043 ("mm/memory_hotplug: embed vmem_altmap details in memory block")
+Signed-off-by: Georgi Djakov <georgi.djakov@oss.qualcomm.com>
+Acked-by: Oscar Salvador (SUSE) <osalvador@kernel.org>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Richard Cheng <icheng@nvidia.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Georgi Djakov <djakov@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dw.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/base/memory.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -850,8 +850,10 @@ static int dw8250_probe(struct platform_
- 	 */
- 	if (data->clk) {
- 		err = clk_notifier_register(data->clk, &data->clk_notifier);
--		if (err)
-+		if (err) {
-+			serial8250_unregister_port(data->data.line);
- 			return dev_err_probe(dev, err, "Failed to set the clock notifier\n");
-+		}
- 		queue_work(system_dfl_wq, &data->clk_work);
- 	}
+--- a/drivers/base/memory.c
++++ b/drivers/base/memory.c
+@@ -807,7 +807,6 @@ static int add_memory_block(unsigned lon
+ 	mem->start_section_nr = block_id * sections_per_block;
+ 	mem->state = state;
+ 	mem->nid = nid;
+-	mem->altmap = altmap;
+ 	INIT_LIST_HEAD(&mem->group_next);
  
+ #ifndef CONFIG_NUMA
+@@ -825,6 +824,8 @@ static int add_memory_block(unsigned lon
+ 	if (ret)
+ 		return ret;
+ 
++	mem->altmap = altmap;
++
+ 	if (group) {
+ 		mem->group = group;
+ 		list_add(&mem->group_next, &group->memory_blocks);
 
 
