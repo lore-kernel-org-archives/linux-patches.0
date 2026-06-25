@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98C32E091B;
-	Thu, 25 Jun 2026 13:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417EF1E633C;
+	Thu, 25 Jun 2026 13:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392970; cv=none; b=eXdvXJODKEYsHHG0Jwwi/Cewj7B3c8qYPWqNC4a/KZ21VWAA5th5Yl3SAtg5QsqjkBEfxymAnxscTweQ+A7w42PYi1pbtRQI6yFPN9hDYW+1qKQxANIamHW8ImMb4g+ddbawpgSiHHu2r7gMIYm0JwnAl7Px8GIgWM8PJwg2HUk=
+	t=1782392973; cv=none; b=flX9vSzXNOY+jF/1hHYaJG9sCDlLYQnevG8qUGWxG0kk8VLq6PKXM3iibaKyCx7b3ZaOpSKOMrARnyOz2BwI3OcT3L2Yiy6yhm5+Vml64k0nuWl2hoIDHkXNPxgq51JpsopBbx0dZjv+Y6R0y19lX8xaZ5LEteYYg5JYUQpgtQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392970; c=relaxed/simple;
-	bh=jMZSl2knEChKRf+rXJe7NFY9+Y08moeFGO0+VFZni4k=;
+	s=arc-20240116; t=1782392973; c=relaxed/simple;
+	bh=We0+lH7P+X4EG/Djo5FS3t+ukpF8sxG26Bwjv9F92IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgNXwF6AdmqwCkfTmehN3j+guhGCxswg4h45W5144dhXyZdpei8lu5Jl2hCefzOCKS1uJhCn3ytJ8KoWb9+zCmqaPBFFNoxQOzhVEfGHrxqJZQ2ScAt758RaZ+yXxqoUbMMNX5YPhbPMzzdmY6asNmuX5QwTt8wwTNY4iaSUqpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIHvKkZp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=swpufYpVPIZMjHchorx07o4ZEZstpM+e1v7ectKca+hT9qD4vWFZh+0xRKgII6HfotxJYmeKImjfGJnVZyimu61Jro+xuf3UXBY6u2tCgMLVCOYLdxj1NwiEmDVks0yZ7Va83Dm+p76hP6Hx1hWLr+iYpdUGqhVrudMqBRDrbdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOvROY7H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIHvKkZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3BD1F000E9;
-	Thu, 25 Jun 2026 13:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOvROY7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418CA1F000E9;
+	Thu, 25 Jun 2026 13:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392968;
-	bh=JIRMpL52vlZ6GhFXZs+0aBvXz2AmdmlWZo4MJSUtZ1I=;
+	s=korg; t=1782392971;
+	bh=N6dLL5kukwBegsVUyOKvwqYF2qrO9sNr7py+PrYrtSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SIHvKkZp53QFprU2nSDkCpQz+qLTgHI3nqcvjaP+XY+x3SjVx1p3r/mEoDbBcTL4U
-	 GwO2GsT+z4hjraavAEzdMiVyZONticelaHdhe4FdrZensJMxwM6O3+WfzdZKTJHiF5
-	 7RE48oUty90+mO5Qass6KxBicAfa8cEkfsxCFaOg=
+	b=nOvROY7HQI07SrI7+bdSFP3HtQyTyU+EEJdMTcAj+83hjLtEoVLq+8IEGj39JCpXy
+	 LzodH/Lwp0g2QfdCk2R2CH9iiCyP8NhTsb+UAs9MKX7epXSi8lo4el6QdjcuBR9R0q
+	 I0BxX5J8HnkyT3HkQdZi2DDsHGibACTStGnnOllU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 7.0 17/49] rose: hold loopback neighbour reference across timer callback
-Date: Thu, 25 Jun 2026 14:03:29 +0100
-Message-ID: <20260625125639.904985505@linuxfoundation.org>
+	Tj <tj.iam.tj@proton.me>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.0 03/49] lockd: fix TEST handling when not all permissions are available.
+Date: Thu, 25 Jun 2026 14:03:15 +0100
+Message-ID: <20260625125637.974589603@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -49,56 +53,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: NeilBrown <neil@brown.name>
 
-commit d270a7a5793af84555c40dd1eb80f1d497fdf53c upstream.
+[ Upstream commit 0b474240327cebeff08ad429e8ed3cfc6c8ee816 ]
 
-rose_loopback_timer() dereferences rose_loopback_neigh throughout its
-body but holds no reference on it.  A concurrent rose_loopback_clear()
-followed by rose_add_loopback_neigh() could free and reallocate the
-neighbour while the timer body is running, causing a use-after-free.
+The F_GETLK fcntl can work with either read access or write access or
+both.  It can query F_RDLCK and F_WRLCK locks in either case.
 
-Take a reference with rose_neigh_hold() at the start of the callback
-(bailing out if the pointer is already NULL) and release it with
-rose_neigh_put() at the single exit point.  The neigh cannot be freed
-while the callback holds a reference.
+However lockd currently treats F_GETLK similar to F_SETLK in that read
+access is required to query an F_RDLCK lock and write access is required
+to query a F_WRLCK lock.
 
-Fixes: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is wrong and can cause problems - e.g.  when qemu accesses a
+read-only (e.g. iso) filesystem image over NFS (though why it queries
+if it can get a write lock - I don't know.  But it does, and this works
+with local filesystems).
+
+So we need TEST requests to be handled differently.  To do this:
+
+- change nlm_do_fopen() to accept O_RDWR as a mode and in that case
+  succeed if either a O_RDONLY or O_WRONLY file can be opened.
+- change nlm_lookup_file() to accept a mode argument from caller,
+  instead of deducing base on lock time, and pass that on to nlm_do_fopen()
+- change nlm4svc_retrieve_args() and nlmsvc_retrieve_args() to detect
+  TEST requests and pass O_RDWR as a mode to nlm_lookup_file, passing
+  the same mode as before for other requests.  Also set
+   lock->fl.c.flc_file to whichever file is available for TEST requests.
+- change nlmsvc_testlock() to also not calculate the mode, but to use
+  whatever was stored in lock->fl.c.flc_file.
+
+This behaviour of lockd - requesting O_WRONLY access to TEST for
+exclusive locks - has been present at least since git history began.
+However it was hidden until recently because knfsd ignored the access
+requested by lockd and required only READ access for all locking
+requests (unless the underlying filesystem provided an f_op->open
+function which checked access permissions).
+
+The commit mentioned in Fixes: below changed nfsd_permission() to NOT
+override the access request for LOCK requests and this exposed the bug
+that we are now fixing.
+
+Note that there is another issue that this patch does not address.
+The flock(.., LOCK_EX) call is permitted on a read-only file descriptor.
+Linux NFS maps this to NLM locking as whole-file byte-range locks.
+nfsd will see this as though it were fcntl( F_SETLK (F_WRLCK)) and will
+now require write access, which it might not be able to get.
+It is not clear if this is a problem in practice, or what the best
+solution might be.  So no attempt is made to address it.
+
+Reported-by: Tj <tj.iam.tj@proton.me>
+Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1128861
+Fixes: 4cc9b9f2bf4d ("nfsd: refine and rename NFSD_MAY_LOCK")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_loopback.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/lockd/svc4proc.c         | 13 ++++++++++---
+ fs/lockd/svclock.c          |  4 +---
+ fs/lockd/svcproc.c          | 15 ++++++++++++---
+ fs/lockd/svcsubs.c          | 35 +++++++++++++++++++++++++----------
+ include/linux/lockd/lockd.h |  2 +-
+ 5 files changed, 49 insertions(+), 20 deletions(-)
 
---- a/net/rose/rose_loopback.c
-+++ b/net/rose/rose_loopback.c
-@@ -66,10 +66,15 @@ static void rose_loopback_timer(struct t
- 	unsigned int lci_i, lci_o;
- 	int count;
+diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
+index 4b6f18d977343d..75e020a8bfd072 100644
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -26,6 +26,8 @@ nlm4svc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
+ 	struct nlm_host		*host = NULL;
+ 	struct nlm_file		*file = NULL;
+ 	struct nlm_lock		*lock = &argp->lock;
++	bool			is_test = (rqstp->rq_proc == NLMPROC_TEST ||
++					   rqstp->rq_proc == NLMPROC_TEST_MSG);
+ 	__be32			error = 0;
  
-+	if (rose_loopback_neigh)
-+		rose_neigh_hold(rose_loopback_neigh);
-+	else
-+		return;
+ 	/* nfsd callbacks must have been installed for this procedure */
+@@ -46,15 +48,20 @@ nlm4svc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
+ 	if (filp != NULL) {
+ 		int mode = lock_to_openmode(&lock->fl);
+ 
++		if (is_test)
++			mode = O_RDWR;
 +
- 	for (count = 0; count < ROSE_LOOPBACK_LIMIT; count++) {
- 		skb = skb_dequeue(&loopback_queue);
- 		if (!skb)
--			return;
-+			goto out;
- 		if (skb->len < ROSE_MIN_LEN) {
- 			kfree_skb(skb);
- 			continue;
-@@ -109,6 +114,10 @@ static void rose_loopback_timer(struct t
- 			kfree_skb(skb);
- 		}
+ 		lock->fl.c.flc_flags = FL_POSIX;
+ 
+-		error = nlm_lookup_file(rqstp, &file, lock);
++		error = nlm_lookup_file(rqstp, &file, lock, mode);
+ 		if (error)
+ 			goto no_locks;
+ 		*filp = file;
+-
+ 		/* Set up the missing parts of the file_lock structure */
+-		lock->fl.c.flc_file = file->f_file[mode];
++		if (is_test)
++			lock->fl.c.flc_file = nlmsvc_file_file(file);
++		else
++			lock->fl.c.flc_file = file->f_file[mode];
+ 		lock->fl.c.flc_pid = current->tgid;
+ 		lock->fl.fl_start = (loff_t)lock->lock_start;
+ 		lock->fl.fl_end = lock->lock_len ?
+diff --git a/fs/lockd/svclock.c b/fs/lockd/svclock.c
+index abc65dc79f8543..382bf0d93ed1c1 100644
+--- a/fs/lockd/svclock.c
++++ b/fs/lockd/svclock.c
+@@ -619,7 +619,6 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
+ 		struct nlm_lock *conflock)
+ {
+ 	int			error;
+-	int			mode;
+ 	__be32			ret;
+ 
+ 	dprintk("lockd: nlmsvc_testlock(%s/%ld, ty=%d, %Ld-%Ld)\n",
+@@ -637,14 +636,13 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
+ 		goto out;
  	}
+ 
+-	mode = lock_to_openmode(&lock->fl);
+ 	locks_init_lock(&conflock->fl);
+ 	/* vfs_test_lock only uses start, end, and owner, but tests flc_file */
+ 	conflock->fl.c.flc_file = lock->fl.c.flc_file;
+ 	conflock->fl.fl_start = lock->fl.fl_start;
+ 	conflock->fl.fl_end = lock->fl.fl_end;
+ 	conflock->fl.c.flc_owner = lock->fl.c.flc_owner;
+-	error = vfs_test_lock(file->f_file[mode], &conflock->fl);
++	error = vfs_test_lock(lock->fl.c.flc_file, &conflock->fl);
+ 	if (error) {
+ 		ret = nlm_lck_denied_nolocks;
+ 		goto out;
+diff --git a/fs/lockd/svcproc.c b/fs/lockd/svcproc.c
+index 5817ef272332d9..d98e8d684376b7 100644
+--- a/fs/lockd/svcproc.c
++++ b/fs/lockd/svcproc.c
+@@ -55,6 +55,8 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
+ 	struct nlm_host		*host = NULL;
+ 	struct nlm_file		*file = NULL;
+ 	struct nlm_lock		*lock = &argp->lock;
++	bool			is_test = (rqstp->rq_proc == NLMPROC_TEST ||
++					   rqstp->rq_proc == NLMPROC_TEST_MSG);
+ 	int			mode;
+ 	__be32			error = 0;
+ 
+@@ -70,15 +72,22 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
+ 
+ 	/* Obtain file pointer. Not used by FREE_ALL call. */
+ 	if (filp != NULL) {
+-		error = cast_status(nlm_lookup_file(rqstp, &file, lock));
++		mode = lock_to_openmode(&lock->fl);
 +
-+out:
-+	rose_neigh_put(rose_loopback_neigh);
++		if (is_test)
++			mode = O_RDWR;
 +
- 	if (!skb_queue_empty(&loopback_queue))
- 		mod_timer(&loopback_timer, jiffies + 1);
++		error = cast_status(nlm_lookup_file(rqstp, &file, lock, mode));
+ 		if (error != 0)
+ 			goto no_locks;
+ 		*filp = file;
+ 
+ 		/* Set up the missing parts of the file_lock structure */
+-		mode = lock_to_openmode(&lock->fl);
+ 		lock->fl.c.flc_flags = FL_POSIX;
+-		lock->fl.c.flc_file  = file->f_file[mode];
++		if (is_test)
++			lock->fl.c.flc_file = nlmsvc_file_file(file);
++		else
++			lock->fl.c.flc_file = file->f_file[mode];
+ 		lock->fl.c.flc_pid = current->tgid;
+ 		lock->fl.fl_lmops = &nlmsvc_lock_operations;
+ 		nlmsvc_locks_init_private(&lock->fl, host, (pid_t)lock->svid);
+diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
+index dd0214dcb69503..b83e6ecd5be34f 100644
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -82,18 +82,35 @@ int lock_to_openmode(struct file_lock *lock)
+  *
+  * We have to make sure we have the right credential to open
+  * the file.
++ *
++ * mode can be O_RDONLY(0), O_WRONLY(1) or O_RDWR(2). The latter
++ * means success can be achieved with EITHER O_RDONLY or O_WRONLY.
++ * It does NOT mean both read and write are required.
+  */
+ static __be32 nlm_do_fopen(struct svc_rqst *rqstp,
+ 			   struct nlm_file *file, int mode)
+ {
+-	struct file **fp = &file->f_file[mode];
+-	__be32	nfserr;
++	__be32 nfserr = nlm_lck_denied_nolocks;
++	__be32 deferred = 0;
++	struct file **fp;
++	int m;
+ 
+-	if (*fp)
+-		return 0;
+-	nfserr = nlmsvc_ops->fopen(rqstp, &file->f_handle, fp, mode);
+-	if (nfserr)
+-		dprintk("lockd: open failed (error %d)\n", nfserr);
++	for (m = O_RDONLY ; m <= O_WRONLY ; m++) {
++		if (mode != O_RDWR && mode != m)
++			continue;
++
++		fp = &file->f_file[m];
++		if (*fp)
++			return 0;
++		nfserr = nlmsvc_ops->fopen(rqstp, &file->f_handle, fp, m);
++		if (!nfserr)
++			return 0;
++		if (nfserr == nlm_drop_reply)
++			deferred = nfserr;
++	}
++	if (deferred)
++		return deferred;
++	dprintk("lockd: open failed (error %d)\n", ntohl(nfserr));
+ 	return nfserr;
  }
+ 
+@@ -103,17 +120,15 @@ static __be32 nlm_do_fopen(struct svc_rqst *rqstp,
+  */
+ __be32
+ nlm_lookup_file(struct svc_rqst *rqstp, struct nlm_file **result,
+-					struct nlm_lock *lock)
++		struct nlm_lock *lock, int mode)
+ {
+ 	struct nlm_file	*file;
+ 	unsigned int	hash;
+ 	__be32		nfserr;
+-	int		mode;
+ 
+ 	nlm_debug_print_fh("nlm_lookup_file", &lock->fh);
+ 
+ 	hash = file_hash(&lock->fh);
+-	mode = lock_to_openmode(&lock->fl);
+ 
+ 	/* Lock file table */
+ 	mutex_lock(&nlm_file_mutex);
+diff --git a/include/linux/lockd/lockd.h b/include/linux/lockd/lockd.h
+index 330e38776bb20d..fe5cdd4d66f484 100644
+--- a/include/linux/lockd/lockd.h
++++ b/include/linux/lockd/lockd.h
+@@ -294,7 +294,7 @@ void		  nlmsvc_locks_init_private(struct file_lock *, struct nlm_host *, pid_t);
+  * File handling for the server personality
+  */
+ __be32		  nlm_lookup_file(struct svc_rqst *, struct nlm_file **,
+-					struct nlm_lock *);
++				  struct nlm_lock *, int);
+ void		  nlm_release_file(struct nlm_file *);
+ void		  nlmsvc_put_lockowner(struct nlm_lockowner *);
+ void		  nlmsvc_release_lockowner(struct nlm_lock *);
+-- 
+2.53.0
+
 
 
