@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C992D94AF;
-	Thu, 25 Jun 2026 13:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3002BFC7B;
+	Thu, 25 Jun 2026 13:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392754; cv=none; b=eVZd5QylcRzqTEnbz0726MWrbaRV5fxMPwZAnmnhGqBR5Upl+uCIhJ7sfLKWac5SYlr6fGKuOD4zvfV/Ll0Lf/41dpJSWL2HlYGsLKcI33aPA93vMmYfSONN08bp6Vf3+TACAwJkM8OgK+nIyzqTBJSFdF4vLoR2fBaRmH78iF4=
+	t=1782392758; cv=none; b=JzG14Qr0iID20qiwAptEnSb5I1UBhI+2ZHE3GhC55Q9/M9XoOcgpvERwB9PwnY5osb+NAPAvxQywT5ZhCe9N3g0URR+fEexd7dLcE/AzML+osbN4kA0KmBhg4NjJVID11N2l3hE/ybDEqe7EYDWm658Wrve90kXv6W/tToCxwYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392754; c=relaxed/simple;
-	bh=ElV4PeHnD+R3F4UMgfarJiMvVgP/YisZ8I/EaTtgxfo=;
+	s=arc-20240116; t=1782392758; c=relaxed/simple;
+	bh=VMwBzQLKvgaHqIu+SL1RQGouf2a7RmUB3OchiW+iDwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JXn0Uj7OzrMmm56Qj7BmWtHXFAMOB7kKdnuPQ+geW0QUo9EO0Mql/qW62yGqMJYv9v0JsyWrFjWcqNgC/XByGgEAfNcsY1iJf2BveXoOTu74xAlN8g3vCQovHEtDKsr9k/VRTUZGk7gJaWW5EcadeHG6owKdH8DO3kIeOKugMJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVL4aYdi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PBew3vL2ZcBmV3mxl2hlYfoyouuexCV1pW8omNBL+ObmCnQyjBVZM3WJ4gr2t/OkZ8Hl2uQuUuMYw1ikH0n1QjBEoxaPQ1WBnqW9FyklBi/Sv1XbyMXq15hc0N6zuEV0Sx2j5LTEhrybwZxEKxms0pmsP1Q3xEm0oy2JJRh3n74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EiTzKUS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVL4aYdi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C602F1F000E9;
-	Thu, 25 Jun 2026 13:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EiTzKUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1146C1F000E9;
+	Thu, 25 Jun 2026 13:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392753;
-	bh=bNCqM11/AeuoUPAKRRjNEQhRV5DLA5PVjJQ3jBQRL8I=;
+	s=korg; t=1782392756;
+	bh=+4TS1HkypsXL5uQkgCfIdbzHKXAuxiqAphExgq52jM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uVL4aYdi+7z1wOoa4Ew69UCgp6V1+2ywmWS+FaEW6cqpvDs31LNHgPGe43A1ol2yr
-	 bjcCn7DgA2VQd7cAt5b1Q2ySlG0M9v6PU0+9EakraLfIqZG0ci8vjeW7ZTME3X+ygj
-	 sQOTpd8huCuKv7GzqcdWzj6HGqkNdbwLVi/9M7t4=
+	b=2EiTzKUSkXeM7Lx/P26iPuQMEbU0vw5I+KkjlGKyaRVU6DTAYBxSdA4BfijijkDSO
+	 CjZWs5JVvBJ+q1xSLj4k8U4vpYhjNLmXXo7vol4dsRAvw/jtHnKiDiEeXkvSmesYX5
+	 qXFGgGtFLrVOCasCSpbUep7COWMEkBUDiSokUdz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 05/60] debugobjects: Allow to refill the pool before SYSTEM_SCHEDULING
-Date: Thu, 25 Jun 2026 14:02:50 +0100
-Message-ID: <20260625125646.353749593@linuxfoundation.org>
+	Bernard Pidoux <bernard.f6bvp@gmail.com>
+Subject: [PATCH 6.18 14/60] rose: fix dev_put() leak in rose_loopback_timer()
+Date: Thu, 25 Jun 2026 14:02:59 +0100
+Message-ID: <20260625125647.629520746@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -51,48 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit 06e0ae988f6e3499785c407429953ade19c1096b upstream.
+commit ff91adc54db2b62c7cdf063ff761eceb5adf2215 upstream.
 
-The pool of free objects is refilled on several occasions such as object
-initialisation. On PREEMPT_RT refilling is limited to preemptible
-sections due to sleeping locks used by the memory allocator. The system
-boots with disabled interrupts so the pool can not be refilled.
+rose_rx_call_request() always consumes or returns the skb but never
+releases the device reference obtained from rose_dev_get().  When
+rose_rx_call_request() succeeds (returns non-zero) dev_put() was never
+called, leaking one reference per loopback CALL_REQUEST.
 
-If too many objects are initialized and the pool gets empty then
-debugobjects disables itself.
+Move dev_put() outside the conditional so it is called unconditionally
+after rose_rx_call_request() in all cases.
 
-Refiling can also happen early in the boot with disabled interrupts as
-long as the scheduler is not operational. If the scheduler can not
-preempt a task then a sleeping lock can not be contended.
+Also remove the dead check (!rose_loopback_neigh->dev &&
+!rose_loopback_neigh->loopback) that immediately precedes it: the
+loopback neighbour always has loopback=1 so this condition can never
+be true.
 
-Allow to additionally refill the pool if the scheduler is not
-operational.
-
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://patch.msgid.link/20251127153652.291697-2-bigeasy@linutronix.de
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0453c6824595 ("net/rose: fix unbound loop in rose_loopback_timer()")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rose/rose_loopback.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index e4b7f77ece3b4f..9d59b797d1b507 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -731,7 +731,7 @@ static void debug_objects_fill_pool(void)
- 	 * raw_spinlock_t are basically the same type and this lock-type
- 	 * inversion works just fine.
- 	 */
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible()) {
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible() || system_state < SYSTEM_SCHEDULING) {
- 		/*
- 		 * Annotate away the spinlock_t inside raw_spinlock_t warning
- 		 * by temporarily raising the wait-type to WAIT_SLEEP, matching
--- 
-2.53.0
-
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -96,22 +96,15 @@ static void rose_loopback_timer(struct t
+ 		}
+ 
+ 		if (frametype == ROSE_CALL_REQUEST) {
+-			if (!rose_loopback_neigh->dev &&
+-			    !rose_loopback_neigh->loopback) {
+-				kfree_skb(skb);
+-				continue;
+-			}
+-
+ 			dev = rose_dev_get(dest);
+ 			if (!dev) {
+ 				kfree_skb(skb);
+ 				continue;
+ 			}
+ 
+-			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0) {
+-				dev_put(dev);
++			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
+ 				kfree_skb(skb);
+-			}
++			dev_put(dev);
+ 		} else {
+ 			kfree_skb(skb);
+ 		}
 
 
