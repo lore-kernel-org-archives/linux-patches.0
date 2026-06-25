@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C5529B77C;
-	Thu, 25 Jun 2026 13:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD922253EE;
+	Thu, 25 Jun 2026 13:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393002; cv=none; b=oKUYQ7Px7j+gBScyoHbBZisUanIlz5rOEEKbIFgvFCQRAc1Q3vH2oKfcpIgIexIx091IrlvyjZC2yZ43DA5obvuBKj8OX6pbqQ8zu1RzrKJMNGs4TBWH+NClr5OqIdx9A/D4DDqJHuimyIlcBIxWadAOJOKpcaSB4E6Y/HX5vuM=
+	t=1782393006; cv=none; b=o2as64hhrD8FVrBgdBZEq5GIb6+FTZc8hC+3Hso3guuMLzfMVBjx39Kti68eD0bpuYa9KpWcd9TSAmWJTeIFZYAL5EbnZZ/HeBXbIoXWBO02lEl5G7+7NhoidCB/pj/Zd0RVh1niXtQPdGtuiBVFbriBfXgElXojvX8Y1lelpT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393002; c=relaxed/simple;
-	bh=98ROPIKmV4zfIjaDob6iDw4xSzs5GCaTYqKoLvG5j4I=;
+	s=arc-20240116; t=1782393006; c=relaxed/simple;
+	bh=wedskd2z1h9qz6lMNjBoh1ZcAV2+I7l4l4ONKBHs/Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jzl5BeHQKKzOPtdkehTOzHkPM0lgccFtFM/8dvwJzayJnrPALL1r59gYUUmyEx+k4SOnPqT0svMkpxWTJfwWwo9H3IU4ARe2SMyo1BjrOPyt87+5LPlPAR2MTMjo8oY4vAdL5m4m82dMHR9zQR16mSH2p9mouT4tokSZFCOpaG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlhWUY/2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CPZVompW/zH7VgQhHDOPt40OQWZxhyTwA0jJqFwETiD2hqBK+xzOLpCL7lKuTf3LyeUi1uiVtdO5jJC+cgLsioVaJF8VbbatTGoJJZzeDkL0X4sZ/meukXbgNfpiay/qYFwQfDOoUr/QN2EcjLh3qj1ONSaDHoxHEG78qJTT78Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usCoZ6Yk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlhWUY/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAA91F000E9;
-	Thu, 25 Jun 2026 13:10:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usCoZ6Yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AAF1F000E9;
+	Thu, 25 Jun 2026 13:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393001;
-	bh=ELu1XqzLLtw0ftMbKdrxxNGBOOFNd6jDIliOebKBKZo=;
+	s=korg; t=1782393004;
+	bh=B75b0xem9CKJ1Bjb3MaVcXa1zrfrT0iCP9R0Cq3eNS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BlhWUY/2j1Ktupx1hnG+QZdTJMS7HXyAKcCHlxRTLm6pCSItPHPFw0pVjd4QLR+Ad
-	 BNA3sL6dAqb7SY2202eic/Rk2eBFsYQXSqkaAZuNiF0XohMdvQFd0UGvrFx9F/MZZn
-	 CbihI4ucNlhBnFcu9MgLwMbqmxYJvgm4/Ag+PXv8=
+	b=usCoZ6Yk0LGDo+THWtgAdO6IdCtYTDcph9bF+UWIIPSvbJlt8RpccXVh83IlWtmuv
+	 MJE48sw/DHJKczDCVKlwqXLT/zUNCR5kG+OBpB0XuXucy+Bz3ccQ2o39P+hxj+t6IL
+	 +qqt8MKNONvNr67QUFb8na9+5v67EQhv5THdmu4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 7.0 19/49] rose: clear neighbour pointer after rose_neigh_put() in state machines
-Date: Thu, 25 Jun 2026 14:03:31 +0100
-Message-ID: <20260625125640.175730670@linuxfoundation.org>
+Subject: [PATCH 7.0 28/49] rose: cancel neighbour timers in rose_neigh_put() before freeing
+Date: Thu, 25 Jun 2026 14:03:40 +0100
+Message-ID: <20260625125641.474020187@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -51,71 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit e8eb0c6faa8849ba7769516c1a8c84d9f612acf6 upstream.
+commit 9b222cb1d23ff210975e9df5ebab7b011acb6fad upstream.
 
-After calling rose_neigh_put() in rose_state1_machine() through
-rose_state5_machine(), rose->neighbour was left pointing at the
-potentially freed neighbour structure.  A subsequent timer expiry or
-concurrent teardown path could dereference the stale pointer, causing
-a use-after-free.
+rose_neigh_put() kfree()s the neighbour but never cancels its ftimer and
+t0timer. Until now every caller that dropped the final reference first
+called rose_remove_neigh(), which deletes those timers. The socket
+heartbeat reaping path drops the last reference directly, so a neighbour
+could be freed with t0timer still armed -- it re-arms itself in
+rose_t0timer_expiry() -- leading to a use-after-free write in
+enqueue_timer().
 
-Set rose->neighbour to NULL immediately after each rose_neigh_put()
-call in the state machine functions.
+Cancel both timers with timer_delete_sync() (the synchronous variant, to
+wait out a concurrently running, self-rearming handler) in the
+refcount-zero branch of rose_neigh_put().
 
-Fixes: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_in.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ include/net/rose.h |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -57,6 +57,7 @@ static int rose_state1_machine(struct so
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, ECONNREFUSED, skb->data[3], skb->data[4]);
- 		rose_neigh_put(rose->neighbour);
-+		rose->neighbour = NULL;
- 		break;
- 
- 	default:
-@@ -80,11 +81,13 @@ static int rose_state2_machine(struct so
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
- 		rose_neigh_put(rose->neighbour);
-+		rose->neighbour = NULL;
- 		break;
- 
- 	case ROSE_CLEAR_CONFIRMATION:
- 		rose_disconnect(sk, 0, -1, -1);
- 		rose_neigh_put(rose->neighbour);
-+		rose->neighbour = NULL;
- 		break;
- 
- 	default:
-@@ -122,6 +125,7 @@ static int rose_state3_machine(struct so
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
- 		rose_neigh_put(rose->neighbour);
-+		rose->neighbour = NULL;
- 		break;
- 
- 	case ROSE_RR:
-@@ -235,6 +239,7 @@ static int rose_state4_machine(struct so
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
- 		rose_neigh_put(rose->neighbour);
-+		rose->neighbour = NULL;
- 		break;
- 
- 	default:
-@@ -255,6 +260,7 @@ static int rose_state5_machine(struct so
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
- 		rose_neigh_put(rose_sk(sk)->neighbour);
-+		rose_sk(sk)->neighbour = NULL;
- 	}
- 
- 	return 0;
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -160,6 +160,18 @@ static inline void rose_neigh_hold(struc
+ static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
+ {
+ 	if (refcount_dec_and_test(&rose_neigh->use)) {
++		/* We are dropping the last reference, so we are about to free the
++		 * neighbour.  Its timers may still be armed -- t0timer in particular
++		 * re-arms itself in rose_t0timer_expiry().  rose_remove_neigh()
++		 * cancels them before its own put, but callers that drop the final
++		 * reference without first calling rose_remove_neigh() (the socket
++		 * heartbeat reaping path) would otherwise kfree() a neighbour with a
++		 * live timer -> use-after-free.  timer_delete_sync() (not the async
++		 * variant) is required: it waits out a concurrently running handler
++		 * and loops until the self-rearming timer stays stopped.
++		 */
++		timer_delete_sync(&rose_neigh->ftimer);
++		timer_delete_sync(&rose_neigh->t0timer);
+ 		if (rose_neigh->ax25)
+ 			ax25_cb_put(rose_neigh->ax25);
+ 		kfree(rose_neigh->digipeat);
 
 
