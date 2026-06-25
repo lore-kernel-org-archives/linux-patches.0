@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4312D060D;
-	Thu, 25 Jun 2026 13:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFBE2571B8;
+	Thu, 25 Jun 2026 13:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392854; cv=none; b=J/tWQP5rkImVK0SfsouSVTwzMf5uG+JjAQEAZzocoqTrKAI8UgTLcLGE+LCoVuuoyBiMRdXztnAwgjfAK0zaa2wwEQBvWKKQ8jzKdALyFwAN0zwFruSzTMYTQ3Sz5Zqq2Wh0GyVBIdDN6C+IDp1xSzhPWJcZUKuumTy/lP+6bMc=
+	t=1782392857; cv=none; b=RF7EG1R66K8fioq15OtwiP9Xz7decXL1ZLlEQzVNTlCBTWObbT9KnOXsCRw+sbRNzwxrCf0TZ1B/AwiCTfZDLx4JVhFgWjcDBQlmcv5EfuHt65CJRCg/jweEP4/3oh12k/3E+uOoTqxdUZWnBILsfeDJ4QS+2dBIPheMFwo187U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392854; c=relaxed/simple;
-	bh=tQfIuoaFutr5P10ryHeMQmWMYDk9Bcbkm0PrDKUCyRE=;
+	s=arc-20240116; t=1782392857; c=relaxed/simple;
+	bh=/TFdmZRQznOCWt06dtL6DljQu9hS5KMSfMDV7YUBkRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qB5QN7dYGjrlCY80i/+uT/U1VqHpJvB8975OC4MguHjbJrTd7H9V1VgPolOcL0MYfSVXsEq1ed/4lM7RPfcxWv9zcDOKd0tI53yd+VIyV7AbAUvKK6z3xG+cZDMcm42HELq3Jeorz/dMirwDMlCaBO0pgW6BMHOESAVF2DzJ9YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcRZKDuG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h1/PQLe+OhKiOS6wy6s6GB2P37M4p11CT40eT1LUzPkX/IMSqJT0Y/UkxpAdyjazEOLtVHx9MXc/r07/bln9TFR/UdGLNUOgkRh7ctz22bl2dIGVF3aNBm+Lkn6dRQSDPkwaDSS8MVoNPHF5BCL/Pob7cYiRJ2YgQZ8K+f3vo08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEF08RYQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcRZKDuG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18FE1F000E9;
-	Thu, 25 Jun 2026 13:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEF08RYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B711F000E9;
+	Thu, 25 Jun 2026 13:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392853;
-	bh=pGDwJPxSwroDM7bDi0TpYbE8aBILru/pAFnDNL+5ImE=;
+	s=korg; t=1782392856;
+	bh=kevlA4ojNMPXtdh7mUbAavg+/wDeMSGnxWIDZKV3XU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qcRZKDuGzm49SqKqBEgfWXkIhdPf2UgQqz4ehQY1c1PPpwpCmsCZ1ugBEIKQWD33e
-	 aS8KGUhI8+kpN59BcE6KvRJ1BwxR/C1zkyMgSx0kN2wGXcAGYGLNiTU26NoiLrnQD/
-	 tPZNETAtQfWx/O/RIjMIBgraUJUMQoQ/umMfqSFM=
+	b=SEF08RYQOxBTovGI1VxfQT+g0A2XNErBfjSXM2F1k/r/vWOdKg4pYFNihkZfFD8wT
+	 qAH78pXjptUUvIleCjNEFJB3MDUlRc5GoGQrn+1vTp46FWODyxojL/xB3HpfOXe6Wo
+	 gBmI0YoTLYWMeAvveRYGvIwtnNLPfOnXTU+iD8EA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
-Subject: [PATCH 6.18 29/60] regulator: core: fix locking in regulator_resolve_supply() error path
-Date: Thu, 25 Jun 2026 14:03:14 +0100
-Message-ID: <20260625125649.813544483@linuxfoundation.org>
+	Bernard Pidoux <bernard.f6bvp@gmail.com>
+Subject: [PATCH 6.18 20/60] rose: fix notifier unregistered too early in rose_exit()
+Date: Thu, 25 Jun 2026 14:03:05 +0100
+Message-ID: <20260625125648.497898989@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -45,70 +43,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit 497330b203d2c59c5ff3fa4c34d14494d7203bc3 upstream.
+commit f71a8a1edc14dba746edde38adddd654ba202b4d upstream.
 
-If late enabling of a supply regulator fails in
-regulator_resolve_supply(), the code currently triggers a lockdep
-warning:
+rose_exit() called unregister_netdevice_notifier() before the loop that
+calls unregister_netdev() on each ROSE virtual device.  As a result,
+the NETDEV_DOWN event fired by unregister_netdev() was never delivered
+to rose_device_event(), so rose_kill_by_device() never ran.
 
-    WARNING: drivers/regulator/core.c:2649 at _regulator_put+0x80/0xa0, CPU#6: kworker/u32:4/596
-    ...
-    Call trace:
-     _regulator_put+0x80/0xa0 (P)
-     regulator_resolve_supply+0x7cc/0xbe0
-     regulator_register_resolve_supply+0x28/0xb8
+Every socket whose rose->device pointed at a ROSE device therefore kept
+its netdev_tracker entry live until free_netdev() destroyed the
+ref_tracker_dir, at which point the kernel reported all of them as
+leaked references (165 entries in a typical FPAC setup).  Worse, those
+sockets retained stale device pointers and live timers that could fire
+into freed module text after module unload, causing a silent system
+freeze with no kernel panic logged.
 
-as the regulator_list_mutex must be held when calling _regulator_put().
+Fix by moving unregister_netdevice_notifier() to after the device-
+unregistration loop.  unregister_netdev() then delivers NETDEV_DOWN
+while the notifier is still registered, rose_kill_by_device() runs for
+each device, releases all netdev references held by open sockets, and
+calls rose_disconnect() which stops the per-socket timers.
 
-To solve this, simply switch to using regulator_put().
-
-While at it, we should also make sure that no concurrent access happens
-to our rdev while we clear out the supply pointer. Add appropriate
-locking to ensure that.
-
-While the code in question will be removed altogether in a follow-up
-commit, I believe it is still beneficial to have this corrected before
-removal for future reference.
-
-Fixes: 36a1f1b6ddc6 ("regulator: core: Fix memory leak in regulator_resolve_supply()")
-Fixes: 8e5356a73604 ("regulator: core: Clear the supply pointer if enabling fails")
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://patch.msgid.link/20260109-regulators-defer-v2-2-1a25dc968e60@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/core.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/rose/af_rose.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -2159,8 +2159,16 @@ static int regulator_resolve_supply(stru
- 	if (rdev->use_count) {
- 		ret = regulator_enable(rdev->supply);
- 		if (ret < 0) {
--			_regulator_put(rdev->supply);
-+			struct regulator *supply;
-+
-+			regulator_lock_two(rdev, rdev->supply->rdev, &ww_ctx);
-+
-+			supply = rdev->supply;
- 			rdev->supply = NULL;
-+
-+			regulator_unlock_two(rdev, supply->rdev, &ww_ctx);
-+
-+			regulator_put(supply);
- 			goto out;
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -1669,19 +1669,28 @@ static void __exit rose_exit(void)
+ #ifdef CONFIG_SYSCTL
+ 	rose_unregister_sysctl();
+ #endif
+-	unregister_netdevice_notifier(&rose_dev_notifier);
+-
+ 	sock_unregister(PF_ROSE);
+ 
+ 	for (i = 0; i < rose_ndevs; i++) {
+ 		struct net_device *dev = dev_rose[i];
+ 
+ 		if (dev) {
++			/* unregister_netdev() fires NETDEV_DOWN, which -- while the
++			 * notifier is still registered below -- invokes
++			 * rose_kill_by_device(dev).  That releases every socket's
++			 * netdev reference and disconnects all active circuits.
++			 * Unregistering the notifier before this loop was the
++			 * original bug: NETDEV_DOWN was never delivered, leaving
++			 * 165 netdev_tracker entries leaked and stale timers live.
++			 */
+ 			unregister_netdev(dev);
+ 			free_netdev(dev);
  		}
  	}
+ 
++	/* Now safe to remove the notifier -- all ROSE devices are gone. */
++	unregister_netdevice_notifier(&rose_dev_notifier);
++
+ 	kfree(dev_rose);
+ 	proto_unregister(&rose_proto);
+ }
 
 
