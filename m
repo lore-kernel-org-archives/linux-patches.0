@@ -1,58 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635EA2D0C79;
-	Thu, 25 Jun 2026 13:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9491F03DE;
+	Thu, 25 Jun 2026 13:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392887; cv=none; b=F3E7dZtONc+u2GNI7bxa3UdcogOCfOHA/0cei0x+m0JkuIewnDo2hmSZKZB4WzL38hi6hxU3BY8adJbVnAZaRSKCb8EX9F1vYtl9OI6uhcs/Px9Nt5OBtV1hti5RlPaejdkivTr2Iuqf9PlSqIgE7fX/DWKAtHq13dMF4pDiOPQ=
+	t=1782392890; cv=none; b=JqjDuVKXrXqXPNHnn4U7hf+SRBVhN/lRcNtw6t/e/AX2TZrRFCTduvxQB6QFy9Vy9VBNOWDjTbiCAcKFIwszOynbjjQgVr/lPj/aT2rG/Wfxq08RXcH013D920sXAdVSgZVcRHFEVpmJm2zxcuXTsMA+y6VBWpXdGOXiAATLqXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392887; c=relaxed/simple;
-	bh=Az7iPu07A880dD7U27e3Jm6JGY78tc65RIguqohTDxA=;
+	s=arc-20240116; t=1782392890; c=relaxed/simple;
+	bh=MIpQuIR5TV9Fb/2JJmSjGQTYOcRo5Hca87OXiB5sBhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ls99TgnhtT/9Etuu+zJOC0o50RtvF0HaRFim3aH1oFPOl2RCIJ4shFD3P5TDWAq5zf4A6pSQizUeRgnMWTdXGOqoCRY6EUiV4riB0S0iQcwzO3XXHB1C+A4O48GdFoMh2rBKNpwNtPZB6kwJLAoX5/cO7uYneS0f3JmIlePNV5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDstz5GZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TZQEd5llte0deyjaaV6GuQq8NRXoqOHfHQrflaQG7kfzj8Hyn/3uStSdTuKlx1DiNdoFCti8/9vXryhJwFrR9ehvGyqEwIwir760yiEiZI7vJx3sRbodmt+P4FLLCN/VFLWmc/6csHwnmQvWo3c7F9bQqSpmVEn+obHrBG9IcdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2wt0bXZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDstz5GZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F261F000E9;
-	Thu, 25 Jun 2026 13:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2wt0bXZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB56D1F000E9;
+	Thu, 25 Jun 2026 13:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392886;
-	bh=zCJTSZZVaJp69SWQ5fmXB2kwwK9SXW7VYD2itysyjss=;
+	s=korg; t=1782392889;
+	bh=xSXgS8I536bo1Y+B8PR5mqY6WL7k5kVK26medtb3YBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qDstz5GZlCPO1QvUCAnvzpdN0U7NpDG4ALX/aGZ3/D0EZi0qtVx5OmG/B0RUIYnTO
-	 WzsGt+DUmkmhDvWi+fBqsV8OLnQTHstSI6mk3dBdWBxw7GJdmA2U/vBUsq4cB7Wprv
-	 /4JCeYgxQVrE3YFtgbU5DymU7PkuDI7mOUrrfaVo=
+	b=Y2wt0bXZr7Av8+fKsbyKsM2LRWvH0VcbWMB8taO0Dud2ojz6dDDs11RDAC/5yEkOY
+	 xtLQAHP56fKKuf79PhlYqMNGB2lAQY5EtbIGa8WGUEEFn+GmquTwIt/UOZ0CqrSt/n
+	 GKq8eg/85w4Klc95KM0qjdbEnDhIDKViGIDpyfP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lorenzo Stoakes <ljs@kernel.org>,
 	Vlastimil Babka <vbabka@suse.cz>,
-	Andrei Vagin <avagin@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
 	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Andrey Vagin <avagin@gmail.com>,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
 	Jann Horn <jannh@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lance Yang <lance.yang@linux.dev>,
 	Liam Howlett <liam.howlett@oracle.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
-	Nico Pache <npache@redhat.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
 	Suren Baghdasaryan <surenb@google.com>,
-	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Ahmed Elaidy <elaidya225@gmail.com>
-Subject: [PATCH 6.18 39/60] mm: set the VM_MAYBE_GUARD flag on guard region install
-Date: Thu, 25 Jun 2026 14:03:24 +0100
-Message-ID: <20260625125651.382215850@linuxfoundation.org>
+Subject: [PATCH 6.18 40/60] mm: propagate VM_SOFTDIRTY on merge
+Date: Thu, 25 Jun 2026 14:03:25 +0100
+Message-ID: <20260625125651.549558906@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -73,245 +63,143 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit 49e14dabed7a294427588d4b315f57fbfcab9990 upstream.
+commit 6707915e030a3258868355f989b80140c1a45bbe upstream.
 
-Now we have established the VM_MAYBE_GUARD flag and added the capacity to
-set it atomically, do so upon MADV_GUARD_INSTALL.
+Patch series "make VM_SOFTDIRTY a sticky VMA flag", v2.
 
-The places where this flag is used currently and matter are:
+Currently we set VM_SOFTDIRTY when a new mapping is set up (whether by
+establishing a new VMA, or via merge) as implemented in __mmap_complete()
+and do_brk_flags().
 
-* VMA merge - performed under mmap/VMA write lock, therefore excluding
-  racing writes.
+However, when performing a merge of existing mappings such as when
+performing mprotect(), we may lose the VM_SOFTDIRTY flag.
 
-* /proc/$pid/smaps - can race the write, however this isn't meaningful
-  as the flag write is performed at the point of the guard region being
-  established, and thus an smaps reader can't reasonably expect to avoid
-  races.  Due to atomicity, a reader will observe either the flag being
-  set or not.  Therefore consistency will be maintained.
+Now we have the concept of making VMA flags 'sticky', that is that they
+both don't prevent merge and, importantly, are propagated to merged VMAs,
+this seems a sensible alternative to the existing special-casing of
+VM_SOFTDIRTY.
 
-In all other cases the flag being set is irrelevant and atomicity
-guarantees other flags will be read correctly.
+We additionally add a self-test that demonstrates that this logic behaves
+as expected.
 
-Note that non-atomic updates of unrelated flags do not cause an issue with
-this flag being set atomically, as writes of other flags are performed
-under mmap/VMA write lock, and these atomic writes are performed under
-mmap/VMA read lock, which excludes the write, avoiding RMW races.
+This patch (of 2):
 
-Note that we do not encounter issues with KCSAN by adjusting this flag
-atomically, as we are only updating a single bit in the flag bitmap and
-therefore we do not need to annotate these changes.
+Currently we set VM_SOFTDIRTY when a new mapping is set up (whether by
+establishing a new VMA, or via merge) as implemented in __mmap_complete()
+and do_brk_flags().
 
-We intentionally set this flag in advance of actually updating the page
-tables, to ensure that any racing atomic read of this flag will only
-return false prior to page tables being updated, to allow for
-serialisation via page table locks.
+However, when performing a merge of existing mappings such as when
+performing mprotect(), we may lose the VM_SOFTDIRTY flag.
 
-Note that we set vma->anon_vma for anonymous mappings.  This is because
-the expectation for anonymous mappings is that an anon_vma is established
-should they possess any page table mappings.  This is also consistent with
-what we were doing prior to this patch (unconditionally setting anon_vma
-on guard region installation).
+This is because currently we simply ignore VM_SOFTDIRTY for the purposes
+of merge, so one VMA may possess the flag and another not, and whichever
+happens to be the target VMA will be the one upon which the merge is
+performed which may or may not have VM_SOFTDIRTY set.
 
-We also need to update retract_page_tables() to ensure that madvise(...,
-MADV_COLLAPSE) doesn't incorrectly collapse file-backed ranges contain
-guard regions.
+Now we have the concept of 'sticky' VMA flags, let's make VM_SOFTDIRTY one
+which solves this issue.
 
-This was previously guarded by anon_vma being set to catch MAP_PRIVATE
-cases, but the introduction of VM_MAYBE_GUARD necessitates that we check
-this flag instead.
+Additionally update VMA userland tests to propagate changes.
 
-We utilise vma_flag_test_atomic() to do so - we first perform an
-optimistic check, then after the PTE page table lock is held, we can check
-again safely, as upon guard marker install the flag is set atomically
-prior to the page table lock being taken to actually apply it.
-
-So if the initial check fails either:
-
-* Page table retraction acquires page table lock prior to VM_MAYBE_GUARD
-  being set - guard marker installation will be blocked until page table
-  retraction is complete.
-
-OR:
-
-* Guard marker installation acquires page table lock after setting
-  VM_MAYBE_GUARD, which raced and didn't pick this up in the initial
-  optimistic check, blocking page table retraction until the guard regions
-  are installed - the second VM_MAYBE_GUARD check will prevent page table
-  retraction.
-
-Either way we're safe.
-
-We refactor the retraction checks into a single
-file_backed_vma_is_retractable(), there doesn't seem to be any reason that
-the checks were separated as before.
-
-Note that VM_MAYBE_GUARD being set atomically remains correct as
-vma_needs_copy() is invoked with the mmap and VMA write locks held,
-excluding any race with madvise_guard_install().
-
-Link: https://lkml.kernel.org/r/e9e9ce95b6ac17497de7f60fc110c7dd9e489e8d.1763460113.git.ljs@kernel.org
+[akpm@linux-foundation.org: update comments, per Lorenzo]
+  Link: https://lkml.kernel.org/r/0019e0b8-ee1e-4359-b5ee-94225cbe5588@lucifer.local
+Link: https://lkml.kernel.org/r/cover.1763399675.git.ljs@kernel.org
+Link: https://lkml.kernel.org/r/955478b5170715c895d1ef3b7f68e0cd77f76868.1763399675.git.ljs@kernel.org
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+Suggested-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Andrey Vagin <avagin@gmail.com>
 Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Andrei Vagin <avagin@gmail.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand (Red Hat) <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
+Acked-by: Cyrill Gorcunov <gorcunov@gmail.com>
 Cc: Jann Horn <jannh@google.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Lance Yang <lance.yang@linux.dev>
 Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Michal Hocko <mhocko@suse.com>
 Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Ahmed Elaidy <elaidya225@gmail.com>
+Fixes: 34228d473efe ("mm: ignore VM_SOFTDIRTY on VMA merging")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c |   71 +++++++++++++++++++++++++++++++++++++-------------------
- mm/madvise.c    |   22 +++++++++++------
- 2 files changed, 61 insertions(+), 32 deletions(-)
+ include/linux/mm.h               |   15 +++++++--------
+ tools/testing/vma/vma_internal.h |   18 ++++++------------
+ 2 files changed, 13 insertions(+), 20 deletions(-)
 
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1715,6 +1715,43 @@ drop_folio:
- 	return result;
- }
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -515,28 +515,27 @@ extern unsigned int kobjsize(const void
+  * possesses it but the other does not, the merged VMA should nonetheless have
+  * applied to it:
+  *
++ *   VM_SOFTDIRTY - if a VMA is marked soft-dirty, that is has not had its
++ *                  references cleared via /proc/$pid/clear_refs, any merged VMA
++ *                  should be considered soft-dirty also as it operates at a VMA
++ *                  granularity.
++ *
+  * VM_MAYBE_GUARD - If a VMA may have guard regions in place it implies that
+  *                  mapped page tables may contain metadata not described by the
+  *                  VMA and thus any merged VMA may also contain this metadata,
+  *                  and thus we must make this flag sticky.
+  */
+-#define VM_STICKY VM_MAYBE_GUARD
++#define VM_STICKY (VM_SOFTDIRTY | VM_MAYBE_GUARD)
  
-+/* Can we retract page tables for this file-backed VMA? */
-+static bool file_backed_vma_is_retractable(struct vm_area_struct *vma)
-+{
-+	/*
-+	 * Check vma->anon_vma to exclude MAP_PRIVATE mappings that
-+	 * got written to. These VMAs are likely not worth removing
-+	 * page tables from, as PMD-mapping is likely to be split later.
-+	 */
-+	if (READ_ONCE(vma->anon_vma))
-+		return false;
-+
-+	/*
-+	 * When a vma is registered with uffd-wp, we cannot recycle
-+	 * the page table because there may be pte markers installed.
-+	 * Other vmas can still have the same file mapped hugely, but
-+	 * skip this one: it will always be mapped in small page size
-+	 * for uffd-wp registered ranges.
-+	 */
-+	if (userfaultfd_wp(vma))
-+		return false;
-+
-+	/*
-+	 * If the VMA contains guard regions then we can't collapse it.
-+	 *
-+	 * This is set atomically on guard marker installation under mmap/VMA
-+	 * read lock, and here we may not hold any VMA or mmap lock at all.
-+	 *
-+	 * This is therefore serialised on the PTE page table lock, which is
-+	 * obtained on guard region installation after the flag is set, so this
-+	 * check being performed under this lock excludes races.
-+	 */
-+	if (vma_flag_test_atomic(vma, VM_MAYBE_GUARD_BIT))
-+		return false;
-+
-+	return true;
-+}
-+
- static void retract_page_tables(struct address_space *mapping, pgoff_t pgoff)
- {
- 	struct vm_area_struct *vma;
-@@ -1729,14 +1766,6 @@ static void retract_page_tables(struct a
- 		spinlock_t *ptl;
- 		bool success = false;
+ /*
+  * VMA flags we ignore for the purposes of merge, i.e. one VMA possessing one
+  * of these flags and the other not does not preclude a merge.
+  *
+- * VM_SOFTDIRTY - Should not prevent from VMA merging, if we match the flags but
+- *                dirty bit -- the caller should mark merged VMA as dirty. If
+- *                dirty bit won't be excluded from comparison, we increase
+- *                pressure on the memory system forcing the kernel to generate
+- *                new VMAs when old one could be extended instead.
+- *
+  *    VM_STICKY - When merging VMAs, VMA flags must match, unless they are
+  *                'sticky'. If any sticky flags exist in either VMA, we simply
+  *                set all of them on the merged VMA.
+  */
+-#define VM_IGNORE_MERGE (VM_SOFTDIRTY | VM_STICKY)
++#define VM_IGNORE_MERGE VM_STICKY
  
--		/*
--		 * Check vma->anon_vma to exclude MAP_PRIVATE mappings that
--		 * got written to. These VMAs are likely not worth removing
--		 * page tables from, as PMD-mapping is likely to be split later.
--		 */
--		if (READ_ONCE(vma->anon_vma))
--			continue;
--
- 		addr = vma->vm_start + ((pgoff - vma->vm_pgoff) << PAGE_SHIFT);
- 		if (addr & ~HPAGE_PMD_MASK ||
- 		    vma->vm_end < addr + HPAGE_PMD_SIZE)
-@@ -1748,14 +1777,8 @@ static void retract_page_tables(struct a
+ /*
+  * Flags which should result in page tables being copied on fork. These are
+--- a/tools/testing/vma/vma_internal.h
++++ b/tools/testing/vma/vma_internal.h
+@@ -122,28 +122,22 @@ extern unsigned long dac_mmap_min_addr;
+  * possesses it but the other does not, the merged VMA should nonetheless have
+  * applied to it:
+  *
+- * VM_MAYBE_GUARD - If a VMA may have guard regions in place it implies that
+- *                  mapped page tables may contain metadata not described by the
+- *                  VMA and thus any merged VMA may also contain this metadata,
+- *                  and thus we must make this flag sticky.
++ *   VM_SOFTDIRTY - if a VMA is marked soft-dirty, that is has not had its
++ *                  references cleared via /proc/$pid/clear_refs, any merged VMA
++ *                  should be considered soft-dirty also as it operates at a VMA
++ *                  granularity.
+  */
+-#define VM_STICKY VM_MAYBE_GUARD
++#define VM_STICKY (VM_SOFTDIRTY | VM_MAYBE_GUARD)
  
- 		if (hpage_collapse_test_exit(mm))
- 			continue;
--		/*
--		 * When a vma is registered with uffd-wp, we cannot recycle
--		 * the page table because there may be pte markers installed.
--		 * Other vmas can still have the same file mapped hugely, but
--		 * skip this one: it will always be mapped in small page size
--		 * for uffd-wp registered ranges.
--		 */
--		if (userfaultfd_wp(vma))
-+
-+		if (!file_backed_vma_is_retractable(vma))
- 			continue;
+ /*
+  * VMA flags we ignore for the purposes of merge, i.e. one VMA possessing one
+  * of these flags and the other not does not preclude a merge.
+  *
+- * VM_SOFTDIRTY - Should not prevent from VMA merging, if we match the flags but
+- *                dirty bit -- the caller should mark merged VMA as dirty. If
+- *                dirty bit won't be excluded from comparison, we increase
+- *                pressure on the memory system forcing the kernel to generate
+- *                new VMAs when old one could be extended instead.
+- *
+  *    VM_STICKY - When merging VMAs, VMA flags must match, unless they are
+  *                'sticky'. If any sticky flags exist in either VMA, we simply
+  *                set all of them on the merged VMA.
+  */
+-#define VM_IGNORE_MERGE (VM_SOFTDIRTY | VM_STICKY)
++#define VM_IGNORE_MERGE VM_STICKY
  
- 		/* PTEs were notified when unmapped; but now for the PMD? */
-@@ -1782,15 +1805,15 @@ static void retract_page_tables(struct a
- 			spin_lock_nested(ptl, SINGLE_DEPTH_NESTING);
- 
- 		/*
--		 * Huge page lock is still held, so normally the page table
--		 * must remain empty; and we have already skipped anon_vma
--		 * and userfaultfd_wp() vmas.  But since the mmap_lock is not
--		 * held, it is still possible for a racing userfaultfd_ioctl()
--		 * to have inserted ptes or markers.  Now that we hold ptlock,
--		 * repeating the anon_vma check protects from one category,
--		 * and repeating the userfaultfd_wp() check from another.
-+		 * Huge page lock is still held, so normally the page table must
-+		 * remain empty; and we have already skipped anon_vma and
-+		 * userfaultfd_wp() vmas.  But since the mmap_lock is not held,
-+		 * it is still possible for a racing userfaultfd_ioctl() or
-+		 * madvise() to have inserted ptes or markers.  Now that we hold
-+		 * ptlock, repeating the retractable checks protects us from
-+		 * races against the prior checks.
- 		 */
--		if (likely(!vma->anon_vma && !userfaultfd_wp(vma))) {
-+		if (likely(file_backed_vma_is_retractable(vma))) {
- 			pgt_pmd = pmdp_collapse_flush(vma, addr, pmd);
- 			pmdp_get_lockless_sync();
- 			success = true;
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -1141,15 +1141,21 @@ static long madvise_guard_install(struct
- 		return -EINVAL;
- 
- 	/*
--	 * If we install guard markers, then the range is no longer
--	 * empty from a page table perspective and therefore it's
--	 * appropriate to have an anon_vma.
--	 *
--	 * This ensures that on fork, we copy page tables correctly.
-+	 * Set atomically under read lock. All pertinent readers will need to
-+	 * acquire an mmap/VMA write lock to read it. All remaining readers may
-+	 * or may not see the flag set, but we don't care.
- 	 */
--	err = anon_vma_prepare(vma);
--	if (err)
--		return err;
-+	vma_flag_set_atomic(vma, VM_MAYBE_GUARD_BIT);
-+
-+	/*
-+	 * If anonymous and we are establishing page tables the VMA ought to
-+	 * have an anon_vma associated with it.
-+	 */
-+	if (vma_is_anonymous(vma)) {
-+		err = anon_vma_prepare(vma);
-+		if (err)
-+			return err;
-+	}
- 
- 	/*
- 	 * Optimistically try to install the guard marker pages first. If any
+ /*
+  * Flags which should result in page tables being copied on fork. These are
 
 
