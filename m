@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D291E633C;
-	Thu, 25 Jun 2026 13:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9647F2571B8;
+	Thu, 25 Jun 2026 13:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392837; cv=none; b=qk+BtN1dO1kX8C7xPFqV6Ckz3WS1shPujSxcEvyveX/AgT0Y4kFPJm7PEAYnHSfsaTAOiHL8zu9BbO0GlKSBk3TUtGEQFIVQjXr+bA2BuWxaCJHzaOODGV54W6Sn45nYgueH57F5v62s3KICuLFiN7EPmUICvfpT7lxIqRzgFjs=
+	t=1782392840; cv=none; b=SIAysc5tbjNmGc4o8ex2rbC56bCpCetdg+bUMX0dNkcYaxF1pOnL1cgtOTFQzYGd3z9DtKeFhEl028Dbu6/b7T1Li74hCs24RKrTwKbWmKg/g3mKLd+fpcSlN1kJlE+yr8hIBmfcZyUScEBppfNiUsrqZ/orgqTZBy/y4RO63J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392837; c=relaxed/simple;
-	bh=vZ7J8JFv7l0isIyDRTPA64pHmmipIK7lJdpePB4Y8F8=;
+	s=arc-20240116; t=1782392840; c=relaxed/simple;
+	bh=VD4IAhww2xrKGfVYVwjLYw2xLrHWBgD3b4MiKyn6uCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DiQFPjqWnriQWO6r5N7U8sNiV4RPChx6mw/EKzRUOqKE4TKxzHkoQlpmlmSL6c8UMZe5jIhEWX7Dk3FpFxIgVShpfHkNwezsO7fIFVl0xXM02UtFoYFDYOPFZC4VfE2sA5moCYxxxlboiD7iU0hkuwyE6+gXNswC0NqLKwSoFec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6yb9rfW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E0d5gUqNtKJLhx2OF/GlgY8SBPRoTWweI2N2pWl53LWE5wWVyJ6PQE2ocoj7+NLG9IjDSqBWqTrrxcpbccFunzfl0Mp+SovxTI2IhGEq2+cBe/P+IkeTF2qmJN3WoqVmRVPO2LQvgqUyqhjwWThAqFJ6I1fpY5MsRCcY5RTlDJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQSpSozg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6yb9rfW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA311F000E9;
-	Thu, 25 Jun 2026 13:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQSpSozg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CD51F000E9;
+	Thu, 25 Jun 2026 13:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392835;
-	bh=kMLUHQKCS41ug4zbI9wUjjcvJHC3AXo/3K1mc2ctTho=;
+	s=korg; t=1782392839;
+	bh=M+2rHDchSVZohPeAws6sY9H+u5KR1L1Uct5PcqOj2Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T6yb9rfWGi+FpwIRw64nY1cwtESWed1iyH2xiRnlitYk45NZO08YbtjXoqh6OKip4
-	 7wvDL2Xv4fkAQEJ3/drJuR4FQ9wMhaoQBU57y/9a+Ob497yBVAG/Tr+RvVCOwdL12J
-	 F8K1nwLHQukvtWmnCTJqKasVPZ1pb7TlS1YX+cE8=
+	b=mQSpSozgymM3pZU1bK8iThNZERrzQ6IUPM+2EgBu2PNkFEVPmeH2AJm4HXH2p1lSM
+	 IC2eLmgNzgnKIDqpqDTFrS51Bc3Mz3Xjz9W2guDHVKcf5xQO/aN9yZH18NNKlo4fDO
+	 IXA/SrT41q9XtGKY7DT+iPrzCTmTqYq/bZqrnBfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 6.18 24/60] rose: release netdev ref and destroy orphaned incoming sockets
-Date: Thu, 25 Jun 2026 14:03:09 +0100
-Message-ID: <20260625125649.103756507@linuxfoundation.org>
+Subject: [PATCH 6.18 25/60] rose: drop CALL_REQUEST in loopback timer when device is not running
+Date: Thu, 25 Jun 2026 14:03:10 +0100
+Message-ID: <20260625125649.235197933@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -51,79 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit df12be096302d2c947388acc25764456c7f18cc1 upstream.
+commit cf5567a2652e44866eae8987dff4c1ea507680df upstream.
 
-Two related cleanup gaps left the module unremovable after a loopback
-session:
+When ax25stop brings down rose0 while the loopback timer has pending
+CALL_REQUEST frames, rose_loopback_timer() calls rose_dev_get() and
+finds the device still registered (unregister_netdevice waits for
+refs to drop), then calls rose_rx_call_request() which takes a
+netdev_hold() for the new socket.
 
-1. rose_destroy_socket() did not release the device reference.  When
-   an unaccepted incoming socket (created by rose_rx_call_request()) is
-   destroyed via rose_heartbeat_expiry(), it is removed from rose_list
-   before rose_kill_by_device() can find it, so the netdev_hold() taken
-   in rose_rx_call_request() was never matched by netdev_put().  Add the
-   release at the top of rose_destroy_socket() guarded by a NULL check
-   so that rose_release() and rose_kill_by_device(), which already call
-   netdev_put() and set device = NULL, are not affected.
+But NETDEV_DOWN fires only once: rose_kill_by_device() already ran
+before this timer tick, so the new socket is never cleaned up.  The
+stuck reference prevents unregister_netdevice from completing, and the
+orphan socket's timers eventually fire on freed memory (KASAN
+slab-use-after-free in __run_timers).
 
-2. rose_heartbeat_expiry() STATE_0 cleanup required TCP_LISTEN in
-   addition to SOCK_DEAD.  Unaccepted incoming sockets are
-   TCP_ESTABLISHED, so the condition was never true and those sockets
-   lingered forever, holding the module use count above zero and
-   blocking rmmod.  Drop the TCP_LISTEN restriction: any STATE_0 +
-   SOCK_DEAD socket is orphaned and should be destroyed.
+The kernel clears IFF_UP via dev_close() before sending NETDEV_DOWN,
+so checking netif_running() after rose_dev_get() is sufficient: if the
+device is no longer running, the CALL_REQUEST is silently dropped and
+no socket is created.  This closes the race without touching the
+module-exit path (which already stops the timer via loopback_stopping).
 
-Together with the earlier rose_make_new() double-hold fix these three
-patches allow clean rmmod after loopback sessions.
+Tested: unregister_netdevice completes immediately after ax25stop with
+active loopback connections; no ref_tracker warnings, no KASAN.
 
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/af_rose.c    |    9 +++++++++
- net/rose/rose_timer.c |    9 +++++----
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ net/rose/rose_loopback.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -363,6 +363,7 @@ static void rose_destroy_timer(struct ti
-  */
- void rose_destroy_socket(struct sock *sk)
- {
-+	struct rose_sock *rose = rose_sk(sk);
- 	struct sk_buff *skb;
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -118,6 +118,16 @@ static void rose_loopback_timer(struct t
+ 				kfree_skb(skb);
+ 				continue;
+ 			}
++			/* rose_kill_by_device() runs on NETDEV_DOWN (IFF_UP cleared)
++			 * before the device is unregistered.  If we create a new
++			 * socket here after that cleanup, the ref never gets released
++			 * because NETDEV_DOWN fires only once.  Drop the call instead.
++			 */
++			if (!netif_running(dev)) {
++				dev_put(dev);
++				kfree_skb(skb);
++				continue;
++			}
  
- 	rose_remove_socket(sk);
-@@ -370,6 +371,14 @@ void rose_destroy_socket(struct sock *sk
- 	rose_stop_idletimer(sk);
- 	rose_stop_timer(sk);
- 
-+	/* Drop any device reference not already released by rose_kill_by_device()
-+	 * or rose_release() -- e.g. incoming sockets that were never accepted.
-+	 */
-+	if (rose->device) {
-+		netdev_put(rose->device, &rose->dev_tracker);
-+		rose->device = NULL;
-+	}
-+
- 	rose_clear_queues(sk);		/* Flush the queues */
- 
- 	while ((skb = skb_dequeue(&sk->sk_receive_queue)) != NULL) {
---- a/net/rose/rose_timer.c
-+++ b/net/rose/rose_timer.c
-@@ -128,10 +128,11 @@ static void rose_heartbeat_expiry(struct
- 	}
- 	switch (rose->state) {
- 	case ROSE_STATE_0:
--		/* Magic here: If we listen() and a new link dies before it
--		   is accepted() it isn't 'dead' so doesn't get removed. */
--		if (sock_flag(sk, SOCK_DESTROY) ||
--		    (sk->sk_state == TCP_LISTEN && sock_flag(sk, SOCK_DEAD))) {
-+		/* Destroy any orphaned STATE_0 socket: either explicitly
-+		 * flagged SOCK_DESTROY, or SOCK_DEAD (covers both unaccepted
-+		 * incoming connections and listening sockets whose link died).
-+		 */
-+		if (sock_flag(sk, SOCK_DESTROY) || sock_flag(sk, SOCK_DEAD)) {
- 			bh_unlock_sock(sk);
- 			rose_destroy_socket(sk);
- 			sock_put(sk);
+ 			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
+ 				kfree_skb(skb);
 
 
