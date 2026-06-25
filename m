@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152CA2E040D;
-	Thu, 25 Jun 2026 13:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E852E7374;
+	Thu, 25 Jun 2026 13:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393128; cv=none; b=KOZUODhwJ8ymeKPNCrqUL0yCwpwrYuVSYZdGxcNY69yEok+h/B1EwuTOyO6VG9B9bLP1OqyDZQG3vTp/3cUszLinCOlSIxmTYCJvbU0hyrvK653Iitb2YxCSgevyx9VJeVgYlULIeR12/jURJQ1L5tV+QYtfSPWcjg3y1Gwtu90=
+	t=1782393131; cv=none; b=jsKPHqwOtlxYGfmrYehbf9vQsgZWzyrCRVprJjJjjQkfqAKfnlXqhXNd2vx9kKo5f8DImFsMj7Cz9dA9mFKWioxlCnWqCx+jihgCwUot8t6BMZtpbSJ/lc5NuEOB2iyX+ZLdxEAOSzjgB5SLFF4J5TSNvfGSUCR2+6Cn6xFkXNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393128; c=relaxed/simple;
-	bh=STjVY59kaZ92By61VpR6H2Tr4VcFW7ZT0bMZ3DVpGD8=;
+	s=arc-20240116; t=1782393131; c=relaxed/simple;
+	bh=TWp+mgwzcDPVlGlBdP4CxEZF59slptHnq0+XaDhAmzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F34Zw+S3EyU74mzcs24C1aJuQ8CCBXglJtIfL/ErGaLfXk9ogxSU4bgQLZHnxjBcr3GAaw7+B8H5Y9Yw6nTq21OZRibMiWhlA/FnlyM4WsJ0jc354f7yVNOOf3PMlgaEkBNRnykgJac7UZ7Ez76eECqlff/18vbSNzlSryj+Seg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjwq7p2o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HwoJIOy7zep+tyP7mADecClES33JHHgSv6JavNnlfywCHE1vhrA4EvdfKaCvgf2ZMitMaPf9GfKZX5HuHktl6V2MOwJXVFYWRqoR9VLsWEawU63e6YuZQ6pyD1FMZSBjBl7trNcrTknCrDjF3Vor0AsRBnjz/bc2MFNm58G6Z3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0rB2n7Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjwq7p2o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5171F000E9;
-	Thu, 25 Jun 2026 13:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0rB2n7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B301F000E9;
+	Thu, 25 Jun 2026 13:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393127;
-	bh=hb4DWf+fRFxnJor3r9V9B4H9TfFTsnARdV9qbOIylKM=;
+	s=korg; t=1782393130;
+	bh=Kv8C/+GWlW1U7A/SjZfD4zBbikncud+1zV7bKDuLHoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pjwq7p2o4Bwj+AjxToU3AcydvYVUlLZ3Fx1JFw4JdPQVBjp2LCG8uCOT6pUJJzPS4
-	 pt70qcArUKHTlRs1ShC6bJfoGSQ9zjpW+ZlSavsyKofOLspgL0rXF9BQCyNe8I5aZI
-	 pI43ptkFAb76IaYu8m2ptAoaQNrpUA7TllwqS89o=
+	b=q0rB2n7Y8hggE5xdXmDO1aE0mTYr464Tbr5ZA6g1d+QrR8rNsujrGkBN/wwIAOP6V
+	 l/hQaYMaBHfOLDwN+rwWYXyrzWT2H4nu/wC1yZeCzhgEKIclfI/4QXo57/ouv7YHhS
+	 JCPUF0nMZlfYWf1h1mBg3F1SuJjLyKTPkgBdEOB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 7.1 04/21] agp/amd64: Fix broken error propagation in agp_amd64_probe()
-Date: Thu, 25 Jun 2026 14:03:56 +0100
-Message-ID: <20260625125613.826123670@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sam Daly <sam@samdaly.ie>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.1 05/21] iio: light: veml6075: add bounds check to veml6075_it_ms index
+Date: Thu, 25 Jun 2026 14:03:57 +0100
+Message-ID: <20260625125613.974922260@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125613.243729608@linuxfoundation.org>
 References: <20260625125613.243729608@linuxfoundation.org>
@@ -50,52 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Sam Daly <sam@samdaly.ie>
 
-commit b08472db93b1ccff84a7adec5779d47f0e9d3a30 upstream.
+commit 307dc4240bd41852d9e0912921e298160db1c109 upstream.
 
-A NULL pointer dereference was observed in the AMD64 AGP driver when
-running in a virtualized environment (e.g. qemu/kvm) without a physical
-AMD northbridge. The crash occurs in amd64_fetch_size() when attempting
-to dereference the pointer returned by node_to_amd_nb(0).
+veml6075_it_ms has 5 elements but VEML6075_CONF_IT can yield values 0-7.
+If it returns a value >= 5, this causes an out-of-bounds array access.
+Add a bounds check and return -EINVAL if the index is out of range.
 
-The root cause of this crash is broken error propagation in
-agp_amd64_probe(): When no AMD northbridges are found, cache_nbs()
-correctly returns -ENODEV. However, the probe function erroneously
-checks the return value against exactly -1, rather than < 0.
+The problem values are reserved so should never be read from the
+register. Hence this is hardening against fault device, missprogramming
+or bus corruption.
 
-As a result, the hardware absence error is masked, allowing the driver
-to improperly proceed with initialization. It eventually calls
-agp_add_bridge(), which invokes amd64_fetch_size(). Since the hardware
-does not exist, node_to_amd_nb(0) returns NULL, leading to a General
-Protection Fault (GPF) when accessing its ->misc member.
-
-Fix the issue by correcting the error check in agp_amd64_probe() to
-abort properly when cache_nbs() returns any negative error code. This
-prevents the driver from erroneously proceeding without hardware, thereby
-avoiding the subsequent NULL pointer dereference at its source.
-
-Fixes: a32073bffc65 ("[PATCH] x86_64: Clean and enhance up K8 northbridge access code")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v2.6.18+
-Link: https://patch.msgid.link/20260504074823.99377-1-w15303746062@163.com
+Assisted-by: gkh_clanker_2000
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sam Daly <sam@samdaly.ie>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/agp/amd64-agp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/veml6075.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/char/agp/amd64-agp.c
-+++ b/drivers/char/agp/amd64-agp.c
-@@ -546,7 +546,7 @@ static int agp_amd64_probe(struct pci_de
- 	/* Fill in the mode register */
- 	pci_read_config_dword(pdev, bridge->capndx+PCI_AGP_STATUS, &bridge->mode);
+--- a/drivers/iio/light/veml6075.c
++++ b/drivers/iio/light/veml6075.c
+@@ -100,7 +100,7 @@ static const struct iio_chan_spec veml60
  
--	if (cache_nbs(pdev, cap_ptr) == -1) {
-+	if (cache_nbs(pdev, cap_ptr) < 0) {
- 		agp_put_bridge(bridge);
- 		return -ENODEV;
- 	}
+ static int veml6075_request_measurement(struct veml6075_data *data)
+ {
+-	int ret, conf, int_time;
++	int ret, conf, int_time, int_index;
+ 
+ 	ret = regmap_read(data->regmap, VEML6075_CMD_CONF, &conf);
+ 	if (ret < 0)
+@@ -117,7 +117,11 @@ static int veml6075_request_measurement(
+ 	 * time for all possible configurations. Using a 1.50 factor simplifies
+ 	 * operations and ensures reliability under all circumstances.
+ 	 */
+-	int_time = veml6075_it_ms[FIELD_GET(VEML6075_CONF_IT, conf)];
++	int_index = FIELD_GET(VEML6075_CONF_IT, conf);
++	if (int_index >= ARRAY_SIZE(veml6075_it_ms))
++		return -EINVAL;
++
++	int_time = veml6075_it_ms[int_index];
+ 	msleep(int_time + (int_time / 2));
+ 
+ 	/* shutdown again, data registers are still accessible */
 
 
