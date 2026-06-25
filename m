@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4899C29B77C;
-	Thu, 25 Jun 2026 13:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660F91C695;
+	Thu, 25 Jun 2026 13:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392997; cv=none; b=df2SE8wWkZbn+IYPqLMffb9uC4YJBgb8a5wqxzroKqZ6ZFAGChA8CSJFr6dPtSrE5B+eDljO0iGSAl7YxN/1LLaKsm41Qxubrq9O99ctEpOZpDnSL9conEDrkev/+xmIF823pNpcpsnukBHbJJEd/fXackNkesHfDnoJx08x7fs=
+	t=1782392999; cv=none; b=aXeB5RJSXuK1JSAKxeGOC7sLuwHBNFbpr1rI9NRv1Cyv9NzuBBVsN0myK2WtysFMvn3xUYm16l1Y7g6cCYdN662R58ObaseZ6+0nMDgQMBkG+iRnPjrbzMuaM1eg0quO/oIxusisjREe7WfvTZ6sRANpCOKwI4Edymf2zilaTMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392997; c=relaxed/simple;
-	bh=J56y6Yx7/apRcpNkAfWW8CAbpMToIBpQZmntOTkreFs=;
+	s=arc-20240116; t=1782392999; c=relaxed/simple;
+	bh=y9OdxdnNpPStPhXTJAioiywCT0/R8QvBqRfd0T6h9V4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pkil7C/BY4cyVsNIbVDlLIlVYEh5ghyEjXMBnjIog3lJDor/KGVR88KlvYnBW5p1GQ8e2PCXDClEnsqAGJndTg7u1eFkWl0SKa8R+yEgQglYQEcgeaPebwwmHAPXGvnOe1PqSbFGvFmVJhm+/7dPuvk6B4WS4jTZD+KB2jraL+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DECfiP+N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d+B/e7Cjw0h+XfgPxnVnQlTv0p8lmUyZtqNpxrXVNMifB06a0ZDxk2dlswxbRFaeMMlqk61l+eFIXMP9XI7TMl9nq8D5tIp2pVklwjwSkSr1knCfKdNvUmhiJQx9c/mpVNOBJKpIrCzGACvJIoGCgy+6/X3DmjXUyMS+1WfwjYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sf3FjBIc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DECfiP+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B5A1F00A3A;
-	Thu, 25 Jun 2026 13:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sf3FjBIc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A347E1F000E9;
+	Thu, 25 Jun 2026 13:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392995;
-	bh=xKAo6g9TtzhO1KaH7ebpuf1vHLWxyQQfevggr+U9Rc4=;
+	s=korg; t=1782392998;
+	bh=WtW9yONoP+WxBKnS3IIFo7sEO0hqwrpGZLsJi6TTbi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DECfiP+NXZLpoNsl2eGgmJj7p4IcDBm1P9D+87SGvGFF8Wsr2fgsz9mZxUGxhwsLk
-	 nsx28BnjSq4WOsJwQJV6R0frTUTIebYhDMniBr2P7UVDXd9QDfs/HHo0SAtOoebGoo
-	 x52XvMuOvMDANd5NDHxC+b+dB9s09MqnRHMq+rps=
+	b=sf3FjBIc3wILkfRkj4fyR7ZA1VB21+bps3IMZb6XvEywLDxJs87V6j4NW0j/OKWja
+	 EjdMWcC+pU0mlGtLRIDF4hZjjpcWDRKKm7E3zb3KcAMSzNraKZom1i8l1s+/2k2H9V
+	 ww02u6GxPkoIMQyevkMIbm36ErCj8rgtJ6QiPQc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Alexandr Alexandrov <alexandr.alexandrov@oracle.com>,
-	Yang Erkun <yangerkun@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.0 10/49] Revert "NFSD: Defer sub-object cleanup in export put callbacks"
-Date: Thu, 25 Jun 2026 14:03:22 +0100
-Message-ID: <20260625125638.950980248@linuxfoundation.org>
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.0 01/49] io_uring/net: Avoid msghdr on op_connect/op_bind async data
+Date: Thu, 25 Jun 2026 14:03:13 +0100
+Message-ID: <20260625125637.749334717@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -52,245 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Gabriel Krisman Bertazi <krisman@suse.de>
 
-commit 516403d4d85607fdef3ca41d4a56b54e5566fa9a upstream.
+[ Upstream commit 3979840cd858f30f43ea9f4e7f7f1f56de82d698 ]
+This fixes a memory leak due to the lack of the cleanup hook for the
+iovec.  The stable backport differs from upstream by dropping the
+io_connect_bpf_populate hunk, which didn't exist at the time and by
+fixing the merge conflict due to the introduction of
+io_bind_file_create.
 
-This reverts commit 48db892356d6cb80f6942885545de4a6dd8d2a29.
+Both IORING_OP_CONNECT and IORING_OP_BIND reuse the msghdr object just
+to store the sockaddr. Beyond allocating a much larger object than
+needed, msghdr can also wrap an iovec, which will be recycled
+unnecessarily. This uses the sockaddr directly.
 
-Commit 48db892356d6 ("NFSD: Defer sub-object cleanup in export
-put callbacks") moved path_put() and auth_domain_put() out of
-svc_export_put() and expkey_put() and behind queue_rcu_work() to
-close a claimed use-after-free in e_show() and c_show() against
-ex_path and ex_client->name. Discussion in [1] shows neither
-the diagnosis nor the remedy survives review.
-
-The downstream teardown of both sub-objects is already RCU-deferred.
-auth_domain_put() reaches svcauth_unix_domain_release(), which frees
-the unix_domain and its ->name through call_rcu(). path_put()
-reaches dentry_free(), which frees the dentry through call_rcu(),
-and prepend_path() is already structured to tolerate concurrent
-dentry teardown. A reader in cache_seq_start_rcu() therefore
-observes both sub-objects through the next grace period regardless
-of whether svc_export_put() runs synchronously, so the synchronous
-form was never unsafe.
-
-The crash signature in the report cited by commit 48db892356d6
-("NFSD: Defer sub-object cleanup in export put callbacks") has a
-different root cause: a /proc/net/rpc cache file held open across
-network-namespace exit lets cache_destroy_net() free cd->hash_table
-while a reader is still walking it. The correct fix pins cd->net for
-the open fd's lifetime and does not require any deferral inside
-svc_export_put().
-
-Meanwhile, deferring path_put() out of svc_export_put() reintroduces
-the regression that commit 69d803c40ede ("nfsd: Revert "nfsd:
-release svc_expkey/svc_export with rcu_work"") repaired: after
-"exportfs -r" drops the last cache reference, the mount reference
-held through ex_path lingers in the workqueue, so a subsequent
-umount fails with EBUSY.
-
-Restore the synchronous path_put() and auth_domain_put() in
-svc_export_put() and expkey_put() and the call_rcu()/kfree_rcu()
-free of the containing structures. The unrelated fix for
-ex_uuid/ex_stats from commit 2530766492ec ("nfsd: fix UAF when
-access ex_uuid or ex_stats") is preserved.
-
-Link: https://lore.kernel.org/all/10019b42-4589-4f9f-8d5b-d8197db1ce3c@huawei.com/ [1]
-Fixes: 48db892356d6 ("NFSD: Defer sub-object cleanup in export put callbacks")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Alexandr Alexandrov <alexandr.alexandrov@oracle.com>
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://patch.msgid.link/20260602215327.1885109-2-krisman@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/export.c |   63 +++++++------------------------------------------------
- fs/nfsd/export.h |    7 +-----
- fs/nfsd/nfsctl.c |    8 ------
- 3 files changed, 12 insertions(+), 66 deletions(-)
+ io_uring/net.c   | 36 ++++++++++++++++++------------------
+ io_uring/opdef.c |  4 ++--
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -36,30 +36,19 @@
-  * second map contains a reference to the entry in the first map.
-  */
- 
--static struct workqueue_struct *nfsd_export_wq;
--
- #define	EXPKEY_HASHBITS		8
- #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
- #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
- 
--static void expkey_release(struct work_struct *work)
-+static void expkey_put(struct kref *ref)
+diff --git a/io_uring/net.c b/io_uring/net.c
+index 1329fc9d72fd6f..798bf5dedc2e95 100644
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1775,7 +1775,7 @@ int io_socket(struct io_kiocb *req, unsigned int issue_flags)
+ int io_connect_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
  {
--	struct svc_expkey *key = container_of(to_rcu_work(work),
--					      struct svc_expkey, ek_rwork);
-+	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
+ 	struct io_connect *conn = io_kiocb_to_cmd(req, struct io_connect);
+-	struct io_async_msghdr *io;
++	struct sockaddr_storage *addr;
  
- 	if (test_bit(CACHE_VALID, &key->h.flags) &&
- 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
- 		path_put(&key->ek_path);
- 	auth_domain_put(key->ek_client);
--	kfree(key);
--}
--
--static void expkey_put(struct kref *ref)
--{
--	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
--
--	INIT_RCU_WORK(&key->ek_rwork, expkey_release);
--	queue_rcu_work(nfsd_export_wq, &key->ek_rwork);
-+	kfree_rcu(key, ek_rcu);
+ 	if (sqe->len || sqe->buf_index || sqe->rw_flags || sqe->splice_fd_in)
+ 		return -EINVAL;
+@@ -1784,17 +1784,17 @@ int io_connect_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	conn->addr_len =  READ_ONCE(sqe->addr2);
+ 	conn->in_progress = conn->seen_econnaborted = false;
+ 
+-	io = io_msg_alloc_async(req);
+-	if (unlikely(!io))
++	addr = io_uring_alloc_async_data(NULL, req);
++	if (unlikely(!addr))
+ 		return -ENOMEM;
+ 
+-	return move_addr_to_kernel(conn->addr, conn->addr_len, &io->addr);
++	return move_addr_to_kernel(conn->addr, conn->addr_len, addr);
  }
  
- static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
-@@ -364,13 +353,11 @@ static void export_stats_destroy(struct
- 					    EXP_STATS_COUNTERS_NUM);
+ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_connect *connect = io_kiocb_to_cmd(req, struct io_connect);
+-	struct io_async_msghdr *io = req->async_data;
++	struct sockaddr_storage *addr = req->async_data;
+ 	unsigned file_flags;
+ 	int ret;
+ 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
+@@ -1808,8 +1808,7 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
+ 
+ 	file_flags = force_nonblock ? O_NONBLOCK : 0;
+ 
+-	ret = __sys_connect_file(req->file, &io->addr, connect->addr_len,
+-				 file_flags);
++	ret = __sys_connect_file(req->file, addr, connect->addr_len, file_flags);
+ 	if ((ret == -EAGAIN || ret == -EINPROGRESS || ret == -ECONNABORTED)
+ 	    && force_nonblock) {
+ 		if (ret == -EINPROGRESS) {
+@@ -1838,7 +1837,6 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
+ out:
+ 	if (ret < 0)
+ 		req_set_fail(req);
+-	io_req_msg_cleanup(req, issue_flags);
+ 	io_req_set_res(req, ret, 0);
+ 	return IOU_COMPLETE;
+ }
+@@ -1848,15 +1846,15 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
+  * which in turn end up in mnt_want_write() which will grab the fs
+  * percpu start write sem. This can trigger a lockdep warning.
+  */
+-static int io_bind_file_create(const struct io_async_msghdr *io, int addr_len)
++static int io_bind_file_create(const struct sockaddr_storage *addr, int addr_len)
+ {
+ 	const struct sockaddr_un *sun;
+ 
+-	if (io->addr.ss_family != AF_UNIX)
++	if (addr->ss_family != AF_UNIX)
+ 		return 0;
+ 	if (addr_len <= offsetof(struct sockaddr_un, sun_path))
+ 		return 0;
+-	sun = (const struct sockaddr_un *) &io->addr;
++	sun = (const struct sockaddr_un *) addr;
+ 	return sun->sun_path[0] != '\0';
  }
  
--static void svc_export_release(struct work_struct *work)
-+static void svc_export_release(struct rcu_head *rcu_head)
+@@ -1864,7 +1862,7 @@ int io_bind_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
  {
--	struct svc_export *exp = container_of(to_rcu_work(work),
--					      struct svc_export, ex_rwork);
-+	struct svc_export *exp = container_of(rcu_head, struct svc_export,
-+			ex_rcu);
+ 	struct io_bind *bind = io_kiocb_to_cmd(req, struct io_bind);
+ 	struct sockaddr __user *uaddr;
+-	struct io_async_msghdr *io;
++	struct sockaddr_storage *addr;
+ 	int ret;
  
--	path_put(&exp->ex_path);
--	auth_domain_put(exp->ex_client);
- 	nfsd4_fslocs_free(&exp->ex_fslocs);
- 	export_stats_destroy(exp->ex_stats);
- 	kfree(exp->ex_stats);
-@@ -382,8 +369,9 @@ static void svc_export_put(struct kref *
- {
- 	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
+ 	if (sqe->len || sqe->buf_index || sqe->rw_flags || sqe->splice_fd_in)
+@@ -1873,21 +1871,23 @@ int io_bind_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	uaddr = u64_to_user_ptr(READ_ONCE(sqe->addr));
+ 	bind->addr_len =  READ_ONCE(sqe->addr2);
  
--	INIT_RCU_WORK(&exp->ex_rwork, svc_export_release);
--	queue_rcu_work(nfsd_export_wq, &exp->ex_rwork);
-+	path_put(&exp->ex_path);
-+	auth_domain_put(exp->ex_client);
-+	call_rcu(&exp->ex_rcu, svc_export_release);
+-	io = io_msg_alloc_async(req);
+-	if (unlikely(!io))
++	addr = io_uring_alloc_async_data(NULL, req);
++	if (unlikely(!addr))
+ 		return -ENOMEM;
+-	ret = move_addr_to_kernel(uaddr, bind->addr_len, &io->addr);
++
++	ret = move_addr_to_kernel(uaddr, bind->addr_len, addr);
+ 	if (unlikely(ret))
+ 		return ret;
+-	if (io_bind_file_create(io, bind->addr_len))
++	if (io_bind_file_create(addr, bind->addr_len))
+ 		req->flags |= REQ_F_FORCE_ASYNC;
+ 	return 0;
  }
  
- static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
-@@ -1491,36 +1479,6 @@ const struct seq_operations nfs_exports_
- 	.show	= e_show,
- };
++
+ int io_bind(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_bind *bind = io_kiocb_to_cmd(req, struct io_bind);
+-	struct io_async_msghdr *io = req->async_data;
++	struct sockaddr_storage *addr = req->async_data;
+ 	struct socket *sock;
+ 	int ret;
  
--/**
-- * nfsd_export_wq_init - allocate the export release workqueue
-- *
-- * Called once at module load. The workqueue runs deferred svc_export and
-- * svc_expkey release work scheduled by queue_rcu_work() in the cache put
-- * callbacks.
-- *
-- * Return values:
-- *   %0: workqueue allocated
-- *   %-ENOMEM: allocation failed
-- */
--int nfsd_export_wq_init(void)
--{
--	nfsd_export_wq = alloc_workqueue("nfsd_export", WQ_UNBOUND, 0);
--	if (!nfsd_export_wq)
--		return -ENOMEM;
--	return 0;
--}
--
--/**
-- * nfsd_export_wq_shutdown - drain and free the export release workqueue
-- *
-- * Called once at module unload. Per-namespace teardown in
-- * nfsd_export_shutdown() has already drained all deferred work.
-- */
--void nfsd_export_wq_shutdown(void)
--{
--	destroy_workqueue(nfsd_export_wq);
--}
--
- /*
-  * Initialize the exports module.
-  */
-@@ -1582,9 +1540,6 @@ nfsd_export_shutdown(struct net *net)
+@@ -1895,7 +1895,7 @@ int io_bind(struct io_kiocb *req, unsigned int issue_flags)
+ 	if (unlikely(!sock))
+ 		return -ENOTSOCK;
  
- 	cache_unregister_net(nn->svc_expkey_cache, net);
- 	cache_unregister_net(nn->svc_export_cache, net);
--	/* Drain deferred export and expkey release work. */
--	rcu_barrier();
--	flush_workqueue(nfsd_export_wq);
- 	cache_destroy_net(nn->svc_expkey_cache, net);
- 	cache_destroy_net(nn->svc_export_cache, net);
- 	svcauth_unix_purge(net);
---- a/fs/nfsd/export.h
-+++ b/fs/nfsd/export.h
-@@ -7,7 +7,6 @@
- 
- #include <linux/sunrpc/cache.h>
- #include <linux/percpu_counter.h>
--#include <linux/workqueue.h>
- #include <uapi/linux/nfsd/export.h>
- #include <linux/nfs4.h>
- 
-@@ -76,7 +75,7 @@ struct svc_export {
- 	u32			ex_layout_types;
- 	struct nfsd4_deviceid_map *ex_devid_map;
- 	struct cache_detail	*cd;
--	struct rcu_work		ex_rwork;
-+	struct rcu_head		ex_rcu;
- 	unsigned long		ex_xprtsec_modes;
- 	struct export_stats	*ex_stats;
- };
-@@ -93,7 +92,7 @@ struct svc_expkey {
- 	u32			ek_fsid[6];
- 
- 	struct path		ek_path;
--	struct rcu_work		ek_rwork;
-+	struct rcu_head		ek_rcu;
- };
- 
- #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
-@@ -111,8 +110,6 @@ __be32 check_nfsd_access(struct svc_expo
- /*
-  * Function declarations
-  */
--int			nfsd_export_wq_init(void);
--void			nfsd_export_wq_shutdown(void);
- int			nfsd_export_init(struct net *);
- void			nfsd_export_shutdown(struct net *);
- void			nfsd_export_flush(struct net *);
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2269,12 +2269,9 @@ static int __init init_nfsd(void)
- 	if (retval)
- 		goto out_free_pnfs;
- 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
--	retval = nfsd_export_wq_init();
--	if (retval)
--		goto out_free_lockd;
- 	retval = register_pernet_subsys(&nfsd_net_ops);
- 	if (retval < 0)
--		goto out_free_export_wq;
-+		goto out_free_lockd;
- 	retval = register_cld_notifier();
- 	if (retval)
- 		goto out_free_subsys;
-@@ -2303,8 +2300,6 @@ out_free_cld:
- 	unregister_cld_notifier();
- out_free_subsys:
- 	unregister_pernet_subsys(&nfsd_net_ops);
--out_free_export_wq:
--	nfsd_export_wq_shutdown();
- out_free_lockd:
- 	nfsd_lockd_shutdown();
- 	nfsd_drc_slab_free();
-@@ -2325,7 +2320,6 @@ static void __exit exit_nfsd(void)
- 	nfsd4_destroy_laundry_wq();
- 	unregister_cld_notifier();
- 	unregister_pernet_subsys(&nfsd_net_ops);
--	nfsd_export_wq_shutdown();
- 	nfsd_drc_slab_free();
- 	nfsd_lockd_shutdown();
- 	nfsd4_free_slabs();
+-	ret = __sys_bind_socket(sock, &io->addr, bind->addr_len);
++	ret = __sys_bind_socket(sock, addr, bind->addr_len);
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
+diff --git a/io_uring/opdef.c b/io_uring/opdef.c
+index 91a23baf415e89..2e1752df8748b4 100644
+--- a/io_uring/opdef.c
++++ b/io_uring/opdef.c
+@@ -207,7 +207,7 @@ const struct io_issue_def io_issue_defs[] = {
+ 		.unbound_nonreg_file	= 1,
+ 		.pollout		= 1,
+ #if defined(CONFIG_NET)
+-		.async_size		= sizeof(struct io_async_msghdr),
++		.async_size		= sizeof(struct sockaddr_storage),
+ 		.prep			= io_connect_prep,
+ 		.issue			= io_connect,
+ #else
+@@ -510,7 +510,7 @@ const struct io_issue_def io_issue_defs[] = {
+ 		.needs_file		= 1,
+ 		.prep			= io_bind_prep,
+ 		.issue			= io_bind,
+-		.async_size		= sizeof(struct io_async_msghdr),
++		.async_size		= sizeof(struct sockaddr_storage),
+ #else
+ 		.prep			= io_eopnotsupp_prep,
+ #endif
+-- 
+2.53.0
+
 
 
