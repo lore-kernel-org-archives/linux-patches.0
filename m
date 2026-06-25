@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B03A2877F7;
-	Thu, 25 Jun 2026 13:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06752EC086;
+	Thu, 25 Jun 2026 13:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393168; cv=none; b=X+7+92jK7O+n2sKDe40gPPsVYw4xyiEybQCk1z40lpA861vxihHFPopycrGWCB1dyXgH2D1bowBbrD0wq6UiQ9vs0a/QNvfVaXEU27vYkKtHWiQ9ccqL27GAy5ZeiYaWoAM1IT7x9bnUfD/SZxyQd2Nzk0mwLIRW1U4OrYWUNfA=
+	t=1782393171; cv=none; b=UCAgE25ZkibA8EYrqc+i80Mm7fePUGGuh5plNnxiyAw0Rew7ZJ79Y0P6Z+OqFsKo2oz6Meki+bxzlVqRrh9UddJ4LOzc0B0xYEdsBliAeEYrvzeD3ulhw7/rYGEak9vUQRHQJhuH3lCKqIQ9ZKXbKJNAsiK2axrWddkGG5KZFXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393168; c=relaxed/simple;
-	bh=hcfLVja2mOiWJ/tcHgMD9nZvGX40cCR95wtQkrzmQP4=;
+	s=arc-20240116; t=1782393171; c=relaxed/simple;
+	bh=26ZALFjY6Nbcbo2CKgg2kifv1cMd1n9vAM8kAcy48X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hHfbJBQtfTiwfm/jcDrOuOMDgDeFKhwuhD7n5tsyFkhPc53ClT/f7VTy7yzPmRy5pX97NsvT/njxllONH4h6TuStOHwl7/WUgZ0QDWgcGvrNTkuz/PxlZuZ0nu8rhlxjm+mNJqCc3h3r9k9P/yW8xMo2t3AAJOJtIOwUFkExUsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fuuKJdLx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AVds+/ygHQ3x9SOVQqP/2YaFNoqrBcSlwgFqZwjKusk39qLkiU0Rw/Fp4wumD1v/bB2TVPoVwMDW7V9MDEZTB4dM0T7+oi3K9XN7NkEUGShdsE9oWEQfA3vo2wFc8fzg1wfxgaARSha6T5Vv44aAv3RpXkLCcICaJjWbH/5oTXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsvb4044; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fuuKJdLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7551F000E9;
-	Thu, 25 Jun 2026 13:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsvb4044"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B351F000E9;
+	Thu, 25 Jun 2026 13:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393167;
-	bh=W5Nnm+lTDxyvlEqfr4yAZLDvPgqcmN/2pv3WdMYJZhU=;
+	s=korg; t=1782393170;
+	bh=NuzwZvOOsKJU01LQBgbiZn4T63E8vji8elAkmWdg/jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fuuKJdLxukqac68dRvYrVTtKkzG6vA1NXxZJHZHIds/jANM2z7uE65pVJb7W62ili
-	 gPBsUIml1p5MgSCWjTdwaj/pdkt9Ni+RfPhW6SnNEdnPGxsq2rxnwWrFMafWZhR5Q8
-	 QQXzkBof9nDvfklLraK6R0qNYH/KrGBAuwsVfjXY=
+	b=dsvb4044FhlQlfEX7yU/fiHSGU7eO6xtAOzsDLChg1YlB3Y9bfIkEHV2lLNhLA2yz
+	 HqCd9ggj0j6CEpv1LPgFNixTG420kTzCXgTIsy3YEmannUXYvQPwpXXQGAo6DWM/MH
+	 UWIjFDHCGCCLx/kNJMM2nmh6qOavu4hqOc0JuHuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 19/21] ksmbd: reject non-VALID session in compound request branch
-Date: Thu, 25 Jun 2026 14:04:11 +0100
-Message-ID: <20260625125615.927685739@linuxfoundation.org>
+	syzbot+814c351d094f4f1a1b86@syzkaller.appspotmail.com,
+	Ruslan Valiyev <linuxoid@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.1 20/21] media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
+Date: Thu, 25 Jun 2026 14:04:12 +0100
+Message-ID: <20260625125616.062617833@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125613.243729608@linuxfoundation.org>
 References: <20260625125613.243729608@linuxfoundation.org>
@@ -51,58 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Ruslan Valiyev <linuxoid@gmail.com>
 
-commit 609ca17d869d04ba249e32cdcbf13c0b1c66f43c upstream.
+commit 7d8bf3d8f91073f4db347ed3aa6302b56107499c upstream.
 
-smb2_check_user_session() takes a shortcut for any operation that is not
-the first in a COMPOUND request: it reuses work->sess (the session bound by
-the first operation) and validates only the SessionId, then returns
-"valid". It never re-checks work->sess->state == SMB2_SESSION_VALID, and a
-SessionId of 0xFFFFFFFFFFFFFFFF (ULLONG_MAX, the MS-SMB2 related-operation
-value) skips even the id comparison. The standalone path
-(ksmbd_session_lookup_all() plus the SESSION_SETUP state machine) does
-enforce the VALID state; the compound branch bypasses all of it.
+syzbot reported a general protection fault in
+vidtv_psi_ts_psi_write_into [1].
 
-A SESSION_SETUP carrying only an NTLM Type-1 (NtLmNegotiate) blob publishes
-a fresh SMB2_SESSION_IN_PROGRESS session whose sess->user is still NULL
-(->user is assigned later, by ntlm_authenticate()). Used as operation 1 of
-a COMPOUND with operation 2 = TREE_CONNECT (related, SessionId=ULLONG_MAX,
-\\host\IPC$), the tree-connect then runs on that IN_PROGRESS session and
-reaches ksmbd_ipc_tree_connect_request(), which dereferences
-user_name(sess->user) with sess->user == NULL (transport_ipc.c:687/701/704)
--> remote NULL-pointer dereference and a kernel Oops that wedges the ksmbd
-worker for all clients.
+vidtv_mux_get_pid_ctx() can return NULL, but vidtv_mux_push_si() does
+not check for this before dereferencing the returned pointer to access
+the continuity counter. This leads to a general protection fault when
+accessing a near-NULL address.
 
-Reject any non-first compound operation that lands on a session which is
-not SMB2_SESSION_VALID, mirroring the validity the standalone lookup path
-enforces. SESSION_SETUP itself legitimately runs on an IN_PROGRESS session,
-but it is never carried as a non-first compound operation, so multi-leg
-authentication is unaffected by this check.
+The root cause is that vidtv_mux_pid_ctx_init() does not check the
+return value of vidtv_mux_create_pid_ctx_once() for PMT section PIDs.
+If the allocation fails, the PID context is never created, but init
+returns success. The subsequent vidtv_mux_push_si() call then gets
+NULL from vidtv_mux_get_pid_ctx() and crashes.
 
-Fixes: 5005bcb42191 ("ksmbd: validate session id and tree id in the compound request")
+Fix both the root cause (add error check in vidtv_mux_pid_ctx_init
+for PMT PIDs) and add defensive NULL checks in vidtv_mux_push_si for
+all vidtv_mux_get_pid_ctx() calls.
+
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+Workqueue: events vidtv_mux_tick
+RIP: 0010:vidtv_psi_ts_psi_write_into+0x54a/0xbc0 drivers/media/test-drivers/vidtv/vidtv_psi.c:197
+Call Trace:
+ <TASK>
+ vidtv_psi_table_header_write_into drivers/media/test-drivers/vidtv/vidtv_psi.c:799 [inline]
+ vidtv_psi_pmt_write_into+0x3b2/0xa70 drivers/media/test-drivers/vidtv/vidtv_psi.c:1231
+ vidtv_mux_push_si+0x932/0xe80 drivers/media/test-drivers/vidtv/vidtv_mux.c:196
+ vidtv_mux_tick+0xe9b/0x1480 drivers/media/test-drivers/vidtv/vidtv_mux.c:408
+
+Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: syzbot+814c351d094f4f1a1b86@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=814c351d094f4f1a1b86
+Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/test-drivers/vidtv/vidtv_mux.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -613,6 +613,11 @@ int smb2_check_user_session(struct ksmbd
- 					sess_id, work->sess->id);
- 			return -EINVAL;
- 		}
-+		if (work->sess->state != SMB2_SESSION_VALID) {
-+			pr_err("compound request on a non-valid session (state %d)\n",
-+					work->sess->state);
-+			return -EINVAL;
-+		}
- 		return 1;
+--- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
+@@ -101,7 +101,8 @@ static int vidtv_mux_pid_ctx_init(struct
+ 	/* add a ctx for all PMT sections */
+ 	while (p) {
+ 		pid = vidtv_psi_get_pat_program_pid(p);
+-		vidtv_mux_create_pid_ctx_once(m, pid);
++		if (!vidtv_mux_create_pid_ctx_once(m, pid))
++			goto free;
+ 		p = p->next;
  	}
  
+@@ -170,6 +171,9 @@ static u32 vidtv_mux_push_si(struct vidt
+ 	nit_ctx = vidtv_mux_get_pid_ctx(m, VIDTV_NIT_PID);
+ 	eit_ctx = vidtv_mux_get_pid_ctx(m, VIDTV_EIT_PID);
+ 
++	if (!pat_ctx || !sdt_ctx || !nit_ctx || !eit_ctx)
++		return 0;
++
+ 	pat_args.offset             = m->mux_buf_offset;
+ 	pat_args.continuity_counter = &pat_ctx->cc;
+ 
+@@ -186,6 +190,8 @@ static u32 vidtv_mux_push_si(struct vidt
+ 		}
+ 
+ 		pmt_ctx = vidtv_mux_get_pid_ctx(m, pmt_pid);
++		if (!pmt_ctx)
++			continue;
+ 
+ 		pmt_args.offset             = m->mux_buf_offset;
+ 		pmt_args.pmt                = m->si.pmt_secs[i];
 
 
