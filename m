@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1CE1E633C;
-	Thu, 25 Jun 2026 13:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7699E1E633C;
+	Thu, 25 Jun 2026 13:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393052; cv=none; b=CbPrv4ddrNjQ3mSLj1xMMpuHCQFwGAQ7Js82NFNah+EkNDEZG/VcgEm5OL+GhzoBv/AVzm7CfDHbf6qGqC1F08HDHHgsxPafynrRyVJN7iDFbPWrE8HIg1LB3B76QKxA3bPwFIsNBe864ipSTtndbqUV+YItKARt1V5WA1nvTCc=
+	t=1782393055; cv=none; b=QvHTWqk18I8mgOfnXvCEiicqreFvRAwSUi3AlHuWA2svEj1ZLq2oKnuWweWp3yokPJgzwV3dRDC5S+ejJXa5xb+CSpKe7S6U4TTLNECkg/dtBmxOl2A5MggD6uCh5nfJqnK5oETOfvMMr82qmJJ+ParpcwofWDJXrkGu+xaqVG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393052; c=relaxed/simple;
-	bh=U4dxaZTJt8tPIWAUGKHq1/fR7hZ9j4tJ8ta4SSK1T+A=;
+	s=arc-20240116; t=1782393055; c=relaxed/simple;
+	bh=xIgpn5BwZWzEwN2wO4NySuDNB850CcSmTvTttSlCnok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XC2vdOYiQX87htvLnfHBoXuIWvHFyRjEBDibdY/Qu28c5hG4nvuV1UfjG7Yo5fh/+GGOeE/GEC4jiI/A40FQWC8KwJRY+neZo46+Nhs6DM7rBnXYU95nBlOfLJzyyKL6aYMcxZeLoupWaTabfuFYlfePITpy6IJXzfh38CvgpRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InTE6FvA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GtkLRAWdjthhTUFJc8O1Wc7wT8uQk/j854iIm1rM0N3tht7Bhzgt/L2zjrBP7RWYmS3B05gcbDf8yvCuy93Qr82Q80PymKjGiXOd7y3kyeQO3+pF59I1P8aB62ayKVWblo+S+hPb6DyH1hUGfOr3iBl4XayulkICzs65MG1EyJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SCQN9t5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InTE6FvA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7267B1F000E9;
-	Thu, 25 Jun 2026 13:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SCQN9t5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE241F000E9;
+	Thu, 25 Jun 2026 13:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393051;
-	bh=8dDWmuCvbTYbL5RmboNO/AhMg/HKaHjeyA70t5ct1nw=;
+	s=korg; t=1782393054;
+	bh=Gs8Mz711/53sL/0+P5fIwatMFiR0NLnAbF07X5384Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=InTE6FvAckOyfB52tZhTdfFSNlUyIMXMPwbGy3yh2L3EYYYguby0lYt81d6NQ6pis
-	 ZOOiCL9wC9u21bQbdc2pyXJICRCyGubp0ViiUBzg+oNNyJUL9YxKxjrxzptOv45vF1
-	 p/5G+I8+SzkQBlVaKD1cZnSC6x89Zqz5dDOGPP2M=
+	b=0SCQN9t5yWTRqqQf5NJMvYPbO3vyc8IiAa+JtH118zRG9RYpwDYdjdMz+O0ikkf7z
+	 6VumSbhd/tATDBZZT4X53XH0LtBKWZDnB+CM8IyprWfUyjsv7i52PJuEIvyQ/IcsjX
+	 gMXLKS7BP8WAbZyB+G0SE3sBYxUJ1XV/2ebdPebQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 7.0 27/49] rose: drop CALL_REQUEST in loopback timer when device is not running
-Date: Thu, 25 Jun 2026 14:03:39 +0100
-Message-ID: <20260625125641.311035715@linuxfoundation.org>
+Subject: [PATCH 7.0 18/49] rose: fix race between loopback timer and module removal
+Date: Thu, 25 Jun 2026 14:03:30 +0100
+Message-ID: <20260625125640.047807219@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -51,53 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit cf5567a2652e44866eae8987dff4c1ea507680df upstream.
+commit 47dd6ec1a77d77895afb00aa2e68373a48289108 upstream.
 
-When ax25stop brings down rose0 while the loopback timer has pending
-CALL_REQUEST frames, rose_loopback_timer() calls rose_dev_get() and
-finds the device still registered (unregister_netdevice waits for
-refs to drop), then calls rose_rx_call_request() which takes a
-netdev_hold() for the new socket.
+rose_loopback_clear() called timer_delete() which returns immediately
+without waiting for any running callback to complete.  If the timer
+fired concurrently with module removal, rose_loopback_timer() could
+re-arm the timer after timer_delete() returned and then access
+rose_loopback_neigh after it was freed.
 
-But NETDEV_DOWN fires only once: rose_kill_by_device() already ran
-before this timer tick, so the new socket is never cleaned up.  The
-stuck reference prevents unregister_netdevice from completing, and the
-orphan socket's timers eventually fire on freed memory (KASAN
-slab-use-after-free in __run_timers).
+Two complementary changes close the race:
 
-The kernel clears IFF_UP via dev_close() before sending NETDEV_DOWN,
-so checking netif_running() after rose_dev_get() is sufficient: if the
-device is no longer running, the CALL_REQUEST is silently dropped and
-no socket is created.  This closes the race without touching the
-module-exit path (which already stops the timer via loopback_stopping).
+1. Add a loopback_stopping atomic flag.  rose_loopback_timer() checks
+   it at entry (before acquiring a reference) and again inside the
+   loop; when set it drains the queue and exits without re-arming the
+   timer.
 
-Tested: unregister_netdevice completes immediately after ax25stop with
-active loopback connections; no ref_tracker warnings, no KASAN.
+2. Switch rose_loopback_clear() to timer_delete_sync() so it blocks
+   until any in-flight callback has returned before freeing resources.
 
+The smp_mb() between setting the flag and calling timer_delete_sync()
+ensures the flag is visible to any callback that is about to run.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_loopback.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/rose/rose_loopback.c |   31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
 --- a/net/rose/rose_loopback.c
 +++ b/net/rose/rose_loopback.c
-@@ -118,6 +118,16 @@ static void rose_loopback_timer(struct t
- 				kfree_skb(skb);
- 				continue;
- 			}
-+			/* rose_kill_by_device() runs on NETDEV_DOWN (IFF_UP cleared)
-+			 * before the device is unregistered.  If we create a new
-+			 * socket here after that cleanup, the ref never gets released
-+			 * because NETDEV_DOWN fires only once.  Drop the call instead.
-+			 */
-+			if (!netif_running(dev)) {
-+				dev_put(dev);
-+				kfree_skb(skb);
-+				continue;
-+			}
+@@ -12,13 +12,15 @@
+ #include <net/rose.h>
+ #include <linux/init.h>
  
- 			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
- 				kfree_skb(skb);
+-static struct sk_buff_head loopback_queue;
+ #define ROSE_LOOPBACK_LIMIT 1000
+-static struct timer_list loopback_timer;
+ 
++static struct timer_list loopback_timer;
++static struct sk_buff_head loopback_queue;
+ static void rose_set_loopback_timer(void);
+ static void rose_loopback_timer(struct timer_list *unused);
+ 
++static atomic_t loopback_stopping = ATOMIC_INIT(0);
++
+ void rose_loopback_init(void)
+ {
+ 	skb_queue_head_init(&loopback_queue);
+@@ -66,6 +68,9 @@ static void rose_loopback_timer(struct t
+ 	unsigned int lci_i, lci_o;
+ 	int count;
+ 
++	if (atomic_read(&loopback_stopping))
++		return;
++
+ 	if (rose_loopback_neigh)
+ 		rose_neigh_hold(rose_loopback_neigh);
+ 	else
+@@ -75,6 +80,13 @@ static void rose_loopback_timer(struct t
+ 		skb = skb_dequeue(&loopback_queue);
+ 		if (!skb)
+ 			goto out;
++
++		if (atomic_read(&loopback_stopping)) {
++			kfree_skb(skb);
++			skb_queue_purge(&loopback_queue);
++			goto out;
++		}
++
+ 		if (skb->len < ROSE_MIN_LEN) {
+ 			kfree_skb(skb);
+ 			continue;
+@@ -118,7 +130,7 @@ static void rose_loopback_timer(struct t
+ out:
+ 	rose_neigh_put(rose_loopback_neigh);
+ 
+-	if (!skb_queue_empty(&loopback_queue))
++	if (!atomic_read(&loopback_stopping) && !skb_queue_empty(&loopback_queue))
+ 		mod_timer(&loopback_timer, jiffies + 1);
+ }
+ 
+@@ -126,10 +138,15 @@ void __exit rose_loopback_clear(void)
+ {
+ 	struct sk_buff *skb;
+ 
+-	timer_delete(&loopback_timer);
++	atomic_set(&loopback_stopping, 1);
++	/* Pairs with atomic_read() in rose_loopback_timer(): ensure the
++	 * stopping flag is visible before we cancel, so a concurrent
++	 * callback aborts its loop early rather than re-arming the timer.
++	 */
++	smp_mb();
++
++	timer_delete_sync(&loopback_timer);
+ 
+-	while ((skb = skb_dequeue(&loopback_queue)) != NULL) {
+-		skb->sk = NULL;
++	while ((skb = skb_dequeue(&loopback_queue)) != NULL)
+ 		kfree_skb(skb);
+-	}
+ }
 
 
