@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679751E633C;
-	Thu, 25 Jun 2026 13:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08E6149C6F;
+	Thu, 25 Jun 2026 13:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392764; cv=none; b=dbLjiO9wd5d3dFO2fJKxHOwLNMjLTtUe4a5uZSi+IeMGb2Xuxl39ryBubiuPGx+UvcUycn8T4XEXzuHQ+zrRgO+D9R3rsWcOa9pyst04mLSW3RDsfAVoKUo6cGqsM4xwkaoTmN4viH+qr+JXnOpq34tePdKkNh1r9aJLq9tSTbw=
+	t=1782392769; cv=none; b=Nh2kkN0TmpG/1RuC/E/+KzfBxS0Ll87HuQxcMNV12m5o38/B6ifR9jSUTvagl8MnFsk6rw/wMVzuMgiQNAsXE5fcv6t29c4NbfBK+hnK7olg+ZWN+EjHrwlYUQ7gI7irPXfhnuI1by8vf6Jh7trV20yp8SjprzqgvmY+/9ymP2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392764; c=relaxed/simple;
-	bh=Joj+S69w2yiOaiXgA7lAMi3YFiihcqcjGB/JC/K41Tc=;
+	s=arc-20240116; t=1782392769; c=relaxed/simple;
+	bh=SD6Vi0dAttqcFo6ivFISd4EfGoPdb7gQb63k8ATlOFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWdEJcz0tQSf5e1AhbgttjkUeK/7fGTG4ok1ldt6wyddn4Uc3vaFaPJdYp2MG7hKODk86mXNWKNhsbyAPLE0igxDvADY1z1HT5yPav4Wxr4LIaba76Cbf5SHSsuPKy7HT11dWCnnr3EcA8ECDUgmFUS5ScTup7y0RuLpvNeSdog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxEwLdP/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VHgT3ReFl6Axh+k7C8sQtxqgb6aH8HoRKhp23gtxBwnAPpOUTjz55NOxuh+TcTcsqyslzavztIChNfloWZaFRfVbFkEUtnQ6wFRRL7BFPUIBaoJdqhYhzoaXLTDj1HnSjYTO3QGE4xhJU5sAKPWH7ZKouMq9/Zjd2mAVb/YW7nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/yWJyv5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxEwLdP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7E61F00A3A;
-	Thu, 25 Jun 2026 13:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/yWJyv5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017121F000E9;
+	Thu, 25 Jun 2026 13:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392763;
-	bh=JuXLVqJN3vxA9HxBGXsZbHrpvLy8XXS3koLmoxEj9ys=;
+	s=korg; t=1782392766;
+	bh=9d/k9HaobmEnc+LQM277Ii+TIGFvym55b3oFSE3r7rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jxEwLdP/QYDhMak1MJBWGoLynE5TZSdpq3nZvOSY119zVvmal8pgHuM521HP8Xzo1
-	 /8W4XUzzGOy8kZ3deljVsDY1Xb5+MwUZwh25FmUOjl3m/gft1cUZci5vSAtAvsFkFH
-	 BN883H0JkIEMa8pGG+Y4+Yw8CtR+pTB2BN1twMkk=
+	b=H/yWJyv5jVuUPFuxnAQMYhjwlwStKgzNqlLboEfz6GhadW0MfbtDTMrfRUytkTyb1
+	 6shyGdpytXYQ2gligk3ZMlOFnDujqq29THfQkXwB7ff93bI9fWo3X1iWN1UCplbzB2
+	 YmnQVGOB1iEJwmAwcaYKug0EHS6uITqh0qvrjFhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 6.18 16/60] rose: fix race between loopback timer and module removal
-Date: Thu, 25 Jun 2026 14:03:01 +0100
-Message-ID: <20260625125647.915331582@linuxfoundation.org>
+Subject: [PATCH 6.18 17/60] rose: clear neighbour pointer after rose_neigh_put() in state machines
+Date: Thu, 25 Jun 2026 14:03:02 +0100
+Message-ID: <20260625125648.070352821@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -51,106 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit 47dd6ec1a77d77895afb00aa2e68373a48289108 upstream.
+commit e8eb0c6faa8849ba7769516c1a8c84d9f612acf6 upstream.
 
-rose_loopback_clear() called timer_delete() which returns immediately
-without waiting for any running callback to complete.  If the timer
-fired concurrently with module removal, rose_loopback_timer() could
-re-arm the timer after timer_delete() returned and then access
-rose_loopback_neigh after it was freed.
+After calling rose_neigh_put() in rose_state1_machine() through
+rose_state5_machine(), rose->neighbour was left pointing at the
+potentially freed neighbour structure.  A subsequent timer expiry or
+concurrent teardown path could dereference the stale pointer, causing
+a use-after-free.
 
-Two complementary changes close the race:
+Set rose->neighbour to NULL immediately after each rose_neigh_put()
+call in the state machine functions.
 
-1. Add a loopback_stopping atomic flag.  rose_loopback_timer() checks
-   it at entry (before acquiring a reference) and again inside the
-   loop; when set it drains the queue and exits without re-arming the
-   timer.
-
-2. Switch rose_loopback_clear() to timer_delete_sync() so it blocks
-   until any in-flight callback has returned before freeing resources.
-
-The smp_mb() between setting the flag and calling timer_delete_sync()
-ensures the flag is visible to any callback that is about to run.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_loopback.c |   31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ net/rose/rose_in.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/rose/rose_loopback.c
-+++ b/net/rose/rose_loopback.c
-@@ -12,13 +12,15 @@
- #include <net/rose.h>
- #include <linux/init.h>
+--- a/net/rose/rose_in.c
++++ b/net/rose/rose_in.c
+@@ -57,6 +57,7 @@ static int rose_state1_machine(struct so
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, ECONNREFUSED, skb->data[3], skb->data[4]);
+ 		rose_neigh_put(rose->neighbour);
++		rose->neighbour = NULL;
+ 		break;
  
--static struct sk_buff_head loopback_queue;
- #define ROSE_LOOPBACK_LIMIT 1000
--static struct timer_list loopback_timer;
+ 	default:
+@@ -80,11 +81,13 @@ static int rose_state2_machine(struct so
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+ 		rose_neigh_put(rose->neighbour);
++		rose->neighbour = NULL;
+ 		break;
  
-+static struct timer_list loopback_timer;
-+static struct sk_buff_head loopback_queue;
- static void rose_set_loopback_timer(void);
- static void rose_loopback_timer(struct timer_list *unused);
+ 	case ROSE_CLEAR_CONFIRMATION:
+ 		rose_disconnect(sk, 0, -1, -1);
+ 		rose_neigh_put(rose->neighbour);
++		rose->neighbour = NULL;
+ 		break;
  
-+static atomic_t loopback_stopping = ATOMIC_INIT(0);
-+
- void rose_loopback_init(void)
- {
- 	skb_queue_head_init(&loopback_queue);
-@@ -66,6 +68,9 @@ static void rose_loopback_timer(struct t
- 	unsigned int lci_i, lci_o;
- 	int count;
+ 	default:
+@@ -122,6 +125,7 @@ static int rose_state3_machine(struct so
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+ 		rose_neigh_put(rose->neighbour);
++		rose->neighbour = NULL;
+ 		break;
  
-+	if (atomic_read(&loopback_stopping))
-+		return;
-+
- 	if (rose_loopback_neigh)
- 		rose_neigh_hold(rose_loopback_neigh);
- 	else
-@@ -75,6 +80,13 @@ static void rose_loopback_timer(struct t
- 		skb = skb_dequeue(&loopback_queue);
- 		if (!skb)
- 			goto out;
-+
-+		if (atomic_read(&loopback_stopping)) {
-+			kfree_skb(skb);
-+			skb_queue_purge(&loopback_queue);
-+			goto out;
-+		}
-+
- 		if (skb->len < ROSE_MIN_LEN) {
- 			kfree_skb(skb);
- 			continue;
-@@ -118,7 +130,7 @@ static void rose_loopback_timer(struct t
- out:
- 	rose_neigh_put(rose_loopback_neigh);
+ 	case ROSE_RR:
+@@ -235,6 +239,7 @@ static int rose_state4_machine(struct so
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+ 		rose_neigh_put(rose->neighbour);
++		rose->neighbour = NULL;
+ 		break;
  
--	if (!skb_queue_empty(&loopback_queue))
-+	if (!atomic_read(&loopback_stopping) && !skb_queue_empty(&loopback_queue))
- 		mod_timer(&loopback_timer, jiffies + 1);
- }
+ 	default:
+@@ -255,6 +260,7 @@ static int rose_state5_machine(struct so
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+ 		rose_neigh_put(rose_sk(sk)->neighbour);
++		rose_sk(sk)->neighbour = NULL;
+ 	}
  
-@@ -126,10 +138,15 @@ void __exit rose_loopback_clear(void)
- {
- 	struct sk_buff *skb;
- 
--	timer_delete(&loopback_timer);
-+	atomic_set(&loopback_stopping, 1);
-+	/* Pairs with atomic_read() in rose_loopback_timer(): ensure the
-+	 * stopping flag is visible before we cancel, so a concurrent
-+	 * callback aborts its loop early rather than re-arming the timer.
-+	 */
-+	smp_mb();
-+
-+	timer_delete_sync(&loopback_timer);
- 
--	while ((skb = skb_dequeue(&loopback_queue)) != NULL) {
--		skb->sk = NULL;
-+	while ((skb = skb_dequeue(&loopback_queue)) != NULL)
- 		kfree_skb(skb);
--	}
- }
+ 	return 0;
 
 
