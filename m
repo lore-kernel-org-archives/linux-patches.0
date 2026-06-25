@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB60E1E633C;
-	Thu, 25 Jun 2026 13:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368322848A7;
+	Thu, 25 Jun 2026 13:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392814; cv=none; b=MgVV1rAHqosm0tmcfcMLw5YH/c69EguXnajzzb2oLZNWjrHu37dRXqzEsx0lB+lQLVPCZq4ZXp6e+cHLx7MARTZZPmLNeMneGg6el05uerLaOQvDfhFgd5U0npbj9ssLI+T7CtSxb9x8n+cDmLdf36dPpGO1371rcBreCyaAsZE=
+	t=1782392817; cv=none; b=VJv8QnwjMbINX2/2nCWTe+rqeFhvSjGGetnEf3sOciCNHjBHg/xISEhQ7Z5HN90gLM7egPs1b+0HGJESCNmMfvo9xlkKoomzbI3As3LOSTyu0zr6FwqqMr497X1cgpmPQFEv4NtCut7JXXxMxqORw8cBD+6ytUUmPdaNmU4pHpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392814; c=relaxed/simple;
-	bh=EywkRGPv3g1mobtP+Wo0FXpNOJuc88dAH25ucWmURB4=;
+	s=arc-20240116; t=1782392817; c=relaxed/simple;
+	bh=/F8JHvimZ7U2iQSN6ESjtQyZlqn0ybLxU1zW/1AHjAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFtGWfaoWWjlAnyiV1mO6emPhf3LVorrG8tXBigCOQskC5RYncHEYV1IcGhIcOVypTnQX7DrRfqhqqqkh1RugRyivHT0Gxy0Hnakf0UeTZb8Vnxj2ctv/iD6ykh7xDuolTQa/XBO1f0JiSngQJ7F8B0JPlCishiFl1JyCRHeMwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkKv2670; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=caredIUJMcXAHhh6HlWWlAMsSz7zDIVzUaHsAAcr4X8enZnLnSv+YY/nGc4uZwtrfwFHAvRqhqNm10MAQk2pu3u7DFi73sTppF1BuUBs8dw1jsVPGdEz2wtK07AyLkNoV4OYiSTmaNIGfpoK0z0RwS+JaKq+NEBZs2UqPqcJeZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k19N7OwZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkKv2670"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327B71F000E9;
-	Thu, 25 Jun 2026 13:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k19N7OwZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5F51F000E9;
+	Thu, 25 Jun 2026 13:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392812;
-	bh=YunuM1Q6mg5hMkPo62k8WpzXP68NwZbTK4ZN2puGXbc=;
+	s=korg; t=1782392816;
+	bh=1/rrI75J5Sg2r+pWcLT1Ce+tloORQkOGjn5IC/N4apM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gkKv267064v0eDbPkWLHUluPkc/pGMBa2gHCYR9WNgYaNS8TxbIFZ13mRGxWGHvQ3
-	 DU959M5bDMGgPnnjS6O9Rocam31LwDAU666sy5U3cpbzJgkN1wEuqGGTRolpHSx4W2
-	 mtH+24QxnN7LZzPR13PnoiEiMdqR+ZtIZdRb6TEs=
+	b=k19N7OwZQwu7pmyo4aBKfOVTbCbrLWlz/gJ26JopgKbM/lpd4UxlAy295WSZ79Fh6
+	 uvqNFK/qqejZ52GvL55S4+/jT4QP+U5DZETCZzcDApwG3Z0faoxETOKfzy9ZBXmvgu
+	 rlNAXrJIUbRz3Ch1awpnsTu5pCJEINwrHJZMzr9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Matthew Ruffell <matthew.ruffell@canonical.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Titouan Ameline de Cadeville <titouan.ameline@gmail.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 31/60] Drivers: hv: vmbus: Improve the logic of reserving fb_mmio on Gen2 VMs
-Date: Thu, 25 Jun 2026 14:03:16 +0100
-Message-ID: <20260625125650.116543886@linuxfoundation.org>
+Subject: [PATCH 6.18 32/60] firmware: samsung: acpm: Fix cross-thread RX length corruption
+Date: Thu, 25 Jun 2026 14:03:17 +0100
+Message-ID: <20260625125650.257724749@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -54,150 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 016a25e4b0df4d77e7c258edee4aaf982e4ee809 ]
+[ Upstream commit f133bd4b5daf71bccdde0ad1a4f47fac76a6bfb1 ]
 
-If vmbus_reserve_fb() in the kdump/kexec kernel fails to properly reserve
-the framebuffer MMIO range (which is below 4GB) due to a Gen2 VM's
-screen.lfb_base being zero [1], there is an MMIO conflict between the
-drivers hyperv-drm and pci-hyperv: when the driver pci-hyperv's
-hv_allocate_config_window() calls vmbus_allocate_mmio() to get an
-MMIO range, typically it gets a 32-bit MMIO range that overlaps with the
-framebuffer MMIO range, and later hv_pci_enter_d0() fails with an
-error message "PCI Pass-through VSP failed D0 Entry with status" since
-the host thinks that PCI devices must not use MMIO space that the
-host has assigned to the framebuffer.
+Sashiko identified a cross-thread RX length corruption bug when
+reviewing the thermal addition to ACPM [1].
 
-This is especially an issue if pci-hyperv is built-in and hyperv-drm is
-built as a module. Consequently, the kdump/kexec kernel fails to detect
-PCI devices via pci-hyperv, and may fail to mount the root file system,
-which may reside in a NVMe disk. The issue described here has existed
-for SR-IOV VF NICs since day one of the pci-hyperv driver, and has been
-worked around on x64 when possible. With the recent introduction of
-ARM64 VMs that boot from NVMe, there is no workaround, so we need a
-formal fix.
+When multiple threads concurrently send IPC requests, the ACPM polling
+mechanism can encounter responses belonging to other threads. To drain
+the queue, the driver saves these concurrent responses into an internal
+cache (`rx_data->cmd`) to be retrieved later by the owning thread.
 
-On Gen2 VMs, if the screen.lfb_base is 0 in the kdump/kexec kernel [1],
-fall back to the low MMIO base, which should be equal to the framebuffer
-MMIO base [2] (the statement is true according to my testing on x64
-Windows Server 2016, and on x64 and ARM64 Windows Server 2025 and on
-Azure. I checked with the Hyper-V team and they said the statement should
-continue to be true for Gen2 VMs). In the first kernel, screen.lfb_base
-is not 0; if the user specifies a very high resolution, it's not enough
-to only reserve 8MB: let's always reserve half of the space below 4GB,
-but cap the reservation to 128MB, which is the required framebuffer size
-of the highest resolution 7680*4320 supported by Hyper-V.
+Previously, the driver incorrectly used `xfer->rxcnt` (the expected
+receive length of the *current* polling thread) when copying data for
+*other* threads into this cache. If the threads expected responses of
+different lengths, this resulted in buffer underflows (leading to reads
+of uninitialized memory) or potential buffer overflows.
 
-While at it, fix the comparison "end > VTPM_BASE_ADDRESS" by changing
-the > to >=. Here the 'end' is an inclusive end (typically, it's
-0xFFFF_FFFF for the low MMIO range).
+Fix this by replacing the boolean `response` flag in
+`struct acpm_rx_data` with `rxcnt`, caching the exact expected receive
+length for each specific transaction during transfer preparation. Use
+this cached length when saving concurrent responses.
 
-Note: vmbus_reserve_fb() now also reserves an MMIO range at the beginning
-of the low MMIO range on CVMs, which have no framebuffers (the
-'screen.lfb_base' in vmbus_reserve_fb() is 0 for CVMs), just in case the
-host might treat the beginning of the low MMIO range specially [3]. BTW,
-the OpenHCL kernel is not affected by the change, because that kernel
-boots with DeviceTree rather than ACPI (so vmbus_reserve_fb() won't run
-there), and there is no framebuffer device for that kernel.
+Consequently, ensure that `xfer->rxcnt` is explicitly zeroed in driver
+helpers (e.g., `acpm_dvfs_set_xfer`) for fire-and-forget messages to
+prevent uninitialized stack garbage from being interpreted as a massive
+expected receive length.
 
-Note: normally Gen1 VMs don't have the MMIO conflict issue because the
-framebuffer MMIO range (which is hardcoded to base=4GB-128MB and
-size=64MB for Gen1 VMs by the host) is always reported via the legacy PCI
-graphics device's BAR, so the kdump/kexec kernel can reserve the 64MB
-MMIO range; however, if the VM is configured to use a very high resolution
-and the required framebuffer size exceeds 64MB (AFAIK, in practice, this
-isn't a typical configuration by users), the hyperv-drm driver may need to
-allocate an MMIO range above 4GB and change the framebuffer MMIO location
-to the allocated MMIO range -- in this case, there can still be issues [4]
-which can't be easily fixed: any possible affected Gen1 users would have
-to use a resolution whose framebuffer size is <= 64MB, or switch to Gen2
-VMs.
-
-[1] https://lore.kernel.org/all/SA1PR21MB692176C1BC53BFC9EAE5CF8EBF51A@SA1PR21MB6921.namprd21.prod.outlook.com/
-[2] https://lore.kernel.org/all/SA1PR21MB69218F955B62DFF62E3E88D2BF222@SA1PR21MB6921.namprd21.prod.outlook.com/
-[3] https://lore.kernel.org/all/SN6PR02MB415726B17D5A6027CD1717E8D4342@SN6PR02MB4157.namprd02.prod.outlook.com/
-[4] https://lore.kernel.org/all/SA1PR21MB69213486F821CA5A2C793C81BF342@SA1PR21MB6921.namprd21.prod.outlook.com/
-
-Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
-CC: stable@vger.kernel.org
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Krister Johansen <kjlx@templeofstupid.com>
-Tested-by: Matthew Ruffell <matthew.ruffell@canonical.com>
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
+Closes: https://sashiko.dev/#/patchset/20260420-acpm-tmu-v3-0-3dc8e93f0b26%40linaro.org [1]
+Reported-by: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
+Closes: https://lore.kernel.org/r/20260426210255.73674-1-titouan.ameline@gmail.com/
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://patch.msgid.link/20260505-acpm-fixes-sashiko-reports-v5-1-43b5ee7f1674@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/vmbus_drv.c |   29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ drivers/firmware/samsung/exynos-acpm.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2291,8 +2291,8 @@ static acpi_status vmbus_walk_resources(
- 		return AE_NO_MEMORY;
+--- a/drivers/firmware/samsung/exynos-acpm.c
++++ b/drivers/firmware/samsung/exynos-acpm.c
+@@ -103,12 +103,12 @@ struct acpm_queue {
+  *
+  * @cmd:	pointer to where the data shall be saved.
+  * @n_cmd:	number of 32-bit commands.
+- * @response:	true if the client expects the RX data.
++ * @rxcnt:	expected length of the response in 32-bit words.
+  */
+ struct acpm_rx_data {
+ 	u32 *cmd;
+ 	size_t n_cmd;
+-	bool response;
++	size_t rxcnt;
+ };
  
- 	/* If this range overlaps the virtual TPM, truncate it. */
--	if (end > VTPM_BASE_ADDRESS && start < VTPM_BASE_ADDRESS)
--		end = VTPM_BASE_ADDRESS;
-+	if (end >= VTPM_BASE_ADDRESS && start < VTPM_BASE_ADDRESS)
-+		end = VTPM_BASE_ADDRESS - 1;
+ #define ACPM_SEQNUM_MAX    64
+@@ -196,7 +196,7 @@ static void acpm_get_saved_rx(struct acp
+ 	const struct acpm_rx_data *rx_data = &achan->rx_data[tx_seqnum - 1];
+ 	u32 rx_seqnum;
  
- 	new_res->name = "hyperv mmio";
- 	new_res->flags = IORESOURCE_MEM;
-@@ -2359,6 +2359,7 @@ static void vmbus_mmio_remove(void)
- static void __maybe_unused vmbus_reserve_fb(void)
- {
- 	resource_size_t start = 0, size;
-+	resource_size_t low_mmio_base;
- 	struct pci_dev *pdev;
- 
- 	if (efi_enabled(EFI_BOOT)) {
-@@ -2366,6 +2367,24 @@ static void __maybe_unused vmbus_reserve
- 		if (IS_ENABLED(CONFIG_SYSFB)) {
- 			start = screen_info.lfb_base;
- 			size = max_t(__u32, screen_info.lfb_size, 0x800000);
-+
-+			low_mmio_base = hyperv_mmio->start;
-+			if (!low_mmio_base || upper_32_bits(low_mmio_base) ||
-+			    (start && start < low_mmio_base)) {
-+				pr_warn("Unexpected low mmio base %pa\n", &low_mmio_base);
-+			} else {
-+				/*
-+				 * If the kdump/kexec or CVM kernel's lfb_base
-+				 * is 0, fall back to the low mmio base.
-+				 */
-+				if (!start)
-+					start = low_mmio_base;
-+				/*
-+				 * Reserve half of the space below 4GB for high
-+				 * resolutions, but cap the reservation to 128MB.
-+				 */
-+				size = min((SZ_4G - start) / 2, SZ_128M);
-+			}
- 		}
- 	} else {
- 		/* Gen1 VM: get FB base from PCI */
-@@ -2386,8 +2405,10 @@ static void __maybe_unused vmbus_reserve
- 		pci_dev_put(pdev);
- 	}
- 
--	if (!start)
-+	if (!start) {
-+		pr_warn("Unexpected framebuffer mmio base of zero\n");
+-	if (!rx_data->response)
++	if (!rx_data->rxcnt)
  		return;
-+	}
  
- 	/*
- 	 * Make a claim for the frame buffer in the resource tree under the
-@@ -2397,6 +2418,8 @@ static void __maybe_unused vmbus_reserve
- 	 */
- 	for (; !fb_mmio && (size >= 0x100000); size >>= 1)
- 		fb_mmio = __request_region(hyperv_mmio, start, size, fb_mmio_name, 0);
-+
-+	pr_info("hv_mmio=%pR,%pR fb=%pR\n", hyperv_mmio, hyperv_mmio->sibling, fb_mmio);
- }
+ 	rx_seqnum = FIELD_GET(ACPM_PROTOCOL_SEQNUM, rx_data->cmd[0]);
+@@ -253,7 +253,7 @@ static int acpm_get_rx(struct acpm_chan
+ 		seqnum = rx_seqnum - 1;
+ 		rx_data = &achan->rx_data[seqnum];
  
- /**
+-		if (rx_data->response) {
++		if (rx_data->rxcnt) {
+ 			if (rx_seqnum == tx_seqnum) {
+ 				__ioread32_copy(xfer->rxd, addr,
+ 						xfer->rxlen / 4);
+@@ -267,7 +267,7 @@ static int acpm_get_rx(struct acpm_chan
+ 				 * after the response is copied to the request.
+ 				 */
+ 				__ioread32_copy(rx_data->cmd, addr,
+-						xfer->rxlen / 4);
++						rx_data->rxcnt);
+ 			}
+ 		} else {
+ 			clear_bit(seqnum, achan->bitmap_seqnum);
+@@ -379,8 +379,8 @@ static void acpm_prepare_xfer(struct acp
+ 	/* Clear data for upcoming responses */
+ 	rx_data = &achan->rx_data[achan->seqnum - 1];
+ 	memset(rx_data->cmd, 0, sizeof(*rx_data->cmd) * rx_data->n_cmd);
+-	if (xfer->rxd)
+-		rx_data->response = true;
++	/* zero means no response expected */
++	rx_data->rxcnt = xfer->rxlen / 4;
+ 
+ 	/* Flag the index based on seqnum. (seqnum: 1~63, bitmap: 0~62) */
+ 	set_bit(achan->seqnum - 1, achan->bitmap_seqnum);
 
 
