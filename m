@@ -1,117 +1,342 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34992877F7;
-	Thu, 25 Jun 2026 13:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3786D2D0C63;
+	Thu, 25 Jun 2026 13:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392747; cv=none; b=CDbf9Wv3enT4re2Zl9BHpdj696dwpzReCukEvURNJ5TpdD2CAlGURgDlWoDS2Vjry1vifOlHWZm190C3tw24zyUaH0AGzVI5UTyJQRtd4ckhB3jMJh96uYxLjxjMqP8FhO7tc1eSrKp3zg3iFAl4lZaNw6bW6yQi7RrcPVoCyxQ=
+	t=1782392751; cv=none; b=njTq2MTAvtO9lVNXn0ACFYtDdPjERsdhRQIysSD8uc5seHW+PBrBnPUqVpQAV1cgjQ9DAleO97M8NHbtOSUBx0AOeFKbZsvaFrpdsoMz6uO1LTpeSRogLzHEmNGe5y+mJIQ4GyBRr1us+CDnRXM/4yPKtgUueTHkglf5FyxGwCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392747; c=relaxed/simple;
-	bh=VFHBkdHxIs8RoVsuBlcA8snB8ABBN6di6917ny5wxBo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPMJ2ldSDKZveIOO7IP1DDymnEbTAupxFZ68kjjhNPSOqg+18LFLhyG4GiRjQO3EjiAAP2IloM7A5W1Jtz5NY3ORpHmbeXfPRvZCbaBImg1APlT/aYjf32lk+x4T0WBfxZbK8wSHoQTPHVleErQrZ/9NVNV1PkoPKMgI4JV0Ey0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Px7PSRyE; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782392751; c=relaxed/simple;
+	bh=m2RsO56eJvo5723uidwYkE+M/YTdtdb7o2twIOE2G68=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=J2+p6UPFeS8kNDFlIZUqzZEUonQi54tYum6ys+nPP9bdikYU9yh8bT/7tSBtm8aa65dXp4RkORpRUWDp1DedIN2551A8rozHdrbMhdSmQb129B3QstR61I/quI+eVuX1TdLM6H/Ze11nVL/bMDfgu+3uicFHp3Guu/uRmrhy7qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrfJQ2q+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Px7PSRyE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328691F000E9;
-	Thu, 25 Jun 2026 13:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrfJQ2q+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B8A1F000E9;
+	Thu, 25 Jun 2026 13:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392746;
-	bh=2PmSprQEO3VDkwSp7qEPqk1vBJIdgR9CUfqL9TftCH8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Px7PSRyE7RJHWegH/rhvg4VARjgTv3PADmYe3UMcjqZtJ5un+515eb0M2WatcGag0
-	 oH4suDKDPjwjJLlGjI/MJOy9gj1yZSOu/29W2vXuHz1R8rWkjaGxLGgTbexGKuf1ZV
-	 0fBP4Gc9A+Xu7+qWTLF5qBXXA+KBrymog2qMtfXU=
+	s=korg; t=1782392750;
+	bh=N7b+B/7xOZmp8FxvryZJkkFDy1xy4gYhctMvdrWVxEE=;
+	h=From:To:Cc:Subject:Date;
+	b=nrfJQ2q+8Psqu4C/FT4ZDR+rvYsmBzT/t11jl3IAqgDi1//tsvnNI/NOSLGXJaPLB
+	 clHqBtE3C0hrU1eQfM790rbxf/PJrip3Qh3gxzMfD0JvDR2pKeq1XiJuQstC1QOluK
+	 YlkEbY7UPKm/jSTd/DMHz0Q86Q8XEp3qf5XWByAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Lu <llfamsec@gmail.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.18 03/60] fuse: re-lock request before replacing page cache folio
-Date: Thu, 25 Jun 2026 14:02:48 +0100
-Message-ID: <20260625125646.062530598@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 6.18 00/60] 6.18.37-rc1 review
+Date: Thu, 25 Jun 2026 14:02:45 +0100
+Message-ID: <20260625125645.554579168@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
-References: <20260625125645.554579168@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.37-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.18.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.18.37-rc1
+X-KernelTest-Deadline: 2026-06-27T12:56+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.18.37 release.
+There are 60 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 27 Jun 2026 12:54:50 +0000.
+Anything received after that time might be too late.
 
-From: Joanne Koong <joannelkoong@gmail.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.37-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+and the diffstat can be found below.
 
-commit a078484921052d0badd827fcc2770b5cfc1d4120 upstream.
+thanks,
 
-fuse_try_move_folio() unlocks the request on entry but does not
-re-lock it on the success path. This means fuse_chan_abort() can end the
-request and free the fuse_io_args (eg fuse_readpages_end()) while the
-subsequent copy chain logic after fuse_try_move_folio() accesses the
-fuse_io_args, leading to use-after-free issues.
+greg k-h
 
-Fix this by calling lock_request() before replace_page_cache_folio().
-This ensures the request is locked on the success path which will
-prevent the fuse_io_args from being freed while the later copying logic
-runs, and also ensures that the ap->folios[i]->mapping is never null
-since ap->folios[i] will always point to the newfolio after
-replace_page_cache_folio().
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: ce534fb05292 ("fuse: allow splice to move pages")
-Cc: stable@vger.kernel.org
-Reported-by: Lei Lu <llfamsec@gmail.com>
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/fuse/dev.c |   19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.18.37-rc1
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -1037,6 +1037,10 @@ static int fuse_try_move_folio(struct fu
- 	if (WARN_ON(folio_test_mlocked(oldfolio)))
- 		goto out_fallback_unlock;
- 
-+	err = lock_request(cs->req);
-+	if (err)
-+		goto out_fallback_unlock;
-+
- 	replace_page_cache_folio(oldfolio, newfolio);
- 
- 	folio_get(newfolio);
-@@ -1050,20 +1054,7 @@ static int fuse_try_move_folio(struct fu
- 	 */
- 	pipe_buf_release(cs->pipe, buf);
- 
--	err = 0;
--	spin_lock(&cs->req->waitq.lock);
--	if (test_bit(FR_ABORTED, &cs->req->flags))
--		err = -ENOENT;
--	else
--		*foliop = newfolio;
--	spin_unlock(&cs->req->waitq.lock);
--
--	if (err) {
--		folio_unlock(newfolio);
--		folio_put(newfolio);
--		goto out_put_old;
--	}
--
-+	*foliop = newfolio;
- 	folio_unlock(oldfolio);
- 	/* Drop ref for ap->pages[] array */
- 	folio_put(oldfolio);
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    mm: do not copy page tables unnecessarily for VM_UFFD_WP
+
+Miklos Szeredi <mszeredi@redhat.com>
+    virtiofs: fix UAF on submount umount
+
+Ruslan Valiyev <linuxoid@gmail.com>
+    media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
+
+Gil Portnoy <dddhkts1@gmail.com>
+    ksmbd: reject non-VALID session in compound request branch
+
+Georgi Djakov <georgi.djakov@oss.qualcomm.com>
+    drivers/base/memory: set mem->altmap after successful device registration
+
+Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+    serial: qcom_geni: Fix RX DMA stall when SE_DMA_RX_LEN_IN is zero
+
+Yi Yang <yiyang13@huawei.com>
+    vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
+
+Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+    crypto: qat - remove unused character device and IOCTLs
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix bit count in bitmap_copy()
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - iterative IRQ handler
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix memory leak in rmi_set_attn_data()
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix num_subpackets overflow in register descriptor
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix type overflow in register counts
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - refactor register descriptor parsing
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix register descriptor address calculation
+
+Sam Daly <sam@samdaly.ie>
+    iio: adc: ti-ads1298: add bounds check to pga_settings index
+
+Sam Daly <sam@samdaly.ie>
+    iio: light: veml6075: add bounds check to veml6075_it_ms index
+
+Faicker Mo <faicker.mo@gmail.com>
+    net: net_failover: Fix the deadlock in slave register
+
+Mike Marciniszyn (Meta) <mike.marciniszyn@gmail.com>
+    net: export netif_open for self_test usage
+
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    testing/selftests/mm: add soft-dirty merge self-test
+
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    mm: propagate VM_SOFTDIRTY on merge
+
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    mm: set the VM_MAYBE_GUARD flag on guard region install
+
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    mm: introduce copy-on-fork VMAs and make VM_MAYBE_GUARD one
+
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    mm: implement sticky VMA flags
+
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    mm: update vma_modify_flags() to handle residual flags, document
+
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    mm: add atomic VMA flags and set VM_MAYBE_GUARD as such
+
+Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+    mm: introduce VM_MAYBE_GUARD and make visible in /proc/$pid/smaps
+
+Xin Long <lucien.xin@gmail.com>
+    sctp: disable BH before calling udp_tunnel_xmit_skb()
+
+Tudor Ambarus <tudor.ambarus@linaro.org>
+    firmware: samsung: acpm: Fix cross-thread RX length corruption
+
+Dexuan Cui <decui@microsoft.com>
+    Drivers: hv: vmbus: Improve the logic of reserving fb_mmio on Gen2 VMs
+
+Thorsten Blum <thorsten.blum@linux.dev>
+    hv: utils: handle and propagate errors in kvp_register
+
+André Draszik <andre.draszik@linaro.org>
+    regulator: core: fix locking in regulator_resolve_supply() error path
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: don't free fd-owned sockets when reaping in the heartbeat
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: clear neighbour pointer in rose_kill_by_device()
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: cancel neighbour timers in rose_neigh_put() before freeing
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: drop CALL_REQUEST in loopback timer when device is not running
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: release netdev ref and destroy orphaned incoming sockets
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: fix netdev double-hold in rose_make_new()
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: disconnect orphaned STATE_2 sockets when device is gone
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: set SOCK_DESTROY in rose_kill_by_device() for prompt cleanup
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: fix notifier unregistered too early in rose_exit()
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: fix netdev double-hold in rose_rx_call_request()
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: guard rose_neigh_put() against NULL in timer expiry
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: clear neighbour pointer after rose_neigh_put() in state machines
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: fix race between loopback timer and module removal
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: hold loopback neighbour reference across timer callback
+
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: fix dev_put() leak in rose_loopback_timer()
+
+Yicong Yang <yang.yicong@picoheart.com>
+    ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn()
+
+Mingyu Wang <25181214217@stu.xidian.edu.cn>
+    agp/amd64: Fix broken error propagation in agp_amd64_probe()
+
+Weiming Shi <bestswngs@gmail.com>
+    net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()
+
+Weiming Shi <bestswngs@gmail.com>
+    i2c: stub: Reject I2C block transfers with invalid length
+
+Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
+    RDMA/bnxt_re: zero shared page before exposing to userspace
+
+Waiman Long <longman@redhat.com>
+    debugobjects: Dont call fill_pool() in early boot hardirq context
+
+Helen Koike <koike@igalia.com>
+    debugobjects: Do not fill_pool() if pi_blocked_on
+
+Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+    debugobjects: Use LD_WAIT_CONFIG instead of LD_WAIT_SLEEP
+
+Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+    debugobjects: Allow to refill the pool before SYSTEM_SCHEDULING
+
+Yang Erkun <yangerkun@huawei.com>
+    Revert "NFSD: Defer sub-object cleanup in export put callbacks"
+
+Joanne Koong <joannelkoong@gmail.com>
+    fuse: re-lock request before replacing page cache folio
+
+Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+    net: stmmac: fix stm32 (and potentially others) resume regression
+
+Gabriel Krisman Bertazi <krisman@suse.de>
+    io_uring/net: Avoid msghdr on op_connect/op_bind async data
+
+
+-------------
+
+Diffstat:
+
+ Documentation/filesystems/proc.rst                 |   5 +-
+ Documentation/userspace-api/ioctl/ioctl-number.rst |   1 -
+ Makefile                                           |   4 +-
+ drivers/acpi/scan.c                                |  41 +--
+ drivers/base/memory.c                              |   3 +-
+ drivers/char/agp/amd64-agp.c                       |   2 +-
+ drivers/crypto/intel/qat/qat_common/adf_cfg.c      |  10 -
+ drivers/crypto/intel/qat/qat_common/adf_cfg.h      |   1 -
+ .../crypto/intel/qat/qat_common/adf_cfg_common.h   |  32 --
+ drivers/crypto/intel/qat/qat_common/adf_cfg_user.h |  38 --
+ .../crypto/intel/qat/qat_common/adf_common_drv.h   |   3 -
+ drivers/crypto/intel/qat/qat_common/adf_ctl_drv.c  | 404 +--------------------
+ drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c  |  70 ----
+ drivers/firmware/samsung/exynos-acpm.c             |  14 +-
+ drivers/hv/hv_kvp.c                                |  25 +-
+ drivers/hv/vmbus_drv.c                             |  29 +-
+ drivers/i2c/i2c-stub.c                             |   5 +
+ drivers/iio/adc/ti-ads1298.c                       |   7 +-
+ drivers/iio/light/veml6075.c                       |   8 +-
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c           |   2 +-
+ drivers/input/rmi4/rmi_driver.c                    | 171 +++++----
+ drivers/input/rmi4/rmi_driver.h                    |   4 +-
+ drivers/input/rmi4/rmi_f12.c                       |   7 +
+ drivers/media/test-drivers/vidtv/vidtv_mux.c       |   8 +-
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c |   8 +-
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h |   1 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |   3 +-
+ drivers/net/net_failover.c                         |  12 +-
+ drivers/regulator/core.c                           |  10 +-
+ drivers/tty/serial/qcom_geni_serial.c              |   9 +-
+ drivers/tty/vt/vc_screen.c                         |   2 +-
+ fs/fuse/dev.c                                      |  19 +-
+ fs/fuse/file.c                                     |   8 +-
+ fs/nfsd/export.c                                   |  67 +---
+ fs/nfsd/export.h                                   |   7 +-
+ fs/nfsd/nfsctl.c                                   |   8 +-
+ fs/proc/task_mmu.c                                 |   1 +
+ fs/smb/server/smb2pdu.c                            |   5 +
+ include/linux/mm.h                                 | 104 ++++++
+ include/net/rose.h                                 |  12 +
+ include/trace/events/mmflags.h                     |   1 +
+ io_uring/net.c                                     |  36 +-
+ io_uring/opdef.c                                   |   4 +-
+ lib/debugobjects.c                                 |  58 ++-
+ mm/khugepaged.c                                    |  71 ++--
+ mm/madvise.c                                       |  24 +-
+ mm/memory.c                                        |  16 +-
+ mm/mlock.c                                         |   2 +-
+ mm/mprotect.c                                      |   2 +-
+ mm/mseal.c                                         |   7 +-
+ mm/vma.c                                           |  81 +++--
+ mm/vma.h                                           | 130 +++++--
+ net/core/dev.c                                     |   1 +
+ net/core/failover.c                                |   6 +-
+ net/rose/af_rose.c                                 |  49 ++-
+ net/rose/rose_in.c                                 |   6 +
+ net/rose/rose_loopback.c                           |  61 +++-
+ net/rose/rose_timer.c                              |  87 ++++-
+ net/sctp/ipv6.c                                    |   2 +
+ net/sctp/protocol.c                                |   2 +
+ tools/testing/selftests/mm/soft-dirty.c            | 127 ++++++-
+ tools/testing/vma/vma.c                            |   3 +-
+ tools/testing/vma/vma_internal.h                   |  49 +++
+ 63 files changed, 1023 insertions(+), 972 deletions(-)
 
 
