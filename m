@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80BF28640B;
-	Thu, 25 Jun 2026 13:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725682F7F11;
+	Thu, 25 Jun 2026 13:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393068; cv=none; b=bP091utR+AWnwWQg3pOn6x/XBGWTeKNbucuroADYNb93h1Vtq3At5y38LmN/Wo5xqKyqfzmwe8RDz2t6dfR3NZyJcYHoeVBoVBBe7bL8+mMdWKUwVF4Avp2Gn8QiaAOPXFW4gdqWJWlUSLZJVSrFwJVQK9BA2PdJGB+8wo/41vg=
+	t=1782393078; cv=none; b=kariHRhC1oSsuT2WroMaUoukagFh5ogI1kxYFnlGnoYB6uqug2FyZZCMRlQftmAHGTkfh/HgL3JTw1ScmNj/xQoa/7GXwngU6mphzfD4g9UW32ieTQt16HnmQYVoUmry0+JtwEZHY/gWm4Mow4EXW5kPaU/Dp275TZD6caCt6RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393068; c=relaxed/simple;
-	bh=QtGwFp2h0vkLigb/OkCnIQyG88/ioZ9xiETxzgh0Y0k=;
+	s=arc-20240116; t=1782393078; c=relaxed/simple;
+	bh=ZdHpO1qBC84ikQizAh3JB3oETDka25BD8Qcfh1SMZx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=txvx+b4vWzdpReVqF5ZDXOuxhRaK2TtKuI4+SoxM54Dee0vB8klWJp11yt+fCZgNFTNIxLdMz9QasAML/vSPQLYvolRAA/37sd15kmW4Rwr6XKMIgcB274H0dVpM/6VTw/Na2GqEZYAk71X3g4xPsYSTkvkGP293m2BoD+0VQGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbAl/ost; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IbKSBY5JtqRPxodUpvb8fd/vSXHCVOGFaF/CiDQeNOqVE2H8tsjBa28q+DoiIqTaB4J2SONJZNwsfFQywRO4ls+d71+KZlFSO35q6io0dg0NHEeYPEv9BqRPaKv+TFzwwbcduT7cDFVhVzaD7n5Q8m4eUT6RJ+yMzlaj4WzeZao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/U5/j2t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbAl/ost"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD601F000E9;
-	Thu, 25 Jun 2026 13:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/U5/j2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFDA1F00A3D;
+	Thu, 25 Jun 2026 13:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393067;
-	bh=BRNx2OFz81uH6v5OVTFLWEkTBDOCArhuVlolvyhYmV8=;
+	s=korg; t=1782393074;
+	bh=62jP5sarm0v3GEOiRJCCzgpExNbvG/eiDVhbFHAnX3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbAl/ostiNf35P1pHM54pqs83dxYqhxMQ99bIwgT0Zt/lR+D5Nz0oY2MTH5mMzf2O
-	 Aj5N9lZY4Td+2sze89bbELDjWJRHUHj903uWizsxZDbn/ORKR8f/K6kGFixUzLhYfx
-	 muXSw19n2eomFyOsF7rRFWGT4cmljz/7OERdGJgg=
+	b=s/U5/j2tdboHij/XGQlhr6jew5zsVpo3GzhkdaLbmqHBZ+Y83wpYRU/nHrcEw93yb
+	 Imk0BeBsLSw1SYwy7dfb+X3xmcwY8SVfxReAXWzjQDK+7RIIDhTOCxxh1cLZ75HwIo
+	 8OCaua34Lm6AzlFZkKxCU1wNPXzFa2sUXjmpYCaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.0 47/49] ksmbd: reject non-VALID session in compound request branch
-Date: Thu, 25 Jun 2026 14:03:59 +0100
-Message-ID: <20260625125644.124988326@linuxfoundation.org>
+	=?UTF-8?q?Aur=C3=A9lien=20Bombo?= <abombo@microsoft.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Greg Kurz <gkurz@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 7.0 49/49] virtiofs: fix UAF on submount umount
+Date: Thu, 25 Jun 2026 14:04:01 +0100
+Message-ID: <20260625125644.441881535@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -45,64 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit 609ca17d869d04ba249e32cdcbf13c0b1c66f43c upstream.
+commit 06b41351779e9289e8785694ade9042ae85e41ea upstream.
 
-smb2_check_user_session() takes a shortcut for any operation that is not
-the first in a COMPOUND request: it reuses work->sess (the session bound by
-the first operation) and validates only the SessionId, then returns
-"valid". It never re-checks work->sess->state == SMB2_SESSION_VALID, and a
-SessionId of 0xFFFFFFFFFFFFFFFF (ULLONG_MAX, the MS-SMB2 related-operation
-value) skips even the id comparison. The standalone path
-(ksmbd_session_lookup_all() plus the SESSION_SETUP state machine) does
-enforce the VALID state; the compound branch bypasses all of it.
+iput() called from fuse_release_end() can Oops if the super block has
+already been destroyed.  Normally this is prevented by waiting for
+num_waiting to go down to zero before commencing with super block shutdown.
 
-A SESSION_SETUP carrying only an NTLM Type-1 (NtLmNegotiate) blob publishes
-a fresh SMB2_SESSION_IN_PROGRESS session whose sess->user is still NULL
-(->user is assigned later, by ntlm_authenticate()). Used as operation 1 of
-a COMPOUND with operation 2 = TREE_CONNECT (related, SessionId=ULLONG_MAX,
-\\host\IPC$), the tree-connect then runs on that IN_PROGRESS session and
-reaches ksmbd_ipc_tree_connect_request(), which dereferences
-user_name(sess->user) with sess->user == NULL (transport_ipc.c:687/701/704)
--> remote NULL-pointer dereference and a kernel Oops that wedges the ksmbd
-worker for all clients.
+This only works, however, for the last submount instance, as the wait
+counter is per connection, not per superblock.
 
-Reject any non-first compound operation that lands on a session which is
-not SMB2_SESSION_VALID, mirroring the validity the standalone lookup path
-enforces. SESSION_SETUP itself legitimately runs on an IN_PROGRESS session,
-but it is never carried as a non-first compound operation, so multi-leg
-authentication is unaffected by this check.
+Revert to using synchronous release requests for the auto_submounts case,
+which is virtiofs only at this time.
 
-Fixes: 5005bcb42191 ("ksmbd: validate session id and tree id in the compound request")
+Reported-by: Aurélien Bombo <abombo@microsoft.com>
+Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Cc: Greg Kurz <gkurz@redhat.com>
+Closes: https://github.com/kata-containers/kata-containers/issues/12589
+Fixes: 26e5c67deb2e ("fuse: fix livelock in synchronous file put from fuseblk workers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Greg Kurz <gkurz@redhat.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/fuse/file.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -614,6 +614,11 @@ int smb2_check_user_session(struct ksmbd
- 					sess_id, work->sess->id);
- 			return -EINVAL;
- 		}
-+		if (work->sess->state != SMB2_SESSION_VALID) {
-+			pr_err("compound request on a non-valid session (state %d)\n",
-+					work->sess->state);
-+			return -EINVAL;
-+		}
- 		return 1;
- 	}
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -374,8 +374,14 @@ void fuse_file_release(struct inode *ino
+ 	 * aio and closes the fd before the aio completes.  Since aio takes its
+ 	 * own ref to the file, the IO completion has to drop the ref, which is
+ 	 * how the fuse server can end up closing its clients' files.
++	 *
++	 * Exception is virtio-fs, which is not affected by the above (server is
++	 * on host, cannot close open files in guest).  Virtio-fs needs sync
++	 * release, because the num_waiting mechanism to wait for all requests
++	 * before commencing with fs shutdown doesn't work if submounts are
++	 * used.
+ 	 */
+-	fuse_file_put(ff, false);
++	fuse_file_put(ff, ff->fm->fc->auto_submounts);
+ }
  
+ void fuse_release_common(struct file *file, bool isdir)
 
 
