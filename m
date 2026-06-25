@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417EF1E633C;
-	Thu, 25 Jun 2026 13:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4678B1E633C;
+	Thu, 25 Jun 2026 13:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392973; cv=none; b=flX9vSzXNOY+jF/1hHYaJG9sCDlLYQnevG8qUGWxG0kk8VLq6PKXM3iibaKyCx7b3ZaOpSKOMrARnyOz2BwI3OcT3L2Yiy6yhm5+Vml64k0nuWl2hoIDHkXNPxgq51JpsopBbx0dZjv+Y6R0y19lX8xaZ5LEteYYg5JYUQpgtQM=
+	t=1782392976; cv=none; b=qgOOrIYUHgUJh1N+Fs4rHFPVienhQfwI4DWef+FdIMiIT+pEiDTgoH39ggtbisrT10jixuF8q2j5jsTT2ASrRVPl/uLvbALs3P/ya4h0VCzEaQmJOZ9WHW4oN1/YpeN6Z0zGeVnveafYdWUF1e8L1tzetoUNb3fGb0P+NPj6Hwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392973; c=relaxed/simple;
-	bh=We0+lH7P+X4EG/Djo5FS3t+ukpF8sxG26Bwjv9F92IY=;
+	s=arc-20240116; t=1782392976; c=relaxed/simple;
+	bh=EFAutDcg53Rk1gJSyzdDM6p4hwtqt0cIn73outnI0KU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swpufYpVPIZMjHchorx07o4ZEZstpM+e1v7ectKca+hT9qD4vWFZh+0xRKgII6HfotxJYmeKImjfGJnVZyimu61Jro+xuf3UXBY6u2tCgMLVCOYLdxj1NwiEmDVks0yZ7Va83Dm+p76hP6Hx1hWLr+iYpdUGqhVrudMqBRDrbdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOvROY7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XejgzlqAsO1ji1NUg9ivEDrr3VOy3zGJl9e2cTAlkhzql391sKfYQr1w+HDD0icAWCZe60phQg6UO+NE3ANZ0EIyi71XNjoE1XUWfrfebhfP7Ztxddin0P+BdrpSmo2YFJ61ahjFWD+bpYnPQs+uvOwAwllXBc/nIu81kwMaiX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IklQUatF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOvROY7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418CA1F000E9;
-	Thu, 25 Jun 2026 13:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IklQUatF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD5C1F000E9;
+	Thu, 25 Jun 2026 13:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392971;
-	bh=N6dLL5kukwBegsVUyOKvwqYF2qrO9sNr7py+PrYrtSI=;
+	s=korg; t=1782392975;
+	bh=OmCRyb0ezHb3I7x4CSLssWsGRpHUQwie93kO8IfHISM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nOvROY7HQI07SrI7+bdSFP3HtQyTyU+EEJdMTcAj+83hjLtEoVLq+8IEGj39JCpXy
-	 LzodH/Lwp0g2QfdCk2R2CH9iiCyP8NhTsb+UAs9MKX7epXSi8lo4el6QdjcuBR9R0q
-	 I0BxX5J8HnkyT3HkQdZi2DDsHGibACTStGnnOllU=
+	b=IklQUatFd1PujQyeoL0fOFXx4y2bVgPWyM/ge0KS9GJw+aBw9pzXsKBdFhEsYDiGo
+	 GkY6EzDP+u8PN44O4MaBKAnOOEq4RW9d3G6XenKYgRMjEVkkPnDrOGyMV10Ml6UojH
+	 OZtj2sbIAXgqEOeR1y6AM/2gNCA3Ps2Wael9CM6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tj <tj.iam.tj@proton.me>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 03/49] lockd: fix TEST handling when not all permissions are available.
-Date: Thu, 25 Jun 2026 14:03:15 +0100
-Message-ID: <20260625125637.974589603@linuxfoundation.org>
+Subject: [PATCH 7.0 04/49] firmware: exynos-acpm: Count number of commands in acpm_xfer
+Date: Thu, 25 Jun 2026 14:03:16 +0100
+Message-ID: <20260625125638.132647960@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -53,254 +52,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 0b474240327cebeff08ad429e8ed3cfc6c8ee816 ]
+[ Upstream commit 00808ae2e679a97dccc5cf0ee4474ba1e2e8a21a ]
 
-The F_GETLK fcntl can work with either read access or write access or
-both.  It can query F_RDLCK and F_WRLCK locks in either case.
+Struct acpm_xfer holds two buffers with u32 commands - rxd and txd - and
+counts their size by rxlen and txlen.  "len" suffix is here ambiguous,
+so could mean length of the buffer or length of commands, and these are
+not the same since each command is u32.  Rename these to rxcnt and
+txcnt, and change their usage to count the number of commands in each
+buffer.
 
-However lockd currently treats F_GETLK similar to F_SETLK in that read
-access is required to query an F_RDLCK lock and write access is required
-to query a F_WRLCK lock.
+This will have a benefit of allowing to use __counted_by_ptr later.
 
-This is wrong and can cause problems - e.g.  when qemu accesses a
-read-only (e.g. iso) filesystem image over NFS (though why it queries
-if it can get a write lock - I don't know.  But it does, and this works
-with local filesystems).
-
-So we need TEST requests to be handled differently.  To do this:
-
-- change nlm_do_fopen() to accept O_RDWR as a mode and in that case
-  succeed if either a O_RDONLY or O_WRONLY file can be opened.
-- change nlm_lookup_file() to accept a mode argument from caller,
-  instead of deducing base on lock time, and pass that on to nlm_do_fopen()
-- change nlm4svc_retrieve_args() and nlmsvc_retrieve_args() to detect
-  TEST requests and pass O_RDWR as a mode to nlm_lookup_file, passing
-  the same mode as before for other requests.  Also set
-   lock->fl.c.flc_file to whichever file is available for TEST requests.
-- change nlmsvc_testlock() to also not calculate the mode, but to use
-  whatever was stored in lock->fl.c.flc_file.
-
-This behaviour of lockd - requesting O_WRONLY access to TEST for
-exclusive locks - has been present at least since git history began.
-However it was hidden until recently because knfsd ignored the access
-requested by lockd and required only READ access for all locking
-requests (unless the underlying filesystem provided an f_op->open
-function which checked access permissions).
-
-The commit mentioned in Fixes: below changed nfsd_permission() to NOT
-override the access request for LOCK requests and this exposed the bug
-that we are now fixing.
-
-Note that there is another issue that this patch does not address.
-The flock(.., LOCK_EX) call is permitted on a read-only file descriptor.
-Linux NFS maps this to NLM locking as whole-file byte-range locks.
-nfsd will see this as though it were fcntl( F_SETLK (F_WRLCK)) and will
-now require write access, which it might not be able to get.
-It is not clear if this is a problem in practice, or what the best
-solution might be.  So no attempt is made to address it.
-
-Reported-by: Tj <tj.iam.tj@proton.me>
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1128861
-Fixes: 4cc9b9f2bf4d ("nfsd: refine and rename NFSD_MAY_LOCK")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: NeilBrown <neil@brown.name>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://patch.msgid.link/20260219-firmare-acpm-counted-v2-2-e1f7389237d3@oss.qualcomm.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Stable-dep-of: f133bd4b5daf ("firmware: samsung: acpm: Fix cross-thread RX length corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svc4proc.c         | 13 ++++++++++---
- fs/lockd/svclock.c          |  4 +---
- fs/lockd/svcproc.c          | 15 ++++++++++++---
- fs/lockd/svcsubs.c          | 35 +++++++++++++++++++++++++----------
- include/linux/lockd/lockd.h |  2 +-
- 5 files changed, 49 insertions(+), 20 deletions(-)
+ drivers/firmware/samsung/exynos-acpm-dvfs.c |    9 +++++----
+ drivers/firmware/samsung/exynos-acpm-pmic.c |   14 +++++++-------
+ drivers/firmware/samsung/exynos-acpm.c      |   14 +++++++-------
+ drivers/firmware/samsung/exynos-acpm.h      |    4 ++--
+ 4 files changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
-index 4b6f18d977343d..75e020a8bfd072 100644
---- a/fs/lockd/svc4proc.c
-+++ b/fs/lockd/svc4proc.c
-@@ -26,6 +26,8 @@ nlm4svc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
- 	struct nlm_host		*host = NULL;
- 	struct nlm_file		*file = NULL;
- 	struct nlm_lock		*lock = &argp->lock;
-+	bool			is_test = (rqstp->rq_proc == NLMPROC_TEST ||
-+					   rqstp->rq_proc == NLMPROC_TEST_MSG);
- 	__be32			error = 0;
- 
- 	/* nfsd callbacks must have been installed for this procedure */
-@@ -46,15 +48,20 @@ nlm4svc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
- 	if (filp != NULL) {
- 		int mode = lock_to_openmode(&lock->fl);
- 
-+		if (is_test)
-+			mode = O_RDWR;
-+
- 		lock->fl.c.flc_flags = FL_POSIX;
- 
--		error = nlm_lookup_file(rqstp, &file, lock);
-+		error = nlm_lookup_file(rqstp, &file, lock, mode);
- 		if (error)
- 			goto no_locks;
- 		*filp = file;
--
- 		/* Set up the missing parts of the file_lock structure */
--		lock->fl.c.flc_file = file->f_file[mode];
-+		if (is_test)
-+			lock->fl.c.flc_file = nlmsvc_file_file(file);
-+		else
-+			lock->fl.c.flc_file = file->f_file[mode];
- 		lock->fl.c.flc_pid = current->tgid;
- 		lock->fl.fl_start = (loff_t)lock->lock_start;
- 		lock->fl.fl_end = lock->lock_len ?
-diff --git a/fs/lockd/svclock.c b/fs/lockd/svclock.c
-index abc65dc79f8543..382bf0d93ed1c1 100644
---- a/fs/lockd/svclock.c
-+++ b/fs/lockd/svclock.c
-@@ -619,7 +619,6 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
- 		struct nlm_lock *conflock)
- {
- 	int			error;
--	int			mode;
- 	__be32			ret;
- 
- 	dprintk("lockd: nlmsvc_testlock(%s/%ld, ty=%d, %Ld-%Ld)\n",
-@@ -637,14 +636,13 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
- 		goto out;
- 	}
- 
--	mode = lock_to_openmode(&lock->fl);
- 	locks_init_lock(&conflock->fl);
- 	/* vfs_test_lock only uses start, end, and owner, but tests flc_file */
- 	conflock->fl.c.flc_file = lock->fl.c.flc_file;
- 	conflock->fl.fl_start = lock->fl.fl_start;
- 	conflock->fl.fl_end = lock->fl.fl_end;
- 	conflock->fl.c.flc_owner = lock->fl.c.flc_owner;
--	error = vfs_test_lock(file->f_file[mode], &conflock->fl);
-+	error = vfs_test_lock(lock->fl.c.flc_file, &conflock->fl);
- 	if (error) {
- 		ret = nlm_lck_denied_nolocks;
- 		goto out;
-diff --git a/fs/lockd/svcproc.c b/fs/lockd/svcproc.c
-index 5817ef272332d9..d98e8d684376b7 100644
---- a/fs/lockd/svcproc.c
-+++ b/fs/lockd/svcproc.c
-@@ -55,6 +55,8 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
- 	struct nlm_host		*host = NULL;
- 	struct nlm_file		*file = NULL;
- 	struct nlm_lock		*lock = &argp->lock;
-+	bool			is_test = (rqstp->rq_proc == NLMPROC_TEST ||
-+					   rqstp->rq_proc == NLMPROC_TEST_MSG);
- 	int			mode;
- 	__be32			error = 0;
- 
-@@ -70,15 +72,22 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
- 
- 	/* Obtain file pointer. Not used by FREE_ALL call. */
- 	if (filp != NULL) {
--		error = cast_status(nlm_lookup_file(rqstp, &file, lock));
-+		mode = lock_to_openmode(&lock->fl);
-+
-+		if (is_test)
-+			mode = O_RDWR;
-+
-+		error = cast_status(nlm_lookup_file(rqstp, &file, lock, mode));
- 		if (error != 0)
- 			goto no_locks;
- 		*filp = file;
- 
- 		/* Set up the missing parts of the file_lock structure */
--		mode = lock_to_openmode(&lock->fl);
- 		lock->fl.c.flc_flags = FL_POSIX;
--		lock->fl.c.flc_file  = file->f_file[mode];
-+		if (is_test)
-+			lock->fl.c.flc_file = nlmsvc_file_file(file);
-+		else
-+			lock->fl.c.flc_file = file->f_file[mode];
- 		lock->fl.c.flc_pid = current->tgid;
- 		lock->fl.fl_lmops = &nlmsvc_lock_operations;
- 		nlmsvc_locks_init_private(&lock->fl, host, (pid_t)lock->svid);
-diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
-index dd0214dcb69503..b83e6ecd5be34f 100644
---- a/fs/lockd/svcsubs.c
-+++ b/fs/lockd/svcsubs.c
-@@ -82,18 +82,35 @@ int lock_to_openmode(struct file_lock *lock)
-  *
-  * We have to make sure we have the right credential to open
-  * the file.
-+ *
-+ * mode can be O_RDONLY(0), O_WRONLY(1) or O_RDWR(2). The latter
-+ * means success can be achieved with EITHER O_RDONLY or O_WRONLY.
-+ * It does NOT mean both read and write are required.
+--- a/drivers/firmware/samsung/exynos-acpm-dvfs.c
++++ b/drivers/firmware/samsung/exynos-acpm-dvfs.c
+@@ -5,6 +5,7 @@
+  * Copyright 2025 Linaro Ltd.
   */
- static __be32 nlm_do_fopen(struct svc_rqst *rqstp,
- 			   struct nlm_file *file, int mode)
- {
--	struct file **fp = &file->f_file[mode];
--	__be32	nfserr;
-+	__be32 nfserr = nlm_lck_denied_nolocks;
-+	__be32 deferred = 0;
-+	struct file **fp;
-+	int m;
  
--	if (*fp)
--		return 0;
--	nfserr = nlmsvc_ops->fopen(rqstp, &file->f_handle, fp, mode);
--	if (nfserr)
--		dprintk("lockd: open failed (error %d)\n", nfserr);
-+	for (m = O_RDONLY ; m <= O_WRONLY ; m++) {
-+		if (mode != O_RDWR && mode != m)
-+			continue;
-+
-+		fp = &file->f_file[m];
-+		if (*fp)
-+			return 0;
-+		nfserr = nlmsvc_ops->fopen(rqstp, &file->f_handle, fp, m);
-+		if (!nfserr)
-+			return 0;
-+		if (nfserr == nlm_drop_reply)
-+			deferred = nfserr;
-+	}
-+	if (deferred)
-+		return deferred;
-+	dprintk("lockd: open failed (error %d)\n", ntohl(nfserr));
- 	return nfserr;
++#include <linux/array_size.h>
+ #include <linux/bitfield.h>
+ #include <linux/firmware/samsung/exynos-acpm-protocol.h>
+ #include <linux/ktime.h>
+@@ -25,11 +26,11 @@ static void acpm_dvfs_set_xfer(struct ac
+ {
+ 	xfer->acpm_chan_id = acpm_chan_id;
+ 	xfer->txd = cmd;
+-	xfer->txlen = cmdlen;
++	xfer->txcnt = cmdlen;
+ 
+ 	if (response) {
+ 		xfer->rxd = cmd;
+-		xfer->rxlen = cmdlen;
++		xfer->rxcnt = cmdlen;
+ 	}
  }
  
-@@ -103,17 +120,15 @@ static __be32 nlm_do_fopen(struct svc_rqst *rqstp,
-  */
- __be32
- nlm_lookup_file(struct svc_rqst *rqstp, struct nlm_file **result,
--					struct nlm_lock *lock)
-+		struct nlm_lock *lock, int mode)
+@@ -50,7 +51,7 @@ int acpm_dvfs_set_rate(struct acpm_handl
+ 	u32 cmd[4];
+ 
+ 	acpm_dvfs_init_set_rate_cmd(cmd, clk_id, rate);
+-	acpm_dvfs_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id, false);
++	acpm_dvfs_set_xfer(&xfer, cmd, ARRAY_SIZE(cmd), acpm_chan_id, false);
+ 
+ 	return acpm_do_xfer(handle, &xfer);
+ }
+@@ -70,7 +71,7 @@ unsigned long acpm_dvfs_get_rate(struct
+ 	int ret;
+ 
+ 	acpm_dvfs_init_get_rate_cmd(cmd, clk_id);
+-	acpm_dvfs_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id, true);
++	acpm_dvfs_set_xfer(&xfer, cmd, ARRAY_SIZE(cmd), acpm_chan_id, true);
+ 
+ 	ret = acpm_do_xfer(handle, &xfer);
+ 	if (ret)
+--- a/drivers/firmware/samsung/exynos-acpm-pmic.c
++++ b/drivers/firmware/samsung/exynos-acpm-pmic.c
+@@ -63,8 +63,8 @@ static void acpm_pmic_set_xfer(struct ac
  {
- 	struct nlm_file	*file;
- 	unsigned int	hash;
- 	__be32		nfserr;
--	int		mode;
+ 	xfer->txd = cmd;
+ 	xfer->rxd = cmd;
+-	xfer->txlen = cmdlen;
+-	xfer->rxlen = cmdlen;
++	xfer->txcnt = cmdlen;
++	xfer->rxcnt = cmdlen;
+ 	xfer->acpm_chan_id = acpm_chan_id;
+ }
  
- 	nlm_debug_print_fh("nlm_lookup_file", &lock->fh);
+@@ -86,7 +86,7 @@ int acpm_pmic_read_reg(struct acpm_handl
+ 	int ret;
  
- 	hash = file_hash(&lock->fh);
--	mode = lock_to_openmode(&lock->fl);
+ 	acpm_pmic_init_read_cmd(cmd, type, reg, chan);
+-	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
++	acpm_pmic_set_xfer(&xfer, cmd, ARRAY_SIZE(cmd), acpm_chan_id);
  
- 	/* Lock file table */
- 	mutex_lock(&nlm_file_mutex);
-diff --git a/include/linux/lockd/lockd.h b/include/linux/lockd/lockd.h
-index 330e38776bb20d..fe5cdd4d66f484 100644
---- a/include/linux/lockd/lockd.h
-+++ b/include/linux/lockd/lockd.h
-@@ -294,7 +294,7 @@ void		  nlmsvc_locks_init_private(struct file_lock *, struct nlm_host *, pid_t);
-  * File handling for the server personality
-  */
- __be32		  nlm_lookup_file(struct svc_rqst *, struct nlm_file **,
--					struct nlm_lock *);
-+				  struct nlm_lock *, int);
- void		  nlm_release_file(struct nlm_file *);
- void		  nlmsvc_put_lockowner(struct nlm_lockowner *);
- void		  nlmsvc_release_lockowner(struct nlm_lock *);
--- 
-2.53.0
-
+ 	ret = acpm_do_xfer(handle, &xfer);
+ 	if (ret)
+@@ -119,7 +119,7 @@ int acpm_pmic_bulk_read(struct acpm_hand
+ 		return -EINVAL;
+ 
+ 	acpm_pmic_init_bulk_read_cmd(cmd, type, reg, chan, count);
+-	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
++	acpm_pmic_set_xfer(&xfer, cmd, ARRAY_SIZE(cmd), acpm_chan_id);
+ 
+ 	ret = acpm_do_xfer(handle, &xfer);
+ 	if (ret)
+@@ -159,7 +159,7 @@ int acpm_pmic_write_reg(struct acpm_hand
+ 	int ret;
+ 
+ 	acpm_pmic_init_write_cmd(cmd, type, reg, chan, value);
+-	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
++	acpm_pmic_set_xfer(&xfer, cmd, ARRAY_SIZE(cmd), acpm_chan_id);
+ 
+ 	ret = acpm_do_xfer(handle, &xfer);
+ 	if (ret)
+@@ -199,7 +199,7 @@ int acpm_pmic_bulk_write(struct acpm_han
+ 		return -EINVAL;
+ 
+ 	acpm_pmic_init_bulk_write_cmd(cmd, type, reg, chan, count, buf);
+-	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
++	acpm_pmic_set_xfer(&xfer, cmd, ARRAY_SIZE(cmd), acpm_chan_id);
+ 
+ 	ret = acpm_do_xfer(handle, &xfer);
+ 	if (ret)
+@@ -229,7 +229,7 @@ int acpm_pmic_update_reg(struct acpm_han
+ 	int ret;
+ 
+ 	acpm_pmic_init_update_cmd(cmd, type, reg, chan, value, mask);
+-	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
++	acpm_pmic_set_xfer(&xfer, cmd, ARRAY_SIZE(cmd), acpm_chan_id);
+ 
+ 	ret = acpm_do_xfer(handle, &xfer);
+ 	if (ret)
+--- a/drivers/firmware/samsung/exynos-acpm.c
++++ b/drivers/firmware/samsung/exynos-acpm.c
+@@ -205,7 +205,7 @@ static void acpm_get_saved_rx(struct acp
+ 	rx_seqnum = FIELD_GET(ACPM_PROTOCOL_SEQNUM, rx_data->cmd[0]);
+ 
+ 	if (rx_seqnum == tx_seqnum) {
+-		memcpy(xfer->rxd, rx_data->cmd, xfer->rxlen);
++		memcpy(xfer->rxd, rx_data->cmd, xfer->rxcnt * sizeof(*xfer->rxd));
+ 		clear_bit(rx_seqnum - 1, achan->bitmap_seqnum);
+ 	}
+ }
+@@ -258,8 +258,7 @@ static int acpm_get_rx(struct acpm_chan
+ 
+ 		if (rx_data->response) {
+ 			if (rx_seqnum == tx_seqnum) {
+-				__ioread32_copy(xfer->rxd, addr,
+-						xfer->rxlen / 4);
++				__ioread32_copy(xfer->rxd, addr, xfer->rxcnt);
+ 				rx_set = true;
+ 				clear_bit(seqnum, achan->bitmap_seqnum);
+ 			} else {
+@@ -269,8 +268,7 @@ static int acpm_get_rx(struct acpm_chan
+ 				 * clear yet the bitmap. It will be cleared
+ 				 * after the response is copied to the request.
+ 				 */
+-				__ioread32_copy(rx_data->cmd, addr,
+-						xfer->rxlen / 4);
++				__ioread32_copy(rx_data->cmd, addr, xfer->rxcnt);
+ 			}
+ 		} else {
+ 			clear_bit(seqnum, achan->bitmap_seqnum);
+@@ -425,7 +423,9 @@ int acpm_do_xfer(struct acpm_handle *han
+ 
+ 	achan = &acpm->chans[xfer->acpm_chan_id];
+ 
+-	if (!xfer->txd || xfer->txlen > achan->mlen || xfer->rxlen > achan->mlen)
++	if (!xfer->txd ||
++	    (xfer->txcnt * sizeof(*xfer->txd) > achan->mlen) ||
++	    (xfer->rxcnt * sizeof(*xfer->rxd) > achan->mlen))
+ 		return -EINVAL;
+ 
+ 	if (!achan->poll_completion) {
+@@ -448,7 +448,7 @@ int acpm_do_xfer(struct acpm_handle *han
+ 
+ 		/* Write TX command. */
+ 		__iowrite32_copy(achan->tx.base + achan->mlen * tx_front,
+-				 xfer->txd, xfer->txlen / 4);
++				 xfer->txd, xfer->txcnt);
+ 
+ 		/* Advance TX front. */
+ 		writel(idx, achan->tx.front);
+--- a/drivers/firmware/samsung/exynos-acpm.h
++++ b/drivers/firmware/samsung/exynos-acpm.h
+@@ -10,8 +10,8 @@
+ struct acpm_xfer {
+ 	const u32 *txd;
+ 	u32 *rxd;
+-	size_t txlen;
+-	size_t rxlen;
++	size_t txcnt;
++	size_t rxcnt;
+ 	unsigned int acpm_chan_id;
+ };
+ 
 
 
