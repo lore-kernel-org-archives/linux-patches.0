@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188C128751B;
-	Thu, 25 Jun 2026 13:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D4A28640B;
+	Thu, 25 Jun 2026 13:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393029; cv=none; b=G3U14vcDXoR/lGufzh9vgULdR7f2fnPwyW4/N5QCUNT4GVhyYlKZD50v25JmKww4O8hqCXKEK8yGhRRYKNFhigtkPM1/YJOrQEdTli3FKcThPGLJYAB37g8Utl5jMl1XzppnPvsoH6Kx+RgDZwxrmYrvTYrzk+vY9JW4UrrUrHs=
+	t=1782393032; cv=none; b=H80Vm5+PuuNLbF38Zgvg6+bFmLQ0EeOZArFjrI8+wuThc29R0I++0SeMYSAk3UsxLeAl5haC9swWFgLqDBnFu2q36JK9hAYFHQ7WEDQBqli+OT9mUAIkcUz5bBG33Ql2T+uVt+5X1Gf8bG7X1zhIBQ7jNcfhZYqJHbK5zzOD/XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393029; c=relaxed/simple;
-	bh=n78GgRA3z9qLvdmvrii6ihJJlxeI6roZwlDC4p7/ih0=;
+	s=arc-20240116; t=1782393032; c=relaxed/simple;
+	bh=tF0/oRVYAAmNir0LoL0GKqgGC+FuZUqwSzL3j5LiAYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocCg0/kqLIrRmGKV/XtMwgqV59vEVk5E3HfBAe6npEBsbAYXaIDGfzLfUPiqo55T8S3LuoI9Aq6YytJqnlY+jn+C04J8C9Us9TA66/cegvcfj5H/cnhEvGZ7XTQf97URgRs6a78d1Q5TuVP+zI+zpxZbv8vZp1MtnC5kBBdIo+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeAxFqeC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SvWQGIUUzhLW8Vdva7L67va09U5wBdk239JfxqXMy9GQS6A/Lxj8lKviicGnmFpzpCcui6WIa/BfEQ44WLf05TKSU/FxFG5df/xV198WEUjWZO7HgcrAiTe2x2Zw2LRLhIPfiGbiX1EUe1OM8zFyigaVTuNuMu50JtjrvqjZ2Eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oynWl09t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeAxFqeC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FBA1F000E9;
-	Thu, 25 Jun 2026 13:10:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oynWl09t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35291F000E9;
+	Thu, 25 Jun 2026 13:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393028;
-	bh=3FyVCcsCU0rfFppvCMirfp+VvPAlvIqnPiWi1SLUToE=;
+	s=korg; t=1782393031;
+	bh=5vmq2/y9MVgVBPpoJW7Y0bzvQSvtKQLaIuySx8snikQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yeAxFqeCOTX7xevhFP3FSg26cdDua14CVsUIruPvvZz381Ne/WyA+aAq4UPSvzznb
-	 gfvU5fzFtvyGWbvfKlc+dSJcI62lUVJKgWitf7z1U8Jkyrgu3yRmIa5Fk9DIBAT/j3
-	 oG7Y4XlfEFfom6+jHovbBkINCHJlHC199h1ccCfc=
+	b=oynWl09t6B3xg4y/j6QUK3xayWYSt7ha4thn7RWZaQ1i59B1u2xuEY7EYEHS2GKhM
+	 3MEwl7dzS0mFUQvgGYxh8f0gCfQ8f65d/CgUE8FQ2pwfN2fyhxVn082YG/7UZ9N2j5
+	 IOHhbJJgQBwgNvYQFY9znwJW9smkl3rjhqjz9QWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 7.0 20/49] rose: guard rose_neigh_put() against NULL in timer expiry
-Date: Thu, 25 Jun 2026 14:03:32 +0100
-Message-ID: <20260625125640.308669283@linuxfoundation.org>
+Subject: [PATCH 7.0 21/49] rose: fix netdev double-hold in rose_rx_call_request()
+Date: Thu, 25 Jun 2026 14:03:33 +0100
+Message-ID: <20260625125640.448597542@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -51,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit 2b67342c6ff899a0b83359517146a5b7b243af97 upstream.
+commit c675277c3ba0d2310e0825577d58308c39931e14 upstream.
 
-In rose_timer_expiry(), the ROSE_STATE_2 branch calls
-rose_neigh_put(rose->neighbour) without first checking whether the
-pointer is NULL.  After commit 5de7665e0a07 ("net: rose: fix timer
-races against user threads") the timer is re-armed when the socket is
-owned by a user thread; between the re-arm and the next firing, a
-device-down event or concurrent teardown via rose_kill_by_device() can
-set rose->neighbour to NULL, leading to a NULL-pointer dereference
-inside rose_neigh_put().
+rose_rx_call_request() used netdev_tracker_alloc() after assigning
+make_rose->device, intending to take ownership of the reference passed
+by the caller.  But every caller -- rose_route_frame() and
+rose_loopback_timer() -- already calls dev_put() for its own hold after
+the function returns, so the socket ended up with a tracker entry
+pointing at a reference that had already been released.
 
-Add a NULL check before the put and clear the pointer afterwards.
+The result was spurious refcount_t warnings ("saturated", "decrement
+hit 0") on every incoming CALL_REQUEST, leading to refcount corruption
+and eventual silent freeze.
 
-Fixes: 5de7665e0a07 ("net: rose: fix timer races against user threads")
+Replace netdev_tracker_alloc() with netdev_hold() so that
+rose_rx_call_request() acquires its own independent reference.  Each
+caller retains its own hold from rose_dev_get() and releases it via
+dev_put() as before; socket cleanup releases the socket's separate hold
+via netdev_put().
+
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_timer.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/rose/af_rose.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/rose/rose_timer.c
-+++ b/net/rose/rose_timer.c
-@@ -180,7 +180,10 @@ static void rose_timer_expiry(struct tim
- 		break;
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -1079,9 +1079,11 @@ int rose_rx_call_request(struct sk_buff
+ 		make_rose->source_digis[n] = facilities.source_digis[n];
+ 	make_rose->neighbour     = neigh;
+ 	make_rose->device        = dev;
+-	/* Caller got a reference for us. */
+-	netdev_tracker_alloc(make_rose->device, &make_rose->dev_tracker,
+-			     GFP_ATOMIC);
++	/* Take an independent reference for this socket; callers keep their
++	 * own reference (from rose_dev_get / dev_hold) and will release it
++	 * themselves via dev_put().
++	 */
++	netdev_hold(make_rose->device, &make_rose->dev_tracker, GFP_ATOMIC);
+ 	make_rose->facilities    = facilities;
  
- 	case ROSE_STATE_2:	/* T3 */
--		rose_neigh_put(rose->neighbour);
-+		if (rose->neighbour) {
-+			rose_neigh_put(rose->neighbour);
-+			rose->neighbour = NULL;
-+		}
- 		rose_disconnect(sk, ETIMEDOUT, -1, -1);
- 		break;
- 
+ 	rose_neigh_hold(make_rose->neighbour);
 
 
