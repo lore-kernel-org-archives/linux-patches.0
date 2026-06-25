@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D4A28640B;
-	Thu, 25 Jun 2026 13:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331AA2E091B;
+	Thu, 25 Jun 2026 13:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393032; cv=none; b=H80Vm5+PuuNLbF38Zgvg6+bFmLQ0EeOZArFjrI8+wuThc29R0I++0SeMYSAk3UsxLeAl5haC9swWFgLqDBnFu2q36JK9hAYFHQ7WEDQBqli+OT9mUAIkcUz5bBG33Ql2T+uVt+5X1Gf8bG7X1zhIBQ7jNcfhZYqJHbK5zzOD/XE=
+	t=1782393037; cv=none; b=c7MwnwnAoGaV5eNMYBdK76xEHmprx+D/OsiexvSugJE3KNBxbVH7o20z++Z/vNjdiefRVbfcAS5h64uLuJ8aoyK5IFCZuEbG/nZ1RAHjxLQ3mHYOVrE6Y1fnkTT/aH5oaZlAIQ2lUDLLKpGtiA3MGGfMOu/r1ipe3U+glWTeUXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393032; c=relaxed/simple;
-	bh=tF0/oRVYAAmNir0LoL0GKqgGC+FuZUqwSzL3j5LiAYE=;
+	s=arc-20240116; t=1782393037; c=relaxed/simple;
+	bh=lYI6xdMhsgFmRzQ365s4VpSaVSeDODxSXCN2FJ/AW7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvWQGIUUzhLW8Vdva7L67va09U5wBdk239JfxqXMy9GQS6A/Lxj8lKviicGnmFpzpCcui6WIa/BfEQ44WLf05TKSU/FxFG5df/xV198WEUjWZO7HgcrAiTe2x2Zw2LRLhIPfiGbiX1EUe1OM8zFyigaVTuNuMu50JtjrvqjZ2Eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oynWl09t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nv2DbIlrijwLaDws3967OTMn/Aw4nNIdGIgvcSyUpmz5mrdNmzaLuvbUUhuvJmr61PUuMx5BU8etyToJdRn3FTqJlj1/Mnrezhn0TsoNm5UgGltMfx/d2pAZql5wHt3FhEKXdPW2U/NPu6fcv9nIaitsh760CRiLt226ThuCCuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjqhJxtZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oynWl09t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35291F000E9;
-	Thu, 25 Jun 2026 13:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjqhJxtZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1901F000E9;
+	Thu, 25 Jun 2026 13:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393031;
-	bh=5vmq2/y9MVgVBPpoJW7Y0bzvQSvtKQLaIuySx8snikQ=;
+	s=korg; t=1782393034;
+	bh=30O8ptXC+MqyiARXGzNa/zxFT6yt3cBDNp1d7CtBypU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oynWl09t6B3xg4y/j6QUK3xayWYSt7ha4thn7RWZaQ1i59B1u2xuEY7EYEHS2GKhM
-	 3MEwl7dzS0mFUQvgGYxh8f0gCfQ8f65d/CgUE8FQ2pwfN2fyhxVn082YG/7UZ9N2j5
-	 IOHhbJJgQBwgNvYQFY9znwJW9smkl3rjhqjz9QWc=
+	b=WjqhJxtZM1apV2DyTJhkscrVzmjdmJ0coaWXaS3mqfbB0laVjINhnI1zFBqmu1Z28
+	 OOIdISGdPNF0zrfvbZ2Qhd99kxYikhrmxL2HiKvdVn2o3P/71cQnQXUbn+H4PS3UlV
+	 ON3g08pMdKY6Vh/AL7fAqc897zwHlK5s+fXFWilc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 7.0 21/49] rose: fix netdev double-hold in rose_rx_call_request()
-Date: Thu, 25 Jun 2026 14:03:33 +0100
-Message-ID: <20260625125640.448597542@linuxfoundation.org>
+Subject: [PATCH 7.0 22/49] rose: fix notifier unregistered too early in rose_exit()
+Date: Thu, 25 Jun 2026 14:03:34 +0100
+Message-ID: <20260625125640.607463264@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125637.527552689@linuxfoundation.org>
 References: <20260625125637.527552689@linuxfoundation.org>
@@ -51,47 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit c675277c3ba0d2310e0825577d58308c39931e14 upstream.
+commit f71a8a1edc14dba746edde38adddd654ba202b4d upstream.
 
-rose_rx_call_request() used netdev_tracker_alloc() after assigning
-make_rose->device, intending to take ownership of the reference passed
-by the caller.  But every caller -- rose_route_frame() and
-rose_loopback_timer() -- already calls dev_put() for its own hold after
-the function returns, so the socket ended up with a tracker entry
-pointing at a reference that had already been released.
+rose_exit() called unregister_netdevice_notifier() before the loop that
+calls unregister_netdev() on each ROSE virtual device.  As a result,
+the NETDEV_DOWN event fired by unregister_netdev() was never delivered
+to rose_device_event(), so rose_kill_by_device() never ran.
 
-The result was spurious refcount_t warnings ("saturated", "decrement
-hit 0") on every incoming CALL_REQUEST, leading to refcount corruption
-and eventual silent freeze.
+Every socket whose rose->device pointed at a ROSE device therefore kept
+its netdev_tracker entry live until free_netdev() destroyed the
+ref_tracker_dir, at which point the kernel reported all of them as
+leaked references (165 entries in a typical FPAC setup).  Worse, those
+sockets retained stale device pointers and live timers that could fire
+into freed module text after module unload, causing a silent system
+freeze with no kernel panic logged.
 
-Replace netdev_tracker_alloc() with netdev_hold() so that
-rose_rx_call_request() acquires its own independent reference.  Each
-caller retains its own hold from rose_dev_get() and releases it via
-dev_put() as before; socket cleanup releases the socket's separate hold
-via netdev_put().
+Fix by moving unregister_netdevice_notifier() to after the device-
+unregistration loop.  unregister_netdev() then delivers NETDEV_DOWN
+while the notifier is still registered, rose_kill_by_device() runs for
+each device, releases all netdev references held by open sockets, and
+calls rose_disconnect() which stops the per-socket timers.
 
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/af_rose.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/rose/af_rose.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 --- a/net/rose/af_rose.c
 +++ b/net/rose/af_rose.c
-@@ -1079,9 +1079,11 @@ int rose_rx_call_request(struct sk_buff
- 		make_rose->source_digis[n] = facilities.source_digis[n];
- 	make_rose->neighbour     = neigh;
- 	make_rose->device        = dev;
--	/* Caller got a reference for us. */
--	netdev_tracker_alloc(make_rose->device, &make_rose->dev_tracker,
--			     GFP_ATOMIC);
-+	/* Take an independent reference for this socket; callers keep their
-+	 * own reference (from rose_dev_get / dev_hold) and will release it
-+	 * themselves via dev_put().
-+	 */
-+	netdev_hold(make_rose->device, &make_rose->dev_tracker, GFP_ATOMIC);
- 	make_rose->facilities    = facilities;
+@@ -1669,19 +1669,28 @@ static void __exit rose_exit(void)
+ #ifdef CONFIG_SYSCTL
+ 	rose_unregister_sysctl();
+ #endif
+-	unregister_netdevice_notifier(&rose_dev_notifier);
+-
+ 	sock_unregister(PF_ROSE);
  
- 	rose_neigh_hold(make_rose->neighbour);
+ 	for (i = 0; i < rose_ndevs; i++) {
+ 		struct net_device *dev = dev_rose[i];
+ 
+ 		if (dev) {
++			/* unregister_netdev() fires NETDEV_DOWN, which -- while the
++			 * notifier is still registered below -- invokes
++			 * rose_kill_by_device(dev).  That releases every socket's
++			 * netdev reference and disconnects all active circuits.
++			 * Unregistering the notifier before this loop was the
++			 * original bug: NETDEV_DOWN was never delivered, leaving
++			 * 165 netdev_tracker entries leaked and stale timers live.
++			 */
+ 			unregister_netdev(dev);
+ 			free_netdev(dev);
+ 		}
+ 	}
+ 
++	/* Now safe to remove the notifier -- all ROSE devices are gone. */
++	unregister_netdevice_notifier(&rose_dev_notifier);
++
+ 	kfree(dev_rose);
+ 	proto_unregister(&rose_proto);
+ }
 
 
