@@ -1,87 +1,189 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F68A2EC086;
-	Thu, 25 Jun 2026 13:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0462877F7;
+	Thu, 25 Jun 2026 13:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393144; cv=none; b=RIIRUkch1mZfKnDQki0A6MjIrSIeV9Y4EP59v2Zf8IP/lbOg2ztkXWECeqe8QU/JlPneoAqQ/7n/Tv566IBdt6cxft77z2EisZEhEVxRBXCAwCa9PwBAX5/oWZcDuiYFiAYsFhGXHz9HmkMbKAbiYDQMOqgfrPtD/Wgl66EqcK4=
+	t=1782393148; cv=none; b=Un63DJlpuI+BQnn9OiWUSbMGMD7B5JGsEa5ljPC/BXCKwiRnMBL9uX3sfiksM68h3HLpAtHsN+xYesCTRc3YtjwNYP12RwjRvcISAfCYayRjNP/x6UXdSIimYBa4ij2lwa03PLs08zSdSCUbCVazq1dJhS2X7rA9FJsbjwr0whk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393144; c=relaxed/simple;
-	bh=hXZ5IXxBJ4/vNwN3xxVxdcdyigQL3aBaGVe+XaZyIzc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNVripz2mDh+WOmF1yK54LAoRY9+oSzhMppujbtrsykZt4hjUoeh/nBzySkOtudv+wLuD0Vwuh3nZ/dsklHwBtgQoYLTAoMeRk7YXNyAgcRTPICS7+LeuOWp4DPW8mwgMJf9PtJjm94ZQhm50Rj+KT+XDrJhW462hl4JCd7yzWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQ4AcjWO; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782393148; c=relaxed/simple;
+	bh=Y1V1Km+tKvYpeUTUmai3Hl0qKuXEs5HWfC0q6fYAaRI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=INOstaP0yUTBwsXC44Fj+WDuUZgt1Qo0NACAbKJTYhyobkcSyLqBzfNP2GU5iS05HcmrZUvYGer8ETXcrNImmQJtZvHS3ySfGHmb1xUFDDlgY2ggmjGHOTroqbNZiy2vLauYpwTIOdNGEl/xQIJ0giwnAbDemzza+Z3GBYIefpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceF4ea2v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQ4AcjWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46EC1F00A3A;
-	Thu, 25 Jun 2026 13:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceF4ea2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82BF1F000E9;
+	Thu, 25 Jun 2026 13:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393143;
-	bh=O3gJm5ho+sprxgHCxyg2tUmI+m1xUcoWFUG0Hde/3Ws=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tQ4AcjWOosioOYevsQMTnuO4OEozknM/MoHFXAW4GdgojL2uj7CU/nKYvGrTYV9PV
-	 QDELdLic5qP0TRJF0dQy91YuWenXPAm07UTLBmYk91r2ClZnnAyIX2nIx4GwnzQ6m0
-	 GFP6DfqYCg+GZGbY8OB8frGiKuRHk8/D61GlsCzU=
+	s=korg; t=1782393146;
+	bh=tpRMeUtVDDZLkcup7aETD9UQs0+9frGOD53fFH5ag8w=;
+	h=From:To:Cc:Subject:Date;
+	b=ceF4ea2vfIcbgXunq8z6ZlIRlw+i0CISFObcMAJy9Ctb2A1PVn9jXvvBGahKe2HKZ
+	 7ytJMPYR/p821Wo27vFJKOJ3ZBIBUnccPmXyEtVS2FSFZWjO1w9DgJa5peNuvs4gOi
+	 h65aJU6NEuO5Zr5DBybgIPi5n6WB6EvSATDQxk2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 09/21] Input: rmi4 - fix type overflow in register counts
-Date: Thu, 25 Jun 2026 14:04:01 +0100
-Message-ID: <20260625125614.543002211@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 7.1 00/21] 7.1.2-rc1 review
+Date: Thu, 25 Jun 2026 14:03:52 +0100
+Message-ID: <20260625125613.243729608@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260625125613.243729608@linuxfoundation.org>
-References: <20260625125613.243729608@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.2-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-7.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 7.1.2-rc1
+X-KernelTest-Deadline: 2026-06-27T12:56+00:00
 Content-Transfer-Encoding: 8bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 7.1.2 release.
+There are 21 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 27 Jun 2026 12:54:50 +0000.
+Anything received after that time might be too late.
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.2-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
+and the diffstat can be found below.
 
-commit a0a87e441238e07c5f7e3de133ef77a9d4229f01 upstream.
+thanks,
 
-The number of registers in the RMI4 register descriptor is populated
-by counting the bits in the presence map using bitmap_weight(). Since
-the presence map can contain up to 256 bits (RMI_REG_DESC_PRESENSE_BITS),
-storing this count in a u8 can overflow to 0 if all 256 bits are set.
+greg k-h
 
-Change the num_registers field in struct rmi_register_descriptor
-from u8 to u16 to prevent potential integer overflow and ensure safe
-processing of devices reporting large descriptors.
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: 2b6a321da9a2 ("Input: synaptics-rmi4 - add support for Synaptics RMI4 devices")
-Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.1-pro
-Link: https://patch.msgid.link/20260505045952.1570713-3-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/input/rmi4/rmi_driver.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 7.1.2-rc1
 
---- a/drivers/input/rmi4/rmi_driver.h
-+++ b/drivers/input/rmi4/rmi_driver.h
-@@ -65,7 +65,7 @@ struct rmi_register_desc_item {
- struct rmi_register_descriptor {
- 	unsigned long struct_size;
- 	unsigned long presense_map[BITS_TO_LONGS(RMI_REG_DESC_PRESENSE_BITS)];
--	u8 num_registers;
-+	u16 num_registers;
- 	struct rmi_register_desc_item *registers;
- };
- 
+Miklos Szeredi <mszeredi@redhat.com>
+    virtiofs: fix UAF on submount umount
+
+Ruslan Valiyev <linuxoid@gmail.com>
+    media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
+
+Gil Portnoy <dddhkts1@gmail.com>
+    ksmbd: reject non-VALID session in compound request branch
+
+Georgi Djakov <georgi.djakov@oss.qualcomm.com>
+    drivers/base/memory: set mem->altmap after successful device registration
+
+Stepan Ionichev <sozdayvek@gmail.com>
+    serial: 8250_dw: unregister 8250 port if clk_notifier_register() fails
+
+Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+    serial: qcom_geni: Fix RX DMA stall when SE_DMA_RX_LEN_IN is zero
+
+Yi Yang <yiyang13@huawei.com>
+    vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
+
+Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+    crypto: qat - remove unused character device and IOCTLs
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix bit count in bitmap_copy()
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - iterative IRQ handler
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix memory leak in rmi_set_attn_data()
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix num_subpackets overflow in register descriptor
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix type overflow in register counts
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - refactor register descriptor parsing
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: rmi4 - fix register descriptor address calculation
+
+Sam Daly <sam@samdaly.ie>
+    iio: adc: ti-ads1298: add bounds check to pga_settings index
+
+Sam Daly <sam@samdaly.ie>
+    iio: light: veml6075: add bounds check to veml6075_it_ms index
+
+Mingyu Wang <25181214217@stu.xidian.edu.cn>
+    agp/amd64: Fix broken error propagation in agp_amd64_probe()
+
+Yang Erkun <yangerkun@huawei.com>
+    Revert "NFSD: Defer sub-object cleanup in export put callbacks"
+
+Joanne Koong <joannelkoong@gmail.com>
+    fuse: re-lock request before replacing page cache folio
+
+Gabriel Krisman Bertazi <krisman@suse.de>
+    io_uring/net: Avoid msghdr on op_connect/op_bind async data
+
+
+-------------
+
+Diffstat:
+
+ Documentation/userspace-api/ioctl/ioctl-number.rst |   1 -
+ Makefile                                           |   4 +-
+ drivers/base/memory.c                              |   3 +-
+ drivers/char/agp/amd64-agp.c                       |   2 +-
+ drivers/crypto/intel/qat/qat_common/adf_cfg.c      |  10 -
+ drivers/crypto/intel/qat/qat_common/adf_cfg.h      |   1 -
+ .../crypto/intel/qat/qat_common/adf_cfg_common.h   |  32 --
+ drivers/crypto/intel/qat/qat_common/adf_cfg_user.h |  38 --
+ .../crypto/intel/qat/qat_common/adf_common_drv.h   |   3 -
+ drivers/crypto/intel/qat/qat_common/adf_ctl_drv.c  | 404 +--------------------
+ drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c  |  70 ----
+ drivers/iio/adc/ti-ads1298.c                       |   7 +-
+ drivers/iio/light/veml6075.c                       |   8 +-
+ drivers/input/rmi4/rmi_driver.c                    | 171 +++++----
+ drivers/input/rmi4/rmi_driver.h                    |   4 +-
+ drivers/input/rmi4/rmi_f12.c                       |   7 +
+ drivers/media/test-drivers/vidtv/vidtv_mux.c       |   8 +-
+ drivers/tty/serial/8250/8250_dw.c                  |   4 +-
+ drivers/tty/serial/qcom_geni_serial.c              |   9 +-
+ drivers/tty/vt/vc_screen.c                         |   2 +-
+ fs/fuse/dev.c                                      |  19 +-
+ fs/fuse/file.c                                     |   8 +-
+ fs/nfsd/export.c                                   |  67 +---
+ fs/nfsd/export.h                                   |   7 +-
+ fs/nfsd/nfsctl.c                                   |   8 +-
+ fs/smb/server/smb2pdu.c                            |   5 +
+ io_uring/net.c                                     |  36 +-
+ io_uring/opdef.c                                   |   4 +-
+ 28 files changed, 193 insertions(+), 749 deletions(-)
 
 
