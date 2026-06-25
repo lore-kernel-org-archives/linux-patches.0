@@ -1,95 +1,61 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFE135E940;
-	Thu, 25 Jun 2026 14:08:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909EF367B62;
+	Thu, 25 Jun 2026 15:27:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782396495; cv=none; b=GzT1LOrqkTn/DXAZwHVJ+R6KRBXurhiNnW8fgSFM/2az8Ikck3shCAd2k33i/o6AkO7ZD6iIhD+cpNqHQ6wiibkrk+KkgtW1jFTaTSfroZCr8OOKqZkF3SjJ77UWSkcz0PttO08lL4m/tc++BV9M6xQQCyLyATEdLrW5N+THE38=
+	t=1782401267; cv=none; b=r8OhFVC4Ajfpx+XoZzesrYZ0uIUm3FGOEVba1sDrb63TBaZqmL7Cm5rtamSJgDM5BoifO4pthDOGKJmiRXsB0rCs8K94gdE3dThOVkMaW3DjV3XyqZhfZ7SraLuvdw6Oy/JHZSBnlprE7yS8T9y3lnG/uwZ4iSdcw6hWBq+cTa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782396495; c=relaxed/simple;
-	bh=VadflMrV5Y5GiavVRO4d679hafrETVACnjzeOE97MAQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QDKAQgbftivDb8y9I3dy9TiBurrAbw9GpwosNS37hdO8MtRASLGOCwYkqGDjMGz0aU+4irKpCsfIbbmnvawEvO4ZFJkSnn9kuC9M45tHaIs3sVPZ5qPFpCW3eVcz4RSpa6aCclE8044H56Qeb54NJ9eo7+ajiXCOSuddvo/ZTAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XYbA13Tl; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XYbA13Tl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8BC1F000E9;
-	Thu, 25 Jun 2026 14:08:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782396493;
-	bh=4EXQWfdtBSMC0qZpTbidaAuKZ+eg07thHjIW5SaTkgI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=XYbA13TlUVzjdNRF9AXi8VlZ0vLfOTsCeRZ953JWJ+LMVWU13vJYpCrAaekMEgu2q
-	 +YPS1muiT3nBuvDGV597M51b9Ejwq4Tekrfl0pLXt5uzRggBS9A8K3JM99vZZ9Q05f
-	 yU0oKGNE7RkTqW1pBFUOeyuuTrv7RqEPPybKleDB3+pknZra0UQ3TgbPTVbmt+qxUa
-	 br11zfn3XLybPSq3JpHdpDYll+wUAYzhSqzv3tzWqMkshcS/7FFUdrAMT2N4UHkvDc
-	 W5rgwW+zgk/we44UpkL2ZkbfAT3slqG62QOT1uLAvCcbr6Pk1aiRztrR6rnYJZCNi/
-	 pLycM2U6Bs2Jg==
-Received: from johan by xi.lan with local (Exim 4.99.3)
-	(envelope-from <johan@kernel.org>)
-	id 1wckkV-00000002SAt-0rM1;
-	Thu, 25 Jun 2026 16:08:11 +0200
-Date: Thu, 25 Jun 2026 16:08:11 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	s=arc-20240116; t=1782401267; c=relaxed/simple;
+	bh=KH7kSG4TIMCFUMtIC0Lo7bfgl+W4CKNz8hZO5xdyt9s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DxI3wEIeKK1i/LPi9284Dwjv3w4yYFIJPbQjdDMXx+URgMHyRUninL51QhtLUvcmOfW24wJAuSVaItICAxoRYJ5O+udkrULGPNEQHHKxQpMbAs4JPUkf6GchWd6Gq7+rQ/qAceNi9inxlte3Br0Ec1fG4i0gop0Jb85VaSD+ou8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Masayuki Ohtake <masa-korg@dsn.okisemi.com>,
-	Ramanan Govindarajan <ramanan.govindarajan@oracle.com>,
-	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>,
-	Vegard Nossum <vegard.nossum@oracle.com>
-Subject: Re: [PATCH 5.15 323/411] spi: topcliff-pch: fix controller
- deregistration
-Message-ID: <aj02Sx14nrwc--Uo@hovoldconsulting.com>
-References: <20260616145100.376842714@linuxfoundation.org>
- <20260616145118.324999322@linuxfoundation.org>
- <d23a21f0-95dd-4e0c-845e-2a54c50f44eb@oracle.com>
- <ajpLCYZ3eQm5p64L@hovoldconsulting.com>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 6.18 00/60] 6.18.37-rc1 review
+Date: Thu, 25 Jun 2026 15:27:17 +0000
+Message-ID: <20260625152723.8493-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
+References: <20260625125645.554579168@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ajpLCYZ3eQm5p64L@hovoldconsulting.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 23, 2026 at 10:59:53AM +0200, Johan Hovold wrote:
-> On Fri, Jun 19, 2026 at 06:08:40PM +0530, Harshit Mogalapalli wrote:
-> > On 16/06/26 20:29, Greg Kroah-Hartman wrote:
-> > > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Johan Hovold <johan@kernel.org>
-> > > 
-> > > [ Upstream commit 5d6f477d6fc0767c57c5e1e6f55a1662820eef87 ]
-> > > 
-> > > Make sure to deregister the controller before disabling and releasing
-> > > underlying resources like interrupts and DMA during driver unbind.
+# Librecast Test Results
 
-> > I think for 5.15.y we should fix the backport by moving spi_master_get() 
-> > and spi_unregister_master() before the local queue/resource/IRQ teardown 
-> > in pch_spi_pd_remove(), thoughts?
-> 
-> I agree, this backport looks wrong.
-> 
-> This is probably an effect of
-> 
-> 	9d72732fe70c ("spi: topcliff-pch: fix use-after-free on unbind")
-> 
-> being backported before
-> 
-> 	9d72732fe70c ("spi: topcliff-pch: fix use-after-free on unbind")
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-This was supposed to say
+CPU/kernel: Linux auntie 6.18.37-rc1-g66e1cbcc83d0 #1 SMP PREEMPT_DYNAMIC Thu Jun 25 15:04:20 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-	5d6f477d6fc0 ("spi: topcliff-pch: fix controller deregistration")
-
-of course...
- 
-> due to the latter first failing to apply because of the SPI API rename.
-
-Johan
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
