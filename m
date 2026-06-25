@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7B52D0C62;
-	Thu, 25 Jun 2026 13:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2000C23E25B;
+	Thu, 25 Jun 2026 13:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392824; cv=none; b=HuaKsZQSYXwyn4q2YAN8SYQWB6CgxnMq7iiRvM+KIejUv38MOCbaoKfhWOHkzZXzm94YIvOTtJckWLcm527M0yU9+4j/CKWUkO/QQVMrizxaQZXMlNSTQcnB8BD3ki1cMVsavwf55VrgRV9T6fEY4Ex27gMSKJNIWjQxp8rauNc=
+	t=1782392827; cv=none; b=mDs79XCgwfPIp9SeJBTXkEB5CLh1FVOKdDDHn7NJnwa82YU9LGMptM4kwF0Asg+FRqFRLA5u6IqvRgM28svAog5JsklvxkYKXQs4nih/DjH7uSmy91yxaha2JXN6QlZ+S4SCw4AhjZiAZosDdYmDE0ZmancIz6m0dtvWapSgoUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392824; c=relaxed/simple;
-	bh=D4TxbydOi9dHRz9OhnBVAXBqbsS4WAbA4PXirRRKWn4=;
+	s=arc-20240116; t=1782392827; c=relaxed/simple;
+	bh=KfFSjPyxJW9XOXc7Pt9MTgiXNPISibjF7cmapKm5L6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asbZskMyBgNoxIQshBd7NwpFn/SKNgqTW6Y/2/Qy/rj55bffni6baNUHj3Y16oRVkzC+wb/3EwFpRriKbi4MPvXxmjuSTomMnwHyyzlshQYGbC26sKzFb4hU2nIohjCfMed/yshHveCAAoNXjY5dBCguD6nZNJONpAF+yyeDlAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGC3X9TF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iW5RZewB4Uy+X0W+ujdpgYJFRI4NsV4V9s45Le+ZqytHVqQaN2TlOELvQQRrsdiOvc91Iguhqh1PYQoYKABLGtx+MmvYmUUz89XNZZpoc0cwLZ3Jy8wjpxF/y4rdpsBmwgxo/g8/ZBb7dRVOn1QLaSO87A+VT0f0uCdHH5dCsh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJqKBAx6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGC3X9TF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91ED1F000E9;
-	Thu, 25 Jun 2026 13:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJqKBAx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7941F000E9;
+	Thu, 25 Jun 2026 13:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392822;
-	bh=VBez6G4wPtl4pFKdHLKOiJtk81m2U6bTGBNd6vdrnwQ=;
+	s=korg; t=1782392826;
+	bh=vayaskE3V6A3mcI4Mk0d3Gu7RAvazZI9SeY0d8AUv0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UGC3X9TFh1WBWzcyqf9j/weBrr7NKfQOWk6qCpezZTVLHlV+7BJyG15iAHviIv+co
-	 QTfW7Ffu52MihZzzw5nxa1mm982CUtcsUPpOhUOxGYJN77Hi4mNnN0TzugFUrwzH+A
-	 cWCrdzeHH9L1bSEJVPhH8ki1rxMIAk2OSOUVupjY=
+	b=IJqKBAx60mBV0CdUMIPME4iwckmnsq1TYkf8rgX+6nK1ct0GWm2VvoA4FlMj0+Ah9
+	 qnEkAyWbeM0qrs1BRlHoVmBr+DRihcH1qMV9XJe0SZuAQzhJYfchyfaVAPFu/rn7bR
+	 97E5rIFPyEQjBf9O/mxroYGDlQKvvvUM59VWjFKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -50,9 +50,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Ahmed Elaidy <elaidya225@gmail.com>
-Subject: [PATCH 6.18 34/60] mm: introduce VM_MAYBE_GUARD and make visible in /proc/$pid/smaps
-Date: Thu, 25 Jun 2026 14:03:19 +0100
-Message-ID: <20260625125650.574635767@linuxfoundation.org>
+Subject: [PATCH 6.18 35/60] mm: add atomic VMA flags and set VM_MAYBE_GUARD as such
+Date: Thu, 25 Jun 2026 14:03:20 +0100
+Message-ID: <20260625125650.732740428@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -73,100 +73,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit 5dba5cc2e0ffa76f2f6c8922a04469dc9602c396 upstream.
+commit 568822502383acd57d7cc1c72ee43932c45a9524 upstream.
 
-Patch series "introduce VM_MAYBE_GUARD and make it sticky", v4.
+This patch adds the ability to atomically set VMA flags with only the mmap
+read/VMA read lock held.
 
-Currently, guard regions are not visible to users except through
-/proc/$pid/pagemap, with no explicit visibility at the VMA level.
+As this could be hugely problematic for VMA flags in general given that
+all other accesses are non-atomic and serialised by the mmap/VMA locks, we
+implement this with a strict allow-list - that is, only designated flags
+are allowed to do this.
 
-This makes the feature less useful, as it isn't entirely apparent which
-VMAs may have these entries present, especially when performing actions
-which walk through memory regions such as those performed by CRIU.
+We make VM_MAYBE_GUARD one of these flags.
 
-This series addresses this issue by introducing the VM_MAYBE_GUARD flag
-which fulfils this role, updating the smaps logic to display an entry for
-these.
-
-The semantics of this flag are that a guard region MAY be present if set
-(we cannot be sure, as we can't efficiently track whether an
-MADV_GUARD_REMOVE finally removes all the guard regions in a VMA) - but if
-not set the VMA definitely does NOT have any guard regions present.
-
-It's problematic to establish this flag without further action, because
-that means that VMAs with guard regions in them become non-mergeable with
-adjacent VMAs for no especially good reason.
-
-To work around this, this series also introduces the concept of 'sticky'
-VMA flags - that is flags which:
-
-a. if set in one VMA and not in another still permit those VMAs to be
-   merged (if otherwise compatible).
-
-b. When they are merged, the resultant VMA must have the flag set.
-
-The VMA logic is updated to propagate these flags correctly.
-
-Additionally, VM_MAYBE_GUARD being an explicit VMA flag allows us to solve
-an issue with file-backed guard regions - previously these established an
-anon_vma object for file-backed mappings solely to have vma_needs_copy()
-correctly propagate guard region mappings to child processes.
-
-We introduce a new flag alias VM_COPY_ON_FORK (which currently only
-specifies VM_MAYBE_GUARD) and update vma_needs_copy() to check explicitly
-for this flag and to copy page tables if it is present, which resolves
-this issue.
-
-Additionally, we add the ability for allow-listed VMA flags to be
-atomically writable with only mmap/VMA read locks held.
-
-The only flag we allow so far is VM_MAYBE_GUARD, which we carefully ensure
-does not cause any races by being allowed to do so.
-
-This allows us to maintain guard region installation as a read-locked
-operation and not endure the overhead of obtaining a write lock here.
-
-Finally we introduce extensive VMA userland tests to assert that the
-sticky VMA logic behaves correctly as well as guard region self tests to
-assert that smaps visibility is correctly implemented.
-
-This patch (of 9):
-
-Currently, if a user needs to determine if guard regions are present in a
-range, they have to scan all VMAs (or have knowledge of which ones might
-have guard regions).
-
-Since commit 8e2f2aeb8b48 ("fs/proc/task_mmu: add guard region bit to
-pagemap") and the related commit a516403787e0 ("fs/proc: extend the
-PAGEMAP_SCAN ioctl to report guard regions"), users can use either
-/proc/$pid/pagemap or the PAGEMAP_SCAN functionality to perform this
-operation at a virtual address level.
-
-This is not ideal, and it gives no visibility at a /proc/$pid/smaps level
-that guard regions exist in ranges.
-
-This patch remedies the situation by establishing a new VMA flag,
-VM_MAYBE_GUARD, to indicate that a VMA may contain guard regions (it is
-uncertain because we cannot reasonably determine whether a
-MADV_GUARD_REMOVE call has removed all of the guard regions in a VMA, and
-additionally VMAs may change across merge/split).
-
-We utilise 0x800 for this flag which makes it available to 32-bit
-architectures also, a flag that was previously used by VM_DENYWRITE, which
-was removed in commit 8d0920bde5eb ("mm: remove VM_DENYWRITE") and hasn't
-bee reused yet.
-
-We also update the smaps logic and documentation to identify these VMAs.
-
-Another major use of this functionality is that we can use it to identify
-that we ought to copy page tables on fork.
-
-We do not actually implement usage of this flag in mm/madvise.c yet as we
-need to allow some VMA flags to be applied atomically under mmap/VMA read
-lock in order to avoid the need to acquire a write lock for this purpose.
-
-Link: https://lkml.kernel.org/r/cover.1763460113.git.ljs@kernel.org
-Link: https://lkml.kernel.org/r/cf8ef821eba29b6c5b5e138fffe95d6dcabdedb9.1763460113.git.ljs@kernel.org
+Link: https://lkml.kernel.org/r/97e57abed09f2663077ed7a36fb8206e243171a9.1763460113.git.ljs@kernel.org
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
@@ -192,96 +111,68 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Ahmed Elaidy <elaidya225@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/proc.rst |    5 +++--
- fs/proc/task_mmu.c                 |    1 +
- include/linux/mm.h                 |    3 +++
- include/trace/events/mmflags.h     |    1 +
- mm/memory.c                        |    4 ++++
- tools/testing/vma/vma_internal.h   |    1 +
- 6 files changed, 13 insertions(+), 2 deletions(-)
+ include/linux/mm.h |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
---- a/Documentation/filesystems/proc.rst
-+++ b/Documentation/filesystems/proc.rst
-@@ -553,7 +553,7 @@ otherwise.
- kernel flags associated with the particular virtual memory area in two letter
- encoded manner. The codes are the following:
- 
--    ==    =======================================
-+    ==    =============================================================
-     rd    readable
-     wr    writeable
-     ex    executable
-@@ -591,7 +591,8 @@ encoded manner. The codes are the follow
-     sl    sealed
-     lf    lock on fault pages
-     dp    always lazily freeable mapping
--    ==    =======================================
-+    gu    maybe contains guard regions (if not set, definitely doesn't)
-+    ==    =============================================================
- 
- Note that there is no guarantee that every flag and associated mnemonic will
- be present in all further kernel releases. Things get changed, the flags may
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -1159,6 +1159,7 @@ static void show_smap_vma_flags(struct s
- 		[ilog2(VM_MAYSHARE)]	= "ms",
- 		[ilog2(VM_GROWSDOWN)]	= "gd",
- 		[ilog2(VM_PFNMAP)]	= "pf",
-+		[ilog2(VM_MAYBE_GUARD)]	= "gu",
- 		[ilog2(VM_LOCKED)]	= "lo",
- 		[ilog2(VM_IO)]		= "io",
- 		[ilog2(VM_SEQ_READ)]	= "sr",
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
-@@ -269,6 +269,8 @@ extern struct rw_semaphore nommu_region_
- extern unsigned int kobjsize(const void *objp);
- #endif
+@@ -501,6 +501,9 @@ extern unsigned int kobjsize(const void
+ /* This mask represents all the VMA flag bits used by mlock */
+ #define VM_LOCKED_MASK	(VM_LOCKED | VM_LOCKONFAULT)
  
-+#define VM_MAYBE_GUARD_BIT 11
++/* These flags can be updated atomically via VMA/mmap read lock. */
++#define VM_ATOMIC_SET_ALLOWED VM_MAYBE_GUARD
 +
- /*
-  * vm_flags in vm_area_struct, see mm_types.h.
-  * When changing, update also include/trace/events/mmflags.h
-@@ -294,6 +296,7 @@ extern unsigned int kobjsize(const void
- #define VM_UFFD_MISSING	0
- #endif /* CONFIG_MMU */
- #define VM_PFNMAP	0x00000400	/* Page-ranges managed without "struct page", just pure PFN */
-+#define VM_MAYBE_GUARD	BIT(VM_MAYBE_GUARD_BIT)	/* The VMA maybe contains guard regions. */
- #define VM_UFFD_WP	0x00001000	/* wrprotect pages tracking */
+ /* Arch-specific flags to clear when updating VM flags on protection change */
+ #ifndef VM_ARCH_CLEAR
+ # define VM_ARCH_CLEAR	VM_NONE
+@@ -843,6 +846,47 @@ static inline void vm_flags_mod(struct v
+ 	__vm_flags_mod(vma, set, clear);
+ }
  
- #define VM_LOCKED	0x00002000
---- a/include/trace/events/mmflags.h
-+++ b/include/trace/events/mmflags.h
-@@ -213,6 +213,7 @@ IF_HAVE_PG_ARCH_3(arch_3)
- 	{VM_UFFD_MISSING,		"uffd_missing"	},		\
- IF_HAVE_UFFD_MINOR(VM_UFFD_MINOR,	"uffd_minor"	)		\
- 	{VM_PFNMAP,			"pfnmap"	},		\
-+	{VM_MAYBE_GUARD,		"maybe_guard"	},		\
- 	{VM_UFFD_WP,			"uffd_wp"	},		\
- 	{VM_LOCKED,			"locked"	},		\
- 	{VM_IO,				"io"		},		\
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -1494,6 +1494,10 @@ vma_needs_copy(struct vm_area_struct *ds
- 	if (src_vma->anon_vma)
- 		return true;
- 
-+	/* Guard regions have modified page tables that require copying. */
-+	if (src_vma->vm_flags & VM_MAYBE_GUARD)
-+		return true;
++static inline bool __vma_flag_atomic_valid(struct vm_area_struct *vma,
++				       int bit)
++{
++	const vm_flags_t mask = BIT(bit);
 +
- 	/*
- 	 * Don't copy ptes where a page fault will fill them correctly.  Fork
- 	 * becomes much lighter when there are big shared or private readonly
---- a/tools/testing/vma/vma_internal.h
-+++ b/tools/testing/vma/vma_internal.h
-@@ -56,6 +56,7 @@ extern unsigned long dac_mmap_min_addr;
- #define VM_MAYEXEC	0x00000040
- #define VM_GROWSDOWN	0x00000100
- #define VM_PFNMAP	0x00000400
-+#define VM_MAYBE_GUARD	0x00000800
- #define VM_LOCKED	0x00002000
- #define VM_IO           0x00004000
- #define VM_SEQ_READ	0x00008000	/* App will access data sequentially */
++	/* Only specific flags are permitted */
++	if (WARN_ON_ONCE(!(mask & VM_ATOMIC_SET_ALLOWED)))
++		return false;
++
++	return true;
++}
++
++/*
++ * Set VMA flag atomically. Requires only VMA/mmap read lock. Only specific
++ * valid flags are allowed to do this.
++ */
++static inline void vma_flag_set_atomic(struct vm_area_struct *vma, int bit)
++{
++	/* mmap read lock/VMA read lock must be held. */
++	if (!rwsem_is_locked(&vma->vm_mm->mmap_lock))
++		vma_assert_locked(vma);
++
++	if (__vma_flag_atomic_valid(vma, bit))
++		set_bit(bit, &ACCESS_PRIVATE(vma, __vm_flags));
++}
++
++/*
++ * Test for VMA flag atomically. Requires no locks. Only specific valid flags
++ * are allowed to do this.
++ *
++ * This is necessarily racey, so callers must ensure that serialisation is
++ * achieved through some other means, or that races are permissible.
++ */
++static inline bool vma_flag_test_atomic(struct vm_area_struct *vma, int bit)
++{
++	if (__vma_flag_atomic_valid(vma, bit))
++		return test_bit(bit, &vma->vm_flags);
++
++	return false;
++}
++
+ static inline void vma_set_anonymous(struct vm_area_struct *vma)
+ {
+ 	vma->vm_ops = NULL;
 
 
