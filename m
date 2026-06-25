@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EE22D5412;
-	Thu, 25 Jun 2026 13:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DD72571B8;
+	Thu, 25 Jun 2026 13:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392871; cv=none; b=safspzcYBaY3uJiRjXH7IpvOOz0tKKew7aC/IyrMS5GnAfgMjCAcocFpjFTKxFJf8bxxxIVbXkYDYysgQ3D+oRdKdUN/Ck/NC3c6iu3I0JnCgW5hYaNvpPj/N1YINpE21WiQizRsKb85LZUBIYDaaqVnRi7UA3p9CXLC5/A5/2Y=
+	t=1782392874; cv=none; b=dUFWYt4kUnfOtaJjMMGb+T5hC6Yn54f1Hypp+ZHqHTxkJ8RXL+KxoWo7ZMX6uyj5JjV1AAOyK/Gx0uR4I6746jeO66V7ZaAANzOMhg0+WqNdzHcRatm+MFh9674AoR9ynTleIYM2xUygqA/fTrEvfZCMOCazFH5tLMvnLpZVSsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392871; c=relaxed/simple;
-	bh=YQ3CKcVMdN2/mOySCIGkTBMKmw08liwx7Yk3Htu7Z3o=;
+	s=arc-20240116; t=1782392874; c=relaxed/simple;
+	bh=n2GZOo70rTG5/syYgNw11OibZsjL8J7EvhHZBUktsR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rNPUr9XCjhDj6NpAyXAKPnfGeK2HXWA1Ib1OVLDIFzpd+/trDmqwx8z6vKjmYp7D4AL3lnJnkxCPnLJGO5UXoooxqRFxAaqUBv1EGkZHDZAV0xkD1m+eWOv4yHaxWa5bd41baozBVdt2C/HMO6aRJmfEJT+we4ynDiGnlRjmMPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NknSu0CM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TZKhNIrWBuzN6o7QqYoEbmzCmKfrP2iEteoGHP3UXmS2d6Q/IwxNS2iBx/rrirsEMWT22Tyn9qSxPbiaD643sulxf/h3UNZwQ2/J+4yKW7Qm7M7EFtmH0fB2hU6cpsjeF6zbkjnb1fZVfBP1QOKRJv9k1J9MI5Zyp5vpO5QXLGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsYxQTz+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NknSu0CM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8451F000E9;
-	Thu, 25 Jun 2026 13:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsYxQTz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DD21F000E9;
+	Thu, 25 Jun 2026 13:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392869;
-	bh=Y674XSuCyucD5dvdzkNBRLuinSqhfcglgbeRwF+Whak=;
+	s=korg; t=1782392873;
+	bh=4qE56yGmolDPRpOgF+tcC5AUjO/hGCMXNFlF6cg5hCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NknSu0CM2Ei+RHFQCsr5wL8CSWwRF3MnT+M2Jd7/o73oc05qC/lZMEncvRTl9uK15
-	 cFwgUVvXMVqLm1/6/AEiGsuTK8LQakIgAJinzSxsJKuRoINNwvxoScUwYvbRe+Qz65
-	 xPBrz0Ha0qDFo221nae4P+ZLLXkL7GE7jbiwNku8=
+	b=fsYxQTz+fjUoY+Xv2I2R38tYr3RGHcRvuGvk/DdHL6jlxbJib0zwjjcciTxlnicPt
+	 07zVRd0Jx3AKLN9Hh41xay02XhtL5JxemAo3eHZHHfsp0qiAaIprNUTZAB0xGHqlYj
+	 7ozdpTJiDTZRFbZdB23LJO/JfpJZqMK8afsDjQOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 48/60] Input: rmi4 - fix type overflow in register counts
-Date: Thu, 25 Jun 2026 14:03:33 +0100
-Message-ID: <20260625125652.736851146@linuxfoundation.org>
+Subject: [PATCH 6.18 49/60] Input: rmi4 - fix num_subpackets overflow in register descriptor
+Date: Thu, 25 Jun 2026 14:03:34 +0100
+Message-ID: <20260625125652.864608375@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -51,37 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit a0a87e441238e07c5f7e3de133ef77a9d4229f01 upstream.
+commit 2b4b482d5c4c23c668b998a7da985aea0fa4a978 upstream.
 
-The number of registers in the RMI4 register descriptor is populated
-by counting the bits in the presence map using bitmap_weight(). Since
-the presence map can contain up to 256 bits (RMI_REG_DESC_PRESENSE_BITS),
-storing this count in a u8 can overflow to 0 if all 256 bits are set.
+RMI_REG_DESC_SUBPACKET_BITS is defined as 296 (37 * BITS_PER_BYTE). This
+may overflow num_subpackets in struct rmi_register_desc_item which is
+defined as a u8.
 
-Change the num_registers field in struct rmi_register_descriptor
-from u8 to u16 to prevent potential integer overflow and ensure safe
-processing of devices reporting large descriptors.
+Fix this by changing the type of num_subpackets to u16.
 
 Fixes: 2b6a321da9a2 ("Input: synaptics-rmi4 - add support for Synaptics RMI4 devices")
 Cc: stable@vger.kernel.org
 Assisted-by: Gemini:gemini-3.1-pro
-Link: https://patch.msgid.link/20260505045952.1570713-3-dmitry.torokhov@gmail.com
+Link: https://patch.msgid.link/20260505045952.1570713-4-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/input/rmi4/rmi_driver.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/rmi4/rmi_f12.c    |    7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
 --- a/drivers/input/rmi4/rmi_driver.h
 +++ b/drivers/input/rmi4/rmi_driver.h
-@@ -65,7 +65,7 @@ struct rmi_register_desc_item {
- struct rmi_register_descriptor {
- 	unsigned long struct_size;
- 	unsigned long presense_map[BITS_TO_LONGS(RMI_REG_DESC_PRESENSE_BITS)];
--	u8 num_registers;
-+	u16 num_registers;
- 	struct rmi_register_desc_item *registers;
+@@ -53,7 +53,7 @@ struct pdt_entry {
+ struct rmi_register_desc_item {
+ 	u16 reg;
+ 	unsigned long reg_size;
+-	u8 num_subpackets;
++	u16 num_subpackets;
+ 	unsigned long subpacket_map[BITS_TO_LONGS(
+ 				RMI_REG_DESC_SUBPACKET_BITS)];
  };
- 
+--- a/drivers/input/rmi4/rmi_f12.c
++++ b/drivers/input/rmi4/rmi_f12.c
+@@ -467,6 +467,13 @@ static int rmi_f12_probe(struct rmi_func
+ 		f12->data1 = item;
+ 		f12->data1_offset = data_offset;
+ 		data_offset += item->reg_size;
++
++		if (item->num_subpackets > 255) {
++			dev_err(&fn->dev, "Too many fingers declared: %d\n",
++				item->num_subpackets);
++			return -EINVAL;
++		}
++
+ 		sensor->nbr_fingers = item->num_subpackets;
+ 		sensor->report_abs = 1;
+ 		sensor->attn_size += item->reg_size;
 
 
