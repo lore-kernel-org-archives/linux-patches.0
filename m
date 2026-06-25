@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FC21E633C;
-	Thu, 25 Jun 2026 13:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE3B2D8DDB;
+	Thu, 25 Jun 2026 13:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392784; cv=none; b=UGH6xwJD6hQ13OntpbF1HJ6uiamjlCAm2SRG31JqP4KIOIlukNlay+stp5jgKEF06w3rCPd0NTX/LXhZxCDjY2DNlSww9TCQwBsOESdrk8xPwRI8fv4sa69VyXTW0vhy2OWqoEJeQcs9iqYDyHWmggbiBi3X5xS9Er5+XMIMIoY=
+	t=1782392788; cv=none; b=XLfcbBJCW6NWzhButp0hFgbNnuuQntqqzbdQdGy9i1MRPtDg52YOFBBo6M5ktLTQZBgYJxfVzrcdv03DbGlSf8gI03M4a6JLFCP8/yOc9bqp909jpJnUyM+7Wu2Y/Vl5SQbbPdfTEUn6MhMmHucynu5Y7gPfJ5JDYeE7sGXcLVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392784; c=relaxed/simple;
-	bh=CRTrf8xc32LPgWSsUB20M+oFAOq5uR74RO3BTe2Tsx0=;
+	s=arc-20240116; t=1782392788; c=relaxed/simple;
+	bh=aa2Q3CPS+hxHQq2etGmHC5M1e++fBKiPVfqo8BHe5os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4J49Gm2B2i+IABe8m1MAdbE8UFvHrvoc0ZHLQh+vl06kFCrvVQwBrmZojr3gBeO2zYWqh6aY7JPvCy+7Rq+IWxlEaPYX5vAk8AvSiA4JCah1vHRCz8lMi08E+nFahV+QkP9v2afMjkSBe6Qjicq9aUY/o8TCmBEFujXWZbpn2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9fznb2g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LCmyPcqPFdNUPN+RCbi4t2Qk4Xj2eaepJMWPZQbNHX++APOyAvs8gQhm2aFlR6XBuJReFJVkjs/Y1k4XN9wnnHmETBaVf8kVocehbHuH2Cuj5m1rYfhVhgKpVGTBPKzORFazvudvCYEY7VoMuG5fMShLGEgSxhUc2HDa5FqEfAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MICaqfzJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9fznb2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB831F000E9;
-	Thu, 25 Jun 2026 13:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MICaqfzJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46E41F000E9;
+	Thu, 25 Jun 2026 13:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392783;
-	bh=7v1/aoBs06z4eJzT4YOygnFmu7Frys4jWrOM5SpkkaA=;
+	s=korg; t=1782392786;
+	bh=G+YEBR0TBc0YSKnHA67MLUgp6XxiBaw9pookorrR3W8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B9fznb2gbkUsIU6xzfGrHAyhjjPwcJj77UxsSE54SW8SVO9VKj8tU4kk6ekxQ+mzL
-	 my5HgXINibntr8h69zY7HaXyiIuJQQUCEVdHWQchry7WsQ82VVOlMeefb3ZWEX/E6N
-	 zYW9Zi28Zgabn9eJMCzjtwVsGucdFWa5A38P13m4=
+	b=MICaqfzJIkQ9xe4YLQeRk7si2jyuS8zKaBK+8DoytuMu6z9+ojLOyAVlzVc7igxcg
+	 jcfsk0fu+b6RqE2D+loj37dY9Px8HzcTLdJk1I3bN+m1z6HAP2EN1fjricwepIjFI+
+	 dmtGIMYw9I5o1BnHpNoCOwaF5+7r6ZehIbPP4pkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Waiman Long <longman@redhat.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 08/60] debugobjects: Dont call fill_pool() in early boot hardirq context
-Date: Thu, 25 Jun 2026 14:02:53 +0100
-Message-ID: <20260625125646.742893674@linuxfoundation.org>
+	Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.18 09/60] RDMA/bnxt_re: zero shared page before exposing to userspace
+Date: Thu, 25 Jun 2026 14:02:54 +0100
+Message-ID: <20260625125646.892694347@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -53,107 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
 
-commit 0d046ae106255cba5eb83b23f78ee93f3620247d upstream.
+commit f6b079629becfa977f9c51fe53ad2e6dcc55ef44 upstream.
 
-When booting a debug PREEMPT_RT kernel on an ARM64 system, a "inconsistent
-{HARDIRQ-ON-W} -> {IN-HARDIRQ-W} usage" lockdep warning message was
-reported to the console.
+bnxt_re_alloc_ucontext() allocates uctx->shpg via
+__get_free_page(GFP_KERNEL). The buddy allocator does not zero pages
+without __GFP_ZERO, so the page contains stale kernel data from
+whatever object most recently freed it.
 
-During early boot, interrupts are enabled before the scheduler is
-enabled. In this window (before SYSTEM_SCHEDULING is set) interrupts can
-fire and in the hard interrupt context handler attempt to fill the pool
+The page is then mapped into userspace via vm_insert_page() under
+BNXT_RE_MMAP_SH_PAGE in bnxt_re_mmap(). The driver only ever writes
+4 bytes (a u32 AVID) at offset BNXT_RE_AVID_OFFT (0x10) inside
+bnxt_re_create_ah(); the remaining 4092 bytes of the page are exposed
+to userspace unsanitised, leaking kernel memory contents.
 
-This can lead to a deadlock when the interrupt occurred when the interrupt
-hits a region which holds a lock that is required to be taken in the
-allocation path.
+Any user with access to /dev/infiniband/uverbsX on a host with a
+bnxt_re device (typically rdma group membership) can read this data
+via a single mmap() at pgoff 0 after IB_USER_VERBS_CMD_GET_CONTEXT.
 
-Add a new can_fill_pool() helper and reorder the exception rule and forbid
-this scenario by excluding allocations from hard interrupt context.
+Other shared pages in the same file already use get_zeroed_page()
+correctly:
 
-Fixes: 06e0ae988f6e ("debugobjects: Allow to refill the pool before SYSTEM_SCHEDULING")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260605173038.495075-1-longman@redhat.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  drivers/infiniband/hw/bnxt_re/ib_verbs.c
+      srq->uctx_srq_page = (void *)get_zeroed_page(GFP_KERNEL);
+      cq->uctx_cq_page  = (void *)get_zeroed_page(GFP_KERNEL);
+
+uctx->shpg is the only outlier. Bring it in line with the existing
+convention by switching to get_zeroed_page().
+
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
+Link: https://patch.msgid.link/20260509084011.11971-1-pomzm67@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c | 46 +++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index cbd025dae5ce92..17f116247bb423 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -720,6 +720,41 @@ static inline bool debug_objects_is_pi_blocked_on(void)
- #endif
- }
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -4350,7 +4350,7 @@ int bnxt_re_alloc_ucontext(struct ib_uco
  
-+static inline bool can_fill_pool(void)
-+{
-+	/*
-+	 * On !RT enabled kernels there are no restrictions and spinlock_t and
-+	 * raw_spinlock_t are the same types.
-+	 */
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT))
-+		return true;
-+
-+	/*
-+	 * On RT enabled kernels, the task must not be blocked on a lock as
-+	 * that could corrupt the PI state when blocking on a lock in the
-+	 * allocation path.
-+	 */
-+	if (debug_objects_is_pi_blocked_on())
-+		return false;
-+
-+	/*
-+	 * On RT enabled kernels the pool refill should happen in preemptible
-+	 * context.
-+	 */
-+	if (preemptible())
-+		return true;
-+
-+	/*
-+	 * Though during system boot before scheduling is set up, preemption is
-+	 * disabled and the pool can get exhausted. Before scheduling is active
-+	 * a task cannot be blocked on a sleeping lock, but it might hold a lock
-+	 * and if interrupted then hard interrupt context might run into a lock
-+	 * inversion. So exclude hard interrupt context from allocations before
-+	 * scheduling is active.
-+	 */
-+	return system_state < SYSTEM_SCHEDULING && !in_hardirq();
-+}
-+
- static void debug_objects_fill_pool(void)
- {
- 	if (!static_branch_likely(&obj_cache_enabled))
-@@ -734,18 +769,11 @@ static void debug_objects_fill_pool(void)
- 	if (likely(!pool_should_refill(&pool_global)))
- 		return;
+ 	uctx->rdev = rdev;
  
--	/*
--	 * On RT enabled kernels the pool refill must happen in preemptible
--	 * context and not enqueued on an rt_mutex -- for !RT kernels we rely
--	 * on the fact that spinlock_t and raw_spinlock_t are basically the
--	 * same type and this lock-type inversion works just fine.
--	 */
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || system_state < SYSTEM_SCHEDULING ||
--	    (preemptible() && !debug_objects_is_pi_blocked_on())) {
-+	if (can_fill_pool()) {
- 		/*
- 		 * Annotate away the spinlock_t inside raw_spinlock_t warning
- 		 * by temporarily raising the wait-type to LD_WAIT_CONFIG, matching
--		 * the preemptible() condition above.
-+		 * the preemptible() condition in can_fill_pool().
- 		 */
- 		static DEFINE_WAIT_OVERRIDE_MAP(fill_pool_map, LD_WAIT_CONFIG);
- 		lock_map_acquire_try(&fill_pool_map);
--- 
-2.53.0
-
+-	uctx->shpg = (void *)__get_free_page(GFP_KERNEL);
++	uctx->shpg = (void *)get_zeroed_page(GFP_KERNEL);
+ 	if (!uctx->shpg) {
+ 		rc = -ENOMEM;
+ 		goto fail;
 
 
