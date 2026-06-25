@@ -1,135 +1,108 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EBA23E25B;
-	Thu, 25 Jun 2026 17:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B570347DD
+	for <patches@lists.linux.dev>; Thu, 25 Jun 2026 17:12:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782407016; cv=none; b=f19BIrT9b61orhfC7Hh5xJGLPSsJkXyi2AZjsB1uJx+Wk6WjsXk3FAcE6ep/KeGNK1YSmD8qbVhNC6s6P7jW1bJg3cLGutPHat3O0TP4w6xxHuZ4F83eE1d8CpSvqnb6Vcs22vcvc/buAVovRx+9W/v4eNZHqiWn1wuu1UDmjrE=
+	t=1782407522; cv=none; b=BRbk/uIAPMI6R0X9Ny0OomXRZ+KaXpB9oH6KUDQ5Kjqbf7/uuhDDr6AFXeheBgwPgBSpofwTSoKAX3+8ec5e09cwHorcFDd7rIjIBuoaXQW3M4WGBZDr7efTVfa+U30fMh/9yKh8z1SsiEbFYXk/YGHU7Kj5L4xSghmXMmztmWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782407016; c=relaxed/simple;
-	bh=TkaC+ITyc5ECGcY11xX9NJOyBuFYLfP2h/nqfbyS8KM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Jh51cb02wJsbPt/itLSPdtp00yF4zRNZTaPIn+RIH7wblJUre7QlcxOm/wHuv2GX0sskqjX9egpikOXzdZgbPNL+IFd8IFtjETJ0t6Xnlpi6WwaX0H5UVJk7aTXt+2XoWLPdgx3qpefOhqhGnB0/BXFk7GKZSQPgPon4jkT2SY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wcnU5-004JTU-0c;
-	Thu, 25 Jun 2026 17:03:25 +0000
-Received: from ben by deadeye with local (Exim 4.99.3)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wcnU3-00000008Sti-30x4;
-	Thu, 25 Jun 2026 19:03:23 +0200
-Message-ID: <0e31e18e9567e8d58fbb8e06955c3ed8e5a120d3.camel@decadent.org.uk>
-Subject: Re: [PATCH 6.1 431/522] cgroup/cpuset: Reset DL migration state on
- can_attach() failure
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Guopeng Zhang <zhangguopeng@kylinos.cn>, Tejun
- Heo	 <tj@kernel.org>, Chen Ridong <chenridong@huaweicloud.com>, Waiman Long
-	 <longman@redhat.com>, Sasha Levin <sashal@kernel.org>
-Date: Thu, 25 Jun 2026 19:03:18 +0200
-In-Reply-To: <20260616145146.132165243@linuxfoundation.org>
-References: <20260616145125.307082728@linuxfoundation.org>
-	 <20260616145146.132165243@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-MaYQKXGlI/qt01T47OJK"
-User-Agent: Evolution 3.56.2-9 
+	s=arc-20240116; t=1782407522; c=relaxed/simple;
+	bh=GYQPxRYeOZe9xA3Z7jlOLVuS8C1pKrNXXpS5JJeJb0k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Mr95F4CaaQY2fe0KczP4+JQBLlEH0i/rFcBNrEV9sZ1N2GqpzhbmfV3H7AYl/4fzq6gzLNl9jE+nIZMrh4/v/wWvARJhe+4UWuF/mvxX9uDa45ibMuYtJUn7D2oXl5Jycx/upETmhA42pTtIrZfaCttq4wa1n8okm9Bdw2Q9hEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=ABRXfJB/; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="ABRXfJB/"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-46e4764ca48so558317f8f.0
+        for <patches@lists.linux.dev>; Thu, 25 Jun 2026 10:12:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20251104; t=1782407520; x=1783012320; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U/nrtkiDBwccYRRPEcbTsqsJxJusPJzF4noA53Uf2LA=;
+        b=ABRXfJB/vOnRyzIj4tqypronnkpM9ovH0X2OUsQ0t3xXvLWHJ0soQQfy2WKubqX5qy
+         e4cpGI5dK04lzg/flGzcH99zNpXXlnuSouaUb0brXxIXgyv84PPC0493X/gftVzYQbwD
+         lSnktSUQ5oifgv8CJMqifNYwJjq8t35oc58WcIW8ynNnTAOAEquHXf3BfZWvbfe4MxBk
+         IZvISG7Sxj5csKCZYbmmvZn43zQwKH1gagqEhT6EvVPR3qQ24A+E7TzIky0aDilLVwDN
+         g85oqXlZrnUrXdLTWdeA7r/0V4qN9Aj5DiQQ7frw4sijdLb6JmH2bLben+a5iEw6j4zv
+         Q8CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782407520; x=1783012320;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U/nrtkiDBwccYRRPEcbTsqsJxJusPJzF4noA53Uf2LA=;
+        b=otudnjf7uOQ5M+EvEKPt5/bS69NnyDO9KEWsr2zo2cSkTVZzNjUpm24CwnrYIHbi3U
+         L6rlFq0gTrl8UW/rcchw3PQw6ujvlMxPtDCjVDYGVPOAuohRdBC9npaD42S4atWReuC3
+         p2Hnfs9uvbVVHWO0jwK6MUAeugh/fii1yBWCbeVYQhgnTqVO8t7SFk4yC1WOQl/vtnmb
+         027VyXO22WnIaRmT8lsKufByplSclPkzvVWHYgKFYkIIW1arL8a+mVFTxp2ErLi64xVo
+         15lgjRj0Mitv0schjGZ+MEgIsheIAPOyd5o9KIHiZrN+Hrtlna/hhRcc3y+N6pJZ8vH4
+         V3OQ==
+X-Gm-Message-State: AOJu0Yzt1d7OI8QBPiPs/fdCxXKx1YwaVPWFf377BKiInrl9fE9b3XbX
+	hw8Yv8/WQnl4Zm6yCiKjfmD9CWdQ4IJfz/AYuHK9CpjSMPGOEdtfo5A=
+X-Gm-Gg: AfdE7ckNNBcOpfvScZ6kW13EyjljlpA9p0hp2yQXEjnQAvfIxzl5xPZ0zFCii3QFGqU
+	rTFQNfKBciRv9ZA2CEYY7JM4kmWHBJzzudq4e/NyCatRYF6Jv7UR3oNvBredRJXCnRTFTLVEYHF
+	FdJmidW4ePoB5budzrTzGiF4l04O6bfzHz4M91NiPG2viotHEZGHVBLIEiQja1rXLMjyMr6mXHG
+	WP/oPxwYh48r/PE4+soE5XmWn++4kC0yPsRsGlnwiLBstrRePNCfdUpF+QJ3h5GG0DUFAmAJ0v2
+	SvYB4HnS/iKgm7lJZe/S8c24BnIpoLyZRLNdXB5wHUC06+OVWwU42ctSW3Dwi/0No16ZWXv40RR
+	emPvKeVIz7mTMls9xGFX6E78HGmWyqZ4kwlBn/RGYggYqTJOKQcw46nNol3zoJyA2haYiH9sPvy
+	AuMrP2ar0s0XaBhfwtnD4oIcGn4TifDpzUrI2NLWbkhREi+8KQBpr7Fd9R8ZZsuMAs
+X-Received: by 2002:a5d:5e81:0:b0:468:4f81:5aa4 with SMTP id ffacd0b85a97d-46dc026de2bmr5435368f8f.10.1782407519694;
+        Thu, 25 Jun 2026 10:11:59 -0700 (PDT)
+Received: from [192.168.1.3] (p5b0572d8.dip0.t-ipconnect.de. [91.5.114.216])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46c221d93eesm16930278f8f.20.2026.06.25.10.11.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jun 2026 10:11:59 -0700 (PDT)
+Message-ID: <5cd52e45-cd66-4cd1-8f32-22e36702c0e8@googlemail.com>
+Date: Thu, 25 Jun 2026 19:11:56 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 00/60] 6.18.37-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260625125645.554579168@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Am 25.06.2026 um 15:02 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.18.37 release.
+> There are 60 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
 
---=-MaYQKXGlI/qt01T47OJK
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Beste Grüße,
+Peter Schneider
 
-On Tue, 2026-06-16 at 20:29 +0530, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me kno=
-w.
->=20
-> ------------------
->=20
-> From: Guopeng Zhang <zhangguopeng@kylinos.cn>
->=20
-> [ Upstream commit 4a39eda5fdd867fc39f3c039714dd432cee00268 ]
->=20
-> cpuset_can_attach() accumulates temporary SCHED_DEADLINE migration
-> state in the destination cpuset while walking the taskset.
-[...]
-> --- a/kernel/cgroup/cpuset.c
-> +++ b/kernel/cgroup/cpuset.c
-> @@ -2579,16 +2579,13 @@ static int cpuset_can_attach(struct cgro
->  		int cpu =3D cpumask_any_and(cpu_active_mask, cs->effective_cpus);
-> =20
->  		if (unlikely(cpu >=3D nr_cpu_ids)) {
-> -			reset_migrate_dl_data(cs);
->  			ret =3D -EINVAL;
->  			goto out_unlock;
->  		}
-> =20
->  		ret =3D dl_bw_alloc(cpu, cs->sum_migrate_dl_bw);
-> -		if (ret) {
-> -			reset_migrate_dl_data(cs);
-> +		if (ret)
->  			goto out_unlock;
-> -		}
->  	}
-> =20
->  out_success:
-> @@ -3401,7 +3398,10 @@ static int cpuset_can_fork(struct task_s
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-In this backport the second hunk is being applied to the wrong function!
-The backport to 6.6 has the same problem.
-
-Ben.
-
->  	 * changes which zero cpus/mems_allowed.
->  	 */
->  	cs->attach_in_progress++;
-> +
->  out_unlock:
-> +	if (ret)
-> +		reset_migrate_dl_data(cs);
->  	mutex_unlock(&cpuset_mutex);
->  	return ret;
->  }
->=20
->=20
-
---=20
-Ben Hutchings
-Humans are not rational beings; they are rationalising beings.
-
---=-MaYQKXGlI/qt01T47OJK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmo9X1YACgkQ57/I7JWG
-EQm1IBAAyTPz8RlfmKVe8sazTi0W6JmbsxE0aONe892BrngEcAz0g2zEr+OIkgHN
-vh1p7udtSSTGT9iy5SqAu/N+PUd/vlGWb/qbzLHat74HdsxfdcS3iV2qPBivEwNn
-INA7DxD83LCx+Hvz/Dmz4dy5G4tXqpRZLhWLAnCTqoMSeXpaW65XfddJnAPLPXl6
-Y+V/tvyLOwRa9F+ZJUlaUIQ73JlzS7fApzj4wPz59gkyDrwzv3+otM9WY52zmwtx
-gzCaKUK8epodzNBrKFdXBN2EbzUJu/cihPreFPIx5KcT3nWkwC863HOlAxv+EXsX
-rgLcDCjEI6Xi3VozaTrQkYKEPIQRHL6Y0vMFF8Nc+nii6yS1566Uj5PzmkK0ybch
-ZYsSz7rs6fl+HFD9iOPKmhqM9mQ4WNRtqJZ63phqUTceQwp6kBrJd+sJ+p4+78HQ
-1UhoSeAnlCSJnu67gdrUbfga9rKi9ZbhGn4de+B5GEAsAreehG0+Bx2a2IPkMham
-oLY7XBLLl1aHJQ9qpciqdhjliXoFDDdMl12Rz9PkwG6eMPu+8rTujtY4qPrhpcnB
-PjITP0JQlbSLegJWwd2Q6YiC8ptseGuFB2z4cCTExgfh0pAP12lxOyzo+CtUDoFj
-O2MluhcBM99WLEXTE1rrbDfPUqUSxcU8qt4a0sveKq/Ipuj1HOo=
-=SrAn
------END PGP SIGNATURE-----
-
---=-MaYQKXGlI/qt01T47OJK--
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
