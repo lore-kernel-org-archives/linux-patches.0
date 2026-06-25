@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F3728751B;
-	Thu, 25 Jun 2026 13:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE9F2BE026;
+	Thu, 25 Jun 2026 13:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392804; cv=none; b=B8Ot2qeSLCg1IvgtBuGP1K410QmbQBje2G1W+pC4ip5fAl6LnbOFCjXq50l3biknNJ4loIxjokzJm2yBXhmaAcGHZIb2Raa1gs+DNkmPOkjAGc2/ge9NAVBlXZ6DYtVhyEL8/154hED2v8DwmIEk5Dh7BusTlitrZ5psVM/6SSU=
+	t=1782392807; cv=none; b=q14NXkDVYSZr4IGQqMth+14gXccuFe+S5J9fIrl8dbyjn0HSFIvh9OIuzTy0NgIZWMjLCwGfRK1ip7Hwlqj9U5eqdJVf8Q0s8s8H/gGTz6OfyTr+DFO1kRdh1ar9k9ZKuncrledWUZK37Q71f7qqEB230ekY7rNDX5cwD1SE9p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392804; c=relaxed/simple;
-	bh=ge+Ec1pETig7yCgn4Zg5xaQgdPIGeQVmlKSA9evI/oI=;
+	s=arc-20240116; t=1782392807; c=relaxed/simple;
+	bh=atMv3rrfWEw9wssIcSaYKXLlr3+V48pVzFA2YhUw0q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RtZrNfEZu1auvNzoBCHbjHzluDI1VoFWiQJ/WRMesoYwB/PKdXTJmQvAFtIzLOR/O8WJSKEXV4uvOMBoNZ6QZir+yJ46p/vOSNuRLIKdqv48FZQFEcZq+7hKPi8W1/BnXaMAuHDVjR19V12VvuBzC5BTpBSRGSPNU8Yjyui9TTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mooa9DP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TugQww4HkDfotRS51XQNhLQWjNJQqgwi0hCoceBx+rYsDlEVnhvgKj8J/KEpL05h3qkg+GkY6CwVFJjZGomekO94eTL+Bw+MpqHyo+mnud6nTEaboLdWb74MeTokghGW3CFx7fUBGcLWqYSnMX/JtBbsuoqqM+yxJIIjEzqzYBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fs2Rmyod; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mooa9DP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC5D1F000E9;
-	Thu, 25 Jun 2026 13:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fs2Rmyod"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F081F000E9;
+	Thu, 25 Jun 2026 13:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392802;
-	bh=fXpCV8rIj1Q5JD0qOEzLqI5qGSZUwU21S+y/1khp6fA=;
+	s=korg; t=1782392806;
+	bh=juO0ywVZJHlQMjqwqI9fx3KoZmTgAwLSNybaGlUqTGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0mooa9DP5bZmLL3UgvXAX5KLf406ynQ/LO16lFidLZCI1Fn01vGRXAn+Do6H890XQ
-	 8T06QEjrrN8WvdhaUz5e5aN0ppG8HRPQQxZscFfwPZ/akwS0MOSIFB3irfC9yaNQWq
-	 ExNr4dsTtWtPa+ewW4cg++Q6ftcQE8ceVkOAYtGk=
+	b=Fs2RmyodjZOvfcspQzvy6K1tl2+s9jQrrMecCVElCq1TRfcd69ZjFgRPo/WsyxhpG
+	 7jrX4dS7m655DBIv3go/LHQIrJcLkOMVHK2SZLBqcf0tJYRZvIWfPAwxwTrL1m3sIS
+	 vXl9w8ptm2MMWYfwA3szMOTnVCwuLa+nuQPJo44o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Alexandr Alexandrov <alexandr.alexandrov@oracle.com>,
-	Yang Erkun <yangerkun@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 04/60] Revert "NFSD: Defer sub-object cleanup in export put callbacks"
-Date: Thu, 25 Jun 2026 14:02:49 +0100
-Message-ID: <20260625125646.234962429@linuxfoundation.org>
+	Bernard Pidoux <bernard.f6bvp@gmail.com>
+Subject: [PATCH 6.18 21/60] rose: set SOCK_DESTROY in rose_kill_by_device() for prompt cleanup
+Date: Thu, 25 Jun 2026 14:03:06 +0100
+Message-ID: <20260625125648.647768526@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -52,245 +49,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit 516403d4d85607fdef3ca41d4a56b54e5566fa9a upstream.
+commit 741a4863ad570889c75f7a8e404567d8f3e46335 upstream.
 
-This reverts commit 48db892356d6cb80f6942885545de4a6dd8d2a29.
+When rose_kill_by_device() is called (via NETDEV_DOWN on module exit
+or interface removal), it calls rose_disconnect() which transitions
+sockets to ROSE_STATE_0 and sets SOCK_DEAD.  However,
+rose_heartbeat_expiry() only calls rose_destroy_socket() at
+ROSE_STATE_0 if SOCK_DESTROY is set -- the SOCK_DEAD path is reserved
+for TCP_LISTEN sockets.  Without SOCK_DESTROY, orphaned sockets in
+ROSE_STATE_2 (clearing) loop indefinitely in the heartbeat without
+ever being freed, keeping the module use-count elevated and blocking
+modprobe -r rose until the T1 timer (up to 200 s) expires.
 
-Commit 48db892356d6 ("NFSD: Defer sub-object cleanup in export
-put callbacks") moved path_put() and auth_domain_put() out of
-svc_export_put() and expkey_put() and behind queue_rcu_work() to
-close a claimed use-after-free in e_show() and c_show() against
-ex_path and ex_client->name. Discussion in [1] shows neither
-the diagnosis nor the remedy survives review.
+Set SOCK_DESTROY immediately after rose_disconnect() so the heartbeat
+destroys the socket at its next tick (within 5 s), allowing clean
+module unload.
 
-The downstream teardown of both sub-objects is already RCU-deferred.
-auth_domain_put() reaches svcauth_unix_domain_release(), which frees
-the unix_domain and its ->name through call_rcu(). path_put()
-reaches dentry_free(), which frees the dentry through call_rcu(),
-and prepend_path() is already structured to tolerate concurrent
-dentry teardown. A reader in cache_seq_start_rcu() therefore
-observes both sub-objects through the next grace period regardless
-of whether svc_export_put() runs synchronously, so the synchronous
-form was never unsafe.
-
-The crash signature in the report cited by commit 48db892356d6
-("NFSD: Defer sub-object cleanup in export put callbacks") has a
-different root cause: a /proc/net/rpc cache file held open across
-network-namespace exit lets cache_destroy_net() free cd->hash_table
-while a reader is still walking it. The correct fix pins cd->net for
-the open fd's lifetime and does not require any deferral inside
-svc_export_put().
-
-Meanwhile, deferring path_put() out of svc_export_put() reintroduces
-the regression that commit 69d803c40ede ("nfsd: Revert "nfsd:
-release svc_expkey/svc_export with rcu_work"") repaired: after
-"exportfs -r" drops the last cache reference, the mount reference
-held through ex_path lingers in the workqueue, so a subsequent
-umount fails with EBUSY.
-
-Restore the synchronous path_put() and auth_domain_put() in
-svc_export_put() and expkey_put() and the call_rcu()/kfree_rcu()
-free of the containing structures. The unrelated fix for
-ex_uuid/ex_stats from commit 2530766492ec ("nfsd: fix UAF when
-access ex_uuid or ex_stats") is preserved.
-
-Link: https://lore.kernel.org/all/10019b42-4589-4f9f-8d5b-d8197db1ce3c@huawei.com/ [1]
-Fixes: 48db892356d6 ("NFSD: Defer sub-object cleanup in export put callbacks")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Alexandr Alexandrov <alexandr.alexandrov@oracle.com>
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/export.c |   63 +++++++------------------------------------------------
- fs/nfsd/export.h |    7 +-----
- fs/nfsd/nfsctl.c |    8 ------
- 3 files changed, 12 insertions(+), 66 deletions(-)
+ net/rose/af_rose.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -36,30 +36,19 @@
-  * second map contains a reference to the entry in the first map.
-  */
- 
--static struct workqueue_struct *nfsd_export_wq;
--
- #define	EXPKEY_HASHBITS		8
- #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
- #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
- 
--static void expkey_release(struct work_struct *work)
-+static void expkey_put(struct kref *ref)
- {
--	struct svc_expkey *key = container_of(to_rcu_work(work),
--					      struct svc_expkey, ek_rwork);
-+	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
- 
- 	if (test_bit(CACHE_VALID, &key->h.flags) &&
- 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
- 		path_put(&key->ek_path);
- 	auth_domain_put(key->ek_client);
--	kfree(key);
--}
--
--static void expkey_put(struct kref *ref)
--{
--	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
--
--	INIT_RCU_WORK(&key->ek_rwork, expkey_release);
--	queue_rcu_work(nfsd_export_wq, &key->ek_rwork);
-+	kfree_rcu(key, ek_rcu);
- }
- 
- static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
-@@ -364,13 +353,11 @@ static void export_stats_destroy(struct
- 					    EXP_STATS_COUNTERS_NUM);
- }
- 
--static void svc_export_release(struct work_struct *work)
-+static void svc_export_release(struct rcu_head *rcu_head)
- {
--	struct svc_export *exp = container_of(to_rcu_work(work),
--					      struct svc_export, ex_rwork);
-+	struct svc_export *exp = container_of(rcu_head, struct svc_export,
-+			ex_rcu);
- 
--	path_put(&exp->ex_path);
--	auth_domain_put(exp->ex_client);
- 	nfsd4_fslocs_free(&exp->ex_fslocs);
- 	export_stats_destroy(exp->ex_stats);
- 	kfree(exp->ex_stats);
-@@ -382,8 +369,9 @@ static void svc_export_put(struct kref *
- {
- 	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
- 
--	INIT_RCU_WORK(&exp->ex_rwork, svc_export_release);
--	queue_rcu_work(nfsd_export_wq, &exp->ex_rwork);
-+	path_put(&exp->ex_path);
-+	auth_domain_put(exp->ex_client);
-+	call_rcu(&exp->ex_rcu, svc_export_release);
- }
- 
- static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
-@@ -1490,36 +1478,6 @@ const struct seq_operations nfs_exports_
- 	.show	= e_show,
- };
- 
--/**
-- * nfsd_export_wq_init - allocate the export release workqueue
-- *
-- * Called once at module load. The workqueue runs deferred svc_export and
-- * svc_expkey release work scheduled by queue_rcu_work() in the cache put
-- * callbacks.
-- *
-- * Return values:
-- *   %0: workqueue allocated
-- *   %-ENOMEM: allocation failed
-- */
--int nfsd_export_wq_init(void)
--{
--	nfsd_export_wq = alloc_workqueue("nfsd_export", WQ_UNBOUND, 0);
--	if (!nfsd_export_wq)
--		return -ENOMEM;
--	return 0;
--}
--
--/**
-- * nfsd_export_wq_shutdown - drain and free the export release workqueue
-- *
-- * Called once at module unload. Per-namespace teardown in
-- * nfsd_export_shutdown() has already drained all deferred work.
-- */
--void nfsd_export_wq_shutdown(void)
--{
--	destroy_workqueue(nfsd_export_wq);
--}
--
- /*
-  * Initialize the exports module.
-  */
-@@ -1581,9 +1539,6 @@ nfsd_export_shutdown(struct net *net)
- 
- 	cache_unregister_net(nn->svc_expkey_cache, net);
- 	cache_unregister_net(nn->svc_export_cache, net);
--	/* Drain deferred export and expkey release work. */
--	rcu_barrier();
--	flush_workqueue(nfsd_export_wq);
- 	cache_destroy_net(nn->svc_expkey_cache, net);
- 	cache_destroy_net(nn->svc_export_cache, net);
- 	svcauth_unix_purge(net);
---- a/fs/nfsd/export.h
-+++ b/fs/nfsd/export.h
-@@ -7,7 +7,6 @@
- 
- #include <linux/sunrpc/cache.h>
- #include <linux/percpu_counter.h>
--#include <linux/workqueue.h>
- #include <uapi/linux/nfsd/export.h>
- #include <linux/nfs4.h>
- 
-@@ -76,7 +75,7 @@ struct svc_export {
- 	u32			ex_layout_types;
- 	struct nfsd4_deviceid_map *ex_devid_map;
- 	struct cache_detail	*cd;
--	struct rcu_work		ex_rwork;
-+	struct rcu_head		ex_rcu;
- 	unsigned long		ex_xprtsec_modes;
- 	struct export_stats	*ex_stats;
- };
-@@ -93,7 +92,7 @@ struct svc_expkey {
- 	u32			ek_fsid[6];
- 
- 	struct path		ek_path;
--	struct rcu_work		ek_rwork;
-+	struct rcu_head		ek_rcu;
- };
- 
- #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
-@@ -111,8 +110,6 @@ __be32 check_nfsd_access(struct svc_expo
- /*
-  * Function declarations
-  */
--int			nfsd_export_wq_init(void);
--void			nfsd_export_wq_shutdown(void);
- int			nfsd_export_init(struct net *);
- void			nfsd_export_shutdown(struct net *);
- void			nfsd_export_flush(struct net *);
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2262,12 +2262,9 @@ static int __init init_nfsd(void)
- 	if (retval)
- 		goto out_free_pnfs;
- 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
--	retval = nfsd_export_wq_init();
--	if (retval)
--		goto out_free_lockd;
- 	retval = register_pernet_subsys(&nfsd_net_ops);
- 	if (retval < 0)
--		goto out_free_export_wq;
-+		goto out_free_lockd;
- 	retval = register_cld_notifier();
- 	if (retval)
- 		goto out_free_subsys;
-@@ -2296,8 +2293,6 @@ out_free_cld:
- 	unregister_cld_notifier();
- out_free_subsys:
- 	unregister_pernet_subsys(&nfsd_net_ops);
--out_free_export_wq:
--	nfsd_export_wq_shutdown();
- out_free_lockd:
- 	nfsd_lockd_shutdown();
- 	nfsd_drc_slab_free();
-@@ -2318,7 +2313,6 @@ static void __exit exit_nfsd(void)
- 	nfsd4_destroy_laundry_wq();
- 	unregister_cld_notifier();
- 	unregister_pernet_subsys(&nfsd_net_ops);
--	nfsd_export_wq_shutdown();
- 	nfsd_drc_slab_free();
- 	nfsd_lockd_shutdown();
- 	nfsd4_free_slabs();
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -211,6 +211,11 @@ start:
+ 		spin_lock_bh(&rose_list_lock);
+ 		if (rose->device == dev) {
+ 			rose_disconnect(sk, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
++			/* Mark for destruction so rose_heartbeat_expiry()
++			 * cleans up the socket at its next tick rather than
++			 * looping forever in ROSE_STATE_0 with no owner.
++			 */
++			sock_set_flag(sk, SOCK_DESTROY);
+ 			if (rose->neighbour)
+ 				rose_neigh_put(rose->neighbour);
+ 			netdev_put(rose->device, &rose->dev_tracker);
 
 
