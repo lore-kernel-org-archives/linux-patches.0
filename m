@@ -1,108 +1,106 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F692F8E94
-	for <patches@lists.linux.dev>; Thu, 25 Jun 2026 18:19:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4561C315793;
+	Thu, 25 Jun 2026 22:37:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782411595; cv=none; b=GX35LUFYy6wZMQN5J+YiIsjMXcxZd3BKUZe483CeMpyRBTCOqnYKHg16svU2mNG7/0o/GN4yCh4gVquGF3jdAmR8x8yyNef2bT0yPSeddBHuAjfJYkf9huZipbR6mViGWfv/QtmV0ZZwH6EKF+Uigtj9kTuC5ZDffr7IsRHmN5o=
+	t=1782427027; cv=none; b=fDsAXRg1Smzv8404rVZQfA7nYLzT0Zzm0RF4tg6hNYHG6F47xN9SuWrbV/QbtMwMjw3Vlg9e23dn2kNFJ1mAN0DAecuThSyTrcEVa8J31dD+ba5/R/fpTVbouXgDk5rY8AZzCvz1AhIcRts8q7nta7auZk3ddzUWDt87N/3TGCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782411595; c=relaxed/simple;
-	bh=s+oI2GXQ0eVO+G6/VG+wj/0ChWx0Fb1vfvC8e9SCw70=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HmuvkItuAReijYapCKC8e3XJE1qFvDa1iXtrCWZg+8PfNiBzKy03lgcCq97ApcNZltjekHrJXUdS5S9EuXe4BYNHrGa1qoXrdJYupcK/LnWYgD/y/Tj7+D+BNuoLY3+SOqFoG4jOCylYEW6MsIYa/yrCMAcTmerpzh33NVSdHBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=XgUXOKvr; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="XgUXOKvr"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-46dd46901dbso45534f8f.0
-        for <patches@lists.linux.dev>; Thu, 25 Jun 2026 11:19:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1782411593; x=1783016393; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G0EWw2t+XHB23CXT8lj21i27NquOnXh7rc/g7nLatCc=;
-        b=XgUXOKvr/LYquBU8CF5hqggd2bXrV+IKNqaZ5fiqXfTFPxiKXInj4U0ZvprEl4VbYW
-         Y1eI4Rez4MnbRgRg0HVZNObn2KrNfiT3/tbNNsLGnNhvxjHjXuzxCA1DtcT989Kj61Lp
-         7ASS4+6h3JRziQmVyf30YjeAp090+7pVl/zCrx+6gVSLU8MZ2N9k3YLIePmJpfXHZlJT
-         ffVcEiyftWVDF8KKnNh1ttQ4xHisTyGWVLZssb9PfOQqHEzl+X+YBre65PClEcJ240L3
-         Gr3vrbz8YowLfBAHKVjCb2ntO7RC8fLfXNmsHQ4NfmvMNpqMuQQeMbiAq4/lT0qLcG9b
-         DKDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782411593; x=1783016393;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=G0EWw2t+XHB23CXT8lj21i27NquOnXh7rc/g7nLatCc=;
-        b=JyQlAPSAXwez5g/eVk4Bpho1wmUzMbEcpC8dqtr7in+I0L78XP88MvnTvJrHgK3UZJ
-         ac2ug9ZxPBrP9RNOSzLVot55zeZS8TYt+qZk8u++M6QydLwg96aM9vZjZH6SolihLsGn
-         QqVC1pJbN2GyHU3G/ky/odL6XxhCxp1FJ0s0GrTdR05ZQqS2EwE2EZPozlq9heUb4p6S
-         4g+ldcWBYIIGa3oO4yVayHLXdFHKwka7KFg6yNDUyNNkgKB7eHn9YpfQiZVyTB6DPkuS
-         FaNqDmyocHLG6ywu7vsD05L8gTNStC9v7BHTixfACRGY2siRfqtHWDhd2blgTY3wIcFZ
-         sP+w==
-X-Gm-Message-State: AOJu0YyFfyv8B1KN6FsJZpHSNcDXx78WLvpHXY2+Z1YFVJDHd/dVXcv7
-	1xsjq46YWrYr6Q0bHvNpg+No+vyi+pecXL7XC+gRs6Mud22RjOkVVCY=
-X-Gm-Gg: AfdE7clnJpzS1IVbIVINXGq0k/TwTDdEiXetWLlgFlv/HhHCGBUnYEPBTIrp0hJiaCl
-	CqdaOPGtFnfQghxuWNgfxHk5iMV/QOmS0lHdJlO/XMzACV4UKdjbhwUwAfKg8gED0GtRizFEW1X
-	4e0ZUnAu99uua4gWofMZGNUiUWPoYriALX7TgBz+eALNhkKvGmDa4EevDKi/zN5WnPoaLEZhIPw
-	lChVTRoskYfdXH0OnB/XYGsD5bayjqQceT4iL7paVZVlzB0rghdWB8Unt8jkON7hr3ouxDCd14k
-	Hl686NLz0BlauOL0MiWZJ2KmegwaR+t/EjCViJn7TfFyl2IW7DFgmTZ4FP6qQUHH3VPgWXZAUW/
-	AJykaDB9+aBJLDyjmSu+ld6wZ8WMfPvIAoxTEW3E5wAsH4qW7Hega9Ge7BNs1x6UIgGWvea5Vof
-	hOHbzrCDAeD0PosGWYboGH0zsaNIptPzRDDBReObWFTzghEdw/W8Wyirs5lyrLEWCg
-X-Received: by 2002:a05:600c:1910:b0:492:3dce:f6ef with SMTP id 5b1f17b1804b1-492668932f7mr52131135e9.28.1782411592837;
-        Thu, 25 Jun 2026 11:19:52 -0700 (PDT)
-Received: from [192.168.1.3] (p5b0572d8.dip0.t-ipconnect.de. [91.5.114.216])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-492697a22f2sm5125575e9.0.2026.06.25.11.19.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jun 2026 11:19:52 -0700 (PDT)
-Message-ID: <fbf86bb8-e85e-4f95-8e11-ae731b52d19f@googlemail.com>
-Date: Thu, 25 Jun 2026 20:19:51 +0200
+	s=arc-20240116; t=1782427027; c=relaxed/simple;
+	bh=hKaex2wrpfIc9HPsbRGDzLVoyCf0En3NbbKAhpIsNIY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=FCBO4JAZlif+rVzpYm8SuWtYIe+pfYJmv5DWc6b/Oa6GaxjknCFuLy1CJUXPCGGTBsxbZImgNW66A4Qn661vr76HPWarQvo1DFD8N+BLlw03Qt35mrK4HzAP67eEjhUc7OpYHLR21VzRN0lftfmnhX5gxTNRna/0yoT4dcY10t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wcsgw-004Mt5-2n;
+	Thu, 25 Jun 2026 22:37:02 +0000
+Received: from ben by deadeye with local (Exim 4.99.3)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wcsgv-00000008k3n-3H30;
+	Fri, 26 Jun 2026 00:37:01 +0200
+Message-ID: <2ac6b67a0643e111692689daa95dbd8883f16426.camel@decadent.org.uk>
+Subject: Re: [PATCH 6.1 470/522] usb: musb: omap2430: Fix use-after-free in
+ omap2430_probe()
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+  Wentao Liang <vulab@iscas.ac.cn>
+Cc: patches@lists.linux.dev, stable <stable@kernel.org>, Sasha Levin
+	 <sashal@kernel.org>
+Date: Fri, 26 Jun 2026 00:36:56 +0200
+In-Reply-To: <20260616145147.844270971@linuxfoundation.org>
+References: <20260616145125.307082728@linuxfoundation.org>
+	 <20260616145147.844270971@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-GOfYbWqPx8O8Y9YApBRF"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 7.1 00/21] 7.1.2-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260625125613.243729608@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260625125613.243729608@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Am 25.06.2026 um 15:03 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 7.1.2 release.
-> There are 21 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
-
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
-Beste Grüße,
-Peter Schneider
+--=-GOfYbWqPx8O8Y9YApBRF
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+On Tue, 2026-06-16 at 20:30 +0530, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>=20
+> ------------------
+>=20
+> From: Wentao Liang <vulab@iscas.ac.cn>
+>=20
+> [ Upstream commit e194ce048f5a6c549b3a23a8c568c6470f40f772 ]
+>=20
+> In omap2430_probe(), of_node_put(np) is called prematurely before the
+> last access to np, leading to a use-after-free if the node's reference
+> count drops to zero. Move the of_node_put() calls after the last use of
+> np in both the success and error paths.
+[...]
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+It's not called *prematurely*.  omap2430_probe() shouldn't call it at
+all, because it never increments the reference count for np.
+
+Ben.
+
+--=20
+Ben Hutchings
+[W]e found...that it wasn't as easy to get programs right as we had
+thought. I realized that a large part of my life from then on was going
+to be spent in finding mistakes in my own programs.
+                                                 - Maurice Wilkes, 1949
+
+--=-GOfYbWqPx8O8Y9YApBRF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmo9rYgACgkQ57/I7JWG
+EQl7ExAArD0oK/g8UfhA2F+YLH3bmnNB+TJUebGveQunqrmc8NYSR2sLlafLuREH
+BuA3TL0iSd0cVL6RE10rgcXJFj+NyrNBhQ5+Q/OGN3b/m13kWt7Bhbnohi9iWWY6
+PpCIrUdDcQnPMB+sbXn9o96XV5ydsnhGwkUFzR1COr9/pAZ4sZ/MztGAI1q3xXV8
+k6Z6ocqWAuctK3egumgnYN7xc/xeLaHZgg3AxaDeMwMf+8yrbGwOfw0Gnfv08vwP
+mFbES3vAEAeCUrBpIPYGxMr4duYin06hvHzRDhNwtSYztG9ZytZluWbBps9Kbs3N
+Mvm2nQW4bViA0LM6yYHxnrUb8HIOD8/3VqpXauhXxEoHyrC9aRODcK7b8ix6ppK9
+4b/8sMd5Nxkcb8hjv+KQAtQLZj5lR30d0gMJVQ1hy8uN8wUNJ/3HjXz1lHOzy2MZ
+lHEvp4D9UDek4+i9eUi6ZdeRPRUbh+gwPYnlZCL16TtvPqMkuvD0LTR+r4b+NKOO
+oj2tQEt/2YNnCfJUWfDgqJdvRG51nYdrQjrKMXN6qpfiHDG5jpNR4Hjad0Q5Ox9M
+CXL8PH6rCKZgVeXnPRgOXBjU4DH4lOdBkIjz9NO7QbQRkUvTGMJbqRYNXhlYH3+4
+XL9j1orpiht4cGPT5SgL1fopHc/EHLY4PLPnjSg+Jr7N/lXTdMg=
+=f7q+
+-----END PGP SIGNATURE-----
+
+--=-GOfYbWqPx8O8Y9YApBRF--
