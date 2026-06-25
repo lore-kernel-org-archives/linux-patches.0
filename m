@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A3A2BEC2E;
-	Thu, 25 Jun 2026 13:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09562DCC13;
+	Thu, 25 Jun 2026 13:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782393121; cv=none; b=AT1n6kpIO/ZSbia6ry3IGTJLpea1P0PGbvzdhizAXH1Qtt3ICyb/1ACVXbXwR34tas0zJE5gEMFhztyKLAUTwhtutiiSOpaBXc6xtnbJPEgTSPTcJs9KKTNQpTYFQ/lfFJipcgRsuP2eZjLI226pR570KUyvOedfT3bhIioxat4=
+	t=1782393125; cv=none; b=D8As/RI85s3BPiX22X53U7brQiOnTF+iMDAmNxJWYbZS0s4bn0TlCWPBpGrZMItnknQ0biZmbn1O8wp0pTHaBHN4KZpMMXcOXM4K4xVpW0QP/ckoceAHCQc0XmTavtbcG1Kgv9PKBDLBaJAPe0RaqAQ7P99b+F8qN2pwaiBPRFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782393121; c=relaxed/simple;
-	bh=IVPXMfuRhQCZ/k9NwP08MOMKFWMoJ/LgPFFRlB46XZE=;
+	s=arc-20240116; t=1782393125; c=relaxed/simple;
+	bh=q4fyDn/Icl583NHfYEkPQmUm2JEggRWHMJEiVjap2no=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oiGO3yvdfqHNgcDLtIdha61E6hxm6Ipyt7ak7qnFAv7YlkKJ0SwchYBOPMKtfeiM3TXhF8E1JZfECzUaZ+WgGJLj3HjFVq1xaA/JzjREL2Ki3Zu9BTA6DuhxCUGw/zHdAa317P8vMPSEyvBuj+GzbwC5FdvEpFpQz5CGdfItUf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUtXRv9i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sTICEU7vvbcZKorCkOumVhis8RvynBCt63Q/5HDmAQvx9Me3CtaDAgxWM5leyYFpiQxKlAgqlALD+41s9sempstiF5D42ihwSBg/8tbE1Z+kSzd27mcLcNZkvpD2hvy6+/wfo/mBsTEUJcPbCyt5907RxzXTLJ0bbYBrlkD3UmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuOJDxRx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUtXRv9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE1C1F000E9;
-	Thu, 25 Jun 2026 13:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuOJDxRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115091F000E9;
+	Thu, 25 Jun 2026 13:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782393120;
-	bh=u2/amJJtRutc6Dcb9rjEjwV9XE8tMHPcsGtGrW0zgt8=;
+	s=korg; t=1782393123;
+	bh=EGqgHoV/y27U38e24N4KegEPUrpb7AgEpKDwF9Y8D64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NUtXRv9iiaWgiSXUjsb7ijNXBULl/503sEavCl67Gd5P/FWZsWXwBk/Jx+LmTO2/6
-	 dseQPSH9+j+Ej5jY91McyLR8eiDbAzcIqjkcW197RV62sDMs6H8n32uzw9ZvBvbJBX
-	 Mr7c+YVcOAW5rBl/ZqQnywuvLE7aH4dWVtv2SvaY=
+	b=yuOJDxRxAUl4A2PLr9t+lG4+j8swgf7duiQiSyHrAJIUjFa79RcrAAOj++9lBU9ZI
+	 r1D0+tjbaY5SVUOOET7CqlrAleqwwCt1omaY2qDBAxVxo3kVwZ2cR91XpBkXpTzoOO
+	 lOCMpNXwqO/prKE9cyBGf/p5rk6WiNHXHi4Ss07Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Lu <llfamsec@gmail.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 7.1 02/21] fuse: re-lock request before replacing page cache folio
-Date: Thu, 25 Jun 2026 14:03:54 +0100
-Message-ID: <20260625125613.554857280@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Alexandr Alexandrov <alexandr.alexandrov@oracle.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.1 03/21] Revert "NFSD: Defer sub-object cleanup in export put callbacks"
+Date: Thu, 25 Jun 2026 14:03:55 +0100
+Message-ID: <20260625125613.682733239@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125613.243729608@linuxfoundation.org>
 References: <20260625125613.243729608@linuxfoundation.org>
@@ -51,67 +52,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-commit a078484921052d0badd827fcc2770b5cfc1d4120 upstream.
+commit 516403d4d85607fdef3ca41d4a56b54e5566fa9a upstream.
 
-fuse_try_move_folio() unlocks the request on entry but does not
-re-lock it on the success path. This means fuse_chan_abort() can end the
-request and free the fuse_io_args (eg fuse_readpages_end()) while the
-subsequent copy chain logic after fuse_try_move_folio() accesses the
-fuse_io_args, leading to use-after-free issues.
+This reverts commit 48db892356d6cb80f6942885545de4a6dd8d2a29.
 
-Fix this by calling lock_request() before replace_page_cache_folio().
-This ensures the request is locked on the success path which will
-prevent the fuse_io_args from being freed while the later copying logic
-runs, and also ensures that the ap->folios[i]->mapping is never null
-since ap->folios[i] will always point to the newfolio after
-replace_page_cache_folio().
+Commit 48db892356d6 ("NFSD: Defer sub-object cleanup in export
+put callbacks") moved path_put() and auth_domain_put() out of
+svc_export_put() and expkey_put() and behind queue_rcu_work() to
+close a claimed use-after-free in e_show() and c_show() against
+ex_path and ex_client->name. Discussion in [1] shows neither
+the diagnosis nor the remedy survives review.
 
-Fixes: ce534fb05292 ("fuse: allow splice to move pages")
+The downstream teardown of both sub-objects is already RCU-deferred.
+auth_domain_put() reaches svcauth_unix_domain_release(), which frees
+the unix_domain and its ->name through call_rcu(). path_put()
+reaches dentry_free(), which frees the dentry through call_rcu(),
+and prepend_path() is already structured to tolerate concurrent
+dentry teardown. A reader in cache_seq_start_rcu() therefore
+observes both sub-objects through the next grace period regardless
+of whether svc_export_put() runs synchronously, so the synchronous
+form was never unsafe.
+
+The crash signature in the report cited by commit 48db892356d6
+("NFSD: Defer sub-object cleanup in export put callbacks") has a
+different root cause: a /proc/net/rpc cache file held open across
+network-namespace exit lets cache_destroy_net() free cd->hash_table
+while a reader is still walking it. The correct fix pins cd->net for
+the open fd's lifetime and does not require any deferral inside
+svc_export_put().
+
+Meanwhile, deferring path_put() out of svc_export_put() reintroduces
+the regression that commit 69d803c40ede ("nfsd: Revert "nfsd:
+release svc_expkey/svc_export with rcu_work"") repaired: after
+"exportfs -r" drops the last cache reference, the mount reference
+held through ex_path lingers in the workqueue, so a subsequent
+umount fails with EBUSY.
+
+Restore the synchronous path_put() and auth_domain_put() in
+svc_export_put() and expkey_put() and the call_rcu()/kfree_rcu()
+free of the containing structures. The unrelated fix for
+ex_uuid/ex_stats from commit 2530766492ec ("nfsd: fix UAF when
+access ex_uuid or ex_stats") is preserved.
+
+Link: https://lore.kernel.org/all/10019b42-4589-4f9f-8d5b-d8197db1ce3c@huawei.com/ [1]
+Fixes: 48db892356d6 ("NFSD: Defer sub-object cleanup in export put callbacks")
 Cc: stable@vger.kernel.org
-Reported-by: Lei Lu <llfamsec@gmail.com>
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Alexandr Alexandrov <alexandr.alexandrov@oracle.com>
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c |   19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ fs/nfsd/export.c |   63 +++++++------------------------------------------------
+ fs/nfsd/export.h |    7 +-----
+ fs/nfsd/nfsctl.c |    8 ------
+ 3 files changed, 12 insertions(+), 66 deletions(-)
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -1037,6 +1037,10 @@ static int fuse_try_move_folio(struct fu
- 	if (WARN_ON(folio_test_mlocked(oldfolio)))
- 		goto out_fallback_unlock;
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -36,30 +36,19 @@
+  * second map contains a reference to the entry in the first map.
+  */
  
-+	err = lock_request(cs->req);
-+	if (err)
-+		goto out_fallback_unlock;
-+
- 	replace_page_cache_folio(oldfolio, newfolio);
- 
- 	folio_get(newfolio);
-@@ -1050,20 +1054,7 @@ static int fuse_try_move_folio(struct fu
- 	 */
- 	pipe_buf_release(cs->pipe, buf);
- 
--	err = 0;
--	spin_lock(&cs->req->waitq.lock);
--	if (test_bit(FR_ABORTED, &cs->req->flags))
--		err = -ENOENT;
--	else
--		*foliop = newfolio;
--	spin_unlock(&cs->req->waitq.lock);
+-static struct workqueue_struct *nfsd_export_wq;
 -
--	if (err) {
--		folio_unlock(newfolio);
--		folio_put(newfolio);
--		goto out_put_old;
--	}
+ #define	EXPKEY_HASHBITS		8
+ #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
+ #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
+ 
+-static void expkey_release(struct work_struct *work)
++static void expkey_put(struct kref *ref)
+ {
+-	struct svc_expkey *key = container_of(to_rcu_work(work),
+-					      struct svc_expkey, ek_rwork);
++	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
+ 
+ 	if (test_bit(CACHE_VALID, &key->h.flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
+ 		path_put(&key->ek_path);
+ 	auth_domain_put(key->ek_client);
+-	kfree(key);
+-}
 -
-+	*foliop = newfolio;
- 	folio_unlock(oldfolio);
- 	/* Drop ref for ap->pages[] array */
- 	folio_put(oldfolio);
+-static void expkey_put(struct kref *ref)
+-{
+-	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
+-
+-	INIT_RCU_WORK(&key->ek_rwork, expkey_release);
+-	queue_rcu_work(nfsd_export_wq, &key->ek_rwork);
++	kfree_rcu(key, ek_rcu);
+ }
+ 
+ static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -364,13 +353,11 @@ static void export_stats_destroy(struct
+ 					    EXP_STATS_COUNTERS_NUM);
+ }
+ 
+-static void svc_export_release(struct work_struct *work)
++static void svc_export_release(struct rcu_head *rcu_head)
+ {
+-	struct svc_export *exp = container_of(to_rcu_work(work),
+-					      struct svc_export, ex_rwork);
++	struct svc_export *exp = container_of(rcu_head, struct svc_export,
++			ex_rcu);
+ 
+-	path_put(&exp->ex_path);
+-	auth_domain_put(exp->ex_client);
+ 	nfsd4_fslocs_free(&exp->ex_fslocs);
+ 	export_stats_destroy(exp->ex_stats);
+ 	kfree(exp->ex_stats);
+@@ -382,8 +369,9 @@ static void svc_export_put(struct kref *
+ {
+ 	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
+ 
+-	INIT_RCU_WORK(&exp->ex_rwork, svc_export_release);
+-	queue_rcu_work(nfsd_export_wq, &exp->ex_rwork);
++	path_put(&exp->ex_path);
++	auth_domain_put(exp->ex_client);
++	call_rcu(&exp->ex_rcu, svc_export_release);
+ }
+ 
+ static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -1492,36 +1480,6 @@ const struct seq_operations nfs_exports_
+ 	.show	= e_show,
+ };
+ 
+-/**
+- * nfsd_export_wq_init - allocate the export release workqueue
+- *
+- * Called once at module load. The workqueue runs deferred svc_export and
+- * svc_expkey release work scheduled by queue_rcu_work() in the cache put
+- * callbacks.
+- *
+- * Return values:
+- *   %0: workqueue allocated
+- *   %-ENOMEM: allocation failed
+- */
+-int nfsd_export_wq_init(void)
+-{
+-	nfsd_export_wq = alloc_workqueue("nfsd_export", WQ_UNBOUND, 0);
+-	if (!nfsd_export_wq)
+-		return -ENOMEM;
+-	return 0;
+-}
+-
+-/**
+- * nfsd_export_wq_shutdown - drain and free the export release workqueue
+- *
+- * Called once at module unload. Per-namespace teardown in
+- * nfsd_export_shutdown() has already drained all deferred work.
+- */
+-void nfsd_export_wq_shutdown(void)
+-{
+-	destroy_workqueue(nfsd_export_wq);
+-}
+-
+ /*
+  * Initialize the exports module.
+  */
+@@ -1583,9 +1541,6 @@ nfsd_export_shutdown(struct net *net)
+ 
+ 	cache_unregister_net(nn->svc_expkey_cache, net);
+ 	cache_unregister_net(nn->svc_export_cache, net);
+-	/* Drain deferred export and expkey release work. */
+-	rcu_barrier();
+-	flush_workqueue(nfsd_export_wq);
+ 	cache_destroy_net(nn->svc_expkey_cache, net);
+ 	cache_destroy_net(nn->svc_export_cache, net);
+ 	svcauth_unix_purge(net);
+--- a/fs/nfsd/export.h
++++ b/fs/nfsd/export.h
+@@ -7,7 +7,6 @@
+ 
+ #include <linux/sunrpc/cache.h>
+ #include <linux/percpu_counter.h>
+-#include <linux/workqueue.h>
+ #include <uapi/linux/nfsd/export.h>
+ #include <linux/nfs4.h>
+ 
+@@ -76,7 +75,7 @@ struct svc_export {
+ 	u32			ex_layout_types;
+ 	struct nfsd4_deviceid_map *ex_devid_map;
+ 	struct cache_detail	*cd;
+-	struct rcu_work		ex_rwork;
++	struct rcu_head		ex_rcu;
+ 	unsigned long		ex_xprtsec_modes;
+ 	struct export_stats	*ex_stats;
+ };
+@@ -93,7 +92,7 @@ struct svc_expkey {
+ 	u32			ek_fsid[6];
+ 
+ 	struct path		ek_path;
+-	struct rcu_work		ek_rwork;
++	struct rcu_head		ek_rcu;
+ };
+ 
+ #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
+@@ -111,8 +110,6 @@ __be32 check_nfsd_access(struct svc_expo
+ /*
+  * Function declarations
+  */
+-int			nfsd_export_wq_init(void);
+-void			nfsd_export_wq_shutdown(void);
+ int			nfsd_export_init(struct net *);
+ void			nfsd_export_shutdown(struct net *);
+ void			nfsd_export_flush(struct net *);
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2320,12 +2320,9 @@ static int __init init_nfsd(void)
+ 	if (retval)
+ 		goto out_free_pnfs;
+ 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
+-	retval = nfsd_export_wq_init();
+-	if (retval)
+-		goto out_free_lockd;
+ 	retval = register_pernet_subsys(&nfsd_net_ops);
+ 	if (retval < 0)
+-		goto out_free_export_wq;
++		goto out_free_lockd;
+ 	retval = register_cld_notifier();
+ 	if (retval)
+ 		goto out_free_subsys;
+@@ -2354,8 +2351,6 @@ out_free_cld:
+ 	unregister_cld_notifier();
+ out_free_subsys:
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+-out_free_export_wq:
+-	nfsd_export_wq_shutdown();
+ out_free_lockd:
+ 	nfsd_lockd_shutdown();
+ 	nfsd_drc_slab_free();
+@@ -2376,7 +2371,6 @@ static void __exit exit_nfsd(void)
+ 	nfsd4_destroy_laundry_wq();
+ 	unregister_cld_notifier();
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+-	nfsd_export_wq_shutdown();
+ 	nfsd_drc_slab_free();
+ 	nfsd_lockd_shutdown();
+ 	nfsd4_free_slabs();
 
 
