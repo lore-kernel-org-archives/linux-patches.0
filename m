@@ -1,40 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FA42848A7;
-	Thu, 25 Jun 2026 13:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7B52D0C62;
+	Thu, 25 Jun 2026 13:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392820; cv=none; b=fig6UVaCSzwXOHXqzfVmZg85Nauo+UucaciP38vnGZAvY9navDhsBK5SzHx0nox2YWXMWUm8SqA3LTpbMrYjLM1OFGqb6mb8mHtblfbnHTWJJbLuVgjDu5iileE/hGzcolovtakmiHo9ADaRkRx9as3stmA7/ZQ4LScSVaBZYoc=
+	t=1782392824; cv=none; b=HuaKsZQSYXwyn4q2YAN8SYQWB6CgxnMq7iiRvM+KIejUv38MOCbaoKfhWOHkzZXzm94YIvOTtJckWLcm527M0yU9+4j/CKWUkO/QQVMrizxaQZXMlNSTQcnB8BD3ki1cMVsavwf55VrgRV9T6fEY4Ex27gMSKJNIWjQxp8rauNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392820; c=relaxed/simple;
-	bh=fLt/j0dTL+mSHOO1EjsgaESorXazHZLhEOx0OQU8eyQ=;
+	s=arc-20240116; t=1782392824; c=relaxed/simple;
+	bh=D4TxbydOi9dHRz9OhnBVAXBqbsS4WAbA4PXirRRKWn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wsxz54hzV9yWpacKaxd833hRj2mC7YUXQYVl0qtMnYcQx1X1Gmsvsb/Q5KrMmothVnsZ6BubSa7X/jxSoadimXihijiDabkz84VGO4ypnqxs/4DRkle7rx20IGvOHdwgb5yQ334Aaa91Zxd3TG4nfamXJ0sVgiTICkwXzyJdU6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuxYYQy+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=asbZskMyBgNoxIQshBd7NwpFn/SKNgqTW6Y/2/Qy/rj55bffni6baNUHj3Y16oRVkzC+wb/3EwFpRriKbi4MPvXxmjuSTomMnwHyyzlshQYGbC26sKzFb4hU2nIohjCfMed/yshHveCAAoNXjY5dBCguD6nZNJONpAF+yyeDlAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGC3X9TF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuxYYQy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D5D1F000E9;
-	Thu, 25 Jun 2026 13:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGC3X9TF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91ED1F000E9;
+	Thu, 25 Jun 2026 13:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392819;
-	bh=+9PmY22WCE5ujdb2mhdDhdkbTD+pjcuLbGU2C+gawXs=;
+	s=korg; t=1782392822;
+	bh=VBez6G4wPtl4pFKdHLKOiJtk81m2U6bTGBNd6vdrnwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RuxYYQy+HePsHc2+qJl+1ho3vhYcPOgJugehdv1jYR9icHUEvsKInolOolemcxsIf
-	 hD4m0io81hc1XKovD0fekvmuWN1wRvXYFP7b/sJbqWaWQ7E0uHtbmgHSMiCVeNE6qd
-	 YhgSSindguBaG5vhHPgjIf/VX4lTcWv+eJQMIw5c=
+	b=UGC3X9TFh1WBWzcyqf9j/weBrr7NKfQOWk6qCpezZTVLHlV+7BJyG15iAHviIv+co
+	 QTfW7Ffu52MihZzzw5nxa1mm982CUtcsUPpOhUOxGYJN77Hi4mNnN0TzugFUrwzH+A
+	 cWCrdzeHH9L1bSEJVPhH8ki1rxMIAk2OSOUVupjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"marcelo.leitner@gmail.com, lucien.xin@gmail.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, horms@kernel.org, bestswngs@gmail.com, linux-sctp@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Martyniuk" <alexevgmart@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Alexander Martyniuk <alexevgmart@gmail.com>
-Subject: [PATCH 6.18 33/60] sctp: disable BH before calling udp_tunnel_xmit_skb()
-Date: Thu, 25 Jun 2026 14:03:18 +0100
-Message-ID: <20260625125650.415762921@linuxfoundation.org>
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Andrei Vagin <avagin@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Jann Horn <jannh@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Ahmed Elaidy <elaidya225@gmail.com>
+Subject: [PATCH 6.18 34/60] mm: introduce VM_MAYBE_GUARD and make visible in /proc/$pid/smaps
+Date: Thu, 25 Jun 2026 14:03:19 +0100
+Message-ID: <20260625125650.574635767@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -53,87 +71,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit 2cd7e6971fc2787408ceef17906ea152791448cf upstream.
+commit 5dba5cc2e0ffa76f2f6c8922a04469dc9602c396 upstream.
 
-udp_tunnel_xmit_skb() / udp_tunnel6_xmit_skb() are expected to run with
-BH disabled.  After commit 6f1a9140ecda ("add xmit recursion limit to
-tunnel xmit functions"), on the path:
+Patch series "introduce VM_MAYBE_GUARD and make it sticky", v4.
 
-  udp(6)_tunnel_xmit_skb() -> ip(6)tunnel_xmit()
+Currently, guard regions are not visible to users except through
+/proc/$pid/pagemap, with no explicit visibility at the VMA level.
 
-dev_xmit_recursion_inc()/dec() must stay balanced on the same CPU.
+This makes the feature less useful, as it isn't entirely apparent which
+VMAs may have these entries present, especially when performing actions
+which walk through memory regions such as those performed by CRIU.
 
-Without local_bh_disable(), the context may move between CPUs, which can
-break the inc/dec pairing. This may lead to incorrect recursion level
-detection and cause packets to be dropped in ip(6)_tunnel_xmit() or
-__dev_queue_xmit().
+This series addresses this issue by introducing the VM_MAYBE_GUARD flag
+which fulfils this role, updating the smaps logic to display an entry for
+these.
 
-Fix it by disabling BH around both IPv4 and IPv6 SCTP UDP xmit paths.
+The semantics of this flag are that a guard region MAY be present if set
+(we cannot be sure, as we can't efficiently track whether an
+MADV_GUARD_REMOVE finally removes all the guard regions in a VMA) - but if
+not set the VMA definitely does NOT have any guard regions present.
 
-In my testing, after enabling the SCTP over UDP:
+It's problematic to establish this flag without further action, because
+that means that VMAs with guard regions in them become non-mergeable with
+adjacent VMAs for no especially good reason.
 
-  # ip net exec ha sysctl -w net.sctp.udp_port=9899
-  # ip net exec ha sysctl -w net.sctp.encap_port=9899
-  # ip net exec hb sysctl -w net.sctp.udp_port=9899
-  # ip net exec hb sysctl -w net.sctp.encap_port=9899
+To work around this, this series also introduces the concept of 'sticky'
+VMA flags - that is flags which:
 
-  # ip net exec ha iperf3 -s
+a. if set in one VMA and not in another still permit those VMAs to be
+   merged (if otherwise compatible).
 
-- without this patch:
+b. When they are merged, the resultant VMA must have the flag set.
 
-  # ip net exec hb iperf3 -c 192.168.0.1 --sctp
-  [  5]   0.00-10.00  sec  37.2 MBytes  31.2 Mbits/sec  sender
-  [  5]   0.00-10.00  sec  37.1 MBytes  31.1 Mbits/sec  receiver
+The VMA logic is updated to propagate these flags correctly.
 
-- with this patch:
+Additionally, VM_MAYBE_GUARD being an explicit VMA flag allows us to solve
+an issue with file-backed guard regions - previously these established an
+anon_vma object for file-backed mappings solely to have vma_needs_copy()
+correctly propagate guard region mappings to child processes.
 
-  # ip net exec hb iperf3 -c 192.168.0.1 --sctp
-  [  5]   0.00-10.00  sec  3.14 GBytes  2.69 Gbits/sec  sender
-  [  5]   0.00-10.00  sec  3.14 GBytes  2.69 Gbits/sec  receiver
+We introduce a new flag alias VM_COPY_ON_FORK (which currently only
+specifies VM_MAYBE_GUARD) and update vma_needs_copy() to check explicitly
+for this flag and to copy page tables if it is present, which resolves
+this issue.
 
-Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/c874a8548221dcd56ff03c65ba75a74e6cf99119.1776017727.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Additionally, we add the ability for allow-listed VMA flags to be
+atomically writable with only mmap/VMA read locks held.
+
+The only flag we allow so far is VM_MAYBE_GUARD, which we carefully ensure
+does not cause any races by being allowed to do so.
+
+This allows us to maintain guard region installation as a read-locked
+operation and not endure the overhead of obtaining a write lock here.
+
+Finally we introduce extensive VMA userland tests to assert that the
+sticky VMA logic behaves correctly as well as guard region self tests to
+assert that smaps visibility is correctly implemented.
+
+This patch (of 9):
+
+Currently, if a user needs to determine if guard regions are present in a
+range, they have to scan all VMAs (or have knowledge of which ones might
+have guard regions).
+
+Since commit 8e2f2aeb8b48 ("fs/proc/task_mmu: add guard region bit to
+pagemap") and the related commit a516403787e0 ("fs/proc: extend the
+PAGEMAP_SCAN ioctl to report guard regions"), users can use either
+/proc/$pid/pagemap or the PAGEMAP_SCAN functionality to perform this
+operation at a virtual address level.
+
+This is not ideal, and it gives no visibility at a /proc/$pid/smaps level
+that guard regions exist in ranges.
+
+This patch remedies the situation by establishing a new VMA flag,
+VM_MAYBE_GUARD, to indicate that a VMA may contain guard regions (it is
+uncertain because we cannot reasonably determine whether a
+MADV_GUARD_REMOVE call has removed all of the guard regions in a VMA, and
+additionally VMAs may change across merge/split).
+
+We utilise 0x800 for this flag which makes it available to 32-bit
+architectures also, a flag that was previously used by VM_DENYWRITE, which
+was removed in commit 8d0920bde5eb ("mm: remove VM_DENYWRITE") and hasn't
+bee reused yet.
+
+We also update the smaps logic and documentation to identify these VMAs.
+
+Another major use of this functionality is that we can use it to identify
+that we ought to copy page tables on fork.
+
+We do not actually implement usage of this flag in mm/madvise.c yet as we
+need to allow some VMA flags to be applied atomically under mmap/VMA read
+lock in order to avoid the need to acquire a write lock for this purpose.
+
+Link: https://lkml.kernel.org/r/cover.1763460113.git.ljs@kernel.org
+Link: https://lkml.kernel.org/r/cf8ef821eba29b6c5b5e138fffe95d6dcabdedb9.1763460113.git.ljs@kernel.org
+Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ahmed Elaidy <elaidya225@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/ipv6.c     |    2 ++
- net/sctp/protocol.c |    2 ++
- 2 files changed, 4 insertions(+)
+ Documentation/filesystems/proc.rst |    5 +++--
+ fs/proc/task_mmu.c                 |    1 +
+ include/linux/mm.h                 |    3 +++
+ include/trace/events/mmflags.h     |    1 +
+ mm/memory.c                        |    4 ++++
+ tools/testing/vma/vma_internal.h   |    1 +
+ 6 files changed, 13 insertions(+), 2 deletions(-)
 
---- a/net/sctp/ipv6.c
-+++ b/net/sctp/ipv6.c
-@@ -261,9 +261,11 @@ static int sctp_v6_xmit(struct sk_buff *
- 	skb_set_inner_ipproto(skb, IPPROTO_SCTP);
- 	label = ip6_make_flowlabel(sock_net(sk), skb, fl6->flowlabel, true, fl6);
+--- a/Documentation/filesystems/proc.rst
++++ b/Documentation/filesystems/proc.rst
+@@ -553,7 +553,7 @@ otherwise.
+ kernel flags associated with the particular virtual memory area in two letter
+ encoded manner. The codes are the following:
  
-+	local_bh_disable();
- 	udp_tunnel6_xmit_skb(dst, sk, skb, NULL, &fl6->saddr, &fl6->daddr,
- 			     tclass, ip6_dst_hoplimit(dst), label,
- 			     sctp_sk(sk)->udp_port, t->encap_port, false, 0);
-+	local_bh_enable();
- 	return 0;
- }
+-    ==    =======================================
++    ==    =============================================================
+     rd    readable
+     wr    writeable
+     ex    executable
+@@ -591,7 +591,8 @@ encoded manner. The codes are the follow
+     sl    sealed
+     lf    lock on fault pages
+     dp    always lazily freeable mapping
+-    ==    =======================================
++    gu    maybe contains guard regions (if not set, definitely doesn't)
++    ==    =============================================================
  
---- a/net/sctp/protocol.c
-+++ b/net/sctp/protocol.c
-@@ -1102,10 +1102,12 @@ static inline int sctp_v4_xmit(struct sk
- 	skb_reset_inner_mac_header(skb);
- 	skb_reset_inner_transport_header(skb);
- 	skb_set_inner_ipproto(skb, IPPROTO_SCTP);
-+	local_bh_disable();
- 	udp_tunnel_xmit_skb(dst_rtable(dst), sk, skb, fl4->saddr,
- 			    fl4->daddr, dscp, ip4_dst_hoplimit(dst), df,
- 			    sctp_sk(sk)->udp_port, t->encap_port, false, false,
- 			    0);
-+	local_bh_enable();
- 	return 0;
- }
+ Note that there is no guarantee that every flag and associated mnemonic will
+ be present in all further kernel releases. Things get changed, the flags may
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -1159,6 +1159,7 @@ static void show_smap_vma_flags(struct s
+ 		[ilog2(VM_MAYSHARE)]	= "ms",
+ 		[ilog2(VM_GROWSDOWN)]	= "gd",
+ 		[ilog2(VM_PFNMAP)]	= "pf",
++		[ilog2(VM_MAYBE_GUARD)]	= "gu",
+ 		[ilog2(VM_LOCKED)]	= "lo",
+ 		[ilog2(VM_IO)]		= "io",
+ 		[ilog2(VM_SEQ_READ)]	= "sr",
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -269,6 +269,8 @@ extern struct rw_semaphore nommu_region_
+ extern unsigned int kobjsize(const void *objp);
+ #endif
  
++#define VM_MAYBE_GUARD_BIT 11
++
+ /*
+  * vm_flags in vm_area_struct, see mm_types.h.
+  * When changing, update also include/trace/events/mmflags.h
+@@ -294,6 +296,7 @@ extern unsigned int kobjsize(const void
+ #define VM_UFFD_MISSING	0
+ #endif /* CONFIG_MMU */
+ #define VM_PFNMAP	0x00000400	/* Page-ranges managed without "struct page", just pure PFN */
++#define VM_MAYBE_GUARD	BIT(VM_MAYBE_GUARD_BIT)	/* The VMA maybe contains guard regions. */
+ #define VM_UFFD_WP	0x00001000	/* wrprotect pages tracking */
+ 
+ #define VM_LOCKED	0x00002000
+--- a/include/trace/events/mmflags.h
++++ b/include/trace/events/mmflags.h
+@@ -213,6 +213,7 @@ IF_HAVE_PG_ARCH_3(arch_3)
+ 	{VM_UFFD_MISSING,		"uffd_missing"	},		\
+ IF_HAVE_UFFD_MINOR(VM_UFFD_MINOR,	"uffd_minor"	)		\
+ 	{VM_PFNMAP,			"pfnmap"	},		\
++	{VM_MAYBE_GUARD,		"maybe_guard"	},		\
+ 	{VM_UFFD_WP,			"uffd_wp"	},		\
+ 	{VM_LOCKED,			"locked"	},		\
+ 	{VM_IO,				"io"		},		\
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -1494,6 +1494,10 @@ vma_needs_copy(struct vm_area_struct *ds
+ 	if (src_vma->anon_vma)
+ 		return true;
+ 
++	/* Guard regions have modified page tables that require copying. */
++	if (src_vma->vm_flags & VM_MAYBE_GUARD)
++		return true;
++
+ 	/*
+ 	 * Don't copy ptes where a page fault will fill them correctly.  Fork
+ 	 * becomes much lighter when there are big shared or private readonly
+--- a/tools/testing/vma/vma_internal.h
++++ b/tools/testing/vma/vma_internal.h
+@@ -56,6 +56,7 @@ extern unsigned long dac_mmap_min_addr;
+ #define VM_MAYEXEC	0x00000040
+ #define VM_GROWSDOWN	0x00000100
+ #define VM_PFNMAP	0x00000400
++#define VM_MAYBE_GUARD	0x00000800
+ #define VM_LOCKED	0x00002000
+ #define VM_IO           0x00004000
+ #define VM_SEQ_READ	0x00008000	/* App will access data sequentially */
 
 
