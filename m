@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B127D149C6F;
-	Thu, 25 Jun 2026 13:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F3728751B;
+	Thu, 25 Jun 2026 13:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782392800; cv=none; b=M1MTH5ot/IFXJBxQbk/i31v2707ILWZ5icoVcVBl8XmRTc+oVsiKxHjIDw6+FpaNTAURZFn8RgaoLVa3WjueeItcojM6g73CZHf29VHdjgLXtNqoovTyfI3inXqRuglC8Lc95jmFYkzE/q9zNTtdQc5M6WlsVs+IGNqsThr/Hws=
+	t=1782392804; cv=none; b=B8Ot2qeSLCg1IvgtBuGP1K410QmbQBje2G1W+pC4ip5fAl6LnbOFCjXq50l3biknNJ4loIxjokzJm2yBXhmaAcGHZIb2Raa1gs+DNkmPOkjAGc2/ge9NAVBlXZ6DYtVhyEL8/154hED2v8DwmIEk5Dh7BusTlitrZ5psVM/6SSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782392800; c=relaxed/simple;
-	bh=6fO+kMeAk7VSiVRapOHpJf+e5ind+Hg2ilLkla4rZbQ=;
+	s=arc-20240116; t=1782392804; c=relaxed/simple;
+	bh=ge+Ec1pETig7yCgn4Zg5xaQgdPIGeQVmlKSA9evI/oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDxipmJbgBaPCZlXjeadl5DsHbYdOEdjvOZhSqG6m1oU6Mw/hr8iNLF6DgwQhWQHJD3YzBgqXrQvixg1jNafJyiTdQbzcKunnoNcP8MGkQupvXEOMsfgNtftxH1OgPwU9twnXczBSgU8+4Ln7NwqIw0oAkxlaXClNxmN5f++C5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnIkjKjk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RtZrNfEZu1auvNzoBCHbjHzluDI1VoFWiQJ/WRMesoYwB/PKdXTJmQvAFtIzLOR/O8WJSKEXV4uvOMBoNZ6QZir+yJ46p/vOSNuRLIKdqv48FZQFEcZq+7hKPi8W1/BnXaMAuHDVjR19V12VvuBzC5BTpBSRGSPNU8Yjyui9TTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mooa9DP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnIkjKjk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0180E1F000E9;
-	Thu, 25 Jun 2026 13:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mooa9DP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC5D1F000E9;
+	Thu, 25 Jun 2026 13:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1782392799;
-	bh=wVaNDCCEEJfa3dPnP3jXiH76Mhpx8y4QeSRj5/tBE28=;
+	s=korg; t=1782392802;
+	bh=fXpCV8rIj1Q5JD0qOEzLqI5qGSZUwU21S+y/1khp6fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CnIkjKjkNblXqswHBwaWkaWrKu9Gdk0FuAURNE1frDwx3NO5Orq3kdfx+6YaLNk6W
-	 hdKjtOon/gddMPExq7odCU1NxQ1KT9FsZsLHX/DLB1jkmsSpV5r2gGi0Na2aoi3yx6
-	 YNxw3rC+6uS7FmawZCFic3KcN3npYcr5XD4aVays=
+	b=0mooa9DP5bZmLL3UgvXAX5KLf406ynQ/LO16lFidLZCI1Fn01vGRXAn+Do6H890XQ
+	 8T06QEjrrN8WvdhaUz5e5aN0ppG8HRPQQxZscFfwPZ/akwS0MOSIFB3irfC9yaNQWq
+	 ExNr4dsTtWtPa+ewW4cg++Q6ftcQE8ceVkOAYtGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yang.yicong@picoheart.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 13/60] ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn()
-Date: Thu, 25 Jun 2026 14:02:58 +0100
-Message-ID: <20260625125647.473021316@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Alexandr Alexandrov <alexandr.alexandrov@oracle.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 04/60] Revert "NFSD: Defer sub-object cleanup in export put callbacks"
+Date: Thu, 25 Jun 2026 14:02:49 +0100
+Message-ID: <20260625125646.234962429@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
 References: <20260625125645.554579168@linuxfoundation.org>
@@ -52,140 +52,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yang.yicong@picoheart.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit 7cf28b3797a81b616bb7eb3e90cf131afc452919 ]
+commit 516403d4d85607fdef3ca41d4a56b54e5566fa9a upstream.
 
-The device object rescan in acpi_scan_clear_dep_fn() is scheduled on a
-system workqueue which is not guaranteed to be finished before entering
-userspace. This may cause some key devices to be missing when userspace
-init task tries to find them. Two issues observed on RISCV platforms:
+This reverts commit 48db892356d6cb80f6942885545de4a6dd8d2a29.
 
- - Kernel panic due to userspace init cannot have an opened
-   console.
+Commit 48db892356d6 ("NFSD: Defer sub-object cleanup in export
+put callbacks") moved path_put() and auth_domain_put() out of
+svc_export_put() and expkey_put() and behind queue_rcu_work() to
+close a claimed use-after-free in e_show() and c_show() against
+ex_path and ex_client->name. Discussion in [1] shows neither
+the diagnosis nor the remedy survives review.
 
-   The console device scanning is queued by acpi_scan_clear_dep_queue()
-   and not finished by the time userspace init process running, thus by
-   the time userspace init runs, no console is present.
+The downstream teardown of both sub-objects is already RCU-deferred.
+auth_domain_put() reaches svcauth_unix_domain_release(), which frees
+the unix_domain and its ->name through call_rcu(). path_put()
+reaches dentry_free(), which frees the dentry through call_rcu(),
+and prepend_path() is already structured to tolerate concurrent
+dentry teardown. A reader in cache_seq_start_rcu() therefore
+observes both sub-objects through the next grace period regardless
+of whether svc_export_put() runs synchronously, so the synchronous
+form was never unsafe.
 
- - Entering rescue shell due to the lack of root devices (PCIe nvme in
-   our case).
+The crash signature in the report cited by commit 48db892356d6
+("NFSD: Defer sub-object cleanup in export put callbacks") has a
+different root cause: a /proc/net/rpc cache file held open across
+network-namespace exit lets cache_destroy_net() free cd->hash_table
+while a reader is still walking it. The correct fix pins cd->net for
+the open fd's lifetime and does not require any deferral inside
+svc_export_put().
 
-   Same reason as above, the PCIe host bridge scanning is queued on
-   a system workqueue and finished after init process runs.
+Meanwhile, deferring path_put() out of svc_export_put() reintroduces
+the regression that commit 69d803c40ede ("nfsd: Revert "nfsd:
+release svc_expkey/svc_export with rcu_work"") repaired: after
+"exportfs -r" drops the last cache reference, the mount reference
+held through ex_path lingers in the workqueue, so a subsequent
+umount fails with EBUSY.
 
-The reason is because both devices (console, PCIe host bridge) depend on
-riscv-aplic irqchip to serve their interrupts (console's wired interrupt
-and PCI's INTx interrupts). In order to keep the dependency, these
-devices are scanned and created after initializing riscv-aplic. The
-riscv-aplic is initialized in device_initcall() and a device scan work
-is queued via acpi_scan_clear_dep_queue(), which is close to the time
-userspace init process is run. Since system_dfl_wq is used in
-acpi_scan_clear_dep_queue() with no synchronization, the issues will
-happen if userspace init runs before these devices are ready.
+Restore the synchronous path_put() and auth_domain_put() in
+svc_export_put() and expkey_put() and the call_rcu()/kfree_rcu()
+free of the containing structures. The unrelated fix for
+ex_uuid/ex_stats from commit 2530766492ec ("nfsd: fix UAF when
+access ex_uuid or ex_stats") is preserved.
 
-The solution is to wait for the queued work to complete before entering
-userspace init. One possible way would be to use a dedicated workqueue
-instead of system_dfl_wq, and explicitly flush it somewhere in the
-initcall stage before entering userspace. Another way is to use
-async_schedule_dev_nocall() for scanning these devices. It's designed
-for asynchronous initialization and will work in the same way as before
-because it's using a dedicated unbound workqueue as well, but the kernel
-init code calls async_synchronize_full() right before entering userspace
-init which will wait for the work to complete.
-
-Compared to a dedicated workqueue, the second approach is simpler
-because the async schedule framework takes care of all of the details.
-The ACPI code only needs to focus on its job. A dedicated workqueue for
-this could also be redundant because some platforms don't need
-acpi_scan_clear_dep_queue() for their device scanning.
-
-Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
-[ rjw: Subject adjustment, changelog edits ]
-Link: https://patch.msgid.link/20260128132848.93638-1-yang.yicong@picoheart.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ Vivian: Adjust system_dfl_wq -> system_unbound_wq in removed lines ]
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/all/10019b42-4589-4f9f-8d5b-d8197db1ce3c@huawei.com/ [1]
+Fixes: 48db892356d6 ("NFSD: Defer sub-object cleanup in export put callbacks")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Alexandr Alexandrov <alexandr.alexandrov@oracle.com>
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/scan.c | 41 +++++++++++++++--------------------------
- 1 file changed, 15 insertions(+), 26 deletions(-)
+ fs/nfsd/export.c |   63 +++++++------------------------------------------------
+ fs/nfsd/export.h |    7 +-----
+ fs/nfsd/nfsctl.c |    8 ------
+ 3 files changed, 12 insertions(+), 66 deletions(-)
 
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 50f60da6cf27fc..16704c2a730c04 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -5,6 +5,7 @@
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -36,30 +36,19 @@
+  * second map contains a reference to the entry in the first map.
+  */
  
- #define pr_fmt(fmt) "ACPI: " fmt
- 
-+#include <linux/async.h>
- #include <linux/module.h>
- #include <linux/init.h>
- #include <linux/slab.h>
-@@ -2360,46 +2361,34 @@ static int acpi_dev_get_next_consumer_dev_cb(struct acpi_dep_data *dep, void *da
- 	return 0;
- }
- 
--struct acpi_scan_clear_dep_work {
--	struct work_struct work;
--	struct acpi_device *adev;
--};
+-static struct workqueue_struct *nfsd_export_wq;
 -
--static void acpi_scan_clear_dep_fn(struct work_struct *work)
-+static void acpi_scan_clear_dep_fn(void *dev, async_cookie_t cookie)
+ #define	EXPKEY_HASHBITS		8
+ #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
+ #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
+ 
+-static void expkey_release(struct work_struct *work)
++static void expkey_put(struct kref *ref)
  {
--	struct acpi_scan_clear_dep_work *cdw;
+-	struct svc_expkey *key = container_of(to_rcu_work(work),
+-					      struct svc_expkey, ek_rwork);
++	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
+ 
+ 	if (test_bit(CACHE_VALID, &key->h.flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
+ 		path_put(&key->ek_path);
+ 	auth_domain_put(key->ek_client);
+-	kfree(key);
+-}
 -
--	cdw = container_of(work, struct acpi_scan_clear_dep_work, work);
-+	struct acpi_device *adev = to_acpi_device(dev);
- 
- 	acpi_scan_lock_acquire();
--	acpi_bus_attach(cdw->adev, (void *)true);
-+	acpi_bus_attach(adev, (void *)true);
- 	acpi_scan_lock_release();
- 
--	acpi_dev_put(cdw->adev);
--	kfree(cdw);
-+	acpi_dev_put(adev);
+-static void expkey_put(struct kref *ref)
+-{
+-	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
+-
+-	INIT_RCU_WORK(&key->ek_rwork, expkey_release);
+-	queue_rcu_work(nfsd_export_wq, &key->ek_rwork);
++	kfree_rcu(key, ek_rcu);
  }
  
- static bool acpi_scan_clear_dep_queue(struct acpi_device *adev)
+ static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -364,13 +353,11 @@ static void export_stats_destroy(struct
+ 					    EXP_STATS_COUNTERS_NUM);
+ }
+ 
+-static void svc_export_release(struct work_struct *work)
++static void svc_export_release(struct rcu_head *rcu_head)
  {
--	struct acpi_scan_clear_dep_work *cdw;
--
- 	if (adev->dep_unmet)
- 		return false;
+-	struct svc_export *exp = container_of(to_rcu_work(work),
+-					      struct svc_export, ex_rwork);
++	struct svc_export *exp = container_of(rcu_head, struct svc_export,
++			ex_rcu);
  
--	cdw = kmalloc(sizeof(*cdw), GFP_KERNEL);
--	if (!cdw)
--		return false;
--
--	cdw->adev = adev;
--	INIT_WORK(&cdw->work, acpi_scan_clear_dep_fn);
- 	/*
--	 * Since the work function may block on the lock until the entire
--	 * initial enumeration of devices is complete, put it into the unbound
--	 * workqueue.
-+	 * Async schedule the deferred acpi_scan_clear_dep_fn() since:
-+	 * - acpi_bus_attach() needs to hold acpi_scan_lock which cannot
-+	 *   be acquired under acpi_dep_list_lock (held here)
-+	 * - the deferred work at boot stage is ensured to be finished
-+	 *   before userspace init task by the async_synchronize_full()
-+	 *   barrier
-+	 *
-+	 * Use _nocall variant since it'll return on failure instead of
-+	 * run the function synchronously.
- 	 */
--	queue_work(system_unbound_wq, &cdw->work);
--
--	return true;
-+	return async_schedule_dev_nocall(acpi_scan_clear_dep_fn, &adev->dev);
+-	path_put(&exp->ex_path);
+-	auth_domain_put(exp->ex_client);
+ 	nfsd4_fslocs_free(&exp->ex_fslocs);
+ 	export_stats_destroy(exp->ex_stats);
+ 	kfree(exp->ex_stats);
+@@ -382,8 +369,9 @@ static void svc_export_put(struct kref *
+ {
+ 	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
+ 
+-	INIT_RCU_WORK(&exp->ex_rwork, svc_export_release);
+-	queue_rcu_work(nfsd_export_wq, &exp->ex_rwork);
++	path_put(&exp->ex_path);
++	auth_domain_put(exp->ex_client);
++	call_rcu(&exp->ex_rcu, svc_export_release);
  }
  
- static void acpi_scan_delete_dep_data(struct acpi_dep_data *dep)
--- 
-2.53.0
-
+ static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -1490,36 +1478,6 @@ const struct seq_operations nfs_exports_
+ 	.show	= e_show,
+ };
+ 
+-/**
+- * nfsd_export_wq_init - allocate the export release workqueue
+- *
+- * Called once at module load. The workqueue runs deferred svc_export and
+- * svc_expkey release work scheduled by queue_rcu_work() in the cache put
+- * callbacks.
+- *
+- * Return values:
+- *   %0: workqueue allocated
+- *   %-ENOMEM: allocation failed
+- */
+-int nfsd_export_wq_init(void)
+-{
+-	nfsd_export_wq = alloc_workqueue("nfsd_export", WQ_UNBOUND, 0);
+-	if (!nfsd_export_wq)
+-		return -ENOMEM;
+-	return 0;
+-}
+-
+-/**
+- * nfsd_export_wq_shutdown - drain and free the export release workqueue
+- *
+- * Called once at module unload. Per-namespace teardown in
+- * nfsd_export_shutdown() has already drained all deferred work.
+- */
+-void nfsd_export_wq_shutdown(void)
+-{
+-	destroy_workqueue(nfsd_export_wq);
+-}
+-
+ /*
+  * Initialize the exports module.
+  */
+@@ -1581,9 +1539,6 @@ nfsd_export_shutdown(struct net *net)
+ 
+ 	cache_unregister_net(nn->svc_expkey_cache, net);
+ 	cache_unregister_net(nn->svc_export_cache, net);
+-	/* Drain deferred export and expkey release work. */
+-	rcu_barrier();
+-	flush_workqueue(nfsd_export_wq);
+ 	cache_destroy_net(nn->svc_expkey_cache, net);
+ 	cache_destroy_net(nn->svc_export_cache, net);
+ 	svcauth_unix_purge(net);
+--- a/fs/nfsd/export.h
++++ b/fs/nfsd/export.h
+@@ -7,7 +7,6 @@
+ 
+ #include <linux/sunrpc/cache.h>
+ #include <linux/percpu_counter.h>
+-#include <linux/workqueue.h>
+ #include <uapi/linux/nfsd/export.h>
+ #include <linux/nfs4.h>
+ 
+@@ -76,7 +75,7 @@ struct svc_export {
+ 	u32			ex_layout_types;
+ 	struct nfsd4_deviceid_map *ex_devid_map;
+ 	struct cache_detail	*cd;
+-	struct rcu_work		ex_rwork;
++	struct rcu_head		ex_rcu;
+ 	unsigned long		ex_xprtsec_modes;
+ 	struct export_stats	*ex_stats;
+ };
+@@ -93,7 +92,7 @@ struct svc_expkey {
+ 	u32			ek_fsid[6];
+ 
+ 	struct path		ek_path;
+-	struct rcu_work		ek_rwork;
++	struct rcu_head		ek_rcu;
+ };
+ 
+ #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
+@@ -111,8 +110,6 @@ __be32 check_nfsd_access(struct svc_expo
+ /*
+  * Function declarations
+  */
+-int			nfsd_export_wq_init(void);
+-void			nfsd_export_wq_shutdown(void);
+ int			nfsd_export_init(struct net *);
+ void			nfsd_export_shutdown(struct net *);
+ void			nfsd_export_flush(struct net *);
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2262,12 +2262,9 @@ static int __init init_nfsd(void)
+ 	if (retval)
+ 		goto out_free_pnfs;
+ 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
+-	retval = nfsd_export_wq_init();
+-	if (retval)
+-		goto out_free_lockd;
+ 	retval = register_pernet_subsys(&nfsd_net_ops);
+ 	if (retval < 0)
+-		goto out_free_export_wq;
++		goto out_free_lockd;
+ 	retval = register_cld_notifier();
+ 	if (retval)
+ 		goto out_free_subsys;
+@@ -2296,8 +2293,6 @@ out_free_cld:
+ 	unregister_cld_notifier();
+ out_free_subsys:
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+-out_free_export_wq:
+-	nfsd_export_wq_shutdown();
+ out_free_lockd:
+ 	nfsd_lockd_shutdown();
+ 	nfsd_drc_slab_free();
+@@ -2318,7 +2313,6 @@ static void __exit exit_nfsd(void)
+ 	nfsd4_destroy_laundry_wq();
+ 	unregister_cld_notifier();
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+-	nfsd_export_wq_shutdown();
+ 	nfsd_drc_slab_free();
+ 	nfsd_lockd_shutdown();
+ 	nfsd4_free_slabs();
 
 
