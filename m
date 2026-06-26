@@ -1,115 +1,95 @@
-Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB27337E307
-	for <patches@lists.linux.dev>; Fri, 26 Jun 2026 05:13:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA0D283FFB;
+	Fri, 26 Jun 2026 08:21:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782450793; cv=none; b=DmcSzEhOLN4vKDEdwPkR1ea5Keo3j8xKC49EAgJXqvGceKUEM9awX7fa/guF9TTCQlBJ36OyTCRUlLUAozMdmOK80zzNt5S7042h1eJb93GP5XsRImEPJQnPoAuz2kmpZAs2kvoWF2WErpt9A0PLpPra04Arx8HvDGns/PMjmIo=
+	t=1782462065; cv=none; b=VNtmdKQbEGM185OKmKaAmn0iGHchDRSLhmHmbHhOb4Uii2ItAvhJTLeS71XR3hS05z5PyfnXYL+6lfRXHCR92ilzDupT4qeoLxpoQ/ensWGaoJa9CIPXc8lJGIBR41mbAPIGch8NyVK/XriQl1Zc80YcYFWIubLX1stlwpnOdbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782450793; c=relaxed/simple;
-	bh=rQBVJxkt8xjk5AoHuaR2wnXRWQMgeu4QozhhbapwxJU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EajZuX5mUma+lBmdue/Io9nZ6+66XUFeAi6ZvFmidVsbcSPHJSrvNIbiPR93rWl/WK491EwiGQsg186oS4jq0J8N3yYjQ0opIZVmZ7va7QtSIdQqga5mdIyKLKaFqahYK8xL4LyI1C/MhHnXbH/b+uXcxXZxHdFDRH/gsadgTkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=MJmzPNYp; arc=none smtp.client-ip=44.202.169.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1782462065; c=relaxed/simple;
+	bh=8sc6cxuR3tk2T90p8ARBnlmi1Acg6LbP52gCsMdVs0M=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=p5DM5FCQuWskeEuVW1Xh4OTeWBLIOI0Hw1B9OJtafJWqj9Bb9dnwWvLnDEk5/6fCcmkjOTdMJC37bQPBmx6L30OewU4BQcdSmR2oGEco19w/hNzZRrEJgCvoU5A+CDXxf19Orsvz4LdOnGpfJUlZx3+Gu1m2MgHqp34VWVUbKGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PClxCafl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="MJmzPNYp"
-Received: from eig-obgw-5007b.ext.cloudfilter.net ([10.0.29.167])
-	by cmsmtp with ESMTPS
-	id cuMPwYRHmVGUKcyqlwrVv6; Fri, 26 Jun 2026 05:11:35 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id cyqkw2ccbJ2u1cyqlww9hA; Fri, 26 Jun 2026 05:11:35 +0000
-X-Authority-Analysis: v=2.4 cv=W+44VQWk c=1 sm=1 tr=0 ts=6a3e0a07
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=Lc18GGwJt_UjcvvaV1cA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=3kf09Z6SzwzXyqPIS+vGO4STEhAMNfUSMyoF+kW41qY=; b=MJmzPNYp8SrqcenrdOoCPhHtpZ
-	c0GjvIPx0QJO6ZS/sSS/wjpsphv8HHgQLB7bfjeG+YS2DCiNn6A83UaURCF/PqFdxGPXsQlfyHx2U
-	q5tNKjRKiCnIFbrQmWYaDpUTgQzfcoIZhu1SLTZPUOPQ8uoQirPqxNRIBef3Sy0ADZJddYgDorjSD
-	lS5ad6X4jAYZ+ofA1EZHC0NUI/5zBdrBU89d/v8objaJb75PdvoluinQ08JFEEz5eYH61hgFMbJ69
-	WUrn1IsqS5mwIz3iMc+Y+s3b/8Bx+BrhoGKO6uEPV4aIIMORI4kA0y8gz0gbpakBp+bEQCeL0LVf+
-	wX3WUL8A==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:33074 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.99.2)
-	(envelope-from <re@w6rz.net>)
-	id 1wcyqk-00000003qJY-26by;
-	Thu, 25 Jun 2026 23:11:34 -0600
-Message-ID: <07336bed-38e0-403c-b075-68ea59ffc5de@w6rz.net>
-Date: Thu, 25 Jun 2026 22:11:32 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PClxCafl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545E41F000E9;
+	Fri, 26 Jun 2026 08:21:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782462064;
+	bh=+YfZ76r2ksaV8Km/IBCLkq4BDK1sE4dAu4lNJUrn33E=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc;
+	b=PClxCafl7uU6D140WFTcVLHSe+JnE8XVg1bEtWxqtnVqcc0egtLYo7WqqboEO4D7m
+	 DeNOsV4ecE44NXMKAYEJZHFzYP96iaQGVvusNZQGekuqmDZJ02cf0KZdw62YJ7AtwH
+	 T6B8jxwwgQbXcCahcJ4iYjA4RmRQ58nnNwP1SCwHLjxA6Fi6IGc9h3dN1bJStX1beh
+	 e4r025iZ0taPA+LXTdOT5t9Wj6Db44RJLkJpS80I4blWQtBjw9XKRTf6gzvNlsM8VX
+	 I6JM4SbMLJQ6EkiBnzKai7KtSU3j6PnouZlYJUqH0cTI+zVc40aaFkoNHEWVZxHT1J
+	 TphSLdkrHIBHg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 8FE2B39389E8;
+	Fri, 26 Jun 2026 08:20:52 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 00/60] 6.18.37-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260625125645.554579168@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260625125645.554579168@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1wcyqk-00000003qJY-26by
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:33074
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 38
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfI4DONK3z6if/emSEH3NJ41oGdMdApoq/AqhtxmjCOZbNNYDFl4no7943v6m5flxzLTbUYes1VRrYabOxrzGllFMG+jNTO71DVkhpsbnPaPLpQuZpAxS
- hPg0SEYtpRoIZtQZp9C2OIYehmCdtDQEn6GnC3slfAu1Gt78dZFlOcxjj+NShjkzaH9w8jsXRWUbzw==
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 0/8] Support non-leaf and range invalidation features
+ in
+ RISC-V
+From: patchwork-bot+linux-riscv@kernel.org
+Message-Id: 
+ <178246205139.3816447.9006141630589978031.git-patchwork-notify@kernel.org>
+Date: Fri, 26 Jun 2026 08:20:51 +0000
+References: <0-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
+In-Reply-To: <0-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: linux-riscv@lists.infradead.org, alex@ghiti.fr, aou@eecs.berkeley.edu,
+ iommu@lists.linux.dev, joro@8bytes.org, palmer@dabbelt.com, pjw@kernel.org,
+ robin.murphy@arm.com, tjeznach@rivosinc.com, will@kernel.org,
+ andrew.jones@oss.qualcomm.com, fangyu.yu@linux.alibaba.com,
+ patches@lists.linux.dev
 
-On 6/25/26 06:02, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.37 release.
-> There are 60 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 27 Jun 2026 12:54:50 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.37-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hello:
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+This series was applied to riscv/linux.git (fixes)
+by Joerg Roedel <joerg.roedel@amd.com>:
 
-Tested-by: Ron Economos <re@w6rz.net>
+On Fri,  8 May 2026 11:52:59 -0300 you wrote:
+> This is part of the patch pile to get SMMUv3 moved to iommupt. From
+> that perspective it introduces the PT_FEAT_DETAILED_GATHER which will
+> be used by both RISC-V and SMMUv3 to generate optimized invalidation
+> commands.
+> 
+> I don't have any RISC-V anything so this needs to be tested by someone who
+> does.
+> 
+> [...]
+
+Here is the summary with links:
+  - [v2,1/8] iommu: Split the kdoc comment for struct iommu_iotlb_gather
+    https://git.kernel.org/riscv/c/74c9d82c7e3f
+  - [v2,2/8] iommupt: Add struct iommupt_pending_gather
+    https://git.kernel.org/riscv/c/f0e4b7f5f875
+  - [v2,3/8] iommupt: Add PT_FEAT_DETAILED_GATHER
+    https://git.kernel.org/riscv/c/89792629d4b2
+  - [v2,4/8] iommu/riscv: Enable PT_FEAT_DETAILED_GATHER and pass gather to iotlb_inval
+    (no matching commit)
+  - [v2,5/8] iommu/riscv: Compute best stride for single invalidation
+    https://git.kernel.org/riscv/c/bb62adcf4513
+  - [v2,6/8] iommu/riscv: Add RISCV_IOMMU_CAPABILITIES_NL
+    https://git.kernel.org/riscv/c/e4084c6bbb42
+  - [v2,7/8] iommu/riscv: Include the dword number in RISCV_IOMMU_CMD macros
+    https://git.kernel.org/riscv/c/835d06ee7ef0
+  - [v2,8/8] iommu/riscv: Add NAPOT range invalidation support
+    https://git.kernel.org/riscv/c/082ad5ed0785
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
