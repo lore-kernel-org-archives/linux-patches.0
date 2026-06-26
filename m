@@ -1,140 +1,245 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A9037F727
-	for <patches@lists.linux.dev>; Fri, 26 Jun 2026 17:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B4635C183
+	for <patches@lists.linux.dev>; Fri, 26 Jun 2026 19:56:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782496588; cv=none; b=pYVJvFEDjRNzDFR2ZrUsdRoR6z3+JkIulOoVNJTPBEG4+LnzyuKMrMrRnStYWP5hus4GdzDFicdJOffe2oEMMzf4FlNizMVzhKayXCyjLs3cVt4k01MW+28erw1sn/QW8+6POsKP6odcShLmMP8XWYSFT1n1asZJZ2DXZ9yY5vU=
+	t=1782503785; cv=none; b=PgWtHR6kUcujnR7LVSSHHnN/2zV0SJN3gzbdiGpZkdWeGB3cvPFB8QhUj1lxL68g8YWL/qUkZj2yqAZgqJDK9gUu4KR2H5CLvuiolxDISYoSoAsKRbXaS3Dimzy7F0cwf+KzbPx9kCDWj79tVrt7Nm2Xr2zx10r/W0rZaeyXf7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782496588; c=relaxed/simple;
-	bh=QFdhdzcUL0orhGT7Yr98m0IH+vUgMv5RxV9hC6+Dgtk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hs+FqZFnawUGRD24hHc5Xs0cLTmiiUelOAWh2tfrwd2ZTw0+/0KS6jwo9unHpwmFxlkaHqEzfk1FrLAlbPXiA8HHSx34VlmKhqIp6ka4DQJrMopp0X4AWDbcz2V2qRwl1iJyOBmlbxjzwC7YjiNyR7L7XeCr4PwCJzqIJZ7O/MA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ogwpuh5u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N2ZoJ5Hq; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782503785; c=relaxed/simple;
+	bh=vKCMYRw6PeAYacLS/YFX/j9UISD4ObDSppvkRqnhCIY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mS5cy3sKEOTgQ1+KkbfT7HG3Ozdx1pj7b8hxS03ek7iiVWMV7/Ueb1GAoxWSuYbjLAgVZY+zFLvWK+4ulaYzpOZ8F51ILWx9zLY2V7zQQJWcV2PAX/u5EqpOzAfk9ARCcUTgqACxOqV+KEL2JlWGmpeTFvfuIOu16/mcbqcdcbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OmUDShNG; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ogwpuh5u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N2ZoJ5Hq"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 261451D000DA;
-	Fri, 26 Jun 2026 13:56:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 26 Jun 2026 13:56:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1782496586;
-	 x=1782582986; bh=x+IZSo79L5d786Ze9SgP5T+ZDMTtg4MvJShj+brkfOU=; b=
-	Ogwpuh5ulGIfgj8Jp75EJCQWyEBe1lNnu1fk1Ne+4A1baSfyBSY0rUDPaNkG1stO
-	Q8vfF7BgLrTR6/npjgMn+qckMV4IEHbVv6iyHItWxfKxO3DnNksFV95Z3IJEkdN+
-	ajBw0qepSEGMMxY7VGUIvfJeaPBfdMNVtQqMr317r+BP6S/QoAw+fZ0OG6BFl27s
-	xYJa24tUl0Up2FGW8wHpPgEzL401aUOE+6i+RTsd7zV6rtKh0jCDaL68JOhbL+f0
-	jQLFuxY59FgMJsWq891xraYhR5w8buO4vlLMuGZ3D1oppAI0SbfghUCYOFJhePNm
-	ybJ7XubTPFffCwXFHVFo6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782496586; x=
-	1782582986; bh=x+IZSo79L5d786Ze9SgP5T+ZDMTtg4MvJShj+brkfOU=; b=N
-	2ZoJ5Hq4GpQsRlXxuUpVdtLStsCYpG+5s5dQTev8LBX6LaANK6DT0hX/nXB342dT
-	PGr5x7hBEh+Syb98/luBUiZsKuhfQILkCa9lZum0+6ihMAHIVzq+JnYQojTxJ9mQ
-	bBqaIR8hZsby637DDXNzTrD1yXg77HsIzZprznYKsG4JXi+Jpq+r46AnDfGEqVau
-	FI4zKuoQ4Vx6JkzAZZ/wJK7wjD3dB2OpKF075qdKpccq3Z0QsFzLxt2KehgZ9TeX
-	+AZuoYj1H5+XqdN6z+eg/dVcJPvPWpfXkp4Pcoy0UtDLIZb3cu5y4K0d09erXQlQ
-	mFGdN/z0trG2yEFNNjB6w==
-X-ME-Sender: <xms:Sb0-amPQYRPgYrhGWo1gHd5Sd3RMRrMmVxpDM4G90DWGDXxxBSVvbQ>
-    <xme:Sb0-alVgMeEvYKkcpPsxec3nv7cmp1yNkl9jz6iIzmQCs9aXzAo8TtlodxXUNH8JA
-    f_x0bTP4co9WKs5HLGDsQJ-qATVzgPTlzh4TKMQuVyLbmxFarMeLA>
-X-ME-Received: <xmr:Sb0-auZvqEEBU2-Dmy1EcsUffG6G414gTIrVCGavqCYzpTx7lFlv0MGpeGZq3LMz0otPsr7yBSRayZvDs0L0s_U8p4PGj4wO>
-X-ME-Proxy-Cause: dmFkZTFAaUqo/uEEHncEkuOnwkupeLhuCjBbGn90FZPQlh1vlrygtOoZ41ShuFKY4QHHuQ
-    jYMJ5J6/0jFxI+GnOpYxOLJnAdfZVZHmjXhL06MSpl+X5LXBx4LmuVhaSiRAmlOkWhnSvj
-    oj9M1lYSBhSe4+hykrhfWXmCQ5T7VqI2h53/nggBxLg82xIRS4J708zzPEaIDG50LcqIjr
-    AMrKIVZrEkHGpWXgKP1K3jVv+5WL9YT+JtWBdj230XXEkkXMxUWra8LHy4zzP5pXtWwlQq
-    A5KP993LZKiv6O+Ve3mNKCpwBhKwiJWze2SLg4aDFiLtACbajLWH2N97LEl6dKsdaqloZT
-    SYNY4tQ0/gahmFgN7eCUheQPfex/6OxS0kblVWj04kGaUp1kFLHgOxdy9t+UFTCe/xk8sh
-    +XVX/0gGHv31gaI5z3uB1yB3siE3sHgpCi6fcq8muUbxKf+srYmTmYeVujWXVyVebOp18q
-    we8m3VAtFYkBxfvkA+zldriotx0L5nTLeAEQCwIOx7FxrspjNHQpT+V1MNoj6F/TZBOxKT
-    uAYC2lEyr26Q6LP1HJPPVjb8Pv5JEfOyfZytmNcIIhoqs0MRMRH3cji1ngKMdSg+QmIKQC
-    KWKks9Awe3iao4hxVz/tSphMlU4dQec0Fl7gcHmzKvNxEMlvXla68d1gkSBw
-X-ME-Proxy: <xmx:Sb0-aiv6GYM6LYkCDSz-B_LCzmCKh2aoHwQ2DbVUNK519A-NbArHNg>
-    <xmx:Sb0-atkqpa03HiMA30V0u_Hw3Q1MsgL_rQIfr3IaDwgN3D2d8aIWrw>
-    <xmx:Sb0-ajXcmaw8OGTbffbw4Our8JC0WHI7ZyzgMw3odZtBq9PBwInCzQ>
-    <xmx:Sb0-agn-W_bX_X3AeEWI-13nfajg5r98h56q-9X9px27DStNsa0Qog>
-    <xmx:Sr0-ak1nzaL7KBrZeddB2mDIMd3Qs78NxbQhl5O60REOS4pq-TQ-veLN>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Jun 2026 13:56:22 -0400 (EDT)
-Message-ID: <b7bd471b-e9da-4bfc-ad1d-24b378bd1e44@pobox.com>
-Date: Fri, 26 Jun 2026 10:56:21 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OmUDShNG"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-30cac93dfd7so341773eec.1
+        for <patches@lists.linux.dev>; Fri, 26 Jun 2026 12:56:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782503782; x=1783108582; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0bU0QoVcc0wXfhe1dR98a619nSbxI4Rk3dUoG7XOYOg=;
+        b=OmUDShNG7kvQhTt4SFp00N/+UL2VXDgaOwA3Mi/WA0N8iPCLvhNgi42HNJLRx5FUkY
+         S6HFj5mfZ5uHonqlwQdNuXz1ox6fyN+Kbd+O4uGyxeZadJr9lSEaHOOmvYElBgs90JjA
+         2rGwSKDoGAwAQ+X+xGRuZkX2uhh4R86C2k+coU5CFEq9ENMTSJkXpJjjBz/n9QA4krTD
+         dmsJZw+Hl4eBsmzzzm9a4NGjU7vqZdDeS56xB9We4WUlpIfrIv8YGRjkzRhx28QlDHw/
+         tHQWptWwIEoc5e6Ju8I8k00VsV/XZZ/2UzTKjmhIyIsO4OTe3cKUdif4M9mCXuxdmJBl
+         EktA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782503782; x=1783108582;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0bU0QoVcc0wXfhe1dR98a619nSbxI4Rk3dUoG7XOYOg=;
+        b=EH6Mu0UoaYE+f4UAR/rDnVZOjwIOXIAiIBmtV+8034gDhdxhwQ3M9kxOVJKCc1pSxX
+         wWRk6J6Py1FffMZMg4/SVbFJMDqqwcDd8KwccIR0OWql98q5/N+lYOH2ouWSlyMnq5fH
+         njZsjurolUvtIJInZVtgb+dKm9fHfRLYlcoFnaQC8oGnRcpDDwOEl8W3dgYXvE3kXkCH
+         mYw9OjEo89os5Z1enR8e1UIrhAQFe2phh3cfJGRijtlpx42Mz3OQkANPEsxRmGcJJZ/e
+         GBQBcI/YjjgVlMYJzVcWzp9LqqxEIEYkUngznCQRDLlfGUhLJDqM7zDuA2LYwQYKXDHo
+         S2KA==
+X-Forwarded-Encrypted: i=1; AHgh+Rrqyu/EETvhmwC59hpvsMvRe8F0YBOYQ+ln9LoR9npxWHAmDg5Z7QS/+QLQaPbgbYE5Htk6INEA@lists.linux.dev
+X-Gm-Message-State: AOJu0YzuORvM0kmwRJ83pySm2i76SA+g3xg3KmKvRkP2pYMSUFbXNi1W
+	OTWG5Iwy84h3lvvHGceaVL9A4Bn9EQLnQ/OS719dRiY0ifNhy3T64288
+X-Gm-Gg: AfdE7cnKB/euSkz4w5j+srv0ESoUtvRo6Aw9K7VVyD/rcKc1McWIaWPMtp35HVB2LBj
+	RQ2vV8d6tYKShZo6nK1RGPMIAJaMmQ8qC7ys+DA9zH0jN2hXrTVsBSKShTPjidcBiNAJDQHM0bc
+	iH5C+eTR4OGnVxGtABOhuaX/Ljw+88XHTzi0QxKdrQzifmlnoV8E7wz4Wvki6m/vcIGro3t206i
+	ahLWKghos2pbk0RWVzPDCSkXN8vi2lvuYpDXuZyFEQVW98puEWtcW21A/xjeuBM7TKz/zsONu8P
+	RnJggejH1nTGQo1u5mV13BRuVT7dFT0pgM4lB3SItgJ/7DH2FgWH+6LXQTYX7YXmYVa/3CvwgW4
+	NJab5fELRQyWKysVY+3cx/DzUkaFFBaEvG+wgrGDC5AIgasv9UM+XPE6FadCMlx8SOuf3ljrv6V
+	KZqI94OQJk3mn6h049NOzpB3PZF2L7PJXimjWjjCeyiKpaUgEomHLbwtOCnlX77OQC
+X-Received: by 2002:a05:7300:372c:b0:30b:c0b4:db42 with SMTP id 5a478bee46e88-30c85a5cd27mr8794234eec.11.1782503782154;
+        Fri, 26 Jun 2026 12:56:22 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:a474:bf4a:4966:8d97])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c944d004esm11772037eec.22.2026.06.26.12.56.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jun 2026 12:56:21 -0700 (PDT)
+Date: Fri, 26 Jun 2026 12:56:17 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: "Barry K. Nathan" <barryn@pobox.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.1 00/21] 7.1.2-rc1 review
+Message-ID: <aj7RmyBck8EkPn_s@google.com>
+References: <20260625125613.243729608@linuxfoundation.org>
+ <b7bd471b-e9da-4bfc-ad1d-24b378bd1e44@pobox.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 7.1 00/21] 7.1.2-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>
-References: <20260625125613.243729608@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260625125613.243729608@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b7bd471b-e9da-4bfc-ad1d-24b378bd1e44@pobox.com>
 
-(cc Dmitry Torokhov because this is related to two of your commits)
+Hi Barry,
 
-On 6/25/26 6:03 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.1.2 release.
-> There are 21 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Jun 26, 2026 at 10:56:21AM -0700, Barry K. Nathan wrote:
+> (cc Dmitry Torokhov because this is related to two of your commits)
 > 
-> Responses should be made by Sat, 27 Jun 2026 12:54:50 +0000.
-> Anything received after that time might be too late.
+> On 6/25/26 6:03 AM, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 7.1.2 release.
+> > There are 21 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sat, 27 Jun 2026 12:54:50 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.2-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> > 
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.2-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
-> and the diffstat can be found below.
+> Unfortunately, 7.1.2-rc1 breaks the Synaptics touchpad on my Lenovo
+> ThinkPad T14 Gen 1 -- the pointer no longer moves when I touch the
+> touchpad. Potentially relevant line from dmesg:
 > 
-> thanks,
+> rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-020, fw id: 3972349
 > 
-> greg k-h
+> > Dmitry Torokhov<dmitry.torokhov@gmail.com>
+> >      Input: rmi4 - refactor register descriptor parsing
+> > 
+> > Dmitry Torokhov<dmitry.torokhov@gmail.com>
+> >      Input: rmi4 - fix register descriptor address calculation
 > 
-
-Unfortunately, 7.1.2-rc1 breaks the Synaptics touchpad on my Lenovo
-ThinkPad T14 Gen 1 -- the pointer no longer moves when I touch the
-touchpad. Potentially relevant line from dmesg:
-
-rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-020, fw id: 3972349
-
-> Dmitry Torokhov<dmitry.torokhov@gmail.com>
->      Input: rmi4 - refactor register descriptor parsing
+> Both of these patches seem bad in my testing. Either one, individually,
+> causes the pointer to no longer move when I touch the touchpad. If I
+> revert both of them, then my touchpad works again.
 > 
-> Dmitry Torokhov<dmitry.torokhov@gmail.com>
->      Input: rmi4 - fix register descriptor address calculation
+> I have not yet tested 7.0.14-rc1 or 6.18.37-rc1. However, the problem
+> also reproduces on current mainline as of this writing (commit
+> 51cb1aa1250c36269474b8b6ca6b6319e170f5a5).
 
-Both of these patches seem bad in my testing. Either one, individually,
-causes the pointer to no longer move when I touch the touchpad. If I
-revert both of them, then my touchpad works again.
+Could you please try applying this debug patch and send me dmesg?
 
-I have not yet tested 7.0.14-rc1 or 6.18.37-rc1. However, the problem
-also reproduces on current mainline as of this writing (commit
-51cb1aa1250c36269474b8b6ca6b6319e170f5a5).
+diff --git a/drivers/input/rmi4/rmi_driver.c b/drivers/input/rmi4/rmi_driver.c
+index 49a59da6a841..65095257e3c3 100644
+--- a/drivers/input/rmi4/rmi_driver.c
++++ b/drivers/input/rmi4/rmi_driver.c
+@@ -569,27 +569,35 @@ static int rmi_parse_register_desc_item(struct rmi_register_desc_item *item,
+ 	unsigned int map_offset = 0;
+ 	int b;
+ 
+-	if (offset >= size)
++	if (offset >= size) {
++		pr_err("%s: error: offset >= size (%d >= %zu)\n", __func__, offset, size);
+ 		return -EIO;
++	}
+ 
+ 	item->reg_size = buf[offset++];
+ 	if (item->reg_size == 0) {
+-		if (size - offset < 2)
++		if (size - offset < 2) {
++			pr_err("%s: error: size - offset < 2 (%zu - %d < 2)\n", __func__, size, offset);
+ 			return -EIO;
++		}
+ 		item->reg_size = get_unaligned_le16(&buf[offset]);
+ 		offset += 2;
+ 	}
+ 
+ 	if (item->reg_size == 0) {
+-		if (size - offset < 4)
++		if (size - offset < 4) {
++			pr_err("%s: error: size - offset < 4 (%zu - %d < 4)\n", __func__, size, offset);
+ 			return -EIO;
++		}
+ 		item->reg_size = get_unaligned_le32(&buf[offset]);
+ 		offset += 4;
+ 	}
+ 
+ 	do {
+-		if (offset >= size)
++		if (offset >= size) {
++			pr_err("%s: error in loop: offset >= size (%d >= %zu)\n", __func__, offset, size);
+ 			return -EIO;
++		}
+ 
+ 		for (b = 0; b < 7; b++) {
+ 			if (buf[offset] & BIT(b)) {
+@@ -625,9 +633,11 @@ int rmi_read_register_desc(struct rmi_device *d, u16 addr,
+ 	 * The first register of the register descriptor is the size of
+ 	 * the register descriptor's presence register.
+ 	 */
++	pr_info("%s: starting read at addr 0x%04x\n", __func__, addr);
+ 	ret = rmi_read(d, addr, &size_presence_reg);
+ 	if (ret)
+ 		return ret;
++	pr_info("%s: size_presence_reg = %d\n", __func__, size_presence_reg);
+ 	++addr;
+ 
+ 	if (size_presence_reg < 1 || size_presence_reg > RMI_REG_DESC_PRESENCE_REGS_MAX)
+@@ -643,7 +653,10 @@ int rmi_read_register_desc(struct rmi_device *d, u16 addr,
+ 	ret = rmi_read_block(d, addr, buf, size_presence_reg);
+ 	if (ret)
+ 		return ret;
++	pr_info("%s: presence reg: %*ph\n", __func__, (int)size_presence_reg, buf);
++	
+ 	addr += size_presence_reg;
++	pr_info("%s: advanced addr to 0x%04x (after skipping presence reg)\n", __func__, addr);
+ 
+ 	if (buf[0] == 0) {
+ 		if (size_presence_reg < 3)
+@@ -654,6 +667,7 @@ int rmi_read_register_desc(struct rmi_device *d, u16 addr,
+ 		presence_offset = 1;
+ 		rdesc->struct_size = buf[0];
+ 	}
++	pr_info("%s: struct_size = %ld\n", __func__, rdesc->struct_size);
+ 
+ 	memset(presence_map, 0, sizeof(presence_map));
+ 	map_offset = 0;
+@@ -670,6 +684,7 @@ int rmi_read_register_desc(struct rmi_device *d, u16 addr,
+ 
+ 	rdesc->num_registers = bitmap_weight(presence_map,
+ 						RMI_REG_DESC_PRESENCE_BITS);
++	pr_info("%s: num_registers = %d\n", __func__, rdesc->num_registers);
+ 
+ 	rdesc->registers = devm_kcalloc(&d->dev,
+ 					rdesc->num_registers,
+@@ -693,10 +708,14 @@ int rmi_read_register_desc(struct rmi_device *d, u16 addr,
+ 	 * register and a bitmap of all subpackets contained in the packet
+ 	 * register.
+ 	 */
++	pr_info("%s: reading struct_buf from addr 0x%04x, size %ld\n", __func__, addr, rdesc->struct_size);
+ 	ret = rmi_read_block(d, addr, struct_buf, rdesc->struct_size);
+ 	if (ret)
+ 		return ret;
+ 
++	print_hex_dump(KERN_INFO, "rmi_struct: ", DUMP_PREFIX_OFFSET, 16, 1,
++		       struct_buf, rdesc->struct_size, false);
++
+ 	reg = find_first_bit(presence_map, RMI_REG_DESC_PRESENCE_BITS);
+ 	offset = 0;
+ 	for (i = 0; i < rdesc->num_registers; i++) {
+@@ -712,9 +731,8 @@ int rmi_read_register_desc(struct rmi_device *d, u16 addr,
+ 		item->reg = reg;
+ 		offset += item_size;
+ 
+-		rmi_dbg(RMI_DEBUG_CORE, &d->dev,
+-			"%s: reg: %d reg size: %u subpackets: %d\n", __func__,
+-			item->reg, item->reg_size, item->num_subpackets);
++		pr_info("%s: parsed item %d: reg: %d reg size: %u subpackets: %d\n", __func__,
++			i, item->reg, item->reg_size, item->num_subpackets);
+ 
+ 		reg = find_next_bit(presence_map,
+ 				    RMI_REG_DESC_PRESENCE_BITS, reg + 1);
+
+> 
 
 -- 
--Barry K. Nathan  <barryn@pobox.com>
+Dmitry
