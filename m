@@ -1,136 +1,140 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A55F3E2AD6
-	for <patches@lists.linux.dev>; Fri, 26 Jun 2026 15:59:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782489572; cv=pass; b=rrv6hSBQkjOvqZYzo0z9/F3cw8M792olErq1+D1EnXLD726gpG8MQ2RLx7LVqbTr2baImx91j7mEWTXUh2w3Fq7wUyba9lMPBrzPY7hvcu+fNC6TkfGCUK78SiXMIPkxCz46FKP2u2F4/IS+7XGR7b7mpWVGYfL/mO68cLJMH30=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782489572; c=relaxed/simple;
-	bh=sa77kVbAwLb6akjpKfyR0FVo5MP9BFTqAcnkd0xKDjQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PL9JhpI78A68qhOMG5HyMVRPh1NOjNdt+7J4Qt+rnj1S2FuKv1rPHdD4pzoey4HaxdCqFuZCbrx4rq/xXlp4vnAIKA3dof4IdoAqe7i7SnA+v58Scjy6jljRRORSwIBco/QRihRECOOcqoEXjRTGDrj4HB6bKUfa1YeidxglUMg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20251104.gappssmtp.com header.i=@rajagiritech-edu-in.20251104.gappssmtp.com header.b=q+p4Z8CT; arc=pass smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A9037F727
+	for <patches@lists.linux.dev>; Fri, 26 Jun 2026 17:56:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782496588; cv=none; b=pYVJvFEDjRNzDFR2ZrUsdRoR6z3+JkIulOoVNJTPBEG4+LnzyuKMrMrRnStYWP5hus4GdzDFicdJOffe2oEMMzf4FlNizMVzhKayXCyjLs3cVt4k01MW+28erw1sn/QW8+6POsKP6odcShLmMP8XWYSFT1n1asZJZ2DXZ9yY5vU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782496588; c=relaxed/simple;
+	bh=QFdhdzcUL0orhGT7Yr98m0IH+vUgMv5RxV9hC6+Dgtk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hs+FqZFnawUGRD24hHc5Xs0cLTmiiUelOAWh2tfrwd2ZTw0+/0KS6jwo9unHpwmFxlkaHqEzfk1FrLAlbPXiA8HHSx34VlmKhqIp6ka4DQJrMopp0X4AWDbcz2V2qRwl1iJyOBmlbxjzwC7YjiNyR7L7XeCr4PwCJzqIJZ7O/MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ogwpuh5u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N2ZoJ5Hq; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20251104.gappssmtp.com header.i=@rajagiritech-edu-in.20251104.gappssmtp.com header.b="q+p4Z8CT"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-bebb72b845aso188660366b.3
-        for <patches@lists.linux.dev>; Fri, 26 Jun 2026 08:59:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782489570; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WJki+Ra3+mi4rWnnmzaAAvAzPa9RCUYf9nAzm215+Pcm63QeL5Xf6uKXyOhxRaafsG
-         /8PZ1nXISKh0bnIgcv1lhV0j0EuP90coiHvLvTX4tSnehGL8yjqCcYhv00JHYAED+lGF
-         rAb8BA/tRbSVENuguNuUp9eo8qUINryq+5SQ3SYTsLE3VBeLx5I1VWBG+Vgebsod7zsn
-         FMHt70E9XKS3FmSgn/i5qRNaiJGQVAeihBQ3UGUp5FDQPdGlVN2HKWSbR+yfIFSh4E/B
-         rFje7O8PGm5ZKxlg2oGA8fW7b9eUTpuiGoKsCsUsPdNyjqE8FbdbHzQbVoIZr7xXX0fo
-         ljlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=bSdNcjBKXhemYGAFxDX0HcEA04mDXXcRsTRsV6T4JXY=;
-        fh=4v3D1eOkaklR5XMgM+eWwTkCEX6RmSuF0QwH1hLpGFQ=;
-        b=Tb96mjte5tZsSqBRnRtfbZt580VOFptaLHbvRjXTUbObtqmFWqcbtt23alhgWaCl74
-         ISjRAvHM70VqVS8BgwB0W5CaApqOeH1sDpA057oWmy5L9VZWUHHIM8uwc6l6dmrCcZc0
-         Hy82vUO34dpkWKSHq2JB6KRJw6NFa+kMXSPFTb7sBpavxnDdxqKCNORaeyvvMdSgzIJf
-         ARr37twovraSxOjLpTyk0dgSTatLo74tMYxBG7LH7FCIoqaTWWyy50gMMgLafxAG5YGA
-         ICyoqaAVoK6kkbR17NOFtsFfcnW08JTBeDr1k0Nsw92TBsFBi0RtdnbLuce3Dm50nccG
-         Gxew==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20251104.gappssmtp.com; s=20251104; t=1782489570; x=1783094370; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bSdNcjBKXhemYGAFxDX0HcEA04mDXXcRsTRsV6T4JXY=;
-        b=q+p4Z8CTYW2No8OahSbyCuxwEduS10A4v27/moChTcqh8BUd8f0W4WClnrZrKXZnGl
-         scbjm47jLxj7OjAIJxxHIGBBoVQA+e4cMeke/RleWlczmDMTj14O+D0H8r1d0bHjw2py
-         6UzJgcOZCHOvV8TseinNnMaSieLrMwAPRWuYtWJVl17k7WP1Iqf087snYBdhfgwepWV4
-         eGOx46S/J6Z0brWu5sAX2bfGPWAZjirniMPWaCoY6ybcsBexbPcViIIZAqlDIXj8+8Ju
-         c6b9BLUv1X0ISU/hKG6KCs7+629jnorfZfbmCg6KLawb61HLT5YXMzQpVXX8PcfkYadJ
-         4e4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782489570; x=1783094370;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bSdNcjBKXhemYGAFxDX0HcEA04mDXXcRsTRsV6T4JXY=;
-        b=EluSrKRFxXilCe9ZwcvxGMTer0IEDKdADSaJZUpyl4XBAPO5auyDisw3oWVAuR0o9q
-         DYYTRneUpYAvAG/Q6GGhFutpS/l0NeiE9sPwJVyHhzK3jsc2Pijr4lizWGTnQBTQXB3N
-         ruKN+0o9upnA6IrwuKOeaEEk6QajUo9tCzZJcT+pnpzST3lwFiE82Pn/MOAdEYCbnYUa
-         NLNnfcXGe/CoGLtfFnCBaxgNpmwXTif39wYFVTNrsNKpeGgr0J5GSGLLsFG9uKmc7Nim
-         8OE3uM9mfAF01kVrl+VqHF6R5HloyE0leg1zkelaNRj/pFFEDpgPjaNNHPctE4aM8Csm
-         2blA==
-X-Forwarded-Encrypted: i=1; AHgh+RoKE9U6l6BgwYJbbppQTFB5vZqPVdDUOhiAbkV7nkDCNoMzRpCnEg+5TurcJ/dGk0SjHUq2i0Qs@lists.linux.dev
-X-Gm-Message-State: AOJu0YyQ8Gz/7NQulySKhCuOPc5dvYQzk1ZH8XzNXK8Y11i8WDbK+ss2
-	4jVgEdOu9Qkffd8c6eFNtkeBkPjCYkiHn1t1ED4zvYOtDK1ywfCroIVZOLMf04ZO+lexUvhIaG9
-	T3orAdcsY0VUDZtuRBFq9EZYxpi/nfa82NpOt2QZAMQ==
-X-Gm-Gg: AfdE7cmhS/Dbig+UsGVQUBN2PB7WimbmVS9wTCXry8EqIkKPwZNgx/47bsLNZq5KeQ8
-	2NTTtcUHkhJpjQ+75kkbGW3b8jTLkbr03ku+x6qiHiA5WfQnXQFHzchbFPTGIuh4dxr9N0xJMK1
-	O+TiNUYU+XaK8AFycRgME/msItufmt/4XKwBXfd3rSPBlC1JX045NILWznOx1PyDNZbjkRFez26
-	TAxpzxVqyHKoShB1SvkcCTwam2y7C2D+p6nLj2VO/B8zdMsWtWgptqa+UL02K6HL2NwxypvAHBV
-	y33r9vifb6S9ffIn1ViM2o32bEGt5ENnLIs4aMwxcsBqjgGyVR8ejG1n6bWRyySvIQSCCGQEv+l
-	TWT/4f2XUkh7AWoYL003A/y5Lm9AXdXwwogT4IREv
-X-Received: by 2002:a17:907:c49a:b0:c11:f528:869f with SMTP id
- a640c23a62f3a-c1205dc1c57mr485522066b.19.1782489569622; Fri, 26 Jun 2026
- 08:59:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ogwpuh5u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N2ZoJ5Hq"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 261451D000DA;
+	Fri, 26 Jun 2026 13:56:26 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 26 Jun 2026 13:56:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1782496586;
+	 x=1782582986; bh=x+IZSo79L5d786Ze9SgP5T+ZDMTtg4MvJShj+brkfOU=; b=
+	Ogwpuh5ulGIfgj8Jp75EJCQWyEBe1lNnu1fk1Ne+4A1baSfyBSY0rUDPaNkG1stO
+	Q8vfF7BgLrTR6/npjgMn+qckMV4IEHbVv6iyHItWxfKxO3DnNksFV95Z3IJEkdN+
+	ajBw0qepSEGMMxY7VGUIvfJeaPBfdMNVtQqMr317r+BP6S/QoAw+fZ0OG6BFl27s
+	xYJa24tUl0Up2FGW8wHpPgEzL401aUOE+6i+RTsd7zV6rtKh0jCDaL68JOhbL+f0
+	jQLFuxY59FgMJsWq891xraYhR5w8buO4vlLMuGZ3D1oppAI0SbfghUCYOFJhePNm
+	ybJ7XubTPFffCwXFHVFo6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782496586; x=
+	1782582986; bh=x+IZSo79L5d786Ze9SgP5T+ZDMTtg4MvJShj+brkfOU=; b=N
+	2ZoJ5Hq4GpQsRlXxuUpVdtLStsCYpG+5s5dQTev8LBX6LaANK6DT0hX/nXB342dT
+	PGr5x7hBEh+Syb98/luBUiZsKuhfQILkCa9lZum0+6ihMAHIVzq+JnYQojTxJ9mQ
+	bBqaIR8hZsby637DDXNzTrD1yXg77HsIzZprznYKsG4JXi+Jpq+r46AnDfGEqVau
+	FI4zKuoQ4Vx6JkzAZZ/wJK7wjD3dB2OpKF075qdKpccq3Z0QsFzLxt2KehgZ9TeX
+	+AZuoYj1H5+XqdN6z+eg/dVcJPvPWpfXkp4Pcoy0UtDLIZb3cu5y4K0d09erXQlQ
+	mFGdN/z0trG2yEFNNjB6w==
+X-ME-Sender: <xms:Sb0-amPQYRPgYrhGWo1gHd5Sd3RMRrMmVxpDM4G90DWGDXxxBSVvbQ>
+    <xme:Sb0-alVgMeEvYKkcpPsxec3nv7cmp1yNkl9jz6iIzmQCs9aXzAo8TtlodxXUNH8JA
+    f_x0bTP4co9WKs5HLGDsQJ-qATVzgPTlzh4TKMQuVyLbmxFarMeLA>
+X-ME-Received: <xmr:Sb0-auZvqEEBU2-Dmy1EcsUffG6G414gTIrVCGavqCYzpTx7lFlv0MGpeGZq3LMz0otPsr7yBSRayZvDs0L0s_U8p4PGj4wO>
+X-ME-Proxy-Cause: dmFkZTFAaUqo/uEEHncEkuOnwkupeLhuCjBbGn90FZPQlh1vlrygtOoZ41ShuFKY4QHHuQ
+    jYMJ5J6/0jFxI+GnOpYxOLJnAdfZVZHmjXhL06MSpl+X5LXBx4LmuVhaSiRAmlOkWhnSvj
+    oj9M1lYSBhSe4+hykrhfWXmCQ5T7VqI2h53/nggBxLg82xIRS4J708zzPEaIDG50LcqIjr
+    AMrKIVZrEkHGpWXgKP1K3jVv+5WL9YT+JtWBdj230XXEkkXMxUWra8LHy4zzP5pXtWwlQq
+    A5KP993LZKiv6O+Ve3mNKCpwBhKwiJWze2SLg4aDFiLtACbajLWH2N97LEl6dKsdaqloZT
+    SYNY4tQ0/gahmFgN7eCUheQPfex/6OxS0kblVWj04kGaUp1kFLHgOxdy9t+UFTCe/xk8sh
+    +XVX/0gGHv31gaI5z3uB1yB3siE3sHgpCi6fcq8muUbxKf+srYmTmYeVujWXVyVebOp18q
+    we8m3VAtFYkBxfvkA+zldriotx0L5nTLeAEQCwIOx7FxrspjNHQpT+V1MNoj6F/TZBOxKT
+    uAYC2lEyr26Q6LP1HJPPVjb8Pv5JEfOyfZytmNcIIhoqs0MRMRH3cji1ngKMdSg+QmIKQC
+    KWKks9Awe3iao4hxVz/tSphMlU4dQec0Fl7gcHmzKvNxEMlvXla68d1gkSBw
+X-ME-Proxy: <xmx:Sb0-aiv6GYM6LYkCDSz-B_LCzmCKh2aoHwQ2DbVUNK519A-NbArHNg>
+    <xmx:Sb0-atkqpa03HiMA30V0u_Hw3Q1MsgL_rQIfr3IaDwgN3D2d8aIWrw>
+    <xmx:Sb0-ajXcmaw8OGTbffbw4Our8JC0WHI7ZyzgMw3odZtBq9PBwInCzQ>
+    <xmx:Sb0-agn-W_bX_X3AeEWI-13nfajg5r98h56q-9X9px27DStNsa0Qog>
+    <xmx:Sr0-ak1nzaL7KBrZeddB2mDIMd3Qs78NxbQhl5O60REOS4pq-TQ-veLN>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Jun 2026 13:56:22 -0400 (EDT)
+Message-ID: <b7bd471b-e9da-4bfc-ad1d-24b378bd1e44@pobox.com>
+Date: Fri, 26 Jun 2026 10:56:21 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260625125613.243729608@linuxfoundation.org>
-In-Reply-To: <20260625125613.243729608@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Fri, 26 Jun 2026 21:28:53 +0530
-X-Gm-Features: AVVi8CcVlvFIWZ3IZYi9detLPFCd_waRaCiCuFqo098eJ3zgk-_5YmbutM7qhfU
-Message-ID: <CAG=yYwmzH+qbJPpZpk6UEWGzS-S-4VJ=az46wPJuJUuZrGyU-A@mail.gmail.com>
+User-Agent: Mozilla Thunderbird Beta
 Subject: Re: [PATCH 7.1 00/21] 7.1.2-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>
+References: <20260625125613.243729608@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260625125613.243729608@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-hello,
+(cc Dmitry Torokhov because this is related to two of your commits)
 
- Compiled and booted  7.1.2-rc1+
-----------------x---------------------x-------------------
-$sudo dmesg -l err
-[   23.704215] ACPI Error: No handler for Region [VRTC]
-(0000000042f760aa) [SystemCMOS] (20251212/evregion-131)
-[   23.704246] ACPI Error: Region SystemCMOS (ID=5) has no handler
-(20251212/exfldio-261)
-[   23.704275] ACPI Error: Aborting method \TAAD.RTWT due to previous
-error (AE_NOT_EXIST) (20251212/psparse-529)
-[   23.704359] ACPI Error: Aborting method \TAAD._GRT due to previous
-error (AE_NOT_EXIST) (20251212/psparse-529)
-[   28.080686] ACPI BIOS Error (bug): AE_AML_BUFFER_LIMIT, Index
-(0x000000032) is beyond end of object (length 0x32)
-(20251212/exoparg2-393)
-[   28.080708] ACPI Error: Aborting method \_SB.WMID.WQBZ due to
-previous error (AE_AML_BUFFER_LIMIT) (20251212/psparse-529)
-[   28.080732] ACPI Error: Aborting method \_SB.WMID.WQBE due to
-previous error (AE_AML_BUFFER_LIMIT) (20251212/psparse-529)
-[   28.081634] ACPI BIOS Error (bug): AE_AML_BUFFER_LIMIT, Field
-[D008] at bit offset/length 128/8 exceeds size of target Buffer (128
-bits) (20251212/dsopcode-198)
-[   28.081647] ACPI Error: Aborting method \HWMC due to previous error
-(AE_AML_BUFFER_LIMIT) (20251212/psparse-529)
-[   28.081662] ACPI Error: Aborting method \_SB.WMID.WMAA due to
-previous error (AE_AML_BUFFER_LIMIT) (20251212/psparse-529)
-$
------------------x---------------------x------------------
+On 6/25/26 6:03 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.1.2 release.
+> There are 21 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 27 Jun 2026 12:54:50 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.2-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
+Unfortunately, 7.1.2-rc1 breaks the Synaptics touchpad on my Lenovo
+ThinkPad T14 Gen 1 -- the pointer no longer moves when I touch the
+touchpad. Potentially relevant line from dmesg:
 
+rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-020, fw id: 3972349
 
---
-software engineer
-rajagiri school of engineering and technology
+> Dmitry Torokhov<dmitry.torokhov@gmail.com>
+>      Input: rmi4 - refactor register descriptor parsing
+> 
+> Dmitry Torokhov<dmitry.torokhov@gmail.com>
+>      Input: rmi4 - fix register descriptor address calculation
+
+Both of these patches seem bad in my testing. Either one, individually,
+causes the pointer to no longer move when I touch the touchpad. If I
+revert both of them, then my touchpad works again.
+
+I have not yet tested 7.0.14-rc1 or 6.18.37-rc1. However, the problem
+also reproduces on current mainline as of this writing (commit
+51cb1aa1250c36269474b8b6ca6b6319e170f5a5).
+
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
