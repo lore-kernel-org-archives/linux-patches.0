@@ -1,79 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCBB3F8244;
-	Mon, 29 Jun 2026 08:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D8E3FF889;
+	Mon, 29 Jun 2026 12:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782723370; cv=none; b=jp2p2g8zlTsn5E2cbkdyu1sf2F6Rj/HpwMsZJLOqNQe/YdZZHgrKAMvAh6E+FlnR59IIZ+CJL+ivNC+AIB/VxQFmZuGCu1AZYYMWQUsRT5yt3ZLhH1b1LnJMIWpuB5Makopb3oRad/Xb9tOoVJqcmEL0/a0CzxE6pec7D+5lEDA=
+	t=1782737416; cv=none; b=Z9U5f0FniKKP40sPRmN2b0AbdBHKl1YaKV4i7jD7TushE8SsumdtpczdkV2KMMcCvVXXZWS8sSUYaF1ELX7rlXiV3Xe5fQug5tUNi9sJRACsh0maBZkAM6BcjqrMbjSCnQYE7AJ5UAV1y5jtAJO9GZV48lwZauVnjEQYjrnZFSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782723370; c=relaxed/simple;
-	bh=6ZpRv6SzHMXp0xQtZa31f3aFronDafFEK7j2Ogd9m0w=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=G9t25won98evbcjl0pMC1TMCU05We47J51tXgsDT47cB9n3Fec1mV5Q+TxGfYxxAQLkGUc+SBc4SnriQGyPhDc79jmZ2klrEqEHP4QrNVkw0m+OnviQf8pOxyWXA/jzlQgnZrbjCTu3Re8VMUExy/W3Ut9KdRJY9tUuod5lh184=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GwU3YJXR; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782737416; c=relaxed/simple;
+	bh=1vkFsm/C73sLLTMbFwcK9c4kgPWMv/1AfkorNae0fls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AQWRK4NjKv+lTa2RDZ1444xXMvtU/icN0X1BIx5cSW3X52NqDlnH6RWZJ4nVDE+bKYmbW8Uyrk0sgpn3EZB77s8EPr6PbZKStI0j877t0qbz2vDwz8xKrEvyLEu997nkGfw9WAniWGcOG8uxlKujwx/yhUXHqzmZ1/JxycXpY1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VDkIDnL1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GwU3YJXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8BC1F000E9;
-	Mon, 29 Jun 2026 08:56:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VDkIDnL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8711F00A3A;
+	Mon, 29 Jun 2026 12:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782723368;
-	bh=MjjLfoAnCdYSBQMHU+LNPQ7Y69v0MhSYKVpOdD7ztR4=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=GwU3YJXRw2/+yv1fTqnt6eVUxhDAcOuivlMebRL8kpMszPEkVDZp9KZvr1qmRJkEj
-	 ndYeJ+NxyL9mh9tGB6OfPO7zUGCg3QXdX8430/N2Iysu67+wdAZgfcELi9z31tkr6K
-	 Y9U1RVBXklyP6tItBZFDn3uCwDFuhK1NOepw5hw3nVpaTH/63SnR79X6vJtapM97kU
-	 4oA9wlFsT8Mn2tdApNGT/6ZgFis6bRokFmsJyqXoLoH40wuVZ5jVFdTmfZXG0iW4oF
-	 xcAky5dvfXqGgX8fxhaq09pJ6hXplxohoAPkJTz057yO88MJTs5krF6d9LLLvMX8GR
-	 6aLMDBEccE6JQ==
+	s=k20260515; t=1782737415;
+	bh=AEvcL4eAJdQvW0mI6HKHdq0ilBCt30WgNyC54gIx2CQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=VDkIDnL15o3M8f4zo4AGU7YEQMIl5UgoBJmoENdTz3injrYVyiI70r951xn34x3RT
+	 Pw9QIawJBv0eTJ/Q5XIwzpOrc92S10duEN6s4paizdMeFEI0frzAIFGcm56IRPJXqE
+	 tJMQMqdNYR1KJm6hqjvILDk+/RKKHhhLdfAoi8N+AvQa8HDlnL/e2iGyAWs36q9vYT
+	 gLKqinDNO7AeOuRkbBvvXuroiMdBSMyzyE7XMgvM5M+u+mYEhM/JEi6qxqzjsB7IaG
+	 eWbkeBz79q7UNXb6hA7NI2OTcn1xxev064bnsQilEQZx4T2e7YolKesHZa4tL0mxIi
+	 29l+SSejuBXUQ==
+Date: Mon, 29 Jun 2026 13:50:09 +0100
+From: Will Deacon <will@kernel.org>
+To: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, Sasha Levin <sashal@kernel.org>,
+	stable <stable@vger.kernel.org>, mark.rutland@arm.com
+Subject: Re: [PATCH 6.1 337/522] arm64/mm: Enable batched TLB flush in
+ unmap_hotplug_range()
+Message-ID: <akJqAZ8CdhHqGJIS@willie-the-truck>
+References: <20260616145125.307082728@linuxfoundation.org>
+ <20260616145141.584613180@linuxfoundation.org>
+ <b0d5836032ce3135bfc473f6bff791306d086925.camel@decadent.org.uk>
+ <ajqXWqiAol6Shdd6@willie-the-truck>
+ <d2a633c8-496e-48e1-bfa0-a0fc75bd0a08@arm.com>
+ <2026062451-bluff-coherent-672d@gregkh>
+ <b51f82ed-aa54-4c67-bcef-e59acd10c789@arm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2 0/7] vmsplice: fix some problems in my previous
- vmsplice patchset
-From: Christian Brauner <brauner@kernel.org>
-To: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: Askar Safin <safinaskar@gmail.com>, akpm@linux-foundation.org, 
- avagin@gmail.com, axboe@kernel.dk, brauner@kernel.org, 
- collin.funk1@gmail.com, david.laight.linux@gmail.com, dhowells@redhat.com, 
- fuse-devel@lists.linux.dev, hch@infradead.org, jack@suse.cz, 
- joannelkoong@gmail.com, kernel@infinite-source.de, 
- linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, luto@amacapital.net, 
- metze@samba.org, miklos@szeredi.hu, netdev@vger.kernel.org, 
- patches@lists.linux.dev, pfalcato@suse.de, torvalds@linux-foundation.org, 
- val@packett.cool, viro@zeniv.linux.org.uk, w@1wt.eu, willy@infradead.org
-In-Reply-To: <63f7860c-4f5c-4682-8914-27978b9fbfe1@kernel.org>
-References: <89ea76b3-e956-4232-8180-ee3929adf905@kernel.org>
- <20260625101132.3859505-1-safinaskar@gmail.com>
- <63f7860c-4f5c-4682-8914-27978b9fbfe1@kernel.org>
-Date: Mon, 29 Jun 2026 10:56:00 +0200
-Message-Id: <20260629-bauland-knabbern-abgeladen-c0acbfa62cc2@brauner>
-X-Mailer: b4 0.16-dev-4217c
-X-Developer-Signature: v=1; a=openpgp-sha256; l=560; i=brauner@kernel.org;
- h=from:subject:message-id; bh=6ZpRv6SzHMXp0xQtZa31f3aFronDafFEK7j2Ogd9m0w=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWQ5GStpsto3L25ZaHM588TTeVIxjm8PX36fP4G3atef6
- tnan07bdJSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEykfyojQ/+HyQebdwRoa/Tw
- +LrZf/ycyn56iXf4+nN/F66647o+OJORYdO0TNsO1j5m20MZD44uXF/x9VjejOt+wk928kitEog
- 8ywAA
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b51f82ed-aa54-4c67-bcef-e59acd10c789@arm.com>
 
-On 2026-06-25 12:35 +0200, David Hildenbrand (Arm) wrote:
-> On 6/25/26 12:11, Askar Safin wrote:
-> > "David Hildenbrand (Arm)" <david@kernel.org>:
-> >> I think we concluded that we cannot rip out vmsplice that way at this point, and
-> >> I suspect that Christian will drop that topic branch from -next after -rc1.
+On Thu, Jun 25, 2026 at 07:59:51AM +0530, Anshuman Khandual wrote:
+> On 24/06/26 9:59 PM, Greg Kroah-Hartman wrote:
+> > On Wed, Jun 24, 2026 at 04:05:01PM +0100, Ryan Roberts wrote:
+> >> On 23/06/2026 15:25, Will Deacon wrote:
+> >>> On Sun, Jun 21, 2026 at 05:02:27PM +0200, Ben Hutchings wrote:
+> >>>>> @@ -949,15 +953,14 @@ static void unmap_hotplug_pmd_range(pud_
+> >>>>>  		WARN_ON(!pmd_present(pmd));
+> >>>>>  		if (pmd_sect(pmd)) {
+> >>>>>  			pmd_clear(pmdp);
+> >>>>> -
+> >>>>> -			/*
+> >>>>> -			 * One TLBI should be sufficient here as the PMD_SIZE
+> >>>>> -			 * range is mapped with a single block entry.
+> >>>>> -			 */
+> >>>>> -			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+> >>>>> -			if (free_mapped)
+> >>>>> +			if (free_mapped) {
+> >>>>> +				/* CONT blocks are not supported in the vmemmap */
+> >>>>> +				WARN_ON(pmd_cont(pmd));
+> >>>>> +				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
+> >>>>
+> >>>> It wasn't clear to me from the commit message why this now adds PMD_SIZE
+> >>>> rather than PAGE_SIZE.  It seems like this change is fine for Linux
+> >>>> 6.13+ with a CPU that supports TLB range flushing, but otherwise results
+> >>>> in unnecessarily executing multiple TLB invalidations at intervals of
+> >>>> the base page size.
+> >>>
+> >>> Hmm, the commit message also makes very little sense to me and so I don't
+> >>> understand why this patch has us doing multiple TLB invalidations when
+> >>> we run into a !cont, block mapping at the PMD level. The old comment
+> >>> (which this patch removes) should still apply afaict.
+> >>>
+> >>> Anshuman, Ryan, any ideas what's going on here?
+> >>
+> >> I think this change was probably my fault; Given the API is called
+> >> flush_tlb_kernel_range() it seemed like an abuse/hack to pretend we are only
+> >> flushing the first PAGE_SIZE of the range. But as I understand it, even if the
+> >> HW shatters a block mapping into multiple TLB entries, all of the entries
+> >> relating to the block mapping will be invalidated if just one of them intersects
+> >> the TLBI range/address. So it should be safe to reapply this hack.
+> >>
+> >> Although ideally I think it would be better if this API took a stride argument;
+> >> then intent is clear.
+> >>
+> >> What's the best way to handle this? Submit a patch for mainline that reverts
+> >> this part, then get it backported to stable (implying this current patch will
+> >> have been applied to stable)?
 > > 
-> > I think my patches still have a chance.
-> 
-> I talked to Christian and it doesn't sound like it.
+> > yes, that's probably the best way.
+> Sure, will send out the change as suggested.
 
-The amount of regression reports that we got in short succession doesn't
-make it likely that we can merge a plain degradation.
+In case anybody ends up following the breadcrumbs, the patch is here:
 
+https://lore.kernel.org/r/20260626012845.475959-1-anshuman.khandual@arm.com
+
+Will
