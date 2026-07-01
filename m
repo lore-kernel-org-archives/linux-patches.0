@@ -1,446 +1,164 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 803BE425CEB
-	for <patches@lists.linux.dev>; Wed,  1 Jul 2026 11:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782906342; cv=none; b=g25+PIIXBxgXc841JeAh9zxdEpkfJ+exOpO5uTmMBi97Ee1t85zal4238YCNbXkQMgK7AiwuDhmsE3+YGQKfeBh6hAteIezE8wR9/VcEK461tZ5wucUlHYTeRFlBMoc78qYkajD8mjOCjJrZVtzKT2Gq6FJDOaDtVtlMuRl6414=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782906342; c=relaxed/simple;
-	bh=q4demmKvTFhm/EQbKq5+i3ASW2hOsXVF6vW4RiCUyRI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dZqQOhpE5h2kcvZb7ErcNtdekDlUegpeTXiomAkYj33H0P0NAAohVaJLxj8pd2T0OJdrt1UNBb0g6nxuUxpplyJgQZ9ffWQ8REVB8bJZkZnQ8ER0rcTWLAAtfSQfi5ImPXQ5S/dZLSrlt+XgAz5PMPZhsgFT6ytlKdhH0HCE03o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=pLgzIP8M; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11010060.outbound.protection.outlook.com [52.101.229.60])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1263411670
+	for <patches@lists.linux.dev>; Wed,  1 Jul 2026 15:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.60
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782920511; cv=fail; b=f+mirJ+gRPerC59/flTV87PexP1F9OCTaIqaXN+k5uVW83lnbt53Pm8y0kyspNs4HMR4eLgGYc1dyiu469yIBRPnktRF5/QGjuiJ/dvqBDq7CfRL6+0ysLItg8/DJ7668fFx3e7hjFqRs3Cl+QGMquI7kwM9Ak2avl2k0k7NJAI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782920511; c=relaxed/simple;
+	bh=XlONfHf0nXrZ5EvsgZRgyfd/XnPDWeariGCpXkbocB4=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=BngWnKZRGldZc6VRYzqpSJF75QW07u4JdUUYFdQfN0jvp8BMpUB18Lc/d18GVUg+Bu3HbwxX0EfZW2vF/bV7z6XIhbC3nO7yQhB4VL594Mogg3VtZyDVwpmIcOce9udX0YRaxrLckyqsrTJDgYuewy92K8NuQ5MxVf8uJylD6I4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=Lm0HVP3t; arc=fail smtp.client-ip=52.101.229.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="pLgzIP8M"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7A1C22BCC;
-	Wed,  1 Jul 2026 04:45:35 -0700 (PDT)
-Received: from [10.211.55.3] (unknown [10.57.71.75])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1D6983FAFB;
-	Wed,  1 Jul 2026 04:45:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1782906339; bh=q4demmKvTFhm/EQbKq5+i3ASW2hOsXVF6vW4RiCUyRI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pLgzIP8MTu1yifsMugzXmZdcJ+DDqv41g42FBl9/QFgHEp8gWemgJS7k1GUPbuI/3
-	 ZRpHYQRkRlr1WcD7Pe6RM3NI3VmegumMlAwSmG+nqafqZrwIuDgT/P+scCM4VGkjAs
-	 YtDubzqWH/iUS7GrPChQ/oVL05KRbkx3ot4GxhWw=
-Message-ID: <fb4533fb-ef9c-4f75-881f-44b17753f0f6@arm.com>
-Date: Wed, 1 Jul 2026 12:45:23 +0100
+	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="Lm0HVP3t"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oxicwP3FqDBE+/WIOGgk043rdw5PpG2KPwzaigdutH3Mx381nRAA9FLnn2FG8fDbN92vSemQlrcrmhvNdpu4GS/VmrXV08evFklpuSCj6yE531gBcjjdgbBJNAFTM2p1rqn5Z9wGSGvSjrYbe74qkM1nHIPu4YzkpWUIaZyYO+5PizYa2Y8ZB8dAv1TFw6D+sw9SOUe1OSW9QIC8ZkAlq7FW+xnwzT53m24388j7Aj8p+k3NUfXxGo9qqG8+9N7l+wljJljZJpinhMXT5nEH+dwAzfmzww29H/xEXAgy9PVU6Wa4Gj7JSUbF16DFjpayJboMCgNEDc9tdKL6bimjAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gWvygYj1Rhwa6XDivp0D/M+AEPv8bI6C4RJUNG8UIX0=;
+ b=YIO4HVw0CBLXT+5YIRxS5Wo+u6A8LMnx2d52NL92pBJnWJmI17Kgl0YKNnZWshqYTtFnZLkBD8PCzMo4CAIMqe5GocvE+IpL2ibIAPPm+3XjFusMbZefchgmTiA+4KR9sSfmTtg0PD8GuoPV45k64WYw/Qir4AivLXL6o7YdhX1QMJqWF7hFL9lkokR9CvxcoaXzW8ds92ZnaUcIrRtBwc1q/CQ+TcglOjMbqY3p/9zLIph8ik2WEUfxkn9aOAPB4oUbaHxshurSMMQUAiAsq6XrpDh6he1svNWrVJG97KFmqtcLiq51LnryvIS+c5viasqf1EZ8CsS4u+sPt2LnJg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gWvygYj1Rhwa6XDivp0D/M+AEPv8bI6C4RJUNG8UIX0=;
+ b=Lm0HVP3tN2Q+ybm0B53Gl9mD+IjiyJCsYdeIcHUN/Lq4FfKqjYKIRZQqR3WIFj2IBtKK0v/Lr2utDw9UVTaqZHUO5KtZXzxjkGR7bGwhFsqLlZxd9AoqUl2gIwlrzWLQS6JOiSC42rMNbcpqkr28NqvXEHQYQemJqADylHE2LpQ=
+Received: from OSZPR01MB8123.jpnprd01.prod.outlook.com (2603:1096:604:165::7)
+ by TYCPR01MB6769.jpnprd01.prod.outlook.com (2603:1096:400:b0::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Wed, 1 Jul
+ 2026 15:41:45 +0000
+Received: from OSZPR01MB8123.jpnprd01.prod.outlook.com
+ ([fe80::f2ff:7635:979f:c31a]) by OSZPR01MB8123.jpnprd01.prod.outlook.com
+ ([fe80::f2ff:7635:979f:c31a%3]) with mapi id 15.21.0181.008; Wed, 1 Jul 2026
+ 15:41:45 +0000
+From: Chris Paterson <Chris.Paterson2@renesas.com>
+To: Pavel Machek <pavel@nabladev.com>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
+	<stable@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "torvalds@linux-foundation.org"
+	<torvalds@linux-foundation.org>, "akpm@linux-foundation.org"
+	<akpm@linux-foundation.org>, "linux@roeck-us.net" <linux@roeck-us.net>,
+	"shuah@kernel.org" <shuah@kernel.org>, "patches@kernelci.org"
+	<patches@kernelci.org>, "lkft-triage@lists.linaro.org"
+	<lkft-triage@lists.linaro.org>, "jonathanh@nvidia.com"
+	<jonathanh@nvidia.com>, "f.fainelli@gmail.com" <f.fainelli@gmail.com>,
+	"sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>, "rwarsow@gmx.de"
+	<rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>,
+	"hargar@microsoft.com" <hargar@microsoft.com>, "broonie@kernel.org"
+	<broonie@kernel.org>, "achill@achill.org" <achill@achill.org>,
+	"sr@sladewatkins.com" <sr@sladewatkins.com>
+Subject: RE: [PATCH 7.0 00/49] 7.0.14-rc1 review
+Thread-Topic: [PATCH 7.0 00/49] 7.0.14-rc1 review
+Thread-Index: AQHdBKPjSaObmJ+GvkG4AIwATb2ZubZQs62AgAAFbACACB2PIA==
+Date: Wed, 1 Jul 2026 15:41:45 +0000
+Message-ID:
+ <OSZPR01MB8123B6D80AFC66536D35EE35B7F62@OSZPR01MB8123.jpnprd01.prod.outlook.com>
+References: <20260625125637.527552689@linuxfoundation.org>
+ <aj5ho8stx819px0w@duo.ucw.cz> <aj5mMP6X3NUx5XZM@duo.ucw.cz>
+In-Reply-To: <aj5mMP6X3NUx5XZM@duo.ucw.cz>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: OSZPR01MB8123:EE_|TYCPR01MB6769:EE_
+x-ms-office365-filtering-correlation-id: 3d057051-6a7d-4210-0af7-08ded7874191
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|7416014|56012099006|11063799006|4143699003|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info:
+ BN3EJo+IBr8KxN4lT6IT1RjpiSd1sxb/VM1QChzPWUExsgsonyhNhOziXhu5KqwmrBs5dxsRtMqCvVNUMmsHehDy9nHuSGtngUqcg4zEBS/ebK8SiL/IGaCCidusDdhIzSDaXElLZC7VCV1AKjeaUvQuh2hwowiJJkeHG0zwrFAmwlqf14f49VEodBGpOxs3NWb+/XTNbFHWH0UM4A864z28S37YFY1VJzLmqG9Z9lVOcUGLsW53kQ4B5Z+QgU07JJnG8YWJ2ZGJ8Kw0UBSDpHdB0LXh68Ge9wQ514r7COT6k4pTFapXnvXwTg9s9CAr4Gj6aBttkEyZ1BZdnzUjlT3Ponf/2ro6bzEHvsYDjzmy57wsZEQCnP/X/KUskm9fhW2NBYR/eJCN4wfS+SieKlMcFFEg3y0zCeDC/ubmIKLbbA19iVKMz7wUnrmXr7aceEo4gkHxngJCCtV3WCXd+zXbWGC6/nxJiAqbybNSY8nE67YF8E1+Bz9NzNhKuSOtYyMAwKpacDyy7pfj6+B10vnxWLRxw27Bei1iJ3xzTiJUaNcMnTKw4b+QHCRYaHh0szY0ScIfr3/LSvzRJiX+QC4476yJk/e83qYp/1IdyYioGkDInnM2iyC7zMNmSOKS/9dumnWXVoOJpe8/3q0d0dQSfntS/GfSPPtWENx8pPnvGfgBR2elML2IOovdzwxZ0clQcT42bcz6ZlLnRUIht0VaBvdmBELoI7H4sahc3DE=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OSZPR01MB8123.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(56012099006)(11063799006)(4143699003)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?zCrQGHq69xNlGPGz0WbU4KaGxrmyyb2yeqsvg+Pb9J9LxVU5YHQIW2xc?=
+ =?Windows-1252?Q?/9CRATQq8caJvsQKS27ZHrV+DuMRx6LeSrry64efi97Qo2dQ4sNvk58v?=
+ =?Windows-1252?Q?VK5j64mAecDwWCtbv93lXF05BOxaokDfZzdKPEx+moLgpLsEgtEkF3E1?=
+ =?Windows-1252?Q?2ZdavOh30awpUGjqMQHgAFasyg0N4j9h2NxMFb+B4Da3qjJMmrK9HMsW?=
+ =?Windows-1252?Q?7M5BShpnzXAtlat/4UFxY45eVjl0Q7BzgE5Nh2bzy1MNxMAK2I/HJ+FS?=
+ =?Windows-1252?Q?WjQLRTMJfpNNzXZh0W8liEA7Oj3E4t7TcbsmLfosPkUoaqe9Fpc7G36Z?=
+ =?Windows-1252?Q?bB3ikaZQYE7eZTIMs7EvC8FEkp5XAiDFuABc4XG2G6sBWasNPcDsAbSj?=
+ =?Windows-1252?Q?Hce4Awzp2yCKHu8vYVLbllwKH4opNKSveTSJJyDV6YeTh/KUMsyZOikJ?=
+ =?Windows-1252?Q?DZydorf8DYIk6bg9rg9spnTn0YRJIbUtbYbcJNUcOOGmwiJNt6iSQ4Ps?=
+ =?Windows-1252?Q?HckIqVGocK1ZZuSno1nGSh5SjAQIbIUWm0jQGhsLMve+C1qXKuoUrj4C?=
+ =?Windows-1252?Q?TAPiigaiJP4yY/LdTglpetuwe6W+eveHt2wSTsd9oB9uWOLPbIxvxKs2?=
+ =?Windows-1252?Q?NL5bB4+jNdwfnWjh9WgXnz7AWZvqrFVe/Rp4p1EHY4q11nYYypJ3Wmst?=
+ =?Windows-1252?Q?uw7MzBHT8CEZAlxLESB41S2r7s5gb8su3EiTaBRMy1cGcnixFylM3EVG?=
+ =?Windows-1252?Q?wEXlkzKNd4b8q8J/DLY/bQSw1Pio28AZSJuN/s2dK4NCjkSKKddmOCWM?=
+ =?Windows-1252?Q?tLvELljufYYD6eHcQtz2YPF3hG+bYLMhBiOV4bKci9xdmK2dh/mADHP4?=
+ =?Windows-1252?Q?Ew6MHJHjbCvEDhb43M3lQ7LavMpQ7iO91MXLslXkfEHTr8q4CGEcvIm/?=
+ =?Windows-1252?Q?SF1S2OZe14S13y7aP694JfG0YQoAiyY0ZPy4RCK3flKOkJbgy2hSiP7O?=
+ =?Windows-1252?Q?Kt1MkzoLyFmJm1kNk498CmH8pFfjJj0GeoRSBiftJEoPRroIGCZLLONz?=
+ =?Windows-1252?Q?3p3j/vryG789VfW3kxymH5YXOOM/8df9k7ARzKF2uvPbRQQkxwMmGTkq?=
+ =?Windows-1252?Q?NtWKr+RfM9YjhdI7h1+vGolIZNNn31GCLnoLHUe27sTItV0jPTEennKS?=
+ =?Windows-1252?Q?pE1j83LHXHoHURf3RlHokPyB2CV5svkcZE2TKZYs9oIYprtxgoJk9lTx?=
+ =?Windows-1252?Q?5uLUWDBpq+lI+S2w039GrzAbNSj9ndwf7RPhJ6q2YMaPjRjHPCgiJhP0?=
+ =?Windows-1252?Q?XNR0q6vDoxlhM67Ve7NcdPyUEM87Y+lIxGgo0IOOprC2H1WhIGk0kV9c?=
+ =?Windows-1252?Q?lOtQ0YwbEGfI4icSU2pAKZj6BE3/jxTVPoj04CwSh0nYHRzttyvDNCTy?=
+ =?Windows-1252?Q?5gj3qfaHHS+yFgdYvSFaBFs8Mk6YbUH1lSrFCm2BHX3VBJgS4lF1Qca+?=
+ =?Windows-1252?Q?t8UfOjMrpkUi97CAo5aAs0z/MFrqzdQ7uxTb0AcnA46NkG0+DbxnKG/a?=
+ =?Windows-1252?Q?sLD4vZuJeDt0fV8ONhsxwjHTug8kYlbtfHW87+tgy4QgoWHQndWJJjzl?=
+ =?Windows-1252?Q?VZ1ykLj/caAVq+p8Cl/AFQX8iOlrpmUNtCQ3f21PJf95kNEWSariOq5A?=
+ =?Windows-1252?Q?HqXoSbQ6+syf6hIoc4RnvV3U2VFMnYPrqUQ2Nw+2wTorrwCApkk3S2KK?=
+ =?Windows-1252?Q?CCEhxwXJjWhQbiE5K01q8lHJJ6aHK5IOptNf+qKZP30eM/cCRWtUnOUS?=
+ =?Windows-1252?Q?/rDJ9yN93mevoMpHuFrVcm8wLHAr4I8dRnFXupQImp1ZbCm3eA06iQaN?=
+ =?Windows-1252?Q?S5Vnmkb7cTFVIA=3D=3D?=
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Thunderbird Daily
-Subject: Re: [PATCH v5 02/11] x86,fs/resctrl: Document safe RCU list traversal
-To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
- james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
- tglx@linutronix.de, dave.hansen@linux.intel.com
-Cc: x86@kernel.org, hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
- peternewman@google.com, yu.c.chen@intel.com, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <cover.1781029125.git.reinette.chatre@intel.com>
- <6e254c033538d597fa0f968827ae3857a5d8339c.1781029125.git.reinette.chatre@intel.com>
-Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <6e254c033538d597fa0f968827ae3857a5d8339c.1781029125.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: OSZPR01MB8123.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3d057051-6a7d-4210-0af7-08ded7874191
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jul 2026 15:41:45.3659
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: r8Az6F0I2BjWsKUp5zaXX8PlUt1LgK8JBMmr4mbdHpVBS0ECQWJxwp+hpbMVsnLtunXp6EmaEv3yT+t8BhZt5D3+yrN/m4pGICP0Ak8HQSU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB6769
 
-Hi Reinette,
+> From: Pavel Machek <pavel@nabladev.com>
+> Sent: 26 June 2026 12:45
+>=20
+> On Fri 2026-06-26 13:25:23, Pavel Machek wrote:
+> > Hi!
+> >
+> > > This is the start of the stable review cycle for the 7.0.14 release.
+> > > There are 49 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied,
+> please
+> > > let me know.
+> >
+> > CIP testing did not find any problems here:
+> >
+> > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-
+> /tree/linux-7.0.y
+>=20
+> Disregard this, too. For some reason, this release is not yet tested
+> on gitlab. I'm putting Chris on cc, perhaps he has an idea what is
+> wrong there.
 
-On 6/9/26 22:02, Reinette Chatre wrote:
-> rdt_resource::ctrl_domains and rdt_resource::mon_domains are RCU lists with
-> entries added and removed by architecture from CPU hotplug callbacks that
-> are run with cpus_write_lock() held. These lists can be traversed safely
-> from resctrl fs by either holding cpus_read_lock() or relying on an RCU
-> read-side critical section.
-> 
-> resctrl fs traversals of rdt_resource::ctrl_domains and
-> rdt_resource::mon_domains are done using list_for_each_entry() with
-> cpus_read_lock() held. Similarly, x86 architecture callbacks use
-> list_for_each_entry() expecting that resctrl fs makes the call with
-> cpus_read_lock() held. Inconsistently, a lockdep_assert_cpus_held() precedes
-> the list_for_each_entry() call with varying distance to document this safe
-> RCU list traversal.
-> 
-> In preparation for an upcoming traversal of rdt_resource::ctrl_domains that
-> needs to be done from RCU read-side critical section there is a requirement
-> for developers to always know exactly in which context the list is being
-> traversed.
-> 
-> Replace the list_for_each_entry() traversals of RCU list with
-> list_for_each_entry_rcu() to document that an RCU list is being traversed
-> while making use of the built-in lockdep expression that additionally
-> documents that it is cpus_read_lock() that enables the list to be
-> traversed from non-RCU protection. Only revert to documenting the
-> safety of traversal using a comment when lockdep does not have needed
-> visibility in functions called via smp_call*().
-> 
-> The lockdep expression within list_for_each_entry_rcu() depends on
-> RCU_EXPERT that is not set in a typical debug kernel so keep the existing
-> lockdep_assert_cpus_held() that is active with CONFIG_LOCKDEP=y found in
-> typical debug kernel.
-> 
-> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Fixed now.
+Issue caused by an expired token.
 
-Seems good to me. I can add the same for the MPAM driver.
-
-Thanks,
-
-Ben
-
-> ---
-> Changes since v3:
-> - New patch.
-> ---
->  arch/x86/kernel/cpu/resctrl/ctrlmondata.c |  4 ++--
->  arch/x86/kernel/cpu/resctrl/monitor.c     |  2 +-
->  arch/x86/kernel/cpu/resctrl/rdtgroup.c    |  4 ++--
->  fs/resctrl/ctrlmondata.c                  | 12 +++++++-----
->  fs/resctrl/monitor.c                      | 23 +++++++++++++---------
->  fs/resctrl/pseudo_lock.c                  |  2 +-
->  fs/resctrl/rdtgroup.c                     | 24 +++++++++++------------
->  7 files changed, 39 insertions(+), 32 deletions(-)
-> 
-> diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-> index b20e705606b8..e74f1ed54b86 100644
-> --- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-> +++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-> @@ -53,7 +53,7 @@ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid)
->  	/* Walking r->domains, ensure it can't race with cpuhp */
->  	lockdep_assert_cpus_held();
->  
-> -	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		hw_dom = resctrl_to_arch_ctrl_dom(d);
->  		msr_param.res = NULL;
->  		for (t = 0; t < CDP_NUM_TYPES; t++) {
-> @@ -115,7 +115,7 @@ static void _resctrl_sdciae_enable(struct rdt_resource *r, bool enable)
->  	lockdep_assert_cpus_held();
->  
->  	/* Update MSR_IA32_L3_QOS_EXT_CFG MSR on all the CPUs in all domains */
-> -	list_for_each_entry(d, &r->ctrl_domains, hdr.list)
-> +	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held())
->  		on_each_cpu_mask(&d->hdr.cpu_mask, resctrl_sdciae_set_one_amd, &enable, 1);
->  }
->  
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> index 569894d6e5c8..430b8fae0b77 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -510,7 +510,7 @@ static void _resctrl_abmc_enable(struct rdt_resource *r, bool enable)
->  
->  	lockdep_assert_cpus_held();
->  
-> -	list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		on_each_cpu_mask(&d->hdr.cpu_mask, resctrl_abmc_set_one_amd,
->  				 &enable, 1);
->  		resctrl_arch_reset_rmid_all(r, d);
-> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> index 885026468440..5ffa39fa86fa 100644
-> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> @@ -151,7 +151,7 @@ static int set_cache_qos_cfg(int level, bool enable)
->  		return -ENOMEM;
->  
->  	r_l = &rdt_resources_all[level].r_resctrl;
-> -	list_for_each_entry(d, &r_l->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r_l->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (r_l->cache.arch_has_per_cpu_cfg)
->  			/* Pick all the CPUs in the domain instance */
->  			for_each_cpu(cpu, &d->hdr.cpu_mask)
-> @@ -249,7 +249,7 @@ void resctrl_arch_reset_all_ctrls(struct rdt_resource *r)
->  	 * CBMs in all ctrl_domains to the maximum mask value. Pick one CPU
->  	 * from each domain to update the MSRs below.
->  	 */
-> -	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		hw_dom = resctrl_to_arch_ctrl_dom(d);
->  
->  		for (i = 0; i < hw_res->num_closid; i++)
-> diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-> index 9a7dfc48cb2e..f33712c17d38 100644
-> --- a/fs/resctrl/ctrlmondata.c
-> +++ b/fs/resctrl/ctrlmondata.c
-> @@ -261,7 +261,7 @@ static int parse_line(char *line, struct resctrl_schema *s,
->  		return -EINVAL;
->  	}
->  	dom = strim(dom);
-> -	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (d->hdr.id == dom_id) {
->  			data.buf = dom;
->  			data.closid = rdtgrp->closid;
-> @@ -397,7 +397,7 @@ static void show_doms(struct seq_file *s, struct resctrl_schema *schema,
->  
->  	if (resource_name)
->  		seq_printf(s, "%*s:", max_name_width, resource_name);
-> -	list_for_each_entry(dom, &r->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(dom, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (sep)
->  			seq_puts(s, ";");
->  
-> @@ -535,6 +535,8 @@ struct rdt_domain_hdr *resctrl_find_domain(struct list_head *h, int id,
->  	struct rdt_domain_hdr *d;
->  	struct list_head *l;
->  
-> +	lockdep_assert_cpus_held();
-> +
->  	list_for_each(l, h) {
->  		d = list_entry(l, struct rdt_domain_hdr, list);
->  		/* When id is found, return its domain. */
-> @@ -717,7 +719,7 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
->  		 * struct mon_data. Search all domains in the resource for
->  		 * one that matches this cache id.
->  		 */
-> -		list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +		list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  			if (d->ci_id == domid) {
->  				cpu = cpumask_any(&d->hdr.cpu_mask);
->  				ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
-> @@ -817,7 +819,7 @@ static int resctrl_io_alloc_init_cbm(struct resctrl_schema *s, u32 closid)
->  	/* Keep CDP_CODE and CDP_DATA of io_alloc CLOSID's CBM in sync. */
->  	if (resctrl_arch_get_cdp_enabled(r->rid)) {
->  		peer_type = resctrl_peer_type(s->conf_type);
-> -		list_for_each_entry(d, &s->res->ctrl_domains, hdr.list)
-> +		list_for_each_entry_rcu(d, &s->res->ctrl_domains, hdr.list, lockdep_is_cpus_held())
->  			memcpy(&d->staged_config[peer_type],
->  			       &d->staged_config[s->conf_type],
->  			       sizeof(d->staged_config[0]));
-> @@ -980,7 +982,7 @@ static int resctrl_io_alloc_parse_line(char *line,  struct rdt_resource *r,
->  	}
->  
->  	dom = strim(dom);
-> -	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (update_all || d->hdr.id == dom_id) {
->  			data.buf = dom;
->  			data.mode = RDT_MODE_SHAREABLE;
-> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-> index a932a1fea818..2dacb589625d 100644
-> --- a/fs/resctrl/monitor.c
-> +++ b/fs/resctrl/monitor.c
-> @@ -309,7 +309,7 @@ static void add_rmid_to_limbo(struct rmid_entry *entry)
->  	idx = resctrl_arch_rmid_idx_encode(entry->closid, entry->rmid);
->  
->  	entry->busy = 0;
-> -	list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		/*
->  		 * For the first limbo RMID in the domain,
->  		 * setup up the limbo worker.
-> @@ -507,6 +507,11 @@ static int __l3_mon_event_count_sum(struct rdtgroup *rdtgrp, struct rmid_read *r
->  	 * all domains fail for any reason.
->  	 */
->  	ret = -EINVAL;
-> +	/*
-> +	 * RCU list being traversed with CPU hotplug lock held. lockdep
-> +	 * unable to help prove this here since this work is scheduled via
-> +	 * smp_call*(). Not called from MBM overflow handler.
-> +	 */
->  	list_for_each_entry(d, &rr->r->mon_domains, hdr.list) {
->  		if (d->ci_id != rr->ci->id)
->  			continue;
-> @@ -1231,7 +1236,7 @@ static int rdtgroup_assign_cntr_event(struct rdt_l3_mon_domain *d, struct rdtgro
->  	int ret = 0;
->  
->  	if (!d) {
-> -		list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +		list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  			int err;
->  
->  			err = rdtgroup_alloc_assign_cntr(r, d, rdtgrp, mevt);
-> @@ -1303,7 +1308,7 @@ static void rdtgroup_unassign_cntr_event(struct rdt_l3_mon_domain *d, struct rdt
->  	struct rdt_resource *r = resctrl_arch_get_resource(mevt->rid);
->  
->  	if (!d) {
-> -		list_for_each_entry(d, &r->mon_domains, hdr.list)
-> +		list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held())
->  			rdtgroup_free_unassign_cntr(r, d, rdtgrp, mevt);
->  	} else {
->  		rdtgroup_free_unassign_cntr(r, d, rdtgrp, mevt);
-> @@ -1375,7 +1380,7 @@ static void rdtgroup_update_cntr_event(struct rdt_resource *r, struct rdtgroup *
->  	struct rdt_l3_mon_domain *d;
->  	int cntr_id;
->  
-> -	list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		cntr_id = mbm_cntr_get(r, d, rdtgrp, evtid);
->  		if (cntr_id >= 0)
->  			rdtgroup_assign_cntr(r, d, evtid, rdtgrp->mon.rmid,
-> @@ -1545,7 +1550,7 @@ ssize_t resctrl_mbm_assign_mode_write(struct kernfs_open_file *of, char *buf,
->  		/*
->  		 * Reset all the non-achitectural RMID state and assignable counters.
->  		 */
-> -		list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +		list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  			mbm_cntr_free_all(r, d);
->  			resctrl_reset_rmid_all(r, d);
->  		}
-> @@ -1568,7 +1573,7 @@ int resctrl_num_mbm_cntrs_show(struct kernfs_open_file *of,
->  	cpus_read_lock();
->  	mutex_lock(&rdtgroup_mutex);
->  
-> -	list_for_each_entry(dom, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(dom, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (sep)
->  			seq_putc(s, ';');
->  
-> @@ -1602,7 +1607,7 @@ int resctrl_available_mbm_cntrs_show(struct kernfs_open_file *of,
->  		goto out_unlock;
->  	}
->  
-> -	list_for_each_entry(dom, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(dom, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (sep)
->  			seq_putc(s, ';');
->  
-> @@ -1652,7 +1657,7 @@ int mbm_L3_assignments_show(struct kernfs_open_file *of, struct seq_file *s, voi
->  
->  		sep = false;
->  		seq_printf(s, "%s:", mevt->name);
-> -		list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +		list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  			if (sep)
->  				seq_putc(s, ';');
->  
-> @@ -1750,7 +1755,7 @@ static int resctrl_parse_mbm_assignment(struct rdt_resource *r, struct rdtgroup
->  	}
->  
->  	/* Verify if the dom_id is valid */
-> -	list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (d->hdr.id == dom_id) {
->  			ret = rdtgroup_modify_assign_state(dom_str, d, rdtgrp, mevt);
->  			if (ret) {
-> diff --git a/fs/resctrl/pseudo_lock.c b/fs/resctrl/pseudo_lock.c
-> index d1cb0986006e..dea2b4bf966f 100644
-> --- a/fs/resctrl/pseudo_lock.c
-> +++ b/fs/resctrl/pseudo_lock.c
-> @@ -656,7 +656,7 @@ bool rdtgroup_pseudo_locked_in_hierarchy(struct rdt_ctrl_domain *d)
->  	 * associated with them.
->  	 */
->  	for_each_alloc_capable_rdt_resource(r) {
-> -		list_for_each_entry(d_i, &r->ctrl_domains, hdr.list) {
-> +		list_for_each_entry_rcu(d_i, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  			if (d_i->plr)
->  				cpumask_or(cpu_with_psl, cpu_with_psl,
->  					   &d_i->hdr.cpu_mask);
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index af2cbab14497..2a6221925767 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -117,7 +117,7 @@ void rdt_staged_configs_clear(void)
->  	lockdep_assert_held(&rdtgroup_mutex);
->  
->  	for_each_alloc_capable_rdt_resource(r) {
-> -		list_for_each_entry(dom, &r->ctrl_domains, hdr.list)
-> +		list_for_each_entry_rcu(dom, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held())
->  			memset(dom->staged_config, 0, sizeof(dom->staged_config));
->  	}
->  }
-> @@ -1063,7 +1063,7 @@ static int rdt_bit_usage_show(struct kernfs_open_file *of,
->  
->  	cpus_read_lock();
->  	mutex_lock(&rdtgroup_mutex);
-> -	list_for_each_entry(dom, &r->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(dom, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (sep)
->  			seq_putc(seq, ';');
->  		hw_shareable = r->cache.shareable_bits;
-> @@ -1415,7 +1415,7 @@ static bool rdtgroup_mode_test_exclusive(struct rdtgroup *rdtgrp)
->  		if (r->rid == RDT_RESOURCE_MBA || r->rid == RDT_RESOURCE_SMBA)
->  			continue;
->  		has_cache = true;
-> -		list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-> +		list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  			ctrl = resctrl_arch_get_config(r, d, closid,
->  						       s->conf_type);
->  			if (rdtgroup_cbm_overlaps(s, d, ctrl, closid, false)) {
-> @@ -1604,7 +1604,7 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
->  		type = schema->conf_type;
->  		sep = false;
->  		seq_printf(s, "%*s:", max_name_width, schema->name);
-> -		list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-> +		list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  			if (sep)
->  				seq_putc(s, ';');
->  			if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
-> @@ -1649,7 +1649,7 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
->  	cpus_read_lock();
->  	mutex_lock(&rdtgroup_mutex);
->  
-> -	list_for_each_entry(dom, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(dom, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (sep)
->  			seq_puts(s, ";");
->  
-> @@ -1763,7 +1763,7 @@ static int mon_config_write(struct rdt_resource *r, char *tok, u32 evtid)
->  		return -EINVAL;
->  	}
->  
-> -	list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (d->hdr.id == dom_id) {
->  			mbm_config_write_domain(r, d, evtid, val);
->  			goto next;
-> @@ -2554,7 +2554,7 @@ static int set_mba_sc(bool mba_sc)
->  
->  	rdtgroup_default.mba_mbps_event = mba_mbps_default_event;
->  
-> -	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		for (i = 0; i < num_closid; i++)
->  			d->mbps_val[i] = MBA_MAX_MBPS;
->  	}
-> @@ -2879,7 +2879,7 @@ static int rdt_get_tree(struct fs_context *fc)
->  
->  	if (resctrl_is_mbm_enabled()) {
->  		r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
-> -		list_for_each_entry(dom, &r->mon_domains, hdr.list)
-> +		list_for_each_entry_rcu(dom, &r->mon_domains, hdr.list, lockdep_is_cpus_held())
->  			mbm_setup_overflow_handler(dom, MBM_OVERFLOW_INTERVAL,
->  						   RESCTRL_PICK_ANY_CPU);
->  	}
-> @@ -3435,7 +3435,7 @@ static int mkdir_mondata_subdir_alldom(struct kernfs_node *parent_kn,
->  	/* Walking r->domains, ensure it can't race with cpuhp */
->  	lockdep_assert_cpus_held();
->  
-> -	list_for_each_entry(hdr, &r->mon_domains, list) {
-> +	list_for_each_entry_rcu(hdr, &r->mon_domains, list, lockdep_is_cpus_held()) {
->  		ret = mkdir_mondata_subdir(parent_kn, hdr, r, prgrp);
->  		if (ret)
->  			return ret;
-> @@ -3620,7 +3620,7 @@ int rdtgroup_init_cat(struct resctrl_schema *s, u32 closid)
->  	struct rdt_ctrl_domain *d;
->  	int ret;
->  
-> -	list_for_each_entry(d, &s->res->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &s->res->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		ret = __init_one_rdt_domain(d, s, closid);
->  		if (ret < 0)
->  			return ret;
-> @@ -3635,7 +3635,7 @@ static void rdtgroup_init_mba(struct rdt_resource *r, u32 closid)
->  	struct resctrl_staged_config *cfg;
->  	struct rdt_ctrl_domain *d;
->  
-> -	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
->  		if (is_mba_sc(r)) {
->  			d->mbps_val[closid] = MBA_MAX_MBPS;
->  			continue;
-> @@ -4506,7 +4506,7 @@ static struct rdt_l3_mon_domain *get_mon_domain_from_cpu(int cpu,
->  
->  	lockdep_assert_cpus_held();
->  
-> -	list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> +	list_for_each_entry_rcu(d, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
->  		/* Find the domain that contains this CPU */
->  		if (cpumask_test_cpu(cpu, &d->hdr.cpu_mask))
->  			return d;
-
+Kind regards, Chris
