@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E767B356779
-	for <patches@lists.linux.dev>; Wed,  1 Jul 2026 21:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73428349CC1
+	for <patches@lists.linux.dev>; Wed,  1 Jul 2026 21:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782941764; cv=none; b=JAuZRSYFVrOwvQGX1I+P5LfQ0yYaREwkF231vQvs0vrgjKik78WsG6iz7EQq9PoZ7AgNMYyEdyBGE/N1E/zZSFuF0QbLQ4inGUkPQrz+XJuVE1EkyFryvSCMw0MOH6FJeR3TozwVlSFdyTqOIAKvxumGaxpfDXzMT3TwrOti0ns=
+	t=1782941765; cv=none; b=trgQEWK289q5FjvFxAr6mvvF4WGkM+D/MORFqFZ4iV1KaNR80TbdZ5rOrSYjiRqwQBxUUXuneqp0xqdcgQIJUNs62XIieDoODjDlOtCKm+AmPRk099izBvF3SNM+Dfr9CElmfUbmNzVdgDUNiXvgQ0FEKiaevbPznAi+k4MH4CA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782941764; c=relaxed/simple;
-	bh=xwyCxIUGNTzdLv5SV41fiYRpexFCHrDs5pa1DYFWtMo=;
+	s=arc-20240116; t=1782941765; c=relaxed/simple;
+	bh=U+YdMyIyk3aFs0PlrDaXF634IpRNbN5O5XURQbU/Rlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iiBXfiLd4az2QzQHvXZJiwapDqgcxmTnbz2emm8oms2IG/hyiDIJ0VprXu4DuSRlqBbbDbzx3ZQ04wB7Psn0o1NEhVfggq4WC3T6/mjhvZeiWt9bbkmCvDeENTldBZaMsMNTfQKCWk9kFxFoyKQ5xrsqxFCZw1GPctymCMFP1Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jx7i6i9z; arc=none smtp.client-ip=192.198.163.11
+	 MIME-Version; b=oWb+xnINeiPnpS8H4MSToqhVq9/d34ggnjD+YCXBRj6mcgryCVsCFoKRfBHPggDjldEZXerdWcTNVZLgJHOmLrE3WE9IyDW+/BDqMuiOH5IczU7jiW6RjWAO9vhipdpv3RfoKEMYczvpUfIhH75sUutdsTmpqSrPt6Rj/mxLnXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RqhmVFck; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jx7i6i9z"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RqhmVFck"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1782941763; x=1814477763;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=xwyCxIUGNTzdLv5SV41fiYRpexFCHrDs5pa1DYFWtMo=;
-  b=jx7i6i9zCcpTBc+O38+CDvBE5f+7fyK3VCJjKx3On95cUr//uOUGNc7n
-   5X3/8nKL1eihvMe/iFpCbbc/OhCJiddM5bWKhpGzJ7JakfKOMFCktsY2d
-   xFjiGS1owfBoemvS2hmPn/RVyhEGHgRbqdV4AJPS1Xd1FOjzIv5tTZFeQ
-   Pu+UAzWRLac7DACo6n4TbIq2GYPUNavbCwYxJPcUBpMmL+nffiax4Yz8N
-   Z3E4kXKzm1HVb/9MXbmvkUGlpDr/Y9px4vzdiXCAxFzgr1dcMd/M6Euyz
-   guKF+7qt2lYRut75SQyYYP/Dn87oByRo/SCkfTSXTz8bMFTc24FdpGuSB
+  bh=U+YdMyIyk3aFs0PlrDaXF634IpRNbN5O5XURQbU/Rlk=;
+  b=RqhmVFckKd2s8JzdSkZUy856HO0C2Wp705Y4eWn8EQPzep0GAsjCYjnb
+   FpQGFnIi4fpkMb1fkMleMkqZiNpR2SUW+crsdVfCYlT6LhVVfEt5pCNM3
+   fAhVOkn8+LXjZFB6f4ud4tk6IHsCmwZ+esfZvXWnJrWzVw56Oe42I6tNT
+   V7smvm0fsnQb17OXpb7FlO6bU6OQFeAOWW1APBd0HSCK+w6ApbKMhkX0X
+   eGk0wZGGie9n6Pnbw9GSH3vxUsX6dxepDRx2IwK43pHybYQIusg0aY/k+
+   wwNN6GJ9HYDrBMqHQrIAfpBRtHLELHvM0huOw7d2tsU9GtXklT6bIiHDM
    w==;
-X-CSE-ConnectionGUID: oo5kYNPQQ9OCPWgz3WmLBg==
-X-CSE-MsgGUID: hVbKfcqsSr+lbUfajtrnWQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11834"; a="94285750"
+X-CSE-ConnectionGUID: 4VbG3Ly2Qs6inMreGV/xbw==
+X-CSE-MsgGUID: wvizj1gdRgmBzhr89XciDA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11834"; a="94285760"
 X-IronPort-AV: E=Sophos;i="6.25,142,1779174000"; 
-   d="scan'208";a="94285750"
+   d="scan'208";a="94285760"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
   by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2026 14:36:02 -0700
-X-CSE-ConnectionGUID: nidQTaqBSvamvG9DU2jD9w==
-X-CSE-MsgGUID: XJqtDrPcS/WY+pcSJKvd8g==
+X-CSE-ConnectionGUID: NN+V7teeS12RofuBU+8hYg==
+X-CSE-MsgGUID: LJhtunJJTrKLB5wYOdHSnQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,142,1779174000"; 
-   d="scan'208";a="252242520"
+   d="scan'208";a="252242523"
 Received: from mdroper-mobl2.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.120])
   by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2026 14:36:01 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v9 01/12] platform/x86/intel/{pmt,vsec}: Prevent unbind via sysfs
-Date: Wed,  1 Jul 2026 14:35:42 -0700
-Message-ID: <20260701213553.15222-2-tony.luck@intel.com>
+Subject: [PATCH v9 02/12] fs/resctrl: Remove redundant calls to resctrl_arch_mon_capable()
+Date: Wed,  1 Jul 2026 14:35:43 -0700
+Message-ID: <20260701213553.15222-3-tony.luck@intel.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701213553.15222-1-tony.luck@intel.com>
 References: <20260701213553.15222-1-tony.luck@intel.com>
@@ -73,64 +73,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The resctrl AET code uses intel_pmt_get_regions_by_feature() (exported by the
-pmt_telemetry module) to obtain pmt_feature_group instances that are populated
-using data from the pmt_discovery module. The returned telemetry_region::addr
-values are MMIO mappings created in the telemetry driver's probe path,
-and resctrl reads from them while a mount is active.
+Architecture code provides resctrl_arch_mon_capable() so that file
+system code knows whether any monitor features are supported. This
+is used to decide whether to create "mon_data" directories etc.
 
-However, a user can unbind the intel_pmt driver or its parent intel_vsec
-from their devices via sysfs "unbind" attributes. Unbinding either of these
-drivers would tear down the MMIO mappings, leaving resctrl with stale pointers
-and causing a fault on the next access.
+Initially resctrl_arch_mon_capable() was an inline function providing
+the value of the x86 architecture variable "rdt_mon_capable". I.e.
+extremely low overhead and so it was used liberally as a sanity check.
 
-It is safe for the discovery driver to be unbound. It does all its work at
-initial probe time and saves a copy of the features and RMID count.
+The ARM implementation of resctrl_arch_mon_capable() is not inline and
+chases a couple of pointers. Future changes to x86 implementation will
+also make resctrl_arch_mon_capable() more expensive.
 
-Set device_driver::suppress_bind_attrs in each driver so that the "bind"
-and "unbind" sysfs attributes are not exposed and the user cannot detach
-the driver from its devices while resctrl (or any other in-kernel consumer)
-may be using the resources.
+Redundant calls to resctrl_arch_mon_capable() in hot code paths should
+be eliminated.
 
-Fixes: 1fb2daa60de6 ("x86/resctrl: Discover hardware telemetry events")
-Assisted-by: Claude:Opus-4.7
+1) mbm_handle_overflow()
+This function is called once per second from worker threads running on
+each L3 domain. The call is clearly redundant because worker threads are
+only created if the MBM monitoring feature is enabled.
+
+2) is_rmid_match()
+This function is called when a user reads a "tasks" file of a MON_GROUP.
+The call is redundant because the function also checks "r->type ==
+RDTMON_GROUP" and this type of group can only be created on systems that
+support monitoring.
+
+Remove the call to resctrl_arch_mon_capable() from both of these
+functions.
+
 Signed-off-by: Tony Luck <tony.luck@intel.com>
---
-v9:
-	Set .suppress_bind_attrs for intel_vsec as well as intel_telemetry
 ---
- drivers/platform/x86/intel/pmt/telemetry.c | 3 +++
- drivers/platform/x86/intel/vsec.c          | 3 +++
- 2 files changed, 6 insertions(+)
+ fs/resctrl/monitor.c  | 2 +-
+ fs/resctrl/rdtgroup.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/pmt/telemetry.c b/drivers/platform/x86/intel/pmt/telemetry.c
-index 953f35b6daec..f243ccf3185b 100644
---- a/drivers/platform/x86/intel/pmt/telemetry.c
-+++ b/drivers/platform/x86/intel/pmt/telemetry.c
-@@ -427,6 +427,9 @@ static struct auxiliary_driver pmt_telem_aux_driver = {
- 	.id_table	= pmt_telem_id_table,
- 	.remove		= pmt_telem_remove,
- 	.probe		= pmt_telem_probe,
-+	.driver = {
-+		.suppress_bind_attrs = true,
-+	},
- };
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 73413cb128ea..6acf6106e6f1 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -888,7 +888,7 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	 * If the filesystem has been unmounted this work no longer needs to
+ 	 * run.
+ 	 */
+-	if (!resctrl_mounted || !resctrl_arch_mon_capable())
++	if (!resctrl_mounted)
+ 		goto out_unlock;
  
- static int __init pmt_telem_init(void)
-diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
-index 3ae4557b32b4..50e9e122866c 100644
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -893,6 +893,9 @@ static struct pci_driver intel_vsec_pci_driver = {
- 	.id_table = intel_vsec_pci_ids,
- 	.probe = intel_vsec_pci_probe,
- 	.err_handler = &intel_vsec_pci_err_handlers,
-+	.driver = {
-+		.suppress_bind_attrs = true,
-+	},
- };
- module_pci_driver(intel_vsec_pci_driver);
+ 	/*
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index efadadfe4ed5..ac1a5af00bc5 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -691,7 +691,7 @@ static bool is_closid_match(struct task_struct *t, struct rdtgroup *r)
  
+ static bool is_rmid_match(struct task_struct *t, struct rdtgroup *r)
+ {
+-	return (resctrl_arch_mon_capable() && (r->type == RDTMON_GROUP) &&
++	return ((r->type == RDTMON_GROUP) &&
+ 		resctrl_arch_match_rmid(t, r->mon.parent->closid,
+ 					r->mon.rmid));
+ }
 -- 
 2.54.0
 
