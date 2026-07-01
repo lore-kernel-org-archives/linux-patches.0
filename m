@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D24E390986
-	for <patches@lists.linux.dev>; Wed,  1 Jul 2026 04:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D636361DA9
+	for <patches@lists.linux.dev>; Wed,  1 Jul 2026 04:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782880046; cv=none; b=Bs4n2VYo6acPsj0Yl7Was12Uges0NHQ4Ksc8Sq8zPkop5RcD4/DIi8p+gWv2qRhuxu6k3ThsPyb19PPAUOsejUipzdW9VWfE7LWrbhdNxXfY2X9ql8rmYHbE+i6BNNf1qxtf8aLx54Qhdaexj3VTNB8/jajmXmuFdNuFPvNl30E=
+	t=1782880047; cv=none; b=kt7I+ubE1bPVFExCNNjC7AzwdD2QOGQTgm2QGjAYsFvLCIaLJYsWmz9o3k719EYOfuNXKAGDUIhjnSvmKcFWzW+ruhDQzw8hLSwdzB6fJR+gw36LJrR78+mfU1bgMZLnk8f3kCQ1GY0hNeT2v6UccuvCA6yUOy3nkIUSGfAmM0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782880046; c=relaxed/simple;
-	bh=HHnIVECCW8v+1P7f5PgYa2YSAJnLVUlrfkptge7PY3A=;
+	s=arc-20240116; t=1782880047; c=relaxed/simple;
+	bh=jv7ZNDa6JI2lmMI+Jmrk04umdu3Fkzd56xSIPcIcm1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbnKB5en5kuPemQ2glf6JA2XW1hM8RC9mfkgeeiykdIerGFVVI63EH0Eqq6uuKBDvQvP854KrlaCASE1n6u/jWapITKnj2P+w8pQOlZgvQXUJ9jkFLmc5IGTn/90NiDK3r0S50o1mSSr9pwdE/Ujt2QmED9XDiNYgrn+UjmFNTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JrkmlAq6; arc=none smtp.client-ip=198.175.65.14
+	 MIME-Version; b=UvDwbDxkaBhqFEngSW+7plZo3IV2q7yUuSw3E2zF3Dl50leTgmEgl27DUYr8GBlw1mCx10fcop8xYE9RJzHthHSEfjED0gLXHWAd4s2hBL8zZV7nf24ZxFeSlL+jOCG37mfXdhMsZtNM2o0Uqw2nxv/PbS10HH5h2jFPLHX7VOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ehANnJEa; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JrkmlAq6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ehANnJEa"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1782880042; x=1814416042;
+  t=1782880044; x=1814416044;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=HHnIVECCW8v+1P7f5PgYa2YSAJnLVUlrfkptge7PY3A=;
-  b=JrkmlAq6hSBF+bXSNFKVvlBBwyJ70CD8ZoPailB63d4dXfDBi0K+H6WC
-   Env3vgag5apbU/k96OXwHQ5iiXdjmG17OJFs4Nchb7y98X9hYjn60mo+m
-   8btedUbJ0HYRGVeuEuzsZFE1MlI/JtdU7G4EpjFr+5XJYkrmNRL7Jw2zk
-   nLhgBUo17Xuy51+IQ0mDLEo0ZKMzKpUJ5VE2pt0y80PYOv02VfoZpCgjY
-   8CWJKUrMu2GOUtYkWmuQNJOCyFcqakgSVZqckORgmi0UHvAl3wxaeyF4J
-   H2vwfzDVCn0fxFtXEkgSBIi6BkxcwPShyO4EOeFrtkJc4MfJUVFuyGoiO
-   g==;
-X-CSE-ConnectionGUID: l/ShAmY3S3+H30yWA2EoYQ==
-X-CSE-MsgGUID: lA8f3aFZQBuDtU+A8BY1XA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11833"; a="87514264"
+  bh=jv7ZNDa6JI2lmMI+Jmrk04umdu3Fkzd56xSIPcIcm1E=;
+  b=ehANnJEaS5GMfxqcXzCc6dnuwCjsBBBfUQ8MxfoGuUHnNwEcb7j5jzH5
+   uTphrzIH875N5JRWjxSCw35JD/lMgEJjIq3K8A1IP6SxZ6ZCbXpHw93+g
+   LX9TDr6OeTUiuXuOSF11fT64SBTwqyRZVkyFtx2at1WdBxJetJnOWn4MF
+   i+b4FbdhOf+b2g34m+3E2WW1PTKayRj31JFSOVwR5MNCQpCBDuHk3x1EC
+   KkApUUvutAAQ3AwqOUvm1f6g89g6PKbl2QK+zbYagFoJ7BdXROzuKuM+1
+   qsfDwfq0EbCxI7UfY67OEIWyX4I+j8aJmGCi+z8VD10rUxfdx2i+6LnXX
+   Q==;
+X-CSE-ConnectionGUID: cMwedRV0R9+DF/G4oJeVlA==
+X-CSE-MsgGUID: 4lsJTlObSSO3enhNS0Hjkg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11833"; a="87514274"
 X-IronPort-AV: E=Sophos;i="6.24,235,1774335600"; 
-   d="scan'208";a="87514264"
+   d="scan'208";a="87514274"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
   by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2026 21:27:19 -0700
-X-CSE-ConnectionGUID: qrCDhO5uQVqBPnc/yILpEA==
-X-CSE-MsgGUID: UDOsSo5ASuyKJv59dlfGrw==
+X-CSE-ConnectionGUID: e3uIyLKUTvSbzG+HVZs55g==
+X-CSE-MsgGUID: JYSSv+khQ/qhxDED44zSUQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,235,1774335600"; 
-   d="scan'208";a="249080586"
+   d="scan'208";a="249080602"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2026 21:27:18 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -61,9 +61,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v5 04/10] fs/resctrl: Use accurate type for rdt_resource::rid
-Date: Tue, 30 Jun 2026 21:27:04 -0700
-Message-ID: <926b334c50b00b4b763c983c0dca6d4ec9083d60.1782857711.git.reinette.chatre@intel.com>
+Subject: [PATCH v5 05/10] fs/resctrl: Pass error reading event through to user space
+Date: Tue, 30 Jun 2026 21:27:05 -0700
+Message-ID: <6b3c66a49788828bd8c04a6911bd74c91ccd56f3.1782857711.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1782857711.git.reinette.chatre@intel.com>
 References: <cover.1782857711.git.reinette.chatre@intel.com>
@@ -75,66 +75,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Every resctrl resource has a unique ID described by enum resctrl_res_level.
-enum resctrl_res_level is used in all resource ID initializations and all
-resource ID comparisons. All functions consuming the resource ID expects an
-enum resctrl_res_level. Of the four structures that contain a resource ID
-(struct mon_data, struct mon_evt, struct rdt_domain_hdr, and struct
- rdt_resource) only struct rdt_resource does not use enum resctrl_res_level.
+Reading of event data is managed through populating a struct rmid_read with
+properties of event needing to be read. This data is dispatched to an
+appropriate CPU and upon completion any error can be found in rmid_read::err,
+or on success the event data will be in rmid_read::val.
 
-Switch the type of rdt_resource::rid to be enum resctrl_res_level to make
-it obvious what values are valid, match the type everywhere this member is
-used, and obtain benefits from tools that can flag any enum misuse.
+rmid_read::err is not updated in the unlikely scenario that the reading
+of the event was dispatched to a wrong CPU. If this ever occurs due to
+a bug in resctrl the user space read will return "success" but the data
+reported will be invalid.
 
-Move define of RDT_NUM_RESOURCES outside the enum to enable tools to catch
-when a switch() on the resource ID does not handle all the resources and
-thus help flag which switch statements need an update when a new resource
-is added.
+Ensure accurate error reporting so that if there may be an issue with
+how resctrl picks a CPU it could be learned with an error to user space
+instead of silent failure.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
 Changes since v1:
-- Use RDT_RESOURCE_LAST = RDT_RESOURCE_PERF_PKG as last entry in enum.(Ben)
-
-Changes since v2:
 - Add Ben's RB tag.
 
-Changes since v4:
+Changes since V4:
 - Add Tony's Reviewed-by tag.
 ---
- include/linux/resctrl.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/resctrl/monitor.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index c3ae0e8cb522..dd09c2ce9a0f 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -54,11 +54,11 @@ enum resctrl_res_level {
- 	RDT_RESOURCE_MBA,
- 	RDT_RESOURCE_SMBA,
- 	RDT_RESOURCE_PERF_PKG,
--
--	/* Must be the last */
--	RDT_NUM_RESOURCES,
-+	RDT_RESOURCE_LAST = RDT_RESOURCE_PERF_PKG
- };
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 29b13a690cf3..7f3fe055f7c9 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -458,8 +458,10 @@ static int __l3_mon_event_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+ 	}
  
-+#define RDT_NUM_RESOURCES (RDT_RESOURCE_LAST + 1)
-+
- /**
-  * enum resctrl_conf_type - The type of configuration.
-  * @CDP_NONE:	No prioritisation, both code and data are controlled or monitored.
-@@ -324,7 +324,7 @@ struct resctrl_mon {
-  * @cdp_capable:	Is the CDP feature available on this resource
-  */
- struct rdt_resource {
--	int			rid;
-+	enum resctrl_res_level	rid;
- 	bool			alloc_capable;
- 	bool			mon_capable;
- 	enum resctrl_scope	ctrl_scope;
+ 	/* Reading a single domain, must be on a CPU in that domain. */
+-	if (!cpumask_test_cpu(cpu, &d->hdr.cpu_mask))
++	if (!cpumask_test_cpu(cpu, &d->hdr.cpu_mask)) {
++		rr->err = -EIO;
+ 		return -EINVAL;
++	}
+ 	if (rr->is_mbm_cntr)
+ 		rr->err = resctrl_arch_cntr_read(rr->r, d, closid, rmid, cntr_id,
+ 						 rr->evt->evtid, &tval);
+@@ -496,8 +498,10 @@ static int __l3_mon_event_count_sum(struct rdtgroup *rdtgrp, struct rmid_read *r
+ 	}
+ 
+ 	/* Summing domains that share a cache, must be on a CPU for that cache. */
+-	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
++	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map)) {
++		rr->err = -EIO;
+ 		return -EINVAL;
++	}
+ 
+ 	/*
+ 	 * Legacy files must report the sum of an event across all
 -- 
 2.54.0
 
