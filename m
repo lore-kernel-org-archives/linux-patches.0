@@ -1,164 +1,172 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11010060.outbound.protection.outlook.com [52.101.229.60])
+Received: from email.studentenwerk.mhn.de (mailin.studentenwerk.mhn.de [141.84.225.229])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1263411670
-	for <patches@lists.linux.dev>; Wed,  1 Jul 2026 15:41:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.60
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782920511; cv=fail; b=f+mirJ+gRPerC59/flTV87PexP1F9OCTaIqaXN+k5uVW83lnbt53Pm8y0kyspNs4HMR4eLgGYc1dyiu469yIBRPnktRF5/QGjuiJ/dvqBDq7CfRL6+0ysLItg8/DJ7668fFx3e7hjFqRs3Cl+QGMquI7kwM9Ak2avl2k0k7NJAI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782920511; c=relaxed/simple;
-	bh=XlONfHf0nXrZ5EvsgZRgyfd/XnPDWeariGCpXkbocB4=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=BngWnKZRGldZc6VRYzqpSJF75QW07u4JdUUYFdQfN0jvp8BMpUB18Lc/d18GVUg+Bu3HbwxX0EfZW2vF/bV7z6XIhbC3nO7yQhB4VL594Mogg3VtZyDVwpmIcOce9udX0YRaxrLckyqsrTJDgYuewy92K8NuQ5MxVf8uJylD6I4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=Lm0HVP3t; arc=fail smtp.client-ip=52.101.229.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CEB367284
+	for <patches@lists.linux.dev>; Wed,  1 Jul 2026 16:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.84.225.229
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782922947; cv=none; b=I3UoM6X3ECCSbP9Q7dfa4SOp4cnSEcS2If0NgEMOQqV4Q677gBNi/igW/F0yqAWuueo8WPnFWCrg0lmWaiVTVoWTcH7HLTXSmzer4EW4+r8jrDVkYos0lWigePkX4hsQpKceNZZvaUoIVXHDZUlNVY7m2taqJri6djIxrJ6G+7w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782922947; c=relaxed/simple;
+	bh=Jzm7Zuu+KJYAA/H1FDOsDsoBDLZ7bSVfnSX5GIW3Xxw=;
+	h=MIME-Version:Date:From:To:Cc:Subject:Message-ID:Content-Type; b=oMv8h7U+Hq10y/btYBEphhoVGTyo4fb5yNzICw8XQ8CHTiq9h2G1a0ZrteCy7lTDRmkArC6PWNvzYmfbRTp9UE1672AQ+mwEhz/nMhqLpCgrZkVMeXlRfoFPoW7N6LCwQ5KjvVUmONlD5NTuj2GkkF0W+rK6ZsJSoxA0p6MbdQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stwm.de; spf=pass smtp.mailfrom=stwm.de; dkim=pass (2048-bit key) header.d=stwm.de header.i=@stwm.de header.b=odsRq9Ll; arc=none smtp.client-ip=141.84.225.229
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stwm.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stwm.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="Lm0HVP3t"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oxicwP3FqDBE+/WIOGgk043rdw5PpG2KPwzaigdutH3Mx381nRAA9FLnn2FG8fDbN92vSemQlrcrmhvNdpu4GS/VmrXV08evFklpuSCj6yE531gBcjjdgbBJNAFTM2p1rqn5Z9wGSGvSjrYbe74qkM1nHIPu4YzkpWUIaZyYO+5PizYa2Y8ZB8dAv1TFw6D+sw9SOUe1OSW9QIC8ZkAlq7FW+xnwzT53m24388j7Aj8p+k3NUfXxGo9qqG8+9N7l+wljJljZJpinhMXT5nEH+dwAzfmzww29H/xEXAgy9PVU6Wa4Gj7JSUbF16DFjpayJboMCgNEDc9tdKL6bimjAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gWvygYj1Rhwa6XDivp0D/M+AEPv8bI6C4RJUNG8UIX0=;
- b=YIO4HVw0CBLXT+5YIRxS5Wo+u6A8LMnx2d52NL92pBJnWJmI17Kgl0YKNnZWshqYTtFnZLkBD8PCzMo4CAIMqe5GocvE+IpL2ibIAPPm+3XjFusMbZefchgmTiA+4KR9sSfmTtg0PD8GuoPV45k64WYw/Qir4AivLXL6o7YdhX1QMJqWF7hFL9lkokR9CvxcoaXzW8ds92ZnaUcIrRtBwc1q/CQ+TcglOjMbqY3p/9zLIph8ik2WEUfxkn9aOAPB4oUbaHxshurSMMQUAiAsq6XrpDh6he1svNWrVJG97KFmqtcLiq51LnryvIS+c5viasqf1EZ8CsS4u+sPt2LnJg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gWvygYj1Rhwa6XDivp0D/M+AEPv8bI6C4RJUNG8UIX0=;
- b=Lm0HVP3tN2Q+ybm0B53Gl9mD+IjiyJCsYdeIcHUN/Lq4FfKqjYKIRZQqR3WIFj2IBtKK0v/Lr2utDw9UVTaqZHUO5KtZXzxjkGR7bGwhFsqLlZxd9AoqUl2gIwlrzWLQS6JOiSC42rMNbcpqkr28NqvXEHQYQemJqADylHE2LpQ=
-Received: from OSZPR01MB8123.jpnprd01.prod.outlook.com (2603:1096:604:165::7)
- by TYCPR01MB6769.jpnprd01.prod.outlook.com (2603:1096:400:b0::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Wed, 1 Jul
- 2026 15:41:45 +0000
-Received: from OSZPR01MB8123.jpnprd01.prod.outlook.com
- ([fe80::f2ff:7635:979f:c31a]) by OSZPR01MB8123.jpnprd01.prod.outlook.com
- ([fe80::f2ff:7635:979f:c31a%3]) with mapi id 15.21.0181.008; Wed, 1 Jul 2026
- 15:41:45 +0000
-From: Chris Paterson <Chris.Paterson2@renesas.com>
-To: Pavel Machek <pavel@nabladev.com>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "torvalds@linux-foundation.org"
-	<torvalds@linux-foundation.org>, "akpm@linux-foundation.org"
-	<akpm@linux-foundation.org>, "linux@roeck-us.net" <linux@roeck-us.net>,
-	"shuah@kernel.org" <shuah@kernel.org>, "patches@kernelci.org"
-	<patches@kernelci.org>, "lkft-triage@lists.linaro.org"
-	<lkft-triage@lists.linaro.org>, "jonathanh@nvidia.com"
-	<jonathanh@nvidia.com>, "f.fainelli@gmail.com" <f.fainelli@gmail.com>,
-	"sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>, "rwarsow@gmx.de"
-	<rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>,
-	"hargar@microsoft.com" <hargar@microsoft.com>, "broonie@kernel.org"
-	<broonie@kernel.org>, "achill@achill.org" <achill@achill.org>,
-	"sr@sladewatkins.com" <sr@sladewatkins.com>
-Subject: RE: [PATCH 7.0 00/49] 7.0.14-rc1 review
-Thread-Topic: [PATCH 7.0 00/49] 7.0.14-rc1 review
-Thread-Index: AQHdBKPjSaObmJ+GvkG4AIwATb2ZubZQs62AgAAFbACACB2PIA==
-Date: Wed, 1 Jul 2026 15:41:45 +0000
-Message-ID:
- <OSZPR01MB8123B6D80AFC66536D35EE35B7F62@OSZPR01MB8123.jpnprd01.prod.outlook.com>
-References: <20260625125637.527552689@linuxfoundation.org>
- <aj5ho8stx819px0w@duo.ucw.cz> <aj5mMP6X3NUx5XZM@duo.ucw.cz>
-In-Reply-To: <aj5mMP6X3NUx5XZM@duo.ucw.cz>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OSZPR01MB8123:EE_|TYCPR01MB6769:EE_
-x-ms-office365-filtering-correlation-id: 3d057051-6a7d-4210-0af7-08ded7874191
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|7416014|56012099006|11063799006|4143699003|18002099003|22082099003|38070700021;
-x-microsoft-antispam-message-info:
- BN3EJo+IBr8KxN4lT6IT1RjpiSd1sxb/VM1QChzPWUExsgsonyhNhOziXhu5KqwmrBs5dxsRtMqCvVNUMmsHehDy9nHuSGtngUqcg4zEBS/ebK8SiL/IGaCCidusDdhIzSDaXElLZC7VCV1AKjeaUvQuh2hwowiJJkeHG0zwrFAmwlqf14f49VEodBGpOxs3NWb+/XTNbFHWH0UM4A864z28S37YFY1VJzLmqG9Z9lVOcUGLsW53kQ4B5Z+QgU07JJnG8YWJ2ZGJ8Kw0UBSDpHdB0LXh68Ge9wQ514r7COT6k4pTFapXnvXwTg9s9CAr4Gj6aBttkEyZ1BZdnzUjlT3Ponf/2ro6bzEHvsYDjzmy57wsZEQCnP/X/KUskm9fhW2NBYR/eJCN4wfS+SieKlMcFFEg3y0zCeDC/ubmIKLbbA19iVKMz7wUnrmXr7aceEo4gkHxngJCCtV3WCXd+zXbWGC6/nxJiAqbybNSY8nE67YF8E1+Bz9NzNhKuSOtYyMAwKpacDyy7pfj6+B10vnxWLRxw27Bei1iJ3xzTiJUaNcMnTKw4b+QHCRYaHh0szY0ScIfr3/LSvzRJiX+QC4476yJk/e83qYp/1IdyYioGkDInnM2iyC7zMNmSOKS/9dumnWXVoOJpe8/3q0d0dQSfntS/GfSPPtWENx8pPnvGfgBR2elML2IOovdzwxZ0clQcT42bcz6ZlLnRUIht0VaBvdmBELoI7H4sahc3DE=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OSZPR01MB8123.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(56012099006)(11063799006)(4143699003)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?zCrQGHq69xNlGPGz0WbU4KaGxrmyyb2yeqsvg+Pb9J9LxVU5YHQIW2xc?=
- =?Windows-1252?Q?/9CRATQq8caJvsQKS27ZHrV+DuMRx6LeSrry64efi97Qo2dQ4sNvk58v?=
- =?Windows-1252?Q?VK5j64mAecDwWCtbv93lXF05BOxaokDfZzdKPEx+moLgpLsEgtEkF3E1?=
- =?Windows-1252?Q?2ZdavOh30awpUGjqMQHgAFasyg0N4j9h2NxMFb+B4Da3qjJMmrK9HMsW?=
- =?Windows-1252?Q?7M5BShpnzXAtlat/4UFxY45eVjl0Q7BzgE5Nh2bzy1MNxMAK2I/HJ+FS?=
- =?Windows-1252?Q?WjQLRTMJfpNNzXZh0W8liEA7Oj3E4t7TcbsmLfosPkUoaqe9Fpc7G36Z?=
- =?Windows-1252?Q?bB3ikaZQYE7eZTIMs7EvC8FEkp5XAiDFuABc4XG2G6sBWasNPcDsAbSj?=
- =?Windows-1252?Q?Hce4Awzp2yCKHu8vYVLbllwKH4opNKSveTSJJyDV6YeTh/KUMsyZOikJ?=
- =?Windows-1252?Q?DZydorf8DYIk6bg9rg9spnTn0YRJIbUtbYbcJNUcOOGmwiJNt6iSQ4Ps?=
- =?Windows-1252?Q?HckIqVGocK1ZZuSno1nGSh5SjAQIbIUWm0jQGhsLMve+C1qXKuoUrj4C?=
- =?Windows-1252?Q?TAPiigaiJP4yY/LdTglpetuwe6W+eveHt2wSTsd9oB9uWOLPbIxvxKs2?=
- =?Windows-1252?Q?NL5bB4+jNdwfnWjh9WgXnz7AWZvqrFVe/Rp4p1EHY4q11nYYypJ3Wmst?=
- =?Windows-1252?Q?uw7MzBHT8CEZAlxLESB41S2r7s5gb8su3EiTaBRMy1cGcnixFylM3EVG?=
- =?Windows-1252?Q?wEXlkzKNd4b8q8J/DLY/bQSw1Pio28AZSJuN/s2dK4NCjkSKKddmOCWM?=
- =?Windows-1252?Q?tLvELljufYYD6eHcQtz2YPF3hG+bYLMhBiOV4bKci9xdmK2dh/mADHP4?=
- =?Windows-1252?Q?Ew6MHJHjbCvEDhb43M3lQ7LavMpQ7iO91MXLslXkfEHTr8q4CGEcvIm/?=
- =?Windows-1252?Q?SF1S2OZe14S13y7aP694JfG0YQoAiyY0ZPy4RCK3flKOkJbgy2hSiP7O?=
- =?Windows-1252?Q?Kt1MkzoLyFmJm1kNk498CmH8pFfjJj0GeoRSBiftJEoPRroIGCZLLONz?=
- =?Windows-1252?Q?3p3j/vryG789VfW3kxymH5YXOOM/8df9k7ARzKF2uvPbRQQkxwMmGTkq?=
- =?Windows-1252?Q?NtWKr+RfM9YjhdI7h1+vGolIZNNn31GCLnoLHUe27sTItV0jPTEennKS?=
- =?Windows-1252?Q?pE1j83LHXHoHURf3RlHokPyB2CV5svkcZE2TKZYs9oIYprtxgoJk9lTx?=
- =?Windows-1252?Q?5uLUWDBpq+lI+S2w039GrzAbNSj9ndwf7RPhJ6q2YMaPjRjHPCgiJhP0?=
- =?Windows-1252?Q?XNR0q6vDoxlhM67Ve7NcdPyUEM87Y+lIxGgo0IOOprC2H1WhIGk0kV9c?=
- =?Windows-1252?Q?lOtQ0YwbEGfI4icSU2pAKZj6BE3/jxTVPoj04CwSh0nYHRzttyvDNCTy?=
- =?Windows-1252?Q?5gj3qfaHHS+yFgdYvSFaBFs8Mk6YbUH1lSrFCm2BHX3VBJgS4lF1Qca+?=
- =?Windows-1252?Q?t8UfOjMrpkUi97CAo5aAs0z/MFrqzdQ7uxTb0AcnA46NkG0+DbxnKG/a?=
- =?Windows-1252?Q?sLD4vZuJeDt0fV8ONhsxwjHTug8kYlbtfHW87+tgy4QgoWHQndWJJjzl?=
- =?Windows-1252?Q?VZ1ykLj/caAVq+p8Cl/AFQX8iOlrpmUNtCQ3f21PJf95kNEWSariOq5A?=
- =?Windows-1252?Q?HqXoSbQ6+syf6hIoc4RnvV3U2VFMnYPrqUQ2Nw+2wTorrwCApkk3S2KK?=
- =?Windows-1252?Q?CCEhxwXJjWhQbiE5K01q8lHJJ6aHK5IOptNf+qKZP30eM/cCRWtUnOUS?=
- =?Windows-1252?Q?/rDJ9yN93mevoMpHuFrVcm8wLHAr4I8dRnFXupQImp1ZbCm3eA06iQaN?=
- =?Windows-1252?Q?S5Vnmkb7cTFVIA=3D=3D?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=stwm.de header.i=@stwm.de header.b="odsRq9Ll"
+Received: from mailhub.studentenwerk.mhn.de (mailhub.studentenwerk.mhn.de [127.0.0.1])
+	by email.studentenwerk.mhn.de (Postfix) with ESMTPS id 4gr4q16ZpVzRhRJ;
+	Wed, 01 Jul 2026 18:14:53 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwm.de; s=stwm-20170627;
+	t=1782922493;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=bmmkcu8n/kYtKurJkPZdynkvPyuDi/K9ABsRQryk1lI=;
+	b=odsRq9LlUip6Cy+FAbHfkc/fKSFytwkKpzmW6Aw2uXzASwnHXBST/wTmDiR3QbG6hGaxLG
+	+MTt+nBhKPnpPFhQmUb+zfg24WSVlQ+0zROAr52LA+6z9EIJvCGDnX3VnI1gsw/IrAvngO
+	nZScDhs+lFQlAp4L7+7o+26BPLEcH/Zzr2MzVVKi72cd2ng21nmjnUS/lWtz7UJ+ZqeAxs
+	dL28HUuadF3W2OOPJG65YWNZ7lCTOKIIQeL/FfZPqR4PTOyQTI9R7BM0K2MjPVafczugm9
+	vMpa+yII0myGzGNXr7do/fNscFHJX9oDRnHJn60tN+b5k5+xEtHZfoKxFjXN4w==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OSZPR01MB8123.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d057051-6a7d-4210-0af7-08ded7874191
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jul 2026 15:41:45.3659
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: r8Az6F0I2BjWsKUp5zaXX8PlUt1LgK8JBMmr4mbdHpVBS0ECQWJxwp+hpbMVsnLtunXp6EmaEv3yT+t8BhZt5D3+yrN/m4pGICP0Ak8HQSU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB6769
+Date: Wed, 01 Jul 2026 18:14:53 +0200
+From: Wolfgang Walter <linux@stwm.de>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ patches@lists.linux.dev, Jeff Layton <jlayton@kernel.org>, Alexandr
+ Alexandrov <alexandr.alexandrov@oracle.com>, Yang Erkun
+ <yangerkun@huawei.com>, Chuck Lever <chuck.lever@oracle.com>
+Subject: 6.18.37 has problems with nfs4 (server), 6.18.36 works
+Message-ID: <6eccafaaaa60651ef091257c3439c46b@stwm.de>
+X-Sender: linux@stwm.de
+Organization: =?UTF-8?Q?Studierendenwerk_M=C3=BCnchen_Oberbayern?=
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 
-> From: Pavel Machek <pavel@nabladev.com>
-> Sent: 26 June 2026 12:45
->=20
-> On Fri 2026-06-26 13:25:23, Pavel Machek wrote:
-> > Hi!
-> >
-> > > This is the start of the stable review cycle for the 7.0.14 release.
-> > > There are 49 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied,
-> please
-> > > let me know.
-> >
-> > CIP testing did not find any problems here:
-> >
-> > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-
-> /tree/linux-7.0.y
->=20
-> Disregard this, too. For some reason, this release is not yet tested
-> on gitlab. I'm putting Chris on cc, perhaps he has an idea what is
-> wrong there.
+Hello,
 
-Fixed now.
-Issue caused by an expired token.
+after upgrading to v6.18.37 our nfs-server had problems after about 1 
+day. I do not dare to bisect it as caused a relative long downtime.
 
-Kind regards, Chris
+I would consider running av6.18.37 with
+
+Revert "NFSD: Defer sub-object cleanup in export put callbacks"
+
+reverted if this makes sense.
+
+Of course I'm not sure if this was introduced wth 6.18.37 but we never 
+saw that with earlier versions of v6.18.37.
+
+Here is what it logged when ist started:
+
+[77046.588449] R10: 00000000000c0000 R11: dc8c000000000000 R12: 
+ffff8ae33e7ff630
+[77046.588450] R13: ffff8ae49b33e14c R14: ffff8ae1b8008000 R15: 
+ffff8ae49b33e138
+[77046.588451] FS:  0000000000000000(0000) GS:ffff8ae7065cf000(0000) 
+knlGS:0000000000000000
+[77046.588453] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[77046.588454] CR2: 0000000000000000 CR3: 00000011a3624002 CR4: 
+00000000001726f0
+[77046.588456] Call Trace:
+[77046.588457]  <TASK>
+[77046.588458]  ? __state_in_grace+0x2a/0xc0 [grace]
+[77046.588461]  _raw_spin_lock+0x29/0x30
+[77046.588464]  nfsd4_lock+0xbcd/0x1690 [nfsd]
+[77046.588511]  nfsd4_proc_compound+0x325/0x680 [nfsd]
+[77046.588553]  nfsd_dispatch+0xc6/0x210 [nfsd]
+[77046.588598]  svc_process_common+0x4c3/0x6a0 [sunrpc]
+[77046.588648]  ? __pfx_nfsd_dispatch+0x10/0x10 [nfsd]
+[77046.588692]  svc_process+0x142/0x210 [sunrpc]
+[77046.588737]  svc_recv+0x7e5/0x9b0 [sunrpc]
+[77046.588782]  ? __pfx_nfsd+0x10/0x10 [nfsd]
+[77046.588826]  nfsd+0x8f/0xf0 [nfsd]
+[77046.588867]  kthread+0xfc/0x230
+[77046.588870]  ? __pfx_kthread+0x10/0x10
+[77046.588873]  ret_from_fork+0x231/0x260
+[77046.588875]  ? __pfx_kthread+0x10/0x10
+[77046.588878]  ret_from_fork_asm+0x1a/0x30
+[77046.588881]  </TASK>
+[77046.596608] watchdog: BUG: soft lockup - CPU#16 stuck for 75s! 
+[kworker/u97:6:227618]
+[77046.596612] Modules linked in: rpcsec_gss_krb5 msr 8021q garp stp llc 
+mrp binfmt_misc intel_rapl_msr intel_rapl_common sb_edac 
+x86_pkg_temp_thermal intel_powerclamp coretemp ipmi_ssif kvm_intel kvm 
+snd_pcm irqbypass polyval_clmulni snd_timer ghash_clmulni_intel rapl ast 
+snd intel_cstate drm_client_lib vga16fb soundcore drm_shmem_helper 
+intel_uncore drm_kms_helper vgastate pcspkr iTCO_wdt mei_me 
+intel_pmc_bxt iTCO_vendor_support i2c_algo_bit mei watchdog ioatdma 
+evdev joydev acpi_power_meter ipmi_si acpi_ipmi ipmi_devintf 
+ipmi_msghandler button sg nfsd nfs_acl lockd chacha20poly1305 
+auth_rpcgss aesni_intel grace cryptd nfs_localio drbd drm sunrpc fuse 
+lru_cache loop efi_pstore configfs ip_tables x_tables autofs4 ext4 crc16 
+mbcache jbd2 efivarfs raid10 raid456 async_raid6_recov async_memcpy 
+async_pq async_xor async_tx xor raid6_pq raid0 linear dm_mod raid1 
+hid_generic md_mod ses enclosure usbhid hid sd_mod ixgbe libie_fwlog 
+xfrm_algo dca mdio_devres of_mdio ahci fixed_phy xhci_pci libahci 
+fwnode_mdio mpt3sas ehci_pci
+[77046.596647]  libphy raid_class xhci_hcd libata ehci_hcd mdio_bus 
+scsi_transport_sas i2c_i801 usbcore ptp i2c_smbus lpc_ich scsi_mod 
+pps_core usb_common mdio scsi_common wmi
+[77046.596655] CPU: 16 UID: 0 PID: 227618 Comm: kworker/u97:6 Tainted: G 
+      D      L      6.18.37-debian64.all+1.3 #1 PREEMPT(full)
+[77046.596658] Tainted: [D]=DIE, [L]=SOFTLOCKUP
+[77046.596658] Hardware name: Supermicro X10DRi/X10DRI-T, BIOS 1.1a 
+10/16/2015
+[77046.596659] Workqueue: nfsd4 laundromat_main [nfsd]
+[77046.596702] RIP: 0010:native_queued_spin_lock_slowpath+0x28d/0x2c0
+[77046.596706] Code: 83 e0 03 83 ee 01 48 c1 e0 05 48 63 f6 48 05 40 31 
+4e 99 48 03 04 f5 80 f0 78 98 48 89 10 8b 42 08 85 c0 75 09 f3 90 8b 42 
+08 <85> c0 74 f7 48 8b 32 48 85 f6 74 81 0f 18 0e e9 79 ff ff ff bf 01
+[77046.596708] RSP: 0018:ffffd3abb77c3d70 EFLAGS: 00000246
+[77046.596709] RAX: 0000000000000000 RBX: ffff8ae7072d80d0 RCX: 
+ffff8ae7072d812c
+[77046.596710] RDX: ffff8ae69fcb2140 RSI: 0000000000000003 RDI: 
+ffff8ae7072d812c
+[77046.596711] RBP: ffff8ae7072d812c R08: 0000000000440000 R09: 
+ffff8ae7067cf000
+[77046.596713] R10: 0000000000440000 R11: ffff8ae7072d81e8 R12: 
+000000000000002f
+[77046.596714] R13: ffffd3abb77c3e08 R14: ffff8ae7072d80b0 R15: 
+ffff8ae7072d80c0
+[77046.596715] FS:  0000000000000000(0000) GS:ffff8ae7067cf000(0000) 
+knlGS:0000000000000000
+[77046.596717] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[77046.596718] CR2: 00007f93e9a0e3d8 CR3: 00000011a3624005 CR4: 
+00000000001726f0
+[77046.596719] Call Trace:
+[77046.596721]  <TASK>
+[77046.596722]  _raw_spin_lock+0x29/0x30
+[77046.596725]  laundromat_main+0x3c1/0x940 [nfsd]
+[77046.596766]  process_one_work+0x18c/0x350
+[77046.596770]  worker_thread+0x196/0x300
+[77046.596772]  ? __pfx_worker_thread+0x10/0x10
+[77046.596775]  kthread+0xfc/0x230
+[77046.596778]  ? __pfx_kthread+0x10/0x10
+[77046.596780]  ? __pfx_kthread+0x10/0x10
+[77046.596783]  ret_from_fork+0x231/0x260
+[77046.596786]  ? __pfx_kthread+0x10/0x10
+[77046.596788]  ret_from_fork_asm+0x1a/0x30
+[77046.596791]  </TASK>
+[77047.256123] rcu: INFO: rcu_preempt self-detected stall on CPU
+[77047.256431] rcu:     13-....: (83975 ticks this GP) 
+idle=4dc4/1/0x4000000000000000 softirq=9553877/9553878 fqs=41109
+[77047.256701] rcu:     (t=84006 jiffies g=22811861 q=552187 ncpus=24)
+[77047.256973] CPU: 13 UID: 0 PID: 8887 Comm: nfsd Tainted: G      D     
+  L      6.18.37-debian64.all+1.3 #1 PREEMPT(full)
+[77047.256976] Tainted: [D]=DIE, [L]=SOFTLOCKUP
+
+
+
+Regards
+-- 
+Wolfgang Walter
+Studierendenwerk München Oberbayern
+Anstalt des öffentlichen Rechts
