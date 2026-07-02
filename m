@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46E730C158;
-	Thu,  2 Jul 2026 16:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC79329E79;
+	Thu,  2 Jul 2026 16:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010234; cv=none; b=Poy4MHkL+NgKXGptbD8Zro0JAq22Q59SDNCxjL88eZhhp+SeY9oZ93z4GUMFMscBi0UPMLjRzd4WKlkJr0dUJzLJCLhNhQ72BtMY9S1uyVVB+cSsqkSntgrLiHPEOVkx0p0MKrvsemopwNC9o7KVxHYA9ORpMe9keTt4wDu5e9Q=
+	t=1783010237; cv=none; b=gj47F7GOocXEMRvIn0DqhmwP6wfAd1BJev1JRhFtGWAwgBiTg5kxZwmRpU6AgZo/0xb0h6ThQ/K4Yzhe1ERy0t27Ddf7DUXlDVHMQS47sw1TZA/cQui3V21mfC0pKQCHyhJ7g+HiOIMYQW2V+RhtGiUdxOEWrmIeYWDO3Xe0WPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010234; c=relaxed/simple;
-	bh=HjF2YA3ruRDhrgRLSkpwcecbnTugqBBByZg+23/pbec=;
+	s=arc-20240116; t=1783010237; c=relaxed/simple;
+	bh=7CsJOexkE2GnZ8lU+ezW0OXlW9o520zpH3HTl55Vd98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4gGUs/4qXWlyk+uvQxlB1HYJY82AxRm18Ltn8VkqJb8mgCXgmAFdVrbH2I0cMp4e3KZmpHB6W1UcKlEWkPKrMhzSk2Q93qvoPFW59IDRcQvsjxVbHS9Xrmz4QZDBqK9HgoOvA9H8tLgOC+fuzgUNuXkwVmtbwpc7Dw4NcZDOV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWVEsI22; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VfsDIJtwA4wuQzZu6IGRo+QSLabk+MAdtzd2+2eRRBPHl3CW25B07BfNUVstCxcDrIrmxNpJ67dPMldrDVw5jJJvFgCVIkx5VrfS3IH3Jpp53VuBfJ5OrhlUyhtWxRVzVKi49IYFOUrb7lBqnXg6AsKSCWAhcY/HeizJFqUgvYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvpcQixC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWVEsI22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568C11F000E9;
-	Thu,  2 Jul 2026 16:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvpcQixC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22C21F000E9;
+	Thu,  2 Jul 2026 16:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010232;
-	bh=8BN2U6lYqbM2gI2uwbyJvdQKKC5FOIA4DluuVElgIQM=;
+	s=korg; t=1783010235;
+	bh=hHCNI2y0PVFM73c8HTqaafF96mmxgzN8MVYy7no8C7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWVEsI22WTWLgTz1GrFMSViK/WRKfuyKGgN4l0oI83QGypMYzVmzHXomr2Ca9yLzK
-	 KIWytOcxRdfMnmZUQnfKdhs8mQmRLmRyEov8nlbRfDYUJmNLHqCLufJRYsnwTFMU/L
-	 qiZHnKw1kMin7Ypervvjpwck1CpImlmWHntpuAw8=
+	b=GvpcQixCRESjRGZvoCUMUJMuylleFSsleE9uWFDnGz1GFHgR/IJSkg3rHMcs/ZLBx
+	 uFzs+wXz7sI52iccZMuARkZUAQ4KZu9NkSqVBP8Ws9jUNDbebTe0d8Y6rI5dbZ31PJ
+	 3UByI7JlQVjFTlL3/btErwHSkRMd1lm5R/QZH1bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Varun R Mallya <varunrmallya@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Yicong Yang <yang.yicong@picoheart.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/204] selftests/bpf: Add test to ensure kprobe_multi is not sleepable
-Date: Thu,  2 Jul 2026 18:18:09 +0200
-Message-ID: <20260702155119.332572679@linuxfoundation.org>
+Subject: [PATCH 6.12 033/204] ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn()
+Date: Thu,  2 Jul 2026 18:18:10 +0200
+Message-ID: <20260702155119.353611869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -53,128 +52,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Varun R Mallya <varunrmallya@gmail.com>
+From: Yicong Yang <yang.yicong@picoheart.com>
 
-commit c7cab53f9d5273f0cf2a26bdf178c4e074bdfb50 upstream.
+[ Upstream commit 7cf28b3797a81b616bb7eb3e90cf131afc452919 ]
 
-Add a selftest to ensure that kprobe_multi programs cannot be attached
-using the BPF_F_SLEEPABLE flag. This test succeeds when the kernel
-rejects attachment of kprobe_multi when the BPF_F_SLEEPABLE flag is set.
+The device object rescan in acpi_scan_clear_dep_fn() is scheduled on a
+system workqueue which is not guaranteed to be finished before entering
+userspace. This may cause some key devices to be missing when userspace
+init task tries to find them. Two issues observed on RISCV platforms:
 
-Suggested-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Varun R Mallya <varunrmallya@gmail.com>
-Link: https://lore.kernel.org/r/20260408190137.101418-3-varunrmallya@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+ - Kernel panic due to userspace init cannot have an opened
+   console.
+
+   The console device scanning is queued by acpi_scan_clear_dep_queue()
+   and not finished by the time userspace init process running, thus by
+   the time userspace init runs, no console is present.
+
+ - Entering rescue shell due to the lack of root devices (PCIe nvme in
+   our case).
+
+   Same reason as above, the PCIe host bridge scanning is queued on
+   a system workqueue and finished after init process runs.
+
+The reason is because both devices (console, PCIe host bridge) depend on
+riscv-aplic irqchip to serve their interrupts (console's wired interrupt
+and PCI's INTx interrupts). In order to keep the dependency, these
+devices are scanned and created after initializing riscv-aplic. The
+riscv-aplic is initialized in device_initcall() and a device scan work
+is queued via acpi_scan_clear_dep_queue(), which is close to the time
+userspace init process is run. Since system_dfl_wq is used in
+acpi_scan_clear_dep_queue() with no synchronization, the issues will
+happen if userspace init runs before these devices are ready.
+
+The solution is to wait for the queued work to complete before entering
+userspace init. One possible way would be to use a dedicated workqueue
+instead of system_dfl_wq, and explicitly flush it somewhere in the
+initcall stage before entering userspace. Another way is to use
+async_schedule_dev_nocall() for scanning these devices. It's designed
+for asynchronous initialization and will work in the same way as before
+because it's using a dedicated unbound workqueue as well, but the kernel
+init code calls async_synchronize_full() right before entering userspace
+init which will wait for the work to complete.
+
+Compared to a dedicated workqueue, the second approach is simpler
+because the async schedule framework takes care of all of the details.
+The ACPI code only needs to focus on its job. A dedicated workqueue for
+this could also be redundant because some platforms don't need
+acpi_scan_clear_dep_queue() for their device scanning.
+
+Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+[ rjw: Subject adjustment, changelog edits ]
+Link: https://patch.msgid.link/20260128132848.93638-1-yang.yicong@picoheart.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ Vivian: Adjust system_dfl_wq -> system_unbound_wq in removed lines ]
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/prog_tests/kprobe_multi_test.c        | 35 ++++++++++++++++++-
- .../bpf/progs/kprobe_multi_sleepable.c        | 25 +++++++++++++
- 2 files changed, 59 insertions(+), 1 deletion(-)
- create mode 100644 tools/testing/selftests/bpf/progs/kprobe_multi_sleepable.c
+ drivers/acpi/scan.c | 41 +++++++++++++++--------------------------
+ 1 file changed, 15 insertions(+), 26 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-index 960c9323d1e0f5..4183c2c057a304 100644
---- a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-+++ b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-@@ -6,6 +6,7 @@
- #include "kprobe_multi_override.skel.h"
- #include "kprobe_multi_session.skel.h"
- #include "kprobe_multi_session_cookie.skel.h"
-+#include "kprobe_multi_sleepable.skel.h"
- #include "bpf/libbpf_internal.h"
- #include "bpf/hashmap.h"
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 0774cc6921100b..4b9c81fbdc3bb2 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -5,6 +5,7 @@
  
-@@ -216,7 +217,9 @@ static void test_attach_api_syms(void)
- static void test_attach_api_fails(void)
- {
- 	LIBBPF_OPTS(bpf_kprobe_multi_opts, opts);
-+	LIBBPF_OPTS(bpf_test_run_opts, topts);
- 	struct kprobe_multi *skel = NULL;
-+	struct kprobe_multi_sleepable *sl_skel = NULL;
- 	struct bpf_link *link = NULL;
- 	unsigned long long addrs[2];
- 	const char *syms[2] = {
-@@ -224,7 +227,7 @@ static void test_attach_api_fails(void)
- 		"bpf_fentry_test2",
- 	};
- 	__u64 cookies[2];
--	int saved_error;
-+	int saved_error, err;
+ #define pr_fmt(fmt) "ACPI: " fmt
  
- 	addrs[0] = ksym_get_addr("bpf_fentry_test1");
- 	addrs[1] = ksym_get_addr("bpf_fentry_test2");
-@@ -323,9 +326,39 @@ static void test_attach_api_fails(void)
- 	if (!ASSERT_EQ(saved_error, -E2BIG, "fail_6_error"))
- 		goto cleanup;
- 
-+	/* fail_9 - sleepable kprobe multi should not attach */
-+	sl_skel = kprobe_multi_sleepable__open();
-+	if (!ASSERT_OK_PTR(sl_skel, "sleep_skel_open"))
-+		goto cleanup;
-+
-+	sl_skel->bss->user_ptr = sl_skel;
-+
-+	err = bpf_program__set_flags(sl_skel->progs.handle_kprobe_multi_sleepable,
-+				     BPF_F_SLEEPABLE);
-+	if (!ASSERT_OK(err, "sleep_skel_set_flags"))
-+		goto cleanup;
-+
-+	err = kprobe_multi_sleepable__load(sl_skel);
-+	if (!ASSERT_OK(err, "sleep_skel_load"))
-+		goto cleanup;
-+
-+	link = bpf_program__attach_kprobe_multi_opts(sl_skel->progs.handle_kprobe_multi_sleepable,
-+						     "bpf_fentry_test1", NULL);
-+	saved_error = -errno;
-+
-+	if (!ASSERT_ERR_PTR(link, "fail_9"))
-+		goto cleanup;
-+
-+	if (!ASSERT_EQ(saved_error, -EINVAL, "fail_9_error"))
-+		goto cleanup;
-+
-+	err = bpf_prog_test_run_opts(bpf_program__fd(sl_skel->progs.fentry), &topts);
-+	ASSERT_OK(err, "bpf_prog_test_run_opts");
-+
- cleanup:
- 	bpf_link__destroy(link);
- 	kprobe_multi__destroy(skel);
-+	kprobe_multi_sleepable__destroy(sl_skel);
++#include <linux/async.h>
+ #include <linux/module.h>
+ #include <linux/init.h>
+ #include <linux/slab.h>
+@@ -2364,46 +2365,34 @@ static int acpi_dev_get_next_consumer_dev_cb(struct acpi_dep_data *dep, void *da
+ 	return 0;
  }
  
- static void test_session_skel_api(void)
-diff --git a/tools/testing/selftests/bpf/progs/kprobe_multi_sleepable.c b/tools/testing/selftests/bpf/progs/kprobe_multi_sleepable.c
-new file mode 100644
-index 00000000000000..932e1d9c72e2d0
---- /dev/null
-+++ b/tools/testing/selftests/bpf/progs/kprobe_multi_sleepable.c
-@@ -0,0 +1,25 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include "vmlinux.h"
-+#include <bpf/bpf_helpers.h>
-+#include <bpf/bpf_tracing.h>
-+
-+void *user_ptr = 0;
-+
-+SEC("kprobe.multi")
-+int handle_kprobe_multi_sleepable(struct pt_regs *ctx)
-+{
-+	int a, err;
-+
-+	err = bpf_copy_from_user(&a, sizeof(a), user_ptr);
-+	barrier_var(a);
-+	return err;
-+}
-+
-+SEC("fentry/bpf_fentry_test1")
-+int BPF_PROG(fentry)
-+{
-+	return 0;
-+}
-+
-+char _license[] SEC("license") = "GPL";
+-struct acpi_scan_clear_dep_work {
+-	struct work_struct work;
+-	struct acpi_device *adev;
+-};
+-
+-static void acpi_scan_clear_dep_fn(struct work_struct *work)
++static void acpi_scan_clear_dep_fn(void *dev, async_cookie_t cookie)
+ {
+-	struct acpi_scan_clear_dep_work *cdw;
+-
+-	cdw = container_of(work, struct acpi_scan_clear_dep_work, work);
++	struct acpi_device *adev = to_acpi_device(dev);
+ 
+ 	acpi_scan_lock_acquire();
+-	acpi_bus_attach(cdw->adev, (void *)true);
++	acpi_bus_attach(adev, (void *)true);
+ 	acpi_scan_lock_release();
+ 
+-	acpi_dev_put(cdw->adev);
+-	kfree(cdw);
++	acpi_dev_put(adev);
+ }
+ 
+ static bool acpi_scan_clear_dep_queue(struct acpi_device *adev)
+ {
+-	struct acpi_scan_clear_dep_work *cdw;
+-
+ 	if (adev->dep_unmet)
+ 		return false;
+ 
+-	cdw = kmalloc(sizeof(*cdw), GFP_KERNEL);
+-	if (!cdw)
+-		return false;
+-
+-	cdw->adev = adev;
+-	INIT_WORK(&cdw->work, acpi_scan_clear_dep_fn);
+ 	/*
+-	 * Since the work function may block on the lock until the entire
+-	 * initial enumeration of devices is complete, put it into the unbound
+-	 * workqueue.
++	 * Async schedule the deferred acpi_scan_clear_dep_fn() since:
++	 * - acpi_bus_attach() needs to hold acpi_scan_lock which cannot
++	 *   be acquired under acpi_dep_list_lock (held here)
++	 * - the deferred work at boot stage is ensured to be finished
++	 *   before userspace init task by the async_synchronize_full()
++	 *   barrier
++	 *
++	 * Use _nocall variant since it'll return on failure instead of
++	 * run the function synchronously.
+ 	 */
+-	queue_work(system_unbound_wq, &cdw->work);
+-
+-	return true;
++	return async_schedule_dev_nocall(acpi_scan_clear_dep_fn, &adev->dev);
+ }
+ 
+ static void acpi_scan_delete_dep_data(struct acpi_dep_data *dep)
 -- 
 2.53.0
 
