@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843F53A6B85;
-	Thu,  2 Jul 2026 16:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F26C3A6B85;
+	Thu,  2 Jul 2026 16:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010638; cv=none; b=sBJPa/J+B0OYwZRLK3vCa73DLvVcuyDEAQei6pGbxgsfDNGLB5yu7Pt31YDaCPJy7XzxzbCCtg52kNhkrAwLI0HMOvfQQt7fljhrk4l4UHMMYi84eUHDGnds21G0n/0XDOSqGyh/y1dckX0UuaMTuhK9wMxrQR6Jt9OJJOvtU44=
+	t=1783010641; cv=none; b=fAydH23XEKC2PGW/mIvGBjkMkSP8rK88tEGchnQ8raTlIvRyp3hXeBRhr7tWvMCLQKLkwSvJBVNla79GUeyMiKSOZmHJS9LvTdKpx5mcIaWcfplKqIslxZX+Lqp75FnqY+rTT1E+74Wa8qsO2qfHDKnreBKxmEXm7qznF8sf5to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010638; c=relaxed/simple;
-	bh=Os/HpYZEuSef0pt+IGVEke9DwFVWxaAHLFPzX/rwvAQ=;
+	s=arc-20240116; t=1783010641; c=relaxed/simple;
+	bh=wiA2/s+EX6eCsXqOA3kQZrjxY7BNIaBRne7dV/6iweI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XS1v0D32h2AS7LrxMXyvJMqs0lMzp9FWFDPusarAwPNcsLHIAx4AzpW1KEy97iYfYIvRUKG5Oq9eEUNiJJgWoIwJbrLvAYnIjUdKVT4+5Nh2jaTjoOgqqR9QttCUjiYiNmRo+vQPXTWypUVkF/BFApLnm6zi3J4QBzCZ8bY2R5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xm9DHW3G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iuipy+ypcym37X3AUkfQ8gpbZhoRMGAz4YHTc0P6M9iYhPmOZMbvFUqAfP0ucazbldR2hPlvW7CIJcYAm8sN50CLUII1en5ijISmG7aXOk8MCNxnPBadACZhCBdVtnMyFRTlgniTGKjajJ27DHYZREO3QOtP0ryQvjaooWJKYWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbRaQo55; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xm9DHW3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA36A1F000E9;
-	Thu,  2 Jul 2026 16:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbRaQo55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DAF1F000E9;
+	Thu,  2 Jul 2026 16:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010637;
-	bh=c9I70Y6EER+R4AZL8TV+0AyvhPgohrpDhfZntq00JBI=;
+	s=korg; t=1783010640;
+	bh=sNuu58st/2SvFKLaKLf00fEKfGkgtQkXRRcTnnUFRFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xm9DHW3GjDZJkPhDGtonHAOq1Xgk2HN8+VGjBfIvqUeR5BgfjYJ4xR6bL3U3t4WhI
-	 0QQvEAmnTU0Jd6MutH2s1SWfRxEZNO6+sYGIDQYcVXLdzHJSmHbEtHrLbkDX4McHLh
-	 N0XWBwxpLGanvhgFtx+88ykImnooKhsxsiUazy/k=
+	b=YbRaQo55KZVaxHpp9RGnJb9G6iWdpYtqbfadbodnZ1mgB/87N7769h7bLJeKyKgkQ
+	 hsV0CLP4+ZjbtApUhmsxbt6jdmYBHyw1J9E8UI41L8EhdxJ/dwU/Ia4WKCyJBot+Re
+	 mTO3Cn5uQOiJekKvoOwySqHjpb0xoxDB7KV3eoJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 158/204] f2fs: keep atomic write retry from zeroing original data
-Date: Thu,  2 Jul 2026 18:20:15 +0200
-Message-ID: <20260702155121.968562981@linuxfoundation.org>
+	Guannan Wang <wgnbuaa@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 185/204] NFSD: Fix SECINFO_NO_NAME decode error cleanup
+Date: Thu,  2 Jul 2026 18:20:42 +0200
+Message-ID: <20260702155122.537698314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -52,76 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Guannan Wang <wgnbuaa@gmail.com>
 
-commit 6d874b65aadce56ac78f76129dbcfc2599b638f8 upstream.
+commit 9e18e83b8846a5c3fe13fc8a464b4865d33996c6 upstream.
 
-A partial atomic write reserves a block in the COW inode before reading the
-original data page for the untouched bytes in that page.
+nfsd4_decode_secinfo_no_name() currently initializes sin_exp after
+decoding sin_style. If the XDR stream is truncated, the decoder returns
+nfserr_bad_xdr before sin_exp is initialized.
 
-If that read fails, write_begin returns an error but leaves the COW inode
-entry as NEW_ADDR. A retry of the same partial write then finds the COW
-entry, treats it as existing COW data, and f2fs_write_begin() zeroes the
-whole folio because blkaddr is NEW_ADDR.
+Since commit 3fdc54646234 ("NFSD: Reduce amount of struct
+nfsd4_compoundargs that needs clearing"), the inline iops array is not
+cleared between RPC calls. A failed SECINFO_NO_NAME decode can therefore
+leave sin_exp holding stale union contents from a previous operation.
 
-If the retry is committed, the bytes outside the retried write range are
-committed as zeroes instead of preserving the original file contents.
+The error response path still invokes nfsd4_secinfo_no_name_release(),
+which calls exp_put() on a non-NULL sin_exp.
 
-Only use the COW inode as the read source when it already has a real data
-block. If the COW entry is still NEW_ADDR, treat it as a reservation to
-reuse: keep reading the old data from the original inode and avoid
-reserving or accounting the same atomic block again.
+Initialize sin_exp before the first failable decode step, matching
+nfsd4_decode_secinfo().
 
-Cc: stable@kernel.org
-Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 3fdc54646234 ("NFSD: Reduce amount of struct nfsd4_compoundargs that needs clearing")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guannan Wang <wgnbuaa@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4xdr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -3566,6 +3566,7 @@ static int prepare_atomic_write_begin(st
- 	pgoff_t index = folio->index;
- 	int err = 0;
- 	block_t ori_blk_addr = NULL_ADDR;
-+	bool cow_has_reserved_block = false;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1849,10 +1849,11 @@ static __be32 nfsd4_decode_secinfo_no_na
+ 					   union nfsd4_op_u *u)
+ {
+ 	struct nfsd4_secinfo_no_name *sin = &u->secinfo_no_name;
++
++	sin->sin_exp = NULL;
+ 	if (xdr_stream_decode_u32(argp->xdr, &sin->sin_style) < 0)
+ 		return nfserr_bad_xdr;
  
- 	/* If pos is beyond the end of file, reserve a new block in COW inode */
- 	if ((pos & PAGE_MASK) >= i_size_read(inode))
-@@ -3575,9 +3576,11 @@ static int prepare_atomic_write_begin(st
- 	err = __find_data_block(cow_inode, index, blk_addr);
- 	if (err) {
- 		return err;
--	} else if (*blk_addr != NULL_ADDR) {
-+	} else if (__is_valid_data_blkaddr(*blk_addr)) {
- 		*use_cow = true;
- 		return 0;
-+	} else if (*blk_addr == NEW_ADDR) {
-+		cow_has_reserved_block = true;
- 	}
+-	sin->sin_exp = NULL;
+ 	return nfs_ok;
+ }
  
- 	if (is_inode_flag_set(inode, FI_ATOMIC_REPLACE))
-@@ -3590,10 +3593,13 @@ static int prepare_atomic_write_begin(st
- 
- reserve_block:
- 	/* Finally, we should reserve a new block in COW inode for the update */
--	err = __reserve_data_block(cow_inode, index, blk_addr, node_changed);
--	if (err)
--		return err;
--	inc_atomic_write_cnt(inode);
-+	if (!cow_has_reserved_block) {
-+		err = __reserve_data_block(cow_inode, index, blk_addr,
-+					   node_changed);
-+		if (err)
-+			return err;
-+		inc_atomic_write_cnt(inode);
-+	}
- 
- 	if (ori_blk_addr != NULL_ADDR)
- 		*blk_addr = ori_blk_addr;
 
 
