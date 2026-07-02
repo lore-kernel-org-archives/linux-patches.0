@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B556F23EAAD;
-	Thu,  2 Jul 2026 16:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C45426F46F;
+	Thu,  2 Jul 2026 16:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011271; cv=none; b=Pjhrui1eaEQvXqyQQxTfed6ILGHUsX0R8a99lgtb11loZxWwltGzhh3HpifyJQERRcITHBHhKQj0gkSFZsZFxvT/ZidAT9irkXGB4+R8FWyU+0mOUXgbEObW7EpeNnweSwfXaUgTHy004rvwLSUQK2ZbNsnCRSJB6bPDn5GcWJc=
+	t=1783011274; cv=none; b=pehxzyQu8+A5lcu7S0CBDIeN+zCchlI34wxMYFnrfuEA4Cb9bnwaRFy3BW1FOBHpZof3EGes/sCz67zYGBTMAdz4DCYcLnvn6CTpMNEQxCBpToPK89aD/KtQu8Nxitxlhg2vwUxkNpMq2u0qAbLvzJa24AeE41joCrReVvgj17A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011271; c=relaxed/simple;
-	bh=diQusmUA+JUKv6GdKA23md/UAEve72Kvd4KOdBILcmg=;
+	s=arc-20240116; t=1783011274; c=relaxed/simple;
+	bh=FRmGR4n9P3fS5PreEidEQOYwY2LBk8bE2qjBtpl9zaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pk9roLshVeuzEt9nGfemDDWKIYqy4oWUIsGWKN/EhAKpfbN9iN4rvIiFDWx4WBE1X/z94H7M+1JtTNfF2Gi/oQPhCP25D5k8eE+Jnl8hsdKrQrtAFt7gs12/Mpz8o6MKps4HUV8LDzbGlz1p7lXiypE/0Le78yGaUuD8tovCjtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6f5QihN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N+coFDL3NudawaIqgOensUbRvP+9SXnPa0BF9NfxigKwU/hduMohCN8iNuLBtrt38B0hXRt1sDkWgW3gb5K0COtFWvWQM0YitP7eiXmQL0Bk48hENBx4S89QPwW19xZzjLHKlAjbJ1gl9SEbvaFJlmI8fp410KxbIAT6Of+rUEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/AAJ4rH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6f5QihN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F651F000E9;
-	Thu,  2 Jul 2026 16:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/AAJ4rH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EF11F000E9;
+	Thu,  2 Jul 2026 16:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011270;
-	bh=q8fFru/iKUVy2HlL9V+ZQ3kWthiVDHKnWJsUKwObrME=;
+	s=korg; t=1783011273;
+	bh=dy0Oy2B7c4a+kZgvnGjl02WRveXN1DB54O052D7r8Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P6f5QihNc0ByfKZYxZt7kvm0l+BrTKY3MT7yPC8z/uzBzRZEenYlyHE9xqoGpzbYl
-	 Sbru3ysv1dCD03VLhT0OurfV2WXhv6PywrxHeAXoHtFnDLdsmsnmr9T4VVmnrfS+yM
-	 DQ6K4NZ0aJMyzs7ttYnXaeSCs0VXCjDgkcLjnm8U=
+	b=y/AAJ4rHyvnsN/6CDdt+sAFWcqq8FogGSd8Wy5iUjPf7E2sO+mxdCtzQnkoeTE+z1
+	 kUd7PJ61JhH0hZDeqP87sKpLt71/B3Fc1RuEOqLSWQ40h/ek2S9jgNFM1IbhcWNFCD
+	 Tk1fXEstEFnakp1tFHmKuTS6lSrrtoFA7rFcNvws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+81c7c6b52649fd07299d@syzkaller.appspotmail.com,
-	Ian Bridges <icb@fastmail.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 043/108] fbdev: fix use-after-free in store_modes()
-Date: Thu,  2 Jul 2026 18:20:40 +0200
-Message-ID: <20260702155113.000180740@linuxfoundation.org>
+	Usama Arif <usama.arif@linux.dev>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 044/108] block: invalidate cached plug timestamp after task switch
+Date: Thu,  2 Jul 2026 18:20:41 +0200
+Message-ID: <20260702155113.020016705@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -51,73 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Usama Arif <usama.arif@linux.dev>
 
-commit 2c1c805c65fb7dc7524e20376d6987721e73a0b1 upstream.
+commit fad156c2af227f42ca796cbb20ddc354a6dd9932 upstream.
 
-store_modes() replaces a framebuffer's modelist with modes from userspace.
-On success it frees the old modelist with fb_destroy_modelist(). Two
-fields still point into that freed list.
+blk_time_get_ns() caches ktime_get_ns() in current->plug->cur_ktime
+and marks the task with PF_BLOCK_TS. That cache is only valid while the
+task keeps running; if the task is switched out, wall-clock time
+advances and the cached value must not be reused when the task runs again.
 
-One pointer is fb_display[i].mode, the mode a console is using.
-fbcon_new_modelist() moves these pointers to the new list. It only does so
-for consoles still mapped to the framebuffer. An unmapped console is
-skipped and keeps its stale pointer. Unbinding fbcon, for example, sets
-con2fb_map[i] to -1 but leaves fb_display[i].mode set. An
-FBIOPUT_VSCREENINFO ioctl with FB_ACTIVATE_INV_MODE later reaches
-fbcon_mode_deleted(). That function reads the stale fb_display[i].mode
-through fb_mode_is_equal(). The read is a use-after-free.
+The existing invalidation covers explicit plug flushes through
+__blk_flush_plug(), and the schedule() / rtmutex paths through
+sched_update_worker(). It does not cover in-kernel preemption paths such
+as preempt_schedule(), preempt_schedule_notrace(), and
+preempt_schedule_irq(), which enter __schedule(SM_PREEMPT) directly and
+return without calling sched_update_worker().
 
-The other pointer is fb_info->mode, the current mode. It is set through
-the mode sysfs attribute. store_modes() does not update fb_info->mode, so
-it is left pointing into the freed list. show_mode(), the attribute's read
-handler, dereferences the stale fb_info->mode through mode_string(). The
-read is a use-after-free.
+As a result, a task preempted while holding a plug with PF_BLOCK_TS set
+can reuse a stale plug->cur_ktime after it is scheduled back in. blk-iocost
+then consumes that stale timestamp through ioc_now(), producing stale vnow
+values for throttle decisions, and through ioc_rqos_done(), inflating
+on-queue time and feeding false missed-QoS samples into vrate
+adjustment.
 
-Clear both pointers before freeing the list. Commit a1f305893074 ("fbcon:
-Set fb_display[i]->mode to NULL when the mode is released") added the
-helper fbcon_delete_modelist(). It clears every fb_display[i].mode that
-points into a given list. So far it is called only from the unregister
-path. Call it from store_modes() too, and set fb_info->mode to NULL.
+Move the schedule-side invalidation to finish_task_switch(), which runs
+for the scheduled-in task after every actual context switch regardless
+of which schedule entry point was used. Keep __blk_flush_plug() as the
+explicit flush/finish-plug invalidation path, and remove only the
+PF_BLOCK_TS handling from sched_update_worker().
 
-Reported-by: syzbot+81c7c6b52649fd07299d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=81c7c6b52649fd07299d
+Fixes: 06b23f92af87 ("block: update cached timestamp post schedule/preemption")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/ajjoDhAi2y4ArSlz@dev/
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+Link: https://patch.msgid.link/20260616141604.328820-3-usama.arif@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbsysfs.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/linux/blkdev.h |   18 +++++++-----------
+ kernel/sched/core.c    |   12 ++++++++----
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
---- a/drivers/video/fbdev/core/fbsysfs.c
-+++ b/drivers/video/fbdev/core/fbsysfs.c
-@@ -11,6 +11,7 @@
- #include <linux/major.h>
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1187,16 +1187,12 @@ static inline void blk_flush_plug(struct
+ 		__blk_flush_plug(plug, async);
+ }
  
- #include "fb_internal.h"
-+#include "fbcon.h"
- 
- static int activate(struct fb_info *fb_info, struct fb_var_screeninfo *var)
- {
-@@ -111,8 +112,15 @@ static ssize_t store_modes(struct device
- 	if (fb_new_modelist(fb_info)) {
- 		fb_destroy_modelist(&fb_info->modelist);
- 		list_splice(&old_list, &fb_info->modelist);
--	} else
-+	} else {
-+		/*
-+		 * fb_display[i].mode and fb_info->mode both point into the old
-+		 * list. Clear them before it is freed.
-+		 */
-+		fbcon_delete_modelist(&old_list);
-+		fb_info->mode = NULL;
- 		fb_destroy_modelist(&old_list);
+-/*
+- * tsk == current here
+- */
+-static inline void blk_plug_invalidate_ts(struct task_struct *tsk)
+-{
+-	struct blk_plug *plug = tsk->plug;
+-
+-	if (plug)
+-		plug->cur_ktime = 0;
+-	current->flags &= ~PF_BLOCK_TS;
++static __always_inline void blk_plug_invalidate_ts(void)
++{
++	if (unlikely(current->flags & PF_BLOCK_TS)) {
++		current->plug->cur_ktime = 0;
++		current->flags &= ~PF_BLOCK_TS;
 +	}
+ }
  
- 	unlock_fb_info(fb_info);
- 	console_unlock();
+ int blkdev_issue_flush(struct block_device *bdev);
+@@ -1222,7 +1218,7 @@ static inline void blk_flush_plug(struct
+ {
+ }
+ 
+-static inline void blk_plug_invalidate_ts(struct task_struct *tsk)
++static inline void blk_plug_invalidate_ts(void)
+ {
+ }
+ 
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -5206,6 +5206,12 @@ static struct rq *finish_task_switch(str
+ 	 */
+ 	kmap_local_sched_in();
+ 
++	/*
++	 * Any cached block-layer timestamp (plug->cur_ktime) is stale now,
++	 * invalidate it.
++	 */
++	blk_plug_invalidate_ts();
++
+ 	fire_sched_in_preempt_notifiers(current);
+ 	/*
+ 	 * When switching through a kernel thread, the loop in
+@@ -7000,12 +7006,10 @@ static inline void sched_submit_work(str
+ 
+ static void sched_update_worker(struct task_struct *tsk)
+ {
+-	if (tsk->flags & (PF_WQ_WORKER | PF_IO_WORKER | PF_BLOCK_TS)) {
+-		if (tsk->flags & PF_BLOCK_TS)
+-			blk_plug_invalidate_ts(tsk);
++	if (tsk->flags & (PF_WQ_WORKER | PF_IO_WORKER)) {
+ 		if (tsk->flags & PF_WQ_WORKER)
+ 			wq_worker_running(tsk);
+-		else if (tsk->flags & PF_IO_WORKER)
++		else
+ 			io_wq_worker_running(tsk);
+ 	}
+ }
 
 
