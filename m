@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED823491E1;
-	Thu,  2 Jul 2026 16:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63255349AF5;
+	Thu,  2 Jul 2026 16:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010688; cv=none; b=cgCzmcqjQN6VUNog5rSPFrFfM4m1blufHJwGXV0q+9Fbx4mshbZhUAJBbWqmo+1zAHDY54pdxpyFqw5pDgWgFfz68Xg04aNDbh74eu+Yaf8D51PNl1el5HYSK5ORDY+Upde1fB/SHfK6xgcafENH3Y8wGHfhveweHKV2zEobyaA=
+	t=1783010691; cv=none; b=iHQgnGTkCXNJo1U8G/5BN25aoeRk3cjIjQAIjaq3VR3LMrpY2/fRyx1vpL3q48IXEIwNJI9tFZQL962sUHR/wJak4YlBp+2vgrgLirHu3MRQNo/hj4JvmFnW+DWg67m/p5452OyYub5t/xALFkkcxaUxY0BK0wU9ByIXRk+lULk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010688; c=relaxed/simple;
-	bh=SJIwSsotUKEOj41pk1O+XlRvHb8pRf3MnE9Hkes4wOQ=;
+	s=arc-20240116; t=1783010691; c=relaxed/simple;
+	bh=wk9edOeg3oYxkD1ibVeOb6mMDH4OS0EO8Wuh++N9iGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WzE6/FLo5qGM+EpIjUdu9URbFmEFPXlBZKkibacq3qfC7SxGmrljfC+/dPfWeYmw4ildKUFt79kLG2QHX3R18dVsmVBW9dHBxRV8ctDs4nDqmmFOFMdxtyEeUsuH76Eiv9SFH2xVyfsnj+9WpEDoezGA+1gIYBKLDAJllICgwcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AHBUJwL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mQDkxiU/1DEdYinvv7fOiXMYTMTWd06B8IiXAj3C8jIG9z0swAeP34lqPe96bpfJjQQ/RQq2bVuVYoiVtJ+xVzYbxcm8SE5vvfgoNDBwPY8pfexNJ2kYOdul9ZBd9wcdX6c6Ebx3IoIvSd938b7BHlxfOHYqvEQzAy1loNxcNzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFtKGqh1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AHBUJwL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDBE1F000E9;
-	Thu,  2 Jul 2026 16:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFtKGqh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0761F000E9;
+	Thu,  2 Jul 2026 16:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010687;
-	bh=sgQeBKyBW6t8S1+ka4g6YSs6HcXrwBlc6uAgW87i9FY=;
+	s=korg; t=1783010690;
+	bh=uWecGSUAgX6a/+1XNSHcn1AkXLn58cTCbLGtrt2ryVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2AHBUJwLTxLZDHCujr4tRDD7FObwiy65pNqvE5wzAp95nhypiDfQx5A/E5DDTtSaK
-	 OOSejmYKJJSX2X+/zVeDGIkBg2lQyWrquO//uZ8NugvkmPYk+02+dbGiG8aiBOi3FK
-	 4Qubfop5EBI5QnDBTg3VA7zwK8/wTsq2JB6mZG1s=
+	b=sFtKGqh1oLtX8GAuAIR4fUauquzaalS80L5VVjaOs69WLxOZHB7DgJXPrRGNTtAzh
+	 BeOL7f4KuYj1O3E3X2COMeSEf1V2lyrJlVpde1PATM/698aHwEKU65cR9K4jO7vj/G
+	 tPtcF+nEMuwOrDMQ6QGAU5IHqrRVe5mgryq8boAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 160/204] bpf: use kvfree() for replaced sysctl write buffer
-Date: Thu,  2 Jul 2026 18:20:17 +0200
-Message-ID: <20260702155122.011236344@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.12 161/204] MIPS: DEC: Prevent initial console buffer from landing in XKPHYS
+Date: Thu,  2 Jul 2026 18:20:18 +0200
+Message-ID: <20260702155122.032044608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -54,89 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 4c21b5927d4364bfe7365f2700da5fea0ed0d004 upstream.
+commit 7fb13fd35110ebe95eb053faf79d018f51144d85 upstream.
 
-proc_sys_call_handler() allocates its temporary sysctl buffer with
-kvzalloc() and passes it to __cgroup_bpf_run_filter_sysctl(). Since
-kvzalloc() may fall back to vmalloc() for large allocations, freeing
-that buffer with kfree() is wrong and can corrupt memory.
+In 64-bit configurations calling the initial console output handler from
+a kernel thread other than the initial one will result in a situation
+where the stack has been placed in the XKPHYS 64-bit memory segment and
+consequently so has been the buffer allocated there that is used as the
+argument corresponding to the `%s' output conversion specifier for the
+firmware's printf() entry point.
 
-Use kvfree() to safely handle both kmalloc and kvzalloc()/vmalloc
-allocations.
+This 64-bit address will then be truncated by 32-bit firmware, resulting
+in an attempt to access the wrong memory location, which in turn will
+cause all kinds of unpredictable behaviour, such as a kernel crash:
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1-rc5.
-
-Reproduced the bug based on v7.1-rc4 in a QEMU x86_64 guest booted with
-KASAN and CONFIG_FAILSLAB enabled. To exercise the replacement path, the
-test tree also included the accompanying fix for the stale ret == 1
-check in __cgroup_bpf_run_filter_sysctl(). The reproducer confines
-failslab injections to the proc_sys_call_handler() range, uses
-stacktrace-depth=32, and injects fail-nth=1 while writing 8191 bytes to
-/proc/sys/kernel/domainname from a task in the target cgroup. Under
-that setup, fail-nth=1 triggered the fault:
-
-  BUG: unable to handle page fault for address: ffffeb0200024d48
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: Oops: 0000  SMP KASAN NOPTI
-  CPU: 2 UID: 0 PID: 209 Comm: repro_proc_sys_ Not tainted 7.1.0-rc4-00686-g97625979a5d4  PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:kfree+0x6e/0x510
-  ...
+  Console: colour dummy device 160x64
+  Calibrating delay loop... 49.36 BogoMIPS (lpj=192512)
+  pid_max: default: 32768 minimum: 301
+  CPU 0 Unable to handle kernel paging request at virtual address 000000000203bd00, epc == ffffffffbfc08364, ra == ffffffffbfc08800
+  Oops[#1]:
+  CPU: 0 PID: 0 Comm: swapper Not tainted 5.18.0-rc2-00254-gfb649bda6f56-dirty #121
+  $ 0   : 0000000000000000 0000000000000001 0000000000000023 ffffffff80684ba0
+  $ 4   : 000000000203bd00 ffffffffbfc0f3b4 ffffffffffffffff 0000000000000073
+  $ 8   : 0a303d7469000000 0000000000000000 0000000000000073 ffffffffbfc0f473
+  $12   : 0000000000000002 0000000000000000 ffffffff80684c1c 0000000000000000
+  $16   : 0000000000000000 ffffffff80596dc9 0000000000000000 ffffffffbfc09240
+  $20   : ffffffff80684c40 ffffffffbfc0f400 000000000000002d 000000000000002b
+  $24   : ffffffffffffffbf 000000000203bd00
+  $28   : ffffffff805f0000 ffffffff80684b58 0000000000000030 ffffffffbfc08800
+  Hi    : 0000000000000000
+  Lo    : 0000000000000aa8
+  epc   : ffffffffbfc08364 0xffffffffbfc08364
+  ra    : ffffffffbfc08800 0xffffffffbfc08800
+  Status: 140120e2        KX SX UX KERNEL EXL
+  Cause : 00000008 (ExcCode 02)
+  BadVA : 000000000203bd00
+  PrId  : 00000430 (R4000SC)
+  Modules linked in:
+  Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____), tls=0000000000000000)
+  Stack : 0000000000000000 0000000000000000 0000000000000000 0000004d0000004d
+          80684cc0806a2a40 80596dc80000004d 8061000000000000 bfc0850c80684c38
+          0000000000000000 000000000203bd00 0000000000000000 0000000000000000
+          0000000000000000 00000000bfc0f3b4 0000000000000000 0000000000000000
+          0000000000000000 0000000000000000 0000000000000000 0000000000000000
+          0000000000000000 0000000000000000 0000000000000000 0000000000000000
+          0000002500000000 0000000000000000 0000000000000000 802c1a7400000000
+          0203bd0080596dc8 0203bd4d69000000 6c61632000000018 5f746567646e6172
+          6c616320625f6d6f 5f736e5f6d6f7266 206361323778302b 303d74696e726320
+          806a0a38806b0000 806a0a38806b0000 00000000806b0000 80683c58806b0000
+          ...
   Call Trace:
-   <TASK>
-   ? __cgroup_bpf_run_filter_sysctl+0x626/0xc30
-   __cgroup_bpf_run_filter_sysctl+0x74d/0xc30
-   ? __pfx___cgroup_bpf_run_filter_sysctl+0x10/0x10
-   ? srso_return_thunk+0x5/0x5f
-   ? __kvmalloc_node_noprof+0x345/0x870
-   ? proc_sys_call_handler+0x250/0x480
-   ? srso_return_thunk+0x5/0x5f
-   proc_sys_call_handler+0x3a2/0x480
-   ? __pfx_proc_sys_call_handler+0x10/0x10
-   ? srso_return_thunk+0x5/0x5f
-   ? selinux_file_permission+0x39f/0x500
-   ? srso_return_thunk+0x5/0x5f
-   ? lock_is_held_type+0x9e/0x120
-   vfs_write+0x98e/0x1000
-   ...
-   </TASK>
 
-With this fix applied on top of the same test setup, rerunning the
-reproducer with fail-nth=1 yields no corresponding Oops reports.
+  Code: a082ffff  03e00008  00601021 <80820000> 00001821  10400005  24840001  80820000  24630001
 
-Fixes: 4508943794ef ("proc: use kvzalloc for our kernel buffer")
-Cc: stable@vger.kernel.org
+  ---[ end trace 0000000000000000 ]---
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://lore.kernel.org/r/20260603105317.944304-3-dawei.feng@seu.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  KN04 V2.1k    (PC: 0xa0026768, SP: 0x806848e8)
+  >>
+
+In this case the pointer in $4 was truncated from 0x980000000203bd00 to
+0x000000000203bd00.
+
+This may happen when no final console driver has been enabled in the
+configuration and consequently the initial console continues being used
+late into bootstrap or with an upcoming change that will switch the zs
+driver to use a platform device, which in turn will make the console
+handover happen only after other kernel threads have already been
+started.
+
+Fix the issue by making the buffer static and initdata, and therefore
+placed in the CKSEG0 32-bit compatibility segment, observing that the
+console output handler is called with the console lock held, implying
+no need for this code to be reentrant.  Add an assertion to verify the
+buffer actually has been placed in a compatibility segment.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v2.6.12+
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/cgroup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/dec/prom/console.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1774,7 +1774,7 @@ int __cgroup_bpf_run_filter_sysctl(struc
- 	kfree(ctx.cur_val);
+--- a/arch/mips/dec/prom/console.c
++++ b/arch/mips/dec/prom/console.c
+@@ -2,8 +2,9 @@
+ /*
+  *	DECstation PROM-based early console support.
+  *
+- *	Copyright (C) 2004, 2007  Maciej W. Rozycki
++ *	Copyright (C) 2004, 2007, 2026  Maciej W. Rozycki
+  */
++#include <linux/bug.h>
+ #include <linux/console.h>
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+@@ -14,9 +15,11 @@
+ static void __init prom_console_write(struct console *con, const char *s,
+ 				      unsigned int c)
+ {
+-	char buf[81];
++	static char buf[81] __initdata = { 0 };
+ 	unsigned int chunk = sizeof(buf) - 1;
  
- 	if (ret == 1 && ctx.new_updated) {
--		kfree(*buf);
-+		kvfree(*buf);
- 		*buf = ctx.new_val;
- 		*pcount = ctx.new_len;
- 	} else {
++	BUG_ON((long)buf != (int)(long)buf);
++
+ 	while (c > 0) {
+ 		if (chunk > c)
+ 			chunk = c;
 
 
