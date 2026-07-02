@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FB93624DB;
-	Thu,  2 Jul 2026 16:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563D8246BBA;
+	Thu,  2 Jul 2026 16:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010581; cv=none; b=DtYrs2zTVfaW1IRF/J16u4hR9R4y/upopvgtgvM7ic2y87BIA47fJEvl3nrTCXpLNdPUNpEF19hIL5mT7joG08N1GaSa5lvSc1mJRKnvbCTxOAGFcFP1lacBDwo0cqU9pU6QhoyOogWJ9jVilBB6HaiZmmOccP8rwebmcMrUHao=
+	t=1783010583; cv=none; b=XCgVIYlGk+BnUTTZnU3tPq09pzBaTgsBzlaPZDv86ssnM04uI0gArJZTMd1uFASZcQ6z95aGsItZ+mCN+1fBYcTSsJdxg/RE0mo3dQrfN3kLxbCwrgTBNhwHTdzpjJqufRpmj1slEDbjCTpYHpeGzu3p064twe36HTAIHyXcZMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010581; c=relaxed/simple;
-	bh=oUUMjOfgl7Xq9WeBVciwVXKHZDdnzLBPf8P+Ds9z6TY=;
+	s=arc-20240116; t=1783010583; c=relaxed/simple;
+	bh=lnR2EBn1dzruYON8HMA7tSyUm7JuFXEXG/tSP7CCAuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQ/RK3+okeuwma76YXjwdZaH8A72mj/0z42fL7Eb6pDy/Tb6RzVTyMfJ1vxqBAH9EdQwLfGpUeaZNz9zOV7xENbYRZDFFMsRXZjJ8o1s1Khshgk2/S7c3j88+pyE9S/Q8Dztdi0nSYMjulMwLpnlrkCYAwy77BjTe7So1C1f+v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMefon9G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X220hmM6tiHDxHqV0z21H8+siwxXj8rYT5Y6Dp3ieemkAV0R43I91YC2Kbyg1N80pxYA1/RVlhLEDHczLwpvOsy4V7CycCrthVvKS3p4qEmQDinlDWtdAXhcD/xPS18UVDQMeQeHcWglgdCZZA1mJgH1w/CGJi5KBlXbQnfPJ3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1L8obi8B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMefon9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254B21F000E9;
-	Thu,  2 Jul 2026 16:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1L8obi8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD51B1F000E9;
+	Thu,  2 Jul 2026 16:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010579;
-	bh=/2vNVkk19UVRM9/2msHoDbj957AZoF1XCP7hKYFzRbE=;
+	s=korg; t=1783010582;
+	bh=S9P1dbk+XY+hCTWCl+ObOYxtudPkjxeHgUNP1XNInig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMefon9GRPS+mVo0mUqzIgkNApsRxAV1uJ1A8JdPbTSw9bkCRIDPxakrH6nD4SPFr
-	 7719ob9AGuv26PwSluYZ3dIYoqOeIrYFQ71zo0l2I4rUuONEx4JO+xyJoomeDlFHwr
-	 lOBD5s4VuCjBSWpzECg5jRf+rX35nagarux5Iqd0=
+	b=1L8obi8BZ+gTsVYwZAC0rrnzHo9GuOTkGVkuEoht/oYX68msiSdOh7jsoBM8x1jux
+	 az+nm+izIpvNZkHiBD7988ZP9LNip9b/UFyL0jfv88Lw7sNsG+Q5Id/pnFUTQKui/S
+	 DAy8DLVvyk6UmszzVN/Z0/ETbe+SS1LUij6I2tf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 156/204] f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
-Date: Thu,  2 Jul 2026 18:20:13 +0200
-Message-ID: <20260702155121.926997520@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.12 165/204] pwrseq: core: fix use-after-free in pwrseq_debugfs_seq_next()
+Date: Thu,  2 Jul 2026 18:20:22 +0200
+Message-ID: <20260702155122.115108489@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -52,118 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit c4810ada31e80cbe4011467c4f3b1e93f94134f3 upstream.
+commit 257595adf9dac15ae1edd9d07753fbc576a7583d upstream.
 
-f2fs_acl_count() only validates the aggregate ACL xattr length. A
-malformed ACL can still place ACL_USER or ACL_GROUP in a slot that only
-contains struct f2fs_acl_entry_short bytes, and f2fs_acl_from_disk()
-then reads entry->e_id before verifying that a full entry fits.
+pwrseq_debugfs_seq_next() declares 'next' with __free(put_device),
+which causes put_device() to be called on the returned pointer when
+the variable goes out of scope.  This results in a use-after-free
+since the seq_file framework receives a pointer whose reference has
+already been dropped.
 
-Require a short entry before reading e_tag and e_perm, and require a
-full entry before reading e_id for ACL_USER and ACL_GROUP. Return
--EFSCORRUPTED from these new truncated-entry checks, while keeping the
-pre-existing -EINVAL paths unchanged.
+Simply removing __free(put_device) would fix the UAF but would leak
+the reference acquired by bus_find_next_device(), as stop() only
+calls up_read(&pwrseq_sem) and never releases the device reference.
 
-Validation reproduced this kernel report:
-KASAN slab-out-of-bounds in __f2fs_get_acl+0x6fb/0x7e0
-RIP: 0033:0x7f4b835ea7aa
-The buggy address belongs to the object at ffff888114589960 which belongs
-to the cache kmalloc-8 of size 8
-The buggy address is located 0 bytes to the right of allocated 8-byte
-region [ffff888114589960, ffff888114589968)
-Read of size 4
-Call trace:
-  dump_stack_lvl+0x66/0xa0 (?:?)
-  print_report+0xce/0x630 (?:?)
-  __f2fs_get_acl+0x6fb/0x7e0 (fs/f2fs/acl.c:169)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x224/0x430 (?:?)
-  kasan_report+0xe0/0x110 (?:?)
-  __f2fs_get_acl+0x5/0x7e0 (fs/f2fs/acl.c:169)
-  __get_acl+0x281/0x380 (?:?)
-  vfs_get_acl+0x10b/0x190 (?:?)
-  do_get_acl+0x2a/0x410 (?:?)
-  do_get_acl+0x9/0x410 (?:?)
-  do_getxattr+0xe8/0x260 (?:?)
-  filename_getxattr+0xd1/0x140 (?:?)
-  do_getname+0x2d/0x2d0 (?:?)
-  path_getxattrat+0x16c/0x200 (?:?)
-  lock_release+0xc8/0x290 (?:?)
-  cgroup_update_frozen+0x9d/0x320 (?:?)
-  lockdep_hardirqs_on_prepare+0xea/0x1a0 (?:?)
-  trace_hardirqs_on+0x1a/0x170 (?:?)
-  _raw_spin_unlock_irq+0x28/0x50 (?:?)
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+Fix this by making the reference counting consistent across all
+seq_file callbacks, matching the standard pattern used by PCI and
+SCSI:
 
-Cc: stable@kernel.org
-Fixes: af48b85b8cd3 ("f2fs: add xattr and acl functionalities")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+- start(): use get_device() so it returns a referenced pointer.
+- next(): explicitly put_device(curr) to release the previous
+  device's reference (no NULL check needed - the seq_file framework
+  only calls next() while the previous return was non-NULL).
+- stop(): put_device(data) to release the last iterated device's
+  reference, with a NULL guard since stop() may be called with NULL
+  when start() returned NULL or next() reached end-of-sequence.
+
+Cc: stable@vger.kernel.org
+Fixes: 249ebf3f65f8 ("power: sequencing: implement the pwrseq core")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260616151049.1705503-1-vulab@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/acl.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/power/sequencing/core.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/fs/f2fs/acl.c
-+++ b/fs/f2fs/acl.c
-@@ -46,6 +46,7 @@ static inline int f2fs_acl_count(size_t
- static struct posix_acl *f2fs_acl_from_disk(const char *value, size_t size)
- {
- 	int i, count;
-+	int err = -EINVAL;
- 	struct posix_acl *acl;
- 	struct f2fs_acl_header *hdr = (struct f2fs_acl_header *)value;
- 	struct f2fs_acl_entry *entry = (struct f2fs_acl_entry *)(hdr + 1);
-@@ -69,8 +70,11 @@ static struct posix_acl *f2fs_acl_from_d
+--- a/drivers/power/sequencing/core.c
++++ b/drivers/power/sequencing/core.c
+@@ -990,8 +990,9 @@ static void *pwrseq_debugfs_seq_start(st
+ 	ctx.index = *pos;
  
- 	for (i = 0; i < count; i++) {
+ 	/*
+-	 * We're holding the lock for the entire printout so no need to fiddle
+-	 * with device reference count.
++	 * Hold the lock for the entire printout to prevent device removal.
++	 * Reference counts are managed by start()/next()/stop() as required
++	 * by the seq_file contract.
+ 	 */
+ 	down_read(&pwrseq_sem);
  
--		if ((char *)entry > end)
-+		if (unlikely((char *)entry +
-+				sizeof(struct f2fs_acl_entry_short) > end)) {
-+			err = -EFSCORRUPTED;
- 			goto fail;
-+		}
+@@ -999,7 +1000,7 @@ static void *pwrseq_debugfs_seq_start(st
+ 	if (!ctx.index)
+ 		return NULL;
  
- 		acl->a_entries[i].e_tag  = le16_to_cpu(entry->e_tag);
- 		acl->a_entries[i].e_perm = le16_to_cpu(entry->e_perm);
-@@ -85,6 +89,11 @@ static struct posix_acl *f2fs_acl_from_d
- 			break;
- 
- 		case ACL_USER:
-+			if (unlikely((char *)entry +
-+					sizeof(struct f2fs_acl_entry) > end)) {
-+				err = -EFSCORRUPTED;
-+				goto fail;
-+			}
- 			acl->a_entries[i].e_uid =
- 				make_kuid(&init_user_ns,
- 						le32_to_cpu(entry->e_id));
-@@ -92,6 +101,11 @@ static struct posix_acl *f2fs_acl_from_d
- 					sizeof(struct f2fs_acl_entry));
- 			break;
- 		case ACL_GROUP:
-+			if (unlikely((char *)entry +
-+					sizeof(struct f2fs_acl_entry) > end)) {
-+				err = -EFSCORRUPTED;
-+				goto fail;
-+			}
- 			acl->a_entries[i].e_gid =
- 				make_kgid(&init_user_ns,
- 						le32_to_cpu(entry->e_id));
-@@ -107,7 +121,7 @@ static struct posix_acl *f2fs_acl_from_d
- 	return acl;
- fail:
- 	posix_acl_release(acl);
--	return ERR_PTR(-EINVAL);
-+	return ERR_PTR(err);
+-	return ctx.dev;
++	return get_device(ctx.dev);
  }
  
- static void *f2fs_acl_to_disk(struct f2fs_sb_info *sbi,
+ static void *pwrseq_debugfs_seq_next(struct seq_file *seq, void *data,
+@@ -1009,8 +1010,9 @@ static void *pwrseq_debugfs_seq_next(str
+ 
+ 	++*pos;
+ 
+-	struct device *next __free(put_device) =
+-			bus_find_next_device(&pwrseq_bus, curr);
++	struct device *next = bus_find_next_device(&pwrseq_bus, curr);
++
++	put_device(curr);
+ 	return next;
+ }
+ 
+@@ -1059,6 +1061,8 @@ static int pwrseq_debugfs_seq_show(struc
+ 
+ static void pwrseq_debugfs_seq_stop(struct seq_file *seq, void *data)
+ {
++	if (data)
++		put_device(data);
+ 	up_read(&pwrseq_sem);
+ }
+ 
 
 
