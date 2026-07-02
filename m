@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E2B22D7B9;
-	Thu,  2 Jul 2026 16:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00F419049B;
+	Thu,  2 Jul 2026 16:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011182; cv=none; b=lyTzbi7nZTGBkIox88n1m2+t7BEzJ/ztQCTmDQn89te9qF+up5dCX08TJnjlbxueen0/FZ0kwRS6lSAYHx2o3T+1xv6rEF0RCZsGTdnsKPQ16qhNCtINGdfIwMNiS9LmJ1Jh0s+W086sqH6kktoInw0NAPbtbv0pVRxw+ovbxQk=
+	t=1783011185; cv=none; b=flafwq54D0SxoR82ke7u1/2QfhJNg2auRNx3/jzygKDcYnDLnanzzV7zNKuc3N86MaAUuST5yZR4/+q2FsHfnhrU6HVuFu6erNfS5I0TA8IQt7GMpwdhbxkk05eG00mtj2RhB9wID0JoC3Abeqe6Kc/vVrmGtp6ymnxUB91zNQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011182; c=relaxed/simple;
-	bh=zgGTI7UZ3wSq9V40yD7nN0ctMLO7HBqcQhqonrlARh8=;
+	s=arc-20240116; t=1783011185; c=relaxed/simple;
+	bh=dqoYL6gQ9noQ7pxOyAv7At2GcFEbZhA209fqATmrNd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCbEQKkcbGdt12hhTHKwayT+mfKqk5O1C81qnZOek7N0wA9OCwmui1NbsniDYVrUNUF61eSytPoEjBAWRHFXlXNDwJWNqlOIBIYGMDX41OCyl5rn1a4Gjskv4sFnMHVRFhQvCYvqJgwwoHAWjjj2ejobILJmSRRRiQKfEfXunEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZ6IGtR/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nk4b0Ad7zJ0Wuim5VNXiZ+IIG++mZtK7AYtwYVmCYkhVI+VPRB3OPfOF8FArf60q/j5SXjvSLIEsUCKWWL39IIGmyv7wbQEqeaGBpu1ZfZ4T4UP7ccyl8KRTeS1KTsPqZboo/zKTTkV35d6kMF+nL970bSiOlyXFAVINQmnX7Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpcxDPPH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZ6IGtR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1181F00A3A;
-	Thu,  2 Jul 2026 16:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpcxDPPH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C2D1F00A3A;
+	Thu,  2 Jul 2026 16:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011181;
-	bh=XlZyYZ2NcRjlxRyAj0242JjbqEwPSYfAC851YLPmvfY=;
+	s=korg; t=1783011183;
+	bh=kNVMz4FQPSg4JeSC8nXjbmKifgfAfjOh4h/d/4Lc5Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YZ6IGtR/aZWsAKROYQwTPLgWTOVl5CA+ClHanCj18ZpmLicXOpKIH8bmjkC3s2Y/k
-	 8PjNzTc0mA+OCsrgcRdALfPNyBVwcfUfJMk0+NUgxCAsWgD1himdsenmPxFagMT0xg
-	 yzzsuarJAW4xYinZJj8gGCfxHHddUS4Q2F1lAUWo=
+	b=LpcxDPPHSRAWolLeRm+3ODlCPS7QQAtfHEtcQ6rHpRt7ZiT8Ll95GJhjaqQRfg4Ce
+	 fQ4o0uzvvwdxhTjYvm5GRYqFACpy+CmVWpj/OCg6SWgZfq0TX6td1Agb9Q/IvBfmmX
+	 zLWG2AHTKHqc7lid839ERz8tqPAJ3zpWjb70R4VM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 012/108] batman-adv: tp_meter: handle seqno wrap-around for fast recovery detection
-Date: Thu,  2 Jul 2026 18:20:09 +0200
-Message-ID: <20260702155112.366659864@linuxfoundation.org>
+Subject: [PATCH 6.18 013/108] batman-adv: tp_meter: add only finished tp_vars to lists
+Date: Thu,  2 Jul 2026 18:20:10 +0200
+Message-ID: <20260702155112.386378252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -53,35 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit f54c85ed42a1b27a516cf2a4728f5a612b799e07 upstream.
+commit 15ccbf685222274f5add1387af58c2a41a95f81e upstream.
 
-The recover variable and the last_sent sequence number are initialized on
-purpose as a really high value which will wrap-around after the first 2000
-bytes. The fast recovery precondition must therefore not use simple integer
-comparisons but use helpers which are aware of the sequence number
-wrap-arounds.
+When the receiver variables (aka "session") are initialized, then they are
+added to the list of sessions before the timer is set up. A RCU protected
+reader could therefore find the entry and run mod_setup before
+batadv_tp_init_recv() finished the timer initialization.
+
+The same is true for batadv_tp_start(), which must first initialize the
+finish_work and the test_length to avoid a similar problem.
 
 Cc: stable@kernel.org
 Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/tp_meter.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index a85622267ba655..0ebfc4462b8f17 100644
+index 0ebfc4462b8f17..0444aa46b95c29 100644
 --- a/net/batman-adv/tp_meter.c
 +++ b/net/batman-adv/tp_meter.c
-@@ -733,7 +733,7 @@ static void batadv_tp_recv_ack(struct batadv_priv *bat_priv,
- 		if (atomic_read(&tp_vars->dup_acks) != 3)
- 			goto out;
+@@ -1096,21 +1096,21 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
+ 	tp_vars->prerandom_offset = 0;
+ 	spin_lock_init(&tp_vars->prerandom_lock);
  
--		if (tp_vars->recover >= recv_ack)
-+		if (!batadv_seq_before(tp_vars->recover, recv_ack))
- 			goto out;
+-	kref_get(&tp_vars->refcount);
+-	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
+-	spin_unlock_bh(&bat_priv->tp_list_lock);
+-
+ 	tp_vars->test_length = test_length;
+ 	if (!tp_vars->test_length)
+ 		tp_vars->test_length = BATADV_TP_DEF_TEST_LENGTH;
  
- 		/* if this is the third duplicate ACK do Fast Retransmit */
++	/* init work item for finished tp tests */
++	INIT_DELAYED_WORK(&tp_vars->finish_work, batadv_tp_sender_finish);
++
++	kref_get(&tp_vars->refcount);
++	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
++	spin_unlock_bh(&bat_priv->tp_list_lock);
++
+ 	batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 		   "Meter: starting throughput meter towards %pM (length=%ums)\n",
+ 		   dst, test_length);
+ 
+-	/* init work item for finished tp tests */
+-	INIT_DELAYED_WORK(&tp_vars->finish_work, batadv_tp_sender_finish);
+-
+ 	/* start tp kthread. This way the write() call issued from userspace can
+ 	 * happily return and avoid to block
+ 	 */
+@@ -1430,10 +1430,10 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 	INIT_LIST_HEAD(&tp_vars->unacked_list);
+ 
+ 	kref_get(&tp_vars->refcount);
+-	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
++	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
+ 
+ 	kref_get(&tp_vars->refcount);
+-	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
++	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
+ 
+ 	batadv_tp_reset_receiver_timer(tp_vars);
+ 
 -- 
 2.53.0
 
