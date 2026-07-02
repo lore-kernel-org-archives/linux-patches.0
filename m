@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C59417366;
-	Thu,  2 Jul 2026 16:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA84439A047;
+	Thu,  2 Jul 2026 16:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009428; cv=none; b=tbtyoa/vXxW3J97bymoYdP72x8aISuJJPSjFy8cXq/m2fy8niNB8/GZ/6ZvVHhJNMTWmYoNbyumpm0PAeCTegKCetcCQmuaIKRVqn8ygT6fvVZ/ipgDikDpLJK9WZBtx4DA+RexP1xM9zM+GLjclG6FTHNI4xA8KZ0o+798mpdE=
+	t=1783009431; cv=none; b=DFQ46MoMMPTA/cyHII9Lqxie9xDYQJtwKJuueW1eYHvYKmdW0bxIJDj71HDQuamch/3VlrE2b3UsUG20u4E53G5+ry+dktAGXgixU6Of6QZ5n7uRJrtfsrJD2nYJ4dEjFoTrivrWB9UnmY0wPGvRdtXhHXiJmg/RkJn3ELI/bI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009428; c=relaxed/simple;
-	bh=M3okWT1R1GxCHLIKXyaBATj5V2ZT1ZBrpq0myxncmjw=;
+	s=arc-20240116; t=1783009431; c=relaxed/simple;
+	bh=obBtH4X5TCfEMyG1yGxsFSk2a8GGB2aRlN5toZ+KgIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvO24KQ2C40W9J8unpxjrLweMsmv+nBR18vbcE/i50cvsddURhN1Wzfm/X8LSURJq9tmdeFHoD2NctuiJYcpdY/yPVDi+bBXBKWr8Wua9AIfxVYd9E3WHylVCNqHG2Bf6Co83nuASEUqtW5E/uxPoPFzKAYHhWiBRzPWLKscd+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdSrFzhz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BOET3KWBUoZkNRyv26h3isclgD4cUGEbzPT+Fx+7E0lk+mtfy86CiERSwZjaSW4R0BxuhPmNM1nT1eIr1MgLqJRtLLx5OgpRZ1jrbFm4185HdBDVQmaYbPWrDiHbGcCWEf9a/LuxbwFdTfPI43MqrycaeIxknTksAQV3FhgasM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO1UKmT7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdSrFzhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00A11F00A3D;
-	Thu,  2 Jul 2026 16:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO1UKmT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879BC1F00A3A;
+	Thu,  2 Jul 2026 16:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009421;
-	bh=SpXPF4sPgcIQaHwPwUrKoh8iD181SjuXqLthMxLVyUo=;
+	s=korg; t=1783009424;
+	bh=xg+0D/bsW64mWScSffNPI4KICOUY2OhhqZ9LpnVR68U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BdSrFzhzlU2OBJoQ+eAPjx+8g05/WiXcb0cKeJms3EDwEaPDQpGmlyJHyIDXnsNu+
-	 jXQomTB7RWWd+h2alKYv4cMjnJ5zXj72/DQjfkL9Yl4L3BRm096z+wEYruSaJ+MFuM
-	 zwwW4ptBwdwo3dzu+2VZLhkfJq604QU/dZDfC+Io=
+	b=lO1UKmT7aVLqMTbC2SK6XfZ8TK5sUta/L3SPi8x9Sf2BJH+6J7yA0h0RKs7q+Jqwq
+	 2wpNCLr1OuLluzU+sSE9sf3uMSCT1aMjQvCF7E2srWokUzlcBamMbRoBiaptW42Jo8
+	 qtaUdASCyWpkjVaChP6xcXgmqeRPp/yL3Fw1DkLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 43/96] batman-adv: prevent ELP transmission interval underflow
-Date: Thu,  2 Jul 2026 18:19:35 +0200
-Message-ID: <20260702155109.892464823@linuxfoundation.org>
+Subject: [PATCH 5.10 44/96] batman-adv: tp_meter: initialize last_recv_time during init
+Date: Thu,  2 Jul 2026 18:19:36 +0200
+Message-ID: <20260702155109.912069981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -53,48 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 5e50d4b8ae3ea622122d3c6a38d7f6fe68dfddca upstream.
+commit 811cb00fa8cdc3f0a7f6eefc000a6888367c8c8f upstream.
 
-batadv_v_elp_start_timer() enqeues a delayed work. The time when it starts
-is randomly chosen between (elp_interval - BATADV_JITTER) and
-(elp_interval + BATADV_JITTER). The configured elp_interval must therefore
-be larger or equal to BATADV_JITTER to avoid that it causes an underflow of
-the unsigned integer. If this would happen, then a "fast" ELP interval
-would turn into a "day long" delay.
+The last_recv_time is the most important indicator for a receiver session
+to figure out whether a session timed out or not. But this information was
+only initialized after the session was added to the tp_receiver_list and
+after the timer was started.
 
-At the same time, it must not be larger than the maximum value the variable
-can store.
+In the worst case, the timer (function) could have tried to access this
+information before the actual initialization was reached. Like rest of the
+variables of the tp_meter receiver session, this field has to be filled out
+before any other (parallel running) context has the chance to access it.
 
 Cc: stable@kernel.org
-Fixes: a10800829040 ("batman-adv: Add elp_interval hardif genl configuration")
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
 [ Context ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/netlink.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/batman-adv/tp_meter.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/batman-adv/netlink.c b/net/batman-adv/netlink.c
-index 0b5cb03859b25b..e5a0b2c97162d2 100644
---- a/net/batman-adv/netlink.c
-+++ b/net/batman-adv/netlink.c
-@@ -939,9 +939,15 @@ static int batadv_netlink_set_hardif(struct sk_buff *skb,
- #ifdef CONFIG_BATMAN_ADV_BATMAN_V
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index a015ff73812f5e..ea5640242ddc2e 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1412,8 +1412,10 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
  
- 	if (info->attrs[BATADV_ATTR_ELP_INTERVAL]) {
-+		u32 elp_interval;
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+ 					      icmp->session, BATADV_TP_RECEIVER);
+-	if (tp_vars)
++	if (tp_vars) {
++		tp_vars->last_recv_time = jiffies;
+ 		goto out_unlock;
++	}
+ 
+ 	if (!atomic_add_unless(&bat_priv->tp_num, 1, BATADV_TP_MAX_NUM)) {
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+@@ -1440,6 +1442,8 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 	kref_get(&tp_vars->refcount);
+ 	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
+ 
++	tp_vars->last_recv_time = jiffies;
 +
- 		attr = info->attrs[BATADV_ATTR_ELP_INTERVAL];
-+		elp_interval = nla_get_u32(attr);
-+
-+		elp_interval = min_t(u32, elp_interval, INT_MAX);
-+		elp_interval = max_t(u32, elp_interval, BATADV_JITTER);
+ 	kref_get(&tp_vars->refcount);
+ 	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
  
--		atomic_set(&hard_iface->bat_v.elp_interval, nla_get_u32(attr));
-+		atomic_set(&hard_iface->bat_v.elp_interval, elp_interval);
- 	}
+@@ -1488,9 +1492,9 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 				   icmp->orig);
+ 			goto out;
+ 		}
+-	}
  
- 	if (info->attrs[BATADV_ATTR_THROUGHPUT_OVERRIDE]) {
+-	tp_vars->last_recv_time = jiffies;
++		tp_vars->last_recv_time = jiffies;
++	}
+ 
+ 	/* if the packet is a duplicate, it may be the case that an ACK has been
+ 	 * lost. Resend the ACK
 -- 
 2.53.0
 
