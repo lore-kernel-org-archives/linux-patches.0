@@ -1,63 +1,73 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8AF317145
-	for <patches@lists.linux.dev>; Thu,  2 Jul 2026 20:18:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419DD3161BE
+	for <patches@lists.linux.dev>; Thu,  2 Jul 2026 20:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783023489; cv=none; b=deQZ92b+4xoxGllYF430eK6fQ/1HKchU3w9I2Vj1SAxSWu07L7cw0hP5m5iki5mvUx1uQZbnGXaL9o4c8cjcjQ38McugKZvQJeSdr9AwDuYIuwqBVE90On4p8F1Lj0pRYvTi9GGwKa9AztIYJ5UjOIwfhZktAsI7DYWtN5IflA4=
+	t=1783023935; cv=none; b=thPrRXe9h+VmssoPReS2XUgfbcBTYUwYMvi1GMzZBzThiPeZGky/b50AMfb9655+IZmlTwVN2gvyGc53z5U/Ehes3ydW6OeG76gCmTz3ayDGjnAWbXinbT4rta3SP9aNF4eMXqBiJdgl9YTBkbAYE/vkyt+MLGoY5kLhy2TX/ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783023489; c=relaxed/simple;
-	bh=SkElOmdjimEVDG9if3msE0Md43LetI4ECNME1NI6CSw=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=AJieQ7UcKVgL5ofR49+/SZLZweINGqC2mlZ/Qu7Wh7n2Ymlwg6IN4iRlz0xsK3i7MbfEvHZrALlUzsek2K6Pa2rAbeAv364EUPiolGVWF5IsPkqvi+7p1XAjr6z6gSEefftPHmEEhfNQGbIX2a9QQ5rhP2b/VBSzje6qhZ0w8DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fQxOciqk; arc=none smtp.client-ip=209.85.160.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783023935; c=relaxed/simple;
+	bh=vLz0RP/pwjcvD8700PkIjsBrjDT44NCOXMuN85WlfJ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tCteiv7qdfOXNiNQtMlZubq/xD2fKcsBOInvINtQgA6FvLAJOJTgoYtYywgDGBBSmWklXmoGJC16/Q2zTEl6rTJXeFSJmzNTuiN0rLgs3itSo7RXjbetjmUW3WBKZSRm76MLH8cJ8Sj70EYk6GqOA2Z9XlyEUzqKGINVajxVqSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=ivSDZcOi; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fQxOciqk"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-44aeefa1c00so700586fac.0
-        for <patches@lists.linux.dev>; Thu, 02 Jul 2026 13:18:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="ivSDZcOi"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-4758bd3731bso774647f8f.0
+        for <patches@lists.linux.dev>; Thu, 02 Jul 2026 13:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783023487; x=1783628287; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
-         :message-id:from:references:cc:to:subject:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dF7n7bcUMpvGgguhuXDMND355JS/AC8zTZapBPi/s0E=;
-        b=fQxOciqk7NIj6BKB9eqEOLo34tMUd6Ed1o4L6i3qCJYJizJlLVmuhgXmVVi6sq5crL
-         j+vL8/vT8h1j3fOwl56DRWEd6qeMsP3Ar2m18J1P0Sek1eQj1+Bb8UadjHVDMIummX20
-         rZGkA3o5ImBgKYLhqGrN6HuC6k/lTcnxNZmAFj0OKnESGi7hzcNNrZEVvXzi0xlXNAbj
-         BRzL+g0VYmDdrgElCoweW06MJvHC8kds+MrJWTcLQSWd4oHIT4yzj156G17DC00OmPh5
-         HBT9sHuLVFJ89xHRkWuOsT+EZTdRg1t+0YvJMI/RnCvdGOppZgytJQmf+r2G1kgOOM7q
-         Uo6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783023487; x=1783628287;
-        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
-         :message-id:from:references:cc:to:subject:x-gm-gg:x-gm-message-state
+        d=googlemail.com; s=20251104; t=1783023933; x=1783628733; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=dF7n7bcUMpvGgguhuXDMND355JS/AC8zTZapBPi/s0E=;
-        b=mmEYMYdrZGS10kLz8GXwMPyUzsn8LLyWlUccQAI70o1Ekb3RX8kftKPVmWr2Kn/LXP
-         XooScjzudH539cJlR4ztG7qTH+ke6kzrkqUFtgYku5ALKg1ba4WrwqXTOK9i8vVyPJDO
-         T77+5RT/O9v0ukTtwYgfXUGyDI+6GVhqP6SWw24yfS3cBs1vt/1mg8CJLdYEhLJ745LS
-         Hq4aV0HW8BN0Ii5J0G3Zmol//t1wPwIZeAeN+1HT1/TPIqvm/5jGoGfvezOjYBx0izgi
-         o5xl+PSqyJZ1zOpX84dB21QJD8zzpwjJrUnzk8o0/xm0BmQDN13RwGLG+ZF5nwMdap8y
-         LrQQ==
-X-Gm-Message-State: AOJu0YzQ3Y7eNAsxlJ4yYy5Atm2X4N/RLYvMI2WiipfJ+3AYVwkZ7ZrT
-	X7YoTNrrJW5Ku5bqn++KWbzM12Jgdt5TK4ju+qIgcStpPyP1K1/mZCw=
-X-Gm-Gg: AfdE7cmo4OgmOIXy6lp1fQ3Ns3/9CMKx74BleLwcHRbzzZK5L47pm/K8PKDli3YV+ph
-	JmjEGkyjAH+k/bco7pxW6qHX5C4LCTE3JSkqK+9qQCI+5UuDRGNwxFK12Tlug78+m6fPss7ej4l
-	uLp/U2w3+XtMayjgScnX90P5IaX8Ud4dvVD0+aRh1M6bvJMh8rhmC1avPaIS3XIXM/LiGGHGQAZ
-	gzKorttdlvRKdB4D5cmfBrLqS8beM+1MUKfL39v4QXssSQ1XZ5W6WdTgQeATVXeDxbBMS7WrbUG
-	bf2MM+JQJXLrXMnsjt+YczLPMoJ8kDFYMRDnPnIaDX9TM5qrtOBS4WmrhCHM/xxB1a7zr5WRw4L
-	Pue69Bu1/Yxic9pqN0VTM7jI4tqqPwXEwPVUX00sPhyBMvr3yjFnT1KPa1/syYseOrs3jE2u10U
-	If4T9EYnhPcesZF9UEwz67AM7v3TxfuLg7QSi5M/W3
-X-Received: by 2002:a05:6870:5348:10b0:42f:f3b2:e2c9 with SMTP id 586e51a60fabf-44ce9b12300mr627785fac.0.1783023487335;
-        Thu, 02 Jul 2026 13:18:07 -0700 (PDT)
-Received: from [120.7.1.23] (135-23-94-154.cpe.pppoe.ca. [135.23.94.154])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-44cbe84f609sm4052650fac.1.2026.07.02.13.18.05
+        bh=CE19y7mESN6tMsAW2lIFx+MqHczMs9gwLQhyQhGrzrk=;
+        b=ivSDZcOiwjtdU4jkegZDfTTZfrrIR3x/r6dqEsFknf8rH6O1Z0ekyTiErGjth/BwyI
+         d4z4xY1ql0RErOHjoi2QUNQiPttZ+lyvuyKqh8lQUTCFVd4sdi09v6v/UH06e9wKuMDS
+         x8nAbUu2gBanhMPTEseC0qkGGG+hl2serx+Fi9IUliyXtJrv/d1uydcMZCEVOPZuLq9T
+         v8hYThfap8Ygpbz1ux6GwTg2xdH+C6gIdERivLD+hZaaKsxpIqmoZG5u0ka9J7yoe9nt
+         V+LRBiHLdeecPN8SgEB9N0KXHwf8CHFq4hXw58WCBkwIq/SDwHE8DZ/J4LUDVxFF9fDf
+         2P6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783023933; x=1783628733;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CE19y7mESN6tMsAW2lIFx+MqHczMs9gwLQhyQhGrzrk=;
+        b=cs4XyRBs8BR7k96jbyHcsAeNgsDtWNIFPxJoxSb+KHrKOJTkYf514B3OizOzRlbwsA
+         ymJX017lruKSMcrqds72myBonT6HmdZqoeSz5DYsdnGt2RwORbS/Xy43XwwNzeYCq7w9
+         7XYLNoXSD7wBktq7u1qEBX1uZm4wd6A9Sy6oXuO30BmKkytvsSqerflZYDscura89iDZ
+         Mheno4RhfYreUtVhIyS8I30BE0YwXj9uX8TuWBd6hOdurJQheSUMlFKRKaODL8230IWX
+         tZ8i0ZaRadrv2Vrwx1LL6xrul0AE0YSGQEbFtVoK9f6EUisgcrXQq5QvJDJOZ/8aLMC5
+         PALw==
+X-Gm-Message-State: AOJu0YxCIPRBEB+Tk/csRs7KFYGp8wO8E0NAqe0VLa+5obifnTqKU0Sl
+	MC+70aNUf38KMLuuYWd2DRCNcm2Miou9eOleAXaIersczHtuVXzO6Bs=
+X-Gm-Gg: AfdE7ckpuADT//eVb64syzUhNtGn6brt8ZJjdVLXlFq2Jsivl3o1ZeB3+HRrcY1AJfR
+	ANmzeOWAAhQ4OD8w9F1XoSQT8wSzSoPBRPA2kCZrusPTJgblaDHlEZAy+Mce6kHGKnIDfeOChTl
+	LEogBET03rvIRVCb/m4A/aKBoeZz3NsYkQADf98BmG2liRJ9oY/8jiPjePimTEU0zrA/qCiDebP
+	S7oF12QcuJCLSogokSN+k8zvyTo1XZ8m+M4WBk8hKPMdZvDzI5tgl1XWI1KEJf5uF9B8mOjZviB
+	/vjRGI0JaoPG3+00I171xDdRMuEK8RyA93Wg6VD8YM67mKJJltJbnmqeN3HHVXDOXL5TpBGbd6L
+	0dh1Zz1TAMMyBSc0ANY+8oYpodYXKZ2zKKA90jsGpKqAvMqpSFQ0Ini/sG9Gv+IqWVM8p7LN1cB
+	yvxkkEu5eIf2e2KWSmIVv9Xjp5yI0VyNbV5WtAU8IX9zK+CIy8D9ZE/o+mdTXj4bQ=
+X-Received: by 2002:a05:6000:188a:b0:474:88ef:cdec with SMTP id ffacd0b85a97d-479347abc89mr2414532f8f.6.1783023932557;
+        Thu, 02 Jul 2026 13:25:32 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2ac307.dip0.t-ipconnect.de. [91.42.195.7])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477dd94cb64sm12216643f8f.23.2026.07.02.13.25.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jul 2026 13:18:06 -0700 (PDT)
-Subject: Re: [PATCH 5.10 00/96] 5.10.260-rc1 review
+        Thu, 02 Jul 2026 13:25:32 -0700 (PDT)
+Message-ID: <eb95ea8a-7a4d-4e04-83ca-67242a746a1b@googlemail.com>
+Date: Thu, 2 Jul 2026 22:25:30 +0200
+Precedence: bulk
+X-Mailing-List: patches@lists.linux.dev
+List-Id: <patches.lists.linux.dev>
+List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 000/129] 6.1.177-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -66,44 +76,35 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20260702155108.949633242@linuxfoundation.org>
-From: Woody Suwalski <terraluna977@gmail.com>
-Message-ID: <cd648774-2a64-e5c2-a120-e4253d72cd1e@gmail.com>
-Date: Thu, 2 Jul 2026 16:18:19 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101
- Firefox/128.0 SeaMonkey/2.53.23
-Precedence: bulk
-X-Mailing-List: patches@lists.linux.dev
-List-Id: <patches.lists.linux.dev>
-List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
+References: <20260702155112.163984240@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.260 release.
-> There are 96 patches in this series, all will be posted as a response
+Am 02.07.2026 um 18:18 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.177 release.
+> There are 129 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Sat, 04 Jul 2026 15:50:58 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.260-rc1.gz
->
-Problem with the kernel.org web site? I am getting
 
-https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/
+So while I'm watching the Spain vs Austria soccer match, I managed to do some kernel building and testing...
+
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
 
-  404 Not Found
+Beste Grüße,
+Peter Schneider
 
-Same for v6.x and v7.x..
-https://www.kernel.org/pub/linux/kernel/ seems OK???
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-Woody
-
-
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
