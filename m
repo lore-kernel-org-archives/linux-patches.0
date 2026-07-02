@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C1D433E87;
-	Thu,  2 Jul 2026 17:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DACA2FC893;
+	Thu,  2 Jul 2026 17:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011639; cv=none; b=b7LbuUXRtopOfK+hms4yxZyqfVZVR3ZwATCxfkq9hWZAZaRTt+ZNurDCKn+jXePPDA2Zo96Vwv8cm/FJcwwHRlZ6F0Oud6FnXLfD2zWzQal9PrLpdTUf5XlxoM5vArLA1P2/4lN0onof2+7Hbd+iyESVJxQpHDbDockLXoGlpkk=
+	t=1783011642; cv=none; b=UbBdyEdAck367PBd/tJXPWi+ndz11W4L3H/hz6ul9qiLjozJCIvG46EyGfBMJLOUOjKy/h6Io23rnXDz5oKJtTG757EvYf7nhBnrCUNoge49EmAGNV397xcP9t05RhYUV886jndzJVZHudYTdVAAHB+Yfg7WVxYgsB29xqnAHkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011639; c=relaxed/simple;
-	bh=dI08UtuG/ferQ2auerY2ynX9cX6X9szfAHQWrcSC8eo=;
+	s=arc-20240116; t=1783011642; c=relaxed/simple;
+	bh=Pi6ALpI6NXBLVXcHk5vUtlaYbRjOwDMzrOsp/mmP9P8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnkK+tnHA7jmdJKBZPSk331RFOSAgdSWYHSOMS8qwVtpn41lG096rt8yHY9gCE+GiNhV6UQ+Bx9oWxrxQBvPWMmEoLSDqQhIeydjmcL6V1PyP5lsPF1JtuBpiKcuTeMcVZ/vACMMwxRLgnqnZJjPk/yHN8Dw9kqBqrYbk7P43Hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1me2kgd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TwoLkziL84Nw6td186l6/le0XaPUKhAuPrPvg4EhDkhnLsSP1dYNvuSW2iqPl+aiZhlhH6JKnTiWtosUS36TK7QXyAZWgOIDC43pT79ScQpBzDMnxBJilSQgfUr31DKAWSqsSeh6R3HhRPY2WgNtwA9VgV15BEqaUsxTK8TZIs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwZqlgwn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1me2kgd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8FE1F00A3A;
-	Thu,  2 Jul 2026 17:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwZqlgwn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FC51F000E9;
+	Thu,  2 Jul 2026 17:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011638;
-	bh=MQMIeuJ8Odf+YG0uayYBxMM2gXu3GnIoKsxBXX5qK5Y=;
+	s=korg; t=1783011641;
+	bh=9bsUGmurc/6gwkoMaP0fUWSS+pNHtuf5Jf+LMF6FwSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u1me2kgd8Lguxdevee3LP3JwTdAO0kGUg1wukoLj7Uh/QnIbRSJXtD9TCXLuQcpeo
-	 94dyzJFtwsT7rGHSJooS7gxyNlOv11wzmo50PL7QbG24SgUUWAqmUzh8fd84rflSTf
-	 UJu/ggIMX/w0nhKeiIfgJ9yTp7y1LBcKBAnNspTY=
+	b=CwZqlgwnuM4kZeeOzIETsfR3RMo2FKUkaDL874MmRYL65+5wrMUWWrXGg7ou+v60h
+	 zScqRYpwoT81sP5Gs17l/yKH3YkPGMTo7n/Luyh+7viqJTxX1Cr/4Q4ToOw4iKjRcm
+	 3CyD62Ls3V+9L4c0LRJRwYWaSO0QGGxcWyaG+bRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 076/120] exfat: fix potential use-after-free in exfat_find_dir_entry()
-Date: Thu,  2 Jul 2026 18:21:12 +0200
-Message-ID: <20260702155114.531196378@linuxfoundation.org>
+	ElXreno <elxreno@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 7.1 050/120] wifi: mt76: mt7925: dont disable AP BSS when removing TDLS peer
+Date: Thu,  2 Jul 2026 18:20:46 +0200
+Message-ID: <20260702155114.001457882@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -50,90 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: ElXreno <elxreno@gmail.com>
 
-commit 3f5f8ee9917cc2b9076ac533492d8a200edcabb8 upstream.
+commit 37d65384aa6f9cbe45f4052b13b378af1aab3e95 upstream.
 
-In exfat_find_dir_entry(), the buffer_head obtained from
-exfat_get_dentry() is released with brelse(bh) before the fall-through
-TYPE_EXTEND branch reads the directory entry through ep (which points
-into bh->b_data):
+On a STATION vif, removing a TDLS peer takes the mt7925_mac_sta_remove
+-> mt7925_mac_sta_remove_links path. The first loop in that function
+calls mt7925_mcu_add_bss_info(..., enable=false) for every link of the
+station being removed. For a non-MLO STATION vif there is exactly one
+link, link 0, whose bss_conf is the AP's. TDLS peers do not have their
+own bss_conf - they share the AP's BSS.
 
-	brelse(bh);
-	if (entry_type == TYPE_EXTEND) {
-		...
-		len = exfat_extract_uni_name(ep, entry_uniname);
-		...
-	}
+The result is that every TDLS peer teardown sends a BSS_INFO_UPDATE
+with enable=0 for the AP's BSS to the firmware, which wipes the AP-side
+rate-control context. The connection stays associated and TX from the
+host still works at the negotiated rate, but the AP's downlink to us
+collapses to the lowest mandatory OFDM rate (HE-MCS 0 / 6 Mbit/s OFDM)
+and only slowly recovers as rate adaptation re-learns under sustained
+traffic. With brief or bursty traffic the link can stay at 6-72 Mbit/s
+indefinitely, requiring a manual reconnect.
 
-After brelse() drops our reference, nothing guarantees that the
-underlying page backing bh->b_data remains valid for the subsequent
-exfat_extract_uni_name() read. This is the same pattern fixed in
-commit fc961522ddbd ("exfat: Fix potential use after free in
-exfat_load_upcase_table()").
+mt7925_mac_link_sta_remove() already guards its own
+mt7925_mcu_add_bss_info(..., false) call with
+"vif->type == NL80211_IFTYPE_STATION && !link_sta->sta->tdls".
+Add the equivalent guard at the top of the cleanup loop in
+mt7925_mac_sta_remove_links(), above the link_sta / link_conf /
+mlink / mconf lookups, so TDLS peer teardown skips the loop body
+entirely without doing the per-link work that would just be thrown
+away.
 
-Move brelse(bh) so it runs after ep is no longer dereferenced on
-each branch.
+Verified on mt7925e by triggering Samsung-S938B auto-TDLS via iperf3
+and watching iw rx bitrate after teardown:
 
-Confirmed on QEMU x86_64 with CONFIG_KASAN=y + CONFIG_DEBUG_PAGEALLOC=y
-+ CONFIG_PAGE_POISONING=y on linux-next, using a crafted exFAT image
-(long filename with same-hash collisions forcing the TYPE_EXTEND path).
-With a debug-only invalidate_bdev() inserted between brelse(bh) and
-the ep read to make the stale-deref window deterministic, the
-unpatched kernel faults:
+  Before: rx bitrate collapses to 6.0-72.0 Mbit/s, oscillates 17/72/
+          137/288/432 Mbit/s for 30+ seconds, no full recovery without
+          a manual reassoc.
+  After:  rx bitrate stays at 1200.9 Mbit/s HE-MCS 11 NSS 2 80 MHz
+          across the entire TDLS lifecycle.
 
-  BUG: KASAN: use-after-free in exfat_find_dir_entry+0x133b/0x15a0
-  BUG: unable to handle page fault for address: ffff88801a5fa0c2
-  Oops: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
-  RIP: 0010:exfat_find_dir_entry+0x1188/0x15a0
+bpftrace confirms a single mt7925_mcu_add_bss_info(enable=0) call per
+teardown before the fix; zero such calls after.
 
-With this patch applied, the same instrumented harness completes
-cleanly under the same sanitizer stack. I have not reproduced a
-crash on an uninstrumented kernel under ordinary reclaim; the
-instrumented A/B establishes the lifetime violation and that the
-patch closes it, not an unaided triggerability claim.
-
-Fixes: ca06197382bd ("exfat: add directory operations")
+Fixes: 3878b4333602 ("wifi: mt76: mt7925: update mt7925_mac_link_sta_[add, assoc, remove] for MLO")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: ElXreno <elxreno@gmail.com>
+Assisted-by: Claude:claude-opus-4-7 bpftrace
+Link: https://patch.msgid.link/20260506-mt7925-tdls-fixes-v2-2-46aa826ba8bb@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/dir.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -1027,12 +1027,12 @@ rewind:
- 				continue;
- 			}
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1265,6 +1265,9 @@ mt7925_mac_sta_remove_links(struct mt792
+ 		if (vif->type == NL80211_IFTYPE_AP)
+ 			break;
  
--			brelse(bh);
- 			if (entry_type == TYPE_EXTEND) {
- 				unsigned short entry_uniname[16], unichar;
- 
- 				if (step != DIRENT_STEP_NAME ||
- 				    name_len >= MAX_NAME_LENGTH) {
-+					brelse(bh);
- 					step = DIRENT_STEP_FILE;
- 					continue;
- 				}
-@@ -1043,6 +1043,7 @@ rewind:
- 					uniname += EXFAT_FILE_NAME_LEN;
- 
- 				len = exfat_extract_uni_name(ep, entry_uniname);
-+				brelse(bh);
- 				name_len += len;
- 
- 				unichar = *(uniname+len);
-@@ -1061,6 +1062,7 @@ rewind:
- 				continue;
- 			}
- 
-+			brelse(bh);
- 			if (entry_type &
- 					(TYPE_CRITICAL_SEC | TYPE_BENIGN_SEC)) {
- 				if (step == DIRENT_STEP_SECD) {
++		if (vif->type == NL80211_IFTYPE_STATION && sta->tdls)
++			continue;
++
+ 		link_sta = mt792x_sta_to_link_sta(vif, sta, link_id);
+ 		if (!link_sta)
+ 			continue;
 
 
