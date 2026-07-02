@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2436330B01;
-	Thu,  2 Jul 2026 16:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67846360EED;
+	Thu,  2 Jul 2026 16:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010149; cv=none; b=qMrlKHS89huKge9eIcGeD3B7PUA8JTCTyoMzZBFj5rpIEThKQCFrRea0Ur9hy0UPGPzV2ETvYDLqTSpXwXsPa7yr9YXwcFQ7sh0UZdmBi2IJ9MNgxhV5QC45caDp2SmAbSM9LARbo0TWLnyxjVPcqwbpmjIsxb0EbgDUnQrqrYQ=
+	t=1783010152; cv=none; b=usd0faV3YatR+4519h5Jp3g0+gY8Z6DlytivUv8TlD/5YED8xadeGqPbm6T8mCnSbzFdz8cKwSrs2jXgMJYMw4be/xmfdqLRLV4gukhT2EX5AfYphdr1VhycwkzwMATDWaWMXlIRgztdXzWtdmoMDXIZmkAqRBGih0CcqrYLzd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010149; c=relaxed/simple;
-	bh=YyVtniCszM9w+SarP8GeYIaiS7NZEYEjR63aGThq34g=;
+	s=arc-20240116; t=1783010152; c=relaxed/simple;
+	bh=bq+CBrXBrMbggaBVYKMhxtxfIY7PR+2K0Y2tc6qCbI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qD0rg8mWlqNz6vKrNB/Ve9KjccecsjQFsFm35yxFJ+EgAJgHfMZy8e7IG+3Sl4xPBuCLmteiW545rYZkSL+uGfOICKfxbTlEE3HSOSKQFc3EDHPD/chB7CQNu/65ZOfScJTUwdBXOkdDm7c72YqNNgPy2oJdQAdQIdpy7A/uGNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIr2dRub; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SitSV6hsT6JUw44fDQZdSBqtDYF3GEzCQRvR5nTwUeI4s0ZQD8cx0eGhw4Sh8hXyaIQiz6aVPWzK1jmWFE9e5OPhZ8BtognQMPxqHVeIFTYV5+A2UGWLJFJxNeH0QHD5pukPvQliQzlpVV/Mx+ucIZ2hutipdPOgd3/BrKY8Tnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyQRU3Ve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIr2dRub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339B21F000E9;
-	Thu,  2 Jul 2026 16:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyQRU3Ve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7C51F000E9;
+	Thu,  2 Jul 2026 16:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010148;
-	bh=3v1sjRYKnHnnoxyVf08ThOdFNcURsLgZ94+6Y7jAWnM=;
+	s=korg; t=1783010151;
+	bh=abVcqInh6YQTQZPseBtqdiX6y1Kwo4mcvnW+CMJYjQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qIr2dRubWvYU7fVt7ikKz5y/aen7ILCRbMp65EzKjPdoK+zzHMQ5XmQKEC0EaE8LV
-	 ewTMeVn42i1lxei6sdmUfYJ8zVfLUoOq9aCO9LJvGKI+zGzbB9idB/Fh1ZodFh1FFZ
-	 UZz5Wc5040fXTREyvG/FR/KrpJEkooT04BulgfIA=
+	b=IyQRU3Vep8uLugXNRXXVZFYVnZaOpJ89DFJAuBDdwdTZD8vUfeXChCdLw+8O0fhDS
+	 Y1/sOkh/gAmEBOiqYb/xFrEhNPnYzDJ5YmloVkP6wvVStrNglT6if8/0l2UtHtsYTz
+	 kwyGFllBl4nCFI4s5Lmh0LJG/CINnOh7IFc7PCG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jungwoo Lee <jwlee2217@gmail.com>,
-	Wongi Lee <qw3rtyp0@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/129] ipv6: account for fraggap on the paged allocation path
-Date: Thu,  2 Jul 2026 18:20:48 +0200
-Message-ID: <20260702155114.822872371@linuxfoundation.org>
+	=?UTF-8?q?Dominik=20Wo=C5=BAniak?= <stalion@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 108/129] nfsd: check get_user() return when reading princhashlen
+Date: Thu,  2 Jul 2026 18:20:27 +0200
+Message-ID: <20260702155114.378926050@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -47,74 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wongi Lee <qw3rtyp0@gmail.com>
+From: Dominik Woźniak <stalion@gmail.com>
 
-[ Upstream commit 736b380e28d0480c7bc3e022f1950f31fe53a7c5 ]
+commit e186fa1c057f5eccb22afb1e83e34c0627085868 upstream.
 
-In __ip6_append_data(), when the paged-allocation branch is taken
-(MSG_MORE / NETIF_F_SG / large fraglen), alloclen and pagedlen are
-computed as
+In __cld_pipe_inprogress_downcall(), the get_user() that reads
+princhashlen from the userspace cld_msg_v2 buffer does not check its
+return value. A failing copy leaves princhashlen with uninitialised
+stack contents, which are then used to drive memdup_user() and stored
+as princhash.len on the resulting reclaim record. The other get_user()
+calls in this function all check the return; only this one is missed,
+which is most likely a copy-paste oversight from when v2 upcalls were
+introduced.
 
-	alloclen = fragheaderlen + transhdrlen;
-	pagedlen = datalen - transhdrlen;
+Mirror the existing pattern used a few lines above for namelen.
+namecopy is declared with __free(kfree) so the early return cleans up
+the already-allocated buffer automatically.
 
-datalen already includes fraggap (datalen = length + fraggap). When
-fraggap is non-zero, this is not the first skb and transhdrlen is zero.
-The fraggap bytes carried over from the previous skb are copied just past
-the fragment headers in the new skb's linear area. The linear area is
-therefore undersized by fraggap bytes while pagedlen is overstated by the
-same amount, and the copy writes past skb->end into the trailing
-skb_shared_info.
-
-An unprivileged user can trigger this via a UDPv6 socket using
-MSG_MORE together with MSG_SPLICE_PAGES.
-
-The bad accounting was introduced by commit 773ba4fe9104 ("ipv6:
-avoid partial copy for zc"). Before commit ce650a166335 ("udp6: Fix
-__ip6_append_data()'s handling of MSG_SPLICE_PAGES"), the negative
-copy value caused -EINVAL to be returned. That later commit allowed
-MSG_SPLICE_PAGES to proceed in this case, making the corruption
-triggerable.
-
-The non-paged branch sets alloclen to fraglen, which already accounts
-for fraggap because datalen does. Bring the paged branch in line by
-adding fraggap to alloclen and subtracting it from pagedlen.
-
-After this adjustment, copy no longer collapses to -fraggap on the
-paged path, so remove the stale comment describing that old arithmetic.
-Since a negative copy is no longer expected for a valid MSG_SPLICE_PAGES
-case, remove the MSG_SPLICE_PAGES exception from the negative copy check.
-
-Fixes: 773ba4fe9104 ("ipv6: avoid partial copy for zc")
-Signed-off-by: Jungwoo Lee <jwlee2217@gmail.com>
-Signed-off-by: Wongi Lee <qw3rtyp0@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/ajFTqRljatR17fFy@DESKTOP-19IMU7U.localdomain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6ee95d1c8991 ("nfsd: add support for upcall version 2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dominik Woźniak <stalion@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_output.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4recover.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1622,8 +1622,8 @@ alloc_new_skb:
- 				  !(rt->dst.dev->features & NETIF_F_SG)))
- 				alloclen = fraglen;
- 			else {
--				alloclen = fragheaderlen + transhdrlen;
--				pagedlen = datalen - transhdrlen;
-+				alloclen = fragheaderlen + transhdrlen + fraggap;
-+				pagedlen = datalen - transhdrlen - fraggap;
- 			}
- 			alloclen += alloc_extra;
- 
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -815,7 +815,8 @@ __cld_pipe_inprogress_downcall(const str
+ 			if (IS_ERR(name.data))
+ 				return PTR_ERR(name.data);
+ 			name.len = namelen;
+-			get_user(princhashlen, &ci->cc_princhash.cp_len);
++			if (get_user(princhashlen, &ci->cc_princhash.cp_len))
++				return -EFAULT;
+ 			if (princhashlen > 0) {
+ 				princhash.data = memdup_user(
+ 						&ci->cc_princhash.cp_data,
 
 
