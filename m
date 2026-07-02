@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54C130C15A;
-	Thu,  2 Jul 2026 16:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684C5388E4E;
+	Thu,  2 Jul 2026 16:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010596; cv=none; b=UUuuB4RCIkpGkYf3T5y9nCcny/0NZYscrf2V8cIVM7xJ6Q77XqaaH8r0pQgN76yTg+Rw6+jEUuOhQt+51du69lcVWLs9A2xm3tGDEkd6tlhdhsjYyMe7SiUw6S3wEF9JUtklwP7L+jcUzT9W2SEE2AZmmzKwQghaOla06NoCk0U=
+	t=1783010599; cv=none; b=Yj/j6Lehn+Q/uwlUNFTUdfA7Twm2rcMZzzXyNvHq0ma5vOr7vO4RiL47XhwddaiF+DLSWo8TxquAAT78Vl5LtT7zatgNt6hmdROkqFjprbENQGaVDyozGTuVCl6+pU43czVASsL3J9lX+l1Y+dwmdXUvAkRApurAO3ViilZy/fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010596; c=relaxed/simple;
-	bh=QlO0pbe2Q5GsKGQu+QMdLGhyn76FoGaA4aXnpxLeU9M=;
+	s=arc-20240116; t=1783010599; c=relaxed/simple;
+	bh=taKTsP3d9DWDP8oarCVyFBzmMWJVD96H0lwuVW49SrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRxXOMlmuRq4FyfjT/qNO3sCTKRWV4ab4t1FDdxlmcAsXhHFuF4rv1sZ5wsvBJkVudv5331FjPcE8IGbVTGIiVa7GxzP03DwLTzv+QmNme20wPVuAG9NXazSOLC2rTOwN0Q33tWzItX5ATV68SRT/CCjEkKVh8tgNnKXHg64tZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CkGzFiDo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQg0nMpTKItDmNrxO7UDPiQnnbZOOXlSCm1A4NBqBVBOaTRYg8jUAWSkTOrHcnw4x79USvt6HYQzzepvI2OQgv74K1Cw75R4zNjIgsfhUcGd0kdDt8sApP89DMOchLHyBgP5QFd9sYCSWMN9XsbLT8ROtbkJ4mkJU0TRYWD/g8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5vXbT+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CkGzFiDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8A21F00A3A;
-	Thu,  2 Jul 2026 16:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5vXbT+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D5E1F000E9;
+	Thu,  2 Jul 2026 16:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010595;
-	bh=AgfB83ZwnqolcE97dV7vVnSZs24caZaugPwkpHcyD4w=;
+	s=korg; t=1783010598;
+	bh=N+VGbtLDOpihCtbUfSjEkk0j1Y+n+ZhFTpvoPjHyzxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CkGzFiDoGqqr8u21F6YIaCt9x3m2JbzxKYfZzWK9bS6Zv5LT2aANAMzOD5pdJW/Kj
-	 a70moN9ibrgcTVWA3WujlmMPaWHLuwThLJ6Q+oESrnKvKYGehJ5MolseFNx5y3LT3l
-	 DDWHiqYJ+7l8uaZmfsciPjUptbqC+oyBgkZSSspY=
+	b=K5vXbT+mye2jVOAmLNspvi/ScdDuU0BZvxqWG/goPK8JkUpcjtHrdwLVY8wrkxnkq
+	 z9E0gQQ9Rh/ze8LtXnCRaEndWWPsHc0bCMZdBJXXZcRzVZ9hY8roLi/SBpxH7DVFiH
+	 2lmGYdHKVBUKHN6HIarrzxvZ/XUwTonNW/mpeXRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.12 170/204] pNFS: Fix use-after-free in pnfs_update_layout()
-Date: Thu,  2 Jul 2026 18:20:27 +0200
-Message-ID: <20260702155122.218529047@linuxfoundation.org>
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.12 171/204] irqchip/imgpdc: Fix resource leak, add missing chained handler cleanup on remove
+Date: Thu,  2 Jul 2026 18:20:28 +0200
+Message-ID: <20260702155122.238986754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,41 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-commit 13e198a90ca4050f4bee8a3f23680389a6563ccc upstream.
+commit 37738fdf2ab1e504d1c63ce5bc0aeb6452d8f057 upstream.
 
-When hitting the NFS_LAYOUT_RETURN branch in pnfs_update_layout(),
-the code calls pnfs_prepare_to_retry_layoutget(lo). If it succeeds,
-pnfs_put_layout_hdr(lo) is called before trace_pnfs_update_layout(),
-which still references 'lo'. This results in a use-after-free when the
-tracepoint accesses lo's fields.
+The driver allocates domain generic chips using
+irq_alloc_domain_generic_chips() during probe and sets up chained
+handlers using irq_set_chained_handler_and_data(). However, on driver
+removal, the generic chips are not freed and the chained handlers are
+not removed.
 
-Fix this by moving the tracepoint call before pnfs_put_layout_hdr(lo).
+The generic chips remain on the global gc_list and may later be accessed by
+generic interrupt chip suspend, resume, or shutdown callbacks after the
+driver has been removed, potentially resulting in a use-after-free and
+kernel crash.
 
-Fixes: 2c8d5fc37fe2 ("pNFS: Stricter ordering of layoutget and layoutreturn")
+The chained handlers that were installed in probe for peripheral and
+syswake interrupts are also left dangling, which can lead to spurious
+interrupts accessing freed memory.
+
+Fix these issues by:
+
+  - Setting IRQ_DOMAIN_FLAG_DESTROY_GC flag in domain->flags, so the
+    core code automatically removes generic chips when irq_domain_remove()
+    is called
+
+  - Clearing all chained handlers with NULL in pdc_intc_remove()
+
+Fixes: b6ef9161e43a ("irq-imgpdc: add ImgTec PDC irqchip driver")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Link: https://patch.msgid.link/20260618021352.661773-1-fffsqian@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-imgpdc.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -2217,11 +2217,11 @@ lookup_again:
- 		dprintk("%s wait for layoutreturn\n", __func__);
- 		lseg = ERR_PTR(pnfs_prepare_to_retry_layoutget(lo));
- 		if (!IS_ERR(lseg)) {
--			pnfs_put_layout_hdr(lo);
- 			dprintk("%s retrying\n", __func__);
- 			trace_pnfs_update_layout(ino, pos, count, iomode, lo,
- 						 lseg,
- 						 PNFS_UPDATE_LAYOUT_RETRY);
-+			pnfs_put_layout_hdr(lo);
- 			goto lookup_again;
- 		}
- 		trace_pnfs_update_layout(ino, pos, count, iomode, lo, lseg,
+--- a/drivers/irqchip/irq-imgpdc.c
++++ b/drivers/irqchip/irq-imgpdc.c
+@@ -378,6 +378,7 @@ static int pdc_intc_probe(struct platfor
+ 		dev_err(&pdev->dev, "cannot add IRQ domain\n");
+ 		return -ENOMEM;
+ 	}
++	priv->domain->flags |= IRQ_DOMAIN_FLAG_DESTROY_GC;
+ 
+ 	/*
+ 	 * Set up 2 generic irq chips with 2 chip types.
+@@ -465,6 +466,11 @@ static void pdc_intc_remove(struct platf
+ {
+ 	struct pdc_intc_priv *priv = platform_get_drvdata(pdev);
+ 
++	for (unsigned int i = 0; i < priv->nr_perips; ++i)
++		irq_set_chained_handler_and_data(priv->perip_irqs[i], NULL, NULL);
++
++	irq_set_chained_handler_and_data(priv->syswake_irq, NULL, NULL);
++
+ 	irq_domain_remove(priv->domain);
+ }
+ 
 
 
