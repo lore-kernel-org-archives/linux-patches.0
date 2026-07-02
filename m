@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AF882866;
-	Thu,  2 Jul 2026 16:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89101433E87;
+	Thu,  2 Jul 2026 16:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011310; cv=none; b=PAxBzAtf2kQff2FuGJ+0fhR6HRRhtfQbVdrOFOWeR2hlvVL24hrL1oNtanKwmDbNYFyD6laOMWN0d0Zojr4q9bRSwQn8hi3BWId03Krx4ZjRdmChXPy++Ecxr3ckRYw+AvpZM6927qiTny5vG+vIuEkg/CiikgEcX798hFZX3fs=
+	t=1783011313; cv=none; b=L3qkh83xulpcMTAHVH1/1/XbO0AsLQ4fvL5f9NtpfFrVwyuxX1yyJwvMlvNq2D2kE/QXkpI+/S6f7TykSasQG5B/+4wgOyPgf0leclaxFDqQOtmHLriJ0E9qahiptEVPK6cQf+ydkMFkWPXlnScZjeFJulGQIa3p3j+NyAjWR/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011310; c=relaxed/simple;
-	bh=w3aPxo3erlM9LnQmxm4SqK5iImWpPzsxo+jE94z0SsM=;
+	s=arc-20240116; t=1783011313; c=relaxed/simple;
+	bh=/09BGaU4shWvUXAX8XCiN8FyXNZXoQDk2p87z2rezdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDF0mbP4+J3EgDS+9rUT+iyF392mLs74jd2oRPp8GnxHd3//4+SurC4g6pFiI4+lDveD8Qa9PmbhZOrtvckMxG3UvHMGAFHb7JyGY5vVpb7qS4UEqzjaMhRc/XkDj9OxDqP6i+GTZkgaKNrWihKzgXpjkmaF9iA4ZEBMbFs6bHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukNCkL2Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AZA1mIKuG7ZULcyx9lGl0bF6Gfg/cGYXTroW8fNALUyTXJP5c299V1UkpA2dJJzpZejB2MOMsbsH5mpnZOr9Yu9ih2JplLKmgFp04mDKh20wQTndZZcWnHQukBMHmQPz7SVhvRS++Y1+q0KE2wX0fjja2s9Xx1ETMnZUCL0D0Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Npe+RGPx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukNCkL2Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AE31F000E9;
-	Thu,  2 Jul 2026 16:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Npe+RGPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF64D1F000E9;
+	Thu,  2 Jul 2026 16:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011309;
-	bh=TP6tojfS6zZhWMrv8vAnW3jLIT7CkJY1LjSIjFQw6Ck=;
+	s=korg; t=1783011312;
+	bh=mDcCD3fwQrg09r/CHOEu/8U2cWWl3vqQ7jOc2o+jxFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ukNCkL2Zkk8dgMmM13F1dEpzdV9/ToC8mzdT++X9EXttoWvSDoX0j93v6HH11Xug4
-	 oJ5qSsoe5lCDFdQGr8EdBrcodqRZFV5Vx4IuYj8w126h9mq3afFEjiPXDh/7KCOhA0
-	 z5R4FFonh9KELaEMX2wd7jtkg2KV+9L8N+Jj5L/U=
+	b=Npe+RGPxyuzOZuGRmY+MVh4Vv2EkJx1OiGtBV6C2OANnY35QkI5dTSNSnmDry8nCg
+	 +QsYL1OWfuTPtNM2tTb0C3Sjd9aImmPUg4sJ6C6kt26SYvLAR4hDIHzuHb1c8Und5T
+	 pDnfeDJOcYzWAoE1qwVaCmnZxGdHVOFNl9ZZE+mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 061/108] f2fs: validate orphan inode entry count
-Date: Thu,  2 Jul 2026 18:20:58 +0200
-Message-ID: <20260702155113.372642326@linuxfoundation.org>
+Subject: [PATCH 6.18 062/108] f2fs: validate compress cache inode only when enabled
+Date: Thu,  2 Jul 2026 18:20:59 +0200
+Message-ID: <20260702155113.393672102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -54,73 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Wenjie Qi <qwjhust@gmail.com>
 
-commit 846c499a65816d13f1186e3090e825e8bb8bcb8b upstream.
+commit 5073c66a96a9c23c0c2533ed4ed06e42f9021208 upstream.
 
-f2fs_recover_orphan_inodes() trusts the orphan block entry_count when
-replaying orphan inodes from the checkpoint pack. A corrupted entry_count
-larger than F2FS_ORPHANS_PER_BLOCK makes the recovery loop read past the
-ino[] array and interpret footer or following data as inode numbers.
+F2FS_COMPRESS_INO() uses NM_I(sbi)->max_nid as the synthetic inode
+number for the compressed page cache inode. That inode only exists when
+the compress_cache mount option is enabled.
 
-On a crafted image, mounting an unpatched kernel can drive orphan recovery
-into f2fs_bug_on() and panic the kernel. Validate entry_count before
-consuming entries so corrupted checkpoint data fails the mount with
--EFSCORRUPTED and requests fsck instead.
+When compress_cache is disabled, max_nid is outside the valid inode
+range. A corrupted directory entry that points to ino == max_nid should
+therefore be rejected by f2fs_check_nid_range(). However, is_meta_ino()
+currently treats F2FS_COMPRESS_INO() as a meta inode unconditionally,
+so f2fs_iget() bypasses do_read_inode() and its nid range check, and
+instantiates a fake internal inode instead.
 
-Set ERROR_INCONSISTENT_ORPHAN as well, so the corruption reason can be
-recorded in the superblock s_errors[] field. This gives fsck a persistent
-hint even though mount-time orphan recovery failure may leave no chance to
-persist SBI_NEED_FSCK through a checkpoint.
+Gate the compressed cache inode case on COMPRESS_CACHE, matching
+f2fs_init_compress_inode(). With compress_cache disabled, ino ==
+max_nid now follows the normal inode path and is rejected as an
+out-of-range nid.
 
 Cc: stable@kernel.org
-Fixes: 127e670abfa7 ("f2fs: add checkpoint operations")
+Fixes: 6ce19aff0b8c ("f2fs: compress: add compress_inode to cache compressed blocks")
 Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/checkpoint.c    |   14 +++++++++++++-
- include/linux/f2fs_fs.h |    1 +
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ fs/f2fs/inode.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/checkpoint.c
-+++ b/fs/f2fs/checkpoint.c
-@@ -745,6 +745,7 @@ int f2fs_recover_orphan_inodes(struct f2
- 	for (i = 0; i < orphan_blocks; i++) {
- 		struct folio *folio;
- 		struct f2fs_orphan_block *orphan_blk;
-+		unsigned int entry_count;
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -555,8 +555,13 @@ static int do_read_inode(struct inode *i
  
- 		folio = f2fs_get_meta_folio(sbi, start_blk + i);
- 		if (IS_ERR(folio)) {
-@@ -753,7 +754,18 @@ int f2fs_recover_orphan_inodes(struct f2
- 		}
+ static bool is_meta_ino(struct f2fs_sb_info *sbi, unsigned int ino)
+ {
+-	return ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi) ||
+-		ino == F2FS_COMPRESS_INO(sbi);
++	if (ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi))
++		return true;
++#ifdef CONFIG_F2FS_FS_COMPRESSION
++	if (test_opt(sbi, COMPRESS_CACHE) && ino == F2FS_COMPRESS_INO(sbi))
++		return true;
++#endif
++	return false;
+ }
  
- 		orphan_blk = folio_address(folio);
--		for (j = 0; j < le32_to_cpu(orphan_blk->entry_count); j++) {
-+		entry_count = le32_to_cpu(orphan_blk->entry_count);
-+		if (entry_count > F2FS_ORPHANS_PER_BLOCK) {
-+			f2fs_err(sbi, "invalid orphan inode entry count %u",
-+				 entry_count);
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+			f2fs_handle_error(sbi, ERROR_INCONSISTENT_ORPHAN);
-+			err = -EFSCORRUPTED;
-+			f2fs_folio_put(folio, true);
-+			goto out;
-+		}
-+
-+		for (j = 0; j < entry_count; j++) {
- 			nid_t ino = le32_to_cpu(orphan_blk->ino[j]);
- 
- 			err = recover_orphan_inode(sbi, ino);
---- a/include/linux/f2fs_fs.h
-+++ b/include/linux/f2fs_fs.h
-@@ -104,6 +104,7 @@ enum f2fs_error {
- 	ERROR_CORRUPTED_XATTR,
- 	ERROR_INVALID_NODE_REFERENCE,
- 	ERROR_INCONSISTENT_NAT,
-+	ERROR_INCONSISTENT_ORPHAN,
- 	ERROR_MAX,
- };
- 
+ struct inode *f2fs_iget(struct super_block *sb, unsigned long ino)
 
 
