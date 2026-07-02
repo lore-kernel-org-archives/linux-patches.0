@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA6930C37A;
-	Thu,  2 Jul 2026 16:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08FD323417;
+	Thu,  2 Jul 2026 16:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010391; cv=none; b=gDKAz4a1NcMnvD2Ip8aCYtx/xExbW5pXiVxb4KOf13QpbJ8RimiEveCk5ukJjllp0f2/yXY6/uQXpS/Vdblh07KHK64D5G9RVKioBHEZL4mi5vLKnGYXRHpbZJ1iqbxzdaeeYHlAv03OwvmpMKLVFawAxx9exx7b5RQ/oeFUVDg=
+	t=1783010393; cv=none; b=V0eVzqmEgSvvjuNrDJ+nsmQyb2L+gLXsUa5f9mt15C/b5H0qHG0qwKqNjxfQGPq/NpCqz7ruxQbeyHr9P6VCHSef8ZOySm1JDW56dSkApMjC/fEy3bZ8ypf7/jPlRGmufLxacgSOOBUlZDfDxdzApfm1srJVp449svZDGiUx+Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010391; c=relaxed/simple;
-	bh=Tf6NIeuys6GH17YQMuzlTek03N1+94LeXef9vphyun8=;
+	s=arc-20240116; t=1783010393; c=relaxed/simple;
+	bh=cqwuhyQ9ANR3Rdfqi7boVm9ymXWB4I5vfHJlMqYfktc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQU9i64hjDutsTAFzqAM5URmOo+USmy5S61nkTJSdHlxXDGmB8MqQe/BQa1G4HII7c5m2eXi68FeSenoT2uxJkWKYTmOpSyOOSKXg36FBfDjExDcV1VDztVxn1oDmythXTnyGgHqdC964wY3bWYF1k4G2THrTWX92ittjdlPjVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RME3SsJv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gMZisKGxUZD+dDQJB8Pw8NcDScRwNU/UIRcAZGgS6vhUp4oFF+6/KSeK4uJ2nsFv45y1bovATZVqpynFChQyJXdQu9y7vFJ+VokbdcehyicJbSwVPaWyUBi2mgplmkZxNz+4itI6e5F9QoFAcpcitcU9Pyw3VL7Ha/xG13O7MqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6uMoPIU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RME3SsJv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740661F000E9;
-	Thu,  2 Jul 2026 16:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6uMoPIU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FFC1F000E9;
+	Thu,  2 Jul 2026 16:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010390;
-	bh=cvbAmzHmchAlEOdIojBhq+ClztA0HiwffolkEXGPkiM=;
+	s=korg; t=1783010392;
+	bh=/2cYM3z5N1+Jo9Y1OFnyPbyShkQFERpiBeTti1tcvXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RME3SsJvax86fEnlKVt2OUX0n2u8OZruQFaawwbLhkRRWXmW9oQvXmRDNN2Njw40H
-	 XM7kRImN1R/Q/dOIxIpb5DoJkC0FDf9OuK2vD3upoZrXcNUczZUUcOZnr2kjy7X66I
-	 DeQlHMcFtLVXCL2fjTQS3hHoHGoRiplQrBlR8VtA=
+	b=H6uMoPIU/0jJ4eM0SqTRI51hDVtG6FDeHQX3B/pefapfzfzNiXgZ1CtYbUiudgFqc
+	 znRDfrTD/EisCicwHNN5Dhmx67IxqHPlCQ+gP/SUQQnxqfZ34KI7LLJ8Gp0/OO4fbU
+	 W7hD0QMVfCetSBLYThK8Pgzy3fvpwoVGl8zk5twE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+814c351d094f4f1a1b86@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 091/204] media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
-Date: Thu,  2 Jul 2026 18:19:08 +0200
-Message-ID: <20260702155120.572543882@linuxfoundation.org>
+	bpf <bpf@vger.kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Martin Kelly <martin.kelly@crowdstrike.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Subject: [PATCH 6.12 065/204] scripts/sorttable: Add helper functions for Elf_Ehdr
+Date: Thu,  2 Jul 2026 18:18:42 +0200
+Message-ID: <20260702155120.025931385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,81 +64,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 7d8bf3d8f91073f4db347ed3aa6302b56107499c upstream.
+[ Upstream commit 1dfb59a228dde59ad7d99b2fa2104e90004995c7 ]
 
-syzbot reported a general protection fault in
-vidtv_psi_ts_psi_write_into [1].
+In order to remove the double #include of sorttable.h for 64 and 32 bit
+to create duplicate functions, add helper functions for Elf_Ehdr.  This
+will create a function pointer for each helper that will get assigned to
+the appropriate function to handle either the 64bit or 32bit version.
 
-vidtv_mux_get_pid_ctx() can return NULL, but vidtv_mux_push_si() does
-not check for this before dereferencing the returned pointer to access
-the continuity counter. This leads to a general protection fault when
-accessing a near-NULL address.
+This also moves the _r()/r() wrappers for the Elf_Ehdr references that
+handle endian and size differences between the different architectures,
+into the helper function and out of the open code which is more error
+prone.
 
-The root cause is that vidtv_mux_pid_ctx_init() does not check the
-return value of vidtv_mux_create_pid_ctx_once() for PMT section PIDs.
-If the allocation fails, the PID context is never created, but init
-returns success. The subsequent vidtv_mux_push_si() call then gets
-NULL from vidtv_mux_get_pid_ctx() and crashes.
-
-Fix both the root cause (add error check in vidtv_mux_pid_ctx_init
-for PMT PIDs) and add defensive NULL checks in vidtv_mux_push_si for
-all vidtv_mux_get_pid_ctx() calls.
-
-[1]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-Workqueue: events vidtv_mux_tick
-RIP: 0010:vidtv_psi_ts_psi_write_into+0x54a/0xbc0 drivers/media/test-drivers/vidtv/vidtv_psi.c:197
-Call Trace:
- <TASK>
- vidtv_psi_table_header_write_into drivers/media/test-drivers/vidtv/vidtv_psi.c:799 [inline]
- vidtv_psi_pmt_write_into+0x3b2/0xa70 drivers/media/test-drivers/vidtv/vidtv_psi.c:1231
- vidtv_mux_push_si+0x932/0xe80 drivers/media/test-drivers/vidtv/vidtv_mux.c:196
- vidtv_mux_tick+0xe9b/0x1480 drivers/media/test-drivers/vidtv/vidtv_mux.c:408
-
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+814c351d094f4f1a1b86@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=814c351d094f4f1a1b86
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: bpf <bpf@vger.kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/20250105162345.736369526@goodmis.org
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_mux.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ scripts/sorttable.c |   25 +++++++++++++++++++++++++
+ scripts/sorttable.h |   20 ++++++++++++++++----
+ 2 files changed, 41 insertions(+), 4 deletions(-)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
-@@ -101,7 +101,8 @@ static int vidtv_mux_pid_ctx_init(struct
- 	/* add a ctx for all PMT sections */
- 	while (p) {
- 		pid = vidtv_psi_get_pat_program_pid(p);
--		vidtv_mux_create_pid_ctx_once(m, pid);
-+		if (!vidtv_mux_create_pid_ctx_once(m, pid))
-+			goto free;
- 		p = p->next;
- 	}
+--- a/scripts/sorttable.c
++++ b/scripts/sorttable.c
+@@ -85,6 +85,31 @@ static uint64_t (*r8)(const uint64_t *);
+ static void (*w)(uint32_t, uint32_t *);
+ typedef void (*table_sort_t)(char *, int);
  
-@@ -170,6 +171,9 @@ static u32 vidtv_mux_push_si(struct vidt
- 	nit_ctx = vidtv_mux_get_pid_ctx(m, VIDTV_NIT_PID);
- 	eit_ctx = vidtv_mux_get_pid_ctx(m, VIDTV_EIT_PID);
- 
-+	if (!pat_ctx || !sdt_ctx || !nit_ctx || !eit_ctx)
-+		return 0;
++static uint64_t ehdr64_shoff(Elf_Ehdr *ehdr)
++{
++	return r8(&ehdr->e64.e_shoff);
++}
 +
- 	pat_args.offset             = m->mux_buf_offset;
- 	pat_args.continuity_counter = &pat_ctx->cc;
++static uint64_t ehdr32_shoff(Elf_Ehdr *ehdr)
++{
++	return r(&ehdr->e32.e_shoff);
++}
++
++#define EHDR_HALF(fn_name)				\
++static uint16_t ehdr64_##fn_name(Elf_Ehdr *ehdr)	\
++{							\
++	return r2(&ehdr->e64.e_##fn_name);		\
++}							\
++							\
++static uint16_t ehdr32_##fn_name(Elf_Ehdr *ehdr)	\
++{							\
++	return r2(&ehdr->e32.e_##fn_name);		\
++}
++
++EHDR_HALF(shentsize)
++EHDR_HALF(shstrndx)
++EHDR_HALF(shnum)
++
+ /*
+  * Get the whole file as a programming convenience in order to avoid
+  * malloc+lseek+read+free of many pieces.  If successful, then mmap
+--- a/scripts/sorttable.h
++++ b/scripts/sorttable.h
+@@ -27,6 +27,10 @@
+ #undef uint_t
+ #undef _r
+ #undef etype
++#undef ehdr_shoff
++#undef ehdr_shentsize
++#undef ehdr_shstrndx
++#undef ehdr_shnum
  
-@@ -186,6 +190,8 @@ static u32 vidtv_mux_push_si(struct vidt
- 		}
+ #ifdef SORTTABLE_64
+ # define extable_ent_size	16
+@@ -39,6 +43,10 @@
+ # define uint_t			uint64_t
+ # define _r			r8
+ # define etype			e64
++# define ehdr_shoff		ehdr64_shoff
++# define ehdr_shentsize		ehdr64_shentsize
++# define ehdr_shstrndx		ehdr64_shstrndx
++# define ehdr_shnum		ehdr64_shnum
+ #else
+ # define extable_ent_size	8
+ # define compare_extable	compare_extable_32
+@@ -50,6 +58,10 @@
+ # define uint_t			uint32_t
+ # define _r			r
+ # define etype			e32
++# define ehdr_shoff		ehdr32_shoff
++# define ehdr_shentsize		ehdr32_shentsize
++# define ehdr_shstrndx		ehdr32_shstrndx
++# define ehdr_shnum		ehdr32_shnum
+ #endif
  
- 		pmt_ctx = vidtv_mux_get_pid_ctx(m, pmt_pid);
-+		if (!pmt_ctx)
-+			continue;
+ #if defined(SORTTABLE_64) && defined(UNWINDER_ORC_ENABLED)
+@@ -250,16 +262,16 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 	unsigned int orc_num_entries = 0;
+ #endif
  
- 		pmt_args.offset             = m->mux_buf_offset;
- 		pmt_args.pmt                = m->si.pmt_secs[i];
+-	shdr_start = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->etype.e_shoff));
+-	shentsize = r2(&ehdr->etype.e_shentsize);
++	shdr_start = (Elf_Shdr *)((char *)ehdr + ehdr_shoff(ehdr));
++	shentsize = ehdr_shentsize(ehdr);
+ 
+-	shstrndx = r2(&ehdr->etype.e_shstrndx);
++	shstrndx = ehdr_shstrndx(ehdr);
+ 	if (shstrndx == SHN_XINDEX)
+ 		shstrndx = r(&shdr_start->etype.sh_link);
+ 	string_sec = get_index(shdr_start, shentsize, shstrndx);
+ 	secstrings = (const char *)ehdr + _r(&string_sec->etype.sh_offset);
+ 
+-	shnum = r2(&ehdr->etype.e_shnum);
++	shnum = ehdr_shnum(ehdr);
+ 	if (shnum == SHN_UNDEF)
+ 		shnum = _r(&shdr_start->etype.sh_size);
+ 
 
 
