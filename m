@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A833438A6;
-	Thu,  2 Jul 2026 16:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DF33385A7;
+	Thu,  2 Jul 2026 16:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009939; cv=none; b=AKYUtcJE2ggeRugbFR7DjStyPjWa3kn7rsjtQtOQoJLrbg1Zm7s5mWe9Tl5Vok23AtkkHdOfAKC6zZ13wYnNY0cBrqVzDJgp2V/gbrnGCSFtHqndhp1w+OTf05JSJvExxP1ayYVfRUeiveTWPFIYLAOawGB24GDj69dj/dPiIZw=
+	t=1783009941; cv=none; b=VbEMOYYYrp8X6ojnD/zZULyDTjhRz1eMUEWtMCFDZcqtxdgyt8mFZYGriSQVLmePtAVVsLxs0Uacj6+Og3aEgRzuYmHmvdHiTgVcg0RAwZICFMH+YjBRFURJyXpb1Pr3CkY1QICuSSS5k/9kC3QJxh2gmCbvgYTTg79xmY67vMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009939; c=relaxed/simple;
-	bh=GHU8D6Bo6IQTxekOhWLb12jKEVgl7/HBOG28p6CJAF4=;
+	s=arc-20240116; t=1783009941; c=relaxed/simple;
+	bh=bqQ/TLV7qDXbqJELw1eAIbjlyjla+ML5r/9NUO+uKjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rq4j3Bx8MVwf7b40gbPP+gg2FBWMGJyIX1ZmcvpYoKhxj5/GHTzfLJZ4JXLlmlptcMMjnVC4ss+nQYihl/ZdGC6Xgu3hdRwErd24cn2HxJF1kADDjJURT3Mrjmc9Zy+fP5bOrG7s3hgjW7FV6PKBxKGiEZXIXvrH3bVgZ2BcYfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ju0KX9t8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cXuT2EQJk2wmHWN8nAQuVdKLzBT7BlHSYG80iKpVZGiM+wQUJxZE/AFR1SC92CFEZvkv+AktaESwTuFRbGrqBWqUGsyqC8t/j3E8Q7tNu8XqAvsZFjz4OWC+8ehli0/wKj7XTICzFYT2lxaPILIHa+zhp8IHzheCrd6bYxlDPlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zl03/L7R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ju0KX9t8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879821F000E9;
-	Thu,  2 Jul 2026 16:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zl03/L7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD451F00A3A;
+	Thu,  2 Jul 2026 16:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009938;
-	bh=Spzf1z46xIILyB+jGWH62CPSc5eC1wSKIN8w8BMFrj4=;
+	s=korg; t=1783009940;
+	bh=DJpjH9SoXbhdA906vf975aRz4iZAVBiJs0zVvsspfAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ju0KX9t8Fl5jnGHObGM8T1UiY3BzSuORnDJ6RDMtZOD1M13XzLhM8CFJ8eOnOJbtM
-	 pURyd3Be9jOCr516yUmodh8iFTPNN4EC+NPWLEGzcejNHCeSVMlEmEr3GqWkBQ+2+C
-	 4wP0HISWy6b/oRbte8mmq2dJI2Jf45QTmvYfBo/8=
+	b=Zl03/L7R8ltdiF8R9YHRpP5xASY4L86PSpIaULO2zmypvDO8MncwdYjiyVbJ937pU
+	 /Vh4puLR0bsV6UmgtUIKNEenslPoESD2uDTS2ufBd/6P+rCd7BOgJ9Z/AYScAV30et
+	 QN+kh209XBPGhWhv6eP05K0XelCJHUqlUjGOaC4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong Wang <yongwang@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	Yu Zhao <yuzhao@google.com>,
+	syzbot+03fd9b3f71641f0ebf2d@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jakov Novak <jakovnovak30@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/129] Revert "ptp: add testptp mask test"
-Date: Thu,  2 Jul 2026 18:19:27 +0200
-Message-ID: <20260702155113.144450674@linuxfoundation.org>
+Subject: [PATCH 6.1 049/129] mm/mglru: skip special VMAs in lru_gen_look_around()
+Date: Thu,  2 Jul 2026 18:19:28 +0200
+Message-ID: <20260702155113.165543024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -51,91 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Yu Zhao <yuzhao@google.com>
 
-This reverts commit c1c50689799d0343598ab6ccb7209819bcef248d, which is
-commit 26285e689c6cd2cf3849568c83b2ebe53f467143 upstream.
+[ Upstream commit c28ac3c7eb945fee6e20f47d576af68fdff1392a ]
 
-The reverted commit extends the selftest to test timestamp event queue mask
-manipulation in testptp. It exercises masks PTP_MASK_CLEAR_ALL and
-PTP_MASK_EN_SINGLE, introduced in commit c5a445b1e934 ("ptp: support event
-queue reader channel masks"), which is not on this stable branch. The test
-case thus cannot be built against this tree's own UAPI headers.
+Special VMAs like VM_PFNMAP can contain anon pages from COW.  There isn't
+much profit in doing lookaround on them.  Besides, they can trigger the
+pte_special() warning in get_pte_pfn().
 
-The reverted commit was introduced to resolve a missing dependency of
-commit c6dc458227a3 ("testptp: Add option to open PHC in readonly mode"),
-which is 76868642e427 upstream. The only conflict between the two is the
-getopt string, and there is otherwise no direct dependency between the two.
+Skip them in lru_gen_look_around().
 
-This patch therefore reverts the cited commit, with hand-resolving the
-getopt string to include 'r' (as introduced by c6dc458227a3), but not
-'F' (introduced by c1c50689799d).
-
-Reported-by: Yong Wang <yongwang@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://lkml.kernel.org/r/20231223045647.1566043-1-yuzhao@google.com
+Fixes: 018ee47f1489 ("mm: multi-gen LRU: exploit locality in rmap")
+Signed-off-by: Yu Zhao <yuzhao@google.com>
+Reported-by: syzbot+03fd9b3f71641f0ebf2d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/000000000000f9ff00060d14c256@google.com/
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[fix conflicts with variable declarations and vma pointer usage]
+Signed-off-by: Jakov Novak <jakovnovak30@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ mm/vmscan.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index 7030bae8e5e07e..14b975594c88e7 100644
---- a/tools/testing/selftests/ptp/testptp.c
-+++ b/tools/testing/selftests/ptp/testptp.c
-@@ -121,7 +121,6 @@ static void usage(char *progname)
- 		" -d name    device to open\n"
- 		" -e val     read 'val' external time stamp events\n"
- 		" -f val     adjust the ptp clock frequency by 'val' ppb\n"
--		" -F chan    Enable single channel mask and keep device open for debugfs verification.\n"
- 		" -g         get the ptp clock time\n"
- 		" -h         prints this message\n"
- 		" -i val     index for event/trigger\n"
-@@ -190,7 +189,6 @@ int main(int argc, char *argv[])
- 	int seconds = 0;
- 	int readonly = 0;
- 	int settime = 0;
--	int channel = -1;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 1f7a90ecc7007d..f6f8c18dc45f57 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4622,6 +4622,7 @@ void lru_gen_look_around(struct page_vma_mapped_walk *pvmw)
+ 	struct lru_gen_mm_walk *walk;
+ 	int young = 0;
+ 	unsigned long bitmap[BITS_TO_LONGS(MIN_LRU_BATCH)] = {};
++	struct vm_area_struct *vma = pvmw->vma;
+ 	struct folio *folio = pfn_folio(pvmw->pfn);
+ 	struct mem_cgroup *memcg = folio_memcg(folio);
+ 	struct pglist_data *pgdat = folio_pgdat(folio);
+@@ -4635,11 +4636,15 @@ void lru_gen_look_around(struct page_vma_mapped_walk *pvmw)
+ 	if (spin_is_contended(pvmw->ptl))
+ 		return;
  
- 	int64_t t1, t2, tp;
- 	int64_t interval, offset;
-@@ -200,7 +198,7 @@ int main(int argc, char *argv[])
++	/* exclude special VMAs containing anon pages from COW */
++	if (vma->vm_flags & VM_SPECIAL)
++		return;
++
+ 	/* avoid taking the LRU lock under the PTL when possible */
+ 	walk = current->reclaim_state ? current->reclaim_state->mm_walk : NULL;
  
- 	progname = strrchr(argv[0], '/');
- 	progname = progname ? 1+progname : argv[0];
--	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xz"))) {
-+	while (EOF != (c = getopt(argc, argv, "cd:e:f:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xz"))) {
- 		switch (c) {
- 		case 'c':
- 			capabilities = 1;
-@@ -214,9 +212,6 @@ int main(int argc, char *argv[])
- 		case 'f':
- 			adjfreq = atoi(optarg);
- 			break;
--		case 'F':
--			channel = atoi(optarg);
--			break;
- 		case 'g':
- 			gettime = 1;
- 			break;
-@@ -616,18 +611,6 @@ int main(int argc, char *argv[])
- 		free(xts);
- 	}
+-	start = max(pvmw->address & PMD_MASK, pvmw->vma->vm_start);
+-	end = min(pvmw->address | ~PMD_MASK, pvmw->vma->vm_end - 1) + 1;
++	start = max(pvmw->address & PMD_MASK, vma->vm_start);
++	end = min(pvmw->address | ~PMD_MASK, vma->vm_end - 1) + 1;
  
--	if (channel >= 0) {
--		if (ioctl(fd, PTP_MASK_CLEAR_ALL)) {
--			perror("PTP_MASK_CLEAR_ALL");
--		} else if (ioctl(fd, PTP_MASK_EN_SINGLE, (unsigned int *)&channel)) {
--			perror("PTP_MASK_EN_SINGLE");
--		} else {
--			printf("Channel %d exclusively enabled. Check on debugfs.\n", channel);
--			printf("Press any key to continue\n.");
--			getchar();
--		}
--	}
--
- 	close(fd);
- 	return 0;
- }
+ 	if (end - start > MIN_LRU_BATCH * PAGE_SIZE) {
+ 		if (pvmw->address - start < MIN_LRU_BATCH * PAGE_SIZE / 2)
+@@ -4660,7 +4665,7 @@ void lru_gen_look_around(struct page_vma_mapped_walk *pvmw)
+ 	for (i = 0, addr = start; addr != end; i++, addr += PAGE_SIZE) {
+ 		unsigned long pfn;
+ 
+-		pfn = get_pte_pfn(pte[i], pvmw->vma, addr);
++		pfn = get_pte_pfn(pte[i], vma, addr);
+ 		if (pfn == -1)
+ 			continue;
+ 
+@@ -4671,7 +4676,7 @@ void lru_gen_look_around(struct page_vma_mapped_walk *pvmw)
+ 		if (!folio)
+ 			continue;
+ 
+-		if (!ptep_test_and_clear_young(pvmw->vma, addr, pte + i))
++		if (!ptep_test_and_clear_young(vma, addr, pte + i))
+ 			VM_WARN_ON_ONCE(true);
+ 
+ 		young++;
 -- 
 2.53.0
 
