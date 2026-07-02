@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0194782866;
-	Thu,  2 Jul 2026 16:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A602E2FFF9D;
+	Thu,  2 Jul 2026 16:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011303; cv=none; b=ZsPubjyWarYX+4tK/wfdycq7eRMnv1G/WZgVQWxPUFQhBSeMmfThMbNQPfIKuoLuCdDSbiwX1YlOJLq5pstGDvDG1rO9RotW4Vi0ZsQmE39I/G+MKqdTRnuFD1vubDAWa2YPzGJVzVT9LE9ZkG9GOyas38wruNj1S4AUdNWgR7k=
+	t=1783011305; cv=none; b=dWvnzVUD8s8Na+ZSu6xa/Os41+D2M0htXOX1AntXO/gfkaW5Tq9qtG3/EMDWlDvcp6dIA86gR2JYWsw/g+cSAEihIj9ae92kwUxBycjbAXIwrLK3Wn2jLVBiBrgKbdxX5CUzHuODORSeu6F/XPWFpK2TMP9XvZ0uGdWJU8MKjQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011303; c=relaxed/simple;
-	bh=YcP7KgPGEMttQY/gxQUSWN1FdCiTw6D2M7gW7RxQ72g=;
+	s=arc-20240116; t=1783011305; c=relaxed/simple;
+	bh=CKaOLxmGry6/8ww9e0OHu4AcKaoGQSahGbjDlypiu1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVeMfkUKZTROaKul3ER7qXkL6bbdFHxtDi6h0GxD8bh7EgQvVOYJ4mugWmq3kch1KEY3pYFtSCYmM8Z2pnLvvCNW7sR5JeSwwQUkQ/X/PPBcX5XA9iabgsyBbPFuFYLPT4vSVjqxk8TfDjWQzeXJya0NH1UUYOE9+C3ef1olz7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDiGph52; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rpnOJqRrHi+LWPbMabMPqV7HqZLFbsBiUAkflDr2ev0ozqkJueWVoA2k/nnaHSkJ3wTueSbZXlRoAtc/q1W59nxH0xxct5y6o50NOlgyNTvsEE7TSPKUzFsJd6wBKgkyTuihhvoNO0W4U3iTG9hUwEHfOEj6m3zWsnBHYz/mUBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1ANv15j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDiGph52"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667D31F000E9;
-	Thu,  2 Jul 2026 16:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1ANv15j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1F61F000E9;
+	Thu,  2 Jul 2026 16:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011301;
-	bh=r7/DTDhUdCdVCnFQELAtUHKMRye6XGymPukPhysWmOw=;
+	s=korg; t=1783011304;
+	bh=+1/YvLUOcWclwEomvnse5j+hpd2yZgH04d0NO9GlLhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDiGph52SLyWQbPAzaB6Lz9MxpaowkXvfsoLhvUwjkG88fW07OXABanSWjc4DumXN
-	 Px5DLnf05gwBm5vpop4ntHyIBbuO9dEZc969H5vb+CAQzMxhsdaJIXIX2gRTgRJfEK
-	 owOHCnI8VC9HdvleZm4xbrfIfdBR2mKEQpdHQzf8=
+	b=U1ANv15jrmpZ//YaMLnU9YvtsbtZGqmVDmrLGZfmL6WQFsoGzOmEENuvoT85/+bb9
+	 IMUUZWXQWLFJUC5YVGqJEnhRSJjpGvZMNQKVG10wYV+Z0JSW/Ld7x4m/4rXiniv38r
+	 SwxnKBzTeNhpAMtpZMU6k0p3s2SsJspwPpfI5oK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Junjie Cao <junjie.cao@intel.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.18 058/108] wifi: iwlwifi: mld: fix race condition in PTP removal
-Date: Thu,  2 Jul 2026 18:20:55 +0200
-Message-ID: <20260702155113.310621551@linuxfoundation.org>
+Subject: [PATCH 6.18 059/108] wifi: iwlwifi: mld: validate sta_mask before ffs() in BA session handlers
+Date: Thu,  2 Jul 2026 18:20:56 +0200
+Message-ID: <20260702155113.330418707@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -52,46 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit e1fc08598aa34b28359831e768076f56632720c1 upstream.
+commit f056fc2b927448d37eca6b6cacc3d1b0f67b20d2 upstream.
 
-iwl_mld_ptp_remove() calls cancel_delayed_work_sync() only after
-ptp_clock_unregister() and clearing ptp_data state (ptp_clock,
-last_gp2, wrap_counter).
+Three BA session handlers use ffs(ba_data->sta_mask) - 1 to derive a
+station ID without checking that sta_mask is non-zero. When sta_mask is
+zero, ffs() returns 0 and the subtraction wraps to 0xFFFFFFFF, causing
+an out-of-bounds access on fw_id_to_link_sta[].
 
-This creates a race where the delayed work iwl_mld_ptp_work() can
-execute between ptp_clock_unregister() and cancel_delayed_work_sync(),
-observing partially cleared PTP state.
+Add WARN_ON_ONCE(!ba_data->sta_mask) guards before each ffs() call,
+consistent with the existing check in iwl_mld_ampdu_rx_start().
 
-Move cancel_delayed_work_sync() before ptp_clock_unregister() to
-ensure the delayed work is fully stopped before any PTP cleanup
-begins.
-
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Link: https://patch.msgid.link/20260212125035.1345718-2-junjie.cao@intel.com
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB788115C6CE873271A9A15A25AF51A@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/ptp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mld/agg.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/mld/ptp.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/ptp.c
-@@ -319,10 +319,10 @@ void iwl_mld_ptp_remove(struct iwl_mld *
- 			       mld->ptp_data.ptp_clock_info.name,
- 			       ptp_clock_index(mld->ptp_data.ptp_clock));
- 
-+		cancel_delayed_work_sync(&mld->ptp_data.dwork);
- 		ptp_clock_unregister(mld->ptp_data.ptp_clock);
- 		mld->ptp_data.ptp_clock = NULL;
- 		mld->ptp_data.last_gp2 = 0;
- 		mld->ptp_data.wrap_counter = 0;
--		cancel_delayed_work_sync(&mld->ptp_data.dwork);
+--- a/drivers/net/wireless/intel/iwlwifi/mld/agg.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/agg.c
+@@ -64,6 +64,9 @@ static void iwl_mld_release_frames_from_
  	}
- }
+ 
+ 	/* pick any STA ID to find the pointer */
++	if (WARN_ON_ONCE(!ba_data->sta_mask))
++		goto out_unlock;
++
+ 	sta_id = ffs(ba_data->sta_mask) - 1;
+ 	link_sta = rcu_dereference(mld->fw_id_to_link_sta[sta_id]);
+ 	if (WARN_ON_ONCE(IS_ERR_OR_NULL(link_sta) || !link_sta->sta))
+@@ -166,6 +169,9 @@ void iwl_mld_del_ba(struct iwl_mld *mld,
+ 		goto out_unlock;
+ 
+ 	/* pick any STA ID to find the pointer */
++	if (WARN_ON_ONCE(!ba_data->sta_mask))
++		goto out_unlock;
++
+ 	sta_id = ffs(ba_data->sta_mask) - 1;
+ 	link_sta = rcu_dereference(mld->fw_id_to_link_sta[sta_id]);
+ 	if (WARN_ON_ONCE(IS_ERR_OR_NULL(link_sta) || !link_sta->sta))
+@@ -347,6 +353,9 @@ static void iwl_mld_rx_agg_session_expir
+ 	}
+ 
+ 	/* timer expired, pick any STA ID to find the pointer */
++	if (WARN_ON_ONCE(!ba_data->sta_mask))
++		goto unlock;
++
+ 	sta_id = ffs(ba_data->sta_mask) - 1;
+ 	link_sta = rcu_dereference(ba_data->mld->fw_id_to_link_sta[sta_id]);
+ 
 
 
