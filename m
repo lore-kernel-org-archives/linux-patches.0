@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5CE33E344;
-	Thu,  2 Jul 2026 16:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3D833B6ED;
+	Thu,  2 Jul 2026 16:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009463; cv=none; b=O5D6hx1mXilnkcpjPj1VcNPWP82dgZjPz3dZ+UAEFHcoKR5JqLoosnKNeDAiPEmrVjPLhVMLpP1jp9S7IPCe599kPKdGBV6GpHfh5C1uO9XKJqj8pG5uhHZDNVYFmc4o2qp6PkqgFrdBfjTt6bqKJl1Wc2n97CCn7aK6AaCEmJA=
+	t=1783009465; cv=none; b=d8dwdvgqRu2ntUrSC7g/frSmps011Ao2uqeq8CdV4fCndkZYsFJuIjQSFc8scgQR3U7gBwWeRYz/utuhhLbDFLprMFdAFzAcIzLpaM0ZQCXj4meVLyTAW2YtYBcyFWehqPmIM2w5uak0kFHIoMFxTnqIxRvSrpZ7lhdKUCPD2RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009463; c=relaxed/simple;
-	bh=9iOEFO89MgMnJj7ViYrsG7ZFg1svQePWyX39ZlEQouk=;
+	s=arc-20240116; t=1783009465; c=relaxed/simple;
+	bh=+SwSPc5rJPVmcAq9vFlrTNe+G3M9grUpApVU1FqVvFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+eMaJrFHal98uoB2xjhJX7NrYbi+AnZY83e8hG/86ZMEHz6iu6t6i9RQxc0k1vk6v0LHUgBk4u5Vv7MdiVEh7jMvIyWjk3A0ZU1yacEsomd1Ozqp/G8JJxIcSY6yLKnZEt5fW0PLc45vLCFcPdakQE+lwsvYhS5zCRy7v2N/QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYGeSdXd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QGctp4fnemWfmKyvGnIhWRhin3GyzEw9DeNvMHTW4UFq2jkxzVL5mHYQakMrE3obNLBvaTAK3uwlCK2AHMxAsKSIKhEEARNi4YLtYQ12covuiON2GPBCKJ9w9nZIhjAX/mZCFr5qH1HVRZ81Wt07XHk5SO9sQmO6N4R1fClExLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ls1iKWJk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYGeSdXd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013781F00A3A;
-	Thu,  2 Jul 2026 16:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ls1iKWJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618C51F000E9;
+	Thu,  2 Jul 2026 16:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009460;
-	bh=faq3ooaN0nnlYK6T+wtPKOqdrxaMMuE7d2jtZa/Kg5s=;
+	s=korg; t=1783009457;
+	bh=HL484zMkn0DcABkuw01C2Y6e+OvEnJjEdCK4DHIohCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BYGeSdXd4GSlB1Ub7l8SSTOb2exGbKPBs3diXqlDfEJrL/FfFkL+nCgPy/RgraBLA
-	 xi3HFN3EmDSXarXxjVX1aqKb/IzbdUdGaGUqTDDZaO5/LSCjCYF5ZjJzbfJLWS3KaX
-	 UyFwzKSSECkys3ZER5KsGz78rpKcIuyCeyq1aiPA=
+	b=ls1iKWJkf2QAGumIxQGrxMPk74VOrnJHge9Jw+pK4SFxinBf5SxD74/ehj7JS/0jK
+	 c9rnqhhAT0WxhZbW344v0rwWldd6MfhGkacZrBFYaZ9RIAPoMoE6hjo2lU/1b0KMZG
+	 C+LfQZO7DDrOjrmwFDEHr9AHCCbTlUBbY98Lcldk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 5.10 61/96] mac802154: llsec: add skb_cow_data() before in-place crypto
-Date: Thu,  2 Jul 2026 18:19:53 +0200
-Message-ID: <20260702155110.264870584@linuxfoundation.org>
+	Kevin Hao <haokexin@gmail.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Elizaveta Tereshkina <etereshkina@astralinux.ru>
+Subject: [PATCH 5.10 60/96] net: cpsw_new: Fix potential unregister of netdev that has not been registered yet
+Date: Thu,  2 Jul 2026 18:19:52 +0200
+Message-ID: <20260702155110.243734389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -51,98 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Kevin Hao <haokexin@gmail.com>
 
-commit 84a04eb5b210643bd67aab81ff805d32f62aa865 upstream.
+commit 9d724b34fbe13b71865ad0906a4be97571f19cf5 upstream.
 
-llsec_do_encrypt_unauth(), llsec_do_encrypt_auth(),
-llsec_do_decrypt_unauth(), and llsec_do_decrypt_auth() all perform
-in-place cryptographic transformations on skb data.  They build a
-scatterlist with sg_init_one() pointing into the skb's linear data area
-and then pass the same scatterlist as both src and dst to the crypto API
-(e.g. crypto_skcipher_encrypt/decrypt, crypto_aead_encrypt/decrypt).
+If an error occurs during register_netdev() for the first MAC in
+cpsw_register_ports(), even though cpsw->slaves[0].ndev is set to NULL,
+cpsw->slaves[1].ndev would remain unchanged. This could later cause
+cpsw_unregister_ports() to attempt unregistering the second MAC.
+To address this, add a check for ndev->reg_state before calling
+unregister_netdev(). With this change, setting cpsw->slaves[i].ndev
+to NULL becomes unnecessary and can be removed accordingly.
 
-On the RX path, __ieee802154_rx_handle_packet() clones the received skb
-before handing it to each subscriber via ieee802154_subif_frame().  The
-cloned skb shares the same underlying data buffer via reference
-counting.  When llsec_do_decrypt() subsequently modifies this shared
-buffer in place, it corrupts data that other clones -- potentially
-belonging to other sockets or subsystems -- still reference.
-
-On the TX path, similar data sharing can occur when an skb's head has
-been cloned (skb_cloned() returns true).
-
-The fix is to call skb_cow_data() before performing any in-place crypto
-operation.  skb_cow_data() ensures that the skb's data area is not
-shared: if the skb head is cloned or the data spans multiple fragments,
-it copies the data into a private buffer that can be safely modified in
-place.  This is the same pattern used by:
-
-  - ESP (net/ipv4/esp4.c, net/ipv6/esp6.c)
-  - MACsec (drivers/net/macsec.c)
-  - WireGuard (drivers/net/wireguard/receive.c)
-  - TIPC (net/tipc/crypto.c)
-
-Without this guard, in-place crypto on shared skb data leads to:
-  - Silent data corruption of other skb clones
-  - Use-after-free when the crypto API scatterwalk writes through a
-    page that has already been freed by another clone's kfree_skb()
-  - Kernel crashes under concurrent 802.15.4 traffic with security
-    enabled (KASAN/KMSAN reports slab-use-after-free)
-
-Found by 0sec (https://0sec.ai) using automated source analysis.
-
-Fixes: 4c14a2fb5d14 ("mac802154: add llsec decryption method")
-Fixes: 03556e4d0dbb ("mac802154: add llsec encryption method")
+Fixes: ed3525eda4c4 ("net: ethernet: ti: introduce cpsw switchdev based driver part 1 - dual-emac")
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
 Cc: stable@vger.kernel.org
-Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Closes: https://lore.kernel.org/linux-wpan/20260525161806.96158-1-doruk@0sec.ai/
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Closes: <link to your mail on lore>
-Link: https://lore.kernel.org/20260526183726.56100-1-doruk@0sec.ai
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Link: https://patch.msgid.link/20260205-cpsw-error-path-v1-2-6e58bae6b299@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Elizaveta Tereshkina <etereshkina@astralinux.ru>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac802154/llsec.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/ti/cpsw_new.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/mac802154/llsec.c
-+++ b/net/mac802154/llsec.c
-@@ -710,6 +710,7 @@ int mac802154_llsec_encrypt(struct mac80
- {
- 	struct ieee802154_hdr hdr;
- 	int rc, authlen, hlen;
-+	struct sk_buff *trailer;
- 	struct mac802154_llsec_key *key;
- 	u32 frame_ctr;
+diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
+index 66b1620b6f5b0e..cc276241f39161 100644
+--- a/drivers/net/ethernet/ti/cpsw_new.c
++++ b/drivers/net/ethernet/ti/cpsw_new.c
+@@ -1456,7 +1456,8 @@ static void cpsw_unregister_ports(struct cpsw_common *cpsw)
+ 	int i = 0;
  
-@@ -766,6 +767,12 @@ int mac802154_llsec_encrypt(struct mac80
- 	skb->mac_len = ieee802154_hdr_push(skb, &hdr);
- 	skb_reset_mac_header(skb);
+ 	for (i = 0; i < cpsw->data.slaves; i++) {
+-		if (!cpsw->slaves[i].ndev)
++		if (!cpsw->slaves[i].ndev ||
++		    cpsw->slaves[i].ndev->reg_state != NETREG_REGISTERED)
+ 			continue;
  
-+	rc = skb_cow_data(skb, 0, &trailer);
-+	if (rc < 0) {
-+		llsec_key_put(key);
-+		return rc;
-+	}
-+
- 	rc = llsec_do_encrypt(skb, sec, &hdr, key);
- 	llsec_key_put(key);
- 
-@@ -905,6 +912,13 @@ llsec_do_decrypt(struct sk_buff *skb, co
- 		 const struct ieee802154_hdr *hdr,
- 		 struct mac802154_llsec_key *key, __le64 dev_addr)
- {
-+	struct sk_buff *trailer;
-+	int err;
-+
-+	err = skb_cow_data(skb, 0, &trailer);
-+	if (err < 0)
-+		return err;
-+
- 	if (hdr->sec.level == IEEE802154_SCF_SECLEVEL_ENC)
- 		return llsec_do_decrypt_unauth(skb, sec, hdr, key, dev_addr);
- 	else
+ 		unregister_netdev(cpsw->slaves[i].ndev);
+@@ -1476,7 +1477,6 @@ static int cpsw_register_ports(struct cpsw_common *cpsw)
+ 		if (ret) {
+ 			dev_err(cpsw->dev,
+ 				"cpsw: err registering net device%d\n", i);
+-			cpsw->slaves[i].ndev = NULL;
+ 			break;
+ 		}
+ 	}
+-- 
+2.53.0
+
 
 
