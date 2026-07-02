@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6605E349CF2;
-	Thu,  2 Jul 2026 16:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5452B381E96;
+	Thu,  2 Jul 2026 16:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009570; cv=none; b=O7JHVzsBPyMUcGIaL8g6sWBbUTCjj1gZ5/4wMkm4obtPU75pnVITy86f+ziLxGTai3OxiGrTbjiSfsvEGywRE3ipLGFaqlxH0xHybYoz8N/bwKYBXM/Lz4RJIAyYH0x2+JBB0rUPl+QTuHf7MxfxsXoyUc4bCPfXpbElAloKtTk=
+	t=1783009572; cv=none; b=uPDYLHF4vx0mGg/+27Z24gF8SRMbTmmTuO0VuG9FyJSrWlgConRFX8iBwPf9vku96uBuW36V1907owmPIoJW1NoKJoXIkpl3aOzL/0uPCek/mlbGLT8OUgJQ3BsRHK6VPII0fkLAw2DzoN6/Y8d/BnBf2tjNuILYyY5u60F3qXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009570; c=relaxed/simple;
-	bh=1eUTaeNiwWoPPmi3WWo23QnxBGuf/5JJQ3L59RoKf6Y=;
+	s=arc-20240116; t=1783009572; c=relaxed/simple;
+	bh=W5Rf9/9pKdb9E9UWWDCFUoSEozFit4YjodMiwNs8IRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsaXkycm041v9CQdgT5JSFBX7sAFLh0AGrWnI6wMiAJ8b81YW6WKGnSVwVPRaQ0znQ5LPDu0Ndg0WRgaNrjKEt4LRzLZmIYdiF9Zo6rrwrbDdorgyeWOA0amea7jn97XhQhIAJj80sjv+jUCZQcaRzFn6LZKseONnjRahhYyJUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuGjLAsH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jY9pzLWg7nB2bEfDylROYOcF3A6q9aDRTHhyhv1qVK92JawAkJBrCYA41iJB/ow0dP+WJC/+p4c5dD0Ve3xVdyy61/s1hkQd5WcBKxiqjESD53ptHTr7u8UcZEgClO9iRfap2bDmpiD9s4w27q57fDQLNCzQaxNU9w+oT83u6L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVGeefwA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuGjLAsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8CE1F000E9;
-	Thu,  2 Jul 2026 16:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVGeefwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7236B1F00A3A;
+	Thu,  2 Jul 2026 16:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009568;
-	bh=VWI96jFTa4lsa9bzdXyGmkpJNwM5jUlMrHkliS8zIE4=;
+	s=korg; t=1783009570;
+	bh=uzfo1sddjAw2kZMnx3oi8AHjI0qF7ySqg/jlkkHBRFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QuGjLAsHEjoFpZwnRlOxs84IlJg5HaEoK1juyc5LBQ9fUIk2dbzOc2K9zaRTmMtK7
-	 ZJRxdqrrOR3S30hXxzZarObu5Yeie1msGuxaUgu+S6ellF7RwLMHXpyfRi11iB5lms
-	 yChlB34vdyVdeiYTbmLb2KyXrJKnao02HYGimm54=
+	b=VVGeefwAOLekmVQOGFKVAMYwNNvUN+siuRpu11RXa9VDyQz0IIIYf+Mau3vCQC7sl
+	 AyMouDX/dMbyj2gk9VR+ba4LyFNL3goC0gquBcB4sJWuYwA7U6k6sUiPAi22dcEGME
+	 BDW1ttkt0yDZv3frypW1bXGZy4JtbCdjLGINqyas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 46/96] batman-adv: frag: avoid underflow of TTL
-Date: Thu,  2 Jul 2026 18:19:38 +0200
-Message-ID: <20260702155109.951616022@linuxfoundation.org>
+Subject: [PATCH 5.10 95/96] misc: fastrpc: fix DMA address corruption due to find_vma misuse
+Date: Thu,  2 Jul 2026 18:20:27 +0200
+Message-ID: <20260702155110.979005426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -51,45 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 493d9d2528e1a09b090e4b37f0f553def7bd5ce9 upstream.
+[ Upstream commit 464c6ad2aa16e1e1df9d559289199356493d1e00 ]
 
-Packets with a TTL are using it to limit the amount of time this packet can
-be forwarded. But for batadv_frag_packet, the TTL was always only reduced
-but it was never evaluated. It could even underflow without any effect.
+fastrpc_get_args() uses find_vma() to look up the VMA for a user-provided
+pointer and compute a DMA address offset. When the address falls in a gap
+before the returned VMA, (ptr & PAGE_MASK) - vma->vm_start underflows,
+corrupting the DMA address sent to the DSP.
 
-Check the TTL in batadv_frag_skb_fwd() before attempting to prepare it for
-forwarding. This keeps it in sync with the not fragmented unicast packet.
+Replace find_vma() with vma_lookup(), which returns NULL when the address
+is not contained within any VMA.
 
-Cc: stable@kernel.org
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Cc: stable@vger.kernel.org
+Fixes: 80f3afd72bd4 ("misc: fastrpc: consider address offset before sending to DSP")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204528.116920-3-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adapted `vma_lookup(mm, ptr)` to `find_vma(mm, ptr)` plus a `ptr >= vma->vm_start` guard since `vma_lookup()` does not exist in 5.10 ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/misc/fastrpc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/fragmentation.c b/net/batman-adv/fragmentation.c
-index 95c88bbdbcbee0..43dfe86f07a9b1 100644
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -421,6 +421,13 @@ bool batadv_frag_skb_fwd(struct sk_buff *skb,
- 	 */
- 	total_size = ntohs(packet->total_size);
- 	if (total_size > neigh_node->if_incoming->net_dev->mtu) {
-+		if (packet->ttl < 2) {
-+			kfree_skb(skb);
-+			*rx_result = NET_RX_DROP;
-+			ret = true;
-+			goto out;
-+		}
-+
- 		if (skb_cow(skb, ETH_HLEN) < 0) {
- 			kfree_skb(skb);
- 			*rx_result = NET_RX_DROP;
--- 
-2.53.0
-
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -875,7 +875,7 @@ static int fastrpc_get_args(u32 kernel,
+ 
+ 			mmap_read_lock(current->mm);
+ 			vma = find_vma(current->mm, ctx->args[i].ptr);
+-			if (vma)
++			if (vma && ctx->args[i].ptr >= vma->vm_start)
+ 				pages[i].addr += (ctx->args[i].ptr & PAGE_MASK) -
+ 						 vma->vm_start;
+ 			mmap_read_unlock(current->mm);
 
 
