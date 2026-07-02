@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7710F3B3BF2;
-	Thu,  2 Jul 2026 16:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5C73A0E8A;
+	Thu,  2 Jul 2026 16:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009743; cv=none; b=Cl2uMeDHyNh5Lh+aMzpDRvtXSME0eJLKIrO2n9ihIIjR2+s/DwFeUioyDu+92CYSYATv+0/Qo14trKpotsOWd/wzv9rY0v+0yXFkIumzixqoTq6eMwqn7dVSeXFqpm0c1h4d5emAyJj8ANB0PigeeH4kXFY67EET/3y8dIjoc98=
+	t=1783009747; cv=none; b=Z5dqkXQueuqOLOSvkAmfKbqebszrr5EKb8+9Cg8cKPQo2ssLLBvYa9vqr+JOHpyEB2AllGMY8ta7UaVIQNOhVQln3apDBQ88S16oNhP3Vsx44iKtA+yM3MHh6/OC10B8bRqWKzAiTV98TpNXvbBOqmIlr/ym4Eajht8+3v7z+q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009743; c=relaxed/simple;
-	bh=VQ3Nqy7lolxFcGRmSzMP5Ltvp0rQ/GOq6tidXIGzkjc=;
+	s=arc-20240116; t=1783009747; c=relaxed/simple;
+	bh=gGoeyuHsN6ZsN5Yf1ZVtAtChOBeZ3gcFSUZ1bcHdN2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tQx738n5bUV3WGn5/Ip+tA5+jvrtPjk2TS3+F8Nz4Mwft5GS6cldo/yGDo2RhloscgyHd4g6QjVWkNCrj7auqOgniUM+agOpdgdpcyJqMCh9TCIov1ZwXizDKH3KGzKf5grln5AbWHhzE9D/4JIZiPOoSaDqaJP0No34DiFxRd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sC8yYGgt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jJh0exDH+LvDP1StBw8ZuVWD/OCwDPdgC1yJP55BIOjxPBdgkKAJF7Nt/hoyCIBrtcQzIGgYNzzpmcoDKojkbpBob1aOJg3S65OsozWV67PIMF4gTB6lBPg7zZ8xnklOmOtCKNkTn2lSsHjbyh7v/MXYwSk/3mR1WGVZe7+WJ+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfN2gYdk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sC8yYGgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA50D1F000E9;
-	Thu,  2 Jul 2026 16:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfN2gYdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602E61F00A3D;
+	Thu,  2 Jul 2026 16:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009741;
-	bh=mhJypw/6zL2hSrVGS9AQNS3HJbW7YEXraIZTXoDLQp8=;
+	s=korg; t=1783009743;
+	bh=YO0ZlvZZuZrmv2iNuR6cYz/6t+AUcWSfd8MlN3noodk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sC8yYGgtgmuq6OCsp856c27Tf9GFReVOWjfPXdbjkuzDapabLYDfc7Jd+5LD+PdhF
-	 Q9j4TbOwbu/0N8pFCwAOQCXyHY5EN0JC99C0VjGp24QL7hrkD1Njf3ODbPkw1ZyS0l
-	 9cLkdqJg1PNXSey9XXKGH13C1MWODAhFDEX1pIU0=
+	b=KfN2gYdk3Tu7pM4g8ouNwYGPQWNT4r0II0wLtm8U0YcLZ0qY6Kk3Sw1zpOkWPKG95
+	 gwivlVAs2+A1hZAciSKVBGSppXBLyO7J2rPdss+hAbQnImXVQlfrh9sklozbUKHZmI
+	 m7DZ+OcZg5kz+enogskZenqmqTrkTichfYZzEt+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 5.15 70/95] irqchip/imgpdc: Fix resource leak, add missing chained handler cleanup on remove
-Date: Thu,  2 Jul 2026 18:20:13 +0200
-Message-ID: <20260702155110.686771035@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 44/95] batman-adv: tp_meter: restrict number of unacked list entries
+Date: Thu,  2 Jul 2026 18:19:47 +0200
+Message-ID: <20260702155110.134787158@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -50,64 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 37738fdf2ab1e504d1c63ce5bc0aeb6452d8f057 upstream.
+commit e7c775110e1858e5a7471a23a9c9658c0af9df89 upstream.
 
-The driver allocates domain generic chips using
-irq_alloc_domain_generic_chips() during probe and sets up chained
-handlers using irq_set_chained_handler_and_data(). However, on driver
-removal, the generic chips are not freed and the chained handlers are
-not removed.
+When the unacked_list is unbound, an attacker could send messages with
+small lengths and appropriated seqno + gaps to force the receiver to
+allocate more and more unacked_list entries. And the end either causing an
+out-of-memory situation or increase the management overhead for the (large)
+list that significant portions of CPU cycles are wasted in searching
+through the list.
 
-The generic chips remain on the global gc_list and may later be accessed by
-generic interrupt chip suspend, resume, or shutdown callbacks after the
-driver has been removed, potentially resulting in a use-after-free and
-kernel crash.
+When limiting the list to a specific number, it is important to still
+correctly add a new entry to the list. But if the list became larger than
+the limit, the last entry of the list (with the highest seqno) must be
+dropped to still allow the earlier seqnos to finish and therefore to
+continue the process. Otherwise, the process might get stuck with too high
+seqnos which are not handled by batadv_tp_ack_unordered().
 
-The chained handlers that were installed in probe for peripheral and
-syswake interrupts are also left dangling, which can lead to spurious
-interrupts accessing freed memory.
-
-Fix these issues by:
-
-  - Setting IRQ_DOMAIN_FLAG_DESTROY_GC flag in domain->flags, so the
-    core code automatically removes generic chips when irq_domain_remove()
-    is called
-
-  - Clearing all chained handlers with NULL in pdc_intc_remove()
-
-Fixes: b6ef9161e43a ("irq-imgpdc: add ImgTec PDC irqchip driver")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260618021352.661773-1-fffsqian@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+[ Switch to pre-splitted tp_vars structure names ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-imgpdc.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/batman-adv/tp_meter.c | 23 ++++++++++++++++++++++-
+ net/batman-adv/types.h    |  3 +++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-imgpdc.c
-+++ b/drivers/irqchip/irq-imgpdc.c
-@@ -378,6 +378,7 @@ static int pdc_intc_probe(struct platfor
- 		dev_err(&pdev->dev, "cannot add IRQ domain\n");
- 		return -ENOMEM;
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 9e31d86c4b87f5..105cda5b0b2cda 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -87,6 +87,11 @@
+ #define BATADV_TP_PLEN (BATADV_TP_PACKET_LEN - ETH_HLEN - \
+ 			sizeof(struct batadv_unicast_packet))
+ 
++/**
++ * BATADV_TP_MAX_UNACKED - maximum number of packets a receiver didn't yet ack
++ */
++#define BATADV_TP_MAX_UNACKED 100
++
+ static u8 batadv_tp_prerandom[4096] __read_mostly;
+ 
+ /**
+@@ -1195,6 +1200,7 @@ static void batadv_tp_receiver_shutdown(struct timer_list *t)
+ 	list_for_each_entry_safe(un, safe, &tp_vars->unacked_list, list) {
+ 		list_del(&un->list);
+ 		kfree(un);
++		tp_vars->unacked_count--;
  	}
-+	priv->domain->flags |= IRQ_DOMAIN_FLAG_DESTROY_GC;
+ 	spin_unlock_bh(&tp_vars->unacked_lock);
  
- 	/*
- 	 * Set up 2 generic irq chips with 2 chip types.
-@@ -465,6 +466,11 @@ static int pdc_intc_remove(struct platfo
- {
- 	struct pdc_intc_priv *priv = platform_get_drvdata(pdev);
+@@ -1308,6 +1314,7 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
+ 	/* if the list is empty immediately attach this new object */
+ 	if (list_empty(&tp_vars->unacked_list)) {
+ 		list_add(&new->list, &tp_vars->unacked_list);
++		tp_vars->unacked_count++;
+ 		goto out;
+ 	}
  
-+	for (unsigned int i = 0; i < priv->nr_perips; ++i)
-+		irq_set_chained_handler_and_data(priv->perip_irqs[i], NULL, NULL);
+@@ -1338,12 +1345,24 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
+ 		 */
+ 		list_add(&new->list, &un->list);
+ 		added = true;
++		tp_vars->unacked_count++;
+ 		break;
+ 	}
+ 
+ 	/* received packet with smallest seqno out of order; add it to front */
+-	if (!added)
++	if (!added) {
+ 		list_add(&new->list, &tp_vars->unacked_list);
++		tp_vars->unacked_count++;
++	}
 +
-+	irq_set_chained_handler_and_data(priv->syswake_irq, NULL, NULL);
-+
- 	irq_domain_remove(priv->domain);
- 	return 0;
++	/* remove the last (biggest) unacked seqno when list is too large */
++	if (tp_vars->unacked_count > BATADV_TP_MAX_UNACKED) {
++		un = list_last_entry(&tp_vars->unacked_list,
++				     struct batadv_tp_unacked, list);
++		list_del(&un->list);
++		kfree(un);
++		tp_vars->unacked_count--;
++	}
+ 
+ out:
+ 	spin_unlock_bh(&tp_vars->unacked_lock);
+@@ -1380,6 +1399,7 @@ static void batadv_tp_ack_unordered(struct batadv_tp_vars *tp_vars)
+ 
+ 		list_del(&un->list);
+ 		kfree(un);
++		tp_vars->unacked_count--;
+ 	}
+ 	spin_unlock_bh(&tp_vars->unacked_lock);
  }
+@@ -1430,6 +1450,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 
+ 	spin_lock_init(&tp_vars->unacked_lock);
+ 	INIT_LIST_HEAD(&tp_vars->unacked_list);
++	tp_vars->unacked_count = 0;
+ 
+ 	kref_get(&tp_vars->refcount);
+ 	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index d298a3983fab97..d7fb3046d04412 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -1494,6 +1494,9 @@ struct batadv_tp_vars {
+ 	/** @unacked_lock: protect unacked_list */
+ 	spinlock_t unacked_lock;
+ 
++	/** @unacked_count: number of unacked entries */
++	size_t unacked_count;
++
+ 	/** @last_recv_time: time (jiffies) a msg was received */
+ 	unsigned long last_recv_time;
+ 
+-- 
+2.53.0
+
 
 
