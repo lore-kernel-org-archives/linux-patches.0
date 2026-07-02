@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D833831E853;
-	Thu,  2 Jul 2026 16:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED345399D0B;
+	Thu,  2 Jul 2026 16:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009926; cv=none; b=mOoJw1XmtbQxBh/n7WQIbFVXKKVr1d8XbX3zjW9tXdanCzd3KcQvHzUYDl9Yv6qiiZphKm7fMMV2EMGESZKAlQjIKmHCMFXXkE+haf4BbtjmYCdO1FEe137pBl9AwVQhEBpgheaGq8f5TpJIyM8RoRvKOchovwvXNhTdvP6Cqn8=
+	t=1783009929; cv=none; b=sO/ZVd8x8fl0wwu7YwksgY8MlPlK8fPLIBJV9J/5xU/WJ4zjSo9d1vtvIO8kj6BaI2GQJferkVONE5TO06k20pUFYuJoWq4WlrT2wIHWTQBKb1kZRItDQsrhK8oULJwd4XSFczH5e18Y6HV9OqJUCPGldU3CUfyng5K8b25Vo5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009926; c=relaxed/simple;
-	bh=qWFUYGImovnTXs8Ch954MCIrhy34UiF3ZzBt0N+4j9E=;
+	s=arc-20240116; t=1783009929; c=relaxed/simple;
+	bh=Cop8LwCTYseH4o15AMzNgkfbPqirzkXQMc+X08Ce6zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=anITfcHbokqOlV60t1qalq+z5TdvBh8UvRlnOFVGR7C0VgJif74F7B6GEtVgfsNbgeC4SdUBY2vcqtNrA5yupFfIeZF/ll7Y37SC+OFai5nYq7Et7oLq+dBYVdNUgCxOzoK+7MZX++F9FrflubrDm7Ne8EpmbwBhB3o8v0dcW5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1gNDRWuE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SCjE0tEcsCfzYg25Ramw05Ip2QVDPK5becsSjLJPuypO4W8hbDOTY4ic+kRbtM8Vo8OMRsyaRRTSKkFr7lji3gyZcJK1OsY++TUkPpKV7gLBbqkY3xrk5lhONd7doHFn1k8oQ60QJSPl4kt6XK6UhuBj7U1Fx2a81PKzUX/g9EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmcu4ouf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gNDRWuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B821F000E9;
-	Thu,  2 Jul 2026 16:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmcu4ouf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664D31F000E9;
+	Thu,  2 Jul 2026 16:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009925;
-	bh=kLLBeFVCAaZTlMItf+S63aHgZv71bqBylmram0AJaIw=;
+	s=korg; t=1783009927;
+	bh=LC8zkf9P22T0osGcVlQFuTECARMp3DeJt5KzCtccioM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1gNDRWuECZi12qGdS1MM7hPafY1WSvZ0ZzGZN3Uqxc0TXY4QV9AxCVKQuj+s4E9NR
-	 RB6mCkre1JTlGn0VyUcna9iIiFmETR7NZ9uBGUmkM+jTdP98kuDLBcNCnJqgZcNJxP
-	 s3IFllEp83aql/zpF879gd6k4FipKlezBwWsVvlw=
+	b=tmcu4oufVncIxBDf38ou6V7rz9joG14U8G8Dwk0XHG6G+esDLCVxhdp+5KnQ2OrFS
+	 b7/0J/OKkMEVbDnPzLoUck9dva8DzIUAnANJxRHo8l4OnbkvjeXcrvJSg4VdUCEs1f
+	 /460Htre0GGweTuykG5JXSjPTBXB7LFdX11YbhbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Aur=C3=A9lien=20Bombo?= <abombo@microsoft.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Greg Kurz <gkurz@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.1 043/129] virtiofs: fix UAF on submount umount
-Date: Thu,  2 Jul 2026 18:19:22 +0200
-Message-ID: <20260702155113.041064498@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Simon Liebold <simonlie@amazon.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 044/129] perf bench: Avoid NDEBUG warning
+Date: Thu,  2 Jul 2026 18:19:23 +0200
+Message-ID: <20260702155113.061237939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -46,57 +55,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-commit 06b41351779e9289e8785694ade9042ae85e41ea upstream.
+[ Upstream commit d1babea9c38282b58a6f822ab95027cba3165a42 ]
 
-iput() called from fuse_release_end() can Oops if the super block has
-already been destroyed.  Normally this is prevented by waiting for
-num_waiting to go down to zero before commencing with super block shutdown.
+With NDEBUG set the asserts are compiled out. This yields
+"unused-but-set-variable" variables. Move these variables behind
+NDEBUG to avoid the warning.
 
-This only works, however, for the last submount instance, as the wait
-counter is per connection, not per superblock.
-
-Revert to using synchronous release requests for the auto_submounts case,
-which is virtiofs only at this time.
-
-Reported-by: Aurélien Bombo <abombo@microsoft.com>
-Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Cc: Greg Kurz <gkurz@redhat.com>
-Closes: https://github.com/kata-containers/kata-containers/issues/12589
-Fixes: 26e5c67deb2e ("fuse: fix livelock in synchronous file put from fuseblk workers")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kurz <gkurz@redhat.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20230330183827.1412303-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 616b14b47a86 ("perf build: Conditionally define NDEBUG")
+Signed-off-by: Simon Liebold <simonlie@amazon.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/bench/find-bit-bench.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -356,8 +356,14 @@ void fuse_file_release(struct inode *ino
- 	 * aio and closes the fd before the aio completes.  Since aio takes its
- 	 * own ref to the file, the IO completion has to drop the ref, which is
- 	 * how the fuse server can end up closing its clients' files.
-+	 *
-+	 * Exception is virtio-fs, which is not affected by the above (server is
-+	 * on host, cannot close open files in guest).  Virtio-fs needs sync
-+	 * release, because the num_waiting mechanism to wait for all requests
-+	 * before commencing with fs shutdown doesn't work if submounts are
-+	 * used.
- 	 */
--	fuse_file_put(ff, false);
-+	fuse_file_put(ff, ff->fm->fc->auto_submounts);
- }
+diff --git a/tools/perf/bench/find-bit-bench.c b/tools/perf/bench/find-bit-bench.c
+index 22b5cfe9702370..80f051f9c20fd9 100644
+--- a/tools/perf/bench/find-bit-bench.c
++++ b/tools/perf/bench/find-bit-bench.c
+@@ -61,7 +61,6 @@ static int do_for_each_set_bit(unsigned int num_bits)
+ 	double time_average, time_stddev;
+ 	unsigned int bit, i, j;
+ 	unsigned int set_bits, skip;
+-	unsigned int old;
  
- void fuse_release_common(struct file *file, bool isdir)
+ 	init_stats(&fb_time_stats);
+ 	init_stats(&tb_time_stats);
+@@ -73,7 +72,10 @@ static int do_for_each_set_bit(unsigned int num_bits)
+ 			set_bit(i, to_test);
+ 
+ 		for (i = 0; i < outer_iterations; i++) {
+-			old = accumulator;
++#ifndef NDEBUG
++			unsigned int old = accumulator;
++#endif
++
+ 			gettimeofday(&start, NULL);
+ 			for (j = 0; j < inner_iterations; j++) {
+ 				for_each_set_bit(bit, to_test, num_bits)
+@@ -85,7 +87,9 @@ static int do_for_each_set_bit(unsigned int num_bits)
+ 			runtime_us = diff.tv_sec * USEC_PER_SEC + diff.tv_usec;
+ 			update_stats(&fb_time_stats, runtime_us);
+ 
++#ifndef NDEBUG
+ 			old = accumulator;
++#endif
+ 			gettimeofday(&start, NULL);
+ 			for (j = 0; j < inner_iterations; j++) {
+ 				for (bit = 0; bit < num_bits; bit++) {
+-- 
+2.53.0
+
 
 
