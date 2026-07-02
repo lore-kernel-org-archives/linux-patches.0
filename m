@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5674086A;
-	Thu,  2 Jul 2026 16:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95293ACEE9;
+	Thu,  2 Jul 2026 16:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009989; cv=none; b=FamFpssSEYFa+05/9wOdPqSMp+CANXSch8g4SQC1zxq+wy3/y9ziKbymt36JOKtCfPBkCGtmjYHhBhbXEo9BmhfM/NVdvjBW8DrmMEHYPDtkI9bLet6jJQD0C8XGiLA2IxZI4RTkkhO/0Vai+KK9h5gcMvkvRR8K5kufUQso4Ow=
+	t=1783009991; cv=none; b=GAHrOROl4kjkdm6F1xrGiHs/i8fBTbYF1u0/NwTYRkPNU9fQKM9mR5e3APr/IgXBeDl0OmgmSbOBWXAh2x2I64Khcw+WKQ8R4PtJlDHFLnbBloLdD3HViuuGUnpZPSZIXPBsdkH9qd03L56fia4cfN65Rx10iF2og2ttjUuUf4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009989; c=relaxed/simple;
-	bh=lPpfixaB7qlEv53DIrsPowbGu4I8iktHJH85jlfv6pU=;
+	s=arc-20240116; t=1783009991; c=relaxed/simple;
+	bh=syG5bgLpmI1H/B10K/P8AsgBnrmk3UJaSldTFMlUV3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4t5ZqnXMe0IFk7CmNYOkidvqS1pfMxbA3hiWNcgbncOoYa84sJcwHaezAbsHFCghSx0u/YgODxUUTT13wwjRoIJLckvU073tchtMNFBG1PXBGsQi1dd7GhQOVWEQTS2TmWhbuDJ9NnrWsVoO+m/T4fFbq+9StBk+GrCeYlgsEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrMJdQ1i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F/eSMtngaZf0KU5dEaYasxg1dggHDhHfxnrkHTTwIYo6gxHKsun/ThnVVY7/0qWhcwQuaNB9JqGHnXhXpat8CQ6zSY93uLfLZCug2AfUuSCRVQH/ojMjVokX+AybFJRxdNkAJV/i7qWnMMqSUkMhkxJoHfHBZQU5NtRPh/5Tcgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9dfCMA5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrMJdQ1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824851F000E9;
-	Thu,  2 Jul 2026 16:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9dfCMA5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE441F000E9;
+	Thu,  2 Jul 2026 16:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009988;
-	bh=iZGDIV2TT/F+zC2oy3KwMfzqjfeL0Fp/cH/Nxab3yXI=;
+	s=korg; t=1783009990;
+	bh=b11wqchb751V9T8VzTMrk6ypXv8k5YbQP/vaK+P/WUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WrMJdQ1i6xuEG2CPz3kdtf0PmxgUvB6C0L5pzTGOaaeHeqL3MhPDaIQBtbVu/OczV
-	 M5lvFAPC4wg8IldJNbao1rNFAgEIOWvo8qjBTbKxbt8e/Zk+5CW1ChR8vP+RDxC+bc
-	 PKIp3zsh4rMvMjQRxw8yNqS/PYQf/2PdWwjqS6LI=
+	b=e9dfCMA59AE+U8jtCRQponl+TN6VtBTiqEC+u3jKhIum8/YO6HpZ+Z80IEYATSHdg
+	 AwNe4a3gu9lEtBJBzOzDp2COiWHvbcxeScd62G0yt2Tf50s/GolHCeC+rRB2ETN1H1
+	 Y8mEbeo25AU96N+8pu3oAQb6OAtLAeLT1Xae4PWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/129] batman-adv: tp_meter: handle overlapping packets
-Date: Thu,  2 Jul 2026 18:19:48 +0200
-Message-ID: <20260702155113.573620232@linuxfoundation.org>
+Subject: [PATCH 6.1 070/129] batman-adv: tt: dont merge change entries with different VIDs
+Date: Thu,  2 Jul 2026 18:19:49 +0200
+Message-ID: <20260702155113.594065060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -53,105 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit cbde75c38b21f022891525078622587ad557b7c1 upstream.
+commit f08e06c2d5c3e2434e7c773f2213f4a7dce6bc1e upstream.
 
-If the size of the packets would change during the transmission, it could
-happen that some retries of packets are overlapping. In this case, precise
-comparisons of sequence numbers by the receiver would be wrong. It is then
-necessary to check if the start sequence number to the end sequence number
-("seqno + length") would contain a new range.
+batadv_tt_local_event() merges/cancels events for the same client which
+would conflict or be duplicates. The matching of the queued events only
+compares the MAC address - the VLAN ID stored in each event is ignored.
 
-If this is the case then this is enough to accept this packet. In all other
-cases, the packet still has to be dropped (and not acked).
+If a MAC would now appear on multiple VID, the two ADD change events (for
+VID 1 and VID 2) would be merged to a single vid event. The remote can
+therefore not calculate the correct TT table and desync. A full translation
+table exchange is required to recover from this state.
+
+A check of VID is therefore necessary to avoid such wrong merges/cancels.
 
 Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-[ Switch to pre-splitted tp_vars structure names ]
+Fixes: c018ad3de61a ("batman-adv: add the VLAN ID attribute to the TT entry")
+[ Context ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ net/batman-adv/translation-table.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index f745bc09a04963..50b83e0438a07b 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -1284,7 +1284,8 @@ static int batadv_tp_send_ack(struct batadv_priv *bat_priv, const u8 *dst,
- /**
-  * batadv_tp_handle_out_of_order() - store an out of order packet
-  * @tp_vars: the private data of the current TP meter session
-- * @skb: the buffer containing the received packet
-+ * @seqno: sequence number of new received packet
-+ * @payload_len: length of the received packet
-  *
-  * Store the out of order packet in the unacked list for late processing. This
-  * packets are kept in this list so that they can be ACKed at once as soon as
-@@ -1293,22 +1294,17 @@ static int batadv_tp_send_ack(struct batadv_priv *bat_priv, const u8 *dst,
-  * Return: true if the packed has been successfully processed, false otherwise
-  */
- static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
--					  const struct sk_buff *skb)
-+					  u32 seqno, u32 payload_len)
- 	__must_hold(&tp_vars->unacked_lock)
- {
--	const struct batadv_icmp_tp_packet *icmp;
- 	struct batadv_tp_unacked *un, *new;
--	u32 payload_len;
- 	bool added = false;
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 53d2aadcafa154..c3d62df9e2b87d 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -485,6 +485,9 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
+ 		if (!batadv_compare_eth(entry->change.addr, common->addr))
+ 			continue;
  
- 	new = kmalloc(sizeof(*new), GFP_ATOMIC);
- 	if (unlikely(!new))
- 		return false;
- 
--	icmp = (struct batadv_icmp_tp_packet *)skb->data;
--
--	new->seqno = ntohl(icmp->seqno);
--	payload_len = skb->len - sizeof(struct batadv_unicast_packet);
-+	new->seqno = seqno;
- 	new->len = payload_len;
- 
- 	/* if the list is empty immediately attach this new object */
-@@ -1476,7 +1472,7 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
- {
- 	const struct batadv_icmp_tp_packet *icmp;
- 	struct batadv_tp_vars *tp_vars;
--	size_t packet_size;
-+	u32 payload_len;
- 	u32 to_ack;
- 	u32 seqno;
- 
-@@ -1511,15 +1507,17 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
- 	/* if the packet is a duplicate, it may be the case that an ACK has been
- 	 * lost. Resend the ACK
- 	 */
--	if (batadv_seq_before(seqno, tp_vars->last_recv))
-+	payload_len = skb->len - sizeof(struct batadv_unicast_packet);
-+	to_ack = seqno + payload_len;
-+	if (batadv_seq_before(to_ack, tp_vars->last_recv))
- 		goto send_ack;
- 
- 	/* if the packet is out of order enqueue it */
--	if (ntohl(icmp->seqno) != tp_vars->last_recv) {
-+	if (batadv_seq_before(tp_vars->last_recv, seqno)) {
- 		/* exit immediately (and do not send any ACK) if the packet has
- 		 * not been enqueued correctly
- 		 */
--		if (!batadv_tp_handle_out_of_order(tp_vars, skb)) {
-+		if (!batadv_tp_handle_out_of_order(tp_vars, seqno, payload_len)) {
- 			spin_unlock_bh(&tp_vars->unacked_lock);
- 			goto out;
- 		}
-@@ -1529,8 +1527,7 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
- 	}
- 
- 	/* if everything was fine count the ACKed bytes */
--	packet_size = skb->len - sizeof(struct batadv_unicast_packet);
--	tp_vars->last_recv += packet_size;
-+	tp_vars->last_recv = to_ack;
- 
- 	/* check if this ordered message filled a gap.... */
- 	batadv_tp_ack_unordered(tp_vars);
++		if (entry->change.vid != tt_change_node->change.vid)
++			continue;
++
+ 		/* DEL+ADD in the same orig interval have no effect and can be
+ 		 * removed to avoid silly behaviour on the receiver side. The
+ 		 * other way around (ADD+DEL) can happen in case of roaming of
 -- 
 2.53.0
 
