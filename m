@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E099359A89;
-	Thu,  2 Jul 2026 16:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55EE33A70E;
+	Thu,  2 Jul 2026 16:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011040; cv=none; b=IVZ7H+A6UY0q6on0XzMlkZzOPy/tWvXB9lP4qLtofv3E01SUyDdC4UdvNcpqiEfv3xYNVso9tcNzdQiA9Z/bmjAlkGFIhYCp2uxdKOsINcYbvM9EUygpi40h/C3QqYeD104wPdmmBC6I4T4OAacSDtZ03EYwd81QeC0qUTWiEjo=
+	t=1783011042; cv=none; b=MPEff399pY9a9PgYAJbDw6ZoEeLclXKQ1adPtr94SmHpXpzZYXA+m43pdG/Mo+G+vTTJtiufk7KRIH/83bgXQ/HQh6Ku281xdfkVIxiC6kPxkobBDqS/Vnmp3LRj8M9B9FPqyrnqQv1O6KMFH5ipc4JpzQtpwZnKHHqfWgZWLJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011040; c=relaxed/simple;
-	bh=1ygfi+gBC2yeh6qNeaJx1sqlkQzIiULU8aZNbdbNaDE=;
+	s=arc-20240116; t=1783011042; c=relaxed/simple;
+	bh=v5kaJEO49ZY2NMM+UfgabeaKG0Eu3ta8pWbDgckZGhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keiSxyGKJ7xsZHJ2Uex//HbNoKF8tl5T0aBYYmH2hhWHuKpGEyYa8KZSVv1e0vFqcgALVKuHF14ZFQYmhkKYiDFuYXqmHFHhST3maxrPgC8eBWSOH3sDQcd9rMf2WBmNKg98PFpT1OiJsyqNyU+01fyvS88ik96YOjRPRM5Couw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smrcky4+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XCfsOulqPQ1P/MQa+pv9c3dczcTSFx8k0rnEpkRrMYvFV584ipwyaOqhLK9lbMwCoZlk4UJ8MW+AdnBRxuIEcmMXWWXh9GTn+/QiBl8vuvYSOB5/R8k1ufhQG3V2VHUUd7w0Dsvfrm6l9Dzju+HK4NSvJxrYRuYTaRy8LChBS8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1++A8qh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smrcky4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935601F000E9;
-	Thu,  2 Jul 2026 16:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1++A8qh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379871F000E9;
+	Thu,  2 Jul 2026 16:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011039;
-	bh=oCK0HJBdhARqbdMapbP6RYL2Td7l8NoHfyLgq1VWaZk=;
+	s=korg; t=1783011041;
+	bh=CKFYn5q9dKzcgnM/HXav50n4lsQ4lDkokav/1Rh6jOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smrcky4+9ujbFNsNeKIW8Jdq5MijwMt0a9+WRECMuz/4KJ6BSuG5Nrktw1TgXtWfx
-	 ZUpQ7wsIhCgIz2FT8lKzxQR8bYEaTiqNtgdbSXaR5lFYl+OPenVrXFhzznRvdUIgmo
-	 Yd7pJm0xiVAx5JP8isy7a6IqiwbeAnTolZXjuPc0=
+	b=d1++A8qhenrSc5Vr3m4HV80U6nDDZNP7LkjI2kaXLQ4p6GDr5AlceHagMRlRyi2eU
+	 p1yyk7B/Job0hOId2qOh7aC4Ec4tmqnqr8NEdpbyFz/q17bAcoZMy+7jp1PuMeRegP
+	 /deF3DO3Fy5QIvGYBZar07j6WzyOaoTWbtukKotw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/175] batman-adv: tp_meter: fix fast recovery precondition
-Date: Thu,  2 Jul 2026 18:19:57 +0200
-Message-ID: <20260702155117.797747555@linuxfoundation.org>
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.6 132/175] wifi: ath11k: fix warning when unbinding
+Date: Thu,  2 Jul 2026 18:20:33 +0200
+Message-ID: <20260702155118.593533808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,48 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-commit 2b0d08f08ed3b2174f05c43089ec65f3543a025b upstream.
+commit 8b7a26b6681922a38cd5a7829ace61f8e54df9b7 upstream.
 
-The fast recovery precondition checks if the recover (initialized to
-BATADV_TP_FIRST_SEQ) is bigger than the received ack. But since recover is
-only updated when this check is successful, it will never enter the fast
-recovery mode.
+If there is an error during some initialization related to firmware,
+the buffers dp->tx_ring[i].tx_status are released.
+However this is released again when the device is unbinded (ath11k_pci),
+and we get:
+WARNING: CPU: 0 PID: 6231 at mm/slub.c:4368 free_large_kmalloc+0x57/0x90
+Call Trace:
+free_large_kmalloc
+ath11k_dp_free
+ath11k_core_deinit
+ath11k_pci_remove
+...
 
-According to RFC6582 Section 3.2 step 2, the check should actually be
-different:
+The issue is always reproducible from a VM because the MSI addressing
+initialization is failing.
 
-> When the third duplicate ACK is received, the TCP sender first
-> checks the value of recover to see if the Cumulative
-> Acknowledgment field covers more than recover
+In order to fix the issue, just set the buffers to NULL after releasing in
+order to avoid the double free.
 
-The precondition must therefore check if recover is smaller than the
-received ack - basically swapping the operands of the current check.
-
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260420110130.509670-1-jtornosm@redhat.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/dp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 4ff80e4214ff0a..c79352cfddc4ae 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -733,7 +733,7 @@ static void batadv_tp_recv_ack(struct batadv_priv *bat_priv,
- 		if (atomic_read(&tp_vars->dup_acks) != 3)
- 			goto out;
+--- a/drivers/net/wireless/ath/ath11k/dp.c
++++ b/drivers/net/wireless/ath/ath11k/dp.c
+@@ -1039,6 +1039,7 @@ void ath11k_dp_free(struct ath11k_base *
+ 		idr_destroy(&dp->tx_ring[i].txbuf_idr);
+ 		spin_unlock_bh(&dp->tx_ring[i].tx_idr_lock);
+ 		kfree(dp->tx_ring[i].tx_status);
++		dp->tx_ring[i].tx_status = NULL;
+ 	}
  
--		if (recv_ack >= tp_vars->recover)
-+		if (tp_vars->recover >= recv_ack)
- 			goto out;
- 
- 		/* if this is the third duplicate ACK do Fast Retransmit */
--- 
-2.53.0
-
+ 	/* Deinit any SOC level resource */
 
 
