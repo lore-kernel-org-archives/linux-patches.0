@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFB9348C66;
-	Thu,  2 Jul 2026 16:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8B233A70E;
+	Thu,  2 Jul 2026 16:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009910; cv=none; b=pQxSgnmpneLoCBc5STaxNX4wKQnHwuglqKXQMPTa1fAfZPMBAv/d9306furj7nxZzy3v8CsrBwgDa6+gimQoCsM5yxHtQaj1az5iYqJ5or8EO53FQ5Z269oS2g8vwSEg8IdBp30ZPTAKGEx2dCjzd+4mWn49y320tw9OhhntNrY=
+	t=1783009913; cv=none; b=fEboqEo4wZw3p+f0ki7ZDW5AbxBAqnyZd9UAjY1QfbfBaB6nf9NuWTYLMY2j/vcJO/lCKG/hcF6zUl/LxlloTwf0BZljdrpyfR8ROzl8Nw5dmbszTHjMtes0BMvc8O9uNmGmp+kZzj0O09Fam04gJROLv2p9zQ4u3yx7J93ZYUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009910; c=relaxed/simple;
-	bh=o9A2oUrkhzq4KpkxdrBIBjnJ0igeqbj8p+mFX5PiL5M=;
+	s=arc-20240116; t=1783009913; c=relaxed/simple;
+	bh=8dWDyH5/05GJ2Z4vewdnbmfVntu2OE4f5WIsOWE/PDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tLhV7dmbCrK3P+2u7vZ4qGozxTzCrhxk5ssNQCbC3jckpa+tPscjG+OuSdY6Y39O3VzyVrfJeN7TDIYERPa7E4GeH7wga8e3JTnruUaUZ/Q73reZQrVpkShTw7YNjrj4so4wt4KM7gYBh/Fs6LzH/0a/P+VXXGWdCcCj1kGZJG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZhOARbx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bC7SnTv4A4OtQEkIkjG7gVlDlyeTR42vWUAWZqbmlhgoADHoNcBRqRRv0btCOILqG3dmjSb5FN9k97prl8LMOGfIXUZRs2tlQihc49S8DUsrapkqz0ddk5Moagz5g303u5EXn8JYOrrCzV7F+C1tHgp2KZnq/7w7V+IC3qAV0qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2feixvkI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZhOARbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE311F000E9;
-	Thu,  2 Jul 2026 16:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2feixvkI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C484C1F00A3A;
+	Thu,  2 Jul 2026 16:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009909;
-	bh=MpO2fSAmRzwyFQB1TeKmA3sI6yoXP3hvDMQZjp2ii58=;
+	s=korg; t=1783009912;
+	bh=PNALnhKzI5/SHSklP/hxI8qnExTnyGXJiG/5RZZmX18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lZhOARbxXLCDDJuF9PWYc90o2iFcUW3+x/KWiDQ5L0otgEXQ86/3m7Kj8d0haNYwf
-	 bYxm8igExITsaFU4raz32/7xO4RbaokguvTjU4yNFTbIQpwOljQlpNkPoxxb5VrajS
-	 2K0jypLQ1ykXnKnytxlnEVq2YO6jPo4BrQ/pyxYE=
+	b=2feixvkIgGhPkMfcfyoxOphNTntQlywdS9ngLpM4t7RnM9zExjTM9QqEsGQmVTGdN
+	 wNavFPfAbw45iNZNi3sdJsHXhYnDjoqd9pXCDf3Xl3f3DhadBbb5XmRNz4MWzp4kjY
+	 HTYgCHXA5KmAWC6dwXW3yteyifWMzwulJE71yFbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	David Teigland <teigland@redhat.com>,
-	Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
-Subject: [PATCH 6.1 038/129] dlm: prevent NPD when writing a positive value to event_done
-Date: Thu,  2 Jul 2026 18:19:17 +0200
-Message-ID: <20260702155112.942749372@linuxfoundation.org>
+	Yiming Qian <yimingqian591@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 6.1 039/129] netfilter: nf_tables: always walk all pending catchall elements
+Date: Thu,  2 Jul 2026 18:19:18 +0200
+Message-ID: <20260702155112.962952668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -51,42 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 8e2bad543eca5c25cd02cbc63d72557934d45f13 upstream.
+commit 7cb9a23d7ae40a702577d3d8bacb7026f04ac2a9 upstream.
 
-do_uevent returns the value written to event_done. In case it is a
-positive value, new_lockspace would undo all the work, and lockspace
-would not be set. __dlm_new_lockspace, however, would treat that
-positive value as a success due to commit 8511a2728ab8 ("dlm: fix use
-count with multiple joins").
+During transaction processing we might have more than one catchall element:
+1 live catchall element and 1 pending element that is coming as part of the
+new batch.
 
-Down the line, device_create_lockspace would pass that NULL lockspace to
-dlm_find_lockspace_local, leading to a NULL pointer dereference.
+If the map holding the catchall elements is also going away, its
+required to toggle all catchall elements and not just the first viable
+candidate.
 
-Treating such positive values as successes prevents the problem. Given
-this has been broken for so long, this is unlikely to break userspace
-expectations.
+Otherwise, we get:
+ WARNING: ./include/net/netfilter/nf_tables.h:1281 at nft_data_release+0xb7/0xe0 [nf_tables], CPU#2: nft/1404
+ RIP: 0010:nft_data_release+0xb7/0xe0 [nf_tables]
+ [..]
+ __nft_set_elem_destroy+0x106/0x380 [nf_tables]
+ nf_tables_abort_release+0x348/0x8d0 [nf_tables]
+ nf_tables_abort+0xcf2/0x3ac0 [nf_tables]
+ nfnetlink_rcv_batch+0x9c9/0x20e0 [..]
 
-Fixes: 8511a2728ab8 ("dlm: fix use count with multiple joins")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Signed-off-by: Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
+Fixes: 628bd3e49cba ("netfilter: nf_tables: drop map element references from preparation phase")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[ Shivani: Modified to apply on v6.6.y-v6.1.y ]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/lockspace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/fs/dlm/lockspace.c
-+++ b/fs/dlm/lockspace.c
-@@ -657,7 +657,7 @@ static int new_lockspace(const char *nam
- 	   lockspace to start running (via sysfs) in dlm_ls_start(). */
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -627,7 +627,6 @@ static void nft_map_catchall_deactivate(
+ 		elem.priv = catchall->elem;
+ 		nft_set_elem_change_active(ctx->net, set, ext);
+ 		nft_setelem_data_deactivate(ctx->net, set, &elem);
+-		break;
+ 	}
+ }
  
- 	error = do_uevent(ls, 1);
--	if (error)
-+	if (error < 0)
- 		goto out_recoverd;
+@@ -5267,7 +5266,6 @@ static void nft_map_catchall_activate(co
+ 		nft_clear(ctx->net, ext);
+ 		elem.priv = catchall->elem;
+ 		nft_setelem_data_activate(ctx->net, set, &elem);
+-		break;
+ 	}
+ }
  
- 	/* wait until recovery is successful or failed */
 
 
