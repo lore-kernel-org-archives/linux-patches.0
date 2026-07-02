@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61516318BA7;
-	Thu,  2 Jul 2026 16:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0734633D4EC;
+	Thu,  2 Jul 2026 16:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010102; cv=none; b=UbmKl65LJhiKBkAYFDKlbQRaYG5wTbMhdYo9WpoR5C7gjqfkFPKD7KdLIXA018lMXZL/OWGSgPasksji35kOLkRwjFLGJ/t7V72r99vLIdTu2Osl5RdSKk/FwhuV8V/vkTRU5YOg+WKVVcIgGvqbtTxqPAVM0FVTxEhDt9RHU94=
+	t=1783010105; cv=none; b=UZ2Tu/wdM44byDJc/IFyHdlfhbDbixXtzPCWrjfs4pGKaURmOwQyGGpHzI5M+PfXGujvOehym9xOE3Aycg8uakOGaQYhhM5CsfdD5vDVvSYMzBHgtvBdd96aQppJ4bVjTVMGOWB5xRmx7G8Obzfdd52q/42b1pvLfnqNdAxh8x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010102; c=relaxed/simple;
-	bh=T0ZpBCrECyII06inaYkruecV3MA46X/Wl9HIaB6bx10=;
+	s=arc-20240116; t=1783010105; c=relaxed/simple;
+	bh=X+iavA66byMA6cIwgZTp2K0LVAQtuV5sSuK8gjUb/Bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLL536/6Z2xopDW9eJXajPejong93+RMZ6CVXZZUHv4HTLlNgMBPUcLQuO14WleRK82nt9mzzYlzW/v3ZZbo0haUBMVKgzIGOmlN0vvyFPlKylZ+RP8maA8Vnhsa+D7/hxVStjEfYcgVTeaJcI7whgNOhSRiODP13vrfLFL6nGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOXvJW/g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KumyLAs1cjXThK2IUb9O76odZ5ynWP12MYzmAqs5PIsmigXnSPrEvWB2fmqgL/k/PZuyj4p+L1O10qtwvq3lX1ZWR6Ks3VJ3l6cljuul7PU3HKViNklslVKv/NCasAuEwbrZvbjKR9oIlA1F2yFy7z/wz8mJiPhmzyhN5Ckx7go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaZSEEmX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOXvJW/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73BE1F000E9;
-	Thu,  2 Jul 2026 16:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaZSEEmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0211F000E9;
+	Thu,  2 Jul 2026 16:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010101;
-	bh=+Gc/m+YQQNqDt3rRY2gzdQFtFPorRRMJ0WwuJdl3zkI=;
+	s=korg; t=1783010103;
+	bh=DmtU1liU7Sik2e2X04VEnz0y/a4OLKSa6X0RKACJF2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pOXvJW/gZGNPN6FtkpRk08Z5vOQUZaYMztmh9jYDScpKPXUdpq+1E5wRl//7DTpJ8
-	 /Eh4JXAmvCR3bV4zymbHgKCVIOS1ePMl+CpvaJhOjpt678HJwKn12goiIJPnX8GvUc
-	 jPCEUm80zroJ38qMtALLvzi5Hm5i3a0JKu9U1Vvc=
+	b=HaZSEEmXQAUy2ZgnxPr41ZNCct8rFZRozRYD+fPlmh4a3nsGXHqdag2MQWlQcWRGH
+	 LfkeHOMS0/RFVvRQ1bNxuAGHRtECcVPycvYiT0SCmll4/L4bIIrwyE17pgJriRP3mz
+	 uoRIuoXg6nldKDTuKORkms2JkYrAdhGEGrxPCnCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/129] batman-adv: tp_meter: restrict number of unacked list entries
-Date: Thu,  2 Jul 2026 18:19:45 +0200
-Message-ID: <20260702155113.510053007@linuxfoundation.org>
+Subject: [PATCH 6.1 057/129] batman-adv: tp_meter: add only finished tp_vars to lists
+Date: Thu,  2 Jul 2026 18:19:36 +0200
+Message-ID: <20260702155113.326037794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -53,119 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit e7c775110e1858e5a7471a23a9c9658c0af9df89 upstream.
+commit 15ccbf685222274f5add1387af58c2a41a95f81e upstream.
 
-When the unacked_list is unbound, an attacker could send messages with
-small lengths and appropriated seqno + gaps to force the receiver to
-allocate more and more unacked_list entries. And the end either causing an
-out-of-memory situation or increase the management overhead for the (large)
-list that significant portions of CPU cycles are wasted in searching
-through the list.
+When the receiver variables (aka "session") are initialized, then they are
+added to the list of sessions before the timer is set up. A RCU protected
+reader could therefore find the entry and run mod_setup before
+batadv_tp_init_recv() finished the timer initialization.
 
-When limiting the list to a specific number, it is important to still
-correctly add a new entry to the list. But if the list became larger than
-the limit, the last entry of the list (with the highest seqno) must be
-dropped to still allow the earlier seqnos to finish and therefore to
-continue the process. Otherwise, the process might get stuck with too high
-seqnos which are not handled by batadv_tp_ack_unordered().
+The same is true for batadv_tp_start(), which must first initialize the
+finish_work and the test_length to avoid a similar problem.
 
 Cc: stable@kernel.org
 Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-[ Switch to pre-splitted tp_vars structure names ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 23 ++++++++++++++++++++++-
- net/batman-adv/types.h    |  3 +++
- 2 files changed, 25 insertions(+), 1 deletion(-)
+ net/batman-adv/tp_meter.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 133eed2fa9507f..638dd438a6c052 100644
+index 089ac7cc9fbebc..2bba53fc6da5c0 100644
 --- a/net/batman-adv/tp_meter.c
 +++ b/net/batman-adv/tp_meter.c
-@@ -87,6 +87,11 @@
- #define BATADV_TP_PLEN (BATADV_TP_PACKET_LEN - ETH_HLEN - \
- 			sizeof(struct batadv_unicast_packet))
+@@ -1096,21 +1096,21 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
+ 	tp_vars->prerandom_offset = 0;
+ 	spin_lock_init(&tp_vars->prerandom_lock);
  
-+/**
-+ * BATADV_TP_MAX_UNACKED - maximum number of packets a receiver didn't yet ack
-+ */
-+#define BATADV_TP_MAX_UNACKED 100
+-	kref_get(&tp_vars->refcount);
+-	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
+-	spin_unlock_bh(&bat_priv->tp_list_lock);
+-
+ 	tp_vars->test_length = test_length;
+ 	if (!tp_vars->test_length)
+ 		tp_vars->test_length = BATADV_TP_DEF_TEST_LENGTH;
+ 
++	/* init work item for finished tp tests */
++	INIT_DELAYED_WORK(&tp_vars->finish_work, batadv_tp_sender_finish);
 +
- static u8 batadv_tp_prerandom[4096] __read_mostly;
- 
- /**
-@@ -1195,6 +1200,7 @@ static void batadv_tp_receiver_shutdown(struct timer_list *t)
- 	list_for_each_entry_safe(un, safe, &tp_vars->unacked_list, list) {
- 		list_del(&un->list);
- 		kfree(un);
-+		tp_vars->unacked_count--;
- 	}
- 	spin_unlock_bh(&tp_vars->unacked_lock);
- 
-@@ -1308,6 +1314,7 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
- 	/* if the list is empty immediately attach this new object */
- 	if (list_empty(&tp_vars->unacked_list)) {
- 		list_add(&new->list, &tp_vars->unacked_list);
-+		tp_vars->unacked_count++;
- 		goto out;
- 	}
- 
-@@ -1338,12 +1345,24 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
- 		 */
- 		list_add(&new->list, &un->list);
- 		added = true;
-+		tp_vars->unacked_count++;
- 		break;
- 	}
- 
- 	/* received packet with smallest seqno out of order; add it to front */
--	if (!added)
-+	if (!added) {
- 		list_add(&new->list, &tp_vars->unacked_list);
-+		tp_vars->unacked_count++;
-+	}
++	kref_get(&tp_vars->refcount);
++	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
++	spin_unlock_bh(&bat_priv->tp_list_lock);
 +
-+	/* remove the last (biggest) unacked seqno when list is too large */
-+	if (tp_vars->unacked_count > BATADV_TP_MAX_UNACKED) {
-+		un = list_last_entry(&tp_vars->unacked_list,
-+				     struct batadv_tp_unacked, list);
-+		list_del(&un->list);
-+		kfree(un);
-+		tp_vars->unacked_count--;
-+	}
+ 	batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 		   "Meter: starting throughput meter towards %pM (length=%ums)\n",
+ 		   dst, test_length);
  
- out:
- 	spin_unlock_bh(&tp_vars->unacked_lock);
-@@ -1380,6 +1399,7 @@ static void batadv_tp_ack_unordered(struct batadv_tp_vars *tp_vars)
- 
- 		list_del(&un->list);
- 		kfree(un);
-+		tp_vars->unacked_count--;
- 	}
- 	spin_unlock_bh(&tp_vars->unacked_lock);
- }
-@@ -1430,6 +1450,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 
- 	spin_lock_init(&tp_vars->unacked_lock);
+-	/* init work item for finished tp tests */
+-	INIT_DELAYED_WORK(&tp_vars->finish_work, batadv_tp_sender_finish);
+-
+ 	/* start tp kthread. This way the write() call issued from userspace can
+ 	 * happily return and avoid to block
+ 	 */
+@@ -1430,10 +1430,10 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
  	INIT_LIST_HEAD(&tp_vars->unacked_list);
-+	tp_vars->unacked_count = 0;
  
  	kref_get(&tp_vars->refcount);
- 	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index a61e319e4db0e9..d66726d0ea8112 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -1494,6 +1494,9 @@ struct batadv_tp_vars {
- 	/** @unacked_lock: protect unacked_list */
- 	spinlock_t unacked_lock;
+-	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
++	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
  
-+	/** @unacked_count: number of unacked entries */
-+	size_t unacked_count;
-+
- 	/** @last_recv_time: time (jiffies) a msg was received */
- 	unsigned long last_recv_time;
+ 	kref_get(&tp_vars->refcount);
+-	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
++	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
+ 
+ 	batadv_tp_reset_receiver_timer(tp_vars);
  
 -- 
 2.53.0
