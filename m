@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524B824E4C3;
-	Thu,  2 Jul 2026 16:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AF9246BBA;
+	Thu,  2 Jul 2026 16:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011329; cv=none; b=F7DvIY1Dg5ko1TuQUqca1AiX7aSa33wgXJYFkUdWGc9gkMGUIo2Xe4TWomoCHnyNO1Wx7IcrBXHLXNfLikLRHYLa85cht02hTspvd6AmijaX6ER3j5944Po3y9AKRta8h2A5PnC9SJy1VR+AtKUhEPAQjy9sYzbIUj1nhPL+Tc4=
+	t=1783011332; cv=none; b=Q9dPBY/uHPj9Hcnk2ELe3Xj1kBdHXyJuhMYMzZeSRuw/Uh8haQ/tjkuAohaj2wSmkB23K2HZS1ehqF7f4Ca4q7qAdVGkjj1cwYdOl1laHoE4e5brbLVCeejNHP86xzom8ih3KADmXEhDzt9WmObF4KXbn7XL97UslxdKHYwuEes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011329; c=relaxed/simple;
-	bh=4YJkYxT9l1j9oAxSBj+f7y4OAMxB5QtmG8gp/3mFRfg=;
+	s=arc-20240116; t=1783011332; c=relaxed/simple;
+	bh=eaxyEf4vWNbM0yCGjHjosDvOgYWxOORq9F+2jtSiHEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kbpdZZoqWyPxs0AZjh97GpJ+sGW4r8yXWfTvzkAYls8Ci+Zc2o3p+G/TpGSbCyYicdsf2XznMwqGHbP1Yx7ERnLDl/aEZnfs6Ut+Og0wXhdxddgGBUfFnntj1v2VVUSW5g9cI6BSiVQxCVxLy6uEtbtEU+2GLC/KiGXS1/oKjDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/nVQcYY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JM43zSRfHZfr1KMGmloMf25rzdK3K5m7fS8abuPOR/zHf6renv66MT6gp2Bwzxb6sL1o57yrQlgroelhjvM11zO+OBJ5AQcnyBcuFJpEKQshav6PKFIF5Ila85LNQdveFWIZdYM3jP92k78ey9rB0z5EQ1sLyxPdp7hOZzG+HcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1I21Urrs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/nVQcYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89BC1F000E9;
-	Thu,  2 Jul 2026 16:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1I21Urrs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF6F1F000E9;
+	Thu,  2 Jul 2026 16:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011328;
-	bh=fZnPjjJOKk/Hg3bYOA089yQMGJqYcc4bqw+VFAxHaVs=;
+	s=korg; t=1783011330;
+	bh=DGOwvXl3mbDS1zowLJldaCZXia14oIwXVyg92uSRP9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S/nVQcYYr+6B7RscyxI9J6XbsUV3eH2ldVXGB0YkuzWLuphGrXjghDLcpS59DhYsJ
-	 zDl2oV8Uu7mBgiOtbrwoQHGD8P2noDtNrdN+wVI4Wl3cHgWwVtTEen0oT2IhHrW6uO
-	 wkAzzFQfJFihZOwsXAml+beTNL002q63c2v4atmo=
+	b=1I21UrrsEVWsXarTtR6HQPpc1WT8D3LXXsl6qwQp1rQHFfDKzAmm7xATYOJ+rUj5P
+	 xL8AON9oCFswMltNJQMviTm8oPNyNGnK/iF28q6LBsXvtjq/QcTE1QttzMMWF75Yax
+	 7IdZ2avUDvKeb+B0uwAnhWAO9o20z7C3ICOn4X00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 067/108] block: Avoid mounting the bdev pseudo-filesystem in userspace
-Date: Thu,  2 Jul 2026 18:21:04 +0200
-Message-ID: <20260702155113.499036806@linuxfoundation.org>
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.18 068/108] bpf: use kvfree() for replaced sysctl write buffer
+Date: Thu,  2 Jul 2026 18:21:05 +0200
+Message-ID: <20260702155113.519715205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -51,76 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit f73aa66dffcb8e61e78f01b56163ec16a15d06d2 upstream.
+commit 4c21b5927d4364bfe7365f2700da5fea0ed0d004 upstream.
 
-The bdev pseudo-filesystem is an internal kernel filesystem with which
-userspace should not interfere. Unregister it so that userspace cannot
-even attempt to mount it.
+proc_sys_call_handler() allocates its temporary sysctl buffer with
+kvzalloc() and passes it to __cgroup_bpf_run_filter_sysctl(). Since
+kvzalloc() may fall back to vmalloc() for large allocations, freeing
+that buffer with kfree() is wrong and can corrupt memory.
 
-This fixes a bug [1] that occurs when attempting to access files,
-because the system call move_mount() uses pointers declared in the
-inode_operations structure, which for the bdev pseudo-filesystem
-are always equal to 0. `inode->i_op = &empty_iops;`
+Use kvfree() to safely handle both kmalloc and kvzalloc()/vmalloc
+allocations.
 
-[1]
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc5.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor instruction fetch in kernel mode
- #PF: error_code(0x0010) - not-present page
- PGD 23380067 P4D 23380067 PUD 23381067 PMD 0
- Oops: 0010 [#1] PREEMPT SMP KASAN NOPTI
- CPU: 2 PID: 17125 Comm: syz-executor.0 Not tainted 6.1.155-syzkaller-00350-g84221fde2681 #0
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
- RIP: 0010:0x0
+Reproduced the bug based on v7.1-rc4 in a QEMU x86_64 guest booted with
+KASAN and CONFIG_FAILSLAB enabled. To exercise the replacement path, the
+test tree also included the accompanying fix for the stale ret == 1
+check in __cgroup_bpf_run_filter_sysctl(). The reproducer confines
+failslab injections to the proc_sys_call_handler() range, uses
+stacktrace-depth=32, and injects fail-nth=1 while writing 8191 bytes to
+/proc/sys/kernel/domainname from a task in the target cgroup. Under
+that setup, fail-nth=1 triggered the fault:
 
- Call Trace:
- <TASK>
- lookup_open.isra.0+0x700/0x1180 fs/namei.c:3460
- open_last_lookups fs/namei.c:3550 [inline]
- path_openat+0x953/0x2700 fs/namei.c:3780
- do_filp_open+0x1c5/0x410 fs/namei.c:3810
- do_sys_openat2+0x171/0x4d0 fs/open.c:1318
- do_sys_open fs/open.c:1334 [inline]
- __do_sys_openat fs/open.c:1350 [inline]
- __se_sys_openat fs/open.c:1345 [inline]
- __x64_sys_openat+0x13c/0x1f0 fs/open.c:1345
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+  BUG: unable to handle page fault for address: ffffeb0200024d48
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: Oops: 0000  SMP KASAN NOPTI
+  CPU: 2 UID: 0 PID: 209 Comm: repro_proc_sys_ Not tainted 7.1.0-rc4-00686-g97625979a5d4  PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+  RIP: 0010:kfree+0x6e/0x510
+  ...
+  Call Trace:
+   <TASK>
+   ? __cgroup_bpf_run_filter_sysctl+0x626/0xc30
+   __cgroup_bpf_run_filter_sysctl+0x74d/0xc30
+   ? __pfx___cgroup_bpf_run_filter_sysctl+0x10/0x10
+   ? srso_return_thunk+0x5/0x5f
+   ? __kvmalloc_node_noprof+0x345/0x870
+   ? proc_sys_call_handler+0x250/0x480
+   ? srso_return_thunk+0x5/0x5f
+   proc_sys_call_handler+0x3a2/0x480
+   ? __pfx_proc_sys_call_handler+0x10/0x10
+   ? srso_return_thunk+0x5/0x5f
+   ? selinux_file_permission+0x39f/0x500
+   ? srso_return_thunk+0x5/0x5f
+   ? lock_is_held_type+0x9e/0x120
+   vfs_write+0x98e/0x1000
+   ...
+   </TASK>
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+With this fix applied on top of the same test setup, rerunning the
+reproducer with fail-nth=1 yields no corresponding Oops reports.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/all/20131010004732.GJ13318@ZenIV.linux.org.uk/T/#
+Fixes: 4508943794ef ("proc: use kvzalloc for our kernel buffer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260521072857.5078-1-arefev@swemel.ru
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://lore.kernel.org/r/20260603105317.944304-3-dawei.feng@seu.edu.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bdev.c |    5 -----
- 1 file changed, 5 deletions(-)
+ kernel/bpf/cgroup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -438,15 +438,10 @@ EXPORT_SYMBOL_GPL(blockdev_superblock);
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -1940,7 +1940,7 @@ int __cgroup_bpf_run_filter_sysctl(struc
+ 	kfree(ctx.cur_val);
  
- void __init bdev_cache_init(void)
- {
--	int err;
--
- 	bdev_cachep = kmem_cache_create("bdev_cache", sizeof(struct bdev_inode),
- 			0, (SLAB_HWCACHE_ALIGN|SLAB_RECLAIM_ACCOUNT|
- 				SLAB_ACCOUNT|SLAB_PANIC),
- 			init_once);
--	err = register_filesystem(&bd_type);
--	if (err)
--		panic("Cannot register bdev pseudo-fs");
- 	blockdev_mnt = kern_mount(&bd_type);
- 	if (IS_ERR(blockdev_mnt))
- 		panic("Cannot create bdev pseudo-fs");
+ 	if (ret == 1 && ctx.new_updated) {
+-		kfree(*buf);
++		kvfree(*buf);
+ 		*buf = ctx.new_val;
+ 		*pcount = ctx.new_len;
+ 	} else {
 
 
