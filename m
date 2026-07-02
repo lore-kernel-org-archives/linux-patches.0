@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500C1318EC5;
-	Thu,  2 Jul 2026 16:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E954C339B3D;
+	Thu,  2 Jul 2026 16:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010998; cv=none; b=uLRBptsf87/4VdJR5by6VLFvnQ7Uq9XyZB/BcB4/RLidTr4m0Z9CJuop6TumDuclVvQ6rqXEfvAQ2pCVmtXxjhidyCf0JX5bh0evBrz9+FfyMkJVWybwnMMD+VYiXv8RolD+N3uNMk2ZO1Z3j3XSjoD2aMEqi65A6DhLDJ4FjaI=
+	t=1783011001; cv=none; b=kH/96adBmUMs9XndL97XujTvsWb/uMOAUs53AcnnrdTnE/HRQevFHe+oDaW5m/4FbXWDnqJEdWQ0G9pxMZ4SdFwOKP7MYidZ2wBn7Wc0ovWmsMaZ9EyW0kyx8vLDJj+503WHOanBetly1BpseuGDOTGPIuDqqgsyTEAInY4dqho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010998; c=relaxed/simple;
-	bh=NQtKL1xkCrAXl6afsY3aC1KJ5oODsUxIoVLbOAp/+N8=;
+	s=arc-20240116; t=1783011001; c=relaxed/simple;
+	bh=wt2pTz+sSA2xr3QL90+72Lt4a+W7j6U+QzkglzejBdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iehFS7dKcXkvR1sgZGPT6yF7dDAmDPWtk41nkq8wKIZYamyQZ2BROq+dfNTz9F+jY/YIjwX9wpl6jxOraoSZJox0XryLdbHxTU5m+B+oOQZIomKYLu3XJwNZ6Os3L4kOyvSVhetUBTWsat5RXy/aV7SmUJUPa4OfwEAjq2vq4tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRfARHpJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FfF8dU9JB1FfwMJ/RnBKzjxDkhLB4e7v710jF2MqFvd5i0Eatmuzo+FIFCJlqqRJ9bfmNHP6G4uTbmEtmOWhTXaHmSYFUuZ8vL3IsGuRDtGfUGX6mTF2M4HsgaolEhGQQ37AML3Douw8nPCHTf+I0Wb5K57GpG5pJ0fdqgGrJhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16aNbJ5I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRfARHpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71671F000E9;
-	Thu,  2 Jul 2026 16:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16aNbJ5I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8F51F000E9;
+	Thu,  2 Jul 2026 16:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010997;
-	bh=Tg1Gnmux8MtZCR5FqVvWKGded2fORlvZ0Hl3GtBilnA=;
+	s=korg; t=1783010999;
+	bh=gS0wOyrKstm49740SZg1OO2hUmMis2fc/UzFZZuLJdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nRfARHpJpP2p+iGUVm9a/qaKJXAsa08WqYAxu2pej4Qm/Olqrl4B3MQvR9k7EQ0zQ
-	 wk2IaWnNeaAhZXyQFQaxA2COAUGXtX5eNh/95beNEOLBYWK4f6oHujM7j8hMuldyue
-	 f27e7KhLcrbNGPXVDEHQhNdYVYnBZOMNU0wE7hDo=
+	b=16aNbJ5Il9vRTf+UgbmLS1zdn9KaOexxL6gOJGOP9bg8WbwgCC/Vz6kh15OxZ7v2J
+	 Yd8Ifh+UQExyyHpb3vIuKm1tktZ2rHH33xcR0lucWXJv3QURe23B4euS8yzTQ5JM2z
+	 LGbbU1XDiFgKzxwzvRmmgs4TChwWvgghY0yQfycI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Brian Vazquez <brianvv@google.com>,
+	Jungwoo Lee <jwlee2217@gmail.com>,
+	Wongi Lee <qw3rtyp0@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/175] inet: add indirect call wrapper for getfrag() calls
-Date: Thu,  2 Jul 2026 18:20:18 +0200
-Message-ID: <20260702155118.220367445@linuxfoundation.org>
+Subject: [PATCH 6.6 118/175] ipv4: account for fraggap on the paged allocation path
+Date: Thu,  2 Jul 2026 18:20:19 +0200
+Message-ID: <20260702155118.240288177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -53,102 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Wongi Lee <qw3rtyp0@gmail.com>
 
-[ Upstream commit 5204ccbfa22358f95afd031a3f337e6d9a74baea ]
+[ Upstream commit eca856950f7cb1a221e02b99d758409f2c5cec42 ]
 
-UDP send path suffers from one indirect call to ip_generic_getfrag()
+In __ip_append_data(), when the paged-allocation branch is taken,
+alloclen and pagedlen are computed as
 
-We can use INDIRECT_CALL_1() to avoid it.
+	alloclen = fragheaderlen + transhdrlen;
+	pagedlen = datalen - transhdrlen;
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Brian Vazquez <brianvv@google.com>
-Link: https://patch.msgid.link/20241203173617.2595451-1-edumazet@google.com
+datalen already includes fraggap, but the fraggap bytes carried over
+from the previous skb are copied into the new skb's linear area at
+offset transhdrlen by the subsequent skb_copy_and_csum_bits(). The
+linear area is therefore undersized by fraggap bytes while pagedlen is
+overstated by the same amount.
+
+The non-paged branch sets alloclen to fraglen, which already accounts
+for fraggap because datalen does. Bring the paged branch in line by
+adding fraggap to alloclen and subtracting it from pagedlen.
+
+After this adjustment, copy no longer collapses to -fraggap on the
+paged path, so remove the stale comment describing that old arithmetic.
+
+Fixes: 8eb77cc73977 ("ipv4: avoid partial copy for zc")
+Signed-off-by: Jungwoo Lee <jwlee2217@gmail.com>
+Signed-off-by: Wongi Lee <qw3rtyp0@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/ajFR1eLAIs42TN3g@DESKTOP-19IMU7U.localdomain
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: eca856950f7c ("ipv4: account for fraggap on the paged allocation path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_output.c  | 13 +++++++++----
- net/ipv6/ip6_output.c | 13 ++++++++-----
- 2 files changed, 17 insertions(+), 9 deletions(-)
+ net/ipv4/ip_output.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 305d0e2786a2a8..fb1d8be8c6757c 100644
+index fb1d8be8c6757c..8502cd34b578c0 100644
 --- a/net/ipv4/ip_output.c
 +++ b/net/ipv4/ip_output.c
-@@ -1168,7 +1168,10 @@ static int __ip_append_data(struct sock *sk,
- 			/* [!] NOTE: copy will be negative if pagedlen>0
- 			 * because then the equation reduces to -fraggap.
- 			 */
--			if (copy > 0 && getfrag(from, data + transhdrlen, offset, copy, fraggap, skb) < 0) {
-+			if (copy > 0 &&
-+			    INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
-+					    from, data + transhdrlen, offset,
-+					    copy, fraggap, skb) < 0) {
- 				err = -EFAULT;
- 				kfree_skb(skb);
- 				goto error;
-@@ -1212,8 +1215,9 @@ static int __ip_append_data(struct sock *sk,
- 			unsigned int off;
+@@ -1117,8 +1117,8 @@ static int __ip_append_data(struct sock *sk,
+ 				  !(rt->dst.dev->features & NETIF_F_SG)))
+ 				alloclen = fraglen;
+ 			else {
+-				alloclen = fragheaderlen + transhdrlen;
+-				pagedlen = datalen - transhdrlen;
++				alloclen = fragheaderlen + transhdrlen + fraggap;
++				pagedlen = datalen - transhdrlen - fraggap;
+ 			}
  
- 			off = skb->len;
--			if (getfrag(from, skb_put(skb, copy),
--					offset, copy, off, skb) < 0) {
-+			if (INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
-+					    from, skb_put(skb, copy),
-+					    offset, copy, off, skb) < 0) {
- 				__skb_trim(skb, off);
- 				err = -EFAULT;
- 				goto error;
-@@ -1253,7 +1257,8 @@ static int __ip_append_data(struct sock *sk,
- 				get_page(pfrag->page);
+ 			alloclen += alloc_extra;
+@@ -1165,9 +1165,6 @@ static int __ip_append_data(struct sock *sk,
  			}
- 			copy = min_t(int, copy, pfrag->size - pfrag->offset);
--			if (getfrag(from,
-+			if (INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
-+				    from,
- 				    page_address(pfrag->page) + pfrag->offset,
- 				    offset, copy, skb->len, skb) < 0)
- 				goto error_efault;
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 9a08ee6f52da0f..2e2cd0e0d48a5d 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1695,8 +1695,9 @@ static int __ip6_append_data(struct sock *sk,
- 				pskb_trim_unique(skb_prev, maxfraglen);
- 			}
+ 
+ 			copy = datalen - transhdrlen - fraggap - pagedlen;
+-			/* [!] NOTE: copy will be negative if pagedlen>0
+-			 * because then the equation reduces to -fraggap.
+-			 */
  			if (copy > 0 &&
--			    getfrag(from, data + transhdrlen, offset,
--				    copy, fraggap, skb) < 0) {
-+			    INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
-+					   from, data + transhdrlen, offset,
-+					   copy, fraggap, skb) < 0) {
- 				err = -EFAULT;
- 				kfree_skb(skb);
- 				goto error;
-@@ -1740,8 +1741,9 @@ static int __ip6_append_data(struct sock *sk,
- 			unsigned int off;
- 
- 			off = skb->len;
--			if (getfrag(from, skb_put(skb, copy),
--						offset, copy, off, skb) < 0) {
-+			if (INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
-+					    from, skb_put(skb, copy),
-+					    offset, copy, off, skb) < 0) {
- 				__skb_trim(skb, off);
- 				err = -EFAULT;
- 				goto error;
-@@ -1781,7 +1783,8 @@ static int __ip6_append_data(struct sock *sk,
- 				get_page(pfrag->page);
- 			}
- 			copy = min_t(int, copy, pfrag->size - pfrag->offset);
--			if (getfrag(from,
-+			if (INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
-+				    from,
- 				    page_address(pfrag->page) + pfrag->offset,
- 				    offset, copy, skb->len, skb) < 0)
- 				goto error_efault;
+ 			    INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
+ 					    from, data + transhdrlen, offset,
 -- 
 2.53.0
 
