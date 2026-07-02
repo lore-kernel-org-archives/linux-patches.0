@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD06A34107D;
-	Thu,  2 Jul 2026 16:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852DF34107D;
+	Thu,  2 Jul 2026 16:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009756; cv=none; b=fojAWxIFYyXYAOBKrfyMUgL22sZhhcBM6ooG6CMMbeXSlm140m/9p3QSXFKEBsQtjmByKAve6O81Au/Cu436hW/ZfVIqnw44xYduzA+sBpCcy/e9FhAKKgEKUZsKDQ3HjG4udxRqipfNcwyoQA60XPm/vAZF7iXll1h9jiiCgZI=
+	t=1783009759; cv=none; b=criMp+NokcSkFbhLtCvCzJQG1d0MYApD8tGmiAKILUZ0wm8EplTCiln46bEil8CazaQsPu/eH7d2tQrhrIM61Da9Cze6yk4j7puk/S7CgGkhD4EKX/hmMdKUvBxzQN9S5iR/qElXqoLAeW55AfPLelU9Z7p/tU3XzZuCNdZVa3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009756; c=relaxed/simple;
-	bh=SRB0YTO/1/vjC9vyMLoC7h/hgoQif6rI2WZsPKM4eNc=;
+	s=arc-20240116; t=1783009759; c=relaxed/simple;
+	bh=qS3aN51RvuUH0eyDsx5Y9cy7+Cl0Rh2UBOYFXojjYvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NGu5szGOBBdz7yL0TtHhEhOvjIIcY1LfSjTPr2mPIaI0gSmqKSeX0Jml8L9ydbjzxRo03QpcEwLLcoDIFZFpHZ4LRwyVpcFGY4pAgHLNV+HXpC1UWfgpZeeASjQ+zdZi/GQZbepu0kvHlErKPx0iF+qV+lyhN8vkFaKPtvSP0Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoZKMM0q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IQRADnCgUTWhqM4wUi0NwPO2lNF2J08ukON9+BxTLcsUW+LGI9mQoOx8bdgYRr1tMbrCHGtEKpKZPHVUMdRyLJ1J9tecxfGNHSswqTAf5+SoGirMu947k+3p+ksW5hsv8GoN24jBF4YCnL2le1qMSj/pvKKrbOJEdPrY+jqmHL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJM7eNDF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoZKMM0q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D548F1F00A3A;
-	Thu,  2 Jul 2026 16:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJM7eNDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1561F000E9;
+	Thu,  2 Jul 2026 16:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009754;
-	bh=2vEbSfGEoiEydjZAnQOzIJYnL0ZQHR1keWH6hIhwI0Q=;
+	s=korg; t=1783009757;
+	bh=zYWHydVmO+GSO180FcYaNa4TBJpRLeD086oEv0FnUPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FoZKMM0qnrETpqIZPWJoLuCjA97ZuSBBhTrvewJ5pKb61igr2NIHxh97OIS0ZJAPj
-	 RAhd0N3+ThHsYmNL+ToLUZZuB4y96syqF/f6Ee0vZae3EDDZUR+zJ3FJC0GhrW0eP1
-	 iNHgbqbSVe0LYUwtqyfZ3Sd7L70gYjkAUIRJk0e0=
+	b=OJM7eNDFfE+UKFUu7Dr5uhAtUDSjej/IJs+SdMd4G65Lk4HPW6D9SpbxRM0qXfa1a
+	 kuKpDxi7aVRZtfnoqLhlQAsIzIbdJattjGLkIyGeovRKOjqs54mdFODCCmA8fgIqsn
+	 MIdslygg8DZ/y9qaepiFCVrwEX0xkyJEH9klrKGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.15 74/95] power: reset: linkstation-poweroff: fix use-after-free in the linkstation_poweroff_init()
-Date: Thu,  2 Jul 2026 18:20:17 +0200
-Message-ID: <20260702155110.770843419@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 75/95] fbdev: Fix fb_new_modelist to prevent null-ptr-deref in fb_videomode_to_var
+Date: Thu,  2 Jul 2026 18:20:18 +0200
+Message-ID: <20260702155110.791633836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -50,36 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ian Bridges <icb@fastmail.org>
 
-commit 8eec545cde69e46e9a1d2b7d915ce4f5df85b3bd upstream.
+commit 7f08fc10fa3d3366dc3af723970bd03d7d6d10e3 upstream.
 
-Move of_node_put(dn) after the of_match_node() call, which still needs
-the node pointer. The node reference is correctly released after use.
+info->var, a framebuffer's current mode, is expected to have a matching
+entry in info->modelist. var_to_display() relies on this and treats a
+failed fb_match_mode() as "This should not happen". fb_set_var() keeps it
+true by adding the mode to the list on every change, and
+do_register_framebuffer() does the same at registration.
 
-Fixes: e2f471efe1d6 ("power: reset: linkstation-poweroff: prepare for new devices")
+store_modes() replaces the modelist from userspace. fb_new_modelist()
+validates the new modes but does not check that info->var still has a
+match. It relies on fbcon_new_modelist() to re-point consoles, but that
+only handles consoles mapped to the framebuffer. With fbcon unbound there
+are none, so info->var is left describing a mode that is no longer in the
+list.
+
+A later console takeover runs var_to_display(), where fb_match_mode()
+returns NULL and leaves fb_display[i].mode NULL. fbcon_switch() passes it
+to display_to_var(), and fb_videomode_to_var() dereferences the NULL mode.
+
+Keep the current mode in the list in fb_new_modelist(), the same way
+fb_set_var() does.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260407073025.271865-1-vulab@iscas.ac.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/reset/linkstation-poweroff.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/core/fbmem.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/power/reset/linkstation-poweroff.c
-+++ b/drivers/power/reset/linkstation-poweroff.c
-@@ -163,10 +163,10 @@ static int __init linkstation_poweroff_i
- 	dn = of_find_matching_node(NULL, ls_poweroff_of_match);
- 	if (!dn)
- 		return -ENODEV;
--	of_node_put(dn);
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -2061,6 +2061,18 @@ int fb_new_modelist(struct fb_info *info
+ 	if (list_empty(&info->modelist))
+ 		return 1;
  
- 	match = of_match_node(ls_poweroff_of_match, dn);
- 	cfg = match->data;
-+	of_node_put(dn);
++	/*
++	 * The new modelist may not contain the current mode (info->var), and
++	 * fbcon_new_modelist() below only re-points consoles mapped to this
++	 * framebuffer. Add the current mode here so info->var keeps a match
++	 * even when fbcon is unbound.
++	 */
++	if (!fb_match_mode(&info->var, &info->modelist)) {
++		fb_var_to_videomode(&mode, &info->var);
++		if (fb_add_videomode(&mode, &info->modelist))
++			return 1;
++	}
++
+ 	fbcon_new_modelist(info);
  
- 	dn = of_find_node_by_name(NULL, cfg->mdio_node_name);
- 	if (!dn)
+ 	return 0;
 
 
