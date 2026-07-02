@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9282DC78C;
-	Thu,  2 Jul 2026 16:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162D21A682A;
+	Thu,  2 Jul 2026 16:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010308; cv=none; b=LMufyMQ5sTfb9qsoLY98BUaKV/9WEVv6Yxd/ekp68ox5vMgZE+MtFJDv4YRne8w9UxW3VJ5ga0qSu8EhT/B0Wlm2YvJhzqF+vLxnkKoxO2wTjMwGAaCx3PDNRFUCJSdDq15TTjRAAJv9qXLDQQsbSfYln6Uz9Yx9pGHccNnPumE=
+	t=1783010310; cv=none; b=IZdgi6Xh7x7+FGTAMYm7cpctE1GlVdXh0C5SYfodhtfZ0oScrQldjYfXR6nlu1PYDN8YjoBknz8w1La4N31Fn50LauDxAVDir7I0QCmu1YHw1lB2mZYwAbKE2sZicKguh89Nor4tnUMK0FpKEBI6NNkEDro6I8NfMpBVRNOWCKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010308; c=relaxed/simple;
-	bh=lB/n7jKMq23f9ffKIcreoffbIOUNgc5zwxAGIeCgBT0=;
+	s=arc-20240116; t=1783010310; c=relaxed/simple;
+	bh=5/kg7qob13FsibrFqp8telYBw0QBW7fNoll0qAfNqgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhznJHTiGy2uJb5cua8uoXu+OJ0tE3ac3wlmRsrB/vB/gVEb7M3RRd2ScDtO+Jrz0QOphoMKaXGNo7aexY7xr+d9I6jmkKywcZGUjc2HruA9KHP8EOd2oCITla5UJbtcj2G3yPrYvgiLBL1DOOfmbFj3IoaGOyefsZMBxL87sIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hO37/FvM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dLc+oQ948HVwzV76nqLTqlVZPbKBI4Kvs5h93k3nJfDIu0JnWEuO1cBk32Q2APAnMAYLJxa3aiX8Ub0bpjUi4VCD1ajXWNGsEKmHb4K58g+V6Q53MeZnS75jikBe97uowRW2z4+9ak0sOgKrgpOPy8+hNlIxb3Ok8iw6PiqDW7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvvAkM3d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hO37/FvM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44821F000E9;
-	Thu,  2 Jul 2026 16:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvvAkM3d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530541F000E9;
+	Thu,  2 Jul 2026 16:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010306;
-	bh=45u4tT78RqVDHhQ1IKjsgWVr6Hlhyj/l8p8+iGJ9wlo=;
+	s=korg; t=1783010309;
+	bh=Qgoyzwtl0E/fsyp04VCNWdmXETdHiV7750MUoPddlQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hO37/FvM8KQF/xMAhA5loJqjrSfYLmrryy9qWw4g4fNz8oBNX4NLOPaM02HR6aGrs
-	 Sx2xTLhr4WLPn64K2s9PzYz3OJUIib12AlUSpwg6ITZyVGAHNfSFN/zpmxHChWqqZz
-	 qNNT0tPQd9c1rnoTSGKS0+obgHLiErcSfO52MD/0=
+	b=uvvAkM3dC6jr+dX2No/r1hqzhk0Iw+G/6uYs94DJnHqzKPXySPmBe0ZbfIRQDyteC
+	 2+CSwlenhJXSiA+buAojBeMxGPCoh1vulQLTohFjKAAK8lqoT1ZPOVA9mUQTKyo8cj
+	 xl7E7+RJkd6AlF56RPezLb2wU9LN+Y+rk7m4ZHsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -43,9 +43,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josh Poimboeuf <jpoimboe@redhat.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.12 057/204] scripts/sorttable: Remove unused macro defines
-Date: Thu,  2 Jul 2026 18:18:34 +0200
-Message-ID: <20260702155119.857589801@linuxfoundation.org>
+Subject: [PATCH 6.12 058/204] scripts/sorttable: Remove unused write functions
+Date: Thu,  2 Jul 2026 18:18:35 +0200
+Message-ID: <20260702155119.878644434@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -66,12 +66,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 28b24394c6e9a3166fcb4480cba054562526657c ]
+[ Upstream commit 4f48a28b37d594dab38092514a42ae9f4b781553 ]
 
 The code of sorttable.h was copied from the recordmcount.h  which defined
-a bunch of Elf MACROs so that they could be used between 32bit and 64bit
-functions. But there's several MACROs that sorttable.h does not use but
-was copied over. Remove them to clean up the code.
+various write functions for different sizes (2, 4, 8 byte lengths). But
+sorttable only uses the 4 byte writes. Remove the extra versions as they
+are not used.
 
 Cc: bpf <bpf@vger.kernel.org>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
@@ -87,75 +87,73 @@ Cc: Zheng Yejian <zhengyejian1@huawei.com>
 Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
 Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
 Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/20250105162344.128870118@goodmis.org
+Link: https://lore.kernel.org/20250105162344.314385504@goodmis.org
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/sorttable.h |   27 ---------------------------
- 1 file changed, 27 deletions(-)
+ scripts/sorttable.c |   26 --------------------------
+ 1 file changed, 26 deletions(-)
 
---- a/scripts/sorttable.h
-+++ b/scripts/sorttable.h
-@@ -27,19 +27,10 @@
- #undef Elf_Ehdr
- #undef Elf_Shdr
- #undef Elf_Rel
--#undef Elf_Rela
- #undef Elf_Sym
--#undef ELF_R_SYM
--#undef Elf_r_sym
--#undef ELF_R_INFO
--#undef Elf_r_info
--#undef ELF_ST_BIND
- #undef ELF_ST_TYPE
--#undef fn_ELF_R_SYM
--#undef fn_ELF_R_INFO
- #undef uint_t
- #undef _r
--#undef _w
+--- a/scripts/sorttable.c
++++ b/scripts/sorttable.c
+@@ -68,8 +68,6 @@ static uint32_t (*r)(const uint32_t *);
+ static uint16_t (*r2)(const uint16_t *);
+ static uint64_t (*r8)(const uint64_t *);
+ static void (*w)(uint32_t, uint32_t *);
+-static void (*w2)(uint16_t, uint16_t *);
+-static void (*w8)(uint64_t, uint64_t *);
+ typedef void (*table_sort_t)(char *, int);
  
- #ifdef SORTTABLE_64
- # define extable_ent_size	16
-@@ -52,19 +43,10 @@
- # define Elf_Ehdr		Elf64_Ehdr
- # define Elf_Shdr		Elf64_Shdr
- # define Elf_Rel		Elf64_Rel
--# define Elf_Rela		Elf64_Rela
- # define Elf_Sym		Elf64_Sym
--# define ELF_R_SYM		ELF64_R_SYM
--# define Elf_r_sym		Elf64_r_sym
--# define ELF_R_INFO		ELF64_R_INFO
--# define Elf_r_info		Elf64_r_info
--# define ELF_ST_BIND		ELF64_ST_BIND
- # define ELF_ST_TYPE		ELF64_ST_TYPE
--# define fn_ELF_R_SYM		fn_ELF64_R_SYM
--# define fn_ELF_R_INFO		fn_ELF64_R_INFO
- # define uint_t			uint64_t
- # define _r			r8
--# define _w			w8
- #else
- # define extable_ent_size	8
- # define compare_extable	compare_extable_32
-@@ -76,19 +58,10 @@
- # define Elf_Ehdr		Elf32_Ehdr
- # define Elf_Shdr		Elf32_Shdr
- # define Elf_Rel		Elf32_Rel
--# define Elf_Rela		Elf32_Rela
- # define Elf_Sym		Elf32_Sym
--# define ELF_R_SYM		ELF32_R_SYM
--# define Elf_r_sym		Elf32_r_sym
--# define ELF_R_INFO		ELF32_R_INFO
--# define Elf_r_info		Elf32_r_info
--# define ELF_ST_BIND		ELF32_ST_BIND
- # define ELF_ST_TYPE		ELF32_ST_TYPE
--# define fn_ELF_R_SYM		fn_ELF32_R_SYM
--# define fn_ELF_R_INFO		fn_ELF32_R_INFO
- # define uint_t			uint32_t
- # define _r			r
--# define _w			w
- #endif
+ /*
+@@ -146,31 +144,11 @@ static void wbe(uint32_t val, uint32_t *
+ 	put_unaligned_be32(val, x);
+ }
  
- #if defined(SORTTABLE_64) && defined(UNWINDER_ORC_ENABLED)
+-static void w2be(uint16_t val, uint16_t *x)
+-{
+-	put_unaligned_be16(val, x);
+-}
+-
+-static void w8be(uint64_t val, uint64_t *x)
+-{
+-	put_unaligned_be64(val, x);
+-}
+-
+ static void wle(uint32_t val, uint32_t *x)
+ {
+ 	put_unaligned_le32(val, x);
+ }
+ 
+-static void w2le(uint16_t val, uint16_t *x)
+-{
+-	put_unaligned_le16(val, x);
+-}
+-
+-static void w8le(uint64_t val, uint64_t *x)
+-{
+-	put_unaligned_le64(val, x);
+-}
+-
+ /*
+  * Move reserved section indices SHN_LORESERVE..SHN_HIRESERVE out of
+  * the way to -256..-1, to avoid conflicting with real section
+@@ -277,16 +255,12 @@ static int do_file(char const *const fna
+ 		r2	= r2le;
+ 		r8	= r8le;
+ 		w	= wle;
+-		w2	= w2le;
+-		w8	= w8le;
+ 		break;
+ 	case ELFDATA2MSB:
+ 		r	= rbe;
+ 		r2	= r2be;
+ 		r8	= r8be;
+ 		w	= wbe;
+-		w2	= w2be;
+-		w8	= w8be;
+ 		break;
+ 	default:
+ 		fprintf(stderr, "unrecognized ELF data encoding %d: %s\n",
 
 
