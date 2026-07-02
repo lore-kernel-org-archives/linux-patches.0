@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5C73A0E8A;
-	Thu,  2 Jul 2026 16:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34ED3B774F;
+	Thu,  2 Jul 2026 16:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009747; cv=none; b=Z5dqkXQueuqOLOSvkAmfKbqebszrr5EKb8+9Cg8cKPQo2ssLLBvYa9vqr+JOHpyEB2AllGMY8ta7UaVIQNOhVQln3apDBQ88S16oNhP3Vsx44iKtA+yM3MHh6/OC10B8bRqWKzAiTV98TpNXvbBOqmIlr/ym4Eajht8+3v7z+q0=
+	t=1783009749; cv=none; b=OvpY8BNDq+8uIrapQ1eudz2fsLDn7atmVrmdQrns/dGOqpWwpwkpLAuRMffx5ty5VZBXIVvlcCAvOQ1GQRoTLWbfip67gu9dfz5aF9tAvRAMAldpX/ABQDT6MZ0VFwiwzSNzObfbW9UPMWMx8feMoCDtCY99cD1OroghsTvSBo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009747; c=relaxed/simple;
-	bh=gGoeyuHsN6ZsN5Yf1ZVtAtChOBeZ3gcFSUZ1bcHdN2I=;
+	s=arc-20240116; t=1783009749; c=relaxed/simple;
+	bh=6bRve68fYN634RwoX38/GbUZH6sHbf8HzYvyWQMqu98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJh0exDH+LvDP1StBw8ZuVWD/OCwDPdgC1yJP55BIOjxPBdgkKAJF7Nt/hoyCIBrtcQzIGgYNzzpmcoDKojkbpBob1aOJg3S65OsozWV67PIMF4gTB6lBPg7zZ8xnklOmOtCKNkTn2lSsHjbyh7v/MXYwSk/3mR1WGVZe7+WJ+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfN2gYdk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rt8pmuvlW/Ya9K0efSgbBpkRGAnzsRus3BO5/ssU40XMw3xq1OuU0hcjZQafuDmsPYNGCLDDGRtjIMhakzIgSLYvQkOkseuv3UjhjzkAn0s7b/JvRD+p9cxaYc5xa03cbm5ekWN0hdEdVa3Rx235lb5oIIxXEd/sTmgKQV9sBJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rozzLrBK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfN2gYdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602E61F00A3D;
-	Thu,  2 Jul 2026 16:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rozzLrBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0457D1F000E9;
+	Thu,  2 Jul 2026 16:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009743;
-	bh=YO0ZlvZZuZrmv2iNuR6cYz/6t+AUcWSfd8MlN3noodk=;
+	s=korg; t=1783009746;
+	bh=nuj8OvfkgMpqJFEReku3b6QxFUYpVIRPcbfzkXawarw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KfN2gYdk3Tu7pM4g8ouNwYGPQWNT4r0II0wLtm8U0YcLZ0qY6Kk3Sw1zpOkWPKG95
-	 gwivlVAs2+A1hZAciSKVBGSppXBLyO7J2rPdss+hAbQnImXVQlfrh9sklozbUKHZmI
-	 m7DZ+OcZg5kz+enogskZenqmqTrkTichfYZzEt+g=
+	b=rozzLrBKzu6KDq4dtt75BDRHQ8C2Q4yQ9Bin3yffkfNdCYBYLyrukBL5sQtG6K3Cf
+	 B85da76PnhLwPyaYPem/BIpWxqGJft7R86phnuMt8/XlQlTN1US5bTRbVow2aNvzEE
+	 rWnVV/oZQQrnayPD5Qrx/BNq1OxOC6JMdA53+4n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 44/95] batman-adv: tp_meter: restrict number of unacked list entries
-Date: Thu,  2 Jul 2026 18:19:47 +0200
-Message-ID: <20260702155110.134787158@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 5.15 71/95] fpga: region: fix use-after-free in child_regions_with_firmware()
+Date: Thu,  2 Jul 2026 18:20:14 +0200
+Message-ID: <20260702155110.707192969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -51,124 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit e7c775110e1858e5a7471a23a9c9658c0af9df89 upstream.
+commit 54f3c5643ec523a04b6ec0e7c19eb10f5ebebdd3 upstream.
 
-When the unacked_list is unbound, an attacker could send messages with
-small lengths and appropriated seqno + gaps to force the receiver to
-allocate more and more unacked_list entries. And the end either causing an
-out-of-memory situation or increase the management overhead for the (large)
-list that significant portions of CPU cycles are wasted in searching
-through the list.
+Move of_node_put(child_region) after the error print to avoid accessing
+freed memory when pr_err() references child_region.
 
-When limiting the list to a specific number, it is important to still
-correctly add a new entry to the list. But if the list became larger than
-the limit, the last entry of the list (with the highest seqno) must be
-dropped to still allow the earlier seqnos to finish and therefore to
-continue the process. Otherwise, the process might get stuck with too high
-seqnos which are not handled by batadv_tp_ack_unordered().
-
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-[ Switch to pre-splitted tp_vars structure names ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0fa20cdfcc1f ("fpga: fpga-region: device tree control for FPGA")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+[ Yilun: Fix the Fixes tag ]
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260408154534.404327-1-vulab@iscas.ac.cn
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c | 23 ++++++++++++++++++++++-
- net/batman-adv/types.h    |  3 +++
- 2 files changed, 25 insertions(+), 1 deletion(-)
+ drivers/fpga/of-fpga-region.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 9e31d86c4b87f5..105cda5b0b2cda 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -87,6 +87,11 @@
- #define BATADV_TP_PLEN (BATADV_TP_PACKET_LEN - ETH_HLEN - \
- 			sizeof(struct batadv_unicast_packet))
- 
-+/**
-+ * BATADV_TP_MAX_UNACKED - maximum number of packets a receiver didn't yet ack
-+ */
-+#define BATADV_TP_MAX_UNACKED 100
-+
- static u8 batadv_tp_prerandom[4096] __read_mostly;
- 
- /**
-@@ -1195,6 +1200,7 @@ static void batadv_tp_receiver_shutdown(struct timer_list *t)
- 	list_for_each_entry_safe(un, safe, &tp_vars->unacked_list, list) {
- 		list_del(&un->list);
- 		kfree(un);
-+		tp_vars->unacked_count--;
- 	}
- 	spin_unlock_bh(&tp_vars->unacked_lock);
- 
-@@ -1308,6 +1314,7 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
- 	/* if the list is empty immediately attach this new object */
- 	if (list_empty(&tp_vars->unacked_list)) {
- 		list_add(&new->list, &tp_vars->unacked_list);
-+		tp_vars->unacked_count++;
- 		goto out;
+--- a/drivers/fpga/of-fpga-region.c
++++ b/drivers/fpga/of-fpga-region.c
+@@ -166,11 +166,10 @@ static int child_regions_with_firmware(s
+ 						     fpga_region_of_match);
  	}
  
-@@ -1338,12 +1345,24 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
- 		 */
- 		list_add(&new->list, &un->list);
- 		added = true;
-+		tp_vars->unacked_count++;
- 		break;
- 	}
+-	of_node_put(child_region);
+-
+ 	if (ret)
+ 		pr_err("firmware-name not allowed in child FPGA region: %pOF",
+ 		       child_region);
++	of_node_put(child_region);
  
- 	/* received packet with smallest seqno out of order; add it to front */
--	if (!added)
-+	if (!added) {
- 		list_add(&new->list, &tp_vars->unacked_list);
-+		tp_vars->unacked_count++;
-+	}
-+
-+	/* remove the last (biggest) unacked seqno when list is too large */
-+	if (tp_vars->unacked_count > BATADV_TP_MAX_UNACKED) {
-+		un = list_last_entry(&tp_vars->unacked_list,
-+				     struct batadv_tp_unacked, list);
-+		list_del(&un->list);
-+		kfree(un);
-+		tp_vars->unacked_count--;
-+	}
- 
- out:
- 	spin_unlock_bh(&tp_vars->unacked_lock);
-@@ -1380,6 +1399,7 @@ static void batadv_tp_ack_unordered(struct batadv_tp_vars *tp_vars)
- 
- 		list_del(&un->list);
- 		kfree(un);
-+		tp_vars->unacked_count--;
- 	}
- 	spin_unlock_bh(&tp_vars->unacked_lock);
+ 	return ret;
  }
-@@ -1430,6 +1450,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 
- 	spin_lock_init(&tp_vars->unacked_lock);
- 	INIT_LIST_HEAD(&tp_vars->unacked_list);
-+	tp_vars->unacked_count = 0;
- 
- 	kref_get(&tp_vars->refcount);
- 	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index d298a3983fab97..d7fb3046d04412 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -1494,6 +1494,9 @@ struct batadv_tp_vars {
- 	/** @unacked_lock: protect unacked_list */
- 	spinlock_t unacked_lock;
- 
-+	/** @unacked_count: number of unacked entries */
-+	size_t unacked_count;
-+
- 	/** @last_recv_time: time (jiffies) a msg was received */
- 	unsigned long last_recv_time;
- 
--- 
-2.53.0
-
 
 
