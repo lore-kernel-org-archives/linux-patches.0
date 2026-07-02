@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C724DB566;
-	Thu,  2 Jul 2026 16:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7939433D509;
+	Thu,  2 Jul 2026 16:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009479; cv=none; b=cwGJ0wvLURzE7Z/exCh/Dl0qlnSIETi38hGeuacw51nQainuwZVkUjYeAQomTVv3Ue31OCanzcZ9j2/FUiNGgj8hi4VcK+gGbA6AOSfEQ5rv7onqNORDA5v0thomt66u+FqLCh1fxa1QP/phj+On035lwIHGzvk4LS5wyajKOUI=
+	t=1783009483; cv=none; b=RZ5pWcKv8eJZtvL1ZEippS/yW09uJFKiPuCrM6jUB9hOcZ7PeNNuQls2UCD1WHVU1/3QwU/UPwRMnlkxOwfiO0nsaxiFK0m4dAnPiuCjtddZ4UsxBD5JpbyqMcJJJ62LlRpIF5vuIk6V+6AaMUemupfiT1P1e57V3wBSfppEL7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009479; c=relaxed/simple;
-	bh=1FdQRXqiIVjchgBos710PuL5TmvZW5nUBiyqjHjXnvE=;
+	s=arc-20240116; t=1783009483; c=relaxed/simple;
+	bh=SK7evETtCTDKBKm0Ox+JpDGl+mxEsYdlFLDB+cvKVFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaE/JvxDo+mZzjSaizdaZMl7VFzgpEKgr/iJEGz6UQbRigMt009U4rgWxiaLMdHKjg/c8dh6fTcmnMzb8RfqPzILYxB+ZpgxHnNjXcEXzCe1K2C6KY4titqMSFlbfm/iH4odNHpJw+erfhuS2SUa3trTST63ZyG1LtgkVHoppKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJ6ipFmH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gSQ/mnzxo/+aNcdtE6b8xCBcoUEsSRhD6ym4X8x1PYXjq/Vg+q6DBWH1miGIa7+AVSfd6ZopUTHyU6NnpYyEIE44OHCEdVQgwOzRTA97Vu/pkc80DlJmm0/h1SkLrImRHiWFx9NqWgmO7VWax+O872X00Fa/SGZlCtRlQ0xyCeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTyAt0tN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJ6ipFmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCB41F000E9;
-	Thu,  2 Jul 2026 16:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTyAt0tN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACE91F00A3A;
+	Thu,  2 Jul 2026 16:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009476;
-	bh=bxsD1/U8jYBzJ+j3LowIGYmOR9CGSSgrCNl/Op4Ab8w=;
+	s=korg; t=1783009478;
+	bh=2mqTXc0N7LJ2C9EAvtSUUnbg7mIVvU9JZWf8Jd9D+00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bJ6ipFmHqGfD+j1OIL0WdAvT8y3pMAQXFq+cxbeqmbkRqYp4eeRHV/s9drQIeyL5D
-	 9o+tIvl7hGjR6rfoMXeQLL/kMFnRxLzr9UVleHcyYAddP+4T/smMTHM6rCvM6XHSuI
-	 F91ktKlT3OcYRNNkwWPZDT4dcGGtHlmLhmu+HLW0=
+	b=wTyAt0tNQejSlR3n6zNwgkOQxUFh79MaykjJ4N1s+rA8rHqJcAo9lXXaMCW8jJ17s
+	 R2csUmH4ovJ4QHcZL1uIwIyYTaQeLFugnF7mLtmnXfxFqDvXyDUfbvzZF1PpYSgPKI
+	 L0aTIOlqrb4G41rojn1U2ebw5I+drMxtYzmeVCKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 5.10 66/96] wifi: rtlwifi: rtl8821ae: Fix C2H bit location in RX descriptor
-Date: Thu,  2 Jul 2026 18:19:58 +0200
-Message-ID: <20260702155110.370342340@linuxfoundation.org>
+	stable@kernel.org,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.10 67/96] f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
+Date: Thu,  2 Jul 2026 18:19:59 +0200
+Message-ID: <20260702155110.390393768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -50,39 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-commit 83d38df6929118c3f996b9e3351c2d5014073d87 upstream.
+commit c4810ada31e80cbe4011467c4f3b1e93f94134f3 upstream.
 
-Bit 28 of double word 2 in the RX descriptor indicates if the packet is
-a normal 802.11 frame, or a message from the wifi firmware to the
-driver (Card 2 Host).
+f2fs_acl_count() only validates the aggregate ACL xattr length. A
+malformed ACL can still place ACL_USER or ACL_GROUP in a slot that only
+contains struct f2fs_acl_entry_short bytes, and f2fs_acl_from_disk()
+then reads entry->e_id before verifying that a full entry fits.
 
-Commit f5678bfe1cdc ("rtlwifi: rtl8821ae: Replace local bit manipulation
-macros") mistakenly made the driver look for this bit in double word 1,
-causing packet loss and Bluetooth coexistence problems.
+Require a short entry before reading e_tag and e_perm, and require a
+full entry before reading e_id for ACL_USER and ACL_GROUP. Return
+-EFSCORRUPTED from these new truncated-entry checks, while keeping the
+pre-existing -EINVAL paths unchanged.
 
-Fixes: f5678bfe1cdc ("rtlwifi: rtl8821ae: Replace local bit manipulation macros")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/04da7398-cedb-425a-a810-5772ab10139d@gmail.com
+Validation reproduced this kernel report:
+KASAN slab-out-of-bounds in __f2fs_get_acl+0x6fb/0x7e0
+RIP: 0033:0x7f4b835ea7aa
+The buggy address belongs to the object at ffff888114589960 which belongs
+to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes to the right of allocated 8-byte
+region [ffff888114589960, ffff888114589968)
+Read of size 4
+Call trace:
+  dump_stack_lvl+0x66/0xa0 (?:?)
+  print_report+0xce/0x630 (?:?)
+  __f2fs_get_acl+0x6fb/0x7e0 (fs/f2fs/acl.c:169)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x224/0x430 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  __f2fs_get_acl+0x5/0x7e0 (fs/f2fs/acl.c:169)
+  __get_acl+0x281/0x380 (?:?)
+  vfs_get_acl+0x10b/0x190 (?:?)
+  do_get_acl+0x2a/0x410 (?:?)
+  do_get_acl+0x9/0x410 (?:?)
+  do_getxattr+0xe8/0x260 (?:?)
+  filename_getxattr+0xd1/0x140 (?:?)
+  do_getname+0x2d/0x2d0 (?:?)
+  path_getxattrat+0x16c/0x200 (?:?)
+  lock_release+0xc8/0x290 (?:?)
+  cgroup_update_frozen+0x9d/0x320 (?:?)
+  lockdep_hardirqs_on_prepare+0xea/0x1a0 (?:?)
+  trace_hardirqs_on+0x1a/0x170 (?:?)
+  _raw_spin_unlock_irq+0x28/0x50 (?:?)
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+
+Cc: stable@kernel.org
+Fixes: af48b85b8cd3 ("f2fs: add xattr and acl functionalities")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/acl.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h
-@@ -291,7 +291,7 @@ static inline int get_rx_desc_paggr(__le
- 
- static inline int get_rx_status_desc_rpt_sel(__le32 *__pdesc)
+--- a/fs/f2fs/acl.c
++++ b/fs/f2fs/acl.c
+@@ -45,6 +45,7 @@ static inline int f2fs_acl_count(size_t
+ static struct posix_acl *f2fs_acl_from_disk(const char *value, size_t size)
  {
--	return le32_get_bits(*(__pdesc + 1), BIT(28));
-+	return le32_get_bits(*(__pdesc + 2), BIT(28));
+ 	int i, count;
++	int err = -EINVAL;
+ 	struct posix_acl *acl;
+ 	struct f2fs_acl_header *hdr = (struct f2fs_acl_header *)value;
+ 	struct f2fs_acl_entry *entry = (struct f2fs_acl_entry *)(hdr + 1);
+@@ -68,8 +69,11 @@ static struct posix_acl *f2fs_acl_from_d
+ 
+ 	for (i = 0; i < count; i++) {
+ 
+-		if ((char *)entry > end)
++		if (unlikely((char *)entry +
++				sizeof(struct f2fs_acl_entry_short) > end)) {
++			err = -EFSCORRUPTED;
+ 			goto fail;
++		}
+ 
+ 		acl->a_entries[i].e_tag  = le16_to_cpu(entry->e_tag);
+ 		acl->a_entries[i].e_perm = le16_to_cpu(entry->e_perm);
+@@ -84,6 +88,11 @@ static struct posix_acl *f2fs_acl_from_d
+ 			break;
+ 
+ 		case ACL_USER:
++			if (unlikely((char *)entry +
++					sizeof(struct f2fs_acl_entry) > end)) {
++				err = -EFSCORRUPTED;
++				goto fail;
++			}
+ 			acl->a_entries[i].e_uid =
+ 				make_kuid(&init_user_ns,
+ 						le32_to_cpu(entry->e_id));
+@@ -91,6 +100,11 @@ static struct posix_acl *f2fs_acl_from_d
+ 					sizeof(struct f2fs_acl_entry));
+ 			break;
+ 		case ACL_GROUP:
++			if (unlikely((char *)entry +
++					sizeof(struct f2fs_acl_entry) > end)) {
++				err = -EFSCORRUPTED;
++				goto fail;
++			}
+ 			acl->a_entries[i].e_gid =
+ 				make_kgid(&init_user_ns,
+ 						le32_to_cpu(entry->e_id));
+@@ -106,7 +120,7 @@ static struct posix_acl *f2fs_acl_from_d
+ 	return acl;
+ fail:
+ 	posix_acl_release(acl);
+-	return ERR_PTR(-EINVAL);
++	return ERR_PTR(err);
  }
  
- static inline int get_rx_desc_rxmcs(__le32 *__pdesc)
+ static void *f2fs_acl_to_disk(struct f2fs_sb_info *sbi,
 
 
