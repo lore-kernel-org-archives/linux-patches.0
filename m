@@ -1,53 +1,44 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178C7348C63
-	for <patches@lists.linux.dev>; Thu,  2 Jul 2026 16:47:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32793A59A3;
+	Thu,  2 Jul 2026 16:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010857; cv=none; b=KisJW15TVlWNNc3vbBJCTTT1aSABt2Eu8siHZWjVpdLWbHH8RCL+s+OeWSzN91Cj1Plky5A05t8s579sJydSPVrTtCQawNPp79oX9xDUZ4yWc/PQkib2NTUWm94MQQEj9wqK7Ecy6YXrzNqvx0URCUbdo1rdx0a0v6NDQ42yDZc=
+	t=1783010859; cv=none; b=MPTmOQlS7lmTgOSq/Y9fFVLhMEGbnkDamLTEV8qPjQ2GxT9Dl+dh6cgbrsBBXUOTBthwXxBsNxDnK6V/iQL7nPUh7jGZRctL++wVVO7LELvYXiwZCoeivnzaM3znYYqKk1CBYOYv52cwn7AKC4QlbVnNz3UjgI8vpT6GJvCno1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010857; c=relaxed/simple;
-	bh=ONaKedoAz1ZMUYbT86fdH68xNyanLZ4A7ezeq6OWTYg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pZz45gKpsNisR94FVewLmOktvKPjgBY0P9J7YXtFRhaj9TIlBfXPi8+IlYNmCxU7Uya33U0aTMxVagr7FV510VoTEeUHbK5D5R4jWwaQLH2NxDDIdeCO+HyYkg+FCG0pnWieaBFuP6euJFHlL6mhMxC/ElCTt++UxdtMZ26zgC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=jS9syefe; arc=none smtp.client-ip=54.254.200.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	s=arc-20240116; t=1783010859; c=relaxed/simple;
+	bh=4xKFjXa9ZkHgLm4FKcPhm9n5SFNX7RuyXj0foxoITN0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZiGsNbPhd3hsTSDwz4bY5GxXetjRWw+y8tmso1ZZcIahWYJUHpe0sXsUbRd/KpylFv1wcbA75B04c7sQZFrBZmUsYedOVITJqlMKox2RP6RXV/zRlIlEJv0NIWHGf62AQInjXfnLleOeRKdEFfqVF5lmIrMKjm/LnK/hKZeNtfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwtMNUav; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="jS9syefe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1783010780;
-	bh=ywEQIaPdwXqBm2L9NsDVfzNWZ0ixJP2Iy1x1nuGkgbU=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=jS9syefeAbJDsV2qCQDo/bBGuVR7GEdOeqfeS6Gzmgjit9mFTzM/j7Nmg/y7ebt7b
-	 1G5/8/SQYr+IzFbiri2zfgWmT75d6QoRuUEhw6GAHa8jZNTDl1HESVCzVvg+jiKRlo
-	 0/h+mIY8l0cZGEduqLFhTDSJ6IeHwjUdODyENqj4=
-X-QQ-mid: zesmtpgz4t1783010761td432150e
-X-QQ-Originating-IP: XuVxTDBheIZR1nuAnJSqw8c46VDRO+tdQjzu73Sc2Sg=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 03 Jul 2026 00:45:59 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 4839875498590067258
-EX-QQ-RecipientCnt: 9
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: 00107082@163.com,
-	guanwentao@uniontech.com,
-	iklatzco@gmail.com,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwtMNUav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258CE1F000E9;
+	Thu,  2 Jul 2026 16:47:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1783010858;
+	bh=VbqU4jttIXXPHxZlYykZarkEz/qYzvfIofkajmP7vXM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=xwtMNUavodvoHsU7QRaa6vusEUv8WhrGPEGzJvRiZqJXk+od2nPId8XxGgB8OAhdL
+	 r3ZE9DogLx+wN//JI4T0gDOkB+KnnsvLOje1seTkMmg39EBl+yVfrZ/NGdz/SxvrZE
+	 zyMzklhIjg1nTYUu6FpYiOjaiyuV7H90mgZsn3p0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	peterz@infradead.org,
-	sashal@kernel.org,
-	stable@vger.kernel.org,
-	yeoreum.yun@arm.com
-Subject: [PATCH 6.6.y] perf: Fix dangling cgroup pointer in cpuctx backport
-Date: Fri,  3 Jul 2026 00:45:54 +0800
-Message-Id: <20260702164553.498397-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <2026070200-uneaten-smock-4130@gregkh>
-References: <2026070200-uneaten-smock-4130@gregkh>
+	Guenter Roeck <linux@roeck-us.net>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Subject: [PATCH 6.6 065/175] ftrace: Do not over-allocate ftrace memory
+Date: Thu,  2 Jul 2026 18:19:26 +0200
+Message-ID: <20260702155117.163634470@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
+References: <20260702155115.766838875@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,58 +46,165 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Ocx62dM7vaMV8DFUrqhZS20s2ZxTKG0n8HN8mRFJ/vXMmmGrE9kJclM1
-	zmN7NyN93OZPN+Uoqv57p6IDxv+JcpVwqzxg8tQdLyEBKCwfoNfDFOywI9vE1YS0g4JJFsh
-	JM1/61LtqiZ4N/SSZzy+zYXGZdgItw24P0WQPtoncaNb18YeygBHmR90QmgiREENd8WKsuh
-	V+MbMfXiUWIHn/UNUOuleguhEZkdl7fOy1zxpXGA6tOSSXcfOf2CWeBowkquf4hxzLKudF4
-	uzrEtmj0yk3/LBxgWC66UocJya4xCjycEQquWjFZQ2l7jKxrwtFSK4jvR4lFf9yQICh+oro
-	/Xs5IX6Fr1LSo9S2SXPhtWfs40xqs6o7kDgl9EFHZCPD+JxWV+HzJFJOCABcSA6j0Gr1Ka/
-	vMX2SiA7i5VRcz0BkD06fYIlQEHrzNvP0fudYfV1sDaXTYDhJFjs575U9g8PzGuHGq1ojei
-	Mqv6EhuSfpJ4JuJTpCY6+uO66XYjLwEuVzOYSE/TPGhHtaJobYjdYQdl0ngjPUmFcibOxZI
-	S9f5tbMn3YQlKQvTJtYq26Rq3xBUvdWvskt4igpI2M9Z2lVJn9lOwv2GNGUdvXwS+tjkEsx
-	gih57+MmiIUlEC4mXTH4v8S5vkrakkInL27cZ6eGTyo+LuafTB0F1O3rl59RCXLhsFo33rD
-	3i6gRnL2QaTIFkjzDFJxPNif0VP+vf+KXOcOixlYn16H25BRmjtAg4907DBL5SE3bArfCbg
-	PjQuk9ZXZ07kgrgZqD3pr33VAOjD8XWBGS4+yGyHf9nPaVRN4xpqeeFesIuhNZhogReYIaP
-	7wb0fmfRXFyfx+8Yl4bH4w6M1Q69qpiJYs6LI8wIadiCbOQGnZEkyQjmqTOdHl0mACkmnbH
-	KlEV737SgZY4dnGYlVYZODp0d+VZVJh+EKi/kDTxTSJeEbLi7tR57ojGhGbevLK5r+JhRpw
-	65twi01ckl1kHm1zMe30waKOrlzehoUx1pHG4Gh0o79aK5N6j3bSJca/SPIaFPBFDK3MLKv
-	Uiyuj1AT9LgEAVgILTYnNoSAIa/KKbhDK3jwJCRUztXBKIaGKwJl192e4lQ/SVjn3zKC51m
-	fSrYvSMFfp895k8vZ3pvzQ=
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-QQ-RECHKSPAM: 0
 
-recently backport of ("perf: Fix dangling cgroup pointer in cpuctx")
-use a middle version, so aligned with the upstream commit:
-commit 3b7a34aebbdf ("perf: Fix dangling cgroup pointer in cpuctx")
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-This is a fix for stable v6.6.143 backport commit, so no upstream commit.
+------------------
 
-Link: https://lore.kernel.org/all/2026070200-uneaten-smock-4130@gregkh/
-Fixes: ae1ada0af162 ("perf: Fix dangling cgroup pointer in cpuctx")
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+From: Guenter Roeck <linux@roeck-us.net>
+
+[ Upstream commit be55257fab181b93af38f8c4b1b3cb453a78d742 ]
+
+The pg_remaining calculation in ftrace_process_locs() assumes that
+ENTRIES_PER_PAGE multiplied by 2^order equals the actual capacity of the
+allocated page group. However, ENTRIES_PER_PAGE is PAGE_SIZE / ENTRY_SIZE
+(integer division). When PAGE_SIZE is not a multiple of ENTRY_SIZE (e.g.
+4096 / 24 = 170 with remainder 16), high-order allocations (like 256 pages)
+have significantly more capacity than 256 * 170. This leads to pg_remaining
+being underestimated, which in turn makes skip (derived from skipped -
+pg_remaining) larger than expected, causing the WARN(skip != remaining)
+to trigger.
+
+Extra allocated pages for ftrace: 2 with 654 skipped
+WARNING: CPU: 0 PID: 0 at kernel/trace/ftrace.c:7295 ftrace_process_locs+0x5bf/0x5e0
+
+A similar problem in ftrace_allocate_records() can result in allocating
+too many pages. This can trigger the second warning in
+ftrace_process_locs().
+
+Extra allocated pages for ftrace
+WARNING: CPU: 0 PID: 0 at kernel/trace/ftrace.c:7276 ftrace_process_locs+0x548/0x580
+
+Use the actual capacity of a page group to determine the number of pages
+to allocate. Have ftrace_allocate_pages() return the number of allocated
+pages to avoid having to calculate it. Use the actual page group capacity
+when validating the number of unused pages due to skipped entries.
+Drop the definition of ENTRIES_PER_PAGE since it is no longer used.
+
+Cc: stable@vger.kernel.org
+Fixes: 4a3efc6baff93 ("ftrace: Update the mcount_loc check of skipped entries")
+Link: https://patch.msgid.link/20260113152243.3557219-1-linux@roeck-us.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/trace/ftrace.c |   29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index a4187dea6402a..73a86db06cc9b 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -2384,10 +2384,9 @@ __perf_remove_from_context(struct perf_event *event,
- 	 */
- 	if (flags & DETACH_EXIT)
- 		state = PERF_EVENT_STATE_EXIT;
--	if (flags & DETACH_DEAD) {
--		event->pending_disable = 1;
-+	if (flags & DETACH_DEAD)
- 		state = PERF_EVENT_STATE_DEAD;
--	}
-+
- 	event_sched_out(event, ctx);
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1117,7 +1117,6 @@ struct ftrace_page {
+ };
  
- 	if (event->state > PERF_EVENT_STATE_OFF)
--- 
-2.30.2
+ #define ENTRY_SIZE sizeof(struct dyn_ftrace)
+-#define ENTRIES_PER_PAGE (PAGE_SIZE / ENTRY_SIZE)
+ 
+ static struct ftrace_page	*ftrace_pages_start;
+ static struct ftrace_page	*ftrace_pages;
+@@ -3245,7 +3244,8 @@ static int ftrace_update_code(struct mod
+ 	return 0;
+ }
+ 
+-static int ftrace_allocate_records(struct ftrace_page *pg, int count)
++static int ftrace_allocate_records(struct ftrace_page *pg, int count,
++				   unsigned long *num_pages)
+ {
+ 	int order;
+ 	int pages;
+@@ -3255,7 +3255,7 @@ static int ftrace_allocate_records(struc
+ 		return -EINVAL;
+ 
+ 	/* We want to fill as much as possible, with no empty pages */
+-	pages = DIV_ROUND_UP(count, ENTRIES_PER_PAGE);
++	pages = DIV_ROUND_UP(count * ENTRY_SIZE, PAGE_SIZE);
+ 	order = fls(pages) - 1;
+ 
+  again:
+@@ -3270,6 +3270,7 @@ static int ftrace_allocate_records(struc
+ 	}
+ 
+ 	ftrace_number_of_pages += 1 << order;
++	*num_pages += 1 << order;
+ 	ftrace_number_of_groups++;
+ 
+ 	cnt = (PAGE_SIZE << order) / ENTRY_SIZE;
+@@ -3298,12 +3299,14 @@ static void ftrace_free_pages(struct ftr
+ }
+ 
+ static struct ftrace_page *
+-ftrace_allocate_pages(unsigned long num_to_init)
++ftrace_allocate_pages(unsigned long num_to_init, unsigned long *num_pages)
+ {
+ 	struct ftrace_page *start_pg;
+ 	struct ftrace_page *pg;
+ 	int cnt;
+ 
++	*num_pages = 0;
++
+ 	if (!num_to_init)
+ 		return NULL;
+ 
+@@ -3317,7 +3320,7 @@ ftrace_allocate_pages(unsigned long num_
+ 	 * waste as little space as possible.
+ 	 */
+ 	for (;;) {
+-		cnt = ftrace_allocate_records(pg, num_to_init);
++		cnt = ftrace_allocate_records(pg, num_to_init, num_pages);
+ 		if (cnt < 0)
+ 			goto free_pages;
+ 
+@@ -6535,8 +6538,6 @@ static int ftrace_process_locs(struct mo
+ 	if (!count)
+ 		return 0;
+ 
+-	pages = DIV_ROUND_UP(count, ENTRIES_PER_PAGE);
+-
+ 	/*
+ 	 * Sorting mcount in vmlinux at build time depend on
+ 	 * CONFIG_BUILDTIME_MCOUNT_SORT, while mcount loc in
+@@ -6549,7 +6550,7 @@ static int ftrace_process_locs(struct mo
+ 		test_is_sorted(start, count);
+ 	}
+ 
+-	start_pg = ftrace_allocate_pages(count);
++	start_pg = ftrace_allocate_pages(count, &pages);
+ 	if (!start_pg)
+ 		return -ENOMEM;
+ 
+@@ -6636,27 +6637,27 @@ static int ftrace_process_locs(struct mo
+ 	/* We should have used all pages unless we skipped some */
+ 	if (pg_unuse) {
+ 		unsigned long pg_remaining, remaining = 0;
+-		unsigned long skip;
++		long skip;
+ 
+ 		/* Count the number of entries unused and compare it to skipped. */
+-		pg_remaining = (ENTRIES_PER_PAGE << pg->order) - pg->index;
++		pg_remaining = (PAGE_SIZE << pg->order) / ENTRY_SIZE - pg->index;
+ 
+ 		if (!WARN(skipped < pg_remaining, "Extra allocated pages for ftrace")) {
+ 
+ 			skip = skipped - pg_remaining;
+ 
+-			for (pg = pg_unuse; pg; pg = pg->next)
++			for (pg = pg_unuse; pg && skip > 0; pg = pg->next) {
+ 				remaining += 1 << pg->order;
++				skip -= (PAGE_SIZE << pg->order) / ENTRY_SIZE;
++			}
+ 
+ 			pages -= remaining;
+ 
+-			skip = DIV_ROUND_UP(skip, ENTRIES_PER_PAGE);
+-
+ 			/*
+ 			 * Check to see if the number of pages remaining would
+ 			 * just fit the number of entries skipped.
+ 			 */
+-			WARN(skip != remaining, "Extra allocated pages for ftrace: %lu with %lu skipped",
++			WARN(pg || skip > 0, "Extra allocated pages for ftrace: %lu with %lu skipped",
+ 			     remaining, skipped);
+ 		}
+ 		/* Need to synchronize with ftrace_location_range() */
+
 
