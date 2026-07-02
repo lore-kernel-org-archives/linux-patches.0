@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AD41C695;
-	Thu,  2 Jul 2026 16:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA18530C15A;
+	Thu,  2 Jul 2026 16:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011523; cv=none; b=HUdgGyRBoAxPeH0GOswyFc6mMrPwPqJ2snhY+ZLCy3GtIH+e/WluFmBNYyRy0PeLcUisZBUX/xSLERQmVDwgs8a/A0B5CwCIitielbZLndkvWdVJKup/8iNmUA3ayNGB8b6HYf/wsG/oArZUfAiDK1h8yQmlaZR/BzvO/gFWdFY=
+	t=1783011526; cv=none; b=M+xHWlxeIKS1YYR9KksY3MgivoYmm/clwvk8Mv5+qErIM/v/jUoZl1gf3zjoVEYaKGQXMWQ8dowbHfYgyPI3ULyCeRzBUYJCSTTe3HQDqDuxBqkosObk7s+dBw6s9rr82dI8737Ff0hLzmHBnlsIXGBty0R1tNavy6ostEob1rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011523; c=relaxed/simple;
-	bh=57o0mFfMmSNjkARcaORKLW5N2FH1i8VJgIVAf236m38=;
+	s=arc-20240116; t=1783011526; c=relaxed/simple;
+	bh=7Lem4cl0THSUb4hH5/uTyx61W8JW9slL4t1Fo6rD2MY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCrMHq00qyyID/w2U+GqzFaYLz5UBWoOHlz56qjy/n0BMd5UtKyE7RMhXJZ2Gtr1HNbRIetpuCJRQ8OKziKhm+ciqlCa7XuzZKR7a1BZ/6tqv6fsu5IPmvs6enNhgMdF9lm2shthZ/nHqxQV5U3V92jQzqOuT2l9dJUWQDlDuDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvSRZzPJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PXI8YGYl5km2yuf8tbw14O8wfdutmL0uAnGwumq2FEPE6Wrs67ki5EejrIJyCTULOwp6eIDmOnri851aROToxC7BpW6e3mBu1quBpzGrNE+B+qNfmkpSYVPoqLDZf6hThlO8m1NurMUHlnUK7C1DCCR1k3dIChvW2GNkKIn4+eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMFakBzg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvSRZzPJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458341F00ACA;
-	Thu,  2 Jul 2026 16:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMFakBzg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B591F00A3A;
+	Thu,  2 Jul 2026 16:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011522;
-	bh=C/XC8Iid//e/zMtHqFHz6spE5NuRfFteLGMj5pQGrDY=;
+	s=korg; t=1783011525;
+	bh=KNwYHHnsi6N/8Ja0QJmgQ+N5ezgQJC4ywmK+kVtKYqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KvSRZzPJaOSeQjpbUqFBRmKmVMer9w5/q7Xk0y8nPheE8HsECbJXjngMi2DHc9c4G
-	 bBeg31+F9rJBNcutjfT32rYHNpP7b2hRVeVF7kWqkEt0DFmqtJ6wVZtilbfVyh1r+L
-	 RC/3o7hofCezohp8LhrrEpx5tYzP9Ni1gybS+K/4=
+	b=TMFakBzgxKe4ua0RZNGXvO7sXJXRn+QPJJWpQPmkRSTuHgMsK5L2FNXYg0SN1mazX
+	 B/08xhQN9BY0qgaGRzfmZEzzJmZQAE3RqcFJx4pgI3WTb8Y4pATpmXa5Z8Mgz9dFEe
+	 hBbiCfCq6hYrxoET+xDvzzGhhfzK8hOTYxuNY7Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajia Liu <liujiajia@kylinos.cn>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 7.1 031/120] wifi: mt76: add wcid publish check in mt76_sta_add
-Date: Thu,  2 Jul 2026 18:20:27 +0200
-Message-ID: <20260702155113.607074592@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 7.1 032/120] mac802154: llsec: add skb_cow_data() before in-place crypto
+Date: Thu,  2 Jul 2026 18:20:28 +0200
+Message-ID: <20260702155113.627033611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -50,68 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajia Liu <liujiajia@kylinos.cn>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 20b126920a259df4d7dcae19fcfe2c57a74d6b2e upstream.
+commit 84a04eb5b210643bd67aab81ff805d32f62aa865 upstream.
 
-Since mt7925_mac_sta_add publishes wcid, add publish check in mt76_sta_add
-to avoid reinitializing the wcid->poll_list.
+llsec_do_encrypt_unauth(), llsec_do_encrypt_auth(),
+llsec_do_decrypt_unauth(), and llsec_do_decrypt_auth() all perform
+in-place cryptographic transformations on skb data.  They build a
+scatterlist with sg_init_one() pointing into the skb's linear data area
+and then pass the same scatterlist as both src and dst to the crypto API
+(e.g. crypto_skcipher_encrypt/decrypt, crypto_aead_encrypt/decrypt).
 
-Found dev->sta_poll_list corruption when using mt7925 and 7.1-rc4.
-According to the corruption information, prev->next was changed to itself.
+On the RX path, __ieee802154_rx_handle_packet() clones the received skb
+before handing it to each subscriber via ieee802154_subif_frame().  The
+cloned skb shares the same underlying data buffer via reference
+counting.  When llsec_do_decrypt() subsequently modifies this shared
+buffer in place, it corrupts data that other clones -- potentially
+belonging to other sockets or subsystems -- still reference.
 
-wlan0: disconnect from AP 90:fb:5d:94:8b:e3 for new auth to 90:fb:5d:94:8b:e2
-wlan0: authenticate with 90:fb:5d:94:8b:e2 (local address=84:9e:56:9c:7e:6b)
-wlan0: send auth to 90:fb:5d:94:8b:e2 (try 1/3)
- slab kmalloc-8k start ffff8c80958a6000 pointer offset 4160 size 8192
-list_add corruption. prev->next should be next (ffff8c808a7488f8), but was ffff8c80958a7040. (prev=ffff8c80958a7040).
+On the TX path, similar data sharing can occur when an skb's head has
+been cloned (skb_cloned() returns true).
 
- mt76_wcid_add_poll+0x95/0xd0 [mt76]
- mt7925_mac_add_txs.part.0+0xa5/0xe0 [mt7925_common]
- mt7925_rx_check+0xa7/0xc0 [mt7925_common]
- mt76_dma_rx_poll+0x50d/0x790 [mt76]
- mt792x_poll_rx+0x52/0xe0 [mt792x_lib]
+The fix is to call skb_cow_data() before performing any in-place crypto
+operation.  skb_cow_data() ensures that the skb's data area is not
+shared: if the skb head is cloned or the data spans multiple fragments,
+it copies the data into a private buffer that can be safely modified in
+place.  This is the same pattern used by:
 
-Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
-Link: https://patch.msgid.link/20260528033814.46418-1-liujiajia@kylinos.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  - ESP (net/ipv4/esp4.c, net/ipv6/esp6.c)
+  - MACsec (drivers/net/macsec.c)
+  - WireGuard (drivers/net/wireguard/receive.c)
+  - TIPC (net/tipc/crypto.c)
+
+Without this guard, in-place crypto on shared skb data leads to:
+  - Silent data corruption of other skb clones
+  - Use-after-free when the crypto API scatterwalk writes through a
+    page that has already been freed by another clone's kfree_skb()
+  - Kernel crashes under concurrent 802.15.4 traffic with security
+    enabled (KASAN/KMSAN reports slab-use-after-free)
+
+Found by 0sec (https://0sec.ai) using automated source analysis.
+
+Fixes: 4c14a2fb5d14 ("mac802154: add llsec decryption method")
+Fixes: 03556e4d0dbb ("mac802154: add llsec encryption method")
+Cc: stable@vger.kernel.org
+Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Closes: https://lore.kernel.org/linux-wpan/20260525161806.96158-1-doruk@0sec.ai/
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Closes: <link to your mail on lore>
+Link: https://lore.kernel.org/20260526183726.56100-1-doruk@0sec.ai
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ net/mac802154/llsec.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1576,6 +1576,7 @@ mt76_sta_add(struct mt76_phy *phy, struc
+--- a/net/mac802154/llsec.c
++++ b/net/mac802154/llsec.c
+@@ -710,6 +710,7 @@ int mac802154_llsec_encrypt(struct mac80
  {
- 	struct mt76_wcid *wcid = (struct mt76_wcid *)sta->drv_priv;
- 	struct mt76_dev *dev = phy->dev;
-+	struct mt76_wcid *published;
- 	int ret;
- 	int i;
+ 	struct ieee802154_hdr hdr;
+ 	int rc, authlen, hlen;
++	struct sk_buff *trailer;
+ 	struct mac802154_llsec_key *key;
+ 	u32 frame_ctr;
  
-@@ -1595,11 +1596,19 @@ mt76_sta_add(struct mt76_phy *phy, struc
- 		mtxq->wcid = wcid->idx;
- 	}
+@@ -769,6 +770,12 @@ int mac802154_llsec_encrypt(struct mac80
+ 	skb->mac_len = ieee802154_hdr_push(skb, &hdr);
+ 	skb_reset_mac_header(skb);
  
--	ewma_signal_init(&wcid->rssi);
--	rcu_assign_pointer(dev->wcid[wcid->idx], wcid);
-+	published = rcu_dereference_protected(dev->wcid[wcid->idx],
-+					      lockdep_is_held(&dev->mutex));
-+	if (published != wcid) {
-+		WARN_ON_ONCE(published);
-+		ewma_signal_init(&wcid->rssi);
-+		rcu_assign_pointer(dev->wcid[wcid->idx], wcid);
-+		mt76_wcid_init(wcid, phy->band_idx);
-+	} else {
-+		wcid->phy_idx = phy->band_idx;
++	rc = skb_cow_data(skb, 0, &trailer);
++	if (rc < 0) {
++		llsec_key_put(key);
++		return rc;
 +	}
 +
- 	phy->num_sta++;
+ 	rc = llsec_do_encrypt(skb, sec, &hdr, key);
+ 	llsec_key_put(key);
  
--	mt76_wcid_init(wcid, phy->band_idx);
- out:
- 	mutex_unlock(&dev->mutex);
- 
+@@ -908,6 +915,13 @@ llsec_do_decrypt(struct sk_buff *skb, co
+ 		 const struct ieee802154_hdr *hdr,
+ 		 struct mac802154_llsec_key *key, __le64 dev_addr)
+ {
++	struct sk_buff *trailer;
++	int err;
++
++	err = skb_cow_data(skb, 0, &trailer);
++	if (err < 0)
++		return err;
++
+ 	if (hdr->sec.level == IEEE802154_SCF_SECLEVEL_ENC)
+ 		return llsec_do_decrypt_unauth(skb, sec, hdr, key, dev_addr);
+ 	else
 
 
