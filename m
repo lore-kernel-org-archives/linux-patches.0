@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9278F338595;
-	Thu,  2 Jul 2026 16:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9324B480350;
+	Thu,  2 Jul 2026 16:23:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009439; cv=none; b=Yqy51rFTp1esLa57E2fTYS6ShAaDgmtgmjm9ffM5SfexIyoDdhJK22PzDUp6CIxYKKrbQ9U9a9+KyGwWDYvhWtr+SI5OJnFPcilLhJhjoTBfggPSc1C43oUbKSSBpNiTwsJgo3+4OZbOr8WgZgkVO4qY7VRTj02+EEUAt+OkCgc=
+	t=1783009441; cv=none; b=jx1XQ1tyVs8ruwQDrD3Qcn14sr9a6dYq32lx3BIllAE6f9fTkIogQw9esOwbhpRXLggXMZNag5U3RCRN28+1oRHksWgjRJdN8puK8uRYlu2cW+2tsKJhtdvn3OH0hM+MKUf76WdF6XJc5vB5GBieMfc9Dq24pe5snk541vN6X9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009439; c=relaxed/simple;
-	bh=nkd5ZSFYsIsYj93F+j67kNg9kXxLoFC1rrPAA9sTBME=;
+	s=arc-20240116; t=1783009441; c=relaxed/simple;
+	bh=KDIeP+ncdwc7kfujTjPv+hstwp9k+U4iY6sWJgN+YXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=axkVgBm8RVNCu691bd8Cn9XKE8Zekl1JsDf/Ca4jsa5a0juKT2+wieGVN9T1QhK/UMOmU8Zr2ONxTG5KOcA91sS/bC35DagiMoBL40hiibJkwswpzd7r0DnXnyu0RRJ29eKpwE5Tvs2NWu0arzqy9ysW/r/F7oPWBM4fAvidbMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtKvhXVb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r/1UrFZ0HszugV+seWK+tSvatqsAT6L9kCvN2xbxSKl4/3HWt5NHaBY0NViMdlkWCsPR+1uO2BzVDNuULh4oeiKzU2hqNzYds+odDQJtWcRUDQsMbrftYNpGalJPNaIA+w6C8v563wHW4c7/W3zhB/KuTs0YNCiZGLjJxhah+lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRz4I0k/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtKvhXVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034C11F000E9;
-	Thu,  2 Jul 2026 16:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRz4I0k/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5051F00A3E;
+	Thu,  2 Jul 2026 16:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009434;
-	bh=1nzUsMSv4qixoa47f+KuQ6TA27ni+RtJELrrM5ESVEs=;
+	s=korg; t=1783009436;
+	bh=/9bl2cbX1HW8z1ppLh9AZBUMfpj7g4oA6MgdRA1aJUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GtKvhXVboby3RH9rb/QJmgDamuXCfnjcF6ZHmrI0FSxJ4XqbMjljsw2Zr+lCL8XYX
-	 XmCDWmzSEo8pxpu7uVIEm413gD3lZIYeVGDuiTiceGm3eLLIgLwwuy4tYi1V4Yr47O
-	 iqjkyB895yiZ44tixzS1cxVtjLZsCBhQFFnhfawo=
+	b=ZRz4I0k/6KakAVhUJoc5b0jHSRq79gOic/ktgiSPQ3hDfrW9jlUKZLamo/pWb50R4
+	 E4gttym72ohyP/5e6nM/mjVqTmiVsskH+0KtvTxbA8r0Vsam+5rwW1skbx0H/CjTx/
+	 EN2Rzi/hyYIy4dsO2Lk2zFH+o76asQP+KkTGQXlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Tottenham <mtottenh@akamai.com>,
-	Josh Hunt <johunt@akamai.com>,
-	kernel test robot <lkp@intel.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Han Guidong <2045gemini@gmail.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Rajat Gupta <rajat.gupta@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 07/96] net/sched: act_pedit: Parse L3 Header for L4 offset
-Date: Thu,  2 Jul 2026 18:18:59 +0200
-Message-ID: <20260702155109.123977784@linuxfoundation.org>
+Subject: [PATCH 5.10 08/96] net/sched: fix pedit partial COW leading to page cache corruption
+Date: Thu,  2 Jul 2026 18:19:00 +0200
+Message-ID: <20260702155109.147355092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -49,146 +54,235 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Tottenham <mtottenh@akamai.com>
+From: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
 
-[ Upstream commit 6c02568fd1ae53099b4ab86365c5be1ff15f586b ]
+[ Upstream commit 899ee91156e57784090c5565e4f31bd7dbffbc5a ]
 
-Instead of relying on skb->transport_header being set correctly, opt
-instead to parse the L3 header length out of the L3 headers for both
-IPv4/IPv6 when the Extended Layer Op for tcp/udp is used. This fixes a
-bug if GRO is disabled, when GRO is disabled skb->transport_header is
-set by __netif_receive_skb_core() to point to the L3 header, it's later
-fixed by the upper protocol layers, but act_pedit will receive the SKB
-before the fixups are completed. The existing behavior causes the
-following to edit the L3 header if GRO is disabled instead of the UDP
-header:
+tcf_pedit_act() computes the COW range for skb_ensure_writable()
+once before the key loop using tcfp_off_max_hint, but the hint does
+not account for the runtime header offset added by typed keys. This
+can leave part of the write region un-COW'd.
 
-    tc filter add dev eth0 ingress protocol ip flower ip_proto udp \
- dst_ip 192.168.1.3 action pedit ex munge udp set dport 18053
+Fix by moving skb_ensure_writable() inside the per-key loop where
+the actual write offset is known, and add overflow checking on the
+offset arithmetic. For negative offsets (e.g. Ethernet header edits
+at ingress), use skb_cow() to COW the headroom instead. Guard
+offset_valid() against INT_MIN, where negation is undefined.
 
-Also re-introduce a rate-limited warning if we were unable to extract
-the header offset when using the 'ex' interface.
-
-Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to
-the conventional network headers")
-Signed-off-by: Max Tottenham <mtottenh@akamai.com>
-Reviewed-by: Josh Hunt <johunt@akamai.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202305261541.N165u9TZ-lkp@intel.com/
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-(cherry picked from commit 6c02568fd1ae53099b4ab86365c5be1ff15f586b)
+Fixes: 8b796475fd78 ("net/sched: act_pedit: really ensure the skb is writable")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Reported-by: Han Guidong <2045gemini@gmail.com>
+Reported-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Han Guidong <2045gemini@gmail.com>
+Tested-by: Han Guidong <2045gemini@gmail.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Tested-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260531123221.48732-1-jhs@mojatatu.com
+[rename include file from linux/unaligned.h to asm/unaligned.h]
+Conflicts:
+	include/net/tc_act/tc_pedit.h
+	net/sched/act_pedit.c
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 48 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 5 deletions(-)
+ include/net/tc_act/tc_pedit.h |  1 -
+ net/sched/act_pedit.c         | 77 +++++++++++++++++++----------------
+ 2 files changed, 41 insertions(+), 37 deletions(-)
 
+diff --git a/include/net/tc_act/tc_pedit.h b/include/net/tc_act/tc_pedit.h
+index 83fe3993178180..a26d4cd3b8d6f3 100644
+--- a/include/net/tc_act/tc_pedit.h
++++ b/include/net/tc_act/tc_pedit.h
+@@ -14,7 +14,6 @@ struct tcf_pedit_key_ex {
+ struct tcf_pedit_parms {
+ 	struct tc_pedit_key	*tcfp_keys;
+ 	struct tcf_pedit_key_ex	*tcfp_keys_ex;
+-	u32 tcfp_off_max_hint;
+ 	unsigned char tcfp_nkeys;
+ 	unsigned char tcfp_flags;
+ 	struct rcu_head rcu;
 diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index ecad6fc39dc3d7..df31b2b7b42253 100644
+index df31b2b7b42253..35fa94ba0edf8f 100644
 --- a/net/sched/act_pedit.c
 +++ b/net/sched/act_pedit.c
-@@ -13,7 +13,10 @@
- #include <linux/rtnetlink.h>
- #include <linux/module.h>
- #include <linux/init.h>
-+#include <linux/ip.h>
-+#include <linux/ipv6.h>
+@@ -17,6 +17,8 @@
+ #include <linux/ipv6.h>
  #include <linux/slab.h>
-+#include <net/ipv6.h>
+ #include <net/ipv6.h>
++#include <linux/overflow.h>
++#include <asm/unaligned.h>
  #include <net/netlink.h>
  #include <net/pkt_sched.h>
  #include <linux/tc_act/tc_pedit.h>
-@@ -313,28 +316,58 @@ static bool offset_valid(struct sk_buff *skb, int offset)
- 	return true;
- }
- 
--static void pedit_skb_hdr_offset(struct sk_buff *skb,
-+static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
-+{
-+	const int noff = skb_network_offset(skb);
-+	int ret = -EINVAL;
-+	struct iphdr _iph;
-+
-+	switch (skb->protocol) {
-+	case htons(ETH_P_IP): {
-+		const struct iphdr *iph = skb_header_pointer(skb, noff, sizeof(_iph), &_iph);
-+
-+		if (!iph)
-+			goto out;
-+		*hoffset = noff + iph->ihl * 4;
-+		ret = 0;
-+		break;
-+	}
-+	case htons(ETH_P_IPV6):
-+		ret = ipv6_find_hdr(skb, hoffset, header_type, NULL, NULL) == header_type ? 0 : -EINVAL;
-+		break;
-+	}
-+out:
-+	return ret;
-+}
-+
-+static int pedit_skb_hdr_offset(struct sk_buff *skb,
- 				 enum pedit_header_type htype, int *hoffset)
- {
-+	int ret = -EINVAL;
- 	/* 'htype' is validated in the netlink parsing */
- 	switch (htype) {
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_ETH:
--		if (skb_mac_header_was_set(skb))
-+		if (skb_mac_header_was_set(skb)) {
- 			*hoffset = skb_mac_offset(skb);
-+			ret = 0;
-+		}
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP4:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP6:
- 		*hoffset = skb_network_offset(skb);
-+		ret = 0;
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_TCP:
-+		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_TCP);
-+		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_UDP:
--		if (skb_transport_header_was_set(skb))
--			*hoffset = skb_transport_offset(skb);
-+		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_UDP);
- 		break;
- 	default:
- 		break;
+@@ -229,7 +231,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 		goto out_release;
  	}
-+	return ret;
+ 
+-	nparms->tcfp_off_max_hint = 0;
+ 	nparms->tcfp_flags = parm->flags;
+ 	nparms->tcfp_nkeys = parm->nkeys;
+ 
+@@ -257,14 +258,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 						   BITS_PER_TYPE(int) - 1,
+ 						   nparms->tcfp_keys[i].shift);
+ 
+-		/* The AT option can read a single byte, we can bound the actual
+-		 * value with uchar max.
+-		 */
+-		cur += (0xff & offmask) >> nparms->tcfp_keys[i].shift;
+-
+-		/* Each key touches 4 bytes starting from the computed offset */
+-		nparms->tcfp_off_max_hint =
+-			max(nparms->tcfp_off_max_hint, cur + 4);
+ 	}
+ 
+ 	p = to_pedit(*a);
+@@ -305,15 +298,12 @@ static void tcf_pedit_cleanup(struct tc_action *a)
+ 		call_rcu(&parms->rcu, tcf_pedit_cleanup_rcu);
  }
  
- static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
-@@ -369,6 +402,7 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+-static bool offset_valid(struct sk_buff *skb, int offset)
++static bool offset_valid(struct sk_buff *skb, int offset, int len)
+ {
+-	if (offset > 0 && offset > skb->len)
+-		return false;
+-
+-	if  (offset < 0 && -offset > skb_headroom(skb))
++	if (offset < -(int)skb_headroom(skb))
+ 		return false;
+ 
+-	return true;
++	return offset <= (int)skb->len - len;
+ }
+ 
+ static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
+@@ -379,18 +369,10 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 	struct tcf_pedit_key_ex *tkey_ex;
+ 	struct tcf_pedit_parms *parms;
+ 	struct tc_pedit_key *tkey;
+-	u32 max_offset;
+ 	int i;
+ 
+ 	parms = rcu_dereference_bh(p->parms);
+ 
+-	max_offset = (skb_transport_header_was_set(skb) ?
+-		      skb_transport_offset(skb) :
+-		      skb_network_offset(skb)) +
+-		     parms->tcfp_off_max_hint;
+-	if (skb_ensure_writable(skb, min(skb->len, max_offset)))
+-		goto done;
+-
+ 	tcf_lastuse_update(&p->tcf_tm);
+ 	tcf_action_update_bstats(&p->common, skb);
+ 
+@@ -398,10 +380,11 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 	tkey_ex = parms->tcfp_keys_ex;
+ 
+ 	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
++		int write_offset, write_len;
+ 		int offset = tkey->off;
  		int hoffset = 0;
- 		u32 *ptr, hdata;
- 		u32 val;
-+		int rc;
+-		u32 *ptr, hdata;
+-		u32 val;
++		u32 cur_val, val;
++		u32 *ptr;
+ 		int rc;
  
  		if (tkey_ex) {
- 			htype = tkey_ex->htype;
-@@ -377,7 +411,11 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
- 			tkey_ex++;
- 		}
- 
--		pedit_skb_hdr_offset(skb, htype, &hoffset);
-+		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
-+		if (rc) {
-+			pr_info_ratelimited("tc action pedit unable to extract header offset for header type (0x%x)\n", htype);
-+			goto bad;
-+		}
+@@ -419,13 +402,15 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
  
  		if (tkey->offmask) {
  			u8 *d, _d;
++			int at_offset;
+ 
+-			if (!offset_valid(skb, hoffset + tkey->at)) {
++			if (check_add_overflow(hoffset, (int)tkey->at, &at_offset) ||
++			    !offset_valid(skb, at_offset, sizeof(_d))) {
+ 				pr_info_ratelimited("tc action pedit 'at' offset %d out of bounds\n",
+ 						    hoffset + tkey->at);
+ 				goto bad;
+ 			}
+-			d = skb_header_pointer(skb, hoffset + tkey->at,
++			d = skb_header_pointer(skb, at_offset,
+ 					       sizeof(_d), &_d);
+ 			if (!d)
+ 				goto bad;
+@@ -437,31 +422,51 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 			}
+ 		}
+ 
+-		if (!offset_valid(skb, hoffset + offset)) {
+-			pr_info_ratelimited("tc action pedit offset %d out of bounds\n", hoffset + offset);
++		if (check_add_overflow(hoffset, offset, &write_offset)) {
++			pr_info_ratelimited("tc action pedit offset overflow\n");
+ 			goto bad;
+ 		}
+ 
+-		ptr = skb_header_pointer(skb, hoffset + offset,
+-					 sizeof(hdata), &hdata);
+-		if (!ptr)
++		if (!offset_valid(skb, write_offset, sizeof(*ptr))) {
++			pr_info_ratelimited("tc action pedit offset %d out of bounds\n",
++					    write_offset);
+ 			goto bad;
++		}
++
++		if (write_offset < 0) {
++			if (skb_cow(skb, -write_offset))
++				goto bad;
++			if (write_offset + (int)sizeof(*ptr) > 0) {
++				if (skb_ensure_writable(skb,
++							min_t(int, skb->len,
++							      write_offset + (int)sizeof(*ptr))))
++					goto bad;
++			}
++		} else {
++			if (check_add_overflow(write_offset, (int)sizeof(*ptr),
++					       &write_len))
++				goto bad;
++			if (skb_ensure_writable(skb, min_t(int, skb->len,
++							   write_len)))
++				goto bad;
++		}
++
++		ptr = (u32 *)(skb->data + write_offset);
++		cur_val = get_unaligned(ptr);
+ 		/* just do it, baby */
+ 		switch (cmd) {
+ 		case TCA_PEDIT_KEY_EX_CMD_SET:
+ 			val = tkey->val;
+ 			break;
+ 		case TCA_PEDIT_KEY_EX_CMD_ADD:
+-			val = (*ptr + tkey->val) & ~tkey->mask;
++			val = (cur_val + tkey->val) & ~tkey->mask;
+ 			break;
+ 		default:
+ 			pr_info_ratelimited("tc action pedit bad command (%d)\n", cmd);
+ 			goto bad;
+ 		}
+ 
+-		*ptr = ((*ptr & tkey->mask) ^ val);
+-		if (ptr == &hdata)
+-			skb_store_bits(skb, hoffset + offset, ptr, 4);
++		put_unaligned((cur_val & tkey->mask) ^ val, ptr);
+ 	}
+ 
+ 	goto done;
 -- 
 2.53.0
 
