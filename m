@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404742DEA98;
-	Thu,  2 Jul 2026 17:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6531FA859;
+	Thu,  2 Jul 2026 17:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011731; cv=none; b=dh3E/h0vetrDzi3Lkqw9jz9QP3uIC0KPqVqpdgwQP1Rrnd+vqPn0DOy5GD+va5xku25L/WrhR0DaWe3QW8lpwTzVvrSlFSXUTXF1enXJpYdEciBy/MeSfntyfxPgSjlu5cAIDvQQu1OzHEU2Z79Iej9X+kJP5fHqeONVAO6a0do=
+	t=1783011733; cv=none; b=K8U9RjFq0Nl9ilPSzex5Shn5LZrJB6U886hCzLMuhFXCEaJQ2y42tSdSGUdo5kJipVGQNpe8nKPYVWHjRzRNp3nhK87C3bIQklZXRUvZ+/ZOSQ62wsqQlMN8+3ckThAIDxAU/HA9DZKAkG7HGp2mZPLMOSso5Ogsw+vn5f+5FDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011731; c=relaxed/simple;
-	bh=TpPV37oj7OLRQdZBcOQDNl6AhVxVmBr9jCFmjc5+DHs=;
+	s=arc-20240116; t=1783011733; c=relaxed/simple;
+	bh=RX+I87c/VZQG4gpyclMpplcXBEtmdapFmaBdy+n9q+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBqdGFjcefC9nciyzGzDk4yZPa7ZQn518B09hLdHZ8ibIFlPDIbroM6klB1Nip7UM4K2QRIRwEr7iMCbOt/+4pt3hnpojwCN118/a67iHUvFawo/MpQjRyBbZJY5LVXNp+/Bv1leEvtSQy2PqPQIvSZDF8UsK+fxtmk8ocx4GUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUXu9hWZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=puSs16E5qanZ5jQ0u0NZA2asLvzir8UsvRIXFvmjF9gEFnV2OinQOqgja5BDpw2qmbA/v4G4P9tqWCzsAvSJmXU9N35QLuJQRKx5m466u9YLgUiIOqeTRFNEgvSh0RpnsEbnufJyRhE/tRcLhVKtWkOOl69fsxq6Hu+yriaJIKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVV7odPp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUXu9hWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E891F000E9;
-	Thu,  2 Jul 2026 17:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVV7odPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C48A1F000E9;
+	Thu,  2 Jul 2026 17:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011730;
-	bh=A8JXwC3QCHBdBrjI+Ph1dt8gxL3+SE1akLBL1olfAt8=;
+	s=korg; t=1783011732;
+	bh=nqmkuje8vhe/Vm7KIasnSe1aEAUOAgjZSMIyKphXNTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UUXu9hWZQ0GOaTUeSOGqDcZJXETUlHovJgVfb6uTYtK9qAejkBg37tu4s/j+joMqI
-	 4t8qO/SIIn6OhTXjW9zqLJMm3HYxaMggRzYWx+jr2drzPyqK7QQcALvWNtbwWQAoU5
-	 qokXIV96Q0Iz8eEFpxkVN05sup4ucb3tRVQ0LYBE=
+	b=EVV7odPpYQzylAKy4n8SZi+5Xq8WQH8WTItvxGVUcSp/KSM6WhkKWqtDyicOx39S2
+	 V7vKjiBVQvEL+4ktXeULT4L4yYlB6eXmf01lsbVTxkIPHBP4K5j29iG0wJSVqZGtcH
+	 wDLGZFall436HEo+zHOn3maXKm6/mlCUp/sMbDOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.1 112/120] nfsd: avoid leaking pre-allocated openowner on unconfirmed retry race
-Date: Thu,  2 Jul 2026 18:21:48 +0200
-Message-ID: <20260702155115.276991467@linuxfoundation.org>
+Subject: [PATCH 7.1 113/120] nfsd: reset write verifier on deferred writeback errors
+Date: Thu,  2 Jul 2026 18:21:49 +0200
+Message-ID: <20260702155115.297005760@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
@@ -53,44 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 57aee7a35bb12753057c5b65d72d1f46c0e95b07 upstream.
+commit 2090b05803faab8a9fa62fbff871007862cac1b7 upstream.
 
-When find_or_alloc_open_stateowner() encounters an unconfirmed owner, it
-calls release_openowner() and sets oo = NULL. Control then falls through
-past the `if (oo)` guard -- which would have freed any pre-allocated
-`new` -- and unconditionally executes `new = alloc_stateowner(...)`. If
-`new` was already allocated on a prior iteration, the pointer is
-silently overwritten and the previous allocation (slab object + owner
-name buffer) is leaked.
+nfsd_vfs_write() and nfsd_commit() both call filemap_check_wb_err() to
+detect deferred writeback errors, but neither rotates the server's write
+verifier (nn->writeverf) when this check fails. Every other
+durable-storage-failure path in these functions calls
+commit_reset_write_verifier() before returning an error.
 
-This requires a race: two NFSv4.0 OPEN threads with the same owner
-string, where a concurrent thread inserts a new unconfirmed owner into
-the hash between retry iterations. The window is narrow but repeatable
-under adversarial conditions.
+The missing rotation means clients holding UNSTABLE write data under the
+current verifier will COMMIT, receive the unchanged verifier back, and
+conclude their data is durable — silently dropping data that failed
+writeback. This violates the UNSTABLE+COMMIT durability contract
+(RFC 1813 §3.3.7, RFC 8881 §18.32).
 
-Fix by adding `goto retry` after `oo = NULL` so the already-allocated
-`new` is reused on the next iteration rather than overwritten.
+Add commit_reset_write_verifier() calls at both filemap_check_wb_err()
+error sites, matching the pattern used by adjacent error paths in the
+same functions. The helper already filters -EAGAIN and -ESTALE
+internally, so the calls are unconditionally safe.
 
 Reported-by: Chris Mason <clm@meta.com>
-Fixes: 23df17788c62 ("nfsd: perform all find_openstateowner_str calls in the one place.")
+Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
 Cc: stable@vger.kernel.org
 Assisted-by: kres:claude-opus-4-6
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/vfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5169,6 +5169,7 @@ retry:
- 		/* Replace unconfirmed owners without checking for replay. */
- 		release_openowner(oo);
- 		oo = NULL;
-+		goto retry;
- 	}
- 	if (oo) {
- 		if (new)
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1508,8 +1508,10 @@ nfsd_vfs_write(struct svc_rqst *rqstp, s
+ 	nfsd_stats_io_write_add(nn, exp, *cnt);
+ 	fsnotify_modify(file);
+ 	host_err = filemap_check_wb_err(file->f_mapping, since);
+-	if (host_err < 0)
++	if (host_err < 0) {
++		commit_reset_write_verifier(nn, rqstp, host_err);
+ 		goto out_nfserr;
++	}
+ 
+ 	if (stable && fhp->fh_use_wgather) {
+ 		host_err = wait_for_concurrent_writes(file);
+@@ -1689,6 +1691,8 @@ nfsd_commit(struct svc_rqst *rqstp, stru
+ 			nfsd_copy_write_verifier(verf, nn);
+ 			err2 = filemap_check_wb_err(nf->nf_file->f_mapping,
+ 						    since);
++			if (err2 < 0)
++				commit_reset_write_verifier(nn, rqstp, err2);
+ 			err = nfserrno(err2);
+ 			break;
+ 		case -EINVAL:
 
 
