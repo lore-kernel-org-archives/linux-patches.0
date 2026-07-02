@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2053A7590;
-	Thu,  2 Jul 2026 16:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07927349CE8;
+	Thu,  2 Jul 2026 16:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010654; cv=none; b=Ps0PCFEYu1fCZUUBCYtHNwpoK6ap37xIIy/tN/AHWHRvBmxfpHqcZ4wkeufZEZqnKT1ApevzPI4r7uEjz7QxGPSVG1L5+g/toWKhEOY5fjxIJNGgOaGm/oT8ixehI9+27VoDq4s3e1zB/P5nEhBLfxSNkskje++a+iK/JBlJaJ4=
+	t=1783010657; cv=none; b=j8OMTpxGzFFTC3rdOW/GMXlh7E/LpOTRq/cRAG/KX/xt1oHCKqhk505Wwfv40Lg97ldGw0Thk3kmYdTM0vniuwDJfhLGt3GO+z6zNu6IBopOKK+4vCzOAfbQIBaC0YZ4ocGa4Vc+HFvm1zMAxcWSlKVNImcCgSRcJdIK7n2HP4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010654; c=relaxed/simple;
-	bh=iJWyvWV41vF4SaNznwVQj3480ysRnERYciifDFWtw94=;
+	s=arc-20240116; t=1783010657; c=relaxed/simple;
+	bh=lUFjvK9dkErmPU+9FAA+wG410XOFht8Pz23cnxuKyKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2FWfX+JBStWCmZUPfhkZBaB3ORA0MhrQxiambI9e0kqelpUu4X1FzI+5d5ZKu4LQsdNN/g6kb+LD0Pq5T7F27j/8/ubilUuh9K4I0klyzzrFFEpGGlqgzfv7RECAwHG8W5MRdcgP4nNdF2/AAonObMZvDiDJWkOUQaKmBLj6MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ud4+U9ZC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6m2c+fE9L8a+ShFrXJ7j/jmJOz+qsdgAn2FRybxnChEAQHvesCvckEXxM5Zg5fvJguxqqdGJlfX5Of3ZI2m7l5DenYdgKOOzVOV1H+PdYd3de19HCtG8ZQtAyL6Y7ziVpX+pNts8AGdQ/qsxSm58lbw0meecCUkt3whlHe3V2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x++Rs8XU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ud4+U9ZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A011F000E9;
-	Thu,  2 Jul 2026 16:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x++Rs8XU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8991F000E9;
+	Thu,  2 Jul 2026 16:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010653;
-	bh=lGNPScO9MuxoBHhmOnR2M5qHotaFOxT4zRrkHsna63E=;
+	s=korg; t=1783010655;
+	bh=wRjp1iyDMNfaLI8YFJhiqXdsbpf5JV2GcJ6NOvpNklE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ud4+U9ZCstWj63KycZcXgu/e4L+L/MjXMjLSeOsi030yAiUeeyiQCcNWh3nPVTYUU
-	 KmXS9gSZ83IwmrTJ7EhSVKce5Pv6MpsTQOJoEwMzPosdb0x7dJxuZnQuXDbYkPvyo1
-	 PHe0xXPl0vY2+hgUKRDZXKyAVmWCiPR3B4hcjf9U=
+	b=x++Rs8XUgloTkE2/lcwkHNS/cdOPNXd+JORBFCqfZWtZjr+FwRowTGdbmlTxdyDdF
+	 xY9gC2yum/3i/DRRAae6YIlIJWFAFMQ0S9t0ANczgijPamzWEiQYSH5FbrKyLP8Rk9
+	 zGP45bSddbCbX5WjFZTgddjr73bNuMwx3vvBHKBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+	Markus Elfring <elfring@users.sourceforge.net>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.12 190/204] NFSv4/pNFS: reject zero-length r_addr in nfs4_decode_mp_ds_addr
-Date: Thu,  2 Jul 2026 18:20:47 +0200
-Message-ID: <20260702155122.642663479@linuxfoundation.org>
+Subject: [PATCH 6.12 191/204] NFS: Prevent resource leak in nfs_alloc_server()
+Date: Thu,  2 Jul 2026 18:20:48 +0200
+Message-ID: <20260702155122.663404382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,56 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-commit 41fe0f7b84f0cb822ae10ab08592996a592b2a25 upstream.
+commit d189f224308c8ac3feeea8e442c99922bd18f1b2 upstream.
 
-nfs4_decode_mp_ds_addr() decodes the r_netid and r_addr opaques of a
-netaddr4 from a GETDEVICEINFO multipath-DS body, then immediately
-calls strrchr(buf, '.') to locate the port separator. Both decodes
-use xdr_stream_decode_string_dup(), and the current code checks only
-"nlen < 0" / "rlen < 0" before dereferencing the returned string.
+It was overlooked to call ida_free() after a failed nfs_alloc_iostats() call.
+Thus add the missed function call in an if branch.
 
-When the on-wire opaque has length zero, xdr_stream_decode_opaque_inline()
-returns 0 and xdr_stream_decode_string_dup() falls through to its
-"*str = NULL; return ret" tail, leaving buf NULL with a return value
-of 0. The "< 0" check does not catch this, and the next line is
-strrchr(NULL, '.'), a kernel NULL pointer dereference reachable from
-any pNFS-flexfile client mounted against a malicious or compromised
-metadata server.
-
-Reject the zero-length cases explicitly so the decoder fails with
--EBADMSG (treated as a malformed GETDEVICEINFO body) instead of
-panicking the client.
-
+Fixes: 1c7251187dc067a6d460cf33ca67da9c1dd87807 ("NFS: add superblock sysfs entries")
 Cc: stable@vger.kernel.org
-Fixes: 6b7f3cf96364 ("nfs41: pull decode_ds_addr from file layout to generic pnfs")
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reported-by: Christophe Jaillet <christophe.jaillet@wanadoo.fr>
+Closes: https://lore.kernel.org/linux-nfs/1c8e10c9-def7-4f0d-8aa1-23c8035a38c8@wanadoo.fr/
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs_nfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/client.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -1055,14 +1055,14 @@ nfs4_decode_mp_ds_addr(struct net *net,
- 	/* r_netid */
- 	nlen = xdr_stream_decode_string_dup(xdr, &netid, XDR_MAX_NETOBJ,
- 					    gfp_flags);
--	if (unlikely(nlen < 0))
-+	if (unlikely(nlen <= 0))
- 		goto out_err;
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -1054,6 +1054,7 @@ struct nfs_server *nfs_alloc_server(void
  
- 	/* r_addr: ip/ip6addr with port in dec octets - see RFC 5665 */
- 	/* port is ".ABC.DEF", 8 chars max */
- 	rlen = xdr_stream_decode_string_dup(xdr, &buf, INET6_ADDRSTRLEN +
- 					    IPV6_SCOPE_ID_LEN + 8, gfp_flags);
--	if (unlikely(rlen < 0))
-+	if (unlikely(rlen <= 0))
- 		goto out_free_netid;
- 
- 	/* replace port '.' with '-' */
+ 	server->io_stats = nfs_alloc_iostats();
+ 	if (!server->io_stats) {
++		ida_free(&s_sysfs_ids, server->s_sysfs_id);
+ 		kfree(server);
+ 		return NULL;
+ 	}
 
 
