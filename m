@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A803438A9;
-	Thu,  2 Jul 2026 16:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33DF33BBAD;
+	Thu,  2 Jul 2026 16:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009338; cv=none; b=AcbfyJzGIEBwK/88GgjgSRvEuoN15n6esvMCciBnAOi2+RWPdnrt8rR62eb/4O7mRQWL02ju+qCimuZYdNvvCr2iQ3MrpgPwfpmE+XS3U6qA/DhYgETHcBTe1LyPO3jYFywS+BNhydAz8QsUi70M5MosRbDjGlXnc41smzYKhkM=
+	t=1783009341; cv=none; b=dXFE3FTYAfBF+P7HK706zOPpxJEN/jmrhK8dma220AW4wadDQdPUCIMl1iNQX83W4BRJfydAkvOqIRFmOH/R0H8ImRgxauM4Cb4k1E6TBlmilvfM26NhLT5N/z9urrP2dkWwcCA//DwcXG1GN5sq4Muq2YGfJV7By5YGFCGUNr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009338; c=relaxed/simple;
-	bh=suokn4WRv9taXvfjlhzfSWKU2149gcZ9FJf56J9U9rU=;
+	s=arc-20240116; t=1783009341; c=relaxed/simple;
+	bh=94REJ3BtEUPiLOyw9Akr9VdrzcTRSlyxVlS/JH1QjVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alP4UjtcuzWZXBDOFhq8S/i1D6Ab1jmV4+dpHooPq7T6KSAskaNK6mDYxSOwbz4FyAOs/WYplHncps1u4NlNDOHhQNkm746NkogOh+2ZNhRy/xk8Ur08D1AGw2g6KdETpntyAKMEwXsQQJIIE24SqG3QLdHDnbguROafTzTVSF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phUn3XrW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jvrfLjjMBo1SuEb/Bp8NPX5DUxZRvRsEbjG5Lz/kMjMq8AsT58BWzhd0mpzCva6GbxeuNS13bFltmz1AZYBNUKZ338LfOPQ6ljzItl2SZfpI6wADPSxz2i2e6Ry8DN1r8a5UePGNSjSmcRbhaTytERHuD0MvwZJAyad1w+B79YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=caoR9WrC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phUn3XrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A671E1F000E9;
-	Thu,  2 Jul 2026 16:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="caoR9WrC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC6E1F000E9;
+	Thu,  2 Jul 2026 16:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009337;
-	bh=hXBw/BudTdb9VsSZhNJiPUO9fFFVlYSLtKRRc5LzBEI=;
+	s=korg; t=1783009339;
+	bh=YdPK4vAYH21LG/HiQaluBf+BwdqnCgbaNt7+MfmZYsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=phUn3XrW14W8b1TvUY2/4Jz0yl41r6Fwqp4Wj1RpVc3NvtEzIXr3A33QyLxxXZ4ID
-	 1afGn0XKsScJMNYDI6KMvnnzTb5kyQOBYXcNc4sSHbdNS05RRL2m9P+NqI79Fe1hgk
-	 B0y8lnXYkDMdbakUL1+22eS7yg2Et7IjgUKTuljE=
+	b=caoR9WrCiaDLcapxqpCJU9gVDocPZJSVirh895KtK3T/PW/y9zGPI9VeBG1W/8t49
+	 RHFdZOlQHtqtARxProKzGrL59ThKSEvJZEiDnCV1iV+o+HgvG+W++phokc/DdkWy6s
+	 Nzmh3RAxN7ByH0s4NyPwwrIt1JvdogT8ND6M1qvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	GangMin Kim <km.kim1503@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Bin Lan <lanbincn@139.com>,
 	Shivani Agarwal <shivani.agarwal@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/96] net: add skb_header_pointer_careful() helper
-Date: Thu,  2 Jul 2026 18:19:06 +0200
-Message-ID: <20260702155109.284472553@linuxfoundation.org>
+Subject: [PATCH 5.10 15/96] net/sched: cls_u32: use skb_header_pointer_careful()
+Date: Thu,  2 Jul 2026 18:19:07 +0200
+Message-ID: <20260702155109.307114108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -55,50 +56,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 13e00fdc9236bd4d0bff4109d2983171fbcb74c4 ]
+[ Upstream commit cabd1a976375780dabab888784e356f574bbaed8 ]
 
-This variant of skb_header_pointer() should be used in contexts
-where @offset argument is user-controlled and could be negative.
+skb_header_pointer() does not fully validate negative @offset values.
 
-Negative offsets are supported, as long as the zone starts
-between skb->head and skb->data.
+Use skb_header_pointer_careful() instead.
 
+GangMin Kim provided a report and a repro fooling u32_classify():
+
+BUG: KASAN: slab-out-of-bounds in u32_classify+0x1180/0x11b0
+net/sched/cls_u32.c:221
+
+Fixes: fbc2e7d9cf49 ("cls_u32: use skb_header_pointer() to dereference data safely")
+Reported-by: GangMin Kim <km.kim1503@gmail.com>
+Closes: https://lore.kernel.org/netdev/CANn89iJkyUZ=mAzLzC4GdcAgLuPnUoivdLaOs6B9rq5_erj76w@mail.gmail.com/T/
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260128141539.3404400-2-edumazet@google.com
+Link: https://patch.msgid.link/20260128141539.3404400-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Adjust context ]
 Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 [ Shivani: Modified to apply on 5.10.y ]
 Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/sched/cls_u32.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 4b5731245bf15b..667de403b2ebbd 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -3686,6 +3686,18 @@ skb_header_pointer(const struct sk_buff *skb, int offset, int len, void *buffer)
- 				    skb_headlen(skb), buffer);
- }
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index f2a0c10682fc81..e501390ccd7585 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -149,10 +149,8 @@ static int u32_classify(struct sk_buff *skb, const struct tcf_proto *tp,
+ 			int toff = off + key->off + (off2 & key->offmask);
+ 			__be32 *data, hdata;
  
-+/* Variant of skb_header_pointer() where @offset is user-controlled
-+ * and potentially negative.
-+ */
-+static inline void * __must_check
-+skb_header_pointer_careful(const struct sk_buff *skb, int offset,
-+			   int len, void *buffer)
-+{
-+	if (unlikely(offset < 0 && -offset > skb_headroom(skb)))
-+		return NULL;
-+	return skb_header_pointer(skb, offset, len, buffer);
-+}
-+
- /**
-  *	skb_needs_linearize - check if we need to linearize a given skb
-  *			      depending on the given device features.
+-			if (skb_headroom(skb) + toff > INT_MAX)
+-				goto out;
+-
+-			data = skb_header_pointer(skb, toff, 4, &hdata);
++			data = skb_header_pointer_careful(skb, toff, 4,
++							  &hdata);
+ 			if (!data)
+ 				goto out;
+ 			if ((*data ^ key->val) & key->mask) {
+@@ -202,8 +200,9 @@ static int u32_classify(struct sk_buff *skb, const struct tcf_proto *tp,
+ 		if (ht->divisor) {
+ 			__be32 *data, hdata;
+ 
+-			data = skb_header_pointer(skb, off + n->sel.hoff, 4,
+-						  &hdata);
++			data = skb_header_pointer_careful(skb,
++							  off + n->sel.hoff,
++							  4, &hdata);
+ 			if (!data)
+ 				goto out;
+ 			sel = ht->divisor & u32_hash_fold(*data, &n->sel,
+@@ -217,7 +216,7 @@ static int u32_classify(struct sk_buff *skb, const struct tcf_proto *tp,
+ 			if (n->sel.flags & TC_U32_VAROFFSET) {
+ 				__be16 *data, hdata;
+ 
+-				data = skb_header_pointer(skb,
++				data = skb_header_pointer_careful(skb,
+ 							  off + n->sel.offoff,
+ 							  2, &hdata);
+ 				if (!data)
 -- 
 2.53.0
 
