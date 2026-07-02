@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3213D347FFE;
-	Thu,  2 Jul 2026 16:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AB4361DC3;
+	Thu,  2 Jul 2026 16:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010168; cv=none; b=MZTf9QpGKByrKHZtxvEtFkYlrp41muGLZcOj6qJxIWdTIDioqLSykw0ctEJEOdGMO1sPx+9YSJlzq9eUslvwLMvWqSJWwToGES+MZplqarBZqOtuYUp6i56rl4p9WYCTkGfZxzQTcYczJkju+UsPWhuRdgBFLjxD0CnqGgSdeyY=
+	t=1783010172; cv=none; b=eYls2C1VrZk8MqD+7BoPzFc0ND7oRfBpdhWa4xpc2kbyb3fi/f4XSFFv2Fdm83+31E7PMP5kBfTF2FvH7Q9De58Umzm4573CXxCd1Llalu/WMii5vKgIyy1sMVEoThJnlB7qHuW52awqEIc0+KqHjPYe/drjxxIKnrdisycfais=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010168; c=relaxed/simple;
-	bh=nbu1wVq5jk2ZMtxzsxqt+9SQmi2+6IJs2G2XoCiWOoU=;
+	s=arc-20240116; t=1783010172; c=relaxed/simple;
+	bh=+cgAxrqV18XWi4j+FvhVPHgP5BKnDaaK3tbHmPzgZPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4/Rn67C+BrP9ceBgjViblWLHvIO3eaMWooMNQ8I9z4rCOuSRXhq4sv+HCaTTcy65NDbTRbVzHzbGEEY/2G4ki3nC3+m8LOdGgX9bNYdgLrRwTaAWArq9boH/n/Mive5imEvRR1tRd2C24lQlp6tu55hXhtMIAA2PEuvzlboweY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvIQGGFc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WhVYeAg0l4+S61SwRnY6j8XbSxZl9I2NWdOc66OXqtVdZkL7AzSvvZgmCcprRJ8GjBP5jZE3vl6/R4Vj500w0bOY4vxNSQRVQ2w/4HDJMgsMXrhp6nurfM9sji0YUfTNKqLfR7msiNkuW/wqckE23PjV12x9ExxUDeZUVB0N+sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ql2JiRHz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvIQGGFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984D61F000E9;
-	Thu,  2 Jul 2026 16:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ql2JiRHz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AA21F000E9;
+	Thu,  2 Jul 2026 16:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010167;
-	bh=itxBCgaERMfNgJW0o/7YMEed3gRcwifzB6eJfyD7iR8=;
+	s=korg; t=1783010169;
+	bh=AOJ9UP9TaMaI3WPb9fq7sZY1joxyspeHuQ9+ikkqkhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rvIQGGFcA/UJjYE81t9YhboJlDTMTV7oWbvziGNEUV5ond84ysCW0sV1yhaeGMg1e
-	 /oiiUU14cAt0iZth2iaIBvK+GXCF36H6S4BDtYa2e2oJ+IJ5PDAD19TSU5xAEMq4yN
-	 A6Cb+UfQMcKYFfiyjl0GaXnXr7QgWa+lpSrogUBU=
+	b=ql2JiRHz65f9YEbhY0qBj5u22MLOwyUsVaNlG56LOBw6SYmiaOmsXqwUcIttXM0ht
+	 OauSQDzVjL8lGtfcZ/ICkscrN6pcEDzQ1Z3+C+i0jFWLHCuvQw/Bs3qYyKmlXtbucf
+	 VrLgHstggDEnyKe4GNyW/x77bQylfjOX1NPltW+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Long Li <longli@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/129] hv: utils: handle and propagate errors in kvp_register
-Date: Thu,  2 Jul 2026 18:20:33 +0200
-Message-ID: <20260702155114.504235011@linuxfoundation.org>
+	Steffen Persvold <spersvold@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 105/129] fbdev: modedb: Fix misaligned fields in the 1920x1080-60 mode
+Date: Thu,  2 Jul 2026 18:20:24 +0200
+Message-ID: <20260702155114.315951413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -52,86 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Steffen Persvold <spersvold@gmail.com>
 
-[ Upstream commit 3fcf923302a8f5c0dc3af3d2ca2657cb5fae4297 ]
+commit d894c48a57d78206e4df9c90d4acfaf39394806a upstream.
 
-Make kvp_register() return an error code instead of silently ignoring
-failures, and propagate the error from kvp_handle_handshake() instead of
-returning success.
+The 1920x1080@60 modedb entry has one too many initializers before
+its sync field: a stray "0" occupies the sync slot, which shifts the
+remaining values by one field. The entry therefore decodes as
+sync = 0, vmode = FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT (0x3,
+i.e. FB_VMODE_INTERLACED | FB_VMODE_DOUBLE), and flag =
+FB_VMODE_NONINTERLACED, instead of the intended sync = positive H/V,
+vmode = non-interlaced.
 
-This propagates both kzalloc_obj() and hvutil_transport_send() failures
-to kvp_handle_handshake() and thus to kvp_on_msg().
+fb_find_mode() then returns a 1920x1080 mode flagged as interlaced +
+doublescan with active-low syncs. Drivers that honour var->vmode and
+var->sync when programming display timing enable doublescan and the
+wrong sync polarity, corrupting the output.
 
-Fixes: 245ba56a52a3 ("Staging: hv: Implement key/value pair (KVP)")
+Drop the stray initializer so sync and vmode hold their intended
+values (positive H/V sync, non-interlaced), matching the adjacent
+1920x1200 entry.
+
+Fixes: c8902258b2b8 ("fbdev: modedb: Add 1920x1080 at 60 Hz video mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Steffen Persvold <spersvold@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/hv_kvp.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/video/fbdev/core/modedb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hv/hv_kvp.c
-+++ b/drivers/hv/hv_kvp.c
-@@ -93,7 +93,7 @@ static void kvp_send_key(struct work_str
- static void kvp_respond_to_host(struct hv_kvp_msg *msg, int error);
- static void kvp_timeout_func(struct work_struct *dummy);
- static void kvp_host_handshake_func(struct work_struct *dummy);
--static void kvp_register(int);
-+static int kvp_register(int);
+--- a/drivers/video/fbdev/core/modedb.c
++++ b/drivers/video/fbdev/core/modedb.c
+@@ -258,7 +258,7 @@ static const struct fb_videomode modedb[
+ 		FB_VMODE_DOUBLE },
  
- static DECLARE_DELAYED_WORK(kvp_timeout_work, kvp_timeout_func);
- static DECLARE_DELAYED_WORK(kvp_host_handshake_work, kvp_host_handshake_func);
-@@ -127,24 +127,26 @@ static void kvp_register_done(void)
- 	hv_poll_channel(kvp_transaction.recv_channel, kvp_poll_wrapper);
- }
- 
--static void
-+static int
- kvp_register(int reg_value)
- {
- 
- 	struct hv_kvp_msg *kvp_msg;
- 	char *version;
-+	int ret;
- 
- 	kvp_msg = kzalloc(sizeof(*kvp_msg), GFP_KERNEL);
-+	if (!kvp_msg)
-+		return -ENOMEM;
- 
--	if (kvp_msg) {
--		version = kvp_msg->body.kvp_register.version;
--		kvp_msg->kvp_hdr.operation = reg_value;
--		strcpy(version, HV_DRV_VERSION);
--
--		hvutil_transport_send(hvt, kvp_msg, sizeof(*kvp_msg),
--				      kvp_register_done);
--		kfree(kvp_msg);
--	}
-+	version = kvp_msg->body.kvp_register.version;
-+	kvp_msg->kvp_hdr.operation = reg_value;
-+	strcpy(version, HV_DRV_VERSION);
-+
-+	ret = hvutil_transport_send(hvt, kvp_msg, sizeof(*kvp_msg),
-+				    kvp_register_done);
-+	kfree(kvp_msg);
-+	return ret;
- }
- 
- static void kvp_timeout_func(struct work_struct *dummy)
-@@ -186,9 +188,8 @@ static int kvp_handle_handshake(struct h
- 	 */
- 	pr_debug("KVP: userspace daemon ver. %d connected\n",
- 		 msg->kvp_hdr.operation);
--	kvp_register(dm_reg_value);
- 
--	return 0;
-+	return kvp_register(dm_reg_value);
- }
- 
+ 	/* 1920x1080 @ 60 Hz, 67.3 kHz hsync */
+-	{ NULL, 60, 1920, 1080, 6734, 148, 88, 36, 4, 44, 5, 0,
++	{ NULL, 60, 1920, 1080, 6734, 148, 88, 36, 4, 44, 5,
+ 		FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,
+ 		FB_VMODE_NONINTERLACED },
  
 
 
