@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1B91C695;
-	Thu,  2 Jul 2026 16:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867E819049B;
+	Thu,  2 Jul 2026 16:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010614; cv=none; b=sdeXdLCCu3dGPBxsqmdOPL/2sjLnk/FjeWw4bTrmEBvyWN1D1514sRNwccRE4PBX3F4lalc8sa5OUZBQyaG7qjB+6FiAvG/LfwqP8x24O+nbAIkaxdSZVUHldlqheZN02H4NbtiVP570+4kQdlsrQ49AHI0kYqrwusDwARdIeeA=
+	t=1783010617; cv=none; b=ckbEtAsq8qob/+U5LgPg46+m/KBLYMn5wlmETYft4pdsRgATtSSjKhpAQrdAtyLu0Iot+JuduvJmnkkagXGomDAAE1RlCw8Kit9sxh41FC0HFDy0quI9UM5a/xz50U3abudvi+ykWB3jcCazztejwnIDTRbbPhlabaSr6qvISZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010614; c=relaxed/simple;
-	bh=jDX3BH9jPx/M3/spi+59eTMC6chIAqLsJw6ivTHcaqo=;
+	s=arc-20240116; t=1783010617; c=relaxed/simple;
+	bh=5CdnX3cHju8U3xCFSyYiw608EiEgXTXf2wNGj0MkJtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4061MyKrGh5sb9T1cJghlwi+dU904FuOKi+EGKeh42KRKbnj+ZvwdHjKpsYr08ARqU/Rzp0yWuxpaKJiKxKjKg+8iEK7aVp5ra67SbY6wPLxGZt+hTcnQ02YW7FQs86yGeK5V8w0Qrw48vhtxfYOeUi8KvqmpyC1T5QyJQCnDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTSao49J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BkIZ1Z5n/jtDbKzsuqkYvubRNP+h3ji/Uw3MgYxnKwPXMr4Ytx+Z1G41M7cY/E3DSbN3jFOoi6BFi/D81euCvjv6gFgR/kPcyH/CDE2h48OlSAzF1caPXMnDmzGPZ/x+JBv+8zY7GrTsuaREZhtKzOVpJpJCFfMnaidFAmTw7mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLEPA1SE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTSao49J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0E51F000E9;
-	Thu,  2 Jul 2026 16:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLEPA1SE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42C61F000E9;
+	Thu,  2 Jul 2026 16:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010613;
-	bh=WjSZGFl3Uf/X+NfN1NqDwIj18wIrJIXTmkmCVURjdwk=;
+	s=korg; t=1783010616;
+	bh=003HUbq8Jn6GHHsEhWP5/amqARTXYc8xo76D9d6Brb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TTSao49JDYTxMHIVaseuX+qdr1ezMRbxzev856Ih+tBPScJNXl+tGg851foJT6KOG
-	 bkd3VBi8q4poLlcfZsl0kTgSZ8zRSs7CCy2w2yYESzOmFT90AehuXZgSNgOV4aQKAS
-	 VNXpVtKQJUShg6bOsuk2ISEj3GHWiS8CmGB5J3w4=
+	b=GLEPA1SE1RtTMA2VoQrmLBMXFjOwfo/tO4deFmQ4wpjEvZCch3pWBsGTWDXb4OwmR
+	 pTSaBUW+rE3Unh0yQ1M6IufXq4SPsW+FUV6X8kFvH0AbHCxu1jRgQJts0ua/XHoxVg
+	 DxLOoe4MScYHW/marD9ioc0ef4FxO2DPte/DJNQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Jelonek <jelonek.jonas@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.12 176/204] MIPS: smp: report dying CPU to RCU in stop_this_cpu()
-Date: Thu,  2 Jul 2026 18:20:33 +0200
-Message-ID: <20260702155122.344392901@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 177/204] KVM: x86: hyper-v: Bound the bank index when querying sparse banks
+Date: Thu,  2 Jul 2026 18:20:34 +0200
+Message-ID: <20260702155122.364471690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,71 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Jelonek <jelonek.jonas@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 9f3f3bdc6d9dac1a5a8262ee7ad0f2ff1527a7e7 upstream.
+commit 4721f8160f17554b003e8928bb61e6c9b2fe92a3 upstream.
 
-smp_send_stop() parks all secondary CPUs in stop_this_cpu(). The function
-marks the CPU offline for the scheduler via set_cpu_online(false) but
-never informs RCU, so RCU keeps expecting a quiescent state from CPUs
-that are now spinning forever with interrupts disabled.
+When checking if a VP ID is included in a sparse bank set, explicitly check
+that the ID can actually be contained in a sparse bank (the TLFS allows for
+a maximum of 64 banks of 64 vCPUs each).  When handling a paravirtual TLB
+flush for L2, the VP ID is copied verbatim from the enlightened VMCS,
+without any bounds check, i.e. isn't guaranteed to be under the limit of
+4096.
 
-As long as nothing waits for an RCU grace period after smp_send_stop()
-this is harmless, which is why it went unnoticed. Since commit
-91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
-however, irq_work_sync() calls synchronize_rcu() on architectures without
-an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt() returns
-false. That is the asm-generic default used by MIPS. Any irq_work_sync()
-issued in the reboot/shutdown path after smp_send_stop() then blocks on
-a grace period that can never complete, hanging the reboot:
+Failure to check the bounds of the VP ID leads to an out-of-bounds read
+when testing the sparse bank, and super strictly speaking could lead to KVM
+performing an unnecessary TLB flush for an L2 vCPU.
 
-  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
-  ...
-  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-  rcu: Offline CPU 1 blocking current GP.
-  rcu: Offline CPU 2 blocking current GP.
-  rcu: Offline CPU 3 blocking current GP.
+  ==================================================================
+  BUG: KASAN: use-after-free in hv_is_vp_in_sparse_set+0x85/0x100 [kvm]
+  Read of size 8 at addr ffff88811ba5f598 by task hyperv_evmcs/2802
 
-This issue was noticed on several Realtek MIPS switch SoCs (MIPS
-interAptiv) and came up during kernel bump downstream in OpenWrt from
-6.18.33 to 6.18.34, after the backport of the patch to the 6.18 stable
-branch. The patch also has been backported all the way back to 6.1.
+  CPU: 12 UID: 1000 PID: 2802 Comm: hyperv_evmcs Not tainted 7.1.0-rc2 #7 PREEMPT
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x51/0x60
+   print_report+0xcb/0x5d0
+   kasan_report+0xb4/0xe0
+   kasan_check_range+0x35/0x1b0
+   hv_is_vp_in_sparse_set+0x85/0x100 [kvm]
+   kvm_hv_flush_tlb+0xe9e/0x16c0 [kvm]
+   kvm_hv_hypercall+0xe6b/0x1e60 [kvm]
+   vmx_handle_exit+0x485/0x1b60 [kvm_intel]
+   kvm_arch_vcpu_ioctl_run+0x22e3/0x5070 [kvm]
+   kvm_vcpu_ioctl+0x5d0/0x10c0 [kvm]
+   __x64_sys_ioctl+0x129/0x1a0
+   do_syscall_64+0xb9/0xcf0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x7f0e62d1a9bf
+   </TASK>
 
-Call rcutree_report_cpu_dead() once interrupts are disabled, mirroring the
-generic CPU-hotplug offline path, so RCU stops waiting on the parked CPUs
-and grace periods can still complete. MIPS shuts down all CPUs here
-without going through the CPU-hotplug mechanism, so this report is not
-otherwise issued. Reporting a dying CPU to RCU outside the regular hotplug
-offline path is not unprecedented: arm64 does the same in cpu_die_early().
-There it is an exception for a CPU that was coming online and is aborting
-bringup, rather than the default shutdown action as on MIPS.
+  The buggy address belongs to the physical page:
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffffffffffffffff pfn:0x11ba5f
+  flags: 0x4000000000000000(zone=1)
+  raw: 4000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+  raw: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000000
+  page dumped because: kasan: bad access detected
 
-Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
-CC: stable@vger.kernel.org
-Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+  Memory state around the buggy address:
+   ffff88811ba5f480: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+   ffff88811ba5f500: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  >ffff88811ba5f580: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                              ^
+   ffff88811ba5f600: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+   ffff88811ba5f680: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ==================================================================
+  Disabling lock debugging due to kernel taint
+
+Opportunistically add a compile time assertion to ensure the maximum number
+of sparse banks exactly matches the number of possible bits in the passed
+in mask.
+
+Cc: stable@vger.kernel.org
+Fixes: c58a318f6090 ("KVM: x86: hyper-v: L2 TLB flush")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://patch.msgid.link/aiQyZIJtO-2Aj_xN@v4bel
+[sean: add KASAN splat, drop comment, add assert, massage changelog]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/smp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/hyperv.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/mips/kernel/smp.c
-+++ b/arch/mips/kernel/smp.c
-@@ -20,6 +20,7 @@
- #include <linux/sched/mm.h>
- #include <linux/cpumask.h>
- #include <linux/cpu.h>
-+#include <linux/rcupdate.h>
- #include <linux/err.h>
- #include <linux/ftrace.h>
- #include <linux/irqdomain.h>
-@@ -411,6 +412,7 @@ static void stop_this_cpu(void *dummy)
- 	set_cpu_online(smp_processor_id(), false);
- 	calculate_cpu_foreign_map();
- 	local_irq_disable();
-+	rcutree_report_cpu_dead();
- 	while (1);
- }
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -1838,6 +1838,11 @@ static bool hv_is_vp_in_sparse_set(u32 v
+ 	int valid_bit_nr = vp_id / HV_VCPUS_PER_SPARSE_BANK;
+ 	unsigned long sbank;
+ 
++	BUILD_BUG_ON(BITS_PER_TYPE(valid_bank_mask) != HV_MAX_SPARSE_VCPU_BANKS);
++
++	if (valid_bit_nr >= HV_MAX_SPARSE_VCPU_BANKS)
++		return false;
++
+ 	if (!test_bit(valid_bit_nr, (unsigned long *)&valid_bank_mask))
+ 		return false;
  
 
 
