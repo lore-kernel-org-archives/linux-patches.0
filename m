@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B512733A9FC;
-	Thu,  2 Jul 2026 16:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F2E343896;
+	Thu,  2 Jul 2026 16:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010178; cv=none; b=kP7jqV10+qQ+Df6Zwbhe5y3wXfOLafM4AAN3Wubq1zI+3Ozvch4FYr64mRHXoa8ERQjlZu7YJe/A1j148ELvzl2FzftJ3tPZjiKBGFxhONjzYRMWop5OEjWxrwxi3F8ah6UeGZxVIqYrqJPtGJGc87eJWkk4gJOl5Ji5M8BG2Fc=
+	t=1783010181; cv=none; b=Y4Vp8Bng8/f3wO3CKtZ9hAUFEwCXvGrCquSm/aC2ADxY19LHbcFF4LBpiPWE6SCvGhg4Od/LUMx86oU9x7T2bC5+7Kv/FoLq6oT/dz93Qn5spHnHEXa96sNrBzWrYfb6U2CW0ZlQk8g5Gn9jDUObVUGOb3J/waLNDr79CethvyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010178; c=relaxed/simple;
-	bh=OnLsqJVBA4nVw7WCYDs6YHk5B8wPxAkX7Gbj21OChd0=;
+	s=arc-20240116; t=1783010181; c=relaxed/simple;
+	bh=b8JQmBTQNspjDvhf2UgFmLDt9ky4NNa+eZ/K3c1Rk48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HojULpXUApYEpdR3Rg3+b33Y3+QDQoQ6lS5SEKPIoNVKQLvcZkOAAH0GZexsCQltG4XyJQeOQMxFKXFwCxub9P4AFPIFw25+htB+16rNL/bgcNaqp7+mOQngNrOTggPaCJbb4RtYFY8KxjNPU6pBJs5RWi+CuEVllitPWYFQBbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srXB5mZz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IwTb4Gy8cqZ8TYsYyr5DVeBywS1osO1qEXbzcsAO7KhcWxokR7pqDXtucNsabJn1hx5XIQ3FUqbiQSPOCfYWWWtnBiaIH3HIpQf1G9svA8zElppQrD73lNisXIlAmJijA8nQ1/ohz6HYihklZHjHKjRMpA9Xk8pE6lmEt7/gciI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drOklXJd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srXB5mZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E6A1F000E9;
-	Thu,  2 Jul 2026 16:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drOklXJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8661F000E9;
+	Thu,  2 Jul 2026 16:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010177;
-	bh=QE9dtO6AdOwZyxSfbAQRZ2YEiZqlyIgwTl0HATJbIr0=;
+	s=korg; t=1783010180;
+	bh=FfyCBBgPo2uQKDI3GD9KZGDXPMMFTyllPGoQTaC8VOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srXB5mZzzT23/qVwEbrnBsKpZUuz3/h+lGh+Epdh8hpVqxsrQ3/OlhZhkWFYgJniN
-	 ONsLZqqhRTFkQlOW/44wkGjNOXZuR54k2/zCbhQpmcmBJZWk9Y4OUpDWjAN5Dk/JUC
-	 tTG19LZ7CqC6mTSguuj3iCe3WtQSUaStEiZHdawo=
+	b=drOklXJdkmdHrjntuCEbDP6VpggyRjDihNC/Skb3V2Iv+LlfO/JM9qvb0kYDlLAmu
+	 DzQlx48b2hzDScsFKG411FdbDjRZJsZMsXseJEgDVU4zz/5dTJQxWEEDv/ZUdz3zzP
+	 gmIp3VFh7RDXVVCWonj1o8GM1EP6c51Op0FUWS2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/204] drm/v3d: Skip CSD when it has zeroed workgroups
-Date: Thu,  2 Jul 2026 18:17:48 +0200
-Message-ID: <20260702155118.906199046@linuxfoundation.org>
+Subject: [PATCH 6.12 012/204] eventpoll: use hlist_is_singular_node() in __ep_remove()
+Date: Thu,  2 Jul 2026 18:17:49 +0200
+Message-ID: <20260702155118.927645307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -46,82 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 7f93fad5ea0affc9e1505dd0f7596c0fdb496213 ]
+[ Upstream commit 3d9fd0abc94d8cd430cc7cd7d37ce5e5aae2cd2b ]
 
-A compute shader dispatch encodes its workgroup counts in the CFG0..CFG2
-registers. Kicking off a dispatch with a zero count in any of the three
-dimensions is invalid. First, the hardware will process 0 as 65536,
-while the user-space driver exposes a maximum of 65535. Over that, a
-submission with a zeroed workgroup dimension should be a no-op.
+Replace the open-coded "epi is the only entry in file->f_ep" check
+with hlist_is_singular_node(). Same semantics, and the helper avoids
+the head-cacheline access in the common false case.
 
-These zeroed counts can reach the dispatch path through an indirect CSD
-job, whose workgroup counts are only known once the indirect buffer is
-read and may legitimately be zero, but such scenario should only result in
-a no-op.
-
-Overwrite the indirect CSD job workgroup counts with the indirect BO
-ones, even if they are zeroed, and don't submit the job to the hardware
-when any of the workgroup counts is zero, so the job completes immediately
-instead of running the shader.
-
-Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Suggested-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260602-v3d-fix-indirect-csd-v4-2-654309e32bc0@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-1-2470f9eec0f5@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: a6dc643c6931 ("eventpoll: fix ep_remove struct eventpoll / struct file UAF")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ fs/eventpoll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
-index f2a2c17a58c687..f2bac920af899d 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -368,6 +368,16 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
- 		return NULL;
- 	}
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index a860cb54658a3b..8f9dc2f4891ff5 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -827,7 +827,7 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
  
-+	/* The HW interprets a workgroup size of 0 as 65536; however, the
-+	 * user-space driver exposes a maximum of 65535. Therefore, a 0 in
-+	 * any dimension means that we have no workgroups and the compute
-+	 * shader should not be dispatched.
-+	 */
-+	if (!V3D_GET_FIELD(job->args.cfg[0], V3D_CSD_QUEUED_CFG0_NUM_WGS_X) ||
-+	    !V3D_GET_FIELD(job->args.cfg[1], V3D_CSD_QUEUED_CFG1_NUM_WGS_Y) ||
-+	    !V3D_GET_FIELD(job->args.cfg[2], V3D_CSD_QUEUED_CFG2_NUM_WGS_Z))
-+		return NULL;
-+
- 	v3d->queue[V3D_CSD].active_job = &job->base;
- 
- 	v3d_invalidate_caches(v3d);
-@@ -418,13 +428,13 @@ v3d_rewrite_csd_job_wg_counts_from_indirect(struct v3d_cpu_job *job)
- 
- 	wg_counts = (uint32_t *)(bo->vaddr + indirect_csd->offset);
- 
--	if (wg_counts[0] == 0 || wg_counts[1] == 0 || wg_counts[2] == 0)
--		goto unmap_bo;
--
- 	args->cfg[0] = wg_counts[0] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[1] = wg_counts[1] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[2] = wg_counts[2] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 
-+	if (wg_counts[0] == 0 || wg_counts[1] == 0 || wg_counts[2] == 0)
-+		goto unmap_bo;
-+
- 	num_batches = DIV_ROUND_UP(indirect_csd->wg_size, 16) *
- 		      (wg_counts[0] * wg_counts[1] * wg_counts[2]);
- 
+ 	to_free = NULL;
+ 	head = file->f_ep;
+-	if (head->first == &epi->fllink && !epi->fllink.next) {
++	if (hlist_is_singular_node(&epi->fllink, head)) {
+ 		/* See eventpoll_release() for details. */
+ 		WRITE_ONCE(file->f_ep, NULL);
+ 		if (!is_file_epoll(file)) {
 -- 
 2.53.0
 
