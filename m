@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C664C317146;
-	Thu,  2 Jul 2026 16:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3F631AAAF;
+	Thu,  2 Jul 2026 16:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010271; cv=none; b=KE7RgJIMUhQu9sebCA4aGn6/uASe8aENo+4eskRyVAKZ0AbzCNjSeMG8I1JZln+2Tv9RwQC87aRGnaXfDo6o09jK4YM7LtmBjkPUCPCfSasGh+L3FWoIr9yU3fl25PzOr4peHZmAsPuu5iKdAPSZgj/wzDS5MNpNwT4c/ffRG64=
+	t=1783010273; cv=none; b=kgfLqPnGfn9zxYHr6e/gyj+z+ICEbZQHsijRhn2JPV0Yu5Q8RwrP9IfWjqb73yEHAGAlToQ0ASigye667Re2fnMO6hHuiQF+ifbzoJoxVneGOawz8/jmHbPqQtiu2r3GQ37Bix5MaMxNqehzcnCE9D01X4zAC4biiRwIkYDTWWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010271; c=relaxed/simple;
-	bh=OVIXlLwm/vxAmXgDqTs9ketarKh9ZK4Fg0yQUYHDUUQ=;
+	s=arc-20240116; t=1783010273; c=relaxed/simple;
+	bh=Aff67xS7+h5aUc+QD5VI8VLaHKvB4YTx8sGv4ExI5JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrgqUc4XtpPC5Acxgtwhr72Tj70LrGfxpA7DYyzEtq6YAp+kixTy2M1VjBZG5Z+y6brV450N5ENBYxisWNjzhPbpOQheenz+5Dk7KQPPbsRChahhasg6+FJf44U7opEcG/QTO1GPz7OM75QFtcwyGtCvCeSnfgC/IruveyH/dg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MG0Gepm3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jKOab/laxney08UxUdWrIA+XAZmJ9hPRte4JwqTnDbYtSP2HrBQ23FReOKBhZhnZlUxjgcY+HJBmpOkQOo9DaBHL0JSEEY+M6AKj9sQZJsPiQ3YEBf1855ROi1ILvy5jkQ+cOv9QWiAZtKHI/iLGX5FP1HO9ftuwNhts6NiUJHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdAQ5d0C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MG0Gepm3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385B01F000E9;
-	Thu,  2 Jul 2026 16:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdAQ5d0C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D6B1F000E9;
+	Thu,  2 Jul 2026 16:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010269;
-	bh=PWav9QzdxndE6sQ+GbmjFg8LbZEHaDfUY8FiKncgn7o=;
+	s=korg; t=1783010272;
+	bh=RnupWTxYGrELkIQT4JIkiW/IWEfiDhRMlPTHLQ2Kz5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MG0Gepm3rFDvSZ5h44BcGwFiCf0O6a8XJC/5L4NLyKvniza8AdrMvSKrgsl8v0toR
-	 UoPDvec6a4uoYcrAtgpi3yjWsr6vvEhICcXaWyeHPY9f2oTQL7/XExBurXzroe3gl2
-	 UWjICCkargQ9M0/37gfqpqRB4hPb0Oxx9hX26IXo=
+	b=KdAQ5d0C5WhSaTGNMr1pO03y4FhSXbJED5HYCBpIzPPq1kYIQl1ZR2EtLHuOc5vkj
+	 eP0jIyocrFf9s/rZDbfLRGJeWRe84rcHdd6XN5SaHD+v/9kigNM/npV0BgUSYHvXLU
+	 rBcYRBARxPDyRPd/JZ2wjC/70EwxtR4I1CCujDDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Salman Alghamdi <me@cipherat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/204] eventpoll: fix ep_remove struct eventpoll / struct file UAF
-Date: Thu,  2 Jul 2026 18:17:55 +0200
-Message-ID: <20260702155119.049243481@linuxfoundation.org>
+Subject: [PATCH 6.12 045/204] staging: rtl8723bs: fix buffer over-read in rtw_update_protection
+Date: Thu,  2 Jul 2026 18:18:22 +0200
+Message-ID: <20260702155119.598612073@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -52,100 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Salman Alghamdi <me@cipherat.com>
 
-[ Upstream commit a6dc643c69311677c574a0f17a3f4d66a5f3744b ]
+[ Upstream commit 514ab98364595007d4557ecc85d7e5f012c504d3 ]
 
-ep_remove() (via ep_remove_file()) cleared file->f_ep under
-file->f_lock but then kept using @file inside the critical section
-(is_file_epoll(), hlist_del_rcu() through the head, spin_unlock).
-A concurrent __fput() taking the eventpoll_release() fastpath in
-that window observed the transient NULL, skipped
-eventpoll_release_file() and ran to f_op->release / file_free().
+rtw_update_protection() is called with a pointer offset into the
+ies buffer but the full ie_length is passed, causing a potential
+buffer over-read.
 
-For the epoll-watches-epoll case, f_op->release is
-ep_eventpoll_release() -> ep_clear_and_put() -> ep_free(), which
-kfree()s the watched struct eventpoll. Its embedded ->refs
-hlist_head is exactly where epi->fllink.pprev points, so the
-subsequent hlist_del_rcu()'s "*pprev = next" scribbles into freed
-kmalloc-192 memory.
-
-In addition, struct file is SLAB_TYPESAFE_BY_RCU, so the slot
-backing @file could be recycled by alloc_empty_file() --
-reinitializing f_lock and f_ep -- while ep_remove() is still
-nominally inside that lock. The upshot is an attacker-controllable
-kmem_cache_free() against the wrong slab cache.
-
-Pin @file via epi_fget() at the top of ep_remove() and gate the
-critical section on the pin succeeding. With the pin held @file
-cannot reach refcount zero, which holds __fput() off and
-transitively keeps the watched struct eventpoll alive across the
-hlist_del_rcu() and the f_lock use, closing both UAFs.
-
-If the pin fails @file has already reached refcount zero and its
-__fput() is in flight. Because we bailed before clearing f_ep,
-that path takes the eventpoll_release() slow path into
-eventpoll_release_file() and blocks on ep->mtx until the waiter
-side's ep_clear_and_put() drops it. The bailed epi's share of
-ep->refcount stays intact, so the trailing ep_refcount_dec_and_test()
-in ep_clear_and_put() cannot free the eventpoll out from under
-eventpoll_release_file(); the orphaned epi is then cleaned up
-there.
-
-A successful pin also proves we are not racing
-eventpoll_release_file() on this epi, so drop the now-redundant
-re-check of epi->dying under f_lock. The cheap lockless
-READ_ONCE(epi->dying) fast-path bailout stays.
-
-Fixes: 58c9b016e128 ("epoll: use refcount to reduce ep_mutex contention")
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-6-2470f9eec0f5@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Fixes: e945c43df60b ("Staging: rtl8723bs: Delete dead code from update_current_network()")
+Fixes: d3fcee1b78a5 ("staging: rtl8723bs: fix camel case in struct wlan_bssid_ex")
+Reported-by: Luka Gejak <luka.gejak@linux.dev>
+Closes: https://lore.kernel.org/linux-staging/DI2H39EAAFBZ.3KI5NWN02AQ2S@linux.dev
+Cc: stable@vger.kernel.org
+Signed-off-by: Salman Alghamdi <me@cipherat.com>
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Link: https://patch.msgid.link/20260508222649.23989-1-me@cipherat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 2993b76c21f682..22605fbc12ded5 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -883,22 +883,26 @@ static bool ep_remove_epi(struct eventpoll *ep, struct epitem *epi)
-  */
- static void ep_remove(struct eventpoll *ep, struct epitem *epi)
- {
--	struct file *file = epi->ffd.file;
-+	struct file *file __free(fput) = NULL;
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -449,8 +449,11 @@ static void update_current_network(struc
  
- 	lockdep_assert_irqs_enabled();
- 	lockdep_assert_held(&ep->mtx);
- 
- 	ep_unregister_pollwait(ep, epi);
- 
--	/* sync with eventpoll_release_file() */
-+	/* cheap sync with eventpoll_release_file() */
- 	if (unlikely(READ_ONCE(epi->dying)))
- 		return;
- 
--	spin_lock(&file->f_lock);
--	if (epi->dying) {
--		spin_unlock(&file->f_lock);
-+	/*
-+	 * If we manage to grab a reference it means we're not in
-+	 * eventpoll_release_file() and aren't going to be.
-+	 */
-+	file = epi_fget(epi);
-+	if (!file)
- 		return;
--	}
+ 	if ((check_fwstate(pmlmepriv, _FW_LINKED) == true) && (is_same_network(&(pmlmepriv->cur_network.network), pnetwork, 0))) {
+ 		update_network(&(pmlmepriv->cur_network.network), pnetwork, adapter, true);
++		if (pmlmepriv->cur_network.network.ie_length < sizeof(struct ndis_802_11_fix_ie))
++			return;
 +
-+	spin_lock(&file->f_lock);
- 	ep_remove_file(ep, epi, file);
+ 		rtw_update_protection(adapter, (pmlmepriv->cur_network.network.ies) + sizeof(struct ndis_802_11_fix_ie),
+-								pmlmepriv->cur_network.network.ie_length);
++								pmlmepriv->cur_network.network.ie_length - sizeof(struct ndis_802_11_fix_ie));
+ 	}
+ }
  
- 	if (ep_remove_epi(ep, epi))
--- 
-2.53.0
-
+@@ -1070,8 +1073,11 @@ static void rtw_joinbss_update_network(s
+ 			break;
+ 	}
+ 
++	if (cur_network->network.ie_length < sizeof(struct ndis_802_11_fix_ie))
++		return;
++
+ 	rtw_update_protection(padapter, (cur_network->network.ies) + sizeof(struct ndis_802_11_fix_ie),
+-									(cur_network->network.ie_length));
++									(cur_network->network.ie_length - sizeof(struct ndis_802_11_fix_ie)));
+ 
+ 	rtw_update_ht_cap(padapter, cur_network->network.ies, cur_network->network.ie_length, (u8) cur_network->network.configuration.ds_config);
+ }
 
 
