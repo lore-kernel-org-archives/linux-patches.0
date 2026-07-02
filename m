@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4BB330B01;
-	Thu,  2 Jul 2026 16:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D37333F5BE;
+	Thu,  2 Jul 2026 16:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009887; cv=none; b=Veh0vH/Z/JeMphdOQeNd3YqPLwJrieF+0fqw2Y1aKC0D5NFFK1YzAsYq9GqjI+Baa16zRJcQU554LUP6aO/YpuO/wbzcCbQBlTO61cSZPjxIro0gZov6mV01t23KEOq+zFtxyXcBayssa9r815Jvlp9BeUaLaK5trojMptTFZWw=
+	t=1783009890; cv=none; b=RjciLWcHyToa2ZosYX+GE8ZWOFWpaxNr70Pihn6GNuWq/iaOddPsHl77k9Xo47BFLiTe4uLoRA2wGcODl2wIVnJkZ3PY2e63Ysir2LNagiHTVhF1K8OnySXDOL/Dt93EuZAW+wEQ21ccI32KL5HbDi9YB7o+sO9By56bqvdut7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009887; c=relaxed/simple;
-	bh=lMrqQeg475kQ3UoW+3Hyp+VuXQMgl9ywopHVwY+FpT4=;
+	s=arc-20240116; t=1783009890; c=relaxed/simple;
+	bh=zQoE9vAQc2nc7/5Q0Db4hF3FB1hqmjzkA/scqmeJpTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AV54TczLO92y0zqF/kQjvd8tx2U67oJx6pMn4Yzf18HI8icRX845qHFrl3y3ZAhPuAraZtGSenchBuoOHH5G8FSG+ucfx5IHOBluAieUh4CJ4rarPd2Aad+HBOER7bspnlHG+QxcpNWydp3dIZJLZDkSuqs0/Xfz8w4W7nGZOb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnzyKxsD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qoahM8KaCS4aEOL2yyTKfnbFsmTys0ElWvMbLwBSgyn6lO8NwtSbbyNqUTjAmUyUe6n5agC/oPGXxfk/ymgAAxT9YKqYcFIQMxFYn5c0kwpkXfT1J9Hvkr/PhS8pnriBLhE3R/sjMANFXlDeaiyx9pDaHRpxjtkrxgOzUQelJo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oITZlx+9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnzyKxsD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF131F00A3F;
-	Thu,  2 Jul 2026 16:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oITZlx+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4081F000E9;
+	Thu,  2 Jul 2026 16:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009886;
-	bh=RVp2OD5rSJhiR8NvDwK/AKvXYMFxgYGNwke+qE+5itY=;
+	s=korg; t=1783009888;
+	bh=e6WWzszf7pW/WQgrs01jwBa08MnWIc86Pf4p3LjePAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OnzyKxsDlYNhvIFKriupyKft63JUIYNqKrfvtUhz675SjQhTe1o32FZvoORbEdz3T
-	 VWGe/vAPfDj+5yo4k/I8o9AE5SS8Vc0FZB2ITC6pbsh5aQuJpAvWMfJimreeheCknb
-	 eSs0+qN+Bpz+bUcthAgFC77tNRShSMuUyDL+dLCM=
+	b=oITZlx+9tRBOJbOoxJYzgXa7IQddNj9KvWpYAlcWSAdFbpb3CeryqmhfN0FUN1feF
+	 GpyncnkE7VBx+vQQy4qp/LXL36W21W7xuSN+sgvvkKwMAAeby31U1I5h1Y5PbKOWGA
+	 D7/I9J9q2TDaTZiFItImUyBFFnLHtk+U3/VkZZTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inseo An <y0un9sa@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Li hongliang <1468888505@139.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.1 012/129] netfilter: nf_tables: unconditionally bump set->nelems before insertion
-Date: Thu,  2 Jul 2026 18:18:51 +0200
-Message-ID: <20260702155112.416109505@linuxfoundation.org>
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 030/129] ARM: fix branch predictor hardening
+Date: Thu,  2 Jul 2026 18:19:09 +0200
+Message-ID: <20260702155112.781162924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -54,99 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit def602e498a4f951da95c95b1b8ce8ae68aa733a ]
+commit fd2dee1c6e2256f726ba33fd3083a7be0efc80d3 upstream.
 
-In case that the set is full, a new element gets published then removed
-without waiting for the RCU grace period, while RCU reader can be
-walking over it already.
+__do_user_fault() may be called with indeterminent interrupt enable
+state, which means we may be preemptive at this point. This causes
+problems when calling harden_branch_predictor(). For example, when
+called from a data abort, do_alignment_fault()->do_bad_area().
 
-To address this issue, add the element transaction even if set is full,
-but toggle the set_full flag to report -ENFILE so the abort path safely
-unwinds the set to its previous state.
+Move harden_branch_predictor() out of __do_user_fault() and into the
+calling contexts.
 
-As for element updates, decrement set->nelems to restore it.
+Moving it into do_kernel_address_page_fault(), we can be sure that
+interrupts will be disabled here.
 
-A simpler fix is to call synchronize_rcu() in the error path.
-However, with a large batch adding elements to already maxed-out set,
-this could cause noticeable slowdown of such batches.
+Converting do_translation_fault() to use do_kernel_address_page_fault()
+rather than do_bad_area() means that we keep branch predictor handling
+for translation faults. Interrupts will also be disabled at this call
+site.
 
-Fixes: 35d0ac9070ef ("netfilter: nf_tables: fix set->nelems counting with no NLM_F_EXCL")
-Reported-by: Inseo An <y0un9sa@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Shivani: Modified to apply on 6.1.y ]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+do_sect_fault() needs special handling, so detect user mode accesses
+to kernel-addresses, and add an explicit call to branch predictor
+hardening.
+
+Finally, add branch predictor hardening to do_alignment() for the
+faulting case (user mode accessing kernel addresses) before interrupts
+are enabled.
+
+This should cover all cases where harden_branch_predictor() is called,
+ensuring that it is always has interrupts disabled, also ensuring that
+it is called early in each call path.
+
+Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ arch/arm/mm/alignment.c |  4 ++++
+ arch/arm/mm/fault.c     | 39 ++++++++++++++++++++++++++-------------
+ 2 files changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 0d406dab5cac19..735c0210104076 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6417,6 +6417,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	struct nft_data_desc desc;
- 	enum nft_registers dreg;
- 	struct nft_trans *trans;
-+	bool set_full = false;
- 	u64 timeout;
- 	u64 expiration;
- 	int err, i;
-@@ -6709,10 +6710,18 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	if (err < 0)
- 		goto err_elem_free;
+diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
+index f8dd0b3cc8e040..ee264737be6d26 100644
+--- a/arch/arm/mm/alignment.c
++++ b/arch/arm/mm/alignment.c
+@@ -22,6 +22,7 @@
  
-+	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
-+		unsigned int max = nft_set_maxsize(set), nelems;
+ #include <asm/cp15.h>
+ #include <asm/system_info.h>
++#include <asm/system_misc.h>
+ #include <asm/unaligned.h>
+ #include <asm/opcodes.h>
+ 
+@@ -809,6 +810,9 @@ do_alignment(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 	int thumb2_32b = 0;
+ 	int fault;
+ 
++	if (addr >= TASK_SIZE && user_mode(regs))
++		harden_branch_predictor();
 +
-+		nelems = atomic_inc_return(&set->nelems);
-+		if (nelems > max)
-+			set_full = true;
-+	}
-+
- 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_NEWSETELEM, set);
- 	if (trans == NULL) {
- 		err = -ENOMEM;
--		goto err_elem_free;
-+		goto err_set_size;
- 	}
+ 	if (interrupts_enabled(regs))
+ 		local_irq_enable();
  
- 	ext->genmask = nft_genmask_cur(ctx->net);
-@@ -6744,23 +6753,16 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 		goto err_element_clash;
- 	}
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index 907705992ab65f..d0681285dbda3e 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -195,9 +195,6 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
+ {
+ 	struct task_struct *tsk = current;
  
--	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
--		unsigned int max = nft_set_maxsize(set);
+-	if (addr > TASK_SIZE)
+-		harden_branch_predictor();
 -
--		if (!atomic_add_unless(&set->nelems, 1, max)) {
--			err = -ENFILE;
--			goto err_set_full;
--		}
--	}
--
- 	nft_trans_elem(trans) = elem;
- 	nft_trans_commit_list_add_tail(ctx->net, trans);
--	return 0;
+ #ifdef CONFIG_DEBUG_USER
+ 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
+ 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
+@@ -248,8 +245,10 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
+ 		/*
+ 		 * Fault from user mode for a kernel space address. User mode
+ 		 * should not be faulting in kernel space, which includes the
+-		 * vector/khelper page. Send a SIGSEGV.
++		 * vector/khelper page. Handle the branch predictor hardening
++		 * while interrupts are still disabled, then send a SIGSEGV.
+ 		 */
++		harden_branch_predictor();
+ 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
+ 	} else {
+ 		/*
+@@ -419,16 +418,20 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+  * We enter here because the first level page table doesn't contain
+  * a valid entry for the address.
+  *
+- * If the address is in kernel space (>= TASK_SIZE), then we are
+- * probably faulting in the vmalloc() area.
++ * If this is a user address (addr < TASK_SIZE), we handle this as a
++ * normal page fault. This leaves the remainder of the function to handle
++ * kernel address translation faults.
+  *
+- * If the init_task's first level page tables contains the relevant
+- * entry, we copy the it to this task.  If not, we send the process
+- * a signal, fixup the exception, or oops the kernel.
++ * Since user mode is not permitted to access kernel addresses, pass these
++ * directly to do_kernel_address_page_fault() to handle.
+  *
+- * NOTE! We MUST NOT take any locks for this case. We may be in an
+- * interrupt or a critical region, and should only copy the information
+- * from the master page table, nothing more.
++ * Otherwise, we're probably faulting in the vmalloc() area, so try to fix
++ * that up. Note that we must not take any locks or enable interrupts in
++ * this case.
++ *
++ * If vmalloc() fixup fails, that means the non-leaf page tables did not
++ * contain an entry for this address, so handle this via
++ * do_kernel_address_page_fault().
+  */
+ #ifdef CONFIG_MMU
+ static int __kprobes
+@@ -494,7 +497,8 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
+ 	return 0;
  
--err_set_full:
--	nft_setelem_remove(ctx->net, set, &elem);
-+	return set_full ? -ENFILE : 0;
+ bad_area:
+-	do_bad_area(addr, fsr, regs);
++	do_kernel_address_page_fault(current->mm, addr, fsr, regs);
 +
- err_element_clash:
- 	kfree(trans);
-+err_set_size:
-+	if (!(flags & NFT_SET_ELEM_CATCHALL))
-+		atomic_dec(&set->nelems);
- err_elem_free:
- 	nf_tables_set_elem_destroy(ctx, set, elem.priv);
- err_parse_data:
+ 	return 0;
+ }
+ #else					/* CONFIG_MMU */
+@@ -514,7 +518,16 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
+ static int
+ do_sect_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ {
++	/*
++	 * If this is a kernel address, but from user mode, then userspace
++	 * is trying bad stuff. Invoke the branch predictor handling.
++	 * Interrupts are disabled here.
++	 */
++	if (addr >= TASK_SIZE && user_mode(regs))
++		harden_branch_predictor();
++
+ 	do_bad_area(addr, fsr, regs);
++
+ 	return 0;
+ }
+ #endif /* CONFIG_ARM_LPAE */
 -- 
 2.53.0
 
