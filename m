@@ -1,166 +1,108 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012056.outbound.protection.outlook.com [52.101.53.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5064930499A
-	for <patches@lists.linux.dev>; Thu,  2 Jul 2026 17:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.56
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011684; cv=fail; b=Vi2Vhj04YZ3kFILSrNWUxqrstqeNHSbP+lGiMpAXt7rm1fCKsYtc06YMKOb3UvN1KXwl8d4ccJLWE7ccfeEAMS+6M/9mCKW0OuD47iIKpAf7O6gIZ+pIvqlxYlCykIk0GBcalXG7Jha/Sbd6brv29vr3k+5BzVZgze9OcBf344g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011684; c=relaxed/simple;
-	bh=3jQ39w2PtktP3UYSJa9T7vy9tkuzGdLFlaSAEDhMMBU=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=uUCTEo3xMKFxu5xW5AEmiq1VSGjnFQZgfNOwE6q4n+zpIBmQ4fliDgKv0ak7R6sDkdG5WGGzkvWySLfrC6mdTT8Q64ED4FkSrLsttlKiE3L1S6R7/0sHZmMZcroOGy2Zzfgv9HZrbSIe45OCqFT7kjiLic3QYs0jX7ESyIz7BP4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bixxBZSy; arc=fail smtp.client-ip=52.101.53.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA824433E87;
+	Thu,  2 Jul 2026 17:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783011687; cv=none; b=Bb+V7e5JtCyHXQsW2AGd+k62ltxfPnyj33U93OLDmGgU30eYwjpvgqHwMJqEccO6tMIACJtF3TmUzqFu5FP63oU66c+da3N/5SZqLHK01eci+0ZFC3HtjhjFt199Oi3Bx86F44yM3rW7TUtkUt7K3uI9MmdIGSt1K30iyYcqCpE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783011687; c=relaxed/simple;
+	bh=BViPmgTJVR5k3wJEO5R570BV9eHOxJJ/46ls9FfhQgc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=r+OwbbzosN8RqOo8tP4NNOhDeXuZa/1VydXGyGDL6XcE3UzVUpvgKaaMW5TwY9K2j4GhKdNGnHuEonrV5f5goCjy2KOgPgKim//IbBx60ttF5BUdrkHHVMt9u8vLIr1l91urV2ODRyLeVmqyuUEszLoDFJiOPu57zaxY8ee9kYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOF22Yj8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="bixxBZSy"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k2BGfgbJp/isqf5JsXr42xXBO0hT83O8JZ1dAXFuFB+LsGt0W2/0tx4VcBhnfdbcZ3S3pH60P9ysso/voL12ML/cuKWdPxOdge24Tqf9tQi7hyKLAPucxrd8sNbKJ4KwIiPlXwe8LkSrx7St+bxnCqFOCpbJ7edYAq+E6vTxu+fa/NDrM/fn02x8JbRuHM0IzO5EcWZh1p08pvDmuNhdCvbV+0Yf4EjRnO8KYZZ9JPzA3nSAjiesv2AdzYVtpLduVLbpU2ELtf8A6o496pmeqUeTrsXX3YQqbFRHCYJgGPtTkI99ODyTUerrg6OVFBKEtP/zyyfEBOa6fgUg15/USw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ghzcN4eqk7TL9M76tOBQD25lswOUKwIzovqvTgBQazA=;
- b=MtuWhJUW0X9U3JwnbCVL/PtT+cxpfR9kG2hvW1anuFFG/hheLZlK8DUNADOF0wSeXzjmXQ0lBfOZ4Pzo+Y08XoQ+hr7kwLJ4bqNj5rpLTGQsq0lHnEyWowHLkhsVczB0H4sUir8tSleUhOh38jvhMOrco9FOPM7u+v9GZuIh9+zPPzjJ9hZgakqWtxeVmF493bvZqrVbTCaeRsJhUs4VIwc5+W8dwboGEI3LbeoDg6Lx3yhQ89r+1bs5kzJhQnglFX/mkN6TjlTf4NgmMbY3DEao9lrVgtB8RgUN22UKWsSP1chcuBqmV3cGDQiu/bRHKv7eAeeN0l65ohwtwb/Z5Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ghzcN4eqk7TL9M76tOBQD25lswOUKwIzovqvTgBQazA=;
- b=bixxBZSybdgWNhDWgiV1bBdqoM7YkBS8twmcxswSPOHxUZ/MhLOKaxpmSxAikRlAvNDLTxalx0k2n+Xc78IMIeZDCpseIC/3J8cW5phlQleycOvLP9XEaDmq4kbyGRmx5FdRv9ypK6+10Ehgf0ydSA0UVSwRw9AAepiM//id7N8yKbyxQJmYi2U3h9ExUMUekJufcmMrStfhBv0Ulakz0FJtWTPSH0csHh6YuAmeeb7roUzZIRXnZpfkAYyI/LnUFInM6Wu4mG+2DNW9XgdjlDnCPxaHZh0jsTI1i7dSm31exfHStixwCqglTnxLVVgZxJKHx38ONQfZ+fhWKB3/OQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by PH0PR12MB8775.namprd12.prod.outlook.com (2603:10b6:510:28e::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.16; Thu, 2 Jul
- 2026 17:01:17 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0181.008; Thu, 2 Jul 2026
- 17:01:17 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: linux-rdma@vger.kernel.org
-Cc: Edward Srouji <edwards@nvidia.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOF22Yj8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1341F000E9;
+	Thu,  2 Jul 2026 17:01:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1783011685;
+	bh=6cQRNguDvv6fh9L2dtnFwpFK59OlUOtNQTet3EX71Mo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=wOF22Yj8F7qYekzphKRhsscZ1LGOhdVQIC6JpXzouo+vAAQ1agPVNyzsTJtW+wOfk
+	 K+xrM98Zd2ToAw6Ox6V1VKgIvBQqEtMaVkiLbUw88i2jXD/qfE5S/4hKYo0hkzZhAK
+	 ukvsYC+EpFGWfu0LOYjddLLSRqy9Uz3dVrNgmwA4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	Yishai Hadas <yishaih@nvidia.com>
-Subject: [PATCH] RDMA/uverbs: Add UVERBS_ATTR_UHW to UVERBS_METHOD_REG_MR
-Date: Thu,  2 Jul 2026 14:00:57 -0300
-Message-ID: <0-v1-011199f46f44+319-rdma_reg_mr_uhw_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: YT4PR01CA0042.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:fe::22) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 7.1 092/120] 9p: avoid putting oldfid in p9_client_walk() error path
+Date: Thu,  2 Jul 2026 18:21:28 +0200
+Message-ID: <20260702155114.861929859@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
+References: <20260702155112.964534952@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH0PR12MB8775:EE_
-X-MS-Office365-Filtering-Correlation-Id: a2073337-e881-4849-dbf9-08ded85b7cfe
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|18002099003|11063799006|56012099006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	sNnchwiSasUvNoEAfqr81jWmQcGCPs6Hokgw34Of8KB/Rad3JXT3LHytzqKwUmCAQv15rWc//gTfp8XHXr9oNltUQSiMePvfdKRKZhCBG9/Ocv3wP57oFCh6Haf5yLClnQTYizQ3PrcQuJQFm6XODAJz61/agBOHzfO1HV58zdJM4XlSK3Jel+a9fkjjeErISRASyZ51BGXYpiNsfKj8BEW/eMgSuKd2d7g7O+ua2mvel7sr/WIEfn+kUhPFgCSS/OFrQaCprewTzCangHnMooONzQYwf2FvuhwtQhtVLKqWNpxM0xwYXkMercAEDWsKV9tMZ4X9TF3ZOpncCDj7H42xV1pTjsu0TmFKk5jWDLUdM1QZgeqVgASUbYT68GFgWaDQVqx+OCIjnScQtC1xuQ2l7saa16LCGtAws8MIsspCJAw6sDp1FGnesmkDtmD7UtGfhevf/EmGr2HZS7ZoLR6PZUdfB2mgbxFzzQFQXg7wZsYBrk5hRkYyj7RpWP3cpFBR/x9jpF2J79bKAhOXLETQaytM6o2ds8nIB1me4Bq4tWel4gjpLh9492VQmw79F84v4vxCxUymPRDskrB7PffI/sWljNq9bKvVeLLZTzYtipGFvCAR30M5JWkw+67b/7f03SUAL3zxVjg0BMlOGUVOqoQeY/T2CfHZqqgLIbA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(11063799006)(56012099006)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0dGYuR0QgKILkweEGie3Bhljk86lUpUJQEJfw+1VyOazqKi0E3eMflZinBDB?=
- =?us-ascii?Q?oI5CUXJHXiqfXYVpDBBYs5urrz7vfJCdyVQyADEF7sqtyVjqRE2xC9BpROZs?=
- =?us-ascii?Q?TaQF8ouPDd+t0DP887J+x3Su974G0EgVxMCy083lcWwsiRh3R9q6Ibwdbhfa?=
- =?us-ascii?Q?mx87oHkyQAhOaj1HbWlcfC8EkWRUDL4rmKelMeDriolri840YM6+8ZFUg6UJ?=
- =?us-ascii?Q?Ib8LdNSfneL4y1i1xXEQ6FVhVYK9FwMMn9svyIyJlIfkpHrg03DpuHIwkjP4?=
- =?us-ascii?Q?FumSLmUGD6Q1xAxT/5eiyAEkOqiyVaqoDQnnWk8euVWWcWzCYXicxpb5o3X5?=
- =?us-ascii?Q?igd1l17pNBNRianDIHiS+hKB6YEwJdG8wuHaJtATQuoP/NgdZZpVBFPyIRVz?=
- =?us-ascii?Q?yA957lx/yRY+KHSo3wLs1YujDdrHFSLexqEAzpGT30mGElbf4kf6t8xcC/ZG?=
- =?us-ascii?Q?370oHw0OhOuvUdVB3EnmNTT0i5i+CNThlN9y+8Tlp5xk1+55wZjd1DLwIsZU?=
- =?us-ascii?Q?c5KAXxploKzNkXLBORI+R8ulQ173kVcDZFrUHTfWTg1OVl7Nm+22XjBbAHhQ?=
- =?us-ascii?Q?39fDJePjEWmHybVJCywYvxaTuPOsqVuibk9l177gr7BJBQZVIb84fvhq71sC?=
- =?us-ascii?Q?pkx4qbAYyasltnzF89C6uvd8cEphWPQfakzWRjLTB0JhJu5aGQydOb543DfZ?=
- =?us-ascii?Q?TGy5l+xrSjdx6hTLADOimGSlYlzSLwmz9N5C6P2kIQHCztn6QnNxpSa710ek?=
- =?us-ascii?Q?iQiN1KrMJc+MdBwNGEl/Ae/8gGJH3nLF/752xk1jVwTQpqObLHQq/dWCZBkP?=
- =?us-ascii?Q?JuFhFkaQax1/E8nLuXEG9YDunbN/CTG94s4ul9O+/jUmdIl+sLKJRhmvmYIV?=
- =?us-ascii?Q?2j/3Qr7vm6j+pksdHXQqQVIu29Pu7Bh2MA0SKImsqtBqSqnir6/zA54Nojca?=
- =?us-ascii?Q?iI3HxUPEisksWFfOViqLUeM+U9T+wQQQix0npveZL+bGL2zBUzlGhKmz7Gy4?=
- =?us-ascii?Q?7ysQ2HEs+d7UI0gXqKihZMFvusWUexocFUr6G0Cy6ScNP0AvWjSSYkLjPymf?=
- =?us-ascii?Q?iQFs6DIXpwB/gyYUFhmOk9Re8ErMJoad8BF3p0oJgZJFDd8Fvi8Tdc9JhgRp?=
- =?us-ascii?Q?CrCSb28UfBaD2U0Fhkwczt5vLVQabet3mMQk43lk/oT1ov/LLl3HXtR7u0ri?=
- =?us-ascii?Q?9G9jvyyB4PFoWKmxHGjDJpaXu8vC8VQLQcwP0GKz42dsPsX6U7Rgk8QY9HHX?=
- =?us-ascii?Q?fHX6ni3cFus6C54SYgHTsPC7fqTuNGChCHc4zsQ7FTqvTJCHGEl+cbyahfjZ?=
- =?us-ascii?Q?qvu1ilXMFW8Ao8ET1Dw6CkDtB8NdNbAU1qYDYNqd3GrarDRFMUqsbAyb3gjO?=
- =?us-ascii?Q?X/YHvN6KObYVf0uITWWX2FiszPhdM6tDFhEogykV5/OZqCtRFgRgo2WZLpJU?=
- =?us-ascii?Q?HuiwXLrDiodJacphF6RaI5Mdh2p+YeG41my0tTjnzaVkccgOrpKQbIINeFUv?=
- =?us-ascii?Q?bEwvmdjlAAq5ilj/cP2rsA3aPW2KtRiSTRgdieccvFsDNLeatR4w6ORaNou/?=
- =?us-ascii?Q?X3o4Og4pTVJGYWTUiqrDACFCWd4FwvjSvv6WbuTVpgod8xrWABU+HKUQNUq6?=
- =?us-ascii?Q?47XFVwvOyBoKpJ+MNC11SAUgILSyHxn6zwE8472qBJHMRZOOs1S0eHKjTqN1?=
- =?us-ascii?Q?zIkZClZ3tT6PiXLuULaQs0MTaxsruI8NVVAaKW1W1Mjkf4w7?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a2073337-e881-4849-dbf9-08ded85b7cfe
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 17:00:58.6999
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Q557Nnzxn+yWodEEzkJniqzD6O45ku0O3veSTYB+FzcHnEKsTJrg1enp31FTtAAT
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8775
+Content-Transfer-Encoding: 8bit
 
-The original commit missed that three drivers (mthca, irdma, siw) have UHW
-data associated with reg_mr that cannot be passed through the ioctl. They
-also assume that the udata cannot be NULL, so failing to pass a valid
-udata can trigger a NULL udata crash in those drivers.
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-This never happens in real systems since in rdma-core ibv_cmd_reg_mr_ex()
-does not accept a udata and those three drivers don't use it, however a
-malicious userspace could trigger it.
+------------------
 
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+
+commit 1a3860d46e3eb47dbd60339783cdad7904486b9f upstream.
+
+When p9_client_walk() is called with clone set to false, fid aliases
+oldfid. If the walk subsequently fails after the request has been sent,
+the error path jumps to clunk_fid, which currently calls p9_fid_put(fid)
+unconditionally.
+
+This drops a reference to oldfid even though ownership of oldfid remains
+with the caller. If this is the last reference, oldfid can be clunked and
+destroyed while the caller still expects it to be valid. A later use or
+put of oldfid can then trigger a use-after-free or refcount underflow.
+
+Fix this by only putting fid in the clunk_fid error path when it does not
+alias oldfid, matching the existing guard in the error path below.
+
+This can be triggered when a multi-component walk is split into multiple
+p9_client_walk() calls and a later non-cloning walk fails. A reproducer
+and refcount warning logs are available on request.
+
+Fixes: b48dbb998d70 ("9p fid refcount: add p9_fid_get/put wrappers")
 Cc: stable@vger.kernel.org
-Fixes: 5b2e45049dc0 ("IB/core: Add UVERBS_METHOD_REG_MR on the MR object")
-Reported-by: Jacob Moroni <jmoroni@google.com>
-Closes: https://lore.kernel.org/all/CAHYDg1TOGxRGZrS69d4Y--Shj_DZv0nJuM73iHUBwBM70g_t3Q@mail.gmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM 5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Message-ID: <20260528053918.53550-1-zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/uverbs_std_types_mr.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/9p/client.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_mr.c b/drivers/infiniband/core/uverbs_std_types_mr.c
-index 570b9656801d72..0c72f801e0d32d 100644
---- a/drivers/infiniband/core/uverbs_std_types_mr.c
-+++ b/drivers/infiniband/core/uverbs_std_types_mr.c
-@@ -364,7 +364,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_REG_MR)(
- 							dmah, attrs);
- 	else
- 		mr = pd->device->ops.reg_user_mr(pd, addr, length, iova,
--						 access_flags, dmah, NULL);
-+						 access_flags, dmah,
-+						 &attrs->driver_udata);
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1092,7 +1092,8 @@ struct p9_fid *p9_client_walk(struct p9_
  
- 	if (IS_ERR(mr))
- 		return PTR_ERR(mr);
-@@ -527,7 +528,8 @@ DECLARE_UVERBS_NAMED_METHOD(
- 			    UA_MANDATORY),
- 	UVERBS_ATTR_PTR_OUT(UVERBS_ATTR_REG_MR_RESP_RKEY,
- 			    UVERBS_ATTR_TYPE(u32),
--			    UA_MANDATORY));
-+			    UA_MANDATORY),
-+	UVERBS_ATTR_UHW());
+ clunk_fid:
+ 	kfree(wqids);
+-	p9_fid_put(fid);
++	if (fid != oldfid)
++		p9_fid_put(fid);
+ 	fid = NULL;
  
- DECLARE_UVERBS_NAMED_METHOD_DESTROY(
- 	UVERBS_METHOD_MR_DESTROY,
+ error:
 
-base-commit: 5911f6d6e7cce5f35bcaabc1895616e10a6d0aa2
--- 
-2.43.0
 
