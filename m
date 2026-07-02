@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF01333F5BC;
-	Thu,  2 Jul 2026 16:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB9F395AF6;
+	Thu,  2 Jul 2026 16:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009670; cv=none; b=JyDVas3Zro28Ad36mBBH+tR8Ngo9zHLQasZoVWIac0FujVMKKRH5kxMfy5mOXsuHnaDYRKfE2VcYz9jfYdQ4DA6sZ40zYuOjyHCt1D0KKvli1yrgVcfmI8S2NL4T+rq02WrVZVtBKM9xBL0IzqLI7vQy0U61XaDgKWt1ZWKKLxA=
+	t=1783009673; cv=none; b=ALwIPn7UtK0+kAPVJIVez0ipeFa+ucfCgYNPodYD/manxwTC4G3FyIDYVO9yCJYjzmGFEOlTjJvuuMval7dMdJSuDAMMbDmM7ja8qAS7Tm74hQOBoIGkW7sAzWWH9e7g6Ed36/I1elaq26pITPxgSFrkFu61l4/VvadaW3QOEC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009670; c=relaxed/simple;
-	bh=MStzTTWqq2qAIpcfsl9U0FwD2Rwpo5QFh4I3zjmEG1E=;
+	s=arc-20240116; t=1783009673; c=relaxed/simple;
+	bh=Oh9Xj+kz0nEsUXQgS+l/C8A87i1ZID3o+W7tvmIQ+lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gijIAbUmFnXBfEGSV7QWpCrpWTcTZTWagReXxLHX/hyBkYElepK5rPBcqMZROvwIiMDEN1Rco0ick09IrsBXy9jea6F6Hk+hfp7qFG7BDh3ovwXMyCY1QJKXIrcwNwVx5Ds4m9Qa3Uk6Qsw6JMUDVmwjSyF0nmnyV1OphZcTiic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EU5giaPL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K/qbEE5u3QaawU/9kbzWLrTlK2jvtNY/tT7Wo6l80p/ya3uby3l/neaRNuXnNIZbNd6ekW93VDTdz82jnVuWwiQYh911v+R2r3JGYndxEEZ27VFFxg3HBcZKzqjCD2E1SKuozJa+bd/WeK94tbKREqumwcwNAZDWbRjYCDBvhms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ays4ah/E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EU5giaPL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DC91F000E9;
-	Thu,  2 Jul 2026 16:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ays4ah/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5561F00A3A;
+	Thu,  2 Jul 2026 16:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009667;
-	bh=AHkIOzYuurpExcRVmeNs6PKR+oieBIVQC20w6Ag3hsc=;
+	s=korg; t=1783009670;
+	bh=ZcCw2/eK0IaqA8M+5OoD7UJG+RMVPxukggHHgGH2IGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EU5giaPLpqql5jrDzEZMV0frErf+c0cqW9PEUdNpOaBi2X/e9kDzs9+LnKKUG3p0Z
-	 iOLhNtnT61ZLmXergX261/NcUvPz5uhNGQhiUrRFI780q9cwXEMAjjhLFB3ung4LLz
-	 m0kKilO9wcKGFJlYZ6himONQdiazCaceaQH37CeE=
+	b=Ays4ah/EIe5hNpTgCYPRXKl3aGe8OEjKBgqNAnfAI+wbohwc/Q2P56oLd+Dt2Toh2
+	 tRuP3t0p9uoPxCX7yQinLclsDak2v5TE3WUsiTMBfvCklwicPzYB3HJEjnvkf433AK
+	 /4+p9vYTcDb9HZt9kwN6FWQTcz7jYuI+r3oMfw88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Ido Schimmel <idosch@idosch.org>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/95] batman-adv: fix (m|b)cast csum after decrementing TTL
-Date: Thu,  2 Jul 2026 18:19:43 +0200
-Message-ID: <20260702155110.049873642@linuxfoundation.org>
+Subject: [PATCH 5.15 05/95] net/sched: act_pedit: free pedit keys on bail from offset check
+Date: Thu,  2 Jul 2026 18:19:08 +0200
+Message-ID: <20260702155109.321771852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -51,116 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit e728bbdf32660c8f32b8f5e8d09427a2c131ad60 upstream.
+[ Upstream commit 1b483d9f5805c7e3d628d4995e97f4311fcb82eb ]
 
-The broadcast and multicast packets can be received at the same time by the
-local system and forwarded to other nodes. Both are simply decrementing the
-TTL at the beginning of the receive path - independent of chosen paths
-(receive/forward). But such a modification of the data conflicts with the
-hw csum. This is not a problem when the packet is directly forwarded but
-can cause errors in the local receive path.
+Ido Schimmel reports a memleak on a syzkaller instance:
+   BUG: memory leak
+   unreferenced object 0xffff88803d45e400 (size 1024):
+     comm "syz-executor292", pid 563, jiffies 4295025223 (age 51.781s)
+     hex dump (first 32 bytes):
+       28 bd 70 00 fb db df 25 02 00 14 1f ff 02 00 02  (.p....%........
+       00 32 00 00 1f 00 00 00 ac 14 14 3e 08 00 07 00  .2.........>....
+     backtrace:
+       [<ffffffff81bd0f2c>] kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
+       [<ffffffff81bd0f2c>] slab_post_alloc_hook mm/slab.h:772 [inline]
+       [<ffffffff81bd0f2c>] slab_alloc_node mm/slub.c:3452 [inline]
+       [<ffffffff81bd0f2c>] __kmem_cache_alloc_node+0x25c/0x320 mm/slub.c:3491
+       [<ffffffff81a865d9>] __do_kmalloc_node mm/slab_common.c:966 [inline]
+       [<ffffffff81a865d9>] __kmalloc+0x59/0x1a0 mm/slab_common.c:980
+       [<ffffffff83aa85c3>] kmalloc include/linux/slab.h:584 [inline]
+       [<ffffffff83aa85c3>] tcf_pedit_init+0x793/0x1ae0 net/sched/act_pedit.c:245
+       [<ffffffff83a90623>] tcf_action_init_1+0x453/0x6e0 net/sched/act_api.c:1394
+       [<ffffffff83a90e58>] tcf_action_init+0x5a8/0x950 net/sched/act_api.c:1459
+       [<ffffffff83a96258>] tcf_action_add+0x118/0x4e0 net/sched/act_api.c:1985
+       [<ffffffff83a96997>] tc_ctl_action+0x377/0x490 net/sched/act_api.c:2044
+       [<ffffffff83920a8d>] rtnetlink_rcv_msg+0x46d/0xd70 net/core/rtnetlink.c:6395
+       [<ffffffff83b24305>] netlink_rcv_skb+0x185/0x490 net/netlink/af_netlink.c:2575
+       [<ffffffff83901806>] rtnetlink_rcv+0x26/0x30 net/core/rtnetlink.c:6413
+       [<ffffffff83b21cae>] netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+       [<ffffffff83b21cae>] netlink_unicast+0x5be/0x8a0 net/netlink/af_netlink.c:1365
+       [<ffffffff83b2293f>] netlink_sendmsg+0x9af/0xed0 net/netlink/af_netlink.c:1942
+       [<ffffffff8380c39f>] sock_sendmsg_nosec net/socket.c:724 [inline]
+       [<ffffffff8380c39f>] sock_sendmsg net/socket.c:747 [inline]
+       [<ffffffff8380c39f>] ____sys_sendmsg+0x3ef/0xaa0 net/socket.c:2503
+       [<ffffffff838156d2>] ___sys_sendmsg+0x122/0x1c0 net/socket.c:2557
+       [<ffffffff8381594f>] __sys_sendmsg+0x11f/0x200 net/socket.c:2586
+       [<ffffffff83815ab0>] __do_sys_sendmsg net/socket.c:2595 [inline]
+       [<ffffffff83815ab0>] __se_sys_sendmsg net/socket.c:2593 [inline]
+       [<ffffffff83815ab0>] __x64_sys_sendmsg+0x80/0xc0 net/socket.c:2593
 
-Such a problem can then trigger a "hw csum failure". The receiver path must
-therefore ensure that the csum is fixed for each modification of the
-payload before batadv_interface_rx() is reached.
+The recently added static offset check missed a free to the key buffer when
+bailing out on error.
 
-Since all batman-adv packet types with a ttl have it as u8 at offset 2, a
-helper can be used for all of them. But it is only used at the moment for
-batadv_bcast_packet and batadv_mcast_packet because they are the only ones
-which deliver the packet locally but unconditionally modify the TTL.
-
-Cc: stable@kernel.org
-Fixes: 3f69339068f9 ("batman-adv: bcast: queue per interface, if needed")
-Fixes: 07afe1ba288c ("batman-adv: mcast: implement multicast packet reception and forwarding")
-[ Context, Drop change for non-existing mcast handling ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: e1201bc781c2 ("net/sched: act_pedit: check static offsets a priori")
+Reported-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20230425144725.669262-1-pctammela@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/routing.c | 55 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 54 insertions(+), 1 deletion(-)
+ net/sched/act_pedit.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/routing.c b/net/batman-adv/routing.c
-index 503c8c9381ebe9..0fb37993fd4604 100644
---- a/net/batman-adv/routing.c
-+++ b/net/batman-adv/routing.c
-@@ -8,6 +8,7 @@
- #include "main.h"
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index f5b3b6e78b7a6b..efcbca97bf2eda 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -258,7 +258,7 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 		if (!offmask && cur % 4) {
+ 			NL_SET_ERR_MSG_MOD(extack, "Offsets must be on 32bit boundaries");
+ 			ret = -EINVAL;
+-			goto put_chain;
++			goto out_free_keys;
+ 		}
  
- #include <linux/atomic.h>
-+#include <linux/build_bug.h>
- #include <linux/byteorder/generic.h>
- #include <linux/compiler.h>
- #include <linux/errno.h>
-@@ -205,6 +206,58 @@ bool batadv_check_management_packet(struct sk_buff *skb,
- 	return true;
- }
+ 		/* sanitize the shift value for any later use */
+@@ -283,6 +283,8 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
  
-+/**
-+ * batadv_skb_decrement_ttl() - decrement ttl in a batman-adv header, csum-safe
-+ * @skb: the received packet with @skb->data pointing to the batman-adv header
-+ *
-+ * Supports the following packet types, all of which carry the TTL at offset 2:
-+ *
-+ * - batadv_ogm_packet
-+ * - batadv_ogm2_packet
-+ * - batadv_icmp_header
-+ * - batadv_icmp_packet
-+ * - batadv_icmp_tp_packet
-+ * - batadv_icmp_packet_rr
-+ * - batadv_unicast_packet
-+ * - batadv_frag_packet
-+ * - batadv_bcast_packet
-+ * - batadv_mcast_packet
-+ * - batadv_coded_packet
-+ * - batadv_unicast_tvlv_packet
-+ *
-+ * Return: true if the packet may be forwarded (ttl decremented),
-+ *  false if it must be dropped (ttl would expire)
-+ */
-+static bool batadv_skb_decrement_ttl(struct sk_buff *skb)
-+{
-+	static const size_t ttl_offset = 2;
-+	u8 *ttl_pos;
-+
-+	BUILD_BUG_ON(offsetof(struct batadv_ogm_packet, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_ogm2_packet, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_icmp_header, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_icmp_packet, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_icmp_tp_packet, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_icmp_packet_rr, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_unicast_packet, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_frag_packet, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_bcast_packet, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_coded_packet, ttl) != ttl_offset);
-+	BUILD_BUG_ON(offsetof(struct batadv_unicast_tvlv_packet, ttl) != ttl_offset);
-+
-+	ttl_pos = skb->data + ttl_offset;
-+
-+	/* would expire on this hop -> drop, leave header + csum untouched */
-+	if (*ttl_pos < 2)
-+		return false;
-+
-+	skb_postpull_rcsum(skb, ttl_pos, 1);
-+	(*ttl_pos)--;
-+	skb_postpush_rcsum(skb, ttl_pos, 1);
-+
-+	return true;
-+}
-+
- /**
-  * batadv_recv_my_icmp_packet() - receive an icmp packet locally
-  * @bat_priv: the bat priv with all the soft interface information
-@@ -1204,7 +1257,7 @@ int batadv_recv_bcast_packet(struct sk_buff *skb,
+ 	return ret;
  
- 	bcast_packet = (struct batadv_bcast_packet *)skb->data;
- 
--	if (bcast_packet->ttl-- < 2)
-+	if (!batadv_skb_decrement_ttl(skb))
- 		goto free_skb;
- 
- 	orig_node = batadv_orig_hash_find(bat_priv, bcast_packet->orig);
++out_free_keys:
++	kfree(nparms->tcfp_keys);
+ put_chain:
+ 	if (goto_ch)
+ 		tcf_chain_put_by_act(goto_ch);
 -- 
 2.53.0
 
