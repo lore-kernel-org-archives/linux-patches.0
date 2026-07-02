@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F1A33F5BE;
-	Thu,  2 Jul 2026 16:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A92333F5BE;
+	Thu,  2 Jul 2026 16:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011154; cv=none; b=kRaJgLUeH1ofOe9nJQJAC1oH7Ue/Mo1iVaaLB7ZVKTY3FVb3qjZCwbN0qa/5qmuoN4BDCDSA/v+yvskEwwNjqpYhuHIn7A8cTyIKU7ruQc4x+Nh8c9VIsrNSnAzkLOIX9qNz//bWWo/NchKZNbjypFOjMMgexrMkY01SqKRaoLU=
+	t=1783011156; cv=none; b=hQgrudMXwRe9YTFgQf2+l+Z1lQtFjJ1iCbfkYjx/Qy2fMIswc24IKX3b3vdAEonGfBeLgiCQ0/k0O8ac1Ul13XWBWg0j0PRfq+NB96hFY0dmRqHEfYPHOt7ZIavaZmX9MP8prmpCF0g6qDmGCrBDD2k7jCj5bqUR1cqxMENudRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011154; c=relaxed/simple;
-	bh=hAtpDqxtJYacT5ts7vrDUYctkPz8oSBSuccLn/Uk0Y4=;
+	s=arc-20240116; t=1783011156; c=relaxed/simple;
+	bh=F588xhKrTouEC5H1ZGz5IbS3Dre1cdoGzKac/InHX5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoAVRg/7CTJFpsSOLbR/3tO7b/NWbQJNr7JBKJBPQd4JrJ/pkYtEw3xSpBHWWqN3DSjNcHdlMOJ1Pkic6LZ+/Q4ElNDfdWh7NxCcrip3RvNyKI2QCL7vRvjHMgiCiJNbhNoHaJQ82Wn/FVIh0PlrG7SbqljsVp5isaSw2RJ7Awg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUXyUlGb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hp2NIqxQn/RvsFNMkHFz38vyIcPJMaRBBUiar2roKpACjZKJspicyxFmPtvx2aVx8nhXYJaFADieGoOClywYN5gYZa9RsKzz9E1ab31RX71ibTOCjhwBTgXhhtRtkQKCBumQRLkSjyIubPqlq9iNogJlT7k4o1+TK8QqOwzb/UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrAoUCbN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUXyUlGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BD61F000E9;
-	Thu,  2 Jul 2026 16:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrAoUCbN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718461F000E9;
+	Thu,  2 Jul 2026 16:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011152;
-	bh=/fQUhYNTpTd74mV2Efk2kYuwrOytX8VHHq1Wg7Jkej4=;
+	s=korg; t=1783011154;
+	bh=hj0I7vbi/cdjVAgiyjAJn5EQobM/OHUfLn+llHSY1jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JUXyUlGbIj70YF0W2rziRfq2R9Z2iK2MOevWjqxa8x4tqofw3C9Sx/FHxz15jZmli
-	 P7DQzji3QwHsMkThJfRLMR3u4YLbRl4a9OezsYCR+QsIhh7spnhzAqSWrk+HoSAtEM
-	 tplKEzs360Tn8Mst3WmkASDVMP0tx4K9Ws6ygpgI=
+	b=VrAoUCbNMEXvK+tNMZzU0C+BYuPp+GfRfvGBsLKOENFHEl3UcRgBnP9s7M3Au2wSE
+	 CS3UZf7kTbEvMO5Ugc4i8DTTaIS7Deb5h8yJkNow1PmJjc9BFb7yEPh4wHJz59imKj
+	 Bsg3bZtxGPmSo0qsbYP+0r/zkYY3CU9gCuX/d/SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Wang <wangzhi@stu.xidian.edu.cn>,
-	Bin Yu <byu@xidian.edu.cn>,
-	MingYu Wang <w15303746062@163.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/175] crypto: qat - remove unused character device and IOCTLs
-Date: Thu,  2 Jul 2026 18:21:16 +0200
-Message-ID: <20260702155119.470648538@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.6 143/175] MIPS: DEC: Prevent initial console buffer from landing in XKPHYS
+Date: Thu,  2 Jul 2026 18:20:44 +0200
+Message-ID: <20260702155118.819633251@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -55,694 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit d237230728c567297f2f98b425d63156ab2ed17f ]
+commit 7fb13fd35110ebe95eb053faf79d018f51144d85 upstream.
 
-The QAT driver exposes a character device (qat_adf_ctl) with IOCTLs
-for device configuration, start, stop, status query and enumeration.
-These IOCTLs are not part of any public uAPI header and have no known
-in-tree or out-of-tree users. Device lifecycle is already managed via
-sysfs.
+In 64-bit configurations calling the initial console output handler from
+a kernel thread other than the initial one will result in a situation
+where the stack has been placed in the XKPHYS 64-bit memory segment and
+consequently so has been the buffer allocated there that is used as the
+argument corresponding to the `%s' output conversion specifier for the
+firmware's printf() entry point.
 
-The ioctl interface also increases the attack surface and is the
-subject of a number of bug reports.
+This 64-bit address will then be truncated by 32-bit firmware, resulting
+in an attempt to access the wrong memory location, which in turn will
+cause all kinds of unpredictable behaviour, such as a kernel crash:
 
-Remove the character device, the IOCTL definitions, and the related
-data structures (adf_dev_status_info, adf_user_cfg_key_val,
-adf_user_cfg_section, adf_user_cfg_ctl_data). Drop the now-unused
-adf_cfg_user.h header and strip adf_ctl_drv.c down to the minimal
-module_init/module_exit hooks for workqueue, AER, and crypto/compression
-algorithm registration.
+  Console: colour dummy device 160x64
+  Calibrating delay loop... 49.36 BogoMIPS (lpj=192512)
+  pid_max: default: 32768 minimum: 301
+  CPU 0 Unable to handle kernel paging request at virtual address 000000000203bd00, epc == ffffffffbfc08364, ra == ffffffffbfc08800
+  Oops[#1]:
+  CPU: 0 PID: 0 Comm: swapper Not tainted 5.18.0-rc2-00254-gfb649bda6f56-dirty #121
+  $ 0   : 0000000000000000 0000000000000001 0000000000000023 ffffffff80684ba0
+  $ 4   : 000000000203bd00 ffffffffbfc0f3b4 ffffffffffffffff 0000000000000073
+  $ 8   : 0a303d7469000000 0000000000000000 0000000000000073 ffffffffbfc0f473
+  $12   : 0000000000000002 0000000000000000 ffffffff80684c1c 0000000000000000
+  $16   : 0000000000000000 ffffffff80596dc9 0000000000000000 ffffffffbfc09240
+  $20   : ffffffff80684c40 ffffffffbfc0f400 000000000000002d 000000000000002b
+  $24   : ffffffffffffffbf 000000000203bd00
+  $28   : ffffffff805f0000 ffffffff80684b58 0000000000000030 ffffffffbfc08800
+  Hi    : 0000000000000000
+  Lo    : 0000000000000aa8
+  epc   : ffffffffbfc08364 0xffffffffbfc08364
+  ra    : ffffffffbfc08800 0xffffffffbfc08800
+  Status: 140120e2        KX SX UX KERNEL EXL
+  Cause : 00000008 (ExcCode 02)
+  BadVA : 000000000203bd00
+  PrId  : 00000430 (R4000SC)
+  Modules linked in:
+  Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____), tls=0000000000000000)
+  Stack : 0000000000000000 0000000000000000 0000000000000000 0000004d0000004d
+          80684cc0806a2a40 80596dc80000004d 8061000000000000 bfc0850c80684c38
+          0000000000000000 000000000203bd00 0000000000000000 0000000000000000
+          0000000000000000 00000000bfc0f3b4 0000000000000000 0000000000000000
+          0000000000000000 0000000000000000 0000000000000000 0000000000000000
+          0000000000000000 0000000000000000 0000000000000000 0000000000000000
+          0000002500000000 0000000000000000 0000000000000000 802c1a7400000000
+          0203bd0080596dc8 0203bd4d69000000 6c61632000000018 5f746567646e6172
+          6c616320625f6d6f 5f736e5f6d6f7266 206361323778302b 303d74696e726320
+          806a0a38806b0000 806a0a38806b0000 00000000806b0000 80683c58806b0000
+          ...
+  Call Trace:
 
-Clean up leftover dead code that was only reachable from the removed
-IOCTL paths: adf_cfg_del_all(), adf_devmgr_verify_id(),
-adf_devmgr_get_num_dev(), adf_devmgr_get_dev_by_id(),
-adf_get_vf_real_id() and the unused ADF_CFG macros.
+  Code: a082ffff  03e00008  00601021 <80820000> 00001821  10400005  24840001  80820000  24630001
 
-Additionally, drop the entry associated to QAT IOCTLs in
-ioctl-number.rst.
+  ---[ end trace 0000000000000000 ]---
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Cc: stable@vger.kernel.org
-Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
-Reported-by: Zhi Wang <wangzhi@stu.xidian.edu.cn>
-Reported-by: Bin Yu <byu@xidian.edu.cn>
-Reported-by: MingYu Wang <w15303746062@163.com>
-Closes: https://lore.kernel.org/all/61d6d499.ab89.19b9b7f3186.Coremail.wangzhi_xd@stu.xidian.edu.cn/
-Link: https://lore.kernel.org/all/20260508034841.256794-1-w15303746062@163.com/
-Link: https://lore.kernel.org/all/20260508023542.256299-1-w15303746062@163.com/
-Link: https://lore.kernel.org/all/20260504025120.98242-1-w15303746062@163.com/
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  KN04 V2.1k    (PC: 0xa0026768, SP: 0x806848e8)
+  >>
+
+In this case the pointer in $4 was truncated from 0x980000000203bd00 to
+0x000000000203bd00.
+
+This may happen when no final console driver has been enabled in the
+configuration and consequently the initial console continues being used
+late into bootstrap or with an upcoming change that will switch the zs
+driver to use a platform device, which in turn will make the console
+handover happen only after other kernel threads have already been
+started.
+
+Fix the issue by making the buffer static and initdata, and therefore
+placed in the CKSEG0 32-bit compatibility segment, observing that the
+console output handler is called with the console lock held, implying
+no need for this code to be reentrant.  Add an assertion to verify the
+buffer actually has been placed in a compatibility segment.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v2.6.12+
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/userspace-api/ioctl/ioctl-number.rst   |    1 
- drivers/crypto/intel/qat/qat_common/adf_cfg_common.h |   32 -
- drivers/crypto/intel/qat/qat_common/adf_cfg_user.h   |   38 -
- drivers/crypto/intel/qat/qat_common/adf_common_drv.h |    3 
- drivers/crypto/intel/qat/qat_common/adf_ctl_drv.c    |  401 -------------------
- drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c    |   70 ---
- 6 files changed, 1 insertion(+), 544 deletions(-)
- delete mode 100644 drivers/crypto/intel/qat/qat_common/adf_cfg_user.h
+ arch/mips/dec/prom/console.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/Documentation/userspace-api/ioctl/ioctl-number.rst
-+++ b/Documentation/userspace-api/ioctl/ioctl-number.rst
-@@ -219,7 +219,6 @@ Code  Seq#    Include File
-                                                                        <mailto:gregkh@linuxfoundation.org>
- 'a'   all    linux/atm*.h, linux/sonet.h                               ATM on linux
-                                                                        <http://lrcwww.epfl.ch/>
--'a'   00-0F  drivers/crypto/qat/qat_common/adf_cfg_common.h            conflict! qat driver
- 'b'   00-FF                                                            conflict! bit3 vme host bridge
-                                                                        <mailto:natalia@nikhefk.nikhef.nl>
- 'b'   00-0F  linux/dma-buf.h                                           conflict!
---- a/drivers/crypto/intel/qat/qat_common/adf_cfg_common.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_cfg_common.h
-@@ -4,18 +4,11 @@
- #define ADF_CFG_COMMON_H_
- 
- #include <linux/types.h>
--#include <linux/ioctl.h>
- 
- #define ADF_CFG_MAX_STR_LEN 64
- #define ADF_CFG_MAX_KEY_LEN_IN_BYTES ADF_CFG_MAX_STR_LEN
- #define ADF_CFG_MAX_VAL_LEN_IN_BYTES ADF_CFG_MAX_STR_LEN
- #define ADF_CFG_MAX_SECTION_LEN_IN_BYTES ADF_CFG_MAX_STR_LEN
--#define ADF_CFG_BASE_DEC 10
--#define ADF_CFG_BASE_HEX 16
--#define ADF_CFG_ALL_DEVICES 0xFE
--#define ADF_CFG_NO_DEVICE 0xFF
--#define ADF_CFG_AFFINITY_WHATEVER 0xFF
--#define MAX_DEVICE_NAME_SIZE 32
- #define ADF_MAX_DEVICES (32 * 32)
- #define ADF_DEVS_ARRAY_SIZE BITS_TO_LONGS(ADF_MAX_DEVICES)
- 
-@@ -48,29 +41,4 @@ enum adf_device_type {
- 	DEV_C3XXXVF,
- 	DEV_4XXX,
- };
--
--struct adf_dev_status_info {
--	enum adf_device_type type;
--	__u32 accel_id;
--	__u32 instance_id;
--	__u8 num_ae;
--	__u8 num_accel;
--	__u8 num_logical_accel;
--	__u8 banks_per_accel;
--	__u8 state;
--	__u8 bus;
--	__u8 dev;
--	__u8 fun;
--	char name[MAX_DEVICE_NAME_SIZE];
--};
--
--#define ADF_CTL_IOC_MAGIC 'a'
--#define IOCTL_CONFIG_SYS_RESOURCE_PARAMETERS _IOW(ADF_CTL_IOC_MAGIC, 0, \
--		struct adf_user_cfg_ctl_data)
--#define IOCTL_STOP_ACCEL_DEV _IOW(ADF_CTL_IOC_MAGIC, 1, \
--		struct adf_user_cfg_ctl_data)
--#define IOCTL_START_ACCEL_DEV _IOW(ADF_CTL_IOC_MAGIC, 2, \
--		struct adf_user_cfg_ctl_data)
--#define IOCTL_STATUS_ACCEL_DEV _IOW(ADF_CTL_IOC_MAGIC, 3, __u32)
--#define IOCTL_GET_NUM_DEVICES _IOW(ADF_CTL_IOC_MAGIC, 4, __s32)
- #endif
---- a/drivers/crypto/intel/qat/qat_common/adf_cfg_user.h
-+++ /dev/null
-@@ -1,38 +0,0 @@
--/* SPDX-License-Identifier: (BSD-3-Clause OR GPL-2.0-only) */
--/* Copyright(c) 2014 - 2020 Intel Corporation */
--#ifndef ADF_CFG_USER_H_
--#define ADF_CFG_USER_H_
--
--#include "adf_cfg_common.h"
--#include "adf_cfg_strings.h"
--
--struct adf_user_cfg_key_val {
--	char key[ADF_CFG_MAX_KEY_LEN_IN_BYTES];
--	char val[ADF_CFG_MAX_VAL_LEN_IN_BYTES];
--	union {
--		struct adf_user_cfg_key_val *next;
--		__u64 padding3;
--	};
--	enum adf_cfg_val_type type;
--} __packed;
--
--struct adf_user_cfg_section {
--	char name[ADF_CFG_MAX_SECTION_LEN_IN_BYTES];
--	union {
--		struct adf_user_cfg_key_val *params;
--		__u64 padding1;
--	};
--	union {
--		struct adf_user_cfg_section *next;
--		__u64 padding3;
--	};
--} __packed;
--
--struct adf_user_cfg_ctl_data {
--	union {
--		struct adf_user_cfg_section *config_section;
--		__u64 padding;
--	};
--	__u8 device_id;
--} __packed;
--#endif
---- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-@@ -65,11 +65,8 @@ int adf_devmgr_add_dev(struct adf_accel_
- void adf_devmgr_rm_dev(struct adf_accel_dev *accel_dev,
- 		       struct adf_accel_dev *pf);
- struct list_head *adf_devmgr_get_head(void);
--struct adf_accel_dev *adf_devmgr_get_dev_by_id(u32 id);
- struct adf_accel_dev *adf_devmgr_get_first(void);
- struct adf_accel_dev *adf_devmgr_pci_to_accel_dev(struct pci_dev *pci_dev);
--int adf_devmgr_verify_id(u32 id);
--void adf_devmgr_get_num_dev(u32 *num);
- int adf_devmgr_in_reset(struct adf_accel_dev *accel_dev);
- int adf_dev_started(struct adf_accel_dev *accel_dev);
- int adf_dev_restarting_notify(struct adf_accel_dev *accel_dev);
---- a/drivers/crypto/intel/qat/qat_common/adf_ctl_drv.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_ctl_drv.c
-@@ -2,407 +2,13 @@
- /* Copyright(c) 2014 - 2020 Intel Corporation */
- 
- #include <crypto/algapi.h>
-+#include <linux/errno.h>
- #include <linux/module.h>
--#include <linux/mutex.h>
--#include <linux/slab.h>
--#include <linux/fs.h>
--#include <linux/bitops.h>
--#include <linux/pci.h>
--#include <linux/cdev.h>
--#include <linux/uaccess.h>
- 
--#include "adf_accel_devices.h"
- #include "adf_common_drv.h"
--#include "adf_cfg.h"
--#include "adf_cfg_common.h"
--#include "adf_cfg_user.h"
--
--#define ADF_CFG_MAX_SECTION 512
--#define ADF_CFG_MAX_KEY_VAL 256
--
--#define DEVICE_NAME "qat_adf_ctl"
--
--static DEFINE_MUTEX(adf_ctl_lock);
--static long adf_ctl_ioctl(struct file *fp, unsigned int cmd, unsigned long arg);
--
--static const struct file_operations adf_ctl_ops = {
--	.owner = THIS_MODULE,
--	.unlocked_ioctl = adf_ctl_ioctl,
--	.compat_ioctl = compat_ptr_ioctl,
--};
--
--struct adf_ctl_drv_info {
--	unsigned int major;
--	struct cdev drv_cdev;
--	struct class *drv_class;
--};
--
--static struct adf_ctl_drv_info adf_ctl_drv;
--
--static void adf_chr_drv_destroy(void)
--{
--	device_destroy(adf_ctl_drv.drv_class, MKDEV(adf_ctl_drv.major, 0));
--	cdev_del(&adf_ctl_drv.drv_cdev);
--	class_destroy(adf_ctl_drv.drv_class);
--	unregister_chrdev_region(MKDEV(adf_ctl_drv.major, 0), 1);
--}
--
--static int adf_chr_drv_create(void)
--{
--	dev_t dev_id;
--	struct device *drv_device;
--
--	if (alloc_chrdev_region(&dev_id, 0, 1, DEVICE_NAME)) {
--		pr_err("QAT: unable to allocate chrdev region\n");
--		return -EFAULT;
--	}
--
--	adf_ctl_drv.drv_class = class_create(DEVICE_NAME);
--	if (IS_ERR(adf_ctl_drv.drv_class)) {
--		pr_err("QAT: class_create failed for adf_ctl\n");
--		goto err_chrdev_unreg;
--	}
--	adf_ctl_drv.major = MAJOR(dev_id);
--	cdev_init(&adf_ctl_drv.drv_cdev, &adf_ctl_ops);
--	if (cdev_add(&adf_ctl_drv.drv_cdev, dev_id, 1)) {
--		pr_err("QAT: cdev add failed\n");
--		goto err_class_destr;
--	}
--
--	drv_device = device_create(adf_ctl_drv.drv_class, NULL,
--				   MKDEV(adf_ctl_drv.major, 0),
--				   NULL, DEVICE_NAME);
--	if (IS_ERR(drv_device)) {
--		pr_err("QAT: failed to create device\n");
--		goto err_cdev_del;
--	}
--	return 0;
--err_cdev_del:
--	cdev_del(&adf_ctl_drv.drv_cdev);
--err_class_destr:
--	class_destroy(adf_ctl_drv.drv_class);
--err_chrdev_unreg:
--	unregister_chrdev_region(dev_id, 1);
--	return -EFAULT;
--}
--
--static struct adf_user_cfg_ctl_data *adf_ctl_alloc_resources(unsigned long arg)
--{
--	struct adf_user_cfg_ctl_data *cfg_data;
--
--	cfg_data = memdup_user((void __user *)arg, sizeof(*cfg_data));
--	if (IS_ERR(cfg_data))
--		pr_err("QAT: failed to copy from user cfg_data.\n");
--	return cfg_data;
--}
--
--static int adf_add_key_value_data(struct adf_accel_dev *accel_dev,
--				  const char *section,
--				  const struct adf_user_cfg_key_val *key_val)
--{
--	if (key_val->type == ADF_HEX) {
--		long *ptr = (long *)key_val->val;
--		long val = *ptr;
--
--		if (adf_cfg_add_key_value_param(accel_dev, section,
--						key_val->key, (void *)val,
--						key_val->type)) {
--			dev_err(&GET_DEV(accel_dev),
--				"failed to add hex keyvalue.\n");
--			return -EFAULT;
--		}
--	} else {
--		if (adf_cfg_add_key_value_param(accel_dev, section,
--						key_val->key, key_val->val,
--						key_val->type)) {
--			dev_err(&GET_DEV(accel_dev),
--				"failed to add keyvalue.\n");
--			return -EFAULT;
--		}
--	}
--	return 0;
--}
--
--static int adf_copy_key_value_data(struct adf_accel_dev *accel_dev,
--				   struct adf_user_cfg_ctl_data *ctl_data)
--{
--	struct adf_user_cfg_key_val key_val;
--	struct adf_user_cfg_key_val *params_head;
--	struct adf_user_cfg_section section, *section_head;
--	int i, j;
--
--	section_head = ctl_data->config_section;
--
--	for (i = 0; section_head && i < ADF_CFG_MAX_SECTION; i++) {
--		if (copy_from_user(&section, (void __user *)section_head,
--				   sizeof(*section_head))) {
--			dev_err(&GET_DEV(accel_dev),
--				"failed to copy section info\n");
--			goto out_err;
--		}
--
--		if (adf_cfg_section_add(accel_dev, section.name)) {
--			dev_err(&GET_DEV(accel_dev),
--				"failed to add section.\n");
--			goto out_err;
--		}
--
--		params_head = section.params;
--
--		for (j = 0; params_head && j < ADF_CFG_MAX_KEY_VAL; j++) {
--			if (copy_from_user(&key_val, (void __user *)params_head,
--					   sizeof(key_val))) {
--				dev_err(&GET_DEV(accel_dev),
--					"Failed to copy keyvalue.\n");
--				goto out_err;
--			}
--			if (adf_add_key_value_data(accel_dev, section.name,
--						   &key_val)) {
--				goto out_err;
--			}
--			params_head = key_val.next;
--		}
--		section_head = section.next;
--	}
--	return 0;
--out_err:
--	adf_cfg_del_all(accel_dev);
--	return -EFAULT;
--}
--
--static int adf_ctl_ioctl_dev_config(struct file *fp, unsigned int cmd,
--				    unsigned long arg)
--{
--	struct adf_user_cfg_ctl_data *ctl_data;
--	struct adf_accel_dev *accel_dev;
--	int ret = 0;
--
--	ctl_data = adf_ctl_alloc_resources(arg);
--	if (IS_ERR(ctl_data))
--		return PTR_ERR(ctl_data);
--
--	accel_dev = adf_devmgr_get_dev_by_id(ctl_data->device_id);
--	if (!accel_dev) {
--		ret = -EFAULT;
--		goto out;
--	}
--
--	if (adf_dev_started(accel_dev)) {
--		ret = -EFAULT;
--		goto out;
--	}
--
--	if (adf_copy_key_value_data(accel_dev, ctl_data)) {
--		ret = -EFAULT;
--		goto out;
--	}
--	set_bit(ADF_STATUS_CONFIGURED, &accel_dev->status);
--out:
--	kfree(ctl_data);
--	return ret;
--}
--
--static int adf_ctl_is_device_in_use(int id)
--{
--	struct adf_accel_dev *dev;
--
--	list_for_each_entry(dev, adf_devmgr_get_head(), list) {
--		if (id == dev->accel_id || id == ADF_CFG_ALL_DEVICES) {
--			if (adf_devmgr_in_reset(dev) || adf_dev_in_use(dev)) {
--				dev_info(&GET_DEV(dev),
--					 "device qat_dev%d is busy\n",
--					 dev->accel_id);
--				return -EBUSY;
--			}
--		}
--	}
--	return 0;
--}
--
--static void adf_ctl_stop_devices(u32 id)
--{
--	struct adf_accel_dev *accel_dev;
--
--	list_for_each_entry(accel_dev, adf_devmgr_get_head(), list) {
--		if (id == accel_dev->accel_id || id == ADF_CFG_ALL_DEVICES) {
--			if (!adf_dev_started(accel_dev))
--				continue;
--
--			/* First stop all VFs */
--			if (!accel_dev->is_vf)
--				continue;
--
--			adf_dev_down(accel_dev, false);
--		}
--	}
--
--	list_for_each_entry(accel_dev, adf_devmgr_get_head(), list) {
--		if (id == accel_dev->accel_id || id == ADF_CFG_ALL_DEVICES) {
--			if (!adf_dev_started(accel_dev))
--				continue;
--
--			adf_dev_down(accel_dev, false);
--		}
--	}
--}
--
--static int adf_ctl_ioctl_dev_stop(struct file *fp, unsigned int cmd,
--				  unsigned long arg)
--{
--	int ret;
--	struct adf_user_cfg_ctl_data *ctl_data;
--
--	ctl_data = adf_ctl_alloc_resources(arg);
--	if (IS_ERR(ctl_data))
--		return PTR_ERR(ctl_data);
--
--	if (adf_devmgr_verify_id(ctl_data->device_id)) {
--		pr_err("QAT: Device %d not found\n", ctl_data->device_id);
--		ret = -ENODEV;
--		goto out;
--	}
--
--	ret = adf_ctl_is_device_in_use(ctl_data->device_id);
--	if (ret)
--		goto out;
--
--	if (ctl_data->device_id == ADF_CFG_ALL_DEVICES)
--		pr_info("QAT: Stopping all acceleration devices.\n");
--	else
--		pr_info("QAT: Stopping acceleration device qat_dev%d.\n",
--			ctl_data->device_id);
--
--	adf_ctl_stop_devices(ctl_data->device_id);
--
--out:
--	kfree(ctl_data);
--	return ret;
--}
--
--static int adf_ctl_ioctl_dev_start(struct file *fp, unsigned int cmd,
--				   unsigned long arg)
--{
--	int ret;
--	struct adf_user_cfg_ctl_data *ctl_data;
--	struct adf_accel_dev *accel_dev;
--
--	ctl_data = adf_ctl_alloc_resources(arg);
--	if (IS_ERR(ctl_data))
--		return PTR_ERR(ctl_data);
--
--	ret = -ENODEV;
--	accel_dev = adf_devmgr_get_dev_by_id(ctl_data->device_id);
--	if (!accel_dev)
--		goto out;
--
--	dev_info(&GET_DEV(accel_dev),
--		 "Starting acceleration device qat_dev%d.\n",
--		 ctl_data->device_id);
--
--	ret = adf_dev_up(accel_dev, false);
--
--	if (ret) {
--		dev_err(&GET_DEV(accel_dev), "Failed to start qat_dev%d\n",
--			ctl_data->device_id);
--		adf_dev_down(accel_dev, false);
--	}
--out:
--	kfree(ctl_data);
--	return ret;
--}
--
--static int adf_ctl_ioctl_get_num_devices(struct file *fp, unsigned int cmd,
--					 unsigned long arg)
--{
--	u32 num_devices = 0;
--
--	adf_devmgr_get_num_dev(&num_devices);
--	if (copy_to_user((void __user *)arg, &num_devices, sizeof(num_devices)))
--		return -EFAULT;
--
--	return 0;
--}
--
--static int adf_ctl_ioctl_get_status(struct file *fp, unsigned int cmd,
--				    unsigned long arg)
--{
--	struct adf_hw_device_data *hw_data;
--	struct adf_dev_status_info dev_info;
--	struct adf_accel_dev *accel_dev;
--
--	if (copy_from_user(&dev_info, (void __user *)arg,
--			   sizeof(struct adf_dev_status_info))) {
--		pr_err("QAT: failed to copy from user.\n");
--		return -EFAULT;
--	}
--
--	accel_dev = adf_devmgr_get_dev_by_id(dev_info.accel_id);
--	if (!accel_dev)
--		return -ENODEV;
--
--	hw_data = accel_dev->hw_device;
--	dev_info.state = adf_dev_started(accel_dev) ? DEV_UP : DEV_DOWN;
--	dev_info.num_ae = hw_data->get_num_aes(hw_data);
--	dev_info.num_accel = hw_data->get_num_accels(hw_data);
--	dev_info.num_logical_accel = hw_data->num_logical_accel;
--	dev_info.banks_per_accel = hw_data->num_banks
--					/ hw_data->num_logical_accel;
--	strscpy(dev_info.name, hw_data->dev_class->name, sizeof(dev_info.name));
--	dev_info.instance_id = hw_data->instance_id;
--	dev_info.type = hw_data->dev_class->type;
--	dev_info.bus = accel_to_pci_dev(accel_dev)->bus->number;
--	dev_info.dev = PCI_SLOT(accel_to_pci_dev(accel_dev)->devfn);
--	dev_info.fun = PCI_FUNC(accel_to_pci_dev(accel_dev)->devfn);
--
--	if (copy_to_user((void __user *)arg, &dev_info,
--			 sizeof(struct adf_dev_status_info))) {
--		dev_err(&GET_DEV(accel_dev), "failed to copy status.\n");
--		return -EFAULT;
--	}
--	return 0;
--}
--
--static long adf_ctl_ioctl(struct file *fp, unsigned int cmd, unsigned long arg)
--{
--	int ret;
--
--	if (mutex_lock_interruptible(&adf_ctl_lock))
--		return -EFAULT;
--
--	switch (cmd) {
--	case IOCTL_CONFIG_SYS_RESOURCE_PARAMETERS:
--		ret = adf_ctl_ioctl_dev_config(fp, cmd, arg);
--		break;
--
--	case IOCTL_STOP_ACCEL_DEV:
--		ret = adf_ctl_ioctl_dev_stop(fp, cmd, arg);
--		break;
--
--	case IOCTL_START_ACCEL_DEV:
--		ret = adf_ctl_ioctl_dev_start(fp, cmd, arg);
--		break;
--
--	case IOCTL_GET_NUM_DEVICES:
--		ret = adf_ctl_ioctl_get_num_devices(fp, cmd, arg);
--		break;
--
--	case IOCTL_STATUS_ACCEL_DEV:
--		ret = adf_ctl_ioctl_get_status(fp, cmd, arg);
--		break;
--	default:
--		pr_err_ratelimited("QAT: Invalid ioctl %d\n", cmd);
--		ret = -EFAULT;
--		break;
--	}
--	mutex_unlock(&adf_ctl_lock);
--	return ret;
--}
- 
- static int __init adf_register_ctl_device_driver(void)
- {
--	if (adf_chr_drv_create())
--		goto err_chr_dev;
--
- 	if (adf_init_misc_wq())
- 		goto err_misc_wq;
- 
-@@ -434,15 +40,11 @@ err_pf_wq:
- err_aer:
- 	adf_exit_misc_wq();
- err_misc_wq:
--	adf_chr_drv_destroy();
--err_chr_dev:
--	mutex_destroy(&adf_ctl_lock);
- 	return -EFAULT;
- }
- 
- static void __exit adf_unregister_ctl_device_driver(void)
- {
--	adf_chr_drv_destroy();
- 	adf_exit_misc_wq();
- 	adf_exit_aer();
- 	adf_exit_vf_wq();
-@@ -450,7 +52,6 @@ static void __exit adf_unregister_ctl_de
- 	qat_crypto_unregister();
- 	qat_compression_unregister();
- 	adf_clean_vf_map(false);
--	mutex_destroy(&adf_ctl_lock);
- }
- 
- module_init(adf_register_ctl_device_driver);
---- a/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c
-@@ -45,19 +45,6 @@ static struct vf_id_map *adf_find_vf(u32
- 	return NULL;
- }
- 
--static int adf_get_vf_real_id(u32 fake)
--{
--	struct list_head *itr;
--
--	list_for_each(itr, &vfs_table) {
--		struct vf_id_map *ptr =
--			list_entry(itr, struct vf_id_map, list);
--		if (ptr->fake_id == fake)
--			return ptr->id;
--	}
--	return -1;
--}
--
- /**
-  * adf_clean_vf_map() - Cleans VF id mapings
+--- a/arch/mips/dec/prom/console.c
++++ b/arch/mips/dec/prom/console.c
+@@ -2,8 +2,9 @@
+ /*
+  *	DECstation PROM-based early console support.
   *
-@@ -314,63 +301,6 @@ struct adf_accel_dev *adf_devmgr_pci_to_
- }
- EXPORT_SYMBOL_GPL(adf_devmgr_pci_to_accel_dev);
+- *	Copyright (C) 2004, 2007  Maciej W. Rozycki
++ *	Copyright (C) 2004, 2007, 2026  Maciej W. Rozycki
+  */
++#include <linux/bug.h>
+ #include <linux/console.h>
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+@@ -14,9 +15,11 @@
+ static void __init prom_console_write(struct console *con, const char *s,
+ 				      unsigned int c)
+ {
+-	char buf[81];
++	static char buf[81] __initdata = { 0 };
+ 	unsigned int chunk = sizeof(buf) - 1;
  
--struct adf_accel_dev *adf_devmgr_get_dev_by_id(u32 id)
--{
--	struct list_head *itr;
--	int real_id;
--
--	mutex_lock(&table_lock);
--	real_id = adf_get_vf_real_id(id);
--	if (real_id < 0)
--		goto unlock;
--
--	id = real_id;
--
--	list_for_each(itr, &accel_table) {
--		struct adf_accel_dev *ptr =
--				list_entry(itr, struct adf_accel_dev, list);
--		if (ptr->accel_id == id) {
--			mutex_unlock(&table_lock);
--			return ptr;
--		}
--	}
--unlock:
--	mutex_unlock(&table_lock);
--	return NULL;
--}
--
--int adf_devmgr_verify_id(u32 id)
--{
--	if (id == ADF_CFG_ALL_DEVICES)
--		return 0;
--
--	if (adf_devmgr_get_dev_by_id(id))
--		return 0;
--
--	return -ENODEV;
--}
--
--static int adf_get_num_dettached_vfs(void)
--{
--	struct list_head *itr;
--	int vfs = 0;
--
--	mutex_lock(&table_lock);
--	list_for_each(itr, &vfs_table) {
--		struct vf_id_map *ptr =
--			list_entry(itr, struct vf_id_map, list);
--		if (ptr->bdf != ~0 && !ptr->attached)
--			vfs++;
--	}
--	mutex_unlock(&table_lock);
--	return vfs;
--}
--
--void adf_devmgr_get_num_dev(u32 *num)
--{
--	*num = num_devices - adf_get_num_dettached_vfs();
--}
--
- /**
-  * adf_dev_in_use() - Check whether accel_dev is currently in use
-  * @accel_dev: Pointer to acceleration device.
++	BUG_ON((long)buf != (int)(long)buf);
++
+ 	while (c > 0) {
+ 		if (chunk > c)
+ 			chunk = c;
 
 
