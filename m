@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D095353A7D;
-	Thu,  2 Jul 2026 16:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B507A346A10;
+	Thu,  2 Jul 2026 16:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010544; cv=none; b=HisvPNbN6qnFmORsnDlMrgxDPfXzl+wwtx/3p6W8NxcUgGfyZv8rcygxkCpEau6C0U4XJIZNSdaqTYtvSX2N/C5fuspjPW8JbhAlhb/cfTIr3CsYta2obRa3NdkJTo8nuN6NJEEoe4FbddLiuC9Sstg6XvFnaAjAtKbGn0X798A=
+	t=1783010546; cv=none; b=L/LeokkZAZiABmXQBm13JLNEQvL3LE34zYj38kBB0kpyd+4e30PyfzHapQmtMr4d3GY022GaLRvtdx8s6/WfKnU+8ecdrvuO39/ImG9TiXeTyI6BY/BtBB1cOd9vEVYUZ2eec28LP1saAqUGi1JP9uoEdQ+nVpLxxatHSRkJa+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010544; c=relaxed/simple;
-	bh=ZkFJaA7GiWFI/AGjq+chMLftCe4L03I4plpcDJYaqLI=;
+	s=arc-20240116; t=1783010546; c=relaxed/simple;
+	bh=zvfUTT2jEEpmahln9sQJjdWAg4wfAM6+sGr94oC88go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5mWY6o1Ui6ZsIDorsRmWPt9j+yDIpJIygI1ix7HAO1rIBwiNkNiogoiuGOFX3rI9To3h2dpwNHnm+q8BU40vHdqu9KMpjzYILP3jBU7JVNSFoujRTR5zy7cJVr/F3tMmlWShMNoyNwXTLQIolp7xwyC3PmA1Y9JqzzVO11avHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nt5R/Bhx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kcD7IUiCJGc8z2HX1OtjtZeDcP1er+motvx5dlbbGVLpN4GigbWEFloVfBH8SuzzzjwlgM2dAEQ4b0X8dFeETLFeVskYfJui4y0YMR0DCFa1ASyzLGGCQm3yfz9/GqZoSEiDUiEjAcmSFwJIWCYT4SPKbwJZPbHMegN11FuD3yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftC5+/Oo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nt5R/Bhx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A6D1F000E9;
-	Thu,  2 Jul 2026 16:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftC5+/Oo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25B01F000E9;
+	Thu,  2 Jul 2026 16:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010542;
-	bh=4oGg3uBta3sVUYJaGPUTAMzz3XmkAFwbtc8bTZrLKbU=;
+	s=korg; t=1783010545;
+	bh=CW3W7crF83XcMbH8WPAVYazbKiUDMJX/ZqhBe9Rw1uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nt5R/BhxJnTntF5g9e0k4uNT3rV00/Ne+g/+3Fj5/M1/+esH76vcjEhI4O3rN2qk1
-	 rZK6lkPbEBO00VZGH1hVTVUgttFI+aHuAEYRthOlY/eb2eJuvo/3dLUeLl/2RN/abb
-	 xyPeQOSbtcfgkM6uiaaJN1RFrPgeQYilYyy07Wh4=
+	b=ftC5+/Oo4nMDr6LJxiV5kVn/FBKby18MP3ZbeMr/qlQzhoYk+bq9gORxQOwZ9VtTJ
+	 vqW+Eucom66pfoTyiwXNyL58psPT/MBLr/c0SXkQp4l4OEJX8hVQURlu/kOE4GVIyU
+	 1xzFwmQTgv6xH6FJnSIitpBOpXVT8sR5VgavA1Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/204] batman-adv: frag: ensure fragment is writable before modifying TTL
-Date: Thu,  2 Jul 2026 18:19:29 +0200
-Message-ID: <20260702155121.007799242@linuxfoundation.org>
+	ElXreno <elxreno@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.12 148/204] wifi: mt76: mt7925: dont disable AP BSS when removing TDLS peer
+Date: Thu,  2 Jul 2026 18:20:05 +0200
+Message-ID: <20260702155121.761380665@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,107 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: ElXreno <elxreno@gmail.com>
 
-commit b7293c6e8c15b2db77809b25cf8389e35331b27a upstream.
+commit 37d65384aa6f9cbe45f4052b13b378af1aab3e95 upstream.
 
-Before batman-adv is allowed to write to an skb, it either has to have its
-own copy of the skb or use skb_cow() to ensure that the data part is not
-shared. But batadv_frag_skb_fwd() modifies the TTL even when it is shared.
+On a STATION vif, removing a TDLS peer takes the mt7925_mac_sta_remove
+-> mt7925_mac_sta_remove_links path. The first loop in that function
+calls mt7925_mcu_add_bss_info(..., enable=false) for every link of the
+station being removed. For a non-MLO STATION vif there is exactly one
+link, link 0, whose bss_conf is the AP's. TDLS peers do not have their
+own bss_conf - they share the AP's BSS.
 
-Adding a skb_cow() right before this operation avoids this and can at the
-same time prepare it for the modifications required to forward the
-fragment.
+The result is that every TDLS peer teardown sends a BSS_INFO_UPDATE
+with enable=0 for the AP's BSS to the firmware, which wipes the AP-side
+rate-control context. The connection stays associated and TX from the
+host still works at the negotiated rate, but the AP's downlink to us
+collapses to the lowest mandatory OFDM rate (HE-MCS 0 / 6 Mbit/s OFDM)
+and only slowly recovers as rate adaptation re-learns under sustained
+traffic. With brief or bursty traffic the link can stay at 6-72 Mbit/s
+indefinitely, requiring a manual reconnect.
 
-Cc: stable@kernel.org
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+mt7925_mac_link_sta_remove() already guards its own
+mt7925_mcu_add_bss_info(..., false) call with
+"vif->type == NL80211_IFTYPE_STATION && !link_sta->sta->tdls".
+Add the equivalent guard at the top of the cleanup loop in
+mt7925_mac_sta_remove_links(), above the link_sta / link_conf /
+mlink / mconf lookups, so TDLS peer teardown skips the loop body
+entirely without doing the per-link work that would just be thrown
+away.
+
+Verified on mt7925e by triggering Samsung-S938B auto-TDLS via iperf3
+and watching iw rx bitrate after teardown:
+
+  Before: rx bitrate collapses to 6.0-72.0 Mbit/s, oscillates 17/72/
+          137/288/432 Mbit/s for 30+ seconds, no full recovery without
+          a manual reassoc.
+  After:  rx bitrate stays at 1200.9 Mbit/s HE-MCS 11 NSS 2 80 MHz
+          across the entire TDLS lifecycle.
+
+bpftrace confirms a single mt7925_mcu_add_bss_info(enable=0) call per
+teardown before the fix; zero such calls after.
+
+Fixes: 3878b4333602 ("wifi: mt76: mt7925: update mt7925_mac_link_sta_[add, assoc, remove] for MLO")
+Cc: stable@vger.kernel.org
+Signed-off-by: ElXreno <elxreno@gmail.com>
+Assisted-by: Claude:claude-opus-4-7 bpftrace
+Link: https://patch.msgid.link/20260506-mt7925-tdls-fixes-v2-2-46aa826ba8bb@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c | 15 ++++++++++++++-
- net/batman-adv/fragmentation.h |  3 ++-
- net/batman-adv/routing.c       |  3 +--
- 3 files changed, 17 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/batman-adv/fragmentation.c b/net/batman-adv/fragmentation.c
-index fd7cb789ae9a6a..f6714405b0f948 100644
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -384,6 +384,8 @@ bool batadv_frag_skb_buffer(struct sk_buff **skb,
-  * @skb: skb to forward
-  * @recv_if: interface that the skb is received on
-  * @orig_node_src: originator that the skb is received from
-+ * @rx_result: set to NET_RX_SUCCESS when the fragment was forwarded and
-+ *  NET_RX_DROP when it was dropped; only valid when true is returned
-  *
-  * Look up the next-hop of the fragments payload and check if the merged packet
-  * will exceed the MTU towards the next-hop. If so, the fragment is forwarded
-@@ -393,7 +395,8 @@ bool batadv_frag_skb_buffer(struct sk_buff **skb,
-  */
- bool batadv_frag_skb_fwd(struct sk_buff *skb,
- 			 struct batadv_hard_iface *recv_if,
--			 struct batadv_orig_node *orig_node_src)
-+			 struct batadv_orig_node *orig_node_src,
-+			 int *rx_result)
- {
- 	struct batadv_priv *bat_priv = netdev_priv(recv_if->soft_iface);
- 	struct batadv_neigh_node *neigh_node = NULL;
-@@ -412,12 +415,22 @@ bool batadv_frag_skb_fwd(struct sk_buff *skb,
- 	 */
- 	total_size = ntohs(packet->total_size);
- 	if (total_size > neigh_node->if_incoming->net_dev->mtu) {
-+		if (skb_cow(skb, ETH_HLEN) < 0) {
-+			kfree_skb(skb);
-+			*rx_result = NET_RX_DROP;
-+			ret = true;
-+			goto out;
-+		}
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1190,6 +1190,9 @@ mt7925_mac_sta_remove_links(struct mt792
+ 		if (vif->type == NL80211_IFTYPE_AP)
+ 			break;
+ 
++		if (vif->type == NL80211_IFTYPE_STATION && sta->tdls)
++			continue;
 +
-+		packet = (struct batadv_frag_packet *)skb->data;
-+
- 		batadv_inc_counter(bat_priv, BATADV_CNT_FRAG_FWD);
- 		batadv_add_counter(bat_priv, BATADV_CNT_FRAG_FWD_BYTES,
- 				   skb->len + ETH_HLEN);
- 
- 		packet->ttl--;
- 		batadv_send_unicast_skb(skb, neigh_node);
-+		*rx_result = NET_RX_SUCCESS;
- 		ret = true;
- 	}
- 
-diff --git a/net/batman-adv/fragmentation.h b/net/batman-adv/fragmentation.h
-index dbf0871f870303..51e281027ab630 100644
---- a/net/batman-adv/fragmentation.h
-+++ b/net/batman-adv/fragmentation.h
-@@ -19,7 +19,8 @@ void batadv_frag_purge_orig(struct batadv_orig_node *orig,
- 			    bool (*check_cb)(struct batadv_frag_table_entry *));
- bool batadv_frag_skb_fwd(struct sk_buff *skb,
- 			 struct batadv_hard_iface *recv_if,
--			 struct batadv_orig_node *orig_node_src);
-+			 struct batadv_orig_node *orig_node_src,
-+			 int *rx_result);
- bool batadv_frag_skb_buffer(struct sk_buff **skb,
- 			    struct batadv_orig_node *orig_node);
- int batadv_frag_send_packet(struct sk_buff *skb,
-diff --git a/net/batman-adv/routing.c b/net/batman-adv/routing.c
-index 85bc2d284a7798..6fd18b69e5f6be 100644
---- a/net/batman-adv/routing.c
-+++ b/net/batman-adv/routing.c
-@@ -1175,10 +1175,9 @@ int batadv_recv_frag_packet(struct sk_buff *skb,
- 
- 	/* Route the fragment if it is not for us and too big to be merged. */
- 	if (!batadv_is_my_mac(bat_priv, frag_packet->dest) &&
--	    batadv_frag_skb_fwd(skb, recv_if, orig_node_src)) {
-+	    batadv_frag_skb_fwd(skb, recv_if, orig_node_src, &ret)) {
- 		/* skb was consumed */
- 		skb = NULL;
--		ret = NET_RX_SUCCESS;
- 		goto put_orig_node;
- 	}
- 
--- 
-2.53.0
-
+ 		link_sta = mt792x_sta_to_link_sta(vif, sta, link_id);
+ 		if (!link_sta)
+ 			continue;
 
 
