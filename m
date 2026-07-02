@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BF939EF27;
-	Thu,  2 Jul 2026 16:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D344086A;
+	Thu,  2 Jul 2026 16:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009981; cv=none; b=KqJ7rh4Ay3Lq7X33Vw7avUyj1WYdYvMOto8f+mEqOC6PW0xtBNN+15z7dgOpsYSXouvpo46Zc5iSCCslTxYSNcE44ZaqsK2M3UTn2LA4SijI6cWrS527fDAxtm/K3t20k2DQ5N0Y6yxIQiXTM9u1MDEm1IuEqeE0eY2dKnP69ho=
+	t=1783009984; cv=none; b=U0SFIiyPjMTBR41C+6GX0vSUe+96mGamE3aZdYqCRrt1sJszGhhc8rXfKxRlKQhl7a+nYadWXA27YJ6n+gjvZBh6e7hJSzIa/7+l72WGg6L+to1xybRbGkC/s97CeLXXD9/cxK/HPeupAm96O9u9UZSwMZ2AYaHQr1IVomtbDX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009981; c=relaxed/simple;
-	bh=nm0TBhVHDahzcsjqy7y/gIMi/xSZXBjYxsqzPsJoNtk=;
+	s=arc-20240116; t=1783009984; c=relaxed/simple;
+	bh=xUIvy/7aiA7xYIeq87tEnyueNLzkiVg8ieBb2D3L1Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lwx4xnrkq+2x1G+quONfIocrVWP4uENOC9JP3yZ/z3o7z/JjM6j2GAldJzXjnn9cZGLOW+anzxtAjatyDCzecNcS0TtS3ja2DEcQzcr6j5A0lZ/DFeFfuYRAbWQzgfG0jsS568FhGSRuHIfJz1gwS9/rMAFgJ2lg/zjF9Si9/nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzO+Pub8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YsozKuP+DeX2QGAP+SLmBsHWkuk5e0knBDViebXIILXLaXkaCU0mNbGhn9V+sw/liEQL6qWW08iEzSQgvZDR3c94Mlt+pHrZdq8x3GMC7xdwSL+PJK+UrXqDG6M5r1L/agOaNODkhQLpscJlg4J/mQyWo5FRA2Ya/VTjdoV2+0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvVMknPw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzO+Pub8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995AC1F000E9;
-	Thu,  2 Jul 2026 16:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvVMknPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC5B1F000E9;
+	Thu,  2 Jul 2026 16:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009980;
-	bh=UMHWwbWzbgicf2k1eeG0qO7mQNuk/siS5wI10Zh0ZXY=;
+	s=korg; t=1783009982;
+	bh=88SWi8Z57+UJm2HF0pFAFTw3hT1AD20B/BjfaXb+dQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LzO+Pub8hTZ5RND42r/GPJi0AqEYJi+oVTLjS9DA/PGQRCgo1ofpOdKa5dFZVAo1K
-	 zojoshHWtOvHO+K/uSQ4jVK+LNBXulLAp2BluxMQRgxuPwjp05LL0C0yaLSenKcGSY
-	 c3WBg7NFhH0oE+ysms12uM+TEri/GyzJJrs1Nx/E=
+	b=lvVMknPwKhqGqS9Yfwcu1UR+uNYSg1kLZ9buTw9pcrY2U2pVEcGKxqWoBv//rO6qW
+	 Gsqw+47/9JBs3e+pRlWOiFQb+E3Yp4r3na+KmxBj5Mm+04xESwHTcpdO+jdMmgAoFf
+	 68FRllPtxMVXcm/btHmetMgQku79osNWS8QuFgl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/129] batman-adv: bla: annotate lasttime access with READ/WRITE_ONCE
-Date: Thu,  2 Jul 2026 18:19:37 +0200
-Message-ID: <20260702155113.347050304@linuxfoundation.org>
+Subject: [PATCH 6.1 067/129] batman-adv: tp_meter: annotate last_recv_time access with READ/WRITE_ONCE
+Date: Thu,  2 Jul 2026 18:19:46 +0200
+Message-ID: <20260702155113.531669193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -53,152 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 98b0fb191c878a64cbaebfe231d96d57576acf8c upstream.
+commit d67c728f07fca2ee6ffdc6dd4421cf2e8691f4d1 upstream.
 
-The lasttime field for claim, backbone_gw, and loopdetect tracks the
-jiffies value of the most recent activity and is used to detect timeouts.
-These accesses are not consistently protected by a lock, so
-READ_ONCE/WRITE_ONCE must be used to prevent data races caused by compiler
-optimizations.
+The last_recv_time field for batadv_tp_receiver tracks the jiffies value of
+the most recent activity and is used to detect timeouts. These accesses are
+not consistently protected by a lock, so READ_ONCE/WRITE_ONCE must be used
+to prevent data races caused by compiler optimizations.
 
 Cc: stable@kernel.org
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c | 28 +++++++++++++-------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ net/batman-adv/tp_meter.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
-index cfb1eb25c6ac4d..ac12c06f11b89e 100644
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -512,7 +512,7 @@ batadv_bla_get_backbone_gw(struct batadv_priv *bat_priv, const u8 *orig,
- 		return NULL;
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 638dd438a6c052..b882919a868ca0 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1183,7 +1183,7 @@ static void batadv_tp_receiver_shutdown(struct timer_list *t)
+ 	bat_priv = tp_vars->bat_priv;
  
- 	entry->vid = vid;
--	entry->lasttime = jiffies;
-+	WRITE_ONCE(entry->lasttime, jiffies);
- 	entry->crc = BATADV_BLA_CRC_INIT;
- 	entry->bat_priv = bat_priv;
- 	spin_lock_init(&entry->crc_lock);
-@@ -580,7 +580,7 @@ batadv_bla_update_own_backbone_gw(struct batadv_priv *bat_priv,
- 	if (unlikely(!backbone_gw))
- 		return;
- 
--	backbone_gw->lasttime = jiffies;
-+	WRITE_ONCE(backbone_gw->lasttime, jiffies);
- 	batadv_backbone_gw_put(backbone_gw);
- }
- 
-@@ -714,7 +714,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 		ether_addr_copy(claim->addr, mac);
- 		spin_lock_init(&claim->backbone_lock);
- 		claim->vid = vid;
--		claim->lasttime = jiffies;
-+		WRITE_ONCE(claim->lasttime, jiffies);
- 		kref_get(&backbone_gw->refcount);
- 		claim->backbone_gw = backbone_gw;
- 		kref_init(&claim->refcount);
-@@ -736,7 +736,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 			return;
- 		}
- 	} else {
--		claim->lasttime = jiffies;
-+		WRITE_ONCE(claim->lasttime, jiffies);
- 		if (claim->backbone_gw == backbone_gw)
- 			/* no need to register a new backbone */
- 			goto claim_free_ref;
-@@ -769,7 +769,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 	spin_lock_bh(&backbone_gw->crc_lock);
- 	backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
- 	spin_unlock_bh(&backbone_gw->crc_lock);
--	backbone_gw->lasttime = jiffies;
-+	WRITE_ONCE(backbone_gw->lasttime, jiffies);
- 
- claim_free_ref:
- 	batadv_claim_put(claim);
-@@ -858,7 +858,7 @@ static bool batadv_handle_announce(struct batadv_priv *bat_priv, u8 *an_addr,
- 		return true;
- 
- 	/* handle as ANNOUNCE frame */
--	backbone_gw->lasttime = jiffies;
-+	WRITE_ONCE(backbone_gw->lasttime, jiffies);
- 	crc = ntohs(*((__force __be16 *)(&an_addr[4])));
- 
- 	batadv_dbg(BATADV_DBG_BLA, bat_priv,
-@@ -1253,7 +1253,7 @@ static void batadv_bla_purge_backbone_gw(struct batadv_priv *bat_priv, int now)
- 						  head, hash_entry) {
- 				if (now)
- 					goto purge_now;
--				if (!batadv_has_timed_out(backbone_gw->lasttime,
-+				if (!batadv_has_timed_out(READ_ONCE(backbone_gw->lasttime),
- 							  BATADV_BLA_BACKBONE_TIMEOUT))
- 					continue;
- 
-@@ -1334,7 +1334,7 @@ static void batadv_bla_purge_claims(struct batadv_priv *bat_priv,
- 						primary_if->net_dev->dev_addr))
- 				goto skip;
- 
--			if (!batadv_has_timed_out(claim->lasttime,
-+			if (!batadv_has_timed_out(READ_ONCE(claim->lasttime),
- 						  BATADV_BLA_CLAIM_TIMEOUT))
- 				goto skip;
- 
-@@ -1494,7 +1494,7 @@ static void batadv_bla_periodic_work(struct work_struct *work)
- 		eth_random_addr(bat_priv->bla.loopdetect_addr);
- 		bat_priv->bla.loopdetect_addr[0] = 0xba;
- 		bat_priv->bla.loopdetect_addr[1] = 0xbe;
--		bat_priv->bla.loopdetect_lasttime = jiffies;
-+		WRITE_ONCE(bat_priv->bla.loopdetect_lasttime, jiffies);
- 		atomic_set(&bat_priv->bla.loopdetect_next,
- 			   BATADV_BLA_LOOPDETECT_PERIODS);
- 
-@@ -1515,7 +1515,7 @@ static void batadv_bla_periodic_work(struct work_struct *work)
- 						primary_if->net_dev->dev_addr))
- 				continue;
- 
--			backbone_gw->lasttime = jiffies;
-+			WRITE_ONCE(backbone_gw->lasttime, jiffies);
- 
- 			batadv_bla_send_announce(bat_priv, backbone_gw);
- 			if (send_loopdetect)
-@@ -1900,7 +1900,7 @@ batadv_bla_loopdetect_check(struct batadv_priv *bat_priv, struct sk_buff *skb,
- 	/* If the packet came too late, don't forward it on the mesh
- 	 * but don't consider that as loop. It might be a coincidence.
- 	 */
--	if (batadv_has_timed_out(bat_priv->bla.loopdetect_lasttime,
-+	if (batadv_has_timed_out(READ_ONCE(bat_priv->bla.loopdetect_lasttime),
- 				 BATADV_BLA_LOOPDETECT_TIMEOUT))
- 		return true;
- 
-@@ -2016,7 +2016,7 @@ bool batadv_bla_rx(struct batadv_priv *bat_priv, struct sk_buff *skb,
- 
- 	if (own_claim) {
- 		/* ... allow it in any case */
--		claim->lasttime = jiffies;
-+		WRITE_ONCE(claim->lasttime, jiffies);
- 		goto allow;
+ 	/* if there is recent activity rearm the timer */
+-	if (!batadv_has_timed_out(tp_vars->last_recv_time,
++	if (!batadv_has_timed_out(READ_ONCE(tp_vars->last_recv_time),
+ 				  BATADV_TP_RECV_TIMEOUT)) {
+ 		/* reset the receiver shutdown timer */
+ 		batadv_tp_reset_receiver_timer(tp_vars);
+@@ -1424,7 +1424,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+ 					      icmp->session, BATADV_TP_RECEIVER);
+ 	if (tp_vars) {
+-		tp_vars->last_recv_time = jiffies;
++		WRITE_ONCE(tp_vars->last_recv_time, jiffies);
+ 		goto out_unlock;
  	}
  
-@@ -2118,7 +2118,7 @@ bool batadv_bla_tx(struct batadv_priv *bat_priv, struct sk_buff *skb,
- 		/* if yes, the client has roamed and we have
- 		 * to unclaim it.
- 		 */
--		if (batadv_has_timed_out(claim->lasttime, 100)) {
-+		if (batadv_has_timed_out(READ_ONCE(claim->lasttime), 100)) {
- 			/* only unclaim if the last claim entry is
- 			 * older than 100 ms to make sure we really
- 			 * have a roaming client here.
-@@ -2372,7 +2372,7 @@ batadv_bla_backbone_dump_entry(struct sk_buff *msg, u32 portid,
- 	backbone_crc = backbone_gw->crc;
- 	spin_unlock_bh(&backbone_gw->crc_lock);
+@@ -1455,7 +1455,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 	kref_get(&tp_vars->refcount);
+ 	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
  
--	msecs = jiffies_to_msecs(jiffies - backbone_gw->lasttime);
-+	msecs = jiffies_to_msecs(jiffies - READ_ONCE(backbone_gw->lasttime));
+-	tp_vars->last_recv_time = jiffies;
++	WRITE_ONCE(tp_vars->last_recv_time, jiffies);
  
- 	if (is_own)
- 		if (nla_put_flag(msg, BATADV_ATTR_BLA_OWN)) {
+ 	kref_get(&tp_vars->refcount);
+ 	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
+@@ -1506,7 +1506,7 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 			goto out;
+ 		}
+ 
+-		tp_vars->last_recv_time = jiffies;
++		WRITE_ONCE(tp_vars->last_recv_time, jiffies);
+ 	}
+ 
+ 	/* if the packet is a duplicate, it may be the case that an ACK has been
 -- 
 2.53.0
 
