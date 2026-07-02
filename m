@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DFF417369;
-	Thu,  2 Jul 2026 16:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DF03A1E92;
+	Thu,  2 Jul 2026 16:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009454; cv=none; b=EehSNjp9Y32BPZaKQW53YMccnpi2/n4bgjR3cYIanbtJV8N1Bu/lHvWW3AzSuEOG1nZH7iqTqwLxAksPPrMJJ3us+DzBRkhxx0eNhkQmdDDNVJfOWSQjJ0V/dBLs+0d+lIi3YPPsDrKdDtevJr1+fncTX7zV8QZQw4O71VPACXg=
+	t=1783009456; cv=none; b=jVtY+ldkigSyl2vxT4Zg51AT/qwBQqQC0m+z4+wMhzqrJ/lhLt2ILELXuivPu4QKYeu+ESCSYb2MrFHSuCqmQ9l3bMLAfwprJhjR4gUdcy6KWtO1ST/6ACiTx53tUM0jxGy4q7j/VRBERZ4qrkQoVvgarNax3F1oA13+dW4E4wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009454; c=relaxed/simple;
-	bh=B3LnwlGUT0CM69eqkyfL7VnfMLEZTWXJBM0WSOCkxMc=;
+	s=arc-20240116; t=1783009456; c=relaxed/simple;
+	bh=5faJhOdJuqURD51iMaJyu9PtKqFS3/xuDPkrUl7ayLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOtWsCqN3BSOoj3spSP4mYSDMUA3ynA6DErAUK8OQcbmDvSo+RANL5qLwqyut8+OB/J6LO1ziR43Y4Ajp9A0JsePtb9Wo06paF+2hzMYccuAbnGLThBkedHUjUp0Z2hGJIJqAAaoDynOwXt9gZtwb4/PnlC8hVH7a0PkOWHx/0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWsRT2Br; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=payAiJurgDkJATOtixNrAJta+eQnQxokrz323S+o+N2CufGRR+/fs0HgsxNZzmX2FdO905vcaynaJdHhfR8ZOB/tVTkCtB96xL2JxWEL6ArZQVJpq6sk2D1zpgzUZrlZklyRkLrxX+c4DxvLQaZbc5hNeM9mg/JSbSTu6UScs1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EabR3Yc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWsRT2Br"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4F21F000E9;
-	Thu,  2 Jul 2026 16:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EabR3Yc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271271F00A3A;
+	Thu,  2 Jul 2026 16:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009450;
-	bh=+A0xo3Pftn/7FePmDJLxLoyCOrTyWbnuzGshmFDV4dg=;
+	s=korg; t=1783009452;
+	bh=+2I8EpL8zNIvHgMGHq+ZvCxrCyKrQwbXvz0IerOFMv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWsRT2BrowgSwD/k2iDy2BC61iNhJ30XG8plRt9TfuGAM2E4lu11ILeRV6ofQIzu1
-	 NAw4GHujyaKnfeGXBjYtfmqjvIKxtWLdLQGxGVn4+43LJJKq6oqgvtW2h7LxCs6/h2
-	 xwnR9WR6OB8MnvTifww4v2mCua8RM1i7HV/wtSgo=
+	b=1EabR3Yc8FFBQKCbyjHzJbSmTu+PmOnKHGF3pfOTaa+LepYSwjBSHJwswQwCwv0zA
+	 H6t+QjLHNg93/rGnrmpobtCIywrfUG1eJCKyjVzpYivyjSv7unj8HhovyS0HSXa7O7
+	 Zb/aexIbeQ29hMJF37XNtNv8CJ+EWvb6yr1AQCPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	David Howells <dhowells@redhat.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 57/96] ring-buffer: Remove ring_buffer_read_prepare_sync()
-Date: Thu,  2 Jul 2026 18:19:49 +0200
-Message-ID: <20260702155110.181217169@linuxfoundation.org>
+Subject: [PATCH 5.10 58/96] ext4: add bounds check for inline data length in ext4_read_inline_page
+Date: Thu,  2 Jul 2026 18:19:50 +0200
+Message-ID: <20260702155110.202230130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -54,227 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-[ Upstream commit 119a5d573622ae90ba730d18acfae9bb75d77b9a ]
+[ Upstream commit 356227096eb66e41b23caf7045e6304877322edf ]
 
-When the ring buffer was first introduced, reading the non-consuming
-"trace" file required disabling the writing of the ring buffer. To make
-sure the writing was fully disabled before iterating the buffer with a
-non-consuming read, it would set the disable flag of the buffer and then
-call an RCU synchronization to make sure all the buffers were
-synchronized.
+ext4_read_inline_page() does not validate that the inline data length
+fits within a page before copying data. If the inline size exceeds
+PAGE_SIZE due to filesystem corruption, this could lead to a kernel
+memory write beyond the page boundary.
 
-The function ring_buffer_read_start() originally  would initialize the
-iterator and call an RCU synchronization, but this was for each individual
-per CPU buffer where this would get called many times on a machine with
-many CPUs before the trace file could be read. The commit 72c9ddfd4c5bf
-("ring-buffer: Make non-consuming read less expensive with lots of cpus.")
-separated ring_buffer_read_start into ring_buffer_read_prepare(),
-ring_buffer_read_sync() and then ring_buffer_read_start() to allow each of
-the per CPU buffers to be prepared, call the read_buffer_read_sync() once,
-and then the ring_buffer_read_start() for each of the CPUs which made
-things much faster.
+Add a bounds check after computing len, returning -EFSCORRUPTED if the
+value exceeds PAGE_SIZE.
 
-The commit 1039221cc278 ("ring-buffer: Do not disable recording when there
-is an iterator") removed the requirement of disabling the recording of the
-ring buffer in order to iterate it, but it did not remove the
-synchronization that was happening that was required to wait for all the
-buffers to have no more writers. It's now OK for the buffers to have
-writers and no synchronization is needed.
+The upstream commit replaced a BUG_ON(len > PAGE_SIZE) in
+ext4_read_inline_folio(). In 6.1 and earlier, the function is still named
+ext4_read_inline_page() and the BUG_ON was never present, so this patch
+adds the bounds check directly.
 
-Remove the synchronization and put back the interface for the ring buffer
-iterator back before commit 72c9ddfd4c5bf was applied.
-
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250630180440.3eabb514@batman.local.home
-Reported-by: David Howells <dhowells@redhat.com>
-Fixes: 1039221cc278 ("ring-buffer: Do not disable recording when there is an iterator")
-Tested-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-
-Assisted-by: Kiro:claude-opus-4.8
-[doebel@amazon.de: move patch section using guard() macro into a
-separate block to address declaration after statement warning.]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Fixes: 46c7f254543d ("ext4: add read support for inline data")
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ring_buffer.h |  4 +--
- kernel/trace/ring_buffer.c  | 72 ++++++++-----------------------------
- kernel/trace/trace.c        | 14 +++-----
- kernel/trace/trace_kdb.c    |  8 ++---
- 4 files changed, 22 insertions(+), 76 deletions(-)
+ fs/ext4/inline.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
-index 7d5a78f49d43dd..be5c1209224695 100644
---- a/include/linux/ring_buffer.h
-+++ b/include/linux/ring_buffer.h
-@@ -128,9 +128,7 @@ ring_buffer_consume(struct trace_buffer *buffer, int cpu, u64 *ts,
- 		    unsigned long *lost_events);
+diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+index 129f7ff56b43bd..edaa8820226070 100644
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -513,6 +513,14 @@ static int ext4_read_inline_page(struct inode *inode, struct page *page)
+ 		goto out;
  
- struct ring_buffer_iter *
--ring_buffer_read_prepare(struct trace_buffer *buffer, int cpu, gfp_t flags);
--void ring_buffer_read_prepare_sync(void);
--void ring_buffer_read_start(struct ring_buffer_iter *iter);
-+ring_buffer_read_start(struct trace_buffer *buffer, int cpu, gfp_t flags);
- void ring_buffer_read_finish(struct ring_buffer_iter *iter);
- 
- struct ring_buffer_event *
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 03a7127efc5a8a..1089daa17b09e2 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -4858,28 +4858,20 @@ ring_buffer_consume(struct trace_buffer *buffer, int cpu, u64 *ts,
- EXPORT_SYMBOL_GPL(ring_buffer_consume);
- 
- /**
-- * ring_buffer_read_prepare - Prepare for a non consuming read of the buffer
-+ * ring_buffer_read_start - start a non consuming read of the buffer
-  * @buffer: The ring buffer to read from
-  * @cpu: The cpu buffer to iterate over
-  * @flags: gfp flags to use for memory allocation
-  *
-- * This performs the initial preparations necessary to iterate
-- * through the buffer.  Memory is allocated, buffer recording
-- * is disabled, and the iterator pointer is returned to the caller.
-- *
-- * Disabling buffer recording prevents the reading from being
-- * corrupted. This is not a consuming read, so a producer is not
-- * expected.
-- *
-- * After a sequence of ring_buffer_read_prepare calls, the user is
-- * expected to make at least one call to ring_buffer_read_prepare_sync.
-- * Afterwards, ring_buffer_read_start is invoked to get things going
-- * for real.
-+ * This creates an iterator to allow non-consuming iteration through
-+ * the buffer. If the buffer is disabled for writing, it will produce
-+ * the same information each time, but if the buffer is still writing
-+ * then the first hit of a write will cause the iteration to stop.
-  *
-- * This overall must be paired with ring_buffer_read_finish.
-+ * Must be paired with ring_buffer_read_finish.
-  */
- struct ring_buffer_iter *
--ring_buffer_read_prepare(struct trace_buffer *buffer, int cpu, gfp_t flags)
-+ring_buffer_read_start(struct trace_buffer *buffer, int cpu, gfp_t flags)
- {
- 	struct ring_buffer_per_cpu *cpu_buffer;
- 	struct ring_buffer_iter *iter;
-@@ -4904,51 +4896,15 @@ ring_buffer_read_prepare(struct trace_buffer *buffer, int cpu, gfp_t flags)
- 
- 	atomic_inc(&cpu_buffer->resize_disabled);
- 
--	return iter;
--}
--EXPORT_SYMBOL_GPL(ring_buffer_read_prepare);
-+	{
-+		guard(raw_spinlock_irqsave)(&cpu_buffer->reader_lock);
- 
--/**
-- * ring_buffer_read_prepare_sync - Synchronize a set of prepare calls
-- *
-- * All previously invoked ring_buffer_read_prepare calls to prepare
-- * iterators will be synchronized.  Afterwards, read_buffer_read_start
-- * calls on those iterators are allowed.
-- */
--void
--ring_buffer_read_prepare_sync(void)
--{
--	synchronize_rcu();
--}
--EXPORT_SYMBOL_GPL(ring_buffer_read_prepare_sync);
--
--/**
-- * ring_buffer_read_start - start a non consuming read of the buffer
-- * @iter: The iterator returned by ring_buffer_read_prepare
-- *
-- * This finalizes the startup of an iteration through the buffer.
-- * The iterator comes from a call to ring_buffer_read_prepare and
-- * an intervening ring_buffer_read_prepare_sync must have been
-- * performed.
-- *
-- * Must be paired with ring_buffer_read_finish.
-- */
--void
--ring_buffer_read_start(struct ring_buffer_iter *iter)
--{
--	struct ring_buffer_per_cpu *cpu_buffer;
--	unsigned long flags;
--
--	if (!iter)
--		return;
--
--	cpu_buffer = iter->cpu_buffer;
-+		arch_spin_lock(&cpu_buffer->lock);
-+		rb_iter_reset(iter);
-+		arch_spin_unlock(&cpu_buffer->lock);
+ 	len = min_t(size_t, ext4_get_inline_size(inode), i_size_read(inode));
++	if (len > PAGE_SIZE) {
++		ext4_error_inode(inode, __func__, __LINE__, 0,
++				 "inline size %zu exceeds PAGE_SIZE", len);
++		ret = -EFSCORRUPTED;
++		brelse(iloc.bh);
++		goto out;
 +	}
- 
--	raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
--	arch_spin_lock(&cpu_buffer->lock);
--	rb_iter_reset(iter);
--	arch_spin_unlock(&cpu_buffer->lock);
--	raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
-+	return iter;
- }
- EXPORT_SYMBOL_GPL(ring_buffer_read_start);
- 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 5bcd4cbeeb4fe1..ed32d3c4f0e76b 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -4480,21 +4480,15 @@ __tracing_open(struct inode *inode, struct file *file, bool snapshot)
- 	if (iter->cpu_file == RING_BUFFER_ALL_CPUS) {
- 		for_each_tracing_cpu(cpu) {
- 			iter->buffer_iter[cpu] =
--				ring_buffer_read_prepare(iter->array_buffer->buffer,
--							 cpu, GFP_KERNEL);
--		}
--		ring_buffer_read_prepare_sync();
--		for_each_tracing_cpu(cpu) {
--			ring_buffer_read_start(iter->buffer_iter[cpu]);
-+				ring_buffer_read_start(iter->array_buffer->buffer,
-+						       cpu, GFP_KERNEL);
- 			tracing_iter_reset(iter, cpu);
- 		}
- 	} else {
- 		cpu = iter->cpu_file;
- 		iter->buffer_iter[cpu] =
--			ring_buffer_read_prepare(iter->array_buffer->buffer,
--						 cpu, GFP_KERNEL);
--		ring_buffer_read_prepare_sync();
--		ring_buffer_read_start(iter->buffer_iter[cpu]);
-+			ring_buffer_read_start(iter->array_buffer->buffer,
-+					       cpu, GFP_KERNEL);
- 		tracing_iter_reset(iter, cpu);
- 	}
- 
-diff --git a/kernel/trace/trace_kdb.c b/kernel/trace/trace_kdb.c
-index 9da76104f7a28b..18d1551db2b0d5 100644
---- a/kernel/trace/trace_kdb.c
-+++ b/kernel/trace/trace_kdb.c
-@@ -43,17 +43,15 @@ static void ftrace_dump_buf(int skip_entries, long cpu_file)
- 	if (cpu_file == RING_BUFFER_ALL_CPUS) {
- 		for_each_tracing_cpu(cpu) {
- 			iter.buffer_iter[cpu] =
--			ring_buffer_read_prepare(iter.array_buffer->buffer,
--						 cpu, GFP_ATOMIC);
--			ring_buffer_read_start(iter.buffer_iter[cpu]);
-+			ring_buffer_read_start(iter.array_buffer->buffer,
-+					       cpu, GFP_ATOMIC);
- 			tracing_iter_reset(&iter, cpu);
- 		}
- 	} else {
- 		iter.cpu_file = cpu_file;
- 		iter.buffer_iter[cpu_file] =
--			ring_buffer_read_prepare(iter.array_buffer->buffer,
-+			ring_buffer_read_start(iter.array_buffer->buffer,
- 						 cpu_file, GFP_ATOMIC);
--		ring_buffer_read_start(iter.buffer_iter[cpu_file]);
- 		tracing_iter_reset(&iter, cpu_file);
- 	}
- 
++
+ 	kaddr = kmap_atomic(page);
+ 	ret = ext4_read_inline_data(inode, kaddr, len, &iloc);
+ 	flush_dcache_page(page);
 -- 
 2.53.0
 
