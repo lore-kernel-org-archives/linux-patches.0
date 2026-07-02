@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A662D8DC4;
-	Thu,  2 Jul 2026 16:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C056346E7A;
+	Thu,  2 Jul 2026 16:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010342; cv=none; b=ggMN30D9peSiyY1Bh94929eE/6ZIfP4K3bSuWx7Icu61Y8QZgKxAohQMro3UAOtg7PMiB5HnwWtBAGtulHRewCda3TP/bvVvACHpTW4YjI2BUL9O/yw5RC4slGDw8MqVpi076vZchqNpNwpFarp0z3lGywPI6oE92Ll/t7uf9lg=
+	t=1783010344; cv=none; b=XoU74S6hd23CARLcYcCUt9n6MENIJKq9uQhxlCFowL8Rp9WyXgfOU4jQ/dAuEyRzRYpyh/7sx3AzH2ojJNK5XNd8FO5Y6jdeoK9zn/qM3WnSJnFWfhxeuGDZ4A0gDQ2nRwrN+30J1itm5PhxL6w+3VR62sfKIBXkAedNZCij7Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010342; c=relaxed/simple;
-	bh=q+IBaCaQ5BhrIaxvX8g2mEzHtQE6mPR3ym213QWK6mY=;
+	s=arc-20240116; t=1783010344; c=relaxed/simple;
+	bh=bMpp6VKtkf1tyZrhF/UxATawe+kt7fWVR8t/KFa4O1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOMlCfBSwVDidDaFDYawuvu4I/pw5LZI+TQgt/tRYCgbe3mY7gdmfaYXTWD/4KrefDXya0C8h7gUIBCrKb0v56DgjHVzGFgggBg7Zae/EjxuvWDEVBxH+1VDCQnCUbJHB/ZF1SGqW16Kn3chwM9RzRKnPJcoG6Wg2TjPZzavik4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzt+By9Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MisiL46czorFCxvTVl6KuZXMv+8GOiI4jeFs27vp6KKubQIA1u61Aj8zwtI1/NRCTJCqkGWo1x6061EXMm06duBvkI52G2cDAhw6CN1knQeZ8A8k4a66Yz/7w+IRxfzvS32HzlF9fjhGPt0Ac6blb07BEzdFRcPwtQgeRKLMJl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4BwFpta; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzt+By9Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8551F000E9;
-	Thu,  2 Jul 2026 16:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4BwFpta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E271F000E9;
+	Thu,  2 Jul 2026 16:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010340;
-	bh=zchnOQnBU8dVH8BfMHjtMt5gWG5n6Deyzqn8Jb+X1iM=;
+	s=korg; t=1783010343;
+	bh=tylzBM1UUSqcWYR6TLP9/nQxpPf4ywh4LJaFDx0u9z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vzt+By9QUw8ZfpaU5Yoznn/UlipFyvkTjdLgc57zmiI0ljR6y3h8wfiGVsheBPaAf
-	 U0zJ/zVy6M2S1UsplmBQxHgv0X/d+sLvyHpTka5p10+Y4H67RMAKIIlx4xs20m/pSN
-	 FSAJDBM3BOltfjbUaNZlP5RK4rjMTU0lAW9CaOKw=
+	b=P4BwFptaHP4Ug9McZovlyWWUurg0CgeVdeNGq0wPZPMTRAjcg3Gll/dw2n3qQCJEI
+	 lm46JLd0VL5ubf/BhzfwUyq58CE7YrHe60MPy7EK4UXRjEQStt1PwF9tRoKKVsYHXy
+	 7qjbKyvQ9VnrK3yLihP6f4mTC9Xgp4CxKeGRdst8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.12 073/204] scripts/sorttable: Have mcount rela sort use direct values
-Date: Thu,  2 Jul 2026 18:18:50 +0200
-Message-ID: <20260702155120.200282086@linuxfoundation.org>
+Subject: [PATCH 6.12 074/204] scripts/sorttable: Always use an array for the mcount_loc sorting
+Date: Thu,  2 Jul 2026 18:18:51 +0200
+Message-ID: <20260702155120.221182368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -71,19 +71,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit a0265659322540d656727b9e132edfb6f06b6c1a ]
+[ Upstream commit 5fb964f5ba53afda0e2b6dbc00b8205461ffe04a ]
 
-The mcount_loc sorting for when the values are stored in the Elf_Rela
-entries uses the compare_extable() function to do the compares in the
-qsort(). That function does handle byte swapping if the machine being
-compiled for is a different endian than the host machine. But the
-sort_relocs() function sorts an array that pulled in the values from the
-Elf_Rela section and has already done the swapping.
+The sorting of the mcount_loc section is done directly to the section for
+x86 and arm32 but it uses a separate array for arm64 as arm64 has the
+values for the mcount_loc stored in the rela sections of the vmlinux ELF
+file.
 
-Create two new compare functions that will sort the direct values. One
-will sort 32 bit values and the other will sort the 64 bit value. One of
-these will be assigned to a compare_values function pointer and that will
-be used for sorting the Elf_Rela mcount values.
+In order to use the same code to remove weak functions, always use a
+separate array to do the sorting. This requires splitting up the filling
+of the array into one function and the placing the contents of the array
+back into the rela sections or into the mcount_loc section into a separate
+file.
 
 Cc: bpf <bpf@vger.kernel.org>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
@@ -104,62 +103,198 @@ Cc: Catalin Marinas <catalin.marinas@arm.com>
 Cc: Will Deacon <will@kernel.org>
 Cc: Vasily Gorbik <gor@linux.ibm.com>
 Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Link: https://lore.kernel.org/20250218200022.538888594@goodmis.org
+Link: https://lore.kernel.org/20250218200022.710676551@goodmis.org
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/sorttable.c |   26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ scripts/sorttable.c |  122 ++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 90 insertions(+), 32 deletions(-)
 
 --- a/scripts/sorttable.c
 +++ b/scripts/sorttable.c
-@@ -552,6 +552,28 @@ static void *sort_orctable(void *arg)
+@@ -594,31 +594,19 @@ struct elf_mcount_loc {
+ 	uint64_t stop_mcount_loc;
+ };
  
- #ifdef MCOUNT_SORT_ENABLED
- 
-+static int compare_values_64(const void *a, const void *b)
-+{
-+	uint64_t av = *(uint64_t *)a;
-+	uint64_t bv = *(uint64_t *)b;
-+
-+	if (av < bv)
-+		return -1;
-+	return av > bv;
-+}
-+
-+static int compare_values_32(const void *a, const void *b)
-+{
-+	uint32_t av = *(uint32_t *)a;
-+	uint32_t bv = *(uint32_t *)b;
-+
-+	if (av < bv)
-+		return -1;
-+	return av > bv;
-+}
-+
-+static int (*compare_values)(const void *a, const void *b);
-+
- /* Only used for sorting mcount table */
- static void rela_write_addend(Elf_Rela *rela, uint64_t val)
+-/* Sort the relocations not the address itself */
+-static void *sort_relocs(Elf_Ehdr *ehdr, uint64_t start_loc, uint64_t size)
++/* Fill the array with the content of the relocs */
++static int fill_relocs(void *ptr, uint64_t size, Elf_Ehdr *ehdr, uint64_t start_loc)
  {
-@@ -583,6 +605,8 @@ static void *sort_relocs(Elf_Ehdr *ehdr,
- 	void *vals;
- 	void *ptr;
+ 	Elf_Shdr *shdr_start;
+ 	Elf_Rela *rel;
+ 	unsigned int shnum;
+-	unsigned int count;
++	unsigned int count = 0;
+ 	int shentsize;
+-	void *vals;
+-	void *ptr;
+-
+-	compare_values = long_size == 4 ? compare_values_32 : compare_values_64;
++	void *array_end = ptr + size;
  
-+	compare_values = long_size == 4 ? compare_values_32 : compare_values_64;
-+
  	shdr_start = (Elf_Shdr *)((char *)ehdr + ehdr_shoff(ehdr));
  	shentsize = ehdr_shentsize(ehdr);
  
-@@ -640,7 +664,7 @@ static void *sort_relocs(Elf_Ehdr *ehdr,
+-	vals = malloc(long_size * size);
+-	if (!vals) {
+-		snprintf(m_err, ERRSTR_MAXSZ, "Failed to allocate sort array");
+-		pthread_exit(m_err);
+-		return NULL;
+-	}
+-
+-	ptr = vals;
+-
+ 	shnum = ehdr_shnum(ehdr);
+ 	if (shnum == SHN_UNDEF)
+ 		shnum = shdr_size(shdr_start);
+@@ -637,22 +625,18 @@ static void *sort_relocs(Elf_Ehdr *ehdr,
+ 			uint64_t offset = rela_offset(rel);
+ 
+ 			if (offset >= start_loc && offset < start_loc + size) {
+-				if (ptr + long_size > vals + size) {
+-					free(vals);
++				if (ptr + long_size > array_end) {
+ 					snprintf(m_err, ERRSTR_MAXSZ,
+ 						 "Too many relocations");
+-					pthread_exit(m_err);
+-					return NULL;
++					return -1;
+ 				}
+ 
+ 				/* Make sure this has the correct type */
+ 				if (rela_info(rel) != rela_type) {
+-					free(vals);
+ 					snprintf(m_err, ERRSTR_MAXSZ,
+ 						"rela has type %lx but expected %lx\n",
+ 						(long)rela_info(rel), rela_type);
+-					pthread_exit(m_err);
+-					return NULL;
++					return -1;
+ 				}
+ 
+ 				if (long_size == 4)
+@@ -660,13 +644,28 @@ static void *sort_relocs(Elf_Ehdr *ehdr,
+ 				else
+ 					*(uint64_t *)ptr = rela_addend(rel);
+ 				ptr += long_size;
++				count++;
+ 			}
  		}
  	}
- 	count = ptr - vals;
--	qsort(vals, count / long_size, long_size, compare_extable);
-+	qsort(vals, count / long_size, long_size, compare_values);
+-	count = ptr - vals;
+-	qsort(vals, count / long_size, long_size, compare_values);
++	return count;
++}
++
++/* Put the sorted vals back into the relocation elements */
++static void replace_relocs(void *ptr, uint64_t size, Elf_Ehdr *ehdr, uint64_t start_loc)
++{
++	Elf_Shdr *shdr_start;
++	Elf_Rela *rel;
++	unsigned int shnum;
++	int shentsize;
++
++	shdr_start = (Elf_Shdr *)((char *)ehdr + ehdr_shoff(ehdr));
++	shentsize = ehdr_shentsize(ehdr);
++
++	shnum = ehdr_shnum(ehdr);
++	if (shnum == SHN_UNDEF)
++		shnum = shdr_size(shdr_start);
  
- 	ptr = vals;
+-	ptr = vals;
  	for (int i = 0; i < shnum; i++) {
+ 		Elf_Shdr *shdr = get_index(shdr_start, shentsize, i);
+ 		void *end;
+@@ -689,8 +688,32 @@ static void *sort_relocs(Elf_Ehdr *ehdr,
+ 			}
+ 		}
+ 	}
+-	free(vals);
+-	return NULL;
++}
++
++static int fill_addrs(void *ptr, uint64_t size, void *addrs)
++{
++	void *end = ptr + size;
++	int count = 0;
++
++	for (; ptr < end; ptr += long_size, addrs += long_size, count++) {
++		if (long_size == 4)
++			*(uint32_t *)ptr = r(addrs);
++		else
++			*(uint64_t *)ptr = r8(addrs);
++	}
++	return count;
++}
++
++static void replace_addrs(void *ptr, uint64_t size, void *addrs)
++{
++	void *end = ptr + size;
++
++	for (; ptr < end; ptr += long_size, addrs += long_size) {
++		if (long_size == 4)
++			w(*(uint32_t *)ptr, addrs);
++		else
++			w8(*(uint64_t *)ptr, addrs);
++	}
+ }
+ 
+ /* Sort the addresses stored between __start_mcount_loc to __stop_mcount_loc in vmlinux */
+@@ -699,14 +722,49 @@ static void *sort_mcount_loc(void *arg)
+ 	struct elf_mcount_loc *emloc = (struct elf_mcount_loc *)arg;
+ 	uint64_t offset = emloc->start_mcount_loc - shdr_addr(emloc->init_data_sec)
+ 					+ shdr_offset(emloc->init_data_sec);
+-	uint64_t count = emloc->stop_mcount_loc - emloc->start_mcount_loc;
++	uint64_t size = emloc->stop_mcount_loc - emloc->start_mcount_loc;
+ 	unsigned char *start_loc = (void *)emloc->ehdr + offset;
++	Elf_Ehdr *ehdr = emloc->ehdr;
++	void *e_msg = NULL;
++	void *vals;
++	int count;
++
++	vals = malloc(long_size * size);
++	if (!vals) {
++		snprintf(m_err, ERRSTR_MAXSZ, "Failed to allocate sort array");
++		pthread_exit(m_err);
++	}
+ 
+ 	if (sort_reloc)
+-		return sort_relocs(emloc->ehdr, emloc->start_mcount_loc, count);
++		count = fill_relocs(vals, size, ehdr, emloc->start_mcount_loc);
++	else
++		count = fill_addrs(vals, size, start_loc);
++
++	if (count < 0) {
++		e_msg = m_err;
++		goto out;
++	}
++
++	if (count != size / long_size) {
++		snprintf(m_err, ERRSTR_MAXSZ, "Expected %u mcount elements but found %u\n",
++			(int)(size / long_size), count);
++		e_msg = m_err;
++		goto out;
++	}
++
++	compare_values = long_size == 4 ? compare_values_32 : compare_values_64;
++
++	qsort(vals, count, long_size, compare_values);
++
++	if (sort_reloc)
++		replace_relocs(vals, size, ehdr, emloc->start_mcount_loc);
++	else
++		replace_addrs(vals, size, start_loc);
++
++out:
++	free(vals);
+ 
+-	qsort(start_loc, count/long_size, long_size, compare_extable);
+-	return NULL;
++	pthread_exit(e_msg);
+ }
+ 
+ /* Get the address of __start_mcount_loc and __stop_mcount_loc in System.map */
 
 
