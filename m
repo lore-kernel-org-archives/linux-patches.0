@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A467F3B52F8;
-	Thu,  2 Jul 2026 16:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3304A3A6EEE;
+	Thu,  2 Jul 2026 16:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009608; cv=none; b=ZhRajL+b11kvnLyCLNxz8cxG71HISlpxW42J5KNywAKISLzpPRWYuHwKadd+YjfydQoae1t9s+pnybzWssbKlNzmXoLUifx1250fr7jN1XnExVMdiSSYitob3vKsf8pcvwvNA8wop72BjoDiiKPBo2H1ENibiMYnwgUCPlBtbXo=
+	t=1783009610; cv=none; b=BhWSRW2lXy8m+4tjL3ty5RSJ/UWqMbSLY2kc0v7ZCKuut2ma6Ks722BUpB3dLNBoGnbNkHnIHTT135FQb4N1roNpmXo1ImhF0bvHJIfy74vhVIzWSkFHEdU1/nAFK/p93yN+lysTz4LG37BeRSX6GvvK6818ez3IgqqNHPF2mkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009608; c=relaxed/simple;
-	bh=nRMGNUwwaPFWcW6A4JHy2/4dK25XuiobJ/muvq5IahY=;
+	s=arc-20240116; t=1783009610; c=relaxed/simple;
+	bh=Nc7zzFM/TEIN6cawa4zGg/DfDNp9Qd05J1YrpI397nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omB7nDNAZsnNI4XUZHfP7we0WeluFPKfm073WH8d5hPR24g/NBVt7cneKnV7FUqrVIOc9QzpktBUWjVm5Pqgvy9d4PTeOS7ybbIyJITGwylnkwcV88Pems7IfJoccEwwNu+rt6arQaGzT2GYdKecOS5doywf1m5zvHb/0Y3I+Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUSjIKLg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AVhY/kHUJ7ExeR2DM8art1irdF3qzWiFl2K5vwdSh0HL6en63ywJDFBHpM8wo9c68y513MLhotFxO3HdGk2FhLQiCGjzdTE7LEvmX2EwpXvmcRkBnH7uMp2B0dJfq0lfUy3wMkZW3a74czngc7QDdc+K4eTyEsXKL0fk8/z4F5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZsUgdKc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUSjIKLg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2391F000E9;
-	Thu,  2 Jul 2026 16:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZsUgdKc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C57B1F00A3A;
+	Thu,  2 Jul 2026 16:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009605;
-	bh=JgggEdr8fEq92U8kOP4YC5xIYZ5tjgUPizHQzXLuicQ=;
+	s=korg; t=1783009607;
+	bh=WQ0SYUqBFndWanls7ZOwx000LXERYyDz9FwW6XnQON4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dUSjIKLgScxNFaDwMDtc+kD0iC89gxhlEONRbU5DJvIhlPPb9PzUDsBiQ0v9NKL+8
-	 XbC06NwKiaGuM2jiUqX7tbYDGK5sQIXC0mVHVxPAamoj9NorEhqVXWhi6+dOrvDHUd
-	 H82YGWLi8wfulnrPMSCQ5BR8VGdkbBUc/Al6kUNE=
+	b=SZsUgdKcWheFmE5ep4J+MJ22hItG5AMmZ21aJ8Ne0qMvhAXiKEIBIpAmM1Bv8s4BJ
+	 1sLSRFZ0f4fnmkYAdv+PIeIe12hGJN4JqIkF3JKQSqhXkuYcRYNoNIMBPlLHqq7QZb
+	 kNCoPsvcVGIgsl7Qta06EbeQEmn9/k8Yzm9lQW+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jiexun Wang <wangjiexun2025@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 19/95] af_unix: Reject SIOCATMARK on non-stream sockets
-Date: Thu,  2 Jul 2026 18:19:22 +0200
-Message-ID: <20260702155109.611856908@linuxfoundation.org>
+Subject: [PATCH 5.15 02/95] net/sched: act_pedit: check static offsets a priori
+Date: Thu,  2 Jul 2026 18:19:05 +0200
+Message-ID: <20260702155109.253649271@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -59,52 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiexun Wang <wangjiexun2025@gmail.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit d119775f2bad827edc28071c061fdd4a91f889a5 upstream.
+[ Upstream commit e1201bc781c28766720e78a5e099ffa568be4d74 ]
 
-SIOCATMARK reports whether the receive queue is at the urgent mark for
-MSG_OOB.
+Static key offsets should always be on 32 bit boundaries. Validate them on
+create/update time for static offsets and move the datapath validation
+for runtime offsets only.
 
-In AF_UNIX, MSG_OOB is supported only for SOCK_STREAM sockets.
-SOCK_DGRAM and SOCK_SEQPACKET reject MSG_OOB in sendmsg() and recvmsg(),
-so they should not support SIOCATMARK either.
+iproute2 already errors out if a given offset and data size cannot be
+packed to a 32 bit boundary. This change will make sure users which
+create/update pedit instances directly via netlink also error out,
+instead of finding out when packets are traversing.
 
-Return -EOPNOTSUPP for non-stream sockets before checking the receive
-queue.
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260506140825.2987635-1-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+(cherry picked from commit e1201bc781c28766720e78a5e099ffa568be4d74)
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/act_pedit.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 1676bffe7259dc..8e9a8499db5e66 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -3040,6 +3040,9 @@ static int unix_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 			struct sk_buff *skb;
- 			int answ = 0;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index d800e0285d5c25..999ac09e33d5dc 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -250,8 +250,16 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 	memcpy(nparms->tcfp_keys, parm->keys, ksize);
  
-+			if (sk->sk_type != SOCK_STREAM)
-+				return -EOPNOTSUPP;
+ 	for (i = 0; i < nparms->tcfp_nkeys; ++i) {
++		u32 offmask = nparms->tcfp_keys[i].offmask;
+ 		u32 cur = nparms->tcfp_keys[i].off;
+ 
++		/* The AT option can be added to static offsets in the datapath */
++		if (!offmask && cur % 4) {
++			NL_SET_ERR_MSG_MOD(extack, "Offsets must be on 32bit boundaries");
++			ret = -EINVAL;
++			goto put_chain;
++		}
 +
- 			skb = skb_peek(&sk->sk_receive_queue);
- 			if (skb && skb == READ_ONCE(unix_sk(sk)->oob_skb))
- 				answ = 1;
+ 		/* sanitize the shift value for any later use */
+ 		nparms->tcfp_keys[i].shift = min_t(size_t,
+ 						   BITS_PER_TYPE(int) - 1,
+@@ -260,7 +268,7 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 		/* The AT option can read a single byte, we can bound the actual
+ 		 * value with uchar max.
+ 		 */
+-		cur += (0xff & nparms->tcfp_keys[i].offmask) >> nparms->tcfp_keys[i].shift;
++		cur += (0xff & offmask) >> nparms->tcfp_keys[i].shift;
+ 
+ 		/* Each key touches 4 bytes starting from the computed offset */
+ 		nparms->tcfp_off_max_hint =
+@@ -429,12 +437,12 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 					       sizeof(_d), &_d);
+ 			if (!d)
+ 				goto bad;
+-			offset += (*d & tkey->offmask) >> tkey->shift;
+-		}
+ 
+-		if (offset % 4) {
+-			pr_info("tc action pedit offset must be on 32 bit boundaries\n");
+-			goto bad;
++			offset += (*d & tkey->offmask) >> tkey->shift;
++			if (offset % 4) {
++				pr_info("tc action pedit offset must be on 32 bit boundaries\n");
++				goto bad;
++			}
+ 		}
+ 
+ 		if (!offset_valid(skb, hoffset + offset)) {
 -- 
 2.53.0
 
