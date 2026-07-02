@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B1022D7B9;
-	Thu,  2 Jul 2026 16:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9C922D7B9;
+	Thu,  2 Jul 2026 16:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011516; cv=none; b=B7fGizK2tdxS0HlW8hYs8+XPXWfqfzUV42i8JCdnSqJVkYac8CsFnTxA6ceHL88LXTA4PxpO8UpmyumD81AE+UQNLxk6usnTKvDda+wDs+3qmGeQPSqNPv3bjUL8CGLBKOttgIXW/GJtYRhug3GoLeBSD+Q/tnm74igfrNxOK/M=
+	t=1783011518; cv=none; b=V8MN87qqg6dFGAmSbw2xTvh+ekJ/3iWnFB1eBMRAnjTuBZ/Y909GXhfIyvSpflHSANBjZqEQ0QPVTMagnjSUOl1C0cgmQZCr8uWEz3ZgB+jpW/d44I6PZzAl7eQsS+KTyAbkBT1w+VNoAyC4CZX+hNPXpQomakixpZvXlndf8TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011516; c=relaxed/simple;
-	bh=95rGgU6j8Q0rKb8/bZNulRmQN0TQi2wXNp8DM5TLJiI=;
+	s=arc-20240116; t=1783011518; c=relaxed/simple;
+	bh=niIuzV3HU2oZJxiEVh5mt410yICNuBtUS45bDOX/GaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pa0o0EPl9VECyE03oDRosdiWKpl2tudTlGoBI5NjDdPXRSGBqo70DHrsULouw8cuaV1S3r93ti+B54WzWeLU6LwpYslQh8alXsB1DiD7UBvtLp2qrEJx0YBTTedp7LoW1NErmY5RUaL3e/POXqblvSx861Qf+3FHSNfk/DAbPK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6WP6Ncv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YXujdryVAnep0nKnJFtotIrhezfBzcro+0pGEnM5gEMhEb5CjGbBAPcXDU64gpYC0yJ35VM1hUYp88JqRQnICpPuVUmrekCzzqLOPRPMCAPZY6gBtJ1YZZ283Anjt2zTygXhH/tEaIj21K9RRSjU/Z5UiIKvZQ5g4EhZYR66iBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsDn4COf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6WP6Ncv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE021F00A3A;
-	Thu,  2 Jul 2026 16:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsDn4COf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BBE1F00A3A;
+	Thu,  2 Jul 2026 16:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011514;
-	bh=07gc/V5HsZj7l6HWdqoj7EIRl4KxpBYvsmMV/vIl1DQ=;
+	s=korg; t=1783011517;
+	bh=JHsT+mG9FCSkfEGw3kqYdBybbEU/xZhJydH8MNOY1Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F6WP6Ncvt2ocDcB+ZPOonHU4pjbvDOe2ZL97qT4FBaAaByoxpMhAuLoMPmrNWBry8
-	 4wxZkE347Xf0a2UKhqKk/f5UhaV0TaoTu22WmbTXHIVVevJ9mX+SJqoq/CIWG08sa9
-	 F9jJCAWreLkrc6+tlTPBOy4BzLjN5ROTkrScsHIQ=
+	b=QsDn4COfMDzwlJr3HxqMWHaCeIduLywA/9Tf5UeDQYHZ0yGOo0y0nnld0BEGFJMCI
+	 N5B4q70/hPOr+GszS21FrepEVUdpVEOzsqQklSSRB8OKpqqzvtsvaKNMaoVG9aFfJ3
+	 1Qpst20spDnfvEe4k2WeXQXR0/wPTrOo4io66B9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jungwoo Lee <jwlee2217@gmail.com>,
-	Wongi Lee <qw3rtyp0@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 029/120] ipv4: account for fraggap on the paged allocation path
-Date: Thu,  2 Jul 2026 18:20:25 +0200
-Message-ID: <20260702155113.566052707@linuxfoundation.org>
+Subject: [PATCH 7.1 003/120] batman-adv: tp_meter: initialize dup_acks explicitly
+Date: Thu,  2 Jul 2026 18:19:59 +0200
+Message-ID: <20260702155113.036387580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -53,65 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wongi Lee <qw3rtyp0@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit eca856950f7cb1a221e02b99d758409f2c5cec42 ]
+commit b2b68b32a715e0328662801576974aa37b942b00 upstream.
 
-In __ip_append_data(), when the paged-allocation branch is taken,
-alloclen and pagedlen are computed as
+When an ack with a sequence number equal to the last_acked is received, the
+dup_acks counter is increased to decide whether fast retransmit should be
+performed. Only when the sequence numbers are not equal, the dup_acks is
+set to the initial value (0).
 
-	alloclen = fragheaderlen + transhdrlen;
-	pagedlen = datalen - transhdrlen;
+But if the initial packet would have the sequence number
+BATADV_TP_FIRST_SEQ, dup_acks would not be initialized and atomic_inc would
+operate on an undefined starting value. It is therefore required to have it
+explicitly initialized during the start of the sender session.
 
-datalen already includes fraggap, but the fraggap bytes carried over
-from the previous skb are copied into the new skb's linear area at
-offset transhdrlen by the subsequent skb_copy_and_csum_bits(). The
-linear area is therefore undersized by fraggap bytes while pagedlen is
-overstated by the same amount.
-
-The non-paged branch sets alloclen to fraglen, which already accounts
-for fraggap because datalen does. Bring the paged branch in line by
-adding fraggap to alloclen and subtracting it from pagedlen.
-
-After this adjustment, copy no longer collapses to -fraggap on the
-paged path, so remove the stale comment describing that old arithmetic.
-
-Fixes: 8eb77cc73977 ("ipv4: avoid partial copy for zc")
-Signed-off-by: Jungwoo Lee <jwlee2217@gmail.com>
-Signed-off-by: Wongi Lee <qw3rtyp0@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/ajFR1eLAIs42TN3g@DESKTOP-19IMU7U.localdomain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_output.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/batman-adv/tp_meter.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 5bcd73cbdb41c0..ec790bad1679a6 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -1117,8 +1117,8 @@ static int __ip_append_data(struct sock *sk,
- 				  !(rt->dst.dev->features & NETIF_F_SG)))
- 				alloclen = fraglen;
- 			else {
--				alloclen = fragheaderlen + transhdrlen;
--				pagedlen = datalen - transhdrlen;
-+				alloclen = fragheaderlen + transhdrlen + fraggap;
-+				pagedlen = datalen - transhdrlen - fraggap;
- 			}
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index e8941f753a9697..0325b951ff8a8e 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1045,6 +1045,7 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
+ 	tp_vars->icmp_uid = icmp_uid;
  
- 			alloclen += alloc_extra;
-@@ -1165,9 +1165,6 @@ static int __ip_append_data(struct sock *sk,
- 			}
- 
- 			copy = datalen - transhdrlen - fraggap - pagedlen;
--			/* [!] NOTE: copy will be negative if pagedlen>0
--			 * because then the equation reduces to -fraggap.
--			 */
- 			if (copy > 0 &&
- 			    INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
- 					    from, data + transhdrlen, offset,
+ 	tp_vars->last_sent = BATADV_TP_FIRST_SEQ;
++	atomic_set(&tp_vars->dup_acks, 0);
+ 	atomic_set(&tp_vars->last_acked, BATADV_TP_FIRST_SEQ);
+ 	tp_vars->fast_recovery = false;
+ 	tp_vars->recover = BATADV_TP_FIRST_SEQ;
 -- 
 2.53.0
 
