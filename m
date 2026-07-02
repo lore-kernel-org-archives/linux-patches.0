@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6B8318ED2;
-	Thu,  2 Jul 2026 16:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F1A32ED40;
+	Thu,  2 Jul 2026 16:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011421; cv=none; b=t92yzC12plQVzoKnEdL+nPT/EAyOEZtOYK7ks5D/I4hoF/YoT8qPcXOt0Dv6il+97i/34zaZmTtQucTfvVnsEUdh4q62XgT5QmBScVJzUCQ6YLf7+VzJxEEKsuV02BN0aeb8YRTgInBWfm4bBTOzirKNbA1QFQfC2JNtStRcLeE=
+	t=1783011423; cv=none; b=L/Co7pbD2ofl8kaaSqdiKfKAo9+qbZyQYSvOniHiwV4ItrAAmBGfXnOIh1/XBV4fbwWkrxDND0cBwV8vUEWRrqKWQZN6WDVBZE1nAU+EnZc+KmzOEzE3HhjCNpUGFDfF202duHPZe8fJiv2HfQICGycu4PvT12jG0QYRaxSkE6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011421; c=relaxed/simple;
-	bh=V6w7LLlLoSGjL/vOwvVyjlTtSc9LwG2eW2tWrnJChIk=;
+	s=arc-20240116; t=1783011423; c=relaxed/simple;
+	bh=F7bmi8s5S10fJy1Si/YJbZO1b10wNb+DP6lkCI50e38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qlLTbXdmOHTB8bcNE0s9mpcpXhlt4awkv2j2Lpj27zDU0MZqadGK/FfEHU5/lnse65y2vjZPH+D8VdRdQD1wTd94jN+E+rYfgUvdr273vmZTMo2msyyBDfbUEM5LggZId/S2l0fG+EnU/QqiFnfZOM3LAGzL0qTUn/zVi4i671U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y88TWfrv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MaIFwRmoTMadazJLorLvwTxpMq/PrKVl7NcjcaJ1/hdfAluJ55m3UkD5R+2I1HP7qbUa1IH8ZgPG35qpSI7jMgUKamOvSpji5/F8ZXa4lmUfoi2Xr9b6alC4jIyGQDI8h4IZbxXbWa6m132yUQMUNVsFT9fBY8OkP/AW5FxHUDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALqbJ/FH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y88TWfrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFF51F00A3A;
-	Thu,  2 Jul 2026 16:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALqbJ/FH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E711F000E9;
+	Thu,  2 Jul 2026 16:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011420;
-	bh=MuPRszwcqrkL0QZtTld+Qq8QKQCNOGzdKg9dTmW41P8=;
+	s=korg; t=1783011422;
+	bh=SmQBJmb7OnwV23tarZaJNCwLawjvwKWFq9YTqLrAhm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y88TWfrvRaFjhN9hORLeg0xIa2e6inuw9klweIkCZ7N2z5NGXet9uJGZEy8ZyvIJ2
-	 cVxjMMD5u27zNsy11fYf+L3wv9pvFxHX9kg9YuXnHbh82QyMooYjkPkP0U1L9HYJHs
-	 oAS8qLKRj3lfFge9wa2rffTb/cy5Wq/SOlfqrJTs=
+	b=ALqbJ/FHvUzKEECpU5L1j4K22Cwv0aMDsj6doMov8ld3/SuCxSIUDTBmJkiGJOKlI
+	 HtgYUHdEQVz+qwadxnZGciqUPwseoiYSqKaIuM1HzmmZ4clKfbsXsC3gFwow8ELXj9
+	 UDbs1u9hnO0Lh+NxojILcDQiEvnAw8WICNyMR2Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guannan Wang <wgnbuaa@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 095/108] NFSD: Fix SECINFO_NO_NAME decode error cleanup
-Date: Thu,  2 Jul 2026 18:21:32 +0200
-Message-ID: <20260702155114.080501861@linuxfoundation.org>
+	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.18 104/108] NFS: Prevent resource leak in nfs_alloc_server()
+Date: Thu,  2 Jul 2026 18:21:41 +0200
+Message-ID: <20260702155114.268337226@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -50,48 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guannan Wang <wgnbuaa@gmail.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-commit 9e18e83b8846a5c3fe13fc8a464b4865d33996c6 upstream.
+commit d189f224308c8ac3feeea8e442c99922bd18f1b2 upstream.
 
-nfsd4_decode_secinfo_no_name() currently initializes sin_exp after
-decoding sin_style. If the XDR stream is truncated, the decoder returns
-nfserr_bad_xdr before sin_exp is initialized.
+It was overlooked to call ida_free() after a failed nfs_alloc_iostats() call.
+Thus add the missed function call in an if branch.
 
-Since commit 3fdc54646234 ("NFSD: Reduce amount of struct
-nfsd4_compoundargs that needs clearing"), the inline iops array is not
-cleared between RPC calls. A failed SECINFO_NO_NAME decode can therefore
-leave sin_exp holding stale union contents from a previous operation.
-
-The error response path still invokes nfsd4_secinfo_no_name_release(),
-which calls exp_put() on a non-NULL sin_exp.
-
-Initialize sin_exp before the first failable decode step, matching
-nfsd4_decode_secinfo().
-
-Fixes: 3fdc54646234 ("NFSD: Reduce amount of struct nfsd4_compoundargs that needs clearing")
+Fixes: 1c7251187dc067a6d460cf33ca67da9c1dd87807 ("NFS: add superblock sysfs entries")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guannan Wang <wgnbuaa@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reported-by: Christophe Jaillet <christophe.jaillet@wanadoo.fr>
+Closes: https://lore.kernel.org/linux-nfs/1c8e10c9-def7-4f0d-8aa1-23c8035a38c8@wanadoo.fr/
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfs/client.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -1871,10 +1871,11 @@ static __be32 nfsd4_decode_secinfo_no_na
- 					   union nfsd4_op_u *u)
- {
- 	struct nfsd4_secinfo_no_name *sin = &u->secinfo_no_name;
-+
-+	sin->sin_exp = NULL;
- 	if (xdr_stream_decode_u32(argp->xdr, &sin->sin_style) < 0)
- 		return nfserr_bad_xdr;
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -1070,6 +1070,7 @@ struct nfs_server *nfs_alloc_server(void
  
--	sin->sin_exp = NULL;
- 	return nfs_ok;
- }
- 
+ 	server->io_stats = nfs_alloc_iostats();
+ 	if (!server->io_stats) {
++		ida_free(&s_sysfs_ids, server->s_sysfs_id);
+ 		kfree(server);
+ 		return NULL;
+ 	}
 
 
