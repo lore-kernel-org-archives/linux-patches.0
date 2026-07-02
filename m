@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B764E1A682A;
-	Thu,  2 Jul 2026 16:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0C61A682A;
+	Thu,  2 Jul 2026 16:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010313; cv=none; b=fpNRjU6O3S4eHBU0dhjS9KKk0w3zOqyI0GIwZpHZxJDnBs/LJAsLlCFufSTcGmmbm9aAQl0RO5JZSxEq4rGuswjal7Pw4rQJ6NAdwcTZc0cUi/L/ne8SMsyLF9/4DMZHTtlWrG1bWvABCvK2kGfUZBjlA7jTcPHd7eaqBotUvms=
+	t=1783010315; cv=none; b=IJAnJrjjnrmG+bHGCNm/KmjAYr0ih+iIHjvpx7/DoDMYOiu6hB8pNo3cgZkw7UheNkmxcXHsRalSoN7l4MzeCPl3YQkYQ9L6mdKGk/bJHiVAWYvUgcQf5UQayxyLVJubKKMPTCHe36X0CxE/ALhSs4dINU6bsY3jL2yAqxDRorY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010313; c=relaxed/simple;
-	bh=+nMBBF3+qEdwF80EZohmSZfLtmLu14sFa2XQJuSJG1A=;
+	s=arc-20240116; t=1783010315; c=relaxed/simple;
+	bh=fxpxGda1BT9kGUlDqeYqv3kwoRJAPRhyW0oyMSepis0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gV/cgLPU2tlCxE6HzOVEzTZcQU/CB5+RJWKkZ4Aqm1v9RgWMlYJwZYSFqCsrNiBklPRfOtgBXKe92UCC3DbAmhab3fvzR0AXJ0tUXCY5SG5fEAbyX4iOQw5vNRVC+IVz5VNO4AgpxT1/Rk3xzfxNsTiHoWjthwjLWjFtGfofQt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqzEqc6F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mCP3CGKsWY0zUItv3jXlLshGMWwwiX8GMjloxyY4ZUBAXshlZRXIHGF9i6GZQzmzzM7Q+YbcF5me9vMHl+x5/4oW9gHCOgGKr7L9nT6bLYKlDIUbuNkIUxbgivNrW37lQ0/M2+1ciPWcJKzFHEkyXkVVRVNi9h3jqb4NBb4mC/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUUB/VZc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqzEqc6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B8F1F000E9;
-	Thu,  2 Jul 2026 16:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUUB/VZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCEB1F000E9;
+	Thu,  2 Jul 2026 16:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010311;
-	bh=78H5iUnNE9ff1mf9ryBaRmb7wepuCECrnEq6bdnbgLc=;
+	s=korg; t=1783010314;
+	bh=RRmTDIlxSxYk9jhs2BsgSGsT0BsQe2ufO3+9IYUun70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TqzEqc6FdAnu687RW44P208XCG5VEREa0RdPcLUveLfh7sa6rMzHP20PkYrawYzBe
-	 PZmC8oFU5N3zOAEHVcXhJTX8/Z6aBUyZYDuIznuTpvsNoeGor8+D+91Z4MyWHieCM4
-	 aPUFUBHGAGdXjefcdTrF+QIRhyF5heeKtMKvgLEU=
+	b=cUUB/VZc5jOa4DFsdNP/G6iTYwlYfLScGK0bQmZQxNtCLut+NUTFvbufwUxFur5an
+	 ocXAp8fg9JMJ0L+YklFugK2ExxrEzRC3HtyfW1DvhmMAth0FUEAIkSdfvOs7Xhkt/T
+	 8vo1X4WRJsAEF0vbNSSvsF51z2t6xYb2onpHVWNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -43,9 +43,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josh Poimboeuf <jpoimboe@redhat.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.12 059/204] scripts/sorttable: Remove unneeded Elf_Rel
-Date: Thu,  2 Jul 2026 18:18:36 +0200
-Message-ID: <20260702155119.900155393@linuxfoundation.org>
+Subject: [PATCH 6.12 060/204] scripts/sorttable: Have the ORC code use the _r() functions to read
+Date: Thu,  2 Jul 2026 18:18:37 +0200
+Message-ID: <20260702155119.920632860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -66,10 +66,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 6f2c2f93a190467cebd6ebd03feb49514fead5ca ]
+[ Upstream commit 66990c003306c240d570b3ba274ec4f68cf18c91 ]
 
-The code had references to initialize the Elf_Rel relocation tables, but
-it was never used. Remove it.
+The ORC code reads the section information directly from the file. This
+currently works because the default read function is for 64bit little
+endian machines. But if for some reason that ever changes, this will
+break. Instead of having a surprise breakage, use the _r() functions that
+will read the values from the file properly.
 
 Cc: bpf <bpf@vger.kernel.org>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
@@ -85,91 +88,34 @@ Cc: Zheng Yejian <zhengyejian1@huawei.com>
 Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
 Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
 Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/20250105162344.515342233@goodmis.org
+Link: https://lore.kernel.org/20250105162344.721480386@goodmis.org
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/sorttable.h |   23 ++---------------------
- 1 file changed, 2 insertions(+), 21 deletions(-)
+ scripts/sorttable.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/scripts/sorttable.h
 +++ b/scripts/sorttable.h
-@@ -26,7 +26,6 @@
- #undef Elf_Addr
- #undef Elf_Ehdr
- #undef Elf_Shdr
--#undef Elf_Rel
- #undef Elf_Sym
- #undef ELF_ST_TYPE
- #undef uint_t
-@@ -42,7 +41,6 @@
- # define Elf_Addr		Elf64_Addr
- # define Elf_Ehdr		Elf64_Ehdr
- # define Elf_Shdr		Elf64_Shdr
--# define Elf_Rel		Elf64_Rel
- # define Elf_Sym		Elf64_Sym
- # define ELF_ST_TYPE		ELF64_ST_TYPE
- # define uint_t			uint64_t
-@@ -57,7 +55,6 @@
- # define Elf_Addr		Elf32_Addr
- # define Elf_Ehdr		Elf32_Ehdr
- # define Elf_Shdr		Elf32_Shdr
--# define Elf_Rel		Elf32_Rel
- # define Elf_Sym		Elf32_Sym
- # define ELF_ST_TYPE		ELF32_ST_TYPE
- # define uint_t			uint32_t
-@@ -248,14 +245,10 @@ static int do_sort(Elf_Ehdr *ehdr,
- 	Elf32_Word *symtab_shndx = NULL;
- 	Elf_Sym *sort_needed_sym = NULL;
- 	Elf_Shdr *sort_needed_sec;
--	Elf_Rel *relocs = NULL;
--	int relocs_size = 0;
- 	uint32_t *sort_needed_loc;
- 	const char *secstrings;
- 	const char *strtab;
- 	char *extab_image;
--	int extab_index = 0;
--	int i;
- 	int idx;
- 	unsigned int shnum;
- 	unsigned int shstrndx;
-@@ -279,23 +272,15 @@ static int do_sort(Elf_Ehdr *ehdr,
- 	if (shnum == SHN_UNDEF)
- 		shnum = _r(&shdr[0].sh_size);
- 
--	for (i = 0, s = shdr; s < shdr + shnum; i++, s++) {
-+	for (s = shdr; s < shdr + shnum; s++) {
- 		idx = r(&s->sh_name);
--		if (!strcmp(secstrings + idx, "__ex_table")) {
-+		if (!strcmp(secstrings + idx, "__ex_table"))
- 			extab_sec = s;
--			extab_index = i;
--		}
- 		if (!strcmp(secstrings + idx, ".symtab"))
- 			symtab_sec = s;
- 		if (!strcmp(secstrings + idx, ".strtab"))
- 			strtab_sec = s;
- 
--		if ((r(&s->sh_type) == SHT_REL ||
--		     r(&s->sh_type) == SHT_RELA) &&
--		    r(&s->sh_info) == extab_index) {
--			relocs = (void *)ehdr + _r(&s->sh_offset);
--			relocs_size = _r(&s->sh_size);
--		}
- 		if (r(&s->sh_type) == SHT_SYMTAB_SHNDX)
- 			symtab_shndx = (Elf32_Word *)((const char *)ehdr +
- 						      _r(&s->sh_offset));
-@@ -397,10 +382,6 @@ static int do_sort(Elf_Ehdr *ehdr,
- 		      extable_ent_size, compare_extable);
- 	}
- 
--	/* If there were relocations, we no longer need them. */
--	if (relocs)
--		memset(relocs, 0, relocs_size);
--
- 	/* find the flag main_extable_sort_needed */
- 	for (sym = (void *)ehdr + _r(&symtab_sec->sh_offset);
- 	     sym < sym + _r(&symtab_sec->sh_size) / sizeof(Elf_Sym);
+@@ -299,14 +299,14 @@ static int do_sort(Elf_Ehdr *ehdr,
+ #if defined(SORTTABLE_64) && defined(UNWINDER_ORC_ENABLED)
+ 		/* locate the ORC unwind tables */
+ 		if (!strcmp(secstrings + idx, ".orc_unwind_ip")) {
+-			orc_ip_size = s->sh_size;
++			orc_ip_size = _r(&s->sh_size);
+ 			g_orc_ip_table = (int *)((void *)ehdr +
+-						   s->sh_offset);
++						   _r(&s->sh_offset));
+ 		}
+ 		if (!strcmp(secstrings + idx, ".orc_unwind")) {
+-			orc_size = s->sh_size;
++			orc_size = _r(&s->sh_size);
+ 			g_orc_table = (struct orc_entry *)((void *)ehdr +
+-							     s->sh_offset);
++							     _r(&s->sh_offset));
+ 		}
+ #endif
+ 	} /* for loop */
 
 
