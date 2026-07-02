@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26631FA859;
-	Thu,  2 Jul 2026 17:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C67C33B951;
+	Thu,  2 Jul 2026 17:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011699; cv=none; b=AjMvfnBVGV7+I1S54MjYOF0Q4QtB6dqKhsMraeJSELExaJLJVaDtb7fIgWKsDvAK1Ltr3Me6aMR9FmKNfsY5aCxa4wawJ7tOVp4HalffvSIVZlkEGebf5Lw41+DlZMPiX7DabZgK7AVjBXlVcH7JNGzRtt5LwOOmGbLccPtLVsk=
+	t=1783011702; cv=none; b=OLjezIR27/MSF9J0v+dAAoze4upSFbuKLXWxaA1GHDIWzq5uqw9nUvjoaxPRfMIQJduQvIzzOeHCh5RB8ejntTCHvgavBudsXS6z6Qod4c0Yabm6jo8QEYZLVsxrzL4PWjsKqxqEo+iGNS5x7xZncVRacfDvy7iujt/yfZrILiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011699; c=relaxed/simple;
-	bh=Pu1W8SNlgj3ap6NCzg0bcnJkxuBybmSdbi+FQct7gIs=;
+	s=arc-20240116; t=1783011702; c=relaxed/simple;
+	bh=GJKsW0ZTuWBFDYeZMoJtORXfzaxoDOcaGESxRErEw7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqIgYGdKKrIPG3cwXT5xz3kRmGktqEchgSDkLBBF39UyBfFEuOWXA68w2Q0xbNzHW/t4vHMHYnCaAtbFY7et4aSZk8yQYgchIms2LL3agyUSlsPska6Gs5YLl2XFuwL/f9M5GumZn++v5SMrUa0Q3mqa7V+ImEKlNRdMkoMeCNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/j8FyLs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TCjyoDvG8yzyormYG4bkaL3Ge022PHhttqEtdo7qTChHgev3NmXHTlyRJECYfadCH47wpQy+7Bp5L/94s3K2z9RiX5V+tQ8Csgy9r/7PExQiczlENl5HbdjhOnj3zG4N4Tl1sP22K73kTscpx3TLPYZUTfOg02hdENMqtEDEMuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG+7Ab5c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/j8FyLs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE881F00A3A;
-	Thu,  2 Jul 2026 17:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG+7Ab5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B542A1F000E9;
+	Thu,  2 Jul 2026 17:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011698;
-	bh=T8F8D4TNonnPNdrf6PGAFfRNU/kP+oN9CS6rsPESsSY=;
+	s=korg; t=1783011701;
+	bh=6CMuobbF6oCSFsrHM2a3fZIpNMl/UGwgmkdmBSOjnBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t/j8FyLsk3hWZbRCPBHtEY+azCnCJ9to9klQvs5fr0lGbS/ALAhu8Yfj2/PcgznZm
-	 8SCuK2S7Syo1OjxrCMvV4XXxbH0XkQmS6C105zAcrDUhdjJk9cj3z+pOzLCqhe5S6w
-	 dSwallI1iIcs5jDNVhMgFwjrBf54wiS7CrmL0KE0=
+	b=QG+7Ab5cjs0Iz6uSi4Tw3KVpbWN/wU/aqHLAI9+yEOv9BdDcrNaWu4n5U8SW//edi
+	 cbkMucJSQFrnKn1IxFpbglStcY39XEjhGusDW9lAQ+VHJoDsSaVBBo9MrMSamKmhZY
+	 /bytsQGZKJv1xP2aKSEGcyZF4QdrbD+ed9lBU0no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Luka Gejak <luka.gejak@linux.dev>
-Subject: [PATCH 7.1 055/120] wifi: rtw88: usb: fix memory leaks on USB write failures
-Date: Thu,  2 Jul 2026 18:20:51 +0200
-Message-ID: <20260702155114.102458207@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Junjie Cao <junjie.cao@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 7.1 056/120] wifi: iwlwifi: mvm: fix race condition in PTP removal
+Date: Thu,  2 Jul 2026 18:20:52 +0200
+Message-ID: <20260702155114.122697547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -50,79 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luka Gejak <luka.gejak@linux.dev>
+From: Junjie Cao <junjie.cao@intel.com>
 
-commit 6b964941bbfe6e0f18b1a5e008486dbb62df440a upstream.
+commit 65150c9cc3e06ab54bc4e8134a47f6f5d095a4e3 upstream.
 
-When rtw_usb_write_port() fails to submit a USB Request Block (URB)
-(e.g., due to device disconnect or ENOMEM), the completion callback is
-never executed.
+iwl_mvm_ptp_remove() calls cancel_delayed_work_sync() only after
+ptp_clock_unregister() and clearing ptp_data state (ptp_clock,
+ptp_clock_info, last_gp2).
 
-Currently, the driver ignores the return value of rtw_usb_write_port()
-in rtw_usb_write_data() and rtw_usb_tx_agg_skb(). Because these
-functions rely on the completion callback to free the socket buffers
-(skbs) and the transaction control block (txcb), a submission failure
-results in:
-1. A memory leak of the allocated skb in rtw_usb_write_data().
-2. A memory leak of the txcb structure and all aggregated skbs in
-   rtw_usb_tx_agg_skb().
+This creates a race where the delayed work iwl_mvm_ptp_work() can
+execute between ptp_clock_unregister() and cancel_delayed_work_sync(),
+observing partially cleared PTP state.
 
-Fix this by checking the return value of rtw_usb_write_port(). If it
-fails, explicitly free the skb in rtw_usb_write_data(), and properly
-purge the tx_ack_queue and free the txcb in rtw_usb_tx_agg_skb().
+Move cancel_delayed_work_sync() before ptp_clock_unregister() to
+ensure the delayed work is fully stopped before any PTP cleanup
+begins.
 
-The issue was discovered in practice during device disconnect/reconnect
-scenarios and memory pressure conditions. Tested by verifying normal TX
-operation continues after the fix without regressions.
-
-Fixes: a82dfd33d123 ("wifi: rtw88: Add common USB chip support")
 Cc: stable@vger.kernel.org
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Tested-by: Luka Gejak <luka.gejak@linux.dev>
-Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260518142311.10328-2-luka.gejak@linux.dev
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Link: https://patch.msgid.link/20260212125035.1345718-1-junjie.cao@intel.com
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/ptp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -399,6 +399,7 @@ static bool rtw_usb_tx_agg_skb(struct rt
- 	int agg_num = 0;
- 	unsigned int align_next = 0;
- 	u8 qsel;
-+	int ret;
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
+@@ -325,11 +325,11 @@ void iwl_mvm_ptp_remove(struct iwl_mvm *
+ 			       mvm->ptp_data.ptp_clock_info.name,
+ 			       ptp_clock_index(mvm->ptp_data.ptp_clock));
  
- 	if (skb_queue_empty(list))
- 		return false;
-@@ -456,7 +457,13 @@ queue:
- 	tx_desc = (struct rtw_tx_desc *)skb_head->data;
- 	qsel = le32_get_bits(tx_desc->w1, RTW_TX_DESC_W1_QSEL);
- 
--	rtw_usb_write_port(rtwdev, qsel, skb_head, rtw_usb_write_port_tx_complete, txcb);
-+	ret = rtw_usb_write_port(rtwdev, qsel, skb_head,
-+				 rtw_usb_write_port_tx_complete, txcb);
-+	if (ret) {
-+		ieee80211_purge_tx_queue(rtwdev->hw, &txcb->tx_ack_queue);
-+		kfree(txcb);
-+		return false;
-+	}
- 
- 	return true;
- }
-@@ -518,8 +525,10 @@ static int rtw_usb_write_data(struct rtw
- 
- 	ret = rtw_usb_write_port(rtwdev, qsel, skb,
- 				 rtw_usb_write_port_complete, skb);
--	if (unlikely(ret))
-+	if (unlikely(ret)) {
- 		rtw_err(rtwdev, "failed to do USB write, ret=%d\n", ret);
-+		dev_kfree_skb_any(skb);
-+	}
- 
- 	return ret;
++		cancel_delayed_work_sync(&mvm->ptp_data.dwork);
+ 		ptp_clock_unregister(mvm->ptp_data.ptp_clock);
+ 		mvm->ptp_data.ptp_clock = NULL;
+ 		memset(&mvm->ptp_data.ptp_clock_info, 0,
+ 		       sizeof(mvm->ptp_data.ptp_clock_info));
+ 		mvm->ptp_data.last_gp2 = 0;
+-		cancel_delayed_work_sync(&mvm->ptp_data.dwork);
+ 	}
  }
 
 
