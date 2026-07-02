@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3C4318EC5;
-	Thu,  2 Jul 2026 16:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD26C355F5C;
+	Thu,  2 Jul 2026 16:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010731; cv=none; b=eCdGx0smSC6R18uxZcADwg0omSG+1mhD97yql17wKYCw3s6L381jR1Mle0M5B36IKo73/Eq1KB0X9mTMEIIU/hUOqogj1RD2TUB51/C7MEboEZiUSQP4J4WbUKcflLjeo6vdLuk4QJx5Q2Mc/Rk2R/CJE9KzLDujkT5idxZ7fd8=
+	t=1783010733; cv=none; b=pAaUS6jW+yVG3Dt5DETsL0kxf8OrD/SaAAtGRrYxIx+/mFtMPtF5U7qgwYTchliETVnQvyvjiR2ZvZ+YCxj3H24Cohnr+LVbQUPIUemVuW0cp7aE4Ty4gqK9Y+blM4bHU+iHOgziASNpvKg0VMkSgtJMOuYTkMzl4POfehgBtWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010731; c=relaxed/simple;
-	bh=U33/fuPiAXLgTt6nz8EPrNxl8pj+BWMIWEi3vAs78IE=;
+	s=arc-20240116; t=1783010733; c=relaxed/simple;
+	bh=zb2pzqKXHMD37ioD+YqtRfyQXn7P01W7g+Usj8i0jLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIPjw2fj6wIMT08QxrGQQzisqsQwmJzhNogyvzwmJlWcVF2N+C25Qt9fLw6SlUD4TdNLrmQ2/4UCTmRvTlEAWHwRdy3txLfq6++dLch6HJEbeUGbZOWXE0MvYWuabyns6xqePwSO7S/OuVy3N6g6XQyur68uDSksiU3d/LWyhTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cibFzXHv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jxgzbfm8srenZ0HeEd9w0dX1j/wYGd7Ie51/zlwekCiBYhQ5gW64/5oTcw6Xx6c1RoVH3KsnJRD1VOEs1yV/Ew3aryaroCXObXmMApdnWNksNMXcBlNw4NbQSkV7KnpZCLVavO2Vdllg4vhjlxXT6ufIPtcSHdjjTFToa+zD2d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIE5ORwj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cibFzXHv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B49C1F000E9;
-	Thu,  2 Jul 2026 16:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIE5ORwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8EFE1F000E9;
+	Thu,  2 Jul 2026 16:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010729;
-	bh=+VbE8f5GI5pY3rbFuaWqCMvHG8Ml2MDkc0W/zRMk8N0=;
+	s=korg; t=1783010732;
+	bh=8y034PSAzO/MVtqxAoq21PK2bJNIn65kt7XIorl6pMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cibFzXHvKavKOdDASjJdEpS60QHQDq0FNdOSRgWzmT/TGNfdBvCUltb0TTVFkCIpy
-	 5pOu0kTFBzsjeVTz4Z/ATdT7Q9v0+UJJIg4GCC4Yt1gzZick3d6T/ylgG8mRA24vom
-	 yuTgWwXdj/wRSNy5P5WY59TqYwvn9+Uv1GuWO8G0=
+	b=xIE5ORwjY3Or/qRFdglDMzNy4ypVIjs4j/M7zf51GaRcmdngLX8uxCHKT0pkD63kC
+	 nChOkyurraQlfTd/DXLQTllkkeoX/15IOSXUXGdazhpsRqVwIFgZitdTjMGU/uMAls
+	 FyRE8A770xrrJW595IQNxVcDFfWUNKKk6+bWsii4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Chao Gao <chao.gao@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Gulshan Gabel <gulshan.gabel@nutanix.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/175] KVM: VMX: Update SVI during runtime APICv activation
-Date: Thu,  2 Jul 2026 18:18:37 +0200
-Message-ID: <20260702155116.117377985@linuxfoundation.org>
+	Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.6 017/175] RDMA/bnxt_re: zero shared page before exposing to userspace
+Date: Thu,  2 Jul 2026 18:18:38 +0200
+Message-ID: <20260702155116.140268263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -53,149 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
 
-[ Upstream commit b2849bec936be642b5420801f902337f2507648e ]
+commit f6b079629becfa977f9c51fe53ad2e6dcc55ef44 upstream.
 
-The APICv (apic->apicv_active) can be activated or deactivated at runtime,
-for instance, because of APICv inhibit reasons. Intel VMX employs different
-mechanisms to virtualize LAPIC based on whether APICv is active.
+bnxt_re_alloc_ucontext() allocates uctx->shpg via
+__get_free_page(GFP_KERNEL). The buddy allocator does not zero pages
+without __GFP_ZERO, so the page contains stale kernel data from
+whatever object most recently freed it.
 
-When APICv is activated at runtime, GUEST_INTR_STATUS is used to configure
-and report the current pending IRR and ISR states. Unless a specific vector
-is explicitly included in EOI_EXIT_BITMAP, its EOI will not be trapped to
-KVM. Intel VMX automatically clears the corresponding ISR bit based on the
-GUEST_INTR_STATUS.SVI field.
+The page is then mapped into userspace via vm_insert_page() under
+BNXT_RE_MMAP_SH_PAGE in bnxt_re_mmap(). The driver only ever writes
+4 bytes (a u32 AVID) at offset BNXT_RE_AVID_OFFT (0x10) inside
+bnxt_re_create_ah(); the remaining 4092 bytes of the page are exposed
+to userspace unsanitised, leaking kernel memory contents.
 
-When APICv is deactivated at runtime, the VM_ENTRY_INTR_INFO_FIELD is used
-to specify the next interrupt vector to invoke upon VM-entry. The
-VMX IDT_VECTORING_INFO_FIELD is used to report un-invoked vectors on
-VM-exit. EOIs are always trapped to KVM, so the software can manually clear
-pending ISR bits.
+Any user with access to /dev/infiniband/uverbsX on a host with a
+bnxt_re device (typically rdma group membership) can read this data
+via a single mmap() at pgoff 0 after IB_USER_VERBS_CMD_GET_CONTEXT.
 
-There are scenarios where, with APICv activated at runtime, a guest-issued
-EOI may not be able to clear the pending ISR bit.
+Other shared pages in the same file already use get_zeroed_page()
+correctly:
 
-Taking vector 236 as an example, here is one scenario.
+  drivers/infiniband/hw/bnxt_re/ib_verbs.c
+      srq->uctx_srq_page = (void *)get_zeroed_page(GFP_KERNEL);
+      cq->uctx_cq_page  = (void *)get_zeroed_page(GFP_KERNEL);
 
-1. Suppose APICv is inactive. Vector 236 is pending in the IRR.
-2. To handle KVM_REQ_EVENT, KVM moves vector 236 from the IRR to the ISR,
-and configures the VM_ENTRY_INTR_INFO_FIELD via vmx_inject_irq().
-3. After VM-entry, vector 236 is invoked through the guest IDT. At this
-point, the data in VM_ENTRY_INTR_INFO_FIELD is no longer valid. The guest
-interrupt handler for vector 236 is invoked.
-4. Suppose a VM exit occurs very early in the guest interrupt handler,
-before the EOI is issued.
-5. Nothing is reported through the IDT_VECTORING_INFO_FIELD because
-vector 236 has already been invoked in the guest.
-6. Now, suppose APICv is activated. Before the next VM-entry, KVM calls
-kvm_vcpu_update_apicv() to activate APICv.
-7. Unfortunately, GUEST_INTR_STATUS.SVI is not configured, although
-vector 236 is still pending in the ISR.
-8. After VM-entry, the guest finally issues the EOI for vector 236.
-However, because SVI is not configured, vector 236 is not cleared.
-9. ISR is stalled forever on vector 236.
+uctx->shpg is the only outlier. Bring it in line with the existing
+convention by switching to get_zeroed_page().
 
-Here is another scenario.
-
-1. Suppose APICv is inactive. Vector 236 is pending in the IRR.
-2. To handle KVM_REQ_EVENT, KVM moves vector 236 from the IRR to the ISR,
-and configures the VM_ENTRY_INTR_INFO_FIELD via vmx_inject_irq().
-3. VM-exit occurs immediately after the next VM-entry. The vector 236 is
-not invoked through the guest IDT. Instead, it is saved to the
-IDT_VECTORING_INFO_FIELD during the VM-exit.
-4. KVM calls kvm_queue_interrupt() to re-queue the un-invoked vector 236
-into vcpu->arch.interrupt. A KVM_REQ_EVENT is requested.
-5. Now, suppose APICv is activated. Before the next VM-entry, KVM calls
-kvm_vcpu_update_apicv() to activate APICv.
-6. Although APICv is now active, KVM still uses the legacy
-VM_ENTRY_INTR_INFO_FIELD to re-inject vector 236. GUEST_INTR_STATUS.SVI is
-not configured.
-7. After the next VM-entry, vector 236 is invoked through the guest IDT.
-Finally, an EOI occurs. However, due to the lack of GUEST_INTR_STATUS.SVI
-configuration, vector 236 is not cleared from the ISR.
-8. ISR is stalled forever on vector 236.
-
-Using QEMU as an example, vector 236 is stuck in ISR forever.
-
-(qemu) info lapic 1
-dumping local APIC state for CPU 1
-
-LVT0	 0x00010700 active-hi edge  masked                      ExtINT (vec 0)
-LVT1	 0x00010400 active-hi edge  masked                      NMI
-LVTPC	 0x00000400 active-hi edge                              NMI
-LVTERR	 0x000000fe active-hi edge                              Fixed  (vec 254)
-LVTTHMR	 0x00010000 active-hi edge  masked                      Fixed  (vec 0)
-LVTT	 0x000400ec active-hi edge                 tsc-deadline Fixed  (vec 236)
-Timer	 DCR=0x0 (divide by 2) initial_count = 0 current_count = 0
-SPIV	 0x000001ff APIC enabled, focus=off, spurious vec 255
-ICR	 0x000000fd physical edge de-assert no-shorthand
-ICR2	 0x00000000 cpu 0 (X2APIC ID)
-ESR	 0x00000000
-ISR	 236
-IRR	 37(level) 236
-
-The issue isn't applicable to AMD SVM as KVM simply writes vmcb01 directly
-irrespective of whether L1 (vmcs01) or L2 (vmcb02) is active (unlike VMX,
-there is no need/cost to switch between VMCBs).  In addition,
-APICV_INHIBIT_REASON_IRQWIN ensures AMD SVM AVIC is not activated until
-the last interrupt is EOI'd.
-
-Fix the bug by configuring Intel VMX GUEST_INTR_STATUS.SVI if APICv is
-activated at runtime.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Link: https://patch.msgid.link/20251110063212.34902-1-dongli.zhang@oracle.com
-[sean: call out that SVM writes vmcb01 directly, tweak comment]
-Link: https://patch.msgid.link/20251205231913.441872-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[gulshan: resolved a minor conflict in vmx.c arising from a comment]
-Signed-off-by: Gulshan Gabel <gulshan.gabel@nutanix.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
+Link: https://patch.msgid.link/20260509084011.11971-1-pomzm67@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c | 4 ----
- arch/x86/kvm/x86.c     | 7 +++++++
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 4a45e86c5e2fcc..85d301a03b2004 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6851,10 +6851,6 @@ static void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
- 	 * VM-Exit, otherwise L1 with run with a stale SVI.
- 	 */
- 	if (is_guest_mode(vcpu)) {
--		/*
--		 * KVM is supposed to forward intercepted L2 EOIs to L1 if VID
--		 * is enabled in vmcs12; as above, the EOIs affect L2's vAPIC.
--		 */
- 		to_vmx(vcpu)->nested.update_vmcs01_hwapic_isr = true;
- 		return;
- 	}
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 3838b7336590dd..c04277b35e2edf 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10426,9 +10426,16 @@ void __kvm_vcpu_update_apicv(struct kvm_vcpu *vcpu)
- 	 * pending. At the same time, KVM_REQ_EVENT may not be set as APICv was
- 	 * still active when the interrupt got accepted. Make sure
- 	 * kvm_check_and_inject_events() is called to check for that.
-+	 *
-+	 * Update SVI when APICv gets enabled, otherwise SVI won't reflect the
-+	 * highest bit in vISR and the next accelerated EOI in the guest won't
-+	 * be virtualized correctly (the CPU uses SVI to determine which vISR
-+	 * vector to clear).
- 	 */
- 	if (!apic->apicv_active)
- 		kvm_make_request(KVM_REQ_EVENT, vcpu);
-+	else
-+		kvm_apic_update_hwapic_isr(vcpu);
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -4146,7 +4146,7 @@ int bnxt_re_alloc_ucontext(struct ib_uco
  
- out:
- 	preempt_enable();
--- 
-2.53.0
-
+ 	uctx->rdev = rdev;
+ 
+-	uctx->shpg = (void *)__get_free_page(GFP_KERNEL);
++	uctx->shpg = (void *)get_zeroed_page(GFP_KERNEL);
+ 	if (!uctx->shpg) {
+ 		rc = -ENOMEM;
+ 		goto fail;
 
 
