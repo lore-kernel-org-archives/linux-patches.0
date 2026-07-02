@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995E83ACA54;
-	Thu,  2 Jul 2026 16:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F433A7F45;
+	Thu,  2 Jul 2026 16:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009793; cv=none; b=O0O5T4gIxOlK+tHgu3FIpqNSDb21ILEhV90FL54ieOyEt5RIjQBgJMvm25QAgUZcl5OXHV+3a/pi+3LcTgVsg5yP0k1wrmyG5BiaTWQwGyRt3zXUYEwX7JsvuFY75ww+PQVVRXxYLS4jwztDV9cGcu54kWzQrkwbbHJ/Wvv2F8w=
+	t=1783009799; cv=none; b=CM2FhmBfRSHJKd8j6z5szTHsYBgJNwxIrXQvbX2M5dJtQIEHsdDLYrw2qr00k5HO/1UwD/xYXBD0pzzh46100lAPYUCvVelUKCUei7TLTRSj8wHxFwEz59ZTU1m0kggaBRN2JJXlL20hzqKAFOiYeD64TjYW76yFmSjiMXyOo/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009793; c=relaxed/simple;
-	bh=a9Ur+Sy9SgFnm4qcnCxz2kSWDx2oW7hPa90DokyCxm8=;
+	s=arc-20240116; t=1783009799; c=relaxed/simple;
+	bh=EgVjoUg0OEo3jrUZelLlJKFolZEQApFttEewbC6P/1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pg09j8pBpwaKAmAXfHvQWw5TuRpFbDUbzjlEo51o47EfPXV5e6J0pT29/GsNr9Tfm4z3mQL+swcYg1J8ic4YejIaBjPcfXS5Z0RKeenJYkRJOyXVX4z6pfQhQ2wsnhABTJa4phXEw6WDEXG7/ChkFf7qZ2L2IYH8XR6kK11ZW4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycsRLo7b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P63RDxr8jCLEcQiK51pV1H75L9salaZtDiYp0W1O2RUhGg51Qf/3muqdYTZkbaZLxPyjkk52y0V2WtRRyxxsv6MG5iTa5Da80hU8nm6U/i+4KyF7CfKIeS8dVlAF9BhiS+E+uPbevo9hqUnaWjQQfWZMpDNMPHNIwR4zFrCsWFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvGn4UcY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycsRLo7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89971F00AC4;
-	Thu,  2 Jul 2026 16:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvGn4UcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E951F000E9;
+	Thu,  2 Jul 2026 16:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009791;
-	bh=XmWqtqNtDvgaayky5hefvM+lhhePM/wO+erTyuzIlO4=;
+	s=korg; t=1783009793;
+	bh=0+wEFsqMZQljGHHex2SatU7nhEhCT/lc+daUgnEa9ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ycsRLo7bPadd7IL+dFZ21G8tQlu22YWM0xDRFSvcKsMWObiFMg3qVNx8sfo9v2Syd
-	 pS6yn0HT20N9+BBze7U/IGhr9ovnSD8Cf6W1Nvt8fnUcVZAsC4s56GWETpQmIH1jEO
-	 EGQUtP3JefeOhW/8c5WS/8fnMqrdTGL1eIco31bg=
+	b=GvGn4UcYgN1CAaCltFcsPWA7+TRzL4qUed1w5/6H3EHWW/7DGBM98ahysbvE5V8eD
+	 Z+A+4xG6eluCG3iqQV8B+g4JapJVv65lkgC1d//ZZ+FJPaPNuckkf+NOPiZ3O7m4Li
+	 /xqJPQg5qAr9Jsaq2ELtWIl1/zD9hkUgDu7fsNkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 87/95] phonet: Pass net and ifindex to phonet_address_notify().
-Date: Thu,  2 Jul 2026 18:20:30 +0200
-Message-ID: <20260702155111.038574272@linuxfoundation.org>
+Subject: [PATCH 5.15 46/95] batman-adv: tp_meter: prevent parallel modifications of last_recv
+Date: Thu,  2 Jul 2026 18:19:49 +0200
+Message-ID: <20260702155110.177216466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -52,111 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 68ed5c38b512b734caf3da1f87db4a99fcfe3002 ]
+commit 6dde0cfcb36e4d5b3de35b75696937478441eed4 upstream.
 
-Currently, phonet_address_notify() fetches netns and ifindex from dev.
+When last_recv is updated to store the last receive sequence number, it is
+assuming that nothing is modifying in parallel while:
 
-Once addr_doit() is converted to RCU, phonet_address_notify() will be
-called outside of RCU due to GFP_KERNEL, and dev will be unavailable
-there.
+* check for outdated packets is done
+* out of order check is performed (and packets are stored in out-of-order
+  queue)
+* the out-of-order queue was searched for closed gaps
+* sequence number for next ack is calculated
 
-Let's pass net and ifindex to phonet_address_notify().
+Nothing of that was actually protected. It could therefore happen that the
+last_recv was updated multiple times in parallel and the final sequence
+number was calculated with deltas which had no connection to the sequence
+number they were added to.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 71de0177b28d ("net: phonet: free phonet_device after RCU grace period")
+Lock this whole region with the same lock which was already used to protect
+the unacked (out-of-order) list.
+
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+[ Switch to pre-splitted tp_vars structure names ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/phonet/pn_dev.h |    2 +-
- net/phonet/pn_dev.c         |   10 +++++++---
- net/phonet/pn_netlink.c     |   12 ++++++------
- 3 files changed, 14 insertions(+), 10 deletions(-)
+ net/batman-adv/tp_meter.c | 22 +++++++++++++---------
+ net/batman-adv/types.h    |  2 +-
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
---- a/include/net/phonet/pn_dev.h
-+++ b/include/net/phonet/pn_dev.h
-@@ -33,7 +33,7 @@ int phonet_address_add(struct net_device
- int phonet_address_del(struct net_device *dev, u8 addr);
- u8 phonet_address_get(struct net_device *dev, u8 addr);
- int phonet_address_lookup(struct net *net, u8 addr);
--void phonet_address_notify(int event, struct net_device *dev, u8 addr);
-+void phonet_address_notify(struct net *net, int event, u32 ifindex, u8 addr);
- 
- int phonet_route_add(struct net_device *dev, u8 daddr);
- int phonet_route_del(struct net_device *dev, u8 daddr);
---- a/net/phonet/pn_dev.c
-+++ b/net/phonet/pn_dev.c
-@@ -98,10 +98,13 @@ static void phonet_device_destroy(struct
- 	mutex_unlock(&pndevs->lock);
- 
- 	if (pnd) {
-+		struct net *net = dev_net(dev);
-+		u32 ifindex = dev->ifindex;
- 		u8 addr;
- 
- 		for_each_set_bit(addr, pnd->addrs, 64)
--			phonet_address_notify(RTM_DELADDR, dev, addr);
-+			phonet_address_notify(net, RTM_DELADDR, ifindex, addr);
-+
- 		kfree(pnd);
- 	}
- }
-@@ -244,8 +247,9 @@ static int phonet_device_autoconf(struct
- 	ret = phonet_address_add(dev, req.ifr_phonet_autoconf.device);
- 	if (ret)
- 		return ret;
--	phonet_address_notify(RTM_NEWADDR, dev,
--				req.ifr_phonet_autoconf.device);
-+
-+	phonet_address_notify(dev_net(dev), RTM_NEWADDR, dev->ifindex,
-+			      req.ifr_phonet_autoconf.device);
- 	return 0;
- }
- 
---- a/net/phonet/pn_netlink.c
-+++ b/net/phonet/pn_netlink.c
-@@ -22,7 +22,7 @@
- static int fill_addr(struct sk_buff *skb, u32 ifindex, u8 addr,
- 		     u32 portid, u32 seq, int event);
- 
--void phonet_address_notify(int event, struct net_device *dev, u8 addr)
-+void phonet_address_notify(struct net *net, int event, u32 ifindex, u8 addr)
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 503819e9839c62..83749d7b4fd112 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1294,6 +1294,7 @@ static int batadv_tp_send_ack(struct batadv_priv *bat_priv, const u8 *dst,
+  */
+ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
+ 					  const struct sk_buff *skb)
++	__must_hold(&tp_vars->unacked_lock)
  {
- 	struct sk_buff *skb;
- 	int err = -ENOBUFS;
-@@ -32,17 +32,17 @@ void phonet_address_notify(int event, st
- 	if (skb == NULL)
- 		goto errout;
+ 	const struct batadv_icmp_tp_packet *icmp;
+ 	struct batadv_tp_unacked *un, *new;
+@@ -1310,12 +1311,11 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
+ 	payload_len = skb->len - sizeof(struct batadv_unicast_packet);
+ 	new->len = payload_len;
  
--	err = fill_addr(skb, dev->ifindex, addr, 0, 0, event);
-+	err = fill_addr(skb, ifindex, addr, 0, 0, event);
- 	if (err < 0) {
- 		WARN_ON(err == -EMSGSIZE);
- 		kfree_skb(skb);
- 		goto errout;
+-	spin_lock_bh(&tp_vars->unacked_lock);
+ 	/* if the list is empty immediately attach this new object */
+ 	if (list_empty(&tp_vars->unacked_list)) {
+ 		list_add(&new->list, &tp_vars->unacked_list);
+ 		tp_vars->unacked_count++;
+-		goto out;
++		return true;
  	}
--	rtnl_notify(skb, dev_net(dev), 0,
--		    RTNLGRP_PHONET_IFADDR, NULL, GFP_KERNEL);
+ 
+ 	/* otherwise loop over the list and either drop the packet because this
+@@ -1364,9 +1364,6 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
+ 		tp_vars->unacked_count--;
+ 	}
+ 
+-out:
+-	spin_unlock_bh(&tp_vars->unacked_lock);
+-
+ 	return true;
+ }
+ 
+@@ -1376,6 +1373,7 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
+  * @tp_vars: the private data of the current TP meter session
+  */
+ static void batadv_tp_ack_unordered(struct batadv_tp_vars *tp_vars)
++	__must_hold(&tp_vars->unacked_lock)
+ {
+ 	struct batadv_tp_unacked *un, *safe;
+ 	u32 to_ack;
+@@ -1383,7 +1381,6 @@ static void batadv_tp_ack_unordered(struct batadv_tp_vars *tp_vars)
+ 	/* go through the unacked packet list and possibly ACK them as
+ 	 * well
+ 	 */
+-	spin_lock_bh(&tp_vars->unacked_lock);
+ 	list_for_each_entry_safe(un, safe, &tp_vars->unacked_list, list) {
+ 		/* the list is ordered, therefore it is possible to stop as soon
+ 		 * there is a gap between the last acked seqno and the seqno of
+@@ -1401,7 +1398,6 @@ static void batadv_tp_ack_unordered(struct batadv_tp_vars *tp_vars)
+ 		kfree(un);
+ 		tp_vars->unacked_count--;
+ 	}
+-	spin_unlock_bh(&tp_vars->unacked_lock);
+ }
+ 
+ /**
+@@ -1481,6 +1477,7 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 	const struct batadv_icmp_tp_packet *icmp;
+ 	struct batadv_tp_vars *tp_vars;
+ 	size_t packet_size;
++	u32 to_ack;
+ 	u32 seqno;
+ 
+ 	icmp = (struct batadv_icmp_tp_packet *)skb->data;
+@@ -1509,6 +1506,8 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 		WRITE_ONCE(tp_vars->last_recv_time, jiffies);
+ 	}
+ 
++	spin_lock_bh(&tp_vars->unacked_lock);
 +
-+	rtnl_notify(skb, net, 0, RTNLGRP_PHONET_IFADDR, NULL, GFP_KERNEL);
- 	return;
- errout:
--	rtnl_set_sk_err(dev_net(dev), RTNLGRP_PHONET_IFADDR, err);
-+	rtnl_set_sk_err(net, RTNLGRP_PHONET_IFADDR, err);
- }
+ 	/* if the packet is a duplicate, it may be the case that an ACK has been
+ 	 * lost. Resend the ACK
+ 	 */
+@@ -1520,8 +1519,10 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 		/* exit immediately (and do not send any ACK) if the packet has
+ 		 * not been enqueued correctly
+ 		 */
+-		if (!batadv_tp_handle_out_of_order(tp_vars, skb))
++		if (!batadv_tp_handle_out_of_order(tp_vars, skb)) {
++			spin_unlock_bh(&tp_vars->unacked_lock);
+ 			goto out;
++		}
  
- static const struct nla_policy ifa_phonet_policy[IFA_MAX+1] = {
-@@ -89,7 +89,7 @@ static int addr_doit(struct sk_buff *skb
- 	else
- 		err = phonet_address_del(dev, pnaddr);
- 	if (!err)
--		phonet_address_notify(nlh->nlmsg_type, dev, pnaddr);
-+		phonet_address_notify(net, nlh->nlmsg_type, ifm->ifa_index, pnaddr);
- 	return err;
- }
+ 		/* send a duplicate ACK */
+ 		goto send_ack;
+@@ -1535,11 +1536,14 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 	batadv_tp_ack_unordered(tp_vars);
  
+ send_ack:
++	to_ack = tp_vars->last_recv;
++	spin_unlock_bh(&tp_vars->unacked_lock);
++
+ 	/* send the ACK. If the received packet was out of order, the ACK that
+ 	 * is going to be sent is a duplicate (the sender will count them and
+ 	 * possibly enter Fast Retransmit as soon as it has reached 3)
+ 	 */
+-	batadv_tp_send_ack(bat_priv, icmp->orig, tp_vars->last_recv,
++	batadv_tp_send_ack(bat_priv, icmp->orig, to_ack,
+ 			   icmp->timestamp, icmp->session, icmp->uid);
+ out:
+ 	batadv_tp_vars_put(tp_vars);
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index d7fb3046d04412..e1ca1359415bc7 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -1491,7 +1491,7 @@ struct batadv_tp_vars {
+ 	/** @unacked_list: list of unacked packets (meta-info only) */
+ 	struct list_head unacked_list;
+ 
+-	/** @unacked_lock: protect unacked_list */
++	/** @unacked_lock: protect unacked_list + &batadv_tp_receiver.last_recv */
+ 	spinlock_t unacked_lock;
+ 
+ 	/** @unacked_count: number of unacked entries */
+-- 
+2.53.0
+
 
 
