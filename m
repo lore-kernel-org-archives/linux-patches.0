@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AD4347FEE;
-	Thu,  2 Jul 2026 16:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F804349CE7;
+	Thu,  2 Jul 2026 16:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009560; cv=none; b=AppBtEd/mIHpxT+YBcn1QRTzyxim5J4CjyHOu5tv5nqXm0JzaRPd7emu0DoDI1VU7K20/Q7D/3GOJkZozKZyyKt4DCDAKF6GOt/YKDKcKUYALuXEeh97pIdWwXIYpr4sHd66t5mwTMLv1Y8LbUVVv8mLBmsnONCALRjIa9z07Es=
+	t=1783009561; cv=none; b=WPaTi3JxtcCm3kmSObGty2euH44ZvwNsi+uPC6YaJ3wQa897XJaaFLm3R7l44yHEEojkroFmAEqtuZbn31AJM4fr710Zf1HR6QxzrgK3x+wNShO0nljJq6hIbGu9uc/gQnjJRYl3HFWA+W1c280FuxO3ubcR08a9kyEhP9vbkI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009560; c=relaxed/simple;
-	bh=7ELelgBpU/UIOMe4hby3v47VCZ++pB/ESE5W36hz9Ew=;
+	s=arc-20240116; t=1783009561; c=relaxed/simple;
+	bh=H5tExV51F4mUHO+lxRTanuReQnTPim/8aYEFB2RLm2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKQ9xkSahDB0EOk3QgWw9s0FPD4vcEwd+/PYBLNPQ9x1BsWlKOiMSkUzRoyDmyPt5VfYWpIrwOD+TmkkhbN4TL5TYS6BmP6h/3XrhXyGGE7zMKvWpJ2wVX+o40UbJP5tpeKjn0tDbv3BFieNmacbNchAoZFCs6gpKvRvWA/pOiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EprhclzN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Estx8nUPmXqWeSKIdzlB1CaP4Qru/gW2oeUlkhQkdKiHE16n4YbY2jrmnFqDJrjm+e697PAXFpCAk+NP5yuo8EqU8fg7ZeP9hI4jytgmvPNyif+bEatCRxguOpknqF6uYlyjLhsYLGDXHOod0UEkGs6e+A07ylVrjeu6NQOUD5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsjE4u8b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EprhclzN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2F31F00A3A;
-	Thu,  2 Jul 2026 16:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsjE4u8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AFF1F000E9;
+	Thu,  2 Jul 2026 16:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009557;
-	bh=XhHc3NoQVbkJ02fgOTsQS3F4uos3stmyjak+5Wy4L3c=;
+	s=korg; t=1783009560;
+	bh=vxAOxx5cu09kulje1MiXCJ1/lnj8ThJ+18irvUE/Atw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EprhclzNli/+3cnKwNBumAtOxRKmFzjFhx6ddhe5LUFRZvB9CmDt30p/rpNqr2lwB
-	 bYDub+0Giy4aFsbZ6aK1sRgWdEDh+/LpKF3tQ8wSrgCKW6dLebOGhwH/w/zBZDHbRR
-	 BB686R3ueEP0GJ/Z1IGdwEsDlX/O8rs+NE2wxSI4=
+	b=hsjE4u8b5WlYSFcHqv762mYTrdRhlfCQRNeMTJMiKp+RWnrHs3d1SI49gZzBxdlII
+	 o1IiSiHt7VllDPXdn1vkUOxiVOKxQppbqz8XfVOUQLjciZlT055hP0Utjay0zr0GAu
+	 pnd3mcG9iEWfa45Q3XHfCpzcFgb7EBY9WIqguUDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 52/96] batman-adv: tt: dont merge change entries with different VIDs
-Date: Thu,  2 Jul 2026 18:19:44 +0200
-Message-ID: <20260702155110.076901639@linuxfoundation.org>
+Subject: [PATCH 5.10 53/96] batman-adv: tt: track roam count per VID
+Date: Thu,  2 Jul 2026 18:19:45 +0200
+Message-ID: <20260702155110.098775782@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -53,18 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit f08e06c2d5c3e2434e7c773f2213f4a7dce6bc1e upstream.
+commit 12407d5f61c2653a64f2ff4b22f3c267f8420ef1 upstream.
 
-batadv_tt_local_event() merges/cancels events for the same client which
-would conflict or be duplicates. The matching of the queued events only
-compares the MAC address - the VLAN ID stored in each event is ignored.
-
-If a MAC would now appear on multiple VID, the two ADD change events (for
-VID 1 and VID 2) would be merged to a single vid event. The remote can
-therefore not calculate the correct TT table and desync. A full translation
-table exchange is required to recover from this state.
-
-A check of VID is therefore necessary to avoid such wrong merges/cancels.
+batadv_tt_check_roam_count() is supposed to track roaming of a TT entry.
+But TT entries are for a MAC + VID. The VID was completely missed and thus
+leads to incorrect detection of ROAM counts when a client MAC exists in
+multiple VLANs.
 
 Cc: stable@kernel.org
 Fixes: c018ad3de61a ("batman-adv: add the VLAN ID attribute to the TT entry")
@@ -72,23 +66,72 @@ Fixes: c018ad3de61a ("batman-adv: add the VLAN ID attribute to the TT entry")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/batman-adv/translation-table.c | 9 +++++++--
+ net/batman-adv/types.h             | 3 +++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index 79da90b9cf0659..c323660897d43d 100644
+index c323660897d43d..4b3f39d6ddaf5b 100644
 --- a/net/batman-adv/translation-table.c
 +++ b/net/batman-adv/translation-table.c
-@@ -486,6 +486,9 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
- 		if (!batadv_compare_eth(entry->change.addr, common->addr))
+@@ -3753,6 +3753,7 @@ static void batadv_tt_roam_purge(struct batadv_priv *bat_priv)
+  * batadv_tt_check_roam_count() - check if a client has roamed too frequently
+  * @bat_priv: the bat priv with all the soft interface information
+  * @client: mac address of the roaming client
++ * @vid: VLAN identifier
+  *
+  * This function checks whether the client already reached the
+  * maximum number of possible roaming phases. In this case the ROAMING_ADV
+@@ -3760,7 +3761,7 @@ static void batadv_tt_roam_purge(struct batadv_priv *bat_priv)
+  *
+  * Return: true if the ROAMING_ADV can be sent, false otherwise
+  */
+-static bool batadv_tt_check_roam_count(struct batadv_priv *bat_priv, u8 *client)
++static bool batadv_tt_check_roam_count(struct batadv_priv *bat_priv, u8 *client, u16 vid)
+ {
+ 	struct batadv_tt_roam_node *tt_roam_node;
+ 	bool ret = false;
+@@ -3773,6 +3774,9 @@ static bool batadv_tt_check_roam_count(struct batadv_priv *bat_priv, u8 *client)
+ 		if (!batadv_compare_eth(tt_roam_node->addr, client))
  			continue;
  
-+		if (entry->change.vid != tt_change_node->change.vid)
++		if (tt_roam_node->vid != vid)
 +			continue;
 +
- 		/* DEL+ADD in the same orig interval have no effect and can be
- 		 * removed to avoid silly behaviour on the receiver side. The
- 		 * other way around (ADD+DEL) can happen in case of roaming of
+ 		if (batadv_has_timed_out(tt_roam_node->first_time,
+ 					 BATADV_ROAMING_MAX_TIME))
+ 			continue;
+@@ -3794,6 +3798,7 @@ static bool batadv_tt_check_roam_count(struct batadv_priv *bat_priv, u8 *client)
+ 		atomic_set(&tt_roam_node->counter,
+ 			   BATADV_ROAMING_MAX_COUNT - 1);
+ 		ether_addr_copy(tt_roam_node->addr, client);
++		tt_roam_node->vid = vid;
+ 
+ 		list_add(&tt_roam_node->list, &bat_priv->tt.roam_list);
+ 		ret = true;
+@@ -3830,7 +3835,7 @@ static void batadv_send_roam_adv(struct batadv_priv *bat_priv, u8 *client,
+ 	/* before going on we have to check whether the client has
+ 	 * already roamed to us too many times
+ 	 */
+-	if (!batadv_tt_check_roam_count(bat_priv, client))
++	if (!batadv_tt_check_roam_count(bat_priv, client, vid))
+ 		goto out;
+ 
+ 	batadv_dbg(BATADV_DBG_TT, bat_priv,
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index 437d651a1cffe3..88831374e81747 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -2059,6 +2059,9 @@ struct batadv_tt_roam_node {
+ 	/** @addr: mac address of the client in the roaming phase */
+ 	u8 addr[ETH_ALEN];
+ 
++	/** @vid: VLAN identifier */
++	u16 vid;
++
+ 	/**
+ 	 * @counter: number of allowed roaming events per client within a single
+ 	 * OGM interval (changes are committed with each OGM)
 -- 
 2.53.0
 
