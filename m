@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D98733BBCD;
-	Thu,  2 Jul 2026 16:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B06133BBCD;
+	Thu,  2 Jul 2026 16:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010841; cv=none; b=XzBO3TwxDZOa9khy88gwPrSEO3GPWkO+WmYOwGs5nzAcnO9NK9Z9fmjRawbD4yuw3H0HObdwbs2sM9roNVIK5S9S6uYhbWfP2fJfzya3WBsiD0h4sJEUgGGQPO4HpAR6CH46Tfu52ixhyrHwl0RnWu0+aEgqADvX2wVdVfAuz4A=
+	t=1783010844; cv=none; b=tY0CjxAbM987JBo0J6Pu+TSCujYF+fW1i/h9OpQr+IPxJebYYRENb1jeTYAzsLtND1Z1Kpmfnx208+gNGC4zLhnPlfWmD4VwQVcAuzwdka/q1gXh2ZM/Mj6fGP0bdgQi8D5O6fTALVYND2MiMz7KFkqQKAfbSu2pjIv7tMTqmyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010841; c=relaxed/simple;
-	bh=tkGpfoeiIFtJUEeWTHaqu4xczV45ZKFkXydJQC2p3Jo=;
+	s=arc-20240116; t=1783010844; c=relaxed/simple;
+	bh=//NkSy7/erUo+ZOGPdp1cX0AmRze7BxYC1KBPa7PHSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAdkG3pa6YuGVab5HwqL3i+PssCTbWuB/4EvOIQOCQol17mn7uBrEjvSiPCFUbdecbvApfmUfVnxxfY3ii8dSuZ4nFy9pbkQysWo3tBodSwoGSNMa7P0iMVjVmIl2uilU/TDV39VPpakeepZlv7BwGN0nMMOTR0pAl9i7LI9qJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpoRRWNG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p6XkJAfqbXAKUO3j1mypCYLdanPqHD7h8TmQRQOxlkm4ld4iTT+pv8JsrUyOFjL88pgNYuy0y8DDSdc/pYYKYk8WjU9UCURXyh0gDTxAUAHlqldjF5a99jaVghWecDuzsLI+pGaaeT61Ge8V+FJM2LHwpCEbnqZBX9PJoLBty8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTD9I+T2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpoRRWNG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7B91F000E9;
-	Thu,  2 Jul 2026 16:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTD9I+T2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4670E1F000E9;
+	Thu,  2 Jul 2026 16:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010840;
-	bh=7DUzqk36+grn2mkRGFkUpV4voUGt2c/c4ta5tsiOXys=;
+	s=korg; t=1783010842;
+	bh=sAXsk2Dy7deHOZn1PtthCUuUFWPZA14xJgITvGqCIHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zpoRRWNGIzSh1MAg9rUi1OFMgoNraBYpbXu6AfZ0fmpNnp6BXZgl0kr+IehHzeySO
-	 1UN3YbWqFauv0oJ/UnPWURWSsqNyoWQ7WTypo7R7mjEE5NHyytajLxnKDBQUxt/yxv
-	 tUF7DpC0Zi8lr3zoMnXgijSRtf1VoJBDc78Saec8=
+	b=sTD9I+T20A9DLSFVOWFhI+9/SVn1rQqpOctFkjoMxVKpIWvqP4CUyLXMVB7knJ5UX
+	 FV4Q0xn5nS6s4FS0bqTa2/lkdsLJ9IAemymkFJ78kkXnQkkIbtcxY+oeoP9CbqWFvV
+	 KRbQBP/2XibQ+78ox9fsWmSRvM3Dx8zu7Bttl9Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,6 +33,7 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Nicolas Schier <nicolas@fjasle.eu>,
@@ -40,13 +41,16 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Martin Kelly <martin.kelly@crowdstrike.com>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Will Deacon <will@kernel.org>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.6 058/175] scripts/sorttable: Use a structure of function pointers for elf helpers
-Date: Thu,  2 Jul 2026 18:19:19 +0200
-Message-ID: <20260702155117.015755210@linuxfoundation.org>
+Subject: [PATCH 6.6 059/175] arm64: scripts/sorttable: Implement sorting mcount_loc at boot for arm64
+Date: Thu,  2 Jul 2026 18:19:20 +0200
+Message-ID: <20260702155117.036942102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -67,14 +71,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 1e5f6771c247b28135307058d2cfe3b0153733dc ]
+[ Upstream commit b3d09d06e052e1d754645acea4e4d1e96f81c934 ]
 
-Instead of having a series of function pointers that gets assigned to the
-Elf64 or Elf32 versions, put them all into a single structure and use
-that. Add the helper function that chooses the structure into the macros
-that build the different versions of the elf functions.
+The mcount_loc section holds the addresses of the functions that get
+patched by ftrace when enabling function callbacks. It can contain tens of
+thousands of entries. These addresses must be sorted. If they are not
+sorted at compile time, they are sorted at boot. Sorting at boot does take
+some time and does have a small impact on boot performance.
 
-Link: https://lore.kernel.org/all/CAHk-=wiafEyX7UgOeZgvd6fvuByE5WXUPh9599kwOc_d-pdeug@mail.gmail.com/
+x86 and arm32 have the addresses in the mcount_loc section of the ELF
+file. But for arm64, the section just contains zeros. The .rela.dyn
+Elf_Rela section holds the addresses and they get patched at boot during
+the relocation phase.
+
+In order to sort these addresses, the Elf_Rela needs to be updated instead
+of the location in the binary that holds the mcount_loc section. Have the
+sorttable code, allocate an array to hold the functions, load the
+addresses from the Elf_Rela entries, sort them, then put them back in
+order into the Elf_rela entries so that they will be sorted at boot up
+without having to sort them during boot up.
 
 Cc: bpf <bpf@vger.kernel.org>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
@@ -82,303 +97,332 @@ Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Masahiro Yamada <masahiroy@kernel.org>
 Cc: Nathan Chancellor <nathan@kernel.org>
 Cc: Nicolas Schier <nicolas@fjasle.eu>
 Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Cc: Martin Kelly <martin.kelly@crowdstrike.com>
+Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
 Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
 Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Link: https://lore.kernel.org/20250110075459.13d4b94c@gandalf.local.home
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Link: https://lore.kernel.org/20250218200022.373319428@goodmis.org
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/sorttable.c |  175 +++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 118 insertions(+), 57 deletions(-)
+ arch/arm64/Kconfig  |    1 
+ scripts/sorttable.c |  185 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 183 insertions(+), 3 deletions(-)
 
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -202,6 +202,7 @@ config ARM64
+ 		if DYNAMIC_FTRACE_WITH_ARGS
+ 	select HAVE_SAMPLE_FTRACE_DIRECT
+ 	select HAVE_SAMPLE_FTRACE_DIRECT_MULTI
++	select HAVE_BUILDTIME_MCOUNT_SORT
+ 	select HAVE_EFFICIENT_UNALIGNED_ACCESS
+ 	select HAVE_FAST_GUP
+ 	select HAVE_FTRACE_MCOUNT_RECORD
 --- a/scripts/sorttable.c
 +++ b/scripts/sorttable.c
-@@ -85,6 +85,25 @@ static uint64_t (*r8)(const uint64_t *);
+@@ -28,6 +28,7 @@
+ #include <fcntl.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <stdbool.h>
+ #include <string.h>
+ #include <unistd.h>
+ #include <errno.h>
+@@ -79,10 +80,16 @@ typedef union {
+ 	Elf64_Sym	e64;
+ } Elf_Sym;
+ 
++typedef union {
++	Elf32_Rela	e32;
++	Elf64_Rela	e64;
++} Elf_Rela;
++
+ static uint32_t (*r)(const uint32_t *);
+ static uint16_t (*r2)(const uint16_t *);
+ static uint64_t (*r8)(const uint64_t *);
  static void (*w)(uint32_t, uint32_t *);
++static void (*w8)(uint64_t, uint64_t *);
  typedef void (*table_sort_t)(char *, int);
  
-+static struct elf_funcs {
-+	int (*compare_extable)(const void *a, const void *b);
-+	uint64_t (*ehdr_shoff)(Elf_Ehdr *ehdr);
-+	uint16_t (*ehdr_shstrndx)(Elf_Ehdr *ehdr);
-+	uint16_t (*ehdr_shentsize)(Elf_Ehdr *ehdr);
-+	uint16_t (*ehdr_shnum)(Elf_Ehdr *ehdr);
-+	uint64_t (*shdr_addr)(Elf_Shdr *shdr);
-+	uint64_t (*shdr_offset)(Elf_Shdr *shdr);
-+	uint64_t (*shdr_size)(Elf_Shdr *shdr);
-+	uint64_t (*shdr_entsize)(Elf_Shdr *shdr);
-+	uint32_t (*shdr_link)(Elf_Shdr *shdr);
-+	uint32_t (*shdr_name)(Elf_Shdr *shdr);
-+	uint32_t (*shdr_type)(Elf_Shdr *shdr);
-+	uint8_t (*sym_type)(Elf_Sym *sym);
-+	uint32_t (*sym_name)(Elf_Sym *sym);
-+	uint64_t (*sym_value)(Elf_Sym *sym);
-+	uint16_t (*sym_shndx)(Elf_Sym *sym);
-+} e;
-+
+ static struct elf_funcs {
+@@ -102,6 +109,10 @@ static struct elf_funcs {
+ 	uint32_t (*sym_name)(Elf_Sym *sym);
+ 	uint64_t (*sym_value)(Elf_Sym *sym);
+ 	uint16_t (*sym_shndx)(Elf_Sym *sym);
++	uint64_t (*rela_offset)(Elf_Rela *rela);
++	uint64_t (*rela_info)(Elf_Rela *rela);
++	uint64_t (*rela_addend)(Elf_Rela *rela);
++	void (*rela_write_addend)(Elf_Rela *rela, uint64_t val);
+ } e;
+ 
  static uint64_t ehdr64_shoff(Elf_Ehdr *ehdr)
- {
- 	return r8(&ehdr->e64.e_shoff);
-@@ -95,6 +114,11 @@ static uint64_t ehdr32_shoff(Elf_Ehdr *e
- 	return r(&ehdr->e32.e_shoff);
- }
- 
-+static uint64_t ehdr_shoff(Elf_Ehdr *ehdr)
-+{
-+	return e.ehdr_shoff(ehdr);
-+}
-+
- #define EHDR_HALF(fn_name)				\
- static uint16_t ehdr64_##fn_name(Elf_Ehdr *ehdr)	\
- {							\
-@@ -104,6 +128,11 @@ static uint16_t ehdr64_##fn_name(Elf_Ehd
- static uint16_t ehdr32_##fn_name(Elf_Ehdr *ehdr)	\
- {							\
- 	return r2(&ehdr->e32.e_##fn_name);		\
-+}							\
-+							\
-+static uint16_t ehdr_##fn_name(Elf_Ehdr *ehdr)		\
-+{							\
-+	return e.ehdr_##fn_name(ehdr);			\
- }
- 
- EHDR_HALF(shentsize)
-@@ -119,6 +148,11 @@ static uint32_t shdr64_##fn_name(Elf_Shd
- static uint32_t shdr32_##fn_name(Elf_Shdr *shdr)	\
- {							\
- 	return r(&shdr->e32.sh_##fn_name);		\
-+}							\
-+							\
-+static uint32_t shdr_##fn_name(Elf_Shdr *shdr)		\
-+{							\
-+	return e.shdr_##fn_name(shdr);			\
- }
- 
- #define SHDR_ADDR(fn_name)				\
-@@ -130,6 +164,11 @@ static uint64_t shdr64_##fn_name(Elf_Shd
- static uint64_t shdr32_##fn_name(Elf_Shdr *shdr)	\
- {							\
- 	return r(&shdr->e32.sh_##fn_name);		\
-+}							\
-+							\
-+static uint64_t shdr_##fn_name(Elf_Shdr *shdr)		\
-+{							\
-+	return e.shdr_##fn_name(shdr);			\
- }
- 
- #define SHDR_WORD(fn_name)				\
-@@ -141,6 +180,10 @@ static uint32_t shdr64_##fn_name(Elf_Shd
- static uint32_t shdr32_##fn_name(Elf_Shdr *shdr)	\
- {							\
- 	return r(&shdr->e32.sh_##fn_name);		\
-+}							\
-+static uint32_t shdr_##fn_name(Elf_Shdr *shdr)		\
-+{							\
-+	return e.shdr_##fn_name(shdr);			\
- }
- 
- SHDR_ADDR(addr)
-@@ -161,6 +204,11 @@ static uint64_t sym64_##fn_name(Elf_Sym
- static uint64_t sym32_##fn_name(Elf_Sym *sym)	\
- {						\
- 	return r(&sym->e32.st_##fn_name);	\
-+}						\
-+						\
-+static uint64_t sym_##fn_name(Elf_Sym *sym)	\
-+{						\
-+	return e.sym_##fn_name(sym);		\
- }
- 
- #define SYM_WORD(fn_name)			\
-@@ -172,6 +220,11 @@ static uint32_t sym64_##fn_name(Elf_Sym
- static uint32_t sym32_##fn_name(Elf_Sym *sym)	\
- {						\
- 	return r(&sym->e32.st_##fn_name);	\
-+}						\
-+						\
-+static uint32_t sym_##fn_name(Elf_Sym *sym)	\
-+{						\
-+	return e.sym_##fn_name(sym);		\
- }
- 
- #define SYM_HALF(fn_name)			\
-@@ -183,6 +236,11 @@ static uint16_t sym64_##fn_name(Elf_Sym
- static uint16_t sym32_##fn_name(Elf_Sym *sym)	\
- {						\
- 	return r2(&sym->e32.st_##fn_name);	\
-+}						\
-+						\
-+static uint16_t sym_##fn_name(Elf_Sym *sym)	\
-+{						\
-+	return e.sym_##fn_name(sym);		\
- }
- 
- static uint8_t sym64_type(Elf_Sym *sym)
-@@ -195,6 +253,11 @@ static uint8_t sym32_type(Elf_Sym *sym)
- 	return ELF32_ST_TYPE(sym->e32.st_info);
- }
- 
-+static uint8_t sym_type(Elf_Sym *sym)
-+{
-+	return e.sym_type(sym);
-+}
-+
- SYM_ADDR(value)
+@@ -262,6 +273,38 @@ SYM_ADDR(value)
  SYM_WORD(name)
  SYM_HALF(shndx)
-@@ -322,29 +385,16 @@ static int compare_extable_64(const void
- 	return av > bv;
- }
  
-+static int compare_extable(const void *a, const void *b)
-+{
-+	return e.compare_extable(a, b);
++#define __maybe_unused			__attribute__((__unused__))
++
++#define RELA_ADDR(fn_name)					\
++static uint64_t rela64_##fn_name(Elf_Rela *rela)		\
++{								\
++	return r8((uint64_t *)&rela->e64.r_##fn_name);		\
++}								\
++								\
++static uint64_t rela32_##fn_name(Elf_Rela *rela)		\
++{								\
++	return r((uint32_t *)&rela->e32.r_##fn_name);		\
++}								\
++								\
++static uint64_t __maybe_unused rela_##fn_name(Elf_Rela *rela)	\
++{								\
++	return e.rela_##fn_name(rela);				\
 +}
 +
- static inline void *get_index(void *start, int entsize, int index)
- {
- 	return start + (entsize * index);
++RELA_ADDR(offset)
++RELA_ADDR(info)
++RELA_ADDR(addend)
++
++static void rela64_write_addend(Elf_Rela *rela, uint64_t val)
++{
++	w8(val, (uint64_t *)&rela->e64.r_addend);
++}
++
++static void rela32_write_addend(Elf_Rela *rela, uint64_t val)
++{
++	w(val, (uint32_t *)&rela->e32.r_addend);
++}
++
+ /*
+  * Get the whole file as a programming convenience in order to avoid
+  * malloc+lseek+read+free of many pieces.  If successful, then mmap
+@@ -341,6 +384,16 @@ static void wle(uint32_t val, uint32_t *
+ 	put_unaligned_le32(val, x);
  }
  
--
--static int (*compare_extable)(const void *a, const void *b);
--static uint64_t (*ehdr_shoff)(Elf_Ehdr *ehdr);
--static uint16_t (*ehdr_shstrndx)(Elf_Ehdr *ehdr);
--static uint16_t (*ehdr_shentsize)(Elf_Ehdr *ehdr);
--static uint16_t (*ehdr_shnum)(Elf_Ehdr *ehdr);
--static uint64_t (*shdr_addr)(Elf_Shdr *shdr);
--static uint64_t (*shdr_offset)(Elf_Shdr *shdr);
--static uint64_t (*shdr_size)(Elf_Shdr *shdr);
--static uint64_t (*shdr_entsize)(Elf_Shdr *shdr);
--static uint32_t (*shdr_link)(Elf_Shdr *shdr);
--static uint32_t (*shdr_name)(Elf_Shdr *shdr);
--static uint32_t (*shdr_type)(Elf_Shdr *shdr);
--static uint8_t (*sym_type)(Elf_Sym *sym);
--static uint32_t (*sym_name)(Elf_Sym *sym);
--static uint64_t (*sym_value)(Elf_Sym *sym);
--static uint16_t (*sym_shndx)(Elf_Sym *sym);
--
++static void w8be(uint64_t val, uint64_t *x)
++{
++	put_unaligned_be64(val, x);
++}
++
++static void w8le(uint64_t val, uint64_t *x)
++{
++	put_unaligned_le64(val, x);
++}
++
+ /*
+  * Move reserved section indices SHN_LORESERVE..SHN_HIRESERVE out of
+  * the way to -256..-1, to avoid conflicting with real section
+@@ -398,13 +451,12 @@ static inline void *get_index(void *star
  static int extable_ent_size;
  static int long_size;
  
-@@ -864,7 +914,30 @@ static int do_file(char const *const fna
- 	}
++#define ERRSTR_MAXSZ	256
  
- 	switch (ehdr->e32.e_ident[EI_CLASS]) {
--	case ELFCLASS32:
-+	case ELFCLASS32: {
-+		struct elf_funcs efuncs = {
-+			.compare_extable	= compare_extable_32,
-+			.ehdr_shoff		= ehdr32_shoff,
-+			.ehdr_shentsize		= ehdr32_shentsize,
-+			.ehdr_shstrndx		= ehdr32_shstrndx,
-+			.ehdr_shnum		= ehdr32_shnum,
-+			.shdr_addr		= shdr32_addr,
-+			.shdr_offset		= shdr32_offset,
-+			.shdr_link		= shdr32_link,
-+			.shdr_size		= shdr32_size,
-+			.shdr_name		= shdr32_name,
-+			.shdr_type		= shdr32_type,
-+			.shdr_entsize		= shdr32_entsize,
-+			.sym_type		= sym32_type,
-+			.sym_name		= sym32_name,
-+			.sym_value		= sym32_value,
-+			.sym_shndx		= sym32_shndx,
-+		};
-+
-+		e = efuncs;
-+		long_size		= 4;
-+		extable_ent_size	= 8;
-+
- 		if (r2(&ehdr->e32.e_ehsize) != sizeof(Elf32_Ehdr) ||
- 		    r2(&ehdr->e32.e_shentsize) != sizeof(Elf32_Shdr)) {
- 			fprintf(stderr,
-@@ -872,26 +945,32 @@ static int do_file(char const *const fna
- 			return -1;
- 		}
+ #ifdef UNWINDER_ORC_ENABLED
+ /* ORC unwinder only support X86_64 */
+ #include <asm/orc_types.h>
  
--		compare_extable		= compare_extable_32;
--		ehdr_shoff		= ehdr32_shoff;
--		ehdr_shentsize		= ehdr32_shentsize;
--		ehdr_shstrndx		= ehdr32_shstrndx;
--		ehdr_shnum		= ehdr32_shnum;
--		shdr_addr		= shdr32_addr;
--		shdr_offset		= shdr32_offset;
--		shdr_link		= shdr32_link;
--		shdr_size		= shdr32_size;
--		shdr_name		= shdr32_name;
--		shdr_type		= shdr32_type;
--		shdr_entsize		= shdr32_entsize;
--		sym_type		= sym32_type;
--		sym_name		= sym32_name;
--		sym_value		= sym32_value;
--		sym_shndx		= sym32_shndx;
--		long_size		= 4;
--		extable_ent_size	= 8;
-+		}
- 		break;
--	case ELFCLASS64:
-+	case ELFCLASS64: {
-+		struct elf_funcs efuncs = {
-+			.compare_extable	= compare_extable_64,
-+			.ehdr_shoff		= ehdr64_shoff,
-+			.ehdr_shentsize		= ehdr64_shentsize,
-+			.ehdr_shstrndx		= ehdr64_shstrndx,
-+			.ehdr_shnum		= ehdr64_shnum,
-+			.shdr_addr		= shdr64_addr,
-+			.shdr_offset		= shdr64_offset,
-+			.shdr_link		= shdr64_link,
-+			.shdr_size		= shdr64_size,
-+			.shdr_name		= shdr64_name,
-+			.shdr_type		= shdr64_type,
-+			.shdr_entsize		= shdr64_entsize,
-+			.sym_type		= sym64_type,
-+			.sym_name		= sym64_name,
-+			.sym_value		= sym64_value,
-+			.sym_shndx		= sym64_shndx,
-+		};
-+
-+		e = efuncs;
-+		long_size		= 8;
-+		extable_ent_size	= 16;
-+
- 		if (r2(&ehdr->e64.e_ehsize) != sizeof(Elf64_Ehdr) ||
- 		    r2(&ehdr->e64.e_shentsize) != sizeof(Elf64_Shdr)) {
- 			fprintf(stderr,
-@@ -900,25 +979,7 @@ static int do_file(char const *const fna
- 			return -1;
- 		}
- 
--		compare_extable		= compare_extable_64;
--		ehdr_shoff		= ehdr64_shoff;
--		ehdr_shentsize		= ehdr64_shentsize;
--		ehdr_shstrndx		= ehdr64_shstrndx;
--		ehdr_shnum		= ehdr64_shnum;
--		shdr_addr		= shdr64_addr;
--		shdr_offset		= shdr64_offset;
--		shdr_link		= shdr64_link;
--		shdr_size		= shdr64_size;
--		shdr_name		= shdr64_name;
--		shdr_type		= shdr64_type;
--		shdr_entsize		= shdr64_entsize;
--		sym_type		= sym64_type;
--		sym_name		= sym64_name;
--		sym_value		= sym64_value;
--		sym_shndx		= sym64_shndx;
--		long_size		= 8;
--		extable_ent_size	= 16;
+-#define ERRSTR_MAXSZ	256
 -
+ static char g_err[ERRSTR_MAXSZ];
+ static int *g_orc_ip_table;
+ static struct orc_entry *g_orc_table;
+@@ -499,7 +551,19 @@ static void *sort_orctable(void *arg)
+ #endif
+ 
+ #ifdef MCOUNT_SORT_ENABLED
++
++/* Only used for sorting mcount table */
++static void rela_write_addend(Elf_Rela *rela, uint64_t val)
++{
++	e.rela_write_addend(rela, val);
++}
++
+ static pthread_t mcount_sort_thread;
++static bool sort_reloc;
++
++static long rela_type;
++
++static char m_err[ERRSTR_MAXSZ];
+ 
+ struct elf_mcount_loc {
+ 	Elf_Ehdr *ehdr;
+@@ -508,6 +572,103 @@ struct elf_mcount_loc {
+ 	uint64_t stop_mcount_loc;
+ };
+ 
++/* Sort the relocations not the address itself */
++static void *sort_relocs(Elf_Ehdr *ehdr, uint64_t start_loc, uint64_t size)
++{
++	Elf_Shdr *shdr_start;
++	Elf_Rela *rel;
++	unsigned int shnum;
++	unsigned int count;
++	int shentsize;
++	void *vals;
++	void *ptr;
++
++	shdr_start = (Elf_Shdr *)((char *)ehdr + ehdr_shoff(ehdr));
++	shentsize = ehdr_shentsize(ehdr);
++
++	vals = malloc(long_size * size);
++	if (!vals) {
++		snprintf(m_err, ERRSTR_MAXSZ, "Failed to allocate sort array");
++		pthread_exit(m_err);
++		return NULL;
++	}
++
++	ptr = vals;
++
++	shnum = ehdr_shnum(ehdr);
++	if (shnum == SHN_UNDEF)
++		shnum = shdr_size(shdr_start);
++
++	for (int i = 0; i < shnum; i++) {
++		Elf_Shdr *shdr = get_index(shdr_start, shentsize, i);
++		void *end;
++
++		if (shdr_type(shdr) != SHT_RELA)
++			continue;
++
++		rel = (void *)ehdr + shdr_offset(shdr);
++		end = (void *)rel + shdr_size(shdr);
++
++		for (; (void *)rel < end; rel = (void *)rel + shdr_entsize(shdr)) {
++			uint64_t offset = rela_offset(rel);
++
++			if (offset >= start_loc && offset < start_loc + size) {
++				if (ptr + long_size > vals + size) {
++					free(vals);
++					snprintf(m_err, ERRSTR_MAXSZ,
++						 "Too many relocations");
++					pthread_exit(m_err);
++					return NULL;
++				}
++
++				/* Make sure this has the correct type */
++				if (rela_info(rel) != rela_type) {
++					free(vals);
++					snprintf(m_err, ERRSTR_MAXSZ,
++						"rela has type %lx but expected %lx\n",
++						(long)rela_info(rel), rela_type);
++					pthread_exit(m_err);
++					return NULL;
++				}
++
++				if (long_size == 4)
++					*(uint32_t *)ptr = rela_addend(rel);
++				else
++					*(uint64_t *)ptr = rela_addend(rel);
++				ptr += long_size;
++			}
 +		}
++	}
++	count = ptr - vals;
++	qsort(vals, count / long_size, long_size, compare_extable);
++
++	ptr = vals;
++	for (int i = 0; i < shnum; i++) {
++		Elf_Shdr *shdr = get_index(shdr_start, shentsize, i);
++		void *end;
++
++		if (shdr_type(shdr) != SHT_RELA)
++			continue;
++
++		rel = (void *)ehdr + shdr_offset(shdr);
++		end = (void *)rel + shdr_size(shdr);
++
++		for (; (void *)rel < end; rel = (void *)rel + shdr_entsize(shdr)) {
++			uint64_t offset = rela_offset(rel);
++
++			if (offset >= start_loc && offset < start_loc + size) {
++				if (long_size == 4)
++					rela_write_addend(rel, *(uint32_t *)ptr);
++				else
++					rela_write_addend(rel, *(uint64_t *)ptr);
++				ptr += long_size;
++			}
++		}
++	}
++	free(vals);
++	return NULL;
++}
++
+ /* Sort the addresses stored between __start_mcount_loc to __stop_mcount_loc in vmlinux */
+ static void *sort_mcount_loc(void *arg)
+ {
+@@ -517,6 +678,9 @@ static void *sort_mcount_loc(void *arg)
+ 	uint64_t count = emloc->stop_mcount_loc - emloc->start_mcount_loc;
+ 	unsigned char *start_loc = (void *)emloc->ehdr + offset;
+ 
++	if (sort_reloc)
++		return sort_relocs(emloc->ehdr, emloc->start_mcount_loc, count);
++
+ 	qsort(start_loc, count/long_size, long_size, compare_extable);
+ 	return NULL;
+ }
+@@ -866,12 +1030,14 @@ static int do_file(char const *const fna
+ 		r2	= r2le;
+ 		r8	= r8le;
+ 		w	= wle;
++		w8	= w8le;
+ 		break;
+ 	case ELFDATA2MSB:
+ 		r	= rbe;
+ 		r2	= r2be;
+ 		r8	= r8be;
+ 		w	= wbe;
++		w8	= w8be;
  		break;
  	default:
- 		fprintf(stderr, "unrecognized ELF class %d %s\n",
+ 		fprintf(stderr, "unrecognized ELF data encoding %d: %s\n",
+@@ -887,8 +1053,13 @@ static int do_file(char const *const fna
+ 	}
+ 
+ 	switch (r2(&ehdr->e32.e_machine)) {
+-	case EM_386:
+ 	case EM_AARCH64:
++#ifdef MCOUNT_SORT_ENABLED
++		sort_reloc = true;
++		rela_type = 0x403;
++#endif
++		/* fallthrough */
++	case EM_386:
+ 	case EM_LOONGARCH:
+ 	case EM_RISCV:
+ 	case EM_S390:
+@@ -932,6 +1103,10 @@ static int do_file(char const *const fna
+ 			.sym_name		= sym32_name,
+ 			.sym_value		= sym32_value,
+ 			.sym_shndx		= sym32_shndx,
++			.rela_offset		= rela32_offset,
++			.rela_info		= rela32_info,
++			.rela_addend		= rela32_addend,
++			.rela_write_addend	= rela32_write_addend,
+ 		};
+ 
+ 		e = efuncs;
+@@ -965,6 +1140,10 @@ static int do_file(char const *const fna
+ 			.sym_name		= sym64_name,
+ 			.sym_value		= sym64_value,
+ 			.sym_shndx		= sym64_shndx,
++			.rela_offset		= rela64_offset,
++			.rela_info		= rela64_info,
++			.rela_addend		= rela64_addend,
++			.rela_write_addend	= rela64_write_addend,
+ 		};
+ 
+ 		e = efuncs;
 
 
