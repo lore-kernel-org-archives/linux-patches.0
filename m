@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCF3417353;
-	Thu,  2 Jul 2026 16:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08529420E9F;
+	Thu,  2 Jul 2026 16:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010511; cv=none; b=i1het1LEPcKzzR5Bm7kSvRwkrT7nloTBua4BQ124F7c0idV9XX+nR1NlRwkHaVcUab0HP73cMxw2rn2fzQWtzrjQkFETdEWYSSTRU+5xTF6qWlcBQsE0kbwmOy+Jwj8/KvzzoET68rhnqzxrVEL1DxfudUlivDh5c+aYQmlqn28=
+	t=1783010512; cv=none; b=MRqMAIf1T7e6vN19MDrSKrk5v01TvciM8nrahm7w2j30DPcEcFzjqngY8dQVRsifZl9GjyifUFjYemptAU11/QSeBfPMCbB1qlC6lw0xAvqmdVf7cjW1jaANrprXX935j6uN8DQmytCT52ezQ5sdou4MCLmo+8Mf+CrNmlaeVfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010511; c=relaxed/simple;
-	bh=Z7KLsAfBgZ7vDFQPVrAfA7IKpYpHVyZ/Z/PQVpgS/70=;
+	s=arc-20240116; t=1783010512; c=relaxed/simple;
+	bh=u2RpXBDYpYGzV0tGg6jnIvuMkfiI/wlaVo/NZASYymw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o41FwGGOEoJskb5DLzvaqM6Pl5N3X/aQvQbu7lRYLm9AB05Z+krbQwA94as8tZ9RgHTnKmLdXUl7h/jgvw4Npgp8JZvZ8MiP8jQbRHgcul7mlxhsBAfgZy2mzlR6/vy8AngjokGumumY0ieiEeE/MASA8qPoe5dwyLlWZMWY6hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Luywm3c0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cl01DF9aZ7CG28euLlrZhWU8mGJbHmA4WkHoAEPJw2RBanyBCnabYTuM0w/gViUCdziX4O4ECi/qBFyoehRo4iKCCeG7T9zpdwD5XFrY3P1+RFkmElNCyW1ACC5K2NuoA/4WRxARmMzTbDVPYRuzCsc7/EJdXTWPZL2ZQNb1l+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4BIhdrl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Luywm3c0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B831F00A3D;
-	Thu,  2 Jul 2026 16:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4BIhdrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A481F00A3F;
+	Thu,  2 Jul 2026 16:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010506;
-	bh=bnJmFhCgEwMERhVYibrR1Ipa+4rWAy1CTs7/Vn0oTi4=;
+	s=korg; t=1783010508;
+	bh=kyePYu8//GveJynPYojdvBo2OPYzu1QmWh0TgYY8Xz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Luywm3c0Ga+R+F4ABoDG4+ou/PlWixtdSaYETjjdn9c1OFVyBiUMQd9+A678gQOYE
-	 MI/TTsbS+lXtwlOqwn9OzKz/IyS0dTKz2wuXODn97pmVrAX6nHza8gsb3/HVGMy3Dk
-	 hNDc5HID0XKW8yPGnkRWqFCjwsWJ9xCZQTOIzNf8=
+	b=L4BIhdrlO1t3fl+QyzrpbWrDwsIpNrt0VMQFR1NNBjgh2Om6v1a8ECewGQ4BSELq0
+	 yextAWBv9lKTmWKsYadcs1MQ4r06gmRH6dXkLuUqcNuSysoVm4bWW0gI3wVaUseOT/
+	 IRVPIUFfa/tztA2X14oY5K8AktdhrKms2Pnc17uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Ming Lin <chengminglin@mxic.com.tw>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/204] mtd: spi-nor: macronix: add support for mx66{l2, u1}g45g
-Date: Thu,  2 Jul 2026 18:19:52 +0200
-Message-ID: <20260702155121.488780025@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 6.12 136/204] mac802154: llsec: add skb_cow_data() before in-place crypto
+Date: Thu,  2 Jul 2026 18:19:53 +0200
+Message-ID: <20260702155121.509731324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,49 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Ming Lin <chengminglin@mxic.com.tw>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 797bbaa7531f75985b199e484451fa3f954382b3 upstream.
+commit 84a04eb5b210643bd67aab81ff805d32f62aa865 upstream.
 
-Due to incorrect values in the 4-BAIT table for these two flash IDs,
-it is necessary to add these two flash IDs with fixups.
+llsec_do_encrypt_unauth(), llsec_do_encrypt_auth(),
+llsec_do_decrypt_unauth(), and llsec_do_decrypt_auth() all perform
+in-place cryptographic transformations on skb data.  They build a
+scatterlist with sg_init_one() pointing into the skb's linear data area
+and then pass the same scatterlist as both src and dst to the crypto API
+(e.g. crypto_skcipher_encrypt/decrypt, crypto_aead_encrypt/decrypt).
 
-Signed-off-by: Cheng Ming Lin <chengminglin@mxic.com.tw>
-Link: https://lore.kernel.org/r/20250211063028.382169-3-linchengming884@gmail.com
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+On the RX path, __ieee802154_rx_handle_packet() clones the received skb
+before handing it to each subscriber via ieee802154_subif_frame().  The
+cloned skb shares the same underlying data buffer via reference
+counting.  When llsec_do_decrypt() subsequently modifies this shared
+buffer in place, it corrupts data that other clones -- potentially
+belonging to other sockets or subsystems -- still reference.
+
+On the TX path, similar data sharing can occur when an skb's head has
+been cloned (skb_cloned() returns true).
+
+The fix is to call skb_cow_data() before performing any in-place crypto
+operation.  skb_cow_data() ensures that the skb's data area is not
+shared: if the skb head is cloned or the data spans multiple fragments,
+it copies the data into a private buffer that can be safely modified in
+place.  This is the same pattern used by:
+
+  - ESP (net/ipv4/esp4.c, net/ipv6/esp6.c)
+  - MACsec (drivers/net/macsec.c)
+  - WireGuard (drivers/net/wireguard/receive.c)
+  - TIPC (net/tipc/crypto.c)
+
+Without this guard, in-place crypto on shared skb data leads to:
+  - Silent data corruption of other skb clones
+  - Use-after-free when the crypto API scatterwalk writes through a
+    page that has already been freed by another clone's kfree_skb()
+  - Kernel crashes under concurrent 802.15.4 traffic with security
+    enabled (KASAN/KMSAN reports slab-use-after-free)
+
+Found by 0sec (https://0sec.ai) using automated source analysis.
+
+Fixes: 4c14a2fb5d14 ("mac802154: add llsec decryption method")
+Fixes: 03556e4d0dbb ("mac802154: add llsec encryption method")
+Cc: stable@vger.kernel.org
+Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Closes: https://lore.kernel.org/linux-wpan/20260525161806.96158-1-doruk@0sec.ai/
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Closes: <link to your mail on lore>
+Link: https://lore.kernel.org/20260526183726.56100-1-doruk@0sec.ai
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/macronix.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/mac802154/llsec.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/mtd/spi-nor/macronix.c b/drivers/mtd/spi-nor/macronix.c
-index 678ebaa220ca98..6127565372c529 100644
---- a/drivers/mtd/spi-nor/macronix.c
-+++ b/drivers/mtd/spi-nor/macronix.c
-@@ -110,6 +110,10 @@ static const struct flash_info macronix_nor_parts[] = {
- 		.size = SZ_128M,
- 		.no_sfdp_flags = SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ,
- 		.fixups = &macronix_qpp4b_fixups,
-+	}, {
-+		/* MX66L2G45G */
-+		.id = SNOR_ID(0xc2, 0x20, 0x1c),
-+		.fixups = &macronix_qpp4b_fixups,
- 	}, {
- 		.id = SNOR_ID(0xc2, 0x23, 0x14),
- 		.name = "mx25v8035f",
-@@ -165,6 +169,10 @@ static const struct flash_info macronix_nor_parts[] = {
- 		.no_sfdp_flags = SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ,
- 		.fixup_flags = SPI_NOR_4B_OPCODES,
- 		.fixups = &macronix_qpp4b_fixups,
-+	}, {
-+		/* MX66U1G45G */
-+		.id = SNOR_ID(0xc2, 0x25, 0x3b),
-+		.fixups = &macronix_qpp4b_fixups,
- 	}, {
- 		.id = SNOR_ID(0xc2, 0x25, 0x3c),
- 		.name = "mx66u2g45g",
--- 
-2.53.0
-
+--- a/net/mac802154/llsec.c
++++ b/net/mac802154/llsec.c
+@@ -710,6 +710,7 @@ int mac802154_llsec_encrypt(struct mac80
+ {
+ 	struct ieee802154_hdr hdr;
+ 	int rc, authlen, hlen;
++	struct sk_buff *trailer;
+ 	struct mac802154_llsec_key *key;
+ 	u32 frame_ctr;
+ 
+@@ -769,6 +770,12 @@ int mac802154_llsec_encrypt(struct mac80
+ 	skb->mac_len = ieee802154_hdr_push(skb, &hdr);
+ 	skb_reset_mac_header(skb);
+ 
++	rc = skb_cow_data(skb, 0, &trailer);
++	if (rc < 0) {
++		llsec_key_put(key);
++		return rc;
++	}
++
+ 	rc = llsec_do_encrypt(skb, sec, &hdr, key);
+ 	llsec_key_put(key);
+ 
+@@ -908,6 +915,13 @@ llsec_do_decrypt(struct sk_buff *skb, co
+ 		 const struct ieee802154_hdr *hdr,
+ 		 struct mac802154_llsec_key *key, __le64 dev_addr)
+ {
++	struct sk_buff *trailer;
++	int err;
++
++	err = skb_cow_data(skb, 0, &trailer);
++	if (err < 0)
++		return err;
++
+ 	if (hdr->sec.level == IEEE802154_SCF_SECLEVEL_ENC)
+ 		return llsec_do_decrypt_unauth(skb, sec, hdr, key, dev_addr);
+ 	else
 
 
