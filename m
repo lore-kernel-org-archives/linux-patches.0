@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F20348C53;
-	Thu,  2 Jul 2026 16:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70F334A3D9;
+	Thu,  2 Jul 2026 16:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009380; cv=none; b=TE9NZ1JrLlAd2CVyHAZeDpYcynhjpo0c869oBJdbNjGUQoStOQJEmC4N6KmpHQcgGD30bhMgs+1pCc/SPSGqypy3okM37iGuKvsWkr5PSDrDpAVFnC/O0zkGZR2bzr9rJuUZlgh2Txz9EUQcvTFSO31lVsqGpBCIAy7H1EIL5is=
+	t=1783009385; cv=none; b=M5S4HHninyIi1zHN8ah2wvVAivIgWwdBusckgqXJS7H1yrcvVn6/aQDKWJojvsiiPdvz2N4k+l3dbV8QlTOAzgGlkOAFHdHPmPcWH2MeFGFPvB85Wsk+5V+A7Vb2wQX4UlRH/kYmIaxyXREDpaKD6x50PO6YWGjsi0yhjkxh5IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009380; c=relaxed/simple;
-	bh=iW6Ib2z7jW4uZbLgrST3MKrWD/2aoTIWUz8D2Javyy0=;
+	s=arc-20240116; t=1783009385; c=relaxed/simple;
+	bh=/ld/pYuSug3e84qNG2LD0b12K6UV7q+kdvEeV2HWLJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdKaB9NyPb87oja2EkdgvBMbP8SmVSk8UK8s8azRVFThJHVIGb/4cY02AEgNSIpQSgctEBpFSKXKR1Qww/+xJ+Tltf8MOQJRSWmlPHONT8sIQ71OOQblLUFqnRDCnOLbT1NnSje7+SFUldGx7StSLMp7VY9dE7VUiKhE60zzy3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OErYZoUt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aLYR85WxIqaNpHdrQY4z0lgpmRFf+bQzoEubkRDHNrYpWI52g6pgTLLWwX7TNPU608Krj120DtbB7mKENRMg+4gCZaXfjJRL30LPdkAernrngkCKefNkmWDYRROnyYgm46rlGVJvvhoIi7UHo+59KhWhlGWaVOeMnQ4OganGJIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cWHVxu/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OErYZoUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2660C1F00A3A;
-	Thu,  2 Jul 2026 16:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cWHVxu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB8E1F00A3F;
+	Thu,  2 Jul 2026 16:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009376;
-	bh=mFG3K9yIORPIce55ssHQLPnrrQqWIJsD1KJL01/4Dvo=;
+	s=korg; t=1783009382;
+	bh=4WpYjHcf/DRAC+KD+H2uwkG6gzsiHTrflxqW+PXu0/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OErYZoUtcfQegG4lSih7hzAk70ape1KIxXf0vmXbYd5OdGV2DaRGkql23l+t7C4F1
-	 JbLcr3xSdJaq9OWB4dxdX7E6cyhnrDa85BhYoP/NHuu2GjGRW3AXe4eukK0MO8lw8R
-	 tqrjmEypERfuNQge7+2pZaHjP0YWvt2ru3qVqMpc=
+	b=2cWHVxu/evUgo8Z5K5Pya96sgnMhCVpzNRSiEnU2wgli0Vz7fOy/okH597nwtIsbJ
+	 vfoaqaV+Quo1xxvRvo/IOTwi0sd1OrYMwp40uujHT/3ktrt/MZ+d9G1CwcyB/1Mjwe
+	 IUZnAOKGxBy9oHvsAEKdl/+OBbtjsTyDCJ+GBds4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+814c351d094f4f1a1b86@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 28/96] media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
-Date: Thu,  2 Jul 2026 18:19:20 +0200
-Message-ID: <20260702155109.578062829@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 03/96] net/sched: simplify tcf_pedit_act
+Date: Thu,  2 Jul 2026 18:18:55 +0200
+Message-ID: <20260702155109.031855129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -51,81 +54,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit 7d8bf3d8f91073f4db347ed3aa6302b56107499c upstream.
+[ Upstream commit 95b069382351826c0ae37938070aa82dbeaf288d ]
 
-syzbot reported a general protection fault in
-vidtv_psi_ts_psi_write_into [1].
+Remove the check for a negative number of keys as
+this cannot ever happen
 
-vidtv_mux_get_pid_ctx() can return NULL, but vidtv_mux_push_si() does
-not check for this before dereferencing the returned pointer to access
-the continuity counter. This leads to a general protection fault when
-accessing a near-NULL address.
-
-The root cause is that vidtv_mux_pid_ctx_init() does not check the
-return value of vidtv_mux_create_pid_ctx_once() for PMT section PIDs.
-If the allocation fails, the PID context is never created, but init
-returns success. The subsequent vidtv_mux_push_si() call then gets
-NULL from vidtv_mux_get_pid_ctx() and crashes.
-
-Fix both the root cause (add error check in vidtv_mux_pid_ctx_init
-for PMT PIDs) and add defensive NULL checks in vidtv_mux_push_si for
-all vidtv_mux_get_pid_ctx() calls.
-
-[1]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-Workqueue: events vidtv_mux_tick
-RIP: 0010:vidtv_psi_ts_psi_write_into+0x54a/0xbc0 drivers/media/test-drivers/vidtv/vidtv_psi.c:197
-Call Trace:
- <TASK>
- vidtv_psi_table_header_write_into drivers/media/test-drivers/vidtv/vidtv_psi.c:799 [inline]
- vidtv_psi_pmt_write_into+0x3b2/0xa70 drivers/media/test-drivers/vidtv/vidtv_psi.c:1231
- vidtv_mux_push_si+0x932/0xe80 drivers/media/test-drivers/vidtv/vidtv_mux.c:196
- vidtv_mux_tick+0xe9b/0x1480 drivers/media/test-drivers/vidtv/vidtv_mux.c:408
-
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+814c351d094f4f1a1b86@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=814c351d094f4f1a1b86
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_mux.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/sched/act_pedit.c | 137 +++++++++++++++++++++---------------------
+ 1 file changed, 67 insertions(+), 70 deletions(-)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
-@@ -101,7 +101,8 @@ static int vidtv_mux_pid_ctx_init(struct
- 	/* add a ctx for all PMT sections */
- 	while (p) {
- 		pid = vidtv_psi_get_pat_program_pid(p);
--		vidtv_mux_create_pid_ctx_once(m, pid);
-+		if (!vidtv_mux_create_pid_ctx_once(m, pid))
-+			goto free;
- 		p = p->next;
- 	}
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 0fbffebfbdc9d8..84152d3a492469 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -341,8 +341,12 @@ static int pedit_skb_hdr_offset(struct sk_buff *skb,
+ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 			 struct tcf_result *res)
+ {
++	enum pedit_header_type htype = TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK;
++	enum pedit_cmd cmd = TCA_PEDIT_KEY_EX_CMD_SET;
+ 	struct tcf_pedit *p = to_pedit(a);
++	struct tcf_pedit_key_ex *tkey_ex;
+ 	struct tcf_pedit_parms *parms;
++	struct tc_pedit_key *tkey;
+ 	u32 max_offset;
+ 	int i;
  
-@@ -170,6 +171,9 @@ static u32 vidtv_mux_push_si(struct vidt
- 	nit_ctx = vidtv_mux_get_pid_ctx(m, VIDTV_NIT_PID);
- 	eit_ctx = vidtv_mux_get_pid_ctx(m, VIDTV_EIT_PID);
+@@ -358,88 +362,81 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 	tcf_lastuse_update(&p->tcf_tm);
+ 	tcf_action_update_bstats(&p->common, skb);
  
-+	if (!pat_ctx || !sdt_ctx || !nit_ctx || !eit_ctx)
-+		return 0;
+-	if (parms->tcfp_nkeys > 0) {
+-		struct tc_pedit_key *tkey = parms->tcfp_keys;
+-		struct tcf_pedit_key_ex *tkey_ex = parms->tcfp_keys_ex;
+-		enum pedit_header_type htype =
+-			TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK;
+-		enum pedit_cmd cmd = TCA_PEDIT_KEY_EX_CMD_SET;
+-
+-		for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
+-			u32 *ptr, hdata;
+-			int offset = tkey->off;
+-			int hoffset;
+-			u32 val;
+-			int rc;
+-
+-			if (tkey_ex) {
+-				htype = tkey_ex->htype;
+-				cmd = tkey_ex->cmd;
+-
+-				tkey_ex++;
+-			}
++	tkey = parms->tcfp_keys;
++	tkey_ex = parms->tcfp_keys_ex;
+ 
+-			rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
+-			if (rc) {
+-				pr_info("tc action pedit bad header type specified (0x%x)\n",
+-					htype);
+-				goto bad;
+-			}
++	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
++		int offset = tkey->off;
++		u32 *ptr, hdata;
++		int hoffset;
++		u32 val;
++		int rc;
+ 
+-			if (tkey->offmask) {
+-				u8 *d, _d;
+-
+-				if (!offset_valid(skb, hoffset + tkey->at)) {
+-					pr_info("tc action pedit 'at' offset %d out of bounds\n",
+-						hoffset + tkey->at);
+-					goto bad;
+-				}
+-				d = skb_header_pointer(skb, hoffset + tkey->at,
+-						       sizeof(_d), &_d);
+-				if (!d)
+-					goto bad;
+-				offset += (*d & tkey->offmask) >> tkey->shift;
+-			}
++		if (tkey_ex) {
++			htype = tkey_ex->htype;
++			cmd = tkey_ex->cmd;
+ 
+-			if (offset % 4) {
+-				pr_info("tc action pedit offset must be on 32 bit boundaries\n");
+-				goto bad;
+-			}
++			tkey_ex++;
++		}
+ 
+-			if (!offset_valid(skb, hoffset + offset)) {
+-				pr_info("tc action pedit offset %d out of bounds\n",
+-					hoffset + offset);
+-				goto bad;
+-			}
++		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
++		if (rc) {
++			pr_info("tc action pedit bad header type specified (0x%x)\n",
++				htype);
++			goto bad;
++		}
+ 
+-			ptr = skb_header_pointer(skb, hoffset + offset,
+-						 sizeof(hdata), &hdata);
+-			if (!ptr)
+-				goto bad;
+-			/* just do it, baby */
+-			switch (cmd) {
+-			case TCA_PEDIT_KEY_EX_CMD_SET:
+-				val = tkey->val;
+-				break;
+-			case TCA_PEDIT_KEY_EX_CMD_ADD:
+-				val = (*ptr + tkey->val) & ~tkey->mask;
+-				break;
+-			default:
+-				pr_info("tc action pedit bad command (%d)\n",
+-					cmd);
++		if (tkey->offmask) {
++			u8 *d, _d;
 +
- 	pat_args.offset             = m->mux_buf_offset;
- 	pat_args.continuity_counter = &pat_ctx->cc;
++			if (!offset_valid(skb, hoffset + tkey->at)) {
++				pr_info("tc action pedit 'at' offset %d out of bounds\n",
++					hoffset + tkey->at);
+ 				goto bad;
+ 			}
++			d = skb_header_pointer(skb, hoffset + tkey->at,
++					       sizeof(_d), &_d);
++			if (!d)
++				goto bad;
++			offset += (*d & tkey->offmask) >> tkey->shift;
++		}
  
-@@ -186,6 +190,8 @@ static u32 vidtv_mux_push_si(struct vidt
+-			*ptr = ((*ptr & tkey->mask) ^ val);
+-			if (ptr == &hdata)
+-				skb_store_bits(skb, hoffset + offset, ptr, 4);
++		if (offset % 4) {
++			pr_info("tc action pedit offset must be on 32 bit boundaries\n");
++			goto bad;
  		}
  
- 		pmt_ctx = vidtv_mux_get_pid_ctx(m, pmt_pid);
-+		if (!pmt_ctx)
-+			continue;
+-		goto done;
+-	} else {
+-		WARN(1, "pedit BUG: index %d\n", p->tcf_index);
++		if (!offset_valid(skb, hoffset + offset)) {
++			pr_info("tc action pedit offset %d out of bounds\n",
++				hoffset + offset);
++			goto bad;
++		}
++
++		ptr = skb_header_pointer(skb, hoffset + offset,
++					 sizeof(hdata), &hdata);
++		if (!ptr)
++			goto bad;
++		/* just do it, baby */
++		switch (cmd) {
++		case TCA_PEDIT_KEY_EX_CMD_SET:
++			val = tkey->val;
++			break;
++		case TCA_PEDIT_KEY_EX_CMD_ADD:
++			val = (*ptr + tkey->val) & ~tkey->mask;
++			break;
++		default:
++			pr_info("tc action pedit bad command (%d)\n",
++				cmd);
++			goto bad;
++		}
++
++		*ptr = ((*ptr & tkey->mask) ^ val);
++		if (ptr == &hdata)
++			skb_store_bits(skb, hoffset + offset, ptr, 4);
+ 	}
  
- 		pmt_args.offset             = m->mux_buf_offset;
- 		pmt_args.pmt                = m->si.pmt_secs[i];
++	goto done;
++
+ bad:
+ 	spin_lock(&p->tcf_lock);
+ 	p->tcf_qstats.overlimits++;
+-- 
+2.53.0
+
 
 
