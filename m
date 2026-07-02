@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4A2397E81;
-	Thu,  2 Jul 2026 16:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A467F3B52F8;
+	Thu,  2 Jul 2026 16:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009605; cv=none; b=bzOn0zCPV3xggDUbkksaLHJ7zGYoBJAo4yej1hAia+KZlmB9y6qtv8hfc1D59wuelL4SbOVFVsIX+Xqg/fSKwK2gbRgZENTNCVGJ3tsiFAKXKJ7OObxSZfsOm+lQe5kgTIJKS1CAYhW9ROvi2EWoY4GU/N5oPDEgDfssFdMaLoo=
+	t=1783009608; cv=none; b=ZhRajL+b11kvnLyCLNxz8cxG71HISlpxW42J5KNywAKISLzpPRWYuHwKadd+YjfydQoae1t9s+pnybzWssbKlNzmXoLUifx1250fr7jN1XnExVMdiSSYitob3vKsf8pcvwvNA8wop72BjoDiiKPBo2H1ENibiMYnwgUCPlBtbXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009605; c=relaxed/simple;
-	bh=yTSTeNk3K1sCqQlHLX0A0aiEgm/byLi6VO5dLGNFG5c=;
+	s=arc-20240116; t=1783009608; c=relaxed/simple;
+	bh=nRMGNUwwaPFWcW6A4JHy2/4dK25XuiobJ/muvq5IahY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lh9ba/pAgDSo/OTHTmm/BsI8d45UPOggegGP0Y/vbHKTQ9QqCWokqVKSCCXASJ8T2y8T6sKjIgw27oMn6eRKpl1tuoQ2hYHCNhWqSUhMg6D+zTMHpstdUabR+RVC5yuKxUD+dx2pChKwM5US/+xTOfbEnuUjw8AKN2WNxWOqnV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/X7w/t5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=omB7nDNAZsnNI4XUZHfP7we0WeluFPKfm073WH8d5hPR24g/NBVt7cneKnV7FUqrVIOc9QzpktBUWjVm5Pqgvy9d4PTeOS7ybbIyJITGwylnkwcV88Pems7IfJoccEwwNu+rt6arQaGzT2GYdKecOS5doywf1m5zvHb/0Y3I+Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUSjIKLg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/X7w/t5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E081F00A3A;
-	Thu,  2 Jul 2026 16:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUSjIKLg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2391F000E9;
+	Thu,  2 Jul 2026 16:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009602;
-	bh=JEHJAVBVMkDrmbsAvMsHd6M6+BKqT5dlBwaCdX0W+hI=;
+	s=korg; t=1783009605;
+	bh=JgggEdr8fEq92U8kOP4YC5xIYZ5tjgUPizHQzXLuicQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z/X7w/t5QVReSBu4zlDSaOsnVmGB6ZnH09jBYLnOBx6EbIu2G/4korWG8OlnD71fk
-	 YUn6cQUgu7jd0bjx6Mtj61RIRNlKJE7uWPnVxXxYcfen2lN0pgAho9syHiD5H8abHz
-	 nj9JSaf7w3eLDoM8TlOz/LXj8sWmNh9vKGp6Z2+I=
+	b=dUSjIKLgScxNFaDwMDtc+kD0iC89gxhlEONRbU5DJvIhlPPb9PzUDsBiQ0v9NKL+8
+	 XbC06NwKiaGuM2jiUqX7tbYDGK5sQIXC0mVHVxPAamoj9NorEhqVXWhi6+dOrvDHUd
+	 H82YGWLi8wfulnrPMSCQ5BR8VGdkbBUc/Al6kUNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wang <00107082@163.com>,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Justin Chen <justin.chen@broadcom.com>,
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Martyniuk <alexevgmart@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/95] xhci: fix memory leak regression when freeing xhci vdev devices depth first
-Date: Thu,  2 Jul 2026 18:19:21 +0200
-Message-ID: <20260702155109.589842234@linuxfoundation.org>
+Subject: [PATCH 5.15 19/95] af_unix: Reject SIOCATMARK on non-stream sockets
+Date: Thu,  2 Jul 2026 18:19:22 +0200
+Message-ID: <20260702155109.611856908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -53,51 +59,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-commit edcbe06453ddfde21f6aa763f7cab655f26133cc upstream
+commit d119775f2bad827edc28071c061fdd4a91f889a5 upstream.
 
-Suspend-resume cycle test revealed a memory leak in 6.17-rc3
+SIOCATMARK reports whether the receive queue is at the urgent mark for
+MSG_OOB.
 
-Turns out the slot_id race fix changes accidentally ends up calling
-xhci_free_virt_device() with an incorrect vdev parameter.
-The vdev variable was reused for temporary purposes right before calling
-xhci_free_virt_device().
+In AF_UNIX, MSG_OOB is supported only for SOCK_STREAM sockets.
+SOCK_DGRAM and SOCK_SEQPACKET reject MSG_OOB in sendmsg() and recvmsg(),
+so they should not support SIOCATMARK either.
 
-Fix this by passing the correct vdev parameter.
+Return -EOPNOTSUPP for non-stream sockets before checking the receive
+queue.
 
-The slot_id race fix that caused this regression was targeted for stable,
-so this needs to be applied there as well.
-
-Fixes: 2eb03376151b ("usb: xhci: Fix slot_id resource race conflict")
-Reported-by: David Wang <00107082@163.com>
-Closes: https://lore.kernel.org/linux-usb/20250829181354.4450-1-00107082@163.com
-Suggested-by: Michal Pecio <michal.pecio@gmail.com>
-Suggested-by: David Wang <00107082@163.com>
-Cc: stable@vger.kernel.org
-Tested-by: David Wang <00107082@163.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250902105306.877476-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Fixes: 314001f0bf92 ("af_unix: Add OOB support")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260506140825.2987635-1-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/unix/af_unix.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index fb81e61a599d75..7f75298a09d6fc 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -961,7 +961,7 @@ static void xhci_free_virt_devices_depth_first(struct xhci_hcd *xhci, int slot_i
- out:
- 	/* we are now at a leaf device */
- 	xhci_debugfs_remove_slot(xhci, slot_id);
--	xhci_free_virt_device(xhci, vdev, slot_id);
-+	xhci_free_virt_device(xhci, xhci->devs[slot_id], slot_id);
- }
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 1676bffe7259dc..8e9a8499db5e66 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -3040,6 +3040,9 @@ static int unix_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 			struct sk_buff *skb;
+ 			int answ = 0;
  
- int xhci_alloc_virt_device(struct xhci_hcd *xhci, int slot_id,
++			if (sk->sk_type != SOCK_STREAM)
++				return -EOPNOTSUPP;
++
+ 			skb = skb_peek(&sk->sk_receive_queue);
+ 			if (skb && skb == READ_ONCE(unix_sk(sk)->oob_skb))
+ 				answ = 1;
 -- 
 2.53.0
 
