@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE5A37A83C;
-	Thu,  2 Jul 2026 16:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FB93624DB;
+	Thu,  2 Jul 2026 16:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010579; cv=none; b=TlxHZHWudaNvlAXVJPFC4VEkvs2ayVsFUJaqvsdJbHr8NtLnYA4G3YRSpqodL4dfTVAB41tuuur/DEBllr5uuZMjf1aTFEhieFZNBFxL2IkQ2nzALZH7ExB+eahH+TGx/eWTjA2g8/m7+FQzjKxhaqbDPeQwGKcQE9R0uqT1i+A=
+	t=1783010581; cv=none; b=DtYrs2zTVfaW1IRF/J16u4hR9R4y/upopvgtgvM7ic2y87BIA47fJEvl3nrTCXpLNdPUNpEF19hIL5mT7joG08N1GaSa5lvSc1mJRKnvbCTxOAGFcFP1lacBDwo0cqU9pU6QhoyOogWJ9jVilBB6HaiZmmOccP8rwebmcMrUHao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010579; c=relaxed/simple;
-	bh=IN2pvlcvGvbPCDZ6fn9/ySHshIoOriaSmNzVx9jW4SU=;
+	s=arc-20240116; t=1783010581; c=relaxed/simple;
+	bh=oUUMjOfgl7Xq9WeBVciwVXKHZDdnzLBPf8P+Ds9z6TY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3XgzfHMn7yyg5a+vVum7TFV85FIhdhjpxEIZj2+QMpudk0TUQWq1bJu9Kp+BTgEO0/UoulJMkpNe3d/jih2vc83+wQOv2bG8n3R/5N6xP2ZdSvOvCCE7Gx8om7ve3Ua/+glg9zRPGNYXT+R2JYSlDJHm6bf0ZGZv3pzTMgKBLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUZVmKKA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pQ/RK3+okeuwma76YXjwdZaH8A72mj/0z42fL7Eb6pDy/Tb6RzVTyMfJ1vxqBAH9EdQwLfGpUeaZNz9zOV7xENbYRZDFFMsRXZjJ8o1s1Khshgk2/S7c3j88+pyE9S/Q8Dztdi0nSYMjulMwLpnlrkCYAwy77BjTe7So1C1f+v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMefon9G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUZVmKKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802921F00A3A;
-	Thu,  2 Jul 2026 16:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMefon9G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254B21F000E9;
+	Thu,  2 Jul 2026 16:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010577;
-	bh=/nTF1NT57pSxMycuMBrCJwEUw7knoIcs7+7btOc84lY=;
+	s=korg; t=1783010579;
+	bh=/2vNVkk19UVRM9/2msHoDbj957AZoF1XCP7hKYFzRbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zUZVmKKAqE37GTrYzwZE3unkbQG+qD81LBmbvObvba3zxKPDoBf8UggV7/YifjE9/
-	 5TbSjZiEkZqtNoPU5ygWTsU6BKtPJItJnokEg7zObBaIA9dSTXuTF2f9m243Qxn7rN
-	 m7MARAAWnz0W5GHBEM11fdBVWtDPgTOY/iGN/k7E=
+	b=yMefon9GRPS+mVo0mUqzIgkNApsRxAV1uJ1A8JdPbTSw9bkCRIDPxakrH6nD4SPFr
+	 7719ob9AGuv26PwSluYZ3dIYoqOeIrYFQ71zo0l2I4rUuONEx4JO+xyJoomeDlFHwr
+	 lOBD5s4VuCjBSWpzECg5jRf+rX35nagarux5Iqd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/204] batman-adv: prevent ELP transmission interval underflow
-Date: Thu,  2 Jul 2026 18:19:25 +0200
-Message-ID: <20260702155120.924545135@linuxfoundation.org>
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.12 156/204] f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
+Date: Thu,  2 Jul 2026 18:20:13 +0200
+Message-ID: <20260702155121.926997520@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,52 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-commit 5e50d4b8ae3ea622122d3c6a38d7f6fe68dfddca upstream.
+commit c4810ada31e80cbe4011467c4f3b1e93f94134f3 upstream.
 
-batadv_v_elp_start_timer() enqeues a delayed work. The time when it starts
-is randomly chosen between (elp_interval - BATADV_JITTER) and
-(elp_interval + BATADV_JITTER). The configured elp_interval must therefore
-be larger or equal to BATADV_JITTER to avoid that it causes an underflow of
-the unsigned integer. If this would happen, then a "fast" ELP interval
-would turn into a "day long" delay.
+f2fs_acl_count() only validates the aggregate ACL xattr length. A
+malformed ACL can still place ACL_USER or ACL_GROUP in a slot that only
+contains struct f2fs_acl_entry_short bytes, and f2fs_acl_from_disk()
+then reads entry->e_id before verifying that a full entry fits.
 
-At the same time, it must not be larger than the maximum value the variable
-can store.
+Require a short entry before reading e_tag and e_perm, and require a
+full entry before reading e_id for ACL_USER and ACL_GROUP. Return
+-EFSCORRUPTED from these new truncated-entry checks, while keeping the
+pre-existing -EINVAL paths unchanged.
+
+Validation reproduced this kernel report:
+KASAN slab-out-of-bounds in __f2fs_get_acl+0x6fb/0x7e0
+RIP: 0033:0x7f4b835ea7aa
+The buggy address belongs to the object at ffff888114589960 which belongs
+to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes to the right of allocated 8-byte
+region [ffff888114589960, ffff888114589968)
+Read of size 4
+Call trace:
+  dump_stack_lvl+0x66/0xa0 (?:?)
+  print_report+0xce/0x630 (?:?)
+  __f2fs_get_acl+0x6fb/0x7e0 (fs/f2fs/acl.c:169)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x224/0x430 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  __f2fs_get_acl+0x5/0x7e0 (fs/f2fs/acl.c:169)
+  __get_acl+0x281/0x380 (?:?)
+  vfs_get_acl+0x10b/0x190 (?:?)
+  do_get_acl+0x2a/0x410 (?:?)
+  do_get_acl+0x9/0x410 (?:?)
+  do_getxattr+0xe8/0x260 (?:?)
+  filename_getxattr+0xd1/0x140 (?:?)
+  do_getname+0x2d/0x2d0 (?:?)
+  path_getxattrat+0x16c/0x200 (?:?)
+  lock_release+0xc8/0x290 (?:?)
+  cgroup_update_frozen+0x9d/0x320 (?:?)
+  lockdep_hardirqs_on_prepare+0xea/0x1a0 (?:?)
+  trace_hardirqs_on+0x1a/0x170 (?:?)
+  _raw_spin_unlock_irq+0x28/0x50 (?:?)
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
 
 Cc: stable@kernel.org
-Fixes: a10800829040 ("batman-adv: Add elp_interval hardif genl configuration")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af48b85b8cd3 ("f2fs: add xattr and acl functionalities")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/netlink.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/f2fs/acl.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/netlink.c b/net/batman-adv/netlink.c
-index 9362cd9d6f3d33..a7522015224a5b 100644
---- a/net/batman-adv/netlink.c
-+++ b/net/batman-adv/netlink.c
-@@ -936,9 +936,15 @@ static int batadv_netlink_set_hardif(struct sk_buff *skb,
- #ifdef CONFIG_BATMAN_ADV_BATMAN_V
+--- a/fs/f2fs/acl.c
++++ b/fs/f2fs/acl.c
+@@ -46,6 +46,7 @@ static inline int f2fs_acl_count(size_t
+ static struct posix_acl *f2fs_acl_from_disk(const char *value, size_t size)
+ {
+ 	int i, count;
++	int err = -EINVAL;
+ 	struct posix_acl *acl;
+ 	struct f2fs_acl_header *hdr = (struct f2fs_acl_header *)value;
+ 	struct f2fs_acl_entry *entry = (struct f2fs_acl_entry *)(hdr + 1);
+@@ -69,8 +70,11 @@ static struct posix_acl *f2fs_acl_from_d
  
- 	if (info->attrs[BATADV_ATTR_ELP_INTERVAL]) {
-+		u32 elp_interval;
-+
- 		attr = info->attrs[BATADV_ATTR_ELP_INTERVAL];
-+		elp_interval = nla_get_u32(attr);
-+
-+		elp_interval = min_t(u32, elp_interval, INT_MAX);
-+		elp_interval = max_t(u32, elp_interval, BATADV_JITTER);
+ 	for (i = 0; i < count; i++) {
  
--		atomic_set(&hard_iface->bat_v.elp_interval, nla_get_u32(attr));
-+		atomic_set(&hard_iface->bat_v.elp_interval, elp_interval);
- 	}
+-		if ((char *)entry > end)
++		if (unlikely((char *)entry +
++				sizeof(struct f2fs_acl_entry_short) > end)) {
++			err = -EFSCORRUPTED;
+ 			goto fail;
++		}
  
- 	if (info->attrs[BATADV_ATTR_THROUGHPUT_OVERRIDE]) {
--- 
-2.53.0
-
+ 		acl->a_entries[i].e_tag  = le16_to_cpu(entry->e_tag);
+ 		acl->a_entries[i].e_perm = le16_to_cpu(entry->e_perm);
+@@ -85,6 +89,11 @@ static struct posix_acl *f2fs_acl_from_d
+ 			break;
+ 
+ 		case ACL_USER:
++			if (unlikely((char *)entry +
++					sizeof(struct f2fs_acl_entry) > end)) {
++				err = -EFSCORRUPTED;
++				goto fail;
++			}
+ 			acl->a_entries[i].e_uid =
+ 				make_kuid(&init_user_ns,
+ 						le32_to_cpu(entry->e_id));
+@@ -92,6 +101,11 @@ static struct posix_acl *f2fs_acl_from_d
+ 					sizeof(struct f2fs_acl_entry));
+ 			break;
+ 		case ACL_GROUP:
++			if (unlikely((char *)entry +
++					sizeof(struct f2fs_acl_entry) > end)) {
++				err = -EFSCORRUPTED;
++				goto fail;
++			}
+ 			acl->a_entries[i].e_gid =
+ 				make_kgid(&init_user_ns,
+ 						le32_to_cpu(entry->e_id));
+@@ -107,7 +121,7 @@ static struct posix_acl *f2fs_acl_from_d
+ 	return acl;
+ fail:
+ 	posix_acl_release(acl);
+-	return ERR_PTR(-EINVAL);
++	return ERR_PTR(err);
+ }
+ 
+ static void *f2fs_acl_to_disk(struct f2fs_sb_info *sbi,
 
 
