@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6AB30B53E;
-	Thu,  2 Jul 2026 17:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B462DEA98;
+	Thu,  2 Jul 2026 17:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011629; cv=none; b=mx50h8HHxYtrPm0q4ICQuOfIaWyfrCXtB3dpXss3Vlsn9sRcYlj0Nmn8i1fro61h7exYOrOVXVNEfCaWKpBbQ5HRYZel5CcgtZOdruIKQ0gAC9Lf5oBWPm05u0BFZJSzqVlNwOb/QBOVAxjC/P/IeXqGmR7S2Mzk0AAK0YvgrtI=
+	t=1783011631; cv=none; b=Kdt/SsxmlTmtngWU5RWxeTxq4xKHDGl+Man58T1qNwHmCYvpgPjcVNQ8Vv30StyPhAxxI4mwORhjH7frzXD/00bfRFaG/U5NAvMuwm7DWRdPshLwKseFgtu74NCyXh+CAHuh4aOsBWjmhb/GGRko8L2V0kSyqOybX0xurZ4O27s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011629; c=relaxed/simple;
-	bh=vfEHLTHIAQRQ+dg8NRg8vJENz1EIl1wMbg16lcHcLy0=;
+	s=arc-20240116; t=1783011631; c=relaxed/simple;
+	bh=30NZlt7MUBcKs5AD+9ek9OeFg12eCKs/YPwZIdvQPZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVVOOtWauN0HkAvt5SZkZFSCy1eZ7zWOG7Xp+HZDX/flwkbGATO0c/yQgE5WxdI1iYuf1yRnYHz2ivtXZdlcyQgUkabtvU2JG9/yHTrZgFEP9GXl/PazcvtUVZJI8QdvFdCuyRLavshls9DJT/5xzMwTVUsT1wc4LJZ7zi9VoeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6aK6upy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZNPOiWY/2gvMghFgQABqOHkrBNROOiu1TZTRByumZP1Lu1GI5PnZLH61ktqh8V/tK9sOi4Hda9HHCtSZJ+st5zxwk143R9jY5zc7yF9xpsucGRy89SzucbsDwPnKYZEirc3cdiCus1J6gon0FICzGMiCrw6s1Ti/TZAyz6Cuh7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/xOWETo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6aK6upy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613B51F000E9;
-	Thu,  2 Jul 2026 17:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/xOWETo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D741F00A3D;
+	Thu,  2 Jul 2026 17:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011627;
-	bh=pY/rd04mBQ+QenTpgNwXJ8AAFDsIG81+aoL6irFlSCk=;
+	s=korg; t=1783011630;
+	bh=HpKIRq5k2dY0FJsOVkFylLtJY0Bc0P9s98niATktNzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F6aK6upyFIlSnCQ09tq2UwGLtjce5n1fy9rFvaKcOQpMjejN3sk+NJIEQgoZibOS6
-	 lNi5lOJjmECAi9/uaNXujz7JQq7/I2NppM9ni4WuIUsjvPZxlqWoLBZXSl0PkLQZNL
-	 RG5HP1kWelFYYHlym9HtfRCIeS5LaO9ZfrxLY9YA=
+	b=x/xOWETorOw429k9vqHy6lszb4OS23VQHuz5covLtuTNenzlwXHW2ZDOWOEl6Zc84
+	 1HT1ahtknPjo6KKH5l2oKoOF2LgQRqOXPPcpHo5ycmGPKwVrjjVdhQZBkk78aWLlJn
+	 eNcv/MoMEVgghRVVfPpHhTdANrM1/bkJ+KvLPQm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosa.ru>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.1 072/120] f2fs: read COW data with the original inode during atomic write
-Date: Thu,  2 Jul 2026 18:21:08 +0200
-Message-ID: <20260702155114.448634280@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.1 073/120] block: Avoid mounting the bdev pseudo-filesystem in userspace
+Date: Thu,  2 Jul 2026 18:21:09 +0200
+Message-ID: <20260702155114.468451877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -51,137 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosa.ru>
+From: Denis Arefev <arefev@swemel.ru>
 
-commit a41075acde0124d2f8a5f563068a5d63e8ffd57b upstream.
+commit f73aa66dffcb8e61e78f01b56163ec16a15d06d2 upstream.
 
-When updating an atomic-write file, f2fs_write_begin() may read the
-previously written data back from the COW inode:
-prepare_atomic_write_begin() locates the block in the COW inode and sets
-use_cow, and the read bio is then built with the COW inode:
+The bdev pseudo-filesystem is an internal kernel filesystem with which
+userspace should not interfere. Unregister it so that userspace cannot
+even attempt to mount it.
 
-	f2fs_submit_page_read(use_cow ? F2FS_I(inode)->cow_inode : inode,
-			      ...);
+This fixes a bug [1] that occurs when attempting to access files,
+because the system call move_mount() uses pointers declared in the
+inode_operations structure, which for the bdev pseudo-filesystem
+are always equal to 0. `inode->i_op = &empty_iops;`
 
-and f2fs_grab_read_bio() decides whether to schedule fs-layer decryption
-(STEP_DECRYPT) for the bio based on that inode via
-fscrypt_inode_uses_fs_layer_crypto().
+[1]
 
-However, the folio being filled belongs to the original inode
-(folio->mapping->host == inode), and the data stored in the COW block was
-encrypted (or left as plaintext) using the original inode's context, not
-the COW inode's -- see f2fs_encrypt_one_page(), which keys off
-fio->page->mapping->host.  fscrypt_decrypt_pagecache_blocks() likewise
-operates on folio->mapping->host.
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor instruction fetch in kernel mode
+ #PF: error_code(0x0010) - not-present page
+ PGD 23380067 P4D 23380067 PUD 23381067 PMD 0
+ Oops: 0010 [#1] PREEMPT SMP KASAN NOPTI
+ CPU: 2 PID: 17125 Comm: syz-executor.0 Not tainted 6.1.155-syzkaller-00350-g84221fde2681 #0
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+ RIP: 0010:0x0
 
-The COW inode is created as a tmpfile in the parent directory and inherits
-its encryption policy from there.  With test_dummy_encryption the newly
-created COW inode gets the dummy policy and becomes encrypted, while a
-pre-existing regular file -- created before the policy applied, e.g.
-already present in the on-disk image -- stays unencrypted.  The read
-path then sets STEP_DECRYPT based on the encrypted COW inode and calls
-fscrypt_decrypt_pagecache_blocks() on a folio whose host (the unencrypted
-original inode) has a NULL ->i_crypt_info, dereferencing it:
+ Call Trace:
+ <TASK>
+ lookup_open.isra.0+0x700/0x1180 fs/namei.c:3460
+ open_last_lookups fs/namei.c:3550 [inline]
+ path_openat+0x953/0x2700 fs/namei.c:3780
+ do_filp_open+0x1c5/0x410 fs/namei.c:3810
+ do_sys_openat2+0x171/0x4d0 fs/open.c:1318
+ do_sys_open fs/open.c:1334 [inline]
+ __do_sys_openat fs/open.c:1350 [inline]
+ __se_sys_openat fs/open.c:1345 [inline]
+ __x64_sys_openat+0x13c/0x1f0 fs/open.c:1345
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-  Oops: general protection fault, probably for non-canonical address ...
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:fscrypt_decrypt_pagecache_blocks+0xa0/0x310
-  Workqueue: f2fs_post_read_wq f2fs_post_read_work
-  Call Trace:
-   fscrypt_decrypt_bio+0x1eb/0x340
-   f2fs_post_read_work+0xba/0x140
-   process_one_work+0x91c/0x1a40
-   worker_thread+0x677/0xe90
-   kthread+0x2bc/0x3a0
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-The COW inode is only needed to locate the on-disk block, and that block
-address is already resolved into @blkaddr by prepare_atomic_write_begin()
-via __find_data_block(cow_inode, ...); f2fs_submit_page_read() then reads
-from that physical @blkaddr directly, so the inode argument only selects
-the post-read crypto context, not which block is fetched.  Reading with
-@inode therefore returns the same (latest, not-yet-committed) COW data,
-while making both the fs-layer decryption decision and the inline crypto
-path use the correct (original inode's) key.
-
-With the COW inode no longer used at the read site, the use_cow flag has no
-remaining consumer; drop it from f2fs_write_begin() and
-prepare_atomic_write_begin().
-
-Fixes: 591fc34e1f98 ("f2fs: use cow inode data when updating atomic write")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/all/20131010004732.GJ13318@ZenIV.linux.org.uk/T/#
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosa.ru>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260521072857.5078-1-arefev@swemel.ru
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ block/bdev.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -3821,7 +3821,7 @@ unlock_out:
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -446,15 +446,10 @@ EXPORT_SYMBOL_GPL(blockdev_superblock);
  
- static int prepare_atomic_write_begin(struct f2fs_sb_info *sbi,
- 			struct folio *folio, loff_t pos, unsigned int len,
--			block_t *blk_addr, bool *node_changed, bool *use_cow)
-+			block_t *blk_addr, bool *node_changed)
+ void __init bdev_cache_init(void)
  {
- 	struct inode *inode = folio->mapping->host;
- 	struct inode *cow_inode = F2FS_I(inode)->cow_inode;
-@@ -3836,14 +3836,14 @@ static int prepare_atomic_write_begin(st
- 
- 	/* Look for the block in COW inode first */
- 	err = __find_data_block(cow_inode, index, blk_addr);
--	if (err) {
-+	if (err)
- 		return err;
--	} else if (__is_valid_data_blkaddr(*blk_addr)) {
--		*use_cow = true;
-+
-+	if (__is_valid_data_blkaddr(*blk_addr))
- 		return 0;
--	} else if (*blk_addr == NEW_ADDR) {
-+
-+	if (*blk_addr == NEW_ADDR)
- 		cow_has_reserved_block = true;
--	}
- 
- 	if (is_inode_flag_set(inode, FI_ATOMIC_REPLACE))
- 		goto reserve_block;
-@@ -3878,7 +3878,6 @@ static int f2fs_write_begin(const struct
- 	struct folio *folio;
- 	pgoff_t index = pos >> PAGE_SHIFT;
- 	bool need_balance = false;
--	bool use_cow = false;
- 	block_t blkaddr = NULL_ADDR;
- 	int err = 0;
- 
-@@ -3941,7 +3940,7 @@ repeat:
- 
- 	if (f2fs_is_atomic_file(inode))
- 		err = prepare_atomic_write_begin(sbi, folio, pos, len,
--					&blkaddr, &need_balance, &use_cow);
-+					&blkaddr, &need_balance);
- 	else
- 		err = prepare_write_begin(sbi, folio, pos, len,
- 					&blkaddr, &need_balance);
-@@ -3981,8 +3980,15 @@ repeat:
- 			err = -EFSCORRUPTED;
- 			goto put_folio;
- 		}
--		f2fs_submit_page_read(use_cow ? F2FS_I(inode)->cow_inode :
--						inode,
-+		/*
-+		 * Although the block may be stored in the COW inode, the folio
-+		 * belongs to @inode and its data was encrypted (or not) using
-+		 * @inode's context (see f2fs_encrypt_one_page()).  Read with
-+		 * @inode so the post-read decryption decision matches the
-+		 * folio's owner; otherwise an unencrypted @inode whose COW inode
-+		 * is encrypted hits a NULL ->i_crypt_info on decryption.
-+		 */
-+		f2fs_submit_page_read(inode,
- 				      NULL, /* can't write to fsverity files */
- 				      folio, blkaddr, 0, true);
- 
+-	int err;
+-
+ 	bdev_cachep = kmem_cache_create("bdev_cache", sizeof(struct bdev_inode),
+ 			0, (SLAB_HWCACHE_ALIGN|SLAB_RECLAIM_ACCOUNT|
+ 				SLAB_ACCOUNT|SLAB_PANIC),
+ 			init_once);
+-	err = register_filesystem(&bd_type);
+-	if (err)
+-		panic("Cannot register bdev pseudo-fs");
+ 	blockdev_mnt = kern_mount(&bd_type);
+ 	if (IS_ERR(blockdev_mnt))
+ 		panic("Cannot create bdev pseudo-fs");
 
 
