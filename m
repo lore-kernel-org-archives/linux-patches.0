@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C35033F583;
-	Thu,  2 Jul 2026 16:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D4A381EA5;
+	Thu,  2 Jul 2026 16:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009577; cv=none; b=EG3XV4u9gvTYHCpKc8ESuMI8myRDGMtnlJWX4GRdR//fkVDKmfwI7r1zsmzRaB+3Liq9kRoECD3E0IwyoqEIzBub3Zb9yx5YGKd125W+bTIkYiIq3yqZYlqinuuKrMeGIRNMJpc8l+YbFTIc5Z+Jx2n2pN4JcHgjSZfZzVlhaMo=
+	t=1783009580; cv=none; b=M6rh6SSuhxEon/wpOHoOUD+W0GeywKKns/L91yR6bho7Q+imMRHaZoSTboVfHoFMsJtk+mAXMFbFEQA6Kkgqegt4CY68M+GqJ46y/I1gRJj6lgfYD6QeSMQzkkvFBjVcxY1ysryc/ZeUMQRVmG5YEs5iOcdofcBQC3TMfJ+AJ60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009577; c=relaxed/simple;
-	bh=t4X//tdped1PvqOIpb4iN6Mw9zTZ20F3gmgrrXXSq/M=;
+	s=arc-20240116; t=1783009580; c=relaxed/simple;
+	bh=fpmaXMrajiwsCQg8NZFzD0g431lWhudkbQI04vkuceE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbwxGuz7vS0UxQGtf0gc5TaQzW5aHzRxC/MtZd4zLNsYxvz78C0WRyA1fC3hMnME5BcVsxQXTLjB0+uPHKuN805/JBKp/LfSZjLRtloVV+gqPagRSxvfHteu0V+pZ/3IwEYcHthToHOqqKfJiOvmE14nXZ0bvnPlqktVWDtbLf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bfyo2IrI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jkqpcEvLNBFpCzl9+gyTzZp7DD+hwG2L+sHce1dZUcPvCuZGgG/7AiZuzEte43zjXWWQiB3UhWUPwmM4OYPr8JvbwHNFVDMGtECrixxE5wEXQGM09KgoTnKsYz0zupIVT0kS8K4zvN+54EgaqMLaSCnYgn6+TUrkS+1uPH4q60c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyDLR96j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bfyo2IrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86381F000E9;
-	Thu,  2 Jul 2026 16:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyDLR96j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623571F000E9;
+	Thu,  2 Jul 2026 16:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009576;
-	bh=03HMae2NbNlU40ROb52KnrTkA053SDGkUpf71appMko=;
+	s=korg; t=1783009578;
+	bh=Tv6jMgv9dRPvRzxd8vKhnkQqvt1SfILpTwql1jkvEjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bfyo2IrIuiZowpf+m+zo3x6Z54IdLKk6PTsmADjXaT+mdGf7oGIUrTjjJ4gt8lnK4
-	 4z9BLQmam9MwwotZIUEkD8ba2DXTUaLwqbZNX+iobsPZ/BRDBZdgTMK4w/ekUZdy4X
-	 Vhkl6vCz/OoqbxkAuoOEeZFnUtVRPKaVFzFOzJIo=
+	b=jyDLR96jDyBaNOeveG4OPkxkhCrer4FXncrCd1EXJDhKaYJNu9be5qGlk1wteWTha
+	 Ok19OM8jkraOEZ3iUbxPdJ5w1ju5/pLPtCv71Qle+2lGjaB0dM2C/MpbaKAblshARh
+	 cm6T82zuev7XU1XmO/747vbbqzax7BjCd9nO/M6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulfh@kernel.org>,
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 94/96] mmc: renesas_sdhi: Add OF entry for RZ/G2H SoC
-Date: Thu,  2 Jul 2026 18:20:26 +0200
-Message-ID: <20260702155110.958322610@linuxfoundation.org>
+Subject: [PATCH 5.15 01/95] fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
+Date: Thu,  2 Jul 2026 18:19:04 +0200
+Message-ID: <20260702155109.230666525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
-References: <20260702155108.949633242@linuxfoundation.org>
+In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
+References: <20260702155109.196223802@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +49,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit f48ee49726ee4ab545fd2dc644f169c0809b19b3 ]
+[ Upstream commit 4e3d1b2c48ca6c55f1e9ca7f8dccc76f120f276c ]
 
-The RZ/G2H (R8A774E1) SoC was previously handled via the generic
-"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
-the SDHI IP on RZ/G2H is identical with the R-Car H3-N (R8A77951), it
-requires the specific quirks and configuration defined in
-`of_r8a7795_compatible` rather than the generic Gen3 data.
+FUSE_NOTIFY_RETRIEVE must be limited to uptodate folios; !uptodate folios
+can contain uninitialized data.
+Since FUSE_NOTIFY_RETRIEVE is intended to only return data that is already
+in the page cache and not wait for data from the FUSE daemon, treat
+!uptodate folios as if they weren't present.
 
-Add the explicit "renesas,sdhi-r8a774e1" match entry to map it correctly.
-Note that the DT binding file renesas,sdhi.yaml does not need an update
-as the entry for this SoC is already present.
+This only has security impact on systems that don't enable automatic
+zero-initialization of all page allocations via
+CONFIG_INIT_ON_ALLOC_DEFAULT_ON or init_on_alloc=1.
 
-Fixes: 31941342888d ("arm64: dts: renesas: r8a774e1: Add SDHI nodes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Cc: stable@kernel.org
+Fixes: 2d45ba381a74 ("fuse: add retrieve request")
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260519-fuse-retrieve-uptodate-v1-1-a7a1912a37f9@google.com
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[adjusted for stable: page instead of folio]
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/renesas_sdhi_internal_dmac.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/fuse/dev.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-+++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-@@ -119,6 +119,7 @@ static const struct renesas_sdhi_of_data
- static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
- 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
- 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
-+	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_rcar_gen3_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_rcar_gen3_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a7796", .data = &of_rcar_gen3_compatible, },
- 	{ .compatible = "renesas,rcar-gen3-sdhi", .data = &of_rcar_gen3_compatible, },
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 231b1c14b76778..e5a051a624e735 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1724,6 +1724,10 @@ static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
+ 		page = find_get_page(mapping, index);
+ 		if (!page)
+ 			break;
++		if (!PageUptodate(page)) {
++			put_page(page);
++			break;
++		}
+ 
+ 		this_num = min_t(unsigned, num, PAGE_SIZE - offset);
+ 		ap->pages[ap->num_pages] = page;
+-- 
+2.53.0
+
 
 
