@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7626D347BBD;
-	Thu,  2 Jul 2026 16:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094D3339B3D;
+	Thu,  2 Jul 2026 16:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010736; cv=none; b=SYMl4cQ95QGCOqjH44ZeEyf3RHUO8QyeiY0a+YLwiQ4ADsfTInTb7wS4RQAF/wQxTudMAyDioCmI6pAHr2RbBAx60GlrPSVKyrTts7RsC8wsHataqiEL4UOJw7xbd0orHK2cdf3zljO6E49i26dZ+UUAR8qcASAdsOkN5AKnqI8=
+	t=1783010739; cv=none; b=rWaD77WDAXNrcXDUPXgQkc9LBQQdrFYYHm0FvOqRiCN3ipdfyDc4JaXkS6YGmSqHxjCEIGE95PC84bjMsnTjlcPJw0VMSg7TL5DFVAfDjmFZHApgkJno6xLFswzUhwT6/WCp9Q69ikMDwwHkg8EbQUq/bO612lC4lZtJlUfHNpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010736; c=relaxed/simple;
-	bh=PKPWU0zcyKVjBHXUZwTXOWiS9MNIFohOIRnPzOo/ndo=;
+	s=arc-20240116; t=1783010739; c=relaxed/simple;
+	bh=L5RDCOn25KfiwGQJJQc5ARAxpSnup/MpshTyNRfWmBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nUS1agyghSY0TD+Ydj8WD2VWylJCyioMaLKS1A8SQ2DLxP9zdPq//ZSYOFewE1Gf1+CXIKOSVnv8JHUdtAALUoPKfinv89urfjnEVNljwFKeKy7lQGyK/ObIVfD/FJpk00PtnMYVRM5jcBKogb3975r582zg6Vv4iGulkjcIGEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADbWzyvQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dggzHCf4Yxuf2tjSPpCEcIG/Yi1RIMQbOgrSxHT/8MZeh/Kk9GOCVkiD7H5TGKlBOFgw2q/uJHHACPuuEH3SY/PcfJVJi9hYPgtT0P0rQ19IIqRtPa1yQVHCxjCkGTJV4KGt26pQ9YImwBjcM0iuVbrWWQJJtgh7codGmIm0izg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmD9D+Bn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADbWzyvQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9334D1F000E9;
-	Thu,  2 Jul 2026 16:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmD9D+Bn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3891F000E9;
+	Thu,  2 Jul 2026 16:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010735;
-	bh=HWF4lRJ16dVXQ/hHR+auGafim36FCzxqBgtxixhDL9g=;
+	s=korg; t=1783010737;
+	bh=tNsS8eIwmhiM9SPAwwS4/vi5Ob14xGRs3tn8vBhpvcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADbWzyvQPAG7BK1YBaEq0tRIoI/b997LRsA7SLUXC4NadfV8Y+SWVBm0GyFxWBmwo
-	 FlDcJM7RT4XznSRAWxNWyGt6JGtd0W1sgClUP7AmqOj3cAtGi4TETDNZZBuJ1wXkSj
-	 DyHbdUMiDi4p3l7rHdljFVds+bF0twv3vl/Nb/po=
+	b=OmD9D+BnQH2LN217E/ZJa2jWnMPn84mceb5ECV+utHwhpO0PfSUgAjZnrIsOKIaGr
+	 5nOZFQ0lti73djQCZC9LigWF2Db+bUmaZLxs4tSuIdTlaJyW2hGbHeAuMZwOupCh2Q
+	 Wt5n3RzJrFqBqWa+la7W6pYqtB0AVszOUJ/AOKN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xiang Mei <xmei5@asu.edu>,
 	Weiming Shi <bestswngs@gmail.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.6 018/175] i2c: stub: Reject I2C block transfers with invalid length
-Date: Thu,  2 Jul 2026 18:18:39 +0200
-Message-ID: <20260702155116.164055787@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 019/175] net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()
+Date: Thu,  2 Jul 2026 18:18:40 +0200
+Message-ID: <20260702155116.187175409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -54,69 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Weiming Shi <bestswngs@gmail.com>
 
-commit 6036b5067a8199ba7a2dc7b377d4b9dd276d5f9e upstream.
+commit d00c953a8f69921f484b629801766da68f27f658 upstream.
 
-The I2C_SMBUS_I2C_BLOCK_DATA case in stub_xfer() uses data->block[0]
-as the transfer length. The existing check only clamps it to avoid
-overrunning the chip->words[256] register array, but does not validate
-it against I2C_SMBUS_BLOCK_MAX (32), which is the limit of the union
-i2c_smbus_data.block buffer (34 bytes total). The driver is a
-development/test tool (CONFIG_I2C_STUB=m, not built by default)
-that must be loaded with a chip_addr= parameter.
+rmnet_dellink() removes the endpoint from the hash table with
+hlist_del_init_rcu() and then immediately frees it with kfree(). However,
+RCU readers on the receive path (rmnet_rx_handler ->
+__rmnet_map_ingress_handler) may still hold a reference to the endpoint and
+dereference ep->egress_dev after the memory has been freed. The endpoint is
+a kmalloc-32 object, and the stale read at offset 8 corresponds to the
+egress_dev pointer.
 
-A local user with access to /dev/i2c-* can issue an I2C_SMBUS ioctl
-with I2C_SMBUS_I2C_BLOCK_DATA and data->block[0] > 32, causing
-stub_xfer() to read or write past the end of the union
-i2c_smbus_data.block buffer:
+  BUG: unable to handle page fault for address: ffffffffde942eef
+  Oops: 0002 [#1] SMP NOPTI
+  CPU: 1 UID: 0 PID: 137 Comm: poc_write Not tainted 7.0.0+ #4 PREEMPTLAZY
+  RIP: 0010:rmnet_vnd_rx_fixup (rmnet_vnd.c:27)
+  Call Trace:
+   <TASK>
+   __rmnet_map_ingress_handler (rmnet_handlers.c:48 rmnet_handlers.c:101)
+   rmnet_rx_handler (rmnet_handlers.c:129 rmnet_handlers.c:235)
+   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6096)
+   __netif_receive_skb_one_core (net/core/dev.c:6208)
+   netif_receive_skb (net/core/dev.c:6467)
+   tun_get_user (drivers/net/tun.c:1955)
+   tun_chr_write_iter (drivers/net/tun.c:2003)
+   vfs_write (fs/read_write.c:688)
+   ksys_write (fs/read_write.c:740)
+   </TASK>
 
- BUG: KASAN: stack-out-of-bounds in stub_xfer (drivers/i2c/i2c-stub.c:223)
- Read of size 1 at addr ffff88800abcfd92 by task exploit/81
- Call Trace:
-  <TASK>
-  stub_xfer (drivers/i2c/i2c-stub.c:223)
-  __i2c_smbus_xfer (drivers/i2c/i2c-core-smbus.c:593)
-  i2c_smbus_xfer (drivers/i2c/i2c-core-smbus.c:536)
-  i2cdev_ioctl_smbus (drivers/i2c/i2c-dev.c:391)
-  i2cdev_ioctl (drivers/i2c/i2c-dev.c:478)
-  __x64_sys_ioctl (fs/ioctl.c:583)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-  </TASK>
+Add an rcu_head field to struct rmnet_endpoint and replace kfree() with
+kfree_rcu() so the endpoint memory remains valid through the RCU grace
+period. Also remove the rmnet_vnd_dellink() call and inline only the
+nr_rmnet_devs decrement, since rmnet_vnd_dellink() would set
+ep->egress_dev to NULL during the grace period, creating a data race
+with lockless readers.
 
-The bug exists because i2c-stub implements .smbus_xfer directly,
-bypassing the I2C_SMBUS_BLOCK_MAX validation in
-i2c_smbus_xfer_emulated(). The I2C_SMBUS_BLOCK_DATA case in the same
-function correctly validates against I2C_SMBUS_BLOCK_MAX, but the
-I2C_SMBUS_I2C_BLOCK_DATA case does not.
-
-Fix by rejecting transfers with data->block[0] == 0 or
-data->block[0] > I2C_SMBUS_BLOCK_MAX with -EINVAL, consistent with
-both the I2C_SMBUS_BLOCK_DATA case in the same function and the
-I2C_SMBUS_I2C_BLOCK_DATA validation in i2c_smbus_xfer_emulated().
-
-Fixes: 4710317891e4 ("i2c-stub: Implement I2C block support")
+Fixes: ceed73a2cf4a ("drivers: net: ethernet: qualcomm: rmnet: Initial implementation")
 Reported-by: Xiang Mei <xmei5@asu.edu>
 Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://patch.msgid.link/20260514122511.3083479-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-stub.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c |    8 ++++----
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h |    1 +
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/i2c-stub.c
-+++ b/drivers/i2c/i2c-stub.c
-@@ -214,6 +214,11 @@ static s32 stub_xfer(struct i2c_adapter
- 		 * We ignore banks here, because banked chips don't use I2C
- 		 * block transfers
- 		 */
-+		if (data->block[0] == 0 ||
-+		    data->block[0] > I2C_SMBUS_BLOCK_MAX) {
-+			ret = -EINVAL;
-+			break;
-+		}
- 		if (data->block[0] > 256 - command)	/* Avoid overrun */
- 			data->block[0] = 256 - command;
- 		len = data->block[0];
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
+@@ -210,8 +210,8 @@ static void rmnet_dellink(struct net_dev
+ 	ep = rmnet_get_endpoint(real_port, mux_id);
+ 	if (ep) {
+ 		hlist_del_init_rcu(&ep->hlnode);
+-		rmnet_vnd_dellink(mux_id, real_port, ep);
+-		kfree(ep);
++		real_port->nr_rmnet_devs--;
++		kfree_rcu(ep, rcu);
+ 	}
+ 
+ 	netdev_upper_dev_unlink(real_dev, dev);
+@@ -235,9 +235,9 @@ static void rmnet_force_unassociate_devi
+ 		hash_for_each_safe(port->muxed_ep, bkt_ep, tmp_ep, ep, hlnode) {
+ 			unregister_netdevice_queue(ep->egress_dev, &list);
+ 			netdev_upper_dev_unlink(real_dev, ep->egress_dev);
+-			rmnet_vnd_dellink(ep->mux_id, port, ep);
+ 			hlist_del_init_rcu(&ep->hlnode);
+-			kfree(ep);
++			port->nr_rmnet_devs--;
++			kfree_rcu(ep, rcu);
+ 		}
+ 		rmnet_unregister_real_device(real_dev);
+ 		unregister_netdevice_many(&list);
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
+@@ -18,6 +18,7 @@ struct rmnet_endpoint {
+ 	u8 mux_id;
+ 	struct net_device *egress_dev;
+ 	struct hlist_node hlnode;
++	struct rcu_head rcu;
+ };
+ 
+ struct rmnet_egress_agg_params {
 
 
