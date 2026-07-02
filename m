@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A88926F46F;
-	Thu,  2 Jul 2026 16:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D3D82866;
+	Thu,  2 Jul 2026 16:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011077; cv=none; b=Ev1vDYrbgcsd9vTFGGzbn1RuPmDu5vgW54zXXGNOCVxh1umklgx4ljvmhxG46+7ou0dvyUe580MdRsxfkoAPhq3bnL8HXPQ9qStPoP1xCjN8CTM5H4cavRSJdRNqIbkG5n2terButtPZFjWUsdoQY7O02F9IKrbtP37SBfMeIKo=
+	t=1783011079; cv=none; b=TwZpWxJKBh9oZFmP+AFMLv1xoPxF5C/SqiXNxYKYDUQjRc1dCMcFx5BKxeby48vkOrCS6MozipT1q46BPFwiE3kKIdyUT67jqiZJLtvrWbae5UPd//bepo8AysQ1WxPSk7KxAs3b6OMuSX0Ey+56TyN/dgHXZd6uQqXwMkgTbtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011077; c=relaxed/simple;
-	bh=HdhbYby+KIT2Tju2Oy26LwHRiIGN8sa9isy8X2w9UOw=;
+	s=arc-20240116; t=1783011079; c=relaxed/simple;
+	bh=Zz1roTpX9vrxcuqLjrmaxRHsmZqaoSxW9VVIs5CXcz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXsDrApUw1oJqdCdlli42pv1eZlNK1Th/ZXYjuVVUw8bN8fspe9xKlFZeU0I1ijqk6hBlfJM676AOU6T6VPpsoYg5UMGchqe3QTXsY+yjOz8a1XHIMxc12vMmHj7BJsQHvqjAYgimR6al8yyX92j8fEGg2Vj0CvGC5rNX4REJRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToUCDmfz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pgp6mD7R7lO5b3IHpyFJG8EP8rU0U3QpK1NVZlZ6KxdTSV9wotcMR9h8FiR09Cq1A3+rvl/VbXoE56RwUJqnR/uIaB4IwRu+1nwwhjeE294bHjPXwQU2xkOUg9gGV4oWgyORJt5+qXvJZ9amB2TFWeo4HMkt0meUoO2L2F8WWCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1A9mGtC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToUCDmfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706921F00A3A;
-	Thu,  2 Jul 2026 16:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1A9mGtC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9AD1F00A3A;
+	Thu,  2 Jul 2026 16:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011075;
-	bh=L5FeyoKA6CXlp82pNnwaDFpkZgOLcxgruTTSgyP7AQY=;
+	s=korg; t=1783011078;
+	bh=26yMTZjxhoIzQP8MAJLXlBshLRX6EQjDKiIfLcJluiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ToUCDmfzGkwiQnD+0OK0t2pIGgWiDVS95UwtVrnf6HZQ/YwgO6LnDbp4av2NTsW4j
-	 PATh70UaB11vP5ztf0Iaai7nK7QKt5voksEPJTFRuB6CvYGoSPB5NfPXh2s08IOR3j
-	 jptsdjnVxN20K+j5ghFDADBewVU2GLedTngad53s=
+	b=O1A9mGtCsNoYf+Za4AUHsRE4uV8yZL1BFC0gqy6w5Uw1GQOCGb4nwFapwqOcBEVEv
+	 VM0tvK82WkKUHztUrw1lYvD9vwzOLGX87FzjxRc4jF7P3Y2/FaSMBGdkPnGheC2Yar
+	 bK6SqlbP1tV6Ea3iFDV8l2p2COji2TpPNS+Kq5vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 140/175] f2fs: fix incorrect FI_NO_EXTENT handling in __destroy_extent_node()
-Date: Thu,  2 Jul 2026 18:20:41 +0200
-Message-ID: <20260702155118.756316471@linuxfoundation.org>
+	Guo Ren <guoren@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 149/175] LoongArch: Report dying CPU to RCU in stop_this_cpu()
+Date: Thu,  2 Jul 2026 18:20:50 +0200
+Message-ID: <20260702155118.942384274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,85 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 1f70ddb28a3c71df124da5fa4040c808116d6bb9 upstream.
+commit f2539c56c74691e7a88af6372ba2b48c06ed2fe4 upstream.
 
-When __destroy_extent_node() sets the inode flag FI_NO_EXTENT, it does
-not reset the length of the largest extent to 0 and update the inode
-folio. Since modifications to the extent tree are disallowed afterward,
-the cached largest extent may become stale. This can trigger the
-following error in xfstests generic/388:
+This is a port of MIPS commit 9f3f3bdc6d9dac1 ("MIPS: smp: report dying
+CPU to RCU in stop_this_cpu()"). smp_send_stop() parks all secondary
+CPUs in stop_this_cpu(). And the function marks the CPU offline for the
+scheduler via set_cpu_online(false) but never informs RCU, so RCU keeps
+expecting a quiescent state from CPUs that are now spinning forever with
+interrupts disabled.
 
-F2FS-fs (dm-0): sanity_check_extent_cache: inode (ino=1761) extent info [220057, 57, 6] is incorrect, run fsck to fix
+As long as nothing waits for an RCU grace period after smp_send_stop()
+this is harmless, which is why it went unnoticed. However, since commit
+91840be8f710370 ("irq_work: Fix use-after-free in irq_work_single() on
+PREEMPT_RT"), irq_work_sync() calls synchronize_rcu() on architectures
+without an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt()
+returns false. Any irq_work_sync() issued in the reboot/shutdown/halt
+path after smp_send_stop() then blocks on a grace period that can never
+complete, hanging the reboot:
 
-In the f2fs_drop_inode path, __destroy_extent_node() does not need to
-guarantee that et->node_cnt is 0, because concurrency with writeback
-is expected in this path, and writeback may update the extent cache.
+  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
+  ...
+  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+  rcu: Offline CPU 1 blocking current GP.
+  rcu: Offline CPU 2 blocking current GP.
+  rcu: Offline CPU 3 blocking current GP.
 
-This patch reverts commit ed78aeebef05 ("f2fs: fix node_cnt race between
-extent node destroy and writeback"), and remove the unnecessary zero
-check of et->node_cnt.
+This issue needs some hacks to reproduce, and it was not noticed on
+LoongArch because arch_irq_work_has_interrupt() usually returns true.
 
-Fixes: ed78aeebef05 ("f2fs: fix node_cnt race between extent node destroy and writeback")
-Cc: stable@vger.kernel.org
-Reported-by: Chao Yu <chao@kernel.org>
-Suggested-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Call rcutree_report_cpu_dead() once interrupts are disabled, mirroring
+the generic CPU-hotplug offline path, so RCU stops waiting on the parked
+CPUs and grace periods can still complete. LoongArch shuts down all CPUs
+here without going through the CPU-hotplug mechanism, so this report is
+not otherwise issued.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/extent_cache.c |   19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ arch/loongarch/kernel/smp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -87,10 +87,9 @@ static bool __may_extent_tree(struct ino
- 	if (!__init_may_extent_tree(inode, type))
- 		return false;
- 
--	if (is_inode_flag_set(inode, FI_NO_EXTENT))
--		return false;
--
- 	if (type == EX_READ) {
-+		if (is_inode_flag_set(inode, FI_NO_EXTENT))
-+			return false;
- 		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
- 				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
- 			return false;
-@@ -603,14 +602,10 @@ static unsigned int __destroy_extent_nod
- 
- 	while (atomic_read(&et->node_cnt)) {
- 		write_lock(&et->lock);
--		if (!is_inode_flag_set(inode, FI_NO_EXTENT))
--			set_inode_flag(inode, FI_NO_EXTENT);
- 		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
- 		write_unlock(&et->lock);
- 	}
- 
--	f2fs_bug_on(sbi, atomic_read(&et->node_cnt));
--
- 	return node_cnt;
+--- a/arch/loongarch/kernel/smp.c
++++ b/arch/loongarch/kernel/smp.c
+@@ -613,6 +613,7 @@ static void stop_this_cpu(void *dummy)
+ 	set_cpu_online(smp_processor_id(), false);
+ 	calculate_cpu_foreign_map();
+ 	local_irq_disable();
++	rcutree_report_cpu_dead();
+ 	while (true);
  }
- 
-@@ -640,12 +635,12 @@ static void __update_extent_tree_range(s
- 
- 	write_lock(&et->lock);
- 
--	if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
--		write_unlock(&et->lock);
--		return;
--	}
--
- 	if (type == EX_READ) {
-+		if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
-+			write_unlock(&et->lock);
-+			return;
-+		}
-+
- 		prev = et->largest;
- 		dei.len = 0;
  
 
 
