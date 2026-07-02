@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A05433E87;
-	Thu,  2 Jul 2026 17:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E9C1FA859;
+	Thu,  2 Jul 2026 17:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011744; cv=none; b=dJBL7Vf+66B8i+MGvtqOfy/o45IKRfCibJUBHfj2zpeD0g9sWHcPwpDUm26B8yOwfwdpBkWSCI150DXow+WPgAFalkAk9Sniql8rMLEsshTRPJ3oAJbpomzzhweI8gcjim2JrzCZWiYdr0bBWaZSPzAZwIoTFnOFh4V59DYKT8M=
+	t=1783011747; cv=none; b=QdgJgahhQRNDzFl6WUgmBeJ9VeP5+a4ctZZ7Chl/EYEdsYEiBnQXQZYqSv26MtEMnUxoIRP7gHLWIdgmGXIpjDoH4rjTRYgjFsoIiI4iXm6TiZj8M8CO6vJrsvg0nClujM+euafbSq2UrJGxAzCaWgj/6pgoU7oUUk9PG6tMGAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011744; c=relaxed/simple;
-	bh=mH8Rj3qNKaNfpJSKsqW06bXVo9qQEwOw3oiAG7a1suY=;
+	s=arc-20240116; t=1783011747; c=relaxed/simple;
+	bh=U3ZVO9hpU5+THjMxo0FwOPElPuI9EEwiaT+Db9aMvMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YWIwmaOzArbhEfuYk6QyfslEf68D33dki/a4RqTqzFDBwJc3apf6E8qjnVr4jKTCmxlUPoPVq0mmUl9s62iDl+frqYCPA/Azppa5+yC+jIK0PXxf1egLwLbriXhJxogxB7cYLF6sXKOCXLmJbpH+BIvtJDpA2Fdyyc3/04/HmeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrxPUdvJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UV0bjfWqEGsUzF+r9rUeW2RulPBEc+itsY21t8XHDiv8NKKUKQMjzufMnfsygYuX9nP7pkMXNkbhWaSA8zSk3GuYF8eBbZFJ3tlIJmGDeqs9hZWN8Qt7hPJbFJMv1jo+zeoyPMPVjnSUOHwMdZENy4Gw0FiFbHZBrunk2WTv+H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmbYMVzh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrxPUdvJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D038B1F000E9;
-	Thu,  2 Jul 2026 17:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmbYMVzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC961F000E9;
+	Thu,  2 Jul 2026 17:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011743;
-	bh=QUa32pOc3hnNQFVbe07hKMuaZ5M58CLND3IyulgkEmg=;
+	s=korg; t=1783011746;
+	bh=72nSTPrl30qdpY5BG9A0wMUTscVXxSINo4WEB8iYwzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FrxPUdvJJXIbXfwV3C3xToG0eRShnWI4J9VclTy/wvGHbA3IrLJvigWzUzjSITSbv
-	 ilUwon7vQlR9jbX0IvWog/GnFZpgQ18nC7EgACqLoQ/jJfPrQ20ihpipdSX+oTEBcm
-	 xhcO/iAGe0G+FWzqf8Y7CF6znxsK+wUTSqmbAoEw=
+	b=UmbYMVzhw97k3pymlphhIhe7D0Mm2Ka8H/LG/0GuUuw2a0sOvQuqeTB1zlTniCQDo
+	 K5AzjAejyixGfa6B6K7cs2FoUC4fjUn9/VZmr5C2cJ5b9ONDAMA4JHhIfQxs+arfqw
+	 wsXh4UMEGPb1DpXcGL44KvqtBBQJs58lXyW8fBlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Igor Raits <igor.raits@gmail.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
-	=?UTF-8?q?Jan=20=C4=8C=C3=ADpa?= <jan.cipa@gooddata.com>
-Subject: [PATCH 7.1 116/120] NFSv4: clear exception state on successful mkdir retry
-Date: Thu,  2 Jul 2026 18:21:52 +0200
-Message-ID: <20260702155115.357779473@linuxfoundation.org>
+	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 7.1 117/120] NFS: Prevent resource leak in nfs_alloc_server()
+Date: Thu,  2 Jul 2026 18:21:53 +0200
+Message-ID: <20260702155115.379621308@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -46,86 +45,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Igor Raits <igor.raits@gmail.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-commit 238e9b51aa29f48b6243212a3b75c8e48d6b96fd upstream.
+commit d189f224308c8ac3feeea8e442c99922bd18f1b2 upstream.
 
-After a server returns NFS4ERR_DELAY for an NFSv4 CREATE issued by
-mkdir(2), the client correctly waits and retries.  When the retry
-succeeds, however, mkdir(2) can still surface -EEXIST to userspace
-even though the directory was just created on the server.
+It was overlooked to call ida_free() after a failed nfs_alloc_iostats() call.
+Thus add the missed function call in an if branch.
 
-Reproducer (random 16-hex names so collisions are not the cause)
-against an in-kernel Linux nfsd; reproduces under both NFSv4.0 and
-NFSv4.2:
-
-  N=2000000; base=/var/gdc/export
-  for ((i=1; i<=N; i++)); do
-      d=$base/$(openssl rand -hex 8)
-      mkdir "$d" 2>/dev/null || echo "$(date +%T) failed loop=$i $d"
-      rmdir "$d" 2>/dev/null
-  done
-
-Failures cluster at the cadence at which the server-side auth/export
-cache refresh path causes nfsd to return NFS4ERR_DELAY for CREATE.
-
-A wire trace of one failure (the three CREATE RPCs all come from a
-single mkdir(2), generated by the do-while in nfs4_proc_mkdir()):
-
-  client -> server  CREATE name=...  -> NFS4ERR_DELAY
-  ~100 ms later
-  client -> server  CREATE name=...  -> NFS4_OK         (dir created)
-  ~80 us later
-  client -> server  CREATE name=...  -> NFS4ERR_EXIST   (correct)
-
-Since commit dd862da61e91 ("nfs: fix incorrect handling of large-number
-NFS errors in nfs4_do_mkdir()"), nfs4_handle_exception() is called only
-when _nfs4_proc_mkdir() returned an error.  That gate breaks retry-state
-hygiene: nfs4_do_handle_exception() resets exception.{delay,recovering,
-retry} to 0 on entry, so calling it on success is what previously
-cleared the retry flag set by the preceding NFS4ERR_DELAY iteration.
-With the gate in place, exception.retry stays at 1 after the successful
-retry, the loop runs once more, and the resulting CREATE for an
-already-created name yields NFS4ERR_EXIST -> -EEXIST to userspace.
-
-Drop the conditional and call nfs4_handle_exception() unconditionally,
-matching every other do-while in fs/nfs/nfs4proc.c (nfs4_proc_symlink(),
-nfs4_proc_link(), etc.).  The dentry/status separation introduced by
-that commit is preserved.
-
-Fixes: dd862da61e91 ("nfs: fix incorrect handling of large-number NFS errors in nfs4_do_mkdir()")
-Reported-and-tested-by: Jan Čípa <jan.cipa@gooddata.com>
-Closes: https://lore.kernel.org/linux-nfs/CA+9S74hSp_tJu2Ffe2BPNC2T25gfkhgjjDkdgSsF5c2rnJq_wA@mail.gmail.com/
-Reviewed-by: NeilBrown <neil@brown.name>
+Fixes: 1c7251187dc067a6d460cf33ca67da9c1dd87807 ("NFS: add superblock sysfs entries")
 Cc: stable@vger.kernel.org
-Signed-off-by: Igor Raits <igor.raits@gmail.com>
+Reported-by: Christophe Jaillet <christophe.jaillet@wanadoo.fr>
+Closes: https://lore.kernel.org/linux-nfs/1c8e10c9-def7-4f0d-8aa1-23c8035a38c8@wanadoo.fr/
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/nfs/client.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -5302,10 +5302,9 @@ static struct dentry *nfs4_proc_mkdir(st
- 	do {
- 		alias = _nfs4_proc_mkdir(dir, dentry, sattr, label, &err);
- 		trace_nfs4_mkdir(dir, &dentry->d_name, err);
-+		err = nfs4_handle_exception(NFS_SERVER(dir), err, &exception);
- 		if (err)
--			alias = ERR_PTR(nfs4_handle_exception(NFS_SERVER(dir),
--							      err,
--							      &exception));
-+			alias = ERR_PTR(err);
- 	} while (exception.retry);
- 	nfs4_label_release_security(label);
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -1074,6 +1074,7 @@ struct nfs_server *nfs_alloc_server(void
  
+ 	server->io_stats = nfs_alloc_iostats();
+ 	if (!server->io_stats) {
++		ida_free(&s_sysfs_ids, server->s_sysfs_id);
+ 		kfree(server);
+ 		return NULL;
+ 	}
 
 
