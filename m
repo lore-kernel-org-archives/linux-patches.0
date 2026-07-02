@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9256A1FA859;
-	Thu,  2 Jul 2026 17:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371541FA859;
+	Thu,  2 Jul 2026 17:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011673; cv=none; b=uhwldAOz3QN7h4pzR6ADeLsOHPxMcE5SIbTK+hzTcRwMd4IRoChRtb7Srz20M5jAqgvC9KcLurIiExC2RtF5w/FptLegsurOgW4Hze0hTIwXSsqbW95kwg+KLfvVDH6fU86hWuSOWmjvwLisFQ2dg8+oJnBKZu2RSYj/JrrphZI=
+	t=1783011676; cv=none; b=qMhaVAXbH8tK7KXD40mfTAZ2IxEE9P2sZe61xR3R1lcH0+N1yfDrNub/5Vy9xHBJQEovo0ys9ivngTOSeOG9/nw4q/kxRvhj0/nhGSjvHedru7aYXyVxxDrpkzHa4+a5bShV7Uc0plT567qRt/QS+LAdoT0VnQ4z4bWpatQWI9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011673; c=relaxed/simple;
-	bh=fXNi37Eo1X39Ae9CvcMnXe7rvsPVIG/Fk6VI9s++19Q=;
+	s=arc-20240116; t=1783011676; c=relaxed/simple;
+	bh=MOaAFekbu8NMpAlTjdYvwPZAk2M/d4qd89XuxDeJczQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjGsdr5CS0m+y/4dQoYSOfU1ldV/1wTACxqVM6EP7v4bkwGt+81SS6IXeSWFuxTpw+qxC2jJAU5u7ayFSPfPT1k7s56iCUKp7W8Gm1Fcj4auO5rmjPPROK6Dn6P0OkRmNuQE7aIn04N/MR7h9Z33iN+f/vy1/pXomE/sSMkMwbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UJE1pEV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FKZ6+9lUhbvJHRK5wSlZLFslcPaDfGSr2oyzf3Bygx26wimw/eIOKsmOa+sxahxlXEzqYQmsX9cGn9n86P6J/p8vRBK1n9YroAqa1lgyV+/w4Z0PEkADbOgXqRxRF425GbhaEsRt8PpkC0WVZscT0LHPHnZqQfCd0bR7MsPlJAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cC1jK1Jg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UJE1pEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0466F1F00A3A;
-	Thu,  2 Jul 2026 17:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cC1jK1Jg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9E71F000E9;
+	Thu,  2 Jul 2026 17:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011672;
-	bh=k73HxcFZMWiHFNVj7jviBTUx1U4uODxZhNVHwavlOXc=;
+	s=korg; t=1783011675;
+	bh=0yNT6echMFGRc0l8gCHICXXRRLO1SyDkAN3ocFODoH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1UJE1pEVIyVN1VYKT13JQJQ0adQv+F6lZYvi33tfu22BJKWmtOzRVh5I81aiXPc7N
-	 +3vKdp1DvnJAIqf0NgTbfxNWsUkjHfdasUR/f9erGcIit6baUS2evy0eko7Kmiteot
-	 8sk/sDdEQQNpFnZnxjv6VfinXxjfLFrG8NDjOYLo=
+	b=cC1jK1JgYRDEtQTGTCBg0eLxDU06qJD4hRVG29uH7AF44QUCq00Lcbrug4AkIb/76
+	 7i0P+GtCA1tJAuXrRrxWfhFAYxnPNmfNNDfAlWhMtgOGCnhbhCDN6SeIcyttW0Wt6g
+	 GWl/Il99/FAwyaOUgB8+EDwrA1qczGtKFuNCGbNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Subject: [PATCH 7.1 087/120] sched/mmcid: Fix OOB clear_bit when CID is MM_CID_UNSET in fixup path
-Date: Thu,  2 Jul 2026 18:21:23 +0200
-Message-ID: <20260702155114.760632648@linuxfoundation.org>
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.1 088/120] irqchip/imgpdc: Fix resource leak, add missing chained handler cleanup on remove
+Date: Thu,  2 Jul 2026 18:21:24 +0200
+Message-ID: <20260702155114.780808643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -51,88 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-commit de3ab9bd3133899efb92e4cd05ba4203e58fc0a3 upstream.
+commit 37738fdf2ab1e504d1c63ce5bc0aeb6452d8f057 upstream.
 
-In mm_cid_fixup_cpus_to_tasks(), when rq->curr has the target mm and
-mm_cid.active is set, the CID is checked with cid_in_transit() before
-setting the transition bit.  In per-CPU mode a newly forked or exec'd
-task can be running with mm_cid.cid == MM_CID_UNSET because CIDs are
-assigned lazily on schedule-in.  With cid_in_transit() the guard passes
-for MM_CID_UNSET (no transit bit), converts it to MM_CID_UNSET |
-MM_CID_TRANSIT and stores it back; later mm_cid_schedout() feeds this
-to clear_bit() with MM_CID_UNSET as the bit number, triggering an
-out-of-bounds write.
+The driver allocates domain generic chips using
+irq_alloc_domain_generic_chips() during probe and sets up chained
+handlers using irq_set_chained_handler_and_data(). However, on driver
+removal, the generic chips are not freed and the chained handlers are
+not removed.
 
-Symptoms: this is genuine memory corruption, but a bounded out-of-bounds
-write, not an arbitrary one.  MM_CID_UNSET is the fixed sentinel BIT(31),
-so once the bad value reaches mm_cid_schedout() the cid_from_transit_cid()
-strip leaves MM_CID_UNSET, which fails the "cid < max_cids" convergence
-test and falls into mm_drop_cid() -> clear_bit(MM_CID_UNSET,
-mm_cidmask(mm)).  The cid bitmap is embedded in the mm_struct slab object
-(after cpu_bitmap and mm_cpus_allowed) and is only num_possible_cpus()
-bits wide, so clearing bit 31 is a deterministic OOB bit-clear at a
-fixed offset of 2^31 / 8 == 256 MiB past the bitmap base.  The address is
-not attacker-influenced (fixed sentinel -> fixed offset) and the op only
-clears a single bit; what sits 256 MiB further along the direct map is
-whatever kernel object happens to live there, so this corrupts one bit of
-unpredictable kernel memory -- it is not an arbitrary-address or
-arbitrary-value write.
+The generic chips remain on the global gc_list and may later be accessed by
+generic interrupt chip suspend, resume, or shutdown callbacks after the
+driver has been removed, potentially resulting in a use-after-free and
+kernel crash.
 
-It triggers only in per-CPU CID mode, when a CPU is running an active
-task of the target mm whose cid is still MM_CID_UNSET -- the
-fork()/execve() window before that task's next schedule-in assigns it a
-real CID -- and a per-CPU -> per-task fixup walks over it (the mode
-fallback driven by a thread exit, sched_mm_cid_exit(), or by the deferred
-max_cids recompute in mm_cid_work_fn()).
+The chained handlers that were installed in probe for peripheral and
+syswake interrupts are also left dangling, which can lead to spurious
+interrupts accessing freed memory.
 
-In practice syzkaller surfaced it as a KASAN use-after-free reported in
-__schedule -> mm_cid_switch_to, where the offending clear_bit() is inlined
-via mm_cid_schedout() -> mm_drop_cid().
+Fix these issues by:
 
-Guard the transition-bit assignment against MM_CID_UNSET, in addition to
-the existing cid_in_transit() check, so the bit is only set on a genuine
-task-owned CID.  A CPU-owned (MM_CID_ONCPU) CID of a running active task
-is handled by the cid_on_cpu(pcp->cid) branch above and never reaches
-this path, so excluding MM_CID_UNSET (and the already-transitioning case)
-is sufficient.
+  - Setting IRQ_DOMAIN_FLAG_DESTROY_GC flag in domain->flags, so the
+    core code automatically removes generic chips when irq_domain_remove()
+    is called
 
-Fixes: fbd0e71dc370 ("sched/mmcid: Provide CID ownership mode fixup functions")
-Signed-off-by: Rik van Riel <riel@surriel.com>
+  - Clearing all chained handlers with NULL in pdc_intc_remove()
+
+Fixes: b6ef9161e43a ("irq-imgpdc: add ImgTec PDC irqchip driver")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: Claude:claude-opus-4-8 syzkaller
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616203818.1516263-1-riel@surriel.com
+Link: https://patch.msgid.link/20260618021352.661773-1-fffsqian@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-imgpdc.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -10880,8 +10880,19 @@ static void mm_cid_fixup_cpus_to_tasks(s
- 		} else if (rq->curr->mm == mm && rq->curr->mm_cid.active) {
- 			unsigned int cid = rq->curr->mm_cid.cid;
+--- a/drivers/irqchip/irq-imgpdc.c
++++ b/drivers/irqchip/irq-imgpdc.c
+@@ -378,6 +378,7 @@ static int pdc_intc_probe(struct platfor
+ 		dev_err(&pdev->dev, "cannot add IRQ domain\n");
+ 		return -ENOMEM;
+ 	}
++	priv->domain->flags |= IRQ_DOMAIN_FLAG_DESTROY_GC;
  
--			/* Ensure it has the transition bit set */
--			if (!cid_in_transit(cid)) {
-+			/*
-+			 * Set the transition bit only on a genuine task-owned
-+			 * CID. A running active task can legitimately have
-+			 * MM_CID_UNSET here: in per-CPU mode CIDs are assigned
-+			 * lazily on schedule-in, so the fork()/execve() window
-+			 * leaves the task active with no owned CID. Setting the
-+			 * transition bit on MM_CID_UNSET would later feed
-+			 * clear_bit() an out-of-bounds bit number via
-+			 * mm_cid_schedout(), so exclude it. A CPU-owned
-+			 * (MM_CID_ONCPU) CID is handled by the cid_on_cpu()
-+			 * branch above and never reaches here.
-+			 */
-+			if (cid != MM_CID_UNSET && !cid_in_transit(cid)) {
- 				cid = cid_to_transit_cid(cid);
- 				rq->curr->mm_cid.cid = cid;
- 				pcp->cid = cid;
+ 	/*
+ 	 * Set up 2 generic irq chips with 2 chip types.
+@@ -465,6 +466,11 @@ static void pdc_intc_remove(struct platf
+ {
+ 	struct pdc_intc_priv *priv = platform_get_drvdata(pdev);
+ 
++	for (unsigned int i = 0; i < priv->nr_perips; ++i)
++		irq_set_chained_handler_and_data(priv->perip_irqs[i], NULL, NULL);
++
++	irq_set_chained_handler_and_data(priv->syswake_irq, NULL, NULL);
++
+ 	irq_domain_remove(priv->domain);
+ }
+ 
 
 
