@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A23348465;
-	Thu,  2 Jul 2026 16:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD9030C15A;
+	Thu,  2 Jul 2026 16:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010788; cv=none; b=bjRfGkFWsNLW09C6bGwrKPz54bFNARZl5bRlwzlEZH6GENY20YBk9zIoHHdBbDwOMZCi49+ye3f9NagGs/0hgW10Shth6ND3saL3QPLCGBMrMlIrVfDw2lwoN8WtRtABGDZw/oDvudaO+e0MqgUTJNlMdw3kWEoQcrnH6lcle2w=
+	t=1783010791; cv=none; b=pffvyHdSUiBS96uHoY0gN9bX2zBlsXhGmugWtWppB4bi6xQokEEWvcMA0+rAeDLQpN49e1cOtXYsAc2k55fcywJnECKZWXboEtPFJ2lA10Av9VfOgXT19YgfyLkDh1psc+x6C9gYuC1A5tlNeDuWWOmUMqrmeTI3Pt8ysEIDVLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010788; c=relaxed/simple;
-	bh=sz4r7Q4w1NEKFz3NzyqBr+BW7ePCwVgVKjNCO+EPeic=;
+	s=arc-20240116; t=1783010791; c=relaxed/simple;
+	bh=mJreA93oD+c8nqRqwE8tAGGq588QQkkjEkzM90mgl8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmAoK1sEwLjR7mrdzrzJs7ajKYqKZNKVUF1DunL8mIFRn9UIvwZDUH08ZtNuN7wRBY90RtocEqNij7Loyp8jXuZQrVSmAxA90EoBjllYfGLs6c6861ljj8FyTr8zFWwUKJjqN+hzQkbaJ0tkZV26sifqMBZYoe7VyEzZgNzBMzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4fHo0QE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e5DnbdMhdchLVMT8QL3+CifiEhVmLWoKV0dscZ1Ui+zidVM/w7tsPOTZtv8R5/VNCbH6H87hK9HoQU/S/gk+1Nl9Shc/iOFQ4g9BMPo+GvGuXSbYNftO7fFp4MK1UFS1s29HZwFec/ut2EJt/EdxSxIEZh8VdvF4Kc9mbQ3M45U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9ZCtzLN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4fHo0QE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57331F00A3A;
-	Thu,  2 Jul 2026 16:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9ZCtzLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80DAF1F000E9;
+	Thu,  2 Jul 2026 16:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010787;
-	bh=o6glv/I+jpLI1B3aWe4yuNuksIBqa1pj7f45G5DMw00=;
+	s=korg; t=1783010790;
+	bh=q8fLjxaIuNTjuzTSpBgrPmkPUSh97mdUjPWLlMEN4a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4fHo0QERGqIG6HJ2YPBKwJX1TiDWbSTZRL5QbKhwPaK0L/AZmf5UiHej7N5lnGVU
-	 h41Xd1ve45xfZSE4iYFjpVIYc0cqCQz0ET1XuZO5PcCzen5i94USIEUYqRz7KVc7fb
-	 8rrci6wQcgIH/AlUll23s0KoD0XUti1QuWAd3BpY=
+	b=h9ZCtzLNNR4Nbaf73WByRo/E2Tqvvxqm0+sB/BHlJ3MmSNNLDR3FQg5OVWccZ+oXP
+	 x+kQZJ1k8254ApzbWBwlKmpBAbG7bdx7HZiC9hfH/9/XJJic5xh4UATBCmQybfIvpS
+	 kusczuJUq/mTRBt+dsIJsZ83l9Fr8s2Vz4itaj5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+78147abe6c524f183ee9@syzkaller.appspotmail.com,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/175] locking/rtmutex: Skip remove_waiter() when waiter is not enqueued
-Date: Thu,  2 Jul 2026 18:18:57 +0200
-Message-ID: <20260702155116.559022693@linuxfoundation.org>
+Subject: [PATCH 6.6 037/175] phonet: Pass ifindex to fill_addr().
+Date: Thu,  2 Jul 2026 18:18:58 +0200
+Message-ID: <20260702155116.579387331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -52,66 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 40a25d59e85b3c8709ac2424d44f65610467871e ]
+[ Upstream commit 08a9572be36819b5d9011604edfa5db6c5062a7a ]
 
-syzbot triggered the following splat in remove_waiter() via
-FUTEX_CMP_REQUEUE_PI:
+We will convert addr_doit() and getaddr_dumpit() to RCU, both
+of which call fill_addr().
 
-  KASAN: null-ptr-deref in range [0x0000000000000a88-0x0000000000000a8f]
-   class_raw_spinlock_constructor
-   remove_waiter+0x159/0x1200 kernel/locking/rtmutex.c:1561
-   rt_mutex_start_proxy_lock+0x103/0x120
-   futex_requeue+0x10e4/0x20d0
-   __x64_sys_futex+0x34f/0x4d0
+The former will call phonet_address_notify() outside of RCU
+due to GFP_KERNEL, so dev will not be available in fill_addr().
 
-task_blocks_on_rt_mutex() does not arm the waiter upon deadlock detection,
-leaving waiter->task nil, where 3bfdc63936dd ("rtmutex: Use waiter::task instead
-of current in remove_waiter()") made this fatal.
+Let's pass ifindex directly to fill_addr().
 
-Furthermore, rt_mutex_start_proxy_lock() should not be calling into remove_waiter()
-upon a successfully grabbing the rtmutex. 1a1fb985f2e2 ("futex: Handle early deadlock
-return correctly"), moved the remove_waiter() out of __rt_mutex_start_proxy_lock()
-(where 'ret' was only ever 0 or < 0) into the wrapper. Tighten this check to
-account for try_to_take_rt_mutex().
-
-Fixes: 3bfdc63936dd ("rtmutex: Use waiter::task instead of current in remove_waiter()")
-Reported-by: syzbot+78147abe6c524f183ee9@syzkaller.appspotmail.com
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/69f114ac.050a0220.ac8b.0003.GAE@google.com/
-Link: https://patch.msgid.link/20260507112913.1019537-1-dave@stgolabs.net
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 71de0177b28d ("net: phonet: free phonet_device after RCU grace period")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/rtmutex.c     |    3 +++
- kernel/locking/rtmutex_api.c |    2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ net/phonet/pn_netlink.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/kernel/locking/rtmutex.c
-+++ b/kernel/locking/rtmutex.c
-@@ -1524,6 +1524,9 @@ static void __sched remove_waiter(struct
+--- a/net/phonet/pn_netlink.c
++++ b/net/phonet/pn_netlink.c
+@@ -19,7 +19,7 @@
  
- 	lockdep_assert_held(&lock->wait_lock);
+ /* Device address handling */
  
-+	if (!waiter_task) /* never enqueued */
-+		return;
+-static int fill_addr(struct sk_buff *skb, struct net_device *dev, u8 addr,
++static int fill_addr(struct sk_buff *skb, u32 ifindex, u8 addr,
+ 		     u32 portid, u32 seq, int event);
+ 
+ void phonet_address_notify(int event, struct net_device *dev, u8 addr)
+@@ -31,7 +31,8 @@ void phonet_address_notify(int event, st
+ 			nla_total_size(1), GFP_KERNEL);
+ 	if (skb == NULL)
+ 		goto errout;
+-	err = fill_addr(skb, dev, addr, 0, 0, event);
 +
- 	scoped_guard(raw_spinlock, &waiter_task->pi_lock) {
- 		rt_mutex_dequeue(lock, waiter);
- 		waiter_task->pi_blocked_on = NULL;
---- a/kernel/locking/rtmutex_api.c
-+++ b/kernel/locking/rtmutex_api.c
-@@ -344,7 +344,7 @@ int __sched rt_mutex_start_proxy_lock(st
++	err = fill_addr(skb, dev->ifindex, addr, 0, 0, event);
+ 	if (err < 0) {
+ 		WARN_ON(err == -EMSGSIZE);
+ 		kfree_skb(skb);
+@@ -92,8 +93,8 @@ static int addr_doit(struct sk_buff *skb
+ 	return err;
+ }
  
- 	raw_spin_lock_irq(&lock->wait_lock);
- 	ret = __rt_mutex_start_proxy_lock(lock, waiter, task);
--	if (unlikely(ret))
-+	if (unlikely(ret < 0))
- 		remove_waiter(lock, waiter);
- 	raw_spin_unlock_irq(&lock->wait_lock);
+-static int fill_addr(struct sk_buff *skb, struct net_device *dev, u8 addr,
+-			u32 portid, u32 seq, int event)
++static int fill_addr(struct sk_buff *skb, u32 ifindex, u8 addr,
++		     u32 portid, u32 seq, int event)
+ {
+ 	struct ifaddrmsg *ifm;
+ 	struct nlmsghdr *nlh;
+@@ -107,7 +108,7 @@ static int fill_addr(struct sk_buff *skb
+ 	ifm->ifa_prefixlen = 0;
+ 	ifm->ifa_flags = IFA_F_PERMANENT;
+ 	ifm->ifa_scope = RT_SCOPE_LINK;
+-	ifm->ifa_index = dev->ifindex;
++	ifm->ifa_index = ifindex;
+ 	if (nla_put_u8(skb, IFA_LOCAL, addr))
+ 		goto nla_put_failure;
+ 	nlmsg_end(skb, nlh);
+@@ -140,7 +141,7 @@ static int getaddr_dumpit(struct sk_buff
+ 			if (addr_idx++ < addr_start_idx)
+ 				continue;
  
+-			if (fill_addr(skb, pnd->netdev, addr << 2,
++			if (fill_addr(skb, pnd->netdev->ifindex, addr << 2,
+ 					 NETLINK_CB(cb->skb).portid,
+ 					cb->nlh->nlmsg_seq, RTM_NEWADDR) < 0)
+ 				goto out;
 
 
