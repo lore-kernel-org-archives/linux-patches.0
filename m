@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A976834FF78;
-	Thu,  2 Jul 2026 16:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5087C35DA65;
+	Thu,  2 Jul 2026 16:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010078; cv=none; b=nOe3NHm5OKAThIGlgLNq0wlVLq6RwpJ6sbWS1mLiNPoucArH1GiQAB324jjPKn6tOozOe5c3jKYh8OrOGCKdss/IhBlTAnaEgywTaL5Mmb4SOCWyH9SKdDht9R1Bx74X9ay+YPf8/aJQp1cYjMCbl03lvvsW0GfH1uQTqat7XCc=
+	t=1783010081; cv=none; b=esQdppQDHHmpNaF4uX7CjSMjTAPBfjTvmziUcF43Y5uLVafshjGZBZm1SkTrRUSf6N/Yi+pRWFjLBOCnCegNNypSpNAcAimjcwKPd0U86Etm4Etv2lYqE/nKkeOfYcUKXB9P8vDBoWaMszj0sbMJ3MXITxmbLdfZZQmpJ/a5frk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010078; c=relaxed/simple;
-	bh=ENIjCpKiaIjPklPRh/d+M6UKyA0fmdMfUvlWYkA3lbc=;
+	s=arc-20240116; t=1783010081; c=relaxed/simple;
+	bh=M+w7wxgLxEuNCCXCC7otThJ8OORuxdzxmfceCv6juRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWIeczq3VYjadyQTRCbd+/EB9U5a4YzEt+dmF042V1PmntTe+Rdo8O1KvEAJAwnDZqa4nELWrvk+k3KSt86LSOaAlbanSUSbOp6koowMLIY9Fj4Btixvd2wm55X+shMPh4QKxuTThQmZaQUM8RzxTr6pR9VPLey2FCThadgVzXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSgZPZMt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NQaJPd+vPJl/nojUlUd+IibtdtkWdrt4uy4L87Fqp9DzJur4wIIw8CwLJ5lb8PuLWA+p6gW5+zZtFQfJmLruMuFwWyysMtko0uoM+r9vIlyBw/TpVCty0gambqCvqHoNQrX70A6Dc+CIxFuFEGtf0PyMkGtoUO2rmE8kjY+nB/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbVkHvus; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSgZPZMt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230391F000E9;
-	Thu,  2 Jul 2026 16:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbVkHvus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60BC1F000E9;
+	Thu,  2 Jul 2026 16:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010077;
-	bh=HRQ9I04crAn2PEH7hGrMr0nf0hx7HShul0+PhKsMc7Y=;
+	s=korg; t=1783010080;
+	bh=M3CMol38hFy4xPkNzMKhV/jgd3wKfzHEOsxiaywAjWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kSgZPZMtHb78cGc7dosHVrmWXCcp565wTgFdMX8R3qEUwlAVNrzLMR8GQoQsm+Y7e
-	 9wME28eeCahzdGnbVhdKctQ3g7EjPWRm04+PJPB2yhdyDALm2gUIfJCi6ebdHNINlK
-	 UO14VPRWQAMakgPvEIlmngDiR3xdjE03jOV3nB3I=
+	b=MbVkHvusozd7QsOE2nGQFqelw39yF0g1A9JtSooaDQEBZ9tgkPBsbvV4k422ac1Ik
+	 MpZ4rEpOguZlG6vSeX4XUD74V++EDPPVcUEffuW48RPY8dU7tHz3B1muTQK0zqeTO8
+	 zcwthv/JoQ3mjdyKdEvAZC9B6Kj4e2ohtxX4zmKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.1 100/129] 9p: avoid putting oldfid in p9_client_walk() error path
-Date: Thu,  2 Jul 2026 18:20:19 +0200
-Message-ID: <20260702155114.214116906@linuxfoundation.org>
+	Jonas Jelonek <jelonek.jonas@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 101/129] MIPS: smp: report dying CPU to RCU in stop_this_cpu()
+Date: Thu,  2 Jul 2026 18:20:20 +0200
+Message-ID: <20260702155114.234260002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -55,54 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Jonas Jelonek <jelonek.jonas@gmail.com>
 
-commit 1a3860d46e3eb47dbd60339783cdad7904486b9f upstream.
+commit 9f3f3bdc6d9dac1a5a8262ee7ad0f2ff1527a7e7 upstream.
 
-When p9_client_walk() is called with clone set to false, fid aliases
-oldfid. If the walk subsequently fails after the request has been sent,
-the error path jumps to clunk_fid, which currently calls p9_fid_put(fid)
-unconditionally.
+smp_send_stop() parks all secondary CPUs in stop_this_cpu(). The function
+marks the CPU offline for the scheduler via set_cpu_online(false) but
+never informs RCU, so RCU keeps expecting a quiescent state from CPUs
+that are now spinning forever with interrupts disabled.
 
-This drops a reference to oldfid even though ownership of oldfid remains
-with the caller. If this is the last reference, oldfid can be clunked and
-destroyed while the caller still expects it to be valid. A later use or
-put of oldfid can then trigger a use-after-free or refcount underflow.
+As long as nothing waits for an RCU grace period after smp_send_stop()
+this is harmless, which is why it went unnoticed. Since commit
+91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
+however, irq_work_sync() calls synchronize_rcu() on architectures without
+an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt() returns
+false. That is the asm-generic default used by MIPS. Any irq_work_sync()
+issued in the reboot/shutdown path after smp_send_stop() then blocks on
+a grace period that can never complete, hanging the reboot:
 
-Fix this by only putting fid in the clunk_fid error path when it does not
-alias oldfid, matching the existing guard in the error path below.
+  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
+  ...
+  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+  rcu: Offline CPU 1 blocking current GP.
+  rcu: Offline CPU 2 blocking current GP.
+  rcu: Offline CPU 3 blocking current GP.
 
-This can be triggered when a multi-component walk is split into multiple
-p9_client_walk() calls and a later non-cloning walk fails. A reproducer
-and refcount warning logs are available on request.
+This issue was noticed on several Realtek MIPS switch SoCs (MIPS
+interAptiv) and came up during kernel bump downstream in OpenWrt from
+6.18.33 to 6.18.34, after the backport of the patch to the 6.18 stable
+branch. The patch also has been backported all the way back to 6.1.
 
-Fixes: b48dbb998d70 ("9p fid refcount: add p9_fid_get/put wrappers")
-Cc: stable@vger.kernel.org
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM 5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260528053918.53550-1-zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Call rcutree_report_cpu_dead() once interrupts are disabled, mirroring the
+generic CPU-hotplug offline path, so RCU stops waiting on the parked CPUs
+and grace periods can still complete. MIPS shuts down all CPUs here
+without going through the CPU-hotplug mechanism, so this report is not
+otherwise issued. Reporting a dying CPU to RCU outside the regular hotplug
+offline path is not unprecedented: arm64 does the same in cpu_die_early().
+There it is an exception for a CPU that was coming online and is aborting
+bringup, rather than the default shutdown action as on MIPS.
+
+Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
+CC: stable@vger.kernel.org
+Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/client.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/mips/kernel/smp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -1207,7 +1207,8 @@ struct p9_fid *p9_client_walk(struct p9_
+--- a/arch/mips/kernel/smp.c
++++ b/arch/mips/kernel/smp.c
+@@ -19,6 +19,7 @@
+ #include <linux/sched/mm.h>
+ #include <linux/cpumask.h>
+ #include <linux/cpu.h>
++#include <linux/rcupdate.h>
+ #include <linux/err.h>
+ #include <linux/ftrace.h>
+ #include <linux/irqdomain.h>
+@@ -392,6 +393,7 @@ static void stop_this_cpu(void *dummy)
+ 	set_cpu_online(smp_processor_id(), false);
+ 	calculate_cpu_foreign_map();
+ 	local_irq_disable();
++	rcutree_report_cpu_dead();
+ 	while (1);
+ }
  
- clunk_fid:
- 	kfree(wqids);
--	p9_fid_put(fid);
-+	if (fid != oldfid)
-+		p9_fid_put(fid);
- 	fid = NULL;
- 
- error:
 
 
