@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1873F433E87;
-	Thu,  2 Jul 2026 17:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB25F309EE9;
+	Thu,  2 Jul 2026 17:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011621; cv=none; b=FMt8i6PE6PDeBR0XnepILxAnSkxY/hJPQfHC5ktSg2qcVSwxVjPVyBWi6SYVDxtgZPKC0cigN0oGHtLbLLLgpBUJ26cG+JWlLeEAgBj/CHRKuQYEpNRMFrSKL03Sf2H2lCACzsNjEvMLFpEjQ04/BuVx92WW72jDlGEu/Pn1Ux0=
+	t=1783011623; cv=none; b=mkohknd3UfRv7WgtHAv+Pb7lm5BVXYQ4TUGPJcjjoMwgQBwNVR+tFuHcqP0CYOjVxfW+yJnSAgL49+9VyosffPiVNQ2tP88jU60awSW4zvbFQHAOKy5s7SBT29EU8trBWoWeVQf/0Wfr+irO2O2ymZL+B+6puYpxPjMdSCxDfm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011621; c=relaxed/simple;
-	bh=uZBANYZ148gs3F0QNa6YAeHt7ycUu2E+3VgCAWRXY9A=;
+	s=arc-20240116; t=1783011623; c=relaxed/simple;
+	bh=4hMLFzxSe1Y4/4UVsAs7HsBkoZyH3aH8RPKMjJqaDZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nlJmKDhdpbRqZySvjCp1jLDBzxfsh5eu1hef+u8FZJatYfI/e3cut/DSBrFpYTcGgx+pAsH880CHQ2IJGueX990erZWEQfE2lOpgoTa5eCCfAcg8oJFCcsfNNgAw5DnGGf2gc9tpgEMwB8dGl0jHkwG4YJJWKK83akEhjdK7Cww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRG53oZW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lL4IqevKGtOhndLCTpPPWgal2gKkwFtm2s2tMZYlnifRZnD9djXQNWffa+ABougsoYAlx7WcMmPerXINk0b2QsROvXdAr54UKJCqNCviM4+fl4imRSJE1z7av2GcfsmhLvWFQiixWGraURh/sNsunFPvnDSysX+xfXATNGUTdf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdUqPri8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRG53oZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C891F000E9;
-	Thu,  2 Jul 2026 17:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdUqPri8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFB71F000E9;
+	Thu,  2 Jul 2026 17:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011620;
-	bh=ZLniOW/mqs4TV/V+vDT5iTC65xUE/NYwDK27nRvK2V4=;
+	s=korg; t=1783011622;
+	bh=LPHBcQrNxfYP/doUSg6ooYNXrTPHaSBBc3IRj5wj/lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tRG53oZW/EFxGFwgXq0umtZ1/B3DlmGsLFYmog+93PtSyqVW3uwqQHW/3wid8IPsx
-	 thsrO57QG8rVYhGgMbWtibMr2p2RYacdRAN9JxFaSILcl5WL/EN4uTL1FPRjFsez4M
-	 xkaQcmbLRu8tIkThy3QOixJ0h0ZePPa+m9LsCsV0=
+	b=cdUqPri8pR16+Lej5mMm8QV/XyvMdFDwx2IwoGKreKKjJM814NCqhMrxOKsjRcZ0p
+	 0Orkm0i6c4gsmZRAv0A1tWOD+37PNwu07M32wKUhjZulRuHJpiQJOb4YUq8a+YbRVS
+	 iOq4ucXsTuX2WDc67aTVok1R/4zU+7ZfYoV1ibP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.1 069/120] Revert "f2fs: remove non-uptodate folio from the page cache in move_data_block"
-Date: Thu,  2 Jul 2026 18:21:05 +0200
-Message-ID: <20260702155114.386956019@linuxfoundation.org>
+Subject: [PATCH 7.1 070/120] f2fs: fix incorrect FI_NO_EXTENT handling in __destroy_extent_node()
+Date: Thu,  2 Jul 2026 18:21:06 +0200
+Message-ID: <20260702155114.407659626@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -51,152 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit ccaba785821970f422c47770331c7e3271763f17 upstream.
+commit 1f70ddb28a3c71df124da5fa4040c808116d6bb9 upstream.
 
-This reverts commit 9609dd704725a40cd63d915f2ab6c44248a44598.
+When __destroy_extent_node() sets the inode flag FI_NO_EXTENT, it does
+not reset the length of the largest extent to 0 and update the inode
+folio. Since modifications to the extent tree are disallowed afterward,
+the cached largest extent may become stale. This can trigger the
+following error in xfstests generic/388:
 
-The kernel panics are keeping to be reported especially when the f2fs
-partition get almost full. By investigation, we find that the reason is
-one f2fs page got freed to buddy without being deleted from LRU and the
-root cause is the race happened in [2] which is enrolled by this commit.
+F2FS-fs (dm-0): sanity_check_extent_cache: inode (ino=1761) extent info [220057, 57, 6] is incorrect, run fsck to fix
 
-There are 3 race processes in this scenario, please find below for their
-main activities.
+In the f2fs_drop_inode path, __destroy_extent_node() does not need to
+guarantee that et->node_cnt is 0, because concurrency with writeback
+is expected in this path, and writeback may update the extent cache.
 
-The changed code in move_data_block() lets the GC path evict the tail-end
-folio from the page cache through folio_end_dropbehind().  Once
-folio_unmap_invalidate() removes the folio from mapping->i_pages, the
-page-cache references for all pages in the folio are dropped.  The folio
-is then kept alive only by temporary external references, which allows a
-later split to operate on a folio whose subpages are no longer protected
-by page-cache references.
+This patch reverts commit ed78aeebef05 ("f2fs: fix node_cnt race between
+extent node destroy and writeback"), and remove the unnecessary zero
+check of et->node_cnt.
 
-After the page-cache references are gone, split_folio_to_order() can
-split the big folio into individual pages and put the resulting subpages
-back on the LRU.  For tail pages beyond EOF, split removes them from the
-page cache and drops their page-cache references.  A tail page can then
-remain on the LRU with PG_lru set while holding only the split caller's
-temporary reference.  When free_folio_and_swap_cache() drops that final
-reference, the page enters the final folio_put() release path.
-
-In parallel, folio_isolate_lru() can observe the same tail page with a
-non-zero refcount and PG_lru set.  It clears PG_lru before taking its own
-reference.  If this races with the final folio_put() from the split path,
-__folio_put() sees PG_lru already cleared and skips lruvec_del_folio().
-The page is then freed back to the allocator while its lru links are
-still present in the LRU list.  A later LRU operation on a neighboring
-page detects the stale link and reports list corruption.
-
-[1]
-[   22.486082] list_del corruption. next->prev should be fffffffec10e0ac8, but was dead000000000122. (next=fffffffec10e0a88)
-[   22.486130] ------------[ cut here ]------------
-[   22.486134] kernel BUG at lib/list_debug.c:67!
-[   22.486141] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-[   22.488502] Tainted: [W]=WARN, [O]=OOT_MODULE
-[   22.488506] Hardware name: Spreadtrum UMS9230 1H10 SoC (DT)
-[   22.488511] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   22.488517] pc : __list_del_entry_valid_or_report+0x14c/0x154
-[   22.488531] lr : __list_del_entry_valid_or_report+0x14c/0x154
-[   22.488539] sp : ffffffc08006b830
-[   22.488542] x29: ffffffc08006b868 x28: 0000000000003020 x27: 0000000000000000
-[   22.488553] x26: 0000000000000000 x25: 0000000000000004 x24: fffffffec10e0ac0
-[   22.488564] x23: 00000000000000e8 x22: 0000000000000024 x21: dead000000000122
-[   22.488574] x20: fffffffec10e0a88 x19: fffffffec10e0ac8 x18: ffffffc080061060
-[   22.488585] x17: 20747562202c3863 x16: 6130653031636566 x15: 0000000000000058
-[   22.488595] x14: 0000000000000004 x13: ffffff80f91e0000 x12: 0000000000000003
-[   22.488605] x11: 0000000000000003 x10: 0000000000000001 x9 : ffe85721f0e25f00
-[   22.488615] x8 : ffe85721f0e25f00 x7 : 0000000000000000 x6 : 6c65645f7473696c
-[   22.488625] x5 : ffffffed39b23026 x4 : 0000000000000000 x3 : 0000000000000010
-[   22.488636] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 000000000000006d
-[   22.488647] Call trace:
-[   22.488651]  __list_del_entry_valid_or_report+0x14c/0x154 (P)
-[   22.488661]  __folio_put+0x2bc/0x434
-[   22.488670]  folio_put+0x28/0x58
-[   22.488678]  do_garbage_collect+0x1a34/0x2584
-[   22.488689]  f2fs_gc+0x230/0x9b4
-[   22.488697]  f2fs_fallocate+0xb90/0xdf4
-[   22.488706]  vfs_fallocate+0x1b4/0x2bc
-[   22.488716]  __arm64_sys_fallocate+0x44/0x78
-[   22.488725]  invoke_syscall+0x58/0xe4
-[   22.488732]  do_el0_svc+0x48/0xdc
-[   22.488739]  el0_svc+0x3c/0x98
-[   22.488747]  el0t_64_sync_handler+0x20/0x130
-[   22.488754]  el0t_64_sync+0x1c4/0x1c8
-
-[2]
-CPU0 (f2fs GC)              CPU1 (split_folio_to_order)          CPU2 (folio_isolate_lru)
-
-F: pagecache refs = n
-F: extra refs = GC + split
-F: PG_lru set
-move_data_block()
-folio = f2fs_grab_cache_folio(F)
-...
-__folio_set_dropbehind(F)
-folio_unlock(F)
-folio_end_dropbehind(F)
-  folio_unmap_invalidate(F)
-    __filemap_remove_folio(F)
-    folio_put_refs(F, n)
-folio_put(F)
-                            split_folio_to_order(F)
-                              folio_ref_freeze(F, 1)
-                              ...
-                              lru_add_split_folio(T)
-                                list_add_tail(&T->lru, &F->lru)
-                                folio_set_lru(T)
-                              __filemap_remove_folio(T)
-                              folio_put_refs(T, 1)
-                              /* T refcount == 1, PageLRU set */
-                                                                  folio_isolate_lru(T)
-                                                                    folio_test_clear_lru(T)
-                            free_folio_and_swap_cache(T)
-                              folio_put(T)
-                                /* refcount: 1 -> 0 */
-                                __folio_put(T)
-                                  __page_cache_release(T)
-                                    folio_test_lru(T) == false
-                                    /* skip lruvec_del_folio(T) */
-                                  free_frozen_pages(T)
-                                                                  folio_get(T)
-                                                                  lruvec_del_folio(T)
-later:
-  list_del(adjacent->lru)
-    next == &T->lru
-    next->prev == LIST_POISON / PCP freelist
-    BUG
-
+Fixes: ed78aeebef05 ("f2fs: fix node_cnt race between extent node destroy and writeback")
 Cc: stable@vger.kernel.org
-Fixes: 9609dd704725 ("f2fs: remove non-uptodate folio from the page cache in move_data_block")
-Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Reported-by: Chao Yu <chao@kernel.org>
+Suggested-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/f2fs/extent_cache.c |   19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 69e0a867219d..56a1c0547d76 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1499,11 +1499,7 @@ static int move_data_block(struct inode *inode, block_t bidx,
- put_out:
- 	f2fs_put_dnode(&dn);
- out:
--	if (!folio_test_uptodate(folio))
--		__folio_set_dropbehind(folio);
--	folio_unlock(folio);
--	folio_end_dropbehind(folio);
--	folio_put(folio);
-+	f2fs_folio_put(folio, true);
- out_iput:
- 	if (atomic_inode)
- 		iput(atomic_inode);
--- 
-2.55.0
-
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -119,10 +119,9 @@ static bool __may_extent_tree(struct ino
+ 	if (!__init_may_extent_tree(inode, type))
+ 		return false;
+ 
+-	if (is_inode_flag_set(inode, FI_NO_EXTENT))
+-		return false;
+-
+ 	if (type == EX_READ) {
++		if (is_inode_flag_set(inode, FI_NO_EXTENT))
++			return false;
+ 		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
+ 				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
+ 			return false;
+@@ -645,14 +644,10 @@ static unsigned int __destroy_extent_nod
+ 
+ 	while (atomic_read(&et->node_cnt)) {
+ 		write_lock(&et->lock);
+-		if (!is_inode_flag_set(inode, FI_NO_EXTENT))
+-			set_inode_flag(inode, FI_NO_EXTENT);
+ 		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
+ 		write_unlock(&et->lock);
+ 	}
+ 
+-	f2fs_bug_on(sbi, atomic_read(&et->node_cnt));
+-
+ 	return node_cnt;
+ }
+ 
+@@ -691,12 +686,12 @@ static void __update_extent_tree_range(s
+ 
+ 	write_lock(&et->lock);
+ 
+-	if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
+-		write_unlock(&et->lock);
+-		return;
+-	}
+-
+ 	if (type == EX_READ) {
++		if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
++			write_unlock(&et->lock);
++			return;
++		}
++
+ 		prev = et->largest;
+ 		dei.len = 0;
+ 
 
 
