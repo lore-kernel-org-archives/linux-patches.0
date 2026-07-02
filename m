@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8B233A70E;
-	Thu,  2 Jul 2026 16:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C67330B29;
+	Thu,  2 Jul 2026 16:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009913; cv=none; b=fEboqEo4wZw3p+f0ki7ZDW5AbxBAqnyZd9UAjY1QfbfBaB6nf9NuWTYLMY2j/vcJO/lCKG/hcF6zUl/LxlloTwf0BZljdrpyfR8ROzl8Nw5dmbszTHjMtes0BMvc8O9uNmGmp+kZzj0O09Fam04gJROLv2p9zQ4u3yx7J93ZYUE=
+	t=1783009916; cv=none; b=f7sld1LfVeMcHPwGVE7Rbr0SQiTez8pHsZFfEr4LCCTzVTr3/wnhipTpQ1cKeyPqkVoiGkniV+nkGKHmqgSpgQVHdLNrUs2kFmaFCR8bFwHZjSvyFwRs8Z73VEL+K082DWjshWu0zfPuPwKTuTEHmg3KY6XqN7a1rEGyqHcmYzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009913; c=relaxed/simple;
-	bh=8dWDyH5/05GJ2Z4vewdnbmfVntu2OE4f5WIsOWE/PDw=;
+	s=arc-20240116; t=1783009916; c=relaxed/simple;
+	bh=wk848r46DIJ8YXjKTLfRixnoTpSAFGmQ3fJlyEKkUYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bC7SnTv4A4OtQEkIkjG7gVlDlyeTR42vWUAWZqbmlhgoADHoNcBRqRRv0btCOILqG3dmjSb5FN9k97prl8LMOGfIXUZRs2tlQihc49S8DUsrapkqz0ddk5Moagz5g303u5EXn8JYOrrCzV7F+C1tHgp2KZnq/7w7V+IC3qAV0qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2feixvkI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WC5VHU99gjgEwgp7x6NKs9I61plTLBCQH/JzBXrRSerUMLt80M5AHRenghXJ87hYdafDLbEgAVKYQOgzcMVWiFx19procwaIUu2023duazvY2dnR5Xpu2dxHnV0n+KzTIcjgQYJL8lCoGaBvpKOrY3p43d/ngeP1pkqJPqSfs4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsGMPqIm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2feixvkI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C484C1F00A3A;
-	Thu,  2 Jul 2026 16:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsGMPqIm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F841F000E9;
+	Thu,  2 Jul 2026 16:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009912;
-	bh=PNALnhKzI5/SHSklP/hxI8qnExTnyGXJiG/5RZZmX18=;
+	s=korg; t=1783009914;
+	bh=YPPknz2Rd9jvtPtj3V3CZWUzv8nGsCV3A3Zxf/gR5UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2feixvkIgGhPkMfcfyoxOphNTntQlywdS9ngLpM4t7RnM9zExjTM9QqEsGQmVTGdN
-	 wNavFPfAbw45iNZNi3sdJsHXhYnDjoqd9pXCDf3Xl3f3DhadBbb5XmRNz4MWzp4kjY
-	 HTYgCHXA5KmAWC6dwXW3yteyifWMzwulJE71yFbY=
+	b=YsGMPqImGp2hEVYft54DIvmnUjxwxrl5ZQnEcU2G+PNSsKvV7xfVQV8IVcjfjpl6l
+	 2r0JutWCm+PaNbkt+7JwGdwYtrChJO8Y25yEj0bSn+o91h+bHZG+x97iMkGAnI7IDv
+	 GKOsnPvQLjXgTQrnj0opSLH841UtrmMB/Qc6LLXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.1 039/129] netfilter: nf_tables: always walk all pending catchall elements
-Date: Thu,  2 Jul 2026 18:19:18 +0200
-Message-ID: <20260702155112.962952668@linuxfoundation.org>
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 013/129] selftests/bpf: Move get_time_ns to testing_helpers.h
+Date: Thu,  2 Jul 2026 18:18:52 +0200
+Message-ID: <20260702155112.436376777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -51,54 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 7cb9a23d7ae40a702577d3d8bacb7026f04ac2a9 upstream.
+commit 3830d04a7401f277185e4439eb259c1b13e76788 upstream.
 
-During transaction processing we might have more than one catchall element:
-1 live catchall element and 1 pending element that is coming as part of the
-new batch.
+We'd like to have single copy of get_time_ns used b bench and test_progs,
+but we can't just include bench.h, because of conflicting 'struct env'
+objects.
 
-If the map holding the catchall elements is also going away, its
-required to toggle all catchall elements and not just the first viable
-candidate.
+Moving get_time_ns to testing_helpers.h which is being included by both
+bench and test_progs objects.
 
-Otherwise, we get:
- WARNING: ./include/net/netfilter/nf_tables.h:1281 at nft_data_release+0xb7/0xe0 [nf_tables], CPU#2: nft/1404
- RIP: 0010:nft_data_release+0xb7/0xe0 [nf_tables]
- [..]
- __nft_set_elem_destroy+0x106/0x380 [nf_tables]
- nf_tables_abort_release+0x348/0x8d0 [nf_tables]
- nf_tables_abort+0xcf2/0x3ac0 [nf_tables]
- nfnetlink_rcv_batch+0x9c9/0x20e0 [..]
-
-Fixes: 628bd3e49cba ("netfilter: nf_tables: drop map element references from preparation phase")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Shivani: Modified to apply on v6.6.y-v6.1.y ]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230809083440.3209381-19-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: e6c209da7e0e ("selftests/bpf: Check for timeout in perf_link test")
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    2 --
- 1 file changed, 2 deletions(-)
+ tools/testing/selftests/bpf/bench.h                    |  9 ---------
+ .../selftests/bpf/prog_tests/kprobe_multi_test.c       |  8 --------
+ tools/testing/selftests/bpf/testing_helpers.h          | 10 ++++++++++
+ 3 files changed, 10 insertions(+), 17 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -627,7 +627,6 @@ static void nft_map_catchall_deactivate(
- 		elem.priv = catchall->elem;
- 		nft_set_elem_change_active(ctx->net, set, ext);
- 		nft_setelem_data_deactivate(ctx->net, set, &elem);
--		break;
- 	}
+diff --git a/tools/testing/selftests/bpf/bench.h b/tools/testing/selftests/bpf/bench.h
+index 66959387148375..2c94c57885af85 100644
+--- a/tools/testing/selftests/bpf/bench.h
++++ b/tools/testing/selftests/bpf/bench.h
+@@ -79,15 +79,6 @@ void grace_period_latency_basic_stats(struct bench_res res[], int res_cnt,
+ void grace_period_ticks_basic_stats(struct bench_res res[], int res_cnt,
+ 				    struct basic_stats *gp_stat);
+ 
+-static inline __u64 get_time_ns(void)
+-{
+-	struct timespec t;
+-
+-	clock_gettime(CLOCK_MONOTONIC, &t);
+-
+-	return (u64)t.tv_sec * 1000000000 + t.tv_nsec;
+-}
+-
+ static inline void atomic_inc(long *value)
+ {
+ 	(void)__atomic_add_fetch(value, 1, __ATOMIC_RELAXED);
+diff --git a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+index 0d82e28aed1ac0..8086e28346466f 100644
+--- a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
++++ b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+@@ -304,14 +304,6 @@ static void test_attach_api_fails(void)
+ 	kprobe_multi__destroy(skel);
  }
  
-@@ -5267,7 +5266,6 @@ static void nft_map_catchall_activate(co
- 		nft_clear(ctx->net, ext);
- 		elem.priv = catchall->elem;
- 		nft_setelem_data_activate(ctx->net, set, &elem);
--		break;
- 	}
- }
+-static inline __u64 get_time_ns(void)
+-{
+-	struct timespec t;
+-
+-	clock_gettime(CLOCK_MONOTONIC, &t);
+-	return (__u64) t.tv_sec * 1000000000 + t.tv_nsec;
+-}
+-
+ static size_t symbol_hash(const void *key, void *ctx __maybe_unused)
+ {
+ 	return str_hash((const char *) key);
+diff --git a/tools/testing/selftests/bpf/testing_helpers.h b/tools/testing/selftests/bpf/testing_helpers.h
+index f72fb24f8e90fb..ba4f205e7bc757 100644
+--- a/tools/testing/selftests/bpf/testing_helpers.h
++++ b/tools/testing/selftests/bpf/testing_helpers.h
+@@ -7,6 +7,7 @@
+ #include <stdbool.h>
+ #include <bpf/bpf.h>
+ #include <bpf/libbpf.h>
++#include <time.h>
  
+ int parse_num_list(const char *s, bool **set, int *set_len);
+ __u32 link_info_prog_id(const struct bpf_link *link, struct bpf_link_info *info);
+@@ -30,4 +31,13 @@ int load_bpf_testmod(bool verbose);
+ void unload_bpf_testmod(bool verbose);
+ int kern_sync_rcu(void);
+ 
++static inline __u64 get_time_ns(void)
++{
++	struct timespec t;
++
++	clock_gettime(CLOCK_MONOTONIC, &t);
++
++	return (u64)t.tv_sec * 1000000000 + t.tv_nsec;
++}
++
+ #endif /* __TESTING_HELPERS_H */
+-- 
+2.53.0
+
 
 
