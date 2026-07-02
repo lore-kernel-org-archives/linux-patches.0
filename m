@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589B23546E1;
-	Thu,  2 Jul 2026 16:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F554323417;
+	Thu,  2 Jul 2026 16:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010396; cv=none; b=HKq46qZt+HbbuFLJIorKXMNUhlb9PW8JzB3oa0sE4I8mrbeyEHlXmxDT7uYSBO2N4AuwmqkDoDxKZ6NlTMtDTxqfnl+GHGJCqtOf8Lm6Y7r9jKCKO+fWBjecov0IyEnABiqJXKoCUzCa8CecGoYumob84pf2aLk8c9H5aBKkhyg=
+	t=1783010399; cv=none; b=iWl2w9FMUZEZ3BMSJ5Fs4yrVgs0MSBDpw8wwadtOmdi4IHdw9iMRaev74S3qp09pmmewmYqgJ1Vq3ImEDhFSKvfSoxJNh+gcZDaBdAAWUddjuFJGFOUenPnpF0zsQxuIfjMxiGiAfEFAY81zKq6waQibMtY0NtEWgMJqPE3XdMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010396; c=relaxed/simple;
-	bh=Gn/JjzACw2XOMZFvAEC8+9hb/GRqn7sDTXCvfY/B16s=;
+	s=arc-20240116; t=1783010399; c=relaxed/simple;
+	bh=DMOiPr12pOJ/3SE//zHjfT8YpoDyq77Vk7LBdBt3jSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kipTVvEN4YGMBDESRHY1MdHjQ8BWoJKjNFUmU/7EgDRHgZeeoTct9+1s9DsppWr8I76dEfZweNorOZMC5uaWiYDmpY3qdALj2sLIe2U2uuPU9xV+A9AAL1OlQXIjVDkam0b2yXxz26uV92niAiSdSVSEjI8PLBKN6xUw13VSA5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0wZBQ5Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ou8jkUJ+X/aW5X6FQ+00FVxLd/MzIkz9RZum9AX5kLwjMTUTHcfcbwXgYSFMI0lP0Qi0RyVAPaMskLumd5vR200tEFESLdTHxhelaM2d6QwqinLqT6B1Ol8JmGDaKIK/iqgSD3+oDOmtwgA6oSj1Hhj9e0eGPI7y1NI8uBaPcvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKqStXoI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0wZBQ5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0D41F000E9;
-	Thu,  2 Jul 2026 16:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKqStXoI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FB81F00A3D;
+	Thu,  2 Jul 2026 16:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010395;
-	bh=yOkqMAWLizIiQqlS7bdVKNy8Of92mZgLDHYw3eA9aAE=;
+	s=korg; t=1783010397;
+	bh=v96KIqQ+iBxp4JcGXb6CIc4INXR3Z3KixZFOM62cuV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v0wZBQ5QZi900WFR+Ude+FhB/u2ScygN48rPhn6ohs3Ue5bSlZsL7r2Zx3x+RLW4w
-	 lDsiwIwB0Cn9pmcHxiEWPK9ti2rO7Ajkj/lPEAJpp1bi9Pax5a2v5t4oEEJLku3H8Q
-	 t+EkKu5ZAGsOgf1DdnTUsNEHBPKM+sq4s185ZA/A=
+	b=AKqStXoIwWoGDDLeoF3Zu86MoUz9vqsOoRxNA6irBeftk0Ep9xFXEPkZ4EQZo/2xl
+	 zeWracuKkt6En3Ae4cIatkgENDWDV+xhUUqw/QwEgyQFgJ5hV+ImVavUwR796wyjzr
+	 /w7ZjJDb4gubrbYwxpyYfWo4GsqKHuZHQXpUNbMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Aur=C3=A9lien=20Bombo?= <abombo@microsoft.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Greg Kurz <gkurz@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.12 092/204] virtiofs: fix UAF on submount umount
-Date: Thu,  2 Jul 2026 18:19:09 +0200
-Message-ID: <20260702155120.594488210@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 093/204] KVM: x86: Fix shadow paging use-after-free due to unexpected role
+Date: Thu,  2 Jul 2026 18:19:10 +0200
+Message-ID: <20260702155120.616098558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -46,57 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 06b41351779e9289e8785694ade9042ae85e41ea upstream.
+commit 81ccda30b4e83d8f5cc4fd50503c44e3a33abfeb upstream.
 
-iput() called from fuse_release_end() can Oops if the super block has
-already been destroyed.  Normally this is prevented by waiting for
-num_waiting to go down to zero before commencing with super block shutdown.
+Commit 0cb2af2ea66ad ("KVM: x86: Fix shadow paging use-after-free due
+to unexpected GFN") fixed a shadow paging mismatch between stored and
+computed GFNs; the bug could be triggered by changing a PDE mapping from
+outside the guest, and then deleting a memslot.  The rmap_remove()
+call would miss entries created after the PDE change because the GFN
+of the leaf SPTE does not match the GFN of the struct kvm_mmu_page.
 
-This only works, however, for the last submount instance, as the wait
-counter is per connection, not per superblock.
+A similar hole however remains if the modified PDE points to a non-leaf
+page.  In this case the gfn can be made to match, but the role does not
+match: the original large 2MB page creates a kvm_mmu_page with direct=1,
+while the new 4KB needs a kvm_mmu_page with direct=0.  However,
+kvm_mmu_get_child_sp() does not compare the role, and therefore reuses
+the page.
 
-Revert to using synchronous release requests for the auto_submounts case,
-which is virtiofs only at this time.
+The next step is installing a leaf (4KB) SPTE on the new path which
+records an rmap entry under the gfn resolved by the walk.  But when
+that child is zapped its parent kvm_mmu_page has direct=1 and
+kvm_mmu_page_get_gfn() computes the gfn for the 4KB page as
+sp->gfn + index instead of using sp->shadowed_translation[] (or sp->gfns[]
+in older kernels).  It therefore fails to remove the recorded entry.
 
-Reported-by: Aurélien Bombo <abombo@microsoft.com>
-Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Cc: Greg Kurz <gkurz@redhat.com>
-Closes: https://github.com/kata-containers/kata-containers/issues/12589
-Fixes: 26e5c67deb2e ("fuse: fix livelock in synchronous file put from fuseblk workers")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kurz <gkurz@redhat.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When the memslot is dropped the shadow page is freed but the rmap
+entry survives, as in the scenario that was already fixed.  Code that
+later walks that gfn (dirty logging, MMU notifier invalidation, and
+so on) dereferences an sptep that lies in the freed page, causing the
+use-after-free.
+
+Fixes: 2032a93d66fa ("KVM: MMU: Don't allocate gfns page for direct mmu pages")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/x86/kvm/mmu/mmu.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -373,8 +373,14 @@ void fuse_file_release(struct inode *ino
- 	 * aio and closes the fd before the aio completes.  Since aio takes its
- 	 * own ref to the file, the IO completion has to drop the ref, which is
- 	 * how the fuse server can end up closing its clients' files.
-+	 *
-+	 * Exception is virtio-fs, which is not affected by the above (server is
-+	 * on host, cannot close open files in guest).  Virtio-fs needs sync
-+	 * release, because the num_waiting mechanism to wait for all requests
-+	 * before commencing with fs shutdown doesn't work if submounts are
-+	 * used.
- 	 */
--	fuse_file_put(ff, false);
-+	fuse_file_put(ff, ff->fm->fc->auto_submounts);
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index d288c60ae200ba..a67d013fff4d91 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2329,13 +2329,15 @@ static struct kvm_mmu_page *kvm_mmu_get_child_sp(struct kvm_vcpu *vcpu,
+ 						 u64 *sptep, gfn_t gfn,
+ 						 bool direct, unsigned int access)
+ {
+-	union kvm_mmu_page_role role;
++	union kvm_mmu_page_role role = kvm_mmu_child_role(sptep, direct, access);
+ 
+-	if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep) &&
+-	    spte_to_child_sp(*sptep) && spte_to_child_sp(*sptep)->gfn == gfn)
++	if (is_shadow_present_pte(*sptep) &&
++	    !is_large_pte(*sptep) &&
++	    spte_to_child_sp(*sptep) &&
++	    spte_to_child_sp(*sptep)->gfn == gfn &&
++	    spte_to_child_sp(*sptep)->role.word == role.word)
+ 		return ERR_PTR(-EEXIST);
+ 
+-	role = kvm_mmu_child_role(sptep, direct, access);
+ 	return kvm_mmu_get_shadow_page(vcpu, gfn, role);
  }
  
- void fuse_release_common(struct file *file, bool isdir)
+-- 
+2.53.0
+
 
 
