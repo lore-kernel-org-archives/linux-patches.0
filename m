@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA91381EAC;
-	Thu,  2 Jul 2026 16:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12474EA37A;
+	Thu,  2 Jul 2026 16:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009780; cv=none; b=hze02XqJ9b9z58rVGVNXIK4Yu1Mt7TO1EUcKktDZDrUj2rYJu6uR1BDt36xSiRCTNdUity6OcnjHKoK+R+HiDLTCEVNaGvdgPUyV08JwL0tTD7Adw44zhE+3jXosUVU4KiPeLblyeGO50VA82923nHrr7ySJ3MJcxo5qwFG6zg0=
+	t=1783009782; cv=none; b=j1xXp6m6RHVfgxW3L+VnOotbCIP/uS1UWOW1rQUrtKL3lF2lV7H14tDwPN+/18wLiQkMxI0AjJl4Re3Aqg8brNxikPP5eRSuX9ES1g/Abg/fjTWvsngp63hj7AHZLeDjLCRmg9IzXOZehsgGfWcgKLzmtVLTuJrSnVhRJ0iPBRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009780; c=relaxed/simple;
-	bh=UREJhxuL03I2McC4cFMmOFRZa8T5bQtICjljwX3YFCw=;
+	s=arc-20240116; t=1783009782; c=relaxed/simple;
+	bh=dtFOCCMPnGpF6ZVPTWqzNdnQQFX+BKw040LHplbnEbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNF91NN0wjadUIIvs6HU87mkw18nQhS//t0TbjaWGL6Is3xRapTi7EO2aQ5kTOsoG9EYoxfaka5uPRnoMh1tta86FiUdOMXYUR8qMIiV8Fk5ET5f126yv0X/pH61t1gvufGCnxIdRs2ukjzRjP5WQA60GhIxV+FSmPsqJlWQXig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzH38XZi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S+/QkCvnnwQ9HQ/Q0UdlaxuOIvT7t82Ec2SrsjnhIUOknIfLQLr2+LGtwhyo5YVAaMUhy0B+nECHDa114NvtAXbYofS281C/4Iwvls2D1PwCQeIe/UXRSSLzac483U8sCJyLucPc8ceXkZhMW/ABtRVGtdncra4R673I90xZ1pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtuiq5Zw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzH38XZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFF31F000E9;
-	Thu,  2 Jul 2026 16:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtuiq5Zw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3774C1F00A3A;
+	Thu,  2 Jul 2026 16:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009778;
-	bh=kuwhjothnZjVK3ouivGqAlxC4GWnWFQH+nK1FxFG5T0=;
+	s=korg; t=1783009780;
+	bh=YgqKAdiIKLMGZq7y3gfOrj7Ar+dHtc7E9yE9TrzHhkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CzH38XZiiZipJWkCyZ4Hbexj/a2l3lFa+QBY0jaKnS943P1MzJO6LQjKcNZIZTgub
-	 uKiYWcSaDBQFBzMVaza3MFxm4nMFxOACVyszJeCmkOOdgaAHyt2Bk+LCOusONvET/G
-	 O8Ku0eEVx5bbD/a6Kc8p1XJXg0s6XEKfwQwXAXvM=
+	b=gtuiq5ZwR9GOiHBRqH0IrZLVXmlWX+XeB6pCDB5afkNYZ8onF+/GrMEjAYm996fgj
+	 glla9ae3H/zIDBa9TWe02/aZt8Pi2MblxVBU1b+/OKS6swbCR2oskDHMtD/GwZxQhj
+	 H1i8aMDYT4J8g1oS03fgT4siQD0hTHepm9Hod+K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Long Li <longli@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 82/95] hv: utils: handle and propagate errors in kvp_register
-Date: Thu,  2 Jul 2026 18:20:25 +0200
-Message-ID: <20260702155110.932734144@linuxfoundation.org>
+Subject: [PATCH 5.15 83/95] misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
+Date: Thu,  2 Jul 2026 18:20:26 +0200
+Message-ID: <20260702155110.953651351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -52,86 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit 3fcf923302a8f5c0dc3af3d2ca2657cb5fae4297 ]
+[ Upstream commit 9bde43a0e2f469961e18d0a3496a9a74379c22bf ]
 
-Make kvp_register() return an error code instead of silently ignoring
-failures, and propagate the error from kvp_handle_handshake() instead of
-returning success.
+dma_set_mask_and_coherent only updates the mask to which the device
+dma_mask pointer points to. Add a dma_mask to the channel ctx and set
+the device dma_mask to point to that, otherwise the dma_set_mask will
+return an error and the dma_set_coherent_mask will be skipped too.
 
-This propagates both kzalloc_obj() and hvutil_transport_send() failures
-to kvp_handle_handshake() and thus to kvp_on_msg().
-
-Fixes: 245ba56a52a3 ("Staging: hv: Implement key/value pair (KVP)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20221125071405.148786-11-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 5401fb4fe10f ("misc: fastrpc: Fix NULL pointer dereference in rpmsg callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/hv_kvp.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/misc/fastrpc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/hv/hv_kvp.c
-+++ b/drivers/hv/hv_kvp.c
-@@ -93,7 +93,7 @@ static void kvp_send_key(struct work_str
- static void kvp_respond_to_host(struct hv_kvp_msg *msg, int error);
- static void kvp_timeout_func(struct work_struct *dummy);
- static void kvp_host_handshake_func(struct work_struct *dummy);
--static void kvp_register(int);
-+static int kvp_register(int);
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -214,6 +214,7 @@ struct fastrpc_channel_ctx {
+ 	struct list_head users;
+ 	struct miscdevice miscdev;
+ 	struct kref refcount;
++	u64 dma_mask;
+ };
  
- static DECLARE_DELAYED_WORK(kvp_timeout_work, kvp_timeout_func);
- static DECLARE_DELAYED_WORK(kvp_host_handshake_work, kvp_host_handshake_func);
-@@ -127,24 +127,26 @@ static void kvp_register_done(void)
- 	hv_poll_channel(kvp_transaction.recv_channel, kvp_poll_wrapper);
- }
+ struct fastrpc_user {
+@@ -1691,6 +1692,7 @@ static int fastrpc_rpmsg_probe(struct rp
+ 	kref_init(&data->refcount);
  
--static void
-+static int
- kvp_register(int reg_value)
- {
- 
- 	struct hv_kvp_msg *kvp_msg;
- 	char *version;
-+	int ret;
- 
- 	kvp_msg = kzalloc(sizeof(*kvp_msg), GFP_KERNEL);
-+	if (!kvp_msg)
-+		return -ENOMEM;
- 
--	if (kvp_msg) {
--		version = kvp_msg->body.kvp_register.version;
--		kvp_msg->kvp_hdr.operation = reg_value;
--		strcpy(version, HV_DRV_VERSION);
--
--		hvutil_transport_send(hvt, kvp_msg, sizeof(*kvp_msg),
--				      kvp_register_done);
--		kfree(kvp_msg);
--	}
-+	version = kvp_msg->body.kvp_register.version;
-+	kvp_msg->kvp_hdr.operation = reg_value;
-+	strcpy(version, HV_DRV_VERSION);
-+
-+	ret = hvutil_transport_send(hvt, kvp_msg, sizeof(*kvp_msg),
-+				    kvp_register_done);
-+	kfree(kvp_msg);
-+	return ret;
- }
- 
- static void kvp_timeout_func(struct work_struct *dummy)
-@@ -186,9 +188,8 @@ static int kvp_handle_handshake(struct h
- 	 */
- 	pr_debug("KVP: userspace daemon ver. %d connected\n",
- 		 msg->kvp_hdr.operation);
--	kvp_register(dm_reg_value);
- 
--	return 0;
-+	return kvp_register(dm_reg_value);
- }
- 
- 
+ 	dev_set_drvdata(&rpdev->dev, data);
++	rdev->dma_mask = &data->dma_mask;
+ 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
+ 	INIT_LIST_HEAD(&data->users);
+ 	spin_lock_init(&data->lock);
 
 
