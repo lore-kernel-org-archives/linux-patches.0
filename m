@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A336340410;
-	Thu,  2 Jul 2026 16:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAA33976B8;
+	Thu,  2 Jul 2026 16:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009918; cv=none; b=g7m294X3m0iyJ9WaFN5BYNVfX22PY+dHMDzyK1XO09cMldvNLMt1MTwHYoGKbOvWPLPGmUL6qWOlLkMI4QJ/2+y6m7KIxVV4N91/Kpbwuu5m/QZL2RiXthAAkmu4858YmiXn69FFSntO7NcO++EpWBvx3gElDwoJYT3gTUUDjek=
+	t=1783009921; cv=none; b=DNYR0O1BajMmdfUrs/27+2MK2AguXnGhHryaYMM5nYXk2EhWvKBolrwAWL/8BrHXoX0k3smegMflS7TwSynpuPC8Fvos66pGq5L1qMZBq6trAI/BcU7M6hgfmDiipSP/kM+IgxBQybVfFSQ5P2OCzyWqSe46VPKMt1RtjMS7F8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009918; c=relaxed/simple;
-	bh=mmYZYvldZB/ODuhQuKvqsLLa/ArLUiJPS/H2EjoXijI=;
+	s=arc-20240116; t=1783009921; c=relaxed/simple;
+	bh=1HifSDsMuJyKVqGRumkPXrFl4EYlXPhZlWFvypeqXkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdQ5MaWNGJ/gLFIKtk9au9KJAEPX0RbIKohEUkp64c9Q+HGT2OwNvSLRFIBM1faV90sMkYRgCK0N4mlhQaSAU4YcXYV+8a94yL4fJY4gonNud8NIM/I9YvygwEjzSwDG6RPNWGmZAark0OoDzPdyasbNIhjBKnnzjrlCURkogPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfuZne0Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UTsfw7c1pXB0rNoVaNWaJ5mzQB0bQK9O9MprFzMVlTXjvBouTA1W99y22vDGf3/Nd5GXHZ3qLCf4Wf4dXB3ePFwXHhR9BdV6knS55xdyHX7vU6Yk91kngIgloPyzx+i3HohJBJJNgI8k5jk3tYNJEU6J0jEKrQDnkHyABY7NSB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xx1wuK4h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfuZne0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7FE1F000E9;
-	Thu,  2 Jul 2026 16:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xx1wuK4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44D41F000E9;
+	Thu,  2 Jul 2026 16:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009917;
-	bh=yI6TZvLp5Vd1mzlNQCSOXqM8FnDXh+Cfy4WP0otcASU=;
+	s=korg; t=1783009920;
+	bh=O7JoNKVexgj6AtRfR7AeoXMq3vwxonRUmVppHLJl838=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfuZne0ZVGzHHrr67GPrygPYv7SoWAjJLF+IWVtFZ3TAZojCLA1u6VRZJq1rI1v3p
-	 R71SKXtgAv1LkjcAoYOjzkRIegcqk83kSNrrhZMaR7Ciu7weMmGdvCe30alBB5TAlb
-	 9b6fBZcBt7HsjiJsKQV+WPTitXA5zom98V1JJEAc=
+	b=Xx1wuK4hyMwcdVwqMcQfIVyNm/gCblEb4LEB4sybRcQVKoQepMwnzTKFaZroZ45VM
+	 xEuh1mMwkoVVpKLop/sVn0R7yYFuRdeS5tbjIT/Xpl9FO49FGEUM0dKSZmRlYzDD+w
+	 XV6teDQEF3TeVdqn69WwR414nRwsLcZw5WHA7bL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.1 040/129] vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
-Date: Thu,  2 Jul 2026 18:19:19 +0200
-Message-ID: <20260702155112.983166420@linuxfoundation.org>
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 041/129] ksmbd: reject non-VALID session in compound request branch
+Date: Thu,  2 Jul 2026 18:19:20 +0200
+Message-ID: <20260702155113.002013150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -50,46 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit a287620312dc6dcb9a093417a0e589bf30fcf38a upstream.
+commit 609ca17d869d04ba249e32cdcbf13c0b1c66f43c upstream.
 
-A KASAN null-ptr-deref was observed in vcs_notifier():
+smb2_check_user_session() takes a shortcut for any operation that is not
+the first in a COMPOUND request: it reuses work->sess (the session bound by
+the first operation) and validates only the SessionId, then returns
+"valid". It never re-checks work->sess->state == SMB2_SESSION_VALID, and a
+SessionId of 0xFFFFFFFFFFFFFFFF (ULLONG_MAX, the MS-SMB2 related-operation
+value) skips even the id comparison. The standalone path
+(ksmbd_session_lookup_all() plus the SESSION_SETUP state machine) does
+enforce the VALID state; the compound branch bypasses all of it.
 
-BUG: KASAN: null-ptr-deref in vcs_notifier+0x98/0x130
-Read of size 2 at addr qmp_cmd_name: qmp_capabilities, arguments: {}
+A SESSION_SETUP carrying only an NTLM Type-1 (NtLmNegotiate) blob publishes
+a fresh SMB2_SESSION_IN_PROGRESS session whose sess->user is still NULL
+(->user is assigned later, by ntlm_authenticate()). Used as operation 1 of
+a COMPOUND with operation 2 = TREE_CONNECT (related, SessionId=ULLONG_MAX,
+\\host\IPC$), the tree-connect then runs on that IN_PROGRESS session and
+reaches ksmbd_ipc_tree_connect_request(), which dereferences
+user_name(sess->user) with sess->user == NULL (transport_ipc.c:687/701/704)
+-> remote NULL-pointer dereference and a kernel Oops that wedges the ksmbd
+worker for all clients.
 
-The issue is a race condition in vcs_write(). When the console_lock is
-temporarily dropped (to copy data from userspace), the vc_data pointer
-obtained from vcs_vc() may become stale. After re-acquiring the lock,
-vcs_vc() is called again to re-validate the pointer. If the vc has been
-deallocated in the meantime, vcs_vc() returns NULL, and the while loop
-breaks (with written > 0). However, after the loop, vcs_scr_updated(vc)
-is still called with the now-NULL vc pointer, leading to a null pointer
-dereference in the notifier chain (vcs_notifier dereferences param->vc).
+Reject any non-first compound operation that lands on a session which is
+not SMB2_SESSION_VALID, mirroring the validity the standalone lookup path
+enforces. SESSION_SETUP itself legitimately runs on an IN_PROGRESS session,
+but it is never carried as a non-first compound operation, so multi-leg
+authentication is unaffected by this check.
 
-Fix this by adding a NULL check for vc before calling vcs_scr_updated().
-
-Fixes: 8fb9ea65c9d1 ("vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF")
+Fixes: 5005bcb42191 ("ksmbd: validate session id and tree id in the compound request")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://patch.msgid.link/20260604060734.2914976-1-yiyang13@huawei.com
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vc_screen.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -699,7 +699,7 @@ vcs_write(struct file *file, const char
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -605,6 +605,11 @@ int smb2_check_user_session(struct ksmbd
+ 					sess_id, work->sess->id);
+ 			return -EINVAL;
+ 		}
++		if (work->sess->state != SMB2_SESSION_VALID) {
++			pr_err("compound request on a non-valid session (state %d)\n",
++					work->sess->state);
++			return -EINVAL;
++		}
+ 		return 1;
  	}
- 	*ppos += written;
- 	ret = written;
--	if (written)
-+	if (written && vc)
- 		vcs_scr_updated(vc);
  
- unlock_out:
 
 
