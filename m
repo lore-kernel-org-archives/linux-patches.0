@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094D3339B3D;
-	Thu,  2 Jul 2026 16:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461AD30B50D;
+	Thu,  2 Jul 2026 16:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010739; cv=none; b=rWaD77WDAXNrcXDUPXgQkc9LBQQdrFYYHm0FvOqRiCN3ipdfyDc4JaXkS6YGmSqHxjCEIGE95PC84bjMsnTjlcPJw0VMSg7TL5DFVAfDjmFZHApgkJno6xLFswzUhwT6/WCp9Q69ikMDwwHkg8EbQUq/bO612lC4lZtJlUfHNpQ=
+	t=1783010741; cv=none; b=uYs6Zn7Cec++6PcqByUwEN7dgylR5NJ6PmsXYo/TZedIsFdaKWuoN7bfmHVt2lraDTPJBBpz2jCEpO3pSshS0xvqg420TH+skpr+hTBcgQzeli4ip8iUB43Ai+z5Ss/ahim56N5d1tp7g6/Np0G1USdj2QurTxq981U5yul8b3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010739; c=relaxed/simple;
-	bh=L5RDCOn25KfiwGQJJQc5ARAxpSnup/MpshTyNRfWmBY=;
+	s=arc-20240116; t=1783010741; c=relaxed/simple;
+	bh=qFwvWYKe51fwho2GdkX4aoe9PpxVuZMWsNQL71y7KXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dggzHCf4Yxuf2tjSPpCEcIG/Yi1RIMQbOgrSxHT/8MZeh/Kk9GOCVkiD7H5TGKlBOFgw2q/uJHHACPuuEH3SY/PcfJVJi9hYPgtT0P0rQ19IIqRtPa1yQVHCxjCkGTJV4KGt26pQ9YImwBjcM0iuVbrWWQJJtgh7codGmIm0izg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmD9D+Bn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=goShbjmvfceSOCb55rtLUWdeWzQj2PIjVQQEbaFLDxnXqpPcXboTh2gvmoVcPtTUbkl+454CSld93Hm8uzUjy8GhBxoWk4t6+86z9Hzux1TkuAiCVSk4Ant13Ln1dy5xMsjNuLkeyOjOCl4yKqMfB4FmKYeI3f8wtNKvmj9iVT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAgmVK7Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmD9D+Bn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3891F000E9;
-	Thu,  2 Jul 2026 16:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAgmVK7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15F91F000E9;
+	Thu,  2 Jul 2026 16:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010737;
-	bh=tNsS8eIwmhiM9SPAwwS4/vi5Ob14xGRs3tn8vBhpvcA=;
+	s=korg; t=1783010740;
+	bh=EMM2zpYOcPmRUiUjAAp+U/1RtUQGMMfF03VC7LoxaRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OmD9D+BnQH2LN217E/ZJa2jWnMPn84mceb5ECV+utHwhpO0PfSUgAjZnrIsOKIaGr
-	 5nOZFQ0lti73djQCZC9LigWF2Db+bUmaZLxs4tSuIdTlaJyW2hGbHeAuMZwOupCh2Q
-	 Wt5n3RzJrFqBqWa+la7W6pYqtB0AVszOUJ/AOKN8=
+	b=JAgmVK7ZaRoOtcNjIILIptNtkmfgMerUdfYs8AxiugP9K1RpzGzPbkijflP6SdD7w
+	 jkfSqS3mMz3IyKdXxHj3wgurCUnH4jbrclr5RgmRKLm47lVlBW1bE7ZOOH+Fmdq36K
+	 xT1PzLHRULTzhvGTbJIqJOEQuIhNuJWEWIxopbQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 019/175] net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()
-Date: Thu,  2 Jul 2026 18:18:40 +0200
-Message-ID: <20260702155116.187175409@linuxfoundation.org>
+	Yiming Qian <yimingqian591@gmail.com>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Han Guidong <2045gemini@gmail.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Rajat Gupta <rajat.gupta@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 002/175] net/sched: fix pedit partial COW leading to page cache corruption
+Date: Thu,  2 Jul 2026 18:18:23 +0200
+Message-ID: <20260702155115.821410282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -45,93 +54,236 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
 
-commit d00c953a8f69921f484b629801766da68f27f658 upstream.
+[ Upstream commit 899ee91156e57784090c5565e4f31bd7dbffbc5a ]
 
-rmnet_dellink() removes the endpoint from the hash table with
-hlist_del_init_rcu() and then immediately frees it with kfree(). However,
-RCU readers on the receive path (rmnet_rx_handler ->
-__rmnet_map_ingress_handler) may still hold a reference to the endpoint and
-dereference ep->egress_dev after the memory has been freed. The endpoint is
-a kmalloc-32 object, and the stale read at offset 8 corresponds to the
-egress_dev pointer.
+tcf_pedit_act() computes the COW range for skb_ensure_writable()
+once before the key loop using tcfp_off_max_hint, but the hint does
+not account for the runtime header offset added by typed keys. This
+can leave part of the write region un-COW'd.
 
-  BUG: unable to handle page fault for address: ffffffffde942eef
-  Oops: 0002 [#1] SMP NOPTI
-  CPU: 1 UID: 0 PID: 137 Comm: poc_write Not tainted 7.0.0+ #4 PREEMPTLAZY
-  RIP: 0010:rmnet_vnd_rx_fixup (rmnet_vnd.c:27)
-  Call Trace:
-   <TASK>
-   __rmnet_map_ingress_handler (rmnet_handlers.c:48 rmnet_handlers.c:101)
-   rmnet_rx_handler (rmnet_handlers.c:129 rmnet_handlers.c:235)
-   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6096)
-   __netif_receive_skb_one_core (net/core/dev.c:6208)
-   netif_receive_skb (net/core/dev.c:6467)
-   tun_get_user (drivers/net/tun.c:1955)
-   tun_chr_write_iter (drivers/net/tun.c:2003)
-   vfs_write (fs/read_write.c:688)
-   ksys_write (fs/read_write.c:740)
-   </TASK>
+Fix by moving skb_ensure_writable() inside the per-key loop where
+the actual write offset is known, and add overflow checking on the
+offset arithmetic. For negative offsets (e.g. Ethernet header edits
+at ingress), use skb_cow() to COW the headroom instead. Guard
+offset_valid() against INT_MIN, where negation is undefined.
 
-Add an rcu_head field to struct rmnet_endpoint and replace kfree() with
-kfree_rcu() so the endpoint memory remains valid through the RCU grace
-period. Also remove the rmnet_vnd_dellink() call and inline only the
-nr_rmnet_devs decrement, since rmnet_vnd_dellink() would set
-ep->egress_dev to NULL during the grace period, creating a data race
-with lockless readers.
-
-Fixes: ceed73a2cf4a ("drivers: net: ethernet: qualcomm: rmnet: Initial implementation")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260514122511.3083479-2-bestswngs@gmail.com
+Fixes: 8b796475fd78 ("net/sched: act_pedit: really ensure the skb is writable")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Reported-by: Han Guidong <2045gemini@gmail.com>
+Reported-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Han Guidong <2045gemini@gmail.com>
+Tested-by: Han Guidong <2045gemini@gmail.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Tested-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260531123221.48732-1-jhs@mojatatu.com
+[rename include file from linux/unaligned.h to asm/unaligned.h]
+Conflicts:
+	include/net/tc_act/tc_pedit.h
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c |    8 ++++----
- drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h |    1 +
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ include/net/tc_act/tc_pedit.h |  1 -
+ net/sched/act_pedit.c         | 77 +++++++++++++++++++----------------
+ 2 files changed, 41 insertions(+), 37 deletions(-)
 
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
-@@ -210,8 +210,8 @@ static void rmnet_dellink(struct net_dev
- 	ep = rmnet_get_endpoint(real_port, mux_id);
- 	if (ep) {
- 		hlist_del_init_rcu(&ep->hlnode);
--		rmnet_vnd_dellink(mux_id, real_port, ep);
--		kfree(ep);
-+		real_port->nr_rmnet_devs--;
-+		kfree_rcu(ep, rcu);
+diff --git a/include/net/tc_act/tc_pedit.h b/include/net/tc_act/tc_pedit.h
+index 83fe3993178180..a26d4cd3b8d6f3 100644
+--- a/include/net/tc_act/tc_pedit.h
++++ b/include/net/tc_act/tc_pedit.h
+@@ -14,7 +14,6 @@ struct tcf_pedit_key_ex {
+ struct tcf_pedit_parms {
+ 	struct tc_pedit_key	*tcfp_keys;
+ 	struct tcf_pedit_key_ex	*tcfp_keys_ex;
+-	u32 tcfp_off_max_hint;
+ 	unsigned char tcfp_nkeys;
+ 	unsigned char tcfp_flags;
+ 	struct rcu_head rcu;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 1ef8fcfa9997d1..80b2a1e9d5ceb9 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -16,6 +16,8 @@
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
+ #include <linux/slab.h>
++#include <linux/overflow.h>
++#include <asm/unaligned.h>
+ #include <net/ipv6.h>
+ #include <net/netlink.h>
+ #include <net/pkt_sched.h>
+@@ -242,7 +244,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 		goto out_free_ex;
  	}
  
- 	netdev_upper_dev_unlink(real_dev, dev);
-@@ -235,9 +235,9 @@ static void rmnet_force_unassociate_devi
- 		hash_for_each_safe(port->muxed_ep, bkt_ep, tmp_ep, ep, hlnode) {
- 			unregister_netdevice_queue(ep->egress_dev, &list);
- 			netdev_upper_dev_unlink(real_dev, ep->egress_dev);
--			rmnet_vnd_dellink(ep->mux_id, port, ep);
- 			hlist_del_init_rcu(&ep->hlnode);
--			kfree(ep);
-+			port->nr_rmnet_devs--;
-+			kfree_rcu(ep, rcu);
- 		}
- 		rmnet_unregister_real_device(real_dev);
- 		unregister_netdevice_many(&list);
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
-@@ -18,6 +18,7 @@ struct rmnet_endpoint {
- 	u8 mux_id;
- 	struct net_device *egress_dev;
- 	struct hlist_node hlnode;
-+	struct rcu_head rcu;
- };
+-	nparms->tcfp_off_max_hint = 0;
+ 	nparms->tcfp_flags = parm->flags;
+ 	nparms->tcfp_nkeys = parm->nkeys;
  
- struct rmnet_egress_agg_params {
+@@ -268,14 +269,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 						   BITS_PER_TYPE(int) - 1,
+ 						   nparms->tcfp_keys[i].shift);
+ 
+-		/* The AT option can read a single byte, we can bound the actual
+-		 * value with uchar max.
+-		 */
+-		cur += (0xff & offmask) >> nparms->tcfp_keys[i].shift;
+-
+-		/* Each key touches 4 bytes starting from the computed offset */
+-		nparms->tcfp_off_max_hint =
+-			max(nparms->tcfp_off_max_hint, cur + 4);
+ 	}
+ 
+ 	p = to_pedit(*a);
+@@ -318,15 +311,12 @@ static void tcf_pedit_cleanup(struct tc_action *a)
+ 		call_rcu(&parms->rcu, tcf_pedit_cleanup_rcu);
+ }
+ 
+-static bool offset_valid(struct sk_buff *skb, int offset)
++static bool offset_valid(struct sk_buff *skb, int offset, int len)
+ {
+-	if (offset > 0 && offset > skb->len)
+-		return false;
+-
+-	if  (offset < 0 && -offset > skb_headroom(skb))
++	if (offset < -(int)skb_headroom(skb))
+ 		return false;
+ 
+-	return true;
++	return offset <= (int)skb->len - len;
+ }
+ 
+ static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
+@@ -393,18 +383,10 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 	struct tcf_pedit_key_ex *tkey_ex;
+ 	struct tcf_pedit_parms *parms;
+ 	struct tc_pedit_key *tkey;
+-	u32 max_offset;
+ 	int i;
+ 
+ 	parms = rcu_dereference_bh(p->parms);
+ 
+-	max_offset = (skb_transport_header_was_set(skb) ?
+-		      skb_transport_offset(skb) :
+-		      skb_network_offset(skb)) +
+-		     parms->tcfp_off_max_hint;
+-	if (skb_ensure_writable(skb, min(skb->len, max_offset)))
+-		goto done;
+-
+ 	tcf_lastuse_update(&p->tcf_tm);
+ 	tcf_action_update_bstats(&p->common, skb);
+ 
+@@ -412,10 +394,11 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 	tkey_ex = parms->tcfp_keys_ex;
+ 
+ 	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
++		int write_offset, write_len;
+ 		int offset = tkey->off;
+ 		int hoffset = 0;
+-		u32 *ptr, hdata;
+-		u32 val;
++		u32 cur_val, val;
++		u32 *ptr;
+ 		int rc;
+ 
+ 		if (tkey_ex) {
+@@ -433,13 +416,15 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 
+ 		if (tkey->offmask) {
+ 			u8 *d, _d;
++			int at_offset;
+ 
+-			if (!offset_valid(skb, hoffset + tkey->at)) {
++			if (check_add_overflow(hoffset, (int)tkey->at, &at_offset) ||
++			    !offset_valid(skb, at_offset, sizeof(_d))) {
+ 				pr_info_ratelimited("tc action pedit 'at' offset %d out of bounds\n",
+ 						    hoffset + tkey->at);
+ 				goto bad;
+ 			}
+-			d = skb_header_pointer(skb, hoffset + tkey->at,
++			d = skb_header_pointer(skb, at_offset,
+ 					       sizeof(_d), &_d);
+ 			if (!d)
+ 				goto bad;
+@@ -451,31 +436,51 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 			}
+ 		}
+ 
+-		if (!offset_valid(skb, hoffset + offset)) {
+-			pr_info_ratelimited("tc action pedit offset %d out of bounds\n", hoffset + offset);
++		if (check_add_overflow(hoffset, offset, &write_offset)) {
++			pr_info_ratelimited("tc action pedit offset overflow\n");
+ 			goto bad;
+ 		}
+ 
+-		ptr = skb_header_pointer(skb, hoffset + offset,
+-					 sizeof(hdata), &hdata);
+-		if (!ptr)
++		if (!offset_valid(skb, write_offset, sizeof(*ptr))) {
++			pr_info_ratelimited("tc action pedit offset %d out of bounds\n",
++					    write_offset);
+ 			goto bad;
++		}
++
++		if (write_offset < 0) {
++			if (skb_cow(skb, -write_offset))
++				goto bad;
++			if (write_offset + (int)sizeof(*ptr) > 0) {
++				if (skb_ensure_writable(skb,
++							min_t(int, skb->len,
++							      write_offset + (int)sizeof(*ptr))))
++					goto bad;
++			}
++		} else {
++			if (check_add_overflow(write_offset, (int)sizeof(*ptr),
++					       &write_len))
++				goto bad;
++			if (skb_ensure_writable(skb, min_t(int, skb->len,
++							   write_len)))
++				goto bad;
++		}
++
++		ptr = (u32 *)(skb->data + write_offset);
++		cur_val = get_unaligned(ptr);
+ 		/* just do it, baby */
+ 		switch (cmd) {
+ 		case TCA_PEDIT_KEY_EX_CMD_SET:
+ 			val = tkey->val;
+ 			break;
+ 		case TCA_PEDIT_KEY_EX_CMD_ADD:
+-			val = (*ptr + tkey->val) & ~tkey->mask;
++			val = (cur_val + tkey->val) & ~tkey->mask;
+ 			break;
+ 		default:
+ 			pr_info_ratelimited("tc action pedit bad command (%d)\n", cmd);
+ 			goto bad;
+ 		}
+ 
+-		*ptr = ((*ptr & tkey->mask) ^ val);
+-		if (ptr == &hdata)
+-			skb_store_bits(skb, hoffset + offset, ptr, 4);
++		put_unaligned((cur_val & tkey->mask) ^ val, ptr);
+ 	}
+ 
+ 	goto done;
+-- 
+2.53.0
+
 
 
