@@ -1,56 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90ACD347FCD;
-	Thu,  2 Jul 2026 16:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38348399CEE;
+	Thu,  2 Jul 2026 16:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010352; cv=none; b=UTES2N4mm6HI0IWQcduUP1hYDPnW1+4dRj9ZPHR/cdVmHrUJ52t8uvY7i3+JHkvmVrQf62WMeakTOIoFldRM5DXH8VMi64tvvDc4rbjhNWY/AfgW2xP+k+abWWFdUmkbSVRYb1oGR+tXX7Mx+Mz5JM8zwrhb5qtEh38y8V5zoS0=
+	t=1783010355; cv=none; b=Iu02ZNPt/yJaK7y3bWkmq3KxPqa4IUAS5KldUaMO9vwjQsOMKt/gN6OvUo4+5A9rLCUudDqU7K4SLWy6Nx0oVCAF5xap74qb2TrELAjWZf8RfEuwTo7rxHO5TKjTX/nzYJ3L+9OwV9cIuk543gIKrDUh3DJP9SuyotbPhN6ErlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010352; c=relaxed/simple;
-	bh=bARL1UfQ2+/TVIKdaHQ6opMS9ybB3oAQx961l0o5yN4=;
+	s=arc-20240116; t=1783010355; c=relaxed/simple;
+	bh=TXlwlWXbhYWLzhzFaFaHv/5Fw4fKKXCXEmFkxeolxvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1k+ylpb19ECdCHB2dDjItlPsOm06SpzzruMKGAaaqeR1nI5DY9ZpOVgrJtGRoDi3YUD0x9FO+mxMJz52YOcUtqVD09m0clgywRL9Gn51aAF7ZSxSkmPAWomaGFqDwiwCSBfmObv7O7p0yQMv9mpW1rv43N4XpLvvMlrTLiluAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tImRB9f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PCK+r+gX7sLjjeHT8cqYFJmEt2qXI/BgjY1qxRbw48aHitfzqDzfcQQ8qBHXU3riJGruskmC0FkVAhZz6D/tqPLgODWZIRW5bOdLmoW6TdkJyKCBNvfL5xD3VrsTlyuOb3T6j4br5BVmf4BB0amLOVeetcoXso07/gDyGbG1fQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKodFgOP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tImRB9f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948361F000E9;
-	Thu,  2 Jul 2026 16:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKodFgOP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622871F000E9;
+	Thu,  2 Jul 2026 16:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010351;
-	bh=hTkMjPba82vZaMvl5WNIP5krQISY8NwgVjgfri0lkOk=;
+	s=korg; t=1783010353;
+	bh=lbsEqmqGmBZ0TDwFIhL7jWOgeV5eqkp+uOmgPebegPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2tImRB9fJrbyIme1z1SFh0lyjxyAOX0FcZ+3zi/8bL7d4bx4pa4TUCNOhOurvGdEW
-	 UkB/ijisQRUPEutFfOJB4Fuo8g9b9ZEFW65XE8z38ZbG/FdP1o8PPbloO+LM1kO9ex
-	 WQy4iE3KghP7nLU8KzDBmyr2o3TQDovTgiqEGMWM=
+	b=eKodFgOP8T+osnBDuofwCqGHgS2ktFyCpCd049hB/xhMZgg2db7E8MdgrT+gD0K9V
+	 LxCwWNDAk+hN/Et4V7wR5fyG9li3cTU83qh0GeckfcB3Dih4TrfRu+mL3ggnkfqAq1
+	 yPHUpzTiK1og6wGK0gf1CUXPj3iZ3G37ObI/54z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bpf <bpf@vger.kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Martin Kelly <martin.kelly@crowdstrike.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.12 077/204] ftrace: Have ftrace pages output reflect freed pages
-Date: Thu,  2 Jul 2026 18:18:54 +0200
-Message-ID: <20260702155120.282872367@linuxfoundation.org>
+Subject: [PATCH 6.12 078/204] ftrace: Do not over-allocate ftrace memory
+Date: Thu,  2 Jul 2026 18:18:55 +0200
+Message-ID: <20260702155120.303532668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -69,109 +51,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 264143c4e54412095f4b615e65bf736fc3c60af0 ]
+[ Upstream commit be55257fab181b93af38f8c4b1b3cb453a78d742 ]
 
-The amount of memory that ftrace uses to save the descriptors to manage
-the functions it can trace is shown at output. But if there are a lot of
-functions that are skipped because they were weak or the architecture
-added holes into the tables, then the extra pages that were allocated are
-freed. But these freed pages are not reflected in the numbers shown, and
-they can even be inconsistent with what is reported:
+The pg_remaining calculation in ftrace_process_locs() assumes that
+ENTRIES_PER_PAGE multiplied by 2^order equals the actual capacity of the
+allocated page group. However, ENTRIES_PER_PAGE is PAGE_SIZE / ENTRY_SIZE
+(integer division). When PAGE_SIZE is not a multiple of ENTRY_SIZE (e.g.
+4096 / 24 = 170 with remainder 16), high-order allocations (like 256 pages)
+have significantly more capacity than 256 * 170. This leads to pg_remaining
+being underestimated, which in turn makes skip (derived from skipped -
+pg_remaining) larger than expected, causing the WARN(skip != remaining)
+to trigger.
 
- ftrace: allocating 57482 entries in 225 pages
- ftrace: allocated 224 pages with 3 groups
+Extra allocated pages for ftrace: 2 with 654 skipped
+WARNING: CPU: 0 PID: 0 at kernel/trace/ftrace.c:7295 ftrace_process_locs+0x5bf/0x5e0
 
-The above shows the number of original entries that are in the mcount_loc
-section and the pages needed to save them (225), but the second output
-reflects the number of pages that were actually used. The two should be
-consistent as:
+A similar problem in ftrace_allocate_records() can result in allocating
+too many pages. This can trigger the second warning in
+ftrace_process_locs().
 
- ftrace: allocating 56739 entries in 224 pages
- ftrace: allocated 224 pages with 3 groups
+Extra allocated pages for ftrace
+WARNING: CPU: 0 PID: 0 at kernel/trace/ftrace.c:7276 ftrace_process_locs+0x548/0x580
 
-The above also shows the accurate number of entires that were actually
-stored and does not include the entries that were removed.
+Use the actual capacity of a page group to determine the number of pages
+to allocate. Have ftrace_allocate_pages() return the number of allocated
+pages to avoid having to calculate it. Use the actual page group capacity
+when validating the number of unused pages due to skipped entries.
+Drop the definition of ENTRIES_PER_PAGE since it is no longer used.
 
-Cc: bpf <bpf@vger.kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Link: https://lore.kernel.org/20250218200023.221100846@goodmis.org
+Cc: stable@vger.kernel.org
+Fixes: 4a3efc6baff93 ("ftrace: Update the mcount_loc check of skipped entries")
+Link: https://patch.msgid.link/20260113152243.3557219-1-linux@roeck-us.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ kernel/trace/ftrace.c |   29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
 --- a/kernel/trace/ftrace.c
 +++ b/kernel/trace/ftrace.c
-@@ -7050,6 +7050,7 @@ static int ftrace_process_locs(struct mo
- 	unsigned long addr;
- 	unsigned long kaslr;
- 	unsigned long flags = 0; /* Shut up gcc */
-+	unsigned long pages;
- 	int ret = -ENOMEM;
+@@ -1122,7 +1122,6 @@ struct ftrace_page {
+ };
  
- 	count = end - start;
-@@ -7057,6 +7058,8 @@ static int ftrace_process_locs(struct mo
+ #define ENTRY_SIZE sizeof(struct dyn_ftrace)
+-#define ENTRIES_PER_PAGE (PAGE_SIZE / ENTRY_SIZE)
+ 
+ static struct ftrace_page	*ftrace_pages_start;
+ static struct ftrace_page	*ftrace_pages;
+@@ -3754,7 +3753,8 @@ static int ftrace_update_code(struct mod
+ 	return 0;
+ }
+ 
+-static int ftrace_allocate_records(struct ftrace_page *pg, int count)
++static int ftrace_allocate_records(struct ftrace_page *pg, int count,
++				   unsigned long *num_pages)
+ {
+ 	int order;
+ 	int pages;
+@@ -3764,7 +3764,7 @@ static int ftrace_allocate_records(struc
+ 		return -EINVAL;
+ 
+ 	/* We want to fill as much as possible, with no empty pages */
+-	pages = DIV_ROUND_UP(count, ENTRIES_PER_PAGE);
++	pages = DIV_ROUND_UP(count * ENTRY_SIZE, PAGE_SIZE);
+ 	order = fls(pages) - 1;
+ 
+  again:
+@@ -3779,6 +3779,7 @@ static int ftrace_allocate_records(struc
+ 	}
+ 
+ 	ftrace_number_of_pages += 1 << order;
++	*num_pages += 1 << order;
+ 	ftrace_number_of_groups++;
+ 
+ 	cnt = (PAGE_SIZE << order) / ENTRY_SIZE;
+@@ -3807,12 +3808,14 @@ static void ftrace_free_pages(struct ftr
+ }
+ 
+ static struct ftrace_page *
+-ftrace_allocate_pages(unsigned long num_to_init)
++ftrace_allocate_pages(unsigned long num_to_init, unsigned long *num_pages)
+ {
+ 	struct ftrace_page *start_pg;
+ 	struct ftrace_page *pg;
+ 	int cnt;
+ 
++	*num_pages = 0;
++
+ 	if (!num_to_init)
+ 		return NULL;
+ 
+@@ -3826,7 +3829,7 @@ ftrace_allocate_pages(unsigned long num_
+ 	 * waste as little space as possible.
+ 	 */
+ 	for (;;) {
+-		cnt = ftrace_allocate_records(pg, num_to_init);
++		cnt = ftrace_allocate_records(pg, num_to_init, num_pages);
+ 		if (cnt < 0)
+ 			goto free_pages;
+ 
+@@ -7058,8 +7061,6 @@ static int ftrace_process_locs(struct mo
  	if (!count)
  		return 0;
  
-+	pages = DIV_ROUND_UP(count, ENTRIES_PER_PAGE);
-+
+-	pages = DIV_ROUND_UP(count, ENTRIES_PER_PAGE);
+-
  	/*
  	 * Sorting mcount in vmlinux at build time depend on
  	 * CONFIG_BUILDTIME_MCOUNT_SORT, while mcount loc in
-@@ -7168,6 +7171,8 @@ static int ftrace_process_locs(struct mo
- 			for (pg = pg_unuse; pg; pg = pg->next)
+@@ -7072,7 +7073,7 @@ static int ftrace_process_locs(struct mo
+ 		test_is_sorted(start, count);
+ 	}
+ 
+-	start_pg = ftrace_allocate_pages(count);
++	start_pg = ftrace_allocate_pages(count, &pages);
+ 	if (!start_pg)
+ 		return -ENOMEM;
+ 
+@@ -7159,27 +7160,27 @@ static int ftrace_process_locs(struct mo
+ 	/* We should have used all pages unless we skipped some */
+ 	if (pg_unuse) {
+ 		unsigned long pg_remaining, remaining = 0;
+-		unsigned long skip;
++		long skip;
+ 
+ 		/* Count the number of entries unused and compare it to skipped. */
+-		pg_remaining = (ENTRIES_PER_PAGE << pg->order) - pg->index;
++		pg_remaining = (PAGE_SIZE << pg->order) / ENTRY_SIZE - pg->index;
+ 
+ 		if (!WARN(skipped < pg_remaining, "Extra allocated pages for ftrace")) {
+ 
+ 			skip = skipped - pg_remaining;
+ 
+-			for (pg = pg_unuse; pg; pg = pg->next)
++			for (pg = pg_unuse; pg && skip > 0; pg = pg->next) {
  				remaining += 1 << pg->order;
++				skip -= (PAGE_SIZE << pg->order) / ENTRY_SIZE;
++			}
  
-+			pages -= remaining;
-+
- 			skip = DIV_ROUND_UP(skip, ENTRIES_PER_PAGE);
+ 			pages -= remaining;
  
- 			/*
-@@ -7181,6 +7186,13 @@ static int ftrace_process_locs(struct mo
- 		synchronize_rcu();
- 		ftrace_free_pages(pg_unuse);
- 	}
-+
-+	if (!mod) {
-+		count -= skipped;
-+		pr_info("ftrace: allocating %ld entries in %ld pages\n",
-+			count, pages);
-+	}
-+
- 	return ret;
- }
- 
-@@ -7835,9 +7847,6 @@ void __init ftrace_init(void)
- 		goto failed;
- 	}
- 
--	pr_info("ftrace: allocating %ld entries in %ld pages\n",
--		count, DIV_ROUND_UP(count, ENTRIES_PER_PAGE));
+-			skip = DIV_ROUND_UP(skip, ENTRIES_PER_PAGE);
 -
- 	ret = ftrace_process_locs(NULL,
- 				  __start_mcount_loc,
- 				  __stop_mcount_loc);
+ 			/*
+ 			 * Check to see if the number of pages remaining would
+ 			 * just fit the number of entries skipped.
+ 			 */
+-			WARN(skip != remaining, "Extra allocated pages for ftrace: %lu with %lu skipped",
++			WARN(pg || skip > 0, "Extra allocated pages for ftrace: %lu with %lu skipped",
+ 			     remaining, skipped);
+ 		}
+ 		/* Need to synchronize with ftrace_location_range() */
 
 
