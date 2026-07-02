@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA97235E1CE;
-	Thu,  2 Jul 2026 16:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8154333E348;
+	Thu,  2 Jul 2026 16:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010062; cv=none; b=YA+Y9bMQz2tqajqocUzlNzhHlN/WmLdlLSu0ViAlXbAQpP7gyGqhRsQYbgDc+E0StGl0X7K2cw8E0G+9u+lyVjkFvl4CEcQuEKzMNRYSA6dk7iQVfSriMfCHCCDOM0R2L2lPXtbYnx73aOP9r7R8Zv1e2r29RkXtBoS9OL8DKeg=
+	t=1783010065; cv=none; b=PM1xqfklSUp47j4ZROKlYKaG6SKBocp+xKuPcyvEUHLdkDe+P9HlL8Z8JejEHwcwymU/g2n8O2otD7/EBW/Pes/ozBLTKu8/tHWUfzqeybPpSL3qklXs0hoXeS63I1/eVXIQ7kHiXl/sRfNE905/YL16c+ZCoyOhF5EiyjixvBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010062; c=relaxed/simple;
-	bh=VNLarYh63fABAKKoJd1jlu5QDy2WT70ZV5vqx1AUoUY=;
+	s=arc-20240116; t=1783010065; c=relaxed/simple;
+	bh=AC6WsFRmG0KCbaHiHHCpsxsRHSJ76uWOy5i3Ir3U/B0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QndThImscJ0gLfl0JUMn/kjDwY+pgPw8kG+22usaQKifdZWzIAniIPJ2B+rKUQsSEGtuWQOwdA1QvVdrebbsWtGOyVt/aqnqyWwFYCSYsA1b1mfAocz7ppEZQHmCTtD1KiyE5awpBRNyISSeaTPhrfbAqexqpkBsDWpsjG8W+zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7wsk6Lt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CLGZ+y/UEmKX2W0t4HK3vab0/I0SaMiMxJyLXTVigikWk+sjbbMi6rts4Mhnx7qFwLBpEYyILzpnuXcc1/q3I/gEVYFujTgwNvGC9Ypnz2QuZP/G/awRPKrIOb7ufEhufwhe8rW3LsC+URRfbbJ5t2zhkg1ee1134ypGLGWcIsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEsYaWeJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7wsk6Lt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D94E1F000E9;
-	Thu,  2 Jul 2026 16:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEsYaWeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E720C1F00A3A;
+	Thu,  2 Jul 2026 16:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010061;
-	bh=Z72m2jjlrNy+27WcCmalgBDYk/jMxwWkg7IWAfxIyAU=;
+	s=korg; t=1783010064;
+	bh=P5M3i3mc1e97uh1A7FEgoQ0aVNaMMt5+l+/pu9B7MnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v7wsk6Ltw26gDjNWZb5MHo2ytUbBwBSd/tnpW7sbz48MpHmUSmwKQT7fUoxtE1VVV
-	 hNrLmsNYr2x3rBdOFwb5jszZHpObNuc7ruzXmJjZyHOkpBRxpff+c8VbyDlmwOj0uh
-	 +pcDWukypBdAxey+ZHd9g4qGK0x9o1mWEVKA69QE=
+	b=fEsYaWeJMSRDkqDi3o9ORnbpgZSxcwijFUeShcZlzsUV2cbuxL0QkEzElA/B0zU4s
+	 7psWu4NwOiR8EV0D4+0TwqT22tlBZ884U25+ArBJyPckAt1tWwLzPBYLBRF2L91uGn
+	 /wD7zaMRlWmXJKwuiQsTK7M+of2+z7JGvNPTfRJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 095/129] LoongArch: Report dying CPU to RCU in stop_this_cpu()
-Date: Thu,  2 Jul 2026 18:20:14 +0200
-Message-ID: <20260702155114.109325852@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.1 096/129] pNFS: Fix use-after-free in pnfs_update_layout()
+Date: Thu,  2 Jul 2026 18:20:15 +0200
+Message-ID: <20260702155114.128996129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -50,60 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit f2539c56c74691e7a88af6372ba2b48c06ed2fe4 upstream.
+commit 13e198a90ca4050f4bee8a3f23680389a6563ccc upstream.
 
-This is a port of MIPS commit 9f3f3bdc6d9dac1 ("MIPS: smp: report dying
-CPU to RCU in stop_this_cpu()"). smp_send_stop() parks all secondary
-CPUs in stop_this_cpu(). And the function marks the CPU offline for the
-scheduler via set_cpu_online(false) but never informs RCU, so RCU keeps
-expecting a quiescent state from CPUs that are now spinning forever with
-interrupts disabled.
+When hitting the NFS_LAYOUT_RETURN branch in pnfs_update_layout(),
+the code calls pnfs_prepare_to_retry_layoutget(lo). If it succeeds,
+pnfs_put_layout_hdr(lo) is called before trace_pnfs_update_layout(),
+which still references 'lo'. This results in a use-after-free when the
+tracepoint accesses lo's fields.
 
-As long as nothing waits for an RCU grace period after smp_send_stop()
-this is harmless, which is why it went unnoticed. However, since commit
-91840be8f710370 ("irq_work: Fix use-after-free in irq_work_single() on
-PREEMPT_RT"), irq_work_sync() calls synchronize_rcu() on architectures
-without an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt()
-returns false. Any irq_work_sync() issued in the reboot/shutdown/halt
-path after smp_send_stop() then blocks on a grace period that can never
-complete, hanging the reboot:
+Fix this by moving the tracepoint call before pnfs_put_layout_hdr(lo).
 
-  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
-  ...
-  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-  rcu: Offline CPU 1 blocking current GP.
-  rcu: Offline CPU 2 blocking current GP.
-  rcu: Offline CPU 3 blocking current GP.
-
-This issue needs some hacks to reproduce, and it was not noticed on
-LoongArch because arch_irq_work_has_interrupt() usually returns true.
-
-Call rcutree_report_cpu_dead() once interrupts are disabled, mirroring
-the generic CPU-hotplug offline path, so RCU stops waiting on the parked
-CPUs and grace periods can still complete. LoongArch shuts down all CPUs
-here without going through the CPU-hotplug mechanism, so this report is
-not otherwise issued.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 2c8d5fc37fe2 ("pNFS: Stricter ordering of layoutget and layoutreturn")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/smp.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/pnfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kernel/smp.c
-+++ b/arch/loongarch/kernel/smp.c
-@@ -517,6 +517,7 @@ static void stop_this_cpu(void *dummy)
- 	set_cpu_online(smp_processor_id(), false);
- 	calculate_cpu_foreign_map();
- 	local_irq_disable();
-+	rcutree_report_cpu_dead();
- 	while (true);
- }
- 
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2070,11 +2070,11 @@ lookup_again:
+ 		dprintk("%s wait for layoutreturn\n", __func__);
+ 		lseg = ERR_PTR(pnfs_prepare_to_retry_layoutget(lo));
+ 		if (!IS_ERR(lseg)) {
+-			pnfs_put_layout_hdr(lo);
+ 			dprintk("%s retrying\n", __func__);
+ 			trace_pnfs_update_layout(ino, pos, count, iomode, lo,
+ 						 lseg,
+ 						 PNFS_UPDATE_LAYOUT_RETRY);
++			pnfs_put_layout_hdr(lo);
+ 			goto lookup_again;
+ 		}
+ 		trace_pnfs_update_layout(ino, pos, count, iomode, lo, lseg,
 
 
