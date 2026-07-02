@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F6F1C695;
-	Thu,  2 Jul 2026 16:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C91E3346BE;
+	Thu,  2 Jul 2026 16:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011410; cv=none; b=Wu+wg+lbp5sQWaWxkDrtPPDsy5uCQU0xST4tdn64ty4LKfRYygP94FIp5EqJjSbXfFKD9QnTc7ZSGqZkgo13fEdvQ9bmBT0gxVjfFBHENECydfvMd5JK3gtGd6uSYos/MP3irjz74gP4qkQS3QaDMPyc6tKwOmJENUkpmfTRXpw=
+	t=1783011413; cv=none; b=g2KKxAcTtIP0iBmLgOJ4d820Q9SK38umsEpuj/eh1wCSWSmyZ/+YpGeO6OnV8xkItdOwLR6gtgEs714GCOgrt0IWAj8y/Us0dTDv/7rimzndjC7mf98XUGHk8gd8aJpAJQatLce3ppD2IQT0YiJ0mCyYhAdd6w2KSnQ+MrpXHWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011410; c=relaxed/simple;
-	bh=S3ejPvyMRYkKhPozP5M7PJUUXSJGFkRqUOwSkLJThCk=;
+	s=arc-20240116; t=1783011413; c=relaxed/simple;
+	bh=vMkG/SyZdbYEKscfr81DqBAEhctEFrlpcB54BgikU3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FfUAKKxHbTaQfmMhZMXY9ixTKWu0quPeAF6ClyYJzUjSI3qgyq7nZKpJfoeUX2grld1pEeA1s7Ojpa2UWf01uEawQMKwPvhJZqXMYkqYSzsV7mbPUMod85dj8kP18ZQh3NK1XiMnLBVk7gqY7qlS++XEbHRabWcZMmHx2jQFqfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iF+VUnfq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KIe0RrLXsvIV5xVEfWJbMNdiDs7fsLcheM+pMRC2WJOV4yb6cre3C/0/coPjtt/nAryCkuwUnyrD0NrO7ULBl/t2ZzbLwVeoEWId4lv59Dz4aOF2U8lu1oru0WPNavnXQqgoVhNd5FlWYW3N3OA1uKCPPJHqskyeWXQLa2twW1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6s+hVK+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iF+VUnfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286161F000E9;
-	Thu,  2 Jul 2026 16:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6s+hVK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C345D1F000E9;
+	Thu,  2 Jul 2026 16:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011409;
-	bh=r6OlKDUpUhZK+/7TW5DtYdDKLNkEhDHNbKBl6uvvv6g=;
+	s=korg; t=1783011412;
+	bh=0C4CYObpwjBUc+clpWlZkvbtYHgYOnCA/Ux4b4ZU6hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iF+VUnfqPCg77D1WyuwJykQuG82aVDF42OoAm0UWSuij6tuQBBYlYyDW2uJTYBStQ
-	 U76R/7uFXOeZCcvoObMZoNCRyZvgwECJvf7AhinEL1mYaZV/0zqRBh+o1ZMKBmK3Oo
-	 XBNB4qQCp3vFsVszXA1MLnDUI2G8LKMR2Ypw1nss=
+	b=m6s+hVK+V1aNNiEiyzfhoqEG04Y+GrakhPka6XOw6LVkyvcBgbl4/kFdck55Q8/ys
+	 0jAKGiOeJDvJ4+ArxLEImG6eRUH0e76jwpJVkbkgoPao1hPL/YTnayhyWXwkYmDv2Z
+	 +xhLsQCtuEE0IpYJ7pbsZ9pzFf+5HJmFWnjFGhfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.18 054/108] wifi: rtlwifi: rtl8821ae: Fix C2H bit location in RX descriptor
-Date: Thu,  2 Jul 2026 18:20:51 +0200
-Message-ID: <20260702155113.229123860@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Luka Gejak <luka.gejak@linux.dev>
+Subject: [PATCH 6.18 055/108] wifi: rtw88: increase TX report timeout to fix race condition
+Date: Thu,  2 Jul 2026 18:20:52 +0200
+Message-ID: <20260702155113.248936349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -50,39 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-commit 83d38df6929118c3f996b9e3351c2d5014073d87 upstream.
+commit c80788f7c5aed8d420366b821f867a8a353d83a5 upstream.
 
-Bit 28 of double word 2 in the RX descriptor indicates if the packet is
-a normal 802.11 frame, or a message from the wifi firmware to the
-driver (Card 2 Host).
+The driver expects the firmware to report TX status within 500ms.
+However, a timeout can be triggered when the hardware performs
+background scans while under TX load. During these scans, the firmware
+stays off-channel for periods exceeding 500ms, delaying the delivery of
+TX reports back to the driver.
 
-Commit f5678bfe1cdc ("rtlwifi: rtl8821ae: Replace local bit manipulation
-macros") mistakenly made the driver look for this bit in double word 1,
-causing packet loss and Bluetooth coexistence problems.
+When this occurs, the purge timer fires prematurely and drops the
+tracking skbs from the queue. This results in the host stack
+interpreting the missing status as packet loss, leading to TCP window
+collapse. In testing with iperf3, this causes throughput to drop from
+~90 Mbps to near-zero for approximately 2 seconds until the connection
+recovers.
 
-Fixes: f5678bfe1cdc ("rtlwifi: rtl8821ae: Replace local bit manipulation macros")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Increase RTW_TX_PROBE_TIMEOUT to 2500ms for RTL8723DU. This duration is
+sufficient to accommodate off-channel dwell time during full background
+scans, ensuring the purge timer only trips during genuine firmware
+lockups and preventing unnecessary TCP retransmission cycles.
+
+Fixes: a82dfd33d123 ("wifi: rtw88: Add common USB chip support")
+Cc: stable@vger.kernel.org
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Tested-by: Luka Gejak <luka.gejak@linux.dev>
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/04da7398-cedb-425a-a810-5772ab10139d@gmail.com
+Link: https://patch.msgid.link/20260518142311.10328-1-luka.gejak@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/tx.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h
-@@ -291,7 +291,7 @@ static inline int get_rx_desc_paggr(__le
- 
- static inline int get_rx_status_desc_rpt_sel(__le32 *__pdesc)
+--- a/drivers/net/wireless/realtek/rtw88/tx.c
++++ b/drivers/net/wireless/realtek/rtw88/tx.c
+@@ -196,6 +196,7 @@ void rtw_tx_report_purge_timer(struct ti
+ void rtw_tx_report_enqueue(struct rtw_dev *rtwdev, struct sk_buff *skb, u8 sn)
  {
--	return le32_get_bits(*(__pdesc + 1), BIT(28));
-+	return le32_get_bits(*(__pdesc + 2), BIT(28));
- }
+ 	struct rtw_tx_report *tx_report = &rtwdev->tx_report;
++	unsigned long timeout = RTW_TX_PROBE_TIMEOUT;
+ 	unsigned long flags;
+ 	u8 *drv_data;
  
- static inline int get_rx_desc_rxmcs(__le32 *__pdesc)
+@@ -207,7 +208,11 @@ void rtw_tx_report_enqueue(struct rtw_de
+ 	__skb_queue_tail(&tx_report->queue, skb);
+ 	spin_unlock_irqrestore(&tx_report->q_lock, flags);
+ 
+-	mod_timer(&tx_report->purge_timer, jiffies + RTW_TX_PROBE_TIMEOUT);
++	if (rtwdev->chip->id == RTW_CHIP_TYPE_8723D &&
++	    rtwdev->hci.type == RTW_HCI_TYPE_USB)
++		timeout = msecs_to_jiffies(2500);
++
++	mod_timer(&tx_report->purge_timer, jiffies + timeout);
+ }
+ EXPORT_SYMBOL(rtw_tx_report_enqueue);
+ 
 
 
