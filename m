@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C1134752D;
-	Thu,  2 Jul 2026 16:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D889349CF2;
+	Thu,  2 Jul 2026 16:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010436; cv=none; b=bp13liMpqUrn7KNba0gCG7E2gXJix1dDBQPMoPIC15ulxG+twSnLkBTnjoOxzQnKBQBXnsEVhFMZKQF/ziIIqrMo1RmaLTMQzU3OwAPBfi1d39DM0HzmixRaz64Tb4albPs6AJyBTKlemAx7cOkAKWgYU6GMaOpzhJhR4t8LiyE=
+	t=1783010439; cv=none; b=oo5ISbwWcjhaa7GkRyWlUVDXnqAH03CUG2MLLgckdgA0iHasGZUYs9rb1RGP+mU389Y5coPJ3pkb95Yu3OZmMsvTCV3R/6vLtCqaZTHBS2RumYuZhQ39Zo8xP+vGEQ1m1FpWK2hzHuLyLgJGoCSg15eZz4ip8pLI3FPghtn7ST0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010436; c=relaxed/simple;
-	bh=QtNjElrCWKCtmDm0ElSIAwTIwtcDiLhAQE6Qetbu1to=;
+	s=arc-20240116; t=1783010439; c=relaxed/simple;
+	bh=RuggjEVzwf1xwoemZKyFq4LBgjIgTJfJBut9i9eGO4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNZDPDQOlFOFydgl6ReTFkoc5i74sbqdDd0cueXp82BBcbmuSV4UiFtoyf7v1dmXXI63tjOoUCNkMBCJtygSG2aSfj1tUfsRLorf3toeHHGIItYIoQZuIt2HyEKDGJ5TysHIoVBkKCI381bfr8veeij/mw1wWhZgw3C7H1f05yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SneD37aw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QSvNV4WvCFgyhf896p9wszKNFQWotIAF9fDyimBSEeIznBaZasBbBZaLkDfP7ulmdzd7P2sisrh9qsNiv1X9PPozJTsDCeTj9Zk1DANfz92dCItS7xnM1AJA1WkPPdNU5uxx+JuF0JXHcWwV9Uc3RlnNYktiSV6mddPnUuFgH0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQFiM4tS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SneD37aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569E51F000E9;
-	Thu,  2 Jul 2026 16:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQFiM4tS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39721F000E9;
+	Thu,  2 Jul 2026 16:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010434;
-	bh=iFnsoq7U/XQa0WRPrhDUQRFYYfe312wJULO+ayOg1Mo=;
+	s=korg; t=1783010437;
+	bh=GiTUoYQcO8hwb6FpCZUHaHk0UqIio9pVHOJPJLvz/rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SneD37awpTA+XUxDLvqxsXstXFYqRqaCXpi9R5XvPvKext5VuxMk1bBfOkr2VRopw
-	 uSVHvxufRCg2ycw952ZP3FQBt9stq+d3yj3KQvAleXywQ8WLwiE2M5QoezTPm0bgBs
-	 AUa4UXTVHyzxVQNiWFDXFGPWSeN44hBHLZuF9FmI=
+	b=OQFiM4tSfdligWoi3TQRYTQPePNgTru2BnF8k4bk+FGE5uOroiTEdkovmBbmkd5Ve
+	 JrpiLE6lQiM9gN6RW6ncF/5jeYxtd9jqex0/10tTuFVdfCWsl3fkioBKTEq0k8exNe
+	 PNfQS/O2VtNLOWwTiaBZ/rv27pvuhXF5wKp5gRjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/204] batman-adv: tp_meter: add only finished tp_vars to lists
-Date: Thu,  2 Jul 2026 18:19:23 +0200
-Message-ID: <20260702155120.883111152@linuxfoundation.org>
+Subject: [PATCH 6.12 107/204] batman-adv: bla: annotate lasttime access with READ/WRITE_ONCE
+Date: Thu,  2 Jul 2026 18:19:24 +0200
+Message-ID: <20260702155120.903581969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -53,70 +53,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 15ccbf685222274f5add1387af58c2a41a95f81e upstream.
+commit 98b0fb191c878a64cbaebfe231d96d57576acf8c upstream.
 
-When the receiver variables (aka "session") are initialized, then they are
-added to the list of sessions before the timer is set up. A RCU protected
-reader could therefore find the entry and run mod_setup before
-batadv_tp_init_recv() finished the timer initialization.
-
-The same is true for batadv_tp_start(), which must first initialize the
-finish_work and the test_length to avoid a similar problem.
+The lasttime field for claim, backbone_gw, and loopdetect tracks the
+jiffies value of the most recent activity and is used to detect timeouts.
+These accesses are not consistently protected by a lock, so
+READ_ONCE/WRITE_ONCE must be used to prevent data races caused by compiler
+optimizations.
 
 Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ net/batman-adv/bridge_loop_avoidance.c | 28 +++++++++++++-------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 089ac7cc9fbebc..2bba53fc6da5c0 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -1096,21 +1096,21 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
- 	tp_vars->prerandom_offset = 0;
- 	spin_lock_init(&tp_vars->prerandom_lock);
+diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
+index 15aeb07285e61f..cc6c14cac06282 100644
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -512,7 +512,7 @@ batadv_bla_get_backbone_gw(struct batadv_priv *bat_priv, const u8 *orig,
+ 		return NULL;
  
--	kref_get(&tp_vars->refcount);
--	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
--	spin_unlock_bh(&bat_priv->tp_list_lock);
--
- 	tp_vars->test_length = test_length;
- 	if (!tp_vars->test_length)
- 		tp_vars->test_length = BATADV_TP_DEF_TEST_LENGTH;
+ 	entry->vid = vid;
+-	entry->lasttime = jiffies;
++	WRITE_ONCE(entry->lasttime, jiffies);
+ 	entry->crc = BATADV_BLA_CRC_INIT;
+ 	entry->bat_priv = bat_priv;
+ 	spin_lock_init(&entry->crc_lock);
+@@ -580,7 +580,7 @@ batadv_bla_update_own_backbone_gw(struct batadv_priv *bat_priv,
+ 	if (unlikely(!backbone_gw))
+ 		return;
  
-+	/* init work item for finished tp tests */
-+	INIT_DELAYED_WORK(&tp_vars->finish_work, batadv_tp_sender_finish);
-+
-+	kref_get(&tp_vars->refcount);
-+	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
-+	spin_unlock_bh(&bat_priv->tp_list_lock);
-+
- 	batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 		   "Meter: starting throughput meter towards %pM (length=%ums)\n",
- 		   dst, test_length);
+-	backbone_gw->lasttime = jiffies;
++	WRITE_ONCE(backbone_gw->lasttime, jiffies);
+ 	batadv_backbone_gw_put(backbone_gw);
+ }
  
--	/* init work item for finished tp tests */
--	INIT_DELAYED_WORK(&tp_vars->finish_work, batadv_tp_sender_finish);
--
- 	/* start tp kthread. This way the write() call issued from userspace can
- 	 * happily return and avoid to block
+@@ -714,7 +714,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
+ 		ether_addr_copy(claim->addr, mac);
+ 		spin_lock_init(&claim->backbone_lock);
+ 		claim->vid = vid;
+-		claim->lasttime = jiffies;
++		WRITE_ONCE(claim->lasttime, jiffies);
+ 		kref_get(&backbone_gw->refcount);
+ 		claim->backbone_gw = backbone_gw;
+ 		kref_init(&claim->refcount);
+@@ -736,7 +736,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
+ 			return;
+ 		}
+ 	} else {
+-		claim->lasttime = jiffies;
++		WRITE_ONCE(claim->lasttime, jiffies);
+ 		if (claim->backbone_gw == backbone_gw)
+ 			/* no need to register a new backbone */
+ 			goto claim_free_ref;
+@@ -769,7 +769,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
+ 	spin_lock_bh(&backbone_gw->crc_lock);
+ 	backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
+ 	spin_unlock_bh(&backbone_gw->crc_lock);
+-	backbone_gw->lasttime = jiffies;
++	WRITE_ONCE(backbone_gw->lasttime, jiffies);
+ 
+ claim_free_ref:
+ 	batadv_claim_put(claim);
+@@ -858,7 +858,7 @@ static bool batadv_handle_announce(struct batadv_priv *bat_priv, u8 *an_addr,
+ 		return true;
+ 
+ 	/* handle as ANNOUNCE frame */
+-	backbone_gw->lasttime = jiffies;
++	WRITE_ONCE(backbone_gw->lasttime, jiffies);
+ 	crc = ntohs(*((__force __be16 *)(&an_addr[4])));
+ 
+ 	batadv_dbg(BATADV_DBG_BLA, bat_priv,
+@@ -1253,7 +1253,7 @@ static void batadv_bla_purge_backbone_gw(struct batadv_priv *bat_priv, int now)
+ 						  head, hash_entry) {
+ 				if (now)
+ 					goto purge_now;
+-				if (!batadv_has_timed_out(backbone_gw->lasttime,
++				if (!batadv_has_timed_out(READ_ONCE(backbone_gw->lasttime),
+ 							  BATADV_BLA_BACKBONE_TIMEOUT))
+ 					continue;
+ 
+@@ -1334,7 +1334,7 @@ static void batadv_bla_purge_claims(struct batadv_priv *bat_priv,
+ 						primary_if->net_dev->dev_addr))
+ 				goto skip;
+ 
+-			if (!batadv_has_timed_out(claim->lasttime,
++			if (!batadv_has_timed_out(READ_ONCE(claim->lasttime),
+ 						  BATADV_BLA_CLAIM_TIMEOUT))
+ 				goto skip;
+ 
+@@ -1494,7 +1494,7 @@ static void batadv_bla_periodic_work(struct work_struct *work)
+ 		eth_random_addr(bat_priv->bla.loopdetect_addr);
+ 		bat_priv->bla.loopdetect_addr[0] = 0xba;
+ 		bat_priv->bla.loopdetect_addr[1] = 0xbe;
+-		bat_priv->bla.loopdetect_lasttime = jiffies;
++		WRITE_ONCE(bat_priv->bla.loopdetect_lasttime, jiffies);
+ 		atomic_set(&bat_priv->bla.loopdetect_next,
+ 			   BATADV_BLA_LOOPDETECT_PERIODS);
+ 
+@@ -1515,7 +1515,7 @@ static void batadv_bla_periodic_work(struct work_struct *work)
+ 						primary_if->net_dev->dev_addr))
+ 				continue;
+ 
+-			backbone_gw->lasttime = jiffies;
++			WRITE_ONCE(backbone_gw->lasttime, jiffies);
+ 
+ 			batadv_bla_send_announce(bat_priv, backbone_gw);
+ 			if (send_loopdetect)
+@@ -1900,7 +1900,7 @@ batadv_bla_loopdetect_check(struct batadv_priv *bat_priv, struct sk_buff *skb,
+ 	/* If the packet came too late, don't forward it on the mesh
+ 	 * but don't consider that as loop. It might be a coincidence.
  	 */
-@@ -1430,10 +1430,10 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 	INIT_LIST_HEAD(&tp_vars->unacked_list);
+-	if (batadv_has_timed_out(bat_priv->bla.loopdetect_lasttime,
++	if (batadv_has_timed_out(READ_ONCE(bat_priv->bla.loopdetect_lasttime),
+ 				 BATADV_BLA_LOOPDETECT_TIMEOUT))
+ 		return true;
  
- 	kref_get(&tp_vars->refcount);
--	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
-+	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
+@@ -2016,7 +2016,7 @@ bool batadv_bla_rx(struct batadv_priv *bat_priv, struct sk_buff *skb,
  
- 	kref_get(&tp_vars->refcount);
--	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
-+	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
+ 	if (own_claim) {
+ 		/* ... allow it in any case */
+-		claim->lasttime = jiffies;
++		WRITE_ONCE(claim->lasttime, jiffies);
+ 		goto allow;
+ 	}
  
- 	batadv_tp_reset_receiver_timer(tp_vars);
+@@ -2118,7 +2118,7 @@ bool batadv_bla_tx(struct batadv_priv *bat_priv, struct sk_buff *skb,
+ 		/* if yes, the client has roamed and we have
+ 		 * to unclaim it.
+ 		 */
+-		if (batadv_has_timed_out(claim->lasttime, 100)) {
++		if (batadv_has_timed_out(READ_ONCE(claim->lasttime), 100)) {
+ 			/* only unclaim if the last claim entry is
+ 			 * older than 100 ms to make sure we really
+ 			 * have a roaming client here.
+@@ -2372,7 +2372,7 @@ batadv_bla_backbone_dump_entry(struct sk_buff *msg, u32 portid,
+ 	backbone_crc = backbone_gw->crc;
+ 	spin_unlock_bh(&backbone_gw->crc_lock);
  
+-	msecs = jiffies_to_msecs(jiffies - backbone_gw->lasttime);
++	msecs = jiffies_to_msecs(jiffies - READ_ONCE(backbone_gw->lasttime));
+ 
+ 	if (is_own)
+ 		if (nla_put_flag(msg, BATADV_ATTR_BLA_OWN)) {
 -- 
 2.53.0
 
