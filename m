@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070773AC0FD;
-	Thu,  2 Jul 2026 16:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE637353A68;
+	Thu,  2 Jul 2026 16:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009527; cv=none; b=cl9SHfXaex8LeqHGsU2ca6+nnOwNdp15ZwlqU5GhGIPSeogGsyAx+1jJEatG17H5YTwmvrLkhtPLGa2KaPz/kCXwlkX4ZtSFPg+qgI0gi3A6o4xCgGHe2D5N2PQbaQ6UEqZqhXsrU9m00r3Etefy+ODmK3DzszpeM/5o/8N6C2w=
+	t=1783009529; cv=none; b=ZAfBq9TmOl5CXkNrSQCbD4C34N2xfacqbTtFQbSZkT+HD1h65I0zfdTlY6Vv9Ao24tUOe90hW3fbQRCheQ4cO5wnTyqKd2IZwiFdI4brieRsDihCn2WMLHrHRthyi8Q9AYUTdLK4K7vka9TyF0gVSQVi+nVvKpIUYHlCD1uif6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009527; c=relaxed/simple;
-	bh=qN2Ids3nnvJrpPl5ERT3cmn2B4XEUAOt34B1mRDCx5I=;
+	s=arc-20240116; t=1783009529; c=relaxed/simple;
+	bh=gmmMNhBr8L8MoY6sop4APG6j4qcgtkJMaAGC043VvJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHU6l9LjftWCjKTWMt0LPk1j9BtLVwmmm18K+w2rkIRBoaObl5/MyMEXJWqls1eVfIbCasDwGP6WX/7oZtqoN/tXhsM6AbYZ+tsT9c905MQTZI8vHer+B3Exda0aYaSgqhmO6P0aLeL0q8dJ2yK32iF7PwnzYHfGyL8uDYBrUlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8zvZ1s+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U9bHMX4b4rMbRJJYGZvIvq5GeBVd9q6554PkLLxKLuPuK1YZoE6MIr0wOy4VsdDkHnx5vw5WAyheUPcBcuqif+xUn3Ryo69sJkm+iN4BhUNNsdTXERZmQh2aX0d1/DY4slwHE1orzZ/DAweseMdQkYnP4RxvDLgnMISil9VrFdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXS7fdPy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8zvZ1s+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7F01F00A3A;
-	Thu,  2 Jul 2026 16:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXS7fdPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B2C1F000E9;
+	Thu,  2 Jul 2026 16:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009521;
-	bh=ojBGWcIe7/mJyYRSrSkCQXkkS71vUGmjDmWX5f0PnXU=;
+	s=korg; t=1783009523;
+	bh=Oo6yQZW3bDa1EHvXy2TJbAT0y4zwv7oOouUJavYUbGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E8zvZ1s+syBc5O05G9LmkcFaxpG/fUh0rw5ww/b7SV3jlab9DaEO5szeX1fUOpOn6
-	 hsOW3/HBjBakDc7qbKuxmkrNIRNJTAgKCi7t2q8g53LqFsNGNglYST5x4hfGm/AmI4
-	 5nM4Maqe1B4uQFIvZfSg6lt0uoc1k9ta7q+Qr8Qc=
+	b=tXS7fdPyHU4LQFje4PJuPED4UvJRmm22lf2f7w5w6OCDQSK1qQXL61puHfRDW7J5m
+	 lWU5BXOJEj14Eu6rD7cuBrXfdinmk1QnuJ/zJdozahLLxzlt98Nq1GeQAGwIZ0WAyk
+	 YWiKT9ZM8qaos5RLivuGcF7Tay7380+y0UVxnUaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	David Teigland <teigland@redhat.com>,
-	Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
-Subject: [PATCH 5.10 82/96] dlm: prevent NPD when writing a positive value to event_done
-Date: Thu,  2 Jul 2026 18:20:14 +0200
-Message-ID: <20260702155110.703379727@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yongchao Wu <yongchao.wu@autochips.com>,
+	Peter Chen <peter.chen@kernel.org>,
+	Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
+Subject: [PATCH 5.10 83/96] usb: cdns3: gadget: fix NULL pointer dereference in ep_queue
+Date: Thu,  2 Jul 2026 18:20:15 +0200
+Message-ID: <20260702155110.723759989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -51,42 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Yongchao Wu <yongchao.wu@autochips.com>
 
-commit 8e2bad543eca5c25cd02cbc63d72557934d45f13 upstream.
+commit 7f6f127b9bc34bed35f56faf7ecb1561d6b39000 upstream.
 
-do_uevent returns the value written to event_done. In case it is a
-positive value, new_lockspace would undo all the work, and lockspace
-would not be set. __dlm_new_lockspace, however, would treat that
-positive value as a success due to commit 8511a2728ab8 ("dlm: fix use
-count with multiple joins").
+When the gadget endpoint is disabled or not yet configured, the ep->desc
+pointer can be NULL. This leads to a NULL pointer dereference when
+__cdns3_gadget_ep_queue() is called, causing a kernel crash.
 
-Down the line, device_create_lockspace would pass that NULL lockspace to
-dlm_find_lockspace_local, leading to a NULL pointer dereference.
+Add a check to return -ESHUTDOWN if ep->desc is NULL, which is the
+standard return code for unconfigured endpoints.
 
-Treating such positive values as successes prevents the problem. Given
-this has been broken for so long, this is unlikely to break userspace
-expectations.
+This prevents potential crashes when ep_queue is called on endpoints
+that are not ready.
 
-Fixes: 8511a2728ab8 ("dlm: fix use count with multiple joins")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Signed-off-by: Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260331000407.613298-1-yongchao.wu@autochips.com
+Signed-off-by: Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/lockspace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/gadget.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/dlm/lockspace.c
-+++ b/fs/dlm/lockspace.c
-@@ -639,7 +639,7 @@ static int new_lockspace(const char *nam
- 	   lockspace to start running (via sysfs) in dlm_ls_start(). */
+--- a/drivers/usb/cdns3/gadget.c
++++ b/drivers/usb/cdns3/gadget.c
+@@ -2587,6 +2587,9 @@ static int __cdns3_gadget_ep_queue(struc
+ 	struct cdns3_request *priv_req;
+ 	int ret = 0;
  
- 	error = do_uevent(ls, 1);
--	if (error)
-+	if (error < 0)
- 		goto out_recoverd;
- 
- 	wait_for_completion(&ls->ls_members_done);
++	if (!ep->desc)
++		return -ESHUTDOWN;
++
+ 	request->actual = 0;
+ 	request->status = -EINPROGRESS;
+ 	priv_req = to_cdns3_request(request);
 
 
