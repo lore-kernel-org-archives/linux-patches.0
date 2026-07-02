@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D272D26F46F;
-	Thu,  2 Jul 2026 17:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2B430499A;
+	Thu,  2 Jul 2026 17:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011658; cv=none; b=Nh3/sId6Er/KmBHGpRNd7JR3VEEtFsplYWnysMqv9Jd0Wj6uLzLZNh5ZzOTPqzgGyALjAjoPHj501rgnfXl3J9j150Ro0LbbhvHvVH1d3SeRWB5jRWCuzddCVU7RXIXu1qrMACEzg+tvMVGIzXizpv1S1Pe8LVlKruwII2nzvUQ=
+	t=1783011660; cv=none; b=r/fHKJPEDjnQ4s3dZDW5yiF4sMXMez30xFkoGhZQnvDAgBphue7eV+QKN4/URMMha/qWWZrgUWSftY+KHA5SqXPPfNBGhst9YA68D4dINFS1W9s2/Gq5SqSa3zF5YcIg1ksaNgR4qtUk6yVvBdWeXfdTLtKzWBxwSKPbIf+38HE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011658; c=relaxed/simple;
-	bh=4iauggWIrZ1nU6zDQu90sz15gSqAuKyPfaQiCU+qLgQ=;
+	s=arc-20240116; t=1783011660; c=relaxed/simple;
+	bh=qvf1wIiCdhHZAZAzwbhBVqFxu8wHl9jYiaJp2QZSm8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POj1n0s2Hzj23HZg8xrzN1rOCZP6grhW4tvbOqYRQppQ3UlEFvdiP0/rYSLwmZJ/h+iQxGd+fOVMFz2gExNmnH1Cp5HcbF5kM+fruiG7sYByYK66ObmqrsozjaoRXBcF5K8YC36H21DVF5QmO6V11eBTulx49fdQVYc4kP/81ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/E0cidD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VcCPqkhGoxCfvrQpYt/KoRVQ2+hYEemOEeznIs38uXQ7tvUxCVk7iLQlWHKlFeNvSA5yyUaml5lI4RS7b7oTpj/wLMs+ewa2kA6F8uh2RtZZZTHUWNuDFhH3dq32ODb67o174BtKAQOhwYlOapYU5p8N4xMBtbW946OlZD+hPI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2QSBrFe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/E0cidD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0A71F000E9;
-	Thu,  2 Jul 2026 17:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2QSBrFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92761F000E9;
+	Thu,  2 Jul 2026 17:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011656;
-	bh=JOEN8F8It0oLZppgOrJkkIOV4cNyXQbefGgaoxa9Q4Q=;
+	s=korg; t=1783011659;
+	bh=T9fgoC0wk7o7vkSRGkNlhOKNpRy/vQM8o4Ge6oSQyQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/E0cidDn17GUeinWywzTX4qqwm3tLcUGa59/rzjTNnz8o09OdM+bL4ezGvObx7sB
-	 YoovwMw4Si843s3WTY0tUYTb09lGY3jI+T42bC+BuuOMTSSNf8mvUnJRADlDl5WUXO
-	 L300lJ4NpaHFso6wF27YhmJiYRomAySrny/y79yM=
+	b=r2QSBrFeVP+D3Ar/OuLSJ8AYlSuPiVlq/IMPw/XEox09+NgKazrZZjgAMrR8v8ZPT
+	 spNfQCN8s11BAuxJ0Uw9u3V6Nsa7TcE8JUISdNXFSNctf2BWz7hww1nViPDvLMi8WE
+	 BGDdayHWSaaoW+nZ/hfRtk5GutX/kob03xL50NJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 082/120] hdlc_ppp: sync per-proto timers before freeing hdlc state
-Date: Thu,  2 Jul 2026 18:21:18 +0200
-Message-ID: <20260702155114.658839332@linuxfoundation.org>
+	Jay Shin <jaeshin@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	coregee2000@gmail.com,
+	Ming Lei <ming.lei@redhat.com>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.1 083/120] blk-cgroup: fix UAF in __blkcg_rstat_flush()
+Date: Thu,  2 Jul 2026 18:21:19 +0200
+Message-ID: <20260702155114.678798512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -44,115 +49,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Michal Koutný <mkoutny@suse.com>
 
-commit c78a4e41ab5ead6193ad8a2dd92e8906bae659fa upstream.
+commit 0ab5ee5a1badb58cbb2242617cb01a4972b1f2a2 upstream.
 
-Each PPP control protocol (LCP/IPCP/IPV6CP) embedded in struct ppp
-registers a timer via timer_setup(). That struct ppp is the
-hdlc->state allocation, which detach_hdlc_protocol() frees with kfree()
-in both teardown paths: unregister_hdlc_device() and the re-attach inside
-attach_hdlc_protocol().
+When multiple blkgs in the same blkcg are released concurrently,
+a use-after-free can occur. The race happens when one blkg's
+__blkcg_rstat_flush() removes another blkg's iostat entries via
+llist_del_all(). The second blkg sees an empty list and proceeds
+to free itself while the first is still iterating over its entries.
 
-The ppp proto never registered a .detach callback, so
-detach_hdlc_protocol() performs no timer synchronization before the
-kfree(). The only cancel, timer_delete(&proto->timer) in ppp_cp_event(),
-is partial (it does not wait for a running callback) and only runs on the
-->CLOSED transition; ppp_stop()/ppp_close() do not sync either. A
-ppp_timer callback already executing (blocked on ppp->lock) survives the
-kfree and then dereferences proto->state / ppp->lock in freed memory,
-leading to a use-after-free.
+Move the flush from __blkg_release() (RCU callback) to blkg_release()
+(before call_rcu). This ensures the RCU grace period waits for any
+concurrent flush's rcu_read_lock() section to complete before freeing.
 
-Fix this by adding a .detach helper that calls timer_shutdown_sync() on
-every per-proto timer. detach_hdlc_protocol() invokes proto->detach(dev)
-before kfree(hdlc->state), so timer_shutdown_sync()
-now runs on both free paths.
-timer_shutdown_sync() is used instead of timer_delete_sync() because the
-keepalive path re-arms the timer through add_timer()/mod_timer() and
-shutdown blocks any re-activation during teardown.
-
-Initialize the per-protocol timers in ppp_ioctl() when the protocol is
-attached, and remove the now-redundant timer_setup() from ppp_start(), so
-that the timers are initialized exactly once at attach time and
-ppp_timer_release() never operates on uninitialized timer_list
-structures. attach_hdlc_protocol() uses kmalloc() (not kzalloc), so
-struct ppp's protos[i].timer is uninitialized garbage until the first
-timer_setup(); without this init-at-attach, attaching the PPP protocol
-without ever bringing the device up would leave timer_shutdown_sync()
-operating on uninitialized memory in .detach. Moving the init out of
-ppp_start() (which only runs on NETDEV_UP) into the attach path makes the
-initialization unconditional and avoids initializing the same timer_list
-twice.
-
-This bug was found by static analysis.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260617020518.116319-1-fanwu01@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Jay Shin <jaeshin@redhat.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Waiman Long <longman@redhat.com>
+Fixes: 20cb1c2fb756 ("blk-cgroup: Flush stats before releasing blkcg_gq")
+Reported-by: coregee2000@gmail.com
+Closes: https://lore.kernel.org/linux-block/CAHPqNmwT9oRpem3J3erS_W0uSQND47LGGSBsNxP8E6uSUish1w@mail.gmail.com/
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Tested-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Link: https://patch.msgid.link/20260205155425.342084-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/hdlc_ppp.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ block/blk-cgroup.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/net/wan/hdlc_ppp.c
-+++ b/drivers/net/wan/hdlc_ppp.c
-@@ -619,7 +619,6 @@ static void ppp_start(struct net_device
- 		struct proto *proto = &ppp->protos[i];
- 
- 		proto->dev = dev;
--		timer_setup(&proto->timer, ppp_timer, 0);
- 		proto->state = CLOSED;
- 	}
- 	ppp->protos[IDX_LCP].pid = PID_LCP;
-@@ -639,6 +638,15 @@ static void ppp_close(struct net_device
- 	ppp_tx_flush();
- }
- 
-+static void ppp_timer_release(struct net_device *dev)
-+{
-+	struct ppp *ppp = get_ppp(dev);
-+	int i;
-+
-+	for (i = 0; i < IDX_COUNT; i++)
-+		timer_shutdown_sync(&ppp->protos[i].timer);
-+}
-+
- static struct hdlc_proto proto = {
- 	.start		= ppp_start,
- 	.stop		= ppp_stop,
-@@ -647,6 +655,7 @@ static struct hdlc_proto proto = {
- 	.ioctl		= ppp_ioctl,
- 	.netif_rx	= ppp_rx,
- 	.module		= THIS_MODULE,
-+	.detach		= ppp_timer_release,
- };
- 
- static const struct header_ops ppp_header_ops = {
-@@ -657,7 +666,7 @@ static int ppp_ioctl(struct net_device *
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -164,20 +164,10 @@ static void blkg_free(struct blkcg_gq *b
+ static void __blkg_release(struct rcu_head *rcu)
  {
- 	hdlc_device *hdlc = dev_to_hdlc(dev);
- 	struct ppp *ppp;
--	int result;
-+	int i, result;
+ 	struct blkcg_gq *blkg = container_of(rcu, struct blkcg_gq, rcu_head);
+-	struct blkcg *blkcg = blkg->blkcg;
+-	int cpu;
  
- 	switch (ifs->type) {
- 	case IF_GET_PROTO:
-@@ -685,6 +694,8 @@ static int ppp_ioctl(struct net_device *
- 			return result;
+ #ifdef CONFIG_BLK_CGROUP_PUNT_BIO
+ 	WARN_ON(!bio_list_empty(&blkg->async_bios));
+ #endif
+-	/*
+-	 * Flush all the non-empty percpu lockless lists before releasing
+-	 * us, given these stat belongs to us.
+-	 *
+-	 * blkg_stat_lock is for serializing blkg stat update
+-	 */
+-	for_each_possible_cpu(cpu)
+-		__blkcg_rstat_flush(blkcg, cpu);
  
- 		ppp = get_ppp(dev);
-+		for (i = 0; i < IDX_COUNT; i++)
-+			timer_setup(&ppp->protos[i].timer, ppp_timer, 0);
- 		spin_lock_init(&ppp->lock);
- 		ppp->req_timeout = 2;
- 		ppp->cr_retries = 10;
+ 	/* release the blkcg and parent blkg refs this blkg has been holding */
+ 	css_put(&blkg->blkcg->css);
+@@ -195,6 +185,17 @@ static void __blkg_release(struct rcu_he
+ static void blkg_release(struct percpu_ref *ref)
+ {
+ 	struct blkcg_gq *blkg = container_of(ref, struct blkcg_gq, refcnt);
++	struct blkcg *blkcg = blkg->blkcg;
++	int cpu;
++
++	/*
++	 * Flush all the non-empty percpu lockless lists before releasing
++	 * us, given these stat belongs to us.
++	 *
++	 * blkg_stat_lock is for serializing blkg stat update
++	 */
++	for_each_possible_cpu(cpu)
++		__blkcg_rstat_flush(blkcg, cpu);
+ 
+ 	call_rcu(&blkg->rcu_head, __blkg_release);
+ }
 
 
