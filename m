@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD91351C3D;
-	Thu,  2 Jul 2026 16:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE80326942;
+	Thu,  2 Jul 2026 16:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010055; cv=none; b=J5UUEr5UdRaXcjNghZdgKJjQAB8aogkr+KTyvd4X1IrdjcIMyoV0JMCbFYNlF8R3guepkZehmJh1pMn1INFpZCBAuE4U9+QE0e84Y59YRZSigNQbuSKmMSOOD9nh5oeb3/hLW/yQgTLvUDDA4flxdQsQKEBRovpBtfFLNCiKoCU=
+	t=1783010058; cv=none; b=WcE1N/7JkT26oD2PSnl9T2T0d9am/lLDkbYhBi11362tkY0C5KbrRVXoylO1D+RpFG7NuH85rn7gTDAkucs/lGocDa1JfFXpNXpsenFaUkTkvyit6+HfRRVII3qMnQomIEi++sWCTOeNGm5ErE9LiPDqQhPsIjnpK+qGM2y4AaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010055; c=relaxed/simple;
-	bh=qB2egGpUnaZLq9ggSN3wWCLel8iKoyl5dynsJCuMtzQ=;
+	s=arc-20240116; t=1783010058; c=relaxed/simple;
+	bh=YcoF6PyCeio2r08tA7JKTQAPp5MFq2/HZG8fZOiNRJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nfy/6LXyxQvL93+plpgMDDDpHtXyE9zN08azDpTDm5JsIRuEUS0fBW80v8GhnOyRoxcqSzVMr8Vbmsohxqqz+YeM+CXdSY8Gyxo3XP3QLTr+/RldeKkDKdyVfMnrdMUZtnZQbpgCQVzCmJ9gPCrKuCT4XOOJJxw5J8CYtgBSNbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOOL54Hx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQ4lDZQaYk9XJc9KlIJUKpDVZ/pZndhx4h+xZXgEaefjKxAD3hP4vJ9kH46AHpqw3jVwYt5/vxrJGw1sZGo3eC5Jwlwz4Ab2ngqfDdbv+Rw8x0LjbCsYAvYrsQ9pMdTG7i/GiFQnX4xBjF86dGv5Ioq862a/gfTDgwjd2YC5glk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCLD18o6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOOL54Hx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA141F000E9;
-	Thu,  2 Jul 2026 16:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCLD18o6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C82D1F00A3A;
+	Thu,  2 Jul 2026 16:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010053;
-	bh=W2tdDb9xlrgiwawss434/Xbe3RDzDPRUBo0gs6VYCTo=;
+	s=korg; t=1783010056;
+	bh=f3Tqqs/hazmiwrMkW3880rRg4TYW0IZsCS88AWOmd44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BOOL54HxBWkwfg7IfcsvlBO5ILOdglMvm38T8U6MsFgYy9yHgh2yOP6vpvJrmMqNe
-	 JiNG2/UButLuCsffxiCqiSH//IBZPBvHgPc0b66CQ1njY/Nq8gQbR0HW3AVIdTKp9v
-	 nii2VRousF2wOZWdM0I2GzzIOSvE2pj1dxBaDYeY=
+	b=uCLD18o65xldoY2vILgD0m0/oevhCe2CjlAbcDZQ5At4Cjvlkxb38M6v4TPc+us7W
+	 MLfdeJGfcd//n8XipzCulr+D0sVwt5g/rqfyfmuYY+b4avTbJhrsoIbX5MSEVGwZxa
+	 l5Y6x+0RyeG7vXINoPOTSz8hOvplBXAs4ZJKH+f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.1 092/129] exfat: fix potential use-after-free in exfat_find_dir_entry()
-Date: Thu,  2 Jul 2026 18:20:11 +0200
-Message-ID: <20260702155114.047073180@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 093/129] hdlc_ppp: sync per-proto timers before freeing hdlc state
+Date: Thu,  2 Jul 2026 18:20:12 +0200
+Message-ID: <20260702155114.067486691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -50,90 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 3f5f8ee9917cc2b9076ac533492d8a200edcabb8 upstream.
+commit c78a4e41ab5ead6193ad8a2dd92e8906bae659fa upstream.
 
-In exfat_find_dir_entry(), the buffer_head obtained from
-exfat_get_dentry() is released with brelse(bh) before the fall-through
-TYPE_EXTEND branch reads the directory entry through ep (which points
-into bh->b_data):
+Each PPP control protocol (LCP/IPCP/IPV6CP) embedded in struct ppp
+registers a timer via timer_setup(). That struct ppp is the
+hdlc->state allocation, which detach_hdlc_protocol() frees with kfree()
+in both teardown paths: unregister_hdlc_device() and the re-attach inside
+attach_hdlc_protocol().
 
-	brelse(bh);
-	if (entry_type == TYPE_EXTEND) {
-		...
-		len = exfat_extract_uni_name(ep, entry_uniname);
-		...
-	}
+The ppp proto never registered a .detach callback, so
+detach_hdlc_protocol() performs no timer synchronization before the
+kfree(). The only cancel, timer_delete(&proto->timer) in ppp_cp_event(),
+is partial (it does not wait for a running callback) and only runs on the
+->CLOSED transition; ppp_stop()/ppp_close() do not sync either. A
+ppp_timer callback already executing (blocked on ppp->lock) survives the
+kfree and then dereferences proto->state / ppp->lock in freed memory,
+leading to a use-after-free.
 
-After brelse() drops our reference, nothing guarantees that the
-underlying page backing bh->b_data remains valid for the subsequent
-exfat_extract_uni_name() read. This is the same pattern fixed in
-commit fc961522ddbd ("exfat: Fix potential use after free in
-exfat_load_upcase_table()").
+Fix this by adding a .detach helper that calls timer_shutdown_sync() on
+every per-proto timer. detach_hdlc_protocol() invokes proto->detach(dev)
+before kfree(hdlc->state), so timer_shutdown_sync()
+now runs on both free paths.
+timer_shutdown_sync() is used instead of timer_delete_sync() because the
+keepalive path re-arms the timer through add_timer()/mod_timer() and
+shutdown blocks any re-activation during teardown.
 
-Move brelse(bh) so it runs after ep is no longer dereferenced on
-each branch.
+Initialize the per-protocol timers in ppp_ioctl() when the protocol is
+attached, and remove the now-redundant timer_setup() from ppp_start(), so
+that the timers are initialized exactly once at attach time and
+ppp_timer_release() never operates on uninitialized timer_list
+structures. attach_hdlc_protocol() uses kmalloc() (not kzalloc), so
+struct ppp's protos[i].timer is uninitialized garbage until the first
+timer_setup(); without this init-at-attach, attaching the PPP protocol
+without ever bringing the device up would leave timer_shutdown_sync()
+operating on uninitialized memory in .detach. Moving the init out of
+ppp_start() (which only runs on NETDEV_UP) into the attach path makes the
+initialization unconditional and avoids initializing the same timer_list
+twice.
 
-Confirmed on QEMU x86_64 with CONFIG_KASAN=y + CONFIG_DEBUG_PAGEALLOC=y
-+ CONFIG_PAGE_POISONING=y on linux-next, using a crafted exFAT image
-(long filename with same-hash collisions forcing the TYPE_EXTEND path).
-With a debug-only invalidate_bdev() inserted between brelse(bh) and
-the ep read to make the stale-deref window deterministic, the
-unpatched kernel faults:
+This bug was found by static analysis.
 
-  BUG: KASAN: use-after-free in exfat_find_dir_entry+0x133b/0x15a0
-  BUG: unable to handle page fault for address: ffff88801a5fa0c2
-  Oops: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
-  RIP: 0010:exfat_find_dir_entry+0x1188/0x15a0
-
-With this patch applied, the same instrumented harness completes
-cleanly under the same sanitizer stack. I have not reproduced a
-crash on an uninstrumented kernel under ordinary reclaim; the
-instrumented A/B establishes the lifetime violation and that the
-patch closes it, not an unaided triggerability claim.
-
-Fixes: ca06197382bd ("exfat: add directory operations")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260617020518.116319-1-fanwu01@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/dir.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wan/hdlc_ppp.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -1040,12 +1040,12 @@ rewind:
- 				continue;
- 			}
+--- a/drivers/net/wan/hdlc_ppp.c
++++ b/drivers/net/wan/hdlc_ppp.c
+@@ -621,7 +621,6 @@ static void ppp_start(struct net_device
+ 		struct proto *proto = &ppp->protos[i];
  
--			brelse(bh);
- 			if (entry_type == TYPE_EXTEND) {
- 				unsigned short entry_uniname[16], unichar;
+ 		proto->dev = dev;
+-		timer_setup(&proto->timer, ppp_timer, 0);
+ 		proto->state = CLOSED;
+ 	}
+ 	ppp->protos[IDX_LCP].pid = PID_LCP;
+@@ -641,6 +640,15 @@ static void ppp_close(struct net_device
+ 	ppp_tx_flush();
+ }
  
- 				if (step != DIRENT_STEP_NAME ||
- 				    name_len >= MAX_NAME_LENGTH) {
-+					brelse(bh);
- 					step = DIRENT_STEP_FILE;
- 					continue;
- 				}
-@@ -1056,6 +1056,7 @@ rewind:
- 					uniname += EXFAT_FILE_NAME_LEN;
++static void ppp_timer_release(struct net_device *dev)
++{
++	struct ppp *ppp = get_ppp(dev);
++	int i;
++
++	for (i = 0; i < IDX_COUNT; i++)
++		timer_shutdown_sync(&ppp->protos[i].timer);
++}
++
+ static struct hdlc_proto proto = {
+ 	.start		= ppp_start,
+ 	.stop		= ppp_stop,
+@@ -649,6 +657,7 @@ static struct hdlc_proto proto = {
+ 	.ioctl		= ppp_ioctl,
+ 	.netif_rx	= ppp_rx,
+ 	.module		= THIS_MODULE,
++	.detach		= ppp_timer_release,
+ };
  
- 				len = exfat_extract_uni_name(ep, entry_uniname);
-+				brelse(bh);
- 				name_len += len;
+ static const struct header_ops ppp_header_ops = {
+@@ -659,7 +668,7 @@ static int ppp_ioctl(struct net_device *
+ {
+ 	hdlc_device *hdlc = dev_to_hdlc(dev);
+ 	struct ppp *ppp;
+-	int result;
++	int i, result;
  
- 				unichar = *(uniname+len);
-@@ -1074,6 +1075,7 @@ rewind:
- 				continue;
- 			}
+ 	switch (ifs->type) {
+ 	case IF_GET_PROTO:
+@@ -687,6 +696,8 @@ static int ppp_ioctl(struct net_device *
+ 			return result;
  
-+			brelse(bh);
- 			if (entry_type &
- 					(TYPE_CRITICAL_SEC | TYPE_BENIGN_SEC)) {
- 				if (step == DIRENT_STEP_SECD) {
+ 		ppp = get_ppp(dev);
++		for (i = 0; i < IDX_COUNT; i++)
++			timer_setup(&ppp->protos[i].timer, ppp_timer, 0);
+ 		spin_lock_init(&ppp->lock);
+ 		ppp->req_timeout = 2;
+ 		ppp->cr_retries = 10;
 
 
