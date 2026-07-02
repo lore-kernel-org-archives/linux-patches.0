@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD38349CF2;
-	Thu,  2 Jul 2026 16:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6009349CF2;
+	Thu,  2 Jul 2026 16:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011135; cv=none; b=tg+QtJUn72BxeYGxKGtGZFj0YFkDiZx/o4Gb4/0UsbQmM3SqI1m7BS/lO5Se0QNgAgZaD+nqFuvmONY2I535oTeI/GL351Lvw2xQkwBgh2eGfTLtaatcZBQjTBRZFyoa1je4ZaZr9v9nGpippxjvxP1mVF6VU89zLwK4fAcKnKI=
+	t=1783011137; cv=none; b=N3WMYmcx1mYEB59dqvnxjx+ce2x3aZu3xf/m+OeuRCQ1n/g1WpYQN+7YI0WcXr+PnuAyjDdrS6o75AjAHu3vuQJ8iJQcneofMkBkykWzAxVfQjZLn9tx7JdzE2Hmhn2le6CBMeMeHKePQN3xzZfRayH++s+S2L2Xz+AHSlARdQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011135; c=relaxed/simple;
-	bh=9Xi0oRiJIITV7WkUMgcy9zhzWSFpqtN487pg8XsoN9M=;
+	s=arc-20240116; t=1783011137; c=relaxed/simple;
+	bh=32XukIrfM3SQFyj2bLDFztJq27xBYfWqlrFDmUuKkPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0OylnEezrMvixCzZoKvi6ShksxVbgnIB/c0wzOToT4O+GDy2e7P2j+3lcVVYMYfkrvsi4xWD/Rxc6j2o04ll5la3Wv8yQUzP8kn+c15aTwKsNfFRM2a0GP9i9vTlo9JaBx+sLIVNcDedCURXRy9X0LL5wY/hvdr36TPJQmV2cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymx9lpt5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MOTA+KvuXiY/aRL5fTyNxhTvQb2uaYE0ZwNSBe1fFKSF9JbmT5pqD0zGeGpQLf8jiRDzaRaDaoZU87qgFQIlY26yHtlvraktHQhQIDYTH8M3K4o4wp8In/O/GBIFOcOyP9UnV3VLF9lBvhbiysta8Xqkc1kdA5OyMPxgi5tsZd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNhNbopN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymx9lpt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637D81F000E9;
-	Thu,  2 Jul 2026 16:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNhNbopN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054B31F000E9;
+	Thu,  2 Jul 2026 16:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011133;
-	bh=0qF5dXZwkNBQzJvEvhU1vsmZXoRqf522ZFocOEeZQ5E=;
+	s=korg; t=1783011136;
+	bh=TBSQJBOQqteDfCdhyTnV4N0ITzF8AAS/2hROgzafjtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ymx9lpt5vVxjtMGz1qtL5+u3rhcezyts6FH5pw6E5Y/UrlBk6Qi0gwOza16GDyTuF
-	 hv0ElG+tYjX6e2PksC6JK7XOFTCLuyqilZPx6vDUZB5ZT4iDuEkiHVvcR0EjfvkWae
-	 iSIh7qOGIZXijbl6GiRN6tjLtLImCw5Hnq5jod/k=
+	b=dNhNbopNes5myoyrucdXhsVwp4Nfbx3N5KD8zX6Cu5CX5wPPGm4GegZntxWSFbxdw
+	 Cu4D6zj17K8nU8jAA0r5veqTS5pNXBRHRhdCNPzPXHfwQl1+uLKUJHyjnBNteU5wE0
+	 lhrbZi3oBW3MmGhjNdtyOq2Nu37JCxvVsaxtUxWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 142/175] bpf: use kvfree() for replaced sysctl write buffer
-Date: Thu,  2 Jul 2026 18:20:43 +0200
-Message-ID: <20260702155118.797232287@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 169/175] serial: qcom_geni: Fix RX DMA stall when SE_DMA_RX_LEN_IN is zero
+Date: Thu,  2 Jul 2026 18:21:10 +0200
+Message-ID: <20260702155119.345964034@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -54,89 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-commit 4c21b5927d4364bfe7365f2700da5fea0ed0d004 upstream.
+[ Upstream commit b93062b6d8a1b2d9bad235cac25558a909819026 ]
 
-proc_sys_call_handler() allocates its temporary sysctl buffer with
-kvzalloc() and passes it to __cgroup_bpf_run_filter_sysctl(). Since
-kvzalloc() may fall back to vmalloc() for large allocations, freeing
-that buffer with kfree() is wrong and can corrupt memory.
+In qcom_geni_serial_handle_rx_dma(), geni_se_rx_dma_unprep() clears
+port->rx_dma_addr before SE_DMA_RX_LEN_IN is read. If the register is zero,
+for example when the RX stale counter fires on an idle line, the handler
+returns without calling geni_se_rx_dma_prep().
 
-Use kvfree() to safely handle both kmalloc and kvzalloc()/vmalloc
-allocations.
+The next RX DMA interrupt then hits the !port->rx_dma_addr guard and
+returns immediately, so the RX DMA buffer is never rearmed and later input
+is lost.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1-rc5.
+Keep the handler on the rearm path when rx_in is zero. Warn about the
+unexpected zero-length DMA completion, skip received-data handling, and
+always call geni_se_rx_dma_prep().
 
-Reproduced the bug based on v7.1-rc4 in a QEMU x86_64 guest booted with
-KASAN and CONFIG_FAILSLAB enabled. To exercise the replacement path, the
-test tree also included the accompanying fix for the stale ret == 1
-check in __cgroup_bpf_run_filter_sysctl(). The reproducer confines
-failslab injections to the proc_sys_call_handler() range, uses
-stacktrace-depth=32, and injects fail-nth=1 while writing 8191 bytes to
-/proc/sys/kernel/domainname from a task in the target cgroup. Under
-that setup, fail-nth=1 triggered the fault:
-
-  BUG: unable to handle page fault for address: ffffeb0200024d48
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: Oops: 0000  SMP KASAN NOPTI
-  CPU: 2 UID: 0 PID: 209 Comm: repro_proc_sys_ Not tainted 7.1.0-rc4-00686-g97625979a5d4  PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:kfree+0x6e/0x510
-  ...
-  Call Trace:
-   <TASK>
-   ? __cgroup_bpf_run_filter_sysctl+0x626/0xc30
-   __cgroup_bpf_run_filter_sysctl+0x74d/0xc30
-   ? __pfx___cgroup_bpf_run_filter_sysctl+0x10/0x10
-   ? srso_return_thunk+0x5/0x5f
-   ? __kvmalloc_node_noprof+0x345/0x870
-   ? proc_sys_call_handler+0x250/0x480
-   ? srso_return_thunk+0x5/0x5f
-   proc_sys_call_handler+0x3a2/0x480
-   ? __pfx_proc_sys_call_handler+0x10/0x10
-   ? srso_return_thunk+0x5/0x5f
-   ? selinux_file_permission+0x39f/0x500
-   ? srso_return_thunk+0x5/0x5f
-   ? lock_is_held_type+0x9e/0x120
-   vfs_write+0x98e/0x1000
-   ...
-   </TASK>
-
-With this fix applied on top of the same test setup, rerunning the
-reproducer with fail-nth=1 yields no corresponding Oops reports.
-
-Fixes: 4508943794ef ("proc: use kvzalloc for our kernel buffer")
+Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
 Cc: stable@vger.kernel.org
-
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://lore.kernel.org/r/20260603105317.944304-3-dawei.feng@seu.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260528-serial-rx-0-byte-fix-v2-1-b4195cfe342f@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/cgroup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/qcom_geni_serial.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1776,7 +1776,7 @@ int __cgroup_bpf_run_filter_sysctl(struc
- 	kfree(ctx.cur_val);
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -838,12 +838,9 @@ static void qcom_geni_serial_handle_rx_d
+ 	port->rx_dma_addr = 0;
  
- 	if (ret == 1 && ctx.new_updated) {
--		kfree(*buf);
-+		kvfree(*buf);
- 		*buf = ctx.new_val;
- 		*pcount = ctx.new_len;
- 	} else {
+ 	rx_in = readl(uport->membase + SE_DMA_RX_LEN_IN);
+-	if (!rx_in) {
+-		dev_warn(uport->dev, "serial engine reports 0 RX bytes in!\n");
+-		return;
+-	}
+-
+-	if (!drop)
++	if (!rx_in)
++		dev_warn_ratelimited(uport->dev, "serial engine reports 0 RX bytes in!\n");
++	else if (!drop)
+ 		handle_rx_uart(uport, rx_in, drop);
+ 
+ 	ret = geni_se_rx_dma_prep(&port->se, port->rx_buf,
 
 
