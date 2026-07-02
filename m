@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EA33B2FD1;
-	Thu,  2 Jul 2026 16:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C09639DBD4;
+	Thu,  2 Jul 2026 16:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009634; cv=none; b=aiTDR45qaZZlAMiy+GwlFogKEtUX78cguL4CRQgjg4VerxZSVGEMrA98W+dnsdNKA0BOUULmwBgOE7+5NvmH8BIxVr81DpdqxqgkmzT2SEFfQfeb2BOYpZowHoaHJQ46kjOihLSTie+uMpwWOolIm6zil9L1cbf1SNg7VtxMUvI=
+	t=1783009637; cv=none; b=ivIh72xroajQf9CLX9OXKNiRQy6t5RUXpQtp48PyHXUaBWOho2LgtD+mGxpxuW+0g/Ay1aITqRvV5zM3fA6GdguWiGMiemCT2GGDMgC9kcUC/ImAe0Og4659wgoM+b1VKMJJv8ymddB0hzvyDhF6vc+9Viva3rvUWAYvKq5EN/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009634; c=relaxed/simple;
-	bh=6RDFgDze8ADc8Gy3CP5frlN1plLjZPxEyvkbGRMcB7o=;
+	s=arc-20240116; t=1783009637; c=relaxed/simple;
+	bh=oHzUhGDpse21stiP8yivi55tTmW8djIGHazNn8g7sZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lOv1AZT4ADT1SEqIIVMLam4N5yv3dL9c5PMXSZG9VAby9j+GHx/XL/WBbhjYPAdne6+D0N6mVi73m3HEMykpLJmo54KqiFNGjEso8gvLVATWJdqrq5Tc3a31yGP4z61G1Z/sN5bClJW16Fw6avHkTICvP//GwTdXwxkEx33PoXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqWP2BJF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P3lszvwIvhkSgmF3JofXm9D4SgR8UgkDjssz2369aBCqmTsGbxKOlLf6HAbJzxo+GZzg2BZmeSvfo4NJbXkXImVHe947S7aAmFWPdZvmi+qnZckjEzmspvagiCh0McVzkJW5k9Rz8l/HHJ6QBc2docuIWO7A0UbQLiDo6+0FmW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzd9Z6yh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqWP2BJF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912801F000E9;
-	Thu,  2 Jul 2026 16:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzd9Z6yh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317961F00A3A;
+	Thu,  2 Jul 2026 16:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009631;
-	bh=F8VuIUigoXiG4MeOK23tRR5QOC1OklH+FHZEWx/Dfug=;
+	s=korg; t=1783009633;
+	bh=rD/qEj8hqz5hRZqKFPNlHXaNvPw7Mj5NTyTgGC/j1fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mqWP2BJFeoYi/rcdJ8R6Cq6+aaKAhnGIFJZOKSt5NvkzgthGxIbqDkthefBamUv6y
-	 NnVcPhOM2Rwa5599yrfpuZkACEJxXai18eUooZwTdW+mRN1e/F/ImaCBoL2J7Ar/Tp
-	 HWEgObQttntOiKzYZDvFHOcsHP7Uhp8Yn7Zar4MI=
+	b=rzd9Z6yhg0W5SavQUOLCE5dnHR9sdSGvJDI4Wp0+6DKnxbIalFGhdoPQ+ljvIWxeg
+	 NCoRM9gVWuQSRUechaLSSFeWTpeue4laounR1kln/W+1hTKyoEzQb1mH+p6ymd2IoN
+	 k3e2GMJbdC+clueccCmV6GOuU6BrUPITh9mWUFaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 28/95] batman-adv: tp_meter: keep unacked list in ascending ordered
-Date: Thu,  2 Jul 2026 18:19:31 +0200
-Message-ID: <20260702155109.799977782@linuxfoundation.org>
+Subject: [PATCH 5.15 29/95] batman-adv: tp_meter: initialize dup_acks explicitly
+Date: Thu,  2 Jul 2026 18:19:32 +0200
+Message-ID: <20260702155109.820550562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -53,40 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 5aa8651527ea0b610e7a09fb3b8204c1398b9525 upstream.
+commit b2b68b32a715e0328662801576974aa37b942b00 upstream.
 
-When batadv_tp_handle_out_of_order inserts a new entry in the list of
-unacked (out of order) packets, it searches from the entry with the newest
-sequence number towards oldest sequence number. If an entry is found which
-is older than the newly entry, the new entry has to be added after the
-found one to keep the ascending order.
+When an ack with a sequence number equal to the last_acked is received, the
+dup_acks counter is increased to decide whether fast retransmit should be
+performed. Only when the sequence numbers are not equal, the dup_acks is
+set to the initial value (0).
 
-But for this operation list_add_tail() was used. But this function adds an
-entry _before_ another one. As result, the list would contain a lot of
-swapped sequence numbers. The consumer of this list
-(batadv_tp_ack_unordered()) would then fail to correctly ack packets.
+But if the initial packet would have the sequence number
+BATADV_TP_FIRST_SEQ, dup_acks would not be initialized and atomic_inc would
+operate on an undefined starting value. It is therefore required to have it
+explicitly initialized during the start of the sender session.
 
 Cc: stable@kernel.org
 Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/tp_meter.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index c7b48d51e2aed2..e8792e1e4eedfa 100644
+index e8792e1e4eedfa..2b68eacd7bf51d 100644
 --- a/net/batman-adv/tp_meter.c
 +++ b/net/batman-adv/tp_meter.c
-@@ -1325,7 +1325,7 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
- 		 * one is attached _after_ it. In this way the list is kept in
- 		 * ascending order
- 		 */
--		list_add_tail(&new->list, &un->list);
-+		list_add(&new->list, &un->list);
- 		added = true;
- 		break;
- 	}
+@@ -1045,6 +1045,7 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
+ 	tp_vars->icmp_uid = icmp_uid;
+ 
+ 	tp_vars->last_sent = BATADV_TP_FIRST_SEQ;
++	atomic_set(&tp_vars->dup_acks, 0);
+ 	atomic_set(&tp_vars->last_acked, BATADV_TP_FIRST_SEQ);
+ 	tp_vars->fast_recovery = false;
+ 	tp_vars->recover = BATADV_TP_FIRST_SEQ;
 -- 
 2.53.0
 
