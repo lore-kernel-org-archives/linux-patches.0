@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56A9346A18;
-	Thu,  2 Jul 2026 16:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2053A7590;
+	Thu,  2 Jul 2026 16:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010651; cv=none; b=kvKLGBy6Sg9mSwQarVbY/Zy4ou41SmJido6XqquneYSTGlSxE7OXgQLXLl/6hatR3iVXkHU8OJdFgfmTveozzXaOozcbKpJyGyX4bgxDsjWzDW0W9uKqh4D+S1stZHRFZvMHxlUq1vi2n4UKuvqIlYSty287Xsfjw1nP9j8QQ5w=
+	t=1783010654; cv=none; b=Ps0PCFEYu1fCZUUBCYtHNwpoK6ap37xIIy/tN/AHWHRvBmxfpHqcZ4wkeufZEZqnKT1ApevzPI4r7uEjz7QxGPSVG1L5+g/toWKhEOY5fjxIJNGgOaGm/oT8ixehI9+27VoDq4s3e1zB/P5nEhBLfxSNkskje++a+iK/JBlJaJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010651; c=relaxed/simple;
-	bh=2vSyNPBGEGjdwUzqZ5QkoroVMP8KWtk1vnVj5qV621Q=;
+	s=arc-20240116; t=1783010654; c=relaxed/simple;
+	bh=iJWyvWV41vF4SaNznwVQj3480ysRnERYciifDFWtw94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y1aHetcw2UEkd2XOYDmL9O4c4RFnVtOSCrWzYWrOTgcgExK1hdDTPeLNSqUy3CpjRcyda+SL8THN+JiO0SNmR6akjEfYS/D1f8d2AvTIqijxNn3Wbc5IvtkzjEQIcNy8qrP3XpiiiMdepPAO4lm4rZ1o4o/zGpztBBPnxkvGHiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFYw/ot0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X2FWfX+JBStWCmZUPfhkZBaB3ORA0MhrQxiambI9e0kqelpUu4X1FzI+5d5ZKu4LQsdNN/g6kb+LD0Pq5T7F27j/8/ubilUuh9K4I0klyzzrFFEpGGlqgzfv7RECAwHG8W5MRdcgP4nNdF2/AAonObMZvDiDJWkOUQaKmBLj6MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ud4+U9ZC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFYw/ot0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277B91F000E9;
-	Thu,  2 Jul 2026 16:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ud4+U9ZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A011F000E9;
+	Thu,  2 Jul 2026 16:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010650;
-	bh=8LRK5cKpAMNkCEPTu7Xz1glu3fBEp6WtsTKcqgienHc=;
+	s=korg; t=1783010653;
+	bh=lGNPScO9MuxoBHhmOnR2M5qHotaFOxT4zRrkHsna63E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lFYw/ot014YKt9HBXjPSJD/oB1ym6MmTYY+pX6bQ0FNt1sCC4jYmrJ97rQ4Unf8VP
-	 iGx6cNmSaBdmQPC9QBNdu/d5dINahwTNhLYynw+4JZFEDnzszzaVi+NKJRS9QsNECm
-	 BtsnGJv9rukVN1RnsmB3ik8/BW+/GTMgXWxvX0kM=
+	b=ud4+U9ZCstWj63KycZcXgu/e4L+L/MjXMjLSeOsi030yAiUeeyiQCcNWh3nPVTYUU
+	 KmXS9gSZ83IwmrTJ7EhSVKce5Pv6MpsTQOJoEwMzPosdb0x7dJxuZnQuXDbYkPvyo1
+	 PHe0xXPl0vY2+hgUKRDZXKyAVmWCiPR3B4hcjf9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 189/204] nfsd: reset write verifier on deferred writeback errors
-Date: Thu,  2 Jul 2026 18:20:46 +0200
-Message-ID: <20260702155122.620868715@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.12 190/204] NFSv4/pNFS: reject zero-length r_addr in nfs4_decode_mp_ds_addr
+Date: Thu,  2 Jul 2026 18:20:47 +0200
+Message-ID: <20260702155122.642663479@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -45,67 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 2090b05803faab8a9fa62fbff871007862cac1b7 upstream.
+commit 41fe0f7b84f0cb822ae10ab08592996a592b2a25 upstream.
 
-nfsd_vfs_write() and nfsd_commit() both call filemap_check_wb_err() to
-detect deferred writeback errors, but neither rotates the server's write
-verifier (nn->writeverf) when this check fails. Every other
-durable-storage-failure path in these functions calls
-commit_reset_write_verifier() before returning an error.
+nfs4_decode_mp_ds_addr() decodes the r_netid and r_addr opaques of a
+netaddr4 from a GETDEVICEINFO multipath-DS body, then immediately
+calls strrchr(buf, '.') to locate the port separator. Both decodes
+use xdr_stream_decode_string_dup(), and the current code checks only
+"nlen < 0" / "rlen < 0" before dereferencing the returned string.
 
-The missing rotation means clients holding UNSTABLE write data under the
-current verifier will COMMIT, receive the unchanged verifier back, and
-conclude their data is durable — silently dropping data that failed
-writeback. This violates the UNSTABLE+COMMIT durability contract
-(RFC 1813 §3.3.7, RFC 8881 §18.32).
+When the on-wire opaque has length zero, xdr_stream_decode_opaque_inline()
+returns 0 and xdr_stream_decode_string_dup() falls through to its
+"*str = NULL; return ret" tail, leaving buf NULL with a return value
+of 0. The "< 0" check does not catch this, and the next line is
+strrchr(NULL, '.'), a kernel NULL pointer dereference reachable from
+any pNFS-flexfile client mounted against a malicious or compromised
+metadata server.
 
-Add commit_reset_write_verifier() calls at both filemap_check_wb_err()
-error sites, matching the pattern used by adjacent error paths in the
-same functions. The helper already filters -EAGAIN and -ESTALE
-internally, so the calls are unconditionally safe.
+Reject the zero-length cases explicitly so the decoder fails with
+-EBADMSG (treated as a malformed GETDEVICEINFO body) instead of
+panicking the client.
 
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 6b7f3cf96364 ("nfs41: pull decode_ds_addr from file layout to generic pnfs")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/nfs/pnfs_nfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1203,8 +1203,10 @@ nfsd_vfs_write(struct svc_rqst *rqstp, s
- 	nfsd_stats_io_write_add(nn, exp, *cnt);
- 	fsnotify_modify(file);
- 	host_err = filemap_check_wb_err(file->f_mapping, since);
--	if (host_err < 0)
-+	if (host_err < 0) {
-+		commit_reset_write_verifier(nn, rqstp, host_err);
- 		goto out_nfserr;
-+	}
+--- a/fs/nfs/pnfs_nfs.c
++++ b/fs/nfs/pnfs_nfs.c
+@@ -1055,14 +1055,14 @@ nfs4_decode_mp_ds_addr(struct net *net,
+ 	/* r_netid */
+ 	nlen = xdr_stream_decode_string_dup(xdr, &netid, XDR_MAX_NETOBJ,
+ 					    gfp_flags);
+-	if (unlikely(nlen < 0))
++	if (unlikely(nlen <= 0))
+ 		goto out_err;
  
- 	if (stable && fhp->fh_use_wgather) {
- 		host_err = wait_for_concurrent_writes(file);
-@@ -1370,6 +1372,8 @@ nfsd_commit(struct svc_rqst *rqstp, stru
- 			nfsd_copy_write_verifier(verf, nn);
- 			err2 = filemap_check_wb_err(nf->nf_file->f_mapping,
- 						    since);
-+			if (err2 < 0)
-+				commit_reset_write_verifier(nn, rqstp, err2);
- 			err = nfserrno(err2);
- 			break;
- 		case -EINVAL:
+ 	/* r_addr: ip/ip6addr with port in dec octets - see RFC 5665 */
+ 	/* port is ".ABC.DEF", 8 chars max */
+ 	rlen = xdr_stream_decode_string_dup(xdr, &buf, INET6_ADDRSTRLEN +
+ 					    IPV6_SCOPE_ID_LEN + 8, gfp_flags);
+-	if (unlikely(rlen < 0))
++	if (unlikely(rlen <= 0))
+ 		goto out_free_netid;
+ 
+ 	/* replace port '.' with '-' */
 
 
