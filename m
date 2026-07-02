@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FE033D4EC;
-	Thu,  2 Jul 2026 16:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBEE30C37A;
+	Thu,  2 Jul 2026 16:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011161; cv=none; b=aXfi1tUCeFvBlidVWZ9i8zltJsj/B3I1trkmrwtcJ5MUsUVShuzCZavRdXKNe3ImSuZU57H9lwiETC07fGwdf7+2x1mV4gLuST44y3uRPV+kYBUlZHi/k5VToBrOQFIM9lfZHaLCtcPQsuMuQAwCbd00jIHI7hUrly8k54rfmsg=
+	t=1783011164; cv=none; b=hhvyO7Zpw3jDlceuLXz2QE6gIhC5LHh+WcROYH795yt/mhWjPPDcIvFhmtzQBWoD7VDZa2zQdXCWHB8sh6X2i8Gt0d0Pe8DfaJOP04gVDS9JGH1jSvldf/1VCO8tRYd8L9nnie6IQpjdzV1p25KtEcazLC4NUjgu6MUNK/AQGuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011161; c=relaxed/simple;
-	bh=Raa9zq6akG38rvlmh2i5kSqoWEm3o5hiMyGnAUlMRGY=;
+	s=arc-20240116; t=1783011164; c=relaxed/simple;
+	bh=ENa7VouvXNpByyQ+L4hJSI0Mh7jky13HM456+2ZXqFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQO/d08PLkBrcezCXWM6Ym1wSIqhEJuguoOgMP/kjaJWQxIcsAv95Lkq+xPs1CQa+7dOLf/8zogD3eYfj7FBkI9/5pMnXDRBlsiH0uBldX6a0XsH2kiHZFLiKzv7NyaUV0zanTzSEF62opbYVZkymKoXxbx5bakLfZj6/0AJFqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIlDNznW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iJG6h6umTIxz8k4e8m71kAfoHf4nKC1BvfLZvhe6As+xebCCIgUjpCPq6wT3YpI91dpB/mmg7VIz9VjGNzTz9bd9vJabijq/MxEuwcX/D4P+G8YNfKS5tsF2y1aTQLoW2cgEzYgLaYZaZEr6voK9ebchiQLaTg8J1S3G9eHnGhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaD7xbfE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIlDNznW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A221F000E9;
-	Thu,  2 Jul 2026 16:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaD7xbfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D3B1F000E9;
+	Thu,  2 Jul 2026 16:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011160;
-	bh=DtgOtEXjChAAINDMB9XvSD6KXrog11Dfy2fnjRzMpag=;
+	s=korg; t=1783011162;
+	bh=kH/njiNASe3KYmgRpjR5gW0s/+0enUZBF4Q5JoK0/7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yIlDNznWbjEvcKvL6/LB0ld5fJIa4JpDmWg3tfOCGjIk5zlaD/YOlCNW9MahYEKrp
-	 VnnWRfjPIFn0BuFqHUSCPUlUFDVRsBl1KYioMGqK4ErXhjsB1CPc+4DspDtYYcnPOc
-	 uVIq4yNj1KSNzcHoED5/Lv6RIyOEufLcYyjouE7I=
+	b=jaD7xbfEGHlVY7tR96NzMP/lZdE0apGblC4oN0WcBtC/1+K9e64kCJtexcio1+Zbo
+	 yYQbG61l3Wuzu2NgKd/bjT8lyePsqMy/PwYYrEIiUvTo1+xnenf0unpHPGPrKYFimK
+	 9cZiBGoMELExzViVmYC8d4jZwoydh9BNQDcmQ5vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>
-Subject: [PATCH 6.6 145/175] gfs2: fix use-after-free in gfs2_qd_dealloc
-Date: Thu,  2 Jul 2026 18:20:46 +0200
-Message-ID: <20260702155118.860729577@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 146/175] hdlc_ppp: sync per-proto timers before freeing hdlc state
+Date: Thu,  2 Jul 2026 18:20:47 +0200
+Message-ID: <20260702155118.881522668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,48 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit f9c9ec2c319f843b70ecdf939d48b52d189bc081 upstream.
+commit c78a4e41ab5ead6193ad8a2dd92e8906bae659fa upstream.
 
-gfs2_qd_dealloc(), called as an RCU callback from gfs2_qd_dispose(),
-accesses the superblock object sdp through qd->qd_sbd after freeing qd.
-It does so to decrement sd_quota_count and wake up sd_kill_wait.
+Each PPP control protocol (LCP/IPCP/IPV6CP) embedded in struct ppp
+registers a timer via timer_setup(). That struct ppp is the
+hdlc->state allocation, which detach_hdlc_protocol() frees with kfree()
+in both teardown paths: unregister_hdlc_device() and the re-attach inside
+attach_hdlc_protocol().
 
-However, by the time the RCU callback runs, gfs2_put_super() may have
-already freed sdp via free_sbd().  This can happen when
-gfs2_quota_cleanup() is called during unmount: it disposes of quota
-objects via call_rcu() and then waits on sd_kill_wait with a 60-second
-timeout.  If the timeout expires, or if gfs2_gl_hash_clear() triggers
-additional qd_put() calls that schedule more RCU callbacks after the
-wait completes, gfs2_put_super() will proceed to free the superblock
-while RCU callbacks referencing it are still pending.
+The ppp proto never registered a .detach callback, so
+detach_hdlc_protocol() performs no timer synchronization before the
+kfree(). The only cancel, timer_delete(&proto->timer) in ppp_cp_event(),
+is partial (it does not wait for a running callback) and only runs on the
+->CLOSED transition; ppp_stop()/ppp_close() do not sync either. A
+ppp_timer callback already executing (blocked on ppp->lock) survives the
+kfree and then dereferences proto->state / ppp->lock in freed memory,
+leading to a use-after-free.
 
-Add an rcu_barrier() before free_sbd() in gfs2_put_super() to ensure
-all pending RCU callbacks (including gfs2_qd_dealloc) have completed
-before the superblock is freed.
+Fix this by adding a .detach helper that calls timer_shutdown_sync() on
+every per-proto timer. detach_hdlc_protocol() invokes proto->detach(dev)
+before kfree(hdlc->state), so timer_shutdown_sync()
+now runs on both free paths.
+timer_shutdown_sync() is used instead of timer_delete_sync() because the
+keepalive path re-arms the timer through add_timer()/mod_timer() and
+shutdown blocks any re-activation during teardown.
 
-Fixes: a475c5dd16e5 ("gfs2: Free quota data objects synchronously")
-Reported-by: syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=42a37bf8045847d8f9d2
-Tested-by: syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com
+Initialize the per-protocol timers in ppp_ioctl() when the protocol is
+attached, and remove the now-redundant timer_setup() from ppp_start(), so
+that the timers are initialized exactly once at attach time and
+ppp_timer_release() never operates on uninitialized timer_list
+structures. attach_hdlc_protocol() uses kmalloc() (not kzalloc), so
+struct ppp's protos[i].timer is uninitialized garbage until the first
+timer_setup(); without this init-at-attach, attaching the PPP protocol
+without ever bringing the device up would leave timer_shutdown_sync()
+operating on uninitialized memory in .detach. Moving the init out of
+ppp_start() (which only runs on NETDEV_UP) into the attach path makes the
+initialization unconditional and avoids initializing the same timer_list
+twice.
+
+This bug was found by static analysis.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260617020518.116319-1-fanwu01@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/super.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wan/hdlc_ppp.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -652,6 +652,7 @@ restart:
- 	gfs2_delete_debugfs_file(sdp);
+--- a/drivers/net/wan/hdlc_ppp.c
++++ b/drivers/net/wan/hdlc_ppp.c
+@@ -621,7 +621,6 @@ static void ppp_start(struct net_device
+ 		struct proto *proto = &ppp->protos[i];
  
- 	gfs2_sys_fs_del(sdp);
-+	rcu_barrier();
- 	free_sbd(sdp);
+ 		proto->dev = dev;
+-		timer_setup(&proto->timer, ppp_timer, 0);
+ 		proto->state = CLOSED;
+ 	}
+ 	ppp->protos[IDX_LCP].pid = PID_LCP;
+@@ -641,6 +640,15 @@ static void ppp_close(struct net_device
+ 	ppp_tx_flush();
  }
  
++static void ppp_timer_release(struct net_device *dev)
++{
++	struct ppp *ppp = get_ppp(dev);
++	int i;
++
++	for (i = 0; i < IDX_COUNT; i++)
++		timer_shutdown_sync(&ppp->protos[i].timer);
++}
++
+ static struct hdlc_proto proto = {
+ 	.start		= ppp_start,
+ 	.stop		= ppp_stop,
+@@ -649,6 +657,7 @@ static struct hdlc_proto proto = {
+ 	.ioctl		= ppp_ioctl,
+ 	.netif_rx	= ppp_rx,
+ 	.module		= THIS_MODULE,
++	.detach		= ppp_timer_release,
+ };
+ 
+ static const struct header_ops ppp_header_ops = {
+@@ -659,7 +668,7 @@ static int ppp_ioctl(struct net_device *
+ {
+ 	hdlc_device *hdlc = dev_to_hdlc(dev);
+ 	struct ppp *ppp;
+-	int result;
++	int i, result;
+ 
+ 	switch (ifs->type) {
+ 	case IF_GET_PROTO:
+@@ -687,6 +696,8 @@ static int ppp_ioctl(struct net_device *
+ 			return result;
+ 
+ 		ppp = get_ppp(dev);
++		for (i = 0; i < IDX_COUNT; i++)
++			timer_setup(&ppp->protos[i].timer, ppp_timer, 0);
+ 		spin_lock_init(&ppp->lock);
+ 		ppp->req_timeout = 2;
+ 		ppp->cr_retries = 10;
 
 
