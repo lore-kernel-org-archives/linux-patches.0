@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B954C348C5E;
-	Thu,  2 Jul 2026 16:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9835039A80E;
+	Thu,  2 Jul 2026 16:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009541; cv=none; b=pYyU1FyhYkKXLjdaKzJcgv4cxd38ccmIrtYc19Q5VeQirre8idAmk7HS0/v37ywqLDuD6ES6pBYgMDmvisDpAPYVxG4qGfMXCBDkDXIWNIO8NRAOePZCBod2ujd6nkdeS9mtxsve3SjqsBtN+whS5fX4HmxuabnF4BG3Ymr8t6A=
+	t=1783009542; cv=none; b=nPxm5msjVd+rFPM/k8JfQ07C4gQAkBiRHKRf5VF3US5+h96XTEvDoOhd0lWak7zYJLe4okOqC+JEbJ/668e/gzCx/LACFZS2JknvZGt8fBMzvDpKhk5hOW08kel3fhCEsiuCLCRHIeokTjyAji6lfwHtUJNYKDJSHm5B2YCHX1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009541; c=relaxed/simple;
-	bh=yHElywk4wdAttBUKvjtYeXGe4mFcU/2NytxF9jRHrK0=;
+	s=arc-20240116; t=1783009542; c=relaxed/simple;
+	bh=/5XXhTou12xkB23G6Rs8U9uky8NaEtqIY77bH+e1208=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJiOVF+LyHDUKKXb4tIfHkbdvxgiTfk4bRmK/EVUQIn4X1X+mHYs4VjarMt/VNV5X4+zuAWkB+DyH/BtkBJNRb6AWsjWEYT/1Og8ZzPKlp4GNZyf0Gv8Zb8FuZ8DcX7xhDIS0A/BNFnwsugeVnrfNXQZrYcV+bfsXadCEf37Ga0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxG/5Z5J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uEhlzq9n5+yqgucl2BR1vR265Fr9c+WLVYNxVI6JPDbFhngL++Bfcx+sPdQ6n4kzH0/vv4Obe8tRwJW5GCx4R7cNqsJC1bmzNXwlmfMQ5fhD0M3Pcmp0k4CGo1Bgnc1W6NaMN51hWJqXrfzE08xLkPlwd9KfHFZGP3ZQjHTMt5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMQ2R3az; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxG/5Z5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9730B1F00A3A;
-	Thu,  2 Jul 2026 16:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMQ2R3az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411591F00A3D;
+	Thu,  2 Jul 2026 16:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009534;
-	bh=uE45Nr+xF226DyFjVpRrrhvwaek3b74u4TDnAFTiuxk=;
+	s=korg; t=1783009536;
+	bh=xow4nQQ50N5VeZ9NOu4cRrs3fVYlYhph/VT3oRoScvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XxG/5Z5JuIqZqeI59oca8BaNZEQUKnZi+akHibw6xWvrLqJQ3iFhYBxZG6bJcOxZ5
-	 oJ3OSYR8lyc7eZwpPq9gX2fOvah3tbJOdCJFUAanPrwGNS7tsI1iD/Xx0dk+ib8rLn
-	 GNWtp6lDNzYAlwxN1S/1ji8K9vXN4UOFgJxQ0jEM=
+	b=PMQ2R3azg36HMG8vmT3NajrIMayIa0J2j1wnycIR3JfJNqyaCxtlRHsIZ/Dc1yNEs
+	 hH84/u8uMputghPzQxOH/3vRIxRsX3dUZEaC+3yMf0RmrzxYsB6lYd6yZS6U0zPzDY
+	 Dh9nG3jxrmtO3x9J7D5hm7qQLicvjxaCMoziYncs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Long Li <longli@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 86/96] hv: utils: handle and propagate errors in kvp_register
-Date: Thu,  2 Jul 2026 18:20:18 +0200
-Message-ID: <20260702155110.788406854@linuxfoundation.org>
+Subject: [PATCH 5.10 87/96] mptcp: fix missing wakeups in edge scenarios
+Date: Thu,  2 Jul 2026 18:20:19 +0200
+Message-ID: <20260702155110.810150131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -52,86 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 3fcf923302a8f5c0dc3af3d2ca2657cb5fae4297 ]
+[ Upstream commit 9d8d28738f24b75616d6ca7a27cb4aed88520343 ]
 
-Make kvp_register() return an error code instead of silently ignoring
-failures, and propagate the error from kvp_handle_handshake() instead of
-returning success.
+The mptcp_recvmsg() can fill MPTCP socket receive queue via
+mptcp_move_skbs(), but currently does not try to wakeup any listener,
+because the same process is going to check the receive queue soon.
 
-This propagates both kzalloc_obj() and hvutil_transport_send() failures
-to kvp_handle_handshake() and thus to kvp_on_msg().
+When multiple threads are reading from the same fd, the above can
+cause stall. Add the missing wakeup.
 
-Fixes: 245ba56a52a3 ("Staging: hv: Implement key/value pair (KVP)")
+Fixes: 6771bfd9ee24 ("mptcp: update mptcp ack sequence from work queue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-1-856831229976@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/hv_kvp.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ net/mptcp/protocol.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/hv/hv_kvp.c
-+++ b/drivers/hv/hv_kvp.c
-@@ -93,7 +93,7 @@ static void kvp_send_key(struct work_str
- static void kvp_respond_to_host(struct hv_kvp_msg *msg, int error);
- static void kvp_timeout_func(struct work_struct *dummy);
- static void kvp_host_handshake_func(struct work_struct *dummy);
--static void kvp_register(int);
-+static int kvp_register(int);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1571,6 +1571,14 @@ static bool __mptcp_move_skbs(struct mpt
  
- static DECLARE_DELAYED_WORK(kvp_timeout_work, kvp_timeout_func);
- static DECLARE_DELAYED_WORK(kvp_host_handshake_work, kvp_host_handshake_func);
-@@ -127,24 +127,26 @@ static void kvp_register_done(void)
- 	hv_poll_channel(kvp_transaction.recv_channel, kvp_poll_wrapper);
- }
- 
--static void
-+static int
- kvp_register(int reg_value)
- {
- 
- 	struct hv_kvp_msg *kvp_msg;
- 	char *version;
-+	int ret;
- 
- 	kvp_msg = kzalloc(sizeof(*kvp_msg), GFP_KERNEL);
-+	if (!kvp_msg)
-+		return -ENOMEM;
- 
--	if (kvp_msg) {
--		version = kvp_msg->body.kvp_register.version;
--		kvp_msg->kvp_hdr.operation = reg_value;
--		strcpy(version, HV_DRV_VERSION);
--
--		hvutil_transport_send(hvt, kvp_msg, sizeof(*kvp_msg),
--				      kvp_register_done);
--		kfree(kvp_msg);
--	}
-+	version = kvp_msg->body.kvp_register.version;
-+	kvp_msg->kvp_hdr.operation = reg_value;
-+	strcpy(version, HV_DRV_VERSION);
+ 	if (mptcp_ofo_queue(msk) || moved > 0) {
+ 		mptcp_check_data_fin((struct sock *)msk);
 +
-+	ret = hvutil_transport_send(hvt, kvp_msg, sizeof(*kvp_msg),
-+				    kvp_register_done);
-+	kfree(kvp_msg);
-+	return ret;
- }
- 
- static void kvp_timeout_func(struct work_struct *dummy)
-@@ -186,9 +188,8 @@ static int kvp_handle_handshake(struct h
- 	 */
- 	pr_debug("KVP: userspace daemon ver. %d connected\n",
- 		 msg->kvp_hdr.operation);
--	kvp_register(dm_reg_value);
- 
--	return 0;
-+	return kvp_register(dm_reg_value);
- }
- 
- 
++		/* When multiple threads read from the same socket, the caller
++		 * filling the receive queue does not try to wake up any other
++		 * listener, which can stall it. Flag the data as ready and
++		 * issue the missing wakeup here.
++		 */
++		set_bit(MPTCP_DATA_READY, &msk->flags);
++		((struct sock *)msk)->sk_data_ready((struct sock *)msk);
+ 		return true;
+ 	}
+ 	return false;
 
 
