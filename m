@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696B1399D0B;
-	Thu,  2 Jul 2026 16:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143C93385A7;
+	Thu,  2 Jul 2026 16:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009931; cv=none; b=HtiQzf9AsBwBOuOI1z5OPyqLpCtRASLjn6cM4LIlEbloa8/aCOMHIUlCDieAaKvFyG5/CAcqijRbw/OdN6rhRiIWdAv5Iy6u/335MBEchyboRbqOvS+gZgQlq9dsr3A0kpz5bArnuvN0HTjXdNQoITAAk6tqLZBhRWkBic7V6qU=
+	t=1783009934; cv=none; b=UNnswECqzU4jtsHWdKrB4OwHmYuQi8k6ZSt+9WAL94Abyu8ipt8Vp1ValYq7Mpl0jbydUEwSm5ZdsGVpJF1vJiusYT+wLb94Agb49WrFC891pYYRDmvfpX8kEPTeQoFU1Ub+Ynm8AqZmF6C+Jt/5s0bprmkb3DBVLIQwVHk4c5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009931; c=relaxed/simple;
-	bh=aeZcYLCwIi5dbgRlq6T82PoN9hIpLGSlb1d1+cIikcc=;
+	s=arc-20240116; t=1783009934; c=relaxed/simple;
+	bh=sJZd2fLWS3AbIKE0HUcd3WBlOnAkpDWd+qySAFXmuSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6R2q9cZ5ZAyB2dZGmlVRF3OhhFSQUAQeIsCWDjqOnDUBl3YCgMCnFJRK9y4KZGnXd6V00I/9VeKPy+huZxx+RDELt3D02ql6/0+rN9M/PeGhAr2fYrd1zbLpA379mAvOyEK3aSsbG7jOZwChcoA/ly6IcKsBOACdhA9wNHRtL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qU6iWQwt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QuXOjITNium8muYVs6wiGLaXdv6JMIaPmBBLDedCHsWRrqjlC0XagVM3Iky6ya8TPEYhrXO8L44sd7+9QrgU5wAd0LH5wAxeCB/vVeTRoW/gq22e/PNfQtbK3rZbc2oy2GwoL/bFD0T2qHSceyY816unUAfIMU8BxaasFZyfwUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVy3sYl9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU6iWQwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51401F000E9;
-	Thu,  2 Jul 2026 16:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVy3sYl9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7252C1F000E9;
+	Thu,  2 Jul 2026 16:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009930;
-	bh=Qz7H0f8sY6gyw0t0o/5aPtYh4dSAUAyqDkdayM6QvPE=;
+	s=korg; t=1783009932;
+	bh=v12H4bmXbMgVXDrbACCzJAgUpmo/VDRpE0sjyCaXo5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qU6iWQwtKoBZ/GkGJWgEcpcUeOwVGKEx3kIxTzxiX4mby/0YkKa1LpRj0KfiMwTYc
-	 ybGDTUNZJrOWMIWV+tu0ZkZ/fo/JlyzN7CuvBjKPZYTnt7MV7YvVOxJPYQvhSiON/r
-	 ++nGQqMn9xK6BXVcb5X3HxKThhPp8QSbN2wVNuFs=
+	b=VVy3sYl9lVN7YH3I6IUUySctCN7HqlSXTlzCf+oGI7bhd6EMyLLQxOz8hRUC3vXIh
+	 BgKwD/1rUDbrIGnOXWL7oLQWIdm22mLcAKHNhm5m/VFnGAc52z41pBB3qbjMmPOzXj
+	 SIkB44fBhdz+sr6t37jIT10mzk96BqxxjnbRs40I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Simon Liebold <simonlie@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/129] perf block-range: Move debug code behind ifndef NDEBUG
-Date: Thu,  2 Jul 2026 18:19:24 +0200
-Message-ID: <20260702155113.081402858@linuxfoundation.org>
+Subject: [PATCH 6.1 046/129] KVM: x86: Fix shadow paging use-after-free due to unexpected role
+Date: Thu,  2 Jul 2026 18:19:25 +0200
+Message-ID: <20260702155113.103519385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -61,47 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit 984a785f25e5b5db5fa673130b60dca6ca794406 ]
+commit 81ccda30b4e83d8f5cc4fd50503c44e3a33abfeb upstream.
 
-Make good on a comment and avoid a unused-but-set-variable warning.
+Commit 0cb2af2ea66ad ("KVM: x86: Fix shadow paging use-after-free due
+to unexpected GFN") fixed a shadow paging mismatch between stored and
+computed GFNs; the bug could be triggered by changing a PDE mapping from
+outside the guest, and then deleting a memslot.  The rmap_remove()
+call would miss entries created after the PDE change because the GFN
+of the leaf SPTE does not match the GFN of the struct kvm_mmu_page.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/20230330183827.1412303-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 616b14b47a86 ("perf build: Conditionally define NDEBUG")
-Signed-off-by: Simon Liebold <simonlie@amazon.de>
+A similar hole however remains if the modified PDE points to a non-leaf
+page.  In this case the gfn can be made to match, but the role does not
+match: the original large 2MB page creates a kvm_mmu_page with direct=1,
+while the new 4KB needs a kvm_mmu_page with direct=0.  However,
+kvm_mmu_get_child_sp() does not compare the role, and therefore reuses
+the page.
+
+The next step is installing a leaf (4KB) SPTE on the new path which
+records an rmap entry under the gfn resolved by the walk.  But when
+that child is zapped its parent kvm_mmu_page has direct=1 and
+kvm_mmu_page_get_gfn() computes the gfn for the 4KB page as
+sp->gfn + index instead of using sp->shadowed_translation[] (or sp->gfns[]
+in older kernels).  It therefore fails to remove the recorded entry.
+
+When the memslot is dropped the shadow page is freed but the rmap
+entry survives, as in the scenario that was already fixed.  Code that
+later walks that gfn (dirty logging, MMU notifier invalidation, and
+so on) dereferences an sptep that lies in the freed page, causing the
+use-after-free.
+
+Fixes: 2032a93d66fa ("KVM: MMU: Don't allocate gfns page for direct mmu pages")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/block-range.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/block-range.c b/tools/perf/util/block-range.c
-index 1be43265750137..680e92774d0cde 100644
---- a/tools/perf/util/block-range.c
-+++ b/tools/perf/util/block-range.c
-@@ -11,11 +11,7 @@ struct {
- 
- static void block_range__debug(void)
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 58d67e5ab2c583..9edfc812423766 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2239,13 +2239,15 @@ static struct kvm_mmu_page *kvm_mmu_get_child_sp(struct kvm_vcpu *vcpu,
+ 						 u64 *sptep, gfn_t gfn,
+ 						 bool direct, unsigned int access)
  {
--	/*
--	 * XXX still paranoid for now; see if we can make this depend on
--	 * DEBUG=1 builds.
--	 */
--#if 1
-+#ifndef NDEBUG
- 	struct rb_node *rb;
- 	u64 old = 0; /* NULL isn't executable */
+-	union kvm_mmu_page_role role;
++	union kvm_mmu_page_role role = kvm_mmu_child_role(sptep, direct, access);
+ 
+-	if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep) &&
+-	    spte_to_child_sp(*sptep) && spte_to_child_sp(*sptep)->gfn == gfn)
++	if (is_shadow_present_pte(*sptep) &&
++	    !is_large_pte(*sptep) &&
++	    spte_to_child_sp(*sptep) &&
++	    spte_to_child_sp(*sptep)->gfn == gfn &&
++	    spte_to_child_sp(*sptep)->role.word == role.word)
+ 		return ERR_PTR(-EEXIST);
+ 
+-	role = kvm_mmu_child_role(sptep, direct, access);
+ 	return kvm_mmu_get_shadow_page(vcpu, gfn, role);
+ }
  
 -- 
 2.53.0
