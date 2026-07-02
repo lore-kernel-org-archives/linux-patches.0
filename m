@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645D733E34E;
-	Thu,  2 Jul 2026 16:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C6E4EA368;
+	Thu,  2 Jul 2026 16:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009752; cv=none; b=PWwjTwOgPyaBeWhR3iftlPL3QTAOxdKoK9Iokw1DvEQzXrGRE7P3CHrAIxgotAVJiW2IQe9BNvHubkh0sEyd2qRrM0UYUigLcLg5kAq97KvEJ2Jirv1ibFhLJCjdTQpzg8IQm3GNJAHJpy3ZrCUdfBcN+XWYs2U+THZJDqJkt/k=
+	t=1783009754; cv=none; b=O/GtZILVHtNarEUqjfatY2VISLuWUnwx5R3sMktnHbWpzUWdeTC/sQbAkzdWZHHOr2jbTaNEysbGLTJ7+hzaw/8WrTRzCQ882KpRnzf9XDLrnzZ4HqXkpPsKURcxOvzyVHF95XNcPNUwvgBug5s6mGkZceh/SxOmWcToMSt6Ys0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009752; c=relaxed/simple;
-	bh=CziMUO2HlKrFe4tCZlrgfuoUDQQAn2o4Llx0URblDjY=;
+	s=arc-20240116; t=1783009754; c=relaxed/simple;
+	bh=L0bEpCYpI299zq/HRO6Mf617fuTFZnCYPg281mK3JRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brNaZSCh0z36QL22gdgcghEldxbtBF7BlQrMq3UoidFP30zfJyuFTsmBYj6zpCtH0EpSa4en/JCgqEShx6r72bddbVLjEMXoAyOUH86SibiMMDj3T52u80ywk9CCjXTwoR5AnUMiTxJOddOUYWeQwYRzmdiDdLqAebnnbOQy9xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6IEYIT2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tP463LxfnoolAwpH8bOWBxTHfBmBk++R324+Z/ni0Htyj6nIDznxPQjx60m+r8YosAluhUyGlUwVbpArWsADkoDrBUK7YLo9cQ3PycsmIHofEOdZUVM/rUFrAm1/u1bbbdJyDPOS9qucRMxD5mV/OY1jsthTpZgUJexbQv5EDrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EV9Gy8bn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6IEYIT2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A198D1F00A3A;
-	Thu,  2 Jul 2026 16:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EV9Gy8bn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F00B1F000E9;
+	Thu,  2 Jul 2026 16:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009749;
-	bh=UR6Pz38WFDV5stctgmx38HgYiM7ybQ+jud8WkpDBSk8=;
+	s=korg; t=1783009751;
+	bh=HKBEjTCklhoz7fmP2SDadzTYGcBHL+etHANZfEKVSRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e6IEYIT2m6FVEeH2GuCVFHe9PCxpSGsW99xdCqC/w8bmZXJgGHQJYZEoWtTw710I4
-	 7qHXO+1lW8ZAVr6YMbsDXGTj+cSm+t8I5gXHkO4FyGWRQtxLlh2WuPUUzYs8DuaaTd
-	 Rm3GHMO+EUYP4+ppgps0dFOY0yxQ92Nc9vAhDwuc=
+	b=EV9Gy8bnoSnH0/S10deozfC3S+tr4U3YciygFzesDPqBxfISrF63cQsMEw4ote1O2
+	 lerdn97MmR5A4u0/OeVJsBjaTNWGny1RO5iGgiQe0MPezw67UTzc+JGxzlhA1I2zKt
+	 Ukd+J2J3eEV1xn+pRWLiTjRcUWoPgYn181ibInYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 72/95] ocfs2: reject oversized group bitmap descriptors
-Date: Thu,  2 Jul 2026 18:20:15 +0200
-Message-ID: <20260702155110.728930688@linuxfoundation.org>
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.15 73/95] KVM: SVM: Fix page overflow in sev_dbg_crypt() for ENCRYPT path
+Date: Thu,  2 Jul 2026 18:20:16 +0200
+Message-ID: <20260702155110.749755316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -57,128 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit 9bd541e09dffff27e5bec0f9f45b0228173a5375 upstream.
+commit 78ee2d50185a037b3d2452a97f3dad69c3f7f389 upstream.
 
-ocfs2_validate_gd_parent() only bounds bg_bits against the parent
-allocator's chain geometry.  A malicious descriptor can still claim a
-bg_size/bg_bits pair that exceeds the bitmap bytes that physically fit in
-the group descriptor block, so later bitmap scans and bit updates can run
-past bg_bitmap.
+In sev_dbg_crypt(), the per-iteration transfer length is bounded by
+the source page offset (PAGE_SIZE - s_off) but not by the destination
+page offset (PAGE_SIZE - d_off).  When d_off > s_off, the encrypt
+path (__sev_dbg_encrypt_user) performs a read-modify-write using a
+single-page intermediate buffer (dst_tpage):
 
-Add a physical-cap check based on ocfs2_group_bitmap_size() for the parent
-allocator type and reject descriptors whose bg_size or bg_bits exceed that
-capacity.  Keep the existing chain geometry check so both the on-disk
-bitmap layout and the allocator metadata must agree before the descriptor
-is used.
+  1. __sev_dbg_decrypt() expands the size to round_up(len + (d_off & 15), 16)
+     before issuing the PSP command.  If len + (d_off & 15) > PAGE_SIZE,
+     the PSP writes beyond the end of the 4096-byte dst_tpage allocation.
 
-Validation reproduced this kernel report:
-KASAN use-after-free in _find_next_bit+0x7f/0xc0
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x66/0xa0 (?:?)
-  print_report+0xd0/0x630 (?:?)
-  _find_next_bit+0x7f/0xc0 (?:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x188/0x2f0 (?:?)
-  kasan_report+0xe4/0x120 (?:?)
-  ocfs2_find_max_contig_free_bits+0x35/0x70 (fs/ocfs2/suballoc.c:1375)
-  ocfs2_block_group_set_bits+0x472/0x4b0 (fs/ocfs2/suballoc.c:1457)
-  ocfs2_cluster_group_search+0x16b/0x440 (fs/ocfs2/suballoc.c:86)
-  ocfs2_bg_discontig_fix_result+0x1ef/0x230 (fs/ocfs2/suballoc.c:1786)
-  ocfs2_search_chain+0x8f8/0x10a0 (fs/ocfs2/suballoc.c:1886)
-  get_page_from_freelist+0x70e/0x2370 (?:?)
-  lock_release+0xc6/0x290 (?:?)
-  do_raw_spin_unlock+0x9a/0x100 (?:?)
-  kasan_unpoison+0x27/0x60 (?:?)
-  __bfs+0x147/0x240 (?:?)
-  get_page_from_freelist+0x83d/0x2370 (?:?)
-  ocfs2_claim_suballoc_bits+0x38c/0xe70 (fs/ocfs2/suballoc.c:96)
-  sched_domains_numa_masks_clear+0x70/0xd0 (?:?)
-  check_irq_usage+0xe8/0xb70 (?:?)
-  __ocfs2_claim_clusters+0x18d/0x4c0 (fs/ocfs2/suballoc.c:2497)
-  check_path+0x24/0x50 (?:?)
-  rcu_is_watching+0x20/0x50 (?:?)
-  check_prev_add+0xfd/0xd00 (?:?)
-  ocfs2_add_clusters_in_btree+0x17d/0x810 (fs/ocfs2/suballoc.c:?)
-  __folio_batch_add_and_move+0x1f5/0x3d0 (?:?)
-  ocfs2_add_inode_data+0xd9/0x120 (fs/ocfs2/suballoc.c:?)
-  filemap_add_folio+0x105/0x1f0 (?:?)
-  ocfs2_write_begin_nolock+0x29f7/0x2f80 (fs/ocfs2/suballoc.c:3043)
-  ocfs2_read_inode_block+0xb5/0x110 (fs/ocfs2/suballoc.c:?)
-  down_write+0xf5/0x180 (?:?)
-  ocfs2_write_begin+0x180/0x240 (fs/ocfs2/suballoc.c:?)
-  __mark_inode_dirty+0x758/0x9a0 (?:?)
-  inode_to_bdi+0x41/0x90 (?:?)
-  balance_dirty_pages_ratelimited_flags+0xf8/0x1d0 (?:?)
-  generic_perform_write+0x252/0x440 (?:?)
-  mnt_put_write_access_file+0x16/0x70 (?:?)
-  file_update_time_flags+0xe4/0x200 (?:?)
-  ocfs2_file_write_iter+0x80a/0x1320 (fs/ocfs2/suballoc.c:?)
-  lock_acquire+0x184/0x2f0 (?:?)
-  ksys_write+0xd2/0x170 (?:?)
-  apparmor_file_permission+0xf5/0x310 (?:?)
-  read_zero+0x8d/0x140 (?:?)
-  lock_is_held_type+0x8f/0x100 (?:?)
+  2. The subsequent memcpy()/copy_from_user() into
+     page_address(dst_tpage) + (d_off & 15) of 'len' bytes overflows
+     by up to 15 bytes under the same condition.
 
-Link: https://lore.kernel.org/20260524111248.1429884-1-rollkingzzc@gmail.com
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Trigger example: s_off = 0, d_off = 1, debug.len = PAGE_SIZE -
+the PSP is instructed to write round_up(4097, 16) = 4112 bytes to
+a 4096-byte buffer.
+
+Fix by also bounding len by (PAGE_SIZE - d_off), the same check that
+sev_send_update_data() already performs for its single-page guest
+region.
+
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in sev_dbg_crypt+0x993/0xd10 [kvm_amd]
+ Write of size 4095 at addr ff110062293bb009 by task sev_dbg_test/228214
+
+ CPU: 96 UID: 0 PID: 228214 Comm: sev_dbg_test Tainted: G     U  W           7.0.0-smp--5ce9b0c48211-dbg #156 PREEMPTLAZY
+ Tainted: [U]=USER, [W]=WARN
+ Hardware name: Google Astoria/astoria, BIOS 0.20250817.1-0 08/25/2025
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x54/0x70
+  print_report+0xbc/0x260
+  kasan_report+0xa2/0xd0
+  kasan_check_range+0x25f/0x2c0
+  __asan_memcpy+0x40/0x70
+  sev_dbg_crypt+0x993/0xd10 [kvm_amd]
+  sev_mem_enc_ioctl+0x33c/0x450 [kvm_amd]
+  kvm_vm_ioctl+0x65d/0x6d0 [kvm]
+  __se_sys_ioctl+0xb2/0x100
+  do_syscall_64+0xe8/0x870
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  </TASK>
+
+ The buggy address belongs to the physical page:
+ page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x7fe72b6a0 pfn:0x62293bb
+ memcg:ff11000112827d82
+ flags: 0x1400000000000000(node=1|zone=1)
+ raw: 1400000000000000 0000000000000000 dead000000000122 0000000000000000
+ raw: 00000007fe72b6a0 0000000000000000 00000001ffffffff ff11000112827d82
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ff110062293bbf00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  ff110062293bbf80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ >ff110062293bc000: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                    ^
+  ff110062293bc080: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+  ff110062293bc100: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+ ==================================================================
+ Disabling lock debugging due to kernel taint
+
+Fixes: 24f41fb23a39 ("KVM: SVM: Add support for SEV DEBUG_DECRYPT command")
+Fixes: 7d1594f5d94b ("KVM: SVM: Add support for SEV DEBUG_ENCRYPT command")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+[sean: add sample KASAN splat, Fixes, and stable@]
+Link: https://patch.msgid.link/20260501203537.2120074-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/suballoc.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ arch/x86/kvm/svm/sev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ocfs2/suballoc.c
-+++ b/fs/ocfs2/suballoc.c
-@@ -201,8 +201,16 @@ static int ocfs2_validate_gd_parent(stru
- 				    int resize)
- {
- 	unsigned int max_bits;
-+	unsigned int max_bitmap_bits;
-+	unsigned int max_bitmap_size;
-+	int suballocator;
- 	struct ocfs2_group_desc *gd = (struct ocfs2_group_desc *)bh->b_data;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -954,6 +954,7 @@ static int sev_dbg_crypt(struct kvm *kvm
+ 		s_off = vaddr & ~PAGE_MASK;
+ 		d_off = dst_vaddr & ~PAGE_MASK;
+ 		len = min_t(size_t, (PAGE_SIZE - s_off), size);
++		len = min_t(size_t, len, PAGE_SIZE - d_off);
  
-+	suballocator = le64_to_cpu(di->i_blkno) != OCFS2_SB(sb)->bitmap_blkno;
-+	max_bitmap_size = ocfs2_group_bitmap_size(sb, suballocator,
-+						  OCFS2_SB(sb)->s_feature_incompat);
-+	max_bitmap_bits = max_bitmap_size * 8;
-+
- 	if (di->i_blkno != gd->bg_parent_dinode) {
- 		do_error("Group descriptor #%llu has bad parent pointer (%llu, expected %llu)\n",
- 			 (unsigned long long)bh->b_blocknr,
-@@ -210,6 +218,20 @@ static int ocfs2_validate_gd_parent(stru
- 			 (unsigned long long)le64_to_cpu(di->i_blkno));
- 	}
- 
-+	if (le16_to_cpu(gd->bg_size) > max_bitmap_size) {
-+		do_error("Group descriptor #%llu has bitmap size %u but physical max of %u\n",
-+			 (unsigned long long)bh->b_blocknr,
-+			 le16_to_cpu(gd->bg_size),
-+			 max_bitmap_size);
-+	}
-+
-+	if (le16_to_cpu(gd->bg_bits) > max_bitmap_bits) {
-+		do_error("Group descriptor #%llu has bit count %u but physical max of %u\n",
-+			 (unsigned long long)bh->b_blocknr,
-+			 le16_to_cpu(gd->bg_bits),
-+			 max_bitmap_bits);
-+	}
-+
- 	max_bits = le16_to_cpu(di->id2.i_chain.cl_cpg) * le16_to_cpu(di->id2.i_chain.cl_bpc);
- 	if (le16_to_cpu(gd->bg_bits) > max_bits) {
- 		do_error("Group descriptor #%llu has bit count of %u\n",
+ 		if (dec)
+ 			ret = __sev_dbg_decrypt_user(kvm,
 
 
