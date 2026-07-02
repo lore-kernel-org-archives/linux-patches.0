@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED345399D0B;
-	Thu,  2 Jul 2026 16:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696B1399D0B;
+	Thu,  2 Jul 2026 16:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009929; cv=none; b=sO/ZVd8x8fl0wwu7YwksgY8MlPlK8fPLIBJV9J/5xU/WJ4zjSo9d1vtvIO8kj6BaI2GQJferkVONE5TO06k20pUFYuJoWq4WlrT2wIHWTQBKb1kZRItDQsrhK8oULJwd4XSFczH5e18Y6HV9OqJUCPGldU3CUfyng5K8b25Vo5k=
+	t=1783009931; cv=none; b=HtiQzf9AsBwBOuOI1z5OPyqLpCtRASLjn6cM4LIlEbloa8/aCOMHIUlCDieAaKvFyG5/CAcqijRbw/OdN6rhRiIWdAv5Iy6u/335MBEchyboRbqOvS+gZgQlq9dsr3A0kpz5bArnuvN0HTjXdNQoITAAk6tqLZBhRWkBic7V6qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009929; c=relaxed/simple;
-	bh=Cop8LwCTYseH4o15AMzNgkfbPqirzkXQMc+X08Ce6zk=;
+	s=arc-20240116; t=1783009931; c=relaxed/simple;
+	bh=aeZcYLCwIi5dbgRlq6T82PoN9hIpLGSlb1d1+cIikcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCjE0tEcsCfzYg25Ramw05Ip2QVDPK5becsSjLJPuypO4W8hbDOTY4ic+kRbtM8Vo8OMRsyaRRTSKkFr7lji3gyZcJK1OsY++TUkPpKV7gLBbqkY3xrk5lhONd7doHFn1k8oQ60QJSPl4kt6XK6UhuBj7U1Fx2a81PKzUX/g9EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmcu4ouf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O6R2q9cZ5ZAyB2dZGmlVRF3OhhFSQUAQeIsCWDjqOnDUBl3YCgMCnFJRK9y4KZGnXd6V00I/9VeKPy+huZxx+RDELt3D02ql6/0+rN9M/PeGhAr2fYrd1zbLpA379mAvOyEK3aSsbG7jOZwChcoA/ly6IcKsBOACdhA9wNHRtL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qU6iWQwt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmcu4ouf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664D31F000E9;
-	Thu,  2 Jul 2026 16:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU6iWQwt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51401F000E9;
+	Thu,  2 Jul 2026 16:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009927;
-	bh=LC8zkf9P22T0osGcVlQFuTECARMp3DeJt5KzCtccioM=;
+	s=korg; t=1783009930;
+	bh=Qz7H0f8sY6gyw0t0o/5aPtYh4dSAUAyqDkdayM6QvPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tmcu4oufVncIxBDf38ou6V7rz9joG14U8G8Dwk0XHG6G+esDLCVxhdp+5KnQ2OrFS
-	 b7/0J/OKkMEVbDnPzLoUck9dva8DzIUAnANJxRHo8l4OnbkvjeXcrvJSg4VdUCEs1f
-	 /460Htre0GGweTuykG5JXSjPTBXB7LFdX11YbhbI=
+	b=qU6iWQwtKoBZ/GkGJWgEcpcUeOwVGKEx3kIxTzxiX4mby/0YkKa1LpRj0KfiMwTYc
+	 ybGDTUNZJrOWMIWV+tu0ZkZ/fo/JlyzN7CuvBjKPZYTnt7MV7YvVOxJPYQvhSiON/r
+	 ++nGQqMn9xK6BXVcb5X3HxKThhPp8QSbN2wVNuFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Simon Liebold <simonlie@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/129] perf bench: Avoid NDEBUG warning
-Date: Thu,  2 Jul 2026 18:19:23 +0200
-Message-ID: <20260702155113.061237939@linuxfoundation.org>
+Subject: [PATCH 6.1 045/129] perf block-range: Move debug code behind ifndef NDEBUG
+Date: Thu,  2 Jul 2026 18:19:24 +0200
+Message-ID: <20260702155113.081402858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -63,11 +63,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit d1babea9c38282b58a6f822ab95027cba3165a42 ]
+[ Upstream commit 984a785f25e5b5db5fa673130b60dca6ca794406 ]
 
-With NDEBUG set the asserts are compiled out. This yields
-"unused-but-set-variable" variables. Move these variables behind
-NDEBUG to avoid the warning.
+Make good on a comment and avoid a unused-but-set-variable warning.
 
 Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
@@ -85,43 +83,26 @@ Stable-dep-of: 616b14b47a86 ("perf build: Conditionally define NDEBUG")
 Signed-off-by: Simon Liebold <simonlie@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/bench/find-bit-bench.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/perf/util/block-range.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/tools/perf/bench/find-bit-bench.c b/tools/perf/bench/find-bit-bench.c
-index 22b5cfe9702370..80f051f9c20fd9 100644
---- a/tools/perf/bench/find-bit-bench.c
-+++ b/tools/perf/bench/find-bit-bench.c
-@@ -61,7 +61,6 @@ static int do_for_each_set_bit(unsigned int num_bits)
- 	double time_average, time_stddev;
- 	unsigned int bit, i, j;
- 	unsigned int set_bits, skip;
--	unsigned int old;
+diff --git a/tools/perf/util/block-range.c b/tools/perf/util/block-range.c
+index 1be43265750137..680e92774d0cde 100644
+--- a/tools/perf/util/block-range.c
++++ b/tools/perf/util/block-range.c
+@@ -11,11 +11,7 @@ struct {
  
- 	init_stats(&fb_time_stats);
- 	init_stats(&tb_time_stats);
-@@ -73,7 +72,10 @@ static int do_for_each_set_bit(unsigned int num_bits)
- 			set_bit(i, to_test);
- 
- 		for (i = 0; i < outer_iterations; i++) {
--			old = accumulator;
+ static void block_range__debug(void)
+ {
+-	/*
+-	 * XXX still paranoid for now; see if we can make this depend on
+-	 * DEBUG=1 builds.
+-	 */
+-#if 1
 +#ifndef NDEBUG
-+			unsigned int old = accumulator;
-+#endif
-+
- 			gettimeofday(&start, NULL);
- 			for (j = 0; j < inner_iterations; j++) {
- 				for_each_set_bit(bit, to_test, num_bits)
-@@ -85,7 +87,9 @@ static int do_for_each_set_bit(unsigned int num_bits)
- 			runtime_us = diff.tv_sec * USEC_PER_SEC + diff.tv_usec;
- 			update_stats(&fb_time_stats, runtime_us);
+ 	struct rb_node *rb;
+ 	u64 old = 0; /* NULL isn't executable */
  
-+#ifndef NDEBUG
- 			old = accumulator;
-+#endif
- 			gettimeofday(&start, NULL);
- 			for (j = 0; j < inner_iterations; j++) {
- 				for (bit = 0; bit < num_bits; bit++) {
 -- 
 2.53.0
 
