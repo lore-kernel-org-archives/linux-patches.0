@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFE6336897;
-	Thu,  2 Jul 2026 16:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A77318EC1;
+	Thu,  2 Jul 2026 16:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010526; cv=none; b=Alz7T9QJRx0cY4np9tBB7B/+tLwUewlfGOFcwCGpaPwAYuc7bBlrDly5f/FWQUc8QhCKGRrZWw0OLqQ7SCI22e5e9pPJmiyadjsznpF9SDNFKOBXO6O7KxeSbylKZc6HaeptXDjfejH4HUlFMLluHsVYt1O36leP6xepcwteU4E=
+	t=1783010528; cv=none; b=Y8XX663mXrL1IixBXpaXtS4fVL9yqJ0WcuDY3CvrS8uMkADloKu3fiDt6Z4luHY1b75JJUJrY/63ez+r4qn5QRIuKfl53TOJsCQXlHpgTj3X4LNBXKRrN0mBQz3L3CAyDvG7ZL+r+XimQUt1Ov4M3+fTs2xsCNq9x2nIJHFW7Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010526; c=relaxed/simple;
-	bh=L/RodYz4ohc29vFngDP/vZHSh+3a9Dny40x416RkmLU=;
+	s=arc-20240116; t=1783010528; c=relaxed/simple;
+	bh=wGX3h7KvilYOoCB9u/zYiktWodWQI+F89Sv+gWz1cIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qq3MwojBwlwFY8vtK2gDQJIG82rGmILGvxbtLECo4KEBWl22ZxhQJCD58Slvqos7QjowtwVsZIIrdN83tQTD8X6EjTnEfX5bnN9ZJFcbTaiXaxjRuxBdRYCwA1r2Hzk5oPsN/UPPE0urBVWzjgK+NHeGQoWmGuN8UOuNAk7bWHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8CrLdZi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pXzEJv2/yvEJW/6ITX88xX8RXnIJogPxAjqInoosnQ6rM2S8KZq/Nk7UpmlodDjpw3ayyl9vK9t1BNGniw4IB06/YnA9RPYxr8sKPsvG/b6xGKq7spEqXvsfdPHmzY7l/xqUm6kL4xggjLtV60o8txmobVuzsqrOYPz7bUESQWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxO8S1Jr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8CrLdZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D96A1F000E9;
-	Thu,  2 Jul 2026 16:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxO8S1Jr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C0E1F000E9;
+	Thu,  2 Jul 2026 16:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010524;
-	bh=1dmVi3NsvBQ4ujlnMQVzB0XW781wDG/un7gefO63IJ8=;
+	s=korg; t=1783010527;
+	bh=Crd5PlLOZuwSWmhlVn9lI5z348M42Rh6SJ+lcisgEN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A8CrLdZiF+7QBRep3e7rJOoEBjjeIKa+SEG+GZg4pO9YubTSo5IQ0sz9LOGo70Hgm
-	 KHwU0kVgTWQHunZeSq8zIstMGyskk2Vm8a/G/CqF+jQhBJH29d5jAEi+IRPOMHsMAQ
-	 /11V1/1KxracMGUuZlQkJuzqL0eH8z1iI06Sltjs=
+	b=oxO8S1JrmbD7vp+PSk2Swlmg0zGZKgvrDO9QyHrvlDjiybuOaa38aeSbScrF+rB59
+	 gNVFa+UCkkyXD8ZsekLbr0mv/4qKfUOuny71fHX8alFqRLAgnMkau+IG5Wos3Tum4y
+	 gCRzvwi81Zixb3Gz5hgyOTldIwOXMqwl4vR6Tm/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>
-Subject: [PATCH 6.12 141/204] NTB: epf: Avoid pci_iounmap() with offset when PEER_SPAD and CONFIG share BAR
-Date: Thu,  2 Jul 2026 18:19:58 +0200
-Message-ID: <20260702155121.613427875@linuxfoundation.org>
+	syzbot+81c7c6b52649fd07299d@syzkaller.appspotmail.com,
+	Ian Bridges <icb@fastmail.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 142/204] fbdev: fix use-after-free in store_modes()
+Date: Thu,  2 Jul 2026 18:19:59 +0200
+Message-ID: <20260702155121.634481387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -52,56 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Ian Bridges <icb@fastmail.org>
 
-commit d876153680e3d721d385e554def919bce3d18c74 upstream.
+commit 2c1c805c65fb7dc7524e20376d6987721e73a0b1 upstream.
 
-When BAR_PEER_SPAD and BAR_CONFIG share one PCI BAR, the module teardown
-path ends up calling pci_iounmap() on the same iomem with some offset,
-which is unnecessary and triggers a kernel warning like the following:
+store_modes() replaces a framebuffer's modelist with modes from userspace.
+On success it frees the old modelist with fb_destroy_modelist(). Two
+fields still point into that freed list.
 
-  Trying to vunmap() nonexistent vm area (0000000069a5ffe8)
-  WARNING: mm/vmalloc.c:3470 at vunmap+0x58/0x68, CPU#5: modprobe/2937
-  [...]
-  Call trace:
-   vunmap+0x58/0x68 (P)
-   iounmap+0x34/0x48
-   pci_iounmap+0x2c/0x40
-   ntb_epf_pci_remove+0x44/0x80 [ntb_hw_epf]
-   pci_device_remove+0x48/0xf8
-   device_remove+0x50/0x88
-   device_release_driver_internal+0x1c8/0x228
-   driver_detach+0x50/0xb0
-   bus_remove_driver+0x74/0x100
-   driver_unregister+0x34/0x68
-   pci_unregister_driver+0x34/0xa0
-   ntb_epf_pci_driver_exit+0x14/0xfe0 [ntb_hw_epf]
-  [...]
+One pointer is fb_display[i].mode, the mode a console is using.
+fbcon_new_modelist() moves these pointers to the new list. It only does so
+for consoles still mapped to the framebuffer. An unmapped console is
+skipped and keeps its stale pointer. Unbinding fbcon, for example, sets
+con2fb_map[i] to -1 but leaves fb_display[i].mode set. An
+FBIOPUT_VSCREENINFO ioctl with FB_ACTIVATE_INV_MODE later reaches
+fbcon_mode_deleted(). That function reads the stale fb_display[i].mode
+through fb_mode_is_equal(). The read is a use-after-free.
 
-Fix it by unmapping only when PEER_SPAD and CONFIG use difference bars.
+The other pointer is fb_info->mode, the current mode. It is set through
+the mode sysfs attribute. store_modes() does not update fb_info->mode, so
+it is left pointing into the freed list. show_mode(), the attribute's read
+handler, dereferences the stale fb_info->mode through mode_string(). The
+read is a use-after-free.
 
+Clear both pointers before freeing the list. Commit a1f305893074 ("fbcon:
+Set fb_display[i]->mode to NULL when the mode is released") added the
+helper fbcon_delete_modelist(). It clears every fb_display[i].mode that
+points into a given list. So far it is called only from the unregister
+path. Call it from store_modes() too, and set fb_info->mode to NULL.
+
+Reported-by: syzbot+81c7c6b52649fd07299d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=81c7c6b52649fd07299d
 Cc: stable@vger.kernel.org
-Fixes: e75d5ae8ab88 ("NTB: epf: Allow more flexibility in the memory BAR map method")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Link: https://lore.kernel.org/all/ajjoDhAi2y4ArSlz@dev/
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/hw/epf/ntb_hw_epf.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/core/fbsysfs.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/ntb/hw/epf/ntb_hw_epf.c
-+++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
-@@ -646,7 +646,8 @@ static void ntb_epf_deinit_pci(struct nt
- 	struct pci_dev *pdev = ndev->ntb.pdev;
+--- a/drivers/video/fbdev/core/fbsysfs.c
++++ b/drivers/video/fbdev/core/fbsysfs.c
+@@ -11,6 +11,7 @@
+ #include <linux/major.h>
  
- 	pci_iounmap(pdev, ndev->ctrl_reg);
--	pci_iounmap(pdev, ndev->peer_spad_reg);
-+	if (ndev->barno_map[BAR_PEER_SPAD] != ndev->barno_map[BAR_CONFIG])
-+		pci_iounmap(pdev, ndev->peer_spad_reg);
- 	pci_iounmap(pdev, ndev->db_reg);
+ #include "fb_internal.h"
++#include "fbcon.h"
  
- 	pci_release_regions(pdev);
+ #define FB_SYSFS_FLAG_ATTR 1
+ 
+@@ -113,8 +114,15 @@ static ssize_t store_modes(struct device
+ 	if (fb_new_modelist(fb_info)) {
+ 		fb_destroy_modelist(&fb_info->modelist);
+ 		list_splice(&old_list, &fb_info->modelist);
+-	} else
++	} else {
++		/*
++		 * fb_display[i].mode and fb_info->mode both point into the old
++		 * list. Clear them before it is freed.
++		 */
++		fbcon_delete_modelist(&old_list);
++		fb_info->mode = NULL;
+ 		fb_destroy_modelist(&old_list);
++	}
+ 
+ 	unlock_fb_info(fb_info);
+ 	console_unlock();
 
 
