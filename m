@@ -1,138 +1,473 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BDD34389B;
-	Thu,  2 Jul 2026 16:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47875492185;
+	Thu,  2 Jul 2026 16:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009442; cv=none; b=dFb5cRvUvBKQq+ZjdH9Qhr/bkKbO05d9PnT1nmzoRzTOyi/R8/7AHlkhD6xFcOdLBKZulcPvu7DZLnMb3AnemjQr6OMGEqIaMMve38KhvdlKy37QJzaobHhvC34vIGj9S/G42zB1LTKWiZ1jhoGnsXMTMMrzbmTIigpy1YbESwY=
+	t=1783009447; cv=none; b=egh6N2T5H57ZGGAKV/US94FmQlgAdgx08cpK13Nqf6kRES7mbtlFQ/o28ozVuhViW7JyD3VFiYvNlGvElpEDglkaMPevTu496j2p0mnpHbRUbw90l2IaW2Rq56WrxETFIxhWqZIS092IzGW3mORY5LVQeM3oAmr7IWgHDC/WdRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009442; c=relaxed/simple;
-	bh=0vqcWoyUrlGBq3IIu7dvsBqwrTwXMwn3grm2eOZs0j8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LnC1scJ7RAm48YbLKUOMSH8IdAH9azdWwfXyqm2mwBB/9gg00hLrTwKzk6KBmMl+9clTRjGz60V8yaskl/akCKEe6tzZtWx1f7gC6ifHhqrasZNXTbn6XGzYTCsEAVGolBP7fAgMyxK8BTWavwGNrQU515N5vFm5ghPijIOGG9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlPUrNzu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783009447; c=relaxed/simple;
+	bh=ObqgvITbHYCcDvxtRx7xLyVYKYs1MOUj5D16Z6p3FRU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FJOuqY+u08EYsagUSqaj2ONfwAKXVSA3KKwDMdp+xLI7RBA6wZVdeffkJLKt+fbRdSQ/A9qdSgd4b3RZ7pcqco6McStdaZKraRqINh7KLgxa0ngPrshUXshT3S/9XTH3kIFd/xFzZhPAyp0cFnmnM04UJSEJmX6yNMh3RVjOGIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wof8hUEp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlPUrNzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9651F00A3A;
-	Thu,  2 Jul 2026 16:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wof8hUEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5011F000E9;
+	Thu,  2 Jul 2026 16:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009439;
-	bh=vPKafJ6CXKUTvJtsfLqr7OzlS+QHRAhbkONf3+WoBpI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YlPUrNzuzgRVuT1ccuFLfn6iVTiKNh1o4W7+erQksG2kCT238G1PzbDqLxxmbTvV5
-	 3Q0rIwL6QWr+Vf/3CtS2kyMiGj4UTvb7x3JdlZzStQ0ZfGyfxTRZRhOvnOZIrZELFI
-	 Z/k1CZKcENVjLwPHvw+jg5h0mlSyp0ZqtWJPTP/g=
+	s=korg; t=1783009442;
+	bh=9WpeyFB18GR7YxO/MLFXLqvZmPgaReQm/W6ewZEk+Hc=;
+	h=From:To:Cc:Subject:Date;
+	b=Wof8hUEpbBCAuOXQGxFGXy5y53nygIivgXfUcp1Zsgblq1ZcQ3v6Ea0ZNoEK4waKA
+	 9gGdKGpDBwTiIRZjOBGX+q/3aMeaOeZP/+ShxJXxShrymeoE7mfrNNRfrBsURpcUUl
+	 xBc0r3TJhBpiJqPsC8hdrB4ppKqCGs02iCvgG3Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 09/96] net/sched: act_pedit: free pedit keys on bail from offset check
-Date: Thu,  2 Jul 2026 18:19:01 +0200
-Message-ID: <20260702155109.170596958@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 5.10 00/96] 5.10.260-rc1 review
+Date: Thu,  2 Jul 2026 18:18:52 +0200
+Message-ID: <20260702155108.949633242@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
-References: <20260702155108.949633242@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.260-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.260-rc1
+X-KernelTest-Deadline: 2026-07-04T15:51+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.10.260 release.
+There are 96 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 04 Jul 2026 15:50:58 +0000.
+Anything received after that time might be too late.
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.260-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
 
-[ Upstream commit 1b483d9f5805c7e3d628d4995e97f4311fcb82eb ]
+thanks,
 
-Ido Schimmel reports a memleak on a syzkaller instance:
-   BUG: memory leak
-   unreferenced object 0xffff88803d45e400 (size 1024):
-     comm "syz-executor292", pid 563, jiffies 4295025223 (age 51.781s)
-     hex dump (first 32 bytes):
-       28 bd 70 00 fb db df 25 02 00 14 1f ff 02 00 02  (.p....%........
-       00 32 00 00 1f 00 00 00 ac 14 14 3e 08 00 07 00  .2.........>....
-     backtrace:
-       [<ffffffff81bd0f2c>] kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-       [<ffffffff81bd0f2c>] slab_post_alloc_hook mm/slab.h:772 [inline]
-       [<ffffffff81bd0f2c>] slab_alloc_node mm/slub.c:3452 [inline]
-       [<ffffffff81bd0f2c>] __kmem_cache_alloc_node+0x25c/0x320 mm/slub.c:3491
-       [<ffffffff81a865d9>] __do_kmalloc_node mm/slab_common.c:966 [inline]
-       [<ffffffff81a865d9>] __kmalloc+0x59/0x1a0 mm/slab_common.c:980
-       [<ffffffff83aa85c3>] kmalloc include/linux/slab.h:584 [inline]
-       [<ffffffff83aa85c3>] tcf_pedit_init+0x793/0x1ae0 net/sched/act_pedit.c:245
-       [<ffffffff83a90623>] tcf_action_init_1+0x453/0x6e0 net/sched/act_api.c:1394
-       [<ffffffff83a90e58>] tcf_action_init+0x5a8/0x950 net/sched/act_api.c:1459
-       [<ffffffff83a96258>] tcf_action_add+0x118/0x4e0 net/sched/act_api.c:1985
-       [<ffffffff83a96997>] tc_ctl_action+0x377/0x490 net/sched/act_api.c:2044
-       [<ffffffff83920a8d>] rtnetlink_rcv_msg+0x46d/0xd70 net/core/rtnetlink.c:6395
-       [<ffffffff83b24305>] netlink_rcv_skb+0x185/0x490 net/netlink/af_netlink.c:2575
-       [<ffffffff83901806>] rtnetlink_rcv+0x26/0x30 net/core/rtnetlink.c:6413
-       [<ffffffff83b21cae>] netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-       [<ffffffff83b21cae>] netlink_unicast+0x5be/0x8a0 net/netlink/af_netlink.c:1365
-       [<ffffffff83b2293f>] netlink_sendmsg+0x9af/0xed0 net/netlink/af_netlink.c:1942
-       [<ffffffff8380c39f>] sock_sendmsg_nosec net/socket.c:724 [inline]
-       [<ffffffff8380c39f>] sock_sendmsg net/socket.c:747 [inline]
-       [<ffffffff8380c39f>] ____sys_sendmsg+0x3ef/0xaa0 net/socket.c:2503
-       [<ffffffff838156d2>] ___sys_sendmsg+0x122/0x1c0 net/socket.c:2557
-       [<ffffffff8381594f>] __sys_sendmsg+0x11f/0x200 net/socket.c:2586
-       [<ffffffff83815ab0>] __do_sys_sendmsg net/socket.c:2595 [inline]
-       [<ffffffff83815ab0>] __se_sys_sendmsg net/socket.c:2593 [inline]
-       [<ffffffff83815ab0>] __x64_sys_sendmsg+0x80/0xc0 net/socket.c:2593
+greg k-h
 
-The recently added static offset check missed a free to the key buffer when
-bailing out on error.
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: e1201bc781c2 ("net/sched: act_pedit: check static offsets a priori")
-Reported-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230425144725.669262-1-pctammela@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/sched/act_pedit.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.260-rc1
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 35fa94ba0edf8f..0601deea04d725 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -250,7 +250,7 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
- 		if (!offmask && cur % 4) {
- 			NL_SET_ERR_MSG_MOD(extack, "Offsets must be on 32bit boundaries");
- 			ret = -EINVAL;
--			goto put_chain;
-+			goto out_free_keys;
- 		}
- 
- 		/* sanitize the shift value for any later use */
-@@ -275,6 +275,8 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
- 
- 	return ret;
- 
-+out_free_keys:
-+	kfree(nparms->tcfp_keys);
- put_chain:
- 	if (goto_ch)
- 		tcf_chain_put_by_act(goto_ch);
--- 
-2.53.0
+Miklos Szeredi <mszeredi@redhat.com>
+    virtiofs: fix UAF on submount umount
 
+Junrui Luo <moonafterrain@outlook.com>
+    misc: fastrpc: fix DMA address corruption due to find_vma misuse
+
+Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+    mmc: renesas_sdhi: Add OF entry for RZ/G2H SoC
+
+Santosh Kalluri <santosh.kalluri129@gmail.com>
+    net: phonet: free phonet_device after RCU grace period
+
+Kuniyuki Iwashima <kuniyu@amazon.com>
+    phonet: Pass net and ifindex to phonet_address_notify().
+
+Kuniyuki Iwashima <kuniyu@amazon.com>
+    phonet: Pass ifindex to fill_addr().
+
+Dexuan Cui <decui@microsoft.com>
+    Drivers: hv: vmbus: Improve the logic of reserving fb_mmio on Gen2 VMs
+
+Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+    misc: fastrpc: Fix NULL pointer dereference in rpmsg callback
+
+Abel Vesa <abel.vesa@linaro.org>
+    misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
+
+Paolo Abeni <pabeni@redhat.com>
+    mptcp: fix missing wakeups in edge scenarios
+
+Thorsten Blum <thorsten.blum@linux.dev>
+    hv: utils: handle and propagate errors in kvp_register
+
+Kyle Meyer <kyle.meyer@hpe.com>
+    bnxt_en: Fix NULL pointer dereference
+
+Michael Chan <michael.chan@broadcom.com>
+    bnxt_en: Modify bnxt_disable_int_sync() to be called more than once.
+
+Yongchao Wu <yongchao.wu@autochips.com>
+    usb: cdns3: gadget: fix NULL pointer dereference in ep_queue
+
+Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+    dlm: prevent NPD when writing a positive value to event_done
+
+Dominik Woźniak <stalion@gmail.com>
+    nfsd: check get_user() return when reading princhashlen
+
+Jeff Layton <jlayton@kernel.org>
+    nfsd: fix posix_acl leak on SETACL decode failure
+
+Guannan Wang <wgnbuaa@gmail.com>
+    NFSD: Fix SECINFO_NO_NAME decode error cleanup
+
+Steffen Persvold <spersvold@gmail.com>
+    fbdev: modedb: Fix misaligned fields in the 1920x1080-60 mode
+
+Ian Bridges <icb@fastmail.org>
+    fbdev: Fix fb_new_modelist to prevent null-ptr-deref in fb_videomode_to_var
+
+Ashutosh Desai <ashutoshdesai993@gmail.com>
+    KVM: SVM: Fix page overflow in sev_dbg_crypt() for ENCRYPT path
+
+Zhang Cen <rollkingzzc@gmail.com>
+    ocfs2: reject oversized group bitmap descriptors
+
+Wentao Liang <vulab@iscas.ac.cn>
+    fpga: region: fix use-after-free in child_regions_with_firmware()
+
+Qingshuang Fu <fuqingshuang@kylinos.cn>
+    irqchip/imgpdc: Fix resource leak, add missing chained handler cleanup on remove
+
+Wentao Liang <vulab@iscas.ac.cn>
+    pNFS: Fix use-after-free in pnfs_update_layout()
+
+Doruk Tan Ozturk <doruk@0sec.ai>
+    tipc: fix slab-use-after-free Read in tipc_aead_decrypt_done
+
+Michael Bommarito <michael.bommarito@gmail.com>
+    exfat: fix potential use-after-free in exfat_find_dir_entry()
+
+Maciej W. Rozycki <macro@orcam.me.uk>
+    MIPS: DEC: Prevent initial console buffer from landing in XKPHYS
+
+Dawei Feng <dawei.feng@seu.edu.cn>
+    bpf: use kvfree() for replaced sysctl write buffer
+
+Zhang Cen <rollkingzzc@gmail.com>
+    f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
+
+Bitterblue Smith <rtl8821cerfe2@gmail.com>
+    wifi: rtlwifi: rtl8821ae: Fix C2H bit location in RX descriptor
+
+Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+    wifi: ath11k: fix warning when unbinding
+
+Zenm Chen <zenmchen@gmail.com>
+    wifi: mt76: mt76x2u: Add support for ELECOM WDC-867SU3S
+
+Shaomin Chen <eeesssooo020@gmail.com>
+    keys: Pin request_key_auth payload in instantiate paths
+
+Jarkko Sakkinen <jarkko@kernel.org>
+    KEYS: fix overflow in keyctl_pkey_params_get_2()
+
+Doruk Tan Ozturk <doruk@0sec.ai>
+    mac802154: llsec: add skb_cow_data() before in-place crypto
+
+Kevin Hao <haokexin@gmail.com>
+    net: cpsw_new: Fix potential unregister of netdev that has not been registered yet
+
+Herbert Xu <herbert@gondor.apana.org.au>
+    crypto: af_alg - Set merge to zero early in af_alg_sendmsg
+
+Yuto Ohnuki <ytohnuki@amazon.com>
+    ext4: add bounds check for inline data length in ext4_read_inline_page
+
+Bjoern Doebel <doebel@amazon.de>
+    ring-buffer: Remove ring_buffer_read_prepare_sync()
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tvlv: avoid race of cifsnotfound handler state
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tvlv: enforce 2-byte alignment
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: dat: prevent false sharing between VLANs
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tt: track roam count per VID
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tt: don't merge change entries with different VIDs
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: handle overlapping packets
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: prevent parallel modifications of last_recv
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: annotate last_recv_time access with READ/WRITE_ONCE
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: restrict number of unacked list entries
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: v: prevent OGM aggregation on disabled hardif
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: frag: avoid underflow of TTL
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: frag: ensure fragment is writable before modifying TTL
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: initialize last_recv_time during init
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: prevent ELP transmission interval underflow
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: bla: annotate lasttime access with READ/WRITE_ONCE
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: add only finished tp_vars to lists
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: handle seqno wrap-around for fast recovery detection
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: fix fast recovery precondition
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: avoid divide-by-zero for dec_cwnd
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: avoid window underflow
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: initialize dec_cwnd explicitly
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: initialize dup_acks explicitly
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tp_meter: keep unacked list in ascending ordered
+
+Pedro Tammela <pctammela@mojatatu.com>
+    net/sched: act_pedit: fix action bind logic
+
+Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+    crypto: qat - remove unused character device and IOCTLs
+
+Herbert Xu <herbert@gondor.apana.org.au>
+    crypto: qat - Return pointer directly in adf_ctl_alloc_resources
+
+Thorsten Blum <thorsten.blum@linux.dev>
+    crypto: qat - Replace kzalloc() + copy_from_user() with memdup_user()
+
+Bagas Sanjaya <bagasdotme@gmail.com>
+    Documentation: ioctl-number: Extend "Include File" column width
+
+Ruslan Valiyev <linuxoid@gmail.com>
+    media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
+
+Yi Yang <yiyang13@huawei.com>
+    vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
+
+André Draszik <andre.draszik@linaro.org>
+    regulator: core: fix locking in regulator_resolve_supply() error path
+
+Mingyu Wang <25181214217@stu.xidian.edu.cn>
+    agp/amd64: Fix broken error propagation in agp_amd64_probe()
+
+Weiming Shi <bestswngs@gmail.com>
+    net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()
+
+Weiming Shi <bestswngs@gmail.com>
+    i2c: stub: Reject I2C block transfers with invalid length
+
+Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
+    RDMA/bnxt_re: zero shared page before exposing to userspace
+
+Jiacheng Shi <billsjc@sjtu.edu.cn>
+    vfio/iommu_type1: replace kfree with kvfree
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tt: prevent TVLV entry number overflow
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: tt: reject oversized local TVLV buffers
+
+Wang Yufen <wangyufen@huawei.com>
+    netdevsim: Fix memory leak of nsim_dev->fa_cookie
+
+Hangyu Hua <hbh25y@gmail.com>
+    net: 9p: fix refcount leak in p9_read_work() error handling
+
+Harry Wentland <harry.wentland@amd.com>
+    drm/amd/display: Use krealloc_array() in dal_vector_reserve()
+
+Eric Dumazet <edumazet@google.com>
+    net/sched: cls_u32: use skb_header_pointer_careful()
+
+Eric Dumazet <edumazet@google.com>
+    net: add skb_header_pointer_careful() helper
+
+Eric Dumazet <edumazet@google.com>
+    ip6_vti: set netns_immutable on the fallback device.
+
+Harry Wentland <harry.wentland@amd.com>
+    drm/amd/display: Bound VBIOS record-chain walk loops
+
+Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+    slimbus: qcom-ngd-ctrl: Register callbacks after creating the ngd
+
+Jann Horn <jannh@google.com>
+    fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
+
+Pedro Tammela <pctammela@mojatatu.com>
+    net/sched: act_pedit: free pedit keys on bail from offset check
+
+Rajat Gupta <rajat.gupta@oss.qualcomm.com>
+    net/sched: fix pedit partial COW leading to page cache corruption
+
+Max Tottenham <mtottenh@akamai.com>
+    net/sched: act_pedit: Parse L3 Header for L4 offset
+
+Pedro Tammela <pctammela@mojatatu.com>
+    net/sched: act_pedit: rate limit datapath messages
+
+Pedro Tammela <pctammela@mojatatu.com>
+    net/sched: act_pedit: check static offsets a priori
+
+Pedro Tammela <pctammela@mojatatu.com>
+    net/sched: act_pedit: remove extra check for key type
+
+Pedro Tammela <pctammela@mojatatu.com>
+    net/sched: simplify tcf_pedit_act
+
+Pedro Tammela <pctammela@mojatatu.com>
+    net/sched: transition act_pedit to rcu and percpu stats
+
+Pedro Tammela <pctammela@mojatatu.com>
+    net/sched: act_pedit: use NLA_POLICY for parsing 'ex' keys
+
+
+-------------
+
+Diffstat:
+
+ Documentation/userspace-api/ioctl/ioctl-number.rst | 427 ++++++++++-----------
+ Makefile                                           |   4 +-
+ arch/mips/dec/prom/console.c                       |   7 +-
+ arch/x86/kvm/svm/sev.c                             |   1 +
+ crypto/af_alg.c                                    |   2 +
+ drivers/char/agp/amd64-agp.c                       |   2 +-
+ drivers/crypto/qat/qat_common/adf_cfg_common.h     |  32 --
+ drivers/crypto/qat/qat_common/adf_cfg_user.h       |  38 --
+ drivers/crypto/qat/qat_common/adf_common_drv.h     |   3 -
+ drivers/crypto/qat/qat_common/adf_ctl_drv.c        | 421 +-------------------
+ drivers/crypto/qat/qat_common/adf_dev_mgr.c        |  70 ----
+ drivers/fpga/of-fpga-region.c                      |   3 +-
+ drivers/gpu/drm/amd/display/dc/basics/vector.c     |   2 +-
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser.c  |  15 +-
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |  12 +-
+ .../drm/amd/display/dc/bios/bios_parser_helper.h   |   5 +
+ drivers/hv/hv_kvp.c                                |  25 +-
+ drivers/hv/vmbus_drv.c                             |  56 ++-
+ drivers/i2c/i2c-stub.c                             |   5 +
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c           |   2 +-
+ drivers/irqchip/irq-imgpdc.c                       |   6 +
+ drivers/media/test-drivers/vidtv/vidtv_mux.c       |   8 +-
+ drivers/misc/fastrpc.c                             |   9 +-
+ drivers/mmc/host/renesas_sdhi_internal_dmac.c      |   1 +
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c          |   3 +
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c |   8 +-
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h |   1 +
+ drivers/net/ethernet/ti/cpsw_new.c                 |   4 +-
+ drivers/net/netdevsim/dev.c                        |   1 +
+ drivers/net/wireless/ath/ath11k/dp.c               |   1 +
+ drivers/net/wireless/mediatek/mt76/mt76x2/usb.c    |   1 +
+ .../net/wireless/realtek/rtlwifi/rtl8821ae/trx.h   |   2 +-
+ drivers/regulator/core.c                           |  10 +-
+ drivers/slimbus/qcom-ngd-ctrl.c                    |  11 +-
+ drivers/tty/vt/vc_screen.c                         |   2 +-
+ drivers/usb/cdns3/gadget.c                         |   3 +
+ drivers/vfio/vfio_iommu_type1.c                    |   2 +-
+ drivers/video/fbdev/core/fbmem.c                   |  12 +
+ drivers/video/fbdev/core/modedb.c                  |   2 +-
+ fs/dlm/lockspace.c                                 |   2 +-
+ fs/exfat/dir.c                                     |   4 +-
+ fs/ext4/inline.c                                   |   8 +
+ fs/f2fs/acl.c                                      |  18 +-
+ fs/fuse/dev.c                                      |   4 +
+ fs/fuse/file.c                                     |   8 +-
+ fs/nfs/pnfs.c                                      |   2 +-
+ fs/nfsd/nfs2acl.c                                  |  17 +-
+ fs/nfsd/nfs3acl.c                                  |  17 +-
+ fs/nfsd/nfs4recover.c                              |   3 +-
+ fs/nfsd/nfs4xdr.c                                  |   3 +-
+ fs/ocfs2/suballoc.c                                |  22 ++
+ include/keys/request_key_auth-type.h               |   2 +
+ include/linux/ring_buffer.h                        |   4 +-
+ include/linux/skbuff.h                             |  12 +
+ include/net/phonet/pn_dev.h                        |   2 +-
+ include/net/tc_act/tc_pedit.h                      |  80 +++-
+ kernel/bpf/cgroup.c                                |   2 +-
+ kernel/trace/ring_buffer.c                         |  74 +---
+ kernel/trace/trace.c                               |  14 +-
+ kernel/trace/trace_kdb.c                           |   8 +-
+ net/9p/trans_fd.c                                  |   1 +
+ net/batman-adv/bat_iv_ogm.c                        |  11 +-
+ net/batman-adv/bat_v.c                             |   1 +
+ net/batman-adv/bat_v_ogm.c                         |  23 +-
+ net/batman-adv/bridge_loop_avoidance.c             |  28 +-
+ net/batman-adv/distributed-arp-table.c             |  12 +-
+ net/batman-adv/fragmentation.c                     |  22 +-
+ net/batman-adv/fragmentation.h                     |   3 +-
+ net/batman-adv/netlink.c                           |  10 +-
+ net/batman-adv/routing.c                           |   3 +-
+ net/batman-adv/tp_meter.c                          | 115 ++++--
+ net/batman-adv/translation-table.c                 |  40 +-
+ net/batman-adv/tvlv.c                              |  69 +++-
+ net/batman-adv/types.h                             |  21 +-
+ net/ipv6/ip6_vti.c                                 |   1 +
+ net/mac802154/llsec.c                              |  14 +
+ net/mptcp/protocol.c                               |   8 +
+ net/phonet/pn_dev.c                                |  12 +-
+ net/phonet/pn_netlink.c                            |  23 +-
+ net/sched/act_pedit.c                              | 420 +++++++++++---------
+ net/sched/cls_u32.c                                |  13 +-
+ net/tipc/crypto.c                                  |   9 +
+ security/keys/internal.h                           |   2 +
+ security/keys/keyctl.c                             |  24 +-
+ security/keys/keyctl_pkey.c                        |   9 +-
+ security/keys/request_key_auth.c                   |  33 +-
+ 86 files changed, 1206 insertions(+), 1246 deletions(-)
 
 
