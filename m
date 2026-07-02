@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DB533ADAD;
-	Thu,  2 Jul 2026 16:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D942317146;
+	Thu,  2 Jul 2026 16:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011171; cv=none; b=eBc7oaipsXiha8R/lNirOn3vrYjjDmuEVwC0bRZpBVtUxit3JtuM/DIFKKu4jmScdqEbn/U7s8yBovEGF9TvJ3hjxzufTfZGruKzO22cIc8hXruYkCuV414Lpnl0Od3c2mnzOjZDgudwXijpApP4TGbl5ruCR8ouvMrzkqGrH4A=
+	t=1783011174; cv=none; b=lXUHaJ3wNen3pmKqsF8FqEcD0M21HVZ+z1MGmn8kCIX1olm72krWyVcVuTjZn0Y9elujGeGZmVzoO3Ai5++LDajiJQsIPwr4oo/5yUA02to+wYBXcfP7v2qs8ccNLdaz7UHF8x/pCvd/l8xSizwQ7mIX6i02Vn9ZLpqzytKvSK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011171; c=relaxed/simple;
-	bh=Iydom2bzuGbkbPGQs4rDomutVZHZsg2brAu5V7zJ2C4=;
+	s=arc-20240116; t=1783011174; c=relaxed/simple;
+	bh=JbPq4tKrvcotipJp/yQ0ammTYy9C8GbTZrZTP1lqbrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ktqs+Ot+Ro6ugpriml3cqN4EepN4v8b8upre7w2QAhulxssfYjZ2nenmBTlBMRVoA5JrLtf9GwCMAr1IjQfQvlhP9clpxicxCeCSlRqp7HlAd7x8ywGOmf8SQtM1fB7jYRoDI9NCR2LKeed5VOVvNZmp2f8urfGdiE7Lg0SX//c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXcTiZo1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ec8vZDlmqywM5GSJR7/QbJFu+aE0BDySumuCh4mVHRK3WA4aZ3Px3ViYN6Z3hFo1Cxk+SPVupidiyQYX0xixN6bVs/pDxYQ10Jon+DGsWNsoI5SU+ww2usIydHM7b0pLX7rdWHb9AQReyNOl3/303aoTsQMk1rJONsa5ozKCwrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSJPgc/1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXcTiZo1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DAA1F000E9;
-	Thu,  2 Jul 2026 16:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSJPgc/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D268A1F000E9;
+	Thu,  2 Jul 2026 16:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011170;
-	bh=2dbke7KIeHOgVmDEQvhR9qDyfl6k0cSfGx29b4y6z5w=;
+	s=korg; t=1783011173;
+	bh=Nr2QgfFy3cBsQnCcfI7SUtApxH6Q8VpCk1+BRIayKiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sXcTiZo17YwueX0DeFQSQ5LDPDWHeIENpy8c5zmKUxKVhIeZuUrYZez2ZkdT+lwOl
-	 lvBbRcStzBQBjgSbADwlThHuk0IFo9u01p3asgZCvED2BPnq6TorSYE+/CE5QDQkCs
-	 MsXyFtLq6fGbnmzMePzCKSAHdqfeQaiHJEeS+xjg=
+	b=BSJPgc/1NAIjI7ONGt0E5SskayTgLxgZ8d3dNGp7Vg925+VGbNT3wa5Wx1cK9BoWY
+	 QGNvHomQdesK1rsjYtl0HTbzdCJcvSKTpBnIWpnZgcCrh7HVbJJDopgUifbPtaxoZQ
+	 51+IOM7VU1PNvcvw+80cRzIKTpUTrsg8GVc7tRsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 139/175] f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
-Date: Thu,  2 Jul 2026 18:20:40 +0200
-Message-ID: <20260702155118.736373796@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 001/108] KVM: x86: Fix shadow paging use-after-free due to unexpected role
+Date: Thu,  2 Jul 2026 18:19:58 +0200
+Message-ID: <20260702155112.143957930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
-References: <20260702155115.766838875@linuxfoundation.org>
+In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
+References: <20260702155112.110058792@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,122 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit c4810ada31e80cbe4011467c4f3b1e93f94134f3 upstream.
+commit 81ccda30b4e83d8f5cc4fd50503c44e3a33abfeb upstream.
 
-f2fs_acl_count() only validates the aggregate ACL xattr length. A
-malformed ACL can still place ACL_USER or ACL_GROUP in a slot that only
-contains struct f2fs_acl_entry_short bytes, and f2fs_acl_from_disk()
-then reads entry->e_id before verifying that a full entry fits.
+Commit 0cb2af2ea66ad ("KVM: x86: Fix shadow paging use-after-free due
+to unexpected GFN") fixed a shadow paging mismatch between stored and
+computed GFNs; the bug could be triggered by changing a PDE mapping from
+outside the guest, and then deleting a memslot.  The rmap_remove()
+call would miss entries created after the PDE change because the GFN
+of the leaf SPTE does not match the GFN of the struct kvm_mmu_page.
 
-Require a short entry before reading e_tag and e_perm, and require a
-full entry before reading e_id for ACL_USER and ACL_GROUP. Return
--EFSCORRUPTED from these new truncated-entry checks, while keeping the
-pre-existing -EINVAL paths unchanged.
+A similar hole however remains if the modified PDE points to a non-leaf
+page.  In this case the gfn can be made to match, but the role does not
+match: the original large 2MB page creates a kvm_mmu_page with direct=1,
+while the new 4KB needs a kvm_mmu_page with direct=0.  However,
+kvm_mmu_get_child_sp() does not compare the role, and therefore reuses
+the page.
 
-Validation reproduced this kernel report:
-KASAN slab-out-of-bounds in __f2fs_get_acl+0x6fb/0x7e0
-RIP: 0033:0x7f4b835ea7aa
-The buggy address belongs to the object at ffff888114589960 which belongs
-to the cache kmalloc-8 of size 8
-The buggy address is located 0 bytes to the right of allocated 8-byte
-region [ffff888114589960, ffff888114589968)
-Read of size 4
-Call trace:
-  dump_stack_lvl+0x66/0xa0 (?:?)
-  print_report+0xce/0x630 (?:?)
-  __f2fs_get_acl+0x6fb/0x7e0 (fs/f2fs/acl.c:169)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x224/0x430 (?:?)
-  kasan_report+0xe0/0x110 (?:?)
-  __f2fs_get_acl+0x5/0x7e0 (fs/f2fs/acl.c:169)
-  __get_acl+0x281/0x380 (?:?)
-  vfs_get_acl+0x10b/0x190 (?:?)
-  do_get_acl+0x2a/0x410 (?:?)
-  do_get_acl+0x9/0x410 (?:?)
-  do_getxattr+0xe8/0x260 (?:?)
-  filename_getxattr+0xd1/0x140 (?:?)
-  do_getname+0x2d/0x2d0 (?:?)
-  path_getxattrat+0x16c/0x200 (?:?)
-  lock_release+0xc8/0x290 (?:?)
-  cgroup_update_frozen+0x9d/0x320 (?:?)
-  lockdep_hardirqs_on_prepare+0xea/0x1a0 (?:?)
-  trace_hardirqs_on+0x1a/0x170 (?:?)
-  _raw_spin_unlock_irq+0x28/0x50 (?:?)
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+The next step is installing a leaf (4KB) SPTE on the new path which
+records an rmap entry under the gfn resolved by the walk.  But when
+that child is zapped its parent kvm_mmu_page has direct=1 and
+kvm_mmu_page_get_gfn() computes the gfn for the 4KB page as
+sp->gfn + index instead of using sp->shadowed_translation[] (or sp->gfns[]
+in older kernels).  It therefore fails to remove the recorded entry.
 
-Cc: stable@kernel.org
-Fixes: af48b85b8cd3 ("f2fs: add xattr and acl functionalities")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When the memslot is dropped the shadow page is freed but the rmap
+entry survives, as in the scenario that was already fixed.  Code that
+later walks that gfn (dirty logging, MMU notifier invalidation, and
+so on) dereferences an sptep that lies in the freed page, causing the
+use-after-free.
+
+Fixes: 2032a93d66fa ("KVM: MMU: Don't allocate gfns page for direct mmu pages")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/acl.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/acl.c
-+++ b/fs/f2fs/acl.c
-@@ -46,6 +46,7 @@ static inline int f2fs_acl_count(size_t
- static struct posix_acl *f2fs_acl_from_disk(const char *value, size_t size)
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 0bd0cb8992c9fd..541e199feb9981 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2453,13 +2453,15 @@ static struct kvm_mmu_page *kvm_mmu_get_child_sp(struct kvm_vcpu *vcpu,
+ 						 u64 *sptep, gfn_t gfn,
+ 						 bool direct, unsigned int access)
  {
- 	int i, count;
-+	int err = -EINVAL;
- 	struct posix_acl *acl;
- 	struct f2fs_acl_header *hdr = (struct f2fs_acl_header *)value;
- 	struct f2fs_acl_entry *entry = (struct f2fs_acl_entry *)(hdr + 1);
-@@ -69,8 +70,11 @@ static struct posix_acl *f2fs_acl_from_d
+-	union kvm_mmu_page_role role;
++	union kvm_mmu_page_role role = kvm_mmu_child_role(sptep, direct, access);
  
- 	for (i = 0; i < count; i++) {
+-	if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep) &&
+-	    spte_to_child_sp(*sptep) && spte_to_child_sp(*sptep)->gfn == gfn)
++	if (is_shadow_present_pte(*sptep) &&
++	    !is_large_pte(*sptep) &&
++	    spte_to_child_sp(*sptep) &&
++	    spte_to_child_sp(*sptep)->gfn == gfn &&
++	    spte_to_child_sp(*sptep)->role.word == role.word)
+ 		return ERR_PTR(-EEXIST);
  
--		if ((char *)entry > end)
-+		if (unlikely((char *)entry +
-+				sizeof(struct f2fs_acl_entry_short) > end)) {
-+			err = -EFSCORRUPTED;
- 			goto fail;
-+		}
- 
- 		acl->a_entries[i].e_tag  = le16_to_cpu(entry->e_tag);
- 		acl->a_entries[i].e_perm = le16_to_cpu(entry->e_perm);
-@@ -85,6 +89,11 @@ static struct posix_acl *f2fs_acl_from_d
- 			break;
- 
- 		case ACL_USER:
-+			if (unlikely((char *)entry +
-+					sizeof(struct f2fs_acl_entry) > end)) {
-+				err = -EFSCORRUPTED;
-+				goto fail;
-+			}
- 			acl->a_entries[i].e_uid =
- 				make_kuid(&init_user_ns,
- 						le32_to_cpu(entry->e_id));
-@@ -92,6 +101,11 @@ static struct posix_acl *f2fs_acl_from_d
- 					sizeof(struct f2fs_acl_entry));
- 			break;
- 		case ACL_GROUP:
-+			if (unlikely((char *)entry +
-+					sizeof(struct f2fs_acl_entry) > end)) {
-+				err = -EFSCORRUPTED;
-+				goto fail;
-+			}
- 			acl->a_entries[i].e_gid =
- 				make_kgid(&init_user_ns,
- 						le32_to_cpu(entry->e_id));
-@@ -107,7 +121,7 @@ static struct posix_acl *f2fs_acl_from_d
- 	return acl;
- fail:
- 	posix_acl_release(acl);
--	return ERR_PTR(-EINVAL);
-+	return ERR_PTR(err);
+-	role = kvm_mmu_child_role(sptep, direct, access);
+ 	return kvm_mmu_get_shadow_page(vcpu, gfn, role);
  }
  
- static void *f2fs_acl_to_disk(struct f2fs_sb_info *sbi,
+-- 
+2.53.0
+
 
 
