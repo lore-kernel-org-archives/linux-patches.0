@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF7C30499A;
-	Thu,  2 Jul 2026 17:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D67433E87;
+	Thu,  2 Jul 2026 17:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011689; cv=none; b=Bk28fr0LDHxcnnOJdNnh3RLt94U19g5tHXPK5Ia33cE6MdKBkq4KpfoNeXmKUIAiH+oEr5rtrWhHwfrE9TQdjmO0q3V5/Lt2waJaSL1AUvtBTPw1zUJbSQ/JDbYo0GBJjI4LHpZ9DyfN+R97AhtA2odKL75rxNDBWAKFRSM3EK4=
+	t=1783011692; cv=none; b=Ic2wL827U8nvLjO+QR2NHUI+clSvQFpHwramgaYjYvaKaSAs1K9jAsWU8d0TWltFQ3v41ddcHihiHBSuVuSFYpdXkmbxRZkV6z9O4gwzFycJIgGhddGikZu45goYRnU/EjmLAPkssfG+0RjFAoLntMuP1065/G8MUcmK+/bbtVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011689; c=relaxed/simple;
-	bh=kfGcO3p2gLGBQsKZT8LI7FTtGajVVhnLWOnBPZxVANQ=;
+	s=arc-20240116; t=1783011692; c=relaxed/simple;
+	bh=ckCA5DQTJRAcpoWJs1yOHnrx87EPGm9b0FhtiQAG5DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJBspxeLpJ2zimcHwkEsdefwEX0ti4eBwJms71Mg+RdKtdEom3zWpwcCxin3AopRev7Q3KubrOu8qItQrvNTGMRng8SYERbwW8murp0NMxsm/IO967eADaH3e4dcMeHqbOh19Jfw90ow6189AfSoNzZyq24gW8Ko4svjnaxol84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbk13POG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=li/ut9nvZ4QlYyqEuOco4BggbAHJusn2nmwn8wORujHSwVwTZIg7GMH27V/XrUw1p1c6QbD/pK3FCCSDeK5EOP4VXB97RDrV7v9JRQNbA3aYEDv/zqnkPYLfjhqbAKbundpnm8vAP48WXqQO4TWla9C0b2IxKLeNSfbhpdRrBro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dN+6Zzlx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbk13POG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3511F000E9;
-	Thu,  2 Jul 2026 17:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dN+6Zzlx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631681F000E9;
+	Thu,  2 Jul 2026 17:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011688;
-	bh=RHaig3KPQvGV7LRGJAyaBhP7m/t9y85QRj0mY4hUQsc=;
+	s=korg; t=1783011690;
+	bh=zS1qq9NiY/Zdq7CPTorOE0ikpjinfZWKxE9jMhvflhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sbk13POGWUo9+Y/1CDHAuQAFkoXu6RendWiCmo6PKCQ9nbDpJa9PC33TrfWg89HuP
-	 1ZG3/JstmWcQOEmoYhSPPZcTcNqFpNYE0sSXEN25jxCAKqSP1jHzKPhF/FomUlX7Vk
-	 srJMkJFhInHQuvLEwljjJe6DF+dhM6MpQ6a9/b8M=
+	b=dN+6ZzlxsTauy/U5xAQRuZ3sEfkQTHaQ+FdACKIAipneNuwzSMLXKPhLB5hutTy+U
+	 HNRzCBZkPhDGxAT++sYAjs2pjOAoZD94HOZP9mbailJGenLHRw04s3BXRZYO2h047W
+	 x/B2Ga7C2I1y2hqDZOV/1cWnpUVuYdy5hrmUsmIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Jelonek <jelonek.jonas@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 7.1 093/120] MIPS: smp: report dying CPU to RCU in stop_this_cpu()
-Date: Thu,  2 Jul 2026 18:21:29 +0200
-Message-ID: <20260702155114.884020767@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 7.1 052/120] wifi: rtl8xxxu: Detect the maximum supported channel width
+Date: Thu,  2 Jul 2026 18:20:48 +0200
+Message-ID: <20260702155114.041727989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -50,71 +50,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Jelonek <jelonek.jonas@gmail.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 9f3f3bdc6d9dac1a5a8262ee7ad0f2ff1527a7e7 upstream.
+commit ef771eabc79d5f21b63689cca0e0fa5493fa0a8a upstream.
 
-smp_send_stop() parks all secondary CPUs in stop_this_cpu(). The function
-marks the CPU offline for the scheduler via set_cpu_online(false) but
-never informs RCU, so RCU keeps expecting a quiescent state from CPUs
-that are now spinning forever with interrupts disabled.
+Some devices malfunction when connected to a network with 40 MHz channel
+width, because they don't support that.
 
-As long as nothing waits for an RCU grace period after smp_send_stop()
-this is harmless, which is why it went unnoticed. Since commit
-91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
-however, irq_work_sync() calls synchronize_rcu() on architectures without
-an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt() returns
-false. That is the asm-generic default used by MIPS. Any irq_work_sync()
-issued in the reboot/shutdown path after smp_send_stop() then blocks on
-a grace period that can never complete, hanging the reboot:
+RTL8188FU, RTL8192FU, and RTL8710BU (RTL8188GU) have a way to signal
+this (and some other capabilities) to the driver. Get this information
+from the hardware and advertise 40 MHz support only when the hardware
+can handle it. We assume the other chips can always handle it.
 
-  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
-  ...
-  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-  rcu: Offline CPU 1 blocking current GP.
-  rcu: Offline CPU 2 blocking current GP.
-  rcu: Offline CPU 3 blocking current GP.
+RTL8710BU needs a different way to retrieve this information, which will
+be implemented some other time.
 
-This issue was noticed on several Realtek MIPS switch SoCs (MIPS
-interAptiv) and came up during kernel bump downstream in OpenWrt from
-6.18.33 to 6.18.34, after the backport of the patch to the 6.18 stable
-branch. The patch also has been backported all the way back to 6.1.
-
-Call rcutree_report_cpu_dead() once interrupts are disabled, mirroring the
-generic CPU-hotplug offline path, so RCU stops waiting on the parked CPUs
-and grace periods can still complete. MIPS shuts down all CPUs here
-without going through the CPU-hotplug mechanism, so this report is not
-otherwise issued. Reporting a dying CPU to RCU outside the regular hotplug
-offline path is not unprecedented: arm64 does the same in cpu_die_early().
-There it is an exception for a CPU that was coming online and is aborting
-bringup, rather than the default shutdown action as on MIPS.
-
-Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
-CC: stable@vger.kernel.org
-Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: dbf9b7bb0edf ("wifi: rtl8xxxu: Enable 40 MHz width by default")
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221394
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/c57de68e-5d57-4c26-898f-8a284bb25381@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/smp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtl8xxxu/8188e.c    |    1 
+ drivers/net/wireless/realtek/rtl8xxxu/8188f.c    |    1 
+ drivers/net/wireless/realtek/rtl8xxxu/8192c.c    |    1 
+ drivers/net/wireless/realtek/rtl8xxxu/8192e.c    |    1 
+ drivers/net/wireless/realtek/rtl8xxxu/8192f.c    |    1 
+ drivers/net/wireless/realtek/rtl8xxxu/8710b.c    |    1 
+ drivers/net/wireless/realtek/rtl8xxxu/8723a.c    |    1 
+ drivers/net/wireless/realtek/rtl8xxxu/8723b.c    |    1 
+ drivers/net/wireless/realtek/rtl8xxxu/core.c     |   64 +++++++++++++++++++++--
+ drivers/net/wireless/realtek/rtl8xxxu/regs.h     |    2 
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h |    7 ++
+ 11 files changed, 76 insertions(+), 5 deletions(-)
 
---- a/arch/mips/kernel/smp.c
-+++ b/arch/mips/kernel/smp.c
-@@ -20,6 +20,7 @@
- #include <linux/sched/mm.h>
- #include <linux/cpumask.h>
- #include <linux/cpu.h>
-+#include <linux/rcupdate.h>
- #include <linux/err.h>
- #include <linux/ftrace.h>
- #include <linux/irqdomain.h>
-@@ -422,6 +423,7 @@ static void stop_this_cpu(void *dummy)
- 	set_cpu_online(smp_processor_id(), false);
- 	calculate_cpu_foreign_map();
- 	local_irq_disable();
-+	rcutree_report_cpu_dead();
- 	while (1);
+--- a/drivers/net/wireless/realtek/rtl8xxxu/8188e.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/8188e.c
+@@ -1866,6 +1866,7 @@ struct rtl8xxxu_fileops rtl8188eu_fops =
+ 	.has_tx_report = 1,
+ 	.init_reg_pkt_life_time = 1,
+ 	.gen2_thermal_meter = 1,
++	.hw_feature_report = 0,
+ 	.max_sec_cam_num = 32,
+ 	.adda_1t_init = 0x0b1b25a0,
+ 	.adda_1t_path_on = 0x0bdb25a0,
+--- a/drivers/net/wireless/realtek/rtl8xxxu/8188f.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/8188f.c
+@@ -1745,6 +1745,7 @@ struct rtl8xxxu_fileops rtl8188fu_fops =
+ 	.init_reg_rxfltmap = 1,
+ 	.init_reg_pkt_life_time = 1,
+ 	.init_reg_hmtfr = 1,
++	.hw_feature_report = 1,
+ 	.ampdu_max_time = 0x70,
+ 	.ustime_tsf_edca = 0x28,
+ 	.max_aggr_num = 0x0c14,
+--- a/drivers/net/wireless/realtek/rtl8xxxu/8192c.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/8192c.c
+@@ -723,6 +723,7 @@ struct rtl8xxxu_fileops rtl8192cu_fops =
+ 	.tx_desc_size = sizeof(struct rtl8xxxu_txdesc32),
+ 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc16),
+ 	.supports_ap = 1,
++	.hw_feature_report = 0,
+ 	.max_macid_num = 32,
+ 	.max_sec_cam_num = 32,
+ 	.adda_1t_init = 0x0b1b25a0,
+--- a/drivers/net/wireless/realtek/rtl8xxxu/8192e.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/8192e.c
+@@ -1751,6 +1751,7 @@ struct rtl8xxxu_fileops rtl8192eu_fops =
+ 	.has_s0s1 = 0,
+ 	.gen2_thermal_meter = 1,
+ 	.needs_full_init = 1,
++	.hw_feature_report = 0,
+ 	.supports_ap = 1,
+ 	.max_macid_num = 128,
+ 	.max_sec_cam_num = 64,
+--- a/drivers/net/wireless/realtek/rtl8xxxu/8192f.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/8192f.c
+@@ -2074,6 +2074,7 @@ struct rtl8xxxu_fileops rtl8192fu_fops =
+ 	.init_reg_rxfltmap = 1,
+ 	.init_reg_pkt_life_time = 1,
+ 	.init_reg_hmtfr = 1,
++	.hw_feature_report = 1,
+ 	.ampdu_max_time = 0x5e,
+ 	.ustime_tsf_edca = 0x50,
+ 	.max_aggr_num = 0x1f1f,
+--- a/drivers/net/wireless/realtek/rtl8xxxu/8710b.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/8710b.c
+@@ -1852,6 +1852,7 @@ struct rtl8xxxu_fileops rtl8710bu_fops =
+ 	.init_reg_rxfltmap = 1,
+ 	.init_reg_pkt_life_time = 1,
+ 	.init_reg_hmtfr = 1,
++	.hw_feature_report = 0, /* TODO, it's different */
+ 	.ampdu_max_time = 0x5e,
+ 	/*
+ 	 * The RTL8710BU vendor driver uses 0x50 here and it works fine,
+--- a/drivers/net/wireless/realtek/rtl8xxxu/8723a.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/8723a.c
+@@ -632,6 +632,7 @@ struct rtl8xxxu_fileops rtl8723au_fops =
+ 	.rx_agg_buf_size = 16000,
+ 	.tx_desc_size = sizeof(struct rtl8xxxu_txdesc32),
+ 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc16),
++	.hw_feature_report = 0,
+ 	.max_sec_cam_num = 32,
+ 	.adda_1t_init = 0x0b1b25a0,
+ 	.adda_1t_path_on = 0x0bdb25a0,
+--- a/drivers/net/wireless/realtek/rtl8xxxu/8723b.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/8723b.c
+@@ -1746,6 +1746,7 @@ struct rtl8xxxu_fileops rtl8723bu_fops =
+ 	.gen2_thermal_meter = 1,
+ 	.needs_full_init = 1,
+ 	.init_reg_hmtfr = 1,
++	.hw_feature_report = 0,
+ 	.ampdu_max_time = 0x5e,
+ 	.ustime_tsf_edca = 0x50,
+ 	.max_aggr_num = 0x0c14,
+--- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+@@ -14,6 +14,7 @@
+  */
+ 
+ #include <linux/firmware.h>
++#include <linux/iopoll.h>
+ #include "regs.h"
+ #include "rtl8xxxu.h"
+ 
+@@ -3915,6 +3916,46 @@ static inline u8 rtl8xxxu_get_macid(stru
+ 	return sta_info->macid;
  }
  
++static void rtl8xxxu_request_hw_feature(struct rtl8xxxu_priv *priv)
++{
++	if (!priv->fops->hw_feature_report)
++		return;
++
++	rtl8xxxu_write8(priv, REG_C2HEVT_MSG_NORMAL, C2H_HW_FEATURE_DUMP);
++}
++
++static int rtl8xxxu_dump_hw_feature(struct rtl8xxxu_priv *priv)
++{
++	static const u8 bw_map[8] = { 0, 0, 160, 5, 10, 20, 40, 80 };
++	struct rtl8xxxu_hw_feature *hw_feature = &priv->hw_feature;
++	u8 feature[13];
++	int i, ret;
++	u8 id, bw;
++
++	if (!priv->fops->hw_feature_report) {
++		hw_feature->max_bw = 40;
++		return 0;
++	}
++
++	ret = read_poll_timeout(rtl8xxxu_read8, id,
++				id == C2H_HW_FEATURE_REPORT,
++				10000, 800000, false,
++				priv, REG_C2HEVT_MSG_NORMAL);
++	if (ret)
++		return ret;
++
++	for (i = 0; i < ARRAY_SIZE(feature); i++)
++		feature[i] = rtl8xxxu_read8(priv, REG_C2HEVT_MSG_NORMAL + 2 + i);
++
++	rtl8xxxu_write8(priv, REG_C2HEVT_MSG_NORMAL, 0);
++
++	bw = u8_get_bits(feature[6], GENMASK(2, 0));
++
++	hw_feature->max_bw = bw_map[bw];
++
++	return 0;
++}
++
+ static int rtl8xxxu_init_device(struct ieee80211_hw *hw)
+ {
+ 	struct rtl8xxxu_priv *priv = hw->priv;
+@@ -3961,6 +4002,8 @@ static int rtl8xxxu_init_device(struct i
+ 	 */
+ 	rtl8xxxu_write16(priv, REG_TRXFF_BNDY + 2, fops->trxff_boundary);
+ 
++	rtl8xxxu_request_hw_feature(priv);
++
+ 	for (int retry = 5; retry >= 0 ; retry--) {
+ 		ret = rtl8xxxu_download_firmware(priv);
+ 		dev_dbg(dev, "%s: download_firmware %i\n", __func__, ret);
+@@ -3976,6 +4019,12 @@ static int rtl8xxxu_init_device(struct i
+ 	if (ret)
+ 		goto exit;
+ 
++	ret = rtl8xxxu_dump_hw_feature(priv);
++	if (ret) {
++		dev_err(dev, "failed to dump hw feature\n");
++		goto exit;
++	}
++
+ 	if (fops->phy_init_antenna_selection)
+ 		fops->phy_init_antenna_selection(priv);
+ 
+@@ -7835,15 +7884,20 @@ static int rtl8xxxu_probe(struct usb_int
+ 	sband->ht_cap.ht_supported = true;
+ 	sband->ht_cap.ampdu_factor = IEEE80211_HT_MAX_AMPDU_64K;
+ 	sband->ht_cap.ampdu_density = IEEE80211_HT_MPDU_DENSITY_16;
+-	sband->ht_cap.cap = IEEE80211_HT_CAP_SGI_20 | IEEE80211_HT_CAP_SGI_40 |
+-			    IEEE80211_HT_CAP_SUP_WIDTH_20_40;
++	sband->ht_cap.cap = IEEE80211_HT_CAP_SGI_20;
++
++	if (priv->hw_feature.max_bw >= 40) {
++		sband->ht_cap.cap |= IEEE80211_HT_CAP_SGI_40;
++		sband->ht_cap.cap |= IEEE80211_HT_CAP_SUP_WIDTH_20_40;
++	} else {
++		dev_info(&udev->dev, "hardware doesn't support HT40\n");
++	}
++
+ 	memset(&sband->ht_cap.mcs, 0, sizeof(sband->ht_cap.mcs));
+ 	sband->ht_cap.mcs.rx_mask[0] = 0xff;
+ 	sband->ht_cap.mcs.rx_mask[4] = 0x01;
+-	if (priv->rf_paths > 1) {
++	if (priv->rf_paths > 1)
+ 		sband->ht_cap.mcs.rx_mask[1] = 0xff;
+-		sband->ht_cap.cap |= IEEE80211_HT_CAP_SGI_40;
+-	}
+ 	sband->ht_cap.mcs.tx_params = IEEE80211_HT_MCS_TX_DEFINED;
+ 
+ 	hw->wiphy->bands[NL80211_BAND_2GHZ] = sband;
+--- a/drivers/net/wireless/realtek/rtl8xxxu/regs.h
++++ b/drivers/net/wireless/realtek/rtl8xxxu/regs.h
+@@ -447,6 +447,8 @@
+ /* 8188EU */
+ #define REG_32K_CTRL			0x0194
+ #define REG_C2HEVT_MSG_NORMAL		0x01a0
++#define C2H_HW_FEATURE_REPORT		0x19
++#define C2H_HW_FEATURE_DUMP		0xfd
+ /* 8192EU/8723BU/8812 */
+ #define REG_C2HEVT_CMD_ID_8723B		0x01ae
+ #define REG_C2HEVT_CLEAR		0x01af
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
+@@ -1789,11 +1789,17 @@ struct rtl8xxxu_cfo_tracking {
+ #define RTL8XXXU_BC_MC_MACID1	1
+ #define RTL8XXXU_MAX_SEC_CAM_NUM	64
+ 
++struct rtl8xxxu_hw_feature {
++	u8 max_bw;
++};
++
+ struct rtl8xxxu_priv {
+ 	struct ieee80211_hw *hw;
+ 	struct usb_device *udev;
+ 	struct rtl8xxxu_fileops *fops;
+ 
++	struct rtl8xxxu_hw_feature hw_feature;
++
+ 	spinlock_t tx_urb_lock;
+ 	struct list_head tx_urb_free_list;
+ 	int tx_urb_free_count;
+@@ -2009,6 +2015,7 @@ struct rtl8xxxu_fileops {
+ 	u8 init_reg_pkt_life_time:1;
+ 	u8 init_reg_hmtfr:1;
+ 	u8 supports_concurrent:1;
++	u8 hw_feature_report:1;
+ 	u8 ampdu_max_time;
+ 	u8 ustime_tsf_edca;
+ 	u16 max_aggr_num;
 
 
