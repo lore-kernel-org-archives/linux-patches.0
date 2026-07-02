@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FF02DEA98;
-	Thu,  2 Jul 2026 17:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44AE30B53E;
+	Thu,  2 Jul 2026 17:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011705; cv=none; b=aqFmIjhwf7lwSNuq9UwRNz2aCkpGOep1+eL+WUN+GwK2jOqEmEdMuBCh/z1HwA8GBI9x99epeR+dQs/fjkqAzaQVAQU7AJxPvmLxCAR2+RL+ZjtqebWc4dVWrVu7DCTVltLkV+RbgVRhnZS5CRtBY2s+1Rv370IvYdStXeR1JaU=
+	t=1783011707; cv=none; b=Uc7OBdMRfViBVYHhiLkVgPsjl5PWAe9feK+IlATqWeGSuxEjDdE/PHF0PNtre3ArCcIaz3Uu/DQo+4WPiMfOB19jgiU3Hv2s6w6FOXXhotNp0T8FOCOeQre3tm7OKPyFZwalWI/j5w/ba4OjyiePiOY1cgfLDa+JdDWCxQoVDGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011705; c=relaxed/simple;
-	bh=ZobOUlb0BM9Xw6A7pVrQb78NWLl/fQn4WtOh3t1a4CE=;
+	s=arc-20240116; t=1783011707; c=relaxed/simple;
+	bh=lglEfIUhK8jyGrFP/m8J8txtOE9drUI62NsOMLo8qBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALFghhNo1k7ZoqbzfKO0/EpUZAFeB8zLOCpIttrvjzCZ0a+GG7MStpg3F2DS6Pr1bpMt1/Zw+1Shf2scAAESavH/cG+Lb/VfR0SkMSinIoFxFAOPQz+TuW14+2hE7PH8/IXLrN3Ia8jA8wUvN2+EzbAziVslfnuFgbLuKa4dgpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+4QZmMT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e21MLe8inxIO7wP9QTQrwwZd10gs4c4x1jYmwkX2pGyqd00txArPT96N+BINhNE1mjFVL0OEV+zH8yLuNnYgmv/nex6NF7awK9A9oVsy25q9He03RmZoqbpTyKX3DgcnHrhlgV1vcwGOAEGAkuSqQnFdkypx6d7adZ72JkM4K2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlOh08GD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+4QZmMT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8271F000E9;
-	Thu,  2 Jul 2026 17:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlOh08GD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F399E1F000E9;
+	Thu,  2 Jul 2026 17:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011703;
-	bh=3e/k0Ygxu4hjXAzOrTdV8P0d+xAzSOk21EtKOCyRaDs=;
+	s=korg; t=1783011706;
+	bh=WeSw43ioA1kbg0aPwrXYLCg1k/PNqYhU4xyHB26JDQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+4QZmMT1z7fSyh+gem5H5/9shbfqyJggSlbmLahZKvGUJ8THqduLhvqDF8MHkw0d
-	 HwTKno3RsSi61LgtSlHRXppnrjBVLC1YOUReaGORj2UceNGRlufQ7GO/8mMQtz0x9b
-	 b23BerhODl8bitMl6e7kLo6yBHGVNTI4mldymR2Y=
+	b=DlOh08GDKr3f1CMppIN+86kVtElQe0sMrvUbXS8zfzc3qCBJD9hN9j7LTe23btLQ1
+	 2pvfIABfMO/YHIkqNPM7Ww4pmvtEBx8OTwnv82rOkmL66Twqf8oxGHfb7WjeR0Ytzt
+	 wnrOTbBLpQnOxgeAICp85Ilr8pAI4iZPZL022KbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 047/120] userfaultfd: ensure mremap_userfaultfd_fail() releases mmap_changing
-Date: Thu,  2 Jul 2026 18:20:43 +0200
-Message-ID: <20260702155113.937799780@linuxfoundation.org>
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.1 095/120] KVM: SVM: Fix page overflow in sev_dbg_crypt() for ENCRYPT path
+Date: Thu,  2 Jul 2026 18:21:31 +0200
+Message-ID: <20260702155114.924901340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -55,48 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit 0496a59745b0723ea74274db16fd5c8b1379b9a9 upstream.
+commit 78ee2d50185a037b3d2452a97f3dad69c3f7f389 upstream.
 
-Sashiko says:
+In sev_dbg_crypt(), the per-iteration transfer length is bounded by
+the source page offset (PAGE_SIZE - s_off) but not by the destination
+page offset (PAGE_SIZE - d_off).  When d_off > s_off, the encrypt
+path (__sev_dbg_encrypt_user) performs a read-modify-write using a
+single-page intermediate buffer (dst_tpage):
 
-  mremap_userfaultfd_prep() increments ctx->mmap_changing to stall
-  concurrent operations, but mremap_userfaultfd_fail() does not
-  decrement it before dropping the context reference.
+  1. __sev_dbg_decrypt() expands the size to round_up(len + (d_off & 15), 16)
+     before issuing the PSP command.  If len + (d_off & 15) > PAGE_SIZE,
+     the PSP writes beyond the end of the 4096-byte dst_tpage allocation.
 
-If an mremap operation fails, ctx->mmap_changing remains elevated. This
-will causes subsequent userfaultfd operations like a UFFDIO_COPY to fail
-with -EAGAIN.
+  2. The subsequent memcpy()/copy_from_user() into
+     page_address(dst_tpage) + (d_off & 15) of 'len' bytes overflows
+     by up to 15 bytes under the same condition.
 
-Decrement ctx->mmap_changing in mremap_userfaultfd_fail().
+Trigger example: s_off = 0, d_off = 1, debug.len = PAGE_SIZE -
+the PSP is instructed to write round_up(4097, 16) = 4112 bytes to
+a 4096-byte buffer.
 
-Link: https://sashiko.dev/#/patchset/20260430113512.115938-1-rppt@kernel.org
-Link: https://lore.kernel.org/20260513081416.495963-1-rppt@kernel.org
-Fixes: df2cc96e7701 ("userfaultfd: prevent non-cooperative events vs mcopy_atomic races")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix by also bounding len by (PAGE_SIZE - d_off), the same check that
+sev_send_update_data() already performs for its single-page guest
+region.
+
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in sev_dbg_crypt+0x993/0xd10 [kvm_amd]
+ Write of size 4095 at addr ff110062293bb009 by task sev_dbg_test/228214
+
+ CPU: 96 UID: 0 PID: 228214 Comm: sev_dbg_test Tainted: G     U  W           7.0.0-smp--5ce9b0c48211-dbg #156 PREEMPTLAZY
+ Tainted: [U]=USER, [W]=WARN
+ Hardware name: Google Astoria/astoria, BIOS 0.20250817.1-0 08/25/2025
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x54/0x70
+  print_report+0xbc/0x260
+  kasan_report+0xa2/0xd0
+  kasan_check_range+0x25f/0x2c0
+  __asan_memcpy+0x40/0x70
+  sev_dbg_crypt+0x993/0xd10 [kvm_amd]
+  sev_mem_enc_ioctl+0x33c/0x450 [kvm_amd]
+  kvm_vm_ioctl+0x65d/0x6d0 [kvm]
+  __se_sys_ioctl+0xb2/0x100
+  do_syscall_64+0xe8/0x870
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  </TASK>
+
+ The buggy address belongs to the physical page:
+ page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x7fe72b6a0 pfn:0x62293bb
+ memcg:ff11000112827d82
+ flags: 0x1400000000000000(node=1|zone=1)
+ raw: 1400000000000000 0000000000000000 dead000000000122 0000000000000000
+ raw: 00000007fe72b6a0 0000000000000000 00000001ffffffff ff11000112827d82
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ff110062293bbf00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  ff110062293bbf80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ >ff110062293bc000: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                    ^
+  ff110062293bc080: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+  ff110062293bc100: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+ ==================================================================
+ Disabling lock debugging due to kernel taint
+
+Fixes: 24f41fb23a39 ("KVM: SVM: Add support for SEV DEBUG_DECRYPT command")
+Fixes: 7d1594f5d94b ("KVM: SVM: Add support for SEV DEBUG_ENCRYPT command")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+[sean: add sample KASAN splat, Fixes, and stable@]
+Link: https://patch.msgid.link/20260501203537.2120074-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/svm/sev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -786,6 +786,8 @@ void mremap_userfaultfd_fail(struct vm_u
- 	if (!ctx)
- 		return;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -1396,6 +1396,7 @@ static int sev_dbg_crypt(struct kvm *kvm
+ 		s_off = vaddr & ~PAGE_MASK;
+ 		d_off = dst_vaddr & ~PAGE_MASK;
+ 		len = min_t(size_t, (PAGE_SIZE - s_off), size);
++		len = min_t(size_t, len, PAGE_SIZE - d_off);
  
-+	atomic_dec(&ctx->mmap_changing);
-+	VM_WARN_ON_ONCE(atomic_read(&ctx->mmap_changing) < 0);
- 	userfaultfd_ctx_put(ctx);
- }
- 
+ 		if (dec)
+ 			ret = __sev_dbg_decrypt_user(kvm,
 
 
