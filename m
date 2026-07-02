@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E27B24E4C3;
-	Thu,  2 Jul 2026 17:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339F91FA859;
+	Thu,  2 Jul 2026 17:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011765; cv=none; b=JeJmfV/TnLgU9LnzS3KI5GnTBBlqcqzS1TQhsZFuU0HvBq3Dww/jB9yTjcQjy1ONZhYOEeaI8pWyTdOOEFzyNeKYt21YyA8ndgtiAxhZ2O4ErfRRgyZv00+zh/twDCBD2ejWUj9+eeN9HtC63Av9gNfJZHYketQnnM4qAc1h2Ts=
+	t=1783011768; cv=none; b=bYvgD6jzJFnLxLOTr1NeG5oFo39xGxo75bhWTxkDhVUh2OlvRfp8vjaKCZkp4DCq7ruHzGCuJm+1a7z6DZxbBNfiOYexa7N8k5M6GR8+GS5EpCpuuIgiWr2QXL5n+coF9qj773ULtQq95qtFY0QbSHD0GmgnvE+ih9OavV/FqNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011765; c=relaxed/simple;
-	bh=/lTkDijhHKwaVb7fToQC9ntk1KagKlsuXJC7LIn1vao=;
+	s=arc-20240116; t=1783011768; c=relaxed/simple;
+	bh=/bPeA9xeup5phmepzJi3LXmLXiYxe/feqILskgQQLpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUOrPD/GrKCr/JBEoCsmkdVkykZYSl5N0RG6el66nVbrSMxhWjs/1xW9Q7NRgBjXV+vu7xtysuilj2IY3dM5fx9RQkrKpn9Ac6Qn2oTEtWAjA7s8HtSceUFM+vqvndW/U9yfEhJ9q3SY10kwgm/LTZ9woz3wEPT0DSg01u2ollk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrRJ6Fjp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cGjrr0oWqoxLnvCxo3FGHisax/AyUzJvzefD5R3SccqqYpKIbQI6/7rw85lUgJItp4OalXYJKi0Vi4yFAVpEFl7tnr/bUucJsOX7zcfvVKqK8RJiSTjE64okrw42p7pgVMaiwM6MfW3UvcpwIFO1s6cJQOEBrLhEdatCv2nc2N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewIzGzJ+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrRJ6Fjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005881F000E9;
-	Thu,  2 Jul 2026 17:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewIzGzJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B821F00A3A;
+	Thu,  2 Jul 2026 17:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011764;
-	bh=FJPucgB+VXTr2AVJRUiokUrc2Ry1TDGPhRPmBvovb8Q=;
+	s=korg; t=1783011767;
+	bh=UV7sO0SSyeax+8jOXQwNi/yNR6dZf8mVOTLz/rGYmHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrRJ6FjpIrFSWRQfR8lrxK4ddIco/vmjrQkdtJDvf0JOtxNHuj5DeyEXP5uw/6rhf
-	 6giCO8NQJsT6YCOwWxNuHFOz0t7UUD5v2ffWc7dZnTYEc79t8Ur1B2B8WDCqylQDhg
-	 8yw8MrQZs/fikz5fXxsTyJWtBm95yFNOTXVKE5Ws=
+	b=ewIzGzJ+ztoPl8jEYa9xZRPfknpOO9Fr0vtZWOazpMkjlR6ANJj7mvKi0McfHwXsM
+	 buB5AUNStDd3DVZQSK3NIl6e8CRAPQbOr5mX/iL1ncnLQyj9F6lpvNjXcPeRM9ZyDz
+	 MvVOcG9GVEcWg84EKIckka4KKK6ptxJL2U4peEIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.1 100/120] fbdev: fbcon: fix out-of-bounds read in err_out of fbcon_do_set_font()
-Date: Thu,  2 Jul 2026 18:21:36 +0200
-Message-ID: <20260702155115.027652883@linuxfoundation.org>
+Subject: [PATCH 7.1 101/120] fbdev: omap2: fix use-after-free in omapfb_mmap
+Date: Thu,  2 Jul 2026 18:21:37 +0200
+Message-ID: <20260702155115.046925573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -51,65 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-commit 8fdc8c2057eea08d40ce2c8eed41ff9e451c65c2 upstream.
+commit 7958e67375aa111522086286bba13cfc0816ce8d upstream.
 
-When fbcon_do_set_font() fails (e.g., due to a memory allocation failure
-inside vc_resize() under heavy memory pressure), it jumps to the `err_out`
-label to roll back the console state. However, the current rollback logic
-forgets to restore the `hi_font` state, leading to a severe state machine
-corruption.
+omapfb_mmap() has a race condition with OMAPFB_SETUP_PLANE ioctl that
+can lead to use-after-free:
 
-Earlier in the function, `set_vc_hi_font()` might be called to change
-`vc->vc_hi_font_mask` and mutate the screen buffer. If `vc_resize()`
-subsequently fails, the `err_out` path restores `vc_font.charcount`
-but entirely skips rolling back the `vc_hi_font_mask` and the screen
-buffer.
+The fb_mmap() entry point holds mm_lock but not lock (fb_info->lock),
+while ioctl handlers like OMAPFB_SETUP_PLANE hold lock but not mm_lock.
+This allows concurrent execution.
 
-This mismatch leaves the terminal in a desynchronized state. Because
-`vc_hi_font_mask` remains set, the VT subsystem will still accept
-character indices greater than 255 from userspace and write them to the
-screen buffer. Subsequent rendering calls (e.g., `fbcon_putcs()`) will
-then use these inflated indices to access the reverted, 256-character
-font array, leading to a deterministic out-of-bounds read and potential
-kernel memory disclosure.
+In omapfb_mmap():
+1. rg = omapfb_get_mem_region(ofbi->region);      // Get old region ref
+2. start = omapfb_get_region_paddr(ofbi);          // Read from NEW region
+3. len = fix->smem_len;                             // Read from NEW region
+4. vm_iomap_memory(vma, start, len);               // Map NEW region memory
+5. atomic_inc(&rg->map_count);                      // Increment OLD region!
 
-Fix this by adding the missing rollback logic for the `hi_font` mask
-and screen buffer in the error path.
+Concurrently, OMAPFB_SETUP_PLANE can:
+- Reassign ofbi->region = new_rg
+- Update fix->smem_len
+- OMAPFB_SETUP_MEM then checks NEW region's map_count (0!) and frees it
 
-Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
+This leaves userspace with a mapping to freed physical memory.
+
+The fix is to read all required values (start, len) from the same
+region reference (rg) that will have its map_count incremented,
+preventing the region from being freed while still mapped.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/video/fbdev/omap2/omapfb/omapfb-main.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2407,6 +2407,7 @@ static int fbcon_do_set_font(struct vc_d
- 	int resize, ret, old_width, old_height, old_charcount;
- 	font_data_t *old_fontdata = p->fontdata;
- 	const u8 *old_data = vc->vc_font.data;
-+	unsigned short old_hi_font_mask = vc->vc_hi_font_mask;
+--- a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
++++ b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
+@@ -1099,7 +1099,11 @@ static int omapfb_mmap(struct fb_info *f
  
- 	font_data_get(data);
+ 	rg = omapfb_get_mem_region(ofbi->region);
  
-@@ -2453,6 +2454,12 @@ err_out:
- 	vc->vc_font.height = old_height;
- 	vc->vc_font.charcount = old_charcount;
- 
-+	/* Restore the hi_font state and screen buffer */
-+	if (old_hi_font_mask && !vc->vc_hi_font_mask)
-+		set_vc_hi_font(vc, true);
-+	else if (!old_hi_font_mask && vc->vc_hi_font_mask)
-+		set_vc_hi_font(vc, false);
+-	start = omapfb_get_region_paddr(ofbi);
++	if (ofbi->rotation_type == OMAP_DSS_ROT_VRFB)
++		start = rg->vrfb.paddr[0];
++	else
++		start = rg->paddr;
 +
- 	font_data_put(data);
+ 	len = fix->smem_len;
  
- 	return ret;
+ 	DBG("user mmap region start %lx, len %d, off %lx\n", start, len,
+@@ -1109,6 +1113,8 @@ static int omapfb_mmap(struct fb_info *f
+ 	vma->vm_ops = &mmap_user_ops;
+ 	vma->vm_private_data = rg;
+ 
++	atomic_inc(&rg->map_count);
++
+ 	r = vm_iomap_memory(vma, start, len);
+ 	if (r)
+ 		goto error;
+@@ -1121,6 +1127,7 @@ static int omapfb_mmap(struct fb_info *f
+ 	return 0;
+ 
+ error:
++	atomic_dec(&rg->map_count);
+ 	omapfb_put_mem_region(rg);
+ 
+ 	return r;
 
 
