@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47F924E4C3;
-	Thu,  2 Jul 2026 16:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510A033689F;
+	Thu,  2 Jul 2026 16:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010874; cv=none; b=cmjr4DsV51DZmgx1FCgld8I9TWK5u7rGmXziUFzARMz6s6VSoZ5GwUIjM9vzWehLg8P1U/Totm8NM9W3JHvDBkgWgwkx4hcCxO7oMdJFI4Fb61M1l8EDpZuhlntsHSysosYlaJwoEUD1pWgPr1uQCUuTOYio+ArQGnfxU4Ka1KU=
+	t=1783010877; cv=none; b=vDhYELe56SgLffcuiVuUfSKvrbRe+eT36aAe01Hk1Uh9/3W/78kjHYNVDfoA62lXmHcJwzWMmdkOvgT1TNaFJZw3LxG0DmsRn+JB7dMZITN0lWlfI66rekh3+Eim2//I0+F0iFW17d+ENmF5oMD37+VhdVBC2+flxpNYtfwuv5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010874; c=relaxed/simple;
-	bh=PnnarlvcfnlU0NrDXpGE6QU+hnGm8vIceTQh0YphhSc=;
+	s=arc-20240116; t=1783010877; c=relaxed/simple;
+	bh=nzHFW808mKiYCHhhUCoh3jdm0Xr8uA3plSIxGTnjVIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlABy/TtcgrB39LjrC43jPQfTXT4cbG1FgUGq7BicVKbi35zCqLV2LPdxRF/OFJTwFT2vaXV9yT6SZFy5rmo8s3o/tECmiJokvZhnDZR3u+sig24gDqpl0pQEh7lsxjenMoDr4b//FJnZEo/TyVLVWeyDRxDSEze8vx/TA192wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+JVQl3/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ti6LoUPsWolHRt8w8Vi2d0sJCogWVSlamaKK1QLsZMUpz4oJLYwdsO9HDoQniV11b90/+Cn3zOSwWg6EK81dKZG1DXsinxfd8AtLYtmHMSOocYOtCUV3keha1CbjV+4Cb/hvPAE6na1aY/6dv/+yu6lkWSXZ+DU4ezTx14eF1Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D77xOyc2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+JVQl3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFE61F000E9;
-	Thu,  2 Jul 2026 16:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D77xOyc2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D111F000E9;
+	Thu,  2 Jul 2026 16:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010873;
-	bh=WTE9htJNoN8FI/ZDcNSxV3+9whoIZgsRzeh3Alkp/UU=;
+	s=korg; t=1783010876;
+	bh=kyaDQGsLVqREU2ThKA6vJIqswe+aWnjCPBkLdvM3DB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G+JVQl3/AuEaIfjvNkC/jNuC3BbYK1ca/zP9A+oP9jV+cYTA5wgCPKTRP5AbextcW
-	 B8gSuuZhAFH1OK44KCA8fXno6SOFaoVz8943tFGgAaQFYufIZcemDB1zgGtTwLIzPN
-	 D/5vxGFJrMQHTVgedYUZtNtUk2lHRlqqpWPY5EmY=
+	b=D77xOyc2Ovvrytlm4TD/d2OppAX5Cwzsk2pTEObl8+QrAF7JZ+uVRl0d7ato13uFT
+	 5fBoGtOK6pDC9GldlXCtx+C/TQgc/V0MhFV4dWFKHKWTkG9BCFAvt9c/ny/7Vn4kL3
+	 e37evLWjIdna8IPRzJpJBliX4GzOYGBZRtV0WFFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.6 070/175] scripts/sorttable: Fix endianness handling in build-time mcount sort
-Date: Thu,  2 Jul 2026 18:19:31 +0200
-Message-ID: <20260702155117.265629829@linuxfoundation.org>
+	Yi Yang <yiyang13@huawei.com>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.6 071/175] vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
+Date: Thu,  2 Jul 2026 18:19:32 +0200
+Message-ID: <20260702155117.288498724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -58,48 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit 023f124a64174c47e18340ded7e2a39b96eb9523 ]
+commit a287620312dc6dcb9a093417a0e589bf30fcf38a upstream.
 
-Kernel cross-compilation with BUILDTIME_MCOUNT_SORT produces zeroed
-mcount values if the build-host endianness does not match the ELF
-file endianness.
+A KASAN null-ptr-deref was observed in vcs_notifier():
 
-The mcount values array is converted from ELF file
-endianness to build-host endianness during initialization in
-fill_relocs()/fill_addrs(). Avoid extra conversion of these values during
-weak-function zeroing; otherwise, they do not match nm-parsed addresses
-and all mcount values are zeroed out.
+BUG: KASAN: null-ptr-deref in vcs_notifier+0x98/0x130
+Read of size 2 at addr qmp_cmd_name: qmp_capabilities, arguments: {}
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Link: https://lore.kernel.org/patch.git-dca31444b0f1.your-ad-here.call-01743554658-ext-8692@work.hours
-Fixes: ef378c3b8233 ("scripts/sorttable: Zero out weak functions in mcount_loc table")
-Reported-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reported-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Closes: https://lore.kernel.org/all/your-ad-here.call-01743522822-ext-4975@work.hours/
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+The issue is a race condition in vcs_write(). When the console_lock is
+temporarily dropped (to copy data from userspace), the vc_data pointer
+obtained from vcs_vc() may become stale. After re-acquiring the lock,
+vcs_vc() is called again to re-validate the pointer. If the vc has been
+deallocated in the meantime, vcs_vc() returns NULL, and the while loop
+breaks (with written > 0). However, after the loop, vcs_scr_updated(vc)
+is still called with the now-NULL vc pointer, leading to a null pointer
+dereference in the notifier chain (vcs_notifier dereferences param->vc).
+
+Fix this by adding a NULL check for vc before calling vcs_scr_updated().
+
+Fixes: 8fb9ea65c9d1 ("vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20260604060734.2914976-1-yiyang13@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/sorttable.c |    2 +-
+ drivers/tty/vt/vc_screen.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/sorttable.c
-+++ b/scripts/sorttable.c
-@@ -857,7 +857,7 @@ static void *sort_mcount_loc(void *arg)
- 		for (void *ptr = vals; ptr < vals + size; ptr += long_size) {
- 			uint64_t key;
+--- a/drivers/tty/vt/vc_screen.c
++++ b/drivers/tty/vt/vc_screen.c
+@@ -699,7 +699,7 @@ vcs_write(struct file *file, const char
+ 	}
+ 	*ppos += written;
+ 	ret = written;
+-	if (written)
++	if (written && vc)
+ 		vcs_scr_updated(vc);
  
--			key = long_size == 4 ? r((uint32_t *)ptr) : r8((uint64_t *)ptr);
-+			key = long_size == 4 ? *(uint32_t *)ptr : *(uint64_t *)ptr;
- 			if (!find_func(key)) {
- 				if (long_size == 4)
- 					*(uint32_t *)ptr = 0;
+ unlock_out:
 
 
