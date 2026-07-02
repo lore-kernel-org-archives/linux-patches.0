@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A0C360EFC;
-	Thu,  2 Jul 2026 16:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDD5353A94;
+	Thu,  2 Jul 2026 16:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010490; cv=none; b=P5FsGpnCupDvGfwkvW15y6/w+PLX2aCSDsjCSEtihR67Tx2pK1OMhNSy//63ZoopNXX0IYwU7gMhOK4mlxc7Pel3fSvNFfCXF/Vw48n0st3XX9iTVOS7g3La5oM2lT7qD/cILT2bTZ1POinOfF0wJZlBtxoFCzNAnR9aSM/2vGA=
+	t=1783010493; cv=none; b=DyUREODR+SqyCIvMdP8+rPuN+tgdVfhKjIGrKR2GACwxt1TNGRvEN137czEdHlpbwlGOBXgoIpWNXypKbY+iD6wCwnPrtZkIBWwq14ylaxz09ugHaORgXu5udlXLl+/DWwNSsgumEJhJ2fkj05tpZF3XVSNEiWoRloQZgmw0664=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010490; c=relaxed/simple;
-	bh=w3eeAwbhoFnypXG1HbCwNHslNz4zF+yCuGyhZf+bhn8=;
+	s=arc-20240116; t=1783010493; c=relaxed/simple;
+	bh=uEvZEr+ZSqq0LmaGurtj3xqAbFil9VHNwGiGufaVYKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IX1W79XlbvU6GAUYbYobZn8KaD99afCFKRTkzYWTrx8NQfQesi9EgNnG3JEY1BcdcYleMiaFwzOdZVT3j6K1gVUK+SzpBkvN6LI+/7lAjZu3ARKYDZ+0Z5ZVo0Uonx161bVzNeaZ/8rRLBrUxeGTHAAxceLWvvg88S03UYeKHFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMjVdpAw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EsOHi0lhVdyC0mwObceJdgDdpyYeKWJpgXKdzUIB1IhL4zNCsLKGUvqfLvhZxirNAyac2lp1v4CoKMjU5BuZi1ETqIUXmCUsOD3459yTsff4QqjmKc+rRnyzSQpf5Vg7+hg8gIx1XhXd/crzp370w47TyveuG8oBbWWOyaoounY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxyG1tIZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMjVdpAw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56DB1F00A3E;
-	Thu,  2 Jul 2026 16:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxyG1tIZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D34C1F00ADB;
+	Thu,  2 Jul 2026 16:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010485;
-	bh=1u5AuLXjov0rV1YBHOV23PAyGDTMUZnnu2LSXNhqSVg=;
+	s=korg; t=1783010487;
+	bh=Oe9agH0vHVbSG+vzYOZ2cvTfhTJTn/mY0nWKEo8A/II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WMjVdpAwMLFQdQv5A02zh/1K3RhVY3Oy/LmPsqf2/LbPhNQF8a+NjwZ/ioQmiRWvJ
-	 84q1eL8Dj+Wzr5I5Po6JZ80xmSgY8KMrropi90XbOweyy4xpMKzji2xI10Pe7/68pO
-	 LzBwJv6TzqjQNu8QUSFqVJffsKgldaX1SGChZ/cM=
+	b=XxyG1tIZZKSvfKyN5ItsAhZBlv+MSwAq1gpoDbli2s0gUgkm1VJB4JQ1xD2SlvkuP
+	 VmLT153VEFBYvAf+qjsxSn69+bsqFDTToa8Gh9c93qWEgWzEq+xqARsY0nGa2UF4WN
+	 2ra3DySkVsSOG4qOLDHPpbMMIHWhXo8lOT6yaejE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Brian Vazquez <brianvv@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/204] batman-adv: ensure bcast is writable before modifying TTL
-Date: Thu,  2 Jul 2026 18:19:27 +0200
-Message-ID: <20260702155120.965236995@linuxfoundation.org>
+Subject: [PATCH 6.12 128/204] inet: add indirect call wrapper for getfrag() calls
+Date: Thu,  2 Jul 2026 18:19:45 +0200
+Message-ID: <20260702155121.338934616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,48 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 4cd6d3a4b96a8576f1fed8f9f9f17c2dc2978e0c upstream.
+[ Upstream commit 5204ccbfa22358f95afd031a3f337e6d9a74baea ]
 
-Before batman-adv is allowed to write to an skb, it either has to have its
-own copy of the skb or used skb_cow() to ensure that the data part is not
-shared.
+UDP send path suffers from one indirect call to ip_generic_getfrag()
 
-The old implementation used a shared queue and created copies before
-attempting to write to it. But with the new implementation, the broadcast
-packet is already modified when it gets received. Potentially writing to
-shared buffers in this process.
+We can use INDIRECT_CALL_1() to avoid it.
 
-Adding a skb_cow() right before this operation avoids this and can at the
-same time prepare it for the modifications required to rebroadcast the
-packet.
-
-Cc: stable@kernel.org
-Fixes: 3f69339068f9 ("batman-adv: bcast: queue per interface, if needed")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Brian Vazquez <brianvv@google.com>
+Link: https://patch.msgid.link/20241203173617.2595451-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: eca856950f7c ("ipv4: account for fraggap on the paged allocation path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/routing.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv4/ip_output.c  | 13 +++++++++----
+ net/ipv6/ip6_output.c | 13 ++++++++-----
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/net/batman-adv/routing.c b/net/batman-adv/routing.c
-index f1061985149fc5..32a40c1c115c6a 100644
---- a/net/batman-adv/routing.c
-+++ b/net/batman-adv/routing.c
-@@ -1198,6 +1198,12 @@ int batadv_recv_bcast_packet(struct sk_buff *skb,
- 	if (batadv_is_my_mac(bat_priv, bcast_packet->orig))
- 		goto free_skb;
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index ba51fc42531c26..0d0d6ebdd3a849 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1169,7 +1169,10 @@ static int __ip_append_data(struct sock *sk,
+ 			/* [!] NOTE: copy will be negative if pagedlen>0
+ 			 * because then the equation reduces to -fraggap.
+ 			 */
+-			if (copy > 0 && getfrag(from, data + transhdrlen, offset, copy, fraggap, skb) < 0) {
++			if (copy > 0 &&
++			    INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
++					    from, data + transhdrlen, offset,
++					    copy, fraggap, skb) < 0) {
+ 				err = -EFAULT;
+ 				kfree_skb(skb);
+ 				goto error;
+@@ -1213,8 +1216,9 @@ static int __ip_append_data(struct sock *sk,
+ 			unsigned int off;
  
-+	/* create a copy of the skb, if needed, to modify it. */
-+	if (skb_cow(skb, ETH_HLEN) < 0)
-+		goto free_skb;
-+
-+	bcast_packet = (struct batadv_bcast_packet *)skb->data;
-+
- 	if (bcast_packet->ttl-- < 2)
- 		goto free_skb;
+ 			off = skb->len;
+-			if (getfrag(from, skb_put(skb, copy),
+-					offset, copy, off, skb) < 0) {
++			if (INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
++					    from, skb_put(skb, copy),
++					    offset, copy, off, skb) < 0) {
+ 				__skb_trim(skb, off);
+ 				err = -EFAULT;
+ 				goto error;
+@@ -1254,7 +1258,8 @@ static int __ip_append_data(struct sock *sk,
+ 				get_page(pfrag->page);
+ 			}
+ 			copy = min_t(int, copy, pfrag->size - pfrag->offset);
+-			if (getfrag(from,
++			if (INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
++				    from,
+ 				    page_address(pfrag->page) + pfrag->offset,
+ 				    offset, copy, skb->len, skb) < 0)
+ 				goto error_efault;
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 3804ead05a35ae..50b41be5d38d0e 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1695,8 +1695,9 @@ static int __ip6_append_data(struct sock *sk,
+ 				pskb_trim_unique(skb_prev, maxfraglen);
+ 			}
+ 			if (copy > 0 &&
+-			    getfrag(from, data + transhdrlen, offset,
+-				    copy, fraggap, skb) < 0) {
++			    INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
++					   from, data + transhdrlen, offset,
++					   copy, fraggap, skb) < 0) {
+ 				err = -EFAULT;
+ 				kfree_skb(skb);
+ 				goto error;
+@@ -1740,8 +1741,9 @@ static int __ip6_append_data(struct sock *sk,
+ 			unsigned int off;
  
+ 			off = skb->len;
+-			if (getfrag(from, skb_put(skb, copy),
+-						offset, copy, off, skb) < 0) {
++			if (INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
++					    from, skb_put(skb, copy),
++					    offset, copy, off, skb) < 0) {
+ 				__skb_trim(skb, off);
+ 				err = -EFAULT;
+ 				goto error;
+@@ -1781,7 +1783,8 @@ static int __ip6_append_data(struct sock *sk,
+ 				get_page(pfrag->page);
+ 			}
+ 			copy = min_t(int, copy, pfrag->size - pfrag->offset);
+-			if (getfrag(from,
++			if (INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
++				    from,
+ 				    page_address(pfrag->page) + pfrag->offset,
+ 				    offset, copy, skb->len, skb) < 0)
+ 				goto error_efault;
 -- 
 2.53.0
 
