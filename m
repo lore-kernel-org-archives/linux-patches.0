@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4B534104E;
-	Thu,  2 Jul 2026 16:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318BF33B970;
+	Thu,  2 Jul 2026 16:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009739; cv=none; b=SMrA8SjgkO27gE2V2PnnQFaeVLcgv7q7VLFJc01xCalFVB8zjyLOOHyjqfDPXtgoJTl02xHe0HNi9z2e44bVb3ONuN52Iyvc1w12Zsq/AYdAXy3y39H1tkhw5oL29tDJbt4rsmnz2Dvz0ojH+lT4G4rMYlPfj5Rl7/kmXS8Lzr8=
+	t=1783009742; cv=none; b=h1S9UstBk/3TCuE/nRDCUG/w77YieHlmX1pJuayfPbl1DXRUgjhYXwUZ5orbTEFAHKysapIPzLpOAR2c2O7tFRr20/dSWI4d4EInUh/n5NW2ExvtslKqkIePDCgmTp0Na9BOZGufMAIvZN7+619IozWimUT5HMP1x8v7YQXR/cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009739; c=relaxed/simple;
-	bh=iG6tkekfyAqnVpBHvC1cAhuZverM4rW3lLeL7SYABcM=;
+	s=arc-20240116; t=1783009742; c=relaxed/simple;
+	bh=lkq0EUnLDDtHFC8HBZjJc1wo2guWTRrf2lfiPZ7PFuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4lE4l6WPl+Hq0Hy7lcoFv67L+5/m+nWm2WBUpaEQqrGk0iB3JNqgV2BV489XzR+KZ0+FODMzNr1Xc9YFBycZSWb39FFU1RV5lr2U44esOrtCiX9K9/CIdNW++wDo28iImKQnjhby/xHaGPZO4kmQvacrzqAt3I3/E1QsErH6b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtsQCC0G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ip+E6VCHBczhVpD6vue8ONxFlc5810Mo5b8WleyC/JScrC5KBPhjmuoj9FZHR83t+EPM+StpMBGNeWUJlb8QIclSdpdufmaxwogM19Qf7cdLAptk3R2S4pTb1g8lyXhCXh81cnD5zVNb4wsOT8GX7m0pftT9XDYhRyeVrqddhzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2q4OO/5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtsQCC0G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3201F000E9;
-	Thu,  2 Jul 2026 16:28:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2q4OO/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1C31F00A3A;
+	Thu,  2 Jul 2026 16:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009736;
-	bh=OpM+K/+grWsrTFTjYuR6FfcnbkoybG4YIyaTnOT+v2g=;
+	s=korg; t=1783009738;
+	bh=229DDulCM3yw9zOKG3abB0RQq+LpMOe7+qYp/baVJ9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OtsQCC0Gs7D0t/TSX4PCjoosgyeE46vHQZLkmY/ljlRjLbVDUa8tpfiLxHFf3RjN+
-	 fQ/xrPwyjuq+J9OrZqh5RBiJH+u5MtmiRN+gMbySNlGqVjvmenGIz4KVSaNMvON1jm
-	 PpyriN/3BWinAzpQ6gPOeZ/FkmQJWUazpWtJ0fz8=
+	b=M2q4OO/5jEKE/EQRUinOUcYezpmWrXAbXuF+xhcU5KQAwB0wY1UDxEPDsZmxJ8h0S
+	 d1NhpehBFTGw7hgOEH7WsrVq9W7yZ3YQtXJrBpm7LlQHEJaPWd6ioO+ppwGhvmjYH1
+	 tNYTu/j4WkIVm0KQY9l8N6MDDcEZI1TOT48uAgsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 68/95] tipc: fix slab-use-after-free Read in tipc_aead_decrypt_done
-Date: Thu,  2 Jul 2026 18:20:11 +0200
-Message-ID: <20260702155110.646045595@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 5.15 69/95] pNFS: Fix use-after-free in pnfs_update_layout()
+Date: Thu,  2 Jul 2026 18:20:12 +0200
+Message-ID: <20260702155110.666284003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -53,124 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit bda3348872a2ef0d19f2df6aa8cb5025adce2f20 upstream.
+commit 13e198a90ca4050f4bee8a3f23680389a6563ccc upstream.
 
-tipc_aead_decrypt() goes straight from tipc_bearer_hold(b) to
-crypto_aead_decrypt(req) without taking a reference on the netns, unlike
-the encrypt path. When crypto_aead_decrypt() is offloaded asynchronously
-(e.g. the SIMD aead wrapper queuing to cryptd), the cryptd worker runs
-tipc_aead_decrypt_done() later. If the bearer's netns is torn down in the
-meantime, cleanup_net() -> tipc_exit_net() -> tipc_crypto_stop() frees the
-per-netns tipc_crypto, and the completion then reads it:
-tipc_aead_decrypt_done() dereferences aead->crypto->stats and
-aead->crypto->net, and tipc_crypto_rcv_complete() dereferences
-aead->crypto->aead[] and the node table -- reading freed memory.
+When hitting the NFS_LAYOUT_RETURN branch in pnfs_update_layout(),
+the code calls pnfs_prepare_to_retry_layoutget(lo). If it succeeds,
+pnfs_put_layout_hdr(lo) is called before trace_pnfs_update_layout(),
+which still references 'lo'. This results in a use-after-free when the
+tracepoint accesses lo's fields.
 
-Decoded KASAN splat (v7.1-rc7, CONFIG_KASAN_INLINE + TIPC + TIPC_CRYPTO):
+Fix this by moving the tracepoint call before pnfs_put_layout_hdr(lo).
 
-  BUG: KASAN: slab-use-after-free in tipc_aead_decrypt_done (net/tipc/crypto.c:999)
-  Read of size 8 at addr ffff8881056258a8 by task kworker/u16:2/51
-  Workqueue: events_unbound
-  Call Trace:
-   tipc_aead_decrypt_done (net/tipc/crypto.c:999)
-   process_one_work (kernel/workqueue.c:3314)
-   worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-  Allocated by task 169:
-   __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-   tipc_crypto_start (net/tipc/crypto.c:1502)
-   tipc_init_net (net/tipc/core.c:72)
-   ops_init (net/core/net_namespace.c:137)
-   setup_net (net/core/net_namespace.c:446)
-   copy_net_ns (net/core/net_namespace.c:579)
-   create_new_namespaces (kernel/nsproxy.c:132)
-   __x64_sys_unshare (kernel/fork.c:3316)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-  Freed by task 8:
-   kfree (mm/slub.c:6566)
-   tipc_exit_net (net/tipc/core.c:119)
-   cleanup_net (net/core/net_namespace.c:704)
-   process_one_work (kernel/workqueue.c:3314)
-   kthread (kernel/kthread.c:436)
-
-This is the same class of bug that commit e279024617134 ("net/tipc: fix
-slab-use-after-free Read in tipc_aead_encrypt_done") fixed for the encrypt
-side. The encrypt path takes maybe_get_net(aead->crypto->net) before
-crypto_aead_encrypt() and drops it with put_net() on the synchronous
-return paths and in tipc_aead_encrypt_done(); the -EINPROGRESS/-EBUSY
-return keeps the reference for the async callback to release. The decrypt
-path was left without the equivalent guard.
-
-Mirror the encrypt-side fix on the decrypt path: take a net reference
-before crypto_aead_decrypt() (failing with -ENODEV and the matching
-bearer put if it cannot be acquired), keep it across the
--EINPROGRESS/-EBUSY async return, and drop it with put_net() on the
-synchronous success/error return and at the end of
-tipc_aead_decrypt_done().
-
-Reproduced under KASAN on v7.1-rc7: a UDP bearer with a cluster key is
-flooded with crafted encrypted frames from an unknown peer (driving the
-cluster-key decrypt path) while the bearer's netns is repeatedly torn
-down. The completion must run asynchronously to outlive
-tipc_crypto_stop(); on x86 the stock aesni gcm(aes) now decrypts
-synchronously, so the async path was exercised via cryptd offload. The
-unguarded aead->crypto dereference in tipc_aead_decrypt_done() is the
-unpatched upstream path; tipc_aead_decrypt() still lacks
-maybe_get_net(aead->crypto->net), so the completion can outlive the free
-on any config where crypto_aead_decrypt() goes async.
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
+Fixes: 2c8d5fc37fe2 ("pNFS: Stricter ordering of layoutget and layoutreturn")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260617075818.37431-1-doruk@0sec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/crypto.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/nfs/pnfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -961,12 +961,20 @@ static int tipc_aead_decrypt(struct net
- 		goto exit;
- 	}
- 
-+	/* Get net to avoid freed tipc_crypto when delete namespace */
-+	if (!maybe_get_net(net)) {
-+		tipc_bearer_put(b);
-+		rc = -ENODEV;
-+		goto exit;
-+	}
-+
- 	/* Now, do decrypt */
- 	rc = crypto_aead_decrypt(req);
- 	if (rc == -EINPROGRESS || rc == -EBUSY)
- 		return rc;
- 
- 	tipc_bearer_put(b);
-+	put_net(net);
- 
- exit:
- 	kfree(ctx);
-@@ -1004,6 +1012,7 @@ static void tipc_aead_decrypt_done(struc
- 	}
- 
- 	tipc_bearer_put(b);
-+	put_net(net);
- }
- 
- static inline int tipc_ehdr_size(struct tipc_ehdr *ehdr)
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2067,11 +2067,11 @@ lookup_again:
+ 		dprintk("%s wait for layoutreturn\n", __func__);
+ 		lseg = ERR_PTR(pnfs_prepare_to_retry_layoutget(lo));
+ 		if (!IS_ERR(lseg)) {
+-			pnfs_put_layout_hdr(lo);
+ 			dprintk("%s retrying\n", __func__);
+ 			trace_pnfs_update_layout(ino, pos, count, iomode, lo,
+ 						 lseg,
+ 						 PNFS_UPDATE_LAYOUT_RETRY);
++			pnfs_put_layout_hdr(lo);
+ 			goto lookup_again;
+ 		}
+ 		trace_pnfs_update_layout(ino, pos, count, iomode, lo, lseg,
 
 
