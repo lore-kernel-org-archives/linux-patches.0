@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B649348C5E;
-	Thu,  2 Jul 2026 16:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A94033F5B3;
+	Thu,  2 Jul 2026 16:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009517; cv=none; b=Xt6AczI/grWg2Y8C0MJlaWCUKUirL2rk0ieFdjfqXacce6zCVSNocRa9XmlTJVms6J7YjrLlow/O0K27wPzAAlyzYpdg4We9/Cc9+FfG5UAZcH01prCBNEYNcxpn5KCASuOQ/EhTFmbuPbhsC3Fyg7rEJ9iwAIH/PhwHP1yka/k=
+	t=1783009522; cv=none; b=GW+LUFUmP+zOtPwEfkYwO3QajpWDoQ76g+Yk/bnKV7gzH5wftTWwAux3RIDL4axQPxV5QopfFmLEcjiMHmS5H0/ILUURR875gRYO65psCgZ10PPlsWU1gFIcunNo08MnPe5nBOYkKjorRQ0EspDHMOIWhFj1HyYkvQPCSB6nRns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009517; c=relaxed/simple;
-	bh=iCz0B8VRW5lvTea3xEgCskByaVMIwaQBmFwRWcu9Q1I=;
+	s=arc-20240116; t=1783009522; c=relaxed/simple;
+	bh=YS3NqftLsJnGQ1DA/hhfOi9sQ7gdu+mNVr1zNfucUSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z73dlGKbelxHcF2PqLCuqNJlTVmatFHVP0txu9xxiLEOeLsWLtbLnWYbo5m7rqYZQ2Mn9UfaY1O3GZ9wmP/CpsYS/SFfk7nFz+Z1cXUAIjEvSX+bh6G2bc6dZNHIVXLoMYJthagBT2za759uCbuiyXWXpRtQHYOGK8tp7WKJC2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlUkXaeo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e82Ri3rnqYAa+oo77rogM8nscszEowWRHdaWzu04siBZQ9MOGzEmZfjZzozhcTZHKX4xWgheGJy0lnSsq0mz/P8CxLsD6AyFUZ5TfKhGNJ6Cjp14GH/sidomTv6heCixXcriGsxZV0s9RxWDmJ4H0ITKmTq06Xu1G4cnfSoLDlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUo2HPtQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlUkXaeo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBF21F00A3A;
-	Thu,  2 Jul 2026 16:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUo2HPtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987D91F00A3E;
+	Thu,  2 Jul 2026 16:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009510;
-	bh=KNOsXQwrEvmm68J07x+yQhK1co375+5+PmZlmZvlTLk=;
+	s=korg; t=1783009513;
+	bh=9v58OWHiFab2U0rQbewrVWrJE0CwEAiJkOaN/tS4K6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nlUkXaeoBs2fxzWoy/4L/8xLEQnj/qBYUN07wyOUPf/8ZZXONJ2c7COTUxEposUfn
-	 xvJd5RAQhfNKQMoY2AwwkrXCoeONEBNb6vh3y1h14VArHShkNw29IOMRBNAyEvtDyB
-	 JFgRS7xv6FTW/8PirGvR9G0nShgeBh1I+EoVaUrI=
+	b=uUo2HPtQBT2ux5otVhe1ZDcGWoHHnWnlzpzCIfmIQzD75iSLwNJAZRv6SQtiPAmSD
+	 Q99yxKSbSAn/41yp4HFy6FYMl03MQkTIbBdNTCoOkO2CJjT5C8p+L8wT39q2cFh/MU
+	 xR7iR/E1dMPGUamFxpJ7dgMLb3hTRM8JU/88UK54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Persvold <spersvold@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 78/96] fbdev: modedb: Fix misaligned fields in the 1920x1080-60 mode
-Date: Thu,  2 Jul 2026 18:20:10 +0200
-Message-ID: <20260702155110.622499713@linuxfoundation.org>
+	Guannan Wang <wgnbuaa@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 79/96] NFSD: Fix SECINFO_NO_NAME decode error cleanup
+Date: Thu,  2 Jul 2026 18:20:11 +0200
+Message-ID: <20260702155110.642116359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -50,46 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Persvold <spersvold@gmail.com>
+From: Guannan Wang <wgnbuaa@gmail.com>
 
-commit d894c48a57d78206e4df9c90d4acfaf39394806a upstream.
+commit 9e18e83b8846a5c3fe13fc8a464b4865d33996c6 upstream.
 
-The 1920x1080@60 modedb entry has one too many initializers before
-its sync field: a stray "0" occupies the sync slot, which shifts the
-remaining values by one field. The entry therefore decodes as
-sync = 0, vmode = FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT (0x3,
-i.e. FB_VMODE_INTERLACED | FB_VMODE_DOUBLE), and flag =
-FB_VMODE_NONINTERLACED, instead of the intended sync = positive H/V,
-vmode = non-interlaced.
+nfsd4_decode_secinfo_no_name() currently initializes sin_exp after
+decoding sin_style. If the XDR stream is truncated, the decoder returns
+nfserr_bad_xdr before sin_exp is initialized.
 
-fb_find_mode() then returns a 1920x1080 mode flagged as interlaced +
-doublescan with active-low syncs. Drivers that honour var->vmode and
-var->sync when programming display timing enable doublescan and the
-wrong sync polarity, corrupting the output.
+Since commit 3fdc54646234 ("NFSD: Reduce amount of struct
+nfsd4_compoundargs that needs clearing"), the inline iops array is not
+cleared between RPC calls. A failed SECINFO_NO_NAME decode can therefore
+leave sin_exp holding stale union contents from a previous operation.
 
-Drop the stray initializer so sync and vmode hold their intended
-values (positive H/V sync, non-interlaced), matching the adjacent
-1920x1200 entry.
+The error response path still invokes nfsd4_secinfo_no_name_release(),
+which calls exp_put() on a non-NULL sin_exp.
 
-Fixes: c8902258b2b8 ("fbdev: modedb: Add 1920x1080 at 60 Hz video mode")
+Initialize sin_exp before the first failable decode step, matching
+nfsd4_decode_secinfo().
+
+Fixes: 3fdc54646234 ("NFSD: Reduce amount of struct nfsd4_compoundargs that needs clearing")
 Cc: stable@vger.kernel.org
-Signed-off-by: Steffen Persvold <spersvold@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Guannan Wang <wgnbuaa@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/modedb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/modedb.c
-+++ b/drivers/video/fbdev/core/modedb.c
-@@ -258,7 +258,7 @@ static const struct fb_videomode modedb[
- 		FB_VMODE_DOUBLE },
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1821,10 +1821,11 @@ static __be32 nfsd4_decode_secinfo_no_na
+ 					   union nfsd4_op_u *u)
+ {
+ 	struct nfsd4_secinfo_no_name *sin = &u->secinfo_no_name;
++
++	sin->sin_exp = NULL;
+ 	if (xdr_stream_decode_u32(argp->xdr, &sin->sin_style) < 0)
+ 		return nfserr_bad_xdr;
  
- 	/* 1920x1080 @ 60 Hz, 67.3 kHz hsync */
--	{ NULL, 60, 1920, 1080, 6734, 148, 88, 36, 4, 44, 5, 0,
-+	{ NULL, 60, 1920, 1080, 6734, 148, 88, 36, 4, 44, 5,
- 		FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,
- 		FB_VMODE_NONINTERLACED },
+-	sin->sin_exp = NULL;
+ 	return nfs_ok;
+ }
  
 
 
