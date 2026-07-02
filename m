@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D37333F5BE;
-	Thu,  2 Jul 2026 16:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F023330B01;
+	Thu,  2 Jul 2026 16:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009890; cv=none; b=RjciLWcHyToa2ZosYX+GE8ZWOFWpaxNr70Pihn6GNuWq/iaOddPsHl77k9Xo47BFLiTe4uLoRA2wGcODl2wIVnJkZ3PY2e63Ysir2LNagiHTVhF1K8OnySXDOL/Dt93EuZAW+wEQ21ccI32KL5HbDi9YB7o+sO9By56bqvdut7k=
+	t=1783009892; cv=none; b=TWG8cuGanKCq2fU4LBeAIo2naPppHPF23Lbh3QZzQtFO8rVX9vGY/IdnS9ANShbLQVoVS+mtQpzBXRPsPWRDrXDNdqEc3AAmgoy3nj3V2yD2A+3Hh9fAz0N2pxkgmdpUabzM1uZWj/hi82vOktS5PpYDnLGN54PtKu05o25UrSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009890; c=relaxed/simple;
-	bh=zQoE9vAQc2nc7/5Q0Db4hF3FB1hqmjzkA/scqmeJpTY=;
+	s=arc-20240116; t=1783009892; c=relaxed/simple;
+	bh=lMSWWe4soLu1VynmrmJ6fERuTTVYTo+UnNTdLK5TCo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qoahM8KaCS4aEOL2yyTKfnbFsmTys0ElWvMbLwBSgyn6lO8NwtSbbyNqUTjAmUyUe6n5agC/oPGXxfk/ymgAAxT9YKqYcFIQMxFYn5c0kwpkXfT1J9Hvkr/PhS8pnriBLhE3R/sjMANFXlDeaiyx9pDaHRpxjtkrxgOzUQelJo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oITZlx+9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DUAj0HSctnud4DskGDIzfqB6UkXj5z4pW6HmyzUUNwTw9RyV9r9mqpnXdQjFQ5nCs08B9+WfLQJBcreu6h7OrZqu4ZBt7lLmTSJ3SaoQIj8H1QVE3XYcIK6VSc9my5Y9O5kiEfQdR6VhpFzU+yGUHAnKDa9QXD94HMiaJKJk30E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxqErbLM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oITZlx+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4081F000E9;
-	Thu,  2 Jul 2026 16:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxqErbLM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EC81F000E9;
+	Thu,  2 Jul 2026 16:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009888;
-	bh=e6WWzszf7pW/WQgrs01jwBa08MnWIc86Pf4p3LjePAg=;
+	s=korg; t=1783009891;
+	bh=yc61fK6OcFcOYQHTmUzSfemp7M4kJ7BjnDUkYQ57KFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oITZlx+9tRBOJbOoxJYzgXa7IQddNj9KvWpYAlcWSAdFbpb3CeryqmhfN0FUN1feF
-	 GpyncnkE7VBx+vQQy4qp/LXL36W21W7xuSN+sgvvkKwMAAeby31U1I5h1Y5PbKOWGA
-	 D7/I9J9q2TDaTZiFItImUyBFFnLHtk+U3/VkZZTU=
+	b=HxqErbLM+sgr4HFvoEyaJfNSGV9EzVPXf9WpKdLKO4ueh55m6vgvcsTIOmVEevwVh
+	 h6c77MnUFNI5ynet0gsh4tfAxC4OylTqYDUfI6poOQrSXUV5CCX8LYeEK+C8IySK1q
+	 pecBrZYVCpazY4rCoAuz71D6eFulr7qzo32mOjjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/129] ARM: fix branch predictor hardening
-Date: Thu,  2 Jul 2026 18:19:09 +0200
-Message-ID: <20260702155112.781162924@linuxfoundation.org>
+	Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.1 031/129] RDMA/bnxt_re: zero shared page before exposing to userspace
+Date: Thu,  2 Jul 2026 18:19:10 +0200
+Message-ID: <20260702155112.800808283@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -52,154 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
 
-commit fd2dee1c6e2256f726ba33fd3083a7be0efc80d3 upstream.
+commit f6b079629becfa977f9c51fe53ad2e6dcc55ef44 upstream.
 
-__do_user_fault() may be called with indeterminent interrupt enable
-state, which means we may be preemptive at this point. This causes
-problems when calling harden_branch_predictor(). For example, when
-called from a data abort, do_alignment_fault()->do_bad_area().
+bnxt_re_alloc_ucontext() allocates uctx->shpg via
+__get_free_page(GFP_KERNEL). The buddy allocator does not zero pages
+without __GFP_ZERO, so the page contains stale kernel data from
+whatever object most recently freed it.
 
-Move harden_branch_predictor() out of __do_user_fault() and into the
-calling contexts.
+The page is then mapped into userspace via vm_insert_page() under
+BNXT_RE_MMAP_SH_PAGE in bnxt_re_mmap(). The driver only ever writes
+4 bytes (a u32 AVID) at offset BNXT_RE_AVID_OFFT (0x10) inside
+bnxt_re_create_ah(); the remaining 4092 bytes of the page are exposed
+to userspace unsanitised, leaking kernel memory contents.
 
-Moving it into do_kernel_address_page_fault(), we can be sure that
-interrupts will be disabled here.
+Any user with access to /dev/infiniband/uverbsX on a host with a
+bnxt_re device (typically rdma group membership) can read this data
+via a single mmap() at pgoff 0 after IB_USER_VERBS_CMD_GET_CONTEXT.
 
-Converting do_translation_fault() to use do_kernel_address_page_fault()
-rather than do_bad_area() means that we keep branch predictor handling
-for translation faults. Interrupts will also be disabled at this call
-site.
+Other shared pages in the same file already use get_zeroed_page()
+correctly:
 
-do_sect_fault() needs special handling, so detect user mode accesses
-to kernel-addresses, and add an explicit call to branch predictor
-hardening.
+  drivers/infiniband/hw/bnxt_re/ib_verbs.c
+      srq->uctx_srq_page = (void *)get_zeroed_page(GFP_KERNEL);
+      cq->uctx_cq_page  = (void *)get_zeroed_page(GFP_KERNEL);
 
-Finally, add branch predictor hardening to do_alignment() for the
-faulting case (user mode accessing kernel addresses) before interrupts
-are enabled.
+uctx->shpg is the only outlier. Bring it in line with the existing
+convention by switching to get_zeroed_page().
 
-This should cover all cases where harden_branch_predictor() is called,
-ensuring that it is always has interrupts disabled, also ensuring that
-it is called early in each call path.
-
-Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
+Link: https://patch.msgid.link/20260509084011.11971-1-pomzm67@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mm/alignment.c |  4 ++++
- arch/arm/mm/fault.c     | 39 ++++++++++++++++++++++++++-------------
- 2 files changed, 30 insertions(+), 13 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
-index f8dd0b3cc8e040..ee264737be6d26 100644
---- a/arch/arm/mm/alignment.c
-+++ b/arch/arm/mm/alignment.c
-@@ -22,6 +22,7 @@
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -3870,7 +3870,7 @@ int bnxt_re_alloc_ucontext(struct ib_uco
  
- #include <asm/cp15.h>
- #include <asm/system_info.h>
-+#include <asm/system_misc.h>
- #include <asm/unaligned.h>
- #include <asm/opcodes.h>
+ 	uctx->rdev = rdev;
  
-@@ -809,6 +810,9 @@ do_alignment(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	int thumb2_32b = 0;
- 	int fault;
- 
-+	if (addr >= TASK_SIZE && user_mode(regs))
-+		harden_branch_predictor();
-+
- 	if (interrupts_enabled(regs))
- 		local_irq_enable();
- 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index 907705992ab65f..d0681285dbda3e 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -195,9 +195,6 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
- {
- 	struct task_struct *tsk = current;
- 
--	if (addr > TASK_SIZE)
--		harden_branch_predictor();
--
- #ifdef CONFIG_DEBUG_USER
- 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
- 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
-@@ -248,8 +245,10 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
- 		/*
- 		 * Fault from user mode for a kernel space address. User mode
- 		 * should not be faulting in kernel space, which includes the
--		 * vector/khelper page. Send a SIGSEGV.
-+		 * vector/khelper page. Handle the branch predictor hardening
-+		 * while interrupts are still disabled, then send a SIGSEGV.
- 		 */
-+		harden_branch_predictor();
- 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
- 	} else {
- 		/*
-@@ -419,16 +418,20 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
-  * We enter here because the first level page table doesn't contain
-  * a valid entry for the address.
-  *
-- * If the address is in kernel space (>= TASK_SIZE), then we are
-- * probably faulting in the vmalloc() area.
-+ * If this is a user address (addr < TASK_SIZE), we handle this as a
-+ * normal page fault. This leaves the remainder of the function to handle
-+ * kernel address translation faults.
-  *
-- * If the init_task's first level page tables contains the relevant
-- * entry, we copy the it to this task.  If not, we send the process
-- * a signal, fixup the exception, or oops the kernel.
-+ * Since user mode is not permitted to access kernel addresses, pass these
-+ * directly to do_kernel_address_page_fault() to handle.
-  *
-- * NOTE! We MUST NOT take any locks for this case. We may be in an
-- * interrupt or a critical region, and should only copy the information
-- * from the master page table, nothing more.
-+ * Otherwise, we're probably faulting in the vmalloc() area, so try to fix
-+ * that up. Note that we must not take any locks or enable interrupts in
-+ * this case.
-+ *
-+ * If vmalloc() fixup fails, that means the non-leaf page tables did not
-+ * contain an entry for this address, so handle this via
-+ * do_kernel_address_page_fault().
-  */
- #ifdef CONFIG_MMU
- static int __kprobes
-@@ -494,7 +497,8 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
- 	return 0;
- 
- bad_area:
--	do_bad_area(addr, fsr, regs);
-+	do_kernel_address_page_fault(current->mm, addr, fsr, regs);
-+
- 	return 0;
- }
- #else					/* CONFIG_MMU */
-@@ -514,7 +518,16 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
- static int
- do_sect_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- {
-+	/*
-+	 * If this is a kernel address, but from user mode, then userspace
-+	 * is trying bad stuff. Invoke the branch predictor handling.
-+	 * Interrupts are disabled here.
-+	 */
-+	if (addr >= TASK_SIZE && user_mode(regs))
-+		harden_branch_predictor();
-+
- 	do_bad_area(addr, fsr, regs);
-+
- 	return 0;
- }
- #endif /* CONFIG_ARM_LPAE */
--- 
-2.53.0
-
+-	uctx->shpg = (void *)__get_free_page(GFP_KERNEL);
++	uctx->shpg = (void *)get_zeroed_page(GFP_KERNEL);
+ 	if (!uctx->shpg) {
+ 		rc = -ENOMEM;
+ 		goto fail;
 
 
