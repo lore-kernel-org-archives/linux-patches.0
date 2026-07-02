@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB9F395AF6;
-	Thu,  2 Jul 2026 16:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287EF39D6D9;
+	Thu,  2 Jul 2026 16:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009673; cv=none; b=ALwIPn7UtK0+kAPVJIVez0ipeFa+ucfCgYNPodYD/manxwTC4G3FyIDYVO9yCJYjzmGFEOlTjJvuuMval7dMdJSuDAMMbDmM7ja8qAS7Tm74hQOBoIGkW7sAzWWH9e7g6Ed36/I1elaq26pITPxgSFrkFu61l4/VvadaW3QOEC0=
+	t=1783009677; cv=none; b=PF678tXgMw1+kw0fEWHy9vwZTlw7v312FNIWUW+wsHH7qZhnwU0esxCJvSo0EhLJNvcFrHwlEGXBRBl8wUI7XeguPyN6LN4UyhSQPXkrNP97NWNeD7D+rssFI4WGmba7fjvyiAkVUkwRqmO97rkyLDkySC+9k5J0mELHvrlHVm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009673; c=relaxed/simple;
-	bh=Oh9Xj+kz0nEsUXQgS+l/C8A87i1ZID3o+W7tvmIQ+lQ=;
+	s=arc-20240116; t=1783009677; c=relaxed/simple;
+	bh=t4zk2nn0Bxvo3qmbaWWp+2nei8vP2i3FZ1XA2yoAEYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/qbEE5u3QaawU/9kbzWLrTlK2jvtNY/tT7Wo6l80p/ya3uby3l/neaRNuXnNIZbNd6ekW93VDTdz82jnVuWwiQYh911v+R2r3JGYndxEEZ27VFFxg3HBcZKzqjCD2E1SKuozJa+bd/WeK94tbKREqumwcwNAZDWbRjYCDBvhms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ays4ah/E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GKOaiR6Od0kITpCs6somlipfpIa+2ZBwv+/bj2XFBqDT01fJU4BaNyNB6Z0eichHW3XY+/LtfZcschXEaeHJZ630iOGbItAIq/Py6FB3qyzWKZpeL8zDB+lFSbkYnveX8hdDV+pXwqKx8KdPq3khF8u4M+HR4c0OrjpehIPSl5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3UjHGsN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ays4ah/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5561F00A3A;
-	Thu,  2 Jul 2026 16:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3UjHGsN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B3F1F000E9;
+	Thu,  2 Jul 2026 16:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009670;
-	bh=ZcCw2/eK0IaqA8M+5OoD7UJG+RMVPxukggHHgGH2IGM=;
+	s=korg; t=1783009672;
+	bh=JmkcUI7LXYRQNPxqp/j+S+QpVw7/18rj/SwKh4Fp1L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ays4ah/EIe5hNpTgCYPRXKl3aGe8OEjKBgqNAnfAI+wbohwc/Q2P56oLd+Dt2Toh2
-	 tRuP3t0p9uoPxCX7yQinLclsDak2v5TE3WUsiTMBfvCklwicPzYB3HJEjnvkf433AK
-	 /4+p9vYTcDb9HZt9kwN6FWQTcz7jYuI+r3oMfw88=
+	b=m3UjHGsNMbWmd0vh2bxS+7Ip3g47S2A/LX1qEsSKm1+aEK2a+nIz1F9uD7NpKHZZG
+	 LbiID6qDZB91sb5dIt091m2lLGsA+HKo2Kd+JcPMQNpqIUUNkqQGU831E8ogkQg16F
+	 gDtLJcvdxOWg8Sp2f7t2tfvamKLBZp7hO1xVsrHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/95] net/sched: act_pedit: free pedit keys on bail from offset check
-Date: Thu,  2 Jul 2026 18:19:08 +0200
-Message-ID: <20260702155109.321771852@linuxfoundation.org>
+Subject: [PATCH 5.15 06/95] drm/amd/display: Bound VBIOS record-chain walk loops
+Date: Thu,  2 Jul 2026 18:19:09 +0200
+Message-ID: <20260702155109.343119025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -54,83 +54,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 1b483d9f5805c7e3d628d4995e97f4311fcb82eb ]
+[ Upstream commit ff287df16a1a58aca78b08d1f3ee09fc44da0351 ]
 
-Ido Schimmel reports a memleak on a syzkaller instance:
-   BUG: memory leak
-   unreferenced object 0xffff88803d45e400 (size 1024):
-     comm "syz-executor292", pid 563, jiffies 4295025223 (age 51.781s)
-     hex dump (first 32 bytes):
-       28 bd 70 00 fb db df 25 02 00 14 1f ff 02 00 02  (.p....%........
-       00 32 00 00 1f 00 00 00 ac 14 14 3e 08 00 07 00  .2.........>....
-     backtrace:
-       [<ffffffff81bd0f2c>] kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-       [<ffffffff81bd0f2c>] slab_post_alloc_hook mm/slab.h:772 [inline]
-       [<ffffffff81bd0f2c>] slab_alloc_node mm/slub.c:3452 [inline]
-       [<ffffffff81bd0f2c>] __kmem_cache_alloc_node+0x25c/0x320 mm/slub.c:3491
-       [<ffffffff81a865d9>] __do_kmalloc_node mm/slab_common.c:966 [inline]
-       [<ffffffff81a865d9>] __kmalloc+0x59/0x1a0 mm/slab_common.c:980
-       [<ffffffff83aa85c3>] kmalloc include/linux/slab.h:584 [inline]
-       [<ffffffff83aa85c3>] tcf_pedit_init+0x793/0x1ae0 net/sched/act_pedit.c:245
-       [<ffffffff83a90623>] tcf_action_init_1+0x453/0x6e0 net/sched/act_api.c:1394
-       [<ffffffff83a90e58>] tcf_action_init+0x5a8/0x950 net/sched/act_api.c:1459
-       [<ffffffff83a96258>] tcf_action_add+0x118/0x4e0 net/sched/act_api.c:1985
-       [<ffffffff83a96997>] tc_ctl_action+0x377/0x490 net/sched/act_api.c:2044
-       [<ffffffff83920a8d>] rtnetlink_rcv_msg+0x46d/0xd70 net/core/rtnetlink.c:6395
-       [<ffffffff83b24305>] netlink_rcv_skb+0x185/0x490 net/netlink/af_netlink.c:2575
-       [<ffffffff83901806>] rtnetlink_rcv+0x26/0x30 net/core/rtnetlink.c:6413
-       [<ffffffff83b21cae>] netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-       [<ffffffff83b21cae>] netlink_unicast+0x5be/0x8a0 net/netlink/af_netlink.c:1365
-       [<ffffffff83b2293f>] netlink_sendmsg+0x9af/0xed0 net/netlink/af_netlink.c:1942
-       [<ffffffff8380c39f>] sock_sendmsg_nosec net/socket.c:724 [inline]
-       [<ffffffff8380c39f>] sock_sendmsg net/socket.c:747 [inline]
-       [<ffffffff8380c39f>] ____sys_sendmsg+0x3ef/0xaa0 net/socket.c:2503
-       [<ffffffff838156d2>] ___sys_sendmsg+0x122/0x1c0 net/socket.c:2557
-       [<ffffffff8381594f>] __sys_sendmsg+0x11f/0x200 net/socket.c:2586
-       [<ffffffff83815ab0>] __do_sys_sendmsg net/socket.c:2595 [inline]
-       [<ffffffff83815ab0>] __se_sys_sendmsg net/socket.c:2593 [inline]
-       [<ffffffff83815ab0>] __x64_sys_sendmsg+0x80/0xc0 net/socket.c:2593
+[Why & How]
+All record-chain walk loops in bios_parser.c and bios_parser2.c use
+for(;;) and only terminate on a 0xFF record_type sentinel or zero
+record_size. A malformed VBIOS image missing the terminator record
+causes unbounded iteration at probe time, potentially hundreds of
+thousands of iterations with record_size=1. In the final iterations
+near the BIOS image boundary, struct casts beyond the 2-byte header
+validated by GET_IMAGE can also read out of bounds.
 
-The recently added static offset check missed a free to the key buffer when
-bailing out on error.
+Cap all 14 record-chain walk loops to BIOS_MAX_NUM_RECORD (256)
+iterations. The atombios.h defines up to 22 distinct record types
+and atomfirmware.h has 13. Assuming an average of less than 10
+records per type (which is reasonable since most are connector-
+based) 256 is a generous upper bound.
 
-Fixes: e1201bc781c2 ("net/sched: act_pedit: check static offsets a priori")
-Reported-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230425144725.669262-1-pctammela@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
+Assisted-by: Copilot:claude-opus-4.6 Mythos
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 95700a3d660287ed657d6892f7be9ffc0e294a93)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser.c | 15 ++++++++++-----
+ .../gpu/drm/amd/display/dc/bios/bios_parser2.c    | 15 ++++++++++-----
+ .../drm/amd/display/dc/bios/bios_parser_helper.h  |  5 +++++
+ 3 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index f5b3b6e78b7a6b..efcbca97bf2eda 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -258,7 +258,7 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
- 		if (!offmask && cur % 4) {
- 			NL_SET_ERR_MSG_MOD(extack, "Offsets must be on 32bit boundaries");
- 			ret = -EINVAL;
--			goto put_chain;
-+			goto out_free_keys;
- 		}
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
+index d8982aca8ef680..d2730af8e8030f 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
+@@ -223,6 +223,7 @@ static enum bp_result bios_parser_get_i2c_info(struct dc_bios *dcb,
+ 	ATOM_COMMON_RECORD_HEADER *header;
+ 	ATOM_I2C_RECORD *record;
+ 	struct bios_parser *bp = BP_FROM_DCB(dcb);
++	int i;
  
- 		/* sanitize the shift value for any later use */
-@@ -283,6 +283,8 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 	if (!info)
+ 		return BP_RESULT_BADINPUT;
+@@ -235,7 +236,7 @@ static enum bp_result bios_parser_get_i2c_info(struct dc_bios *dcb,
+ 	offset = le16_to_cpu(object->usRecordOffset)
+ 			+ bp->object_info_tbl_offset;
  
- 	return ret;
+-	for (;;) {
++	for (i = 0; i < BIOS_MAX_NUM_RECORD; i++) {
+ 		header = GET_IMAGE(ATOM_COMMON_RECORD_HEADER, offset);
  
-+out_free_keys:
-+	kfree(nparms->tcfp_keys);
- put_chain:
- 	if (goto_ch)
- 		tcf_chain_put_by_act(goto_ch);
+ 		if (!header)
+@@ -294,11 +295,12 @@ static enum bp_result bios_parser_get_device_tag_record(
+ {
+ 	ATOM_COMMON_RECORD_HEADER *header;
+ 	uint32_t offset;
++	int i;
+ 
+ 	offset = le16_to_cpu(object->usRecordOffset)
+ 			+ bp->object_info_tbl_offset;
+ 
+-	for (;;) {
++	for (i = 0; i < BIOS_MAX_NUM_RECORD; i++) {
+ 		header = GET_IMAGE(ATOM_COMMON_RECORD_HEADER, offset);
+ 
+ 		if (!header)
+@@ -870,6 +872,7 @@ static ATOM_HPD_INT_RECORD *get_hpd_record(struct bios_parser *bp,
+ {
+ 	ATOM_COMMON_RECORD_HEADER *header;
+ 	uint32_t offset;
++	int i;
+ 
+ 	if (!object) {
+ 		BREAK_TO_DEBUGGER(); /* Invalid object */
+@@ -879,7 +882,7 @@ static ATOM_HPD_INT_RECORD *get_hpd_record(struct bios_parser *bp,
+ 	offset = le16_to_cpu(object->usRecordOffset)
+ 			+ bp->object_info_tbl_offset;
+ 
+-	for (;;) {
++	for (i = 0; i < BIOS_MAX_NUM_RECORD; i++) {
+ 		header = GET_IMAGE(ATOM_COMMON_RECORD_HEADER, offset);
+ 
+ 		if (!header)
+@@ -1572,6 +1575,7 @@ static ATOM_ENCODER_CAP_RECORD_V2 *get_encoder_cap_record(
+ {
+ 	ATOM_COMMON_RECORD_HEADER *header;
+ 	uint32_t offset;
++	int i;
+ 
+ 	if (!object) {
+ 		BREAK_TO_DEBUGGER(); /* Invalid object */
+@@ -1581,7 +1585,7 @@ static ATOM_ENCODER_CAP_RECORD_V2 *get_encoder_cap_record(
+ 	offset = le16_to_cpu(object->usRecordOffset)
+ 					+ bp->object_info_tbl_offset;
+ 
+-	for (;;) {
++	for (i = 0; i < BIOS_MAX_NUM_RECORD; i++) {
+ 		header = GET_IMAGE(ATOM_COMMON_RECORD_HEADER, offset);
+ 
+ 		if (!header)
+@@ -2665,6 +2669,7 @@ static enum bp_result update_slot_layout_info(
+ 	unsigned int record_offset)
+ {
+ 	unsigned int j;
++	unsigned int n;
+ 	struct bios_parser *bp;
+ 	ATOM_BRACKET_LAYOUT_RECORD *record;
+ 	ATOM_COMMON_RECORD_HEADER *record_header;
+@@ -2674,7 +2679,7 @@ static enum bp_result update_slot_layout_info(
+ 	record = NULL;
+ 	record_header = NULL;
+ 
+-	for (;;) {
++	for (n = 0; n < BIOS_MAX_NUM_RECORD; n++) {
+ 
+ 		record_header = (ATOM_COMMON_RECORD_HEADER *)
+ 			GET_IMAGE(ATOM_COMMON_RECORD_HEADER, record_offset);
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+index e186d4daae55b6..2192b2597edbc3 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -296,6 +296,7 @@ static enum bp_result bios_parser_get_i2c_info(struct dc_bios *dcb,
+ 	struct atom_i2c_record *record;
+ 	struct atom_i2c_record dummy_record = {0};
+ 	struct bios_parser *bp = BP_FROM_DCB(dcb);
++	int i;
+ 
+ 	if (!info)
+ 		return BP_RESULT_BADINPUT;
+@@ -316,7 +317,7 @@ static enum bp_result bios_parser_get_i2c_info(struct dc_bios *dcb,
+ 
+ 	offset = object->disp_recordoffset + bp->object_info_tbl_offset;
+ 
+-	for (;;) {
++	for (i = 0; i < BIOS_MAX_NUM_RECORD; i++) {
+ 		header = GET_IMAGE(struct atom_common_record_header, offset);
+ 
+ 		if (!header)
+@@ -446,6 +447,7 @@ static struct atom_hpd_int_record *get_hpd_record(
+ {
+ 	struct atom_common_record_header *header;
+ 	uint32_t offset;
++	int i;
+ 
+ 	if (!object) {
+ 		BREAK_TO_DEBUGGER(); /* Invalid object */
+@@ -455,7 +457,7 @@ static struct atom_hpd_int_record *get_hpd_record(
+ 	offset = le16_to_cpu(object->disp_recordoffset)
+ 			+ bp->object_info_tbl_offset;
+ 
+-	for (;;) {
++	for (i = 0; i < BIOS_MAX_NUM_RECORD; i++) {
+ 		header = GET_IMAGE(struct atom_common_record_header, offset);
+ 
+ 		if (!header)
+@@ -1614,6 +1616,7 @@ static struct atom_encoder_caps_record *get_encoder_cap_record(
+ {
+ 	struct atom_common_record_header *header;
+ 	uint32_t offset;
++	int i;
+ 
+ 	if (!object) {
+ 		BREAK_TO_DEBUGGER(); /* Invalid object */
+@@ -1622,7 +1625,7 @@ static struct atom_encoder_caps_record *get_encoder_cap_record(
+ 
+ 	offset = object->encoder_recordoffset + bp->object_info_tbl_offset;
+ 
+-	for (;;) {
++	for (i = 0; i < BIOS_MAX_NUM_RECORD; i++) {
+ 		header = GET_IMAGE(struct atom_common_record_header, offset);
+ 
+ 		if (!header)
+@@ -1651,6 +1654,7 @@ static struct atom_disp_connector_caps_record *get_disp_connector_caps_record(
+ {
+ 	struct atom_common_record_header *header;
+ 	uint32_t offset;
++	int i;
+ 
+ 	if (!object) {
+ 		BREAK_TO_DEBUGGER(); /* Invalid object */
+@@ -1659,7 +1663,7 @@ static struct atom_disp_connector_caps_record *get_disp_connector_caps_record(
+ 
+ 	offset = object->disp_recordoffset + bp->object_info_tbl_offset;
+ 
+-	for (;;) {
++	for (i = 0; i < BIOS_MAX_NUM_RECORD; i++) {
+ 		header = GET_IMAGE(struct atom_common_record_header, offset);
+ 
+ 		if (!header)
+@@ -2420,6 +2424,7 @@ static enum bp_result update_slot_layout_info(
+ {
+ 	unsigned int record_offset;
+ 	unsigned int j;
++	unsigned int n;
+ 	struct atom_display_object_path_v2 *object;
+ 	struct atom_bracket_layout_record *record;
+ 	struct atom_common_record_header *record_header;
+@@ -2441,7 +2446,7 @@ static enum bp_result update_slot_layout_info(
+ 		(object->disp_recordoffset) +
+ 		(unsigned int)(bp->object_info_tbl_offset);
+ 
+-	for (;;) {
++	for (n = 0; n < BIOS_MAX_NUM_RECORD; n++) {
+ 
+ 		record_header = (struct atom_common_record_header *)
+ 			GET_IMAGE(struct atom_common_record_header,
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.h b/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.h
+index e1b4a40a353db1..da1e30de3c59a0 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.h
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.h
+@@ -38,4 +38,9 @@ uint32_t bios_get_vga_enabled_displays(struct dc_bios *bios);
+ 
+ #define GET_IMAGE(type, offset) ((type *) bios_get_image(&bp->base, offset, sizeof(type)))
+ 
++/* Upper bound on the number of records in a VBIOS record chain. Prevents
++ * unbounded looping if the VBIOS image is malformed and lacks a terminator.
++ */
++#define BIOS_MAX_NUM_RECORD 256
++
+ #endif
 -- 
 2.53.0
 
