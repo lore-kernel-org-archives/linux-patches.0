@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F60832ED40;
-	Thu,  2 Jul 2026 16:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F059822D7B9;
+	Thu,  2 Jul 2026 16:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010796; cv=none; b=rLmPZ8x62sgauFg6za5VS8phNBzAkOehH4sElLFYsR+qe9Y8FU2eZkXPGrB4tgADCDMeH99Aj8mIN7KjJUl47irfc0cYj+BBeECT+jrsUNLEczkb2SQGivB/4RXShjGEi0P2gN+zDl3V6/xS+6q52T7DfBmxWmwd8Rf1fKXgqSg=
+	t=1783010799; cv=none; b=qG/5lixqnYuzNPHcZLpsSnIvq6hUgXfI9DQXhcVfYirKftJQee+4zamDLHvr3o+GduUN5QdWK1pM+LzJiXUY6u9GF/1Ufqp4IrW2rLp2B6ayI85Ajf5tk6mGRgaWGJLo8VTlR4D/dLtpLTuHGqtReqZtYZiu7e4uLnj3CzNB7nU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010796; c=relaxed/simple;
-	bh=FyosHntRHMVgDX42pV21T/P9Y5QVsSVQS1Xs8lpICyU=;
+	s=arc-20240116; t=1783010799; c=relaxed/simple;
+	bh=k8ocSuu6B/2mOYWDdVdJe4mTG1O5FruuBa6z9fALx0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nnc6qHNcuQOl1mkKRVjLz85LmWZXMq0SpQM2u+xYxtPl7AmdQxaeQ7BkL0JEB9uMKiRy8Q3omLI7T/c1wLFXeddner6h7XMb8fHWyPcnEbTZ0+bHVeI2jLD0Yt0JvxnxZyn5aB36AFCElX/n3Gm72vGweg5qgZAWKQkb7D9sXxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWRCU9eJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A/ku1YpJlsRxtl6tL9RXTv2kNyvfBS9v129dSLpIHU6ayxCCZ5+hAPyo2aKMcpII6QbjHR05GwkffR8LcvChCBWQUvbIZQBV8eOBIBx/ru0DrI7MdiIWXELlPoPEgtCYyiOlNc/sksQMMlS5kuZ5VywsQPCYKUrFoTaBPcIdjoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbnB3wBH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWRCU9eJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DCF1F000E9;
-	Thu,  2 Jul 2026 16:46:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbnB3wBH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BFA1F000E9;
+	Thu,  2 Jul 2026 16:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010795;
-	bh=9qCH83KNm0j0Cafv7KsTDpvtv69bDrhJJAvmbg69zfM=;
+	s=korg; t=1783010797;
+	bh=ghTmdJoIQvMCK2m6xIgcs9je7W//PUUfugRz6wantzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yWRCU9eJ94i6cEV33YrLdBjige1k8Kf0jx/DqdC7ykGdYCqLbfOPVXKgXeXXC6A9e
-	 X7QDrx/v0deSXbawJoETQ6CWKWVnPMSWge4BCLo8YE6ilTDC7MTMYmt7kVti4bOwfb
-	 O8n/JHHG1JZdE+kvveFRg2XuSsAM5LRRVevegxVo=
+	b=XbnB3wBH/Vj4A1p4yAdC0RkhtMlO1G8mJFmy1ZRH4OBs8X7MDpTcjRcCzBEBayxnl
+	 rv+dxVezJWkhkysgFyEeMT7A0SWhmo8E2viAfF12XHrh3q9vZUJwLZLIjE+g4DK1Rp
+	 WPIZgR8oxCE7L25I9sI9qsTzC6uAiBXnzHRoSbrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Santosh Kalluri <santosh.kalluri129@gmail.com>,
-	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
-	Simon Horman <horms@kernel.org>,
+	Noam Rathaus <noamr@ssd-disclosure.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Salvatore Bonaccorso <carnil@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/175] net: phonet: free phonet_device after RCU grace period
-Date: Thu,  2 Jul 2026 18:19:00 +0200
-Message-ID: <20260702155116.621746953@linuxfoundation.org>
+Subject: [PATCH 6.6 004/175] ip6_vti: set netns_immutable on the fallback device.
+Date: Thu,  2 Jul 2026 18:18:25 +0200
+Message-ID: <20260702155115.861087830@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -47,47 +49,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Santosh Kalluri <santosh.kalluri129@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 71de0177b28da751f407581a4515cf4d762f6296 ]
+[ Upstream commit d289d5307762d1838aaece22c6b6fcad9e8865f9 ]
 
-phonet_device_destroy() removes a phonet_device from the per-net device
-list with list_del_rcu(), but frees it immediately. RCU readers walking
-the same list can still hold a pointer to the object after it has been
-removed, leading to a slab-use-after-free.
+john1988 and Noam Rathaus reported that vti6_init_net() does not set the
+netns_immutable flag on the per-netns fallback tunnel device (ip6_vti0).
 
-Use kfree_rcu(), matching the lifetime rule already used by
-phonet_address_del() for the same object type.
+Other similar tunnel drivers (like ip6_tunnel, sit, ip6_gre, and ip_tunnel)
+correctly set this flag during their fallback device initialization to
+prevent them from being moved to another network namespace.
 
-Fixes: eeb74a9d45f7 ("Phonet: convert devices list to RCU")
-Cc: stable@vger.kernel.org
-Signed-off-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
-Acked-by: Rémi Denis-Courmont <remi@remlab.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 61220ab34948 ("vti6: Enable namespace changing")
+Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://patch.msgid.link/20260608155918.787644-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[Salvatore Bonaccorso: Backport for version without 0c493da86374 ("net:
+rename netns_local to netns_immutable") in v6.15-rc1 and without
+05c1280a2bcf ("netdev_features: convert NETIF_F_NETNS_LOCAL to
+dev->netns_local") in v6.12-rc1 and use NETIF_F_NETNS_LOCAL device
+feature.]
+Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/phonet/pn_dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_vti.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/phonet/pn_dev.c
-+++ b/net/phonet/pn_dev.c
-@@ -105,7 +105,7 @@ static void phonet_device_destroy(struct
- 		for_each_set_bit(addr, pnd->addrs, 64)
- 			phonet_address_notify(net, RTM_DELADDR, ifindex, addr);
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index 67cf616c1499a4..95cf8c52953c2f 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -1166,6 +1166,7 @@ static int __net_init vti6_init_net(struct net *net)
+ 		goto err_alloc_dev;
+ 	dev_net_set(ip6n->fb_tnl_dev, net);
+ 	ip6n->fb_tnl_dev->rtnl_link_ops = &vti6_link_ops;
++	ip6n->fb_tnl_dev->features |= NETIF_F_NETNS_LOCAL;
  
--		kfree(pnd);
-+		kfree_rcu(pnd, rcu);
- 	}
- }
- 
+ 	err = vti6_fb_tnl_dev_init(ip6n->fb_tnl_dev);
+ 	if (err < 0)
+-- 
+2.53.0
+
 
 
