@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2FB381E92;
-	Thu,  2 Jul 2026 16:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5746F36215B;
+	Thu,  2 Jul 2026 16:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010194; cv=none; b=Dbye2E+MhhMXK7WpsjWxDNCUzIqUsqzrZs8Wj9n+YQ/l1rmQ37aLrpGAdZh0yyqDxrS1yGds/ZtsNQXdDWqvR/euBmbNdp3Ze9u7AwpFFORIt9dmm/SnehJHTsIrm3fotHGaksZNRGwtAgZcEPGXIKOY4LTBmboUg7gotRZgOjk=
+	t=1783010198; cv=none; b=vFs0aMDbwD/yj/VOrwKNJOk+MCOq6gjEhfPC5cobMnRNdKcEmwrZSsRUVAxvCrkI0wcU5Dx5Kwb/w1LzneEn1E7kWDts/WvjOGnO8k1TDuAA/lI6Bivaiu9iCYCNG97aNYgSsaN4G/mw80OhFWdF6MqJmzJ2GSC4Ac276YPp9SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010194; c=relaxed/simple;
-	bh=+9ixt2SdzpQk9RUSKt9X5cdsw1+qFJcxdte3YthQPGI=;
+	s=arc-20240116; t=1783010198; c=relaxed/simple;
+	bh=A60A2sBi7HHfgEoo9mV3PTh5tUmmAGAk9ESxC/kYCks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZjJc6Qrf4XduCvRXp4sUfv4UidhMD5JP6JMn0DUNf/AlLIOvCvNmW2RE6ptQUPdIbPPlZtF8TBRrGQTP9WmJGrSdDM/aM2RRspVv5r2NuZJIx0c0ypIVwG3qNvObZxQncEczarDckx9dOa7xtRdTjYrHjDP4Nkvuv5j3OKed5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+OVihcC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nDxNg64cXIuSf5//qZ5Uw8WLZaJusuQqPyGs4PGwltNFT6y71JRTXY3GRIN3xkzp+JdPmn2y+nL6BonTy1xpwm/tpE2MBHFK7uUOwcMnxQsf7ZNSykenzDiSYrbR1OUGwLvH5rL0FyFzabRvUqYgN5OGfGs/vF7+/on27YmY3y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WpWZCSb9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+OVihcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D584C1F00A3A;
-	Thu,  2 Jul 2026 16:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpWZCSb9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AAF1F000E9;
+	Thu,  2 Jul 2026 16:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010193;
-	bh=P48gxzQQ9eA8IpBH7ME/n7dEZnceLlTBnqZKpgnqlTE=;
+	s=korg; t=1783010195;
+	bh=CyzrZLuzAY86qV1iIb3aRHMz8KTO9KtqvG1C0JZEuVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C+OVihcCoPc7ZAtayjO5qm97fyl8tqyIHcJJqq2u3uwfJOZME35ILYXYJ6A/WtbyB
-	 Q25Sh8xcL021DnfSMxbpHqaG3dhSWgPZZepecLtxYccT14w+RYRa4xUO3fuh+xb4ua
-	 TZ4NULo0byIJ7segJG4c8sVjVvP0tMBUozEhtpCM=
+	b=WpWZCSb9XcID3MK1MujGEh1osDpWOx34MeLwI3LKfDNezGn5Wji5OwJlFxLsrRu9M
+	 BK3QSsDRMP9ay+jqyOYra42r53RiXu6PC/p+qk3OQu/Ot++dwai/4cbPcTejykCh4o
+	 h6donAfVKmUNmjXQrnHjdHjaFFVhX1qL3QNImVcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/204] fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
-Date: Thu,  2 Jul 2026 18:17:41 +0200
-Message-ID: <20260702155118.761149243@linuxfoundation.org>
+Subject: [PATCH 6.12 005/204] gpiolib: Extract gpiochip_choose_fwnode() for wider use
+Date: Thu,  2 Jul 2026 18:17:42 +0200
+Message-ID: <20260702155118.781677897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -53,48 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 4e3d1b2c48ca6c55f1e9ca7f8dccc76f120f276c ]
+[ Upstream commit 375790f18396b2ba706e031b150c58cd37b45a11 ]
 
-FUSE_NOTIFY_RETRIEVE must be limited to uptodate folios; !uptodate folios
-can contain uninitialized data.
-Since FUSE_NOTIFY_RETRIEVE is intended to only return data that is already
-in the page cache and not wait for data from the FUSE daemon, treat
-!uptodate folios as if they weren't present.
+Extract gpiochip_choose_fwnode() for the future use in another function.
 
-This only has security impact on systems that don't enable automatic
-zero-initialization of all page allocations via
-CONFIG_INIT_ON_ALLOC_DEFAULT_ON or init_on_alloc=1.
-
-Cc: stable@kernel.org
-Fixes: 2d45ba381a74 ("fuse: add retrieve request")
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260519-fuse-retrieve-uptodate-v1-1-a7a1912a37f9@google.com
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[adjusted for stable: page instead of folio]
-Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Tested-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+Reviewed-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+Link: https://lore.kernel.org/r/20250213195621.3133406-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 16fdabe143fc ("gpio: Fix resource leaks on errors in gpiochip_add_data_with_key()")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpio/gpiolib.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
-index 8f4a2ff56cc3be..6381a4626bc5a6 100644
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -1769,6 +1769,10 @@ static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
- 		page = find_get_page(mapping, index);
- 		if (!page)
- 			break;
-+		if (!PageUptodate(page)) {
-+			put_page(page);
-+			break;
-+		}
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 5c8cd816569634..d48a57b899f79c 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -883,6 +883,21 @@ void *gpiochip_get_data(struct gpio_chip *gc)
+ }
+ EXPORT_SYMBOL_GPL(gpiochip_get_data);
  
- 		this_num = min_t(unsigned, num, PAGE_SIZE - offset);
- 		ap->pages[ap->num_pages] = page;
++/*
++ * If the calling driver provides the specific firmware node,
++ * use it. Otherwise use the one from the parent device, if any.
++ */
++static struct fwnode_handle *gpiochip_choose_fwnode(struct gpio_chip *gc)
++{
++	if (gc->fwnode)
++		return gc->fwnode;
++
++	if (gc->parent)
++		return dev_fwnode(gc->parent);
++
++	return NULL;
++}
++
+ int gpiochip_get_ngpios(struct gpio_chip *gc, struct device *dev)
+ {
+ 	u32 ngpios = gc->ngpio;
+@@ -942,14 +957,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 	gc->gpiodev = gdev;
+ 	gpiochip_set_data(gc, data);
+ 
+-	/*
+-	 * If the calling driver did not initialize firmware node,
+-	 * do it here using the parent device, if any.
+-	 */
+-	if (gc->fwnode)
+-		device_set_node(&gdev->dev, gc->fwnode);
+-	else if (gc->parent)
+-		device_set_node(&gdev->dev, dev_fwnode(gc->parent));
++	device_set_node(&gdev->dev, gpiochip_choose_fwnode(gc));
+ 
+ 	gdev->id = ida_alloc(&gpio_ida, GFP_KERNEL);
+ 	if (gdev->id < 0) {
 -- 
 2.53.0
 
