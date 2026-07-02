@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5208360ED5;
-	Thu,  2 Jul 2026 16:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DB725B09B;
+	Thu,  2 Jul 2026 16:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010589; cv=none; b=evhfm4bm80Rs7NxsSsPSZ28l3/C211MAVcFI9C4Xx2qE8rDdHZmFvuoGJxIZpzIavPPMMdJpwdsI6D37mmcgcy/4VaDadMwAVBhIt3wT+bHoHeNfIg+OB0o20udHUZUzKABeENVrNN1V9DWZqzluoNV1+n9LKsKy/xPj+P9+7+g=
+	t=1783010591; cv=none; b=dbLIgkCtk+YVMhfBqOt7qCvlQso8GcuQ5Ue/MVfRGvmOGHfmYZHa2xJ9C15mhJmJo3T2OffpA8cSd3oPCD1ieVnELrax0F0stW4s9S29TO5/BdqU8/eGm6lR1EA3N4kUwbkekj2DHff+I1u7YX9kvB/4Qs6pLjgluSw2HU394pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010589; c=relaxed/simple;
-	bh=mfdWltmw1BTa4QSK3VX6Spyx3sLO9L0XVHdzvVUXCQg=;
+	s=arc-20240116; t=1783010591; c=relaxed/simple;
+	bh=ySUlQ4L6ZjMukn2WPhF81WR0Lu5vKKh6p/Xr/NnSdQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZMCA2PjxCyiSmZT91qylO6GfGau/eV5ubo5dlW0K5G6h39oeA73zIxKy7OH1lpHWSAwMEQgrWVFVogxMNmhqtJfkbQbPAqx7HZIlN+hl8v5jTK+Xe7Qa6iJ+6PLdgYlvjs7n7J70xRg5T1ukELnXcZaVpGKHJd31BcFS+JIILDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFcnB47i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b4pS1zD2PAVBJyZGT7BCk9CLRa5t9P1lvhLSSy8q59yMd0Gb0SiWYOd8N/YJ4bZYx90vy4ahlZDU5edzFOIUFOEz5ZDQ9nzFt/4/ZB55Yoj0Z8/3KZMS0OTx7RJ/u/ghBlyDDsKjIC2ZlsoB61/5l5oHCoSaLkOkGV5v/Dij5fE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/TwMQIQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFcnB47i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA151F000E9;
-	Thu,  2 Jul 2026 16:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/TwMQIQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3201F000E9;
+	Thu,  2 Jul 2026 16:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010587;
-	bh=pYrTjja3nCGmoGwoIENoaefYfYOpaPAV9jUCTQNnC2c=;
+	s=korg; t=1783010590;
+	bh=jMt8L7g1pfsckEzhdK3Yon6Js1ulmSjfFv+9FXR2QOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hFcnB47iYM+e3P3AEN0Dh73KTJKao2xQpjjeVQyoD/DdYVkbX6Bu+JBUiGjtbtfoV
-	 M2dAlSqkolHIam/qfO0rLgMQqH9CVkiQTX9OWylOc980zAUfBokoQe6wiyr97EefwO
-	 mnmnG2jRwRI6IxRvyGFr6TZBJBGtR0oP+gUAEIjY=
+	b=e/TwMQIQMmJXpiLsiKedX/4JaGiZSZQLnQjlHf6oVZRf7gYYVMQIDFMSPwcPQb4Kt
+	 gu3vPq3HoBgY4GAxMln7EdubQwZ8YKIhM4pEd58oc3lE8Y3jsTy/X0KQEVcPr+AIjr
+	 adq8lhYMt5E2iXlQkEhwVG7S9o5JtUN8afOxuUKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Shin <jaeshin@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	coregee2000@gmail.com,
-	Ming Lei <ming.lei@redhat.com>,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 167/204] blk-cgroup: fix UAF in __blkcg_rstat_flush()
-Date: Thu,  2 Jul 2026 18:20:24 +0200
-Message-ID: <20260702155122.157819369@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 168/204] tipc: fix slab-use-after-free Read in tipc_aead_decrypt_done
+Date: Thu,  2 Jul 2026 18:20:25 +0200
+Message-ID: <20260702155122.177742174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -49,83 +47,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Koutný <mkoutny@suse.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 0ab5ee5a1badb58cbb2242617cb01a4972b1f2a2 upstream.
+commit bda3348872a2ef0d19f2df6aa8cb5025adce2f20 upstream.
 
-When multiple blkgs in the same blkcg are released concurrently,
-a use-after-free can occur. The race happens when one blkg's
-__blkcg_rstat_flush() removes another blkg's iostat entries via
-llist_del_all(). The second blkg sees an empty list and proceeds
-to free itself while the first is still iterating over its entries.
+tipc_aead_decrypt() goes straight from tipc_bearer_hold(b) to
+crypto_aead_decrypt(req) without taking a reference on the netns, unlike
+the encrypt path. When crypto_aead_decrypt() is offloaded asynchronously
+(e.g. the SIMD aead wrapper queuing to cryptd), the cryptd worker runs
+tipc_aead_decrypt_done() later. If the bearer's netns is torn down in the
+meantime, cleanup_net() -> tipc_exit_net() -> tipc_crypto_stop() frees the
+per-netns tipc_crypto, and the completion then reads it:
+tipc_aead_decrypt_done() dereferences aead->crypto->stats and
+aead->crypto->net, and tipc_crypto_rcv_complete() dereferences
+aead->crypto->aead[] and the node table -- reading freed memory.
 
-Move the flush from __blkg_release() (RCU callback) to blkg_release()
-(before call_rcu). This ensures the RCU grace period waits for any
-concurrent flush's rcu_read_lock() section to complete before freeing.
+Decoded KASAN splat (v7.1-rc7, CONFIG_KASAN_INLINE + TIPC + TIPC_CRYPTO):
 
+  BUG: KASAN: slab-use-after-free in tipc_aead_decrypt_done (net/tipc/crypto.c:999)
+  Read of size 8 at addr ffff8881056258a8 by task kworker/u16:2/51
+  Workqueue: events_unbound
+  Call Trace:
+   tipc_aead_decrypt_done (net/tipc/crypto.c:999)
+   process_one_work (kernel/workqueue.c:3314)
+   worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+
+  Allocated by task 169:
+   __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+   tipc_crypto_start (net/tipc/crypto.c:1502)
+   tipc_init_net (net/tipc/core.c:72)
+   ops_init (net/core/net_namespace.c:137)
+   setup_net (net/core/net_namespace.c:446)
+   copy_net_ns (net/core/net_namespace.c:579)
+   create_new_namespaces (kernel/nsproxy.c:132)
+   __x64_sys_unshare (kernel/fork.c:3316)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+  Freed by task 8:
+   kfree (mm/slub.c:6566)
+   tipc_exit_net (net/tipc/core.c:119)
+   cleanup_net (net/core/net_namespace.c:704)
+   process_one_work (kernel/workqueue.c:3314)
+   kthread (kernel/kthread.c:436)
+
+This is the same class of bug that commit e279024617134 ("net/tipc: fix
+slab-use-after-free Read in tipc_aead_encrypt_done") fixed for the encrypt
+side. The encrypt path takes maybe_get_net(aead->crypto->net) before
+crypto_aead_encrypt() and drops it with put_net() on the synchronous
+return paths and in tipc_aead_encrypt_done(); the -EINPROGRESS/-EBUSY
+return keeps the reference for the async callback to release. The decrypt
+path was left without the equivalent guard.
+
+Mirror the encrypt-side fix on the decrypt path: take a net reference
+before crypto_aead_decrypt() (failing with -ENODEV and the matching
+bearer put if it cannot be acquired), keep it across the
+-EINPROGRESS/-EBUSY async return, and drop it with put_net() on the
+synchronous success/error return and at the end of
+tipc_aead_decrypt_done().
+
+Reproduced under KASAN on v7.1-rc7: a UDP bearer with a cluster key is
+flooded with crafted encrypted frames from an unknown peer (driving the
+cluster-key decrypt path) while the bearer's netns is repeatedly torn
+down. The completion must run asynchronously to outlive
+tipc_crypto_stop(); on x86 the stock aesni gcm(aes) now decrypts
+synchronously, so the async path was exercised via cryptd offload. The
+unguarded aead->crypto dereference in tipc_aead_decrypt_done() is the
+unpatched upstream path; tipc_aead_decrypt() still lacks
+maybe_get_net(aead->crypto->net), so the completion can outlive the free
+on any config where crypto_aead_decrypt() goes async.
+
+Found by 0sec automated security-research tooling (https://0sec.ai).
+
+Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
 Cc: stable@vger.kernel.org
-Cc: Jay Shin <jaeshin@redhat.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Fixes: 20cb1c2fb756 ("blk-cgroup: Flush stats before releasing blkcg_gq")
-Reported-by: coregee2000@gmail.com
-Closes: https://lore.kernel.org/linux-block/CAHPqNmwT9oRpem3J3erS_W0uSQND47LGGSBsNxP8E6uSUish1w@mail.gmail.com/
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Link: https://patch.msgid.link/20260205155425.342084-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260617075818.37431-1-doruk@0sec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ net/tipc/crypto.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -164,20 +164,10 @@ static void blkg_free(struct blkcg_gq *b
- static void __blkg_release(struct rcu_head *rcu)
- {
- 	struct blkcg_gq *blkg = container_of(rcu, struct blkcg_gq, rcu_head);
--	struct blkcg *blkcg = blkg->blkcg;
--	int cpu;
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -950,12 +950,20 @@ static int tipc_aead_decrypt(struct net
+ 		goto exit;
+ 	}
  
- #ifdef CONFIG_BLK_CGROUP_PUNT_BIO
- 	WARN_ON(!bio_list_empty(&blkg->async_bios));
- #endif
--	/*
--	 * Flush all the non-empty percpu lockless lists before releasing
--	 * us, given these stat belongs to us.
--	 *
--	 * blkg_stat_lock is for serializing blkg stat update
--	 */
--	for_each_possible_cpu(cpu)
--		__blkcg_rstat_flush(blkcg, cpu);
- 
- 	/* release the blkcg and parent blkg refs this blkg has been holding */
- 	css_put(&blkg->blkcg->css);
-@@ -195,6 +185,17 @@ static void __blkg_release(struct rcu_he
- static void blkg_release(struct percpu_ref *ref)
- {
- 	struct blkcg_gq *blkg = container_of(ref, struct blkcg_gq, refcnt);
-+	struct blkcg *blkcg = blkg->blkcg;
-+	int cpu;
++	/* Get net to avoid freed tipc_crypto when delete namespace */
++	if (!maybe_get_net(net)) {
++		tipc_bearer_put(b);
++		rc = -ENODEV;
++		goto exit;
++	}
 +
-+	/*
-+	 * Flush all the non-empty percpu lockless lists before releasing
-+	 * us, given these stat belongs to us.
-+	 *
-+	 * blkg_stat_lock is for serializing blkg stat update
-+	 */
-+	for_each_possible_cpu(cpu)
-+		__blkcg_rstat_flush(blkcg, cpu);
+ 	/* Now, do decrypt */
+ 	rc = crypto_aead_decrypt(req);
+ 	if (rc == -EINPROGRESS || rc == -EBUSY)
+ 		return rc;
  
- 	call_rcu(&blkg->rcu_head, __blkg_release);
+ 	tipc_bearer_put(b);
++	put_net(net);
+ 
+ exit:
+ 	kfree(ctx);
+@@ -993,6 +1001,7 @@ static void tipc_aead_decrypt_done(void
+ 	}
+ 
+ 	tipc_bearer_put(b);
++	put_net(net);
  }
+ 
+ static inline int tipc_ehdr_size(struct tipc_ehdr *ehdr)
 
 
