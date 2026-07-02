@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2209630EF95;
-	Thu,  2 Jul 2026 17:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF94830C60F;
+	Thu,  2 Jul 2026 17:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011613; cv=none; b=Kx5NzpjU6h24XfgpeBEEVqAnxwn9SJu3jpnTY5jJxtxMQdg4CpwY5yK7lZBsrti56LJXbnjxnV0d/a9QT1sRhFfIs5dwZQkEf3KRJ+IzJAMtkNjZbMovMzJlCAUisttJJmg+unqEMoVVTHBKONSI4zPykkFadsrKoGRJOpUCU84=
+	t=1783011615; cv=none; b=mFvM139wnrlGPI9bERbjpUhmdwLsrcz0dtybWd73rZFQLc9UU1xbAbgaPiSRhojH0VBnvxOHWG12xAiKNHdaKSnf4cIiMMYsQa5nEEapGfHSCOpw6xWyb6Ypv22xR/F1MOlz7Gs/aBDG1gfT1R2E+jtXNQDskDS0IBFbeu+jzyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011613; c=relaxed/simple;
-	bh=dSbw9XB+yAtcA+R4dan7hG/bHIo+9OGF9Hb0RM3Otkk=;
+	s=arc-20240116; t=1783011615; c=relaxed/simple;
+	bh=vm0qgJ+hQYzPZ56fTC/CUvjS6Zf1crQa2/aHWA//GWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQVeYZjuAu/9YewQHV1CIfa/nCjnaJDKac9WN1VPU4uwqJUHCPQnemJehUQjYtOuwNvrrMC4aGTtThIJDmD+AsL/RNRuJbLBFa3wfnC0Z8xDPgTGenywL6YtZCXl0UMUXYprHq37wV7SUmGZLS6KVyeHw1SHshF0nRMRiP4fvoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcDnAhOB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iNRIF2e/BYB5NRGAAWTMaeRoEybtyu4P/NlHuj6oWqHp3MeF5AN2Iy5Pqf582Vf5e7dVDTe4jfuYWKTPcOf4zUmCXQIGw5nnz/0OLkr/k8VPfOLv8WuxDTMYBp1FUoCtWVShD418FC/6lcv1dS+N1Nq6mIOzQ9B9klpb0QlwgLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcTX8N+7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcDnAhOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884CA1F00A3A;
-	Thu,  2 Jul 2026 17:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcTX8N+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DAD1F00A3D;
+	Thu,  2 Jul 2026 17:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011612;
-	bh=GQnBHMO7uwdJqBifkN6URAhcNB3RnEdINHwLu3cshW0=;
+	s=korg; t=1783011614;
+	bh=Q2zYYweBl//9gteHaK6c3eqGn9HtAHe/gLUrJ6ow8KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vcDnAhOBdF0BgybW+7VaTswb6Sk9RUYgg0nT1dW8oZNdG93xTb4AVr62S0cU5Ck6x
-	 46Y7bODBDWS1tZLGPEKhpV9fLiMNjdCv35GfiTOzMT0JD99AgfCF6Tn5I8l54Bt4+r
-	 hZSh0nML6S9lfj3ca5gSBkIIsAZAz64WM+fUwJ0E=
+	b=PcTX8N+76rSKEis7VyIiTTC31Bp1sexCQIlSBR84fs9Yoac1NYEfm8UQNQi0LYQ61
+	 namzV/QfmHEs+CBTNnyiqYvAtV3Jb9flNS6qGjzg4qGpJz5EWKNXyTyrr9asq7Dhum
+	 XR9ec4mOCZqpjD/G2B6CtXn/MlScFkJbzeJ0mqJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenm Chen <zenmchen@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 7.1 049/120] wifi: mt76: mt76x2u: Add support for ELECOM WDC-867SU3S
-Date: Thu,  2 Jul 2026 18:20:45 +0200
-Message-ID: <20260702155113.980025311@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 7.1 067/120] f2fs: bound i_inline_xattr_size for non-inline-xattr inodes
+Date: Thu,  2 Jul 2026 18:21:03 +0200
+Message-ID: <20260702155114.346209297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -51,34 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit f4ce0664e9f0387873b181777891741c33e19465 upstream.
+commit 378acf3cf19b6af6cba55e8dd1154c4e1504bae8 upstream.
 
-Add the ID 056e:400a to the table to support an additional MT7612U
-adapter: ELECOM WDC-867SU3S.
+When the flexible_inline_xattr feature is enabled, do_read_inode() loads
+the on-disk i_inline_xattr_size unconditionally:
 
-Compile tested only.
+	if (f2fs_sb_has_flexible_inline_xattr(sbi))
+		fi->i_inline_xattr_size = le16_to_cpu(ri->i_inline_xattr_size);
 
-Cc: stable@vger.kernel.org # 5.10.x
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260407154430.9184-1-zenmchen@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+but sanity_check_inode() only range-checks it when the inode also has the
+FI_INLINE_XATTR flag set.  An inode that carries an inline dentry or inline
+data but not FI_INLINE_XATTR -- the normal layout for an inline
+directory -- therefore keeps a fully attacker-controlled
+i_inline_xattr_size from a crafted image.
+
+get_inline_xattr_addrs() returns that value with no flag gating, so it
+feeds the inode geometry:
+
+	MAX_INLINE_DATA()  = 4 * (CUR_ADDRS_PER_INODE - i_inline_xattr_size - 1)
+	NR_INLINE_DENTRY() = MAX_INLINE_DATA() * BITS_PER_BYTE / (...)
+	addrs_per_page()   = CUR_ADDRS_PER_INODE - i_inline_xattr_size
+
+A large i_inline_xattr_size drives MAX_INLINE_DATA() and NR_INLINE_DENTRY()
+negative, so make_dentry_ptr_inline() sets d->max (int) to a negative
+value.  The inline directory walk then compares an unsigned long bit_pos
+against that negative d->max, which is promoted to a huge unsigned bound,
+and reads far past the inline area:
+
+	while (bit_pos < d->max)		/* fs/f2fs/dir.c */
+		... test_bit_le(bit_pos, d->bitmap) / d->dentry[bit_pos] ...
+
+Mounting a crafted image and reading such a directory triggers an
+out-of-bounds read in f2fs_fill_dentries(); the same underflow also
+corrupts ADDRS_PER_INODE for regular files.
+
+Validate i_inline_xattr_size against MAX_INLINE_XATTR_SIZE whenever the
+flexible_inline_xattr feature is enabled -- i.e. whenever the value is
+loaded from disk and consumed -- and keep the lower MIN_INLINE_XATTR_SIZE
+bound gated on inodes that actually carry an inline xattr, so legitimate
+inodes with i_inline_xattr_size == 0 are still accepted.
+
+Cc: stable@vger.kernel.org
+Fixes: 6afc662e68b5 ("f2fs: support flexible inline xattr size")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/inode.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-@@ -16,6 +16,7 @@ static const struct usb_device_id mt76x2
- 	{ USB_DEVICE(0x0e8d, 0x7612) },	/* Aukey USBAC1200 - Alfa AWUS036ACM */
- 	{ USB_DEVICE(0x057c, 0x8503) },	/* Avm FRITZ!WLAN AC860 */
- 	{ USB_DEVICE(0x7392, 0xb711) },	/* Edimax EW 7722 UAC */
-+	{ USB_DEVICE(0x056e, 0x400a) },	/* ELECOM WDC-867SU3S */
- 	{ USB_DEVICE(0x0e8d, 0x7632) },	/* HC-M7662BU1 */
- 	{ USB_DEVICE(0x0471, 0x2126) }, /* LiteOn WN4516R module, nonstandard USB connector */
- 	{ USB_DEVICE(0x0471, 0x7600) }, /* LiteOn WN4519R module, nonstandard USB connector */
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -324,9 +324,9 @@ static bool sanity_check_inode(struct in
+ 	}
+ 
+ 	if (f2fs_sb_has_flexible_inline_xattr(sbi) &&
+-		f2fs_has_inline_xattr(inode) &&
+-		(fi->i_inline_xattr_size < MIN_INLINE_XATTR_SIZE ||
+-		fi->i_inline_xattr_size > MAX_INLINE_XATTR_SIZE)) {
++		(fi->i_inline_xattr_size > MAX_INLINE_XATTR_SIZE ||
++		(f2fs_has_inline_xattr(inode) &&
++		fi->i_inline_xattr_size < MIN_INLINE_XATTR_SIZE))) {
+ 		f2fs_warn(sbi, "%s: inode (ino=%llx) has corrupted i_inline_xattr_size: %d, min: %zu, max: %lu",
+ 			  __func__, inode->i_ino, fi->i_inline_xattr_size,
+ 			  MIN_INLINE_XATTR_SIZE, MAX_INLINE_XATTR_SIZE);
 
 
