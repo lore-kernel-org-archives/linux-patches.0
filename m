@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE58B33E355;
-	Thu,  2 Jul 2026 16:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4BB330B01;
+	Thu,  2 Jul 2026 16:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009884; cv=none; b=LmKNpB04AGWxC4dNUXpme1oK4mFazciVSEWI0FIVHXDNYZznTSxLbVsHWX9CXHkQCfRsM1/KZCLeN9hWvlqkx4yaUj3+yHf0w+cQfUwYRdGjImxEnaVaLmg/reul2AS2kQyHs4pnbRzRTwRSZ2WnrY9imCeYVCK5W1NMqf08w+Y=
+	t=1783009887; cv=none; b=Veh0vH/Z/JeMphdOQeNd3YqPLwJrieF+0fqw2Y1aKC0D5NFFK1YzAsYq9GqjI+Baa16zRJcQU554LUP6aO/YpuO/wbzcCbQBlTO61cSZPjxIro0gZov6mV01t23KEOq+zFtxyXcBayssa9r815Jvlp9BeUaLaK5trojMptTFZWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009884; c=relaxed/simple;
-	bh=m7XiYb4m8+y7gP0i7/DCKQgzCSwh5DXXRwkS7xrZ3/8=;
+	s=arc-20240116; t=1783009887; c=relaxed/simple;
+	bh=lMrqQeg475kQ3UoW+3Hyp+VuXQMgl9ywopHVwY+FpT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPfuvNJ+SoVd2LqqMbKE6CdVcah36a2LSJ22rjs9DK5/0h817G6JWHDr0qdGq5r02m8kkrxlO3/eP//M3pBKUENpAUX+76jB7WEfkqUVV6i1AkL257OjFMhircz0lUBRrs9+RwsyttF0Ed3bU/uTtVbRH3eNjvrBdqX/eHPjHv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/GYpgCv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AV54TczLO92y0zqF/kQjvd8tx2U67oJx6pMn4Yzf18HI8icRX845qHFrl3y3ZAhPuAraZtGSenchBuoOHH5G8FSG+ucfx5IHOBluAieUh4CJ4rarPd2Aad+HBOER7bspnlHG+QxcpNWydp3dIZJLZDkSuqs0/Xfz8w4W7nGZOb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnzyKxsD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/GYpgCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2010B1F000E9;
-	Thu,  2 Jul 2026 16:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnzyKxsD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF131F00A3F;
+	Thu,  2 Jul 2026 16:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009883;
-	bh=nED5XRzgUMfjW5k9rr3iDtHoR2km0TGVoYzcpxxd1RQ=;
+	s=korg; t=1783009886;
+	bh=RVp2OD5rSJhiR8NvDwK/AKvXYMFxgYGNwke+qE+5itY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/GYpgCvrDkI2cjiKHk5yjS766ijNMETmE563M/q7co5FH97XIuesMf+Vd8fMFIu8
-	 oM4w1pcSesigzPItuQ0UbCbxmsRsz6knC/Gx20fqp/+gtBnlKUgvqNTw+Ib2+0Z1L0
-	 hjHk/xbeZSYrpYsuSQIAQ1T0x4n3GwArp4KPpYGU=
+	b=OnzyKxsDlYNhvIFKriupyKft63JUIYNqKrfvtUhz675SjQhTe1o32FZvoORbEdz3T
+	 VWGe/vAPfDj+5yo4k/I8o9AE5SS8Vc0FZB2ITC6pbsh5aQuJpAvWMfJimreeheCknb
+	 eSs0+qN+Bpz+bUcthAgFC77tNRShSMuUyDL+dLCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huaweicloud.com>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/129] ARM: fix hash_name() fault
-Date: Thu,  2 Jul 2026 18:19:08 +0200
-Message-ID: <20260702155112.761365077@linuxfoundation.org>
+	Inseo An <y0un9sa@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Li hongliang <1468888505@139.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 6.1 012/129] netfilter: nf_tables: unconditionally bump set->nelems before insertion
+Date: Thu,  2 Jul 2026 18:18:51 +0200
+Message-ID: <20260702155112.416109505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -53,107 +54,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 7733bc7d299d682f2723dc38fc7f370b9bf973e9 upstream.
+[ Upstream commit def602e498a4f951da95c95b1b8ce8ae68aa733a ]
 
-Zizhi Wo reports:
+In case that the set is full, a new element gets published then removed
+without waiting for the RCU grace period, while RCU reader can be
+walking over it already.
 
-"During the execution of hash_name()->load_unaligned_zeropad(), a
- potential memory access beyond the PAGE boundary may occur. For
- example, when the filename length is near the PAGE_SIZE boundary.
- This triggers a page fault, which leads to a call to
- do_page_fault()->mmap_read_trylock(). If we can't acquire the lock,
- we have to fall back to the mmap_read_lock() path, which calls
- might_sleep(). This breaks RCU semantics because path lookup occurs
- under an RCU read-side critical section."
+To address this issue, add the element transaction even if set is full,
+but toggle the set_full flag to report -ENFILE so the abort path safely
+unwinds the set to its previous state.
 
-This is seen with CONFIG_DEBUG_ATOMIC_SLEEP=y and CONFIG_KFENCE=y.
+As for element updates, decrement set->nelems to restore it.
 
-Kernel addresses (with the exception of the vectors/kuser helper
-page) do not have VMAs associated with them. If the vectors/kuser
-helper page faults, then there are two possibilities:
+A simpler fix is to call synchronize_rcu() in the error path.
+However, with a large batch adding elements to already maxed-out set,
+this could cause noticeable slowdown of such batches.
 
-1. if the fault happened while in kernel mode, then we're basically
-   dead, because the CPU won't be able to vector through this page
-   to handle the fault.
-2. if the fault happened while in user mode, that means the page was
-   protected from user access, and we want to fault anyway.
-
-Thus, we can handle kernel addresses from any context entirely
-separately without going anywhere near the mmap lock. This gives us
-an entirely non-sleeping path for all kernel mode kernel address
-faults.
-
-As we handle the kernel address faults before interrupts are enabled,
-this change has the side effect of improving the branch predictor
-hardening, but does not completely solve the issue.
-
-Reported-by: Zizhi Wo <wozizhi@huaweicloud.com>
-Reported-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Link: https://lore.kernel.org/r/20251126090505.3057219-1-wozizhi@huaweicloud.com
-Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: 35d0ac9070ef ("netfilter: nf_tables: fix set->nelems counting with no NLM_F_EXCL")
+Reported-by: Inseo An <y0un9sa@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ Shivani: Modified to apply on 6.1.y ]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ net/netfilter/nf_tables_api.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index c94633eb64a1bb..907705992ab65f 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -240,6 +240,35 @@ void do_bad_area(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- #define VM_FAULT_BADMAP		((__force vm_fault_t)0x010000)
- #define VM_FAULT_BADACCESS	((__force vm_fault_t)0x020000)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 0d406dab5cac19..735c0210104076 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6417,6 +6417,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	struct nft_data_desc desc;
+ 	enum nft_registers dreg;
+ 	struct nft_trans *trans;
++	bool set_full = false;
+ 	u64 timeout;
+ 	u64 expiration;
+ 	int err, i;
+@@ -6709,10 +6710,18 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (err < 0)
+ 		goto err_elem_free;
  
-+static int __kprobes
-+do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
-+			     unsigned int fsr, struct pt_regs *regs)
-+{
-+	if (user_mode(regs)) {
-+		/*
-+		 * Fault from user mode for a kernel space address. User mode
-+		 * should not be faulting in kernel space, which includes the
-+		 * vector/khelper page. Send a SIGSEGV.
-+		 */
-+		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
-+	} else {
-+		/*
-+		 * Fault from kernel mode. Enable interrupts if they were
-+		 * enabled in the parent context. Section (upper page table)
-+		 * translation faults are handled via do_translation_fault(),
-+		 * so we will only get here for a non-present kernel space
-+		 * PTE or PTE permission fault. This may happen in exceptional
-+		 * circumstances and need the fixup tables to be walked.
-+		 */
-+		if (interrupts_enabled(regs))
-+			local_irq_enable();
++	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
++		unsigned int max = nft_set_maxsize(set), nelems;
 +
-+		__do_kernel_fault(mm, addr, fsr, regs);
++		nelems = atomic_inc_return(&set->nelems);
++		if (nelems > max)
++			set_full = true;
 +	}
 +
-+	return 0;
-+}
+ 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_NEWSETELEM, set);
+ 	if (trans == NULL) {
+ 		err = -ENOMEM;
+-		goto err_elem_free;
++		goto err_set_size;
+ 	}
+ 
+ 	ext->genmask = nft_genmask_cur(ctx->net);
+@@ -6744,23 +6753,16 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		goto err_element_clash;
+ 	}
+ 
+-	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
+-		unsigned int max = nft_set_maxsize(set);
+-
+-		if (!atomic_add_unless(&set->nelems, 1, max)) {
+-			err = -ENFILE;
+-			goto err_set_full;
+-		}
+-	}
+-
+ 	nft_trans_elem(trans) = elem;
+ 	nft_trans_commit_list_add_tail(ctx->net, trans);
+-	return 0;
+ 
+-err_set_full:
+-	nft_setelem_remove(ctx->net, set, &elem);
++	return set_full ? -ENFILE : 0;
 +
- static int __kprobes
- do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- {
-@@ -253,6 +282,12 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	if (kprobe_page_fault(regs, fsr))
- 		return 0;
- 
-+	/*
-+	 * Handle kernel addresses faults separately, which avoids touching
-+	 * the mmap lock from contexts that are not able to sleep.
-+	 */
-+	if (addr >= TASK_SIZE)
-+		return do_kernel_address_page_fault(mm, addr, fsr, regs);
- 
- 	/* Enable interrupts if they were enabled in the parent context. */
- 	if (interrupts_enabled(regs))
+ err_element_clash:
+ 	kfree(trans);
++err_set_size:
++	if (!(flags & NFT_SET_ELEM_CATCHALL))
++		atomic_dec(&set->nelems);
+ err_elem_free:
+ 	nf_tables_set_elem_destroy(ctx, set, elem.priv);
+ err_parse_data:
 -- 
 2.53.0
 
