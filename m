@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F059822D7B9;
-	Thu,  2 Jul 2026 16:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C3633D4F0;
+	Thu,  2 Jul 2026 16:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010799; cv=none; b=qG/5lixqnYuzNPHcZLpsSnIvq6hUgXfI9DQXhcVfYirKftJQee+4zamDLHvr3o+GduUN5QdWK1pM+LzJiXUY6u9GF/1Ufqp4IrW2rLp2B6ayI85Ajf5tk6mGRgaWGJLo8VTlR4D/dLtpLTuHGqtReqZtYZiu7e4uLnj3CzNB7nU=
+	t=1783010801; cv=none; b=SW+23JxI7ZneslKmtlF88Hhlp/NjKuzV+bVymx+0beSrJolQDQlUX+7W2qH2flMmq91SQi8Y/uXm9T7g4wkGW8u00SRdYpdyOxwMLbznCBZkhN/KrpuqppJXC4ivcc9j96OioSVNUmgeZNnjbpltzY3VpigSMeEOWlaSXrnD468=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010799; c=relaxed/simple;
-	bh=k8ocSuu6B/2mOYWDdVdJe4mTG1O5FruuBa6z9fALx0M=;
+	s=arc-20240116; t=1783010801; c=relaxed/simple;
+	bh=iuTg+r2aJb+oRyO/DoJzogbNTbF2ttFca0LZWep7glg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/ku1YpJlsRxtl6tL9RXTv2kNyvfBS9v129dSLpIHU6ayxCCZ5+hAPyo2aKMcpII6QbjHR05GwkffR8LcvChCBWQUvbIZQBV8eOBIBx/ru0DrI7MdiIWXELlPoPEgtCYyiOlNc/sksQMMlS5kuZ5VywsQPCYKUrFoTaBPcIdjoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbnB3wBH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M+dHySEwnYHM0LPL8ZqBueXdCLeKZY0xLbr5/t1j097DQNOGpkEl7xPKs8rJ8v0UkiGNEfUvfVpXPupEI3HzEyB2HBNm8ElljOky+/JEDHdBJd180c6fV/vdXZZYMU5Pv0m4dI3o0CWfyQuCFz5ytsZZ0dZM5/k8GjDpMCLeYps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+NF5mtb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbnB3wBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BFA1F000E9;
-	Thu,  2 Jul 2026 16:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+NF5mtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25291F000E9;
+	Thu,  2 Jul 2026 16:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010797;
-	bh=ghTmdJoIQvMCK2m6xIgcs9je7W//PUUfugRz6wantzM=;
+	s=korg; t=1783010800;
+	bh=UM0pK7gwBmjJaw0CK9vEfDTNkC2XC4JEI2BTkGaTyfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XbnB3wBH/Vj4A1p4yAdC0RkhtMlO1G8mJFmy1ZRH4OBs8X7MDpTcjRcCzBEBayxnl
-	 rv+dxVezJWkhkysgFyEeMT7A0SWhmo8E2viAfF12XHrh3q9vZUJwLZLIjE+g4DK1Rp
-	 WPIZgR8oxCE7L25I9sI9qsTzC6uAiBXnzHRoSbrw=
+	b=u+NF5mtbKT1zcDglTmqIXncfUjP4HdQ2dbt5QyGFTfgLX/4fXPeTwlFfs3WWAFREL
+	 p80ZJfP86Cpq6/8W0Cp13pToS/zFvG2lBvHI1gaJVI3n3LiPWsjK+84iXfZ0SxckOP
+	 0mhSCtKnsNK4OYgLuapM4suIKrP+jaeZx5nXcZ0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noam Rathaus <noamr@ssd-disclosure.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Salvatore Bonaccorso <carnil@debian.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	netdev@vger.kernel.org,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/175] ip6_vti: set netns_immutable on the fallback device.
-Date: Thu,  2 Jul 2026 18:18:25 +0200
-Message-ID: <20260702155115.861087830@linuxfoundation.org>
+Subject: [PATCH 6.6 040/175] rxrpc: Fix the ACK parser to extract the SACK table for parsing
+Date: Thu,  2 Jul 2026 18:19:01 +0200
+Message-ID: <20260702155116.642120945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -55,49 +61,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit d289d5307762d1838aaece22c6b6fcad9e8865f9 ]
+[ Upstream commit 333b6d5bb9f87827ac2639c737bf9613dbae7253 ]
 
-john1988 and Noam Rathaus reported that vti6_init_net() does not set the
-netns_immutable flag on the per-netns fallback tunnel device (ip6_vti0).
+Fix modification of the received skbuff in rxrpc_input_soft_acks() and a
+potential incorrect access of the buffer in a fragmented UDP packet (the
+packet would probably have to be deliberately pre-generated as fragmented)
+when AF_RXRPC tries to extract the contents of the SACK table by copying
+out the contents of the SACK table into a buffer before attempting to parse
 
-Other similar tunnel drivers (like ip6_tunnel, sit, ip6_gre, and ip_tunnel)
-correctly set this flag during their fallback device initialization to
-prevent them from being moved to another network namespace.
+AF_RXRPC assumes that it can just call skb_condense() and then validly
+access the SACK table from skb->data and that it will be a flat buffer -
+but skb_condense() can silently fail to do anything under some
+circumstances.
 
-Fixes: 61220ab34948 ("vti6: Enable namespace changing")
-Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://patch.msgid.link/20260608155918.787644-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Salvatore Bonaccorso: Backport for version without 0c493da86374 ("net:
-rename netns_local to netns_immutable") in v6.15-rc1 and without
-05c1280a2bcf ("netdev_features: convert NETIF_F_NETNS_LOCAL to
-dev->netns_local") in v6.12-rc1 and use NETIF_F_NETNS_LOCAL device
-feature.]
-Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Note that whilst rxrpc_input_soft_acks() should be able to parse extended
+ACKs, the rest of AF_RXRPC doesn't currently support that.
+
+Further, there's then no need to call skb_condense() in rxrpc_input_ack(),
+so don't.
+
+Fixes: d57a3a151660 ("rxrpc: Save last ACK's SACK table rather than marking txbufs")
+Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://lore.kernel.org/r/20260513180907.2061972-1-michael.bommarito@gmail.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Eric Dumazet <edumazet@google.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: netdev@vger.kernel.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/105362.1780573560@warthog.procyon.org.uk
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_vti.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/rxrpc/input.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
-index 67cf616c1499a4..95cf8c52953c2f 100644
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -1166,6 +1166,7 @@ static int __net_init vti6_init_net(struct net *net)
- 		goto err_alloc_dev;
- 	dev_net_set(ip6n->fb_tnl_dev, net);
- 	ip6n->fb_tnl_dev->rtnl_link_ops = &vti6_link_ops;
-+	ip6n->fb_tnl_dev->features |= NETIF_F_NETNS_LOCAL;
+--- a/net/rxrpc/input.c
++++ b/net/rxrpc/input.c
+@@ -781,7 +781,18 @@ static void rxrpc_input_soft_acks(struct
+ 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
+ 	unsigned int i, old_nacks = 0;
+ 	rxrpc_seq_t lowest_nak = seq + sp->nr_acks;
+-	u8 *acks = skb->data + sizeof(struct rxrpc_wire_header) + sizeof(struct rxrpc_ackpacket);
++	u8 sack[256] __aligned(sizeof(unsigned long));
++	u8 *acks = sack;
++
++	/* Extract the SACK table into a flat buffer rather than accessing it
++	 * directly through skb->data, which is not guaranteed to be linear for
++	 * a fragmented packet (skb_condense() can silently fail to linearise
++	 * it).
++	 */
++	if (skb_copy_bits(skb,
++			  sizeof(struct rxrpc_wire_header) + sizeof(struct rxrpc_ackpacket),
++			  sack, umin(sp->nr_acks, sizeof(sack))) < 0)
++		return;
  
- 	err = vti6_fb_tnl_dev_init(ip6n->fb_tnl_dev);
- 	if (err < 0)
--- 
-2.53.0
-
+ 	for (i = 0; i < sp->nr_acks; i++) {
+ 		if (acks[i] == RXRPC_ACK_TYPE_ACK) {
 
 
