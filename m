@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2641430C37A;
-	Thu,  2 Jul 2026 16:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83908348465;
+	Thu,  2 Jul 2026 16:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010778; cv=none; b=iA1Hqt2gDlhwLx96p3/oY+xVt6GL4GIJGjCgy1F3FjPD7s0ofaKA5a0+9PDY73hUZt/0+zrZWuy5yRDrUCw0vsrqoucHfWz/3Bb5DJxvcuHdsqpdQauUtc3rpXiEVsB4i4/fIPCgimp7j8a56rXoOI/wx8n2zUiYKSHYhi49/Hk=
+	t=1783010780; cv=none; b=eq0zlEr5rAI392QLGoVB+fROLT+tTbWnH3w7F3eQM13A75O51CjyfNiuFlWUtGq3xODgr+St/YkSIl6qmHS+9XczNVlYxCGzqCL0/JgOtSGlVtHduISps6OM2FIiKXeG3tIquQP60vXXvnKc8UbXLze79dxH1qKsM1/J0gRaAPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010778; c=relaxed/simple;
-	bh=5idctXAqY/hFRmehLMPZ/UcR90D5M9ZLeOesPbGH9/U=;
+	s=arc-20240116; t=1783010780; c=relaxed/simple;
+	bh=gmdsas5abTCj3EUPsH3OHVA1TDA4mlsewIJ8fpc5nAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9de7P4UQTklNAzjhzA7oajlyG1vy6lMdqCZ9QUjI+3gTmwlNU2oGywSEOD7Y9J5mgcq/lJF56t3R9giuWoGL7C1ndL5IRabUre1I87zhibmI45uxyrN9iIYmoI/KxCV69Fm/nYeJr8zXrIJt/V2Mq4ccPnJ2stnzS3x6T38ITs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x87JSMfa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xspz0RDJH/j0jKM/qMXS2/HX0Sfd88vkOsOdwEsOLa0aKwijmFiNJhcz9D7W6VSmXZczipv1V76qn8qqejAgwUnZag8pbpQDnP/0kjXJAkIp9WCobLyu1RZoShAV9HTr1Rg1eHYIKHMwcaCHHZHoK7IpdkCrpDnNj6QTE8O7fVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nzk0hIn8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x87JSMfa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490921F000E9;
-	Thu,  2 Jul 2026 16:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nzk0hIn8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84091F000E9;
+	Thu,  2 Jul 2026 16:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010776;
-	bh=Dj2uuDAYsPINSRRuv47bOwlRftIwAt/QthxcgYjNDLE=;
+	s=korg; t=1783010779;
+	bh=lLyoBTwB+OOZ9s3gACW+eVGbQE1RaMlkvSOrbKVdSD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x87JSMfa169plIobGbyBDq0wYrYnNcNvn3NJtgWtATg2vHcX8nAXEGB6uqT7ENTtm
-	 lOs9KozLACnzJ883jUQfTVxYeNO8dNrRC/E6KpVV880g5rK3H08mweYQ/y7y+yczNr
-	 ap28+mJQi4aCt4MsE9SrhDRVbz/6R3udX1JvoE6o=
+	b=Nzk0hIn8P489EjIcOzHV5T4QmKzEh1P4aBXwiRSEsEmCpeCYu+kae3r6oP6jVnfUf
+	 GhI1m1vB2etsVMg7YgyetKoOspuKneV2e0hKmP/vlTtLtushz5b8YEt9ADMaaqn3+2
+	 9lnZ6VtnHC7aj8EnEM1Z01OhcFvKKa6oOzvFFryY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Long Li <longli@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/175] mptcp: pm: fix extra_subflows underflow on userspace PM subflow creation
-Date: Thu,  2 Jul 2026 18:18:53 +0200
-Message-ID: <20260702155116.473465280@linuxfoundation.org>
+Subject: [PATCH 6.6 033/175] hv: utils: handle and propagate errors in kvp_register
+Date: Thu,  2 Jul 2026 18:18:54 +0200
+Message-ID: <20260702155116.494377970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -52,62 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 14e9fea30b68fc75b2b3d97396a7e6adb544bd2a ]
+[ Upstream commit 3fcf923302a8f5c0dc3af3d2ca2657cb5fae4297 ]
 
-The userspace PM increments extra_subflows after __mptcp_subflow_connect()
-succeeds, but __mptcp_subflow_connect() calls mptcp_pm_close_subflow()
-on failure to roll back the pre-increment done by the kernel PM's fill_*()
-helpers. Because the userspace PM hasn't incremented yet at that point,
-this decrement is spurious and causes extra_subflows to underflow.
+Make kvp_register() return an error code instead of silently ignoring
+failures, and propagate the error from kvp_handle_handshake() instead of
+returning success.
 
-Fix it by aligning the userspace PM with the kernel PM: increment
-extra_subflows before calling __mptcp_subflow_connect(), so the existing
-error path in subflow.c correctly rolls it back on failure. Also simplify
-the error handling by taking pm.lock only when needed for cleanup.
+This propagates both kzalloc_obj() and hvutil_transport_send() failures
+to kvp_handle_handshake() and thus to kvp_on_msg().
 
-Fixes: 77e4b94a3de6 ("mptcp: update userspace pm infos")
+Fixes: 245ba56a52a3 ("Staging: hv: Implement key/value pair (KVP)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-5-856831229976@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/hv/hv_kvp.c |   27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -408,18 +408,21 @@ int mptcp_nl_cmd_sf_create(struct sk_buf
- 		goto create_err;
- 	}
+--- a/drivers/hv/hv_kvp.c
++++ b/drivers/hv/hv_kvp.c
+@@ -93,7 +93,7 @@ static void kvp_send_key(struct work_str
+ static void kvp_respond_to_host(struct hv_kvp_msg *msg, int error);
+ static void kvp_timeout_func(struct work_struct *dummy);
+ static void kvp_host_handshake_func(struct work_struct *dummy);
+-static void kvp_register(int);
++static int kvp_register(int);
  
-+	spin_lock_bh(&msk->pm.lock);
-+	msk->pm.subflows++;
-+	spin_unlock_bh(&msk->pm.lock);
+ static DECLARE_DELAYED_WORK(kvp_timeout_work, kvp_timeout_func);
+ static DECLARE_DELAYED_WORK(kvp_host_handshake_work, kvp_host_handshake_func);
+@@ -127,24 +127,26 @@ static void kvp_register_done(void)
+ 	hv_poll_channel(kvp_transaction.recv_channel, kvp_poll_wrapper);
+ }
+ 
+-static void
++static int
+ kvp_register(int reg_value)
+ {
+ 
+ 	struct hv_kvp_msg *kvp_msg;
+ 	char *version;
++	int ret;
+ 
+ 	kvp_msg = kzalloc(sizeof(*kvp_msg), GFP_KERNEL);
++	if (!kvp_msg)
++		return -ENOMEM;
+ 
+-	if (kvp_msg) {
+-		version = kvp_msg->body.kvp_register.version;
+-		kvp_msg->kvp_hdr.operation = reg_value;
+-		strcpy(version, HV_DRV_VERSION);
+-
+-		hvutil_transport_send(hvt, kvp_msg, sizeof(*kvp_msg),
+-				      kvp_register_done);
+-		kfree(kvp_msg);
+-	}
++	version = kvp_msg->body.kvp_register.version;
++	kvp_msg->kvp_hdr.operation = reg_value;
++	strcpy(version, HV_DRV_VERSION);
 +
- 	lock_sock(sk);
++	ret = hvutil_transport_send(hvt, kvp_msg, sizeof(*kvp_msg),
++				    kvp_register_done);
++	kfree(kvp_msg);
++	return ret;
+ }
  
- 	err = __mptcp_subflow_connect(sk, &addr_l, &addr_r);
+ static void kvp_timeout_func(struct work_struct *dummy)
+@@ -186,9 +188,8 @@ static int kvp_handle_handshake(struct h
+ 	 */
+ 	pr_debug("KVP: userspace daemon ver. %d connected\n",
+ 		 msg->kvp_hdr.operation);
+-	kvp_register(dm_reg_value);
  
- 	release_sock(sk);
+-	return 0;
++	return kvp_register(dm_reg_value);
+ }
  
--	spin_lock_bh(&msk->pm.lock);
--	if (err)
-+	if (err) {
-+		spin_lock_bh(&msk->pm.lock);
- 		mptcp_userspace_pm_delete_local_addr(msk, &local);
--	else
--		msk->pm.subflows++;
--	spin_unlock_bh(&msk->pm.lock);
-+		spin_unlock_bh(&msk->pm.lock);
-+	}
  
-  create_err:
- 	sock_put((struct sock *)msk);
 
 
