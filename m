@@ -1,473 +1,156 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47875492185;
-	Thu,  2 Jul 2026 16:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B878639F165;
+	Thu,  2 Jul 2026 16:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009447; cv=none; b=egh6N2T5H57ZGGAKV/US94FmQlgAdgx08cpK13Nqf6kRES7mbtlFQ/o28ozVuhViW7JyD3VFiYvNlGvElpEDglkaMPevTu496j2p0mnpHbRUbw90l2IaW2Rq56WrxETFIxhWqZIS092IzGW3mORY5LVQeM3oAmr7IWgHDC/WdRM=
+	t=1783009450; cv=none; b=JzOc8b/DeSSlwoc1iZ7UAEeYoILYrMv+Ih+kQMz/JeKztUd9JaGGBsTJvFgsMGR57ymRS4k4BixSbtPNqT5PgGbLAbc8vgDLECNBANSiSDDRvk5vr5K8QPIHNaYLmTFXnXwK6PJAaJbOLWji94zn26MB5b4dZcNmXvIBVQKhGgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009447; c=relaxed/simple;
-	bh=ObqgvITbHYCcDvxtRx7xLyVYKYs1MOUj5D16Z6p3FRU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FJOuqY+u08EYsagUSqaj2ONfwAKXVSA3KKwDMdp+xLI7RBA6wZVdeffkJLKt+fbRdSQ/A9qdSgd4b3RZ7pcqco6McStdaZKraRqINh7KLgxa0ngPrshUXshT3S/9XTH3kIFd/xFzZhPAyp0cFnmnM04UJSEJmX6yNMh3RVjOGIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wof8hUEp; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783009450; c=relaxed/simple;
+	bh=duZlGIutiexBvOogmYwOThoP5GezjgVRYPRsrLnhfSE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dO/CkQCM1eRDeW1mJevIq8YcD+zbRDY+eS08lasxkteFhuFWch8LQwhbWpZY5RK7MV5bGyO2mDJXzSqlrmsPLRbvw3M1bif6xHyDoQRJRE/ROUdlntpTCmueS9wZlIKPCFkSGqoQCLEU2v2n2GqkEuh0sAUolBQwaXubhbWkmlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWnbiiHA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wof8hUEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5011F000E9;
-	Thu,  2 Jul 2026 16:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWnbiiHA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521971F00A3A;
+	Thu,  2 Jul 2026 16:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009442;
-	bh=9WpeyFB18GR7YxO/MLFXLqvZmPgaReQm/W6ewZEk+Hc=;
-	h=From:To:Cc:Subject:Date;
-	b=Wof8hUEpbBCAuOXQGxFGXy5y53nygIivgXfUcp1Zsgblq1ZcQ3v6Ea0ZNoEK4waKA
-	 9gGdKGpDBwTiIRZjOBGX+q/3aMeaOeZP/+ShxJXxShrymeoE7mfrNNRfrBsURpcUUl
-	 xBc0r3TJhBpiJqPsC8hdrB4ppKqCGs02iCvgG3Kc=
+	s=korg; t=1783009444;
+	bh=NkuQO3410t3n9/V3FNaULdWecEA2DQ4SkMarQ1AC/9s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=XWnbiiHA2/wczdk2tc2HKDp+O5NcGmbl8Q1qM9vN0MijHFhn4yT0IQyVSyytTrwFF
+	 /swlC0sbT9bsr7CovpAXaPNQHqM4uwdDSv1D7wnzDSjlqDRt+5qcxaOpre7q3biqRK
+	 UL3H8VFArmEbcUbQcCfm0klTirKy0bQ8xamvqkFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: [PATCH 5.10 00/96] 5.10.260-rc1 review
-Date: Thu,  2 Jul 2026 18:18:52 +0200
-Message-ID: <20260702155108.949633242@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 47/96] batman-adv: v: prevent OGM aggregation on disabled hardif
+Date: Thu,  2 Jul 2026 18:19:39 +0200
+Message-ID: <20260702155109.972958617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
+References: <20260702155108.949633242@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.260-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.10.260-rc1
-X-KernelTest-Deadline: 2026-07-04T15:51+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.10.260 release.
-There are 96 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Sven Eckelmann <sven@narfation.org>
+
+commit d11c00b95b2a3b3934007fc003dccc6fdcc061ad upstream.
+
+When an interface gets disabled, the worker is correctly disabled by
+batadv_hardif_disable_interface() -> ... -> batadv_v_ogm_iface_disable().
+In this process, the skb aggr_list is also freed.
+
+But batadv_v_ogm_send_meshif() can still queue new skbs (via
+batadv_v_ogm_queue_on_if()) to the aggr_list. This will only stop after all
+cores can no longer find the RCU protected list of hard interfaces. These
+queued skbs will never be freed or consumed by batadv_v_ogm_aggr_work.
+
+The batadv_v_ogm_iface_disable() function must block
+batadv_v_ogm_queue_on_if() to avoid leak of skbs.
+
+Cc: stable@kernel.org
+Fixes: f89255a02f1d ("batman-adv: BATMAN_V: introduce per hard-iface OGMv2 queues")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/batman-adv/bat_v.c     |  1 +
+ net/batman-adv/bat_v_ogm.c | 12 ++++++++++++
+ net/batman-adv/types.h     |  6 ++++++
+ 3 files changed, 19 insertions(+)
+
+diff --git a/net/batman-adv/bat_v.c b/net/batman-adv/bat_v.c
+index 6dc39fc0350e6a..7b9bc8a4bd48f5 100644
+--- a/net/batman-adv/bat_v.c
++++ b/net/batman-adv/bat_v.c
+@@ -1084,6 +1084,7 @@ void batadv_v_hardif_init(struct batadv_hard_iface *hard_iface)
+ 
+ 	hard_iface->bat_v.aggr_len = 0;
+ 	skb_queue_head_init(&hard_iface->bat_v.aggr_list);
++	hard_iface->bat_v.aggr_list_enabled = false;
+ 	INIT_DELAYED_WORK(&hard_iface->bat_v.aggr_wq,
+ 			  batadv_v_ogm_aggr_work);
+ }
+diff --git a/net/batman-adv/bat_v_ogm.c b/net/batman-adv/bat_v_ogm.c
+index 939aa4b303ad98..12de9b44064dd4 100644
+--- a/net/batman-adv/bat_v_ogm.c
++++ b/net/batman-adv/bat_v_ogm.c
+@@ -255,11 +255,18 @@ static void batadv_v_ogm_queue_on_if(struct batadv_priv *bat_priv,
+ 	}
+ 
+ 	spin_lock_bh(&hard_iface->bat_v.aggr_list.lock);
++	if (!hard_iface->bat_v.aggr_list_enabled) {
++		kfree_skb(skb);
++		goto unlock;
++	}
++
+ 	if (!batadv_v_ogm_queue_left(skb, hard_iface))
+ 		batadv_v_ogm_aggr_send(bat_priv, hard_iface);
+ 
+ 	hard_iface->bat_v.aggr_len += batadv_v_ogm_len(skb);
+ 	__skb_queue_tail(&hard_iface->bat_v.aggr_list, skb);
++
++unlock:
+ 	spin_unlock_bh(&hard_iface->bat_v.aggr_list.lock);
+ }
+ 
+@@ -422,6 +429,10 @@ int batadv_v_ogm_iface_enable(struct batadv_hard_iface *hard_iface)
+ {
+ 	struct batadv_priv *bat_priv = netdev_priv(hard_iface->soft_iface);
+ 
++	spin_lock_bh(&hard_iface->bat_v.aggr_list.lock);
++	hard_iface->bat_v.aggr_list_enabled = true;
++	spin_unlock_bh(&hard_iface->bat_v.aggr_list.lock);
++
+ 	batadv_v_ogm_start_queue_timer(hard_iface);
+ 	batadv_v_ogm_start_timer(bat_priv);
+ 
+@@ -437,6 +448,7 @@ void batadv_v_ogm_iface_disable(struct batadv_hard_iface *hard_iface)
+ 	cancel_delayed_work_sync(&hard_iface->bat_v.aggr_wq);
+ 
+ 	spin_lock_bh(&hard_iface->bat_v.aggr_list.lock);
++	hard_iface->bat_v.aggr_list_enabled = false;
+ 	batadv_v_ogm_aggr_list_free(hard_iface);
+ 	spin_unlock_bh(&hard_iface->bat_v.aggr_list.lock);
+ }
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index 238d9824c2d62f..28f239421f74a3 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -131,6 +131,12 @@ struct batadv_hard_iface_bat_v {
+ 	/** @aggr_list: queue for to be aggregated OGM packets */
+ 	struct sk_buff_head aggr_list;
+ 
++	/**
++	 * @aggr_list_enabled: aggr_list is active and new skbs can be
++	 * enqueued. Protected by aggr_list.lock after initialization
++	 */
++	bool aggr_list_enabled:1;
++
+ 	/** @aggr_len: size of the OGM aggregate (excluding ethernet header) */
+ 	unsigned int aggr_len;
+ 
+-- 
+2.53.0
 
-Responses should be made by Sat, 04 Jul 2026 15:50:58 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.260-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.10.260-rc1
-
-Miklos Szeredi <mszeredi@redhat.com>
-    virtiofs: fix UAF on submount umount
-
-Junrui Luo <moonafterrain@outlook.com>
-    misc: fastrpc: fix DMA address corruption due to find_vma misuse
-
-Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-    mmc: renesas_sdhi: Add OF entry for RZ/G2H SoC
-
-Santosh Kalluri <santosh.kalluri129@gmail.com>
-    net: phonet: free phonet_device after RCU grace period
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    phonet: Pass net and ifindex to phonet_address_notify().
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    phonet: Pass ifindex to fill_addr().
-
-Dexuan Cui <decui@microsoft.com>
-    Drivers: hv: vmbus: Improve the logic of reserving fb_mmio on Gen2 VMs
-
-Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-    misc: fastrpc: Fix NULL pointer dereference in rpmsg callback
-
-Abel Vesa <abel.vesa@linaro.org>
-    misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: fix missing wakeups in edge scenarios
-
-Thorsten Blum <thorsten.blum@linux.dev>
-    hv: utils: handle and propagate errors in kvp_register
-
-Kyle Meyer <kyle.meyer@hpe.com>
-    bnxt_en: Fix NULL pointer dereference
-
-Michael Chan <michael.chan@broadcom.com>
-    bnxt_en: Modify bnxt_disable_int_sync() to be called more than once.
-
-Yongchao Wu <yongchao.wu@autochips.com>
-    usb: cdns3: gadget: fix NULL pointer dereference in ep_queue
-
-Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-    dlm: prevent NPD when writing a positive value to event_done
-
-Dominik Woźniak <stalion@gmail.com>
-    nfsd: check get_user() return when reading princhashlen
-
-Jeff Layton <jlayton@kernel.org>
-    nfsd: fix posix_acl leak on SETACL decode failure
-
-Guannan Wang <wgnbuaa@gmail.com>
-    NFSD: Fix SECINFO_NO_NAME decode error cleanup
-
-Steffen Persvold <spersvold@gmail.com>
-    fbdev: modedb: Fix misaligned fields in the 1920x1080-60 mode
-
-Ian Bridges <icb@fastmail.org>
-    fbdev: Fix fb_new_modelist to prevent null-ptr-deref in fb_videomode_to_var
-
-Ashutosh Desai <ashutoshdesai993@gmail.com>
-    KVM: SVM: Fix page overflow in sev_dbg_crypt() for ENCRYPT path
-
-Zhang Cen <rollkingzzc@gmail.com>
-    ocfs2: reject oversized group bitmap descriptors
-
-Wentao Liang <vulab@iscas.ac.cn>
-    fpga: region: fix use-after-free in child_regions_with_firmware()
-
-Qingshuang Fu <fuqingshuang@kylinos.cn>
-    irqchip/imgpdc: Fix resource leak, add missing chained handler cleanup on remove
-
-Wentao Liang <vulab@iscas.ac.cn>
-    pNFS: Fix use-after-free in pnfs_update_layout()
-
-Doruk Tan Ozturk <doruk@0sec.ai>
-    tipc: fix slab-use-after-free Read in tipc_aead_decrypt_done
-
-Michael Bommarito <michael.bommarito@gmail.com>
-    exfat: fix potential use-after-free in exfat_find_dir_entry()
-
-Maciej W. Rozycki <macro@orcam.me.uk>
-    MIPS: DEC: Prevent initial console buffer from landing in XKPHYS
-
-Dawei Feng <dawei.feng@seu.edu.cn>
-    bpf: use kvfree() for replaced sysctl write buffer
-
-Zhang Cen <rollkingzzc@gmail.com>
-    f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtlwifi: rtl8821ae: Fix C2H bit location in RX descriptor
-
-Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-    wifi: ath11k: fix warning when unbinding
-
-Zenm Chen <zenmchen@gmail.com>
-    wifi: mt76: mt76x2u: Add support for ELECOM WDC-867SU3S
-
-Shaomin Chen <eeesssooo020@gmail.com>
-    keys: Pin request_key_auth payload in instantiate paths
-
-Jarkko Sakkinen <jarkko@kernel.org>
-    KEYS: fix overflow in keyctl_pkey_params_get_2()
-
-Doruk Tan Ozturk <doruk@0sec.ai>
-    mac802154: llsec: add skb_cow_data() before in-place crypto
-
-Kevin Hao <haokexin@gmail.com>
-    net: cpsw_new: Fix potential unregister of netdev that has not been registered yet
-
-Herbert Xu <herbert@gondor.apana.org.au>
-    crypto: af_alg - Set merge to zero early in af_alg_sendmsg
-
-Yuto Ohnuki <ytohnuki@amazon.com>
-    ext4: add bounds check for inline data length in ext4_read_inline_page
-
-Bjoern Doebel <doebel@amazon.de>
-    ring-buffer: Remove ring_buffer_read_prepare_sync()
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tvlv: avoid race of cifsnotfound handler state
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tvlv: enforce 2-byte alignment
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: dat: prevent false sharing between VLANs
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tt: track roam count per VID
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tt: don't merge change entries with different VIDs
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: handle overlapping packets
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: prevent parallel modifications of last_recv
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: annotate last_recv_time access with READ/WRITE_ONCE
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: restrict number of unacked list entries
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: v: prevent OGM aggregation on disabled hardif
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: frag: avoid underflow of TTL
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: frag: ensure fragment is writable before modifying TTL
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: initialize last_recv_time during init
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: prevent ELP transmission interval underflow
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: bla: annotate lasttime access with READ/WRITE_ONCE
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: add only finished tp_vars to lists
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: handle seqno wrap-around for fast recovery detection
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: fix fast recovery precondition
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: avoid divide-by-zero for dec_cwnd
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: avoid window underflow
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: initialize dec_cwnd explicitly
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: initialize dup_acks explicitly
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: keep unacked list in ascending ordered
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: fix action bind logic
-
-Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-    crypto: qat - remove unused character device and IOCTLs
-
-Herbert Xu <herbert@gondor.apana.org.au>
-    crypto: qat - Return pointer directly in adf_ctl_alloc_resources
-
-Thorsten Blum <thorsten.blum@linux.dev>
-    crypto: qat - Replace kzalloc() + copy_from_user() with memdup_user()
-
-Bagas Sanjaya <bagasdotme@gmail.com>
-    Documentation: ioctl-number: Extend "Include File" column width
-
-Ruslan Valiyev <linuxoid@gmail.com>
-    media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
-
-Yi Yang <yiyang13@huawei.com>
-    vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
-
-André Draszik <andre.draszik@linaro.org>
-    regulator: core: fix locking in regulator_resolve_supply() error path
-
-Mingyu Wang <25181214217@stu.xidian.edu.cn>
-    agp/amd64: Fix broken error propagation in agp_amd64_probe()
-
-Weiming Shi <bestswngs@gmail.com>
-    net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()
-
-Weiming Shi <bestswngs@gmail.com>
-    i2c: stub: Reject I2C block transfers with invalid length
-
-Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
-    RDMA/bnxt_re: zero shared page before exposing to userspace
-
-Jiacheng Shi <billsjc@sjtu.edu.cn>
-    vfio/iommu_type1: replace kfree with kvfree
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tt: prevent TVLV entry number overflow
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tt: reject oversized local TVLV buffers
-
-Wang Yufen <wangyufen@huawei.com>
-    netdevsim: Fix memory leak of nsim_dev->fa_cookie
-
-Hangyu Hua <hbh25y@gmail.com>
-    net: 9p: fix refcount leak in p9_read_work() error handling
-
-Harry Wentland <harry.wentland@amd.com>
-    drm/amd/display: Use krealloc_array() in dal_vector_reserve()
-
-Eric Dumazet <edumazet@google.com>
-    net/sched: cls_u32: use skb_header_pointer_careful()
-
-Eric Dumazet <edumazet@google.com>
-    net: add skb_header_pointer_careful() helper
-
-Eric Dumazet <edumazet@google.com>
-    ip6_vti: set netns_immutable on the fallback device.
-
-Harry Wentland <harry.wentland@amd.com>
-    drm/amd/display: Bound VBIOS record-chain walk loops
-
-Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-    slimbus: qcom-ngd-ctrl: Register callbacks after creating the ngd
-
-Jann Horn <jannh@google.com>
-    fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: free pedit keys on bail from offset check
-
-Rajat Gupta <rajat.gupta@oss.qualcomm.com>
-    net/sched: fix pedit partial COW leading to page cache corruption
-
-Max Tottenham <mtottenh@akamai.com>
-    net/sched: act_pedit: Parse L3 Header for L4 offset
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: rate limit datapath messages
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: check static offsets a priori
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: remove extra check for key type
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: simplify tcf_pedit_act
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: transition act_pedit to rcu and percpu stats
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: use NLA_POLICY for parsing 'ex' keys
-
-
--------------
-
-Diffstat:
-
- Documentation/userspace-api/ioctl/ioctl-number.rst | 427 ++++++++++-----------
- Makefile                                           |   4 +-
- arch/mips/dec/prom/console.c                       |   7 +-
- arch/x86/kvm/svm/sev.c                             |   1 +
- crypto/af_alg.c                                    |   2 +
- drivers/char/agp/amd64-agp.c                       |   2 +-
- drivers/crypto/qat/qat_common/adf_cfg_common.h     |  32 --
- drivers/crypto/qat/qat_common/adf_cfg_user.h       |  38 --
- drivers/crypto/qat/qat_common/adf_common_drv.h     |   3 -
- drivers/crypto/qat/qat_common/adf_ctl_drv.c        | 421 +-------------------
- drivers/crypto/qat/qat_common/adf_dev_mgr.c        |  70 ----
- drivers/fpga/of-fpga-region.c                      |   3 +-
- drivers/gpu/drm/amd/display/dc/basics/vector.c     |   2 +-
- drivers/gpu/drm/amd/display/dc/bios/bios_parser.c  |  15 +-
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |  12 +-
- .../drm/amd/display/dc/bios/bios_parser_helper.h   |   5 +
- drivers/hv/hv_kvp.c                                |  25 +-
- drivers/hv/vmbus_drv.c                             |  56 ++-
- drivers/i2c/i2c-stub.c                             |   5 +
- drivers/infiniband/hw/bnxt_re/ib_verbs.c           |   2 +-
- drivers/irqchip/irq-imgpdc.c                       |   6 +
- drivers/media/test-drivers/vidtv/vidtv_mux.c       |   8 +-
- drivers/misc/fastrpc.c                             |   9 +-
- drivers/mmc/host/renesas_sdhi_internal_dmac.c      |   1 +
- drivers/net/ethernet/broadcom/bnxt/bnxt.c          |   3 +
- drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c |   8 +-
- drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h |   1 +
- drivers/net/ethernet/ti/cpsw_new.c                 |   4 +-
- drivers/net/netdevsim/dev.c                        |   1 +
- drivers/net/wireless/ath/ath11k/dp.c               |   1 +
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c    |   1 +
- .../net/wireless/realtek/rtlwifi/rtl8821ae/trx.h   |   2 +-
- drivers/regulator/core.c                           |  10 +-
- drivers/slimbus/qcom-ngd-ctrl.c                    |  11 +-
- drivers/tty/vt/vc_screen.c                         |   2 +-
- drivers/usb/cdns3/gadget.c                         |   3 +
- drivers/vfio/vfio_iommu_type1.c                    |   2 +-
- drivers/video/fbdev/core/fbmem.c                   |  12 +
- drivers/video/fbdev/core/modedb.c                  |   2 +-
- fs/dlm/lockspace.c                                 |   2 +-
- fs/exfat/dir.c                                     |   4 +-
- fs/ext4/inline.c                                   |   8 +
- fs/f2fs/acl.c                                      |  18 +-
- fs/fuse/dev.c                                      |   4 +
- fs/fuse/file.c                                     |   8 +-
- fs/nfs/pnfs.c                                      |   2 +-
- fs/nfsd/nfs2acl.c                                  |  17 +-
- fs/nfsd/nfs3acl.c                                  |  17 +-
- fs/nfsd/nfs4recover.c                              |   3 +-
- fs/nfsd/nfs4xdr.c                                  |   3 +-
- fs/ocfs2/suballoc.c                                |  22 ++
- include/keys/request_key_auth-type.h               |   2 +
- include/linux/ring_buffer.h                        |   4 +-
- include/linux/skbuff.h                             |  12 +
- include/net/phonet/pn_dev.h                        |   2 +-
- include/net/tc_act/tc_pedit.h                      |  80 +++-
- kernel/bpf/cgroup.c                                |   2 +-
- kernel/trace/ring_buffer.c                         |  74 +---
- kernel/trace/trace.c                               |  14 +-
- kernel/trace/trace_kdb.c                           |   8 +-
- net/9p/trans_fd.c                                  |   1 +
- net/batman-adv/bat_iv_ogm.c                        |  11 +-
- net/batman-adv/bat_v.c                             |   1 +
- net/batman-adv/bat_v_ogm.c                         |  23 +-
- net/batman-adv/bridge_loop_avoidance.c             |  28 +-
- net/batman-adv/distributed-arp-table.c             |  12 +-
- net/batman-adv/fragmentation.c                     |  22 +-
- net/batman-adv/fragmentation.h                     |   3 +-
- net/batman-adv/netlink.c                           |  10 +-
- net/batman-adv/routing.c                           |   3 +-
- net/batman-adv/tp_meter.c                          | 115 ++++--
- net/batman-adv/translation-table.c                 |  40 +-
- net/batman-adv/tvlv.c                              |  69 +++-
- net/batman-adv/types.h                             |  21 +-
- net/ipv6/ip6_vti.c                                 |   1 +
- net/mac802154/llsec.c                              |  14 +
- net/mptcp/protocol.c                               |   8 +
- net/phonet/pn_dev.c                                |  12 +-
- net/phonet/pn_netlink.c                            |  23 +-
- net/sched/act_pedit.c                              | 420 +++++++++++---------
- net/sched/cls_u32.c                                |  13 +-
- net/tipc/crypto.c                                  |   9 +
- security/keys/internal.h                           |   2 +
- security/keys/keyctl.c                             |  24 +-
- security/keys/keyctl_pkey.c                        |   9 +-
- security/keys/request_key_auth.c                   |  33 +-
- 86 files changed, 1206 insertions(+), 1246 deletions(-)
 
 
