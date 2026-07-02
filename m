@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D611A682A;
-	Thu,  2 Jul 2026 16:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A9119049B;
+	Thu,  2 Jul 2026 16:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010407; cv=none; b=ht1+LbJD3FvMEbejavfxY1uEqNzXW1lTIs8c+W7lZvtb/FG/0QCAlbhIw2VN4wQJdhUp7JxENi6XVzGuksHwT6gZqm7o62JuOJJ7pbdchZKjqrxlNd5VBIS8nfABhQyDC4pLlRadK8l5KPhFGr8FFFDeoVoSxfzGvysVMv2y8PE=
+	t=1783010409; cv=none; b=YW6QDrR4pYeGVLgc3wiTJY1aoU+X9bfjvNY6xb6/80AQAFtqbtz5cYbgwZqoWLmEeQKgOfH8EEa4DEYGdRzqUTA4dYIxijoZFZ4q8nMs0mQKlgFgxD3JB3DbHZ7KqOHdI+2QLtjJ2BdXVFGOrVkeyb0/NWI8g+AZVDgyx0MM3g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010407; c=relaxed/simple;
-	bh=cemBNTH8td8D9VkGtEgHQUlaPkTzQWU7y9rPl9dhrOk=;
+	s=arc-20240116; t=1783010409; c=relaxed/simple;
+	bh=k6FQ4wNb7H6rjT0n7OY6luA0xVlzPNOlml/0xGg2/XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Duqf0uBJqUOLmcJq2JjzH53b5DqhN5dOb3e45CWUFZMQn2oCiMgF0yrSYMhs4t2gE9Nqtv6DLUMGjJMdZgWFAgtImBHmGSh8489+XffwKk6QcR9Ed8oZYv7Ir/9jLiyLHQKx7bwLBpDlIAaDJAI/vvPf3B/TjLD6wSJgEyRs0qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VblpaYzZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F0y3c+Zbij0p6x4HLEd72qJFqLE/WrFfKjaaoZgku1yFL/6YDKYbZiEV+rsmu1d30tjtgve8UybeRjzMrRW4E3bXROpGh6+C/Zgxx+xrikgOppEIejHv//dUD8g7z1UDmHaz1tj0G3h3aVEnmkbYvM8+rx+usup6/1QuHH82SoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpEXGStB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VblpaYzZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515461F000E9;
-	Thu,  2 Jul 2026 16:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpEXGStB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5E41F000E9;
+	Thu,  2 Jul 2026 16:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010405;
-	bh=u0agyBAbVToAt7mbEARh84JhfYdyrFB0nz17WzdKnCA=;
+	s=korg; t=1783010408;
+	bh=m8BCa82YwIMiQ7TKPg+Bn5y7drTCvYRV49B3/t6RkUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VblpaYzZ2O81p5iEwooR/tK2CIPyW4WvMKZ0oh5+SE1k/9m12Vcw4+zL41DMm1FAk
-	 3784NN7Mqzs+o/Cnx0o9t7ELK60aqgUzyELkUeS9T7GoAaioQxugCcwjlcm1UQgc2+
-	 HmyXz6CsMStO0pTwjI6xdml6xVcwT88VHYERTNzM=
+	b=OpEXGStBrMudFUT85bdIC/IpvU2v6ksN+1At/4JwEQnckulPkdCyp5GIkPIecx00B
+	 eb+TfF2LAzoGWgx1kY+1oCUzflmL7pvukAxioIT46iH3XpF1NUCQdgYlWLQnudsWMF
+	 qaSzIx3pvwamMDjul8GnP6osIkXoaKr+6y8ZcWnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Jack Wang <jinpu.wang@ionos.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/204] KVM: SEV: Ignore MMIO requests of length 0
-Date: Thu,  2 Jul 2026 18:19:13 +0200
-Message-ID: <20260702155120.678263379@linuxfoundation.org>
+Subject: [PATCH 6.12 097/204] KVM: SEV: Reject MMIO requests larger than 8 bytes with GHCB v2+
+Date: Thu,  2 Jul 2026 18:19:14 +0200
+Message-ID: <20260702155120.698485132@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -55,45 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 1aa8a6dc7dac8b83234b53518311bf78231f4fa5 upstream.
+commit dcf1b2d4b0564a27e4ca7c654871aab4f9620046 upstream.
 
-Explicitly ignore MMIO requests of length '0', so that setting up the
-software scratch area (and other code) doesn't have to worry about
-underflowing the length, and to allow for special casing '0' in the
-future.
+When using GHCB v2+, reject MMIO requests that are larger than 8 bytes.
+Per the GHCB spec:
 
-Fixes: 8f423a80d299 ("KVM: SVM: Support MMIO for an SEV-ES guest")
+  SW_EXITINFO2 must be less than or equal to 0x7fffffff for version 1 and
+  less than or equal to 0x8 for all other versions.
+
+Fixes: 4af663c2f64a ("KVM: SEV: Allow per-guest configuration of GHCB protocol version")
 Cc: stable@vger.kernel.org
 Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-3-seanjc@google.com>
+Message-ID: <20260501202250.2115252-4-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kvm/svm/sev.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 115c59c86f448a..0a01971e33f0b7 100644
+index 0a01971e33f0b7..497a6e70513570 100644
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
-@@ -4347,6 +4347,9 @@ int sev_handle_vmgexit(struct kvm_vcpu *vcpu)
- 	exit_code = kvm_ghcb_get_sw_exit_code(control);
- 	switch (exit_code) {
- 	case SVM_VMGEXIT_MMIO_READ:
-+		if (!control->exit_info_2)
+@@ -4350,6 +4350,13 @@ int sev_handle_vmgexit(struct kvm_vcpu *vcpu)
+ 		if (!control->exit_info_2)
+ 			return 1;
+ 
++		if (to_kvm_sev_info(vcpu->kvm)->ghcb_version >= 2 &&
++		    control->exit_info_2 > 8) {
++			ghcb_set_sw_exit_info_1(svm->sev_es.ghcb, 2);
++			ghcb_set_sw_exit_info_2(svm->sev_es.ghcb, GHCB_ERR_INVALID_INPUT);
 +			return 1;
++		}
 +
  		ret = setup_vmgexit_scratch(svm, true, control->exit_info_2);
  		if (ret)
  			break;
-@@ -4357,6 +4360,9 @@ int sev_handle_vmgexit(struct kvm_vcpu *vcpu)
- 					   svm->sev_es.ghcb_sa);
- 		break;
- 	case SVM_VMGEXIT_MMIO_WRITE:
-+		if (!control->exit_info_2)
+@@ -4363,6 +4370,13 @@ int sev_handle_vmgexit(struct kvm_vcpu *vcpu)
+ 		if (!control->exit_info_2)
+ 			return 1;
+ 
++		if (to_kvm_sev_info(vcpu->kvm)->ghcb_version >= 2 &&
++		    control->exit_info_2 > 8) {
++			ghcb_set_sw_exit_info_1(svm->sev_es.ghcb, 2);
++			ghcb_set_sw_exit_info_2(svm->sev_es.ghcb, GHCB_ERR_INVALID_INPUT);
 +			return 1;
++		}
 +
  		ret = setup_vmgexit_scratch(svm, false, control->exit_info_2);
  		if (ret)
