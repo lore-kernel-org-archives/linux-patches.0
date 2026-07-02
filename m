@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0734633D4EC;
-	Thu,  2 Jul 2026 16:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29F2330B01;
+	Thu,  2 Jul 2026 16:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010105; cv=none; b=UZ2Tu/wdM44byDJc/IFyHdlfhbDbixXtzPCWrjfs4pGKaURmOwQyGGpHzI5M+PfXGujvOehym9xOE3Aycg8uakOGaQYhhM5CsfdD5vDVvSYMzBHgtvBdd96aQppJ4bVjTVMGOWB5xRmx7G8Obzfdd52q/42b1pvLfnqNdAxh8x4=
+	t=1783010107; cv=none; b=bPuE7CmsPbvEKaYrlfRuDQEI2u/aiO9hQTCJIbvQP0efvSEyeTBHDnlq5DRKwCkrB6RqOi/zYauASc7UA4BofSfUsLcGUNmpWMgQB7suV5NqIGiyEO+YtGeiZ1xtjwgZT+l2IB0ZK7774KAs1GLtsjdyhvQ7zV9nngPVvH/uQn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010105; c=relaxed/simple;
-	bh=X+iavA66byMA6cIwgZTp2K0LVAQtuV5sSuK8gjUb/Bw=;
+	s=arc-20240116; t=1783010107; c=relaxed/simple;
+	bh=GUwf0H6K0Uzht15IZ+w3GP1XCc2uRgLFTPGMHfDDu24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KumyLAs1cjXThK2IUb9O76odZ5ynWP12MYzmAqs5PIsmigXnSPrEvWB2fmqgL/k/PZuyj4p+L1O10qtwvq3lX1ZWR6Ks3VJ3l6cljuul7PU3HKViNklslVKv/NCasAuEwbrZvbjKR9oIlA1F2yFy7z/wz8mJiPhmzyhN5Ckx7go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaZSEEmX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NctisKIuj/9OiU2UUKMmOqEFjX48r/jZZ5zJR+pVQr69MY2/itdXz4pSBQxWfOSwPaHGumnVP8OFUnroqLu4RELqR7Iqr6e0tKhRXJ7IGs/tjlyawOdzUO2nKHBbOUszrgiX1DPJRk2BjJQ97sg40RMChiESTDKx4HXGF7fOhXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1/r5ujH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaZSEEmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0211F000E9;
-	Thu,  2 Jul 2026 16:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1/r5ujH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1048D1F000E9;
+	Thu,  2 Jul 2026 16:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010103;
-	bh=DmtU1liU7Sik2e2X04VEnz0y/a4OLKSa6X0RKACJF2Y=;
+	s=korg; t=1783010106;
+	bh=yPnbRnjS6qJRicLlGu3fcmsZU1KwVjwrWWpKXM0QyDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HaZSEEmXQAUy2ZgnxPr41ZNCct8rFZRozRYD+fPlmh4a3nsGXHqdag2MQWlQcWRGH
-	 LfkeHOMS0/RFVvRQ1bNxuAGHRtECcVPycvYiT0SCmll4/L4bIIrwyE17pgJriRP3mz
-	 uoRIuoXg6nldKDTuKORkms2JkYrAdhGEGrxPCnCU=
+	b=x1/r5ujHYWWOvurTSDt4CeVxEfGkRWKtFu0Lr9fSNUFapKW9eHI7Dt6+22X6Xsf/a
+	 9ifp5S2k9hSwXo2VPJ7IxzslZbd7aV/A72Az3tsINIm+XltQ/NuA23BCPcrGVozdMv
+	 WvyOePrzss619UhO9GWxewtUOIOOExF7zQh+GQCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/129] batman-adv: tp_meter: add only finished tp_vars to lists
-Date: Thu,  2 Jul 2026 18:19:36 +0200
-Message-ID: <20260702155113.326037794@linuxfoundation.org>
+	Guannan Wang <wgnbuaa@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 106/129] NFSD: Fix SECINFO_NO_NAME decode error cleanup
+Date: Thu,  2 Jul 2026 18:20:25 +0200
+Message-ID: <20260702155114.337496343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -51,74 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Guannan Wang <wgnbuaa@gmail.com>
 
-commit 15ccbf685222274f5add1387af58c2a41a95f81e upstream.
+commit 9e18e83b8846a5c3fe13fc8a464b4865d33996c6 upstream.
 
-When the receiver variables (aka "session") are initialized, then they are
-added to the list of sessions before the timer is set up. A RCU protected
-reader could therefore find the entry and run mod_setup before
-batadv_tp_init_recv() finished the timer initialization.
+nfsd4_decode_secinfo_no_name() currently initializes sin_exp after
+decoding sin_style. If the XDR stream is truncated, the decoder returns
+nfserr_bad_xdr before sin_exp is initialized.
 
-The same is true for batadv_tp_start(), which must first initialize the
-finish_work and the test_length to avoid a similar problem.
+Since commit 3fdc54646234 ("NFSD: Reduce amount of struct
+nfsd4_compoundargs that needs clearing"), the inline iops array is not
+cleared between RPC calls. A failed SECINFO_NO_NAME decode can therefore
+leave sin_exp holding stale union contents from a previous operation.
 
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The error response path still invokes nfsd4_secinfo_no_name_release(),
+which calls exp_put() on a non-NULL sin_exp.
+
+Initialize sin_exp before the first failable decode step, matching
+nfsd4_decode_secinfo().
+
+Fixes: 3fdc54646234 ("NFSD: Reduce amount of struct nfsd4_compoundargs that needs clearing")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guannan Wang <wgnbuaa@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/nfsd/nfs4xdr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 089ac7cc9fbebc..2bba53fc6da5c0 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -1096,21 +1096,21 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
- 	tp_vars->prerandom_offset = 0;
- 	spin_lock_init(&tp_vars->prerandom_lock);
- 
--	kref_get(&tp_vars->refcount);
--	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
--	spin_unlock_bh(&bat_priv->tp_list_lock);
--
- 	tp_vars->test_length = test_length;
- 	if (!tp_vars->test_length)
- 		tp_vars->test_length = BATADV_TP_DEF_TEST_LENGTH;
- 
-+	/* init work item for finished tp tests */
-+	INIT_DELAYED_WORK(&tp_vars->finish_work, batadv_tp_sender_finish);
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1821,10 +1821,11 @@ static __be32 nfsd4_decode_secinfo_no_na
+ 					   union nfsd4_op_u *u)
+ {
+ 	struct nfsd4_secinfo_no_name *sin = &u->secinfo_no_name;
 +
-+	kref_get(&tp_vars->refcount);
-+	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
-+	spin_unlock_bh(&bat_priv->tp_list_lock);
-+
- 	batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 		   "Meter: starting throughput meter towards %pM (length=%ums)\n",
- 		   dst, test_length);
++	sin->sin_exp = NULL;
+ 	if (xdr_stream_decode_u32(argp->xdr, &sin->sin_style) < 0)
+ 		return nfserr_bad_xdr;
  
--	/* init work item for finished tp tests */
--	INIT_DELAYED_WORK(&tp_vars->finish_work, batadv_tp_sender_finish);
--
- 	/* start tp kthread. This way the write() call issued from userspace can
- 	 * happily return and avoid to block
- 	 */
-@@ -1430,10 +1430,10 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 	INIT_LIST_HEAD(&tp_vars->unacked_list);
+-	sin->sin_exp = NULL;
+ 	return nfs_ok;
+ }
  
- 	kref_get(&tp_vars->refcount);
--	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
-+	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
- 
- 	kref_get(&tp_vars->refcount);
--	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
-+	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
- 
- 	batadv_tp_reset_receiver_timer(tp_vars);
- 
--- 
-2.53.0
-
 
 
