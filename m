@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA49E82866;
-	Thu,  2 Jul 2026 16:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BB03ACEED;
+	Thu,  2 Jul 2026 16:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010951; cv=none; b=cpp/esWOtcerX8kciQMUeOHA/xQ8aTFIAKxgOk0uvKEdxBlbafM/Qq6cDrt5dqbjZgojV30PEPI39dvsDgw99Vv9qpCLO+wsYGfxcUys0uFg/UXEFiUoJs3MXmw3k/yGeAmnO8DHFeLDJKI00kS/akB4+q9aiJ+/45Bu9k6a1Ao=
+	t=1783010953; cv=none; b=dtsoDJ5sFH4BJkuX8GqOlMrfTyZLUjt+euo1mlmOnGxEjTTdzKZBYs+/ZC3/OFxqJ7q+JTxkz5omDO26Hb1ICna/2NvLiOP8gL1S1AsOlJ2GoKiN0BcgNf9aDsY74N/AwRldlhTCnN/y6eFR/mmQKTq+VsqiyQo8uXiPSRqNxr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010951; c=relaxed/simple;
-	bh=5gJp86DDfZfjq24ACLNdStRiHsA3jech4hAnZgql91Q=;
+	s=arc-20240116; t=1783010953; c=relaxed/simple;
+	bh=9SgdSGSwH2zB1ttoL+MdTBM6vX3lDIYT8w5ZG5Jy5v4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CL2Q6l0uqV+Bq3kfvtYBsjocRBbngaEW/ihKYmA+5mOwtPBAkrmUfbe8/EntPx9mCAHuIAsEzOmXdjVtc39OJFjeYN5NVDhsXSFYSQXWwCRQNJ6C4xb/XcYgUuPLxiFw2IL0d6LsgGsCcfDHGkPwsV49rz2a9sqe+s8mKIqC27A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7Rk0ZuV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FgwkCgYe4wfzYvZa3299PaxpjbkSbBr/rjK5n3rFQzG/dTBGNKdKoCjABAnQds1UCrV9mlD4B1fux5VZspFh1PXI1M5u0qTfamu1IpSExegarukym0mUsXyY4CSUWb0aP8o724sV4yGNDbWDWS+FZRR/d+1dFkIFu2YuLlh9Pbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SG8yk46/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7Rk0ZuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A1F1F00A3F;
-	Thu,  2 Jul 2026 16:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SG8yk46/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AC01F000E9;
+	Thu,  2 Jul 2026 16:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010949;
-	bh=omHAUm/i9GraBxsKEdH9iRkO4ZWx+HG8D8+KJJ0AWd8=;
+	s=korg; t=1783010952;
+	bh=qYbVotjtBCIu/+LEwcSk25c8AP+hvnKl0x3We03N5BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J7Rk0ZuV4hc/hAmNigwCjtS21K6iUOUQa+3biB+qk8seO9rNdr+RNYCDcROosqqJO
-	 xg464u5SeT4csxsKmlbrViZNSzhXblEk3zIUGepdQ0i/UsBKmTjnton9f/eYUqRgdo
-	 8/Qv/e4uRzEZr770OSimpM7G7sGsuOBRvOib6IIs=
+	b=SG8yk46/AT9MMSeW6l52Yad4oSeRAlACcSNxX4I5L0ta+YPQr9kVpD+2eN9OF4BTE
+	 lf9MxAdL6/9USRBodBifv1INqKJBO1Yu+WEx0uGXA5okIVZGyCU8ar28grrjc51Fqj
+	 XY7rzSqItTCJszhQdbTdIh+0QnCcavpD4RIzSXJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bpf <bpf@vger.kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Martin Kelly <martin.kelly@crowdstrike.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.6 046/175] scripts/sorttable: Remove unneeded Elf_Rel
-Date: Thu,  2 Jul 2026 18:19:07 +0200
-Message-ID: <20260702155116.769094845@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 093/175] batman-adv: tp_meter: initialize dec_cwnd explicitly
+Date: Thu,  2 Jul 2026 18:19:54 +0200
+Message-ID: <20260702155117.736247321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -64,112 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 6f2c2f93a190467cebd6ebd03feb49514fead5ca ]
+commit febfb1b86224489535312296ecfa3d4bf467f339 upstream.
 
-The code had references to initialize the Elf_Rel relocation tables, but
-it was never used. Remove it.
+When batadv_tp_update_cwnd() is called, dec_cwnd is increased. But dec_cwnd
+is only initialixed (to 0) when a duplicate Ack was received or when cwnd
+is below the ss_threshold.
 
-Cc: bpf <bpf@vger.kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/20250105162344.515342233@goodmis.org
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Just initialize the cwnd during the initialization to avoid any potential
+access of uninitialized data.
+
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/sorttable.h |   23 ++---------------------
- 1 file changed, 2 insertions(+), 21 deletions(-)
+ net/batman-adv/tp_meter.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/scripts/sorttable.h
-+++ b/scripts/sorttable.h
-@@ -26,7 +26,6 @@
- #undef Elf_Addr
- #undef Elf_Ehdr
- #undef Elf_Shdr
--#undef Elf_Rel
- #undef Elf_Sym
- #undef ELF_ST_TYPE
- #undef uint_t
-@@ -42,7 +41,6 @@
- # define Elf_Addr		Elf64_Addr
- # define Elf_Ehdr		Elf64_Ehdr
- # define Elf_Shdr		Elf64_Shdr
--# define Elf_Rel		Elf64_Rel
- # define Elf_Sym		Elf64_Sym
- # define ELF_ST_TYPE		ELF64_ST_TYPE
- # define uint_t			uint64_t
-@@ -57,7 +55,6 @@
- # define Elf_Addr		Elf32_Addr
- # define Elf_Ehdr		Elf32_Ehdr
- # define Elf_Shdr		Elf32_Shdr
--# define Elf_Rel		Elf32_Rel
- # define Elf_Sym		Elf32_Sym
- # define ELF_ST_TYPE		ELF32_ST_TYPE
- # define uint_t			uint32_t
-@@ -248,14 +245,10 @@ static int do_sort(Elf_Ehdr *ehdr,
- 	Elf32_Word *symtab_shndx = NULL;
- 	Elf_Sym *sort_needed_sym = NULL;
- 	Elf_Shdr *sort_needed_sec;
--	Elf_Rel *relocs = NULL;
--	int relocs_size = 0;
- 	uint32_t *sort_needed_loc;
- 	const char *secstrings;
- 	const char *strtab;
- 	char *extab_image;
--	int extab_index = 0;
--	int i;
- 	int idx;
- 	unsigned int shnum;
- 	unsigned int shstrndx;
-@@ -279,23 +272,15 @@ static int do_sort(Elf_Ehdr *ehdr,
- 	if (shnum == SHN_UNDEF)
- 		shnum = _r(&shdr[0].sh_size);
- 
--	for (i = 0, s = shdr; s < shdr + shnum; i++, s++) {
-+	for (s = shdr; s < shdr + shnum; s++) {
- 		idx = r(&s->sh_name);
--		if (!strcmp(secstrings + idx, "__ex_table")) {
-+		if (!strcmp(secstrings + idx, "__ex_table"))
- 			extab_sec = s;
--			extab_index = i;
--		}
- 		if (!strcmp(secstrings + idx, ".symtab"))
- 			symtab_sec = s;
- 		if (!strcmp(secstrings + idx, ".strtab"))
- 			strtab_sec = s;
- 
--		if ((r(&s->sh_type) == SHT_REL ||
--		     r(&s->sh_type) == SHT_RELA) &&
--		    r(&s->sh_info) == extab_index) {
--			relocs = (void *)ehdr + _r(&s->sh_offset);
--			relocs_size = _r(&s->sh_size);
--		}
- 		if (r(&s->sh_type) == SHT_SYMTAB_SHNDX)
- 			symtab_shndx = (Elf32_Word *)((const char *)ehdr +
- 						      _r(&s->sh_offset));
-@@ -397,10 +382,6 @@ static int do_sort(Elf_Ehdr *ehdr,
- 		      extable_ent_size, compare_extable);
- 	}
- 
--	/* If there were relocations, we no longer need them. */
--	if (relocs)
--		memset(relocs, 0, relocs_size);
--
- 	/* find the flag main_extable_sort_needed */
- 	for (sym = (void *)ehdr + _r(&symtab_sec->sh_offset);
- 	     sym < sym + _r(&symtab_sec->sh_size) / sizeof(Elf_Sym);
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 750e5e9d3dc9d6..f6ccb639744a2a 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1055,6 +1055,8 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
+ 	 * soft_interface, hence its MTU
+ 	 */
+ 	tp_vars->cwnd = BATADV_TP_PLEN * 3;
++	tp_vars->dec_cwnd = 0;
++
+ 	/* at the beginning initialise the SS threshold to the biggest possible
+ 	 * window size, hence the AWND size
+ 	 */
+-- 
+2.53.0
+
 
 
