@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B423F33EB0E;
-	Thu,  2 Jul 2026 16:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F721B4138;
+	Thu,  2 Jul 2026 16:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009831; cv=none; b=pe3XjUu3+9XmFFGely8tMWbMxxLYmmEjMN1uury/zbzCo6Un9rpuJILjIkrU7qtH64yChd6X52Xiq/EKIs5zXrALP6qKF541TW5YdjmW3GLx+osT3Mc3pumtztAH3rC9s73pVzNGjJtHk6sHeiCFNopurfW0iqvCbiaKBUNYRBU=
+	t=1783009832; cv=none; b=tQsaxRsr3Yh6EDOApOf9UzzEyIbKrpYfw9QLX/TPPKxu8mKhvu1zb56DNHEza87niZpKTk3S7jIpMzEEngzgRuOqdxqBlm8gCLBn0wPNfG2QOivuhx3S/V17pjNzjY9Y7ez07xbFF3BATKQwOpjUwesICH8ogkjVmcRyP6NQ8bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009831; c=relaxed/simple;
-	bh=rxScBloIw9j7IHBLMOBjk5iuR6WISStaW1Iyi3U/jDI=;
+	s=arc-20240116; t=1783009832; c=relaxed/simple;
+	bh=8Ko+WJZzS7T12lam2y13xhl3gKA+Mer9j88D0SOfVgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ojAEo34wB+kURX2x4LvCr17V7Iq7QgS5kpi4PAJh+hf/hB8PYX++z9vvP/WTBpCbuxALVUmZysNbvqDeJp6TmcTuv9SsBFwidaOT6At10a7LBGeANFLA9UBqrLheq1WETBfAOTcdnS+oR7c9bvFkDM6RnuwYnuvKfi/8GZksRP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2z2r8FG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j5Zd57Yh3DSG9heMn2wNWHINFBsdXRC6X4T2nrApcvUMsFZL8j1V9Q36ekTHexC4b73LTEdmq8K22Iddp4Ie1BE9bNCJXm+h1upc3nOJIRPj3dW6PoCaigK/vItEJGdLMIOcMleyznPj1yVlZKqkpY4z4fYRPqwaiZi9f1Wz02E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1uEePPc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2z2r8FG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FFA1F000E9;
-	Thu,  2 Jul 2026 16:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1uEePPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956191F00A3A;
+	Thu,  2 Jul 2026 16:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009828;
-	bh=FmZXYZVKV98HteICnRScARD8jcn2NGlcJ/SgDHreU+Y=;
+	s=korg; t=1783009831;
+	bh=yHyRUJDllFaU62BhWVQgCj5MgX0EYM3axZwwjPLA1hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j2z2r8FG1YroPfXGLPqWOn+I/voBUWFlYWkd7w6f78Fq0eeJSCJmhDeZIQ050gX/R
-	 1idR3teHfYVrbWehNUM/QqAVLp+BtN0ixA6VjR5Y1VnCrqBL2Xj1KxXE1JwRHb0EIN
-	 RWEwZp+aDJvY5axgWk1hbfBVD8KAj9SoLoyY1Wfs=
+	b=m1uEePPc8jcfeppNS4wwL/cZkeLHvOLky+ihb5oJdNKz/q4Ebbcb5hVVaWRgntWC0
+	 vLw++gFMNre28hCDd0Z26JTUVx5BHEGU5M6iJ6Ku4hofu5I7FouOAFK0jIrB19ESAL
+	 8QLUIkLeaf8aCHXiAfZIeTM6RvRvd2NQcDzj8jbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Santosh Kalluri <santosh.kalluri129@gmail.com>,
-	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 88/95] net: phonet: free phonet_device after RCU grace period
-Date: Thu,  2 Jul 2026 18:20:31 +0200
-Message-ID: <20260702155111.060275285@linuxfoundation.org>
+Subject: [PATCH 6.1 001/129] fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
+Date: Thu,  2 Jul 2026 18:18:40 +0200
+Message-ID: <20260702155112.195182434@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
-References: <20260702155109.196223802@linuxfoundation.org>
+In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
+References: <20260702155112.163984240@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +47,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Santosh Kalluri <santosh.kalluri129@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 71de0177b28da751f407581a4515cf4d762f6296 ]
+[ Upstream commit 4e3d1b2c48ca6c55f1e9ca7f8dccc76f120f276c ]
 
-phonet_device_destroy() removes a phonet_device from the per-net device
-list with list_del_rcu(), but frees it immediately. RCU readers walking
-the same list can still hold a pointer to the object after it has been
-removed, leading to a slab-use-after-free.
+FUSE_NOTIFY_RETRIEVE must be limited to uptodate folios; !uptodate folios
+can contain uninitialized data.
+Since FUSE_NOTIFY_RETRIEVE is intended to only return data that is already
+in the page cache and not wait for data from the FUSE daemon, treat
+!uptodate folios as if they weren't present.
 
-Use kfree_rcu(), matching the lifetime rule already used by
-phonet_address_del() for the same object type.
+This only has security impact on systems that don't enable automatic
+zero-initialization of all page allocations via
+CONFIG_INIT_ON_ALLOC_DEFAULT_ON or init_on_alloc=1.
 
-Fixes: eeb74a9d45f7 ("Phonet: convert devices list to RCU")
-Cc: stable@vger.kernel.org
-Signed-off-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
-Acked-by: Rémi Denis-Courmont <remi@remlab.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@kernel.org
+Fixes: 2d45ba381a74 ("fuse: add retrieve request")
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260519-fuse-retrieve-uptodate-v1-1-a7a1912a37f9@google.com
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[adjusted for stable: page instead of folio]
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/phonet/pn_dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/dev.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/phonet/pn_dev.c
-+++ b/net/phonet/pn_dev.c
-@@ -105,7 +105,7 @@ static void phonet_device_destroy(struct
- 		for_each_set_bit(addr, pnd->addrs, 64)
- 			phonet_address_notify(net, RTM_DELADDR, ifindex, addr);
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 58ec5bac6ce9d1..abee0cd67182f3 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1718,6 +1718,10 @@ static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
+ 		page = find_get_page(mapping, index);
+ 		if (!page)
+ 			break;
++		if (!PageUptodate(page)) {
++			put_page(page);
++			break;
++		}
  
--		kfree(pnd);
-+		kfree_rcu(pnd, rcu);
- 	}
- }
- 
+ 		this_num = min_t(unsigned, num, PAGE_SIZE - offset);
+ 		ap->pages[ap->num_pages] = page;
+-- 
+2.53.0
+
 
 
