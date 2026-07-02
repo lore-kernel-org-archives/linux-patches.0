@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F1D335066;
-	Thu,  2 Jul 2026 16:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF63122D7B9;
+	Thu,  2 Jul 2026 16:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011537; cv=none; b=lgYP5E5ooqzn8oAOJr4Xb9mbLWROhDj/9qY0qTec6eSzxJZSn3AZalVZAHF12a1H1EgTM1opoCCmPcbr0mTAPSbFL5m16hCHCySHNJzNOvdurD1cilkDLGwW6eyP+zy4/txGHEA5LEa3yBXDzvjMzFo+dq1P6AsZthUuSGGsTCw=
+	t=1783011539; cv=none; b=GyPlNvX33ypn/tE3oVOJJMePu9rVsmypH5ozq8qxhpQAILF1LCAPcHsbkSgN7PB2j9Wvb4BShaysAZhDaSfoSAsavdutpSwxHmJ0lV2H1eX1jAaip44QevPnvoYWqkUREzmnMljiNWsMARNuHASuGZVK+ZK69YQHsNw/LTdxsmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011537; c=relaxed/simple;
-	bh=2hyBUjuLzYZcbJg++UIrGOm4kVfLfHmUasJCKJvn9sU=;
+	s=arc-20240116; t=1783011539; c=relaxed/simple;
+	bh=6CaXlmKE74km/qM0udzTouNrTqhCO1lPvwGkl98P+0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o8K8C0IdsLIIQCLyYs9tKw4OyYpmRprU4RCGbu9Y+nIRBqZrIKMgeLoN+J+EaoUBTCD+Bt6dOAidb2jENLxj0vPha9JIFLOfqW2AGq0P5ZT3EMxq2b6AMEaOZJJfNX+xRnXur6skkVoB+V6lu12WTn4crKgs8ygWxmc+oOIoPzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qaK9ho5R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C7A9ep27ta3hwU/WVEd2yDVlqs3DUXzsOvh/JJ1HNxUJmiXZtBt5N0p55XdW8UrK7x79Ef/Q8PUFf30k8+DyQhFPUo9npKyJ7BZZ8M4EtQzykeYwFEolqUbGEOfw4LldIRyEfSDt+LO7cwtus3QHdCupHtvo37qj7bNMe+MphwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0liRjYB3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qaK9ho5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6D31F00A3A;
-	Thu,  2 Jul 2026 16:58:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0liRjYB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215801F00A3A;
+	Thu,  2 Jul 2026 16:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011536;
-	bh=GpMeX5QRbz74WXumC1HHFuypGXazY+gidJseum3wxqk=;
+	s=korg; t=1783011538;
+	bh=0eQT/9X5YsXagTvtrTKTnYwiVP+6siWMK2kswWqts6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qaK9ho5Rs/padXHbKt6um1HjSkK1I1Z81po5D3VlLiK8sKDuMyPzyxdDIjip3GHdQ
-	 RQJgrb5Sf3p+j4X9e1p3q33UZkPZFp+jpZnUldC4hLSg8r0P5dB5inyX3X2lEp7LO4
-	 G44A08dxUJhxWkmOPgNQgwflTe8wS73X66YhAueg=
+	b=0liRjYB3T8V93c88lo9XhjOGKHzDT+/R1e5RYu73aksHkbuAhQlHDb0HozM8X+wxg
+	 pfRgzDFqdJCttXotEtTF7sLlWAKq6fNfiTjHUgM/x/Z49MmLHkD5fPLlIyUopP9WO3
+	 YmizVHYQo2ydJdTG8WrQzYzudaoIPfGrMD9NQH7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Ruslan Valiyev <linuxoid@gmail.com>,
 	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 7.1 036/120] apparmor: mediate the implicit connect of TCP fast open sendmsg
-Date: Thu,  2 Jul 2026 18:20:32 +0200
-Message-ID: <20260702155113.708240416@linuxfoundation.org>
+Subject: [PATCH 7.1 037/120] apparmor: fix use-after-free in rawdata dedup loop
+Date: Thu,  2 Jul 2026 18:20:33 +0200
+Message-ID: <20260702155113.728260717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -50,55 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ruslan Valiyev <linuxoid@gmail.com>
 
-commit 4d587cd8a72155089a627130bbd4716ec0856e21 upstream.
+commit 6f060496d03e4dc560a40f73770bd08335cb7a27 upstream.
 
-sendmsg()/sendto() with MSG_FASTOPEN is a combination of connect(2) and
-write(2): it opens the connection in the SYN. apparmor_socket_sendmsg()
-only checks AA_MAY_SEND, so a profile that grants send but denies connect
-lets a confined task open an outbound TCP/MPTCP connection that connect(2)
-would have refused, bypassing connect mediation.
+aa_replace_profiles() walks ns->rawdata_list to dedup the incoming
+policy blob against entries already attached to existing profiles.
+Per the kernel-doc on struct aa_loaddata, list membership does not
+hold a reference: profiles hold pcount, and when the last pcount
+drops, do_ploaddata_rmfs() is queued on a workqueue that takes
+ns->lock and removes the entry. Between dropping the last pcount
+and the workqueue running, an entry remains on the list with
+pcount == 0.
 
-Mediate the implicit connect when MSG_FASTOPEN is set and a destination
-is supplied. Add it to apparmor_socket_sendmsg() (not the shared
-aa_sock_msg_perm() helper, which recvmsg also uses) and call aa_sk_perm()
-directly, mirroring the selinux and tomoyo fixes. sk_is_tcp() does not
-cover MPTCP fast open, so the SOCK_STREAM/IPPROTO_MPTCP arm is explicit.
+aa_get_profile_loaddata() is an unconditional kref_get() on
+pcount, so when the dedup loop hits such an entry, refcount
+hardening reports
 
-Fixes: cf60af03ca4e ("net-tcp: Fast Open client - sendmsg(MSG_FASTOPEN)")
+  refcount_t: addition on 0; use-after-free.
+
+inside aa_replace_profiles(), and the poisoned counter then
+trips "saturated" and "underflow" warnings on the subsequent
+uses of the same loaddata.
+
+Before commit a0b7091c4de4 ("apparmor: fix race on rawdata
+dereference") the dedup path used a get_unless_zero-style helper
+on a single counter, so the existing "if (tmp)" guard was
+meaningful. The split-refcount refactor introduced
+aa_get_profile_loaddata(), which has plain kref_get() semantics,
+and the guard quietly became a no-op.
+
+Introduce aa_get_profile_loaddata_not0(), matching the existing
+_not0 convention used by aa_get_profile_not0(), and use it for
+the rawdata_list dedup lookup so dying entries are skipped.
+
+Reproduced on x86_64 with v7.1-rc5 in QEMU+KVM running Ubuntu
+24.04 + stress-ng 0.17.06:
+
+  stress-ng --apparmor 1 --klog-check --timeout 60s
+
+Without this patch the three refcount_t warnings fire within a
+few seconds. With it the same 60 s run is clean. Coverage is a
+smoke-test only; a longer soak with CONFIG_KASAN, CONFIG_KCSAN
+and CONFIG_PROVE_LOCKING would be welcome from anyone with the
+cycles.
+
+Fixes: a0b7091c4de4 ("apparmor: fix race on rawdata dereference")
+Reported-by: Colin Ian King <colin.i.king@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221513
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/lsm.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ security/apparmor/include/policy_unpack.h |   19 +++++++++++++++++++
+ security/apparmor/policy.c                |    8 ++++++--
+ 2 files changed, 25 insertions(+), 2 deletions(-)
 
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -1422,7 +1422,21 @@ static int aa_sock_msg_perm(const char *
- static int apparmor_socket_sendmsg(struct socket *sock,
- 				   struct msghdr *msg, int size)
- {
--	return aa_sock_msg_perm(OP_SENDMSG, AA_MAY_SEND, sock, msg, size);
-+	int error = aa_sock_msg_perm(OP_SENDMSG, AA_MAY_SEND, sock, msg, size);
-+
-+	if (error)
-+		return error;
-+
-+	/* TCP fast open carries connect() semantics in sendmsg(); mediate
-+	 * the implicit connect so it cannot bypass the connect permission.
-+	 */
-+	if ((msg->msg_flags & MSG_FASTOPEN) && msg->msg_name &&
-+	    (sk_is_tcp(sock->sk) ||
-+	     (sk_is_inet(sock->sk) && sock->sk->sk_type == SOCK_STREAM &&
-+	      sock->sk->sk_protocol == IPPROTO_MPTCP)))
-+		error = aa_sk_perm(OP_CONNECT, AA_MAY_CONNECT, sock->sk);
-+
-+	return error;
+--- a/security/apparmor/include/policy_unpack.h
++++ b/security/apparmor/include/policy_unpack.h
+@@ -163,6 +163,25 @@ aa_get_profile_loaddata(struct aa_loadda
+ 	return data;
  }
  
- static int apparmor_socket_recvmsg(struct socket *sock,
++/**
++ * aa_get_profile_loaddata_not0 - get a profile reference count if not zero
++ * @data: reference to get a count on
++ *
++ * Like aa_get_profile_loaddata(), but safe to call on an entry that may
++ * be on a list (e.g. ns->rawdata_list) where the last pcount has already
++ * dropped and the deferred cleanup has not yet run.
++ *
++ * Returns: pointer to reference, or %NULL if @data is NULL or its
++ *          profile refcount has already reached zero.
++ */
++static inline struct aa_loaddata *
++aa_get_profile_loaddata_not0(struct aa_loaddata *data)
++{
++	if (data && kref_get_unless_zero(&data->pcount))
++		return data;
++	return NULL;
++}
++
+ void __aa_loaddata_update(struct aa_loaddata *data, long revision);
+ bool aa_rawdata_eq(struct aa_loaddata *l, struct aa_loaddata *r);
+ void aa_loaddata_kref(struct kref *kref);
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1223,8 +1223,12 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 			if (aa_rawdata_eq(rawdata_ent, udata)) {
+ 				struct aa_loaddata *tmp;
+ 
+-				tmp = aa_get_profile_loaddata(rawdata_ent);
+-				/* check we didn't fail the race */
++				/*
++				 * Entries remain on rawdata_list with
++				 * pcount == 0 until do_ploaddata_rmfs()
++				 * runs; only take a live profile ref.
++				 */
++				tmp = aa_get_profile_loaddata_not0(rawdata_ent);
+ 				if (tmp) {
+ 					aa_put_profile_loaddata(udata);
+ 					udata = tmp;
 
 
