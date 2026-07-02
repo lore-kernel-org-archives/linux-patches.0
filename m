@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91AB3469E7;
-	Thu,  2 Jul 2026 16:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434031DD97;
+	Thu,  2 Jul 2026 16:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010916; cv=none; b=Tmduym7Y4uiDhKShwpay3PW7DLdeDI4p/4U+VH5EMZlxpjBUXuy5QQ+LZq7b/CVAaSACQ00AZLMMhm74GQqh9IyfFso47dR3zqcIVyfqG5QPm+qgkgYaQ3KPcZtZho9hT3ho8ZU+7pBtBmTkkgN8hfiaJOv0LPT5JfmrnnqUy9o=
+	t=1783010919; cv=none; b=P0JUtUvRJN9SGY8qBBHP2xAifNlN69jVVyipzEpnLNadPywNOyCzOXAUSEtML3hbgB1OKw/wFjvKGIf/siPQQG7n4aZm74RJV13iPBjzLOC2A9VTvDvh8HYDq7848xFwr52npX0p0GrBvvmuYf9zBjdqi0jQg1QYbLo0d70tkns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010916; c=relaxed/simple;
-	bh=z6BfcMhZ3wfXjXaRyCZcmfgsPpgc8UHaEn8T3jqY60M=;
+	s=arc-20240116; t=1783010919; c=relaxed/simple;
+	bh=4//LVlSf7X0EN5E4+w5wRZ51P4xdD6nt7vHFvGBEZMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIKVXGN8pRYHMidoN4CkHwzKkGwl/Qfi9Dp9jGw9mt1ZoUjk3gpMkrj7i30Ruu/sbzMQHhwo/zczavMnjrRuDTTHW285y1vM/S80v+boUcaoS+5zg8WND4AByPQyqNABFxo8XSUW56Vw3udNaNXT6hQbXALB4CQUrLCAIK58D+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBRjmCFO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bho43lxAmr5oI/NtSVNnWA2fWDC60Z1jt/1t497U8x0H/b5toXaIGT64ofI3QhS4wyC62rVhj5NYFefPnIg42ABTJJ6b0+XdDC4HWk9Pjk4dnfM+qY4v57P9OohkmvZWE4wjymISlYdQvFJ9SlSte052g0nE7caWnAlm4lHY5uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuvMzMtm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBRjmCFO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8301F000E9;
-	Thu,  2 Jul 2026 16:48:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuvMzMtm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC491F000E9;
+	Thu,  2 Jul 2026 16:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010915;
-	bh=TCU1GV1B7RhBYUlek+mYPb5o+opsVEiBoInXSmfiJxs=;
+	s=korg; t=1783010918;
+	bh=Lz62lHVlB3AxhV1u1sO/H7oD+6HBowXRnYNzS6Neg7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dBRjmCFO8lDxwzYjrGNiuScUyEqVjNXxYfQaHwy5wbokDNmC1iYVzrMBlrEYJCLm5
-	 FkfpunflkHtLZElkcjhyXIDJscGbG2tjWFAVxoaSm2zY3EsVQQjrB5BaPMVD2OT7Jt
-	 L7sYFbIFaJlLJccxuBnXtWKGXVK2lEQw6mVPXyS8=
+	b=zuvMzMtmLqLTpbgwfCt+QfGxvFKgB4M02HznmYoL/KIBno6DvO6TkvmVJS0c/NX2q
+	 2pj0xFdgKS0r1/Au0jA2DMYR2VkXm/QXU8bPA8yCdKmTbKBKbhkaJM84hG5VALtw+r
+	 Nnux/7duq3D+XpNIz1blKhMEw+oQrjzKV6GXQc4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong Wang <yongwang@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/175] Revert "ptp: add testptp mask test"
-Date: Thu,  2 Jul 2026 18:19:46 +0200
-Message-ID: <20260702155117.572064337@linuxfoundation.org>
+	bpf <bpf@vger.kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Martin Kelly <martin.kelly@crowdstrike.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Subject: [PATCH 6.6 050/175] scripts/sorttable: Replace Elf_Shdr Macro with a union
+Date: Thu,  2 Jul 2026 18:19:11 +0200
+Message-ID: <20260702155116.851170914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,93 +64,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-This reverts commit 59ac47a0275fcd5a7637c3d5da20b0905563c7f5, which is
-commit 26285e689c6cd2cf3849568c83b2ebe53f467143 upstream.
+[ Upstream commit 545f6cf8f4c9a268e0bab2637f1d279679befdbf ]
 
-The reverted commit extends the selftest to test timestamp event queue mask
-manipulation in testptp. It exercises masks PTP_MASK_CLEAR_ALL and
-PTP_MASK_EN_SINGLE, introduced in commit c5a445b1e934 ("ptp: support event
-queue reader channel masks"), which is not on this stable branch. The test
-case thus cannot be built against this tree's own UAPI headers.
+In order to remove the double #include of sorttable.h for 64 and 32 bit
+to create duplicate functions for both, replace the Elf_Shdr macro with a
+union that defines both Elf64_Shdr and Elf32_Shdr, with field e64 for the
+64bit version, and e32 for the 32bit version.
 
-The reverted commit was introduced to resolve a missing dependency of
-commit 8d9f22c570ba ("testptp: Add option to open PHC in readonly mode"),
-which is 76868642e427 upstream. The only conflict between the two is the
-getopt string, and there is otherwise no direct dependency between the two.
+It can then use the macro etype to get the proper value.
 
-This patch therefore reverts the cited commit, with hand-resolving the
-getopt string to include 'r' (as introduced by c6dc458227a3), but not
-'F' (introduced by c1c50689799d).
+This will eventually be replaced with just single functions that can
+handle both 32bit and 64bit ELF parsing.
 
-Reported-by: Yong Wang <yongwang@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: bpf <bpf@vger.kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/20250105162345.339462681@goodmis.org
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ scripts/sorttable.c |   10 +++++++
+ scripts/sorttable.h |   74 ++++++++++++++++++++++++++++------------------------
+ 2 files changed, 51 insertions(+), 33 deletions(-)
 
-diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index e0aed424fe42d5..8f05212f82329a 100644
---- a/tools/testing/selftests/ptp/testptp.c
-+++ b/tools/testing/selftests/ptp/testptp.c
-@@ -121,7 +121,6 @@ static void usage(char *progname)
- 		" -d name    device to open\n"
- 		" -e val     read 'val' external time stamp events\n"
- 		" -f val     adjust the ptp clock frequency by 'val' ppb\n"
--		" -F chan    Enable single channel mask and keep device open for debugfs verification.\n"
- 		" -g         get the ptp clock time\n"
- 		" -h         prints this message\n"
- 		" -i val     index for event/trigger\n"
-@@ -190,7 +189,6 @@ int main(int argc, char *argv[])
- 	int seconds = 0;
- 	int readonly = 0;
- 	int settime = 0;
--	int channel = -1;
+--- a/scripts/sorttable.c
++++ b/scripts/sorttable.c
+@@ -69,6 +69,11 @@ typedef union {
+ 	Elf64_Ehdr	e64;
+ } Elf_Ehdr;
  
- 	int64_t t1, t2, tp;
- 	int64_t interval, offset;
-@@ -200,7 +198,7 @@ int main(int argc, char *argv[])
++typedef union {
++	Elf32_Shdr	e32;
++	Elf64_Shdr	e64;
++} Elf_Shdr;
++
+ static uint32_t (*r)(const uint32_t *);
+ static uint16_t (*r2)(const uint16_t *);
+ static uint64_t (*r8)(const uint64_t *);
+@@ -198,6 +203,11 @@ static int compare_extable_64(const void
+ 	return av > bv;
+ }
  
- 	progname = strrchr(argv[0], '/');
- 	progname = progname ? 1+progname : argv[0];
--	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xz"))) {
-+	while (EOF != (c = getopt(argc, argv, "cd:e:f:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xz"))) {
- 		switch (c) {
- 		case 'c':
- 			capabilities = 1;
-@@ -214,9 +212,6 @@ int main(int argc, char *argv[])
- 		case 'f':
- 			adjfreq = atoi(optarg);
- 			break;
--		case 'F':
--			channel = atoi(optarg);
--			break;
- 		case 'g':
- 			gettime = 1;
- 			break;
-@@ -618,18 +613,6 @@ int main(int argc, char *argv[])
- 		free(xts);
++static inline void *get_index(void *start, int entsize, int index)
++{
++	return start + (entsize * index);
++}
++
+ /* 32 bit and 64 bit are very similar */
+ #include "sorttable.h"
+ #define SORTTABLE_64
+--- a/scripts/sorttable.h
++++ b/scripts/sorttable.h
+@@ -23,7 +23,6 @@
+ #undef sort_mcount_loc
+ #undef elf_mcount_loc
+ #undef do_sort
+-#undef Elf_Shdr
+ #undef Elf_Sym
+ #undef ELF_ST_TYPE
+ #undef uint_t
+@@ -37,7 +36,6 @@
+ # define sort_mcount_loc	sort_mcount_loc_64
+ # define elf_mcount_loc		elf_mcount_loc_64
+ # define do_sort		do_sort_64
+-# define Elf_Shdr		Elf64_Shdr
+ # define Elf_Sym		Elf64_Sym
+ # define ELF_ST_TYPE		ELF64_ST_TYPE
+ # define uint_t			uint64_t
+@@ -50,7 +48,6 @@
+ # define sort_mcount_loc	sort_mcount_loc_32
+ # define elf_mcount_loc		elf_mcount_loc_32
+ # define do_sort		do_sort_32
+-# define Elf_Shdr		Elf32_Shdr
+ # define Elf_Sym		Elf32_Sym
+ # define ELF_ST_TYPE		ELF32_ST_TYPE
+ # define uint_t			uint32_t
+@@ -171,8 +168,8 @@ struct elf_mcount_loc {
+ static void *sort_mcount_loc(void *arg)
+ {
+ 	struct elf_mcount_loc *emloc = (struct elf_mcount_loc *)arg;
+-	uint_t offset = emloc->start_mcount_loc - _r(&(emloc->init_data_sec)->sh_addr)
+-					+ _r(&(emloc->init_data_sec)->sh_offset);
++	uint_t offset = emloc->start_mcount_loc - _r(&(emloc->init_data_sec)->etype.sh_addr)
++					+ _r(&(emloc->init_data_sec)->etype.sh_offset);
+ 	uint_t count = emloc->stop_mcount_loc - emloc->start_mcount_loc;
+ 	unsigned char *start_loc = (void *)emloc->ehdr + offset;
+ 
+@@ -222,10 +219,11 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 		   table_sort_t custom_sort)
+ {
+ 	int rc = -1;
+-	Elf_Shdr *s, *shdr = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->etype.e_shoff));
++	Elf_Shdr *shdr_start;
+ 	Elf_Shdr *strtab_sec = NULL;
+ 	Elf_Shdr *symtab_sec = NULL;
+ 	Elf_Shdr *extab_sec = NULL;
++	Elf_Shdr *string_sec;
+ 	Elf_Sym *sym;
+ 	const Elf_Sym *symtab;
+ 	Elf32_Word *symtab_shndx = NULL;
+@@ -235,7 +233,10 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 	const char *secstrings;
+ 	const char *strtab;
+ 	char *extab_image;
++	int sort_need_index;
++	int shentsize;
+ 	int idx;
++	int i;
+ 	unsigned int shnum;
+ 	unsigned int shstrndx;
+ #ifdef MCOUNT_SORT_ENABLED
+@@ -249,34 +250,40 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 	unsigned int orc_num_entries = 0;
+ #endif
+ 
++	shdr_start = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->etype.e_shoff));
++	shentsize = r2(&ehdr->etype.e_shentsize);
++
+ 	shstrndx = r2(&ehdr->etype.e_shstrndx);
+ 	if (shstrndx == SHN_XINDEX)
+-		shstrndx = r(&shdr[0].sh_link);
+-	secstrings = (const char *)ehdr + _r(&shdr[shstrndx].sh_offset);
++		shstrndx = r(&shdr_start->etype.sh_link);
++	string_sec = get_index(shdr_start, shentsize, shstrndx);
++	secstrings = (const char *)ehdr + _r(&string_sec->etype.sh_offset);
+ 
+ 	shnum = r2(&ehdr->etype.e_shnum);
+ 	if (shnum == SHN_UNDEF)
+-		shnum = _r(&shdr[0].sh_size);
++		shnum = _r(&shdr_start->etype.sh_size);
++
++	for (i = 0; i < shnum; i++) {
++		Elf_Shdr *shdr = get_index(shdr_start, shentsize, i);
+ 
+-	for (s = shdr; s < shdr + shnum; s++) {
+-		idx = r(&s->sh_name);
++		idx = r(&shdr->etype.sh_name);
+ 		if (!strcmp(secstrings + idx, "__ex_table"))
+-			extab_sec = s;
++			extab_sec = shdr;
+ 		if (!strcmp(secstrings + idx, ".symtab"))
+-			symtab_sec = s;
++			symtab_sec = shdr;
+ 		if (!strcmp(secstrings + idx, ".strtab"))
+-			strtab_sec = s;
++			strtab_sec = shdr;
+ 
+-		if (r(&s->sh_type) == SHT_SYMTAB_SHNDX)
++		if (r(&shdr->etype.sh_type) == SHT_SYMTAB_SHNDX)
+ 			symtab_shndx = (Elf32_Word *)((const char *)ehdr +
+-						      _r(&s->sh_offset));
++						      _r(&shdr->etype.sh_offset));
+ 
+ #ifdef MCOUNT_SORT_ENABLED
+ 		/* locate the .init.data section in vmlinux */
+ 		if (!strcmp(secstrings + idx, ".init.data")) {
+ 			get_mcount_loc(&_start_mcount_loc, &_stop_mcount_loc);
+ 			mstruct.ehdr = ehdr;
+-			mstruct.init_data_sec = s;
++			mstruct.init_data_sec = shdr;
+ 			mstruct.start_mcount_loc = _start_mcount_loc;
+ 			mstruct.stop_mcount_loc = _stop_mcount_loc;
+ 		}
+@@ -285,14 +292,14 @@ static int do_sort(Elf_Ehdr *ehdr,
+ #if defined(SORTTABLE_64) && defined(UNWINDER_ORC_ENABLED)
+ 		/* locate the ORC unwind tables */
+ 		if (!strcmp(secstrings + idx, ".orc_unwind_ip")) {
+-			orc_ip_size = _r(&s->sh_size);
++			orc_ip_size = _r(&shdr->etype.sh_size);
+ 			g_orc_ip_table = (int *)((void *)ehdr +
+-						   _r(&s->sh_offset));
++						   _r(&shdr->etype.sh_offset));
+ 		}
+ 		if (!strcmp(secstrings + idx, ".orc_unwind")) {
+-			orc_size = _r(&s->sh_size);
++			orc_size = _r(&shdr->etype.sh_size);
+ 			g_orc_table = (struct orc_entry *)((void *)ehdr +
+-							     _r(&s->sh_offset));
++							     _r(&shdr->etype.sh_offset));
+ 		}
+ #endif
+ 	} /* for loop */
+@@ -355,22 +362,22 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 		goto out;
  	}
  
--	if (channel >= 0) {
--		if (ioctl(fd, PTP_MASK_CLEAR_ALL)) {
--			perror("PTP_MASK_CLEAR_ALL");
--		} else if (ioctl(fd, PTP_MASK_EN_SINGLE, (unsigned int *)&channel)) {
--			perror("PTP_MASK_EN_SINGLE");
--		} else {
--			printf("Channel %d exclusively enabled. Check on debugfs.\n", channel);
--			printf("Press any key to continue\n.");
--			getchar();
--		}
--	}
--
- 	close(fd);
- 	return 0;
- }
--- 
-2.53.0
-
+-	extab_image = (void *)ehdr + _r(&extab_sec->sh_offset);
+-	strtab = (const char *)ehdr + _r(&strtab_sec->sh_offset);
++	extab_image = (void *)ehdr + _r(&extab_sec->etype.sh_offset);
++	strtab = (const char *)ehdr + _r(&strtab_sec->etype.sh_offset);
+ 	symtab = (const Elf_Sym *)((const char *)ehdr +
+-						  _r(&symtab_sec->sh_offset));
++						  _r(&symtab_sec->etype.sh_offset));
+ 
+ 	if (custom_sort) {
+-		custom_sort(extab_image, _r(&extab_sec->sh_size));
++		custom_sort(extab_image, _r(&extab_sec->etype.sh_size));
+ 	} else {
+-		int num_entries = _r(&extab_sec->sh_size) / extable_ent_size;
++		int num_entries = _r(&extab_sec->etype.sh_size) / extable_ent_size;
+ 		qsort(extab_image, num_entries,
+ 		      extable_ent_size, compare_extable);
+ 	}
+ 
+ 	/* find the flag main_extable_sort_needed */
+-	for (sym = (void *)ehdr + _r(&symtab_sec->sh_offset);
+-	     sym < sym + _r(&symtab_sec->sh_size) / sizeof(Elf_Sym);
++	for (sym = (void *)ehdr + _r(&symtab_sec->etype.sh_offset);
++	     sym < sym + _r(&symtab_sec->etype.sh_size) / sizeof(Elf_Sym);
+ 	     sym++) {
+ 		if (ELF_ST_TYPE(sym->st_info) != STT_OBJECT)
+ 			continue;
+@@ -388,13 +395,14 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 		goto out;
+ 	}
+ 
+-	sort_needed_sec = &shdr[get_secindex(r2(&sym->st_shndx),
+-					     sort_needed_sym - symtab,
+-					     symtab_shndx)];
++	sort_need_index = get_secindex(r2(&sym->st_shndx),
++				       sort_needed_sym - symtab,
++				       symtab_shndx);
++	sort_needed_sec = get_index(shdr_start, shentsize, sort_need_index);
+ 	sort_needed_loc = (void *)ehdr +
+-		_r(&sort_needed_sec->sh_offset) +
++		_r(&sort_needed_sec->etype.sh_offset) +
+ 		_r(&sort_needed_sym->st_value) -
+-		_r(&sort_needed_sec->sh_addr);
++		_r(&sort_needed_sec->etype.sh_addr);
+ 
+ 	/* extable has been sorted, clear the flag */
+ 	w(0, sort_needed_loc);
 
 
