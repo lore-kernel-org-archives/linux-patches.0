@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89101433E87;
-	Thu,  2 Jul 2026 16:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BC319049B;
+	Thu,  2 Jul 2026 16:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011313; cv=none; b=L3qkh83xulpcMTAHVH1/1/XbO0AsLQ4fvL5f9NtpfFrVwyuxX1yyJwvMlvNq2D2kE/QXkpI+/S6f7TykSasQG5B/+4wgOyPgf0leclaxFDqQOtmHLriJ0E9qahiptEVPK6cQf+ydkMFkWPXlnScZjeFJulGQIa3p3j+NyAjWR/U=
+	t=1783011316; cv=none; b=syH7pa7bOGFKJTyG8QxD8/ZBmQzzLruahm2ip9fOUylchjsVWT6kqErcSSfsKmnRLwVFLRQ5Y7rvLztRQ/Vddlwc1JXQwcevWh+3AfwqpP6FCn8dsmbI9ToywfTIvuX1Ixekb1txH7z2bCX7/1fSMQGtL8WZ/n4QST9AOKShYio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011313; c=relaxed/simple;
-	bh=/09BGaU4shWvUXAX8XCiN8FyXNZXoQDk2p87z2rezdM=;
+	s=arc-20240116; t=1783011316; c=relaxed/simple;
+	bh=FUMqK6KKpQ4u1QQfPuaKfUoPft22DRRUfMOu52+rsM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZA1mIKuG7ZULcyx9lGl0bF6Gfg/cGYXTroW8fNALUyTXJP5c299V1UkpA2dJJzpZejB2MOMsbsH5mpnZOr9Yu9ih2JplLKmgFp04mDKh20wQTndZZcWnHQukBMHmQPz7SVhvRS++Y1+q0KE2wX0fjja2s9Xx1ETMnZUCL0D0Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Npe+RGPx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DGaY/EYxjT85BVKVzmbWzmDn/q/okiJteRvYR5MduXC+6NjVlcXYSx/1pXhBFGv4tfb7dheZGlxzCqpf+EsGUoVOykvvVG5TjQWSNE+CGbce5ALwr28MJEpzc1NVJVG1zBHY4M8F77hfrqxcrTVFUznSixWKrsXn9luwwJEVrJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjvInfBQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Npe+RGPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF64D1F000E9;
-	Thu,  2 Jul 2026 16:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjvInfBQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A4E1F000E9;
+	Thu,  2 Jul 2026 16:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011312;
-	bh=mDcCD3fwQrg09r/CHOEu/8U2cWWl3vqQ7jOc2o+jxFk=;
+	s=korg; t=1783011315;
+	bh=40GIn2I5WAQShROkIj24Sg1/415jhhNiJWqBQg4FMrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Npe+RGPxyuzOZuGRmY+MVh4Vv2EkJx1OiGtBV6C2OANnY35QkI5dTSNSnmDry8nCg
-	 +QsYL1OWfuTPtNM2tTb0C3Sjd9aImmPUg4sJ6C6kt26SYvLAR4hDIHzuHb1c8Und5T
-	 pDnfeDJOcYzWAoE1qwVaCmnZxGdHVOFNl9ZZE+mY=
+	b=vjvInfBQH2eEBqDPCkkaS12QPTB0Kqpfr+GG8/hgCP4H3CwuQ+WOtm2/Tqdp05kVD
+	 6GbkM6ElGAHJup/ZsAdqEsFrtnuv2pQM8J3/j1ENREboEGjA2wW28xmX6sfdEQyqfH
+	 VBEKGZyGy02JFNCJ4Ov+A8U+4m37YfwlPBk5x+ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Yunji Kang <yunji0.kang@samsung.com>,
+	Yeongjin Gil <youngjin.gil@samsung.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 062/108] f2fs: validate compress cache inode only when enabled
-Date: Thu,  2 Jul 2026 18:20:59 +0200
-Message-ID: <20260702155113.393672102@linuxfoundation.org>
+Subject: [PATCH 6.18 063/108] f2fs: fix to round down start offset of fallocate for pin file
+Date: Thu,  2 Jul 2026 18:21:00 +0200
+Message-ID: <20260702155113.415180336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -52,53 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Sunmin Jeong <s_min.jeong@samsung.com>
 
-commit 5073c66a96a9c23c0c2533ed4ed06e42f9021208 upstream.
+commit 4275b59673eb60b02eec3997816c83f1f4b909c4 upstream.
 
-F2FS_COMPRESS_INO() uses NM_I(sbi)->max_nid as the synthetic inode
-number for the compressed page cache inode. That inode only exists when
-the compress_cache mount option is enabled.
+Currently, the length of fallocate for pin file is section-aligned to
+keep allocated sections from being selected as victims of GC. However,
+for the case that the start offset of fallocate is not aligned in
+section, the allocated sections can't be fully utilized. It's because a
+new section is allocated by f2fs_allocate_pinning_section() after using
+blks_per_sec blocks regardless of the start offset. As a result, several
+unexpected dirty segments may be created, including blocks assigned to
+the pinned file.
 
-When compress_cache is disabled, max_nid is outside the valid inode
-range. A corrupted directory entry that points to ino == max_nid should
-therefore be rejected by f2fs_check_nid_range(). However, is_meta_ino()
-currently treats F2FS_COMPRESS_INO() as a meta inode unconditionally,
-so f2fs_iget() bypasses do_read_inode() and its nid range check, and
-instantiates a fake internal inode instead.
+To address this issue, let's round down the start offset of fallocate
+to the length of section.
 
-Gate the compressed cache inode case on COMPRESS_CACHE, matching
-f2fs_init_compress_inode(). With compress_cache disabled, ino ==
-max_nid now follows the normal inode path and is rejected as an
-out-of-range nid.
+The reproducing scenario is as below
 
-Cc: stable@kernel.org
-Fixes: 6ce19aff0b8c ("f2fs: compress: add compress_inode to cache compressed blocks")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+chunk=$(((2<<20)+4096)) # 2MB + 4KB
+touch test
+f2fs_io pinfile set test
+f2fs_io fallocate 0 0 $chunk test
+f2fs_io fallocate 0 $chunk $chunk test
+f2fs_io fallocate 0 $((chunk*2)) $chunk test
+f2fs_io fiemap 0 $((chunk*3)) test
+
+Fiemap: offset = 0 len = 12288
+    logical addr.    physical addr.   length           flags
+0   0000000000000000 000000068c600000 0000000000400000 00001088
+1   0000000000400000 000000003d400000 0000000000001000 00001088
+2   0000000000401000 00000003eb200000 0000000000200000 00001088
+3   0000000000601000 00000005e4200000 0000000000001000 00001088
+4   0000000000602000 0000000605400000 0000000000200000 00001089
+
+Cc: stable@vger.kernel.org
+Fixes: f5a53edcf01e ("f2fs: support aligned pinned file")
+Reviewed-by: Yunji Kang <yunji0.kang@samsung.com>
+Reviewed-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inode.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/f2fs/file.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -555,8 +555,13 @@ static int do_read_inode(struct inode *i
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1895,8 +1895,15 @@ static int f2fs_expand_inode_data(struct
  
- static bool is_meta_ino(struct f2fs_sb_info *sbi, unsigned int ino)
- {
--	return ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi) ||
--		ino == F2FS_COMPRESS_INO(sbi);
-+	if (ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi))
-+		return true;
-+#ifdef CONFIG_F2FS_FS_COMPRESSION
-+	if (test_opt(sbi, COMPRESS_CACHE) && ino == F2FS_COMPRESS_INO(sbi))
-+		return true;
-+#endif
-+	return false;
- }
+ 	if (f2fs_is_pinned_file(inode)) {
+ 		block_t sec_blks = CAP_BLKS_PER_SEC(sbi);
+-		block_t sec_len = roundup(map.m_len, sec_blks);
++		block_t sec_len;
  
- struct inode *f2fs_iget(struct super_block *sb, unsigned long ino)
++		if (map.m_lblk % sec_blks) {
++			map.m_lblk = rounddown(map.m_lblk, sec_blks);
++			map.m_len = pg_end - map.m_lblk;
++			if (off_end)
++				map.m_len++;
++		}
++		sec_len = roundup(map.m_len, sec_blks);
+ 		map.m_len = sec_blks;
+ next_alloc:
+ 		f2fs_down_write(&sbi->pin_sem);
 
 
