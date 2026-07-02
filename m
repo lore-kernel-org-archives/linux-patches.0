@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F26C3A6B85;
-	Thu,  2 Jul 2026 16:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E61390613;
+	Thu,  2 Jul 2026 16:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010641; cv=none; b=fAydH23XEKC2PGW/mIvGBjkMkSP8rK88tEGchnQ8raTlIvRyp3hXeBRhr7tWvMCLQKLkwSvJBVNla79GUeyMiKSOZmHJS9LvTdKpx5mcIaWcfplKqIslxZX+Lqp75FnqY+rTT1E+74Wa8qsO2qfHDKnreBKxmEXm7qznF8sf5to=
+	t=1783010644; cv=none; b=ttPHxyQNQ/L0WrBxXQvoGQg758q/E7FGSnDRaBlGWNPg7/G8QcxN6juIMD4ZFsHuf3z6t3byEPBhYdby5VwVuCtz2VbXvS+s0fNlyzPW60a0spOjzbgDGFKRZ073sNeU08rOMPkwGrQIU53zMDlfG/PxdcEgSgkvEBM9xFWWChE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010641; c=relaxed/simple;
-	bh=wiA2/s+EX6eCsXqOA3kQZrjxY7BNIaBRne7dV/6iweI=;
+	s=arc-20240116; t=1783010644; c=relaxed/simple;
+	bh=KxjtduipL8sFss095fs9SA3nTVCSVemw8NJ2iT/s3Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iuipy+ypcym37X3AUkfQ8gpbZhoRMGAz4YHTc0P6M9iYhPmOZMbvFUqAfP0ucazbldR2hPlvW7CIJcYAm8sN50CLUII1en5ijISmG7aXOk8MCNxnPBadACZhCBdVtnMyFRTlgniTGKjajJ27DHYZREO3QOtP0ryQvjaooWJKYWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbRaQo55; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZAFwEMywwb8MQeRzaIFJfd4UcbuTRbWwy41krzpbjzshbqzKJqSCosCnfaIUK47bpoZbeR18gHiZMcOa9XO3YG0fs/vOTqGPHYZK7jrX3l2FFibIMA7JElGg11zYggCls7vz11k1Q+I9pcdgmDoYs+NNL7pMrQFJWNevQ+Rtb9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIaNQ9Zz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbRaQo55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DAF1F000E9;
-	Thu,  2 Jul 2026 16:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIaNQ9Zz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432F81F000E9;
+	Thu,  2 Jul 2026 16:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010640;
-	bh=sNuu58st/2SvFKLaKLf00fEKfGkgtQkXRRcTnnUFRFY=;
+	s=korg; t=1783010642;
+	bh=hQQu4uIvse87wzIti8cRsAr6OWyKUvtixoSNSnSUqPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YbRaQo55KZVaxHpp9RGnJb9G6iWdpYtqbfadbodnZ1mgB/87N7769h7bLJeKyKgkQ
-	 hsV0CLP4+ZjbtApUhmsxbt6jdmYBHyw1J9E8UI41L8EhdxJ/dwU/Ia4WKCyJBot+Re
-	 mTO3Cn5uQOiJekKvoOwySqHjpb0xoxDB7KV3eoJ8=
+	b=aIaNQ9ZzvdkgjPvIdBMwLgzn0D4YN1azDGoUEglbssh9tVymFZ3BaxgwSNmGPHt1b
+	 lz7PTbSLg6Ac4YhZLi/znOpjRQl/xE5ukThztCwudwToPwq79KMZHWZQj5qdrM7AJB
+	 2S3i5iBmTVx52C9SFpnVJMyxHkJqGqkE7qb4Z6Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guannan Wang <wgnbuaa@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 185/204] NFSD: Fix SECINFO_NO_NAME decode error cleanup
-Date: Thu,  2 Jul 2026 18:20:42 +0200
-Message-ID: <20260702155122.537698314@linuxfoundation.org>
+Subject: [PATCH 6.12 186/204] nfsd: fix posix_acl leak on SETACL decode failure
+Date: Thu,  2 Jul 2026 18:20:43 +0200
+Message-ID: <20260702155122.558468621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,48 +50,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guannan Wang <wgnbuaa@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 9e18e83b8846a5c3fe13fc8a464b4865d33996c6 upstream.
+commit 0853ac544c590880d797b04daa33fcb72b6be0e1 upstream.
 
-nfsd4_decode_secinfo_no_name() currently initializes sin_exp after
-decoding sin_style. If the XDR stream is truncated, the decoder returns
-nfserr_bad_xdr before sin_exp is initialized.
+nfsaclsvc_decode_setaclargs() and nfs3svc_decode_setaclargs() each
+call nfs_stream_decode_acl() twice, first for NFS_ACL and then for
+NFS_DFACL.  Each successful call transfers ownership of a freshly
+allocated posix_acl into argp->acl_access or argp->acl_default.  If
+the first call succeeds but the second fails, the decoder returns
+false and argp->acl_access is left dangling.
 
-Since commit 3fdc54646234 ("NFSD: Reduce amount of struct
-nfsd4_compoundargs that needs clearing"), the inline iops array is not
-cleared between RPC calls. A failed SECINFO_NO_NAME decode can therefore
-leave sin_exp holding stale union contents from a previous operation.
+ACLPROC2_SETACL.pc_release was wired to nfssvc_release_attrstat and
+ACLPROC3_SETACL.pc_release was wired to nfs3svc_release_fhandle.
+Both only call fh_put() and have no knowledge of the ACL fields on
+argp.  The posix_acl_release() pairs sat at the out: labels inside
+nfsacld_proc_setacl() and nfsd3_proc_setacl(), but svc_process()
+skips pc_func when pc_decode returns false, so that cleanup is
+unreachable on decode failure:
 
-The error response path still invokes nfsd4_secinfo_no_name_release(),
-which calls exp_put() on a non-NULL sin_exp.
+    svc_process_common()
+      pc_decode()                  /* decode_setaclargs: false */
+      /* pc_func skipped */
+      pc_release()                 /* fh_put only -- ACLs leaked */
 
-Initialize sin_exp before the first failable decode step, matching
-nfsd4_decode_secinfo().
+The orphaned posix_acl is leaked for the lifetime of the server.
 
-Fixes: 3fdc54646234 ("NFSD: Reduce amount of struct nfsd4_compoundargs that needs clearing")
+Fix by adding nfsaclsvc_release_setacl() and nfs3svc_release_setacl(),
+which release both argp->acl_access and argp->acl_default in addition
+to fh_put(), and wiring them as pc_release for their respective SETACL
+procedures.  pc_release runs on every path svc_process() takes after
+decode, including decode failure, so the posix_acl_release() pairs are
+removed from the proc functions' out: labels to keep ownership in one
+place.  This matches the existing release_getacl() pattern used by
+the sibling GETACL procedures.
+
+Fixes: a257cdd0e217 ("[PATCH] NFSD: Add server support for NFSv3 ACLs.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guannan Wang <wgnbuaa@gmail.com>
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs2acl.c |   17 ++++++++++++-----
+ fs/nfsd/nfs3acl.c |   17 ++++++++++++-----
+ 2 files changed, 24 insertions(+), 10 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -1849,10 +1849,11 @@ static __be32 nfsd4_decode_secinfo_no_na
- 					   union nfsd4_op_u *u)
- {
- 	struct nfsd4_secinfo_no_name *sin = &u->secinfo_no_name;
-+
-+	sin->sin_exp = NULL;
- 	if (xdr_stream_decode_u32(argp->xdr, &sin->sin_style) < 0)
- 		return nfserr_bad_xdr;
+--- a/fs/nfsd/nfs2acl.c
++++ b/fs/nfsd/nfs2acl.c
+@@ -131,10 +131,7 @@ static __be32 nfsacld_proc_setacl(struct
+ 	resp->status = fh_getattr(fh, &resp->stat);
  
--	sin->sin_exp = NULL;
- 	return nfs_ok;
+ out:
+-	/* argp->acl_{access,default} may have been allocated in
+-	   nfssvc_decode_setaclargs. */
+-	posix_acl_release(argp->acl_access);
+-	posix_acl_release(argp->acl_default);
++	/* argp->acl_{access,default} are released in nfsaclsvc_release_setacl. */
+ 	return rpc_success;
+ 
+ out_drop_lock:
+@@ -310,6 +307,16 @@ static void nfsaclsvc_release_access(str
+ 	fh_put(&resp->fh);
  }
  
++static void nfsaclsvc_release_setacl(struct svc_rqst *rqstp)
++{
++	struct nfsd3_setaclargs *argp = rqstp->rq_argp;
++	struct nfsd_attrstat *resp = rqstp->rq_resp;
++
++	fh_put(&resp->fh);
++	posix_acl_release(argp->acl_access);
++	posix_acl_release(argp->acl_default);
++}
++
+ #define ST 1		/* status*/
+ #define AT 21		/* attributes */
+ #define pAT (1+AT)	/* post attributes - conditional */
+@@ -343,7 +350,7 @@ static const struct svc_procedure nfsd_a
+ 		.pc_func = nfsacld_proc_setacl,
+ 		.pc_decode = nfsaclsvc_decode_setaclargs,
+ 		.pc_encode = nfssvc_encode_attrstatres,
+-		.pc_release = nfssvc_release_attrstat,
++		.pc_release = nfsaclsvc_release_setacl,
+ 		.pc_argsize = sizeof(struct nfsd3_setaclargs),
+ 		.pc_argzero = sizeof(struct nfsd3_setaclargs),
+ 		.pc_ressize = sizeof(struct nfsd_attrstat),
+--- a/fs/nfsd/nfs3acl.c
++++ b/fs/nfsd/nfs3acl.c
+@@ -118,10 +118,7 @@ out_drop_lock:
+ out_errno:
+ 	resp->status = nfserrno(error);
+ out:
+-	/* argp->acl_{access,default} may have been allocated in
+-	   nfs3svc_decode_setaclargs. */
+-	posix_acl_release(argp->acl_access);
+-	posix_acl_release(argp->acl_default);
++	/* argp->acl_{access,default} are released in nfs3svc_release_setacl. */
+ 	return rpc_success;
+ }
+ 
+@@ -223,6 +220,16 @@ static void nfs3svc_release_getacl(struc
+ 	posix_acl_release(resp->acl_default);
+ }
+ 
++static void nfs3svc_release_setacl(struct svc_rqst *rqstp)
++{
++	struct nfsd3_setaclargs *argp = rqstp->rq_argp;
++	struct nfsd3_attrstat *resp = rqstp->rq_resp;
++
++	fh_put(&resp->fh);
++	posix_acl_release(argp->acl_access);
++	posix_acl_release(argp->acl_default);
++}
++
+ #define ST 1		/* status*/
+ #define AT 21		/* attributes */
+ #define pAT (1+AT)	/* post attributes - conditional */
+@@ -256,7 +263,7 @@ static const struct svc_procedure nfsd_a
+ 		.pc_func = nfsd3_proc_setacl,
+ 		.pc_decode = nfs3svc_decode_setaclargs,
+ 		.pc_encode = nfs3svc_encode_setaclres,
+-		.pc_release = nfs3svc_release_fhandle,
++		.pc_release = nfs3svc_release_setacl,
+ 		.pc_argsize = sizeof(struct nfsd3_setaclargs),
+ 		.pc_argzero = sizeof(struct nfsd3_setaclargs),
+ 		.pc_ressize = sizeof(struct nfsd3_attrstat),
 
 
