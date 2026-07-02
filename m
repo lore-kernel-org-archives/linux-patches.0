@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAB53B9D94;
-	Thu,  2 Jul 2026 16:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2003AB47C;
+	Thu,  2 Jul 2026 16:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009681; cv=none; b=p8dmLHRbgbt0M3ebIouepVX1sHtOR2H3gXotxkQEtmI0xwiCvrodarD8Tg40BNTuKHAemMGz8qVfy8Xyk1UnGTuGLlHbFYAE52uk2xEFm1NFskMxQJQWbd6ms801GHVZAa1Q3iDcELWcInJOIQW1i72aeX49sOzxswbL0jWBayw=
+	t=1783009684; cv=none; b=ObqwIT40npqprexg+6NZWuThZP8GWA6DkTZGS4AaQpIN6IL3Qy+dHAgAP8ZMY/sQaeHG9FBH6bHwlScJHRzI4pkkdJCDhfb5LesJ0ZqBbgxOlzFsx5y3xb9AUu3wngTMBa+zXndRDGk11l8OXd3tE0rUALW7o6UHdRF+KkiK8es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009681; c=relaxed/simple;
-	bh=GSQCFXdAJwVAG8dj+HnZ2QipkGO8by+ar8sHLlgZ8IU=;
+	s=arc-20240116; t=1783009684; c=relaxed/simple;
+	bh=YcVmSgtgk+TnUx3zgniB/pSsnMIEkZRPOTCnEI6oCEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTq4OEEQw2y4xzfVn76fvsXe6Ev0PADROsZFhRy9t71yM2qL0BkYUDV8/Xe/gs8XSeoLNneAnUXGNZsdsXD3yRKQWyv7IZJnMNrOxlGs7leRAHi6WH3+UsfMJulsFJMhyGvHkNK9QTiDE0a2WTrHMrpaiKlWlxIygyqJ+VUqlUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ol2WD2tn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=psFgwhpGvfpUB4NuJyebx0n1ZvYGzTiKChJGgcME/1L+vd48TYdaMxmxvWhPjC3ZPVxLMPouNYfx6i7Zn4duupAgVDYwimaI0QoMH1kTSXD3dRNknBG9NO4LpYntskN/foJW5XSLfsvsk9Q5ldjxf9HSaai+bFzU13UnUm14nCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2QZ50gr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ol2WD2tn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72C21F00A3A;
-	Thu,  2 Jul 2026 16:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2QZ50gr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B411F00A3D;
+	Thu,  2 Jul 2026 16:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009675;
-	bh=J9S8ewYE4JnFEx2T0JtpCqSXnM8cdZ3hWb/QiYUvUog=;
+	s=korg; t=1783009680;
+	bh=1U+FLJJA6qYFutBHtntvZwmWKDu2vuEHPGgH1mBN7Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ol2WD2tnd0RymRffBGDPWPJaxVjDp9nspGvcfyimANektzPQYliI3B2dbKy6v4Vut
-	 JJXZCpS1v7/f9O2WsMQN1/quH+rAzEXOFuof7PSp8zzn+PHATtzmAXrbbe59/YaxEr
-	 oLEycR/sNpQRNSS8klhKij1T7CMtoC3avvx4WNkc=
+	b=B2QZ50gr2JQPHZKokpfUU9LHrrccS/KYIZs+/dSrNklT958BgF39XY1TzkYNgPxCy
+	 U4rcWlfV1giOiP0Pv2C2pKsRIiVL3mDvam+bmAU2Vm8b8E41YGQFim9bpbRI3u/ooC
+	 lunFP7xaRfIa97A5Zlf23mlu93BtuEiO49e6vyuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noam Rathaus <noamr@ssd-disclosure.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Salvatore Bonaccorso <carnil@debian.org>,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/95] ip6_vti: set netns_immutable on the fallback device.
-Date: Thu,  2 Jul 2026 18:19:10 +0200
-Message-ID: <20260702155109.363970123@linuxfoundation.org>
+Subject: [PATCH 5.15 09/95] drm/v3d: Skip CSD when it has zeroed workgroups
+Date: Thu,  2 Jul 2026 18:19:12 +0200
+Message-ID: <20260702155109.404421983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -49,53 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit d289d5307762d1838aaece22c6b6fcad9e8865f9 ]
+[ Upstream commit 7f93fad5ea0affc9e1505dd0f7596c0fdb496213 ]
 
-john1988 and Noam Rathaus reported that vti6_init_net() does not set the
-netns_immutable flag on the per-netns fallback tunnel device (ip6_vti0).
+A compute shader dispatch encodes its workgroup counts in the CFG0..CFG2
+registers. Kicking off a dispatch with a zero count in any of the three
+dimensions is invalid. First, the hardware will process 0 as 65536,
+while the user-space driver exposes a maximum of 65535. Over that, a
+submission with a zeroed workgroup dimension should be a no-op.
 
-Other similar tunnel drivers (like ip6_tunnel, sit, ip6_gre, and ip_tunnel)
-correctly set this flag during their fallback device initialization to
-prevent them from being moved to another network namespace.
+These zeroed counts can reach the dispatch path through an indirect CSD
+job, whose workgroup counts are only known once the indirect buffer is
+read and may legitimately be zero, but such scenario should only result in
+a no-op.
 
-Fixes: 61220ab34948 ("vti6: Enable namespace changing")
-Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://patch.msgid.link/20260608155918.787644-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Salvatore Bonaccorso: Backport for version without 0c493da86374 ("net:
-rename netns_local to netns_immutable") in v6.15-rc1 and without
-05c1280a2bcf ("netdev_features: convert NETIF_F_NETNS_LOCAL to
-dev->netns_local") in v6.12-rc1 and use NETIF_F_NETNS_LOCAL device
-feature.]
-Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Overwrite the indirect CSD job workgroup counts with the indirect BO
+ones, even if they are zeroed, and don't submit the job to the hardware
+when any of the workgroup counts is zero, so the job completes immediately
+instead of running the shader.
+
+Cc: stable@vger.kernel.org
+Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
+Suggested-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260602-v3d-fix-indirect-csd-v4-2-654309e32bc0@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_vti.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/v3d/v3d_sched.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
-index 077aae4b1bb332..e5f3293d190d39 100644
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -1167,6 +1167,7 @@ static int __net_init vti6_init_net(struct net *net)
- 		goto err_alloc_dev;
- 	dev_net_set(ip6n->fb_tnl_dev, net);
- 	ip6n->fb_tnl_dev->rtnl_link_ops = &vti6_link_ops;
-+	ip6n->fb_tnl_dev->features |= NETIF_F_NETNS_LOCAL;
+diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
+index db98855741ee85..46c52d89cb2498 100644
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -257,6 +257,16 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 		return NULL;
+ 	}
  
- 	err = vti6_fb_tnl_dev_init(ip6n->fb_tnl_dev);
- 	if (err < 0)
++	/* The HW interprets a workgroup size of 0 as 65536; however, the
++	 * user-space driver exposes a maximum of 65535. Therefore, a 0 in
++	 * any dimension means that we have no workgroups and the compute
++	 * shader should not be dispatched.
++	 */
++	if (!V3D_GET_FIELD(job->args.cfg[0], V3D_CSD_QUEUED_CFG0_NUM_WGS_X) ||
++	    !V3D_GET_FIELD(job->args.cfg[1], V3D_CSD_QUEUED_CFG1_NUM_WGS_Y) ||
++	    !V3D_GET_FIELD(job->args.cfg[2], V3D_CSD_QUEUED_CFG2_NUM_WGS_Z))
++		return NULL;
++
+ 	v3d->queue[V3D_CSD].active_job = &job->base;
+ 
+ 	v3d_invalidate_caches(v3d);
 -- 
 2.53.0
 
