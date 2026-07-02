@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F246A24E4C3;
-	Thu,  2 Jul 2026 16:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921B824E4C3;
+	Thu,  2 Jul 2026 16:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011353; cv=none; b=RvLUpF7V8EwSIrN6KfH6gXb95SkQzQK2bvqP8S3X0KjmhFnfZQTa6puavwIqzeZ1uefjNyuqH94XrqD6SLEf/9l7Qt8pZLlcH7GeNUikhl07VQLGbe3kfz0dglucMmIIqrUcBwiOZ1OhY69FgzLwz8dJUzXDB8NNNuliuM9+n68=
+	t=1783011355; cv=none; b=gavtulUqmQ7e4wtpv8/+J93x2a8YDryUr0EkqCAPAZupofazbI8Ap2aM0nmn/GtjOtooJq9rG7FDrm/26CcMg8aidSwVTvTgCn34IIJO3n3oIQfHh0KcVkHPTJHB/YkOqHTsPHGly1yt0kyeg3CmTLjIZPNJn/0NZ6XaRVX4PGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011353; c=relaxed/simple;
-	bh=lI+jdOmwH6GbtMGup+0t+IBSJ5wHI5mtV9F6xkx2SGU=;
+	s=arc-20240116; t=1783011355; c=relaxed/simple;
+	bh=ALNcZSft5uXfXlvq9LZO4cK65OiwhHQg0doShVW4LDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=REiQ8y2Em0Wc/e1a3DHNiOOa3YSuudkGoiTuLfiJSj7A0x7stSuDbNWTgm4fy3UsafZDdPdbYt02yxCNu1GhHZ4VpQBI2xwqxGetQg8TQ1PjW8jntgQLGj8ryeD6BnvIOM//idMqdjMLYndp+nh1md0nALBSJqwoHtWoaUXxIYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2X8OI1Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YFV7qw9pkWhaLJIcOOJRLDqWtz2Cqb9AMHQYG+2BRkRvVY8Jm2O7jNmlili504lAqPHv+81FY6HE1ktWixAakFTMUZ8seEbO2CzPEBj90N/aGc10ZjAkyge5nvRMH/JuGoy486eNfZbaK9ZZO1WG6hY4ZkPW1cRD7JUIUCg1gMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l38ZlfPh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2X8OI1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654431F000E9;
-	Thu,  2 Jul 2026 16:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l38ZlfPh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DD51F000E9;
+	Thu,  2 Jul 2026 16:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011351;
-	bh=GG8KO5Wql8yIcT733jCxPBc/qbacvENa+42VzcNy/bA=;
+	s=korg; t=1783011354;
+	bh=fO0zZ+xNN7gIHHzw1963/e91cNwQtD81zDu3e64NQRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g2X8OI1YLArMycYpOrtxWXPBgIx0Yi5OLfc76+Adx4X2y32Gp2wvg91upNaQF1I6j
-	 /WJN5YNchkUCXspqpS7ih1VrWLkXlXjOAf1QB7V8dF7fI+kv28eWnCln5ComLnJy5D
-	 6fz9b3JdXq61UEGfYFJsDt8+8R/6XoTDIvQpoC30=
+	b=l38ZlfPhUHYGOXnjEFmwhyf2OWvlMXrAimzEqDcbl6ZkWDh94M+ysPmBdQCefiyxQ
+	 qBMQ6IB0zuI79QjZlPCal/hsSSmxG7H38TyIcRaEwxhWMqfY4NlPh3yRr09vV5+X6s
+	 Z2ZieEQFwFONwRqXUj5t+L1VpdZmn6N2dFHtqboo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 076/108] hdlc_ppp: sync per-proto timers before freeing hdlc state
-Date: Thu,  2 Jul 2026 18:21:13 +0200
-Message-ID: <20260702155113.687997420@linuxfoundation.org>
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 050/108] userfaultfd: ensure mremap_userfaultfd_fail() releases mmap_changing
+Date: Thu,  2 Jul 2026 18:20:47 +0200
+Message-ID: <20260702155113.145722202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -50,109 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-commit c78a4e41ab5ead6193ad8a2dd92e8906bae659fa upstream.
+commit 0496a59745b0723ea74274db16fd5c8b1379b9a9 upstream.
 
-Each PPP control protocol (LCP/IPCP/IPV6CP) embedded in struct ppp
-registers a timer via timer_setup(). That struct ppp is the
-hdlc->state allocation, which detach_hdlc_protocol() frees with kfree()
-in both teardown paths: unregister_hdlc_device() and the re-attach inside
-attach_hdlc_protocol().
+Sashiko says:
 
-The ppp proto never registered a .detach callback, so
-detach_hdlc_protocol() performs no timer synchronization before the
-kfree(). The only cancel, timer_delete(&proto->timer) in ppp_cp_event(),
-is partial (it does not wait for a running callback) and only runs on the
-->CLOSED transition; ppp_stop()/ppp_close() do not sync either. A
-ppp_timer callback already executing (blocked on ppp->lock) survives the
-kfree and then dereferences proto->state / ppp->lock in freed memory,
-leading to a use-after-free.
+  mremap_userfaultfd_prep() increments ctx->mmap_changing to stall
+  concurrent operations, but mremap_userfaultfd_fail() does not
+  decrement it before dropping the context reference.
 
-Fix this by adding a .detach helper that calls timer_shutdown_sync() on
-every per-proto timer. detach_hdlc_protocol() invokes proto->detach(dev)
-before kfree(hdlc->state), so timer_shutdown_sync()
-now runs on both free paths.
-timer_shutdown_sync() is used instead of timer_delete_sync() because the
-keepalive path re-arms the timer through add_timer()/mod_timer() and
-shutdown blocks any re-activation during teardown.
+If an mremap operation fails, ctx->mmap_changing remains elevated. This
+will causes subsequent userfaultfd operations like a UFFDIO_COPY to fail
+with -EAGAIN.
 
-Initialize the per-protocol timers in ppp_ioctl() when the protocol is
-attached, and remove the now-redundant timer_setup() from ppp_start(), so
-that the timers are initialized exactly once at attach time and
-ppp_timer_release() never operates on uninitialized timer_list
-structures. attach_hdlc_protocol() uses kmalloc() (not kzalloc), so
-struct ppp's protos[i].timer is uninitialized garbage until the first
-timer_setup(); without this init-at-attach, attaching the PPP protocol
-without ever bringing the device up would leave timer_shutdown_sync()
-operating on uninitialized memory in .detach. Moving the init out of
-ppp_start() (which only runs on NETDEV_UP) into the attach path makes the
-initialization unconditional and avoids initializing the same timer_list
-twice.
+Decrement ctx->mmap_changing in mremap_userfaultfd_fail().
 
-This bug was found by static analysis.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260617020518.116319-1-fanwu01@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260430113512.115938-1-rppt@kernel.org
+Link: https://lore.kernel.org/20260513081416.495963-1-rppt@kernel.org
+Fixes: df2cc96e7701 ("userfaultfd: prevent non-cooperative events vs mcopy_atomic races")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/hdlc_ppp.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ fs/userfaultfd.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wan/hdlc_ppp.c
-+++ b/drivers/net/wan/hdlc_ppp.c
-@@ -621,7 +621,6 @@ static void ppp_start(struct net_device
- 		struct proto *proto = &ppp->protos[i];
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -767,6 +767,8 @@ void mremap_userfaultfd_fail(struct vm_u
+ 	if (!ctx)
+ 		return;
  
- 		proto->dev = dev;
--		timer_setup(&proto->timer, ppp_timer, 0);
- 		proto->state = CLOSED;
- 	}
- 	ppp->protos[IDX_LCP].pid = PID_LCP;
-@@ -641,6 +640,15 @@ static void ppp_close(struct net_device
- 	ppp_tx_flush();
++	atomic_dec(&ctx->mmap_changing);
++	VM_WARN_ON_ONCE(atomic_read(&ctx->mmap_changing) < 0);
+ 	userfaultfd_ctx_put(ctx);
  }
  
-+static void ppp_timer_release(struct net_device *dev)
-+{
-+	struct ppp *ppp = get_ppp(dev);
-+	int i;
-+
-+	for (i = 0; i < IDX_COUNT; i++)
-+		timer_shutdown_sync(&ppp->protos[i].timer);
-+}
-+
- static struct hdlc_proto proto = {
- 	.start		= ppp_start,
- 	.stop		= ppp_stop,
-@@ -649,6 +657,7 @@ static struct hdlc_proto proto = {
- 	.ioctl		= ppp_ioctl,
- 	.netif_rx	= ppp_rx,
- 	.module		= THIS_MODULE,
-+	.detach		= ppp_timer_release,
- };
- 
- static const struct header_ops ppp_header_ops = {
-@@ -659,7 +668,7 @@ static int ppp_ioctl(struct net_device *
- {
- 	hdlc_device *hdlc = dev_to_hdlc(dev);
- 	struct ppp *ppp;
--	int result;
-+	int i, result;
- 
- 	switch (ifs->type) {
- 	case IF_GET_PROTO:
-@@ -687,6 +696,8 @@ static int ppp_ioctl(struct net_device *
- 			return result;
- 
- 		ppp = get_ppp(dev);
-+		for (i = 0; i < IDX_COUNT; i++)
-+			timer_setup(&ppp->protos[i].timer, ppp_timer, 0);
- 		spin_lock_init(&ppp->lock);
- 		ppp->req_timeout = 2;
- 		ppp->cr_retries = 10;
 
 
