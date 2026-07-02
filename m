@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B99347515;
-	Thu,  2 Jul 2026 16:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B08E388E4E;
+	Thu,  2 Jul 2026 16:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009398; cv=none; b=nyZ5oeNkjhcWDv+fiGVRMPbUW0v84v33AcQ+2SnxsaoILV6PRpsFieR0WOCq25tPr3189Sze/Bql0euKoBgUw4wl/dGw3awA5Jy4X5iOH7zz6eXbi3lTB79lniTPwevljMsGTWnLgWOdK8F4KKxMvbHtbvwII4AmEMVm7gooG/4=
+	t=1783009400; cv=none; b=ocg9bbuFd+AJmYCU2NvhlXjTg7zMRlfvVquULjf0+M2G03Qk3AKYzvUUSMgMTeJnokXYfdfjDAA0th6n8viNM1rMq0gV0yoAu+WsULUOYomZ8Fuj/9Emq4yFCh9KxidsojFH6sfBIQdsYYo4Dcj6eU5YpJWqsh0Hpj6G18tFPs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009398; c=relaxed/simple;
-	bh=9W6SvW/zZv8hq3za3MOVa0ca98kifN290VO204vnIS8=;
+	s=arc-20240116; t=1783009400; c=relaxed/simple;
+	bh=hUJ0e52Ppsqoi0Li4LKI4372spzg0u6ayC0kVUSzICU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7Lki8Topq9uReK5PUv16KXxkvN/X7ftJqtFZ7sZk2pI2KyZj8SNfKqpGxYrUvfKXM+t4xIKG/5WCZRm951DBlJCE7PIYusr7JprdNp3mwEtqeXa+54qnNfXZu7azMrI7dAH3Cb9pW2TVEo25DHwoGFd1GcbmXQZT4q+4tm+Mdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXqYAFmr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HeQLOJHHC+R3/S4XGWpJdxDiHk9WPWPiipVS+rt2M3nbaXYZLf+Zwz8NluwSssK1IsI0zkj40CcHlARZD4u5AU54w/TBbAc2F6C+cngQloI1w5LDM98dGZhIRIAkNGwtrGuLeDDXQvrp6XGCXUwNGSWRHUZwdeNKjVlmVnY4+vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAspxcjL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXqYAFmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A281F00A3D;
-	Thu,  2 Jul 2026 16:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAspxcjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72C21F000E9;
+	Thu,  2 Jul 2026 16:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009392;
-	bh=6psnI4QveiNVg12Gf/rfeNjFyr0ICpGjgmL7Xsf4uA4=;
+	s=korg; t=1783009395;
+	bh=guMcj1sP8H8OYP8xsVrHOV3GdNFn+MeASToPDL373Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hXqYAFmrKYlBItvk4xc8Y5F+/82Sww9DOmEIqOrvY64gMl5oioEpeWOhXEBRRclIZ
-	 H7tV4UmkQYhxeEJfL/BDXeUZLYuKc3wiHRYj26lnMLjbPCY9+QCdaTkbOZ+4dO4Wyv
-	 Yf/1JmVbY7MKCLbvoL8xIYp1NfXaMB6ZlHn77Z48=
+	b=oAspxcjLImLl5j28xbaWboiLvYc4aEokxBkyHik5UlAoeRcgkcv7jbvA1MsvSlxiA
+	 IG19p0HlImCmdFFwVRcWLYnrlPCGQWl3u7Ys4PmHED1V57YA37/6U6Re0z4mdQgBvT
+	 zyNtm89jHDQMFOqtn5m27c0YFhWy/AGtaS3B9Xi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Wentao Guan <guanwentao@uniontech.com>,
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 33/96] net/sched: act_pedit: fix action bind logic
-Date: Thu,  2 Jul 2026 18:19:25 +0200
-Message-ID: <20260702155109.681792810@linuxfoundation.org>
+Subject: [PATCH 5.10 34/96] batman-adv: tp_meter: keep unacked list in ascending ordered
+Date: Thu,  2 Jul 2026 18:19:26 +0200
+Message-ID: <20260702155109.702854704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -54,204 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit e9e42292ea76a8358b0c02ffd530d78e133a1b73 ]
+commit 5aa8651527ea0b610e7a09fb3b8204c1398b9525 upstream.
 
-The TC architecture allows filters and actions to be created independently.
-In filters the user can reference action objects using:
-tc action add action pedit ... index 1
-tc filter add ... action pedit index 1
+When batadv_tp_handle_out_of_order inserts a new entry in the list of
+unacked (out of order) packets, it searches from the entry with the newest
+sequence number towards oldest sequence number. If an entry is found which
+is older than the newly entry, the new entry has to be added after the
+found one to keep the ascending order.
 
-In the current code for act_pedit this is broken as it checks netlink
-attributes for create/update before actually checking if we are binding to an
-existing action.
+But for this operation list_add_tail() was used. But this function adds an
+entry _before_ another one. As result, the list would contain a lot of
+swapped sequence numbers. The consumer of this list
+(batadv_tp_ack_unordered()) would then fail to correctly ack packets.
 
-tdc results:
-1..69
-ok 1 319a - Add pedit action that mangles IP TTL
-ok 2 7e67 - Replace pedit action with invalid goto chain
-ok 3 377e - Add pedit action with RAW_OP offset u32
-ok 4 a0ca - Add pedit action with RAW_OP offset u32 (INVALID)
-ok 5 dd8a - Add pedit action with RAW_OP offset u16 u16
-ok 6 53db - Add pedit action with RAW_OP offset u16 (INVALID)
-ok 7 5c7e - Add pedit action with RAW_OP offset u8 add value
-ok 8 2893 - Add pedit action with RAW_OP offset u8 quad
-ok 9 3a07 - Add pedit action with RAW_OP offset u8-u16-u8
-ok 10 ab0f - Add pedit action with RAW_OP offset u16-u8-u8
-ok 11 9d12 - Add pedit action with RAW_OP offset u32 set u16 clear u8 invert
-ok 12 ebfa - Add pedit action with RAW_OP offset overflow u32 (INVALID)
-ok 13 f512 - Add pedit action with RAW_OP offset u16 at offmask shift set
-ok 14 c2cb - Add pedit action with RAW_OP offset u32 retain value
-ok 15 1762 - Add pedit action with RAW_OP offset u8 clear value
-ok 16 bcee - Add pedit action with RAW_OP offset u8 retain value
-ok 17 e89f - Add pedit action with RAW_OP offset u16 retain value
-ok 18 c282 - Add pedit action with RAW_OP offset u32 clear value
-ok 19 c422 - Add pedit action with RAW_OP offset u16 invert value
-ok 20 d3d3 - Add pedit action with RAW_OP offset u32 invert value
-ok 21 57e5 - Add pedit action with RAW_OP offset u8 preserve value
-ok 22 99e0 - Add pedit action with RAW_OP offset u16 preserve value
-ok 23 1892 - Add pedit action with RAW_OP offset u32 preserve value
-ok 24 4b60 - Add pedit action with RAW_OP negative offset u16/u32 set value
-ok 25 a5a7 - Add pedit action with LAYERED_OP eth set src
-ok 26 86d4 - Add pedit action with LAYERED_OP eth set src & dst
-ok 27 f8a9 - Add pedit action with LAYERED_OP eth set dst
-ok 28 c715 - Add pedit action with LAYERED_OP eth set src (INVALID)
-ok 29 8131 - Add pedit action with LAYERED_OP eth set dst (INVALID)
-ok 30 ba22 - Add pedit action with LAYERED_OP eth type set/clear sequence
-ok 31 dec4 - Add pedit action with LAYERED_OP eth set type (INVALID)
-ok 32 ab06 - Add pedit action with LAYERED_OP eth add type
-ok 33 918d - Add pedit action with LAYERED_OP eth invert src
-ok 34 a8d4 - Add pedit action with LAYERED_OP eth invert dst
-ok 35 ee13 - Add pedit action with LAYERED_OP eth invert type
-ok 36 7588 - Add pedit action with LAYERED_OP ip set src
-ok 37 0fa7 - Add pedit action with LAYERED_OP ip set dst
-ok 38 5810 - Add pedit action with LAYERED_OP ip set src & dst
-ok 39 1092 - Add pedit action with LAYERED_OP ip set ihl & dsfield
-ok 40 02d8 - Add pedit action with LAYERED_OP ip set ttl & protocol
-ok 41 3e2d - Add pedit action with LAYERED_OP ip set ttl (INVALID)
-ok 42 31ae - Add pedit action with LAYERED_OP ip ttl clear/set
-ok 43 486f - Add pedit action with LAYERED_OP ip set duplicate fields
-ok 44 e790 - Add pedit action with LAYERED_OP ip set ce, df, mf, firstfrag, nofrag fields
-ok 45 cc8a - Add pedit action with LAYERED_OP ip set tos
-ok 46 7a17 - Add pedit action with LAYERED_OP ip set precedence
-ok 47 c3b6 - Add pedit action with LAYERED_OP ip add tos
-ok 48 43d3 - Add pedit action with LAYERED_OP ip add precedence
-ok 49 438e - Add pedit action with LAYERED_OP ip clear tos
-ok 50 6b1b - Add pedit action with LAYERED_OP ip clear precedence
-ok 51 824a - Add pedit action with LAYERED_OP ip invert tos
-ok 52 106f - Add pedit action with LAYERED_OP ip invert precedence
-ok 53 6829 - Add pedit action with LAYERED_OP beyond ip set dport & sport
-ok 54 afd8 - Add pedit action with LAYERED_OP beyond ip set icmp_type & icmp_code
-ok 55 3143 - Add pedit action with LAYERED_OP beyond ip set dport (INVALID)
-ok 56 815c - Add pedit action with LAYERED_OP ip6 set src
-ok 57 4dae - Add pedit action with LAYERED_OP ip6 set dst
-ok 58 fc1f - Add pedit action with LAYERED_OP ip6 set src & dst
-ok 59 6d34 - Add pedit action with LAYERED_OP ip6 dst retain value (INVALID)
-ok 60 94bb - Add pedit action with LAYERED_OP ip6 traffic_class
-ok 61 6f5e - Add pedit action with LAYERED_OP ip6 flow_lbl
-ok 62 6795 - Add pedit action with LAYERED_OP ip6 set payload_len, nexthdr, hoplimit
-ok 63 1442 - Add pedit action with LAYERED_OP tcp set dport & sport
-ok 64 b7ac - Add pedit action with LAYERED_OP tcp sport set (INVALID)
-ok 65 cfcc - Add pedit action with LAYERED_OP tcp flags set
-ok 66 3bc4 - Add pedit action with LAYERED_OP tcp set dport, sport & flags fields
-ok 67 f1c8 - Add pedit action with LAYERED_OP udp set dport & sport
-ok 68 d784 - Add pedit action with mixed RAW/LAYERED_OP #1
-ok 69 70ca - Add pedit action with mixed RAW/LAYERED_OP #2
-
-Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to the conventional network headers")
-Fixes: f67169fef8db ("net/sched: act_pedit: fix WARN() in the traffic path")
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 58 +++++++++++++++++++++++--------------------
- 1 file changed, 31 insertions(+), 27 deletions(-)
+ net/batman-adv/tp_meter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 0601deea04d725..fe9e826184c168 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -182,26 +182,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index fc2f0b49e5a06e..c837a91879ac2f 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1334,7 +1334,7 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
+ 		 * one is attached _after_ it. In this way the list is kept in
+ 		 * ascending order
+ 		 */
+-		list_add_tail(&new->list, &un->list);
++		list_add(&new->list, &un->list);
+ 		added = true;
+ 		break;
  	}
- 
- 	parm = nla_data(pattr);
--	if (!parm->nkeys) {
--		NL_SET_ERR_MSG_MOD(extack, "Pedit requires keys to be passed");
--		return -EINVAL;
--	}
--	ksize = parm->nkeys * sizeof(struct tc_pedit_key);
--	if (nla_len(pattr) < sizeof(*parm) + ksize) {
--		NL_SET_ERR_MSG_ATTR(extack, pattr, "Length of TCA_PEDIT_PARMS or TCA_PEDIT_PARMS_EX pedit attribute is invalid");
--		return -EINVAL;
--	}
--
--	nparms = kzalloc(sizeof(*nparms), GFP_KERNEL);
--	if (!nparms)
--		return -ENOMEM;
--
--	nparms->tcfp_keys_ex =
--		tcf_pedit_keys_ex_parse(tb[TCA_PEDIT_KEYS_EX], parm->nkeys);
--	if (IS_ERR(nparms->tcfp_keys_ex)) {
--		ret = PTR_ERR(nparms->tcfp_keys_ex);
--		goto out_free;
--	}
- 
- 	index = parm->index;
- 	err = tcf_idr_check_alloc(tn, &index, a, bind);
-@@ -210,25 +190,49 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
- 						&act_pedit_ops, bind, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
--			goto out_free_ex;
-+			return ret;
- 		}
- 		ret = ACT_P_CREATED;
- 	} else if (err > 0) {
- 		if (bind)
--			goto out_free;
-+			return 0;
- 		if (!ovr) {
- 			ret = -EEXIST;
- 			goto out_release;
- 		}
- 	} else {
--		ret = err;
--		goto out_free_ex;
-+		return err;
-+	}
-+
-+	if (!parm->nkeys) {
-+		NL_SET_ERR_MSG_MOD(extack, "Pedit requires keys to be passed");
-+		ret = -EINVAL;
-+		goto out_release;
-+	}
-+	ksize = parm->nkeys * sizeof(struct tc_pedit_key);
-+	if (nla_len(pattr) < sizeof(*parm) + ksize) {
-+		NL_SET_ERR_MSG_ATTR(extack, pattr, "Length of TCA_PEDIT_PARMS or TCA_PEDIT_PARMS_EX pedit attribute is invalid");
-+		ret = -EINVAL;
-+		goto out_release;
-+	}
-+
-+	nparms = kzalloc(sizeof(*nparms), GFP_KERNEL);
-+	if (!nparms) {
-+		ret = -ENOMEM;
-+		goto out_release;
-+	}
-+
-+	nparms->tcfp_keys_ex =
-+		tcf_pedit_keys_ex_parse(tb[TCA_PEDIT_KEYS_EX], parm->nkeys);
-+	if (IS_ERR(nparms->tcfp_keys_ex)) {
-+		ret = PTR_ERR(nparms->tcfp_keys_ex);
-+		goto out_free;
- 	}
- 
- 	err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch, extack);
- 	if (err < 0) {
- 		ret = err;
--		goto out_release;
-+		goto out_free_ex;
- 	}
- 
- 	nparms->tcfp_flags = parm->flags;
-@@ -280,12 +284,12 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
- put_chain:
- 	if (goto_ch)
- 		tcf_chain_put_by_act(goto_ch);
--out_release:
--	tcf_idr_release(*a, bind);
- out_free_ex:
- 	kfree(nparms->tcfp_keys_ex);
- out_free:
- 	kfree(nparms);
-+out_release:
-+	tcf_idr_release(*a, bind);
- 	return ret;
- }
- 
 -- 
 2.53.0
 
