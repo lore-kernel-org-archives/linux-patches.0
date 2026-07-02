@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C63414DE5;
-	Thu,  2 Jul 2026 16:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E09847DD47;
+	Thu,  2 Jul 2026 16:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009433; cv=none; b=SEock9FhN06c8gIcCvHfTw7QtqY6z3idJP55R1vlOZFlIXxx2PXeUFSpDjqrMBTfGc+pMK7Rn9D3AquKvCv3YV549gOO1QR7q4rQIhsAJxr+eHtbpQxKp7uosBhfATVQvOYXWvioNb6O1SYGN3kBpOvokjeASa++dNkF6zMM7g4=
+	t=1783009437; cv=none; b=Ro6pq9LOQGOh41IGfv35LYEOUsEi79Xyv5uEhLOoVdsU8LJiTw1Z6xFPPB49krQJbGdr60ot1pVlMnSzxl5lp8u+6CgL5PeryahsqqQ7AKHQjBzx7XlOwxK2Ety3Xom45A/MtBFJfmDZYd1oYQ6qMPSJj9Xy/vrICFWAKE/ufe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009433; c=relaxed/simple;
-	bh=aofA1hjVITO0VUPIaAwPNmQ+isboBcx4+cgpGSbGJ9E=;
+	s=arc-20240116; t=1783009437; c=relaxed/simple;
+	bh=kyI6kHftdjm2xpwz9HUfyqNAB90L6e2i2JL8blJ+730=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5V9y58aE0EMQ3ezdtA9DbQ7lvISTSTytifnufiVonw26jTUGiGeqdAty2QIixE7EJDEWfHrVAC9n4gxprtC2Ho5CD5V5POl2Jpq83YuUCVUKD9ZronckxCJOVjRZj8Q/nQhBgb3qXxrkmbO5CqJThK0f8q7vphumz8I8rxrTPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpbVfkJt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cXm/VttjXI42kqJTHj7sbkFKdNDhJR6Bpn+qgbJwdDJ3ttm9ZvugcHMqtBDnCYdJPkZP3PjHD0EcZIN3L/py6221SWeiWd1Knth7SrqXypddnMAupi9jGuwGJDVGWixIwBplHBswCZ7nlDSA2v9YRuU0yqvaY2sq6B91Wq1bvOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X140wjGw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpbVfkJt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C8A1F000E9;
-	Thu,  2 Jul 2026 16:23:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X140wjGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72D01F00A3D;
+	Thu,  2 Jul 2026 16:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009426;
-	bh=B9CK0rEbxwsN36GUflIBSR9ChcdlRQTG0FVMV7IlaDc=;
+	s=korg; t=1783009429;
+	bh=3zQGbw81Y3hxcScC6tPqk9v3HsknPe/HdCtE5wMCw1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tpbVfkJtrgUIrXciW6xwpFlpwb0FhhRk+cwB8ljlgloHKjC870MwKG092Z4wcx9Wc
-	 DeYYMDftnwPH3SWlcKpkKq57fEt73DnFaIg75hA49v/TinbS+/JGrqi9klnGqjgICk
-	 bj4/e8cRmJk2JSgGh2ypqhV1H7Q9Ou2yIFffTa4I=
+	b=X140wjGwvT+WjcvC0jSMdE2N9jCOcu2nApx8/GzGPUPdLZXiSkV4MfohuMTglIDQC
+	 X1IWDOTXFuZ7/aiVOn8G2vYSCJxTCJVICt39lAy1VSgVTjjepawNUb2npnpk1z7ipu
+	 jkHIjabV6dQ6qNvTRmrLg4sN5qBR6avCt9sYning=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 45/96] batman-adv: frag: ensure fragment is writable before modifying TTL
-Date: Thu,  2 Jul 2026 18:19:37 +0200
-Message-ID: <20260702155109.931718595@linuxfoundation.org>
+Subject: [PATCH 5.10 05/96] net/sched: act_pedit: check static offsets a priori
+Date: Thu,  2 Jul 2026 18:18:57 +0200
+Message-ID: <20260702155109.079134995@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -51,105 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit b7293c6e8c15b2db77809b25cf8389e35331b27a upstream.
+[ Upstream commit e1201bc781c28766720e78a5e099ffa568be4d74 ]
 
-Before batman-adv is allowed to write to an skb, it either has to have its
-own copy of the skb or use skb_cow() to ensure that the data part is not
-shared. But batadv_frag_skb_fwd() modifies the TTL even when it is shared.
+Static key offsets should always be on 32 bit boundaries. Validate them on
+create/update time for static offsets and move the datapath validation
+for runtime offsets only.
 
-Adding a skb_cow() right before this operation avoids this and can at the
-same time prepare it for the modifications required to forward the
-fragment.
+iproute2 already errors out if a given offset and data size cannot be
+packed to a 32 bit boundary. This change will make sure users which
+create/update pedit instances directly via netlink also error out,
+instead of finding out when packets are traversing.
 
-Cc: stable@kernel.org
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/fragmentation.c | 15 ++++++++++++++-
- net/batman-adv/fragmentation.h |  3 ++-
- net/batman-adv/routing.c       |  3 +--
- 3 files changed, 17 insertions(+), 4 deletions(-)
+ net/sched/act_pedit.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/batman-adv/fragmentation.c b/net/batman-adv/fragmentation.c
-index 724e06e3e799f4..95c88bbdbcbee0 100644
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -386,6 +386,8 @@ bool batadv_frag_skb_buffer(struct sk_buff **skb,
-  * @skb: skb to forward
-  * @recv_if: interface that the skb is received on
-  * @orig_node_src: originator that the skb is received from
-+ * @rx_result: set to NET_RX_SUCCESS when the fragment was forwarded and
-+ *  NET_RX_DROP when it was dropped; only valid when true is returned
-  *
-  * Look up the next-hop of the fragments payload and check if the merged packet
-  * will exceed the MTU towards the next-hop. If so, the fragment is forwarded
-@@ -395,7 +397,8 @@ bool batadv_frag_skb_buffer(struct sk_buff **skb,
-  */
- bool batadv_frag_skb_fwd(struct sk_buff *skb,
- 			 struct batadv_hard_iface *recv_if,
--			 struct batadv_orig_node *orig_node_src)
-+			 struct batadv_orig_node *orig_node_src,
-+			 int *rx_result)
- {
- 	struct batadv_priv *bat_priv = netdev_priv(recv_if->soft_iface);
- 	struct batadv_orig_node *orig_node_dst;
-@@ -418,12 +421,22 @@ bool batadv_frag_skb_fwd(struct sk_buff *skb,
- 	 */
- 	total_size = ntohs(packet->total_size);
- 	if (total_size > neigh_node->if_incoming->net_dev->mtu) {
-+		if (skb_cow(skb, ETH_HLEN) < 0) {
-+			kfree_skb(skb);
-+			*rx_result = NET_RX_DROP;
-+			ret = true;
-+			goto out;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 957ce9017c3f73..95ae885ecba168 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -239,8 +239,16 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 	memcpy(nparms->tcfp_keys, parm->keys, ksize);
+ 
+ 	for (i = 0; i < nparms->tcfp_nkeys; ++i) {
++		u32 offmask = nparms->tcfp_keys[i].offmask;
+ 		u32 cur = nparms->tcfp_keys[i].off;
+ 
++		/* The AT option can be added to static offsets in the datapath */
++		if (!offmask && cur % 4) {
++			NL_SET_ERR_MSG_MOD(extack, "Offsets must be on 32bit boundaries");
++			ret = -EINVAL;
++			goto put_chain;
 +		}
 +
-+		packet = (struct batadv_frag_packet *)skb->data;
-+
- 		batadv_inc_counter(bat_priv, BATADV_CNT_FRAG_FWD);
- 		batadv_add_counter(bat_priv, BATADV_CNT_FRAG_FWD_BYTES,
- 				   skb->len + ETH_HLEN);
+ 		/* sanitize the shift value for any later use */
+ 		nparms->tcfp_keys[i].shift = min_t(size_t,
+ 						   BITS_PER_TYPE(int) - 1,
+@@ -249,7 +257,7 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 		/* The AT option can read a single byte, we can bound the actual
+ 		 * value with uchar max.
+ 		 */
+-		cur += (0xff & nparms->tcfp_keys[i].offmask) >> nparms->tcfp_keys[i].shift;
++		cur += (0xff & offmask) >> nparms->tcfp_keys[i].shift;
  
- 		packet->ttl--;
- 		batadv_send_unicast_skb(skb, neigh_node);
-+		*rx_result = NET_RX_SUCCESS;
- 		ret = true;
- 	}
+ 		/* Each key touches 4 bytes starting from the computed offset */
+ 		nparms->tcfp_off_max_hint =
+@@ -383,12 +391,12 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 					       sizeof(_d), &_d);
+ 			if (!d)
+ 				goto bad;
+-			offset += (*d & tkey->offmask) >> tkey->shift;
+-		}
  
-diff --git a/net/batman-adv/fragmentation.h b/net/batman-adv/fragmentation.h
-index 881ef328b6cd7e..aba6eecb7d0e76 100644
---- a/net/batman-adv/fragmentation.h
-+++ b/net/batman-adv/fragmentation.h
-@@ -19,7 +19,8 @@ void batadv_frag_purge_orig(struct batadv_orig_node *orig,
- 			    bool (*check_cb)(struct batadv_frag_table_entry *));
- bool batadv_frag_skb_fwd(struct sk_buff *skb,
- 			 struct batadv_hard_iface *recv_if,
--			 struct batadv_orig_node *orig_node_src);
-+			 struct batadv_orig_node *orig_node_src,
-+			 int *rx_result);
- bool batadv_frag_skb_buffer(struct sk_buff **skb,
- 			    struct batadv_orig_node *orig_node);
- int batadv_frag_send_packet(struct sk_buff *skb,
-diff --git a/net/batman-adv/routing.c b/net/batman-adv/routing.c
-index 9e5c71e406ffc6..f6df66a534c41e 100644
---- a/net/batman-adv/routing.c
-+++ b/net/batman-adv/routing.c
-@@ -1143,10 +1143,9 @@ int batadv_recv_frag_packet(struct sk_buff *skb,
+-		if (offset % 4) {
+-			pr_info("tc action pedit offset must be on 32 bit boundaries\n");
+-			goto bad;
++			offset += (*d & tkey->offmask) >> tkey->shift;
++			if (offset % 4) {
++				pr_info("tc action pedit offset must be on 32 bit boundaries\n");
++				goto bad;
++			}
+ 		}
  
- 	/* Route the fragment if it is not for us and too big to be merged. */
- 	if (!batadv_is_my_mac(bat_priv, frag_packet->dest) &&
--	    batadv_frag_skb_fwd(skb, recv_if, orig_node_src)) {
-+	    batadv_frag_skb_fwd(skb, recv_if, orig_node_src, &ret)) {
- 		/* skb was consumed */
- 		skb = NULL;
--		ret = NET_RX_SUCCESS;
- 		goto put_orig_node;
- 	}
- 
+ 		if (!offset_valid(skb, hoffset + offset)) {
 -- 
 2.53.0
 
