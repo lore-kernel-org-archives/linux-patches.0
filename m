@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FE32D8DC4;
-	Thu,  2 Jul 2026 16:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737062D8DC4;
+	Thu,  2 Jul 2026 16:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011237; cv=none; b=YoSy8N3SHsKnSXE1fcBc65lt2Oc1WuDpkhYz/8dINgF4Tz7QOqWptLli5ViDNWKVnwGQD/YsZKOvcN4U2HSCXrB38aNCcpUCaXENWbC65L3noO+HW0+ULW7JebwwKOoJqVbc/dTq9jv35Ba3/EOkZHufA598KXrxx9blCUpusJY=
+	t=1783011240; cv=none; b=kk+QjehDP2qpRvjOVQRg7F4YdDQJZbECTg8uCqME8cdLJP3sKjSh7FzK7eh71CZCwJU3r2xWUm5xuxIExFqIZfPSyuPTxa37gZMXzBr8c/mh+7KqoVijcBStjJjkvRsBUWxHcwCfZZp0mn6uTi2vgD788y6F7+47qtzx/oTCnmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011237; c=relaxed/simple;
-	bh=VNjO/3bD1a4YZljNz/fpPidTNL4pJ0z1VbPgbr+oosE=;
+	s=arc-20240116; t=1783011240; c=relaxed/simple;
+	bh=sq9ceR1T0b6AsqwwBkhvVMyHkXm/YMQB3VFP0Mdbcnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CFVXnim4rcgMuRrIQy01XbRAH6Q+0ZGinBJCavxzSTZ+HikGQoJQ5iGQVWX7wfi5/85yUQ0OrI0O4OVZgRbVXl0R/+oxP+xSirx8lTvMNzeSoxK5HTh04U52/v8HaWiH70IVFQ026goKFPoz6SeZnvtHiJWQwOn9H5cgBsEnc/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r79Fdo5c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R8yam5jg1zeKz2vHkEnwCfeKjXjDjMXfVoJ2BohM7vWTwcNowyV9/awl4tw3oaWyjov9+arQc/TpZWWXQYK9ND0mU9ijqNoSj9DQSANpQGyZtPp4E7MEjybg4YCvMtA+Qr6168OlCqZ8wST2G0swaEmYnav6O77+Oxm2uPw65BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUiK4uMH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r79Fdo5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BDF1F00A3D;
-	Thu,  2 Jul 2026 16:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUiK4uMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987051F000E9;
+	Thu,  2 Jul 2026 16:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011236;
-	bh=rwcue/U6HLAyokpn21X5o8dQHXOSKXYccLIJ72pbinI=;
+	s=korg; t=1783011239;
+	bh=3ErI2p0vSkM5OpeigYhyTcq9EateKWFuMlvlUsII/Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r79Fdo5c/qDu2MrkG4kn0X/hNZikuhxvbYTU1RmC3q9SVWt6kzFoI1+lc/NO8lyBG
-	 Wb+AJtw4lM9gWnNfs+UUsMi8fqXdgGj+xFDOBYWD3bGKSzvBEvSyRkJpjjx4yJhRHq
-	 X9sGjxH9237OUs79keXCPgvTKH9y2iPm4fHQ1wFI=
+	b=rUiK4uMHLaEhqmnWZ1y/KnUFHTKeENhs1zDYjY0athw0KIpAr9pMv2TBof/xv8QKx
+	 Dm3kQJ1D5MT2HYmy+HU7q8Uqbk69oXENPpTVi8Ztn1P6flKpZ1pmQadXe4rV2jb+Wt
+	 X30d4068YiwkViTOTh3hgSYbMSz2e1fNle0ljoNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 031/108] batman-adv: tvlv: avoid race of cifsnotfound handler state
-Date: Thu,  2 Jul 2026 18:20:28 +0200
-Message-ID: <20260702155112.755113075@linuxfoundation.org>
+	Jungwoo Lee <jwlee2217@gmail.com>,
+	Wongi Lee <qw3rtyp0@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 032/108] ipv6: account for fraggap on the paged allocation path
+Date: Thu,  2 Jul 2026 18:20:29 +0200
+Message-ID: <20260702155112.774683882@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -51,154 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Wongi Lee <qw3rtyp0@gmail.com>
 
-commit edb557b2ba38fea2c5eb710cf366c797e187218c upstream.
+commit 736b380e28d0480c7bc3e022f1950f31fe53a7c5 upstream.
 
-TVLV handlers can have the flag BATADV_TVLV_HANDLER_OGM_CIFNOTFND set to
-signal that the OGM handler should be called (with NULL for data) when the
-specific TVLV container was not found in the OGM. This is used by:
+In __ip6_append_data(), when the paged-allocation branch is taken
+(MSG_MORE / NETIF_F_SG / large fraglen), alloclen and pagedlen are
+computed as
 
-* DAT
-* GW
-* Multicast (OGM + Tracker)
+	alloclen = fragheaderlen + transhdrlen;
+	pagedlen = datalen - transhdrlen;
 
-The state whether the handler was executed was stored in the struct
-batadv_tvlv_handler. But the TVLV processing is started without any lock.
-Multiple parallel contexts processing TVLVs would therefore overwrite each
-others BATADV_TVLV_HANDLER_OGM_CALLED flag in the shared
-batadv_tvlv_handler.
+datalen already includes fraggap (datalen = length + fraggap). When
+fraggap is non-zero, this is not the first skb and transhdrlen is zero.
+The fraggap bytes carried over from the previous skb are copied just past
+the fragment headers in the new skb's linear area. The linear area is
+therefore undersized by fraggap bytes while pagedlen is overstated by the
+same amount, and the copy writes past skb->end into the trailing
+skb_shared_info.
 
-Drop the shared BATADV_TVLV_HANDLER_OGM_CALLED flag and instead determine,
-per TVLV buffer, whether a matching container was present by scanning the
-packet's buffer.
+An unprivileged user can trigger this via a UDPv6 socket using
+MSG_MORE together with MSG_SPLICE_PAGES.
 
-Cc: stable@kernel.org
-Fixes: ef26157747d4 ("batman-adv: tvlv - basic infrastructure")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The bad accounting was introduced by commit 773ba4fe9104 ("ipv6:
+avoid partial copy for zc"). Before commit ce650a166335 ("udp6: Fix
+__ip6_append_data()'s handling of MSG_SPLICE_PAGES"), the negative
+copy value caused -EINVAL to be returned. That later commit allowed
+MSG_SPLICE_PAGES to proceed in this case, making the corruption
+triggerable.
+
+The non-paged branch sets alloclen to fraglen, which already accounts
+for fraggap because datalen does. Bring the paged branch in line by
+adding fraggap to alloclen and subtracting it from pagedlen.
+
+After this adjustment, copy no longer collapses to -fraggap on the
+paged path, so remove the stale comment describing that old arithmetic.
+Since a negative copy is no longer expected for a valid MSG_SPLICE_PAGES
+case, remove the MSG_SPLICE_PAGES exception from the negative copy check.
+
+Fixes: 773ba4fe9104 ("ipv6: avoid partial copy for zc")
+Signed-off-by: Jungwoo Lee <jwlee2217@gmail.com>
+Signed-off-by: Wongi Lee <qw3rtyp0@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/ajFTqRljatR17fFy@DESKTOP-19IMU7U.localdomain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tvlv.c  | 63 ++++++++++++++++++++++++++++++++++++++----
- net/batman-adv/types.h |  7 -----
- 2 files changed, 57 insertions(+), 13 deletions(-)
+ net/ipv6/ip6_output.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/net/batman-adv/tvlv.c b/net/batman-adv/tvlv.c
-index 63fb54024d1543..a91f1891747c0a 100644
---- a/net/batman-adv/tvlv.c
-+++ b/net/batman-adv/tvlv.c
-@@ -398,7 +398,6 @@ static int batadv_tvlv_call_handler(struct batadv_priv *bat_priv,
- 		tvlv_handler->ogm_handler(bat_priv, orig_node,
- 					  BATADV_NO_FLAGS,
- 					  tvlv_value, tvlv_value_len);
--		tvlv_handler->flags |= BATADV_TVLV_HANDLER_OGM_CALLED;
- 		break;
- 	case BATADV_UNICAST_TVLV:
- 		if (!skb)
-@@ -430,6 +429,48 @@ static int batadv_tvlv_call_handler(struct batadv_priv *bat_priv,
- 	return NET_RX_SUCCESS;
- }
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1648,8 +1648,8 @@ alloc_new_skb:
+ 				  !(rt->dst.dev->features & NETIF_F_SG)))
+ 				alloclen = fraglen;
+ 			else {
+-				alloclen = fragheaderlen + transhdrlen;
+-				pagedlen = datalen - transhdrlen;
++				alloclen = fragheaderlen + transhdrlen + fraggap;
++				pagedlen = datalen - transhdrlen - fraggap;
+ 			}
+ 			alloclen += alloc_extra;
  
-+/**
-+ * batadv_tvlv_containers_contain() - check if a tvlv buffer holds a container
-+ * @tvlv_value: tvlv content
-+ * @tvlv_value_len: tvlv content length
-+ * @type: tvlv container type to look for
-+ * @version: tvlv container version to look for
-+ *
-+ * Return: true if a container of the given type and version is present in the
-+ * tvlv buffer, false otherwise.
-+ */
-+static bool batadv_tvlv_containers_contain(void *tvlv_value,
-+					   u16 tvlv_value_len, u8 type,
-+					   u8 version)
-+{
-+	struct batadv_tvlv_hdr *tvlv_hdr;
-+	u16 tvlv_value_cont_len;
-+
-+	while (tvlv_value_len >= sizeof(*tvlv_hdr)) {
-+		tvlv_hdr = tvlv_value;
-+		tvlv_value_cont_len = ntohs(tvlv_hdr->len);
-+		tvlv_value = tvlv_hdr + 1;
-+		tvlv_value_len -= sizeof(*tvlv_hdr);
-+
-+		if (tvlv_value_cont_len > tvlv_value_len)
-+			break;
-+
-+		/* the next tvlv header is accessed assuming (at least) 2-byte
-+		 * alignment, so it must start at an even offset.
-+		 */
-+		if (tvlv_value_cont_len & 1)
-+			break;
-+
-+		if (tvlv_hdr->type == type && tvlv_hdr->version == version)
-+			return true;
-+
-+		tvlv_value = (u8 *)tvlv_value + tvlv_value_cont_len;
-+		tvlv_value_len -= tvlv_value_cont_len;
-+	}
-+
-+	return false;
-+}
-+
- /**
-  * batadv_tvlv_containers_process() - parse the given tvlv buffer to call the
-  *  appropriate handlers
-@@ -449,7 +490,9 @@ int batadv_tvlv_containers_process(struct batadv_priv *bat_priv,
- 				   struct sk_buff *skb, void *tvlv_value,
- 				   u16 tvlv_value_len)
- {
-+	u16 tvlv_value_start_len = tvlv_value_len;
- 	struct batadv_tvlv_handler *tvlv_handler;
-+	void *tvlv_value_start = tvlv_value;
- 	struct batadv_tvlv_hdr *tvlv_hdr;
- 	u16 tvlv_value_cont_len;
- 	u8 cifnotfound = BATADV_TVLV_HANDLER_OGM_CIFNOTFND;
-@@ -493,12 +536,20 @@ int batadv_tvlv_containers_process(struct batadv_priv *bat_priv,
- 		if (!tvlv_handler->ogm_handler)
- 			continue;
+@@ -1664,10 +1664,7 @@ alloc_new_skb:
+ 			fraglen = datalen + fragheaderlen;
  
--		if ((tvlv_handler->flags & BATADV_TVLV_HANDLER_OGM_CIFNOTFND) &&
--		    !(tvlv_handler->flags & BATADV_TVLV_HANDLER_OGM_CALLED))
--			tvlv_handler->ogm_handler(bat_priv, orig_node,
--						  cifnotfound, NULL, 0);
-+		if (!(tvlv_handler->flags & BATADV_TVLV_HANDLER_OGM_CIFNOTFND))
-+			continue;
- 
--		tvlv_handler->flags &= ~BATADV_TVLV_HANDLER_OGM_CALLED;
-+		/* if the corresponding container was present then the handler
-+		 * was already called from the loop above
-+		 */
-+		if (batadv_tvlv_containers_contain(tvlv_value_start,
-+						   tvlv_value_start_len,
-+						   tvlv_handler->type,
-+						   tvlv_handler->version))
-+			continue;
-+
-+		tvlv_handler->ogm_handler(bat_priv, orig_node,
-+					  cifnotfound, NULL, 0);
- 	}
- 	rcu_read_unlock();
- 
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index ef712ba4fff2cb..ac4494f1b8e2a8 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -2245,13 +2245,6 @@ enum batadv_tvlv_handler_flags {
- 	 *  will call this handler even if its type was not found (with no data)
- 	 */
- 	BATADV_TVLV_HANDLER_OGM_CIFNOTFND = BIT(1),
--
--	/**
--	 * @BATADV_TVLV_HANDLER_OGM_CALLED: interval tvlv handling flag - the
--	 *  API marks a handler as being called, so it won't be called if the
--	 *  BATADV_TVLV_HANDLER_OGM_CIFNOTFND flag was set
--	 */
--	BATADV_TVLV_HANDLER_OGM_CALLED = BIT(2),
- };
- 
- #endif /* _NET_BATMAN_ADV_TYPES_H_ */
--- 
-2.53.0
-
+ 			copy = datalen - transhdrlen - fraggap - pagedlen;
+-			/* [!] NOTE: copy may be negative if pagedlen>0
+-			 * because then the equation may reduces to -fraggap.
+-			 */
+-			if (copy < 0 && !(flags & MSG_SPLICE_PAGES)) {
++			if (copy < 0) {
+ 				err = -EINVAL;
+ 				goto error;
+ 			}
 
 
