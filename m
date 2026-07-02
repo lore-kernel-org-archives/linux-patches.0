@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4211B349AE0;
-	Thu,  2 Jul 2026 16:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC30737A84C;
+	Thu,  2 Jul 2026 16:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010633; cv=none; b=E1KYL5hlIEp9Qk2hH3V3BBttOdvVhBS0CeL11JYLF0WoyAZ/KnpUoF5me16ffhMrnud+aexLgx+7PApXzzmHUPWZ4V6bW1O0AFzTHcwdvJImX+qwfh5A2xip5CqtlUtltPwIoGssIsLcrn3+IjRRksQhYptETISQWylgcbae1S8=
+	t=1783010635; cv=none; b=lEdkISWi2o1lK0lwGoCm/z7BNvMTMhsVeW9GKGCCyk723b4RArFEbshBJ2o0NFOlfu+U8y5T/l825c9Aui10a6HrE1pPWXEordteTYvjdz4WoD9/wHUhMKRHxIp/0hIhjShcpWXmxRkdbtYsFej2EA5gGIs4ktp2H1yhF8Ao+3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010633; c=relaxed/simple;
-	bh=Z3Sm+TLSfsq3ZZvyo046n3WZNI6YVdY8ARMUOn4RPHs=;
+	s=arc-20240116; t=1783010635; c=relaxed/simple;
+	bh=Hm8HMLFN4f9ex38RnXueiBD/kMc4arW7QUc9Vlk3NMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqO/zCs6CBfhOMdel5s1OCSlCZCdlC3SUZ4bIEOZDG6KrQcK9/BDGzWgfqzeRu0jFY6EOktVmaqAXTGFpUvhrTmQv3TnTMX88JJi7qRxXZDTLGcH0IwjnqkZx5DTlaU1fYO+v4kQkseGrbSBRTk1PxKxZdmCEjJRq8OHaYOEdAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gw4ga6k3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hcoX5204glCR7Ar5h1WRhHJnvTNBl5Xhme1Wq/S4uyY/075b9d5oI5di+0Gy42XhD16wbJDV1ESQDkPATFbXnU7Eg79DIz1HP/wy8xL12+yPeWKDExEA/iQuypNpMyQTF0barQIKjvIExesu6LOYMKbiE87V+nETQBeg5ZcHBXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lpjfy9gh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gw4ga6k3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89EE1F000E9;
-	Thu,  2 Jul 2026 16:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lpjfy9gh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8871F000E9;
+	Thu,  2 Jul 2026 16:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010632;
-	bh=QLJZPglzwYZM7wwOg3UYPZjmMXUk9LNjHDCMs6xGUWw=;
+	s=korg; t=1783010634;
+	bh=bEdwa8++Nr2givTB3LT2pYPFXj7GoJNuNWVKMsCpHwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gw4ga6k3ZENnPrXSS3g/ZdZ7CsXy3sp3slA6phshpfS0XLzAMEfvBQBUSQju0mB14
-	 9098ZUqZEbkkhmnScv3qfJrxmeUfrHhVEDJ3GaUxc2VUx60Q7b31mQ/K0hzY5+iesU
-	 JBSLHc+mITdyt5qDofr3v1s4tLqUaVMj5Nax4GJM=
+	b=Lpjfy9ghWR2j+7pK/Gp/qnLA++EnJyyCPu2muzeyJW7p70AVCogB7PiJ4cAJ2iqhO
+	 WO9h71xM/oyBG+tod+/Yt6F4gbBM6sE3Pd4f1U7k63IgsowcW0n4XV5fcbCAzrIKLX
+	 HrEwaA9wXycLDLnd2wa7E9JXdtBAg+r1JPnP4gB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Persvold <spersvold@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 183/204] fbdev: modedb: Fix misaligned fields in the 1920x1080-60 mode
-Date: Thu,  2 Jul 2026 18:20:40 +0200
-Message-ID: <20260702155122.493251500@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.12 184/204] i2c: core: fix adapter registration race
+Date: Thu,  2 Jul 2026 18:20:41 +0200
+Message-ID: <20260702155122.514271101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,46 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Persvold <spersvold@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit d894c48a57d78206e4df9c90d4acfaf39394806a upstream.
+commit ba14d7cf2fe7284610a29854bdff22b2537d3ce6 upstream.
 
-The 1920x1080@60 modedb entry has one too many initializers before
-its sync field: a stray "0" occupies the sync slot, which shifts the
-remaining values by one field. The entry therefore decodes as
-sync = 0, vmode = FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT (0x3,
-i.e. FB_VMODE_INTERLACED | FB_VMODE_DOUBLE), and flag =
-FB_VMODE_NONINTERLACED, instead of the intended sync = positive H/V,
-vmode = non-interlaced.
+Adapters can be looked up based on their id using i2c_get_adapter()
+which takes a reference to the embedded struct device.
 
-fb_find_mode() then returns a 1920x1080 mode flagged as interlaced +
-doublescan with active-low syncs. Drivers that honour var->vmode and
-var->sync when programming display timing enable doublescan and the
-wrong sync polarity, corrupting the output.
+Make sure that the adapter (including its struct device) has been
+initialised before adding it to the IDR to avoid accessing uninitialised
+data which could, for example, lead to NULL-pointer dereferences or
+use-after-free.
 
-Drop the stray initializer so sync and vmode hold their intended
-values (positive H/V sync, non-interlaced), matching the adjacent
-1920x1200 entry.
+Note that the i2c-dev chardev, which is registered from a bus notifier,
+currently uses i2c_get_adapter() so the adapter needs to be added to the
+IDR before registration.
 
-Fixes: c8902258b2b8 ("fbdev: modedb: Add 1920x1080 at 60 Hz video mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Steffen Persvold <spersvold@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 6e13e6418418 ("i2c: Add i2c_add_numbered_adapter()")
+Cc: stable@vger.kernel.org	# 2.6.22
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/modedb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/i2c-core-base.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/core/modedb.c
-+++ b/drivers/video/fbdev/core/modedb.c
-@@ -258,7 +258,7 @@ static const struct fb_videomode modedb[
- 		FB_VMODE_DOUBLE },
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -1559,6 +1559,10 @@ static int i2c_register_adapter(struct i
+ 	pm_suspend_ignore_children(&adap->dev, true);
+ 	pm_runtime_enable(&adap->dev);
  
- 	/* 1920x1080 @ 60 Hz, 67.3 kHz hsync */
--	{ NULL, 60, 1920, 1080, 6734, 148, 88, 36, 4, 44, 5, 0,
-+	{ NULL, 60, 1920, 1080, 6734, 148, 88, 36, 4, 44, 5,
- 		FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,
- 		FB_VMODE_NONINTERLACED },
++	mutex_lock(&core_lock);
++	idr_replace(&i2c_adapter_idr, adap, adap->nr);
++	mutex_unlock(&core_lock);
++
+ 	res = device_add(&adap->dev);
+ 	if (res) {
+ 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
+@@ -1617,7 +1621,7 @@ static int __i2c_add_numbered_adapter(st
+ 	int id;
  
+ 	mutex_lock(&core_lock);
+-	id = idr_alloc(&i2c_adapter_idr, adap, adap->nr, adap->nr + 1, GFP_KERNEL);
++	id = idr_alloc(&i2c_adapter_idr, NULL, adap->nr, adap->nr + 1, GFP_KERNEL);
+ 	mutex_unlock(&core_lock);
+ 	if (WARN(id < 0, "couldn't get idr"))
+ 		return id == -ENOSPC ? -EBUSY : id;
+@@ -1653,7 +1657,7 @@ int i2c_add_adapter(struct i2c_adapter *
+ 	}
+ 
+ 	mutex_lock(&core_lock);
+-	id = idr_alloc(&i2c_adapter_idr, adapter,
++	id = idr_alloc(&i2c_adapter_idr, NULL,
+ 		       __i2c_first_dynamic_bus_num, 0, GFP_KERNEL);
+ 	mutex_unlock(&core_lock);
+ 	if (WARN(id < 0, "couldn't get idr"))
 
 
