@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C1BDDA9;
-	Thu,  2 Jul 2026 16:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E59DDA9;
+	Thu,  2 Jul 2026 16:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010412; cv=none; b=l3FnhwfMtxvlwfNHAZWBX224/FCBuM/1p6IelB1Dv++3ii+dXYOHNsnTO71ll6r4zU/+/d0VNRxnVc/xAJv+8DX4bEIivisFxhcgIBf6s9xKKSjDEargh/VXvQaVy3IoWNR16WBn1NKv8RjERhcNeoKiTbtJdMWpU70XjFMSfCk=
+	t=1783010415; cv=none; b=NiZ2LDlCg1xNtEDdlcxncqjmXC8SVw1l4sH3SFCegJ72CcueNE1W49ACYnFZ9noIdcF1xU2fId+YMds3glJm4iR4og7J2owxP0vISrpaLNxIxHlJX9VtRGV9q9QDVCJaGBFSL8YWHj3ub97uE2Bgoky4UL8vD6f2AXocDtau8VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010412; c=relaxed/simple;
-	bh=nsyRwzOh2Coci871jFG0uNsZyXiEoR8WXQdPzX9+d5k=;
+	s=arc-20240116; t=1783010415; c=relaxed/simple;
+	bh=HQWQY+hP1F5RuXp9p1FNhIfluFmpyW7dkBRAU88FJUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/JMyBzQwR+vN83iJGoTYtahfiyJXMBIPWyCeLcuvGgbLsJ6A0Qcd3CCYKDCK0nLtfz+zD6H+zE9gZsJqmtKbzOjSDMMy6Cdvcwu7CI1J5B6g2vR3fjrxPY+Cm0xRO0FqFZG5737d8HcEEUXSRTQg9S4YSYMyOW0TP21lJ+FIqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGslMXv3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ue8YgDN7u6aWo9Bpu1xeodbDYYjWSoBU7Ymgb6qAgcjV5EXZ3x9Zug5R+9SMpadV63NFLUkkv87nxbCK22JSjs1uqC64a4XzkX4h9akfcOX9W7FlzuNXdSf1I7XUBIgG2Ffja6OceBEpZi6kPsdCbjbhkF5GGVP0aNs+chCAEes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBHUwZxp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGslMXv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985EE1F000E9;
-	Thu,  2 Jul 2026 16:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBHUwZxp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447291F00A3A;
+	Thu,  2 Jul 2026 16:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010411;
-	bh=TVZzLsBKCDisreJPxC66lddcVWPqZP/hfx/Iu44QlCc=;
+	s=korg; t=1783010413;
+	bh=xgT/52hnwHo83VXxE92rvKTYVQxM0dKh3P4hD6NJCjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGslMXv345n2Shc65KEMWEzbA/iNxUr/eV8R7o8eyJkeWAFPQUHZj+MhxWeu0VLSD
-	 Flz5+DBtY+UCH1Sdv23G8pJ0g5mISTeRuR70HugZ16t4fDA6u5WN0+MCb3Z6Nn+Vj9
-	 DDZxwAtEoGjkKbp6jgqLooaLtII0C/Lf6VCDsb3A=
+	b=EBHUwZxp0uWELuNm3df1DzsHVuBHbCKAf+uQQV8RpT6f87rN13lJ9Gm6ttCizScB8
+	 2ZqRRfDxVqmTqOGwSGRbFnhC7/mrFdEu9hZtNftUJqDkPwTcERTA9W+/XsbsD2+MF7
+	 BXd/xdYEI1WzSy+zp3Ej7BI/MPeROsnEaB/4N774=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/204] KVM: SEV: Ignore Port I/O requests of length 0
-Date: Thu,  2 Jul 2026 18:19:15 +0200
-Message-ID: <20260702155120.720202160@linuxfoundation.org>
+Subject: [PATCH 6.12 099/204] batman-adv: tp_meter: keep unacked list in ascending ordered
+Date: Thu,  2 Jul 2026 18:19:16 +0200
+Message-ID: <20260702155120.740915631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -53,53 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 3988bd2723de407ae90fa7a6f6029b4e60238c58 upstream.
+commit 5aa8651527ea0b610e7a09fb3b8204c1398b9525 upstream.
 
-Explicitly ignore Port I/O requests of length '0' (or count '0'), so that
-setting up the software scratch area (and other code) doesn't have to
-worry about underflowing the length, and to allow for WARNing on trying
-to configure the scratch area with len==0.
+When batadv_tp_handle_out_of_order inserts a new entry in the list of
+unacked (out of order) packets, it searches from the entry with the newest
+sequence number towards oldest sequence number. If an entry is found which
+is older than the newly entry, the new entry has to be added after the
+found one to keep the ascending order.
 
-Fixes: 291bd20d5d88 ("KVM: SVM: Add initial support for a VMGEXIT VMEXIT")
-Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-5-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+But for this operation list_add_tail() was used. But this function adds an
+entry _before_ another one. As result, the list would contain a lot of
+swapped sequence numbers. The consumer of this list
+(batadv_tp_ack_unordered()) would then fail to correctly ack packets.
+
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/batman-adv/tp_meter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 497a6e70513570..73e49317735173 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -4459,6 +4459,11 @@ int sev_handle_vmgexit(struct kvm_vcpu *vcpu)
- 			    control->exit_info_1, control->exit_info_2);
- 		ret = -EINVAL;
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index dfc3374549921f..f350a60e6c76b9 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1325,7 +1325,7 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
+ 		 * one is attached _after_ it. In this way the list is kept in
+ 		 * ascending order
+ 		 */
+-		list_add_tail(&new->list, &un->list);
++		list_add(&new->list, &un->list);
+ 		added = true;
  		break;
-+	case SVM_EXIT_IOIO:
-+		if (!((control->exit_info_1 & SVM_IOIO_SIZE_MASK) >> SVM_IOIO_SIZE_SHIFT))
-+			return 1;
-+
-+		fallthrough;
- 	default:
- 		ret = svm_invoke_exit_handler(vcpu, exit_code);
  	}
-@@ -4479,6 +4484,9 @@ int sev_es_string_io(struct vcpu_svm *svm, int size, unsigned int port, int in)
- 	if (unlikely(check_mul_overflow(count, size, &bytes)))
- 		return -EINVAL;
- 
-+	if (!bytes)
-+		return 1;
-+
- 	r = setup_vmgexit_scratch(svm, in, bytes);
- 	if (r)
- 		return r;
 -- 
 2.53.0
 
