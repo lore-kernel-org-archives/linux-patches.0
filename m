@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB65339844;
-	Thu,  2 Jul 2026 16:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D5A342523;
+	Thu,  2 Jul 2026 16:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009970; cv=none; b=jK3PvCxZJ0vWHnA+pEC50juDO4FB9LDq1BuKAlQCI8WJYyLI3BGxI996DX6omC13JkFmSsXcQqymviRbIt/RXVCzFuxdDNC0pFdz8Ow0BapffrD3XHF/TOI5Uv3gAiHdNMDbFi3qZkUOBdXoc3VJsB3wTcVLwNVFweJmqFJ9kU0=
+	t=1783009973; cv=none; b=mJgaBGqYbmJpCKq8pQL5rlpKzhfcGftZT2O0rldLqaqBSTIuyfNWhgpkM3Gq1X3l+7wphZcaBfBSON4kCjhb5/juTYSLO2/HZPEcundEyiByt/jhdVVmNav6MsJaXWFFJaZ+YAGPmpAUEFNF5eG7OhgD6Nr+nRMeyFvOoO8CcFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009970; c=relaxed/simple;
-	bh=u6mSSgVIFRd23dPU4u6xDHvYF9zAIP87BkK8pFoMFzA=;
+	s=arc-20240116; t=1783009973; c=relaxed/simple;
+	bh=tEZuOmFc4PYo6NJp6MItgctjIgr3W73mEVvlZ1F1LhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eeQkOZCPpJWzqaMKDOcuKTVJKoWXJBw+OnGcrEBDF2HISBzGxnUQ9+eA55WRe4VUwictRsqCwBVJqvOazXUReyy4yp/relTnDT5zn1eWR21W+4+Lh8aSkD/FoX7urz3kV6qZuBm7geSLuV/mhjqjOMSO4fwQ8uYaZ81AfFX8hjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7kW9JVo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ENYrBQYZdI7cEeR7dyGr5BGrF/i/5HIbGHxXo5plxf0Zle/POI5U4GUFMKCtkq7WCNtNHQ0BqwHD81N1gdvWNNkIBAy0NrBGf0QsTvTr1sexERCa75Mhpq/iOMBtZ6ZbwCy9TXAsOpGLo3SeBA4KaCV3JXiHy14Ow6TQQEC2swY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xpv0fPJX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7kW9JVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E25D1F00A3A;
-	Thu,  2 Jul 2026 16:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xpv0fPJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71421F000E9;
+	Thu,  2 Jul 2026 16:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009969;
-	bh=lSbvrSMGLkTKhrm+IncKkYQryWzHWPEJEtpDn7/P484=;
+	s=korg; t=1783009972;
+	bh=sccGH+bM2jgJjbatt6ptB71ayzEeib2JYY6H7Bvk8KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f7kW9JVoaujH3WE/gUi22vzzjrq23EOZPynlNoCtx3ic7zJs+pvd4MpCbCfPY3Erf
-	 ueEq0LYFW9XQKTEECZeTkySZ8W9SLzUxbkmVojw53CdbPdHcHCkZnUIvF3N3aRMBQk
-	 TB3+8Dl8cjYQdAl5ubjIQKSn6S+0gpL7BmIfDtkE=
+	b=Xpv0fPJXyytTJ67wvi4gr1GCb2PEhXBNJQwwWPTYeoCoqYHZTfYwX71mttUH8vZEV
+	 XAr1XZAqBdaEyQNBme1+lsfiLiJBE6VsGl2jOCmKU1jYpeRoUp7uRZPJlPWV71sGO0
+	 XMBRqG1TYqGmLvnq4y5hkfwqKJu3UdmsbxIBkZw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Nicholas Dudar <main.kalliope@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/129] batman-adv: tt: prevent TVLV entry number overflow
-Date: Thu,  2 Jul 2026 18:18:56 +0200
-Message-ID: <20260702155112.519702070@linuxfoundation.org>
+Subject: [PATCH 6.1 018/129] KVM: nVMX: Add a helper to get highest pending from Posted Interrupt vector
+Date: Thu,  2 Jul 2026 18:18:57 +0200
+Message-ID: <20260702155112.539597314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -51,78 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 99d9958fa10fb684b2a8e2c48a8d704122721420 upstream.
+commit d83c36d822be44db4bad0c43bea99c8908f54117 upstream.
 
-The helpers to prepare the buffers for the local and global TT based
-replies are trying to sum up all TT entries which can be found for each
-VLAN. In theory, this sum can be too big for an u16 and therefore overflow.
-A too small buffer would then be allocated for the TVLV.
+Add a helper to retrieve the highest pending vector given a Posted
+Interrupt descriptor.  While the actual operation is straightforward, it's
+surprisingly easy to mess up, e.g. if one tries to reuse lapic.c's
+find_highest_vector(), which doesn't work with PID.PIR due to the APIC's
+IRR and ISR component registers being physically discontiguous (they're
+4-byte registers aligned at 16-byte intervals).
 
-The too small buffer will be handled gracefully by
-batadv_tt_tvlv_generate() and is not causing a buffer overflow - just a
-truncated reply. But this overflow shouldn't have happened in the first and
-the too small buffer should never have been allocated when an overflow was
-detected.
+To make PIR handling more consistent with respect to IRR and ISR handling,
+return -1 to indicate "no interrupt pending".
 
-Cc: stable@kernel.org
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240607172609.3205077-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ Nicholas Dudar: backport to 6.1.y. 6.1.y defines struct pi_desc in
+  posted_intr.h and predates the move to <asm/posted_intr.h>, so the helper
+  and the <linux/find.h> include go in posted_intr.h. ]
+Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ arch/x86/kvm/vmx/nested.c      |  5 +++--
+ arch/x86/kvm/vmx/posted_intr.h | 10 ++++++++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index e0503c8f24c353..53d2aadcafa154 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -850,11 +850,18 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
- 	u16 total_entries = 0;
- 	u8 *tt_change_ptr;
- 	int vlan_entries;
-+	u16 sum_entries;
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index bdc462944cb082..7d8e18dbe8531b 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -12,6 +12,7 @@
+ #include "mmu.h"
+ #include "nested.h"
+ #include "pmu.h"
++#include "posted_intr.h"
+ #include "sgx.h"
+ #include "trace.h"
+ #include "vmx.h"
+@@ -3818,8 +3819,8 @@ static int vmx_complete_nested_posted_interrupt(struct kvm_vcpu *vcpu)
+ 	if (!pi_test_and_clear_on(vmx->nested.pi_desc))
+ 		return 0;
  
- 	spin_lock_bh(&orig_node->vlan_list_lock);
- 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
- 		vlan_entries = atomic_read(&vlan->tt.num_entries);
--		total_entries += vlan_entries;
-+
-+		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
-+			*tt_len = 0;
-+			goto out;
-+		}
-+
-+		total_entries = sum_entries;
- 		num_vlan++;
- 	}
+-	max_irr = find_last_bit((unsigned long *)vmx->nested.pi_desc->pir, 256);
+-	if (max_irr != 256) {
++	max_irr = pi_find_highest_vector(vmx->nested.pi_desc);
++	if (max_irr > 0) {
+ 		vapic_page = vmx->nested.virtual_apic_map.hva;
+ 		if (!vapic_page)
+ 			goto mmio_needed;
+diff --git a/arch/x86/kvm/vmx/posted_intr.h b/arch/x86/kvm/vmx/posted_intr.h
+index 26992076552ef1..88cea0dac7204b 100644
+--- a/arch/x86/kvm/vmx/posted_intr.h
++++ b/arch/x86/kvm/vmx/posted_intr.h
+@@ -2,6 +2,8 @@
+ #ifndef __KVM_X86_VMX_POSTED_INTR_H
+ #define __KVM_X86_VMX_POSTED_INTR_H
  
-@@ -941,15 +948,22 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
- 	struct batadv_softif_vlan *vlan;
- 	size_t change_offset;
- 	u16 num_vlan = 0;
--	u16 vlan_entries = 0;
- 	u16 total_entries = 0;
- 	u16 tvlv_len;
- 	u8 *tt_change_ptr;
-+	int vlan_entries;
-+	u16 sum_entries;
- 
- 	spin_lock_bh(&bat_priv->softif_vlan_list_lock);
- 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
- 		vlan_entries = atomic_read(&vlan->tt.num_entries);
--		total_entries += vlan_entries;
++#include <linux/find.h>
 +
-+		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
-+			tvlv_len = 0;
-+			goto out;
-+		}
-+
-+		total_entries = sum_entries;
- 		num_vlan++;
- 	}
+ #define POSTED_INTR_ON  0
+ #define POSTED_INTR_SN  1
  
+@@ -103,4 +105,12 @@ int vmx_pi_update_irte(struct kvm *kvm, unsigned int host_irq,
+ 		       uint32_t guest_irq, bool set);
+ void vmx_pi_start_assignment(struct kvm *kvm);
+ 
++static inline int pi_find_highest_vector(struct pi_desc *pi_desc)
++{
++	int vec;
++
++	vec = find_last_bit((unsigned long *)pi_desc->pir, 256);
++	return vec < 256 ? vec : -1;
++}
++
+ #endif /* __KVM_X86_VMX_POSTED_INTR_H */
 -- 
 2.53.0
 
