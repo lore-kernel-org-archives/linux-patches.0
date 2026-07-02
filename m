@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB0433B970;
-	Thu,  2 Jul 2026 16:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8DD331A66;
+	Thu,  2 Jul 2026 16:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009371; cv=none; b=VfIIcCFev2rmhrt3wmMbqI8X9UMyXL/dPNCSaaaQWZeXDyQbxTxm7lQygb8bNFv4AzSs+DTXxKYBkXtlCk3M/QjdESZ9JKwd6Vd7EnyJrqRXqY4vh3nzGpML69EiepDojwD3jbUfY0J5iK48os7+IyQilm4hfj1Nn2ZMOThLCYU=
+	t=1783009372; cv=none; b=pweG+XNPLzOVKp8fv5/btvilgvd99YTntdKHpcCBmXvCm5yTfMBW0I5PgpDyBMGwjMtoXchdRm5UKJrOaucgledoA8JQWIsaxCyxBW3q/ooBVGcW2JgkxZstHQAz5u3SBfw00GekWFsVo18EDRW9VM8q5qx4wDp5z2w8uD2Hy1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009371; c=relaxed/simple;
-	bh=weielljI+USGKH4R5cO+wC/nJevoQ5xSkVAtkgSkwdQ=;
+	s=arc-20240116; t=1783009372; c=relaxed/simple;
+	bh=AqRv150PPFrNi8lt3W2zyJ2RZSoBcoc+Eq1rmzVHKEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hg+LEUpLLclbehTG/yLnPIVPAr6KRND5m5H6SMQmNXV3hHnByCb5B8bwnNofgfqvWPNpfUYLu2skvaCXAYYd1KCXZCsVnQsRR/hf0UhMzpaydlehdP1j5LBS9XVvdk8pO6x99ZdFZHevVPpG93vb6PcSJL+iY2kF2DOsewOtiEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilIbbgj2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nFTOejbbIU0s0UerI6f7U9TU0/KPhEyJqirxU53wq909EQL1dDv9vwrNjvnIrzaLT1DOpoxecyqnqyiVqXsJUridEIIJYOf53898CqEyNzxs2R4tge2eJD9vamoJWSoyn5irDKy7mfZ9iTUpeDwd38nITp1trUjYFRHkR/jTw4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZ1p2MbK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilIbbgj2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904011F00A3D;
-	Thu,  2 Jul 2026 16:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZ1p2MbK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386FE1F00A3F;
+	Thu,  2 Jul 2026 16:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009366;
-	bh=q+Y5oNH57DL+R7X1rHYoEgNyykxvJ4gvp5j7v/f5RNg=;
+	s=korg; t=1783009368;
+	bh=AyDWEpidAOuQlJA9JB49I5N27MMb/tvI5+0Ct1ndyEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ilIbbgj2XgBKHuBFhCwJvlgvinoOt2Bz6Hs3M77QjDIxFq5Vht2aT1Gnh7+3C0yVG
-	 IPvyMpFfyJ0n3Ghu4T0vEH6h63jEjKaZUydkMxPB4uEdGFvY4VhlUgLDZrlmjCb1e2
-	 CPwU9dF0Rs0LZwhL2UxMM1X/3UvqC2JgJMl9e2C0=
+	b=cZ1p2MbKyHguQE57gU0EWuR/iSANs8gIbqMh2KMRVQ779nj7jsAr3kSdW/Bqf0RiC
+	 ialuor13pRmqM+FjWKnHvRyVBiFfpIYA6Nw6Qhn4AiibO5F7mVfEYq81spYzyzYKDG
+	 Lo0lhb52CnA7VPaYxZbR4CcKcvuBvoz9dSPKeD/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 24/96] net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()
-Date: Thu,  2 Jul 2026 18:19:16 +0200
-Message-ID: <20260702155109.493907830@linuxfoundation.org>
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 5.10 25/96] agp/amd64: Fix broken error propagation in agp_amd64_probe()
+Date: Thu,  2 Jul 2026 18:19:17 +0200
+Message-ID: <20260702155109.514416835@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -51,87 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit d00c953a8f69921f484b629801766da68f27f658 upstream.
+commit b08472db93b1ccff84a7adec5779d47f0e9d3a30 upstream.
 
-rmnet_dellink() removes the endpoint from the hash table with
-hlist_del_init_rcu() and then immediately frees it with kfree(). However,
-RCU readers on the receive path (rmnet_rx_handler ->
-__rmnet_map_ingress_handler) may still hold a reference to the endpoint and
-dereference ep->egress_dev after the memory has been freed. The endpoint is
-a kmalloc-32 object, and the stale read at offset 8 corresponds to the
-egress_dev pointer.
+A NULL pointer dereference was observed in the AMD64 AGP driver when
+running in a virtualized environment (e.g. qemu/kvm) without a physical
+AMD northbridge. The crash occurs in amd64_fetch_size() when attempting
+to dereference the pointer returned by node_to_amd_nb(0).
 
-  BUG: unable to handle page fault for address: ffffffffde942eef
-  Oops: 0002 [#1] SMP NOPTI
-  CPU: 1 UID: 0 PID: 137 Comm: poc_write Not tainted 7.0.0+ #4 PREEMPTLAZY
-  RIP: 0010:rmnet_vnd_rx_fixup (rmnet_vnd.c:27)
-  Call Trace:
-   <TASK>
-   __rmnet_map_ingress_handler (rmnet_handlers.c:48 rmnet_handlers.c:101)
-   rmnet_rx_handler (rmnet_handlers.c:129 rmnet_handlers.c:235)
-   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6096)
-   __netif_receive_skb_one_core (net/core/dev.c:6208)
-   netif_receive_skb (net/core/dev.c:6467)
-   tun_get_user (drivers/net/tun.c:1955)
-   tun_chr_write_iter (drivers/net/tun.c:2003)
-   vfs_write (fs/read_write.c:688)
-   ksys_write (fs/read_write.c:740)
-   </TASK>
+The root cause of this crash is broken error propagation in
+agp_amd64_probe(): When no AMD northbridges are found, cache_nbs()
+correctly returns -ENODEV. However, the probe function erroneously
+checks the return value against exactly -1, rather than < 0.
 
-Add an rcu_head field to struct rmnet_endpoint and replace kfree() with
-kfree_rcu() so the endpoint memory remains valid through the RCU grace
-period. Also remove the rmnet_vnd_dellink() call and inline only the
-nr_rmnet_devs decrement, since rmnet_vnd_dellink() would set
-ep->egress_dev to NULL during the grace period, creating a data race
-with lockless readers.
+As a result, the hardware absence error is masked, allowing the driver
+to improperly proceed with initialization. It eventually calls
+agp_add_bridge(), which invokes amd64_fetch_size(). Since the hardware
+does not exist, node_to_amd_nb(0) returns NULL, leading to a General
+Protection Fault (GPF) when accessing its ->misc member.
 
-Fixes: ceed73a2cf4a ("drivers: net: ethernet: qualcomm: rmnet: Initial implementation")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260514122511.3083479-2-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix the issue by correcting the error check in agp_amd64_probe() to
+abort properly when cache_nbs() returns any negative error code. This
+prevents the driver from erroneously proceeding without hardware, thereby
+avoiding the subsequent NULL pointer dereference at its source.
+
+Fixes: a32073bffc65 ("[PATCH] x86_64: Clean and enhance up K8 northbridge access code")
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v2.6.18+
+Link: https://patch.msgid.link/20260504074823.99377-1-w15303746062@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c |    8 ++++----
- drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h |    1 +
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/char/agp/amd64-agp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
-@@ -204,8 +204,8 @@ static void rmnet_dellink(struct net_dev
- 	ep = rmnet_get_endpoint(real_port, mux_id);
- 	if (ep) {
- 		hlist_del_init_rcu(&ep->hlnode);
--		rmnet_vnd_dellink(mux_id, real_port, ep);
--		kfree(ep);
-+		real_port->nr_rmnet_devs--;
-+		kfree_rcu(ep, rcu);
+--- a/drivers/char/agp/amd64-agp.c
++++ b/drivers/char/agp/amd64-agp.c
+@@ -546,7 +546,7 @@ static int agp_amd64_probe(struct pci_de
+ 	/* Fill in the mode register */
+ 	pci_read_config_dword(pdev, bridge->capndx+PCI_AGP_STATUS, &bridge->mode);
+ 
+-	if (cache_nbs(pdev, cap_ptr) == -1) {
++	if (cache_nbs(pdev, cap_ptr) < 0) {
+ 		agp_put_bridge(bridge);
+ 		return -ENODEV;
  	}
- 
- 	netdev_upper_dev_unlink(real_dev, dev);
-@@ -229,9 +229,9 @@ static void rmnet_force_unassociate_devi
- 		hash_for_each_safe(port->muxed_ep, bkt_ep, tmp_ep, ep, hlnode) {
- 			unregister_netdevice_queue(ep->egress_dev, &list);
- 			netdev_upper_dev_unlink(real_dev, ep->egress_dev);
--			rmnet_vnd_dellink(ep->mux_id, port, ep);
- 			hlist_del_init_rcu(&ep->hlnode);
--			kfree(ep);
-+			port->nr_rmnet_devs--;
-+			kfree_rcu(ep, rcu);
- 		}
- 		rmnet_unregister_real_device(real_dev);
- 		unregister_netdevice_many(&list);
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
-@@ -16,6 +16,7 @@ struct rmnet_endpoint {
- 	u8 mux_id;
- 	struct net_device *egress_dev;
- 	struct hlist_node hlnode;
-+	struct rcu_head rcu;
- };
- 
- /* One instance of this structure is instantiated for each real_dev associated
 
 
