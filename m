@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599742F8EBF;
-	Thu,  2 Jul 2026 16:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034ED2D0602;
+	Thu,  2 Jul 2026 16:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011568; cv=none; b=Xsp1mgeiT+W3fsc/VFTNrU5ln+KvErfssVN9eo60v2ARQkJxcQoFNy7Zqm6deKqfsPtFpE/WFDPhqb1M6nVCKHx5vpBInZSavs/WzJSc+AOzFT9lf8pWPQjooor1gy8kNKq+4WqdtL3cgE3Z3vWDBEkpyv7J+V8gxYQ2fVSTnbE=
+	t=1783011571; cv=none; b=SArSEx4qYR2ZIT+jdHAjl3JMtaMS9ysyVp/jrk0+gpU0/JVjMZWqF9jXe3lSsI+xitAQISRyguWrngbk92NsYkApXom9dMS/nik+1iIpe2QJ8+dy7LBaK5Qiw90JYQLuYmdTv3AIzU1q8DYzStuEiwfeNxwdqQ7mCoXf77fTxLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011568; c=relaxed/simple;
-	bh=Kc20u3WOqgPXZzDKGdgsyVQ2/VmKHwONYknQ62hUvJU=;
+	s=arc-20240116; t=1783011571; c=relaxed/simple;
+	bh=SLF4KReT7HTKUPyJnu+yfG4gBgQo8jGfK1VsiSLQT34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncjPVAxucrRsnYdx59/pbRfVsHmC69us9NGiQU4aMCNLLqNLDuL2+YA7poIPX90hxsmd6uqRY0GPFeBSBQ9RTVbGVUP+2X5lOpjRRxqdlUAb7hN0YA15ANTyszViaXof5mk2HpSJqDbbERFMcPwAp0c2KrDqTbWNkZ84z7/eO9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYY4bR0i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BjC+0JMWrW4VUKuxcCgg9ftPNXbrWahQe8i++Bk0BvRZHxJPHdknOXallH6lgz05vaYrPYpN1AXyI1pUCw+arFUlb9+VYtbQZpNPqhYvhvkm43KgsJoc+x9b33LMsXMVconhr5PHWRwBCm6HcrdXDppk9RLgFNeCHJeyoNfhICs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEgIktdU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYY4bR0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF52F1F00A3A;
-	Thu,  2 Jul 2026 16:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEgIktdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671121F00A3A;
+	Thu,  2 Jul 2026 16:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011567;
-	bh=GSNnGhgAcx0IBrAFYedQYW/TvLq8KxPnEP3z2jSJ7mc=;
+	s=korg; t=1783011569;
+	bh=CRnlm8qzulyvUKmChTM+iSwmPnr6CPH/chLJoUZ5Dlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zYY4bR0i9Sa8hzpKNCUDgkqdhI4ujRUy/WvXx0wTkNYnECHxAhtJYcxmehkAy8ntr
-	 OTyC0hhsiGOCA4O2dSHee+uj8g/G7PFoFSeQM2IGIlAL4Acdn1E21EF8/3XzKp7bom
-	 YGylPZ7d7fyc2GosdaC7WOWM9TMPPKF4GHAKH52I=
+	b=TEgIktdUHChG+w+DYqlcIdCLxcbM9UXO/hN1tRilRHOAMGj656dITtUgxea/oYEOC
+	 oxBZCOWH7eGIIEN37YeSE5r3ajADouafisqFzp+mY50uz25xTkr7EXqdZPweYCY+dD
+	 MMP555qOLSLCOgG3g+M9sIxwkQ5+/7F6Out34RJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 005/120] batman-adv: tp_meter: avoid window underflow
-Date: Thu,  2 Jul 2026 18:20:01 +0200
-Message-ID: <20260702155113.076972700@linuxfoundation.org>
+Subject: [PATCH 7.1 006/120] batman-adv: tp_meter: avoid divide-by-zero for dec_cwnd
+Date: Thu,  2 Jul 2026 18:20:02 +0200
+Message-ID: <20260702155113.097212361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -53,52 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 765947b81fb54b6ebb0bc1cfe55c0fa399e002b8 upstream.
+commit 33ccd52f3cc9ed46ce395199f89aa3234dc83314 upstream.
 
-In batadv_tp_avail(), win_left is calculated with 32-bit unsigned
-arithmetic: win_left = win_limit - tp_vars->last_sent;
+The cwnd is always MSS <= cwnd <= 0x20000000. But the calculation in
+batadv_tp_update_cwnd() assumes unsigned 32 bit arithmetics.
 
-During Fast Recovery, cwnd is inflated and last_sent advances rapidly. When
-Fast Recovery ends, cwnd drops abruptly back to ss_threshold. If the newly
-shrunk win_limit is less than last_sent, the unsigned subtraction will
-underflow, wrapping to a massive positive value. Instead of returning that
-the window is full (unavailable), it returns that the sender can continue
-sending.
+    ((mss * 8) ** 2) / (cwnd * 8)
 
-To handle this situation, it must be checked whether the windows end
-sequence number (win_limit) has to be compared with the last sent sequence
-number. If it would be before the last sent sequence number, then more acks
-are needed before the transmission can be started again.
+In case cwnd is actually 0x20000000, it will be shifted by 3 bit to the
+left end up at 0x100000000 or U32_MAX + 1. It will therefore wrap around
+and be 0 - resulting in:
+
+    ((mss * 8) ** 2) / 0
+
+This is of course invalid and cannot be calculated. The calculation should
+must be simplified to avoid this overflow:
+
+   (mss ** 2) * 8 / cwnd
+
+It will keep the precision enhancement from the scaling (by 8) but avoid
+the overflow in the divisor.
+
+In theory, there could still be an overflow in the dividend. It is at the
+moment fixed to BATADV_TP_PLEN in batadv_tp_recv_ack() - so it is not an
+imminent problem. But allowing it to use the whole u32 bit range, would
+mean that it can still use up to 67 bits. To keep this calculation safe for
+32 bit arithmetic, mss must never use more than floor((32 - 3) / 2) bits -
+or in other words: must never be larger than 16383.
 
 Cc: stable@kernel.org
 Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/batman-adv/tp_meter.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 2ff7aa5ed19fb3..d3b8f02ca08b14 100644
+index d3b8f02ca08b14..e4f76c141af3e2 100644
 --- a/net/batman-adv/tp_meter.c
 +++ b/net/batman-adv/tp_meter.c
-@@ -817,10 +817,15 @@ static void batadv_tp_recv_ack(struct batadv_priv *bat_priv,
- static bool batadv_tp_avail(struct batadv_tp_vars *tp_vars,
- 			    size_t payload_len)
- {
-+	u32 last_sent = READ_ONCE(tp_vars->last_sent);
- 	u32 win_left, win_limit;
+@@ -154,9 +154,12 @@ static void batadv_tp_update_cwnd(struct batadv_tp_vars *tp_vars, u32 mss)
+ 		return;
+ 	}
  
- 	win_limit = atomic_read(&tp_vars->last_acked) + tp_vars->cwnd;
--	win_left = win_limit - tp_vars->last_sent;
++	/* prevent overflow in (mss * mss) << 3 */
++	mss = min_t(u32, mss, (1U << 14) - 1);
 +
-+	if (batadv_seq_before(last_sent, win_limit))
-+		win_left = win_limit - last_sent;
-+	else
-+		win_left = 0;
- 
- 	return win_left >= payload_len;
- }
+ 	/* increment CWND at least of 1 (section 3.1 of RFC5681) */
+ 	tp_vars->dec_cwnd += max_t(u32, 1U << 3,
+-				   ((mss * mss) << 6) / (tp_vars->cwnd << 3));
++				   ((mss * mss) << 3) / tp_vars->cwnd);
+ 	if (tp_vars->dec_cwnd < (mss << 3)) {
+ 		spin_unlock_bh(&tp_vars->cwnd_lock);
+ 		return;
 -- 
 2.53.0
 
