@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF23D360ED5;
-	Thu,  2 Jul 2026 16:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874173101C8;
+	Thu,  2 Jul 2026 16:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010819; cv=none; b=g9g2DwifDK2kCq/tJWatXlC05af1kvIOu6b4U8xdOlzYcYCdPwCOSyPDXnacXNrzHEt4MQDZ9LbhSHgWkEWfWRMONluihv78d3dPochnT4YDrXra/9WFizu0ZsIhhXuZJt1vwWpn7WA/l64Iiy0L/aTCSQsLWSlDapFI5NwD4GA=
+	t=1783010822; cv=none; b=McrSx3bcaMKFpFP+C8K41MNAXZorVKDf3rWRbdWllk8QPtTd3uMeKzatoHSSHUwUGwYXA6/zWrS6KUPKtd2Fu69Du/0xf+JsoewSaaYoGwBhsveNJsnSmiQmJfbaxSg5r9y576LjK4q79mVYwNmYwp8tK2HHZg/wvJSiRS4T/Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010819; c=relaxed/simple;
-	bh=aaaoDtLJVpweGr/QRjYIzRXZhIaZvDlM5XtDIIZF23A=;
+	s=arc-20240116; t=1783010822; c=relaxed/simple;
+	bh=k9ak+qXb94mhOUVUuMmPUtBIQzKD/OimHuWDPCXpRZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AwMUklj1+T7Q5t3w94tvDm21yLhvuwpfZ1pkh14/UogZjhelDB/TXsJYS/yFH7FyMWH8KQeG/4LlhAuWl+nOGQu7uc8MMqsaLqBZvByO020i0RKpWAc9reTuwvyJPCeZbK7ByraGI0stgfDGlsF1bWTCEy0AnRodCwsZcR2BJs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rD7lBp6m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cOr41eufCUF/VJ63d4x5nx1NhV3d4hJT5mJU6QqO7tzX2ESKyRb6NKYGo3+KUV1pAIIYO84kpOm3BTVVOPMDJkJt/wp3qGnSNSxoQZ0NPSm5l/LIf6qcB7bfV/uByKKLPf87+UsoeRDd+ThNziiy5qnJJDAKE3oeryGfRyJrSgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0vdtD5H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rD7lBp6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB761F000E9;
-	Thu,  2 Jul 2026 16:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0vdtD5H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5811F000E9;
+	Thu,  2 Jul 2026 16:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010818;
-	bh=uisxN6VQlOPjP640POqTibgkkJFdXDtatlJsydo3EMo=;
+	s=korg; t=1783010821;
+	bh=/2CCeXJ4zuUJbUPwIe8+hfQGdhooRCJnalIb3SebZNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rD7lBp6mLY+jhpJgUY2OjHIOCVFSRjlqfl06iHmmDZfnO+ehUr3R83DNeRFaJImZY
-	 KoQzQqyADsgm1UG0pKA58CXcnAr40fDCFV6SoIUAZ0rL+UOeMsrJdsPA/GKG7LPydG
-	 pnkg0oQ2om8nUp3kYNm2DVJioCD9IDScjItKrly0=
+	b=S0vdtD5HOaQEpjByQkErgFDXnDFSxJCWAyuVcT3yVAnbyiDOQvrfDt7Sa6XJr2X6r
+	 5C5ETIYJDvfr7s43vO/c9FuvyrovEAePbjPoF76MYikKcRQWWW3SNWo6j5LW4+Nj2U
+	 dFDfyfuAAu47ghekj5l016V/NNlX4GE7VgUUuVc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/175] drm/v3d: Skip CSD when it has zeroed workgroups
-Date: Thu,  2 Jul 2026 18:18:27 +0200
-Message-ID: <20260702155115.903199561@linuxfoundation.org>
+Subject: [PATCH 6.6 007/175] batman-adv: tt: prevent TVLV entry number overflow
+Date: Thu,  2 Jul 2026 18:18:28 +0200
+Message-ID: <20260702155115.924688265@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -46,65 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 7f93fad5ea0affc9e1505dd0f7596c0fdb496213 ]
+commit 99d9958fa10fb684b2a8e2c48a8d704122721420 upstream.
 
-A compute shader dispatch encodes its workgroup counts in the CFG0..CFG2
-registers. Kicking off a dispatch with a zero count in any of the three
-dimensions is invalid. First, the hardware will process 0 as 65536,
-while the user-space driver exposes a maximum of 65535. Over that, a
-submission with a zeroed workgroup dimension should be a no-op.
+The helpers to prepare the buffers for the local and global TT based
+replies are trying to sum up all TT entries which can be found for each
+VLAN. In theory, this sum can be too big for an u16 and therefore overflow.
+A too small buffer would then be allocated for the TVLV.
 
-These zeroed counts can reach the dispatch path through an indirect CSD
-job, whose workgroup counts are only known once the indirect buffer is
-read and may legitimately be zero, but such scenario should only result in
-a no-op.
+The too small buffer will be handled gracefully by
+batadv_tt_tvlv_generate() and is not causing a buffer overflow - just a
+truncated reply. But this overflow shouldn't have happened in the first and
+the too small buffer should never have been allocated when an overflow was
+detected.
 
-Overwrite the indirect CSD job workgroup counts with the indirect BO
-ones, even if they are zeroed, and don't submit the job to the hardware
-when any of the workgroup counts is zero, so the job completes immediately
-instead of running the shader.
-
-Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Suggested-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260602-v3d-fix-indirect-csd-v4-2-654309e32bc0@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Cc: stable@kernel.org
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/batman-adv/translation-table.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
-index ff91cdb75bb912..ab872bc818004a 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -234,6 +234,16 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
- 		return NULL;
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 4045ddefc29b47..7041cd69e20070 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -850,11 +850,18 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
+ 	u16 total_entries = 0;
+ 	u8 *tt_change_ptr;
+ 	int vlan_entries;
++	u16 sum_entries;
+ 
+ 	spin_lock_bh(&orig_node->vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
+ 		vlan_entries = atomic_read(&vlan->tt.num_entries);
+-		total_entries += vlan_entries;
++
++		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
++			*tt_len = 0;
++			goto out;
++		}
++
++		total_entries = sum_entries;
+ 		num_vlan++;
  	}
  
-+	/* The HW interprets a workgroup size of 0 as 65536; however, the
-+	 * user-space driver exposes a maximum of 65535. Therefore, a 0 in
-+	 * any dimension means that we have no workgroups and the compute
-+	 * shader should not be dispatched.
-+	 */
-+	if (!V3D_GET_FIELD(job->args.cfg[0], V3D_CSD_QUEUED_CFG0_NUM_WGS_X) ||
-+	    !V3D_GET_FIELD(job->args.cfg[1], V3D_CSD_QUEUED_CFG1_NUM_WGS_Y) ||
-+	    !V3D_GET_FIELD(job->args.cfg[2], V3D_CSD_QUEUED_CFG2_NUM_WGS_Z))
-+		return NULL;
-+
- 	v3d->queue[V3D_CSD].active_job = &job->base;
+@@ -941,15 +948,22 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
+ 	struct batadv_softif_vlan *vlan;
+ 	size_t change_offset;
+ 	u16 num_vlan = 0;
+-	u16 vlan_entries = 0;
+ 	u16 total_entries = 0;
+ 	u16 tvlv_len;
+ 	u8 *tt_change_ptr;
++	int vlan_entries;
++	u16 sum_entries;
  
- 	v3d_invalidate_caches(v3d);
+ 	spin_lock_bh(&bat_priv->softif_vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
+ 		vlan_entries = atomic_read(&vlan->tt.num_entries);
+-		total_entries += vlan_entries;
++
++		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
++			tvlv_len = 0;
++			goto out;
++		}
++
++		total_entries = sum_entries;
+ 		num_vlan++;
+ 	}
+ 
 -- 
 2.53.0
 
