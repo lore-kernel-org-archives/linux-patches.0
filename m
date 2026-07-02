@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528E62FC893;
-	Thu,  2 Jul 2026 17:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B662D0602;
+	Thu,  2 Jul 2026 17:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011647; cv=none; b=jjWfwP6jtTch3b5WGnGRWQ32tjYiOhQpxj2s1Ys8jKlEsvvU9603bZgsjGeV3nfCTS4YKBk+T09714/va+/814eFH9wNJD+cgdeTag3Me95oobkXvWFp1y3XynfskegaoOosW+5S8LgHFBddDYzCDdw6wJJZfQk+kwTdIEkiQuk=
+	t=1783011650; cv=none; b=pjwoj4aPl7KvKyzZR6LY9iQwsAyZOuxN3II4qh+E/UGM0Mlphx9cbSMjc9kM3rikOkbutMO89Fm57DsDZbdSRrVOkua3B1B6FH1RQ4zaMPehpEmk5NrFVyoYzX7d+qmTW7Vw9KWABW0Q2rEAFVIhKjRtjwmmIGNtLxTLfqXCxp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011647; c=relaxed/simple;
-	bh=pevtjS+ciha9PYITGDZIvrApZYDYH/929gEqLPIZnXw=;
+	s=arc-20240116; t=1783011650; c=relaxed/simple;
+	bh=XlzV3Ytw99aGaXyY0/N5tSNPdXbC9gEdOvVGaJRDhKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=quXjFWap/Z45XjNu+u6zlqf3+3iIDTkweqmXO0M49f++NenZkIooisBvJF5sipLb48aiuada/pge+gAnMT5uVHbNrBEvw/0mz4AoE0Hycyiu8KDnWd0oNQ0gh9YF/8QJ9wo1qWdkmgdr/5PqqMrojWCcyQAgQ154gUHExZWIDjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvvGBqTi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjouqWIP6Svp/Clyjj4YRZWBt44oM7fdfWHrsRMVMqOiPTmHkLbmtsSVnf6ZWPwtaFrkHiy/UfjAAgWmvWiXXZwcaH+ummGCcQgWxljDG85+joNfRQq7/fAQDLYqqHmr6qnhALQjCZ7bCJLSy5WinwgJLqG1SqOOaYkL/EUxeNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pI6jxqPG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvvGBqTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92851F000E9;
-	Thu,  2 Jul 2026 17:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pI6jxqPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627281F00A3A;
+	Thu,  2 Jul 2026 17:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011646;
-	bh=TgDKhjjoGBr0jbrFyCrXvwGZUOQYukIGqoiRoigXzXQ=;
+	s=korg; t=1783011648;
+	bh=mJUNB8u3ZY+uNxDoc28kXj9UCWJb7WWTzt9yt3LGXpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvvGBqTiQDEIHACdrP15tHkTdkkP62lZuXj4Nw0eF5qZFbF3GbxDTlDFeI43NlhKG
-	 qob4xYKfkJcYQeF2PvrFHrp6s2fBw0zJH08JnfxnCUNiYSIBpW+Q9pWh6KRKqYBIM+
-	 VMsZ1v6IZcMqPxbhG8i53ts/Dkt10iZkHDRl4j9g=
+	b=pI6jxqPGHvNLPVSQOl9dnTgUAabSc1XEyoDJg8njea7kjZ9t0Forr3GIxQ0nYVwNo
+	 AjinlRAo0v2JsbjIt6coKznCnMRKff+t1x5cs5N1p+Aance/o1uGo1gv5GP6oC4ZCy
+	 CGnY6ov1SMT89WZwIQnWJtpnvbnyARiJXvrHtoQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7.1 078/120] KVM: Replace guest-triggerable BUG_ON() in ioeventfd datamatch with get_unaligned()
-Date: Thu,  2 Jul 2026 18:21:14 +0200
-Message-ID: <20260702155114.574344674@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Calvin Buckley <calvin@cmpct.info>,
+	Brad Spengler <brad.spengler@opensrcsec.com>,
+	Sam James <sam@gentoo.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.1 079/120] crypto: nx - fix nx_crypto_ctx_exit argument
+Date: Thu,  2 Jul 2026 18:21:15 +0200
+Message-ID: <20260702155114.593773989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -50,116 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Sam James <sam@gentoo.org>
 
-commit f1edbed787ba67988ed34e0132ca128b052b6ce8 upstream.
+commit 4e67f504ee9ded15e256b64f4fde150e917381d7 upstream.
 
-Drop a BUG_ON() that has been reachable since it was first added, way back
-in 2009, and instead use get_unaligned() to perform potentially-unaligned
-accesses.
+nx_crypto_ctx_shash_exit calls nx_crypto_ctx_exit with crypto_shash_ctx(...)
+but crypto_shash_ctx gives a nx_crypto_ctx *, not a crypto_tfm *.
 
-For a given store, KVM x86's emulator tracks the entire value in the
-destination operand, x86_emulate_ctxt.dst.  If the destination is memory,
-and the target splits multiple pages and/or is emulated MMIO, then KVM
-handles each fragment independently.  E.g. on a page split starting at page
-offset 0xffc, KVM writes 4 bytes to the first page, then the remaining
-bytes to the second page, using ctxt->dst as the source for both (with
-appropriate offsets).
+Fix the type in nx_crypto_ctx_exit and drop the bogus crypto_tfm_ctx
+call.
 
-If the destination splits a page *and* hits emulated MMIO on the second
-page, then KVM will complete the write to the first page, then emulate the
-MMIO access to the second page.  If there is a datamatch-enabled ioeventfd
-at offset 0 of the second page, then KVM will process the remainder of the
-store as a potential ioeventfd signal.
+This fixes the following oops:
 
-Putting it all together, if the guest emits a store that splits a page
-starting at page offset N, and the second page has a datamatch-enabled
-ioeventfd at offset 0, then KVM will check for datamatch using
-&dst.valptr[N] as the source.  Due to dst (and thus dst.valptr) being
-32-byte aligned, if N is not aligned to @len, the BUG_ON() fires.
-
-E.g. with a 16-byte store at page offset 0xffc, to an ioeventfd of len 8,
-all initial checks in ioeventfd_in_range() will succeed, and the BUG_ON()
-fires due to @val being 4-byte aligned, but not 8-byte aligned.
-
-  ------------[ cut here ]------------
-  kernel BUG at arch/x86/kvm/../../../virt/kvm/eventfd.c:783!
-  Oops: invalid opcode: 0000 [#1] SMP
-  CPU: 0 UID: 1000 PID: 615 Comm: repro Not tainted 7.1.0-rc2-ff238429d1ea #365 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:ioeventfd_write+0x6c/0x70 [kvm]
+  BUG: Unable to handle kernel data access at 0xc0403effffffffc8
+  Faulting instruction address: 0xc000000000396cb4
+  Oops: Kernel access of bad area, sig: 11 [#15]
   Call Trace:
-   <TASK>
-   __kvm_io_bus_write+0x85/0xb0 [kvm]
-   kvm_io_bus_write+0x53/0x80 [kvm]
-   vcpu_mmio_write+0x66/0xf0 [kvm]
-   emulator_read_write_onepage+0x12a/0x540 [kvm]
-   emulator_read_write+0x109/0x2b0 [kvm]
-   x86_emulate_insn+0x4f8/0xfb0 [kvm]
-   x86_emulate_instruction+0x181/0x790 [kvm]
-   kvm_mmu_page_fault+0x313/0x630 [kvm]
-   vmx_handle_exit+0x18a/0x590 [kvm_intel]
-   kvm_arch_vcpu_ioctl_run+0xc81/0x1c90 [kvm]
-   kvm_vcpu_ioctl+0x2d5/0x970 [kvm]
-   __x64_sys_ioctl+0x8a/0xd0
-   do_syscall_64+0xb7/0x890
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x7f19c931a9bf
-   </TASK>
-  Modules linked in: kvm_intel kvm irqbypass
-  ---[ end trace 0000000000000000 ]---
+   nx_crypto_ctx_shash_exit+0x24/0x60
+   crypto_shash_exit_tfm+0x28/0x40
+   crypto_destroy_tfm+0x98/0x140
+   crypto_exit_ahash_using_shash+0x20/0x40
+   crypto_destroy_tfm+0x98/0x140
+   hash_release+0x1c/0x30
+   alg_sock_destruct+0x38/0x60
+   __sk_destruct+0x48/0x2b0
+   af_alg_release+0x58/0xb0
+   __sock_release+0x68/0x150
+   sock_close+0x20/0x40
+   __fput+0x110/0x3a0
+   sys_close+0x48/0xa0
+   system_call_exception+0x140/0x2d0
+   system_call_common+0xf4/0x258
 
-In a perfect world, the fix would be to simply delete the BUG_ON(), as KVM
-x86 doesn't perform alignment checks on "normal" memory accesses at CPL0.
-Sadly, C99 ruins all the fun; while the x86 architecture plays nice,
-dereferencing an unaligned pointer directly is undefined behavior in C,
-e.g. triggers splats when running with CONFIG_UBSAN_ALIGNMENT=y.
+.. which came from hardlink(1) opportunistically using AF_ALG.
 
-Fixes: d34e6b175e61 ("KVM: add ioeventfd support")
+The same problem exists with nx_crypto_ctx_skcipher_exit getting a context
+it wasn't expecting, but apparently nobody hit that for years.
+
+Cc: Eric Biggers <ebiggers@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260612225241.678509-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: bfd9efddf990 ("crypto: nx - convert AES-ECB to skcipher API")
+Fixes: 9420e628e7d8 ("crypto: nx - Use API partial block handling")
+Acked-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Reported-by: Calvin Buckley <calvin@cmpct.info>
+Tested-by: Calvin Buckley <calvin@cmpct.info>
+Suggested-by: Brad Spengler <brad.spengler@opensrcsec.com>
+Signed-off-by: Sam James <sam@gentoo.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/eventfd.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/crypto/nx/nx.c |    6 ++----
+ drivers/crypto/nx/nx.h |    2 +-
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
---- a/virt/kvm/eventfd.c
-+++ b/virt/kvm/eventfd.c
-@@ -24,6 +24,7 @@
- #include <linux/slab.h>
- #include <linux/seqlock.h>
- #include <linux/irqbypass.h>
-+#include <linux/unaligned.h>
- #include <trace/events/kvm.h>
- 
- #include <kvm/iodev.h>
-@@ -779,21 +780,18 @@ ioeventfd_in_range(struct _ioeventfd *p,
- 		return true;
- 
- 	/* otherwise, we have to actually compare the data */
+--- a/drivers/crypto/nx/nx.c
++++ b/drivers/crypto/nx/nx.c
+@@ -714,15 +714,13 @@ int nx_crypto_ctx_aes_xcbc_init(struct c
+ /**
+  * nx_crypto_ctx_exit - destroy a crypto api context
+  *
+- * @tfm: the crypto transform pointer for the context
++ * @nx_ctx: the crypto api context
+  *
+  * As crypto API contexts are destroyed, this exit hook is called to free the
+  * memory associated with it.
+  */
+-void nx_crypto_ctx_exit(struct crypto_tfm *tfm)
++void nx_crypto_ctx_exit(struct nx_crypto_ctx *nx_ctx)
+ {
+-	struct nx_crypto_ctx *nx_ctx = crypto_tfm_ctx(tfm);
 -
--	BUG_ON(!IS_ALIGNED((unsigned long)val, len));
--
- 	switch (len) {
- 	case 1:
--		_val = *(u8 *)val;
-+		_val = get_unaligned((u8 *)val);
- 		break;
- 	case 2:
--		_val = *(u16 *)val;
-+		_val = get_unaligned((u16 *)val);
- 		break;
- 	case 4:
--		_val = *(u32 *)val;
-+		_val = get_unaligned((u32 *)val);
- 		break;
- 	case 8:
--		_val = *(u64 *)val;
-+		_val = get_unaligned((u64 *)val);
- 		break;
- 	default:
- 		return false;
+ 	kfree_sensitive(nx_ctx->kmem);
+ 	nx_ctx->csbcpb = NULL;
+ 	nx_ctx->csbcpb_aead = NULL;
+--- a/drivers/crypto/nx/nx.h
++++ b/drivers/crypto/nx/nx.h
+@@ -153,7 +153,7 @@ int nx_crypto_ctx_aes_ctr_init(struct cr
+ int nx_crypto_ctx_aes_cbc_init(struct crypto_skcipher *tfm);
+ int nx_crypto_ctx_aes_ecb_init(struct crypto_skcipher *tfm);
+ int nx_crypto_ctx_sha_init(struct crypto_shash *tfm);
+-void nx_crypto_ctx_exit(struct crypto_tfm *tfm);
++void nx_crypto_ctx_exit(struct nx_crypto_ctx *nx_ctx);
+ void nx_crypto_ctx_skcipher_exit(struct crypto_skcipher *tfm);
+ void nx_crypto_ctx_aead_exit(struct crypto_aead *tfm);
+ void nx_crypto_ctx_shash_exit(struct crypto_shash *tfm);
 
 
