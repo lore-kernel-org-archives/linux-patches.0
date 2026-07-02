@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CA5381E96;
-	Thu,  2 Jul 2026 16:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E9234104E;
+	Thu,  2 Jul 2026 16:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010189; cv=none; b=Zrv5u4IlUxVEns5PxbmjrbIemI7PuSX9pJrSfNYOPOQIYHiIGHzT6iGh6fCXfu22dG8R9uYKyzzqV1JeJPXKox1fKC9K+FTSt6LwAu8IsgYSxIC+WFgxQRcOEjK061tmqIObvYYNtmw3LO4i8Nj8Nk4JtZ2CsD9sjl6WAW2hsK0=
+	t=1783010192; cv=none; b=buGnOA3IXalPc59Jm2uFBgsutDBZiOSK9kQ+PfwPErJhkcTKS1fmv/3WloVSSHW/HxP1lxaohPqqJc1LIOs6gBg+M5REU9pEsmxPq6jazkcg0edFAWgZIGmrARnsEOvVdqBksBQG3bUexKGNR6D1FhOuwWaKpwr8iImPfdGH+Mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010189; c=relaxed/simple;
-	bh=ytqUiSsTNhYLAILCVnoHDgsO8TcX+x+ZllYCsK5jaV4=;
+	s=arc-20240116; t=1783010192; c=relaxed/simple;
+	bh=r1Cayh8Tfna3O8/A+oo4wCiNb6kIcqNnbD8ga9eponY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LTQsdEkdad28SUArUhJaBXftrBb00XUH2s91EHXJN/HL2YYzykMrp8bLGOOPRpClkAdrV7yP0w1Y0/iJwGIUdWdhLis5KH+a13MH5CqeTjSYzsOVDASrrrviiL45ImONuGsRXmPmhTQQUuq68BsRL4SzHCHn9RF+Nw2stxSePVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GG3gTmUJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jpn6B5yTjjNoNPVHdj1qxfvfNS6z9ZGeLH3Skp9xGUsLBbY82IcLFo1amHhU2mKkJsO7xkCayOCEWpwMK29Bi0b3FikwJ3qDo4LP2yv0yZUG/hJOlGTydPmRkrr+oo7XllDaFv7S1x4D2s/c/tQOUQAa643FWacBtaoMPwrvV6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayFQVhld; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GG3gTmUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38DC1F000E9;
-	Thu,  2 Jul 2026 16:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayFQVhld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCB31F000E9;
+	Thu,  2 Jul 2026 16:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010188;
-	bh=3voZ4Y/24NFSgewxkivPoYoZWcJbKd/iYhA+zxogsqw=;
+	s=korg; t=1783010190;
+	bh=KhYdM/QtufApfSqcO8U8/6Z+/Z19CMk5CqWg2YhRXHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GG3gTmUJsZx0pzIBqveUkIKHTAoE4pj8Amr+86uIGop3/xKZTbA7T72DGRX9AW9PL
-	 aUcF2SiYIsLyJSdqV4J3NO5zbkB5zeuTDjS2nL+CkRNwAV0YBJUsSHG+GIIlL0GRcG
-	 Y673ImT1jqb0ZUCEz0zrkYnmZnnB2x3I7GTI24nQ=
+	b=ayFQVhldeuGNGkJ73B7DoQjrTHz0PfWoYNHcqxNep7aYAYdtpL0V9GAq8DnBI8cJi
+	 y30rAWB3RzihjYjHCII35CZUP7ixIR3zOjj4Rr+vDwsioJAJ6p/tt1zsuljp3qP4GN
+	 hn9BkquxTJcQ2FqaM3n0mEOub0oipQ/Oc2hCFjnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Quan Zhou <quan.zhou@mediatek.com>,
 	Sean Wang <sean.wang@mediatek.com>,
-	David Ruth <druth@chromium.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Ajrat Makhmutov <rauty@altlinux.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/204] wifi: mt76: mt7921: fix a potential scan no APs
-Date: Thu,  2 Jul 2026 18:17:39 +0200
-Message-ID: <20260702155118.720145294@linuxfoundation.org>
+Subject: [PATCH 6.12 003/204] wifi: mt76: mt7921: fix potential deadlock in mt7921_roc_abort_sync
+Date: Thu,  2 Jul 2026 18:17:40 +0200
+Message-ID: <20260702155118.740854880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -54,52 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-commit 5ed54896b6bd444223092cab361b0785932119ab upstream.
+commit d5059e52fd8bc624ec4255c9fa01a266513d126b upstream.
 
-In multi-channel scenarios, the granted channel must be aborted before
-station remove. Otherwise, the firmware will be put into a wrong state,
-resulting in have chance to make subsequence scan no APs.
-With this patch, the granted channel will be always aborted before
-station remove.
+roc_abort_sync() can deadlock with roc_work(). roc_work() holds
+dev->mt76.mutex, while cancel_work_sync() waits for roc_work()
+to finish. If the caller already owns the same mutex, both
+sides block and no progress is possible.
 
+This deadlock can occur during station removal when
+mt76_sta_state() -> mt76_sta_remove() -> mt7921_mac_sta_remove() ->
+mt7921_roc_abort_sync() invokes cancel_work_sync() while
+roc_work() is still running and holding dev->mt76.mutex.
+
+This avoids the mutex deadlock and preserves exactly-once
+work ownership.
+
+Fixes: 352d966126e6 ("wifi: mt76: mt7921: fix a potential association failure upon resuming")
+Co-developed-by: Quan Zhou <quan.zhou@mediatek.com>
 Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Reviewed-by: Sean Wang <sean.wang@mediatek.com>
-Tested-by: David Ruth <druth@chromium.org>
-Reviewed-by: David Ruth <druth@chromium.org>
-Link: https://patch.msgid.link/1ac1ae779db86d4012199a24ea2ca74050ed4af6.1721300411.git.quan.zhou@mediatek.com
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260126180013.8167-1-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[Ajrat: keep del_timer_sync() instead of timer_delete_sync() -- the
+ timer API rename is not present in 6.12.y. ]
 Signed-off-by: Ajrat Makhmutov <rauty@altlinux.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index a93ae4e44f16a4..f2fffca868b519 100644
+index f2fffca868b519..99561094640f19 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -368,9 +368,9 @@ void mt7921_roc_abort_sync(struct mt792x_dev *dev)
+@@ -365,12 +365,15 @@ void mt7921_roc_abort_sync(struct mt792x_dev *dev)
+ {
+ 	struct mt792x_phy *phy = &dev->phy;
+ 
++	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
++		return;
++
  	del_timer_sync(&phy->roc_timer);
- 	cancel_work_sync(&phy->roc_work);
- 	if (test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
--		ieee80211_iterate_active_interfaces(mt76_hw(dev),
--						    IEEE80211_IFACE_ITER_RESUME_ALL,
--						    mt7921_roc_iter, (void *)phy);
-+		ieee80211_iterate_interfaces(mt76_hw(dev),
-+					     IEEE80211_IFACE_ITER_RESUME_ALL,
-+					     mt7921_roc_iter, (void *)phy);
+-	cancel_work_sync(&phy->roc_work);
+-	if (test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
+-		ieee80211_iterate_interfaces(mt76_hw(dev),
+-					     IEEE80211_IFACE_ITER_RESUME_ALL,
+-					     mt7921_roc_iter, (void *)phy);
++	cancel_work(&phy->roc_work);
++
++	ieee80211_iterate_interfaces(mt76_hw(dev),
++				     IEEE80211_IFACE_ITER_RESUME_ALL,
++				     mt7921_roc_iter, (void *)phy);
  }
  EXPORT_SYMBOL_GPL(mt7921_roc_abort_sync);
- 
-@@ -881,6 +881,7 @@ void mt7921_mac_sta_remove(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 	struct mt792x_dev *dev = container_of(mdev, struct mt792x_dev, mt76);
- 	struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
- 
-+	mt7921_roc_abort_sync(dev);
- 	mt76_connac_free_pending_tx_skbs(&dev->pm, &msta->deflink.wcid);
- 	mt76_connac_pm_wake(&dev->mphy, &dev->pm);
  
 -- 
 2.53.0
