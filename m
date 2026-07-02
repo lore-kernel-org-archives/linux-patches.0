@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE572D8DC4;
-	Thu,  2 Jul 2026 16:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C9E30C158;
+	Thu,  2 Jul 2026 16:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010229; cv=none; b=KS/2Fl1+xu0K5iaRvXOJixsru/YuCYaBGTw0pp+QnMuQBofDbtm9ez5Jo32n/9DEmNzXqMY7IVv4AFRdDwdxo4hgWEnCoPaRj4+3/b7BKUszsfLf/KsMgskmGR/umIo3iL7ZsuhD2RU9v3s0XwMBoj0v8U9ru8r62eQsb8pyjn8=
+	t=1783010231; cv=none; b=uq2vpeZoh9lwtbxuCzZsK/jEzl1p/wzjaxOJuGKAlFvWS5Zvz49x+edos0vptkY2CjmSQQjEW6twobVe56BZRGEfJ6jofUU7cfl2Q9PoU1Z3G9SJV3oIJ/kaggIdc7A/7wiXv5WJ8SN2aEb+pJsNQTFJ3W8gs6lQwF/7to0ovro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010229; c=relaxed/simple;
-	bh=Yb1UrjjM2hAr+jIsD3lsUkmfXNWF9/2Q1K/xuryigBI=;
+	s=arc-20240116; t=1783010231; c=relaxed/simple;
+	bh=ZdCg3Ho44hgTk/xwL+x8XTIPCCqBRtCBR1bMvrgh1/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pESO/dQ34gsaE98Vr/V0+jMSDD/8fTQrHLZdkuo8RhLLtcBMR9BGKsctVy+xTyI9wHYP+WrKdmUky+A7RACxNsbqnq0/7BKxsPGemp14XBwGxwe291gOxnn65oj37V3rpHSWaQgDVc5/BT/FCY22uJi6HJs4WN6HHgrtZmDEkHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOAvza1N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aAF/KjQkvSgIg2bwKHY7yX+E7rIUAOP1qAfxhihiqbOp6qA4MEzhkrtvLqiOBQsdj+YEwZ3a7VFCrzJ2F0D8D0WtZ3PbryDtR0s+fZr3YARJzfTSJp3+oz5jOu7MHh4vYrARekCsFFvEq3zy0hpGKj+qt5hqVBAxSbxEuJhnjnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+cKN/qu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOAvza1N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189291F000E9;
-	Thu,  2 Jul 2026 16:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+cKN/qu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AF51F000E9;
+	Thu,  2 Jul 2026 16:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010227;
-	bh=AzPpZgRL35S+FLdILyIq+PvC9aqxNEWswMVGHwTTwsA=;
+	s=korg; t=1783010230;
+	bh=bR2UldUF8wQ8hE7d/0dpnWae+VRT+lpUyWARHhZJYfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QOAvza1NbNbavmKCdSDbjYMjfJTVBVuYx3MxNIiMPMIBpGm3awfjHT4OAof84a3hI
-	 Fm1dxIgWVGpJq46ODNmzCFXIJPmoBNDDAmyV9COMg9t7vok8sVb/Ly+1AwU0NOtZWO
-	 nXyTPChPAQXWoY3W5DVg8kJ6Obq92NdEigJ0SQMs=
+	b=Y+cKN/qukSlhT9HqK9/HmcVLxFJ3ZargBwHoc7fJ2Sd38andWPtZcMYQajvnctMV+
+	 BtyVGL2zyPr7BDp0aQodVC/9d+2EYLHawLkN0BcXu65SIYk+7Zb5hytL0JNJE92FHH
+	 S12ccphHjFUE1di02ZN4xIqSUsQH9roxJs0uC8IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 6.12 030/204] agp/amd64: Fix broken error propagation in agp_amd64_probe()
-Date: Thu,  2 Jul 2026 18:18:07 +0200
-Message-ID: <20260702155119.291579537@linuxfoundation.org>
+	Varun R Mallya <varunrmallya@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 031/204] bpf: Reject sleepable kprobe_multi programs at attach time
+Date: Thu,  2 Jul 2026 18:18:08 +0200
+Message-ID: <20260702155119.312709464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,52 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Varun R Mallya <varunrmallya@gmail.com>
 
-commit b08472db93b1ccff84a7adec5779d47f0e9d3a30 upstream.
+commit eb7024bfcc5f68ed11ed9dd4891a3073c15f04a8 upstream.
 
-A NULL pointer dereference was observed in the AMD64 AGP driver when
-running in a virtualized environment (e.g. qemu/kvm) without a physical
-AMD northbridge. The crash occurs in amd64_fetch_size() when attempting
-to dereference the pointer returned by node_to_amd_nb(0).
+kprobe.multi programs run in atomic/RCU context and cannot sleep.
+However, bpf_kprobe_multi_link_attach() did not validate whether the
+program being attached had the sleepable flag set, allowing sleepable
+helpers such as bpf_copy_from_user() to be invoked from a non-sleepable
+context.
 
-The root cause of this crash is broken error propagation in
-agp_amd64_probe(): When no AMD northbridges are found, cache_nbs()
-correctly returns -ENODEV. However, the probe function erroneously
-checks the return value against exactly -1, rather than < 0.
+This causes a "sleeping function called from invalid context" splat:
 
-As a result, the hardware absence error is masked, allowing the driver
-to improperly proceed with initialization. It eventually calls
-agp_add_bridge(), which invokes amd64_fetch_size(). Since the hardware
-does not exist, node_to_amd_nb(0) returns NULL, leading to a General
-Protection Fault (GPF) when accessing its ->misc member.
+  BUG: sleeping function called from invalid context at ./include/linux/uaccess.h:169
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1787, name: sudo
+  preempt_count: 1, expected: 0
+  RCU nest depth: 2, expected: 0
 
-Fix the issue by correcting the error check in agp_amd64_probe() to
-abort properly when cache_nbs() returns any negative error code. This
-prevents the driver from erroneously proceeding without hardware, thereby
-avoiding the subsequent NULL pointer dereference at its source.
+Fix this by rejecting sleepable programs early in
+bpf_kprobe_multi_link_attach(), before any further processing.
 
-Fixes: a32073bffc65 ("[PATCH] x86_64: Clean and enhance up K8 northbridge access code")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v2.6.18+
-Link: https://patch.msgid.link/20260504074823.99377-1-w15303746062@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
+Signed-off-by: Varun R Mallya <varunrmallya@gmail.com>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20260401191126.440683-1-varunrmallya@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/agp/amd64-agp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/bpf_trace.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/char/agp/amd64-agp.c
-+++ b/drivers/char/agp/amd64-agp.c
-@@ -546,7 +546,7 @@ static int agp_amd64_probe(struct pci_de
- 	/* Fill in the mode register */
- 	pci_read_config_dword(pdev, bridge->capndx+PCI_AGP_STATUS, &bridge->mode);
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 4a44451efbcc67..41c874fbd6fa79 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2943,6 +2943,10 @@ int bpf_kprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	if (!is_kprobe_multi(prog))
+ 		return -EINVAL;
  
--	if (cache_nbs(pdev, cap_ptr) == -1) {
-+	if (cache_nbs(pdev, cap_ptr) < 0) {
- 		agp_put_bridge(bridge);
- 		return -ENODEV;
- 	}
++	/* kprobe_multi is not allowed to be sleepable. */
++	if (prog->sleepable)
++		return -EINVAL;
++
+ 	flags = attr->link_create.kprobe_multi.flags;
+ 	if (flags & ~BPF_F_KPROBE_MULTI_RETURN)
+ 		return -EINVAL;
+-- 
+2.53.0
+
 
 
