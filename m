@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522F3318EC5;
-	Thu,  2 Jul 2026 16:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9EE1C695;
+	Thu,  2 Jul 2026 16:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011103; cv=none; b=C0ldz5RUTacvqco+XmlazqGVSBA8BF0h47SsYAGFPj1Zb8vpD2ex7dsig591N/S0oXzgriIFrVVRntBV7oal8G5r7YHBjbmhg7PhDvD8VOdUc7BDUwMgkAOstE6+6UZI0EaFjpzMSCEICCkCLzTXq3eoOo41H55rr4dIEaEJ3Wc=
+	t=1783011106; cv=none; b=Xod7h6s514iGsnEKcDB/9ZQmpFgS+CyxeGa2namFlwKTzxp3+qXYuW1tRDxXB5qN/L4SAiZVW4SVjeF9BE53ydzGLdJTlwrjdc6g5FsHumP/bXClARKdEaKaw/wKXMYyNL/TJ16+CLCNsinCIS2sfO3frGxN4xxG95HnBT2vmD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011103; c=relaxed/simple;
-	bh=3doaFOD/cJrSSlIcOADVTWHzDnaf7z0YxzRpH9kdljo=;
+	s=arc-20240116; t=1783011106; c=relaxed/simple;
+	bh=p3sCfzLSvmP4mBLeZkfeQdZ+LS9YW/VK6lZln4cljT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBF/njtLfURKmI4doUyo30b2F9jZg+Y/CuMp87na1wihwoZZfqA9zetZ/8eMNOzlvRqUxxmp1gu1bSufAI/mMFgT8P9/UEbjw9gIbMxXWgrT3A22R0iUviZltXFb/uJZWmEtBfinZzsLwRZ5SlyOOx8+KxTrpcpHrw4YDT9EXyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXb268Tc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W8NKj/D2KIi3SQlnKlFEnnPxLjE14HTgfF959nw03tLipd+WtKe1mdDLxKNDg0EzUt3+9L8h0vA5pdttz24k3YjH4/FQOpBGpMpp0kmITmqqvJZPNA2X6IAA+3YMwOj2/kp6/cgsQxQMDUQQ0wnzPn5wCSO913uXMjYTtOMHY4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSg018Vs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXb268Tc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71391F000E9;
-	Thu,  2 Jul 2026 16:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSg018Vs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0051F000E9;
+	Thu,  2 Jul 2026 16:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011102;
-	bh=NP3dKYdlHDuI3iStsw7c7OHPEmnSJEMMEoFUF5w1EZ8=;
+	s=korg; t=1783011104;
+	bh=JYTiJneXsHzHTthGRr60/uPiwPiI9AIqSRdYucV5EuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZXb268Tcd9t1PaSc60ZgtaavfKf1FEOVAy6P8AG/fo5N+tD/n1ry2XSEUEhotr45c
-	 7N6dwJfZfvSTy5RIC1c7zV1MHWrMxP3RTxGMAE0G7lYUwlR5hQFwerrUMGfxF2Q4Lk
-	 k1M6kwtojRXHtyIqGwVTVKDJhnMhta0zRcczovCQ=
+	b=dSg018VsQqGWpQc2WFhCBIYmsh80v/Tc9+4A0FB5SnQHmiCVDqWXVjD4g/bNZfjHl
+	 IY6Cg1/o1im2sr92B6lF/1wQ5v18QQFPbw3HiIDDdN2URRNsajsvdALLDRQtHVu/Fa
+	 3hpenJWTSIvBXS+V9MV+iFCSnDdN6Tcy8FqfUC1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 158/175] KVM: SVM: Fix page overflow in sev_dbg_crypt() for ENCRYPT path
-Date: Thu,  2 Jul 2026 18:20:59 +0200
-Message-ID: <20260702155119.122939846@linuxfoundation.org>
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 141/175] f2fs: keep atomic write retry from zeroing original data
+Date: Thu,  2 Jul 2026 18:20:42 +0200
+Message-ID: <20260702155118.776379316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -50,93 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit 78ee2d50185a037b3d2452a97f3dad69c3f7f389 upstream.
+commit 6d874b65aadce56ac78f76129dbcfc2599b638f8 upstream.
 
-In sev_dbg_crypt(), the per-iteration transfer length is bounded by
-the source page offset (PAGE_SIZE - s_off) but not by the destination
-page offset (PAGE_SIZE - d_off).  When d_off > s_off, the encrypt
-path (__sev_dbg_encrypt_user) performs a read-modify-write using a
-single-page intermediate buffer (dst_tpage):
+A partial atomic write reserves a block in the COW inode before reading the
+original data page for the untouched bytes in that page.
 
-  1. __sev_dbg_decrypt() expands the size to round_up(len + (d_off & 15), 16)
-     before issuing the PSP command.  If len + (d_off & 15) > PAGE_SIZE,
-     the PSP writes beyond the end of the 4096-byte dst_tpage allocation.
+If that read fails, write_begin returns an error but leaves the COW inode
+entry as NEW_ADDR. A retry of the same partial write then finds the COW
+entry, treats it as existing COW data, and f2fs_write_begin() zeroes the
+whole folio because blkaddr is NEW_ADDR.
 
-  2. The subsequent memcpy()/copy_from_user() into
-     page_address(dst_tpage) + (d_off & 15) of 'len' bytes overflows
-     by up to 15 bytes under the same condition.
+If the retry is committed, the bytes outside the retried write range are
+committed as zeroes instead of preserving the original file contents.
 
-Trigger example: s_off = 0, d_off = 1, debug.len = PAGE_SIZE -
-the PSP is instructed to write round_up(4097, 16) = 4112 bytes to
-a 4096-byte buffer.
+Only use the COW inode as the read source when it already has a real data
+block. If the COW entry is still NEW_ADDR, treat it as a reservation to
+reuse: keep reading the old data from the original inode and avoid
+reserving or accounting the same atomic block again.
 
-Fix by also bounding len by (PAGE_SIZE - d_off), the same check that
-sev_send_update_data() already performs for its single-page guest
-region.
-
- ==================================================================
- BUG: KASAN: slab-use-after-free in sev_dbg_crypt+0x993/0xd10 [kvm_amd]
- Write of size 4095 at addr ff110062293bb009 by task sev_dbg_test/228214
-
- CPU: 96 UID: 0 PID: 228214 Comm: sev_dbg_test Tainted: G     U  W           7.0.0-smp--5ce9b0c48211-dbg #156 PREEMPTLAZY
- Tainted: [U]=USER, [W]=WARN
- Hardware name: Google Astoria/astoria, BIOS 0.20250817.1-0 08/25/2025
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x54/0x70
-  print_report+0xbc/0x260
-  kasan_report+0xa2/0xd0
-  kasan_check_range+0x25f/0x2c0
-  __asan_memcpy+0x40/0x70
-  sev_dbg_crypt+0x993/0xd10 [kvm_amd]
-  sev_mem_enc_ioctl+0x33c/0x450 [kvm_amd]
-  kvm_vm_ioctl+0x65d/0x6d0 [kvm]
-  __se_sys_ioctl+0xb2/0x100
-  do_syscall_64+0xe8/0x870
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  </TASK>
-
- The buggy address belongs to the physical page:
- page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x7fe72b6a0 pfn:0x62293bb
- memcg:ff11000112827d82
- flags: 0x1400000000000000(node=1|zone=1)
- raw: 1400000000000000 0000000000000000 dead000000000122 0000000000000000
- raw: 00000007fe72b6a0 0000000000000000 00000001ffffffff ff11000112827d82
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ff110062293bbf00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  ff110062293bbf80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- >ff110062293bc000: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                    ^
-  ff110062293bc080: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-  ff110062293bc100: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
- ==================================================================
- Disabling lock debugging due to kernel taint
-
-Fixes: 24f41fb23a39 ("KVM: SVM: Add support for SEV DEBUG_DECRYPT command")
-Fixes: 7d1594f5d94b ("KVM: SVM: Add support for SEV DEBUG_ENCRYPT command")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-[sean: add sample KASAN splat, Fixes, and stable@]
-Link: https://patch.msgid.link/20260501203537.2120074-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Cc: stable@kernel.org
+Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/data.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -1004,6 +1004,7 @@ static int sev_dbg_crypt(struct kvm *kvm
- 		s_off = vaddr & ~PAGE_MASK;
- 		d_off = dst_vaddr & ~PAGE_MASK;
- 		len = min_t(size_t, (PAGE_SIZE - s_off), size);
-+		len = min_t(size_t, len, PAGE_SIZE - d_off);
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -3527,6 +3527,7 @@ static int prepare_atomic_write_begin(st
+ 	pgoff_t index = page->index;
+ 	int err = 0;
+ 	block_t ori_blk_addr = NULL_ADDR;
++	bool cow_has_reserved_block = false;
  
- 		if (dec)
- 			ret = __sev_dbg_decrypt_user(kvm,
+ 	/* If pos is beyond the end of file, reserve a new block in COW inode */
+ 	if ((pos & PAGE_MASK) >= i_size_read(inode))
+@@ -3536,9 +3537,11 @@ static int prepare_atomic_write_begin(st
+ 	err = __find_data_block(cow_inode, index, blk_addr);
+ 	if (err) {
+ 		return err;
+-	} else if (*blk_addr != NULL_ADDR) {
++	} else if (__is_valid_data_blkaddr(*blk_addr)) {
+ 		*use_cow = true;
+ 		return 0;
++	} else if (*blk_addr == NEW_ADDR) {
++		cow_has_reserved_block = true;
+ 	}
+ 
+ 	if (is_inode_flag_set(inode, FI_ATOMIC_REPLACE))
+@@ -3551,10 +3554,13 @@ static int prepare_atomic_write_begin(st
+ 
+ reserve_block:
+ 	/* Finally, we should reserve a new block in COW inode for the update */
+-	err = __reserve_data_block(cow_inode, index, blk_addr, node_changed);
+-	if (err)
+-		return err;
+-	inc_atomic_write_cnt(inode);
++	if (!cow_has_reserved_block) {
++		err = __reserve_data_block(cow_inode, index, blk_addr,
++					   node_changed);
++		if (err)
++			return err;
++		inc_atomic_write_cnt(inode);
++	}
+ 
+ 	if (ori_blk_addr != NULL_ADDR)
+ 		*blk_addr = ori_blk_addr;
 
 
