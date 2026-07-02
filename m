@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FFD331EB7;
-	Thu,  2 Jul 2026 17:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBCB331EB7;
+	Thu,  2 Jul 2026 17:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011711; cv=none; b=d3OSFBv/SmiaaC1vNtsvt/XAbrwZrD/D1aEOUP+gcSdSP3fTNCWjoT7zh+fHQ6WcjY/B5nhcXO7bsTcnFELZmIrQZhz49p2VTmklzIQVfnMILNkzmxAjachapl8ltYmmy0rQZfMdDQwjp1P51sKDMs6Y3kFWxr4pddtymbcsk3E=
+	t=1783011713; cv=none; b=AuOegGOcz6PdfPiRjJwz+9PqE1YiKTFvGM9rTWbXulXQrrhGOh2/u32nY4o2w2g1DufB9Mxp8DYjQPYtjzLKuuy9wqvcE8iW+LbR97nMAzvsqU7XrTThN3AwMR6RoNBarh5+CN+aJe5jLnGlcGNmPmS30gFnDm9nzn3hcXzc4x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011711; c=relaxed/simple;
-	bh=B1vBlWUsi3ZIEI55qn7bc/LUJNL/rqKC6EsOcDzFyqg=;
+	s=arc-20240116; t=1783011713; c=relaxed/simple;
+	bh=lcvUKGrZZWmWJ1zyfXgx/a5gPTkynHQ+zSVdk0x8WWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmUrxuj1nyx5QKIBv+pyxZHoOVOyphW0CX+TWmu7hvnqPqz5Q0LU4E1a/OapzVWzrf5sRUvCaDOF2e6FGU3yjTO2y8yx/gQRDfYfShvIM3huuO5vJ936m+uhWc1q0Xc4GdmeqcfzGarHDRZ02AAnHeAUBIWBJTLxQpZ8XyWFoTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwQ/cf4J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fkle3k/YZBlo+E3OCyZ66KVJrdqfREqjG/NhuQ3Xki5+TnN0k4qS+oePWpO58NHRUyIYXCzUJcEPOqCtEzyeksYSaexKuNitVMSOoEcpEIGnuv+cYdmRR2yWb+EhG/oZ1njn8KPO4muzwmTf9we5G3bOsAsBkLhBXYlTeGB8n3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YlPTOFo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwQ/cf4J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BC41F00A3A;
-	Thu,  2 Jul 2026 17:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YlPTOFo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F531F000E9;
+	Thu,  2 Jul 2026 17:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011709;
-	bh=0nN8a9Ikw4pgA3o2Lo9+YrHN5mkC0CYlwzxH/FNSSEc=;
+	s=korg; t=1783011711;
+	bh=1Dx1avZifzZWawvRMFkWfn82r/P5JQncl+/MeG1Me18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KwQ/cf4JhBg8Nnv8jiB3TOGHD9dhHkomKHZIV478lwo0D1djkIFGYCzHRTIMK5/sI
-	 eQ1C50PJSZPnH0f55T46bZ0xBC7vZyIEBDJeMsXqGRvRWOIfsxmcFSzYc36pg8uJ+Y
-	 3G9PhtF9qasEp7f8B8E/syq1m5i60xIKcA2LD8VM=
+	b=1YlPTOFoilwhJMekhhr5X0tXS0tDmgV8ORaSelZ/OR6h9usaLQRTSpeO2eB4T9FDU
+	 OcRGoy1N+SF0dxKXfmTPo57mjEKgv0jxOmlzSgkStwu+jgi15N/JBkCK7R/3gJ0nQB
+	 5eBVmQ8sqOmvl7yvCpytSo8UUaEP5d2FwIejqPDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 7.1 104/120] i2c: core: fix adapter registration race
-Date: Thu,  2 Jul 2026 18:21:40 +0200
-Message-ID: <20260702155115.112326119@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.1 105/120] nfsd: release layout stid on setlease failure
+Date: Thu,  2 Jul 2026 18:21:41 +0200
+Message-ID: <20260702155115.133387703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -50,61 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Chris Mason <clm@meta.com>
 
-commit ba14d7cf2fe7284610a29854bdff22b2537d3ce6 upstream.
+commit 30d55c8aabb261bc3f427d6b9aae7ef6206063f9 upstream.
 
-Adapters can be looked up based on their id using i2c_get_adapter()
-which takes a reference to the embedded struct device.
+nfs4_alloc_stid() publishes the new stid into cl->cl_stateids via
+idr_alloc_cyclic() under cl_lock before returning to
+nfsd4_alloc_layout_stateid(). When nfsd4_layout_setlease() then
+fails, the error path frees the layout stateid directly with
+kmem_cache_free() without ever calling idr_remove(), leaving the
+IDR slot pointing at freed slab memory. Any subsequent IDR walker
+(states_show, client teardown) dereferences the dangling pointer.
 
-Make sure that the adapter (including its struct device) has been
-initialised before adding it to the IDR to avoid accessing uninitialised
-data which could, for example, lead to NULL-pointer dereferences or
-use-after-free.
+The correct teardown for an IDR-published stid is nfs4_put_stid(),
+which removes the IDR slot under cl_lock, dispatches sc_free
+(nfsd4_free_layout_stateid) to release ls->ls_file via
+nfsd4_close_layout(), and drops the nfs4_file reference in its
+tail.
 
-Note that the i2c-dev chardev, which is registered from a bus notifier,
-currently uses i2c_get_adapter() so the adapter needs to be added to the
-IDR before registration.
+A second issue blocks that switch: nfsd4_free_layout_stateid()
+unconditionally inspects ls->ls_fence_work via
+delayed_work_pending() under ls_lock, but
+INIT_DELAYED_WORK(&ls->ls_fence_work, ...) currently runs only
+after the setlease call. On the setlease-failure path the
+destructor would touch an uninitialized delayed_work.
 
-Fixes: 6e13e6418418 ("i2c: Add i2c_add_numbered_adapter()")
-Cc: stable@vger.kernel.org	# 2.6.22
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+    nfsd4_alloc_layout_stateid()
+      nfs4_alloc_stid()           /* idr_alloc_cyclic under cl_lock */
+      nfsd4_layout_setlease()     /* fails */
+        nfs4_put_stid()
+          nfsd4_free_layout_stateid()
+            delayed_work_pending(&ls->ls_fence_work)  /* needs INIT */
+            nfsd4_close_layout()  /* nfsd_file_put(ls->ls_file) */
+          put_nfs4_file()
+
+Fix by hoisting the ls_fenced / ls_fence_delay / INIT_DELAYED_WORK
+initialization above the nfsd4_layout_setlease() call, and replace
+the manual nfsd_file_put + put_nfs4_file + kmem_cache_free cleanup
+with a single nfs4_put_stid(stp).
+
+Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
+Cc: stable@vger.kernel.org
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4layouts.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1569,6 +1569,10 @@ static int i2c_register_adapter(struct i
- 	pm_suspend_ignore_children(&adap->dev, true);
- 	pm_runtime_enable(&adap->dev);
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -264,10 +264,12 @@ nfsd4_alloc_layout_stateid(struct nfsd4_
+ 		ls->ls_file = find_any_file(fp);
+ 	BUG_ON(!ls->ls_file);
  
-+	mutex_lock(&core_lock);
-+	idr_replace(&i2c_adapter_idr, adap, adap->nr);
-+	mutex_unlock(&core_lock);
++	ls->ls_fenced = false;
++	ls->ls_fence_delay = 0;
++	INIT_DELAYED_WORK(&ls->ls_fence_work, nfsd4_layout_fence_worker);
 +
- 	res = device_add(&adap->dev);
- 	if (res) {
- 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
-@@ -1627,7 +1631,7 @@ static int __i2c_add_numbered_adapter(st
- 	int id;
- 
- 	mutex_lock(&core_lock);
--	id = idr_alloc(&i2c_adapter_idr, adap, adap->nr, adap->nr + 1, GFP_KERNEL);
-+	id = idr_alloc(&i2c_adapter_idr, NULL, adap->nr, adap->nr + 1, GFP_KERNEL);
- 	mutex_unlock(&core_lock);
- 	if (WARN(id < 0, "couldn't get idr"))
- 		return id == -ENOSPC ? -EBUSY : id;
-@@ -1661,7 +1665,7 @@ int i2c_add_adapter(struct i2c_adapter *
+ 	if (nfsd4_layout_setlease(ls)) {
+-		nfsd_file_put(ls->ls_file);
+-		put_nfs4_file(fp);
+-		kmem_cache_free(nfs4_layout_stateid_cache, ls);
++		nfs4_put_stid(stp);
+ 		return NULL;
  	}
  
- 	mutex_lock(&core_lock);
--	id = idr_alloc(&i2c_adapter_idr, adapter,
-+	id = idr_alloc(&i2c_adapter_idr, NULL,
- 		       __i2c_first_dynamic_bus_num, 0, GFP_KERNEL);
- 	mutex_unlock(&core_lock);
- 	if (WARN(id < 0, "couldn't get idr"))
+@@ -280,10 +282,6 @@ nfsd4_alloc_layout_stateid(struct nfsd4_
+ 	list_add(&ls->ls_perfile, &fp->fi_lo_states);
+ 	spin_unlock(&fp->fi_lock);
+ 
+-	ls->ls_fenced = false;
+-	ls->ls_fence_delay = 0;
+-	INIT_DELAYED_WORK(&ls->ls_fence_work, nfsd4_layout_fence_worker);
+-
+ 	trace_nfsd_layoutstate_alloc(&ls->ls_stid.sc_stateid);
+ 	return ls;
+ }
 
 
