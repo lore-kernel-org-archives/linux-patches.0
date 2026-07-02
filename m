@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B82414DE5;
-	Thu,  2 Jul 2026 16:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20185388E4E;
+	Thu,  2 Jul 2026 16:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009414; cv=none; b=Sqwagfi0NrRZZJbG+M1mNbymD14px9jKI2vkb7VkKj3N/a9D0mtyp+1r5izA+edWKt6T+WREOk6ksdzvYdlVhICpcgBDPxGbYVWp1T/rz4iBmqAWeJk2kg7HQGh9XoZYjOFYcXEcK2mNYek5C4IdcK/hpfitA/lKZaglHop713U=
+	t=1783009413; cv=none; b=k8lQa/aYtK0oSPVVnGrW/3/LA5E+l3jt3u4mbE/okIBpN4fxN/ZQDp9L9Fcl0soOTmI89aIxIGDgABo3RtloxrdA4/G1wmtenb6+Ug1U5uwb6ub/kITHOS6gh8BcQGWubZA/XXZjPO5ejZEfwKDw1/xZZl/iFzbu8q0W6RdRQZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009414; c=relaxed/simple;
-	bh=MQUZqke4g27KghawRDBcbjHdRe1NM2DJr2sRyquF2Q8=;
+	s=arc-20240116; t=1783009413; c=relaxed/simple;
+	bh=yYqiGY0LIGl4daXsQgc1B1Wv/2UI7Q6WALo9QR9d7Sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wog+WFVoMw/E4ucRfAXHOxN6fo1Uh6ojUxwSLpsUyh6Pbls75CBQYnyWbR6QsHxeJ6GtfX0ktKSpXY18tzUNpguwYPz127CjM1eG5asLSv3v/45iQcLmPHfsReAZCEZzuEQ3KoWGqXZcaIQuQUzauDgTAjwjHVyHPyoXV9Na6sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdMCLcb4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nB6UpOMK74xiZE8x9gTSwM2PLyVYgfo5g6b8xueIB2pGuCmT068XLPnLS3ukYYmYUrID3yOhyaGLGYEC8EBIB+XyHWgf2e9waavniWw/URbopXijK7zZSBcfeq/l0o/t6B6ENoPt1JgXTMWewhpOkPVAqx3MrrHseS7EMG0AALM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9RttTdY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdMCLcb4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDAC1F00A3E;
-	Thu,  2 Jul 2026 16:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9RttTdY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B751F00A3D;
+	Thu,  2 Jul 2026 16:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009410;
-	bh=fggnnEQwdObJ2BdXANJSJUaFZvms6VwZGVjpQLJ/yuk=;
+	s=korg; t=1783009408;
+	bh=VwRdiKPycEzHyuu4mMvNTmif6vZxd6+xJ0y4v2W2LKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdMCLcb47zicGsq38BZoZsVL+CEGERC76SJf1VHB5Hz6+5SPPA94Uciasnq4Iopyf
-	 96pKnPQxWLXInMANBTU5M9LUcl+Bl6IzEKfGmfPnVpwgIMVKtEizpF5J9Xrb/4ySrj
-	 fxzvx+Gw1vqbVccH7GZeN5Sh7x+46K3v4Jl/NPzo=
+	b=o9RttTdY+9pcc/CrE4fMO33IMjYXF2TLxLX1f7eAH/zJppIgoBo2klTk+2EzxNkf5
+	 VFRaGe1keQXexb8j7u0EtyIlb+IFwOeTtGXU+GHLkmaUpztjC1PHl4ml8WGi6vt1rL
+	 8dk+tNCjJci9Kxr+Uj1tK0cAE13O8blroAieLlJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Wentao Guan <guanwentao@uniontech.com>,
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 04/96] net/sched: act_pedit: remove extra check for key type
-Date: Thu,  2 Jul 2026 18:18:56 +0200
-Message-ID: <20260702155109.055892028@linuxfoundation.org>
+Subject: [PATCH 5.10 39/96] batman-adv: tp_meter: fix fast recovery precondition
+Date: Thu,  2 Jul 2026 18:19:31 +0200
+Message-ID: <20260702155109.807354872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -54,96 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 577140180ba28d0d37bc898c7bd6702c83aa106f ]
+commit 2b0d08f08ed3b2174f05c43089ec65f3543a025b upstream.
 
-The netlink parsing already validates the key 'htype'.
-Remove the datapath check as it's redundant.
+The fast recovery precondition checks if the recover (initialized to
+BATADV_TP_FIRST_SEQ) is bigger than the received ack. But since recover is
+only updated when this check is successful, it will never enter the fast
+recovery mode.
 
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+According to RFC6582 Section 3.2 step 2, the check should actually be
+different:
+
+> When the third duplicate ACK is received, the TCP sender first
+> checks the value of recover to see if the Cumulative
+> Acknowledgment field covers more than recover
+
+The precondition must therefore check if recover is smaller than the
+received ack - basically swapping the operands of the current check.
+
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 29 +++++++----------------------
- 1 file changed, 7 insertions(+), 22 deletions(-)
+ net/batman-adv/tp_meter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 84152d3a492469..957ce9017c3f73 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -305,37 +305,28 @@ static bool offset_valid(struct sk_buff *skb, int offset)
- 	return true;
- }
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 118cb5dd285c2d..cd196842478686 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -738,7 +738,7 @@ static void batadv_tp_recv_ack(struct batadv_priv *bat_priv,
+ 		if (atomic_read(&tp_vars->dup_acks) != 3)
+ 			goto out;
  
--static int pedit_skb_hdr_offset(struct sk_buff *skb,
--				enum pedit_header_type htype, int *hoffset)
-+static void pedit_skb_hdr_offset(struct sk_buff *skb,
-+				 enum pedit_header_type htype, int *hoffset)
- {
--	int ret = -EINVAL;
--
-+	/* 'htype' is validated in the netlink parsing */
- 	switch (htype) {
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_ETH:
--		if (skb_mac_header_was_set(skb)) {
-+		if (skb_mac_header_was_set(skb))
- 			*hoffset = skb_mac_offset(skb);
--			ret = 0;
--		}
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP4:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP6:
- 		*hoffset = skb_network_offset(skb);
--		ret = 0;
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_TCP:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_UDP:
--		if (skb_transport_header_was_set(skb)) {
-+		if (skb_transport_header_was_set(skb))
- 			*hoffset = skb_transport_offset(skb);
--			ret = 0;
--		}
- 		break;
- 	default:
--		ret = -EINVAL;
- 		break;
- 	}
--
--	return ret;
- }
+-		if (recv_ack >= tp_vars->recover)
++		if (tp_vars->recover >= recv_ack)
+ 			goto out;
  
- static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
-@@ -367,10 +358,9 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
- 
- 	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
- 		int offset = tkey->off;
-+		int hoffset = 0;
- 		u32 *ptr, hdata;
--		int hoffset;
- 		u32 val;
--		int rc;
- 
- 		if (tkey_ex) {
- 			htype = tkey_ex->htype;
-@@ -379,12 +369,7 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
- 			tkey_ex++;
- 		}
- 
--		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
--		if (rc) {
--			pr_info("tc action pedit bad header type specified (0x%x)\n",
--				htype);
--			goto bad;
--		}
-+		pedit_skb_hdr_offset(skb, htype, &hoffset);
- 
- 		if (tkey->offmask) {
- 			u8 *d, _d;
+ 		/* if this is the third duplicate ACK do Fast Retransmit */
 -- 
 2.53.0
 
