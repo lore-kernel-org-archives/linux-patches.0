@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598383A9854;
-	Thu,  2 Jul 2026 16:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AB0339844;
+	Thu,  2 Jul 2026 16:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009695; cv=none; b=YnbchKa0XboJ9/oRvG6h0zQ67NhG03Mamu+S0NO9JO03fAd+3xU6MfY5TwAlbk8As6MEjtr6KVkdNE1obhOFMsp2ymPpBj62QUO9dsL4umZE9uTC+XYjuLnHhfmiRb4k1bb487+1i/E2Hdxdhmh1v6XtI3xKPkshP1I0m81XM3k=
+	t=1783009698; cv=none; b=j2iGDv79rgXfrB94uyhDk8+At9kDOpNp7RkOR1wRmHSjYFiY9PhuDwCOwBS8+YIC6tU2uwNbcMugD/jwVRKWX4WsPMAHy96Hfc/YVGusmc2i1SkCzgzCAjiL3k2SKeENjzrVo1+s01Ul9mvSsA/54th1uk+KfihM7a3kgLuQVdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009695; c=relaxed/simple;
-	bh=8gpsW2vKg/CtcVTJp6JZQSET15iq1LydF0fmDQouCtw=;
+	s=arc-20240116; t=1783009698; c=relaxed/simple;
+	bh=WctCFgjSZwwjM/Egs5LgJvw48lTNer43xRc78j4CA70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3Lg49WRjNu/aPOHYgwE8sfXojHaieLAnJ5ccrPAcMMPxVcMlQnMnnnHdbSFUDrW/fLjwMyRKzuxBD0mCSIGC9nvf8j0/D+kujXktbkC/SLFF30MSOKbBmEMXgEpKqxVVMl/ZUmWoidoC9RYx1J8xIYWVwVoB3CPfDzPk1MOXuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbG/fjVF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HIQ4DhTJ+aDsVr0CB+fN8ysUPbmqO6agA6Ccj2ITeQwhP1sa8AZhD7hKHuub+qxriVPJPXIYJ75hQ0br5N1dk/AnCSM5CVl3L3ygsK9WLaUARVrsfKJbhEkklDY25FO/c4MKmsXYW5PpkRwTnfd2puh+UzJNy15pGqI/XjsTvzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUobIkOE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbG/fjVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F681F00ADF;
-	Thu,  2 Jul 2026 16:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUobIkOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F441F000E9;
+	Thu,  2 Jul 2026 16:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009691;
-	bh=xOKS0WDNjmX4qFhktXPPPMDnmZt/r4obpJnDm4KTkUE=;
+	s=korg; t=1783009693;
+	bh=3/1BYjuq+X/1bRm5gr4bmKOSDt3JLb+lxu2sAzQgEf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DbG/fjVFr8JJD5mHMXAmq3sNABbnJwDmzGInj4FPzHWfuII9+AKVPQI0HBtGmMQ+P
-	 37NZgL9qDYftxv7pPXOrbWqfuA8E7TKBWizVuCVr/cbDI6AAauuYjvoTVvYly9zWLD
-	 VpXR4s3+1wHGloNyx7OqKQTKRG0W+3yQuNW4M/QA=
+	b=hUobIkOEEpl0Bhh6nLVUDnH8SbfKCs60COgWeco2Bhp12Gv/SV1ra7s3D5udO8PaI
+	 yk9iUXlcNxxI+vyvX1vmVKXNBG/mkXcdHiKi87agUb/AEueE0LqVzayZAmcikc7s0X
+	 JpGBS6907Id2pwc2uijVoV7harSIll7MpTy4/iWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	David Howells <dhowells@redhat.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Bjoern Doebel <doebel@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 52/95] batman-adv: tvlv: avoid race of cifsnotfound handler state
-Date: Thu,  2 Jul 2026 18:19:55 +0200
-Message-ID: <20260702155110.305542484@linuxfoundation.org>
+Subject: [PATCH 5.15 53/95] ring-buffer: Remove ring_buffer_read_prepare_sync()
+Date: Thu,  2 Jul 2026 18:19:56 +0200
+Message-ID: <20260702155110.325076496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -51,153 +54,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Bjoern Doebel <doebel@amazon.de>
 
-commit edb557b2ba38fea2c5eb710cf366c797e187218c upstream.
+[ Upstream commit 119a5d573622ae90ba730d18acfae9bb75d77b9a ]
 
-TVLV handlers can have the flag BATADV_TVLV_HANDLER_OGM_CIFNOTFND set to
-signal that the OGM handler should be called (with NULL for data) when the
-specific TVLV container was not found in the OGM. This is used by:
+When the ring buffer was first introduced, reading the non-consuming
+"trace" file required disabling the writing of the ring buffer. To make
+sure the writing was fully disabled before iterating the buffer with a
+non-consuming read, it would set the disable flag of the buffer and then
+call an RCU synchronization to make sure all the buffers were
+synchronized.
 
-* DAT
-* GW
-* Multicast (OGM + Tracker)
+The function ring_buffer_read_start() originally  would initialize the
+iterator and call an RCU synchronization, but this was for each individual
+per CPU buffer where this would get called many times on a machine with
+many CPUs before the trace file could be read. The commit 72c9ddfd4c5bf
+("ring-buffer: Make non-consuming read less expensive with lots of cpus.")
+separated ring_buffer_read_start into ring_buffer_read_prepare(),
+ring_buffer_read_sync() and then ring_buffer_read_start() to allow each of
+the per CPU buffers to be prepared, call the read_buffer_read_sync() once,
+and then the ring_buffer_read_start() for each of the CPUs which made
+things much faster.
 
-The state whether the handler was executed was stored in the struct
-batadv_tvlv_handler. But the TVLV processing is started without any lock.
-Multiple parallel contexts processing TVLVs would therefore overwrite each
-others BATADV_TVLV_HANDLER_OGM_CALLED flag in the shared
-batadv_tvlv_handler.
+The commit 1039221cc278 ("ring-buffer: Do not disable recording when there
+is an iterator") removed the requirement of disabling the recording of the
+ring buffer in order to iterate it, but it did not remove the
+synchronization that was happening that was required to wait for all the
+buffers to have no more writers. It's now OK for the buffers to have
+writers and no synchronization is needed.
 
-Drop the shared BATADV_TVLV_HANDLER_OGM_CALLED flag and instead determine,
-per TVLV buffer, whether a matching container was present by scanning the
-packet's buffer.
+Remove the synchronization and put back the interface for the ring buffer
+iterator back before commit 72c9ddfd4c5bf was applied.
 
-Cc: stable@kernel.org
-Fixes: ef26157747d4 ("batman-adv: tvlv - basic infrastructure")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250630180440.3eabb514@batman.local.home
+Reported-by: David Howells <dhowells@redhat.com>
+Fixes: 1039221cc278 ("ring-buffer: Do not disable recording when there is an iterator")
+Tested-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+
+Assisted-by: Kiro:claude-opus-4.8
+[doebel@amazon.de: move patch section using guard() macro into a
+separate block to address declaration after statement warning.]
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tvlv.c  | 63 ++++++++++++++++++++++++++++++++++++++----
- net/batman-adv/types.h |  7 -----
- 2 files changed, 57 insertions(+), 13 deletions(-)
+ include/linux/ring_buffer.h |  4 +--
+ kernel/trace/ring_buffer.c  | 72 ++++++++-----------------------------
+ kernel/trace/trace.c        | 14 +++-----
+ kernel/trace/trace_kdb.c    |  8 ++---
+ 4 files changed, 22 insertions(+), 76 deletions(-)
 
-diff --git a/net/batman-adv/tvlv.c b/net/batman-adv/tvlv.c
-index 66c2043dc1df91..6eb95bd7a4bc36 100644
---- a/net/batman-adv/tvlv.c
-+++ b/net/batman-adv/tvlv.c
-@@ -394,7 +394,6 @@ static int batadv_tvlv_call_handler(struct batadv_priv *bat_priv,
- 		tvlv_handler->ogm_handler(bat_priv, orig_node,
- 					  BATADV_NO_FLAGS,
- 					  tvlv_value, tvlv_value_len);
--		tvlv_handler->flags |= BATADV_TVLV_HANDLER_OGM_CALLED;
- 	} else {
- 		if (!src)
- 			return NET_RX_SUCCESS;
-@@ -413,6 +412,48 @@ static int batadv_tvlv_call_handler(struct batadv_priv *bat_priv,
- 	return NET_RX_SUCCESS;
- }
+diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
+index 3e7bfc0f65aee2..b53335ed2d0efc 100644
+--- a/include/linux/ring_buffer.h
++++ b/include/linux/ring_buffer.h
+@@ -130,9 +130,7 @@ ring_buffer_consume(struct trace_buffer *buffer, int cpu, u64 *ts,
+ 		    unsigned long *lost_events);
  
-+/**
-+ * batadv_tvlv_containers_contain() - check if a tvlv buffer holds a container
-+ * @tvlv_value: tvlv content
-+ * @tvlv_value_len: tvlv content length
-+ * @type: tvlv container type to look for
-+ * @version: tvlv container version to look for
-+ *
-+ * Return: true if a container of the given type and version is present in the
-+ * tvlv buffer, false otherwise.
-+ */
-+static bool batadv_tvlv_containers_contain(void *tvlv_value,
-+					   u16 tvlv_value_len, u8 type,
-+					   u8 version)
-+{
-+	struct batadv_tvlv_hdr *tvlv_hdr;
-+	u16 tvlv_value_cont_len;
-+
-+	while (tvlv_value_len >= sizeof(*tvlv_hdr)) {
-+		tvlv_hdr = tvlv_value;
-+		tvlv_value_cont_len = ntohs(tvlv_hdr->len);
-+		tvlv_value = tvlv_hdr + 1;
-+		tvlv_value_len -= sizeof(*tvlv_hdr);
-+
-+		if (tvlv_value_cont_len > tvlv_value_len)
-+			break;
-+
-+		/* the next tvlv header is accessed assuming (at least) 2-byte
-+		 * alignment, so it must start at an even offset.
-+		 */
-+		if (tvlv_value_cont_len & 1)
-+			break;
-+
-+		if (tvlv_hdr->type == type && tvlv_hdr->version == version)
-+			return true;
-+
-+		tvlv_value = (u8 *)tvlv_value + tvlv_value_cont_len;
-+		tvlv_value_len -= tvlv_value_cont_len;
-+	}
-+
-+	return false;
-+}
-+
+ struct ring_buffer_iter *
+-ring_buffer_read_prepare(struct trace_buffer *buffer, int cpu, gfp_t flags);
+-void ring_buffer_read_prepare_sync(void);
+-void ring_buffer_read_start(struct ring_buffer_iter *iter);
++ring_buffer_read_start(struct trace_buffer *buffer, int cpu, gfp_t flags);
+ void ring_buffer_read_finish(struct ring_buffer_iter *iter);
+ 
+ struct ring_buffer_event *
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index e44115db0efe35..e7c472729542d9 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5037,28 +5037,20 @@ ring_buffer_consume(struct trace_buffer *buffer, int cpu, u64 *ts,
+ EXPORT_SYMBOL_GPL(ring_buffer_consume);
+ 
  /**
-  * batadv_tvlv_containers_process() - parse the given tvlv buffer to call the
-  *  appropriate handlers
-@@ -433,7 +474,9 @@ int batadv_tvlv_containers_process(struct batadv_priv *bat_priv,
- 				   u8 *src, u8 *dst,
- 				   void *tvlv_value, u16 tvlv_value_len)
+- * ring_buffer_read_prepare - Prepare for a non consuming read of the buffer
++ * ring_buffer_read_start - start a non consuming read of the buffer
+  * @buffer: The ring buffer to read from
+  * @cpu: The cpu buffer to iterate over
+  * @flags: gfp flags to use for memory allocation
+  *
+- * This performs the initial preparations necessary to iterate
+- * through the buffer.  Memory is allocated, buffer recording
+- * is disabled, and the iterator pointer is returned to the caller.
+- *
+- * Disabling buffer recording prevents the reading from being
+- * corrupted. This is not a consuming read, so a producer is not
+- * expected.
+- *
+- * After a sequence of ring_buffer_read_prepare calls, the user is
+- * expected to make at least one call to ring_buffer_read_prepare_sync.
+- * Afterwards, ring_buffer_read_start is invoked to get things going
+- * for real.
++ * This creates an iterator to allow non-consuming iteration through
++ * the buffer. If the buffer is disabled for writing, it will produce
++ * the same information each time, but if the buffer is still writing
++ * then the first hit of a write will cause the iteration to stop.
+  *
+- * This overall must be paired with ring_buffer_read_finish.
++ * Must be paired with ring_buffer_read_finish.
+  */
+ struct ring_buffer_iter *
+-ring_buffer_read_prepare(struct trace_buffer *buffer, int cpu, gfp_t flags)
++ring_buffer_read_start(struct trace_buffer *buffer, int cpu, gfp_t flags)
  {
-+	u16 tvlv_value_start_len = tvlv_value_len;
- 	struct batadv_tvlv_handler *tvlv_handler;
-+	void *tvlv_value_start = tvlv_value;
- 	struct batadv_tvlv_hdr *tvlv_hdr;
- 	u16 tvlv_value_cont_len;
- 	u8 cifnotfound = BATADV_TVLV_HANDLER_OGM_CIFNOTFND;
-@@ -473,12 +516,20 @@ int batadv_tvlv_containers_process(struct batadv_priv *bat_priv,
- 	rcu_read_lock();
- 	hlist_for_each_entry_rcu(tvlv_handler,
- 				 &bat_priv->tvlv.handler_list, list) {
--		if ((tvlv_handler->flags & BATADV_TVLV_HANDLER_OGM_CIFNOTFND) &&
--		    !(tvlv_handler->flags & BATADV_TVLV_HANDLER_OGM_CALLED))
--			tvlv_handler->ogm_handler(bat_priv, orig_node,
--						  cifnotfound, NULL, 0);
-+		if (!(tvlv_handler->flags & BATADV_TVLV_HANDLER_OGM_CIFNOTFND))
-+			continue;
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+ 	struct ring_buffer_iter *iter;
+@@ -5083,51 +5075,15 @@ ring_buffer_read_prepare(struct trace_buffer *buffer, int cpu, gfp_t flags)
  
--		tvlv_handler->flags &= ~BATADV_TVLV_HANDLER_OGM_CALLED;
-+		/* if the corresponding container was present then the handler
-+		 * was already called from the loop above
-+		 */
-+		if (batadv_tvlv_containers_contain(tvlv_value_start,
-+						   tvlv_value_start_len,
-+						   tvlv_handler->type,
-+						   tvlv_handler->version))
-+			continue;
-+
-+		tvlv_handler->ogm_handler(bat_priv, orig_node,
-+					  cifnotfound, NULL, 0);
- 	}
- 	rcu_read_unlock();
+ 	atomic_inc(&cpu_buffer->resize_disabled);
  
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index f0d5701265ef48..586679ad574f72 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -2447,13 +2447,6 @@ enum batadv_tvlv_handler_flags {
- 	 *  will call this handler even if its type was not found (with no data)
- 	 */
- 	BATADV_TVLV_HANDLER_OGM_CIFNOTFND = BIT(1),
+-	return iter;
+-}
+-EXPORT_SYMBOL_GPL(ring_buffer_read_prepare);
++	{
++		guard(raw_spinlock_irqsave)(&cpu_buffer->reader_lock);
+ 
+-/**
+- * ring_buffer_read_prepare_sync - Synchronize a set of prepare calls
+- *
+- * All previously invoked ring_buffer_read_prepare calls to prepare
+- * iterators will be synchronized.  Afterwards, read_buffer_read_start
+- * calls on those iterators are allowed.
+- */
+-void
+-ring_buffer_read_prepare_sync(void)
+-{
+-	synchronize_rcu();
+-}
+-EXPORT_SYMBOL_GPL(ring_buffer_read_prepare_sync);
 -
--	/**
--	 * @BATADV_TVLV_HANDLER_OGM_CALLED: interval tvlv handling flag - the
--	 *  API marks a handler as being called, so it won't be called if the
--	 *  BATADV_TVLV_HANDLER_OGM_CIFNOTFND flag was set
--	 */
--	BATADV_TVLV_HANDLER_OGM_CALLED = BIT(2),
- };
+-/**
+- * ring_buffer_read_start - start a non consuming read of the buffer
+- * @iter: The iterator returned by ring_buffer_read_prepare
+- *
+- * This finalizes the startup of an iteration through the buffer.
+- * The iterator comes from a call to ring_buffer_read_prepare and
+- * an intervening ring_buffer_read_prepare_sync must have been
+- * performed.
+- *
+- * Must be paired with ring_buffer_read_finish.
+- */
+-void
+-ring_buffer_read_start(struct ring_buffer_iter *iter)
+-{
+-	struct ring_buffer_per_cpu *cpu_buffer;
+-	unsigned long flags;
+-
+-	if (!iter)
+-		return;
+-
+-	cpu_buffer = iter->cpu_buffer;
++		arch_spin_lock(&cpu_buffer->lock);
++		rb_iter_reset(iter);
++		arch_spin_unlock(&cpu_buffer->lock);
++	}
  
- #endif /* _NET_BATMAN_ADV_TYPES_H_ */
+-	raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+-	arch_spin_lock(&cpu_buffer->lock);
+-	rb_iter_reset(iter);
+-	arch_spin_unlock(&cpu_buffer->lock);
+-	raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
++	return iter;
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_read_start);
+ 
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 537360be8e4e0d..1a29a9d9e86853 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4803,21 +4803,15 @@ __tracing_open(struct inode *inode, struct file *file, bool snapshot)
+ 	if (iter->cpu_file == RING_BUFFER_ALL_CPUS) {
+ 		for_each_tracing_cpu(cpu) {
+ 			iter->buffer_iter[cpu] =
+-				ring_buffer_read_prepare(iter->array_buffer->buffer,
+-							 cpu, GFP_KERNEL);
+-		}
+-		ring_buffer_read_prepare_sync();
+-		for_each_tracing_cpu(cpu) {
+-			ring_buffer_read_start(iter->buffer_iter[cpu]);
++				ring_buffer_read_start(iter->array_buffer->buffer,
++						       cpu, GFP_KERNEL);
+ 			tracing_iter_reset(iter, cpu);
+ 		}
+ 	} else {
+ 		cpu = iter->cpu_file;
+ 		iter->buffer_iter[cpu] =
+-			ring_buffer_read_prepare(iter->array_buffer->buffer,
+-						 cpu, GFP_KERNEL);
+-		ring_buffer_read_prepare_sync();
+-		ring_buffer_read_start(iter->buffer_iter[cpu]);
++			ring_buffer_read_start(iter->array_buffer->buffer,
++					       cpu, GFP_KERNEL);
+ 		tracing_iter_reset(iter, cpu);
+ 	}
+ 
+diff --git a/kernel/trace/trace_kdb.c b/kernel/trace/trace_kdb.c
+index 59857a1ee44cdf..628c25693cef2f 100644
+--- a/kernel/trace/trace_kdb.c
++++ b/kernel/trace/trace_kdb.c
+@@ -43,17 +43,15 @@ static void ftrace_dump_buf(int skip_entries, long cpu_file)
+ 	if (cpu_file == RING_BUFFER_ALL_CPUS) {
+ 		for_each_tracing_cpu(cpu) {
+ 			iter.buffer_iter[cpu] =
+-			ring_buffer_read_prepare(iter.array_buffer->buffer,
+-						 cpu, GFP_ATOMIC);
+-			ring_buffer_read_start(iter.buffer_iter[cpu]);
++			ring_buffer_read_start(iter.array_buffer->buffer,
++					       cpu, GFP_ATOMIC);
+ 			tracing_iter_reset(&iter, cpu);
+ 		}
+ 	} else {
+ 		iter.cpu_file = cpu_file;
+ 		iter.buffer_iter[cpu_file] =
+-			ring_buffer_read_prepare(iter.array_buffer->buffer,
++			ring_buffer_read_start(iter.array_buffer->buffer,
+ 						 cpu_file, GFP_ATOMIC);
+-		ring_buffer_read_start(iter.buffer_iter[cpu_file]);
+ 		tracing_iter_reset(&iter, cpu_file);
+ 	}
+ 
 -- 
 2.53.0
 
