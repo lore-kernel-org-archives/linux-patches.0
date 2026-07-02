@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB25F309EE9;
-	Thu,  2 Jul 2026 17:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5744F26F46F;
+	Thu,  2 Jul 2026 17:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011623; cv=none; b=mkohknd3UfRv7WgtHAv+Pb7lm5BVXYQ4TUGPJcjjoMwgQBwNVR+tFuHcqP0CYOjVxfW+yJnSAgL49+9VyosffPiVNQ2tP88jU60awSW4zvbFQHAOKy5s7SBT29EU8trBWoWeVQf/0Wfr+irO2O2ymZL+B+6puYpxPjMdSCxDfm8=
+	t=1783011626; cv=none; b=L9FCr7AEJmSlL6xkO0is/0ZU5UCK2rpFreOZaFc6EbdPFX3vtW6wi3EwtxVTMR+nPSpiVKzV2A+fQ6YQywdKaL4+PyJiFnR+YqFEdKsuicI21zddvk3HLOCrA0fD4Jo3c889XzzB5wE8n/F1Ec8gvGbEVOFrQct4+7WZGTKdB5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011623; c=relaxed/simple;
-	bh=4hMLFzxSe1Y4/4UVsAs7HsBkoZyH3aH8RPKMjJqaDZY=;
+	s=arc-20240116; t=1783011626; c=relaxed/simple;
+	bh=edV5hsRcOC4J4UxYPwp6IOzkBuj8Uo+5IA5+YdzLw3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lL4IqevKGtOhndLCTpPPWgal2gKkwFtm2s2tMZYlnifRZnD9djXQNWffa+ABougsoYAlx7WcMmPerXINk0b2QsROvXdAr54UKJCqNCviM4+fl4imRSJE1z7av2GcfsmhLvWFQiixWGraURh/sNsunFPvnDSysX+xfXATNGUTdf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdUqPri8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fzmLJbQxmrtYq7U6fADNr6NJN6p7qGEXfWMchH2/AmvErZOJ/t2jBgKIpXA5qPxCTxWnCEfErtCAcGXJL/Qp2AmKZB7NXlxUttEp1i+zXIgCTH8msYAutrCUAFeKBqIqJQjK+/cz6aEes11YBcwv3Ms06X19xmEo5fDLTs9fh4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvzUbry0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdUqPri8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFB71F000E9;
-	Thu,  2 Jul 2026 17:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvzUbry0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4EE1F000E9;
+	Thu,  2 Jul 2026 17:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011622;
-	bh=LPHBcQrNxfYP/doUSg6ooYNXrTPHaSBBc3IRj5wj/lE=;
+	s=korg; t=1783011625;
+	bh=bvnxidkrxNs7CFhdfhLvoSUoDpt0zuIehGXpYNkOr1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cdUqPri8pR16+Lej5mMm8QV/XyvMdFDwx2IwoGKreKKjJM814NCqhMrxOKsjRcZ0p
-	 0Orkm0i6c4gsmZRAv0A1tWOD+37PNwu07M32wKUhjZulRuHJpiQJOb4YUq8a+YbRVS
-	 iOq4ucXsTuX2WDc67aTVok1R/4zU+7ZfYoV1ibP8=
+	b=VvzUbry0+mte/z61ppLvqcrIhzr5OV8qWXJjsACHo5Fw0rmOnor1qcMxhxocThD9p
+	 9Tr/zl3UNf5lYV1sV2pVK6S+0SWtxYRaFyVfcsEg1M/uOzJOZaWSQKYVPaUn6q3L6I
+	 B3OJ0LU+jbE1DzKT/ggGEAp6TX6hMe3WTcDNTw6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.1 070/120] f2fs: fix incorrect FI_NO_EXTENT handling in __destroy_extent_node()
-Date: Thu,  2 Jul 2026 18:21:06 +0200
-Message-ID: <20260702155114.407659626@linuxfoundation.org>
+Subject: [PATCH 7.1 071/120] f2fs: keep atomic write retry from zeroing original data
+Date: Thu,  2 Jul 2026 18:21:07 +0200
+Message-ID: <20260702155114.427866537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -51,85 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit 1f70ddb28a3c71df124da5fa4040c808116d6bb9 upstream.
+commit 6d874b65aadce56ac78f76129dbcfc2599b638f8 upstream.
 
-When __destroy_extent_node() sets the inode flag FI_NO_EXTENT, it does
-not reset the length of the largest extent to 0 and update the inode
-folio. Since modifications to the extent tree are disallowed afterward,
-the cached largest extent may become stale. This can trigger the
-following error in xfstests generic/388:
+A partial atomic write reserves a block in the COW inode before reading the
+original data page for the untouched bytes in that page.
 
-F2FS-fs (dm-0): sanity_check_extent_cache: inode (ino=1761) extent info [220057, 57, 6] is incorrect, run fsck to fix
+If that read fails, write_begin returns an error but leaves the COW inode
+entry as NEW_ADDR. A retry of the same partial write then finds the COW
+entry, treats it as existing COW data, and f2fs_write_begin() zeroes the
+whole folio because blkaddr is NEW_ADDR.
 
-In the f2fs_drop_inode path, __destroy_extent_node() does not need to
-guarantee that et->node_cnt is 0, because concurrency with writeback
-is expected in this path, and writeback may update the extent cache.
+If the retry is committed, the bytes outside the retried write range are
+committed as zeroes instead of preserving the original file contents.
 
-This patch reverts commit ed78aeebef05 ("f2fs: fix node_cnt race between
-extent node destroy and writeback"), and remove the unnecessary zero
-check of et->node_cnt.
+Only use the COW inode as the read source when it already has a real data
+block. If the COW entry is still NEW_ADDR, treat it as a reservation to
+reuse: keep reading the old data from the original inode and avoid
+reserving or accounting the same atomic block again.
 
-Fixes: ed78aeebef05 ("f2fs: fix node_cnt race between extent node destroy and writeback")
-Cc: stable@vger.kernel.org
-Reported-by: Chao Yu <chao@kernel.org>
-Suggested-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Cc: stable@kernel.org
+Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/extent_cache.c |   19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ fs/f2fs/data.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -119,10 +119,9 @@ static bool __may_extent_tree(struct ino
- 	if (!__init_may_extent_tree(inode, type))
- 		return false;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -3828,6 +3828,7 @@ static int prepare_atomic_write_begin(st
+ 	pgoff_t index = folio->index;
+ 	int err = 0;
+ 	block_t ori_blk_addr = NULL_ADDR;
++	bool cow_has_reserved_block = false;
  
--	if (is_inode_flag_set(inode, FI_NO_EXTENT))
--		return false;
--
- 	if (type == EX_READ) {
-+		if (is_inode_flag_set(inode, FI_NO_EXTENT))
-+			return false;
- 		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
- 				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
- 			return false;
-@@ -645,14 +644,10 @@ static unsigned int __destroy_extent_nod
- 
- 	while (atomic_read(&et->node_cnt)) {
- 		write_lock(&et->lock);
--		if (!is_inode_flag_set(inode, FI_NO_EXTENT))
--			set_inode_flag(inode, FI_NO_EXTENT);
- 		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
- 		write_unlock(&et->lock);
+ 	/* If pos is beyond the end of file, reserve a new block in COW inode */
+ 	if ((pos & PAGE_MASK) >= i_size_read(inode))
+@@ -3837,9 +3838,11 @@ static int prepare_atomic_write_begin(st
+ 	err = __find_data_block(cow_inode, index, blk_addr);
+ 	if (err) {
+ 		return err;
+-	} else if (*blk_addr != NULL_ADDR) {
++	} else if (__is_valid_data_blkaddr(*blk_addr)) {
+ 		*use_cow = true;
+ 		return 0;
++	} else if (*blk_addr == NEW_ADDR) {
++		cow_has_reserved_block = true;
  	}
  
--	f2fs_bug_on(sbi, atomic_read(&et->node_cnt));
--
- 	return node_cnt;
- }
+ 	if (is_inode_flag_set(inode, FI_ATOMIC_REPLACE))
+@@ -3852,10 +3855,13 @@ static int prepare_atomic_write_begin(st
  
-@@ -691,12 +686,12 @@ static void __update_extent_tree_range(s
+ reserve_block:
+ 	/* Finally, we should reserve a new block in COW inode for the update */
+-	err = __reserve_data_block(cow_inode, index, blk_addr, node_changed);
+-	if (err)
+-		return err;
+-	inc_atomic_write_cnt(inode);
++	if (!cow_has_reserved_block) {
++		err = __reserve_data_block(cow_inode, index, blk_addr,
++					   node_changed);
++		if (err)
++			return err;
++		inc_atomic_write_cnt(inode);
++	}
  
- 	write_lock(&et->lock);
- 
--	if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
--		write_unlock(&et->lock);
--		return;
--	}
--
- 	if (type == EX_READ) {
-+		if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
-+			write_unlock(&et->lock);
-+			return;
-+		}
-+
- 		prev = et->largest;
- 		dei.len = 0;
- 
+ 	if (ori_blk_addr != NULL_ADDR)
+ 		*blk_addr = ori_blk_addr;
 
 
