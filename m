@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C09639DBD4;
-	Thu,  2 Jul 2026 16:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78E13438A6;
+	Thu,  2 Jul 2026 16:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009637; cv=none; b=ivIh72xroajQf9CLX9OXKNiRQy6t5RUXpQtp48PyHXUaBWOho2LgtD+mGxpxuW+0g/Ay1aITqRvV5zM3fA6GdguWiGMiemCT2GGDMgC9kcUC/ImAe0Og4659wgoM+b1VKMJJv8ymddB0hzvyDhF6vc+9Viva3rvUWAYvKq5EN/o=
+	t=1783009641; cv=none; b=sMxgQFhEvwYGnLiwpvgImY8uZCbVTlqZ2k5mLOhkHk0wrL0jILE+VRDLetsGy5DR3TGmE1T62HFudA6l7hrW4DoH2FBiQeXWb8IY03riTAemIAUHcpcUaijncre3+huUiIAntzlr1OgfJeC54MIrTetlASbRL47OzzqN2DtNEcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009637; c=relaxed/simple;
-	bh=oHzUhGDpse21stiP8yivi55tTmW8djIGHazNn8g7sZE=;
+	s=arc-20240116; t=1783009641; c=relaxed/simple;
+	bh=gIjx9j+jHUI3Q5rYWzyk9Bs9hqhsePkWbuNvgw/wjfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3lszvwIvhkSgmF3JofXm9D4SgR8UgkDjssz2369aBCqmTsGbxKOlLf6HAbJzxo+GZzg2BZmeSvfo4NJbXkXImVHe947S7aAmFWPdZvmi+qnZckjEzmspvagiCh0McVzkJW5k9Rz8l/HHJ6QBc2docuIWO7A0UbQLiDo6+0FmW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzd9Z6yh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O02d+PabOnQY1i7aEqZNKnb97jGvbVGBT1qSB0XGKEowkoFXc+xL7+RP+OniU9Y0Cerw3vm3lqwLn2PqSZL2b+7TCrO6Lt1hRXO277XDusbpLbT3hmM8hJgD/RqiNlBryfhYe1eYmRU2xSGWWDHrYNZUP64odM7sNRVekjfpINg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb6jS28Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzd9Z6yh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317961F00A3A;
-	Thu,  2 Jul 2026 16:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb6jS28Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB421F000E9;
+	Thu,  2 Jul 2026 16:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009633;
-	bh=rD/qEj8hqz5hRZqKFPNlHXaNvPw7Mj5NTyTgGC/j1fs=;
+	s=korg; t=1783009636;
+	bh=jeKLN3VgHt1925Umd6SzZLaTAYO+vUS7luG38THmkn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rzd9Z6yhg0W5SavQUOLCE5dnHR9sdSGvJDI4Wp0+6DKnxbIalFGhdoPQ+ljvIWxeg
-	 NCoRM9gVWuQSRUechaLSSFeWTpeue4laounR1kln/W+1hTKyoEzQb1mH+p6ymd2IoN
-	 k3e2GMJbdC+clueccCmV6GOuU6BrUPITh9mWUFaE=
+	b=Cb6jS28QJuQff+amb0/eFa3QvF5tlmqeqc7P5OMnE0q7jizecgrxz+Q2+0l48r2+i
+	 MIRuWdiPw86QvFnDeqQZMFAKA/R3U1W+nBfEvKi2z9pzWEyzzNIH6GpJsT/x2Flb+6
+	 tUQbag0VaWsq91r0ChKa/UJvndy/7TUsLYhTuHiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 29/95] batman-adv: tp_meter: initialize dup_acks explicitly
-Date: Thu,  2 Jul 2026 18:19:32 +0200
-Message-ID: <20260702155109.820550562@linuxfoundation.org>
+Subject: [PATCH 5.15 03/95] net/sched: act_pedit: rate limit datapath messages
+Date: Thu,  2 Jul 2026 18:19:06 +0200
+Message-ID: <20260702155109.277008433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -51,40 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit b2b68b32a715e0328662801576974aa37b942b00 upstream.
+[ Upstream commit e3c9673e2f6e1b3aa4bb87c570336e10f364c28a ]
 
-When an ack with a sequence number equal to the last_acked is received, the
-dup_acks counter is increased to decide whether fast retransmit should be
-performed. Only when the sequence numbers are not equal, the dup_acks is
-set to the initial value (0).
+Unbounded info messages in the pedit datapath can flood the printk
+ring buffer quite easily depending on the action created.
+As these messages are informational, usually printing some, not all,
+is enough to bring attention to the real issue.
 
-But if the initial packet would have the sequence number
-BATADV_TP_FIRST_SEQ, dup_acks would not be initialized and atomic_inc would
-operate on an undefined starting value. It is therefore required to have it
-explicitly initialized during the start of the sender session.
-
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+(cherry picked from commit e3c9673e2f6e1b3aa4bb87c570336e10f364c28a)
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sched/act_pedit.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index e8792e1e4eedfa..2b68eacd7bf51d 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -1045,6 +1045,7 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
- 	tp_vars->icmp_uid = icmp_uid;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 999ac09e33d5dc..345fd5645e1dd2 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -429,8 +429,8 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 			u8 *d, _d;
  
- 	tp_vars->last_sent = BATADV_TP_FIRST_SEQ;
-+	atomic_set(&tp_vars->dup_acks, 0);
- 	atomic_set(&tp_vars->last_acked, BATADV_TP_FIRST_SEQ);
- 	tp_vars->fast_recovery = false;
- 	tp_vars->recover = BATADV_TP_FIRST_SEQ;
+ 			if (!offset_valid(skb, hoffset + tkey->at)) {
+-				pr_info("tc action pedit 'at' offset %d out of bounds\n",
+-					hoffset + tkey->at);
++				pr_info_ratelimited("tc action pedit 'at' offset %d out of bounds\n",
++						    hoffset + tkey->at);
+ 				goto bad;
+ 			}
+ 			d = skb_header_pointer(skb, hoffset + tkey->at,
+@@ -440,14 +440,13 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 
+ 			offset += (*d & tkey->offmask) >> tkey->shift;
+ 			if (offset % 4) {
+-				pr_info("tc action pedit offset must be on 32 bit boundaries\n");
++				pr_info_ratelimited("tc action pedit offset must be on 32 bit boundaries\n");
+ 				goto bad;
+ 			}
+ 		}
+ 
+ 		if (!offset_valid(skb, hoffset + offset)) {
+-			pr_info("tc action pedit offset %d out of bounds\n",
+-				hoffset + offset);
++			pr_info_ratelimited("tc action pedit offset %d out of bounds\n", hoffset + offset);
+ 			goto bad;
+ 		}
+ 
+@@ -464,8 +463,7 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 			val = (*ptr + tkey->val) & ~tkey->mask;
+ 			break;
+ 		default:
+-			pr_info("tc action pedit bad command (%d)\n",
+-				cmd);
++			pr_info_ratelimited("tc action pedit bad command (%d)\n", cmd);
+ 			goto bad;
+ 		}
+ 
 -- 
 2.53.0
 
