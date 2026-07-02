@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CEF30EF95;
-	Thu,  2 Jul 2026 16:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E8530EF95;
+	Thu,  2 Jul 2026 16:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011437; cv=none; b=N04Zg44JzKQqA7cjLeaLUwz1dfkM9mLZ9JaSikhZiS/KBNEKHV4ANM56ILYW4wwWmwWQD9LTXMjQ7fdeO6NCeX2WvUVrzk+3LGn9h4UdHJPTsxC3BvotQytGm7UluZR3j6WgYGXdjANNcUgC+bjI9FLmuL8RlCF+6rzIY4NYIRo=
+	t=1783011439; cv=none; b=Z3tbWjl036Fe5llUI313Q3vsQaKQhgvQuj+j1X1o/1lKQMLoZWX6gkKBpO+WvdIf1n1Ivz0I/mlgYWa9mAqwurXR0iugfPxtIdykMAgv6F9fP67oZzGMv5PYWtlVTVKvMiFwqYWLjmmGkxIQSklhe5kldVbbU3ZLgucZqRoFgek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011437; c=relaxed/simple;
-	bh=HovX4KDD7CRtkx6Y+7ycWAJCYXO56YFHLASDNfT2kSo=;
+	s=arc-20240116; t=1783011439; c=relaxed/simple;
+	bh=o5BTlOUvuYC25nxoXsVZkzNz4SXu+bj31/UaWi64uxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYwrVn3UPu8jLreWZRIv5q7BrZ9v3HYPPFhoALv5oyP4TQrx1aoIxEQS6Fd0eUZwrWxk+5jG4fNiqVF0d/tBCflUtxq/LBv9fnYtIpbOLwiog/+Sf1iE+ft0TDbS7URXryWaiMxTl60YpMr5L8y2ndrf6UmkC/WxzlOmjWrfsWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCbl1dLW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qGezpdvI5XG1YVHCHL8FCiauPIE4Au2JVJReeJ5VBeRlt5eW3crjYEHFRHoiMopve3RZgg/41vlox/gjh0ggBu1Ayj321qVbUhND0GfGHS8nTiDiFJPIH8ZKt1vEnx7DUTV1T36V7ygRDv+H9PVTpwagoazM/vIfb3bsxu1+lF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKYDz9vS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCbl1dLW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E4E1F000E9;
-	Thu,  2 Jul 2026 16:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKYDz9vS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC5F1F000E9;
+	Thu,  2 Jul 2026 16:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011435;
-	bh=PhKl5/eMT/ysYGuH/FET2FNHzA5olBpKGnDLOVSrNW4=;
+	s=korg; t=1783011438;
+	bh=tSKAVSf5y1+J+qrv+ONHgx6DFOjshP5ThV2OarhYqcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bCbl1dLWDK2fuFG4YxyE90Z3GrOLsBJprI5t2tADgtm9YtW1XKU2NurcxhlqeDZPr
-	 px6KQ1rg3we0TECBnGJrHAHRxtPTexe98kT2cSSCatbpP6isy4EuNfYJqRSp07pRIO
-	 Hd1DYv/wqFDolTGdhWjwG4YNx529hCzfhmI6KHaM=
+	b=jKYDz9vSRLc3lF9sC/byyU7hLCFyICw8OWCpVIezdL1mEHuqTtZFbA7NYav1lRBjx
+	 dxGO+CaZCz45432z7gd9Mf7XP7Mtx8oY+a0PYHc5mMSjABTinCIArXuZmMwn3BUm74
+	 qCtJK7Yb/m7xOZ7+iCkF105pzPUv23HV1rWgCDq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 096/108] nfsd: fix posix_acl leak on SETACL decode failure
-Date: Thu,  2 Jul 2026 18:21:33 +0200
-Message-ID: <20260702155114.101215382@linuxfoundation.org>
+Subject: [PATCH 6.18 097/108] nfsd: fix inverted cp_ttl check in async copy reaper
+Date: Thu,  2 Jul 2026 18:21:34 +0200
+Message-ID: <20260702155114.121629805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -52,129 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 0853ac544c590880d797b04daa33fcb72b6be0e1 upstream.
+commit 0150459b05490b88b7e7378a31550a9e07b5517c upstream.
 
-nfsaclsvc_decode_setaclargs() and nfs3svc_decode_setaclargs() each
-call nfs_stream_decode_acl() twice, first for NFS_ACL and then for
-NFS_DFACL.  Each successful call transfers ownership of a freshly
-allocated posix_acl into argp->acl_access or argp->acl_default.  If
-the first call succeeds but the second fails, the decoder returns
-false and argp->acl_access is left dangling.
+nfsd4_async_copy_reaper() is supposed to keep completed async copy
+state around for NFSD_COPY_INITIAL_TTL (10) laundromat ticks so
+that OFFLOAD_STATUS can report the result, then reap the state once
+the countdown expires.
 
-ACLPROC2_SETACL.pc_release was wired to nfssvc_release_attrstat and
-ACLPROC3_SETACL.pc_release was wired to nfs3svc_release_fhandle.
-Both only call fh_put() and have no knowledge of the ACL fields on
-argp.  The posix_acl_release() pairs sat at the out: labels inside
-nfsacld_proc_setacl() and nfsd3_proc_setacl(), but svc_process()
-skips pc_func when pc_decode returns false, so that cleanup is
-unreachable on decode failure:
+The TTL predicate is inverted: `if (--copy->cp_ttl)` is true while
+ticks remain and false when the counter reaches zero.  This causes
+the copy to be reaped on the very first tick (cp_ttl goes from 10
+to 9, which is non-zero) instead of after all 10 ticks elapse.
+Once reaped, OFFLOAD_STATUS returns NFS4ERR_BAD_STATEID because
+the copy state has already been freed.
 
-    svc_process_common()
-      pc_decode()                  /* decode_setaclargs: false */
-      /* pc_func skipped */
-      pc_release()                 /* fh_put only -- ACLs leaked */
+Fix by negating the test so that cleanup runs when the TTL expires.
 
-The orphaned posix_acl is leaked for the lifetime of the server.
-
-Fix by adding nfsaclsvc_release_setacl() and nfs3svc_release_setacl(),
-which release both argp->acl_access and argp->acl_default in addition
-to fh_put(), and wiring them as pc_release for their respective SETACL
-procedures.  pc_release runs on every path svc_process() takes after
-decode, including decode failure, so the posix_acl_release() pairs are
-removed from the proc functions' out: labels to keep ownership in one
-place.  This matches the existing release_getacl() pattern used by
-the sibling GETACL procedures.
-
-Fixes: a257cdd0e217 ("[PATCH] NFSD: Add server support for NFSv3 ACLs.")
+Fixes: aa0ebd21df9c ("NFSD: Add nfsd4_copy time-to-live")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
+Assisted-by: kres:claude-opus-4-6
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs2acl.c |   17 ++++++++++++-----
- fs/nfsd/nfs3acl.c |   17 ++++++++++++-----
- 2 files changed, 24 insertions(+), 10 deletions(-)
+ fs/nfsd/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -131,10 +131,7 @@ static __be32 nfsacld_proc_setacl(struct
- 	resp->status = fh_getattr(fh, &resp->stat);
- 
- out:
--	/* argp->acl_{access,default} may have been allocated in
--	   nfssvc_decode_setaclargs. */
--	posix_acl_release(argp->acl_access);
--	posix_acl_release(argp->acl_default);
-+	/* argp->acl_{access,default} are released in nfsaclsvc_release_setacl. */
- 	return rpc_success;
- 
- out_drop_lock:
-@@ -310,6 +307,16 @@ static void nfsaclsvc_release_access(str
- 	fh_put(&resp->fh);
- }
- 
-+static void nfsaclsvc_release_setacl(struct svc_rqst *rqstp)
-+{
-+	struct nfsd3_setaclargs *argp = rqstp->rq_argp;
-+	struct nfsd_attrstat *resp = rqstp->rq_resp;
-+
-+	fh_put(&resp->fh);
-+	posix_acl_release(argp->acl_access);
-+	posix_acl_release(argp->acl_default);
-+}
-+
- #define ST 1		/* status*/
- #define AT 21		/* attributes */
- #define pAT (1+AT)	/* post attributes - conditional */
-@@ -343,7 +350,7 @@ static const struct svc_procedure nfsd_a
- 		.pc_func = nfsacld_proc_setacl,
- 		.pc_decode = nfsaclsvc_decode_setaclargs,
- 		.pc_encode = nfssvc_encode_attrstatres,
--		.pc_release = nfssvc_release_attrstat,
-+		.pc_release = nfsaclsvc_release_setacl,
- 		.pc_argsize = sizeof(struct nfsd3_setaclargs),
- 		.pc_argzero = sizeof(struct nfsd3_setaclargs),
- 		.pc_ressize = sizeof(struct nfsd_attrstat),
---- a/fs/nfsd/nfs3acl.c
-+++ b/fs/nfsd/nfs3acl.c
-@@ -118,10 +118,7 @@ out_drop_lock:
- out_errno:
- 	resp->status = nfserrno(error);
- out:
--	/* argp->acl_{access,default} may have been allocated in
--	   nfs3svc_decode_setaclargs. */
--	posix_acl_release(argp->acl_access);
--	posix_acl_release(argp->acl_default);
-+	/* argp->acl_{access,default} are released in nfs3svc_release_setacl. */
- 	return rpc_success;
- }
- 
-@@ -223,6 +220,16 @@ static void nfs3svc_release_getacl(struc
- 	posix_acl_release(resp->acl_default);
- }
- 
-+static void nfs3svc_release_setacl(struct svc_rqst *rqstp)
-+{
-+	struct nfsd3_setaclargs *argp = rqstp->rq_argp;
-+	struct nfsd3_attrstat *resp = rqstp->rq_resp;
-+
-+	fh_put(&resp->fh);
-+	posix_acl_release(argp->acl_access);
-+	posix_acl_release(argp->acl_default);
-+}
-+
- #define ST 1		/* status*/
- #define AT 21		/* attributes */
- #define pAT (1+AT)	/* post attributes - conditional */
-@@ -256,7 +263,7 @@ static const struct svc_procedure nfsd_a
- 		.pc_func = nfsd3_proc_setacl,
- 		.pc_decode = nfs3svc_decode_setaclargs,
- 		.pc_encode = nfs3svc_encode_setaclres,
--		.pc_release = nfs3svc_release_fhandle,
-+		.pc_release = nfs3svc_release_setacl,
- 		.pc_argsize = sizeof(struct nfsd3_setaclargs),
- 		.pc_argzero = sizeof(struct nfsd3_setaclargs),
- 		.pc_ressize = sizeof(struct nfsd3_attrstat),
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1404,7 +1404,7 @@ void nfsd4_async_copy_reaper(struct nfsd
+ 		list_for_each_safe(pos, next, &clp->async_copies) {
+ 			copy = list_entry(pos, struct nfsd4_copy, copies);
+ 			if (test_bit(NFSD4_COPY_F_OFFLOAD_DONE, &copy->cp_flags)) {
+-				if (--copy->cp_ttl) {
++				if (!--copy->cp_ttl) {
+ 					list_del_init(&copy->copies);
+ 					list_add(&copy->copies, &reaplist);
+ 				}
 
 
