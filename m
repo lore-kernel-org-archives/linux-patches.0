@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D561396B8C;
-	Thu,  2 Jul 2026 16:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAC534AB00;
+	Thu,  2 Jul 2026 16:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009620; cv=none; b=Aycf+UbD46uFGNYPBFYxUGazwBPTMw3Cjs7z1oQ7XS2/y3YoPBppmf/cOjTavTpLIFaj9JaLIo3OYj3/jk/5YxO4PEmbm31QzeFIwh699ZxbdjwTQKq0gtY7brR6Ky4izf8Io2LcNteYXk3yNdh7o/HZFJh6Y4P0EmR8T1Ez8wg=
+	t=1783009624; cv=none; b=gB+nnnjc3oOksNcLmLLs5IeyglwOYMvDZJ2TXCEXL5RCiU3l1mgULCinGj7Vl5wrErhyfYZGxp1Ys4gvz4XRwlVzLbwKtpDWO9985htoqUeDEKofGhRq3UOJll3ew27+ETsYTM6frQ8iHYj8TSfDeWAbAFFE+bHtoCJXK3grk7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009620; c=relaxed/simple;
-	bh=IIrLGJnrTo8Gp0MzfA42z5FNrk81J3ZDCNKAmruxcaM=;
+	s=arc-20240116; t=1783009624; c=relaxed/simple;
+	bh=5Et4eiz7I3BrMV6ZMf8zbzmEduy9PQqj0KHj8roG2vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rAyBcIxTizTMGKgWFF9h59sOFHbiypAKIslBJSqw5571oTYLa/KPXDD3HV29lVfJzSG/QsPkZGvQTje5G+PLE6/5nq0Yuee4xJj7Pq3P7UGitQXJ9pVTrey5KISR8U7ps780xZ9WroiGnZiSMCidm7xsX+CgqFxGCLy9Syq/P2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdcpIHSG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ELnywm5EZ6OhuxXbwiLkWsZuB1xVID/cEer6cy4DiexIM6eL50E+t7x6u1WxdFZ2+I+4OTEouZzwWrpFuOL0UWHJv0B3/TRffsOYyWNvoLu4CyZDptNxJ+JbcZ3XCt89Xsg0PPV70DydoAcWIdQrDy0dzyNY/W5QKDK6H9QefIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5hjDXsy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdcpIHSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9859D1F00A3A;
-	Thu,  2 Jul 2026 16:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5hjDXsy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1D71F000E9;
+	Thu,  2 Jul 2026 16:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009618;
-	bh=+VMYUCrMe3H8lyvtsK1aADQ5sOsu8WGU4FLjWSDiy8s=;
+	s=korg; t=1783009620;
+	bh=gyAmClFmt7YgsOeyqt9ZaKUrlfF94O32aiLBcyVsZSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HdcpIHSGOxddBnYMPSu1fF08zt93Lv9QooWYnGJTbCTxr2QHslsSWxXYE2KIbfRuj
-	 ca7aT8VNLBTYCx7GnW1F5+xikSGYBN+npM8eICMYYdgYRHrscy64Ulj44p0o/PqlTE
-	 3O3LiQET5f8cvEQpuOLdqXDOLOjtXqkQo4GsA8+Y=
+	b=J5hjDXsy6d5e98jrr6NnSSCZxws5nvdN+azML90siaILHpEW2LLrrc+Pp25ZSl6XH
+	 Y1mqDcTRzLVM2E5YAfN8v12QjfCswaV7vRqcnrzFbDTwS7u86tSs8Z0Im6h+EB8z8Z
+	 L48ttXVJ2znyzTIojRJChqJLZ0IpnN5MRWRS3/1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Aur=C3=A9lien=20Bombo?= <abombo@microsoft.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Greg Kurz <gkurz@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 5.15 23/95] virtiofs: fix UAF on submount umount
-Date: Thu,  2 Jul 2026 18:19:26 +0200
-Message-ID: <20260702155109.695242682@linuxfoundation.org>
+	Yong Wang <yongwang@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 24/95] Revert "selftest/ptp: update ptp selftest to exercise the gettimex options"
+Date: Thu,  2 Jul 2026 18:19:27 +0200
+Message-ID: <20260702155109.717109635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -46,57 +45,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Petr Machata <petrm@nvidia.com>
 
-commit 06b41351779e9289e8785694ade9042ae85e41ea upstream.
+This reverts commit 6b32d042aa8255e964ebed860e24adccb204fcbc, which is
+commit 3d07b691ee707c00afaf365440975e81bb96cd9b upstream.
 
-iput() called from fuse_release_end() can Oops if the super block has
-already been destroyed.  Normally this is prevented by waiting for
-num_waiting to go down to zero before commencing with super block shutdown.
+The cited commit allows testptp to set a configurable clock_id. That is
+done via a PTP_SYS_OFFSET_EXTENDED ioctl call, whose argument is struct
+ptp_sys_offset_extended, where the clock_id is set. However, this Linux
+version does not support the ptp_sys_offset_extended.clockid field, and
+the test case cannot be built against this tree's own UAPI headers.
 
-This only works, however, for the last submount instance, as the wait
-counter is per connection, not per superblock.
+The reverted commit was introduced to resolve a missing dependency of
+commit bef3a83a9a67 ("testptp: Add option to open PHC in readonly mode"),
+which is 76868642e427 upstream. My suspicion is that the only conflict
+between the two is the getopt string, and there is otherwise no direct
+dependency between the two.
 
-Revert to using synchronous release requests for the auto_submounts case,
-which is virtiofs only at this time.
+This patch therefore reverts the cited commit, with hand-resolving the
+getopt string to include 'r' (as introduced by c6dc458227a3), but not
+'y' (introduced by 06954f715deb).
 
-Reported-by: Aurélien Bombo <abombo@microsoft.com>
-Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Cc: Greg Kurz <gkurz@redhat.com>
-Closes: https://github.com/kata-containers/kata-containers/issues/12589
-Fixes: 26e5c67deb2e ("fuse: fix livelock in synchronous file put from fuseblk workers")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kurz <gkurz@redhat.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Yong Wang <yongwang@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/testing/selftests/ptp/testptp.c | 62 +++------------------------
+ 1 file changed, 5 insertions(+), 57 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -358,8 +358,14 @@ void fuse_file_release(struct inode *ino
- 	 * aio and closes the fd before the aio completes.  Since aio takes its
- 	 * own ref to the file, the IO completion has to drop the ref, which is
- 	 * how the fuse server can end up closing its clients' files.
-+	 *
-+	 * Exception is virtio-fs, which is not affected by the above (server is
-+	 * on host, cannot close open files in guest).  Virtio-fs needs sync
-+	 * release, because the num_waiting mechanism to wait for all requests
-+	 * before commencing with fs shutdown doesn't work if submounts are
-+	 * used.
- 	 */
--	fuse_file_put(ff, false);
-+	fuse_file_put(ff, ff->fm->fc->auto_submounts);
+diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
+index 89b4f43a7ba459..d78d52f028ab52 100644
+--- a/tools/testing/selftests/ptp/testptp.c
++++ b/tools/testing/selftests/ptp/testptp.c
+@@ -147,7 +147,6 @@ static void usage(char *progname)
+ 		" -T val     set the ptp clock time to 'val' seconds\n"
+ 		" -x val     get an extended ptp clock time with the desired number of samples (up to %d)\n"
+ 		" -X         get a ptp clock cross timestamp\n"
+-		" -y val     pre/post tstamp timebase to use {realtime|monotonic|monotonic-raw}\n"
+ 		" -z         test combinations of rising/falling external time stamp flags\n",
+ 		progname, PTP_MAX_SAMPLES);
  }
+@@ -192,7 +191,6 @@ int main(int argc, char *argv[])
+ 	int readonly = 0;
+ 	int settime = 0;
+ 	int channel = -1;
+-	clockid_t ext_clockid = CLOCK_REALTIME;
  
- void fuse_release_common(struct file *file, bool isdir)
+ 	int64_t t1, t2, tp;
+ 	int64_t interval, offset;
+@@ -202,7 +200,7 @@ int main(int argc, char *argv[])
+ 
+ 	progname = strrchr(argv[0], '/');
+ 	progname = progname ? 1+progname : argv[0];
+-	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xy:z"))) {
++	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xz"))) {
+ 		switch (c) {
+ 		case 'c':
+ 			capabilities = 1;
+@@ -285,21 +283,6 @@ int main(int argc, char *argv[])
+ 		case 'X':
+ 			getcross = 1;
+ 			break;
+-		case 'y':
+-			if (!strcasecmp(optarg, "realtime"))
+-				ext_clockid = CLOCK_REALTIME;
+-			else if (!strcasecmp(optarg, "monotonic"))
+-				ext_clockid = CLOCK_MONOTONIC;
+-			else if (!strcasecmp(optarg, "monotonic-raw"))
+-				ext_clockid = CLOCK_MONOTONIC_RAW;
+-			else {
+-				fprintf(stderr,
+-					"type needs to be realtime, monotonic or monotonic-raw; was given %s\n",
+-					optarg);
+-				return -1;
+-			}
+-			break;
+-
+ 		case 'z':
+ 			flagtest = 1;
+ 			break;
+@@ -590,7 +573,6 @@ int main(int argc, char *argv[])
+ 		}
+ 
+ 		soe->n_samples = getextended;
+-		soe->clockid = ext_clockid;
+ 
+ 		if (ioctl(fd, PTP_SYS_OFFSET_EXTENDED, soe)) {
+ 			perror("PTP_SYS_OFFSET_EXTENDED");
+@@ -599,46 +581,12 @@ int main(int argc, char *argv[])
+ 			       getextended);
+ 
+ 			for (i = 0; i < getextended; i++) {
+-				switch (ext_clockid) {
+-				case CLOCK_REALTIME:
+-					printf("sample #%2d: real time before: %lld.%09u\n",
+-					       i, soe->ts[i][0].sec,
+-					       soe->ts[i][0].nsec);
+-					break;
+-				case CLOCK_MONOTONIC:
+-					printf("sample #%2d: monotonic time before: %lld.%09u\n",
+-					       i, soe->ts[i][0].sec,
+-					       soe->ts[i][0].nsec);
+-					break;
+-				case CLOCK_MONOTONIC_RAW:
+-					printf("sample #%2d: monotonic-raw time before: %lld.%09u\n",
+-					       i, soe->ts[i][0].sec,
+-					       soe->ts[i][0].nsec);
+-					break;
+-				default:
+-					break;
+-				}
++				printf("sample #%2d: system time before: %lld.%09u\n",
++				       i, soe->ts[i][0].sec, soe->ts[i][0].nsec);
+ 				printf("            phc time: %lld.%09u\n",
+ 				       soe->ts[i][1].sec, soe->ts[i][1].nsec);
+-				switch (ext_clockid) {
+-				case CLOCK_REALTIME:
+-					printf("            real time after: %lld.%09u\n",
+-					       soe->ts[i][2].sec,
+-					       soe->ts[i][2].nsec);
+-					break;
+-				case CLOCK_MONOTONIC:
+-					printf("            monotonic time after: %lld.%09u\n",
+-					       soe->ts[i][2].sec,
+-					       soe->ts[i][2].nsec);
+-					break;
+-				case CLOCK_MONOTONIC_RAW:
+-					printf("            monotonic-raw time after: %lld.%09u\n",
+-					       soe->ts[i][2].sec,
+-					       soe->ts[i][2].nsec);
+-					break;
+-				default:
+-					break;
+-				}
++				printf("            system time after: %lld.%09u\n",
++				       soe->ts[i][2].sec, soe->ts[i][2].nsec);
+ 			}
+ 		}
+ 
+-- 
+2.53.0
+
 
 
