@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E113A9870;
-	Thu,  2 Jul 2026 16:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18C03A9870;
+	Thu,  2 Jul 2026 16:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009976; cv=none; b=ob8RU+81TIK8fPRYetU7WVoJGnwl9XKuAC7Wsh7lA9iSYtL0ya7TcClltLiITZ6fhUWkNtmFrVDj727zRFuK2nlORQuI3lLsntofUjk0hDMiY8SRBKzK6U6O7+rsp7lrkxHs71f6XSEfHCnND68aPdif5UKIppYaa3hQGY9pDu0=
+	t=1783009978; cv=none; b=BfLFF3JJ8I06kKam01HIgJPbG8Ete0lK6Oy0YUb55DCrvFM+0rrc9s0cP6m7lNmry9cfJsugIZFKCbhGjWou4kUViMeWI+ysI93gfl4s+HmSVsbsTX+6Rx3Hr0QVzDxG3bYXIbIxJ91U2VJL+zaq0KpIzeyFQdMw2CqqM4qKttU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009976; c=relaxed/simple;
-	bh=NoqT1MEBZeicf6sAfnKnxP1pmr512bLnYq76ZRBUZe0=;
+	s=arc-20240116; t=1783009978; c=relaxed/simple;
+	bh=lU7+Xnfv+/WzEZXMQFGE6FhxJshwZh5bHNhM4zUZ/yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CTCPDJW/eduZoTptq7xgoM079sOuYwUXL25ixxnT2tbgAGunBWWJba2xg8rC5X1mXcEYCscUBnsnR5el0wy7JBI3Fz7g9estDQpcHc4LATTZEnXeDavEF9pW0BjQ0DRpe8wc9bW7gk923RfRXOQjoqKbwUOshE3SaK66c/kvcOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdcUhvuY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Se4WhNxR9eupz5MYhfCfJCXUMGvAToSvNY9BFh9qUGFBsss323keh/r97WzraJVQXe/3o8BAZOhk6VvWPPlW1F4N2EFRFp/IEDbYRzMOnPhHoyIYHqI+Z5CPwXTqMX/TgZuiuE5X5A4wKZ0yJzB8vSemok6MLRsoq/9f5NMH9Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4lAWlni; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdcUhvuY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B921F000E9;
-	Thu,  2 Jul 2026 16:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4lAWlni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14801F000E9;
+	Thu,  2 Jul 2026 16:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009974;
-	bh=YLgLkMgWOyyemDoC5UoK+EX0txWkvB2Ta4kzYgCnXe0=;
+	s=korg; t=1783009977;
+	bh=CjuWsy5z7xGv0KoSX5akNNrvFZQrXtURDYs/rmPyWFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CdcUhvuYqe5LVYtUeZD0h3SPpYYB5OZbAb/Lcw65Z/bLzf5bPMtliVPpGW3iua0FL
-	 T36aOxTVi8Wi3v4jHyEibZdB6mSafQn/oQNCwVToNh8CNMenLeooRzYz8rMXKv1Yfg
-	 +sMYEeTa4RUi56n8A01VZHI7kL5lIGVFckSPHYjQ=
+	b=N4lAWlni03YRFDf0i5u7MBWJmV3lrTnuxsP7xl9vyJlCfK3hsWiCH7Q8cN534CfJw
+	 eRmhvPymFrW4m4nuSShs/C/MUxnv8jdCZcm6GJVQ+QascdJ7+n4u9tjPRFFD+3xPp/
+	 RMKj0lSD6oEuRTFwDZveZVoTQX9blx7tK7+iSmSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Nicholas Dudar <main.kalliope@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/129] KVM: nVMX: Check for pending posted interrupts when looking for nested events
-Date: Thu,  2 Jul 2026 18:18:58 +0200
-Message-ID: <20260702155112.559832658@linuxfoundation.org>
+Subject: [PATCH 6.1 010/129] netfilter: nf_tables: always increment set element count
+Date: Thu,  2 Jul 2026 18:18:49 +0200
+Message-ID: <20260702155112.376041111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -53,83 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 27c4fa42b11af780d49ce704f7fa67b3c2544df4 upstream.
+[ Upstream commit d4b7f29eb85c93893bc27388b37709efbc3c9a0e ]
 
-Check for pending (and notified!) posted interrupts when checking if L2
-has a pending wake event, as fully posted/notified virtual interrupt is a
-valid wake event for HLT.
+At this time, set->nelems counter only increments when the set has
+a maximum size.
 
-Note that KVM must check vmx->nested.pi_pending to avoid prematurely
-waking L2, e.g. even if KVM sees a non-zero PID.PIR and PID.0N=1, the
-virtual interrupt won't actually be recognized until a notification IRQ is
-received by the vCPU or the vCPU does (nested) VM-Enter.
+All set elements decrement the counter unconditionally, this is
+confusing.
 
-Fixes: 26844fee6ade ("KVM: x86: never write to memory from kvm_vcpu_check_block()")
-Cc: stable@vger.kernel.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Reported-by: Jim Mattson <jmattson@google.com>
-Closes: https://lore.kernel.org/all/20231207010302.2240506-1-jmattson@google.com
-Link: https://lore.kernel.org/r/20240607172609.3205077-5-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ Nicholas Dudar: backport to 6.1.y. Prerequisite for the next patch, which
-  folds its check into the vmx_has_nested_events() body this patch builds.
-  Applies cleanly. The for_injection path still returns preemption_timer ||
-  mtf, as the previous 6.1.y body did. ]
-Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
+Increment the counter unconditionally to make this symmetrical.
+This would also allow changing the set maximum size after set creation
+in a later patch.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[ Shivani: Modified to apply on 6.1.y ]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 36 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 34 insertions(+), 2 deletions(-)
+ net/netfilter/nf_tables_api.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 7d8e18dbe8531b..ad07e83d2c1d5b 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3953,8 +3953,40 @@ static bool nested_vmx_preemption_timer_pending(struct kvm_vcpu *vcpu)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 201e2cc0453992..b6b7b0b3539dc9 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6699,10 +6699,13 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		goto err_element_clash;
+ 	}
  
- static bool vmx_has_nested_events(struct kvm_vcpu *vcpu, bool for_injection)
- {
--	return nested_vmx_preemption_timer_pending(vcpu) ||
--	       to_vmx(vcpu)->nested.mtf_pending;
-+	struct vcpu_vmx *vmx = to_vmx(vcpu);
-+	void *vapic = vmx->nested.virtual_apic_map.hva;
-+	int max_irr, vppr;
+-	if (!(flags & NFT_SET_ELEM_CATCHALL) && set->size &&
+-	    !atomic_add_unless(&set->nelems, 1, set->size + set->ndeact)) {
+-		err = -ENFILE;
+-		goto err_set_full;
++	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
++		unsigned int max = set->size ? set->size + set->ndeact : UINT_MAX;
 +
-+	if (nested_vmx_preemption_timer_pending(vcpu) ||
-+	    vmx->nested.mtf_pending)
-+		return true;
-+
-+	/*
-+	 * Virtual Interrupt Delivery doesn't require manual injection.  Either
-+	 * the interrupt is already in GUEST_RVI and will be recognized by CPU
-+	 * at VM-Entry, or there is a KVM_REQ_EVENT pending and KVM will move
-+	 * the interrupt from the PIR to RVI prior to entering the guest.
-+	 */
-+	if (for_injection)
-+		return false;
-+
-+	if (!nested_cpu_has_vid(get_vmcs12(vcpu)) ||
-+	    __vmx_interrupt_blocked(vcpu))
-+		return false;
-+
-+	if (!vapic)
-+		return false;
-+
-+	vppr = *((u32 *)(vapic + APIC_PROCPRI));
-+
-+	if (vmx->nested.pi_pending && vmx->nested.pi_desc &&
-+	    pi_test_on(vmx->nested.pi_desc)) {
-+		max_irr = pi_find_highest_vector(vmx->nested.pi_desc);
-+		if (max_irr > 0 && (max_irr & 0xf0) > (vppr & 0xf0))
-+			return true;
-+	}
-+
-+	return false;
- }
++		if (!atomic_add_unless(&set->nelems, 1, max)) {
++			err = -ENFILE;
++			goto err_set_full;
++		}
+ 	}
  
- /*
+ 	nft_trans_elem(trans) = elem;
 -- 
 2.53.0
 
