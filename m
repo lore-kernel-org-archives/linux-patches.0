@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C3633D4F0;
-	Thu,  2 Jul 2026 16:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493CC33D4F0;
+	Thu,  2 Jul 2026 16:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010801; cv=none; b=SW+23JxI7ZneslKmtlF88Hhlp/NjKuzV+bVymx+0beSrJolQDQlUX+7W2qH2flMmq91SQi8Y/uXm9T7g4wkGW8u00SRdYpdyOxwMLbznCBZkhN/KrpuqppJXC4ivcc9j96OioSVNUmgeZNnjbpltzY3VpigSMeEOWlaSXrnD468=
+	t=1783010804; cv=none; b=axRgxps+PvVPxvg98xB1MLUgnYA1q8nrxEmeE7BoWbkKPyLPC0UmgoG4sUvUrX3UrevnUkZLLcINNkW3j4cJhuYqKk2yy8E8tYOderuViY5/px1SJ9kfQVbO5geBSgYndeiSDKxo0sYyVCw1bNWaoN2eERHiswQ02EtU0vjtHGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010801; c=relaxed/simple;
-	bh=iuTg+r2aJb+oRyO/DoJzogbNTbF2ttFca0LZWep7glg=;
+	s=arc-20240116; t=1783010804; c=relaxed/simple;
+	bh=hkghXn9+CsL2xgKtz0ssVcg5Yhkgv9Ao/2Sw0jgNI3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+dHySEwnYHM0LPL8ZqBueXdCLeKZY0xLbr5/t1j097DQNOGpkEl7xPKs8rJ8v0UkiGNEfUvfVpXPupEI3HzEyB2HBNm8ElljOky+/JEDHdBJd180c6fV/vdXZZYMU5Pv0m4dI3o0CWfyQuCFz5ytsZZ0dZM5/k8GjDpMCLeYps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+NF5mtb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YnGHXNCwC78erm/LGDWuN0i0sA+x8OPQuHj+k0SHi4ccnP83XUTUpayHm5P00oe7PwtWSw4YJBU2o7uRk2QM5BSRtMVUfWxwfxd8GJZgHIhNf9NhRnRRLlTDelsuTlvCp0aAj1Sm6owrJNsGCvXauOzWABg9wEg2Lsslr4tPym0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYxza3YH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+NF5mtb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25291F000E9;
-	Thu,  2 Jul 2026 16:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYxza3YH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FEA1F000E9;
+	Thu,  2 Jul 2026 16:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010800;
-	bh=UM0pK7gwBmjJaw0CK9vEfDTNkC2XC4JEI2BTkGaTyfw=;
+	s=korg; t=1783010803;
+	bh=a8mFac3Nnm8vNfeNsbsU+k0RCCPCBhPYuLIa+tieCQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u+NF5mtbKT1zcDglTmqIXncfUjP4HdQ2dbt5QyGFTfgLX/4fXPeTwlFfs3WWAFREL
-	 p80ZJfP86Cpq6/8W0Cp13pToS/zFvG2lBvHI1gaJVI3n3LiPWsjK+84iXfZ0SxckOP
-	 0mhSCtKnsNK4OYgLuapM4suIKrP+jaeZx5nXcZ0w=
+	b=aYxza3YHn0ctvTGw9+8QVeiwnh59pbtJsunuoMWRphwmx5dU2GnzfR3bChmBMxUZz
+	 nntWh/M473OuY6cyUzM8pgyTTAhfV7+uJeDK4Ligl7cWGyauXDbMe6iGuXSeFvZdiy
+	 S0zPuPKEf7Pokdqm4d1iR6tT+WzSmtZ6Xh/2Gibc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
-	stable@kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/175] rxrpc: Fix the ACK parser to extract the SACK table for parsing
-Date: Thu,  2 Jul 2026 18:19:01 +0200
-Message-ID: <20260702155116.642120945@linuxfoundation.org>
+Subject: [PATCH 6.6 041/175] slimbus: qcom-ngd-ctrl: Fix up platform_driver registration
+Date: Thu,  2 Jul 2026 18:19:02 +0200
+Message-ID: <20260702155116.662932284@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -61,70 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 333b6d5bb9f87827ac2639c737bf9613dbae7253 ]
+[ Upstream commit 8663e8334d7b6007f5d8a4e5dd270246f35107a6 ]
 
-Fix modification of the received skbuff in rxrpc_input_soft_acks() and a
-potential incorrect access of the buffer in a fragmented UDP packet (the
-packet would probably have to be deliberately pre-generated as fragmented)
-when AF_RXRPC tries to extract the contents of the SACK table by copying
-out the contents of the SACK table into a buffer before attempting to parse
+Device drivers should not invoke platform_driver_register()/unregister()
+in their probe and remove paths. They should further not rely on
+platform_driver_unregister() as their only means of "deleting" their
+child devices.
 
-AF_RXRPC assumes that it can just call skb_condense() and then validly
-access the SACK table from skb->data and that it will be a flat buffer -
-but skb_condense() can silently fail to do anything under some
-circumstances.
+Introduce a helper to unregister the child device and move the
+platform_driver_register()/unregister() to module_init()/exit().
 
-Note that whilst rxrpc_input_soft_acks() should be able to parse extended
-ACKs, the rest of AF_RXRPC doesn't currently support that.
-
-Further, there's then no need to call skb_condense() in rxrpc_input_ack(),
-so don't.
-
-Fixes: d57a3a151660 ("rxrpc: Save last ACK's SACK table rather than marking txbufs")
-Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://lore.kernel.org/r/20260513180907.2061972-1-michael.bommarito@gmail.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/105362.1780573560@warthog.procyon.org.uk
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204421.116824-3-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/input.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/slimbus/qcom-ngd-ctrl.c |   36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
---- a/net/rxrpc/input.c
-+++ b/net/rxrpc/input.c
-@@ -781,7 +781,18 @@ static void rxrpc_input_soft_acks(struct
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
- 	unsigned int i, old_nacks = 0;
- 	rxrpc_seq_t lowest_nak = seq + sp->nr_acks;
--	u8 *acks = skb->data + sizeof(struct rxrpc_wire_header) + sizeof(struct rxrpc_ackpacket);
-+	u8 sack[256] __aligned(sizeof(unsigned long));
-+	u8 *acks = sack;
-+
-+	/* Extract the SACK table into a flat buffer rather than accessing it
-+	 * directly through skb->data, which is not guaranteed to be linear for
-+	 * a fragmented packet (skb_condense() can silently fail to linearise
-+	 * it).
-+	 */
-+	if (skb_copy_bits(skb,
-+			  sizeof(struct rxrpc_wire_header) + sizeof(struct rxrpc_ackpacket),
-+			  sack, umin(sp->nr_acks, sizeof(sack))) < 0)
-+		return;
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1561,6 +1561,13 @@ static int of_qcom_slim_ngd_register(str
+ 	return -ENODEV;
+ }
  
- 	for (i = 0; i < sp->nr_acks; i++) {
- 		if (acks[i] == RXRPC_ACK_TYPE_ACK) {
++static void qcom_slim_ngd_unregister(struct qcom_slim_ngd_ctrl *ctrl)
++{
++	struct qcom_slim_ngd *ngd = ctrl->ngd;
++
++	platform_device_del(ngd->pdev);
++}
++
+ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1663,7 +1670,6 @@ static int qcom_slim_ngd_ctrl_probe(stru
+ 		goto err_pdr_lookup;
+ 	}
+ 
+-	platform_driver_register(&qcom_slim_ngd_driver);
+ 	return of_qcom_slim_ngd_register(dev, ctrl);
+ 
+ err_pdr_alloc:
+@@ -1677,7 +1683,9 @@ err_pdr_lookup:
+ 
+ static int qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
+ {
+-	platform_driver_unregister(&qcom_slim_ngd_driver);
++	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
++
++	qcom_slim_ngd_unregister(ctrl);
+ 
+ 	return 0;
+ }
+@@ -1756,6 +1764,28 @@ static struct platform_driver qcom_slim_
+ 	},
+ };
+ 
+-module_platform_driver(qcom_slim_ngd_ctrl_driver);
++static int qcom_slim_ngd_init(void)
++{
++	int ret;
++
++	ret = platform_driver_register(&qcom_slim_ngd_driver);
++	if (ret)
++		return ret;
++
++	ret = platform_driver_register(&qcom_slim_ngd_ctrl_driver);
++	if (ret)
++		platform_driver_unregister(&qcom_slim_ngd_driver);
++
++	return ret;
++}
++
++static void qcom_slim_ngd_exit(void)
++{
++	platform_driver_unregister(&qcom_slim_ngd_ctrl_driver);
++	platform_driver_unregister(&qcom_slim_ngd_driver);
++}
++
++module_init(qcom_slim_ngd_init);
++module_exit(qcom_slim_ngd_exit);
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("Qualcomm SLIMBus NGD controller");
 
 
