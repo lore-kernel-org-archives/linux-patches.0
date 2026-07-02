@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489EF3A7839;
-	Thu,  2 Jul 2026 16:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3104A82866;
+	Thu,  2 Jul 2026 16:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010662; cv=none; b=Pgc4QyuWq++3zIJ7Xj5bD6mhNpHtu0m9oaslwbcJYlUFoJPfDpagX6REf7PorFdd1wBkbxGZAQimhDRM1dca4Xf+PyhSs+BDJ4kwvp6ATsSOsjAjcv87mRqgrXOZf8xFwo4ntIs3FVzDonzQK8t6iAp2oAuN6E1vwyR4yh23Q5c=
+	t=1783010665; cv=none; b=CMIFiJ9G4TiBpLd3EUIt5tg8TPLzwYbGeA9jcyE9blgp4NY65+8ESU6IA+B3qTgvbQ+KKfpj8diq5AaOaQHNnufrRGfd6l+CM2mZa4sOe84xXXHRExTHGiVn7DyNiJwuLbp002Wntr4HKh2CXwHAbl8yAv7EAUu7Rf5+LrPm+BM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010662; c=relaxed/simple;
-	bh=c4BOpQUXfVN1cpBO+lfff+VysCnAWmGxMDdAWHdyN6w=;
+	s=arc-20240116; t=1783010665; c=relaxed/simple;
+	bh=hEPjnRB2vbnraqwb8VIWkC+9MNjFgDPLftCjvztkDbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOfU9IftdfMpjJDkA10wqBAqdAfE7ZN2VWPltVzP1/ZXqH4PICyi4f1E1BTsCTc7HyN80lA4mWv3a8Zy6/6LGekwBOZU/P5mQSLeU6mkVvJ4qKfxXcAJdgyUq2Gc0alXKFh5iyki1A4P2b3nIVYrn3CnVRbe2I3CAB1jn8KMMBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDuPHqcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ue+y92Um5mkwgiN8S0o4ycS8ZrvRzAUfKQZXawCPHAFQ5nVu/jRDMWBJ0wngqV/Mva5GtUBY9xRCw2gYtQkOWAAqIUKkV4zfgp420gKDEJ39/O7MmPx2lQ0wAPuXlOCuytx2uD5Cb0cANppuXulSR+5xGZ/fGvlfvBVyS8xByY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaCUpUyl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDuPHqcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0E21F00A3D;
-	Thu,  2 Jul 2026 16:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaCUpUyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1831F00A3A;
+	Thu,  2 Jul 2026 16:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010661;
-	bh=5aqnngcBe45/xfK5AwdK38883pYupLXqKffaQmFO04o=;
+	s=korg; t=1783010663;
+	bh=OSB+bhFD1js71tRayNH9Fko0i6Vy9ma5UZvuQsYKkCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bDuPHqcVovOLSpHRh8cy4LTtp/uo/xAb5DfsKr+TZihkSWWoNSnegspav/x+pa6yX
-	 aQeB5otDDPr57AERQV6YJwD3RbCV+mrRHs7CqiPsoWV+VTCBRLG2Ud35Wlpbvt1361
-	 WSTyhiAYIz8hCDoHv7FTkkq6czDgnoVoLpdS9YhY=
+	b=iaCUpUylKTJ/+gMBZiZRRZymH8Gl1/UcQbxHJfk5+9+WSL1Ah1+O+VojA9BvaX4he
+	 FxCFU4LoSBNJq5TBPvvSi/Lhi8+tse9W7tqBmcqrjznOSfd8sS11af2gQp+cY+hyD/
+	 WJvIc45phuanWFquqFqeOvkFGFL/8JKn47qn77ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Georgi Djakov <georgi.djakov@oss.qualcomm.com>,
+	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Richard Cheng <icheng@nvidia.com>,
+	David Hildenbrand <david@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 193/204] serial: 8250_dw: unregister 8250 port if clk_notifier_register() fails
-Date: Thu,  2 Jul 2026 18:20:50 +0200
-Message-ID: <20260702155122.704295311@linuxfoundation.org>
+Subject: [PATCH 6.12 194/204] drivers/base/memory: set mem->altmap after successful device registration
+Date: Thu,  2 Jul 2026 18:20:51 +0200
+Message-ID: <20260702155122.724830154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,48 +58,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Georgi Djakov <georgi.djakov@oss.qualcomm.com>
 
-[ Upstream commit 10fc708b4de7f86002d2d735a2dbf3b5b7f65692 ]
+[ Upstream commit a2b8d7827f48ee54a686cb80e4a1d0ff954ec42a ]
 
-dw8250_probe() registers the 8250 port via serial8250_register_8250_port()
-and then, if the device has a clock, registers a clock notifier. If
-clk_notifier_register() fails, probe returns the error but leaves the
-8250 port registered. The matching serial8250_unregister_port() lives
-in dw8250_remove(), which is not called when probe fails, so the port
-slot stays occupied until the device is rebound or the system is
-rebooted. The devm-allocated driver data is freed while the port still
-references it (via the saved private_data and serial_in/serial_out
-callbacks), so any access to that port slot before a rebind is a
-use-after-free hazard.
+If __add_memory_block() fails at xa_store() (under memory pressure for
+example), device_unregister() is called, which eventually triggers
+memory_block_release() with mem->altmap still set, causing a
+WARN_ON(mem->altmap).  This was triggered by modifying virtio-mem driver.
 
-Unregister the port on the clk_notifier_register() error path.
+Fix this by delaying the assignment of mem->altmap until after
+__add_memory_block() has succeeded.
 
-Fixes: cc816969d7b5 ("serial: 8250_dw: Fix common clocks usage race condition")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260514143746.23671-2-sozdayvek@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20260514092657.3057141-1-georgi.djakov@oss.qualcomm.com
+Fixes: 1a8c64e11043 ("mm/memory_hotplug: embed vmem_altmap details in memory block")
+Signed-off-by: Georgi Djakov <georgi.djakov@oss.qualcomm.com>
+Acked-by: Oscar Salvador (SUSE) <osalvador@kernel.org>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Richard Cheng <icheng@nvidia.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Georgi Djakov <djakov@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dw.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/base/memory.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -655,8 +655,10 @@ static int dw8250_probe(struct platform_
- 	 */
- 	if (data->clk) {
- 		err = clk_notifier_register(data->clk, &data->clk_notifier);
--		if (err)
-+		if (err) {
-+			serial8250_unregister_port(data->data.line);
- 			return dev_err_probe(dev, err, "Failed to set the clock notifier\n");
-+		}
- 		queue_work(system_unbound_wq, &data->clk_work);
- 	}
+--- a/drivers/base/memory.c
++++ b/drivers/base/memory.c
+@@ -794,7 +794,6 @@ static int add_memory_block(unsigned lon
+ 	mem->start_section_nr = block_id * sections_per_block;
+ 	mem->state = state;
+ 	mem->nid = NUMA_NO_NODE;
+-	mem->altmap = altmap;
+ 	INIT_LIST_HEAD(&mem->group_next);
  
+ #ifndef CONFIG_NUMA
+@@ -812,6 +811,8 @@ static int add_memory_block(unsigned lon
+ 	if (ret)
+ 		return ret;
+ 
++	mem->altmap = altmap;
++
+ 	if (group) {
+ 		mem->group = group;
+ 		list_add(&mem->group_next, &group->memory_blocks);
 
 
