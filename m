@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B422E349CF2;
-	Thu,  2 Jul 2026 16:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5144C347BA7;
+	Thu,  2 Jul 2026 16:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011129; cv=none; b=fLSxebzDftqtTn5oac7VOpDHqDyJM2ofLCzjb0dAyM6ruV7S09snNWOxX7fVlcrl2ysNxjZEnnlX6LCW2yfjiZh8O8Hhpq6vr4O4VzJAppyWY8vmPxWu2oe0Dvc7umX2C0Q1pvk+lS9inqVPgkvdeO7Z4boGPrWn+oGEcvUrmvA=
+	t=1783011132; cv=none; b=Dfya+FNm85k1nx0OAY+WMKw00N4Ds+2JCDjWIQxT4Kzf6qIJHpY4PR2GoWSSUZ6+ATFqqlm6SWX9YatQfPOPRRqfiog+6P+G/wwRVbT7n985lbLjo0zC9HPT37z7hJ+Z9P0+EW30lSBHJzYB43v8bgqILhfBksdAmiN13sj8n8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011129; c=relaxed/simple;
-	bh=RmCvbz9U4WCN2WnQ33Ej6RYcTDpCxqgyTNq81YyCAVo=;
+	s=arc-20240116; t=1783011132; c=relaxed/simple;
+	bh=ShcWgsvmI/aKhpvvdYTsEP19Ny+MSEYr+GE2OXHP+5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svXltM54pqeyiB5JKXYYl1jVRB9u19+ZXHA95BePdpoxTPJn+A8qF9oHZkkr+sp64PQ0VlP+JHLg1+qnM5rks/W+LTrLGh5/FqGw9lNZt7WPXHOxZUtPbHHj3LCEkGMqH2uUfBkTaBZGAt4TbQzXHeU40/ER7jC7y8PoxHwNI3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATirxqNu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mG6+ItL7Adhj3GYGP1L12oCkOu1wpc5G/Zqp53ij998G5GVOy0pY8UlkZeMcUK4JtBuw/NdoFi0krGRqr8xfNdnsDGi3qSpVWdAjdfQY0f7igycPTPyNI7DDK7BUCejAkT29hVNCAop6G8OPYGM4v8feJBffp4jDNAZRO6CGFb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qus0cxVD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATirxqNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4221F000E9;
-	Thu,  2 Jul 2026 16:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qus0cxVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77841F000E9;
+	Thu,  2 Jul 2026 16:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011128;
-	bh=x7m7szZ2RU7ua+I3Lvu8WNY2mjDPCpxj8Zxi4yV8Emc=;
+	s=korg; t=1783011131;
+	bh=9FoCySOriQQjD30+6pVTn/mnEQp2s2tssetqh1IN1K8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ATirxqNuMW2qxtsqF8ZKa20h63Qft0n4v0CqmMLicEnvaLIU+XLTNJ+6xGZu1BC5g
-	 O0dTN31jXwBsmdpaAm25DVCEEQ0Ko1GryyJrZhs5RpZY+np9t4ferTqJ6Hr+69+xcs
-	 7WL/2Kz+wNMm4A8kI+zAfBXbbsH2jZ1QH5wco/7E=
+	b=qus0cxVDQcMi99RrNxq5uWpAxHiFDf9RxCANIB3MYZG4NGQICqW1z5P5+NT0+rPBl
+	 pl9XIy220c3QiX/JuxmKb9G/ua3o4ADJNRC7cMoiU/3rU/6JN3AdEmCz90aMt6ToIE
+	 VeeTH+7HkOdEUyo34DkR4O4EEjRV8MIywTbp7094=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.6 167/175] NFS: Prevent resource leak in nfs_alloc_server()
-Date: Thu,  2 Jul 2026 18:21:08 +0200
-Message-ID: <20260702155119.305514207@linuxfoundation.org>
+	Hem Parekh <hemparekh1596@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 168/175] ksmbd: fix out-of-bounds read in smb_check_perm_dacl()
+Date: Thu,  2 Jul 2026 18:21:09 +0200
+Message-ID: <20260702155119.326195380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,33 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Hem Parekh <hemparekh1596@gmail.com>
 
-commit d189f224308c8ac3feeea8e442c99922bd18f1b2 upstream.
+commit 1ef06004ed4bd6d3ed8c840d9d1a376b66d4935b upstream.
 
-It was overlooked to call ida_free() after a failed nfs_alloc_iostats() call.
-Thus add the missed function call in an if branch.
+The permission-check ACE walk in smb_check_perm_dacl() validates the ACE
+header size and caps sid.num_subauth at SID_MAX_SUB_AUTHORITIES, but it
+never checks that ace->size is actually large enough to contain
+num_subauth sub-authorities before compare_sids() dereferences them.
 
-Fixes: 1c7251187dc067a6d460cf33ca67da9c1dd87807 ("NFS: add superblock sysfs entries")
+CIFS_SID_BASE_SIZE covers the SID header up to but excluding the
+sub_auth[] array, and offsetof(struct smb_ace, sid) is the ACE header,
+so the existing guards only guarantee the 8-byte SID base, i.e. zero
+sub-authorities. compare_sids() then reads ace->sid.sub_auth[i] for
+i < min(local_sid->num_subauth, ace->sid.num_subauth). The local
+comparison SIDs (sid_everyone, sid_unix_NFS_mode, and the id_to_sid()
+result) always have at least one sub-authority, and an attacker controls
+the ACE revision and authority bytes (which lie within the in-bounds SID
+base), so they can match one of those SIDs and force the sub_auth read.
+
+A crafted ACE with size == 16 and num_subauth >= 1 placed at the tail of
+the security descriptor therefore causes a heap out-of-bounds read of up
+to SID_MAX_SUB_AUTHORITIES * sizeof(__le32) bytes past the pntsd
+allocation. The security descriptor is loaded by ksmbd_vfs_get_sd_xattr()
+into a buffer sized exactly to the on-disk data (kzalloc(sd_size) in
+ndr_decode_v4_ntacl()), so the read lands past the allocation. The
+malformed descriptor can be stored verbatim via SMB2_SET_INFO (the DACL
+is not normalised before being written to the security.NTACL xattr) and
+the read fires on a subsequent SMB2_CREATE access check, making this
+reachable by an authenticated client on a share that uses ACL xattrs.
+
+Add the missing num_subauth-versus-ace_size check, mirroring the
+identical guards already present in the sibling parsers parse_dacl() and
+smb_inherit_dacl().
+
+Fixes: d07b26f39246 ("ksmbd: require minimum ACE size in smb_check_perm_dacl()")
 Cc: stable@vger.kernel.org
-Reported-by: Christophe Jaillet <christophe.jaillet@wanadoo.fr>
-Closes: https://lore.kernel.org/linux-nfs/1c8e10c9-def7-4f0d-8aa1-23c8035a38c8@wanadoo.fr/
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Hem Parekh <hemparekh1596@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/client.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/smbacl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -1046,6 +1046,7 @@ struct nfs_server *nfs_alloc_server(void
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1419,7 +1419,9 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 			break;
+ 		aces_size -= ace_size;
  
- 	server->io_stats = nfs_alloc_iostats();
- 	if (!server->io_stats) {
-+		ida_free(&s_sysfs_ids, server->s_sysfs_id);
- 		kfree(server);
- 		return NULL;
- 	}
+-		if (ace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES)
++		if (ace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
++		    ace_size < offsetof(struct smb_ace, sid) + CIFS_SID_BASE_SIZE +
++			      sizeof(__le32) * ace->sid.num_subauth)
+ 			break;
+ 
+ 		if (!compare_sids(&sid, &ace->sid) ||
 
 
