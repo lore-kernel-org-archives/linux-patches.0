@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405B930C146;
-	Thu,  2 Jul 2026 16:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8759331EB6;
+	Thu,  2 Jul 2026 16:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011597; cv=none; b=Xp2v8Bk7dEcSafgi3lr12VOW1H9AbdBBBArbUBd/KKAYSBT0gP3OTW+n8Hx+SGpY8QPIme4L95mwxXCZC97cRnJwJ2tehzq5a3A5aT6VYqm8VosxYLJzioEOnm2MuL7X+NNgHNbRB1UrRN8j3JDiCIByxVpeQg35zEdVR77fm24=
+	t=1783011600; cv=none; b=QrqR1J6FRmyYBZ9oqNkZfYRrYvFfdWBLNONpwj/n7qH7u70Ep8ipRXUwoBayvl8PPnKJPfdoAUxZdyHV8f3sKjqp/WUVx5qb9hTAss6VkNtPIHiHmmnnlW8hOD25rDgcEnV39W39Mqwm/Fr4UryYhVwhBJEmnZwg5mTEJr964Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011597; c=relaxed/simple;
-	bh=QHXm/NRkuf1XHRnlLuzJfiWOixtLvtt5urczIj9J3xU=;
+	s=arc-20240116; t=1783011600; c=relaxed/simple;
+	bh=Je7QclP/s82F4lr2djPqNVqhfEwmlfdex9qDUgFfs9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AX8RTnUphPiNstS+ZmwwiwQ0o4bhaKWii4h2AWHV3Y3zPDyKqt+K/NMLQpIxK+2MI8bewfQM6FHNC2i/isv3hys59RLPDMhuOXa2MzLHJgu3TvyS6VrJVSJXJKkIiT0ONe7JHjjlwY1XxQikeFqcUg4wBdNrwUpj+bbivzBoWq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yk69B7Xu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nC/TjIiqR+V/uyPO4nmv1rF+dd9l1o0P92uThkVSmxhbbOuXe09h0rq3L8XlX++d0IfNjqp+JULDTNZYdhXi0ejnyi8B8A2USrnW8tlVM+5RVUbQZREKWsm4uamvHlWRCJtT3uGRJUx/Tpkl1p+hLhJLX5tpHh7ZDvXAHB6wzcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrurD/VX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yk69B7Xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FF01F00A3D;
-	Thu,  2 Jul 2026 16:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrurD/VX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5EC1F00A3A;
+	Thu,  2 Jul 2026 16:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011596;
-	bh=2ZVOOouQciJmLzq7QNauuoEVmlMcroBbx3N7hmJ6fUM=;
+	s=korg; t=1783011598;
+	bh=PPgykJtNdWzhIaryr4nSp3OasW0kX1TOsoQtFUMsw9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yk69B7XuGjnuTCcfMjkUovldKtAwiJgHnWrSV2UHbnZr19Bg7PhNhZqNDQno5XIL5
-	 4WyIkL49Z2HOT9qhPFZkg44Ep09CiS5bs9p9VJ+bnmtjM3ENd5X7p6Q6e4U1AUiZ56
-	 aefXaA8CE77C/wg8b43t7dwshq5kkuFJvsLzP02Q=
+	b=PrurD/VXhaaWHbFdkCoMtr02+AjLkOqqztdC90ziy1peS7ZKWGfwfm2r2Jh4UgzZR
+	 ouQFDw0u7Sg6OeSJV9SneR8xHLg+LwhRKn17r5sg5s3RX+p4NLvDtxIxgbwQllwfSC
+	 AEL9mZ/NYSLEWmIkLv5/R1gAiA/oKiR8vHZXRw2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
+	syzbot+2488d8d751b27f7ce268@syzkaller.appspotmail.com,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.1 061/120] f2fs: reject setattr size changes on large folio files
-Date: Thu,  2 Jul 2026 18:20:57 +0200
-Message-ID: <20260702155114.224430332@linuxfoundation.org>
+Subject: [PATCH 7.1 062/120] f2fs: fix to do sanity check on f2fs_get_node_folio_ra()
+Date: Thu,  2 Jul 2026 18:20:58 +0200
+Message-ID: <20260702155114.244501800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -52,43 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 242d30bfc0a84b8b5de0a88821b53c9ad7fd31c4 upstream.
+commit 8712353ed80f87271d732297567dcdbe4b84e8c7 upstream.
 
-F2FS large folios are only enabled for immutable non-compressed files.
-Writable open and writable mmap reject such mappings, but truncate(2)
-through f2fs_setattr() misses the same guard.
+kernel BUG at fs/f2fs/file.c:845!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 5336 Comm: syz.0.0 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:f2fs_do_truncate_blocks+0x1115/0x1140 fs/f2fs/file.c:845
+Code: fc fc 90 0f 0b e8 8b 9d 9a fd 90 0f 0b e8 83 9d 9a fd 48 89 df 48 c7 c6 60 d1 1a 8c e8 54 f1 fc fc 90 0f 0b e8 6c 9d 9a fd 90 <0f> 0b e8 64 9d 9a fd 90 0f 0b 90 e9 93 fd ff ff e8 56 9d 9a fd 90
+RSP: 0018:ffffc9000e4474c0 EFLAGS: 00010283
+RAX: ffffffff842b1d34 RBX: 0000000000000003 RCX: 0000000000100000
+RDX: ffffc9000f03a000 RSI: 0000000000035503 RDI: 0000000000035504
+RBP: ffffc9000e447608 R08: ffff8880123b0000 R09: 0000000000000002
+R10: 00000000fffffffe R11: 0000000000000002 R12: 0000000000000001
+R13: 0000000000000000 R14: 1ffff92001c88ea0 R15: 00000000ffff039c
+FS:  00007f7e02ee36c0(0000) GS:ffff88808c887000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ff0305c4000 CR3: 0000000012d4c000 CR4: 0000000000352ef0
+Call Trace:
+ <TASK>
+ f2fs_truncate_blocks+0x10a/0x300 fs/f2fs/file.c:882
+ f2fs_truncate+0x471/0x7c0 fs/f2fs/file.c:940
+ f2fs_evict_inode+0xa3f/0x1ac0 fs/f2fs/inode.c:907
+ evict+0x61e/0xb10 fs/inode.c:841
+ f2fs_fill_super+0x5f43/0x78f0 fs/f2fs/super.c:5224
+ get_tree_bdev_flags+0x431/0x4f0 fs/super.c:1694
+ vfs_get_tree+0x92/0x2a0 fs/super.c:1754
+ fc_mount fs/namespace.c:1193 [inline]
+ do_new_mount_fc fs/namespace.c:3758 [inline]
+ do_new_mount+0x341/0xd30 fs/namespace.c:3834
+ do_mount fs/namespace.c:4167 [inline]
+ __do_sys_mount fs/namespace.c:4383 [inline]
+ __se_sys_mount+0x31d/0x420 fs/namespace.c:4360
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x15f/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-If FS_IMMUTABLE_FL is cleared while the inode is still cached, the mapping
-can keep large-folio support and ATTR_SIZE can change i_size. Reject size
-changes in that state.
+	count = ADDRS_PER_PAGE(dn.node_folio, inode);
+
+	count -= dn.ofs_in_node;
+	f2fs_bug_on(sbi, count < 0);
+
+The fuzz test will trigger above bug_on in f2fs.
+
+The root cause should be: in the corrupted inode, there is a direct node
+which has the same ino and nid in its footer, so in f2fs_do_truncate_blocks(),
+after f2fs_get_dnode_of_data() finds such dnode:
+1) ADDRS_PER_PAGE(dn.node_folio, inode) will return 923
+2) once dn.ofs_in_node points to addr[923, 1017]
+Then it will trigger the system panic.
+
+Let's introduce NODE_TYPE_NON_IXNODE to indicate current node should
+not be an inode or xattr node, and then use it in below path to detect
+inconsistent node chain in inode mapping table:
+
+- f2fs_do_truncate_blocks
+ - f2fs_get_dnode_of_data
+  - f2fs_get_node_folio_ra
+   -  __get_node_folio
+    - f2fs_sanity_check_node_footer
+     - case NODE_TYPE_NON_IXNODE -> check whether it is inode|xnode
 
 Cc: stable@kernel.org
-Fixes: 05e65c14ea59 ("f2fs: support large folio for immutable non-compressed case")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Reported-by: syzbot+2488d8d751b27f7ce268@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69fa3697.170a0220.59368.0018.GAE@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/f2fs.h |    1 +
+ fs/f2fs/node.c |    6 +++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 69aad1060c48..d240ca78a31f 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1098,6 +1098,8 @@ int f2fs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 		return -EPERM;
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1583,6 +1583,7 @@ enum node_type {
+ 	NODE_TYPE_INODE,
+ 	NODE_TYPE_XATTR,
+ 	NODE_TYPE_NON_INODE,
++	NODE_TYPE_NON_IXNODE,	/* non inode and xnode */
+ };
  
- 	if ((attr->ia_valid & ATTR_SIZE)) {
-+		if (mapping_large_folio_support(inode->i_mapping))
-+			return -EOPNOTSUPP;
- 		if (!f2fs_is_compress_backend_ready(inode) ||
- 				IS_DEVICE_ALIASING(inode))
- 			return -EOPNOTSUPP;
--- 
-2.55.0
-
+ /* a threshold of maximum elapsed time in critical region to print tracepoint */
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1541,6 +1541,10 @@ int f2fs_sanity_check_node_footer(struct
+ 		if (is_inode)
+ 			goto out_err;
+ 		break;
++	case NODE_TYPE_NON_IXNODE:
++		if (is_inode || is_xnode)
++			goto out_err;
++		break;
+ 	default:
+ 		break;
+ 	}
+@@ -1634,7 +1638,7 @@ static struct folio *f2fs_get_node_folio
+ 	struct f2fs_sb_info *sbi = F2FS_F_SB(parent);
+ 	nid_t nid = get_nid(parent, start, false);
+ 
+-	return __get_node_folio(sbi, nid, parent, start, NODE_TYPE_REGULAR);
++	return __get_node_folio(sbi, nid, parent, start, NODE_TYPE_NON_IXNODE);
+ }
+ 
+ static void flush_inline_data(struct f2fs_sb_info *sbi, nid_t ino)
 
 
