@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF8F433E87;
-	Thu,  2 Jul 2026 17:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1873F433E87;
+	Thu,  2 Jul 2026 17:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011618; cv=none; b=YIIL8NFhg4XDEbV+LT06/Esmg/3sySuw6uAQvGeTZZRwhOVI6O02WYbiwzgNqQi/aOyMd+uYxKgVc5UVa0Zd7sGvUHsUGvLBpTg8QuSOj+/etYOGGw8Ru/d3ieEHQpdQPJMi6n7q1sMtujhvAo+hX3MjM+qfItjXl4MP6RLvnnw=
+	t=1783011621; cv=none; b=FMt8i6PE6PDeBR0XnepILxAnSkxY/hJPQfHC5ktSg2qcVSwxVjPVyBWi6SYVDxtgZPKC0cigN0oGHtLbLLLgpBUJ26cG+JWlLeEAgBj/CHRKuQYEpNRMFrSKL03Sf2H2lCACzsNjEvMLFpEjQ04/BuVx92WW72jDlGEu/Pn1Ux0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011618; c=relaxed/simple;
-	bh=dhYcsPhGP96vLop9gEVZ921BMvrsJZ7jtqWAg73D1Hk=;
+	s=arc-20240116; t=1783011621; c=relaxed/simple;
+	bh=uZBANYZ148gs3F0QNa6YAeHt7ycUu2E+3VgCAWRXY9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDQNofHRh8kBmKz87QMiupMqa5LRfHJm4i2y9tjK7qCvIPVfRMAmnoiYF36p7HYDxQ4VEvMGHfhfre50tAoKqXDes3twPqlT2JEIOowCT9oCEA2V7ZFwkgaFRbwBs0esy2hyj/zYLqZ352Qx90BczgWhMB2ZBrHJ+iGGzP9hh+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oclfFnbU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nlJmKDhdpbRqZySvjCp1jLDBzxfsh5eu1hef+u8FZJatYfI/e3cut/DSBrFpYTcGgx+pAsH880CHQ2IJGueX990erZWEQfE2lOpgoTa5eCCfAcg8oJFCcsfNNgAw5DnGGf2gc9tpgEMwB8dGl0jHkwG4YJJWKK83akEhjdK7Cww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRG53oZW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oclfFnbU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02FB1F00A3A;
-	Thu,  2 Jul 2026 17:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRG53oZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C891F000E9;
+	Thu,  2 Jul 2026 17:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011617;
-	bh=a7DnGvmSc6QnXlmlaUYaMteC0VRgkUKiSTTY4F8m+do=;
+	s=korg; t=1783011620;
+	bh=ZLniOW/mqs4TV/V+vDT5iTC65xUE/NYwDK27nRvK2V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oclfFnbUxfOMsqS18YeOsFJC5eG1cSzdGC35ySr+qg0zSh1oihMobEG5fn7mbJcCx
-	 2rNxj34idHewz86ddYl+zZxtKntqxz9HZ+2qLCeZQ+eNXi06lc0N4BaKCSfYjPG2hI
-	 syXtBk3LIc744bh39KwlcpThYy09kv8NcIixj9GA=
+	b=tRG53oZW/EFxGFwgXq0umtZ1/B3DlmGsLFYmog+93PtSyqVW3uwqQHW/3wid8IPsx
+	 thsrO57QG8rVYhGgMbWtibMr2p2RYacdRAN9JxFaSILcl5WL/EN4uTL1FPRjFsez4M
+	 xkaQcmbLRu8tIkThy3QOixJ0h0ZePPa+m9LsCsV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Cen <rollkingzzc@gmail.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.1 068/120] f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
-Date: Thu,  2 Jul 2026 18:21:04 +0200
-Message-ID: <20260702155114.366411912@linuxfoundation.org>
+Subject: [PATCH 7.1 069/120] Revert "f2fs: remove non-uptodate folio from the page cache in move_data_block"
+Date: Thu,  2 Jul 2026 18:21:05 +0200
+Message-ID: <20260702155114.386956019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -52,118 +51,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
 
-commit c4810ada31e80cbe4011467c4f3b1e93f94134f3 upstream.
+commit ccaba785821970f422c47770331c7e3271763f17 upstream.
 
-f2fs_acl_count() only validates the aggregate ACL xattr length. A
-malformed ACL can still place ACL_USER or ACL_GROUP in a slot that only
-contains struct f2fs_acl_entry_short bytes, and f2fs_acl_from_disk()
-then reads entry->e_id before verifying that a full entry fits.
+This reverts commit 9609dd704725a40cd63d915f2ab6c44248a44598.
 
-Require a short entry before reading e_tag and e_perm, and require a
-full entry before reading e_id for ACL_USER and ACL_GROUP. Return
--EFSCORRUPTED from these new truncated-entry checks, while keeping the
-pre-existing -EINVAL paths unchanged.
+The kernel panics are keeping to be reported especially when the f2fs
+partition get almost full. By investigation, we find that the reason is
+one f2fs page got freed to buddy without being deleted from LRU and the
+root cause is the race happened in [2] which is enrolled by this commit.
 
-Validation reproduced this kernel report:
-KASAN slab-out-of-bounds in __f2fs_get_acl+0x6fb/0x7e0
-RIP: 0033:0x7f4b835ea7aa
-The buggy address belongs to the object at ffff888114589960 which belongs
-to the cache kmalloc-8 of size 8
-The buggy address is located 0 bytes to the right of allocated 8-byte
-region [ffff888114589960, ffff888114589968)
-Read of size 4
-Call trace:
-  dump_stack_lvl+0x66/0xa0 (?:?)
-  print_report+0xce/0x630 (?:?)
-  __f2fs_get_acl+0x6fb/0x7e0 (fs/f2fs/acl.c:169)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x224/0x430 (?:?)
-  kasan_report+0xe0/0x110 (?:?)
-  __f2fs_get_acl+0x5/0x7e0 (fs/f2fs/acl.c:169)
-  __get_acl+0x281/0x380 (?:?)
-  vfs_get_acl+0x10b/0x190 (?:?)
-  do_get_acl+0x2a/0x410 (?:?)
-  do_get_acl+0x9/0x410 (?:?)
-  do_getxattr+0xe8/0x260 (?:?)
-  filename_getxattr+0xd1/0x140 (?:?)
-  do_getname+0x2d/0x2d0 (?:?)
-  path_getxattrat+0x16c/0x200 (?:?)
-  lock_release+0xc8/0x290 (?:?)
-  cgroup_update_frozen+0x9d/0x320 (?:?)
-  lockdep_hardirqs_on_prepare+0xea/0x1a0 (?:?)
-  trace_hardirqs_on+0x1a/0x170 (?:?)
-  _raw_spin_unlock_irq+0x28/0x50 (?:?)
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+There are 3 race processes in this scenario, please find below for their
+main activities.
 
-Cc: stable@kernel.org
-Fixes: af48b85b8cd3 ("f2fs: add xattr and acl functionalities")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+The changed code in move_data_block() lets the GC path evict the tail-end
+folio from the page cache through folio_end_dropbehind().  Once
+folio_unmap_invalidate() removes the folio from mapping->i_pages, the
+page-cache references for all pages in the folio are dropped.  The folio
+is then kept alive only by temporary external references, which allows a
+later split to operate on a folio whose subpages are no longer protected
+by page-cache references.
+
+After the page-cache references are gone, split_folio_to_order() can
+split the big folio into individual pages and put the resulting subpages
+back on the LRU.  For tail pages beyond EOF, split removes them from the
+page cache and drops their page-cache references.  A tail page can then
+remain on the LRU with PG_lru set while holding only the split caller's
+temporary reference.  When free_folio_and_swap_cache() drops that final
+reference, the page enters the final folio_put() release path.
+
+In parallel, folio_isolate_lru() can observe the same tail page with a
+non-zero refcount and PG_lru set.  It clears PG_lru before taking its own
+reference.  If this races with the final folio_put() from the split path,
+__folio_put() sees PG_lru already cleared and skips lruvec_del_folio().
+The page is then freed back to the allocator while its lru links are
+still present in the LRU list.  A later LRU operation on a neighboring
+page detects the stale link and reports list corruption.
+
+[1]
+[   22.486082] list_del corruption. next->prev should be fffffffec10e0ac8, but was dead000000000122. (next=fffffffec10e0a88)
+[   22.486130] ------------[ cut here ]------------
+[   22.486134] kernel BUG at lib/list_debug.c:67!
+[   22.486141] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
+[   22.488502] Tainted: [W]=WARN, [O]=OOT_MODULE
+[   22.488506] Hardware name: Spreadtrum UMS9230 1H10 SoC (DT)
+[   22.488511] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   22.488517] pc : __list_del_entry_valid_or_report+0x14c/0x154
+[   22.488531] lr : __list_del_entry_valid_or_report+0x14c/0x154
+[   22.488539] sp : ffffffc08006b830
+[   22.488542] x29: ffffffc08006b868 x28: 0000000000003020 x27: 0000000000000000
+[   22.488553] x26: 0000000000000000 x25: 0000000000000004 x24: fffffffec10e0ac0
+[   22.488564] x23: 00000000000000e8 x22: 0000000000000024 x21: dead000000000122
+[   22.488574] x20: fffffffec10e0a88 x19: fffffffec10e0ac8 x18: ffffffc080061060
+[   22.488585] x17: 20747562202c3863 x16: 6130653031636566 x15: 0000000000000058
+[   22.488595] x14: 0000000000000004 x13: ffffff80f91e0000 x12: 0000000000000003
+[   22.488605] x11: 0000000000000003 x10: 0000000000000001 x9 : ffe85721f0e25f00
+[   22.488615] x8 : ffe85721f0e25f00 x7 : 0000000000000000 x6 : 6c65645f7473696c
+[   22.488625] x5 : ffffffed39b23026 x4 : 0000000000000000 x3 : 0000000000000010
+[   22.488636] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 000000000000006d
+[   22.488647] Call trace:
+[   22.488651]  __list_del_entry_valid_or_report+0x14c/0x154 (P)
+[   22.488661]  __folio_put+0x2bc/0x434
+[   22.488670]  folio_put+0x28/0x58
+[   22.488678]  do_garbage_collect+0x1a34/0x2584
+[   22.488689]  f2fs_gc+0x230/0x9b4
+[   22.488697]  f2fs_fallocate+0xb90/0xdf4
+[   22.488706]  vfs_fallocate+0x1b4/0x2bc
+[   22.488716]  __arm64_sys_fallocate+0x44/0x78
+[   22.488725]  invoke_syscall+0x58/0xe4
+[   22.488732]  do_el0_svc+0x48/0xdc
+[   22.488739]  el0_svc+0x3c/0x98
+[   22.488747]  el0t_64_sync_handler+0x20/0x130
+[   22.488754]  el0t_64_sync+0x1c4/0x1c8
+
+[2]
+CPU0 (f2fs GC)              CPU1 (split_folio_to_order)          CPU2 (folio_isolate_lru)
+
+F: pagecache refs = n
+F: extra refs = GC + split
+F: PG_lru set
+move_data_block()
+folio = f2fs_grab_cache_folio(F)
+...
+__folio_set_dropbehind(F)
+folio_unlock(F)
+folio_end_dropbehind(F)
+  folio_unmap_invalidate(F)
+    __filemap_remove_folio(F)
+    folio_put_refs(F, n)
+folio_put(F)
+                            split_folio_to_order(F)
+                              folio_ref_freeze(F, 1)
+                              ...
+                              lru_add_split_folio(T)
+                                list_add_tail(&T->lru, &F->lru)
+                                folio_set_lru(T)
+                              __filemap_remove_folio(T)
+                              folio_put_refs(T, 1)
+                              /* T refcount == 1, PageLRU set */
+                                                                  folio_isolate_lru(T)
+                                                                    folio_test_clear_lru(T)
+                            free_folio_and_swap_cache(T)
+                              folio_put(T)
+                                /* refcount: 1 -> 0 */
+                                __folio_put(T)
+                                  __page_cache_release(T)
+                                    folio_test_lru(T) == false
+                                    /* skip lruvec_del_folio(T) */
+                                  free_frozen_pages(T)
+                                                                  folio_get(T)
+                                                                  lruvec_del_folio(T)
+later:
+  list_del(adjacent->lru)
+    next == &T->lru
+    next->prev == LIST_POISON / PCP freelist
+    BUG
+
+Cc: stable@vger.kernel.org
+Fixes: 9609dd704725 ("f2fs: remove non-uptodate folio from the page cache in move_data_block")
+Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/acl.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/f2fs/gc.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/fs/f2fs/acl.c
-+++ b/fs/f2fs/acl.c
-@@ -47,6 +47,7 @@ static inline int f2fs_acl_count(size_t
- static struct posix_acl *f2fs_acl_from_disk(const char *value, size_t size)
- {
- 	int i, count;
-+	int err = -EINVAL;
- 	struct posix_acl *acl;
- 	struct f2fs_acl_header *hdr = (struct f2fs_acl_header *)value;
- 	struct f2fs_acl_entry *entry = (struct f2fs_acl_entry *)(hdr + 1);
-@@ -70,8 +71,11 @@ static struct posix_acl *f2fs_acl_from_d
- 
- 	for (i = 0; i < count; i++) {
- 
--		if ((char *)entry > end)
-+		if (unlikely((char *)entry +
-+				sizeof(struct f2fs_acl_entry_short) > end)) {
-+			err = -EFSCORRUPTED;
- 			goto fail;
-+		}
- 
- 		acl->a_entries[i].e_tag  = le16_to_cpu(entry->e_tag);
- 		acl->a_entries[i].e_perm = le16_to_cpu(entry->e_perm);
-@@ -86,6 +90,11 @@ static struct posix_acl *f2fs_acl_from_d
- 			break;
- 
- 		case ACL_USER:
-+			if (unlikely((char *)entry +
-+					sizeof(struct f2fs_acl_entry) > end)) {
-+				err = -EFSCORRUPTED;
-+				goto fail;
-+			}
- 			acl->a_entries[i].e_uid =
- 				make_kuid(&init_user_ns,
- 						le32_to_cpu(entry->e_id));
-@@ -93,6 +102,11 @@ static struct posix_acl *f2fs_acl_from_d
- 					sizeof(struct f2fs_acl_entry));
- 			break;
- 		case ACL_GROUP:
-+			if (unlikely((char *)entry +
-+					sizeof(struct f2fs_acl_entry) > end)) {
-+				err = -EFSCORRUPTED;
-+				goto fail;
-+			}
- 			acl->a_entries[i].e_gid =
- 				make_kgid(&init_user_ns,
- 						le32_to_cpu(entry->e_id));
-@@ -108,7 +122,7 @@ static struct posix_acl *f2fs_acl_from_d
- 	return acl;
- fail:
- 	posix_acl_release(acl);
--	return ERR_PTR(-EINVAL);
-+	return ERR_PTR(err);
- }
- 
- static void *f2fs_acl_to_disk(struct f2fs_sb_info *sbi,
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 69e0a867219d..56a1c0547d76 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1499,11 +1499,7 @@ static int move_data_block(struct inode *inode, block_t bidx,
+ put_out:
+ 	f2fs_put_dnode(&dn);
+ out:
+-	if (!folio_test_uptodate(folio))
+-		__folio_set_dropbehind(folio);
+-	folio_unlock(folio);
+-	folio_end_dropbehind(folio);
+-	folio_put(folio);
++	f2fs_folio_put(folio, true);
+ out_iput:
+ 	if (atomic_inode)
+ 		iput(atomic_inode);
+-- 
+2.55.0
+
 
 
