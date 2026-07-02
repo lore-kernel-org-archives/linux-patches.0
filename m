@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC2135F602;
-	Thu,  2 Jul 2026 16:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D1335F19A;
+	Thu,  2 Jul 2026 16:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010378; cv=none; b=FG0fhhP3MKTTq/tU2jKI0A8m9+GTO6au6hFy1YmfxkzhSDsiaT0WInYtUk9AKqy32pwWT7eWOznvY/TOerQ232BoS5cloj2KFoWLY2fRQLXI7utM4vQm1kevgu9/c6tsy/xUjVN56HZmP9C4arjEOUwCkypsZwvtVAcUyoSXF+8=
+	t=1783010380; cv=none; b=Y99f0uswHiTAE7zEqB+umMBSYRAasLYOqgrrfOkIBi2sm0pYtxgeJKfdigaCNiN2qBnwyNMTz0AGOwBvIBYlR9KrOVf2Q1RdMjzeeUSWsnI7I+C7DcZZ01RtFMfbZJiPBS3v9L02yp6qKlcGCgPQCtoQWpVvriPnVQ4+sS0IRjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010378; c=relaxed/simple;
-	bh=T+px+FU+ynCZ37HevFZrA4swf8zU8tkcRxdRNnIZcQ4=;
+	s=arc-20240116; t=1783010380; c=relaxed/simple;
+	bh=Bkg3CTNCQ53SflcFZhAT/qAZbmFa2DlcWPyi+1zhLpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vA9S5a4GiE0sFykPchglrbs2tprrfNLk+x8PWMtUX6gWVQayEuElR5HSbwFRrRm3/dR7zmuUwh+ONJvUvpIDydjUk3MQ42Zotq4MvYL77ciIW10Rfu+bNS8Qs0Lr8pXuLdvLEdRHdD4o6iPLutieHLLI5ZSVZqa9wtPMzxyyw84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V13Hrxc6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=d4BkPss5Nsf9AfpcP3s/XkwPcpeYwtknVRoelWic7IdMGK3b2KS4v61GALLPCru0X0xD4SHhkuRbZeWMDK9JfpVG/InxGLiTIMNHbm9DBlZ6GGiEgUmAaj4bqA3Le/pubgqQ+3pWrjFy8fNW27buge8KOR2KsYMZ8fLaWiUzzXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ah53z44l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V13Hrxc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3271F000E9;
-	Thu,  2 Jul 2026 16:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ah53z44l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAA01F000E9;
+	Thu,  2 Jul 2026 16:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010376;
-	bh=M3MVU3TnEhJ7O5YMAq817MxgNt0eu/G7szvLi2dqxMo=;
+	s=korg; t=1783010379;
+	bh=WIHqj+5VYWd6gCmYmxT1aDHx1AFSpn+obx28Zx3NxDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V13Hrxc6eGR8pH0x1UTo7YvWUtAJMrbfOO3SzZOrwYwu9aaCUeMnAu82BTFAqhGBE
-	 ic3050zBms9HF3agpjZ5Je2KoOo4C0qDUtjCeWjtQ/i3Sa7yeJCW8igRrVzZu6sF0H
-	 G4ZE/lDMYgtyX8ruWzBR1qWnbFN1kSOpY5i9xK8M=
+	b=Ah53z44l2LZGguzzz5nEgv1bD0AkeHEM0Uatam9DXTPP2KgcorvoXnhAgkC6//Umd
+	 sRldyK2WwVPTAK35Dk5XrTBcF8KhNBQul/r642uP3S6Ownc1yCha6LhQeO2qtifidO
+	 oJke0MDtz66yUUBA2o9CXGTQs7AzyNPJi+mrcaNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Sam Daly <sam@samdaly.ie>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.12 086/204] iio: light: veml6075: add bounds check to veml6075_it_ms index
-Date: Thu,  2 Jul 2026 18:19:03 +0200
-Message-ID: <20260702155120.468920490@linuxfoundation.org>
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Sam Daly <sam@samdaly.ie>
+Subject: [PATCH 6.12 087/204] iio: adc: ti-ads1298: add bounds check to pga_settings index
+Date: Thu,  2 Jul 2026 18:19:04 +0200
+Message-ID: <20260702155120.490586150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -46,6 +48,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -54,50 +57,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Sam Daly <sam@samdaly.ie>
 
-commit 307dc4240bd41852d9e0912921e298160db1c109 upstream.
+commit 95e8a48d7a85d4226934020e57815a3316d3a14b upstream.
 
-veml6075_it_ms has 5 elements but VEML6075_CONF_IT can yield values 0-7.
-If it returns a value >= 5, this causes an out-of-bounds array access.
-Add a bounds check and return -EINVAL if the index is out of range.
+ads1298_pga_settings has 7 elements but ADS1298_MASK_CH_PGA can yield
+values 0-7. If it yields a value >= 7, this causes an out-of-bounds
+array access. Add a bounds check and return -EINVAL if the index
+is out of range.
 
-The problem values are reserved so should never be read from the
-register. Hence this is hardening against fault device, missprogramming
-or bus corruption.
+Note that the remaining value b111 is reserved so should not be seen
+in a correctly functioning system.
 
 Assisted-by: gkh_clanker_2000
 Cc: stable <stable@kernel.org>
+Cc: Jonathan Cameron <jic23@kernel.org>
+Cc: David Lechner <dlechner@baylibre.com>
+Cc: "Nuno Sá" <nuno.sa@analog.com>
+Cc: Andy Shevchenko <andy@kernel.org>
 Signed-off-by: Sam Daly <sam@samdaly.ie>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/veml6075.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ti-ads1298.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/light/veml6075.c
-+++ b/drivers/iio/light/veml6075.c
-@@ -100,7 +100,7 @@ static const struct iio_chan_spec veml60
- 
- static int veml6075_request_measurement(struct veml6075_data *data)
+--- a/drivers/iio/adc/ti-ads1298.c
++++ b/drivers/iio/adc/ti-ads1298.c
+@@ -279,6 +279,7 @@ static const u8 ads1298_pga_settings[] =
+ static int ads1298_get_scale(struct ads1298_private *priv,
+ 			     int channel, int *val, int *val2)
  {
--	int ret, conf, int_time;
-+	int ret, conf, int_time, int_index;
++	unsigned int pga_idx;
+ 	int ret;
+ 	unsigned int regval;
+ 	u8 gain;
+@@ -302,7 +303,11 @@ static int ads1298_get_scale(struct ads1
+ 	if (ret)
+ 		return ret;
  
- 	ret = regmap_read(data->regmap, VEML6075_CMD_CONF, &conf);
- 	if (ret < 0)
-@@ -117,7 +117,11 @@ static int veml6075_request_measurement(
- 	 * time for all possible configurations. Using a 1.50 factor simplifies
- 	 * operations and ensures reliability under all circumstances.
- 	 */
--	int_time = veml6075_it_ms[FIELD_GET(VEML6075_CONF_IT, conf)];
-+	int_index = FIELD_GET(VEML6075_CONF_IT, conf);
-+	if (int_index >= ARRAY_SIZE(veml6075_it_ms))
+-	gain = ads1298_pga_settings[FIELD_GET(ADS1298_MASK_CH_PGA, regval)];
++	pga_idx = FIELD_GET(ADS1298_MASK_CH_PGA, regval);
++	if (pga_idx >= ARRAY_SIZE(ads1298_pga_settings))
 +		return -EINVAL;
 +
-+	int_time = veml6075_it_ms[int_index];
- 	msleep(int_time + (int_time / 2));
++	gain = ads1298_pga_settings[pga_idx];
+ 	*val /= gain; /* Full scale is VREF / gain */
  
- 	/* shutdown again, data registers are still accessible */
+ 	*val2 = ADS1298_BITS_PER_SAMPLE - 1; /* Signed, hence the -1 */
 
 
