@@ -1,141 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213481FA859;
-	Thu,  2 Jul 2026 17:02:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07E7318EC1
+	for <patches@lists.linux.dev>; Thu,  2 Jul 2026 17:44:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011776; cv=none; b=Bs+YbZ9ye1Uci/ugGD5qPZzBTkb3Xb3MGvOuq8oKfeNTrJrMdnFDAO8JPtazfNQ5LRDGBUoSyS83mw+KZIJ20TfG5Ij0HyBnBoFlv5MUJAQJweSW7RPlSRusSo6WvG4H1n5X+tdWBWOVIYt8fa2AA2F41hbL0Eu6QnDmE28GJQQ=
+	t=1783014263; cv=none; b=ufBGiKe7Xc/agJKVh8++KVmDkw1VoA+hrWzryqC1pma8wJD8j/G/wZwE19YLtmYRM+/7uhM+I8MGBibm6jaUCWtqXInun1TnV2BC1G8uMqr8RcqY3mju1zxxhBaEajUCyARRPN307/mTlMMiu7ooPZIJ1nOEtM2eoEUoRVY5cSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011776; c=relaxed/simple;
-	bh=6uVIWO55axgjFN4Xl+Zx2yRUjigWigUEIklyRwkaV10=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IO6jFAkt13SlcMGoKuIEK5UrDTV4U8v0NBxeilTzO30NtTfJ93BTxYLxAUzLrvLSB6CUTxCp7BWVxOD79XChi2ykrLe5aFzm5mLhoE6D7TPhfHy09wPjnArEBcnZogY7eR1Ln2egvupr5xlsDPG51JLZV8497wMTXU+aZkIgs/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEgeUE4n; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783014263; c=relaxed/simple;
+	bh=slYQfA95u4w9IfAmSQlot7YQrqu1NxdBnaQ4y+GqwuI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mrRLIurRmB+6l8qv/XXl9IfV5gI/C8mpX0zbzP8Igkd6CdOtUY7KZWqEeUMDoqEE2TFRSLaS7y0ye7V0WAz0QWGtWP9wD4NH28fF+ceNu+gBrtNujnXWrJUZyjgNH3125icVMXBoOPodnMFBDOzprBZ1W2iojcDXbp53HZ4HrzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8wf5o7W; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEgeUE4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869AF1F000E9;
-	Thu,  2 Jul 2026 17:02:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011775;
-	bh=RoZHchTpKJPKtblYPBHSILuiZrUCb1XiOw2Vquavne4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rEgeUE4nc+fxvy3bB1bIyzV5BLZ3rJH+qOE78CHB3KHIETwF1gyb0QF7qAQbjqgE+
-	 b1fppbcmlPmsoFULOlzdB6xyRrUDtm7SbbZobelW/fa2j0j9MqUTtnt+8DGUm+Rr1P
-	 Ra/Cw+fUWGqwTsK9mRU9C4PH4LfxMnHhfCutkXtE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.1 094/120] KVM: x86: hyper-v: Bound the bank index when querying sparse banks
-Date: Thu,  2 Jul 2026 18:21:30 +0200
-Message-ID: <20260702155114.904169681@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
-References: <20260702155112.964534952@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8wf5o7W"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7eb5bdb50fcso495926a34.1
+        for <patches@lists.linux.dev>; Thu, 02 Jul 2026 10:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1783014261; x=1783619061; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=HK9U9SbnZZhSV1BjuVIdjTw4J1whSoiAiJpu28W0Epw=;
+        b=T8wf5o7Wow6tYivikruGcWKYhezgXgIGL9gE8ovvcQOOXglpUhXXzeMvToUwEC9RLw
+         nwAhQyvv+HV043n9OelJbfLjktAB24HoAl8yKdd76oaVYxDs0BPkgk2eBcrsGOddzZSG
+         a1AcCDaAaud0nn/kaBscF+rJiSsHzXd4rl12w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783014261; x=1783619061;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=HK9U9SbnZZhSV1BjuVIdjTw4J1whSoiAiJpu28W0Epw=;
+        b=U9oObiQ9NSfLfS5bEaGD2VV6YqmEeChxyTMQu/E1NnlLGGbMMU/LYQpMGTc3eeFD5Q
+         Ib1P1sEay4yvjyeUhwNESInomzWky0AUOvxe0PalLhNaz76cLfGec7jOqKdTLcfdWEBl
+         //KoveYnuW/sREd5TthJDelkCpAJ3s3KatawWPg3VjhoTUM7vEJ2aPQQXavD8KmvwAqP
+         976DrM4gevAqkb16yucva4Ish2wAQ996qQCd1RfKELhb3rMkJKFGyMh/HuoSahrAxoPO
+         r3fJDgB3gUohWYpYJOpr7gvdA1exJrp/zxPeBsFUgVNrWIDI9745M99uHdU7uu11Qlsp
+         MHVg==
+X-Gm-Message-State: AOJu0Yz/wepgw9CErZ5HxpM8H+2zPd70sgZryndw3V2tPZy36yRr/Qha
+	xd6Lv6e2ymFNPJBqzj8ABmpO4tJER1HOXb8DK70awHajHsTWStGPztgaQ4v0D+Z8v7Q=
+X-Gm-Gg: AfdE7cmYLXIT4DvHb14/2QHC0ZoAuDuM/mbG1a1LbP9GfzT9cDQCX6QiXwSuBs7MKkN
+	6EZcYxB5B8fK33uG4LXpZ1AOMyr+Wa/7PtFoxTzxEyIxnsGPcy10Pa8PZ6hAOejDJmJUyp4g7Et
+	+1KOmdOjEafK9IMBUX+xjc4ZcCXSMGxxO/9UK4lSI6gEMdAo9qFgdmLii9cgu2QAFQWCaazqRXL
+	AdDtI4EW5Bada6nxZI6Z5PZyuLN6rhjJhqmWKj8isr6Yy8DlGg/tvq6k8Q9Tgyd9bRV9aJZL2Q+
+	IeFmtA4eNnylUCvi7jOlMSRjsh2YBDIRBCKkr6pBEaK+fkhj6nP61tRIaYlKts6Ep6NdAg0+CjA
+	HPt3Q6+UqOWmaVPLOhjlQqEs2yN1bFG7pdMMdoP/1b6vfuvi0SJxMjOulilJ+1gEa+9yTMZYG0N
+	hU7pbSmc+f8fNUqAYeK59DB0BO4dk4mF0=
+X-Received: by 2002:a05:6830:6816:b0:7d7:e142:2ead with SMTP id 46e09a7af769-7eb504b30d2mr3873128a34.20.1783014260892;
+        Thu, 02 Jul 2026 10:44:20 -0700 (PDT)
+Received: from [192.168.1.14] ([38.15.57.99])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7eb542d017csm3026439a34.8.2026.07.02.10.44.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jul 2026 10:44:20 -0700 (PDT)
+Message-ID: <0585b5ab-f9a1-4922-b2f4-167d0402758c@linuxfoundation.org>
+Date: Thu, 2 Jul 2026 11:44:18 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.1 000/120] 7.1.3-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20260702155112.964534952@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+On 7/2/26 10:19, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.1.3 release.
+> There are 120 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 04 Jul 2026 15:50:58 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.3-rc1.gz
 
-------------------
+I am seeing 404 on this link. Maybe I will it more time for it to show up on
+kernel.org
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+Same with 6.18 link - haven't tried the others.
 
-commit 4721f8160f17554b003e8928bb61e6c9b2fe92a3 upstream.
-
-When checking if a VP ID is included in a sparse bank set, explicitly check
-that the ID can actually be contained in a sparse bank (the TLFS allows for
-a maximum of 64 banks of 64 vCPUs each).  When handling a paravirtual TLB
-flush for L2, the VP ID is copied verbatim from the enlightened VMCS,
-without any bounds check, i.e. isn't guaranteed to be under the limit of
-4096.
-
-Failure to check the bounds of the VP ID leads to an out-of-bounds read
-when testing the sparse bank, and super strictly speaking could lead to KVM
-performing an unnecessary TLB flush for an L2 vCPU.
-
-  ==================================================================
-  BUG: KASAN: use-after-free in hv_is_vp_in_sparse_set+0x85/0x100 [kvm]
-  Read of size 8 at addr ffff88811ba5f598 by task hyperv_evmcs/2802
-
-  CPU: 12 UID: 1000 PID: 2802 Comm: hyperv_evmcs Not tainted 7.1.0-rc2 #7 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x51/0x60
-   print_report+0xcb/0x5d0
-   kasan_report+0xb4/0xe0
-   kasan_check_range+0x35/0x1b0
-   hv_is_vp_in_sparse_set+0x85/0x100 [kvm]
-   kvm_hv_flush_tlb+0xe9e/0x16c0 [kvm]
-   kvm_hv_hypercall+0xe6b/0x1e60 [kvm]
-   vmx_handle_exit+0x485/0x1b60 [kvm_intel]
-   kvm_arch_vcpu_ioctl_run+0x22e3/0x5070 [kvm]
-   kvm_vcpu_ioctl+0x5d0/0x10c0 [kvm]
-   __x64_sys_ioctl+0x129/0x1a0
-   do_syscall_64+0xb9/0xcf0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x7f0e62d1a9bf
-   </TASK>
-
-  The buggy address belongs to the physical page:
-  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffffffffffffffff pfn:0x11ba5f
-  flags: 0x4000000000000000(zone=1)
-  raw: 4000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-  raw: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000000
-  page dumped because: kasan: bad access detected
-
-  Memory state around the buggy address:
-   ffff88811ba5f480: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-   ffff88811ba5f500: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  >ffff88811ba5f580: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                              ^
-   ffff88811ba5f600: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-   ffff88811ba5f680: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  ==================================================================
-  Disabling lock debugging due to kernel taint
-
-Opportunistically add a compile time assertion to ensure the maximum number
-of sparse banks exactly matches the number of possible bits in the passed
-in mask.
-
-Cc: stable@vger.kernel.org
-Fixes: c58a318f6090 ("KVM: x86: hyper-v: L2 TLB flush")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://patch.msgid.link/aiQyZIJtO-2Aj_xN@v4bel
-[sean: add KASAN splat, drop comment, add assert, massage changelog]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/x86/kvm/hyperv.c |    5 +++++
- 1 file changed, 5 insertions(+)
-
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -1839,6 +1839,11 @@ static bool hv_is_vp_in_sparse_set(u32 v
- 	int valid_bit_nr = vp_id / HV_VCPUS_PER_SPARSE_BANK;
- 	unsigned long sbank;
- 
-+	BUILD_BUG_ON(BITS_PER_TYPE(valid_bank_mask) != HV_MAX_SPARSE_VCPU_BANKS);
-+
-+	if (valid_bit_nr >= HV_MAX_SPARSE_VCPU_BANKS)
-+		return false;
-+
- 	if (!test_bit(valid_bit_nr, (unsigned long *)&valid_bank_mask))
- 		return false;
- 
-
-
+thanks,
+-- Shuah
