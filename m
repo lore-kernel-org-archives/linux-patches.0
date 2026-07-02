@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155503AF64D;
-	Thu,  2 Jul 2026 16:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685AC3B6361;
+	Thu,  2 Jul 2026 16:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010710; cv=none; b=QgJnldocpfQzPDLanGR+ggO56zd9ZLrpy0VxCnjKNOhbhvjkch+xo0Y/fk4YmVtvY+N+gFgdtDBsTYFX89CGAsmuzZ0y8XM0UKLmTk1E9hEFxJo0hqKWqj6XV34wkI/hA63LGZC+I55xV59poNMgSVYXqbxxvb4O05bqqAto0B4=
+	t=1783010712; cv=none; b=Gq4wk45AsjxUkuRvSu55ItzdC2BDUPWY5gotz0emm0visd+itxwtJkkSxRexIUcEiiuO/NqBpd7eCXEGg9BQr40LJYK6Yx7jySqJzKZEdM3h87xw35nYIiSUxCUvvsCGFpv04Gqe6GdDSzOILX/CnBg6XdpFLJWqDPKCQGn/88E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010710; c=relaxed/simple;
-	bh=S7Jk7ky1p4uVrbkQbDfdggfvu2yaazvbxj9h5cdhCq0=;
+	s=arc-20240116; t=1783010712; c=relaxed/simple;
+	bh=qEqwHxIyqtP4GlL22LL7KqwJIj8wx5vo4L4uGlCKlNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCKRgF1PDVXTi772vdukynu5nuIs/DYUSi6eK66dj3ymJn28ykx84F58adEa0Z4+vRRRJcvc6xTeA30I/g6H7v0vgeLm3I9tFqV+02u3z+QDrDJl6qDFg/Vi2zRWcgaPZhHD6dScg/7MjkaxHt6SOQssi7pVvN6vK2HU+14QXeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqqmodX1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ud63InLjXQ0cG6lrZ+sVY4NBJLOcaslFSrRrun1KByd1zh6sx67t4yE/ftxRugsrE15BsAnEpGj4eoVan+Q9xtujSzFER0F20Heus1Jjuh/OtguvNMXHFZO8zIcG63TZUd34mm95LLsiMXtC0ZnbamCn75bkJlLpJchHFDttRGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rt4BwOhU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqqmodX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC881F000E9;
-	Thu,  2 Jul 2026 16:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rt4BwOhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7F81F000E9;
+	Thu,  2 Jul 2026 16:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010708;
-	bh=qcng3kCTruOsyoKOsYWsW9a81s0OnAasgh/X6KagxU8=;
+	s=korg; t=1783010711;
+	bh=6eo64JpbOlR4+SSLoJjQA4RiroChyZSxmh7u1kwnSno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NqqmodX1njzyGym4U0VpSSyCegawP/lQ52hAIfhtIopzgRNb/S2hTBfrU+QONSjFk
-	 SglyM7kL++JGcBIUETscg1wNKqYq61KUu0F+qPim2A4nsdaS5xxA2P5i9pm6qVbgRv
-	 MX8pidsC874YcqudQJsqbNw6BQ0AQhbBsz9zlDnc=
+	b=Rt4BwOhU9JLd+ShuPM6neqCzq5Iv3iBVcFh4J20AWMooRxmq+PBDejBeuqy5Clbp+
+	 +CjkWoc5KNxB+yGIS+oGC2LMK/UffKBHfqW6XWcEUvObCVsS6KDGnE+vQypLtkOvj7
+	 f1GsUmsUQCKMGfnm7Zg9/WBuezaXQSJpWYmv1aTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Tonghao Zhang <tonghao@bamaicloud.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 202/204] net: bonding: update the slave array for broadcast mode
-Date: Thu,  2 Jul 2026 18:20:59 +0200
-Message-ID: <20260702155122.896823808@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/175] fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
+Date: Thu,  2 Jul 2026 18:18:22 +0200
+Message-ID: <20260702155115.800865083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
-References: <20260702155118.667618796@linuxfoundation.org>
+In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
+References: <20260702155115.766838875@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,60 +49,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tonghao Zhang <tonghao@bamaicloud.com>
+From: Jann Horn <jannh@google.com>
 
-commit e0caeb24f538c3c9c94f471882ceeb43d9dc2739 upstream.
+[ Upstream commit 4e3d1b2c48ca6c55f1e9ca7f8dccc76f120f276c ]
 
-This patch fixes ce7a381697cb ("net: bonding: add broadcast_neighbor option for 802.3ad").
-Before this commit, on the broadcast mode, all devices were traversed using the
-bond_for_each_slave_rcu. This patch supports traversing devices by using all_slaves.
-Therefore, we need to update the slave array when enslave or release slave.
+FUSE_NOTIFY_RETRIEVE must be limited to uptodate folios; !uptodate folios
+can contain uninitialized data.
+Since FUSE_NOTIFY_RETRIEVE is intended to only return data that is already
+in the page cache and not wait for data from the FUSE daemon, treat
+!uptodate folios as if they weren't present.
 
-Fixes: ce7a381697cb ("net: bonding: add broadcast_neighbor option for 802.3ad")
-Cc: Simon Horman <horms@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: <stable@vger.kernel.org>
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Tested-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/all/a97e6e1e-81bc-4a79-8352-9e4794b0d2ca@kernel.org/
-Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20251016125136.16568-1-tonghao@bamaicloud.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This only has security impact on systems that don't enable automatic
+zero-initialization of all page allocations via
+CONFIG_INIT_ON_ALLOC_DEFAULT_ON or init_on_alloc=1.
+
+Cc: stable@kernel.org
+Fixes: 2d45ba381a74 ("fuse: add retrieve request")
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260519-fuse-retrieve-uptodate-v1-1-a7a1912a37f9@google.com
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[adjusted for stable: page instead of folio]
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/fuse/dev.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2390,7 +2390,9 @@ skip_mac_set:
- 			bpf_prog_inc(bond->xdp_prog);
- 	}
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 29a6c3a5829d83..a7705b5b22e09d 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1722,6 +1722,10 @@ static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
+ 		page = find_get_page(mapping, index);
+ 		if (!page)
+ 			break;
++		if (!PageUptodate(page)) {
++			put_page(page);
++			break;
++		}
  
--	if (bond_mode_can_use_xmit_hash(bond))
-+	/* broadcast mode uses the all_slaves to loop through slaves. */
-+	if (bond_mode_can_use_xmit_hash(bond) ||
-+	    BOND_MODE(bond) == BOND_MODE_BROADCAST)
- 		bond_update_slave_arr(bond, NULL);
- 
- 	bond_xdp_set_features(bond_dev);
-@@ -2533,7 +2535,8 @@ static int __bond_release_one(struct net
- 
- 	bond_upper_dev_unlink(bond, slave);
- 
--	if (bond_mode_can_use_xmit_hash(bond))
-+	if (bond_mode_can_use_xmit_hash(bond) ||
-+	    BOND_MODE(bond) == BOND_MODE_BROADCAST)
- 		bond_update_slave_arr(bond, slave);
- 
- 	slave_info(bond_dev, slave_dev, "Releasing %s interface\n",
+ 		this_num = min_t(unsigned, num, PAGE_SIZE - offset);
+ 		ap->pages[ap->num_pages] = page;
+-- 
+2.53.0
+
 
 
