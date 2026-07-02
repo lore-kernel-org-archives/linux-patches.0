@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0753317146;
-	Thu,  2 Jul 2026 16:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9202E33B975;
+	Thu,  2 Jul 2026 16:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011085; cv=none; b=S0nkXdVgnqMNz4BkG6wNWXUW68S7bGtcuGVRIB98mt0zedEy05/r5RkJvgO2GZad0NAk7UviAt3A10DCAvRBJotlNdqFwGH4HITvC3a1V85YEyW/ETDVngDb1C2o0+RAL0nvztULV9yI9WYa9aiwAiUF3fCEizQMEZ7R7iJC/+w=
+	t=1783011087; cv=none; b=lqODIR/QDEvCZSWKCTtFajP5rJwXRcg1ZWiDhFlujPmp9hootljKtsBiOQQcl7ngozBRSOvvCQskf5uPq5YefZeMmYMNnffGl+ZzbUyrZ+QK4+XP+JtmIcHEDCQM+OHNSB/s/jSQYfw401yq4pPaCAPLLTLOtgv0PLFz+xxUPoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011085; c=relaxed/simple;
-	bh=DCi9CbBNE8MxXyZhtP3hm2EhMEd8nZwKYtuYnpKafgs=;
+	s=arc-20240116; t=1783011087; c=relaxed/simple;
+	bh=XCnQxaDkeEdTpJOjRSR6JTMTPIFeJbTc5Vkk9HwAUCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLzS3U7xFJS5gC6SCMVGbE2vF9VTjqE2ZvCRuN+Ys/SVnVaU+F35dZ1RmiTmOchhzPmppy0XD0e8skq67rJHObRQRvcnq4+TD+Pcxgl6wsanOmJ92eUY9944NFGD/b9zhH1vLWNCyFiBzwIxC3wHyiY6LDVyxWVh4U4sBoGudr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9/SYcAP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o5V/HEPXn72u22ouVWuEJ+2BN3gA9h5Mm0O/cg8DymHrzSLVWEcGvOD2NWlWIQIwW/IGdxbnTLFtr44RNCuZ0BltElN6vetz8cKoHXOiJ3GwVfsnX2veKX9yTnGKlggJoxkZFgDmrN3klW9NoqHfJYu4fxyS5A0RiucRkJxuulQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnKCO70B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9/SYcAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3901F000E9;
-	Thu,  2 Jul 2026 16:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnKCO70B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AA31F00A3A;
+	Thu,  2 Jul 2026 16:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011083;
-	bh=ME7eplkNHTih9DQ+T8vA5G01qQJwH8wwr/cPGEHZA/Y=;
+	s=korg; t=1783011086;
+	bh=g8pcysCsLfneAgPdzazwC+BbXlNboIWtdpc5wvvdj64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M9/SYcAPBPBFaGOFQ4FozfLj++pGYrtImvr7szphrrYg0pik3x4tv8rPxgM3GbLa9
-	 fH5CRRFA0B+k6T8uUk3AAB3QtOIxvVsiLf9DPdSOldxtEIzXIZwEeUCtufgkNABCzb
-	 /XmqO7iVkq14k9i9ehujd3vszu84KT6zVo2Txb6A=
+	b=LnKCO70Bvjj2AIPQdt9G6QcTY93KNp3cUPxChR0+LHaW+qKU2m/9MQkrmIla7hNhg
+	 OdLrZwZWrEmkWmPIfkej+R1PfOp9VkywsZDNVCssiwdekSuYY0rJUIamXeX8dBjQnn
+	 k8Nlg3eblzaTQS9Y/A+HG4XruopcCHvJpaIL6BUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.6 151/175] irqchip/imgpdc: Fix resource leak, add missing chained handler cleanup on remove
-Date: Thu,  2 Jul 2026 18:20:52 +0200
-Message-ID: <20260702155118.982152137@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 6.6 152/175] fpga: region: fix use-after-free in child_regions_with_firmware()
+Date: Thu,  2 Jul 2026 18:20:53 +0200
+Message-ID: <20260702155119.002139680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -50,64 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 37738fdf2ab1e504d1c63ce5bc0aeb6452d8f057 upstream.
+commit 54f3c5643ec523a04b6ec0e7c19eb10f5ebebdd3 upstream.
 
-The driver allocates domain generic chips using
-irq_alloc_domain_generic_chips() during probe and sets up chained
-handlers using irq_set_chained_handler_and_data(). However, on driver
-removal, the generic chips are not freed and the chained handlers are
-not removed.
+Move of_node_put(child_region) after the error print to avoid accessing
+freed memory when pr_err() references child_region.
 
-The generic chips remain on the global gc_list and may later be accessed by
-generic interrupt chip suspend, resume, or shutdown callbacks after the
-driver has been removed, potentially resulting in a use-after-free and
-kernel crash.
-
-The chained handlers that were installed in probe for peripheral and
-syswake interrupts are also left dangling, which can lead to spurious
-interrupts accessing freed memory.
-
-Fix these issues by:
-
-  - Setting IRQ_DOMAIN_FLAG_DESTROY_GC flag in domain->flags, so the
-    core code automatically removes generic chips when irq_domain_remove()
-    is called
-
-  - Clearing all chained handlers with NULL in pdc_intc_remove()
-
-Fixes: b6ef9161e43a ("irq-imgpdc: add ImgTec PDC irqchip driver")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 0fa20cdfcc1f ("fpga: fpga-region: device tree control for FPGA")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260618021352.661773-1-fffsqian@163.com
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+[ Yilun: Fix the Fixes tag ]
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260408154534.404327-1-vulab@iscas.ac.cn
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-imgpdc.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/fpga/of-fpga-region.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-imgpdc.c
-+++ b/drivers/irqchip/irq-imgpdc.c
-@@ -378,6 +378,7 @@ static int pdc_intc_probe(struct platfor
- 		dev_err(&pdev->dev, "cannot add IRQ domain\n");
- 		return -ENOMEM;
+--- a/drivers/fpga/of-fpga-region.c
++++ b/drivers/fpga/of-fpga-region.c
+@@ -168,11 +168,10 @@ static int child_regions_with_firmware(s
+ 						     fpga_region_of_match);
  	}
-+	priv->domain->flags |= IRQ_DOMAIN_FLAG_DESTROY_GC;
  
- 	/*
- 	 * Set up 2 generic irq chips with 2 chip types.
-@@ -465,6 +466,11 @@ static int pdc_intc_remove(struct platfo
- {
- 	struct pdc_intc_priv *priv = platform_get_drvdata(pdev);
+-	of_node_put(child_region);
+-
+ 	if (ret)
+ 		pr_err("firmware-name not allowed in child FPGA region: %pOF",
+ 		       child_region);
++	of_node_put(child_region);
  
-+	for (unsigned int i = 0; i < priv->nr_perips; ++i)
-+		irq_set_chained_handler_and_data(priv->perip_irqs[i], NULL, NULL);
-+
-+	irq_set_chained_handler_and_data(priv->syswake_irq, NULL, NULL);
-+
- 	irq_domain_remove(priv->domain);
- 	return 0;
+ 	return ret;
  }
 
 
