@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9C922D7B9;
-	Thu,  2 Jul 2026 16:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F2A26F46F;
+	Thu,  2 Jul 2026 16:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011518; cv=none; b=V8MN87qqg6dFGAmSbw2xTvh+ekJ/3iWnFB1eBMRAnjTuBZ/Y909GXhfIyvSpflHSANBjZqEQ0QPVTMagnjSUOl1C0cgmQZCr8uWEz3ZgB+jpW/d44I6PZzAl7eQsS+KTyAbkBT1w+VNoAyC4CZX+hNPXpQomakixpZvXlndf8TI=
+	t=1783011521; cv=none; b=FJ+NcK6x9Uue7zFUspPhqugwxizTNKOdiE4J2K2ToZupWG0E6uORBfdY4sdcGNWl6YSoWJxLuhBlReJFAtA08werBkPGZj/y8XyHA8+lwy7cmxjDGWLeodV3G0m6ZQ4iVTRvHhKmb7bPYtu7XFIWOJjIOdkVW5epgZcH+Mh+5SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011518; c=relaxed/simple;
-	bh=niIuzV3HU2oZJxiEVh5mt410yICNuBtUS45bDOX/GaY=;
+	s=arc-20240116; t=1783011521; c=relaxed/simple;
+	bh=Glv9WQ8pvMJdDpT77I3WctiNgSzpGIFFOBEUa8YQHog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXujdryVAnep0nKnJFtotIrhezfBzcro+0pGEnM5gEMhEb5CjGbBAPcXDU64gpYC0yJ35VM1hUYp88JqRQnICpPuVUmrekCzzqLOPRPMCAPZY6gBtJ1YZZ283Anjt2zTygXhH/tEaIj21K9RRSjU/Z5UiIKvZQ5g4EhZYR66iBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsDn4COf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R5bFde8XbQnzZTR2aniftvHRUtOHrgNKkyGh5GOA28DH4e/xhVmju9sgG7QZVHxg6Z3mnMXoqLUHzS1Q+U+OyG7vyS8GruQ/VL7ZwEHyhvG7rCAG3g0/Zq8XlOYH0jqWdirqruAbHdnSLFghWbU16vWW79yXhh9QknhrkBgA344=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/EPs3L0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsDn4COf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BBE1F00A3A;
-	Thu,  2 Jul 2026 16:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/EPs3L0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF191F00A3D;
+	Thu,  2 Jul 2026 16:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011517;
-	bh=JHsT+mG9FCSkfEGw3kqYdBybbEU/xZhJydH8MNOY1Qo=;
+	s=korg; t=1783011520;
+	bh=yAjf/Tyb5faQ/vGz4ztGS+Op9hxrwoNT96nav4a8O+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QsDn4COfMDzwlJr3HxqMWHaCeIduLywA/9Tf5UeDQYHZ0yGOo0y0nnld0BEGFJMCI
-	 N5B4q70/hPOr+GszS21FrepEVUdpVEOzsqQklSSRB8OKpqqzvtsvaKNMaoVG9aFfJ3
-	 1Qpst20spDnfvEe4k2WeXQXR0/wPTrOo4io66B9g=
+	b=T/EPs3L0wqZkdV7UzKpUOOFzI35zn1hijN8zkP82em8LcrfK1DDbCItn7grsY7wLO
+	 oFlUw13VXVYF1bSiXRdGlzpY6mGu0lfGlrHgPKnKbIJTFKrE4GV25zBLMpDoJHLL0n
+	 GwHIJbxLOMpzWCNmlorgGVWAhT0PeDAK73wCaUI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 003/120] batman-adv: tp_meter: initialize dup_acks explicitly
-Date: Thu,  2 Jul 2026 18:19:59 +0200
-Message-ID: <20260702155113.036387580@linuxfoundation.org>
+	Zhen Yan <sdjasjbuaa@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.1 030/120] ntfs3: reject direct userspace writes to reserved $LX* xattrs
+Date: Thu,  2 Jul 2026 18:20:26 +0200
+Message-ID: <20260702155113.585850995@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -51,42 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit b2b68b32a715e0328662801576974aa37b942b00 upstream.
+commit 5b08dccecf825cbf905f348bc6ccb497507e28e2 upstream.
 
-When an ack with a sequence number equal to the last_acked is received, the
-dup_acks counter is increased to decide whether fast retransmit should be
-performed. Only when the sequence numbers are not equal, the dup_acks is
-set to the initial value (0).
+NTFS3 uses $LXUID, $LXGID, $LXMOD and $LXDEV as internal WSL
+permission metadata and reloads them into i_uid, i_gid and i_mode
+from ntfs_get_wsl_perm().
 
-But if the initial packet would have the sequence number
-BATADV_TP_FIRST_SEQ, dup_acks would not be initialized and atomic_inc would
-operate on an undefined starting value. It is therefore required to have it
-explicitly initialized during the start of the sender session.
+Because the empty-prefix xattr handler also lets file owners call
+setxattr() on these names directly, an unprivileged writer on a
+writable ntfs3 mount can plant root ownership and S_ISUID on their own
+file and gain euid 0 after inode reload.
 
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reject direct userspace writes to the reserved $LX* names. Internal
+ntfs3 metadata updates are unchanged because ntfs_save_wsl_perm()
+writes them via ntfs_set_ea() directly.
+
+Signed-off-by: Zhen Yan <sdjasjbuaa@gmail.com>
+[almaz.alexandrovich@paragon-software.com: added an additional check for non privileged users]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/xattr.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index e8941f753a9697..0325b951ff8a8e 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -1045,6 +1045,7 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
- 	tp_vars->icmp_uid = icmp_uid;
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -851,6 +851,12 @@ out:
+ 	return err;
+ }
  
- 	tp_vars->last_sent = BATADV_TP_FIRST_SEQ;
-+	atomic_set(&tp_vars->dup_acks, 0);
- 	atomic_set(&tp_vars->last_acked, BATADV_TP_FIRST_SEQ);
- 	tp_vars->fast_recovery = false;
- 	tp_vars->recover = BATADV_TP_FIRST_SEQ;
--- 
-2.53.0
-
++static bool ntfs_is_reserved_lxattr(const char *name)
++{
++	return !strcmp(name, "$LXUID") || !strcmp(name, "$LXGID") ||
++	       !strcmp(name, "$LXMOD") || !strcmp(name, "$LXDEV");
++}
++
+ /*
+  * ntfs_setxattr - inode_operations::setxattr
+  */
+@@ -955,6 +961,12 @@ set_new_fa:
+ 		goto out;
+ 	}
+ 
++	/* Do not allow non privileged users to change $LXUID/$LXGID... */
++	if (ntfs_is_reserved_lxattr(name) && !capable(CAP_SYS_ADMIN)) {
++		err = -EPERM;
++		goto out;
++	}
++
+ 	/* Deal with NTFS extended attribute. */
+ 	err = ntfs_set_ea(inode, name, strlen(name), value, size, flags, 0,
+ 			  NULL);
 
 
