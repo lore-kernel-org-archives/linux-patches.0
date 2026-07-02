@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D415381EA6;
-	Thu,  2 Jul 2026 16:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A05D35E1AD;
+	Thu,  2 Jul 2026 16:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010455; cv=none; b=scRKJZoMhi24999X3jFzORT89TBlcYQWhLgqN174x7JoWKK8LrKFZ0ad9gEwF7ZuYWeqPM83JgXk9RiY7gfcm3aS21INdfHChqMHlpA/v4UilCGqgIy0X4rEXbBVzM/cRLBroTy2JdQMggMwIFJWE6NGOB37mNOPR085tICVyMM=
+	t=1783010457; cv=none; b=V8qysgbaA30VGQvcMasVJSP7C0BGHwmpqGJnB9tPinKxdVFi/hsQJgU9LpUFP2bTkG8VsXd8RIo+W7gcdqV8XQ9xE4GS5W0AQ5o3Af0q6j7In+ivt1JlLNlT2NSwsmVuS1SGvxuWQzSLixKVingp+i71GfrCZ9PuLz42qidcM2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010455; c=relaxed/simple;
-	bh=ECocjumNju2IkcWIkoZboX7cBOroIeVvzG/mof3htSA=;
+	s=arc-20240116; t=1783010457; c=relaxed/simple;
+	bh=oGuNO0JZhtsP4Q+OH4ZpcMe4CBXgG9KE4JH8KW1RnhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HN6TkBjjEDMKXHwsj6P7TKcy1JvxcaP+BqGuLlF23JJFhmYEvty41RFyBnmHccx3/PSkxpMsG7+IqM6TTmEGdTB5jxWTaW0+fWtSnpqdGkcnzqeZyHahg8yyK/ITjTlr4Nr4h7JhFL9R3UJtIrcY/1cA7Ys6YgGESRdCaPOpINo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1/BGa2J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mnwEjSTeFxXLY+qjhLiVvd8904iYHdnG4HUSdWH0wsDFSaRBCWdfaCwkHLASMa8hepZ8r0Krb4vGTfkz6xzFJB0FwYze/DMEPQmCLxdgaEgGZA3BqCI2zv3fadnHchpSLKFJvFTlDrLybnzcLamO+ngcabm4lENkDqN/5mO9LKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YT0FwN4u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1/BGa2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81901F00A3A;
-	Thu,  2 Jul 2026 16:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YT0FwN4u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DBD1F000E9;
+	Thu,  2 Jul 2026 16:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010453;
-	bh=4dsGiog7dH61K541uaOkF8n2vN11f8ErNt4jfCcFSfA=;
+	s=korg; t=1783010456;
+	bh=tOTvaTxN/uQ8MMBLqgV7nD3yhysS6IaiZev0YXuu3J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w1/BGa2Jw4ns0OJ1oO1lFYESgzbU9sP0IuFmYB+dXJXB32uZYaVf0xyinEDcAIcVo
-	 wsvK6doQpN0CfTPb4pGtMOZq9f63im2ayqaQreVMOS8QRg9EXF507PYXjdD1NETGHh
-	 0uf4tqN8yaaHjRH+ZslEYHAvYpJqukvhb3kRmp64=
+	b=YT0FwN4uZZ6Oi5H80oTxo3Jq3/KyBi5N47NzOPKOJa1rTqrsJyx3zB6xmMPUBDuPi
+	 IhdYIG5USgiK/111XOGbDcLh4TYKK+7TJI+rVD2Xq14XMxliYEtbZzQM2ZsmaZobWZ
+	 Cs17I3X7ipvfuPiHKB1WtKZGV2vSdarEYDk7VfZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bpf <bpf@vger.kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Martin Kelly <martin.kelly@crowdstrike.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.12 062/204] scripts/sorttable: Convert Elf_Ehdr to union
-Date: Thu,  2 Jul 2026 18:18:39 +0200
-Message-ID: <20260702155119.962171711@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 109/204] batman-adv: tp_meter: initialize last_recv_time during init
+Date: Thu,  2 Jul 2026 18:19:26 +0200
+Message-ID: <20260702155120.944573309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -64,205 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 157fb5b3cfd2cb5950314f926a76e567fc1921c5 ]
+commit 811cb00fa8cdc3f0a7f6eefc000a6888367c8c8f upstream.
 
-In order to remove the double #include of sorttable.h for 64 and 32 bit
-to create duplicate functions for both, replace the Elf_Ehdr macro with a
-union that defines both Elf64_Ehdr and Elf32_Ehdr, with field e64 for the
-64bit version, and e32 for the 32bit version.
+The last_recv_time is the most important indicator for a receiver session
+to figure out whether a session timed out or not. But this information was
+only initialized after the session was added to the tp_receiver_list and
+after the timer was started.
 
-Then a macro etype can be used instead to get to the proper value.
+In the worst case, the timer (function) could have tried to access this
+information before the actual initialization was reached. Like rest of the
+variables of the tp_meter receiver session, this field has to be filled out
+before any other (parallel running) context has the chance to access it.
 
-This will eventually be replaced with just single functions that can
-handle both 32bit and 64bit ELF parsing.
-
-Cc: bpf <bpf@vger.kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/20250105162345.148224465@goodmis.org
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/sorttable.c |   36 ++++++++++++++++++++----------------
- scripts/sorttable.h |   12 ++++++------
- 2 files changed, 26 insertions(+), 22 deletions(-)
+ net/batman-adv/tp_meter.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/scripts/sorttable.c
-+++ b/scripts/sorttable.c
-@@ -64,6 +64,11 @@
- #define EM_LOONGARCH	258
- #endif
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 2bba53fc6da5c0..133eed2fa9507f 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1403,8 +1403,10 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
  
-+typedef union {
-+	Elf32_Ehdr	e32;
-+	Elf64_Ehdr	e64;
-+} Elf_Ehdr;
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+ 					      icmp->session, BATADV_TP_RECEIVER);
+-	if (tp_vars)
++	if (tp_vars) {
++		tp_vars->last_recv_time = jiffies;
+ 		goto out_unlock;
++	}
+ 
+ 	if (!atomic_add_unless(&bat_priv->tp_num, 1, BATADV_TP_MAX_NUM)) {
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+@@ -1432,6 +1434,8 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 	kref_get(&tp_vars->refcount);
+ 	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
+ 
++	tp_vars->last_recv_time = jiffies;
 +
- static uint32_t (*r)(const uint32_t *);
- static uint16_t (*r2)(const uint16_t *);
- static uint64_t (*r8)(const uint64_t *);
-@@ -266,10 +271,10 @@ static void sort_relative_table_with_dat
- static int do_file(char const *const fname, void *addr)
- {
- 	int rc = -1;
--	Elf32_Ehdr *ehdr = addr;
-+	Elf_Ehdr *ehdr = addr;
- 	table_sort_t custom_sort = NULL;
+ 	kref_get(&tp_vars->refcount);
+ 	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
  
--	switch (ehdr->e_ident[EI_DATA]) {
-+	switch (ehdr->e32.e_ident[EI_DATA]) {
- 	case ELFDATA2LSB:
- 		r	= rle;
- 		r2	= r2le;
-@@ -284,18 +289,18 @@ static int do_file(char const *const fna
- 		break;
- 	default:
- 		fprintf(stderr, "unrecognized ELF data encoding %d: %s\n",
--			ehdr->e_ident[EI_DATA], fname);
-+			ehdr->e32.e_ident[EI_DATA], fname);
- 		return -1;
- 	}
- 
--	if (memcmp(ELFMAG, ehdr->e_ident, SELFMAG) != 0 ||
--	    (r2(&ehdr->e_type) != ET_EXEC && r2(&ehdr->e_type) != ET_DYN) ||
--	    ehdr->e_ident[EI_VERSION] != EV_CURRENT) {
-+	if (memcmp(ELFMAG, ehdr->e32.e_ident, SELFMAG) != 0 ||
-+	    (r2(&ehdr->e32.e_type) != ET_EXEC && r2(&ehdr->e32.e_type) != ET_DYN) ||
-+	    ehdr->e32.e_ident[EI_VERSION] != EV_CURRENT) {
- 		fprintf(stderr, "unrecognized ET_EXEC/ET_DYN file %s\n", fname);
- 		return -1;
- 	}
- 
--	switch (r2(&ehdr->e_machine)) {
-+	switch (r2(&ehdr->e32.e_machine)) {
- 	case EM_386:
- 	case EM_AARCH64:
- 	case EM_LOONGARCH:
-@@ -318,14 +323,14 @@ static int do_file(char const *const fna
- 		break;
- 	default:
- 		fprintf(stderr, "unrecognized e_machine %d %s\n",
--			r2(&ehdr->e_machine), fname);
-+			r2(&ehdr->e32.e_machine), fname);
- 		return -1;
- 	}
- 
--	switch (ehdr->e_ident[EI_CLASS]) {
-+	switch (ehdr->e32.e_ident[EI_CLASS]) {
- 	case ELFCLASS32:
--		if (r2(&ehdr->e_ehsize) != sizeof(Elf32_Ehdr) ||
--		    r2(&ehdr->e_shentsize) != sizeof(Elf32_Shdr)) {
-+		if (r2(&ehdr->e32.e_ehsize) != sizeof(Elf32_Ehdr) ||
-+		    r2(&ehdr->e32.e_shentsize) != sizeof(Elf32_Shdr)) {
- 			fprintf(stderr,
- 				"unrecognized ET_EXEC/ET_DYN file: %s\n", fname);
- 			break;
-@@ -334,20 +339,19 @@ static int do_file(char const *const fna
- 		break;
- 	case ELFCLASS64:
- 		{
--		Elf64_Ehdr *const ghdr = (Elf64_Ehdr *)ehdr;
--		if (r2(&ghdr->e_ehsize) != sizeof(Elf64_Ehdr) ||
--		    r2(&ghdr->e_shentsize) != sizeof(Elf64_Shdr)) {
-+		if (r2(&ehdr->e64.e_ehsize) != sizeof(Elf64_Ehdr) ||
-+		    r2(&ehdr->e64.e_shentsize) != sizeof(Elf64_Shdr)) {
- 			fprintf(stderr,
- 				"unrecognized ET_EXEC/ET_DYN file: %s\n",
- 				fname);
- 			break;
+@@ -1480,9 +1484,9 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 				   icmp->orig);
+ 			goto out;
  		}
--		rc = do_sort_64(ghdr, fname, custom_sort);
-+		rc = do_sort_64(ehdr, fname, custom_sort);
- 		}
- 		break;
- 	default:
- 		fprintf(stderr, "unrecognized ELF class %d %s\n",
--			ehdr->e_ident[EI_CLASS], fname);
-+			ehdr->e32.e_ident[EI_CLASS], fname);
- 		break;
- 	}
+-	}
  
---- a/scripts/sorttable.h
-+++ b/scripts/sorttable.h
-@@ -23,12 +23,12 @@
- #undef sort_mcount_loc
- #undef elf_mcount_loc
- #undef do_sort
--#undef Elf_Ehdr
- #undef Elf_Shdr
- #undef Elf_Sym
- #undef ELF_ST_TYPE
- #undef uint_t
- #undef _r
-+#undef etype
+-	tp_vars->last_recv_time = jiffies;
++		tp_vars->last_recv_time = jiffies;
++	}
  
- #ifdef SORTTABLE_64
- # define extable_ent_size	16
-@@ -37,12 +37,12 @@
- # define sort_mcount_loc	sort_mcount_loc_64
- # define elf_mcount_loc		elf_mcount_loc_64
- # define do_sort		do_sort_64
--# define Elf_Ehdr		Elf64_Ehdr
- # define Elf_Shdr		Elf64_Shdr
- # define Elf_Sym		Elf64_Sym
- # define ELF_ST_TYPE		ELF64_ST_TYPE
- # define uint_t			uint64_t
- # define _r			r8
-+# define etype			e64
- #else
- # define extable_ent_size	8
- # define compare_extable	compare_extable_32
-@@ -50,12 +50,12 @@
- # define sort_mcount_loc	sort_mcount_loc_32
- # define elf_mcount_loc		elf_mcount_loc_32
- # define do_sort		do_sort_32
--# define Elf_Ehdr		Elf32_Ehdr
- # define Elf_Shdr		Elf32_Shdr
- # define Elf_Sym		Elf32_Sym
- # define ELF_ST_TYPE		ELF32_ST_TYPE
- # define uint_t			uint32_t
- # define _r			r
-+# define etype			e32
- #endif
- 
- #if defined(SORTTABLE_64) && defined(UNWINDER_ORC_ENABLED)
-@@ -222,7 +222,7 @@ static int do_sort(Elf_Ehdr *ehdr,
- 		   table_sort_t custom_sort)
- {
- 	int rc = -1;
--	Elf_Shdr *s, *shdr = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->e_shoff));
-+	Elf_Shdr *s, *shdr = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->etype.e_shoff));
- 	Elf_Shdr *strtab_sec = NULL;
- 	Elf_Shdr *symtab_sec = NULL;
- 	Elf_Shdr *extab_sec = NULL;
-@@ -249,12 +249,12 @@ static int do_sort(Elf_Ehdr *ehdr,
- 	unsigned int orc_num_entries = 0;
- #endif
- 
--	shstrndx = r2(&ehdr->e_shstrndx);
-+	shstrndx = r2(&ehdr->etype.e_shstrndx);
- 	if (shstrndx == SHN_XINDEX)
- 		shstrndx = r(&shdr[0].sh_link);
- 	secstrings = (const char *)ehdr + _r(&shdr[shstrndx].sh_offset);
- 
--	shnum = r2(&ehdr->e_shnum);
-+	shnum = r2(&ehdr->etype.e_shnum);
- 	if (shnum == SHN_UNDEF)
- 		shnum = _r(&shdr[0].sh_size);
- 
+ 	/* if the packet is a duplicate, it may be the case that an ACK has been
+ 	 * lost. Resend the ACK
+-- 
+2.53.0
+
 
 
