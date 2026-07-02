@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D694A2E1B;
-	Thu,  2 Jul 2026 16:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48453ACA60;
+	Thu,  2 Jul 2026 16:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009473; cv=none; b=oI/APdVfB7kJ+t0eBF/EbBXjz2sR2XJUQseqkMghxCjThZs91c4DEgiJF/FudiVy0qubkohy2kwlFCKF+3I6hXeUTGEFzLlYVU4vrk5JzmZpGeXMRhSCma3O9MHR6EfRP3t5j0sj5QPqPNGQ1Vmq+WZpxNeVCFM3ejxjltaySC0=
+	t=1783009474; cv=none; b=AutiOGw0KMvAWuOqL9bZvZy1Nhj8fgyPRA3wOVSVDSfy5vQkvvqr97nS54hmboqMAmUknNC8f6/kLqdHtttz+dG3hM4Yu1NNDmZ07nVedymCeXFOwaXrgQCsDWp0ffqvCTZbJhvqHWV9N/9yz8DMt8DPdmXbmw+R/10A3KNXkPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009473; c=relaxed/simple;
-	bh=5oRa0vEp1u/tzLXTP46VJwpNL4D5zdrKsplzDAqtTeY=;
+	s=arc-20240116; t=1783009474; c=relaxed/simple;
+	bh=hpsj4aMaMsvbPrO43LfOFBO9whqvAF1JV3H4lza/lkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIuVlsOaWSiTqp9ol7MtF3EGZgH0xJHcHf2Cf7u1/kgWKMMF/EvxQFdGcUQKN4Z+xXLT1r+JIpCj+kvQa6YoPdn9U/f+fb2pdc0Y+jg4Airbxuipczv8VJJLaQ/vNIRLwNECbgSmcktW8Q7C52USU1ekadVoUhaIgutG0CDnRBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wa2aC1p9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R6dBnf0vlSbUENuPWufCMcBXcjetpUwPt/Je1lRZ9gVWLh8GQKI8S2x9L/W7MDC5feQYO4ik+xiZB6X4Fwh0vkYm51m69jG+J272M/XAD/suDa5cesYeJVrPFCtFGLlmDxiEE8yY26Iw4Ez02ocpsirIarL+eOc4u6ZY2ztsWQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICLD3/1k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wa2aC1p9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6E41F00A3D;
-	Thu,  2 Jul 2026 16:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICLD3/1k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA3B1F000E9;
+	Thu,  2 Jul 2026 16:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009471;
-	bh=v++3tARNA61aA8lK/VpltLkqpgKrIm2MK6tWTIfQw4Q=;
+	s=korg; t=1783009468;
+	bh=yXdufhIa7qwnZ0zQ7nPIXmuuZXg6BnW1NOwxI3pkz+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wa2aC1p9AUPRiqdNQh0FuAgPLeyvkIjAAra2kWrA6ZoqfQTWkhBrEZnISkSAGihfv
-	 SstJkgb16ki5dCDPfpUeISHPI6xq+vpfeAVCpqO4m0RvHKjtahwk4vt091BklrMJG+
-	 dt2A5eDXLn2h/qQ/BoIVsQXR4dfphMwljE4NQyMs=
+	b=ICLD3/1kNtgLUPXKBxfby1jc4L/lKa0LHvuIUzE1MhtDqWFEuNN3Ggl6jpp28kU3Z
+	 71KtbuH+9HTaqH4yImsRLD2tyAF+xzDFk5A9doYUTACdq3oHWANnZDh7fAl2D2yYCS
+	 tSwk1KMf8rwlWVxjytUH9XNd70TEmRpRyo7ndHcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 5.10 65/96] wifi: ath11k: fix warning when unbinding
-Date: Thu,  2 Jul 2026 18:19:57 +0200
-Message-ID: <20260702155110.350063500@linuxfoundation.org>
+	Zenm Chen <zenmchen@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 5.10 64/96] wifi: mt76: mt76x2u: Add support for ELECOM WDC-867SU3S
+Date: Thu,  2 Jul 2026 18:19:56 +0200
+Message-ID: <20260702155110.327654084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -52,49 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-commit 8b7a26b6681922a38cd5a7829ace61f8e54df9b7 upstream.
+commit f4ce0664e9f0387873b181777891741c33e19465 upstream.
 
-If there is an error during some initialization related to firmware,
-the buffers dp->tx_ring[i].tx_status are released.
-However this is released again when the device is unbinded (ath11k_pci),
-and we get:
-WARNING: CPU: 0 PID: 6231 at mm/slub.c:4368 free_large_kmalloc+0x57/0x90
-Call Trace:
-free_large_kmalloc
-ath11k_dp_free
-ath11k_core_deinit
-ath11k_pci_remove
-...
+Add the ID 056e:400a to the table to support an additional MT7612U
+adapter: ELECOM WDC-867SU3S.
 
-The issue is always reproducible from a VM because the MSI addressing
-initialization is failing.
+Compile tested only.
 
-In order to fix the issue, just set the buffers to NULL after releasing in
-order to avoid the double free.
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260420110130.509670-1-jtornosm@redhat.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Cc: stable@vger.kernel.org # 5.10.x
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260407154430.9184-1-zenmchen@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/dp.c |    1 +
+ drivers/net/wireless/mediatek/mt76/mt76x2/usb.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/ath/ath11k/dp.c
-+++ b/drivers/net/wireless/ath/ath11k/dp.c
-@@ -1015,6 +1015,7 @@ void ath11k_dp_free(struct ath11k_base *
- 		idr_destroy(&dp->tx_ring[i].txbuf_idr);
- 		spin_unlock_bh(&dp->tx_ring[i].tx_idr_lock);
- 		kfree(dp->tx_ring[i].tx_status);
-+		dp->tx_ring[i].tx_status = NULL;
- 	}
- 
- 	/* Deinit any SOC level resource */
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+@@ -16,6 +16,7 @@ static const struct usb_device_id mt76x2
+ 	{ USB_DEVICE(0x0e8d, 0x7612) },	/* Aukey USBAC1200 - Alfa AWUS036ACM */
+ 	{ USB_DEVICE(0x057c, 0x8503) },	/* Avm FRITZ!WLAN AC860 */
+ 	{ USB_DEVICE(0x7392, 0xb711) },	/* Edimax EW 7722 UAC */
++	{ USB_DEVICE(0x056e, 0x400a) },	/* ELECOM WDC-867SU3S */
+ 	{ USB_DEVICE(0x0e8d, 0x7632) },	/* HC-M7662BU1 */
+ 	{ USB_DEVICE(0x0471, 0x2126) }, /* LiteOn WN4516R module, nonstandard USB connector */
+ 	{ USB_DEVICE(0x0471, 0x7600) }, /* LiteOn WN4519R module, nonstandard USB connector */
 
 
