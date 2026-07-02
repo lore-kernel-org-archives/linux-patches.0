@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE80326942;
-	Thu,  2 Jul 2026 16:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453A034887B;
+	Thu,  2 Jul 2026 16:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010058; cv=none; b=WcE1N/7JkT26oD2PSnl9T2T0d9am/lLDkbYhBi11362tkY0C5KbrRVXoylO1D+RpFG7NuH85rn7gTDAkucs/lGocDa1JfFXpNXpsenFaUkTkvyit6+HfRRVII3qMnQomIEi++sWCTOeNGm5ErE9LiPDqQhPsIjnpK+qGM2y4AaE=
+	t=1783010060; cv=none; b=Amin5XntyRYD69XUfLuJRuAh8WZP6fZOWs2/UNN4Q2LeTgWBk5aoXMBcykWYvkDZvLk8O6qk69iAVoszWnsobs7R4NwlBJyXEdU8qqKGwBaxxBi28aFQ0VzzYiZboaFKxBC8RqVUSgUjK/zaLhlR2dHAdQ8MfHSR6sOdTlvI2aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010058; c=relaxed/simple;
-	bh=YcoF6PyCeio2r08tA7JKTQAPp5MFq2/HZG8fZOiNRJo=;
+	s=arc-20240116; t=1783010060; c=relaxed/simple;
+	bh=4HLr0h4Z3xF1chPqV1hV9n0G1/ZaogedyCeb+3tX+ZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQ4lDZQaYk9XJc9KlIJUKpDVZ/pZndhx4h+xZXgEaefjKxAD3hP4vJ9kH46AHpqw3jVwYt5/vxrJGw1sZGo3eC5Jwlwz4Ab2ngqfDdbv+Rw8x0LjbCsYAvYrsQ9pMdTG7i/GiFQnX4xBjF86dGv5Ioq862a/gfTDgwjd2YC5glk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCLD18o6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AB+91VeVfPHqyHbUaWaz3CCSaS/83y4CRE29GAmH90iT0V6kzcGgzaasvhUK51rkhOT3xxnrcHHWE5el4YdJbsz+BfSVeGstPMWXS+ZiC/D+se/Kn3cCPv6nOc1XfeIuUjMjC83hz2iLYRWxSjoxn8nlj4qMfWpUCCB4HH3/iIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PBpksaA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCLD18o6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C82D1F00A3A;
-	Thu,  2 Jul 2026 16:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PBpksaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4071F00A3D;
+	Thu,  2 Jul 2026 16:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010056;
-	bh=f3Tqqs/hazmiwrMkW3880rRg4TYW0IZsCS88AWOmd44=;
+	s=korg; t=1783010059;
+	bh=Eu88PzwtgIcxD/ffs3BLnRTGaKl+yiG3vhYPgrfyaIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uCLD18o65xldoY2vILgD0m0/oevhCe2CjlAbcDZQ5At4Cjvlkxb38M6v4TPc+us7W
-	 MLfdeJGfcd//n8XipzCulr+D0sVwt5g/rqfyfmuYY+b4avTbJhrsoIbX5MSEVGwZxa
-	 l5Y6x+0RyeG7vXINoPOTSz8hOvplBXAs4ZJKH+f0=
+	b=0PBpksaAKOK2vN0n4oG5KjSHulxdzm9ciYNK92I2zTYEiGaKPYwLaUuu89PbUnTBf
+	 mGNeHzRL5z8Wgyh91cIJNzATPuRYtIa06pG+tcHGeGFma+GMPf2OPHkT/6PMH9unRI
+	 giep9QXEDCZZ0O9QnhUoz16GXdWvDEStnZZui9/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 093/129] hdlc_ppp: sync per-proto timers before freeing hdlc state
-Date: Thu,  2 Jul 2026 18:20:12 +0200
-Message-ID: <20260702155114.067486691@linuxfoundation.org>
+Subject: [PATCH 6.1 094/129] tipc: fix slab-use-after-free Read in tipc_aead_decrypt_done
+Date: Thu,  2 Jul 2026 18:20:13 +0200
+Message-ID: <20260702155114.088825581@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -50,109 +53,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit c78a4e41ab5ead6193ad8a2dd92e8906bae659fa upstream.
+commit bda3348872a2ef0d19f2df6aa8cb5025adce2f20 upstream.
 
-Each PPP control protocol (LCP/IPCP/IPV6CP) embedded in struct ppp
-registers a timer via timer_setup(). That struct ppp is the
-hdlc->state allocation, which detach_hdlc_protocol() frees with kfree()
-in both teardown paths: unregister_hdlc_device() and the re-attach inside
-attach_hdlc_protocol().
+tipc_aead_decrypt() goes straight from tipc_bearer_hold(b) to
+crypto_aead_decrypt(req) without taking a reference on the netns, unlike
+the encrypt path. When crypto_aead_decrypt() is offloaded asynchronously
+(e.g. the SIMD aead wrapper queuing to cryptd), the cryptd worker runs
+tipc_aead_decrypt_done() later. If the bearer's netns is torn down in the
+meantime, cleanup_net() -> tipc_exit_net() -> tipc_crypto_stop() frees the
+per-netns tipc_crypto, and the completion then reads it:
+tipc_aead_decrypt_done() dereferences aead->crypto->stats and
+aead->crypto->net, and tipc_crypto_rcv_complete() dereferences
+aead->crypto->aead[] and the node table -- reading freed memory.
 
-The ppp proto never registered a .detach callback, so
-detach_hdlc_protocol() performs no timer synchronization before the
-kfree(). The only cancel, timer_delete(&proto->timer) in ppp_cp_event(),
-is partial (it does not wait for a running callback) and only runs on the
-->CLOSED transition; ppp_stop()/ppp_close() do not sync either. A
-ppp_timer callback already executing (blocked on ppp->lock) survives the
-kfree and then dereferences proto->state / ppp->lock in freed memory,
-leading to a use-after-free.
+Decoded KASAN splat (v7.1-rc7, CONFIG_KASAN_INLINE + TIPC + TIPC_CRYPTO):
 
-Fix this by adding a .detach helper that calls timer_shutdown_sync() on
-every per-proto timer. detach_hdlc_protocol() invokes proto->detach(dev)
-before kfree(hdlc->state), so timer_shutdown_sync()
-now runs on both free paths.
-timer_shutdown_sync() is used instead of timer_delete_sync() because the
-keepalive path re-arms the timer through add_timer()/mod_timer() and
-shutdown blocks any re-activation during teardown.
+  BUG: KASAN: slab-use-after-free in tipc_aead_decrypt_done (net/tipc/crypto.c:999)
+  Read of size 8 at addr ffff8881056258a8 by task kworker/u16:2/51
+  Workqueue: events_unbound
+  Call Trace:
+   tipc_aead_decrypt_done (net/tipc/crypto.c:999)
+   process_one_work (kernel/workqueue.c:3314)
+   worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Initialize the per-protocol timers in ppp_ioctl() when the protocol is
-attached, and remove the now-redundant timer_setup() from ppp_start(), so
-that the timers are initialized exactly once at attach time and
-ppp_timer_release() never operates on uninitialized timer_list
-structures. attach_hdlc_protocol() uses kmalloc() (not kzalloc), so
-struct ppp's protos[i].timer is uninitialized garbage until the first
-timer_setup(); without this init-at-attach, attaching the PPP protocol
-without ever bringing the device up would leave timer_shutdown_sync()
-operating on uninitialized memory in .detach. Moving the init out of
-ppp_start() (which only runs on NETDEV_UP) into the attach path makes the
-initialization unconditional and avoids initializing the same timer_list
-twice.
+  Allocated by task 169:
+   __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+   tipc_crypto_start (net/tipc/crypto.c:1502)
+   tipc_init_net (net/tipc/core.c:72)
+   ops_init (net/core/net_namespace.c:137)
+   setup_net (net/core/net_namespace.c:446)
+   copy_net_ns (net/core/net_namespace.c:579)
+   create_new_namespaces (kernel/nsproxy.c:132)
+   __x64_sys_unshare (kernel/fork.c:3316)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-This bug was found by static analysis.
+  Freed by task 8:
+   kfree (mm/slub.c:6566)
+   tipc_exit_net (net/tipc/core.c:119)
+   cleanup_net (net/core/net_namespace.c:704)
+   process_one_work (kernel/workqueue.c:3314)
+   kthread (kernel/kthread.c:436)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+This is the same class of bug that commit e279024617134 ("net/tipc: fix
+slab-use-after-free Read in tipc_aead_encrypt_done") fixed for the encrypt
+side. The encrypt path takes maybe_get_net(aead->crypto->net) before
+crypto_aead_encrypt() and drops it with put_net() on the synchronous
+return paths and in tipc_aead_encrypt_done(); the -EINPROGRESS/-EBUSY
+return keeps the reference for the async callback to release. The decrypt
+path was left without the equivalent guard.
+
+Mirror the encrypt-side fix on the decrypt path: take a net reference
+before crypto_aead_decrypt() (failing with -ENODEV and the matching
+bearer put if it cannot be acquired), keep it across the
+-EINPROGRESS/-EBUSY async return, and drop it with put_net() on the
+synchronous success/error return and at the end of
+tipc_aead_decrypt_done().
+
+Reproduced under KASAN on v7.1-rc7: a UDP bearer with a cluster key is
+flooded with crafted encrypted frames from an unknown peer (driving the
+cluster-key decrypt path) while the bearer's netns is repeatedly torn
+down. The completion must run asynchronously to outlive
+tipc_crypto_stop(); on x86 the stock aesni gcm(aes) now decrypts
+synchronously, so the async path was exercised via cryptd offload. The
+unguarded aead->crypto dereference in tipc_aead_decrypt_done() is the
+unpatched upstream path; tipc_aead_decrypt() still lacks
+maybe_get_net(aead->crypto->net), so the completion can outlive the free
+on any config where crypto_aead_decrypt() goes async.
+
+Found by 0sec automated security-research tooling (https://0sec.ai).
+
+Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260617020518.116319-1-fanwu01@zju.edu.cn
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260617075818.37431-1-doruk@0sec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/hdlc_ppp.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/tipc/crypto.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/wan/hdlc_ppp.c
-+++ b/drivers/net/wan/hdlc_ppp.c
-@@ -621,7 +621,6 @@ static void ppp_start(struct net_device
- 		struct proto *proto = &ppp->protos[i];
- 
- 		proto->dev = dev;
--		timer_setup(&proto->timer, ppp_timer, 0);
- 		proto->state = CLOSED;
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -950,12 +950,20 @@ static int tipc_aead_decrypt(struct net
+ 		goto exit;
  	}
- 	ppp->protos[IDX_LCP].pid = PID_LCP;
-@@ -641,6 +640,15 @@ static void ppp_close(struct net_device
- 	ppp_tx_flush();
+ 
++	/* Get net to avoid freed tipc_crypto when delete namespace */
++	if (!maybe_get_net(net)) {
++		tipc_bearer_put(b);
++		rc = -ENODEV;
++		goto exit;
++	}
++
+ 	/* Now, do decrypt */
+ 	rc = crypto_aead_decrypt(req);
+ 	if (rc == -EINPROGRESS || rc == -EBUSY)
+ 		return rc;
+ 
+ 	tipc_bearer_put(b);
++	put_net(net);
+ 
+ exit:
+ 	kfree(ctx);
+@@ -993,6 +1001,7 @@ static void tipc_aead_decrypt_done(struc
+ 	}
+ 
+ 	tipc_bearer_put(b);
++	put_net(net);
  }
  
-+static void ppp_timer_release(struct net_device *dev)
-+{
-+	struct ppp *ppp = get_ppp(dev);
-+	int i;
-+
-+	for (i = 0; i < IDX_COUNT; i++)
-+		timer_shutdown_sync(&ppp->protos[i].timer);
-+}
-+
- static struct hdlc_proto proto = {
- 	.start		= ppp_start,
- 	.stop		= ppp_stop,
-@@ -649,6 +657,7 @@ static struct hdlc_proto proto = {
- 	.ioctl		= ppp_ioctl,
- 	.netif_rx	= ppp_rx,
- 	.module		= THIS_MODULE,
-+	.detach		= ppp_timer_release,
- };
- 
- static const struct header_ops ppp_header_ops = {
-@@ -659,7 +668,7 @@ static int ppp_ioctl(struct net_device *
- {
- 	hdlc_device *hdlc = dev_to_hdlc(dev);
- 	struct ppp *ppp;
--	int result;
-+	int i, result;
- 
- 	switch (ifs->type) {
- 	case IF_GET_PROTO:
-@@ -687,6 +696,8 @@ static int ppp_ioctl(struct net_device *
- 			return result;
- 
- 		ppp = get_ppp(dev);
-+		for (i = 0; i < IDX_COUNT; i++)
-+			timer_setup(&ppp->protos[i].timer, ppp_timer, 0);
- 		spin_lock_init(&ppp->lock);
- 		ppp->req_timeout = 2;
- 		ppp->cr_retries = 10;
+ static inline int tipc_ehdr_size(struct tipc_ehdr *ehdr)
 
 
