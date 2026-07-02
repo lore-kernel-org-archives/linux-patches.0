@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961A63491D0;
-	Thu,  2 Jul 2026 16:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070773AC0FD;
+	Thu,  2 Jul 2026 16:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009525; cv=none; b=gPGpZD+HnmpeFQtcnhvgrmWNbgamfenWCfN0zIdG9UBA4Q0C/3ACp8p/Uwwo749p7MCXLI+uAibkWX9yn4bH1qFQFIY+CnDkbs3Z+rFaF3M6Bsdouh0rcUI+gHIu/F0K8aeh4ZhmohnhmnCIw2XoZYstO5r9l/PEU0TF04vdlo0=
+	t=1783009527; cv=none; b=cl9SHfXaex8LeqHGsU2ca6+nnOwNdp15ZwlqU5GhGIPSeogGsyAx+1jJEatG17H5YTwmvrLkhtPLGa2KaPz/kCXwlkX4ZtSFPg+qgI0gi3A6o4xCgGHe2D5N2PQbaQ6UEqZqhXsrU9m00r3Etefy+ODmK3DzszpeM/5o/8N6C2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009525; c=relaxed/simple;
-	bh=AxLN9zz/uDK3i5SSFHPumAolozXvpwJ91Hv+JayolgU=;
+	s=arc-20240116; t=1783009527; c=relaxed/simple;
+	bh=qN2Ids3nnvJrpPl5ERT3cmn2B4XEUAOt34B1mRDCx5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sbCUrgfJWNNtwZaDnBh7SeOdKTaERSR4NupxN8+u/nrlKg/ojNI+matmBFxn0dpe4EL5tsAaUBm2SsSgikjZ1iS3iTPf5A6dae4M55171jSHGJ4EAVuBnFDYlmADNf5UIEn9ocM2lpA7jUQJU9kdV19cMls9HwaMLl+FtV1cU34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXrd3Gpa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rHU6l9LjftWCjKTWMt0LPk1j9BtLVwmmm18K+w2rkIRBoaObl5/MyMEXJWqls1eVfIbCasDwGP6WX/7oZtqoN/tXhsM6AbYZ+tsT9c905MQTZI8vHer+B3Exda0aYaSgqhmO6P0aLeL0q8dJ2yK32iF7PwnzYHfGyL8uDYBrUlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8zvZ1s+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXrd3Gpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E9E1F00A3D;
-	Thu,  2 Jul 2026 16:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8zvZ1s+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7F01F00A3A;
+	Thu,  2 Jul 2026 16:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009518;
-	bh=RAM2uRnJPis3q9m4XgbxnHrfMTZfSuKy4iy6kg+tlkA=;
+	s=korg; t=1783009521;
+	bh=ojBGWcIe7/mJyYRSrSkCQXkkS71vUGmjDmWX5f0PnXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TXrd3GpacmGcnR/IdfnAZ9VQqnC7W3lDAY6bBDqD9YtNvUCy5lToPEat6UKO7Mop3
-	 Yz6unj+Nv0FGeuRogiCM6FW8ZVLlDYGT2UmwI1o7cT3tDkQWlfbPufDzSvacQrTt1m
-	 836OSfJT0OTI6nC/t21LIg4jPztLw3KOieMRL2Lg=
+	b=E8zvZ1s+syBc5O05G9LmkcFaxpG/fUh0rw5ww/b7SV3jlab9DaEO5szeX1fUOpOn6
+	 hsOW3/HBjBakDc7qbKuxmkrNIRNJTAgKCi7t2q8g53LqFsNGNglYST5x4hfGm/AmI4
+	 5nM4Maqe1B4uQFIvZfSg6lt0uoc1k9ta7q+Qr8Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dominik=20Wo=C5=BAniak?= <stalion@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.10 81/96] nfsd: check get_user() return when reading princhashlen
-Date: Thu,  2 Jul 2026 18:20:13 +0200
-Message-ID: <20260702155110.683851454@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	David Teigland <teigland@redhat.com>,
+	Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
+Subject: [PATCH 5.10 82/96] dlm: prevent NPD when writing a positive value to event_done
+Date: Thu,  2 Jul 2026 18:20:14 +0200
+Message-ID: <20260702155110.703379727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -45,51 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dominik Woźniak <stalion@gmail.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit e186fa1c057f5eccb22afb1e83e34c0627085868 upstream.
+commit 8e2bad543eca5c25cd02cbc63d72557934d45f13 upstream.
 
-In __cld_pipe_inprogress_downcall(), the get_user() that reads
-princhashlen from the userspace cld_msg_v2 buffer does not check its
-return value. A failing copy leaves princhashlen with uninitialised
-stack contents, which are then used to drive memdup_user() and stored
-as princhash.len on the resulting reclaim record. The other get_user()
-calls in this function all check the return; only this one is missed,
-which is most likely a copy-paste oversight from when v2 upcalls were
-introduced.
+do_uevent returns the value written to event_done. In case it is a
+positive value, new_lockspace would undo all the work, and lockspace
+would not be set. __dlm_new_lockspace, however, would treat that
+positive value as a success due to commit 8511a2728ab8 ("dlm: fix use
+count with multiple joins").
 
-Mirror the existing pattern used a few lines above for namelen.
-namecopy is declared with __free(kfree) so the early return cleans up
-the already-allocated buffer automatically.
+Down the line, device_create_lockspace would pass that NULL lockspace to
+dlm_find_lockspace_local, leading to a NULL pointer dereference.
 
-Fixes: 6ee95d1c8991 ("nfsd: add support for upcall version 2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dominik Woźniak <stalion@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Treating such positive values as successes prevents the problem. Given
+this has been broken for so long, this is unlikely to break userspace
+expectations.
+
+Fixes: 8511a2728ab8 ("dlm: fix use count with multiple joins")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Signed-off-by: Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4recover.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/dlm/lockspace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -815,7 +815,8 @@ __cld_pipe_inprogress_downcall(const str
- 			if (IS_ERR(name.data))
- 				return PTR_ERR(name.data);
- 			name.len = namelen;
--			get_user(princhashlen, &ci->cc_princhash.cp_len);
-+			if (get_user(princhashlen, &ci->cc_princhash.cp_len))
-+				return -EFAULT;
- 			if (princhashlen > 0) {
- 				princhash.data = memdup_user(
- 						&ci->cc_princhash.cp_data,
+--- a/fs/dlm/lockspace.c
++++ b/fs/dlm/lockspace.c
+@@ -639,7 +639,7 @@ static int new_lockspace(const char *nam
+ 	   lockspace to start running (via sysfs) in dlm_ls_start(). */
+ 
+ 	error = do_uevent(ls, 1);
+-	if (error)
++	if (error < 0)
+ 		goto out_recoverd;
+ 
+ 	wait_for_completion(&ls->ls_members_done);
 
 
