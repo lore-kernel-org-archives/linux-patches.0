@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E1F32ED4E;
-	Thu,  2 Jul 2026 16:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3B12D8DC4;
+	Thu,  2 Jul 2026 16:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010205; cv=none; b=iJzd8tcT1vmx4/5c3zu00/NCbr1yZAzKmlttJMJgQ3fAS9rb630s/WMFTXX4eWj34Dl/hEyvu1XYrD69NXDtDNUlJFdIrg06hxTBrVPRv+WqI4Bb39c75VsCtRCVJUhSmNDJO6aY4+KoeO4v4ejj5OkVtqOFbIONSxihggL6u1U=
+	t=1783010207; cv=none; b=FFjHO/h+4Fcve43pKiYdt9Fh0yz3yRBQZ1zoTE9FQ0jqy+4CGpKCCp/+gCJaE5n2RYE8AknAXr2a81Q1l3fSCpdW5qz9Q/ybKo7zC+JvrrYQr80W+uI9ymRmXc85D/BeCkWxl81GzoGwyDjrYJFg++zW9kjWagPuhhj36hjb0aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010205; c=relaxed/simple;
-	bh=k8AYJdREt8QfXuZr5Pp7sLT7zy6cvpM/f6WhGmCEoWo=;
+	s=arc-20240116; t=1783010207; c=relaxed/simple;
+	bh=doVSSwEjTxwaNB08KcFVBTqe7iaQ8GiJiIJRYduLMGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NU4EuWp47oXt/KbXVrh62woPLVVyGpOyXUfE9/4SWGTMXD7WOvZhMvizqWr+M5bh1g96dgsPVmlASWzzzujE/MeDIu1BdDJh9udVqJP5eRpsxB5nC6EE2gL57w6+ffSh/P1XTvVY3qC6oDnCeCLBR02aPnKF6avspokjXGbmNtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCwci9nE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iAxxXik9P5JW6nUiXgE8w4WTjjhlYtfxehKJcTshX9C7UEVJ791AQc+gXPFzGj79yDKRJiCXGEGL2lDyzNvAt7o2lFLWVIsHdekHwA2yZjdIVCSM3F+ZS7SvorB50RU52mnkiwuYqEGmljtonYfZmG57+ldkNBqqW0zPDDYQb0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/GAOHyK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCwci9nE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF4B1F00A3A;
-	Thu,  2 Jul 2026 16:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/GAOHyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05AA1F000E9;
+	Thu,  2 Jul 2026 16:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010203;
-	bh=KNSfMNxOSw/MZuELoNy/KqeOdP7FseAdhdM7+AvtxJc=;
+	s=korg; t=1783010206;
+	bh=q0CWFkEJJ1W0JS6tFcRsCZ7zq1COv3p/utzFsNpvmpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCwci9nEZeFDYzwT/KNRjIrdaoHwBYmRqoMW0HOsHuXK3ryKVpECD7mNbl/lXoYZj
-	 iAs9oZSZWZIo/PLCNUR6AOMi4bjvqopnypGSKXtHlSd7WbJNxuI5FXbIwDKHfMqPWk
-	 9PxxVS1stocAQitodTHmIFvK+SQ9RNG33e9U9mvg=
+	b=l/GAOHyKFouPMKZXIVls715MZDXhf5YdCcrQfJWBsXH/imEnlf2HKRilc4OMIbI/R
+	 5LXRg8EqunMV6Uxwn1AqCy2R9SSP//ko7x7qJVOGTUTqCxviZF+ycQ7vMfJ2+3XT2y
+	 AxVhOI3A1TbTLa2nCVPKALCxC/tL/4i9RztM/44s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/204] io_uring/net: Avoid msghdr on op_connect/op_bind async data
-Date: Thu,  2 Jul 2026 18:17:45 +0200
-Message-ID: <20260702155118.843709578@linuxfoundation.org>
+Subject: [PATCH 6.12 009/204] drm/xe/display: fix oops in suspend/shutdown without display
+Date: Thu,  2 Jul 2026 18:17:46 +0200
+Message-ID: <20260702155118.865170211@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,172 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 3979840cd858f30f43ea9f4e7f7f1f56de82d698 ]
-This fixes a memory leak due to the lack of the cleanup hook for the
-iovec.  The stable backport differs from upstream by dropping the
-io_connect_bpf_populate hunk, which didn't exist at the time and by
-fixing the merge conflict due to the introduction of
-io_bind_file_create and by using the older async_data allocation API.
+[ Upstream commit 68938cc08e23a94fd881e845837ff918de005ce7 ]
 
-Both IORING_OP_CONNECT and IORING_OP_BIND reuse the msghdr object just
-to store the sockaddr. Beyond allocating a much larger object than
-needed, msghdr can also wrap an iovec, which will be recycled
-unnecessarily. This uses the sockaddr directly.
+The xe driver keeps track of whether to probe display, and whether
+display hardware is there, using xe->info.probe_display. It gets set to
+false if there's no display after intel_display_device_probe(). However,
+the display may also be disabled via fuses, detected at a later time in
+intel_display_device_info_runtime_init().
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260602215327.1885109-2-krisman@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+In this case, the xe driver does for_each_intel_crtc() on uninitialized
+mode config in xe_display_flush_cleanup_work(), leading to a NULL
+pointer dereference, and generally calls display code with display info
+cleared.
+
+Check for intel_display_device_present() after
+intel_display_device_info_runtime_init(), and reset
+xe->info.probe_display as necessary. Also do unset_display_features()
+for completeness, although display runtime init has already done
+that. This will need to be unified across all cases later.
+
+Move intel_display_device_info_runtime_init() call slightly earlier,
+similar to i915, to avoid a bunch of unnecessary setup for no display
+cases.
+
+Note #1: The xe driver has no business doing low level display plumbing
+like for_each_intel_crtc() to begin with. It all needs to happen in
+display code.
+
+Note #2: The actual bug is present already in commit 44e694958b95
+("drm/xe/display: Implement display support"), but the oops was likely
+introduced later at commit ddf6492e0e50 ("drm/xe/display: Make display
+suspend/resume work on discrete").
+
+Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7904
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/6150
+Cc: stable@vger.kernel.org # v6.8+
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260515160920.1082842-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 7c3eb9f47533220888a67266448185fd0775d4da)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/net.c   | 36 ++++++++++++++++++------------------
- io_uring/opdef.c |  4 ++--
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/xe/display/xe_display.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/io_uring/net.c b/io_uring/net.c
-index 8eb0ebdc6a720c..f2f2ae1037e9b3 100644
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1719,7 +1719,7 @@ int io_socket(struct io_kiocb *req, unsigned int issue_flags)
- int io_connect_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- {
- 	struct io_connect *conn = io_kiocb_to_cmd(req, struct io_connect);
--	struct io_async_msghdr *io;
-+	struct sockaddr_storage *addr;
+diff --git a/drivers/gpu/drm/xe/display/xe_display.c b/drivers/gpu/drm/xe/display/xe_display.c
+index e164e2d71e1157..de1fd4dff0e869 100644
+--- a/drivers/gpu/drm/xe/display/xe_display.c
++++ b/drivers/gpu/drm/xe/display/xe_display.c
+@@ -148,6 +148,15 @@ int xe_display_init_noirq(struct xe_device *xe)
  
- 	if (sqe->len || sqe->buf_index || sqe->rw_flags || sqe->splice_fd_in)
- 		return -EINVAL;
-@@ -1728,17 +1728,17 @@ int io_connect_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 	conn->addr_len =  READ_ONCE(sqe->addr2);
- 	conn->in_progress = conn->seen_econnaborted = false;
+ 	intel_display_driver_early_probe(xe);
  
--	io = io_msg_alloc_async(req);
--	if (unlikely(!io))
-+	if (io_alloc_async_data(req))
- 		return -ENOMEM;
-+	addr = req->async_data;
- 
--	return move_addr_to_kernel(conn->addr, conn->addr_len, &io->addr);
-+	return move_addr_to_kernel(conn->addr, conn->addr_len, addr);
- }
- 
- int io_connect(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_connect *connect = io_kiocb_to_cmd(req, struct io_connect);
--	struct io_async_msghdr *io = req->async_data;
-+	struct sockaddr_storage *addr = req->async_data;
- 	unsigned file_flags;
- 	int ret;
- 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
-@@ -1752,8 +1752,7 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
- 
- 	file_flags = force_nonblock ? O_NONBLOCK : 0;
- 
--	ret = __sys_connect_file(req->file, &io->addr, connect->addr_len,
--				 file_flags);
-+	ret = __sys_connect_file(req->file, addr, connect->addr_len, file_flags);
- 	if ((ret == -EAGAIN || ret == -EINPROGRESS || ret == -ECONNABORTED)
- 	    && force_nonblock) {
- 		if (ret == -EINPROGRESS) {
-@@ -1782,7 +1781,6 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
- out:
- 	if (ret < 0)
- 		req_set_fail(req);
--	io_req_msg_cleanup(req, issue_flags);
- 	io_req_set_res(req, ret, 0);
- 	return IOU_OK;
- }
-@@ -1792,15 +1790,15 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
-  * which in turn end up in mnt_want_write() which will grab the fs
-  * percpu start write sem. This can trigger a lockdep warning.
-  */
--static int io_bind_file_create(const struct io_async_msghdr *io, int addr_len)
-+static int io_bind_file_create(const struct sockaddr_storage *addr, int addr_len)
- {
- 	const struct sockaddr_un *sun;
- 
--	if (io->addr.ss_family != AF_UNIX)
-+	if (addr->ss_family != AF_UNIX)
- 		return 0;
- 	if (addr_len <= offsetof(struct sockaddr_un, sun_path))
- 		return 0;
--	sun = (const struct sockaddr_un *) &io->addr;
-+	sun = (const struct sockaddr_un *) addr;
- 	return sun->sun_path[0] != '\0';
- }
- 
-@@ -1808,7 +1806,7 @@ int io_bind_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- {
- 	struct io_bind *bind = io_kiocb_to_cmd(req, struct io_bind);
- 	struct sockaddr __user *uaddr;
--	struct io_async_msghdr *io;
-+	struct sockaddr_storage *addr;
- 	int ret;
- 
- 	if (sqe->len || sqe->buf_index || sqe->rw_flags || sqe->splice_fd_in)
-@@ -1817,21 +1815,23 @@ int io_bind_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 	uaddr = u64_to_user_ptr(READ_ONCE(sqe->addr));
- 	bind->addr_len =  READ_ONCE(sqe->addr2);
- 
--	io = io_msg_alloc_async(req);
--	if (unlikely(!io))
-+	if (io_alloc_async_data(req))
- 		return -ENOMEM;
--	ret = move_addr_to_kernel(uaddr, bind->addr_len, &io->addr);
-+	addr = req->async_data;
++	intel_display_device_info_runtime_init(xe);
 +
-+	ret = move_addr_to_kernel(uaddr, bind->addr_len, addr);
- 	if (unlikely(ret))
- 		return ret;
--	if (io_bind_file_create(io, bind->addr_len))
-+	if (io_bind_file_create(addr, bind->addr_len))
- 		req->flags |= REQ_F_FORCE_ASYNC;
- 	return 0;
- }
- 
++	/* Display may have been disabled at runtime init */
++	if (!has_display(xe)) {
++		xe->info.probe_display = false;
++		unset_display_features(xe);
++		return 0;
++	}
 +
- int io_bind(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_bind *bind = io_kiocb_to_cmd(req, struct io_bind);
--	struct io_async_msghdr *io = req->async_data;
-+	struct sockaddr_storage *addr = req->async_data;
- 	struct socket *sock;
- 	int ret;
+ 	/* Early display init.. */
+ 	intel_opregion_setup(display);
  
-@@ -1839,7 +1839,7 @@ int io_bind(struct io_kiocb *req, unsigned int issue_flags)
- 	if (unlikely(!sock))
- 		return -ENOTSOCK;
+@@ -159,8 +168,6 @@ int xe_display_init_noirq(struct xe_device *xe)
  
--	ret = __sys_bind_socket(sock, &io->addr, bind->addr_len);
-+	ret = __sys_bind_socket(sock, addr, bind->addr_len);
- 	if (ret < 0)
- 		req_set_fail(req);
- 	io_req_set_res(req, ret, 0);
-diff --git a/io_uring/opdef.c b/io_uring/opdef.c
-index 5dc1cba158a060..bbb62d2ab2a3bf 100644
---- a/io_uring/opdef.c
-+++ b/io_uring/opdef.c
-@@ -205,7 +205,7 @@ const struct io_issue_def io_issue_defs[] = {
- 		.unbound_nonreg_file	= 1,
- 		.pollout		= 1,
- #if defined(CONFIG_NET)
--		.async_size		= sizeof(struct io_async_msghdr),
-+		.async_size		= sizeof(struct sockaddr_storage),
- 		.prep			= io_connect_prep,
- 		.issue			= io_connect,
- #else
-@@ -501,7 +501,7 @@ const struct io_issue_def io_issue_defs[] = {
- 		.needs_file		= 1,
- 		.prep			= io_bind_prep,
- 		.issue			= io_bind,
--		.async_size		= sizeof(struct io_async_msghdr),
-+		.async_size		= sizeof(struct sockaddr_storage),
- #else
- 		.prep			= io_eopnotsupp_prep,
- #endif
+ 	intel_bw_init_hw(xe);
+ 
+-	intel_display_device_info_runtime_init(xe);
+-
+ 	err = intel_display_driver_probe_noirq(xe);
+ 	if (err) {
+ 		intel_opregion_cleanup(display);
 -- 
 2.53.0
 
