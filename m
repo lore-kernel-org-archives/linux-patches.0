@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461AD30B50D;
-	Thu,  2 Jul 2026 16:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2F63368B8;
+	Thu,  2 Jul 2026 16:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010741; cv=none; b=uYs6Zn7Cec++6PcqByUwEN7dgylR5NJ6PmsXYo/TZedIsFdaKWuoN7bfmHVt2lraDTPJBBpz2jCEpO3pSshS0xvqg420TH+skpr+hTBcgQzeli4ip8iUB43Ai+z5Ss/ahim56N5d1tp7g6/Np0G1USdj2QurTxq981U5yul8b3U=
+	t=1783010743; cv=none; b=neI+IOqjdao4H4WbDmr4p9TSgZoImmic2zl0X+IUYnUiQDc0QQm2wrwEZIGzncA9jub8EkGG3rvrtfRBCK/1LaRrZtsFtfOGFEVaOk+DrM5iG50Ti1LZVAJssAS9vrbPi7hlY0q6EeTcwQ8xXsFcQSY0Z4lww2C31wNQ1dn+UBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010741; c=relaxed/simple;
-	bh=qFwvWYKe51fwho2GdkX4aoe9PpxVuZMWsNQL71y7KXA=;
+	s=arc-20240116; t=1783010743; c=relaxed/simple;
+	bh=Kgr3hV66KDppGLu66j4XwkwW1wLsEI345Qj2tqEBcHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=goShbjmvfceSOCb55rtLUWdeWzQj2PIjVQQEbaFLDxnXqpPcXboTh2gvmoVcPtTUbkl+454CSld93Hm8uzUjy8GhBxoWk4t6+86z9Hzux1TkuAiCVSk4Ant13Ln1dy5xMsjNuLkeyOjOCl4yKqMfB4FmKYeI3f8wtNKvmj9iVT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAgmVK7Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=alWIEpmZHi8Oskm8vMpXhpkf7knlUlH68Pcv8Cph1Ga67FaEcbAYUWkmeZ2oi7GbyO1HnYBS0pMYIgsAWbKpfl9oCzPXBNE3iuWTLiPEG9l36Xx9yyyWjmdukcfYDR326yvjow0tR1R+FuR/Q/gnA9xSErwbML6+hR9M6YAy1Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXw30OpL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAgmVK7Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15F91F000E9;
-	Thu,  2 Jul 2026 16:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXw30OpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8F21F000E9;
+	Thu,  2 Jul 2026 16:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010740;
-	bh=EMM2zpYOcPmRUiUjAAp+U/1RtUQGMMfF03VC7LoxaRQ=;
+	s=korg; t=1783010742;
+	bh=s6It/YuIiUt8U6UeYHPn1QRx2lPRAjMH20FWM0D5WA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JAgmVK7ZaRoOtcNjIILIptNtkmfgMerUdfYs8AxiugP9K1RpzGzPbkijflP6SdD7w
-	 jkfSqS3mMz3IyKdXxHj3wgurCUnH4jbrclr5RgmRKLm47lVlBW1bE7ZOOH+Fmdq36K
-	 xT1PzLHRULTzhvGTbJIqJOEQuIhNuJWEWIxopbQc=
+	b=DXw30OpL8CW4bcsZFKc4ZFQ+zbKXmKl33BlHXackkJ9YlAqb7dp+SToYURhE0f7pU
+	 ueVJ5Dt+T+yYQrGI+h+bZrFrp+Isk+dagE7kSn/uWY3jw2dM45ncjY41CvI1nlcikh
+	 IQ0HRDySEB6t3n4K7Xu/lwT1uUgpa2DRYHRGETow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Keenan Dong <keenanat2000@gmail.com>,
-	Han Guidong <2045gemini@gmail.com>,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Rajat Gupta <rajat.gupta@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/175] net/sched: fix pedit partial COW leading to page cache corruption
-Date: Thu,  2 Jul 2026 18:18:23 +0200
-Message-ID: <20260702155115.821410282@linuxfoundation.org>
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 6.6 020/175] agp/amd64: Fix broken error propagation in agp_amd64_probe()
+Date: Thu,  2 Jul 2026 18:18:41 +0200
+Message-ID: <20260702155116.209754630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -54,236 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit 899ee91156e57784090c5565e4f31bd7dbffbc5a ]
+commit b08472db93b1ccff84a7adec5779d47f0e9d3a30 upstream.
 
-tcf_pedit_act() computes the COW range for skb_ensure_writable()
-once before the key loop using tcfp_off_max_hint, but the hint does
-not account for the runtime header offset added by typed keys. This
-can leave part of the write region un-COW'd.
+A NULL pointer dereference was observed in the AMD64 AGP driver when
+running in a virtualized environment (e.g. qemu/kvm) without a physical
+AMD northbridge. The crash occurs in amd64_fetch_size() when attempting
+to dereference the pointer returned by node_to_amd_nb(0).
 
-Fix by moving skb_ensure_writable() inside the per-key loop where
-the actual write offset is known, and add overflow checking on the
-offset arithmetic. For negative offsets (e.g. Ethernet header edits
-at ingress), use skb_cow() to COW the headroom instead. Guard
-offset_valid() against INT_MIN, where negation is undefined.
+The root cause of this crash is broken error propagation in
+agp_amd64_probe(): When no AMD northbridges are found, cache_nbs()
+correctly returns -ENODEV. However, the probe function erroneously
+checks the return value against exactly -1, rather than < 0.
 
-Fixes: 8b796475fd78 ("net/sched: act_pedit: really ensure the skb is writable")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Reported-by: Keenan Dong <keenanat2000@gmail.com>
-Reported-by: Han Guidong <2045gemini@gmail.com>
-Reported-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Han Guidong <2045gemini@gmail.com>
-Tested-by: Han Guidong <2045gemini@gmail.com>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Tested-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260531123221.48732-1-jhs@mojatatu.com
-[rename include file from linux/unaligned.h to asm/unaligned.h]
-Conflicts:
-	include/net/tc_act/tc_pedit.h
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+As a result, the hardware absence error is masked, allowing the driver
+to improperly proceed with initialization. It eventually calls
+agp_add_bridge(), which invokes amd64_fetch_size(). Since the hardware
+does not exist, node_to_amd_nb(0) returns NULL, leading to a General
+Protection Fault (GPF) when accessing its ->misc member.
+
+Fix the issue by correcting the error check in agp_amd64_probe() to
+abort properly when cache_nbs() returns any negative error code. This
+prevents the driver from erroneously proceeding without hardware, thereby
+avoiding the subsequent NULL pointer dereference at its source.
+
+Fixes: a32073bffc65 ("[PATCH] x86_64: Clean and enhance up K8 northbridge access code")
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v2.6.18+
+Link: https://patch.msgid.link/20260504074823.99377-1-w15303746062@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tc_act/tc_pedit.h |  1 -
- net/sched/act_pedit.c         | 77 +++++++++++++++++++----------------
- 2 files changed, 41 insertions(+), 37 deletions(-)
+ drivers/char/agp/amd64-agp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/tc_act/tc_pedit.h b/include/net/tc_act/tc_pedit.h
-index 83fe3993178180..a26d4cd3b8d6f3 100644
---- a/include/net/tc_act/tc_pedit.h
-+++ b/include/net/tc_act/tc_pedit.h
-@@ -14,7 +14,6 @@ struct tcf_pedit_key_ex {
- struct tcf_pedit_parms {
- 	struct tc_pedit_key	*tcfp_keys;
- 	struct tcf_pedit_key_ex	*tcfp_keys_ex;
--	u32 tcfp_off_max_hint;
- 	unsigned char tcfp_nkeys;
- 	unsigned char tcfp_flags;
- 	struct rcu_head rcu;
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 1ef8fcfa9997d1..80b2a1e9d5ceb9 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -16,6 +16,8 @@
- #include <linux/ip.h>
- #include <linux/ipv6.h>
- #include <linux/slab.h>
-+#include <linux/overflow.h>
-+#include <asm/unaligned.h>
- #include <net/ipv6.h>
- #include <net/netlink.h>
- #include <net/pkt_sched.h>
-@@ -242,7 +244,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
- 		goto out_free_ex;
+--- a/drivers/char/agp/amd64-agp.c
++++ b/drivers/char/agp/amd64-agp.c
+@@ -546,7 +546,7 @@ static int agp_amd64_probe(struct pci_de
+ 	/* Fill in the mode register */
+ 	pci_read_config_dword(pdev, bridge->capndx+PCI_AGP_STATUS, &bridge->mode);
+ 
+-	if (cache_nbs(pdev, cap_ptr) == -1) {
++	if (cache_nbs(pdev, cap_ptr) < 0) {
+ 		agp_put_bridge(bridge);
+ 		return -ENODEV;
  	}
- 
--	nparms->tcfp_off_max_hint = 0;
- 	nparms->tcfp_flags = parm->flags;
- 	nparms->tcfp_nkeys = parm->nkeys;
- 
-@@ -268,14 +269,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
- 						   BITS_PER_TYPE(int) - 1,
- 						   nparms->tcfp_keys[i].shift);
- 
--		/* The AT option can read a single byte, we can bound the actual
--		 * value with uchar max.
--		 */
--		cur += (0xff & offmask) >> nparms->tcfp_keys[i].shift;
--
--		/* Each key touches 4 bytes starting from the computed offset */
--		nparms->tcfp_off_max_hint =
--			max(nparms->tcfp_off_max_hint, cur + 4);
- 	}
- 
- 	p = to_pedit(*a);
-@@ -318,15 +311,12 @@ static void tcf_pedit_cleanup(struct tc_action *a)
- 		call_rcu(&parms->rcu, tcf_pedit_cleanup_rcu);
- }
- 
--static bool offset_valid(struct sk_buff *skb, int offset)
-+static bool offset_valid(struct sk_buff *skb, int offset, int len)
- {
--	if (offset > 0 && offset > skb->len)
--		return false;
--
--	if  (offset < 0 && -offset > skb_headroom(skb))
-+	if (offset < -(int)skb_headroom(skb))
- 		return false;
- 
--	return true;
-+	return offset <= (int)skb->len - len;
- }
- 
- static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
-@@ -393,18 +383,10 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
- 	struct tcf_pedit_key_ex *tkey_ex;
- 	struct tcf_pedit_parms *parms;
- 	struct tc_pedit_key *tkey;
--	u32 max_offset;
- 	int i;
- 
- 	parms = rcu_dereference_bh(p->parms);
- 
--	max_offset = (skb_transport_header_was_set(skb) ?
--		      skb_transport_offset(skb) :
--		      skb_network_offset(skb)) +
--		     parms->tcfp_off_max_hint;
--	if (skb_ensure_writable(skb, min(skb->len, max_offset)))
--		goto done;
--
- 	tcf_lastuse_update(&p->tcf_tm);
- 	tcf_action_update_bstats(&p->common, skb);
- 
-@@ -412,10 +394,11 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
- 	tkey_ex = parms->tcfp_keys_ex;
- 
- 	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
-+		int write_offset, write_len;
- 		int offset = tkey->off;
- 		int hoffset = 0;
--		u32 *ptr, hdata;
--		u32 val;
-+		u32 cur_val, val;
-+		u32 *ptr;
- 		int rc;
- 
- 		if (tkey_ex) {
-@@ -433,13 +416,15 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
- 
- 		if (tkey->offmask) {
- 			u8 *d, _d;
-+			int at_offset;
- 
--			if (!offset_valid(skb, hoffset + tkey->at)) {
-+			if (check_add_overflow(hoffset, (int)tkey->at, &at_offset) ||
-+			    !offset_valid(skb, at_offset, sizeof(_d))) {
- 				pr_info_ratelimited("tc action pedit 'at' offset %d out of bounds\n",
- 						    hoffset + tkey->at);
- 				goto bad;
- 			}
--			d = skb_header_pointer(skb, hoffset + tkey->at,
-+			d = skb_header_pointer(skb, at_offset,
- 					       sizeof(_d), &_d);
- 			if (!d)
- 				goto bad;
-@@ -451,31 +436,51 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
- 			}
- 		}
- 
--		if (!offset_valid(skb, hoffset + offset)) {
--			pr_info_ratelimited("tc action pedit offset %d out of bounds\n", hoffset + offset);
-+		if (check_add_overflow(hoffset, offset, &write_offset)) {
-+			pr_info_ratelimited("tc action pedit offset overflow\n");
- 			goto bad;
- 		}
- 
--		ptr = skb_header_pointer(skb, hoffset + offset,
--					 sizeof(hdata), &hdata);
--		if (!ptr)
-+		if (!offset_valid(skb, write_offset, sizeof(*ptr))) {
-+			pr_info_ratelimited("tc action pedit offset %d out of bounds\n",
-+					    write_offset);
- 			goto bad;
-+		}
-+
-+		if (write_offset < 0) {
-+			if (skb_cow(skb, -write_offset))
-+				goto bad;
-+			if (write_offset + (int)sizeof(*ptr) > 0) {
-+				if (skb_ensure_writable(skb,
-+							min_t(int, skb->len,
-+							      write_offset + (int)sizeof(*ptr))))
-+					goto bad;
-+			}
-+		} else {
-+			if (check_add_overflow(write_offset, (int)sizeof(*ptr),
-+					       &write_len))
-+				goto bad;
-+			if (skb_ensure_writable(skb, min_t(int, skb->len,
-+							   write_len)))
-+				goto bad;
-+		}
-+
-+		ptr = (u32 *)(skb->data + write_offset);
-+		cur_val = get_unaligned(ptr);
- 		/* just do it, baby */
- 		switch (cmd) {
- 		case TCA_PEDIT_KEY_EX_CMD_SET:
- 			val = tkey->val;
- 			break;
- 		case TCA_PEDIT_KEY_EX_CMD_ADD:
--			val = (*ptr + tkey->val) & ~tkey->mask;
-+			val = (cur_val + tkey->val) & ~tkey->mask;
- 			break;
- 		default:
- 			pr_info_ratelimited("tc action pedit bad command (%d)\n", cmd);
- 			goto bad;
- 		}
- 
--		*ptr = ((*ptr & tkey->mask) ^ val);
--		if (ptr == &hdata)
--			skb_store_bits(skb, hoffset + offset, ptr, 4);
-+		put_unaligned((cur_val & tkey->mask) ^ val, ptr);
- 	}
- 
- 	goto done;
--- 
-2.53.0
-
 
 
