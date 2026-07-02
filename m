@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4F43A0E88;
-	Thu,  2 Jul 2026 16:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEBC33ADB0;
+	Thu,  2 Jul 2026 16:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009776; cv=none; b=ZQ1vD7dg19tOMTQsxWrcBHN9G0ecfU03sTbITzlUVtsKYM/XTebwI4UObJo9O1WBXv3LPx1eCPJ6vjnhQkEx/N/ZvGk61+5WhR7MnGcDHe3tIYLxX4jY5dXwAlT6wAP4t3SPS3h+/7TUYRQg3IsWCF7Y8caYpVCp6obq58FVQrM=
+	t=1783009777; cv=none; b=WxldxilGyHZ3puHYkduXHkTXpB3+DmzfapRPofQWdfloLTB362YRjfk4egpM87R3OdzrUN9nbXtXpE2ysv3jUQ9lucURiXRWan+r0pTW+Lai4gf2OnBfmjs/WyGu69qRHAw/pQQFMDZbTt5yhHLnbsa29XbLx0PQ5xaz9qxMRBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009776; c=relaxed/simple;
-	bh=4i+rj+KEzXJ5xQW5kmOzvMVX7bqWVQ2EkHvxpXokWU8=;
+	s=arc-20240116; t=1783009777; c=relaxed/simple;
+	bh=1rI9efT8mxislU6frqePWiJkL09I3oq0Nu6jBJUNdGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yi+JTMToT7MU3ET37bULxGVSBu7OPcEMOqdXulaUd0qpK4FGrscvvnOxchGAcaP7owUjkrppKE9QwSgFUfvomAS2p3XtCYiUhMFr4D8yLKbTqaNuinzOVTot/3L722Xxp49+vf+ldlr0nh2goV42lcAsCe/vOb1D6wHzEtrAP6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M41FvhQH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=irCyZHGCeXH2Xqajql148dEH1aJOJfZ9q296f94ZmXgPqk5UNC3yqhDzujzr/a5zXclzLw+YOPQV3G4bfNPyVDOrfPPsPdBRxhdh07St9IPo1e/aBng/ZCoQA/0vCmwlXlVmpGeQuj9IHBIIdZZ7D5uX5q1JCYqE+xo0/6WvD48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNYKpWMv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M41FvhQH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475FD1F000E9;
-	Thu,  2 Jul 2026 16:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNYKpWMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47521F00A3A;
+	Thu,  2 Jul 2026 16:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009772;
-	bh=ElT2ou2j4BzsOfvU8sqVFsjZsMU9DfkR+OnOnPtnNek=;
+	s=korg; t=1783009775;
+	bh=edEaZFU/2jAwFRNz7hdNq3pr5LEM183D19XWqLJ9Hzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M41FvhQHvZ2cIq3ZpcGAhd7z8hs5JQNMe0yYAoMa/NMdPWFw1rsdh6kGPViISgoGI
-	 OTigMbMCA3TAQg9WNF3d/YuNIvTyHmx5jqcqcDVYJGEvkT2okIX0Prf2kde4PabRbn
-	 tQgQfBV3iWTH/C+6OcA0MRu8abd8wIinjW8uFNDk=
+	b=eNYKpWMv+lKZSdl+f7Mae3slU62HcjBUUC7hvlTAWhIc9Uyw0mqHVxhYceIxCbSbW
+	 fdlgaOL/M6NG/v34k1C2yeREPgT9M7bkjb/dS1uuu3XXbVplH61BDzdIJsyZRzmx9z
+	 aK2SSvlf1k/GUlH3D3PmLYmb6wSRB3ig5LOKnSCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 45/95] batman-adv: tp_meter: annotate last_recv_time access with READ/WRITE_ONCE
-Date: Thu,  2 Jul 2026 18:19:48 +0200
-Message-ID: <20260702155110.155330535@linuxfoundation.org>
+Subject: [PATCH 5.15 81/95] mptcp: fix missing wakeups in edge scenarios
+Date: Thu,  2 Jul 2026 18:20:24 +0200
+Message-ID: <20260702155110.912177437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -51,65 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit d67c728f07fca2ee6ffdc6dd4421cf2e8691f4d1 upstream.
+[ Upstream commit 9d8d28738f24b75616d6ca7a27cb4aed88520343 ]
 
-The last_recv_time field for batadv_tp_receiver tracks the jiffies value of
-the most recent activity and is used to detect timeouts. These accesses are
-not consistently protected by a lock, so READ_ONCE/WRITE_ONCE must be used
-to prevent data races caused by compiler optimizations.
+The mptcp_recvmsg() can fill MPTCP socket receive queue via
+mptcp_move_skbs(), but currently does not try to wakeup any listener,
+because the same process is going to check the receive queue soon.
 
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+When multiple threads are reading from the same fd, the above can
+cause stall. Add the missing wakeup.
+
+Fixes: 6771bfd9ee24 ("mptcp: update mptcp ack sequence from work queue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-1-856831229976@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 105cda5b0b2cda..503819e9839c62 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -1183,7 +1183,7 @@ static void batadv_tp_receiver_shutdown(struct timer_list *t)
- 	bat_priv = tp_vars->bat_priv;
- 
- 	/* if there is recent activity rearm the timer */
--	if (!batadv_has_timed_out(tp_vars->last_recv_time,
-+	if (!batadv_has_timed_out(READ_ONCE(tp_vars->last_recv_time),
- 				  BATADV_TP_RECV_TIMEOUT)) {
- 		/* reset the receiver shutdown timer */
- 		batadv_tp_reset_receiver_timer(tp_vars);
-@@ -1424,7 +1424,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
- 					      icmp->session, BATADV_TP_RECEIVER);
- 	if (tp_vars) {
--		tp_vars->last_recv_time = jiffies;
-+		WRITE_ONCE(tp_vars->last_recv_time, jiffies);
- 		goto out_unlock;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2119,8 +2119,10 @@ static bool __mptcp_move_skbs(struct mpt
+ 		__mptcp_splice_receive_queue(sk);
+ 		mptcp_data_unlock(sk);
  	}
+-	if (ret)
++	if (ret) {
+ 		mptcp_check_data_fin((struct sock *)msk);
++		sk->sk_data_ready(sk);
++	}
+ 	return !skb_queue_empty(&msk->receive_queue);
+ }
  
-@@ -1455,7 +1455,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 	kref_get(&tp_vars->refcount);
- 	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
- 
--	tp_vars->last_recv_time = jiffies;
-+	WRITE_ONCE(tp_vars->last_recv_time, jiffies);
- 
- 	kref_get(&tp_vars->refcount);
- 	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
-@@ -1506,7 +1506,7 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
- 			goto out;
- 		}
- 
--		tp_vars->last_recv_time = jiffies;
-+		WRITE_ONCE(tp_vars->last_recv_time, jiffies);
- 	}
- 
- 	/* if the packet is a duplicate, it may be the case that an ACK has been
--- 
-2.53.0
-
 
 
