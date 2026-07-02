@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F814336897;
-	Thu,  2 Jul 2026 16:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDBA317146;
+	Thu,  2 Jul 2026 16:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010531; cv=none; b=QE88lUf23nJkzUMYFujfjlMJPTmFu6LKVfr4cOaEENWnidUzBApAfVfDJT0ufTjGmfmd6jrhd2EBCRiysuKJwTaParw4ygqIWbfJHkaCqnFowz4x2cmM0B7Y7I7DisYYABSzMoFHIlsJIM1r90wj/Qcr6AecNdrV8I2IFQ/wc/s=
+	t=1783010533; cv=none; b=j+chrh/9eER76ytX1/euAiG+tWhC/FhdHMUfkTcpXu9feFoeXcf0xTn1ZUVy91y1ToU855I28VivJ8rdZFwaL/c/jaGpw35eOPDqJqnkdx3xR5nzcWTmewPjsQWHA9WeI8BoN78Qv7Z/dJX+rlcZPu9VyIMLyVuEF9swGDLG7Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010531; c=relaxed/simple;
-	bh=oqDEWpCoiAsCWk+byZyAi1zYfx/IaFpe5a4NWW3Gcxw=;
+	s=arc-20240116; t=1783010533; c=relaxed/simple;
+	bh=n8UEPaffKFycbEP54eg89Mfex9yLDEfKt7Ny5kibDpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKuw0pIbBIw06kfmMsdGSzSOz83tZKLUl4f/Jc4v4fE3Yo73fagnYuydJP38HkzuuKCUjBA6Tz+cKjutp7ma5iGj+Xzt8FhEaJmL85oPgpuovUAjGER7er7YMbD8ljd5G8m8EK4P6Ujb1pd1XrWtrA01Q17jdf8S6fXKkc7IDXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU9R8K+1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ismLAU13z0cqtn2NldA/Xph6Jpb7cXLJZX/+YJ51ewpY77TaIHwCZeffu4xq45QN55uGAcTzPvRcTIt3m38KHJdmS0yZ68ZSwM8YtFGPsNHRqzI1MEyW9zJb1zt7GjtUPyxgEjDvMjh29Yiy23rUzcB30VrnFh1rBtlAZozbxCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5RLzaHc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU9R8K+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C7D1F000E9;
-	Thu,  2 Jul 2026 16:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5RLzaHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84981F000E9;
+	Thu,  2 Jul 2026 16:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010529;
-	bh=WRV5PBnP2wg75a9NUjmZvand2CkfraFy4uLgjQaQxgw=;
+	s=korg; t=1783010532;
+	bh=w9ax0GAcSxR/97JQX6x+MCRLz+Zdofhs3eTBCTB3g3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IU9R8K+1MeR2uhHVh0aguJnfSMxGoRBuUFeW1s3i462Fn0NIvthCpy0o0Z7Id/xXv
-	 wiM/IZM28pXUxfKU1iCbCP5c+Lh4iNIXB4qYtoHaJSDQRVxyTAeBsAt3pf8TDHqUfg
-	 Sc51AypcoB6ktv+FXmYwxhv15pmdE22N18i9z9C4=
+	b=I5RLzaHc4ZzZqsp4mwBQc8VGvT//mGzd7VYSV2k9b5UO4viJOro/MtJv/gBWqLFrb
+	 g/E+2mQag8OsVHGMknDhna2P8OutqW6JoN//Bg3gdtdh6g7ryWQTxhcJZwqYJ0oOLj
+	 /ZwcmfeMozsU40u4I7up6oX4XnZqzKnPYzS5bS24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 143/204] block: invalidate cached plug timestamp after task switch
-Date: Thu,  2 Jul 2026 18:20:00 +0200
-Message-ID: <20260702155121.656439165@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Tamir Duberstein <tamird@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Ansuel Smith <ansuelsmth@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 144/204] err.h: use __always_inline on all error pointer helpers
+Date: Thu,  2 Jul 2026 18:20:01 +0200
+Message-ID: <20260702155121.676088851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,109 +59,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit fad156c2af227f42ca796cbb20ddc354a6dd9932 upstream.
+commit 94bfc7f3b0c7c33331ba4ff6cc64ff309dfcbce8 upstream.
 
-blk_time_get_ns() caches ktime_get_ns() in current->plug->cur_ktime
-and marks the task with PF_BLOCK_TS. That cache is only valid while the
-task keeps running; if the task is switched out, wall-clock time
-advances and the cached value must not be reused when the task runs again.
+While testing randconfig builds on s390, I came across a link failure with
+CONFIG_DMA_SHARED_BUFFER disabled:
 
-The existing invalidation covers explicit plug flushes through
-__blk_flush_plug(), and the schedule() / rtmutex paths through
-sched_update_worker(). It does not cover in-kernel preemption paths such
-as preempt_schedule(), preempt_schedule_notrace(), and
-preempt_schedule_irq(), which enter __schedule(SM_PREEMPT) directly and
-return without calling sched_update_worker().
+ERROR: modpost: "dma_buf_put" [drivers/iommu/iommufd/iommufd.ko] undefined!
 
-As a result, a task preempted while holding a plug with PF_BLOCK_TS set
-can reuse a stale plug->cur_ktime after it is scheduled back in. blk-iocost
-then consumes that stale timestamp through ioc_now(), producing stale vnow
-values for throttle decisions, and through ioc_rqos_done(), inflating
-on-queue time and feeding false missed-QoS samples into vrate
-adjustment.
+The problem here is that IS_ERR() is not inlined and dead code elimination
+fails as a consequence.
 
-Move the schedule-side invalidation to finish_task_switch(), which runs
-for the scheduled-in task after every actual context switch regardless
-of which schedule entry point was used. Keep __blk_flush_plug() as the
-explicit flush/finish-plug invalidation path, and remove only the
-PF_BLOCK_TS handling from sched_update_worker().
+The err.h helpers all turn into a trivial assignment of a bit mask and
+should never result in a function call, so force them to always be inline.
+This should generally result in better object code aside from avoiding
+the link failure above.
 
-Fixes: 06b23f92af87 ("block: update cached timestamp post schedule/preemption")
-Cc: stable@vger.kernel.org
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Link: https://patch.msgid.link/20260616141604.328820-3-usama.arif@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/20260526101851.2495110-1-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Tamir Duberstein <tamird@kernel.org>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Ansuel Smith <ansuelsmth@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/blkdev.h |   18 +++++++-----------
- kernel/sched/core.c    |   12 ++++++++----
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ include/linux/err.h |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1105,16 +1105,12 @@ static inline void blk_flush_plug(struct
- 		__blk_flush_plug(plug, async);
- }
- 
--/*
-- * tsk == current here
-- */
--static inline void blk_plug_invalidate_ts(struct task_struct *tsk)
--{
--	struct blk_plug *plug = tsk->plug;
--
--	if (plug)
--		plug->cur_ktime = 0;
--	current->flags &= ~PF_BLOCK_TS;
-+static __always_inline void blk_plug_invalidate_ts(void)
-+{
-+	if (unlikely(current->flags & PF_BLOCK_TS)) {
-+		current->plug->cur_ktime = 0;
-+		current->flags &= ~PF_BLOCK_TS;
-+	}
- }
- 
- int blkdev_issue_flush(struct block_device *bdev);
-@@ -1140,7 +1136,7 @@ static inline void blk_flush_plug(struct
+--- a/include/linux/err.h
++++ b/include/linux/err.h
+@@ -36,7 +36,7 @@
+  *
+  * Return: A pointer with @error encoded within its value.
+  */
+-static inline void * __must_check ERR_PTR(long error)
++static __always_inline void * __must_check ERR_PTR(long error)
  {
+ 	return (void *) error;
  }
- 
--static inline void blk_plug_invalidate_ts(struct task_struct *tsk)
-+static inline void blk_plug_invalidate_ts(void)
+@@ -52,7 +52,7 @@ static inline void * __must_check ERR_PT
+  * @ptr: An error pointer.
+  * Return: The error code within @ptr.
+  */
+-static inline long __must_check PTR_ERR(__force const void *ptr)
++static __always_inline long __must_check PTR_ERR(__force const void *ptr)
  {
+ 	return (long) ptr;
  }
- 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5226,6 +5226,12 @@ static struct rq *finish_task_switch(str
- 	 */
- 	kmap_local_sched_in();
- 
-+	/*
-+	 * Any cached block-layer timestamp (plug->cur_ktime) is stale now,
-+	 * invalidate it.
-+	 */
-+	blk_plug_invalidate_ts();
-+
- 	fire_sched_in_preempt_notifiers(current);
- 	/*
- 	 * When switching through a kernel thread, the loop in
-@@ -6785,12 +6791,10 @@ static inline void sched_submit_work(str
- 
- static void sched_update_worker(struct task_struct *tsk)
+@@ -65,7 +65,7 @@ static inline long __must_check PTR_ERR(
+  * @ptr: The pointer to check.
+  * Return: true if @ptr is an error pointer, false otherwise.
+  */
+-static inline bool __must_check IS_ERR(__force const void *ptr)
++static __always_inline bool __must_check IS_ERR(__force const void *ptr)
  {
--	if (tsk->flags & (PF_WQ_WORKER | PF_IO_WORKER | PF_BLOCK_TS)) {
--		if (tsk->flags & PF_BLOCK_TS)
--			blk_plug_invalidate_ts(tsk);
-+	if (tsk->flags & (PF_WQ_WORKER | PF_IO_WORKER)) {
- 		if (tsk->flags & PF_WQ_WORKER)
- 			wq_worker_running(tsk);
--		else if (tsk->flags & PF_IO_WORKER)
-+		else
- 			io_wq_worker_running(tsk);
- 	}
+ 	return IS_ERR_VALUE((unsigned long)ptr);
  }
+@@ -79,7 +79,7 @@ static inline bool __must_check IS_ERR(_
+  *
+  * Like IS_ERR(), but also returns true for a null pointer.
+  */
+-static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
++static __always_inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
+ {
+ 	return unlikely(!ptr) || IS_ERR_VALUE((unsigned long)ptr);
+ }
+@@ -91,7 +91,7 @@ static inline bool __must_check IS_ERR_O
+  * Explicitly cast an error-valued pointer to another pointer type in such a
+  * way as to make it clear that's what's going on.
+  */
+-static inline void * __must_check ERR_CAST(__force const void *ptr)
++static __always_inline void * __must_check ERR_CAST(__force const void *ptr)
+ {
+ 	/* cast away the const */
+ 	return (void *) ptr;
+@@ -114,7 +114,7 @@ static inline void * __must_check ERR_CA
+  *
+  * Return: The error code within @ptr if it is an error pointer; 0 otherwise.
+  */
+-static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
++static __always_inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
+ {
+ 	if (IS_ERR(ptr))
+ 		return PTR_ERR(ptr);
 
 
