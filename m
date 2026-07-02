@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CA024E4C3;
-	Thu,  2 Jul 2026 16:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5002424E4C3;
+	Thu,  2 Jul 2026 16:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011251; cv=none; b=HiEF1bKI4l5RABljnkO1x1gKmHeBH32hHMk+9Vc6TXvzpyZQO3/Dgasmps3zBsJB90lBfi3RmGAw2khQ9m7MS9iM8HPRrd6cBWYyd8DYTsZASNlsWiOhe06HmtzW/kOqWE4cw86tdl/TZc/z6NR5f5iXe2cifM5G8XbEYT+Ntb8=
+	t=1783011253; cv=none; b=osnaTDgzTjNV28+bsAyAqYrrwfOsT1A6nySgDf/eX4ohg1AVwyIhla+JmKdMz24h06hV1lmlbkyslm+55KKTS0nLaYX/7ae4mVtvgTxlkW5Rbgkxdbw4041F/c3zsvyIUbLMRvOZdPJdlMOP3ySnR2zjdkK8OhxxOhw9xgSFBvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011251; c=relaxed/simple;
-	bh=CzVQE0bo1gvPy9iEDmW+1Nag6emEmgKivl4CF80AiJY=;
+	s=arc-20240116; t=1783011253; c=relaxed/simple;
+	bh=FKR3Ou95aTj79UwfZqBSV/4nBDgXButoLqGlB9ohZq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YaSale7ICghnbCrwGXQfgZRbEhH5UJDRRhTPFsB1Vg6Ho9qNsfvBDsXo3dhN+4RuuYcZ1cx6wiNhxI3AOiyfvW8KELr0VpvJB2hjMQ+hvFZZu3kDGeXpcWDNIarzj/TMP3P1vHncrKfRRPG+YW7po9TVzsBgBsvpj6ISR/00huY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3kALPOB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IbHdCKEEOBxOY70NJDnzSp+mIFRY2EqKa/6IKzR6QpTuoVgs/syEywc0X3VVYUcpCN7wI5nnjqeHBJ57fVcCjgrDYgxTAXbblnukJpaKOGPa19ddYgoNGhHbqOu3BfVTCfnAU3Xh1Ge0zVbPgbELk6ZupnnDUNh9hqJ8b4TyTZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+5/m0cH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3kALPOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205A81F000E9;
-	Thu,  2 Jul 2026 16:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+5/m0cH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76951F000E9;
+	Thu,  2 Jul 2026 16:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011249;
-	bh=zDbBn/h/JpXuW/1aXUh3fpQcsCBhnb3r1cuqpp/RI/4=;
+	s=korg; t=1783011252;
+	bh=cYcqptbIIPhDBXd0lGs8ZzS+h6cRIOevFbZwVATFi6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O3kALPOBmwqyrKoeIzSRtA9hEI83rl7KJ3+Hh1rHbTqhNqLSivOZ+BlkQwDS/j0Ge
-	 kFBYagbMWuKORr2m6d3ydiRhe/0rvwT4Jt4CmhcW/a8dKs0faJOTId19tREHrBIO+q
-	 dytVyaulKcPecAP+yWOBfvbUO0hyIj94ZlJeQLlM=
+	b=T+5/m0cHIuq304a1bGI+sAIuQz3OJ6V/3ultKTo9dCJbDIUFbvMj708/bnXfhBO8/
+	 fZqTvf0Y/g0tESH4VQQ1Gf7QryCE+ipH/A3lERcJsLBM1fSATJwlk+3QmPgCMNvgu+
+	 Yjl5il9Hy8XKzzRhGrbGC+OhvjwOrPfOxW6Y0z3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Ushakov <sysroot314@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/108] af_unix: Set gc_in_progress to true in unix_gc().
-Date: Thu,  2 Jul 2026 18:20:33 +0200
-Message-ID: <20260702155112.855621743@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 6.18 037/108] mac802154: llsec: add skb_cow_data() before in-place crypto
+Date: Thu,  2 Jul 2026 18:20:34 +0200
+Message-ID: <20260702155112.876738910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -52,64 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-[ Upstream commit d82ba05263c69fa2437fe93e4e561cc40f4c03af ]
+commit 84a04eb5b210643bd67aab81ff805d32f62aa865 upstream.
 
-Igor Ushakov reported that unix_gc() could run with gc_in_progress
-being false if the work is scheduled while running:
+llsec_do_encrypt_unauth(), llsec_do_encrypt_auth(),
+llsec_do_decrypt_unauth(), and llsec_do_decrypt_auth() all perform
+in-place cryptographic transformations on skb data.  They build a
+scatterlist with sg_init_one() pointing into the skb's linear data area
+and then pass the same scatterlist as both src and dst to the crypto API
+(e.g. crypto_skcipher_encrypt/decrypt, crypto_aead_encrypt/decrypt).
 
-  Thread 1         Thread 2                     Thread 3
-  --------         --------                     --------
-                   unix_schedule_gc()           unix_schedule_gc()
-                   `- if (!gc_in_progress)      `- if (!gc_in_progress)
-                      |- gc_in_progress = true     |
-                      `- queue_work()              |
-  unix_gc() <----------------/                     |
-  |                                                |- gc_in_progress = true
-  ...                                              `- queue_work()
-  |                                                       |
-  `- gc_in_progress = false                               |
-                                                          |
-  unix_gc() <---------------------------------------------'
-  |
-  ... /* gc_in_progress == false */
-  |
-  `- gc_in_progress = false
+On the RX path, __ieee802154_rx_handle_packet() clones the received skb
+before handing it to each subscriber via ieee802154_subif_frame().  The
+cloned skb shares the same underlying data buffer via reference
+counting.  When llsec_do_decrypt() subsequently modifies this shared
+buffer in place, it corrupts data that other clones -- potentially
+belonging to other sockets or subsystems -- still reference.
 
-unix_peek_fpl() relies on gc_in_progress not to confuse GC
-by MSG_PEEK.
+On the TX path, similar data sharing can occur when an skb's head has
+been cloned (skb_cloned() returns true).
 
-Let's set gc_in_progress to true in unix_gc().
+The fix is to call skb_cow_data() before performing any in-place crypto
+operation.  skb_cow_data() ensures that the skb's data area is not
+shared: if the skb head is cloned or the data spans multiple fragments,
+it copies the data into a private buffer that can be safely modified in
+place.  This is the same pattern used by:
 
-Fixes: 8b90a9f819dc ("af_unix: Run GC on only one CPU.")
-Reported-by: Igor Ushakov <sysroot314@gmail.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260501073945.1884564-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Add setting gc_in_progress in __unix_gc(). Keep the existing
-  set in unix_gc() for wait_for_unix_gc() over-limit throttling. ]
-Signed-off-by: Igor Ushakov <sysroot314@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  - ESP (net/ipv4/esp4.c, net/ipv6/esp6.c)
+  - MACsec (drivers/net/macsec.c)
+  - WireGuard (drivers/net/wireguard/receive.c)
+  - TIPC (net/tipc/crypto.c)
+
+Without this guard, in-place crypto on shared skb data leads to:
+  - Silent data corruption of other skb clones
+  - Use-after-free when the crypto API scatterwalk writes through a
+    page that has already been freed by another clone's kfree_skb()
+  - Kernel crashes under concurrent 802.15.4 traffic with security
+    enabled (KASAN/KMSAN reports slab-use-after-free)
+
+Found by 0sec (https://0sec.ai) using automated source analysis.
+
+Fixes: 4c14a2fb5d14 ("mac802154: add llsec decryption method")
+Fixes: 03556e4d0dbb ("mac802154: add llsec encryption method")
+Cc: stable@vger.kernel.org
+Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Closes: https://lore.kernel.org/linux-wpan/20260525161806.96158-1-doruk@0sec.ai/
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Closes: <link to your mail on lore>
+Link: https://lore.kernel.org/20260526183726.56100-1-doruk@0sec.ai
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/garbage.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac802154/llsec.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index 529b21d043d927..39867170902662 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -606,6 +606,8 @@ static void __unix_gc(struct work_struct *work)
- 	struct sk_buff_head hitlist;
- 	struct sk_buff *skb;
+--- a/net/mac802154/llsec.c
++++ b/net/mac802154/llsec.c
+@@ -710,6 +710,7 @@ int mac802154_llsec_encrypt(struct mac80
+ {
+ 	struct ieee802154_hdr hdr;
+ 	int rc, authlen, hlen;
++	struct sk_buff *trailer;
+ 	struct mac802154_llsec_key *key;
+ 	u32 frame_ctr;
  
-+	WRITE_ONCE(gc_in_progress, true);
+@@ -769,6 +770,12 @@ int mac802154_llsec_encrypt(struct mac80
+ 	skb->mac_len = ieee802154_hdr_push(skb, &hdr);
+ 	skb_reset_mac_header(skb);
+ 
++	rc = skb_cow_data(skb, 0, &trailer);
++	if (rc < 0) {
++		llsec_key_put(key);
++		return rc;
++	}
 +
- 	spin_lock(&unix_gc_lock);
+ 	rc = llsec_do_encrypt(skb, sec, &hdr, key);
+ 	llsec_key_put(key);
  
- 	if (unix_graph_state == UNIX_GRAPH_NOT_CYCLIC) {
--- 
-2.53.0
-
+@@ -908,6 +915,13 @@ llsec_do_decrypt(struct sk_buff *skb, co
+ 		 const struct ieee802154_hdr *hdr,
+ 		 struct mac802154_llsec_key *key, __le64 dev_addr)
+ {
++	struct sk_buff *trailer;
++	int err;
++
++	err = skb_cow_data(skb, 0, &trailer);
++	if (err < 0)
++		return err;
++
+ 	if (hdr->sec.level == IEEE802154_SCF_SECLEVEL_ENC)
+ 		return llsec_do_decrypt_unauth(skb, sec, hdr, key, dev_addr);
+ 	else
 
 
