@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F187734752D;
-	Thu,  2 Jul 2026 16:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D415381EA6;
+	Thu,  2 Jul 2026 16:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010453; cv=none; b=qGFvWQieqBSBIEB73UnC4ExXORy501Zo/fVz71zZlHRmsa6X7sBIA6IdsF/YOhKJmFKEyo+6fchN8+akj1bx0TDWeT67RcxZ/BhUm6k7fIQERNhMJf1EDcTjuNsIVDHI2gdarh8rikXd4Tkh/+83nu+akKX7Y3hqbqRv9aVyqao=
+	t=1783010455; cv=none; b=scRKJZoMhi24999X3jFzORT89TBlcYQWhLgqN174x7JoWKK8LrKFZ0ad9gEwF7ZuYWeqPM83JgXk9RiY7gfcm3aS21INdfHChqMHlpA/v4UilCGqgIy0X4rEXbBVzM/cRLBroTy2JdQMggMwIFJWE6NGOB37mNOPR085tICVyMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010453; c=relaxed/simple;
-	bh=3hxEgZMWQvGSBdm8b+1AhMK19GtAHCJsiVdJqi2h+FI=;
+	s=arc-20240116; t=1783010455; c=relaxed/simple;
+	bh=ECocjumNju2IkcWIkoZboX7cBOroIeVvzG/mof3htSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOFGRvZsbZc3wSPOSTEp+79SDBhAbetUsOks+XUtsXR+34EcSoIFfe3a8r5txBvXlCNVYovgK8iF0jDZw4OyHAiLDFcrx84Q3fRVQwb1xM0Nadn10NiswTeepKmpo+NnaIDxTkvqJczdoyixPUpDi62azziHTufZ8aIM9//9xiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kq/NVWoM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HN6TkBjjEDMKXHwsj6P7TKcy1JvxcaP+BqGuLlF23JJFhmYEvty41RFyBnmHccx3/PSkxpMsG7+IqM6TTmEGdTB5jxWTaW0+fWtSnpqdGkcnzqeZyHahg8yyK/ITjTlr4Nr4h7JhFL9R3UJtIrcY/1cA7Ys6YgGESRdCaPOpINo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1/BGa2J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kq/NVWoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380C51F000E9;
-	Thu,  2 Jul 2026 16:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1/BGa2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81901F00A3A;
+	Thu,  2 Jul 2026 16:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010450;
-	bh=tSYSo3REkR74Q2PSca7EDzAg8fpCcysI9MkqiZnchz8=;
+	s=korg; t=1783010453;
+	bh=4dsGiog7dH61K541uaOkF8n2vN11f8ErNt4jfCcFSfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kq/NVWoMYsx6lofB3rTTHyiaOB5y9iBiCmRDUgVzMix94H/WwpR+DMpIlLacG5hTP
-	 b/4nCl1+WOLFMxlt22R0a8pGhpk+hl0GD3CuW5NMvC93zKVf1GsWrTyLwnbOGlnUIl
-	 nEzQWIr6FMhnTKEtNfZ+BJHzramITE3oVgUjF1kk=
+	b=w1/BGa2Jw4ns0OJ1oO1lFYESgzbU9sP0IuFmYB+dXJXB32uZYaVf0xyinEDcAIcVo
+	 wsvK6doQpN0CfTPb4pGtMOZq9f63im2ayqaQreVMOS8QRg9EXF507PYXjdD1NETGHh
+	 0uf4tqN8yaaHjRH+ZslEYHAvYpJqukvhb3kRmp64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,6 +33,7 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Nicolas Schier <nicolas@fjasle.eu>,
@@ -40,13 +41,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Martin Kelly <martin.kelly@crowdstrike.com>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.12 071/204] scripts/sorttable: Use a structure of function pointers for elf helpers
-Date: Thu,  2 Jul 2026 18:18:48 +0200
-Message-ID: <20260702155120.158124126@linuxfoundation.org>
+Subject: [PATCH 6.12 062/204] scripts/sorttable: Convert Elf_Ehdr to union
+Date: Thu,  2 Jul 2026 18:18:39 +0200
+Message-ID: <20260702155119.962171711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -67,14 +66,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 1e5f6771c247b28135307058d2cfe3b0153733dc ]
+[ Upstream commit 157fb5b3cfd2cb5950314f926a76e567fc1921c5 ]
 
-Instead of having a series of function pointers that gets assigned to the
-Elf64 or Elf32 versions, put them all into a single structure and use
-that. Add the helper function that chooses the structure into the macros
-that build the different versions of the elf functions.
+In order to remove the double #include of sorttable.h for 64 and 32 bit
+to create duplicate functions for both, replace the Elf_Ehdr macro with a
+union that defines both Elf64_Ehdr and Elf32_Ehdr, with field e64 for the
+64bit version, and e32 for the 32bit version.
 
-Link: https://lore.kernel.org/all/CAHk-=wiafEyX7UgOeZgvd6fvuByE5WXUPh9599kwOc_d-pdeug@mail.gmail.com/
+Then a macro etype can be used instead to get to the proper value.
+
+This will eventually be replaced with just single functions that can
+handle both 32bit and 64bit ELF parsing.
 
 Cc: bpf <bpf@vger.kernel.org>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
@@ -82,303 +84,185 @@ Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Masahiro Yamada <masahiroy@kernel.org>
 Cc: Nathan Chancellor <nathan@kernel.org>
 Cc: Nicolas Schier <nicolas@fjasle.eu>
 Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Cc: Martin Kelly <martin.kelly@crowdstrike.com>
+Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
 Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
 Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Link: https://lore.kernel.org/20250110075459.13d4b94c@gandalf.local.home
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/20250105162345.148224465@goodmis.org
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/sorttable.c |  175 +++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 118 insertions(+), 57 deletions(-)
+ scripts/sorttable.c |   36 ++++++++++++++++++++----------------
+ scripts/sorttable.h |   12 ++++++------
+ 2 files changed, 26 insertions(+), 22 deletions(-)
 
 --- a/scripts/sorttable.c
 +++ b/scripts/sorttable.c
-@@ -85,6 +85,25 @@ static uint64_t (*r8)(const uint64_t *);
- static void (*w)(uint32_t, uint32_t *);
- typedef void (*table_sort_t)(char *, int);
+@@ -64,6 +64,11 @@
+ #define EM_LOONGARCH	258
+ #endif
  
-+static struct elf_funcs {
-+	int (*compare_extable)(const void *a, const void *b);
-+	uint64_t (*ehdr_shoff)(Elf_Ehdr *ehdr);
-+	uint16_t (*ehdr_shstrndx)(Elf_Ehdr *ehdr);
-+	uint16_t (*ehdr_shentsize)(Elf_Ehdr *ehdr);
-+	uint16_t (*ehdr_shnum)(Elf_Ehdr *ehdr);
-+	uint64_t (*shdr_addr)(Elf_Shdr *shdr);
-+	uint64_t (*shdr_offset)(Elf_Shdr *shdr);
-+	uint64_t (*shdr_size)(Elf_Shdr *shdr);
-+	uint64_t (*shdr_entsize)(Elf_Shdr *shdr);
-+	uint32_t (*shdr_link)(Elf_Shdr *shdr);
-+	uint32_t (*shdr_name)(Elf_Shdr *shdr);
-+	uint32_t (*shdr_type)(Elf_Shdr *shdr);
-+	uint8_t (*sym_type)(Elf_Sym *sym);
-+	uint32_t (*sym_name)(Elf_Sym *sym);
-+	uint64_t (*sym_value)(Elf_Sym *sym);
-+	uint16_t (*sym_shndx)(Elf_Sym *sym);
-+} e;
++typedef union {
++	Elf32_Ehdr	e32;
++	Elf64_Ehdr	e64;
++} Elf_Ehdr;
 +
- static uint64_t ehdr64_shoff(Elf_Ehdr *ehdr)
+ static uint32_t (*r)(const uint32_t *);
+ static uint16_t (*r2)(const uint16_t *);
+ static uint64_t (*r8)(const uint64_t *);
+@@ -266,10 +271,10 @@ static void sort_relative_table_with_dat
+ static int do_file(char const *const fname, void *addr)
  {
- 	return r8(&ehdr->e64.e_shoff);
-@@ -95,6 +114,11 @@ static uint64_t ehdr32_shoff(Elf_Ehdr *e
- 	return r(&ehdr->e32.e_shoff);
- }
+ 	int rc = -1;
+-	Elf32_Ehdr *ehdr = addr;
++	Elf_Ehdr *ehdr = addr;
+ 	table_sort_t custom_sort = NULL;
  
-+static uint64_t ehdr_shoff(Elf_Ehdr *ehdr)
-+{
-+	return e.ehdr_shoff(ehdr);
-+}
-+
- #define EHDR_HALF(fn_name)				\
- static uint16_t ehdr64_##fn_name(Elf_Ehdr *ehdr)	\
- {							\
-@@ -104,6 +128,11 @@ static uint16_t ehdr64_##fn_name(Elf_Ehd
- static uint16_t ehdr32_##fn_name(Elf_Ehdr *ehdr)	\
- {							\
- 	return r2(&ehdr->e32.e_##fn_name);		\
-+}							\
-+							\
-+static uint16_t ehdr_##fn_name(Elf_Ehdr *ehdr)		\
-+{							\
-+	return e.ehdr_##fn_name(ehdr);			\
- }
- 
- EHDR_HALF(shentsize)
-@@ -119,6 +148,11 @@ static uint32_t shdr64_##fn_name(Elf_Shd
- static uint32_t shdr32_##fn_name(Elf_Shdr *shdr)	\
- {							\
- 	return r(&shdr->e32.sh_##fn_name);		\
-+}							\
-+							\
-+static uint32_t shdr_##fn_name(Elf_Shdr *shdr)		\
-+{							\
-+	return e.shdr_##fn_name(shdr);			\
- }
- 
- #define SHDR_ADDR(fn_name)				\
-@@ -130,6 +164,11 @@ static uint64_t shdr64_##fn_name(Elf_Shd
- static uint64_t shdr32_##fn_name(Elf_Shdr *shdr)	\
- {							\
- 	return r(&shdr->e32.sh_##fn_name);		\
-+}							\
-+							\
-+static uint64_t shdr_##fn_name(Elf_Shdr *shdr)		\
-+{							\
-+	return e.shdr_##fn_name(shdr);			\
- }
- 
- #define SHDR_WORD(fn_name)				\
-@@ -141,6 +180,10 @@ static uint32_t shdr64_##fn_name(Elf_Shd
- static uint32_t shdr32_##fn_name(Elf_Shdr *shdr)	\
- {							\
- 	return r(&shdr->e32.sh_##fn_name);		\
-+}							\
-+static uint32_t shdr_##fn_name(Elf_Shdr *shdr)		\
-+{							\
-+	return e.shdr_##fn_name(shdr);			\
- }
- 
- SHDR_ADDR(addr)
-@@ -161,6 +204,11 @@ static uint64_t sym64_##fn_name(Elf_Sym
- static uint64_t sym32_##fn_name(Elf_Sym *sym)	\
- {						\
- 	return r(&sym->e32.st_##fn_name);	\
-+}						\
-+						\
-+static uint64_t sym_##fn_name(Elf_Sym *sym)	\
-+{						\
-+	return e.sym_##fn_name(sym);		\
- }
- 
- #define SYM_WORD(fn_name)			\
-@@ -172,6 +220,11 @@ static uint32_t sym64_##fn_name(Elf_Sym
- static uint32_t sym32_##fn_name(Elf_Sym *sym)	\
- {						\
- 	return r(&sym->e32.st_##fn_name);	\
-+}						\
-+						\
-+static uint32_t sym_##fn_name(Elf_Sym *sym)	\
-+{						\
-+	return e.sym_##fn_name(sym);		\
- }
- 
- #define SYM_HALF(fn_name)			\
-@@ -183,6 +236,11 @@ static uint16_t sym64_##fn_name(Elf_Sym
- static uint16_t sym32_##fn_name(Elf_Sym *sym)	\
- {						\
- 	return r2(&sym->e32.st_##fn_name);	\
-+}						\
-+						\
-+static uint16_t sym_##fn_name(Elf_Sym *sym)	\
-+{						\
-+	return e.sym_##fn_name(sym);		\
- }
- 
- static uint8_t sym64_type(Elf_Sym *sym)
-@@ -195,6 +253,11 @@ static uint8_t sym32_type(Elf_Sym *sym)
- 	return ELF32_ST_TYPE(sym->e32.st_info);
- }
- 
-+static uint8_t sym_type(Elf_Sym *sym)
-+{
-+	return e.sym_type(sym);
-+}
-+
- SYM_ADDR(value)
- SYM_WORD(name)
- SYM_HALF(shndx)
-@@ -322,29 +385,16 @@ static int compare_extable_64(const void
- 	return av > bv;
- }
- 
-+static int compare_extable(const void *a, const void *b)
-+{
-+	return e.compare_extable(a, b);
-+}
-+
- static inline void *get_index(void *start, int entsize, int index)
- {
- 	return start + (entsize * index);
- }
- 
--
--static int (*compare_extable)(const void *a, const void *b);
--static uint64_t (*ehdr_shoff)(Elf_Ehdr *ehdr);
--static uint16_t (*ehdr_shstrndx)(Elf_Ehdr *ehdr);
--static uint16_t (*ehdr_shentsize)(Elf_Ehdr *ehdr);
--static uint16_t (*ehdr_shnum)(Elf_Ehdr *ehdr);
--static uint64_t (*shdr_addr)(Elf_Shdr *shdr);
--static uint64_t (*shdr_offset)(Elf_Shdr *shdr);
--static uint64_t (*shdr_size)(Elf_Shdr *shdr);
--static uint64_t (*shdr_entsize)(Elf_Shdr *shdr);
--static uint32_t (*shdr_link)(Elf_Shdr *shdr);
--static uint32_t (*shdr_name)(Elf_Shdr *shdr);
--static uint32_t (*shdr_type)(Elf_Shdr *shdr);
--static uint8_t (*sym_type)(Elf_Sym *sym);
--static uint32_t (*sym_name)(Elf_Sym *sym);
--static uint64_t (*sym_value)(Elf_Sym *sym);
--static uint16_t (*sym_shndx)(Elf_Sym *sym);
--
- static int extable_ent_size;
- static int long_size;
- 
-@@ -864,7 +914,30 @@ static int do_file(char const *const fna
+-	switch (ehdr->e_ident[EI_DATA]) {
++	switch (ehdr->e32.e_ident[EI_DATA]) {
+ 	case ELFDATA2LSB:
+ 		r	= rle;
+ 		r2	= r2le;
+@@ -284,18 +289,18 @@ static int do_file(char const *const fna
+ 		break;
+ 	default:
+ 		fprintf(stderr, "unrecognized ELF data encoding %d: %s\n",
+-			ehdr->e_ident[EI_DATA], fname);
++			ehdr->e32.e_ident[EI_DATA], fname);
+ 		return -1;
  	}
  
- 	switch (ehdr->e32.e_ident[EI_CLASS]) {
--	case ELFCLASS32:
-+	case ELFCLASS32: {
-+		struct elf_funcs efuncs = {
-+			.compare_extable	= compare_extable_32,
-+			.ehdr_shoff		= ehdr32_shoff,
-+			.ehdr_shentsize		= ehdr32_shentsize,
-+			.ehdr_shstrndx		= ehdr32_shstrndx,
-+			.ehdr_shnum		= ehdr32_shnum,
-+			.shdr_addr		= shdr32_addr,
-+			.shdr_offset		= shdr32_offset,
-+			.shdr_link		= shdr32_link,
-+			.shdr_size		= shdr32_size,
-+			.shdr_name		= shdr32_name,
-+			.shdr_type		= shdr32_type,
-+			.shdr_entsize		= shdr32_entsize,
-+			.sym_type		= sym32_type,
-+			.sym_name		= sym32_name,
-+			.sym_value		= sym32_value,
-+			.sym_shndx		= sym32_shndx,
-+		};
-+
-+		e = efuncs;
-+		long_size		= 4;
-+		extable_ent_size	= 8;
-+
- 		if (r2(&ehdr->e32.e_ehsize) != sizeof(Elf32_Ehdr) ||
- 		    r2(&ehdr->e32.e_shentsize) != sizeof(Elf32_Shdr)) {
- 			fprintf(stderr,
-@@ -872,26 +945,32 @@ static int do_file(char const *const fna
- 			return -1;
- 		}
+-	if (memcmp(ELFMAG, ehdr->e_ident, SELFMAG) != 0 ||
+-	    (r2(&ehdr->e_type) != ET_EXEC && r2(&ehdr->e_type) != ET_DYN) ||
+-	    ehdr->e_ident[EI_VERSION] != EV_CURRENT) {
++	if (memcmp(ELFMAG, ehdr->e32.e_ident, SELFMAG) != 0 ||
++	    (r2(&ehdr->e32.e_type) != ET_EXEC && r2(&ehdr->e32.e_type) != ET_DYN) ||
++	    ehdr->e32.e_ident[EI_VERSION] != EV_CURRENT) {
+ 		fprintf(stderr, "unrecognized ET_EXEC/ET_DYN file %s\n", fname);
+ 		return -1;
+ 	}
  
--		compare_extable		= compare_extable_32;
--		ehdr_shoff		= ehdr32_shoff;
--		ehdr_shentsize		= ehdr32_shentsize;
--		ehdr_shstrndx		= ehdr32_shstrndx;
--		ehdr_shnum		= ehdr32_shnum;
--		shdr_addr		= shdr32_addr;
--		shdr_offset		= shdr32_offset;
--		shdr_link		= shdr32_link;
--		shdr_size		= shdr32_size;
--		shdr_name		= shdr32_name;
--		shdr_type		= shdr32_type;
--		shdr_entsize		= shdr32_entsize;
--		sym_type		= sym32_type;
--		sym_name		= sym32_name;
--		sym_value		= sym32_value;
--		sym_shndx		= sym32_shndx;
--		long_size		= 4;
--		extable_ent_size	= 8;
-+		}
+-	switch (r2(&ehdr->e_machine)) {
++	switch (r2(&ehdr->e32.e_machine)) {
+ 	case EM_386:
+ 	case EM_AARCH64:
+ 	case EM_LOONGARCH:
+@@ -318,14 +323,14 @@ static int do_file(char const *const fna
  		break;
--	case ELFCLASS64:
-+	case ELFCLASS64: {
-+		struct elf_funcs efuncs = {
-+			.compare_extable	= compare_extable_64,
-+			.ehdr_shoff		= ehdr64_shoff,
-+			.ehdr_shentsize		= ehdr64_shentsize,
-+			.ehdr_shstrndx		= ehdr64_shstrndx,
-+			.ehdr_shnum		= ehdr64_shnum,
-+			.shdr_addr		= shdr64_addr,
-+			.shdr_offset		= shdr64_offset,
-+			.shdr_link		= shdr64_link,
-+			.shdr_size		= shdr64_size,
-+			.shdr_name		= shdr64_name,
-+			.shdr_type		= shdr64_type,
-+			.shdr_entsize		= shdr64_entsize,
-+			.sym_type		= sym64_type,
-+			.sym_name		= sym64_name,
-+			.sym_value		= sym64_value,
-+			.sym_shndx		= sym64_shndx,
-+		};
-+
-+		e = efuncs;
-+		long_size		= 8;
-+		extable_ent_size	= 16;
-+
- 		if (r2(&ehdr->e64.e_ehsize) != sizeof(Elf64_Ehdr) ||
- 		    r2(&ehdr->e64.e_shentsize) != sizeof(Elf64_Shdr)) {
- 			fprintf(stderr,
-@@ -900,25 +979,7 @@ static int do_file(char const *const fna
- 			return -1;
- 		}
+ 	default:
+ 		fprintf(stderr, "unrecognized e_machine %d %s\n",
+-			r2(&ehdr->e_machine), fname);
++			r2(&ehdr->e32.e_machine), fname);
+ 		return -1;
+ 	}
  
--		compare_extable		= compare_extable_64;
--		ehdr_shoff		= ehdr64_shoff;
--		ehdr_shentsize		= ehdr64_shentsize;
--		ehdr_shstrndx		= ehdr64_shstrndx;
--		ehdr_shnum		= ehdr64_shnum;
--		shdr_addr		= shdr64_addr;
--		shdr_offset		= shdr64_offset;
--		shdr_link		= shdr64_link;
--		shdr_size		= shdr64_size;
--		shdr_name		= shdr64_name;
--		shdr_type		= shdr64_type;
--		shdr_entsize		= shdr64_entsize;
--		sym_type		= sym64_type;
--		sym_name		= sym64_name;
--		sym_value		= sym64_value;
--		sym_shndx		= sym64_shndx;
--		long_size		= 8;
--		extable_ent_size	= 16;
--
-+		}
+-	switch (ehdr->e_ident[EI_CLASS]) {
++	switch (ehdr->e32.e_ident[EI_CLASS]) {
+ 	case ELFCLASS32:
+-		if (r2(&ehdr->e_ehsize) != sizeof(Elf32_Ehdr) ||
+-		    r2(&ehdr->e_shentsize) != sizeof(Elf32_Shdr)) {
++		if (r2(&ehdr->e32.e_ehsize) != sizeof(Elf32_Ehdr) ||
++		    r2(&ehdr->e32.e_shentsize) != sizeof(Elf32_Shdr)) {
+ 			fprintf(stderr,
+ 				"unrecognized ET_EXEC/ET_DYN file: %s\n", fname);
+ 			break;
+@@ -334,20 +339,19 @@ static int do_file(char const *const fna
+ 		break;
+ 	case ELFCLASS64:
+ 		{
+-		Elf64_Ehdr *const ghdr = (Elf64_Ehdr *)ehdr;
+-		if (r2(&ghdr->e_ehsize) != sizeof(Elf64_Ehdr) ||
+-		    r2(&ghdr->e_shentsize) != sizeof(Elf64_Shdr)) {
++		if (r2(&ehdr->e64.e_ehsize) != sizeof(Elf64_Ehdr) ||
++		    r2(&ehdr->e64.e_shentsize) != sizeof(Elf64_Shdr)) {
+ 			fprintf(stderr,
+ 				"unrecognized ET_EXEC/ET_DYN file: %s\n",
+ 				fname);
+ 			break;
+ 		}
+-		rc = do_sort_64(ghdr, fname, custom_sort);
++		rc = do_sort_64(ehdr, fname, custom_sort);
+ 		}
  		break;
  	default:
  		fprintf(stderr, "unrecognized ELF class %d %s\n",
+-			ehdr->e_ident[EI_CLASS], fname);
++			ehdr->e32.e_ident[EI_CLASS], fname);
+ 		break;
+ 	}
+ 
+--- a/scripts/sorttable.h
++++ b/scripts/sorttable.h
+@@ -23,12 +23,12 @@
+ #undef sort_mcount_loc
+ #undef elf_mcount_loc
+ #undef do_sort
+-#undef Elf_Ehdr
+ #undef Elf_Shdr
+ #undef Elf_Sym
+ #undef ELF_ST_TYPE
+ #undef uint_t
+ #undef _r
++#undef etype
+ 
+ #ifdef SORTTABLE_64
+ # define extable_ent_size	16
+@@ -37,12 +37,12 @@
+ # define sort_mcount_loc	sort_mcount_loc_64
+ # define elf_mcount_loc		elf_mcount_loc_64
+ # define do_sort		do_sort_64
+-# define Elf_Ehdr		Elf64_Ehdr
+ # define Elf_Shdr		Elf64_Shdr
+ # define Elf_Sym		Elf64_Sym
+ # define ELF_ST_TYPE		ELF64_ST_TYPE
+ # define uint_t			uint64_t
+ # define _r			r8
++# define etype			e64
+ #else
+ # define extable_ent_size	8
+ # define compare_extable	compare_extable_32
+@@ -50,12 +50,12 @@
+ # define sort_mcount_loc	sort_mcount_loc_32
+ # define elf_mcount_loc		elf_mcount_loc_32
+ # define do_sort		do_sort_32
+-# define Elf_Ehdr		Elf32_Ehdr
+ # define Elf_Shdr		Elf32_Shdr
+ # define Elf_Sym		Elf32_Sym
+ # define ELF_ST_TYPE		ELF32_ST_TYPE
+ # define uint_t			uint32_t
+ # define _r			r
++# define etype			e32
+ #endif
+ 
+ #if defined(SORTTABLE_64) && defined(UNWINDER_ORC_ENABLED)
+@@ -222,7 +222,7 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 		   table_sort_t custom_sort)
+ {
+ 	int rc = -1;
+-	Elf_Shdr *s, *shdr = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->e_shoff));
++	Elf_Shdr *s, *shdr = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->etype.e_shoff));
+ 	Elf_Shdr *strtab_sec = NULL;
+ 	Elf_Shdr *symtab_sec = NULL;
+ 	Elf_Shdr *extab_sec = NULL;
+@@ -249,12 +249,12 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 	unsigned int orc_num_entries = 0;
+ #endif
+ 
+-	shstrndx = r2(&ehdr->e_shstrndx);
++	shstrndx = r2(&ehdr->etype.e_shstrndx);
+ 	if (shstrndx == SHN_XINDEX)
+ 		shstrndx = r(&shdr[0].sh_link);
+ 	secstrings = (const char *)ehdr + _r(&shdr[shstrndx].sh_offset);
+ 
+-	shnum = r2(&ehdr->e_shnum);
++	shnum = r2(&ehdr->etype.e_shnum);
+ 	if (shnum == SHN_UNDEF)
+ 		shnum = _r(&shdr[0].sh_size);
+ 
 
 
