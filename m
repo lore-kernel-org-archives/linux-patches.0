@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D67433E87;
-	Thu,  2 Jul 2026 17:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696B9433E87;
+	Thu,  2 Jul 2026 17:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011692; cv=none; b=Ic2wL827U8nvLjO+QR2NHUI+clSvQFpHwramgaYjYvaKaSAs1K9jAsWU8d0TWltFQ3v41ddcHihiHBSuVuSFYpdXkmbxRZkV6z9O4gwzFycJIgGhddGikZu45goYRnU/EjmLAPkssfG+0RjFAoLntMuP1065/G8MUcmK+/bbtVw=
+	t=1783011694; cv=none; b=bEqJW7z+42XGJ6b54kzMeu2itmf8A+B+PjNP8Fy3yCwML3TQ8hnSDuq5duxqtSEARZoAoEBI2gKCA6xtGelHCvSuXvyak25Sqway5SC0bMSWiUZNJewvBSV0MYUtVPyw+5dMX88G0yrVxThmOWQGOMfMUo8XGIW3KaEJBGMULmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011692; c=relaxed/simple;
-	bh=ckCA5DQTJRAcpoWJs1yOHnrx87EPGm9b0FhtiQAG5DY=;
+	s=arc-20240116; t=1783011694; c=relaxed/simple;
+	bh=sCVNd6naJLCUwzsV8NCsy1y6Cn2NN2lCc9rdXJC8xxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=li/ut9nvZ4QlYyqEuOco4BggbAHJusn2nmwn8wORujHSwVwTZIg7GMH27V/XrUw1p1c6QbD/pK3FCCSDeK5EOP4VXB97RDrV7v9JRQNbA3aYEDv/zqnkPYLfjhqbAKbundpnm8vAP48WXqQO4TWla9C0b2IxKLeNSfbhpdRrBro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dN+6Zzlx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H8v9C0hVL0xx3c/cpRqgVtrKCvnXfI+x+SfcMqt48e6rbULreOVeIidTDga+2rWkXkfU8Qlat/Fy/WIlcZNeGT9IgT12w2E75Qi5ejmFRIuEmStQb+wca5Y+wdPAR5EN9h4QNcW6jOv+Rc9BJn3TWpPqQLjc4ox+dE0PNXig2Eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzUs4U6v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dN+6Zzlx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631681F000E9;
-	Thu,  2 Jul 2026 17:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzUs4U6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D103E1F000E9;
+	Thu,  2 Jul 2026 17:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011690;
-	bh=zS1qq9NiY/Zdq7CPTorOE0ikpjinfZWKxE9jMhvflhc=;
+	s=korg; t=1783011693;
+	bh=nYJTUtimY2sK9QIPwFICgDpowM2iK69n6S6vQVWMnAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dN+6ZzlxsTauy/U5xAQRuZ3sEfkQTHaQ+FdACKIAipneNuwzSMLXKPhLB5hutTy+U
-	 HNRzCBZkPhDGxAT++sYAjs2pjOAoZD94HOZP9mbailJGenLHRw04s3BXRZYO2h047W
-	 x/B2Ga7C2I1y2hqDZOV/1cWnpUVuYdy5hrmUsmIc=
+	b=WzUs4U6v4H6ZuqgLEq9LYo1XMalGUftnBlpsyY96CRUQIBfA3mtRkcBI4tUeGnHtq
+	 L8NbWbehAnql7zinTB6j563K3RvFmRqXbqowxRLQ1OqJ+/mePtuuFw58mD2X1n6zbJ
+	 qxnZ/iNKhniXzqWu1992ie3lXmKCMZ9d2JlLugM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 7.1 052/120] wifi: rtl8xxxu: Detect the maximum supported channel width
-Date: Thu,  2 Jul 2026 18:20:48 +0200
-Message-ID: <20260702155114.041727989@linuxfoundation.org>
+Subject: [PATCH 7.1 053/120] wifi: rtlwifi: rtl8821ae: Fix C2H bit location in RX descriptor
+Date: Thu,  2 Jul 2026 18:20:49 +0200
+Message-ID: <20260702155114.063262362@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -52,264 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit ef771eabc79d5f21b63689cca0e0fa5493fa0a8a upstream.
+commit 83d38df6929118c3f996b9e3351c2d5014073d87 upstream.
 
-Some devices malfunction when connected to a network with 40 MHz channel
-width, because they don't support that.
+Bit 28 of double word 2 in the RX descriptor indicates if the packet is
+a normal 802.11 frame, or a message from the wifi firmware to the
+driver (Card 2 Host).
 
-RTL8188FU, RTL8192FU, and RTL8710BU (RTL8188GU) have a way to signal
-this (and some other capabilities) to the driver. Get this information
-from the hardware and advertise 40 MHz support only when the hardware
-can handle it. We assume the other chips can always handle it.
+Commit f5678bfe1cdc ("rtlwifi: rtl8821ae: Replace local bit manipulation
+macros") mistakenly made the driver look for this bit in double word 1,
+causing packet loss and Bluetooth coexistence problems.
 
-RTL8710BU needs a different way to retrieve this information, which will
-be implemented some other time.
-
-Fixes: dbf9b7bb0edf ("wifi: rtl8xxxu: Enable 40 MHz width by default")
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221394
+Fixes: f5678bfe1cdc ("rtlwifi: rtl8821ae: Replace local bit manipulation macros")
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/c57de68e-5d57-4c26-898f-8a284bb25381@gmail.com
+Link: https://patch.msgid.link/04da7398-cedb-425a-a810-5772ab10139d@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/8188e.c    |    1 
- drivers/net/wireless/realtek/rtl8xxxu/8188f.c    |    1 
- drivers/net/wireless/realtek/rtl8xxxu/8192c.c    |    1 
- drivers/net/wireless/realtek/rtl8xxxu/8192e.c    |    1 
- drivers/net/wireless/realtek/rtl8xxxu/8192f.c    |    1 
- drivers/net/wireless/realtek/rtl8xxxu/8710b.c    |    1 
- drivers/net/wireless/realtek/rtl8xxxu/8723a.c    |    1 
- drivers/net/wireless/realtek/rtl8xxxu/8723b.c    |    1 
- drivers/net/wireless/realtek/rtl8xxxu/core.c     |   64 +++++++++++++++++++++--
- drivers/net/wireless/realtek/rtl8xxxu/regs.h     |    2 
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h |    7 ++
- 11 files changed, 76 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/8188e.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8188e.c
-@@ -1866,6 +1866,7 @@ struct rtl8xxxu_fileops rtl8188eu_fops =
- 	.has_tx_report = 1,
- 	.init_reg_pkt_life_time = 1,
- 	.gen2_thermal_meter = 1,
-+	.hw_feature_report = 0,
- 	.max_sec_cam_num = 32,
- 	.adda_1t_init = 0x0b1b25a0,
- 	.adda_1t_path_on = 0x0bdb25a0,
---- a/drivers/net/wireless/realtek/rtl8xxxu/8188f.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8188f.c
-@@ -1745,6 +1745,7 @@ struct rtl8xxxu_fileops rtl8188fu_fops =
- 	.init_reg_rxfltmap = 1,
- 	.init_reg_pkt_life_time = 1,
- 	.init_reg_hmtfr = 1,
-+	.hw_feature_report = 1,
- 	.ampdu_max_time = 0x70,
- 	.ustime_tsf_edca = 0x28,
- 	.max_aggr_num = 0x0c14,
---- a/drivers/net/wireless/realtek/rtl8xxxu/8192c.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8192c.c
-@@ -723,6 +723,7 @@ struct rtl8xxxu_fileops rtl8192cu_fops =
- 	.tx_desc_size = sizeof(struct rtl8xxxu_txdesc32),
- 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc16),
- 	.supports_ap = 1,
-+	.hw_feature_report = 0,
- 	.max_macid_num = 32,
- 	.max_sec_cam_num = 32,
- 	.adda_1t_init = 0x0b1b25a0,
---- a/drivers/net/wireless/realtek/rtl8xxxu/8192e.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8192e.c
-@@ -1751,6 +1751,7 @@ struct rtl8xxxu_fileops rtl8192eu_fops =
- 	.has_s0s1 = 0,
- 	.gen2_thermal_meter = 1,
- 	.needs_full_init = 1,
-+	.hw_feature_report = 0,
- 	.supports_ap = 1,
- 	.max_macid_num = 128,
- 	.max_sec_cam_num = 64,
---- a/drivers/net/wireless/realtek/rtl8xxxu/8192f.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8192f.c
-@@ -2074,6 +2074,7 @@ struct rtl8xxxu_fileops rtl8192fu_fops =
- 	.init_reg_rxfltmap = 1,
- 	.init_reg_pkt_life_time = 1,
- 	.init_reg_hmtfr = 1,
-+	.hw_feature_report = 1,
- 	.ampdu_max_time = 0x5e,
- 	.ustime_tsf_edca = 0x50,
- 	.max_aggr_num = 0x1f1f,
---- a/drivers/net/wireless/realtek/rtl8xxxu/8710b.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8710b.c
-@@ -1852,6 +1852,7 @@ struct rtl8xxxu_fileops rtl8710bu_fops =
- 	.init_reg_rxfltmap = 1,
- 	.init_reg_pkt_life_time = 1,
- 	.init_reg_hmtfr = 1,
-+	.hw_feature_report = 0, /* TODO, it's different */
- 	.ampdu_max_time = 0x5e,
- 	/*
- 	 * The RTL8710BU vendor driver uses 0x50 here and it works fine,
---- a/drivers/net/wireless/realtek/rtl8xxxu/8723a.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8723a.c
-@@ -632,6 +632,7 @@ struct rtl8xxxu_fileops rtl8723au_fops =
- 	.rx_agg_buf_size = 16000,
- 	.tx_desc_size = sizeof(struct rtl8xxxu_txdesc32),
- 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc16),
-+	.hw_feature_report = 0,
- 	.max_sec_cam_num = 32,
- 	.adda_1t_init = 0x0b1b25a0,
- 	.adda_1t_path_on = 0x0bdb25a0,
---- a/drivers/net/wireless/realtek/rtl8xxxu/8723b.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8723b.c
-@@ -1746,6 +1746,7 @@ struct rtl8xxxu_fileops rtl8723bu_fops =
- 	.gen2_thermal_meter = 1,
- 	.needs_full_init = 1,
- 	.init_reg_hmtfr = 1,
-+	.hw_feature_report = 0,
- 	.ampdu_max_time = 0x5e,
- 	.ustime_tsf_edca = 0x50,
- 	.max_aggr_num = 0x0c14,
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -14,6 +14,7 @@
-  */
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h
+@@ -291,7 +291,7 @@ static inline int get_rx_desc_paggr(__le
  
- #include <linux/firmware.h>
-+#include <linux/iopoll.h>
- #include "regs.h"
- #include "rtl8xxxu.h"
- 
-@@ -3915,6 +3916,46 @@ static inline u8 rtl8xxxu_get_macid(stru
- 	return sta_info->macid;
+ static inline int get_rx_status_desc_rpt_sel(__le32 *__pdesc)
+ {
+-	return le32_get_bits(*(__pdesc + 1), BIT(28));
++	return le32_get_bits(*(__pdesc + 2), BIT(28));
  }
  
-+static void rtl8xxxu_request_hw_feature(struct rtl8xxxu_priv *priv)
-+{
-+	if (!priv->fops->hw_feature_report)
-+		return;
-+
-+	rtl8xxxu_write8(priv, REG_C2HEVT_MSG_NORMAL, C2H_HW_FEATURE_DUMP);
-+}
-+
-+static int rtl8xxxu_dump_hw_feature(struct rtl8xxxu_priv *priv)
-+{
-+	static const u8 bw_map[8] = { 0, 0, 160, 5, 10, 20, 40, 80 };
-+	struct rtl8xxxu_hw_feature *hw_feature = &priv->hw_feature;
-+	u8 feature[13];
-+	int i, ret;
-+	u8 id, bw;
-+
-+	if (!priv->fops->hw_feature_report) {
-+		hw_feature->max_bw = 40;
-+		return 0;
-+	}
-+
-+	ret = read_poll_timeout(rtl8xxxu_read8, id,
-+				id == C2H_HW_FEATURE_REPORT,
-+				10000, 800000, false,
-+				priv, REG_C2HEVT_MSG_NORMAL);
-+	if (ret)
-+		return ret;
-+
-+	for (i = 0; i < ARRAY_SIZE(feature); i++)
-+		feature[i] = rtl8xxxu_read8(priv, REG_C2HEVT_MSG_NORMAL + 2 + i);
-+
-+	rtl8xxxu_write8(priv, REG_C2HEVT_MSG_NORMAL, 0);
-+
-+	bw = u8_get_bits(feature[6], GENMASK(2, 0));
-+
-+	hw_feature->max_bw = bw_map[bw];
-+
-+	return 0;
-+}
-+
- static int rtl8xxxu_init_device(struct ieee80211_hw *hw)
- {
- 	struct rtl8xxxu_priv *priv = hw->priv;
-@@ -3961,6 +4002,8 @@ static int rtl8xxxu_init_device(struct i
- 	 */
- 	rtl8xxxu_write16(priv, REG_TRXFF_BNDY + 2, fops->trxff_boundary);
- 
-+	rtl8xxxu_request_hw_feature(priv);
-+
- 	for (int retry = 5; retry >= 0 ; retry--) {
- 		ret = rtl8xxxu_download_firmware(priv);
- 		dev_dbg(dev, "%s: download_firmware %i\n", __func__, ret);
-@@ -3976,6 +4019,12 @@ static int rtl8xxxu_init_device(struct i
- 	if (ret)
- 		goto exit;
- 
-+	ret = rtl8xxxu_dump_hw_feature(priv);
-+	if (ret) {
-+		dev_err(dev, "failed to dump hw feature\n");
-+		goto exit;
-+	}
-+
- 	if (fops->phy_init_antenna_selection)
- 		fops->phy_init_antenna_selection(priv);
- 
-@@ -7835,15 +7884,20 @@ static int rtl8xxxu_probe(struct usb_int
- 	sband->ht_cap.ht_supported = true;
- 	sband->ht_cap.ampdu_factor = IEEE80211_HT_MAX_AMPDU_64K;
- 	sband->ht_cap.ampdu_density = IEEE80211_HT_MPDU_DENSITY_16;
--	sband->ht_cap.cap = IEEE80211_HT_CAP_SGI_20 | IEEE80211_HT_CAP_SGI_40 |
--			    IEEE80211_HT_CAP_SUP_WIDTH_20_40;
-+	sband->ht_cap.cap = IEEE80211_HT_CAP_SGI_20;
-+
-+	if (priv->hw_feature.max_bw >= 40) {
-+		sband->ht_cap.cap |= IEEE80211_HT_CAP_SGI_40;
-+		sband->ht_cap.cap |= IEEE80211_HT_CAP_SUP_WIDTH_20_40;
-+	} else {
-+		dev_info(&udev->dev, "hardware doesn't support HT40\n");
-+	}
-+
- 	memset(&sband->ht_cap.mcs, 0, sizeof(sband->ht_cap.mcs));
- 	sband->ht_cap.mcs.rx_mask[0] = 0xff;
- 	sband->ht_cap.mcs.rx_mask[4] = 0x01;
--	if (priv->rf_paths > 1) {
-+	if (priv->rf_paths > 1)
- 		sband->ht_cap.mcs.rx_mask[1] = 0xff;
--		sband->ht_cap.cap |= IEEE80211_HT_CAP_SGI_40;
--	}
- 	sband->ht_cap.mcs.tx_params = IEEE80211_HT_MCS_TX_DEFINED;
- 
- 	hw->wiphy->bands[NL80211_BAND_2GHZ] = sband;
---- a/drivers/net/wireless/realtek/rtl8xxxu/regs.h
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/regs.h
-@@ -447,6 +447,8 @@
- /* 8188EU */
- #define REG_32K_CTRL			0x0194
- #define REG_C2HEVT_MSG_NORMAL		0x01a0
-+#define C2H_HW_FEATURE_REPORT		0x19
-+#define C2H_HW_FEATURE_DUMP		0xfd
- /* 8192EU/8723BU/8812 */
- #define REG_C2HEVT_CMD_ID_8723B		0x01ae
- #define REG_C2HEVT_CLEAR		0x01af
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-@@ -1789,11 +1789,17 @@ struct rtl8xxxu_cfo_tracking {
- #define RTL8XXXU_BC_MC_MACID1	1
- #define RTL8XXXU_MAX_SEC_CAM_NUM	64
- 
-+struct rtl8xxxu_hw_feature {
-+	u8 max_bw;
-+};
-+
- struct rtl8xxxu_priv {
- 	struct ieee80211_hw *hw;
- 	struct usb_device *udev;
- 	struct rtl8xxxu_fileops *fops;
- 
-+	struct rtl8xxxu_hw_feature hw_feature;
-+
- 	spinlock_t tx_urb_lock;
- 	struct list_head tx_urb_free_list;
- 	int tx_urb_free_count;
-@@ -2009,6 +2015,7 @@ struct rtl8xxxu_fileops {
- 	u8 init_reg_pkt_life_time:1;
- 	u8 init_reg_hmtfr:1;
- 	u8 supports_concurrent:1;
-+	u8 hw_feature_report:1;
- 	u8 ampdu_max_time;
- 	u8 ustime_tsf_edca;
- 	u16 max_aggr_num;
+ static inline int get_rx_desc_rxmcs(__le32 *__pdesc)
 
 
