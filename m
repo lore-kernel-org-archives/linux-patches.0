@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89346346A0C;
-	Thu,  2 Jul 2026 16:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6589399375;
+	Thu,  2 Jul 2026 16:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009514; cv=none; b=B39kNjfFiMBMvC81+wq8JmXE+fy/zGzV0FqtdtQjwszhO3hS/axCSL2w9FIXOvFxmwT1DicSIMbdXskd3SEBXLimA6XSzu+dTCMd9pFi3du656j9TrfOEWd8k7aEy9JGOfewovo1KI2pda8/rp4beoMoWWx1LCPm6OKbl/Bdkzk=
+	t=1783009515; cv=none; b=mFE8p14rFANgGFlI23JXoTJ1wzj/zTSCNTzUtTzAoObbFz6l7W0Zi9hkL7VP0XEycuee0uOaNKlZnQyU04ipAyv9LdBe7Aj9nGAzJZ19plN0B/hnpJqHMVJQCNFQqdsUFB76H9GfPCRbUm9vYq2b1al3G2Ej3zqgikRDfdm53BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009514; c=relaxed/simple;
-	bh=0QMpFnFTRpQWFpRQgYDCfNqCJMh4NrF/V9R2UCIemhc=;
+	s=arc-20240116; t=1783009515; c=relaxed/simple;
+	bh=aVZldMx04Ne8WEBk1bYtt779d2/hjVXwCAmTdix/kXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kcqlHRAr2RpCa+k5HvH5EZYbM8DSzOxiD4zF7C2Z226RhIK5wyk7TYnqBHjKz67RToVBikxljk/sWPIQww553NnxlTY37YsJtLddttk8s5PplYfFj5hCppvNhryfh5uI0YWFSV6oTBHNbE37P0TfC4U/35+IzImp6ztzEAaA77g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNHLI8E/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lUCG0hhtcKlOMwzVRQ2rLNhn0IJRfdiMbPGUPOA04NlKZExTkXe+9Fqa82W/zP9bMTx90m8pepPG+au0shnFoY/UT97rnUbEgyDake0j7KkkuK4JaucgWEA6q8JDwQqDm/v8CODnqK/wSuSdcFCgJEOuhd9WEMEd/T3JyIKZc+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+2qkqgq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNHLI8E/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CE21F000E9;
-	Thu,  2 Jul 2026 16:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+2qkqgq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C501F00A3D;
+	Thu,  2 Jul 2026 16:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009505;
-	bh=5gSHLAn2Vr95mhSM/OoAtJmCgsIsfuLxpODE9qBxYh8=;
+	s=korg; t=1783009507;
+	bh=0OOAl+H0bjAkaa1+tTvdYdVvAJkK6YwYBTwAuh9qeyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bNHLI8E/Pl+HMwv8u4RNVL516cRTRBAIx//5p8HIFmA5aMJsjwlcg6CRXOaTJie0q
-	 ziQmPx4M80Y7DDsrZX7qZwc4hHfNmStkN2Ly98dq42T/2FqCJV/Bl7mfmIq0RFcLiz
-	 eQZo1DamRgiKTfvVwV1/3uS+wdaNTZGYPohfJsx4=
+	b=u+2qkqgqRucD9sZJYGJOMFebHRmwW1NCzcLIbdee/tu3vhwBskIRgReP4HlJJiP8p
+	 djM+P+A10H54A2Ww6iJHBjH/adZOB7l6NQeD2KP//v8NBbZiq25VC+eOAsgRsa/vuP
+	 0Pk4Zib8e4CZkqR9cu9vOQ7IcJcwbt/aVBq75hI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 76/96] KVM: SVM: Fix page overflow in sev_dbg_crypt() for ENCRYPT path
-Date: Thu,  2 Jul 2026 18:20:08 +0200
-Message-ID: <20260702155110.580478488@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 77/96] fbdev: Fix fb_new_modelist to prevent null-ptr-deref in fb_videomode_to_var
+Date: Thu,  2 Jul 2026 18:20:09 +0200
+Message-ID: <20260702155110.601919662@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -50,93 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Ian Bridges <icb@fastmail.org>
 
-commit 78ee2d50185a037b3d2452a97f3dad69c3f7f389 upstream.
+commit 7f08fc10fa3d3366dc3af723970bd03d7d6d10e3 upstream.
 
-In sev_dbg_crypt(), the per-iteration transfer length is bounded by
-the source page offset (PAGE_SIZE - s_off) but not by the destination
-page offset (PAGE_SIZE - d_off).  When d_off > s_off, the encrypt
-path (__sev_dbg_encrypt_user) performs a read-modify-write using a
-single-page intermediate buffer (dst_tpage):
+info->var, a framebuffer's current mode, is expected to have a matching
+entry in info->modelist. var_to_display() relies on this and treats a
+failed fb_match_mode() as "This should not happen". fb_set_var() keeps it
+true by adding the mode to the list on every change, and
+do_register_framebuffer() does the same at registration.
 
-  1. __sev_dbg_decrypt() expands the size to round_up(len + (d_off & 15), 16)
-     before issuing the PSP command.  If len + (d_off & 15) > PAGE_SIZE,
-     the PSP writes beyond the end of the 4096-byte dst_tpage allocation.
+store_modes() replaces the modelist from userspace. fb_new_modelist()
+validates the new modes but does not check that info->var still has a
+match. It relies on fbcon_new_modelist() to re-point consoles, but that
+only handles consoles mapped to the framebuffer. With fbcon unbound there
+are none, so info->var is left describing a mode that is no longer in the
+list.
 
-  2. The subsequent memcpy()/copy_from_user() into
-     page_address(dst_tpage) + (d_off & 15) of 'len' bytes overflows
-     by up to 15 bytes under the same condition.
+A later console takeover runs var_to_display(), where fb_match_mode()
+returns NULL and leaves fb_display[i].mode NULL. fbcon_switch() passes it
+to display_to_var(), and fb_videomode_to_var() dereferences the NULL mode.
 
-Trigger example: s_off = 0, d_off = 1, debug.len = PAGE_SIZE -
-the PSP is instructed to write round_up(4097, 16) = 4112 bytes to
-a 4096-byte buffer.
+Keep the current mode in the list in fb_new_modelist(), the same way
+fb_set_var() does.
 
-Fix by also bounding len by (PAGE_SIZE - d_off), the same check that
-sev_send_update_data() already performs for its single-page guest
-region.
-
- ==================================================================
- BUG: KASAN: slab-use-after-free in sev_dbg_crypt+0x993/0xd10 [kvm_amd]
- Write of size 4095 at addr ff110062293bb009 by task sev_dbg_test/228214
-
- CPU: 96 UID: 0 PID: 228214 Comm: sev_dbg_test Tainted: G     U  W           7.0.0-smp--5ce9b0c48211-dbg #156 PREEMPTLAZY
- Tainted: [U]=USER, [W]=WARN
- Hardware name: Google Astoria/astoria, BIOS 0.20250817.1-0 08/25/2025
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x54/0x70
-  print_report+0xbc/0x260
-  kasan_report+0xa2/0xd0
-  kasan_check_range+0x25f/0x2c0
-  __asan_memcpy+0x40/0x70
-  sev_dbg_crypt+0x993/0xd10 [kvm_amd]
-  sev_mem_enc_ioctl+0x33c/0x450 [kvm_amd]
-  kvm_vm_ioctl+0x65d/0x6d0 [kvm]
-  __se_sys_ioctl+0xb2/0x100
-  do_syscall_64+0xe8/0x870
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  </TASK>
-
- The buggy address belongs to the physical page:
- page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x7fe72b6a0 pfn:0x62293bb
- memcg:ff11000112827d82
- flags: 0x1400000000000000(node=1|zone=1)
- raw: 1400000000000000 0000000000000000 dead000000000122 0000000000000000
- raw: 00000007fe72b6a0 0000000000000000 00000001ffffffff ff11000112827d82
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ff110062293bbf00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  ff110062293bbf80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- >ff110062293bc000: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                    ^
-  ff110062293bc080: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-  ff110062293bc100: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
- ==================================================================
- Disabling lock debugging due to kernel taint
-
-Fixes: 24f41fb23a39 ("KVM: SVM: Add support for SEV DEBUG_DECRYPT command")
-Fixes: 7d1594f5d94b ("KVM: SVM: Add support for SEV DEBUG_ENCRYPT command")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-[sean: add sample KASAN splat, Fixes, and stable@]
-Link: https://patch.msgid.link/20260501203537.2120074-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/core/fbmem.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -836,6 +836,7 @@ static int sev_dbg_crypt(struct kvm *kvm
- 		s_off = vaddr & ~PAGE_MASK;
- 		d_off = dst_vaddr & ~PAGE_MASK;
- 		len = min_t(size_t, (PAGE_SIZE - s_off), size);
-+		len = min_t(size_t, len, PAGE_SIZE - d_off);
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -1989,6 +1989,18 @@ int fb_new_modelist(struct fb_info *info
+ 	if (list_empty(&info->modelist))
+ 		return 1;
  
- 		if (dec)
- 			ret = __sev_dbg_decrypt_user(kvm,
++	/*
++	 * The new modelist may not contain the current mode (info->var), and
++	 * fbcon_new_modelist() below only re-points consoles mapped to this
++	 * framebuffer. Add the current mode here so info->var keeps a match
++	 * even when fbcon is unbound.
++	 */
++	if (!fb_match_mode(&info->var, &info->modelist)) {
++		fb_var_to_videomode(&mode, &info->var);
++		if (fb_add_videomode(&mode, &info->modelist))
++			return 1;
++	}
++
+ 	fbcon_new_modelist(info);
+ 
+ 	return 0;
 
 
