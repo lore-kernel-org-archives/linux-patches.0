@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A684B30C146;
-	Thu,  2 Jul 2026 16:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522F3318EC5;
+	Thu,  2 Jul 2026 16:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011100; cv=none; b=WXtkm8HaAMk18i9RqEDc9tKGaNbTCRIghB8+duhQ1Qgu0z5Hd4wb5xuU3PCxUK6hc1nhkAk6Jwh7Eh5gudja4Mz9rWEY5eiyIoC+cPzZVo6LnrYRVGNXlemKcG4ZGEgTz7ilJHtG1q1vUCtajQca/OCCHaDnj0mCQyac6IBNwYI=
+	t=1783011103; cv=none; b=C0ldz5RUTacvqco+XmlazqGVSBA8BF0h47SsYAGFPj1Zb8vpD2ex7dsig591N/S0oXzgriIFrVVRntBV7oal8G5r7YHBjbmhg7PhDvD8VOdUc7BDUwMgkAOstE6+6UZI0EaFjpzMSCEICCkCLzTXq3eoOo41H55rr4dIEaEJ3Wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011100; c=relaxed/simple;
-	bh=EN0nhWWIt6KYMJsdk1d9yU+wjI8VWrIPC8Bh/W1+egI=;
+	s=arc-20240116; t=1783011103; c=relaxed/simple;
+	bh=3doaFOD/cJrSSlIcOADVTWHzDnaf7z0YxzRpH9kdljo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2laE+uoVzkSMEvnbcoWjiEZY5Cm7HMS3UxpeeOQ+0h4fB+CgDz6883oz5x9u/N1yBAyyFmd6HRd4Q6uQWCPu1XdcrdGSzOzyWMnIGg1N6NEkzan7LGf2YpcVzUR86jsvOwcPa/v11a3L+GPhHwt4/T4HRx0qASjLXENqctzZLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVmmwY/v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sBF/njtLfURKmI4doUyo30b2F9jZg+Y/CuMp87na1wihwoZZfqA9zetZ/8eMNOzlvRqUxxmp1gu1bSufAI/mMFgT8P9/UEbjw9gIbMxXWgrT3A22R0iUviZltXFb/uJZWmEtBfinZzsLwRZ5SlyOOx8+KxTrpcpHrw4YDT9EXyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXb268Tc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVmmwY/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1931D1F000E9;
-	Thu,  2 Jul 2026 16:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXb268Tc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71391F000E9;
+	Thu,  2 Jul 2026 16:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011099;
-	bh=SNfaOLSct+g1LaUTZW2FzHru2u/oeN97RyuNxOXIO3w=;
+	s=korg; t=1783011102;
+	bh=NP3dKYdlHDuI3iStsw7c7OHPEmnSJEMMEoFUF5w1EZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVmmwY/vOx7UVkzBCINK+5vOB1Bi4+2FHJqCN3qkZrG738uFGNrVqksY78goeKZev
-	 W6hU9sWDrpJB8AR1jk78vBBA0/VX1y8hU7Mb5h07DyOTTA2oSIBwZhg7nR9SMXvewB
-	 LKwS43DVNDYhyuYi1vNo11Dc5J0Vdy9Pzim5LJAo=
+	b=ZXb268Tcd9t1PaSc60ZgtaavfKf1FEOVAy6P8AG/fo5N+tD/n1ry2XSEUEhotr45c
+	 7N6dwJfZfvSTy5RIC1c7zV1MHWrMxP3RTxGMAE0G7lYUwlR5hQFwerrUMGfxF2Q4Lk
+	 k1M6kwtojRXHtyIqGwVTVKDJhnMhta0zRcczovCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 157/175] KVM: x86: hyper-v: Bound the bank index when querying sparse banks
-Date: Thu,  2 Jul 2026 18:20:58 +0200
-Message-ID: <20260702155119.102559855@linuxfoundation.org>
+Subject: [PATCH 6.6 158/175] KVM: SVM: Fix page overflow in sev_dbg_crypt() for ENCRYPT path
+Date: Thu,  2 Jul 2026 18:20:59 +0200
+Message-ID: <20260702155119.122939846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,91 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit 4721f8160f17554b003e8928bb61e6c9b2fe92a3 upstream.
+commit 78ee2d50185a037b3d2452a97f3dad69c3f7f389 upstream.
 
-When checking if a VP ID is included in a sparse bank set, explicitly check
-that the ID can actually be contained in a sparse bank (the TLFS allows for
-a maximum of 64 banks of 64 vCPUs each).  When handling a paravirtual TLB
-flush for L2, the VP ID is copied verbatim from the enlightened VMCS,
-without any bounds check, i.e. isn't guaranteed to be under the limit of
-4096.
+In sev_dbg_crypt(), the per-iteration transfer length is bounded by
+the source page offset (PAGE_SIZE - s_off) but not by the destination
+page offset (PAGE_SIZE - d_off).  When d_off > s_off, the encrypt
+path (__sev_dbg_encrypt_user) performs a read-modify-write using a
+single-page intermediate buffer (dst_tpage):
 
-Failure to check the bounds of the VP ID leads to an out-of-bounds read
-when testing the sparse bank, and super strictly speaking could lead to KVM
-performing an unnecessary TLB flush for an L2 vCPU.
+  1. __sev_dbg_decrypt() expands the size to round_up(len + (d_off & 15), 16)
+     before issuing the PSP command.  If len + (d_off & 15) > PAGE_SIZE,
+     the PSP writes beyond the end of the 4096-byte dst_tpage allocation.
 
-  ==================================================================
-  BUG: KASAN: use-after-free in hv_is_vp_in_sparse_set+0x85/0x100 [kvm]
-  Read of size 8 at addr ffff88811ba5f598 by task hyperv_evmcs/2802
+  2. The subsequent memcpy()/copy_from_user() into
+     page_address(dst_tpage) + (d_off & 15) of 'len' bytes overflows
+     by up to 15 bytes under the same condition.
 
-  CPU: 12 UID: 1000 PID: 2802 Comm: hyperv_evmcs Not tainted 7.1.0-rc2 #7 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x51/0x60
-   print_report+0xcb/0x5d0
-   kasan_report+0xb4/0xe0
-   kasan_check_range+0x35/0x1b0
-   hv_is_vp_in_sparse_set+0x85/0x100 [kvm]
-   kvm_hv_flush_tlb+0xe9e/0x16c0 [kvm]
-   kvm_hv_hypercall+0xe6b/0x1e60 [kvm]
-   vmx_handle_exit+0x485/0x1b60 [kvm_intel]
-   kvm_arch_vcpu_ioctl_run+0x22e3/0x5070 [kvm]
-   kvm_vcpu_ioctl+0x5d0/0x10c0 [kvm]
-   __x64_sys_ioctl+0x129/0x1a0
-   do_syscall_64+0xb9/0xcf0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x7f0e62d1a9bf
-   </TASK>
+Trigger example: s_off = 0, d_off = 1, debug.len = PAGE_SIZE -
+the PSP is instructed to write round_up(4097, 16) = 4112 bytes to
+a 4096-byte buffer.
 
-  The buggy address belongs to the physical page:
-  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffffffffffffffff pfn:0x11ba5f
-  flags: 0x4000000000000000(zone=1)
-  raw: 4000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-  raw: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000000
-  page dumped because: kasan: bad access detected
+Fix by also bounding len by (PAGE_SIZE - d_off), the same check that
+sev_send_update_data() already performs for its single-page guest
+region.
 
-  Memory state around the buggy address:
-   ffff88811ba5f480: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-   ffff88811ba5f500: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  >ffff88811ba5f580: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                              ^
-   ffff88811ba5f600: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-   ffff88811ba5f680: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  ==================================================================
-  Disabling lock debugging due to kernel taint
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in sev_dbg_crypt+0x993/0xd10 [kvm_amd]
+ Write of size 4095 at addr ff110062293bb009 by task sev_dbg_test/228214
 
-Opportunistically add a compile time assertion to ensure the maximum number
-of sparse banks exactly matches the number of possible bits in the passed
-in mask.
+ CPU: 96 UID: 0 PID: 228214 Comm: sev_dbg_test Tainted: G     U  W           7.0.0-smp--5ce9b0c48211-dbg #156 PREEMPTLAZY
+ Tainted: [U]=USER, [W]=WARN
+ Hardware name: Google Astoria/astoria, BIOS 0.20250817.1-0 08/25/2025
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x54/0x70
+  print_report+0xbc/0x260
+  kasan_report+0xa2/0xd0
+  kasan_check_range+0x25f/0x2c0
+  __asan_memcpy+0x40/0x70
+  sev_dbg_crypt+0x993/0xd10 [kvm_amd]
+  sev_mem_enc_ioctl+0x33c/0x450 [kvm_amd]
+  kvm_vm_ioctl+0x65d/0x6d0 [kvm]
+  __se_sys_ioctl+0xb2/0x100
+  do_syscall_64+0xe8/0x870
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  </TASK>
 
+ The buggy address belongs to the physical page:
+ page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x7fe72b6a0 pfn:0x62293bb
+ memcg:ff11000112827d82
+ flags: 0x1400000000000000(node=1|zone=1)
+ raw: 1400000000000000 0000000000000000 dead000000000122 0000000000000000
+ raw: 00000007fe72b6a0 0000000000000000 00000001ffffffff ff11000112827d82
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ff110062293bbf00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  ff110062293bbf80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ >ff110062293bc000: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                    ^
+  ff110062293bc080: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+  ff110062293bc100: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+ ==================================================================
+ Disabling lock debugging due to kernel taint
+
+Fixes: 24f41fb23a39 ("KVM: SVM: Add support for SEV DEBUG_DECRYPT command")
+Fixes: 7d1594f5d94b ("KVM: SVM: Add support for SEV DEBUG_ENCRYPT command")
 Cc: stable@vger.kernel.org
-Fixes: c58a318f6090 ("KVM: x86: hyper-v: L2 TLB flush")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://patch.msgid.link/aiQyZIJtO-2Aj_xN@v4bel
-[sean: add KASAN splat, drop comment, add assert, massage changelog]
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+[sean: add sample KASAN splat, Fixes, and stable@]
+Link: https://patch.msgid.link/20260501203537.2120074-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/hyperv.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/kvm/svm/sev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -1787,6 +1787,11 @@ static bool hv_is_vp_in_sparse_set(u32 v
- 	int valid_bit_nr = vp_id / HV_VCPUS_PER_SPARSE_BANK;
- 	unsigned long sbank;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -1004,6 +1004,7 @@ static int sev_dbg_crypt(struct kvm *kvm
+ 		s_off = vaddr & ~PAGE_MASK;
+ 		d_off = dst_vaddr & ~PAGE_MASK;
+ 		len = min_t(size_t, (PAGE_SIZE - s_off), size);
++		len = min_t(size_t, len, PAGE_SIZE - d_off);
  
-+	BUILD_BUG_ON(BITS_PER_TYPE(valid_bank_mask) != HV_MAX_SPARSE_VCPU_BANKS);
-+
-+	if (valid_bit_nr >= HV_MAX_SPARSE_VCPU_BANKS)
-+		return false;
-+
- 	if (!test_bit(valid_bit_nr, (unsigned long *)&valid_bank_mask))
- 		return false;
- 
+ 		if (dec)
+ 			ret = __sev_dbg_decrypt_user(kvm,
 
 
