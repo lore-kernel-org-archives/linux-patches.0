@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C5E1FA859;
-	Thu,  2 Jul 2026 17:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E27B24E4C3;
+	Thu,  2 Jul 2026 17:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011762; cv=none; b=oRLFn6WVJTy8gGH26He/rFgQrVzFAec0x8VTcj1YyHpzGFpHJIHpwi+myGEdXkDTOgf7+yXBvQaTCBsh5IY7IcKHOzo71cCtIua14TroJZa3ej+DjLr4sQDXrdNEsk7F+/5PCO+7J7SK7YJEG/JedcX2yKup7Toituh4hkrhn3U=
+	t=1783011765; cv=none; b=JeJmfV/TnLgU9LnzS3KI5GnTBBlqcqzS1TQhsZFuU0HvBq3Dww/jB9yTjcQjy1ONZhYOEeaI8pWyTdOOEFzyNeKYt21YyA8ndgtiAxhZ2O4ErfRRgyZv00+zh/twDCBD2ejWUj9+eeN9HtC63Av9gNfJZHYketQnnM4qAc1h2Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011762; c=relaxed/simple;
-	bh=vE4PdDajzx/DNnTCUbf6QyGMAAcNxM6fz4tqtjTEUkw=;
+	s=arc-20240116; t=1783011765; c=relaxed/simple;
+	bh=/lTkDijhHKwaVb7fToQC9ntk1KagKlsuXJC7LIn1vao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI66tzA9gpxd9iEufYuL9TGWOBkg62H9OIeoxJSOXDu33KFlot3XxwEucCWl0U2cMVCHP/WBp6+h3KGLQ4aT7/xsgMprtuhZ/bDDZnn+3FWPjmqDGRMh/IBiwOF9DOOvRtSwpyQ/AI+s/wHaFfwDWzXfgR0N/4IoZ2Mvt6rDOfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptvoMtN+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oUOrPD/GrKCr/JBEoCsmkdVkykZYSl5N0RG6el66nVbrSMxhWjs/1xW9Q7NRgBjXV+vu7xtysuilj2IY3dM5fx9RQkrKpn9Ac6Qn2oTEtWAjA7s8HtSceUFM+vqvndW/U9yfEhJ9q3SY10kwgm/LTZ9woz3wEPT0DSg01u2ollk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrRJ6Fjp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptvoMtN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6621F000E9;
-	Thu,  2 Jul 2026 17:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrRJ6Fjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005881F000E9;
+	Thu,  2 Jul 2026 17:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011761;
-	bh=JsHuNNq7esB+GtnPA9sfrOTzFFWU7mY/mZkJu4got/Q=;
+	s=korg; t=1783011764;
+	bh=FJPucgB+VXTr2AVJRUiokUrc2Ry1TDGPhRPmBvovb8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ptvoMtN+ABZkYTVNVh7PbaJ0VbQEueBy7IHyp57zg9i1OZq32lW7WpI4LfxlPIXXs
-	 PLwBYrdHmJ5ijf90LE8pbn27ZYmMipKr5GAg8LAJOBQzH0P26QaBfiOZczQxaBtJWj
-	 fzs4xQ2/fkBGLKHVcAFUQVIda61uBRYp1Gi+nEOc=
+	b=DrRJ6FjpIrFSWRQfR8lrxK4ddIco/vmjrQkdtJDvf0JOtxNHuj5DeyEXP5uw/6rhf
+	 6giCO8NQJsT6YCOwWxNuHFOz0t7UUD5v2ffWc7dZnTYEc79t8Ur1B2B8WDCqylQDhg
+	 8yw8MrQZs/fikz5fXxsTyJWtBm95yFNOTXVKE5Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.1 099/120] fbdev: Fix fb_new_modelist to prevent null-ptr-deref in fb_videomode_to_var
-Date: Thu,  2 Jul 2026 18:21:35 +0200
-Message-ID: <20260702155115.008184951@linuxfoundation.org>
+Subject: [PATCH 7.1 100/120] fbdev: fbcon: fix out-of-bounds read in err_out of fbcon_do_set_font()
+Date: Thu,  2 Jul 2026 18:21:36 +0200
+Message-ID: <20260702155115.027652883@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -50,59 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit 7f08fc10fa3d3366dc3af723970bd03d7d6d10e3 upstream.
+commit 8fdc8c2057eea08d40ce2c8eed41ff9e451c65c2 upstream.
 
-info->var, a framebuffer's current mode, is expected to have a matching
-entry in info->modelist. var_to_display() relies on this and treats a
-failed fb_match_mode() as "This should not happen". fb_set_var() keeps it
-true by adding the mode to the list on every change, and
-do_register_framebuffer() does the same at registration.
+When fbcon_do_set_font() fails (e.g., due to a memory allocation failure
+inside vc_resize() under heavy memory pressure), it jumps to the `err_out`
+label to roll back the console state. However, the current rollback logic
+forgets to restore the `hi_font` state, leading to a severe state machine
+corruption.
 
-store_modes() replaces the modelist from userspace. fb_new_modelist()
-validates the new modes but does not check that info->var still has a
-match. It relies on fbcon_new_modelist() to re-point consoles, but that
-only handles consoles mapped to the framebuffer. With fbcon unbound there
-are none, so info->var is left describing a mode that is no longer in the
-list.
+Earlier in the function, `set_vc_hi_font()` might be called to change
+`vc->vc_hi_font_mask` and mutate the screen buffer. If `vc_resize()`
+subsequently fails, the `err_out` path restores `vc_font.charcount`
+but entirely skips rolling back the `vc_hi_font_mask` and the screen
+buffer.
 
-A later console takeover runs var_to_display(), where fb_match_mode()
-returns NULL and leaves fb_display[i].mode NULL. fbcon_switch() passes it
-to display_to_var(), and fb_videomode_to_var() dereferences the NULL mode.
+This mismatch leaves the terminal in a desynchronized state. Because
+`vc_hi_font_mask` remains set, the VT subsystem will still accept
+character indices greater than 255 from userspace and write them to the
+screen buffer. Subsequent rendering calls (e.g., `fbcon_putcs()`) will
+then use these inflated indices to access the reverted, 256-character
+font array, leading to a deterministic out-of-bounds read and potential
+kernel memory disclosure.
 
-Keep the current mode in the list in fb_new_modelist(), the same way
-fb_set_var() does.
+Fix this by adding the missing rollback logic for the `hi_font` mask
+and screen buffer in the error path.
 
+Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbmem.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/video/fbdev/core/fbcon.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -734,6 +734,18 @@ int fb_new_modelist(struct fb_info *info
- 	if (list_empty(&info->modelist))
- 		return 1;
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2407,6 +2407,7 @@ static int fbcon_do_set_font(struct vc_d
+ 	int resize, ret, old_width, old_height, old_charcount;
+ 	font_data_t *old_fontdata = p->fontdata;
+ 	const u8 *old_data = vc->vc_font.data;
++	unsigned short old_hi_font_mask = vc->vc_hi_font_mask;
  
-+	/*
-+	 * The new modelist may not contain the current mode (info->var), and
-+	 * fbcon_new_modelist() below only re-points consoles mapped to this
-+	 * framebuffer. Add the current mode here so info->var keeps a match
-+	 * even when fbcon is unbound.
-+	 */
-+	if (!fb_match_mode(&info->var, &info->modelist)) {
-+		fb_var_to_videomode(&mode, &info->var);
-+		if (fb_add_videomode(&mode, &info->modelist))
-+			return 1;
-+	}
+ 	font_data_get(data);
+ 
+@@ -2453,6 +2454,12 @@ err_out:
+ 	vc->vc_font.height = old_height;
+ 	vc->vc_font.charcount = old_charcount;
+ 
++	/* Restore the hi_font state and screen buffer */
++	if (old_hi_font_mask && !vc->vc_hi_font_mask)
++		set_vc_hi_font(vc, true);
++	else if (!old_hi_font_mask && vc->vc_hi_font_mask)
++		set_vc_hi_font(vc, false);
 +
- 	fbcon_new_modelist(info);
+ 	font_data_put(data);
  
- 	return 0;
+ 	return ret;
 
 
