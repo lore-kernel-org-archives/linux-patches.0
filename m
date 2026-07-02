@@ -1,631 +1,270 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F4B35DD1C;
-	Thu,  2 Jul 2026 16:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A327E35E1C0;
+	Thu,  2 Jul 2026 16:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009857; cv=none; b=VXpWgNocB3/7jG3nbc6/z5SuH0MM1N9/5jjuGg/ug/zs0NTOYq0HbsZQR6eUVD0rgdvngXJKZ6cmZEf4QPylDeUYHMAWC+zKpvDaC01IZf+0oxV4QYq+HDLfdgAwQcdD8B0GyuqiAmw3oH38NweqE2oLsNh+rihe3w/DhF4FXJ8=
+	t=1783009859; cv=none; b=IPdqOnlk9FB73O+jOGs/uSogI+I4S2sTsgVZ8Vi4d/zNZB9388Ytxr/wRJDQbm5j7JmFRpsSmQi7KL+eAl8bifyuFgz2s9ECnR81eLD269kVfO5I1Nf8e6Jt9fCWx3gZN6VBnGGlcFfgmpjipGBw0JFwuy9AeAffJVdUf3VG+oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009857; c=relaxed/simple;
-	bh=EFjh4beU9w9bgoe/RBehg2AZmYZWi28jxvMyGJ+ojpM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=o5UoUI9+qQ61s4bnDAmQwS9WBx8zeHduJTyXygwi7CbAMxwoxv2v7NTNEknjLsriU/jLbja40EhOyPdxqq+nhIcFs+REu4pOn6mVtRh/BIn+QQmOj/D+7wGqjjSiYEdH9fHUQ454BhSFH44lunF0HNyh+qzTbOqp2gxJE36LgA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmzmcUgC; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783009859; c=relaxed/simple;
+	bh=tsN7aMpTnCrL5HAQTjz4XKEIYPQ8AL1agyilMhfSewo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cdBxI7SZ5920U+4yIYH6pbeAw8Uiuw92hF+gkX0fJfTgkcULvvSIe0DO0JykxkkOehlGsNZB3ddul3oxA2iAtRkoLeRXA0NrUeCGCgTkBHwlQ8ZEv5Efy2vIT1cR9rdWuY2pdm22uC3fc4ljZCfHgVsBLkuI6upOhIJBVobODMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwP9XXwz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmzmcUgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029171F000E9;
-	Thu,  2 Jul 2026 16:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwP9XXwz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C832C1F00A3A;
+	Thu,  2 Jul 2026 16:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009854;
-	bh=fDtXBw9/Yygou/JxcrTSd28CTfil5ZJeJWqsIEWmXxo=;
-	h=From:To:Cc:Subject:Date;
-	b=hmzmcUgCPmeg8nKm9IL001flGE7cIETS2oMj/RyJNQzKdi0tkfZrfw3gnhIGZBNR1
-	 YBz6NEReXWfiQpV+1FX+FzJy+cbvU5HUL7mA1H2TK3Lm12kelASx7NfXvGIdyPgHb6
-	 l5bOEW5ZVpZHibw7f9OMX9PuAFjjOL1YKrlhWy8o=
+	s=korg; t=1783009857;
+	bh=teI6Qu4Ffpr1whbTubfAl9CPqa+ezr4nclAxAE9V+c4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=iwP9XXwzdMMtFMz/nxLB0wrugXETwmtg7iqar/0ITQOCpIJRJ6vPqKXy22AwrQrMO
+	 A7He+OUAh9pYfCwseiHegsrYpC7vtQd4boQ9er0C1AjRYgw6BpG26mR/0ph6oXkixu
+	 nVjBzciSJHAef3MNHOIBAk67zZzylBAB4T6jKM20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: [PATCH 6.1 000/129] 6.1.177-rc1 review
-Date: Thu,  2 Jul 2026 18:18:39 +0200
-Message-ID: <20260702155112.163984240@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 6.1 011/129] netfilter: nf_tables: fix set size with rbtree backend
+Date: Thu,  2 Jul 2026 18:18:50 +0200
+Message-ID: <20260702155112.395847341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
+References: <20260702155112.163984240@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.177-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.177-rc1
-X-KernelTest-Deadline: 2026-07-04T15:51+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.177 release.
-There are 129 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Pablo Neira Ayuso <pablo@netfilter.org>
+
+[ Upstream commit 8d738c1869f611955d91d8d0fd0012d9ef207201 ]
+
+The existing rbtree implementation uses singleton elements to represent
+ranges, however, userspace provides a set size according to the number
+of ranges in the set.
+
+Adjust provided userspace set size to the number of singleton elements
+in the kernel by multiplying the range by two.
+
+Check if the no-match all-zero element is already in the set, in such
+case release one slot in the set size.
+
+Fixes: 0ed6389c483d ("netfilter: nf_tables: rename set implementations")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ Shivani: Modified to apply on 6.1.y ]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ include/net/netfilter/nf_tables.h |  6 ++++
+ net/netfilter/nf_tables_api.c     | 49 +++++++++++++++++++++++++++++--
+ net/netfilter/nft_set_rbtree.c    | 43 +++++++++++++++++++++++++++
+ 3 files changed, 96 insertions(+), 2 deletions(-)
+
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index dafa0a32e6e1df..3329c2eaea9f07 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -422,6 +422,9 @@ struct nft_set_ext;
+  *	@remove: remove element from set
+  *	@walk: iterate over all set elements
+  *	@get: get set elements
++ *	@ksize: kernel set size
++ *	@usize: userspace set size
++ *	@adjust_maxsize: delta to adjust maximum set size
+  *	@privsize: function to return size of set private data
+  *	@init: initialize private data of new set instance
+  *	@destroy: destroy private data of set instance
+@@ -470,6 +473,9 @@ struct nft_set_ops {
+ 					       const struct nft_set *set,
+ 					       const struct nft_set_elem *elem,
+ 					       unsigned int flags);
++	u32				(*ksize)(u32 size);
++	u32				(*usize)(u32 size);
++	u32				(*adjust_maxsize)(const struct nft_set *set);
+ 	void				(*commit)(struct nft_set *set);
+ 	void				(*abort)(const struct nft_set *set);
+ 	u64				(*privsize)(const struct nlattr * const nla[],
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index b6b7b0b3539dc9..0d406dab5cac19 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4277,6 +4277,14 @@ static int nf_tables_fill_set_concat(struct sk_buff *skb,
+ 	return 0;
+ }
+ 
++static u32 nft_set_userspace_size(const struct nft_set_ops *ops, u32 size)
++{
++	if (ops->usize)
++		return ops->usize(size);
++
++	return size;
++}
++
+ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
+ 			      const struct nft_set *set, u16 event, u16 flags)
+ {
+@@ -4341,7 +4349,8 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
+ 	if (!nest)
+ 		goto nla_put_failure;
+ 	if (set->size &&
+-	    nla_put_be32(skb, NFTA_SET_DESC_SIZE, htonl(set->size)))
++	    nla_put_be32(skb, NFTA_SET_DESC_SIZE,
++			 htonl(nft_set_userspace_size(set->ops, set->size))))
+ 		goto nla_put_failure;
+ 
+ 	if (set->field_count > 1 &&
+@@ -4711,6 +4720,15 @@ static bool nft_set_is_same(const struct nft_set *set,
+ 	return true;
+ }
+ 
++static u32 nft_set_kernel_size(const struct nft_set_ops *ops,
++			       const struct nft_set_desc *desc)
++{
++	if (ops->ksize)
++		return ops->ksize(desc->size);
++
++	return desc->size;
++}
++
+ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 			    const struct nlattr * const nla[])
+ {
+@@ -4893,6 +4911,9 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (err < 0)
+ 			return err;
+ 
++		if (desc.size)
++			desc.size = nft_set_kernel_size(set->ops, &desc);
++
+ 		err = 0;
+ 		if (!nft_set_is_same(set, &desc, exprs, num_exprs, flags)) {
+ 			NL_SET_BAD_ATTR(extack, nla[NFTA_SET_NAME]);
+@@ -4915,6 +4936,9 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 	if (IS_ERR(ops))
+ 		return PTR_ERR(ops);
+ 
++	if (desc.size)
++		desc.size = nft_set_kernel_size(ops, &desc);
++
+ 	udlen = 0;
+ 	if (nla[NFTA_SET_USERDATA])
+ 		udlen = nla_len(nla[NFTA_SET_USERDATA]);
+@@ -6356,6 +6380,27 @@ static bool nft_setelem_valid_key_end(const struct nft_set *set,
+ 	return true;
+ }
+ 
++static u32 nft_set_maxsize(const struct nft_set *set)
++{
++	u32 maxsize, delta;
++
++	if (!set->size)
++		return UINT_MAX;
++
++	if (set->ops->adjust_maxsize)
++		delta = set->ops->adjust_maxsize(set);
++	else
++		delta = 0;
++
++	if (check_add_overflow(set->size, set->ndeact, &maxsize))
++		return UINT_MAX;
++
++	if (check_add_overflow(maxsize, delta, &maxsize))
++		return UINT_MAX;
++
++	return maxsize;
++}
++
+ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 			    const struct nlattr *attr, u32 nlmsg_flags)
+ {
+@@ -6700,7 +6745,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	}
+ 
+ 	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
+-		unsigned int max = set->size ? set->size + set->ndeact : UINT_MAX;
++		unsigned int max = nft_set_maxsize(set);
+ 
+ 		if (!atomic_add_unless(&set->nelems, 1, max)) {
+ 			err = -ENFILE;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 23e4e656f7f0cb..433094c4200f97 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -773,6 +773,46 @@ static bool nft_rbtree_estimate(const struct nft_set_desc *desc, u32 features,
+ 	return true;
+ }
+ 
++/* rbtree stores ranges as singleton elements, each range is composed of two
++ * elements ...
++ */
++static u32 nft_rbtree_ksize(u32 size)
++{
++	return size * 2;
++}
++
++/* ... hide this detail to userspace. */
++static u32 nft_rbtree_usize(u32 size)
++{
++	if (!size)
++		return 0;
++
++	return size / 2;
++}
++
++static u32 nft_rbtree_adjust_maxsize(const struct nft_set *set)
++{
++	struct nft_rbtree *priv = nft_set_priv(set);
++	struct nft_rbtree_elem *rbe;
++	struct rb_node *node;
++	const void *key;
++
++	node = rb_last(&priv->root);
++	if (!node)
++		return 0;
++
++	rbe = rb_entry(node, struct nft_rbtree_elem, node);
++	if (!nft_rbtree_interval_end(rbe))
++		return 0;
++
++	key = nft_set_ext_key(&rbe->ext);
++	if (memchr(key, 1, set->klen))
++		return 0;
++
++	/* this is the all-zero no-match element. */
++	return 1;
++}
++
+ const struct nft_set_type nft_set_rbtree_type = {
+ 	.features	= NFT_SET_INTERVAL | NFT_SET_MAP | NFT_SET_OBJECT | NFT_SET_TIMEOUT,
+ 	.ops		= {
+@@ -789,5 +829,8 @@ const struct nft_set_type nft_set_rbtree_type = {
+ 		.lookup		= nft_rbtree_lookup,
+ 		.walk		= nft_rbtree_walk,
+ 		.get		= nft_rbtree_get,
++		.ksize		= nft_rbtree_ksize,
++		.usize		= nft_rbtree_usize,
++		.adjust_maxsize = nft_rbtree_adjust_maxsize,
+ 	},
+ };
+-- 
+2.53.0
 
-Responses should be made by Sat, 04 Jul 2026 15:50:58 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.177-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.177-rc1
-
-Wongi Lee <qw3rtyp0@gmail.com>
-    ipv6: account for fraggap on the paged allocation path
-
-Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-    crypto: qat - remove unused character device and IOCTLs
-
-Herbert Xu <herbert@gondor.apana.org.au>
-    crypto: qat - Return pointer directly in adf_ctl_alloc_resources
-
-Thorsten Blum <thorsten.blum@linux.dev>
-    crypto: qat - Replace kzalloc() + copy_from_user() with memdup_user()
-
-Bagas Sanjaya <bagasdotme@gmail.com>
-    Documentation: ioctl-number: Extend "Include File" column width
-
-Stepan Ionichev <sozdayvek@gmail.com>
-    serial: 8250_dw: unregister 8250 port if clk_notifier_register() fails
-
-Joanne Koong <joannelkoong@gmail.com>
-    fuse: re-lock request before replacing page cache folio
-
-Santosh Kalluri <santosh.kalluri129@gmail.com>
-    net: phonet: free phonet_device after RCU grace period
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    phonet: Pass net and ifindex to phonet_address_notify().
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    phonet: Pass ifindex to fill_addr().
-
-Davidlohr Bueso <dave@stgolabs.net>
-    locking/rtmutex: Skip remove_waiter() when waiter is not enqueued
-
-Dexuan Cui <decui@microsoft.com>
-    Drivers: hv: vmbus: Improve the logic of reserving fb_mmio on Gen2 VMs
-
-Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-    futex/requeue: Prevent NULL pointer dereference in remove_waiter() on self-deadlock
-
-Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-    misc: fastrpc: Fix NULL pointer dereference in rpmsg callback
-
-Abel Vesa <abel.vesa@linaro.org>
-    misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
-
-Thorsten Blum <thorsten.blum@linux.dev>
-    hv: utils: handle and propagate errors in kvp_register
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: fix missing wakeups in edge scenarios
-
-Tao Cui <cuitao@kylinos.cn>
-    mptcp: pm: fix extra_subflows underflow on userspace PM subflow creation
-
-Deepak Kumar Singh <quic_deesin@quicinc.com>
-    rpmsg: char: Add lock to avoid race when rpmsg device is released
-
-Hem Parekh <hemparekh1596@gmail.com>
-    ksmbd: fix out-of-bounds read in smb_check_perm_dacl()
-
-Michael Bommarito <michael.bommarito@gmail.com>
-    NFSv4/pNFS: reject zero-length r_addr in nfs4_decode_mp_ds_addr
-
-Dominik Woźniak <stalion@gmail.com>
-    nfsd: check get_user() return when reading princhashlen
-
-Jeff Layton <jlayton@kernel.org>
-    nfsd: fix posix_acl leak on SETACL decode failure
-
-Guannan Wang <wgnbuaa@gmail.com>
-    NFSD: Fix SECINFO_NO_NAME decode error cleanup
-
-Steffen Persvold <spersvold@gmail.com>
-    fbdev: modedb: Fix misaligned fields in the 1920x1080-60 mode
-
-Ian Bridges <icb@fastmail.org>
-    fbdev: Fix fb_new_modelist to prevent null-ptr-deref in fb_videomode_to_var
-
-Wentao Liang <vulab@iscas.ac.cn>
-    power: reset: linkstation-poweroff: fix use-after-free in the linkstation_poweroff_init()
-
-Ashutosh Desai <ashutoshdesai993@gmail.com>
-    KVM: SVM: Fix page overflow in sev_dbg_crypt() for ENCRYPT path
-
-Jonas Jelonek <jelonek.jonas@gmail.com>
-    MIPS: smp: report dying CPU to RCU in stop_this_cpu()
-
-Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-    9p: avoid putting oldfid in p9_client_walk() error path
-
-Zhang Cen <rollkingzzc@gmail.com>
-    ocfs2: reject oversized group bitmap descriptors
-
-Wentao Liang <vulab@iscas.ac.cn>
-    fpga: region: fix use-after-free in child_regions_with_firmware()
-
-Qingshuang Fu <fuqingshuang@kylinos.cn>
-    irqchip/imgpdc: Fix resource leak, add missing chained handler cleanup on remove
-
-Wentao Liang <vulab@iscas.ac.cn>
-    pNFS: Fix use-after-free in pnfs_update_layout()
-
-Huacai Chen <chenhuacai@kernel.org>
-    LoongArch: Report dying CPU to RCU in stop_this_cpu()
-
-Doruk Tan Ozturk <doruk@0sec.ai>
-    tipc: fix slab-use-after-free Read in tipc_aead_decrypt_done
-
-Fan Wu <fanwu01@zju.edu.cn>
-    hdlc_ppp: sync per-proto timers before freeing hdlc state
-
-Michael Bommarito <michael.bommarito@gmail.com>
-    exfat: fix potential use-after-free in exfat_find_dir_entry()
-
-Maciej W. Rozycki <macro@orcam.me.uk>
-    MIPS: DEC: Prevent initial console buffer from landing in XKPHYS
-
-Dawei Feng <dawei.feng@seu.edu.cn>
-    bpf: use kvfree() for replaced sysctl write buffer
-
-Zhang Cen <rollkingzzc@gmail.com>
-    f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
-
-Sunmin Jeong <s_min.jeong@samsung.com>
-    f2fs: fix to round down start offset of fallocate for pin file
-
-Wenjie Qi <qwjhust@gmail.com>
-    f2fs: validate compress cache inode only when enabled
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtlwifi: rtl8821ae: Fix C2H bit location in RX descriptor
-
-Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-    wifi: ath11k: fix warning when unbinding
-
-Zenm Chen <zenmchen@gmail.com>
-    wifi: mt76: mt76x2u: Add support for ELECOM WDC-867SU3S
-
-Shaomin Chen <eeesssooo020@gmail.com>
-    keys: Pin request_key_auth payload in instantiate paths
-
-Jarkko Sakkinen <jarkko@kernel.org>
-    KEYS: fix overflow in keyctl_pkey_params_get_2()
-
-Koichiro Den <den@valinux.co.jp>
-    NTB: epf: Avoid pci_iounmap() with offset when PEER_SPAD and CONFIG share BAR
-
-Ruslan Valiyev <linuxoid@gmail.com>
-    apparmor: fix use-after-free in rawdata dedup loop
-
-Bryam Vargas <hexlabsecurity@proton.me>
-    apparmor: mediate the implicit connect of TCP fast open sendmsg
-
-Yiming Qian <yimingqian591@gmail.com>
-    net: skmsg: preserve sg.copy across SG transforms
-
-Doruk Tan Ozturk <doruk@0sec.ai>
-    mac802154: llsec: add skb_cow_data() before in-place crypto
-
-Yuto Ohnuki <ytohnuki@amazon.com>
-    ext4: add bounds check for inline data length in ext4_read_inline_page
-
-Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-    ntfs3: reject direct userspace writes to reserved $LX* xattrs
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tvlv: avoid race of cifsnotfound handler state
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tvlv: enforce 2-byte alignment
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: dat: prevent false sharing between VLANs
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tt: track roam count per VID
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tt: don't merge change entries with different VIDs
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: handle overlapping packets
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: prevent parallel modifications of last_recv
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: annotate last_recv_time access with READ/WRITE_ONCE
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: restrict number of unacked list entries
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: v: prevent OGM aggregation on disabled hardif
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: frag: avoid underflow of TTL
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: frag: ensure fragment is writable before modifying TTL
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: fix (m|b)cast csum after decrementing TTL
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: ensure bcast is writable before modifying TTL
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: initialize last_recv_time during init
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: prevent ELP transmission interval underflow
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: bla: annotate lasttime access with READ/WRITE_ONCE
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: add only finished tp_vars to lists
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: handle seqno wrap-around for fast recovery detection
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: fix fast recovery precondition
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: avoid divide-by-zero for dec_cwnd
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: avoid window underflow
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: initialize dec_cwnd explicitly
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: initialize dup_acks explicitly
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tp_meter: keep unacked list in ascending ordered
-
-Yu Zhao <yuzhao@google.com>
-    mm/mglru: skip special VMAs in lru_gen_look_around()
-
-Petr Machata <petrm@nvidia.com>
-    Revert "ptp: add testptp mask test"
-
-Sean Christopherson <seanjc@google.com>
-    KVM: x86/mmu: Ensure hugepage is in by slot before checking max mapping level
-
-Paolo Bonzini <pbonzini@redhat.com>
-    KVM: x86: Fix shadow paging use-after-free due to unexpected role
-
-Ian Rogers <irogers@google.com>
-    perf block-range: Move debug code behind ifndef NDEBUG
-
-Ian Rogers <irogers@google.com>
-    perf bench: Avoid NDEBUG warning
-
-Miklos Szeredi <mszeredi@redhat.com>
-    virtiofs: fix UAF on submount umount
-
-Ruslan Valiyev <linuxoid@gmail.com>
-    media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
-
-Gil Portnoy <dddhkts1@gmail.com>
-    ksmbd: reject non-VALID session in compound request branch
-
-Yi Yang <yiyang13@huawei.com>
-    vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
-
-Florian Westphal <fw@strlen.de>
-    netfilter: nf_tables: always walk all pending catchall elements
-
-Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-    dlm: prevent NPD when writing a positive value to event_done
-
-André Draszik <andre.draszik@linaro.org>
-    regulator: core: fix locking in regulator_resolve_supply() error path
-
-Bjoern Doebel <doebel@amazon.de>
-    ring-buffer: Remove ring_buffer_read_prepare_sync()
-
-Jiexun Wang <wangjiexun2025@gmail.com>
-    af_unix: Reject SIOCATMARK on non-stream sockets
-
-Mingyu Wang <25181214217@stu.xidian.edu.cn>
-    agp/amd64: Fix broken error propagation in agp_amd64_probe()
-
-Weiming Shi <bestswngs@gmail.com>
-    net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()
-
-Weiming Shi <bestswngs@gmail.com>
-    i2c: stub: Reject I2C block transfers with invalid length
-
-Lord Ulf Henrik Holmberg <henrik.holmberg@defensify.se>
-    RDMA/bnxt_re: zero shared page before exposing to userspace
-
-Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-    ARM: fix branch predictor hardening
-
-Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-    ARM: fix hash_name() fault
-
-Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-    ARM: allow __do_kernel_fault() to report execution of memory faults
-
-Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-    ARM: group is_permission_fault() with is_translation_fault()
-
-Waiman Long <longman@redhat.com>
-    debugobjects: Dont call fill_pool() in early boot hardirq context
-
-Helen Koike <koike@igalia.com>
-    debugobjects: Do not fill_pool() if pi_blocked_on
-
-Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-    debugobjects: Use LD_WAIT_CONFIG instead of LD_WAIT_SLEEP
-
-Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-    debugobjects: Allow to refill the pool before SYSTEM_SCHEDULING
-
-Peter Zijlstra <peterz@infradead.org>
-    debugobjects,locking: Annotate debug_object_fill_pool() wait type violation
-
-Eric Dumazet <edumazet@google.com>
-    net: annotate data-races around sk->sk_{data_ready,write_space}
-
-Sean Christopherson <seanjc@google.com>
-    KVM: nVMX: Fold requested virtual interrupt check into has_nested_events()
-
-Sean Christopherson <seanjc@google.com>
-    KVM: nVMX: Check for pending posted interrupts when looking for nested events
-
-Sean Christopherson <seanjc@google.com>
-    KVM: nVMX: Add a helper to get highest pending from Posted Interrupt vector
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: tt: prevent TVLV entry number overflow
-
-Maíra Canal <mcanal@igalia.com>
-    drm/v3d: Skip CSD when it has zeroed workgroups
-
-Maíra Canal <mcanal@igalia.com>
-    drm/v3d: Store the active job inside the queue's state
-
-Ihor Solodrai <ihor.solodrai@pm.me>
-    selftests/bpf: Check for timeout in perf_link test
-
-Jiri Olsa <jolsa@kernel.org>
-    selftests/bpf: Move get_time_ns to testing_helpers.h
-
-Pablo Neira Ayuso <pablo@netfilter.org>
-    netfilter: nf_tables: unconditionally bump set->nelems before insertion
-
-Pablo Neira Ayuso <pablo@netfilter.org>
-    netfilter: nf_tables: fix set size with rbtree backend
-
-Florian Westphal <fw@strlen.de>
-    netfilter: nf_tables: always increment set element count
-
-Eric Dumazet <edumazet@google.com>
-    ip6_vti: set netns_immutable on the fallback device.
-
-Harry Wentland <harry.wentland@amd.com>
-    drm/amd/display: Bound VBIOS record-chain walk loops
-
-Sean Christopherson <seanjc@google.com>
-    KVM: VMX: Make vmread_error_trampoline() uncallable from C code
-
-Hangbin Liu <liuhangbin@gmail.com>
-    selftests/bpf: move SYS() macro into the test_progs.h
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: free pedit keys on bail from offset check
-
-Rajat Gupta <rajat.gupta@oss.qualcomm.com>
-    net/sched: fix pedit partial COW leading to page cache corruption
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: rate limit datapath messages
-
-Pedro Tammela <pctammela@mojatatu.com>
-    net/sched: act_pedit: check static offsets a priori
-
-Jann Horn <jannh@google.com>
-    fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
-
-
--------------
-
-Diffstat:
-
- Documentation/userspace-api/ioctl/ioctl-number.rst | 463 ++++++++++-----------
- Makefile                                           |   4 +-
- arch/arm/mm/alignment.c                            |   4 +
- arch/arm/mm/fault.c                                |  94 ++++-
- arch/loongarch/kernel/smp.c                        |   1 +
- arch/mips/dec/prom/console.c                       |   7 +-
- arch/mips/kernel/smp.c                             |   2 +
- arch/x86/include/asm/kvm-x86-ops.h                 |   1 -
- arch/x86/include/asm/kvm_host.h                    |   1 -
- arch/x86/kvm/mmu/mmu.c                             |  28 +-
- arch/x86/kvm/svm/sev.c                             |   1 +
- arch/x86/kvm/vmx/nested.c                          |  45 +-
- arch/x86/kvm/vmx/posted_intr.h                     |  10 +
- arch/x86/kvm/vmx/vmenter.S                         |   2 +
- arch/x86/kvm/vmx/vmx.c                             |  21 -
- arch/x86/kvm/vmx/vmx_ops.h                         |  18 +-
- arch/x86/kvm/x86.c                                 |  10 +-
- drivers/char/agp/amd64-agp.c                       |   2 +-
- drivers/crypto/qat/qat_common/adf_cfg_common.h     |  32 --
- drivers/crypto/qat/qat_common/adf_cfg_user.h       |  38 --
- drivers/crypto/qat/qat_common/adf_common_drv.h     |   3 -
- drivers/crypto/qat/qat_common/adf_ctl_drv.c        | 425 +------------------
- drivers/crypto/qat/qat_common/adf_dev_mgr.c        |  70 ----
- drivers/fpga/of-fpga-region.c                      |   3 +-
- drivers/gpu/drm/amd/display/dc/bios/bios_parser.c  |  15 +-
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |  27 +-
- .../drm/amd/display/dc/bios/bios_parser_helper.h   |   5 +
- drivers/gpu/drm/v3d/v3d_drv.h                      |   8 +-
- drivers/gpu/drm/v3d/v3d_gem.c                      |   5 +-
- drivers/gpu/drm/v3d/v3d_irq.c                      |  24 +-
- drivers/gpu/drm/v3d/v3d_sched.c                    |  36 +-
- drivers/hv/hv_kvp.c                                |  25 +-
- drivers/hv/vmbus_drv.c                             |  29 +-
- drivers/i2c/i2c-stub.c                             |   5 +
- drivers/infiniband/hw/bnxt_re/ib_verbs.c           |   2 +-
- drivers/irqchip/irq-imgpdc.c                       |   6 +
- drivers/media/test-drivers/vidtv/vidtv_mux.c       |   8 +-
- drivers/misc/fastrpc.c                             |   7 +-
- drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c |   8 +-
- drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h |   1 +
- drivers/net/wan/hdlc_ppp.c                         |  15 +-
- drivers/net/wireless/ath/ath11k/dp.c               |   1 +
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c    |   1 +
- .../net/wireless/realtek/rtlwifi/rtl8821ae/trx.h   |   2 +-
- drivers/ntb/hw/epf/ntb_hw_epf.c                    |   3 +-
- drivers/power/reset/linkstation-poweroff.c         |   2 +-
- drivers/regulator/core.c                           |  10 +-
- drivers/rpmsg/rpmsg_char.c                         |   8 +
- drivers/tty/serial/8250/8250_dw.c                  |   4 +-
- drivers/tty/vt/vc_screen.c                         |   2 +-
- drivers/video/fbdev/core/fbmem.c                   |  12 +
- drivers/video/fbdev/core/modedb.c                  |   2 +-
- fs/dlm/lockspace.c                                 |   2 +-
- fs/exfat/dir.c                                     |   4 +-
- fs/ext4/inline.c                                   |   8 +
- fs/f2fs/acl.c                                      |  18 +-
- fs/f2fs/file.c                                     |   9 +-
- fs/f2fs/inode.c                                    |   9 +-
- fs/fuse/dev.c                                      |  23 +-
- fs/fuse/file.c                                     |   8 +-
- fs/nfs/pnfs.c                                      |   2 +-
- fs/nfs/pnfs_nfs.c                                  |   4 +-
- fs/nfsd/nfs2acl.c                                  |  17 +-
- fs/nfsd/nfs3acl.c                                  |  17 +-
- fs/nfsd/nfs4recover.c                              |   3 +-
- fs/nfsd/nfs4xdr.c                                  |   3 +-
- fs/ntfs3/xattr.c                                   |  12 +
- fs/ocfs2/suballoc.c                                |  22 +
- fs/smb/server/smb2pdu.c                            |   5 +
- fs/smb/server/smbacl.c                             |   4 +-
- include/keys/request_key_auth-type.h               |   2 +
- include/linux/kvm_host.h                           |   7 +-
- include/linux/lockdep.h                            |  14 +
- include/linux/lockdep_types.h                      |   1 +
- include/linux/ring_buffer.h                        |   4 +-
- include/linux/skmsg.h                              |  15 +-
- include/net/netfilter/nf_tables.h                  |   6 +
- include/net/phonet/pn_dev.h                        |   2 +-
- include/net/tc_act/tc_pedit.h                      |   1 -
- kernel/bpf/cgroup.c                                |   2 +-
- kernel/futex/requeue.c                             |   6 +
- kernel/locking/lockdep.c                           |  28 +-
- kernel/locking/rtmutex.c                           |   3 +
- kernel/locking/rtmutex_api.c                       |   2 +-
- kernel/trace/ring_buffer.c                         |  67 +--
- kernel/trace/trace.c                               |  14 +-
- kernel/trace/trace_kdb.c                           |   8 +-
- lib/debugobjects.c                                 |  57 ++-
- mm/vmscan.c                                        |  13 +-
- net/9p/client.c                                    |   3 +-
- net/batman-adv/bat_iv_ogm.c                        |  11 +-
- net/batman-adv/bat_v.c                             |   1 +
- net/batman-adv/bat_v_ogm.c                         |  23 +-
- net/batman-adv/bridge_loop_avoidance.c             |  28 +-
- net/batman-adv/distributed-arp-table.c             |  12 +-
- net/batman-adv/fragmentation.c                     |  22 +-
- net/batman-adv/fragmentation.h                     |   3 +-
- net/batman-adv/netlink.c                           |  10 +-
- net/batman-adv/routing.c                           |  64 ++-
- net/batman-adv/tp_meter.c                          | 115 +++--
- net/batman-adv/translation-table.c                 |  32 +-
- net/batman-adv/tvlv.c                              |  69 ++-
- net/batman-adv/types.h                             |  21 +-
- net/core/filter.c                                  |  27 ++
- net/core/skmsg.c                                   |  16 +-
- net/ipv4/tcp.c                                     |   4 +-
- net/ipv4/tcp_bpf.c                                 |   2 +-
- net/ipv4/tcp_input.c                               |  14 +-
- net/ipv4/tcp_minisocks.c                           |   2 +-
- net/ipv4/udp.c                                     |   2 +-
- net/ipv4/udp_bpf.c                                 |   2 +-
- net/ipv6/ip6_output.c                              |   4 +-
- net/ipv6/ip6_vti.c                                 |   1 +
- net/mac802154/llsec.c                              |  14 +
- net/mptcp/pm_userspace.c                           |  13 +-
- net/mptcp/protocol.c                               |   4 +-
- net/netfilter/nf_tables_api.c                      |  74 +++-
- net/netfilter/nft_set_rbtree.c                     |  43 ++
- net/phonet/pn_dev.c                                |  12 +-
- net/phonet/pn_netlink.c                            |  23 +-
- net/sched/act_pedit.c                              | 101 +++--
- net/tipc/crypto.c                                  |   9 +
- net/tls/tls_sw.c                                   |   4 +
- net/unix/af_unix.c                                 |  11 +-
- security/apparmor/include/policy_unpack.h          |  19 +
- security/apparmor/lsm.c                            |  16 +-
- security/apparmor/policy.c                         |   8 +-
- security/keys/internal.h                           |   2 +
- security/keys/keyctl.c                             |  24 +-
- security/keys/keyctl_pkey.c                        |   9 +-
- security/keys/request_key_auth.c                   |  33 +-
- tools/perf/bench/find-bit-bench.c                  |   8 +-
- tools/perf/util/block-range.c                      |   6 +-
- tools/testing/selftests/bpf/bench.h                |   9 -
- tools/testing/selftests/bpf/prog_tests/empty_skb.c |  25 +-
- .../selftests/bpf/prog_tests/kprobe_multi_test.c   |   8 -
- tools/testing/selftests/bpf/prog_tests/perf_link.c |  15 +-
- .../testing/selftests/bpf/prog_tests/tc_redirect.c | 154 ++++---
- .../testing/selftests/bpf/prog_tests/test_tunnel.c |  71 ++--
- .../testing/selftests/bpf/prog_tests/xdp_bonding.c |  38 +-
- .../selftests/bpf/prog_tests/xdp_do_redirect.c     |  30 +-
- .../selftests/bpf/prog_tests/xdp_synproxy.c        |  41 +-
- tools/testing/selftests/bpf/test_progs.h           |  15 +
- tools/testing/selftests/bpf/testing_helpers.h      |  10 +
- tools/testing/selftests/ptp/testptp.c              |  19 +-
- 145 files changed, 1807 insertions(+), 1529 deletions(-)
 
 
