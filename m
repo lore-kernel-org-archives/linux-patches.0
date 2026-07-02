@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B24F3438A6;
-	Thu,  2 Jul 2026 16:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2443438A6;
+	Thu,  2 Jul 2026 16:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010890; cv=none; b=CpTvAabP2moMrfuKAU6K0DRzXtbmhuyhF9t6EKm7IBZdf21tA1YKum9wE3ErJ3Xz07okk0e3O0VxNGAaFvj4/pINUay3bXKlctexkcbXSkgjC90dTPUeUCDKDaPkPYd9xJNEpVn4VJ7JHm+QrfiJGpsZODCW6s0pexjXOTD3ib4=
+	t=1783010893; cv=none; b=axzRpcI97dfNHpNPaYtuE2/GNdnkUI7SinoQz4xnm19BNdxWQJbrTEHPJCABU9wA5mQ9L49tsbpBHtFIQlXYcLaHWx2GxZb1xu5ii0rpauB+uB5Oyb2q5vBpepJ3fgrb1dtoQPZ7kclIrTeG2XVcQCf69sBGS8Z3ixU+MOFRYLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010890; c=relaxed/simple;
-	bh=9doA/ZCYYDZxaOmqc40cYOKsrk1+NskfN7XJar+HnIk=;
+	s=arc-20240116; t=1783010893; c=relaxed/simple;
+	bh=bZcPNc+5Cm+4QpL3lBXdaTihk3BvwjHAkpOKYUKJem4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4wXWXcvhm/9G0b8jM7pJgx60q9h0MdrY+m45+TWjqDxwCk/7upZkCT41siJmh+AKKFddio/Ue2uo3wJ4raD/JmmexPvVghg5/7896wXikvhbOf5h2kB3RyL3gGZ8m/BSuEzA8UR7wgd9Nvyvx80aw0/rh+yregGVwJ9mubs+Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPllT6bu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EudOxnEKSONO8nm6HY4uEUfGqej7BWUOYrorkDW5quOBdvE55C2JYumK+de+kSEO/ZMeXvGig9j2lYMQ9ib4Ngx6Vg1vDYuBvW4CKT8Z+p/RLTdQ/Tgasd9cjJYRzisY9Bau+X0YYRJVqsDc11F4fLlupvseD+MfGlqZijxDn4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/9+dkxu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPllT6bu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AF11F000E9;
-	Thu,  2 Jul 2026 16:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/9+dkxu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F261F000E9;
+	Thu,  2 Jul 2026 16:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010889;
-	bh=k1+5xjOEqPFwi7OAMxPWj1S3+mGnRi4n7vBFmlzEijc=;
+	s=korg; t=1783010892;
+	bh=dPiqUHLf0ymm74BL4hg+SGmX8zMa1dl+UeA81bFoJ3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tPllT6bugjQI4Ns3wHv9jes+XwHlCyIuxZb1hlgQ6JvOAvlb+EtbNspjWDufGZ9eH
-	 8ang56tFYQ88LG8p0ILn8c0UAUqvyE1Ol+EsLwqm0nH5l9c69gGx/xIv9UAdZqaQyh
-	 O6eOScP7fv7HELSU5O1JObiTbovkbeeuiCRxZLkc=
+	b=Y/9+dkxudTrcwd+5Aei3tnTVy54CU0ylCNWeZJb0BqtmgLU4U5T5F9+C3IBC9xVIw
+	 5zuScA9wMEOZPDkCdzQCHbaFWUvJmNDkWOq08gZRqNWOELVa87GCYDUUjcoCnWAGjk
+	 az5a9PsqicV7bNygV6YcDiOUDRCwyeunuxOa522E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bpf <bpf@vger.kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Martin Kelly <martin.kelly@crowdstrike.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Subject: [PATCH 6.6 049/175] scripts/sorttable: Convert Elf_Ehdr to union
-Date: Thu,  2 Jul 2026 18:19:10 +0200
-Message-ID: <20260702155116.830787158@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 076/175] eventpoll: use hlist_is_singular_node() in __ep_remove()
+Date: Thu,  2 Jul 2026 18:19:37 +0200
+Message-ID: <20260702155117.391018560@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -64,205 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 157fb5b3cfd2cb5950314f926a76e567fc1921c5 ]
+[ Upstream commit 3d9fd0abc94d8cd430cc7cd7d37ce5e5aae2cd2b ]
 
-In order to remove the double #include of sorttable.h for 64 and 32 bit
-to create duplicate functions for both, replace the Elf_Ehdr macro with a
-union that defines both Elf64_Ehdr and Elf32_Ehdr, with field e64 for the
-64bit version, and e32 for the 32bit version.
+Replace the open-coded "epi is the only entry in file->f_ep" check
+with hlist_is_singular_node(). Same semantics, and the helper avoids
+the head-cacheline access in the common false case.
 
-Then a macro etype can be used instead to get to the proper value.
-
-This will eventually be replaced with just single functions that can
-handle both 32bit and 64bit ELF parsing.
-
-Cc: bpf <bpf@vger.kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/20250105162345.148224465@goodmis.org
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-1-2470f9eec0f5@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: a6dc643c6931 ("eventpoll: fix ep_remove struct eventpoll / struct file UAF")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/sorttable.c |   36 ++++++++++++++++++++----------------
- scripts/sorttable.h |   12 ++++++------
- 2 files changed, 26 insertions(+), 22 deletions(-)
+ fs/eventpoll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/sorttable.c
-+++ b/scripts/sorttable.c
-@@ -64,6 +64,11 @@
- #define EM_LOONGARCH	258
- #endif
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 8a556560a5b2f2..4f05d12a05031a 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -745,7 +745,7 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
  
-+typedef union {
-+	Elf32_Ehdr	e32;
-+	Elf64_Ehdr	e64;
-+} Elf_Ehdr;
-+
- static uint32_t (*r)(const uint32_t *);
- static uint16_t (*r2)(const uint16_t *);
- static uint64_t (*r8)(const uint64_t *);
-@@ -266,10 +271,10 @@ static void sort_relative_table_with_dat
- static int do_file(char const *const fname, void *addr)
- {
- 	int rc = -1;
--	Elf32_Ehdr *ehdr = addr;
-+	Elf_Ehdr *ehdr = addr;
- 	table_sort_t custom_sort = NULL;
- 
--	switch (ehdr->e_ident[EI_DATA]) {
-+	switch (ehdr->e32.e_ident[EI_DATA]) {
- 	case ELFDATA2LSB:
- 		r	= rle;
- 		r2	= r2le;
-@@ -284,18 +289,18 @@ static int do_file(char const *const fna
- 		break;
- 	default:
- 		fprintf(stderr, "unrecognized ELF data encoding %d: %s\n",
--			ehdr->e_ident[EI_DATA], fname);
-+			ehdr->e32.e_ident[EI_DATA], fname);
- 		return -1;
- 	}
- 
--	if (memcmp(ELFMAG, ehdr->e_ident, SELFMAG) != 0 ||
--	    (r2(&ehdr->e_type) != ET_EXEC && r2(&ehdr->e_type) != ET_DYN) ||
--	    ehdr->e_ident[EI_VERSION] != EV_CURRENT) {
-+	if (memcmp(ELFMAG, ehdr->e32.e_ident, SELFMAG) != 0 ||
-+	    (r2(&ehdr->e32.e_type) != ET_EXEC && r2(&ehdr->e32.e_type) != ET_DYN) ||
-+	    ehdr->e32.e_ident[EI_VERSION] != EV_CURRENT) {
- 		fprintf(stderr, "unrecognized ET_EXEC/ET_DYN file %s\n", fname);
- 		return -1;
- 	}
- 
--	switch (r2(&ehdr->e_machine)) {
-+	switch (r2(&ehdr->e32.e_machine)) {
- 	case EM_386:
- 	case EM_AARCH64:
- 	case EM_LOONGARCH:
-@@ -318,14 +323,14 @@ static int do_file(char const *const fna
- 		break;
- 	default:
- 		fprintf(stderr, "unrecognized e_machine %d %s\n",
--			r2(&ehdr->e_machine), fname);
-+			r2(&ehdr->e32.e_machine), fname);
- 		return -1;
- 	}
- 
--	switch (ehdr->e_ident[EI_CLASS]) {
-+	switch (ehdr->e32.e_ident[EI_CLASS]) {
- 	case ELFCLASS32:
--		if (r2(&ehdr->e_ehsize) != sizeof(Elf32_Ehdr) ||
--		    r2(&ehdr->e_shentsize) != sizeof(Elf32_Shdr)) {
-+		if (r2(&ehdr->e32.e_ehsize) != sizeof(Elf32_Ehdr) ||
-+		    r2(&ehdr->e32.e_shentsize) != sizeof(Elf32_Shdr)) {
- 			fprintf(stderr,
- 				"unrecognized ET_EXEC/ET_DYN file: %s\n", fname);
- 			break;
-@@ -334,20 +339,19 @@ static int do_file(char const *const fna
- 		break;
- 	case ELFCLASS64:
- 		{
--		Elf64_Ehdr *const ghdr = (Elf64_Ehdr *)ehdr;
--		if (r2(&ghdr->e_ehsize) != sizeof(Elf64_Ehdr) ||
--		    r2(&ghdr->e_shentsize) != sizeof(Elf64_Shdr)) {
-+		if (r2(&ehdr->e64.e_ehsize) != sizeof(Elf64_Ehdr) ||
-+		    r2(&ehdr->e64.e_shentsize) != sizeof(Elf64_Shdr)) {
- 			fprintf(stderr,
- 				"unrecognized ET_EXEC/ET_DYN file: %s\n",
- 				fname);
- 			break;
- 		}
--		rc = do_sort_64(ghdr, fname, custom_sort);
-+		rc = do_sort_64(ehdr, fname, custom_sort);
- 		}
- 		break;
- 	default:
- 		fprintf(stderr, "unrecognized ELF class %d %s\n",
--			ehdr->e_ident[EI_CLASS], fname);
-+			ehdr->e32.e_ident[EI_CLASS], fname);
- 		break;
- 	}
- 
---- a/scripts/sorttable.h
-+++ b/scripts/sorttable.h
-@@ -23,12 +23,12 @@
- #undef sort_mcount_loc
- #undef elf_mcount_loc
- #undef do_sort
--#undef Elf_Ehdr
- #undef Elf_Shdr
- #undef Elf_Sym
- #undef ELF_ST_TYPE
- #undef uint_t
- #undef _r
-+#undef etype
- 
- #ifdef SORTTABLE_64
- # define extable_ent_size	16
-@@ -37,12 +37,12 @@
- # define sort_mcount_loc	sort_mcount_loc_64
- # define elf_mcount_loc		elf_mcount_loc_64
- # define do_sort		do_sort_64
--# define Elf_Ehdr		Elf64_Ehdr
- # define Elf_Shdr		Elf64_Shdr
- # define Elf_Sym		Elf64_Sym
- # define ELF_ST_TYPE		ELF64_ST_TYPE
- # define uint_t			uint64_t
- # define _r			r8
-+# define etype			e64
- #else
- # define extable_ent_size	8
- # define compare_extable	compare_extable_32
-@@ -50,12 +50,12 @@
- # define sort_mcount_loc	sort_mcount_loc_32
- # define elf_mcount_loc		elf_mcount_loc_32
- # define do_sort		do_sort_32
--# define Elf_Ehdr		Elf32_Ehdr
- # define Elf_Shdr		Elf32_Shdr
- # define Elf_Sym		Elf32_Sym
- # define ELF_ST_TYPE		ELF32_ST_TYPE
- # define uint_t			uint32_t
- # define _r			r
-+# define etype			e32
- #endif
- 
- #if defined(SORTTABLE_64) && defined(UNWINDER_ORC_ENABLED)
-@@ -222,7 +222,7 @@ static int do_sort(Elf_Ehdr *ehdr,
- 		   table_sort_t custom_sort)
- {
- 	int rc = -1;
--	Elf_Shdr *s, *shdr = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->e_shoff));
-+	Elf_Shdr *s, *shdr = (Elf_Shdr *)((char *)ehdr + _r(&ehdr->etype.e_shoff));
- 	Elf_Shdr *strtab_sec = NULL;
- 	Elf_Shdr *symtab_sec = NULL;
- 	Elf_Shdr *extab_sec = NULL;
-@@ -249,12 +249,12 @@ static int do_sort(Elf_Ehdr *ehdr,
- 	unsigned int orc_num_entries = 0;
- #endif
- 
--	shstrndx = r2(&ehdr->e_shstrndx);
-+	shstrndx = r2(&ehdr->etype.e_shstrndx);
- 	if (shstrndx == SHN_XINDEX)
- 		shstrndx = r(&shdr[0].sh_link);
- 	secstrings = (const char *)ehdr + _r(&shdr[shstrndx].sh_offset);
- 
--	shnum = r2(&ehdr->e_shnum);
-+	shnum = r2(&ehdr->etype.e_shnum);
- 	if (shnum == SHN_UNDEF)
- 		shnum = _r(&shdr[0].sh_size);
- 
+ 	to_free = NULL;
+ 	head = file->f_ep;
+-	if (head->first == &epi->fllink && !epi->fllink.next) {
++	if (hlist_is_singular_node(&epi->fllink, head)) {
+ 		/* See eventpoll_release() for details. */
+ 		WRITE_ONCE(file->f_ep, NULL);
+ 		if (!is_file_epoll(file)) {
+-- 
+2.53.0
+
 
 
