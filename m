@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D889349CF2;
-	Thu,  2 Jul 2026 16:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79920353A73;
+	Thu,  2 Jul 2026 16:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010439; cv=none; b=oo5ISbwWcjhaa7GkRyWlUVDXnqAH03CUG2MLLgckdgA0iHasGZUYs9rb1RGP+mU389Y5coPJ3pkb95Yu3OZmMsvTCV3R/6vLtCqaZTHBS2RumYuZhQ39Zo8xP+vGEQ1m1FpWK2hzHuLyLgJGoCSg15eZz4ip8pLI3FPghtn7ST0=
+	t=1783010442; cv=none; b=FIbnPFTRrMCu8/p7RUjFZiPn/YXgfGwHlB6RNu4/8+RCmu92vHSAjGTdjVbEAbHTLSF0vMdp/SpGesac92daPtMmG12twP9Ygkp7F3SAiM9g0Ppx+s+LLDrGzk1/o//w0Krv7CZiNTm+8oeNJ+0vMqMV9oZkKX8pl15p26SsTf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010439; c=relaxed/simple;
-	bh=RuggjEVzwf1xwoemZKyFq4LBgjIgTJfJBut9i9eGO4o=;
+	s=arc-20240116; t=1783010442; c=relaxed/simple;
+	bh=uOTYxwKFJpqhUbJ7Enoe8S9DJEiNIy+KHkMIMudhg1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QSvNV4WvCFgyhf896p9wszKNFQWotIAF9fDyimBSEeIznBaZasBbBZaLkDfP7ulmdzd7P2sisrh9qsNiv1X9PPozJTsDCeTj9Zk1DANfz92dCItS7xnM1AJA1WkPPdNU5uxx+JuF0JXHcWwV9Uc3RlnNYktiSV6mddPnUuFgH0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQFiM4tS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lp2omGL7qjkHy/pDaaqgH7nzhS9EjZcrpflIzWDrdDEdLEML8+jwGHFy/NK7dpZ79Y08h3RmIFxr0eJ4/C0EE/mvhPgSao25R8En+jjOQ4ny4UXBjVnu7DkwjHzBMRB1KM16HKQM6q1dTUkpNq4XhJO6hncMdfFTdZqqOfDB5AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkHZRxZj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQFiM4tS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39721F000E9;
-	Thu,  2 Jul 2026 16:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkHZRxZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BFB1F000E9;
+	Thu,  2 Jul 2026 16:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010437;
-	bh=GiTUoYQcO8hwb6FpCZUHaHk0UqIio9pVHOJPJLvz/rg=;
+	s=korg; t=1783010440;
+	bh=q3f2VeQAcLwqbvXr7+VXRf4VnafmPHXalhq77wyG9X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OQFiM4tSfdligWoi3TQRYTQPePNgTru2BnF8k4bk+FGE5uOroiTEdkovmBbmkd5Ve
-	 JrpiLE6lQiM9gN6RW6ncF/5jeYxtd9jqex0/10tTuFVdfCWsl3fkioBKTEq0k8exNe
-	 PNfQS/O2VtNLOWwTiaBZ/rv27pvuhXF5wKp5gRjU=
+	b=EkHZRxZj6Nwz3aXQq7pxSq7epMfuf9H/dl+JXychtxWAJicGArxNbrblgclhxhrn9
+	 nFgwQ9Nc0YE6qkIH6Al6sKHzOBVnDCanYQ+p5gopQbZiznQF+YKuGdAs+oDO1xrhAJ
+	 aU+RlrVNLzjCVGSnjtut9VfQTN6/iQP04CDOblgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/204] batman-adv: bla: annotate lasttime access with READ/WRITE_ONCE
-Date: Thu,  2 Jul 2026 18:19:24 +0200
-Message-ID: <20260702155120.903581969@linuxfoundation.org>
+	bpf <bpf@vger.kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Martin Kelly <martin.kelly@crowdstrike.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Subject: [PATCH 6.12 067/204] scripts/sorttable: Add helper functions for Elf_Sym
+Date: Thu,  2 Jul 2026 18:18:44 +0200
+Message-ID: <20260702155120.067051698@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,156 +64,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 98b0fb191c878a64cbaebfe231d96d57576acf8c upstream.
+[ Upstream commit 17bed33ac12f011f4695059960e1b1d6457229a7 ]
 
-The lasttime field for claim, backbone_gw, and loopdetect tracks the
-jiffies value of the most recent activity and is used to detect timeouts.
-These accesses are not consistently protected by a lock, so
-READ_ONCE/WRITE_ONCE must be used to prevent data races caused by compiler
-optimizations.
+In order to remove the double #include of sorttable.h for 64 and 32 bit
+to create duplicate functions, add helper functions for Elf_Sym.  This
+will create a function pointer for each helper that will get assigned to
+the appropriate function to handle either the 64bit or 32bit version.
 
-Cc: stable@kernel.org
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This also removes the last references of etype and _r() macros from the
+sorttable.h file as their references are now just defined in the
+appropriate architecture version of the helper functions. All read
+functions now exist in the helper functions which makes it easier to
+maintain, as the helper functions define the necessary architecture sizes.
+
+Cc: bpf <bpf@vger.kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/20250105162346.185740651@goodmis.org
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c | 28 +++++++++++++-------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ scripts/sorttable.c |   47 +++++++++++++++++++++++++++++++++++++++++++++++
+ scripts/sorttable.h |   30 ++++++++++++++++--------------
+ 2 files changed, 63 insertions(+), 14 deletions(-)
 
-diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
-index 15aeb07285e61f..cc6c14cac06282 100644
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -512,7 +512,7 @@ batadv_bla_get_backbone_gw(struct batadv_priv *bat_priv, const u8 *orig,
- 		return NULL;
+--- a/scripts/sorttable.c
++++ b/scripts/sorttable.c
+@@ -152,6 +152,53 @@ SHDR_WORD(link)
+ SHDR_WORD(name)
+ SHDR_WORD(type)
  
- 	entry->vid = vid;
--	entry->lasttime = jiffies;
-+	WRITE_ONCE(entry->lasttime, jiffies);
- 	entry->crc = BATADV_BLA_CRC_INIT;
- 	entry->bat_priv = bat_priv;
- 	spin_lock_init(&entry->crc_lock);
-@@ -580,7 +580,7 @@ batadv_bla_update_own_backbone_gw(struct batadv_priv *bat_priv,
- 	if (unlikely(!backbone_gw))
- 		return;
++#define SYM_ADDR(fn_name)			\
++static uint64_t sym64_##fn_name(Elf_Sym *sym)	\
++{						\
++	return r8(&sym->e64.st_##fn_name);	\
++}						\
++						\
++static uint64_t sym32_##fn_name(Elf_Sym *sym)	\
++{						\
++	return r(&sym->e32.st_##fn_name);	\
++}
++
++#define SYM_WORD(fn_name)			\
++static uint32_t sym64_##fn_name(Elf_Sym *sym)	\
++{						\
++	return r(&sym->e64.st_##fn_name);	\
++}						\
++						\
++static uint32_t sym32_##fn_name(Elf_Sym *sym)	\
++{						\
++	return r(&sym->e32.st_##fn_name);	\
++}
++
++#define SYM_HALF(fn_name)			\
++static uint16_t sym64_##fn_name(Elf_Sym *sym)	\
++{						\
++	return r2(&sym->e64.st_##fn_name);	\
++}						\
++						\
++static uint16_t sym32_##fn_name(Elf_Sym *sym)	\
++{						\
++	return r2(&sym->e32.st_##fn_name);	\
++}
++
++static uint8_t sym64_type(Elf_Sym *sym)
++{
++	return ELF64_ST_TYPE(sym->e64.st_info);
++}
++
++static uint8_t sym32_type(Elf_Sym *sym)
++{
++	return ELF32_ST_TYPE(sym->e32.st_info);
++}
++
++SYM_ADDR(value)
++SYM_WORD(name)
++SYM_HALF(shndx)
++
+ /*
+  * Get the whole file as a programming convenience in order to avoid
+  * malloc+lseek+read+free of many pieces.  If successful, then mmap
+--- a/scripts/sorttable.h
++++ b/scripts/sorttable.h
+@@ -23,10 +23,7 @@
+ #undef sort_mcount_loc
+ #undef elf_mcount_loc
+ #undef do_sort
+-#undef ELF_ST_TYPE
+ #undef uint_t
+-#undef _r
+-#undef etype
+ #undef ehdr_shoff
+ #undef ehdr_shentsize
+ #undef ehdr_shstrndx
+@@ -38,6 +35,10 @@
+ #undef shdr_name
+ #undef shdr_type
+ #undef shdr_entsize
++#undef sym_type
++#undef sym_name
++#undef sym_value
++#undef sym_shndx
  
--	backbone_gw->lasttime = jiffies;
-+	WRITE_ONCE(backbone_gw->lasttime, jiffies);
- 	batadv_backbone_gw_put(backbone_gw);
- }
+ #ifdef SORTTABLE_64
+ # define extable_ent_size	16
+@@ -46,10 +47,7 @@
+ # define sort_mcount_loc	sort_mcount_loc_64
+ # define elf_mcount_loc		elf_mcount_loc_64
+ # define do_sort		do_sort_64
+-# define ELF_ST_TYPE		ELF64_ST_TYPE
+ # define uint_t			uint64_t
+-# define _r			r8
+-# define etype			e64
+ # define ehdr_shoff		ehdr64_shoff
+ # define ehdr_shentsize		ehdr64_shentsize
+ # define ehdr_shstrndx		ehdr64_shstrndx
+@@ -61,6 +59,10 @@
+ # define shdr_name		shdr64_name
+ # define shdr_type		shdr64_type
+ # define shdr_entsize		shdr64_entsize
++# define sym_type		sym64_type
++# define sym_name		sym64_name
++# define sym_value		sym64_value
++# define sym_shndx		sym64_shndx
+ #else
+ # define extable_ent_size	8
+ # define compare_extable	compare_extable_32
+@@ -68,10 +70,7 @@
+ # define sort_mcount_loc	sort_mcount_loc_32
+ # define elf_mcount_loc		elf_mcount_loc_32
+ # define do_sort		do_sort_32
+-# define ELF_ST_TYPE		ELF32_ST_TYPE
+ # define uint_t			uint32_t
+-# define _r			r
+-# define etype			e32
+ # define ehdr_shoff		ehdr32_shoff
+ # define ehdr_shentsize		ehdr32_shentsize
+ # define ehdr_shstrndx		ehdr32_shstrndx
+@@ -83,6 +82,10 @@
+ # define shdr_name		shdr32_name
+ # define shdr_type		shdr32_type
+ # define shdr_entsize		shdr32_entsize
++# define sym_type		sym32_type
++# define sym_name		sym32_name
++# define sym_value		sym32_value
++# define sym_shndx		sym32_shndx
+ #endif
  
-@@ -714,7 +714,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 		ether_addr_copy(claim->addr, mac);
- 		spin_lock_init(&claim->backbone_lock);
- 		claim->vid = vid;
--		claim->lasttime = jiffies;
-+		WRITE_ONCE(claim->lasttime, jiffies);
- 		kref_get(&backbone_gw->refcount);
- 		claim->backbone_gw = backbone_gw;
- 		kref_init(&claim->refcount);
-@@ -736,7 +736,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 			return;
- 		}
- 	} else {
--		claim->lasttime = jiffies;
-+		WRITE_ONCE(claim->lasttime, jiffies);
- 		if (claim->backbone_gw == backbone_gw)
- 			/* no need to register a new backbone */
- 			goto claim_free_ref;
-@@ -769,7 +769,7 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 	spin_lock_bh(&backbone_gw->crc_lock);
- 	backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
- 	spin_unlock_bh(&backbone_gw->crc_lock);
--	backbone_gw->lasttime = jiffies;
-+	WRITE_ONCE(backbone_gw->lasttime, jiffies);
+ #if defined(SORTTABLE_64) && defined(UNWINDER_ORC_ENABLED)
+@@ -414,9 +417,9 @@ static int do_sort(Elf_Ehdr *ehdr,
  
- claim_free_ref:
- 	batadv_claim_put(claim);
-@@ -858,7 +858,7 @@ static bool batadv_handle_announce(struct batadv_priv *bat_priv, u8 *an_addr,
- 		return true;
- 
- 	/* handle as ANNOUNCE frame */
--	backbone_gw->lasttime = jiffies;
-+	WRITE_ONCE(backbone_gw->lasttime, jiffies);
- 	crc = ntohs(*((__force __be16 *)(&an_addr[4])));
- 
- 	batadv_dbg(BATADV_DBG_BLA, bat_priv,
-@@ -1253,7 +1253,7 @@ static void batadv_bla_purge_backbone_gw(struct batadv_priv *bat_priv, int now)
- 						  head, hash_entry) {
- 				if (now)
- 					goto purge_now;
--				if (!batadv_has_timed_out(backbone_gw->lasttime,
-+				if (!batadv_has_timed_out(READ_ONCE(backbone_gw->lasttime),
- 							  BATADV_BLA_BACKBONE_TIMEOUT))
- 					continue;
- 
-@@ -1334,7 +1334,7 @@ static void batadv_bla_purge_claims(struct batadv_priv *bat_priv,
- 						primary_if->net_dev->dev_addr))
- 				goto skip;
- 
--			if (!batadv_has_timed_out(claim->lasttime,
-+			if (!batadv_has_timed_out(READ_ONCE(claim->lasttime),
- 						  BATADV_BLA_CLAIM_TIMEOUT))
- 				goto skip;
- 
-@@ -1494,7 +1494,7 @@ static void batadv_bla_periodic_work(struct work_struct *work)
- 		eth_random_addr(bat_priv->bla.loopdetect_addr);
- 		bat_priv->bla.loopdetect_addr[0] = 0xba;
- 		bat_priv->bla.loopdetect_addr[1] = 0xbe;
--		bat_priv->bla.loopdetect_lasttime = jiffies;
-+		WRITE_ONCE(bat_priv->bla.loopdetect_lasttime, jiffies);
- 		atomic_set(&bat_priv->bla.loopdetect_next,
- 			   BATADV_BLA_LOOPDETECT_PERIODS);
- 
-@@ -1515,7 +1515,7 @@ static void batadv_bla_periodic_work(struct work_struct *work)
- 						primary_if->net_dev->dev_addr))
- 				continue;
- 
--			backbone_gw->lasttime = jiffies;
-+			WRITE_ONCE(backbone_gw->lasttime, jiffies);
- 
- 			batadv_bla_send_announce(bat_priv, backbone_gw);
- 			if (send_loopdetect)
-@@ -1900,7 +1900,7 @@ batadv_bla_loopdetect_check(struct batadv_priv *bat_priv, struct sk_buff *skb,
- 	/* If the packet came too late, don't forward it on the mesh
- 	 * but don't consider that as loop. It might be a coincidence.
- 	 */
--	if (batadv_has_timed_out(bat_priv->bla.loopdetect_lasttime,
-+	if (batadv_has_timed_out(READ_ONCE(bat_priv->bla.loopdetect_lasttime),
- 				 BATADV_BLA_LOOPDETECT_TIMEOUT))
- 		return true;
- 
-@@ -2016,7 +2016,7 @@ bool batadv_bla_rx(struct batadv_priv *bat_priv, struct sk_buff *skb,
- 
- 	if (own_claim) {
- 		/* ... allow it in any case */
--		claim->lasttime = jiffies;
-+		WRITE_ONCE(claim->lasttime, jiffies);
- 		goto allow;
+ 	for (sym = sym_start; (void *)sym + symentsize < sym_end;
+ 	     sym = (void *)sym + symentsize) {
+-		if (ELF_ST_TYPE(sym->etype.st_info) != STT_OBJECT)
++		if (sym_type(sym) != STT_OBJECT)
+ 			continue;
+-		if (!strcmp(strtab + r(&sym->etype.st_name),
++		if (!strcmp(strtab + sym_name(sym),
+ 			    "main_extable_sort_needed")) {
+ 			sort_needed_sym = sym;
+ 			break;
+@@ -430,14 +433,13 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 		goto out;
  	}
  
-@@ -2118,7 +2118,7 @@ bool batadv_bla_tx(struct batadv_priv *bat_priv, struct sk_buff *skb,
- 		/* if yes, the client has roamed and we have
- 		 * to unclaim it.
- 		 */
--		if (batadv_has_timed_out(claim->lasttime, 100)) {
-+		if (batadv_has_timed_out(READ_ONCE(claim->lasttime), 100)) {
- 			/* only unclaim if the last claim entry is
- 			 * older than 100 ms to make sure we really
- 			 * have a roaming client here.
-@@ -2372,7 +2372,7 @@ batadv_bla_backbone_dump_entry(struct sk_buff *msg, u32 portid,
- 	backbone_crc = backbone_gw->crc;
- 	spin_unlock_bh(&backbone_gw->crc_lock);
+-	sort_need_index = get_secindex(r2(&sym->etype.st_shndx),
++	sort_need_index = get_secindex(sym_shndx(sym),
+ 				       ((void *)sort_needed_sym - (void *)symtab) / symentsize,
+ 				       symtab_shndx);
+ 	sort_needed_sec = get_index(shdr_start, shentsize, sort_need_index);
+ 	sort_needed_loc = (void *)ehdr +
+ 		shdr_offset(sort_needed_sec) +
+-		_r(&sort_needed_sym->etype.st_value) -
+-		shdr_addr(sort_needed_sec);
++		sym_value(sort_needed_sym) - shdr_addr(sort_needed_sec);
  
--	msecs = jiffies_to_msecs(jiffies - backbone_gw->lasttime);
-+	msecs = jiffies_to_msecs(jiffies - READ_ONCE(backbone_gw->lasttime));
- 
- 	if (is_own)
- 		if (nla_put_flag(msg, BATADV_ATTR_BLA_OWN)) {
--- 
-2.53.0
-
+ 	/* extable has been sorted, clear the flag */
+ 	w(0, sort_needed_loc);
 
 
