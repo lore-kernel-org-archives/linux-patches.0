@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0480330C60F;
-	Thu,  2 Jul 2026 16:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C63E3A7843;
+	Thu,  2 Jul 2026 16:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010497; cv=none; b=iROMltSiiEEq5TwJZ/9KqEz+lWTGi+uej3sMgQDWF3xT21bRFKIcR1Ty77HExk/4+G96OUZNRNLJy7D73rg0gTFJumEnOFnqfFgLwDgbOAMYKNnaBFzdKAsIJ83OKcvLnkKHTZahSxS0RAnQLHTpnoyghGIZ0k0xxTIhh4Wkyus=
+	t=1783010499; cv=none; b=aTilFUas48VowuFKw9cb/q1+eWTlp21GnsPzoj5UQIC5E78rQoweofX4LhJ7WDu5KeEQphMoOECZplArNTBfFyHu6qMCiKDieETKJ/2II8aG1puJjsWAyqWTIeepWWZZ7wpqEBHnsh8uHYKDTE7H6PXdOW7mwlkQqmilYPIoiYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010497; c=relaxed/simple;
-	bh=oIjTtdrSsiLrc/jBArpfI9dboHuJc2q2xciFUxCwZdo=;
+	s=arc-20240116; t=1783010499; c=relaxed/simple;
+	bh=lCHzAI9Fd23eih7Riv/GecJ0DBmYTOOqrqwcwnJqrAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IggwnWv0mgRl61SdbI8ktnM7cidMtsJLirLmbZL9KQwjUU9oFXYo1Kf1Ju8T+IUd+lF+oP81GahFf6nIeUqM7yLnlVeJZJ+Lae1t/fJprb3a4zVtadGl5dna9ztXAJqhiDPjrevKSVjpF0rrNPBJn5oNtTKzshqtLRI5eZ9In/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikCN+DP8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEreIqgLnUTNdaxhMR8vp1eR6WHsYXz3NoFQbWUexdSdACrHbVUeeYiOPi5fbyB2s7QlsNBTxyYLVn+N2oUF8PuidxS8J7CWEmlGxrGpqXDbc5AOSgIi1fHRO6xLoAGGki91qOUPm4OP2Ov3r8sfHl+DuTXRzyj5tyQtJCkelgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1ddt3AN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikCN+DP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70B11F0155C;
-	Thu,  2 Jul 2026 16:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1ddt3AN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA5C1F00ACF;
+	Thu,  2 Jul 2026 16:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010490;
-	bh=sImg1cN9ax5nEUDCye+lCL2DvbzgM7tEjBKR/2wQsOQ=;
+	s=korg; t=1783010493;
+	bh=pXPC5r52j92yqvf3G+j6Z5y0wA177TLPbaHVCImSX5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ikCN+DP8t7/Yytj++48UrkGW5rfGodK1NpdP+qjMUvPgX6BGFs6XZRR0e01aa56rr
-	 AOQcwufyEpfjlPV0R6J8Kx71cFfndwqnvqUR/0Uf1UGtNutAwoLcaIaR0WNhxHIGbw
-	 awnFrgmtGUeXY6ua8F57/uxgRVkBOGIDwmG+0Nfw=
+	b=s1ddt3ANUBzaQFq9cgTqW1Bjg5Ie9aWryZtO3FXH/F2FCx/zAySWaBjCms6FHLXS3
+	 9pCBvxLqHru32ZKjjMaccMCxnn2mC7kLbXHeWyaEnSP90D0kwmzY5ujxgplRGYFDaj
+	 DQwWhw8ctfY60lbBmcyuEu7Fg7o2ctS2xmlk9Yos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jungwoo Lee <jwlee2217@gmail.com>,
-	Wongi Lee <qw3rtyp0@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/204] ipv4: account for fraggap on the paged allocation path
-Date: Thu,  2 Jul 2026 18:19:46 +0200
-Message-ID: <20260702155121.361628729@linuxfoundation.org>
+	Zhen Yan <sdjasjbuaa@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.12 130/204] ntfs3: reject direct userspace writes to reserved $LX* xattrs
+Date: Thu,  2 Jul 2026 18:19:47 +0200
+Message-ID: <20260702155121.385022222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -53,67 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wongi Lee <qw3rtyp0@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit eca856950f7cb1a221e02b99d758409f2c5cec42 ]
+commit 5b08dccecf825cbf905f348bc6ccb497507e28e2 upstream.
 
-In __ip_append_data(), when the paged-allocation branch is taken,
-alloclen and pagedlen are computed as
+NTFS3 uses $LXUID, $LXGID, $LXMOD and $LXDEV as internal WSL
+permission metadata and reloads them into i_uid, i_gid and i_mode
+from ntfs_get_wsl_perm().
 
-	alloclen = fragheaderlen + transhdrlen;
-	pagedlen = datalen - transhdrlen;
+Because the empty-prefix xattr handler also lets file owners call
+setxattr() on these names directly, an unprivileged writer on a
+writable ntfs3 mount can plant root ownership and S_ISUID on their own
+file and gain euid 0 after inode reload.
 
-datalen already includes fraggap, but the fraggap bytes carried over
-from the previous skb are copied into the new skb's linear area at
-offset transhdrlen by the subsequent skb_copy_and_csum_bits(). The
-linear area is therefore undersized by fraggap bytes while pagedlen is
-overstated by the same amount.
+Reject direct userspace writes to the reserved $LX* names. Internal
+ntfs3 metadata updates are unchanged because ntfs_save_wsl_perm()
+writes them via ntfs_set_ea() directly.
 
-The non-paged branch sets alloclen to fraglen, which already accounts
-for fraggap because datalen does. Bring the paged branch in line by
-adding fraggap to alloclen and subtracting it from pagedlen.
-
-After this adjustment, copy no longer collapses to -fraggap on the
-paged path, so remove the stale comment describing that old arithmetic.
-
-Fixes: 8eb77cc73977 ("ipv4: avoid partial copy for zc")
-Signed-off-by: Jungwoo Lee <jwlee2217@gmail.com>
-Signed-off-by: Wongi Lee <qw3rtyp0@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/ajFR1eLAIs42TN3g@DESKTOP-19IMU7U.localdomain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Zhen Yan <sdjasjbuaa@gmail.com>
+[almaz.alexandrovich@paragon-software.com: added an additional check for non privileged users]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_output.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ fs/ntfs3/xattr.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 0d0d6ebdd3a849..41031c5c430334 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -1118,8 +1118,8 @@ static int __ip_append_data(struct sock *sk,
- 				  !(rt->dst.dev->features & NETIF_F_SG)))
- 				alloclen = fraglen;
- 			else {
--				alloclen = fragheaderlen + transhdrlen;
--				pagedlen = datalen - transhdrlen;
-+				alloclen = fragheaderlen + transhdrlen + fraggap;
-+				pagedlen = datalen - transhdrlen - fraggap;
- 			}
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -829,6 +829,12 @@ out:
+ 	return err;
+ }
  
- 			alloclen += alloc_extra;
-@@ -1166,9 +1166,6 @@ static int __ip_append_data(struct sock *sk,
- 			}
++static bool ntfs_is_reserved_lxattr(const char *name)
++{
++	return !strcmp(name, "$LXUID") || !strcmp(name, "$LXGID") ||
++	       !strcmp(name, "$LXMOD") || !strcmp(name, "$LXDEV");
++}
++
+ /*
+  * ntfs_setxattr - inode_operations::setxattr
+  */
+@@ -933,6 +939,12 @@ set_new_fa:
+ 		goto out;
+ 	}
  
- 			copy = datalen - transhdrlen - fraggap - pagedlen;
--			/* [!] NOTE: copy will be negative if pagedlen>0
--			 * because then the equation reduces to -fraggap.
--			 */
- 			if (copy > 0 &&
- 			    INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
- 					    from, data + transhdrlen, offset,
--- 
-2.53.0
-
++	/* Do not allow non privileged users to change $LXUID/$LXGID... */
++	if (ntfs_is_reserved_lxattr(name) && !capable(CAP_SYS_ADMIN)) {
++		err = -EPERM;
++		goto out;
++	}
++
+ 	/* Deal with NTFS extended attribute. */
+ 	err = ntfs_set_ea(inode, name, strlen(name), value, size, flags, 0,
+ 			  NULL);
 
 
