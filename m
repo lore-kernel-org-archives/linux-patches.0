@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F56022D7B9;
-	Thu,  2 Jul 2026 16:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4732126F46F;
+	Thu,  2 Jul 2026 16:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011573; cv=none; b=E+Oq493Du8YVyglPTROPsALSJLH8bEhjjPKVAdHz2EaLjotlw5PsNbBQCBvcSXB30Pkgt2noDKBOinLmTpWohspGTFKTx67CEHUx8V9e6Cpf+r8A2479RBPelnGMLyJKjQaYODduIADQ4zalsX95j3wxgcIlTl6+2m+rWwh8ndc=
+	t=1783011576; cv=none; b=DQgB/8mJXdWKvxbZVEdKoi3aeAUobEd1BodGDx4sPa1Lc2wH63pZ1xdN4vU5lzCWegu+4g7R/Ikpq+HL1K55AfYDposi+lvOJIKXAUNGCv1lB2XUwR6HbHCW7/Dgj6eiYWA4vzh3e+1TUwZhlAOaZnuFR1xQHBWkvkY2BvSLByU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011573; c=relaxed/simple;
-	bh=7oP+D2Fd7m/zG9wAvxbeEK5xW+N+TIBpg20222STCZI=;
+	s=arc-20240116; t=1783011576; c=relaxed/simple;
+	bh=HSAZCVd9KVL3hoX1VbKMd46pNF6VY9qUCBLX/3ZRE1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qHE0VuDPbhT7z6D3y12OR5DA+/2x9BDbmO/aeJYVoJJ4zIuZww0EB/oJifwTk31M2g0g0Mu+FhYC76K1N8GkdtCQ4+JpKdC2X+383H4vjuID7hnzxnAJoCBbwyof3GMNUU7l2bpCBEsEUij+WHykyc1RmuB45LQkruqoA+bB8Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXJcDLsj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bPxa3h1FZeWzUK7QN/VqjjqDfBvVX6Bqx1vmSh0dC1Bv0RCRgyMMV3XbJXAh8UvmuE6zxBsnnlGlILITCjAcw9pkS0kdjuZqYIZg5lRt2vxnS36dB3H7s3NvRqmifgwTTsAPf8wj/Tipz56rN6PEUB3nD05b2LaJeH0V9mqdeHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Y0DAOZm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXJcDLsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1063B1F00A3D;
-	Thu,  2 Jul 2026 16:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Y0DAOZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0B41F00A3A;
+	Thu,  2 Jul 2026 16:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011572;
-	bh=nRUs6cxs4Cnipv3oFJQkOA7pHIGcSfT/DXEs44NcCeo=;
+	s=korg; t=1783011575;
+	bh=ZQKuG6OjnQZYwU6a6TXPpVS+XcboxI1+64oWsoLe2n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gXJcDLsjgUBYg5W49inqeh8aL4jhx8VVgCQ1b03CWAgJshsDcyY2hSYSWVX2kAMjP
-	 yjTbCWY9eSCR8HABBchs27W75r69mC/gJSVH5U/RpBg81xQRfO+urWKIn6IMptiNqo
-	 41wZWpP2qDFhaGMWvCEKuTr8eLAelpNIPM6xw644=
+	b=2Y0DAOZmgQ4/+8efz2fGMf8gsJDMSmBtmGU+jO669PSWmHXN2Ugk3MByTjp7Vj9GX
+	 +sjlITBk33SjlvTs4TD9YXHixeWdcc2kyNlJPFcueTP5gzyuvzme0UankxM7LatdYI
+	 o43SFK9sPLlfVHL7UpP6ok9jho/xP8Ukp5dAAPsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 007/120] batman-adv: tp_meter: fix fast recovery precondition
-Date: Thu,  2 Jul 2026 18:20:03 +0200
-Message-ID: <20260702155113.116810278@linuxfoundation.org>
+Subject: [PATCH 7.1 008/120] batman-adv: tp_meter: handle seqno wrap-around for fast recovery detection
+Date: Thu,  2 Jul 2026 18:20:04 +0200
+Message-ID: <20260702155113.136361055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -53,22 +53,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 2b0d08f08ed3b2174f05c43089ec65f3543a025b upstream.
+commit f54c85ed42a1b27a516cf2a4728f5a612b799e07 upstream.
 
-The fast recovery precondition checks if the recover (initialized to
-BATADV_TP_FIRST_SEQ) is bigger than the received ack. But since recover is
-only updated when this check is successful, it will never enter the fast
-recovery mode.
-
-According to RFC6582 Section 3.2 step 2, the check should actually be
-different:
-
-> When the third duplicate ACK is received, the TCP sender first
-> checks the value of recover to see if the Cumulative
-> Acknowledgment field covers more than recover
-
-The precondition must therefore check if recover is smaller than the
-received ack - basically swapping the operands of the current check.
+The recover variable and the last_sent sequence number are initialized on
+purpose as a really high value which will wrap-around after the first 2000
+bytes. The fast recovery precondition must therefore not use simple integer
+comparisons but use helpers which are aware of the sequence number
+wrap-arounds.
 
 Cc: stable@kernel.org
 Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
@@ -79,15 +70,15 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index e4f76c141af3e2..77bc69573a5624 100644
+index 77bc69573a5624..0801dcf93540ac 100644
 --- a/net/batman-adv/tp_meter.c
 +++ b/net/batman-adv/tp_meter.c
 @@ -733,7 +733,7 @@ static void batadv_tp_recv_ack(struct batadv_priv *bat_priv,
  		if (atomic_read(&tp_vars->dup_acks) != 3)
  			goto out;
  
--		if (recv_ack >= tp_vars->recover)
-+		if (tp_vars->recover >= recv_ack)
+-		if (tp_vars->recover >= recv_ack)
++		if (!batadv_seq_before(tp_vars->recover, recv_ack))
  			goto out;
  
  		/* if this is the third duplicate ACK do Fast Retransmit */
