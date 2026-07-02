@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDBA317146;
-	Thu,  2 Jul 2026 16:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D3B24E4C3;
+	Thu,  2 Jul 2026 16:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010533; cv=none; b=j+chrh/9eER76ytX1/euAiG+tWhC/FhdHMUfkTcpXu9feFoeXcf0xTn1ZUVy91y1ToU855I28VivJ8rdZFwaL/c/jaGpw35eOPDqJqnkdx3xR5nzcWTmewPjsQWHA9WeI8BoN78Qv7Z/dJX+rlcZPu9VyIMLyVuEF9swGDLG7Sc=
+	t=1783010536; cv=none; b=IpyHYAALRv8ke3g7uwviFKw9yqUSECunAsrCQi8YZZ8kz6cwbqboU18hX/6zdY8m2tuku4ymvH59xRELXOcZfTMt/gG+4zKr7B2eNNC3UWnlEvWRvFe96IMKOlohXu/8qIwK5f3+TwJMdprHm2fB54/rmFMiiFA2HBP+1LNrmjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010533; c=relaxed/simple;
-	bh=n8UEPaffKFycbEP54eg89Mfex9yLDEfKt7Ny5kibDpA=;
+	s=arc-20240116; t=1783010536; c=relaxed/simple;
+	bh=x09uRbWXlNs7yPZHv/cl/SVLoHRA3z/rcm2BgjYNroU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ismLAU13z0cqtn2NldA/Xph6Jpb7cXLJZX/+YJ51ewpY77TaIHwCZeffu4xq45QN55uGAcTzPvRcTIt3m38KHJdmS0yZ68ZSwM8YtFGPsNHRqzI1MEyW9zJb1zt7GjtUPyxgEjDvMjh29Yiy23rUzcB30VrnFh1rBtlAZozbxCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5RLzaHc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GTdTxmbV4jF+C70Y2oMaFZc9+WrQHX5fQhXLKz6sghI7rVKAowBaYI3Ym//c0DoSVhd4Gf9ZW2NEAu5hq8GUottO6GoF4/vtbnaJDQ5wPRiJDFcNTmnq5z6yjGJK6t18b9tRfNKwK6Ts9RfWibocCH/tWKDWrnaRgy8fnOHlatM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/cSvZmI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5RLzaHc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84981F000E9;
-	Thu,  2 Jul 2026 16:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/cSvZmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680461F000E9;
+	Thu,  2 Jul 2026 16:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010532;
-	bh=w9ax0GAcSxR/97JQX6x+MCRLz+Zdofhs3eTBCTB3g3o=;
+	s=korg; t=1783010534;
+	bh=vleu/acfkKLk59yU68yGzwrBhUqM8EVsaCtfHgjk3A8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I5RLzaHc4ZzZqsp4mwBQc8VGvT//mGzd7VYSV2k9b5UO4viJOro/MtJv/gBWqLFrb
-	 g/E+2mQag8OsVHGMknDhna2P8OutqW6JoN//Bg3gdtdh6g7ryWQTxhcJZwqYJ0oOLj
-	 /ZwcmfeMozsU40u4I7up6oX4XnZqzKnPYzS5bS24=
+	b=r/cSvZmIX5KUtg1oCfskIHnbGOsbW4Qe+DysEspcFZJzLW0stx3de5EOJE7QBDqiw
+	 1AJTRqLp2650Zu+oUq9uVkM8euLlcDLiHScMdiLPOpHKLoThPLFe3TnP7TV0Bb5+cd
+	 xJIenNYilYkjdTWsSCfdq90oUiklkXa6+RieTO0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tamir Duberstein <tamird@kernel.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Ansuel Smith <ansuelsmth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 144/204] err.h: use __always_inline on all error pointer helpers
-Date: Thu,  2 Jul 2026 18:20:01 +0200
-Message-ID: <20260702155121.676088851@linuxfoundation.org>
+	Alessandro Groppo <ale.grpp@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.12 145/204] KEYS: fix overflow in keyctl_pkey_params_get_2()
+Date: Thu,  2 Jul 2026 18:20:02 +0200
+Message-ID: <20260702155121.696516043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -59,96 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit 94bfc7f3b0c7c33331ba4ff6cc64ff309dfcbce8 upstream.
+commit cb481e59ea6cae3b7796ac1d7a22b6b24c3f3c0b upstream.
 
-While testing randconfig builds on s390, I came across a link failure with
-CONFIG_DMA_SHARED_BUFFER disabled:
+The length for the internal output buffer is calculated incorrectly, which
+can result overflow when a too small buffer is provided.
 
-ERROR: modpost: "dma_buf_put" [drivers/iommu/iommufd/iommufd.ko] undefined!
+Fix the bug by allocating internal output with the size of the maximum
+length of the cryptographic primitive instead of caller provided size.
 
-The problem here is that IS_ERR() is not inlined and dead code elimination
-fails as a consequence.
-
-The err.h helpers all turn into a trivial assignment of a bit mask and
-should never result in a function call, so force them to always be inline.
-This should generally result in better object code aside from avoiding
-the link failure above.
-
-Link: https://lore.kernel.org/20260526101851.2495110-1-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Tamir Duberstein <tamird@kernel.org>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Ansuel Smith <ansuelsmth@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/keyrings/20260531024914.3712130-1-jarkko@kernel.org/
+Cc: stable@vger.kernel.org # v4.20+
+Fixes: 00d60fd3b932 ("KEYS: Provide keyctls to drive the new key type ops for asymmetric keys [ver #2]")
+Reported-by: Alessandro Groppo <ale.grpp@gmail.com>
+Tested-by: Alessandro Groppo <ale.grpp@gmail.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/err.h |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ security/keys/keyctl_pkey.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/include/linux/err.h
-+++ b/include/linux/err.h
-@@ -36,7 +36,7 @@
-  *
-  * Return: A pointer with @error encoded within its value.
-  */
--static inline void * __must_check ERR_PTR(long error)
-+static __always_inline void * __must_check ERR_PTR(long error)
- {
- 	return (void *) error;
+--- a/security/keys/keyctl_pkey.c
++++ b/security/keys/keyctl_pkey.c
+@@ -138,28 +138,35 @@ static int keyctl_pkey_params_get_2(cons
+ 		if (uparams.in_len  > info.max_dec_size ||
+ 		    uparams.out_len > info.max_enc_size)
+ 			return -EINVAL;
++
++		params->out_len = info.max_enc_size;
+ 		break;
+ 	case KEYCTL_PKEY_DECRYPT:
+ 		if (uparams.in_len  > info.max_enc_size ||
+ 		    uparams.out_len > info.max_dec_size)
+ 			return -EINVAL;
++
++		params->out_len = info.max_dec_size;
+ 		break;
+ 	case KEYCTL_PKEY_SIGN:
+ 		if (uparams.in_len  > info.max_data_size ||
+ 		    uparams.out_len > info.max_sig_size)
+ 			return -EINVAL;
++
++		params->out_len = info.max_sig_size;
+ 		break;
+ 	case KEYCTL_PKEY_VERIFY:
+ 		if (uparams.in_len  > info.max_data_size ||
+ 		    uparams.in2_len > info.max_sig_size)
+ 			return -EINVAL;
++
++		params->out_len = info.max_sig_size;
+ 		break;
+ 	default:
+ 		BUG();
+ 	}
+ 
+ 	params->in_len  = uparams.in_len;
+-	params->out_len = uparams.out_len; /* Note: same as in2_len */
+ 	return 0;
  }
-@@ -52,7 +52,7 @@ static inline void * __must_check ERR_PT
-  * @ptr: An error pointer.
-  * Return: The error code within @ptr.
-  */
--static inline long __must_check PTR_ERR(__force const void *ptr)
-+static __always_inline long __must_check PTR_ERR(__force const void *ptr)
- {
- 	return (long) ptr;
- }
-@@ -65,7 +65,7 @@ static inline long __must_check PTR_ERR(
-  * @ptr: The pointer to check.
-  * Return: true if @ptr is an error pointer, false otherwise.
-  */
--static inline bool __must_check IS_ERR(__force const void *ptr)
-+static __always_inline bool __must_check IS_ERR(__force const void *ptr)
- {
- 	return IS_ERR_VALUE((unsigned long)ptr);
- }
-@@ -79,7 +79,7 @@ static inline bool __must_check IS_ERR(_
-  *
-  * Like IS_ERR(), but also returns true for a null pointer.
-  */
--static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
-+static __always_inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
- {
- 	return unlikely(!ptr) || IS_ERR_VALUE((unsigned long)ptr);
- }
-@@ -91,7 +91,7 @@ static inline bool __must_check IS_ERR_O
-  * Explicitly cast an error-valued pointer to another pointer type in such a
-  * way as to make it clear that's what's going on.
-  */
--static inline void * __must_check ERR_CAST(__force const void *ptr)
-+static __always_inline void * __must_check ERR_CAST(__force const void *ptr)
- {
- 	/* cast away the const */
- 	return (void *) ptr;
-@@ -114,7 +114,7 @@ static inline void * __must_check ERR_CA
-  *
-  * Return: The error code within @ptr if it is an error pointer; 0 otherwise.
-  */
--static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
-+static __always_inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
- {
- 	if (IS_ERR(ptr))
- 		return PTR_ERR(ptr);
+ 
 
 
