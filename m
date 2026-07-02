@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C0D345752;
-	Thu,  2 Jul 2026 16:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8408922D7B9;
+	Thu,  2 Jul 2026 16:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010609; cv=none; b=jaGxQT6/QQckyGQuK669mAw5XcihnftJayKglfuA8zH5o079StvFJmeG9TpxjJDW0BHjoeZZ/XPs+ls0ahCbP+dCn7tOxOxQvT4TQ6CiqqsD7TMw3VenVlS9nynWPyUcAa5IzZ1B6IAh3xb4aewZBe2hoC/RklRqnS3YIQ5WK8E=
+	t=1783010612; cv=none; b=mKbvfX+zb+ZtMFtGXsW5PMd+jCB2IQT5hMIWFmIAwjsSi895BT1nJidMAQg61Qa/KkZoUAtPRBkG7AYOjqBTjC7QIfVMAI6LHMTXWGlngROGCA832xyGmOo/x+KnOA5BhMzfdBNSyyiRRsboG1/JXds1j5DCk/KEgxYyLoecd50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010609; c=relaxed/simple;
-	bh=Z0WzoYMK5GaIDLJr95nI/LzFUi0MGwtQyXyTVxO2R8E=;
+	s=arc-20240116; t=1783010612; c=relaxed/simple;
+	bh=pV3ejcsup1iSe6VlPV+lWBSZRWooe1aiQJZtMgZHc6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRYzc5B0QpqYWTBxI9TY5dJGfRXjPcWd+zVJpFT0J2Xyz3ma9IDkWcH5tMwWLzT7TbzcVj+bsLviWhYEm/VmQLjuPe5dyonOT+P/qoXhFcokjmdNYdxGqqdl0OFzbbxx8TcN7lUVSshfX1kL+76Evc+PAGc14sSmvfSc2m4gupM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/WPArzW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sCm7nQsi6CmnkcfXS5ZHtE4fTdAkwI4ITsFX9JxKpcVtMkNZjidPQMy+RBETMfixzyJ0+znZ1Q9SkIJQMkNQ/rOLiLNFy5mKzsFe4UZZtPK65gkfB6TuctpaCoWdnbnQx/fUjAqFTD4KxLppFTEHdqSDqCAd3TZDjfLxY0Nc+/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKQ1j3/L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/WPArzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032D11F000E9;
-	Thu,  2 Jul 2026 16:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKQ1j3/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19611F000E9;
+	Thu,  2 Jul 2026 16:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010608;
-	bh=ZEt/zOn9L/eeoKbHxPils2jrdHfbVOY7wT7N0Q4ZxXc=;
+	s=korg; t=1783010611;
+	bh=tDV8QcoccFjddg/O0k1ytg6wsORhtXIDMVC+0grLbSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r/WPArzWLr+WFaNyLQjl7knj5vV/CfgiTMh6e6EarRKkqpPFO8MVSU9YnySuTGsSP
-	 0fiFqskcMD/7/p9eei5Usjr8D2wqkXNMmNXVinh8MEq1/0YVze5aLxDOT8mLC8YCB0
-	 F/UH9Owu3oDFgqzhSkZ+MdK3/+/PmO3mNucewtvI=
+	b=uKQ1j3/LRSy318xLW7SmEaU3yVtGgey+1DxwTJmGXC55aSIN6CR72LYiUCzcJ3kva
+	 QaoPQqmSqPRn7BG4FZ9NRBytS2jEbvDTtFmQOFNwH1pBnTzFQhUo3F6D7/ZiKLYo5g
+	 2OCseEpRw6TQRSjzvYhyCOWclTrV8uZ2iuwltWds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 157/204] f2fs: fix incorrect FI_NO_EXTENT handling in __destroy_extent_node()
-Date: Thu,  2 Jul 2026 18:20:14 +0200
-Message-ID: <20260702155121.948130171@linuxfoundation.org>
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 6.12 175/204] 9p: avoid putting oldfid in p9_client_walk() error path
+Date: Thu,  2 Jul 2026 18:20:32 +0200
+Message-ID: <20260702155122.322574411@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,85 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit 1f70ddb28a3c71df124da5fa4040c808116d6bb9 upstream.
+commit 1a3860d46e3eb47dbd60339783cdad7904486b9f upstream.
 
-When __destroy_extent_node() sets the inode flag FI_NO_EXTENT, it does
-not reset the length of the largest extent to 0 and update the inode
-folio. Since modifications to the extent tree are disallowed afterward,
-the cached largest extent may become stale. This can trigger the
-following error in xfstests generic/388:
+When p9_client_walk() is called with clone set to false, fid aliases
+oldfid. If the walk subsequently fails after the request has been sent,
+the error path jumps to clunk_fid, which currently calls p9_fid_put(fid)
+unconditionally.
 
-F2FS-fs (dm-0): sanity_check_extent_cache: inode (ino=1761) extent info [220057, 57, 6] is incorrect, run fsck to fix
+This drops a reference to oldfid even though ownership of oldfid remains
+with the caller. If this is the last reference, oldfid can be clunked and
+destroyed while the caller still expects it to be valid. A later use or
+put of oldfid can then trigger a use-after-free or refcount underflow.
 
-In the f2fs_drop_inode path, __destroy_extent_node() does not need to
-guarantee that et->node_cnt is 0, because concurrency with writeback
-is expected in this path, and writeback may update the extent cache.
+Fix this by only putting fid in the clunk_fid error path when it does not
+alias oldfid, matching the existing guard in the error path below.
 
-This patch reverts commit ed78aeebef05 ("f2fs: fix node_cnt race between
-extent node destroy and writeback"), and remove the unnecessary zero
-check of et->node_cnt.
+This can be triggered when a multi-component walk is split into multiple
+p9_client_walk() calls and a later non-cloning walk fails. A reproducer
+and refcount warning logs are available on request.
 
-Fixes: ed78aeebef05 ("f2fs: fix node_cnt race between extent node destroy and writeback")
+Fixes: b48dbb998d70 ("9p fid refcount: add p9_fid_get/put wrappers")
 Cc: stable@vger.kernel.org
-Reported-by: Chao Yu <chao@kernel.org>
-Suggested-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM 5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Message-ID: <20260528053918.53550-1-zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/extent_cache.c |   19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ net/9p/client.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -86,10 +86,9 @@ static bool __may_extent_tree(struct ino
- 	if (!__init_may_extent_tree(inode, type))
- 		return false;
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1215,7 +1215,8 @@ struct p9_fid *p9_client_walk(struct p9_
  
--	if (is_inode_flag_set(inode, FI_NO_EXTENT))
--		return false;
--
- 	if (type == EX_READ) {
-+		if (is_inode_flag_set(inode, FI_NO_EXTENT))
-+			return false;
- 		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
- 				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
- 			return false;
-@@ -602,14 +601,10 @@ static unsigned int __destroy_extent_nod
+ clunk_fid:
+ 	kfree(wqids);
+-	p9_fid_put(fid);
++	if (fid != oldfid)
++		p9_fid_put(fid);
+ 	fid = NULL;
  
- 	while (atomic_read(&et->node_cnt)) {
- 		write_lock(&et->lock);
--		if (!is_inode_flag_set(inode, FI_NO_EXTENT))
--			set_inode_flag(inode, FI_NO_EXTENT);
- 		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
- 		write_unlock(&et->lock);
- 	}
- 
--	f2fs_bug_on(sbi, atomic_read(&et->node_cnt));
--
- 	return node_cnt;
- }
- 
-@@ -639,12 +634,12 @@ static void __update_extent_tree_range(s
- 
- 	write_lock(&et->lock);
- 
--	if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
--		write_unlock(&et->lock);
--		return;
--	}
--
- 	if (type == EX_READ) {
-+		if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
-+			write_unlock(&et->lock);
-+			return;
-+		}
-+
- 		prev = et->largest;
- 		dei.len = 0;
- 
+ error:
 
 
