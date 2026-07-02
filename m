@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453A034887B;
-	Thu,  2 Jul 2026 16:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA97235E1CE;
+	Thu,  2 Jul 2026 16:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010060; cv=none; b=Amin5XntyRYD69XUfLuJRuAh8WZP6fZOWs2/UNN4Q2LeTgWBk5aoXMBcykWYvkDZvLk8O6qk69iAVoszWnsobs7R4NwlBJyXEdU8qqKGwBaxxBi28aFQ0VzzYiZboaFKxBC8RqVUSgUjK/zaLhlR2dHAdQ8MfHSR6sOdTlvI2aU=
+	t=1783010062; cv=none; b=YA+Y9bMQz2tqajqocUzlNzhHlN/WmLdlLSu0ViAlXbAQpP7gyGqhRsQYbgDc+E0StGl0X7K2cw8E0G+9u+lyVjkFvl4CEcQuEKzMNRYSA6dk7iQVfSriMfCHCCDOM0R2L2lPXtbYnx73aOP9r7R8Zv1e2r29RkXtBoS9OL8DKeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010060; c=relaxed/simple;
-	bh=4HLr0h4Z3xF1chPqV1hV9n0G1/ZaogedyCeb+3tX+ZA=;
+	s=arc-20240116; t=1783010062; c=relaxed/simple;
+	bh=VNLarYh63fABAKKoJd1jlu5QDy2WT70ZV5vqx1AUoUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AB+91VeVfPHqyHbUaWaz3CCSaS/83y4CRE29GAmH90iT0V6kzcGgzaasvhUK51rkhOT3xxnrcHHWE5el4YdJbsz+BfSVeGstPMWXS+ZiC/D+se/Kn3cCPv6nOc1XfeIuUjMjC83hz2iLYRWxSjoxn8nlj4qMfWpUCCB4HH3/iIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PBpksaA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QndThImscJ0gLfl0JUMn/kjDwY+pgPw8kG+22usaQKifdZWzIAniIPJ2B+rKUQsSEGtuWQOwdA1QvVdrebbsWtGOyVt/aqnqyWwFYCSYsA1b1mfAocz7ppEZQHmCTtD1KiyE5awpBRNyISSeaTPhrfbAqexqpkBsDWpsjG8W+zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7wsk6Lt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PBpksaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4071F00A3D;
-	Thu,  2 Jul 2026 16:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7wsk6Lt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D94E1F000E9;
+	Thu,  2 Jul 2026 16:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010059;
-	bh=Eu88PzwtgIcxD/ffs3BLnRTGaKl+yiG3vhYPgrfyaIg=;
+	s=korg; t=1783010061;
+	bh=Z72m2jjlrNy+27WcCmalgBDYk/jMxwWkg7IWAfxIyAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0PBpksaAKOK2vN0n4oG5KjSHulxdzm9ciYNK92I2zTYEiGaKPYwLaUuu89PbUnTBf
-	 mGNeHzRL5z8Wgyh91cIJNzATPuRYtIa06pG+tcHGeGFma+GMPf2OPHkT/6PMH9unRI
-	 giep9QXEDCZZ0O9QnhUoz16GXdWvDEStnZZui9/k=
+	b=v7wsk6Ltw26gDjNWZb5MHo2ytUbBwBSd/tnpW7sbz48MpHmUSmwKQT7fUoxtE1VVV
+	 hNrLmsNYr2x3rBdOFwb5jszZHpObNuc7ruzXmJjZyHOkpBRxpff+c8VbyDlmwOj0uh
+	 +pcDWukypBdAxey+ZHd9g4qGK0x9o1mWEVKA69QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 094/129] tipc: fix slab-use-after-free Read in tipc_aead_decrypt_done
-Date: Thu,  2 Jul 2026 18:20:13 +0200
-Message-ID: <20260702155114.088825581@linuxfoundation.org>
+	Guo Ren <guoren@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 095/129] LoongArch: Report dying CPU to RCU in stop_this_cpu()
+Date: Thu,  2 Jul 2026 18:20:14 +0200
+Message-ID: <20260702155114.109325852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -53,124 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit bda3348872a2ef0d19f2df6aa8cb5025adce2f20 upstream.
+commit f2539c56c74691e7a88af6372ba2b48c06ed2fe4 upstream.
 
-tipc_aead_decrypt() goes straight from tipc_bearer_hold(b) to
-crypto_aead_decrypt(req) without taking a reference on the netns, unlike
-the encrypt path. When crypto_aead_decrypt() is offloaded asynchronously
-(e.g. the SIMD aead wrapper queuing to cryptd), the cryptd worker runs
-tipc_aead_decrypt_done() later. If the bearer's netns is torn down in the
-meantime, cleanup_net() -> tipc_exit_net() -> tipc_crypto_stop() frees the
-per-netns tipc_crypto, and the completion then reads it:
-tipc_aead_decrypt_done() dereferences aead->crypto->stats and
-aead->crypto->net, and tipc_crypto_rcv_complete() dereferences
-aead->crypto->aead[] and the node table -- reading freed memory.
+This is a port of MIPS commit 9f3f3bdc6d9dac1 ("MIPS: smp: report dying
+CPU to RCU in stop_this_cpu()"). smp_send_stop() parks all secondary
+CPUs in stop_this_cpu(). And the function marks the CPU offline for the
+scheduler via set_cpu_online(false) but never informs RCU, so RCU keeps
+expecting a quiescent state from CPUs that are now spinning forever with
+interrupts disabled.
 
-Decoded KASAN splat (v7.1-rc7, CONFIG_KASAN_INLINE + TIPC + TIPC_CRYPTO):
+As long as nothing waits for an RCU grace period after smp_send_stop()
+this is harmless, which is why it went unnoticed. However, since commit
+91840be8f710370 ("irq_work: Fix use-after-free in irq_work_single() on
+PREEMPT_RT"), irq_work_sync() calls synchronize_rcu() on architectures
+without an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt()
+returns false. Any irq_work_sync() issued in the reboot/shutdown/halt
+path after smp_send_stop() then blocks on a grace period that can never
+complete, hanging the reboot:
 
-  BUG: KASAN: slab-use-after-free in tipc_aead_decrypt_done (net/tipc/crypto.c:999)
-  Read of size 8 at addr ffff8881056258a8 by task kworker/u16:2/51
-  Workqueue: events_unbound
-  Call Trace:
-   tipc_aead_decrypt_done (net/tipc/crypto.c:999)
-   process_one_work (kernel/workqueue.c:3314)
-   worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
+  ...
+  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+  rcu: Offline CPU 1 blocking current GP.
+  rcu: Offline CPU 2 blocking current GP.
+  rcu: Offline CPU 3 blocking current GP.
 
-  Allocated by task 169:
-   __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-   tipc_crypto_start (net/tipc/crypto.c:1502)
-   tipc_init_net (net/tipc/core.c:72)
-   ops_init (net/core/net_namespace.c:137)
-   setup_net (net/core/net_namespace.c:446)
-   copy_net_ns (net/core/net_namespace.c:579)
-   create_new_namespaces (kernel/nsproxy.c:132)
-   __x64_sys_unshare (kernel/fork.c:3316)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+This issue needs some hacks to reproduce, and it was not noticed on
+LoongArch because arch_irq_work_has_interrupt() usually returns true.
 
-  Freed by task 8:
-   kfree (mm/slub.c:6566)
-   tipc_exit_net (net/tipc/core.c:119)
-   cleanup_net (net/core/net_namespace.c:704)
-   process_one_work (kernel/workqueue.c:3314)
-   kthread (kernel/kthread.c:436)
+Call rcutree_report_cpu_dead() once interrupts are disabled, mirroring
+the generic CPU-hotplug offline path, so RCU stops waiting on the parked
+CPUs and grace periods can still complete. LoongArch shuts down all CPUs
+here without going through the CPU-hotplug mechanism, so this report is
+not otherwise issued.
 
-This is the same class of bug that commit e279024617134 ("net/tipc: fix
-slab-use-after-free Read in tipc_aead_encrypt_done") fixed for the encrypt
-side. The encrypt path takes maybe_get_net(aead->crypto->net) before
-crypto_aead_encrypt() and drops it with put_net() on the synchronous
-return paths and in tipc_aead_encrypt_done(); the -EINPROGRESS/-EBUSY
-return keeps the reference for the async callback to release. The decrypt
-path was left without the equivalent guard.
-
-Mirror the encrypt-side fix on the decrypt path: take a net reference
-before crypto_aead_decrypt() (failing with -ENODEV and the matching
-bearer put if it cannot be acquired), keep it across the
--EINPROGRESS/-EBUSY async return, and drop it with put_net() on the
-synchronous success/error return and at the end of
-tipc_aead_decrypt_done().
-
-Reproduced under KASAN on v7.1-rc7: a UDP bearer with a cluster key is
-flooded with crafted encrypted frames from an unknown peer (driving the
-cluster-key decrypt path) while the bearer's netns is repeatedly torn
-down. The completion must run asynchronously to outlive
-tipc_crypto_stop(); on x86 the stock aesni gcm(aes) now decrypts
-synchronously, so the async path was exercised via cryptd offload. The
-unguarded aead->crypto dereference in tipc_aead_decrypt_done() is the
-unpatched upstream path; tipc_aead_decrypt() still lacks
-maybe_get_net(aead->crypto->net), so the completion can outlive the free
-on any config where crypto_aead_decrypt() goes async.
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
-Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260617075818.37431-1-doruk@0sec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/crypto.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/loongarch/kernel/smp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -950,12 +950,20 @@ static int tipc_aead_decrypt(struct net
- 		goto exit;
- 	}
- 
-+	/* Get net to avoid freed tipc_crypto when delete namespace */
-+	if (!maybe_get_net(net)) {
-+		tipc_bearer_put(b);
-+		rc = -ENODEV;
-+		goto exit;
-+	}
-+
- 	/* Now, do decrypt */
- 	rc = crypto_aead_decrypt(req);
- 	if (rc == -EINPROGRESS || rc == -EBUSY)
- 		return rc;
- 
- 	tipc_bearer_put(b);
-+	put_net(net);
- 
- exit:
- 	kfree(ctx);
-@@ -993,6 +1001,7 @@ static void tipc_aead_decrypt_done(struc
- 	}
- 
- 	tipc_bearer_put(b);
-+	put_net(net);
+--- a/arch/loongarch/kernel/smp.c
++++ b/arch/loongarch/kernel/smp.c
+@@ -517,6 +517,7 @@ static void stop_this_cpu(void *dummy)
+ 	set_cpu_online(smp_processor_id(), false);
+ 	calculate_cpu_foreign_map();
+ 	local_irq_disable();
++	rcutree_report_cpu_dead();
+ 	while (true);
  }
  
- static inline int tipc_ehdr_size(struct tipc_ehdr *ehdr)
 
 
