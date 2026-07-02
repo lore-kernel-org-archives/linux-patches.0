@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860B0DDA9;
-	Thu,  2 Jul 2026 16:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E24033B6E8;
+	Thu,  2 Jul 2026 16:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010036; cv=none; b=nnR3qPznT2YIZ3zP9Y7wpXCPNgR5QWiLNO1fhdLDRRHym2GP7JbVJsIJnI416glmw4WR2ejzYEvaitlvR36Ypk6yKsAjIW6178LphfIkdu3rpv4tUWSGzM7LfwuA3iISbOjkNy0rqEZBIFZNHCK/p17VGuaRfwTDceWJ87L7pOQ=
+	t=1783010039; cv=none; b=TnpGNBUQsS2yKKHE6BSh2zUQAuKRj10IGtwCi9q74HVmlX1PfTbUUrqfyRP50dZZzY++AT8xG6Yr1SLyl/IVB67ZwU13kzwdNIkfVY7jOIWfROZFpiX/gC3kDKkRIHxW8v6EESCBDcnvTOtyhPAhvor0woObt0SYrsQQHyP4TLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010036; c=relaxed/simple;
-	bh=cJ/e8ZkNbg0Iv/J6mxyxWWx+SlEGpO+Qn3S1vPDERHw=;
+	s=arc-20240116; t=1783010039; c=relaxed/simple;
+	bh=rJdiJ0g0h3ADRWCVEFiP1QOYxaI4qOKD5eiGSX6ddbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FA2/wKKbcPQu06K0cVJ5IePxXnd913UQiQjmztkKddmWXs3dGzj377wr/IaH2tf75KakK3WS0wqjptg3TKwO0L2rcBEwcDSqCETMc5fLHnXXMbhASLDH8LGZ+aetXsTiZvUiV59mfBM27l/YZSvkSgx/efoKEN6lWfIdNrp5Uv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srZMjl9v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IaIfp+VvRQEI/axziRP/mnhZ8rzrWjR93WrLVk20Kh3xyA0AReBak3iHNQyZGFiiZxBs0e+ihkNlhL24o6gbtnco051rmjh07aJN38bbihexT/ubab+8xLOHNI4vhkjAxZEh6RJCclAQc4rBJptUozRRj3tS0WQUxb3guZ4LAXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyBitoAv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srZMjl9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1251F000E9;
-	Thu,  2 Jul 2026 16:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyBitoAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C781F000E9;
+	Thu,  2 Jul 2026 16:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010035;
-	bh=BIOMLGhVdOhHzB9ZqHC6r1ik47+pDXzqg/4bkQ9pd50=;
+	s=korg; t=1783010038;
+	bh=0W6pfam9UJdPzPzyDCzfS5/geYzhjOa7W00I4ppGSvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srZMjl9vpZp05l0PL+18I0Gya5VhbjlF8htLUKCC29DIgvgKX4m2wJzjqyggXNpCz
-	 o8zN8e2DMLeUh03G9SFotE4bkXyaBK1PM0oyg+dZHQVUfsoUKbB35F1MjgJ2zOLb8N
-	 aHXZF+Fve0B1Vhd605ffRBR0/x7MwBBl1KnVrrV8=
+	b=CyBitoAvmAt8/sjlG/bsDVIjwG8TQT1uP1RMCw+AKvjrSanHuBTuqDgHxWPsyJS0B
+	 KFXz2z+/g3fpTmYA89Ikryjo37QdyCl2hbSqf9cDVIrJPsSJZ54iwdEVp2sgg/NjyA
+	 Bb94a/xlyjSwXwdMZkm6+p6UcrQs/B/s2LrJhbKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.1 086/129] wifi: rtlwifi: rtl8821ae: Fix C2H bit location in RX descriptor
-Date: Thu,  2 Jul 2026 18:20:05 +0200
-Message-ID: <20260702155113.922622165@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 060/129] batman-adv: tp_meter: initialize last_recv_time during init
+Date: Thu,  2 Jul 2026 18:19:39 +0200
+Message-ID: <20260702155113.387344397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -50,39 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 83d38df6929118c3f996b9e3351c2d5014073d87 upstream.
+commit 811cb00fa8cdc3f0a7f6eefc000a6888367c8c8f upstream.
 
-Bit 28 of double word 2 in the RX descriptor indicates if the packet is
-a normal 802.11 frame, or a message from the wifi firmware to the
-driver (Card 2 Host).
+The last_recv_time is the most important indicator for a receiver session
+to figure out whether a session timed out or not. But this information was
+only initialized after the session was added to the tp_receiver_list and
+after the timer was started.
 
-Commit f5678bfe1cdc ("rtlwifi: rtl8821ae: Replace local bit manipulation
-macros") mistakenly made the driver look for this bit in double word 1,
-causing packet loss and Bluetooth coexistence problems.
+In the worst case, the timer (function) could have tried to access this
+information before the actual initialization was reached. Like rest of the
+variables of the tp_meter receiver session, this field has to be filled out
+before any other (parallel running) context has the chance to access it.
 
-Fixes: f5678bfe1cdc ("rtlwifi: rtl8821ae: Replace local bit manipulation macros")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/04da7398-cedb-425a-a810-5772ab10139d@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/tp_meter.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/trx.h
-@@ -291,7 +291,7 @@ static inline int get_rx_desc_paggr(__le
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 2bba53fc6da5c0..133eed2fa9507f 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -1403,8 +1403,10 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
  
- static inline int get_rx_status_desc_rpt_sel(__le32 *__pdesc)
- {
--	return le32_get_bits(*(__pdesc + 1), BIT(28));
-+	return le32_get_bits(*(__pdesc + 2), BIT(28));
- }
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+ 					      icmp->session, BATADV_TP_RECEIVER);
+-	if (tp_vars)
++	if (tp_vars) {
++		tp_vars->last_recv_time = jiffies;
+ 		goto out_unlock;
++	}
  
- static inline int get_rx_desc_rxmcs(__le32 *__pdesc)
+ 	if (!atomic_add_unless(&bat_priv->tp_num, 1, BATADV_TP_MAX_NUM)) {
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+@@ -1432,6 +1434,8 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 	kref_get(&tp_vars->refcount);
+ 	timer_setup(&tp_vars->timer, batadv_tp_receiver_shutdown, 0);
+ 
++	tp_vars->last_recv_time = jiffies;
++
+ 	kref_get(&tp_vars->refcount);
+ 	hlist_add_head_rcu(&tp_vars->list, &bat_priv->tp_list);
+ 
+@@ -1480,9 +1484,9 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
+ 				   icmp->orig);
+ 			goto out;
+ 		}
+-	}
+ 
+-	tp_vars->last_recv_time = jiffies;
++		tp_vars->last_recv_time = jiffies;
++	}
+ 
+ 	/* if the packet is a duplicate, it may be the case that an ACK has been
+ 	 * lost. Resend the ACK
+-- 
+2.53.0
+
 
 
