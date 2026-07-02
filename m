@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C67330B29;
-	Thu,  2 Jul 2026 16:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A336340410;
+	Thu,  2 Jul 2026 16:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009916; cv=none; b=f7sld1LfVeMcHPwGVE7Rbr0SQiTez8pHsZFfEr4LCCTzVTr3/wnhipTpQ1cKeyPqkVoiGkniV+nkGKHmqgSpgQVHdLNrUs2kFmaFCR8bFwHZjSvyFwRs8Z73VEL+K082DWjshWu0zfPuPwKTuTEHmg3KY6XqN7a1rEGyqHcmYzE=
+	t=1783009918; cv=none; b=g7m294X3m0iyJ9WaFN5BYNVfX22PY+dHMDzyK1XO09cMldvNLMt1MTwHYoGKbOvWPLPGmUL6qWOlLkMI4QJ/2+y6m7KIxVV4N91/Kpbwuu5m/QZL2RiXthAAkmu4858YmiXn69FFSntO7NcO++EpWBvx3gElDwoJYT3gTUUDjek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009916; c=relaxed/simple;
-	bh=wk848r46DIJ8YXjKTLfRixnoTpSAFGmQ3fJlyEKkUYo=;
+	s=arc-20240116; t=1783009918; c=relaxed/simple;
+	bh=mmYZYvldZB/ODuhQuKvqsLLa/ArLUiJPS/H2EjoXijI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WC5VHU99gjgEwgp7x6NKs9I61plTLBCQH/JzBXrRSerUMLt80M5AHRenghXJ87hYdafDLbEgAVKYQOgzcMVWiFx19procwaIUu2023duazvY2dnR5Xpu2dxHnV0n+KzTIcjgQYJL8lCoGaBvpKOrY3p43d/ngeP1pkqJPqSfs4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsGMPqIm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sdQ5MaWNGJ/gLFIKtk9au9KJAEPX0RbIKohEUkp64c9Q+HGT2OwNvSLRFIBM1faV90sMkYRgCK0N4mlhQaSAU4YcXYV+8a94yL4fJY4gonNud8NIM/I9YvygwEjzSwDG6RPNWGmZAark0OoDzPdyasbNIhjBKnnzjrlCURkogPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfuZne0Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsGMPqIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F841F000E9;
-	Thu,  2 Jul 2026 16:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfuZne0Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7FE1F000E9;
+	Thu,  2 Jul 2026 16:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009914;
-	bh=YPPknz2Rd9jvtPtj3V3CZWUzv8nGsCV3A3Zxf/gR5UE=;
+	s=korg; t=1783009917;
+	bh=yI6TZvLp5Vd1mzlNQCSOXqM8FnDXh+Cfy4WP0otcASU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YsGMPqImGp2hEVYft54DIvmnUjxwxrl5ZQnEcU2G+PNSsKvV7xfVQV8IVcjfjpl6l
-	 2r0JutWCm+PaNbkt+7JwGdwYtrChJO8Y25yEj0bSn+o91h+bHZG+x97iMkGAnI7IDv
-	 GKOsnPvQLjXgTQrnj0opSLH841UtrmMB/Qc6LLXI=
+	b=qfuZne0ZVGzHHrr67GPrygPYv7SoWAjJLF+IWVtFZ3TAZojCLA1u6VRZJq1rI1v3p
+	 R71SKXtgAv1LkjcAoYOjzkRIegcqk83kSNrrhZMaR7Ciu7weMmGdvCe30alBB5TAlb
+	 9b6fBZcBt7HsjiJsKQV+WPTitXA5zom98V1JJEAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/129] selftests/bpf: Move get_time_ns to testing_helpers.h
-Date: Thu,  2 Jul 2026 18:18:52 +0200
-Message-ID: <20260702155112.436376777@linuxfoundation.org>
+	Yi Yang <yiyang13@huawei.com>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.1 040/129] vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
+Date: Thu,  2 Jul 2026 18:19:19 +0200
+Message-ID: <20260702155112.983166420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -52,96 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Yi Yang <yiyang13@huawei.com>
 
-commit 3830d04a7401f277185e4439eb259c1b13e76788 upstream.
+commit a287620312dc6dcb9a093417a0e589bf30fcf38a upstream.
 
-We'd like to have single copy of get_time_ns used b bench and test_progs,
-but we can't just include bench.h, because of conflicting 'struct env'
-objects.
+A KASAN null-ptr-deref was observed in vcs_notifier():
 
-Moving get_time_ns to testing_helpers.h which is being included by both
-bench and test_progs objects.
+BUG: KASAN: null-ptr-deref in vcs_notifier+0x98/0x130
+Read of size 2 at addr qmp_cmd_name: qmp_capabilities, arguments: {}
 
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20230809083440.3209381-19-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: e6c209da7e0e ("selftests/bpf: Check for timeout in perf_link test")
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The issue is a race condition in vcs_write(). When the console_lock is
+temporarily dropped (to copy data from userspace), the vc_data pointer
+obtained from vcs_vc() may become stale. After re-acquiring the lock,
+vcs_vc() is called again to re-validate the pointer. If the vc has been
+deallocated in the meantime, vcs_vc() returns NULL, and the while loop
+breaks (with written > 0). However, after the loop, vcs_scr_updated(vc)
+is still called with the now-NULL vc pointer, leading to a null pointer
+dereference in the notifier chain (vcs_notifier dereferences param->vc).
+
+Fix this by adding a NULL check for vc before calling vcs_scr_updated().
+
+Fixes: 8fb9ea65c9d1 ("vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20260604060734.2914976-1-yiyang13@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/bench.h                    |  9 ---------
- .../selftests/bpf/prog_tests/kprobe_multi_test.c       |  8 --------
- tools/testing/selftests/bpf/testing_helpers.h          | 10 ++++++++++
- 3 files changed, 10 insertions(+), 17 deletions(-)
+ drivers/tty/vt/vc_screen.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/bench.h b/tools/testing/selftests/bpf/bench.h
-index 66959387148375..2c94c57885af85 100644
---- a/tools/testing/selftests/bpf/bench.h
-+++ b/tools/testing/selftests/bpf/bench.h
-@@ -79,15 +79,6 @@ void grace_period_latency_basic_stats(struct bench_res res[], int res_cnt,
- void grace_period_ticks_basic_stats(struct bench_res res[], int res_cnt,
- 				    struct basic_stats *gp_stat);
+--- a/drivers/tty/vt/vc_screen.c
++++ b/drivers/tty/vt/vc_screen.c
+@@ -699,7 +699,7 @@ vcs_write(struct file *file, const char
+ 	}
+ 	*ppos += written;
+ 	ret = written;
+-	if (written)
++	if (written && vc)
+ 		vcs_scr_updated(vc);
  
--static inline __u64 get_time_ns(void)
--{
--	struct timespec t;
--
--	clock_gettime(CLOCK_MONOTONIC, &t);
--
--	return (u64)t.tv_sec * 1000000000 + t.tv_nsec;
--}
--
- static inline void atomic_inc(long *value)
- {
- 	(void)__atomic_add_fetch(value, 1, __ATOMIC_RELAXED);
-diff --git a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-index 0d82e28aed1ac0..8086e28346466f 100644
---- a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-+++ b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-@@ -304,14 +304,6 @@ static void test_attach_api_fails(void)
- 	kprobe_multi__destroy(skel);
- }
- 
--static inline __u64 get_time_ns(void)
--{
--	struct timespec t;
--
--	clock_gettime(CLOCK_MONOTONIC, &t);
--	return (__u64) t.tv_sec * 1000000000 + t.tv_nsec;
--}
--
- static size_t symbol_hash(const void *key, void *ctx __maybe_unused)
- {
- 	return str_hash((const char *) key);
-diff --git a/tools/testing/selftests/bpf/testing_helpers.h b/tools/testing/selftests/bpf/testing_helpers.h
-index f72fb24f8e90fb..ba4f205e7bc757 100644
---- a/tools/testing/selftests/bpf/testing_helpers.h
-+++ b/tools/testing/selftests/bpf/testing_helpers.h
-@@ -7,6 +7,7 @@
- #include <stdbool.h>
- #include <bpf/bpf.h>
- #include <bpf/libbpf.h>
-+#include <time.h>
- 
- int parse_num_list(const char *s, bool **set, int *set_len);
- __u32 link_info_prog_id(const struct bpf_link *link, struct bpf_link_info *info);
-@@ -30,4 +31,13 @@ int load_bpf_testmod(bool verbose);
- void unload_bpf_testmod(bool verbose);
- int kern_sync_rcu(void);
- 
-+static inline __u64 get_time_ns(void)
-+{
-+	struct timespec t;
-+
-+	clock_gettime(CLOCK_MONOTONIC, &t);
-+
-+	return (u64)t.tv_sec * 1000000000 + t.tv_nsec;
-+}
-+
- #endif /* __TESTING_HELPERS_H */
--- 
-2.53.0
-
+ unlock_out:
 
 
