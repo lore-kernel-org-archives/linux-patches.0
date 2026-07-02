@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDF8340408;
-	Thu,  2 Jul 2026 16:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84982FFF9D;
+	Thu,  2 Jul 2026 16:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011392; cv=none; b=kPxAu19tkrPURgPWvCsn+bDohxDYVTjZWbxnIlYFgtHrBYSZzU5m1I06ST8aXkTykZq449+0XKPfPjpwbkXAmAGr23fW79jSq/vt81+xgfVF4furqLuxXbiJ8sBHxHqvtYuKcdEjFzKLURf3FX2vCIm92BZSY1RMvT6mUAQgFaw=
+	t=1783011395; cv=none; b=juIlX8KuxmgZsSAGJBkd6ehlF4hFGqJd+CuOoQZuv5yncVNgE4udxfkg+x1nwUXIYrsGvEG+z/T4IUR/z/9HGdCgkeIWaC89fYnrfjR9/95bR+f/ENCDAUzIj6sR6ml0vTat5xgiubzpIWFLM3GT8EaLMgZq3EWeKSlBvA1BekU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011392; c=relaxed/simple;
-	bh=21EIzs5oy762PIWWFTWQzjpPln8qUtyhPXxuX5uEcaQ=;
+	s=arc-20240116; t=1783011395; c=relaxed/simple;
+	bh=SJxjYD4k1SRCBQ//EshooLADk+6fNYPN24jv7QHAfK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9Mi+/+0r+116Zm3dHcnXEW9KvvSvPZke0fEXsFOUPPm/zhigjf4c3ujY0hExMzFzHk2cJmXb1Lw6FRM1D+48Z7vzjmO1/ehNfRZ8Zc8dIdxOQT5HdyXY6dHSo9VSN2V0JfLrZwfneW5c1/jgirH1RlyxSyB74ranQBX/+BtNWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnEsHeE9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KIKW3e9PBzqP1jt6APvxGul6hyayOOLBCWAWxhlXlgU6QLR7dYtnwi437Evg2JbPiwq8VrKu9QUnCyn4lq0Zl/OonMEOTR1+VnFwXy0doa81fgGdZmhdQA2RalRHdSNK2PWUwyoupbtve1pK/Is+ep5F1SGZWhFRCW2I8vqULl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzh3VojN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnEsHeE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35811F000E9;
-	Thu,  2 Jul 2026 16:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzh3VojN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0101F000E9;
+	Thu,  2 Jul 2026 16:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011391;
-	bh=oEkdvKXRIi5ujle0Gc528vg6rnUWZ45hty/9Ipin4Go=;
+	s=korg; t=1783011393;
+	bh=zneNHN+n24toqdm2Ge1soEr7mAqSmga86ITqZHMQD1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnEsHeE9oI8pXNZ8Xi1WRrUda+h8JlzR6gOey7p5h3q2RW48zB4mUkM5qEIO9bJcq
-	 eB8SQZZpQAhdEXFHlT5uuVJDJFFLvKJQjgd6ihWkNE8aPm7Ei1cW1yAucU/T80dz//
-	 L6ahB7xcHFRGoJ62K9PR2SN5r2U20bHAk3hQeJNA=
+	b=fzh3VojNPKC2RBaehfKfWx68NK527HMhVg76UxeaKXgRWcPIDokA2ekrLPhAnjlya
+	 fsZKZ/bRIENUPi+pAjQQdSBoebNmIqEosDe/5wT5PhPg9VtuhS8HWTj9LQbbMFMawm
+	 5FqNXES/qiFBn9GdKNcp01b4etmmzhoCx0AABDUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 089/108] power: reset: linkstation-poweroff: fix use-after-free in the linkstation_poweroff_init()
-Date: Thu,  2 Jul 2026 18:21:26 +0200
-Message-ID: <20260702155113.956274402@linuxfoundation.org>
+	Yanko Kaneti <yaneti@declera.com>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.18 090/108] riscv: kfence: Call mark_new_valid_map() for kfence_unprotect()
+Date: Thu,  2 Jul 2026 18:21:27 +0200
+Message-ID: <20260702155113.976085199@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -50,36 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Vivian Wang <wangruikang@iscas.ac.cn>
 
-commit 8eec545cde69e46e9a1d2b7d915ce4f5df85b3bd upstream.
+commit 8d6c8c40e733b3fcaf92fed0a078bba2f6941a3b upstream.
 
-Move of_node_put(dn) after the of_match_node() call, which still needs
-the node pointer. The node reference is correctly released after use.
+In kfence_protect_page(), which kfence_unprotect() calls, we cannot send
+IPIs to other CPUs to ask them to flush TLB. This may lead to those CPUs
+spuriously faulting on a recently allocated kfence object despite it
+being valid, leading to false positive use-after-free reports.
 
-Fixes: e2f471efe1d6 ("power: reset: linkstation-poweroff: prepare for new devices")
+Fix this by calling mark_new_valid_map() so that the page fault handling
+code path notices the spurious fault and flushes TLB then retries the
+access.
+
+Update the comment in handle_exception to indicate that
+new_valid_map_cpus_check also handles kfence_unprotect() spurious
+faults.
+
+Note that kfence_protect() has the same stale TLB entries problem, but
+that leads to false negatives, which is fine with kfence.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260407073025.271865-1-vulab@iscas.ac.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reported-by: Yanko Kaneti <yaneti@declera.com>
+Fixes: b3431a8bb336 ("riscv: Fix IPIs usage in kfence_protect_page()")
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Link: https://patch.msgid.link/20260303-handle-kfence-protect-spurious-fault-v2-2-f80d8354d79d@iscas.ac.cn
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/reset/linkstation-poweroff.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/kfence.h |    7 +++++--
+ arch/riscv/kernel/entry.S       |    6 ++++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/power/reset/linkstation-poweroff.c
-+++ b/drivers/power/reset/linkstation-poweroff.c
-@@ -163,10 +163,10 @@ static int __init linkstation_poweroff_i
- 	dn = of_find_matching_node(NULL, ls_poweroff_of_match);
- 	if (!dn)
- 		return -ENODEV;
--	of_node_put(dn);
+--- a/arch/riscv/include/asm/kfence.h
++++ b/arch/riscv/include/asm/kfence.h
+@@ -6,6 +6,7 @@
+ #include <linux/kfence.h>
+ #include <linux/pfn.h>
+ #include <asm-generic/pgalloc.h>
++#include <asm/cacheflush.h>
+ #include <asm/pgtable.h>
  
- 	match = of_match_node(ls_poweroff_of_match, dn);
- 	cfg = match->data;
-+	of_node_put(dn);
+ static inline bool arch_kfence_init_pool(void)
+@@ -17,10 +18,12 @@ static inline bool kfence_protect_page(u
+ {
+ 	pte_t *pte = virt_to_kpte(addr);
  
- 	dn = of_find_node_by_name(NULL, cfg->mdio_node_name);
- 	if (!dn)
+-	if (protect)
++	if (protect) {
+ 		set_pte(pte, __pte(pte_val(ptep_get(pte)) & ~_PAGE_PRESENT));
+-	else
++	} else {
+ 		set_pte(pte, __pte(pte_val(ptep_get(pte)) | _PAGE_PRESENT));
++		mark_new_valid_map();
++	}
+ 
+ 	preempt_disable();
+ 	local_flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -107,8 +107,10 @@ SYM_CODE_START(handle_exception)
+ 
+ #ifdef CONFIG_64BIT
+ 	/*
+-	 * The RISC-V kernel does not eagerly emit a sfence.vma after each
+-	 * new vmalloc mapping, which may result in exceptions:
++	 * The RISC-V kernel does not flush TLBs on all CPUS after each new
++	 * vmalloc mapping or kfence_unprotect(), which may result in
++	 * exceptions:
++	 *
+ 	 * - if the uarch caches invalid entries, the new mapping would not be
+ 	 *   observed by the page table walker and an invalidation is needed.
+ 	 * - if the uarch does not cache invalid entries, a reordered access
 
 
