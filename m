@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685AC3B6361;
-	Thu,  2 Jul 2026 16:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120353C8C5E;
+	Thu,  2 Jul 2026 16:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010712; cv=none; b=Gq4wk45AsjxUkuRvSu55ItzdC2BDUPWY5gotz0emm0visd+itxwtJkkSxRexIUcEiiuO/NqBpd7eCXEGg9BQr40LJYK6Yx7jySqJzKZEdM3h87xw35nYIiSUxCUvvsCGFpv04Gqe6GdDSzOILX/CnBg6XdpFLJWqDPKCQGn/88E=
+	t=1783010715; cv=none; b=Rmt/Sm8vVjFVaHdCghYWVXkupe3chgAHQYtlW17RVtsVd2mLGt/vHVLGaiHyDMWNxkP3CU5x0sS44TG6ftMODzvd9+y/R+YF9Kj9uuvcnuvWnPoAHDQmy4hGKYb14zz44bqXpH17CHwbx6Q2k+FF44Dvk4qS0ULcpDCOwsEDXTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010712; c=relaxed/simple;
-	bh=qEqwHxIyqtP4GlL22LL7KqwJIj8wx5vo4L4uGlCKlNI=;
+	s=arc-20240116; t=1783010715; c=relaxed/simple;
+	bh=ouv4yDFvmgmNFPakem1GMIGQ4yk/hSk7zaKFyX4cNIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ud63InLjXQ0cG6lrZ+sVY4NBJLOcaslFSrRrun1KByd1zh6sx67t4yE/ftxRugsrE15BsAnEpGj4eoVan+Q9xtujSzFER0F20Heus1Jjuh/OtguvNMXHFZO8zIcG63TZUd34mm95LLsiMXtC0ZnbamCn75bkJlLpJchHFDttRGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rt4BwOhU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JmQ0j1fY7kLub7HdlMdt7EBJp5o0BXQurqgIsHxTNsFHi7YSnVovekrHGMhd6vo3buZzo/9zx3iFQ98AZjvzINfS79+SmoMyoSEJTiTlCxGMCi7DbSLgyQjqMnUV9UAXn8jdBmv/CeGYV87HBRyByB/0eFZWC7j2JbeChzt+Na8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTflaB40; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rt4BwOhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7F81F000E9;
-	Thu,  2 Jul 2026 16:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTflaB40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779A61F000E9;
+	Thu,  2 Jul 2026 16:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010711;
-	bh=6eo64JpbOlR4+SSLoJjQA4RiroChyZSxmh7u1kwnSno=;
+	s=korg; t=1783010714;
+	bh=RNZE6xHhLQtEkR6BYGMbKtO9w6iFRFBC1HwelEBihlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rt4BwOhU9JLd+ShuPM6neqCzq5Iv3iBVcFh4J20AWMooRxmq+PBDejBeuqy5Clbp+
-	 +CjkWoc5KNxB+yGIS+oGC2LMK/UffKBHfqW6XWcEUvObCVsS6KDGnE+vQypLtkOvj7
-	 f1GsUmsUQCKMGfnm7Zg9/WBuezaXQSJpWYmv1aTY=
+	b=KTflaB40s4l566gn7yqo86Bna68pzaJyaHEtXPIUtzsQZKhAxbk6J3axroGH/Xqzw
+	 LZbSQJ6vEnqk8NbECb+BSgSdQY0GBphU8sKJR/pU36xCzp3Zoli8z75pCaYDAwCiIh
+	 JWv3/ihba89p/rabvj6SbhiwJWBgLV2bYk0mZdJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	syzbot+b8ca586b9fc235f0c0df@syzkaller.appspotmail.com,
+	Helen Koike <koike@igalia.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/175] fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
-Date: Thu,  2 Jul 2026 18:18:22 +0200
-Message-ID: <20260702155115.800865083@linuxfoundation.org>
+Subject: [PATCH 6.6 010/175] debugobjects: Do not fill_pool() if pi_blocked_on
+Date: Thu,  2 Jul 2026 18:18:31 +0200
+Message-ID: <20260702155115.986768059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -53,48 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit 4e3d1b2c48ca6c55f1e9ca7f8dccc76f120f276c ]
+commit 5f41161059fd0f1bbf18c90f3180e38cc45a14eb upstream.
 
-FUSE_NOTIFY_RETRIEVE must be limited to uptodate folios; !uptodate folios
-can contain uninitialized data.
-Since FUSE_NOTIFY_RETRIEVE is intended to only return data that is already
-in the page cache and not wait for data from the FUSE daemon, treat
-!uptodate folios as if they weren't present.
+On RT enabled kernels, fill_pool() ends up calling rtlock_lock(), which
+asserts if current::pi_blocked_on is set, because a task can obviously only
+block on one lock as otherwise the priority inheritenace chain gets
+corrupted.
 
-This only has security impact on systems that don't enable automatic
-zero-initialization of all page allocations via
-CONFIG_INIT_ON_ALLOC_DEFAULT_ON or init_on_alloc=1.
+Prevent this by expanding the conditional to take current::pi_blocked_on
+into account.
 
-Cc: stable@kernel.org
-Fixes: 2d45ba381a74 ("fuse: add retrieve request")
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260519-fuse-retrieve-uptodate-v1-1-a7a1912a37f9@google.com
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[adjusted for stable: page instead of folio]
-Signed-off-by: Jann Horn <jannh@google.com>
+Fixes: 4bedcc28469a ("debugobjects: Make them PREEMPT_RT aware")
+Reported-by: syzbot+b8ca586b9fc235f0c0df@syzkaller.appspotmail.com
+Signed-off-by: Helen Koike <koike@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260511215359.3351259-1-koike@igalia.com
+Closes: https://syzkaller.appspot.com/bug?extid=b8ca586b9fc235f0c0df
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ lib/debugobjects.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
-index 29a6c3a5829d83..a7705b5b22e09d 100644
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -1722,6 +1722,10 @@ static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
- 		page = find_get_page(mapping, index);
- 		if (!page)
- 			break;
-+		if (!PageUptodate(page)) {
-+			put_page(page);
-+			break;
-+		}
+diff --git a/lib/debugobjects.c b/lib/debugobjects.c
+index bebc00aacafedd..b1c3e873a71d40 100644
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -597,15 +597,25 @@ static struct debug_obj *lookup_object_or_alloc(void *addr, struct debug_bucket
+ 	return NULL;
+ }
  
- 		this_num = min_t(unsigned, num, PAGE_SIZE - offset);
- 		ap->pages[ap->num_pages] = page;
++static inline bool debug_objects_is_pi_blocked_on(void)
++{
++#ifdef CONFIG_RT_MUTEXES
++	return current->pi_blocked_on != NULL;
++#else
++	return false;
++#endif
++}
++
+ static void debug_objects_fill_pool(void)
+ {
+ 	/*
+ 	 * On RT enabled kernels the pool refill must happen in preemptible
+-	 * context -- for !RT kernels we rely on the fact that spinlock_t and
+-	 * raw_spinlock_t are basically the same type and this lock-type
+-	 * inversion works just fine.
++	 * context and not enqueued on an rt_mutex -- for !RT kernels we rely
++	 * on the fact that spinlock_t and raw_spinlock_t are basically the
++	 * same type and this lock-type inversion works just fine.
+ 	 */
+-	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible() || system_state < SYSTEM_SCHEDULING) {
++	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || system_state < SYSTEM_SCHEDULING ||
++	    (preemptible() && !debug_objects_is_pi_blocked_on())) {
+ 		/*
+ 		 * Annotate away the spinlock_t inside raw_spinlock_t warning
+ 		 * by temporarily raising the wait-type to LD_WAIT_CONFIG, matching
 -- 
 2.53.0
 
