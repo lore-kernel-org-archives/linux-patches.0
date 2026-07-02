@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE1D33B969;
-	Thu,  2 Jul 2026 16:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015594A33E1;
+	Thu,  2 Jul 2026 16:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009488; cv=none; b=k9pryFlZmN6IL2ABM1BiQNLYtL4BQMPYN+zrvTBH3Pr0YFwFbAtpC59uCdu4ppfjTlYak2PjOaIy3gp1t7ZM4OfO0UE12V6VIyu9FBDCfg3ssP0Li7TDk96qU8BC81+a7XtSTDx/lpBx7D7lptaj/CXJw3xqwSuLEoOHPFAl7pE=
+	t=1783009491; cv=none; b=IK8TdYLGotqeJzdLs4TuHtQAuR6imD9gNcXaHvVs/LCyMX1wYBkdNh62s7xSrTOJ/y/Fb4z+EKSrZIxiYAvpYCkp6gc2AHA0R4wnpRzHJtn4I/zWPDvdzNcBn2fZQMexTEohauUPIqPIDULKmjj0Kosnpnp1R9NFM2Kvgaxe3uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009488; c=relaxed/simple;
-	bh=qp1w+S06zZ/SYh5A942p/eWVUbx3pS/t73+iqNiV03E=;
+	s=arc-20240116; t=1783009491; c=relaxed/simple;
+	bh=P4yXUYgun603pPj+WE71Xv+8BiOcToTZ9sorjA7hQO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cka/tdUnsuqxwfnfJ86iHqi4AKJNBei56WPrbySmLo39r274YZTg86n+wABsVLSrjGgQDGDKTD1LH7Ee7kWTAKUc6NLKBGzuRPMvVcDx/u56vV/anZ7vQAq2Aitu8XvKVPIwgT7H80Xmoe1EnQP9+jStNmVPbAqn417pMe9bgLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPjJaIOc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P55rYXTg3Ieqp38A8PG3p7+3Y/OvXYWGW09zt4+32nzBy4bNXh+oajulqaM8EFIAOECpfJ+xXIwx+OcPMRbfX6pdu17FO09tZqXQJWsL5i6t02uC0mXhDTm/VraRnw28JFget7fs0CUaHNFoUngjbmMw9u4KlC1fx5c/v/alEJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLokxPip; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPjJaIOc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A945D1F00A3A;
-	Thu,  2 Jul 2026 16:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLokxPip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500C41F000E9;
+	Thu,  2 Jul 2026 16:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009484;
-	bh=KA4koBeG8OsC0tadx2z5g7lCb/5oSOeZVrehiSYTJz0=;
+	s=korg; t=1783009486;
+	bh=xzxxhwiQnshsR4ZQXQ33cW/B2XHMknvoA/JYggaip5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EPjJaIOcygVLDUGI3HYHnKt5YaMr2fNqWChsyM5iJEuTdIHZDPt6NmkCTVyq/z9qn
-	 3sYGCsJ6Ha2k5HWiNhbqMlUM9UZfIu6raPMab2rmePWjfgESbNkd1MnEsos3aoGCKi
-	 l/+R3GP3XkwCIXLY4oc3Wgy/kgNzXeS7CH5XygOY=
+	b=xLokxPipkg/4XP6Yag0mz/0TVG2axWgWpp6C1G1kT/43W+BSVXY1WzvFAtG05WZ2r
+	 kNu20XaT1tb9MTrKMhdmJfdW0f+FtYJ5iHUmfVNYwjzMovOsl1mZ6aUI+PMRuRf8h1
+	 i1ZjXt9goHsNe+ZU3SXPebLS0Giv797XUbR9Klf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.10 69/96] MIPS: DEC: Prevent initial console buffer from landing in XKPHYS
-Date: Thu,  2 Jul 2026 18:20:01 +0200
-Message-ID: <20260702155110.431234191@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 5.10 70/96] exfat: fix potential use-after-free in exfat_find_dir_entry()
+Date: Thu,  2 Jul 2026 18:20:02 +0200
+Message-ID: <20260702155110.453167382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -50,116 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 7fb13fd35110ebe95eb053faf79d018f51144d85 upstream.
+commit 3f5f8ee9917cc2b9076ac533492d8a200edcabb8 upstream.
 
-In 64-bit configurations calling the initial console output handler from
-a kernel thread other than the initial one will result in a situation
-where the stack has been placed in the XKPHYS 64-bit memory segment and
-consequently so has been the buffer allocated there that is used as the
-argument corresponding to the `%s' output conversion specifier for the
-firmware's printf() entry point.
+In exfat_find_dir_entry(), the buffer_head obtained from
+exfat_get_dentry() is released with brelse(bh) before the fall-through
+TYPE_EXTEND branch reads the directory entry through ep (which points
+into bh->b_data):
 
-This 64-bit address will then be truncated by 32-bit firmware, resulting
-in an attempt to access the wrong memory location, which in turn will
-cause all kinds of unpredictable behaviour, such as a kernel crash:
+	brelse(bh);
+	if (entry_type == TYPE_EXTEND) {
+		...
+		len = exfat_extract_uni_name(ep, entry_uniname);
+		...
+	}
 
-  Console: colour dummy device 160x64
-  Calibrating delay loop... 49.36 BogoMIPS (lpj=192512)
-  pid_max: default: 32768 minimum: 301
-  CPU 0 Unable to handle kernel paging request at virtual address 000000000203bd00, epc == ffffffffbfc08364, ra == ffffffffbfc08800
-  Oops[#1]:
-  CPU: 0 PID: 0 Comm: swapper Not tainted 5.18.0-rc2-00254-gfb649bda6f56-dirty #121
-  $ 0   : 0000000000000000 0000000000000001 0000000000000023 ffffffff80684ba0
-  $ 4   : 000000000203bd00 ffffffffbfc0f3b4 ffffffffffffffff 0000000000000073
-  $ 8   : 0a303d7469000000 0000000000000000 0000000000000073 ffffffffbfc0f473
-  $12   : 0000000000000002 0000000000000000 ffffffff80684c1c 0000000000000000
-  $16   : 0000000000000000 ffffffff80596dc9 0000000000000000 ffffffffbfc09240
-  $20   : ffffffff80684c40 ffffffffbfc0f400 000000000000002d 000000000000002b
-  $24   : ffffffffffffffbf 000000000203bd00
-  $28   : ffffffff805f0000 ffffffff80684b58 0000000000000030 ffffffffbfc08800
-  Hi    : 0000000000000000
-  Lo    : 0000000000000aa8
-  epc   : ffffffffbfc08364 0xffffffffbfc08364
-  ra    : ffffffffbfc08800 0xffffffffbfc08800
-  Status: 140120e2        KX SX UX KERNEL EXL
-  Cause : 00000008 (ExcCode 02)
-  BadVA : 000000000203bd00
-  PrId  : 00000430 (R4000SC)
-  Modules linked in:
-  Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____), tls=0000000000000000)
-  Stack : 0000000000000000 0000000000000000 0000000000000000 0000004d0000004d
-          80684cc0806a2a40 80596dc80000004d 8061000000000000 bfc0850c80684c38
-          0000000000000000 000000000203bd00 0000000000000000 0000000000000000
-          0000000000000000 00000000bfc0f3b4 0000000000000000 0000000000000000
-          0000000000000000 0000000000000000 0000000000000000 0000000000000000
-          0000000000000000 0000000000000000 0000000000000000 0000000000000000
-          0000002500000000 0000000000000000 0000000000000000 802c1a7400000000
-          0203bd0080596dc8 0203bd4d69000000 6c61632000000018 5f746567646e6172
-          6c616320625f6d6f 5f736e5f6d6f7266 206361323778302b 303d74696e726320
-          806a0a38806b0000 806a0a38806b0000 00000000806b0000 80683c58806b0000
-          ...
-  Call Trace:
+After brelse() drops our reference, nothing guarantees that the
+underlying page backing bh->b_data remains valid for the subsequent
+exfat_extract_uni_name() read. This is the same pattern fixed in
+commit fc961522ddbd ("exfat: Fix potential use after free in
+exfat_load_upcase_table()").
 
-  Code: a082ffff  03e00008  00601021 <80820000> 00001821  10400005  24840001  80820000  24630001
+Move brelse(bh) so it runs after ep is no longer dereferenced on
+each branch.
 
-  ---[ end trace 0000000000000000 ]---
-  Kernel panic - not syncing: Fatal exception in interrupt
+Confirmed on QEMU x86_64 with CONFIG_KASAN=y + CONFIG_DEBUG_PAGEALLOC=y
++ CONFIG_PAGE_POISONING=y on linux-next, using a crafted exFAT image
+(long filename with same-hash collisions forcing the TYPE_EXTEND path).
+With a debug-only invalidate_bdev() inserted between brelse(bh) and
+the ep read to make the stale-deref window deterministic, the
+unpatched kernel faults:
 
-  KN04 V2.1k    (PC: 0xa0026768, SP: 0x806848e8)
-  >>
+  BUG: KASAN: use-after-free in exfat_find_dir_entry+0x133b/0x15a0
+  BUG: unable to handle page fault for address: ffff88801a5fa0c2
+  Oops: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
+  RIP: 0010:exfat_find_dir_entry+0x1188/0x15a0
 
-In this case the pointer in $4 was truncated from 0x980000000203bd00 to
-0x000000000203bd00.
+With this patch applied, the same instrumented harness completes
+cleanly under the same sanitizer stack. I have not reproduced a
+crash on an uninstrumented kernel under ordinary reclaim; the
+instrumented A/B establishes the lifetime violation and that the
+patch closes it, not an unaided triggerability claim.
 
-This may happen when no final console driver has been enabled in the
-configuration and consequently the initial console continues being used
-late into bootstrap or with an upcoming change that will switch the zs
-driver to use a platform device, which in turn will make the console
-handover happen only after other kernel threads have already been
-started.
-
-Fix the issue by making the buffer static and initdata, and therefore
-placed in the CKSEG0 32-bit compatibility segment, observing that the
-console output handler is called with the console lock held, implying
-no need for this code to be reentrant.  Add an assertion to verify the
-buffer actually has been placed in a compatibility segment.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v2.6.12+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: ca06197382bd ("exfat: add directory operations")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/dec/prom/console.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/exfat/dir.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/mips/dec/prom/console.c
-+++ b/arch/mips/dec/prom/console.c
-@@ -2,8 +2,9 @@
- /*
-  *	DECstation PROM-based early console support.
-  *
-- *	Copyright (C) 2004, 2007  Maciej W. Rozycki
-+ *	Copyright (C) 2004, 2007, 2026  Maciej W. Rozycki
-  */
-+#include <linux/bug.h>
- #include <linux/console.h>
- #include <linux/init.h>
- #include <linux/kernel.h>
-@@ -14,9 +15,11 @@
- static void __init prom_console_write(struct console *con, const char *s,
- 				      unsigned int c)
- {
--	char buf[81];
-+	static char buf[81] __initdata = { 0 };
- 	unsigned int chunk = sizeof(buf) - 1;
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -1043,12 +1043,12 @@ rewind:
+ 				continue;
+ 			}
  
-+	BUG_ON((long)buf != (int)(long)buf);
-+
- 	while (c > 0) {
- 		if (chunk > c)
- 			chunk = c;
+-			brelse(bh);
+ 			if (entry_type == TYPE_EXTEND) {
+ 				unsigned short entry_uniname[16], unichar;
+ 
+ 				if (step != DIRENT_STEP_NAME ||
+ 				    name_len >= MAX_NAME_LENGTH) {
++					brelse(bh);
+ 					step = DIRENT_STEP_FILE;
+ 					continue;
+ 				}
+@@ -1059,6 +1059,7 @@ rewind:
+ 					uniname += EXFAT_FILE_NAME_LEN;
+ 
+ 				len = exfat_extract_uni_name(ep, entry_uniname);
++				brelse(bh);
+ 				name_len += len;
+ 
+ 				unichar = *(uniname+len);
+@@ -1077,6 +1078,7 @@ rewind:
+ 				continue;
+ 			}
+ 
++			brelse(bh);
+ 			if (entry_type &
+ 					(TYPE_CRITICAL_SEC | TYPE_BENIGN_SEC)) {
+ 				if (step == DIRENT_STEP_SECD) {
 
 
