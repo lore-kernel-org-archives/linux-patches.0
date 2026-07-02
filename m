@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4AE331EB6;
-	Thu,  2 Jul 2026 16:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C12336897;
+	Thu,  2 Jul 2026 16:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010746; cv=none; b=r91+kNIKRWwnt5ML1xjNegMuYBJ0GSo68ILLw8REvg9UIoAXK0uheoTQTlbo1fiFFfOxATYyiuT8Yt5te1up5CqE4IGM3sP3hR4mF/LfJc/UKrPyxxgftzqz3xxFpPSihKamVvKzFVT++OJZGXSZpolSIhC4iKGHh8xZgeMAQ0c=
+	t=1783010749; cv=none; b=IQTpRPoeoHsYP6gz3FU3CG6bhoem2NhmxujBU9eiXn0WIc3ujlTqFt4MnPD1psAwqdJOnebtkhY5hOCuGsc0yQ65VZDGAWyhIxI7uoJgRtbMRSvw9Qz4NZozQHGh1QBTdKrFT5sS8SL2DXcDWDTCzYQiY0ArVGA06kibchFkSJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010746; c=relaxed/simple;
-	bh=rxr6G4iqn4YfnsvQ2MhCHHmbO8lUEYTLKRhlUMD5Rvc=;
+	s=arc-20240116; t=1783010749; c=relaxed/simple;
+	bh=qX3s4VM/7CMWHJ/Xtnp+CjIQVi0QuAdur7kbtJufcVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fsa1YJ9p5yS+pYfEi6BFLN0cOdMrNSscB6FGDmjJv68B+l+wLrN9HFmpCy4Vgfm+HnWD981UUnSZZS/zJLjPLuvEBRS8uFlppApJrxcAnnB0xghGuKPFCXklbPenNqFMJwD/rMe6xGOnmis3+841vjqK9U4X3gADurpoBN8P3Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTNlC7Y2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PgDIg0UZ4tJwLS/4IyljVy68lJU7CedC0k6U/HCOZLt+7AEgArFYoCSKryfkyFeyEFgBTLUIlqbpqRLIlw7EfS8chfJ1guwqJQFsSSNa+JSbhPokKA+zZB8YuGkUF87tMiPO35YefgSnOvf5kT7VHpx9UlDfyTnWeCfGrfOboGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+E7Oc4I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTNlC7Y2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C691F00A3A;
-	Thu,  2 Jul 2026 16:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+E7Oc4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8737F1F00A3A;
+	Thu,  2 Jul 2026 16:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010745;
-	bh=00hV5jUuBWj9WN5ZHGDc6Dg7KQoKyMtOFDFUDxMCe/g=;
+	s=korg; t=1783010748;
+	bh=5UnREXNPO1Co2HKzEi64MahpSV0unsFrYEOHaC2p3y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTNlC7Y2aD+FxLt+gIZ+3q2BJoTVs2k6bRJoC/DOP73zjw6pEvlco7cKQA/bH1DwA
-	 Jw9S2JTuLUm8Q2girRqxdr4GceD+4nQL+YFcEmvck4VXfD77oiTERMSatcHv9mdji0
-	 Yv4TzzmhiHypV2oV7GwNUIURJa3T/TgLIKG/9mzg=
+	b=U+E7Oc4I/tVKB8YQNwAQ73u89ddNri54oW0elfpjhdiHOhCWzGbFwsq1/Y7ur7FKv
+	 jpbZ6q7IGHpWDWi/9CIdfimSxKTnGlIoEMVUB1KF0H8yKo7GmWvornliqEDNDtYwXA
+	 gik49drqMgXc2aVc6N9YIuYijfth63W8Ecacxhzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Varun R Mallya <varunrmallya@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Leon Hwang <leon.hwang@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Varun R Mallya <varunrmallya@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/175] bpf: Reject sleepable kprobe_multi programs at attach time
-Date: Thu,  2 Jul 2026 18:18:42 +0200
-Message-ID: <20260702155116.234259801@linuxfoundation.org>
+Subject: [PATCH 6.6 022/175] selftests/bpf: Add test to ensure kprobe_multi is not sleepable
+Date: Thu,  2 Jul 2026 18:18:43 +0200
+Message-ID: <20260702155116.254578541@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -57,54 +55,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Varun R Mallya <varunrmallya@gmail.com>
 
-commit eb7024bfcc5f68ed11ed9dd4891a3073c15f04a8 upstream.
+commit c7cab53f9d5273f0cf2a26bdf178c4e074bdfb50 upstream.
 
-kprobe.multi programs run in atomic/RCU context and cannot sleep.
-However, bpf_kprobe_multi_link_attach() did not validate whether the
-program being attached had the sleepable flag set, allowing sleepable
-helpers such as bpf_copy_from_user() to be invoked from a non-sleepable
-context.
+Add a selftest to ensure that kprobe_multi programs cannot be attached
+using the BPF_F_SLEEPABLE flag. This test succeeds when the kernel
+rejects attachment of kprobe_multi when the BPF_F_SLEEPABLE flag is set.
 
-This causes a "sleeping function called from invalid context" splat:
-
-  BUG: sleeping function called from invalid context at ./include/linux/uaccess.h:169
-  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1787, name: sudo
-  preempt_count: 1, expected: 0
-  RCU nest depth: 2, expected: 0
-
-Fix this by rejecting sleepable programs early in
-bpf_kprobe_multi_link_attach(), before any further processing.
-
-Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
+Suggested-by: Leon Hwang <leon.hwang@linux.dev>
 Signed-off-by: Varun R Mallya <varunrmallya@gmail.com>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20260401191126.440683-1-varunrmallya@gmail.com
+Link: https://lore.kernel.org/r/20260408190137.101418-3-varunrmallya@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[shung-hsi.yu: sleepable flag was in 'struct bpf_prog_aux' before commit
-66c8473135c6 "bpf: move sleepable flag from bpf_prog_aux to bpf_prog"]
+[shung-hsi.yu: borrowed 'saved_error' variable from commit 00cdcd2900bd
+("selftests/bpf: Don't use libbpf_get_error() in kprobe_multi_test"). ]
 Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../bpf/prog_tests/kprobe_multi_test.c        | 34 +++++++++++++++++++
+ .../bpf/progs/kprobe_multi_sleepable.c        | 25 ++++++++++++++
+ 2 files changed, 59 insertions(+)
+ create mode 100644 tools/testing/selftests/bpf/progs/kprobe_multi_sleepable.c
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index a896b80252ae11..87e7cc2dc5ccd8 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2905,6 +2905,10 @@ int bpf_kprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
- 	if (prog->expected_attach_type != BPF_TRACE_KPROBE_MULTI)
- 		return -EINVAL;
+diff --git a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+index 4041cfa670eb4c..d41e140c315083 100644
+--- a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
++++ b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+@@ -4,6 +4,7 @@
+ #include "trace_helpers.h"
+ #include "kprobe_multi_empty.skel.h"
+ #include "kprobe_multi_override.skel.h"
++#include "kprobe_multi_sleepable.skel.h"
+ #include "bpf/libbpf_internal.h"
+ #include "bpf/hashmap.h"
  
-+	/* kprobe_multi is not allowed to be sleepable. */
-+	if (prog->aux->sleepable)
-+		return -EINVAL;
+@@ -214,7 +215,9 @@ static void test_attach_api_syms(void)
+ static void test_attach_api_fails(void)
+ {
+ 	LIBBPF_OPTS(bpf_kprobe_multi_opts, opts);
++	LIBBPF_OPTS(bpf_test_run_opts, topts);
+ 	struct kprobe_multi *skel = NULL;
++	struct kprobe_multi_sleepable *sl_skel = NULL;
+ 	struct bpf_link *link = NULL;
+ 	unsigned long long addrs[2];
+ 	const char *syms[2] = {
+@@ -222,6 +225,7 @@ static void test_attach_api_fails(void)
+ 		"bpf_fentry_test2",
+ 	};
+ 	__u64 cookies[2];
++	int saved_error, err;
+ 
+ 	addrs[0] = ksym_get_addr("bpf_fentry_test1");
+ 	addrs[1] = ksym_get_addr("bpf_fentry_test2");
+@@ -300,9 +304,39 @@ static void test_attach_api_fails(void)
+ 	if (!ASSERT_EQ(libbpf_get_error(link), -EINVAL, "fail_5_error"))
+ 		goto cleanup;
+ 
++	/* fail_9 - sleepable kprobe multi should not attach */
++	sl_skel = kprobe_multi_sleepable__open();
++	if (!ASSERT_OK_PTR(sl_skel, "sleep_skel_open"))
++		goto cleanup;
 +
- 	flags = attr->link_create.kprobe_multi.flags;
- 	if (flags & ~BPF_F_KPROBE_MULTI_RETURN)
- 		return -EINVAL;
++	sl_skel->bss->user_ptr = sl_skel;
++
++	err = bpf_program__set_flags(sl_skel->progs.handle_kprobe_multi_sleepable,
++				     BPF_F_SLEEPABLE);
++	if (!ASSERT_OK(err, "sleep_skel_set_flags"))
++		goto cleanup;
++
++	err = kprobe_multi_sleepable__load(sl_skel);
++	if (!ASSERT_OK(err, "sleep_skel_load"))
++		goto cleanup;
++
++	link = bpf_program__attach_kprobe_multi_opts(sl_skel->progs.handle_kprobe_multi_sleepable,
++						     "bpf_fentry_test1", NULL);
++	saved_error = -errno;
++
++	if (!ASSERT_ERR_PTR(link, "fail_9"))
++		goto cleanup;
++
++	if (!ASSERT_EQ(saved_error, -EINVAL, "fail_9_error"))
++		goto cleanup;
++
++	err = bpf_prog_test_run_opts(bpf_program__fd(sl_skel->progs.fentry), &topts);
++	ASSERT_OK(err, "bpf_prog_test_run_opts");
++
+ cleanup:
+ 	bpf_link__destroy(link);
+ 	kprobe_multi__destroy(skel);
++	kprobe_multi_sleepable__destroy(sl_skel);
+ }
+ 
+ static size_t symbol_hash(long key, void *ctx __maybe_unused)
+diff --git a/tools/testing/selftests/bpf/progs/kprobe_multi_sleepable.c b/tools/testing/selftests/bpf/progs/kprobe_multi_sleepable.c
+new file mode 100644
+index 00000000000000..932e1d9c72e2d0
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/kprobe_multi_sleepable.c
+@@ -0,0 +1,25 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include "vmlinux.h"
++#include <bpf/bpf_helpers.h>
++#include <bpf/bpf_tracing.h>
++
++void *user_ptr = 0;
++
++SEC("kprobe.multi")
++int handle_kprobe_multi_sleepable(struct pt_regs *ctx)
++{
++	int a, err;
++
++	err = bpf_copy_from_user(&a, sizeof(a), user_ptr);
++	barrier_var(a);
++	return err;
++}
++
++SEC("fentry/bpf_fentry_test1")
++int BPF_PROG(fentry)
++{
++	return 0;
++}
++
++char _license[] SEC("license") = "GPL";
 -- 
 2.53.0
 
