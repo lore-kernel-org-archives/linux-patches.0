@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8759331EB6;
-	Thu,  2 Jul 2026 16:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C44318ED2;
+	Thu,  2 Jul 2026 17:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011600; cv=none; b=QrqR1J6FRmyYBZ9oqNkZfYRrYvFfdWBLNONpwj/n7qH7u70Ep8ipRXUwoBayvl8PPnKJPfdoAUxZdyHV8f3sKjqp/WUVx5qb9hTAss6VkNtPIHiHmmnnlW8hOD25rDgcEnV39W39Mqwm/Fr4UryYhVwhBJEmnZwg5mTEJr964Bc=
+	t=1783011602; cv=none; b=dEdwWKmySYwRsOi7UfGSUdCKIz/SwT8Ct2liADdRBxSPEdv/oNsp+YlDYgocirpFfRjAqEHLTDujWhEuYmOur13oLzqmA9XxKW3yOMnTKQY/LyODEfoRDqo2G7dkiJWQd/2fUP+uKsKcEnkhcoKG8cKwVB+1jAS66JzctL0k5UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011600; c=relaxed/simple;
-	bh=Je7QclP/s82F4lr2djPqNVqhfEwmlfdex9qDUgFfs9I=;
+	s=arc-20240116; t=1783011602; c=relaxed/simple;
+	bh=rPYhZkXuNKezSRIZXnqHm/RG5C1jk6csrGBVAnZnJQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nC/TjIiqR+V/uyPO4nmv1rF+dd9l1o0P92uThkVSmxhbbOuXe09h0rq3L8XlX++d0IfNjqp+JULDTNZYdhXi0ejnyi8B8A2USrnW8tlVM+5RVUbQZREKWsm4uamvHlWRCJtT3uGRJUx/Tpkl1p+hLhJLX5tpHh7ZDvXAHB6wzcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrurD/VX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QU8MK+I0b2PSGfpSatKfGjuvGL/f2TY7AOJgWudKD8y+ztEFrQNt8JtJyhaU0tdEI4ZJgMi50tiPhhlOjVja3TdtN/X4A7bkFKd3WOzkkVkB2mds7OZd470yPQ17onaIJetBDjo2cfnJSAJhZUXLGpFstGp0k2/4MC7Rw0aFibo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U723WXXO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrurD/VX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5EC1F00A3A;
-	Thu,  2 Jul 2026 16:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U723WXXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3A21F00A3D;
+	Thu,  2 Jul 2026 17:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011598;
-	bh=PPgykJtNdWzhIaryr4nSp3OasW0kX1TOsoQtFUMsw9U=;
+	s=korg; t=1783011601;
+	bh=kZW1d89rMsA4LSBZofxiFzK/e1aFu/gVYbQL3KaGUTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PrurD/VXhaaWHbFdkCoMtr02+AjLkOqqztdC90ziy1peS7ZKWGfwfm2r2Jh4UgzZR
-	 ouQFDw0u7Sg6OeSJV9SneR8xHLg+LwhRKn17r5sg5s3RX+p4NLvDtxIxgbwQllwfSC
-	 AEL9mZ/NYSLEWmIkLv5/R1gAiA/oKiR8vHZXRw2w=
+	b=U723WXXOmJncQ1SrdBBmzOPZGXaXfTaXVHP7JWh60AATSJLRdZM7olBxWhudfRCLr
+	 9z0sWKFtmwdfcwInSYHfN1pBWeTy7IAgu+SMMzvjm3DFUuVKuO9q9/goNO3/tmzCHi
+	 eSsPnO5CVvKwA626/dD0qSioymAnEUCwgwhLoiGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+2488d8d751b27f7ce268@syzkaller.appspotmail.com,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.1 062/120] f2fs: fix to do sanity check on f2fs_get_node_folio_ra()
-Date: Thu,  2 Jul 2026 18:20:58 +0200
-Message-ID: <20260702155114.244501800@linuxfoundation.org>
+Subject: [PATCH 7.1 063/120] f2fs: validate orphan inode entry count
+Date: Thu,  2 Jul 2026 18:20:59 +0200
+Message-ID: <20260702155114.264386368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -52,111 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit 8712353ed80f87271d732297567dcdbe4b84e8c7 upstream.
+commit 846c499a65816d13f1186e3090e825e8bb8bcb8b upstream.
 
-kernel BUG at fs/f2fs/file.c:845!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 5336 Comm: syz.0.0 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:f2fs_do_truncate_blocks+0x1115/0x1140 fs/f2fs/file.c:845
-Code: fc fc 90 0f 0b e8 8b 9d 9a fd 90 0f 0b e8 83 9d 9a fd 48 89 df 48 c7 c6 60 d1 1a 8c e8 54 f1 fc fc 90 0f 0b e8 6c 9d 9a fd 90 <0f> 0b e8 64 9d 9a fd 90 0f 0b 90 e9 93 fd ff ff e8 56 9d 9a fd 90
-RSP: 0018:ffffc9000e4474c0 EFLAGS: 00010283
-RAX: ffffffff842b1d34 RBX: 0000000000000003 RCX: 0000000000100000
-RDX: ffffc9000f03a000 RSI: 0000000000035503 RDI: 0000000000035504
-RBP: ffffc9000e447608 R08: ffff8880123b0000 R09: 0000000000000002
-R10: 00000000fffffffe R11: 0000000000000002 R12: 0000000000000001
-R13: 0000000000000000 R14: 1ffff92001c88ea0 R15: 00000000ffff039c
-FS:  00007f7e02ee36c0(0000) GS:ffff88808c887000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ff0305c4000 CR3: 0000000012d4c000 CR4: 0000000000352ef0
-Call Trace:
- <TASK>
- f2fs_truncate_blocks+0x10a/0x300 fs/f2fs/file.c:882
- f2fs_truncate+0x471/0x7c0 fs/f2fs/file.c:940
- f2fs_evict_inode+0xa3f/0x1ac0 fs/f2fs/inode.c:907
- evict+0x61e/0xb10 fs/inode.c:841
- f2fs_fill_super+0x5f43/0x78f0 fs/f2fs/super.c:5224
- get_tree_bdev_flags+0x431/0x4f0 fs/super.c:1694
- vfs_get_tree+0x92/0x2a0 fs/super.c:1754
- fc_mount fs/namespace.c:1193 [inline]
- do_new_mount_fc fs/namespace.c:3758 [inline]
- do_new_mount+0x341/0xd30 fs/namespace.c:3834
- do_mount fs/namespace.c:4167 [inline]
- __do_sys_mount fs/namespace.c:4383 [inline]
- __se_sys_mount+0x31d/0x420 fs/namespace.c:4360
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x15f/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+f2fs_recover_orphan_inodes() trusts the orphan block entry_count when
+replaying orphan inodes from the checkpoint pack. A corrupted entry_count
+larger than F2FS_ORPHANS_PER_BLOCK makes the recovery loop read past the
+ino[] array and interpret footer or following data as inode numbers.
 
-	count = ADDRS_PER_PAGE(dn.node_folio, inode);
+On a crafted image, mounting an unpatched kernel can drive orphan recovery
+into f2fs_bug_on() and panic the kernel. Validate entry_count before
+consuming entries so corrupted checkpoint data fails the mount with
+-EFSCORRUPTED and requests fsck instead.
 
-	count -= dn.ofs_in_node;
-	f2fs_bug_on(sbi, count < 0);
-
-The fuzz test will trigger above bug_on in f2fs.
-
-The root cause should be: in the corrupted inode, there is a direct node
-which has the same ino and nid in its footer, so in f2fs_do_truncate_blocks(),
-after f2fs_get_dnode_of_data() finds such dnode:
-1) ADDRS_PER_PAGE(dn.node_folio, inode) will return 923
-2) once dn.ofs_in_node points to addr[923, 1017]
-Then it will trigger the system panic.
-
-Let's introduce NODE_TYPE_NON_IXNODE to indicate current node should
-not be an inode or xattr node, and then use it in below path to detect
-inconsistent node chain in inode mapping table:
-
-- f2fs_do_truncate_blocks
- - f2fs_get_dnode_of_data
-  - f2fs_get_node_folio_ra
-   -  __get_node_folio
-    - f2fs_sanity_check_node_footer
-     - case NODE_TYPE_NON_IXNODE -> check whether it is inode|xnode
+Set ERROR_INCONSISTENT_ORPHAN as well, so the corruption reason can be
+recorded in the superblock s_errors[] field. This gives fsck a persistent
+hint even though mount-time orphan recovery failure may leave no chance to
+persist SBI_NEED_FSCK through a checkpoint.
 
 Cc: stable@kernel.org
-Reported-by: syzbot+2488d8d751b27f7ce268@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69fa3697.170a0220.59368.0018.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
+Fixes: 127e670abfa7 ("f2fs: add checkpoint operations")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h |    1 +
- fs/f2fs/node.c |    6 +++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ fs/f2fs/checkpoint.c    |   14 +++++++++++++-
+ include/linux/f2fs_fs.h |    1 +
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1583,6 +1583,7 @@ enum node_type {
- 	NODE_TYPE_INODE,
- 	NODE_TYPE_XATTR,
- 	NODE_TYPE_NON_INODE,
-+	NODE_TYPE_NON_IXNODE,	/* non inode and xnode */
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -943,6 +943,7 @@ int f2fs_recover_orphan_inodes(struct f2
+ 	for (i = 0; i < orphan_blocks; i++) {
+ 		struct folio *folio;
+ 		struct f2fs_orphan_block *orphan_blk;
++		unsigned int entry_count;
+ 
+ 		folio = f2fs_get_meta_folio(sbi, start_blk + i);
+ 		if (IS_ERR(folio)) {
+@@ -951,7 +952,18 @@ int f2fs_recover_orphan_inodes(struct f2
+ 		}
+ 
+ 		orphan_blk = folio_address(folio);
+-		for (j = 0; j < le32_to_cpu(orphan_blk->entry_count); j++) {
++		entry_count = le32_to_cpu(orphan_blk->entry_count);
++		if (entry_count > F2FS_ORPHANS_PER_BLOCK) {
++			f2fs_err(sbi, "invalid orphan inode entry count %u",
++				 entry_count);
++			set_sbi_flag(sbi, SBI_NEED_FSCK);
++			f2fs_handle_error(sbi, ERROR_INCONSISTENT_ORPHAN);
++			err = -EFSCORRUPTED;
++			f2fs_folio_put(folio, true);
++			goto out;
++		}
++
++		for (j = 0; j < entry_count; j++) {
+ 			nid_t ino = le32_to_cpu(orphan_blk->ino[j]);
+ 
+ 			err = recover_orphan_inode(sbi, ino);
+--- a/include/linux/f2fs_fs.h
++++ b/include/linux/f2fs_fs.h
+@@ -107,6 +107,7 @@ enum f2fs_error {
+ 	ERROR_CORRUPTED_XATTR,
+ 	ERROR_INVALID_NODE_REFERENCE,
+ 	ERROR_INCONSISTENT_NAT,
++	ERROR_INCONSISTENT_ORPHAN,
+ 	ERROR_MAX,
  };
  
- /* a threshold of maximum elapsed time in critical region to print tracepoint */
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1541,6 +1541,10 @@ int f2fs_sanity_check_node_footer(struct
- 		if (is_inode)
- 			goto out_err;
- 		break;
-+	case NODE_TYPE_NON_IXNODE:
-+		if (is_inode || is_xnode)
-+			goto out_err;
-+		break;
- 	default:
- 		break;
- 	}
-@@ -1634,7 +1638,7 @@ static struct folio *f2fs_get_node_folio
- 	struct f2fs_sb_info *sbi = F2FS_F_SB(parent);
- 	nid_t nid = get_nid(parent, start, false);
- 
--	return __get_node_folio(sbi, nid, parent, start, NODE_TYPE_REGULAR);
-+	return __get_node_folio(sbi, nid, parent, start, NODE_TYPE_NON_IXNODE);
- }
- 
- static void flush_inline_data(struct f2fs_sb_info *sbi, nid_t ino)
 
 
