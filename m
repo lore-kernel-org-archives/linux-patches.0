@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DDA30C141;
-	Thu,  2 Jul 2026 16:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B1022D7B9;
+	Thu,  2 Jul 2026 16:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011513; cv=none; b=FxJruXxO9IqVHHED/nOJRd+pGIyr4R398lY/WTS17YIsAfYGj2xI99b3UCvixX88a2wymf4o5etVTaFE2FKdTx4nRra1Ro9HwXAJ1gSPVNPGqXGq3z3UElv1Evzoc2U+FMH6sEaUpYcwhKu37lMngIr4rW6vAmXdPeVMaS5O8iY=
+	t=1783011516; cv=none; b=B7fGizK2tdxS0HlW8hYs8+XPXWfqfzUV42i8JCdnSqJVkYac8CsFnTxA6ceHL88LXTA4PxpO8UpmyumD81AE+UQNLxk6usnTKvDda+wDs+3qmGeQPSqNPv3bjUL8CGLBKOttgIXW/GJtYRhug3GoLeBSD+Q/tnm74igfrNxOK/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011513; c=relaxed/simple;
-	bh=9sQjgqVgaMwyli+9fAKwUE1v+nwY/+MI4kzwQGTiMlE=;
+	s=arc-20240116; t=1783011516; c=relaxed/simple;
+	bh=95rGgU6j8Q0rKb8/bZNulRmQN0TQi2wXNp8DM5TLJiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MV7pPng4DeVQv/eUMocWt7uwc4tTJXfLLc7v/v1NEz9QEaodSO9H6cmtagVOEuXdX+ufs4xD/D99yqqBsytY48Bt9aHU6M2ySJK2fgvbB8sZHaBjOegk9UdzU1JcPoMV4P/Wtd36VHhC/xUKX8xx3Xc6iYn8Ph6BxAl7dUA63U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eQuqvNA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pa0o0EPl9VECyE03oDRosdiWKpl2tudTlGoBI5NjDdPXRSGBqo70DHrsULouw8cuaV1S3r93ti+B54WzWeLU6LwpYslQh8alXsB1DiD7UBvtLp2qrEJx0YBTTedp7LoW1NErmY5RUaL3e/POXqblvSx861Qf+3FHSNfk/DAbPK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6WP6Ncv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eQuqvNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11371F00A3A;
-	Thu,  2 Jul 2026 16:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6WP6Ncv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE021F00A3A;
+	Thu,  2 Jul 2026 16:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011512;
-	bh=QC8JKleU/pUa7LK73IxfRMc9F2TLwWqrWcOq9a4CBBo=;
+	s=korg; t=1783011514;
+	bh=07gc/V5HsZj7l6HWdqoj7EIRl4KxpBYvsmMV/vIl1DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0eQuqvNAmwXizwvq2ZI3ekR+GJNgE0iY39Th4SBDMW1M28ezqgBwwUZkDD1JCHd8m
-	 dfZ2ZFU+gFAgwTX9uHI1pNUcqqp+muZuVb9jOl52iJgVk4GPMksvTGNLIvQFEw3yN0
-	 u9PXhf8ijAsg6mqh3SjI2DkH+o4ZJD2MEjBxf2/8=
+	b=F6WP6Ncvt2ocDcB+ZPOonHU4pjbvDOe2ZL97qT4FBaAaByoxpMhAuLoMPmrNWBry8
+	 4wxZkE347Xf0a2UKhqKk/f5UhaV0TaoTu22WmbTXHIVVevJ9mX+SJqoq/CIWG08sa9
+	 F9jJCAWreLkrc6+tlTPBOy4BzLjN5ROTkrScsHIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,10 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jungwoo Lee <jwlee2217@gmail.com>,
 	Wongi Lee <qw3rtyp0@gmail.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 028/120] ipv6: account for fraggap on the paged allocation path
-Date: Thu,  2 Jul 2026 18:20:24 +0200
-Message-ID: <20260702155113.544743381@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 029/120] ipv4: account for fraggap on the paged allocation path
+Date: Thu,  2 Jul 2026 18:20:25 +0200
+Message-ID: <20260702155113.566052707@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -54,32 +55,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Wongi Lee <qw3rtyp0@gmail.com>
 
-commit 736b380e28d0480c7bc3e022f1950f31fe53a7c5 upstream.
+[ Upstream commit eca856950f7cb1a221e02b99d758409f2c5cec42 ]
 
-In __ip6_append_data(), when the paged-allocation branch is taken
-(MSG_MORE / NETIF_F_SG / large fraglen), alloclen and pagedlen are
-computed as
+In __ip_append_data(), when the paged-allocation branch is taken,
+alloclen and pagedlen are computed as
 
 	alloclen = fragheaderlen + transhdrlen;
 	pagedlen = datalen - transhdrlen;
 
-datalen already includes fraggap (datalen = length + fraggap). When
-fraggap is non-zero, this is not the first skb and transhdrlen is zero.
-The fraggap bytes carried over from the previous skb are copied just past
-the fragment headers in the new skb's linear area. The linear area is
-therefore undersized by fraggap bytes while pagedlen is overstated by the
-same amount, and the copy writes past skb->end into the trailing
-skb_shared_info.
-
-An unprivileged user can trigger this via a UDPv6 socket using
-MSG_MORE together with MSG_SPLICE_PAGES.
-
-The bad accounting was introduced by commit 773ba4fe9104 ("ipv6:
-avoid partial copy for zc"). Before commit ce650a166335 ("udp6: Fix
-__ip6_append_data()'s handling of MSG_SPLICE_PAGES"), the negative
-copy value caused -EINVAL to be returned. That later commit allowed
-MSG_SPLICE_PAGES to proceed in this case, making the corruption
-triggerable.
+datalen already includes fraggap, but the fraggap bytes carried over
+from the previous skb are copied into the new skb's linear area at
+offset transhdrlen by the subsequent skb_copy_and_csum_bits(). The
+linear area is therefore undersized by fraggap bytes while pagedlen is
+overstated by the same amount.
 
 The non-paged branch sets alloclen to fraglen, which already accounts
 for fraggap because datalen does. Bring the paged branch in line by
@@ -87,23 +75,23 @@ adding fraggap to alloclen and subtracting it from pagedlen.
 
 After this adjustment, copy no longer collapses to -fraggap on the
 paged path, so remove the stale comment describing that old arithmetic.
-Since a negative copy is no longer expected for a valid MSG_SPLICE_PAGES
-case, remove the MSG_SPLICE_PAGES exception from the negative copy check.
 
-Fixes: 773ba4fe9104 ("ipv6: avoid partial copy for zc")
+Fixes: 8eb77cc73977 ("ipv4: avoid partial copy for zc")
 Signed-off-by: Jungwoo Lee <jwlee2217@gmail.com>
 Signed-off-by: Wongi Lee <qw3rtyp0@gmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/ajFTqRljatR17fFy@DESKTOP-19IMU7U.localdomain
+Link: https://patch.msgid.link/ajFR1eLAIs42TN3g@DESKTOP-19IMU7U.localdomain
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ net/ipv4/ip_output.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1668,8 +1668,8 @@ alloc_new_skb:
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 5bcd73cbdb41c0..ec790bad1679a6 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1117,8 +1117,8 @@ static int __ip_append_data(struct sock *sk,
  				  !(rt->dst.dev->features & NETIF_F_SG)))
  				alloclen = fraglen;
  			else {
@@ -112,19 +100,20 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +				alloclen = fragheaderlen + transhdrlen + fraggap;
 +				pagedlen = datalen - transhdrlen - fraggap;
  			}
- 			alloclen += alloc_extra;
  
-@@ -1684,10 +1684,7 @@ alloc_new_skb:
- 			fraglen = datalen + fragheaderlen;
+ 			alloclen += alloc_extra;
+@@ -1165,9 +1165,6 @@ static int __ip_append_data(struct sock *sk,
+ 			}
  
  			copy = datalen - transhdrlen - fraggap - pagedlen;
--			/* [!] NOTE: copy may be negative if pagedlen>0
--			 * because then the equation may reduces to -fraggap.
+-			/* [!] NOTE: copy will be negative if pagedlen>0
+-			 * because then the equation reduces to -fraggap.
 -			 */
--			if (copy < 0 && !(flags & MSG_SPLICE_PAGES)) {
-+			if (copy < 0) {
- 				err = -EINVAL;
- 				goto error;
- 			}
+ 			if (copy > 0 &&
+ 			    INDIRECT_CALL_1(getfrag, ip_generic_getfrag,
+ 					    from, data + transhdrlen, offset,
+-- 
+2.53.0
+
 
 
