@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7841F346E64;
-	Thu,  2 Jul 2026 16:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E1F32ED4E;
+	Thu,  2 Jul 2026 16:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010203; cv=none; b=CqiR8Tu14PMg99YAXtABWG84S+GO3XzaAFTMKYxl6jB3HAg6UfwYJlQPlDXo+2hFtiehWxnSl886t+GPq1+hQZzuLuEdzA/YF7ZgIFE1mQBPmF7mFqpIZLN9x4HQIeXq4I2aWzYOi9UrhV3D9XKvLx6RbOLB4pr263QL/YCS4I0=
+	t=1783010205; cv=none; b=iJzd8tcT1vmx4/5c3zu00/NCbr1yZAzKmlttJMJgQ3fAS9rb630s/WMFTXX4eWj34Dl/hEyvu1XYrD69NXDtDNUlJFdIrg06hxTBrVPRv+WqI4Bb39c75VsCtRCVJUhSmNDJO6aY4+KoeO4v4ejj5OkVtqOFbIONSxihggL6u1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010203; c=relaxed/simple;
-	bh=IM8HWXzW1kD+11s5/ix5FQ/6yKrdQulVs0rpExE9Hxg=;
+	s=arc-20240116; t=1783010205; c=relaxed/simple;
+	bh=k8AYJdREt8QfXuZr5Pp7sLT7zy6cvpM/f6WhGmCEoWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAtcGC00GWH6y0h5M/OinhZQP/Udb2fVfRZOHNsbvu6r11D7sbbYH+W5SM9xpvyxUXa4cBd+ozxXogbPYWfwQdSf/5L9jCVWcADfFdZurQ48D9hyrrX/8YkkEglGXThg5jkNi8ucqX5AqETo/hxjuEt4oQ6ARk7DCwqn3vyg3uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGw6ekcE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NU4EuWp47oXt/KbXVrh62woPLVVyGpOyXUfE9/4SWGTMXD7WOvZhMvizqWr+M5bh1g96dgsPVmlASWzzzujE/MeDIu1BdDJh9udVqJP5eRpsxB5nC6EE2gL57w6+ffSh/P1XTvVY3qC6oDnCeCLBR02aPnKF6avspokjXGbmNtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCwci9nE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGw6ekcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AAE1F000E9;
-	Thu,  2 Jul 2026 16:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCwci9nE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF4B1F00A3A;
+	Thu,  2 Jul 2026 16:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010201;
-	bh=UUvBF1xHUOaraOwCVBrFU05fhY74kbcNcLZKxByF/LE=;
+	s=korg; t=1783010203;
+	bh=KNSfMNxOSw/MZuELoNy/KqeOdP7FseAdhdM7+AvtxJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MGw6ekcErjjDagWvjabr+N2LuuF0RT1Y4b7tzlZLfbmXOcYevDdY+R3QsdB6YW0BK
-	 0nF5/Dd9usPd4AyFjx+GROXsOz9jcomseHkRV1Er/feMNfHX8aJUN689jk++ZiKEKy
-	 3GXDR9N97VR+9+Y6YXMI7CPyxKPXlWocKRPZAeHc=
+	b=CCwci9nEZeFDYzwT/KNRjIrdaoHwBYmRqoMW0HOsHuXK3ryKVpECD7mNbl/lXoYZj
+	 iAs9oZSZWZIo/PLCNUR6AOMi4bjvqopnypGSKXtHlSd7WbJNxuI5FXbIwDKHfMqPWk
+	 9PxxVS1stocAQitodTHmIFvK+SQ9RNG33e9U9mvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/204] gpio: Fix resource leaks on errors in gpiochip_add_data_with_key()
-Date: Thu,  2 Jul 2026 18:17:44 +0200
-Message-ID: <20260702155118.823225230@linuxfoundation.org>
+Subject: [PATCH 6.12 008/204] io_uring/net: Avoid msghdr on op_connect/op_bind async data
+Date: Thu,  2 Jul 2026 18:17:45 +0200
+Message-ID: <20260702155118.843709578@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -53,248 +51,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Gabriel Krisman Bertazi <krisman@suse.de>
 
-[ Upstream commit 16fdabe143fce2cbf89139677728e17e21b46c28 ]
+[ Upstream commit 3979840cd858f30f43ea9f4e7f7f1f56de82d698 ]
+This fixes a memory leak due to the lack of the cleanup hook for the
+iovec.  The stable backport differs from upstream by dropping the
+io_connect_bpf_populate hunk, which didn't exist at the time and by
+fixing the merge conflict due to the introduction of
+io_bind_file_create and by using the older async_data allocation API.
 
-Since commit aab5c6f20023 ("gpio: set device type for GPIO chips"),
-`gdev->dev.release` is unset.  As a result, the reference count to
-`gdev->dev` isn't dropped on the error handling paths.
-
-Drop the reference on errors.
-
-Also reorder the instructions to make the error handling simpler.
-Now gpiochip_add_data_with_key() roughly looks like:
-
-   >>> Some memory allocation.  Go to ERR ZONE 1 on errors.
-   >>> device_initialize().
-
-   gpiodev_release() takes over the responsibility for freeing the
-   resources of `gdev->dev`.  The subsequent error handling paths
-   shouldn't go through ERR ZONE 1 again which leads to double free.
-
-   >>> Some initialization mainly on `gdev`.
-   >>> The rest of initialization.  Go to ERR ZONE 2 on errors.
-   >>> Chip registration success and exit.
-
-   >>> ERR ZONE 2.  gpio_device_put() and exit.
-   >>> ERR ZONE 1.
+Both IORING_OP_CONNECT and IORING_OP_BIND reuse the msghdr object just
+to store the sockaddr. Beyond allocating a much larger object than
+needed, msghdr can also wrap an iovec, which will be recycled
+unnecessarily. This uses the sockaddr directly.
 
 Cc: stable@vger.kernel.org
-Fixes: aab5c6f20023 ("gpio: set device type for GPIO chips")
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260205092840.2574840-1-tzungbi@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-[missing commit fcc8b637c542 ("gpiolib: switch the line state notifier
- to atomic"), commit dcb73cbaaeb3 ("gpio: cdev: use raw notifier for
- line state events") and commit d4f335b410dd ("gpiolib: rename GPIO chip
- printk macros") in 6.12.y.
- s/gpiochip_err/chip_err/ as well as replaced
- rwlock_init+RAW_INIT_NOTIFIER_HEAD with BLOCKING_INIT_NOTIFIER_HEAD
- based on missing commits, following same logic as in 16fdabe143fc.]
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://patch.msgid.link/20260602215327.1885109-2-krisman@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 101 ++++++++++++++++++++---------------------
- 1 file changed, 48 insertions(+), 53 deletions(-)
+ io_uring/net.c   | 36 ++++++++++++++++++------------------
+ io_uring/opdef.c |  4 ++--
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 97a32e6f901fce..878f9ab4a09829 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -785,13 +785,15 @@ static const struct device_type gpio_dev_type = {
- #define gcdev_unregister(gdev)		device_del(&(gdev)->dev)
- #endif
- 
-+/*
-+ * An initial reference count has been held in gpiochip_add_data_with_key().
-+ * The caller should drop the reference via gpio_device_put() on errors.
-+ */
- static int gpiochip_setup_dev(struct gpio_device *gdev)
+diff --git a/io_uring/net.c b/io_uring/net.c
+index 8eb0ebdc6a720c..f2f2ae1037e9b3 100644
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1719,7 +1719,7 @@ int io_socket(struct io_kiocb *req, unsigned int issue_flags)
+ int io_connect_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
  {
- 	struct fwnode_handle *fwnode = dev_fwnode(&gdev->dev);
- 	int ret;
+ 	struct io_connect *conn = io_kiocb_to_cmd(req, struct io_connect);
+-	struct io_async_msghdr *io;
++	struct sockaddr_storage *addr;
  
--	device_initialize(&gdev->dev);
--
- 	/*
- 	 * If fwnode doesn't belong to another device, it's safe to clear its
- 	 * initialized flag.
-@@ -859,9 +861,11 @@ static void gpiochip_setup_devs(void)
- 	list_for_each_entry_srcu(gdev, &gpio_devices, list,
- 				 srcu_read_lock_held(&gpio_devices_srcu)) {
- 		ret = gpiochip_setup_dev(gdev);
--		if (ret)
-+		if (ret) {
-+			gpio_device_put(gdev);
- 			dev_err(&gdev->dev,
- 				"Failed to initialize gpio device (%d)\n", ret);
-+		}
- 	}
+ 	if (sqe->len || sqe->buf_index || sqe->rw_flags || sqe->splice_fd_in)
+ 		return -EINVAL;
+@@ -1728,17 +1728,17 @@ int io_connect_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	conn->addr_len =  READ_ONCE(sqe->addr2);
+ 	conn->in_progress = conn->seen_econnaborted = false;
+ 
+-	io = io_msg_alloc_async(req);
+-	if (unlikely(!io))
++	if (io_alloc_async_data(req))
+ 		return -ENOMEM;
++	addr = req->async_data;
+ 
+-	return move_addr_to_kernel(conn->addr, conn->addr_len, &io->addr);
++	return move_addr_to_kernel(conn->addr, conn->addr_len, addr);
  }
  
-@@ -941,70 +945,71 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 	int base = 0;
+ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_connect *connect = io_kiocb_to_cmd(req, struct io_connect);
+-	struct io_async_msghdr *io = req->async_data;
++	struct sockaddr_storage *addr = req->async_data;
+ 	unsigned file_flags;
+ 	int ret;
+ 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
+@@ -1752,8 +1752,7 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
+ 
+ 	file_flags = force_nonblock ? O_NONBLOCK : 0;
+ 
+-	ret = __sys_connect_file(req->file, &io->addr, connect->addr_len,
+-				 file_flags);
++	ret = __sys_connect_file(req->file, addr, connect->addr_len, file_flags);
+ 	if ((ret == -EAGAIN || ret == -EINPROGRESS || ret == -ECONNABORTED)
+ 	    && force_nonblock) {
+ 		if (ret == -EINPROGRESS) {
+@@ -1782,7 +1781,6 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
+ out:
+ 	if (ret < 0)
+ 		req_set_fail(req);
+-	io_req_msg_cleanup(req, issue_flags);
+ 	io_req_set_res(req, ret, 0);
+ 	return IOU_OK;
+ }
+@@ -1792,15 +1790,15 @@ int io_connect(struct io_kiocb *req, unsigned int issue_flags)
+  * which in turn end up in mnt_want_write() which will grab the fs
+  * percpu start write sem. This can trigger a lockdep warning.
+  */
+-static int io_bind_file_create(const struct io_async_msghdr *io, int addr_len)
++static int io_bind_file_create(const struct sockaddr_storage *addr, int addr_len)
+ {
+ 	const struct sockaddr_un *sun;
+ 
+-	if (io->addr.ss_family != AF_UNIX)
++	if (addr->ss_family != AF_UNIX)
+ 		return 0;
+ 	if (addr_len <= offsetof(struct sockaddr_un, sun_path))
+ 		return 0;
+-	sun = (const struct sockaddr_un *) &io->addr;
++	sun = (const struct sockaddr_un *) addr;
+ 	return sun->sun_path[0] != '\0';
+ }
+ 
+@@ -1808,7 +1806,7 @@ int io_bind_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ {
+ 	struct io_bind *bind = io_kiocb_to_cmd(req, struct io_bind);
+ 	struct sockaddr __user *uaddr;
+-	struct io_async_msghdr *io;
++	struct sockaddr_storage *addr;
  	int ret;
  
--	/*
--	 * First: allocate and populate the internal stat container, and
--	 * set up the struct device.
--	 */
- 	gdev = kzalloc(sizeof(*gdev), GFP_KERNEL);
- 	if (!gdev)
+ 	if (sqe->len || sqe->buf_index || sqe->rw_flags || sqe->splice_fd_in)
+@@ -1817,21 +1815,23 @@ int io_bind_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	uaddr = u64_to_user_ptr(READ_ONCE(sqe->addr));
+ 	bind->addr_len =  READ_ONCE(sqe->addr2);
+ 
+-	io = io_msg_alloc_async(req);
+-	if (unlikely(!io))
++	if (io_alloc_async_data(req))
  		return -ENOMEM;
--
--	gdev->dev.type = &gpio_dev_type;
--	gdev->dev.bus = &gpio_bus_type;
--	gdev->dev.parent = gc->parent;
--	rcu_assign_pointer(gdev->chip, gc);
--
- 	gc->gpiodev = gdev;
- 	gpiochip_set_data(gc, data);
+-	ret = move_addr_to_kernel(uaddr, bind->addr_len, &io->addr);
++	addr = req->async_data;
++
++	ret = move_addr_to_kernel(uaddr, bind->addr_len, addr);
+ 	if (unlikely(ret))
+ 		return ret;
+-	if (io_bind_file_create(io, bind->addr_len))
++	if (io_bind_file_create(addr, bind->addr_len))
+ 		req->flags |= REQ_F_FORCE_ASYNC;
+ 	return 0;
+ }
  
--	device_set_node(&gdev->dev, gpiochip_choose_fwnode(gc));
--
- 	ret = ida_alloc(&gpio_ida, GFP_KERNEL);
++
+ int io_bind(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_bind *bind = io_kiocb_to_cmd(req, struct io_bind);
+-	struct io_async_msghdr *io = req->async_data;
++	struct sockaddr_storage *addr = req->async_data;
+ 	struct socket *sock;
+ 	int ret;
+ 
+@@ -1839,7 +1839,7 @@ int io_bind(struct io_kiocb *req, unsigned int issue_flags)
+ 	if (unlikely(!sock))
+ 		return -ENOTSOCK;
+ 
+-	ret = __sys_bind_socket(sock, &io->addr, bind->addr_len);
++	ret = __sys_bind_socket(sock, addr, bind->addr_len);
  	if (ret < 0)
- 		goto err_free_gdev;
- 	gdev->id = ret;
- 
--	ret = dev_set_name(&gdev->dev, GPIOCHIP_NAME "%d", gdev->id);
-+	ret = init_srcu_struct(&gdev->srcu);
- 	if (ret)
- 		goto err_free_ida;
-+	rcu_assign_pointer(gdev->chip, gc);
- 
--	if (gc->parent && gc->parent->driver)
--		gdev->owner = gc->parent->driver->owner;
--	else if (gc->owner)
--		/* TODO: remove chip->owner */
--		gdev->owner = gc->owner;
--	else
--		gdev->owner = THIS_MODULE;
-+	ret = init_srcu_struct(&gdev->desc_srcu);
-+	if (ret)
-+		goto err_cleanup_gdev_srcu;
-+
-+	ret = dev_set_name(&gdev->dev, GPIOCHIP_NAME "%d", gdev->id);
-+	if (ret)
-+		goto err_cleanup_desc_srcu;
-+
-+	device_initialize(&gdev->dev);
-+	/*
-+	 * After this point any allocated resources to `gdev` will be
-+	 * free():ed by gpiodev_release().  If you add new resources
-+	 * then make sure they get free():ed there.
-+	 */
-+	gdev->dev.type = &gpio_dev_type;
-+	gdev->dev.bus = &gpio_bus_type;
-+	gdev->dev.parent = gc->parent;
-+	device_set_node(&gdev->dev, gpiochip_choose_fwnode(gc));
- 
- 	ret = gpiochip_get_ngpios(gc, &gdev->dev);
- 	if (ret)
--		goto err_free_dev_name;
-+		goto err_put_device;
-+	gdev->ngpio = gc->ngpio;
- 
- 	gdev->descs = kcalloc(gc->ngpio, sizeof(*gdev->descs), GFP_KERNEL);
- 	if (!gdev->descs) {
- 		ret = -ENOMEM;
--		goto err_free_dev_name;
-+		goto err_put_device;
- 	}
- 
- 	gdev->label = kstrdup_const(gc->label ?: "unknown", GFP_KERNEL);
- 	if (!gdev->label) {
- 		ret = -ENOMEM;
--		goto err_free_descs;
-+		goto err_put_device;
- 	}
- 
--	gdev->ngpio = gc->ngpio;
- 	gdev->can_sleep = gc->can_sleep;
--
- 	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
- 	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
--
--	ret = init_srcu_struct(&gdev->srcu);
--	if (ret)
--		goto err_free_label;
--
--	ret = init_srcu_struct(&gdev->desc_srcu);
--	if (ret)
--		goto err_cleanup_gdev_srcu;
-+#ifdef CONFIG_PINCTRL
-+	INIT_LIST_HEAD(&gdev->pin_ranges);
-+#endif
-+	if (gc->parent && gc->parent->driver)
-+		gdev->owner = gc->parent->driver->owner;
-+	else if (gc->owner)
-+		/* TODO: remove chip->owner */
-+		gdev->owner = gc->owner;
-+	else
-+		gdev->owner = THIS_MODULE;
- 
- 	scoped_guard(mutex, &gpio_devices_lock) {
- 		/*
-@@ -1020,7 +1025,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 			if (base < 0) {
- 				ret = base;
- 				base = 0;
--				goto err_cleanup_desc_srcu;
-+				goto err_put_device;
- 			}
- 
- 			/*
-@@ -1040,14 +1045,10 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 		ret = gpiodev_add_to_list_unlocked(gdev);
- 		if (ret) {
- 			chip_err(gc, "GPIO integer space overlap, cannot add chip\n");
--			goto err_cleanup_desc_srcu;
-+			goto err_put_device;
- 		}
- 	}
- 
--#ifdef CONFIG_PINCTRL
--	INIT_LIST_HEAD(&gdev->pin_ranges);
--#endif
--
- 	if (gc->names)
- 		gpiochip_set_desc_names(gc);
- 
-@@ -1128,25 +1129,19 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 	scoped_guard(mutex, &gpio_devices_lock)
- 		list_del_rcu(&gdev->list);
- 	synchronize_srcu(&gpio_devices_srcu);
--	if (gdev->dev.release) {
--		/* release() has been registered by gpiochip_setup_dev() */
--		gpio_device_put(gdev);
--		goto err_print_message;
--	}
-+err_put_device:
-+	gpio_device_put(gdev);
-+	goto err_print_message;
-+
- err_cleanup_desc_srcu:
- 	cleanup_srcu_struct(&gdev->desc_srcu);
- err_cleanup_gdev_srcu:
- 	cleanup_srcu_struct(&gdev->srcu);
--err_free_label:
--	kfree_const(gdev->label);
--err_free_descs:
--	kfree(gdev->descs);
--err_free_dev_name:
--	kfree(dev_name(&gdev->dev));
- err_free_ida:
- 	ida_free(&gpio_ida, gdev->id);
- err_free_gdev:
- 	kfree(gdev);
-+
- err_print_message:
- 	/* failures here can mean systems won't boot... */
- 	if (ret != -EPROBE_DEFER) {
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
+diff --git a/io_uring/opdef.c b/io_uring/opdef.c
+index 5dc1cba158a060..bbb62d2ab2a3bf 100644
+--- a/io_uring/opdef.c
++++ b/io_uring/opdef.c
+@@ -205,7 +205,7 @@ const struct io_issue_def io_issue_defs[] = {
+ 		.unbound_nonreg_file	= 1,
+ 		.pollout		= 1,
+ #if defined(CONFIG_NET)
+-		.async_size		= sizeof(struct io_async_msghdr),
++		.async_size		= sizeof(struct sockaddr_storage),
+ 		.prep			= io_connect_prep,
+ 		.issue			= io_connect,
+ #else
+@@ -501,7 +501,7 @@ const struct io_issue_def io_issue_defs[] = {
+ 		.needs_file		= 1,
+ 		.prep			= io_bind_prep,
+ 		.issue			= io_bind,
+-		.async_size		= sizeof(struct io_async_msghdr),
++		.async_size		= sizeof(struct sockaddr_storage),
+ #else
+ 		.prep			= io_eopnotsupp_prep,
+ #endif
 -- 
 2.53.0
 
