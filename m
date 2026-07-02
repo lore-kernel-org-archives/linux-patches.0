@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A1130EF95;
-	Thu,  2 Jul 2026 16:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F60832ED40;
+	Thu,  2 Jul 2026 16:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010793; cv=none; b=rZifeZeFUWmqO3VGiy6G0HDBwJ4u/RbAEl82ndaBABsw2+PuVdoU67CWfxf0+9Lg7BMNe/jHlho3sz6fg8BlVXlG4WSEmDq5UMnPsnNHTZVs/0uQlPfOEbpSwcnH6oDS0vDFkLkTwd90xn+IVAbr/Y17Uq93FQ7c+TUCV79HgC0=
+	t=1783010796; cv=none; b=rLmPZ8x62sgauFg6za5VS8phNBzAkOehH4sElLFYsR+qe9Y8FU2eZkXPGrB4tgADCDMeH99Aj8mIN7KjJUl47irfc0cYj+BBeECT+jrsUNLEczkb2SQGivB/4RXShjGEi0P2gN+zDl3V6/xS+6q52T7DfBmxWmwd8Rf1fKXgqSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010793; c=relaxed/simple;
-	bh=DwU47u6+syl/qTpOx5TFuDahQUQwcDG7W+/gOJqWM1E=;
+	s=arc-20240116; t=1783010796; c=relaxed/simple;
+	bh=FyosHntRHMVgDX42pV21T/P9Y5QVsSVQS1Xs8lpICyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DW6fa6dZonxvIv1jBsG2mrztosG/gasgsh3d7e2Cg6MSuAVKDQRoHxCPfv93qQfoDxSZCK5UlpfAVqNxeXoQZa752tCmVAuyY+BIFuV69mHVNdMjQBRZBwkOeL5KvfdCNpX8QkNkSxhMC9IIUC1wBCex2wSeBCE7ZTrqZcERxoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvB61YGI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Nnc6qHNcuQOl1mkKRVjLz85LmWZXMq0SpQM2u+xYxtPl7AmdQxaeQ7BkL0JEB9uMKiRy8Q3omLI7T/c1wLFXeddner6h7XMb8fHWyPcnEbTZ0+bHVeI2jLD0Yt0JvxnxZyn5aB36AFCElX/n3Gm72vGweg5qgZAWKQkb7D9sXxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWRCU9eJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvB61YGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251361F000E9;
-	Thu,  2 Jul 2026 16:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWRCU9eJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DCF1F000E9;
+	Thu,  2 Jul 2026 16:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010792;
-	bh=Sd3/2wsaq/YQeSweVNPooQf198Tr/P4+GRLhtvnicJY=;
+	s=korg; t=1783010795;
+	bh=9qCH83KNm0j0Cafv7KsTDpvtv69bDrhJJAvmbg69zfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CvB61YGIoApZbAQapkWObmeFe7dJ79VeEfWIP+OCKiBY/E8vyRkqH30i8J4ozMcy1
-	 jPBAq9AkBRWkmwCYoySj45i+8FJI2ERZa3XqWJO3YswKvZBPQluM1EPjdzVIiX8mQm
-	 yhRYtAz9oS7lKaNniuStAj/KSQjre3IBgL4yeGqw=
+	b=yWRCU9eJ94i6cEV33YrLdBjige1k8Kf0jx/DqdC7ykGdYCqLbfOPVXKgXeXXC6A9e
+	 X7QDrx/v0deSXbawJoETQ6CWKWVnPMSWge4BCLo8YE6ilTDC7MTMYmt7kVti4bOwfb
+	 O8n/JHHG1JZdE+kvveFRg2XuSsAM5LRRVevegxVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Santosh Kalluri <santosh.kalluri129@gmail.com>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/175] phonet: Pass net and ifindex to phonet_address_notify().
-Date: Thu,  2 Jul 2026 18:18:59 +0200
-Message-ID: <20260702155116.600128183@linuxfoundation.org>
+Subject: [PATCH 6.6 039/175] net: phonet: free phonet_device after RCU grace period
+Date: Thu,  2 Jul 2026 18:19:00 +0200
+Message-ID: <20260702155116.621746953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -46,116 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Santosh Kalluri <santosh.kalluri129@gmail.com>
 
-[ Upstream commit 68ed5c38b512b734caf3da1f87db4a99fcfe3002 ]
+[ Upstream commit 71de0177b28da751f407581a4515cf4d762f6296 ]
 
-Currently, phonet_address_notify() fetches netns and ifindex from dev.
+phonet_device_destroy() removes a phonet_device from the per-net device
+list with list_del_rcu(), but frees it immediately. RCU readers walking
+the same list can still hold a pointer to the object after it has been
+removed, leading to a slab-use-after-free.
 
-Once addr_doit() is converted to RCU, phonet_address_notify() will be
-called outside of RCU due to GFP_KERNEL, and dev will be unavailable
-there.
+Use kfree_rcu(), matching the lifetime rule already used by
+phonet_address_del() for the same object type.
 
-Let's pass net and ifindex to phonet_address_notify().
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 71de0177b28d ("net: phonet: free phonet_device after RCU grace period")
+Fixes: eeb74a9d45f7 ("Phonet: convert devices list to RCU")
+Cc: stable@vger.kernel.org
+Signed-off-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
+Acked-by: Rémi Denis-Courmont <remi@remlab.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/phonet/pn_dev.h |    2 +-
- net/phonet/pn_dev.c         |   10 +++++++---
- net/phonet/pn_netlink.c     |   12 ++++++------
- 3 files changed, 14 insertions(+), 10 deletions(-)
+ net/phonet/pn_dev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/phonet/pn_dev.h
-+++ b/include/net/phonet/pn_dev.h
-@@ -38,7 +38,7 @@ int phonet_address_add(struct net_device
- int phonet_address_del(struct net_device *dev, u8 addr);
- u8 phonet_address_get(struct net_device *dev, u8 addr);
- int phonet_address_lookup(struct net *net, u8 addr);
--void phonet_address_notify(int event, struct net_device *dev, u8 addr);
-+void phonet_address_notify(struct net *net, int event, u32 ifindex, u8 addr);
- 
- int phonet_route_add(struct net_device *dev, u8 daddr);
- int phonet_route_del(struct net_device *dev, u8 daddr);
 --- a/net/phonet/pn_dev.c
 +++ b/net/phonet/pn_dev.c
-@@ -98,10 +98,13 @@ static void phonet_device_destroy(struct
- 	mutex_unlock(&pndevs->lock);
- 
- 	if (pnd) {
-+		struct net *net = dev_net(dev);
-+		u32 ifindex = dev->ifindex;
- 		u8 addr;
- 
+@@ -105,7 +105,7 @@ static void phonet_device_destroy(struct
  		for_each_set_bit(addr, pnd->addrs, 64)
--			phonet_address_notify(RTM_DELADDR, dev, addr);
-+			phonet_address_notify(net, RTM_DELADDR, ifindex, addr);
-+
- 		kfree(pnd);
+ 			phonet_address_notify(net, RTM_DELADDR, ifindex, addr);
+ 
+-		kfree(pnd);
++		kfree_rcu(pnd, rcu);
  	}
- }
-@@ -244,8 +247,9 @@ static int phonet_device_autoconf(struct
- 	ret = phonet_address_add(dev, req.ifr_phonet_autoconf.device);
- 	if (ret)
- 		return ret;
--	phonet_address_notify(RTM_NEWADDR, dev,
--				req.ifr_phonet_autoconf.device);
-+
-+	phonet_address_notify(dev_net(dev), RTM_NEWADDR, dev->ifindex,
-+			      req.ifr_phonet_autoconf.device);
- 	return 0;
- }
- 
---- a/net/phonet/pn_netlink.c
-+++ b/net/phonet/pn_netlink.c
-@@ -22,7 +22,7 @@
- static int fill_addr(struct sk_buff *skb, u32 ifindex, u8 addr,
- 		     u32 portid, u32 seq, int event);
- 
--void phonet_address_notify(int event, struct net_device *dev, u8 addr)
-+void phonet_address_notify(struct net *net, int event, u32 ifindex, u8 addr)
- {
- 	struct sk_buff *skb;
- 	int err = -ENOBUFS;
-@@ -32,17 +32,17 @@ void phonet_address_notify(int event, st
- 	if (skb == NULL)
- 		goto errout;
- 
--	err = fill_addr(skb, dev->ifindex, addr, 0, 0, event);
-+	err = fill_addr(skb, ifindex, addr, 0, 0, event);
- 	if (err < 0) {
- 		WARN_ON(err == -EMSGSIZE);
- 		kfree_skb(skb);
- 		goto errout;
- 	}
--	rtnl_notify(skb, dev_net(dev), 0,
--		    RTNLGRP_PHONET_IFADDR, NULL, GFP_KERNEL);
-+
-+	rtnl_notify(skb, net, 0, RTNLGRP_PHONET_IFADDR, NULL, GFP_KERNEL);
- 	return;
- errout:
--	rtnl_set_sk_err(dev_net(dev), RTNLGRP_PHONET_IFADDR, err);
-+	rtnl_set_sk_err(net, RTNLGRP_PHONET_IFADDR, err);
- }
- 
- static const struct nla_policy ifa_phonet_policy[IFA_MAX+1] = {
-@@ -89,7 +89,7 @@ static int addr_doit(struct sk_buff *skb
- 	else
- 		err = phonet_address_del(dev, pnaddr);
- 	if (!err)
--		phonet_address_notify(nlh->nlmsg_type, dev, pnaddr);
-+		phonet_address_notify(net, nlh->nlmsg_type, ifm->ifa_index, pnaddr);
- 	return err;
  }
  
 
