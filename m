@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC31733D4F0;
-	Thu,  2 Jul 2026 16:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F90035A39F;
+	Thu,  2 Jul 2026 16:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010806; cv=none; b=lH+QtIv6jrzYP7+a8X/bry9krIedr2P/NoxSjktomussatEauBDB7n6Wyb/xJVv0OD0LSiImG7tJrhBy0NWZGDVMdjWtA1M75mi/l9Q2g4sTlZXvymJcpKT/+tb9U3l4ds52GG6GtQg/ZwKxRmiWpQmWL+V45I2R3JXyMhNA4Es=
+	t=1783010809; cv=none; b=bXgBxR8DXEYHWugfD+RcZvY8iNzOtCcqj6JsKT42YdodIVbYltT8P0wPHW/LRB58y14xVUELnC5D2tRdCAecue10+3nZNjKG0guyJwzxeVFQHwA/g47UH935RRHEQgwAZ/VWq1fTqvQPNK9NXoZ/QZAMP2xnW2SX3ItvM9Kz/1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010806; c=relaxed/simple;
-	bh=nzBUlNNmpkyr5yQmHE1hRor7P47pQIDvD3b/MUbvy6E=;
+	s=arc-20240116; t=1783010809; c=relaxed/simple;
+	bh=R4Gmoxwh/o4ObM5gGNbqI1D0CsUy0WfvQcYzdfN2IcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SU0GSQESCJK+zNiW3c30H2v+zaQ9DykM1I2ZYbl9EWLLDOGJgCgLZHXQ+rJKlQey+K4PwxLD0fqMWU5ZJxV7ZhpNgrEFdSk2ntFGqoDYPMctZ232VqDM9ziaBILzBw5Q9Jzx4V95tCF/Z/YRBRk165fJpV7NVKHcv8aHGCocz6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5hAphkj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NMp6HST0TvimXE09gLvYqdhLMaAU4My6T352j9Zsjkwntx/x1sHCXR/TNqe5P/MQZfoO4axpR+Wd+EvZH4czhBLBpNg0yhijnNL0zUsykmh6u17kGPxP74CxytDobQDITMAc0ZUfLaCboedzbmrNT6rWJYhgzxlcEYHejBnTeYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLQqmf/A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5hAphkj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB891F000E9;
-	Thu,  2 Jul 2026 16:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLQqmf/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66CA1F000E9;
+	Thu,  2 Jul 2026 16:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010805;
-	bh=FrF3xZXmDpo4kMc58r5YGePgpr0WbtVA/FUO28plo08=;
+	s=korg; t=1783010808;
+	bh=KZ1K6Mb1sCQ9fQNdXvGCisrKKl74NFEJ/TOHsWde3aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y5hAphkj5qrTI6ugdUn7tP+ZaEnq2Zs2S4MTPKYuLtIlTAQzEyK29A/xvqpXRhXwh
-	 Iuhm4IKYcF/ZY6N50aFI/oaHPJ9T2RkrbPBoYFzJqKQ81fSotd+I3uje5Sud9muA9p
-	 9CHzHM5/zvWeGhGVBAq/yGXtLYlmyF3GZSUHkMBM=
+	b=xLQqmf/ASVyY2L5jcJqosZlqb2qD8bSQH1l8rM95eiXXPKAShSMKyS+yZupNgH9Qr
+	 xF2Qpazw8NNl/+4wJxQVA6Fm24Imd8YY/marhTAQ9jAKXS61r+bWWSzJhjgGndRCjl
+	 CVY4PvwZe3NGTUydQ7AxmzYxzgZFkzaN13cJ1z8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Lei Lu <llfamsec@gmail.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/175] slimbus: qcom-ngd-ctrl: Balance pm_runtime enablement for NGD
-Date: Thu,  2 Jul 2026 18:19:03 +0200
-Message-ID: <20260702155116.683925916@linuxfoundation.org>
+Subject: [PATCH 6.6 043/175] fuse: re-lock request before replacing page cache folio
+Date: Thu,  2 Jul 2026 18:19:04 +0200
+Message-ID: <20260702155116.703487929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,43 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 6a003446b725c44b9e3ffa111b0effbaa2d43085 ]
+[ Upstream commit a078484921052d0badd827fcc2770b5cfc1d4120 ]
 
-The pm_runtime_enable() and pm_runtime_use_autosuspend() calls are
-supposed to be balanced on exit, add these calls.
+fuse_try_move_folio() unlocks the request on entry but does not
+re-lock it on the success path. This means fuse_chan_abort() can end the
+request and free the fuse_io_args (eg fuse_readpages_end()) while the
+subsequent copy chain logic after fuse_try_move_folio() accesses the
+fuse_io_args, leading to use-after-free issues.
 
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Fix this by calling lock_request() before replace_page_cache_folio().
+This ensures the request is locked on the success path which will
+prevent the fuse_io_args from being freed while the later copying logic
+runs, and also ensures that the ap->folios[i]->mapping is never null
+since ap->folios[i] will always point to the newfolio after
+replace_page_cache_folio().
+
+Fixes: ce534fb05292 ("fuse: allow splice to move pages")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-8-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Lei Lu <llfamsec@gmail.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/fuse/dev.c |   19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1585,6 +1585,8 @@ static int qcom_slim_ngd_probe(struct pl
- 	ret = qcom_slim_ngd_qmi_svc_event_init(ctrl);
- 	if (ret) {
- 		dev_err(&pdev->dev, "QMI service registration failed:%d", ret);
-+		pm_runtime_dont_use_autosuspend(dev);
-+		pm_runtime_disable(dev);
- 		return ret;
- 	}
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -843,6 +843,10 @@ static int fuse_try_move_page(struct fus
+ 	if (WARN_ON(folio_test_mlocked(oldfolio)))
+ 		goto out_fallback_unlock;
  
-@@ -1694,6 +1696,7 @@ static int qcom_slim_ngd_remove(struct p
- {
- 	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
++	err = lock_request(cs->req);
++	if (err)
++		goto out_fallback_unlock;
++
+ 	replace_page_cache_folio(oldfolio, newfolio);
  
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pdr_handle_release(ctrl->pdr);
- 	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
+ 	folio_get(newfolio);
+@@ -856,20 +860,7 @@ static int fuse_try_move_page(struct fus
+ 	 */
+ 	pipe_buf_release(cs->pipe, buf);
+ 
+-	err = 0;
+-	spin_lock(&cs->req->waitq.lock);
+-	if (test_bit(FR_ABORTED, &cs->req->flags))
+-		err = -ENOENT;
+-	else
+-		*pagep = &newfolio->page;
+-	spin_unlock(&cs->req->waitq.lock);
+-
+-	if (err) {
+-		folio_unlock(newfolio);
+-		folio_put(newfolio);
+-		goto out_put_old;
+-	}
+-
++	*pagep = &newfolio->page;
+ 	folio_unlock(oldfolio);
+ 	/* Drop ref for ap->pages[] array */
+ 	folio_put(oldfolio);
 
 
