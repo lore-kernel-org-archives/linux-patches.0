@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BC319049B;
-	Thu,  2 Jul 2026 16:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5D119049B;
+	Thu,  2 Jul 2026 16:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011316; cv=none; b=syH7pa7bOGFKJTyG8QxD8/ZBmQzzLruahm2ip9fOUylchjsVWT6kqErcSSfsKmnRLwVFLRQ5Y7rvLztRQ/Vddlwc1JXQwcevWh+3AfwqpP6FCn8dsmbI9ToywfTIvuX1Ixekb1txH7z2bCX7/1fSMQGtL8WZ/n4QST9AOKShYio=
+	t=1783011318; cv=none; b=Jl0WqTmlpOi976aZkvisDO8B9CyV4wppKpHpEZY5Bx7hf3ihiJLhXjfi3lDx7m6V+KTZE7LBSU7WSBfTOTDMCkChQt2H+AcMeunAGBxD58Wcuxhyu1iv2vTJVUNN1gIFRVtBAxwV4mw1e11hVS6Ug21TN9nESghtcPM0jb/Q7RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011316; c=relaxed/simple;
-	bh=FUMqK6KKpQ4u1QQfPuaKfUoPft22DRRUfMOu52+rsM4=;
+	s=arc-20240116; t=1783011318; c=relaxed/simple;
+	bh=2myylT1ngt3+goEg3ePT8qa1VJFhHJWYR+UEC1e6B84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGaY/EYxjT85BVKVzmbWzmDn/q/okiJteRvYR5MduXC+6NjVlcXYSx/1pXhBFGv4tfb7dheZGlxzCqpf+EsGUoVOykvvVG5TjQWSNE+CGbce5ALwr28MJEpzc1NVJVG1zBHY4M8F77hfrqxcrTVFUznSixWKrsXn9luwwJEVrJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjvInfBQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mraf9w3lYXzQ/hzfXlQwkmgTDuXE2p9t0Ffv+vwd5LQvUDGUpV8xA0u95i910N8VntOkq0mS0A4r+Rvaabi4b8DtEMzZieXRUpEwFEUwaEM2sdmuBO3YeE3JGh3IpbC4aHwkFm51SNux32txR9MNZUmJ/UEI7WvORlonyzeoDQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOOomYSA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjvInfBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A4E1F000E9;
-	Thu,  2 Jul 2026 16:55:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOOomYSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C7F1F000E9;
+	Thu,  2 Jul 2026 16:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011315;
-	bh=40GIn2I5WAQShROkIj24Sg1/415jhhNiJWqBQg4FMrE=;
+	s=korg; t=1783011317;
+	bh=QmYoWJAQPLqlgfC5bDAHqVzy2jsGpd2CeBdx630BIi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vjvInfBQH2eEBqDPCkkaS12QPTB0Kqpfr+GG8/hgCP4H3CwuQ+WOtm2/Tqdp05kVD
-	 6GbkM6ElGAHJup/ZsAdqEsFrtnuv2pQM8J3/j1ENREboEGjA2wW28xmX6sfdEQyqfH
-	 VBEKGZyGy02JFNCJ4Ov+A8U+4m37YfwlPBk5x+ho=
+	b=AOOomYSAf0R+AObJSHe80ca8udY6JHRMDkz7Tw6x2I/DfIz3CqwHxhD5g+//LBpkP
+	 Hg2uORZgZE4t9sBVSjINb2UFtuDJa5or/2baiWHrnBTWhInMBTq4XLYjhH+o5YFaqo
+	 kP+pBnBtVlpi5q+KZ1IRZRL9JUjc3+p+MvQHkNK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunji Kang <yunji0.kang@samsung.com>,
-	Yeongjin Gil <youngjin.gil@samsung.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
+	stable@kernel.org,
+	Zhang Cen <rollkingzzc@gmail.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 063/108] f2fs: fix to round down start offset of fallocate for pin file
-Date: Thu,  2 Jul 2026 18:21:00 +0200
-Message-ID: <20260702155113.415180336@linuxfoundation.org>
+Subject: [PATCH 6.18 064/108] f2fs: validate ACL entry sizes in f2fs_acl_from_disk()
+Date: Thu,  2 Jul 2026 18:21:01 +0200
+Message-ID: <20260702155113.436226226@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -54,71 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunmin Jeong <s_min.jeong@samsung.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-commit 4275b59673eb60b02eec3997816c83f1f4b909c4 upstream.
+commit c4810ada31e80cbe4011467c4f3b1e93f94134f3 upstream.
 
-Currently, the length of fallocate for pin file is section-aligned to
-keep allocated sections from being selected as victims of GC. However,
-for the case that the start offset of fallocate is not aligned in
-section, the allocated sections can't be fully utilized. It's because a
-new section is allocated by f2fs_allocate_pinning_section() after using
-blks_per_sec blocks regardless of the start offset. As a result, several
-unexpected dirty segments may be created, including blocks assigned to
-the pinned file.
+f2fs_acl_count() only validates the aggregate ACL xattr length. A
+malformed ACL can still place ACL_USER or ACL_GROUP in a slot that only
+contains struct f2fs_acl_entry_short bytes, and f2fs_acl_from_disk()
+then reads entry->e_id before verifying that a full entry fits.
 
-To address this issue, let's round down the start offset of fallocate
-to the length of section.
+Require a short entry before reading e_tag and e_perm, and require a
+full entry before reading e_id for ACL_USER and ACL_GROUP. Return
+-EFSCORRUPTED from these new truncated-entry checks, while keeping the
+pre-existing -EINVAL paths unchanged.
 
-The reproducing scenario is as below
+Validation reproduced this kernel report:
+KASAN slab-out-of-bounds in __f2fs_get_acl+0x6fb/0x7e0
+RIP: 0033:0x7f4b835ea7aa
+The buggy address belongs to the object at ffff888114589960 which belongs
+to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes to the right of allocated 8-byte
+region [ffff888114589960, ffff888114589968)
+Read of size 4
+Call trace:
+  dump_stack_lvl+0x66/0xa0 (?:?)
+  print_report+0xce/0x630 (?:?)
+  __f2fs_get_acl+0x6fb/0x7e0 (fs/f2fs/acl.c:169)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x224/0x430 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  __f2fs_get_acl+0x5/0x7e0 (fs/f2fs/acl.c:169)
+  __get_acl+0x281/0x380 (?:?)
+  vfs_get_acl+0x10b/0x190 (?:?)
+  do_get_acl+0x2a/0x410 (?:?)
+  do_get_acl+0x9/0x410 (?:?)
+  do_getxattr+0xe8/0x260 (?:?)
+  filename_getxattr+0xd1/0x140 (?:?)
+  do_getname+0x2d/0x2d0 (?:?)
+  path_getxattrat+0x16c/0x200 (?:?)
+  lock_release+0xc8/0x290 (?:?)
+  cgroup_update_frozen+0x9d/0x320 (?:?)
+  lockdep_hardirqs_on_prepare+0xea/0x1a0 (?:?)
+  trace_hardirqs_on+0x1a/0x170 (?:?)
+  _raw_spin_unlock_irq+0x28/0x50 (?:?)
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
 
-chunk=$(((2<<20)+4096)) # 2MB + 4KB
-touch test
-f2fs_io pinfile set test
-f2fs_io fallocate 0 0 $chunk test
-f2fs_io fallocate 0 $chunk $chunk test
-f2fs_io fallocate 0 $((chunk*2)) $chunk test
-f2fs_io fiemap 0 $((chunk*3)) test
-
-Fiemap: offset = 0 len = 12288
-    logical addr.    physical addr.   length           flags
-0   0000000000000000 000000068c600000 0000000000400000 00001088
-1   0000000000400000 000000003d400000 0000000000001000 00001088
-2   0000000000401000 00000003eb200000 0000000000200000 00001088
-3   0000000000601000 00000005e4200000 0000000000001000 00001088
-4   0000000000602000 0000000605400000 0000000000200000 00001089
-
-Cc: stable@vger.kernel.org
-Fixes: f5a53edcf01e ("f2fs: support aligned pinned file")
-Reviewed-by: Yunji Kang <yunji0.kang@samsung.com>
-Reviewed-by: Yeongjin Gil <youngjin.gil@samsung.com>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Cc: stable@kernel.org
+Fixes: af48b85b8cd3 ("f2fs: add xattr and acl functionalities")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/f2fs/acl.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1895,8 +1895,15 @@ static int f2fs_expand_inode_data(struct
+--- a/fs/f2fs/acl.c
++++ b/fs/f2fs/acl.c
+@@ -46,6 +46,7 @@ static inline int f2fs_acl_count(size_t
+ static struct posix_acl *f2fs_acl_from_disk(const char *value, size_t size)
+ {
+ 	int i, count;
++	int err = -EINVAL;
+ 	struct posix_acl *acl;
+ 	struct f2fs_acl_header *hdr = (struct f2fs_acl_header *)value;
+ 	struct f2fs_acl_entry *entry = (struct f2fs_acl_entry *)(hdr + 1);
+@@ -69,8 +70,11 @@ static struct posix_acl *f2fs_acl_from_d
  
- 	if (f2fs_is_pinned_file(inode)) {
- 		block_t sec_blks = CAP_BLKS_PER_SEC(sbi);
--		block_t sec_len = roundup(map.m_len, sec_blks);
-+		block_t sec_len;
+ 	for (i = 0; i < count; i++) {
  
-+		if (map.m_lblk % sec_blks) {
-+			map.m_lblk = rounddown(map.m_lblk, sec_blks);
-+			map.m_len = pg_end - map.m_lblk;
-+			if (off_end)
-+				map.m_len++;
+-		if ((char *)entry > end)
++		if (unlikely((char *)entry +
++				sizeof(struct f2fs_acl_entry_short) > end)) {
++			err = -EFSCORRUPTED;
+ 			goto fail;
 +		}
-+		sec_len = roundup(map.m_len, sec_blks);
- 		map.m_len = sec_blks;
- next_alloc:
- 		f2fs_down_write(&sbi->pin_sem);
+ 
+ 		acl->a_entries[i].e_tag  = le16_to_cpu(entry->e_tag);
+ 		acl->a_entries[i].e_perm = le16_to_cpu(entry->e_perm);
+@@ -85,6 +89,11 @@ static struct posix_acl *f2fs_acl_from_d
+ 			break;
+ 
+ 		case ACL_USER:
++			if (unlikely((char *)entry +
++					sizeof(struct f2fs_acl_entry) > end)) {
++				err = -EFSCORRUPTED;
++				goto fail;
++			}
+ 			acl->a_entries[i].e_uid =
+ 				make_kuid(&init_user_ns,
+ 						le32_to_cpu(entry->e_id));
+@@ -92,6 +101,11 @@ static struct posix_acl *f2fs_acl_from_d
+ 					sizeof(struct f2fs_acl_entry));
+ 			break;
+ 		case ACL_GROUP:
++			if (unlikely((char *)entry +
++					sizeof(struct f2fs_acl_entry) > end)) {
++				err = -EFSCORRUPTED;
++				goto fail;
++			}
+ 			acl->a_entries[i].e_gid =
+ 				make_kgid(&init_user_ns,
+ 						le32_to_cpu(entry->e_id));
+@@ -107,7 +121,7 @@ static struct posix_acl *f2fs_acl_from_d
+ 	return acl;
+ fail:
+ 	posix_acl_release(acl);
+-	return ERR_PTR(-EINVAL);
++	return ERR_PTR(err);
+ }
+ 
+ static void *f2fs_acl_to_disk(struct f2fs_sb_info *sbi,
 
 
