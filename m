@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921B824E4C3;
-	Thu,  2 Jul 2026 16:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB251C695;
+	Thu,  2 Jul 2026 16:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011355; cv=none; b=gavtulUqmQ7e4wtpv8/+J93x2a8YDryUr0EkqCAPAZupofazbI8Ap2aM0nmn/GtjOtooJq9rG7FDrm/26CcMg8aidSwVTvTgCn34IIJO3n3oIQfHh0KcVkHPTJHB/YkOqHTsPHGly1yt0kyeg3CmTLjIZPNJn/0NZ6XaRVX4PGA=
+	t=1783011358; cv=none; b=GIMIxrJSbYL9mqGDNeFYV9hR4uJFV/INuPDaxCTmQhgtEVxxf9G/x2y1L/CYeEoccjTtLsAeYkpvQcY1CKZyTXqtJDwVzwcTiJGuPfBoGy5ucZHH6vBkzS8sPzRxhc77OhbzfQdD+qonCnZ9Fr+o5yU+2p0EKTv5WM5KlYwKSb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011355; c=relaxed/simple;
-	bh=ALNcZSft5uXfXlvq9LZO4cK65OiwhHQg0doShVW4LDA=;
+	s=arc-20240116; t=1783011358; c=relaxed/simple;
+	bh=PX21BupwuebTTbRrNoLrjHK7CJccT56U8H7BzJTV8DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFV7qw9pkWhaLJIcOOJRLDqWtz2Cqb9AMHQYG+2BRkRvVY8Jm2O7jNmlili504lAqPHv+81FY6HE1ktWixAakFTMUZ8seEbO2CzPEBj90N/aGc10ZjAkyge5nvRMH/JuGoy486eNfZbaK9ZZO1WG6hY4ZkPW1cRD7JUIUCg1gMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l38ZlfPh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=a3WURtV8mLGCLpnaT62lTcCaF6MUYA7KlE9zN3BO4oDCkQdsPf8wh9oGgUxbrWfAU4xQAMSvJfga4XLRPb7z9KHePVAlzcHwjsWIPPWdMmG2+SW+UElv/Ek5H+Mk6YXOaOTxpth5jxl2SITbMLWrEpbXaf+7RQgj2REQpq/297U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mroWlKUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l38ZlfPh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DD51F000E9;
-	Thu,  2 Jul 2026 16:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mroWlKUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0741F000E9;
+	Thu,  2 Jul 2026 16:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011354;
-	bh=fO0zZ+xNN7gIHHzw1963/e91cNwQtD81zDu3e64NQRs=;
+	s=korg; t=1783011357;
+	bh=PDei/COzb45h5sClDzU5gZsPWtKGDWhbCqO4H6mKSF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l38ZlfPhUHYGOXnjEFmwhyf2OWvlMXrAimzEqDcbl6ZkWDh94M+ysPmBdQCefiyxQ
-	 qBMQ6IB0zuI79QjZlPCal/hsSSmxG7H38TyIcRaEwxhWMqfY4NlPh3yRr09vV5+X6s
-	 Z2ZieEQFwFONwRqXUj5t+L1VpdZmn6N2dFHtqboo=
+	b=mroWlKUac19Jjyuf/foeoqhi2RGWXK9KPi4sartPL+dCzuJF3SRX4UKVR/KHvlRMs
+	 maPYxA+4sLSS/rN7pzkFRPFCuQRek+kKLYyttXnUaqy6TWlsUQlCBJ+0tjTXd9Ab/g
+	 00dz5JjnuDs+eB0iGj/b9IchEJSo2jM+zZR/jKvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 050/108] userfaultfd: ensure mremap_userfaultfd_fail() releases mmap_changing
-Date: Thu,  2 Jul 2026 18:20:47 +0200
-Message-ID: <20260702155113.145722202@linuxfoundation.org>
+	Jay Shin <jaeshin@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	coregee2000@gmail.com,
+	Ming Lei <ming.lei@redhat.com>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 077/108] blk-cgroup: fix UAF in __blkcg_rstat_flush()
+Date: Thu,  2 Jul 2026 18:21:14 +0200
+Message-ID: <20260702155113.708347927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -49,54 +49,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Michal Koutný <mkoutny@suse.com>
 
-commit 0496a59745b0723ea74274db16fd5c8b1379b9a9 upstream.
+commit 0ab5ee5a1badb58cbb2242617cb01a4972b1f2a2 upstream.
 
-Sashiko says:
+When multiple blkgs in the same blkcg are released concurrently,
+a use-after-free can occur. The race happens when one blkg's
+__blkcg_rstat_flush() removes another blkg's iostat entries via
+llist_del_all(). The second blkg sees an empty list and proceeds
+to free itself while the first is still iterating over its entries.
 
-  mremap_userfaultfd_prep() increments ctx->mmap_changing to stall
-  concurrent operations, but mremap_userfaultfd_fail() does not
-  decrement it before dropping the context reference.
+Move the flush from __blkg_release() (RCU callback) to blkg_release()
+(before call_rcu). This ensures the RCU grace period waits for any
+concurrent flush's rcu_read_lock() section to complete before freeing.
 
-If an mremap operation fails, ctx->mmap_changing remains elevated. This
-will causes subsequent userfaultfd operations like a UFFDIO_COPY to fail
-with -EAGAIN.
-
-Decrement ctx->mmap_changing in mremap_userfaultfd_fail().
-
-Link: https://sashiko.dev/#/patchset/20260430113512.115938-1-rppt@kernel.org
-Link: https://lore.kernel.org/20260513081416.495963-1-rppt@kernel.org
-Fixes: df2cc96e7701 ("userfaultfd: prevent non-cooperative events vs mcopy_atomic races")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Jay Shin <jaeshin@redhat.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Waiman Long <longman@redhat.com>
+Fixes: 20cb1c2fb756 ("blk-cgroup: Flush stats before releasing blkcg_gq")
+Reported-by: coregee2000@gmail.com
+Closes: https://lore.kernel.org/linux-block/CAHPqNmwT9oRpem3J3erS_W0uSQND47LGGSBsNxP8E6uSUish1w@mail.gmail.com/
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Tested-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Link: https://patch.msgid.link/20260205155425.342084-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |    2 ++
- 1 file changed, 2 insertions(+)
+ block/blk-cgroup.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -767,6 +767,8 @@ void mremap_userfaultfd_fail(struct vm_u
- 	if (!ctx)
- 		return;
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -164,20 +164,10 @@ static void blkg_free(struct blkcg_gq *b
+ static void __blkg_release(struct rcu_head *rcu)
+ {
+ 	struct blkcg_gq *blkg = container_of(rcu, struct blkcg_gq, rcu_head);
+-	struct blkcg *blkcg = blkg->blkcg;
+-	int cpu;
  
-+	atomic_dec(&ctx->mmap_changing);
-+	VM_WARN_ON_ONCE(atomic_read(&ctx->mmap_changing) < 0);
- 	userfaultfd_ctx_put(ctx);
+ #ifdef CONFIG_BLK_CGROUP_PUNT_BIO
+ 	WARN_ON(!bio_list_empty(&blkg->async_bios));
+ #endif
+-	/*
+-	 * Flush all the non-empty percpu lockless lists before releasing
+-	 * us, given these stat belongs to us.
+-	 *
+-	 * blkg_stat_lock is for serializing blkg stat update
+-	 */
+-	for_each_possible_cpu(cpu)
+-		__blkcg_rstat_flush(blkcg, cpu);
+ 
+ 	/* release the blkcg and parent blkg refs this blkg has been holding */
+ 	css_put(&blkg->blkcg->css);
+@@ -195,6 +185,17 @@ static void __blkg_release(struct rcu_he
+ static void blkg_release(struct percpu_ref *ref)
+ {
+ 	struct blkcg_gq *blkg = container_of(ref, struct blkcg_gq, refcnt);
++	struct blkcg *blkcg = blkg->blkcg;
++	int cpu;
++
++	/*
++	 * Flush all the non-empty percpu lockless lists before releasing
++	 * us, given these stat belongs to us.
++	 *
++	 * blkg_stat_lock is for serializing blkg stat update
++	 */
++	for_each_possible_cpu(cpu)
++		__blkcg_rstat_flush(blkcg, cpu);
+ 
+ 	call_rcu(&blkg->rcu_head, __blkg_release);
  }
- 
 
 
