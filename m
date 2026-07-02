@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2443438A6;
-	Thu,  2 Jul 2026 16:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B752DC78C;
+	Thu,  2 Jul 2026 16:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010893; cv=none; b=axzRpcI97dfNHpNPaYtuE2/GNdnkUI7SinoQz4xnm19BNdxWQJbrTEHPJCABU9wA5mQ9L49tsbpBHtFIQlXYcLaHWx2GxZb1xu5ii0rpauB+uB5Oyb2q5vBpepJ3fgrb1dtoQPZ7kclIrTeG2XVcQCf69sBGS8Z3ixU+MOFRYLw=
+	t=1783010895; cv=none; b=KYYMPDtxNw2t+14hUAmrdQmqu3U7PR0EPrGGl1k1JUGVRP0FPaTny2h7f6vs+BnAg+NwM3QvA5vB+v0m+UlzTe9HbBPVtztx0At9QEYiXHR5zuLQjXRyVrdO5zc0qQZkjxtNofJC2ydFbGUCLN53bQFaNAlfq2z57/lygGiFzyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010893; c=relaxed/simple;
-	bh=bZcPNc+5Cm+4QpL3lBXdaTihk3BvwjHAkpOKYUKJem4=;
+	s=arc-20240116; t=1783010895; c=relaxed/simple;
+	bh=11r4sCvE5MEGd5ofseH/TpllEIouzzBVA3/1+nGvofM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EudOxnEKSONO8nm6HY4uEUfGqej7BWUOYrorkDW5quOBdvE55C2JYumK+de+kSEO/ZMeXvGig9j2lYMQ9ib4Ngx6Vg1vDYuBvW4CKT8Z+p/RLTdQ/Tgasd9cjJYRzisY9Bau+X0YYRJVqsDc11F4fLlupvseD+MfGlqZijxDn4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/9+dkxu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=INwhDq3e9eeNJFR9fUtDuGMuU5cdA9QB2JDi2pb78LDWYvXCIxRABNOHFhTS5errqAg2MoxtUd+yp9+zMmuv0RLw+Y2N8tAVyU1GuVNeuGNU87mLqJIy3qAlQjpZq0zN3ljJpn8GiT+JgCfTCVGwgAg6aEDR0N2/X24v3w+xX0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ViUAZxPg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/9+dkxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F261F000E9;
-	Thu,  2 Jul 2026 16:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViUAZxPg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388881F000E9;
+	Thu,  2 Jul 2026 16:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010892;
-	bh=dPiqUHLf0ymm74BL4hg+SGmX8zMa1dl+UeA81bFoJ3M=;
+	s=korg; t=1783010894;
+	bh=3j5wXu7JIUZHoeXFxFs4oAn3BxTIxcgB/4zdTFf/1OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/9+dkxudTrcwd+5Aei3tnTVy54CU0ylCNWeZJb0BqtmgLU4U5T5F9+C3IBC9xVIw
-	 5zuScA9wMEOZPDkCdzQCHbaFWUvJmNDkWOq08gZRqNWOELVa87GCYDUUjcoCnWAGjk
-	 az5a9PsqicV7bNygV6YcDiOUDRCwyeunuxOa522E=
+	b=ViUAZxPg8f2Y9l0h2WmIOucVSomWAexNqKX6t5/xWfyns5rVDihl794SqDfHbL7m2
+	 w6BlZtICLwJfUJqMJjo5n/C0NOdc6P/goHpslxs7EOJJjQm5Vs1YYuggqQlyQnFCXx
+	 bM9ypJ2V/3HyB0b/mD00U+hFNQIUGoM0jZ7ceR1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Quentin Schulz <quentin.schulz@cherry.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/175] eventpoll: use hlist_is_singular_node() in __ep_remove()
-Date: Thu,  2 Jul 2026 18:19:37 +0200
-Message-ID: <20260702155117.391018560@linuxfoundation.org>
+Subject: [PATCH 6.6 077/175] eventpoll: split __ep_remove()
+Date: Thu,  2 Jul 2026 18:19:38 +0200
+Message-ID: <20260702155117.410559822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -53,34 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 3d9fd0abc94d8cd430cc7cd7d37ce5e5aae2cd2b ]
+[ Upstream commit 0f7bdfd413000985de09fc39eb9efa1e091a3ce0 ]
 
-Replace the open-coded "epi is the only entry in file->f_ep" check
-with hlist_is_singular_node(). Same semantics, and the helper avoids
-the head-cacheline access in the common false case.
+Split __ep_remove() to delineate file removal from epoll item removal.
 
-Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-1-2470f9eec0f5@kernel.org
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-2-2470f9eec0f5@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Stable-dep-of: a6dc643c6931 ("eventpoll: fix ep_remove struct eventpoll / struct file UAF")
 Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/eventpoll.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
 diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 8a556560a5b2f2..4f05d12a05031a 100644
+index 4f05d12a05031a..ae9cb82764482c 100644
 --- a/fs/eventpoll.c
 +++ b/fs/eventpoll.c
-@@ -745,7 +745,7 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
+@@ -715,6 +715,9 @@ static void ep_free(struct eventpoll *ep)
+ 	kfree_rcu(ep, rcu);
+ }
  
- 	to_free = NULL;
- 	head = file->f_ep;
--	if (head->first == &epi->fllink && !epi->fllink.next) {
-+	if (hlist_is_singular_node(&epi->fllink, head)) {
++static void __ep_remove_file(struct eventpoll *ep, struct epitem *epi, struct file *file);
++static bool __ep_remove_epi(struct eventpoll *ep, struct epitem *epi);
++
+ /*
+  * Removes a "struct epitem" from the eventpoll RB tree and deallocates
+  * all the associated resources. Must be called with "mtx" held.
+@@ -726,8 +729,6 @@ static void ep_free(struct eventpoll *ep)
+ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
+ {
+ 	struct file *file = epi->ffd.file;
+-	struct epitems_head *to_free;
+-	struct hlist_head *head;
+ 
+ 	lockdep_assert_irqs_enabled();
+ 
+@@ -743,8 +744,21 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
+ 		return false;
+ 	}
+ 
+-	to_free = NULL;
+-	head = file->f_ep;
++	__ep_remove_file(ep, epi, file);
++	return __ep_remove_epi(ep, epi);
++}
++
++/*
++ * Called with &file->f_lock held,
++ * returns with it released
++ */
++static void __ep_remove_file(struct eventpoll *ep, struct epitem *epi, struct file *file)
++{
++	struct epitems_head *to_free = NULL;
++	struct hlist_head *head = file->f_ep;
++
++	lockdep_assert_held(&ep->mtx);
++
+ 	if (hlist_is_singular_node(&epi->fllink, head)) {
  		/* See eventpoll_release() for details. */
  		WRITE_ONCE(file->f_ep, NULL);
- 		if (!is_file_epoll(file)) {
+@@ -758,6 +772,11 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
+ 	hlist_del_rcu(&epi->fllink);
+ 	spin_unlock(&file->f_lock);
+ 	free_ephead(to_free);
++}
++
++static bool __ep_remove_epi(struct eventpoll *ep, struct epitem *epi)
++{
++	lockdep_assert_held(&ep->mtx);
+ 
+ 	rb_erase_cached(&epi->rbn, &ep->rbr);
+ 
 -- 
 2.53.0
 
