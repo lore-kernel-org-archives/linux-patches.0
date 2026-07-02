@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BED3AC0DC;
-	Thu,  2 Jul 2026 16:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4A2397E81;
+	Thu,  2 Jul 2026 16:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009603; cv=none; b=eoMBGCD/MEpF8ESYbX0TkyAbFt2X3ATn940bZBNvZmGKb2nbyBIPSTss4avPgyRXTCn6RaiFRYwMpFaDI8QEV30t+NhvxrolzCgcLc1MWHYi4wuRQUc3R/BZBiRiITI34FHdzQe0ZQo3/pVKKvSY0xQ2Yu2eGCYfxw4l07YLdNg=
+	t=1783009605; cv=none; b=bzOn0zCPV3xggDUbkksaLHJ7zGYoBJAo4yej1hAia+KZlmB9y6qtv8hfc1D59wuelL4SbOVFVsIX+Xqg/fSKwK2gbRgZENTNCVGJ3tsiFAKXKJ7OObxSZfsOm+lQe5kgTIJKS1CAYhW9ROvi2EWoY4GU/N5oPDEgDfssFdMaLoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009603; c=relaxed/simple;
-	bh=1n0hSwSRyn3M99NVePCQwcGLvloVBLjv004VSUKxzsE=;
+	s=arc-20240116; t=1783009605; c=relaxed/simple;
+	bh=yTSTeNk3K1sCqQlHLX0A0aiEgm/byLi6VO5dLGNFG5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCO0ubR9f4UMq6f2Ca/jb1irQn+qPX6qKSIxAVQabGlmLl8P9K7i7ndMX5W76tqhZV9cbFBcHyUNHzsZDstsdNjmsx+TLUwznL2VDpad5QQpg0/OB4c7lU1XGdQ7LNTOupG60Dlrk6hT8U5SglmcKronWOzdxkbiUQnbcFORPvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTck3o+q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lh9ba/pAgDSo/OTHTmm/BsI8d45UPOggegGP0Y/vbHKTQ9QqCWokqVKSCCXASJ8T2y8T6sKjIgw27oMn6eRKpl1tuoQ2hYHCNhWqSUhMg6D+zTMHpstdUabR+RVC5yuKxUD+dx2pChKwM5US/+xTOfbEnuUjw8AKN2WNxWOqnV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/X7w/t5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTck3o+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8BC1F000E9;
-	Thu,  2 Jul 2026 16:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/X7w/t5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E081F00A3A;
+	Thu,  2 Jul 2026 16:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009599;
-	bh=tqQUdsmdK+ynkMBCwbCAPa+cGo3qqPghDm8nQv2n5+s=;
+	s=korg; t=1783009602;
+	bh=JEHJAVBVMkDrmbsAvMsHd6M6+BKqT5dlBwaCdX0W+hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QTck3o+qPvux+ZB8et+mrA86JdviAHo/5izNM3kH6vDgoDR38jZAyoKp+z7nSYNuf
-	 2L0sVTRUG3vTxV18cjb7aS2KSaleK2mcZjRXLKP5DyENIuB7QEIoV8t0Cfgx/OT6+8
-	 xMo2nB9trYj6RxrLLF2Id7p1pVRjJDLPedYM+kGk=
+	b=Z/X7w/t5QVReSBu4zlDSaOsnVmGB6ZnH09jBYLnOBx6EbIu2G/4korWG8OlnD71fk
+	 YUn6cQUgu7jd0bjx6Mtj61RIRNlKJE7uWPnVxXxYcfen2lN0pgAho9syHiD5H8abHz
+	 nj9JSaf7w3eLDoM8TlOz/LXj8sWmNh9vKGp6Z2+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 5.15 17/95] agp/amd64: Fix broken error propagation in agp_amd64_probe()
-Date: Thu,  2 Jul 2026 18:19:20 +0200
-Message-ID: <20260702155109.568304786@linuxfoundation.org>
+	David Wang <00107082@163.com>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 18/95] xhci: fix memory leak regression when freeing xhci vdev devices depth first
+Date: Thu,  2 Jul 2026 18:19:21 +0200
+Message-ID: <20260702155109.589842234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -50,52 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit b08472db93b1ccff84a7adec5779d47f0e9d3a30 upstream.
+commit edcbe06453ddfde21f6aa763f7cab655f26133cc upstream
 
-A NULL pointer dereference was observed in the AMD64 AGP driver when
-running in a virtualized environment (e.g. qemu/kvm) without a physical
-AMD northbridge. The crash occurs in amd64_fetch_size() when attempting
-to dereference the pointer returned by node_to_amd_nb(0).
+Suspend-resume cycle test revealed a memory leak in 6.17-rc3
 
-The root cause of this crash is broken error propagation in
-agp_amd64_probe(): When no AMD northbridges are found, cache_nbs()
-correctly returns -ENODEV. However, the probe function erroneously
-checks the return value against exactly -1, rather than < 0.
+Turns out the slot_id race fix changes accidentally ends up calling
+xhci_free_virt_device() with an incorrect vdev parameter.
+The vdev variable was reused for temporary purposes right before calling
+xhci_free_virt_device().
 
-As a result, the hardware absence error is masked, allowing the driver
-to improperly proceed with initialization. It eventually calls
-agp_add_bridge(), which invokes amd64_fetch_size(). Since the hardware
-does not exist, node_to_amd_nb(0) returns NULL, leading to a General
-Protection Fault (GPF) when accessing its ->misc member.
+Fix this by passing the correct vdev parameter.
 
-Fix the issue by correcting the error check in agp_amd64_probe() to
-abort properly when cache_nbs() returns any negative error code. This
-prevents the driver from erroneously proceeding without hardware, thereby
-avoiding the subsequent NULL pointer dereference at its source.
+The slot_id race fix that caused this regression was targeted for stable,
+so this needs to be applied there as well.
 
-Fixes: a32073bffc65 ("[PATCH] x86_64: Clean and enhance up K8 northbridge access code")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v2.6.18+
-Link: https://patch.msgid.link/20260504074823.99377-1-w15303746062@163.com
+Fixes: 2eb03376151b ("usb: xhci: Fix slot_id resource race conflict")
+Reported-by: David Wang <00107082@163.com>
+Closes: https://lore.kernel.org/linux-usb/20250829181354.4450-1-00107082@163.com
+Suggested-by: Michal Pecio <michal.pecio@gmail.com>
+Suggested-by: David Wang <00107082@163.com>
+Cc: stable@vger.kernel.org
+Tested-by: David Wang <00107082@163.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250902105306.877476-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/agp/amd64-agp.c |    2 +-
+ drivers/usb/host/xhci-mem.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/agp/amd64-agp.c
-+++ b/drivers/char/agp/amd64-agp.c
-@@ -546,7 +546,7 @@ static int agp_amd64_probe(struct pci_de
- 	/* Fill in the mode register */
- 	pci_read_config_dword(pdev, bridge->capndx+PCI_AGP_STATUS, &bridge->mode);
+diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+index fb81e61a599d75..7f75298a09d6fc 100644
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -961,7 +961,7 @@ static void xhci_free_virt_devices_depth_first(struct xhci_hcd *xhci, int slot_i
+ out:
+ 	/* we are now at a leaf device */
+ 	xhci_debugfs_remove_slot(xhci, slot_id);
+-	xhci_free_virt_device(xhci, vdev, slot_id);
++	xhci_free_virt_device(xhci, xhci->devs[slot_id], slot_id);
+ }
  
--	if (cache_nbs(pdev, cap_ptr) == -1) {
-+	if (cache_nbs(pdev, cap_ptr) < 0) {
- 		agp_put_bridge(bridge);
- 		return -ENODEV;
- 	}
+ int xhci_alloc_virt_device(struct xhci_hcd *xhci, int slot_id,
+-- 
+2.53.0
+
 
 
