@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A60347BC1;
-	Thu,  2 Jul 2026 16:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F20348C53;
+	Thu,  2 Jul 2026 16:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009377; cv=none; b=ij0kbvJXmBzXLDx8QLkeJ5+LAPuoqkvQmU6lvRJ1g7h/M4IfGaciV0HrFsdePGGQ0VKlRebB4UZKHCe8yrfRwzsqQfLfckPCH6IQocfJ17c96kkCiRC4LLecEe6TgzKzhVbXgJg55qVSZAtmDwAuB2xut/KDQlwh4bSnEBG12ds=
+	t=1783009380; cv=none; b=TE9NZ1JrLlAd2CVyHAZeDpYcynhjpo0c869oBJdbNjGUQoStOQJEmC4N6KmpHQcgGD30bhMgs+1pCc/SPSGqypy3okM37iGuKvsWkr5PSDrDpAVFnC/O0zkGZR2bzr9rJuUZlgh2Txz9EUQcvTFSO31lVsqGpBCIAy7H1EIL5is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009377; c=relaxed/simple;
-	bh=gqgjW2FLqeukFfcoKR6wjxokd2lCk6ekRsNATvpfNcQ=;
+	s=arc-20240116; t=1783009380; c=relaxed/simple;
+	bh=iW6Ib2z7jW4uZbLgrST3MKrWD/2aoTIWUz8D2Javyy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NmxLDHihEvQHk/adU8VrqcAJl+248zujGJhIvbvIbQFUkSyyDShNHiuEFDx0B0R5ZvumqgisO4vpGAi+4V8RioFuS35Z3iSWiV02u/Y3QqC+KvkxS7ao0dIbexVxPcR9i28qqg0c94sZiw23oAxsJBV2pw4fXLqpa3h1knmWGUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnLY2TXB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EdKaB9NyPb87oja2EkdgvBMbP8SmVSk8UK8s8azRVFThJHVIGb/4cY02AEgNSIpQSgctEBpFSKXKR1Qww/+xJ+Tltf8MOQJRSWmlPHONT8sIQ71OOQblLUFqnRDCnOLbT1NnSje7+SFUldGx7StSLMp7VY9dE7VUiKhE60zzy3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OErYZoUt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnLY2TXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F89A1F000E9;
-	Thu,  2 Jul 2026 16:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OErYZoUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2660C1F00A3A;
+	Thu,  2 Jul 2026 16:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009374;
-	bh=nQxX/whZsVOa4ku1EVVhr7xuswtHIZUnbSiCpeKO22c=;
+	s=korg; t=1783009376;
+	bh=mFG3K9yIORPIce55ssHQLPnrrQqWIJsD1KJL01/4Dvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZnLY2TXBwQ7wszkYkeVwyPneWy0B0DvwRX1aIlA7BMZrGuIzbNcMe5NDBWILt2OGj
-	 xQOUfmyeu3M0erKGS684MsTWPEFdiGS6688Jp8VbWmkl7kN64f15A3cbq94mLhLsTK
-	 qPLTyQL9KyRJjCB/G6D20GdpyUmkFyK/HKWN5i3g=
+	b=OErYZoUtcfQegG4lSih7hzAk70ape1KIxXf0vmXbYd5OdGV2DaRGkql23l+t7C4F1
+	 JbLcr3xSdJaq9OWB4dxdX7E6cyhnrDa85BhYoP/NHuu2GjGRW3AXe4eukK0MO8lw8R
+	 tqrjmEypERfuNQge7+2pZaHjP0YWvt2ru3qVqMpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 5.10 27/96] vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write
-Date: Thu,  2 Jul 2026 18:19:19 +0200
-Message-ID: <20260702155109.556508135@linuxfoundation.org>
+	syzbot+814c351d094f4f1a1b86@syzkaller.appspotmail.com,
+	Ruslan Valiyev <linuxoid@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 28/96] media: vidtv: fix NULL pointer dereference in vidtv_mux_push_si
+Date: Thu,  2 Jul 2026 18:19:20 +0200
+Message-ID: <20260702155109.578062829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -50,46 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Ruslan Valiyev <linuxoid@gmail.com>
 
-commit a287620312dc6dcb9a093417a0e589bf30fcf38a upstream.
+commit 7d8bf3d8f91073f4db347ed3aa6302b56107499c upstream.
 
-A KASAN null-ptr-deref was observed in vcs_notifier():
+syzbot reported a general protection fault in
+vidtv_psi_ts_psi_write_into [1].
 
-BUG: KASAN: null-ptr-deref in vcs_notifier+0x98/0x130
-Read of size 2 at addr qmp_cmd_name: qmp_capabilities, arguments: {}
+vidtv_mux_get_pid_ctx() can return NULL, but vidtv_mux_push_si() does
+not check for this before dereferencing the returned pointer to access
+the continuity counter. This leads to a general protection fault when
+accessing a near-NULL address.
 
-The issue is a race condition in vcs_write(). When the console_lock is
-temporarily dropped (to copy data from userspace), the vc_data pointer
-obtained from vcs_vc() may become stale. After re-acquiring the lock,
-vcs_vc() is called again to re-validate the pointer. If the vc has been
-deallocated in the meantime, vcs_vc() returns NULL, and the while loop
-breaks (with written > 0). However, after the loop, vcs_scr_updated(vc)
-is still called with the now-NULL vc pointer, leading to a null pointer
-dereference in the notifier chain (vcs_notifier dereferences param->vc).
+The root cause is that vidtv_mux_pid_ctx_init() does not check the
+return value of vidtv_mux_create_pid_ctx_once() for PMT section PIDs.
+If the allocation fails, the PID context is never created, but init
+returns success. The subsequent vidtv_mux_push_si() call then gets
+NULL from vidtv_mux_get_pid_ctx() and crashes.
 
-Fix this by adding a NULL check for vc before calling vcs_scr_updated().
+Fix both the root cause (add error check in vidtv_mux_pid_ctx_init
+for PMT PIDs) and add defensive NULL checks in vidtv_mux_push_si for
+all vidtv_mux_get_pid_ctx() calls.
 
-Fixes: 8fb9ea65c9d1 ("vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF")
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+Workqueue: events vidtv_mux_tick
+RIP: 0010:vidtv_psi_ts_psi_write_into+0x54a/0xbc0 drivers/media/test-drivers/vidtv/vidtv_psi.c:197
+Call Trace:
+ <TASK>
+ vidtv_psi_table_header_write_into drivers/media/test-drivers/vidtv/vidtv_psi.c:799 [inline]
+ vidtv_psi_pmt_write_into+0x3b2/0xa70 drivers/media/test-drivers/vidtv/vidtv_psi.c:1231
+ vidtv_mux_push_si+0x932/0xe80 drivers/media/test-drivers/vidtv/vidtv_mux.c:196
+ vidtv_mux_tick+0xe9b/0x1480 drivers/media/test-drivers/vidtv/vidtv_mux.c:408
+
+Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://patch.msgid.link/20260604060734.2914976-1-yiyang13@huawei.com
+Reported-by: syzbot+814c351d094f4f1a1b86@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=814c351d094f4f1a1b86
+Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vc_screen.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/test-drivers/vidtv/vidtv_mux.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -699,7 +699,7 @@ vcs_write(struct file *file, const char
+--- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
+@@ -101,7 +101,8 @@ static int vidtv_mux_pid_ctx_init(struct
+ 	/* add a ctx for all PMT sections */
+ 	while (p) {
+ 		pid = vidtv_psi_get_pat_program_pid(p);
+-		vidtv_mux_create_pid_ctx_once(m, pid);
++		if (!vidtv_mux_create_pid_ctx_once(m, pid))
++			goto free;
+ 		p = p->next;
  	}
- 	*ppos += written;
- 	ret = written;
--	if (written)
-+	if (written && vc)
- 		vcs_scr_updated(vc);
  
- unlock_out:
+@@ -170,6 +171,9 @@ static u32 vidtv_mux_push_si(struct vidt
+ 	nit_ctx = vidtv_mux_get_pid_ctx(m, VIDTV_NIT_PID);
+ 	eit_ctx = vidtv_mux_get_pid_ctx(m, VIDTV_EIT_PID);
+ 
++	if (!pat_ctx || !sdt_ctx || !nit_ctx || !eit_ctx)
++		return 0;
++
+ 	pat_args.offset             = m->mux_buf_offset;
+ 	pat_args.continuity_counter = &pat_ctx->cc;
+ 
+@@ -186,6 +190,8 @@ static u32 vidtv_mux_push_si(struct vidt
+ 		}
+ 
+ 		pmt_ctx = vidtv_mux_get_pid_ctx(m, pmt_pid);
++		if (!pmt_ctx)
++			continue;
+ 
+ 		pmt_args.offset             = m->mux_buf_offset;
+ 		pmt_args.pmt                = m->si.pmt_secs[i];
 
 
