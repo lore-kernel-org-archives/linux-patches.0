@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D4A381EA5;
-	Thu,  2 Jul 2026 16:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993A637A827;
+	Thu,  2 Jul 2026 16:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009580; cv=none; b=M6rh6SSuhxEon/wpOHoOUD+W0GeywKKns/L91yR6bho7Q+imMRHaZoSTboVfHoFMsJtk+mAXMFbFEQA6Kkgqegt4CY68M+GqJ46y/I1gRJj6lgfYD6QeSMQzkkvFBjVcxY1ysryc/ZeUMQRVmG5YEs5iOcdofcBQC3TMfJ+AJ60=
+	t=1783009582; cv=none; b=I0vvlQqniTv6lfvcENO2242zwNkLiVcYKX4bDsFB1e1PQGOQuKJ9hWmyEC85fyqQLLuCk3clMIkkdWu2zmmOEa1XRxYVbcXMXpIxHWW6t6O7uM0VB3J0ldVMYUElsuDERP2GBYtwENggxMHmVeAZjjbnmXrqOHeQuhnniAZNGqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009580; c=relaxed/simple;
-	bh=fpmaXMrajiwsCQg8NZFzD0g431lWhudkbQI04vkuceE=;
+	s=arc-20240116; t=1783009582; c=relaxed/simple;
+	bh=OlM03fmrbfX74ttrO3KL0fUOm5cC6dQ45qXTYZRgjBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jkqpcEvLNBFpCzl9+gyTzZp7DD+hwG2L+sHce1dZUcPvCuZGgG/7AiZuzEte43zjXWWQiB3UhWUPwmM4OYPr8JvbwHNFVDMGtECrixxE5wEXQGM09KgoTnKsYz0zupIVT0kS8K4zvN+54EgaqMLaSCnYgn6+TUrkS+1uPH4q60c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyDLR96j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y2PYOid/up/LoS4a94CFTZ+5GqtKH9Cn55LDrUG2RxftN0w55hbYUS+f3a9EzQnncIN+CS1pbyyuss8Bwlpua/ofqtxjwPbytMRJPL+/TNaXJ+7RcPanZhn03GHE0/ZBN7a5HMPgXfrrVlvpNOT/Vfhxn60Cof+p73qS+JV47uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iR60cgLd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyDLR96j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623571F000E9;
-	Thu,  2 Jul 2026 16:26:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iR60cgLd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0931F000E9;
+	Thu,  2 Jul 2026 16:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009578;
-	bh=Tv6jMgv9dRPvRzxd8vKhnkQqvt1SfILpTwql1jkvEjU=;
+	s=korg; t=1783009581;
+	bh=YfSMoV48600WEW5Xhdk3tZ4DOuODvFzcA2wNS2Pkc/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyDLR96jDyBaNOeveG4OPkxkhCrer4FXncrCd1EXJDhKaYJNu9be5qGlk1wteWTha
-	 Ok19OM8jkraOEZ3iUbxPdJ5w1ju5/pLPtCv71Qle+2lGjaB0dM2C/MpbaKAblshARh
-	 cm6T82zuev7XU1XmO/747vbbqzax7BjCd9nO/M6Q=
+	b=iR60cgLd9V5cWJsdsEhhad67nrGcYb1VA9lGBn1EoxI5rzpF7unSOl2V3TizBD6Vi
+	 sq5vBA8tx6tn6HJBLPk9o2KNpFgLnkmFH0F+HlhefW8/X5yRvMZxWmGGJtivDn0FJR
+	 gaKaAu8/Tk4RxcBkqB8ntJPTB120GHQ6fnJxLKis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/95] fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
-Date: Thu,  2 Jul 2026 18:19:04 +0200
-Message-ID: <20260702155109.230666525@linuxfoundation.org>
+Subject: [PATCH 5.15 10/95] batman-adv: tt: reject oversized local TVLV buffers
+Date: Thu,  2 Jul 2026 18:19:13 +0200
+Message-ID: <20260702155109.425421053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155109.196223802@linuxfoundation.org>
 References: <20260702155109.196223802@linuxfoundation.org>
@@ -53,48 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 4e3d1b2c48ca6c55f1e9ca7f8dccc76f120f276c ]
+commit 1e9fab756f8395096d5bba7be0c373c4c8f5d165 upstream.
 
-FUSE_NOTIFY_RETRIEVE must be limited to uptodate folios; !uptodate folios
-can contain uninitialized data.
-Since FUSE_NOTIFY_RETRIEVE is intended to only return data that is already
-in the page cache and not wait for data from the FUSE daemon, treat
-!uptodate folios as if they weren't present.
+The commit 3a359bf5c61d ("batman-adv: reject oversized global TT response
+buffers") added a check to ensure that a global return buffer size can be
+stored in an u16. The same buffer handling also exists for the local data
+buffer but was not touched.
 
-This only has security impact on systems that don't enable automatic
-zero-initialization of all page allocations via
-CONFIG_INIT_ON_ALLOC_DEFAULT_ON or init_on_alloc=1.
+A similar check should be also be in place for the local TVLV buffer. It
+doesn't have the similar attack surface because it is only generated from
+locally discovered MAC addresses but the dynamic nature could still cause
+temporarily to large buffers.
 
 Cc: stable@kernel.org
-Fixes: 2d45ba381a74 ("fuse: add retrieve request")
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260519-fuse-retrieve-uptodate-v1-1-a7a1912a37f9@google.com
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[adjusted for stable: page instead of folio]
-Signed-off-by: Jann Horn <jannh@google.com>
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/batman-adv/translation-table.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
-index 231b1c14b76778..e5a051a624e735 100644
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -1724,6 +1724,10 @@ static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
- 		page = find_get_page(mapping, index);
- 		if (!page)
- 			break;
-+		if (!PageUptodate(page)) {
-+			put_page(page);
-+			break;
-+		}
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index e4d55b27f2551b..3849c348ff0344 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -939,12 +939,12 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
+ {
+ 	struct batadv_tvlv_tt_vlan_data *tt_vlan;
+ 	struct batadv_softif_vlan *vlan;
++	size_t change_offset;
+ 	u16 num_vlan = 0;
+ 	u16 vlan_entries = 0;
+ 	u16 total_entries = 0;
+ 	u16 tvlv_len;
+ 	u8 *tt_change_ptr;
+-	int change_offset;
  
- 		this_num = min_t(unsigned, num, PAGE_SIZE - offset);
- 		ap->pages[ap->num_pages] = page;
+ 	spin_lock_bh(&bat_priv->softif_vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
+@@ -960,8 +960,10 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
+ 	if (*tt_len < 0)
+ 		*tt_len = batadv_tt_len(total_entries);
+ 
+-	tvlv_len = *tt_len;
+-	tvlv_len += change_offset;
++	if (check_add_overflow(*tt_len, change_offset, &tvlv_len)) {
++		tvlv_len = 0;
++		goto out;
++	}
+ 
+ 	*tt_data = kmalloc(tvlv_len, GFP_ATOMIC);
+ 	if (!*tt_data) {
 -- 
 2.53.0
 
