@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DA93491E1;
-	Thu,  2 Jul 2026 16:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99F5349AF5;
+	Thu,  2 Jul 2026 16:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010699; cv=none; b=j52KWPo5fsaJqQfOuH+H/lnFY0m1Z0ciwqSbPGkaltabIE6zFSzKDyCR1VbmbC4O6QtBJxaXkomvIip+2Vj4g8T4NWJDK6C2bBdClPkWSBexQXv0dllnTwTQhhtGaSo2wHaTR4FOS/2sKyF1qNacrJ5XO3ejIwkd0ddpMxVxTWU=
+	t=1783010701; cv=none; b=cf2EZC2oTJyHDkWoM4H/IAhKhF9ffjeuu+Q7YRUgrCcv3APaK1dgKw1GVobFGoq+VhRubtZ62mcNCAaA3uoeBSSraLC71hcnYVigLKg/qdqBdtv7PYH4HuljhCZ+Zs6wRb8UUQ1ORsB/O0gGhrdIn1oKQQGcij612z9Qd1xaiWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010699; c=relaxed/simple;
-	bh=OvNnpN0TLjjbaa14E+nFOjCtKVymb7xbKXvLEqWU8i0=;
+	s=arc-20240116; t=1783010701; c=relaxed/simple;
+	bh=dhHV3D+1z6+gm5XO/dEMv1COHlPS6IWflbTTUzvMsiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K91wRfZE3NgjTKSGKJTsyd8iT8aTxl5hipZtXqovOuhAo5Pcrw6ZZTH48Wbq/QuPAUIsAi90uyZoz1Zc6pC2bcv2FPekqmfFgS0VDvsxBOJxSfrI0fJBOOH2BdYticXHMiLphbb7ZkIrU3M70CfktjFp0k24+4L1fVJAjfcz5Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbLujieT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N7zbPtJ/CQ1N3KUyGI9wvP94yHvwUIg7atdgeoL8kFo1lAZqa0pONHai0Pp5Tm4JnFWTFt8NadPEjCv83hggLoIGO+F1Lxp7qu9yBqbik3OIUDN/bQ1yXSBTxqz0MGRysFowsv/wmSUtnHC0PSNhPQQMvkmRLkjZYQ3EwqPmNBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjzG3NpM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbLujieT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7C11F000E9;
-	Thu,  2 Jul 2026 16:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjzG3NpM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2394C1F000E9;
+	Thu,  2 Jul 2026 16:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010698;
-	bh=W0M6cEUIUYR5ndRhqsNoUJkeqopeKsbb/IJH4yVWgM4=;
+	s=korg; t=1783010700;
+	bh=gypTpHI3Z1FNJjAYK+UxxAT8wYVSuXEj4xZqgb/gYiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dbLujieT+Xp30P53csTGpNorHuLNi2T0v7Q/WDQ8tPq5kF8Smxy+M5x2g8BpdjpAn
-	 kvmiaw3sPXriH50nFZWHp/2GoqgcD0Tv0e3u9r9/XvmBNp0iE20TkmUgYx5SXKtZHQ
-	 7nM1PZC6GMKlmURa6m9j6oGFdzdoxFK2XtfOhmik=
+	b=wjzG3NpM0sKk+14qEP0G7FhARq4S5pFMa0t1lhw1HRVsIA56iwoghABrDcxrCAZ9h
+	 aMa232Cj6EWb+UIpUq11uSL7O26fVjAeufe/j1DeBrY7OnQQ0yRyXZ8Cua1Fj7q2MH
+	 5AosYrFU5e6nVtxMIhNQr/tb/V3SKL686P/H6olM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>
-Subject: [PATCH 6.12 164/204] gfs2: fix use-after-free in gfs2_qd_dealloc
-Date: Thu,  2 Jul 2026 18:20:21 +0200
-Message-ID: <20260702155122.094731853@linuxfoundation.org>
+	Yunji Kang <yunji0.kang@samsung.com>,
+	Yeongjin Gil <youngjin.gil@samsung.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.12 155/204] f2fs: fix to round down start offset of fallocate for pin file
+Date: Thu,  2 Jul 2026 18:20:12 +0200
+Message-ID: <20260702155121.906321806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -51,48 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Sunmin Jeong <s_min.jeong@samsung.com>
 
-commit f9c9ec2c319f843b70ecdf939d48b52d189bc081 upstream.
+commit 4275b59673eb60b02eec3997816c83f1f4b909c4 upstream.
 
-gfs2_qd_dealloc(), called as an RCU callback from gfs2_qd_dispose(),
-accesses the superblock object sdp through qd->qd_sbd after freeing qd.
-It does so to decrement sd_quota_count and wake up sd_kill_wait.
+Currently, the length of fallocate for pin file is section-aligned to
+keep allocated sections from being selected as victims of GC. However,
+for the case that the start offset of fallocate is not aligned in
+section, the allocated sections can't be fully utilized. It's because a
+new section is allocated by f2fs_allocate_pinning_section() after using
+blks_per_sec blocks regardless of the start offset. As a result, several
+unexpected dirty segments may be created, including blocks assigned to
+the pinned file.
 
-However, by the time the RCU callback runs, gfs2_put_super() may have
-already freed sdp via free_sbd().  This can happen when
-gfs2_quota_cleanup() is called during unmount: it disposes of quota
-objects via call_rcu() and then waits on sd_kill_wait with a 60-second
-timeout.  If the timeout expires, or if gfs2_gl_hash_clear() triggers
-additional qd_put() calls that schedule more RCU callbacks after the
-wait completes, gfs2_put_super() will proceed to free the superblock
-while RCU callbacks referencing it are still pending.
+To address this issue, let's round down the start offset of fallocate
+to the length of section.
 
-Add an rcu_barrier() before free_sbd() in gfs2_put_super() to ensure
-all pending RCU callbacks (including gfs2_qd_dealloc) have completed
-before the superblock is freed.
+The reproducing scenario is as below
 
-Fixes: a475c5dd16e5 ("gfs2: Free quota data objects synchronously")
-Reported-by: syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=42a37bf8045847d8f9d2
-Tested-by: syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com
+chunk=$(((2<<20)+4096)) # 2MB + 4KB
+touch test
+f2fs_io pinfile set test
+f2fs_io fallocate 0 0 $chunk test
+f2fs_io fallocate 0 $chunk $chunk test
+f2fs_io fallocate 0 $((chunk*2)) $chunk test
+f2fs_io fiemap 0 $((chunk*3)) test
+
+Fiemap: offset = 0 len = 12288
+    logical addr.    physical addr.   length           flags
+0   0000000000000000 000000068c600000 0000000000400000 00001088
+1   0000000000400000 000000003d400000 0000000000001000 00001088
+2   0000000000401000 00000003eb200000 0000000000200000 00001088
+3   0000000000601000 00000005e4200000 0000000000001000 00001088
+4   0000000000602000 0000000605400000 0000000000200000 00001089
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: f5a53edcf01e ("f2fs: support aligned pinned file")
+Reviewed-by: Yunji Kang <yunji0.kang@samsung.com>
+Reviewed-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/super.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/file.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -652,6 +652,7 @@ restart:
- 	gfs2_delete_debugfs_file(sdp);
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1838,8 +1838,15 @@ static int f2fs_expand_inode_data(struct
  
- 	gfs2_sys_fs_del(sdp);
-+	rcu_barrier();
- 	free_sbd(sdp);
- }
+ 	if (f2fs_is_pinned_file(inode)) {
+ 		block_t sec_blks = CAP_BLKS_PER_SEC(sbi);
+-		block_t sec_len = roundup(map.m_len, sec_blks);
++		block_t sec_len;
  
++		if (map.m_lblk % sec_blks) {
++			map.m_lblk = rounddown(map.m_lblk, sec_blks);
++			map.m_len = pg_end - map.m_lblk;
++			if (off_end)
++				map.m_len++;
++		}
++		sec_len = roundup(map.m_len, sec_blks);
+ 		map.m_len = sec_blks;
+ next_alloc:
+ 		f2fs_down_write(&sbi->pin_sem);
 
 
