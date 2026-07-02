@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE5B3101C8;
-	Thu,  2 Jul 2026 16:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE75A348465;
+	Thu,  2 Jul 2026 16:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010935; cv=none; b=ooi5aRvFlnaInsTV80WUxIJyBWe4+IzOfVuOy6k9JXSiYAmooOxSHy8Z/zrU1ijLmoZbnJFZBPeVvy3UPBvviU273Za3x0jVSs3G7vvtOBt+WrGTD9TcvRxLtfZ9oCXVgnAJB46sMPoXU3JLNHP38M09Wpv48KhRK72Pr6ZR0ag=
+	t=1783010938; cv=none; b=hM4e9fJoWw6OAClzxiJAizaxjR7HLnAWxgiOTFz3OIKX6S+7Mk8dzqsMinn5GEoyobWMzEQf1Vm+jxlJsuCYzbZlilgn8oBmYyKUUL65BF9bRoxmSf7G/CD/v7wCm/VmVMPiizGou6w5rTthEItkQ4Vie9epj1q60a/iSpxOKZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010935; c=relaxed/simple;
-	bh=rgJYt4MGyzEkUdzerKsGVE4poEn5lPLDqg+8bOQknlc=;
+	s=arc-20240116; t=1783010938; c=relaxed/simple;
+	bh=O0RFh2tPMo9s4/W6qpDviOM3hrljghVPF8anIQVl+m4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkzOhWvWcHe41tF7iBVC8E5gDIHkKkRkWZLv9YNEO8qdgdTtWj163lEM/Iin1VFH/IhTWTAo0czFzKdfOf0BF+N0z1Py+UCmUprVregvIh5Lmv+E3a2/v+YpVkfdYxYBARlLpkvBwxJVvrVZ7msBLcQufXo+NTR4TWdsqmP51nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HG3kYuEJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gL+ZL7KlcbtN9T6LaLTHtdkA/cOjtHd8Yk9AU5Ru6rh5I4vWXu2FbFOQMf5pzJz4HuUWO50t4Qs/vj2+UlZu5cT4wV3RaMDHHrh2ab6W82vBkZLmLIcjUXB/7lXjIqdJqGF0r2G0xdhl3gM9VJed9HnUKJRaAKj2uZyUPo38vlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUDyu+Do; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HG3kYuEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0BA1F00A3F;
-	Thu,  2 Jul 2026 16:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUDyu+Do"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4301F000E9;
+	Thu,  2 Jul 2026 16:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010934;
-	bh=/w47M9Iw9lFpW49tvV7teDtjDjwbxwWqxegYcCIoyJs=;
+	s=korg; t=1783010936;
+	bh=KQOowqlxz3Eb5U/sKYDErMumtXu0IvDWhc8IoeOf2g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HG3kYuEJegJQceqSNF44j32Gz148ixivC7tPUmxTDGt1dW809X89hxGyrmobVSRfA
-	 F1bQ342gn+gMlEzb/C8kOHDL5W5hkInK05HZMpidRI/6BWNr77XuVD7VWqbIatIxIx
-	 xS0Wic/JA0MxuJyIRnqC9M72mxnhzTqH4eAYn/kw=
+	b=pUDyu+DoSCvlQ6D2X4f39QhHNSR4wwsyItcnDc3wlldFXuI9bCksavtcFpQpDJ25B
+	 +Ag7tQpkc7X2ibzB75QQ97nnOgXj75e77y8+mBZT6SxPbK7NdjMszNzxwxjmLq8zQr
+	 PhITQ37oHYk92PpQYS9UW1F8EKWGWk/pa43/jTRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/175] batman-adv: tp_meter: keep unacked list in ascending ordered
-Date: Thu,  2 Jul 2026 18:19:52 +0200
-Message-ID: <20260702155117.695986348@linuxfoundation.org>
+	bpf <bpf@vger.kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Martin Kelly <martin.kelly@crowdstrike.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Subject: [PATCH 6.6 051/175] scripts/sorttable: Convert Elf_Sym MACRO over to a union
+Date: Thu,  2 Jul 2026 18:19:12 +0200
+Message-ID: <20260702155116.871282843@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,44 +64,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 5aa8651527ea0b610e7a09fb3b8204c1398b9525 upstream.
+[ Upstream commit 200d015e73b4da69bcd8212a7c58695452b12bad ]
 
-When batadv_tp_handle_out_of_order inserts a new entry in the list of
-unacked (out of order) packets, it searches from the entry with the newest
-sequence number towards oldest sequence number. If an entry is found which
-is older than the newly entry, the new entry has to be added after the
-found one to keep the ascending order.
+In order to remove the double #include of sorttable.h for 64 and 32 bit
+to create duplicate functions for both, replace the Elf_Sym macro with a
+union that defines both Elf64_Sym and Elf32_Sym, with field e64 for the
+64bit version, and e32 for the 32bit version.
 
-But for this operation list_add_tail() was used. But this function adds an
-entry _before_ another one. As result, the list would contain a lot of
-swapped sequence numbers. The consumer of this list
-(batadv_tp_ack_unordered()) would then fail to correctly ack packets.
+It can then use the macro etype to get the proper value.
 
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This will eventually be replaced with just single functions that can
+handle both 32bit and 64bit ELF parsing.
+
+Cc: bpf <bpf@vger.kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: Martin  Kelly <martin.kelly@crowdstrike.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/20250105162345.528626969@goodmis.org
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/sorttable.c |    5 +++++
+ scripts/sorttable.h |   25 ++++++++++++++-----------
+ 2 files changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index dfc3374549921f..f350a60e6c76b9 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -1325,7 +1325,7 @@ static bool batadv_tp_handle_out_of_order(struct batadv_tp_vars *tp_vars,
- 		 * one is attached _after_ it. In this way the list is kept in
- 		 * ascending order
- 		 */
--		list_add_tail(&new->list, &un->list);
-+		list_add(&new->list, &un->list);
- 		added = true;
- 		break;
+--- a/scripts/sorttable.c
++++ b/scripts/sorttable.c
+@@ -74,6 +74,11 @@ typedef union {
+ 	Elf64_Shdr	e64;
+ } Elf_Shdr;
+ 
++typedef union {
++	Elf32_Sym	e32;
++	Elf64_Sym	e64;
++} Elf_Sym;
++
+ static uint32_t (*r)(const uint32_t *);
+ static uint16_t (*r2)(const uint16_t *);
+ static uint64_t (*r8)(const uint64_t *);
+--- a/scripts/sorttable.h
++++ b/scripts/sorttable.h
+@@ -23,7 +23,6 @@
+ #undef sort_mcount_loc
+ #undef elf_mcount_loc
+ #undef do_sort
+-#undef Elf_Sym
+ #undef ELF_ST_TYPE
+ #undef uint_t
+ #undef _r
+@@ -36,7 +35,6 @@
+ # define sort_mcount_loc	sort_mcount_loc_64
+ # define elf_mcount_loc		elf_mcount_loc_64
+ # define do_sort		do_sort_64
+-# define Elf_Sym		Elf64_Sym
+ # define ELF_ST_TYPE		ELF64_ST_TYPE
+ # define uint_t			uint64_t
+ # define _r			r8
+@@ -48,7 +46,6 @@
+ # define sort_mcount_loc	sort_mcount_loc_32
+ # define elf_mcount_loc		elf_mcount_loc_32
+ # define do_sort		do_sort_32
+-# define Elf_Sym		Elf32_Sym
+ # define ELF_ST_TYPE		ELF32_ST_TYPE
+ # define uint_t			uint32_t
+ # define _r			r
+@@ -230,10 +227,13 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 	Elf_Sym *sort_needed_sym = NULL;
+ 	Elf_Shdr *sort_needed_sec;
+ 	uint32_t *sort_needed_loc;
++	void *sym_start;
++	void *sym_end;
+ 	const char *secstrings;
+ 	const char *strtab;
+ 	char *extab_image;
+ 	int sort_need_index;
++	int symentsize;
+ 	int shentsize;
+ 	int idx;
+ 	int i;
+@@ -376,12 +376,15 @@ static int do_sort(Elf_Ehdr *ehdr,
  	}
--- 
-2.53.0
-
+ 
+ 	/* find the flag main_extable_sort_needed */
+-	for (sym = (void *)ehdr + _r(&symtab_sec->etype.sh_offset);
+-	     sym < sym + _r(&symtab_sec->etype.sh_size) / sizeof(Elf_Sym);
+-	     sym++) {
+-		if (ELF_ST_TYPE(sym->st_info) != STT_OBJECT)
++	sym_start = (void *)ehdr + _r(&symtab_sec->etype.sh_offset);
++	sym_end = sym_start + _r(&symtab_sec->etype.sh_size);
++	symentsize = _r(&symtab_sec->etype.sh_entsize);
++
++	for (sym = sym_start; (void *)sym + symentsize < sym_end;
++	     sym = (void *)sym + symentsize) {
++		if (ELF_ST_TYPE(sym->etype.st_info) != STT_OBJECT)
+ 			continue;
+-		if (!strcmp(strtab + r(&sym->st_name),
++		if (!strcmp(strtab + r(&sym->etype.st_name),
+ 			    "main_extable_sort_needed")) {
+ 			sort_needed_sym = sym;
+ 			break;
+@@ -395,13 +398,13 @@ static int do_sort(Elf_Ehdr *ehdr,
+ 		goto out;
+ 	}
+ 
+-	sort_need_index = get_secindex(r2(&sym->st_shndx),
+-				       sort_needed_sym - symtab,
++	sort_need_index = get_secindex(r2(&sym->etype.st_shndx),
++				       ((void *)sort_needed_sym - (void *)symtab) / symentsize,
+ 				       symtab_shndx);
+ 	sort_needed_sec = get_index(shdr_start, shentsize, sort_need_index);
+ 	sort_needed_loc = (void *)ehdr +
+ 		_r(&sort_needed_sec->etype.sh_offset) +
+-		_r(&sort_needed_sym->st_value) -
++		_r(&sort_needed_sym->etype.st_value) -
+ 		_r(&sort_needed_sec->etype.sh_addr);
+ 
+ 	/* extable has been sorted, clear the flag */
 
 
