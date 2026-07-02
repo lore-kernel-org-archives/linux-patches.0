@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06ADF34104E;
-	Thu,  2 Jul 2026 16:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7CB342509;
+	Thu,  2 Jul 2026 16:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009997; cv=none; b=Km61UKWFzRFRRRNo7KurUw3BoBRmZ3c6vIgEObBsuj9lCVrl9XMhrWpthnWDU9hIPkOEOwBo9iN59EI4Dii4VQYugRJtS1Uht2bJJeJlWa0UihldRgGpX0EmbtP+JKePh5IlyPm0BIRXQnFpWuYyhm8rqhLqctnIRyr3/AkVDJQ=
+	t=1783009999; cv=none; b=dx6BQTUONR7TwBP6//kMMuK0Rd+eum7yXv/eokIntDVHbGLSgONyIegN3o9JfcKSNeQB/pGYWCAop3q6Bfmol9k/azUnhOxmNxPcSKF+r0I2ncrdq2xkq4LgEW/hjQ8CoR63vn5rvo9YkRbA4uRxsDDblR8ZjyR6C1G6iz/TMlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009997; c=relaxed/simple;
-	bh=ZNS46mOQB8gsKwsGIX9FK2xpjWeuWZ1R50cdYxFAgs0=;
+	s=arc-20240116; t=1783009999; c=relaxed/simple;
+	bh=SUvYI1SI1ISsCxmcZgaU2/5VbdT/6+KqPvpxssj0OSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxdDxp5LqymtWz5udZJ1jt15/MSjqmoEBcTQsIuvKL7wwuMNuWx9HNrx0bV3xGaHy5UDCrx4Nlx3DdAXkSwpeQJ3MjatAs0B7z599QsXNliLI8bJ6EmRGCVPp20pAszV2Yg+Q51y0EydXoxwJ5LvsdsKdI5QYnFjk8KWg35WhHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1CekFTQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PUGF59SSGRNTvmPe9B3g0Dz28C78R57WkR57oMbsAo+WEvyagreN+STMotn/Zb2DTP9U1eTH8z2MVgVrxBk8ILyJASPZ1gvZOTq38HQTnoJp14KItEpCyLQYSDF30SNBCn8f+smtsysJFtRt7x+sipunQJtY43rDzxn4CKzBrFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCIaXEWF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1CekFTQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0551F000E9;
-	Thu,  2 Jul 2026 16:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCIaXEWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102591F000E9;
+	Thu,  2 Jul 2026 16:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009995;
-	bh=0ZAydgfGvoNo50DGjM6wevirOdVX0r3KcUT88/P0/Yg=;
+	s=korg; t=1783009998;
+	bh=ntmr+yrrA6KazHAjkabkvcS1mKxTvQxU/kEdX00+cA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q1CekFTQ8YKtKH4Lfx36gYgcS4FrcB87gJti5uE+3Qs+5rOR9npgy2013AdBcYRyX
-	 WPA8Xh6AQATISF3ie+coOihwmyAH/Mw7V5N2z8D4KirAALW277znBUz2ozw6H3j9JF
-	 5dbAy0DcU22X4MBIvCOT/Twv3csLhjXib20gq+gQ=
+	b=yCIaXEWFhQieNOJBH6OJ//oBr70qmUyeonHQMVrdIoJQbo+XuXMNLALy9OvKNCDvy
+	 8g7T2PxS3UtR3eBl8fV+Nr1iuXpZClgQJiLkOoxOJoMqvSkKHpN0DnUA8vlPYoiyU7
+	 CkdR//5BVNkmiSmQHzN8KpSIVqxbvAqLhtL2Q84M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/129] batman-adv: dat: prevent false sharing between VLANs
-Date: Thu,  2 Jul 2026 18:19:51 +0200
-Message-ID: <20260702155113.634081687@linuxfoundation.org>
+Subject: [PATCH 6.1 073/129] batman-adv: tvlv: enforce 2-byte alignment
+Date: Thu,  2 Jul 2026 18:19:52 +0200
+Message-ID: <20260702155113.654542289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -53,53 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 20d7658b74169f86d4ac01b9185b3eadddf71f28 upstream.
+commit 32a6799255525d6ea4da0f7e9e0e521ad9560a46 upstream.
 
-The local hash of DAT entries is supposed to be VLAN (VID) aware. But
-the adding to the hash and the search in the hash were not checking the VID
-information of the hash entries. The entries would therefore only be
-correctly separated when batadv_hash_dat() didn't select the same buckets
-for different VIDs.
+The fields of an aggregated OGM(v2) are accessed assuming (at least) 2-byte
+alignment, so a following OGM must start at an even offset. As the header
+length is even, an odd tvlv_len would misalign it and trigger unaligned
+accesses on strict-alignment architectures.
+
+Such a misaligned TVLV/OGM/OGMv2 is not created by a normal participant in
+the mesh. Therefore, reject such malformed packets.
 
 Cc: stable@kernel.org
-Fixes: be1db4f6615b ("batman-adv: make the Distributed ARP Table vlan aware")
+Fixes: ef26157747d4 ("batman-adv: tvlv - basic infrastructure")
+[ Drop change for non-existing mcast handling ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/distributed-arp-table.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/batman-adv/bat_iv_ogm.c | 11 ++++++++++-
+ net/batman-adv/bat_v_ogm.c  | 11 ++++++++++-
+ net/batman-adv/tvlv.c       |  6 ++++++
+ 3 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
-index e8d706d86aa82a..36462d9288c7ee 100644
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -215,10 +215,13 @@ static void batadv_dat_purge(struct work_struct *work)
-  */
- static bool batadv_compare_dat(const struct hlist_node *node, const void *data2)
+diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
+index c52e3b82889868..7fd692b642e392 100644
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -311,14 +311,23 @@ batadv_iv_ogm_aggr_packet(int buff_pos, int packet_len,
+ 			  const struct batadv_ogm_packet *ogm_packet)
  {
--	const void *data1 = container_of(node, struct batadv_dat_entry,
--					 hash_entry);
-+	const struct batadv_dat_entry *entry1;
-+	const struct batadv_dat_entry *entry2;
+ 	int next_buff_pos = 0;
++	u16 tvlv_len;
  
--	return memcmp(data1, data2, sizeof(__be32)) == 0;
-+	entry1 = container_of(node, struct batadv_dat_entry, hash_entry);
-+	entry2 = data2;
+ 	/* check if there is enough space for the header */
+ 	next_buff_pos += buff_pos + sizeof(*ogm_packet);
+ 	if (next_buff_pos > packet_len)
+ 		return false;
+ 
++	tvlv_len = ntohs(ogm_packet->tvlv_len);
 +
-+	return entry1->ip == entry2->ip && entry1->vid == entry2->vid;
++	/* the fields of an aggregated OGM are accessed assuming (at least)
++	 * 2-byte alignment, so a following OGM must start at an even offset.
++	 */
++	if (tvlv_len & 1)
++		return false;
++
+ 	/* check if there is enough space for the optional TVLV */
+-	next_buff_pos += ntohs(ogm_packet->tvlv_len);
++	next_buff_pos += tvlv_len;
+ 
+ 	return next_buff_pos <= packet_len;
  }
+diff --git a/net/batman-adv/bat_v_ogm.c b/net/batman-adv/bat_v_ogm.c
+index f87c2b80e4291e..e8ad4817d20018 100644
+--- a/net/batman-adv/bat_v_ogm.c
++++ b/net/batman-adv/bat_v_ogm.c
+@@ -854,14 +854,23 @@ batadv_v_ogm_aggr_packet(int buff_pos, int packet_len,
+ 			 const struct batadv_ogm2_packet *ogm2_packet)
+ {
+ 	int next_buff_pos = 0;
++	u16 tvlv_len;
  
- /**
-@@ -345,6 +348,9 @@ batadv_dat_entry_hash_find(struct batadv_priv *bat_priv, __be32 ip,
- 		if (dat_entry->ip != ip)
- 			continue;
+ 	/* check if there is enough space for the header */
+ 	next_buff_pos += buff_pos + sizeof(*ogm2_packet);
+ 	if (next_buff_pos > packet_len)
+ 		return false;
  
-+		if (dat_entry->vid != vid)
-+			continue;
++	tvlv_len = ntohs(ogm2_packet->tvlv_len);
 +
- 		if (!kref_get_unless_zero(&dat_entry->refcount))
- 			continue;
++	/* the fields of an aggregated OGMv2 are accessed assuming (at least)
++	 * 2-byte alignment, so a following OGMv2 must start at an even offset.
++	 */
++	if (tvlv_len & 1)
++		return false;
++
+ 	/* check if there is enough space for the optional TVLV */
+-	next_buff_pos += ntohs(ogm2_packet->tvlv_len);
++	next_buff_pos += tvlv_len;
  
+ 	return next_buff_pos <= packet_len;
+ }
+diff --git a/net/batman-adv/tvlv.c b/net/batman-adv/tvlv.c
+index 99e5e8518dcc9a..e25430da5afb1b 100644
+--- a/net/batman-adv/tvlv.c
++++ b/net/batman-adv/tvlv.c
+@@ -448,6 +448,12 @@ int batadv_tvlv_containers_process(struct batadv_priv *bat_priv,
+ 		if (tvlv_value_cont_len > tvlv_value_len)
+ 			break;
+ 
++		/* the next tvlv header is accessed assuming (at least) 2-byte
++		 * alignment, so it must start at an even offset.
++		 */
++		if (tvlv_value_cont_len & 1)
++			break;
++
+ 		tvlv_handler = batadv_tvlv_handler_get(bat_priv,
+ 						       tvlv_hdr->type,
+ 						       tvlv_hdr->version);
 -- 
 2.53.0
 
