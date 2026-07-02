@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B662D0602;
-	Thu,  2 Jul 2026 17:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E84D433E87;
+	Thu,  2 Jul 2026 17:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011650; cv=none; b=pjwoj4aPl7KvKyzZR6LY9iQwsAyZOuxN3II4qh+E/UGM0Mlphx9cbSMjc9kM3rikOkbutMO89Fm57DsDZbdSRrVOkua3B1B6FH1RQ4zaMPehpEmk5NrFVyoYzX7d+qmTW7Vw9KWABW0Q2rEAFVIhKjRtjwmmIGNtLxTLfqXCxp0=
+	t=1783011652; cv=none; b=AEV05gJ1DAGX6krGY1NJsBblPYRfLom9CAYzshv39NtVy2L/fNu3AOoivb1MzwT3N/rxral7bip02zOYSTZeZ6r/L4MHKY0jR7DmrmA34PCDbqNcqYKYOR1WqsazjLc6CN7wbJq/E1smOd+8ApJWWUxw2aCdplKQnXfibK1S+qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011650; c=relaxed/simple;
-	bh=XlzV3Ytw99aGaXyY0/N5tSNPdXbC9gEdOvVGaJRDhKA=;
+	s=arc-20240116; t=1783011652; c=relaxed/simple;
+	bh=PiyIF8mIdnipiYcObKZw793xKZ7MVTUyN3ppmLGRQWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjouqWIP6Svp/Clyjj4YRZWBt44oM7fdfWHrsRMVMqOiPTmHkLbmtsSVnf6ZWPwtaFrkHiy/UfjAAgWmvWiXXZwcaH+ummGCcQgWxljDG85+joNfRQq7/fAQDLYqqHmr6qnhALQjCZ7bCJLSy5WinwgJLqG1SqOOaYkL/EUxeNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pI6jxqPG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ocM7Hcybt2mpAQUYE5yrji6ZFDQgJU0uk+Rcl77wecEQJCTS+bF+uNXr6pTxrLHvoPudIEOsU1Of7LSLXXTpGj3pIsRPC2AnsUj5Pt5BFZDgeX7l2+1MToZ+rQnlegphgZ60IrwI2MOHd2T7SPHGiudJokfYzhdB1R7XrutSveo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqyin96c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pI6jxqPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627281F00A3A;
-	Thu,  2 Jul 2026 17:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqyin96c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012451F000E9;
+	Thu,  2 Jul 2026 17:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011648;
-	bh=mJUNB8u3ZY+uNxDoc28kXj9UCWJb7WWTzt9yt3LGXpg=;
+	s=korg; t=1783011651;
+	bh=JvHj066W9GUM936W4IUoy+TgtS7j0tcgzH/ALBLTTqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pI6jxqPGHvNLPVSQOl9dnTgUAabSc1XEyoDJg8njea7kjZ9t0Forr3GIxQ0nYVwNo
-	 AjinlRAo0v2JsbjIt6coKznCnMRKff+t1x5cs5N1p+Aance/o1uGo1gv5GP6oC4ZCy
-	 CGnY6ov1SMT89WZwIQnWJtpnvbnyARiJXvrHtoQE=
+	b=wqyin96cEFFgh1d9UtnD4fFpbmhE+ikzOfSJmh69uwqoyPIiiPzU6eHaNhG9F6KV7
+	 URUnUF154OBGOkuws6GZ+tLVgszfDtVDsDmQO+KR4SVKyZh0Iwh+9aYH8ymQV768NV
+	 kODX/JNq/Cxa1mRqDu7SElokrmCGKBSkLVKwAbZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Calvin Buckley <calvin@cmpct.info>,
-	Brad Spengler <brad.spengler@opensrcsec.com>,
-	Sam James <sam@gentoo.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 079/120] crypto: nx - fix nx_crypto_ctx_exit argument
-Date: Thu,  2 Jul 2026 18:21:15 +0200
-Message-ID: <20260702155114.593773989@linuxfoundation.org>
+	syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 7.1 080/120] gfs2: fix use-after-free in gfs2_qd_dealloc
+Date: Thu,  2 Jul 2026 18:21:16 +0200
+Message-ID: <20260702155114.615729554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -54,90 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam James <sam@gentoo.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 4e67f504ee9ded15e256b64f4fde150e917381d7 upstream.
+commit f9c9ec2c319f843b70ecdf939d48b52d189bc081 upstream.
 
-nx_crypto_ctx_shash_exit calls nx_crypto_ctx_exit with crypto_shash_ctx(...)
-but crypto_shash_ctx gives a nx_crypto_ctx *, not a crypto_tfm *.
+gfs2_qd_dealloc(), called as an RCU callback from gfs2_qd_dispose(),
+accesses the superblock object sdp through qd->qd_sbd after freeing qd.
+It does so to decrement sd_quota_count and wake up sd_kill_wait.
 
-Fix the type in nx_crypto_ctx_exit and drop the bogus crypto_tfm_ctx
-call.
+However, by the time the RCU callback runs, gfs2_put_super() may have
+already freed sdp via free_sbd().  This can happen when
+gfs2_quota_cleanup() is called during unmount: it disposes of quota
+objects via call_rcu() and then waits on sd_kill_wait with a 60-second
+timeout.  If the timeout expires, or if gfs2_gl_hash_clear() triggers
+additional qd_put() calls that schedule more RCU callbacks after the
+wait completes, gfs2_put_super() will proceed to free the superblock
+while RCU callbacks referencing it are still pending.
 
-This fixes the following oops:
+Add an rcu_barrier() before free_sbd() in gfs2_put_super() to ensure
+all pending RCU callbacks (including gfs2_qd_dealloc) have completed
+before the superblock is freed.
 
-  BUG: Unable to handle kernel data access at 0xc0403effffffffc8
-  Faulting instruction address: 0xc000000000396cb4
-  Oops: Kernel access of bad area, sig: 11 [#15]
-  Call Trace:
-   nx_crypto_ctx_shash_exit+0x24/0x60
-   crypto_shash_exit_tfm+0x28/0x40
-   crypto_destroy_tfm+0x98/0x140
-   crypto_exit_ahash_using_shash+0x20/0x40
-   crypto_destroy_tfm+0x98/0x140
-   hash_release+0x1c/0x30
-   alg_sock_destruct+0x38/0x60
-   __sk_destruct+0x48/0x2b0
-   af_alg_release+0x58/0xb0
-   __sock_release+0x68/0x150
-   sock_close+0x20/0x40
-   __fput+0x110/0x3a0
-   sys_close+0x48/0xa0
-   system_call_exception+0x140/0x2d0
-   system_call_common+0xf4/0x258
-
-.. which came from hardlink(1) opportunistically using AF_ALG.
-
-The same problem exists with nx_crypto_ctx_skcipher_exit getting a context
-it wasn't expecting, but apparently nobody hit that for years.
-
-Cc: Eric Biggers <ebiggers@kernel.org>
+Fixes: a475c5dd16e5 ("gfs2: Free quota data objects synchronously")
+Reported-by: syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=42a37bf8045847d8f9d2
+Tested-by: syzbot+42a37bf8045847d8f9d2@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Fixes: bfd9efddf990 ("crypto: nx - convert AES-ECB to skcipher API")
-Fixes: 9420e628e7d8 ("crypto: nx - Use API partial block handling")
-Acked-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Reported-by: Calvin Buckley <calvin@cmpct.info>
-Tested-by: Calvin Buckley <calvin@cmpct.info>
-Suggested-by: Brad Spengler <brad.spengler@opensrcsec.com>
-Signed-off-by: Sam James <sam@gentoo.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/nx/nx.c |    6 ++----
- drivers/crypto/nx/nx.h |    2 +-
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ fs/gfs2/super.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/nx/nx.c
-+++ b/drivers/crypto/nx/nx.c
-@@ -714,15 +714,13 @@ int nx_crypto_ctx_aes_xcbc_init(struct c
- /**
-  * nx_crypto_ctx_exit - destroy a crypto api context
-  *
-- * @tfm: the crypto transform pointer for the context
-+ * @nx_ctx: the crypto api context
-  *
-  * As crypto API contexts are destroyed, this exit hook is called to free the
-  * memory associated with it.
-  */
--void nx_crypto_ctx_exit(struct crypto_tfm *tfm)
-+void nx_crypto_ctx_exit(struct nx_crypto_ctx *nx_ctx)
- {
--	struct nx_crypto_ctx *nx_ctx = crypto_tfm_ctx(tfm);
--
- 	kfree_sensitive(nx_ctx->kmem);
- 	nx_ctx->csbcpb = NULL;
- 	nx_ctx->csbcpb_aead = NULL;
---- a/drivers/crypto/nx/nx.h
-+++ b/drivers/crypto/nx/nx.h
-@@ -153,7 +153,7 @@ int nx_crypto_ctx_aes_ctr_init(struct cr
- int nx_crypto_ctx_aes_cbc_init(struct crypto_skcipher *tfm);
- int nx_crypto_ctx_aes_ecb_init(struct crypto_skcipher *tfm);
- int nx_crypto_ctx_sha_init(struct crypto_shash *tfm);
--void nx_crypto_ctx_exit(struct crypto_tfm *tfm);
-+void nx_crypto_ctx_exit(struct nx_crypto_ctx *nx_ctx);
- void nx_crypto_ctx_skcipher_exit(struct crypto_skcipher *tfm);
- void nx_crypto_ctx_aead_exit(struct crypto_aead *tfm);
- void nx_crypto_ctx_shash_exit(struct crypto_shash *tfm);
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -643,6 +643,7 @@ restart:
+ 	gfs2_delete_debugfs_file(sdp);
+ 
+ 	gfs2_sys_fs_del(sdp);
++	rcu_barrier();
+ 	free_sbd(sdp);
+ }
+ 
 
 
