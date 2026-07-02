@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38BF1FA859;
-	Thu,  2 Jul 2026 17:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794991FA859;
+	Thu,  2 Jul 2026 17:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011678; cv=none; b=SDL5qIfvtSpIUvmttTWtyxX3pj4qr+rnNH6GfoWMkyATqBnu6yUEh2JnUFYdb6SVCVIlVGqJF6WVejeALPkFZgXwB7iuu4tGKqKBxF84AVKnTQfGSYsd0PxXNp3vTEks5vYviwdtnQpG8c8yfgDF4EpB/+6I2qGYhPJyEI2kdOs=
+	t=1783011681; cv=none; b=qvp42Y/CUNGmIfLv9phWb+qGxPa1Ks6DkQq/fCin9GzTTlp4HCU6d0v/4Z6FKhdWuCmYpvL6J7O1ny60pI8j5jWnOzW4aRmFB7tgMM8msdmeyBi21Z32O5HERr3qiUW+QyqU4PETh0MjenaYry8wViVij08Dsm0OmPOvu2UuGHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011678; c=relaxed/simple;
-	bh=c2SDuVK8c1f9LHx+Y9jrdL6GxUOYOqMJiv4t9fmgaCA=;
+	s=arc-20240116; t=1783011681; c=relaxed/simple;
+	bh=ifwUEELtEdjf/DUE2IsyUgvUQvRyAYE/M2YIgZHddvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uAHXCaVso4BB1opNcWPxeEqnKlRkurU8cjddygaNvsG8d9InZ6y9JCWvPRpEwsVmGOrO5pAcKtpTl25D4+z1xmLKTD9rf4wR+B46d1UzwLZnLZmZNeZycnrqQBBP0X+SZrHh4R6HFLvUQC7yn39nZ8UhJMRI1OIKqXUmBK7TiL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYIbGRWZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OEhJ+8sQjLBRcPkmLRQ1xwOaFChY/tuJcaoSEYCbPqck3VX4QPHq3PbRgN7vkSMeLGC0pDcxX4AdytaCP1GTaJwElCKkLv5+CSFpdX+s8H7GUKRuzTdOhLwIX4zh/QQadc1DkKoxF5aHP5cnKtiHDQXfeVnAM5PYi5cC4xCFhdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8asmDWq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYIbGRWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D551F000E9;
-	Thu,  2 Jul 2026 17:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8asmDWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8B11F00A3A;
+	Thu,  2 Jul 2026 17:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011677;
-	bh=/kPupm844tCS3GxJK9UkXDgADfGwP3cg7aX9EHyBA/s=;
+	s=korg; t=1783011680;
+	bh=DAJ0SATjVtrdIm1DJWVQy7jssgN2MxXAsCp21Bz61Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aYIbGRWZg1scVt01JQ/tDX8iH1uVv6Qnc+ZazZYtmRsp7f6DG9hdB8AOrlw1B8gij
-	 oMtZsNcYb6LEWaqfMRbF9ph4YdMo6jvYcK5k+/Qk7x6sVNuDGh9FQ8Tl9lucRD4mGX
-	 3RO51XU3FypghFuGSF7qCvoTurNthzGT587lKdg0=
+	b=f8asmDWqOlufTy4Hi5rsbujndTfHjZtr1Fmj/RpI2Ph9YFp4WZ192ftN2QVoEpZYY
+	 NrAxsNEWXvVrUbKQHCurhHYpPnV0iNO5GAYAc0oVyZYiUCnIHlEG7Nvhl91cCOVBJK
+	 xohzMPEfv77IVdw9WZwmT4Xad848gfaFnulFB2XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 7.1 089/120] fpga: region: fix use-after-free in child_regions_with_firmware()
-Date: Thu,  2 Jul 2026 18:21:25 +0200
-Message-ID: <20260702155114.800624697@linuxfoundation.org>
+	Yuho Choi <dbgh9129@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 7.1 090/120] rpmsg: char: Fix use-after-free on probe error path
+Date: Thu,  2 Jul 2026 18:21:26 +0200
+Message-ID: <20260702155114.820542435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -51,39 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-commit 54f3c5643ec523a04b6ec0e7c19eb10f5ebebdd3 upstream.
+commit 1ff3f528e67d20e2b1483dcaba899dc7832b2e6b upstream.
 
-Move of_node_put(child_region) after the error print to avoid accessing
-freed memory when pr_err() references child_region.
+rpmsg_chrdev_probe() stores the newly allocated eptdev in the default
+endpoint's priv pointer before calling rpmsg_chrdev_eptdev_add(). If
+rpmsg_chrdev_eptdev_add() then fails, its error path frees eptdev while
+the default endpoint may still dispatch callbacks with the stale priv
+pointer.
 
-Fixes: 0fa20cdfcc1f ("fpga: fpga-region: device tree control for FPGA")
+Avoid publishing eptdev through the default endpoint until
+rpmsg_chrdev_eptdev_add() succeeds. Messages received before the priv
+pointer is published should be ignored by rpmsg_ept_cb(). Flow-control
+updates can hit rpmsg_ept_flow_cb() in the same window, so make both
+callbacks return success when priv is NULL.
+
+Fixes: bc69d1066569 ("rpmsg: char: Introduce the "rpmsg-raw" channel")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-[ Yilun: Fix the Fixes tag ]
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20260408154534.404327-1-vulab@iscas.ac.cn
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Link: https://lore.kernel.org/r/20260601183247.1962010-1-dbgh9129@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/of-fpga-region.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/rpmsg/rpmsg_char.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/fpga/of-fpga-region.c
-+++ b/drivers/fpga/of-fpga-region.c
-@@ -168,11 +168,10 @@ static int child_regions_with_firmware(s
- 						     fpga_region_of_match);
- 	}
+--- a/drivers/rpmsg/rpmsg_char.c
++++ b/drivers/rpmsg/rpmsg_char.c
+@@ -104,6 +104,9 @@ static int rpmsg_ept_cb(struct rpmsg_dev
+ 	struct rpmsg_eptdev *eptdev = priv;
+ 	struct sk_buff *skb;
  
--	of_node_put(child_region);
--
- 	if (ret)
- 		pr_err("firmware-name not allowed in child FPGA region: %pOF",
- 		       child_region);
-+	of_node_put(child_region);
++	if (!eptdev)
++		return 0;
++
+ 	skb = alloc_skb(len, GFP_ATOMIC);
+ 	if (!skb)
+ 		return -ENOMEM;
+@@ -124,6 +127,9 @@ static int rpmsg_ept_flow_cb(struct rpms
+ {
+ 	struct rpmsg_eptdev *eptdev = priv;
  
- 	return ret;
++	if (!eptdev)
++		return 0;
++
+ 	eptdev->remote_flow_restricted = enable;
+ 	eptdev->remote_flow_updated = true;
+ 
+@@ -490,6 +496,7 @@ static int rpmsg_chrdev_probe(struct rpm
+ 	struct rpmsg_channel_info chinfo;
+ 	struct rpmsg_eptdev *eptdev;
+ 	struct device *dev = &rpdev->dev;
++	int ret;
+ 
+ 	memcpy(chinfo.name, rpdev->id.name, RPMSG_NAME_SIZE);
+ 	chinfo.src = rpdev->src;
+@@ -502,13 +509,17 @@ static int rpmsg_chrdev_probe(struct rpm
+ 	/* Set the default_ept to the rpmsg device endpoint */
+ 	eptdev->default_ept = rpdev->ept;
+ 
++	ret = rpmsg_chrdev_eptdev_add(eptdev, chinfo);
++
++	if (ret)
++		return ret;
+ 	/*
+ 	 * The rpmsg_ept_cb uses *priv parameter to get its rpmsg_eptdev context.
+-	 * Storedit in default_ept *priv field.
++	 * Stored it in default_ept *priv field.
+ 	 */
+ 	eptdev->default_ept->priv = eptdev;
+ 
+-	return rpmsg_chrdev_eptdev_add(eptdev, chinfo);
++	return 0;
  }
+ 
+ static void rpmsg_chrdev_remove(struct rpmsg_device *rpdev)
 
 
