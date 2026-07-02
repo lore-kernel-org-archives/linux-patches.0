@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A003438A6;
-	Thu,  2 Jul 2026 16:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C664C317146;
+	Thu,  2 Jul 2026 16:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010268; cv=none; b=LJUqNuKPZWWyEqP8//8kXDSYOf77/A7CpSAMwbessuwY52ZClj4UCpnjtFoJfT+ICymW8CdJqUEbZj46/0Ggw/fh1HltvQLi9fxh2nuclEr51WnfSWoqCUIoszDlwSQhZkC9EE3sV+5w6syekvDqoC1w0fMnDbr13X7rZHNbzfs=
+	t=1783010271; cv=none; b=KE7RgJIMUhQu9sebCA4aGn6/uASe8aENo+4eskRyVAKZ0AbzCNjSeMG8I1JZln+2Tv9RwQC87aRGnaXfDo6o09jK4YM7LtmBjkPUCPCfSasGh+L3FWoIr9yU3fl25PzOr4peHZmAsPuu5iKdAPSZgj/wzDS5MNpNwT4c/ffRG64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010268; c=relaxed/simple;
-	bh=yMGnsSBV8EDDsBZcEA/TTAaFdnEzbQh7MhtIepVywqQ=;
+	s=arc-20240116; t=1783010271; c=relaxed/simple;
+	bh=OVIXlLwm/vxAmXgDqTs9ketarKh9ZK4Fg0yQUYHDUUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rLa34qGbu/bXpRQ/zXHP7xJPQ7HTVZF3JfIgJXbiO/Fb4KTk/DuIhJn3BNwb5UKgKoBhqMxjbZrUBIJ7Rx/GRJpSsObDy2TNtYbKjTYCa5r2swfTtfE30mjPRIYrPr5PbgTOxN9214c0v3TJj7RU904OCvL3LMoqalYxToqg954=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHGpfmOC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OrgqUc4XtpPC5Acxgtwhr72Tj70LrGfxpA7DYyzEtq6YAp+kixTy2M1VjBZG5Z+y6brV450N5ENBYxisWNjzhPbpOQheenz+5Dk7KQPPbsRChahhasg6+FJf44U7opEcG/QTO1GPz7OM75QFtcwyGtCvCeSnfgC/IruveyH/dg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MG0Gepm3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHGpfmOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932EA1F000E9;
-	Thu,  2 Jul 2026 16:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MG0Gepm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385B01F000E9;
+	Thu,  2 Jul 2026 16:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010267;
-	bh=aT0GI47SvvWBAAZAamiW1BetP/NPk9uCUNFavLaC2VM=;
+	s=korg; t=1783010269;
+	bh=PWav9QzdxndE6sQ+GbmjFg8LbZEHaDfUY8FiKncgn7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aHGpfmOCf/j0X/Wx8twmQ9U/EbYbPq3bMtdKfaLiPHItkMdJGc6Xm2CDIXMwsSBw5
-	 AG+HvLgPxiq8oQtw4Kp78CpJLqC102DRMSbu8nJsqL9S6ZIfyt+2w7Y4OHD3xJp6Oc
-	 72Fmq4r6C/CRsQSMrkL6ONnSsvNfpQwxjH8rJEyU=
+	b=MG0Gepm3rFDvSZ5h44BcGwFiCf0O6a8XJC/5L4NLyKvniza8AdrMvSKrgsl8v0toR
+	 UoPDvec6a4uoYcrAtgpi3yjWsr6vvEhICcXaWyeHPY9f2oTQL7/XExBurXzroe3gl2
+	 UWjICCkargQ9M0/37gfqpqRB4hPb0Oxx9hX26IXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Li <liali@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Kevin Berry <kpberry@google.com>
-Subject: [PATCH 6.12 044/204] bonding: fix NULL pointer dereference in actor_port_prio setting
-Date: Thu,  2 Jul 2026 18:18:21 +0200
-Message-ID: <20260702155119.578095938@linuxfoundation.org>
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 018/204] eventpoll: fix ep_remove struct eventpoll / struct file UAF
+Date: Thu,  2 Jul 2026 18:17:55 +0200
+Message-ID: <20260702155119.049243481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -46,65 +46,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 067bf016e99ad72aa4ff869d6dec1fd62a9c6202 ]
+[ Upstream commit a6dc643c69311677c574a0f17a3f4d66a5f3744b ]
 
-Liang reported an issue where setting a slave’s actor_port_prio to
-predefined values such as 0, 255, or 65535 would cause a system crash.
+ep_remove() (via ep_remove_file()) cleared file->f_ep under
+file->f_lock but then kept using @file inside the critical section
+(is_file_epoll(), hlist_del_rcu() through the head, spin_unlock).
+A concurrent __fput() taking the eventpoll_release() fastpath in
+that window observed the transient NULL, skipped
+eventpoll_release_file() and ran to f_op->release / file_free().
 
-The problem occurs because in bond_opt_parse(), when the provided value
-matches a predefined table entry, the function returns that table entry,
-which does not contain slave information. Later, in
-bond_option_actor_port_prio_set(), calling bond_slave_get_rtnl() leads
-to a NULL pointer dereference.
+For the epoll-watches-epoll case, f_op->release is
+ep_eventpoll_release() -> ep_clear_and_put() -> ep_free(), which
+kfree()s the watched struct eventpoll. Its embedded ->refs
+hlist_head is exactly where epi->fllink.pprev points, so the
+subsequent hlist_del_rcu()'s "*pprev = next" scribbles into freed
+kmalloc-192 memory.
 
-Since actor_port_prio is defined as a u16 and initialized to the default
-value of 255 in ad_initialize_port(), there is no need for the
-bond_actor_port_prio_tbl. Using the BOND_OPTFLAG_RAWVAL flag is sufficient.
+In addition, struct file is SLAB_TYPESAFE_BY_RCU, so the slot
+backing @file could be recycled by alloc_empty_file() --
+reinitializing f_lock and f_ep -- while ep_remove() is still
+nominally inside that lock. The upshot is an attacker-controllable
+kmem_cache_free() against the wrong slab cache.
 
-Fixes: 6b6dc81ee7e8 ("bonding: add support for per-port LACP actor priority")
-Reported-by: Liang Li <liali@redhat.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20251105072620.164841-1-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Kevin Berry <kpberry@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Pin @file via epi_fget() at the top of ep_remove() and gate the
+critical section on the pin succeeding. With the pin held @file
+cannot reach refcount zero, which holds __fput() off and
+transitively keeps the watched struct eventpoll alive across the
+hlist_del_rcu() and the f_lock use, closing both UAFs.
+
+If the pin fails @file has already reached refcount zero and its
+__fput() is in flight. Because we bailed before clearing f_ep,
+that path takes the eventpoll_release() slow path into
+eventpoll_release_file() and blocks on ep->mtx until the waiter
+side's ep_clear_and_put() drops it. The bailed epi's share of
+ep->refcount stays intact, so the trailing ep_refcount_dec_and_test()
+in ep_clear_and_put() cannot free the eventpoll out from under
+eventpoll_release_file(); the orphaned epi is then cleaned up
+there.
+
+A successful pin also proves we are not racing
+eventpoll_release_file() on this epi, so drop the now-redundant
+re-check of epi->dying under f_lock. The cheap lockless
+READ_ONCE(epi->dying) fast-path bailout stays.
+
+Fixes: 58c9b016e128 ("epoll: use refcount to reduce ep_mutex contention")
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-6-2470f9eec0f5@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_options.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ fs/eventpoll.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -225,13 +225,6 @@ static const struct bond_opt_value bond_
- 	{ NULL,      -1,    0},
- };
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 2993b76c21f682..22605fbc12ded5 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -883,22 +883,26 @@ static bool ep_remove_epi(struct eventpoll *ep, struct epitem *epi)
+  */
+ static void ep_remove(struct eventpoll *ep, struct epitem *epi)
+ {
+-	struct file *file = epi->ffd.file;
++	struct file *file __free(fput) = NULL;
  
--static const struct bond_opt_value bond_actor_port_prio_tbl[] = {
--	{ "minval",  0,     BOND_VALFLAG_MIN},
--	{ "maxval",  65535, BOND_VALFLAG_MAX},
--	{ "default", 255,   BOND_VALFLAG_DEFAULT},
--	{ NULL,      -1,    0},
--};
--
- static const struct bond_opt_value bond_ad_user_port_key_tbl[] = {
- 	{ "minval",  0,     BOND_VALFLAG_MIN | BOND_VALFLAG_DEFAULT},
- 	{ "maxval",  1023,  BOND_VALFLAG_MAX},
-@@ -497,7 +490,7 @@ static const struct bond_option bond_opt
- 		.id = BOND_OPT_ACTOR_PORT_PRIO,
- 		.name = "actor_port_prio",
- 		.unsuppmodes = BOND_MODE_ALL_EX(BIT(BOND_MODE_8023AD)),
--		.values = bond_actor_port_prio_tbl,
-+		.flags = BOND_OPTFLAG_RAWVAL,
- 		.set = bond_option_actor_port_prio_set,
- 	},
- 	[BOND_OPT_AD_ACTOR_SYSTEM] = {
+ 	lockdep_assert_irqs_enabled();
+ 	lockdep_assert_held(&ep->mtx);
+ 
+ 	ep_unregister_pollwait(ep, epi);
+ 
+-	/* sync with eventpoll_release_file() */
++	/* cheap sync with eventpoll_release_file() */
+ 	if (unlikely(READ_ONCE(epi->dying)))
+ 		return;
+ 
+-	spin_lock(&file->f_lock);
+-	if (epi->dying) {
+-		spin_unlock(&file->f_lock);
++	/*
++	 * If we manage to grab a reference it means we're not in
++	 * eventpoll_release_file() and aren't going to be.
++	 */
++	file = epi_fget(epi);
++	if (!file)
+ 		return;
+-	}
++
++	spin_lock(&file->f_lock);
+ 	ep_remove_file(ep, epi, file);
+ 
+ 	if (ep_remove_epi(ep, epi))
+-- 
+2.53.0
+
 
 
