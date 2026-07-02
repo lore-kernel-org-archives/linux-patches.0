@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0281C695;
-	Thu,  2 Jul 2026 16:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC9B23EAAD;
+	Thu,  2 Jul 2026 16:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011324; cv=none; b=UC7G0r3mgXWMO3smFYLNO2CxKj1xLd2071itZXjt2QXOx5y3KC5s0ctx2/abklGTHmvfoUAJe9yM4yuNzHUW9nf+y/hyC+JxF4DCvHWMHqoq26xdErYF3SyUwQXIXJgaiOyBXBCNx6wAfbyTMF1NemmTNloMM/UByi/mh+nKfPU=
+	t=1783011326; cv=none; b=Dq0spaKnAXrbjY1Wn/7UxOGk+4n0ylbIKuhbaLgRRI1vciEvdFWcwt1UYYQ0nq6jxztZyb3+eh5a3nYVckI7haXyeHJL5yaWudpvZwvMKO3PFiNy9A/AqQ2sqrUljVV8l86j7bLSvbsh8N060IFSv9s/IQm3KICbf/hAGmJOYE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011324; c=relaxed/simple;
-	bh=Y5yjC6AikUIMcWl8Bg+TlCuOW6F4CeGsWu5Wojj4+8s=;
+	s=arc-20240116; t=1783011326; c=relaxed/simple;
+	bh=D78jI4CHID5Dzsm8b2N8DoiOzK7zndsw2zeLQ9FW/YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oeK0EPKSXg/2atROj/MU/D5cxY3FxGiU241WizqddTlGzzik4OWFnw+DC94iuycB1iPiMKNLjqAhDK3DFhEMEEHUz93C6Glog/ZAm4y/+Se90REZdurnpZg+9g79M0eIkbH8f63A24nH3FNVv3N0J3z7Tqx/Kxgqf2SO/tXTKVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6BvzQCM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J6i1O3scPr6eRG9htZqu8miZnzq1j/7FD8zZdagaVjSqRaoJMkQqkdCeZBAyNqUngXwbWqcLaQjBVqWEzvEA2Ko8/mPECczBNyi1HOGpTzkRqku9xsEjz0F9Unn+76TZSP7PNEnzGSwQ69awecRFYizc7B02gVBYoshZBZczJM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfsLB69q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6BvzQCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A5D1F000E9;
-	Thu,  2 Jul 2026 16:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfsLB69q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9FA1F000E9;
+	Thu,  2 Jul 2026 16:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011322;
-	bh=wUC51sAcY97P7dtKSvme8JAEMFB4uI1TBVO7+cKrq70=;
+	s=korg; t=1783011325;
+	bh=klHa2S/6kYyH+GQTSIaaJumwBarHAfVkgBur6r8KeH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T6BvzQCM3msGQTZbpAQAXwqFmM8QF1oc3WuWFm29ef6lPeQhlxbesLAnBnMUhbnSC
-	 C4iRDTjRk5vfTtCSFzpQqPJNzLMBGKLd9d3DkHZD1x2FnQ7KrHXjStRRujJEppNvwt
-	 dJFz5buDY00J0DL8WulpDKVwIilP5wYEWhJGt4PQ=
+	b=JfsLB69qb8XuFLayN5NgWbDkt5KH+lxesmUFgLk7laczIKZ8eNNBmI/L+31393FTD
+	 +0CTzfSQohuq6XWZJ4uJtTTRWU7xf/7Q3dp7yAZlYf9GBweWBmzy3DWtrgfQ/CtRWE
+	 vFgWEnb8t/nrmBRu922jxCO+zq6nJDFb+/tlzQWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 066/108] f2fs: keep atomic write retry from zeroing original data
-Date: Thu,  2 Jul 2026 18:21:03 +0200
-Message-ID: <20260702155113.479122184@linuxfoundation.org>
+	Shaomin Chen <eeesssooo020@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.18 049/108] keys: Pin request_key_auth payload in instantiate paths
+Date: Thu,  2 Jul 2026 18:20:46 +0200
+Message-ID: <20260702155113.124995881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.110058792@linuxfoundation.org>
 References: <20260702155112.110058792@linuxfoundation.org>
@@ -52,76 +50,215 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Shaomin Chen <eeesssooo020@gmail.com>
 
-commit 6d874b65aadce56ac78f76129dbcfc2599b638f8 upstream.
+commit fd15b457a86939c38aa12116adabd8ff686c5e51 upstream.
 
-A partial atomic write reserves a block in the COW inode before reading the
-original data page for the untouched bytes in that page.
+A: request_key()       B: KEYCTL_INSTANTIATE_IOV
+================       =========================
 
-If that read fails, write_begin returns an error but leaves the COW inode
-entry as NEW_ADDR. A retry of the same partial write then finds the COW
-entry, treats it as existing COW data, and f2fs_write_begin() zeroes the
-whole folio because blkaddr is NEW_ADDR.
+create auth key
+store rka in auth key
+wait for helper
+                       get auth key
+                       load rka from auth key
+                       copy user payload
+                       sleep on #PF
 
-If the retry is committed, the bytes outside the retried write range are
-committed as zeroes instead of preserving the original file contents.
+helper completed
+detach and free rka
+destroy auth key
+                       wake up
+                       use rka->target_key
+                       **USE-AFTER-FREE**
 
-Only use the COW inode as the read source when it already has a real data
-block. If the COW entry is still NEW_ADDR, treat it as a reservation to
-reuse: keep reading the old data from the original inode and avoid
-reserving or accounting the same atomic block again.
+Give request_key_auth payloads a refcount.  Take a payload reference while
+authkey->sem stabilizes the payload and revocation state.  Hold that
+reference across the instantiate and reject paths.  Drop the auth key
+owning reference from revoke and destroy.
 
-Cc: stable@kernel.org
-Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[jarkko: Replaced the first two paragraphs of text with an actual
+ concurrency scenario.]
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: b5f545c880a2 ("[PATCH] keys: Permit running process to instantiate keys")
+Reported-by: Shaomin Chen <eeesssooo020@gmail.com>
+Closes: https://lore.kernel.org/r/20260519144403.436694-1-eeesssooo020@gmail.com
+Signed-off-by: Shaomin Chen <eeesssooo020@gmail.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ include/keys/request_key_auth-type.h |    2 ++
+ security/keys/internal.h             |    2 ++
+ security/keys/keyctl.c               |   24 ++++++++++++++++++------
+ security/keys/request_key_auth.c     |   33 +++++++++++++++++++++++++++++++--
+ 4 files changed, 53 insertions(+), 8 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -3537,6 +3537,7 @@ static int prepare_atomic_write_begin(st
- 	pgoff_t index = folio->index;
- 	int err = 0;
- 	block_t ori_blk_addr = NULL_ADDR;
-+	bool cow_has_reserved_block = false;
+--- a/include/keys/request_key_auth-type.h
++++ b/include/keys/request_key_auth-type.h
+@@ -9,12 +9,14 @@
+ #define _KEYS_REQUEST_KEY_AUTH_TYPE_H
  
- 	/* If pos is beyond the end of file, reserve a new block in COW inode */
- 	if ((pos & PAGE_MASK) >= i_size_read(inode))
-@@ -3546,9 +3547,11 @@ static int prepare_atomic_write_begin(st
- 	err = __find_data_block(cow_inode, index, blk_addr);
- 	if (err) {
- 		return err;
--	} else if (*blk_addr != NULL_ADDR) {
-+	} else if (__is_valid_data_blkaddr(*blk_addr)) {
- 		*use_cow = true;
- 		return 0;
-+	} else if (*blk_addr == NEW_ADDR) {
-+		cow_has_reserved_block = true;
- 	}
+ #include <linux/key.h>
++#include <linux/refcount.h>
  
- 	if (is_inode_flag_set(inode, FI_ATOMIC_REPLACE))
-@@ -3561,10 +3564,13 @@ static int prepare_atomic_write_begin(st
+ /*
+  * Authorisation record for request_key().
+  */
+ struct request_key_auth {
+ 	struct rcu_head		rcu;
++	refcount_t		usage;
+ 	struct key		*target_key;
+ 	struct key		*dest_keyring;
+ 	const struct cred	*cred;
+--- a/security/keys/internal.h
++++ b/security/keys/internal.h
+@@ -208,6 +208,8 @@ extern struct key *request_key_auth_new(
+ 					const void *callout_info,
+ 					size_t callout_len,
+ 					struct key *dest_keyring);
++struct request_key_auth *request_key_auth_get(struct key *authkey);
++void request_key_auth_put(struct request_key_auth *rka);
  
- reserve_block:
- 	/* Finally, we should reserve a new block in COW inode for the update */
--	err = __reserve_data_block(cow_inode, index, blk_addr, node_changed);
--	if (err)
--		return err;
--	inc_atomic_write_cnt(inode);
-+	if (!cow_has_reserved_block) {
-+		err = __reserve_data_block(cow_inode, index, blk_addr,
-+					   node_changed);
-+		if (err)
-+			return err;
-+		inc_atomic_write_cnt(inode);
+ extern struct key *key_get_instantiation_authkey(key_serial_t target_id);
+ 
+--- a/security/keys/keyctl.c
++++ b/security/keys/keyctl.c
+@@ -1197,9 +1197,13 @@ static long keyctl_instantiate_key_commo
+ 	if (!instkey)
+ 		goto error;
+ 
+-	rka = instkey->payload.data[0];
+-	if (rka->target_key->serial != id)
++	rka = request_key_auth_get(instkey);
++	if (!rka) {
++		ret = -EKEYREVOKED;
+ 		goto error;
 +	}
++	if (rka->target_key->serial != id)
++		goto error_put_rka;
  
- 	if (ori_blk_addr != NULL_ADDR)
- 		*blk_addr = ori_blk_addr;
+ 	/* pull the payload in if one was supplied */
+ 	payload = NULL;
+@@ -1208,7 +1212,7 @@ static long keyctl_instantiate_key_commo
+ 		ret = -ENOMEM;
+ 		payload = kvmalloc(plen, GFP_KERNEL);
+ 		if (!payload)
+-			goto error;
++			goto error_put_rka;
+ 
+ 		ret = -EFAULT;
+ 		if (!copy_from_iter_full(payload, plen, from))
+@@ -1234,6 +1238,8 @@ static long keyctl_instantiate_key_commo
+ 
+ error2:
+ 	kvfree_sensitive(payload, plen);
++error_put_rka:
++	request_key_auth_put(rka);
+ error:
+ 	return ret;
+ }
+@@ -1358,15 +1364,19 @@ long keyctl_reject_key(key_serial_t id,
+ 	if (!instkey)
+ 		goto error;
+ 
+-	rka = instkey->payload.data[0];
+-	if (rka->target_key->serial != id)
++	rka = request_key_auth_get(instkey);
++	if (!rka) {
++		ret = -EKEYREVOKED;
+ 		goto error;
++	}
++	if (rka->target_key->serial != id)
++		goto error_put_rka;
+ 
+ 	/* find the destination keyring if present (which must also be
+ 	 * writable) */
+ 	ret = get_instantiation_keyring(ringid, rka, &dest_keyring);
+ 	if (ret < 0)
+-		goto error;
++		goto error_put_rka;
+ 
+ 	/* instantiate the key and link it into a keyring */
+ 	ret = key_reject_and_link(rka->target_key, timeout, error,
+@@ -1379,6 +1389,8 @@ long keyctl_reject_key(key_serial_t id,
+ 	if (ret == 0)
+ 		keyctl_change_reqkey_auth(NULL);
+ 
++error_put_rka:
++	request_key_auth_put(rka);
+ error:
+ 	return ret;
+ }
+--- a/security/keys/request_key_auth.c
++++ b/security/keys/request_key_auth.c
+@@ -23,6 +23,7 @@ static void request_key_auth_describe(co
+ static void request_key_auth_revoke(struct key *);
+ static void request_key_auth_destroy(struct key *);
+ static long request_key_auth_read(const struct key *, char *, size_t);
++static void request_key_auth_rcu_disposal(struct rcu_head *);
+ 
+ /*
+  * The request-key authorisation key type definition.
+@@ -116,6 +117,31 @@ static void free_request_key_auth(struct
+ }
+ 
+ /*
++ * Take a reference to the request-key authorisation payload so callers can
++ * drop authkey->sem before doing operations that may sleep.
++ */
++struct request_key_auth *request_key_auth_get(struct key *authkey)
++{
++	struct request_key_auth *rka;
++
++	down_read(&authkey->sem);
++	rka = dereference_key_locked(authkey);
++	if (rka && !test_bit(KEY_FLAG_REVOKED, &authkey->flags))
++		refcount_inc(&rka->usage);
++	else
++		rka = NULL;
++	up_read(&authkey->sem);
++
++	return rka;
++}
++
++void request_key_auth_put(struct request_key_auth *rka)
++{
++	if (rka && refcount_dec_and_test(&rka->usage))
++		call_rcu(&rka->rcu, request_key_auth_rcu_disposal);
++}
++
++/*
+  * Dispose of the request_key_auth record under RCU conditions
+  */
+ static void request_key_auth_rcu_disposal(struct rcu_head *rcu)
+@@ -136,8 +162,10 @@ static void request_key_auth_revoke(stru
+ 	struct request_key_auth *rka = dereference_key_locked(key);
+ 
+ 	kenter("{%d}", key->serial);
++	if (!rka)
++		return;
+ 	rcu_assign_keypointer(key, NULL);
+-	call_rcu(&rka->rcu, request_key_auth_rcu_disposal);
++	request_key_auth_put(rka);
+ }
+ 
+ /*
+@@ -150,7 +178,7 @@ static void request_key_auth_destroy(str
+ 	kenter("{%d}", key->serial);
+ 	if (rka) {
+ 		rcu_assign_keypointer(key, NULL);
+-		call_rcu(&rka->rcu, request_key_auth_rcu_disposal);
++		request_key_auth_put(rka);
+ 	}
+ }
+ 
+@@ -174,6 +202,7 @@ struct key *request_key_auth_new(struct
+ 	rka = kzalloc(sizeof(*rka), GFP_KERNEL);
+ 	if (!rka)
+ 		goto error;
++	refcount_set(&rka->usage, 1);
+ 	rka->callout_info = kmemdup(callout_info, callout_len, GFP_KERNEL);
+ 	if (!rka->callout_info)
+ 		goto error_free_rka;
 
 
