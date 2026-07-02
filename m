@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563D8246BBA;
-	Thu,  2 Jul 2026 16:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7DD246BBA;
+	Thu,  2 Jul 2026 16:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010583; cv=none; b=XCgVIYlGk+BnUTTZnU3tPq09pzBaTgsBzlaPZDv86ssnM04uI0gArJZTMd1uFASZcQ6z95aGsItZ+mCN+1fBYcTSsJdxg/RE0mo3dQrfN3kLxbCwrgTBNhwHTdzpjJqufRpmj1slEDbjCTpYHpeGzu3p064twe36HTAIHyXcZMU=
+	t=1783010586; cv=none; b=I4mRemt/Q8nSMDbHwpayLatF9ZpLU43DJYtA1JlaQijyjYn+EyZa0mctGlqlzQr6AOSF2zbqkReOba+aoPp4QH8GV17chdQhzTyFbOKSwyiFybaQzbYW5CgqnuEbxln30Y4Q0rUpxAPSC4wL8Rw7reAnqVsE8FSPR1or9qhUkQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010583; c=relaxed/simple;
-	bh=lnR2EBn1dzruYON8HMA7tSyUm7JuFXEXG/tSP7CCAuY=;
+	s=arc-20240116; t=1783010586; c=relaxed/simple;
+	bh=TeI4KTsOl/GylfOPYVQzK1tX6Juy794viQKhiG/Ij8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X220hmM6tiHDxHqV0z21H8+siwxXj8rYT5Y6Dp3ieemkAV0R43I91YC2Kbyg1N80pxYA1/RVlhLEDHczLwpvOsy4V7CycCrthVvKS3p4qEmQDinlDWtdAXhcD/xPS18UVDQMeQeHcWglgdCZZA1mJgH1w/CGJi5KBlXbQnfPJ3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1L8obi8B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ri+28f9Rfm5le/GbkY0LfQEfJQRwJxuPAxqoQGD2CVaNQnsmz3NlK2bcurlhlUhXRcb7VGRE9peNWSG+NM3AHoDrRHVIBsbCBmmtBVTW7ynfzN00u7XzMB2DS6p4loesrpJ2xp8vS4quzf7wPt1FNU+/89zihg1dXWkYM+wDlow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK1xhcLD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1L8obi8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD51B1F000E9;
-	Thu,  2 Jul 2026 16:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK1xhcLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646E11F000E9;
+	Thu,  2 Jul 2026 16:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010582;
-	bh=S9P1dbk+XY+hCTWCl+ObOYxtudPkjxeHgUNP1XNInig=;
+	s=korg; t=1783010584;
+	bh=EyKiDTRMvKV9Xe9FMRSu4nw88QYNdSXGOr7rYZozR1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1L8obi8BZ+gTsVYwZAC0rrnzHo9GuOTkGVkuEoht/oYX68msiSdOh7jsoBM8x1jux
-	 az+nm+izIpvNZkHiBD7988ZP9LNip9b/UFyL0jfv88Lw7sNsG+Q5Id/pnFUTQKui/S
-	 DAy8DLVvyk6UmszzVN/Z0/ETbe+SS1LUij6I2tf0=
+	b=xK1xhcLD1yNJ3HBgo079FWC5bDBXhGybjFYu0JpJ+z/SWlUTWOH7xVWp0tp7lt3XF
+	 8Aof4jRpi2IyiHzfdui8ft5LsBnIeNreERLuqgz3GH6BcOxde3ZxCjiFQZ61eAgz+U
+	 hPh+5Ge6J7ijjrDDS2V9P/UixSGAwC6ouoXN/BZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 165/204] pwrseq: core: fix use-after-free in pwrseq_debugfs_seq_next()
-Date: Thu,  2 Jul 2026 18:20:22 +0200
-Message-ID: <20260702155122.115108489@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 166/204] hdlc_ppp: sync per-proto timers before freeing hdlc state
+Date: Thu,  2 Jul 2026 18:20:23 +0200
+Message-ID: <20260702155122.137797555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,85 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 257595adf9dac15ae1edd9d07753fbc576a7583d upstream.
+commit c78a4e41ab5ead6193ad8a2dd92e8906bae659fa upstream.
 
-pwrseq_debugfs_seq_next() declares 'next' with __free(put_device),
-which causes put_device() to be called on the returned pointer when
-the variable goes out of scope.  This results in a use-after-free
-since the seq_file framework receives a pointer whose reference has
-already been dropped.
+Each PPP control protocol (LCP/IPCP/IPV6CP) embedded in struct ppp
+registers a timer via timer_setup(). That struct ppp is the
+hdlc->state allocation, which detach_hdlc_protocol() frees with kfree()
+in both teardown paths: unregister_hdlc_device() and the re-attach inside
+attach_hdlc_protocol().
 
-Simply removing __free(put_device) would fix the UAF but would leak
-the reference acquired by bus_find_next_device(), as stop() only
-calls up_read(&pwrseq_sem) and never releases the device reference.
+The ppp proto never registered a .detach callback, so
+detach_hdlc_protocol() performs no timer synchronization before the
+kfree(). The only cancel, timer_delete(&proto->timer) in ppp_cp_event(),
+is partial (it does not wait for a running callback) and only runs on the
+->CLOSED transition; ppp_stop()/ppp_close() do not sync either. A
+ppp_timer callback already executing (blocked on ppp->lock) survives the
+kfree and then dereferences proto->state / ppp->lock in freed memory,
+leading to a use-after-free.
 
-Fix this by making the reference counting consistent across all
-seq_file callbacks, matching the standard pattern used by PCI and
-SCSI:
+Fix this by adding a .detach helper that calls timer_shutdown_sync() on
+every per-proto timer. detach_hdlc_protocol() invokes proto->detach(dev)
+before kfree(hdlc->state), so timer_shutdown_sync()
+now runs on both free paths.
+timer_shutdown_sync() is used instead of timer_delete_sync() because the
+keepalive path re-arms the timer through add_timer()/mod_timer() and
+shutdown blocks any re-activation during teardown.
 
-- start(): use get_device() so it returns a referenced pointer.
-- next(): explicitly put_device(curr) to release the previous
-  device's reference (no NULL check needed - the seq_file framework
-  only calls next() while the previous return was non-NULL).
-- stop(): put_device(data) to release the last iterated device's
-  reference, with a NULL guard since stop() may be called with NULL
-  when start() returned NULL or next() reached end-of-sequence.
+Initialize the per-protocol timers in ppp_ioctl() when the protocol is
+attached, and remove the now-redundant timer_setup() from ppp_start(), so
+that the timers are initialized exactly once at attach time and
+ppp_timer_release() never operates on uninitialized timer_list
+structures. attach_hdlc_protocol() uses kmalloc() (not kzalloc), so
+struct ppp's protos[i].timer is uninitialized garbage until the first
+timer_setup(); without this init-at-attach, attaching the PPP protocol
+without ever bringing the device up would leave timer_shutdown_sync()
+operating on uninitialized memory in .detach. Moving the init out of
+ppp_start() (which only runs on NETDEV_UP) into the attach path makes the
+initialization unconditional and avoids initializing the same timer_list
+twice.
 
+This bug was found by static analysis.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: 249ebf3f65f8 ("power: sequencing: implement the pwrseq core")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260616151049.1705503-1-vulab@iscas.ac.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260617020518.116319-1-fanwu01@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/sequencing/core.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/wan/hdlc_ppp.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/power/sequencing/core.c
-+++ b/drivers/power/sequencing/core.c
-@@ -990,8 +990,9 @@ static void *pwrseq_debugfs_seq_start(st
- 	ctx.index = *pos;
+--- a/drivers/net/wan/hdlc_ppp.c
++++ b/drivers/net/wan/hdlc_ppp.c
+@@ -621,7 +621,6 @@ static void ppp_start(struct net_device
+ 		struct proto *proto = &ppp->protos[i];
  
- 	/*
--	 * We're holding the lock for the entire printout so no need to fiddle
--	 * with device reference count.
-+	 * Hold the lock for the entire printout to prevent device removal.
-+	 * Reference counts are managed by start()/next()/stop() as required
-+	 * by the seq_file contract.
- 	 */
- 	down_read(&pwrseq_sem);
- 
-@@ -999,7 +1000,7 @@ static void *pwrseq_debugfs_seq_start(st
- 	if (!ctx.index)
- 		return NULL;
- 
--	return ctx.dev;
-+	return get_device(ctx.dev);
+ 		proto->dev = dev;
+-		timer_setup(&proto->timer, ppp_timer, 0);
+ 		proto->state = CLOSED;
+ 	}
+ 	ppp->protos[IDX_LCP].pid = PID_LCP;
+@@ -641,6 +640,15 @@ static void ppp_close(struct net_device
+ 	ppp_tx_flush();
  }
  
- static void *pwrseq_debugfs_seq_next(struct seq_file *seq, void *data,
-@@ -1009,8 +1010,9 @@ static void *pwrseq_debugfs_seq_next(str
- 
- 	++*pos;
- 
--	struct device *next __free(put_device) =
--			bus_find_next_device(&pwrseq_bus, curr);
-+	struct device *next = bus_find_next_device(&pwrseq_bus, curr);
++static void ppp_timer_release(struct net_device *dev)
++{
++	struct ppp *ppp = get_ppp(dev);
++	int i;
 +
-+	put_device(curr);
- 	return next;
- }
++	for (i = 0; i < IDX_COUNT; i++)
++		timer_shutdown_sync(&ppp->protos[i].timer);
++}
++
+ static struct hdlc_proto proto = {
+ 	.start		= ppp_start,
+ 	.stop		= ppp_stop,
+@@ -649,6 +657,7 @@ static struct hdlc_proto proto = {
+ 	.ioctl		= ppp_ioctl,
+ 	.netif_rx	= ppp_rx,
+ 	.module		= THIS_MODULE,
++	.detach		= ppp_timer_release,
+ };
  
-@@ -1059,6 +1061,8 @@ static int pwrseq_debugfs_seq_show(struc
- 
- static void pwrseq_debugfs_seq_stop(struct seq_file *seq, void *data)
+ static const struct header_ops ppp_header_ops = {
+@@ -659,7 +668,7 @@ static int ppp_ioctl(struct net_device *
  {
-+	if (data)
-+		put_device(data);
- 	up_read(&pwrseq_sem);
- }
+ 	hdlc_device *hdlc = dev_to_hdlc(dev);
+ 	struct ppp *ppp;
+-	int result;
++	int i, result;
  
+ 	switch (ifs->type) {
+ 	case IF_GET_PROTO:
+@@ -687,6 +696,8 @@ static int ppp_ioctl(struct net_device *
+ 			return result;
+ 
+ 		ppp = get_ppp(dev);
++		for (i = 0; i < IDX_COUNT; i++)
++			timer_setup(&ppp->protos[i].timer, ppp_timer, 0);
+ 		spin_lock_init(&ppp->lock);
+ 		ppp->req_timeout = 2;
+ 		ppp->cr_retries = 10;
 
 
