@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D3B24E4C3;
-	Thu,  2 Jul 2026 16:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAB223EAAD;
+	Thu,  2 Jul 2026 16:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010536; cv=none; b=IpyHYAALRv8ke3g7uwviFKw9yqUSECunAsrCQi8YZZ8kz6cwbqboU18hX/6zdY8m2tuku4ymvH59xRELXOcZfTMt/gG+4zKr7B2eNNC3UWnlEvWRvFe96IMKOlohXu/8qIwK5f3+TwJMdprHm2fB54/rmFMiiFA2HBP+1LNrmjE=
+	t=1783010539; cv=none; b=RGIR2ysz3s6vtp3c91RLCevG3Ktu1T7vdeRAz3Eak/JYxIVFh3pqObziJ11d78rbBgioPYF7kVWIYG34nKFO+L7GMm5Jw1D99tTjbKvJOmfUPMq3/d9WGW/m1KSQtfrTTXj0JCSwDTe+1W13pcgrLcER+PvxZeL0G2Q953OrHR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010536; c=relaxed/simple;
-	bh=x09uRbWXlNs7yPZHv/cl/SVLoHRA3z/rcm2BgjYNroU=;
+	s=arc-20240116; t=1783010539; c=relaxed/simple;
+	bh=NPB8l/B9B433USGcfq7Dhhao6Unt7kmANsOeo7Hlg7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GTdTxmbV4jF+C70Y2oMaFZc9+WrQHX5fQhXLKz6sghI7rVKAowBaYI3Ym//c0DoSVhd4Gf9ZW2NEAu5hq8GUottO6GoF4/vtbnaJDQ5wPRiJDFcNTmnq5z6yjGJK6t18b9tRfNKwK6Ts9RfWibocCH/tWKDWrnaRgy8fnOHlatM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/cSvZmI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nqayoK7sJ55wX4Ve0f2iTvEPkmgqYw2+qSO4GmdyGSa/PrfVf3/S6PpnisjoNYoRNV1Vc8nzMzTp+xT7YPURJsUdWRHxg+ULPbOzOijtYeSxvrg8+CP9hcdC866tRmHknPs5ZmqV8Z1OMa07LSW2y2wb0kusBg8Y9Lamf+dPCP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpXcGnPC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/cSvZmI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680461F000E9;
-	Thu,  2 Jul 2026 16:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpXcGnPC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2B41F000E9;
+	Thu,  2 Jul 2026 16:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010534;
-	bh=vleu/acfkKLk59yU68yGzwrBhUqM8EVsaCtfHgjk3A8=;
+	s=korg; t=1783010537;
+	bh=JR+mX6lsNu9a/F5SeNqpVzqAIDj7cBAj6jrmh5aj25I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r/cSvZmIX5KUtg1oCfskIHnbGOsbW4Qe+DysEspcFZJzLW0stx3de5EOJE7QBDqiw
-	 1AJTRqLp2650Zu+oUq9uVkM8euLlcDLiHScMdiLPOpHKLoThPLFe3TnP7TV0Bb5+cd
-	 xJIenNYilYkjdTWsSCfdq90oUiklkXa6+RieTO0Q=
+	b=DpXcGnPCKTAr7hFm49+aSTfHNMzL6lb+c8zAgTf8Hv6II8e0VUIOj5rD9OYJaM20L
+	 c4bt4MaprIsA7+q0LR5X7bzJ8wlOQGWv5tnzoeT7yQYGvyQDdNNync9xfYYm++TiQF
+	 jex4UVZTbsq/7LmHHG/rykjWRMiLYrOA8mvsoku4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Groppo <ale.grpp@gmail.com>,
+	Shaomin Chen <eeesssooo020@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.12 145/204] KEYS: fix overflow in keyctl_pkey_params_get_2()
-Date: Thu,  2 Jul 2026 18:20:02 +0200
-Message-ID: <20260702155121.696516043@linuxfoundation.org>
+Subject: [PATCH 6.12 146/204] keys: Pin request_key_auth payload in instantiate paths
+Date: Thu,  2 Jul 2026 18:20:03 +0200
+Message-ID: <20260702155121.717041602@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -50,65 +50,215 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Shaomin Chen <eeesssooo020@gmail.com>
 
-commit cb481e59ea6cae3b7796ac1d7a22b6b24c3f3c0b upstream.
+commit fd15b457a86939c38aa12116adabd8ff686c5e51 upstream.
 
-The length for the internal output buffer is calculated incorrectly, which
-can result overflow when a too small buffer is provided.
+A: request_key()       B: KEYCTL_INSTANTIATE_IOV
+================       =========================
 
-Fix the bug by allocating internal output with the size of the maximum
-length of the cryptographic primitive instead of caller provided size.
+create auth key
+store rka in auth key
+wait for helper
+                       get auth key
+                       load rka from auth key
+                       copy user payload
+                       sleep on #PF
 
-Link: https://lore.kernel.org/keyrings/20260531024914.3712130-1-jarkko@kernel.org/
-Cc: stable@vger.kernel.org # v4.20+
-Fixes: 00d60fd3b932 ("KEYS: Provide keyctls to drive the new key type ops for asymmetric keys [ver #2]")
-Reported-by: Alessandro Groppo <ale.grpp@gmail.com>
-Tested-by: Alessandro Groppo <ale.grpp@gmail.com>
+helper completed
+detach and free rka
+destroy auth key
+                       wake up
+                       use rka->target_key
+                       **USE-AFTER-FREE**
+
+Give request_key_auth payloads a refcount.  Take a payload reference while
+authkey->sem stabilizes the payload and revocation state.  Hold that
+reference across the instantiate and reject paths.  Drop the auth key
+owning reference from revoke and destroy.
+
+[jarkko: Replaced the first two paragraphs of text with an actual
+ concurrency scenario.]
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: b5f545c880a2 ("[PATCH] keys: Permit running process to instantiate keys")
+Reported-by: Shaomin Chen <eeesssooo020@gmail.com>
+Closes: https://lore.kernel.org/r/20260519144403.436694-1-eeesssooo020@gmail.com
+Signed-off-by: Shaomin Chen <eeesssooo020@gmail.com>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/keyctl_pkey.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ include/keys/request_key_auth-type.h |    2 ++
+ security/keys/internal.h             |    2 ++
+ security/keys/keyctl.c               |   24 ++++++++++++++++++------
+ security/keys/request_key_auth.c     |   33 +++++++++++++++++++++++++++++++--
+ 4 files changed, 53 insertions(+), 8 deletions(-)
 
---- a/security/keys/keyctl_pkey.c
-+++ b/security/keys/keyctl_pkey.c
-@@ -138,28 +138,35 @@ static int keyctl_pkey_params_get_2(cons
- 		if (uparams.in_len  > info.max_dec_size ||
- 		    uparams.out_len > info.max_enc_size)
- 			return -EINVAL;
-+
-+		params->out_len = info.max_enc_size;
- 		break;
- 	case KEYCTL_PKEY_DECRYPT:
- 		if (uparams.in_len  > info.max_enc_size ||
- 		    uparams.out_len > info.max_dec_size)
- 			return -EINVAL;
-+
-+		params->out_len = info.max_dec_size;
- 		break;
- 	case KEYCTL_PKEY_SIGN:
- 		if (uparams.in_len  > info.max_data_size ||
- 		    uparams.out_len > info.max_sig_size)
- 			return -EINVAL;
-+
-+		params->out_len = info.max_sig_size;
- 		break;
- 	case KEYCTL_PKEY_VERIFY:
- 		if (uparams.in_len  > info.max_data_size ||
- 		    uparams.in2_len > info.max_sig_size)
- 			return -EINVAL;
-+
-+		params->out_len = info.max_sig_size;
- 		break;
- 	default:
- 		BUG();
- 	}
+--- a/include/keys/request_key_auth-type.h
++++ b/include/keys/request_key_auth-type.h
+@@ -9,12 +9,14 @@
+ #define _KEYS_REQUEST_KEY_AUTH_TYPE_H
  
- 	params->in_len  = uparams.in_len;
--	params->out_len = uparams.out_len; /* Note: same as in2_len */
- 	return 0;
+ #include <linux/key.h>
++#include <linux/refcount.h>
+ 
+ /*
+  * Authorisation record for request_key().
+  */
+ struct request_key_auth {
+ 	struct rcu_head		rcu;
++	refcount_t		usage;
+ 	struct key		*target_key;
+ 	struct key		*dest_keyring;
+ 	const struct cred	*cred;
+--- a/security/keys/internal.h
++++ b/security/keys/internal.h
+@@ -208,6 +208,8 @@ extern struct key *request_key_auth_new(
+ 					const void *callout_info,
+ 					size_t callout_len,
+ 					struct key *dest_keyring);
++struct request_key_auth *request_key_auth_get(struct key *authkey);
++void request_key_auth_put(struct request_key_auth *rka);
+ 
+ extern struct key *key_get_instantiation_authkey(key_serial_t target_id);
+ 
+--- a/security/keys/keyctl.c
++++ b/security/keys/keyctl.c
+@@ -1197,9 +1197,13 @@ static long keyctl_instantiate_key_commo
+ 	if (!instkey)
+ 		goto error;
+ 
+-	rka = instkey->payload.data[0];
+-	if (rka->target_key->serial != id)
++	rka = request_key_auth_get(instkey);
++	if (!rka) {
++		ret = -EKEYREVOKED;
+ 		goto error;
++	}
++	if (rka->target_key->serial != id)
++		goto error_put_rka;
+ 
+ 	/* pull the payload in if one was supplied */
+ 	payload = NULL;
+@@ -1208,7 +1212,7 @@ static long keyctl_instantiate_key_commo
+ 		ret = -ENOMEM;
+ 		payload = kvmalloc(plen, GFP_KERNEL);
+ 		if (!payload)
+-			goto error;
++			goto error_put_rka;
+ 
+ 		ret = -EFAULT;
+ 		if (!copy_from_iter_full(payload, plen, from))
+@@ -1234,6 +1238,8 @@ static long keyctl_instantiate_key_commo
+ 
+ error2:
+ 	kvfree_sensitive(payload, plen);
++error_put_rka:
++	request_key_auth_put(rka);
+ error:
+ 	return ret;
+ }
+@@ -1358,15 +1364,19 @@ long keyctl_reject_key(key_serial_t id,
+ 	if (!instkey)
+ 		goto error;
+ 
+-	rka = instkey->payload.data[0];
+-	if (rka->target_key->serial != id)
++	rka = request_key_auth_get(instkey);
++	if (!rka) {
++		ret = -EKEYREVOKED;
+ 		goto error;
++	}
++	if (rka->target_key->serial != id)
++		goto error_put_rka;
+ 
+ 	/* find the destination keyring if present (which must also be
+ 	 * writable) */
+ 	ret = get_instantiation_keyring(ringid, rka, &dest_keyring);
+ 	if (ret < 0)
+-		goto error;
++		goto error_put_rka;
+ 
+ 	/* instantiate the key and link it into a keyring */
+ 	ret = key_reject_and_link(rka->target_key, timeout, error,
+@@ -1379,6 +1389,8 @@ long keyctl_reject_key(key_serial_t id,
+ 	if (ret == 0)
+ 		keyctl_change_reqkey_auth(NULL);
+ 
++error_put_rka:
++	request_key_auth_put(rka);
+ error:
+ 	return ret;
+ }
+--- a/security/keys/request_key_auth.c
++++ b/security/keys/request_key_auth.c
+@@ -23,6 +23,7 @@ static void request_key_auth_describe(co
+ static void request_key_auth_revoke(struct key *);
+ static void request_key_auth_destroy(struct key *);
+ static long request_key_auth_read(const struct key *, char *, size_t);
++static void request_key_auth_rcu_disposal(struct rcu_head *);
+ 
+ /*
+  * The request-key authorisation key type definition.
+@@ -116,6 +117,31 @@ static void free_request_key_auth(struct
  }
  
+ /*
++ * Take a reference to the request-key authorisation payload so callers can
++ * drop authkey->sem before doing operations that may sleep.
++ */
++struct request_key_auth *request_key_auth_get(struct key *authkey)
++{
++	struct request_key_auth *rka;
++
++	down_read(&authkey->sem);
++	rka = dereference_key_locked(authkey);
++	if (rka && !test_bit(KEY_FLAG_REVOKED, &authkey->flags))
++		refcount_inc(&rka->usage);
++	else
++		rka = NULL;
++	up_read(&authkey->sem);
++
++	return rka;
++}
++
++void request_key_auth_put(struct request_key_auth *rka)
++{
++	if (rka && refcount_dec_and_test(&rka->usage))
++		call_rcu(&rka->rcu, request_key_auth_rcu_disposal);
++}
++
++/*
+  * Dispose of the request_key_auth record under RCU conditions
+  */
+ static void request_key_auth_rcu_disposal(struct rcu_head *rcu)
+@@ -136,8 +162,10 @@ static void request_key_auth_revoke(stru
+ 	struct request_key_auth *rka = dereference_key_locked(key);
+ 
+ 	kenter("{%d}", key->serial);
++	if (!rka)
++		return;
+ 	rcu_assign_keypointer(key, NULL);
+-	call_rcu(&rka->rcu, request_key_auth_rcu_disposal);
++	request_key_auth_put(rka);
+ }
+ 
+ /*
+@@ -150,7 +178,7 @@ static void request_key_auth_destroy(str
+ 	kenter("{%d}", key->serial);
+ 	if (rka) {
+ 		rcu_assign_keypointer(key, NULL);
+-		call_rcu(&rka->rcu, request_key_auth_rcu_disposal);
++		request_key_auth_put(rka);
+ 	}
+ }
+ 
+@@ -174,6 +202,7 @@ struct key *request_key_auth_new(struct
+ 	rka = kzalloc(sizeof(*rka), GFP_KERNEL);
+ 	if (!rka)
+ 		goto error;
++	refcount_set(&rka->usage, 1);
+ 	rka->callout_info = kmemdup(callout_info, callout_len, GFP_KERNEL);
+ 	if (!rka->callout_info)
+ 		goto error_free_rka;
 
 
