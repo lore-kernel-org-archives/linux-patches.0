@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60373B3BF2;
-	Thu,  2 Jul 2026 16:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A477349CE8;
+	Thu,  2 Jul 2026 16:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010004; cv=none; b=uF8KubHJviaya1xK8zOntG7rGEbWw6lwN98ir3U6j7uOBccj7akDi1s1KweSmH2HAO7LmQWeKuvN4ZSPes4jxUc4ZlEJ7sUYSICv2kKyIg9jnbC89cHYgCFzliZG+XmtGEUO93Tx8koD9Q2vmBiFpD2D6sigrcTDppGSXlw9iTE=
+	t=1783010007; cv=none; b=Lq0L3DjODP/RxMGbyV115FVOso395SyHIhxtS3DQ87qbfxXbxyfmbaWKwhf29YqByUjcihXL3gZ3JTiKQ1MrgUjGwkXOZsl0fnx+uuGcPVoKIgX69WQM5y0+gEyiL8Nls5s75a/GMOmlTsDZWmlZUsPR/aRUs3xL9me9NHBhBLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010004; c=relaxed/simple;
-	bh=Sfws2dGvPjM0yAqIkZPIFhyTQSAkBa2oeHAQkYtEaaU=;
+	s=arc-20240116; t=1783010007; c=relaxed/simple;
+	bh=UVJ3i6vNnAfVtNZxxdxJ25bBR93tKNK2noXpzikIQNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zyufb3TfUFMNAwEGaIgWTYtSiMxiAdj2K4UkWYVeed1OU2a0vocn5BDxcKa4w70IHQ4/El1Dvk1R2u9jui95vN5geEqfefmFHOXEItuP4uySs+6XG7Z3cUT4Dju7cCu7oBjAiJ3745mQysXjfyjfvbwiem2olhYBb5REkSZj4Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0h9vr7aJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YasV39E3ytRV9r3DCYU38M7Y4KXYyJ7IB5azUwapVBpgyfEiJG3CebAWDErJpsmzgcgBfYN5iz73R7N8uqx0mAlgsrfHld9bLjxUfplrR70IeOml61Fn+Ej0X+2PogtMNg2h+KqdXrEZSo6S0CeQO7c7Yg/8dz7SUkyj1czQHQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOQUdqiu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0h9vr7aJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574C71F000E9;
-	Thu,  2 Jul 2026 16:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOQUdqiu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15201F000E9;
+	Thu,  2 Jul 2026 16:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010003;
-	bh=Swhq2VIH1rCw5uhVGhHlsX41CM6W3yQcb96h8s8Mh2U=;
+	s=korg; t=1783010006;
+	bh=alPHjo8j4cvASzJaU0kLgaw4CEQ8q/R81ul0pHYFujs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0h9vr7aJDEhutIUlhQ+YXTlxoCXnN3z+8doKFuxjWY1eyop3LR1gTfptbIeK2Yijs
-	 1xnR34MM2H3Z3nPVABQSVmNVGTEXzpl6LN0ymj3orTk1V4Fu1OoIDY/5Dce3JVQrgX
-	 GYqPAxPs4PZQIUsczEkKKjeMNvBi5E1Jwlvr4qoo=
+	b=dOQUdqiu5YI2IiUzRzpjD9cpgaUXzDkSBjZCZIfFFEWNOYUomgMNPlX4zgaJIfm9Y
+	 GIY9j1tYI/dsZ4UidjSlvLrduCL2hlYK+/1XU7zQDnWFc51jRVmaqFZmb3OB8QNWPj
+	 zKRTwCwri6oMkBbf2RbZ+dKMLlYoGCdurkYLDRNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Yan <sdjasjbuaa@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 075/129] ntfs3: reject direct userspace writes to reserved $LX* xattrs
-Date: Thu,  2 Jul 2026 18:19:54 +0200
-Message-ID: <20260702155113.694236032@linuxfoundation.org>
+	Yuto Ohnuki <ytohnuki@amazon.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 076/129] ext4: add bounds check for inline data length in ext4_read_inline_page
+Date: Thu,  2 Jul 2026 18:19:55 +0200
+Message-ID: <20260702155113.714041170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.163984240@linuxfoundation.org>
 References: <20260702155112.163984240@linuxfoundation.org>
@@ -50,58 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-commit 5b08dccecf825cbf905f348bc6ccb497507e28e2 upstream.
+[ Upstream commit 356227096eb66e41b23caf7045e6304877322edf ]
 
-NTFS3 uses $LXUID, $LXGID, $LXMOD and $LXDEV as internal WSL
-permission metadata and reloads them into i_uid, i_gid and i_mode
-from ntfs_get_wsl_perm().
+ext4_read_inline_page() does not validate that the inline data length
+fits within a page before copying data. If the inline size exceeds
+PAGE_SIZE due to filesystem corruption, this could lead to a kernel
+memory write beyond the page boundary.
 
-Because the empty-prefix xattr handler also lets file owners call
-setxattr() on these names directly, an unprivileged writer on a
-writable ntfs3 mount can plant root ownership and S_ISUID on their own
-file and gain euid 0 after inode reload.
+Add a bounds check after computing len, returning -EFSCORRUPTED if the
+value exceeds PAGE_SIZE.
 
-Reject direct userspace writes to the reserved $LX* names. Internal
-ntfs3 metadata updates are unchanged because ntfs_save_wsl_perm()
-writes them via ntfs_set_ea() directly.
+The upstream commit replaced a BUG_ON(len > PAGE_SIZE) in
+ext4_read_inline_folio(). In 6.1 and earlier, the function is still named
+ext4_read_inline_page() and the BUG_ON was never present, so this patch
+adds the bounds check directly.
 
-Signed-off-by: Zhen Yan <sdjasjbuaa@gmail.com>
-[almaz.alexandrovich@paragon-software.com: added an additional check for non privileged users]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 46c7f254543d ("ext4: add read support for inline data")
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/xattr.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/ext4/inline.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -846,6 +846,12 @@ out:
- 	return err;
- }
- 
-+static bool ntfs_is_reserved_lxattr(const char *name)
-+{
-+	return !strcmp(name, "$LXUID") || !strcmp(name, "$LXGID") ||
-+	       !strcmp(name, "$LXMOD") || !strcmp(name, "$LXDEV");
-+}
-+
- /*
-  * ntfs_setxattr - inode_operations::setxattr
-  */
-@@ -951,6 +957,12 @@ set_new_fa:
+diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+index a1fb99d2b472bf..c0c1e865270785 100644
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -518,6 +518,14 @@ static int ext4_read_inline_page(struct inode *inode, struct page *page)
  		goto out;
- 	}
  
-+	/* Do not allow non privileged users to change $LXUID/$LXGID... */
-+	if (ntfs_is_reserved_lxattr(name) && !capable(CAP_SYS_ADMIN)) {
-+		err = -EPERM;
+ 	len = min_t(size_t, ext4_get_inline_size(inode), i_size_read(inode));
++	if (len > PAGE_SIZE) {
++		ext4_error_inode(inode, __func__, __LINE__, 0,
++				 "inline size %zu exceeds PAGE_SIZE", len);
++		ret = -EFSCORRUPTED;
++		brelse(iloc.bh);
 +		goto out;
 +	}
 +
- 	/* Deal with NTFS extended attribute. */
- 	err = ntfs_set_ea(inode, name, name_len, value, size, flags, 0);
- 
+ 	kaddr = kmap_atomic(page);
+ 	ret = ext4_read_inline_data(inode, kaddr, len, &iloc);
+ 	flush_dcache_page(page);
+-- 
+2.53.0
+
 
 
