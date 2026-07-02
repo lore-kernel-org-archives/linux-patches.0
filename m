@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8DD331A66;
-	Thu,  2 Jul 2026 16:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C02C33E355;
+	Thu,  2 Jul 2026 16:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783009372; cv=none; b=pweG+XNPLzOVKp8fv5/btvilgvd99YTntdKHpcCBmXvCm5yTfMBW0I5PgpDyBMGwjMtoXchdRm5UKJrOaucgledoA8JQWIsaxCyxBW3q/ooBVGcW2JgkxZstHQAz5u3SBfw00GekWFsVo18EDRW9VM8q5qx4wDp5z2w8uD2Hy1s=
+	t=1783009374; cv=none; b=cIar+egfCtbTlqnya2lL1UZxv/WOVyrtUY+sIau/ezD4c26Z8yIxDHqikrzo7ZJfnUk+85ZeJpe0bsobCDyGh9HuKZwYopItPmBURji88yQtXXsBshhDC7Cyjl2Dju40KEB5xPQzlPp9a6iztxUdSm5bMI7gHcKsxXIZ8Sj78Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783009372; c=relaxed/simple;
-	bh=AqRv150PPFrNi8lt3W2zyJ2RZSoBcoc+Eq1rmzVHKEE=;
+	s=arc-20240116; t=1783009374; c=relaxed/simple;
+	bh=FdGofmnForuXzoSzsf0PGDkn6ueKx3g4N1I92AOkPo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFTOejbbIU0s0UerI6f7U9TU0/KPhEyJqirxU53wq909EQL1dDv9vwrNjvnIrzaLT1DOpoxecyqnqyiVqXsJUridEIIJYOf53898CqEyNzxs2R4tge2eJD9vamoJWSoyn5irDKy7mfZ9iTUpeDwd38nITp1trUjYFRHkR/jTw4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZ1p2MbK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HtZJxa+efNZMWC26RfJbl1ZkpH9VkDiR7+DfvpWmNxQ4q7IzuP46CyI5tA9v/Oh+R3h7hlVlC7YNbRyUDRW6scvtiLlI8Etefoat2l6ZvacBezVEK5VCb01sOgocm29HP1aKPaVM8dSq6szUNozSWNjFfqq/kqE02XN5qeCX1Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCDnWI5B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZ1p2MbK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386FE1F00A3F;
-	Thu,  2 Jul 2026 16:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCDnWI5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78E71F00A3E;
+	Thu,  2 Jul 2026 16:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783009368;
-	bh=AyDWEpidAOuQlJA9JB49I5N27MMb/tvI5+0Ct1ndyEQ=;
+	s=korg; t=1783009371;
+	bh=sDcrVYKF97YSIUYFGfH7SqfIBouZyAVS4ynZTtnYH18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cZ1p2MbKyHguQE57gU0EWuR/iSANs8gIbqMh2KMRVQ779nj7jsAr3kSdW/Bqf0RiC
-	 ialuor13pRmqM+FjWKnHvRyVBiFfpIYA6Nw6Qhn4AiibO5F7mVfEYq81spYzyzYKDG
-	 Lo0lhb52CnA7VPaYxZbR4CcKcvuBvoz9dSPKeD/M=
+	b=UCDnWI5B52ltY2kQJ0zXJj9YeuN3wENfzbY3azZiKBObAx9TSOCJW0B96q0KzxQlE
+	 Bq7LWkvMyohGDuUT5rfRgFZlPNdQpUseNahFsd7dtJ6t6Q+CATRU95ZRy1Y4y7QIvU
+	 jjL8j0IEM7GLbZ/w6O+00jshcpgXvW2npBB1F2nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 5.10 25/96] agp/amd64: Fix broken error propagation in agp_amd64_probe()
-Date: Thu,  2 Jul 2026 18:19:17 +0200
-Message-ID: <20260702155109.514416835@linuxfoundation.org>
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
+Subject: [PATCH 5.10 26/96] regulator: core: fix locking in regulator_resolve_supply() error path
+Date: Thu,  2 Jul 2026 18:19:18 +0200
+Message-ID: <20260702155109.535988384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
 References: <20260702155108.949633242@linuxfoundation.org>
@@ -44,58 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: André Draszik <andre.draszik@linaro.org>
 
-commit b08472db93b1ccff84a7adec5779d47f0e9d3a30 upstream.
+commit 497330b203d2c59c5ff3fa4c34d14494d7203bc3 upstream.
 
-A NULL pointer dereference was observed in the AMD64 AGP driver when
-running in a virtualized environment (e.g. qemu/kvm) without a physical
-AMD northbridge. The crash occurs in amd64_fetch_size() when attempting
-to dereference the pointer returned by node_to_amd_nb(0).
+If late enabling of a supply regulator fails in
+regulator_resolve_supply(), the code currently triggers a lockdep
+warning:
 
-The root cause of this crash is broken error propagation in
-agp_amd64_probe(): When no AMD northbridges are found, cache_nbs()
-correctly returns -ENODEV. However, the probe function erroneously
-checks the return value against exactly -1, rather than < 0.
+    WARNING: drivers/regulator/core.c:2649 at _regulator_put+0x80/0xa0, CPU#6: kworker/u32:4/596
+    ...
+    Call trace:
+     _regulator_put+0x80/0xa0 (P)
+     regulator_resolve_supply+0x7cc/0xbe0
+     regulator_register_resolve_supply+0x28/0xb8
 
-As a result, the hardware absence error is masked, allowing the driver
-to improperly proceed with initialization. It eventually calls
-agp_add_bridge(), which invokes amd64_fetch_size(). Since the hardware
-does not exist, node_to_amd_nb(0) returns NULL, leading to a General
-Protection Fault (GPF) when accessing its ->misc member.
+as the regulator_list_mutex must be held when calling _regulator_put().
 
-Fix the issue by correcting the error check in agp_amd64_probe() to
-abort properly when cache_nbs() returns any negative error code. This
-prevents the driver from erroneously proceeding without hardware, thereby
-avoiding the subsequent NULL pointer dereference at its source.
+To solve this, simply switch to using regulator_put().
 
-Fixes: a32073bffc65 ("[PATCH] x86_64: Clean and enhance up K8 northbridge access code")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v2.6.18+
-Link: https://patch.msgid.link/20260504074823.99377-1-w15303746062@163.com
+While at it, we should also make sure that no concurrent access happens
+to our rdev while we clear out the supply pointer. Add appropriate
+locking to ensure that.
+
+While the code in question will be removed altogether in a follow-up
+commit, I believe it is still beneficial to have this corrected before
+removal for future reference.
+
+Fixes: 36a1f1b6ddc6 ("regulator: core: Fix memory leak in regulator_resolve_supply()")
+Fixes: 8e5356a73604 ("regulator: core: Clear the supply pointer if enabling fails")
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://patch.msgid.link/20260109-regulators-defer-v2-2-1a25dc968e60@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/agp/amd64-agp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/core.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/char/agp/amd64-agp.c
-+++ b/drivers/char/agp/amd64-agp.c
-@@ -546,7 +546,7 @@ static int agp_amd64_probe(struct pci_de
- 	/* Fill in the mode register */
- 	pci_read_config_dword(pdev, bridge->capndx+PCI_AGP_STATUS, &bridge->mode);
- 
--	if (cache_nbs(pdev, cap_ptr) == -1) {
-+	if (cache_nbs(pdev, cap_ptr) < 0) {
- 		agp_put_bridge(bridge);
- 		return -ENODEV;
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -2036,8 +2036,16 @@ static int regulator_resolve_supply(stru
+ 	if (rdev->use_count) {
+ 		ret = regulator_enable(rdev->supply);
+ 		if (ret < 0) {
+-			_regulator_put(rdev->supply);
++			struct regulator *supply;
++
++			regulator_lock_two(rdev, rdev->supply->rdev, &ww_ctx);
++
++			supply = rdev->supply;
+ 			rdev->supply = NULL;
++
++			regulator_unlock_two(rdev, supply->rdev, &ww_ctx);
++
++			regulator_put(supply);
+ 			goto out;
+ 		}
  	}
 
 
