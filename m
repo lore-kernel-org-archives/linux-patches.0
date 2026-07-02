@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A052DC78C;
-	Thu,  2 Jul 2026 16:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2641430C37A;
+	Thu,  2 Jul 2026 16:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010775; cv=none; b=kxZ+GwtEOrA/Cka2Nzv2sMZguDUctN6zMaySWmHsgjULv5N3x8sS2mp8ShnCTXBppy9+MfEopmKY5FwH5ZipxGgUYEZKFImcY4mbLg6QhndXJhhrzsSPPRIliUtoJs+7uDHT5bIq9weZHhDbYj+YDi3BVj2GIBp8w1OZi/MmENU=
+	t=1783010778; cv=none; b=iA1Hqt2gDlhwLx96p3/oY+xVt6GL4GIJGjCgy1F3FjPD7s0ofaKA5a0+9PDY73hUZt/0+zrZWuy5yRDrUCw0vsrqoucHfWz/3Bb5DJxvcuHdsqpdQauUtc3rpXiEVsB4i4/fIPCgimp7j8a56rXoOI/wx8n2zUiYKSHYhi49/Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010775; c=relaxed/simple;
-	bh=peQZA4U1ooryZq8S3/zMlg7n2TqQtgPKUv+fuUss7J4=;
+	s=arc-20240116; t=1783010778; c=relaxed/simple;
+	bh=5idctXAqY/hFRmehLMPZ/UcR90D5M9ZLeOesPbGH9/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HIiigTuQQF20d0lFGSrCqnDTY3Xz1RNtwPm+9lbG01ZaeRAK90BfUD7rvYxeyjk1OOrTVvy84AHYaBQlc7gNcEgAdek3RJN0g0tIPlmkEGMZRrAkiVqqFAza5Enj4gSXgRuKuOpTjekkkbxGhKzKAU0AnGQ1KHxWCy2RzVNwF0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JyeMBO3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A9de7P4UQTklNAzjhzA7oajlyG1vy6lMdqCZ9QUjI+3gTmwlNU2oGywSEOD7Y9J5mgcq/lJF56t3R9giuWoGL7C1ndL5IRabUre1I87zhibmI45uxyrN9iIYmoI/KxCV69Fm/nYeJr8zXrIJt/V2Mq4ccPnJ2stnzS3x6T38ITs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x87JSMfa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JyeMBO3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EE91F000E9;
-	Thu,  2 Jul 2026 16:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x87JSMfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490921F000E9;
+	Thu,  2 Jul 2026 16:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010774;
-	bh=d8BA7OBHDrLxYWiluFl9V9GTKj/znSRvm5GCwB7TwSA=;
+	s=korg; t=1783010776;
+	bh=Dj2uuDAYsPINSRRuv47bOwlRftIwAt/QthxcgYjNDLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0JyeMBO3sHzEv+wMdYr+0d3aA6htgxYZTvPTPc+1b8etnLUFi2ptYEGmeksJIc/iB
-	 j9LRHCEOSum0jvjpNv0PFmye2gd+YobtZGlos44DUUpOL9P0f0TO8oYWlyOZVz7z/w
-	 ChQ9R9bV5r9HcB2ABaYR+J1vgjIhDjCZuL81LHKs=
+	b=x87JSMfa169plIobGbyBDq0wYrYnNcNvn3NJtgWtATg2vHcX8nAXEGB6uqT7ENTtm
+	 lOs9KozLACnzJ883jUQfTVxYeNO8dNrRC/E6KpVV880g5rK3H08mweYQ/y7y+yczNr
+	 ap28+mJQi4aCt4MsE9SrhDRVbz/6R3udX1JvoE6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.6 031/175] netfilter: nf_tables: always walk all pending catchall elements
-Date: Thu,  2 Jul 2026 18:18:52 +0200
-Message-ID: <20260702155116.453188734@linuxfoundation.org>
+	Tao Cui <cuitao@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 032/175] mptcp: pm: fix extra_subflows underflow on userspace PM subflow creation
+Date: Thu,  2 Jul 2026 18:18:53 +0200
+Message-ID: <20260702155116.473465280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 References: <20260702155115.766838875@linuxfoundation.org>
@@ -51,54 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit 7cb9a23d7ae40a702577d3d8bacb7026f04ac2a9 upstream.
+[ Upstream commit 14e9fea30b68fc75b2b3d97396a7e6adb544bd2a ]
 
-During transaction processing we might have more than one catchall element:
-1 live catchall element and 1 pending element that is coming as part of the
-new batch.
+The userspace PM increments extra_subflows after __mptcp_subflow_connect()
+succeeds, but __mptcp_subflow_connect() calls mptcp_pm_close_subflow()
+on failure to roll back the pre-increment done by the kernel PM's fill_*()
+helpers. Because the userspace PM hasn't incremented yet at that point,
+this decrement is spurious and causes extra_subflows to underflow.
 
-If the map holding the catchall elements is also going away, its
-required to toggle all catchall elements and not just the first viable
-candidate.
+Fix it by aligning the userspace PM with the kernel PM: increment
+extra_subflows before calling __mptcp_subflow_connect(), so the existing
+error path in subflow.c correctly rolls it back on failure. Also simplify
+the error handling by taking pm.lock only when needed for cleanup.
 
-Otherwise, we get:
- WARNING: ./include/net/netfilter/nf_tables.h:1281 at nft_data_release+0xb7/0xe0 [nf_tables], CPU#2: nft/1404
- RIP: 0010:nft_data_release+0xb7/0xe0 [nf_tables]
- [..]
- __nft_set_elem_destroy+0x106/0x380 [nf_tables]
- nf_tables_abort_release+0x348/0x8d0 [nf_tables]
- nf_tables_abort+0xcf2/0x3ac0 [nf_tables]
- nfnetlink_rcv_batch+0x9c9/0x20e0 [..]
-
-Fixes: 628bd3e49cba ("netfilter: nf_tables: drop map element references from preparation phase")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Shivani: Modified to apply on v6.6.y-v6.1.y ]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Fixes: 77e4b94a3de6 ("mptcp: update userspace pm infos")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-5-856831229976@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    2 --
- 1 file changed, 2 deletions(-)
+ net/mptcp/pm_userspace.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -652,7 +652,6 @@ static void nft_map_catchall_deactivate(
- 		elem.priv = catchall->elem;
- 		nft_set_elem_change_active(ctx->net, set, ext);
- 		nft_setelem_data_deactivate(ctx->net, set, &elem);
--		break;
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -408,18 +408,21 @@ int mptcp_nl_cmd_sf_create(struct sk_buf
+ 		goto create_err;
  	}
- }
  
-@@ -5615,7 +5614,6 @@ static void nft_map_catchall_activate(co
- 		nft_clear(ctx->net, ext);
- 		elem.priv = catchall->elem;
- 		nft_setelem_data_activate(ctx->net, set, &elem);
--		break;
- 	}
- }
++	spin_lock_bh(&msk->pm.lock);
++	msk->pm.subflows++;
++	spin_unlock_bh(&msk->pm.lock);
++
+ 	lock_sock(sk);
  
+ 	err = __mptcp_subflow_connect(sk, &addr_l, &addr_r);
+ 
+ 	release_sock(sk);
+ 
+-	spin_lock_bh(&msk->pm.lock);
+-	if (err)
++	if (err) {
++		spin_lock_bh(&msk->pm.lock);
+ 		mptcp_userspace_pm_delete_local_addr(msk, &local);
+-	else
+-		msk->pm.subflows++;
+-	spin_unlock_bh(&msk->pm.lock);
++		spin_unlock_bh(&msk->pm.lock);
++	}
+ 
+  create_err:
+ 	sock_put((struct sock *)msk);
 
 
