@@ -1,46 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A9A30EF95;
-	Thu,  2 Jul 2026 16:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4347230EF95;
+	Thu,  2 Jul 2026 16:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010402; cv=none; b=bbPOFEbLC2mTlitxTM/+IFC+DQHIbfqxGT3l4UQLebcbJ/RghL9WjllpcDPaPejt5wc1SMgOwBlrgqtVhx5VfLt/NaRAXLEdSAtdo5zJ9aFfSKPV79Rbhmk+2kcXzSkwZvGlJS8D8Wr65Ms9jM6GMF+BCSckkQfuzmYgRnOVBhY=
+	t=1783010404; cv=none; b=CrqHj2dnEeFIJI7FEa3PyX/e462zuRmAmCC+KsPix3pu7bySyKgMgdVABGCpfMJSwDC2/QHHa+6Rdd5tbbyLgvYWH7hESK011bvRKblL7Ic/yVK1yjytXTXuLV2V25dbux6UNCi9Ue1r4QUaV8k+DFKjgYnBsmQbsc6EDYNieks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010402; c=relaxed/simple;
-	bh=6B1APKwoEe4rKvSSUY8IIyxfZ5NLsSnHTqG+SuyXhh8=;
+	s=arc-20240116; t=1783010404; c=relaxed/simple;
+	bh=TYBoyq86w7UpTkm9FWcS/eWSCnHYqfJhhInYOYjolrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j1cwWZ/xwD7cx0I7z3pqW0Bi5UCFElXdo7R3ffoTIBxHp57y5U3+gRFbncQJG2wxlvHOyQE7eWwWVyUDiDV26BV8l5JzzLJvh1wuNKgR/9Ci8aBEG1AYtfYtWrxk97ju5mWNfeXYRTf1UvL4dlchGeT2Ouf1B3GqpsdjAks07wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+PYpTML; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gg5no0huKK69JL8wd5IjnbTLWAEuTKW6jkCVMVOI4gxI7Zt1owLW63btmMm75BU5p+HMq+tcWgTNadtcMwYsPhsoTWk8vHWD77Er8vdLpiSbZXMvbohxPLMyl2IgxiVTx6in7mlcmyH3eXb9Ks7/f/cjqPIrzzDxywOSK6dTH7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qy8Ea668; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+PYpTML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EEA1F000E9;
-	Thu,  2 Jul 2026 16:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qy8Ea668"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99381F000E9;
+	Thu,  2 Jul 2026 16:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783010400;
-	bh=5aQ1CFzGqKnjy91QSN8uZWrH9yWZoB+pN3A4HauPtWM=;
+	s=korg; t=1783010403;
+	bh=h06zTveyNsHTYAAPWg6HzSjSt5qTXtZ5z3ixUzkEwG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y+PYpTMLh1apPre7ztsMR/McjttR3bMxnxQQaii6EZn+1OG2rHBQaYAUdV8VuH5u0
-	 5TNiaWR0iUgenTSvk78mPG1VyJ8rQp9wronEXuao3fWGGVerij7PhBSHp+ZjX1Ckhk
-	 F87jvXqgzm20gECNHXNpuWP73dUZl1rbFpsNuXrY=
+	b=qy8Ea668uOrqW/Hs95r9Dp3sx7OejKhYenKkEotYqWSoyi9VfaOIJkZaDjYZ5GZvc
+	 LKxNn0XKmXm1gVo9kivUwevHoxe4GZGZWMrYGfZmf83qyuLqIRJTXn8nSbkmDNDrfl
+	 FiW3+7bBDASCqmxfkGARCCL/aXMomh5TIjHwwxYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Matlack <dmatlack@google.com>,
-	James Houghton <jthoughton@google.com>,
-	Alexander Bulekov <bkov@amazon.com>,
-	Fred Griffoul <fgriffo@amazon.co.uk>,
-	Alexander Graf <graf@amazon.de>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Filippo Sironi <sironi@amazon.de>,
-	Ivan Orlov <iorlov@amazon.co.uk>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/204] KVM: x86/mmu: Ensure hugepage is in by slot before checking max mapping level
-Date: Thu,  2 Jul 2026 18:19:11 +0200
-Message-ID: <20260702155120.637166311@linuxfoundation.org>
+Subject: [PATCH 6.12 095/204] Revert "PCI: qcom: Advertise Hotplug Slot Capability with no Command Completion support"
+Date: Thu,  2 Jul 2026 18:19:12 +0200
+Message-ID: <20260702155120.657837749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
 References: <20260702155118.667618796@linuxfoundation.org>
@@ -59,133 +49,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+This reverts commit 480c94d3affbc11b9e98ca223a9fa19d90b84fbb.
 
-commit ef057cbf825e03b63f6edf5980f96abf3c53089d upstream.
-
-When recovering hugepages in the shadow MMU, verify that the base gfn of
-the shadow page is actually contained within the target memslot, *before*
-querying the max mapping level given the shadow page's gfn.  Failure to
-pre-check the validity of the gfn can lead to an out-of-bounds access to
-the slot's lpage_info (which typically manifests as a host #PF because the
-lpage_info is vmalloc'd) if the guest creates a hugepage mapping (in its
-PTEs) that extends "below" the bounds of a memslot.
-
-When faulting in memory for a guest, and the size of the guest mapping is
-greater than KVM's (current) max mapping, then KVM will create a "direct"
-shadow page (direct in that there are no gPTEs to shadow, and so the target
-gfn is a direct calculation given the base gfn of the shadow page).  The
-hugepage recovery flow looks for such direct shadow pages, as forcing 4KiB
-mappings when dirty logging generates the guest > host mapping size case.
-When the 4KiB restriction is lifted, then KVM can replace the shadow page
-with a hugepage.
-
-But if KVM originally used a smaller mapping than the guest because the
-range of memory covered by the guest hugepage exceeds the bounds of a
-memslot, then KVM will link a direct shadow page with a gfn that is outside
-the bounds of the memslot being used to fault in memory.  The rmap entry
-added for the leaf mapping is correct and within bounds, but the gfn of the
-leaf SPTE's parent shadow page will be out of bounds.
-
-  BUG: unable to handle page fault for address: ffffc90000806ffc
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 100000067 P4D 100000067 PUD 1002a7067 PMD 10612f067 PTE 0
-  Oops: Oops: 0000 [#1] SMP
-  CPU: 13 UID: 1000 PID: 757 Comm: mmu_stress_test Not tainted 7.1.0-rc1-48ce1e26eace-x86_pir_to_irr_comments-vm #341 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:kvm_mmu_max_mapping_level+0x79/0x2b0 [kvm]
-  Call Trace:
-   <TASK>
-   kvm_mmu_recover_huge_pages+0x21b/0x320 [kvm]
-   kvm_set_memslot+0x1ee/0x590 [kvm]
-   kvm_set_memory_region.part.0+0x3a1/0x4d0 [kvm]
-   kvm_vm_ioctl+0x9bf/0x15d0 [kvm]
-   __x64_sys_ioctl+0x8a/0xd0
-   do_syscall_64+0xb7/0xbb0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x7f21c0f1a9bf
-   </TASK>
-
-Don't bother pre-checking the bounds of the potential hugepage, i.e. don't
-check that e.g. sp->gfn + KVM_PAGES_PER_HPAGE(sp->role.level + 1) is also
-within the memslot, as the checks performed by kvm_mmu_max_mapping_level()
-are a superset of the basic bounds checks.  I.e. pre-checking the full
-range would be a dubious micro-optimization.
-
-Fixes: 9eba50f8d7fc ("KVM: x86/mmu: Consult max mapping level when zapping collapsible SPTEs")
-Cc: stable@vger.kernel.org
-Cc: David Matlack <dmatlack@google.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Alexander Bulekov <bkov@amazon.com>
-Cc: Fred Griffoul <fgriffo@amazon.co.uk>
-Cc: Alexander Graf <graf@amazon.de>
-Cc: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Filippo Sironi <sironi@amazon.de>
-Cc: Ivan Orlov <iorlov@amazon.co.uk>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c   | 18 ++++++++++++------
- include/linux/kvm_host.h |  7 ++++++-
- 2 files changed, 18 insertions(+), 7 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index a67d013fff4d91..aab26f90c28551 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -6952,13 +6952,19 @@ static bool kvm_mmu_zap_collapsible_spte(struct kvm *kvm,
- 		sp = sptep_to_sp(sptep);
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index ae0f36e270baa1..5d27cd149f5120 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -329,20 +329,15 @@ static void qcom_pcie_clear_aspm_l0s(struct dw_pcie *pci)
+ 	dw_pcie_dbi_ro_wr_dis(pci);
+ }
  
- 		/*
--		 * We cannot do huge page mapping for indirect shadow pages,
--		 * which are found on the last rmap (level = 1) when not using
--		 * tdp; such shadow pages are synced with the page table in
--		 * the guest, and the guest page table is using 4K page size
--		 * mapping if the indirect sp has level = 1.
-+		 * Direct shadow page can be replaced by a hugepage if the host
-+		 * mapping level allows it and the memslot maps all of the host
-+		 * hugepage.  Note!  If the memslot maps only part of the
-+		 * hugepage, sp->gfn may be below slot->base_gfn, and querying
-+		 * the max mapping level would cause an out-of-bounds lpage_info
-+		 * access.  So the gfn bounds check *must* be done first.
-+		 *
-+		 * Indirect shadow pages are created when the guest page tables
-+		 * are using 4K pages.  Since the host mapping is always
-+		 * constrained by the page size in the guest, indirect shadow
-+		 * pages are never collapsible.
- 		 */
--		if (sp->role.direct &&
-+		if (sp->role.direct && is_gfn_in_memslot(slot, sp->gfn) &&
- 		    sp->role.level < kvm_mmu_max_mapping_level(kvm, slot, sp->gfn,
- 							       PG_LEVEL_NUM)) {
- 			kvm_zap_one_rmap_spte(kvm, rmap_head, sptep);
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index 04b81e2166d5dc..b4235e99f0a9d0 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -1745,6 +1745,11 @@ int kvm_request_irq_source_id(struct kvm *kvm);
- void kvm_free_irq_source_id(struct kvm *kvm, int irq_source_id);
- bool kvm_arch_irqfd_allowed(struct kvm *kvm, struct kvm_irqfd *args);
+-static void qcom_pcie_set_slot_nccs(struct dw_pcie *pci)
++static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
+ {
+ 	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+ 	u32 val;
  
-+static inline bool is_gfn_in_memslot(const struct kvm_memory_slot *slot, gfn_t gfn)
-+{
-+	return gfn >= slot->base_gfn && gfn < slot->base_gfn + slot->npages;
-+}
-+
- /*
-  * Returns a pointer to the memslot if it contains gfn.
-  * Otherwise returns NULL.
-@@ -1755,7 +1760,7 @@ try_get_memslot(struct kvm_memory_slot *slot, gfn_t gfn)
- 	if (!slot)
- 		return NULL;
+ 	dw_pcie_dbi_ro_wr_en(pci);
  
--	if (gfn >= slot->base_gfn && gfn < slot->base_gfn + slot->npages)
-+	if (is_gfn_in_memslot(slot, gfn))
- 		return slot;
- 	else
- 		return NULL;
+-	/*
+-	 * Qcom PCIe Root Ports do not support generating command completion
+-	 * notifications for the Hot-Plug commands. So set the NCCS field to
+-	 * avoid waiting for the completions.
+-	 */
+ 	val = readl(pci->dbi_base + offset + PCI_EXP_SLTCAP);
+-	val |= PCI_EXP_SLTCAP_NCCS;
++	val &= ~PCI_EXP_SLTCAP_HPC;
+ 	writel(val, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+ 
+ 	dw_pcie_dbi_ro_wr_dis(pci);
+@@ -537,7 +532,7 @@ static int qcom_pcie_post_init_2_1_0(struct qcom_pcie *pcie)
+ 	writel(CFG_BRIDGE_SB_INIT,
+ 	       pci->dbi_base + AXI_MSTR_RESP_COMP_CTRL1);
+ 
+-	qcom_pcie_set_slot_nccs(pcie->pci);
++	qcom_pcie_clear_hpc(pcie->pci);
+ 
+ 	return 0;
+ }
+@@ -617,7 +612,7 @@ static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
+ 		writel(val, pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT);
+ 	}
+ 
+-	qcom_pcie_set_slot_nccs(pcie->pci);
++	qcom_pcie_clear_hpc(pcie->pci);
+ 
+ 	return 0;
+ }
+@@ -710,7 +705,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
+ 	val |= EN;
+ 	writel(val, pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
+ 
+-	qcom_pcie_set_slot_nccs(pcie->pci);
++	qcom_pcie_clear_hpc(pcie->pci);
+ 
+ 	return 0;
+ }
+@@ -1014,7 +1009,7 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+ 		writel(WR_NO_SNOOP_OVERIDE_EN | RD_NO_SNOOP_OVERIDE_EN,
+ 				pcie->parf + PARF_NO_SNOOP_OVERIDE);
+ 
+-	qcom_pcie_set_slot_nccs(pcie->pci);
++	qcom_pcie_clear_hpc(pcie->pci);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
