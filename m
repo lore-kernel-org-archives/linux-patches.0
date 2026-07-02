@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C67C33B951;
-	Thu,  2 Jul 2026 17:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FF02DEA98;
+	Thu,  2 Jul 2026 17:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011702; cv=none; b=OLjezIR27/MSF9J0v+dAAoze4upSFbuKLXWxaA1GHDIWzq5uqw9nUvjoaxPRfMIQJduQvIzzOeHCh5RB8ejntTCHvgavBudsXS6z6Qod4c0Yabm6jo8QEYZLVsxrzL4PWjsKqxqEo+iGNS5x7xZncVRacfDvy7iujt/yfZrILiI=
+	t=1783011705; cv=none; b=aqFmIjhwf7lwSNuq9UwRNz2aCkpGOep1+eL+WUN+GwK2jOqEmEdMuBCh/z1HwA8GBI9x99epeR+dQs/fjkqAzaQVAQU7AJxPvmLxCAR2+RL+ZjtqebWc4dVWrVu7DCTVltLkV+RbgVRhnZS5CRtBY2s+1Rv370IvYdStXeR1JaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783011702; c=relaxed/simple;
-	bh=GJKsW0ZTuWBFDYeZMoJtORXfzaxoDOcaGESxRErEw7w=;
+	s=arc-20240116; t=1783011705; c=relaxed/simple;
+	bh=ZobOUlb0BM9Xw6A7pVrQb78NWLl/fQn4WtOh3t1a4CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCjyoDvG8yzyormYG4bkaL3Ge022PHhttqEtdo7qTChHgev3NmXHTlyRJECYfadCH47wpQy+7Bp5L/94s3K2z9RiX5V+tQ8Csgy9r/7PExQiczlENl5HbdjhOnj3zG4N4Tl1sP22K73kTscpx3TLPYZUTfOg02hdENMqtEDEMuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG+7Ab5c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ALFghhNo1k7ZoqbzfKO0/EpUZAFeB8zLOCpIttrvjzCZ0a+GG7MStpg3F2DS6Pr1bpMt1/Zw+1Shf2scAAESavH/cG+Lb/VfR0SkMSinIoFxFAOPQz+TuW14+2hE7PH8/IXLrN3Ia8jA8wUvN2+EzbAziVslfnuFgbLuKa4dgpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+4QZmMT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG+7Ab5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B542A1F000E9;
-	Thu,  2 Jul 2026 17:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+4QZmMT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8271F000E9;
+	Thu,  2 Jul 2026 17:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011701;
-	bh=6CMuobbF6oCSFsrHM2a3fZIpNMl/UGwgmkdmBSOjnBk=;
+	s=korg; t=1783011703;
+	bh=3e/k0Ygxu4hjXAzOrTdV8P0d+xAzSOk21EtKOCyRaDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QG+7Ab5cjs0Iz6uSi4Tw3KVpbWN/wU/aqHLAI9+yEOv9BdDcrNaWu4n5U8SW//edi
-	 cbkMucJSQFrnKn1IxFpbglStcY39XEjhGusDW9lAQ+VHJoDsSaVBBo9MrMSamKmhZY
-	 /bytsQGZKJv1xP2aKSEGcyZF4QdrbD+ed9lBU0no=
+	b=N+4QZmMT1z7fSyh+gem5H5/9shbfqyJggSlbmLahZKvGUJ8THqduLhvqDF8MHkw0d
+	 HwTKno3RsSi61LgtSlHRXppnrjBVLC1YOUReaGORj2UceNGRlufQ7GO/8mMQtz0x9b
+	 b23BerhODl8bitMl6e7kLo6yBHGVNTI4mldymR2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Junjie Cao <junjie.cao@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 7.1 056/120] wifi: iwlwifi: mvm: fix race condition in PTP removal
-Date: Thu,  2 Jul 2026 18:20:52 +0200
-Message-ID: <20260702155114.122697547@linuxfoundation.org>
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 047/120] userfaultfd: ensure mremap_userfaultfd_fail() releases mmap_changing
+Date: Thu,  2 Jul 2026 18:20:43 +0200
+Message-ID: <20260702155113.937799780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
 References: <20260702155112.964534952@linuxfoundation.org>
@@ -52,47 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-commit 65150c9cc3e06ab54bc4e8134a47f6f5d095a4e3 upstream.
+commit 0496a59745b0723ea74274db16fd5c8b1379b9a9 upstream.
 
-iwl_mvm_ptp_remove() calls cancel_delayed_work_sync() only after
-ptp_clock_unregister() and clearing ptp_data state (ptp_clock,
-ptp_clock_info, last_gp2).
+Sashiko says:
 
-This creates a race where the delayed work iwl_mvm_ptp_work() can
-execute between ptp_clock_unregister() and cancel_delayed_work_sync(),
-observing partially cleared PTP state.
+  mremap_userfaultfd_prep() increments ctx->mmap_changing to stall
+  concurrent operations, but mremap_userfaultfd_fail() does not
+  decrement it before dropping the context reference.
 
-Move cancel_delayed_work_sync() before ptp_clock_unregister() to
-ensure the delayed work is fully stopped before any PTP cleanup
-begins.
+If an mremap operation fails, ctx->mmap_changing remains elevated. This
+will causes subsequent userfaultfd operations like a UFFDIO_COPY to fail
+with -EAGAIN.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Link: https://patch.msgid.link/20260212125035.1345718-1-junjie.cao@intel.com
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Decrement ctx->mmap_changing in mremap_userfaultfd_fail().
+
+Link: https://sashiko.dev/#/patchset/20260430113512.115938-1-rppt@kernel.org
+Link: https://lore.kernel.org/20260513081416.495963-1-rppt@kernel.org
+Fixes: df2cc96e7701 ("userfaultfd: prevent non-cooperative events vs mcopy_atomic races")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/ptp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/userfaultfd.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-@@ -325,11 +325,11 @@ void iwl_mvm_ptp_remove(struct iwl_mvm *
- 			       mvm->ptp_data.ptp_clock_info.name,
- 			       ptp_clock_index(mvm->ptp_data.ptp_clock));
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -786,6 +786,8 @@ void mremap_userfaultfd_fail(struct vm_u
+ 	if (!ctx)
+ 		return;
  
-+		cancel_delayed_work_sync(&mvm->ptp_data.dwork);
- 		ptp_clock_unregister(mvm->ptp_data.ptp_clock);
- 		mvm->ptp_data.ptp_clock = NULL;
- 		memset(&mvm->ptp_data.ptp_clock_info, 0,
- 		       sizeof(mvm->ptp_data.ptp_clock_info));
- 		mvm->ptp_data.last_gp2 = 0;
--		cancel_delayed_work_sync(&mvm->ptp_data.dwork);
- 	}
++	atomic_dec(&ctx->mmap_changing);
++	VM_WARN_ON_ONCE(atomic_read(&ctx->mmap_changing) < 0);
+ 	userfaultfd_ctx_put(ctx);
  }
+ 
 
 
