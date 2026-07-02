@@ -1,184 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012056.outbound.protection.outlook.com [52.101.53.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A782FC893;
-	Thu,  2 Jul 2026 17:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783011684; cv=none; b=M7K5T59XAA9SyTZ7eunij1bhW0MRxJry/AIawjNQ+kFoJqEtmGj7mfDgHH5Rbw4xQCa4dNYnJtIAIhw1AUA7q6CjG1B5Z6w67fh8xACCEDNSfV1ugJaVYz8QYh+QJfsKo+KyJnMtv858k0ad540NpFjBkEeoVD5/CXqBU77VN6s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5064930499A
+	for <patches@lists.linux.dev>; Thu,  2 Jul 2026 17:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.56
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783011684; cv=fail; b=Vi2Vhj04YZ3kFILSrNWUxqrstqeNHSbP+lGiMpAXt7rm1fCKsYtc06YMKOb3UvN1KXwl8d4ccJLWE7ccfeEAMS+6M/9mCKW0OuD47iIKpAf7O6gIZ+pIvqlxYlCykIk0GBcalXG7Jha/Sbd6brv29vr3k+5BzVZgze9OcBf344g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783011684; c=relaxed/simple;
-	bh=/xgq1ffVQwoF1K32hrf6cmZZ9WXlm4rFfQzIy6xssA4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8bsdA4468H8iGNSN1cigN4pGIjFUSFvG/H7iM+Nh+t4Yjb47NkBvkS0TFPuRW0KnD7ha8nHDwj/2hSrFoNlbGd0wfWfFW7h1yEadmNd37u2vuiaTnKwu/ErpNEaOv+PI4MVEm+WwFexfnt9xO1kE2maqd3Dkiv7lfCxmVd86rE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMrXikD+; arc=none smtp.client-ip=100.103.45.18
+	bh=3jQ39w2PtktP3UYSJa9T7vy9tkuzGdLFlaSAEDhMMBU=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=uUCTEo3xMKFxu5xW5AEmiq1VSGjnFQZgfNOwE6q4n+zpIBmQ4fliDgKv0ak7R6sDkdG5WGGzkvWySLfrC6mdTT8Q64ED4FkSrLsttlKiE3L1S6R7/0sHZmMZcroOGy2Zzfgv9HZrbSIe45OCqFT7kjiLic3QYs0jX7ESyIz7BP4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bixxBZSy; arc=fail smtp.client-ip=52.101.53.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMrXikD+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8209E1F000E9;
-	Thu,  2 Jul 2026 17:01:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1783011683;
-	bh=dI+yFU2XCd5qOzLPa+KOyHiGLhvsta7uEGXjL41eiNw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qMrXikD+dtK3xUwoE+lKUT81G/LbQtQ5vnjjVlVJCLb85NzmrDlF2blZIZFtQgheO
-	 +6Noy7YIGjnyqwJ/YxH65TzHtjzjcUJYmqkvqpCdrXqp2gXX5UY8l1N78jRxnVox1B
-	 xsRJC0bMKNYW3NMb+iu+MNc9tqTr/hOQvA3mUzWc=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="bixxBZSy"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=k2BGfgbJp/isqf5JsXr42xXBO0hT83O8JZ1dAXFuFB+LsGt0W2/0tx4VcBhnfdbcZ3S3pH60P9ysso/voL12ML/cuKWdPxOdge24Tqf9tQi7hyKLAPucxrd8sNbKJ4KwIiPlXwe8LkSrx7St+bxnCqFOCpbJ7edYAq+E6vTxu+fa/NDrM/fn02x8JbRuHM0IzO5EcWZh1p08pvDmuNhdCvbV+0Yf4EjRnO8KYZZ9JPzA3nSAjiesv2AdzYVtpLduVLbpU2ELtf8A6o496pmeqUeTrsXX3YQqbFRHCYJgGPtTkI99ODyTUerrg6OVFBKEtP/zyyfEBOa6fgUg15/USw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ghzcN4eqk7TL9M76tOBQD25lswOUKwIzovqvTgBQazA=;
+ b=MtuWhJUW0X9U3JwnbCVL/PtT+cxpfR9kG2hvW1anuFFG/hheLZlK8DUNADOF0wSeXzjmXQ0lBfOZ4Pzo+Y08XoQ+hr7kwLJ4bqNj5rpLTGQsq0lHnEyWowHLkhsVczB0H4sUir8tSleUhOh38jvhMOrco9FOPM7u+v9GZuIh9+zPPzjJ9hZgakqWtxeVmF493bvZqrVbTCaeRsJhUs4VIwc5+W8dwboGEI3LbeoDg6Lx3yhQ89r+1bs5kzJhQnglFX/mkN6TjlTf4NgmMbY3DEao9lrVgtB8RgUN22UKWsSP1chcuBqmV3cGDQiu/bRHKv7eAeeN0l65ohwtwb/Z5Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ghzcN4eqk7TL9M76tOBQD25lswOUKwIzovqvTgBQazA=;
+ b=bixxBZSybdgWNhDWgiV1bBdqoM7YkBS8twmcxswSPOHxUZ/MhLOKaxpmSxAikRlAvNDLTxalx0k2n+Xc78IMIeZDCpseIC/3J8cW5phlQleycOvLP9XEaDmq4kbyGRmx5FdRv9ypK6+10Ehgf0ydSA0UVSwRw9AAepiM//id7N8yKbyxQJmYi2U3h9ExUMUekJufcmMrStfhBv0Ulakz0FJtWTPSH0csHh6YuAmeeb7roUzZIRXnZpfkAYyI/LnUFInM6Wu4mG+2DNW9XgdjlDnCPxaHZh0jsTI1i7dSm31exfHStixwCqglTnxLVVgZxJKHx38ONQfZ+fhWKB3/OQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by PH0PR12MB8775.namprd12.prod.outlook.com (2603:10b6:510:28e::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.16; Thu, 2 Jul
+ 2026 17:01:17 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0181.008; Thu, 2 Jul 2026
+ 17:01:17 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: linux-rdma@vger.kernel.org
+Cc: Edward Srouji <edwards@nvidia.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 091/120] ocfs2: reject oversized group bitmap descriptors
-Date: Thu,  2 Jul 2026 18:21:27 +0200
-Message-ID: <20260702155114.840308845@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
-References: <20260702155112.964534952@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	stable@vger.kernel.org,
+	Yishai Hadas <yishaih@nvidia.com>
+Subject: [PATCH] RDMA/uverbs: Add UVERBS_ATTR_UHW to UVERBS_METHOD_REG_MR
+Date: Thu,  2 Jul 2026 14:00:57 -0300
+Message-ID: <0-v1-011199f46f44+319-rdma_reg_mr_uhw_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: YT4PR01CA0042.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:fe::22) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH0PR12MB8775:EE_
+X-MS-Office365-Filtering-Correlation-Id: a2073337-e881-4849-dbf9-08ded85b7cfe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|18002099003|11063799006|56012099006|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	sNnchwiSasUvNoEAfqr81jWmQcGCPs6Hokgw34Of8KB/Rad3JXT3LHytzqKwUmCAQv15rWc//gTfp8XHXr9oNltUQSiMePvfdKRKZhCBG9/Ocv3wP57oFCh6Haf5yLClnQTYizQ3PrcQuJQFm6XODAJz61/agBOHzfO1HV58zdJM4XlSK3Jel+a9fkjjeErISRASyZ51BGXYpiNsfKj8BEW/eMgSuKd2d7g7O+ua2mvel7sr/WIEfn+kUhPFgCSS/OFrQaCprewTzCangHnMooONzQYwf2FvuhwtQhtVLKqWNpxM0xwYXkMercAEDWsKV9tMZ4X9TF3ZOpncCDj7H42xV1pTjsu0TmFKk5jWDLUdM1QZgeqVgASUbYT68GFgWaDQVqx+OCIjnScQtC1xuQ2l7saa16LCGtAws8MIsspCJAw6sDp1FGnesmkDtmD7UtGfhevf/EmGr2HZS7ZoLR6PZUdfB2mgbxFzzQFQXg7wZsYBrk5hRkYyj7RpWP3cpFBR/x9jpF2J79bKAhOXLETQaytM6o2ds8nIB1me4Bq4tWel4gjpLh9492VQmw79F84v4vxCxUymPRDskrB7PffI/sWljNq9bKvVeLLZTzYtipGFvCAR30M5JWkw+67b/7f03SUAL3zxVjg0BMlOGUVOqoQeY/T2CfHZqqgLIbA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(11063799006)(56012099006)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?0dGYuR0QgKILkweEGie3Bhljk86lUpUJQEJfw+1VyOazqKi0E3eMflZinBDB?=
+ =?us-ascii?Q?oI5CUXJHXiqfXYVpDBBYs5urrz7vfJCdyVQyADEF7sqtyVjqRE2xC9BpROZs?=
+ =?us-ascii?Q?TaQF8ouPDd+t0DP887J+x3Su974G0EgVxMCy083lcWwsiRh3R9q6Ibwdbhfa?=
+ =?us-ascii?Q?mx87oHkyQAhOaj1HbWlcfC8EkWRUDL4rmKelMeDriolri840YM6+8ZFUg6UJ?=
+ =?us-ascii?Q?Ib8LdNSfneL4y1i1xXEQ6FVhVYK9FwMMn9svyIyJlIfkpHrg03DpuHIwkjP4?=
+ =?us-ascii?Q?FumSLmUGD6Q1xAxT/5eiyAEkOqiyVaqoDQnnWk8euVWWcWzCYXicxpb5o3X5?=
+ =?us-ascii?Q?igd1l17pNBNRianDIHiS+hKB6YEwJdG8wuHaJtATQuoP/NgdZZpVBFPyIRVz?=
+ =?us-ascii?Q?yA957lx/yRY+KHSo3wLs1YujDdrHFSLexqEAzpGT30mGElbf4kf6t8xcC/ZG?=
+ =?us-ascii?Q?370oHw0OhOuvUdVB3EnmNTT0i5i+CNThlN9y+8Tlp5xk1+55wZjd1DLwIsZU?=
+ =?us-ascii?Q?c5KAXxploKzNkXLBORI+R8ulQ173kVcDZFrUHTfWTg1OVl7Nm+22XjBbAHhQ?=
+ =?us-ascii?Q?39fDJePjEWmHybVJCywYvxaTuPOsqVuibk9l177gr7BJBQZVIb84fvhq71sC?=
+ =?us-ascii?Q?pkx4qbAYyasltnzF89C6uvd8cEphWPQfakzWRjLTB0JhJu5aGQydOb543DfZ?=
+ =?us-ascii?Q?TGy5l+xrSjdx6hTLADOimGSlYlzSLwmz9N5C6P2kIQHCztn6QnNxpSa710ek?=
+ =?us-ascii?Q?iQiN1KrMJc+MdBwNGEl/Ae/8gGJH3nLF/752xk1jVwTQpqObLHQq/dWCZBkP?=
+ =?us-ascii?Q?JuFhFkaQax1/E8nLuXEG9YDunbN/CTG94s4ul9O+/jUmdIl+sLKJRhmvmYIV?=
+ =?us-ascii?Q?2j/3Qr7vm6j+pksdHXQqQVIu29Pu7Bh2MA0SKImsqtBqSqnir6/zA54Nojca?=
+ =?us-ascii?Q?iI3HxUPEisksWFfOViqLUeM+U9T+wQQQix0npveZL+bGL2zBUzlGhKmz7Gy4?=
+ =?us-ascii?Q?7ysQ2HEs+d7UI0gXqKihZMFvusWUexocFUr6G0Cy6ScNP0AvWjSSYkLjPymf?=
+ =?us-ascii?Q?iQFs6DIXpwB/gyYUFhmOk9Re8ErMJoad8BF3p0oJgZJFDd8Fvi8Tdc9JhgRp?=
+ =?us-ascii?Q?CrCSb28UfBaD2U0Fhkwczt5vLVQabet3mMQk43lk/oT1ov/LLl3HXtR7u0ri?=
+ =?us-ascii?Q?9G9jvyyB4PFoWKmxHGjDJpaXu8vC8VQLQcwP0GKz42dsPsX6U7Rgk8QY9HHX?=
+ =?us-ascii?Q?fHX6ni3cFus6C54SYgHTsPC7fqTuNGChCHc4zsQ7FTqvTJCHGEl+cbyahfjZ?=
+ =?us-ascii?Q?qvu1ilXMFW8Ao8ET1Dw6CkDtB8NdNbAU1qYDYNqd3GrarDRFMUqsbAyb3gjO?=
+ =?us-ascii?Q?X/YHvN6KObYVf0uITWWX2FiszPhdM6tDFhEogykV5/OZqCtRFgRgo2WZLpJU?=
+ =?us-ascii?Q?HuiwXLrDiodJacphF6RaI5Mdh2p+YeG41my0tTjnzaVkccgOrpKQbIINeFUv?=
+ =?us-ascii?Q?bEwvmdjlAAq5ilj/cP2rsA3aPW2KtRiSTRgdieccvFsDNLeatR4w6ORaNou/?=
+ =?us-ascii?Q?X3o4Og4pTVJGYWTUiqrDACFCWd4FwvjSvv6WbuTVpgod8xrWABU+HKUQNUq6?=
+ =?us-ascii?Q?47XFVwvOyBoKpJ+MNC11SAUgILSyHxn6zwE8472qBJHMRZOOs1S0eHKjTqN1?=
+ =?us-ascii?Q?zIkZClZ3tT6PiXLuULaQs0MTaxsruI8NVVAaKW1W1Mjkf4w7?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2073337-e881-4849-dbf9-08ded85b7cfe
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 17:00:58.6999
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Q557Nnzxn+yWodEEzkJniqzD6O45ku0O3veSTYB+FzcHnEKsTJrg1enp31FTtAAT
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8775
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+The original commit missed that three drivers (mthca, irdma, siw) have UHW
+data associated with reg_mr that cannot be passed through the ioctl. They
+also assume that the udata cannot be NULL, so failing to pass a valid
+udata can trigger a NULL udata crash in those drivers.
 
-------------------
+This never happens in real systems since in rdma-core ibv_cmd_reg_mr_ex()
+does not accept a udata and those three drivers don't use it, however a
+malicious userspace could trigger it.
 
-From: Zhang Cen <rollkingzzc@gmail.com>
-
-commit 9bd541e09dffff27e5bec0f9f45b0228173a5375 upstream.
-
-ocfs2_validate_gd_parent() only bounds bg_bits against the parent
-allocator's chain geometry.  A malicious descriptor can still claim a
-bg_size/bg_bits pair that exceeds the bitmap bytes that physically fit in
-the group descriptor block, so later bitmap scans and bit updates can run
-past bg_bitmap.
-
-Add a physical-cap check based on ocfs2_group_bitmap_size() for the parent
-allocator type and reject descriptors whose bg_size or bg_bits exceed that
-capacity.  Keep the existing chain geometry check so both the on-disk
-bitmap layout and the allocator metadata must agree before the descriptor
-is used.
-
-Validation reproduced this kernel report:
-KASAN use-after-free in _find_next_bit+0x7f/0xc0
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x66/0xa0 (?:?)
-  print_report+0xd0/0x630 (?:?)
-  _find_next_bit+0x7f/0xc0 (?:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x188/0x2f0 (?:?)
-  kasan_report+0xe4/0x120 (?:?)
-  ocfs2_find_max_contig_free_bits+0x35/0x70 (fs/ocfs2/suballoc.c:1375)
-  ocfs2_block_group_set_bits+0x472/0x4b0 (fs/ocfs2/suballoc.c:1457)
-  ocfs2_cluster_group_search+0x16b/0x440 (fs/ocfs2/suballoc.c:86)
-  ocfs2_bg_discontig_fix_result+0x1ef/0x230 (fs/ocfs2/suballoc.c:1786)
-  ocfs2_search_chain+0x8f8/0x10a0 (fs/ocfs2/suballoc.c:1886)
-  get_page_from_freelist+0x70e/0x2370 (?:?)
-  lock_release+0xc6/0x290 (?:?)
-  do_raw_spin_unlock+0x9a/0x100 (?:?)
-  kasan_unpoison+0x27/0x60 (?:?)
-  __bfs+0x147/0x240 (?:?)
-  get_page_from_freelist+0x83d/0x2370 (?:?)
-  ocfs2_claim_suballoc_bits+0x38c/0xe70 (fs/ocfs2/suballoc.c:96)
-  sched_domains_numa_masks_clear+0x70/0xd0 (?:?)
-  check_irq_usage+0xe8/0xb70 (?:?)
-  __ocfs2_claim_clusters+0x18d/0x4c0 (fs/ocfs2/suballoc.c:2497)
-  check_path+0x24/0x50 (?:?)
-  rcu_is_watching+0x20/0x50 (?:?)
-  check_prev_add+0xfd/0xd00 (?:?)
-  ocfs2_add_clusters_in_btree+0x17d/0x810 (fs/ocfs2/suballoc.c:?)
-  __folio_batch_add_and_move+0x1f5/0x3d0 (?:?)
-  ocfs2_add_inode_data+0xd9/0x120 (fs/ocfs2/suballoc.c:?)
-  filemap_add_folio+0x105/0x1f0 (?:?)
-  ocfs2_write_begin_nolock+0x29f7/0x2f80 (fs/ocfs2/suballoc.c:3043)
-  ocfs2_read_inode_block+0xb5/0x110 (fs/ocfs2/suballoc.c:?)
-  down_write+0xf5/0x180 (?:?)
-  ocfs2_write_begin+0x180/0x240 (fs/ocfs2/suballoc.c:?)
-  __mark_inode_dirty+0x758/0x9a0 (?:?)
-  inode_to_bdi+0x41/0x90 (?:?)
-  balance_dirty_pages_ratelimited_flags+0xf8/0x1d0 (?:?)
-  generic_perform_write+0x252/0x440 (?:?)
-  mnt_put_write_access_file+0x16/0x70 (?:?)
-  file_update_time_flags+0xe4/0x200 (?:?)
-  ocfs2_file_write_iter+0x80a/0x1320 (fs/ocfs2/suballoc.c:?)
-  lock_acquire+0x184/0x2f0 (?:?)
-  ksys_write+0xd2/0x170 (?:?)
-  apparmor_file_permission+0xf5/0x310 (?:?)
-  read_zero+0x8d/0x140 (?:?)
-  lock_is_held_type+0x8f/0x100 (?:?)
-
-Link: https://lore.kernel.org/20260524111248.1429884-1-rollkingzzc@gmail.com
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 5b2e45049dc0 ("IB/core: Add UVERBS_METHOD_REG_MR on the MR object")
+Reported-by: Jacob Moroni <jmoroni@google.com>
+Closes: https://lore.kernel.org/all/CAHYDg1TOGxRGZrS69d4Y--Shj_DZv0nJuM73iHUBwBM70g_t3Q@mail.gmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- fs/ocfs2/suballoc.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/infiniband/core/uverbs_std_types_mr.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/suballoc.c
-+++ b/fs/ocfs2/suballoc.c
-@@ -231,8 +231,16 @@ static int ocfs2_validate_gd_parent(stru
- 				    int resize)
- {
- 	unsigned int max_bits;
-+	unsigned int max_bitmap_bits;
-+	unsigned int max_bitmap_size;
-+	int suballocator;
- 	struct ocfs2_group_desc *gd = (struct ocfs2_group_desc *)bh->b_data;
+diff --git a/drivers/infiniband/core/uverbs_std_types_mr.c b/drivers/infiniband/core/uverbs_std_types_mr.c
+index 570b9656801d72..0c72f801e0d32d 100644
+--- a/drivers/infiniband/core/uverbs_std_types_mr.c
++++ b/drivers/infiniband/core/uverbs_std_types_mr.c
+@@ -364,7 +364,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_REG_MR)(
+ 							dmah, attrs);
+ 	else
+ 		mr = pd->device->ops.reg_user_mr(pd, addr, length, iova,
+-						 access_flags, dmah, NULL);
++						 access_flags, dmah,
++						 &attrs->driver_udata);
  
-+	suballocator = le64_to_cpu(di->i_blkno) != OCFS2_SB(sb)->bitmap_blkno;
-+	max_bitmap_size = ocfs2_group_bitmap_size(sb, suballocator,
-+						  OCFS2_SB(sb)->s_feature_incompat);
-+	max_bitmap_bits = max_bitmap_size * 8;
-+
- 	if (di->i_blkno != gd->bg_parent_dinode) {
- 		do_error("Group descriptor #%llu has bad parent pointer (%llu, expected %llu)\n",
- 			 (unsigned long long)bh->b_blocknr,
-@@ -240,6 +248,20 @@ static int ocfs2_validate_gd_parent(stru
- 			 (unsigned long long)le64_to_cpu(di->i_blkno));
- 	}
+ 	if (IS_ERR(mr))
+ 		return PTR_ERR(mr);
+@@ -527,7 +528,8 @@ DECLARE_UVERBS_NAMED_METHOD(
+ 			    UA_MANDATORY),
+ 	UVERBS_ATTR_PTR_OUT(UVERBS_ATTR_REG_MR_RESP_RKEY,
+ 			    UVERBS_ATTR_TYPE(u32),
+-			    UA_MANDATORY));
++			    UA_MANDATORY),
++	UVERBS_ATTR_UHW());
  
-+	if (le16_to_cpu(gd->bg_size) > max_bitmap_size) {
-+		do_error("Group descriptor #%llu has bitmap size %u but physical max of %u\n",
-+			 (unsigned long long)bh->b_blocknr,
-+			 le16_to_cpu(gd->bg_size),
-+			 max_bitmap_size);
-+	}
-+
-+	if (le16_to_cpu(gd->bg_bits) > max_bitmap_bits) {
-+		do_error("Group descriptor #%llu has bit count %u but physical max of %u\n",
-+			 (unsigned long long)bh->b_blocknr,
-+			 le16_to_cpu(gd->bg_bits),
-+			 max_bitmap_bits);
-+	}
-+
- 	max_bits = le16_to_cpu(di->id2.i_chain.cl_cpg) * le16_to_cpu(di->id2.i_chain.cl_bpc);
- 	if (le16_to_cpu(gd->bg_bits) > max_bits) {
- 		do_error("Group descriptor #%llu has bit count of %u\n",
+ DECLARE_UVERBS_NAMED_METHOD_DESTROY(
+ 	UVERBS_METHOD_MR_DESTROY,
 
+base-commit: 5911f6d6e7cce5f35bcaabc1895616e10a6d0aa2
+-- 
+2.43.0
 
