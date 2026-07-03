@@ -1,86 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F739C8EB;
-	Fri,  3 Jul 2026 00:15:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF2CF247291
+	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 03:12:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783037758; cv=none; b=l95JpeVP5UKkNRUdKom74jXwOIbuNmb3tWeIpdozEhRcfaB4Htsdsuz1dQcXwsIe8CjSSDrJujwOEEsNhyJnjZfdDOr8e3PQJIJqGc0+1CbmmQ17AFpabxAxrNLMscxkXP/qN6ZfFz9ZufMsTusSlaAqK+UMP4taLq4cBWWlH7M=
+	t=1783048366; cv=none; b=A45aAEfGf2yZAfjoz2craoLij+ZfK8FNw4rq2z8J9J2Nc/GXtPPD/aVL4EV2Wwc37cGmElwA09WibTrhP04AyDxI8O1p2mIzb7scd+L3mKB4xNyamXQV81jcuoiyhiNWC6pxdFbBKSCBKQ6rVTgjpKO06XzIRkY6VMyG0P4OAbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783037758; c=relaxed/simple;
-	bh=zJg35A6koDl4wONfZDExkhwfKrGCj/Yx7dNmDcf0fcE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cCJZ6YbaEJNQjHkBsxWrF4CynDBVjvFlaufQvfUgVb4xiO/us/ZoHOe8h5FIJv9T2zZsx4YFcMa2OYgs1VFXo9pns/krAV2tyvsFtWrg0b8ELPUPgclmd2rEFqpN9aITWSvk6POCMKIbjpS6PMiCgtmtMIyEsjQQrvKUuAlAJHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ak9bLBaa; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ak9bLBaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345B31F00A3A;
-	Fri,  3 Jul 2026 00:15:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783037756;
-	bh=5l6c9rHedxHWKbI/GYNxv/9iK5Y7e5jzABUhYqQ+mfQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ak9bLBaa07/2n0r+V5Bf/fN6KyXp2cwbW00+8XjVcKBL/Sjvfn9y83o08B/9KebRP
-	 n2z8eMWh4JJP2NgRrjmxHUGD0VQ31sprN+FF+U06r0HP2A7QAFoHW9N/HXqcl6HQAm
-	 rMrn6MAvWlvHbh8iIC3RprJbvO9Zr3dhG1j7FbDbgd/QFR9Bk1ENjC+ekd4PpOA15E
-	 yIoXvb8oCrcsppfbxSrIsjpKB88/+r3c8r0wbCtfMHuS/u3utRZHWSegzay3Q+kWKL
-	 s5trVwT8VBUovrPnSEtr7ZxMCi3wAWx+LYk7/ZyPjDBQ2idp+gESzH7vUJsyDSP80u
-	 KtDJVPAMVdwNQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 7.1 000/120] 7.1.3-rc1 review
-Date: Fri,  3 Jul 2026 02:15:46 +0200
-Message-ID: <20260703001546.13180-1-ojeda@kernel.org>
-In-Reply-To: <20260702155112.964534952@linuxfoundation.org>
-References: <20260702155112.964534952@linuxfoundation.org>
+	s=arc-20240116; t=1783048366; c=relaxed/simple;
+	bh=zaIIDwJenKUY5f+BRBxcGHB5vBYf53XU4rXE+9ag8UU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=ZY+5hhH/4MK4iOAUz3n8fGt765sOcKbFSEb1XFar9QJ+aU1YQKUeXu1p5h/IbIgysVczn/1FQdOQC5sJokKlNSdkcA7J3IHUkPj94A4q6ofFWNeLPlIczRvF7+3TK8xEetYlwWtPthopDCe/pGLxq7CNWcWTj65G2GmN6DtAIXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.68.155])
+	by gateway (Coremail) with SMTP id _____8BxnuupKEdqjS8BAA--.1048S3;
+	Fri, 03 Jul 2026 11:12:41 +0800 (CST)
+Received: from chenhuacai$loongson.cn ( [223.64.68.155] ) by
+ ajax-webmail-front1 (Coremail) ; Fri, 3 Jul 2026 11:12:40 +0800 (GMT+08:00)
+Date: Fri, 3 Jul 2026 11:12:40 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?6ZmI5Y2O5omN?= <chenhuacai@loongson.cn>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	"Guo Ren" <guoren@kernel.org>
+Subject: Re: [PATCH 6.1 095/129] LoongArch: Report dying CPU to RCU in
+ stop_this_cpu()
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.3-cmXT6 build
+ 20250609(354f7833) Copyright (c) 2002-2026 www.mailtech.cn loongson
+In-Reply-To: <20260702155114.109325852@linuxfoundation.org>
+References: <20260702155112.163984240@linuxfoundation.org>
+ <20260702155114.109325852@linuxfoundation.org>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: wS3XfWZvb3Rlcl90eHQ9MzEwNTo2MTg=
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-ID: <329cd36.6ac7d.19f25f6d0e3.Coremail.chenhuacai@loongson.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:qMiowJCxusGoKEdqN2G9AA--.30646W
+X-CM-SenderInfo: hfkh0x5xdftxo6or00hjvr0hdfq/1tbiAQERBmpF-eUZ-AABsE
+X-Coremail-Antispam: 1Uk129KBj93XoWxCw1ruF45GFy5AFy8XF18WFX_yoW5urW8pr
+	WfCrnxuw4kXr1xu3ykC34xCF1DXws3Gr1aqFs5JrZ3AayYvw1vvw1IqFyFqFyY9395W342
+	vFn0v3yvq3WUJrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUBFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lFcxC0VAYjxAxZF
+	0Ew4CEw7xC0wACY4xI67k04243AVC20s07MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCj
+	c4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
+	CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1x
+	MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
+	4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JwCE64xv
+	F2IEb7IF0Fy7YxBIdaVFxhVjvjDU0xZFpf9x07jbOz3UUUUU=
 
-On Thu, 02 Jul 2026 18:19:56 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 7.1.3 release.
-> There are 120 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 04 Jul 2026 15:50:58 +0000.
-> Anything received after that time might be too late.
+SGksIEdyZWcsCgoKPiAtLS0tLeWOn+Wni+mCruS7ti0tLS0tCj4g5Y+R5Lu25Lq6OiAiR3JlZyBL
+cm9haC1IYXJ0bWFuIiA8Z3JlZ2toQGxpbnV4Zm91bmRhdGlvbi5vcmc+Cj4g5Y+R6YCB5pe26Ze0
+OjIwMjYtMDctMDMgMDA6MjA6MTQgKOaYn+acn+S6lCkKPiDmlLbku7bkuro6IHN0YWJsZUB2Z2Vy
+Lmtlcm5lbC5vcmcKPiDmioTpgIE6ICJHcmVnIEtyb2FoLUhhcnRtYW4iIDxncmVna2hAbGludXhm
+b3VuZGF0aW9uLm9yZz4sIHBhdGNoZXNAbGlzdHMubGludXguZGV2LCAiR3VvIFJlbiIgPGd1b3Jl
+bkBrZXJuZWwub3JnPiwgIkh1YWNhaSBDaGVuIiA8Y2hlbmh1YWNhaUBsb29uZ3Nvbi5jbj4KPiDk
+uLvpopg6IFtQQVRDSCA2LjEgMDk1LzEyOV0gTG9vbmdBcmNoOiBSZXBvcnQgZHlpbmcgQ1BVIHRv
+IFJDVSBpbiBzdG9wX3RoaXNfY3B1KCkKPiAKPiA2LjEtc3RhYmxlIHJldmlldyBwYXRjaC4gIElm
+IGFueW9uZSBoYXMgYW55IG9iamVjdGlvbnMsIHBsZWFzZSBsZXQgbWUga25vdy4KPiAKPiAtLS0t
+LS0tLS0tLS0tLS0tLS0KPiAKPiBGcm9tOiBIdWFjYWkgQ2hlbiA8Y2hlbmh1YWNhaUBsb29uZ3Nv
+bi5jbj4KPiAKPiBjb21taXQgZjI1MzljNTZjNzQ2OTFlN2E4OGFmNjM3MmJhMmI0OGMwNmVkMmZl
+NCB1cHN0cmVhbS4KPiAKPiBUaGlzIGlzIGEgcG9ydCBvZiBNSVBTIGNvbW1pdCA5ZjNmM2JkYzZk
+OWRhYzEgKCJNSVBTOiBzbXA6IHJlcG9ydCBkeWluZwo+IENQVSB0byBSQ1UgaW4gc3RvcF90aGlz
+X2NwdSgpIikuIHNtcF9zZW5kX3N0b3AoKSBwYXJrcyBhbGwgc2Vjb25kYXJ5Cj4gQ1BVcyBpbiBz
+dG9wX3RoaXNfY3B1KCkuIEFuZCB0aGUgZnVuY3Rpb24gbWFya3MgdGhlIENQVSBvZmZsaW5lIGZv
+ciB0aGUKPiBzY2hlZHVsZXIgdmlhIHNldF9jcHVfb25saW5lKGZhbHNlKSBidXQgbmV2ZXIgaW5m
+b3JtcyBSQ1UsIHNvIFJDVSBrZWVwcwo+IGV4cGVjdGluZyBhIHF1aWVzY2VudCBzdGF0ZSBmcm9t
+IENQVXMgdGhhdCBhcmUgbm93IHNwaW5uaW5nIGZvcmV2ZXIgd2l0aAo+IGludGVycnVwdHMgZGlz
+YWJsZWQuCj4gCj4gQXMgbG9uZyBhcyBub3RoaW5nIHdhaXRzIGZvciBhbiBSQ1UgZ3JhY2UgcGVy
+aW9kIGFmdGVyIHNtcF9zZW5kX3N0b3AoKQo+IHRoaXMgaXMgaGFybWxlc3MsIHdoaWNoIGlzIHdo
+eSBpdCB3ZW50IHVubm90aWNlZC4gSG93ZXZlciwgc2luY2UgY29tbWl0Cj4gOTE4NDBiZThmNzEw
+MzcwICgiaXJxX3dvcms6IEZpeCB1c2UtYWZ0ZXItZnJlZSBpbiBpcnFfd29ya19zaW5nbGUoKSBv
+bgo+IFBSRUVNUFRfUlQiKSwgaXJxX3dvcmtfc3luYygpIGNhbGxzIHN5bmNocm9uaXplX3JjdSgp
+IG9uIGFyY2hpdGVjdHVyZXMKPiB3aXRob3V0IGFuIGlycV93b3JrIHNlbGYtSVBJLCBpLmUuIHdo
+ZXJlIGFyY2hfaXJxX3dvcmtfaGFzX2ludGVycnVwdCgpCj4gcmV0dXJucyBmYWxzZS4gQW55IGly
+cV93b3JrX3N5bmMoKSBpc3N1ZWQgaW4gdGhlIHJlYm9vdC9zaHV0ZG93bi9oYWx0Cj4gcGF0aCBh
+ZnRlciBzbXBfc2VuZF9zdG9wKCkgdGhlbiBibG9ja3Mgb24gYSBncmFjZSBwZXJpb2QgdGhhdCBj
+YW4gbmV2ZXIKPiBjb21wbGV0ZSwgaGFuZ2luZyB0aGUgcmVib290Ogo+IAo+ICAgV0FSTklORzog
+Q1BVOiAwIFBJRDogMTUgYXQga2VybmVsL2lycV93b3JrLmM6MTQ0IGlycV93b3JrX3F1ZXVlX29u
+Cj4gICAuLi4KPiAgIHJjdTogSU5GTzogcmN1X3NjaGVkIGRldGVjdGVkIHN0YWxscyBvbiBDUFVz
+L3Rhc2tzOgo+ICAgcmN1OiBPZmZsaW5lIENQVSAxIGJsb2NraW5nIGN1cnJlbnQgR1AuCj4gICBy
+Y3U6IE9mZmxpbmUgQ1BVIDIgYmxvY2tpbmcgY3VycmVudCBHUC4KPiAgIHJjdTogT2ZmbGluZSBD
+UFUgMyBibG9ja2luZyBjdXJyZW50IEdQLgo+IAo+IFRoaXMgaXNzdWUgbmVlZHMgc29tZSBoYWNr
+cyB0byByZXByb2R1Y2UsIGFuZCBpdCB3YXMgbm90IG5vdGljZWQgb24KPiBMb29uZ0FyY2ggYmVj
+YXVzZSBhcmNoX2lycV93b3JrX2hhc19pbnRlcnJ1cHQoKSB1c3VhbGx5IHJldHVybnMgdHJ1ZS4K
+PiAKPiBDYWxsIHJjdXRyZWVfcmVwb3J0X2NwdV9kZWFkKCkgb25jZSBpbnRlcnJ1cHRzIGFyZSBk
+aXNhYmxlZCwgbWlycm9yaW5nCj4gdGhlIGdlbmVyaWMgQ1BVLWhvdHBsdWcgb2ZmbGluZSBwYXRo
+LCBzbyBSQ1Ugc3RvcHMgd2FpdGluZyBvbiB0aGUgcGFya2VkCj4gQ1BVcyBhbmQgZ3JhY2UgcGVy
+aW9kcyBjYW4gc3RpbGwgY29tcGxldGUuIExvb25nQXJjaCBzaHV0cyBkb3duIGFsbCBDUFVzCj4g
+aGVyZSB3aXRob3V0IGdvaW5nIHRocm91Z2ggdGhlIENQVS1ob3RwbHVnIG1lY2hhbmlzbSwgc28g
+dGhpcyByZXBvcnQgaXMKPiBub3Qgb3RoZXJ3aXNlIGlzc3VlZC4KPiAKPiBDYzogPHN0YWJsZUB2
+Z2VyLmtlcm5lbC5vcmc+Cj4gRml4ZXM6IDkxODQwYmU4ZjcxMCAoImlycV93b3JrOiBGaXggdXNl
+LWFmdGVyLWZyZWUgaW4gaXJxX3dvcmtfc2luZ2xlKCkgb24gUFJFRU1QVF9SVCIpCj4gUmV2aWV3
+ZWQtYnk6IEd1byBSZW4gPGd1b3JlbkBrZXJuZWwub3JnPgo+IFNpZ25lZC1vZmYtYnk6IEh1YWNh
+aSBDaGVuIDxjaGVuaHVhY2FpQGxvb25nc29uLmNuPgo+IFNpZ25lZC1vZmYtYnk6IEdyZWcgS3Jv
+YWgtSGFydG1hbiA8Z3JlZ2toQGxpbnV4Zm91bmRhdGlvbi5vcmc+Cj4gLS0tCj4gIGFyY2gvbG9v
+bmdhcmNoL2tlcm5lbC9zbXAuYyB8ICAgIDEgKwo+ICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRp
+b24oKykKPiAKPiAtLS0gYS9hcmNoL2xvb25nYXJjaC9rZXJuZWwvc21wLmMKPiArKysgYi9hcmNo
+L2xvb25nYXJjaC9rZXJuZWwvc21wLmMKPiBAQCAtNTE3LDYgKzUxNyw3IEBAIHN0YXRpYyB2b2lk
+IHN0b3BfdGhpc19jcHUodm9pZCAqZHVtbXkpCj4gIAlzZXRfY3B1X29ubGluZShzbXBfcHJvY2Vz
+c29yX2lkKCksIGZhbHNlKTsKPiAgCWNhbGN1bGF0ZV9jcHVfZm9yZWlnbl9tYXAoKTsKPiAgCWxv
+Y2FsX2lycV9kaXNhYmxlKCk7Cj4gKwlyY3V0cmVlX3JlcG9ydF9jcHVfZGVhZCgpOwpGb3IgNi4x
+ICYgNi42IHRoaXMgc2hvdWxkIGJlICJyY3VfcmVwb3J0X2RlYWQoc21wX3Byb2Nlc3Nvcl9pZCgp
+KSIuIElmIHlvdSBkb24ndCB3YW50IHRvIG1vZGlmeSBwbGVhc2UganVzdCBkcm9wIHRoaXMgcGF0
+Y2gsIGFuZCBJIHdpbGwgc2VuZCBmb3IgdGhlbS4KCkh1YWNhaQoKPiAgCXdoaWxlICh0cnVlKTsK
+PiAgfQo+ICAKPiAKDQoNCuacrOmCruS7tuWPiuWFtumZhOS7tuWQq+aciem+meiKr+S4reenkeea
+hOWVhuS4muenmOWvhuS/oeaBr++8jOS7hemZkOS6juWPkemAgee7meS4iumdouWcsOWdgOS4reWI
+l+WHuueahOS4quS6uuaIlue+pOe7hOOAguemgeatouS7u+S9leWFtuS7luS6uuS7peS7u+S9leW9
+ouW8j+S9v+eUqO+8iOWMheaLrOS9huS4jemZkOS6juWFqOmDqOaIlumDqOWIhuWcsOazhOmcsuOA
+geWkjeWItuaIluaVo+WPke+8ieacrOmCruS7tuWPiuWFtumZhOS7tuS4reeahOS/oeaBr+OAguWm
+guaenOaCqOmUmeaUtuacrOmCruS7tu+8jOivt+aCqOeri+WNs+eUteivneaIlumCruS7tumAmuef
+peWPkeS7tuS6uuW5tuWIoOmZpOacrOmCruS7tuOAgiANClRoaXMgZW1haWwgYW5kIGl0cyBhdHRh
+Y2htZW50cyBjb250YWluIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBmcm9tIExvb25nc29uIFRl
+Y2hub2xvZ3kgLCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUgcGVyc29uIG9yIGVudGl0
+eSB3aG9zZSBhZGRyZXNzIGlzIGxpc3RlZCBhYm92ZS4gQW55IHVzZSBvZiB0aGUgaW5mb3JtYXRp
+b24gY29udGFpbmVkIGhlcmVpbiBpbiBhbnkgd2F5IChpbmNsdWRpbmcsIGJ1dCBub3QgbGltaXRl
+ZCB0bywgdG90YWwgb3IgcGFydGlhbCBkaXNjbG9zdXJlLCByZXByb2R1Y3Rpb24gb3IgZGlzc2Vt
+aW5hdGlvbikgYnkgcGVyc29ucyBvdGhlciB0aGFuIHRoZSBpbnRlbmRlZCByZWNpcGllbnQocykg
+aXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmUgdGhpcyBlbWFpbCBpbiBlcnJvciwgcGxlYXNl
+IG5vdGlmeSB0aGUgc2VuZGVyIGJ5IHBob25lIG9yIGVtYWlsIGltbWVkaWF0ZWx5IGFuZCBkZWxl
+dGUgaXQuIA0KDQoNCg==
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64 and arm32:
-
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
-
-It would be nice to get this one in for 6.18 and 7.1:
-
-  3fff4271809b ("rust: str: clean unused import for Rust >= 1.98")
-
-Thanks!
-
-Cheers,
-Miguel
