@@ -1,94 +1,71 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7FA39B49C
-	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 05:05:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8F22857F0;
+	Fri,  3 Jul 2026 05:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783055153; cv=none; b=iCdcBAW89FtNdWm/fzkVaWxOGY13KwB2k5XW0Cg6lQRxj7gzCdLlQYcetGi60IRPhGx538ve15Pu5kZ+DOCZW+TmTdNU6qGfuG+XMiuAQmFadtEXqEWitNAn7qy0HgETPOg5BVS73vS7tdYLGzxbkE9c//I8owV7z5pq2KMgBBg=
+	t=1783057085; cv=none; b=Fq1Qk2830B13mgnfMUbuD+c1kCzCCBXalB6rHFAIGVdp/m7PZGy2hTwHjNYtmAdQjRPup4hhDDZkbhkk4rM2fWZm715M6faGacEiGrTehlYyH/dIsuAQdukrHNZUN5syThdiznU6WEhDm3rY8DH46eGb+bUmcrG0n5x551IXEbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783055153; c=relaxed/simple;
-	bh=3Au1U27iZcl4pVADshRVmDztN7WWYD7I9Gdi0ioXFro=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pxrypNFo+6jZdGl7Q3JNcrkAEcpZ7sOuDdiG7cnWBzaH2JN5ZgY/PEoNr2ZoyekHThXWvy1nxJfA2ZyikuOpb6i/gvaq8U2KgBEQKko5NESB1I6xiCTh6FI6mT9nMF4VKcuFqvlvSLe6u3ro00NRV3kKx6cntAASvp6IXQa4X00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.103] (unknown [123.118.218.239])
-	by APP-03 (Coremail) with SMTP id rQCowADn47oaQ0dqkGi+Fg--.1069S2;
-	Fri, 03 Jul 2026 13:05:31 +0800 (CST)
-Message-ID: <6c5c0723-66c6-4f9f-8021-2562efc95c6e@iscas.ac.cn>
-Date: Fri, 3 Jul 2026 13:05:30 +0800
+	s=arc-20240116; t=1783057085; c=relaxed/simple;
+	bh=DCR6ZYxlzYYAtxzAfCQ0MViqSJzBGX/3lGgM73udkSo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KQ8JT7lIdXolKkWPhjr+xZP9aM7bYsw4rYh6GXJgjxBR3NYmSmDaqr5EHdJnLNh71Zl9ESlDbgV/uB5lhicYPJgxtZULSv2lj2cTnfBPdDHnpwU90pVZ7Xas0skgXDsxxF6Zc/ZjcWmMDgDW9ymoVmMAKL2/rmbgmSlIjnRZ5as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oR6gi2fk; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oR6gi2fk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E341F000E9;
+	Fri,  3 Jul 2026 05:38:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1783057084;
+	bh=M7kJGpHUevpDgZJOPKLrEaRXTnWAx7jiwkscngfQ+l4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=oR6gi2fkOycewFZxL1xcEmRMIgKbCV41FDqzR2zbnwtBHEP1N8LL7Q0wuayZ7lHmC
+	 u9F7vHYUkueyr5kO1vTiPRc8VCIh+qBRpIdlJXxUqWiunyyxSoC7Bzencbttw3/pof
+	 p40AY9zp7HdXt/q1vpk+Ddb3MxQsUlwT1ZNUnI+4=
+Date: Fri, 3 Jul 2026 07:38:14 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org,
+	conor@kernel.org, f.fainelli@gmail.com, hargar@microsoft.com,
+	jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
+	linux@roeck-us.net, lkft-triage@lists.linaro.org,
+	patches@kernelci.org, patches@lists.linux.dev, pavel@nabladev.com,
+	rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com,
+	stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
+Subject: Re: [PATCH 7.1 000/120] 7.1.3-rc1 review
+Message-ID: <2026070302-cramp-casually-fce6@gregkh>
+References: <20260702155112.964534952@linuxfoundation.org>
+ <20260703001546.13180-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.1 097/120] riscv: kfence: Call mark_new_valid_map() for
- kfence_unprotect()
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Yanko Kaneti <yaneti@declera.com>,
- Paul Walmsley <pjw@kernel.org>
-References: <20260702155112.964534952@linuxfoundation.org>
- <20260702155114.965608834@linuxfoundation.org>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20260702155114.965608834@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowADn47oaQ0dqkGi+Fg--.1069S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Xr18AFWUGFWDAF43ZFWxtFb_yoWfWFcEga
-	40van5WryxWa1v9F1ayFsa9r48Kr9YqrW5X3s3tr4UGr43WrZ8uF1v9FsxZ3W2grZxKrs2
-	ywn2qayxXr12gjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb7AYjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY1x0262kKe7AKxVWUAVWUtwCF04k2
-	0xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI
-	8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41l
-	IxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIx
-	AIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2
-	jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8KLvtUUUUU==
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260703001546.13180-1-ojeda@kernel.org>
 
-On 7/3/26 00:21, Greg Kroah-Hartman wrote:
+On Fri, Jul 03, 2026 at 02:15:46AM +0200, Miguel Ojeda wrote:
+> On Thu, 02 Jul 2026 18:19:56 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 7.1.3 release.
+> > There are 120 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Sat, 04 Jul 2026 15:50:58 +0000.
+> > Anything received after that time might be too late.
+> 
+> Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
+> for loongarch64 and arm32:
+> 
+> Tested-by: Miguel Ojeda <ojeda@kernel.org>
+> 
+> It would be nice to get this one in for 6.18 and 7.1:
+> 
+>   3fff4271809b ("rust: str: clean unused import for Rust >= 1.98")
 
-> 7.1-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
->
-> From: Vivian Wang <wangruikang@iscas.ac.cn>
->
-> commit 8d6c8c40e733b3fcaf92fed0a078bba2f6941a3b upstream.
-> [...]
->
-> --- a/arch/riscv/include/asm/kfence.h
-> +++ b/arch/riscv/include/asm/kfence.h
->
-> [...]
->
-> -	if (protect)
-> +	if (protect) {
->  		set_pte(pte, __pte(pte_val(ptep_get(pte)) & ~_PAGE_PRESENT));
-> -	else
-> +	} else {
->  		set_pte(pte, __pte(pte_val(ptep_get(pte)) | _PAGE_PRESENT));
-> +		mark_new_valid_map();
-
-Please also backport this commit's parent, the introduction of
-mark_new_valid_map():
-
-    9ee25d0a70ff4494b4e1d266b962d0a574ef318a ("riscv: mm: Extract helper mark_new_valid_map()")
-
-before this patch.
-
-IIUC this is needed on 6.12.y, 6.18.y, 7.1.y.
-
-Thanks,
-Vivian "dramforever" Wang
-
+It will get there eventually, my backlog right now is huge...
