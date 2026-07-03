@@ -1,146 +1,78 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACCA3D1AA0
-	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 12:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783081303; cv=pass; b=txFH/TKcDBmMKF5Ijwkm0gQzhcuJG2WKsAm6s0kTgSE+/6EoTLnVwe07Oi/SjDVoYGpnKkGussSouD+ilmUdOFR6lC0iaHr7FgEDgisJClIzro2KvLH6v3WwraGhjmsPQ2rGmUdbgxrzXHWO2SCuhew7zDwB5pQFy983Jxcsvm4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783081303; c=relaxed/simple;
-	bh=e7AeLpfI/V+IZizL+0VxFnbt6XslONmPoQZ28t9uKEg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dIsIlKVC/iOW8fXoO8d1sFdl6Czvd3tfSE/S3HH8ohwAOdg0W5664fsGhx0KhjmVsmUUINvDuNcCDj9+yqJEjg+zCO+A12tnrKSGJMppdtIrq/Yq1o6r0RnNhvDi3uZ52KyUnlK2yi8REynOl8WSXa+IFyvxevIv8yFMWz8K4Do=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VeQQpA6M; arc=pass smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D633D9559
+	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 12:32:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783081972; cv=none; b=WOCQ6pZcV1kP94zOegvZT7dEK0F1kD4VhRNx3RnA6wfi5O0F0py2no5Bqw34UtJYTDIGTra1UMvgaMNbMfS+Ua8DVlpqpPNCBsxuPUReAvrRu78c6jwIE1AtKqcYZQBkU3OIUu3pu8wZA1TuTtcDqfkEQrsi5DXO3/AtZP4IU24=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783081972; c=relaxed/simple;
+	bh=nmZA6+uB3urD2hKCpKw8hiD4oFjQ9dwF7f3r4Tfky8g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=p0NlCNGXgD0iVoJe6263vkNnnmGCxrUlg1ANN2l99oEXwbbkzcypTdiub7/W3x73rTSFxefjluUQ7CrXD/RNlCLao+ttRvlyIjpmUlP7tI+yfiR4xx+8e2K0kF6kR+RW9JbrWTS0sL3tsaq9nX8JOlXt5AKBM4cbOmJI3270ybE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lGEn1QW0; arc=none smtp.client-ip=91.218.175.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VeQQpA6M"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-39af87c4589so5114441fa.2
-        for <patches@lists.linux.dev>; Fri, 03 Jul 2026 05:21:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783081300; cv=none;
-        d=google.com; s=arc-20260327;
-        b=VydRnEIJLOURPDfJqJUJFyt9QobKrRB8Wgyi+X+DFrOGYJYfypacfoSYWd2/SV81Kp
-         PnR2SZamz+FkCT/zFUe3ByN+/rKLNJGQwXRWB074p+vgBj1TUET/iSKlrw3diOltbTrX
-         IvcJ1fUUVNFHlqnXd36CQsVlAs86WH8xyGiZ1qw/86SIBr5VbK8OEpPl/dgGDnXf7EME
-         M7b1q5/lkWHEytXGVO4TJodrDRrYi9mLi0Br+fI/1mRhuLNLegNSoUnUnMDMtD+1jI+Q
-         9RGHsoc0mMpEdOKuXNQ5Me4t/sHxac0VkPWM3gg8D2zjCyvgWdl5u4z/q2opE+0T4/SH
-         GUug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LPBk8ugS/kgMy/u15yq0CBcBrSjlFHrN86r+y6xZUes=;
-        fh=YagEoifd7Afhevhvf8g4gavUiNIkCJk20EMS4OCipDk=;
-        b=Fc/tiHfB40AHuVy/j/kPYNwWyg3NwVlvlBqzO2M5I8Ot2jBJDk8IHfn3mU8qS6NXfO
-         g2GjG5hkB0XfXmwyYBTCA5s+h+Pzure7gkceI/cW3ctzdvmh7HAYUTdyNZDBuXuGvRqp
-         NxqWcI518v3espgHdBIOiRAlIV4IldDywL241B2pN0gzcoXfhUc7AU/exnBR8CMGaUvL
-         OsiLqL0p+0y7aKyiZvQUXdx65lDAyS+3b55q4xqergg9ArV1+dMjalA2QGYlUoREoFdr
-         fCCGvhlwSvwgTjaNW4B0G3pqoiDKcxmrblrYBA4Hl//7iN8Uu3rFfH6DO36UJhsceIx+
-         GZrA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783081300; x=1783686100; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LPBk8ugS/kgMy/u15yq0CBcBrSjlFHrN86r+y6xZUes=;
-        b=VeQQpA6M+Zi8zi5JgdJyhm92ksWihiUWXmNGYaEJoV+5i4O6Ukr0a7yZEvHQvuiYQr
-         pccLdZVdFYgUrY8orRE3tgi9I73/DGXa5NElJYs4JeG4+m/kMgwJ4UX3FyJu90f3YtOg
-         eY3FrLJlv+zP7EJ5f9aSTeq5+16yrmRCUeW5NqH7E2CRP8yPCPbwo0aubuudat1b36ze
-         isgYoczGLdyph0gnAXwxQo39qUm8Clx2vstnc4omKVBoRvdzWYUupbq839GOnImedDkv
-         mGGd2nTURo4sok8gXkZvvRh90AORmOw8PEPo6V295ERS+m6XJMSW3RunOTVoudeOly49
-         ShRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783081300; x=1783686100;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LPBk8ugS/kgMy/u15yq0CBcBrSjlFHrN86r+y6xZUes=;
-        b=JLrO67nidM491KAceqYlKZUEtmGLFZsZC15nYc4dDXSod1K4NB4XTDardzPEnBvT7C
-         SOhQlN6t6JfFvt91nqUMZeRzKts83RcNWaN0Ptfi94z+f8rjTWPTY83vza4U4gb88NuH
-         EJy+hN38qBEVSdDO0DXf/3+RKC3lsalJ5x6a141mffJiRS8sDJUIS4Dmal55UQDqMCPi
-         9PHV0DxksP/+JVPYON39ATmHldRb7eZ6MpjQLc4qqiVePQWI75POJWDHhjoCOJTUwCXp
-         /w6KGgUCGHIx06IEdtcxR58KMQKvoPfVvC1wK7b2DuLvwDY9T8KATEBmv6IlrL9SO4yT
-         Kpww==
-X-Forwarded-Encrypted: i=1; AHgh+RoeN7B1BsvKd8Mk4tneViw/SrtJ6c61I3XV/Xuvq/FrS08XLI7nmn8eLpKfWt0PLg9MpdDutp8+@lists.linux.dev
-X-Gm-Message-State: AOJu0YypUiGL96VIswJHjwkYUfakTdKkgfmEdeXSY3AzSF+v381siS+k
-	U6JEYq+yaxWSu9A/BfA4V9Kqg8bo65k8cQK6kHcS7cFIRQ/y2AqDoy+kc5eiI8nm7/9wO4xhYUY
-	HzuIHUl8RnmlEdDP8piyF9FuDvubc0r8=
-X-Gm-Gg: AfdE7clk1e/OpVQle0VjrEOrZW3jlmJ3Fai7AxXrVVNrWP6RrX0nyvXWjt7in3+/9gv
-	tOJVvzkiSuk+YgyQdm/HHZB/MDl7XsA8tEmuBFYfVZMPdPCef3yyXMF7UlIhDtPXjMULQupXnvT
-	tBJ9d548MXlRnOVeM6+uX8u3M/Y2wHACioUQv/aOWFE3YFeeY0Dxxe87/APt1cgsL716PxgXcM/
-	EcAzB1yNBmdNamG4f6haYD5MZMQ9mWaEBxKwL2zB9/LEATdxRHLvfpGAt/QlkVi7i+HSlP1rlC1
-	+MDbMTeRi0MLLjUcuXLdFkojKelNEg==
-X-Received: by 2002:a05:6512:6887:b0:5ae:bf95:38e4 with SMTP id
- 2adb3069b0e04-5aec679798cmr1666596e87.3.1783081299489; Fri, 03 Jul 2026
- 05:21:39 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lGEn1QW0"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1783081964;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KPobOMpzLXIZ6h+MVV8WTmoa13pxNOpbezeoUAZoB28=;
+	b=lGEn1QW0L8yjWbmvygdeC/+JFPmdBuDOtLNHL0GwaV3OabcFTtTB7N57JCebnvsxY5f11U
+	JxPftL4Si3/LLOk4OVjNnBewAIQz2oL3dsHYRBTXUfkxsTC1OhC05Y7sLk10yR3fUokWTH
+	pa9kLdLXv25oUUqe2O91ufSHmFeBjV8=
+From: Usama Arif <usama.arif@linux.dev>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Usama Arif <usama.arif@linux.dev>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Jens Axboe <axboe@kernel.dk>
+Subject: Re: [PATCH 6.18 044/108] block: invalidate cached plug timestamp after task switch
+Date: Fri,  3 Jul 2026 05:32:35 -0700
+Message-ID: <20260703123236.3139759-1-usama.arif@linux.dev>
+In-Reply-To: <20260702155113.020016705@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260703072822.817328079@linuxfoundation.org>
-In-Reply-To: <20260703072822.817328079@linuxfoundation.org>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Fri, 3 Jul 2026 17:51:27 +0530
-X-Gm-Features: AVVi8CcM4kfM7lzOEdj071SFlE-qqUn8hYlhEnpvzVa2yugxgWc4NOB7MuYiVXc
-Message-ID: <CAC-m1rrUUkGEGkQ8sxZYss1c02pCGyfAp6fyPzwTpWWN=tPGfg@mail.gmail.com>
-Subject: Re: [PATCH 7.1 000/121] 7.1.3-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, Jul 3, 2026 at 1:08=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 7.1.3 release.
-> There are 121 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 05 Jul 2026 07:28:08 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
-7.1.3-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-7.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
+On Thu,  2 Jul 2026 18:20:41 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Build and boot report of 7.1.3-rc2
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Usama Arif <usama.arif@linux.dev>
+> 
+> commit fad156c2af227f42ca796cbb20ddc354a6dd9932 upstream.
+> 
+> blk_time_get_ns() caches ktime_get_ns() in current->plug->cur_ktime
+> and marks the task with PF_BLOCK_TS. That cache is only valid while the
+> task keeps running; if the task is switched out, wall-clock time
+> advances and the cached value must not be reused when the task runs again.
+> 
 
-The kernel built successfully on both x86_64 and arm64 using their respecti=
-ve
-default configurations. No build issues were encountered. The kernel booted
-successfully on both architectures in the virtual environment. Basic
-boot verification
-completed successfully, and no unexpected dmesg regressions were observed
-during testing.
 
-Kernel Version: 7.1.3-rc2
-Architectures: x86_64 (x86_64_defconfig), arm64 (defconfig)
-Kernel source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
--stable-rc.git
-Commit: 19dde9778fd8e8fb700fd3f9d29be0eb4376fb71
+Hi Greg,
 
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
+It looks like this patch was backported, but the preceding patch [1]
+in the series was not bacported to the stable branches. Both this and its
+prerequisite have the same Fixes tag.
 
-Best regards,
-Dileep Malepu.
+Not having the prerequisite will result in a NULL derefernce.
+Could we please add [1] to the stable branches?
+
+Thanks!
+
+[1] https://lore.kernel.org/all/20260616141604.328820-2-usama.arif@linux.dev/ 
