@@ -1,88 +1,71 @@
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2550339719
-	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 08:30:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6FD3B14C4;
+	Fri,  3 Jul 2026 09:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783067454; cv=none; b=s1FFoFNSXtSAZB2efYoZvZ3vDTJOEFX0eqkVuYXkNWJGXRwsipe2ZVbsmO3NDngUhnzuHVch/2KICLmRWFWD/lwZya6puEkoOnmVyXP3cIyLdfi4REOSdurgf2/zaYqsrhOaWNdyOx7sflw/H2rNDLwh6SQDg/Ci0WVo+/UipNU=
+	t=1783071582; cv=none; b=s98WIQg3zFI1/A5veXjolZZLbvCIkcF1q4AJULkAIa19oCKY8aN+GjMb1vtSV+TxOfZpNRBkqkTAHtndEhNsI5LUv0LrydIEav/OYtFE0unqlGaMgIxgEfBvbqgRZ0xMsUZGZVIoloIQg2WbKoM0GTpHBupZN7rHk2QsBz/h5hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783067454; c=relaxed/simple;
-	bh=hwsyZm1/G34HNtLQtbkaqg7zowOEukBeLR58BGiVuHM=;
+	s=arc-20240116; t=1783071582; c=relaxed/simple;
+	bh=9G+Tw6c7rXrGZSMgB2I8p5VfbXfFXdGkw9pw9/E69o8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YbyBpJdtr8DF8mu9t9cBtcU8KwufIbBdy3mFAmwbYVMpt+Qspv2C4kRm8Xz/515Rb42m4YaJihbFYf3HTrP7qL0/XQ9kuE6svE9EJ8OF4IWsjgee2EcwcecPHWkfYWcZApSTWPv2vajr1rVT7/GXgElZqllokFoVV3vXeWKgp3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=TQ5Q8Q4x; arc=none smtp.client-ip=178.251.229.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=XX4F8ynw6oeJOIjaNzsNrtpdRKAWp9vFE9KndpeThn5GEFhV5YEhDa1EqtZAXxP0N7T+yJBcELwmG1eh8pt5OKQWHH7ykj4ObegSkaUtu890vTuqwrD0Uq7fpaEZ9D18hGWlz6RjvLMigTPBaTWL3WZLNmivt7Fi/m3C/YIzt3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHnGnK36; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="TQ5Q8Q4x"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DF78E118BA9;
-	Fri,  3 Jul 2026 10:30:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1783067450;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=f0itF6EjDNn0IXyI8Zrp57euAIEQlqO+V6SAHn2ccBU=;
-	b=TQ5Q8Q4xjVPLGFZRXCg23KDvD2iFXRi01h2sNf7gP81/DF+keqn7W1S1VAbjHpMoISNh9/
-	maxUmU6qA6fuy1TXqPaH46fr3rhNW4WIp+W1XYhBKkkvrHOM6LsEu6ZCHBD3C6rNlmpx7I
-	+SvuBRKLVwy/TSjqDP1hTo70coCO+XfC1t7xU1W+fyHiZJ/zWCTADZlhpcO+Ke0MDfa6C2
-	94kBDvS10PVL3neifJtyf5bnbMG208Hm6wMseLby4sx0e3/GVoOea1GoxwLuD9EE0sDVMI
-	+tHnUScraACMxeB/z/RDd752I3CtPCqu6Vso6Puus0l/UdW633wtJ43gvWdLqQ==
-Date: Fri, 3 Jul 2026 10:30:45 +0200
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.10 00/96] 5.10.260-rc1 review
-Message-ID: <akdzNauW-cGJumrh@duo.ucw.cz>
-References: <20260702155108.949633242@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHnGnK36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D391F000E9;
+	Fri,  3 Jul 2026 09:39:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1783071581;
+	bh=x6qdjgggnd6Pzq8RvJKOSa1BUsVjBeG/Tf5BuXME5fw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=NHnGnK36rFRs8aBcl9roq7yDwblvMsvBDzZH2zZHmpO+KP6MrXgi+EiWSK9upSAAp
+	 xXre9dA7x97xkhcNcJTu2YxV1pMlIR4RatCPSFfzUvxHgxM+6AcDs6J7uvkJ9Hc9Xq
+	 XTUhXpIVaxMZd8h91duCM8IT9x+sx8nEY40ZGWBo=
+Date: Fri, 3 Jul 2026 11:39:51 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Wentao Guan <guanwentao@uniontech.com>
+Cc: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org,
+	conor@kernel.org, f.fainelli@gmail.com, hargar@microsoft.com,
+	jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
+	linux@roeck-us.net, lkft-triage@lists.linaro.org,
+	patches@kernelci.org, patches@lists.linux.dev, pavel@nabladev.com,
+	rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com,
+	stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
+Subject: Re: [PATCH 6.6 000/175] 6.6.144-rc1 review
+Message-ID: <2026070341-asleep-hazing-15a6@gregkh>
+References: <20260702155115.766838875@linuxfoundation.org>
+ <20260703080126.567705-1-guanwentao@uniontech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dmPIqyQ6TWCKY6T9"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260702155108.949633242@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260703080126.567705-1-guanwentao@uniontech.com>
 
+On Fri, Jul 03, 2026 at 04:01:27PM +0800, Wentao Guan wrote:
+> Hi,
+> 
+> Build failed in loongarch arch, which resolve in link:
+> https://lore.kernel.org/stable/20260703032401.857553-1-chenhuacai@loongson.cn/
+> https://lore.kernel.org/stable/2026070318-monotone-mug-74d6@gregkh/
+> 
+> arch/loongarch/kernel/smp.c: In function ‘stop_this_cpu’:
+> arch/loongarch/kernel/smp.c:616:9: error: implicit declaration of function ‘rcutree_report_cpu_dead’; did you mean ‘rcutree_prepare_cpu’? [-Werror=implicit-function-declaration]
+>   616 |         rcutree_report_cpu_dead();
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~
+>       |         rcutree_prepare_cpu
+> 
+> Build tested in our x86,arm64,riscv config successfully without error.
 
---dmPIqyQ6TWCKY6T9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Offending commit already dropped.
 
-Hi!
+thans,
 
-> This is the start of the stable review cycle for the 5.10.260 release.
-> There are 96 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-5.10.y
-
-Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
-
-Best regards,
-                                                                Pavel
-
-
---dmPIqyQ6TWCKY6T9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCakdzNQAKCRAw5/Bqldv6
-8rBeAKDD6y3hV/wnGHqwvlVpOhY/x+mN5gCfbo0cK1NYE0xaXZf6KG3oDEONF20=
-=pqdD
------END PGP SIGNATURE-----
-
---dmPIqyQ6TWCKY6T9--
+greg k-h
