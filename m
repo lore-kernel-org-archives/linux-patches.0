@@ -1,171 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE7B34C990;
-	Fri,  3 Jul 2026 20:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929762C9D;
+	Fri,  3 Jul 2026 21:16:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783112388; cv=none; b=pYVm2MHUGzx5aHdLilDTb/LEC2xc7dkWXPw96x50uUp+4h0RcimtgkaJFie6NllVkasXRfNORdNJO4anbL+s9NVi1Ex3B5FgzlMA9KYWpHQs0Nis4KgjWzybPf1X+e+kAc6s2W0eAc+g/SWWXUVKzAKpPnZV3Zj0eDzw8TiSkDo=
+	t=1783113375; cv=none; b=rWGxSatmFPQivS7upNwiMXCVCk/VUcuDJsoSkUhhL9GKnqFuD+DKMaNcO7HLwIBpPDu7yWHGWHBIZBmOFHaDtjgeA5szej1VH0jvGro6VsHtmPO/sWFnDZ8EinJW3Q5lamlajbA2iXMGB5ribrS4IezVu8ZjcXdpUwcqILDMtVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783112388; c=relaxed/simple;
-	bh=A71QVY+Cp7VPv9rgoww0UCOYY2oiORrWhqzvLtbx/QA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ji/YivWSD97JwQfHO8X/+kmLc2MLyW8kV/ZQeU1f/PlfEMGzAHR2RdU/N3BmZXak/RGK/+v+EHrRE7RM9u6ZXHloyhldX6uBV0eDQI0ASjQ0GafSSKtQpRqRKx/gJVyM3R5D8dWO309KtLUzHgK0NsDU8/QByKyVDNoLdfb3DnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LZT3RHFk; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZT3RHFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07BB1F00A3A;
-	Fri,  3 Jul 2026 20:59:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783112387;
-	bh=BfuXr9H6YzXwCCCoYsHNuPnXbN+h+qaE0JpFIz1KEWY=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=LZT3RHFkLAoICb90fWe4fd5+DpwaDwBeu3oubLyFoeYA/tjBqKAvU0Vn+/HMVK9FC
-	 PvTPVl4vJaQ/z4hlmEwn0HGI3ha4RFqV/4eJqPepn9HdSS9OHNHJBEK0MSxHeBVFFL
-	 GsjlsW1hPVw2f5PhghhCt4E174Jummhax93rC52X8TExjCft9zIpedJZyhGeIDHUcb
-	 FvbUe1O8RXnvhXcbLvZDPkLtlVJSjPRKQ/JajZUtasGCXqsfqkmW8uVhBXXsUX8nzX
-	 0SbQxsd+BxSxA1LLXLnIhlJ1q8Kieh1fqtL3mg8RTw68TBxPnElfTdWJIRgfl9CD02
-	 gVEjY5f+C2+xw==
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfauth.phl.internal (Postfix) with ESMTP id B6F98F40068;
-	Fri,  3 Jul 2026 16:59:45 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-10.internal (MEProxy); Fri, 03 Jul 2026 16:59:45 -0400
-X-ME-Sender: <xms:wSJIaqNV3AAnjczM_nK2csD2znW6ZTXyfl_lKrX-Q6PSI27lE3mPwg>
-    <xme:wSJIajy8k3qsxoFc1ZfNQcMcUHpGWI5M8hcDILBG1vTorRMKYWzDxXwQ72ku2a4xs
-    qRvZW5RCrpDTfagHL5LsTLokGQbKsq2iLrrQ6p3lpD3eGi3IBApBB0>
-X-ME-Proxy-Cause: dmFkZTGviJ5Hbr3mAoTh2jR51lHjouG5uW9woJzqrDUAqwMdE6q4pJyv591OBkQ2Il1u/f
-    0SQunAdJI9bo1ZdYvLao9lfugXE0Vlyy2RoKurBBLsIrGT6IsT2ir3i2aYV37ua+bkS8z+
-    rY+ndqjQBgi7dUl/pzILUeXPolqGOIFx7rYyx/SJLKaxs9vo/ZA0JD7nZE0qWutxBRaHzr
-    PNBJ9+0+m4IT1cXkbylifxKxkVkJGJwKeZmW4+78qMUQBnVX3vbGWEQQG278Ajo2VEn2Pu
-    ienTT+4Wl2SE8LkQG82cQfDE/9AmuodCJKok57JAI3b5rGdEunKCE0umlvTp9pTX852fdq
-    Gp7pMc40/W4ofPEvHzpTFJ5ZYk0ZpLMN9LU7B09E9oP9Z3HUXZJIhueO/zcU8q1LddFJEp
-    HAxw8x3o6diABNY1oUettvTymQUa9uUhViybPsWqIVrF6uJ4EC2ebR4gerqJZ5FiX6qdH5
-    UG9x7RZIfkDH4nam0Qx5FLg5vV+AqYAbprsNu0zE6VX8b6uydmp4eeLD5hGbFH5wJOcXrV
-    3zbotKw+aKs6y2/70bA3pejLVqDqJ7v6aNbk3BpwxaGinv0cm5r2W6ngltSNrUZZ9Z7SSq
-    XA79gsxx0TX7xFStTV3sWx69b+D1k4g2f9ql8i8OJi5MdJLL/Ol5IZE39VVQ
-X-ME-Proxy: <xmx:wSJIau9Dn1MrBwGpnmA2wFHlTKjtHJj9Wtq8BirWAdfxYr-xn-Ohvg>
-    <xmx:wSJIahSH4MYlAWQBWN9Ln5Sa1vpWEladoqAEtcQRKxfrkjleuM9fAA>
-    <xmx:wSJIanpQg8wlwyguSxDiL5b4_txplRLqtMt9fIMjUD2xYPDTCzdEIQ>
-    <xmx:wSJIammVOxj_9ABQ8ah934yIYY6XkiW48YP7IznlR9M40moaDaaMzQ>
-    <xmx:wSJIaocj5yVPMtwKPoM-K75jFvhc7DZ2tXOYGma7FHdND53VzORUFhbf>
-Feedback-ID: ifa6e4810:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 874CD780AB5; Fri,  3 Jul 2026 16:59:45 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1783113375; c=relaxed/simple;
+	bh=V6xaUuco4Hh9fpSCgAGLGPUfOLMdlzTPR/r/+FDcWJA=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=qwqGkVhAhUpPkymbWKuWHgM9tY/xCOVnikKh0Xv2s/BWpoAmYQF6WtgIxrpMzS61IxndYIsh71Pp25TFBi6HKiRJwdMsHueW8DBB0q7akMBjptbaxAUdCjJnL6BUeu8VFwnCGiNDnDd5ko6Sr2rlyMsS2d1O971Co9z6/PTBMbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wflF6-0001Ox-09;
+	Fri, 03 Jul 2026 21:16:11 +0000
+Received: from ben by deadeye with local (Exim 4.99.3)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wflF3-0000000BrSs-2y1n;
+	Fri, 03 Jul 2026 23:16:09 +0200
+Message-ID: <6359da4c14e0b4c6ffa068407a42c07e56ef9c5c.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 11/96] slimbus: qcom-ngd-ctrl: Register callbacks
+ after creating the ngd
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
+ Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, Srinivas Kandagatla
+ <srini@kernel.org>, Sasha Levin	 <sashal@kernel.org>
+Date: Fri, 03 Jul 2026 23:16:03 +0200
+In-Reply-To: <20260702155109.217063292@linuxfoundation.org>
+References: <20260702155108.949633242@linuxfoundation.org>
+	 <20260702155109.217063292@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-oDhnDsjeUF0d1srP2zHQ"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: AVhOwI0RYJaZ
-Date: Fri, 03 Jul 2026 16:59:25 -0400
-From: "Chuck Lever" <cel@kernel.org>
-To: "Wolfgang Walter" <linux@stwm.de>
-Cc: stable@vger.kernel.org, "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- patches@lists.linux.dev, "Jeff Layton" <jlayton@kernel.org>,
- "Alexandr Alexandrov" <alexandr.alexandrov@oracle.com>,
- yangerkun <yangerkun@huawei.com>, linux-nfs@vger.kernel.org
-Message-Id: <ad301582-cb44-42cd-ab3f-c90f7c3dc11a@app.fastmail.com>
-In-Reply-To: <3d80d1812ab903dbc831fef122d3cc75@stwm.de>
-References: <20260703160306.1651327-1-cel@kernel.org>
- <3d80d1812ab903dbc831fef122d3cc75@stwm.de>
-Subject: Re: 6.18.37 has problems with nfs4 (server), 6.18.36 works
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
+--=-oDhnDsjeUF0d1srP2zHQ
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 3, 2026, at 2:30 PM, Wolfgang Walter wrote:
-> Hello Chuck,
->
-> Am 2026-07-03 18:03, schrieb Chuck Lever:
->> Hi Wolfgang, and stable@ --
->> 
->> Short version for stable@: 6.18.37 does not need a revert of
->> 95f9eb19d5e6 ("Revert 'NFSD: Defer sub-object cleanup in export
->> put callbacks'").  That commit is correct for 6.18, and it is
->> not the cause of Wolfgang's crash.  Please leave it in place.
->
-> Ok. I run v6.18.37 with the patch reverted since about a day (just for 
-> the record). But according to your analysis, that's just a coincidence.
->
->> 
->> The reasoning: 95f9eb19d5e6 touches only fs/nfsd/export.c,
->> export.h, and nfsctl.c.  Wolfgang's oops is in
->> remove_blocked_locks() -> __destroy_client() ->
->> nfsd4_destroy_clientid(), entirely within fs/nfsd/nfs4state.c,
->> which the revert does not modify.  That path is byte-for-byte
->> identical across 6.18.36, 6.18.37, and current mainline, so the
->> revert cannot have introduced the bug and no missing backport
->> repairs it.  The 6.18.36-good / 6.18.37-bad split is a timing
->> coincidence; I believe the same latent bug is present in both.
->> 
->> Because the defect is present upstream as well, the fix belongs
->> in mainline first and is then backported to 6.18.y and the other
->> affected trees.
->> 
->> Wolfgang - to confirm this and capture the allocation and free
->> stacks, a KASAN-enabled kernel would settle it.  On a v6.18.37
->> tree:
->> 
->>   1. Add to your .config (keep your usual CONFIG_DEBUG_INFO so
->>      symbols resolve):
->> 
->>        CONFIG_KASAN=y
->>        CONFIG_KASAN_GENERIC=y
->>        CONFIG_KASAN_INLINE=y
->>        CONFIG_STACKTRACE=y
->> 
->>   2. Build and boot that kernel.  Stay on 6.18.37 -- you do not
->>      need the revert-the-revert build I suggested earlier; that
->>      experiment no longer tells us anything.
->> 
->>   3. When it trips, KASAN prints a "BUG: KASAN: use-after-free"
->>      report with "Allocated by" and "Freed by" call stacks.
->>      That report, in full, is what I need -- it should land in
->>      /var/log/messages just as the last oops did.
->> 
->> One caveat: KASAN roughly doubles memory use and adds CPU cost,
->> so weigh that before running it on the production server.  If
->> that is not practical, a full log from the first stall line
->> onward, with all CPU backtraces, captured over netconsole or
->> serial, is a useful second best.
->> 
->> I will draft a candidate upstream fix from the analysis so far
->> and send it separately.  If KASAN on the production box is not
->> an option, testing that patch may be the least disruptive way
->> to confirm.
->> 
->
-> I think the memory usage should not be a problem, higher cpu usage 
-> neither.
->
-> But as it is a coincidence the probability to catch that error is 
-> probably very low. We use v6.18 kernels since v6.18.1 on that fileserver 
-> and this error never occured before.
->
-> Or do you think it happens more often, but without symptoms, and KASAN 
-> would detect it?
->
-> So I will try running a v3.18.37 + your patch applied. This of course 
-> can not prove that it fixes the problem because it almost never happens, 
-> but probably this would detect if if the patch had side effects.
+On Thu, 2026-07-02 at 18:19 +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+>=20
+> [ Upstream commit 2a9d50e9ea406e0c8735938484adc20515ef1b47 ]
+[...]
 
-Correct: your reproduction of the crash does not appear to
-be strongly correlated with any particular kernel release. I
-based my analysis strictly on the additional stack trace data
-you sent earlier today.
+No objections, but this is missing from 5.15, 6.1, and 6.6.
 
-I think it's more likely that your 50 client workload hit a
-particular race that exposed a pre-existing UAF. KASAN will
-change execution timing, certainly, but I can't predict
-whether it will make the race window bigger.
+Ben.
 
-So you can only test whether my patch causes new regressions,
-not whether it prevents your crasher. :-(
+--=20
+Ben Hutchings
+You can't have everything.  Where would you put it?
 
+--=-oDhnDsjeUF0d1srP2zHQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
--- 
-Chuck Lever
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmpIJpQACgkQ57/I7JWG
+EQlcLxAAxgAXYvkTSD0DOG/EhEEBsU/tYe4+hKgBlj4hL28QC3DzZFAKnOXCYEsT
+9OAkxzK0QY5/WYWwL1jyFJGBKlN6JeyvvHb+EflaLvA/ueLhypJx1mxbeNfXfTZA
+g2po4u+MH5uF64VFxa8lijCOI0D20L1fyBgx6d/UBXC5XuGf3iCq/sesZZfzOyzZ
+2Mc4PYdNGWg257+raX2eI39sgk2xca2oZcSdZVOkXTfJkqWnNeqjJ8T3ZRMoU6lM
+Ls4nermXvkdEbG3GVxm2huyagSCfHG4yKoZCJS3DKA5SqSaRgN0xWnNarYGIRwC2
+RZbFlYLX+58xWBcBWFh6oJQvl7Kn6l8TkDn3VmN0rkQldP1v5SwYF5LhSAnlL88j
+qQ2I3GzHb4xRyyzoF8DKfJfN2HcZYuJlFyTH4yfwl/DVeoBB1oik+1DAHn60px2L
+/u06td6dN4ERDZn7hxx6rSqYnoGZA9bRZ+FX4UkQzy2XAZiQe/R+dDpDQfFNUr9S
+pp3Pmtc9AsJFg6CFL+X19PbaJa8UYF2pA9f/vKgxX4yg1CKQzqUhH3H9+MOEwmJg
+UwGiOA2DqR3zotPHUZgqLdxIo2vEVHowL5d3C78etf+gwjOgwHt/T84+akTy0fP7
+Df38dnrV8KhXvBfpoCYFBO6tHsoM+fLfcXJNqIDoBEEFh+1lCjE=
+=uReK
+-----END PGP SIGNATURE-----
+
+--=-oDhnDsjeUF0d1srP2zHQ--
