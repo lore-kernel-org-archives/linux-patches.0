@@ -1,107 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from email.studentenwerk.mhn.de (email.studentenwerk.mhn.de [141.84.225.229])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1E3265CD9;
-	Fri,  3 Jul 2026 16:03:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C840A261B92
+	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 18:30:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.84.225.229
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783094591; cv=none; b=sezVmjZUNYZUjxuUkOBCW3Wb4AgDbMrCYd9rvCRhC7dBC9naQEAg+N5nxf63yNZdeS+TObWvDEBKtEsmAry/Ea+Bixq3uEA0HZFFKKvaTeovsStDjYT30fcz5v0SbEUa6nZqmY5PrkvBeJfOmF3Hm4zpfq9jh6ga981xjmwx/Rs=
+	t=1783103449; cv=none; b=ijSI3rnU/nJv+Rds5Npjd8XLfZUqfi0Gw2k5B4fqbw1dYC6KC/BxinmG6xeslOhHnxZ3o6d3BGpvMZI1StF1DesVZAf9sS2aZvQej81tjwXLepW6294OVdGZoAN5JroLiN1ir2g/kbNx6DMS/GbQbMNas/BOoWAkDVKsuaSzMWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783094591; c=relaxed/simple;
-	bh=bXcKhhfsL6UgsrMldjAdCtahG3ljcsAHiMdc+1+DceU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KRcI1A0WupjdXdUj3pM9kY7hWwzhPmez/q6PbXQq7accdol+/oCsvbk2qaxJ/rY6ubiMK9O833HLEir7c0fLzfi1cRIsNayJiOE3PUPG/a8mR8K3e0VM6CPECeZSl41n05Ir2mOcr1rAfwr2r1XOZCuL5Mo8FqON5JIiI66Ogb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mhefmiM0; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783103449; c=relaxed/simple;
+	bh=RV15ipwq4miWMw1ZfmGmZ1dsn7YXEXkRZbYMy4iRgws=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=f56MLDXPIh4FHrqtcRhrXo3xD9hZhWbYT28ENPj7UFP59qwZYoYOJ7nhtvFOHy6FqTvqBSefnFKByYA5ckZJedDxbozvPY4x+npS4ZHpXFGq5vY3gtIOlmVpFwKPe2ttGgOdCd88kNzH9ufVgtXPCVu6oYQAG2U7EpR2vdMsjM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stwm.de; spf=pass smtp.mailfrom=stwm.de; dkim=pass (2048-bit key) header.d=stwm.de header.i=@stwm.de header.b=GfBLVgtz; arc=none smtp.client-ip=141.84.225.229
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stwm.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stwm.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mhefmiM0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B9E1F000E9;
-	Fri,  3 Jul 2026 16:03:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783094589;
-	bh=m3SMrN8TM9wj4tMHjI+jT3uwvFujpNyluzX7JN24lg4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mhefmiM0/Smw0hFxf9rUBN6+rAeIOHHBuj99G+oRbsehzJWU4kSVrnKt9NOf0VLZy
-	 tsrXZeOyvQp34GpSj2yvvsWxTk09sX0h1dWUKqAjDUcCnKJtidTo67othhBURwpIkO
-	 /OmOUfsG2P6ZMC3WYOmmpjuQzzUQd/QPsDITxe2MvdirH0ZbZbl2BJSeR1hbHUqrWb
-	 VD3bYTfMEMDMk9Etq7ldWzRnRpnGYIWjUF2uW3a7CrDPPjhjzjLd8j80PrPJbY0x/f
-	 J9Pri+ZvbQ1wm8Z6Zm5a/B5jGBPgaOKxWhHyng9yUKmrA9SpzIkfgLhk/jpG8BtdHc
-	 a3CCZzbEK1+AQ==
-From: Chuck Lever <cel@kernel.org>
-To: Wolfgang Walter <linux@stwm.de>
-Cc: stable@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Alexandr Alexandrov <alexandr.alexandrov@oracle.com>,
-	Yang Erkun <yangerkun@huawei.com>,
-	linux-nfs@vger.kernel.org
-Subject: Re: 6.18.37 has problems with nfs4 (server), 6.18.36 works
-Date: Fri,  3 Jul 2026 12:03:05 -0400
-Message-ID: <20260703160306.1651327-1-cel@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <114a396bac4fc5e1aa730ea58d59a78f@stwm.de>
-References: 
+	dkim=pass (2048-bit key) header.d=stwm.de header.i=@stwm.de header.b="GfBLVgtz"
+Received: from mailhub.studentenwerk.mhn.de (mailhub.studentenwerk.mhn.de [127.0.0.1])
+	by email.studentenwerk.mhn.de (Postfix) with ESMTPS id 4gsMkk21T7zRhRJ;
+	Fri, 03 Jul 2026 20:30:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwm.de; s=stwm-20170627;
+	t=1783103438;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=94lQu3GW61jSH6v3zV2ia73X9muvR3oPlZ7JCXSRD+k=;
+	b=GfBLVgtzh+2/DMkEt0bb4GGDzWl7g/acjN5Qg3lVkV+CV3Dx9AsSZcURLZfaW05XNp+W5F
+	zek90wpI1tDgt6M8fzt/T+M8hOVRFHPDSGP/VNnijBq7oHCmVbpBDFqxEepLlMd/YdznfI
+	++6MTTIrU979JG07H1IJnfrTHcuyCfHP5nesknClhSSehogi+aP7WGBBg37fRCFgvkxyee
+	gtuf6Gi/4YUZOCzAVVvtW0ddbXF/3do82b7gh5ZIky7+svoEAG842Elp/X+n6Rfw7t5nGy
+	RDP5ZPg4vetkV5kZ54/ZmQ0qHxIxveQOns0hG3wtEjxZ9/POfw+eQlOHBlE8xA==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Date: Fri, 03 Jul 2026 20:30:38 +0200
+From: Wolfgang Walter <linux@stwm.de>
+To: Chuck Lever <cel@kernel.org>
+Cc: stable@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ patches@lists.linux.dev, Jeff Layton <jlayton@kernel.org>, Alexandr
+ Alexandrov <alexandr.alexandrov@oracle.com>, Yang Erkun
+ <yangerkun@huawei.com>, linux-nfs@vger.kernel.org
+Subject: Re: 6.18.37 has problems with nfs4 (server), 6.18.36 works
+In-Reply-To: <20260703160306.1651327-1-cel@kernel.org>
+References: <20260703160306.1651327-1-cel@kernel.org>
+Message-ID: <3d80d1812ab903dbc831fef122d3cc75@stwm.de>
+X-Sender: linux@stwm.de
+Organization: =?UTF-8?Q?Studierendenwerk_M=C3=BCnchen_Oberbayern?=
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Wolfgang, and stable@ --=0D
-=0D
-Short version for stable@: 6.18.37 does not need a revert of=0D
-95f9eb19d5e6 ("Revert 'NFSD: Defer sub-object cleanup in export=0D
-put callbacks'").  That commit is correct for 6.18, and it is=0D
-not the cause of Wolfgang's crash.  Please leave it in place.=0D
-=0D
-The reasoning: 95f9eb19d5e6 touches only fs/nfsd/export.c,=0D
-export.h, and nfsctl.c.  Wolfgang's oops is in=0D
-remove_blocked_locks() -> __destroy_client() ->=0D
-nfsd4_destroy_clientid(), entirely within fs/nfsd/nfs4state.c,=0D
-which the revert does not modify.  That path is byte-for-byte=0D
-identical across 6.18.36, 6.18.37, and current mainline, so the=0D
-revert cannot have introduced the bug and no missing backport=0D
-repairs it.  The 6.18.36-good / 6.18.37-bad split is a timing=0D
-coincidence; I believe the same latent bug is present in both.=0D
-=0D
-Because the defect is present upstream as well, the fix belongs=0D
-in mainline first and is then backported to 6.18.y and the other=0D
-affected trees.=0D
-=0D
-Wolfgang - to confirm this and capture the allocation and free=0D
-stacks, a KASAN-enabled kernel would settle it.  On a v6.18.37=0D
-tree:=0D
-=0D
-  1. Add to your .config (keep your usual CONFIG_DEBUG_INFO so=0D
-     symbols resolve):=0D
-=0D
-       CONFIG_KASAN=3Dy=0D
-       CONFIG_KASAN_GENERIC=3Dy=0D
-       CONFIG_KASAN_INLINE=3Dy=0D
-       CONFIG_STACKTRACE=3Dy=0D
-=0D
-  2. Build and boot that kernel.  Stay on 6.18.37 -- you do not=0D
-     need the revert-the-revert build I suggested earlier; that=0D
-     experiment no longer tells us anything.=0D
-=0D
-  3. When it trips, KASAN prints a "BUG: KASAN: use-after-free"=0D
-     report with "Allocated by" and "Freed by" call stacks.=0D
-     That report, in full, is what I need -- it should land in=0D
-     /var/log/messages just as the last oops did.=0D
-=0D
-One caveat: KASAN roughly doubles memory use and adds CPU cost,=0D
-so weigh that before running it on the production server.  If=0D
-that is not practical, a full log from the first stall line=0D
-onward, with all CPU backtraces, captured over netconsole or=0D
-serial, is a useful second best.=0D
-=0D
-I will draft a candidate upstream fix from the analysis so far=0D
-and send it separately.  If KASAN on the production box is not=0D
-an option, testing that patch may be the least disruptive way=0D
-to confirm.=0D
-=0D
-Thanks for the careful report and the bisect.=0D
-=0D
-Chuck=0D
+Hello Chuck,
+
+Am 2026-07-03 18:03, schrieb Chuck Lever:
+> Hi Wolfgang, and stable@ --
+> 
+> Short version for stable@: 6.18.37 does not need a revert of
+> 95f9eb19d5e6 ("Revert 'NFSD: Defer sub-object cleanup in export
+> put callbacks'").  That commit is correct for 6.18, and it is
+> not the cause of Wolfgang's crash.  Please leave it in place.
+
+Ok. I run v6.18.37 with the patch reverted since about a day (just for 
+the record). But according to your analysis, that's just a coincidence.
+
+> 
+> The reasoning: 95f9eb19d5e6 touches only fs/nfsd/export.c,
+> export.h, and nfsctl.c.  Wolfgang's oops is in
+> remove_blocked_locks() -> __destroy_client() ->
+> nfsd4_destroy_clientid(), entirely within fs/nfsd/nfs4state.c,
+> which the revert does not modify.  That path is byte-for-byte
+> identical across 6.18.36, 6.18.37, and current mainline, so the
+> revert cannot have introduced the bug and no missing backport
+> repairs it.  The 6.18.36-good / 6.18.37-bad split is a timing
+> coincidence; I believe the same latent bug is present in both.
+> 
+> Because the defect is present upstream as well, the fix belongs
+> in mainline first and is then backported to 6.18.y and the other
+> affected trees.
+> 
+> Wolfgang - to confirm this and capture the allocation and free
+> stacks, a KASAN-enabled kernel would settle it.  On a v6.18.37
+> tree:
+> 
+>   1. Add to your .config (keep your usual CONFIG_DEBUG_INFO so
+>      symbols resolve):
+> 
+>        CONFIG_KASAN=y
+>        CONFIG_KASAN_GENERIC=y
+>        CONFIG_KASAN_INLINE=y
+>        CONFIG_STACKTRACE=y
+> 
+>   2. Build and boot that kernel.  Stay on 6.18.37 -- you do not
+>      need the revert-the-revert build I suggested earlier; that
+>      experiment no longer tells us anything.
+> 
+>   3. When it trips, KASAN prints a "BUG: KASAN: use-after-free"
+>      report with "Allocated by" and "Freed by" call stacks.
+>      That report, in full, is what I need -- it should land in
+>      /var/log/messages just as the last oops did.
+> 
+> One caveat: KASAN roughly doubles memory use and adds CPU cost,
+> so weigh that before running it on the production server.  If
+> that is not practical, a full log from the first stall line
+> onward, with all CPU backtraces, captured over netconsole or
+> serial, is a useful second best.
+> 
+> I will draft a candidate upstream fix from the analysis so far
+> and send it separately.  If KASAN on the production box is not
+> an option, testing that patch may be the least disruptive way
+> to confirm.
+> 
+
+I think the memory usage should not be a problem, higher cpu usage 
+neither.
+
+But as it is a coincidence the probability to catch that error is 
+probably very low. We use v6.18 kernels since v6.18.1 on that fileserver 
+and this error never occured before.
+
+Or do you think it happens more often, but without symptoms, and KASAN 
+would detect it?
+
+So I will try running a v3.18.37 + your patch applied. This of course 
+can not prove that it fixes the problem because it almost never happens, 
+but probably this would detect if if the patch had side effects.
+
+Regards,
+-- 
+Wolfgang Walter
+Studierendenwerk München Oberbayern
+Anstalt des öffentlichen Rechts
