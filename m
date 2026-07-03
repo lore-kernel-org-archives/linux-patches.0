@@ -1,119 +1,89 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B789379C3E
-	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 08:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7790D36AB61
+	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 08:12:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783065727; cv=none; b=gs1llqtzmju2nu5BPqGeCSpdhyXkXc49RyulsfKzgakEoohH9MGKKb9C8RBzeD13I3DO7xfz7uBDJyjcQZe58qw+LT+0jOVegfESMa21mLskWtS6n2jOJzokX9QrGcF8mf+xZAT13uQYzWDUG3fSGx/heDgaunfPfbt/6yiMZTU=
+	t=1783066338; cv=none; b=RLoLKZcFyxw5CnmDg2GK0Ni5MwTiMkgeUe41DAgPRcPiw1+GQPhp92w5o+zl7sM+7jaKGO1NkLznJ1NB8aESOGvv/od8IZK54AnOGVHZ+2sSxDJjLBlisHO+SPPEDuzzh4L0/1O1ohWUINfCzy9bq19/J5WwVQPBBQ60fN05omw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783065727; c=relaxed/simple;
-	bh=oufx/YT3B18z7DkgI3xZd+Q1Vx9EAplrMEvY5I4LI74=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TPdJLYt0BYimaOhDrYBW3MFd+4y0/GqJqfFVO9ILmUKlLJY+uWGx8RUZbX3RB3CKnyIPVXizOPKR/k41RQnxJTsZmHz0GJQOqfaYqCYbAkL2xI4stwAmDWfLSracJHlOVhjeIDGA+zhnocI5IrPH3eOLmhduuMUevw0BnENkW/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=fs3CKy0c; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	s=arc-20240116; t=1783066338; c=relaxed/simple;
+	bh=DGy4flH25VXMiKCsIgEegcwD6RqmMUEhC319grkQUv8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ceqsKdl4aP0KnIe0tY9yIWbjTzP4q9R+xCGodPZlKqmGll0h/mJ4iQm0xmRSge3HxyNo6k0EMUaF6rsezSLo1vsQKs+3HCQGNlYYZBCCXY0ijzsNK1RxjZuCK/jaUos/sm2a1J8seH2jfk2EMMwWw8zW245OUsDjAQivQHzYmzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=Dmg3b8Q5; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="fs3CKy0c"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1783065705;
-	bh=NNXufMQul2FJzTPQw9me9giHqSXX/0i609aKfwT0fHk=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=fs3CKy0c6ZZM4ugJCQqTgzJclkgvndbWh9+PYbpqIZHMbtcyS65LHeGXCGX+vjC80
-	 H10NnEunk0e/qRSG05vEpF0Lf3zbWMyONyGcUyzWvgNH+O0cr85KARgWPzF7nFnIRt
-	 mx0MVJfatn/JCiH/4U0FNIXbVvSL/OFm82VrLurg=
-X-QQ-mid: esmtpgz16t1783065698tef29bb39
-X-QQ-Originating-IP: eYEIxAm8QAvKc69W9TO873BXENXnRHEHfnT77zTschI=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 03 Jul 2026 16:01:35 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 15110257462297389488
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.6 000/175] 6.6.144-rc1 review
-Date: Fri,  3 Jul 2026 16:01:27 +0800
-Message-Id: <20260703080126.567705-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
-References: <20260702155115.766838875@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="Dmg3b8Q5"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id D3E03118B69;
+	Fri,  3 Jul 2026 10:12:02 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1783066327;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=+30KoiDN0n4qlGlim7ciE6Rnij5Frat/7Wyk1wvTAE8=;
+	b=Dmg3b8Q5fSjt+RUsgA2CtUqlvEZaYW7fZs4W8pspf2YILgZ4d2c5QDmEDC39q4RZ3JxXmf
+	2Zt4I8U6T6BZLvrfRoaIs6ytLQrlZGV52wKoAAzocYa98KDxDvPtKD7WyU3kiRZzR7BM8x
+	EEbai8nr5xRjKl4IOR78Nyl/Jz3TCMpu+yGfjHic2pvrHU8olZb2eWemC237iB/88JIuRQ
+	EzGyODsbsPlbEri8ZnWwY4AFlas58PuhWR888CYIFzWu1bdVSdhgB5Q3oefPpKIG+X1D9v
+	gZpn++QLJXYPcKkRmdMiXGyGr2d5fvnYMoUMAaknTxhBAvfE32xpEkl1W9D4RQ==
+Date: Fri, 3 Jul 2026 10:12:00 +0200
+From: Pavel Machek <pavel@nabladev.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/204] 6.12.95-rc1 review
+Message-ID: <akdu0Cxu84Yr0qXQ@duo.ucw.cz>
+References: <20260702155118.667618796@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Mj9e7MGzKUWXaTTbyIGcHbeh0LIQR/u76P2qgjsL8vv+3lfdkwtl5coV
-	8DOYPWIsZrvxk1LZBXIAwlufHkoNLf4Unjp3rOsa9OF+0pGHXv8smuwKbdjydIfMo1abIE9
-	0TD1EBYckpFvgPHzqbJ1+3FOoLs+pbZW+wqKnpN4tnniYX8VRX1WvV4qC374GC7zCfMT+7+
-	mes+cvqnVUC1Gpyw/51awHNSK1ab7T+myXMiiLhdWqrHP3gsEwjfb4Zix1mCEARiJliDBWC
-	oxFr03eMoburwSLi2y/PT6BJ7XaRx4P4rpHsLUJalhvm6bw8tCKFE6jWHStAR32ZO38cc9E
-	Ffr9M1BUl7tFnnx1Zg5wGcxvDxgWJCn7cunX2UeDMubNidzsmG0iT48KPdBBnJvzPc+vAc4
-	t6n5lscP1sBZ+V2sOpCyyZWbMB9xNAyz5bPZyuoXHjw3kIVg9iv+9rWWWQidcHm/q91rQrf
-	yHgYi2OK7Tz6i9eYtBvAXYI4HnJn+i0SJk3WkdLbKSkzrdQFlf3FhTndlVXoqaPE92BVG4c
-	hAMngz8zUkJNc2zMeIfmLqgUBqoXEspu0lYl4mZdP+9Fx8+ThxewTp9+8w8ds6PZ8jReeG9
-	imrIN1E4DgGds2nrvP/lTc5HnN5WT/AJURSggbDKP5ah/Nnmp+C3MvNZuzusEvsAF3wQNJe
-	ghm5V95HcocnH1T8DzfpmGEKXCEbtbfxOV3BRxETn10WLYBg2bnBRnMFMnNRm3eqpivCb4s
-	rX/I+TpLsaMDQ2BuLBoVjOX+NGoqQauT3rH+deA1Kf9Z5YVOozoO4UVrLlHh+4vjagoXtdd
-	1lVbFVyvbisxYr1f/ekfYSajAjFjemOQ9EpRoqtbc9u5W3I0QSjZXVQUjqczGqCbIqUzqkA
-	srke5h5F6zR4jQX6QHaJVg5TBNHSxFNb0OtsZg4/3hZ+ec3xab/ehiOjZD/ItIrn8osv9ks
-	x1enyeECjxkOs/Fol0sRYYbWGThlHRQoPVuJwyPJrEyYjyDoyNabN76jsM8OJ2h2u6q/qaq
-	HvE7cuBMrkQDIicRYt0jeI88gIkGUKnddtmuTOkxksB9u9VTIeeSpIYxjQv5LH7FYb4Hpg2
-	5WZ7f5jCFmsOIOyF9eKmoqIo5+7Cf7XwA==
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-RECHKSPAM: 0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="I4cJqBhJU+Cw9SW5"
+Content-Disposition: inline
+In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-Hi,
 
-Build failed in loongarch arch, which resolve in link:
-https://lore.kernel.org/stable/20260703032401.857553-1-chenhuacai@loongson.cn/
-https://lore.kernel.org/stable/2026070318-monotone-mug-74d6@gregkh/
+--I4cJqBhJU+Cw9SW5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-arch/loongarch/kernel/smp.c: In function ‘stop_this_cpu’:
-arch/loongarch/kernel/smp.c:616:9: error: implicit declaration of function ‘rcutree_report_cpu_dead’; did you mean ‘rcutree_prepare_cpu’? [-Werror=implicit-function-declaration]
-  616 |         rcutree_report_cpu_dead();
-      |         ^~~~~~~~~~~~~~~~~~~~~~~
-      |         rcutree_prepare_cpu
+Hi!
 
-Build tested in our x86,arm64,riscv config successfully without error.
+> This is the start of the stable review cycle for the 6.12.95 release.
+> There are 204 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+CIP testing did not find any problems here:
 
-BRs
-Wentao Guan
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-6.1.y
 
-Log:
-Linux version 6.6.144-rc1-arm64-desktop-hwe-g383d9611bec7 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT
-Linux version 6.6.144-rc1-arm64-desktop-hwe-g383d9611bec7 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT Fri Jul  3 12:05:13 CST 2026
-Linux version 6.6.144-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP
-Linux version 6.6.144-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP Fri Jul  3 15:53:55 CST 2026
-Linux version 6.6.144-rc1-amd64-desktop-hwe-g383d9611bec7 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC
-Linux version 6.6.144-rc1-amd64-desktop-hwe-g383d9611bec7 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Fri Jul  3 11:47:09 CST 2026
+Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
 
+I see -rc2 is out, but I don't have results for that ATM.
+
+Best regards,
+                                                                Pavel
+
+--I4cJqBhJU+Cw9SW5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iFwEABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCakdu0AAKCRAw5/Bqldv6
+8k8pAJYlm0qlnkTuifTgyCy1VbvZCvvsAJ96UE8/TVhSRbUunv1jtl2ESQi9qA==
+=Al5U
+-----END PGP SIGNATURE-----
+
+--I4cJqBhJU+Cw9SW5--
