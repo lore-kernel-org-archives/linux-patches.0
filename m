@@ -1,78 +1,82 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D633D9559
-	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 12:32:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0553D34B9;
+	Fri,  3 Jul 2026 13:01:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783081972; cv=none; b=WOCQ6pZcV1kP94zOegvZT7dEK0F1kD4VhRNx3RnA6wfi5O0F0py2no5Bqw34UtJYTDIGTra1UMvgaMNbMfS+Ua8DVlpqpPNCBsxuPUReAvrRu78c6jwIE1AtKqcYZQBkU3OIUu3pu8wZA1TuTtcDqfkEQrsi5DXO3/AtZP4IU24=
+	t=1783083702; cv=none; b=iC1xbYUHHwnhWO+p6+8oO/H30QTY2IIQI+1B4skP/CUNxKCOxMp/J4Ca95lMQfKp90RCSBNeXf3Jt27rPfB0aLbE0672POBGd1wVLflNQiht+SvlLqNpztf5IviW6EGdQuC/aa24CxG8FnjWgL5OJ+jX596hwtMy7E4/QE9oMkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783081972; c=relaxed/simple;
-	bh=nmZA6+uB3urD2hKCpKw8hiD4oFjQ9dwF7f3r4Tfky8g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0NlCNGXgD0iVoJe6263vkNnnmGCxrUlg1ANN2l99oEXwbbkzcypTdiub7/W3x73rTSFxefjluUQ7CrXD/RNlCLao+ttRvlyIjpmUlP7tI+yfiR4xx+8e2K0kF6kR+RW9JbrWTS0sL3tsaq9nX8JOlXt5AKBM4cbOmJI3270ybE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lGEn1QW0; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1783083702; c=relaxed/simple;
+	bh=AbzBDH3T+wh4F+diDHMBqWKM8WckEbhLYcjXYqcEh6E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H482JGDEjTFDRLrt4m7rjM0S94zUyeXOvUxp9UFWADeoMyo7g57tfQvd05SObYVoG79bXZJbFuW+gNwkEGmUM5yMre51/AvjhQjdm7K1aOLiQT7gbc6Kxtd2S3JeJkmdgaOBfG9CRtPT/ZHO7Q+qPyYW1OEZHR+9q5n5gGpnTdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X4x+MK1P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lGEn1QW0"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1783081964;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KPobOMpzLXIZ6h+MVV8WTmoa13pxNOpbezeoUAZoB28=;
-	b=lGEn1QW0L8yjWbmvygdeC/+JFPmdBuDOtLNHL0GwaV3OabcFTtTB7N57JCebnvsxY5f11U
-	JxPftL4Si3/LLOk4OVjNnBewAIQz2oL3dsHYRBTXUfkxsTC1OhC05Y7sLk10yR3fUokWTH
-	pa9kLdLXv25oUUqe2O91ufSHmFeBjV8=
-From: Usama Arif <usama.arif@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X4x+MK1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB631F000E9;
+	Fri,  3 Jul 2026 13:01:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783083700;
+	bh=8BWh3P/p1AtnXbYiaKGUXteMwmA14h7nnMyUaFNgjds=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=X4x+MK1P9orpK0tchxOID7y/aHuivL3CiPn6/RvGs2bsyBty6EXVwKK6L7mzTea1V
+	 XQO9TCs1Vog1B17n+JMiFa5YLH8HAm1Frjyvqjiz4f0cCZBqTtpRBtkOSgkRK5CHAK
+	 NPugPbKPzHmTCzyuIhVPuXLnD/ecyMRlT4Fd+IupeTrHH6RioOYeebf6ruAezM9G0S
+	 z2c5Ep88R0JenhY2jRzT4O28ZSSp26Qtd0xT6rLjvMAxQgbkqkYxgebNl9YcwxaiHp
+	 +/qHKMct6pACjRBNANezru4MOy0S4j0xIRy6MszHKYQMXHcQ2idlrfh1uGouw8y3za
+	 Xyxq74I0Kwu4g==
+Date: Fri, 3 Jul 2026 14:01:34 +0100
+From: Mark Brown <broonie@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Usama Arif <usama.arif@linux.dev>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: Re: [PATCH 6.18 044/108] block: invalidate cached plug timestamp after task switch
-Date: Fri,  3 Jul 2026 05:32:35 -0700
-Message-ID: <20260703123236.3139759-1-usama.arif@linux.dev>
-In-Reply-To: <20260702155113.020016705@linuxfoundation.org>
-References: 
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 7.1 000/121] 7.1.3-rc2 review
+Message-ID: <55a271b7-e62a-4aac-b58d-78607eef3ed8@sirena.org.uk>
+References: <20260703072822.817328079@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-
-On Thu,  2 Jul 2026 18:20:41 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Usama Arif <usama.arif@linux.dev>
-> 
-> commit fad156c2af227f42ca796cbb20ddc354a6dd9932 upstream.
-> 
-> blk_time_get_ns() caches ktime_get_ns() in current->plug->cur_ktime
-> and marks the task with PF_BLOCK_TS. That cache is only valid while the
-> task keeps running; if the task is switched out, wall-clock time
-> advances and the cached value must not be reused when the task runs again.
-> 
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="k5x9XtRP3mHTq+OL"
+Content-Disposition: inline
+In-Reply-To: <20260703072822.817328079@linuxfoundation.org>
+X-Cookie: Another megabytes the dust.
 
 
-Hi Greg,
+--k5x9XtRP3mHTq+OL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-It looks like this patch was backported, but the preceding patch [1]
-in the series was not bacported to the stable branches. Both this and its
-prerequisite have the same Fixes tag.
+On Fri, Jul 03, 2026 at 09:35:59AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.1.3 release.
+> There are 121 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Not having the prerequisite will result in a NULL derefernce.
-Could we please add [1] to the stable branches?
+Tested-by: Mark Brown <broonie@kernel.org>
 
-Thanks!
+--k5x9XtRP3mHTq+OL
+Content-Type: application/pgp-signature; name="signature.asc"
 
-[1] https://lore.kernel.org/all/20260616141604.328820-2-usama.arif@linux.dev/ 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpHsq0ACgkQJNaLcl1U
+h9DZLAf9ElVRlI9ve+3ub8K2BLnTm7HRUNLcAL42Bw8rMpqk1o0pg7ZJjZLioq1Y
+1RYxiTgdXDG59wjBJuGfmGoYmZDklwyDqjm4DH9GIt+yUfRnfPkhvIsrGt5bbTvU
+7ihI0RsOAg+zLNqkZIZmkxbxeOS/btJITX3Q7jsUU9T/eDun2B8O+U+r/TVqAHOm
+uWNDRwf9ZGXX4ZCt9W4onOs9y3eIg5VQAUwxLPEGXF7Fw9SjZF+k+INKztaG44GS
+HjMfWZuQI6Y2I7MqqmJJOFV2DrrPytG4DIiQLmMdHHdzqNs9vkFAFc5oEWm0RHUu
+L9cN8OcNqXgAbHzhVKKLJalDu2CW6A==
+=c+6j
+-----END PGP SIGNATURE-----
+
+--k5x9XtRP3mHTq+OL--
