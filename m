@@ -1,52 +1,52 @@
-Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
+Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8693655EA
-	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 06:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA1C2652A2
+	for <patches@lists.linux.dev>; Fri,  3 Jul 2026 06:33:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783058901; cv=none; b=myCRfIdwCKMSAFenOTYRgx/+9jjBlO6JBz1pom2FUj0PJCK8Il+7/s/09mJ+6/1bbw39gqlgslQrJB51sY/FzzjlTvihiERiLRIuj/gw+cEiHQ/movlXG+c4nJTaCBdj7ysEANg3o0HTmoNR7tYoN+iHexWoHtZl2M2lxvJdiV4=
+	t=1783060420; cv=none; b=nvAprflrTqQCYkfOvJNx3qArqzMKNK+2OoSR5vgKjUnzIlrflphqNr4sJSyraKXVY3HZtqOHEhyxvjJyLJA5Hb9SRU1BGFfSs4P6w4EkgcTsK+h19EVWNHayJCVEqGczkAEK1etfAnVU6mZXoWdCpEX2GpUr1Rc3ENXWSPpsbUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783058901; c=relaxed/simple;
-	bh=dx9w94AhTWx/gq9vAv9aqaRW52yBBm73UOM5KjQ2DWM=;
+	s=arc-20240116; t=1783060420; c=relaxed/simple;
+	bh=llPMnD9CmTO/YJZHWYq4xGkXOuYsf1H2zGq5uGLzrL8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b0eglUoKx3SpZFI2yze2fqkoidmTz0lXosZ6AUQPJk3atUaj2syG/RpqSrHbRdc1xRgAcw8zNZ8FBaB3+TQBiJDUDoXkysrzqIPKpQYyb7/xWpEcFBQw/iwit2Q3Q3hxulgWqDchUBQyGV0FdA2VDBh3N/25ZV8XzD12Cqzw3Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=e/57qUuI; arc=none smtp.client-ip=35.89.44.39
+	 In-Reply-To:Content-Type; b=dgTm9ZHS1GUud3zeolAjI3Xgk3pI/r0WxEQVol5NhO3pr/s2Dyh/b032PcCvUA5c8cJ1JUZ9s/z17J6iK1qU6137h8FXj6lNOWGc8uLfIJm2mtAH25U7dolJlGoVltTkhcKG2TNYjgmVPOLDT31Hb5RO4uCij7wMY46Ekj/J9rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=NnC7qgJd; arc=none smtp.client-ip=35.89.44.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="e/57qUuI"
-Received: from eig-obgw-5002b.ext.cloudfilter.net ([10.0.29.226])
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="NnC7qgJd"
+Received: from eig-obgw-6001b.ext.cloudfilter.net ([10.0.30.143])
 	by cmsmtp with ESMTPS
-	id fPS0wbSJvjgwefX4VwSKgf; Fri, 03 Jul 2026 06:08:19 +0000
+	id fPXtwMcQFMFEgfXSvwk7eF; Fri, 03 Jul 2026 06:33:33 +0000
 Received: from box5620.bluehost.com ([162.241.219.59])
 	by cmsmtp with ESMTPS
-	id fX4UwZn8booyIfX4Uwgc48; Fri, 03 Jul 2026 06:08:19 +0000
-X-Authority-Analysis: v=2.4 cv=AZ6xH2XG c=1 sm=1 tr=0 ts=6a4751d3
+	id fXSuwmiVtUsP9fXSuwTJlA; Fri, 03 Jul 2026 06:33:32 +0000
+X-Authority-Analysis: v=2.4 cv=UPvdHDfy c=1 sm=1 tr=0 ts=6a4757bc
  a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=Fowlm8kEtbx0O9ktuRkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=L5EjiQpGQaFGZdqT14z7:22
+ a=HaFmDPmJAAAA:8 a=QUYbzp3p0A3I4yDEf8UA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
 	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
 	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
 	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
 	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
 	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ap2WA2OS9VyfySBBrFn208zBSGOqORd1QUPMQwh1n5A=; b=e/57qUuIL6xA1I+Ku/KaTXEjFS
-	2vJSnyVtO0HOTzPl4FYrsixkycA/x9tll3DsXAwpJPAiIQWFrpQLVHNEx1fqBrCXWY+CCL1Y/a7o0
-	fjvU9C6HwbjJJPLqXjaX7T00rQZJIOgAgIHiVbDSA5w59r28QHgv4tQBpHp7DnpACGFrJgEdiaO0m
-	erj3W7Gc3V1x6QH+s99qxcEIAgXKp3eudXyxEBwPIrLH9274uBnnaOUnAbTxJkBpHoK1y1pbvVjXi
-	jXPjbtcOh1U7kyHR7uFjKfRfvLn9esKgqbPs3DKuCn/IB/C34PrNzC0JNN0p4MnVPipvZ3wM4prMe
-	yspxLoSA==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:51120 helo=[10.0.1.180])
+	bh=XiPJyo+3hduYqvapHluQcwtJSbaZiATUs9s0eJ7l3Cg=; b=NnC7qgJdaosk14D3pUgUhfCC3m
+	vyvmkM92vS8XIVocKQm/sWCW/X932lMO5srckeBN3XLr+1eKAQzqZIGhZF4WPhD2jFKlpiqaccMHm
+	+bm63RJp7Y7FLZqGra+vyumldd3WE/Iq1ZsxLh6Isc4RmEUQZKnQRO5K5LgRvIKq00j/+dilGbM0e
+	Vmi204UMXzAJtVnLKpv9f0Y/WqsjfIU+feKzDU7abYBql8tg54m/gAIKP91OcI1d1PxMeGlVKqXqh
+	WWLE86RX/8VEVsSvEvd+SjEc9/7gqLzH/RkOWljvlVkPVdBzlxT6uQb6F5hyzBPu0dyKzWbTxVIf6
+	jjIQSs5g==;
+Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:34798 helo=[10.0.1.180])
 	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
 	(Exim 4.99.2)
 	(envelope-from <re@w6rz.net>)
-	id 1wfX4T-00000000q57-42oD;
-	Fri, 03 Jul 2026 00:08:18 -0600
-Message-ID: <c99b489f-c5b3-410a-a2bf-cc9816bcffc7@w6rz.net>
-Date: Thu, 2 Jul 2026 23:08:16 -0700
+	id 1wfXSt-000000013NJ-47qb;
+	Fri, 03 Jul 2026 00:33:32 -0600
+Message-ID: <e14a4bab-c513-409d-b3c3-33e26ece23d0@w6rz.net>
+Date: Thu, 2 Jul 2026 23:33:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,7 +54,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/204] 6.12.95-rc1 review
+Subject: Re: [PATCH 6.6 000/175] 6.6.144-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -63,12 +63,12 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20260702155118.667618796@linuxfoundation.org>
+References: <20260702155115.766838875@linuxfoundation.org>
 Content-Language: en-US
 From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260702155118.667618796@linuxfoundation.org>
+In-Reply-To: <20260702155115.766838875@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - box5620.bluehost.com
 X-AntiAbuse: Original Domain - lists.linux.dev
@@ -77,22 +77,22 @@ X-AntiAbuse: Sender Address Domain - w6rz.net
 X-BWhitelist: no
 X-Source-IP: 73.162.206.103
 X-Source-L: No
-X-Exim-ID: 1wfX4T-00000000q57-42oD
+X-Exim-ID: 1wfXSt-000000013NJ-47qb
 X-Source: 
 X-Source-Args: 
 X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:51120
+X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:34798
 X-Source-Auth: re@w6rz.net
-X-Email-Count: 18
+X-Email-Count: 38
 X-Org: HG=bhshared;ORG=bluehost;
 X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
 X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfDYG9s8kIzQbcr8UOhLFl0wCf+S9NaTRr7NaqSb01gH1XCtOjSKP/vA0capklPEhp3pSRBmBDc0h2KOs5X7KcWAghAtId03pXDj5k3Cb38hXFNiFxNIF
- d+i9bGygH2jDp9HmDAovoY+N66v8PmG/FXjovAlR21hEoHvJJfyXJ0LFp0skQ9Um4l9bucmlO80GiQ==
+X-CMAE-Envelope: MS4xfLax97+jy9fVoXzQD7YFCp9ieJeuMqOdKa44v4xaCsVs+WE4lTjN4dIEaTvXwNKl79WOtu2QLw0PAtiMlUotgMWdXC49Zcte/sneFYH7o9CQXd9vIZ9U
+ zPijmFmNtV9GNkoQ89siQhveZZHL+QqStvRIwNUnCYe9GGcJaxr0RoYjCGTRWU/dEVl7IQnh4sAJAQ==
 
-On 7/2/26 09:17, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.95 release.
-> There are 204 patches in this series, all will be posted as a response
+On 7/2/26 09:18, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.144 release.
+> There are 175 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -100,25 +100,16 @@ On 7/2/26 09:17, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.95-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.144-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-The build fails on RISC-V with:
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-In file included from mm/kfence/core.c:36:
-./arch/riscv/include/asm/kfence.h: In function 'kfence_protect_page':
-./arch/riscv/include/asm/kfence.h:25:17: error: implicit declaration of function 'mark_new_valid_map' [-Wimplicit-function-declaration]
-    25 |                 mark_new_valid_map();
-       |                 ^~~~~~~~~~~~~~~~~~
-
-This is caused by commit "riscv: kfence: Call mark_new_valid_map() for kfence_unprotect()" e4cd475b84f3803fbaff874d5db89e1028bff4cb
-
-As already reported by https://lore.kernel.org/stable/6c5c0723-66c6-4f9f-8021-2562efc95c6e@iscas.ac.cn/, upstream commit "riscv: mm: 
-Extract helper mark_new_valid_map()" 9ee25d0a70ff4494b4e1d266b962d0a574ef318a solves the issue. This commit cherry picks successfully.
+Tested-by: Ron Economos <re@w6rz.net>
 
