@@ -1,118 +1,138 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35D0433E7A
-	for <patches@lists.linux.dev>; Sun,  5 Jul 2026 15:19:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783264760; cv=pass; b=Wu+7s/Rg7Vg45iNk4+zYxow+Dzw+i0APilNgEZMpc7lopsoX5q5NdiwhVenAqtn9/CkoFw3D2x9edgSKftBgTzCPfjfAagX86fzAA0NYDJcARjKF5VIT8Sopqr9QrlwUAUKHCstj3A2nkdBezlCnG4pdLobtC5l3Vv9uoLSqc/s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783264760; c=relaxed/simple;
-	bh=oP7nSsm92j9AKFJ5eaVUz/K2L8mjciRFihFP24h4pN0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lJqqUUiQOs0LO6bguvvOvnYo0oO55ob7ZL/KvidbbbeSVOSuR5R2Goj7DpkykHZTqSHJFtcmcgSzOkMN0kX7wxvXrn3rk0Nh1eFh82TfgXmzl2xZKSU/i+R9cJOBBnRD9CmlmItazFBkRx+u5C1wkt/SokGf70tUTyv6nQ3pWNk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQfrf5Pg; arc=pass smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQfrf5Pg"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2cc73e322dbso7140625ad.1
-        for <patches@lists.linux.dev>; Sun, 05 Jul 2026 08:19:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783264759; cv=none;
-        d=google.com; s=arc-20260327;
-        b=iFd7szuyadfFMgHGnR3X4EnrEXjIOvyAxEqMqzPy9seUp9eMKo42oJWFuS5Jt8cJWM
-         WUr8BrYkPfXvarO+DYEap5DeMerThX5PVvh9WaPljfQYqAKce7VANXalN2mHD7ZtqFYg
-         pwjft2clfA5GuDqIwt7ISyJsbNKTaMWeM803bvm4opOYDAGAtkkblE3R+rEBdI5QKGVI
-         LKy3PDnlNZd8W7sgWtFmgAH5cmr5Ttr1kAmmQ0cx+gvlRwwzTejsbhZ8fBe6HAuD2vrQ
-         YCmMj4CKsWo1/Ec7TbO0mHRV+zCD5bZaCMdU/4z9PqMuhkqBdBRkCVGgxIxGf53BjuVu
-         IbOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=oP7nSsm92j9AKFJ5eaVUz/K2L8mjciRFihFP24h4pN0=;
-        fh=DfmxYTP+dWtmhr8aXBCfOOo55IfmM32jEYwUWDNCvso=;
-        b=IvMUCE2SykNgQxBU2eLbeJxEiqnODkF/AGGabf+cYAgncy6SPhjZ/y8L7L0LEY/nQ/
-         nl6aKLUzDs9QcYWjYVsL8XamCJgukfz/Y/Cv+axxxIEJyXEjbLxSJRZsFu+WeAMFliLq
-         UvFF/kPdH//dezT4ffFQqFI+zN/eSjlsenwjOeAWgB57ZILJobF5206+1GcVrYcjIlm0
-         lsHsiPt47DjgjdH5AWsgoZ/M2KTRAMwXvV/nD0458dlsKkvc2Wvv6mtq78r7BOcXbPn/
-         iiDz96GgQNnlkLvMy8ResEmGp51eQJTufBAGKrp02+cpc0j4w27Es7C83JNNDh8G73NL
-         5GZA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783264759; x=1783869559; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oP7nSsm92j9AKFJ5eaVUz/K2L8mjciRFihFP24h4pN0=;
-        b=gQfrf5Pgxo4KrH2Y2uWc+9+zo6vXt1WoU9Cewkvow1kX9quJwXdvAryfrFebEbpBub
-         IvODUMCkLw8hSucfAAYe5SV5m3TwTR04ioNg1/KUWA12BhSnxKye7oEyjPONvP9ad55d
-         CrhFw0Ljyjad13atUMJNvWQfP7+0mFWpo1tBjvrtYnbkYpDSedGsIt7cvPBD/9hwh5S5
-         pry58tia8hmbdB6PGwrnL8+mO5oJ+J70juCUWQfkBFPV40C9SNHNiHhSOOqIoAhoarL3
-         TmVbsQCTuxN4Z5xe+4N4TrUN0Uh70XFvr/KQxQmE0xGgp/MKO7c12q6iVGOaOLvnQPDF
-         qaPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783264759; x=1783869559;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=oP7nSsm92j9AKFJ5eaVUz/K2L8mjciRFihFP24h4pN0=;
-        b=Zp4d6MgAa6K9aRIpP+57oW6d+dNbr82JS1N67r0KJl37JvUHOoKwmWiaOnsuwKklXJ
-         VFwOg5Dw+DWcsP2qYcbGXI4xsyM2JHXvvB4upnWjHvu05/6xQnxlTMVOaRd19kAnAmaa
-         tydY74rJzAG8Y2NRdF9peN1KdQV9VRUhvo18RSTV9l3AzAhdSS9vyr/ov0axJ7rqGTGt
-         U4j8UwEBcreW4MdgLnfxnYccweq2IKQpmnY5pGOxic9q5UKnr/rC5Pdw+tJ5PMlpYzT7
-         lyXJHc7J1RUZlrerKVSCNNc+VTfxo793w5XsMvgD0og/FW/G6Q75ENraROPUjeIwvtN3
-         sbUA==
-X-Forwarded-Encrypted: i=1; AHgh+RrEMdwkw3bd0tTnVEsGMZgbXI/yAgxtcRUMpv+dMopAxxMUxBVcJ1Qm5OQ2RCYWVxSiezfTg+Wd@lists.linux.dev
-X-Gm-Message-State: AOJu0YyypT2+cSX2eMiePZejb3pxmplS6fjHFVDuRapZOT2Jie7MgPCV
-	tQGvIIm1eCX4ZfrNNqErpVlBrHqhR2lIbFFhXfXr1/RrH3f1f3h3iCM93RmCG1MZki4V1l8av2J
-	scuBMEqwQsp+n6L5mq/PY2E3CbsGfZLo=
-X-Gm-Gg: AfdE7ckPIxIdPeoRbKTh2zL+gLYfk1CnMgqFF/i+96qC42kyZ5jI4D6Rk/fCR0Se9Bc
-	nMMNkZ3+gJImGC0w/0q5vYCAyhQNMWvt82kpNooajbIjPnVqptTbbrfohO373YBD0NTGoInejVJ
-	0K+XOhLzW00ibasVt1465htmDo+h8zQotSnCg/Fzod/OEZxMXW/0kzl39NUon1IcNTByL+va70l
-	O6R4O8ujAbF8s7bT4nnLOFTDbYK8PmHygvaYkoTAQX9BJQNnPxoFqZPN5a5nU0Dd6Ylmiwa9aQ=
-X-Received: by 2002:a17:902:ce10:b0:2cb:ea0b:9164 with SMTP id
- d9443c01a7336-2cbea0b92f3mr66876105ad.6.1783264758990; Sun, 05 Jul 2026
- 08:19:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05F8233721;
+	Sun,  5 Jul 2026 20:15:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783282518; cv=none; b=L10BG4+7aITbEaipsrXasNsLsdaMt/36myhO+Eb+fW89eiGU9We5FRwpK3DJ23IW82xVlByIOPMhGXIeMstRC77i4T4p3vmK30cqY6c8b5+ljsd/IQdQG+6rH1cmxfCZY2o5/LBmE7U8RUUd9OPdCLs/PCkiu2RbEmwpr9ELuyg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783282518; c=relaxed/simple;
+	bh=7K3ufwKFVD4323zTFUVFgZ2GEeI1mMEXqrKhI2bpY/M=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Z53Di0cLmwCpC/Tpn1Gup6NM4fvi2PzfTglraXpeNAxB2jURVoBAilmdLYGWvwUQ4CMpYFT6M3/H85yTkbc34X+9q+GtEomAOHLJd4afzRvy4izZJFa7L49xU8EaMs8UGHcmbjIlhpe7W+YwTsNp0B7CuxXxRL/g7tYShsYouEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wgTF4-000Dx7-2h;
+	Sun, 05 Jul 2026 20:15:06 +0000
+Received: from ben by deadeye with local (Exim 4.99.3)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wgTF3-0000000CSIH-4AJd;
+	Sun, 05 Jul 2026 22:15:05 +0200
+Message-ID: <8601edcd7c9bcc70e75f85a758f8818c57945d07.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 81/96] nfsd: check get_user() return when reading
+ princhashlen
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Dominik =?UTF-8?Q?Wo=C5=BAniak?=
+	 <stalion@gmail.com>, Jeff Layton <jlayton@kernel.org>, Chuck Lever
+	 <chuck.lever@oracle.com>
+Date: Sun, 05 Jul 2026 22:15:00 +0200
+In-Reply-To: <20260702155110.683851454@linuxfoundation.org>
+References: <20260702155108.949633242@linuxfoundation.org>
+	 <20260702155110.683851454@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-SbwbxIMGqu+NRlRe6o3a"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260528194657.359703301@linuxfoundation.org> <CAFQ-Uc-wu8fbTDXhtyODCz36_1DBue5ay7V2LpzjrUgHs+0WvQ@mail.gmail.com>
- <2026062933-storeroom-amusement-0b66@gregkh> <CAFQ-Uc9p7PhXp-FC4N3iYAtyeKgN6z4A_+L8YwKDAkXxZAvksg@mail.gmail.com>
- <2026070446-blank-duckbill-13ec@gregkh> <CAFQ-Uc8AAEGw90BPximQm3cLzB+KiH_PXr-UZEPK9nvueMGtSg@mail.gmail.com>
- <2026070406-squander-geography-213a@gregkh> <CAFQ-Uc8CDnGUH3xhjaVBd+Dr=+b7Lfu1SUrGGh2gQ17WW+gqxQ@mail.gmail.com>
- <2026070421-overflow-voyage-73b8@gregkh> <CAFQ-Uc9JvsHVCgj6ydVrg++hA4CCxw+FuQYfKzBC65HyuJNMoQ@mail.gmail.com>
- <2026070400-broadways-designer-ea0b@gregkh>
-In-Reply-To: <2026070400-broadways-designer-ea0b@gregkh>
-From: maher azz <maherazz04@gmail.com>
-Date: Sun, 5 Jul 2026 16:19:07 +0100
-X-Gm-Features: AVVi8Cflt3WU4EW9KvEe6pUrgWLhymOYj-fuuxb_awP3laKJg2ZT0yxF-A-6ylY
-Message-ID: <CAFQ-Uc_+TQutABrGb5+JvrBLUyq30KcfLURQHoJdCw_Uu9-MPg@mail.gmail.com>
-Subject: Re: [PATCH 7.0 345/461] vsock/virtio: fix zerocopy completion for
- multi-skb sends
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
-	Arseniy Krasnov <avkrasnov@salutedevices.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Sasha Levin <sashal@kernel.org>
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+
+
+--=-SbwbxIMGqu+NRlRe6o3a
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Yes i am sending to cve@kernel.org, i sent using another email just a
-few seconds ago, please re-check?
+On Thu, 2026-07-02 at 18:20 +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Dominik Wo=C5=BAniak <stalion@gmail.com>
+>=20
+> commit e186fa1c057f5eccb22afb1e83e34c0627085868 upstream.
+>=20
+> In __cld_pipe_inprogress_downcall(), the get_user() that reads
+> princhashlen from the userspace cld_msg_v2 buffer does not check its
+> return value. A failing copy leaves princhashlen with uninitialised
+> stack contents, which are then used to drive memdup_user() and stored
+> as princhash.len on the resulting reclaim record. The other get_user()
+> calls in this function all check the return; only this one is missed,
+> which is most likely a copy-paste oversight from when v2 upcalls were
+> introduced.
+>=20
+> Mirror the existing pattern used a few lines above for namelen.
+> namecopy is declared with __free(kfree) so the early return cleans up
+> the already-allocated buffer automatically.
+>=20
+> Fixes: 6ee95d1c8991 ("nfsd: add support for upcall version 2")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Dominik Wo=C5=BAniak <stalion@gmail.com>
+> Reviewed-by: Jeff Layton <jlayton@kernel.org>
+> Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  fs/nfsd/nfs4recover.c |    3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>=20
+> --- a/fs/nfsd/nfs4recover.c
+> +++ b/fs/nfsd/nfs4recover.c
+> @@ -815,7 +815,8 @@ __cld_pipe_inprogress_downcall(const str
+>  			if (IS_ERR(name.data))
+>  				return PTR_ERR(name.data);
+>  			name.len =3D namelen;
+> -			get_user(princhashlen, &ci->cc_princhash.cp_len);
+> +			if (get_user(princhashlen, &ci->cc_princhash.cp_len))
+> +				return -EFAULT;
 
-On Sat, Jul 4, 2026 at 12:40=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Sat, Jul 04, 2026 at 12:34:20PM +0100, maher azz wrote:
-> > I=E2=80=99m using gmail directly. I=E2=80=99m requesting a CVE to refer=
- to it directly as
-> > im going to disclose the poc on my accounts so people know about it
-> > and patch
->
-> You keep sending html email :(
->
-> And are you sure you are sending it to the correct email address?
+I think this depends on commit 4552f4e3f2c9 "nfsd: change
+nfs4_client_to_reclaim() to allocate data" which went into 6.19.  In
+older stable branches this failure path appears to leak name.data.
+
+Ben.
+
+>  			if (princhashlen > 0) {
+>  				princhash.data =3D memdup_user(
+>  						&ci->cc_princhash.cp_data,
+>=20
+>=20
+
+--=20
+Ben Hutchings
+Experience is directly proportional to the value of equipment destroyed
+                                                    - Carolyn Scheppner
+
+--=-SbwbxIMGqu+NRlRe6o3a
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmpKu0QACgkQ57/I7JWG
+EQlVqBAAiZHWV9L660yL37qIUzWKGORHj8g8xtLhm+MWdv4MTKZSpjOFt03DN/AZ
+bcH/O1oSGXWuVp81ryLbviX4vDbUGwQv4CdPOvc6rbgIq7yvHZwZNPOP5/MAxMjm
+t2UFf0ynOPs2quoHc9CRFktSqKGmrfjRLT+U8iJBNQgolRL1gdQJLoniTkhhUIyO
+bPyVPfScTG7rpqlYbQWwTzKoo7DgJqN4OQa+jKdVRDjRKQXuBwbjY4f2DpED1reD
+rqpgmsoszCNNcYQp0oTqw4IUAoz0+btCVTsQTf942Ag7xLKGdazmEX0Wc/BHY/8y
+q2HnG4WUGkognB3ddXgJ210VO2hjiw2jRpfOWtZnXWqmpFciiqQ8mwsBzqld58WQ
+rV7Sa7ufIWqG2cQwCxPpSW6y6cBZF9lTswrb7mePop40ASJaxsxz8AQ02L0tWfRp
+XXbgysLlPW5ujTN2hhssbL3r3fpjdkPCuMvbYk0GKIqO4wXlsV3NlgsPWiF1W6Jv
+jeaKP3FeGZlKAy+Npaic2iYBwepT4mM0MTaEGpmMxb8JniJ4yOv0/iE1EobaloLW
+6b3IveWS7WPaUgkeJlfcEM/9T9sZHol4R7SGx5Eo5Z0cO3aaihO0zhUgZ58befWk
+Qn+355EgDf/bB/yXWhwV/mrHkdmO+zW7IqKP6FLbHxMfuds42dw=
+=xPxv
+-----END PGP SIGNATURE-----
+
+--=-SbwbxIMGqu+NRlRe6o3a--
