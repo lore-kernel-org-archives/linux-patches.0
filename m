@@ -1,162 +1,120 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11010007.outbound.protection.outlook.com [52.101.229.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841B63DDB07
-	for <patches@lists.linux.dev>; Mon,  6 Jul 2026 14:15:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.7
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783347355; cv=fail; b=p5JSS9MNkuLQ8VL6reJBiVM99hAKQgEGac1m8EqKQZ9ftF1jaG0FSGXVawHcXBRYNcoP8Gb5mNU8Dn1Fus7k57LCCzz7zl/k5NXWrZ4ma0YDpO2gB23nI1VSF2VxY/JUCg1LJ017GrSSc+aKwMUGYn8N+PbNgc+EdFCZ5+J2GeU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783347355; c=relaxed/simple;
-	bh=ULzDlA5baC/WbW3IqAJ6HeemTxXnY2U624B9fUThIY8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=MAJVCEvnbjxAL2UOF0TjV7Zz6tbeWebK0jYB/02/TTRSjYBo8yUQwMZT03H/qAT8UFqMbh2tGu6yWEtMixvw+sFMySamg/1nVZ/OFz4qSSFpOIyjrdYdq0X47feBZsgGkPsptOVLz1EviucPXCeGhqf0Ln1AFJtCnhk1Hz/Ac1k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com; spf=pass smtp.mailfrom=bp.renesas.com; dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b=By4Gj9vT; arc=fail smtp.client-ip=52.101.229.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bp.renesas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F24E3E44E8
+	for <patches@lists.linux.dev>; Mon,  6 Jul 2026 14:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783349514; cv=none; b=eOVuAkuD69J+msJIb5MaUVRGeqM0HLxmGHWbGGBNanKxWj+TqIkKGJZnIKsgqg2lpb4sk1uo+esejN4sA+aHq5LofYou8MD38e0Hkkit5MmEy07DjrB+mWB0cI1BYf1h5123C4m2kqlWeTeD2geIOkU580/iZXBDzkTTuQMk7Gg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783349514; c=relaxed/simple;
+	bh=sq7xbhnc9EjRi0Ay1bR2dO6JbTROjVeGnProqyAUdg8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rYtZa0opGS0ET6XVI6H3CEEQtMI/3PEePpz+eFSD5QQIK7HXJmAkf8TX+jqbaqyNIPUakjq3e2XWa4Ra/N9A9rXXsPG7VmZZ4ilpheU/hAHa9WTKehatcnmurIh+/gVuEXtwvomh1FJhUrl1yhZNVOb1fQiZt7ZdKptf21xsjyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2CWcEj9; arc=none smtp.client-ip=209.85.161.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b="By4Gj9vT"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ipfn7sWnZKU2iOkRiirs3tn7Q9ZQuzQskAPNXrQ0ia3rRuSDlbwpJcN2JIa4TtzR+KG3vMj698XzXScS4mNW4xvwyG9JdCnvgHP6+rRw+kTausNWG2F8oLjleu6gs8kAN5lsrQJ2hCqs1N82egIZZejzqpjldXIBXXBvCM/Lf9O7ilGkU6WZDWT/iMxLKfXKF7KG7rquybf8apR4xx0bMPf3isXIrzY32XJsLAhNXfTzKayDq2UGCiraJU+AoSEDT1D5Ja25gn1XhqPfBK+FuT3UPiWDdG2ionuUwKNrEFTrxdANLG+1dvWICEblS7Vu8zEVthyev1J1/jJ1Y7FzHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ULzDlA5baC/WbW3IqAJ6HeemTxXnY2U624B9fUThIY8=;
- b=Kpj2rBajmRHbgJcNzia0x/cpqHXa0HYhJAZZsklXudWxLLyQF3Q9G9qtroFzRHlTC3kTiFGNanWCvDRaCEQPcYdfAzTjIESKIOEA0v0nl2oYv7wTpnQuKENEziSbV+57kvmlT5Bp1NEkovetdvNfdUayjPUP/2CYcWm3NG6aGDLOWRc2FdX/5tH/6umOCbpi59JI7ZTywYiLSXQP0yYaLwDl89pGifwYhu6d3/lGhuVcVWaKCMuB++yvjVkwlVOck70S5+Kt4Csw+UHNqjPvRgrAwBViIZQeAIBLTi6/Jd4LK1qM3HjSraUDzv6lfHg5+9PUmMf0Tr46ezBC0CNrIQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
- header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bp.renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ULzDlA5baC/WbW3IqAJ6HeemTxXnY2U624B9fUThIY8=;
- b=By4Gj9vTjRODT9Sw1M2bzsqTPs55iGwp5Rj/mpygvn4P1PH/gvrGuCW+K2GW3/TvDrWYOBZmFTgp589foCGQsne8BawXuuU5pRCmirvxFA4sYnQGbSJz1vx6HIcnB8x3gSROaa+R3i+32IgIE67I8EK/OZRHOWiBPfryXtlQcK4=
-Received: from OSCPR01MB14315.jpnprd01.prod.outlook.com (2603:1096:604:39f::5)
- by OS3PR01MB10297.jpnprd01.prod.outlook.com (2603:1096:604:1df::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Mon, 6 Jul
- 2026 14:15:48 +0000
-Received: from OSCPR01MB14315.jpnprd01.prod.outlook.com
- ([fe80::66f:fac9:2ef6:9796]) by OSCPR01MB14315.jpnprd01.prod.outlook.com
- ([fe80::66f:fac9:2ef6:9796%6]) with mapi id 15.21.0181.008; Mon, 6 Jul 2026
- 14:15:48 +0000
-From: Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>
-To: Sasha Levin <sashal@kernel.org>, geert <geert@linux-m68k.org>, Ben
- Hutchings <ben@decadent.org.uk>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, wsa+renesas <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>, Ulf Hansson <ulfh@kernel.org>
-Subject: RE: [PATCH 5.10 94/96] mmc: renesas_sdhi: Add OF entry for RZ/G2H SoC
-Thread-Topic: [PATCH 5.10 94/96] mmc: renesas_sdhi: Add OF entry for RZ/G2H
- SoC
-Thread-Index: AQHdCj+FKf8oM+BZj0GrJ6s5iCm/JrZfgvoAgAChXwCAADznsIAALA6AgAAByRA=
-Date: Mon, 6 Jul 2026 14:15:48 +0000
-Message-ID:
- <OSCPR01MB14315F1985B25A9D1BA98ECF9AAF12@OSCPR01MB14315.jpnprd01.prod.outlook.com>
-References:
- <OSCPR01MB14315350989F1BD556CA5B1E9AAF12@OSCPR01MB14315.jpnprd01.prod.outlook.com>
- <20260706135124.draft-0005@kernel.org>
-In-Reply-To: <20260706135124.draft-0005@kernel.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bp.renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OSCPR01MB14315:EE_|OS3PR01MB10297:EE_
-x-ms-office365-filtering-correlation-id: 49396870-c031-4403-f47e-08dedb6913c1
-x-ld-processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|11063799006|4143699003|38070700021|22082099003|18002099003|56012099006;
-x-microsoft-antispam-message-info:
- gZt5go+B4OrIyimKda0EdwP/qLRKmdrT0YHlHXjwM0asfTmOaYL+fMYZjbOPpPOFHW+Hlt9M87NO0kdziW1ps8ZAPlafbssStm6GhS9X6BNhQDTn98TLNi6wLF9Xs9bHUkKJ985MbcSPAnIiyJXYxHVqLdpJW7Psx9SSf5AT3AxftrCFZeQngPcGy7V8FNccaSU95ZKBXPhcAxbj1eFLyfe6CiVQrVD+y+qvsrED2I/jGLTjSxoWLP6tCc6Ji9s2PHy07txKxiF0itwAsndr12UbSLjhDO6faA7GoX+MwmqZNCU1zCVyC+DK0lZ28hgfh4fIJ/Ztz+StOmugx1a/EkBs2tVQPOIzbKATLzmELnRkn+x5ItekCg+DG5oC/T3COlGNZuKvxy1siCqNx9JlW1iDWFo6c9GB0KGgpEaX63oQi3myDKogO4zpNnvSjg8ZcuhpU2NXjLxvCQ8xAR2bNbsoexdMwfI+hJcbQnOHB3ZZP1wwcNaq837qjqM2ORefLnufPJM7Z4I9pmp4JoAysNTh84vA9+s3khb3Uq2GTL6LCaSgPRsxZeGcnud4MHiRCix4GkxpE7DPsUOvWAyjpJkovAwOrR0492whOPrsav1RJ8zEW6KHINcjquU1+DoPN9k3rQZG1+3hFP+BqkL2QniXevPTn+3UoJMFdFfazpH9dMP8NcE1HrdhqFsxUHvAFVVHgfEHtnw7zwKMN8DuFa06UnmhjHeiLHPyl4szGR0=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OSCPR01MB14315.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(11063799006)(4143699003)(38070700021)(22082099003)(18002099003)(56012099006);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?ZxQicTCQVrMKEGb6GSOv/QeTHOhUHLcLp8H/lPO9GJUcoJ0I7wBBRcJ8BRki?=
- =?us-ascii?Q?Mt44R3+grbURXHUewbU1RSesj0n9jxWNXVJ9CSOuIsyUVzqGP7DbFp1bnjnG?=
- =?us-ascii?Q?VpbWM8fKv9FU5VrFnDP+BVnnxqlXShqjqKY+ZHRHahoV1MxuJnPVkdsKyRZo?=
- =?us-ascii?Q?FlPkKakZjeFPfDmKOCyTHJRCZzdkLWD+Bj4517R4IhuynoC8kX8Ag9nb1CRM?=
- =?us-ascii?Q?TVryGHfM2xcLk6aGTXB39XIMFm4toc3STrn4SM+bxvFfGq2CW2VaeKuLC2AV?=
- =?us-ascii?Q?ox828G8yHaRruenEwxw0cfJ1a9dT2v7ve/+N8fNM32YWmP9fZFZVqjrim9jP?=
- =?us-ascii?Q?tMKPnCFZQdt3qovuUVXUndyPh3+i7r89wlEPgcZQBQwIl0tFGLicNxl4tyh0?=
- =?us-ascii?Q?2ydNhk8MCfRZN4O1Yu+2LGE6EQmQfHOWh588/K+6PWqlGtQdApKbGStqKSuS?=
- =?us-ascii?Q?y0HPkJPVpSeUndUouMYHcNtoHxGJyw61+/btxV3JURBxfWJYmDXhs7GFE+6z?=
- =?us-ascii?Q?n5ycX2KvnGXZR0Fk1DM64p4PbLGT/tAe82Xjs0gFKn31/w/PVw9EvuYArjCc?=
- =?us-ascii?Q?x6ntZMQEWkV66L/yGxGWQZFUlxX6XYqgjVkdOkZZdsGyj717+wlRYcJY74NQ?=
- =?us-ascii?Q?C+DUheHyDJNqHI1BYt7y1tvVcar+h3CM+6lQHhd2YRaP5SEMg0S0QnJsbkGj?=
- =?us-ascii?Q?/Uqtpj0FkaZHNVyiIx+Yx/l15dnIehJ2HVvF08vdG3rVtcOdjv+7IZtmB/Uh?=
- =?us-ascii?Q?bCWvYIDt8WPIrgkRaN6689gftOBxSIQwhWVDcZG/S3DbjUCqvYUUZyEAXNYu?=
- =?us-ascii?Q?OS+EHKSVeSRAZm7KzavwCAdeq9N8UkHCHDYaXvPsuPZZ+CMi2b+YQ2DKUl6f?=
- =?us-ascii?Q?B1flire7ZTM+QuhZ5u4VaKJNdlwEfqUO/eTLmo6IT6kHuq6l08n8Nv1//Bm1?=
- =?us-ascii?Q?Zboiz2jLk0LZTfJyHddtCQafOlnM0lIJNeKyBTkXxLt31wadmBIIqpqSk//p?=
- =?us-ascii?Q?uY0x1XpSIqV1O89Dl7R2R8xuC7GysguMpko40ycKaG7y0luUzPi646irrOX8?=
- =?us-ascii?Q?GXneiGwqOeXBUCOU3EaVc0XG806NLEjSR7cuj0iMRy0NsED/omKi6ys8vvOi?=
- =?us-ascii?Q?SgyL00lHgZFsrvBWjAzSDme+imcPKR3O4U4qELliHKhRSERGYGFb/YvNmk1h?=
- =?us-ascii?Q?NO1W65ROfZTBUFykyHF3Zi9NXmJzo+T0BT8+dzg8GGSK53rY2JNd7gYorEfw?=
- =?us-ascii?Q?MXQXZhk0zE7vgZsXiHYwBYDrmDQn/zCs9rVXvsCnlcd8u3/FQxOgS2pkjpmy?=
- =?us-ascii?Q?iXMmIqBdca3jFRRc5kwt0i6bvq01elPLlUCnFVimmzVSUwC7Oa/gj0YqQPgW?=
- =?us-ascii?Q?4aRKWlpyJvLIDJT+orhvJb+3h76c0pugGxGZ/ZokFfnEtzS5R0MG2nc3KbDX?=
- =?us-ascii?Q?E71x2Td4hFMkICFD3++e19rOA+jCjBX244P4j67GfKxIY5shylSzgQcZSH1o?=
- =?us-ascii?Q?F48Y3PuP9usVfutaixQXnl/zyNXGp3sjSU4oOpFE6PAsvuTX4K+KNQlDvIDG?=
- =?us-ascii?Q?HzgmBkkDxaUqhIQuFEdgzfHz44ks8vmepkNVUtDyR10TVkFOvlZ60oWTJ9tS?=
- =?us-ascii?Q?uvaq7DRwyuTQs1QD3/8OGib05iQMP3jjcfHWbEHc7ggCPc+n+aDPInkybSC+?=
- =?us-ascii?Q?LyXmHYuJmiMTsCBCw47A3tLJlsUESFd6pQL8zyT0brKIInwG7iU90RSGOvNI?=
- =?us-ascii?Q?SQ8ZikklTu9lFzqJB2Oc/LTy3ESWCMO0ZYIU0t/OI0WMrmjzfInO?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2CWcEj9"
+Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-6a1888969ddso1791113eaf.3
+        for <patches@lists.linux.dev>; Mon, 06 Jul 2026 07:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1783349507; x=1783954307; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2wkpr02sORILsW4RehBg9onx4laNz5hB035kvA5lQmY=;
+        b=U2CWcEj9bXl6rUI8V+Mos1OIPkOulJwzCsmhr5SqmDv6GpTB/y4rxRCOYqFsl9j+KV
+         JGCILXVqP2JamuPcvvNiVaS7tNb4GMTwu8HzuUZAgnv9jHT3n6XG1BwO9J8mvyXB00Z1
+         zqY2rDWsu80lTRoBBixiBjmn/c1vTDYNn3VpE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783349507; x=1783954307;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2wkpr02sORILsW4RehBg9onx4laNz5hB035kvA5lQmY=;
+        b=IhIjnCDl6V3kviyGmpqG150sCSG9pO6y12f0Q+rwWnUTSa8+g5zscpg8ZH3XxPbcV7
+         3zjFrzaPXZY+6Cu8+yGEWEtqHvOQnAGr0/K3pa1d/ylWIueiqvAst/KkF46j9tjj/5cG
+         uz/finQ5zLrw0ArKWTDE5O1u+LPdpEZzIT4TMMUeMqALK98m8C/hGfrpu7J5GPRwzqJm
+         xWyksQJ7TktsYnl3A5f2VNkBbFlnzga0W4P8KplPXE7HgbixZuOXJWJmO3ofmB+uRi0E
+         MfI7JuK9tB9P4A41Ee7wGt1MqplFD+8t3kcT6k9Q/b0cyuhMTbcDeEvPvX7oJm092IgM
+         XpjA==
+X-Gm-Message-State: AOJu0YyaKv+uPa5m7+plYOXCcC9NiNO1EVh1IkM1cuOzaH++9umVHRd6
+	DqjgZMNEV49U30QW2HqDELVecRWmMUHAz60vDts3gMdUXwOCa0Ul9uz5CGsDBhqarEw=
+X-Gm-Gg: AfdE7cmZ2q3MjOnz3/nXJ0i+0s/9IQv4nhKr+uYv87CvDS6VexzOfzvlYibuk/8NxTZ
+	Ey0uXCFAkNleMAEtxoLILCWjS31kU+iZvGImkjKVXmmUzh237VyqZq6eATHnGjjjm/5XKmEEwjR
+	bApI6cM072dbyFTDf65w13Z1sPxOpDtCY6VZfKpqwKjtSLJd3/o0WxfKTXBWB34gZbaJTWZUCuz
+	dsVEhjvHdUkfPkPbafbY8eXSN4omb7iMmjF8lCpYZUtXgVVhqMpzGWU/LvTeSHcmNLbwy5YZxbc
+	UWBih7xKC5esi2FiiIqpSUZvKpq+AudiPExOdSP4upOnmyuJQzZ7qCUsxU9YXy8jmw8cXM24NGw
+	FcuDOWeVoqa7eq3FpRfhQNa9wY7vZNWgnM67tq+y3nennAMDxKFn6Eygn+wg/N6g4JbBK9vlUl4
+	TYW8GeSTAKvOsSy312X1QM
+X-Received: by 2002:a05:6820:6ac9:b0:6a1:50eb:d4fb with SMTP id 006d021491bc7-6a3553d9de9mr521946eaf.60.1783349506968;
+        Mon, 06 Jul 2026 07:51:46 -0700 (PDT)
+Received: from [192.168.1.14] ([38.15.57.99])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-44cfb13e15esm11222998fac.3.2026.07.06.07.51.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jul 2026 07:51:46 -0700 (PDT)
+Message-ID: <8ca09aa7-7ab2-4ce2-8484-ebb2aa0e8cde@linuxfoundation.org>
+Date: Mon, 6 Jul 2026 08:51:44 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: bp.renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OSCPR01MB14315.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 49396870-c031-4403-f47e-08dedb6913c1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jul 2026 14:15:48.2236
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eDZKPSY9V4OSjFcN5iYrvDiCh1U3M7B/cE3XjyGOJWYGFpAW1fpIFKLtQeg5z2lQN0jI/1LaR43nDr1MA8AxCGQ3CQhhy/dolgU037FsOBe3eB/X2eSTsrhhJiP5F16x
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3PR01MB10297
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.1 000/120] 7.1.3-rc1 review
+To: Peter Schneider <pschneider1968@googlemail.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20260702155112.964534952@linuxfoundation.org>
+ <0585b5ab-f9a1-4922-b2f4-167d0402758c@linuxfoundation.org>
+ <075e465d-bd07-4fd9-8641-30066e966d07@googlemail.com>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <075e465d-bd07-4fd9-8641-30066e966d07@googlemail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Sasha,
+On 7/2/26 17:12, Peter Schneider wrote:
+> Am 02.07.2026 um 19:44 schrieb Shuah Khan:
+>> On 7/2/26 10:19, Greg Kroah-Hartman wrote:
+>>> This is the start of the stable review cycle for the 7.1.3 release.
+>>> There are 120 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Sat, 04 Jul 2026 15:50:58 +0000.
+>>> Anything received after that time might be too late.
+>>>
+>>> The whole patch series can be found in one patch at:
+>>>     https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.3-rc1.gz
+>>
+>> I am seeing 404 on this link. Maybe I will it more time for it to show up on
+>> kernel.org
+>>
+>> Same with 6.18 link - haven't tried the others.
+>>
+>> thanks,
+>> -- Shuah
+> 
+> LWN has the story that there was a mirroring issue due to a misconfiguration which led to the deletion of everything under /pub on the public mirrors only, and that Konstantin is working on restoring everything.
+> 
+> https://lwn.net/Articles/1081015/
+> 
+> This is the ticket status at Linux Foundation:
+> 
+> https://status.linuxfoundation.org/incidents/3y1k8b4ky71t
+> 
 
-> From: Sasha Levin <sashal@kernel.org>
-> Sent: 06 July 2026 15:08
-> To: geert <geert@linux-m68k.org>; Ben Hutchings <ben@decadent.org.uk>
-> Cc: Sasha Levin <sashal@kernel.org>; Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org>; stable@vger.kernel.org;
-> patches@lists.linux.dev; wsa+renesas <wsa+renesas@sang-engineering.com>;
-> Geert Uytterhoeven <geert+renesas@glider.be>; Ulf Hansson
-> <ulfh@kernel.org>; Prabhakar Mahadev Lad <prabhakar.mahadev-
-> lad.rj@bp.renesas.com>
-> Subject: Re: [PATCH 5.10 94/96] mmc: renesas_sdhi: Add OF entry for RZ/G2=
-H
-> SoC
->=20
-> > Thanks for pointing that out. We could drop this patch from stable
-> > 5.10 and I can backport this patch and commit 71b7597c63d2ddf6 to CIP
-> > kernels <=3D 5.10.
->=20
-> The patch already shipped in v5.10.260. Since it's behaviorally a no-op
-> there, I don't plan to queue a bare revert.
->=20
-> Prabhakar, could you send a proper 5.10.y patch adding the
-> sdhi_quirks_match[] entry Geert sketched (.soc_id =3D "r8a774e1" - note t=
-he
-> missing '4' in his line), so RZ/G2H actually gets the ES3.* tap quirks on
-> 5.10? I'd be glad to queue that.
->
-Sure, I will do that.
+Thank you.
 
-Cheers,
-Prabhakar
+-- Shuah
