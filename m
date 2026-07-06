@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E275F4219F7
-	for <patches@lists.linux.dev>; Mon,  6 Jul 2026 22:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296F936F905
+	for <patches@lists.linux.dev>; Mon,  6 Jul 2026 22:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783378019; cv=none; b=nxDUbJwroCOdpjbRoqHMsNvmWICqYqQ6dyszobNOmNgRkMpZ7d7DnqrmWNtIE0duiptVXDG3AiCRn3oLsoqlBVvo3EbNRmI2Av/yKmxO3Uanf/OCdI7Lk1/IS9KQZ24wZKDYCL0HwY6ivqwW/LvTU9LSBOW9LT7bZ6pYdSWTqgo=
+	t=1783378020; cv=none; b=T0sPXXR3c2PvzOjg+hcEI+03tbQFhtaiH1dM+UR5qZYosu0KoafWbdP3V22llH9jnRpCTMcVVxqyxInVeaV5CJacSlmdnTcQZ9YaR2GMLogl21R0QtBdu/7g3VI8T0j87eBE3pcP7gGYUQU9QciLQtl9wm/O+iAsnZD74Q3O73s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783378019; c=relaxed/simple;
-	bh=OfB15tG20zAUd/JUsLu9kp7DBIhLMizaUwELzScGhSA=;
+	s=arc-20240116; t=1783378020; c=relaxed/simple;
+	bh=fGERMFmTJ4r2lZdd5ICktYB3zBb6Wxs1jJkPcZOb7vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VyAaWB9eZoXkfDcAVFXhRZOLwMa8vbZiY/uac1hZR81nSVkJTmcB74CVJ/8vNsK51oS8ChPo74WCagyBBI926m4jkG+CMaG3fbJnN9ghu1lXqlWmD8wkQGiKSrccsxQu4sh9fssuTfUq9dCXqxg7LDGQNIomYT68IVe9u+dY1+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KlB/0+l5; arc=none smtp.client-ip=192.198.163.10
+	 MIME-Version; b=dLME733h8I5ccm/Ne1w5w9bsFGZz8GPdP7B0NR8P4YWWYI4+A5/8Z5cVVGpaNnWGDx/v2JwUHbh9ImLmf4VvLABw3fCFlyPAUcW1EPpYbhYB4wtHgwljmGA52NUxJWS5w79q4ONcbO+TMgcM1rtbkikg2/WDJ5L0nyIgx1t+wSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QYqWh7Pb; arc=none smtp.client-ip=192.198.163.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KlB/0+l5"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QYqWh7Pb"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783378007; x=1814914007;
+  t=1783378018; x=1814914018;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=OfB15tG20zAUd/JUsLu9kp7DBIhLMizaUwELzScGhSA=;
-  b=KlB/0+l5ape0K65dgNnqHr8/5K9XSdOr+jN02wW/+hHGbNLJSweik/5O
-   nT9W1tj5Vc7WdA6kE8RZqD9OXrsQlgkqZxrf8qqExqBJz7o/15bS8VVi2
-   LLcv619Vd7w0ZkMmAEcl44/70eKexJQB9t8PvUOQPFYYd56+HM3IIhJAL
-   Ej1LYLiRrt83x9enoKx7AIKY5ujZxbYpvnlc+n9471wfKKwOfakZygkE3
-   xarw7WkH19xHY+O8CQiuuAvsCKDNIVwbqVSJCdn326HSGfgcaTvq/NVPA
-   z6nb6qg2lQSzURYpNkpjibCzodxWONLjR139IS0BwSGAZ258F1hmOpvjk
+  bh=fGERMFmTJ4r2lZdd5ICktYB3zBb6Wxs1jJkPcZOb7vY=;
+  b=QYqWh7PbXVtJlL6KnhvsIoHEMxDMLruVnHvfwJaIz1AuRsRkhKdDQNYN
+   /VZ6PZtU89LXRSnnXbml2FCNHTyVC656/VUeqoXUhTK3tqys6sDA7sVOD
+   BjK05SnkfBacIPgOnXOQH2mZWbL9K9Off4eI9wlH6qVlQDCl+4xgWfYSh
+   OcU8lMYsTAW1bfutUiKArBQWCZ/MIDAlPzBxUVtr2xoU17f6xZUM3lEu1
+   p1yt1IWT+LuQ2kufznHb+oKg9I1IPFZfw6EZkhhqz4tE+uG1uCtnBXFRi
+   Uf8jy5+Kfo3McoDJz/ng/4cCWiJyxw7OeanJlyM5a5YN7MjxSwmzkAVjp
    Q==;
-X-CSE-ConnectionGUID: KOkIiA6pQ4+nA/hAt2MAQQ==
-X-CSE-MsgGUID: P0IKMoB4ShuXaNswdGvKiA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11839"; a="95401543"
+X-CSE-ConnectionGUID: Gsv1NveXR1yCPlMe3QKoiA==
+X-CSE-MsgGUID: wNJ5QPM8SKK8GoKs/5XbYA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11839"; a="95401564"
 X-IronPort-AV: E=Sophos;i="6.25,151,1779174000"; 
-   d="scan'208";a="95401543"
+   d="scan'208";a="95401564"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 15:46:42 -0700
-X-CSE-ConnectionGUID: hyKSvvmVQVeyGwCeXc6quQ==
-X-CSE-MsgGUID: FhDJo7MURva11JP5hQwW7A==
+X-CSE-ConnectionGUID: fxAlXkFDRh+oK6o23RjR/g==
+X-CSE-MsgGUID: QADyxn9SRIS3FsSf+v+4UA==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 15:46:41 -0700
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 15:46:42 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: tony.luck@intel.com,
 	james.morse@arm.com,
@@ -59,9 +59,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v6 08/10] fs/resctrl: Prevent deadlock and use-after-free in info file handlers
-Date: Mon,  6 Jul 2026 15:46:28 -0700
-Message-ID: <e5468d05f984f4db2c0fc378562b2c4a9cca301b.1783377598.git.reinette.chatre@intel.com>
+Subject: [PATCH v6 10/10] fs/resctrl: Fix UAF from worker threads when domains are removed
+Date: Mon,  6 Jul 2026 15:46:30 -0700
+Message-ID: <4c88e01e29df638d9ecad71b2ee3b411e24067bd.1783377598.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1783377598.git.reinette.chatre@intel.com>
 References: <cover.1783377598.git.reinette.chatre@intel.com>
@@ -73,780 +73,303 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl provides files under the info/ directory to expose global
-configuration and capabilities to userspace. These files are instantiated
-statically during filesystem mount and expose data associated with internal
-schema structures via kernfs private pointers.
+The mbm_handle_overflow() and cqm_handle_limbo() workers read event
+counters and may sleep while doing so. They are scheduled via
+delayed_work embedded in struct rdt_l3_mon_domain. Architecture allocates
+and frees these domains from CPU hotplug callbacks under cpus_write_lock(),
+and the workers acquire cpus_read_lock() to keep the domain alive across
+their access.
 
-A potential deadlock exists between userspace readers of these info files
-and the unmount filesystem teardown process. Reading an info file invokes
-kernfs which acquires an active reference, after which the handler typically
-attempts to acquire the rdtgroup_mutex. Concurrently, unmounting the
-filesystem holds the rdtgroup_mutex and then attempts to recursively
-remove the info kernfs nodes involving kernfs_drain() which blocks until
-all active references are released. Another problem exists where info files
-might be accessed from an outdated mount if the filesystem is unmounted and
-remounted during a reader's execution, leading to a use-after-free when
-reading the now-deleted private schema data.
+A use-after-free can occur when a worker is blocked waiting for
+cpus_read_lock() while the hotplug core holds cpus_write_lock():
+the architecture frees the rdt_l3_mon_domain that contains the worker's
+work_struct. When the worker unblocks, the container_of() it performs on
+the embedded work pointer dereferences freed memory.
 
-Introduce info_kn_lock() and info_kn_unlock() helpers to coordinate locking
-across all info handlers. These helpers mirror similar logic used by resource
-group handlers by deliberately breaking the kernfs active protection before
-attempting to acquire the rdtgroup_mutex, preventing the deadlock. To guard
-against the vulnerability from rapid mount cycling, info_kn_lock() securely
-walks the parent lineage of the kernfs node under an RCU section to confirm
-the node belongs to the globally active root before permitting the operation
-to proceed. Convert all info file handlers to use this helper and only
-de-reference the schema after it is determined safe to do so.
+Drop cpus_read_lock() from the workers and instead drain pending and
+in-flight work synchronously before the architecture can free the domain.
+Since architecture offlines the domain under cpus_write_lock() after it has
+been unlinked from the RCU list and a grace period has elapsed, no new work
+can be scheduled. The cancel only needs to wait out existing work.
+Drop rdtgroup_mutex during CPU offline around cancel_delayed_work_sync()
+so that a worker waiting on the mutex can complete before re-pinning the
+work on a different CPU.
 
-Make no attempt to output an error message to last_cmd_status on failure
-since failure implies there is no filesystem with which to display the error
-to user space.
+When offlining a CPU the architecture may iterate over resources in any
+order. For example, the MBA control domain may be offlined before or
+after a corresponding L3 monitor domain. Ensure that resctrl fs cancels
+the workers no matter what order the architecture offlines the domains.
 
+Fixes: 24247aeeabe9 ("x86/intel_rdt/cqm: Improve limbo list processing")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=3
-Assisted-by: GitHub_Copilot:gemini-3.1-pro
+Closes: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com # [1]
+Co-developed-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
-Changes since V2:
-- New patch
+Changes since v2:
+- Rewrite changelog
+- v2 attempted to solve the issue by using is_percpu_thread() within the
+  worker to learn if CPU worker was running on is going offline. A
+  Sashiko (https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=5)
+  pointed out that this would not be able to handle the scenario if one
+  of the hotplug handlers following the resctrl offline handlers failed.
+- Some other fixes attempted that failed:
+  - Switch to accessing domain structure in handler via RCU so that CPU
+    hotplug lock no longer needed. Use cancel_delayed_work_sync() with
+    mutex dropped to cancel worker. Running worker from RCU read-side
+    critical section is a problem since the worker needs to be
+    able to sleep (mbm_handle_overflow()->mbm_update()->
+		    mbm_update_one_event()->resctrl_arch_mon_ctx_alloc()->
+		    might_sleep())
+  - Adding a reference count to the domain structure to avoid the worker
+    needing to take CPU hotplug lock. This ended up being very complicated
+    with the architecture needing new APIs to manage the reference count
+    which cannot cleanly integrate into MPAM since it uses a single
+    architecture domain structure to contain both the control and monitoring
+    domain structures. Managing the references across mount, unmount,
+    online, offline, as well as worker self exit resulted in several
+    asymmetrical and complicated paths that were error prone. Locking also
+    proved to be complicated since architecture would need to initiate
+    domain free that will need to call back into resctrl that will take
+    rdtgroup_mutex which means that references need to be taken/released
+    without locking.
 
 Changes since V3:
-- Add Tony's Reviewed-by tag.
-- Changelog grammar fixes.
----
- fs/resctrl/ctrlmondata.c |  38 ++++----
- fs/resctrl/internal.h    |   3 +-
- fs/resctrl/monitor.c     |  48 +++++-----
- fs/resctrl/rdtgroup.c    | 192 ++++++++++++++++++++++++++++++++-------
- 4 files changed, 203 insertions(+), 78 deletions(-)
+- Traverse mon_domains list using list_for_each_entry_rcu( ...,
+  lockdep_is_cpus_held()) to document how CPU hotplug lock is required
+  to be held (via architecture).
+- Add snippet in changelog to motivate canceling work in monitor and
+  control domain offline handlers.
 
-diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index f33712c17d38..2b29fb5a8702 100644
---- a/fs/resctrl/ctrlmondata.c
-+++ b/fs/resctrl/ctrlmondata.c
-@@ -771,10 +771,12 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- int resctrl_io_alloc_show(struct kernfs_open_file *of, struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
-+	r = s->res;
- 	if (r->cache.io_alloc_capable) {
- 		if (resctrl_arch_get_io_alloc_enabled(r))
- 			seq_puts(seq, "enabled\n");
-@@ -784,7 +786,7 @@ int resctrl_io_alloc_show(struct kernfs_open_file *of, struct seq_file *seq, voi
- 		seq_puts(seq, "not supported\n");
- 	}
- 
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return 0;
- }
-@@ -849,7 +851,7 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
- 			       size_t nbytes, loff_t off)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 	char const *grp_name;
- 	u32 io_alloc_closid;
- 	bool enable;
-@@ -859,9 +861,10 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
- 	if (ret)
- 		return ret;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
-+	r = s->res;
- 	rdt_last_cmd_clear();
- 
- 	if (!r->cache.io_alloc_capable) {
-@@ -909,8 +912,7 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
- 	}
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -918,14 +920,15 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
- int resctrl_io_alloc_cbm_show(struct kernfs_open_file *of, struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 	int ret = 0;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-+	r = s->res;
- 	if (!r->cache.io_alloc_capable) {
- 		rdt_last_cmd_printf("io_alloc is not supported on %s\n", s->name);
- 		ret = -ENODEV;
-@@ -947,8 +950,7 @@ int resctrl_io_alloc_cbm_show(struct kernfs_open_file *of, struct seq_file *seq,
- 	show_doms(seq, s, NULL, resctrl_io_alloc_closid(r));
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 	return ret;
- }
- 
-@@ -1015,7 +1017,7 @@ ssize_t resctrl_io_alloc_cbm_write(struct kernfs_open_file *of, char *buf,
- 				   size_t nbytes, loff_t off)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 	u32 io_alloc_closid;
- 	int ret = 0;
- 
-@@ -1025,10 +1027,11 @@ ssize_t resctrl_io_alloc_cbm_write(struct kernfs_open_file *of, char *buf,
- 
- 	buf[nbytes - 1] = '\0';
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	rdt_last_cmd_clear();
- 
-+	r = s->res;
- 	if (!r->cache.io_alloc_capable) {
- 		rdt_last_cmd_printf("io_alloc is not supported on %s\n", s->name);
- 		ret = -ENODEV;
-@@ -1053,8 +1056,7 @@ ssize_t resctrl_io_alloc_cbm_write(struct kernfs_open_file *of, char *buf,
- out_clear_configs:
- 	rdt_staged_configs_clear();
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index 48af75b9dc85..e62a277dee85 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -335,8 +335,9 @@ __printf(1, 2)
- void rdt_last_cmd_printf(const char *fmt, ...);
- 
- struct rdtgroup *rdtgroup_kn_lock_live(struct kernfs_node *kn);
--
- void rdtgroup_kn_unlock(struct kernfs_node *kn);
-+bool info_kn_lock(struct kernfs_node *kn);
-+void info_kn_unlock(struct kernfs_node *kn);
- 
- int rdtgroup_kn_mode_restrict(struct rdtgroup *r, const char *name);
- 
+Changes since V4:
+- Add check for empty domain to workers to avoid reading RMID when
+  domain's cpu_mask is empty because x86's resctrl_arch_rmid_read()
+  depends on there being CPUs in the domain's cpu_mask.
+---
+ fs/resctrl/monitor.c  | 60 +++++++++++++++++++++++++++++++++++--------
+ fs/resctrl/rdtgroup.c | 52 +++++++++++++++++++++++++++++++++----
+ 2 files changed, 97 insertions(+), 15 deletions(-)
+
 diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 2dacb589625d..15e3eeddb6df 100644
+index 15e3eeddb6df..7340b1d17f17 100644
 --- a/fs/resctrl/monitor.c
 +++ b/fs/resctrl/monitor.c
-@@ -1062,7 +1062,8 @@ int event_filter_show(struct kernfs_open_file *of, struct seq_file *seq, void *v
- 	bool sep = false;
- 	int ret = 0, i;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	rdt_last_cmd_clear();
- 
- 	r = resctrl_arch_get_resource(mevt->rid);
-@@ -1083,7 +1084,7 @@ int event_filter_show(struct kernfs_open_file *of, struct seq_file *seq, void *v
- 	seq_putc(seq, '\n');
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return ret;
+@@ -633,14 +633,22 @@ void mon_event_count(void *info)
+ 		rr->err = 0;
  }
-@@ -1094,7 +1095,8 @@ int resctrl_mbm_assign_on_mkdir_show(struct kernfs_open_file *of, struct seq_fil
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 	int ret = 0;
  
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	rdt_last_cmd_clear();
+-static struct rdt_ctrl_domain *get_ctrl_domain_from_cpu(int cpu,
+-							struct rdt_resource *r)
++/*
++ * Find the software controller's ctrl domain that contains @cpu on resource @r.
++ *
++ * Only called from the mbm_over worker via update_mba_bw() where the returned
++ * domain is kept alive by cancel_delayed_work_sync() in
++ * resctrl_offline_ctrl_domain(). This drains this worker and then waits on
++ * rdtgroup_mutex held here before the architecture can free the ctrl domain.
++ *
++ * Context: Call from RCU read-side critical section.
++ */
++static struct rdt_ctrl_domain *get_sc_ctrl_domain_from_cpu(int cpu,
++							   struct rdt_resource *r)
+ {
+ 	struct rdt_ctrl_domain *d;
  
- 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
-@@ -1106,7 +1108,7 @@ int resctrl_mbm_assign_on_mkdir_show(struct kernfs_open_file *of, struct seq_fil
- 	seq_printf(s, "%u\n", r->mon.mbm_assign_on_mkdir);
+-	lockdep_assert_cpus_held();
+-
+-	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
++	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list) {
+ 		/* Find the domain that contains this CPU */
+ 		if (cpumask_test_cpu(cpu, &d->hdr.cpu_mask))
+ 			return d;
+@@ -701,7 +709,8 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_l3_mon_domain *dom_m
+ 	if (WARN_ON_ONCE(!pmbm_data))
+ 		return;
  
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return ret;
- }
-@@ -1122,7 +1124,8 @@ ssize_t resctrl_mbm_assign_on_mkdir_write(struct kernfs_open_file *of, char *buf
- 	if (ret)
- 		return ret;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	rdt_last_cmd_clear();
- 
- 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
-@@ -1134,7 +1137,7 @@ ssize_t resctrl_mbm_assign_on_mkdir_write(struct kernfs_open_file *of, char *buf
- 	r->mon.mbm_assign_on_mkdir = value;
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -1424,8 +1427,8 @@ ssize_t event_filter_write(struct kernfs_open_file *of, char *buf, size_t nbytes
- 
- 	buf[nbytes - 1] = '\0';
+-	dom_mba = get_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
++	guard(rcu)();
++	dom_mba = get_sc_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
+ 	if (!dom_mba) {
+ 		pr_warn_once("Failure to get domain for MBA update\n");
+ 		return;
+@@ -804,11 +813,25 @@ void cqm_handle_limbo(struct work_struct *work)
+ 	unsigned long delay = msecs_to_jiffies(CQM_LIMBOCHECK_INTERVAL);
+ 	struct rdt_l3_mon_domain *d;
  
 -	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
++	/*
++	 * Safe to run without CPU hotplug lock. Work is guaranteed to be
++	 * canceled before the domain structure is removed.
++	 */
+ 	mutex_lock(&rdtgroup_mutex);
  
- 	rdt_last_cmd_clear();
++	/*
++	 * Ensure the worker is dedicated to a CPU as intended and not
++	 * relocated by workqueue subsystem as part of CPU going offline.
++	 */
++	if (!is_percpu_thread())
++		goto out_unlock;
++
+ 	d = container_of(work, struct rdt_l3_mon_domain, cqm_limbo.work);
  
-@@ -1448,8 +1451,7 @@ ssize_t event_filter_write(struct kernfs_open_file *of, char *buf, size_t nbytes
++	/* Domain is going offline */
++	if (cpumask_empty(&d->hdr.cpu_mask))
++		goto out_unlock;
++
+ 	__check_limbo(d, false);
+ 
+ 	if (has_busy_rmid(d)) {
+@@ -818,8 +841,8 @@ void cqm_handle_limbo(struct work_struct *work)
+ 					 delay);
  	}
  
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
++out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
 -	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
  }
-@@ -1460,7 +1462,8 @@ int resctrl_mbm_assign_mode_show(struct kernfs_open_file *of,
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 	bool enabled;
  
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	enabled = resctrl_arch_mbm_cntr_assign_enabled(r);
- 
- 	if (r->mon.mbm_cntr_assignable) {
-@@ -1479,7 +1482,7 @@ int resctrl_mbm_assign_mode_show(struct kernfs_open_file *of,
- 		seq_puts(s, "[default]\n");
- 	}
- 
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return 0;
- }
-@@ -1498,8 +1501,8 @@ ssize_t resctrl_mbm_assign_mode_write(struct kernfs_open_file *of, char *buf,
- 
- 	buf[nbytes - 1] = '\0';
+ /**
+@@ -851,7 +874,10 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	struct list_head *head;
+ 	struct rdt_resource *r;
  
 -	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
++	/*
++	 * Safe to run without CPU hotplug lock. Work is guaranteed to be
++	 * canceled before the domain structure is removed.
++	 */
+ 	mutex_lock(&rdtgroup_mutex);
  
- 	rdt_last_cmd_clear();
+ 	/*
+@@ -861,9 +887,24 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	if (!resctrl_mounted || !resctrl_arch_mon_capable())
+ 		goto out_unlock;
  
-@@ -1557,8 +1560,7 @@ ssize_t resctrl_mbm_assign_mode_write(struct kernfs_open_file *of, char *buf,
- 	}
++	/*
++	 * Ensure the worker is dedicated to a CPU and not relocated by
++	 * workqueue subsystem as part of CPU going offline since reading
++	 * events depend on smp_processor_id(). After passing this check
++	 * smp_processor_id() is valid for entire duration of this worker
++	 * since it runs with rdtgroup_mutex held and the offline handler needs
++	 * rdtgroup_mutex to offline the CPU being run on here.
++	 */
++	if (!is_percpu_thread())
++		goto out_unlock;
++
+ 	r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+ 	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
  
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
++	/* Domain is going offline */
++	if (cpumask_empty(&d->hdr.cpu_mask))
++		goto out_unlock;
++
+ 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+ 		mbm_update(r, d, prgrp);
  
- 	return ret ?: nbytes;
- }
-@@ -1570,8 +1572,8 @@ int resctrl_num_mbm_cntrs_show(struct kernfs_open_file *of,
- 	struct rdt_l3_mon_domain *dom;
- 	bool sep = false;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	list_for_each_entry_rcu(dom, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
- 		if (sep)
-@@ -1582,8 +1584,7 @@ int resctrl_num_mbm_cntrs_show(struct kernfs_open_file *of,
- 	}
- 	seq_putc(s, '\n');
- 
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1596,8 +1597,8 @@ int resctrl_available_mbm_cntrs_show(struct kernfs_open_file *of,
- 	u32 cntrs, i;
- 	int ret = 0;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-@@ -1623,8 +1624,7 @@ int resctrl_available_mbm_cntrs_show(struct kernfs_open_file *of,
- 	seq_putc(s, '\n');
+@@ -885,7 +926,6 @@ void mbm_handle_overflow(struct work_struct *work)
  
  out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
+ 	mutex_unlock(&rdtgroup_mutex);
 -	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret;
  }
+ 
+ /**
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 77c9d22017bc..9f998e394911 100644
+index 9f998e394911..b5fb59d0e035 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -977,13 +977,14 @@ static int rdt_last_cmd_status_show(struct kernfs_open_file *of,
+@@ -4491,6 +4491,29 @@ static void domain_destroy_l3_mon_state(struct rdt_l3_mon_domain *d)
+ 
+ void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d)
  {
- 	int len;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	len = seq_buf_used(&last_cmd_status);
- 	if (len)
- 		seq_printf(seq, "%.*s", len, last_cmd_status_buf);
- 	else
- 		seq_puts(seq, "ok\n");
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1002,7 +1003,11 @@ static int rdt_num_closids_show(struct kernfs_open_file *of,
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	seq_printf(seq, "%u\n", s->num_closid);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1010,9 +1015,14 @@ static int rdt_default_ctrl_show(struct kernfs_open_file *of,
- 				 struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%x\n", resctrl_get_default_ctrl(r));
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1020,9 +1030,15 @@ static int rdt_min_cbm_bits_show(struct kernfs_open_file *of,
- 				 struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
-+
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->cache.min_cbm_bits);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1030,9 +1046,14 @@ static int rdt_shareable_bits_show(struct kernfs_open_file *of,
- 				   struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%x\n", r->cache.shareable_bits);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1060,15 +1081,16 @@ static int rdt_bit_usage_show(struct kernfs_open_file *of,
- 	 */
- 	unsigned long sw_shareable = 0, hw_shareable = 0;
- 	unsigned long exclusive = 0, pseudo_locked = 0;
--	struct rdt_resource *r = s->res;
- 	struct rdt_ctrl_domain *dom;
- 	int i, hwb, swb, excl, psl;
-+	struct rdt_resource *r;
- 	enum rdtgrp_mode mode;
- 	bool sep = false;
- 	u32 ctrl_val;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	list_for_each_entry_rcu(dom, &r->ctrl_domains, hdr.list, lockdep_is_cpus_held()) {
- 		if (sep)
- 			seq_putc(seq, ';');
-@@ -1144,8 +1166,7 @@ static int rdt_bit_usage_show(struct kernfs_open_file *of,
- 		sep = true;
- 	}
- 	seq_putc(seq, '\n');
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1153,9 +1174,14 @@ static int rdt_min_bw_show(struct kernfs_open_file *of,
- 			   struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->membw.min_bw);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1164,8 +1190,12 @@ static int rdt_num_rmids_show(struct kernfs_open_file *of,
- {
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	seq_printf(seq, "%u\n", r->mon.num_rmid);
- 
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1175,6 +1205,8 @@ static int rdt_mon_features_show(struct kernfs_open_file *of,
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 	struct mon_evt *mevt;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	for_each_mon_event(mevt) {
- 		if (mevt->rid != r->rid || !mevt->enabled)
- 			continue;
-@@ -1184,6 +1216,8 @@ static int rdt_mon_features_show(struct kernfs_open_file *of,
- 			seq_printf(seq, "%s_config\n", mevt->name);
- 	}
- 
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1191,9 +1225,14 @@ static int rdt_bw_gran_show(struct kernfs_open_file *of,
- 			    struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->membw.bw_gran);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1201,16 +1240,24 @@ static int rdt_delay_linear_show(struct kernfs_open_file *of,
- 				 struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->membw.delay_linear);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
- static int max_threshold_occ_show(struct kernfs_open_file *of,
- 				  struct seq_file *seq, void *v)
- {
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	seq_printf(seq, "%u\n", resctrl_rmid_realloc_threshold);
-+	info_kn_unlock(of->kn);
- 
- 	return 0;
- }
-@@ -1219,22 +1266,28 @@ static int rdt_thread_throttle_mode_show(struct kernfs_open_file *of,
- 					 struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
-+
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
-+	r = s->res;
- 	switch (r->membw.throttle_mode) {
- 	case THREAD_THROTTLE_PER_THREAD:
- 		seq_puts(seq, "per-thread\n");
--		return 0;
-+		break;
- 	case THREAD_THROTTLE_MAX:
- 		seq_puts(seq, "max\n");
--		return 0;
-+		break;
- 	case THREAD_THROTTLE_UNDEFINED:
- 		seq_puts(seq, "undefined\n");
--		return 0;
-+		break;
-+	default:
-+		WARN_ON_ONCE(1);
-+		break;
- 	}
- 
--	WARN_ON_ONCE(1);
--
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1248,12 +1301,20 @@ static ssize_t max_threshold_occ_write(struct kernfs_open_file *of,
- 	if (ret)
- 		return ret;
- 
--	if (bytes > resctrl_rmid_realloc_limit)
--		return -EINVAL;
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+
-+	if (bytes > resctrl_rmid_realloc_limit) {
-+		ret = -EINVAL;
-+		goto out_unlock;
-+	}
- 
- 	resctrl_rmid_realloc_threshold = resctrl_arch_round_mon_val(bytes);
- 
--	return nbytes;
-+out_unlock:
-+	info_kn_unlock(of->kn);
-+
-+	return ret ?: nbytes;
- }
- 
- /*
-@@ -1293,10 +1354,15 @@ static int rdt_has_sparse_bitmasks_show(struct kernfs_open_file *of,
- 					struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->cache.arch_has_sparse_bitmasks);
- 
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1652,8 +1718,8 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
- 	struct rdt_l3_mon_domain *dom;
- 	bool sep = false;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	lockdep_assert_cpus_held();
-+	lockdep_assert_held(&rdtgroup_mutex);
- 
- 	list_for_each_entry_rcu(dom, &r->mon_domains, hdr.list, lockdep_is_cpus_held()) {
- 		if (sep)
-@@ -1670,8 +1736,6 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
- 	}
- 	seq_puts(s, "\n");
- 
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
- 
- 	return 0;
- }
-@@ -1681,8 +1745,12 @@ static int mbm_total_bytes_config_show(struct kernfs_open_file *of,
- {
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+
- 	mbm_config_show(seq, r, QOS_L3_MBM_TOTAL_EVENT_ID);
- 
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1691,8 +1759,12 @@ static int mbm_local_bytes_config_show(struct kernfs_open_file *of,
- {
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+
- 	mbm_config_show(seq, r, QOS_L3_MBM_LOCAL_EVENT_ID);
- 
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1790,8 +1862,8 @@ static ssize_t mbm_total_bytes_config_write(struct kernfs_open_file *of,
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n')
- 		return -EINVAL;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-@@ -1799,8 +1871,7 @@ static ssize_t mbm_total_bytes_config_write(struct kernfs_open_file *of,
- 
- 	ret = mon_config_write(r, buf, QOS_L3_MBM_TOTAL_EVENT_ID);
- 
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -1816,8 +1887,8 @@ static ssize_t mbm_local_bytes_config_write(struct kernfs_open_file *of,
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n')
- 		return -EINVAL;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-@@ -1825,8 +1896,7 @@ static ssize_t mbm_local_bytes_config_write(struct kernfs_open_file *of,
- 
- 	ret = mon_config_write(r, buf, QOS_L3_MBM_LOCAL_EVENT_ID);
- 
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -2659,6 +2729,58 @@ void rdtgroup_kn_unlock(struct kernfs_node *kn)
- 	rdtgroup_kn_put(rdtgrp, kn);
- }
- 
-+/*
-+ * Accessing the kn after breaking active protection is safe since the open
-+ * of resctrl file holds a kernfs base reference (different from active
-+ * protection) on the kn ensuring that it remains accessible even if it was
-+ * unlinked. Each kn in turn holds base reference to parent so the kn's
-+ * genealogy remains in memory until all base references dropped.
-+ */
-+static bool is_active_resctrl_node(struct kernfs_node *kn)
-+{
-+	struct kernfs_node *p;
-+	bool match = false;
-+
-+	guard(rcu)();
-+	p = kn;
-+	while (p) {
-+		if (p == rdtgroup_default.kn) {
-+			match = true;
-+			break;
-+		}
-+		p = rcu_dereference(p->__parent);
-+	}
-+
-+	return match;
-+}
-+
-+bool info_kn_lock(struct kernfs_node *kn)
-+{
-+	kernfs_break_active_protection(kn);
-+	cpus_read_lock();
-+	mutex_lock(&rdtgroup_mutex);
-+
 +	/*
-+	 * Check both if resctrl is torn down (!rdtgroup_default.kn) and
-+	 * if the reader's kernfs_node originates from a dead mount.
++	 * mbm_handle_overflow() may dereference this ctrl domain via
++	 * update_mba_bw()->get_sc_ctrl_domain_from_cpu(). The architecture has
++	 * unlinked the domain from the RCU list and waited a grace period, so
++	 * no new worker iteration can find it; drain any worker that already
++	 * holds a pointer to it before the architecture frees the domain.
++	 *
++	 * Software controller is enabled/disabled on mount/unmount with
++	 * cpus_read_lock() held. Running here with cpus_write_lock() so
++	 * there are no concurrent changes to software controller status.
 +	 */
-+	if (!rdtgroup_default.kn || !is_active_resctrl_node(kn)) {
-+		mutex_unlock(&rdtgroup_mutex);
-+		cpus_read_unlock();
-+		kernfs_unbreak_active_protection(kn);
-+		return false;
++	if (r->rid == RDT_RESOURCE_MBA && is_mba_sc(r)) {
++		struct rdt_resource *l3 = resctrl_arch_get_resource(RDT_RESOURCE_L3);
++		struct rdt_l3_mon_domain *mon_d;
++
++		list_for_each_entry_rcu(mon_d, &l3->mon_domains, hdr.list, lockdep_is_cpus_held()) {
++			if (mon_d->hdr.id == d->hdr.id) {
++				cancel_delayed_work_sync(&mon_d->mbm_over);
++				break;
++			}
++		}
 +	}
 +
-+	return true;
-+}
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	if (supports_mba_mbps() && r->rid == RDT_RESOURCE_MBA)
+@@ -4503,6 +4526,24 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ {
+ 	struct rdt_l3_mon_domain *d;
+ 
++	/*
++	 * Called by architecture under CPU hotplug lock as it prepares to remove
++	 * the domain which is guaranteed to be accessible here.
++	 * The domain has been unlinked from the RCU list and a grace period
++	 * has elapsed, so no new worker can be scheduled. Drain any worker that
++	 * is in flight or pending before letting architecture proceed to free
++	 * the domain that has the workers' struct delayed_work embedded.
++	 * Do so before taking rdtgroup_mutex since the workers also acquire it.
++	 */
++	if (r->rid == RDT_RESOURCE_L3 &&
++	    domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3)) {
++		d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
++		if (resctrl_is_mbm_enabled())
++			cancel_delayed_work_sync(&d->mbm_over);
++		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID))
++			cancel_delayed_work_sync(&d->cqm_limbo);
++	}
 +
-+void info_kn_unlock(struct kernfs_node *kn)
-+{
-+	mutex_unlock(&rdtgroup_mutex);
-+	cpus_read_unlock();
-+	kernfs_unbreak_active_protection(kn);
-+}
-+
- static int mkdir_mondata_all(struct kernfs_node *parent_kn,
- 			     struct rdtgroup *prgrp,
- 			     struct kernfs_node **mon_data_kn);
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	/*
+@@ -4519,8 +4560,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ 		goto out_unlock;
+ 
+ 	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
+-	if (resctrl_is_mbm_enabled())
+-		cancel_delayed_work(&d->mbm_over);
+ 	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
+ 		/*
+ 		 * When a package is going down, forcefully
+@@ -4531,7 +4570,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ 		 * package never comes back.
+ 		 */
+ 		__check_limbo(d, true);
+-		cancel_delayed_work(&d->cqm_limbo);
+ 	}
+ 
+ 	domain_destroy_l3_mon_state(d);
+@@ -4712,12 +4750,16 @@ void resctrl_offline_cpu(unsigned int cpu)
+ 	d = get_mon_domain_from_cpu(cpu, l3);
+ 	if (d) {
+ 		if (resctrl_is_mbm_enabled() && cpu == d->mbm_work_cpu) {
+-			cancel_delayed_work(&d->mbm_over);
++			mutex_unlock(&rdtgroup_mutex);
++			cancel_delayed_work_sync(&d->mbm_over);
++			mutex_lock(&rdtgroup_mutex);
+ 			mbm_setup_overflow_handler(d, 0, cpu);
+ 		}
+ 		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) &&
+ 		    cpu == d->cqm_work_cpu && has_busy_rmid(d)) {
+-			cancel_delayed_work(&d->cqm_limbo);
++			mutex_unlock(&rdtgroup_mutex);
++			cancel_delayed_work_sync(&d->cqm_limbo);
++			mutex_lock(&rdtgroup_mutex);
+ 			cqm_setup_limbo_handler(d, 0, cpu);
+ 		}
+ 	}
 -- 
 2.54.0
 
