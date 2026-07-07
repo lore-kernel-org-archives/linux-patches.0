@@ -1,65 +1,65 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E27380FFB
-	for <patches@lists.linux.dev>; Tue,  7 Jul 2026 11:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6683FF1C7
+	for <patches@lists.linux.dev>; Tue,  7 Jul 2026 12:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783425471; cv=none; b=QD9r7Iw4Kz1vF7UB8srXu/UCb26EiS2qUbFadHcO5xyAfHiCRbp33cEsik1vNhifgPfrAFBmGNybs7vg0l78a89DFJ9OZR4thMToD/kiSUF1w3u72YQ3fzcf9PDL++tE3YR7WXlIaSZyLIr3ObVWa0REYOP8iuha6q7bVCozY1E=
+	t=1783427119; cv=none; b=rMRKx0/7SctL66tai8iCdMJ2B9kHLL1vFcfDQs85rMde2RoM5v8AdNlTyggiYIH26hgl2eYppwxGa8c8zYqpDgKAGZgHo7ss5+V9xbxc1lKeKnNphduaMaLWJNdUmTJDRrD+LnLpAJCx3ZYPRUlpxu+uElxgtdAUitVOrVnkp1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783425471; c=relaxed/simple;
-	bh=bYyIxzQ/EtEx+7SnF9gPUBLzz72p3bOo/OFVmbuhkR8=;
+	s=arc-20240116; t=1783427119; c=relaxed/simple;
+	bh=bkS05jk3WJCL6+WtPkaVFwjew5+GA6ULhsFQoHwLjp0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uZWvUJO3cSX2rlEGLYIHER6HLrLWlwCNWDA94fgbvpMdcpRDjjei9uHvNILqdNb+xxyeaPpRpaJPD4rxje6cuzkbNrhO8ePXhDRKfwrW7P+ySIecE1qjwSsNBEP3n3wxykTHYFRCKN+poV5rwvwNRgQgYPr+ncx+qIpBgJhhKKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=EPXTzKcB; arc=none smtp.client-ip=209.85.128.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=br8WQJHbKd14A9h4MfHcckm3simtL0sVmLDkjnP1xSZLUA5uDcQOs3LVMlyqXkqtXAt9VlUConqj1hJU9e1mjGnNynhPImTHGoTlbwZEdBOah19fumwrcgYzDcwvAyXY8XTb2ViE08J43BXccV6NgyqNdCgOmLAzYO3i2L6SRac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WtJCn4gK; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EPXTzKcB"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-493b8d92a4eso29085e9.1
-        for <patches@lists.linux.dev>; Tue, 07 Jul 2026 04:57:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WtJCn4gK"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-493be0fbcc5so36805e9.0
+        for <patches@lists.linux.dev>; Tue, 07 Jul 2026 05:25:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783425468; x=1784030268; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1783427117; x=1784031917; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=NTfR+wHBxAreRe0VNbdWPjK32qxCiRZ4OQnybQ+8rCc=;
-        b=EPXTzKcBwimqeJTBKmRCEizyolUBNRVEswzdNCrhb6JhAFMEPEkF57FyxkVUdzfKjW
-         qdVwomc149AHkzLNipzcJ+3hFI39lnxMacPou0+kww2mN/u8htbX/p5JrWMgPjg4Ac0b
-         8u9I3TDlEUFt4RnE1JXqwg3JdS4ZsW7NcacPKMmYXMFW2gx8Omr7C6PlKyx7CDs4jVmP
-         wY6Nmmi7081tH4Fty2ETwU7QiH32D76P0Bd0OwPIhhTvB49U05ZEsSsEgNECSe9LO43a
-         uU+N+TYKVgM794VZQvxJeCQGLceAk/iU1KOu/rfnnXCPxZHd+ON9186wvkdFG8gs4zq9
-         n+Mg==
+        bh=BNIu1nT9O5TEzBCIb6SZPpMwQbKBprZzCJQi10hmSNQ=;
+        b=WtJCn4gKYNbsAfH3duNjcM2wz1c71NNl3WZWSasuFomsCGbrljfUSdU9d5pP4RlSSG
+         ddLzmcWeQQwXNryR97/8R7TpR45FE+Eru9Mf85nE3WySVM9TG36cljEryPWyVH5rhBRy
+         v9PfoJ0ALYSSb4symscHCGK6+wQbtrmkpv1oMnCzpySfJDAGSEOJJleEZur7E5FWmQnU
+         aqbLEn13UJ0Sxn9klo3PtpTP9FOSn6NTZSulmtP+cPBuvylfZObv7g8kSLlY/zEO80El
+         xEZ/xj42IYpLGfbHaJVxt9KMPBBfWls6yPFHRcICHlFK52DQ4UtnxRtfgBdsf6R9xFOV
+         +IWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783425468; x=1784030268;
+        d=1e100.net; s=20251104; t=1783427117; x=1784031917;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=NTfR+wHBxAreRe0VNbdWPjK32qxCiRZ4OQnybQ+8rCc=;
-        b=aJNMmYKPa2sLH2TLXVc3afh0tEtOIaA2ShFMeP+n5QbX9tT60HhI627MC8KQG+twTH
-         7s4/B6kuT+k+kuVY27auITdBCJFSUfTYwxDnsxgbUrJXnd1y3gzqJ6h+a4vygt0vuQl5
-         rfAExxzotT+3+ZZC1U0OWgOIoJ/3zJ3h4WXTYs74yX/4RQhEZaL1S6+TlvYfIv7suu9+
-         2nqBgkWn7WTZ0cJs8Hq173ivYd91u3cqd0blYUFzI1xpA2J71P8Oq6V62ptmCmm9CnMI
-         wVeMvUw4zUorNQJt6x5KGgPl+x0czjdJO0Y1+T1CMPcvL2dZE71rWTdwyLhKLgtxVjzi
-         p54g==
-X-Forwarded-Encrypted: i=1; AHgh+RrJtjVtEvzwd3kLfIRw3zqFXqakO/n/A/2yek9o7Wo7/ob+CF62IKqKQAaEY+0D7q7xrJjBixLw@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyxac8GDKr97qDA/VswSjNjSBcOvxu/aNBY2qhAlPU8OBh9AZir
-	k7GDVwsg2E6AkSOH2BWMz7x2iW2cDG+faPLbEjPvHFwhEnLx5xTp0/78ihmbGJKdYA==
-X-Gm-Gg: AfdE7clI2e3yliMYuGWjDg9v6fgufqszCh4i1Hlbq3vNFXJZ3FtBwKThicnkjhzICwh
-	sxGkcL+OwQ/yhSqRPvyZckbZDQXGiINLC3fDfUovN6hciEobHV6sm0uBqCZQodQPod41zQp4YGA
-	nF0PccTuyPBTjWzVU2oueJrPELbUKGyKpx7hvUgZzyX3nK1+3lI9R4OnAcHk7cbywn4sKtLV+bY
-	lRlM0Pdm2WhUm7ujJ2q1r6xGJM8rkQAK1AwlpUzUvuB/ru3r7qWS9f6ihQLjFtsQQP731VevVhR
-	hvPYOEH0bMmQMxtuDEjtNxZu7ZPr7wfZPGzxxbuPEJBBmWuN6E9xrk484Q+GZNTa6+Skumw+xfo
-	l9Wt2GZ60ZpXLTybea71HIOkAk9+75iipRaQ4W9vrrOCoU0t+noRKtKuEZoIRyyjnG31+9jmgnu
-	pOaPs70WZ0hO9TfFlbjHzcbxyy1amiViThqhyr2M5MpxYT4KhR
-X-Received: by 2002:a05:600c:e489:20b0:493:a96b:f9fe with SMTP id 5b1f17b1804b1-493e10ce831mr496815e9.4.1783425468224;
-        Tue, 07 Jul 2026 04:57:48 -0700 (PDT)
+        bh=BNIu1nT9O5TEzBCIb6SZPpMwQbKBprZzCJQi10hmSNQ=;
+        b=hF3BhtNUe+GdWOwPsTdzyttinudGPiyNqpAeNSVqeqqHpVcImIjjVCy1kdqFg4rJR8
+         RpdijQdSgqNoa26PFdlKRIGg8TFmkmu52PVNMY0jhyEe3K2K6epsu0IgJhk03tNYTz4f
+         hf0BAcs5H99OE3oykE0+UFK+Jt2rqdyuY5GdJ9DAfTIelqXQcCb4sOh7XPSi3qlXANkf
+         3flZOBsF/XCH+dAidpQcJ6nZDZElaQwSIvBGoxd3zIvCHCfeSTRMijAOJXxNNDlgYIT0
+         uHZsLk+LjuQTxWD/Ikj4ACoCGJDbPkrC3QJ+FUMU+hYBdvfuLuVe4f7d0wb8bjZWG1XS
+         jt8A==
+X-Forwarded-Encrypted: i=1; AHgh+Rqbl4pkqjBYoaHhdt6DoBMQ8wf7t30UvYJQgHsQF5Gow62QbqM3fXj82SIgleZh6HEwcLxqZ3lf@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywo4zNNQ+3NINlzicsNca7+w7216UgJ5F/1OOOa5KOZ+tA7gjOe
+	impJR2vTEfJNFyAsXy/Tp6J49pMW3Ok6wGHmP4WGnN8Y7TQmc8hfcKz1jw88dbTX7A==
+X-Gm-Gg: AfdE7cnPhScSlYswWpF8eXQBXZcexfyCRkt2R9CWaC/gcbSYj+dkQIJcFYPKBDkPmLg
+	mAzMMTfpKPxu2Cit44pBNM7N2z9tpRSva3/dyzPCmehOemg3vrjJpv4/+cFzyhU/6SeBwHuqtpY
+	cC86SbktIGX8A3GrXv772oCI2fGOYzzVWEVogL9zndoPS8P0j1IyxHgXk2IyycBgBAPw5vlu1Y5
+	WbrgDQnrtZYPqzq2qPfK/TdL8N/kYnaP/rDnn5/LoGTeNfRT3mCEtVj5+ZW84IvpwPwrGcZEO1B
+	NnIjjeBUfeXury6YYBYxYKV628FsqXLdffBLLOovSWriveJO8CWCYKxaunHbM2RxMMjnFhT4Zpr
+	am7y3z8MAkQPwmD4kPZ4B5jSiqgAJPynjLutY8USvdRSq2NwNwPgzvJpLMDRje9+4w7plGa8En1
+	eH3kAmRiHZDGLWg6tBYK80lVWXyOo4XcEc6yN4Bqo8P2UvMuRs7LF0pG/qzcI=
+X-Received: by 2002:a05:600c:1c0d:b0:492:203f:a378 with SMTP id 5b1f17b1804b1-493e121b8cdmr1231235e9.8.1783427116023;
+        Tue, 07 Jul 2026 05:25:16 -0700 (PDT)
 Received: from google.com (220.60.76.34.bc.googleusercontent.com. [34.76.60.220])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493e0f4ef53sm56007625e9.8.2026.07.07.04.57.47
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493e0f3677asm48472185e9.4.2026.07.07.05.25.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 04:57:47 -0700 (PDT)
-Date: Tue, 7 Jul 2026 11:57:41 +0000
+        Tue, 07 Jul 2026 05:25:14 -0700 (PDT)
+Date: Tue, 7 Jul 2026 12:25:08 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
@@ -70,11 +70,10 @@ Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
 	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
 	Pranjal Shrivastava <praan@google.com>,
 	Samiullah Khawaja <skhawaja@google.com>
-Subject: Re: [PATCH v2 6/8] iommu/arm-smmu-v3: Populate the tlbi at the top
- of the call chain
-Message-ID: <akzptWVIihnH79Hb@google.com>
+Subject: Re: [PATCH v2 0/8] Organize the SMMUv3 invalidation flow so iommupt
+ can use it
+Message-ID: <akzwJFpHTsgMrOYI@google.com>
 References: <0-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
- <6-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -83,195 +82,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
+In-Reply-To: <0-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
 
-On Mon, Jul 06, 2026 at 01:26:43PM -0300, Jason Gunthorpe wrote:
-> Each of these has their own unique situation, populate the tlbi right
-> at the top and pass it into arm_smmu_domain_inv_range(). They will
-> diverge further when the iommupt invalidation scheme is introduced.
+On Mon, Jul 06, 2026 at 01:26:37PM -0300, Jason Gunthorpe wrote:
+> [ This is part of the patch pile to move SMMUv3 over to the generic page
+> table, the precursor patches have been merged now:
+> 1) Organize the SMMUv3 invalidation flow so iommupt can use it
+> 2) Use the generic iommu page table for SMMUv3
 > 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   | 21 ++++----
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 51 +++++++++----------
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   | 13 +++--
->  3 files changed, 45 insertions(+), 40 deletions(-)
+> The whole branch is here:
+>    https://github.com/jgunthorpe/linux/commits/iommu_pt_arm64/
+> ]
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> index 5d4dde3d1cfe87..e6001913e2b043 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> @@ -139,16 +139,19 @@ static void arm_smmu_mm_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
->  {
->  	struct arm_smmu_domain *smmu_domain =
->  		container_of(mn, struct arm_smmu_domain, mmu_notifier);
-> -	size_t size;
-> +	struct arm_smmu_tlbi tlbi = {
-> +		.smmu_domain = smmu_domain,
-> +		.iova = start,
-> +		/*
-> +		 * The mm_types defines vm_end as the first byte after the end
-> +		 * address, different from IOMMU subsystem using the last
-> +		 * address of an address range.
-> +		 */
-> +		.size = end - start,
-> +		.iopte_granule = PAGE_SIZE,
-> +	};
->  
-> -	/*
-> -	 * The mm_types defines vm_end as the first byte after the end address,
-> -	 * different from IOMMU subsystem using the last address of an address
-> -	 * range. So do a simple translation here by calculating size correctly.
-> -	 */
-> -	size = end - start;
-> -
-> -	arm_smmu_domain_inv_range(smmu_domain, start, size, PAGE_SIZE, false);
-> +	arm_smmu_domain_tlbi(&tlbi);
->  }
->  
->  static void arm_smmu_mm_release(struct mmu_notifier *mn, struct mm_struct *mm)
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index fbe3e5dc42f964..2e477f15080148 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -2661,25 +2661,12 @@ static void arm_smmu_domain_tlbi_inv(struct arm_smmu_tlbi *tlbi,
->  	}
->  }
->  
-> -void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
-> -			       unsigned long iova, size_t size,
-> -			       unsigned int granule, bool leaf)
-> +void arm_smmu_domain_tlbi(struct arm_smmu_tlbi *tlbi)
->  {
-> -	struct arm_smmu_tlbi tlbi = {
-> -		.smmu_domain = smmu_domain,
-> -		.iova = iova,
-> -		.size = size,
-> -		.iopte_granule = granule,
-> -		.leaf_only = leaf,
-> -	};
->  	struct arm_smmu_invs *invs;
->  
-> -	if (!size || size == SIZE_MAX) {
-> -		tlbi.single.use_full_inv = true;
-> -		tlbi.range.use_full_inv = true;
-> -	} else {
-> -		arm_smmu_tlbi_calc_single(&tlbi);
-> -	}
-> +	if (!tlbi->single.use_full_inv)
-> +		arm_smmu_tlbi_calc_single(tlbi);
->  
->  	/*
->  	 * An invalidation request must follow some IOPTE change and then load
+> iommupt has a design that focuses on building a single iommu_iotlb_gather
+> for arbitary batches of map/unmap operations. The gather uses the free
+> list and it captures invalidations of tables, leaves and supports mixed
+> levels.
+> 
+> The introduction of PT_FEAT_DETAILED_GATHER provides some additional
+> information that is useful for ARM: the damage bitmaps for the table and
+> level changes.
+> 
+> Prior to switching SMMUv3 over to use iommupt prepare for this by
+> reworking the internal invalidation to work on the same data format that
+> iommupt will produce. Bridge the invalidations generated by io-pgtable
+> into the new format. The conversion is simple enough, io-pgtable generates
+> invalidation operations that have only a single set bit in
+> table_levels_bitmap/leaf_levels_bitmap, so we can convert the io-pgtable
+> provided size into the proper level leaf or table bit.
+> 
+> When iommupt uses this mechanism it will fill in full bitmaps reflecting
+> the union of all invalidations contained in the gather, and this series
+> provides an implementation that can work this way.
+> 
+> Like the other drivers the general algorithm focuses on trying to issue a
+> single command per gather or at most 512 single invalidations. If that
+> isn't possible then it falls back to full invalidation. Since table and
+> leaf invalidation are combined together there is no waste of invaliding
+> tables prior to performing a full invalidation.
+> 
+> On its own this provides value as the invalidation has a number of
+> rough spots:
+> 
+>  - Non-leaf invalidation actually expands into a TLBI for every
+>    translation granule because the inner logic doesn't special case the
+>    walk vs leaf condition. Now that a table_levels_bitmap is used to
+>    describe the walk invalidation it properly generates a RIL with optimal
+>    TTL or only one single invalidation.
+> 
+>  - RIL doesn't calculate perfect hints for SVA because the SVA rules are
+>    different from the io-pgtable-arm rules that the RIL algorithm works
+>    with. SVA can now express the combined leaf and table invalidation that
+>    the MM callback represents and get the right TTL, with an optimization
+>    for the common 4k only scenario.
+> 
+>  - RIL didn't generate a single invalidation like VT-d and AMD do,
+>    instead it tries to generate an exact coverage with many
+>    smaller invalidations. Switch it to match the other drivers single
+>    range approach for performance and consistency. Since ARM has a much
+>    more flexible range definition the over invalidation is far smaller
+>    than other systems.
+> 
+> The approach is to introduce a new struct arm_smmu_tlbi which
+> describes the invalidation, pre-compute into the tlbi the single and
+> range commands from the start/last and bitmaps, and then apply the
+> correct pre-computed command to each of items in the invalidation
+> list.
+> 
+> The RIL and single calculations are revised to use the new bitmaps
+> and accurately generate TTL/stride/etc.
+> 
+> Some of this design is to support another series to remove the batch on
+> the stack. Now that we have the invalidation list and the tlbi it is
+> simple to just expand the invs list directly into commands instead of
+> using the temporary on-stack batch array. Eventually removing batch will
+> save ~1k of stack usage here.
+> 
+> v2:
+>  - Rebase to v7.2-rc1
+> v1: https://lore.kernel.org/all/0-v1-5b1ac97a5403+6588f-smmu_tlbi_jgg@nvidia.com/
+> 
+> Jason Gunthorpe (8):
+>   iommu/arm-smmu-v3: Pass the parameters for the invalidation in a
+>     struct
+>   iommu/arm-smmu-v3: Move pgsize out of arm_smmu_inv
+>   iommu/arm-smmu-v3: Optimize range invalidation for latency
+>   iommu/arm-smmu-v3: Keep track in the arm_smmu_invs if RIL is used
+>   iommu/arm-smmu-v3: Precompute the invalidation commands
+>   iommu/arm-smmu-v3: Populate the tlbi at the top of the call chain
+>   iommu/arm-smmu-v3: Change how the tlbi describes the invalidation
+>   iommu/arm-smmu-v3: Support the DS expansion of RIL's SCALE
 
-The rest of the comment still refers to the old name
-arm_smmu_domain_inv_range()
-
-> @@ -2709,14 +2696,14 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
->  	smp_mb();
->  
->  	rcu_read_lock();
-> -	invs = rcu_dereference(smmu_domain->invs);
-> +	invs = rcu_dereference(tlbi->smmu_domain->invs);
->  
->  	/* Only precaculate RIL if it will be used. */
->  	if (invs->has_range_inv) {
-> -		if (!tlbi.range.use_full_inv)
-> -			arm_smmu_tlbi_calc_range(&tlbi);
-> +		if (!tlbi->range.use_full_inv)
-> +			arm_smmu_tlbi_calc_range(tlbi);
->  	} else {
-> -		tlbi.range.use_full_inv = true;
-> +		tlbi->range.use_full_inv = true;
->  	}
->  
->  	/*
-> @@ -2727,10 +2714,10 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
->  		unsigned long flags;
->  
->  		read_lock_irqsave(&invs->rwlock, flags);
-> -		arm_smmu_domain_tlbi_inv(&tlbi, invs);
-> +		arm_smmu_domain_tlbi_inv(tlbi, invs);
->  		read_unlock_irqrestore(&invs->rwlock, flags);
->  	} else {
-> -		arm_smmu_domain_tlbi_inv(&tlbi, invs);
-> +		arm_smmu_domain_tlbi_inv(tlbi, invs);
->  	}
->  
->  	rcu_read_unlock();
-> @@ -2750,8 +2737,14 @@ static void arm_smmu_tlb_inv_walk(unsigned long iova, size_t size,
->  				  size_t granule, void *cookie)
->  {
->  	struct arm_smmu_domain *smmu_domain = cookie;
-> +	struct arm_smmu_tlbi tlbi = {
-> +		.smmu_domain = smmu_domain,
-> +		.iova = iova,
-> +		.size = size,
-> +		.iopte_granule = granule,
-> +	};
->  
-> -	arm_smmu_domain_inv_range(smmu_domain, iova, size, granule, false);
-> +	arm_smmu_domain_tlbi(&tlbi);
->  }
->  
->  static const struct iommu_flush_ops arm_smmu_flush_ops = {
-> @@ -4018,14 +4011,18 @@ static void arm_smmu_flush_iotlb_all(struct iommu_domain *domain)
->  static void arm_smmu_iotlb_sync(struct iommu_domain *domain,
->  				struct iommu_iotlb_gather *gather)
->  {
-> -	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
-> +	struct arm_smmu_tlbi tlbi = {
-> +		.smmu_domain = to_smmu_domain(domain),
-> +		.iova = gather->start,
-> +		.size = gather->end - gather->start + 1,
-> +		.iopte_granule = gather->pgsize,
-> +		.leaf_only = true,
-> +	};
->  
->  	if (!gather->pgsize)
->  		return;
->  
-> -	arm_smmu_domain_inv_range(smmu_domain, gather->start,
-> -				  gather->end - gather->start + 1,
-> -				  gather->pgsize, true);
-> +	arm_smmu_domain_tlbi(&tlbi);
->  }
->  
->  static phys_addr_t
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> index 9d262ef6076225..5f97d1a63ebbfd 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> @@ -1169,13 +1169,18 @@ int arm_smmu_set_pasid(struct arm_smmu_master *master,
->  		       struct arm_smmu_domain *smmu_domain, ioasid_t pasid,
->  		       struct arm_smmu_cd *cd, struct iommu_domain *old);
->  
-> -void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
-> -			       unsigned long iova, size_t size,
-> -			       unsigned int granule, bool leaf);
-> +void arm_smmu_domain_tlbi(struct arm_smmu_tlbi *tlbi);
->  
->  static inline void arm_smmu_domain_inv(struct arm_smmu_domain *smmu_domain)
->  {
-> -	arm_smmu_domain_inv_range(smmu_domain, 0, 0, 0, false);
-> +	/* Prefilled for invalidate all */
-> +	struct arm_smmu_tlbi tlbi = {
-> +		.smmu_domain = smmu_domain,
-> +		.single.use_full_inv = true,
-> +		.range.use_full_inv = true,
-
-Those were introduced last patch, but I am wondering if use_full_inv
-should be a common field instead of having it in both single and range.
+I quickly went through the series, and left few comments.
+As discussed before regarding the TLB invalidation logic sharing
+with pKVM [1], I still think after these changes both drivers can
+share some logic on the level arm_smmu_tlbi_calc_range() (+ tweaks).
+I am planning to post my series by this week, I will keep it based
+on upstream and I can rework my series later if this one gets merged
+first.
 
 Thanks,
 Mostafa
 
-> +	};
-> +
-> +	arm_smmu_domain_tlbi(&tlbi);
->  }
->  
->  void __arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu,
+[1] https://lore.kernel.org/all/20260501111928.259252-5-smostafa@google.com/
+
+> 
+>  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   |  32 +-
+>  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c  |  30 +-
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 439 ++++++++++++------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  54 ++-
+>  4 files changed, 382 insertions(+), 173 deletions(-)
+> 
+> 
+> base-commit: 4c73a6222c248384513c4f465e547df80b280a06
 > -- 
 > 2.43.0
 > 
