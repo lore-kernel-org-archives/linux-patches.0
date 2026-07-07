@@ -1,200 +1,209 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6683FF1C7
-	for <patches@lists.linux.dev>; Tue,  7 Jul 2026 12:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783427119; cv=none; b=rMRKx0/7SctL66tai8iCdMJ2B9kHLL1vFcfDQs85rMde2RoM5v8AdNlTyggiYIH26hgl2eYppwxGa8c8zYqpDgKAGZgHo7ss5+V9xbxc1lKeKnNphduaMaLWJNdUmTJDRrD+LnLpAJCx3ZYPRUlpxu+uElxgtdAUitVOrVnkp1E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783427119; c=relaxed/simple;
-	bh=bkS05jk3WJCL6+WtPkaVFwjew5+GA6ULhsFQoHwLjp0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=br8WQJHbKd14A9h4MfHcckm3simtL0sVmLDkjnP1xSZLUA5uDcQOs3LVMlyqXkqtXAt9VlUConqj1hJU9e1mjGnNynhPImTHGoTlbwZEdBOah19fumwrcgYzDcwvAyXY8XTb2ViE08J43BXccV6NgyqNdCgOmLAzYO3i2L6SRac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WtJCn4gK; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D1241737E;
+	Tue,  7 Jul 2026 13:18:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783430316; cv=fail; b=unSGTp2PNsK4pHagzxyms9JYz3MzdoO+vv09kNzbOT/5l1M5Qr57y9N1vEU1UTMo4rTuHWCUqvhlAzOsgzU9vHaS0w2qmlIHvBgnBfx7leGY15RnXRrPcY54mnvyAy4RgqoMMotpuX7lO3G1/sBXIcgOBiqda+wen1nbMLmhArA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783430316; c=relaxed/simple;
+	bh=lxytljmdfj8Aw+rDbTcR9IOLX6jirPal8k0y/b7DS7E=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=RN2dbgxqIOJj21RphpUGoHOncma7gU9Iyovm1f90Vg+zBIV/xW5BbTfMKzAdEsiOQbSRcrqiI0pPpTZ8SZPTfcxPBoo03Iz718536HwMKHu0lxG8ryCKvqdOw/PsYRXAKNxGpIKy+gv3hJ1w2Oh/d3+DGKAzLABscOfP7Yx9RZg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=R0qR6Eq/; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=zCpvXvqj; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WtJCn4gK"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-493be0fbcc5so36805e9.0
-        for <patches@lists.linux.dev>; Tue, 07 Jul 2026 05:25:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="R0qR6Eq/";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="zCpvXvqj"
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 667CuECp712949;
+	Tue, 7 Jul 2026 13:18:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=lg32R/l2qL875cFv2bmwzzQjL1NGqbB9tC2fkt8Pvrk=; b=
+	R0qR6Eq/0T6/Re98NlTm4zIXQUo4rf1CPXHFbAG+boMwrgUlZPx4WuoY8tZ6iDtw
+	sBSmh3JTZeQeRvsc8DyqFah9MZE044mOICgWer2xe3+mWUEA+5Cjz1HC+HE0zTGO
+	Tq+CxmQHxIepKiBodVfvzFrShybqQRy+2IWTUWivmFfX1SqrGzJDEbF59Xw30tW9
+	GT8pNv+9fDGRLpQ0UsUpVxaO9icJxKHom91M+FeGOTg/lIAjRMtHXkRAdIl/wR6g
+	YO0GRUriCgFtKza3bw1Y5JoiXMqrmkyjd952gQkdzqx+31OHQI6itKbrxJ1PGKgR
+	5pNtN2slaOb62k9rc9j7bw==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4f6rs1dppe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 07 Jul 2026 13:18:26 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 667DIBnE008880;
+	Tue, 7 Jul 2026 13:18:26 GMT
+Received: from sn4pr2101cu001.outbound.protection.outlook.com (mail-southcentralusazon11012036.outbound.protection.outlook.com [40.93.195.36])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4f6rmdqabn-4
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 07 Jul 2026 13:18:25 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NHvQ8kzqtdunlDwb2kJ725aMvksOsU8m2cSRbUSYOsEm8ZcjwJu+mIAaW1JsrXBbV57n7M/ebpRI09c5CgoFV+s7WBGZgGv2P0nWB6oJUvFLs0ViBX6NO4b+Qia3IoRCyvnGEbftMRoz3ZlD351T+Df7be2hlZubodcEoxjSa1BrO9DJALFBTn3idhcR+UiVijENmpY96Lz6ctL92CD0XUmtEjJRvxIKJg9lnUoSjN9u6mTYaITEU2kyiNQfqEl7d+YKfWQkp4kmM0qt1WEOoHjIDzledGhCkfwSTzr/UZGXDGWF4C0Ve4vfkEPOh7rTVWWIW3iHpAfXwL6L4cJ+vA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lg32R/l2qL875cFv2bmwzzQjL1NGqbB9tC2fkt8Pvrk=;
+ b=W4xwRjvNbJhJAT9MQ9DX60P84n5r4RJab/2PhL/64w0I3ceulOwQs/PntCy+eW6N6IhupfWQpUT7SZ95AQOj7RWZ7PXBZRQZx+fgv4L3ygZPwarJRQzWysjLM7z29uqzn8Fji6DCLgJm4WMP9VrkGvpamFrAQMPb8+qTBeW3Mjcvk51fz6yDOtBZtXMI7o/xoenIqXcTIoameA7TwSQEVnSOn6aOb2GtCVas8cbVMPn+jyiVQCkho+YTW3K2ZGEGiB+K/rE6s0X/psDhFeqxD1iR3nlGh9iN0kfsvGc6LG08PIup1n2X4cvoS29jRSbiKQ3+G74tm7b7O8+sKnwm2A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783427117; x=1784031917; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BNIu1nT9O5TEzBCIb6SZPpMwQbKBprZzCJQi10hmSNQ=;
-        b=WtJCn4gKYNbsAfH3duNjcM2wz1c71NNl3WZWSasuFomsCGbrljfUSdU9d5pP4RlSSG
-         ddLzmcWeQQwXNryR97/8R7TpR45FE+Eru9Mf85nE3WySVM9TG36cljEryPWyVH5rhBRy
-         v9PfoJ0ALYSSb4symscHCGK6+wQbtrmkpv1oMnCzpySfJDAGSEOJJleEZur7E5FWmQnU
-         aqbLEn13UJ0Sxn9klo3PtpTP9FOSn6NTZSulmtP+cPBuvylfZObv7g8kSLlY/zEO80El
-         xEZ/xj42IYpLGfbHaJVxt9KMPBBfWls6yPFHRcICHlFK52DQ4UtnxRtfgBdsf6R9xFOV
-         +IWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783427117; x=1784031917;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BNIu1nT9O5TEzBCIb6SZPpMwQbKBprZzCJQi10hmSNQ=;
-        b=hF3BhtNUe+GdWOwPsTdzyttinudGPiyNqpAeNSVqeqqHpVcImIjjVCy1kdqFg4rJR8
-         RpdijQdSgqNoa26PFdlKRIGg8TFmkmu52PVNMY0jhyEe3K2K6epsu0IgJhk03tNYTz4f
-         hf0BAcs5H99OE3oykE0+UFK+Jt2rqdyuY5GdJ9DAfTIelqXQcCb4sOh7XPSi3qlXANkf
-         3flZOBsF/XCH+dAidpQcJ6nZDZElaQwSIvBGoxd3zIvCHCfeSTRMijAOJXxNNDlgYIT0
-         uHZsLk+LjuQTxWD/Ikj4ACoCGJDbPkrC3QJ+FUMU+hYBdvfuLuVe4f7d0wb8bjZWG1XS
-         jt8A==
-X-Forwarded-Encrypted: i=1; AHgh+Rqbl4pkqjBYoaHhdt6DoBMQ8wf7t30UvYJQgHsQF5Gow62QbqM3fXj82SIgleZh6HEwcLxqZ3lf@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywo4zNNQ+3NINlzicsNca7+w7216UgJ5F/1OOOa5KOZ+tA7gjOe
-	impJR2vTEfJNFyAsXy/Tp6J49pMW3Ok6wGHmP4WGnN8Y7TQmc8hfcKz1jw88dbTX7A==
-X-Gm-Gg: AfdE7cnPhScSlYswWpF8eXQBXZcexfyCRkt2R9CWaC/gcbSYj+dkQIJcFYPKBDkPmLg
-	mAzMMTfpKPxu2Cit44pBNM7N2z9tpRSva3/dyzPCmehOemg3vrjJpv4/+cFzyhU/6SeBwHuqtpY
-	cC86SbktIGX8A3GrXv772oCI2fGOYzzVWEVogL9zndoPS8P0j1IyxHgXk2IyycBgBAPw5vlu1Y5
-	WbrgDQnrtZYPqzq2qPfK/TdL8N/kYnaP/rDnn5/LoGTeNfRT3mCEtVj5+ZW84IvpwPwrGcZEO1B
-	NnIjjeBUfeXury6YYBYxYKV628FsqXLdffBLLOovSWriveJO8CWCYKxaunHbM2RxMMjnFhT4Zpr
-	am7y3z8MAkQPwmD4kPZ4B5jSiqgAJPynjLutY8USvdRSq2NwNwPgzvJpLMDRje9+4w7plGa8En1
-	eH3kAmRiHZDGLWg6tBYK80lVWXyOo4XcEc6yN4Bqo8P2UvMuRs7LF0pG/qzcI=
-X-Received: by 2002:a05:600c:1c0d:b0:492:203f:a378 with SMTP id 5b1f17b1804b1-493e121b8cdmr1231235e9.8.1783427116023;
-        Tue, 07 Jul 2026 05:25:16 -0700 (PDT)
-Received: from google.com (220.60.76.34.bc.googleusercontent.com. [34.76.60.220])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493e0f3677asm48472185e9.4.2026.07.07.05.25.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 05:25:14 -0700 (PDT)
-Date: Tue, 7 Jul 2026 12:25:08 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Jean-Philippe Brucker <jpb@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	David Matlack <dmatlack@google.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	Pranjal Shrivastava <praan@google.com>,
-	Samiullah Khawaja <skhawaja@google.com>
-Subject: Re: [PATCH v2 0/8] Organize the SMMUv3 invalidation flow so iommupt
- can use it
-Message-ID: <akzwJFpHTsgMrOYI@google.com>
-References: <0-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lg32R/l2qL875cFv2bmwzzQjL1NGqbB9tC2fkt8Pvrk=;
+ b=zCpvXvqjGh3gROVnZ2dOLfP/AVEe/jSoUvimzBlG6OQ5mnuIUKuIgOQ7Nh+AzQySLdHvuGFaaTYYS02AnRbKunqzPpIn/ZEBm59Ke7/l0ddF7wuAd2RrMkj12RqKTd81zI/YIvbDPrlZZjbT7+lZjVu1I5y3KuOY1OCc56pzEQ4=
+Received: from BN0PR10MB5128.namprd10.prod.outlook.com (2603:10b6:408:117::24)
+ by IA1PR10MB7359.namprd10.prod.outlook.com (2603:10b6:208:3fc::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Tue, 7 Jul
+ 2026 13:18:17 +0000
+Received: from BN0PR10MB5128.namprd10.prod.outlook.com
+ ([fe80::4083:91ab:47a4:f244]) by BN0PR10MB5128.namprd10.prod.outlook.com
+ ([fe80::4083:91ab:47a4:f244%6]) with mapi id 15.21.0181.012; Tue, 7 Jul 2026
+ 13:18:17 +0000
+Message-ID: <ba08a15b-e61b-453f-9331-adf17690d612@oracle.com>
+Date: Tue, 7 Jul 2026 09:18:14 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 81/96] nfsd: check get_user() return when reading
+ princhashlen
+To: Sasha Levin <sashal@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable@vger.kernel.org
+Cc: patches@lists.linux.dev,
+        =?UTF-8?Q?Dominik_Wo=C5=BAniak?=
+ <stalion@gmail.com>,
+        Jeff Layton <jlayton@kernel.org>, Ben Hutchings <ben@decadent.org.uk>
+References: <8601edcd7c9bcc70e75f85a758f8818c57945d07.camel@decadent.org.uk>
+ <20260706135124.draft-0004@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
+Content-Language: en-US
+In-Reply-To: <20260706135124.draft-0004@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH0PR04CA0039.namprd04.prod.outlook.com
+ (2603:10b6:610:77::14) To BN0PR10MB5128.namprd10.prod.outlook.com
+ (2603:10b6:408:117::24)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN0PR10MB5128:EE_|IA1PR10MB7359:EE_
+X-MS-Office365-Filtering-Correlation-Id: ad4e3555-fdf7-42a5-12b6-08dedc2a344f
+X-LD-Processed: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+ BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|4143699003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+ bMEEniqSd8yWr9BcRLKqu2Mo/LP6+s5qRCEdxXZN59ShNliqDf8XY+0TuRRGsI9UmljjqRbWahXVI7+uKAwceUc/ZUpk30H51ZL+CTLMT2/P3TEZOZwQ8g+6z3ENZdJwL0hGG/01NJzQE1rO24n+iyAx5L3qz1l+V84Blqt0rmAXy7nsXXwUTbHwi06IjeLs5/gskw6H40SWy+r4+fCuqF+J7mc63vno4IyZGHYH+RWD+P6vb5AXv/rF0jW429OFY53gIijsxg/oL9ti+rxaX6OertBJg8e+d9MRMxtCcm/9Xrk8Ce7CY4urCWAs/930+4VoNrw/z5ITwQruKZPgJhJudc/lMgqvfj1ZR4Y1fKo/ItWp66dKtzg6ZGCy1n+bdvlewJtmD+f3DwUSMMnoyHhAoyzPzkiIx3k7RNMNnGm2VwiX/Ht5QkvtM/yo1NeIxhRvXS1g4d1GeZWVaLmqf140J6NLCYMBPV6/T5+TFHJR2VApSjNG33MxaGnVkc+y/8SkkbHRyFs2385/v5QevEy7fJ/mxm6BnbUy98c0dTp247WWyHs6E+EmU4F7fMXLSLyE9vTyPkY0adwvCu4Tu7h8Ri6T9wFLk/msIqVWLvhF9qipG53xrdtGhPkbtbj1H1yHqNvL/R+8J0ZOoMBxdCd1ql97mZpnN9JyGiKKsAU=
+X-Forefront-Antispam-Report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0PR10MB5128.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+ =?utf-8?B?TnJ3eTVpVEtyUDJ0bm9BVkZRY0hkK1hONWZGcHY3aVA3ZGZVdGNxSFU5dHJx?=
+ =?utf-8?B?LzNVT1drcWFkWHlhRDZ3bVVyaXQydkpLNTlYdEt1dlNDS1RNUmxiQ1NvNFI2?=
+ =?utf-8?B?dmhXNXJvVWJseHMyajhsdVFLM3RlbDAwUUNVMUkxV0x1QnpCZzJvK0tNc2py?=
+ =?utf-8?B?T3h2Q2FvdGFaR2dLN1daWXlzNUwwUi8rS204N1ZsZ2pMOXFoNm9YUVZoQkVG?=
+ =?utf-8?B?VVh2U0tRMC9yTmlZWldYVFo0R2t2S1BvVFY5RW9zaXNqd1cxc1JXblNNYkhr?=
+ =?utf-8?B?UlREMitsTVFLekd0dVMzL0I5dVl4MUpzMXpxNDF2ZjhTcHVUZDhJbWYzcWFl?=
+ =?utf-8?B?ZE1IY2lFaWwxTXBFNTc1S2hjWkRhYlRhbW0rc3RyZXh2d21LdFNyRmtCSDBR?=
+ =?utf-8?B?T3ZnVjYzNXZkcnVLK0FVWHJQM2NQOE1NNkxzMHo0VEFCdTVjNHZKK3JFZEdZ?=
+ =?utf-8?B?aGdJUWp4Qmx4eFBCbXcvb0pZbDhxeENLSHUva3dPQ1pBU1FjblhIczNuS1pq?=
+ =?utf-8?B?REs5K2RKVVZkWGdhZE1rZ2x5S0NCMGdJTnduZXY5ZXVyRkM4cEd5NU54amFC?=
+ =?utf-8?B?bmNUMzlrTmg4emc4ODhETHkzYWJhOWVvekY1N1JrMEpGcVVuNDBJcU51NGxm?=
+ =?utf-8?B?ZVNuTHZHZFdsSkRyOTFEWkVRaVNJdjdtT3REU1BzOGxra3h3YXZpMFZKRzdO?=
+ =?utf-8?B?U2NiSlRvS0hmU1FPV1l0UHVCZy91TUVyMkdTYXNRSzBydnM1dGt3K2dnM1la?=
+ =?utf-8?B?cnZMNXZ5aS9IYzVsejRQeFNJd080OFlveXFldEdnZU5sWituMlJPSE5MNzNP?=
+ =?utf-8?B?UUpJWGY4RWo5aFNUSWNxeFFRZDdGb21ZUWJoNjhIaVMrdjg0WmRPU09nY3FM?=
+ =?utf-8?B?QlBvN0tnbDZnQUhOb3FxS1dSMkIwVTdsaDgyUkE1Z2Z6cmJqQnZGd1JINnZX?=
+ =?utf-8?B?SDRPbTRIZFM4OEtBSDQ1bGlOT2VCMzJDdEJhWkdFTnNsaXBWVlZIcEpZOFpY?=
+ =?utf-8?B?SDdMMmx6R0xDOC9ZVkZTSmU5Rm5LSUNXa3IrcWtEUEZFNC85ZDBnNnVCTjRv?=
+ =?utf-8?B?WkFCcDBXTEdWaytOQlRJWHMvMHJ4K1ovTFJjblRqT2UzeEthODdESmxvZHBL?=
+ =?utf-8?B?eHlocStFNjh4dGJ1eEZUK00rcGVMNkJ5SEpjUWlkSmppeUdYYWM2VUFzdWhB?=
+ =?utf-8?B?SDVNejRQZUZHb0JoR2FOMzVKZVB3U2pYMFdJZXJlS1lwVWNTT0RaM29xYzg5?=
+ =?utf-8?B?d09YWDlUeW9mWkdrZGVQSFNJSmgzTTluSm1ucGgwNHV2Q0pETWpzckxtNlZs?=
+ =?utf-8?B?ckt3TG9NZDB4N0czTHovTUZJY3pobElGSEFMOTZ2Y2tYWUlhNU9uaHFabm1O?=
+ =?utf-8?B?OHlpSlJGa2hCZktkWHNWRlczelVCMEFnQURwZGJlVXMyV0FOVk1ET2wwRnIy?=
+ =?utf-8?B?Z3NvL2MvaFB6YVhEVE5CeHRRMjlBRG1rdVJ6OXVxenpPRmxFRjZWWXBTaC9G?=
+ =?utf-8?B?ZkE4MmNwNHlGdk9pb0hJajdSczlGQkFuRlkyUXFTOUF0SERRYWFEcU9wN04v?=
+ =?utf-8?B?SnZYVjgwZU02dHhpV1k3LzVtN3cxU0FjdmF4dHRkQ3JNeXcwV2hETzNrS2k2?=
+ =?utf-8?B?V0F0bmV3N2hGZmQyK3BCbmwwV2hGMm51K2NSWHptcWFBUUlORFlMbi84KzI3?=
+ =?utf-8?B?d0FQanUxOTZkRy8zc0xhMTd6djdmMktxM1dQdHoveW1QeERDSjdSaXVFem5o?=
+ =?utf-8?B?MlZuK3hDS2NIc1o3ZnpRc2Z6NnhLQklESTNvSmlteFd6QXl4dnRjQ3Q1ZFlY?=
+ =?utf-8?B?ZG4rTmNoZUIvVjdjM09lYjJrSVlSVUIyTmw0M0FORDViYzZLZlczNVBOV1po?=
+ =?utf-8?B?RFloTDViZmNDWkZ1WmR2cTUrVTJ5SG9lVWZOam5mSk5uWTFVV2JPVUNYSmhQ?=
+ =?utf-8?B?aTM5UFVCSHk3a2tRRmlZNzJRbEt3QnptTVowd0lTY3BHS1lOTlVNOUp4cE1I?=
+ =?utf-8?B?MVp3Q3FoSWdSQUlPQ0pYbG9sbmNPOGhiMmlieng4WUt4QTdkVWVxYTYyT2V1?=
+ =?utf-8?B?RXF1cmp2V0VXQ2dSMlM4eUY4VDYra2dsaUI4V3dLUnlnQjB4WHVjK0N1KzJh?=
+ =?utf-8?B?R0Z5dFluZ0l4NUN6RXpFa04zVzZyNU1JaVlhUGh5b0NDdE05RmNmVEFoV01K?=
+ =?utf-8?B?UENBcTFPMHBlclkwRDNXNTJIdFBWbVNzS21EOEIrTmlxK3ptWTl6QjBtWkFn?=
+ =?utf-8?B?VkJQNXYyR0kvSnM3WUhSOGs5cVk5d2dQRVpVQ3JPWElFQzRqUDM3ai9zMnZx?=
+ =?utf-8?B?TEhPVzdsM1JxcWdOQTFTUlROZzduUXZramdzdkVDZnpidjJxY2tqUT09?=
+X-Exchange-RoutingPolicyChecked:
+	Zp+niIqa0aRzHWfu2Cal1/mxFGx02vCFhdN8nv3qshX/7HUJliAh3/WyLqdWGAfJWoR7pGQbeppwJEOIozgoDyZZnqd7r6ehls9jB2fySyhDcXBwFJ4/VxMaopMeOfDvQdGH+1x82p+ux6DUWn39QUToc1YXyUnkC/Xy947aVToKGDcNZIYFSsbdmEdJEEU6lOU/Ll57DBvIIun/5+4YfhjW2bR2ErhMTEpv/c5jTlh5JBKOzRetzH4BdsBRTpLpSdeeNmkHhav8fQLGw26/BKYtY2MCH5gzf25DAGZwcW2PHWUxXvZU8qO0q3ZyiN4ZXssAJf+QKbXLAJH/19LZ8g==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	/M1LK/8DNIy8eVmurK9p9tiwRa3hYs6Hq+lOAPxIjHx5Jwa4Ajw1SIeVBBdOfDZIq+CGbGvUBWKRkm2PFDHDwt11hGaihfncaxIaiNMPAue78AoDaDWdGQ0OZqlRdkB2CTPIni016qtXmgi692ZSeWVVCM91VO5w29NsqKtHluiHWR46gu7f0U2a7vMB0EXYMD0HFNKLehd8+DR/Pp3OL3QST5+Ahl5oGiXBka3+IcclKKnjCqYNjcpiGFQ61RJYzG7kfud+OH4KvTU9PPXhMTcEuv1OnzrTmo/E65s+wiASenbC4wahP8dWPeKjXDUmCmU13Y/xId7cL5tZ6Bs51kiK8q6PwNEKX93c+EnfRJhpPcPIc0OjM+mja42ogcs+tjutfo8XTzfPx/yuvpo/LsDlLZS0H9H1J3dou7n6YkG+CfWC6QNU+O27UHvNvPnk3kWRS8QcQ6GJhpJdjionc/JT2o6ke+NF8QC2EZGlFdWlSnl2hs6YieM4WNrKR3d9C6r7Vm22T07brMBS9EaUpytwTSJQz/pEAptf0gvxjtKAblM1RBBwY7vCRsZ1lDgjm0X34sQtZRdl+6PNgRjtFoJp4uzCPdH78a9npBSQQpI=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ad4e3555-fdf7-42a5-12b6-08dedc2a344f
+X-MS-Exchange-CrossTenant-AuthSource: BN0PR10MB5128.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2026 13:18:16.9239
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: bRNYWKU+O7EGrzDZEe+wxyaQbbgbcwrVHLJzZdIwE7hi2jhP6LQ8J0ICbTVgpi9eBknXFJujPmYyAB//hH547g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB7359
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
+ mlxscore=0 suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2606160000 definitions=main-2607070130
+X-Proofpoint-ORIG-GUID: v_F99zxU8sSN5mr82OjqZWKUTzE4ngVQ
+X-Proofpoint-GUID: v_F99zxU8sSN5mr82OjqZWKUTzE4ngVQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX1jLPeXh5wenF
+ bZQsdFZxzR9fK26JZgbnJcDZTrz69HR0/dSZhZQIpDhISfUC97eefOmkbQUVtFwCTLhFEXeb7Cx
+ 5W8oN9bvrbCH42AzWw9X947dgBaPtIzdN1ER8i3QyJc6C3SAptX8QDCNMYKuG2mxNHxDQ0i49dI
+ 2D8SViTpJ5+zP8xjAvqJlPHhOKqAhil8ZJlW1Rxlme5DzUQwOFHOq3bMs+esEBESjtWcEDmLHn5
+ PTzhq2pHG6F45JQqR1aFn3NvqkoticcsQaqwYMuRQmMSJdlW7aZxfSNokEGC0WGqAJAYA5j2VYW
+ zdzeemStDAVr7zvXzDWUHfXE08St9Sx9B1vrsLPNMNkTbLH8xBGUP9lLoyL/u2k3FOOI1WPg45g
+ f8PKF9Mb6mEsOlHgxNnLN7g0hFpevJNAAkgKBBrxmETXlteQvYwBCipVz70DLFj5eYmig+f9qwS
+ WI6eTTfnxX023W55TOw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyOSBTYWx0ZWRfX0fHiaYk3P76c
+ DvQVrBakJ7CtokR8VnRIiVefQ50Ha6HwyqH4Ku4txByP+njIFlswnY/glDRnkru8wxNDFJYBhOg
+ FTYvkWvXfPm71/Fr7VR4HVhAatiE2oYEiNYPjLNT5pPC5H+Eb4Bg
+X-Authority-Analysis: v=2.4 cv=Vu0Txe2n c=1 sm=1 tr=0 ts=6a4cfca2 cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=RAioF0-LDSMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=RD47p0oAkeU5bO7t-o6f:22 a=kuHZnEiJILy5avvf2NUA:9
+ a=QEXdDO2ut3YA:10
 
-On Mon, Jul 06, 2026 at 01:26:37PM -0300, Jason Gunthorpe wrote:
-> [ This is part of the patch pile to move SMMUv3 over to the generic page
-> table, the precursor patches have been merged now:
-> 1) Organize the SMMUv3 invalidation flow so iommupt can use it
-> 2) Use the generic iommu page table for SMMUv3
+On 7/6/26 10:08 AM, Sasha Levin wrote:
+>> I think this depends on commit 4552f4e3f2c9 "nfsd: change
+>> nfs4_client_to_reclaim() to allocate data" which went into 6.19.  In
+>> older stable branches this failure path appears to leak name.data.
 > 
-> The whole branch is here:
->    https://github.com/jgunthorpe/linux/commits/iommu_pt_arm64/
-> ]
+> You're right - the new early return leaks name.data on every branch
+> lacking 4552f4e3f2c9, and the patch shipped in this round of releases
+> on all six branches.
 > 
-> iommupt has a design that focuses on building a single iommu_iotlb_gather
-> for arbitary batches of map/unmap operations. The gather uses the free
-> list and it captures invalidations of tables, leaves and supports mixed
-> levels.
-> 
-> The introduction of PT_FEAT_DETAILED_GATHER provides some additional
-> information that is useful for ARM: the damage bitmaps for the table and
-> level changes.
-> 
-> Prior to switching SMMUv3 over to use iommupt prepare for this by
-> reworking the internal invalidation to work on the same data format that
-> iommupt will produce. Bridge the invalidations generated by io-pgtable
-> into the new format. The conversion is simple enough, io-pgtable generates
-> invalidation operations that have only a single set bit in
-> table_levels_bitmap/leaf_levels_bitmap, so we can convert the io-pgtable
-> provided size into the proper level leaf or table bit.
-> 
-> When iommupt uses this mechanism it will fill in full bitmaps reflecting
-> the union of all invalidations contained in the gather, and this series
-> provides an implementation that can work this way.
-> 
-> Like the other drivers the general algorithm focuses on trying to issue a
-> single command per gather or at most 512 single invalidations. If that
-> isn't possible then it falls back to full invalidation. Since table and
-> leaf invalidation are combined together there is no waste of invaliding
-> tables prior to performing a full invalidation.
-> 
-> On its own this provides value as the invalidation has a number of
-> rough spots:
-> 
->  - Non-leaf invalidation actually expands into a TLBI for every
->    translation granule because the inner logic doesn't special case the
->    walk vs leaf condition. Now that a table_levels_bitmap is used to
->    describe the walk invalidation it properly generates a RIL with optimal
->    TTL or only one single invalidation.
-> 
->  - RIL doesn't calculate perfect hints for SVA because the SVA rules are
->    different from the io-pgtable-arm rules that the RIL algorithm works
->    with. SVA can now express the combined leaf and table invalidation that
->    the MM callback represents and get the right TTL, with an optimization
->    for the common 4k only scenario.
-> 
->  - RIL didn't generate a single invalidation like VT-d and AMD do,
->    instead it tries to generate an exact coverage with many
->    smaller invalidations. Switch it to match the other drivers single
->    range approach for performance and consistency. Since ARM has a much
->    more flexible range definition the over invalidation is far smaller
->    than other systems.
-> 
-> The approach is to introduce a new struct arm_smmu_tlbi which
-> describes the invalidation, pre-compute into the tlbi the single and
-> range commands from the start/last and bitmaps, and then apply the
-> correct pre-computed command to each of items in the invalidation
-> list.
-> 
-> The RIL and single calculations are revised to use the new bitmaps
-> and accurately generate TTL/stride/etc.
-> 
-> Some of this design is to support another series to remove the batch on
-> the stack. Now that we have the invalidation list and the tlbi it is
-> simple to just expand the invs list directly into commands instead of
-> using the temporary on-stack batch array. Eventually removing batch will
-> save ~1k of stack usage here.
-> 
-> v2:
->  - Rebase to v7.2-rc1
-> v1: https://lore.kernel.org/all/0-v1-5b1ac97a5403+6588f-smmu_tlbi_jgg@nvidia.com/
-> 
-> Jason Gunthorpe (8):
->   iommu/arm-smmu-v3: Pass the parameters for the invalidation in a
->     struct
->   iommu/arm-smmu-v3: Move pgsize out of arm_smmu_inv
->   iommu/arm-smmu-v3: Optimize range invalidation for latency
->   iommu/arm-smmu-v3: Keep track in the arm_smmu_invs if RIL is used
->   iommu/arm-smmu-v3: Precompute the invalidation commands
->   iommu/arm-smmu-v3: Populate the tlbi at the top of the call chain
->   iommu/arm-smmu-v3: Change how the tlbi describes the invalidation
->   iommu/arm-smmu-v3: Support the DS expansion of RIL's SCALE
+> Could someone please send a tested backport of 4552f4e3f2c9 to all relevant
+> trees?
 
-I quickly went through the series, and left few comments.
-As discussed before regarding the TLB invalidation logic sharing
-with pKVM [1], I still think after these changes both drivers can
-share some logic on the level arm_smmu_tlbi_calc_range() (+ tweaks).
-I am planning to post my series by this week, I will keep it based
-on upstream and I can rework my series later if this one gets merged
-first.
+Not wanting to duplicate effort, is that "someone" me ?
 
-Thanks,
-Mostafa
 
-[1] https://lore.kernel.org/all/20260501111928.259252-5-smostafa@google.com/
-
-> 
->  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   |  32 +-
->  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c  |  30 +-
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 439 ++++++++++++------
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  54 ++-
->  4 files changed, 382 insertions(+), 173 deletions(-)
-> 
-> 
-> base-commit: 4c73a6222c248384513c4f465e547df80b280a06
-> -- 
-> 2.43.0
-> 
+-- 
+Chuck Lever
