@@ -1,45 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17FD233927
-	for <patches@lists.linux.dev>; Mon, 13 Jul 2026 17:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E79834C806
+	for <patches@lists.linux.dev>; Mon, 13 Jul 2026 17:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783964429; cv=none; b=X3bSkRwztCh+fi1u4XC6FakK8yCL8oOs4AYm2hVkSpnELUPU3D0tQdqoZRR4Te2nv5svl7lAQvGbhl9ZktmO7UoT5uUzWB7q5iWKBCqeiT+hQUt8TxzBZUgdONJ1uw/nD07WCgD0ihIy9PuYOJ6QSx+pUwm2tgP+are7yy3uaM4=
+	t=1783964430; cv=none; b=BkJJH6fS8p3PwCZYYD9PMHYRMeA/coFwwRarVPFk4Cj7P9UzBzI3fEXe/4bvupeJhN03H5Wx9Pz/86serwhPzrPvvQAzalhVIUiJtdGFEY8lNtjlU+gO4ykV+cGm0DcFrZd2KHvVB+DTp2mLQR/2K49f3k94+b2i7FKTp0vQ/Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783964429; c=relaxed/simple;
-	bh=i9IGYdXD9+8Mkw0M1G7DOHF8yR31gRFkEmMO+ijz5qU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BYshjS6Uwog/k9Yx1IUx5wGTpx1urwVqQsPB/sRAQpWGlhXr0NSaFplzelE3mewFGOpGJps9e1jYGa0a3L+9D5Z18tVToqbQBB9bIh6x1/vW7knDeiNZm5MIQD4ig2+09uFOlwF/GWJg6ANQPNRqIpgF9y5cfF+qikR/FPeKGEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=J9Ika+kO; arc=none smtp.client-ip=198.175.65.9
+	s=arc-20240116; t=1783964430; c=relaxed/simple;
+	bh=N06nFP2rKh9Q082zQ1ti39fOIdamPmbQxeOLFJ/PMqg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YHMZFZbz4oxs84rbXMkfWzV+nTYEluhgan6XfGC9g5vsYZpssRU9AFcs/uN0oO+/1jxzK4LzfvqmxLT/kcufUlkfWJ4fbLCG8ksVGKFMgCWf5nX1sl/aJPyIsZDDIyiFUT24otHuuaz6efI2E1KiL41bDTEu+rkmP52OTW3i10A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SOX4DnAe; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J9Ika+kO"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SOX4DnAe"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783964428; x=1815500428;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=i9IGYdXD9+8Mkw0M1G7DOHF8yR31gRFkEmMO+ijz5qU=;
-  b=J9Ika+kOxVWCNas3dno/Ng+UjnXUNOnwj1Bb98JmxYLrqh0alrGRMIq+
-   W9VrQRpZ+fWAL+Chj49VQ7t1Ma1zwch71mZc9QBJcm4tkt/2hPxk2aj9P
-   CJVIcdAT7DE5Q6pHj5/5UaoI088mdBAOQlzFBl1G9xlW960tN8KpBcFVk
-   LhZPbEsl/5HA/M9i1EaMtKz/ge/4XMG2/cydsEsIOCc98O6YTMk6BoPYI
-   kGM3XwdHfMDfYecoaLqrsM7qQ1tS7ZJ8RuWjaZ2YdYesm74Cl0Qd1Y5ah
-   Q+AQDrGYCyWXyfXMVSUJisKbKg2QznS8SeXQN751FcnoPRzA8EeGwrgWD
-   Q==;
-X-CSE-ConnectionGUID: aBCEJHpLQEukOvJhMaWhkw==
-X-CSE-MsgGUID: 3EZwaWJ/RvaZPZij4liP0w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="107375508"
+  t=1783964429; x=1815500429;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=N06nFP2rKh9Q082zQ1ti39fOIdamPmbQxeOLFJ/PMqg=;
+  b=SOX4DnAeQGfSrxN3x/UR7B0iHGDNwMakKyJPA38ibiNZYHnA8eqJbfmm
+   fQNvt3xj9/oT9znX5Hx2ZTMQ6afGP6t4IPNhSa9GbZnlC3nfjaOvA6YTd
+   EhrU5F7r2XxZL8nLapfigkrrtCErJcYFjCXbFXCtuem8G0jkRY3Q6vvLA
+   zo0MXnjCJcGRKnP1+RnVbTalfWMCecYrnvucfH7uo0oWqKqR4W8aKkUmH
+   BILMwGPhBZCzLZjiN5PNIuaZdNc66YTci+zrQ8JF0QB0Y6crTSgFfsAaw
+   aakRXZgnCveN2/UU7JcvVvefsQsXR/Ri/ukGPX+ghFkg9Blfj+dSrkscO
+   g==;
+X-CSE-ConnectionGUID: yDQeG3/CTIKfcA2e+DZ7tQ==
+X-CSE-MsgGUID: HJi8GvRISN67HgOJVin5wA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="107375538"
 X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="107375508"
+   d="scan'208";a="107375538"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2026 10:40:26 -0700
-X-CSE-ConnectionGUID: GYqX4Dd3RN6O5zRydjVEYQ==
-X-CSE-MsgGUID: kdMlBbklQwujj8GXcXLpiQ==
+X-CSE-ConnectionGUID: 2sQlcYm7QFmobhl3tqEXfQ==
+X-CSE-MsgGUID: r1HTY6rsSBuT/mIC8Os5Cw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="254483876"
+   d="scan'208";a="254483887"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2026 10:40:25 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -60,10 +61,12 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v7 0/7] x86,fs/resctrl: Fix long-standing issues
-Date: Mon, 13 Jul 2026 10:39:36 -0700
-Message-ID: <cover.1783963505.git.reinette.chatre@intel.com>
+Subject: [PATCH v7 3/7] fs/resctrl: Fix deadlock on errors during mount
+Date: Mon, 13 Jul 2026 10:39:39 -0700
+Message-ID: <fe701825d7f538a6bbac6732230004050300c93e.1783963505.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <cover.1783963505.git.reinette.chatre@intel.com>
+References: <cover.1783963505.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -72,83 +75,191 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-v6: https://lore.kernel.org/lkml/cover.1783377598.git.reinette.chatre@intel.com/
-v5: https://lore.kernel.org/lkml/cover.1781029125.git.reinette.chatre@intel.com/
-v4: https://lore.kernel.org/lkml/cover.1780456704.git.reinette.chatre@intel.com/
-v3: https://lore.kernel.org/lkml/cover.1779476724.git.reinette.chatre@intel.com/
-v2: https://lore.kernel.org/lkml/20260515193944.15114-1-tony.luck@intel.com/
-v1: https://lore.kernel.org/all/20260508182143.14592-1-tony.luck@intel.com/
+rdt_get_tree() acquires rdtgroup_mutex before calling kernfs_get_tree(). If
+superblock setup fails inside kernfs_get_tree(), the VFS calls .kill_sb()
+(rdt_kill_sb()) on the same thread before kernfs_get_tree() returns.
+rdt_kill_sb() unconditionally attempts to acquire rdtgroup_mutex and
+deadlock occurs.
 
-While reviewing the AET series [1] Sashiko reported a deadlock during mount,
-and a use-after-free when an L3 domain is removed during CPU offline. More issues
-were uncovered as fixes were developed and reviewed. While the goal is to
-fix all issues the races surrounding pseudo-locked regions are not yet
-solved and have been removed from this series (last appearance was in V3 of
-this series).
+Since mount failure resulting from kernfs_get_tree() already calls the
+resctrl fs unmount handler (rdt_kill_sb()) let both call the same helper
+to make it clear both paths perform the same cleanup.
 
-Applies against v7.2-rc3.
+Call kernfs_get_tree() outside of locks. If kernfs_get_tree() fails and
+ctx->kfc.new_sb_created is set, then rdt_kill_sb() has already been called
+and no further cleanup is needed.
 
-Changes since V6:
-- Drop first three patches that are in v7.2-rc3.
-- Remove extra blank lines. (Tony)
-- No functional changes.
+kernfs_get_tree() may set ctx->kfc.new_sb_created and then fail to obtain
+an inode for the new kn, causing the rdt_kill_sb() path to run with one fewer
+reference than required for the root to remain accessible in kernfs_kill_sb().
+Add an extra hold on rdtgroup_default.kn to defend against this scenario
+and ensure the root can be dereferenced safely from kernfs_kill_sb().
 
-Changes since V5:
-- Drop patch #1 (x86,fs/resctrl: Prevent out-of-bounds access while offlining
-  CPU when SNC enabled) that can be found in v7.2-rc2.
-- Re-order remaining patches so that stable candidate patches are at
-  beginning of series. The stable candidates are:
-  Patch 1: fs/resctrl: Free mon_data structures on rdt_get_tree() failure
-  Patch 2: fs/resctrl: Fix use-after-free during unmount
-  Patch 3: fs/resctrl: Fix double-add of pseudo-locked region's RMID to free list
-- To support the backporting to stable patch #1 adds a forward declaration
-  that is removed in patch #5 that moves the actual functions to avoid too many
-  forward declarations.
-- The end result of changes since v5: v6 net changes are identical to V5
-  changes.
+Dropping locks before kernfs_get_tree() creates a window where CPU hotplug
+callbacks can race with the mount operation. Specifically, an online event
+observing resctrl_mounted == true could concurrently append directories to
+the unactivated kernfs tree, allocate mon_data structures, and arm background
+workers.
 
-Changes since V4:
-- Add new fix to prevent out-of-bouds read when SNC is enabled and domain
-  with busy RMID goes offline.
-- Add substitute for "is domain going offline" check to workers to avoid
-  reading any event counters on soon-to-be-offline domain since its
-  cpu_mask is empty and reading an event counter on an SNC enabled system
-  depends on knowing a CPU associated with the domain.
+This concurrency is safe because the mount has not yet returned to the VFS,
+meaning userspace cannot interact with these transient files. If
+kernfs_get_tree() subsequently fails, the standard resctrl_unmount() teardown
+safely manages the concurrent modifications: any dynamically generated kernfs
+nodes are removed, and the associated memory is freed. Any background
+workers spawned by the hotplug event will naturally exit without re-arming
+when they acquire rdtgroup_mutex and observe resctrl_mounted == false.
+
+Fixes: 5ff193fbde20 ("x86/intel_rdt: Add basic resctrl filesystem support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com [1]
+Co-developed-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+---
+Changes since V2:
+- Switch to "Reported-by/Closes" in changelog
 
 Changes since V3:
-- Drop majority of pseudo-locking fixes, only keep the double free/double
-  list add fix.
-- Add patch to help document safe RCU list traversal.
-- See individual patches for detailed changes.
+- Add Ben's Reviewed-by tag.
+- Rework subject and changelog.
+- s/root kn/root/ in comment. (Chenyu)
+- Add Chenyu's Reviewed-by tag.
+- Changelog grammar fixes.
+- Add snippet to changelog about potential race with hotplug handlers.
+---
+ fs/resctrl/rdtgroup.c | 83 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 56 insertions(+), 27 deletions(-)
 
-[1] https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com
-
-Reinette Chatre (6):
-  x86,fs/resctrl: Document safe RCU list traversal
-  fs/resctrl: Fix deadlock on errors during mount
-  fs/resctrl: Prevent use-after-free in rdtgroup_kn_put()
-  fs/resctrl: Prevent deadlock and use-after-free in info file handlers
-  x86/resctrl: Ensure domain fully initialized before placed on RCU list
-  fs/resctrl: Fix UAF from worker threads when domains are removed
-
-Tony Luck (1):
-  fs/resctrl: Move functions to avoid forward references in subsequent
-    fixes
-
- arch/x86/kernel/cpu/resctrl/core.c        |  18 +-
- arch/x86/kernel/cpu/resctrl/ctrlmondata.c |   4 +-
- arch/x86/kernel/cpu/resctrl/intel_aet.c   |   5 +-
- arch/x86/kernel/cpu/resctrl/monitor.c     |   2 +-
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   4 +-
- fs/resctrl/ctrlmondata.c                  |  50 +-
- fs/resctrl/internal.h                     |   3 +-
- fs/resctrl/monitor.c                      | 131 ++--
- fs/resctrl/pseudo_lock.c                  |   2 +-
- fs/resctrl/rdtgroup.c                     | 858 +++++++++++++---------
- 10 files changed, 660 insertions(+), 417 deletions(-)
-
-
-base-commit: a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 9804e40ad36d..ce964721ba8e 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -2989,10 +2989,34 @@ static void resctrl_fs_teardown(void)
+ 	rdtgroup_destroy_root();
+ }
+ 
++static void resctrl_unmount(void)
++{
++	struct rdt_resource *r;
++
++	cpus_read_lock();
++	mutex_lock(&rdtgroup_mutex);
++
++	rdt_disable_ctx();
++
++	/* Put everything back to default values. */
++	for_each_alloc_capable_rdt_resource(r)
++		resctrl_arch_reset_all_ctrls(r);
++
++	resctrl_fs_teardown();
++	if (resctrl_arch_alloc_capable())
++		resctrl_arch_disable_alloc();
++	if (resctrl_arch_mon_capable())
++		resctrl_arch_disable_mon();
++	resctrl_mounted = false;
++	mutex_unlock(&rdtgroup_mutex);
++	cpus_read_unlock();
++}
++
+ static int rdt_get_tree(struct fs_context *fc)
+ {
+ 	struct rdt_fs_context *ctx = rdt_fc2context(fc);
+ 	unsigned long flags = RFTYPE_CTRL_BASE;
++	struct kernfs_node *rdt_root_kn;
+ 	struct rdt_l3_mon_domain *dom;
+ 	struct rdt_resource *r;
+ 	int ret;
+@@ -3068,10 +3092,6 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	if (ret)
+ 		goto out_mondata;
+ 
+-	ret = kernfs_get_tree(fc);
+-	if (ret < 0)
+-		goto out_psl;
+-
+ 	if (resctrl_arch_alloc_capable())
+ 		resctrl_arch_enable_alloc();
+ 	if (resctrl_arch_mon_capable())
+@@ -3087,10 +3107,38 @@ static int rdt_get_tree(struct fs_context *fc)
+ 						   RESCTRL_PICK_ANY_CPU);
+ 	}
+ 
+-	goto out;
++	/*
++	 * Ensure root remains accessible after mutex is unlocked so that
++	 * kernfs_kill_sb() can run safely if called by kernfs_get_tree()'s
++	 * failure path after creating a superblock but before taking reference
++	 * on root kn (for example, if unable to get inode for root kn).
++	 */
++	kernfs_get(rdtgroup_default.kn);
++
++	/*
++	 * Make backup of the current root kn being created to be used in
++	 * kernfs_put(). The additional reference taken above will prevent the
++	 * kn from being freed before kernfs_kill_sb() can run but
++	 * rdtgroup_default.kn may be set to NULL via rdtgroup_destroy_root()
++	 * and its backing root (rdt_root) could be overwritten before
++	 * kernfs_put() can run.
++	 */
++	rdt_root_kn = rdtgroup_default.kn;
++
++	rdt_last_cmd_clear();
++	mutex_unlock(&rdtgroup_mutex);
++	cpus_read_unlock();
++
++	ret = kernfs_get_tree(fc);
++	/*
++	 * resctrl can only be mounted once, new superblock only expected
++	 * to be created once.
++	 */
++	if (!ctx->kfc.new_sb_created)
++		resctrl_unmount();
++	kernfs_put(rdt_root_kn);
++	return ret;
+ 
+-out_psl:
+-	rdt_pseudo_lock_release();
+ out_mondata:
+ 	if (resctrl_arch_mon_capable())
+ 		kernfs_remove(kn_mondata);
+@@ -3110,7 +3158,6 @@ static int rdt_get_tree(struct fs_context *fc)
+ out_root:
+ 	rdtgroup_destroy_root();
+ out:
+-	rdt_last_cmd_clear();
+ 	mutex_unlock(&rdtgroup_mutex);
+ 	cpus_read_unlock();
+ 	return ret;
+@@ -3197,26 +3244,8 @@ static int rdt_init_fs_context(struct fs_context *fc)
+ 
+ static void rdt_kill_sb(struct super_block *sb)
+ {
+-	struct rdt_resource *r;
+-
+-	cpus_read_lock();
+-	mutex_lock(&rdtgroup_mutex);
+-
+-	rdt_disable_ctx();
+-
+-	/* Put everything back to default values. */
+-	for_each_alloc_capable_rdt_resource(r)
+-		resctrl_arch_reset_all_ctrls(r);
+-
+-	resctrl_fs_teardown();
+-	if (resctrl_arch_alloc_capable())
+-		resctrl_arch_disable_alloc();
+-	if (resctrl_arch_mon_capable())
+-		resctrl_arch_disable_mon();
+-	resctrl_mounted = false;
++	resctrl_unmount();
+ 	kernfs_kill_sb(sb);
+-	mutex_unlock(&rdtgroup_mutex);
+-	cpus_read_unlock();
+ }
+ 
+ static struct file_system_type rdt_fs_type = {
 -- 
 2.54.0
 
