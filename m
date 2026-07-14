@@ -1,110 +1,66 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012019.outbound.protection.outlook.com [52.101.43.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D18418A47
-	for <patches@lists.linux.dev>; Tue, 14 Jul 2026 22:14:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDE13ECBD9
+	for <patches@lists.linux.dev>; Tue, 14 Jul 2026 22:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784067302; cv=fail; b=Wf75NjYXL/Y6mPKWsjw1y/2N3N8UwihGtj4+j5rrhord3Q+h3YI4MRr4Ja3udGnaMLtJ6YnWxVSoIK4xfD18gemvxMyrZfJk3ZvGby8TjB39rwEsH7Dv3B4r1IpW6LGaqh3Ti7aVJ430X8FBgvAgmd5IacDz2BVRBPAaTvSmdNc=
+	t=1784069151; cv=fail; b=krPkE0nJByzdmfrm9nlXx+fUJWeWslmdZkAlOkvytiSaHTATJF+lyErR9/ZtVsIhNMRgKXu/d7HqWoh2MhGg5Tio5V3o5gRMLpA3cpez4CtJpY/xRfa4OLEE+fp1DVP+8MlK9O19M+MraeCnSPzXZE/eAMfI87LZOANHMHmGZo0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784067302; c=relaxed/simple;
-	bh=gR9XuGrcegQteq5tZFxm7EeM/tz/t0FJRdTRueKi8y8=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=NMV4gajlw6O6C54av/yWdfAKRGO7aJe2gSAcrgcCgGevT6QeMu2ZZTeAyFF8Bb7ndfT8UxMdavkUhuqkjrdBJ87tDqgJtPzUx8mYfl/UDT6jsEnAzPa5MjbC3svYrVUe9SuJ21CbYqnoXoJaGdWvEUtODXMs+qDckg1aJ6WkG/4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=d/9BlFMB; arc=fail smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1784069151; c=relaxed/simple;
+	bh=78UAuzwLg4VdU5PCkTfAyr24liYVfTwtUjqWpBJA7U4=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=LES5BvDvDnumWpfi4o+rRfL1ruBiEsvl3BoVvp8ICel8U23A4yYI/ItZzUsU265WNxgEtP6pTJ99dfwmy3LKZREnerasvAqY4WoWxhD/+bQw6LUbrYAqU1sQdQWiFy7LkyZZse0aGvMVlcafVWV1hb+7G1CYnyM+0OAYnpOxacc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=kYmCkHGK; arc=fail smtp.client-ip=52.101.43.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="d/9BlFMB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1784067296; x=1815603296;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=gR9XuGrcegQteq5tZFxm7EeM/tz/t0FJRdTRueKi8y8=;
-  b=d/9BlFMBnn8EU5veV0Nr/EJ5xBdF/qnGaGgbLMleJyYYEuoszfwc968D
-   000WH7r4tpcrzKogJ8ZgrsWMcVP+Hrrl18PAH3vtkqAs3u1jgYfdL0EF1
-   vHXJM1rN4qKh7Q5OXAPuWhB4FSqJ9jGqCYe2LpRvsyAHEvGjPA7h8WkTp
-   ciy1YGXO3cxCL3l5+5s/0qbOl9LuA0tQ22PXLAa1kSLrgValA6wKgUhf2
-   /TzjT3a1szhOX5ruj0RUchGIvUsj6JV9BD/OCBAEjnT6Qo3RqrXrNvTED
-   zs5BhFLAFxd+k9xW0DBvzvhDFsPT6Bisk4Q5rvo646fhVaX5hL8BNyUuK
-   Q==;
-X-CSE-ConnectionGUID: O56xZLBtSJ+xyiU/qiZvrA==
-X-CSE-MsgGUID: M3+BeJNRT4Cd4bvJNsgEww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11847"; a="96064283"
-X-IronPort-AV: E=Sophos;i="6.25,164,1779174000"; 
-   d="scan'208";a="96064283"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2026 15:14:55 -0700
-X-CSE-ConnectionGUID: 80WmSYJ8SVuXskb9eWSGEw==
-X-CSE-MsgGUID: UV2a8Vy5QqaeW31xggUTig==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,164,1779174000"; 
-   d="scan'208";a="252017812"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2026 15:14:55 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Tue, 14 Jul 2026 15:14:54 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Tue, 14 Jul 2026 15:14:54 -0700
-Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.49) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Tue, 14 Jul 2026 15:14:52 -0700
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="kYmCkHGK"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wosKjYJy1f507Hqa6ZW5hQ8zCbuxwyOM7yiQ0ZUZtd4Fi2LSBcs/1zkdXfTiR/HCsBdj+Pjdau8DKSkf7U0LgfJICqqEXR6cxkAOvMoZcs56GFqpZe1BTh9Y/8/jVqPZkrc4Wg4CSM85scygQgyp5elfEQhFX+64wnqh3qg0pwMTonkVD7K3c+i/AAMgLbsN9AGrYl8LwGPn9o7wm3G4VdC7C1yQXwXF/0HeQOWqVXr3vCmjyVOnEachbfR9GPwRNjI11jglYhEzq3mWVAeWwLSKrECHW65xLXthTgBbCIkcQk7yon57aFzu5nm6BCtgtLjQb6d4UqWuARNl+Ihd0Q==
+ b=DOXkamfzZULbJPXZ9R7ybCP6jiJF27VSNLD0WZK98pUK/r5AfNKaXKcI39PS4qQXkzOQObRVXXJ26Rc8xN6rrcvY+z5Tvpp66iJOMTmANGN4+S7C8YyanSrQ9zwscdG3k64UquH7RZGdE87jhD1/9WtILbIi4MBQzwKS/pl0EZXWT6FbL9FUErNJ2KfQ1nmfogdbAya+i089VKYENTTwO8ui6o7c4v1JjplhzavnnUQpZYTJG9TSdi0U6oVhbXKhyYQTtXOytgThiRJtN9hLvcVxj7YyEImaO2z+vtBCZIRiV1xv0Zh6DULYKz2jwjiopD/RiExDhp2OD3q8xAxoOg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=knKa9JwKhpI3dlUXFgcqRJ6sScyXIiRU1G+MN6ludBk=;
- b=zPC2VSkMW6klai55fS5KDI4o7UABmHbGdkaw+w6NJHu/zcKIptnaW+FaeOq2FvstDonrOgU4ZvFbwVhVII8YYlVWddAJQECh3/RfBOaogOe4JO6+b2hiOyXa68aIyz+iTdXTgIZcIVixHUWeZYTurhkaGNrEQP2OMXs4K6ULn/ui2sX+7hIpmjc6Yguti2T1NDSRxsUm6TUAJgl3JsdGxZIiOWAWqxWD8CHUk9TGOxo1u42kGScSpo7bi2iM0Y4y6ccXWlDc710dreTGHtK2m7MChFZ4SElPZLVye9KNGRTfvUKRJP1Ulbui5V0PpaUTxAAHRMi7EV2twMR2sSH2RA==
+ bh=IoFt2P8ExjKcnjzS/85Ux19mgmbDzov+slNWXRTRClw=;
+ b=FvdYDOsMwGGflguQl/10xO7IVCqJQegalPneJbzjUohThDg2AORa+O1lwHg/I09VkXigT9xlzsvg7RbbpNPDJSvubZ39bWm3BMFZHPzjCSdfXTMg/Nra3FbaWhI42QjmsxhNszF6sbzcDnvprUOCOpoC7XZ5NJ+blvN2TkS44NqTN5QCaw0J1nn42mGKHihoLWfBS5Ym0Fl2lrtRGXvEAtSCyGAtRwjCRUgVCC1ZkuGqjSdFVnPRM7gucb+gjXPkKkU7lgzs+o/5Xz2hZ1ttB78X5fxIF5tfNWg26Io9M9BGHKKv2K0DlKiBi2+diigbAFF5pAJHzNKEa/qHimiG1A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IoFt2P8ExjKcnjzS/85Ux19mgmbDzov+slNWXRTRClw=;
+ b=kYmCkHGKyEyKfqtnfks1bh40jE+uMLqUeagOmKTdNv2/26yYHvPokd8CZVax6UVoglIfcDvynop7EOWzlHLaY7w1x91iDdR2SoWWmvyGi43aSL7cGLbzzfsht1uxop23GM/rzmuh8rmw/1vNHkAUe0J3H5o5yOy3T1M+jF3+zTQ=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by IA1PR11MB6444.namprd11.prod.outlook.com (2603:10b6:208:3a7::11) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL1PR12MB5320.namprd12.prod.outlook.com (2603:10b6:208:314::17)
+ by SJ2PR12MB9138.namprd12.prod.outlook.com (2603:10b6:a03:565::9) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.10; Tue, 14 Jul
- 2026 22:14:49 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::3454:2577:75f2:60a6]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::3454:2577:75f2:60a6%4]) with mapi id 15.21.0202.018; Tue, 14 Jul 2026
- 22:14:49 +0000
-Date: Tue, 14 Jul 2026 15:14:47 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
-	<yu.c.chen@intel.com>, David E Box <david.e.box@intel.com>, <x86@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-Subject: Re: [PATCH v9 06/12] arm,x86,fs/resctrl: Handle change in number of
- RMIDs on each mount
-Message-ID: <ala01wjf3cBob2_u@agluck-desk3>
-References: <20260701213553.15222-7-tony.luck@intel.com>
- <06cdd789-bf1b-415d-a588-b72938d3b0dc@intel.com>
- <alFbX0tItMg9CbB5@agluck-desk3>
- <e937d05b-8381-4d4e-bc36-7165a7214694@intel.com>
- <alZdWe-DACOtDwm0@agluck-desk3>
- <cbbf71f2-06a0-4833-a7b3-b8c6df440e93@intel.com>
- <alZ2-eJ3yXWHVelp@agluck-desk3>
- <4f0124ca-d4a5-40a3-9bc8-3a1e75ff576a@intel.com>
- <alacCy4Ja4gF97PU@agluck-desk3>
- <1dac7a0e-8b69-4b4f-81e1-c010d186e69d@intel.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1dac7a0e-8b69-4b4f-81e1-c010d186e69d@intel.com>
-X-ClientProxiedBy: BYAPR21CA0011.namprd21.prod.outlook.com
- (2603:10b6:a03:114::21) To SJ1PR11MB6083.namprd11.prod.outlook.com
- (2603:10b6:a03:48a::9)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Tue, 14 Jul
+ 2026 22:45:42 +0000
+Received: from BL1PR12MB5320.namprd12.prod.outlook.com
+ ([fe80::1876:4a6d:2cf5:b8d1]) by BL1PR12MB5320.namprd12.prod.outlook.com
+ ([fe80::1876:4a6d:2cf5:b8d1%5]) with mapi id 15.21.0223.008; Tue, 14 Jul 2026
+ 22:45:42 +0000
+Message-ID: <88a6f85c-254d-4efe-ab2d-2ca41b05618d@amd.com>
+Date: Tue, 14 Jul 2026 17:45:39 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/10] x86,fs/resctrl: Improve resctrl quality and
+ consistency
+To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
+ james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
+ tglx@linutronix.de, dave.hansen@linux.intel.com
+Cc: x86@kernel.org, hpa@zytor.com, ben.horgan@arm.com, fustini@kernel.org,
+ fenghuay@nvidia.com, peternewman@google.com, yu.c.chen@intel.com,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <cover.1782857711.git.reinette.chatre@intel.com>
+Content-Language: en-US
+From: "Moger, Babu" <bmoger@amd.com>
+In-Reply-To: <cover.1782857711.git.reinette.chatre@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH0PR04CA0056.namprd04.prod.outlook.com
+ (2603:10b6:610:77::31) To BL1PR12MB5320.namprd12.prod.outlook.com
+ (2603:10b6:208:314::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -112,234 +68,205 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PR11MB6083:EE_|IA1PR11MB6444:EE_
-X-MS-Office365-Filtering-Correlation-Id: c19ec8df-7fcf-4698-f805-08dee1f551b0
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5320:EE_|SJ2PR12MB9138:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9089456d-8e12-4ee0-4fe3-08dee1f9a223
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|23010399003|1800799024|7416014|376014|22082099003|18002099003|6133799003|3023799007|11063799006|4143699003|56012099006|5023799004;
-X-Microsoft-Antispam-Message-Info: tPjAYj36Qz0w7WaaaPKEAgLbONd1nmcttyF/iGQtnPtquuUFORIoGjz1Qh6Nkd/CzmDVHEh4340Dzwu7J66V0lciiKOljADA/p/PDNHRB7OtuSjLWYq2ZGreK0DpqhJDaimzWwJRh4JJs2DS1E+U7GFaz8C4GIaIixTJqttQ5c4TqQD7q8sDSJ+G2T2s/sMSjtsCOZp3O7fGIXEQbGmb5xge4RWa94F9YM7O6W6j2y24bZK5afUIwVR0K0IMxcoTC44B3vnIM02bpGZicUgTu5GjJYpiaBXO365BYlCIDOcxzcA0hNq/xEdB6cDfvsJfGsUdaKI1CkpCzSh9/UWKW8OMoEuiBo1FndxPsoAhwZASIplLXlt1ZEomWy+vLHvla5+ZbkYXiRuvLoNO99FyiHHYj5FC8wt2zo1ouoKG4HxMMIL6SKJFm9/f7czBCvZWuWEYEvJo1tzLnrmxLatr/Z8CLYWpiyLhgkg8BcRQUbCUEsJGBX49W13amAmECU5QR3kIZxbmcrdOaF01/3K2GucilXTpqSS+fGulCB4AcxH4gIa4dzPdpiEgXel9Vu4plMbkTCT7Pj913Od169TMEvJWFvRx4FVWIreaqNjYO27vtDhfcMu0oupRfcn0QHMV
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(7416014)(376014)(22082099003)(18002099003)(6133799003)(3023799007)(11063799006)(4143699003)(56012099006)(5023799004);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|366016|376014|1800799024|23010399003|18002099003|22082099003|11063799006|3023799007|56012099006|13003099007|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	pj7+G+gSnSiojXJgHDC9Tm23kdLskEZ8YkOYsVS0R7sT1wAsSGEc6Ad4TqnRUS5oN/Rfbfz5q6oDwD7ZpIKKlRhkdjgnxA2MzSJtf0/3F3WsAOdGGVj330hfIoF+NvNvUa7y2PsD/i9WKUCQR7bdI81Kw7pChqq2P0HiX1lzBQeuYPvHI+Q91WKZUMzjQPgbzEn7vlfiHmS4Ozz6zexFplmXXlNKjnDefRwYkrRxI5aMYoGdqi2DEaVtETKdFGsCz2npsu1+jBJkZQKJ9GMHJ3Cf/gc/Cm2mFM7NXUFsFzhiglAy4TAwlGDffybROdgYwW50lPr8Vb1hVycouQ6ZgUFcyzpRkoJiiE8nzY3crYpNNuKYD6g6VnBioxHnpVAGilEgvcvfRO83mEOtPk12gW1rDHP7zxlVt9gojw4CmrErdzhUn6ckNOaUbsDww9pe3UMSy1WMrbVl1QlVbhNoi6BZ5izZZqnU2JElRNzfeIeIUgdErXZTd1Lq4IDWRKF//EWeEz6Yr3v/olXHeAoVKkxuwMAubxI3Es1Y49I+hNEmcuJ0d4LHWL0o+P1/8f6F0cBBzuZ6wSRnm0TH03pdiWsvPaDE1b+wGVOuTBvD8OL3nVobuM3bZF2ad/MGNz9k
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5320.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(1800799024)(23010399003)(18002099003)(22082099003)(11063799006)(3023799007)(56012099006)(13003099007)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?T8TqGxPmeu9Aa1j2Lkbi+gLMldpkl8TF39j/Ll+EaXovZRWmrJtXaTrFQG6j?=
- =?us-ascii?Q?9wOPwJ/Ngari8J1V9GSPUi6tmLoJ0nYJMji650CGaPWUtNcwSsQJqNe1O3bR?=
- =?us-ascii?Q?7H88AeOvVX5cyruEPmBgrtMEHpTXhfSrd8h/azla0O1vJZsObakifSOmGc3m?=
- =?us-ascii?Q?QwfTkI0JTLsm/7Sej6DvJassUTOeYMJBYNZzkF3Lk1Y4xN4aI8SSQS3vHnn2?=
- =?us-ascii?Q?GOqvCn4pUhWFlnHPdJzG1M+uoj+lsTX0SdB4eZip99ncp3e6QEp0QhCDE6E+?=
- =?us-ascii?Q?mOD+rH0A7w5mQshZkcqv37+g379f6tZhYZQRsBsWZ2Rawb5m6KTf/j950zip?=
- =?us-ascii?Q?aeQUxgWseAWX8u7Ntm5UWfZ3JH1X461Jes45SB4AnAcwG0VxKCqj0FzWbOVm?=
- =?us-ascii?Q?+Y1IVkRyA/YHhVesQJY5vF8fKsJ8lhYOclu7E9PTTaCP8gpwz1U4XBoAbli8?=
- =?us-ascii?Q?aezQnX2Bmji7SyBGa56PssgLDBFNPGnkQr57SzJanyiisqNgTlTM6RLMYkmu?=
- =?us-ascii?Q?avBrh+PtjUrFOlPp5fzqs2RFZ9m+QCekC5uj3LfBPbIg4nAv+vQY+YnQVL3q?=
- =?us-ascii?Q?8hor26E8scTHYxvWQg3JB/kbmu6FhuHA+ZeOVxqowCy9DzrG7dlXgm7RqEY+?=
- =?us-ascii?Q?VWd0I6XoiFLECGX0G6Bt5Is7h1M/y9XiAT+3csUNi66DrxGFwwwhAmVjpMG+?=
- =?us-ascii?Q?QLIXKBC0o3SyWxv+KQPkEMoxQqrZwpAY+YO2EBCk/NKGz9oWayKNZ2KWMZ7Q?=
- =?us-ascii?Q?lOlh5AqMhwjX0Nfjm7by8PuUzXXRvM7zZ25QmWCoKA0NCIPUx77TJcSPjQuT?=
- =?us-ascii?Q?m3BSpwQwZ12j1gdtsFoAR7t9r1fl8+2TzH89sv3h7Zd3v+TCzP7HPFD/Bu3X?=
- =?us-ascii?Q?ixh2Bj+4Xf7DheMPVke8wtYwNWwzm6OpRPRsWDzYhkHL1UGtiCU7Gzr/XsEK?=
- =?us-ascii?Q?Qh/Qrqi/y8+INXOLxARYOleFxewB2+E8Wjiu74zDyKJsgay9QOaff1+cWfXm?=
- =?us-ascii?Q?jcbxd6GLLdVex0rMkFJ0iGoA3CvQKPee+u3N8iwr+ZO/sNE3NICCoNb+LPgy?=
- =?us-ascii?Q?8G/IILux4y8onvx8Geoo01Dx+k0B50iIpcZlr2jpUk3EjdosOqbo8PlbBRGo?=
- =?us-ascii?Q?LUIh1wUEwwaPEcIiWmhohoyjoq5JxtZMk/DY1H7fcEFuSmOwq9AOkeikKPUd?=
- =?us-ascii?Q?OKXWJwldRnAuY6Lg2RLgNQwPmwBn0eILB8aEuoXr3Vz3zpgzJFGgEfLXkew0?=
- =?us-ascii?Q?XlajY9WO5DdHk+QmtmjMrei+qXFlkb8WKubHNSHg+ckkWnK+bApbiZ/2zCy8?=
- =?us-ascii?Q?a6SX90EJtEvGW6fzuZnvr9fLd/nD0XTeiKVNvUF09dUGhWjKFBZt8XY5e3ZP?=
- =?us-ascii?Q?ZozpFkN13rToS0U0QgaMXOsIlQIfQvxCvcnV3u0uFXI3rByBS3F4ePgscO7T?=
- =?us-ascii?Q?TcinBQCgEo6KKGZriearKco2VdxXgp5Z5HpKZZHK8ZoaFiXHoMRR9o4cN5VD?=
- =?us-ascii?Q?mFI9HE5iXLqEbzxJ7pyKbjGNktckoIM2500fSec/X72qY8nwpSrh0McDXIEf?=
- =?us-ascii?Q?WQTDLmcQKfKjimjeHVH/e1Q/8TXaLw0ds7Jt266Qg/00wUtrYVAVxngW5kEk?=
- =?us-ascii?Q?zas/vCHlYGwScZ/0ziVng1UbYSpDrksrom6sURat2e9Y6gdpAUA39V3Z3pry?=
- =?us-ascii?Q?kRg0Jr8K6FqpdTnXKd/fxGBP9+n/MX2vU98Tr5qj6n+QyqBYaTYyP/st9IAZ?=
- =?us-ascii?Q?zn/ZWc/svg=3D=3D?=
-X-Exchange-RoutingPolicyChecked: hnFMZKXbSpG1vWHUytkTiVj/cl9+CSgKrBu8Zuk/VnWvb5OZopNqUFD9mbbOeVOkhPw4Zhz7U3hQHRCnPgbPuVzXGKFbG3FNgHJBPo3X8aQf3nIWhIwHr3vrLwrPTThR3MWcFoxhMEFLnq/GfkXzQuuNAXM6vp5wE6QtQDSu4TrvzxaprIND522ZfbU9JscSM590z71eQYD1lW00Ro5//T2Y21laGtnAzRT7OrBzgDNaF914R4nnghfRLgXSU9fQ9V8yXxqzlXJtflxJCAu5I+Fetdi9M2I/u23EybzDvCm8GeZiTGv/EeyEtEZT3AEi+SU5f/J86Sg8kzYZqsR1DA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: c19ec8df-7fcf-4698-f805-08dee1f551b0
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?STcvUTZneVNWS0JIcUlaNjhvY09YQ2JEYllMdUhGSFhTbWxkcXRMODdTVVBS?=
+ =?utf-8?B?VFVoQlFEUXYzWGRTcUVkL0pUdjFydGV6NDRFNmlyenJPZlRsbnhkcmxoNTl5?=
+ =?utf-8?B?M0xhQUZHaGh6U1ZMaHpYZ0hHU282RHg1T2xKYUJHN2dZRDdLeG5ZeXpqZG1I?=
+ =?utf-8?B?SVdNUEE2MUt2dUVpclV1Z09uL2pwenJjN3gzZWIrdUdsY0Q0TzEyNGsxN08r?=
+ =?utf-8?B?cE4vZHVMT1h3ZjVwaDlmbUt0Zm5Rek1za1lrNDlOa2E2RzZOcDZxaVV0STFq?=
+ =?utf-8?B?YkNXTmZIZ015c3VSWG43bDc0dnBIWGV1WVlZdDZ0ZFNJMVhrZ1lveDlEVGwv?=
+ =?utf-8?B?N21ueWR3cG5iZUthaytNc0VuUUp1a3NudzRycFpsb0FXZTd0WEV6VW9ibWpx?=
+ =?utf-8?B?bjhHOXg0Y3d2cThYQnM4cXdiTWUyZ2lyRmtHN2pKTEFCcUtoTHV6cmw2V3lm?=
+ =?utf-8?B?MHhpQng0bUFqTkFSVmhaQm9yckQxRGVVQnAyYk5xNmc5cHhvSUhKalhmTUxz?=
+ =?utf-8?B?d00zN0hJZ3FOcFdTWnM0SWpFN0lIY2tLd3FKT2JrWERtWCttaFd4MTd5U1Av?=
+ =?utf-8?B?S1oyTlFKQzFtUitoeFZOMlBudmpyam1kRTdaVFVmV3pQUzIyWkJ4THBzYzRH?=
+ =?utf-8?B?NDJ4MXl2YVJWdEU4UHdCa0RzY0syR0Q0Z0k1NmpPckU4cVBLSjJJMHZBVlcz?=
+ =?utf-8?B?ZWdUNFlxejNhQytWSDdIcWl3VkRKMXNnYnJ5SWh6UTB4clk3Tk1jOWhlTmo5?=
+ =?utf-8?B?M0NTNy9VTVVvaStMaitCTGxTNGk2U2RSNWdma3dZUE1oUmIxYTlGd0xtN210?=
+ =?utf-8?B?bTlBZGduOWRGaS9IYWhSK0UxWmdYbFM0WDZBRi94TWlEQ3F2cDlBaVRYM0pk?=
+ =?utf-8?B?cWVZVE9PUkRWTSs4Nk4wdERqdzBUZTM3bHA5R0ZrSmg1ZUNmOXN4QWFiT01P?=
+ =?utf-8?B?aDlmNjZtZlh3Nkt0OXRmS0Zkc0Z6VDJ0YkVxSGVqTmNWRURvUTIxaGdwNytJ?=
+ =?utf-8?B?T2VaQ2o5WlNoN2h0KzFwRFBWL3RmZjJBMVliU29MRmo1TDZKY0IxNVpPZVVU?=
+ =?utf-8?B?cEdBZWM5SUhKandoQVo3R3R4eVVHZy9kaFNTa0xHUVZyU3RGT0VzY0RaYjVT?=
+ =?utf-8?B?OXhGbWh3UU5KTXkwOUN0MGdGRktLWGJSSWszYy9EMGlDbnNXU3ZxVmRqOTBG?=
+ =?utf-8?B?cmdRMFBIOGtRSDVHOGxsajdESDkwZTJrS0cyK3lzUm9PaFduLzljZzlGaFVV?=
+ =?utf-8?B?RnVmNDlyY3RRdktBdXNnUFRpVGhlSlllcmFoNGxESFBpZmJTazM1U3l0Vi9y?=
+ =?utf-8?B?d1lTMCs2c203WXJCZWdRL0lHd1Qzb0tKZ0xQM2VmS1E3bURGdzZoYWJZZWs0?=
+ =?utf-8?B?dzJiL2JwUERHbHl0THNpa1dha2c5MHd3dHRhK2NZR1FGZjY0MXRkeTFkSVJ1?=
+ =?utf-8?B?UHV4WmlNTzA3eExwSHpFa2UvS2IyT2NrcXI3N0M4L3ljU3B3NW5HOFJpTmN4?=
+ =?utf-8?B?Uk5hVklSWU1IQ1pvcXV5OTBNSGRJSnFBcEpMc0t6bUE2aWZTU1k2bStCUXJP?=
+ =?utf-8?B?KzAyTXBpK2hDUWl5TFc2RUU5NzZQbVpGTXFTRGJFVTFLcnJ5QVdmM1daOVhm?=
+ =?utf-8?B?Q01lOEx3THR0OVc3dFhZY0NWNmQ3Y3FKNVJkVWxHWVhZaUprZHlYMzBKL1dk?=
+ =?utf-8?B?aU02c2g4WFIweG9laUQwMzVqb3dNalRCOGtsSy81ajNJK2hYNTg5bkJRZWxO?=
+ =?utf-8?B?a29tQ0VvZitWSHdHQmFSNUMvSWhTYUtTcE9nUG9zcDRmaW1kWEplOC9sRlh2?=
+ =?utf-8?B?RFluVXhpMzV3L3V2TWsvUFFMcThnR1pTSXNQWmZmSVUzUW8yOUVIQy9OUTVJ?=
+ =?utf-8?B?bFNlTHhqV3pYaFNudkszV3hGL1J1NUd0WHZGaFB6cCtlRHBoT2t1amlnREtE?=
+ =?utf-8?B?b3k3TWRWMnRNMnVoWEdrUVNkSGo4WTFVUzk0WnRKVWdSaEFBREZXczBmTUhu?=
+ =?utf-8?B?Z3ZmZXlOdjNRSFRTTjZ6THRVdnBFeDREZ20rT0JkRVQ2SmdmNjloYU5nTWlK?=
+ =?utf-8?B?aS9qUjNwSjhGZXpOZGFxdDVHblN2Z2ducVBiUEFPV3hWdlNVZDIwRVJWSXVr?=
+ =?utf-8?B?bUh0WEVPTTQwS1JxYXc2d1l2Y25iZkxzSGxnZWNKN1UzUXFQUjZFcHkxR1J1?=
+ =?utf-8?B?R2JudEpkdTdKUW16SThkdDF5S3NnYlN6MGRBcXQyNlpIK01vSzN4cG8rQXEr?=
+ =?utf-8?B?OC91N2VSQ1MwbWF4MlBuZlpRRWtYWEt1U0tFODhBaUs4VnJHeXRpWkw0dWR6?=
+ =?utf-8?Q?rnnT07DEyTqwg0ca9F?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9089456d-8e12-4ee0-4fe3-08dee1f9a223
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5320.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 22:14:48.9857
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 22:45:42.2613
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6pPTobv5HHlodw6dVIT7oj4AFJJUTdkYiNXSh9qhiTAgBRgjNZp2XD3yAZ6cSmaUWkx8VjLLdSEXRoDkudKnuA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6444
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: rujcYuUSl1RjYSpfCjXY0bSnsAlaurLXicxoBIHBFLhJcZFT/wC3lETizPmkPERM
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9138
 
-Hi Reinette,
+Ran few tests on the series. Looks good.
 
-On Tue, Jul 14, 2026 at 02:07:17PM -0700, Reinette Chatre wrote:
-> Hi Tony,
+Tested-by: Babu Moger <babu.moger@amd.com>
+
+On 6/30/2026 11:27 PM, Reinette Chatre wrote:
+> Applies on top of v7.2-rc1 + v5 of "x86,fs/resctrl: Fix long-standing issues":
+>    https://lore.kernel.org/lkml/cover.1781029125.git.reinette.chatre@intel.com/
 > 
-> On 7/14/26 1:28 PM, Luck, Tony wrote:
-> > Hi Reinette,
-> > 
-> > On Tue, Jul 14, 2026 at 11:16:53AM -0700, Reinette Chatre wrote:
-> >> Hi Tony,
-> >>
-> >> On 7/14/26 10:50 AM, Luck, Tony wrote:
-> >>> On Tue, Jul 14, 2026 at 09:45:04AM -0700, Reinette Chatre wrote:
-> >>>> Hi Tony,
-> >>>
-> >>> ... trimming to open issue ...
-> >>>
-> >>>>>> How much to rely on CPUID is not clear to me. The direction seems to
-> >>>>>> be to move away from CPUID, which makes adding new CPUID dependencies
-> >>>>>> less ideal? 
-> >>>
-> >>> Where is this direction to move away from CPUID coming from?
-> >>
-> >> This is the impression I got from the discussions during series that adds support for
-> >> LLC occupancy monitoring via ERDT (https://lore.kernel.org/lkml/cover.1782866200.git.yu.c.chen@intel.com/).
-> >> If ERDT is the future direction then I do not think resctrl should assume that the
-> >> same data will always be available via CPUID also. With ERDT there is a separate
-> >> per-domain maximum RMID that should be discovered via ACPI.
-> > 
-> > My view of system design today is that architects have a box full of Lego(TM)
-> > bricks for features that they clip together. The bricks often have different
-> > parameters - sized based on the maximum values across all systems where they
-> > might be used.
-> > 
-> > In this case you end up with different components supporting different
-> > numbers of RMIDs.
+> Changes since v4:
+> - v4: https://lore.kernel.org/lkml/cover.1777419024.git.reinette.chatre@intel.com/
+> - Rebased on top of V5 "x86,fs/resctrl: Fix long-standing issues":
+>    https://lore.kernel.org/lkml/cover.1781029125.git.reinette.chatre@intel.com/
+>    A significant change in that series is the addition of
+>    info_kn_lock()/info_kn_unlock() helpers to the info file handlers. With
+>    the addition of locking to the max_threshold_occ_write() in that series
+>    it seemed appropriate to re-order the last_cmd_status handling in
+>    max_threshold_occ_write() to be after the change to last_cmd_status
+>    custom to contain max_threshold_occ_write() changes to one patch.
+> - Add resctrl filename to new error messages to disambiguate the various
+>    "Invalid input" messages. (Tony)
+> - Add Tony's Reviewed-by tag to all patches.
 > 
-> ack.
+> Changes since v3:
+> - v3: https://lore.kernel.org/lkml/cover.1775576382.git.reinette.chatre@intel.com/
+> - Rebased on v7.1-rc1.
+> - Drop "MAINTAINERS: Update resctrl entry" and "fs/resctrl: Add missing return
+>    value descriptions" that can be found in v7.1-rc1.
+> - Drop "fs/resctrl: Avoid "may be used uninitialized" warning" that just does unnecessary
+>    work to appease compiler warning that is disabled by default. (Boris)
+> - Use pr_warn() instead of WARN_ON() in "x86/resctrl: Protect against bad
+>    shift".
 > 
-> > 
-> > For RMID the absolute maximum usable value is defined by CPUID(0xF).EBX.
+> Changes since v2:
+> - v2: https://lore.kernel.org/lkml/cover.1774043709.git.reinette.chatre@intel.com/
+> - Rebased on top of tip/master with pending resctrl selftest changes,
+>    https://lore.kernel.org/lkml/cover.1775266384.git.reinette.chatre@intel.com/,
+>    applied on top to support testing with latest kernel that has pending resctrl
+>    changes merged.
+> - Drop "fs/resctrl: Use stricter checks on input to cpus/cpus_list file"
+>    that ended up being too strict and removed one use case. (Chris)
+> - max_threshold_occ_write() switch to guard(). (Chenyu)
+> - Add more detail to one return value description.
+> - Add tags.
+> - No opinions so far on needing to update last_cmd_status on success of all read
+>    commands. At this time last_cmd_status will continue to return previous
+>    failure message (if any) after a read command accessing static data succeeds.
 > 
-> Would this be the case even if CPUID(0xF).EDX == 0?
-
-Yes. Looking again at definition of IA32_PQR_ASSOC in the Intel SDM the
-width of the RMID field is defined solely by the value in CPUID.0FH.00H:EBX
-
-In contrast the definition of the width of the CLOS field refers to the
-"max of all valid RDT Allocation ResID.EDX[15:0] subleaves"
-
-Unclear if the RMID width didn't refer to valid monitoring subleaves
-because there was only one such leaf? Or perhaps deliberate planning
-ahead for a day where there is a system that monitors only non-L3
-events that are enumerated outside of CPUID(0xF).EDX. Either way,
-as written the max RMID value does not depend on EDX.
-
+> Changes since v1:
+> - v1: https://lore.kernel.org/lkml/cover.1772476561.git.reinette.chatre@intel.com/
+> - To simplify tracking, include patch to MAINTAINERS submitted separately:
+>    https://lore.kernel.org/lkml/4274c478922c01f9ceebc805acf991f10a95519f.1771442788.git.reinette.chatre@intel.com/
+> - Follow recent upstream changes to add reference to tip tree handbook in
+>    MAINTAINERS entry.
+> - Use new pattern in resctrl to enable looping over all entries of an enum
+>    while making adding new enum entries more clear all while avoiding warnings
+>    when compiling with -Wswitch. (Ben)
+> - Add another last_cmd_status enhancement that appends "[truncated]" to
+>    output of info/last_cmd_status if the backing buffer overflowed.
+> - Please see patch changelogs for details of changes.
+> - Add tags.
 > 
-> > A WRMSR to IA32_PQR_ASSOC.RMID of any value greater than that will #GP
-> > fault. So, while you might have an ERDT table saying that it supports 500
-> > RMIDs, if that Lego brick is plugged into an SoC that has CPUID(0xF).EBX =
-> > 399, then you can only use 400 RMIDs, and the extra 100 counters on the ERDT
-> > device will sit unused as there is no way for them to be accessed.
-> > 
-> >>>>> Here's my current work-in-progress version:
-> >>>>>
-> >>>>> u32 resctrl_arch_system_max_rmid_idx(void)
-> >>>>> {
-> >>>>> 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
-> >>>>> 	u32 ret;
-> >>>>>
-> >>>>> 	/* CPUID provides maximum possible RMID value */
-> >>>>> 	ret = cpuid_ebx(0xf) + 1;
-> >>>>
-> >>>> There is also boot_cpu_data.x86_cache_max_rmid initialized in resctrl_cpu_detect() that
-> >>>> could be used directly? Looks like resctrl_cpu_detect() already scales the number of
-> >>>> RMID down if needed when L3 monitoring is supported, but it does not take SNC into account.
-> >>>
-> >>> I looked at that, but rejected it because it isn't adjusted for SNC.
-> >>
-> >> Right. Neither is cpuid_ebx(0xf). Is it necessary for resctrl_arch_system_max_rmid_idx()
-> >> to call CPUID every time or could it use the cached value in boot_cpu_data.x86_cache_max_rmid?
-> > 
-> > Yes. Necessary. See how boot_cpu_data.x86_cache_max_rmid is derived:
-> > 
-> > /* Runs once on the BSP during boot. */
-> > void resctrl_cpu_detect(struct cpuinfo_x86 *c)
-> > {
-> > 	if (!cpu_has(c, X86_FEATURE_CQM_LLC) && !cpu_has(c, X86_FEATURE_ABMC)) {
-> > 		c->x86_cache_max_rmid  = -1;
-> > 		c->x86_cache_occ_scale = -1;
-> > 		c->x86_cache_mbm_width_offset = -1;
-> > 		return;
-> > 	}
-> > 
-> > On a theoretical platform that doesn't support X86_FEATURE_CQM_LLC or X86_FEATURE_ABMC
-> > x86_cache_max_rmid will be -1.
-> > 
-> > In fact you can get this with boot argument of "clearcpuid=cqm_occup_llc"
-> > 
-> > I wonder if that test should really be for X86_FEATURE_CQM and thus
-> > check CPUID(0x7).EBX[12]?
+> Hi Everybody,
 > 
-> It seems that doing so would match the definition of IA32_PQR_ASSOC found below that
-> you highlighted earlier and should result in a valid x86_cache_max_rmid as intended?
-> I am not familiar with the history of the original enabling
-> (commit cbc82b172638 ("x86: Add support for Intel Cache QoS Monitoring (CQM) detection"))
-> that resulted in X86_FEATURE_CQM not used.
-
-Nor me. I didn't get involved with RDT until shortly after that, when
-Vikas was doing the coding, and there was the great debate about trying
-to implement RDT inside the cgroup subsystem (that ultimately failed for
-a variety of good reasons, and thus the resctrl file system was born).
-
-Plausibly a simple confusion between the similar names "X86_FEATURE_CQM"
-and "X86_FEATURE_CQM_LLC"?
-
+> This is a collection of resctrl cleanups assembled together for convenience
+> and simpler tracking. I'd be happy to split them up if it makes review and/or
+> handling easier.
 > 
-> > 
-> >>>>> 	/*
-> >>>>> 	 * if system is capable of L3 monitoring the maximum RMID value may
-> >>>>> 	 * be lower that system maximum. Either because the L3 monitoring
-> >>>>> 	 * feature supports fewer RMIDs (CPUID(0xF, 0x1).ECX), or because SNC
-> >>>>> 	 * (Sub-NUMA Cluster) is enabled and divides RMIDs per cluster.
-> >>>>> 	 */
-> >>>>> 	if (r->mon_capable)
-> >>>>> 		ret = r->mon.num_rmid;
-> >>>>>
-> >>>>> 	return ret;
-> >>>>> }
-> >>>>>
-> >>>>> CPUID seems unavoidable in the case that the platform doesn't support
-> >>>>> (or has disabled the various L3 monitoring events). In that case using
-> >>>>
-> >>>> Since L3 monitoring is the only CPUID supported monitoring resource I do not
-> >>>> think cpuid_ebx(0xf) can be used if the platform does not support L3 monitoring.
-> >>>> I expect that would mean that leaf 0x7 would indicate that monitoring is
-> >>>> not supported which would make leaf 0xf invalid? Interestingly resctrl does
-> >>>> not seem to consider X86_FEATURE_CQM from leaf 0x7 at all and just goes straight
-> >>>> to leaf 0xf.
-> >>>
-> >>> I disagree. The definition of IA32_PQR_ASSOC says:
-> >>>
-> >>> 1) The MSR exists if either of CPUID.07H.00H:EBX[12] or CPUID.07H.00H:EBX[15] is set
-> >>>    (in this case bit 12 for monitoring, It does appear to be a bug that resctrl is
-> >>>    not checking bit 12 before looking at leaf 0xF).
-> >>>
-> >>> 2) The supported width of the RMID field is Ceil(Log2 (CPUID.0FH.00H:EBX[31:0] +1))
-> >>>
-> >>> So I believe that a theoretical system that supported AET (or some other
-> >>> monitoring) but didn't support L3 monitoring, would have to set CPUID.07H.00H:EBX[12]
-> >>> and provide the max RMID value in CPUID.0FH.00H:EBX[31:0].
-> >>
-> >> I see. That would mean that CPUID would report a max RMID value while also reporting
-> >> that there are no resources being monitored. I assume ERDT is an example of "some other
-> >> monitoring" and it has its own per-domain max RMID that is separate from the different
-> >> monitoring features. How do these different max RMID values relate? Should this
-> >> architectural "get the max RMID" be expanded to also consider the per-RMDD maximum when
-> >> ERDT support lands?
-> > 
-> > Yes, ERDT is an example of a monitoring resource enumerated by ACPI.
-> > 
-> > AET is enumerated via a combination of PCIe configuration space VSEC
-> > entries and an XML file.
-> > 
-> > See above "Lego" explanation for why they don't factor into the "max RMID"
-> > calculation.
-> > 
-> >>>
-> >>> For resctrl we have the practical case of booting with "rdt=!cmt,!mbmtotal,!mbmlocal"
-> >>> to software disable all L3 monitoring.
-> >> ack.
-> >>
-> >> Reinette
-> >>
-> > 
-> > -Tony
+> Summary of changes:
+> 
+> - Let resctrl pass stricter checks from various tools to provide a cleaner
+>    baseline with the goal to promote healthier contributions:
+>    - ./tools/docs/kernel-doc -Wall -v <files>
+>    - Build with W=12
+>    - ./scripts/coccicheck
+>    - Static checkers
+> 
+> - Use accurate and consistent type for all uses of resource ID.
+> 
+> - In the unlikely scenario that resctrl picked a wrong CPU to read an event
+>    from, pass the error through to user space instead of claiming to succeed
+>    and returning a (wrong) result.
+> 
+> - Since inception of last_cmd_status feature there have been mismatches
+>    between resctrl file operation failures and the contents of
+>    info/last_cmd_status. This pattern keeps propagating with each new resctrl
+>    feature. Establish a new baseline with a new pattern that ensures
+>    info/last_cmd_status contains an accurate failure description that matches
+>    the most recent resctrl file operation failure.
+> 
+> One potential open:
+> 
+> There remains an inconsistency between resctrl file operations that do/can
+> _not_ fail and the contents of info/last_cmd_status. If a resctrl
+> file operation fails and an informational error is printed to last_cmd_status
+> then a subsequent reading of a resctrl file (specifically most of the files
+> found in info/) may succeed while info/last_cmd_status may or may not return
+> the error from previous failure.
+> 
+> Ensuring last_cmd_status is reset on every read carries the cost of taking
+> rdtgroup_mutex on several more user space initiated paths and thus increase
+> contention on rdtgroup_mutex. I opted to not make this change and instead
+> focus this work on ensuring that last_cmd_status is accurate whenever there is
+> a failure during any resctrl file operation. Please let me know if you have
+> opinions in this regard.
+> 
+> Update v5: The addition of the info_kn_lock()/info_kn_unlock() helpers to
+> info file handlers now means that rdtgroup_mutex is held every time an info
+> file is opened. There is thus now less burden to reset last_cmd_status
+> buffer on each info file access. Even so, since there has not been any
+> opinions in this regard I opted to keep current behavior.
+> 
+> Any feedback is appreciated.
+> 
+> Regards,
 > 
 > Reinette
+> 
+> Reinette Chatre (10):
+>    fs/resctrl: Use correct format specifier for printing error pointers
+>    x86/resctrl: Protect against bad shift
+>    fs/resctrl: Change pattern used to track number of entries in enum
+>    fs/resctrl: Use accurate type for rdt_resource::rid
+>    fs/resctrl: Pass error reading event through to user space
+>    fs/resctrl: Use accurate and symmetric exit flows
+>    fs/resctrl: Change last_cmd_status custom during input parsing
+>    fs/resctrl: Add last_cmd_status support for writes to
+>      max_threshold_occupancy
+>    fs/resctrl: Communicate resource group deleted error via
+>      last_cmd_status
+>    fs/resctrl: Inform user space when status buffer overflowed
+> 
+>   arch/x86/kernel/cpu/resctrl/core.c |   6 +-
+>   fs/resctrl/ctrlmondata.c           |  71 ++++++++++-------
+>   fs/resctrl/monitor.c               |  78 ++++++++++--------
+>   fs/resctrl/rdtgroup.c              | 123 +++++++++++++++++------------
+>   include/linux/resctrl.h            |  11 +--
+>   5 files changed, 173 insertions(+), 116 deletions(-)
+> 
 
--Tony
