@@ -1,272 +1,169 @@
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012019.outbound.protection.outlook.com [52.101.43.19])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011044.outbound.protection.outlook.com [40.107.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDE13ECBD9
-	for <patches@lists.linux.dev>; Tue, 14 Jul 2026 22:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DC137268B;
+	Tue, 14 Jul 2026 23:09:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784069151; cv=fail; b=krPkE0nJByzdmfrm9nlXx+fUJWeWslmdZkAlOkvytiSaHTATJF+lyErR9/ZtVsIhNMRgKXu/d7HqWoh2MhGg5Tio5V3o5gRMLpA3cpez4CtJpY/xRfa4OLEE+fp1DVP+8MlK9O19M+MraeCnSPzXZE/eAMfI87LZOANHMHmGZo0=
+	t=1784070584; cv=fail; b=M6yjv9iWEF9821AhANBAwqFXrPI0D49AVMdXhzst//ZtI7iJOMplWOToefIGG0V8CPWsfikm5fimdPEETg2Qz1lCBNjH6T79cnNCgVbCmHGsYI4ABs0oAMUh7TuIbPQwCDvN7H0y4YvlONCytV6Mivuxc1EGgjEFr6ZuL0lyqDY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784069151; c=relaxed/simple;
-	bh=78UAuzwLg4VdU5PCkTfAyr24liYVfTwtUjqWpBJA7U4=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=LES5BvDvDnumWpfi4o+rRfL1ruBiEsvl3BoVvp8ICel8U23A4yYI/ItZzUsU265WNxgEtP6pTJ99dfwmy3LKZREnerasvAqY4WoWxhD/+bQw6LUbrYAqU1sQdQWiFy7LkyZZse0aGvMVlcafVWV1hb+7G1CYnyM+0OAYnpOxacc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=kYmCkHGK; arc=fail smtp.client-ip=52.101.43.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	s=arc-20240116; t=1784070584; c=relaxed/simple;
+	bh=mUrOZA9Bq82diRwCQsKScgDVs25nOJ8f0w6f2vlRv2s=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FicF4nkdkY33oU99e1yjxJ1qz4ToqCMG8TkukfgjTzPKBL/RhxT5yFOGanG6ag1TlrlnCuq/e7tDfx70qBKp5KtANNN6ORLa6/aAcAy9CXKeDMzZpHbveoWRZdfKRWARN0StltQAjcG1lGBw11Mwda6hKTNZJ948/QIzBTtUaT8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ADN1QfoF; arc=fail smtp.client-ip=40.107.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="kYmCkHGK"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ADN1QfoF"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DOXkamfzZULbJPXZ9R7ybCP6jiJF27VSNLD0WZK98pUK/r5AfNKaXKcI39PS4qQXkzOQObRVXXJ26Rc8xN6rrcvY+z5Tvpp66iJOMTmANGN4+S7C8YyanSrQ9zwscdG3k64UquH7RZGdE87jhD1/9WtILbIi4MBQzwKS/pl0EZXWT6FbL9FUErNJ2KfQ1nmfogdbAya+i089VKYENTTwO8ui6o7c4v1JjplhzavnnUQpZYTJG9TSdi0U6oVhbXKhyYQTtXOytgThiRJtN9hLvcVxj7YyEImaO2z+vtBCZIRiV1xv0Zh6DULYKz2jwjiopD/RiExDhp2OD3q8xAxoOg==
+ b=WjcSpwpeYNDUMACccEB6n2EkZ9HIBawrUU4CUC1EYmIhb3ksiJR0czWzS1+Y/5XAZzAbhg/26OUbFcw2nCvYQKb2vawVHm2bA8hjAsyQQeFu6N6/ihR6EWrsDsds0I5VzihTtaF/0hcWWj55vp+y5s3uYCooR/rwZuBzjXcjmGM6cWucFED6XZly+6L/xLIh3pkSxPK8YS4zilf7Is1eg/frNNpAJYDnWoexVqgaAZSgbWfZNp0fxXRUzlm7+rmAppergcyDaWfYm+B57Co6y4QX5jMZ1jxoB3ragryS1xC49j6oqcxUupJhmpcZSpP1Fb3nqXY9PzQU6kAOQmDLEA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IoFt2P8ExjKcnjzS/85Ux19mgmbDzov+slNWXRTRClw=;
- b=FvdYDOsMwGGflguQl/10xO7IVCqJQegalPneJbzjUohThDg2AORa+O1lwHg/I09VkXigT9xlzsvg7RbbpNPDJSvubZ39bWm3BMFZHPzjCSdfXTMg/Nra3FbaWhI42QjmsxhNszF6sbzcDnvprUOCOpoC7XZ5NJ+blvN2TkS44NqTN5QCaw0J1nn42mGKHihoLWfBS5Ym0Fl2lrtRGXvEAtSCyGAtRwjCRUgVCC1ZkuGqjSdFVnPRM7gucb+gjXPkKkU7lgzs+o/5Xz2hZ1ttB78X5fxIF5tfNWg26Io9M9BGHKKv2K0DlKiBi2+diigbAFF5pAJHzNKEa/qHimiG1A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ bh=ovu+MJpfmO8hWq7ZdCSjO3yz9NllpzQkyfrDB5S72dY=;
+ b=H4KcJkkcgPQ+Jzx+yeItMnbl8bGMjweQEys8VRNmJHM9VXbm68ZIjypDIG1KDZeRRDY9t0nx0AXgi4TGh5Nr8CHRR1QV94Jm0ujB7GPffWom8Ug7HMczW1AO7HjD8e6QQpbPhkGYglieOKCZV5ip4bK6QgZE4aGboTcEfpj2ab4sERkzym8PJ0ko+wNZ9+VmWIlj5CyRRsS8LP0dPDsGipC7Yk2+x23KArCXwOONnusdFB8Wtm5m3wP2XvbX/oV8YOwoIGiRbuVgde427HnxRNC/k7U7Iv68DFXgno9zGN+JmAMI5P7C4YrakoocR4FCjiMgMYFVuxnTCaL7pHhbmA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IoFt2P8ExjKcnjzS/85Ux19mgmbDzov+slNWXRTRClw=;
- b=kYmCkHGKyEyKfqtnfks1bh40jE+uMLqUeagOmKTdNv2/26yYHvPokd8CZVax6UVoglIfcDvynop7EOWzlHLaY7w1x91iDdR2SoWWmvyGi43aSL7cGLbzzfsht1uxop23GM/rzmuh8rmw/1vNHkAUe0J3H5o5yOy3T1M+jF3+zTQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BL1PR12MB5320.namprd12.prod.outlook.com (2603:10b6:208:314::17)
- by SJ2PR12MB9138.namprd12.prod.outlook.com (2603:10b6:a03:565::9) with
+ bh=ovu+MJpfmO8hWq7ZdCSjO3yz9NllpzQkyfrDB5S72dY=;
+ b=ADN1QfoFphFOKR3TBvQkXbiJfVz8L7PqAOIfWxyX3JWCTIgEWE9maJO7zc9v69CokgcnZgfCo4fZgpFWpEpPWaLgkD+9JE7WLYtvAcIYZPaDk7g6JbxkQNARdS+0CFJz7cQdvHZ6tEaBa+KWuBfsCSfSiOhZkKbjxmxPpeHg+D82cjRKQH/pFBeUVqtRd6DiTcybvHT3eBqnULj27gOc2/W3XDrtV9QmVjA5N3UkHF4wCDbq4nh+nP8SdebmcoYL5S6nIRkEkQ4x7fCxpB+bQmmcUo++S4srAP2xRnd11cfBO1S575ar3WV0AD05VAQglQTw+uf6PPHfgxrObPS+Kg==
+Received: from SJ0PR13CA0098.namprd13.prod.outlook.com (2603:10b6:a03:2c5::13)
+ by PH7PR12MB5620.namprd12.prod.outlook.com (2603:10b6:510:137::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Tue, 14 Jul
- 2026 22:45:42 +0000
-Received: from BL1PR12MB5320.namprd12.prod.outlook.com
- ([fe80::1876:4a6d:2cf5:b8d1]) by BL1PR12MB5320.namprd12.prod.outlook.com
- ([fe80::1876:4a6d:2cf5:b8d1%5]) with mapi id 15.21.0223.008; Tue, 14 Jul 2026
- 22:45:42 +0000
-Message-ID: <88a6f85c-254d-4efe-ab2d-2ca41b05618d@amd.com>
-Date: Tue, 14 Jul 2026 17:45:39 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/10] x86,fs/resctrl: Improve resctrl quality and
- consistency
-To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
- james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
- tglx@linutronix.de, dave.hansen@linux.intel.com
-Cc: x86@kernel.org, hpa@zytor.com, ben.horgan@arm.com, fustini@kernel.org,
- fenghuay@nvidia.com, peternewman@google.com, yu.c.chen@intel.com,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <cover.1782857711.git.reinette.chatre@intel.com>
-Content-Language: en-US
-From: "Moger, Babu" <bmoger@amd.com>
-In-Reply-To: <cover.1782857711.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CH0PR04CA0056.namprd04.prod.outlook.com
- (2603:10b6:610:77::31) To BL1PR12MB5320.namprd12.prod.outlook.com
- (2603:10b6:208:314::17)
+ 2026 23:09:33 +0000
+Received: from SJ5PEPF000001F7.namprd05.prod.outlook.com
+ (2603:10b6:a03:2c5:cafe::24) by SJ0PR13CA0098.outlook.office365.com
+ (2603:10b6:a03:2c5::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.223.9 via Frontend Transport; Tue, 14
+ Jul 2026 23:09:33 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SJ5PEPF000001F7.mail.protection.outlook.com (10.167.242.75) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.223.9 via Frontend Transport; Tue, 14 Jul 2026 23:09:33 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Tue, 14 Jul
+ 2026 16:09:23 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Tue, 14 Jul 2026 16:09:23 -0700
+Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.126.190.180)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Tue, 14 Jul 2026 16:09:22 -0700
+Date: Tue, 14 Jul 2026 16:09:21 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <iommu@lists.linux.dev>, "Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Jean-Philippe Brucker <jpb@kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>, David Matlack <dmatlack@google.com>, "Pasha
+ Tatashin" <pasha.tatashin@soleen.com>, <patches@lists.linux.dev>, "Pranjal
+ Shrivastava" <praan@google.com>, Samiullah Khawaja <skhawaja@google.com>,
+	Mostafa Saleh <smostafa@google.com>
+Subject: Re: [PATCH v3 7/8] iommu/arm-smmu-v3: Change how the tlbi describes
+ the invalidation
+Message-ID: <albBoVkI4KIh+spI@nvidia.com>
+References: <0-v3-4e7f64f4e094+85e-smmu_tlbi_jgg@nvidia.com>
+ <7-v3-4e7f64f4e094+85e-smmu_tlbi_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <7-v3-4e7f64f4e094+85e-smmu_tlbi_jgg@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5320:EE_|SJ2PR12MB9138:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9089456d-8e12-4ee0-4fe3-08dee1f9a223
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F7:EE_|PH7PR12MB5620:EE_
+X-MS-Office365-Filtering-Correlation-Id: d8c954f7-62e2-4754-a496-08dee1fcf752
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|366016|376014|1800799024|23010399003|18002099003|22082099003|11063799006|3023799007|56012099006|13003099007|6133799003;
+	BCL:0;ARA:13230040|7416014|1800799024|36860700016|376014|82310400026|23010399003|18002099003|22082099003|11063799006|56012099006|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	pj7+G+gSnSiojXJgHDC9Tm23kdLskEZ8YkOYsVS0R7sT1wAsSGEc6Ad4TqnRUS5oN/Rfbfz5q6oDwD7ZpIKKlRhkdjgnxA2MzSJtf0/3F3WsAOdGGVj330hfIoF+NvNvUa7y2PsD/i9WKUCQR7bdI81Kw7pChqq2P0HiX1lzBQeuYPvHI+Q91WKZUMzjQPgbzEn7vlfiHmS4Ozz6zexFplmXXlNKjnDefRwYkrRxI5aMYoGdqi2DEaVtETKdFGsCz2npsu1+jBJkZQKJ9GMHJ3Cf/gc/Cm2mFM7NXUFsFzhiglAy4TAwlGDffybROdgYwW50lPr8Vb1hVycouQ6ZgUFcyzpRkoJiiE8nzY3crYpNNuKYD6g6VnBioxHnpVAGilEgvcvfRO83mEOtPk12gW1rDHP7zxlVt9gojw4CmrErdzhUn6ckNOaUbsDww9pe3UMSy1WMrbVl1QlVbhNoi6BZ5izZZqnU2JElRNzfeIeIUgdErXZTd1Lq4IDWRKF//EWeEz6Yr3v/olXHeAoVKkxuwMAubxI3Es1Y49I+hNEmcuJ0d4LHWL0o+P1/8f6F0cBBzuZ6wSRnm0TH03pdiWsvPaDE1b+wGVOuTBvD8OL3nVobuM3bZF2ad/MGNz9k
+	haDhMwbRthmTRygkdfkmbnH9DZkG3hR3/TJ+yaCTEESPQnPy9Az1DN1vV7NPSkQ1yLM28PbwVCZJdlNq3I4777OQ+nqvsWE6oON4fWQA9YmsabTT0J9V9g3c4PJkDQf7IvNaF6kPXMG7rE5qomEeUPW7XTvLJtFcH12rML82cgGfsPmXTZpnmaffTWCFe8YobZLJPivMiZzuUMp5kU0n17PBxuil/Z1/MkqQGXvzG1OBq4JgSZ4LAs/cYveLY1z20ReUTPriQWDnSgBE/EQYPMsnjx05dgVk1ZptRUPX/1SVVvpBcXtJklgdEGx3GTODO1u5aQDN4viAmuIUSDIg6GjB5wAjUNVu5ztepvdSLLPTPzCq3eYkWA9KIYkiBWAN4/moimN8foX2vuTvCdczVbNRXUt9fVRFjJUc6QrTLr8sNtGcoBfAp8pamVlCWfZBLMKrEyR10MbP/3Zdfvt5znE4T//ZVLjpMLzO240sU2N6tkOJG9u9umnz0KuB231TUQseM8N9sd1HExA9vZMfHy6XrqiQ3PmWROvUUl6rM35LpLDRmY/39XopIFu9MmhcdzO8DIw46aUADsg4J7aDNJojoSc0PmZRMer+vLgk7hu0URia0Kib/5gntxVuXdI+eC1CSHWgpdG2qFFM24AdaUZb/KunZ4r+B0iTlcTA/rrfkvQZCNzsCiGQVqTjinfSvoS6UDnrwbUTC8lo7rjp9w==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5320.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(1800799024)(23010399003)(18002099003)(22082099003)(11063799006)(3023799007)(56012099006)(13003099007)(6133799003);DIR:OUT;SFP:1101;
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(36860700016)(376014)(82310400026)(23010399003)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?STcvUTZneVNWS0JIcUlaNjhvY09YQ2JEYllMdUhGSFhTbWxkcXRMODdTVVBS?=
- =?utf-8?B?VFVoQlFEUXYzWGRTcUVkL0pUdjFydGV6NDRFNmlyenJPZlRsbnhkcmxoNTl5?=
- =?utf-8?B?M0xhQUZHaGh6U1ZMaHpYZ0hHU282RHg1T2xKYUJHN2dZRDdLeG5ZeXpqZG1I?=
- =?utf-8?B?SVdNUEE2MUt2dUVpclV1Z09uL2pwenJjN3gzZWIrdUdsY0Q0TzEyNGsxN08r?=
- =?utf-8?B?cE4vZHVMT1h3ZjVwaDlmbUt0Zm5Rek1za1lrNDlOa2E2RzZOcDZxaVV0STFq?=
- =?utf-8?B?YkNXTmZIZ015c3VSWG43bDc0dnBIWGV1WVlZdDZ0ZFNJMVhrZ1lveDlEVGwv?=
- =?utf-8?B?N21ueWR3cG5iZUthaytNc0VuUUp1a3NudzRycFpsb0FXZTd0WEV6VW9ibWpx?=
- =?utf-8?B?bjhHOXg0Y3d2cThYQnM4cXdiTWUyZ2lyRmtHN2pKTEFCcUtoTHV6cmw2V3lm?=
- =?utf-8?B?MHhpQng0bUFqTkFSVmhaQm9yckQxRGVVQnAyYk5xNmc5cHhvSUhKalhmTUxz?=
- =?utf-8?B?d00zN0hJZ3FOcFdTWnM0SWpFN0lIY2tLd3FKT2JrWERtWCttaFd4MTd5U1Av?=
- =?utf-8?B?S1oyTlFKQzFtUitoeFZOMlBudmpyam1kRTdaVFVmV3pQUzIyWkJ4THBzYzRH?=
- =?utf-8?B?NDJ4MXl2YVJWdEU4UHdCa0RzY0syR0Q0Z0k1NmpPckU4cVBLSjJJMHZBVlcz?=
- =?utf-8?B?ZWdUNFlxejNhQytWSDdIcWl3VkRKMXNnYnJ5SWh6UTB4clk3Tk1jOWhlTmo5?=
- =?utf-8?B?M0NTNy9VTVVvaStMaitCTGxTNGk2U2RSNWdma3dZUE1oUmIxYTlGd0xtN210?=
- =?utf-8?B?bTlBZGduOWRGaS9IYWhSK0UxWmdYbFM0WDZBRi94TWlEQ3F2cDlBaVRYM0pk?=
- =?utf-8?B?cWVZVE9PUkRWTSs4Nk4wdERqdzBUZTM3bHA5R0ZrSmg1ZUNmOXN4QWFiT01P?=
- =?utf-8?B?aDlmNjZtZlh3Nkt0OXRmS0Zkc0Z6VDJ0YkVxSGVqTmNWRURvUTIxaGdwNytJ?=
- =?utf-8?B?T2VaQ2o5WlNoN2h0KzFwRFBWL3RmZjJBMVliU29MRmo1TDZKY0IxNVpPZVVU?=
- =?utf-8?B?cEdBZWM5SUhKandoQVo3R3R4eVVHZy9kaFNTa0xHUVZyU3RGT0VzY0RaYjVT?=
- =?utf-8?B?OXhGbWh3UU5KTXkwOUN0MGdGRktLWGJSSWszYy9EMGlDbnNXU3ZxVmRqOTBG?=
- =?utf-8?B?cmdRMFBIOGtRSDVHOGxsajdESDkwZTJrS0cyK3lzUm9PaFduLzljZzlGaFVV?=
- =?utf-8?B?RnVmNDlyY3RRdktBdXNnUFRpVGhlSlllcmFoNGxESFBpZmJTazM1U3l0Vi9y?=
- =?utf-8?B?d1lTMCs2c203WXJCZWdRL0lHd1Qzb0tKZ0xQM2VmS1E3bURGdzZoYWJZZWs0?=
- =?utf-8?B?dzJiL2JwUERHbHl0THNpa1dha2c5MHd3dHRhK2NZR1FGZjY0MXRkeTFkSVJ1?=
- =?utf-8?B?UHV4WmlNTzA3eExwSHpFa2UvS2IyT2NrcXI3N0M4L3ljU3B3NW5HOFJpTmN4?=
- =?utf-8?B?Uk5hVklSWU1IQ1pvcXV5OTBNSGRJSnFBcEpMc0t6bUE2aWZTU1k2bStCUXJP?=
- =?utf-8?B?KzAyTXBpK2hDUWl5TFc2RUU5NzZQbVpGTXFTRGJFVTFLcnJ5QVdmM1daOVhm?=
- =?utf-8?B?Q01lOEx3THR0OVc3dFhZY0NWNmQ3Y3FKNVJkVWxHWVhZaUprZHlYMzBKL1dk?=
- =?utf-8?B?aU02c2g4WFIweG9laUQwMzVqb3dNalRCOGtsSy81ajNJK2hYNTg5bkJRZWxO?=
- =?utf-8?B?a29tQ0VvZitWSHdHQmFSNUMvSWhTYUtTcE9nUG9zcDRmaW1kWEplOC9sRlh2?=
- =?utf-8?B?RFluVXhpMzV3L3V2TWsvUFFMcThnR1pTSXNQWmZmSVUzUW8yOUVIQy9OUTVJ?=
- =?utf-8?B?bFNlTHhqV3pYaFNudkszV3hGL1J1NUd0WHZGaFB6cCtlRHBoT2t1amlnREtE?=
- =?utf-8?B?b3k3TWRWMnRNMnVoWEdrUVNkSGo4WTFVUzk0WnRKVWdSaEFBREZXczBmTUhu?=
- =?utf-8?B?Z3ZmZXlOdjNRSFRTTjZ6THRVdnBFeDREZ20rT0JkRVQ2SmdmNjloYU5nTWlK?=
- =?utf-8?B?aS9qUjNwSjhGZXpOZGFxdDVHblN2Z2ducVBiUEFPV3hWdlNVZDIwRVJWSXVr?=
- =?utf-8?B?bUh0WEVPTTQwS1JxYXc2d1l2Y25iZkxzSGxnZWNKN1UzUXFQUjZFcHkxR1J1?=
- =?utf-8?B?R2JudEpkdTdKUW16SThkdDF5S3NnYlN6MGRBcXQyNlpIK01vSzN4cG8rQXEr?=
- =?utf-8?B?OC91N2VSQ1MwbWF4MlBuZlpRRWtYWEt1U0tFODhBaUs4VnJHeXRpWkw0dWR6?=
- =?utf-8?Q?rnnT07DEyTqwg0ca9F?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9089456d-8e12-4ee0-4fe3-08dee1f9a223
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5320.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 22:45:42.2613
+	1DM3AOsM9UlcCusii+FSh03GqRphPTgvky6I4BT+xZXZ+PRQN+Bu65D1+io6/gy8geEIe0QI0PaFqBV3l2Ksz1y6auNaszYEmolRIUEAEMxEgukVhhIPafEBALXewOaTKMnkwaaOoB8Drwyv9G91B6R4+VBJ/VeycNd7JMpDFYw40x1gyqJTAMhu61Y6zeR9tbriYPtAyzcHNLMrO4EX1WqYU062A5I2IrvzNNgx+95TM0XCaDT1BmIR+ZCkwUcTmgeey4rbRl5HYCaF8PqMHdhw0gzmcgZMJzfZrUaD+F4rka7nd0RUo2tI9EQdeoucPp5tytaE/Mu2v8Mv7+mZucGt2lIgqwujzUIZucMPc0a8P2UCXE//VXKRCPeJKS9mh8OifBrH0WZm2uucUHmpRieOELwyeShDNw4dV1Vhq4mhrrHZON3colyJ3PLVaUEE
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 23:09:33.0382
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rujcYuUSl1RjYSpfCjXY0bSnsAlaurLXicxoBIHBFLhJcZFT/wC3lETizPmkPERM
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9138
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8c954f7-62e2-4754-a496-08dee1fcf752
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001F7.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5620
 
-Ran few tests on the series. Looks good.
+On Tue, Jul 14, 2026 at 03:46:07PM -0300, Jason Gunthorpe wrote:
+> +static unsigned int arm_smmu_compute_ttl(u8 leaf_bitmap, u8 table_bitmap,
+> +	} else {
+> +		/* Both bitmaps zero is not allowed */
+> +		return 0;
+> +	}
 
-Tested-by: Babu Moger <babu.moger@amd.com>
+"not allowed" reads like we need a WARN_ON?
 
-On 6/30/2026 11:27 PM, Reinette Chatre wrote:
-> Applies on top of v7.2-rc1 + v5 of "x86,fs/resctrl: Fix long-standing issues":
->    https://lore.kernel.org/lkml/cover.1781029125.git.reinette.chatre@intel.com/
-> 
-> Changes since v4:
-> - v4: https://lore.kernel.org/lkml/cover.1777419024.git.reinette.chatre@intel.com/
-> - Rebased on top of V5 "x86,fs/resctrl: Fix long-standing issues":
->    https://lore.kernel.org/lkml/cover.1781029125.git.reinette.chatre@intel.com/
->    A significant change in that series is the addition of
->    info_kn_lock()/info_kn_unlock() helpers to the info file handlers. With
->    the addition of locking to the max_threshold_occ_write() in that series
->    it seemed appropriate to re-order the last_cmd_status handling in
->    max_threshold_occ_write() to be after the change to last_cmd_status
->    custom to contain max_threshold_occ_write() changes to one patch.
-> - Add resctrl filename to new error messages to disambiguate the various
->    "Invalid input" messages. (Tony)
-> - Add Tony's Reviewed-by tag to all patches.
-> 
-> Changes since v3:
-> - v3: https://lore.kernel.org/lkml/cover.1775576382.git.reinette.chatre@intel.com/
-> - Rebased on v7.1-rc1.
-> - Drop "MAINTAINERS: Update resctrl entry" and "fs/resctrl: Add missing return
->    value descriptions" that can be found in v7.1-rc1.
-> - Drop "fs/resctrl: Avoid "may be used uninitialized" warning" that just does unnecessary
->    work to appease compiler warning that is disabled by default. (Boris)
-> - Use pr_warn() instead of WARN_ON() in "x86/resctrl: Protect against bad
->    shift".
-> 
-> Changes since v2:
-> - v2: https://lore.kernel.org/lkml/cover.1774043709.git.reinette.chatre@intel.com/
-> - Rebased on top of tip/master with pending resctrl selftest changes,
->    https://lore.kernel.org/lkml/cover.1775266384.git.reinette.chatre@intel.com/,
->    applied on top to support testing with latest kernel that has pending resctrl
->    changes merged.
-> - Drop "fs/resctrl: Use stricter checks on input to cpus/cpus_list file"
->    that ended up being too strict and removed one use case. (Chris)
-> - max_threshold_occ_write() switch to guard(). (Chenyu)
-> - Add more detail to one return value description.
-> - Add tags.
-> - No opinions so far on needing to update last_cmd_status on success of all read
->    commands. At this time last_cmd_status will continue to return previous
->    failure message (if any) after a read command accessing static data succeeds.
-> 
-> Changes since v1:
-> - v1: https://lore.kernel.org/lkml/cover.1772476561.git.reinette.chatre@intel.com/
-> - To simplify tracking, include patch to MAINTAINERS submitted separately:
->    https://lore.kernel.org/lkml/4274c478922c01f9ceebc805acf991f10a95519f.1771442788.git.reinette.chatre@intel.com/
-> - Follow recent upstream changes to add reference to tip tree handbook in
->    MAINTAINERS entry.
-> - Use new pattern in resctrl to enable looping over all entries of an enum
->    while making adding new enum entries more clear all while avoiding warnings
->    when compiling with -Wswitch. (Ben)
-> - Add another last_cmd_status enhancement that appends "[truncated]" to
->    output of info/last_cmd_status if the backing buffer overflowed.
-> - Please see patch changelogs for details of changes.
-> - Add tags.
-> 
-> Hi Everybody,
-> 
-> This is a collection of resctrl cleanups assembled together for convenience
-> and simpler tracking. I'd be happy to split them up if it makes review and/or
-> handling easier.
-> 
-> Summary of changes:
-> 
-> - Let resctrl pass stricter checks from various tools to provide a cleaner
->    baseline with the goal to promote healthier contributions:
->    - ./tools/docs/kernel-doc -Wall -v <files>
->    - Build with W=12
->    - ./scripts/coccicheck
->    - Static checkers
-> 
-> - Use accurate and consistent type for all uses of resource ID.
-> 
-> - In the unlikely scenario that resctrl picked a wrong CPU to read an event
->    from, pass the error through to user space instead of claiming to succeed
->    and returning a (wrong) result.
-> 
-> - Since inception of last_cmd_status feature there have been mismatches
->    between resctrl file operation failures and the contents of
->    info/last_cmd_status. This pattern keeps propagating with each new resctrl
->    feature. Establish a new baseline with a new pattern that ensures
->    info/last_cmd_status contains an accurate failure description that matches
->    the most recent resctrl file operation failure.
-> 
-> One potential open:
-> 
-> There remains an inconsistency between resctrl file operations that do/can
-> _not_ fail and the contents of info/last_cmd_status. If a resctrl
-> file operation fails and an informational error is printed to last_cmd_status
-> then a subsequent reading of a resctrl file (specifically most of the files
-> found in info/) may succeed while info/last_cmd_status may or may not return
-> the error from previous failure.
-> 
-> Ensuring last_cmd_status is reset on every read carries the cost of taking
-> rdtgroup_mutex on several more user space initiated paths and thus increase
-> contention on rdtgroup_mutex. I opted to not make this change and instead
-> focus this work on ensuring that last_cmd_status is accurate whenever there is
-> a failure during any resctrl file operation. Please let me know if you have
-> opinions in this regard.
-> 
-> Update v5: The addition of the info_kn_lock()/info_kn_unlock() helpers to
-> info file handlers now means that rdtgroup_mutex is held every time an info
-> file is opened. There is thus now less burden to reset last_cmd_status
-> buffer on each info file access. Even so, since there has not been any
-> opinions in this regard I opted to keep current behavior.
-> 
-> Any feedback is appreciated.
-> 
-> Regards,
-> 
-> Reinette
-> 
-> Reinette Chatre (10):
->    fs/resctrl: Use correct format specifier for printing error pointers
->    x86/resctrl: Protect against bad shift
->    fs/resctrl: Change pattern used to track number of entries in enum
->    fs/resctrl: Use accurate type for rdt_resource::rid
->    fs/resctrl: Pass error reading event through to user space
->    fs/resctrl: Use accurate and symmetric exit flows
->    fs/resctrl: Change last_cmd_status custom during input parsing
->    fs/resctrl: Add last_cmd_status support for writes to
->      max_threshold_occupancy
->    fs/resctrl: Communicate resource group deleted error via
->      last_cmd_status
->    fs/resctrl: Inform user space when status buffer overflowed
-> 
->   arch/x86/kernel/cpu/resctrl/core.c |   6 +-
->   fs/resctrl/ctrlmondata.c           |  71 ++++++++++-------
->   fs/resctrl/monitor.c               |  78 ++++++++++--------
->   fs/resctrl/rdtgroup.c              | 123 +++++++++++++++++------------
->   include/linux/resctrl.h            |  11 +--
->   5 files changed, 173 insertions(+), 116 deletions(-)
-> 
+Otherwise, should it be reworded?
 
+> +static u8 arm_smmu_tlbi_calc_stride(struct arm_smmu_tlbi *tlbi)
+> +{
+> +	u8 combined = tlbi->table_levels_bitmap | tlbi->leaf_levels_bitmap;
+> +	u8 tg_szlg2 = tlbi->tgsz_lg2;
+> +
+> +	if (!combined)
+> +		return U8_MAX;
+
+As the code checks "combined", ...
+
+> +	 * If leaf_levels_bitmap is 0 then this is a walk cache only
+> +	 * invalidation. If table_levels_bitmap is 0 then this is a leaf only
+> +	 * invalidation.
+
+..., how about listing all combinations in this kdocs:
+       * The pair (table, leaf) below selects the invalidation scope:
+       *   table!=0, leaf==0 : walk cache only
+       *   table==0, leaf!=0 : leaves only
+       *   table!=0, leaf!=0 : walk cache + leaves
+       *   table==0, leaf==0 : a full invalidation
+?
+
+> +	 * Level bitmaps use iommupt numbering: bit 0 is the leaf-only level
+> +	 * (ARM level 3), bit 1 is the next level up (ARM level 2), etc.
+
+Also, the driver calculates ttl via the inverted numbering noted
+here. How about:
+
+static inline int arm_smmu_bitmap_to_level(u8 bitmap)
+{
+      return 3 - (int)__ffs(bitmap);
+}
+
+?
+
+Then, arm_smmu_compute_ttl() would read slightly better.
+
+With that,
+
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
