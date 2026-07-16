@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6861400DE8;
-	Thu, 16 Jul 2026 14:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD51400DE8;
+	Thu, 16 Jul 2026 14:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211184; cv=none; b=U70oKR66xJm9+7F/cxaDlWI4hVtyw5E5+4szK1QwwV1/tx9SEWyXL1R53Et7IbWpE0NraldaATdf7VbNlN0/8SkD2x679r3t26Vyotk7Ty7bMAWh2VJ0a5AG7qbTVNcuCBIpU/4eC1K75tUjOMcgiVGZje/9q6ODYvOuE7nIY0E=
+	t=1784211186; cv=none; b=kEyflgWDZ0ygQfYqquNOUzs0/+IC80Uwm/Z4WntYftm/9LWWLyyMuDHQO/pkZvhZySwT5a0Q5EBfL+l831UP6UgjLRd7+M7SPC06OyzGDT6zjB2cQ+/gMp9GzcZC7uOmTjZukD9BK9kSieEuVOnYYcPIJ+XyN4yH48As6cqz2aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211184; c=relaxed/simple;
-	bh=64JytIEgWpmn7nCFfb2fFfsEUujca88P4AzcXvZ2RD4=;
+	s=arc-20240116; t=1784211186; c=relaxed/simple;
+	bh=jL+OSXGMxm3naeNdniZj5tg3PBtsiumT4U2bLiJ/hPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9mLp32zGP4wgLDFjn/WMcOM/HzsWptnmwN5d+kim198+ET/jnXrP0m0boN7qwx/gzNfsn0jOwNXCEXx5t0q8uN3YGZHbYXXS+JSYPVzwLqMh6P3+YJHb3WwkJqTDgXJ5Rvg+eYYpeFz4pu2pDuDoMF2lKOA9AJOJ0QuJ9sTCL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c08UpkGK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MRYX1yHQ6eD2d8NwQCnH++W8nKOh/b8TzRIWPy+KLI0C4a+3zULvpr9Et5oLRsPq/OdMN2u/90NS8Q6yqCLVUrenEtxF6tai6mfDFvnDxrZI/I3zO1b9/R4HI5QKKAhj9Tp1hY+oR6CHutLgQ/zOINw2guCBriV3U0cA818heVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zB3F5SkO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c08UpkGK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B3C1F00A3A;
-	Thu, 16 Jul 2026 14:13:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zB3F5SkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D141F000E9;
+	Thu, 16 Jul 2026 14:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211182;
-	bh=iPhmeMqe3wQ/dbi7KNK749uTnYBZ110pqcJ7mZXOJHE=;
+	s=korg; t=1784211185;
+	bh=8dgro+nkCemF14aTJZ+vOCLLKLVHc2NjfQw0jQDdxoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c08UpkGKphFHahUoiBzZRmHpOkX+1jmIuaOwxdeT5iUnzJoQJH6xjo21aD6nd1+0h
-	 M/sklcBML2JMmKbhiJWHDjxdvPZ12GZkPN2GwczynHy4iENO5zDG3Wv8eC1B3e3hfg
-	 QSmYlx473lM3Csgoq11+WBZEwENFnSmVjiuOI2C8=
+	b=zB3F5SkOVAB60N0aot5LvbgfzGq/EnalZOAqJnrHasim6Xjrr0Gr8DtiPcbQVlCXr
+	 4geHmvLsn2oT3OG1H3UhE7QGQqp13FCNDPSSycYbrlQdj4YH/+YCoscDMKGA7otZX1
+	 KZ23Fz7li+lgmytuYGyffU0hsXJW/qNJWpVZQpVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 324/480] rust_binder: fix BINDER_GET_EXTENDED_ERROR
-Date: Thu, 16 Jul 2026 15:31:11 +0200
-Message-ID: <20260716133051.826744040@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.18 333/480] udf: validate sparing table length as an entry count, not a byte count
+Date: Thu, 16 Jul 2026 15:31:20 +0200
+Message-ID: <20260716133052.018795162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,287 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 77bfebf110773f5a0d6b5ff8110896adb2c9c335 ]
+commit 3ec997bd5508e9b25210b5bbec89031629cdb093 upstream.
 
-This code currently copies the ExtendedError struct to the stack,
-modifies the copy, and then doesn't modify the original. Thus, fix it.
+udf_load_sparable_map() accepts a sparing table when
 
-Furthermore, errors when replying must be delivered directly to the
-remote thread, so update deliver_reply() to take an extended error
-argument.
+	sizeof(*st) + le16_to_cpu(st->reallocationTableLen) > sb->s_blocksize
 
-Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260605-set-extended-error-v3-1-d60b69a75f97@google.com
+is false, i.e. it treats reallocationTableLen as a number of BYTES that
+must fit in the block.  But the table is walked as an array of 8-byte
+sparingEntry elements:
+
+	for (i = 0; i < le16_to_cpu(st->reallocationTableLen); i++) {
+		struct sparingEntry *entry = &st->mapEntry[i];
+		... entry->origLocation ...
+	}
+
+in udf_get_pblock_spar15() and udf_relocate_blocks().  A
+reallocationTableLen of N therefore passes the check whenever
+sizeof(*st) + N <= blocksize, yet the consumers index
+sizeof(*st) + N * sizeof(struct sparingEntry) bytes -- up to ~8x the
+block.  On a crafted UDF image this is an out-of-bounds read in
+udf_get_pblock_spar15(); udf_relocate_blocks() additionally feeds the
+same length to udf_update_tag(), whose crc_itu_t() reads far past the
+block, and its memmove() through st->mapEntry[] is an out-of-bounds
+write.
+
+Validate reallocationTableLen as the entry count it is, with
+struct_size().
+
+Fixes: 1df2ae31c724 ("udf: Fortify loading of sparing table")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260612-b4-disp-91780c4e-v1-1-f15112ff6882@proton.me
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder/error.rs       | 13 +++---
- drivers/android/binder/thread.rs      | 65 +++++++++++++++++++--------
- drivers/android/binder/transaction.rs | 15 +++----
- 3 files changed, 58 insertions(+), 35 deletions(-)
+ fs/udf/super.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/android/binder/error.rs b/drivers/android/binder/error.rs
-index c6a834071f8cef..fd9e9d9e5658b1 100644
---- a/drivers/android/binder/error.rs
-+++ b/drivers/android/binder/error.rs
-@@ -72,20 +72,17 @@ impl core::fmt::Debug for BinderError {
-     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-         match self.reply {
-             BR_FAILED_REPLY => match self.source.as_ref() {
--                Some(source) => f
--                    .debug_struct("BR_FAILED_REPLY")
--                    .field("source", source)
--                    .finish(),
-+                Some(source) => source.fmt(f),
-                 None => f.pad("BR_FAILED_REPLY"),
-             },
-             BR_DEAD_REPLY => f.pad("BR_DEAD_REPLY"),
-             BR_FROZEN_REPLY => f.pad("BR_FROZEN_REPLY"),
-             BR_TRANSACTION_PENDING_FROZEN => f.pad("BR_TRANSACTION_PENDING_FROZEN"),
-             BR_TRANSACTION_COMPLETE => f.pad("BR_TRANSACTION_COMPLETE"),
--            _ => f
--                .debug_struct("BinderError")
--                .field("reply", &self.reply)
--                .finish(),
-+            _ => match self.source.as_ref() {
-+                Some(source) => source.fmt(f),
-+                None => self.reply.fmt(f),
-+            },
-         }
-     }
- }
-diff --git a/drivers/android/binder/thread.rs b/drivers/android/binder/thread.rs
-index 93aa98c2a173a0..ad8bdf762ddc6f 100644
---- a/drivers/android/binder/thread.rs
-+++ b/drivers/android/binder/thread.rs
-@@ -498,9 +498,16 @@ impl Thread {
-         Ok(())
-     }
- 
-+    pub(crate) fn clear_extended_error(&self, debug_id: usize) {
-+        self.inner.lock().extended_error = ExtendedError::new(debug_id as u32, BR_OK, 0);
-+    }
-+
-     pub(crate) fn get_extended_error(&self, data: UserSlice) -> Result {
-         let mut writer = data.writer();
--        let ee = self.inner.lock().extended_error;
-+        let mut inner = self.inner.lock();
-+        let ee = inner.extended_error;
-+        inner.extended_error = ExtendedError::new(0, BR_OK, 0);
-+        drop(inner);
-         writer.write(&ee)?;
-         Ok(())
-     }
-@@ -1105,7 +1112,10 @@ impl Thread {
-             inner.pop_transaction_to_reply(thread.as_ref())
-         } {
-             let reply = Err(BR_DEAD_REPLY);
--            if !transaction.from.deliver_single_reply(reply, &transaction) {
-+            if !transaction
-+                .from
-+                .deliver_single_reply(reply, &transaction, None)
-+            {
-                 break;
-             }
- 
-@@ -1117,8 +1127,9 @@ impl Thread {
-         &self,
-         reply: Result<DLArc<Transaction>, u32>,
-         transaction: &DArc<Transaction>,
-+        extended_error: Option<ExtendedError>,
-     ) {
--        if self.deliver_single_reply(reply, transaction) {
-+        if self.deliver_single_reply(reply, transaction, extended_error) {
-             transaction.from.unwind_transaction_stack();
-         }
-     }
-@@ -1132,6 +1143,7 @@ impl Thread {
-         &self,
-         reply: Result<DLArc<Transaction>, u32>,
-         transaction: &DArc<Transaction>,
-+        extended_error: Option<ExtendedError>,
-     ) -> bool {
-         if let Ok(transaction) = &reply {
-             transaction.set_outstanding(&mut self.process.inner.lock());
-@@ -1147,6 +1159,12 @@ impl Thread {
-                 return true;
-             }
- 
-+            if let Some(ee) = extended_error {
-+                if inner.extended_error.command == BR_OK {
-+                    inner.extended_error = ee;
-+                }
-+            }
-+
-             match reply {
-                 Ok(work) => {
-                     inner.push_work(work);
-@@ -1217,6 +1235,9 @@ impl Thread {
-         info.buffers_size = td.buffers_size as usize;
-         // SAFETY: Above `read` call initializes all bytes, so this union read is ok.
-         info.target_handle = unsafe { td.transaction_data.target.handle };
-+
-+        info.debug_id = super::next_debug_id();
-+
-         Ok(())
-     }
- 
-@@ -1225,6 +1246,8 @@ impl Thread {
-         let mut info = TransactionInfo::zeroed();
-         self.read_transaction_info(cmd, reader, &mut info)?;
- 
-+        self.clear_extended_error(info.debug_id);
-+
-         let ret = if info.is_reply {
-             self.reply_inner(&mut info)
-         } else if info.is_oneway() {
-@@ -1234,23 +1257,21 @@ impl Thread {
-         };
- 
-         if let Err(err) = ret {
--            if err.reply != BR_TRANSACTION_COMPLETE {
--                info.reply = err.reply;
--            }
--
-             self.push_return_work(err.reply);
--            if let Some(source) = &err.source {
--                info.errno = source.to_errno();
-+            if err.reply != BR_TRANSACTION_COMPLETE {
-                 info.reply = err.reply;
-+                if let Some(source) = &err.source {
-+                    info.errno = source.to_errno();
- 
--                {
--                    let mut ee = self.inner.lock().extended_error;
--                    ee.command = err.reply;
--                    ee.param = source.to_errno();
-+                    {
-+                        let mut inner = self.inner.lock();
-+                        inner.extended_error =
-+                            ExtendedError::new(info.debug_id as u32, err.reply, source.to_errno());
-+                    }
-                 }
- 
-                 pr_warn!(
--                    "{}:{} transaction to {} failed: {source:?}",
-+                    "{}:{} transaction to {} failed: {err:?}",
-                     info.from_pid,
-                     info.from_tid,
-                     info.to_pid
-@@ -1315,18 +1336,24 @@ impl Thread {
-             let allow_fds = orig.flags & TF_ACCEPT_FDS != 0;
-             let reply = Transaction::new_reply(self, process, info, allow_fds)?;
-             self.inner.lock().push_work(completion);
--            orig.from.deliver_reply(Ok(reply), &orig);
-+            orig.from.deliver_reply(Ok(reply), &orig, None);
-             Ok(())
-         })()
-         .map_err(|mut err| {
-             // At this point we only return `BR_TRANSACTION_COMPLETE` to the caller, and we must let
-             // the sender know that the transaction has completed (with an error in this case).
-+
-             pr_warn!(
--                "Failure {:?} during reply - delivering BR_FAILED_REPLY to sender.",
--                err
-+                "{}:{} reply to {} failed: {err:?}",
-+                info.from_pid,
-+                info.from_tid,
-+                info.to_pid
-             );
--            let reply = Err(BR_FAILED_REPLY);
--            orig.from.deliver_reply(reply, &orig);
-+
-+            let param = err.source.as_ref().map_or(0, |e| e.to_errno());
-+            let ee = ExtendedError::new(info.debug_id as u32, err.reply, param);
-+            orig.from
-+                .deliver_reply(Err(BR_FAILED_REPLY), &orig, Some(ee));
-             err.reply = BR_TRANSACTION_COMPLETE;
-             err
-         });
-diff --git a/drivers/android/binder/transaction.rs b/drivers/android/binder/transaction.rs
-index 733f452d8f49dd..b5434a2ae8193c 100644
---- a/drivers/android/binder/transaction.rs
-+++ b/drivers/android/binder/transaction.rs
-@@ -42,6 +42,7 @@ pub(crate) struct TransactionInfo {
-     pub(crate) reply: u32,
-     pub(crate) oneway_spam_suspect: bool,
-     pub(crate) is_reply: bool,
-+    pub(crate) debug_id: usize,
- }
- 
- impl TransactionInfo {
-@@ -82,7 +83,6 @@ impl Transaction {
-         from: &Arc<Thread>,
-         info: &mut TransactionInfo,
-     ) -> BinderResult<DLArc<Self>> {
--        let debug_id = super::next_debug_id();
-         let allow_fds = node_ref.node.flags & FLAT_BINDER_FLAG_ACCEPTS_FDS != 0;
-         let txn_security_ctx = node_ref.node.flags & FLAT_BINDER_FLAG_TXN_SECURITY_CTX != 0;
-         let mut txn_security_ctx_off = if txn_security_ctx { Some(0) } else { None };
-@@ -90,7 +90,7 @@ impl Transaction {
-         let mut alloc = match from.copy_transaction_data(
-             to.clone(),
-             info,
--            debug_id,
-+            info.debug_id,
-             allow_fds,
-             txn_security_ctx_off.as_mut(),
-         ) {
-@@ -117,7 +117,7 @@ impl Transaction {
-         let data_address = alloc.ptr;
- 
-         Ok(DTRWrap::arc_pin_init(pin_init!(Transaction {
--            debug_id,
-+            debug_id: info.debug_id,
-             target_node: Some(target_node),
-             from_parent,
-             sender_euid: from.process.task.euid(),
-@@ -141,9 +141,8 @@ impl Transaction {
-         info: &mut TransactionInfo,
-         allow_fds: bool,
-     ) -> BinderResult<DLArc<Self>> {
--        let debug_id = super::next_debug_id();
-         let mut alloc =
--            match from.copy_transaction_data(to.clone(), info, debug_id, allow_fds, None) {
-+            match from.copy_transaction_data(to.clone(), info, info.debug_id, allow_fds, None) {
-                 Ok(alloc) => alloc,
-                 Err(err) => {
-                     pr_warn!("Failure in copy_transaction_data: {:?}", err);
-@@ -154,7 +153,7 @@ impl Transaction {
-             alloc.set_info_clear_on_drop();
-         }
-         Ok(DTRWrap::arc_pin_init(pin_init!(Transaction {
--            debug_id,
-+            debug_id: info.debug_id,
-             target_node: None,
-             from_parent: None,
-             sender_euid: from.process.task.euid(),
-@@ -380,7 +379,7 @@ impl DeliverToRead for Transaction {
-         let send_failed_reply = ScopeGuard::new(|| {
-             if self.target_node.is_some() && self.flags & TF_ONE_WAY == 0 {
-                 let reply = Err(BR_FAILED_REPLY);
--                self.from.deliver_reply(reply, &self);
-+                self.from.deliver_reply(reply, &self, None);
-             }
-             self.drop_outstanding_txn();
-         });
-@@ -462,7 +461,7 @@ impl DeliverToRead for Transaction {
-         // If this is not a reply or oneway transaction, then send a dead reply.
-         if self.target_node.is_some() && self.flags & TF_ONE_WAY == 0 {
-             let reply = Err(BR_DEAD_REPLY);
--            self.from.deliver_reply(reply, &self);
-+            self.from.deliver_reply(reply, &self, None);
-         }
- 
-         self.drop_outstanding_txn();
--- 
-2.53.0
-
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1426,7 +1426,8 @@ static int udf_load_sparable_map(struct
+ 		if (ident != 0 ||
+ 		    strncmp(st->sparingIdent.ident, UDF_ID_SPARING,
+ 			    strlen(UDF_ID_SPARING)) ||
+-		    sizeof(*st) + le16_to_cpu(st->reallocationTableLen) >
++		    struct_size(st, mapEntry,
++				le16_to_cpu(st->reallocationTableLen)) >
+ 							sb->s_blocksize) {
+ 			brelse(bh);
+ 			continue;
 
 
