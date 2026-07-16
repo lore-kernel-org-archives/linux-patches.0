@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8949F42901C;
-	Thu, 16 Jul 2026 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05E041F5CB;
+	Thu, 16 Jul 2026 13:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209685; cv=none; b=oSmSFA1cePzzqHjvoKM1dmu8DP+KWEu8JVj2xLL5JjHQ2+MBSn8YhUEDJ6GvxEKgBUp5FTyjNi+71GNzBXs5Zxi2sa4yl2bIWM9ju40ukGYCAQJflGySmgCc0mn6AS8ODjuy7bum2dhdedt4FLz8se1IiL5EAJDdIYQIgufOksY=
+	t=1784209686; cv=none; b=bDH0WwKYCITMS0o/eo+k//pbyPJAwaZpjjL4RyQKdoUBHvL2E4RzrXDWmZCryCxHthSjGGq/WQ9isHuJsh4HiKdwXSeHrhUjJ5WhmSN+5sSRrjbRrLC6byT1pU5oFWcAqPWBwU/t+IlbL7vPTvjZgnyGHPwQF/pKrSfvW/azKKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209685; c=relaxed/simple;
-	bh=1Zb8/Tpo4KswQ/EqtFyiqYRllsAC90diMBApEBfobrk=;
+	s=arc-20240116; t=1784209686; c=relaxed/simple;
+	bh=LvBz3x27micrnITn1v5O2hBCUOcAKVrR651fdRtrI+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z23NdJbmPXb632HIHTsKjvV0wP9JlSZyO+Vbuk+vRXezS2oKVpfhbSGtReAiLc05nzdRInOWilamPR6vroLYKnB8Me2WEdXSqG1BE8EZeXkTPfMFBCzPmewlFhnXq2nWuJ67ZR4vl/rvaRi8nME5DbUu05aEi/9NedKmz4PEfig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5mEG0ef; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EDQ1n8vGVGHknvOj/wLp0/HutNBs8tMn0kKbx+Tc3yGLztV/cnRf7rAhKiOa5M4gkgp9PGskxt3zrWLhN6ievlqCP8atbwkzU3uSY5e6XfJ7DR3jFvhEHoBM3q0BH6eR5A/EBSAIJIcfs5rEngRMY42IqhtmzZ/O6O3My2nl1AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ht0dtJ6o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5mEG0ef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EF31F000E9;
-	Thu, 16 Jul 2026 13:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ht0dtJ6o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC03C1F00A3D;
+	Thu, 16 Jul 2026 13:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209673;
-	bh=JoTf/J1z9qcXCZBGeO6oBPC24zTmOkZjzJuk9EJXcoA=;
+	s=korg; t=1784209668;
+	bh=Stn9Fc0jmb9ILkvJ12xQIbCiuMDo2bbL2Ay7LNzp70E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5mEG0ef8SSwBqmhu/tM+osCDtnmSFh3Emk9SsLkJyMNsqjGb2IaNVtRe6K+erXwN
-	 dnu7a3IkgyNZh2isK5M/EdiUeVC1FSi2/hZjn/wjbzU0RKpte+3At+6+QTnl4CASHo
-	 YoLT5VrztXG4FfqbB9yvHpoELJ+JRuLOm+bPHbnE=
+	b=Ht0dtJ6oBDQHpjxjxt+LMirGS9+IhcUuiI/MjBn3mHu1RAH3xkfDvFp8YjVJeMGwf
+	 OXSSkT+75GP7tSiacW8av+ksXODnieyJfz55R/0Grb9Zd/A0MNmXR0rMRYAM9alcxc
+	 hvu74Z3X07eO7h1hrFP7c0f85z+rEpHmhtIE3bSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 276/518] HID: sensor-hub: Add sensor_hub_input_attr_read_values() for multi-byte reads
-Date: Thu, 16 Jul 2026 15:29:04 +0200
-Message-ID: <20260716133053.853694083@linuxfoundation.org>
+	Manish Khadka <maskmemanish@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.1 274/518] HID: appleir: fix UAF on pending key_up_timer in remove()
+Date: Thu, 16 Jul 2026 15:29:02 +0200
+Message-ID: <20260716133053.809697750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -54,179 +50,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Manish Khadka <maskmemanish@gmail.com>
 
-commit f784fcea450617055d2d12eec5b2f6e0e38bf878 upstream.
+commit 75fe87e19d8aff81eb2c64d15d244ab8da4de945 upstream.
 
-sensor_hub_input_attr_get_raw_value() is limited to returning a single
-32-bit value, which is insufficient for sensors that report data larger
-than 32 bits, such as a quaternion with four s16 elements.
+appleir_remove() runs hid_hw_stop() before timer_delete_sync().
+hid_hw_stop() synchronously unregisters the HID input device via
+hid_disconnect() -> hidinput_disconnect() -> input_unregister_device(),
+which drops the last reference and frees the underlying input_dev when
+no userspace handle holds it open.
 
-Add sensor_hub_input_attr_read_values() that accepts a caller-provided
-buffer and accumulates incoming data until the buffer is full. The two
-paths are distinguished in sensor_hub_raw_event() by pending.max_raw_size
-being non-zero, preserving backward compatibility.
+key_up_tick() reads appleir->input_dev and calls input_report_key() /
+input_sync() on it.  The timer is armed from appleir_raw_event() with
+a HZ/8 (~125 ms) timeout on every keydown and key-repeat report.  If a
+key was pressed shortly before the device is disconnected, the timer
+can fire after hid_hw_stop() has freed input_dev but before the
+teardown drains it.
 
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Co-developed-by: Zhang Lixu <lixu.zhang@intel.com>
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Acked-by: Jiri Kosina <jkosina@suse.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+A simple reorder is not sufficient.  Putting the timer drain first
+still leaves a window where a USB URB completion (raw_event) running
+during hid_hw_stop() can call mod_timer() and re-arm the timer, which
+then fires after hidinput_disconnect() has freed input_dev.  The same
+URB-completion window also lets raw_event() reach key_up(), key_down()
+and battery_flat() directly, all of which dereference
+appleir->input_dev.
+
+Introduce a 'removing' flag on struct appleir, gated by the existing
+spinlock.  appleir_remove() sets the flag under the lock and then
+shuts down the timer with timer_shutdown_sync(), which both drains any
+in-flight callback and permanently disables further mod_timer() calls.
+appleir_raw_event() and key_up_tick() bail out early if the flag is
+set, so no path can arm or run the timer, or dereference
+appleir->input_dev, after remove() has started tearing down.
+
+The keyrepeat and flatbattery branches of appleir_raw_event()
+previously called into the input layer without holding the spinlock;
+take it now so the flag check is well-defined.  This incidentally
+closes a pre-existing read-side race on appleir->current_key in the
+keyrepeat branch.
+
+This bug is structurally a sibling of commit 4db2af929279 ("HID:
+appletb-kbd: fix UAF in inactivity-timer cleanup path") and has been
+present since the driver was introduced.
+
+Fixes: 9a4a5574ce42 ("HID: appleir: add support for Apple ir devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Manish Khadka <maskmemanish@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sensor-hub.c   |   77 +++++++++++++++++++++++++++++++++++++----
- include/linux/hid-sensor-hub.h |   25 +++++++++++++
- 2 files changed, 96 insertions(+), 6 deletions(-)
+ drivers/hid/hid-appleir.c |   45 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 35 insertions(+), 10 deletions(-)
 
---- a/drivers/hid/hid-sensor-hub.c
-+++ b/drivers/hid/hid-sensor-hub.c
-@@ -286,6 +286,54 @@ done_proc:
- }
- EXPORT_SYMBOL_GPL(sensor_hub_get_feature);
- 
-+int sensor_hub_input_attr_read_values(struct hid_sensor_hub_device *hsdev,
-+				      u32 usage_id, u32 attr_usage_id,
-+				      u32 report_id,
-+				      enum sensor_hub_read_flags flag,
-+				      u32 buffer_size, u8 *buffer)
-+{
-+	struct sensor_hub_data *data = hid_get_drvdata(hsdev->hdev);
-+	struct hid_report *report;
-+	unsigned long flags;
-+	long cycles;
-+	int ret;
-+
-+	report = sensor_hub_report(report_id, hsdev->hdev, HID_INPUT_REPORT);
-+	if (!report)
-+		return -EINVAL;
-+
-+	mutex_lock(hsdev->mutex_ptr);
-+	if (flag == SENSOR_HUB_SYNC) {
-+		memset(&hsdev->pending, 0, sizeof(hsdev->pending));
-+		init_completion(&hsdev->pending.ready);
-+		hsdev->pending.usage_id = usage_id;
-+		hsdev->pending.attr_usage_id = attr_usage_id;
-+		hsdev->pending.max_raw_size = buffer_size;
-+		hsdev->pending.raw_data = buffer;
-+
-+		spin_lock_irqsave(&data->lock, flags);
-+		hsdev->pending.status = true;
-+		spin_unlock_irqrestore(&data->lock, flags);
-+	}
-+	mutex_lock(&data->mutex);
-+	hid_hw_request(hsdev->hdev, report, HID_REQ_GET_REPORT);
-+	mutex_unlock(&data->mutex);
-+	ret = 0;
-+	if (flag == SENSOR_HUB_SYNC) {
-+		cycles = wait_for_completion_interruptible_timeout(&hsdev->pending.ready,
-+								   HZ * 5);
-+		if (cycles == 0)
-+			ret = -ETIMEDOUT;
-+		else if (cycles < 0)
-+			ret = cycles;
-+
-+		hsdev->pending.status = false;
-+	}
-+	mutex_unlock(hsdev->mutex_ptr);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(sensor_hub_input_attr_read_values);
- 
- int sensor_hub_input_attr_get_raw_value(struct hid_sensor_hub_device *hsdev,
- 					u32 usage_id,
-@@ -478,6 +526,8 @@ static int sensor_hub_raw_event(struct h
- 	struct hid_collection *collection = NULL;
- 	void *priv = NULL;
- 	struct hid_sensor_hub_device *hsdev = NULL;
-+	u32 copy_size;
-+	u32 avail;
- 
- 	hid_dbg(hdev, "sensor_hub_raw_event report id:0x%x size:%d type:%d\n",
- 			 report->id, size, report->type);
-@@ -518,12 +568,27 @@ static int sensor_hub_raw_event(struct h
- 					      hsdev->pending.attr_usage_id ==
- 					      report->field[i]->logical)) {
- 			hid_dbg(hdev, "data was pending ...\n");
--			hsdev->pending.raw_data = kmemdup(ptr, sz, GFP_ATOMIC);
--			if (hsdev->pending.raw_data)
--				hsdev->pending.raw_size = sz;
--			else
--				hsdev->pending.raw_size = 0;
--			complete(&hsdev->pending.ready);
-+			if (hsdev->pending.max_raw_size) {
-+				if (hsdev->pending.index < hsdev->pending.max_raw_size) {
-+					avail = hsdev->pending.max_raw_size - hsdev->pending.index;
-+					copy_size = clamp(sz, 0U, avail);
-+
-+					memcpy(hsdev->pending.raw_data + hsdev->pending.index,
-+					       ptr, copy_size);
-+					hsdev->pending.index += copy_size;
-+					if (hsdev->pending.index >= hsdev->pending.max_raw_size) {
-+						hsdev->pending.raw_size = hsdev->pending.index;
-+						complete(&hsdev->pending.ready);
-+					}
-+				}
-+			} else {
-+				hsdev->pending.raw_data = kmemdup(ptr, sz, GFP_ATOMIC);
-+				if (hsdev->pending.raw_data)
-+					hsdev->pending.raw_size = sz;
-+				else
-+					hsdev->pending.raw_size = 0;
-+				complete(&hsdev->pending.ready);
-+			}
- 		}
- 		if (callback->capture_sample) {
- 			if (report->field[i]->logical)
---- a/include/linux/hid-sensor-hub.h
-+++ b/include/linux/hid-sensor-hub.h
-@@ -43,6 +43,8 @@ struct hid_sensor_hub_attribute_info {
-  * @attr_usage_id:	Usage Id of a field, e.g. X-axis for a gyro.
-  * @raw_size:		Response size for a read request.
-  * @raw_data:		Place holder for received response.
-+ * @index:		Current write index into raw_data for multi-byte reads.
-+ * @max_raw_size:	Total buffer size for multi-byte reads; 0 for single-value reads.
-  */
- struct sensor_hub_pending {
- 	bool status;
-@@ -51,6 +53,8 @@ struct sensor_hub_pending {
- 	u32 attr_usage_id;
- 	int raw_size;
- 	u8  *raw_data;
-+	u32 index;
-+	u32 max_raw_size;
+--- a/drivers/hid/hid-appleir.c
++++ b/drivers/hid/hid-appleir.c
+@@ -109,9 +109,10 @@ struct appleir {
+ 	struct hid_device *hid;
+ 	unsigned short keymap[ARRAY_SIZE(appleir_key_table)];
+ 	struct timer_list key_up_timer;	/* timer for key up */
+-	spinlock_t lock;		/* protects .current_key */
++	spinlock_t lock;		/* protects .current_key, .removing */
+ 	int current_key;		/* the currently pressed key */
+ 	int prev_key_idx;		/* key index in a 2 packets message */
++	bool removing;			/* set during teardown; gates input_dev access */
  };
  
- /**
-@@ -184,6 +188,27 @@ int sensor_hub_input_attr_get_raw_value(
- );
+ static int get_key(int data)
+@@ -172,7 +173,7 @@ static void key_up_tick(struct timer_lis
+ 	unsigned long flags;
  
- /**
-+ * sensor_hub_input_attr_read_values() - Synchronous multi-byte read request
-+ * @hsdev:		Hub device instance.
-+ * @usage_id:		Attribute usage id of parent physical device as per spec
-+ * @attr_usage_id:	Attribute usage id as per spec
-+ * @report_id:		Report id to look for
-+ * @flag:		Synchronous or asynchronous read
-+ * @buffer_size:	Size of the buffer in bytes
-+ * @buffer:		Buffer to store the read data
-+ *
-+ * Issues a synchronous or asynchronous read request for an input attribute,
-+ * accumulating data into the provided buffer until it is full.
-+ * Return: 0 on success, -ETIMEDOUT if the device did not respond, or a
-+ * negative error code.
-+ */
-+int sensor_hub_input_attr_read_values(struct hid_sensor_hub_device *hsdev,
-+				      u32 usage_id, u32 attr_usage_id,
-+				      u32 report_id,
-+				      enum sensor_hub_read_flags flag,
-+				      u32 buffer_size, u8 *buffer);
+ 	spin_lock_irqsave(&appleir->lock, flags);
+-	if (appleir->current_key) {
++	if (!appleir->removing && appleir->current_key) {
+ 		key_up(hid, appleir, appleir->current_key);
+ 		appleir->current_key = 0;
+ 	}
+@@ -195,6 +196,10 @@ static int appleir_raw_event(struct hid_
+ 		int index;
+ 
+ 		spin_lock_irqsave(&appleir->lock, flags);
++		if (appleir->removing) {
++			spin_unlock_irqrestore(&appleir->lock, flags);
++			goto out;
++		}
+ 		/*
+ 		 * If we already have a key down, take it up before marking
+ 		 * this one down
+@@ -229,17 +234,25 @@ static int appleir_raw_event(struct hid_
+ 	appleir->prev_key_idx = 0;
+ 
+ 	if (!memcmp(data, keyrepeat, sizeof(keyrepeat))) {
+-		key_down(hid, appleir, appleir->current_key);
+-		/*
+-		 * Remote doesn't do key up, either pull them up, in the test
+-		 * above, or here set a timer which pulls them up after 1/8 s
+-		 */
+-		mod_timer(&appleir->key_up_timer, jiffies + HZ / 8);
++		spin_lock_irqsave(&appleir->lock, flags);
++		if (!appleir->removing) {
++			key_down(hid, appleir, appleir->current_key);
++			/*
++			 * Remote doesn't do key up, either pull them up, in
++			 * the test above, or here set a timer which pulls them
++			 * up after 1/8 s
++			 */
++			mod_timer(&appleir->key_up_timer, jiffies + HZ / 8);
++		}
++		spin_unlock_irqrestore(&appleir->lock, flags);
+ 		goto out;
+ 	}
+ 
+ 	if (!memcmp(data, flatbattery, sizeof(flatbattery))) {
+-		battery_flat(appleir);
++		spin_lock_irqsave(&appleir->lock, flags);
++		if (!appleir->removing)
++			battery_flat(appleir);
++		spin_unlock_irqrestore(&appleir->lock, flags);
+ 		/* Fall through */
+ 	}
+ 
+@@ -318,8 +331,20 @@ fail:
+ static void appleir_remove(struct hid_device *hid)
+ {
+ 	struct appleir *appleir = hid_get_drvdata(hid);
++	unsigned long flags;
 +
-+/**
- * sensor_hub_set_feature() - Feature set request
- * @hsdev:	Hub device instance.
- * @report_id:	Report id to look for
++	/*
++	 * Mark the driver as tearing down so that any concurrent raw_event
++	 * (e.g. from a USB URB completion that hid_hw_stop() has not yet
++	 * killed) and the key_up_timer softirq stop touching input_dev
++	 * before hid_hw_stop() frees it via hidinput_disconnect().
++	 */
++	spin_lock_irqsave(&appleir->lock, flags);
++	appleir->removing = true;
++	spin_unlock_irqrestore(&appleir->lock, flags);
++
++	timer_shutdown_sync(&appleir->key_up_timer);
+ 	hid_hw_stop(hid);
+-	timer_delete_sync(&appleir->key_up_timer);
+ }
+ 
+ static const struct hid_device_id appleir_devices[] = {
 
 
