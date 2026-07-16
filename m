@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41E7400997;
-	Thu, 16 Jul 2026 14:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AD3425884;
+	Thu, 16 Jul 2026 14:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211861; cv=none; b=QUui+tjfFKoDcgQdcwY5v29dfzKofU0siQU53g05PKQzgzJT0LkHtnUXWx1HnGVKOE1J1fwzL1+hJH2SIdEOYSUT1TjzkdIemOiogQ3Do2VhNVJYzDJB9txW4OCNNO0zL+edVr7D/G2S7c7/ILdmD6gr9e3kDOpmQ85phyD6um0=
+	t=1784211863; cv=none; b=Z4nYHc76SmD/MPC00V2XTzUfBi8OCr/5v8UJlOEPmgR70BNFIbVQ06QGS9z50Y3jUJjSSZbHFWtbNwoEXrN8jB4BHF9i1cduDPQ64x+bWSyj78uiLp+Dvx1oemvDFq7xB6fBo4XzCYMwE/jB3buSPtXGRmN9LFKLAYyQhd2gipo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211861; c=relaxed/simple;
-	bh=EiHlHM+Ds7o9VWy9vYCSH0tGc3EeVfJnDU6wuvbMcGE=;
+	s=arc-20240116; t=1784211863; c=relaxed/simple;
+	bh=274HpMZZKhTfCc4crWptFHQ3hvQ5ZVzN7tn987D2HfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cK00obqiEOEeiFNxLmmpX1/xhQ8CfRMeSh0Npw5wD74hv/X642NV5JOglpftVwquHTuXGY+2+gvcBWiXB/drODJ8mJorPVQBed74C2I4I3f1khsPlogj5tSjU25Xpt/T2volVyacXlOyGXWaw+RduLKczmjQAiI1NSBhs+VSpk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrxNLAcU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eICk7JvZP4ZEca05eY0oNiw0+zFrVEFxqeKkfQHAA8+nV7vU9hlJ6DPHzA3YljoPgNdwpG3p+eS5JiWcQhBlOKKELyqNqdxVVUZ7o4cY81LgkaM3Xg8C8HsD7ruXV0qLFvNEwSgEwnes2k39IHN8JIe8EZ58HlvRj7P6PEop/RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGiASMt4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrxNLAcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BBB1F000E9;
-	Thu, 16 Jul 2026 14:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGiASMt4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D1A1F00A3E;
+	Thu, 16 Jul 2026 14:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211855;
-	bh=ijWqJOR+rt+3NH8TYDc7+MZ3IPL0JEOKHYT16LHKCFQ=;
+	s=korg; t=1784211861;
+	bh=KuNNOV0mGPi+EMQxiqzfk5Ya5+06lK65/UALDS+sRM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vrxNLAcUi07XbXbthpPWEjZCCn9H4REt7AtFKKSUOK+mN7JfKDu2Ae+MTEjqgMFHP
-	 9wkeRzAQECPsdc5vF3XbESqZgXhDK8QYZ1d+3LPlOl93lLak2crT1HvenwI4aiTNxl
-	 gy3CgmIvfAlA61COA5Ny4OcL4PKqHHkLh2Xmk4eg=
+	b=vGiASMt40DQZWb3+GnIaWA5/PSO6emAgULAwM78igRJNVDiYFRofiJw50qbRcaoRR
+	 itk8mP6p47lr85BfcdTFhMnYjU2Vp5cOLzJLthDbRcpcTxM2z/5DpzioA2xJ+nCTpv
+	 EoK71PKkNfdOdCh3hCoGXDiupfJl5vJ6EdXOWN54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichun Zhang <yichun@openresty.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Yuka <yuka@umeyashiki.org>,
-	Ammar Faizi <ammarfaizi2@openresty.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.12 107/349] virtio_pci: fix vq info pointer lookup via wrong index
-Date: Thu, 16 Jul 2026 15:30:41 +0200
-Message-ID: <20260716133035.710686144@linuxfoundation.org>
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>
+Subject: [PATCH 6.12 109/349] hwrng: virtio: clamp device-reported used.len at copy_data()
+Date: Thu, 16 Jul 2026 15:30:43 +0200
+Message-ID: <20260716133035.754418913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,96 +50,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ammar Faizi <ammarfaizi2@openresty.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit f7d380fb525c13bdd114369a1979c80c346e6abc upstream.
+commit e3046eeada299f917a8ad883af4434bfb86556b1 upstream.
 
-Unbinding a virtio balloon device:
+random_recv_done() stores the device-reported used.len directly into
+vi->data_avail.  copy_data() then indexes vi->data[] using
+vi->data_idx (advanced by previous copy_data() calls) and issues a
+memcpy() without re-validating either value against the posted
+buffer size sizeof(vi->data) (SMP_CACHE_BYTES bytes, typically 32
+or 64).
 
-    echo virtio0 > /sys/bus/virtio/drivers/virtio_balloon/unbind
+A malicious or buggy virtio-rng backend can set used.len beyond
+sizeof(vi->data), steering the memcpy() past the end of the inline
+array into adjacent kmalloc-1k slab bytes.  hwrng_fillfn() mixes
+those bytes into the guest RNG, and guest root can also observe
+them directly via /dev/hwrng.
 
-triggers a NULL pointer dereference. The dmesg says:
+Concrete impact is inside the guest:
 
-    BUG: kernel NULL pointer dereference, address: 0000000000000008
-    [...]
-    RIP: 0010:__list_del_entry_valid_or_report+0x5/0xf0
-    Call Trace:
-    <TASK>
-    vp_del_vqs+0x121/0x230
-    remove_common+0x135/0x150
-    virtballoon_remove+0xee/0x100
-    virtio_dev_remove+0x3b/0x80
-    device_release_driver_internal+0x187/0x2c0
-    unbind_store+0xb9/0xe0
-    kernfs_fop_write_iter.llvm.11660790530567441834+0xf6/0x180
-    vfs_write+0x2a9/0x3b0
-    ksys_write+0x5c/0xd0
-    do_syscall_64+0x54/0x230
-    entry_SYSCALL_64_after_hwframe+0x29/0x31
-    [...]
-    </TASK>
+ - Memory-safety / hardening: any virtio-rng backend that
+   over-reports used.len causes the driver to read past vi->data
+   into unrelated slab contents.  hwrng_fillfn() is a kernel thread
+   that runs as soon as the device is probed; no guest userspace
+   interaction is required to first-trigger the OOB.
 
-The virtio_balloon device registers 5 queues (inflate, deflate, stats,
-free_page, reporting) but only the first two are unconditional. The
-stats, free_page and reporting queues are each conditional on their
-respective feature bits. When any of these features are absent, the
-corresponding vqs_info entry has name == NULL, creating holes in the
-array.
+ - Cross-boundary leak (confidential-compute threat model): a
+   malicious hypervisor cooperating with a malicious or compromised
+   guest root userspace can use /dev/hwrng as a leak channel for
+   guest-kernel heap data.  The host sets a large used.len, guest
+   root reads /dev/hwrng, and the returned bytes contain guest
+   kernel slab contents that were adjacent to vi->data.  In
+   practice, confidential-compute guests (SEV-SNP, TDX) usually
+   disable virtio-rng entirely, so this path is narrow, but the
+   fix is still worth carrying because the underlying
+   memory-safety bug contaminates the guest RNG on any host.
 
-The root cause is an indexing mismatch introduced when vq info storage
-was changed to be passed as an argument. vp_find_vqs_msix() and
-vp_find_vqs_intx() store the info pointer at vp_dev->vqs[i], where 'i'
-is the caller's sparse array index. However, the virtqueue itself gets
-vq->index assigned from queue_idx, a dense index that skips NULL
-entries. When holes exist, 'i' and queue_idx diverge. Later,
-vp_del_vqs() looks up info via vp_dev->vqs[vq->index] using the dense
-index into the sparsely-populated array, and hits NULL.
+KASAN confirms the OOB on a 7.1-rc4 guest whose virtio-rng backend
+has been patched to report used.len = 0x10000:
 
-Fix this by storing info at vp_dev->vqs[queue_idx] instead of
-vp_dev->vqs[i], so the store index matches the lookup index
-(vq->index). Apply the fix to both the MSIX and INTX paths.
+  BUG: KASAN: slab-out-of-bounds in virtio_read+0x394/0x5d0
+  Read of size 64 at addr ffff88800ae0ba20 by task hwrng/52
+  Call Trace:
+   __asan_memcpy+0x23/0x60
+   virtio_read+0x394/0x5d0
+   hwrng_fillfn+0xb2/0x470
+   kthread+0x2cc/0x3a0
+  Allocated by task 1:
+   probe_common+0xa5/0x660
+   virtio_dev_probe+0x549/0xbc0
+  The buggy address belongs to the object at ffff88800ae0b800
+   which belongs to the cache kmalloc-1k of size 1024
+  The buggy address is located 0 bytes to the right of
+   allocated 544-byte region [ffff88800ae0b800, ffff88800ae0ba20)
 
-Cc: Yichun Zhang <yichun@openresty.com>
-Cc: Jiri Pirko <jiri@nvidia.com>
-Cc: stable@vger.kernel.org # v6.11+
-Tested-by: Yuka <yuka@umeyashiki.org>
-Fixes: 89a1c435aec2 ("virtio_pci: pass vq info as an argument to vp_setup_vq()")
-Signed-off-by: Ammar Faizi <ammarfaizi2@openresty.com>
-Message-Id: <20260315141808.547081-1-ammarfaizi2@openresty.com>
+Same class of bug as commit c04db81cd028 ("net/9p: Fix buffer
+overflow in USB transport layer"), which hardened
+usb9pfs_rx_complete() against unchecked device-reported length in
+the USB 9p transport.
+
+With the clamp at point of use and array_index_nospec() in place,
+the same harness boots cleanly: copy_data() returns zero for the
+bogus report, the device-supplied bytes after data_idx are
+discarded, and the driver issues a fresh request.
+
+Fixes: f7f510ec1957 ("virtio: An entropy device, as suggested by hpa.")
+Cc: stable@vger.kernel.org
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260531142251.2792061-1-michael.bommarito@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_pci_common.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/char/hw_random/virtio-rng.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/virtio/virtio_pci_common.c
-+++ b/drivers/virtio/virtio_pci_common.c
-@@ -426,10 +426,11 @@ static int vp_find_vqs_msix(struct virti
- 			vqs[i] = NULL;
- 			continue;
- 		}
--		vqs[i] = vp_find_one_vq_msix(vdev, queue_idx++, vqi->callback,
-+		vqs[i] = vp_find_one_vq_msix(vdev, queue_idx, vqi->callback,
- 					     vqi->name, vqi->ctx, false,
- 					     &allocated_vectors, vector_policy,
--					     &vp_dev->vqs[i]);
-+					     &vp_dev->vqs[queue_idx]);
-+		queue_idx++;
- 		if (IS_ERR(vqs[i])) {
- 			err = PTR_ERR(vqs[i]);
- 			goto error_find;
-@@ -488,9 +489,10 @@ static int vp_find_vqs_intx(struct virti
- 			vqs[i] = NULL;
- 			continue;
- 		}
--		vqs[i] = vp_setup_vq(vdev, queue_idx++, vqi->callback,
-+		vqs[i] = vp_setup_vq(vdev, queue_idx, vqi->callback,
- 				     vqi->name, vqi->ctx,
--				     VIRTIO_MSI_NO_VECTOR, &vp_dev->vqs[i]);
-+				     VIRTIO_MSI_NO_VECTOR, &vp_dev->vqs[queue_idx]);
-+		queue_idx++;
- 		if (IS_ERR(vqs[i])) {
- 			err = PTR_ERR(vqs[i]);
- 			goto out_del_vqs;
+--- a/drivers/char/hw_random/virtio-rng.c
++++ b/drivers/char/hw_random/virtio-rng.c
+@@ -7,6 +7,7 @@
+ #include <asm/barrier.h>
+ #include <linux/err.h>
+ #include <linux/hw_random.h>
++#include <linux/nospec.h>
+ #include <linux/scatterlist.h>
+ #include <linux/spinlock.h>
+ #include <linux/virtio.h>
+@@ -66,8 +67,26 @@ static void request_entropy(struct virtr
+ static unsigned int copy_data(struct virtrng_info *vi, void *buf,
+ 			      unsigned int size)
+ {
+-	size = min_t(unsigned int, size, vi->data_avail);
+-	memcpy(buf, vi->data + vi->data_idx, size);
++	unsigned int idx, avail;
++
++	/*
++	 * vi->data_avail was set from the device-reported used.len and
++	 * vi->data_idx was advanced by previous copy_data() calls.  A
++	 * malicious or buggy virtio-rng backend can drive either past
++	 * sizeof(vi->data).  Clamp at point of use and harden the index
++	 * with array_index_nospec() so the memcpy() below cannot be
++	 * steered into adjacent slab memory, including under
++	 * speculation.
++	 */
++	avail = min_t(unsigned int, vi->data_avail, sizeof(vi->data));
++	if (vi->data_idx >= avail) {
++		vi->data_avail = 0;
++		request_entropy(vi);
++		return 0;
++	}
++	size = min_t(unsigned int, size, avail - vi->data_idx);
++	idx = array_index_nospec(vi->data_idx, sizeof(vi->data));
++	memcpy(buf, vi->data + idx, size);
+ 	vi->data_idx += size;
+ 	vi->data_avail -= size;
+ 	if (vi->data_avail == 0)
 
 
