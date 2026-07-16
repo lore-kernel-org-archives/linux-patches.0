@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987033DA5C1;
-	Thu, 16 Jul 2026 13:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B683FD121;
+	Thu, 16 Jul 2026 13:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209926; cv=none; b=rjEOjdg6NHHy4fOTUm7OUxKBD7tL0fXcGDVTJieqs0hmFx+9S0GBy5leaUY36htL5QCZAkRK0mO7v7clZy4aEYuO0Abl4uQvX84H3xfSJNJOhSuLWvLN/V1cwxp6V52YW4Nv4r+oaK6t3caDP86byzLEwZLDJ5C4BLzxQKooxmE=
+	t=1784209930; cv=none; b=i3mfU1TDmGo8BbinrvscfQoIGCk5sEOZgxNMAw2l+qylXKOx9kQ8dZfzBYA2bWDorau3yeVnx8zZL/syWHpw3pw7CqrSaEsWl/DV4GtVGRwvYfLAwqUyesW8410e8CKl0PGvKGgcTJBSUYsBwdV/Il6qmPtUHe4wIh1zy+wc13M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209926; c=relaxed/simple;
-	bh=EtKV73iIIKTKdTcAhcdmI+X/EtB6rwE0HHSPZTTIUv8=;
+	s=arc-20240116; t=1784209930; c=relaxed/simple;
+	bh=FIMYjNEGHIdbXIKLcGLDA962I6XfrVTqt7I+8+hxP/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBp7pUSF7PnmDPBDT9z0Z7SUd9esuJM5ELQ9cGbzR4EpVhJsdnwqzC/OwAaA7X1yghb71RhCFALWY5Zw/Gmxai+kl6ANW7D6cv7c5w8UXB2YGi5C3gdDKQ2isMLQTEO9blTXx70iv4hk2yuDsCqLfsRNFGGLvsZmWLWrKyf6wy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krq5R0cS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tNHZQuf43nukNGW1kvz3aOEgAxhhcREmwqVf+fHE5P7OcSsh8sZLO0jEsJEUrXGwPT+3ej5tJCFMuGQfS7Wdp5AwlpfxOtICRgD7SXy4SamijKYXKI+zbKHvFuj8Ffhj+/q83pJclLk/iCojhjv6UycBbyz3MZY+FVXsM1Oehq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysRogL4g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krq5R0cS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082B91F000E9;
-	Thu, 16 Jul 2026 13:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysRogL4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C2A1F000E9;
+	Thu, 16 Jul 2026 13:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209925;
-	bh=ewwsj6L6Qhiz68odWJZFYWfOeCI6xCzBMRzzip2Cloc=;
+	s=korg; t=1784209928;
+	bh=jxEyQQhNO/uEfQlhbCYPTQBR1HZA4y6W2cm1RaOFR/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=krq5R0cSVWffCS80roMP6uFRDk32+cM+Gk/3DNfYL6lGwoc3l4P/BIl21eM3BS7Hy
-	 6FoGtE7CK237fwvafIoV+raF7Zr9LokhVHGAOLE65Gw4MW8Vtz0A8KVfjf3eWJI7d1
-	 ncfyRbFD0MZ797HCRR4tyTIN24Tyf6QatJGqLn30=
+	b=ysRogL4gkjfZIvRDLi7dEBTRUtuG4Ef/CQUzXoT54qYW7B5uMstJ/aBAuMZiYuxFd
+	 Dl336gyEAyF1sl21BrSKSFViGsrgxeN7tSsH4P2WkXKn/IS9oU1XrL583VrStNvfg0
+	 L/63k2MUJ04h72CS5n/d+KkgJ46LYKceJUdyQVYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Tycho Andersen (AMD)" <tycho@kernel.org>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 371/518] crypto: ccp - Do not initialize SNP for SEV ioctls
-Date: Thu, 16 Jul 2026 15:30:39 +0200
-Message-ID: <20260716133055.946183594@linuxfoundation.org>
+Subject: [PATCH 7.1 372/518] crypto: ccp - Do not initialize SNP for ioctl(SNP_COMMIT)
+Date: Thu, 16 Jul 2026 15:30:40 +0200
+Message-ID: <20260716133055.968014991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Tycho Andersen (AMD) <tycho@kernel.org>
 
-commit fb1758e74b8061aacfbce7bbb7a7cc650537e167 upstream.
+commit 5a1364da2f04217a36e2fdfa2db4ee025b383a20 upstream.
 
 Sashiko notes:
 
@@ -63,23 +63,12 @@ Sashiko notes:
 > execution for an active VM trigger a general protection fault and crash the
 > host?
 
-sev_move_to_init_state() is called for ioctls requiring only SEV firmware:
-SEV_PEK_GEN, SEV_PDH_GEN, SEV_PEK_CSR, SEV_PEK_CERT_IMPORT, and
-SEV_PDH_CERT_EXPORT. After the firmware command, it does SEV_SHUTDOWN on
-the SEV firmware. Since these commands do not require SNP to be
-initialized, skip it by calling __sev_platform_init_locked() which only
-initializes the SEV firmware. This way SNP is not Initialized at all, and
-HSAVE_PA is not cleared.
+The SNP_COMMIT command does not require the firmware to be in any
+particular state. Skip initializing it if it was previously uninitialized.
 
-The previous code saved any SEV initialization firmware error to
-init_args.error and then threw it away and hardcoded the return value of
-INVALID_PLATFORM_STATE regardless of the real firmware error. This patch
-changes it to surface the underlying error, which is hopefully both more
-useful and doesn't cause any problems.
-
-Note that it is still safe to call __sev_firmware_shutdown() directly: it
-calls __sev_snp_shutdown_locked(), which skips SNP shutdown if SNP was not
-initialized.
+The SEV-SNP firmware specification doc 56860 does not mention SNP_COMMIT in
+Table 5 as a command that is allowed in the UNINIT state, but it is in fact
+allowed and a future documentation update will reflect that.
 
 Fixes: ceac7fb89e8d ("crypto: ccp - Ensure implicit SEV/SNP init and shutdown in ioctls")
 Reported-by: Sashiko
@@ -91,27 +80,36 @@ Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |   13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
 --- a/drivers/crypto/ccp/sev-dev.c
 +++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1716,14 +1716,11 @@ static int sev_get_platform_state(int *s
+@@ -2437,24 +2437,13 @@ cleanup:
  
- static int sev_move_to_init_state(struct sev_issue_cmd *argp, bool *shutdown_required)
+ static int sev_ioctl_do_snp_commit(struct sev_issue_cmd *argp)
  {
--	struct sev_platform_init_args init_args = {0};
- 	int rc;
- 
--	rc = _sev_platform_init_locked(&init_args);
--	if (rc) {
--		argp->error = SEV_RET_INVALID_PLATFORM_STATE;
-+	rc = __sev_platform_init_locked(&argp->error);
-+	if (rc)
- 		return rc;
+-	struct sev_device *sev = psp_master->sev_data;
+ 	struct sev_data_snp_commit buf;
+-	bool shutdown_required = false;
+-	int ret, error;
+-
+-	if (!sev->snp_initialized) {
+-		ret = snp_move_to_init_state(argp, &shutdown_required);
+-		if (ret)
+-			return ret;
 -	}
++	int ret;
  
- 	*shutdown_required = true;
+ 	buf.len = sizeof(buf);
+ 
+ 	ret = __sev_do_cmd_locked(SEV_CMD_SNP_COMMIT, &buf, &argp->error);
+ 
+-	if (shutdown_required)
+-		__sev_snp_shutdown_locked(&error, false);
+-
+ 	return ret;
+ }
  
 
 
