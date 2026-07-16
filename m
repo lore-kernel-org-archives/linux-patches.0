@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ACE42A7AF;
-	Thu, 16 Jul 2026 14:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A64142A7B7;
+	Thu, 16 Jul 2026 14:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211967; cv=none; b=UUd995/lqoR+ZOQpkT4hEAffQR3Yj8gol43R+G9fnL9thIhVaRWBt38uUhl2zxKGD9DbT9I7hFCzhRg6z4jJaRKh165VYuUInmGbpNnZfAyO/8cjhO8HEYbAzWrBYcBF+V9bFv588Soz8OhUueFShSpmn7MLqlNLnM++lymori0=
+	t=1784211969; cv=none; b=hvafFtgR7q2vMgvH2q4dZ9Kf7R4om1aFz2KU52ZZ8GwBMcDgQkXQ1O5piCYUwX6Yc0zFsq7wQLqfFnIWIem6FzUrD4Ihx9+AYw+HnI06ZuYiGNipnMGJlXsZeWcO6it1Cd83wIyTOixm58IPUkLpmeoeiAPPOQ67keHzmemYPqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211967; c=relaxed/simple;
-	bh=qgF7Yga9D2Qeiuc7Ed2k7u3KIzIbSdhH3FkY4NErG8g=;
+	s=arc-20240116; t=1784211969; c=relaxed/simple;
+	bh=luWDKyAT/h/9gF/fFQY53aUbDf8ej7ZafqHW7Zfo2LI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCeSyxy1MkpQlPzKgMm4duIQXE2x4y+wDrlF3nyMwzsMAgLr6Qin6EYgRvdraFgaQmwa4QsT4+XI9u+WFLTh4HVM+xF9sTrlSfwhSkOTa+Ll3/Q6SvTuJAKKVxhqo2gh4Z5ubRO/rOlF80cqwrxKa5II65v7HatF2jz/QE92G64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApxEXS8W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U532sHE+rGyMxdRSpmUwEPj+mNhS/nIvx2Ck3iuCHReBKWj9dsVVRRm/dfbEKAyrdZKRHn1d8oGsEUZ1hu5UHBGz0c0lcOHDJTSGafy+DiDCG1wjpq4ZJqfKa7m/QdQKz4QC22GOoeAc4PaVjDnAxU8abJVOHfEjyo70Zcg17Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODNspzQX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApxEXS8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699D31F000E9;
-	Thu, 16 Jul 2026 14:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODNspzQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C70B1F000E9;
+	Thu, 16 Jul 2026 14:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211965;
-	bh=d8vAnGAduKZX6jkoyu9iEcmn8PUskzf3Tr/uBRnM00A=;
+	s=korg; t=1784211968;
+	bh=GGl1aaWo2WRLkkO+jeHBJFrXYJ78GDvFuro0ugaNMGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ApxEXS8WHNPvHubldERq8/NogfvQKDMS3VvAGr8KCq8bGwQce9iEctqCITyKnO1H+
-	 pWC4gOTnh+CQyGWdS/tQvA/Fzgc5eTgFGAxBImBH9wPJVp4Hi7laKBzrCkg3GfbPqK
-	 5J94Bj2FEcy5qPYCw0FSKS5jO5/Mm8ufYy/EHxlQ=
+	b=ODNspzQXtt6gQVfh3MynZTvmkRjhw6OYGdn9JwarB+c5d4jlLRlQdZPW/KF6R0nPn
+	 IY782QBO1510GkD24uF5ZpGMuvDQLpPdEJG/rjAyvTX82WI1QYjU2rDYNEa5wGlgbk
+	 JVd6c/NCf72dn2wzjG+lHWdIuLsp/qbtYfTyHFT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 105/349] mm/damon/ops-common: handle extreme intervals in damon_hot_score()
-Date: Thu, 16 Jul 2026 15:30:39 +0200
-Message-ID: <20260716133035.666287217@linuxfoundation.org>
+	Rajat Jain <rajatja@google.com>,
+	Johan Hovold <johan@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 096/349] Bluetooth: btusb: fix wakeup source leak on probe failure
+Date: Thu, 16 Jul 2026 15:30:30 +0200
+Message-ID: <20260716133035.464135775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,90 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 35d4a3cf70a855b50e53189ac2f8463e20a02046 upstream.
+commit 3d93e1bb0fb881fe3ef961d1120556658e9cac4d upstream.
 
-Fix three issues in damon_hot_score() that comes from wrong handling of
-extreme (zero or too high) monitoring intervals user setup.
+Make sure to disable wakeup on probe failure to avoid leaking the wakeup
+source.
 
-When the user sets sampling interval zero, damon_max_nr_accesses(), which
-is called from damon_hot_score(), causes a divide-by-zero.  Needless to
-say, it is a problem.
-
-When the user sets the aggregation interval zero, the function returns
-zero.  It is wrong, since the real maximum nr_acceses in the setup should
-be one.  Worse yet, it can cause another divide-by-zero from its caller,
-damon_hot_score(), since it uses damon_max_nr_accesses() return value as a
-denominator.
-
-When the user sets the aggregation interval very high, damon_hot_score()
-could return a value out of [0, DAMOS_MAX_SCORE] range.  Since the return
-value is used as an index to the regions_score_histogram array, which is
-DAMOS_MAX_SCORE+1 size, it causes out of bounds array access.
-
-The issues can be relatively easily reproduced like below.  The sysfs
-write permission is required, though.
-
-    # ./damo start --damos_action lru_prio --damos_quota_space 100M \
-            --damos_quota_interval 1s
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0
-    # echo 0 > contexts/0/monitoring_attrs/intervals/sample_us
-    # echo 0 > contexts/0/monitoring_attrs/intervals/aggr_us
-    # echo commit > state
-    # dmesg
-    [...]
-    [  131.329762] Oops: divide error: 0000 [#1] SMP NOPTI
-    [...]
-    [  131.336089] RIP: 0010:damon_hot_score+0x27/0xd0
-    [...]
-
-Fix the divide-by-zero intervals problems by explicitly handling the zero
-intervals in damon_max_nr_accesses().  Fix the out-of-bound array access
-by applying [0, DAMOS_MAX_SCORE] bounds before returning from
-damon_hot_score().
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260623135834.67189-1-sj@kernel.org
-Link: https://lore.kernel.org/20260619202459.145010-1-sj@kernel.org [1]
-Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: fd913ef7ce61 ("Bluetooth: btusb: Add out-of-band wakeup support")
+Cc: stable@vger.kernel.org	# 4.11
+Cc: Rajat Jain <rajatja@google.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    8 ++++++--
- mm/damon/ops-common.c |    1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -770,9 +770,13 @@ static inline bool damon_target_has_pid(
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2925,6 +2925,11 @@ static int marvell_config_oob_wake(struc
  
- static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs)
- {
--	/* {aggr,sample}_interval are unsigned long, hence could overflow */
--	return min(attrs->aggr_interval / attrs->sample_interval,
-+	unsigned long sample_interval;
-+	unsigned long max_nr_accesses;
+ 	return 0;
+ }
++#else
++static inline int marvell_config_oob_wake(struct hci_dev *hdev)
++{
++	return 0;
++}
+ #endif
+ 
+ static int btusb_set_bdaddr_marvell(struct hci_dev *hdev,
+@@ -3739,6 +3744,11 @@ static int btusb_config_oob_wake(struct
+ 	bt_dev_info(hdev, "OOB Wake-on-BT configured at IRQ %u", irq);
+ 	return 0;
+ }
++#else
++static inline int btusb_config_oob_wake(struct hci_dev *hdev)
++{
++	return 0;
++}
+ #endif
+ 
+ static void btusb_check_needs_reset_resume(struct usb_interface *intf)
+@@ -3962,7 +3972,6 @@ static int btusb_probe(struct usb_interf
+ 	hdev->notify = btusb_notify;
+ 	hdev->wakeup = btusb_wakeup;
+ 
+-#ifdef CONFIG_PM
+ 	err = btusb_config_oob_wake(hdev);
+ 	if (err)
+ 		goto out_free_dev;
+@@ -3971,9 +3980,9 @@ static int btusb_probe(struct usb_interf
+ 	if (id->driver_info & BTUSB_MARVELL && data->oob_wake_irq) {
+ 		err = marvell_config_oob_wake(hdev);
+ 		if (err)
+-			goto out_free_dev;
++			goto err_disable_wakeup;
+ 	}
+-#endif
 +
-+	sample_interval = attrs->sample_interval ? : 1;
-+	max_nr_accesses = min(attrs->aggr_interval / sample_interval,
- 			(unsigned long)UINT_MAX);
-+	return max_nr_accesses ? : 1;
- }
+ 	if (id->driver_info & BTUSB_CW6622)
+ 		set_bit(HCI_QUIRK_BROKEN_STORED_LINK_KEY, &hdev->quirks);
  
- 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -107,6 +107,7 @@ int damon_hot_score(struct damon_ctx *c,
- 	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
- 	 */
- 	hotness = hotness * DAMOS_MAX_SCORE / DAMON_MAX_SUBSCORE;
-+	hotness = max(min(hotness, DAMOS_MAX_SCORE), 0);
- 
- 	return hotness;
- }
+@@ -4216,6 +4225,9 @@ err_release_siblings:
+ 	}
+ err_kill_tx_urbs:
+ 	usb_kill_anchored_urbs(&data->tx_anchor);
++err_disable_wakeup:
++	if (data->oob_wake_irq)
++		device_init_wakeup(&data->udev->dev, false);
+ out_free_dev:
+ 	if (data->reset_gpio)
+ 		gpiod_put(data->reset_gpio);
 
 
