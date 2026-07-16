@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A8242B339;
-	Thu, 16 Jul 2026 14:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04B83B7B76;
+	Thu, 16 Jul 2026 14:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212255; cv=none; b=t8RjZi4YGL8/YrIIxr9yk75DXnbC4DwddKcABqLwcCd4fGWC2hUVG1F9u/GvecR/Xgr/0k6JQwY3QgRsJKeTEkzmNOIdaep0BZCPw+7Dst+kd4nDgFsuQtXYuQIuLyc5AJ0MhoB2AjbytcSa3ZzGqrET5nvyvcnAGonRYfVFMAg=
+	t=1784212258; cv=none; b=jcAiS38wWnxz8nAOrmaFR4r/WxfJbHxMJ3PdjGWE3jqxGlzdgTuWczo8CpT45qMq8jFECi5LV65M6UnNN3eaEPvzbRtJ9UbsNVpXkAt98wfV0vwjQBrABw1p6AONDQJ3wqTUD10UyEL7QrgOTtqLC76jGHFr4r8Q7+AxEMKWHag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212255; c=relaxed/simple;
-	bh=Hq0NcKH7YqRxQ6oZapb80s1ejCLqiwsUz+NTs+PsG0o=;
+	s=arc-20240116; t=1784212258; c=relaxed/simple;
+	bh=N/fcmpDNgNq5l/ruQM+LpeakdhVoDmtOqwZUlvWH21E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WawfhZwLY7eTPi0n0sSwL8n2AM+qLYl4DVgpsiG+lYQGgJHV4L0YEwn6MZvgGhZNa1mVQ23e3/Ee9+XQ25GOun5AqBSNzmEOZLv/QESlnuS4ZhrVARaBtHMkX6NCh8SNWf6QvD8oGzBQn22zWy2q44xuUYzLnk6HPRPtNkBlKJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bsl5k9qv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZQfnr2TrL1zsgop37+jfsaFq4Uh8LymMQ3JSlKiAIJj0bIt6MCEu2/KlPWOZYbeD0ZYmyjO1xo2AS8FbBvSbLMCT53AKJacROP4rMgk2SwUaz8t+Lm993JFp5jOc6LuOLxXM89ERhHt6H0sKbEofMHV0uIjnEen5MPOABoHVBTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwiZarRP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bsl5k9qv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9563B1F000E9;
-	Thu, 16 Jul 2026 14:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwiZarRP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9171F00A3E;
+	Thu, 16 Jul 2026 14:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212253;
-	bh=Sc9A9pGXV1U6+stxpnJ2QEr01+0oGUx/TadWliAqdf0=;
+	s=korg; t=1784212255;
+	bh=in6RYU4AvAV3QuRs/O0IgPDtR9PRc24SW+SJi1Baa30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bsl5k9qvwXe/Vlh1j5SquToi80r+hsDMBSO/omsLTNPVCT9IqTssh6+r6vXq4ZYDF
-	 NYoBlQlyvbGJWDSFDHVoFi+V9cI1t0H3O/CzsqiZw/RCkpiy88QkiOtioQjnS/i4+m
-	 yUwuC1tE+6aLt8qRkZW5n2SSnt4P4U4YfZEMi+7o=
+	b=uwiZarRPHsjp9wF3hsrU0T9okSixnm3LjwrcaxdKSg5G2E78j0CJmkkABP/dWrw+C
+	 VVYsCbeNY+E68Z6mCschL5fjDecBbFemFNUz0YRb++245mv5v8rvRZLkD/aiecU7BF
+	 rTKU9W1gKFzeidC9BkDK5ok2SA6DpA1Z0JOjOv30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 257/349] PCI: Always lift 2.5GT/s restriction in PCIe failed link retraining
-Date: Thu, 16 Jul 2026 15:33:11 +0200
-Message-ID: <20260716133039.101282232@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.12 258/349] udf: validate free block extents against the partition length
+Date: Thu, 16 Jul 2026 15:33:12 +0200
+Message-ID: <20260716133039.125688381@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,134 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 72780f7964684939d7d2f69c348876213b184484 upstream.
+commit 5f0419457f89dce1a3f1c8e62a3adf2f39ab8168 upstream.
 
-Discard Vendor:Device ID matching in the PCIe failed link retraining quirk
-and ignore the link status for the removal of the 2.5GT/s speed clamp,
-whether applied by the quirk itself or the firmware earlier on.  Revert to
-the original target link speed if this final link retraining has failed.
+udf_free_blocks() checks the logical block number and count against the
+partition length, but drops the extent offset from that final bound.  A
+crafted extent can pass the guard while logicalBlockNum + offset + count
+points past the partition, which later indexes past the space bitmap
+array.
 
-This is so that link training noise in hot-plug scenarios does not make a
-link remain clamped to the 2.5GT/s speed where an event race has led the
-quirk to apply the speed clamp for one device, only to leave it in place
-for a subsequent device to be plugged in.
+A single ftruncate(2) on a file backed by such an extent reliably
+panics the kernel.  This is a local availability issue.  On desktop
+systems where UDisks/polkit allows the active user to mount removable
+UDF media without CAP_SYS_ADMIN, an unprivileged local user can supply
+the crafted filesystem and trigger the panic by truncating a writable
+file on it.  Systems that require root or CAP_SYS_ADMIN to mount the
+image have a higher prerequisite.
 
-Refer to the Link Capabilities register directly for the maximum link speed
-determination so as to streamline backporting.
+No confidentiality or integrity impact is claimed: the reproduced
+primitive is an out-of-bounds read of a bitmap pointer slot followed by
+a kernel panic.
 
-Fixes: a89c82249c37 ("PCI: Work around PCIe link training failures")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Cc: stable@vger.kernel.org # v6.5+
-Link: https://patch.msgid.link/alpine.DEB.2.21.2512080331530.49654@angie.orcam.me.uk
-[ Update for missing PCIe link speed helpers for 6.12.y. ]
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use the already computed logicalBlockNum + offset + count value for the
+partition length check.  Also make load_block_bitmap() reject an
+out-of-range block group before indexing s_block_bitmap[], so corrupted
+callers cannot walk past the flexible array.
+
+Fixes: 56e69e59751d ("udf: prevent integer overflow in udf_bitmap_free_blocks()")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260515142327.1120767-1-michael.bommarito@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c | 51 +++++++++++++++++---------------------------
- 1 file changed, 20 insertions(+), 31 deletions(-)
+ fs/udf/balloc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 3d05ea35c536f5..9b2acf388f8ad7 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -68,11 +68,10 @@
-  * Restrict the speed to 2.5GT/s then with the Target Link Speed field,
-  * request a retrain and check the result.
-  *
-- * If this turns out successful and we know by the Vendor:Device ID it is
-- * safe to do so, then lift the restriction, letting the devices negotiate
-- * a higher speed.  Also check for a similar 2.5GT/s speed restriction the
-- * firmware may have already arranged and lift it with ports that already
-- * report their data link being up.
-+ * If this turns out successful, or where a 2.5GT/s speed restriction has
-+ * been previously arranged by the firmware and the port reports its link
-+ * already being up, lift the restriction, in a hope it is safe to do so,
-+ * letting the devices negotiate a higher speed.
-  *
-  * Otherwise revert the speed to the original setting and request a retrain
-  * again to remove any residual state, ignoring the result as it's supposed
-@@ -83,12 +82,9 @@
-  */
- int pcie_failed_link_retrain(struct pci_dev *dev)
- {
--	static const struct pci_device_id ids[] = {
--		{ PCI_VDEVICE(ASMEDIA, 0x2824) }, /* ASMedia ASM2824 */
--		{}
--	};
--	u16 lnksta, lnkctl2;
-+	u16 lnksta, lnkctl2, oldlnkctl2;
- 	int ret = -ENOTTY;
-+	u32 lnkcap;
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -82,8 +82,9 @@ static int load_block_bitmap(struct supe
+ 	int nr_groups = bitmap->s_nr_groups;
  
- 	if (!pci_is_pcie(dev) || !pcie_downstream_port(dev) ||
- 	    !pcie_cap_has_lnkctl2(dev) || !dev->link_active_reporting)
-@@ -96,10 +92,9 @@ int pcie_failed_link_retrain(struct pci_dev *dev)
- 
- 	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
- 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
-+	oldlnkctl2 = lnkctl2;
- 	if ((lnksta & (PCI_EXP_LNKSTA_LBMS | PCI_EXP_LNKSTA_DLLLA)) ==
- 	    PCI_EXP_LNKSTA_LBMS) {
--		u16 oldlnkctl2 = lnkctl2;
--
- 		pci_info(dev, "broken device, retraining non-functional downstream link at 2.5GT/s\n");
- 
- 		lnkctl2 &= ~PCI_EXP_LNKCTL2_TLS;
-@@ -107,35 +102,29 @@ int pcie_failed_link_retrain(struct pci_dev *dev)
- 		pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, lnkctl2);
- 
- 		ret = pcie_retrain_link(dev, false);
--		if (ret) {
--			pci_info(dev, "retraining failed\n");
--			pcie_capability_write_word(dev, PCI_EXP_LNKCTL2,
--						   oldlnkctl2);
--			pcie_retrain_link(dev, true);
--			return ret;
--		}
--
--		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
-+		if (ret)
-+			goto err;
+ 	if (block_group >= nr_groups) {
+-		udf_debug("block_group (%u) > nr_groups (%d)\n",
++		udf_debug("block_group (%u) >= nr_groups (%d)\n",
+ 			  block_group, nr_groups);
++		return -EFSCORRUPTED;
  	}
  
--	if ((lnksta & PCI_EXP_LNKSTA_DLLLA) &&
--	    (lnkctl2 & PCI_EXP_LNKCTL2_TLS) == PCI_EXP_LNKCTL2_TLS_2_5GT &&
--	    pci_match_id(ids, dev)) {
--		u32 lnkcap;
--
-+	pcie_capability_read_dword(dev, PCI_EXP_LNKCAP, &lnkcap);
-+	if ((lnkctl2 & PCI_EXP_LNKCTL2_TLS) == PCI_EXP_LNKCTL2_TLS_2_5GT &&
-+	    (lnkcap & PCI_EXP_LNKCAP_SLS) != PCI_EXP_LNKCAP_SLS_2_5GB) {
- 		pci_info(dev, "removing 2.5GT/s downstream link speed restriction\n");
--		pcie_capability_read_dword(dev, PCI_EXP_LNKCAP, &lnkcap);
- 		lnkctl2 &= ~PCI_EXP_LNKCTL2_TLS;
- 		lnkctl2 |= lnkcap & PCI_EXP_LNKCAP_SLS;
- 		pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, lnkctl2);
+ 	if (bitmap->s_block_bitmap[block_group]) {
+@@ -662,7 +663,7 @@ void udf_free_blocks(struct super_block
  
- 		ret = pcie_retrain_link(dev, false);
--		if (ret) {
--			pci_info(dev, "retraining failed\n");
--			return ret;
--		}
-+		if (ret)
-+			goto err;
- 	}
- 
-+	return ret;
-+err:
-+	pci_info(dev, "retraining failed\n");
-+	pcie_capability_write_word(dev, PCI_EXP_LNKCTL2, oldlnkctl2);
-+
-+	pcie_retrain_link(dev, true);
- 	return ret;
- }
- 
--- 
-2.53.0
-
+ 	if (check_add_overflow(bloc->logicalBlockNum, offset, &blk) ||
+ 	    check_add_overflow(blk, count, &blk) ||
+-	    bloc->logicalBlockNum + count > map->s_partition_len) {
++	    blk > map->s_partition_len) {
+ 		udf_debug("Invalid request to free blocks: (%d, %u), off %u, "
+ 			  "len %u, partition len %u\n",
+ 			  partition, bloc->logicalBlockNum, offset, count,
 
 
