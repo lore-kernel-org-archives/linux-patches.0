@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A19322301;
-	Thu, 16 Jul 2026 14:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0963161AD;
+	Thu, 16 Jul 2026 14:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211665; cv=none; b=ltoHSYAbAhKGQeKKPVphpYM3ldeDeG4flm7vgOJ0mhaSWuv2Xbll+rSDqy2fHZXCAUnHobR6p2Pl4BjpdAoEe44oLjP8jBC7DJEOP2ljXoCVVBKCWy7iFm45AQvQ8Mt0r9ZDkz0lHeBEKMCmEgGU9buEX8plF/q2ajgU1kfnhJg=
+	t=1784211667; cv=none; b=Udi07mv269PfAXMmkmc6/W7Ft5wMt89Xbu3jZCvPUBc+vBkLz+p54qeJ4CFJKJahWm/IEAkMfgccpWE+hMKNTJCchfiVVlnZ/Us/zG2HfHvyfNgRt/TGWyMov9le9dnNkd4nGnL/iPm0IzBwpeNf3RQIKdMI3YnR+DYZ3cMP6PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211665; c=relaxed/simple;
-	bh=jjt7qrxuFvg97VlgQSyRRxwPcCUoLGrczcJlc8xRYfg=;
+	s=arc-20240116; t=1784211667; c=relaxed/simple;
+	bh=Bm0EVJ/KFLp6Ek1H+61ZJp75NA5OQwxa782Ejpv9gaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MI1CasVOmhQ4al8Pyq5e/eKGjubPujnrBFwnRdnPZXm+5mgzMta4kZAbOIIOhVo6jKPnAW3Z0B08f+2zJTJrMbPxWiIrC/T1DLrH62BxICLFCdz3CQO0mg441xBLcUmmkdP+IxpAWYdkuLxhDP70q0VHLYvZMlNtkLU1npTwmic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qy/ys1UU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o5ZvbMlyx9dXWS+PPlTbanfYAvuwfq6XNeIfrPUK0xcmA27LzdezdeIaA8D/9Tsy+46dWQx6vX/IuTu7GWIARgzaIl+MVQkaOfEAn2Xm0/GBxsGdS6jUPqt4cGUy1psg4v4PKjNsN7ftkO92WB9+EVZXS9CQiIxTZ1tdQsz/8B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MreRj+0j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qy/ys1UU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9371F000E9;
-	Thu, 16 Jul 2026 14:21:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MreRj+0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5541F000E9;
+	Thu, 16 Jul 2026 14:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211663;
-	bh=mYtAhoz1Nj02MRoxz7akLB54501otlF0/s6f0y5CmjQ=;
+	s=korg; t=1784211666;
+	bh=iRjF+VMrQuhUIs5FGyhgvi0bhIGbxNSK7cffuwD6clU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qy/ys1UU6Zfhv5o9kJhbHC44XolvcQMcox/n0f9IKpyNGjls171+PcuKetOXm0gZw
-	 S198N/1RBg6Hc+bG9DjdUcQ9svLy2KuHJYr3ncdgApq7Pps2D0hsgGD1vXleFGi9sG
-	 QavN7H705wsGBRBif0QYVhZ2PEwrP0b1AXeRUXvo=
+	b=MreRj+0jxXJN4asNk6QORQKjVOSEsrlRGAmte8kKNKZ2Wf5K36Ctor9ZTf3jHINwJ
+	 ZPH/8UG01TCVCQlqpApsAtHyVIQMoQRv7FTGnGaQTaepTeomfHtA5vdNaw4XSO35+5
+	 xHcCdD7QNfX6FbWMYLXfsFmXtaLTZfhlMij7j6DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/349] bcachefs: avoid truncating fiemap extent length
-Date: Thu, 16 Jul 2026 15:29:00 +0200
-Message-ID: <20260716133033.430994445@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Markus Mayer <mmayer@broadcom.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 6.12 033/349] perf trace beauty fcntl: Fix build with older kernel headers
+Date: Thu, 16 Jul 2026 15:29:27 +0200
+Message-ID: <20260716133034.051011875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,69 +60,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-No upstream commit exists for this patch.
+commit 7ee7f48413c42b90230de4a8e40898b757bc8e82 upstream.
 
-bkey sizes are stored in sectors as u32, while fiemap reports byte
-lengths as u64. Shifting k.k->size before widening performs the
-conversion in 32 bits, so an extent of 4 GiB or larger can wrap before
-it is passed to fiemap_fill_next_extent().
+Toolchains with older kernel headers that do not include upstream commit
+c75b1d9421f80f41 ("fs: add fcntl() interface for setting/getting write
+life time hints") will now fail to build perf due to missing definitions
+for F_GET_RW_HINT/F_SET_RW_HINT/F_GET_FILE_RW_HINT/F_SET_FILE_RW_HINT.
 
-Compute the byte length after casting the sector count to u64 and reuse
-it for all bch2_fill_extent() cases.
+Provide a fallback definition for these when they are not already
+defined.
 
-The same issue was fixed in bcachefs-tools, but there is no Linux
-upstream commit to backport to 6.12. The affected 6.12 implementation lives
-in fs/bcachefs/fs.c, while the bcachefs-tools fix touches
-fs/bcachefs/vfs/fiemap.c.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Link: https://lore.kernel.org/linux-bcachefs/20260610105547.129545-1-mdmitrichenko@astralinux.ru/
-Link: https://evilpiepirate.org/git/bcachefs-tools.git/commit/?id=6d9a895ed00d4b3868312df93253d2a817b0c6a3
-Signed-off-by: Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
-Acked-by: Kent Overstreet <kent.overstreet@linux.dev>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9c47f66748381ecb ("perf trace beauty fcntl: Basic 'arg' beautifier")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Markus Mayer <mmayer@broadcom.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/bcachefs/fs.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/perf/trace/beauty/fcntl.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/bcachefs/fs.c
-+++ b/fs/bcachefs/fs.c
-@@ -1184,6 +1184,8 @@ static int bch2_fill_extent(struct bch_f
- 			    struct fiemap_extent_info *info,
- 			    struct bkey_s_c k, unsigned flags)
- {
-+	u64 len = (u64)k.k->size << 9;
+--- a/tools/perf/trace/beauty/fcntl.c
++++ b/tools/perf/trace/beauty/fcntl.c
+@@ -9,6 +9,22 @@
+ #include <linux/kernel.h>
+ #include <linux/fcntl.h>
+ 
++#ifndef F_GET_RW_HINT
++#define F_GET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 11)
++#endif
 +
- 	if (bkey_extent_is_direct_data(k.k)) {
- 		struct bkey_ptrs_c ptrs = bch2_bkey_ptrs_c(k);
- 		const union bch_extent_entry *entry;
-@@ -1212,7 +1214,7 @@ static int bch2_fill_extent(struct bch_f
- 			ret = fiemap_fill_next_extent(info,
- 						bkey_start_offset(k.k) << 9,
- 						offset << 9,
--						k.k->size << 9, flags|flags2);
-+						len, flags | flags2);
- 			if (ret)
- 				return ret;
- 		}
-@@ -1221,13 +1223,13 @@ static int bch2_fill_extent(struct bch_f
- 	} else if (bkey_extent_is_inline_data(k.k)) {
- 		return fiemap_fill_next_extent(info,
- 					       bkey_start_offset(k.k) << 9,
--					       0, k.k->size << 9,
-+					       0, len,
- 					       flags|
- 					       FIEMAP_EXTENT_DATA_INLINE);
- 	} else if (k.k->type == KEY_TYPE_reservation) {
- 		return fiemap_fill_next_extent(info,
- 					       bkey_start_offset(k.k) << 9,
--					       0, k.k->size << 9,
-+					       0, len,
- 					       flags|
- 					       FIEMAP_EXTENT_DELALLOC|
- 					       FIEMAP_EXTENT_UNWRITTEN);
++#ifndef F_SET_RW_HINT
++#define F_SET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 12)
++#endif
++
++#ifndef F_GET_FILE_RW_HINT
++#define F_GET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 13)
++#endif
++
++#ifndef F_SET_FILE_RW_HINT
++#define F_SET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 14)
++#endif
++
+ static size_t fcntl__scnprintf_getfd(unsigned long val, char *bf, size_t size, bool show_prefix)
+ {
+ 	return val ? scnprintf(bf, size, "%s", "0") :
 
 
