@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10DB3009E2;
-	Thu, 16 Jul 2026 14:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6839F2FFDE1;
+	Thu, 16 Jul 2026 14:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210669; cv=none; b=UUUFco1crOz/JwReJTjsmiqbz/Ra5nGC7brTzWi7hAlJ90HbbsbZPnqXq/7ovGS8K3Dhb6PEZj+c3N0YlV/Aa0lluyXeJMSaVY8GrUzE6C6VbnHTp5amxDI8yMm7qa4MArkeK452ZAruryKD+g7qF+Hy/JckzfjTV0Ya8ne+W4M=
+	t=1784210672; cv=none; b=uknsGegzWYi2RTAJVO824ZZst98oXBZX+AMNFIMKXIT3jmr7HMLKjZ02kz3sxPSaoWJV6ICVplm21j93Q40toUNFhWaHQ52YuJJpvK0wmYkv1BZbQl0PglJnrIVgMYjCkswTrJ5GuU25rJmyX2+b/EJhJS1BLYktKIinAV4bwNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210669; c=relaxed/simple;
-	bh=qOXYAqagQKQrk7k9vcaUkATtPe1HspnfxJ/4fU5ngmo=;
+	s=arc-20240116; t=1784210672; c=relaxed/simple;
+	bh=RxfitwaitlcN3FwifejnlUZ6Em61LBOvx9G/m7txZww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjnc0E0Yxxl9UYQKXzmx3yI6CPXGYRNDx+paNbaT77230V4838K09DA9SC+GJc1HwKur6KXb6+1hFbZqkMkMRP43ksLeaVE/XY5PHLpYFoC2sQ5ieCUq0Wo291O48utoqZJT9frn3M19z0EdcBiIjLf4tD0wXqRt6WTt2LupPwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaE1rtgU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZpzgWSdOu9+0voc4rCHqSEUojzYkbO003J4TzG+B6K5anPYSesDuFmAFZ6vL56VHMyrkhP4r4YDlHRmlCu8Z35uvQXHv4xnbzn2zDSsauxbHRVp9J7Aezpv32sxMPdzXhpNDHq4fTygxut+7XxhU5v9kahT1xe1h4efgX4lcWa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bfxr/zuk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaE1rtgU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324291F000E9;
-	Thu, 16 Jul 2026 14:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bfxr/zuk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD66F1F000E9;
+	Thu, 16 Jul 2026 14:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210668;
-	bh=VnGAxupngLSOHi2mhbJsKPvEphHWp35HfwSX2xJuPEM=;
+	s=korg; t=1784210671;
+	bh=Sw+rK6u0z24PxWJi/JTlffdI+w7Hieg7DJuUBORDmgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UaE1rtgU5sRr7lk8a/kDEDCFlUjXLEq0uCTrKmj2o+BiGin1P8HIY4tBQne7unSg2
-	 03eaqya8mAtKcXkJMmT66bDaGOw3Qhe/gN2njvxYkFWwc51mlz6n9+yiR/VYRhwX8W
-	 P0pSDi7B/+YXXM+hg2V8UfYr7ivKQCgYYflHfoDw=
+	b=Bfxr/zukQq7E01b3aOo0sdjTJr45GKiqT93SYDhfWBhkK9RIEkDuUpEBZbnnp60kJ
+	 NAfZl6xrtVMC1l2aguLnybTKHFxL6/6hG9KzWfGw3GTRDAW6I8btdiJ22TZxzjyYhq
+	 kmcaaY7JamxS1nTZ1Eg3QiRcFfmCi0TBBF/NX7zU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Xu Rao <raoxu@uniontech.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.18 133/480] xhci: sideband: fix ring sg table pages leak
-Date: Thu, 16 Jul 2026 15:28:00 +0200
-Message-ID: <20260716133047.588040162@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>
+Subject: [PATCH 6.18 134/480] usb: typec: tcpci_rt1711h: unregister TCPCI port with devres
+Date: Thu, 16 Jul 2026 15:28:01 +0200
+Message-ID: <20260716133047.610790367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,43 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 49f6e3c3ef19f04f6657ed8dce550e36c763abb8 upstream.
+commit e8da46d99d3710106e7c44db14566bf9b57386b5 upstream.
 
-xhci_ring_to_sgtable() allocates a temporary pages array and
-uses it to build the returned sg_table with
-sg_alloc_table_from_pages().
+rt1711h_probe() registers the TCPCI port before requesting the interrupt
+and enabling alert interrupts. If either of those later steps fails, the
+probe function returns without unregistering the TCPCI port. The explicit
+unregister currently only happens from the remove callback.
 
-The error paths free the pages array, but the success path
-returns the sg_table without freeing it. This leaks the temporary
-array every time a sideband client gets an endpoint or event ring
-buffer.
+Register a devres action immediately after tcpci_register_port() succeeds,
+so tcpci_unregister_port() runs on later probe failures and on driver
+detach. Drop the remove callback to avoid unregistering the same port
+twice.
 
-Free the pages array after sg_alloc_table_from_pages() succeeds.
-The returned sg_table has its own scatterlist entries and does not
-depend on the temporary array after construction.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fixes: de66754e9f80 ("xhci: sideband: add initial api to register a secondary interrupter entity")
+Fixes: 302c570bf36e ("usb: typec: tcpci_rt1711h: avoid screaming irq causing boot hangs")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260703144033.483286-2-mathias.nyman@linux.intel.com
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260706145312.37260-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-sideband.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/tcpm/tcpci_rt1711h.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/host/xhci-sideband.c
-+++ b/drivers/usb/host/xhci-sideband.c
-@@ -58,6 +58,8 @@ xhci_ring_to_sgtable(struct xhci_sideban
- 	if (sg_alloc_table_from_pages(sgt, pages, n_pages, 0, sz, GFP_KERNEL))
- 		goto err;
+--- a/drivers/usb/typec/tcpm/tcpci_rt1711h.c
++++ b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
+@@ -330,6 +330,8 @@ static int rt1711h_check_revision(struct
+ 	return ret;
+ }
  
-+	kvfree(pages);
++static void rt1711h_unregister_tcpci_port(void *tcpci);
 +
- 	/*
- 	 * Save first segment dma address to sg dma_address field for the sideband
- 	 * client to have access to the IOVA of the ring.
+ static int rt1711h_probe(struct i2c_client *client)
+ {
+ 	int ret;
+@@ -381,6 +383,10 @@ static int rt1711h_probe(struct i2c_clie
+ 	if (IS_ERR_OR_NULL(chip->tcpci))
+ 		return PTR_ERR(chip->tcpci);
+ 
++	ret = devm_add_action_or_reset(chip->dev, rt1711h_unregister_tcpci_port, chip->tcpci);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_threaded_irq(chip->dev, client->irq, NULL,
+ 					rt1711h_irq,
+ 					IRQF_ONESHOT | IRQF_TRIGGER_LOW,
+@@ -398,11 +404,9 @@ static int rt1711h_probe(struct i2c_clie
+ 	return 0;
+ }
+ 
+-static void rt1711h_remove(struct i2c_client *client)
++static void rt1711h_unregister_tcpci_port(void *tcpci)
+ {
+-	struct rt1711h_chip *chip = i2c_get_clientdata(client);
+-
+-	tcpci_unregister_port(chip->tcpci);
++	tcpci_unregister_port(tcpci);
+ }
+ 
+ static const struct rt1711h_chip_info rt1711h = {
+@@ -435,7 +439,6 @@ static struct i2c_driver rt1711h_i2c_dri
+ 		.of_match_table = rt1711h_of_match,
+ 	},
+ 	.probe = rt1711h_probe,
+-	.remove = rt1711h_remove,
+ 	.id_table = rt1711h_id,
+ };
+ module_i2c_driver(rt1711h_i2c_driver);
 
 
