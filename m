@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B99422550;
-	Thu, 16 Jul 2026 13:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DEE3F482E;
+	Thu, 16 Jul 2026 13:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209065; cv=none; b=A8lgmaT8K1ZLNbH4/Q8dW3IZKGOk9ZpeRxmOLcdFVkKnfi4wmKHOLsm1nZqzFygNUCJ9buDtohs3Wo8jCj1FKO7IZDT4Md482nveckzT8xlWnkfzIqCSup8Hi/Q73IDICWv5726TCYa/kg2Eq6+Opy4ASctfJIni0ULouimcOMo=
+	t=1784209067; cv=none; b=B5aLZ7aaIbA8BGvfixWZ1hV0OjQaeG/7uX/G0ouHnz6k6jV8MCeJkMnUHfjW6J4EJLrDhdGCZFjqDNiqE+we2eKn7YtT2TKTlcsNgv9PGdhfpTVRFRSgCusNbxDvGehDkLh8oI5Ku/vj/hSyiKVo4bdLbBJx15NPMKkiqy3dP3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209065; c=relaxed/simple;
-	bh=mYAcivXiQOFuVtaPNHGQYL9uO0Ox8tzTxZuDYDNayRk=;
+	s=arc-20240116; t=1784209067; c=relaxed/simple;
+	bh=ZfllxAK9/3+DB5yBLZJmkxCTGiFRc9N+1hNfsyNS8co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BvANMD1yXcW5W5hZC0crsG45qF2Ncf3nfi6F8L43yWxUik9wwxjIqIE/W4PulsmH8ZVKtIzXSzsCu5S+h87vUy8fnS+fHo4g+/pHV+I2lAxJYpLs7joDDS4+/2xv8MU9CiEfRZ0zO6vlrsk1Q/tNj36RAjv+oqRSBvL8tn6sW3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5wimzm1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qNakEOYHd8+tyJm08Q3x8H9ZdbPREcCGWJ4RQ+BumQ+D7GQkaIfDRf/OFZoZRsTCLppFdxiTvpgzjuUm1oW4sldvdEXjCuz+dskHKEvePDKpTdRkKEodpc00IfGWPSb/GiNIsXi+vCw0DmmytATlj4+ilNpoEHG7YA/ANDSAcSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BQpUmK3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5wimzm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02EB1F000E9;
-	Thu, 16 Jul 2026 13:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BQpUmK3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8858A1F000E9;
+	Thu, 16 Jul 2026 13:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209063;
-	bh=Hqvq6Njh2ybPJEBKGAgm8oKaYb1OubBPu3YOLX2Pao4=;
+	s=korg; t=1784209066;
+	bh=1tOXBo8KbhTnOWIl145sEw5pkveKcnU8+h81odiahb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l5wimzm1OYsecqcs/5hS5Q/9kKJ9H8ceFJZHbp/RAccbRT2lDMUAnby0U3ieawneO
-	 RLS/GsaT5KalPHuigAVMuBPrb+wtz/C+l6swA+/RvMHwU+4EnxH9KGGclgWcxyc1Hs
-	 UTXSfWiAMSE9nNjoUGbxEo18BD20oGcslQLJvVMU=
+	b=2BQpUmK3K+W3MJSg4Nvva1GENsvaEWqNUsZoUgF49jG41qJJFzBxyYVjeL8II+Eiv
+	 31tmTjpVwsUhJY9SE8F4LhfjifSsyv2pL+mxPfkyr1Qp9ztjAqGpcrjzjaeLwD2wFW
+	 LIGjOD0cpzUCxgGdJOu02Pk0t0iGi2nC/D9jpct4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 044/518] iio: adc: ti-ads1119: fix PM reference leak in buffer preenable
-Date: Thu, 16 Jul 2026 15:25:12 +0200
-Message-ID: <20260716133048.746945240@linuxfoundation.org>
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 027/518] bpf: Skip redundant IBPB in pack allocator
+Date: Thu, 16 Jul 2026 15:24:55 +0200
+Message-ID: <20260716133048.370978119@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,44 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit adf4bc07f814da8329278d32600147f5a150938c upstream.
+commit a23c1c5396a91680703360d1ee28a44657c503c4 upstream.
 
-ads1119_triggered_buffer_preenable() resumes the device with
-pm_runtime_resume_and_get() before starting a conversion.
+bpf_prog_pack_alloc() issues IBPB on all CPUs on every cBPF allocation,
+even when reusing chunks from an existing pack where no new memory was
+touched since the last IBPB.
 
-If i2c_smbus_write_byte() fails, the function returns the error directly
-and leaves the runtime PM usage counter elevated. The matching
-postdisable callback is not called when preenable fails, so the reference
-is leaked and the device may remain runtime-active indefinitely.
+Since IBPB on all CPUs is heavy, Dave Hansen suggested to track allocation
+since last IBPB, and only issue IBPB at reuse for the chunks that have not
+seen an IBPB since they were last freed.
 
-Store the I2C transfer result in ret and drop the runtime PM reference on
-failure before returning the error.
+Track per-pack whether an IBPB is needed via arch_flush_needed. Set it when
+allocating a chunk, reset on IBPB flush. On reuse, conditionally issue the
+flush. Since IBPB invalidates all BTB entries, clear the flag on all packs
+after flushing.
 
-Fixes: a9306887eba41 ("iio: adc: ti-ads1119: Add driver")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ti-ads1119.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/bpf/core.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ti-ads1119.c
-+++ b/drivers/iio/adc/ti-ads1119.c
-@@ -459,7 +459,11 @@ static int ads1119_triggered_buffer_pree
- 	if (ret)
- 		return ret;
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 1b7e74e63bd4bc..1bf4b8dffe9158 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -876,6 +876,7 @@ int bpf_jit_add_poke_descriptor(struct bpf_prog *prog,
+ struct bpf_prog_pack {
+ 	struct list_head list;
+ 	void *ptr;
++	bool arch_flush_needed;
+ 	unsigned long bitmap[];
+ };
  
--	return i2c_smbus_write_byte(st->client, ADS1119_CMD_START_SYNC);
-+	ret = i2c_smbus_write_byte(st->client, ADS1119_CMD_START_SYNC);
-+	if (ret)
-+		pm_runtime_put_autosuspend(dev);
+@@ -928,6 +929,8 @@ static struct bpf_prog_pack *alloc_new_pack(bpf_jit_fill_hole_t bpf_fill_ill_ins
+ 	bpf_fill_ill_insns(pack->ptr, BPF_PROG_PACK_SIZE);
+ 	bitmap_zero(pack->bitmap, BPF_PROG_PACK_SIZE / BPF_PROG_CHUNK_SIZE);
+ 
++	if (static_branch_unlikely(&bpf_pred_flush_enabled))
++		pack->arch_flush_needed = true;
+ 	set_vm_flush_reset_perms(pack->ptr);
+ 	err = set_memory_rox((unsigned long)pack->ptr,
+ 			     BPF_PROG_PACK_SIZE / PAGE_SIZE);
+@@ -990,8 +993,15 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool
+ 
+ found_free_area:
+ 	/* Flush only for cBPF as it may contain a crafted gadget */
+-	if (static_branch_unlikely(&bpf_pred_flush_enabled) && was_classic)
++	if (static_branch_unlikely(&bpf_pred_flush_enabled) &&
++	    pack->arch_flush_needed &&
++	    was_classic) {
++		struct bpf_prog_pack *p;
 +
-+	return ret;
- }
+ 		static_call_cond(bpf_arch_pred_flush)();
++		list_for_each_entry(p, &pack_list, list)
++			p->arch_flush_needed = false;
++	}
+ 	bitmap_set(pack->bitmap, pos, nbits);
+ 	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
  
- static int ads1119_triggered_buffer_postdisable(struct iio_dev *indio_dev)
+@@ -1029,6 +1039,9 @@ void bpf_prog_pack_free(void *ptr, u32 size)
+ 		  "bpf_prog_pack bug: missing bpf_arch_text_invalidate?\n");
+ 
+ 	bitmap_clear(pack->bitmap, pos, nbits);
++
++	if (static_branch_unlikely(&bpf_pred_flush_enabled))
++		pack->arch_flush_needed = true;
+ 	if (bitmap_find_next_zero_area(pack->bitmap, BPF_PROG_CHUNK_COUNT, 0,
+ 				       BPF_PROG_CHUNK_COUNT, 0) == 0) {
+ 		list_del(&pack->list);
+-- 
+2.53.0
+
 
 
