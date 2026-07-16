@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BD822301;
-	Thu, 16 Jul 2026 13:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E0F3101BF;
+	Thu, 16 Jul 2026 13:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210236; cv=none; b=tDjmOGhutERMfLL3UnNhE8v/jsnTY66xnWbQqnPHoZ+2RH31fbWA2V3k8pxGqxv/Z0MLMGcxKkJCuagF2WfroSJJzjDvJucBFwKiw+W0Sh990/h9X2txhkvCawP+R/QtOd2nphebTy0w7PxR6AcFueEAXRWLuuA21rStzXTqPYI=
+	t=1784210238; cv=none; b=BFajNLyU6/Liyjnt9wdU/g3ao2i8Cm5jz0VFwviw6Xfi32WLExewEq7ihxpOx8n+fixZd5Nq3rzYZBUAaWRfpvIZ8o3W84pTEN7AxLrBcyOtomDaIlJWJ4k/YEjdyaIteE4PW+FAYUuorlXt8odoLUU3hi/at1tIqLwpHBmXPG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210236; c=relaxed/simple;
-	bh=X0qQY6konPrBHBraY+lozsHC8kGq5v/YPDaGtQeHXXY=;
+	s=arc-20240116; t=1784210238; c=relaxed/simple;
+	bh=MRqaGjblGeRRk513DZbEUES9UcmGfJEyEp2cATMh+90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2hckHXXQrKW7KWfoUMp3NkWC4ruTJWm0IABlIIrljqC1clCvCT8BNfUrIThT5BBiTqCxV0dpopgHoruEN+lfAUZzNrai100O8itlBO3htnz/t7iqhwM0TAiEnsea9kDzBmG8PCFjjdkw9CZbWsbLMtEgGUoczN+yM5bl6afyPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdjNStGe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R8KlNqcL0OCfvVxXhIXx65AExLSOuP8Upm9YYZYKzyqsPWOLt1PwMtmtO/RgfLYdm9dhEtqMzuF++cZI+WWCLRFyGKJDGi15SJjJZjR8nGUjoHoJ7BJh8V0893uSN1iW/igyyxSF60+ge88t6RncnTPMCWJXQyqQMASuABOM6z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vUG9fIJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdjNStGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F251F000E9;
-	Thu, 16 Jul 2026 13:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vUG9fIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A0D1F000E9;
+	Thu, 16 Jul 2026 13:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210235;
-	bh=+72X+O9oCU68e1fm4HJkjDOHVbPDDBb2FoXleDoXLG4=;
+	s=korg; t=1784210237;
+	bh=Y7J4sipMSb6nSwSDplg0+nk8/8Z83RIEoHTpLBaV6AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wdjNStGeavvZvCwGmf9WMSIcgFTtEPn3yKXpFsESYyBgkeruaUA442tpu0zYxGo1S
-	 gZX2FRr7RaLCcf8HLhGP+P5vfx+2rDI5RjVJe0yX5wSy7dL63QyGOPri3pWlKqvX9l
-	 D5D3CsD1AknopslDjCkSfi3Rc5s+rQ7XOWgP+eYw=
+	b=0vUG9fIJwZVaESGQBzXYfjbamNAbhCIJY33CLUEl9qjh2semN2mjp96TK6j2O3z/v
+	 vaPn+C2y2C9j/zB8ZiCgTsW6YCwehS/AKXB7Ky0t8vgac9nZgJL/Yd+dMecJHkhKL6
+	 yef+sJOvMbNZh7EwYy+0GWvfqFA8TbIOjGSoArPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Featherston <mark@embeddedTS.com>,
-	Kris Bahnsen <kris@embeddedTS.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 487/518] Input: ads7846 - dont use scratch for tx_buf when clearing register
-Date: Thu, 16 Jul 2026 15:32:35 +0200
-Message-ID: <20260716133058.504133554@linuxfoundation.org>
+Subject: [PATCH 7.1 488/518] Input: touchwin - reset the packet index on every complete packet
+Date: Thu, 16 Jul 2026 15:32:36 +0200
+Message-ID: <20260716133058.525107775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,71 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kris Bahnsen <kris@embeddedTS.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 856668312685d9a8f32d49a135a89c429d309f81 upstream.
+commit 478cdd736f2ce3114f90e775d7358136d3977b94 upstream.
 
-The workaround for XPT2046 clears the command register, giving the
-touchscreen controller a NOP. The change incorrectly re-uses the
-req->scratch variable which is used as rx_buf for xfer[5], so by
-the time xfer[6] occurs, the contents of req->scratch may not be
-0. It was found that the touchscreen controller can end up in
-a completely unresponsive state due to it being given a command
-the driver does not expect.
+tw_interrupt() accumulates each non-zero serial byte into a fixed
+three-byte buffer with a running index that is only reset once a full
+packet has been received *and* the device's two Y bytes agree:
 
-Instead, rely on the spi_transfer behavior of tx_buf being NULL to
-transmit all 0 bits and use the scratch variable for the rx_buf for
-both the 1 byte command to and 2 byte response from the controller.
+	tw->data[tw->idx++] = data;
+	if (tw->idx == TW_LENGTH && tw->data[1] == tw->data[2]) {
+		...
+		tw->idx = 0;
+	}
 
-Also relocates the scratch member of struct ser_req to force it
-into a different cache line to prevent any potential issues of
-DMA stepping on unrelated data in other struct members due to
-sharing the same cache line.
+The reset is gated on tw->data[1] == tw->data[2], a value the device
+controls.  A malicious, malfunctioning or counterfeit Touchwindow
+peripheral can stream non-zero bytes whose 2nd and 3rd bytes differ: the
+index reaches TW_LENGTH without the equality holding, is never reset, and
+keeps growing, so tw->data[tw->idx++] walks off the end of the three-byte
+array and the rest of the heap-allocated struct tw, one attacker-chosen
+byte at a time -- an unbounded, device-driven heap out-of-bounds write.
 
-This change was tested on real TSC2046 and ADS7843 controllers,
-but not the XPT2046 the workaround was originally created for.
-Confirming that the original modification to clear the command
-register does not impact either real controller.
+Reset the index on every completed packet and report an event only when
+the two Y bytes match, like the other serio touchscreen drivers do.
 
-Fixes: 781a07da9bb94 ("Input: ads7846 - add dummy command register clearing cycle")
+Fixes: 11ea3173d5f2 ("Input: add driver for Touchwin serial touchscreens")
 Cc: stable@vger.kernel.org
-Co-developed-by: Mark Featherston <mark@embeddedTS.com>
-Signed-off-by: Mark Featherston <mark@embeddedTS.com>
-Signed-off-by: Kris Bahnsen <kris@embeddedTS.com>
-Link: https://patch.msgid.link/20260507164943.760009-1-kris@embeddedTS.com
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260613-b4-disp-69921bfd-v1-1-82c036899959@proton.me
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/ads7846.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/input/touchscreen/touchwin.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/input/touchscreen/ads7846.c
-+++ b/drivers/input/touchscreen/ads7846.c
-@@ -325,7 +325,6 @@ struct ser_req {
- 	u8			ref_on;
- 	u8			command;
- 	u8			ref_off;
--	u16			scratch;
- 	struct spi_message	msg;
- 	struct spi_transfer	xfer[8];
- 	/*
-@@ -333,6 +332,7 @@ struct ser_req {
- 	 * transfer buffers to live in their own cache lines.
- 	 */
- 	__be16 sample ____cacheline_aligned;
-+	u16			scratch;
- };
- 
- struct ads7845_ser_req {
-@@ -403,8 +403,7 @@ static int ads7846_read12_ser(struct dev
- 	spi_message_add_tail(&req->xfer[5], &req->msg);
- 
- 	/* clear the command register */
--	req->scratch = 0;
--	req->xfer[6].tx_buf = &req->scratch;
-+	req->xfer[6].rx_buf = &req->scratch;
- 	req->xfer[6].len = 1;
- 	spi_message_add_tail(&req->xfer[6], &req->msg);
- 
+--- a/drivers/input/touchscreen/touchwin.c
++++ b/drivers/input/touchscreen/touchwin.c
+@@ -63,12 +63,15 @@ static irqreturn_t tw_interrupt(struct s
+ 	if (data) {		/* touch */
+ 		tw->touched = 1;
+ 		tw->data[tw->idx++] = data;
+-		/* verify length and that the two Y's are the same */
+-		if (tw->idx == TW_LENGTH && tw->data[1] == tw->data[2]) {
+-			input_report_abs(dev, ABS_X, tw->data[0]);
+-			input_report_abs(dev, ABS_Y, tw->data[1]);
+-			input_report_key(dev, BTN_TOUCH, 1);
+-			input_sync(dev);
++		/* a full packet ends the accumulation, valid or not */
++		if (tw->idx == TW_LENGTH) {
++			/* report only if the two Y's are the same */
++			if (tw->data[1] == tw->data[2]) {
++				input_report_abs(dev, ABS_X, tw->data[0]);
++				input_report_abs(dev, ABS_Y, tw->data[1]);
++				input_report_key(dev, BTN_TOUCH, 1);
++				input_sync(dev);
++			}
+ 			tw->idx = 0;
+ 		}
+ 	} else if (tw->touched) {	/* untouch */
 
 
