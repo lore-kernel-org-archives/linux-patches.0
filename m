@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2483BED2D;
-	Thu, 16 Jul 2026 13:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BDF2DF137;
+	Thu, 16 Jul 2026 13:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209119; cv=none; b=YniZ0T7HeLyccpYGp34bTIW6wgumfLg9MpUIj0clp80tqy3i4QItBMl3ii92zsPGerc4fIDwVJdyvJnjFp9YYYQlUKpSGyY6s6PCHa4x/58yPuEI2dJ55fy3zwEWMUc0aODzOCpa+HcicvkaIL7iDBzWJC+kD6pKfAGNRM7hcqI=
+	t=1784209122; cv=none; b=PSThv5NZ+tgsjLj4q5NC0PHatt1ikafmqN00q1TlNC7JMJg9FF1ADaKl4gpGF+F8KwDYOt6MeKuteAB7shKbwSPzQumG3iFGMrF04DCYq8rcCVSio4WkSXi9bnf91OMF9U7vAxcBEaNQwUxprXdGRF+9HdZGGJ+Mlpu2Enskm04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209119; c=relaxed/simple;
-	bh=X6vLQe3Lqx0pNGrcvgRe2ON/Ab9CIqflMGesOBwctDQ=;
+	s=arc-20240116; t=1784209122; c=relaxed/simple;
+	bh=y6MLFsSW98rIK/V6YTg/uS3HRpfNcuqHtUv/1OyKnbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbWDpNXEMCdpTvcSZ8FJqi5zBe8UOrvN/S2qIRpbUFdRa97fDZAIlEjh3AUpvgTtIBYx4Hf22iiq67XM9zbvf97sxWWo2DcHojmBWXdVskfpJQO9adTQeYZYYZnD+U4B6iRolOeh2LRlPczemsfBUvc6PfHlXPLrS1DbTCjkzHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zEOvfIp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VUxvHIL0eY5npCyv9/2RKc05n1KgY6oAIQkpi9ldL1XbOlP6VmWQrmYkctaKdSeV7TkR2EDClpbfIuxCZNJqvJV3q4Ahorw4G0SjnsZnc0qTwUelwKZIIK/9EQWIPJNlAW6wP264DZMWxeEsR5Tze3ICq4saETNG93mYnJS973A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWEEURNV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zEOvfIp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DDB1F000E9;
-	Thu, 16 Jul 2026 13:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWEEURNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1681F000E9;
+	Thu, 16 Jul 2026 13:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209118;
-	bh=VmM2TNQO9z13ZN2uvln0SQ5LQWRxqJGdXp0FQJO16yA=;
+	s=korg; t=1784209121;
+	bh=0uvX4G82DmVkFrHvyIOaoAYOzz9EfukamJaXgysH7SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1zEOvfIplfSbTcm2ixpneM5w0E7DdW5+703Zz6b2JyQGj0Zc+1ZIq9AyDpdOvdZfU
-	 KEsN7x91OuIXgAUgeqDPMoo6lIuqcfbBpSvH0BOXRCNuAQimL0JPRsjwBAhIEUKoSS
-	 Oh/s2FSONTFZ4hWlmloAPXikPm2dLGQQeHhZvVls=
+	b=AWEEURNVLeeXDj+p9ox5Tsa1Igcl7AmDLBlmpJtaZ8Yy55oGNnvjdd0QwAxfD2owD
+	 HyMze8pHbXeu1/D9x4b2bJ+79q7kDLhhhkpr0fr5RdkUETYIu/sjNHPhcrely63M76
+	 XcReQ59cyWNVsf2+VsXHi5RNKkMPR82C8mh8UJSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	David Heidelberg <david@ixit.cz>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 063/518] iio: light: al3010: read both ALS ADC registers again
-Date: Thu, 16 Jul 2026 15:25:31 +0200
-Message-ID: <20260716133049.160861154@linuxfoundation.org>
+Subject: [PATCH 7.1 064/518] iio: light: al3320a: add missing REGMAP_I2C to Kconfig
+Date: Thu, 16 Jul 2026 15:25:32 +0200
+Message-ID: <20260716133049.184453452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,50 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-commit ee78fae068f52a5582aaf448d9414f826855c106 upstream.
+commit 9efcc9ba9b2e940cc01e63d132ae741e4c5d09c7 upstream.
 
-al3010_read_raw() used to read two adjacent registers
-until the driver was modernized using the regmap framework.
-That cleanup accidentally replaced the 16-bit word read
-with a single byte read. I'm reverting latter.
+The Kconfig entry for the al3320a is missing a `select REGMAP_I2C`,
+causing build failures.
 
-Fixes: 0e5e21e23dd6 ("iio: light: al3010: Implement regmap support")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+Fixes: 1850e6ae7f91 ("iio: light: al3320a: Implement regmap support")
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: David Heidelberg <david@ixit.cz>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/al3010.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/iio/light/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/light/al3010.c
-+++ b/drivers/iio/light/al3010.c
-@@ -111,7 +111,8 @@ static int al3010_read_raw(struct iio_de
- 			   int *val2, long mask)
- {
- 	struct al3010_data *data = iio_priv(indio_dev);
--	int ret, gain, raw;
-+	int ret, gain;
-+	__le16 raw;
+--- a/drivers/iio/light/Kconfig
++++ b/drivers/iio/light/Kconfig
+@@ -67,6 +67,7 @@ config AL3010
  
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
-@@ -120,11 +121,12 @@ static int al3010_read_raw(struct iio_de
- 		 * - low byte of output is stored at AL3010_REG_DATA_LOW
- 		 * - high byte of output is stored at AL3010_REG_DATA_LOW + 1
- 		 */
--		ret = regmap_read(data->regmap, AL3010_REG_DATA_LOW, &raw);
-+		ret = regmap_bulk_read(data->regmap, AL3010_REG_DATA_LOW,
-+				       &raw, sizeof(raw));
- 		if (ret)
- 			return ret;
- 
--		*val = raw;
-+		*val = le16_to_cpu(raw);
- 
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
+ config AL3320A
+ 	tristate "AL3320A ambient light sensor"
++	select REGMAP_I2C
+ 	depends on I2C
+ 	help
+ 	  Say Y here if you want to build a driver for the Dyna Image AL3320A
 
 
