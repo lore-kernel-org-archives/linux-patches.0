@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CDF331EAF;
-	Thu, 16 Jul 2026 13:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7183D4133;
+	Thu, 16 Jul 2026 13:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209551; cv=none; b=R7WIZU/weRk7/U5h0ELJCZBDMAqTJSbK3mtreBJxSKOEUj3/2nkSpdKRxDmLOo4YkJPTLJUNlzm40wsHehlaqmn/gcWY7IvCeVdn+EBldJ2U+FVNc3tqWzHhnwicPy8NvN94AOFgnx6LEcehxoP5Wy9Las4pXxO92LRou5MIT18=
+	t=1784209553; cv=none; b=EOop/JS/RzR9Rxs8ER1ZzsJYKWvWtbRFIegAeHytHR0CUmCTSJqthz+WTjrU9AOEoedpZCJTJr7eno15LTbk2pCEbmd+8ajc7ksqvctsd0Pju3PkWO/YX2LZWAmuPZIVToVjhDw2FK3g9ghqioAFJQZSfBZ0V2Oy0xnFiea1tkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209551; c=relaxed/simple;
-	bh=w4HD2q9LWNLkobXG8rvpeOttclYG5QlIXUVfbhqG1kU=;
+	s=arc-20240116; t=1784209553; c=relaxed/simple;
+	bh=Uq4VZupN2j8TCXLVMpQLxcCkyrlwCtPCptgBxzmms5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cuYMd/OgiAvMEcRSSiqMiC6SPwOD3jIrCBifTj8okqu5m9vAvYez5d4XvAW2YpguEE2VSknY0Nz164YsXiU1o3y+jKJD98DZ9aQwYyerZ/dPOgh+bNUqUWIQMW9Clc2YiIGqOhPvosJd2p7iA8CYsbQkwQf3XOLceSt1jWzAtXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xl/qmtLf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D+V9PSXVApQa/5pw5jOIf1heKetjzs/y+rWky2r/8SrfxcL6ZfcCG2FwsdT1Gn8QNlWBJpdScJF5ft9rOhPZHRQc7sP8RRSPAFzWdFCpeqxynpDCgaqOt/nuurFSjjzulnXli0Lf2OdO97QKug6rrlZxQaal+ZiEyFZEaWgkBgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5uSPHSI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xl/qmtLf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022B81F000E9;
-	Thu, 16 Jul 2026 13:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5uSPHSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7512A1F00A3A;
+	Thu, 16 Jul 2026 13:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209547;
-	bh=pzE2yKetP8/DTPnM2Gk36ZzQDE3BmDXF7TUhJMaGrO0=;
+	s=korg; t=1784209550;
+	bh=tMtpRjxyip4VqEMlJjce8wxX3zZByhpXXiLD28SPlg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xl/qmtLfELiaJzkQs+qIhN8gLTUpXxxn5Rcg1/wbkojRRfnNQDMws7LBgGEDmuF9t
-	 9RenEuwbidoo3MFggz9IMeqCoylVr+hy+qx/LRyE97so689FfPAPbXBKfLJfDg6Q6p
-	 pRcfzggT35/z9VxNd/DSXJ9qUn4oAORoM59jhQZg=
+	b=s5uSPHSIvohWpgDuEarpo7GVYsDI1Y2op23KvZrv/DGd751HpzIZ4MVphK+qTwS3Y
+	 B4b/wJ7oNMKP4RoonSBvGothq3rvZrIyMyL2J1DRuMpyVm0c7zp+jFEq3nExkfW7ct
+	 /d89JeJm/eOfAWdXrWjuGId+KiF9GGzfpZv+bIdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Musaab Khan <musaab.khan@protonmail.com>,
+	Haofeng Li <lihaofeng@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 228/518] ksmbd: track the connection owning a byte-range lock
-Date: Thu, 16 Jul 2026 15:28:16 +0200
-Message-ID: <20260716133052.811390374@linuxfoundation.org>
+Subject: [PATCH 7.1 229/518] ksmbd: validate NTLMv2 response before updating session key
+Date: Thu, 16 Jul 2026 15:28:17 +0200
+Message-ID: <20260716133052.833313959@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,134 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Haofeng Li <lihaofeng@kylinos.cn>
 
-commit c1016dd1d8b2bcd1158bbaabe94a31bb7e7431fb upstream.
+commit 954d196bebb2b50151cb96454c72dc113b2af1ac upstream.
 
-SMB2_LOCK adds each granted byte-range lock to both the file lock list
-and the lock list of the connection which handled the request.  The
-final close and durable handle paths, however, remove the connection
-list entry while holding fp->conn->llist_lock.
+ksmbd_auth_ntlmv2() derives the NTLMv2 session key into
+sess->sess_key before it verifies the NTLMv2 response.
+ksmbd_decode_ntlmssp_auth_blob() then continues into KEY_XCH even
+when ksmbd_auth_ntlmv2() failed.
 
-With SMB3 multichannel, the connection handling the LOCK request can be
-different from the connection which opened the file.  The entry can
-therefore be removed under a different spinlock from the one protecting
-the list it belongs to.  A concurrent traversal can then access freed
-struct ksmbd_lock and struct file_lock objects.
+With SMB3 multichannel binding, the failed authentication operates on
+an existing session and the session setup error path does not expire
+binding sessions. A client can send a binding session setup with a
+bad NT proof and KEY_XCH and still modify sess->sess_key before
+STATUS_LOGON_FAILURE is returned.
 
-Record the connection owning each lock's clist entry and hold a
-reference to it while the entry is linked.  Use that connection and its
-llist_lock for unlock, rollback, close, and durable preserve.  Durable
-reconnect assigns the new connection as the owner when publishing the
-locks again.
+Relevant path:
 
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+  smb2_sess_setup()
+    -> conn->binding = true
+    -> ntlm_authenticate()
+       -> session_user()
+       -> ksmbd_decode_ntlmssp_auth_blob()
+          -> ksmbd_auth_ntlmv2()
+             -> calc_ntlmv2_hash()
+             -> hmac_md5_usingrawkey(..., sess->sess_key)
+             -> crypto_memneq() returns mismatch
+          -> KEY_XCH arc4_crypt(..., sess->sess_key, ...)
+    -> out_err without expiring the binding session
+
+Derive the base session key into a local buffer and copy it to
+sess->sess_key only after the proof matches. Return immediately on
+authentication failure so KEY_XCH is only processed after successful
+authentication.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: f9929ef6a2a5 ("ksmbd: add support for key exchange")
 Cc: stable@vger.kernel.org
-Reported-by: Musaab Khan <musaab.khan@protonmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c   |   10 ++++++++--
- fs/smb/server/vfs_cache.c |   23 +++++++++++++++++------
- fs/smb/server/vfs_cache.h |    1 +
- 3 files changed, 26 insertions(+), 8 deletions(-)
+ fs/smb/server/auth.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -7644,9 +7644,11 @@ int smb2_lock(struct ksmbd_work *work)
- 						nolock = 0;
- 						list_del(&cmp_lock->flist);
- 						list_del(&cmp_lock->clist);
-+						cmp_lock->conn = NULL;
- 						spin_unlock(&conn->llist_lock);
- 						up_read(&conn_list_lock);
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -142,6 +142,7 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
+ {
+ 	char ntlmv2_hash[CIFS_ENCPWD_SIZE];
+ 	char ntlmv2_rsp[CIFS_HMAC_MD5_HASH_SIZE];
++	char sess_key[SMB2_NTLMV2_SESSKEY_SIZE];
+ 	struct hmac_md5_ctx ctx;
+ 	int rc;
  
-+						ksmbd_conn_put(conn);
- 						locks_free_lock(cmp_lock->fl);
- 						kfree(cmp_lock);
- 						goto out_check_cl;
-@@ -7781,6 +7783,7 @@ skip:
- 				goto out2;
- 			} else if (!rc) {
- 				list_add(&smb_lock->llist, &rollback_list);
-+				smb_lock->conn = ksmbd_conn_get(work->conn);
- 				spin_lock(&work->conn->llist_lock);
- 				list_add_tail(&smb_lock->clist,
- 					      &work->conn->lock_list);
-@@ -7835,11 +7838,14 @@ out:
- 		}
+@@ -164,12 +165,21 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
+ 	/* Generate the session key */
+ 	hmac_md5_usingrawkey(ntlmv2_hash, CIFS_HMAC_MD5_HASH_SIZE,
+ 			     ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE,
+-			     sess->sess_key);
++			     sess_key);
  
- 		list_del(&smb_lock->llist);
--		spin_lock(&work->conn->llist_lock);
-+		conn = smb_lock->conn;
-+		spin_lock(&conn->llist_lock);
- 		if (!list_empty(&smb_lock->flist))
- 			list_del(&smb_lock->flist);
- 		list_del(&smb_lock->clist);
--		spin_unlock(&work->conn->llist_lock);
-+		smb_lock->conn = NULL;
-+		spin_unlock(&conn->llist_lock);
-+		ksmbd_conn_put(conn);
- 
- 		locks_free_lock(smb_lock->fl);
- 		if (rlock)
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -484,10 +484,14 @@ static void __ksmbd_close_fd(struct ksmb
- 	 * there are not accesses to fp->lock_list.
- 	 */
- 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
--		if (!list_empty(&smb_lock->clist) && fp->conn) {
--			spin_lock(&fp->conn->llist_lock);
--			list_del(&smb_lock->clist);
--			spin_unlock(&fp->conn->llist_lock);
-+		struct ksmbd_conn *conn = smb_lock->conn;
+ 	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
+-			  CIFS_HMAC_MD5_HASH_SIZE))
+-		return -EINVAL;
+-	return 0;
++			  CIFS_HMAC_MD5_HASH_SIZE)) {
++		rc = -EINVAL;
++		goto out;
++	}
 +
-+		if (conn) {
-+			spin_lock(&conn->llist_lock);
-+			list_del_init(&smb_lock->clist);
-+			smb_lock->conn = NULL;
-+			spin_unlock(&conn->llist_lock);
-+			ksmbd_conn_put(conn);
- 		}
++	memcpy(sess->sess_key, sess_key, sizeof(sess_key));
++	rc = 0;
++out:
++	memzero_explicit(ntlmv2_hash, sizeof(ntlmv2_hash));
++	memzero_explicit(ntlmv2_rsp, sizeof(ntlmv2_rsp));
++	memzero_explicit(sess_key, sizeof(sess_key));
++	return rc;
+ }
  
- 		list_del(&smb_lock->flist);
-@@ -1303,9 +1307,15 @@ static bool session_fd_check(struct ksmb
- 	up_write(&ci->m_lock);
+ /**
+@@ -226,6 +236,8 @@ int ksmbd_decode_ntlmssp_auth_blob(struc
+ 				nt_len - CIFS_ENCPWD_SIZE,
+ 				domain_name, conn->ntlmssp.cryptkey);
+ 	kfree(domain_name);
++	if (ret)
++		return ret;
  
- 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
--		spin_lock(&conn->llist_lock);
-+		struct ksmbd_conn *lock_conn = smb_lock->conn;
-+
-+		if (!lock_conn)
-+			continue;
-+		spin_lock(&lock_conn->llist_lock);
- 		list_del_init(&smb_lock->clist);
--		spin_unlock(&conn->llist_lock);
-+		smb_lock->conn = NULL;
-+		spin_unlock(&lock_conn->llist_lock);
-+		ksmbd_conn_put(lock_conn);
- 	}
- 
- 	fp->conn = NULL;
-@@ -1435,6 +1445,7 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 	}
- 
- 	list_for_each_entry(smb_lock, &fp->lock_list, flist) {
-+		smb_lock->conn = ksmbd_conn_get(conn);
- 		spin_lock(&conn->llist_lock);
- 		list_add_tail(&smb_lock->clist, &conn->lock_list);
- 		spin_unlock(&conn->llist_lock);
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -32,6 +32,7 @@ struct ksmbd_session;
- 
- struct ksmbd_lock {
- 	struct file_lock *fl;
-+	struct ksmbd_conn *conn;
- 	struct list_head clist;
- 	struct list_head flist;
- 	struct list_head llist;
+ 	/* The recovered secondary session key */
+ 	if (conn->ntlmssp.client_flags & NTLMSSP_NEGOTIATE_KEY_XCH) {
 
 
