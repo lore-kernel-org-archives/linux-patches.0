@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4C92DF137;
-	Thu, 16 Jul 2026 13:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D152DF137;
+	Thu, 16 Jul 2026 13:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209293; cv=none; b=TWeLr9RDHgPpI9ocrPKXp3x+qUgZBcL/sdhpoX0K/JO00X3gJTmiHtyFvM7OU7t7WwrXPXTPjpa7KvB+L+y1CJc2y0tXmm5CClnSZUioUIVZEnEDgkCkFpdcw5S4dCBGX1mAs4EdouUoB5NSokLjbS6QBQ1UJB0FhhvFioFetM8=
+	t=1784209296; cv=none; b=fwca++uBh1F8eNuh6u/ZHiaXR2QMVVaQKtwZfQG9PnV5cM8DHIBX926aBCtkrWLi6SxYUYEsmhEOJllhpBFMJzJK6fUW899WigH8cGZ/Jf6+tHG+sNvrxyd3FSX/5OMFadpTWrCqyy+O/BqWOzulEkGUxK4BZdlXaB9BEdsqhic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209293; c=relaxed/simple;
-	bh=b/OkRJddN7OjUbpFLbTzVQ0MSANBjj899CjzVrItN38=;
+	s=arc-20240116; t=1784209296; c=relaxed/simple;
+	bh=bWwUYtANdnp7GhfUNoaEvIBCiaZIeSqyPOlhqqEvis8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gn4LwkJNIIcsz+JtezXyJ+iPcssHCpQCfmMKyspcW61QKamMVglVNPekdIpMnNlDjhW7DAuNHeraFl20qAusVdnFp/1WqFsJwYwvbcRgPfmlcjTN7cwoAkvgwrE9RAtMKBHtXUvarIqUwX52+Zb2uQk/z1vGlE9zYQn0kdEsMgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFptdGTx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjELgxQYPnRwK9uYThlHRaiSSdgg8UOEa7paTAYCtFkuMdkLhbBSvUEaw+K/C+9Tnbn8GrsdYcnJETYNUt4K4TzC7Ht9yLvW4g0CRkDSZ7HerOzPY1ZGbfchuR4uLYw3UTWF4d4WsGM/trebT2bmish7s6NFBSygvHVHclMEBoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCzan/Pf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFptdGTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109CA1F000E9;
-	Thu, 16 Jul 2026 13:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCzan/Pf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1911F000E9;
+	Thu, 16 Jul 2026 13:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209292;
-	bh=ObmdGUcKFDF4fcwD1tLK3Sc5RSZK6OIb8HR0XihniXU=;
+	s=korg; t=1784209295;
+	bh=9qshh9dg336I9p/NAV7HLr1pgkDgtc22IfJsMQqiSag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OFptdGTxsaC1bgV6HGHp1ai+x78pu/PI19kh78IASWJwZCVLkJQ4NuZPZqnXAm3/F
-	 PKqR8fBD+zMAU3hDZTkXvCE4r/aZ61TOeMuiNAbXK5e8BMuAwAzXM+bWaRcm5IG/ZN
-	 dAxcXUcz3HAMmIkG9g2UDs0Tjvb0cijuH2tn/neA=
+	b=jCzan/PfyD6jiDiPr9ZPRkMgHzQif+Kw4y5HGrRC/qd2F/CaQzmkS9kvhXcDpauGm
+	 qY4IkVSvhUpbtkMGe9BdR5xUbZApDUUNZho/03groGnNeoIOr3djUtdP6raqV6IBzc
+	 LEtid5Mf+ac1GNvidrjrvl/d5TZaMcnjMc18zkGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Alok Tiwari <alok.a.tiwari@oracle.com>
-Subject: [PATCH 7.1 131/518] PCI: Always lift 2.5GT/s restriction in PCIe failed link retraining
-Date: Thu, 16 Jul 2026 15:26:39 +0200
-Message-ID: <20260716133050.724731529@linuxfoundation.org>
+	Vidya Sagar <vidyas@nvidia.com>
+Subject: [PATCH 7.1 132/518] PCI: host-common: Request bus reassignment when not probe-only
+Date: Thu, 16 Jul 2026 15:26:40 +0200
+Message-ID: <20260716133050.745377788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,118 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-commit 72780f7964684939d7d2f69c348876213b184484 upstream.
+commit fda8749ba73638f5bbca3ffb39bc6861eb3b23fa upstream.
 
-Discard Vendor:Device ID matching in the PCIe failed link retraining quirk
-and ignore the link status for the removal of the 2.5GT/s speed clamp,
-whether applied by the quirk itself or the firmware earlier on.  Revert to
-the original target link speed if this final link retraining has failed.
+pci_host_common_init() is used by several generic ECAM host drivers.
+After PCI core changes around pci_flags and preserve_config, these hosts
+no longer opted into full bus number reassignment the way they did
+before, which broke enumeration of devices on a Marvell CN106XX board.
 
-This is so that link training noise in hot-plug scenarios does not make a
-link remain clamped to the 2.5GT/s speed where an event race has led the
-quirk to apply the speed clamp for one device, only to leave it in place
-for a subsequent device to be plugged in.
+When PCI_PROBE_ONLY is not set, add PCI_REASSIGN_ALL_BUS so
+pci_scan_bridge_extend() takes the reassignment path: bus numbers can be
+assigned from firmware EA data (e.g. pci_ea_fixed_busnrs()). Skip the
+flag in probe-only mode so existing assignments are not overridden.
 
-Refer to the Link Capabilities register directly for the maximum link speed
-determination so as to streamline backporting.
-
-Fixes: a89c82249c37 ("PCI: Work around PCIe link training failures")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 7246a4520b4b ("PCI: Use preserve_config in place of pci_flags")
+Closes: https://lore.kernel.org/all/abkqm_LCd9zAM8cW@rkannoth-OptiPlex-7090/
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+[mani: added stable tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: add problem report link]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Cc: stable@vger.kernel.org # v6.5+
-Link: https://patch.msgid.link/alpine.DEB.2.21.2512080331530.49654@angie.orcam.me.uk
+Cc: stable@vger.kernel.org
+Cc: Vidya Sagar <vidyas@nvidia.com>
+Link: https://patch.msgid.link/20260414081730.3864372-1-rkannoth@marvell.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |   51 ++++++++++++++++++---------------------------------
- 1 file changed, 18 insertions(+), 33 deletions(-)
+ drivers/pci/controller/pci-host-common.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -80,11 +80,10 @@ static bool pcie_lbms_seen(struct pci_de
-  * Restrict the speed to 2.5GT/s then with the Target Link Speed field,
-  * request a retrain and check the result.
-  *
-- * If this turns out successful and we know by the Vendor:Device ID it is
-- * safe to do so, then lift the restriction, letting the devices negotiate
-- * a higher speed.  Also check for a similar 2.5GT/s speed restriction the
-- * firmware may have already arranged and lift it with ports that already
-- * report their data link being up.
-+ * If this turns out successful, or where a 2.5GT/s speed restriction has
-+ * been previously arranged by the firmware and the port reports its link
-+ * already being up, lift the restriction, in a hope it is safe to do so,
-+ * letting the devices negotiate a higher speed.
-  *
-  * Otherwise revert the speed to the original setting and request a retrain
-  * again to remove any residual state, ignoring the result as it's supposed
-@@ -95,52 +94,38 @@ static bool pcie_lbms_seen(struct pci_de
-  */
- int pcie_failed_link_retrain(struct pci_dev *dev)
- {
--	static const struct pci_device_id ids[] = {
--		{ PCI_VDEVICE(ASMEDIA, 0x2824) }, /* ASMedia ASM2824 */
--		{}
--	};
--	u16 lnksta, lnkctl2;
-+	u16 lnksta, lnkctl2, oldlnkctl2;
- 	int ret = -ENOTTY;
-+	u32 lnkcap;
+--- a/drivers/pci/controller/pci-host-common.c
++++ b/drivers/pci/controller/pci-host-common.c
+@@ -68,6 +68,10 @@ int pci_host_common_init(struct platform
+ 	if (IS_ERR(cfg))
+ 		return PTR_ERR(cfg);
  
- 	if (!pci_is_pcie(dev) || !pcie_downstream_port(dev) ||
- 	    !pcie_cap_has_lnkctl2(dev) || !dev->link_active_reporting)
- 		return ret;
- 
- 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
-+	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &oldlnkctl2);
- 	if (!(lnksta & PCI_EXP_LNKSTA_DLLLA) && pcie_lbms_seen(dev, lnksta)) {
--		u16 oldlnkctl2;
--
- 		pci_info(dev, "broken device, retraining non-functional downstream link at 2.5GT/s\n");
--
--		pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &oldlnkctl2);
- 		ret = pcie_set_target_speed(dev, PCIE_SPEED_2_5GT, false);
--		if (ret) {
--			pci_info(dev, "retraining failed\n");
--			pcie_set_target_speed(dev, PCIE_LNKCTL2_TLS2SPEED(oldlnkctl2),
--					      true);
--			return ret;
--		}
--
--		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
-+		if (ret)
-+			goto err;
- 	}
- 
- 	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
--
--	if ((lnksta & PCI_EXP_LNKSTA_DLLLA) &&
--	    (lnkctl2 & PCI_EXP_LNKCTL2_TLS) == PCI_EXP_LNKCTL2_TLS_2_5GT &&
--	    pci_match_id(ids, dev)) {
--		u32 lnkcap;
--
-+	pcie_capability_read_dword(dev, PCI_EXP_LNKCAP, &lnkcap);
-+	if ((lnkctl2 & PCI_EXP_LNKCTL2_TLS) == PCI_EXP_LNKCTL2_TLS_2_5GT &&
-+	    (lnkcap & PCI_EXP_LNKCAP_SLS) != PCI_EXP_LNKCAP_SLS_2_5GB) {
- 		pci_info(dev, "removing 2.5GT/s downstream link speed restriction\n");
--		pcie_capability_read_dword(dev, PCI_EXP_LNKCAP, &lnkcap);
- 		ret = pcie_set_target_speed(dev, PCIE_LNKCAP_SLS2SPEED(lnkcap), false);
--		if (ret) {
--			pci_info(dev, "retraining failed\n");
--			return ret;
--		}
-+		if (ret)
-+			goto err;
- 	}
- 
- 	return ret;
-+err:
-+	pci_info(dev, "retraining failed\n");
-+	pcie_set_target_speed(dev, PCIE_LNKCTL2_TLS2SPEED(oldlnkctl2), true);
-+	return ret;
- }
- 
- static ktime_t fixup_debug_start(struct pci_dev *dev,
++	/* Do not reassign bus numbers if probe only */
++	if (!pci_has_flag(PCI_PROBE_ONLY))
++		pci_add_flags(PCI_REASSIGN_ALL_BUS);
++
+ 	bridge->sysdata = cfg;
+ 	bridge->ops = (struct pci_ops *)&ops->pci_ops;
+ 	bridge->enable_device = ops->enable_device;
 
 
