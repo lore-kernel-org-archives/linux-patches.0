@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7946A3195EF;
-	Thu, 16 Jul 2026 14:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7AB28505E;
+	Thu, 16 Jul 2026 14:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211268; cv=none; b=gUXrlS0Xhsov1K2P9VV4dgbWbLua/zJuobPUEEMiBjPm2P43z2HT2R8SKx+RTy7mEPsYhmGESxHEEEyRrzlytDNyGGCg8QWeY7Kg0tBTvqATpV5Q98C4DILjCg9qLFXcFG/LXl38BCfR18BftYm7SDBWdLKdWev1gW6kh350AGA=
+	t=1784211271; cv=none; b=C7iWJMAAqE2Sw2SRxCQfVoHkv4W9M6EjnM6rWnXuu/48epovEGXNBE/j+9XBSn10d/oxpXci6HyAQT9qtaB1iCkYq/BRD9NHebGukQOFoHib9eRvmIIgxZjOKJBqLnbcP++ZF/HmgYgW/DCN+bGNre7Cvgwco/Tcal22CnS2eVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211268; c=relaxed/simple;
-	bh=n/JB1I+r6hDZeBpDUv/Hps6022SsNUv1xAn2EAWYcqs=;
+	s=arc-20240116; t=1784211271; c=relaxed/simple;
+	bh=XjyeqK70nPsnYq7nIYqM66/gsVzLKV1RIA7Wzghk04A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNH/mpNvoiw05lDZWGT7aHs88CDbDQRLRy5vLAML8mrOgNnjeH1WZD0tfrTzb4GXom5i7HUEsxCI7T7gIXqbppy5pBOKOG7AMew4sPY9M7bi/0thmn9cywdgiVkMWtXTx8Z2nqMZ25YLdjvzcAR5qcWRpPaF19E/EiZ9ep4G+yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reDLAN36; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HiP5OCz+nUue1E8z6jr8VWUMKovlzvQBbwd22VxGUuaaZVkn0s5YusXkFor5Cv3QokSQViq2YamEB56TDe/lNxsQ70C0zQ9hV1sz8YEuGOHFOpvHm1HTKS8Th0Twbdk7f/0ulJ3swlvhh5CjJnmdkf3DwJTo2TV1Hl9LeHa08BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyDEAITU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reDLAN36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDF71F000E9;
-	Thu, 16 Jul 2026 14:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyDEAITU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839271F00A3A;
+	Thu, 16 Jul 2026 14:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211267;
-	bh=QAYNa690ZnyefrCiV9k6vsoGCU71AZ3a0PeJmNA3ATI=;
+	s=korg; t=1784211270;
+	bh=GM/JoFIsOAenAHVdSWncGJOn+AaulQCO3YLkwoVIXSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=reDLAN36wa9s/RHVlz+y+7BRY1XZrwn67jY+ZCyAEWAaEA2dnAnE35ijiKWB4Lhsj
-	 kSL8VIlDPGZkL7j+j8oMjhQ81hVObBHAxo3Lhqq2dc8oXnhlqKPpqbW0G6Pfq+DAvm
-	 gh9TCdbwrbYVioQu0kHfYnVfnEONfY2ZC/0ovel8=
+	b=XyDEAITUvXHQP9YqW6niXCXWhi5tZ2r7i4wequp9Yu5KlnNTTHzB08MfEPw/pZkWG
+	 8LPHCwlnby3zvqdePVfAIkHBxiBMSNuvNjrSoPNohTE+8FcI3gCQ3oObueAVfkSoWn
+	 zAWbbnz7ExEEja0RDU4UbnsUmsYQzsIbmEqHgH1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 362/480] crypto: drbg - Fix the fips_enabled priority boost
-Date: Thu, 16 Jul 2026 15:31:49 +0200
-Message-ID: <20260716133052.635031681@linuxfoundation.org>
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 327/480] bpf: Restrict JIT predictor flush to cBPF
+Date: Thu, 16 Jul 2026 15:31:14 +0200
+Message-ID: <20260716133051.893012611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,39 +51,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit a8a1f93080efc83a9ff8452954429ae379e9e614 upstream.
+commit 0bb99f2cfaae6822d734d69722de30af823efdf3 upstream.
 
-When fips_enabled=1, it seems to have been intended for one of the
-algorithms defined in crypto/drbg.c to be the highest priority "stdrng"
-algorithm, so that it is what is used by "stdrng" users.
+Currently predictor flush on memory reuse is done for all BPF JIT
+allocations, but only cBPF programs can be loaded by an unprivileged user.
+eBPF is privileged by default, and flushing predictors for all CPUs on
+every eBPF reuse penalizes the common case for no security benefit.
 
-However, the code only boosts the priority to 400, which is less than
-the priority 500 used in drivers/crypto/caam/caamprng.c.  Thus, the CAAM
-RNG could be used instead.
+eBPF allocations can be frequent on busy systems, only flush predictors
+for cBPF programs. Trampoline and dispatcher allocations also skip the
+flush as they are eBPF-only.
 
-Fix this by boosting the priority by 2000 instead of 200.
+  [pawan: backport had various conflicts in arches bpf_int_jit_compile().
+	  loongarch bpf_int_jit_compile() doesn't use pack allocator,
+	  dropped was_classic hunk. ]
 
-Fixes: 541af946fe13 ("crypto: drbg - SP800-90A Deterministic Random Bit Generator")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/drbg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/net/bpf_jit_comp.c   |  4 ++--
+ arch/loongarch/net/bpf_jit.c    |  2 +-
+ arch/powerpc/net/bpf_jit_comp.c |  4 ++--
+ arch/riscv/net/bpf_jit_comp64.c |  2 +-
+ arch/riscv/net/bpf_jit_core.c   |  3 ++-
+ arch/x86/net/bpf_jit_comp.c     |  5 +++--
+ include/linux/filter.h          |  5 +++--
+ kernel/bpf/core.c               | 13 ++++++++-----
+ kernel/bpf/dispatcher.c         |  2 +-
+ 9 files changed, 23 insertions(+), 17 deletions(-)
 
---- a/crypto/drbg.c
-+++ b/crypto/drbg.c
-@@ -2082,7 +2082,7 @@ static inline void __init drbg_fill_arra
- 	 * it is selected.
- 	 */
- 	if (fips_enabled)
--		alg->base.cra_priority += 200;
-+		alg->base.cra_priority += 2000;
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 873c1b784a872d..c563bae8fce1c2 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -2117,7 +2117,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
+ 	image_size = extable_offset + extable_size;
+ 	ro_header = bpf_jit_binary_pack_alloc(image_size, &ro_image_ptr,
+ 					      sizeof(u64), &header, &image_ptr,
+-					      jit_fill_hole);
++					      jit_fill_hole, was_classic);
+ 	if (!ro_header) {
+ 		prog = orig_prog;
+ 		goto out_off;
+@@ -2754,7 +2754,7 @@ int arch_bpf_trampoline_size(const struct btf_func_model *m, u32 flags,
  
- 	alg->base.cra_ctxsize 	= sizeof(struct drbg_state);
- 	alg->base.cra_module	= THIS_MODULE;
+ void *arch_alloc_bpf_trampoline(unsigned int size)
+ {
+-	return bpf_prog_pack_alloc(size, jit_fill_hole);
++	return bpf_prog_pack_alloc(size, jit_fill_hole, false);
+ }
+ 
+ void arch_free_bpf_trampoline(void *image, unsigned int size)
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index e9d666508ae28f..a000620ca99da7 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -1474,7 +1474,7 @@ static void invoke_bpf_mod_ret(struct jit_ctx *ctx, struct bpf_tramp_links *tl,
+ 
+ void *arch_alloc_bpf_trampoline(unsigned int size)
+ {
+-	return bpf_prog_pack_alloc(size, jit_fill_hole);
++	return bpf_prog_pack_alloc(size, jit_fill_hole, false);
+ }
+ 
+ void arch_free_bpf_trampoline(void *image, unsigned int size)
+diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
+index 189ef7b72081d2..cedab25aa3a823 100644
+--- a/arch/powerpc/net/bpf_jit_comp.c
++++ b/arch/powerpc/net/bpf_jit_comp.c
+@@ -246,7 +246,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+ 	alloclen = proglen + FUNCTION_DESCR_SIZE + fixup_len + extable_len;
+ 
+ 	fhdr = bpf_jit_binary_pack_alloc(alloclen, &fimage, 4, &hdr, &image,
+-					      bpf_jit_fill_ill_insns);
++					 bpf_jit_fill_ill_insns, bpf_prog_was_classic(fp));
+ 	if (!fhdr) {
+ 		fp = org_fp;
+ 		goto out_addrs;
+@@ -468,7 +468,7 @@ bool bpf_jit_supports_insn(struct bpf_insn *insn, bool in_arena)
+ 
+ void *arch_alloc_bpf_trampoline(unsigned int size)
+ {
+-	return bpf_prog_pack_alloc(size, bpf_jit_fill_ill_insns);
++	return bpf_prog_pack_alloc(size, bpf_jit_fill_ill_insns, false);
+ }
+ 
+ void arch_free_bpf_trampoline(void *image, unsigned int size)
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 45cbc7c6fe490c..9e9e6dcfc48254 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -1268,7 +1268,7 @@ int arch_bpf_trampoline_size(const struct btf_func_model *m, u32 flags,
+ 
+ void *arch_alloc_bpf_trampoline(unsigned int size)
+ {
+-	return bpf_prog_pack_alloc(size, bpf_fill_ill_insns);
++	return bpf_prog_pack_alloc(size, bpf_fill_ill_insns, false);
+ }
+ 
+ void arch_free_bpf_trampoline(void *image, unsigned int size)
+diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
+index 191bf0e66c8243..e4ab5bb9c9f646 100644
+--- a/arch/riscv/net/bpf_jit_core.c
++++ b/arch/riscv/net/bpf_jit_core.c
+@@ -125,7 +125,8 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
+ 				bpf_jit_binary_pack_alloc(prog_size + extable_size,
+ 							  &jit_data->ro_image, sizeof(u32),
+ 							  &jit_data->header, &jit_data->image,
+-							  bpf_fill_ill_insns);
++							  bpf_fill_ill_insns,
++							  bpf_prog_was_classic(prog));
+ 			if (!jit_data->ro_header) {
+ 				prog = orig_prog;
+ 				goto out_offset;
+diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+index 788671a32d8ee0..c3798cab3b7db0 100644
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -3447,7 +3447,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
+ 
+ void *arch_alloc_bpf_trampoline(unsigned int size)
+ {
+-	return bpf_prog_pack_alloc(size, jit_fill_hole);
++	return bpf_prog_pack_alloc(size, jit_fill_hole, false);
+ }
+ 
+ void arch_free_bpf_trampoline(void *image, unsigned int size)
+@@ -3780,7 +3780,8 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
+ 			/* allocate module memory for x86 insns and extable */
+ 			header = bpf_jit_binary_pack_alloc(roundup(proglen, align) + extable_size,
+ 							   &image, align, &rw_header, &rw_image,
+-							   jit_fill_hole);
++							   jit_fill_hole,
++							   bpf_prog_was_classic(prog));
+ 			if (!header) {
+ 				prog = orig_prog;
+ 				goto out_addrs;
+diff --git a/include/linux/filter.h b/include/linux/filter.h
+index 3c4dd718beced8..2469fd2e401578 100644
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -1290,7 +1290,7 @@ void bpf_jit_free(struct bpf_prog *fp);
+ struct bpf_binary_header *
+ bpf_jit_binary_pack_hdr(const struct bpf_prog *fp);
+ 
+-void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns);
++void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool was_classic);
+ void bpf_prog_pack_free(void *ptr, u32 size);
+ 
+ static inline bool bpf_prog_kallsyms_verify_off(const struct bpf_prog *fp)
+@@ -1304,7 +1304,8 @@ bpf_jit_binary_pack_alloc(unsigned int proglen, u8 **ro_image,
+ 			  unsigned int alignment,
+ 			  struct bpf_binary_header **rw_hdr,
+ 			  u8 **rw_image,
+-			  bpf_jit_fill_hole_t bpf_fill_ill_insns);
++			  bpf_jit_fill_hole_t bpf_fill_ill_insns,
++			  bool was_classic);
+ int bpf_jit_binary_pack_finalize(struct bpf_binary_header *ro_header,
+ 				 struct bpf_binary_header *rw_header);
+ void bpf_jit_binary_pack_free(struct bpf_binary_header *ro_header,
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index a043fccb917e86..338a806e25c045 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -924,7 +924,7 @@ static struct bpf_prog_pack *alloc_new_pack(bpf_jit_fill_hole_t bpf_fill_ill_ins
+ 	return NULL;
+ }
+ 
+-void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
++void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool was_classic)
+ {
+ 	unsigned int nbits = BPF_PROG_SIZE_TO_NBITS(size);
+ 	struct bpf_prog_pack *pack;
+@@ -939,7 +939,7 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
+ 		 * safe because cBPF programs (the unprivileged attack surface)
+ 		 * are bounded well below a pack size.
+ 		 */
+-		if (static_branch_unlikely(&bpf_pred_flush_enabled))
++		if (was_classic && static_branch_unlikely(&bpf_pred_flush_enabled))
+ 			pr_warn_once("BPF: Predictors not flushed for allocations greater than BPF_PROG_PACK_SIZE\n");
+ 		size = round_up(size, PAGE_SIZE);
+ 		ptr = bpf_jit_alloc_exec(size);
+@@ -971,7 +971,9 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
+ 	pos = 0;
+ 
+ found_free_area:
+-	static_call_cond(bpf_arch_pred_flush)();
++	/* Flush only for cBPF as it may contain a crafted gadget */
++	if (static_branch_unlikely(&bpf_pred_flush_enabled) && was_classic)
++		static_call_cond(bpf_arch_pred_flush)();
+ 	bitmap_set(pack->bitmap, pos, nbits);
+ 	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
+ 
+@@ -1131,7 +1133,8 @@ bpf_jit_binary_pack_alloc(unsigned int proglen, u8 **image_ptr,
+ 			  unsigned int alignment,
+ 			  struct bpf_binary_header **rw_header,
+ 			  u8 **rw_image,
+-			  bpf_jit_fill_hole_t bpf_fill_ill_insns)
++			  bpf_jit_fill_hole_t bpf_fill_ill_insns,
++			  bool was_classic)
+ {
+ 	struct bpf_binary_header *ro_header;
+ 	u32 size, hole, start;
+@@ -1144,7 +1147,7 @@ bpf_jit_binary_pack_alloc(unsigned int proglen, u8 **image_ptr,
+ 
+ 	if (bpf_jit_charge_modmem(size))
+ 		return NULL;
+-	ro_header = bpf_prog_pack_alloc(size, bpf_fill_ill_insns);
++	ro_header = bpf_prog_pack_alloc(size, bpf_fill_ill_insns, was_classic);
+ 	if (!ro_header) {
+ 		bpf_jit_uncharge_modmem(size);
+ 		return NULL;
+diff --git a/kernel/bpf/dispatcher.c b/kernel/bpf/dispatcher.c
+index b77db7413f8c70..ea2d60dc1feeb7 100644
+--- a/kernel/bpf/dispatcher.c
++++ b/kernel/bpf/dispatcher.c
+@@ -145,7 +145,7 @@ void bpf_dispatcher_change_prog(struct bpf_dispatcher *d, struct bpf_prog *from,
+ 
+ 	mutex_lock(&d->mutex);
+ 	if (!d->image) {
+-		d->image = bpf_prog_pack_alloc(PAGE_SIZE, bpf_jit_fill_hole_with_zero);
++		d->image = bpf_prog_pack_alloc(PAGE_SIZE, bpf_jit_fill_hole_with_zero, false);
+ 		if (!d->image)
+ 			goto out;
+ 		d->rw_image = bpf_jit_alloc_exec(PAGE_SIZE);
+-- 
+2.53.0
+
 
 
