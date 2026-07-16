@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A8222F74A;
-	Thu, 16 Jul 2026 14:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3691400973;
+	Thu, 16 Jul 2026 14:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210412; cv=none; b=sQa4UucJBWB6ORtiITUr4FMA0fvURAGnXyHdF+gghmZi18S1jPVBZxSmUmbLOUtEvDRyIPBAHCtM07holyrTuntg0MJOWFqJBLbCu8QlqvesHPNw878nl1tfDZChdfxgOXk5uQ0EnmRFLGv1vXfRLEfk/j4t/kxUy0vkXAGZ3hs=
+	t=1784210414; cv=none; b=fhvsFTwT/qEjqYzUjxeTwqCePhHKbtHsG41V0fBujAnGkKTrJH/EVaFNJSngA0vnopjYNMzs+WZ6xD/Iz1Bws4da6Re8+mOXzKf087JLVg94phL6so2g9vlw5HfqiPijI/8Ttj5vpXN5Lhfqp+MNF9VmzbUztP2cGDujwK346RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210412; c=relaxed/simple;
-	bh=wA3ldRCPPXV78136pc9RYTwsYEtkHPRqar+bZnZ0svc=;
+	s=arc-20240116; t=1784210414; c=relaxed/simple;
+	bh=HlItblnNQ4MIF60u/uCAS9Jo02rkYcsuNuTYDRQZCgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srw3ooO2uaxZE8zpso6mk7LOjsI8/w5+MV0HQlE9k6AeD2wLSURBRkd1o5t3WTaBPvwtF2q7JHTKdYm17oMvR7eiybegE1DvXMbhEl6uem6spAFaYRCUT5chlytoLDh1m8jnV0b7GNMsbxRB7VJfEDgsPJ/RV9fzwUk4ymWxYaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Eb7rFDo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dTmaDfK38C2bBZhCSHBFHQJqlUpMMf2ogcD6qlahVAwIn/TZDA3rwG7a9GYMmjynNkbcv3/M5ubNQW6S1hK68HyD8GlWtdXqTJfJe+8IaTahaQpsP63/vTwtCjQ3NGaKw312MOaOlCd8VrrrcB1jhAI6MzGmk3t5Y2kgrOHnE/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZLfAx1+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Eb7rFDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A83E1F000E9;
-	Thu, 16 Jul 2026 14:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZLfAx1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E9C1F000E9;
+	Thu, 16 Jul 2026 14:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210410;
-	bh=qqiTJ4l44YPBTLCoNeUoA1NmPy45b7HEsOUBR5hx2uo=;
+	s=korg; t=1784210413;
+	bh=YNMhqzGjjf9gds7VTjz7EKauIBvKs4+BXfu01MzB3iE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Eb7rFDoxndik9RK2QUAiQ/KkgzyZbzxuMjPOLhQPIdiBvKPEI9/doWIZr8JJP3ZP
-	 4GFVhycRqmE5oS3nVK8K1entlt0hfJNgK4OlprUZZx3g2zb5yuC+zmqp2kQPeon5ej
-	 GvRoRKXH7fVGM2aCyPc2s05wsqrgTFjhVVXprz/s=
+	b=JZLfAx1+eBdG31FRGWYYFOtBbk3rLEC7tXa8nTPXFbVtp7bdbnw3nXhnTyIXiKeES
+	 F/nFAt8KP3ZVsVwXHvTlyXXqmL7/9KljxLiv/DU7bXvRffngniIqhdYdzF9YoNjmc7
+	 IbV/mENthwCBQL+4C7proFciLTpy34NCu3ri01X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanzhen Gan <elysia-best@simplelinux.cn.eu.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 036/480] LoongArch: Add PIO for early access before ACPI PCI root register
-Date: Thu, 16 Jul 2026 15:26:23 +0200
-Message-ID: <20260716133045.481355349@linuxfoundation.org>
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Gary Guo <gary@garyguo.net>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 037/480] rust: cpufreq: clean new `clippy::map_or_identity` lint for Rust 1.98.0
+Date: Thu, 16 Jul 2026 15:26:24 +0200
+Message-ID: <20260716133045.503461247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,107 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 6061e65f95713b01f4313cda6637dfe3aa5412b4 upstream.
+commit 3473e0a219fdb2cb013da0a5d917e66fef052325 upstream.
 
-For ACPI system we suppose the ISA/LPC PIO range is registered together
-with PCI root bridge. But the fact is there may be some early access to
-the ISA/LPC PIO range before ACPI PCI root register (most of them are
-due to abnormal BIOS). Unconditionally register the ISA/LPC PIO range
-usually causes ACPI PCI root register fail because of the address range
-confliction. So we add a pair of helpers: acpi_add_early_pio() to add
-PIO for early access, and acpi_remove_early_pio() to remove PIO before
-PCI root register. Since acpi_remove_early_pio() may be called multiple
-times, we add an acpi_pio flag to ensure PIO be removed only once.
+Starting with Rust 1.98.0 (expected 2026-08-20), Clippy is likely
+introducing a new lint `clippy::map_or_identity` [1][2], which currently
+triggers in a single case:
 
-Cc: <stable@vger.kernel.org>
-Tested-by: Yuanzhen Gan <elysia-best@simplelinux.cn.eu.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+    warning: expression can be simplified using `Result::unwrap_or()`
+        --> rust/kernel/cpufreq.rs:1326:60
+         |
+    1326 |         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
+         |                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         |
+         = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#map_or_identity
+         = note: `-W clippy::map-or-identity` implied by `-W clippy::all`
+         = help: to override `-W clippy::all` add `#[allow(clippy::map_or_identity)]`
+    help: consider using `unwrap_or`
+         |
+    1326 -         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
+    1326 +         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).unwrap_or(0))
+         |
+
+The suggestion is valid, thus clean it up.
+
+Cc: stable@vger.kernel.org # Needed in 6.18.y and later.
+Link: https://github.com/rust-lang/rust-clippy/issues/15801 [1]
+Link: https://github.com/rust-lang/rust-clippy/pull/16052 [2]
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20260530095809.213611-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/acpi.h |    2 ++
- arch/loongarch/kernel/acpi.c      |   28 ++++++++++++++++++++++++++++
- arch/loongarch/kernel/setup.c     |    2 ++
- arch/loongarch/pci/acpi.c         |    2 ++
- 4 files changed, 34 insertions(+)
+ rust/kernel/cpufreq.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/include/asm/acpi.h
-+++ b/arch/loongarch/include/asm/acpi.h
-@@ -38,6 +38,8 @@ static inline bool acpi_has_cpu_in_madt(
- extern struct list_head acpi_wakeup_device_list;
- extern struct acpi_madt_core_pic acpi_core_pic[MAX_CORE_PIC];
+--- a/rust/kernel/cpufreq.rs
++++ b/rust/kernel/cpufreq.rs
+@@ -1323,7 +1323,7 @@ impl<T: Driver> Registration<T> {
+         // SAFETY: The C API guarantees that `cpu` refers to a valid CPU number.
+         let cpu_id = unsafe { CpuId::from_u32_unchecked(cpu) };
  
-+extern void acpi_add_early_pio(void);
-+extern void acpi_remove_early_pio(void);
- extern int __init parse_acpi_topology(void);
+-        PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
++        PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).unwrap_or(0))
+     }
  
- static inline u32 get_acpi_id_for_cpu(unsigned int cpu)
---- a/arch/loongarch/kernel/acpi.c
-+++ b/arch/loongarch/kernel/acpi.c
-@@ -16,6 +16,7 @@
- #include <linux/memblock.h>
- #include <linux/of_fdt.h>
- #include <linux/serial_core.h>
-+#include <linux/vmalloc.h>
- #include <asm/io.h>
- #include <asm/numa.h>
- #include <asm/loongson.h>
-@@ -59,6 +60,33 @@ void __iomem *acpi_os_ioremap(acpi_physi
- 		return ioremap_cache(phys, size);
- }
- 
-+#define PIO_BASE (unsigned long)PCI_IOBASE
-+#define PIO_SIZE ALIGN(ISA_IOSIZE, PAGE_SIZE)
-+
-+static bool acpi_pio;
-+
-+/* Add PIO for early access */
-+void acpi_add_early_pio(void)
-+{
-+	if (!acpi_disabled) {
-+		acpi_pio = true;
-+		vmap_page_range(PIO_BASE, PIO_BASE + PIO_SIZE,
-+				LOONGSON_LIO_BASE, pgprot_device(PAGE_KERNEL));
-+	}
-+}
-+
-+/* Remove PIO for PCI register */
-+void acpi_remove_early_pio(void)
-+{
-+	if (!acpi_pio)
-+		return;
-+
-+	if (!acpi_disabled) {
-+		acpi_pio = false;
-+		vunmap_range(PIO_BASE, PIO_BASE + PIO_SIZE);
-+	}
-+}
-+
- #ifdef CONFIG_SMP
- static int set_processor_mask(u32 id, u32 pass)
- {
---- a/arch/loongarch/kernel/setup.c
-+++ b/arch/loongarch/kernel/setup.c
-@@ -510,6 +510,8 @@ static __init int arch_reserve_pio_range
- {
- 	struct device_node *np;
- 
-+	acpi_add_early_pio();
-+
- 	for_each_node_by_name(np, "isa") {
- 		struct of_range range;
- 		struct of_range_parser parser;
---- a/arch/loongarch/pci/acpi.c
-+++ b/arch/loongarch/pci/acpi.c
-@@ -65,6 +65,8 @@ static int acpi_prepare_root_resources(s
- 	struct resource_entry *entry, *tmp;
- 	struct acpi_device *device = ci->bridge;
- 
-+	acpi_remove_early_pio();
-+
- 	status = acpi_pci_probe_root_resources(ci);
- 	if (status > 0) {
- 		acpi_evaluate_integer(device->handle, "PCIH", NULL, &pci_h);
+     /// Driver's `update_limit` callback.
 
 
