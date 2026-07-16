@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E05385D76;
-	Thu, 16 Jul 2026 13:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516C0400972;
+	Thu, 16 Jul 2026 13:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209396; cv=none; b=gRzDVrJBNSqUBRwukfBrvdP1591kynnJT/0+X3/1R8oSEAxBspspP8ff2pjPWfkMvUlGx7BzjgDOBTSmYkU02sJLoge56QIi7FkVxgZQoJmZw7eznM6X1oL5utWuluYhPfbOj4z+Zpskq9d5TGYCXBeuWkvZ7ni6+SAciaSl+z8=
+	t=1784209399; cv=none; b=lE36UAzEh1Z4OgppGK4L+CciXHj1tvllUGGb95DTFq52JzqBq9ncXrO5DetJ9MwO7DLIGmAAFh37WhG2kb5KJ7eaXJaQ8w8Mmh/xruBW4/7J42Q/psf44P5i7+lV6Z5ZJqZbrthYL2klDKCcO/sJGnVWV8RI8b7MV4xsxwEVBNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209396; c=relaxed/simple;
-	bh=r+4UE5bTKDrkYJDP6zv1iyYaOHMNTSDZWuwIOwdBgiE=;
+	s=arc-20240116; t=1784209399; c=relaxed/simple;
+	bh=IHtndzkGUmCAS5ng8bvdx1OJ0ZEYCwEA5JwLrkEBmmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T974NaE5FKgZ3ZmXgVgyIxGf4Su62j0j1iPtO+c7s/eUSTYL+CVedlsPED1wCGcpDmEXETllU2qIGUVeD7nXXQ7KvVSdlImMURB3LhkcyLftiTvD75q1arXxz4nedxtuMhW9haVdrgRfeyUelEOAzvUMBpQcVTSZ7AITcOkTW2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcYiVToh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N+riJicuBuS7QtwfjhmfodvsPf6PdZcY/dZU/A9mbZJezWN6dTXi0SE2/hHPzoh9Z62sLKekLO95IGlt2qDrsXS6HN32b5wyFA8rhD5b+fM52Z3KpRhy2Z2mLRPmLs6WOnltY2eudMPReI5Vo1jegSwy4RunJYI3jys4JG0CJS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb4H0lBS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcYiVToh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA83F1F000E9;
-	Thu, 16 Jul 2026 13:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb4H0lBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E40B1F000E9;
+	Thu, 16 Jul 2026 13:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209395;
-	bh=DMA1yxdyXJRPLDtHesAEZ5R9UqjDG9g/h4sO5hkX71I=;
+	s=korg; t=1784209397;
+	bh=WCkR/Izihq/zJqX+AUsJqEm3lIaoGNeIeGR/3+Hh8oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PcYiVTohcbkrWwbZWohQN1JLQ24EeS/xlZDTaZ8Arx+fLgXVyC7IQadUs+vXyTEN0
-	 LB1J03I1tRVpMKxmWmMXE8MimAsqR1JFdgW4hG08d1dE/FFGP/v2BPiQ267djFxXZp
-	 13i5DMz4O4du6BAjj0kX0oaOXWtrNpwiAkLhIsvc=
+	b=Pb4H0lBSm60ei480lBnDervzdBwI7iq0JH2DZ/rc6mU24z4Yk36DCK0AzT8QS8FLf
+	 /CSYgMST7poenKj0MA7t3mmUUgUz1QzwxOrrGHiByXHw8qsC598c2sjnBBDXpYP4T8
+	 PomGyQ8X67kMWmg4MifeY0K32vh/jL+CQjVlEmqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>
-Subject: [PATCH 7.1 126/518] usb: typec: tcpci_rt1711h: unregister TCPCI port with devres
-Date: Thu, 16 Jul 2026 15:26:34 +0200
-Message-ID: <20260716133050.614761417@linuxfoundation.org>
+	Han Gao <gaohan@iscas.ac.cn>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Chen Wang <unicorn_wang@outlook.com>
+Subject: [PATCH 7.1 127/518] riscv: dts: sophgo: Add dma-coherent to SG2042 PCIe controllers
+Date: Thu, 16 Jul 2026 15:26:35 +0200
+Message-ID: <20260716133050.636896850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,77 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Han Gao <gaohan@iscas.ac.cn>
 
-commit e8da46d99d3710106e7c44db14566bf9b57386b5 upstream.
+commit 2647eabde8de748ee2c9a2816615d4af3bd4bf9d upstream.
 
-rt1711h_probe() registers the TCPCI port before requesting the interrupt
-and enabling alert interrupts. If either of those later steps fails, the
-probe function returns without unregistering the TCPCI port. The explicit
-unregister currently only happens from the remove callback.
+SG2042's PCIe root complexes are cache-coherent with the CPU. Mark all
+four PCIe controller nodes (pcie_rc0 through pcie_rc3) as dma-coherent
+so the kernel uses coherent DMA mappings instead of non-coherent bounce
+buffering.
 
-Register a devres action immediately after tcpci_register_port() succeeds,
-so tcpci_unregister_port() runs on later probe failures and on driver
-detach. Drop the remove callback to avoid unregistering the same port
-twice.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: 302c570bf36e ("usb: typec: tcpci_rt1711h: avoid screaming irq causing boot hangs")
-Cc: stable <stable@kernel.org>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260706145312.37260-1-mhun512@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+Link: https://patch.msgid.link/20260331171248.973014-3-gaohan@iscas.ac.cn
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpci_rt1711h.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpci_rt1711h.c
-+++ b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
-@@ -295,6 +295,8 @@ static int rt1711h_sw_reset(struct rt171
- 	return 0;
- }
- 
-+static void rt1711h_unregister_tcpci_port(void *tcpci);
-+
- static int rt1711h_probe(struct i2c_client *client)
- {
- 	int ret;
-@@ -340,6 +342,10 @@ static int rt1711h_probe(struct i2c_clie
- 	if (IS_ERR_OR_NULL(chip->tcpci))
- 		return PTR_ERR(chip->tcpci);
- 
-+	ret = devm_add_action_or_reset(chip->dev, rt1711h_unregister_tcpci_port, chip->tcpci);
-+	if (ret)
-+		return ret;
-+
- 	ret = devm_request_threaded_irq(chip->dev, client->irq, NULL,
- 					rt1711h_irq,
- 					IRQF_ONESHOT | IRQF_TRIGGER_LOW,
-@@ -357,11 +363,9 @@ static int rt1711h_probe(struct i2c_clie
- 	return 0;
- }
- 
--static void rt1711h_remove(struct i2c_client *client)
-+static void rt1711h_unregister_tcpci_port(void *tcpci)
- {
--	struct rt1711h_chip *chip = i2c_get_clientdata(client);
--
--	tcpci_unregister_port(chip->tcpci);
-+	tcpci_unregister_port(tcpci);
- }
- 
- static const struct rt1711h_chip_info rt1711h = {
-@@ -394,7 +398,6 @@ static struct i2c_driver rt1711h_i2c_dri
- 		.of_match_table = rt1711h_of_match,
- 	},
- 	.probe = rt1711h_probe,
--	.remove = rt1711h_remove,
- 	.id_table = rt1711h_id,
- };
- module_i2c_driver(rt1711h_i2c_driver);
+--- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+@@ -417,6 +417,7 @@
+ 			vendor-id = <0x1f1c>;
+ 			device-id = <0x2042>;
+ 			cdns,no-bar-match-nbits = <48>;
++			dma-coherent;
+ 			msi-parent = <&msi>;
+ 			status = "disabled";
+ 		};
+@@ -439,6 +440,7 @@
+ 			vendor-id = <0x1f1c>;
+ 			device-id = <0x2042>;
+ 			cdns,no-bar-match-nbits = <48>;
++			dma-coherent;
+ 			msi-parent = <&msi>;
+ 			status = "disabled";
+ 		};
+@@ -461,6 +463,7 @@
+ 			vendor-id = <0x1f1c>;
+ 			device-id = <0x2042>;
+ 			cdns,no-bar-match-nbits = <48>;
++			dma-coherent;
+ 			msi-parent = <&msi>;
+ 			status = "disabled";
+ 		};
+@@ -483,6 +486,7 @@
+ 			vendor-id = <0x1f1c>;
+ 			device-id = <0x2042>;
+ 			cdns,no-bar-match-nbits = <48>;
++			dma-coherent;
+ 			msi-parent = <&msi>;
+ 			status = "disabled";
+ 		};
 
 
