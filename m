@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159A941F7D5;
-	Thu, 16 Jul 2026 13:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27A22475F7;
+	Thu, 16 Jul 2026 13:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209175; cv=none; b=uzPJgMocvsiwSuSeJX7VRdTruxbQflEC1QIss6XakuLQTLoKAF7aq+C470nM8+RDGlq9d0P0RTRbFJR3ONJCJ+QIctFiDsxqpS7oD0wyOp9k0v3zvJ4GFE1a3XFbYN2MHw9x8LDH5SuVGVLcK9mhhkPyfN41BPqaq1+UKFeGXaY=
+	t=1784209177; cv=none; b=LiQ2yl/jZoBRKh3W7Rk7oQe/tPmuyb9qfNO8/7O9Aot7ePV9x1cKFB8d4FhjitNGLbpphchcoKKIbMh7a0ly04rkh0mEKAygQD08FzI8U5RF+Jfu0A5TFe2ZjcV1tR08uUsv/PqY+kkIeT0Vvm+FsisRhaJI1sgi2uwpW4yvjGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209175; c=relaxed/simple;
-	bh=p1V84cG+Ghb6T4uG6Cnwn6r33074Tq7hHT+xchalx0A=;
+	s=arc-20240116; t=1784209177; c=relaxed/simple;
+	bh=PWheMIuM+sPzIFsK+eXuzkuHOP8Jg005nRskxhHKHQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VueY1iQcNBJLdClb0J/gEHs7fKGsvbuWG3Qs7pVN0F7ZDsUeB8gXBdYhLEwPMElc1KiCMmjyi8ManLu/lGEyRWlWWNkWBXepEyfONZpufLTum2Kd52W2341932U778RMojQdA3PEBUoYCzUIpY98ZkRDt/7ho6KxBYF1TjWYgm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kB3gjMPK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m1IiqbqurTQC0a0ktH0tMHggZTXp+G90j1uqsAsKPk+UlZ9SULkwQbhh0/1G1LAjPfsyy+mU7pRCLSgoG0MNJ3RBh9f6tUnBTpSUIrXyNxb89Fy5g1fdcAayQ5jiQh60mRhvl5LfMpylqbCncKknpqlPtbM9B5FmM2TijYNFLYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lN3INvXP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kB3gjMPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4F01F000E9;
-	Thu, 16 Jul 2026 13:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lN3INvXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232FF1F000E9;
+	Thu, 16 Jul 2026 13:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209174;
-	bh=1k/8DhvmS4VvJgiYOgS16TYkHSctbnsOVnciFFT+Bkk=;
+	s=korg; t=1784209176;
+	bh=OMEDivxsd72WXnfinkJpM2VvRkkZt2iL5iFdekMBmpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kB3gjMPKp/HRkyZRZ4UV1qHcVnNDKvHasr4aXs7tiZQMDp5jqwl9w8HlZLtNCNVXM
-	 AcNqo96KwhlaXhjUwPQnGlMxSUXpwjJ6HzSkrkXMYZMODgaCykZkZNcEIDOGcBCxWC
-	 dZzJhkbn4LYvqoXhQ2ufsLN2HxXD3l14lQ7bAVv4=
+	b=lN3INvXPeibmw2HuHq0g2lnpePLUkdcDfRlq2vxn0yk/wBWjaTLOyx2jQKCsaHskG
+	 fCnN9UyuKFqXNufOtKo1up/x3764z7Rg6TWckYi72vmb8w2Zifo884RWGtiNi75dHP
+	 CgUdr9qdtZPovslurXkQPbH5P5joXuk455adYU7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 086/518] ALSA: compress: Fix task creation error unwind
-Date: Thu, 16 Jul 2026 15:25:54 +0200
-Message-ID: <20260716133049.747421930@linuxfoundation.org>
+Subject: [PATCH 7.1 087/518] ALSA: es1938: check snd_ctl_new1() return value
+Date: Thu, 16 Jul 2026 15:25:55 +0200
+Message-ID: <20260716133049.769635149@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,75 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit 4a60127debb9e370d6c0e22a307326b624a141f3 upstream.
+commit 1edd1f02dddd20aeb6066ded41017615766ea42f upstream.
 
-snd_compr_task_new() allocates the driver task before validating the
-returned DMA buffers and reserving file descriptors. When either of
-those later steps fails, the core frees its task wrapper and DMA-buffer
-references without calling the driver's task_free() callback. Any
-driver resources allocated by task_create() are therefore leaked.
+snd_ctl_new1() can return NULL when memory allocation fails.
+snd_es1938_mixer() does not check the return value before dereferencing
+the pointer, which can lead to a NULL pointer dereference.
 
-The dual-fd allocation path also jumps to cleanup without storing the
-negative get_unused_fd_flags() result in retval. Since retval still
-contains the successful task_create() return value, TASK_CREATE can
-incorrectly report success although the task was discarded.
+Add a NULL check after snd_ctl_new1() and return -ENOMEM if it fails.
 
-Preserve the fd allocation errors and call task_free() when failure
-occurs after a successful task_create() callback.
-
-Fixes: 04177158cf98 ("ALSA: compress_offload: introduce accel operation mode")
-Fixes: 3d3f43fab4cf ("ALSA: compress_offload: improve file descriptors installation for dma-buf")
+Assisted-by: Opencode:DeepSeek-V4-Flash
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260615-alsa-compress-task-unwind-v1-1-39e8ad3ddb27@gmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Link: https://patch.msgid.link/tencent_E0DC65165FDF2C8982BAFB6794B854B53B0A@qq.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/compress_offload.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ sound/pci/es1938.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/core/compress_offload.c
-+++ b/sound/core/compress_offload.c
-@@ -1083,15 +1083,18 @@ static int snd_compr_task_new(struct snd
- 	   file descriptors are allocated before fd_install() */
- 	if (!task->input || !task->input->file || !task->output || !task->output->file) {
- 		retval = -EINVAL;
--		goto cleanup;
-+		goto free_driver_task;
- 	}
- 	fd_i = get_unused_fd_flags(O_WRONLY|O_CLOEXEC);
--	if (fd_i < 0)
--		goto cleanup;
-+	if (fd_i < 0) {
-+		retval = fd_i;
-+		goto free_driver_task;
-+	}
- 	fd_o = get_unused_fd_flags(O_RDONLY|O_CLOEXEC);
- 	if (fd_o < 0) {
-+		retval = fd_o;
- 		put_unused_fd(fd_i);
--		goto cleanup;
-+		goto free_driver_task;
- 	}
- 	/* keep dmabuf reference until freed with task free ioctl */
- 	get_dma_buf(task->input);
-@@ -1103,6 +1106,8 @@ static int snd_compr_task_new(struct snd
- 	list_add_tail(&task->list, &stream->runtime->tasks);
- 	stream->runtime->total_tasks++;
- 	return 0;
-+free_driver_task:
-+	stream->ops->task_free(stream, task);
- cleanup:
- 	snd_compr_task_free(task);
- 	return retval;
+--- a/sound/pci/es1938.c
++++ b/sound/pci/es1938.c
+@@ -1655,6 +1655,8 @@ static int snd_es1938_mixer(struct es193
+ 	for (idx = 0; idx < ARRAY_SIZE(snd_es1938_controls); idx++) {
+ 		struct snd_kcontrol *kctl;
+ 		kctl = snd_ctl_new1(&snd_es1938_controls[idx], chip);
++		if (!kctl)
++			return -ENOMEM;
+ 		switch (idx) {
+ 			case 0:
+ 				chip->master_volume = kctl;
 
 
