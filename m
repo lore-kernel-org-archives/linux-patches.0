@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0CB414A36;
-	Thu, 16 Jul 2026 13:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20478423775;
+	Thu, 16 Jul 2026 13:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209025; cv=none; b=T/3S5ndii1zNzwqPP2IkgDy0VYq6nUK9LRTzw/OwOjsynHhtVZBgTZT8NcG1rCe86vFbyYuSnIVs0ZIUwMs9fqFLNdDr9yNy7ZrnM+AvhCFGmroIrvuRjTIrY7X0pRnBh/qaUC48vqozs/PT5MqVPSfjRKelhQhI2wVTbXzqDa8=
+	t=1784209027; cv=none; b=Jdad9Xnp3CKCOKAbz1xCf3mnjtNJZYKt3CVqUCjG0r+gZyUvy6IUOh5KV3B9podT/wD4mxmdmv5Dyb6Cl8YYU0fNksOm1fAHMuGeuGaF+0SUxPufWChjNQYpMCZUGrNvFTWKIFIdIAge67DKMZ1TDNIP+J4nnxawZ5dS65/eEPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209025; c=relaxed/simple;
-	bh=F7YZ1a/B4Fq4PDyFayN9XF+/dG0xGfol0dY9U1Ijnkw=;
+	s=arc-20240116; t=1784209027; c=relaxed/simple;
+	bh=TTNA8naTIHEfsymEEyCcMC0THSmyUA7BkUoHwQOENbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3gKrD7xCYr+X8AtShPfEuPfsF2M/dp9kBcdtlUIYKUwCWC0YEJ+tMZ6XeaN/wMu/udZN/8/uRsCd5jSAHHNh/MHCI5dipQUE1e3/U+xd0DR/QZwLpvg6EFQR6HQMMaZD8WkaGz+ijRahazois9IFo8+a1AbiK81RDCmEDRIL+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmCisyGF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=keJX0XzqTIXQjWyGG3ymGaXDX9yjlxDsxRWDZu3ECHoVmQrUdsccIn6xXcczbXby4GCE+badaIlVWbHh2khzRj1jByoVt9P9kQilBw9kHZB8G2oEtFybZVLurr1DiMsRX7qG1uF/WpFUWFGckDvs1clakG9PprwQKjQ7b6bVofc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpSIQXtt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmCisyGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176EC1F000E9;
-	Thu, 16 Jul 2026 13:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpSIQXtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877381F000E9;
+	Thu, 16 Jul 2026 13:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209023;
-	bh=gpfFV3V5XB3Jd52wLluXX/JRgEvz06CGfInlwMX0UKE=;
+	s=korg; t=1784209026;
+	bh=8Z/bGGlCQKqz45x0EEKMYWdyS+LDlo8115/V5s85Imk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JmCisyGFyA1rqsKBCTT1SG//KSzF4T8GDb+0QuD5Iw4+gG4Av8OGWXMCQUpYIltdV
-	 bGMTt4ImAOfd1M/P3bKOAnIkskvFqnkwqVxO5K3JGJsKDBuaDnku/+qO9I34YcypyU
-	 YUG00CeLe12iyVbc/7swiY57bpeKLgH6TISGt9Qg=
+	b=xpSIQXttoEo9qzbgQGD1B5jYwnhmuio3hpv+x0UMK39ckrU1L61ySyZHUSget/SNn
+	 /MsyeYVlBwikNAyr7qjolIXoUj+elsW7W4JY+NlV88LLYNs61uTpJ+mfpTan0p5Asp
+	 MwSJUdnlkMNxCtehSJTq9yDCjn7b7w740ZjGLmMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.1 006/518] slab: recognize @GFP parameter as optional in kernel-doc
-Date: Thu, 16 Jul 2026 15:24:34 +0200
-Message-ID: <20260716133047.917597710@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Markus Mayer <mmayer@broadcom.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 7.1 007/518] perf trace beauty fcntl: Fix build with older kernel headers
+Date: Thu, 16 Jul 2026 15:24:35 +0200
+Message-ID: <20260716133047.939603559@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,57 +60,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-commit 7b5f5865fb11e60edd03c5e063e2d228b7062317 upstream.
+commit 7ee7f48413c42b90230de4a8e40898b757bc8e82 upstream.
 
-Since the @GFP parameter in kmalloc_obj() etc. is now optional, change
-the kernel-doc to indicate that it is optional. This avoids kernel-doc
-warnings:
+Toolchains with older kernel headers that do not include upstream commit
+c75b1d9421f80f41 ("fs: add fcntl() interface for setting/getting write
+life time hints") will now fail to build perf due to missing definitions
+for F_GET_RW_HINT/F_SET_RW_HINT/F_GET_FILE_RW_HINT/F_SET_FILE_RW_HINT.
 
-WARNING: include/linux/slab.h:1101 Excess function parameter 'GFP' description in 'kmalloc_obj'
-WARNING: include/linux/slab.h:1113 Excess function parameter 'GFP' description in 'kmalloc_objs'
-WARNING: include/linux/slab.h:1128 Excess function parameter 'GFP' description in 'kmalloc_flex'
+Provide a fallback definition for these when they are not already
+defined.
 
-Fixes: e19e1b480ac7 ("add default_gfp() helper macro and use it in the new *alloc_obj() helpers")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Harry Yoo (Oracle) <harry@kernel.org>
-Link: https://patch.msgid.link/20260617163125.2716279-1-rdunlap@infradead.org
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 9c47f66748381ecb ("perf trace beauty fcntl: Basic 'arg' beautifier")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Markus Mayer <mmayer@broadcom.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/slab.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/trace/beauty/fcntl.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/include/linux/slab.h
-+++ b/include/linux/slab.h
-@@ -1000,7 +1000,7 @@ void *kmalloc_nolock_noprof(size_t size,
- /**
-  * kmalloc_obj - Allocate a single instance of the given type
-  * @VAR_OR_TYPE: Variable or type to allocate.
-- * @GFP: GFP flags for the allocation.
-+ * @...: optional GFP flags for the allocation (GFP_KERNEL when not specified).
-  *
-  * Returns: newly allocated pointer to a @VAR_OR_TYPE on success, or NULL
-  * on failure.
-@@ -1012,7 +1012,7 @@ void *kmalloc_nolock_noprof(size_t size,
-  * kmalloc_objs - Allocate an array of the given type
-  * @VAR_OR_TYPE: Variable or type to allocate an array of.
-  * @COUNT: How many elements in the array.
-- * @GFP: GFP flags for the allocation.
-+ * @...: optional GFP flags for the allocation (GFP_KERNEL when not specified).
-  *
-  * Returns: newly allocated pointer to array of @VAR_OR_TYPE on success,
-  * or NULL on failure.
-@@ -1025,7 +1025,7 @@ void *kmalloc_nolock_noprof(size_t size,
-  * @VAR_OR_TYPE: Variable or type to allocate (with its flex array).
-  * @FAM: The name of the flexible array member of the structure.
-  * @COUNT: How many flexible array member elements are desired.
-- * @GFP: GFP flags for the allocation.
-+ * @...: optional GFP flags for the allocation (GFP_KERNEL when not specified).
-  *
-  * Returns: newly allocated pointer to @VAR_OR_TYPE on success, NULL on
-  * failure. If @FAM has been annotated with __counted_by(), the allocation
+--- a/tools/perf/trace/beauty/fcntl.c
++++ b/tools/perf/trace/beauty/fcntl.c
+@@ -9,6 +9,22 @@
+ #include <linux/kernel.h>
+ #include <linux/fcntl.h>
+ 
++#ifndef F_GET_RW_HINT
++#define F_GET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 11)
++#endif
++
++#ifndef F_SET_RW_HINT
++#define F_SET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 12)
++#endif
++
++#ifndef F_GET_FILE_RW_HINT
++#define F_GET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 13)
++#endif
++
++#ifndef F_SET_FILE_RW_HINT
++#define F_SET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 14)
++#endif
++
+ static size_t fcntl__scnprintf_getfd(unsigned long val, char *bf, size_t size, bool show_prefix)
+ {
+ 	return val ? scnprintf(bf, size, "%s", "0") :
 
 
