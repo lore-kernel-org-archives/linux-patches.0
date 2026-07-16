@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA19425868;
-	Thu, 16 Jul 2026 13:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C8C3FDBFD;
+	Thu, 16 Jul 2026 13:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209725; cv=none; b=f0weouu4tVpEoY02S0kGGn/u8MYpZXzYHV69dClo0dN0HbrZjD6/k4OqwU8rgAjJWalnrDQu+pvpMMPjcvBbn5+IDOnVCuXaz66NpQurKta+cGM86HElXkVQfGxY8ECfyXqzSXYtQzshtsXollzOg5SS4wXt92+42DxaCMSgN10=
+	t=1784209725; cv=none; b=sYNQfvLDG2+G5LVjQzl5KMZ3y2rFADCHfRuTgpPPY3S8SKf1tn9kZsVEwwa4/1oOOF9fiSmlVvB4u539u50C3Wa2X/7MFw7wBXl5o+AERLOtoyebrXHP1YJrE9HgVkXsFhf2uRrle2WcVbAOQHOYR5B41SbQ5Dny5XAtt6lTiuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784209725; c=relaxed/simple;
-	bh=Ab6fMoVbx4esH8DeKV+PxHOYILtkV47N9hspBA4OqU0=;
+	bh=UILTVJIYM1lb4xzmIcqkrCTxzuKHOVIdkaO1J5+lGYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=si6hWqeqKTKyRKYFX8jwBZLc8gzBGZ+4kWLKy9oi0yGrs0SF7wsyNsNkk355BExSaUnHBCOSVOp5KDvu4CXVDcvVRd2JKFmDAtMHw22Dr/zw7XzP935HnZXNivQyMmZOB0HEjrOlnBU8Y3a/WwvJs0cZU2xEYQeBuugGWFbOXhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlQZ/pBo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hDoVehE1txxcwncAEPlDLZhZgnRS9W3+oQZGEMK3ZT5xG0vghRCpJTSdrnoq4l/Hjy1UHv8tGbw1YmE9ZILV3QNZpq6AS/5FwyHPw9kOQSweigJy6sC/9WLWv908tvG2IRjo5dJniUWSk1SXpkTkG7hGDkJe4RiA9m1F4jL/hx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7dzpvO0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlQZ/pBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5551F00A3A;
-	Thu, 16 Jul 2026 13:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7dzpvO0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401061F00A3F;
+	Thu, 16 Jul 2026 13:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209718;
-	bh=hoEnfTIEr/4u4EZYvDcpC8fdj1CdYAk32ChRY3eNMV4=;
+	s=korg; t=1784209720;
+	bh=ni0kSQZ+MsvNRxmhnheRmNUrY6aDZvQFNaiBMbOgzEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rlQZ/pBom7CUhVt8PXquVL/UFOUmzLxor2b1JhydZ8nTdW1v19a4TjD3XghRyMESS
-	 r6EOtE17mJO4a1zSnjPXxEFRK9ZLThR3s3+dosofe+fkbNUJHlB+yrnNFYlBZrzT7y
-	 zn9y8ZBTKpGwXRgByUaibR4sWy8Ahgv/FoAejjdk=
+	b=q7dzpvO04892XZ7YNqB2Z74+ZcNzLfN7BvUMVX2XXHlLnf/AEjQXq7DxbPsNchtHG
+	 6uQL4BjpcAGyDbeHmzpjYwFwSBHjrbWURosrCQZLapwtgoK6P7Xb+4zKZ+qAALIYDv
+	 Bzf96MyfkgAuYMOyARuwqFLxAuG4DStofUyR5Dks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhao Zhang <zzhan461@ucr.edu>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Xu Kuohai <xukuohai@huawei.com>,
 	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 7.1 291/518] bpf: Reject fragmented frames in devmap
-Date: Thu, 16 Jul 2026 15:29:19 +0200
-Message-ID: <20260716133054.185222808@linuxfoundation.org>
+Subject: [PATCH 7.1 292/518] bpf: Restore sysctl new-value from 1 to 0
+Date: Thu, 16 Jul 2026 15:29:20 +0200
+Message-ID: <20260716133054.207528997@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,73 +48,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Zhang <zzhan461@ucr.edu>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit aa496720618f1a6054f1c870bf10b4f6c99bf656 upstream.
+commit 2566c3b24219c5b30e35205cba029ff34ff7c78b upstream.
 
-Devmap broadcast redirects clone the packet for all but the last
-destination.
+Commit 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value
+helpers") changed the success return value to 0, but failed to update the
+corresponding check in __cgroup_bpf_run_filter_sysctl(). Since
+bpf_prog_run_array_cg() now returns 0 on success, the legacy ret == 1
+condition is never satisfied. As a result, the modified value is ignored,
+and bpf_sysctl_set_new_value() fails to replace the write buffer.
 
-For native XDP, that clone path copies only the linear xdp_frame data,
-while fragmented frames keep skb_shared_info in tailroom outside the
-linear area. Cloning such a frame leaves XDP_FLAGS_HAS_FRAGS set but
-without valid frag metadata, and the later free path can interpret
-uninitialized tail data as skb_shared_info, leading to an out-of-bounds
-access during frame return.
+Fix this by checking for a return value of 0 instead, so cgroup/sysctl
+programs can correctly replace the pending sysctl buffer.
 
-Reject fragmented native XDP frames in dev_map_enqueue_clone().
+This bug was discovered during a manual code review. Tested via a
+cgroup/sysctl BPF reproducer overriding writes to a target sysctl.
+Pre-fix, bpf_sysctl_set_new_value("foo") was silently ignored: the write
+returned 8192 and the value remained "600". Post-fix, the BPF replacement
+buffer properly propagates: the write returns 3 and the value updates to
+"foo".
 
-Add the same restriction to the generic XDP clone path in
-dev_map_redirect_clone(). Generic XDP represents fragmented packets as
-nonlinear skbs, and rejecting them here keeps clone-based broadcast
-support aligned between native and generic XDP.
+Fixes: f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err instead of allow boolean")
+Cc: stable@vger.kernel.org
 
-Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/21c2d153dd25603d359069a02bf06779b51f6423.1780385378.git.zzhan461@ucr.edu
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Xu Kuohai <xukuohai@huawei.com>
+Link: https://lore.kernel.org/r/20260603105317.944304-4-dawei.feng@seu.edu.cn
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/devmap.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/bpf/cgroup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -581,6 +581,10 @@ static int dev_map_enqueue_clone(struct
- {
- 	struct xdp_frame *nxdpf;
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -1935,7 +1935,7 @@ int __cgroup_bpf_run_filter_sysctl(struc
  
-+	/* Frags live outside the linear frame and cannot be cloned safely. */
-+	if (unlikely(xdp_frame_has_frags(xdpf)))
-+		return -EOPNOTSUPP;
-+
- 	nxdpf = xdpf_clone(xdpf);
- 	if (!nxdpf)
- 		return -ENOMEM;
-@@ -726,6 +730,9 @@ static int dev_map_redirect_clone(struct
- 	struct sk_buff *nskb;
- 	int err;
+ 	kfree(ctx.cur_val);
  
-+	if (unlikely(skb_is_nonlinear(skb)))
-+		return -EOPNOTSUPP;
-+
- 	nskb = skb_clone(skb, GFP_ATOMIC);
- 	if (!nskb)
- 		return -ENOMEM;
+-	if (ret == 1 && ctx.new_updated) {
++	if (!ret && ctx.new_updated) {
+ 		kvfree(*buf);
+ 		*buf = ctx.new_val;
+ 		*pcount = ctx.new_len;
 
 
