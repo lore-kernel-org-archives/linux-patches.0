@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCCC3D25D0;
-	Thu, 16 Jul 2026 14:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E389400982;
+	Thu, 16 Jul 2026 14:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211694; cv=none; b=cF19NP8jmCV6eFdJlvyHe48McpmGxlylkyRvSkIjvn4GpdcrVtgMY0PbZUmzHDVYmdiJcbh5SApPSZxbUUqMbAp5wBTCLniChfenRrCNiLYVkdV+XGsaBGD8WZ620O0Hz49ob7PRMdX+nBToAydYVsfYf63mWIZ8iicGPPSAIpM=
+	t=1784211696; cv=none; b=M7MKypQnEh0rgHkbCuwE8wMPf9yG0einjdl1KOb73EG9RS2c77f7toANh4TjaA7nsNiGr3RiEvPLsph+u6M5fomxQtwdC398Vh/0xhCOb66/0ptFH/f6wUkC4kZpoebMcrFrrP8OlrvLqHayYO2276XA1rKgZBo1a1HTwiADL3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211694; c=relaxed/simple;
-	bh=lRAFixLWMl/5MRdfqoYUmn22/+jISfIbCFZJrkytNZM=;
+	s=arc-20240116; t=1784211696; c=relaxed/simple;
+	bh=oa7UQwqv/5atAQaygE/jntUuW+8IanIiqnEZUPz9MBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EA7/hFgr6NtWOLxK+H5Vhnhvi1LlGm1zN2Bw8utqFdHgfFHIdiqch/JzoFvESbl3kU7zAqp4U2INlLZU6C7b0MHqrWgwXdt2khE7KtCEBFCfHqjPUFxtR/SmVvdVgtL+ycU5CaA0A5+mLjEsXrKTo5ET2B14hcuoeVX7QnwupLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKzxe2Zm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h6CmDdOF+yVc4NsYDm40meQKJoUzPkQNGAF0vc/qPs7wS5C6xgHrWTg8yq3vNR/0XdG+QI+86o8tqwzXg3lQ6i9lXOlBBUHvdGxXIfHJ8OPiAIg/CK4eRZjWwo/Z+RAQylyGcwyJxsVhTFvvjMx91ZCb97k1izw4UXOh7Enw5tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GswmRIYd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKzxe2Zm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C451F000E9;
-	Thu, 16 Jul 2026 14:21:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GswmRIYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6B21F000E9;
+	Thu, 16 Jul 2026 14:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211692;
-	bh=hWcGuN2Od6YvqwXSpmOQDzNlekI8NrLjpnYU4SBCgxE=;
+	s=korg; t=1784211695;
+	bh=Wlnglj/zfRAnA624mCILjzSwdtsT4qcLMP6JaJ0xIe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pKzxe2ZmLGK9xJr9PgVH0yanuAmMx0ULoiVd6+UuPiYzCYObRIZCN1nMA/AVKmNUI
-	 CH34BhGav6Yz5a94UUR8zq0ATTa+sZxvy8MUp/VcpbrWT76+fak/jY3947SNeTe8Dj
-	 qPY+DbNzr3+oiD6pca+iCcTAiX0lYB5gxmcVYHgc=
+	b=GswmRIYd9NdwxnOFqrjLFE3oL0zpUNUPJmyBvnVUTSADB79S417dQNTAwH8SaT2tS
+	 33p+u59IbeOmlhPJxy0tKQG2AKt4G++4WPQ9s6vdaddVAAOzRDpoKqOp5t51gVlZM1
+	 nCdn9H8a9o6ulLRTPMFplaWZWy1jDbHdNqtkiqJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Ron Economos <re@w6rz.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/349] drm/amd: Fix set but not used warnings
-Date: Thu, 16 Jul 2026 15:29:01 +0200
-Message-ID: <20260716133033.455390479@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 6.12 043/349] usb: gadget: function: rndis: add length check for header
+Date: Thu, 16 Jul 2026 15:29:37 +0200
+Message-ID: <20260716133034.288853001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -46,144 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit 46791d147d3ab3262298478106ef2a52fc7192e2 ]
+commit 21b5bf155435008e0fb0736795289788e63d426f upstream.
 
-There are many set but not used warnings under drivers/gpu/drm/amd when
-compiling with the latest upstream mainline GCC:
+Add a length check for the rndis header in rndis_rm_hdr, to ensure that
+MessageType, MessageLength, DataOffset, and DataLength fields are
+present before they are accessed.
 
-  drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c:305:18: warning: variable ‘p’ set but not used [-Wunused-but-set-variable=]
-  drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h:103:26: warning: variable ‘internal_reg_offset’ set but not used [-Wunused-but-set-variable=]
-  ...
-  drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h:164:26: warning: variable ‘internal_reg_offset’ set but not used [-Wunused-but-set-variable=]
-  ...
-  drivers/gpu/drm/amd/amdgpu/../display/dc/dc_dmub_srv.c:445:13: warning: variable ‘pipe_idx’ set but not used [-Wunused-but-set-variable=]
-  drivers/gpu/drm/amd/amdgpu/../display/dc/dc_dmub_srv.c:875:21: warning: variable ‘pipe_idx’ set but not used [-Wunused-but-set-variable=]
-
-Remove the variables actually not used or add __maybe_unused attribute for
-the variables actually used to fix them, compile tested only.
-
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Ron Economos <re@w6rz.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: gkh_clanker_2000
+Cc: stable <stable@kernel.org>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Link: https://patch.msgid.link/20260708-usb-gadget-rndis-v1-2-e77e026dcc6a@kroah.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c     | 4 +---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h      | 6 ++++--
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c | 9 +++------
- 3 files changed, 8 insertions(+), 11 deletions(-)
+ drivers/usb/gadget/function/rndis.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
-index 30b4e2c406f319..2e62dfd03c92e7 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
-@@ -307,7 +307,6 @@ void amdgpu_gart_unbind(struct amdgpu_device *adev, uint64_t offset,
- 			int pages)
- {
- 	unsigned t;
--	unsigned p;
- 	int i, j;
- 	u64 page_base;
- 	/* Starting from VEGA10, system bit must be 0 to mean invalid. */
-@@ -321,8 +320,7 @@ void amdgpu_gart_unbind(struct amdgpu_device *adev, uint64_t offset,
- 		return;
+--- a/drivers/usb/gadget/function/rndis.c
++++ b/drivers/usb/gadget/function/rndis.c
+@@ -1080,6 +1080,12 @@ int rndis_rm_hdr(struct gether *port,
+ 	/* tmp points to a struct rndis_packet_msg_type */
+ 	__le32 *tmp = (void *)skb->data;
  
- 	t = offset / AMDGPU_GPU_PAGE_SIZE;
--	p = t / AMDGPU_GPU_PAGES_IN_CPU_PAGE;
--	for (i = 0; i < pages; i++, p++) {
-+	for (i = 0; i < pages; i++) {
- 		page_base = adev->dummy_page_addr;
- 		if (!adev->gart.ptr)
- 			continue;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h
-index 3b6254de2c0e5f..d20236826e6cb8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h
-@@ -100,7 +100,8 @@
- 
- #define SOC15_DPG_MODE_OFFSET(ip, inst_idx, reg) 						\
- 	({											\
--		uint32_t internal_reg_offset, addr;						\
-+		/* To avoid a -Wunused-but-set-variable warning. */				\
-+		uint32_t internal_reg_offset __maybe_unused, addr;				\
- 		bool video_range, video1_range, aon_range, aon1_range;				\
- 												\
- 		addr = (adev->reg_offset[ip##_HWIP][inst_idx][reg##_BASE_IDX] + reg);		\
-@@ -161,7 +162,8 @@
- 
- #define SOC24_DPG_MODE_OFFSET(ip, inst_idx, reg)						\
- 	({											\
--		uint32_t internal_reg_offset, addr;						\
-+		/* To avoid a -Wunused-but-set-variable warning. */				\
-+		uint32_t internal_reg_offset __maybe_unused, addr;				\
- 		bool video_range, aon_range;				\
- 												\
- 		addr = (adev->reg_offset[ip##_HWIP][inst_idx][reg##_BASE_IDX] + reg);		\
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-index ec5009f411eb0d..19b8d46ce848d7 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-@@ -428,7 +428,6 @@ bool dc_dmub_srv_p_state_delegate(struct dc *dc, bool should_manage_pstate, stru
- 	int i = 0, k = 0;
- 	int ramp_up_num_steps = 1; // TODO: Ramp is currently disabled. Reenable it.
- 	uint8_t visual_confirm_enabled;
--	int pipe_idx = 0;
- 	struct dc_stream_status *stream_status = NULL;
- 
- 	if (dc == NULL)
-@@ -443,7 +442,7 @@ bool dc_dmub_srv_p_state_delegate(struct dc *dc, bool should_manage_pstate, stru
- 	cmd.fw_assisted_mclk_switch.config_data.visual_confirm_enabled = visual_confirm_enabled;
- 
- 	if (should_manage_pstate) {
--		for (i = 0, pipe_idx = 0; i < dc->res_pool->pipe_count; i++) {
-+		for (i = 0; i < dc->res_pool->pipe_count; i++) {
- 			struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[i];
- 
- 			if (!pipe->stream)
-@@ -458,7 +457,6 @@ bool dc_dmub_srv_p_state_delegate(struct dc *dc, bool should_manage_pstate, stru
- 				cmd.fw_assisted_mclk_switch.config_data.vactive_stretch_margin_us = dc->debug.fpo_vactive_margin_us;
- 				break;
- 			}
--			pipe_idx++;
- 		}
- 	}
- 
-@@ -857,7 +855,7 @@ void dc_dmub_setup_subvp_dmub_command(struct dc *dc,
- 		bool enable)
- {
- 	uint8_t cmd_pipe_index = 0;
--	uint32_t i, pipe_idx;
-+	uint32_t i;
- 	uint8_t subvp_count = 0;
- 	union dmub_rb_cmd cmd;
- 	struct pipe_ctx *subvp_pipes[2];
-@@ -884,7 +882,7 @@ void dc_dmub_setup_subvp_dmub_command(struct dc *dc,
- 
- 	if (enable) {
- 		// For each pipe that is a "main" SUBVP pipe, fill in pipe data for DMUB SUBVP cmd
--		for (i = 0, pipe_idx = 0; i < dc->res_pool->pipe_count; i++) {
-+		for (i = 0; i < dc->res_pool->pipe_count; i++) {
- 			struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[i];
- 			pipe_mall_type = dc_state_get_pipe_subvp_type(context, pipe);
- 
-@@ -907,7 +905,6 @@ void dc_dmub_setup_subvp_dmub_command(struct dc *dc,
- 				populate_subvp_cmd_vblank_pipe_info(dc, context, &cmd, pipe, cmd_pipe_index++);
- 
- 			}
--			pipe_idx++;
- 		}
- 		if (subvp_count == 2) {
- 			update_subvp_prefetch_end_to_mall_start(dc, context, &cmd, subvp_pipes);
--- 
-2.53.0
-
++	/* Need at least MessageType, MessageLength, DataOffset, DataLength */
++	if (skb->len < 16) {
++		dev_kfree_skb_any(skb);
++		return -EINVAL;
++	}
++
+ 	/* MessageType, MessageLength */
+ 	if (cpu_to_le32(RNDIS_MSG_PACKET)
+ 			!= get_unaligned(tmp++)) {
 
 
