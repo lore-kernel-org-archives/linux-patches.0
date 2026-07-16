@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B803BCD11;
-	Thu, 16 Jul 2026 13:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300B53BCD11;
+	Thu, 16 Jul 2026 13:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210213; cv=none; b=SKY7Hf/3y+7Lrc+M6/SYhnRrzf2rzPl1PpaoBL8u9qJ2iMdQSLpO3jg96gMr4J/fOWfRNsAWaT84lFO3lK5REdG6g78V3AqbcLYlBQjsCWjosgpe5vafx2pxjh8kc4EbX/5w5Xo6KCtvIkDQu0DE2UkPRFVfGs4qiOBbEMJ+rNc=
+	t=1784210215; cv=none; b=k8yDR1kh35P+KSn1wlJ3d8OfQLrJcxTf6xeilXQlrXU+xhS5Jvj4J94/jhAUK2oV6xld0FuDb8NEe8UV8N+NiWuPQ6oSNI6ECA971nnfIhLtp+TzSGOvWrpFAamIT07AFleJ6X8CFI+v9zisNl78fBHWTkWxQ3tQW5ny8sIpN2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210213; c=relaxed/simple;
-	bh=MVx0TRgjpgHc6IRVDB9avZU9yMw2ChWGakvs1cuPJsQ=;
+	s=arc-20240116; t=1784210215; c=relaxed/simple;
+	bh=5QrdOlGU1ZrU5ucgpml5d4G+TYV4jYOx877dNEI952k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOp3d/t9YVnIWEpYkP7g44Qp8oU9cvMZ9m5pkUPKgYYI8/ikm/y5i7ouHnIzpVyUtQsmswPdn9EUk22e6Zo0ztb7eytL9wmxAn0zLXnmnrovcdWCVWtYn17ssca8oY4lLN2HVjwgt9BPa3sMW8I42bN/wjsTV0IhJg9pKEBE0Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7kwijkm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kjHyixTrfePw36Esc1ayYu7ov5fMmqRkPjp0hey/XNiNyfkPp+068yOtXZFMXdtXpGGnKxwqEmtfcn2mzacPxaU4ky3ZN8tQOdihz2XwLcPg6+MPKWhoEd/SP1tGiKVf6n0H0T+Sv+N2khRzV7YQuXZajB0ct5BGSUSO635WxNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1kbk/+r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7kwijkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0EF1F000E9;
-	Thu, 16 Jul 2026 13:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1kbk/+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F8A1F000E9;
+	Thu, 16 Jul 2026 13:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210211;
-	bh=nOjm+ZXS/x7GpB1gHM0ffaXifSB1OG9n3bbHrwV8GWs=;
+	s=korg; t=1784210214;
+	bh=k9Nk7swJ64XH+okkvm78G12wuyFUom7lOjP7W4lyN+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n7kwijkmxsMz4+5G15BiIOqkx+H2iYX0ne7WasLKbzGKQu3u3/A78WFPUnMi4tE1l
-	 RIYESSEiCnGzdtmdHQypW6+8LIeZr9WGx1JMtXqm52rhgnMgZ+N448XXPL4DDeiEua
-	 HyT9zzp4bY65xmQ1gp3dVlZaZRjYDuS3ZvvdB1ng=
+	b=U1kbk/+rKB16OZeRQGPN1ikRdIGt/Z0IXZ0OXwo3YAJPKbMmEiPKecSqfIDCSlIRL
+	 ZK/1u4CovUOgqZEzh7UM2zGeCNMuF4g11j+5GG5Kfy4cLAg2iC5z1de+jmFe0ebxyI
+	 sl8gEtvsoliLDUwSmIuD7ssHHbs0CZ3UlLRMcK+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.1 479/518] i2c: i801: fix hardware state machine corruption in error path
-Date: Thu, 16 Jul 2026 15:32:27 +0200
-Message-ID: <20260716133058.329359738@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.1 480/518] Input: synaptics-rmi4 - unregister function handlers on physical driver registration failure
+Date: Thu, 16 Jul 2026 15:32:28 +0200
+Message-ID: <20260716133058.351129832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,64 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 10dd1a736d557e310a77117832874729a0175d57 upstream.
+commit 6251f7d3472c0409e30f8d6a24f10d33d12e3f9a upstream.
 
-A severe livelock and subsequent Hung Task panic were observed in the
-i2c-i801 driver during concurrent Fuzzing. The crash is caused by an
-unconditional hardware register cleanup in the error handling path of
-i801_access().
+If rmi_register_physical_driver() fails, the current error path
+unregisters only the RMI bus. The function handlers registered
+earlier remain registered with the driver core.
 
-When i801_check_pre() fails (e.g., returning -EBUSY because the SMBus
-controller is actively used by BIOS/ACPI), the kernel does not actually
-acquire the hardware ownership. However, the code jumps to the 'out'
-label and executes:
+Add a separate error path to unregister the function handlers
+before unregistering the bus in this failure case.
 
-    iowrite8(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
-
-This forcefully clears the INUSE_STS lock and resets the hardware status
-flags without owning the controller. Doing so interrupts ongoing BIOS/ACPI
-transactions and totally corrupts the SMBus hardware state machine.
-
-Consequently, all subsequent i801_access() calls fail at the pre-check
-stage, triggering an endless stream of "SMBus is busy, can't use it!"
-error logs. Over a slow serial console, this printk flood monopolizes
-the CPU (Console Livelock), starving other processes trying to acquire
-the mmap_lock down_read semaphore, ultimately triggering the hung task
-watchdog.
-
-Fix this by moving the 'out' label below the hardware register cleanup.
-If i801_check_pre() fails, we safely bypass the iowrite8() and only
-release the software locks (pm_runtime and mutex), strictly adhering to
-the rule of not releasing resources that were never acquired.
-
-Fixes: 1f760b87e54c ("i2c: i801: Call i801_check_pre() from i801_access()")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Cc: <stable@vger.kernel.org> # v6.3+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260512093534.348655-1-w15303746062@163.com
+Fixes: 2b6a321da9a2 ("Input: synaptics-rmi4 - add support for Synaptics RMI4 devices")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260610064633.2837084-1-haoxiang_li2024@163.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/rmi4/rmi_bus.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -931,13 +931,13 @@ static s32 i801_access(struct i2c_adapte
- 	 */
- 	if (hwpec)
- 		iowrite8(ioread8(SMBAUXCTL(priv)) & ~SMBAUXCTL_CRC, SMBAUXCTL(priv));
--out:
- 	/*
- 	 * Unlock the SMBus device for use by BIOS/ACPI,
- 	 * and clear status flags if not done already.
- 	 */
- 	iowrite8(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
+--- a/drivers/input/rmi4/rmi_bus.c
++++ b/drivers/input/rmi4/rmi_bus.c
+@@ -455,11 +455,13 @@ static int __init rmi_bus_init(void)
+ 	if (error) {
+ 		pr_err("%s: error registering the RMI physical driver: %d\n",
+ 			__func__, error);
+-		goto err_unregister_bus;
++		goto err_unregister_function_handlers;
+ 	}
  
-+out:
- 	pm_runtime_put_autosuspend(&priv->pci_dev->dev);
- 	mutex_unlock(&priv->acpi_lock);
- 	return ret;
+ 	return 0;
+ 
++err_unregister_function_handlers:
++	rmi_unregister_function_handlers();
+ err_unregister_bus:
+ 	bus_unregister(&rmi_bus_type);
+ 	return error;
 
 
