@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC7C42902A;
-	Thu, 16 Jul 2026 14:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A473D42D769;
+	Thu, 16 Jul 2026 14:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212370; cv=none; b=ifA6eR8+8KfOU06xwsQeJGM367Inzv7fdsNsLn35nlnLLqLV3NZUewmVQeaZZ/Cb1mhU5Btnbte7f+1vyzjnmOt0e8OIs+4cO/I3nzut5q2lSIch/muA8i+iluC5/yDz7n+eonDQ1CkeuuqmkUdX2sSV3qXWvyzQNWACSmFqB1k=
+	t=1784212372; cv=none; b=KNH/KtVFv+lBL64Lh7C+63f+K8Qs82fnWruwB56JZ67oh2cbywD5UkNKWHapAZci2qBLPzJ1FB3FOSvKoM1vwdMPjkrOGjJTnv5YNyulnCYFdYHuLjXXv8JgRKtFm82jL11n2Zt1Qr5zkePPtEbBq6Eu1c7dZUqq6zqSeUqUC2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212370; c=relaxed/simple;
-	bh=NO2L8A2HRit7tnThc4F4jT9hrjhRBzG9hBNgtdgT/DU=;
+	s=arc-20240116; t=1784212372; c=relaxed/simple;
+	bh=UAcFswrjSgtEhJ/wNHLHkZrXBC/wxxvl8lO1dX2TR0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m01A0RzXRZ6xz2mhYy6RwLQE+96oNxgbPdpzWj8El/KLduXdRajF0sDGOzoz0FpVtGDnN3eX1GB2SttiRVNyhMv+GbGYnrEtuUtd4MONnS7n+xd0a9puncs20o/ADbUfa0vNenEwQRwLj1/OPQHv5kX1DOtpyUP/izbLkvDwzzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjyJo7UY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KN1/y4js/snVX9lLGgbRzGfGHlIpmCmSp9GhBgD58lG5kCzaBVYHNX/kwUscaimLTM8eaYh0bgKpBc4aMnikHFV+h+DBQIDEA/jb2I38ovbwnFpSDAq4TWnyQ8bPTcb9coOZA0sRn7b9xb4Z8SRABO0/YrvX5yji+1CyZuFQr44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z94ogiBq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjyJo7UY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755011F000E9;
-	Thu, 16 Jul 2026 14:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z94ogiBq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161871F000E9;
+	Thu, 16 Jul 2026 14:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212369;
-	bh=YJONFqJKtuZU3q4ZD54gJJHx97yHmaG+6ltx5K0gbEo=;
+	s=korg; t=1784212371;
+	bh=7ie+Vxqr3OQ4FN01+6mMBllsKdYUduVZR3L1X9rI3Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VjyJo7UYI6bTtO/GSt0oJR/ceJoxEnLGwDeRBI/HLKXgK95BYAKdzqEyMa65A8avg
-	 sMCNEV9H7ad+CDZyhV7ClfA3nCnNKcm0Bid2r0C07gwLtcaPS/lhow0J3s1N9V1xde
-	 N3go7kcnVHLBjvXg6k0mt28aZvX70fUS3awLrMCE=
+	b=Z94ogiBqx8kCF1DDVR+DaVYUqbl66cm3nQhOP1L4UiV//tsbvDw13JyZJPJe5SLZc
+	 1hsbQXUvsCS7A3P43FoKoAvOv0j9UG7RW6H8Xj/dulbFHpB2/98gXoFawxUhXInEbI
+	 sRwN6KpCnOXYq+V0SII72Vfdez+iZRoK67dK1Y0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Gompa <neal@gompa.dev>,
-	Janne Grunau <j@jannau.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 301/349] watchdog: apple: Add "apple,t8103-wdt" compatible
-Date: Thu, 16 Jul 2026 15:33:55 +0200
-Message-ID: <20260716133040.057107746@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 302/349] regulator: scmi: fix of_node refcount leak in scmi_regulator_probe()
+Date: Thu, 16 Jul 2026 15:33:56 +0200
+Message-ID: <20260716133040.080358151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,37 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 14ca4868886f2188401fe06cd7bf01a330b3fb99 upstream.
+commit fa11039d6cdff84584a3ef8cc1f5e1b56e045da2 upstream.
 
-After discussion with the devicetree maintainers we agreed to not extend
-lists with the generic compatible "apple,wdt" anymore [1]. Use
-"apple,t8103-wdt" as base compatible as it is the SoC the driver and
-bindings were written for.
+scmi_regulator_probe() calls of_find_node_by_name() which takes a
+reference on the returned device node. On the error path where
+process_scmi_regulator_of_node() fails, the function returns without
+calling of_node_put() on the child node, leaking the reference.
 
-[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
+Add of_node_put(np) on the error path to properly release the
+reference.
 
-Fixes: 4ed224aeaf66 ("watchdog: Add Apple SoC watchdog driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Link: https://lore.kernel.org/r/20251231-watchdog-apple-t8103-base-compat-v1-1-1702a02e0c45@jannau.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 0fbeae70ee7c ("regulator: add SCMI driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260527104850.872415-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/apple_wdt.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/scmi-regulator.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/watchdog/apple_wdt.c
-+++ b/drivers/watchdog/apple_wdt.c
-@@ -215,6 +215,7 @@ static int apple_wdt_suspend(struct devi
- static DEFINE_SIMPLE_DEV_PM_OPS(apple_wdt_pm_ops, apple_wdt_suspend, apple_wdt_resume);
- 
- static const struct of_device_id apple_wdt_of_match[] = {
-+	{ .compatible = "apple,t8103-wdt" },
- 	{ .compatible = "apple,wdt" },
- 	{},
- };
+--- a/drivers/regulator/scmi-regulator.c
++++ b/drivers/regulator/scmi-regulator.c
+@@ -345,8 +345,10 @@ static int scmi_regulator_probe(struct s
+ 	for_each_child_of_node_scoped(np, child) {
+ 		ret = process_scmi_regulator_of_node(sdev, ph, child, rinfo);
+ 		/* abort on any mem issue */
+-		if (ret == -ENOMEM)
++		if (ret == -ENOMEM) {
++			of_node_put(np);
+ 			return ret;
++		}
+ 	}
+ 	of_node_put(np);
+ 	/*
 
 
