@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC983B0ADE;
-	Thu, 16 Jul 2026 14:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05F227732;
+	Thu, 16 Jul 2026 14:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211544; cv=none; b=HWUwG+ZdFv2YwIIo6IEtCAqfXDdpkhonOnimdfg9vqESp5xcZZsg4zhk7oZfGfNZlYA8ReIByFLRhqa+AFK07qLqLnkXzx9SAL3MbWfRTpM+MME8RxQqNubKkKHY2YFFYlGKzVMeNWAoMrD/oqhA+Xunp7PQV6N12AuECgio5tk=
+	t=1784211547; cv=none; b=HSTl82ssIfcZ0xE2gf4BsJQvlPy/OKaXsVSIZ6G6wkBebHbVCxdADPZY03CRC1Y6JkG4FfBr3ZmknxYfpWgN3P/qZDqiAu7B4dRYpQbd4IPqg7VyIlQgbn9tNelpjB78eG+YLpseAWWOi6rjmI3ZuIKAyyCMgj6YDQsF8iGSylg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211544; c=relaxed/simple;
-	bh=kS7BP0qE/+uuv4sJn6Yo4N5SZ+JtaQnWar3d5gARM88=;
+	s=arc-20240116; t=1784211547; c=relaxed/simple;
+	bh=lPPdyxPQgjQcCJWjXhUTnhHtgqfTIndBAylcbp1vqh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPKbi2cLUC/nilryPclMjOx5dcXh5dZdcSDyBWd04XD+cZSqoAX9OCA0ZnO7qXqaq2W91hTwVyR2MYTqV6Mfgo6v7/xOrbBbOGhKGq+NJjntBvNXTykcf8n425KRkxxglaz+X+qsIBPzgb1tpXX6L/9iohvc4KvxFDfZzhznq40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ypRMkCU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V9FoLE4x7m8hMjPIXZzXQ+d6sN3CQ7o7OtPee9Z7z1M+GwMGuSMoPbpeZ5OlEid9sDY+elVe7S4g2rmXlRQfhePPbRGA3cyTmVJe1cbZ3GmJ2PA9aBtD8leB3Q68P7PClhXqggQbxQSGgHBu8EkIWrIFN6f8WosDS28E8P4i7io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQfE/SPz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ypRMkCU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9561F00A3D;
-	Thu, 16 Jul 2026 14:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQfE/SPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624491F000E9;
+	Thu, 16 Jul 2026 14:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211543;
-	bh=NKugVTY5CYSF0QL0sZogLl+0LwHBvWYetSFzflSyeag=;
+	s=korg; t=1784211545;
+	bh=Tf5OdcOuHeY0OlfAAnKr0ZBcTSrO7daXZtC08LNdWRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ypRMkCU72sxc7mULmjiXkwOszDD3ypsKiQXhB6LSHutUTz4Xt9mDFnPc8Souz46g
-	 R6v6nCV2xlerbI5dZn6A+iroFsXd2PoatIp27QMc48FM/3imWKcFb+b5RS3bmL+P5v
-	 huUIj4Grevfo2GlBNkltIBn4DX/Tc+Pe9O51r2yE=
+	b=WQfE/SPzV5qLdGPdbtCN3qFoAyiHqCUiBFsmpyUXSkX5W5C7YOMPo1mQitZxot8l1
+	 pmcJiq3QNEE5iMx4Q7WHYZI8svD4d22u55UzppQdwroh8NAvj+InQcAZiP++1FDFTh
+	 WDzM5XzgFO7jNqA9rmyk64FRQ6ApeblRLr2M50zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 424/480] KVM: SVM: Only disable x2AVIC WRMSR interception for MSRs that are accelerated
-Date: Thu, 16 Jul 2026 15:32:51 +0200
-Message-ID: <20260716133053.986865607@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 415/480] iommufd: Avoid partial fault group delivery in iommufd_fault_fops_read()
+Date: Thu, 16 Jul 2026 15:32:42 +0200
+Message-ID: <20260716133053.790718361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,100 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 8c63179d975f2029c948ecce622f72af616dbff7 upstream.
+commit 091ab6d70dc444f56ed14faedbcacfc979f4c613 upstream.
 
-When x2AVIC is enabled, disable WRMSR interception only for MSRs that are
-actually accelerated by hardware.  Disabling interception for MSRs that
-aren't accelerated is functionally "fine", and in some cases a weird "win"
-for performance, but only for cases that should never be triggered by a
-well-behaved VM (writes to read-only registers; the #GP will typically
-occur in the guest without taking a #VMEXIT, even for fault-like exits).
+The cookie returned by xa_alloc() in iommufd_fault_fops_read() is per fault
+group, but the inner copy_to_user() runs per fault inside the group. If a
+copy fails mid-group, xa_erase clears the cookie and the group is restored
+to the deliver list, yet done is not rolled back. The function returns the
+partial byte count, with the successfully copied faults sitting at offsets
+below done carrying the now-erased cookie. The next read() then re-fetches
+the group, allocates a fresh cookie, and re-delivers every fault including
+the ones already copied; userspace sees duplicates carrying the new cookie,
+and a stale cookie that can never be responded to.
 
-But overall, disabling interception for MSRs that aren't accelerated is at
-best confusing and unintuitive, and at worst introduces avoidable risk, as
-the APM's documentation is imperfect and contradictory.  The table in
-"15.29.3.1 Virtual APIC Register Accesses" of simply states that such
-writes generate exits, where as "Section 15.29.10 x2AVIC" says:
+Use a local group_done variable that tracks the per-group progress inside
+the inner loop, and only commit done = group_done after the inner loop has
+finished successfully. On a copy_to_user failure the outer break skips the
+commit, so done remains at its prior start-of-group baseline; the partial
+bytes already written past done are undefined to userspace per the read(2)
+contract, and the next read re-delivers the whole group atomically.
 
-  x2APIC MSR intercept checks and access checks have higher priority than
-  AVIC access permission checks.
-
-CPU behavior follows the latter (which makes perfect sense), but all in
-all there's simply no reason to disable interception just to make a #GP
-faster.
-
-Note, the set of MSRs that are passed through for write is identical to
-VMX's set when IPI virtualization is enabled.  This is not a coincidence,
-and is another motiviating factor for cleaning up the intercepts, as x2AVIC
-is functionally equivalent to APICv+IPIv.
-
-Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
+Fixes: 07838f7fd529 ("iommufd: Add iommufd fault object")
+Link: https://patch.msgid.link/r/360cab4d4aeccb0bae275a970e2b3c340a71e0e0.1780343944.git.nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://patch.msgid.link/20260514213115.1637082-4-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |   40 ++++------------------------------------
- 1 file changed, 4 insertions(+), 36 deletions(-)
+ drivers/iommu/iommufd/eventq.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -113,39 +113,6 @@ static void avic_set_x2apic_msr_intercep
- {
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
- 	u64 rd_regs;
--
--	static const u32 x2avic_passthrough_msrs[] = {
--		X2APIC_MSR(APIC_ID),
--		X2APIC_MSR(APIC_LVR),
--		X2APIC_MSR(APIC_TASKPRI),
--		X2APIC_MSR(APIC_ARBPRI),
--		X2APIC_MSR(APIC_PROCPRI),
--		X2APIC_MSR(APIC_EOI),
--		X2APIC_MSR(APIC_RRR),
--		X2APIC_MSR(APIC_LDR),
--		X2APIC_MSR(APIC_DFR),
--		X2APIC_MSR(APIC_SPIV),
--		X2APIC_MSR(APIC_ISR),
--		X2APIC_MSR(APIC_TMR),
--		X2APIC_MSR(APIC_IRR),
--		X2APIC_MSR(APIC_ESR),
--		X2APIC_MSR(APIC_ICR),
--		X2APIC_MSR(APIC_ICR2),
--
--		/*
--		 * Note!  Always intercept LVTT, as TSC-deadline timer mode
--		 * isn't virtualized by hardware, and the CPU will generate a
--		 * #GP instead of a #VMEXIT.
--		 */
--		X2APIC_MSR(APIC_LVTTHMR),
--		X2APIC_MSR(APIC_LVTPC),
--		X2APIC_MSR(APIC_LVT0),
--		X2APIC_MSR(APIC_LVT1),
--		X2APIC_MSR(APIC_LVTERR),
--		X2APIC_MSR(APIC_TMICT),
--		X2APIC_MSR(APIC_TMCCT),
--		X2APIC_MSR(APIC_TDCR),
--	};
- 	int i;
+--- a/drivers/iommu/iommufd/eventq.c
++++ b/drivers/iommu/iommufd/eventq.c
+@@ -139,6 +139,8 @@ static ssize_t iommufd_fault_fops_read(s
  
- 	if (intercept == svm->x2avic_msrs_intercepted)
-@@ -160,9 +127,10 @@ static void avic_set_x2apic_msr_intercep
- 		svm_set_intercept_for_msr(vcpu, APIC_BASE_MSR + i,
- 					  MSR_TYPE_R, intercept);
+ 	mutex_lock(&fault->mutex);
+ 	while ((group = iommufd_fault_deliver_fetch(fault))) {
++		size_t group_done = done;
++
+ 		if (done >= count ||
+ 		    group->fault_count * fault_size > count - done) {
+ 			iommufd_fault_deliver_restore(fault, group);
+@@ -160,16 +162,17 @@ static ssize_t iommufd_fault_fops_read(s
+ 			iommufd_compose_fault_message(&iopf->fault,
+ 						      &data, idev,
+ 						      group->cookie);
+-			if (copy_to_user(buf + done, &data, fault_size)) {
++			if (copy_to_user(buf + group_done, &data, fault_size)) {
+ 				xa_erase(&fault->response, group->cookie);
+ 				iommufd_fault_deliver_restore(fault, group);
+ 				rc = -EFAULT;
+ 				break;
+ 			}
+-			done += fault_size;
++			group_done += fault_size;
+ 		}
+ 		if (rc)
+ 			break;
++		done = group_done;
+ 	}
+ 	mutex_unlock(&fault->mutex);
  
--	for (i = 0; i < ARRAY_SIZE(x2avic_passthrough_msrs); i++)
--		svm_set_intercept_for_msr(vcpu, x2avic_passthrough_msrs[i],
--					  MSR_TYPE_W, intercept);
-+	svm_set_intercept_for_msr(vcpu, X2APIC_MSR(APIC_TASKPRI), MSR_TYPE_W, intercept);
-+	svm_set_intercept_for_msr(vcpu, X2APIC_MSR(APIC_EOI), MSR_TYPE_W, intercept);
-+	svm_set_intercept_for_msr(vcpu, X2APIC_MSR(APIC_SELF_IPI), MSR_TYPE_W, intercept);
-+	svm_set_intercept_for_msr(vcpu, X2APIC_MSR(APIC_ICR), MSR_TYPE_W, intercept);
- 
- 	svm->x2avic_msrs_intercepted = intercept;
- }
 
 
