@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A06A41F5EC;
-	Thu, 16 Jul 2026 13:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077F741F36A;
+	Thu, 16 Jul 2026 13:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209304; cv=none; b=IqhuXTYylqbxAJ5u2Z+Qf034Cuo28oXWOJ3hw2/mDJ6uO3JHoDmjILNUYsEDiJuQe+57ahW9D+E23/8e/zXmXFThytodPrNUIme80Nvq1KKxWMZxDyAfN3YYUV/g/YZQcPXrZvQmsdqwBdj1cfFNdr5GEfFIXXPobKCppxTqgO0=
+	t=1784209307; cv=none; b=p/CFN8aO7uljYPuBWtllKErArdoq7ov/YOlH2sLfBrsr/tWgO1OHs6fKhZce900zDL+FRu6YRJdahxpblU5inxa6G2a2G6TDYu9NxUi/2kNo7972j85l5Z79lQPKtCEO6X9VUAtBGLfb5TzmW0HhoaPu0K3majkxSNkhk5ddGfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209304; c=relaxed/simple;
-	bh=UF5EucKlcHTrCZFgSHKLMrfRWB+RLB6QL0zkUs9SDsE=;
+	s=arc-20240116; t=1784209307; c=relaxed/simple;
+	bh=MX2TOtVuvA1K0B5JqoglGG9Dl5bdNXKTSHSRi3ZCfrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbDMvnWMQsw098MHIYCvtDKp8I3OY8uWIpNfzuJaEzJc59ucrTtgIkiw37zqs5c31ZZOXm+PmZjWqzWeCJOwCtdOp9qc2NwjVpwidk9bWBblzq4SDUL9oR0BfT8fQU5DjmcSoNE2O/AlYixUtLPqb6AUbBBBTiNVOUGiYuQxQAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xf9Z3oIr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YgWe5UXZENH25xcz9A/GpMnhNX7DPhuIAOaJBK7JyKO6QgLm12SvCzJI5zBEkse5cg2Z7L7rnnrACddf8kFRzac9WVVUcMFKA8ho4yK7P1NChFQolFMcghV4i3mr+5OdjjrkjJHzQ39Cko46f0F2r1UDG+nGD+vQeGiM+1XzbrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBPxK9Cx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xf9Z3oIr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994471F000E9;
-	Thu, 16 Jul 2026 13:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBPxK9Cx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA991F000E9;
+	Thu, 16 Jul 2026 13:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209303;
-	bh=HSKgLqu0mJvyu8gB4C6T2mB/uqK4H4XPGQ0+KBbP/Ks=;
+	s=korg; t=1784209305;
+	bh=kbMkqXveGMJdk6SXtarcqckbmx+LW2S7yctgglMLOGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xf9Z3oIrpCZN1MJNd0d8ZEQ6pjchAIu17rHhMajixBHwvMFEMApR+FnlSi7rgxgZ9
-	 bM25mq7n8dhZPKNnpF0Km+x/b+iRTbPLJ7UsChkUToszXWv6wVxPejdnbtyLsjWCkx
-	 1viPZNUwCVTjdY60iwBbB928lx1IeEBn/QqQ6+04=
+	b=RBPxK9CxCdwNgeh4OhfeQlTXghJHFrpiHy2DeUiIw0qeyAgLoHqTB6Vx/5MloHF5L
+	 Uj2LcsijyGhY6CzF3gk3eea03FEK2i8XjAAAc52H67AahIsEnbADOj3jHImqhmqrVC
+	 JSa9UMIRZjbMSi+d36NJqhXJbK/L/M5Aj67XcfiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 7.1 135/518] PCI: imx6: Assert ref_clk_en after reference clock stabilizes on i.MX95
-Date: Thu, 16 Jul 2026 15:26:43 +0200
-Message-ID: <20260716133050.809561592@linuxfoundation.org>
+	Caleb James DeLisle <cjd@cjdns.fr>
+Subject: [PATCH 7.1 136/518] PCI: mediatek: Fix IRQ domain leak when port fails to enable
+Date: Thu, 16 Jul 2026 15:26:44 +0200
+Message-ID: <20260716133050.830354852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,83 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-commit 9dda3f83ba677b9cc2613cecd9120123000ae50f upstream.
+commit f865a57896bd92d7662eb2818d8f48872e2cbbc7 upstream.
 
-According to the PHY Databook Common Block Signals section, the
-ref_clk_en signal must remain de-asserted until the reference clock is
-running at the appropriate frequency. Once the clock is stable,
-ref_clk_en can be asserted. For lower power states where the reference
-clock to the PHY is disabled, ref_clk_en should also be de-asserted.
+When mtk_pcie_enable_port() fails, mtk_pcie_port_free() removes the port
+from pcie->ports and frees the port structure. However, the IRQ domains set
+up earlier by mtk_pcie_init_irq_domain() are never freed.
 
-Move the ref_clk_en bit manipulation into imx95_pcie_enable_ref_clk()
-to ensure the reference clock stabilizes before ref_clk_en is asserted
-and before the PHY reset is de-asserted. This aligns with the timing
-requirements specified in the PHY documentation.
+Fix this by refactoring mtk_pcie_irq_teardown() into a per-port helper,
+mtk_pcie_irq_teardown_port(), and calling it from mtk_pcie_setup() when
+mtk_pcie_enable_port() fails. Since the IRQ teardown must only happen in
+the probe error path (during resume, child devices may have active MSI
+mappings and the NOIRQ context prohibits sleeping locks),
+mtk_pcie_enable_port() is changed to return an error code so callers can
+distinguish the two paths and act accordingly.
 
-Fixes: d8574ce57d76 ("PCI: imx6: Add external reference clock input mode support")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+This issue was reported by Sashiko while reviewing the EcoNet EN7528 SoC
+support series.
+
+Fixes: b099631df160 ("PCI: mediatek: Add controller support for MT2712 and MT7622")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260518072715.3166514-3-hongxing.zhu@nxp.com
+Cc: stable@vger.kernel.org # 5.10
+Cc: Caleb James DeLisle <cjd@cjdns.fr>
+Link: https://patch.msgid.link/20260521174617.17692-1-mani@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ drivers/pci/controller/pcie-mediatek.c |   63 ++++++++++++++++++++-------------
+ 1 file changed, 40 insertions(+), 23 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -268,8 +268,6 @@ static int imx95_pcie_select_ref_clk_src
- 
- static int imx95_pcie_init_phy(struct imx_pcie *imx_pcie)
- {
--	bool ext = imx_pcie->enable_ext_refclk;
--
- 	/*
- 	 * ERR051624: The Controller Without Vaux Cannot Exit L23 Ready
- 	 * Through Beacon or PERST# De-assertion
-@@ -288,10 +286,6 @@ static int imx95_pcie_init_phy(struct im
- 			IMX95_PCIE_PHY_CR_PARA_SEL,
- 			IMX95_PCIE_PHY_CR_PARA_SEL);
- 
--	regmap_update_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_0,
--			   IMX95_PCIE_REF_CLKEN,
--			   ext ? 0 : IMX95_PCIE_REF_CLKEN);
--
- 	return 0;
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -529,23 +529,27 @@ static void mtk_pcie_enable_msi(struct m
+ 	writel(val, port->base + PCIE_INT_MASK);
  }
  
-@@ -740,7 +734,29 @@ static void imx95_pcie_clkreq_override(s
- 
- static int imx95_pcie_enable_ref_clk(struct imx_pcie *imx_pcie, bool enable)
+-static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
++static void mtk_pcie_irq_teardown_port(struct mtk_pcie_port *port)
  {
-+	bool ext = imx_pcie->enable_ext_refclk;
+-	struct mtk_pcie_port *port, *tmp;
++	irq_set_chained_handler_and_data(port->irq, NULL, NULL);
+ 
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
+-		irq_set_chained_handler_and_data(port->irq, NULL, NULL);
++	if (port->irq_domain)
++		irq_domain_remove(port->irq_domain);
+ 
+-		if (port->irq_domain)
+-			irq_domain_remove(port->irq_domain);
++	if (IS_ENABLED(CONFIG_PCI_MSI)) {
++		if (port->inner_domain)
++			irq_domain_remove(port->inner_domain);
++	}
+ 
+-		if (IS_ENABLED(CONFIG_PCI_MSI)) {
+-			if (port->inner_domain)
+-				irq_domain_remove(port->inner_domain);
+-		}
++	irq_dispose_mapping(port->irq);
++}
+ 
+-		irq_dispose_mapping(port->irq);
+-	}
++static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
++{
++	struct mtk_pcie_port *port, *tmp;
 +
- 	imx95_pcie_clkreq_override(imx_pcie, enable);
-+	/*
-+	 * The ref_clk_en signal must remain de-asserted until the
-+	 * reference clock is running at appropriate frequency, at which
-+	 * point this bit can be asserted. For lower power states where
-+	 * the reference clock to the PHY is disabled, it may also be
-+	 * de-asserted.
-+	 * +------------------- -+--------+----------------+
-+	 * | External clock mode | Enable | PCIE_REF_CLKEN |
-+	 * +---------------------+--------+----------------+
-+	 * | TRUE                | X      | 1b'0           |
-+	 * +---------------------+--------+----------------+
-+	 * | FALSE               | TRUE   | 1b'1           |
-+	 * +---------------------+--------+----------------+
-+	 * | FALSE               | FALSE  | 1b'0           |
-+	 * +---------------------+--------+----------------+
-+	 */
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_0,
-+			   IMX95_PCIE_REF_CLKEN,
-+			   ext || !enable ? 0 : IMX95_PCIE_REF_CLKEN);
-+
- 	return 0;
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
++		mtk_pcie_irq_teardown_port(port);
  }
  
+ static int mtk_pcie_intx_map(struct irq_domain *domain, unsigned int irq,
+@@ -865,7 +869,7 @@ static int mtk_pcie_startup_port_an7583(
+ 	return mtk_pcie_startup_port_v2(port);
+ }
+ 
+-static void mtk_pcie_enable_port(struct mtk_pcie_port *port)
++static int mtk_pcie_enable_port(struct mtk_pcie_port *port)
+ {
+ 	struct mtk_pcie *pcie = port->pcie;
+ 	struct device *dev = pcie->dev;
+@@ -874,7 +878,7 @@ static void mtk_pcie_enable_port(struct
+ 	err = clk_prepare_enable(port->sys_ck);
+ 	if (err) {
+ 		dev_err(dev, "failed to enable sys_ck%d clock\n", port->slot);
+-		goto err_sys_clk;
++		return err;
+ 	}
+ 
+ 	err = clk_prepare_enable(port->ahb_ck);
+@@ -922,11 +926,15 @@ static void mtk_pcie_enable_port(struct
+ 		goto err_phy_on;
+ 	}
+ 
+-	if (!pcie->soc->startup(port))
+-		return;
++	err = pcie->soc->startup(port);
++	if (err) {
++		dev_info(dev, "Port%d link down\n", port->slot);
++		goto err_soc_startup;
++	}
+ 
+-	dev_info(dev, "Port%d link down\n", port->slot);
++	return 0;
+ 
++err_soc_startup:
+ 	phy_power_off(port->phy);
+ err_phy_on:
+ 	phy_exit(port->phy);
+@@ -942,8 +950,8 @@ err_aux_clk:
+ 	clk_disable_unprepare(port->ahb_ck);
+ err_ahb_clk:
+ 	clk_disable_unprepare(port->sys_ck);
+-err_sys_clk:
+-	mtk_pcie_port_free(port);
++
++	return err;
+ }
+ 
+ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
+@@ -1109,8 +1117,13 @@ static int mtk_pcie_setup(struct mtk_pci
+ 		return err;
+ 
+ 	/* enable each port, and then check link status */
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
+-		mtk_pcie_enable_port(port);
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
++		err = mtk_pcie_enable_port(port);
++		if (err) {
++			mtk_pcie_irq_teardown_port(port);
++			mtk_pcie_port_free(port);
++		}
++	}
+ 
+ 	/* power down PCIe subsys if slots are all empty (link down) */
+ 	if (list_empty(&pcie->ports))
+@@ -1209,14 +1222,18 @@ static int mtk_pcie_resume_noirq(struct
+ {
+ 	struct mtk_pcie *pcie = dev_get_drvdata(dev);
+ 	struct mtk_pcie_port *port, *tmp;
++	int err;
+ 
+ 	if (list_empty(&pcie->ports))
+ 		return 0;
+ 
+ 	clk_prepare_enable(pcie->free_ck);
+ 
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
+-		mtk_pcie_enable_port(port);
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
++		err = mtk_pcie_enable_port(port);
++		if (err)
++			mtk_pcie_port_free(port);
++	}
+ 
+ 	/* In case of EP was removed while system suspend. */
+ 	if (list_empty(&pcie->ports))
 
 
