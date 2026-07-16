@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A8D42A7AF;
-	Thu, 16 Jul 2026 14:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E5B3D9680;
+	Thu, 16 Jul 2026 14:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211961; cv=none; b=df9+K339Q0xrCL9HmK1sZNVk5DfhAeNI6JQ6Pe2hSBoWskP4epUQbhrXDdJ/RMsaLsLA0LfGd7SRny6ZLda/plgheXJgDbv1hpjLaom5IbF8HbtjhY6CO5noGcNV4LE2/1VG23DO6VErMkiUCA6zb39b5CpllnVlwbTz6ETacXI=
+	t=1784211964; cv=none; b=T3am3SuwQ9PGGoxZAkXYquV3JrcvEzbtpSyag+2mcnmR5V2sdDP/AMXNyXywny8tl5brTu/Yo+awt3vvF0HKUJGnwNjNQNam0UUuhPeWmo/SWcz0qqmgNDuToXpqx0HSPTP2mxxDerA88wH4VT+9VuF9mZDc/dkZVSULEwbloAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211961; c=relaxed/simple;
-	bh=+W/TyygeEpA4Y9huXHPizVpTx9mkhACWSIELDeHTkIo=;
+	s=arc-20240116; t=1784211964; c=relaxed/simple;
+	bh=qcc2YSlGlmKKCZG1x1QtcwD+sI71HV9eoSB/CDd9rFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tyTjGNjYgLSQxt8T9ZGALk1lj1EY5It5Im++GNQMQtekPaOowJFiTx7siS3m+cmUzmjNuna71qkZ4lGmAn/MVr2BQ/GRXrSUYbPOUqCwDSeNejp27m0zELCAORMeYyyH3jxpcvw16FgKWUBoTYenI/G0YrsZ03WIrh/lj3kmIBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hu5oGGgP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ucFeXiZnbKolLTo2u7NCyd3nvSMgzinK3EniWwnBTi1+a13B3ODrtwNuExmWbgk6Q0vbqO/d1x29rvOfUplP74+mKYEuIBl3a+nLTW4bqnBpDgPKdFqRC54EaTlhHZZ5USmLeF/UO5PtZwlKGTDoE6GOTA+sYI73Ztl9kOZ7JEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPuSF827; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hu5oGGgP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8961F000E9;
-	Thu, 16 Jul 2026 14:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPuSF827"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE081F000E9;
+	Thu, 16 Jul 2026 14:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211960;
-	bh=+/dsYnjiJGIVwBL3CnIlDF/fLfDWkLNXsnZ06WZTgmM=;
+	s=korg; t=1784211963;
+	bh=cYnxjjkLq4CX9WJZnztP+PY24elfP8hDc5oyqUs3LFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hu5oGGgPeaId5Ty576w2VLR2uuDKz68UYlDFjPrf43MAkOvl6Qz5mSHsbBLIEWCtP
-	 mafi42jNIHnnTDPdnlxmZsu70dzWJoXSiM4iLElMdxI4CwW3TNJNpln1vjVjv3OEgX
-	 J/F9UTA6mh4JdPevE5BhYqRQRLNBkkMFTuO4tnf4=
+	b=CPuSF827LNpjqAPcXyUnmJzg4zyJNKtXEgxKwAq4zaFgqBcrQxTH+2o+uQrKKl5fy
+	 aiBkV7m/lqQWSlFIiq7VRnO3feIcLokZpcj6yaiZabuB9yU3Lh3E+6pmJVsytUT503
+	 3sC9vkH7WPo6+jKeJvVSX0rJ836WPsa9PRI+O5u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Vidya Sagar <vidyas@nvidia.com>
-Subject: [PATCH 6.12 103/349] PCI: host-common: Request bus reassignment when not probe-only
-Date: Thu, 16 Jul 2026 15:30:37 +0200
-Message-ID: <20260716133035.620048540@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.12 104/349] PCI: imx6: Fix IMX6SX_GPR12_PCIE_TEST_POWERDOWN handling
+Date: Thu, 16 Jul 2026 15:30:38 +0200
+Message-ID: <20260716133035.643216402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,47 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-commit fda8749ba73638f5bbca3ffb39bc6861eb3b23fa upstream.
+commit aad953fb4eed0df5486cd54ccad80ac197678e01 upstream.
 
-pci_host_common_init() is used by several generic ECAM host drivers.
-After PCI core changes around pci_flags and preserve_config, these hosts
-no longer opted into full bus number reassignment the way they did
-before, which broke enumeration of devices on a Marvell CN106XX board.
+The IMX6SX_GPR12_PCIE_TEST_POWERDOWN bit does not control the PCIe
+reference clock on i.MX6SX. Instead, it is part of i.MX6SX PCIe core
+reset sequence.
 
-When PCI_PROBE_ONLY is not set, add PCI_REASSIGN_ALL_BUS so
-pci_scan_bridge_extend() takes the reassignment path: bus numbers can be
-assigned from firmware EA data (e.g. pci_ea_fixed_busnrs()). Skip the
-flag in probe-only mode so existing assignments are not overridden.
+Move the IMX6SX_GPR12_PCIE_TEST_POWERDOWN assertion/deassertion into
+the core reset functions to properly reflect its purpose. Remove the
+.enable_ref_clk() callback for i.MX6SX since it was incorrectly
+manipulating this bit.
 
-Fixes: 7246a4520b4b ("PCI: Use preserve_config in place of pci_flags")
-Closes: https://lore.kernel.org/all/abkqm_LCd9zAM8cW@rkannoth-OptiPlex-7090/
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-[mani: added stable tag]
+Fixes: e3c06cd063d6 ("PCI: imx6: Add initial imx6sx support")
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: add problem report link]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Cc: stable@vger.kernel.org
-Cc: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260414081730.3864372-1-rkannoth@marvell.com
+Link: https://patch.msgid.link/20260319090844.444987-1-hongxing.zhu@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-host-common.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pci/controller/dwc/pci-imx6.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/pci/controller/pci-host-common.c
-+++ b/drivers/pci/controller/pci-host-common.c
-@@ -73,6 +73,10 @@ int pci_host_common_probe(struct platfor
- 	if (IS_ERR(cfg))
- 		return PTR_ERR(cfg);
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -612,14 +612,6 @@ static int imx_pcie_attach_pd(struct dev
+ 	return 0;
+ }
  
-+	/* Do not reassign bus numbers if probe only */
-+	if (!pci_has_flag(PCI_PROBE_ONLY))
-+		pci_add_flags(PCI_REASSIGN_ALL_BUS);
-+
- 	bridge->sysdata = cfg;
- 	bridge->ops = (struct pci_ops *)&ops->pci_ops;
- 	bridge->msi_domain = true;
+-static int imx6sx_pcie_enable_ref_clk(struct imx_pcie *imx_pcie, bool enable)
+-{
+-	regmap_update_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12,
+-			   IMX6SX_GPR12_PCIE_TEST_POWERDOWN,
+-			   enable ? 0 : IMX6SX_GPR12_PCIE_TEST_POWERDOWN);
+-	return 0;
+-}
+-
+ static int imx6q_pcie_enable_ref_clk(struct imx_pcie *imx_pcie, bool enable)
+ {
+ 	if (enable) {
+@@ -702,6 +694,9 @@ static int imx6sx_pcie_core_reset(struct
+ 	if (assert)
+ 		regmap_set_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12,
+ 				IMX6SX_GPR12_PCIE_TEST_POWERDOWN);
++	else
++		regmap_clear_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12,
++				  IMX6SX_GPR12_PCIE_TEST_POWERDOWN);
+ 
+ 	/* Force PCIe PHY reset */
+ 	regmap_update_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR5, IMX6SX_GPR5_PCIE_BTNRST_RESET,
+@@ -1578,7 +1573,6 @@ static const struct imx_pcie_drvdata drv
+ 		.mode_off[0] = IOMUXC_GPR12,
+ 		.mode_mask[0] = IMX6Q_GPR12_DEVICE_TYPE,
+ 		.init_phy = imx6sx_pcie_init_phy,
+-		.enable_ref_clk = imx6sx_pcie_enable_ref_clk,
+ 		.core_reset = imx6sx_pcie_core_reset,
+ 	},
+ 	[IMX6QP] = {
 
 
