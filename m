@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBA8319601;
-	Thu, 16 Jul 2026 14:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A473161AD;
+	Thu, 16 Jul 2026 14:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210869; cv=none; b=R8mpn0l9qrQ9nAqO3r3uLwvECTzrN+2hbPPhpg5thTN2nbAETfu7YVsBXlqhnR/PWei1SuYXE/4xylzR0LuD74xNYeGmkpTpDFaVT29uq6QTwqo8qtfS53D/hioGp2AG0TlzQo5hfQ54IGMUc2d6Zo2l7PGdk2A+NHPgm/B8Wtc=
+	t=1784210872; cv=none; b=TfY/0AqFs4obF/VxH0SFp6hhrI3NBBDy3t65adVFT7ux2gj1NvlRTGnntH7LfTR0CYCyJwWcFWErtMvkftZytzTtPTvOc1WuYWlFGlD+H88q4aGeS0nCNpKJJ60D15RVCMSkEsqiQfJWdQByxkTXyulAVEBlYmL/rwr1jLJwQ4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210869; c=relaxed/simple;
-	bh=8rI7ivR3QuRGS3ov09B7H4WLidTUeUr+GAc6FtMl08k=;
+	s=arc-20240116; t=1784210872; c=relaxed/simple;
+	bh=+m65FkVTIB5JAk8UEQvkBTUz1Tdltl9aRdEC2wEXRp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/+CTfEDSVg1Hzn/dfCVabI34c4oTiGRSKgZIpfmp1B1JobnseVTFjRUobZgEfXmDMI2pecUvsFmOVprxlhQ+M+08lmCB+8F+5QwtDUVru3dI1Oa8DJ162kT+bKQK9RLrBraxk2SDHKFUw4Sgp12JApOsovuWihFiRT/f/4OjiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qn64Gehv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lAOTS0nuFsC71nLs4w/+2bRTPS+2AKhNZtuLsHTU8e0He6CKgH8KWE5cYG+tM6DKEf1hOfLfqkTvkt8FEfvGEdaEiMIV9L1lb6bThaTB6A4RqWAhqhfob0PhN4E61t//eH/DgMU5kvbMisW/NLjEoK/+snnQyuEXMYi+E8foXwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2cdBhJH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qn64Gehv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4161F000E9;
-	Thu, 16 Jul 2026 14:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2cdBhJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7891F000E9;
+	Thu, 16 Jul 2026 14:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210867;
-	bh=cPNrY9Oap8GT3FQ/FDiSsTM2cc6s48ium5rfCEALcHk=;
+	s=korg; t=1784210870;
+	bh=bPb6g+4/cE1/QiKnhj7UTjwgqe/+v2WjaqEjKycJEOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qn64GehvHCvRSOIB7HE47nknfWqfoc4xfo5+/h+WfyuxlNTfUPeAcqlVRopg6Rk6y
-	 wo6a3ETcG3yWAFg61nFbqQ50ZTPGUp+4djC6wV73hlg+gw97bE7eww2gclKTMEawy/
-	 9j47p5hVIOy9BMyhoh5KiT5vbq9nd9fneT+zd3Bs=
+	b=z2cdBhJHirRGlNPIiFeRBNRUYDwa5qsvE1NQ1sdOlhS5+IudGSjYHV6ruP1EUn9x+
+	 pkqy6/Wdk6Hn/EaDz7To/xHEzzvqtoUrrC4NKavMEgbGyGw/cJ9pyVEK7ioZYtVVRX
+	 qVNVsl0cBEQLZ8E4FkUIv0U97LrHZtL1cNwOVxN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 211/480] fs/ntfs3: fsync files by syncing parent inodes
-Date: Thu, 16 Jul 2026 15:29:18 +0200
-Message-ID: <20260716133049.295508872@linuxfoundation.org>
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 185/480] netpoll: fix a use-after-free on shutdown path
+Date: Thu, 16 Jul 2026 15:28:52 +0200
+Message-ID: <20260716133048.730307384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,167 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit dcd9d6a47199565d83d61a11bbf91fa2ade4d676 ]
+commit 45f1458a85017a023f138b22ac5c76abd477db42 upstream.
 
-Some xfstests expect fsync() on a file or directory to also persist
-directory metadata up the parent chain. Using generic_file_fsync() is not
-sufficient for ntfs, because parent directories are not explicitly
-written out.
+There is a use-after-free error on netpoll, which is clearly detected by
+KASAN.
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: d7ea8495fd30 ("fs/ntfs3: fix missing run load for vcn0 in attr_data_get_block_locked()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+      BUG: KASAN: slab-use-after-free in _raw_spin_lock_irqsave+0x3b/0x80
+      Read of size 1 at addr ... by task kworker/9:1
+      Workqueue: events queue_process
+      Call Trace:
+       skb_dequeue+0x1e/0xb0
+       queue_process+0x2c/0x600
+       process_scheduled_works+0x4b6/0x850
+       worker_thread+0x414/0x5a0
+      Allocated by task 242:
+       __netpoll_setup+0x201/0x4a0
+       netpoll_setup+0x249/0x550
+       enabled_store+0x32f/0x380
+      Freed by task 0:
+       kfree+0x1b7/0x540
+       rcu_core+0x3f8/0x7a0
+
+The problem happens when there is a pending TX worker running in
+parallel with the cleanup path.
+
+This is what happens on netpoll shutdown path:
+
+1) __netpoll_cleanup() is called
+2) set dev->npinfo to NULL
+3) call_rcu() with rcu_cleanup_netpoll_info()
+  3.1) rcu_cleanup_netpoll_info() tries to cancel all workers with
+       cancel_delayed_work(), but doesn't wait for the worker to finish
+4) and kfree(npinfo);
+
+Because 3.1) doesn't really cancel the work, as the comment says "we
+can't call cancel_delayed_work_sync here, as we are in softirq", the TX
+worker can run after 4).
+
+Tl;DR: queue_process() is not an RCU reader, it reaches npinfo through
+the work item via container_of().
+
+Use disable_delayed_work_sync() to ensure the worker is completely
+stopped and prevent any future re-arming attempts. Once npinfo is set
+to NULL, senders will bail out and not queue new work. The disable flag
+ensures any in-flight re-arming attempts also fail silently.
+
+In the future, we can do the cleanup inline here without needing the
+npinfo->rcu rcu_head, but that is net-next material.
+
+Cc: stable@vger.kernel.org
+Fixes: 38e6bc185d95 ("netpoll: make __netpoll_cleanup non-block")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260625-netpoll_rcu_fix-v2-1-0748ffac1e98@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/dir.c     |  2 +-
- fs/ntfs3/file.c    | 30 ++++++++++++++++++++++++---
- fs/ntfs3/frecord.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++
- fs/ntfs3/ntfs_fs.h |  2 ++
- 4 files changed, 81 insertions(+), 4 deletions(-)
+ net/core/netpoll.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index 460df046482c73..d41d02372c747b 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -624,7 +624,7 @@ const struct file_operations ntfs_dir_operations = {
- 	.llseek		= generic_file_llseek,
- 	.read		= generic_read_dir,
- 	.iterate_shared	= ntfs_readdir,
--	.fsync		= generic_file_fsync,
-+	.fsync		= ntfs_file_fsync,
- 	.open		= ntfs_file_open,
- 	.unlocked_ioctl = ntfs_ioctl,
- #ifdef CONFIG_COMPAT
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 5042eb321eb891..6a19bb04220809 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -1378,13 +1378,37 @@ static ssize_t ntfs_file_splice_write(struct pipe_inode_info *pipe,
- /*
-  * ntfs_file_fsync - file_operations::fsync
-  */
--static int ntfs_file_fsync(struct file *file, loff_t start, loff_t end, int datasync)
-+int ntfs_file_fsync(struct file *file, loff_t start, loff_t end, int datasync)
- {
- 	struct inode *inode = file_inode(file);
--	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
-+	struct super_block *sb = inode->i_sb;
-+	struct ntfs_sb_info *sbi = sb->s_fs_info;
-+	int err, ret;
-+
-+	if (unlikely(ntfs3_forced_shutdown(sb)))
- 		return -EIO;
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -812,14 +812,6 @@ static void rcu_cleanup_netpoll_info(str
+ 			container_of(rcu_head, struct netpoll_info, rcu);
  
--	return generic_file_fsync(file, start, end, datasync);
-+	ret = file_write_and_wait_range(file, start, end);
-+	if (ret)
-+		return ret;
-+
-+	ret = write_inode_now(inode, !datasync);
-+
-+	if (!ret) {
-+		ret = ni_write_parents(ntfs_i(inode), !datasync);
-+	}
-+
-+	if (!ret) {
-+		ntfs_set_state(sbi, NTFS_DIRTY_CLEAR);
-+		ntfs_update_mftmirr(sbi, false);
-+	}
-+
-+	err = sync_blockdev(sb->s_bdev);
-+	if (unlikely(err && !ret))
-+		ret = err;
-+	if (!ret)
-+		blkdev_issue_flush(sb->s_bdev);
-+	return ret;
+ 	skb_queue_purge(&npinfo->txq);
+-
+-	/* we can't call cancel_delayed_work_sync here, as we are in softirq */
+-	cancel_delayed_work(&npinfo->tx_work);
+-
+-	/* clean after last, unfinished work */
+-	__skb_queue_purge(&npinfo->txq);
+-	/* now cancel it again */
+-	cancel_delayed_work(&npinfo->tx_work);
+ 	kfree(npinfo);
  }
  
- // clang-format off
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 480f2ed518a783..e904c5da919222 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -3090,6 +3090,57 @@ bool ni_is_dirty(struct inode *inode)
- 	return false;
- }
+@@ -843,6 +835,7 @@ static void __netpoll_cleanup(struct net
+ 			ops->ndo_netpoll_cleanup(np->dev);
  
-+/*
-+ * ni_write_parents
-+ *
-+ * Helper function for ntfs_file_fsync.
-+ */
-+int ni_write_parents(struct ntfs_inode *ni, int sync)
-+{
-+	int err = 0;
-+	struct ATTRIB *attr = NULL;
-+	struct ATTR_LIST_ENTRY *le = NULL;
-+	struct ntfs_sb_info *sbi = ni->mi.sbi;
-+	struct super_block *sb = sbi->sb;
-+
-+	while ((attr = ni_find_attr(ni, attr, &le, ATTR_NAME, NULL, 0, NULL,
-+				    NULL))) {
-+		struct inode *dir;
-+		struct ATTR_FILE_NAME *fname;
-+
-+		fname = resident_data_ex(attr, SIZEOF_ATTRIBUTE_FILENAME);
-+		if (!fname)
-+			continue;
-+
-+		/* Check simple case when parent inode equals current inode. */
-+		if (ino_get(&fname->home) == ni->vfs_inode.i_ino) {
-+			if (MFT_REC_ROOT != ni->vfs_inode.i_ino) {
-+				ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
-+				err = -EINVAL;
-+			}
-+			continue;
-+		}
-+
-+		dir = ntfs_iget5(sb, &fname->home, NULL);
-+		if (IS_ERR(dir)) {
-+			ntfs_inode_warn(
-+				&ni->vfs_inode,
-+				"failed to open parent directory r=%lx to write",
-+				(long)ino_get(&fname->home));
-+			continue;
-+		}
-+
-+		if (!is_bad_inode(dir)) {
-+			int err2 = write_inode_now(dir, sync);
-+			if (!err)
-+				err = err2;
-+		}
-+		iput(dir);
-+	}
-+
-+	return err;
-+}
-+
- /*
-  * ni_update_parent
-  *
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index a4466e9641f65d..7fb08bff025491 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -510,6 +510,7 @@ int ntfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- int ntfs_file_open(struct inode *inode, struct file *file);
- int ntfs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
- 		__u64 start, __u64 len);
-+int ntfs_file_fsync(struct file *file, loff_t start, loff_t end, int datasync);
- long ntfs_ioctl(struct file *filp, u32 cmd, unsigned long arg);
- long ntfs_compat_ioctl(struct file *filp, u32 cmd, unsigned long arg);
- extern const struct inode_operations ntfs_special_inode_operations;
-@@ -587,6 +588,7 @@ int ni_rename(struct ntfs_inode *dir_ni, struct ntfs_inode *new_dir_ni,
- 	      struct ntfs_inode *ni, struct NTFS_DE *de, struct NTFS_DE *new_de);
+ 		RCU_INIT_POINTER(np->dev->npinfo, NULL);
++		disable_delayed_work_sync(&npinfo->tx_work);
+ 		call_rcu(&npinfo->rcu, rcu_cleanup_netpoll_info);
+ 	}
  
- bool ni_is_dirty(struct inode *inode);
-+int ni_write_parents(struct ntfs_inode *ni, int sync);
- 
- /* Globals from fslog.c */
- bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes);
--- 
-2.53.0
-
 
 
