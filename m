@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50576401A0A;
-	Thu, 16 Jul 2026 13:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6443D8127;
+	Thu, 16 Jul 2026 13:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210249; cv=none; b=FNLyvIh2Oq7PYJGKdZc6BEkHfHXpUxAJJC8/JXfBYbkugh0NfDmFLiYJnPn7/uxjwEESnZMRm8P/ZFlf6HvrP/LrKkVYMRg4T1TWResx/2v2/QpiYtYVAyTj05znrYBRZdlUDX2masWVD++yiqtgrAeb38IiEWlyGQXmm2QHiF8=
+	t=1784210252; cv=none; b=dBwPpTfk95lrI1L7YxK/XMx/tXNc6+8V57NiFjmPA+ujIA8e3wq4/Mm/B+IrjpkZ1EfnD4yXRa+u5dMFTd0AE1FFkO0LLX+GSmVp1zmLww9dFGuwZ4/QglfSdgP4YWvEHcyqYC7Xt24C6qCOT9JdBY8zu0ehjUHcCLqo/JOPB4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210249; c=relaxed/simple;
-	bh=eYMRd/B5gxrxceoZFdpYdRX/US8xSjaVJFCsR5+rL9A=;
+	s=arc-20240116; t=1784210252; c=relaxed/simple;
+	bh=aUKx5ZKYgqjODJUgUTG8/Hk507Uhy3GWW2jmky6NN1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/g2WCEhy3cacJaWrHxrXwbbOuWqONSqmft5lhU4joqcDZAODLzTTQYnOYPULxFzxjBTh2AzavLji02B8eLxah3SHnUc4ShlM0yaIm6Xt0PxIsa2rF1baozgoZ2e+BJh32r+cZfN1j62rOPd2jHeasg+U4+0DDdx9CqE0QYRLmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTCnuzdW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pPr8tLHx/mRWfeqQ+8nk+kiiFy3MrPtx4J5wIn6LPz8v9eKrSPArhZAv46QmTMavb34UNe6/moew2QJAeecgcJ/7KyBr4Ri/BG+82TZGa8RxMgYWrfRvOf5OczkCNX7uzEMc8n5lWFxbO5CDRGi2vA3swGTliw4Yz7K6U/qmsyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLvEvXC5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTCnuzdW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BB31F000E9;
-	Thu, 16 Jul 2026 13:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLvEvXC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6A21F00A3A;
+	Thu, 16 Jul 2026 13:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210248;
-	bh=gsQNocrqo5mnTklw/2e58Lg/YZPrbYxDZdvlf47obio=;
+	s=korg; t=1784210250;
+	bh=kfvGkQ69lL+auUcYWEvmYJK9iT/TtVFuipZBDa5pfAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTCnuzdWypDH184AS2ZZH9SJqvdAbO/OyAyRvOEdOlOxMR4fiL6KKWAn786rMNESu
-	 oA8jnmAji9x8RVxJmWTqavTJrZl2wrDb3crsRDlLrqH3LwL1NGWaInBUN2K+3lckFM
-	 T9I8S5mh57UazpjFYcPJIcqSDPkPHXtRww7cWTJc=
+	b=wLvEvXC5AchYL2Bc29y+NNmKEyI7FLJexZiSDT3C8mJ+41oWZ6EF861bVzDX1XVSp
+	 OBqjh4nrKRNGWcv/DB2xs6D37n27LRUTTrU3bacurIHeQdn89DgpT2TKPgaSWsh0UN
+	 Oq0Hzx/rqJ58LvgOzE6OGMlnw8TpyzLyY7/w0XYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.1 450/518] KVM: arm64: nv: Avoid dereferencing NULL VNCR pseudo-TLB
-Date: Thu, 16 Jul 2026 15:31:58 +0200
-Message-ID: <20260716133057.690880054@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Zeng Chi <zengchi@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 7.1 451/518] LoongArch: KVM: Add missing slots_lock for device register/unregister
+Date: Thu, 16 Jul 2026 15:31:59 +0200
+Message-ID: <20260716133057.712887665@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,104 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Zeng Chi <zengchi@kylinos.cn>
 
-commit 4be6cbeb93d26994bd1827ddbce391e3c4395c8f upstream.
+commit aeded601d6aceb57cdda4b2701d2ee00c43a8b69 upstream.
 
-VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions,
-and either can race against a vcpu not being onlined yet (no pseudo-TLB
-allocated). Similarly, the TLB might be invalid, and the invalidation
-should be skipped in this case.
+kvm_io_bus_register_dev() and kvm_io_bus_unregister_dev() should be
+called under kvm->slots_lock. The unregister calls in ipi.c, eiointc.c
+and pch_pic.c were also missing this protection. Add it to match the
+register side.
 
-Both kvm_invalidate_vncr_ipa() and kvm_invalidate_vncr_va() are
-expected to perform the same checks, except that the latter doesn't
-check for the allocation and blindly dereferences the pointer.
-
-Solve this by introducing a new iterator built on top of the usual
-kvm_for_each_vcpu() that checks for both of the above conditions,
-and convert the two users to it.
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/r/aiUvSbrWndQeUPc8@v4bel
-Fixes: 4ffa72ad8f37 ("KVM: arm64: nv: Add S1 TLB invalidation primitive for VNCR_EL2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20260607175745.297793-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/nested.c |   36 +++++++++++++++---------------------
- 1 file changed, 15 insertions(+), 21 deletions(-)
+ arch/loongarch/kvm/intc/eiointc.c |    6 ++++++
+ arch/loongarch/kvm/intc/ipi.c     |    2 ++
+ arch/loongarch/kvm/intc/pch_pic.c |    2 ++
+ 3 files changed, 10 insertions(+)
 
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -904,9 +904,21 @@ static void invalidate_vncr(struct vncr_
- 		clear_fixmap(vncr_fixmap(vt->cpu));
+--- a/arch/loongarch/kvm/intc/eiointc.c
++++ b/arch/loongarch/kvm/intc/eiointc.c
+@@ -645,10 +645,14 @@ static int kvm_eiointc_create(struct kvm
+ 
+ 	device = &s->device_vext;
+ 	kvm_iodevice_init(device, &kvm_eiointc_virt_ops);
++	mutex_lock(&kvm->slots_lock);
+ 	ret = kvm_io_bus_register_dev(kvm, KVM_IOCSR_BUS,
+ 			EIOINTC_VIRT_BASE, EIOINTC_VIRT_SIZE, device);
++	mutex_unlock(&kvm->slots_lock);
+ 	if (ret < 0) {
++		mutex_lock(&kvm->slots_lock);
+ 		kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &s->device);
++		mutex_unlock(&kvm->slots_lock);
+ 		kfree(s);
+ 		return ret;
+ 	}
+@@ -667,8 +671,10 @@ static void kvm_eiointc_destroy(struct k
+ 
+ 	kvm = dev->kvm;
+ 	eiointc = kvm->arch.eiointc;
++	mutex_lock(&kvm->slots_lock);
+ 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &eiointc->device);
+ 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &eiointc->device_vext);
++	mutex_unlock(&kvm->slots_lock);
+ 	kfree(eiointc);
+ 	kfree(dev);
  }
+--- a/arch/loongarch/kvm/intc/ipi.c
++++ b/arch/loongarch/kvm/intc/ipi.c
+@@ -447,7 +447,9 @@ static void kvm_ipi_destroy(struct kvm_d
  
-+/*
-+ * VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions, and
-+ * either can race against a vcpu not being onlined yet (no pseudo-TLB
-+ * allocated). Similarly, the TLB might be invalid.  Skip those, as they
-+ * obviously don't participate in the invalidation at this stage.
-+ */
-+#define kvm_for_each_vncr_tlb(idx, vcpup, tlbp, kvm)	\
-+	kvm_for_each_vcpu(idx, vcpup, kvm)		\
-+		if (((tlbp) = vcpup->arch.vncr_tlb) &&	\
-+		    (tlbp)->valid)
-+
- static void kvm_invalidate_vncr_ipa(struct kvm *kvm, u64 start, u64 end)
- {
- 	struct kvm_vcpu *vcpu;
-+	struct vncr_tlb *vt;
- 	unsigned long i;
- 
- 	lockdep_assert_held_write(&kvm->mmu_lock);
-@@ -914,24 +926,9 @@ static void kvm_invalidate_vncr_ipa(stru
- 	if (!kvm_has_feat(kvm, ID_AA64MMFR4_EL1, NV_frac, NV2_ONLY))
- 		return;
- 
--	kvm_for_each_vcpu(i, vcpu, kvm) {
--		struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
-+	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
- 		u64 ipa_start, ipa_end, ipa_size;
- 
--		/*
--		 * Careful here: We end-up here from an MMU notifier,
--		 * and this can race against a vcpu not being onlined
--		 * yet, without the pseudo-TLB being allocated.
--		 *
--		 * Skip those, as they obviously don't participate in
--		 * the invalidation at this stage.
--		 */
--		if (!vt)
--			continue;
--
--		if (!vt->valid)
--			continue;
--
- 		ipa_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift,
- 							    vt->wr.level));
- 		ipa_start = vt->wr.pa & ~(ipa_size - 1);
-@@ -961,17 +958,14 @@ static void invalidate_vncr_va(struct kv
- 			       struct s1e2_tlbi_scope *scope)
- {
- 	struct kvm_vcpu *vcpu;
-+	struct vncr_tlb *vt;
- 	unsigned long i;
- 
- 	lockdep_assert_held_write(&kvm->mmu_lock);
- 
--	kvm_for_each_vcpu(i, vcpu, kvm) {
--		struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
-+	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
- 		u64 va_start, va_end, va_size;
- 
--		if (!vt->valid)
--			continue;
--
- 		va_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift,
- 							   vt->wr.level));
- 		va_start = vt->gva & ~(va_size - 1);
+ 	kvm = dev->kvm;
+ 	ipi = kvm->arch.ipi;
++	mutex_lock(&kvm->slots_lock);
+ 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &ipi->device);
++	mutex_unlock(&kvm->slots_lock);
+ 	kfree(ipi);
+ 	kfree(dev);
+ }
+--- a/arch/loongarch/kvm/intc/pch_pic.c
++++ b/arch/loongarch/kvm/intc/pch_pic.c
+@@ -481,7 +481,9 @@ static void kvm_pch_pic_destroy(struct k
+ 	kvm = dev->kvm;
+ 	s = kvm->arch.pch_pic;
+ 	/* unregister pch pic device and free it's memory */
++	mutex_lock(&kvm->slots_lock);
+ 	kvm_io_bus_unregister_dev(kvm, KVM_MMIO_BUS, &s->device);
++	mutex_unlock(&kvm->slots_lock);
+ 	kfree(s);
+ 	kfree(dev);
+ }
 
 
