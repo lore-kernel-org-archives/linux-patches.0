@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C173426433;
-	Thu, 16 Jul 2026 13:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E64B42586F;
+	Thu, 16 Jul 2026 13:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209815; cv=none; b=nZ0uGOag4jpS84xRe3ypOrOM2bzaNda4NkqoO3AB5J1BL+BdeoYcjky01ugF/bFBOGYvEo0XUhHLxgSuDp1DQ7cdUIHsxrd/2X+oDGLNm4Iice1H71nbpJcmyRtLXUkeUJFF3PFgIKHbEHeD1RBGLPyDLBmbUOJO/ibZM7E30LI=
+	t=1784209817; cv=none; b=tmC8YR++y7tTRCEhJodVpNbdwTxFNFSfsE7UxxXlFno9116ENDkCA5suqBL2whTtYXgix3gQv+clybmihIgh0hTmGwa82kyekhzdH2DUj3V3oy8yTFqCFUsd663Qg75UuEh5ZQIrHSAKSmZBOChhF5GRa0PgyMPuIVDotxqYz74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209815; c=relaxed/simple;
-	bh=/k/LjMmccc3l9F1XtlQNdprqcGZeofPiEBILydPDpOc=;
+	s=arc-20240116; t=1784209817; c=relaxed/simple;
+	bh=MwChEuhcsP5NUZeLVMg37tlLGNx9l387aD8pfoY2wTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxJoJGf5DoCZXLAaVNdGX2jVnhBWZmPsfJa7aIdnsIM+Um+rSacRVOGZEwEgCvXCOJhaVqdH2AzFDZ+2vEDTcTjIk/nWiVEKkhxfsgMr0QnScH8TrSUmumon7wWiFh5lt2nm6zv7aMtqwpyVCE09lg9kRVU6DPwzET2JK8zqbKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQ5zU4P4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=InG68Po8oAsZQMj4AFncDI5fzkN386wmZriXoNWQQSJVtoMHReHqVhdrXPgEgUTjtMi7HlidWD9ktRCnUD09Q8mMV5FglkOcBhcGZ2XGhNG2UipriNJv7YelcpJTP3gyDvGE0szEctKsw4nc6EfZwBKPzYXBN4FXJaX2A6bhLZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NI5d3AWg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQ5zU4P4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410651F00A3A;
-	Thu, 16 Jul 2026 13:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NI5d3AWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A3C1F000E9;
+	Thu, 16 Jul 2026 13:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209812;
-	bh=KsCq32zdABNi/AOQaMapPwHnws4SoP42Rm24F+eqA0Q=;
+	s=korg; t=1784209815;
+	bh=+DXlJFeFNNgbE95dPBF+2LcV1bLnxzSlQC+CZx6VR88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OQ5zU4P4dj0oTJbrR8K2KnHxAtLQwC2hog5QSpnMuRe7YU6YDG0ekL1oHJgK+GV59
-	 doM+9ktR2RT5/mrZ9RSFHs+kvoU718CllVz6N89Dt3/WfnnKH2CfnoFayTB19TjTWK
-	 c5Pq+OwLaWchjbJKafY8Jr2+XtJcPJRbqPokh3c4=
+	b=NI5d3AWg+uedbDecDcLwz4c48qTi3qD7IGmVqjs43W90TTiEXW4/f65mQuI5T45Zf
+	 hkaV72nmen7QFcQfn5oofmfK19hE4nCT564L8T/LOLuqd4XGCpCjCWFDJ3ifBhsBB7
+	 U5FvwkI06iGjJhbuMeoCK6/tmnqCHBjGlHl2fFa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 7.1 328/518] usb: typec: class: drop PD lookup reference
-Date: Thu, 16 Jul 2026 15:29:56 +0200
-Message-ID: <20260716133054.990185512@linuxfoundation.org>
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH 7.1 329/518] usb: typec: ps883x: Fix DP+USB3 configuration
+Date: Thu, 16 Jul 2026 15:29:57 +0200
+Message-ID: <20260716133055.010814935@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,36 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 43ae2f90b70cda374c487c1639a01d0f14e5d583 upstream.
+commit b229b22b0a945d52dee887c856991ad08744d08e upstream.
 
-usb_power_delivery_find() wraps class_find_device_by_name(). That helper
-returns a device reference that must be released by the caller.
+Commit 6bebd9b77726 ("usb: typec: ps883x: Rework ps883x_set()") introduced
+two regressions:
 
-select_usb_power_delivery_store() only needs this reference while calling
-the pd_set callback. Drop it once the callback returns. Otherwise the sysfs
-write can pin the selected USB Power Delivery object and prevent it from
-being released on unregister.
+ 1. The CONN_STATUS_0_USB_3_1_CONNECTED bit is mistakenly written to the
+    wrong configuration register (cfg1 instead of cfg0). This breaks USB3
+    when using USB3+DP adapters.
 
-Fixes: a7cff92f0635 ("usb: typec: USB Power Delivery helpers for ports and partners")
+ 2. The switch-case fallthrough block is inverted: Currently,
+    TYPEC_DP_STATE_C (DP-only) inherits the USB3 configuration, while
+    TYPEC_DP_STATE_D (DP+USB3) is missing the necessary DP sink flags.
+
+Fix these by writing the USB3 bit to the correct register and swapping the
+case statement order so both states get their correct bits assigned.
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260702191329.2648043-1-shuangpeng.kernel@gmail.com
+Fixes: 6bebd9b77726 ("usb: typec: ps883x: Rework ps883x_set()")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260601-ps883x-usb3dp-fixes-v1-1-d19bec3a6d26@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/typec/mux/ps883x.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -1619,6 +1619,7 @@ static ssize_t select_usb_power_delivery
- 		return -EINVAL;
+--- a/drivers/usb/typec/mux/ps883x.c
++++ b/drivers/usb/typec/mux/ps883x.c
+@@ -118,12 +118,12 @@ static int ps883x_set(struct ps883x_reti
+ 				CONN_STATUS_1_DP_HPD_LEVEL;
  
- 	ret = port->ops->pd_set(port, pd);
-+	put_device(&pd->dev);
- 	if (ret)
- 		return ret;
- 
+ 			switch (state->mode)  {
++			case TYPEC_DP_STATE_D:
++				cfg0 |= CONN_STATUS_0_USB_3_1_CONNECTED;
++				fallthrough;
+ 			case TYPEC_DP_STATE_C:
+ 				cfg1 |= CONN_STATUS_1_DP_SINK_REQUESTED |
+ 					CONN_STATUS_1_DP_PIN_ASSIGNMENT_C_D;
+-				fallthrough;
+-			case TYPEC_DP_STATE_D:
+-				cfg1 |= CONN_STATUS_0_USB_3_1_CONNECTED;
+ 				break;
+ 			default: /* MODE_E */
+ 				break;
 
 
