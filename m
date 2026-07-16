@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87593319601;
-	Thu, 16 Jul 2026 14:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E4B42F6FA;
+	Thu, 16 Jul 2026 14:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212174; cv=none; b=n4LelQX8qrKHfE2JR4bxdHw9IFjyI+QRDXtNRdt2QSMn9nEEgZOhF+tMQE9AMG/HLJBvc2DVsHi4Y8lMrEijD49EClHgv9FzS+vOPGzH9Xmx+bXhXc6wqOSODWfb2YLADDLZlAUUO7xlpN8t/faJMW3EiaS84pIu4r0EBWEqU84=
+	t=1784212177; cv=none; b=XZ/3Tl42BDKWvSjbA6E14vokMwFu6vJKFk3K5icelODXES/E7pM6Y2meAcP59rczB1ZR58nsGsLTlJeYgYrwsMhNbfo14NsesUMR5k5p5ms2AXbqXVS+qhMDA269hJOO6A66vXgbii/NSzVaMn6a40hBnahtdHlhiyQQmn6IX3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212174; c=relaxed/simple;
-	bh=XTy5he/hrVFN+mSHg5+Bp1lRdt2RnTuLSW/GMtgAdf0=;
+	s=arc-20240116; t=1784212177; c=relaxed/simple;
+	bh=MxtEEeMBUQskrK4CbJuKjm6gPWX4zovh/NvX0TqKE0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWq1bUIOe91Bb3wzWBqgCHtRYn8YVqPkp+TTM9RE6fspH66SiRqA47VQ5uNG/Hd+y1Fn8V0l+vfvK95KrxAgen/GkfHeGm46iPTUj7VHswPMKyNEXWDOZkylQO2RBcj5lDDaGlpyu2LGgA3SuP4rKt4SHT5Q1nWumxLeOVp6oPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0S2o/6Rr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jLsFjs90a85pzyC1EaUVjPm6RWV6yhqZazu60u7FUECF69kNPFteMAtM3cho9Q2wcxHb1wlyNgxo8hSvWA8URqqyw+GBQAraFF/TotwxPycMqHdgTYfIXO9iT0Tv2RldhHlfqahiCI3wQ63YYMqYbcwb5TVw+7Lc0tdiOg8dqT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uD86B22K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0S2o/6Rr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B986F1F000E9;
-	Thu, 16 Jul 2026 14:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uD86B22K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623A31F000E9;
+	Thu, 16 Jul 2026 14:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212173;
-	bh=5NNy8QbfDU3m9HiycaUqdzltxSmryG6c/M1nQ0x89LA=;
+	s=korg; t=1784212175;
+	bh=U1BbS6IjYlM3Q2d6USXi6S02DPJuLcjDKBGghgEZpr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0S2o/6RrwYzjwRamvX3o7b67lLbmRlD9WPz3FNUyFqK3n9E6ha+ceeU9ZqIXkfmBU
-	 BwmwB1oi0DBvgQ1THdO4On+/RS8Uxv4Rd1J/HO6NOnAhj/BPDDAMunHOJTn94XJ7ol
-	 FCzidnDzLN6pOZNX+GxxNCp3Ls3K6u1F11hF4wtM=
+	b=uD86B22K6kiWxK7oAGWO7SUJ6vC/1z30i34mBe4embg7zDmpdJs+sNz6CGZtsv6dg
+	 exgGrvlIZLM1Gjyuzwc1xdO/YDU6h+ByGCrOkXufFt2BdQQT8NG+wdZDcGhK80910I
+	 gZAzdRRhBnJZOOA5MRVKoijDfieOnxE/CgOCqbUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
 	stable <stable@kernel.org>,
-	Jimmy Hu <hhhuuu@google.com>
-Subject: [PATCH 6.12 226/349] usb: gadget: udc: Fix use-after-free in gadget_match_driver
-Date: Thu, 16 Jul 2026 15:32:40 +0200
-Message-ID: <20260716133038.420319656@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>
+Subject: [PATCH 6.12 227/349] usb: gadget: f_printer: take kref only for successful open
+Date: Thu, 16 Jul 2026 15:32:41 +0200
+Message-ID: <20260716133038.442212885@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,113 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Hu <hhhuuu@google.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 67e511d2989eb1c8c588b599ce2fcc6bb8e6f7ea upstream.
+commit 30adce93d5c4a5a1ec29d9249e3fdfcc391d406b upstream.
 
-The udc structure acts as the management structure for the gadget,
-but their lifecycles are decoupled. A race condition exists where
-usb_del_gadget() frees the udc memory (e.g., via mode-switch work)
-while gadget_match_driver() concurrently accesses the freed udc memory
-(e.g., via configfs), causing a Use-After-Free (UAF) that triggers a
-NULL pointer dereference when the freed memory is zeroed:
+printer_open() returns -EBUSY when the character device is already
+open, but it increments dev->kref regardless of the return value. VFS
+does not call ->release() for a failed open, so every rejected second
+open permanently leaks one reference.
 
-[39430.908615][ T1171] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[39430.911397][ T1171] pc : __pi_strcmp+0x20/0x140
-[39430.911441][ T1171] lr : gadget_match_driver+0x34/0x60
-...
-[39430.911890][ T1171]  usb_gadget_register_driver_owner+0x50/0xf8
-[39430.911910][ T1171]  gadget_dev_desc_UDC_store+0xf4/0x140
-[39430.931308][ T1171]  configfs_write_iter+0xec/0x134
+Move kref_get() into the successful-open branch.
 
-[39430.957058][ T1171] Workqueue: events_freezable __dwc3_set_mode
-[39430.957287][ T1171]  dwc3_gadget_exit+0x34/0x8c
-[39430.957304][ T1171]  __dwc3_set_mode+0xc0/0x664
-
-Fix this by ensuring the udc structure remains allocated until the
-gadget is released. To achieve this, introduce a new
-usb_gadget_release() routine to the core. When the gadget is added,
-usb_add_gadget() stores the gadget's release routine in the udc
-structure and takes a reference to the udc. When the gadget is
-released, usb_gadget_release() drops the reference to the udc and
-then calls the gadget's release routine.
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: e8d5f92b8d30 ("usb: gadget: function: printer: fix use-after-free in __lock_acquire")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jimmy Hu <hhhuuu@google.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260625073705.803880-1-hhhuuu@google.com
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/80295742B820DA9B+20260626064617.4090626-1-raoxu@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |   29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_printer.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -31,8 +31,9 @@ static const struct bus_type gadget_bus_
- /**
-  * struct usb_udc - describes one usb device controller
-  * @driver: the gadget driver pointer. For use by the class code
-- * @dev: the child device to the actual controller
-  * @gadget: the gadget. For use by the class code
-+ * @gadget_release: the gadget's release routine
-+ * @dev: the child device to the actual controller
-  * @list: for use by the udc class driver
-  * @vbus: for udcs who care about vbus status, this value is real vbus status;
-  * for udcs who do not care about vbus status, this value is always true
-@@ -53,6 +54,7 @@ static const struct bus_type gadget_bus_
- struct usb_udc {
- 	struct usb_gadget_driver	*driver;
- 	struct usb_gadget		*gadget;
-+	void				(*gadget_release)(struct device *dev);
- 	struct device			dev;
- 	struct list_head		list;
- 	bool				vbus;
-@@ -1356,6 +1358,17 @@ static void usb_udc_nop_release(struct d
- 	dev_vdbg(dev, "%s\n", __func__);
+--- a/drivers/usb/gadget/function/f_printer.c
++++ b/drivers/usb/gadget/function/f_printer.c
+@@ -363,12 +363,11 @@ printer_open(struct inode *inode, struct
+ 		ret = 0;
+ 		/* Change the printer status to show that it's on-line. */
+ 		dev->printer_status |= PRINTER_SELECTED;
++		kref_get(&dev->kref);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&dev->lock, flags);
+ 
+-	kref_get(&dev->kref);
+-
+ 	return ret;
  }
  
-+static void usb_gadget_release(struct device *dev)
-+{
-+	struct usb_gadget *gadget = dev_to_usb_gadget(dev);
-+	struct usb_udc *udc = gadget->udc;
-+	/* Cache the gadget's release routine to prevent UAF */
-+	void (*release)(struct device *dev) = udc->gadget_release;
-+
-+	put_device(&udc->dev);
-+	release(dev);
-+}
-+
- /**
-  * usb_initialize_gadget - initialize a gadget and its embedded struct device
-  * @parent: the parent device to this udc. Usually the controller driver's
-@@ -1412,6 +1425,14 @@ int usb_add_gadget(struct usb_gadget *ga
- 	mutex_init(&udc->connect_lock);
- 
- 	udc->started = false;
-+	/*
-+	 * Align decoupled lifecycles: take a UDC reference to ensure it
-+	 * remains allocated until the gadget is released, requiring an
-+	 * override of the gadget's release routine to drop it.
-+	 */
-+	udc->gadget_release = gadget->dev.release;
-+	gadget->dev.release = usb_gadget_release;
-+	get_device(&udc->dev);
- 
- 	mutex_lock(&udc_lock);
- 	list_add_tail(&udc->list, &udc_list);
-@@ -1456,6 +1477,12 @@ int usb_add_gadget(struct usb_gadget *ga
- 	mutex_lock(&udc_lock);
- 	list_del(&udc->list);
- 	mutex_unlock(&udc_lock);
-+	/*
-+	 * Revert the override and drop the UDC reference to prevent
-+	 * leaking the UDC if the gadget was statically allocated.
-+	 */
-+	gadget->dev.release = udc->gadget_release;
-+	put_device(&udc->dev);
- 
-  err_put_udc:
- 	put_device(&udc->dev);
 
 
