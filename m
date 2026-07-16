@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417583FD121;
-	Thu, 16 Jul 2026 13:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD352D6E64;
+	Thu, 16 Jul 2026 13:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210008; cv=none; b=YZRUlo7iBZAN0evyc3Or9qx+NBVb2A6Hx9BSUisfrydYruglMoJc4cMw1O0BtTZZyjVWuFBp7SxlLbRCQhSFKrEzkIOuQvaWJTufg9t3mczwe5GpkxnnmP1pDFTRpi3XaM0vTFJw13UfbQxH1tsli5pmHrtQ/OQeNAhbhIJ+fWo=
+	t=1784210011; cv=none; b=fGP+5IH2BI4zPxpMB9IsYwRKQrOPLNbLrYxnG2Vj24pQXFjxjlA7ZHQIcz0T0FMAH9gre8xUe8nc4KutV94gEP5HBcBQLXt3P89/q/HdGNHEw1TveOleY0QPNUWIBOfrQsjPv18noqH30lmF+rb0k3j1MEBSOue41HOoYgeWgdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210008; c=relaxed/simple;
-	bh=Azk+rC2AqcDacJS2PP1zC4/BOb2cXAN5lm7IxkHhL+U=;
+	s=arc-20240116; t=1784210011; c=relaxed/simple;
+	bh=UL1J+DBQLMnZeaiuTFV//soKM/8xOyr4D/vVQop+DhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QW4mTCmC1c1Zfv+yxC4rgJlE2MiRjoadLMDYbAOaBOMPgp5XylLG76sKNJuEfMOlQJUHRrnbE/DVDXtOpMu3T/lb55D60p6avRjElKTir+yyvjglWNtViyrDZn1wdHAs/zalXVgrOCFwT8FYAFxodSnaWvAOD/6TzWrTaG00Qww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnG2qWbQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HiG2hEpGXafRh9OBXqsjO9GTO7zR5sbr76JM+blQ65tjhXVtUPA1l+XWFmGw4TyeYkewgxOMJhsLIstQYpgLpjYMXqjgMMlrZSvssxm6pAoF2C9pvieLSnTDgKpiO44DDxoJ/4H3uWLcJw6HKbCdSjjsj+r7DFlFqApAc1SRkm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2DvOpQT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnG2qWbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544EE1F000E9;
-	Thu, 16 Jul 2026 13:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2DvOpQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A2B1F000E9;
+	Thu, 16 Jul 2026 13:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210006;
-	bh=yLtGwZffmZsk7VkD/FNTF02+fKAk3hB30j0C0aUohH0=;
+	s=korg; t=1784210009;
+	bh=VIMQnjURBFtH9UZexyOcZT4J/hMqA1vYNXYCEKUtdU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XnG2qWbQjzVA19thioUNppQZ5J8sVbWx5jnlc09+4wF3dj4A9keYE6Eb0aQZpTnhy
-	 RsxZCN9QWnF3fPa+NoFpvLTwmxjVAU1/06aZLnqMz/Vtivel8mAC/LBEsVpGMAN/Xg
-	 pNcA39XGFeUB3e3JDaC9FNnUHWwF3aTNPg+s7zPA=
+	b=s2DvOpQT2VVRV/RnWP+EPwXry4GuuLE40sE8QfYQCfwUz46cGx68JayesspA2BRCu
+	 TPiaKl3MHQ4sDrzxYN5c/dN0NQqVmSxWllvvqai0jHKfPh2JklM6wcsLI2le8Q8udb
+	 3quw0CIxod7q+VH29BFGqk3TnHRYxbrYkrfI0+80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 7.1 358/518] btrfs: fix incorrect buffered IO fallback for append direct writes
-Date: Thu, 16 Jul 2026 15:30:26 +0200
-Message-ID: <20260716133055.661009761@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 7.1 359/518] isofs: bound Rock Ridge symlink components to the SL record
+Date: Thu, 16 Jul 2026 15:30:27 +0200
+Message-ID: <20260716133055.684469440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,196 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit ff66fe6662330226b3f486014c375538d91c44aa upstream.
+commit 5fa1d6a5ec2356d2107dead614437c66fa7138b1 upstream.
 
-[BUG]
-With the previous bug of short direct writes fixed, test case
-generic/362 (*) still fails with the following error with nodatasum
-mount option:
+get_symlink_chunk() and the SL handling in
+parse_rock_ridge_inode_internal() walk the variable-length components of
+a Rock Ridge "SL" (symbolic link) record.  Each component is a two-byte
+header (flags, len) followed by len bytes of text, so it occupies
+slp->len + 2 bytes.  Both loops read slp->len and advance to the next
+component, and get_symlink_chunk() additionally does
+memcpy(rpnt, slp->text, slp->len), but neither checks that the component
+lies within the SL record before dereferencing it.
 
-# generic/362  0s ... - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
-# - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
-#    --- tests/generic/362.out	2024-08-24 15:31:37.200000000 +0930
-#    +++ /home/adam/xfstests/results//generic/362.out.bad	2026-05-27 10:13:09.072485767 +0930
-#    @@ -1,2 +1,3 @@
-#     QA output created by 362
-#    +Wrong file size after first write, got 8192 expected 4096
-#     Silence is golden
-#    ...
+A crafted SL record whose component declares a len that runs past the
+record (rr->len) therefore triggers an out-of-bounds read of up to 255
+bytes.  When the record sits at the tail of its backing buffer - for
+example a small kmalloc()ed continuation block reached through a CE
+record - the read crosses the allocation; get_symlink_chunk() then
+copies the out-of-bounds bytes into the symlink body returned to user
+space by readlink(), disclosing adjacent kernel memory.
 
-*: If the test case has been executed before with default data checksum,
-the failure will not reproduce. Need the following fix to make it
-reliably reproducible:
-https://lore.kernel.org/linux-btrfs/20260528111659.87113-1-wqu@suse.com/
+ISO 9660 images are routinely mounted from untrusted removable media -
+desktop environments auto-mount them (e.g. via udisks2) without
+CAP_SYS_ADMIN - so the record contents are attacker-controlled.
 
-[CAUSE]
-Inside btrfs_dio_iomap_begin() for a direct write, we increase the isize
-if it's beyond the current isize.
+Reject any component that does not fit in the remaining record bytes
+before using it.  In get_symlink_chunk() return NULL, like the existing
+output-buffer (plimit) checks, so a malformed record makes readlink()
+fail with -EIO rather than silently returning a truncated target; in
+parse_rock_ridge_inode_internal() stop the inode-size walk.
 
-But if the direct io finished short, we do not revert the isize to the
-previous value nor to the short write end.
-
-Then if we need to fall back to buffered writes, and the write has
-IOCB_APPEND flag, then the buffered write will be positioned at the
-incorrect isize.
-
-The call chain looks like this:
-
- btrfs_direct_write(pos=0, length=4K)
- |- __iomap_dio_rw()
- |  |- iomap_iter()
- |  |  |- btrfs_dio_iomap_begin()
- |  |     |- btrfs_get_blocks_direct_write()
- |  |        |- i_size_write()
- |  |           Which updates the isize to the write end (4K).
- |  |
- |  |- iomap_dio_iter()
- |  |  Failed with -EFAULT on the first page.
- |  |
- |  |- iomap_iter()
- |  |  |- btrfs_dio_iomap_end()
- |  |     Detects a short write, return -ENOTBLK
- |  |- if (ret == -ENOTBLK) { ret = 0;}
- |     Which resets the return value.
- |
- |- ret = iomap_dio_complet()
- |  Which returns 0.
- |
- |- btrfs_buffered_write(iocb, from);
-    |- generic_write_checks()
-       |- iocb->ki_pos = i_size_read()
-          Which is still the new size (4K), other than the original
-	  isize 0.
-
-[FIX]
-Introduce the following btrfs_dio_data members:
-
-- old_isize
-
-- updated_isize
-  If the direct write has enlarged the isize.
-
-Then if we got a short write, and btrfs_dio_data::updated_isize is set,
-revert to the correct isize based on old_isize and current file
-position.
-
-And here we call i_size_write() without holding an extent lock, which is
-a very special case that we're safe to do:
-
- - Only a single writer can be enlarging isize
-   Enlarging isize will take the exclusive inode lock.
-
- - Buffered readers need to wait for the OE we're holding
-   Buffered readers will lock extent and wait for OE of the folio range.
-   Sometimes we can skip the OE wait, but since all page cache is
-   invalidated, the OE wait can not be skipped.
-
-But I do not think this is the most elegant solution, nor covers all
-cases. E.g. if the bio is submitted but IO failed, we are unable to do
-the revert.
-
-I believe the more elegant one would be extend the EXTENT_DIO_LOCKED
-lifespan for direct writes, so that we can update the isize when a
-write beyond EOF finished successfully.
-
-However that change is too huge for a small bug fix.
-So only implement the minimal partial fix for now.
-
-[REASON FOR NO FIXES TAG]
-The bug is again very old, before commit f85781fb505e ("btrfs: switch to
-iomap for direct IO") we are already increasing isize without a
-proper rollback for short writes.
-
-Thus only a CC to stable.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Suggested-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260607011823.217748-1-hexlabsecurity@proton.me
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/direct-io.c |   43 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 42 insertions(+), 1 deletion(-)
+ fs/isofs/rock.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/btrfs/direct-io.c
-+++ b/fs/btrfs/direct-io.c
-@@ -15,10 +15,12 @@
- 
- struct btrfs_dio_data {
- 	ssize_t submitted;
-+	loff_t old_isize;
- 	struct extent_changeset *data_reserved;
- 	struct btrfs_ordered_extent *ordered;
- 	bool data_space_reserved;
- 	bool nocow_done;
-+	bool updated_isize;
- };
- 
- struct btrfs_dio_private {
-@@ -228,6 +230,7 @@ static int btrfs_get_blocks_direct_write
- 	bool space_reserved = false;
- 	u64 len = *lenp;
- 	u64 prev_len;
-+	loff_t old_isize;
- 	int ret = 0;
- 
- 	/*
-@@ -341,8 +344,14 @@ static int btrfs_get_blocks_direct_write
- 	 * Need to update the i_size under the extent lock so buffered
- 	 * readers will get the updated i_size when we unlock.
- 	 */
--	if (start + len > i_size_read(inode))
-+	old_isize = i_size_read(inode);
-+	if (start + len > old_isize) {
-+		if (!dio_data->updated_isize) {
-+			dio_data->old_isize = old_isize;
-+			dio_data->updated_isize = true;
-+		}
- 		i_size_write(inode, start + len);
-+	}
- out:
- 	if (ret && space_reserved) {
- 		btrfs_delalloc_release_extents(BTRFS_I(inode), len);
-@@ -626,6 +635,38 @@ static int btrfs_dio_iomap_end(struct in
- 		length -= submitted;
- 		if (write) {
- 			/*
-+			 * Got a short write and have updated the isize, need to
-+			 * revert the isize change.
-+			 *
-+			 * Normally we need to update isize with extent lock hold,
-+			 * but we're safe due to the following factors:
-+			 *
-+			 * - Only a single writer can be enlarging isize
-+			 *   Enlarging isize will take the exclusive inode lock.
-+			 *
-+			 * - Buffered readers need to wait for the OE we're holding
-+			 *   Buffered readers will lock extent and wait for OE
-+			 *   of the folio range, and since page cache is invalidated
-+			 *   the OE wait can not be skipped.
-+			 *
-+			 * So here we are safe to revert the isize before
-+			 * finishing the OE, and no reader of the remaining range
-+			 * can see the enlarged size.
-+			 *
-+			 * TODO: Extend the DIO_LOCKED lifespan for direct writes,
-+			 * and only enlarge isize after a successful write.
-+			 */
-+			if (dio_data->updated_isize) {
-+				u64 new_isize;
-+
-+				if (submitted == 0)
-+					new_isize = dio_data->old_isize;
-+				else
-+					new_isize = max(dio_data->old_isize, pos);
-+				i_size_write(inode, new_isize);
-+				dio_data->updated_isize = false;
-+			}
-+			/*
- 			 * We have a short write, if there is any range
- 			 * that is submitted properly, that part will have
- 			 * its own OE split from the original one.
+--- a/fs/isofs/rock.c
++++ b/fs/isofs/rock.c
+@@ -466,6 +466,9 @@ repeat:
+ 				inode->i_size = symlink_len;
+ 				while (slen > 1) {
+ 					rootflag = 0;
++					/* keep the component within the SL record */
++					if (slp->len + 2 > slen)
++						goto eio;
+ 					switch (slp->flags & ~1) {
+ 					case 0:
+ 						inode->i_size +=
+@@ -621,6 +624,14 @@ static char *get_symlink_chunk(char *rpn
+ 	slp = &rr->u.SL.link;
+ 	while (slen > 1) {
+ 		rootflag = 0;
++		/*
++		 * A component is slp->len + 2 bytes (a two-byte header plus
++		 * len bytes of text).  If it does not fit in the bytes left in
++		 * the SL record the record is malformed: fail like the plimit
++		 * checks below so readlink() returns -EIO, not a truncated path.
++		 */
++		if (slp->len + 2 > slen)
++			return NULL;
+ 		switch (slp->flags & ~1) {
+ 		case 0:
+ 			if (slp->len > plimit - rpnt)
 
 
