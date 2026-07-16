@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F078C39DBD6;
-	Thu, 16 Jul 2026 13:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8601E36F900;
+	Thu, 16 Jul 2026 13:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209911; cv=none; b=OO/AUyDHH/ui6JcRfQ1KEtyqsgKs75R9XdTMeoGO8F67LrOMTZxyF98OG9z14h7ZzBx4E/vvnZ3QB8WKTLBeIh2ZAYPe5Gx3L4z+II+PpsFNLBALOEkB/Wp6ECKOx2GI8+P3LVNG1ImHVHyu5VoOjhuKmJdhH4BIWy3qKkcYP+Y=
+	t=1784209913; cv=none; b=AFiOON9u8Kc/hxlJQn5OpWscOxUZKtPYWtF0xzVeEpjgej51CHWFHXlu4SKw04UulBro6JHVkPOYmBJTjtUN4kyNPa+sT0h3lRRW4dBzuFjXwH7CLh4P3nNMzVBOispQ5BBmk1a9R66/Y0QxtWlO7dtX2bvLBze302yTkXRILDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209911; c=relaxed/simple;
-	bh=MYgRB3bBKjnE9quHVauCJlENUTeBqj7FRKOoBaEM/a0=;
+	s=arc-20240116; t=1784209913; c=relaxed/simple;
+	bh=1RP2zZAt6PRT1BoKbQA6NiQRnbBPPm8jY0W8SST+Efk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQtsFI2cBqQBj5DcNfbUocje6FdZmtyW4/ZbS11l8az0r8GlyYfMpny2oTZWxLnamv/gEBjauB/+fbuX6ZmTa3kiPjajku95hHJW4K4zhNMua4FUJMQJdlbhNW9erFmWmP/9XCIVRq9ny+Gk5ipYR2lzyBlzrP9m1DjlXgEUPx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pq+P1doE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nozbPE4bTpNtYGaY7qjkiAYy4/TgzX+ieg58j3FADG456npmCFKP3aKv+9DYgPWiUQpMdQHgvRLCrL1n/awgYqRwTKwfgq8vj0oZ6l3FVfRI04O9rLPohAEThWH9uqIzNuUaGfGYPJJ5vtH0DNz370x8ZZ6kXUeTZ0lIEgxzo1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXLyVA/z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pq+P1doE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8221F000E9;
-	Thu, 16 Jul 2026 13:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXLyVA/z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E981F000E9;
+	Thu, 16 Jul 2026 13:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209909;
-	bh=ejHIhZjbSVA2AdvrwS3YqXGlFNjuAjkba8d9RxpMWkg=;
+	s=korg; t=1784209912;
+	bh=1IO9ky3XEaLO3S8rjQRaRRuYFrs3oDGH48HsfbqzbS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pq+P1doErtPdtzYx+pdHLVSVb+xqzI9jPtXJ5oCsn3Ttf4ifGBQWkBN1woVADzbz2
-	 bx+VQXb6fug29skp1Wt/h6Aq7DQPF5of7pJ8UwQmT2nSldrDXpMbUtfiEQzZUR+Jvt
-	 ysGo7jwB8qZEj1dX2c2ozro0Q/QLLuLkOGcobre4=
+	b=gXLyVA/zP0DIrouJrk/bDYyp7NYRl+0IdPjiqgrd79XnjwpaVEGkpQlTRkK0Jp2ou
+	 +OqAxbAIhnP2lojAfM53L5GJA2ivp7Aa4jx5TH5gYLVeHMACFrii5LvyauqlECiWwR
+	 33I5HUOgPDPBO9y+3QQK15lDZbqV9wOnEasFD+0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ruijie Li <ruijieli51@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 366/518] crypto: hisi-trng - Remove crypto_rng interface
-Date: Thu, 16 Jul 2026 15:30:34 +0200
-Message-ID: <20260716133055.838476807@linuxfoundation.org>
+Subject: [PATCH 7.1 367/518] crypto: pcrypt - restore callback for non-parallel fallback
+Date: Thu, 16 Jul 2026 15:30:35 +0200
+Message-ID: <20260716133055.859362395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,404 +57,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Ruijie Li <ruijieli51@gmail.com>
 
-commit 216a7795ec210bdabd5dad42323eee70bbfc8d90 upstream.
+commit ed459fe319376e876de433d12b6c6772e612ca36 upstream.
 
-drivers/crypto/hisilicon/trng/trng.c exposes the same hardware through
-two completely separate interfaces, crypto_rng and hwrng.  However, the
-implementation of this is buggy because it permits generation operations
-from these interfaces to run concurrently with each other, accessing the
-same registers.  That is, hisi_trng_generate() synchronizes with itself
-but not with hisi_trng_read().  This results in potential repetition of
-output from the RNG, output of non-random values, etc.
+pcrypt installs pcrypt_aead_done() on the child AEAD request before
+trying to submit it through padata.  If padata_do_parallel() returns
+-EBUSY, pcrypt falls back to calling the child AEAD directly.
 
-Fortunately, there's actually no point in hardware RNG drivers
-implementing the crypto_rng interface.  It's not actually used by
-anything besides the "rng" algorithm type of AF_ALG, which in turn is
-not actually used in practice.  Other crypto_rng hardware drivers are
-likewise being phased out, leaving just the hwrng support.
+That fallback must not keep the padata completion callback.  Otherwise
+an asynchronous completion runs pcrypt_aead_done() even though the
+request was never enrolled in padata.
 
-Thus, remove it to simplify the code and avoid conflict (and confusion)
-with the hwrng interface which is the one that actually matters.
+Restore the original request callback and callback data before calling
+the child AEAD directly.  This keeps the fallback path aligned with a
+direct AEAD request while leaving the parallel path unchanged.
 
-Fixes: e4d9d10ef4be ("crypto: hisilicon/trng - add support for PRNG")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 662f2f13e66d ("crypto: pcrypt - Call crypto layer directly when padata_do_parallel() return -EBUSY")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/hisilicon/Kconfig     |    1 
- drivers/crypto/hisilicon/trng/trng.c |  296 -----------------------------------
- 2 files changed, 2 insertions(+), 295 deletions(-)
+ crypto/pcrypt.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/crypto/hisilicon/Kconfig
-+++ b/drivers/crypto/hisilicon/Kconfig
-@@ -80,6 +80,5 @@ config CRYPTO_DEV_HISI_TRNG
- 	tristate "Support for HISI TRNG Driver"
- 	depends on ARM64 && ACPI
- 	select HW_RANDOM
--	select CRYPTO_RNG
- 	help
- 	  Support for HiSilicon TRNG Driver.
---- a/drivers/crypto/hisilicon/trng/trng.c
-+++ b/drivers/crypto/hisilicon/trng/trng.c
-@@ -1,234 +1,27 @@
- // SPDX-License-Identifier: GPL-2.0
- /* Copyright (c) 2019 HiSilicon Limited. */
+--- a/crypto/pcrypt.c
++++ b/crypto/pcrypt.c
+@@ -122,6 +122,8 @@ static int pcrypt_aead_encrypt(struct ae
+ 		return -EINPROGRESS;
+ 	if (err == -EBUSY) {
+ 		/* try non-parallel mode */
++		aead_request_set_callback(creq, flags, req->base.complete,
++					  req->base.data);
+ 		return crypto_aead_encrypt(creq);
+ 	}
  
--#include <crypto/internal/rng.h>
- #include <linux/acpi.h>
--#include <linux/crypto.h>
- #include <linux/err.h>
- #include <linux/hw_random.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
--#include <linux/list.h>
- #include <linux/module.h>
--#include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/random.h>
+@@ -173,6 +175,8 @@ static int pcrypt_aead_decrypt(struct ae
+ 		return -EINPROGRESS;
+ 	if (err == -EBUSY) {
+ 		/* try non-parallel mode */
++		aead_request_set_callback(creq, flags, req->base.complete,
++					  req->base.data);
+ 		return crypto_aead_decrypt(creq);
+ 	}
  
- #define HISI_TRNG_REG		0x00F0
- #define HISI_TRNG_BYTES		4
- #define HISI_TRNG_QUALITY	512
--#define HISI_TRNG_VERSION	0x01B8
--#define HISI_TRNG_VER_V1	GENMASK(31, 0)
- #define SLEEP_US		10
- #define TIMEOUT_US		10000
--#define SW_DRBG_NUM_SHIFT	2
--#define SW_DRBG_KEY_BASE	0x082C
--#define SW_DRBG_SEED(n)         (SW_DRBG_KEY_BASE - ((n) << SW_DRBG_NUM_SHIFT))
--#define SW_DRBG_SEED_REGS_NUM	12
--#define SW_DRBG_SEED_SIZE	48
--#define SW_DRBG_BLOCKS		0x0830
--#define SW_DRBG_INIT		0x0834
--#define SW_DRBG_GEN		0x083c
--#define SW_DRBG_STATUS		0x0840
--#define SW_DRBG_BLOCKS_NUM	4095
--#define SW_DRBG_DATA_BASE	0x0850
--#define SW_DRBG_DATA_NUM	4
--#define SW_DRBG_DATA(n)		(SW_DRBG_DATA_BASE - ((n) << SW_DRBG_NUM_SHIFT))
--#define SW_DRBG_BYTES		16
--#define SW_DRBG_ENABLE_SHIFT	12
--#define SEED_SHIFT_24		24
--#define SEED_SHIFT_16		16
--#define SEED_SHIFT_8		8
--#define SW_MAX_RANDOM_BYTES	65520
--
--struct hisi_trng_list {
--	struct mutex lock;
--	struct list_head list;
--	bool is_init;
--};
- 
- struct hisi_trng {
- 	void __iomem *base;
--	struct hisi_trng_list *trng_list;
--	struct list_head list;
- 	struct hwrng rng;
--	u32 ver;
--	u32 ctx_num;
--	/* The bytes of the random number generated since the last seeding. */
--	u32 random_bytes;
--	struct mutex lock;
--};
--
--struct hisi_trng_ctx {
--	struct hisi_trng *trng;
- };
- 
--static atomic_t trng_active_devs;
--static struct hisi_trng_list trng_devices;
--static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait);
--
--static int hisi_trng_set_seed(struct hisi_trng *trng, const u8 *seed)
--{
--	u32 val, seed_reg, i;
--	int ret;
--
--	writel(0x0, trng->base + SW_DRBG_BLOCKS);
--
--	for (i = 0; i < SW_DRBG_SEED_SIZE;
--	     i += SW_DRBG_SEED_SIZE / SW_DRBG_SEED_REGS_NUM) {
--		val = seed[i] << SEED_SHIFT_24;
--		val |= seed[i + 1UL] << SEED_SHIFT_16;
--		val |= seed[i + 2UL] << SEED_SHIFT_8;
--		val |= seed[i + 3UL];
--
--		seed_reg = (i >> SW_DRBG_NUM_SHIFT) % SW_DRBG_SEED_REGS_NUM;
--		writel(val, trng->base + SW_DRBG_SEED(seed_reg));
--	}
--
--	writel(SW_DRBG_BLOCKS_NUM | (0x1 << SW_DRBG_ENABLE_SHIFT),
--	       trng->base + SW_DRBG_BLOCKS);
--	writel(0x1, trng->base + SW_DRBG_INIT);
--	ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
--					 val, val & BIT(0), SLEEP_US, TIMEOUT_US);
--	if (ret) {
--		pr_err("failed to init trng(%d)\n", ret);
--		return -EIO;
--	}
--
--	trng->random_bytes = 0;
--
--	return 0;
--}
--
--static int hisi_trng_seed(struct crypto_rng *tfm, const u8 *seed,
--			  unsigned int slen)
--{
--	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
--	struct hisi_trng *trng = ctx->trng;
--	int ret;
--
--	if (slen < SW_DRBG_SEED_SIZE) {
--		pr_err("slen(%u) is not matched with trng(%d)\n", slen,
--			SW_DRBG_SEED_SIZE);
--		return -EINVAL;
--	}
--
--	mutex_lock(&trng->lock);
--	ret = hisi_trng_set_seed(trng, seed);
--	mutex_unlock(&trng->lock);
--
--	return ret;
--}
--
--static int hisi_trng_reseed(struct hisi_trng *trng)
--{
--	u8 seed[SW_DRBG_SEED_SIZE];
--	int size;
--
--	if (!trng->random_bytes)
--		return 0;
--
--	size = hisi_trng_read(&trng->rng, seed, SW_DRBG_SEED_SIZE, false);
--	if (size != SW_DRBG_SEED_SIZE)
--		return -EIO;
--
--	return hisi_trng_set_seed(trng, seed);
--}
--
--static int hisi_trng_get_bytes(struct hisi_trng *trng, u8 *dstn, unsigned int dlen)
--{
--	u32 data[SW_DRBG_DATA_NUM];
--	u32 currsize = 0;
--	u32 val = 0;
--	int ret;
--	u32 i;
--
--	ret = hisi_trng_reseed(trng);
--	if (ret)
--		return ret;
--
--	do {
--		ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
--						 val, val & BIT(1), SLEEP_US, TIMEOUT_US);
--		if (ret) {
--			pr_err("failed to generate random number(%d)!\n", ret);
--			break;
--		}
--
--		for (i = 0; i < SW_DRBG_DATA_NUM; i++)
--			data[i] = readl(trng->base + SW_DRBG_DATA(i));
--
--		if (dlen - currsize >= SW_DRBG_BYTES) {
--			memcpy(dstn + currsize, data, SW_DRBG_BYTES);
--			currsize += SW_DRBG_BYTES;
--		} else {
--			memcpy(dstn + currsize, data, dlen - currsize);
--			currsize = dlen;
--		}
--
--		trng->random_bytes += SW_DRBG_BYTES;
--		writel(0x1, trng->base + SW_DRBG_GEN);
--	} while (currsize < dlen);
--
--	return ret;
--}
--
--static int hisi_trng_generate(struct crypto_rng *tfm, const u8 *src,
--			      unsigned int slen, u8 *dstn, unsigned int dlen)
--{
--	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
--	struct hisi_trng *trng = ctx->trng;
--	unsigned int currsize = 0;
--	unsigned int block_size;
--	int ret;
--
--	if (!dstn || !dlen) {
--		pr_err("output is error, dlen %u!\n", dlen);
--		return -EINVAL;
--	}
--
--	do {
--		block_size = min_t(unsigned int, dlen - currsize, SW_MAX_RANDOM_BYTES);
--		mutex_lock(&trng->lock);
--		ret = hisi_trng_get_bytes(trng, dstn + currsize, block_size);
--		mutex_unlock(&trng->lock);
--		if (ret)
--			return ret;
--		currsize += block_size;
--	} while (currsize < dlen);
--
--	return 0;
--}
--
--static int hisi_trng_init(struct crypto_tfm *tfm)
--{
--	struct hisi_trng_ctx *ctx = crypto_tfm_ctx(tfm);
--	struct hisi_trng *trng;
--	u32 ctx_num = ~0;
--
--	mutex_lock(&trng_devices.lock);
--	list_for_each_entry(trng, &trng_devices.list, list) {
--		if (trng->ctx_num < ctx_num) {
--			ctx_num = trng->ctx_num;
--			ctx->trng = trng;
--		}
--	}
--	ctx->trng->ctx_num++;
--	mutex_unlock(&trng_devices.lock);
--
--	return 0;
--}
--
--static void hisi_trng_exit(struct crypto_tfm *tfm)
--{
--	struct hisi_trng_ctx *ctx = crypto_tfm_ctx(tfm);
--
--	mutex_lock(&trng_devices.lock);
--	ctx->trng->ctx_num--;
--	mutex_unlock(&trng_devices.lock);
--}
--
- static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
- {
- 	struct hisi_trng *trng;
-@@ -260,42 +53,6 @@ static int hisi_trng_read(struct hwrng *
- 	return currsize;
- }
- 
--static struct rng_alg hisi_trng_alg = {
--	.generate = hisi_trng_generate,
--	.seed =	hisi_trng_seed,
--	.seedsize = SW_DRBG_SEED_SIZE,
--	.base = {
--		.cra_name = "stdrng",
--		.cra_driver_name = "hisi_stdrng",
--		.cra_priority = 300,
--		.cra_ctxsize = sizeof(struct hisi_trng_ctx),
--		.cra_module = THIS_MODULE,
--		.cra_init = hisi_trng_init,
--		.cra_exit = hisi_trng_exit,
--	},
--};
--
--static void hisi_trng_add_to_list(struct hisi_trng *trng)
--{
--	mutex_lock(&trng_devices.lock);
--	list_add_tail(&trng->list, &trng_devices.list);
--	mutex_unlock(&trng_devices.lock);
--}
--
--static int hisi_trng_del_from_list(struct hisi_trng *trng)
--{
--	int ret = -EBUSY;
--
--	mutex_lock(&trng_devices.lock);
--	if (!trng->ctx_num) {
--		list_del(&trng->list);
--		ret = 0;
--	}
--	mutex_unlock(&trng_devices.lock);
--
--	return ret;
--}
--
- static int hisi_trng_probe(struct platform_device *pdev)
- {
- 	struct hisi_trng *trng;
-@@ -305,68 +62,20 @@ static int hisi_trng_probe(struct platfo
- 	if (!trng)
- 		return -ENOMEM;
- 
--	platform_set_drvdata(pdev, trng);
--
- 	trng->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(trng->base))
- 		return PTR_ERR(trng->base);
- 
--	trng->ctx_num = 0;
--	trng->random_bytes = SW_MAX_RANDOM_BYTES;
--	mutex_init(&trng->lock);
--	trng->ver = readl(trng->base + HISI_TRNG_VERSION);
--	if (!trng_devices.is_init) {
--		INIT_LIST_HEAD(&trng_devices.list);
--		mutex_init(&trng_devices.lock);
--		trng_devices.is_init = true;
--	}
--
--	hisi_trng_add_to_list(trng);
--	if (trng->ver != HISI_TRNG_VER_V1 &&
--	    atomic_inc_return(&trng_active_devs) == 1) {
--		ret = crypto_register_rng(&hisi_trng_alg);
--		if (ret) {
--			dev_err(&pdev->dev,
--				"failed to register crypto(%d)\n", ret);
--			atomic_dec_return(&trng_active_devs);
--			goto err_remove_from_list;
--		}
--	}
--
- 	trng->rng.name = pdev->name;
- 	trng->rng.read = hisi_trng_read;
- 	trng->rng.quality = HISI_TRNG_QUALITY;
-+
- 	ret = devm_hwrng_register(&pdev->dev, &trng->rng);
--	if (ret) {
-+	if (ret)
- 		dev_err(&pdev->dev, "failed to register hwrng: %d!\n", ret);
--		goto err_crypto_unregister;
--	}
--
--	return ret;
--
--err_crypto_unregister:
--	if (trng->ver != HISI_TRNG_VER_V1 &&
--	    atomic_dec_return(&trng_active_devs) == 0)
--		crypto_unregister_rng(&hisi_trng_alg);
--
--err_remove_from_list:
--	hisi_trng_del_from_list(trng);
- 	return ret;
- }
- 
--static void hisi_trng_remove(struct platform_device *pdev)
--{
--	struct hisi_trng *trng = platform_get_drvdata(pdev);
--
--	/* Wait until the task is finished */
--	while (hisi_trng_del_from_list(trng))
--		;
--
--	if (trng->ver != HISI_TRNG_VER_V1 &&
--	    atomic_dec_return(&trng_active_devs) == 0)
--		crypto_unregister_rng(&hisi_trng_alg);
--}
--
- static const struct acpi_device_id hisi_trng_acpi_match[] = {
- 	{ "HISI02B3", 0 },
- 	{ }
-@@ -375,7 +84,6 @@ MODULE_DEVICE_TABLE(acpi, hisi_trng_acpi
- 
- static struct platform_driver hisi_trng_driver = {
- 	.probe		= hisi_trng_probe,
--	.remove         = hisi_trng_remove,
- 	.driver		= {
- 		.name	= "hisi-trng-v2",
- 		.acpi_match_table = ACPI_PTR(hisi_trng_acpi_match),
 
 
