@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494B44252D9;
-	Thu, 16 Jul 2026 14:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43C73DB336;
+	Thu, 16 Jul 2026 14:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211775; cv=none; b=f0Z4HS98f6nAmgWI9gcPFhNjJYMnSeYqFQ2AF+2iYxBH+szgk8fVv3IW3xS+dDe+7DnE2hgEwanqSluwIhQymfSvH92SbtGlyQfKJYosVGVDJjAfmAFoI/DCXrXFBPz3CS+eIlygamhlVhI88nrUBJMIG3TOPdyO8LZ4vwqWkFU=
+	t=1784211777; cv=none; b=NPUho75HiFs0uxtaxgujra7kDbOJZdpoACC90+wfzihtGUjvTqnp2Ley4ihqj/CupDQWp86/wAnYIoW2Pylf3g7mW/XvST00QPv855VYdksaTcFpdE98e8PElnJ0AaqZZzoSqdatAGJNqVxYzD8fxYVf8Ydr4SreOa0sIcKL2QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211775; c=relaxed/simple;
-	bh=Wu/Mf17CynXBuvDkQeykwjEuzNyL1QnMczYqo8LFiGM=;
+	s=arc-20240116; t=1784211777; c=relaxed/simple;
+	bh=BAmxWHVwLGQkpWc7aNopPFY6tD8GeZ8mXCxrMv+MFOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvXZGA6KL0VTydhF64yQkbvug8sl19P93szxaTXy8LKQZuyL6WsG52kybJm6ykKcoQuzTbQJKgRRzrt7yr/nRD69gPQnY11uqyZZjEyIrkWFJedFCS1tTUfd2rhzgu5Mu+IediJ9jlR+3ZbFrHTKiZXH6fadU1s+3rmAdf7l4vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUv2mBn/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TdmX8aXVQUTGDHYX5Oef9iOqCNipkH2A33RSqakUzObFHfdV9SlacWs9BGnELTnr4Q3gcJy7ogbv1u+BD0CxuL3sV+TG6oO+SlSjDfmx2+C7nZaSkZd7i2oZduiK6LwHcEjDba7QQ4d1WcHXt+eT8JX3+e6+8oo/UaBWWqyDIFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiL1VzUt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUv2mBn/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66F01F000E9;
-	Thu, 16 Jul 2026 14:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiL1VzUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD3D1F000E9;
+	Thu, 16 Jul 2026 14:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211774;
-	bh=Db2a5De2cHV/zghP6pIQQMYTt1WL1INtQJleAZIHRdA=;
+	s=korg; t=1784211776;
+	bh=3AHFmOip9GoW0Bvwu56DFJGZHyLgFogrKA73whFfsdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NUv2mBn/jl8Ls1XKcxyiwUnYeE73SjLfJYGkU9S7Y9p1XNF4G+9NIi2gnk1iFS4i9
-	 K780Wpyds13MVmBh3/Zqc3POl7dRy3zEHy5YWKiSCpsd9XkyEZX0YKTMHv6M6RAdQq
-	 lVN4UabPcrAERorypwddqAHAoIw0KoGNJirYcaps=
+	b=DiL1VzUthOCImr+FQWpsw7EeKDFzOEpSRtMqOFw/zOBCyusdYDd8GjW8xm9/lygwi
+	 gJjZFz7BSjSjpygPA00Z9XMMQZgUmZgovwidUNKHYgbI+meXnQPje8gkb33i8xa2o8
+	 WAvqaJBh36g3ThsWmS1YZdrBRgegYPog6arzZFxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Dongdong <zhaodongdong@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 075/349] ALSA: cmipci: check snd_ctl_new1() return value
-Date: Thu, 16 Jul 2026 15:30:09 +0200
-Message-ID: <20260716133035.000702778@linuxfoundation.org>
+Subject: [PATCH 6.12 076/349] ALSA: es1938: check snd_ctl_new1() return value
+Date: Thu, 16 Jul 2026 15:30:10 +0200
+Message-ID: <20260716133035.020914194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,51 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit c205bd1b28fb7e5f1061a4e78813fad7d315cb3e upstream.
+commit 1edd1f02dddd20aeb6066ded41017615766ea42f upstream.
 
 snd_ctl_new1() can return NULL when memory allocation fails.
-snd_cmipci_spdif_controls() does not check the return value before
-dereferencing kctl->id.device, which can lead to a NULL pointer
-dereference.
+snd_es1938_mixer() does not check the return value before dereferencing
+the pointer, which can lead to a NULL pointer dereference.
 
-Add NULL checks after snd_ctl_new1() calls and return -ENOMEM if any
-fails.
+Add a NULL check after snd_ctl_new1() and return -ENOMEM if it fails.
 
 Assisted-by: Opencode:DeepSeek-V4-Flash
 Cc: stable@vger.kernel.org
-Fixes: f2f312ad88c6 ("ALSA: cmipci: Fix kctl->id initialization")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
-Link: https://patch.msgid.link/tencent_964433DCD132125D5EDA79EE068A2D6EFA09@qq.com
+Link: https://patch.msgid.link/tencent_E0DC65165FDF2C8982BAFB6794B854B53B0A@qq.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/cmipci.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/pci/es1938.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/pci/cmipci.c
-+++ b/sound/pci/cmipci.c
-@@ -2672,16 +2672,22 @@ static int snd_cmipci_mixer_new(struct c
- 		}
- 		if (cm->can_ac3_hw) {
- 			kctl = snd_ctl_new1(&snd_cmipci_spdif_default, cm);
-+			if (!kctl)
-+				return -ENOMEM;
- 			kctl->id.device = pcm_spdif_device;
- 			err = snd_ctl_add(card, kctl);
- 			if (err < 0)
- 				return err;
- 			kctl = snd_ctl_new1(&snd_cmipci_spdif_mask, cm);
-+			if (!kctl)
-+				return -ENOMEM;
- 			kctl->id.device = pcm_spdif_device;
- 			err = snd_ctl_add(card, kctl);
- 			if (err < 0)
- 				return err;
- 			kctl = snd_ctl_new1(&snd_cmipci_spdif_stream, cm);
-+			if (!kctl)
-+				return -ENOMEM;
- 			kctl->id.device = pcm_spdif_device;
- 			err = snd_ctl_add(card, kctl);
- 			if (err < 0)
+--- a/sound/pci/es1938.c
++++ b/sound/pci/es1938.c
+@@ -1663,6 +1663,8 @@ static int snd_es1938_mixer(struct es193
+ 	for (idx = 0; idx < ARRAY_SIZE(snd_es1938_controls); idx++) {
+ 		struct snd_kcontrol *kctl;
+ 		kctl = snd_ctl_new1(&snd_es1938_controls[idx], chip);
++		if (!kctl)
++			return -ENOMEM;
+ 		switch (idx) {
+ 			case 0:
+ 				chip->master_volume = kctl;
 
 
