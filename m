@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B304F42BEBE;
-	Thu, 16 Jul 2026 14:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3E342CB10;
+	Thu, 16 Jul 2026 14:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211999; cv=none; b=JA/D5BFNiO7Gf4LgWVk1Y+iS57pWhT0l9vGt1xYRHksjHfuATTU9zGqcHNMRAjzWJ+d5QdJ998Kk1USwrizJNDEITvCkeUuRDs52ji2dS+OK1+9M7w3d2JPf2DwwHjSNBVilBpSijONFq/Eajl0xn4BtlUYMCb4gLBFa/neYDO8=
+	t=1784212001; cv=none; b=TobWX1Df6Qd6U0KIvXfFERYdBpIVNl6Eo8VOycbvOJ+NAa1nFyBzAejnUhZ1VzAQgD/lfLUkUkADA2lTVW5VePq4COrLYFTlyN3dCNJwCaHalqT4k8PBqhhtxIvUqq68iONUR/bkIy3elglAbk0AiHA/iE88Q8mLdeMuaF5FMq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211999; c=relaxed/simple;
-	bh=sKjZZvZ7ubcPpViINpzNzG37xcYON2RLzSmZOV2a438=;
+	s=arc-20240116; t=1784212001; c=relaxed/simple;
+	bh=pwu+UMr/HQnyKOLm8/rIyYyENR+ZfMbeDCXcE3IntTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSnlElDSWqam/Maz3/jIEq+DY9/KMFonRpeTrJqCV62EBxOAj8BI1X6iuDbK0EVq6Ekl4D8OIz7OCOe+Zx5AaiBQws8hRrcw3DMD0GV1XZY6Us2t/xPEs8n+5J6/wZ2NGx+lTG2JFuiF7zpvrBr8PPwjnsDhrCMxWkhoCKH+rQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/qM1Tla; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mCwx8ojahKiaFB0nSnJ4Eis80Ye6ZtG7giL/jGGsHuBvuAQ3mKt89VD3LSMH5YPvyfAA5z4HyyjufmYeE8ifAHYJ22RkQoeI4euRvmM5h6aildGIGWJxeF+HQEv/CuTMeXjG9zMhZoAVvxgiL9I/8dS0fV2Cq+WnuYkq7gijxn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XE/K08FC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/qM1Tla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127561F000E9;
-	Thu, 16 Jul 2026 14:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XE/K08FC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F8F1F00A3A;
+	Thu, 16 Jul 2026 14:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211997;
-	bh=BO3sH5aXdOyRu6aTjcVRCFVOim/1QJEJMCFhqiDy3vM=;
+	s=korg; t=1784212000;
+	bh=aDTfOyZrLJ0y2i04alF3XZO8X20LAlQXCfWWo73RHgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s/qM1TlaJHHkgbisRxBbsLUphVJTTg7nwsieXqyVFP4lpYk0LRPRgAzsfim2Ua84l
-	 /9QgedbCNabaB2DI0+9QsYSR2vSDIEjN9A7Fr0hmErWm1mkSUgm6r5ydOFb5pozL3L
-	 MmE8hJ9wLpgssM1s3HDBOa8Yo8kh/3yvqTIyZRFs=
+	b=XE/K08FCq1oeJ/hKo9dTrQ65LaVPREfFAzHGPgsXwllW05BCjw7lE/vp/sZbbQ4i6
+	 Tj4I/PWRU/m69fauYELqfd/Hmi5GVeKkNyEBc5ndPEVRbSjafYworNu1j5jsHZZe2k
+	 phs4fuk0njnUDfPk0txeywLxO1Oa1nxea6t/qUSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 6.12 161/349] coresight: ultrasoc-smb: Fix OOB write in smb_sync_perf_buffer()
-Date: Thu, 16 Jul 2026 15:31:35 +0200
-Message-ID: <20260716133036.982772572@linuxfoundation.org>
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Dave Chinner <david@fromorbit.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 144/349] mm: shrinker: fix NULL pointer dereference in debugfs
+Date: Thu, 16 Jul 2026 15:31:18 +0200
+Message-ID: <20260716133036.592244840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,43 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit 98495b5a4d77dd22e106f462b76e1093a55b29a7 upstream.
+commit e30453c61e185e914fde83c650e268067b140218 upstream.
 
-When the SMB sink is used as a perf AUX sink, smb_update_buffer() calls
-smb_sync_perf_buffer() to copy hardware trace data into the perf AUX ring
-buffer pages. It derives pg_idx = head >> PAGE_SHIFT from @head, which is
-handle->head, and indexes dst_pages[pg_idx]. The pg_idx %= nr_pages
-normalization is only applied after the first loop iteration.
+shrinker_debugfs_add() creates both "count" and "scan" debugfs files
+unconditionally.
 
-This leaves the initial page index underived from the buffer size, which
-can result in an out-of-bounds write past dst_pages[] when head exceeds
-the AUX buffer size.
+That assumes every shrinker implements both count_objects() and
+scan_objects(), which is not guaranteed.  For example, the xen-backend
+shrinker sets count_objects() but leaves scan_objects() NULL, so writing
+to its scan file calls through a NULL function pointer and panics the
+kernel:
 
-Normalize head modulo the AUX buffer size before deriving the page index
-and offset, mirroring tmc_etr_sync_perf_buffer().
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+RIP: 0010:0x0
+Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+Call Trace:
+ <TASK>
+ shrinker_debugfs_scan_write+0x12e/0x270
+ full_proxy_write+0x5f/0x90
+ vfs_write+0xde/0x420
+ ? filp_flush+0x75/0x90
+ ? filp_close+0x1d/0x30
+ ? do_dup2+0xb8/0x120
+ ksys_write+0x68/0xf0
+ ? filp_flush+0x75/0x90
+ do_syscall_64+0xb3/0x5b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 06f5c2926aaa ("drivers/coresight: Add UltraSoc System Memory Buffer driver")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/SYBPR01MB788156B3380A36835DB22290AF102@SYBPR01MB7881.ausprd01.prod.outlook.com
+The count path has the same issue in principle if a shrinker omits
+count_objects().
+
+To fix it, only create "count" and "scan" debugfs files when the
+corresponding callbacks are present.
+
+Link: https://lore.kernel.org/20260617090052.27325-1-qi.zheng@linux.dev
+Fixes: bbf535fd6f06 ("mm: shrinkers: add scan interface for shrinker debugfs")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/coresight/ultrasoc-smb.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/shrinker_debug.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/hwtracing/coresight/ultrasoc-smb.c
-+++ b/drivers/hwtracing/coresight/ultrasoc-smb.c
-@@ -338,6 +338,7 @@ static void smb_sync_perf_buffer(struct
- 	unsigned long to_copy;
- 	long pg_idx, pg_offset;
+--- a/mm/shrinker_debug.c
++++ b/mm/shrinker_debug.c
+@@ -182,10 +182,12 @@ int shrinker_debugfs_add(struct shrinker
+ 	}
+ 	shrinker->debugfs_entry = entry;
  
-+	head %= (unsigned long)buf->nr_pages << PAGE_SHIFT;
- 	pg_idx = head >> PAGE_SHIFT;
- 	pg_offset = head & (PAGE_SIZE - 1);
+-	debugfs_create_file("count", 0440, entry, shrinker,
+-			    &shrinker_debugfs_count_fops);
+-	debugfs_create_file("scan", 0220, entry, shrinker,
+-			    &shrinker_debugfs_scan_fops);
++	if (shrinker->count_objects)
++		debugfs_create_file("count", 0440, entry, shrinker,
++				    &shrinker_debugfs_count_fops);
++	if (shrinker->scan_objects)
++		debugfs_create_file("scan", 0220, entry, shrinker,
++				    &shrinker_debugfs_scan_fops);
+ 	return 0;
+ }
  
 
 
