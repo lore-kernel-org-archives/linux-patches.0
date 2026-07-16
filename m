@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48EF3F482E;
-	Thu, 16 Jul 2026 13:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC85433C1BE;
+	Thu, 16 Jul 2026 13:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209349; cv=none; b=OG9x1m2WS9uWClIPDiYUX75h1lJ5Bq++5C6oJn3/0bkLGyT3D2gIkTfzKNCPFukgqhKUHl+s6t+rO2f0YQq7QCNQo2UQn6fEeRUuJ1YhGYmI7swUZ2vyHxFitZz0TdFmTmZW+2nxkMoJUPFgn1GmNXp1zKX5yq4rv9NY04i8gX0=
+	t=1784209352; cv=none; b=bBkp7bJiPSRZSiLChSDAAFfkZhpHz/Kvh3A3rgC/XKoxOgR0OEjWtYEKO+AeA8xouqAjRfh9ztYooHgkkl69tDMPeQVfXzdA7N7iVyiokt90BSbyRGuW/9H2sdV8SqvvuwDXJAPC80bOmuTveR1G2SjPUI+yP4mim1x7QauCI5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209349; c=relaxed/simple;
-	bh=DhB67bsz95hVuCFqnBobi1ktEt4M7dpjj31YiCQbh6E=;
+	s=arc-20240116; t=1784209352; c=relaxed/simple;
+	bh=E2Co4k7cxc4RE6mO3GX/5fgWxKwF4PcP4Pb0Y44JrnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJVltE1JjNPbuGWMfuKWuZD76btCP6YWhjfEAylPivyW8kvMkTcVP6AmonDDWpkrTm+4il1oWL4Cd5+OsKsLwJCSvIJP/fFIId77mkbvMa501pwgmhsS5KyM6Sem19JcGgKJdHTGg1XYqZpKgPaNboNYlEWyKcJB7a7+uUQNLqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2Q1LqJe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nnE8x4hbj02Zs9fPtmdIXCuuRT0sA7ubM7FMzY0DOeZy3jtQTKVAaZitzv6bTPEmZkYteLsLg6jtetBt0y1d1835c2WFRCJoV0yI1LXJFQxvU9ZSfQGKntCUP2AKrbrI7IJMHoVgfKpExuXvfP44eQZmaRa7e/4ZFKQWjtuu7PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o50lUC5N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2Q1LqJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557A91F000E9;
-	Thu, 16 Jul 2026 13:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o50lUC5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19E01F000E9;
+	Thu, 16 Jul 2026 13:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209347;
-	bh=BeF5Auu0aQI4RQc6AKG15ovLNSdLtJsVe4ISgeCyjDk=;
+	s=korg; t=1784209350;
+	bh=bpzUEmS/9VUdZZPKRUHwPrvun6z2rR+8rvTMA2iLluE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l2Q1LqJe/v+ckB2kwAgmNLIxOIdfEKLdMdHHEx8/CYl6JkzTc/HItkqyMzJTgAOaG
-	 6VERz33qgI14hzAHQtGfgJZQAbYmWy2vpSZZ5T0l7djvCp9WdfjRoyrUOLgWQ2h9S8
-	 oILTBb5tjKwUbDCu09gnjGPpA78irYkQt5XtlWYU=
+	b=o50lUC5NJM8HcW7vyr1jU+BRo0u3N9CEcuaWkD6rkHuT9JtOwnYiJW019LwsD0jU5
+	 EGDUvFm/CNXIInQhOp+1eOSjNmt54o2FO6rSQbNm+4u/+lmDueZDu90wVmBCkYlQcF
+	 8OpFxXqfxyk7pe7cwrBIFTOBiKdhzR3SrcQzBssY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanhe Shu <xiangzao@linux.alibaba.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.1 150/518] tracing: Fix NULL pointer dereference in func_set_flag()
-Date: Thu, 16 Jul 2026 15:26:58 +0200
-Message-ID: <20260716133051.130662065@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 151/518] tipc: fix out-of-bounds read in broadcast Gap ACK blocks
+Date: Thu, 16 Jul 2026 15:26:59 +0200
+Message-ID: <20260716133051.151635935@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,97 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanhe Shu <xiangzao@linux.alibaba.com>
+From: Samuel Page <sam@bynar.io>
 
-commit c3e94604675e3db186111b8942650d86577df9b0 upstream.
+commit 2b66974a1b6134a4bbc3bfed181f7418f688eb54 upstream.
 
-func_set_flag() dereferences tr->current_trace_flags before verifying
-that the current tracer is actually the function tracer. When the active
-tracer has been switched away from "function" (e.g., to "wakeup_rt"),
-tr->current_trace_flags can be NULL, leading to a NULL pointer
-dereference and kernel crash.
+A broadcast PROTOCOL/STATE_MSG can carry a Gap ACK blocks record in its
+data area. tipc_get_gap_ack_blks() only verifies that the record's len
+field is self-consistent with its ugack_cnt/bgack_cnt counts
+(sz == struct_size(p, gacks, ugack_cnt + bgack_cnt)); it does not check
+that the record actually fits in the message data area, msg_data_sz().
 
-The call chain that triggers this is:
+The unicast caller tipc_link_proto_rcv() bounds it ("if (glen > dlen)
+break;"), but the broadcast caller tipc_bcast_sync_rcv() discards the
+returned size, so tipc_link_advance_transmq() copies the record off the
+receive skb with an attacker-controlled count:
 
-  trace_options_write()
-    -> __set_tracer_option()
-      -> trace->set_flag()          /* func_set_flag */
+	this_ga = kmemdup(ga, struct_size(ga, gacks, ga->bgack_cnt),
+			  GFP_ATOMIC);
 
-In func_set_flag(), the first operation is:
+A TIPC neighbour that negotiated TIPC_GAP_ACK_BLOCK triggers it with one
+ordinary broadcast STATE_MSG (msg_bc_ack_invalid() clear), sized so its
+data area is short, carrying a Gap ACK record with len = 0x400,
+bgack_cnt = 0xff and ugack_cnt = 0. len then equals
+struct_size(p, gacks, 255), so the consistency check passes and ga is
+non-NULL; kmemdup() reads struct_size(ga, gacks, 255) = 1024 bytes out
+of the much smaller skb:
 
-  if (!!set == !!(tr->current_trace_flags->val & bit))
+  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x48/0x60
+  Read of size 1024 at addr ffff0000c7030d38 by task poc864/69
+  Call trace:
+   kmemdup_noprof+0x48/0x60
+   tipc_link_advance_transmq+0x86c/0xb80
+   tipc_link_bc_ack_rcv+0x19c/0x1e0
+   tipc_bcast_sync_rcv+0x1c4/0x2c4
+   tipc_rcv+0x85c/0x1340
+   tipc_l2_rcv_msg+0xac/0x104
+  The buggy address belongs to the object at ffff0000c7030d00
+   which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 56 bytes inside of
+   allocated 704-byte region [ffff0000c7030d00, ffff0000c7030fc0)
 
-This dereferences tr->current_trace_flags unconditionally. The safety
-check that guards against a non-function tracer:
+The copied-out bytes are subsequently consumed as gap/ack values, but
+the read is already out of bounds at the kmemdup() regardless of how
+they are used.
 
-  if (tr->current_trace != &function_trace)
-      return 0;
+The unicast STATE path drops such a message: "if (glen > dlen) break;"
+skips the rest of STATE_MSG handling and the skb is freed. Make the
+broadcast path drop it too. tipc_bcast_sync_rcv() now bounds the record
+against msg_data_sz() and, when it does not fit, reports it back through
+tipc_node_bc_sync_rcv() to tipc_rcv() so the skb is discarded rather than
+processed. ga is not cleared on this path: ga == NULL already means
+"legacy peer without Selective ACK", a distinct legitimate state.
 
-is placed *after* the dereference, which is too late.
-
-This was observed with the following crash dump:
-
-  BUG: unable to handle page fault at 0000000000000000
-  RIP: func_set_flag+0xd
-
-  Call Trace:
-   __set_tracer_option+0x27
-   trace_options_write+0x75
-   vfs_write+0x12a
-   ksys_write+0x66
-   do_syscall_64+0x5b
-
-  RIP: ffffffff914c973d  RSP: ff67ec88b01dfdf0  RFLAGS: 00010202
-  RAX: 0000000000000000  RBX: ff3a826e80354580  RCX: 0000000000000001
-  RDX: 0000000000000001  RSI: 0000000000000000  RDI: ffffffff93918080
-
-The disassembly confirms the fault:
-
-  func_set_flag+0:   mov 0x1f08(%rdi), %rax  ; RAX = tr->current_trace_flags = NULL
-  func_set_flag+13:  mov (%rax), %eax        ; page fault: dereference NULL
-
-At the time of the crash:
-  tr->current_trace_flags = 0x0 (NULL)
-  tr->current_trace = wakeup_rt_tracer (not function_trace)
-
-The scenario is that a process opens a function tracer option file (such
-as "func_stack_trace"), then the current tracer is switched to another
-tracer (e.g., "wakeup_rt"), which sets current_trace_flags to NULL. When
-the process subsequently writes to the option file, func_set_flag() is
-invoked and crashes on the NULL dereference.
-
-Fix this by moving the current_trace check before the
-current_trace_flags dereference, so that func_set_flag() returns early
-when the function tracer is not active.
-
+Fixes: d7626b5acff9 ("tipc: introduce Gap ACK blocks for broadcast link")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260624061715.1445655-1-xiangzao@linux.alibaba.com
-Fixes: 76680d0d2825 ("tracing: Have function tracer define options per instance")
-Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Samuel Page <sam@bynar.io>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260625143815.1525412-1-sam@bynar.io
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_functions.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/tipc/bcast.c |   22 ++++++++++++++--------
+ net/tipc/bcast.h |    2 +-
+ net/tipc/node.c  |   15 ++++++++++++---
+ 3 files changed, 27 insertions(+), 12 deletions(-)
 
---- a/kernel/trace/trace_functions.c
-+++ b/kernel/trace/trace_functions.c
-@@ -458,12 +458,12 @@ func_set_flag(struct trace_array *tr, u3
- 	ftrace_func_t func;
- 	u32 new_flags;
+--- a/net/tipc/bcast.c
++++ b/net/tipc/bcast.c
+@@ -497,12 +497,13 @@ void tipc_bcast_ack_rcv(struct net *net,
+  */
+ int tipc_bcast_sync_rcv(struct net *net, struct tipc_link *l,
+ 			struct tipc_msg *hdr,
+-			struct sk_buff_head *retrq)
++			struct sk_buff_head *retrq, bool *valid)
+ {
+ 	struct sk_buff_head *inputq = &tipc_bc_base(net)->inputq;
+ 	struct tipc_gap_ack_blks *ga;
+ 	struct sk_buff_head xmitq;
+ 	int rc = 0;
++	u16 glen;
  
--	/* Do nothing if already set. */
--	if (!!set == !!(tr->current_trace_flags->val & bit))
-+	/* We can change this flag only when current tracer is function. */
-+	if (tr->current_trace != &function_trace)
- 		return 0;
+ 	__skb_queue_head_init(&xmitq);
  
--	/* We can change this flag only when not running. */
--	if (tr->current_trace != &function_trace)
-+	/* Do nothing if already set. */
-+	if (!!set == !!(tr->current_trace_flags->val & bit))
- 		return 0;
+@@ -510,13 +511,18 @@ int tipc_bcast_sync_rcv(struct net *net,
+ 	if (msg_type(hdr) != STATE_MSG) {
+ 		tipc_link_bc_init_rcv(l, hdr);
+ 	} else if (!msg_bc_ack_invalid(hdr)) {
+-		tipc_get_gap_ack_blks(&ga, l, hdr, false);
+-		if (!sysctl_tipc_bc_retruni)
+-			retrq = &xmitq;
+-		rc = tipc_link_bc_ack_rcv(l, msg_bcast_ack(hdr),
+-					  msg_bc_gap(hdr), ga, &xmitq,
+-					  retrq);
+-		rc |= tipc_link_bc_sync_rcv(l, hdr, &xmitq);
++		glen = tipc_get_gap_ack_blks(&ga, l, hdr, false);
++		if (glen > msg_data_sz(hdr)) {
++			/* Malformed Gap ACK blocks; caller drops the msg */
++			*valid = false;
++		} else {
++			if (!sysctl_tipc_bc_retruni)
++				retrq = &xmitq;
++			rc = tipc_link_bc_ack_rcv(l, msg_bcast_ack(hdr),
++						  msg_bc_gap(hdr), ga, &xmitq,
++						  retrq);
++			rc |= tipc_link_bc_sync_rcv(l, hdr, &xmitq);
++		}
+ 	}
+ 	tipc_bcast_unlock(net);
  
- 	new_flags = (tr->current_trace_flags->val & ~bit) | (set ? bit : 0);
+--- a/net/tipc/bcast.h
++++ b/net/tipc/bcast.h
+@@ -97,7 +97,7 @@ void tipc_bcast_ack_rcv(struct net *net,
+ 			struct tipc_msg *hdr);
+ int tipc_bcast_sync_rcv(struct net *net, struct tipc_link *l,
+ 			struct tipc_msg *hdr,
+-			struct sk_buff_head *retrq);
++			struct sk_buff_head *retrq, bool *valid);
+ int tipc_nl_add_bc_link(struct net *net, struct tipc_nl_msg *msg,
+ 			struct tipc_link *bcl);
+ int tipc_nl_bc_link_set(struct net *net, struct nlattr *attrs[]);
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1831,12 +1831,15 @@ static void tipc_node_mcast_rcv(struct t
+ }
+ 
+ static void tipc_node_bc_sync_rcv(struct tipc_node *n, struct tipc_msg *hdr,
+-				  int bearer_id, struct sk_buff_head *xmitq)
++				  int bearer_id, struct sk_buff_head *xmitq,
++				  bool *valid)
+ {
+ 	struct tipc_link *ucl;
+ 	int rc;
+ 
+-	rc = tipc_bcast_sync_rcv(n->net, n->bc_entry.link, hdr, xmitq);
++	rc = tipc_bcast_sync_rcv(n->net, n->bc_entry.link, hdr, xmitq, valid);
++	if (!*valid)
++		return;
+ 
+ 	if (rc & TIPC_LINK_DOWN_EVT) {
+ 		tipc_node_reset_links(n);
+@@ -2140,12 +2143,18 @@ rcv:
+ 
+ 	/* Ensure broadcast reception is in synch with peer's send state */
+ 	if (unlikely(usr == LINK_PROTOCOL)) {
++		bool valid = true;
++
+ 		if (unlikely(skb_linearize(skb))) {
+ 			tipc_node_put(n);
+ 			goto discard;
+ 		}
+ 		hdr = buf_msg(skb);
+-		tipc_node_bc_sync_rcv(n, hdr, bearer_id, &xmitq);
++		tipc_node_bc_sync_rcv(n, hdr, bearer_id, &xmitq, &valid);
++		if (!valid) {
++			tipc_node_put(n);
++			goto discard;
++		}
+ 	} else if (unlikely(tipc_link_acked(n->bc_entry.link) != bc_ack)) {
+ 		tipc_bcast_ack_rcv(net, n->bc_entry.link, hdr);
+ 	}
 
 
