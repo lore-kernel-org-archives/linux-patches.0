@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3139A4314AD;
-	Thu, 16 Jul 2026 14:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138914314B7;
+	Thu, 16 Jul 2026 14:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212204; cv=none; b=QXbKlLnXucf4lbQOlxKVoKGNBPqjLxnCVTCquDq0U1modoRL7hw27bfz9tE+177DTLcE9FGxSrcZCASTmDNCxG8XZoe/SAIa28Ey9u3N4RMVVpXTkhWZEbLPXP7V9aOpkszHEaFx1rbynaYttaB8IVT2DP7fLMLooWEp7sYS19g=
+	t=1784212207; cv=none; b=ln2gYjet/afhgAqCKYxVtM8CiMk0W536JzbSlzIMPbUWkSOiBES0QwckHu+NcNDZz0txXoTcR29uD8tpc+zHrhupYukwaPIxeHw/UxD51SdHZT7b+8DXMmrQZToOJUrHgiROwaYPEj3xn8gxM5oWoXgUfCW+LeTMT7jcVcN4G/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212204; c=relaxed/simple;
-	bh=qum9ldGfoZ9Ay4YgYjeLcpPcbpN0rdzidZKC310+YKQ=;
+	s=arc-20240116; t=1784212207; c=relaxed/simple;
+	bh=Q8Wwu0zKIDje3RYUCTvuIgwrJQk3N+ZObF1x1gRjMxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryxJKb5eFpofPU4U8T/JhvIbTFsMYaqiFukqu1jzlg5P4ZSb4lvPa6nrraHMJ1E0Ik7AbIinUgm6ZglnkEFTOsHoBvA3FQLyRkvylGIOqa7fTuJaha6//PGjILDOx+V2/HVOGOBjegvpVMPwXXxfAFJRo202Fi//njXhn8oXe1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEwHun55; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NCyQquWlop4CSx7a539GLj+3RFo/E0+S6mxF+/S0+je48mONp+QlZEgNX6HHfKlU1fy7qSjqGen+CUm3WahOg6nPhLF937yuXkmH+7Rl+jrSoDD8tKA7FRzOTBQpcZ/xFk+hcN8wQRhao4DulqPdm4QnyPTTswpsVg/csvAlMJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6pHLyB0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEwHun55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B971F000E9;
-	Thu, 16 Jul 2026 14:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6pHLyB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388FD1F000E9;
+	Thu, 16 Jul 2026 14:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212203;
-	bh=t8q432Q7qjmaq7oSTPsQQXtXizaw6FlFDl+iAK8lMuw=;
+	s=korg; t=1784212205;
+	bh=ev4W5UitjEpZ74kBe7T4Dd2Qj0r1asmRLBMtb+iF084=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vEwHun55CU+yobg8xkcJpZCHFP5WbDTw7SIUnD0uL1I8J21gbgjlzkxTPP77bDGrJ
-	 7ys+DaIYLHWtIh+s+cOUjnD3LkCCx4bqUe85UHokvAyfF2U5plHSkqWupO8kQNKppV
-	 hkMlNmkaJzKBWkm96F8Y/jWVDR0h5YBaqPPmQ1Gg=
+	b=j6pHLyB0Rwd940z1baOimrgAq3QGZ5YCAO1GOzZVzbHf5CUMWJf+bkCL07fdPkkvO
+	 hHL3TSVy4lTduVa5c0J99XXRLUUjktV9ljB35RR3ixrpGed1Ahkj0o6AxObYxHpOWP
+	 CWVqmdkqTCSBwltJ3v5zZvltD+dW0SnPOoexxppc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Teddy Astie <teddy.astie@vates.tech>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.12 195/349] time/jiffies: Register jiffies clocksource before usage
-Date: Thu, 16 Jul 2026 15:32:09 +0200
-Message-ID: <20260716133037.738722497@linuxfoundation.org>
+	Kartik Rajput <kkartik@nvidia.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>
+Subject: [PATCH 6.12 196/349] clocksource/drivers/timer-tegra186: Fix support for multiple watchdog instances
+Date: Thu, 16 Jul 2026 15:32:10 +0200
+Message-ID: <20260716133037.760832652@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,53 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@kernel.org>
+From: Kartik Rajput <kkartik@nvidia.com>
 
-commit f24df84cbe05e4471c04ac4b921fc0340bbc7752 upstream.
+commit ca57bf46e7a94f8c53d05c376df9fcfdcb482100 upstream.
 
-Teddy reported that a XEN HVM has a long boot delay, which was bisected to
-the recent enhancements to the negative motion detection. It turned out
-that the jiffies clocksource is used in early boot before it is registered,
-which leaves the max_delta_raw field at zero. That causes the read out to
-be clamped to the max delta of 0, which means time is not making progress.
+Tegra SoCs support multiple watchdogs; currently only one (WDT0) is
+used. When multiple watchdogs are registered, tegra186_wdt_enable()
+overwrites the TKEIE(x) register, discarding any existing watchdog
+interrupt enable bits. As a result, enabling one watchdog inadvertently
+disables interrupts for the others.
 
-Cure it by ensuring that it is initialized before its first usage in
-timekeeping_init().
+Fix this by preserving the existing TKEIE(x) value and updating it
+using a read-modify-write sequence.
 
-Fixes: 76031d9536a0 ("clocksource: Make negative motion detection more robust")
-Reported-by: Teddy Astie <teddy.astie@vates.tech>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Teddy Astie <teddy.astie@vates.tech>
+Fixes: 42cee19a9f83 ("clocksource: Add Tegra186 timers support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/87y0gn3fve.ffs@fw13
-Closes: https://lore.kernel.org/all/1780914594.8631fc262581453bbf619ec5b2062170.19ea6c8227b000701b@vates.tech
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260507154557.2082697-2-kkartik@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/jiffies.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/clocksource/timer-tegra186.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/time/jiffies.c
-+++ b/kernel/time/jiffies.c
-@@ -61,15 +61,14 @@ EXPORT_SYMBOL(get_jiffies_64);
+--- a/drivers/clocksource/timer-tegra186.c
++++ b/drivers/clocksource/timer-tegra186.c
+@@ -144,7 +144,8 @@ static void tegra186_wdt_enable(struct t
+ 	u32 value;
  
- EXPORT_SYMBOL(jiffies);
+ 	/* unmask hardware IRQ, this may have been lost across powergate */
+-	value = TKEIE_WDT_MASK(wdt->index, 1);
++	value = readl(tegra->regs + TKEIE(wdt->tmr->hwirq));
++	value |= TKEIE_WDT_MASK(wdt->index, 1);
+ 	writel(value, tegra->regs + TKEIE(wdt->tmr->hwirq));
  
--static int __init init_jiffies_clocksource(void)
--{
--	return __clocksource_register(&clocksource_jiffies);
--}
--
--core_initcall(init_jiffies_clocksource);
-+static bool cs_jiffies_registered __initdata;
- 
- struct clocksource * __init __weak clocksource_default_clock(void)
- {
-+	if (!cs_jiffies_registered) {
-+		__clocksource_register(&clocksource_jiffies);
-+		cs_jiffies_registered = true;
-+	}
- 	return &clocksource_jiffies;
- }
- 
+ 	/* clear interrupt */
 
 
