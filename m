@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7183D4133;
-	Thu, 16 Jul 2026 13:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DBC3D522F;
+	Thu, 16 Jul 2026 13:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209553; cv=none; b=EOop/JS/RzR9Rxs8ER1ZzsJYKWvWtbRFIegAeHytHR0CUmCTSJqthz+WTjrU9AOEoedpZCJTJr7eno15LTbk2pCEbmd+8ajc7ksqvctsd0Pju3PkWO/YX2LZWAmuPZIVToVjhDw2FK3g9ghqioAFJQZSfBZ0V2Oy0xnFiea1tkA=
+	t=1784209557; cv=none; b=sfvmIlcP/7hzw03vpM2vN4vGT5YCN+4t0tUCL7BuSWKrpgEVMJT4M4dPJLOvxTsCHG8yPRzulFw650LKl/CpE1ajdKhIhQQA1O4zvUfYkkGy2wuoCy1XdUc7tU0UMl6/zOz8YtEHEzOS6WUnwEYCpAcEWi6NCszVZp9pQrtgCx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209553; c=relaxed/simple;
-	bh=Uq4VZupN2j8TCXLVMpQLxcCkyrlwCtPCptgBxzmms5E=;
+	s=arc-20240116; t=1784209557; c=relaxed/simple;
+	bh=YanmnAdWiy5qDtBisOI8o3qIuExPsk9mArLbprY2bE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+V9PSXVApQa/5pw5jOIf1heKetjzs/y+rWky2r/8SrfxcL6ZfcCG2FwsdT1Gn8QNlWBJpdScJF5ft9rOhPZHRQc7sP8RRSPAFzWdFCpeqxynpDCgaqOt/nuurFSjjzulnXli0Lf2OdO97QKug6rrlZxQaal+ZiEyFZEaWgkBgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5uSPHSI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TKXYJOox9I96eNuTgFksYtxLkICOkJviWJYi6rmho3D9VluD5h0xrWsKSfkf4OmiybaAybMvsVnxCev349u2uOvV9zOX1bh7urNkiKlz94Kfxy+bTrrkGaT1VuShbRYQUCAVPQpBxY2pK5MXJiwIqzmC8mJ8+E0ZK6UUTUbPvKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0+8pZr8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5uSPHSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7512A1F00A3A;
-	Thu, 16 Jul 2026 13:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0+8pZr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DA31F000E9;
+	Thu, 16 Jul 2026 13:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209550;
-	bh=tMtpRjxyip4VqEMlJjce8wxX3zZByhpXXiLD28SPlg0=;
+	s=korg; t=1784209552;
+	bh=/5QKkv/FRe1QHRsAe+rPdaxhQfeoqi98kZMFsrtsAvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s5uSPHSIvohWpgDuEarpo7GVYsDI1Y2op23KvZrv/DGd751HpzIZ4MVphK+qTwS3Y
-	 B4b/wJ7oNMKP4RoonSBvGothq3rvZrIyMyL2J1DRuMpyVm0c7zp+jFEq3nExkfW7ct
-	 /d89JeJm/eOfAWdXrWjuGId+KiF9GGzfpZv+bIdc=
+	b=t0+8pZr8SQm5xXf/gwzx4TwZKhJMy0TrsGhW80psUALEjxl33omiVYwWD1MRb/5jO
+	 7qbji37J/PTcYkeQRAQPAB/GSNy9zlQ9MOD7AeoHJsP+g7RBK+DOO2Ba6BcVnjnOKn
+	 FAroE8D/0WNLd6LOlCD3cZ0fF7bATmftSHtIXSNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Ralph Boehme <slow@samba.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 229/518] ksmbd: validate NTLMv2 response before updating session key
-Date: Thu, 16 Jul 2026 15:28:17 +0200
-Message-ID: <20260716133052.833313959@linuxfoundation.org>
+Subject: [PATCH 7.1 230/518] smb/client: fix chown/chgrp with SMB3 POSIX Extensions
+Date: Thu, 16 Jul 2026 15:28:18 +0200
+Message-ID: <20260716133052.855258485@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,96 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haofeng Li <lihaofeng@kylinos.cn>
+From: Ralph Boehme <slow@samba.org>
 
-commit 954d196bebb2b50151cb96454c72dc113b2af1ac upstream.
+commit 760ef2c579c2609cf17fb1cd5392f64d42d43d33 upstream.
 
-ksmbd_auth_ntlmv2() derives the NTLMv2 session key into
-sess->sess_key before it verifies the NTLMv2 response.
-ksmbd_decode_ntlmssp_auth_blob() then continues into KEY_XCH even
-when ksmbd_auth_ntlmv2() failed.
+Ownership (chown) and group (chgrp) modifications were being ignored when
+mounting with SMB3 POSIX Extensions unless CIFS_MOUNT_CIFS_ACL or
+CIFS_MOUNT_MODE_FROM_SID were also explicitly set.
 
-With SMB3 multichannel binding, the failed authentication operates on
-an existing session and the session setup error path does not expire
-binding sessions. A client can send a binding session setup with a
-bad NT proof and KEY_XCH and still modify sess->sess_key before
-STATUS_LOGON_FAILURE is returned.
+Fix this by checking for posix_extensions in cifs_setattr_nounix() when
+updating UID and GID, ensuring that id_mode_to_cifs_acl() is called to map
+and set the ownership/group information on the server.
 
-Relevant path:
-
-  smb2_sess_setup()
-    -> conn->binding = true
-    -> ntlm_authenticate()
-       -> session_user()
-       -> ksmbd_decode_ntlmssp_auth_blob()
-          -> ksmbd_auth_ntlmv2()
-             -> calc_ntlmv2_hash()
-             -> hmac_md5_usingrawkey(..., sess->sess_key)
-             -> crypto_memneq() returns mismatch
-          -> KEY_XCH arc4_crypt(..., sess->sess_key, ...)
-    -> out_err without expiring the binding session
-
-Derive the base session key into a local buffer and copy it to
-sess->sess_key only after the proof matches. Return immediately on
-authentication failure so KEY_XCH is only processed after successful
-authentication.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Fixes: f9929ef6a2a5 ("ksmbd: add support for key exchange")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Ralph Boehme <slow@samba.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/auth.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ fs/smb/client/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -142,6 +142,7 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
- {
- 	char ntlmv2_hash[CIFS_ENCPWD_SIZE];
- 	char ntlmv2_rsp[CIFS_HMAC_MD5_HASH_SIZE];
-+	char sess_key[SMB2_NTLMV2_SESSKEY_SIZE];
- 	struct hmac_md5_ctx ctx;
- 	int rc;
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3348,7 +3348,8 @@ cifs_setattr_nounix(struct dentry *diren
+ 	if (attrs->ia_valid & ATTR_GID)
+ 		gid = attrs->ia_gid;
  
-@@ -164,12 +165,21 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
- 	/* Generate the session key */
- 	hmac_md5_usingrawkey(ntlmv2_hash, CIFS_HMAC_MD5_HASH_SIZE,
- 			     ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE,
--			     sess->sess_key);
-+			     sess_key);
- 
- 	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
--			  CIFS_HMAC_MD5_HASH_SIZE))
--		return -EINVAL;
--	return 0;
-+			  CIFS_HMAC_MD5_HASH_SIZE)) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
-+
-+	memcpy(sess->sess_key, sess_key, sizeof(sess_key));
-+	rc = 0;
-+out:
-+	memzero_explicit(ntlmv2_hash, sizeof(ntlmv2_hash));
-+	memzero_explicit(ntlmv2_rsp, sizeof(ntlmv2_rsp));
-+	memzero_explicit(sess_key, sizeof(sess_key));
-+	return rc;
- }
- 
- /**
-@@ -226,6 +236,8 @@ int ksmbd_decode_ntlmssp_auth_blob(struc
- 				nt_len - CIFS_ENCPWD_SIZE,
- 				domain_name, conn->ntlmssp.cryptkey);
- 	kfree(domain_name);
-+	if (ret)
-+		return ret;
- 
- 	/* The recovered secondary session key */
- 	if (conn->ntlmssp.client_flags & NTLMSSP_NEGOTIATE_KEY_XCH) {
+-	if (sbflags & (CIFS_MOUNT_CIFS_ACL | CIFS_MOUNT_MODE_FROM_SID)) {
++	if ((sbflags & (CIFS_MOUNT_CIFS_ACL | CIFS_MOUNT_MODE_FROM_SID)) ||
++	    cifs_sb_master_tcon(cifs_sb)->posix_extensions) {
+ 		if (uid_valid(uid) || gid_valid(gid)) {
+ 			mode = NO_CHANGE_64;
+ 			rc = id_mode_to_cifs_acl(inode, full_path, &mode,
 
 
