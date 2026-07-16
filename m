@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D3522301;
-	Thu, 16 Jul 2026 13:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02072400979;
+	Thu, 16 Jul 2026 13:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210050; cv=none; b=bnHVIhNzSpAA1BxFt3pbu61MOVT8bfnytqc7lYRt/0mDoiovr36SWjVk1LZJD2W/gBBD6kjWIcSOKq0siLcQc4wUSiuTvYXiWvfWpVMjA1D33ls5+fsDQ3klRzgFLlM0X+9WTA8NkTD+rODQ4c4FIocopIzf+R1u0YnfSFfVUyU=
+	t=1784210053; cv=none; b=dggWK2YJUs7CZ0XLgnEGfYTqZigAv+rszihtiBCmmQ6p4NIipYxsRQx/xolD52FslHldrIfIQXL1d7AJCZHSjizjJs4dytINf35RljyKoQ7v8PxnYN8dE+Mw4gTha9Os1lSckAkpYKbDCu2HWbl0inzViTKBtpo/u8GTFqmu1vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210050; c=relaxed/simple;
-	bh=8vOp2Tvluf7+ddtS7F0A52HDfzDJK/vMkNkTHzLnhNs=;
+	s=arc-20240116; t=1784210053; c=relaxed/simple;
+	bh=Hd8EqmIQ1douS6P29MzynvP4cv9SVjvo+rtxQ+xoIts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ek9CN1dxQneIuu1Z8v3yfKTKiIGt5VwUkxw0hkEoZu4urgMidU0jx4rTyctulJkYRIJljHejJ66vNgZFcjZbQRu1mVjEMYOZ7S1PH7GrLZ26YynddtXJE/7Exg4Sw5pajaCt4q/9pz0RjBQPf1eK4apYiR8A1GZYXmtrXuR12rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lx+I7UeC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tmVLN05Q9oXj/baRLUvMHt6OKS15etffbxc/aThRQHp6QN35KI2joNQxuObM+lyLP+0optGcwIyR2bfA6U153YPqsnsVsRLkmnoMaZCZcFPQV67OyOX0+9+bq7ZR9tQqpHbIS1cCjxk39b1bgNB0QW+1LRXfj3u46xHHXVECWX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ox/vtL3S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lx+I7UeC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D74E1F000E9;
-	Thu, 16 Jul 2026 13:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ox/vtL3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16ED81F000E9;
+	Thu, 16 Jul 2026 13:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210048;
-	bh=j6KEugn6LYfVlmx8w41V+aIHu7aAHkZRVv3c7Sg/NkQ=;
+	s=korg; t=1784210051;
+	bh=6mBGabxFysiWgUjl9Lb5WvAUXgsFSnP/G3U8NH04Dn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lx+I7UeCVoL700ghOukdZQCedN1XIzUGDv21nfEhlpys4zgP/n7Pfqp8MfLou2eKV
-	 LYfkrI2/+dE2fMTpmU+gJPderqXrO2/GDEmPnCIVbB0LxPJ+oe4+TJdmYNLhPdMMAM
-	 +yhUf8SNav3HXYw8GbVA3Gf2hW/0ZvfhHn5JpyBE=
+	b=Ox/vtL3SIl5LTU0hmcU03IZnuLJvBAlgnhDX0iP6hvkRukBzMdoa0AIkjeNuxe5FL
+	 T8r7IcgFLG+SX/PirOIttsfo4E//RqhfYHgvbTaQJhD/36IuTsiSMoAeFOfYPyL4ps
+	 1j90vBXBgrX9x0vfNc56+xgSTEtQR2F8XUGuEnYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>
-Subject: [PATCH 7.1 418/518] exfat: bound uniname advance in exfat_find_dir_entry()
-Date: Thu, 16 Jul 2026 15:31:26 +0200
-Message-ID: <20260716133056.984792842@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 7.1 419/518] NTB: epf: Fix request_irq() unwind in ntb_epf_init_isr()
+Date: Thu, 16 Jul 2026 15:31:27 +0200
+Message-ID: <20260716133057.005961314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,79 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 3a1230e7b043c62737b05a3e9275ca83a43ad20a upstream.
+commit fcba26efe5efc7441f5505f4ccc69791214b40be upstream.
 
-In exfat_find_dir_entry(), each TYPE_EXTEND (file name) entry advances the
-output pointer by a fixed amount while the loop guard only tracks the
-accumulated name length:
+ntb_epf_init_isr() requests multiple MSI/MSI-X vectors in a loop. If
+request_irq() fails part-way through, it jumps straight to
+pci_free_irq_vectors() without freeing already requested IRQs.
 
-	if (++order == 2)
-		uniname = p_uniname->name;
-	else
-		uniname += EXFAT_FILE_NAME_LEN;
-	len = exfat_extract_uni_name(ep, entry_uniname);
-	name_len += len;
-	unichar = *(uniname+len);
-	*(uniname+len) = 0x0;
+Fix the error path by freeing any successfully requested IRQs before
+releasing the vectors.
 
-uniname grows by EXFAT_FILE_NAME_LEN (15) per name entry, but name_len
-grows only by the actual extracted length, which is shorter when a name
-fragment contains an early NUL.  The only guard is
-`name_len >= MAX_NAME_LENGTH`, so a crafted directory with many short
-name fragments lets uniname run far past the
-p_uniname->name[MAX_NAME_LENGTH + 3] buffer while name_len stays small,
-causing an out-of-bounds read and write at *(uniname+len).
-
-The sibling extractor exfat_get_uniname_from_ext_entry() already stops
-on a short fragment (the lockstep `len != EXFAT_FILE_NAME_LEN` guard
-added in commit d42334578eba ("exfat: check if filename entries exceeds
-max filename length")); exfat_find_dir_entry() never got the
-equivalent.  Track the per-entry write offset as a count and reject a
-fragment once the offset, or the offset plus the extracted length, would
-exceed MAX_NAME_LENGTH, before forming the output pointer.
-
-Fixes: ca06197382bd ("exfat: add directory operations")
-Cc: stable@vger.kernel.org
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 812ce2f8d14e ("NTB: Add support for EPF PCI Non-Transparent Bridge")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Cc: stable@vger.kernel.org # v5.12+
+Link: https://patch.msgid.link/20260304083028.1391068-2-den@valinux.co.jp
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/dir.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/ntb/hw/epf/ntb_hw_epf.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -1067,6 +1067,7 @@ rewind:
+--- a/drivers/ntb/hw/epf/ntb_hw_epf.c
++++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
+@@ -357,7 +357,7 @@ static int ntb_epf_init_isr(struct ntb_e
+ 				  0, "ntb_epf", ndev);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to request irq\n");
+-			goto err_request_irq;
++			goto err_free_irq;
+ 		}
+ 	}
  
- 			if (entry_type == TYPE_EXTEND) {
- 				unsigned short entry_uniname[16], unichar;
-+				unsigned int offset;
+@@ -367,16 +367,14 @@ static int ntb_epf_init_isr(struct ntb_e
+ 				   argument | irq);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to configure doorbell\n");
+-		goto err_configure_db;
++		goto err_free_irq;
+ 	}
  
- 				if (step != DIRENT_STEP_NAME ||
- 				    name_len >= MAX_NAME_LENGTH) {
-@@ -1075,13 +1076,15 @@ rewind:
- 					continue;
- 				}
+ 	return 0;
  
--				if (++order == 2)
--					uniname = p_uniname->name;
--				else
--					uniname += EXFAT_FILE_NAME_LEN;
+-err_configure_db:
+-	for (i = 0; i < ndev->db_count + 1; i++)
++err_free_irq:
++	while (i--)
+ 		free_irq(pci_irq_vector(pdev, i), ndev);
 -
-+				offset = (++order - 2) * EXFAT_FILE_NAME_LEN;
- 				len = exfat_extract_uni_name(ep, entry_uniname);
- 				brelse(bh);
-+				if (offset > MAX_NAME_LENGTH ||
-+				    len > MAX_NAME_LENGTH - offset) {
-+					step = DIRENT_STEP_FILE;
-+					continue;
-+				}
-+				uniname = p_uniname->name + offset;
- 				name_len += len;
+-err_request_irq:
+ 	pci_free_irq_vectors(pdev);
  
- 				unichar = *(uniname+len);
+ 	return ret;
 
 
