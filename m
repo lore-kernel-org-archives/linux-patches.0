@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1D936A35E;
-	Thu, 16 Jul 2026 13:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A393A41F36A;
+	Thu, 16 Jul 2026 13:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209341; cv=none; b=ajhqt3kueodmOHs36GOAeB8sdOyp2DYrhjJuePSDc2yP7zgOcoinjWTkvssgMlnGHajMp32eE5TaJiDMft1YRSyfVJrm1q1hU2hZcgwm687oV2C7kgt51g/2+RknZft1H5lWnZJqTuT8/xwx29f6Wy9Rnj7bufg9CBral+7Q6UE=
+	t=1784209343; cv=none; b=PgtRcUIgtzRMSAUdqwukzmlpMfSK0Z70cd0d1gbYR2BxSC/TLSM5h1TKbbOI51Yi2dLxs8ZS13ouCeZYKtwnG+O4drys4jsBUMcXt1guIYj5Cr1qPvkHt+81v+t7TCmpjeiRn9tT92vWtpQ48Bps4ZzZB3ddGyUIjwG3T6sTOFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209341; c=relaxed/simple;
-	bh=ARuwheOVLLqcGHUSeQueBPGHafAooZUw4w1Aha2n010=;
+	s=arc-20240116; t=1784209343; c=relaxed/simple;
+	bh=WZjtK8mKH791YUBEjgiUkX3DGuadmj9LZggOBYDK8yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsW21Rsi+l1pCXf/UQhsq1Lfo7vM2Oj5ISUIqjSFB61TzKrAmslWT5Yo8MU9hVwcT0qd24UwL90SW+3FWqow0VMAB2IGRAyQCEAykke5Jrpv8F7PBCrX2dTD/QlSr3hvuKS0YY0qYEIy/h79ByHQTMVSjCodcVcARiWE0/gbuhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YR8OEpbe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VPV1Y4WmBNbZlNtHFgvqyaAcQnDE+uaCZcP3aiFAi1kZZnRsSAbUeUkQ4qHY58Z/7s2o0I8xQWVt5UqC+pba7vKzjCQ377KhO2BIQ3QqO0BE/u+exJRCMn/kCKpKzjXXGg1vcCRuCfitLwHDjX6jBUPJf2RFZKfu73+Bn52Sa9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNGTzAL0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YR8OEpbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E9A1F00A3F;
-	Thu, 16 Jul 2026 13:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNGTzAL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CB01F000E9;
+	Thu, 16 Jul 2026 13:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209339;
-	bh=nzf4w9dFa0VIgNsRbzV4k0XTsBaPpIqT7uw19rqE/Ks=;
+	s=korg; t=1784209342;
+	bh=Higvgwni11FbW53RAwevqb22fYtr9QgqWhvX2yvzOM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YR8OEpbevcBcVxLIVF9DIQrmDR/F3n7U8a5f0XkL3URPjONMDvinZpXDVc2aYBcuZ
-	 HZ97l/xEWazgKhwNp2U1zIFDwIKtyORSAqDNQHvjTglg0ijiqXDRKOhiJ3XJisfG7Y
-	 v9Edy1PkFl5rp6QSDU+KDbS5XQ4FdusrGgc4Epi8=
+	b=uNGTzAL0x7/fNjY9iRWyPxfMCIkagjyznukrVPC4t+izeogjJWK1EMQZXY1pig/9e
+	 3Gkfs/SN6ax1CThBkOcLFIpXO/xnqF/C6L/trAzb9SPUfqIjOv81u5pQAow94RFzrc
+	 TSw/+0T6kmzC0T2ZZDs89lzqNjqeE9SvvVOImAgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Keshav Verma <iganschel@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 7.1 121/518] rust_binder: reject context manager self-transaction
-Date: Thu, 16 Jul 2026 15:26:29 +0200
-Message-ID: <20260716133050.504364304@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 7.1 148/518] usb: misc: usbio: fix disconnect UAF in client teardown
+Date: Thu, 16 Jul 2026 15:26:56 +0200
+Message-ID: <20260716133051.088204810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,46 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keshav Verma <iganschel@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 6849cabfd30fb5727cfd31e8241e15801e17ebf9 upstream.
+commit 0bfeec21984fedd32987f4e4c0cde34b445af404 upstream.
 
-Rust binder resolved handle 0 to the context manager node, but it does not
-reject the case where the caller owns the same node.
+usbio_disconnect() walks usbio->cli_list in reverse and uninitializes each
+auxiliary device. auxiliary_device_uninit() drops the device reference, and
+for an unbound child that can run usbio_auxdev_release() and free the
+containing struct usbio_client.
 
-The C binder driver rejects transactions from the context-manager process
-to handle 0 after resolving the target node. Match that behavior in Rust
-Binder by rejecting handle 0 transactions when the resolved context-manager
-node is owned by the calling process.
+list_for_each_entry_reverse() advances after the loop body by reading
+client->link.prev. If the current client is freed by
+auxiliary_device_uninit(), the iterator dereferences freed memory.
 
-This applies to both synchronous and oneway transactions because both paths
-resolve the target through Process::get_transaction_node().
+Use list_for_each_entry_safe_reverse() so the previous client is
+cached before the body can drop the final reference. This preserves
+reverse teardown order while keeping the next iterator cursor independent
+of the current client's lifetime.
 
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in usbio_disconnect+0x12e/0x150
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x630
+ ? usbio_disconnect+0x12e/0x150
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x188/0x320
+ ? usbio_disconnect+0x12e/0x150
+ kasan_report+0xe0/0x110
+ ? usbio_disconnect+0x12e/0x150
+ usbio_disconnect+0x12e/0x150
+ usb_unbind_interface+0xf3/0x400
+ really_probe+0x316/0x660
+ __driver_probe_device+0x106/0x240
+ driver_probe_device+0x4a/0x110
+ __device_attach_driver+0xf1/0x1a0
+ ? __pfx___device_attach_driver+0x10/0x10
+ bus_for_each_drv+0xf9/0x160
+ ? __pfx_bus_for_each_drv+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? trace_hardirqs_on+0x18/0x130
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? _raw_spin_unlock_irqrestore+0x44/0x60
+ __device_attach+0x133/0x2a0
+ ? __pfx___device_attach+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? do_raw_spin_unlock+0x9a/0x100
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ device_initial_probe+0x55/0x70
+ bus_probe_device+0x4a/0xd0
+ device_add+0x9b9/0xc10
+ ? __pfx_device_add+0x10/0x10
+ ? _raw_spin_unlock_irqrestore+0x44/0x60
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? lockdep_hardirqs_on_prepare+0xea/0x1a0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? usb_enable_lpm+0x3c/0x260
+ usb_set_configuration+0xb64/0xf20
+ usb_generic_driver_probe+0x5f/0x90
+ usb_probe_device+0x71/0x1b0
+ really_probe+0x46b/0x660
+ __driver_probe_device+0x106/0x240
+ driver_probe_device+0x4a/0x110
+ __device_attach_driver+0xf1/0x1a0
+ ? __pfx___device_attach_driver+0x10/0x10
+ bus_for_each_drv+0xf9/0x160
+ ? __pfx_bus_for_each_drv+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? trace_hardirqs_on+0x18/0x130
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? _raw_spin_unlock_irqrestore+0x44/0x60
+ __device_attach+0x133/0x2a0
+ ? __pfx___device_attach+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? do_raw_spin_unlock+0x9a/0x100
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ device_initial_probe+0x55/0x70
+ bus_probe_device+0x4a/0xd0
+ device_add+0x9b9/0xc10
+ ? __pfx_device_add+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? add_device_randomness+0xb7/0xf0
+ usb_new_device+0x492/0x870
+ hub_event+0x1b10/0x29c0
+ ? __pfx_hub_event+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? lock_acquire+0x187/0x300
+ ? process_one_work+0x475/0xb90
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? lock_release+0xc8/0x290
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ process_one_work+0x4d7/0xb90
+ ? __pfx_process_one_work+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __list_add_valid_or_report+0x37/0xf0
+ ? __pfx_hub_event+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ worker_thread+0x2d8/0x570
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x1ad/0x1f0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3c9/0x540
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __switch_to+0x2e9/0x730
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Fixes: 121a0f839dbb ("usb: misc: Add Intel USBIO bridge driver")
 Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Keshav Verma <iganschel@gmail.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260625103957.730-1-iganschel@gmail.com
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://patch.msgid.link/20260618124029.3704089-1-zzzccc427@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/process.rs |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/misc/usbio.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/android/binder/process.rs
-+++ b/drivers/android/binder/process.rs
-@@ -900,7 +900,11 @@ impl Process {
-     pub(crate) fn get_transaction_node(&self, handle: u32) -> BinderResult<NodeRef> {
-         // When handle is zero, try to get the context manager.
-         if handle == 0 {
--            Ok(self.ctx.get_manager_node(true)?)
-+            let node_ref = self.ctx.get_manager_node(true)?;
-+            if core::ptr::eq(self, &*node_ref.node.owner) {
-+                return Err(EINVAL.into());
-+            }
-+            Ok(node_ref)
-         } else {
-             Ok(self.get_node_from_handle(handle, true)?)
-         }
+--- a/drivers/usb/misc/usbio.c
++++ b/drivers/usb/misc/usbio.c
+@@ -518,7 +518,7 @@ static int usbio_resume(struct usb_inter
+ static void usbio_disconnect(struct usb_interface *intf)
+ {
+ 	struct usbio_device *usbio = usb_get_intfdata(intf);
+-	struct usbio_client *client;
++	struct usbio_client *client, *next;
+ 
+ 	/* Wakeup any clients waiting for a reply */
+ 	usbio->rxdat_len = 0;
+@@ -535,7 +535,7 @@ static void usbio_disconnect(struct usb_
+ 	usb_kill_urb(usbio->urb);
+ 	usb_free_urb(usbio->urb);
+ 
+-	list_for_each_entry_reverse(client, &usbio->cli_list, link) {
++	list_for_each_entry_safe_reverse(client, next, &usbio->cli_list, link) {
+ 		auxiliary_device_delete(&client->auxdev);
+ 		auxiliary_device_uninit(&client->auxdev);
+ 	}
 
 
