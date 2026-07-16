@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CF2414A2C;
-	Thu, 16 Jul 2026 13:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722984252A4;
+	Thu, 16 Jul 2026 13:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209644; cv=none; b=sl0X4y7/A8vIHINMLat6YEvJ/rm1fPoHkSXALpxkNF125fFbxlpzC+S4lZcE2l3DQoWLe+1Y4VAZTYBq6CuUpjtk/EOWIRO5pCO6z2ZsoSuJH2WIgASevmfsmG/GlzcJw9Bwk4zY1U9kWNYeE7472k5xlzJRnXCNzGQH7KKrE1M=
+	t=1784209646; cv=none; b=UngwUImnQzH9ZTtj+SV82gQHfjkyQHKmgw9pcYiVYj2AaY0r/tSYldoL5FCziUGVIVQ/ko9MxDGNuy02X05A4svySf7bZSusjVPTWkYNMfLqSmuhN3+gZP2QC+eFbA+xjTN3twL3joVu+HNLunnoWakgttIfSPhMZFn/QMOV4ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209644; c=relaxed/simple;
-	bh=EtTun28iTL9xTmASbigVtgEQNwmg8TEQ6PUiqmD6AGg=;
+	s=arc-20240116; t=1784209646; c=relaxed/simple;
+	bh=4ROVlXXVbhDNylh2387RIhC+A4VQS4IsclPPQhDKHY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cCTzPX+j2eIkayhTpcKZj6ysA8Smdd+IYKtvidkNbjcxmTFidNZkDHfVreH0k/4t5sjPn2/8R9IcxKwkxnSLhPLd1Y6aAarPSHyhhwGbMyW6Z2mhG3ovn9W7q/6rBxnWYdV3EMsYRUXTtv27k7woLPowB/EbGkm52IJ81xRQoYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bU4Yy/1m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eAUQGdV/TI1SmLiSooJJWJJ6t8+l8OTrGvJ8aX1bNfOa0g14IboLk/K4bwIYVpj+v9njuyh0pRJXDWAA4WB4quIcot+JlHPUvQNspqibRB6kiGltUx87/UDZVb8Hr1ANnRbgfMBhbDe1beZJIfy/vFkC76YNgoJRJ/Eps9m5Oh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8JnEl7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bU4Yy/1m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190DF1F000E9;
-	Thu, 16 Jul 2026 13:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8JnEl7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37BC1F00A3D;
+	Thu, 16 Jul 2026 13:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209636;
-	bh=ib5Vgtb0GKI2seR/K6Q0hafO+b0bLM0nlFFwTLObwTU=;
+	s=korg; t=1784209639;
+	bh=MF9yoWwba3YxGrtvZuJzUNDJGsd2OoyHZCGT6rCT+MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bU4Yy/1mWnAraLnHbgLoBLvZQCt4pF845rJ4OSbwanzqH7NgZoQxq2c7CyI50ecfr
-	 J9OGJqnrVD8PdUQXDavK2hECjy6ng9zcdYAtV7Cnd4EXMh4XLVE6tPmlRncCFN3yPM
-	 UBPM7bitVmvFWQO6CVQwHcQjGNuYFolaAuqJIFx0=
+	b=A8JnEl7X6J2xCXCVBvJyyhKcyzjscQ5kJOTk4CzCGEdZAYCs4AVaMdREZtJDhIUuG
+	 6rff/Vj8XSlNafFpeMt8Xo3U1iITgkPzbx+qEaXJec82/Vp9fAcHS+H/UuuTSWapWJ
+	 gPZhcW6mG0ywJCMi/mmOR2YYqSESenOaakKnP4GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 218/518] ksmbd: add a permission check for FSCTL_SET_ZERO_DATA
-Date: Thu, 16 Jul 2026 15:28:06 +0200
-Message-ID: <20260716133052.586063119@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 7.1 219/518] ksmbd: serialize QUERY_DIRECTORY requests per file
+Date: Thu, 16 Jul 2026 15:28:07 +0200
+Message-ID: <20260716133052.608487966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,50 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 3320ba068198adc144c89d6661b805acce01735b upstream.
+commit be6d26bf27499977c746abc163659915082348d8 upstream.
 
-FSCTL_SET_ZERO_DATA in smb2_ioctl() destroys file data via
-ksmbd_vfs_zero_data() -> vfs_fallocate(PUNCH_HOLE/ZERO_RANGE) after
-checking only the share-level KSMBD_TREE_CONN_FLAG_WRITABLE, with no
-per-handle access check. A handle opened with only FILE_WRITE_ATTRIBUTES
-still yields an FMODE_WRITE filp (FILE_WRITE_ATTRIBUTES is part of
-FILE_WRITE_DESIRE_ACCESS_LE, so smb2_create_open_flags() opens it
-O_WRONLY), so the vfs_fallocate FMODE_WRITE check does not stop it; only
-the missing fp->daccess gate would. Reproduced on mainline 7.1-rc7 with
-KASAN by an authenticated SMB client: a FILE_WRITE_ATTRIBUTES-only handle
-zeroed 4096 bytes of file data it had no FILE_WRITE_DATA right to
-(6/6; a FILE_READ_DATA-only handle was correctly denied).
+smb2_query_dir() stores a pointer to its stack-allocated private data in
+the ksmbd_file readdir_data. Concurrent QUERY_DIRECTORY requests using the
+same file handle can overwrite this pointer while an iterate_dir() callback
+is still using it, resulting in a stack use-after-free.
 
-This is the unfixed sibling of commit cc57232cae23 ("ksmbd: fix FSCTL
-permission bypass by adding a permission check for FSCTL_SET_SPARSE").
-Because SET_ZERO_DATA writes data (not an attribute), require
-FILE_WRITE_DATA.
+Add a per-file mutex and hold it while accessing the shared directory
+enumeration state. The lock covers scan restart, dot entry state,
+readdir_data setup and iteration, and response construction. This prevents
+another request from replacing readdir_data.private before the current
+request has finished using it and also serializes the shared file position.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-30527
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/server/smb2pdu.c   |    4 ++++
+ fs/smb/server/vfs_cache.c |    1 +
+ fs/smb/server/vfs_cache.h |    2 ++
+ 3 files changed, 7 insertions(+)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -8487,6 +8487,12 @@ int smb2_ioctl(struct ksmbd_work *work)
- 				goto out;
- 			}
+@@ -4470,6 +4470,8 @@ int smb2_query_dir(struct ksmbd_work *wo
+ 		ksmbd_debug(SMB, "Search pattern is %s\n", srch_ptr);
+ 	}
  
-+			if (!(fp->daccess & FILE_WRITE_DATA_LE)) {
-+				ksmbd_fd_put(work, fp);
-+				ret = -EACCES;
-+				goto out;
-+			}
++	mutex_lock(&dir_fp->readdir_lock);
 +
- 			ret = ksmbd_vfs_zero_data(work, fp, off, len);
- 			ksmbd_fd_put(work, fp);
- 			if (ret < 0)
+ 	if (srch_flag & SMB2_REOPEN || srch_flag & SMB2_RESTART_SCANS) {
+ 		ksmbd_debug(SMB, "Restart directory scan\n");
+ 		generic_file_llseek(dir_fp->filp, 0, SEEK_SET);
+@@ -4574,6 +4576,7 @@ no_buf_len:
+ 			goto err_out;
+ 	}
+ 
++	mutex_unlock(&dir_fp->readdir_lock);
+ 	kfree(srch_ptr);
+ 	ksmbd_fd_put(work, dir_fp);
+ 	ksmbd_revert_fsids(work);
+@@ -4581,6 +4584,7 @@ no_buf_len:
+ 
+ err_out:
+ 	pr_err("error while processing smb2 query dir rc = %d\n", rc);
++	mutex_unlock(&dir_fp->readdir_lock);
+ 	kfree(srch_ptr);
+ 
+ err_out2:
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -790,6 +790,7 @@ struct ksmbd_file *ksmbd_open_fd(struct
+ 	INIT_LIST_HEAD(&fp->node);
+ 	INIT_LIST_HEAD(&fp->lock_list);
+ 	spin_lock_init(&fp->f_lock);
++	mutex_init(&fp->readdir_lock);
+ 	atomic_set(&fp->refcount, 1);
+ 
+ 	fp->filp		= filp;
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -8,6 +8,7 @@
+ 
+ #include <linux/file.h>
+ #include <linux/fs.h>
++#include <linux/mutex.h>
+ #include <linux/rwsem.h>
+ #include <linux/spinlock.h>
+ #include <linux/idr.h>
+@@ -113,6 +114,7 @@ struct ksmbd_file {
+ 
+ 	/* if ls is happening on directory, below is valid*/
+ 	struct ksmbd_readdir_data	readdir_data;
++	struct mutex			readdir_lock;
+ 	int				dot_dotdot[2];
+ 	unsigned int			f_state;
+ 	bool				reserve_lease_break;
 
 
