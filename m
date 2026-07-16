@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5497D20E6E2;
-	Thu, 16 Jul 2026 14:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33403400969;
+	Thu, 16 Jul 2026 14:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212354; cv=none; b=rd2pwyhCzmWuulMsdFUtoiFT14xyb/T3+bOaMuCRjF17iB/tzZJ/cwPynG3UedhDFqbFR1b8R9QWJEgMP0FtiouD7S1oagNFTS93W609Sc7YZ4BC9bQ46l5n8jDIxnWS1j+AMGBi7eYcdfcUd8CkdMVAoq54JoSONyWqdPNpj9Y=
+	t=1784212357; cv=none; b=Fp4X3nwIKsGJ2YSN5h19LKUzoDe6hhniRL8xX2MszJi8s/WvVSwmtL7UZcVVwCYERpUN0RNPb9sIe4hFzf2euqyzDnLAaWmPaXEHYSMaZfFtvTjNrC01zV3XRai8Z7q4fti3Qbboa+fUawmdSZhK9RFCVaEYBkzLixzBM9amTS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212354; c=relaxed/simple;
-	bh=6QPCRn3B3IwdzcTz77VyHRbTT4JN+wvoedjkLiPvtVI=;
+	s=arc-20240116; t=1784212357; c=relaxed/simple;
+	bh=oIdyfTuJtj8HuadjJ1qNBFQMbh/S2VIl/0M2V/7mhI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNGXHZBxg8O4ap6YcpHLeg5j5986H45nuldV+P8sf/A1ft6NVNm5ewZAgSsLuPpWCvslNLnr1YamMFrN7eO8EIF0o/f3/z+JrD7X7bCKIYxHoFfuhFGngB76TsHCgOfzsVKM7a9LivCz/zZRGgQJFVaCsHOb+gQmh4oCg8ROdgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/X3+V5W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e/LFP6eDr6lgOG78q185l/QylyICj1pK+jRU1gJfHe7gKahxwGElu7r1ZtKWXZTUEZE0V5jT6YqkUZLatAMAwmyoG4f0iH9vcIPmrUtltZYxT/S5lR5bFrwBIFkKT8HhLaxds94K07a6P9oWEn8eWt2b7s2o9PLtmXaISpsCH8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9gmz7Ok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/X3+V5W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADF01F000E9;
-	Thu, 16 Jul 2026 14:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9gmz7Ok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C25D1F00A3A;
+	Thu, 16 Jul 2026 14:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212353;
-	bh=VePnLIqMvFrx355OwRS8IevV8LjTAyK6wAkwVkTKPqA=;
+	s=korg; t=1784212355;
+	bh=pfU4PZ7vos43eggDqGj9JGFOptj8R+J65LgYUXcRXEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X/X3+V5WQKwgK/cFm35UyNmU00Jx7kUyZ69/xMl6rBwbQrPtgGm4G9NS4cCVhtE93
-	 colrXncf6CHpwTfEsdXrFROZsCjcCSHeZj+V2o7doaxgOl0swfg4VIrrZlpsk6Lxk3
-	 D6/6V2kvUtUZbZdRAKfORsPuTLA+HgdmXO4mVs30=
+	b=g9gmz7OkOKnyCu4x1l2KvylIHy2q+lIfoUF5lZXn0hxotP8EvZBUUUOtJln3iu0zb
+	 gRRmt0vwtMb/94Bh1bVB46qAbeHrzvDsRPSuYPe5q+MX8VW1njGxk+ybwOTZLeomjS
+	 tE1LhndwM68J5qBCXLG802py7al5RcbVk7WpraYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Louvel <paul.louvel@bootlin.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 296/349] crypto: talitos/hash - fix SEC2 64k - 1 ahash request limitation
-Date: Thu, 16 Jul 2026 15:33:50 +0200
-Message-ID: <20260716133039.945789021@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Fuad Tabba <tabba@google.com>,
+	James Morse <james.morse@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 297/349] arm64: fpsimd: Fix type mismatch in sme_{save,load}_state()
+Date: Thu, 16 Jul 2026 15:33:51 +0200
+Message-ID: <20260716133039.969540698@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,95 +57,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Louvel <paul.louvel@bootlin.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 6e12daff6ec125102a6fdcafc5aa7199f7ce8933 upstream.
+commit 247bd153905085c18ff9006cca1ccb96dfd18e7f upstream.
 
-The problem described in commit 655ef638a2bc ("crypto: talitos - fix
-SEC1 32k ahash request limitation") also apply for the SEC2 hardware,
-but with a limitation of 64k - 1 bytes.
+The sme_save_state() and sme_load_state() functions take a 32-bit int
+argument that describes whether to save/restore ZT0. Their assembly
+implementations consume the entire 64-bit register containing this
+32-bit value, and will attempt to save/restore ZT0 if any bit of
+that 64-bit register is non-zero.
 
-Split ahash_done() into SEC1 and SEC2 paths: SEC1 continues to free the
-whole descriptor list at once, while SEC2 now iterates through
-descriptors one by one, submitting the next only after the previous
-completes, which is required since SEC2 cannot chain descriptors in
-hardware.
+Per the AAPCS64 parameter passing rules, the callee is responsible for
+any necessary widening, and the upper 32-bits are permitted to contain
+arbitrary values. If the upper 32 bits are non-zero, this could result
+in an unexpected attempt to save/restore ZT0, and consequently could
+lead to unexpected traps/undefs/faults.
 
+In practice compilers are very unlikely to generate code where the upper
+32-bits would be non-zero, but they are permitted to do so.
+
+Fix this by only consuming the low 32 bits of the register, and update
+comments accordingly.
+
+Fixes: 95fcec713259 ("arm64/sme: Implement context switching for ZT0")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Fuad Tabba <tabba@google.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Oliver Upton <oupton@kernel.org>
+Cc: Vladimir Murzin <vladimir.murzin@arm.com>
+Cc: Will Deacon <will@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: c662b043cdca ("crypto: af_alg/hash: Support MSG_SPLICE_PAGES")
-Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/talitos.c |   49 ++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 40 insertions(+), 9 deletions(-)
+ arch/arm64/kernel/entry-fpsimd.S |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/crypto/talitos.c
-+++ b/drivers/crypto/talitos.c
-@@ -1820,16 +1820,46 @@ static void ahash_done(struct device *de
- 	struct talitos_edesc *edesc =
- 		 container_of(desc, struct talitos_edesc, desc);
- 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
-+	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
-+	bool is_sec1 = has_ftr_sec1(dev_get_drvdata(dev));
-+	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
-+	struct talitos_edesc *next;
+--- a/arch/arm64/kernel/entry-fpsimd.S
++++ b/arch/arm64/kernel/entry-fpsimd.S
+@@ -103,13 +103,13 @@ SYM_FUNC_END(sme_set_vq)
+  * Save the ZA and ZT state
+  *
+  * x0 - pointer to buffer for state
+- * x1 - number of ZT registers to save
++ * w1 - number of ZT registers to save
+  */
+ SYM_FUNC_START(sme_save_state)
+ 	_sme_rdsvl	2, 1		// x2 = VL/8
+ 	sme_save_za 0, x2, 12		// Leaves x0 pointing to the end of ZA
  
--	if (!req_ctx->last_request && req_ctx->to_hash_later) {
--		/* Position any partial block for next update/final/finup */
--		req_ctx->buf_idx = (req_ctx->buf_idx + 1) & 1;
--		req_ctx->nbuf = req_ctx->to_hash_later;
-+	if (is_sec1) {
-+		if (!req_ctx->last_request && req_ctx->to_hash_later) {
-+			/* Position any partial block for next update/final/finup */
-+			req_ctx->buf_idx = (req_ctx->buf_idx + 1) & 1;
-+			req_ctx->nbuf = req_ctx->to_hash_later;
-+		}
-+
-+		free_edesc_list_from(areq, edesc);
-+		ahash_request_complete(areq, err);
-+	} else {
-+		next = edesc->next_desc;
-+
-+		common_nonsnoop_hash_unmap(dev, edesc, areq);
-+		kfree(edesc);
-+
-+		if (err)
-+			goto out;
-+
-+		if (next) {
-+			err = talitos_submit(dev, ctx->ch, &next->desc,
-+					     ahash_done, areq);
-+			if (err != -EINPROGRESS)
-+				goto out;
-+			return;
-+		}
-+out:
-+		if (!req_ctx->last_request && req_ctx->to_hash_later) {
-+			/* Position any partial block for next update/final/finup */
-+			req_ctx->buf_idx = (req_ctx->buf_idx + 1) & 1;
-+			req_ctx->nbuf = req_ctx->to_hash_later;
-+		}
-+		if (err && next)
-+			free_edesc_list_from(areq, next);
-+		ahash_request_complete(areq, err);
- 	}
--
--	free_edesc_list_from(areq, edesc);
--
--	ahash_request_complete(areq, err);
- }
+-	cbz	x1, 1f
++	cbz	w1, 1f
+ 	_str_zt 0
+ 1:
+ 	ret
+@@ -119,13 +119,13 @@ SYM_FUNC_END(sme_save_state)
+  * Load the ZA and ZT state
+  *
+  * x0 - pointer to buffer for state
+- * x1 - number of ZT registers to save
++ * w1 - number of ZT registers to save
+  */
+ SYM_FUNC_START(sme_load_state)
+ 	_sme_rdsvl	2, 1		// x2 = VL/8
+ 	sme_load_za 0, x2, 12		// Leaves x0 pointing to the end of ZA
  
- /*
-@@ -1940,7 +1970,8 @@ ahash_process_req_prepare(struct ahash_r
- 	struct talitos_ctx *ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(areq));
- 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
- 	struct talitos_edesc *first = NULL, *prev_edesc = NULL, *edesc;
--	size_t desc_max = is_sec1 ? TALITOS1_MAX_DATA_LEN : SIZE_MAX;
-+	size_t desc_max = is_sec1 ? TALITOS1_MAX_DATA_LEN :
-+				    TALITOS2_MAX_DATA_LEN;
- 	struct scatterlist tmp[2];
- 	size_t to_hash_this_desc;
- 	struct scatterlist *src;
+-	cbz	x1, 1f
++	cbz	w1, 1f
+ 	_ldr_zt 0
+ 1:
+ 	ret
 
 
