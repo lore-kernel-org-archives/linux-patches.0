@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9086E42BEB0;
-	Thu, 16 Jul 2026 14:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39557432BCB;
+	Thu, 16 Jul 2026 14:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212280; cv=none; b=h72r4U48kKI1RNN008Dn2NX9ubpTIau68mOQfbNwR4wtwcyAC+oUVSfQvH4Mye8WICN/1W7WoSbmQjeP8cQzC+p0msm3VF8g31QGIsuxD66Wz8rhk5G/Ep/b20kNP489sFgpgYRjX6OzrKYXIW0LW/ACuQZt3s5znVXp2iZnOSE=
+	t=1784212284; cv=none; b=oU5gYKVPRSH6l2K2RNfjDsR1XyroZbw3kLDw7+hW5F1xGP+/wg5RZYoqcZNqigVXRDliwih4ZKCu32dohlbIcByAlTuKimb3YEoW2m3abr3/XrPc7vJWunfuv5ttBJQcmxL2xLlALx3WHjIbVlpv8GinyQrZMGqWxhP6ovD6v2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212280; c=relaxed/simple;
-	bh=qiLG/vxWHTwLstjg2qzmDV7KaTNi4uRGuHUfBp+9OGQ=;
+	s=arc-20240116; t=1784212284; c=relaxed/simple;
+	bh=By19p7phcSXGpEygt0b/9AAev2BhcvFeH3lRPkYPHA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxCyvII4e4Xkb63Ls+SyAhq+GjK+xFZPw8pvP6bam/rbgVbhMM2da+8XDPVx6O8NFaQL5iHmx6wosA79lCXh/seakTl4hRiA4gnYY7yARXgm7mzoS8fJkg2hEsutKUKByDu3W0//Vzz1zPULVVnYld34DMGpnfLNUsjZl2XhCAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmbpDwqm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A2zRV+kF975hdyhZ0wliEPQbFxa3utj6dUrQkJhZCx6QnStx2G0QmeHjNgmqcr/L0+XB7MILUN8+od5NFvhL4SGxQyNtnEGsPoj40wQ+k4ybW/WbHksmdwTFmoS2AJPYNIidSUJ8ETBFuXwPKRV7SknMtfqx08/KyYBgOjuGdJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwCqGhLe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmbpDwqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015D51F000E9;
-	Thu, 16 Jul 2026 14:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwCqGhLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0451F000E9;
+	Thu, 16 Jul 2026 14:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212279;
-	bh=lVUfwjb46H3xMnRgZ0aA1NpRSqXXD4pWgdOIq3X/F+k=;
+	s=korg; t=1784212282;
+	bh=o4Fqv4EnIMbVMzaSjvOOiAub8q8Q64vceCWzvnHcmvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RmbpDwqmjmAKzg6iO7k/KyrWhmtmmXOtDVaMQSN+LBiCsQU1mM/X0BgeR2jfw5uCZ
-	 zqJ/7g7Gb05FVPg3H82TwVLwWpATn2UAU6Z762iyCDrH2mAtPiv2ofBOmQ0NPRFQrH
-	 f/nZy4ORFaxWTlgFg/yZtXfX7xe71QTBf1rjVWY4=
+	b=cwCqGhLehpdpzaP7pZYYbynNcGhs8OlR5vek0KtwEcEdf9uPSq11x59yht5m40QRa
+	 KQEESbi1SBXFM20U37MoZl/u9duW0P2Vl5GPSHx8FBMIEh0jOeH5ugcuqaQ/wVGy6W
+	 JEd/X5ll++qFXT6cPlzKFAhiPGy4ffSn9J+tr67M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 266/349] nvmet-auth: validate reply message payload bounds against transfer length
-Date: Thu, 16 Jul 2026 15:33:20 +0200
-Message-ID: <20260716133039.297346614@linuxfoundation.org>
+	Su Yue <glass.su@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.12 267/349] btrfs: do not trim a device which is not writeable
+Date: Thu, 16 Jul 2026 15:33:21 +0200
+Message-ID: <20260716133039.318327795@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,73 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 3a413ece2504c70aa34a20be4dafec04e8c741f9 upstream.
+commit 1b1937eb08f51319bf71575484cde2b8c517aedc upstream.
 
-nvmet_auth_reply() accesses the variable-length rval[] array using
-attacker-controlled hl (hash length) and dhvlen (DH value length) fields
-without verifying they fit within the allocated buffer of tl bytes.
+[BUG]
+There is a bug report that btrfs/242 can randomly fail with the
+following NULL pointer dereference:
 
-A malicious NVMe-oF initiator can craft a DHCHAP_REPLY message with a
-small transfer length but large hl/dhvlen values, causing out-of-bounds
-heap reads when the target processes the DH public key (rval + 2*hl) or
-performs the host response memcmp.
+  run fstests btrfs/242 at 2026-06-01 10:25:08
+  BTRFS: device fsid d4d7f234-487c-4787-88e4-47a8b68c9874 devid 1 transid 9 /dev/sdc (8:32) scanned by mount (122609)
+  BTRFS info (device sdc): first mount of filesystem d4d7f234-487c-4787-88e4-47a8b68c9874
+  BTRFS info (device sdc): using crc32c checksum algorithm
+  BTRFS warning (device sdc): devid 2 uuid fbe72d72-3272-482d-80fb-ab88ed398192 is missing
+  BTRFS warning (device sdc): devid 2 uuid fbe72d72-3272-482d-80fb-ab88ed398192 is missing
+  BTRFS info (device sdc): allowing degraded mounts
+  BTRFS info (device sdc): turning on async discard
+  BTRFS info (device sdc): enabling free space tree
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
+  user pgtable: 4k pages, 48-bit VAs, pgdp=000000013fd6b000
+  CPU: 4 UID: 0 PID: 122625 Comm: fstrim Not tainted 7.0.10-2-default #1 PREEMPT(full) openSUSE Tumbleweed e9a5f6b24978fba3bf015a992f865837fdfff3dd
+  Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20250812-19.fc42 08/12/2025
+  pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : btrfs_trim_fs+0x34c/0xa00 [btrfs]
+  lr : btrfs_trim_fs+0x1f0/0xa00 [btrfs]
+  Call trace:
+   btrfs_trim_fs+0x34c/0xa00 [btrfs f02c1d570ceea621c69d302ba75dd61868083840] (P)
+   btrfs_ioctl_fitrim+0xe8/0x178 [btrfs f02c1d570ceea621c69d302ba75dd61868083840]
+   btrfs_ioctl+0xdd4/0x2bd8 [btrfs f02c1d570ceea621c69d302ba75dd61868083840]
+   __arm64_sys_ioctl+0xac/0x108
+   invoke_syscall.constprop.0+0x5c/0xd0
+   el0_svc_common.constprop.0+0x40/0xf0
+   do_el0_svc+0x24/0x40
+   el0_svc+0x40/0x1d0
+   el0t_64_sync_handler+0xa0/0xe8
+   el0t_64_sync+0x1b0/0x1b8
+  Code: 17ffff83 f94017e0 f9002be0 f9402ea0 (f9400c00)
+  ---[ end trace 0000000000000000  ]---
 
-With DH authentication configured, the OOB pointer is passed directly to
-sg_init_one() and read by crypto_kpp_compute_shared_secret(), reaching
-up to 526 bytes past the buffer. This is exploitable pre-authentication.
+Also the reporter is very kind to test the following ASSERT() added to
+btrfs_trim_free_extents_throttle():
 
-Add bounds validation ensuring sizeof(*data) + 2*hl + dhvlen <= tl before
-any access to the variable-length fields.
+	ASSERT(device->bdev,
+	       "devid=%llu path=%s dev_state=0x%lx\n",
+	       device->devid, btrfs_dev_name(device), device->dev_state);
 
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
+And it shows the following output:
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+  assertion failed: device->bdev, in extent-tree.c:6630 (devid=2 path=/dev/sdd dev_state=0x82)
+
+Which means the device->bdev is NULL, and the dev_state is
+BTRFS_DEV_STATE_IN_FS_METADATA | BTRFS_DEV_STATE_ITEM_FOUND, without
+BTRFS_DEV_STATE_WRITEABLE flag set.
+
+[CAUSE]
+The pc points to the following call chain:
+
+  btrfs_trim_fs()
+  |- btrfs_trim_free_extents()
+     |- btrfs_trim_free_extents_throttle()
+        |- bdev_max_discard_sectors(device->bdev)
+
+So the NULL pointer dereference is caused by device->bdev being NULL.
+
+This looks impossible by a quick glance, as just before calling
+btrfs_trim_free_extents_throttle(), we have skipped any device that has
+BTRFS_DEV_STATE_MISSING flag set.
+
+However in this particular case, there is a window where the missing
+device is later re-scanned, causing btrfs to remove the
+BTRFS_DEV_STATE_MISSING flag:
+
+  btrfs_control_ioctl()
+  |- btrfs_scan_one_device()
+     |- device_list_add()
+        |- rcu_assign_pointer(device->name, name);
+        |  This updates the missing device's path to the new good path.
+        |
+        |- clear_bit(BTRFS_DEV_STATE_MISSING, &device->dev_state)
+           This removes the BTRFS_DEV_STATE_MISSING flag.
+
+This allows the missing device to re-appear and clear the
+BTRFS_DEV_STATE_MISSING flag.  However the device still does not have
+the BTRFS_DEV_STATE_WRITEABLE flag set, nor is its bdev pointer updated.
+
+The bdev pointer remains NULL, triggering the crash later.
+
+[FIX]
+This is a big de-synchronization between BTRFS_DEV_STATE_MISSING and
+device->bdev pointer, and shows a gap in btrfs's re-appearing-device
+handling.
+
+The proper handling of re-appearing device will need quite some extra
+work, which is out of the context of this small fix.
+
+Thankfully the regular bbio submission path has already handled it well
+by checking if the device->bdev is NULL before submitting.
+
+So here we just fix the crash by checking if the device is writeable and
+has a bdev pointer before calling bdev_max_discard_sectors().
+
+Reported-by: Su Yue <glass.su@suse.com>
+Link: https://lore.kernel.org/linux-btrfs/wlwir19t.fsf@damenly.org/
+Fixes: 499f377f49f0 ("btrfs: iterate over unused chunk space in FITRIM")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/btrfs/extent-tree.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -109,13 +109,22 @@ static u8 nvmet_auth_negotiate(struct nv
- 	return 0;
- }
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -6405,12 +6405,16 @@ static int btrfs_trim_free_extents(struc
  
--static u8 nvmet_auth_reply(struct nvmet_req *req, void *d)
-+static u8 nvmet_auth_reply(struct nvmet_req *req, void *d, u32 tl)
- {
- 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
- 	struct nvmf_auth_dhchap_reply_data *data = d;
--	u16 dhvlen = le16_to_cpu(data->dhvlen);
-+	u16 dhvlen;
- 	u8 *response;
+ 	*trimmed = 0;
  
-+	if (tl < sizeof(*data))
-+		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
-+
-+	dhvlen = le16_to_cpu(data->dhvlen);
-+
-+	/* Validate that hl and dhvlen fit within the transfer length */
-+	if (sizeof(*data) + 2 * (size_t)data->hl + dhvlen > tl)
-+		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
-+
- 	pr_debug("%s: ctrl %d qid %d: data hl %d cvalid %d dhvlen %u\n",
- 		 __func__, ctrl->cntlid, req->sq->qid,
- 		 data->hl, data->cvalid, dhvlen);
-@@ -287,7 +296,7 @@ void nvmet_execute_auth_send(struct nvme
+-	/* Discard not supported = nothing to do. */
+-	if (!bdev_max_discard_sectors(device->bdev))
++	/*
++	 * The caller only filters out MISSING devices, but a device that was
++	 * missing at mount and later rescanned has MISSING cleared while bdev
++	 * is still NULL and WRITEABLE is still unset. Skip those here.
++	 */
++	if (!test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state) || !device->bdev)
+ 		return 0;
  
- 	switch (data->auth_id) {
- 	case NVME_AUTH_DHCHAP_MESSAGE_REPLY:
--		dhchap_status = nvmet_auth_reply(req, d);
-+		dhchap_status = nvmet_auth_reply(req, d, tl);
- 		if (dhchap_status == 0)
- 			req->sq->dhchap_step =
- 				NVME_AUTH_DHCHAP_MESSAGE_SUCCESS1;
+-	/* Not writable = nothing to do. */
+-	if (!test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state))
++	/* Discard not supported = nothing to do. */
++	if (!bdev_max_discard_sectors(device->bdev))
+ 		return 0;
+ 
+ 	/* No free space = nothing to do. */
 
 
