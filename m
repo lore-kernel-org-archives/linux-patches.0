@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CFC2F12CE;
-	Thu, 16 Jul 2026 14:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735682F12CE;
+	Thu, 16 Jul 2026 14:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211374; cv=none; b=AP9roRdAYvxfhH6iRYjAKAHX2xVDSKML9AVX6TY221SM87y+Dt4p+B0TPM+o8iG7YGJNE6Ho+jWQC7hCQRtZrye7GZ8NT4OUEClvbnBZ99oC249inUk48H9TS7aiWj6sIzaJ47cMx3YS2h5kOezycKwph0d14UvOdmEEnc0fW8M=
+	t=1784211376; cv=none; b=MbKXdiFhP67iw1WDSm4COl6WvjcP+JS4T5EGOkAP1UNT4DLbU+NwXydpoBUFhko9X0rHEYBkeetd2yewy+82z/pUljrt3RzwW6uvL18B8iwZwxIavmTpeLqgWlznHHgLMaJav+05HXSao8PJhrPUY26YIOkPRAJZ264hvA2cfl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211374; c=relaxed/simple;
-	bh=cNcuEv+ep03CI5pWWfOG/ugTfVi3val6dkoquAO8Fl0=;
+	s=arc-20240116; t=1784211376; c=relaxed/simple;
+	bh=f1YPnXjS5VTIRsKr8Z/EFWjJzF1Y1r0kPAFwu0bHm/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBDO3ah9uosbZLw0ozx29WU5juTOGUB5FfjQi1AbPhWiwBhI3lTWl9Y3pAk7sGxmbg2LY7JH+kXiKieXHfuIWaC4doYZa586QSrdKRSyUsY/PJjrhuA1DJ05yMY0EFq0AOM8HhfQRiJO8ykrXMES99lPXX7HvDPrKdYyzj8j1eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDbiRdOT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ciRxcn0jVD6lYsPNY9x+4XHZJqUbCiJo9Zv+rRkDnaY0mlHbZ6Q1p693/tzK9//PYdBZhAxrtrFkpEHdkz/g+wcRZ1dUV4jIDSnqR4EmGiTOpq75MDZyCtPOerUmmmwRonuvRkJlTizqsVVSzKoxg/ClUk3LWmehY7U1huQFcQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqiVZxB8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDbiRdOT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181821F000E9;
-	Thu, 16 Jul 2026 14:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqiVZxB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD94F1F000E9;
+	Thu, 16 Jul 2026 14:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211372;
-	bh=hy6gQbKJtlVzMzRgke9tGnhpCkZNmwKgFguiLbQiK3U=;
+	s=korg; t=1784211375;
+	bh=pBLW/npXX20smuzEzeCGq77sIW3dvvM2FOrTe128/OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDbiRdOTzidecvWURLQ6KuqydemmnFmHHaKGr0VnKwEmTLWSbVS4SfdrbtmlsQCNt
-	 OTPbnSf8waEAMRnPQEUOOaFehPZ1YSPS16a+Pa12wZhMs9X8YtexfTKd+2obKOBAPT
-	 DYCUlWrbdnp2Gcx/igY0WOyFdXYlxIoZh+Dw7w3A=
+	b=qqiVZxB8AJGaDSBxTd/9hXvG3pP8dZ+LpoiT7nD9yP/C3g56ivyr1xEpIH5maczXz
+	 SmYHlyZHEMKs8jAdxs88unXOC4Eo5Wac8kaLSpzO+IApXFAdehtMniDq3mHp/mHzhz
+	 tHuMfhSA0auV8i4yNe3Vl3Of3Q53qz6sAo47CEE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ketan Kishore <ketan.kishore@oss.qualcomm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Jann Horn <jannh@google.com>,
 	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Luiz Capitulino <luizcap@redhat.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 402/480] mm: page_ext: add count limit to page_ext_iter_next to prevent invalid PFN access
-Date: Thu, 16 Jul 2026 15:32:29 +0200
-Message-ID: <20260716133053.505664037@linuxfoundation.org>
+Subject: [PATCH 6.18 403/480] mm: do file ownership checks with the proper mount idmap
+Date: Thu, 16 Jul 2026 15:32:30 +0200
+Message-ID: <20260716133053.527238448@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -63,125 +58,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ketan <ketan.kishore@oss.qualcomm.com>
+From: Pedro Falcato <pfalcato@suse.de>
 
-commit ffd017237cfe99e6e5602ab14179b0e6878a0840 upstream.
+commit e187bc02f8fa4226d62814592cf064ee4557c470 upstream.
 
-The page_ext iteration API does not validate if the PFN still belongs to a
-valid section while advancing the iterator.  When dynamically adding
-memory in the hotplug path, it can lead to a NULL pointer dereference
-during page_ext_lookup at the boundary of the last valid section when
-iterator count equals __pgcount.
+Ever since idmapped mounts were introduced, inode ownership checks (for
+side-channel protection) in mincore() and madvise(MADV_PAGEOUT) were done
+against the nop_mnt_idmap, which completely ignores the file's mount's
+idmap.  This results in odd edgecases like:
 
-The for_each_page_ext() macro calls page_ext_iter_next() as its loop
-increment.  for_each_page_ext() does a "__page_ext =
-page_ext_iter_next(&__iter)" at the end.  This causes page_ext_iter_next()
-to increment iter->index past __pgcount and call page_ext_lookup(start_pfn
-+ __pgcount).  During memory hotplug (online), the PFN at start_pfn +
-__pgcount may belong to a section that has not yet been initialized,
-causing page_ext_lookup() to trigger a NULL pointer dereference.
+1) mount/bind-mount with an idmap userA:userB:1
+2) userB runs an owner_or_capable() check on file that is owned by userA
+on-disk/in-memory, but owned by userB after idmap translation
+3) owner_or_capable() mysteriously fails as the correct idmap wasn't supplied
 
-[   14.555124][  T846] Call trace:
-[   14.555125][  T846]  lookup_page_ext+0x6c/0x108 (P)
-[   14.555127][  T846]  page_ext_lookup+0x30/0x3c
-[   14.555129][  T846]  __reset_page_owner+0x11c/0x260
-[   14.571201][  T846]  __free_pages_ok+0x5e8/0x8e0
-[   14.571204][  T846]  __free_pages_core+0x78/0xf0
-[   14.571206][  T846]  generic_online_page+0x14/0x24
-[   14.597782][  T846]  online_pages+0x178/0x30c
-[   14.597784][  T846]  memory_block_change_state+0x284/0x32c
-[   14.597787][  T846]  memory_subsys_online+0x4c/0x64
-[   14.597789][  T846]  device_online+0x88/0xb0
-[   14.597791][  T846]  online_memory_block+0x30/0x40
-[   14.597793][  T846]  walk_memory_blocks+0xac/0xe8
-[   14.597794][  T846]  add_memory_resource+0x280/0x298
-[   14.656161][  T846]  add_memory+0x60/0x98
+In the case of mincore/madvise MADV_PAGEOUT, this is usually benign,
+because file_permission(file, MAY_WRITE) will probably succeed, as it uses
+the proper idmap internally, but it does not need to be the case on e.g a
+0444 file where even the owner itself doesn't have permissions to write to
+it.
 
-Move the iteration boundary enforcement inside the iterator functions, so
-callers cannot inadvertently access beyond the requested range.
+Since this is clearly not trivial to get right, introduce a
+file_owner_or_capable() that can carry the correct semantics, and switch
+the various users in mm to it.
 
-Link: https://lore.kernel.org/20260623-page_ext-v3-1-a89799a5367c@oss.qualcomm.com
-Fixes: 9039b9096ea2 ("mm: page_ext: add an iteration API for page extensions")
-Signed-off-by: Ketan Kishore <ketan.kishore@oss.qualcomm.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Suggested-by: Matthew Wilcox <willy@infradead.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
+The issue was found by manual code inspection & an off-list discussion
+with Jan Kara.
+
+Link: https://lore.kernel.org/20260625153853.913949-1-pfalcato@suse.de
+Fixes: 9caccd41541a ("fs: introduce MOUNT_ATTR_IDMAP")
+Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Jann Horn <jannh@google.com>
 Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Luiz Capitulino <luizcap@redhat.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/page_ext.h |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ include/linux/fs.h |    5 +++++
+ mm/filemap.c       |    2 +-
+ mm/madvise.c       |    3 +--
+ mm/mincore.c       |    3 +--
+ 4 files changed, 8 insertions(+), 5 deletions(-)
 
---- a/include/linux/page_ext.h
-+++ b/include/linux/page_ext.h
-@@ -119,14 +119,18 @@ struct page_ext_iter {
-  * page_ext_iter_begin() - Prepare for iterating through page extensions.
-  * @iter: page extension iterator.
-  * @pfn: PFN of the page we're interested in.
-+ * @count: maximum number of page extensions to return.
-  *
-  * Must be called with RCU read lock taken.
-  *
-  * Return: NULL if no page_ext exists for this page.
-  */
- static inline struct page_ext *page_ext_iter_begin(struct page_ext_iter *iter,
--						unsigned long pfn)
-+		unsigned long pfn, unsigned long count)
- {
-+	if (!count)
-+		return NULL;
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -2852,6 +2852,11 @@ static inline struct mnt_idmap *file_mnt
+ 	return mnt_idmap(file->f_path.mnt);
+ }
+ 
++static inline bool file_owner_or_capable(const struct file *file)
++{
++	return inode_owner_or_capable(file_mnt_idmap(file), file_inode(file));
++}
 +
- 	iter->index = 0;
- 	iter->start_pfn = pfn;
- 	iter->page_ext = page_ext_lookup(pfn);
-@@ -137,19 +141,22 @@ static inline struct page_ext *page_ext_
  /**
-  * page_ext_iter_next() - Get next page extension
-  * @iter: page extension iterator.
-+ * @count: maximum number of page extensions to return.
-  *
-  * Must be called with RCU read lock taken.
-  *
-  * Return: NULL if no next page_ext exists.
-  */
--static inline struct page_ext *page_ext_iter_next(struct page_ext_iter *iter)
-+static inline struct page_ext *page_ext_iter_next(struct page_ext_iter *iter,
-+		unsigned long count)
+  * is_idmapped_mnt - check whether a mount is mapped
+  * @mnt: the mount to check
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -4620,7 +4620,7 @@ static inline bool can_do_cachestat(stru
  {
- 	unsigned long pfn;
+ 	if (f->f_mode & FMODE_WRITE)
+ 		return true;
+-	if (inode_owner_or_capable(file_mnt_idmap(f), file_inode(f)))
++	if (file_owner_or_capable(f))
+ 		return true;
+ 	return file_permission(f, MAY_WRITE) == 0;
+ }
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -338,8 +338,7 @@ static inline bool can_do_file_pageout(s
+ 	 * otherwise we'd be including shared non-exclusive mappings, which
+ 	 * opens a side channel.
+ 	 */
+-	return inode_owner_or_capable(&nop_mnt_idmap,
+-				      file_inode(vma->vm_file)) ||
++	return file_owner_or_capable(vma->vm_file) ||
+ 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
+ }
  
- 	if (WARN_ON_ONCE(!iter->page_ext))
- 		return NULL;
+--- a/mm/mincore.c
++++ b/mm/mincore.c
+@@ -214,8 +214,7 @@ static inline bool can_do_mincore(struct
+ 	 * for writing; otherwise we'd be including shared non-exclusive
+ 	 * mappings, which opens a side channel.
+ 	 */
+-	return inode_owner_or_capable(&nop_mnt_idmap,
+-				      file_inode(vma->vm_file)) ||
++	return file_owner_or_capable(vma->vm_file) ||
+ 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
+ }
  
--	iter->index++;
-+	if (++iter->index >= count)
-+		return NULL;
- 	pfn = iter->start_pfn + iter->index;
- 
- 	if (page_ext_iter_next_fast_possible(pfn))
-@@ -182,9 +189,9 @@ static inline struct page_ext *page_ext_
-  * IMPORTANT: must be called with RCU read lock taken.
-  */
- #define for_each_page_ext(__page, __pgcount, __page_ext, __iter) \
--	for (__page_ext = page_ext_iter_begin(&__iter, page_to_pfn(__page));\
--		__page_ext && __iter.index < __pgcount;          \
--		__page_ext = page_ext_iter_next(&__iter))
-+	for (__page_ext = page_ext_iter_begin(&__iter, page_to_pfn(__page), __pgcount); \
-+		__page_ext; \
-+		__page_ext = page_ext_iter_next(&__iter, __pgcount))
- 
- #else /* !CONFIG_PAGE_EXTENSION */
- struct page_ext;
 
 
