@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6366D4248B8;
-	Thu, 16 Jul 2026 13:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE506429028;
+	Thu, 16 Jul 2026 13:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209717; cv=none; b=VgBtjjqkMbO8NdnuOIkV9EyaKVheaIQzKFxW+1b3HP0oDEdR8BaErHSO4W2vYAmcAwyw8dJd8KmPDZDzxXODl8ZnRk6MpjYWTugpT2J513uGpV3e0Fe+OaRz4RiBzNHiwW3sEt/R9hwM4FH9oOPwoQokezPZAID+1GA9qbZNTL4=
+	t=1784209723; cv=none; b=qJvO83GZAaLV3pGAJlo9cN4ZBuuhV80i/07HNAoXmZfp7l8EuCUB9QqZrCvmYsX5I4NeJZKOnSHEreyWBQFjs5oU7fM20tuFEV6DzFsk1KnvXQHuhrQ/wZ6WM2I2hjbtMaXgdVeD7es1KpOX7YIXKdGe9Htlp6z9jIKWKSyrvEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209717; c=relaxed/simple;
-	bh=YGSEnw1i7te/fOOEYA/913SQT4DxiAYjbWZrtAz5LuY=;
+	s=arc-20240116; t=1784209723; c=relaxed/simple;
+	bh=UJL6P6RayfyBF/3fiH7VMh006lRvm5GgFE8TjTHPWgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XyYFTxxiHszYNgUZAp+m6oQbNDujzkqDfg0KHPn9rD7YeB6lXLT6sjz20kROkYI4LaX1evfKmU4JvEw7apWpjtiaXHeRTLzYbnUjOLUU5Mza9EOjR0AS5U6EuTGyiZOjll5dclQrCu7jsHXfz14C5oZn3nfPKyWgr43FaUCLkeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLvjcl1k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ajgnC0yHAb+TtWLgkRMeiVn4IeRNCcENcxNY6LinGSMKEfWkqzQi1wjdbV1WAvVDN0piHWx/IaU7kzTCvNrAVg+ByoswW9aNL2IeiLpdaCCi4dPmsKv7V4XoZLxtkju1EUKMoAtnOhG1OhzFI9GbIN37uRdgG1/Pwu5b0THPF90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM+yDwec; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLvjcl1k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155B51F00A3F;
-	Thu, 16 Jul 2026 13:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM+yDwec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581B21F00AC4;
+	Thu, 16 Jul 2026 13:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209707;
-	bh=mEYQN8LEQ92QICpCtLMZz5Q7CJu24qarGsdxGaon5u4=;
+	s=korg; t=1784209712;
+	bh=XTP/gUAc0vSRVIzQmGhiewMtXFDgJecIm4NQcQFPT74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLvjcl1kgwGE2lEHGN/IE3DyfOcxmbGTweNSZfRtWxWVT7YRSh4eHUDqHPjkGwHYs
-	 7bBgZU6AxLC0qYIvgO86PSmQ1UsQlCeijf2yxBpqimZppW0UgXBu8qn6b2e54ZbZ12
-	 rud0bSSAS0r7bZPyTDUt6uqMYaV7aYNhbyFXo5YQ=
+	b=bM+yDwect3Puh07ttJGSIF2O8pqRH8aQHc0Qd42b3xyC9FB97f7GOFVjfEvNdiCh1
+	 u50OalLcYGLH+u3MEwS4kXBCsuDiIuXnQfj/GGzRehdOD/RB2wynThuiYKFhGn/rjQ
+	 RZys3wklraRi5keybiu6hzKHkC5tXmZeSlqfISeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Nepomnyashih <sdl@nppct.ru>,
+	Yingjie Gao <gaoyingjie@uniontech.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Allison Henderson <achender@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.1 287/518] xfs: fix unreachable BIGTIME check in dquot flush validation
-Date: Thu, 16 Jul 2026 15:29:15 +0200
-Message-ID: <20260716133054.098467367@linuxfoundation.org>
+Subject: [PATCH 7.1 289/518] xfs: fix exchmaps reservation limit check
+Date: Thu, 16 Jul 2026 15:29:17 +0200
+Message-ID: <20260716133054.143261737@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,59 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Nepomnyashih <sdl@nppct.ru>
+From: Yingjie Gao <gaoyingjie@uniontech.com>
 
-commit 03866d130ed33ab68cc7faaf4bf2c4abef96d42e upstream.
+commit 0a5213bbff62b51c7d4999ac8c7e11ea57d00d45 upstream.
 
-The dqp->q_id == 0 check inside the XFS_DQTYPE_BIGTIME block is
-unreachable because root dquots return successfully earlier. Reject root
-dquots with XFS_DQTYPE_BIGTIME before that early return, preserving the
-intended validation and removing the unreachable condition.
+xfs_exchmaps_estimate_overhead() adds the bmbt and rmapbt
+overhead to a local resblks variable, but the final UINT_MAX
+check still tests req->resblks.  That is the reservation value
+from before the overhead was added.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The computed value is stored back in req->resblks and later passed
+to xfs_trans_alloc(), whose block reservation argument is unsigned
+int.  Check the computed reservation so the existing limit applies
+to the value that will be used.
 
-Fixes: 4ea1ff3b4968 ("xfs: widen ondisk quota expiration timestamps to handle y2038+")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
+Fixes: 966ceafc7a43 ("xfs: create deferred log items for file mapping exchanges")
+Cc: stable@vger.kernel.org # v6.10
+Signed-off-by: Yingjie Gao <gaoyingjie@uniontech.com>
 Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Allison Henderson <achender@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/xfs/libxfs/xfs_exchmaps.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -1216,6 +1216,14 @@ xfs_qm_dqflush_check(
- 	    type != XFS_DQTYPE_PROJ)
- 		return __this_address;
+--- a/fs/xfs/libxfs/xfs_exchmaps.c
++++ b/fs/xfs/libxfs/xfs_exchmaps.c
+@@ -711,7 +711,7 @@ xfs_exchmaps_estimate_overhead(
+ 		return -ENOSPC;
  
-+	/* bigtime flag should never be set on root dquots */
-+	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
-+		if (!xfs_has_bigtime(dqp->q_mount))
-+			return __this_address;
-+		if (dqp->q_id == 0)
-+			return __this_address;
-+	}
-+
- 	if (dqp->q_id == 0)
- 		return NULL;
+ 	/* Can't actually reserve more than UINT_MAX blocks. */
+-	if (req->resblks > UINT_MAX)
++	if (resblks > UINT_MAX)
+ 		return -ENOSPC;
  
-@@ -1231,14 +1239,6 @@ xfs_qm_dqflush_check(
- 	    !dqp->q_rtb.timer)
- 		return __this_address;
- 
--	/* bigtime flag should never be set on root dquots */
--	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
--		if (!xfs_has_bigtime(dqp->q_mount))
--			return __this_address;
--		if (dqp->q_id == 0)
--			return __this_address;
--	}
--
- 	return NULL;
- }
- 
+ 	req->resblks = resblks;
 
 
