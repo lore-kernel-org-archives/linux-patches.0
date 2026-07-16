@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69F2424D78;
-	Thu, 16 Jul 2026 13:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30411429827;
+	Thu, 16 Jul 2026 13:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209703; cv=none; b=XCegkz+MvJU7gHuNOYCWRylw8u6SWXDlPRsKoNDPBIZX/kmLqQpeiPcxrhzbRNnj9lE18A39qukIa2kgCZYv2P1ZhL8Gwxs7aROq/9Mv7m6/nJpMVzAH0+dOvnwaak+V0NOqp5tDU/Dry319uFqg+RRh/hfEj+c/CkvUxYddyEI=
+	t=1784209704; cv=none; b=WvGSiFQj7v7JwOS4AxyOOnGsnauePC3+PVMpjYRXDJKOguDnsmCSF4yrtYk0YB5hNA5Oq5Ph378D9m/0GnH7aCUAvbmdkJcTGukmx1EvIut5iNNx3oeE+wzfpydu/3EemP3pOXLsGMRTPmyW1+iph8SwLVGQQjAxy63L95CRIY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209703; c=relaxed/simple;
-	bh=dxoj3K1SKGkkekLY1L0bFhdQs/h7+nDueGUoJ7KGNRw=;
+	s=arc-20240116; t=1784209704; c=relaxed/simple;
+	bh=Okmjc+ynlik/jsDVoPk8QH7P3DmK59MQtq8JFLkaoyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSHmo04CC35GuY2DeMUWhyoVTK2nYMqOY5G4s5NAG+AJitHkWTjm+DJO2zEOM3M50YqQ5G6E0vdDmAQKmSLtLsRHEDyRiSllED7ASg+aYfWQt5C05Eyhf/ELMtYyRPyqBT3x2u25YIxOQeV760O6PKEEYS2bkbnJ6vkMGsAVn7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIkfOHt9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IV9JN0Sa1nLT0gf8HY/i598/YuSA/CfYUPq8bZNijsZOi0w0g98T/0rD5P1XptruIcv2NOXvAE3DMaokjlkwTKDantAhpC3yGy3lgbdN6qkGA7Q70Oknmr+wP3Hr4/M0DuSM0yKVOL6rPMgWARrgqVPRDUniQbQ/j9iWf7MoPK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQ/8n7Fn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIkfOHt9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEAD1F00A3D;
-	Thu, 16 Jul 2026 13:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQ/8n7Fn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1261F00AC4;
+	Thu, 16 Jul 2026 13:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209689;
-	bh=9k1MAYRXqdRdrOn3EY08MqERh3yl/v1u48dLfWlhfC0=;
+	s=korg; t=1784209694;
+	bh=emxHuIOipVWpy+6AzFWfHygviu2kb+GTAnPpDZVlbA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sIkfOHt9MqLyv3St061ATSafSMIilprWMj+4kg3rKx39/zhwdCZLKFU+6ZrArVnEl
-	 EiLy84JDUR/JosLbzIPcfC0IJ7VvRPLmmD23LEV8ASs6A/j7WUMt1vUPXEZk96TOYT
-	 Wwclz2/uK1H4OzZSj2t/Jjx0nK9BR/9VR4lMV66A=
+	b=FQ/8n7FnIkPnkE1kWC3MKTUXDC+2x8HcgbKRg2gC802bnSP099sQJe18LqdJzO063
+	 ZWVkcQofwL5NfnUJZNoFs3CLSNtqnV9pTgLAaY6Ug2FRpmSg40rqJIM/UI8XQkOdRZ
+	 IqbX5+4+qatUVlBaze49JLevfl6V45/44qvPXD9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	micas-opensource <zjianan156@gmail.com>,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 7.1 281/518] serial: 8250_mid: Disable DMA for selected platforms
-Date: Thu, 16 Jul 2026 15:29:09 +0200
-Message-ID: <20260716133053.960459288@linuxfoundation.org>
+	Yingjie Gao <gaoyingjie@uniontech.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.1 283/518] xfs: release dquot buffer after dqflush failure
+Date: Thu, 16 Jul 2026 15:29:11 +0200
+Message-ID: <20260716133054.006441871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,59 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Yingjie Gao <gaoyingjie@uniontech.com>
 
-commit b1b4efea05a56c0995e4702a86d6624b4fdff32f upstream.
+commit 0c1b3a823a22af623d55f225fe2ac7e8b9052821 upstream.
 
-In accordance with Errata (specification updates)
-HSUART May Stop Functioning when DMA is Active.
+xfs_qm_dqpurge() gets a locked buffer from xfs_dquot_use_attached_buf().
+If xfs_qm_dqflush() fails, the error path skips xfs_buf_relse() and then
+calls xfs_dquot_detach_buf(), which tries to lock the same buffer again.
 
-- Denverton document #572409, rev 3.4, DNV60
-- Ice Lake Xeon D document #714070, ICXD65
-- Snowridge document #731931, SNR44
+Release the buffer after xfs_qm_dqflush() returns so the error path drops
+the caller hold and unlocks the buffer before the dquot is detached,
+matching the other dqflush callers.
 
-For a quick fix just disable the respective callbacks during the device probe.
-Depending on the future development we might remove them completely.
-
-Reported-by: micas-opensource <zjianan156@gmail.com>
-Closes: https://lore.kernel.org/linux-serial/20250625031409.2404219-1-opensource@ruijie.com.cn/
-Fixes: 6ede6dcd87aa ("serial: 8250_mid: add support for DMA engine handling from UART MMIO")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260626094937.561776-1-andriy.shevchenko@linux.intel.com
+Fixes: a40fe30868ba ("xfs: separate dquot buffer reads from xfs_dqflush")
+Cc: stable@vger.kernel.org # v6.13+
+Signed-off-by: Yingjie Gao <gaoyingjie@uniontech.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mid.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_qm.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/pci.h>
- #include <linux/rational.h>
-+#include <linux/util_macros.h>
- 
- #include <linux/dma/hsu.h>
- 
-@@ -368,8 +369,16 @@ static const struct mid8250_board dnv_bo
- 	.freq = 133333333,
- 	.base_baud = 115200,
- 	.bar = 1,
--	.setup = dnv_setup,
--	.exit = dnv_exit,
-+	/*
-+	 * Errata:
-+	 * HSUART May Stop Functioning when DMA is Active.
-+	 *
-+	 * - Denverton document #572409, rev 3.4, DNV60
-+	 * - Ice Lake Xeon D document #714070, ICXD65
-+	 * - Snowridge document #731931, SNR44
-+	 */
-+	.setup = PTR_IF(false, dnv_setup),
-+	.exit = PTR_IF(false, dnv_exit),
- };
- 
- static const struct pci_device_id pci_ids[] = {
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -166,10 +166,9 @@ xfs_qm_dqpurge(
+ 		 * does it on success.
+ 		 */
+ 		error = xfs_qm_dqflush(dqp, bp);
+-		if (!error) {
++		if (!error)
+ 			error = xfs_bwrite(bp);
+-			xfs_buf_relse(bp);
+-		}
++		xfs_buf_relse(bp);
+ 		xfs_dqflock(dqp);
+ 	}
+ 	xfs_dquot_detach_buf(dqp);
 
 
