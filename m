@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4B2424D75;
-	Thu, 16 Jul 2026 14:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E8522301;
+	Thu, 16 Jul 2026 14:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212100; cv=none; b=jrkb277v5/sbJRbSCPuNlMOVoZbFuht0TLPDTqqU3mPtWqn+YpAV4QrkhLg9ZyAo8Jus3EwEWbgZGwZTcKvBpRqIr3KzjPeKVcrnIZY3aD0Y3Jm0/qbfa5lgvHgDaOqZnVBIVMf+3T3fp3rJfUzNixzFAMGv7mnyrMFEk2rwqkM=
+	t=1784212100; cv=none; b=AqZGnxRK6L2v5qZXBtpHAVbZ8OGCkl+T47FElryl7HtlLbM7bBHLLsKL+u3IyRkW7BGT2gz2gkPkLO7vv24K2rArgvTznwloI6gpfp3ML0nJRgCEslPZVuiYgxmDx2C/iWcfhCtVhHIOmT+2ZHywf2FRgc2G6aDJU+iwRXad1zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784212100; c=relaxed/simple;
-	bh=3BTpaSILyIfUYiMFPzcn0oFRQV/idQnKiREY1T9anIY=;
+	bh=KuGg5jAeiK6BbKCvIBsDjCSNT5UPVHqvHEPx3EA5UP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ha2H52QWj742UJf9dHCT32x52MrSwdVsGWpCf9+dvdpIlK0LBvQWpROE7U1JrM1KpCSjykjZQtJXUzToHOSeQ6qlI3Ki/RICXGPokdzJj7e6+Lq3SaZGlOnpHDJ1WZ2DHGYfXy7S1ZJS+/HASi4P1KfVWom5HBOS0UKZ3EVcGoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgWv6a9p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dm14NntfXejWtlkszvUrgNd24DWQ8IXSqNXmyNyMHN/kzwzbcLFSxDFYEh3/qyJZyQF8ynJhgRVXKIfxBXunEb5Wa+aRsecRMEH+XscM0oNXU6aJ2bbsoj2hcXHplpTcSQeNwBM94pfjTU1Zu2DYnp/GZ13KSB5vL8TYZSjml7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyb+WUKY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgWv6a9p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAAE1F00A3A;
-	Thu, 16 Jul 2026 14:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyb+WUKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E106D1F00A3D;
+	Thu, 16 Jul 2026 14:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212091;
-	bh=NpXe5BA5UjFCi2etONYXkOWGyrNIfpolFX/D+M4hRFQ=;
+	s=korg; t=1784212094;
+	bh=AbCfmSGMCH9wcplcj0wQCawtuM1tHa3PBuK9WE1VV9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xgWv6a9plo5Y0GfmMV7Xx4wKj+VLsmjSrl/qAR/s/7u4l3PUANQwPfB0ys8eqIaVl
-	 9yj/kItr2h+xfjEBl7dU/HSL14st4GLZWARAila46q38KC/wm32c14/s4aAjSwN5Y0
-	 jMHi2lkkcSUDiqdQMVHX4XASFY5pWDwriOyQEyow=
+	b=qyb+WUKYC32fmRKc7XtkWvDmB+qwoCq2x1scbqk45pCXlOJ8uD3peYtpjapG7hjl/
+	 VVerBLtsOK+e7ANbuu1y+8nADecbBOnN360SUU0uw4f4bENSuYkFkuwqVrLZMehNok
+	 aAvqR8p8YKjHsyVSZuxQtA5KbCVXOqAdpz8tGQDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.12 189/349] firmware_loader: fix device reference leak in firmware_upload_register()
-Date: Thu, 16 Jul 2026 15:32:03 +0200
-Message-ID: <20260716133037.607524994@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Ignat Korchagin <ignat@linux.win>,
+	Alistair Francis <alistair.francis@wdc.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 198/349] X.509: Fix validation of ASN.1 certificate header
+Date: Thu, 16 Jul 2026 15:32:12 +0200
+Message-ID: <20260716133037.801884909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,73 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 896df22ee57648b0c505bd76ddbc6b2341834696 upstream.
+commit 3b626ba431c4501512ad07549310685e07fe4706 upstream.
 
-firmware_upload_register()
-  -> fw_create_instance()
-     -> device_initialize()
+x509_load_certificate_list() seeks to enforce that a certificate starts
+with 0x30 0x82 (ASN.1 SEQUENCE tag followed by a length of more than 256
+and less than 65535 bytes).
 
-After fw_create_instance() succeeds, the lifetime of the embedded struct
-device is expected to be managed through the device core reference
-counting, since fw_create_instance() has already called
-device_initialize().
+But it only enforces that *either* of those two byte values are present,
+instead of checking for the *conjunction* of the two values.  Fix it.
 
-In firmware_upload_register(), if alloc_lookup_fw_priv() fails after
-fw_create_instance() succeeds, the code reaches free_fw_sysfs and frees
-fw_sysfs directly instead of releasing the device reference with
-put_device(). This may leave the reference count of the embedded struct
-device unbalanced, resulting in a refcount leak.
-
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review. Fix this by using put_device(fw_dev) in the
-failure path and letting fw_dev_release() handle the final cleanup,
-instead of freeing the instance directly from the error path.
-
-Fixes: 97730bbb242c ("firmware_loader: Add firmware-upload support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260505091231.607089-1-lgs201920130244@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 631cc66eb9ea ("MODSIGN: Provide module signing public keys to the kernel")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260508033917.B5873C2BCB0@smtp.kernel.org/
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v3.7+
+Reviewed-by: Ignat Korchagin <ignat@linux.win>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/firmware_loader/sysfs_upload.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ crypto/asymmetric_keys/x509_loader.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/firmware_loader/sysfs_upload.c
-+++ b/drivers/base/firmware_loader/sysfs_upload.c
-@@ -341,7 +341,6 @@ firmware_upload_register(struct module *
- 		goto free_fw_upload_priv;
- 	}
- 	fw_upload->priv = fw_sysfs;
--	fw_sysfs->fw_upload_priv = fw_upload_priv;
- 	fw_dev = &fw_sysfs->dev;
- 
- 	ret = alloc_lookup_fw_priv(name, &fw_cache, &fw_priv,  NULL, 0, 0,
-@@ -349,10 +348,12 @@ firmware_upload_register(struct module *
- 	if (ret != 0) {
- 		if (ret > 0)
- 			ret = -EINVAL;
--		goto free_fw_sysfs;
-+		put_device(fw_dev);
-+		goto free_fw_upload_priv;
- 	}
- 	fw_priv->is_paged_buf = true;
- 	fw_sysfs->fw_priv = fw_priv;
-+	fw_sysfs->fw_upload_priv = fw_upload_priv;
- 
- 	ret = device_add(fw_dev);
- 	if (ret) {
-@@ -363,9 +364,6 @@ firmware_upload_register(struct module *
- 
- 	return fw_upload;
- 
--free_fw_sysfs:
--	kfree(fw_sysfs);
--
- free_fw_upload_priv:
- 	kfree(fw_upload_priv);
- 
+--- a/crypto/asymmetric_keys/x509_loader.c
++++ b/crypto/asymmetric_keys/x509_loader.c
+@@ -20,7 +20,7 @@ int x509_load_certificate_list(const u8
+ 		 */
+ 		if (end - p < 4)
+ 			goto dodgy_cert;
+-		if (p[0] != 0x30 &&
++		if (p[0] != 0x30 ||
+ 		    p[1] != 0x82)
+ 			goto dodgy_cert;
+ 		plen = (p[2] << 8) | p[3];
 
 
