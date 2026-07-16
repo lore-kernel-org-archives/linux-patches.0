@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F5C31E85C;
-	Thu, 16 Jul 2026 13:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9822301;
+	Thu, 16 Jul 2026 13:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210178; cv=none; b=A6Zp0EHNgSDcrMQhOTiVxSLRADNRdYJ/+fhEfnnP9h9XOqusj4FFeKiAYX8lUBOlCGS444NzRDIz/aPsdf10YwTO0AN+eNltR9hhNcS9CbiqfBvkx9LbrjJlA60/CHpQhBn1rmex7n8BR4Egvs4popylsbDPZlBCIrOHADJ/jck=
+	t=1784210181; cv=none; b=WS8lyTnWDXDohY/gkDunoa9siLrAro2JF24wLe11i2jO2d+nSZBd40KOFUHgqO+feerqzcH4ayJldLfAGyy0GWi0rZJ8ycygS+URC0AErVPIQ8CxjjN3WCeteWpFnrP69wnV5bN9TfrkfWz8H4aFbPO0XFnHZFLslgYd/StLyI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210178; c=relaxed/simple;
-	bh=iEBbpSWj0uXnMRamaaLfu9bkwPeM4LGxD9c5s1IqTUI=;
+	s=arc-20240116; t=1784210181; c=relaxed/simple;
+	bh=qi8zv4ILYFnE4ByuexvZyOGl51m7sjorfooI8eE6U20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pM5Kxg2LY0vB0brU0lRRfyL+X2OA7MvwJRkFV/rHmBq6Mom8v8esO186AO+wxS+umRtgdKZsmxY7ZjURbj8wkL+9mlbOA8zASytkaz36NuL4EH4pKI+MS+GDfoWZ38h71hJ0YXOIY3lNd1rU0MgD0bhietrSTz4EruS67tHg5nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwhpFgdT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tNt1dzA4y5hrhadJ3RrFGoBb1uVmLPnv2RAA18FtJzR+oDvKmlrEeCDrVF/JKMAaR7K8MxDYQoQaSIoB9W6BiZrV6Zh4dP1bt8UPEGRm6Hm6wddUnEsJ+k6n7OL7o8nfddwnVresljBVubi+RTE1RlQMbUZOvAo64ITlioc49YM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wU4dV8Cy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwhpFgdT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6451F000E9;
-	Thu, 16 Jul 2026 13:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wU4dV8Cy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765E11F000E9;
+	Thu, 16 Jul 2026 13:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210177;
-	bh=ltE2g6kBtbETMdQPsF9Ra0qUG/RuthKzdBdn582PMBU=;
+	s=korg; t=1784210180;
+	bh=FpCS9xyOx8Gp3gOno1vUZ8h1F17efs9h9vZIROBVVaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CwhpFgdTxaiGotkRbg7vcjKZVvm88odolVpdx2cZ4vljEPKQQUCrFAzMOZZcAibE2
-	 jsySVyfodH773UyA+VV+KmeWS6EQOZnS7IVMv4jxyx12u8qmSlQJi4SplDk7Xen4P1
-	 rIr/AtQnrzxV30GhqK6z4V/N43Ky6wgNVqkhtSjg=
+	b=wU4dV8CyXqbjWR8nJcaIilX8ZqAeQl95qZOIakq72/XgJnON6hMcU2qZGJ56FnCNG
+	 JpGWqi2fSdYIqMxVaMCy+Sk9QDeMO+nIOjIb9mL1BjN/krEeTTuHR1WHCVRCDm5iDk
+	 ssSnodYgQoNI/3VZ1/404fFywn/921geARFTdTKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
+	Jonathan Flynn <jonathan.flynn@hammerspace.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.1 467/518] svcrdma: wake sq waiters when the transport closes
-Date: Thu, 16 Jul 2026 15:32:15 +0200
-Message-ID: <20260716133058.062490481@linuxfoundation.org>
+Subject: [PATCH 7.1 468/518] Revert "svcrdma: Use contiguous pages for RDMA Read sink buffers"
+Date: Thu, 16 Jul 2026 15:32:16 +0200
+Message-ID: <20260716133058.084467275@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,214 +53,287 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-commit e5248a7426030db1e126363f72afdb3b71339a5c upstream.
+commit a39f0ce0c9da20986b429e2db3e4e8739035d61b upstream.
 
-Threads parked in svc_rdma_sq_wait() on sc_sq_ticket_wait or
-sc_send_wait can hang indefinitely in TASK_UNINTERRUPTIBLE state
-across transport teardown, pinning svc_xprt references and
-blocking svc_rdma_free().
+Jonathan Flynn reports that commit 18755b8c2f24 ("svcrdma: Use
+contiguous pages for RDMA Read sink buffers") regresses NFS/RDMA
+WRITE throughput from 73.9 GiB/s to 30.3 GiB/s on a 128-core
+single-NUMA-node server driving dual 400Gb/s links with 640 nfsd
+threads. Server CPU utilization rises from 8.5% to 76%, with
+roughly three quarters of all cycles spent spinning on zone->lock.
 
-The close path sets XPT_CLOSE before invoking xpo_detach and both
-wait_event predicates include an XPT_CLOSE term, but the
-predicates are re-evaluated only on wakeup. sc_sq_ticket_wait has
-no completion-driven wake path; it is advanced solely by the
-chained ticket handoff inside svc_rdma_sq_wait() itself. Without
-an explicit wake at close, parked threads never observe
-XPT_CLOSE, hold their svc_xprt_get reference forever, and
-svc_rdma_free() blocks on xpt_ref dropping to zero.
+The sink buffers are allocated as high-order page blocks, split
+into single pages so each sub-page carries an independent refcount,
+and later released one page at a time through folio batches. The
+per-CPU page caches cannot satisfy an allocation stream whose alloc
+order differs from its free order, so every sink buffer page makes
+a round trip through the buddy allocator's free lists, serialized
+on the zone lock of the single NUMA node. The rq_pages entries that
+the split pages displace, bulk-allocated moments earlier by
+svc_alloc_arg(), are freed without ever being used, doubling the
+allocator traffic.
 
-Two close entry points reach this transport. Local teardown runs
-svc_rdma_detach() from svc_handle_xprt() -> svc_delete_xprt() ->
-xpo_detach() on a worker thread. A remote disconnect arrives at
-svc_rdma_cma_handler(), which calls svc_xprt_deferred_close():
-that sets XPT_CLOSE and enqueues the transport but does not
-access either RDMA waitqueue, so a worker already parked in
-svc_rdma_sq_wait() never re-evaluates its predicate. With every
-worker parked on this transport, no thread is available to run
-the local teardown either, and the wake site there is
-unreachable.
+The regression cannot be addressed trivially. Revert the commit
+now; a reworked approach can return in an upcoming merge window.
 
-Introduce svc_rdma_xprt_deferred_close(), a thin svcrdma wrapper
-that calls svc_xprt_deferred_close() and then wakes both
-sc_sq_ticket_wait and sc_send_wait. Convert the svcrdma producers
-that called svc_xprt_deferred_close() directly:
-svc_rdma_cma_handler(), qp_event_handler(),
-svc_rdma_post_send_err(), svc_rdma_wc_send(), the sendto drop
-path, the rw completion error paths, and the recvfrom flush and
-read-list error paths.
-
-Wake both waitqueues from svc_rdma_detach() as well. The
-synchronous svc_xprt_close() path (backchannel ENOTCONN, device
-removal via svc_rdma_xprt_done) reaches detach without flowing
-through svc_xprt_deferred_close() and therefore does not invoke
-the new helper.
-
-Fixes: ccc89b9d1ed2 ("svcrdma: Add fair queuing for Send Queue access")
+Reported-by: Jonathan Flynn <jonathan.flynn@hammerspace.com>
+Reported-by: Mike Snitzer <snitzer@kernel.org>
+Closes: https://lore.kernel.org/linux-nfs/aiHlPmeZq3WgMwoJ@kernel.org/
+Closes: https://lore.kernel.org/linux-nfs/3cb119b4b2a8aada30c0c60286778a54@mail.gmail.com/
+Fixes: 18755b8c2f24 ("svcrdma: Use contiguous pages for RDMA Read sink buffers")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-[ cel: add svc_rdma_xprt_deferred_close() to complete the fix ]
+Tested-by: Jonathan Flynn <jonathan.flynn@hammerspace.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sunrpc/svc_rdma.h          |    1 +
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c  |    4 ++--
- net/sunrpc/xprtrdma/svc_rdma_rw.c        |    6 +++---
- net/sunrpc/xprtrdma/svc_rdma_sendto.c    |    6 +++---
- net/sunrpc/xprtrdma/svc_rdma_transport.c |   30 ++++++++++++++++++++++++++++--
- 5 files changed, 37 insertions(+), 10 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_rw.c |  223 --------------------------------------
+ 1 file changed, 223 deletions(-)
 
---- a/include/linux/sunrpc/svc_rdma.h
-+++ b/include/linux/sunrpc/svc_rdma.h
-@@ -328,6 +328,7 @@ extern int svc_rdma_result_payload(struc
- 				   unsigned int length);
- 
- /* svc_rdma_transport.c */
-+extern void svc_rdma_xprt_deferred_close(struct svcxprt_rdma *rdma);
- extern struct svc_xprt_class svc_rdma_class;
- #ifdef CONFIG_SUNRPC_BACKCHANNEL
- extern struct svc_xprt_class svc_rdma_bc_class;
---- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -377,7 +377,7 @@ flushed:
- 		trace_svcrdma_wc_recv_err(wc, &ctxt->rc_cid);
- dropped:
- 	svc_rdma_recv_ctxt_put(rdma, ctxt);
--	svc_xprt_deferred_close(&rdma->sc_xprt);
-+	svc_rdma_xprt_deferred_close(rdma);
- }
- 
- /**
-@@ -1001,7 +1001,7 @@ out_readlist:
- 		if (ret == -EINVAL)
- 			svc_rdma_send_error(rdma_xprt, ctxt, ret);
- 		svc_rdma_recv_ctxt_put(rdma_xprt, ctxt);
--		svc_xprt_deferred_close(xprt);
-+		svc_rdma_xprt_deferred_close(rdma_xprt);
- 		return ret;
- 	}
- 	return 0;
 --- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
 +++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -313,7 +313,7 @@ static void svc_rdma_reply_done(struct i
- 		trace_svcrdma_wc_reply_err(wc, &cc->cc_cid);
- 	}
- 
--	svc_xprt_deferred_close(&rdma->sc_xprt);
-+	svc_rdma_xprt_deferred_close(rdma);
+@@ -754,216 +754,6 @@ int svc_rdma_prepare_reply_chunk(struct
+ 	return xdr->len;
  }
  
+-/*
+- * Cap contiguous RDMA Read sink allocations at order-4.
+- * Higher orders risk allocation failure under
+- * __GFP_NORETRY, which would negate the benefit of the
+- * contiguous fast path.
+- */
+-#define SVC_RDMA_CONTIG_MAX_ORDER	4
+-
+-/**
+- * svc_rdma_alloc_read_pages - Allocate physically contiguous pages
+- * @nr_pages: number of pages needed
+- * @order: on success, set to the allocation order
+- *
+- * Attempts a higher-order allocation, falling back to smaller orders.
+- * The returned pages are split immediately so each sub-page has its
+- * own refcount and can be freed independently.
+- *
+- * Returns a pointer to the first page on success, or NULL if even
+- * order-1 allocation fails.
+- */
+-static struct page *
+-svc_rdma_alloc_read_pages(unsigned int nr_pages, unsigned int *order)
+-{
+-	unsigned int o;
+-	struct page *page;
+-
+-	o = min(get_order(nr_pages << PAGE_SHIFT),
+-		SVC_RDMA_CONTIG_MAX_ORDER);
+-
+-	while (o >= 1) {
+-		page = alloc_pages(GFP_KERNEL | __GFP_NORETRY | __GFP_NOWARN,
+-				   o);
+-		if (page) {
+-			split_page(page, o);
+-			*order = o;
+-			return page;
+-		}
+-		o--;
+-	}
+-	return NULL;
+-}
+-
+-/*
+- * svc_rdma_fill_contig_bvec - Replace rq_pages with a contiguous allocation
+- * @rqstp: RPC transaction context
+- * @head: context for ongoing I/O
+- * @bv: bvec entry to fill
+- * @pages_left: number of data pages remaining in the segment
+- * @len_left: bytes remaining in the segment
+- *
+- * On success, fills @bv with a bvec spanning the contiguous range and
+- * advances rc_curpage/rc_page_count. Returns the byte length covered,
+- * or zero if the allocation failed or would overrun rq_maxpages.
+- */
+-static unsigned int
+-svc_rdma_fill_contig_bvec(struct svc_rqst *rqstp,
+-			  struct svc_rdma_recv_ctxt *head,
+-			  struct bio_vec *bv, unsigned int pages_left,
+-			  unsigned int len_left)
+-{
+-	unsigned int order, npages, chunk_pages, chunk_len, i;
+-	struct page *page;
+-
+-	page = svc_rdma_alloc_read_pages(pages_left, &order);
+-	if (!page)
+-		return 0;
+-	npages = 1 << order;
+-
+-	if (head->rc_curpage + npages > rqstp->rq_maxpages) {
+-		for (i = 0; i < npages; i++)
+-			__free_page(page + i);
+-		return 0;
+-	}
+-
+-	/*
+-	 * Replace rq_pages[] entries with pages from the contiguous
+-	 * allocation. If npages exceeds chunk_pages, the extra pages
+-	 * stay in rq_pages[] for later reuse or normal rqst teardown.
+-	 */
+-	for (i = 0; i < npages; i++) {
+-		svc_rqst_page_release(rqstp,
+-				      rqstp->rq_pages[head->rc_curpage + i]);
+-		rqstp->rq_pages[head->rc_curpage + i] = page + i;
+-	}
+-
+-	chunk_pages = min(npages, pages_left);
+-	chunk_len = min_t(unsigned int, chunk_pages << PAGE_SHIFT, len_left);
+-	bvec_set_page(bv, page, chunk_len, 0);
+-	head->rc_page_count += chunk_pages;
+-	head->rc_curpage += chunk_pages;
+-	return chunk_len;
+-}
+-
+-/*
+- * svc_rdma_fill_page_bvec - Add a single rq_page to the bvec array
+- * @head: context for ongoing I/O
+- * @ctxt: R/W context whose bvec array is being filled
+- * @cur: page to add
+- * @bvec_idx: pointer to current bvec index, not advanced on merge
+- * @len_left: bytes remaining in the segment
+- *
+- * If @cur is physically contiguous with the preceding bvec, it is
+- * merged by extending that bvec's length. Otherwise a new bvec
+- * entry is created. Returns the byte length covered.
+- */
+-static unsigned int
+-svc_rdma_fill_page_bvec(struct svc_rdma_recv_ctxt *head,
+-			struct svc_rdma_rw_ctxt *ctxt, struct page *cur,
+-			unsigned int *bvec_idx, unsigned int len_left)
+-{
+-	unsigned int chunk_len = min_t(unsigned int, PAGE_SIZE, len_left);
+-
+-	head->rc_page_count++;
+-	head->rc_curpage++;
+-
+-	if (*bvec_idx > 0) {
+-		struct bio_vec *prev = &ctxt->rw_bvec[*bvec_idx - 1];
+-
+-		if (page_to_phys(prev->bv_page) + prev->bv_offset +
+-		    prev->bv_len == page_to_phys(cur)) {
+-			prev->bv_len += chunk_len;
+-			return chunk_len;
+-		}
+-	}
+-
+-	bvec_set_page(&ctxt->rw_bvec[*bvec_idx], cur, chunk_len, 0);
+-	(*bvec_idx)++;
+-	return chunk_len;
+-}
+-
+-/**
+- * svc_rdma_build_read_segment_contig - Build RDMA Read WR with contiguous pages
+- * @rqstp: RPC transaction context
+- * @head: context for ongoing I/O
+- * @segment: co-ordinates of remote memory to be read
+- *
+- * Greedily allocates higher-order pages to cover the segment,
+- * building one bvec per contiguous chunk. Each allocation is
+- * split so sub-pages have independent refcounts. When a
+- * higher-order allocation fails, remaining pages are covered
+- * individually, merging adjacent pages into the preceding bvec
+- * when they are physically contiguous. The split sub-pages
+- * replace entries in rq_pages[] so downstream cleanup is
+- * unchanged.
+- *
+- * Returns:
+- *   %0: the Read WR was constructed successfully
+- *   %-ENOMEM: allocation failed
+- *   %-EIO: a DMA mapping error occurred
+- */
+-static int svc_rdma_build_read_segment_contig(struct svc_rqst *rqstp,
+-					      struct svc_rdma_recv_ctxt *head,
+-					      const struct svc_rdma_segment *segment)
+-{
+-	struct svcxprt_rdma *rdma = svc_rdma_rqst_rdma(rqstp);
+-	struct svc_rdma_chunk_ctxt *cc = &head->rc_cc;
+-	unsigned int nr_data_pages, bvec_idx;
+-	struct svc_rdma_rw_ctxt *ctxt;
+-	unsigned int len_left;
+-	int ret;
+-
+-	nr_data_pages = PAGE_ALIGN(segment->rs_length) >> PAGE_SHIFT;
+-	if (head->rc_curpage + nr_data_pages > rqstp->rq_maxpages)
+-		return -ENOMEM;
+-
+-	ctxt = svc_rdma_get_rw_ctxt(rdma, nr_data_pages);
+-	if (!ctxt)
+-		return -ENOMEM;
+-
+-	bvec_idx = 0;
+-	len_left = segment->rs_length;
+-	while (len_left) {
+-		unsigned int pages_left = PAGE_ALIGN(len_left) >> PAGE_SHIFT;
+-		unsigned int chunk_len = 0;
+-
+-		if (pages_left >= 2)
+-			chunk_len = svc_rdma_fill_contig_bvec(rqstp, head,
+-							      &ctxt->rw_bvec[bvec_idx],
+-							      pages_left, len_left);
+-		if (chunk_len) {
+-			bvec_idx++;
+-		} else {
+-			struct page *cur =
+-				rqstp->rq_pages[head->rc_curpage];
+-			chunk_len = svc_rdma_fill_page_bvec(head, ctxt, cur,
+-							    &bvec_idx,
+-							    len_left);
+-		}
+-
+-		len_left -= chunk_len;
+-	}
+-
+-	ctxt->rw_nents = bvec_idx;
+-
+-	head->rc_pageoff = offset_in_page(segment->rs_length);
+-	if (head->rc_pageoff)
+-		head->rc_curpage--;
+-
+-	ret = svc_rdma_rw_ctx_init(rdma, ctxt, segment->rs_offset,
+-				   segment->rs_handle, segment->rs_length,
+-				   DMA_FROM_DEVICE);
+-	if (ret < 0)
+-		return -EIO;
+-	percpu_counter_inc(&svcrdma_stat_read);
+-
+-	list_add(&ctxt->rw_list, &cc->cc_rwctxts);
+-	cc->cc_sqecount += ret;
+-	return 0;
+-}
+-
  /**
-@@ -345,7 +345,7 @@ static void svc_rdma_write_done(struct i
- 	 * some of the outgoing RPC message. Signal the loss
- 	 * to the client by closing the connection.
- 	 */
--	svc_xprt_deferred_close(&rdma->sc_xprt);
-+	svc_rdma_xprt_deferred_close(rdma);
- }
- 
- /**
-@@ -390,7 +390,7 @@ static void svc_rdma_wc_read_done(struct
- 	 */
- 	svc_rdma_cc_release(rdma, cc, DMA_FROM_DEVICE);
- 	svc_rdma_recv_ctxt_put(rdma, ctxt);
--	svc_xprt_deferred_close(&rdma->sc_xprt);
-+	svc_rdma_xprt_deferred_close(rdma);
- }
- 
- /*
---- a/net/sunrpc/xprtrdma/svc_rdma_sendto.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
-@@ -395,7 +395,7 @@ int svc_rdma_post_send_err(struct svcxpr
- 			   int sqecount, int ret)
+  * svc_rdma_build_read_segment - Build RDMA Read WQEs to pull one RDMA segment
+  * @rqstp: RPC transaction context
+@@ -990,14 +780,6 @@ static int svc_rdma_build_read_segment(s
+ 	if (check_add_overflow(head->rc_pageoff, len, &total))
+ 		return -EINVAL;
+ 	nr_bvec = PAGE_ALIGN(total) >> PAGE_SHIFT;
+-
+-	if (head->rc_pageoff == 0 && nr_bvec >= 2) {
+-		ret = svc_rdma_build_read_segment_contig(rqstp, head,
+-							 segment);
+-		if (ret != -ENOMEM)
+-			return ret;
+-	}
+-
+ 	ctxt = svc_rdma_get_rw_ctxt(rdma, nr_bvec);
+ 	if (!ctxt)
+ 		return -ENOMEM;
+@@ -1343,11 +1125,6 @@ static void svc_rdma_clear_rqst_pages(st
  {
- 	trace_svcrdma_sq_post_err(rdma, cid, ret);
--	svc_xprt_deferred_close(&rdma->sc_xprt);
-+	svc_rdma_xprt_deferred_close(rdma);
+ 	unsigned int i;
  
- 	/* If even one WR was posted, a Send completion will
- 	 * return the reserved SQ slots.
-@@ -437,7 +437,7 @@ flushed:
- 	else
- 		trace_svcrdma_wc_send_flush(wc, &ctxt->sc_cid);
- 	svc_rdma_send_ctxt_put(rdma, ctxt);
--	svc_xprt_deferred_close(&rdma->sc_xprt);
-+	svc_rdma_xprt_deferred_close(rdma);
- }
- 
- /**
-@@ -1158,7 +1158,7 @@ put_ctxt:
- 	svc_rdma_send_ctxt_put(rdma, sctxt);
- drop_connection:
- 	trace_svcrdma_send_err(rqstp, ret);
--	svc_xprt_deferred_close(&rdma->sc_xprt);
-+	svc_rdma_xprt_deferred_close(rdma);
- 	return -ENOTCONN;
- }
- 
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -98,10 +98,27 @@ struct svc_xprt_class svc_rdma_class = {
- 	.xcl_ident = XPRT_TRANSPORT_RDMA,
- };
- 
-+/**
-+ * svc_rdma_xprt_deferred_close - Close an RDMA transport (deferred)
-+ * @rdma: transport to close
-+ */
-+void svc_rdma_xprt_deferred_close(struct svcxprt_rdma *rdma)
-+{
-+	svc_xprt_deferred_close(&rdma->sc_xprt);
-+
-+	/* Release parked sc_sq_ticket_wait and sc_send_wait waiters.
-+	 * Once XPT_CLOSE is observed each returns -ENOTCONN.
-+	 */
-+	wake_up_all(&rdma->sc_sq_ticket_wait);
-+	wake_up_all(&rdma->sc_send_wait);
-+}
-+
- /* QP event handler */
- static void qp_event_handler(struct ib_event *event, void *context)
- {
- 	struct svc_xprt *xprt = context;
-+	struct svcxprt_rdma *rdma =
-+		container_of(xprt, struct svcxprt_rdma, sc_xprt);
- 
- 	trace_svcrdma_qp_error(event, (struct sockaddr *)&xprt->xpt_remote);
- 	switch (event->event) {
-@@ -119,7 +136,7 @@ static void qp_event_handler(struct ib_e
- 	case IB_EVENT_QP_ACCESS_ERR:
- 	case IB_EVENT_DEVICE_FATAL:
- 	default:
--		svc_xprt_deferred_close(xprt);
-+		svc_rdma_xprt_deferred_close(rdma);
- 		break;
- 	}
- }
-@@ -340,7 +357,7 @@ static int svc_rdma_cma_handler(struct r
- 		svc_xprt_enqueue(xprt);
- 		break;
- 	case RDMA_CM_EVENT_DISCONNECTED:
--		svc_xprt_deferred_close(xprt);
-+		svc_rdma_xprt_deferred_close(rdma);
- 		break;
- 	default:
- 		break;
-@@ -597,6 +614,15 @@ static void svc_rdma_detach(struct svc_x
- 		container_of(xprt, struct svcxprt_rdma, sc_xprt);
- 
- 	rdma_disconnect(rdma->sc_cm_id);
-+
-+	/*
-+	 * Most close paths go through svc_rdma_xprt_deferred_close(),
-+	 * which wakes the SQ waitqueues. svc_xprt_close() reaches
-+	 * detach without that helper, so wake any threads parked in
-+	 * svc_rdma_sq_wait() here as well.
-+	 */
-+	wake_up_all(&rdma->sc_sq_ticket_wait);
-+	wake_up_all(&rdma->sc_send_wait);
- }
- 
- /**
+-	/*
+-	 * Move only pages containing RPC data into rc_pages[]. Pages
+-	 * from a contiguous allocation that were not used for the
+-	 * payload remain in rq_pages[] for subsequent reuse.
+-	 */
+ 	for (i = 0; i < head->rc_page_count; i++) {
+ 		head->rc_pages[i] = rqstp->rq_pages[i];
+ 		rqstp->rq_pages[i] = NULL;
 
 
