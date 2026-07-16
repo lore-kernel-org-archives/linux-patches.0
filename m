@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6C63DDB04;
-	Thu, 16 Jul 2026 13:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9819F427F97;
+	Thu, 16 Jul 2026 13:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209608; cv=none; b=LbP1WXZ3qkQ71eIwkPJ+WyCNFzyYOk6XqAwypX45x5P6D8XM+ZBBugCGTMVptJ3tqELLBl5CtxdAiWqFacxkgb2nh4cgKa8g/2lDlv617g+7bhthEf1i3CcPGbRJ/RArJDIWOF8ObpyoDoK2iu2SYXmJE4/TWTl2A1BR8+YTrhI=
+	t=1784209612; cv=none; b=Dmy07dFp2td3vUTg61bckJipZH765PQy32ZzEZSP8XSTyN6rvVinnCEE32BIivt4y/kF59H1u364KWK045O3Yj1/Yxvp6Qo6q2K4f/LU4w4gfxa5CAIt/vuRKHVpVZP1WNgAbazM6e9neDhFC4CIS9Mf/CZjioj7NooivpoqWZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209608; c=relaxed/simple;
-	bh=rxLQ5+DTuIV8tia+UvH7odRT0NlVU+t5NYhBXvRTjCc=;
+	s=arc-20240116; t=1784209612; c=relaxed/simple;
+	bh=TETYXgdYFTDD+KFYkPJG9AiTYR9ePkSE1M1Nk2NcEcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U48QLQxzhS/UMSeq5MfhdDJf70mmtu/zb7YuT2U4/QyBwDvhMi7lQrH3tmLI0nccu2svFiNWcOQP2IMepePEaGVIMavc6/vZRtYUvLNSwdd10e/NEpI3yxZikhv08aM+ncm9WNWK62d6eSofwl/vBjvMb7cTWgjF0fZnVig+NM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXXtWzyA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P2g8FATsax6Hp7YXstLdNS4utaoH93ZK6IndivuqL/TjksAmzkX3Riu47HFHiHuIYvwDd/qoeNgr5NHJ4nVuNfERkh3+k4IueiOTymFu2DZAX3cCGhmO6msKfuTaNhurgqlli7SP0Byyx08WmFkSnLeVSYXQye7eUCmzQdgZkmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAqDn9i5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXXtWzyA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CBF21F00A3D;
-	Thu, 16 Jul 2026 13:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAqDn9i5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306891F00A3A;
+	Thu, 16 Jul 2026 13:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209605;
-	bh=eyQk9yqUhX4tk1uNh8uN3dy2wENVDH5phHdlwaK6WM0=;
+	s=korg; t=1784209607;
+	bh=g+pt+IYlnFsayXHkZgM0XUt501wt/F2eed2YfpwyjiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXXtWzyAZuf06oF/u741zDzwO6wEdxMDS69K9ukndHxvwATZd5TFvuE0exBmQQQOK
-	 FGMfWMIjMYKpKcu0wvx4mQ2RLieLbynsM/XgafsIjOCYTCSEPq4WjOhQctfNfpTl5+
-	 Eg1qQvyWAB6/SHwIp2SoUH2q8fLoBpAEOSGhPJng=
+	b=dAqDn9i5LPvfPNG5mq97KKTUxBE9ulfOj0KO2QPpqVkViPUD37j+LV657xlM0ecTo
+	 WeDliuITZ9TnUq1jj/m4ETdBvNb8Ouz7TKqASwhTlUEmfzo3vAfKRnrAFkxvb6zhib
+	 8AwkCYfww4JivEU1aoNffUthF8cYfF79XZ6D8Td8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	John Hubbard <jhubbard@nvidia.com>,
+	Jann Horn <jannh@google.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 248/518] libfs: set SB_I_NOEXEC and SB_I_NODEV by default in init_pseudo()
-Date: Thu, 16 Jul 2026 15:28:36 +0200
-Message-ID: <20260716133053.241531105@linuxfoundation.org>
+Subject: [PATCH 7.1 249/518] proc: protect ptrace_may_access() with exec_update_lock (FD links)
+Date: Thu, 16 Jul 2026 15:28:37 +0200
+Message-ID: <20260716133053.262550313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,56 +50,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Hubbard <jhubbard@nvidia.com>
+From: Jann Horn <jannh@google.com>
 
-commit 6de2aeffabaafaeda819e60ec8d04f199711e11a upstream.
+commit 6255da28d4bb5349fe18e84cb043ccd394eba75d upstream.
 
-Since commit 1e7ab6f67824 ("anon_inode: rework assertions"),
-path_noexec() warns when an anonymous-inode file is mmap'd from a
-superblock that has not set SB_I_NOEXEC. dma-buf backs its files this
-way and never set the flag, so mmap of any exported buffer trips the
-warning on a CONFIG_DEBUG_VFS=y kernel:
+proc_pid_get_link() and proc_pid_readlink() currently look up the task from
+the pid once, then do the ptrace access check on that task, then look up
+the task from the pid a second time to do the actual access.
+That's racy in several ways.
 
-  WARNING: CPU: 11 PID: 121813 at fs/exec.c:118 path_noexec+0x47/0x50
-   do_mmap+0x2b5/0x680
-   vm_mmap_pgoff+0x129/0x210
-   ksys_mmap_pgoff+0x177/0x240
-   __x64_sys_mmap+0x33/0x70
+To fix it, pass the task to the ->proc_get_link() handler, and instead of
+proc_fd_access_allowed(), introduce a new helper call_proc_get_link() that
+looks up and locks the task, does the access check, and calls
+->proc_get_link().
 
-init_pseudo() sets up internal SB_NOUSER mounts that are never
-path-reachable. Set both flags here so every pseudo filesystem gets
-them by default instead of each caller setting them.
-
-SB_I_NODEV is inert for unreachable mounts. SB_I_NOEXEC has one
-visible effect: an executable mapping of a pseudo-fs fd, such as a
-dma-buf, now fails with -EPERM, which is the invariant the assertion
-enforces. No in-tree caller maps these executable.
-
-Reproduce on CONFIG_DEBUG_VFS=y:
-
-  make -C tools/testing/selftests/dmabuf-heaps
-  sudo ./tools/testing/selftests/dmabuf-heaps/dmabuf-heap -t system
-
-Fixes: 1e7ab6f67824 ("anon_inode: rework assertions")
-Suggested-by: Christoph Hellwig <hch@infradead.org>
+Fixes: 778c1144771f ("[PATCH] proc: Use sane permission checks on the /proc/<pid>/fd/ symlinks")
 Cc: stable@vger.kernel.org
-Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-Link: https://patch.msgid.link/20260604025315.245910-2-jhubbard@nvidia.com
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260518-procfs-lockfix-part1-v1-2-5c3d20e0ac33@google.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/libfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/proc/base.c     |  119 ++++++++++++++++++++---------------------------------
+ fs/proc/fd.c       |   25 ++++-------
+ fs/proc/internal.h |    2 
+ 3 files changed, 58 insertions(+), 88 deletions(-)
 
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -736,6 +736,7 @@ struct pseudo_fs_context *init_pseudo(st
- 		fc->fs_private = ctx;
- 		fc->ops = &pseudo_fs_context_ops;
- 		fc->sb_flags |= SB_NOUSER;
-+		fc->s_iflags |= SB_I_NOEXEC | SB_I_NODEV;
- 		fc->global = true;
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -218,33 +218,24 @@ static int get_task_root(struct task_str
+ 	return result;
+ }
+ 
+-static int proc_cwd_link(struct dentry *dentry, struct path *path)
++static int proc_cwd_link(struct dentry *dentry, struct path *path,
++			 struct task_struct *task)
+ {
+-	struct task_struct *task = get_proc_task(d_inode(dentry));
+ 	int result = -ENOENT;
+ 
+-	if (task) {
+-		task_lock(task);
+-		if (task->fs) {
+-			get_fs_pwd(task->fs, path);
+-			result = 0;
+-		}
+-		task_unlock(task);
+-		put_task_struct(task);
++	task_lock(task);
++	if (task->fs) {
++		get_fs_pwd(task->fs, path);
++		result = 0;
  	}
- 	return ctx;
++	task_unlock(task);
+ 	return result;
+ }
+ 
+-static int proc_root_link(struct dentry *dentry, struct path *path)
++static int proc_root_link(struct dentry *dentry, struct path *path,
++			  struct task_struct *task)
+ {
+-	struct task_struct *task = get_proc_task(d_inode(dentry));
+-	int result = -ENOENT;
+-
+-	if (task) {
+-		result = get_task_root(task, path);
+-		put_task_struct(task);
+-	}
+-	return result;
++	return get_task_root(task, path);
+ }
+ 
+ /*
+@@ -704,23 +695,6 @@ static int proc_pid_syscall(struct seq_f
+ /*                       Here the fs part begins                        */
+ /************************************************************************/
+ 
+-/* permission checks */
+-static bool proc_fd_access_allowed(struct inode *inode)
+-{
+-	struct task_struct *task;
+-	bool allowed = false;
+-	/* Allow access to a task's file descriptors if it is us or we
+-	 * may use ptrace attach to the process and find out that
+-	 * information.
+-	 */
+-	task = get_proc_task(inode);
+-	if (task) {
+-		allowed = ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS);
+-		put_task_struct(task);
+-	}
+-	return allowed;
+-}
+-
+ int proc_nochmod_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		 struct iattr *attr)
+ {
+@@ -1777,16 +1751,12 @@ static const struct file_operations proc
+ 	.release	= single_release,
+ };
+ 
+-static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
++static int proc_exe_link(struct dentry *dentry, struct path *exe_path,
++			 struct task_struct *task)
+ {
+-	struct task_struct *task;
+ 	struct file *exe_file;
+ 
+-	task = get_proc_task(d_inode(dentry));
+-	if (!task)
+-		return -ENOENT;
+ 	exe_file = get_task_exe_file(task);
+-	put_task_struct(task);
+ 	if (exe_file) {
+ 		*exe_path = exe_file->f_path;
+ 		path_get(&exe_file->f_path);
+@@ -1796,26 +1766,42 @@ static int proc_exe_link(struct dentry *
+ 		return -ENOENT;
+ }
+ 
++static int call_proc_get_link(struct dentry *dentry, struct inode *inode, struct path *path_out)
++{
++	struct task_struct *task;
++	int ret;
++
++	task = get_proc_task(inode);
++	if (!task)
++		return -ENOENT;
++	ret = down_read_killable(&task->signal->exec_update_lock);
++	if (ret)
++		goto out_put_task;
++	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
++		ret = -EACCES;
++		goto out;
++	}
++	ret = PROC_I(inode)->op.proc_get_link(dentry, path_out, task);
++
++out:
++	up_read(&task->signal->exec_update_lock);
++out_put_task:
++	put_task_struct(task);
++	return ret;
++}
++
+ static const char *proc_pid_get_link(struct dentry *dentry,
+ 				     struct inode *inode,
+ 				     struct delayed_call *done)
+ {
+ 	struct path path;
+-	int error = -EACCES;
++	int error;
+ 
+ 	if (!dentry)
+ 		return ERR_PTR(-ECHILD);
+-
+-	/* Are we allowed to snoop on the tasks file descriptors? */
+-	if (!proc_fd_access_allowed(inode))
+-		goto out;
+-
+-	error = PROC_I(inode)->op.proc_get_link(dentry, &path);
+-	if (error)
+-		goto out;
+-
+-	error = nd_jump_link(&path);
+-out:
++	error = call_proc_get_link(dentry, inode, &path);
++	if (!error)
++		error = nd_jump_link(&path);
+ 	return ERR_PTR(error);
+ }
+ 
+@@ -1849,17 +1835,11 @@ static int proc_pid_readlink(struct dent
+ 	struct inode *inode = d_inode(dentry);
+ 	struct path path;
+ 
+-	/* Are we allowed to snoop on the tasks file descriptors? */
+-	if (!proc_fd_access_allowed(inode))
+-		goto out;
+-
+-	error = PROC_I(inode)->op.proc_get_link(dentry, &path);
+-	if (error)
+-		goto out;
+-
+-	error = do_proc_readlink(&path, buffer, buflen);
+-	path_put(&path);
+-out:
++	error = call_proc_get_link(dentry, inode, &path);
++	if (!error) {
++		error = do_proc_readlink(&path, buffer, buflen);
++		path_put(&path);
++	}
+ 	return error;
+ }
+ 
+@@ -2250,21 +2230,16 @@ static const struct dentry_operations ti
+ 	.d_delete	= pid_delete_dentry,
+ };
+ 
+-static int map_files_get_link(struct dentry *dentry, struct path *path)
++static int map_files_get_link(struct dentry *dentry, struct path *path,
++			      struct task_struct *task)
+ {
+ 	unsigned long vm_start, vm_end;
+ 	struct vm_area_struct *vma;
+-	struct task_struct *task;
+ 	struct mm_struct *mm;
+ 	int rc;
+ 
+ 	rc = -ENOENT;
+-	task = get_proc_task(d_inode(dentry));
+-	if (!task)
+-		goto out;
+-
+ 	mm = get_task_mm(task);
+-	put_task_struct(task);
+ 	if (!mm)
+ 		goto out;
+ 
+--- a/fs/proc/fd.c
++++ b/fs/proc/fd.c
+@@ -171,24 +171,19 @@ static const struct dentry_operations ti
+ 	.d_delete	= pid_delete_dentry,
+ };
+ 
+-static int proc_fd_link(struct dentry *dentry, struct path *path)
++static int proc_fd_link(struct dentry *dentry, struct path *path,
++			struct task_struct *task)
+ {
+-	struct task_struct *task;
+ 	int ret = -ENOENT;
++	unsigned int fd = proc_fd(d_inode(dentry));
++	struct file *fd_file;
+ 
+-	task = get_proc_task(d_inode(dentry));
+-	if (task) {
+-		unsigned int fd = proc_fd(d_inode(dentry));
+-		struct file *fd_file;
+-
+-		fd_file = fget_task(task, fd);
+-		if (fd_file) {
+-			*path = fd_file->f_path;
+-			path_get(&fd_file->f_path);
+-			ret = 0;
+-			fput(fd_file);
+-		}
+-		put_task_struct(task);
++	fd_file = fget_task(task, fd);
++	if (fd_file) {
++		*path = fd_file->f_path;
++		path_get(&fd_file->f_path);
++		ret = 0;
++		fput(fd_file);
+ 	}
+ 
+ 	return ret;
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -107,7 +107,7 @@ extern struct kmem_cache *proc_dir_entry
+ void pde_free(struct proc_dir_entry *pde);
+ 
+ union proc_op {
+-	int (*proc_get_link)(struct dentry *, struct path *);
++	int (*proc_get_link)(struct dentry *, struct path *, struct task_struct *);
+ 	int (*proc_show)(struct seq_file *m,
+ 		struct pid_namespace *ns, struct pid *pid,
+ 		struct task_struct *task);
 
 
