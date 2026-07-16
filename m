@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C682DC79B;
-	Thu, 16 Jul 2026 13:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C9242A7B7;
+	Thu, 16 Jul 2026 13:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209771; cv=none; b=f9OMRhIBzC/kAm9AAu8Iw3CPu8prbphrHP2J/1r7liXPokWtCRgzGaju8IU+P8u8IeDOT+GDb9ZaDFO343LIkEaQC31Rv1o26hrkiXkHVn3mNpRWD7YtdV3ij6f1RVCLTa6qRwYAOi7BTjwqcJjckkMbVLhV2K8+nMmxNAGDmzg=
+	t=1784209775; cv=none; b=bk3Hw+UNCpPX/BQcdt5ErKoCX5G6M3B21+U2ldml/i53/lVr9m6Qw3WaAWm04TfCQ+2RcCto1ZFaHtKq/UIFqHRuYGWAY9M+4xQ3fGUXz9G48HapjTrqPLUFv79U4/kM8qStt/LBNpMSVTBTB3ERmSlB+CbWDmLASNUqTEre278=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209771; c=relaxed/simple;
-	bh=MtOZAJrV3vxcWw6LXDKQyNy0cLjpa/Z/Tqm1PSQz4dE=;
+	s=arc-20240116; t=1784209775; c=relaxed/simple;
+	bh=KP9xwFMcCv5v/C9a9+SXVLNPCHt3fFo3BZqdHMYa/hE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCnIgUBXN7fR3Az80Ge+8q8T9o4nLYC0LlUqbooIxWQGdstO+uPGocYFeGSDCVo03gvs+vvr5+DIeO78akdXN2NaSIRdMrHZHB6qpgw3Tukf+BPKN9GSH4CvIaBG5YW9v018cx7PB+tJrTsN3p0jnCVOKcmnDmLftffvgLm8ecM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyf04kG/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mxrx1iruqMvKZKnaNS8gE0Voxq9rVIF3f44MSSR24EPgmJYjUDdsD7wT2/nPamyDNNpieFCtw2d5VPOiiToQ4DlV6avAHCE1tTOBN47JN8+AxAh2SPTax3MJ6+urKu6aHFuTt5NAjXHwgFR59wXxe/lo4r2v4BEqMgGbrYfZqWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnIs6pL1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyf04kG/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C439A1F00A3A;
-	Thu, 16 Jul 2026 13:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnIs6pL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E46E1F000E9;
+	Thu, 16 Jul 2026 13:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209765;
-	bh=sny/7p9wD3kU1Z6pP0CU9Sb1A33BUcAmpZTqDaH8yrc=;
+	s=korg; t=1784209767;
+	bh=PLkgOfoD2f8cc/Q9/c2owkRUAAhasVvQLPbKltIqoO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cyf04kG/Ty/5SC2/Q2pYlUbhw4tn8pz8tQ9b48CQcuJdF20zpL6kyHCdR5rjuoakO
-	 O4o3/xjdFChdUA/2CJiWZwLg+AXgKwiUsobGCJoHDrn3zjv8r8qs+12KCy21stKTK2
-	 dfM+F9vjBwOiNDeQ9I0/m21s9KDlhmq2feFpVkQ4=
+	b=UnIs6pL1c1Xny274cr2w+jeCZhcdPY8GaMQIRgdJNsKCV7LdHdlM9fRxv4STW1fsZ
+	 Plf03w1zRaEi+JcfbFZBqV2l+hS19yHKCo2reHNnm31XGZgZvgXtw+nDeitGq3njuN
+	 OmK9hC0UHy1nmsfxM9I68jIAqMvw0Acx/NGivH8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Lee Jones <lee@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.1 266/518] HID: uhid: convert to hid_safe_input_report()
-Date: Thu, 16 Jul 2026 15:28:54 +0200
-Message-ID: <20260716133053.637979146@linuxfoundation.org>
+	Teddy Astie <teddy.astie@vates.tech>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.1 257/518] time/jiffies: Register jiffies clocksource before usage
+Date: Thu, 16 Jul 2026 15:28:45 +0200
+Message-ID: <20260716133053.442016828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,64 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit 63a694c51bf120a37550890b8e7736b4888985e9 upstream.
+commit f24df84cbe05e4471c04ac4b921fc0340bbc7752 upstream.
 
-Commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
-bogus memset()"), added a check in hid_report_raw_event() to reject
-reports if the received data size is smaller than expected. This was
-intended to prevent OOB errors by no longer allowing zeroing-out of
-shorter reports due to the lack of buffer size information.
+Teddy reported that a XEN HVM has a long boot delay, which was bisected to
+the recent enhancements to the negative motion detection. It turned out
+that the jiffies clocksource is used in early boot before it is registered,
+which leaves the max_delta_raw field at zero. That causes the read out to
+be clamped to the max delta of 0, which means time is not making progress.
 
-However, this leads to regressions in hid_report_raw_event(), where
-shorter than expected reports are rejected, even though their buffers
-are sufficiently large to be zero-padded.
+Cure it by ensuring that it is initialized before its first usage in
+timekeeping_init().
 
-To solve this issue, Benjamin introduced a safer alternative in commit
-206342541fc8 ("HID: core: introduce hid_safe_input_report()"), which
-forwards the buffer size and allows hid_report_raw_event() to safely
-zero-pad the data.
-
-Convert uhid to use hid_safe_input_report() and pass UHID_DATA_MAX as
-the buffer size. This prevents the reported regressions [1], allowing
-hid core to zero-pad the shorter reports safely as expected.
-
+Fixes: 76031d9536a0 ("clocksource: Make negative motion detection more robust")
+Reported-by: Teddy Astie <teddy.astie@vates.tech>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Teddy Astie <teddy.astie@vates.tech>
 Cc: stable@vger.kernel.org
-Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
-Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/ [1]
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Link: https://patch.msgid.link/87y0gn3fve.ffs@fw13
+Closes: https://lore.kernel.org/all/1780914594.8631fc262581453bbf619ec5b2062170.19ea6c8227b000701b@vates.tech
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/uhid.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/time/jiffies.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/uhid.c
-+++ b/drivers/hid/uhid.c
-@@ -595,8 +595,8 @@ static int uhid_dev_input(struct uhid_de
- 	if (!READ_ONCE(uhid->running))
- 		return -EINVAL;
+--- a/kernel/time/jiffies.c
++++ b/kernel/time/jiffies.c
+@@ -60,15 +60,14 @@ EXPORT_SYMBOL(get_jiffies_64);
  
--	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data,
--			 min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
-+	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data, UHID_DATA_MAX,
-+			      min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
+ EXPORT_SYMBOL(jiffies);
  
- 	return 0;
+-static int __init init_jiffies_clocksource(void)
+-{
+-	return __clocksource_register(&clocksource_jiffies);
+-}
+-
+-core_initcall(init_jiffies_clocksource);
++static bool cs_jiffies_registered __initdata;
+ 
+ struct clocksource * __init __weak clocksource_default_clock(void)
+ {
++	if (!cs_jiffies_registered) {
++		__clocksource_register(&clocksource_jiffies);
++		cs_jiffies_registered = true;
++	}
+ 	return &clocksource_jiffies;
  }
-@@ -606,8 +606,8 @@ static int uhid_dev_input2(struct uhid_d
- 	if (!READ_ONCE(uhid->running))
- 		return -EINVAL;
  
--	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data,
--			 min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
-+	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data, UHID_DATA_MAX,
-+			      min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
- 
- 	return 0;
- }
 
 
