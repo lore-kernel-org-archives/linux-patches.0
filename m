@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FBD4252A0;
-	Thu, 16 Jul 2026 14:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2960B400DE8;
+	Thu, 16 Jul 2026 14:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210422; cv=none; b=m/gGM0lIeFwGCiiGqxpos2BDA4p0GBoRU/VC1SHKAldYw8F8w4IF0f96f9+9cL30p/FdLwz3JaNpYSgsHpIw+rJxIxsWU72/5sYRJSardbbS6iSaeyCayFg3a5UddJ7SbOX5sEcEK0dDy7zc8s33DAcOBEm+V6Dhk76K+AyVLEY=
+	t=1784210425; cv=none; b=e6JTpMZpCvxnkPT+5jZmCNuU+dS1tA8VYctLO81yw3w9m5V0zsItG6oZMGspVOooPdFFIniUzB66DoWdpTicjBkdE5OFNy+x/vs7Ydzq3UJaNNPyI0pG27qkkTeG016zw74LFPQ1KkhSmv0aTgSNCM+YDuodvKcGR7e7dUzXfss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210422; c=relaxed/simple;
-	bh=1uSpjVZhmIkxTD0pI/IIM1OxPo1yKTpEAMe3k3v0pjw=;
+	s=arc-20240116; t=1784210425; c=relaxed/simple;
+	bh=rAkCZX72x5D7cavF8h42efQOJd1Z2I1N1xqSrv//E38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QcsFaBcQpe+Wn5hkzYkIQFQtI7qjXcdQkUeAFyCWxGG7hMmvMcuJ0cC7iDM1B8WZHgjGP1bMac0MIj5qSflcOqHWxIJ4I7e2HG/fRyCKzVn7A27rerREw+HwDZdzKtsdL60QoJiVJk0a0c3F+8wg4bcm4nKcs2Zg6yXntDauVDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+fS3dbf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d1JAuqIlc7yvdffHEbFgm21HxNu/B+7tZFh6iEVRNmL2sMzctlp7YJi7RAp8m0gbfwZSma1aRM7ExsHxlaZjgNC9shDVOh6GNPbtNt3/Ifx/+lflXEK5soCsehEakSogMJ0ou7eUMXR3+FfA2C+qSB36XGiyLivjSsh6Hq1MAS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTVzcrI2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+fS3dbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E547B1F000E9;
-	Thu, 16 Jul 2026 14:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTVzcrI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC371F000E9;
+	Thu, 16 Jul 2026 14:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210421;
-	bh=FDv/ad3tL4vCNwPGrhg5DDteAuWmcd8VarlUff4+QHs=;
+	s=korg; t=1784210424;
+	bh=FmySMID2put2mU8HwPsVZRvy9kB4KIquda18Sq9nNyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+fS3dbfZ0Mga0XnTnu25Kp5kZFkKo6iRou9QmySzg1BmeRsAmD1VhLvHU6sP49/N
-	 uR0nnXViQh+nJbSiU6frsq+YDgDBqxjaIx2GlKuUEdfJd6T8gCc1I688q6dV9mKOjs
-	 ijntuiihYp+O2+w2eedvfJf42uauXTC4yk7Xz/W0=
+	b=UTVzcrI2YYBspKTQHmiImAZv4jP4MAMfKsjwc77xpHkoUnjvFP4GGx4K9mRfBBcYm
+	 ba5a8MoK9ynyOVglGlP7Cp8PmUZBBERTZSYwtc2WmCjlQNfLa/NUz5ma0nSwy1o7I/
+	 LZWTzd/z8BVS/4DZTZhzJhZDTqblHpsyOv8BAU8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Chuck Lever <cel@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 004/480] nfsd: release layout stid on setlease failure
-Date: Thu, 16 Jul 2026 15:25:51 +0200
-Message-ID: <20260716133044.773417070@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 040/480] rust: Kbuild: set frame-pointer llvm module flag for CONFIG_FRAME_POINTER
+Date: Thu, 16 Jul 2026 15:26:27 +0200
+Message-ID: <20260716133045.571209187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,75 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 30d55c8aabb261bc3f427d6b9aae7ef6206063f9 upstream.
+commit 191f49f1e38b1c10eb44b0f967c6175c884ef7db upstream.
 
-nfs4_alloc_stid() publishes the new stid into cl->cl_stateids via
-idr_alloc_cyclic() under cl_lock before returning to
-nfsd4_alloc_layout_stateid(). When nfsd4_layout_setlease() then
-fails, the error path frees the layout stateid directly with
-kmem_cache_free() without ever calling idr_remove(), leaving the
-IDR slot pointing at freed slab memory. Any subsequent IDR walker
-(states_show, client teardown) dereferences the dangling pointer.
+Due to a rustc bug, the -Cforce-frame-pointers=y flag only emits the
+frame-pointer annotation for functions, but not for the module. This
+means that functions generated by the LLVM backend such as
+'asan.module_ctor' do not receive the frame-pointer annotation.
 
-The correct teardown for an IDR-published stid is nfs4_put_stid(),
-which removes the IDR slot under cl_lock, dispatches sc_free
-(nfsd4_free_layout_stateid) to release ls->ls_file via
-nfsd4_close_layout(), and drops the nfs4_file reference in its
-tail.
+This is likely to lead to broken backtraces and may also cause issues
+with ftrace if these features are used with functions generated by the
+LLVM backend.
 
-A second issue blocks that switch: nfsd4_free_layout_stateid()
-unconditionally inspects ls->ls_fence_work via
-delayed_work_pending() under ls_lock, but
-INIT_DELAYED_WORK(&ls->ls_fence_work, ...) currently runs only
-after the setlease call. On the setlease-failure path the
-destructor would touch an uninitialized delayed_work.
+Thus, use -Zllvm_module_flag to work around this rustc bug if using a
+rustc without the fix.
 
-    nfsd4_alloc_layout_stateid()
-      nfs4_alloc_stid()           /* idr_alloc_cyclic under cl_lock */
-      nfsd4_layout_setlease()     /* fails */
-        nfs4_put_stid()
-          nfsd4_free_layout_stateid()
-            delayed_work_pending(&ls->ls_fence_work)  /* needs INIT */
-            nfsd4_close_layout()  /* nfsd_file_put(ls->ls_file) */
-          put_nfs4_file()
+[ The fix [1] has landed for Rust 1.98.0 (expected release on
+  2026-08-20). - Miguel ]
 
-Fix by hoisting the ls_fenced / ls_fence_delay / INIT_DELAYED_WORK
-initialization above the nfsd4_layout_setlease() call, and replace
-the manual nfsd_file_put + put_nfs4_file + kmem_cache_free cleanup
-with a single nfs4_put_stid(stp).
+Cc: stable@vger.kernel.org # 6.12.y and later (flag not available in pinned Rust in older LTSs).
+Fixes: 2f7ab1267dc9 ("Kbuild: add Rust support")
+Link: https://github.com/rust-lang/rust/pull/156980 [1]
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260616-frame-ptr-fix-v1-1-dc6b29a631d9@google.com
+[ - Adjusted Cc: stable@ as discussed.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
-Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ cel: drop fence_work init hoist absent from 6.18.y ]
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  - Added comment with link to the PR, similar to what we did in commit
+    ac35b5580ace ("rust: arm64: set uwtable llvm module flag for
+    CONFIG_UNWIND_TABLES").
+
+    - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- fs/nfsd/nfs4layouts.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ Makefile |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index 683bd1130afe29..62762e43f810b3 100644
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -256,9 +256,7 @@ nfsd4_alloc_layout_stateid(struct nfsd4_compound_state *cstate,
- 	BUG_ON(!ls->ls_file);
- 
- 	if (nfsd4_layout_setlease(ls)) {
--		nfsd_file_put(ls->ls_file);
--		put_nfs4_file(fp);
--		kmem_cache_free(nfs4_layout_stateid_cache, ls);
-+		nfs4_put_stid(stp);
- 		return NULL;
- 	}
- 
--- 
-2.53.0
-
+--- a/Makefile
++++ b/Makefile
+@@ -905,6 +905,9 @@ KBUILD_CFLAGS += $(stackp-flags-y)
+ ifdef CONFIG_FRAME_POINTER
+ KBUILD_CFLAGS	+= -fno-omit-frame-pointer -fno-optimize-sibling-calls
+ KBUILD_RUSTFLAGS += -Cforce-frame-pointers=y
++# Work around rustc bug on compilers without
++# https://github.com/rust-lang/rust/pull/156980.
++KBUILD_RUSTFLAGS += $(if $(call rustc-min-version,109800),,-Zllvm_module_flag=frame-pointer:u32:2:max)
+ else
+ # Some targets (ARM with Thumb2, for example), can't be built with frame
+ # pointers.  For those, we don't have FUNCTION_TRACER automatically
 
 
