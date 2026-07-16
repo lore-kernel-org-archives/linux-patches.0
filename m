@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4803D9680;
-	Thu, 16 Jul 2026 14:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A8D42A7AF;
+	Thu, 16 Jul 2026 14:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211959; cv=none; b=hhzNHldvz2TrcBI/AaTuy7JFQon5GACfUOTSrtl/cTsj4JwGWhNPy1CG2+N+lxJFsNT6H8ygLyNHuMeCcqUHXiXItEw6JPt9VnUxpzarmq3ADbXi2GELg1FLwJyTSJ3Ju/E4La9avsd0dgPOKvOaUXPZkB+2vOPgiVFNXX19/W0=
+	t=1784211961; cv=none; b=df9+K339Q0xrCL9HmK1sZNVk5DfhAeNI6JQ6Pe2hSBoWskP4epUQbhrXDdJ/RMsaLsLA0LfGd7SRny6ZLda/plgheXJgDbv1hpjLaom5IbF8HbtjhY6CO5noGcNV4LE2/1VG23DO6VErMkiUCA6zb39b5CpllnVlwbTz6ETacXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211959; c=relaxed/simple;
-	bh=JlE0SDlAL6xpZw91RKs1aAIKEcGg74QC7h0ostKXs8k=;
+	s=arc-20240116; t=1784211961; c=relaxed/simple;
+	bh=+W/TyygeEpA4Y9huXHPizVpTx9mkhACWSIELDeHTkIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WwKEwlKYs6YuH3719ZGl0whe8tUx3j8ZRZe/ABxQMEnI5nsAuMweZIkE3kFrbjk7IV1ga4jKortOB8PJHN4gFpTeriJhR9OWvncKn2TxK4KF7nfRiTeF3ECI/qcFzs0Aw2yGFaz+otE1SNbmAi1pQc7CDWkZhqv6yCBYypHHFo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYDJoLBb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tyTjGNjYgLSQxt8T9ZGALk1lj1EY5It5Im++GNQMQtekPaOowJFiTx7siS3m+cmUzmjNuna71qkZ4lGmAn/MVr2BQ/GRXrSUYbPOUqCwDSeNejp27m0zELCAORMeYyyH3jxpcvw16FgKWUBoTYenI/G0YrsZ03WIrh/lj3kmIBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hu5oGGgP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYDJoLBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1AA1F000E9;
-	Thu, 16 Jul 2026 14:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hu5oGGgP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8961F000E9;
+	Thu, 16 Jul 2026 14:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211958;
-	bh=8YnMZiuNKq0Vna4XNQE1mEvjnqJzZOr16cXbNorw5S8=;
+	s=korg; t=1784211960;
+	bh=+/dsYnjiJGIVwBL3CnIlDF/fLfDWkLNXsnZ06WZTgmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QYDJoLBbyix0qGyPIUBwhuugBZUSNCUG9dd9v6AOMrJnjHl02xRelanUhEabmeqky
-	 tM7lA+V0QddWHG9tYp8kXvGyswq174RVqdbwHhqFTQ5Pfx2zQx+Gee6aUamkozTcuo
-	 cGFHammz0ZjFx4WjDL39VdIBIUw5f+9Tn7HTRxds=
+	b=Hu5oGGgPeaId5Ty576w2VLR2uuDKz68UYlDFjPrf43MAkOvl6Qz5mSHsbBLIEWCtP
+	 mafi42jNIHnnTDPdnlxmZsu70dzWJoXSiM4iLElMdxI4CwW3TNJNpln1vjVjv3OEgX
+	 J/F9UTA6mh4JdPevE5BhYqRQRLNBkkMFTuO4tnf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Vaidya <mahesh.vaidya@altera.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	"Subhransu S. Prusty" <subhransu.sekhar.prusty@altera.com>
-Subject: [PATCH 6.12 102/349] PCI: altera: Do not dispose parent IRQ mapping
-Date: Thu, 16 Jul 2026 15:30:36 +0200
-Message-ID: <20260716133035.597637755@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Vidya Sagar <vidyas@nvidia.com>
+Subject: [PATCH 6.12 103/349] PCI: host-common: Request bus reassignment when not probe-only
+Date: Thu, 16 Jul 2026 15:30:37 +0200
+Message-ID: <20260716133035.620048540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,46 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Vaidya <mahesh.vaidya@altera.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-commit 5ef4bac02189bee0b7c170e352d7a38e13fe9678 upstream.
+commit fda8749ba73638f5bbca3ffb39bc6861eb3b23fa upstream.
 
-altera_pcie_irq_teardown() calls irq_dispose_mapping() on pcie->irq.
-However, pcie->irq is the parent IRQ returned by platform_get_irq(), not
-the mapping created by Altera INTx irq_domain.
+pci_host_common_init() is used by several generic ECAM host drivers.
+After PCI core changes around pci_flags and preserve_config, these hosts
+no longer opted into full bus number reassignment the way they did
+before, which broke enumeration of devices on a Marvell CN106XX board.
 
-The Altera driver only sets the chained handler on the parent IRQ. It
-should detach that handler during teardown, but it should not dispose the
-parent IRQ mapping, which belongs to the parent interrupt controller's
-irq_domain.
+When PCI_PROBE_ONLY is not set, add PCI_REASSIGN_ALL_BUS so
+pci_scan_bridge_extend() takes the reassignment path: bus numbers can be
+assigned from firmware EA data (e.g. pci_ea_fixed_busnrs()). Skip the
+flag in probe-only mode so existing assignments are not overridden.
 
-Drop irq_dispose_mapping(pcie->irq) from the teardown path.
-
-Note that during irqchip remove(), the child IRQs should've disposed. But
-since the chained handler itself is removed, there is no way the stale
-child IRQs (if exists) could fire. So it is safe here.
-
-Fixes: ec15c4d0d5d2 ("PCI: altera: Allow building as module")
-Signed-off-by: Mahesh Vaidya <mahesh.vaidya@altera.com>
-[mani: added a note about IRQ disposal]
+Fixes: 7246a4520b4b ("PCI: Use preserve_config in place of pci_flags")
+Closes: https://lore.kernel.org/all/abkqm_LCd9zAM8cW@rkannoth-OptiPlex-7090/
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+[mani: added stable tag]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Subhransu S. Prusty <subhransu.sekhar.prusty@altera.com>
+[bhelgaas: add problem report link]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260430204330.3121003-2-mahesh.vaidya@altera.com
+Cc: Vidya Sagar <vidyas@nvidia.com>
+Link: https://patch.msgid.link/20260414081730.3864372-1-rkannoth@marvell.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-altera.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/controller/pci-host-common.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/pci/controller/pcie-altera.c
-+++ b/drivers/pci/controller/pcie-altera.c
-@@ -683,7 +683,6 @@ static void altera_pcie_irq_teardown(str
- {
- 	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
- 	irq_domain_remove(pcie->irq_domain);
--	irq_dispose_mapping(pcie->irq);
- }
+--- a/drivers/pci/controller/pci-host-common.c
++++ b/drivers/pci/controller/pci-host-common.c
+@@ -73,6 +73,10 @@ int pci_host_common_probe(struct platfor
+ 	if (IS_ERR(cfg))
+ 		return PTR_ERR(cfg);
  
- static int altera_pcie_parse_dt(struct altera_pcie *pcie)
++	/* Do not reassign bus numbers if probe only */
++	if (!pci_has_flag(PCI_PROBE_ONLY))
++		pci_add_flags(PCI_REASSIGN_ALL_BUS);
++
+ 	bridge->sysdata = cfg;
+ 	bridge->ops = (struct pci_ops *)&ops->pci_ops;
+ 	bridge->msi_domain = true;
 
 
