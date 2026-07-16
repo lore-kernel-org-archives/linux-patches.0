@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551D142DFE1;
-	Thu, 16 Jul 2026 14:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE15B42F700;
+	Thu, 16 Jul 2026 14:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212469; cv=none; b=aSCVx1CjZtv5AtFA8+MGVlr7m7LLOevHqccZlMI/iBPG/YLiw9gYtNYvXUrFT5t5UfRU6Al8XmAf9HPR0PLXfMAC7CRwpxk9LcBV+HYJtFNkO0cdMUw7b3CbsO050LByGX4WyZHGEFK23kjybbeSxNKiCHCL8WfeqZ5JrTQUY7k=
+	t=1784212472; cv=none; b=IHTz79O4BD5DOIjRckK9aB7Ed12mSHUFonxDWNc7Nq5iU5tSGmgLdds/uvQ6QlAtgU5D0vdE5RT/IWfv+EtyY7ksxkfjZkoFfqvWaxT/fMX0M0ibl43dNBN+NHd7JqvQnve2KmMZxDAreX+4AYKznvoY9KndqWdt/klw2uM13Fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212469; c=relaxed/simple;
-	bh=MmXNhWjKabcgeF2cAnWD22uDQwtZCirHlEz3en4nNe8=;
+	s=arc-20240116; t=1784212472; c=relaxed/simple;
+	bh=aSNJiZQ1BWSg3FxFCQmV0Xe5PmC43Jaa+UtvP1SMDWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhHCfQhCZxIfFNo/efs53T0/Xqvf324bYJ0EbJ1YcTiz+jTPjzQtb7uvx2genkHsqPHPnoXoJhsHv0LezCXt/RcUyMKuW6ARN+ZBKMXexR1D3JHJuCFY/c5r/k9kJ0A5wCXkEj3Ccb3wGrYeAQ/kiutA6GHMh8nYv4wfFfMAYQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASUd6Int; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RMvejZBo5FN3qcd4l7Jy6SPSqC9A+9Od/2NCAjB2TVOzq0dJTjEI+rkTpLzo0TL8OdtEcrgivp0/vV9xKsHzZDynoliK4kvm/o4X4UYT4ZpGP2aNtUMcZlvh2IYhyLJ282NAJWfiGLrKMBvf6T4+c6r6PyLkePcgcTM/A9aLbQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0aSQxKP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASUd6Int"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30AA1F000E9;
-	Thu, 16 Jul 2026 14:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0aSQxKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC391F000E9;
+	Thu, 16 Jul 2026 14:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212468;
-	bh=vZClFZ1g5Ke+vxJt0wntC9lwFeYzunjbfk3qVMlpTtw=;
+	s=korg; t=1784212470;
+	bh=kKM1wyyYRn7QblEb7hdGe6plHLnOR7hGm1rPzsl+0ZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ASUd6Int6mzDy33yB5QNzOCO/8da0fTZklNHqrlyGDqTquhlwzkgu6efaOnZ1UUZk
-	 EeEIJatZwIqR6xKhCk0Hicu9jfaSK4d3mYfYdx+GMK/ejgU5Bx6ygW3pDvSdAs0Yfj
-	 Ln5kDtK/Q1NBHEHY91RZ53eK+aHBf/i3/lNjSnXU=
+	b=S0aSQxKPTXVPnrab7h9c5S4W1MbUd0EtkbVNicz3F96W+G7oxzXYgtxBBl2ZFjyG/
+	 0EINQbPUT1n1sLTJiw7d6O36osozuz0AHgkPawGW/F4k/cVJ9y2fsNNxJEzyBZaAJT
+	 VXmjxmF+qJENPbVb8AwFLDY/WLQYlmbw/D3yeTzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 340/349] Input: mms114 - fix multi-touch slot corruption
-Date: Thu, 16 Jul 2026 15:34:34 +0200
-Message-ID: <20260716133040.918335165@linuxfoundation.org>
+Subject: [PATCH 6.12 341/349] Input: maple_keyb - set driver data before registering input device
+Date: Thu, 16 Jul 2026 15:34:35 +0200
+Message-ID: <20260716133040.940907944@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit adea84ee6cdea611146c4251d3c1616f5a09feca upstream.
+commit 536394ec81419b67d9f4f0028812c4372397be1b upstream.
 
-If the touchscreen controller reports a touch ID of 0, the driver
-calculates the slot ID as touch->id - 1, which underflows to UINT_MAX.
-This is passed to input_mt_slot() as -1.
+Set maple driver data before calling input_register_device() to
+ensure that it is available if the device is opened immediately and
+the callback is triggered.
 
-Since the input core ignores negative slot values, the active slot remains
-unchanged. The driver then reports the touch coordinates for the previously
-active slot, corrupting its state.
-
-Fix this by rejecting touch reports with ID 0.
-
-Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
 Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260704060115.353049-1-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/mms114.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/keyboard/maple_keyb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/touchscreen/mms114.c
-+++ b/drivers/input/touchscreen/mms114.c
-@@ -165,7 +165,7 @@ static void mms114_process_mt(struct mms
- 	unsigned int x;
- 	unsigned int y;
+--- a/drivers/input/keyboard/maple_keyb.c
++++ b/drivers/input/keyboard/maple_keyb.c
+@@ -169,6 +169,8 @@ static int probe_maple_kbd(struct device
+ 	kbd->dev = idev;
+ 	memcpy(kbd->keycode, dc_kbd_keycode, sizeof(kbd->keycode));
  
--	if (touch->id > MMS114_MAX_TOUCH) {
-+	if (touch->id == 0 || touch->id > MMS114_MAX_TOUCH) {
- 		dev_err(&client->dev, "Wrong touch id (%d)\n", touch->id);
- 		return;
- 	}
++	maple_set_drvdata(mdev, kbd);
++
+ 	idev->name = mdev->product_name;
+ 	idev->evbit[0] = BIT(EV_KEY) | BIT(EV_REP);
+ 	idev->keycode = kbd->keycode;
+@@ -193,8 +195,6 @@ static int probe_maple_kbd(struct device
+ 
+ 	mdev->driver = mdrv;
+ 
+-	maple_set_drvdata(mdev, kbd);
+-
+ 	return error;
+ 
+ fail_register:
 
 
