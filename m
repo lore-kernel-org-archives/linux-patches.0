@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5E23074B1;
-	Thu, 16 Jul 2026 13:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8980D3009E1;
+	Thu, 16 Jul 2026 13:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209522; cv=none; b=cBiu/1umQCuAJ7cMpgItdJg1jcTOIuIAKyiGp3/lXyhL1RDlRGjromuZs5NEb+hHJdCVIhgZsz8wKexlalrQncXAUNrJ9oKnNJoTp2RUSh+g6kp2QW+r6Z+EqEq8Hqxhatf7uhtxpnnv8paJj1EIf/qZuIHCuhpUTRJzamh9vlY=
+	t=1784209525; cv=none; b=Mrad5P+Wxh4Vki8B2cVncybNNPr43xGlqr1LbLfPLdPNJl2FhqeltLp1bjz75MWiVFjHWGN3Sq6FkLflnzR749N2lD0wQdieFx2/PSzsGscjOiODOYok0JB44BQjilF3cJMHQYgInoZbitLYMHSUT4T1Iel9idLRRd+O7JxjBZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209522; c=relaxed/simple;
-	bh=mz8/mDkXcCUYCnza/iSc+lQb35o4pnR9YT7IGZACtKA=;
+	s=arc-20240116; t=1784209525; c=relaxed/simple;
+	bh=xIX3YW99XDtikc/wkt7a1P6DPlp8jlkGjwaFgebI/y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=idKCrYsqLfy3Znyx9yqK9tEwG1HCw8AXsYB2PCB81iBxH1v+ttE9diIBFODZ/2CPMygIvAcsgz1ZWCO6vucogqJCLzjV1IqFZAw6hU4OyAAM12GAwVSNUX2Lm5LaMGLa0Jh9+Pe9Z9QgrWpPY7JUjqqVtbNvq0emI2+VG1audoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7OhS1TV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UhzbprHFPIgd+w1zYZJSn7figiSnFxmX3FQ2bDAJxXWgxQUaqxcK0/NgjhuAWepHyo2azPUL3WkKk2MX0NkWYnabT77w89Ixy2CdPXpJ0BNfoz7axH0QLMKxGRs5f0AeDcY3Ywq9PN6wwPe5wZHUd5ITlJPQLWFyt50CGOJCk6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7t8FqS+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7OhS1TV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8301F000E9;
-	Thu, 16 Jul 2026 13:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7t8FqS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DEA1F000E9;
+	Thu, 16 Jul 2026 13:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209521;
-	bh=1345oTyPR99P5/IwezY8xV/q7qBDKKIhY5eMYJAfraM=;
+	s=korg; t=1784209523;
+	bh=j7gvdarG/paqLmDYJ5eKBK/tR7ww9euZQhc7bzy+Miw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z7OhS1TV6E6qJky+FJf0BsN6kbhmOVgHvDLbyJa/qOZVPZe88WUwBIir8+dL2aDgm
-	 TMK3R/EAd0gDRrKbzsDTbtEde7qqR0/2KhiomqTRI+qGE5/oBVDW2HVnRHPOV5SNNi
-	 OYPnvRJp0corsVO24bbdNr5CGrt2l5COeYmsOy6U=
+	b=d7t8FqS+gvF2cG87L0DaE+LRnDTYMAE1BUlDkWdrC4AOe1zIZ0eq1AU8eJ/ees8bg
+	 UwWn9lg74RQpWG7YmOHzXIhoMqwgsrshWYsOyWDy4e0MHJQuRhfFuERq/70AR8OIHC
+	 UnoBRdQa061ygQ4vLf9LYV4Izn3KxpJhZe23tnOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Wang <wangchi@kylinos.cn>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.1 173/518] audit: Fix data races of skb_queue_len() readers on audit_queue
-Date: Thu, 16 Jul 2026 15:27:21 +0200
-Message-ID: <20260716133051.624719819@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>
+Subject: [PATCH 7.1 164/518] staging: rtl8723bs: fix OOB reads in IE loops in issue_assocreq() and join_cmd_hdl()
+Date: Thu, 16 Jul 2026 15:27:12 +0200
+Message-ID: <20260716133051.429531992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -45,114 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chi Wang <wangchi@kylinos.cn>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit c9a71daaecb2fb1d8c704545cc0b1c920b9bf5d7 upstream.
+commit ef61d628dfad38fead1fd2e08979ae9126d011d5 upstream.
 
-Multiple readers access audit_queue.qlen via skb_queue_len() without
-holding the queue lock or using READ_ONCE(), while kauditd writes to
-this field via the skb_dequeue() → __skb_unlink() path with WRITE_ONCE()
-protected by a spinlock. This constitutes data races.
+Two IE parsing loops are missing the header bounds checks before they
+dereference pIE->length:
 
-All affected skb_queue_len(&audit_queue) call sites:
-  - kauditd_thread() wait_event_freezable() condition
-  - audit_receive_msg() AUDIT_GET handler (s.backlog assignment)
-  - audit_receive() backlog check
-  - audit_log_start() backlog check and pr_warn()
+ - issue_assocreq() walks pmlmeinfo->network.ies to build the
+   association request. If the stored IE data ends with only an
+   element_id byte and no length byte, pIE->length is read one byte
+   past the end of the buffer.
 
-KCSAN reports the following conflicting access pattern (one example):
-==================================================================
-BUG: KCSAN: data-race in audit_log_start / skb_dequeue
+ - join_cmd_hdl() walks pnetwork->ies during station join and has
+   the same problem under the same conditions.
 
-write (marked) to 0xffffffff8512ee20 of 4 bytes by task 661 on cpu 57:
- skb_dequeue+0x70/0xf0
- kauditd_send_queue+0x71/0x220
- kauditd_thread+0x1cb/0x430
- kthread+0x1c2/0x210
- ret_from_fork+0x162/0x1a0
- ret_from_fork_asm+0x1a/0x30
+Both buffers are filled from AP beacon and probe-response frames, so a
+malicious AP that sends a truncated final IE can trigger the issue.
 
-read to 0xffffffff8512ee20 of 4 bytes by task 36586 on cpu 1:
- audit_log_start+0x2a0/0x6b0
- audit_core_dumps+0x64/0xa0
- do_coredump+0x14b/0x1260
- get_signal+0xeb2/0xf70
- arch_do_signal_or_restart+0x41/0x170
- exit_to_user_mode_loop+0xa2/0x1c0
- do_syscall_64+0x1a3/0x1c0
- entry_SYSCALL_64_after_hwframe+0x76/0xe0
+Apply the two-guard pattern established in update_beacon_info():
+  1. Break if fewer than sizeof(*pIE) bytes remain.
+  2. Break if the IE's declared data extends past the buffer end.
 
-value changed: 0x00000001 -> 0x00000000
-==================================================================
-
-Resolve the race by switching to lockless helper skb_queue_len_lockless(),
-which internally uses READ_ONCE() and properly pairs with the WRITE_ONCE()
-write accesses already present on the writer side.
-
-Cc: stable@vger.kernel.org
-Fixes: 3197542482df ("audit: rework audit_log_start()")
-Signed-off-by: Chi Wang <wangchi@kylinos.cn>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: line length tweak]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Link: https://patch.msgid.link/20260522004531.1038924-3-hossu.alexandru@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -950,7 +950,7 @@ main_queue:
- 		 *       do the multicast send and rotate records from the
- 		 *       main queue to the retry/hold queues */
- 		wait_event_freezable(kauditd_wait,
--				     (skb_queue_len(&audit_queue) ? 1 : 0));
-+				(skb_queue_len_lockless(&audit_queue) ? 1 : 0));
- 	}
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -2935,7 +2935,11 @@ void issue_assocreq(struct adapter *pada
  
- 	return 0;
-@@ -1283,7 +1283,7 @@ static int audit_receive_msg(struct sk_b
- 		s.rate_limit		   = audit_rate_limit;
- 		s.backlog_limit		   = audit_backlog_limit;
- 		s.lost			   = atomic_read(&audit_lost);
--		s.backlog		   = skb_queue_len(&audit_queue);
-+		s.backlog		   = skb_queue_len_lockless(&audit_queue);
- 		s.feature_bitmap	   = AUDIT_FEATURE_BITMAP_ALL;
- 		s.backlog_wait_time	   = audit_backlog_wait_time;
- 		s.backlog_wait_time_actual = atomic_read(&audit_backlog_wait_time_actual);
-@@ -1627,7 +1627,7 @@ static void audit_receive(struct sk_buff
+ 	/* vendor specific IE, such as WPA, WMM, WPS */
+ 	for (i = sizeof(struct ndis_802_11_fix_ie); i < pmlmeinfo->network.ie_length;) {
++		if (i + sizeof(*pIE) > pmlmeinfo->network.ie_length)
++			break;
+ 		pIE = (struct ndis_80211_var_ie *)(pmlmeinfo->network.ies + i);
++		if (i + sizeof(*pIE) + pIE->length > pmlmeinfo->network.ie_length)
++			break;
  
- 	/* can't block with the ctrl lock, so penalize the sender now */
- 	if (audit_backlog_limit &&
--	    (skb_queue_len(&audit_queue) > audit_backlog_limit)) {
-+	    (skb_queue_len_lockless(&audit_queue) > audit_backlog_limit)) {
- 		DECLARE_WAITQUEUE(wait, current);
+ 		switch (pIE->element_id) {
+ 		case WLAN_EID_VENDOR_SPECIFIC:
+@@ -5328,7 +5332,11 @@ u8 join_cmd_hdl(struct adapter *padapter
  
- 		/* wake kauditd to try and flush the queue */
-@@ -1933,7 +1933,7 @@ struct audit_buffer *audit_log_start(str
- 		long stime = audit_backlog_wait_time;
+ 	/* sizeof(struct ndis_802_11_fix_ie) */
+ 	for (i = _FIXED_IE_LENGTH_; i < pnetwork->ie_length;) {
++		if (i + sizeof(*pIE) > pnetwork->ie_length)
++			break;
+ 		pIE = (struct ndis_80211_var_ie *)(pnetwork->ies + i);
++		if (i + sizeof(*pIE) + pIE->length > pnetwork->ie_length)
++			break;
  
- 		while (audit_backlog_limit &&
--		       (skb_queue_len(&audit_queue) > audit_backlog_limit)) {
-+			(skb_queue_len_lockless(&audit_queue) > audit_backlog_limit)) {
- 			/* wake kauditd to try and flush the queue */
- 			wake_up_interruptible(&kauditd_wait);
- 
-@@ -1953,7 +1953,7 @@ struct audit_buffer *audit_log_start(str
- 			} else {
- 				if (audit_rate_check() && printk_ratelimit())
- 					pr_warn("audit_backlog=%d > audit_backlog_limit=%d\n",
--						skb_queue_len(&audit_queue),
-+						skb_queue_len_lockless(&audit_queue),
- 						audit_backlog_limit);
- 				audit_log_lost("backlog limit exceeded");
- 				return NULL;
+ 		switch (pIE->element_id) {
+ 		case WLAN_EID_VENDOR_SPECIFIC:/* Get WMM IE. */
 
 
