@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875FD22301;
-	Thu, 16 Jul 2026 13:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3040322301;
+	Thu, 16 Jul 2026 13:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210141; cv=none; b=klUs/w70WwG5RQjoFHgQL6TSCNabKgI3rrm9r5PXV5CD5f6jSAs/L6Z58shSUftIFPdXcIIeE0Rc9xgn0g6sNp9UN/2WdkI5TokzH6vKoJQ81fIh7guZZ6YTo1UdVPEonnZd6LrKHtwr8mJWbix/Dmmi7boS2SWrRZ/hPW8o/AI=
+	t=1784210144; cv=none; b=rkwXddjmpDEDjOFju5Pj+QicRYjcAp341mnJXsPLSA8+zzpi0cA2AAVQl+/4x+f3hlU7rT5RoV6Z2h1Hnfq4f27o6wr5/Dwh06TRMMFp/xpUvEfdyamE4lFVxVLKr7vBbJW+WzjxCeq1IHYjvvSUrc55ZcJ5CeG/EWyvplEHofI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210141; c=relaxed/simple;
-	bh=vYBgNB0yyOS+j8Ngh6Mkjlfw/e4u3Q46c7wHkDg/xrQ=;
+	s=arc-20240116; t=1784210144; c=relaxed/simple;
+	bh=ddqzTer13eNifYtjcMsAzmoBKzQDKlOaAVPyx03Cftk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/Dta8ivkxmrgRySTdj71ZSebHNLmZiZj6Z4x3Xyl1Y8oma6p5HP03I7KCByhjg1m/CYZcONc+bLM0i0NtcTEyMU0bHHqOaM8BIhrc26ZeYStQqBTLc4mEtNy/Ay9DzyrKLa1xuJogLlhTE11kfc0x7QmMxbR3UW0AOq36pgugE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bA+oH53u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HYQrT9SLaMOR3S6bGhaPuoEZPezegXurcsiz1gXRUujkyehGRHnTDT8MfAJ6xLj/qFxC5wMC8hZVL0j+5D1xQYPUl3yG1wOTLd370mBw3SfBh/wvkoFECVaI6EqfkA/xfNi5iTVkDsOrw4aZasw/FFo8ezlWe9/dORXUDUI0bfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNunUIym; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bA+oH53u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8101F000E9;
-	Thu, 16 Jul 2026 13:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNunUIym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9555B1F000E9;
+	Thu, 16 Jul 2026 13:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210140;
-	bh=5lPRJ+qCyYcVQloc2c/ss573HrfhIrOw5rc6syCfvik=;
+	s=korg; t=1784210143;
+	bh=HR1wvLDZraZZTvcVjWhloypwuPhPQ42z4pqH8Y0a8Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bA+oH53u9czcW58w71Md7IDUO/BBUZ9ED1jn0vxMmTA9aE8cV6Cx1FNZkvva9e0ha
-	 xyDb5rkbkm3nzIpSqkzLnvLv+xuhGChVqlTizbrBKBAG2THIXtKV+C96i4jVhF9nlh
-	 k6FBnySNmlGb4ipa1qyTPWS7XDZoEDwSHi670Pgw=
+	b=YNunUIymiDqvU22JFHRgx3xxPXs5i0cz6PVWPy1CMmG53ID8dYX6W6wC6V3/xtg5O
+	 ScT3ZTCf9H6E2vYLIAsREvObZnyL+wZklDEcBBsGXaZ1qMkB5rB+hmHWvZrhqaN0Aa
+	 X/0NDo3LJxXuqgD6rDxAKUxlqlgQOm+1maSlNIX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ackerley Tng <ackerleytng@google.com>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.1 454/518] KVM: SEV: Pin source page for write when adding CPUID data for SNP guest
-Date: Thu, 16 Jul 2026 15:32:02 +0200
-Message-ID: <20260716133057.778699131@linuxfoundation.org>
+Subject: [PATCH 7.1 455/518] KVM: SVM: Disable x2AVIC RDMSR interception for MSRs KVM actually supports
+Date: Thu, 16 Jul 2026 15:32:03 +0200
+Message-ID: <20260716133057.800219080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,87 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit f13e900599089b10113ceb36013423f0837c6792 upstream.
+commit 7f4b7092d9a173a4271e28c0ed1fc235994e309b upstream.
 
-When populating a guest_memfd instance with the initial CPUID data for an
-SNP guest, acquire a writable pin on the source page as KVM will write back
-the "correct" CPUID information if the userspace provided data is rejected
-by trusted firmware.  Because KVM writes to the source page using a kernel
-mapping, pinning for read could result in KVM clobbering read-only memory.
+When toggling x2AVIC on/off, use KVM's curated mask of x2APIC MSRs that
+can/should be passed through to the guest (or not) when 2AVIC is enabled.
+Using the effective list provided by the local APIC emulation fixes
+multiple (classes of) bugs, as the existing hand-coded list of MSRs is
+wrong on multiple fronts:
 
-Note, well-behaved VMMs are unlikely to be affected, as CPUID information
-is almost always dynamically generated by userspace, i.e. it's unlikely for
-the CPUID information to be backed by a read-only mapping.
+ - ARBPRI isn't supported by KVM, isn't accelerated by AVIC (for read or
+   write), and its #VMEXIT is fault-like, i.e. requires decoding the
+   instruction.  Disabling interception is nonsensical and suboptimal.
 
-Fixes: 2a62345b30529 ("KVM: guest_memfd: GUP source pages prior to populating guest memory")
+ - DFR and ICR2 aren't supported by x2APIC and so don't need their
+   intercepts disabled for performance reasons.  While the #GP due to
+   x2APIC being abled has higher priority than the trap-like #VMEXIT,
+   disabling interception of unsupported MSRs is confusing and unnecessary.
+
+ - RRR is completely unsupported.
+
+ - AVIC currently fails to pass through the "range of vectors" registers,
+   IRR, ISR, and TMR, as e.g. X2APIC_MSR(APIC_IRR) only affects IRR0, and
+   thus only disables intercept for vectors 31:0 (which are the *least*
+   interesting registers).
+
+ - TMCCT (the current APIC timer count) isn't accelerated by hardware, and
+   generates a fault-like AVIC_UNACCELERATED_ACCESS #VMEXIT, i.e. requires
+   KVM to decode the instruction to figure out what the guest was trying to
+   access.  Note, the only reason this isn't a fatal bug is that the AVIC
+   architecture had the foresight to guard against buggy hypervisors.  E.g.
+   if hardware simply read from the virtual APIC page, the guest would get
+   garbage (because the timer is emulated in software).
+
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-Link: https://patch.msgid.link/20260522-fix-sev-gmem-post-populate-v2-1-3f196bfad5a1@google.com
-[sean: rewrite shortlog and changelog, tag for stable@]
+Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://patch.msgid.link/20260514213115.1637082-3-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c   |    1 +
- arch/x86/kvm/vmx/tdx.c   |    2 +-
- include/linux/kvm_host.h |    3 ++-
- virt/kvm/guest_memfd.c   |    6 ++++--
- 4 files changed, 8 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/avic.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2470,6 +2470,7 @@ static int snp_launch_update(struct kvm
- 	sev_populate_args.type = params.type;
- 
- 	count = kvm_gmem_populate(kvm, params.gfn_start, src, npages,
-+				  params.type == KVM_SEV_SNP_PAGE_TYPE_CPUID,
- 				  sev_gmem_post_populate, &sev_populate_args);
- 	if (count < 0) {
- 		argp->error = sev_populate_args.fw_error;
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -3185,7 +3185,7 @@ static int tdx_vcpu_init_mem_region(stru
- 		};
- 		gmem_ret = kvm_gmem_populate(kvm, gpa_to_gfn(region.gpa),
- 					     u64_to_user_ptr(region.source_addr),
--					     1, tdx_gmem_post_populate, &arg);
-+					     1, false, tdx_gmem_post_populate, &arg);
- 		if (gmem_ret < 0) {
- 			ret = gmem_ret;
- 			break;
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -2601,7 +2601,8 @@ int kvm_arch_gmem_prepare(struct kvm *kv
- typedef int (*kvm_gmem_populate_cb)(struct kvm *kvm, gfn_t gfn, kvm_pfn_t pfn,
- 				    struct page *page, void *opaque);
- 
--long kvm_gmem_populate(struct kvm *kvm, gfn_t gfn, void __user *src, long npages,
-+long kvm_gmem_populate(struct kvm *kvm, gfn_t start_gfn, void __user *src,
-+		       long npages, bool may_writeback_src,
- 		       kvm_gmem_populate_cb post_populate, void *opaque);
- #endif
- 
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -858,7 +858,8 @@ out_unlock:
- 	return ret;
- }
- 
--long kvm_gmem_populate(struct kvm *kvm, gfn_t start_gfn, void __user *src, long npages,
-+long kvm_gmem_populate(struct kvm *kvm, gfn_t start_gfn, void __user *src,
-+		       long npages, bool may_writeback_src,
- 		       kvm_gmem_populate_cb post_populate, void *opaque)
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -122,6 +122,9 @@ static u32 x2avic_max_physical_id;
+ static void avic_set_x2apic_msr_interception(struct vcpu_svm *svm,
+ 					     bool intercept)
  {
- 	struct kvm_memory_slot *slot;
-@@ -892,8 +893,9 @@ long kvm_gmem_populate(struct kvm *kvm,
++	struct kvm_vcpu *vcpu = &svm->vcpu;
++	u64 rd_regs;
++
+ 	static const u32 x2avic_passthrough_msrs[] = {
+ 		X2APIC_MSR(APIC_ID),
+ 		X2APIC_MSR(APIC_LVR),
+@@ -162,9 +165,15 @@ static void avic_set_x2apic_msr_intercep
+ 	if (!x2avic_enabled)
+ 		return;
  
- 		if (src) {
- 			unsigned long uaddr = (unsigned long)src + i * PAGE_SIZE;
-+			unsigned int flags = may_writeback_src ? FOLL_WRITE : 0;
++	rd_regs = kvm_x2apic_disable_read_intercept_reg_mask(vcpu);
++
++	for_each_set_bit(i, (unsigned long *)&rd_regs, BITS_PER_TYPE(rd_regs))
++		svm_set_intercept_for_msr(vcpu, APIC_BASE_MSR + i,
++					  MSR_TYPE_R, intercept);
++
+ 	for (i = 0; i < ARRAY_SIZE(x2avic_passthrough_msrs); i++)
+-		svm_set_intercept_for_msr(&svm->vcpu, x2avic_passthrough_msrs[i],
+-					  MSR_TYPE_RW, intercept);
++		svm_set_intercept_for_msr(vcpu, x2avic_passthrough_msrs[i],
++					  MSR_TYPE_W, intercept);
  
--			ret = get_user_pages_fast(uaddr, 1, 0, &src_page);
-+			ret = get_user_pages_fast(uaddr, 1, flags, &src_page);
- 			if (ret < 0)
- 				break;
- 			if (ret != 1) {
+ 	svm->x2avic_msrs_intercepted = intercept;
+ }
 
 
