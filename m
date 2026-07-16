@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BEE425868;
-	Thu, 16 Jul 2026 13:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71983424659;
+	Thu, 16 Jul 2026 13:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209762; cv=none; b=VyEXNkDfT0UbCPMiDpVzgxrENsz9DcDGjvJ5raZ8rLLTvHI9bUQgSqEHAhUY1gnxBe156lleH0TyUmdyyPpnTxYMaaROalGC3Q5Dtc0SfNx2J7sZA67m6XHtn9YzNT2Q5oKXiPexuzlCrDlDQXgeropa2vNo3bH/96vqaw/lWbI=
+	t=1784209764; cv=none; b=e1KLdnP92mSkU9lKeESqwHyMD7+ZBwja8e7L6MI2xp074lCBOMeTI2DkCok5uLxIL8bnjn36dkf3yZoPyLobXHgBzxG/pjejvw4UBUwChd0qPoYNCCjsPI8sYlzEJcYzXyVd/tFQFIccVWqTdZCtwGUQVDxxkr8nZ6VF2TIs7HY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209762; c=relaxed/simple;
-	bh=xrl9r5Olj/Njtcu54mFx2A7rai0HojM0FtYBmaNs42A=;
+	s=arc-20240116; t=1784209764; c=relaxed/simple;
+	bh=hroJE3WSutRwPbmzHpXhWL8oGNMHaovcv5IErB2UG2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRRNAuTnXCUNuEuYtxDWTwAINYyfx5+paJQbLjhQs82VL8HodN5qXCzvNacTtkSJ0rVp3auhrQIF95zS1PdPkKGfyM7Knbd/pdl9q0/XFYWzQeWUn9bWBJXiy6BJVS7dW8kHCZUO0JMpKFLQT5XX5wAwnbFCuG4AzooHbn1BRFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iG8ax+b2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TifQw0zjmIfPiz/VP5w2VHdmKsKwsRkn2NI/xkvghsaXZWd+Yg+jRQMGSR3iNiElMfJld+mwEPImZTZfJ0er0aBYg/nPLXe+ycZiKMJ4effox0axW2cmxhfQGH6gFlS/UpiW2Vor+bpfpz/ftDXhmSeUkburhs14pUKlZOgGANk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYenhL+D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iG8ax+b2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0151F00A3D;
-	Thu, 16 Jul 2026 13:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYenhL+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A991F00A3A;
+	Thu, 16 Jul 2026 13:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209757;
-	bh=IBVy9Uith7otCEwC5BZW8xEeGgBOCCmDq0JXoGnbBgU=;
+	s=korg; t=1784209760;
+	bh=IRDSi4SgqgXFKTAkC2pGoQlKY0yzfBpXMB8qT6NzItY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iG8ax+b2puSNgjv1eDDU/ZAemK3rbtB9s0kQGi2pSv5v5m6MOOxXNU1kON9fnSLLi
-	 Z5x8cjtbHI4LbLHGK1+2g43PNE6d3Jl9zbPkbb8/tXoABFajdZok0r/nMgdhb2GiEX
-	 aelvdr8vYXroetwRxRLoOj6SMhsb0ermlWTDocN4=
+	b=UYenhL+DrLovda+ZGYOS//ka6nUhostcIieqccAMvXfS9sEaqvYkROOxtC0wmfrCK
+	 USTInNKTTTTgkBl1JS+6wpXSnPwla23pB0Po4ODLW92xJa+m8vSmDS+n0spsPNTlgk
+	 oJkGP+qM574mfGlKtrYNfZyouXtY+VvUCgstHKgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yichong Chen <chenyichong@uniontech.com>,
 	SeongJae Park <sj@kernel.org>,
-	Xuewen Wang <wangxuewen@kylinos.cn>,
 	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Subject: [PATCH 7.1 263/518] tools/mm/slabinfo: Fix trace disable logic inversion
-Date: Thu, 16 Jul 2026 15:28:51 +0200
-Message-ID: <20260716133053.574239479@linuxfoundation.org>
+Subject: [PATCH 7.1 264/518] tools/mm/slabinfo: fix total_objects attribute name
+Date: Thu, 16 Jul 2026 15:28:52 +0200
+Message-ID: <20260716133053.595496283@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,36 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Wang <wangxuewen@kylinos.cn>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 235ab68d67eadbef1fdbfb771f21f5bacc77a2ae upstream.
+commit 892a7864730775c3dbee2a39e9ead4fa8d4256e7 upstream.
 
-The disable trace path in slab_debug() had a logic error where it would
-set trace=1 instead of trace=0. This made trace functionality permanently
-enabled once turned on for any slab cache.
+SLUB exports the total_objects sysfs attribute, but slabinfo tries to read
+objects_total. As a result, the lookup fails and the field remains zero.
 
-Fixes: a87615b8f9e2 ("SLUB: slabinfo upgrade")
-Cc: stable@vger.kernel.org
+Use the correct attribute name and rename the corresponding structure
+member to match.
+
+Fixes: 205ab99dd103 ("slub: Update statistics handling for variable order slabs")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Cc: <stable@vger.kernel.org>
 Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Xuewen Wang <wangxuewen@kylinos.cn>
-WARNING: From:/Signed-off-by: email address mismatch: 'From: wangxuewen <18810879172@163.com>' != 'Signed-off-by: wangxuewen <wangxuewen@kylinos.cn>'
-Link: https://patch.msgid.link/20260518062159.80664-2-wangxuewen@kylinos.cn
+Link: https://patch.msgid.link/96556748872BB47E+20260612071359.649946-1-chenyichong@uniontech.com
 Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/mm/slabinfo.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/mm/slabinfo.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/tools/mm/slabinfo.c
 +++ b/tools/mm/slabinfo.c
-@@ -798,7 +798,7 @@ static void slab_debug(struct slabinfo *
- 			fprintf(stderr, "%s can only enable trace for one slab at a time\n", s->name);
- 	}
- 	if (!tracing && s->trace)
--		set_obj(s, "trace", 1);
-+		set_obj(s, "trace", 0);
- }
- 
- static void totals(void)
+@@ -33,7 +33,7 @@ struct slabinfo {
+ 	unsigned int hwcache_align, object_size, objs_per_slab;
+ 	unsigned int sanity_checks, slab_size, store_user, trace;
+ 	int order, poison, reclaim_account, red_zone;
+-	unsigned long partial, objects, slabs, objects_partial, objects_total;
++	unsigned long partial, objects, slabs, objects_partial, total_objects;
+ 	unsigned long alloc_fastpath, alloc_slowpath;
+ 	unsigned long free_fastpath, free_slowpath;
+ 	unsigned long free_frozen, free_add_partial, free_remove_partial;
+@@ -1263,7 +1263,7 @@ static void read_slab_dir(void)
+ 			slab->object_size = get_obj("object_size");
+ 			slab->objects = get_obj("objects");
+ 			slab->objects_partial = get_obj("objects_partial");
+-			slab->objects_total = get_obj("objects_total");
++			slab->total_objects = get_obj("total_objects");
+ 			slab->objs_per_slab = get_obj("objs_per_slab");
+ 			slab->order = get_obj("order");
+ 			slab->partial = get_obj("partial");
 
 
