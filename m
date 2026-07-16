@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9053F41F37E;
-	Thu, 16 Jul 2026 14:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296682FDC53;
+	Thu, 16 Jul 2026 14:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211165; cv=none; b=tOOAo8BuiRj1yXC5EYhsOsqHwAJFIIGuwSp+b2/p+2mUIO/1BjX95nXu5CTp3KA+rQfi0t4BlzdCb70u64eQSTC/O+9QEZV4UknW5H6WEt9YsBa6YF5xgRJJx2TGPmMFm9tpjPpfb1Pzf9s2OhFc6X25n8GIdwfTwwx+2VvZqjw=
+	t=1784211168; cv=none; b=dSSIT6Uf9jB/WYM40jjg7J1jFLWeFs5iGt0hCU4WlNEZ1Ph4tYD+eha/j9B5dbLD6FyrKmZTz6kLcljwEO7TN8ahX9G4OXwEd5WaZRVOahKp0ml7ATJzD2g6PBwLgFIaZVQUJzxJkvPa6/CNIm9v0zYmBevEyIji+5BR/JTZwAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211165; c=relaxed/simple;
-	bh=oGRhFSGLDi3YqFmlAq170rwpVH5S6yidMBd/4spFv6g=;
+	s=arc-20240116; t=1784211168; c=relaxed/simple;
+	bh=pwZOQuhm8O7q1ap6HGPufeBCm/yg7zw9uTw3wSlTt2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tckADEFNUWOtowohZocKM0knhd00FdjYKx4OL1JW+Ww/5QgJp9R7r+kUrMQ8i3bG1lnT/3PbPlt71nTVhzEP3rufzkv34gGjsagdeYfRNV4OO5YDAAcJrcCCm/7UKkC5tBraC/+0NXBAWAyrC59uRf4q5yVCB/fgTnYqGjRZa6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjPaeUor; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PJ+00SBcMRRxBnmFvEvn3FYQu8meL3Xha1T1K4Vd68TFm+bQwO92rTRG2D1azq0jTXoA4EIOdsDEcMmBBIc4C+H6V04s9OqWKPxfIRMyIu+Cra6jLgzgtqHNCCvXDaKBhoVzA7CD54pD/ko0lh7E3qenvVg3uqXQNUlmEEcQUeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSboaBvD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjPaeUor"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005C81F000E9;
-	Thu, 16 Jul 2026 14:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSboaBvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D321F000E9;
+	Thu, 16 Jul 2026 14:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211164;
-	bh=mAqHO7gd7H/AvHLsZdO2XIDSoPuuR2ZTqjfoDwD5KAw=;
+	s=korg; t=1784211167;
+	bh=NuXPhibCv26cAorhqDNiewX79jC+rMJpKZjIRnIK1y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjPaeUorW2yFqmugcOnWfnz6BaJ60ASouMVVE/0vt2IU6JmijXHwTKOc9swfOZDLX
-	 Zcd0CSnElrmoYVTqcG7P5ktaGuJ/oIdspb4bY8c7RskJHB9AxssO3R3xkYHR4VmVxK
-	 ohEzkjkxQ/tSDaenn8H4haqbuWCS/1pbb9hHPNow=
+	b=HSboaBvDZldkL691xw+kv9zecPkYwEZJesAfSMzetV8EOPNafDmCVZawgqRnabJ7D
+	 rAxuPIGyTrKhdTKRQzEKIenALfRu6MkE30btrRYa9wmZ2fcsS20U9e0o6dtzYW8g36
+	 NdNl0AUDJorvO69DMLK/9TrIZbE29K19VCukyU9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 322/480] x86,fs/resctrl: Prevent out-of-bounds access while offlining CPU when SNC enabled
-Date: Thu, 16 Jul 2026 15:31:09 +0200
-Message-ID: <20260716133051.784783681@linuxfoundation.org>
+	Yonghong Song <yonghong.song@linux.dev>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.18 281/480] bpf: Restore sysctl new-value from 1 to 0
+Date: Thu, 16 Jul 2026 15:30:28 +0200
+Message-ID: <20260716133050.906767479@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,133 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit fc16126cc11d9f507130bf84ab137ee0938c900e upstream.
+commit 2566c3b24219c5b30e35205cba029ff34ff7c78b upstream.
 
-The architecture updates the cpu_mask in a domain's header to track which
-online CPUs are associated with the domain. When this mask becomes empty
-the architecture initiates offline of the domain that includes calling
-on resctrl fs to offline the domain. If it is a monitoring domain in
-which LLC occupancy is tracked resctrl fs forces the limbo handler to
-clear all busy RMID state associated with the domain.
+Commit 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value
+helpers") changed the success return value to 0, but failed to update the
+corresponding check in __cgroup_bpf_run_filter_sysctl(). Since
+bpf_prog_run_array_cg() now returns 0 on success, the legacy ret == 1
+condition is never satisfied. As a result, the modified value is ignored,
+and bpf_sysctl_set_new_value() fails to replace the write buffer.
 
-The limbo handler always reads the current event value associated with a
-busy RMID irrespective of it being checked as part of regular "is it still
-busy" check or whether it will be forced released anyway. When reading an
-RMID on a system with SNC enabled the "logical RMID" is converted to the
-"physical RMID" and this conversion requires the NUMA node ID of the
-resctrl monitoring domain that is in turn determined by querying the NUMA
-node ID of any CPU belonging to the monitoring domain.
+Fix this by checking for a return value of 0 instead, so cgroup/sysctl
+programs can correctly replace the pending sysctl buffer.
 
-When the monitoring domain is going offline its cpu_mask is empty causing
-the NUMA node ID query via cpu_to_node() to be done with "nr_cpu_ids" as
-argument resulting in an out-of-bounds access.
+This bug was discovered during a manual code review. Tested via a
+cgroup/sysctl BPF reproducer overriding writes to a target sysctl.
+Pre-fix, bpf_sysctl_set_new_value("foo") was silently ignored: the write
+returned 8192 and the value remained "600". Post-fix, the BPF replacement
+buffer properly propagates: the write returns 3 and the value updates to
+"foo".
 
-Refactor the limbo handler to skip reading the RMID when the RMID will
-just be forced to no longer be dirty in the domain anyway. Add a safety
-check to the architecture's RMID reader to protect against this scenario.
+Fixes: f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err instead of allow boolean")
+Cc: stable@vger.kernel.org
 
-Fixes: e13db55b5a0d ("x86/resctrl: Introduce snc_nodes_per_l3_cache")
-Closes: https://sashiko.dev/#/patchset/cover.1780456704.git.reinette.chatre%40intel.com?part=9
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/16137433df42f85013b2f7a53626795cbd6637b9.1781029125.git.reinette.chatre@intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Xu Kuohai <xukuohai@huawei.com>
+Link: https://lore.kernel.org/r/20260603105317.944304-4-dawei.feng@seu.edu.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/monitor.c |  8 +++++-
- fs/resctrl/monitor.c                  | 39 +++++++++++++++------------
- 2 files changed, 29 insertions(+), 18 deletions(-)
+ kernel/bpf/cgroup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index fe1a2aa53c16ab..4b2b539ddff953 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -243,14 +243,20 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_mon_domain *d,
- 			   u64 *val, void *ignored)
- {
- 	struct rdt_hw_mon_domain *hw_dom = resctrl_to_arch_mon_dom(d);
--	int cpu = cpumask_any(&d->hdr.cpu_mask);
- 	struct arch_mbm_state *am;
- 	u64 msr_val;
- 	u32 prmid;
-+	int cpu;
- 	int ret;
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -1939,7 +1939,7 @@ int __cgroup_bpf_run_filter_sysctl(struc
  
- 	resctrl_arch_rmid_read_context_check();
+ 	kfree(ctx.cur_val);
  
-+	if (cpumask_empty(&d->hdr.cpu_mask)) {
-+		pr_warn_once("Domain %d has no CPUs\n", d->hdr.id);
-+		return -EINVAL;
-+	}
-+
-+	cpu = cpumask_any(&d->hdr.cpu_mask);
- 	prmid = logical_rmid_to_physical_rmid(cpu, rmid);
- 	ret = __rmid_read_phys(prmid, eventid, &msr_val);
- 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 572a9925bd6ca0..7012a75814ac36 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -135,9 +135,9 @@ void __check_limbo(struct rdt_mon_domain *d, bool force_free)
- 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
- 	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
- 	struct rmid_entry *entry;
-+	bool rmid_dirty = true;
- 	u32 idx, cur_idx = 1;
- 	void *arch_mon_ctx;
--	bool rmid_dirty;
- 	u64 val = 0;
- 
- 	arch_mon_ctx = resctrl_arch_mon_ctx_alloc(r, QOS_L3_OCCUP_EVENT_ID);
-@@ -159,22 +159,27 @@ void __check_limbo(struct rdt_mon_domain *d, bool force_free)
- 			break;
- 
- 		entry = __rmid_entry(idx);
--		if (resctrl_arch_rmid_read(r, d, entry->closid, entry->rmid,
--					   QOS_L3_OCCUP_EVENT_ID, &val,
--					   arch_mon_ctx)) {
--			rmid_dirty = true;
--		} else {
--			rmid_dirty = (val >= resctrl_rmid_realloc_threshold);
--
--			/*
--			 * x86's CLOSID and RMID are independent numbers, so the entry's
--			 * CLOSID is an empty CLOSID (X86_RESCTRL_EMPTY_CLOSID). On Arm the
--			 * RMID (PMG) extends the CLOSID (PARTID) space with bits that aren't
--			 * used to select the configuration. It is thus necessary to track both
--			 * CLOSID and RMID because there may be dependencies between them
--			 * on some architectures.
--			 */
--			trace_mon_llc_occupancy_limbo(entry->closid, entry->rmid, d->hdr.id, val);
-+		if (!force_free) {
-+			if (resctrl_arch_rmid_read(r, d, entry->closid,
-+						   entry->rmid, QOS_L3_OCCUP_EVENT_ID,
-+						   &val, arch_mon_ctx)) {
-+				rmid_dirty = true;
-+			} else {
-+				rmid_dirty = (val >= resctrl_rmid_realloc_threshold);
-+
-+				/*
-+				 * x86's CLOSID and RMID are independent numbers,
-+				 * so the entry's CLOSID is an empty CLOSID
-+				 * (X86_RESCTRL_EMPTY_CLOSID). On Arm the RMID
-+				 * (PMG) extends the CLOSID (PARTID) space with
-+				 * bits that aren't used to select the configuration.
-+				 * It is thus necessary to track both CLOSID and
-+				 * RMID because there may be dependencies between
-+				 * them on some architectures.
-+				 */
-+				trace_mon_llc_occupancy_limbo(entry->closid, entry->rmid,
-+							      d->hdr.id, val);
-+			}
- 		}
- 
- 		if (force_free || !rmid_dirty) {
--- 
-2.53.0
-
+-	if (ret == 1 && ctx.new_updated) {
++	if (!ret && ctx.new_updated) {
+ 		kvfree(*buf);
+ 		*buf = ctx.new_val;
+ 		*pcount = ctx.new_len;
 
 
