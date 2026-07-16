@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32B9433BA7;
-	Thu, 16 Jul 2026 14:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A05442BE98;
+	Thu, 16 Jul 2026 14:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212381; cv=none; b=kmqLHHz8HOmmc/k1SYhBPimNtzpNddXf1KSKEJ1JBkKCUZ5qsFTYIRef7RNw12+yV+MXhXYrLS8outFUvJSBQo44crfSCmgIWBL3zzOts9iOVKMYVUc2s3dwIX/qt0hBMFIYw4VgnK6rhzg4VS+l2VoHSRdurnOAn+jDyGsIL0k=
+	t=1784212383; cv=none; b=FVtA0DRlC9azdyuxvydOYV3USWULjGlnLmBz91UViAsY8h5b2pBi3yMPX5Dj+QYJ+RHQ60ZXybdEedYt6pBYi3Pex4GzzNr3Nvgv1a8JrQFINH7LMkwHR+ZW1tbgrLgX6zq/GweRKr+IF4PRft9atlBoDv1vDbeQ0gC5xI/vJ+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212381; c=relaxed/simple;
-	bh=wCg13RzWP61gnKnsD5Kz/16SBgiIpbMasi/UsmXGsa4=;
+	s=arc-20240116; t=1784212383; c=relaxed/simple;
+	bh=4CNy360/D22Kjxq+8fPJpecjS/tbw/sS1wGZ3jMImjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edcC/3y9qK4fIx95ojnw9/35Eut8sgUv4rH1vjjjTdWl3regjR5JwUPqwkK5+iMMkpCiyeQbByRjCbn2nMD28lhetEFwor1cFhGBLWfqSDIVawUMqbbEkY4fdQHr6J7JG4bb38M3lt1ZnGYx7Tju346t0tDVJu3bXVcglFRLmaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O10ncob8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lriGwZSmXU6a+8vWzOM9MMW4/l/7LbmKN3sWBUG7XHPuxs1g0SJ8X0RCPBrAwEJff+Q6F+URaimesNNkTNURTAYrYVBQ6CvPxGr2czqmoce2lyb5npPI4XQzYanK26C5gWpJvHr6qdWt4RQwsusnf7aT0e+1F8P2QEEVSIea/fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWFaTJUb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O10ncob8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D571F000E9;
-	Thu, 16 Jul 2026 14:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWFaTJUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8611F000E9;
+	Thu, 16 Jul 2026 14:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212379;
-	bh=y6vKDxMv12Y1cEzF+G9y4aYjlJaDv+pMPzuXQYH+ceo=;
+	s=korg; t=1784212382;
+	bh=s0kpd1AEzm4gZ4ggFpPKa6m+BLBMjKbW/jHXA6YJCQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O10ncob8KjhIgqhqQ5990PcJOMPo00YNfYj/3ZoOpuSjXiq9JBxOWqqeyGnQNsBZj
-	 viqAVwOXEQl68jEvvT/B0rAdmbtmrzETIBCvs3HKc7d7mHkPifeGw/vUAyN2+y6mtQ
-	 dBEUyaxqpWsRDmbH4hn2s8s6tpbuXt91KEv4axLg=
+	b=UWFaTJUbSzSnVYgZYkTw+jb5AfsABYgNBeqVwIKTyEPHLQvPMRI571C0P2ENKXf+2
+	 izdIUWaic8hvi2flG+bEU7GimcKikuEelViLlHJZEAGWOha/Y25LlV849CgOMnfTen
+	 wU8OnNzcEi78V7wW4gRzvVb0JsJaYoOwIHFQ1hjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.12 305/349] audit: fix potential integer overflow in audit_log_n_hex()
-Date: Thu, 16 Jul 2026 15:33:59 +0200
-Message-ID: <20260716133040.146488745@linuxfoundation.org>
+	Trond Myklebust <trondmy@kernel.org>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.12 306/349] NFSv4: include MAY_WRITE in open permission mask for O_TRUNC
+Date: Thu, 16 Jul 2026 15:34:00 +0200
+Message-ID: <20260716133040.167335284@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,62 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Robaina <rrobaina@redhat.com>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-commit 65dfde57d1e29ce2b76fc23dd565eccd5c0bc0f0 upstream.
+commit 5140f099ecd8a2f2808b7f7b720ee1bad8468974 upstream.
 
-The function calculates new_len as len << 1 for hex encoding. This
-has two overflow risks: the shift itself can overflow when len is
-large, and the result can be truncated when assigned to new_len
-(declared as int) from the size_t calculation.
+POSIX requires write permission to truncate a file, so an open() that
+specifies O_TRUNC must be authorized for write access regardless of the
+O_ACCMODE access mode.
 
-Fix by using check_shl_overflow() to catch shift overflow and
-changing new_len and loop counter i to size_t to prevent truncation.
+nfs_open_permission_mask() builds the access mask passed to
+nfs_may_open(), which is the local authorization gate for OPENs the
+client serves itself from a cached write delegation via the
+can_open_delegated() path in nfs4_try_open_cached().  The mask is
+derived from O_ACCMODE alone, so an open(O_RDONLY | O_TRUNC) against a
+file the caller cannot write requests only MAY_READ and passes the
+local check.  The OPEN is then satisfied locally and the truncation is
+issued to the server as a SETATTR(size=0) over the delegation stateid,
+which the server accepts under standard write-delegation semantics.
+POSIX requires that this open fail with EACCES.
 
+Include MAY_WRITE in the mask whenever O_TRUNC is set so the local
+check matches the access the server would have enforced.
+
+Suggested-by: Trond Myklebust <trondmy@kernel.org>
+Fixes: af22f94ae02a ("NFSv4: Simplify _nfs4_do_access()")
 Cc: stable@vger.kernel.org
-Fixes: 168b7173959f ("AUDIT: Clean up logging of untrusted strings")
-Reviewed-by: Richard Guy Briggs <rgb@redhat.com>
-Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: remove vertical whitspace noise]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/nfs/dir.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -47,6 +47,7 @@
- #include <linux/mutex.h>
- #include <linux/gfp.h>
- #include <linux/pid.h>
-+#include <linux/overflow.h>
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -3318,6 +3318,8 @@ static int nfs_open_permission_mask(int
+ 			mask |= MAY_READ;
+ 		if ((openflags & O_ACCMODE) != O_RDONLY)
+ 			mask |= MAY_WRITE;
++		if (openflags & O_TRUNC)
++			mask |= MAY_WRITE;
+ 	}
  
- #include <linux/audit.h>
- 
-@@ -2030,7 +2031,8 @@ void audit_log_format(struct audit_buffe
- void audit_log_n_hex(struct audit_buffer *ab, const unsigned char *buf,
- 		size_t len)
- {
--	int i, avail, new_len;
-+	int avail;
-+	size_t i, new_len;
- 	unsigned char *ptr;
- 	struct sk_buff *skb;
- 
-@@ -2040,7 +2042,12 @@ void audit_log_n_hex(struct audit_buffer
- 	BUG_ON(!ab->skb);
- 	skb = ab->skb;
- 	avail = skb_tailroom(skb);
--	new_len = len<<1;
-+
-+	if (check_shl_overflow(len, 1, &new_len)) {
-+		audit_log_format(ab, "?");
-+		return;
-+	}
-+
- 	if (new_len >= avail) {
- 		/* Round the buffer request up to the next multiple */
- 		new_len = AUDIT_BUFSIZ*(((new_len-avail)/AUDIT_BUFSIZ) + 1);
+ 	return mask;
 
 
