@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AEF423E83;
-	Thu, 16 Jul 2026 13:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20870424667;
+	Thu, 16 Jul 2026 13:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209566; cv=none; b=MS8AGFPIyJRUdhllFtaLv7Q33idN59qm6GPs2du6guD7L5upQIOQF/BhHZFevEdABw0hIgH08S2tBGPHEW/qFtRXLIQj9goYoluKte3QIVqPaFcG6WEL2hGiertDnob86Nqcmg+U3GdxrKOm8WI/Se+vxHP4Ihi9H53Pc4WXb/I=
+	t=1784209570; cv=none; b=d1OrBI61560qimRIFLPym+YTgwJ/GPdbQrqNYoGC1Rut4JPYB1bqDg6RHDe6jk3hjXVSZag84iko2GDYNla0GzAlyV9oGsflKthy0Mu9ZJjPduoQagIQO4EAdWKpK+T7t4XerRGbUwFlmhDp8tfkD15wOW9+f9lnz6WfRyQJi+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209566; c=relaxed/simple;
-	bh=V4xt7n/oGQtTDBydxJNt5ZjqM8jq3p4xNGRj1Cktdv0=;
+	s=arc-20240116; t=1784209570; c=relaxed/simple;
+	bh=7Rdbu6H8whkzAazvrgpqJXYQWXkWPOKPmBUV6ouiqlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gteZvfIEsc3ymbGgF88vXlZ3j1MyltP2l9UCGE2mtz3a27yyX3YqOYeiYRiI1VP7n80UzKWsb4ZApvGjIRTOQeAwwX+tJQBmcm73aTkockTXnlKsveXrnUDTk8YziHsH3VPFwln8d1iZvlpK9lMtQV/YFDFbuRzCq45dcbAb5yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jR5uck+s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VDHjwZcFXh6gZ0yVnxTHMWqrifBoUxYQO3nUTtRP5Zo/kxRNiGgnfSxVrJ8AdvVip3IVo0I74HgTGao7qNcIdgsntRzYPWFk/2LadzoYCNn2+hw4fl73svc4Ok7FTAAdGj3KoEqpolP//KoLn3E0+1lI8uzooAhgeaUiYAKDG9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b//7QQvZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jR5uck+s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FC21F00A3A;
-	Thu, 16 Jul 2026 13:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b//7QQvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2E11F00A3F;
+	Thu, 16 Jul 2026 13:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209563;
-	bh=ESKCmLC/dWe2xsC8pSrhnLgYE/ytPxLGaw3CInEkiDs=;
+	s=korg; t=1784209565;
+	bh=cAV2QKwQv9aGvhJ97jBTNM/bQV20BTp1npMDcj9X5yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jR5uck+sNDlP99VfjOWD+8TS1et0oHBM1SONosrzyB5JoHKqMhrzMRULd4FnabP9o
-	 b990+14CD1sH6rWM/vNdWMrF6zobT/J5b1Rzrl597tWJgjAcB2A3B7axPSsBD8aPE4
-	 y2RXmx7prQPiX/u04BVe6dR1IVRlYAnjfVyBz/D4=
+	b=b//7QQvZ6wLrvI00cmfaCJuIu+XjTQYAiyr3zdtTqwDLXY2qdOnMC3XqrUVm7y1cD
+	 FHxQUR+QwDdul6+CSqICGTjC5X3/oJEu3HK/HEfQriaqj93ZV4UPTTivlY9/ywFQVe
+	 LQs3oxKukvm2C/hef6r96siCA9aoB+HRb6J6GXhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Henrique Carvalho <henrique.carvalho@suse.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 233/518] smb: client: fix double-free in SMB2_ioctl() replay
-Date: Thu, 16 Jul 2026 15:28:21 +0200
-Message-ID: <20260716133052.919401018@linuxfoundation.org>
+Subject: [PATCH 7.1 234/518] smb: client: fix change notify replay double-free
+Date: Thu, 16 Jul 2026 15:28:22 +0200
+Message-ID: <20260716133052.940895138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,10 +52,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-commit f9bbadb6c94583e3b4af1afc449bfceb1d1ddec9 upstream.
+commit 145f820dcbb2cced374f2532f8a61a44dce4a615 upstream.
 
 A response-bearing attempt can return a replayable error and free its
-response buffer. If SMB2_ioctl_init() fails before the next send, cleanup
+response buffer. If SMB2_notify_init() fails before the next send, cleanup
 retains the previous buffer type and frees that response again.
 
 Reset response bookkeeping before each attempt to prevent the stale free.
@@ -71,7 +71,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/fs/smb/client/smb2pdu.c
 +++ b/fs/smb/client/smb2pdu.c
-@@ -3505,6 +3505,8 @@ SMB2_ioctl(const unsigned int xid, struc
+@@ -4087,6 +4087,8 @@ SMB2_change_notify(const unsigned int xi
  
  replay_again:
  	/* reinitialize for possible replay */
