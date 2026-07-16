@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB7042A145;
-	Thu, 16 Jul 2026 13:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FAF424667;
+	Thu, 16 Jul 2026 13:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209752; cv=none; b=cViVubaUniN5OzA0/OkmDyYkHf1BZTvfQ7PMqaBszAuXWVzUBeyOoLjDLnYiNZ8K9uNUSYbUWo6DB+Rc9IfiZGKXsbwQsbrn6YUEOQ7F0aI4EyHkZLKFG6eLv49cFvatMUYLM/owFlCHKsO8BZt4XdjnTaAtH2WPvSK/+IVg4UM=
+	t=1784209756; cv=none; b=DZSVtMnv2VeDoqHCtK6eViu8bEG42zYyeMJFhbDhIXNPCysO8uakfuSUvY4paNdTyw+fZh4AVkaJae152FBJlS1XhI2w3pYH+fjafxKJ1Fk0HS8i3CnbYYEVxAeh4AANUc1HDp7ft+18Xz6TdxREAYlGVeyva03oWs0uB5uR89U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209752; c=relaxed/simple;
-	bh=3idRBA5mnnC8o5UvAW3IuJbIoPiVaMjwXzpWtk2LCuc=;
+	s=arc-20240116; t=1784209756; c=relaxed/simple;
+	bh=PQubyWAS7VwFn2qxiGwP106SKbIGPvMmU5PoVzUcMBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LE8ZC9TuXI+38aF+yY9NJMK15z5CiWYYuwUi67NZMg63U8fs6kYs1iZ/tUwg+ijevJfq5kN++9hgW2esMDbzCtw0+KAkZ17zaYuLKo3PwIQmnsBMfWTu8o21q+I0XyNu4jC9ciPSInwaJhlk5j1LvVlzRSsFH6wlD8Ceu2K125M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4MUOD47; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F/lt4chaBeHvKxmhRw7U+yR9m2dE4vIMAMhZ0Xmnw5RMoAE1r/DAuL/Bmep0U6VvnGtWHxp7gm3KN5DKKIMvk5sG2f5uaS/ii39FxTJ6wer7qKL9m19j7dou/XtAgK7I9/XTtbVKAgmyTm6xC0e6lQCZHAACJNVnvOMaM0NN3iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUfDMtal; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4MUOD47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29A01F000E9;
-	Thu, 16 Jul 2026 13:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUfDMtal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09F91F00A3D;
+	Thu, 16 Jul 2026 13:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209744;
-	bh=FlRq9JHbgu8zY4mW5gHOU9URLmIr22FMdaNfmyejQH0=;
+	s=korg; t=1784209749;
+	bh=VUiLWGCSkC62K6847wts28bKsti5KPL1D34iHovQo48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R4MUOD47hKvd3uIWzSI09zbN6bt9E0U3FsXDMay53NiLPaC9m7NEwyFlE8JzWWkDl
-	 QlpviTyQ0fEFLu6pdqnsSKSBsHBMGAqNBpzA6c9u+ttzHpaEzU/WL21oFGYV3y/FFd
-	 f/79ZSzRxLjvLSIrNhGB9jEE2XrA/SAO2Te4TkbE=
+	b=aUfDMtal7coHC4EuqwdShr8TrPS2iytpLdrr2QoXbn4iU0WsKqMhfQDUug9/8wX09
+	 Anxh0l6IcZ6vtiodXrCDJA8BpCijmbIKsye4RVFCC6MV0wU4bK+mE2GLUFldOu2WI3
+	 K/M/d0noLjc8PTtjUDmpgzcRylldcZzudBtjWr0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rodrigo=20Lugathe=20da=20Concei=C3=A7=C3=A3o=20Alves?= <lugathe2@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.1 300/518] USB: core: add USB_QUIRK_NO_LPM for VIA Labs USB 2.0 hub
-Date: Thu, 16 Jul 2026 15:29:28 +0200
-Message-ID: <20260716133054.381136674@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	WenTao Liang <vulab@iscas.ac.cn>
+Subject: [PATCH 7.1 302/518] usb: dwc3: meson-g12a: fix refcount leak in dwc3_meson_g12a_resume()
+Date: Thu, 16 Jul 2026 15:29:30 +0200
+Message-ID: <20260716133054.429503032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,52 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodrigo Lugathe da Conceição Alves <lugathe2@gmail.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit bd728c3d9b1cc0bb0fda6a7055c5c8b55d7477b2 upstream.
+commit 692c354bef03b77b30e57e61934da502c8a12d45 upstream.
 
-The VIA Labs, Inc. USB 2.0 hub controller (2109:2817),
-found in a KVM switch, fails to enumerate high-power devices during
-cold boot and system restart.
+If dwc3_meson_g12a_resume() succeeds in calling
+reset_control_reset(), an internal triggered_count reference is
+acquired. If any later step fails (usb_init, phy_init,
+phy_power_on, regulator_enable, or usb_post_init), the function
+returns the error without rearming the reset control. This leaks
+the reference and leaves the reset control in a triggered state,
+causing future reset_control_reset() calls to incorrectly return
+early as if already reset.
 
-Applying the kernel parameter
-  usbcore.quirks=2109:2817:k
-resolves the issue.
+Add an error path that calls reset_control_rearm() to balance
+the reference before returning the error.
 
-Enumeration failure log:
-  usb 1-1.2.3: device descriptor read/64, error -32
-  usb 1-1.2.3: Device not responding to setup address.
-  usb 1-1.2.3: device not accepting address 11, error -71
-  usb 1-1.2-port3: unable to enumerate USB device
-
-Add USB_QUIRK_NO_LPM for this device.
-
-Signed-off-by: Rodrigo Lugathe da Conceição Alves <lugathe2@gmail.com>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260603113626.395612-1-lugathe2@gmail.com
+Fixes: 5b0ba0caaf3a ("usb: dwc3: meson-g12a: refactor usb init")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260611131121.81784-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/dwc3/dwc3-meson-g12a.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -576,6 +576,9 @@ static const struct usb_device_id usb_qu
- 	/* VLI disk */
- 	{ USB_DEVICE(0x2109, 0x0711), .driver_info = USB_QUIRK_NO_LPM },
+--- a/drivers/usb/dwc3/dwc3-meson-g12a.c
++++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
+@@ -907,35 +907,39 @@ static int __maybe_unused dwc3_meson_g12
  
-+	/* VIA Labs, Inc. USB2.0 Hub */
-+	{ USB_DEVICE(0x2109, 0x2817), .driver_info = USB_QUIRK_NO_LPM },
+ 	ret = priv->drvdata->usb_init(priv);
+ 	if (ret)
+-		return ret;
++		goto err_rearm;
+ 
+ 	/* Init PHYs */
+ 	for (i = 0 ; i < PHY_COUNT ; ++i) {
+ 		ret = phy_init(priv->phys[i]);
+ 		if (ret)
+-			return ret;
++			goto err_rearm;
+ 	}
+ 
+ 	/* Set PHY Power */
+ 	for (i = 0 ; i < PHY_COUNT ; ++i) {
+ 		ret = phy_power_on(priv->phys[i]);
+ 		if (ret)
+-			return ret;
++			goto err_rearm;
+ 	}
+ 
+ 	if (priv->vbus && priv->otg_phy_mode == PHY_MODE_USB_HOST) {
+ 		ret = regulator_enable(priv->vbus);
+ 		if (ret)
+-			return ret;
++			goto err_rearm;
+ 	}
+ 
+ 	if (priv->drvdata->usb_post_init) {
+ 		ret = priv->drvdata->usb_post_init(priv);
+ 		if (ret)
+-			return ret;
++			goto err_rearm;
+ 	}
+ 
+ 	return 0;
 +
- 	/* Raydium Touchscreen */
- 	{ USB_DEVICE(0x2386, 0x3114), .driver_info = USB_QUIRK_NO_LPM },
++err_rearm:
++	reset_control_rearm(priv->reset);
++	return ret;
+ }
  
+ static const struct dev_pm_ops dwc3_meson_g12a_dev_pm_ops = {
 
 
