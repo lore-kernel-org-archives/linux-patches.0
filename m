@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6D423395D;
-	Thu, 16 Jul 2026 14:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1C33191C8;
+	Thu, 16 Jul 2026 14:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210440; cv=none; b=DV92sGZaZQ9niG/uXfgNj1acBncTCJoQtci5Z30Z76ugrPyk9wWQ7xXqRlS2Ox6XYPp6vCrLokct1VULuKF3haOIgTpnH628Mm/XK/RNw77xaELs42Nvk1BvWSt+7FC07ByoJ5h3h7F94VN/nHFIXNf5ZwTx3Bf7c1+yunUKy6A=
+	t=1784210443; cv=none; b=ADnGI1vGSbDDH51vx7tTHEZYBTJxeNZJPemQXoZOvseicaC2Eh+B0i1u+vNq2TMtAEMURuoN2QFcM9AAtkZ4vzmC0YQoXHaquLVA60GcDZrWmtLSnY17mxntK0s87bR6pojqgzjiLO0jIFWWglnEpM+cJ4CGvTLxVm5UbJqyEw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210440; c=relaxed/simple;
-	bh=D3tsBsVQzWK26pMr7U19HtRic39BnVpfxZKRTJamyAE=;
+	s=arc-20240116; t=1784210443; c=relaxed/simple;
+	bh=D0FjagXjGZxEw5VBp3MMt/ZQG0M3fgIJYWar6nd7Sqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7s0R76KA5S9W6YOyWqc1uMz6JRycHrg3Hyx0TMWVZXgYefF0O4PaYG3F3qij87Wg0CXaIpJp86a2bI/m6MlQF3/H3bGG1gvBpHooC50ASr2lnscK3VwS0FXC1/KCB8Cm0t/x8wumkYVbU8unHvfReWq4qELP8wH5f9TmIpkl5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+5Xt0ed; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ClmKutsRCHl1Of4aeg2azUvYsBdJdqPrGYtyHtAsPuCCJ1aqwn7GCNZPOgmdDZDiOyj2P5sGWo38KcfPuXN+bXM6CSBVy9KNhnIN0X983YqcyzSeozuvgn0hIutehEzl8UKJqFRqxsqx5Kc4b/16QswDuU13wdjRE1xwtBuyVvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhM//B7Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+5Xt0ed"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D501F00A3A;
-	Thu, 16 Jul 2026 14:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhM//B7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F841F000E9;
+	Thu, 16 Jul 2026 14:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210439;
-	bh=VfholR15uUgtVPrN8Ch2FlJwa9kuSO/Nl1v0CBaMXzw=;
+	s=korg; t=1784210442;
+	bh=PVqTo1CIMo807ak/UUmXYZhLVVANzF9lLSDx1QBVN88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o+5Xt0edbQJJsaLxFSgAfIevoFN+yaw8GODcnGFaiuxAjBMXd8t4xYulvs+gNdiil
-	 7JUN/dO1NglXE256qBvrKmVWXMj0d8NUfI8feLih41XU9tZ8wOgzmUL6idZuftHTFP
-	 FxEAmiBxOtmvHiI3Q0QdmJhCKcy2yg5U4DrByG6U=
+	b=KhM//B7ZTVRIhJxdZPgcyqZw4ARUVZCAOiUlYBn/PaEtwo0Pi1KnEZf61xstk5WYG
+	 Iaj0b+LijHKckfqlsb/8XKRw/EENobVclwun/JjCI52rVc7e69h+bScyPDCBQpjnoo
+	 BssXqrPwawL/BQjeXHDzlQmVFiAYzER/kLvXKIQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Yunlei He <heyunlei@xiaomi.com>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/480] device property: initialize the remaining fields of fwnode_handle in fwnode_init()
-Date: Thu, 16 Jul 2026 15:25:55 +0200
-Message-ID: <20260716133044.864774724@linuxfoundation.org>
+Subject: [PATCH 6.18 009/480] f2fs: remove non-uptodate folio from the page cache in move_data_block
+Date: Thu, 16 Jul 2026 15:25:56 +0200
+Message-ID: <20260716133044.886239470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -54,46 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-[ Upstream commit 7eba000621fff223dd7bab484d48918c7c77a307 ]
+[ Upstream commit 9609dd704725a40cd63d915f2ab6c44248a44598 ]
 
-If a firmware node is allocated on the stack (for instance: temporary
-software node whose life-time we control) or on the heap - but using a
-non-zeroing allocation function - and initialized using fwnode_init(),
-its secondary pointer will contain uninitialized memory which likely
-will be neither NULL nor IS_ERR() and so may end up being dereferenced
-(for example: in dev_to_swnode()). Set fwnode->secondary to NULL on
-initialization. While at it: initialize the remaining fields of struct
-fwnode_handle too just to be sure.
+During data movement, move_data_block acquires file folio without
+triggering a file read. Such folio are typically not uptodate, they need
+to be removed from the page cache after gc complete. This patch marks
+folio with the PG_dropbehind flag and uses folio_end_dropbehind to
+remove folio from the page cache.
 
-Cc: stable@vger.kernel.org
-Fixes: 01bb86b380a3 ("driver core: Add fwnode_init()")
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260511074927.9473-1-bartosz.golaszewski@oss.qualcomm.com
-[ Fix typo in commit message. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Yunlei He <heyunlei@xiaomi.com>
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: e0288584baa5 ("f2fs: atomic: fix UAF issue on f2fs_inode_info.atomic_inode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fwnode.h |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/gc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/include/linux/fwnode.h
-+++ b/include/linux/fwnode.h
-@@ -210,8 +210,10 @@ static inline void fwnode_init(struct fw
- {
- 	fwnode->secondary = NULL;
- 	fwnode->ops = ops;
-+	fwnode->dev = NULL;
- 	INIT_LIST_HEAD(&fwnode->consumers);
- 	INIT_LIST_HEAD(&fwnode->suppliers);
-+	fwnode->flags = 0;
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1456,7 +1456,11 @@ up_out:
+ put_out:
+ 	f2fs_put_dnode(&dn);
+ out:
+-	f2fs_folio_put(folio, true);
++	if (!folio_test_uptodate(folio))
++		__folio_set_dropbehind(folio);
++	folio_unlock(folio);
++	folio_end_dropbehind(folio);
++	folio_put(folio);
+ 	return err;
  }
  
- static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
 
 
