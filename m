@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AB94248CD;
-	Thu, 16 Jul 2026 14:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A20B42A144;
+	Thu, 16 Jul 2026 14:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211982; cv=none; b=XTyzUoDR05k1MVb48k86Wri5oX25TIorzqKf3+WD7DR0YS90b6XZCd7684rDsXjonkKg/6D4LbdaxO8Kwd1iMqDzcNqFIQ8p7XYAun3/cdJqCUAkjm6jMPuXXFeVf59i4oKphjLHpXdgRzp5lteYV0cg35ftLASVhW79m6elbqc=
+	t=1784211985; cv=none; b=aM1HNhUFsdvNPRTvIkBc8ErJN+It5jPG4EIN/RDaKcsOndppLyr66eUXx2q4hgg8OE4l66uHDUydHaRXBCD1RWp6GSKAABqHPLUhH0lzE8klT5ykPlSh+VzBoRDRHvcq787dzR6IlxQ7kaf1/us+YdSR3nY0f2pexwa9IxfnKco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211982; c=relaxed/simple;
-	bh=iRdNTlYY/SUVTFrqTwiTFbMWpOM7UqTAYhSVoG5UvWI=;
+	s=arc-20240116; t=1784211985; c=relaxed/simple;
+	bh=n9SJZglZn60h5oAfXo12iaTu0Acxmq9Zr2Y22SI8VAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgxynxDbDwIutx7oIu3Qz5WqEahMnTVPVo8H9BRpaPlvcvXZ+PRWYTvmdsIfvR/jmQ+NDJF90I2T5mj9k4gPnPlr1RMKlSwo/CAHUfabeDZ3Kya5cXB2Oo6a+RUUsApMKE3+R/6Qm1ppMr4E89RHLSzZkUWMpFC11DaJXsSRrhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJo3gpXc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FclLNQc/tDSnysWC53g5bcXfoHjP8DszAcdIb7b6uUChBpgdV8tRJC2/lHgfy3JRezQYZt9KltvXMzQKHV943MdS3vEhd9QnE74qpBIox2cfEqaIGUToHC3u/92VN5E4iwCwiLYzqRf50mfJGu83SHdBL2z3mVN3N7fp5edOKqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqpUppBS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJo3gpXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3434F1F000E9;
-	Thu, 16 Jul 2026 14:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqpUppBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBA51F000E9;
+	Thu, 16 Jul 2026 14:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211981;
-	bh=QaMnI4GhAtbEBmt0t4DhZ1oS9ODLTBokDSFKg1gneII=;
+	s=korg; t=1784211984;
+	bh=VF9KnYIRjSrgg0dD7PpqUx3rF/G/XOH6v0/1bqPjvNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJo3gpXc91wIoUYs4hlMYdcV9wEepk5sL/RJ2IXVsHkP6+6mBlcap75QDrwQNqzpD
-	 l83t80Al5Abb0JXs+1zhkdR7q2y4gHM+/guBuBgw5FT6u7SKjlA1Ycqos6pC3v2WLt
-	 5KRvnMek7yme6sfyVfLDtRBjDHhpDpa5Ooq1b5gE=
+	b=DqpUppBS2WPT+SkFXqgd/NUebWPJOYNRVuJSLRKEds/eWvVTlt0VhVD/FNsb0ux0J
+	 RRfty8amQ4PzdLGJdYW6Nkn7Eogf9Bd9q4xZgHmf/axGX6d+mM0MSUwVGbSZX4hEgC
+	 O2QT6rNdryoKZpcVKGblqsqpvXQ4RQTsWgzLGKYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 155/349] Bluetooth: ISO: avoid NULL deref of conn in iso_conn_big_sync()
-Date: Thu, 16 Jul 2026 15:31:29 +0200
-Message-ID: <20260716133036.853463692@linuxfoundation.org>
+Subject: [PATCH 6.12 156/349] Bluetooth: L2CAP: validate option length before reading conf opt value
+Date: Thu, 16 Jul 2026 15:31:30 +0200
+Message-ID: <20260716133036.874751112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,72 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit d5541eb148da72d5e0a1bca8ecd171f9fc8b366f upstream.
+commit 687617555cedfb74c9e3cb85d759b908dcb17856 upstream.
 
-iso_conn_big_sync() drops the socket lock to call hci_get_route() and
-then re-acquires it, but dereferences iso_pi(sk)->conn->hcon afterwards
-without re-checking that conn is still valid.
+l2cap_get_conf_opt() derives the option length from the
+attacker-controlled opt->len field and immediately dereferences
+opt->val (as u8, get_unaligned_le16() or get_unaligned_le32(), or a
+raw pointer for the default case) before any caller has confirmed
+that opt->len bytes are present in the buffer. The callers
+(l2cap_parse_conf_req(), l2cap_parse_conf_rsp() and
+l2cap_conf_rfc_get()) only detect a malformed option afterwards, once
+the running length has gone negative, by which point the
+out-of-bounds read has already executed.
 
-While the lock is dropped, the connection can be torn down under the
-same socket lock: iso_disconn_cfm() -> iso_conn_del() -> iso_chan_del()
-sets iso_pi(sk)->conn to NULL (and the broadcast teardown path can also
-clear conn->hcon on its own). When iso_conn_big_sync() re-acquires the
-lock and reads conn->hcon, conn may be NULL, causing a NULL pointer
-dereference (hcon is the first member of struct iso_conn).
+An existing post-hoc length check keeps the garbage value from being
+consumed, so this is not a data leak in the current control flow. It
+is still a validate-after-use ordering bug: up to 4 bytes are read
+past the end of the buffer before it is known to contain them, and it
+is fragile to future changes in the callers.
 
-This path is reached from iso_sock_recvmsg() for a PA-sync broadcast
-sink socket (BT_SK_DEFER_SETUP | BT_SK_PA_SYNC), so the dropped-lock
-window can race with connection teardown driven by controller events.
+Fix it at the source. Pass the end of the buffer into
+l2cap_get_conf_opt() and refuse to touch opt->val unless the full
+option (header + value) fits. Each caller computes an end pointer
+once before the loop and checks the return value directly instead of
+inferring the error from a negative length.
 
-Re-validate iso_pi(sk)->conn and its hcon after re-acquiring the socket
-lock and bail out if the connection went away, as already done in the
-sibling iso_sock_rebind_bc().
-
-Fixes: 7a17308c17880d ("Bluetooth: iso: Fix circular lock in iso_conn_big_sync")
+Fixes: 7c9cbd0b5e38 ("Bluetooth: Verify that l2cap_get_conf_opt provides large enough buffer")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c |   36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1443,6 +1443,7 @@ static void iso_conn_big_sync(struct soc
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3000,13 +3000,24 @@ fail:
+ 	return NULL;
+ }
+ 
+-static inline int l2cap_get_conf_opt(void **ptr, int *type, int *olen,
+-				     unsigned long *val)
++static inline int l2cap_get_conf_opt(void **ptr, void *end, int *type,
++				     int *olen, unsigned long *val)
  {
- 	int err;
- 	struct hci_dev *hdev;
-+	struct iso_conn *conn;
- 	bdaddr_t src, dst;
- 	u8 src_type;
+ 	struct l2cap_conf_opt *opt = *ptr;
+ 	int len;
  
-@@ -1465,8 +1466,17 @@ static void iso_conn_big_sync(struct soc
- 	hci_dev_lock(hdev);
- 	lock_sock(sk);
- 
-+	/* The socket lock was dropped for hci_get_route(), so the connection
-+	 * may have been torn down meanwhile: iso_chan_del() clears conn and
-+	 * the broadcast teardown path can clear conn->hcon on its own. Check
-+	 * both before dereferencing conn->hcon.
++	/* opt->len is attacker-controlled. Validate that the full option
++	 * (header + value) actually fits in the buffer before touching
++	 * opt->val, otherwise the switch below reads past the end of the
++	 * caller's buffer.
 +	 */
-+	conn = iso_pi(sk)->conn;
-+	if (!conn || !conn->hcon)
-+		goto unlock;
++	if (end - *ptr < L2CAP_CONF_OPT_SIZE)
++		return -EINVAL;
 +
- 	if (!test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
--		err = hci_conn_big_create_sync(hdev, iso_pi(sk)->conn->hcon,
-+		err = hci_conn_big_create_sync(hdev, conn->hcon,
- 					       &iso_pi(sk)->qos,
- 					       iso_pi(sk)->sync_handle,
- 					       iso_pi(sk)->bc_num_bis,
-@@ -1475,6 +1485,7 @@ static void iso_conn_big_sync(struct soc
- 			bt_dev_err(hdev, "hci_big_create_sync: %d", err);
- 	}
+ 	len = L2CAP_CONF_OPT_SIZE + opt->len;
++	if (end - *ptr < len)
++		return -EINVAL;
++
+ 	*ptr += len;
  
-+unlock:
- 	release_sock(sk);
- 	hci_dev_unlock(hdev);
- 	hci_dev_put(hdev);
+ 	*type = opt->type;
+@@ -3374,6 +3385,7 @@ static int l2cap_parse_conf_req(struct l
+ 	void *ptr = rsp->data;
+ 	void *endptr = data + data_size;
+ 	void *req = chan->conf_req;
++	void *req_end = req + chan->conf_len;
+ 	int len = chan->conf_len;
+ 	int type, hint, olen;
+ 	unsigned long val;
+@@ -3387,9 +3399,11 @@ static int l2cap_parse_conf_req(struct l
+ 	BT_DBG("chan %p", chan);
+ 
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&req, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&req, req_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		hint  = type & L2CAP_CONF_HINT;
+ 		type &= L2CAP_CONF_MASK;
+@@ -3617,6 +3631,7 @@ static int l2cap_parse_conf_rsp(struct l
+ 	struct l2cap_conf_req *req = data;
+ 	void *ptr = req->data;
+ 	void *endptr = data + size;
++	void *rsp_end = rsp + len;
+ 	int type, olen;
+ 	unsigned long val;
+ 	struct l2cap_conf_rfc rfc = { .mode = L2CAP_MODE_BASIC };
+@@ -3625,9 +3640,11 @@ static int l2cap_parse_conf_rsp(struct l
+ 	BT_DBG("chan %p, rsp %p, len %d, req %p", chan, rsp, len, data);
+ 
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		switch (type) {
+ 		case L2CAP_CONF_MTU:
+@@ -3878,6 +3895,7 @@ static void l2cap_conf_rfc_get(struct l2
+ {
+ 	int type, olen;
+ 	unsigned long val;
++	void *rsp_end = rsp + len;
+ 	/* Use sane default values in case a misbehaving remote device
+ 	 * did not send an RFC or extended window size option.
+ 	 */
+@@ -3896,9 +3914,11 @@ static void l2cap_conf_rfc_get(struct l2
+ 		return;
+ 
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		switch (type) {
+ 		case L2CAP_CONF_RFC:
 
 
