@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DDF31717E;
-	Thu, 16 Jul 2026 13:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3A731E85C;
+	Thu, 16 Jul 2026 13:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209528; cv=none; b=H7idv9rQvMXsRvCuL9GsMyP8DSvb2GrQBlD0Wt6zpOyCsyial2PxFs3yLm3edtHPDzRJcf1aEGoo/9j7EjTJWhU9XWyvjm1QwLesdf4u1VqUBUAyAsmbFk5SaRI7mLYuhGO1cvhEUCjNfads/PAVLxy6gCtOXpzvEnCZmIyFGfM=
+	t=1784209530; cv=none; b=OZjLvEsUtVuvU2+a+bHYi8IuDYnbq8oB4o5M+WpVrTgoqMebgZRND131JGr/PYM2LJypxfIgIK0CszciGOv2miuuoCO11gO7Ez//wB4WvVZ2OFSQvhRJOKcG93cL0y9XG1RWbM2lMNlYi+h8/hyXyYeDxWsQHGl4XQHYQK0bka0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209528; c=relaxed/simple;
-	bh=lpD3Tm1hkR2cYWsH2pCY66n7Bf30a6p3jOGF7VOrIFs=;
+	s=arc-20240116; t=1784209530; c=relaxed/simple;
+	bh=529HJjFXw/bk0erZ89SfXuizA7Gr/HBJmoLUXJ855C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9h2aDq86jiAnM66BSktFOuJnmvS4lkhvB4dptJJPet93aKoVX75FqlFNAb/eek2KjH8q3mnZxDo6k7GzflKuQwmCAJLshxJrdWnXHbQsv+20vT+Ht02f7uu+i/3gWK+KBKVahFT08yh1cPolqupZYTMqB9F28v56WcJe9crrWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCFA+Dua; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O9Na0gN+GKB93ZJ28YOhoR9gQfO7OQ66zMvskamAahCFVJiIIXahWriAZtem7NLKxBvKOgsp3RV0gMCUwoNvoiSMN6OECEfKo4r97JARyMoJt3GNBRD+RRknJyVMnipo24cIY3Ih2dMnbsu/2T7yDf6wNQfzCpDXIN0kmYodFbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhHaL1xP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCFA+Dua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05BC1F000E9;
-	Thu, 16 Jul 2026 13:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhHaL1xP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930FB1F000E9;
+	Thu, 16 Jul 2026 13:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209526;
-	bh=leUL5N7YI1sjBlanPXi2yim6njJD5plSmmQOf3pzKkI=;
+	s=korg; t=1784209529;
+	bh=RbytxtiuEvzrvUJnFGzzGcgLiW83h9X3OTooPsbztsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lCFA+DuauOrUWDxAR2k4YVoU4SrWFSoehyYJ4KAUjzBjffDh8JL2kwU1QO8PLkrlR
-	 uEM0FF/o9iqvIYinW38i93rfBNiieYwzuuEm3KLz6FXXGbxFjy85A7H52zgk+yJOZP
-	 59WYbBTX0sfTebOpu525VQYQWuzMp3TKPfSbXCNA=
+	b=vhHaL1xP2HfIXkPy9OqaclvBv3g+HRn5B4ky3Ki3Jo3QbQ+gtC+cVm/nU2hI08t3A
+	 IZnXkBK1yIkUiPFukNvQjfIlOY9DfqMxAg1OXA848rmGTJLEHXLZywAjL8ioYM1ft+
+	 UwJ1bsuz9msl9OcMuaslVGUWNUazbG4cegIeL+bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.1 212/518] Bluetooth: L2CAP: validate option length before reading conf opt value
-Date: Thu, 16 Jul 2026 15:28:00 +0200
-Message-ID: <20260716133052.455676643@linuxfoundation.org>
+	Musaab Khan <musaab.khan@protonmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.1 221/518] ksmbd: require source read access for duplicate extents
+Date: Thu, 16 Jul 2026 15:28:09 +0200
+Message-ID: <20260716133052.653507704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,135 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 687617555cedfb74c9e3cb85d759b908dcb17856 upstream.
+commit cedff600f1642aa982178503552f0d007bc829c8 upstream.
 
-l2cap_get_conf_opt() derives the option length from the
-attacker-controlled opt->len field and immediately dereferences
-opt->val (as u8, get_unaligned_le16() or get_unaligned_le32(), or a
-raw pointer for the default case) before any caller has confirmed
-that opt->len bytes are present in the buffer. The callers
-(l2cap_parse_conf_req(), l2cap_parse_conf_rsp() and
-l2cap_conf_rfc_get()) only detect a malformed option afterwards, once
-the running length has gone negative, by which point the
-out-of-bounds read has already executed.
+FSCTL_DUPLICATE_EXTENTS_TO_FILE passes the source file directly to
+vfs_clone_file_range() or vfs_copy_file_range() without checking the SMB
+access mask granted to the source handle. A handle opened with attribute
+access can consequently be used to copy file contents into an
+attacker-readable destination.
 
-An existing post-hoc length check keeps the garbage value from being
-consumed, so this is not a data leak in the current control flow. It
-is still a validate-after-use ordering bug: up to 4 bytes are read
-past the end of the buffer before it is known to contain them, and it
-is fragile to future changes in the callers.
+Require FILE_READ_DATA on the source handle before either VFS operation,
+matching other ksmbd data-copy paths.
 
-Fix it at the source. Pass the end of the buffer into
-l2cap_get_conf_opt() and refuse to touch opt->val unless the full
-option (header + value) fits. Each caller computes an end pointer
-once before the loop and checks the return value directly instead of
-inferring the error from a negative length.
-
-Fixes: 7c9cbd0b5e38 ("Bluetooth: Verify that l2cap_get_conf_opt provides large enough buffer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Musaab Khan <musaab.khan@protonmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   36 ++++++++++++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ fs/smb/server/smb2pdu.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3048,13 +3048,24 @@ fail:
- 	return NULL;
- }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8580,6 +8580,10 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			ret = -EACCES;
+ 			goto dup_ext_out;
+ 		}
++		if (!(fp_in->daccess & FILE_READ_DATA_LE)) {
++			ret = -EACCES;
++			goto dup_ext_out;
++		}
  
--static inline int l2cap_get_conf_opt(void **ptr, int *type, int *olen,
--				     unsigned long *val)
-+static inline int l2cap_get_conf_opt(void **ptr, void *end, int *type,
-+				     int *olen, unsigned long *val)
- {
- 	struct l2cap_conf_opt *opt = *ptr;
- 	int len;
- 
-+	/* opt->len is attacker-controlled. Validate that the full option
-+	 * (header + value) actually fits in the buffer before touching
-+	 * opt->val, otherwise the switch below reads past the end of the
-+	 * caller's buffer.
-+	 */
-+	if (end - *ptr < L2CAP_CONF_OPT_SIZE)
-+		return -EINVAL;
-+
- 	len = L2CAP_CONF_OPT_SIZE + opt->len;
-+	if (end - *ptr < len)
-+		return -EINVAL;
-+
- 	*ptr += len;
- 
- 	*type = opt->type;
-@@ -3426,6 +3437,7 @@ static int l2cap_parse_conf_req(struct l
- 	void *ptr = rsp->data;
- 	void *endptr = data + data_size;
- 	void *req = chan->conf_req;
-+	void *req_end = req + chan->conf_len;
- 	int len = chan->conf_len;
- 	int type, hint, olen;
- 	unsigned long val;
-@@ -3439,9 +3451,11 @@ static int l2cap_parse_conf_req(struct l
- 	BT_DBG("chan %p", chan);
- 
- 	while (len >= L2CAP_CONF_OPT_SIZE) {
--		len -= l2cap_get_conf_opt(&req, &type, &olen, &val);
--		if (len < 0)
-+		int ret = l2cap_get_conf_opt(&req, req_end, &type, &olen, &val);
-+
-+		if (ret < 0)
- 			break;
-+		len -= ret;
- 
- 		hint  = type & L2CAP_CONF_HINT;
- 		type &= L2CAP_CONF_MASK;
-@@ -3669,6 +3683,7 @@ static int l2cap_parse_conf_rsp(struct l
- 	struct l2cap_conf_req *req = data;
- 	void *ptr = req->data;
- 	void *endptr = data + size;
-+	void *rsp_end = rsp + len;
- 	int type, olen;
- 	unsigned long val;
- 	struct l2cap_conf_rfc rfc = { .mode = L2CAP_MODE_BASIC };
-@@ -3677,9 +3692,11 @@ static int l2cap_parse_conf_rsp(struct l
- 	BT_DBG("chan %p, rsp %p, len %d, req %p", chan, rsp, len, data);
- 
- 	while (len >= L2CAP_CONF_OPT_SIZE) {
--		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
--		if (len < 0)
-+		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
-+
-+		if (ret < 0)
- 			break;
-+		len -= ret;
- 
- 		switch (type) {
- 		case L2CAP_CONF_MTU:
-@@ -3930,6 +3947,7 @@ static void l2cap_conf_rfc_get(struct l2
- {
- 	int type, olen;
- 	unsigned long val;
-+	void *rsp_end = rsp + len;
- 	/* Use sane default values in case a misbehaving remote device
- 	 * did not send an RFC or extended window size option.
- 	 */
-@@ -3948,9 +3966,11 @@ static void l2cap_conf_rfc_get(struct l2
- 		return;
- 
- 	while (len >= L2CAP_CONF_OPT_SIZE) {
--		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
--		if (len < 0)
-+		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
-+
-+		if (ret < 0)
- 			break;
-+		len -= ret;
- 
- 		switch (type) {
- 		case L2CAP_CONF_RFC:
+ 		src_off = le64_to_cpu(dup_ext->SourceFileOffset);
+ 		dst_off = le64_to_cpu(dup_ext->TargetFileOffset);
 
 
