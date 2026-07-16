@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D645E42465F;
-	Thu, 16 Jul 2026 13:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6B54248A3;
+	Thu, 16 Jul 2026 13:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209229; cv=none; b=KAqmwpUAlzWVDdi5MkeL9NM1e8YDPhJVRqb8/h0Ey0umyYlSFRl5Td2zMPgICpZP0TGiEM/P6syU46I6YxLQ4qMKPGz3jvGaCx8FvygDycTNLc2xV1h59uDGHU5/5CUyLF5hyek4oU2zPd4h9lRe/KaffyJP6U0nLklANdMxwQI=
+	t=1784209231; cv=none; b=U42ilFublQlgxT26Vgvx2WbTgm4FbqxE5HnwcHiBTqT7jR/VZn6tYUi6Ls/N5jTA7s5zfNbVtbnNWin+LJOky/iHRprqWx5jaJ7WGudq4LJysnsSEQnBa3Sn4dQzqqOpQayEPwnUXao8753FQgzfUzYKMXVmVenaUDymx9BDSOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209229; c=relaxed/simple;
-	bh=ZCMdVaJybbmvySM+sTeyXoP7JmmbzUsgII4bDzzVToY=;
+	s=arc-20240116; t=1784209231; c=relaxed/simple;
+	bh=LejDEhYtVcKRb/kCBPZYMczb8JRXQBeSDuglKtYr/x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oxAJfhznvPD8JviF2mWX56n938Yd4EH9eCRyOdDIricK6+p4EFEG/ucncV01YNnyLejFlvH74+bTsVvJWPQiXevF3fx35Dsgp86VobHj9dmBuqYYQCfLyBtcMMqsyfvkrjSTyfX/Fzur+YAlFG0HxC6nhTgCy4iukUX1R/IVNtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2UcTzCW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JpAme7z3yOKQmVbtOey//5X5pArupRaX22hAyr3ss3cccKoavIskfPfy42iiqmL8zRKH2vSp6ihg6jQQ5218ZobA/mpY9XyjmLoD9IPMH2KqQ8LhAQCLAoC+KWiL3EjxGldYs3PFJ7wEzzSDmqxX57B3fgO7RrXiij4Vqb24Hrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxc2oCyh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2UcTzCW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417F61F000E9;
-	Thu, 16 Jul 2026 13:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxc2oCyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7411F00A3A;
+	Thu, 16 Jul 2026 13:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209226;
-	bh=pvvm3eE6IU9e762cc+lnWs3KWhjK9i4Ciuq/i3TmNGc=;
+	s=korg; t=1784209229;
+	bh=BYwMPqCh0HleTJb4CJoxv6jyn4EIcHOIC46f1C6cEvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J2UcTzCWyXoHLfOxJVTJn9xTLQMBW34td+uFwdOTSKAJy87LJGcStaC6Vd+9dY/BR
-	 loTlEoNsNC+bjNiA/f7Ef5txsPMoYO7laj20M2E4I1hYz//EtuSupmFpI5WW8rdGYr
-	 DYH09huiHLdsl84bXsOBXc8M3s7u7LCqAcuOVBS8=
+	b=gxc2oCyhuCOFFwXNEx7ZxFFkZI9iexkBOh8/M2A4Ap0LqsI46DlwN4QYyX4XCkH0E
+	 vHkNbEt9boQ9BvOc+kFT+VdZYRejvd6+wcG182xaslEhnkXzNpmpWvhmfKsOYl9Mhb
+	 89s5pY64LZw+qBBOEDZ4E4+jayfQ9Ob49IJURUuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 104/518] ALSA: usb-audio: Update US-16x08 EQ/comp shadow state after successful writes
-Date: Thu, 16 Jul 2026 15:26:12 +0200
-Message-ID: <20260716133050.135630022@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 7.1 105/518] x86,fs/resctrl: Prevent out-of-bounds access while offlining CPU when SNC enabled
+Date: Thu, 16 Jul 2026 15:26:13 +0200
+Message-ID: <20260716133050.156831253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,160 +46,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-commit a440c17869ecd71da0f295b62868fc742d09a8ba upstream.
+commit fc16126cc11d9f507130bf84ab137ee0938c900e upstream.
 
-snd_us16x08_comp_put() and snd_us16x08_eq_put() update their
-software stores before sending the USB write. If the transfer
-fails, later get callbacks report a value the hardware never
-accepted.
+The architecture updates the cpu_mask in a domain's header to track which
+online CPUs are associated with the domain. When this mask becomes empty
+the architecture initiates offline of the domain that includes calling
+on resctrl fs to offline the domain. If it is a monitoring domain in
+which LLC occupancy is tracked resctrl fs forces the limbo handler to
+clear all busy RMID state associated with the domain.
 
-Build the outgoing message from the current store plus the
-pending value, then commit the store only after a successful
-write.
+The limbo handler always reads the current event value associated with a
+busy RMID irrespective of it being checked as part of regular "is it still
+busy" check or whether it will be forced released anyway. When reading an
+RMID on a system with SNC enabled the "logical RMID" is converted to the
+"physical RMID" and this conversion requires the NUMA node ID of the
+resctrl monitoring domain that is in turn determined by querying the NUMA
+node ID of any CPU belonging to the monitoring domain.
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-4-5a3bd4a673ae@gmail.com
+When the monitoring domain is going offline its cpu_mask is empty causing
+the NUMA node ID query via cpu_to_node() to be done with "nr_cpu_ids" as
+argument resulting in an out-of-bounds access.
+
+Refactor the limbo handler to skip reading the RMID when the RMID will
+just be forced to no longer be dirty in the domain anyway. Add a safety
+check to the architecture's RMID reader to protect against this scenario.
+
+Fixes: e13db55b5a0d ("x86/resctrl: Introduce snc_nodes_per_l3_cache")
+Closes: https://sashiko.dev/#/patchset/cover.1780456704.git.reinette.chatre%40intel.com?part=9
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/16137433df42f85013b2f7a53626795cbd6637b9.1781029125.git.reinette.chatre@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_us16x08.c |   78 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 26 deletions(-)
+ arch/x86/kernel/cpu/resctrl/monitor.c |    5 ++++
+ fs/resctrl/monitor.c                  |   37 +++++++++++++++++++---------------
+ 2 files changed, 26 insertions(+), 16 deletions(-)
 
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -435,6 +435,7 @@ static int snd_us16x08_comp_put(struct s
- 	int index = ucontrol->id.index;
- 	char buf[sizeof(comp_msg)];
- 	int val_idx, val;
-+	int threshold, ratio, attack, release, gain, switch_on;
- 	int err;
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -258,6 +258,11 @@ int resctrl_arch_rmid_read(struct rdt_re
+ 	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
+ 		return -EINVAL;
  
- 	val = ucontrol->value.integer.value[0];
-@@ -447,36 +448,61 @@ static int snd_us16x08_comp_put(struct s
- 	/* new control value incl. bias*/
- 	val_idx = elem->head.id - SND_US16X08_ID_COMP_BASE;
- 
--	store->val[val_idx][index] = ucontrol->value.integer.value[0];
-+	threshold = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD)]
-+		[index];
-+	ratio = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO)][index];
-+	attack = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK)][index];
-+	release = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE)]
-+		[index];
-+	gain = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN)][index];
-+	switch_on = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH)]
-+		[index];
-+
-+	switch (val_idx) {
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD):
-+		threshold = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO):
-+		ratio = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK):
-+		attack = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE):
-+		release = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN):
-+		gain = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH):
-+		switch_on = val;
-+		break;
++	if (cpumask_empty(&hdr->cpu_mask)) {
++		pr_warn_once("Domain %d has no CPUs\n", hdr->id);
++		return -EINVAL;
 +	}
++
+ 	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
+ 	hw_dom = resctrl_to_arch_mon_dom(d);
+ 	cpu = cpumask_any(&hdr->cpu_mask);
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -135,10 +135,10 @@ void __check_limbo(struct rdt_l3_mon_dom
+ 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+ 	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
+ 	struct rmid_entry *entry;
++	bool rmid_dirty = true;
+ 	u32 idx, cur_idx = 1;
+ 	void *arch_mon_ctx;
+ 	void *arch_priv;
+-	bool rmid_dirty;
+ 	u64 val = 0;
  
- 	/* prepare compressor URB message from template  */
- 	memcpy(buf, comp_msg, sizeof(comp_msg));
+ 	arch_priv = mon_event_all[QOS_L3_OCCUP_EVENT_ID].arch_priv;
+@@ -161,22 +161,27 @@ void __check_limbo(struct rdt_l3_mon_dom
+ 			break;
  
- 	/* place comp values in message buffer watch bias! */
--	buf[8] = store->val[
--		COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD)][index]
--		- SND_US16X08_COMP_THRESHOLD_BIAS;
--	buf[11] = ratio_map[store->val[
--		COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO)][index]];
--	buf[14] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK)][index]
--		+ SND_US16X08_COMP_ATTACK_BIAS;
--	buf[17] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE)][index]
--		+ SND_US16X08_COMP_RELEASE_BIAS;
--	buf[20] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN)][index];
--	buf[26] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH)][index];
-+	buf[8] = threshold - SND_US16X08_COMP_THRESHOLD_BIAS;
-+	buf[11] = ratio_map[ratio];
-+	buf[14] = attack + SND_US16X08_COMP_ATTACK_BIAS;
-+	buf[17] = release + SND_US16X08_COMP_RELEASE_BIAS;
-+	buf[20] = gain;
-+	buf[26] = switch_on;
+ 		entry = __rmid_entry(idx);
+-		if (resctrl_arch_rmid_read(r, &d->hdr, entry->closid, entry->rmid,
+-					   QOS_L3_OCCUP_EVENT_ID, arch_priv, &val,
+-					   arch_mon_ctx)) {
+-			rmid_dirty = true;
+-		} else {
+-			rmid_dirty = (val >= resctrl_rmid_realloc_threshold);
++		if (!force_free) {
++			if (resctrl_arch_rmid_read(r, &d->hdr, entry->closid,
++						   entry->rmid, QOS_L3_OCCUP_EVENT_ID,
++						   arch_priv, &val, arch_mon_ctx)) {
++				rmid_dirty = true;
++			} else {
++				rmid_dirty = (val >= resctrl_rmid_realloc_threshold);
  
- 	/* place channel selector in message buffer */
- 	buf[5] = index + 1;
+-			/*
+-			 * x86's CLOSID and RMID are independent numbers, so the entry's
+-			 * CLOSID is an empty CLOSID (X86_RESCTRL_EMPTY_CLOSID). On Arm the
+-			 * RMID (PMG) extends the CLOSID (PARTID) space with bits that aren't
+-			 * used to select the configuration. It is thus necessary to track both
+-			 * CLOSID and RMID because there may be dependencies between them
+-			 * on some architectures.
+-			 */
+-			trace_mon_llc_occupancy_limbo(entry->closid, entry->rmid, d->hdr.id, val);
++				/*
++				 * x86's CLOSID and RMID are independent numbers,
++				 * so the entry's CLOSID is an empty CLOSID
++				 * (X86_RESCTRL_EMPTY_CLOSID). On Arm the RMID
++				 * (PMG) extends the CLOSID (PARTID) space with
++				 * bits that aren't used to select the configuration.
++				 * It is thus necessary to track both CLOSID and
++				 * RMID because there may be dependencies between
++				 * them on some architectures.
++				 */
++				trace_mon_llc_occupancy_limbo(entry->closid, entry->rmid,
++							      d->hdr.id, val);
++			}
+ 		}
  
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(comp_msg));
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set compressor, err:%d\n", err);
-+		return err;
- 	}
- 
-+	store->val[val_idx][index] = val;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
- 	return 1;
- }
- 
-@@ -578,11 +604,10 @@ static int snd_us16x08_eq_put(struct snd
- 	/* copy URB buffer from EQ template */
- 	memcpy(buf, eqs_msq, sizeof(eqs_msq));
- 
--	store->val[b_idx][p_idx][index] = val;
--	buf[20] = store->val[b_idx][3][index];
--	buf[17] = store->val[b_idx][2][index];
--	buf[14] = store->val[b_idx][1][index];
--	buf[11] = store->val[b_idx][0][index];
-+	buf[20] = p_idx == 3 ? val : store->val[b_idx][3][index];
-+	buf[17] = p_idx == 2 ? val : store->val[b_idx][2][index];
-+	buf[14] = p_idx == 1 ? val : store->val[b_idx][1][index];
-+	buf[11] = p_idx == 0 ? val : store->val[b_idx][0][index];
- 
- 	/* place channel index in URB buffer */
- 	buf[5] = index + 1;
-@@ -592,14 +617,15 @@ static int snd_us16x08_eq_put(struct snd
- 
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(eqs_msq));
- 
--	if (err > 0) {
--		/* store new value in EQ band cache */
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set eq param, err:%d\n", err);
-+		return err;
- 	}
- 
-+	store->val[b_idx][p_idx][index] = val;
-+	/* store new value in EQ band cache */
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
- 	return 1;
- }
- 
+ 		if (force_free || !rmid_dirty) {
 
 
