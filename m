@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7D93BCD11;
-	Thu, 16 Jul 2026 14:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A5742B30E;
+	Thu, 16 Jul 2026 14:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211016; cv=none; b=Xh1vTJYaNOB56KGX/ib8+oQv/gnuKbwlLT/adNwJQH1pbARxKy8cFonoscTVMjklM0X7ff8SX5Yl/GplXlDnsFwad0F2oxNXogbuDHoJBKdBSVsgQfjBx+JRyyo6wiog4c82KzVtI+4i9FnPo6JPurlA9MtfHTawc+dtmM4xhrM=
+	t=1784211018; cv=none; b=Ehab6ro6LFllSVnw+ys3eQiL9zxAxBbEaKtUKqw5AgEDtU6VMdGNXeCwzNBWEKNifUAu7NYQ8gqOCFFfPNnm60HcqCN61gps0IW20YQ3fmFejWhcIkr1uNq1wjqCo0Qmb8IndbLNnOOUQW2i3haSpmzl8mOOQEvp9WbZx2Q+EYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211016; c=relaxed/simple;
-	bh=1UwinEc6YyWd5SMPnM3xJ8xUvBD/O1zSAL39WfeC53A=;
+	s=arc-20240116; t=1784211018; c=relaxed/simple;
+	bh=xIP22Juqx5VSpPAvPERZOrpu7Ve55rUZoRFmufcTlv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzxG9nCpeDXD6jll+OxCn7tSmEZXANlbv1TuB4SUw5h/ViMIV2bO3pGbYAy225Li5GQ6YOhvX8EUxLCIlc1KvAp4ctblE7cjJGYTECOo4FGLwc61JNGKiamRD7Zy8Jc9vEkX75QAC+CE17lAkh241fYQ+oBmRRVPHTqx6WBrRGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEvU5KU8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mAjRAQDuX3Dk3+fMHTBanKLTdEjGDZLNf7KrJeMYI/jGxN9VGjtbWQilXT07GRshyOBktaj8mPTV6giRgMkSzid6yGqIeR+lDXM8w+YkywzyuclxrACuWcZ1vG8NC0FplJXSI9M9tDR3BFkNR4lvxm489HvUono4nvJi2kPDi8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaPEhYAB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEvU5KU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFF61F00A3A;
-	Thu, 16 Jul 2026 14:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaPEhYAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036D01F00A3F;
+	Thu, 16 Jul 2026 14:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211014;
-	bh=cJcr9pN3t4ggv2MhQtJ1aFh84/mWVgzoDc3L5MkJMWo=;
+	s=korg; t=1784211017;
+	bh=F8SZ1gOedA2Y1hWTpRvhgNs4lEyGhJEj4YD/T2fuTTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xEvU5KU8BXQsKOgcXxo135rza5ndTKhwL7eOoPE989kEzDZ7nUGtSJ6ZV5Q4da5He
-	 4/HI1vrtT/FNi6yLBKEVjCgNZ62z+BxOJ6N7Sv7jSRWIhHyTZVnxf9elAErhSAr6qt
-	 VcJHbFFQ7SwflR6sy3MwsY6UFNGzNY/jzLe3cnvA=
+	b=jaPEhYABXjxWB8oRlQrNW5lgpQMJ608RVniil0ElDEdMFaPTB+Ues836SdXP91Fqi
+	 I4jUa+yXfCCET1RjqOjL++rnWlZpilzx8lF0/F/nFQjez6CV6/Pmx/WpzUrbunyL7a
+	 Mr+86bZz2Wr47AapIvRw7QmTeh/+KjgUktl7pGBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trung Nguyen <trungnh@cystack.net>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.18 266/480] HID: multitouch: fix out-of-bounds bit access on mt_io_flags
-Date: Thu, 16 Jul 2026 15:30:13 +0200
-Message-ID: <20260716133050.573204262@linuxfoundation.org>
+	Manish Khadka <maskmemanish@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 267/480] HID: appleir: fix UAF on pending key_up_timer in remove()
+Date: Thu, 16 Jul 2026 15:30:14 +0200
+Message-ID: <20260716133050.594950601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,154 +50,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trung Nguyen <trungnh@cystack.net>
+From: Manish Khadka <maskmemanish@gmail.com>
 
-commit 8813b0612275cc61fe9e6603d0ee019247ade6be upstream.
+commit 75fe87e19d8aff81eb2c64d15d244ab8da4de945 upstream.
 
-mt_io_flags is a single unsigned long, but mt_process_slot(),
-mt_release_pending_palms() and mt_release_contacts() use it as a
-per-slot bitmap indexed by the slot number. That slot number is only
-bounded by td->maxcontacts, which is taken from the device's
-ContactCountMaximum feature report and can be up to 255, not by
-BITS_PER_LONG.
+appleir_remove() runs hid_hw_stop() before timer_delete_sync().
+hid_hw_stop() synchronously unregisters the HID input device via
+hid_disconnect() -> hidinput_disconnect() -> input_unregister_device(),
+which drops the last reference and frees the underlying input_dev when
+no userspace handle holds it open.
 
-As a result, a multitouch device that advertises a large contact count
-makes set_bit()/clear_bit() operate past the mt_io_flags word and
-corrupt the adjacent members of struct mt_device. The sticky-fingers
-release timer is the easiest way to reach this. mt_release_contacts()
-runs
+key_up_tick() reads appleir->input_dev and calls input_report_key() /
+input_sync() on it.  The timer is armed from appleir_raw_event() with
+a HZ/8 (~125 ms) timeout on every keydown and key-repeat report.  If a
+key was pressed shortly before the device is disconnected, the timer
+can fire after hid_hw_stop() has freed input_dev but before the
+teardown drains it.
 
-	for (i = 0; i < mt->num_slots; i++)
-		clear_bit(i, &td->mt_io_flags);
+A simple reorder is not sufficient.  Putting the timer drain first
+still leaves a window where a USB URB completion (raw_event) running
+during hid_hw_stop() can call mod_timer() and re-arm the timer, which
+then fires after hidinput_disconnect() has freed input_dev.  The same
+URB-completion window also lets raw_event() reach key_up(), key_down()
+and battery_flat() directly, all of which dereference
+appleir->input_dev.
 
-with num_slots == maxcontacts. For maxcontacts around 250 the loop
-clears the bits that overlap td->applications.next, zeroing that list
-head, and the list_for_each_entry() that immediately follows then
-dereferences NULL. The kernel panics from timer (softirq) context. On a
-KASAN build this shows up as a general protection fault in
-mt_release_contacts() with a null-ptr-deref at offset 0x58, which is
-offsetof(struct mt_application, num_received).
+Introduce a 'removing' flag on struct appleir, gated by the existing
+spinlock.  appleir_remove() sets the flag under the lock and then
+shuts down the timer with timer_shutdown_sync(), which both drains any
+in-flight callback and permanently disables further mod_timer() calls.
+appleir_raw_event() and key_up_tick() bail out early if the flag is
+set, so no path can arm or run the timer, or dereference
+appleir->input_dev, after remove() has started tearing down.
 
-The state is reachable from an untrusted USB or Bluetooth HID
-multitouch device; no local privileges are required.
+The keyrepeat and flatbattery branches of appleir_raw_event()
+previously called into the input layer without holding the spinlock;
+take it now so the flag check is well-defined.  This incidentally
+closes a pre-existing read-side race on appleir->current_key in the
+keyrepeat branch.
 
-Store the per-slot active state in a separately allocated bitmap sized
-for maxcontacts, the same pattern already used for pending_palm_slots,
-and keep only MT_IO_FLAGS_RUNNING in mt_io_flags. The two
-"mt_io_flags & MT_IO_SLOTS_MASK" arming checks become
-bitmap_empty(td->active_slots, td->maxcontacts).
+This bug is structurally a sibling of commit 4db2af929279 ("HID:
+appletb-kbd: fix UAF in inactivity-timer cleanup path") and has been
+present since the driver was introduced.
 
-Move MT_IO_FLAGS_RUNNING back to bit 0. It was bumped to bit 32 by the
-same commit to leave the low byte for the slot bits; with the slot bits
-gone it fits in bit 0 again, which also keeps it within the unsigned
-long on 32-bit.
-
-Fixes: 46f781e0d151 ("HID: multitouch: fix sticky fingers")
+Fixes: 9a4a5574ce42 ("HID: appleir: add support for Apple ir devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Trung Nguyen <trungnh@cystack.net>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Manish Khadka <maskmemanish@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-multitouch.c |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/hid/hid-appleir.c |   45 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 35 insertions(+), 10 deletions(-)
 
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -31,6 +31,7 @@
-  * [1] https://gitlab.freedesktop.org/libevdev/hid-tools
-  */
- 
-+#include <linux/bitmap.h>
- #include <linux/bits.h>
- #include <linux/device.h>
- #include <linux/hid.h>
-@@ -96,8 +97,7 @@ enum report_mode {
- 	TOUCHPAD_REPORT_ALL = TOUCHPAD_REPORT_BUTTONS | TOUCHPAD_REPORT_CONTACTS,
+--- a/drivers/hid/hid-appleir.c
++++ b/drivers/hid/hid-appleir.c
+@@ -109,9 +109,10 @@ struct appleir {
+ 	struct hid_device *hid;
+ 	unsigned short keymap[ARRAY_SIZE(appleir_key_table)];
+ 	struct timer_list key_up_timer;	/* timer for key up */
+-	spinlock_t lock;		/* protects .current_key */
++	spinlock_t lock;		/* protects .current_key, .removing */
+ 	int current_key;		/* the currently pressed key */
+ 	int prev_key_idx;		/* key index in a 2 packets message */
++	bool removing;			/* set during teardown; gates input_dev access */
  };
  
--#define MT_IO_SLOTS_MASK		GENMASK(7, 0) /* reserve first 8 bits for slot tracking */
--#define MT_IO_FLAGS_RUNNING		32
-+#define MT_IO_FLAGS_RUNNING		0
+ static int get_key(int data)
+@@ -172,7 +173,7 @@ static void key_up_tick(struct timer_lis
+ 	unsigned long flags;
  
- static const bool mtrue = true;		/* default for true */
- static const bool mfalse;		/* default for false */
-@@ -173,10 +173,9 @@ struct mt_device {
- 	struct timer_list release_timer;	/* to release sticky fingers */
- 	struct hid_haptic_device *haptic;	/* haptic related configuration */
- 	struct hid_device *hdev;	/* hid_device we're attached to */
--	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING)
--					 * first 8 bits are reserved for keeping the slot
--					 * states, this is fine because we only support up
--					 * to 250 slots (MT_MAX_MAXCONTACT)
-+	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING) */
-+	unsigned long *active_slots;	/* bitmap of slots with an active
-+					 * contact, sized for maxcontacts
- 					 */
- 	__u8 inputmode_value;	/* InputMode HID feature value */
- 	__u8 maxcontacts;
-@@ -1025,7 +1024,7 @@ static void mt_release_pending_palms(str
+ 	spin_lock_irqsave(&appleir->lock, flags);
+-	if (appleir->current_key) {
++	if (!appleir->removing && appleir->current_key) {
+ 		key_up(hid, appleir, appleir->current_key);
+ 		appleir->current_key = 0;
+ 	}
+@@ -195,6 +196,10 @@ static int appleir_raw_event(struct hid_
+ 		int index;
  
- 	for_each_set_bit(slotnum, app->pending_palm_slots, td->maxcontacts) {
- 		clear_bit(slotnum, app->pending_palm_slots);
--		clear_bit(slotnum, &td->mt_io_flags);
-+		clear_bit(slotnum, td->active_slots);
+ 		spin_lock_irqsave(&appleir->lock, flags);
++		if (appleir->removing) {
++			spin_unlock_irqrestore(&appleir->lock, flags);
++			goto out;
++		}
+ 		/*
+ 		 * If we already have a key down, take it up before marking
+ 		 * this one down
+@@ -229,17 +234,25 @@ static int appleir_raw_event(struct hid_
+ 	appleir->prev_key_idx = 0;
  
- 		input_mt_slot(input, slotnum);
- 		input_mt_report_slot_inactive(input);
-@@ -1236,9 +1235,9 @@ static int mt_process_slot(struct mt_dev
- 		input_event(input, EV_ABS, ABS_MT_TOUCH_MAJOR, major);
- 		input_event(input, EV_ABS, ABS_MT_TOUCH_MINOR, minor);
- 
--		set_bit(slotnum, &td->mt_io_flags);
-+		set_bit(slotnum, td->active_slots);
- 	} else {
--		clear_bit(slotnum, &td->mt_io_flags);
-+		clear_bit(slotnum, td->active_slots);
+ 	if (!memcmp(data, keyrepeat, sizeof(keyrepeat))) {
+-		key_down(hid, appleir, appleir->current_key);
+-		/*
+-		 * Remote doesn't do key up, either pull them up, in the test
+-		 * above, or here set a timer which pulls them up after 1/8 s
+-		 */
+-		mod_timer(&appleir->key_up_timer, jiffies + HZ / 8);
++		spin_lock_irqsave(&appleir->lock, flags);
++		if (!appleir->removing) {
++			key_down(hid, appleir, appleir->current_key);
++			/*
++			 * Remote doesn't do key up, either pull them up, in
++			 * the test above, or here set a timer which pulls them
++			 * up after 1/8 s
++			 */
++			mod_timer(&appleir->key_up_timer, jiffies + HZ / 8);
++		}
++		spin_unlock_irqrestore(&appleir->lock, flags);
+ 		goto out;
  	}
  
- 	return 0;
-@@ -1373,7 +1372,7 @@ static void mt_touch_report(struct hid_d
- 	 * defect.
- 	 */
- 	if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
--		if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-+		if (!bitmap_empty(td->active_slots, td->maxcontacts))
- 			mod_timer(&td->release_timer,
- 				  jiffies + msecs_to_jiffies(100));
- 		else
-@@ -1430,6 +1429,15 @@ static int mt_touch_input_configured(str
- 	if (td->is_buttonpad)
- 		__set_bit(INPUT_PROP_BUTTONPAD, input->propbit);
+ 	if (!memcmp(data, flatbattery, sizeof(flatbattery))) {
+-		battery_flat(appleir);
++		spin_lock_irqsave(&appleir->lock, flags);
++		if (!appleir->removing)
++			battery_flat(appleir);
++		spin_unlock_irqrestore(&appleir->lock, flags);
+ 		/* Fall through */
+ 	}
  
-+	if (!td->active_slots) {
-+		td->active_slots = devm_kcalloc(&td->hdev->dev,
-+						BITS_TO_LONGS(td->maxcontacts),
-+						sizeof(long),
-+						GFP_KERNEL);
-+		if (!td->active_slots)
-+			return -ENOMEM;
-+	}
+@@ -318,8 +331,20 @@ fail:
+ static void appleir_remove(struct hid_device *hid)
+ {
+ 	struct appleir *appleir = hid_get_drvdata(hid);
++	unsigned long flags;
 +
- 	app->pending_palm_slots = devm_kcalloc(&hi->input->dev,
- 					       BITS_TO_LONGS(td->maxcontacts),
- 					       sizeof(long),
-@@ -1907,7 +1915,7 @@ static void mt_release_contacts(struct h
- 			for (i = 0; i < mt->num_slots; i++) {
- 				input_mt_slot(input_dev, i);
- 				input_mt_report_slot_inactive(input_dev);
--				clear_bit(i, &td->mt_io_flags);
-+				clear_bit(i, td->active_slots);
- 			}
- 			input_mt_sync_frame(input_dev);
- 			input_sync(input_dev);
-@@ -1930,7 +1938,7 @@ static void mt_expired_timeout(struct ti
- 	 */
- 	if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
- 		return;
--	if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-+	if (!bitmap_empty(td->active_slots, td->maxcontacts))
- 		mt_release_contacts(hdev);
- 	clear_bit_unlock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags);
++	/*
++	 * Mark the driver as tearing down so that any concurrent raw_event
++	 * (e.g. from a USB URB completion that hid_hw_stop() has not yet
++	 * killed) and the key_up_timer softirq stop touching input_dev
++	 * before hid_hw_stop() frees it via hidinput_disconnect().
++	 */
++	spin_lock_irqsave(&appleir->lock, flags);
++	appleir->removing = true;
++	spin_unlock_irqrestore(&appleir->lock, flags);
++
++	timer_shutdown_sync(&appleir->key_up_timer);
+ 	hid_hw_stop(hid);
+-	timer_delete_sync(&appleir->key_up_timer);
  }
+ 
+ static const struct hid_device_id appleir_devices[] = {
 
 
