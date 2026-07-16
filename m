@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9031E85C;
-	Thu, 16 Jul 2026 13:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA60022301;
+	Thu, 16 Jul 2026 13:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210223; cv=none; b=aCeSHOR2v5eZUFXQh+rN+UziBAhBUU6F6pT0sVSG7yn94YgOnRmBFIsOijhWdksOaxpJFlfyB/cnEKFpJRyC5gPcFB1pYBfapLSarj72+duXNmtiGMGtfLrCDLRphb85TwArmfIhCMrLLskHhs0minJkNjUnqR1puBiVy82GcA0=
+	t=1784210225; cv=none; b=cMBQh00Z/rXWO645zGLC3n2PRBc2wx8rJPyOPG7blEQHjkt2oZWgWI75rCYH66WinD0vfr6wXw5NxhcA2faOjANl6p4dlxLs1/SD01/JB0VP+OuS+LpHRMsm9TziEkeOBc/eoXibQWBd/73OJfgzbA7oqTi8qYMmQ11ETZ2x7/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210223; c=relaxed/simple;
-	bh=c+WpTgYLIgUzJnSyhhxzMGDfStTMKLtaPMQtJQbGrxo=;
+	s=arc-20240116; t=1784210225; c=relaxed/simple;
+	bh=de/8hDdIDZegw2ke85Qf0XZVKXN5f9GHS21rUy8a/nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VQ0UzG1GQXzddikLjP0AOsgEI+lAfSAuT8RGTkRrzWZFGJakEksCGidV+yAuzp871mT26PXVV79QsYoCT2x9jcowPs1bC+CasN81PDa5MEuYwrk/RHf7PAg/+GiT2hcRUBqxJwbIdsC61ZQk/PQ6JZYV7l/cY7wbhj+2lnFvBlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbe8R4I6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ok4kzoCCQm9Ld8ivuLd3LWbBwdiW1IepMDM/aonzf77wymPzg7Wrfn/ZUCF5SRTJ5NPdDrGQ1ZTE+hhuBxaGk58GS1SAzZoHvkDXW61G63wbnftyw8OqnBfYtMVNosmBBBPts88EKkg0WY4fgDKtcUrT9iBxY9oKeESjn8/JtBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okR0KrKM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbe8R4I6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784911F000E9;
-	Thu, 16 Jul 2026 13:57:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okR0KrKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC0D1F000E9;
+	Thu, 16 Jul 2026 13:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210222;
-	bh=XfK8CCdyPx+oi9GwH0hlfc+bYeFF8tV5g3ElQySFXIw=;
+	s=korg; t=1784210224;
+	bh=o+pynsJ6ImM0jbITh46HTTLX7i7xNJuw5CoewWZVxaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gbe8R4I6GDtv+nJaOu+br+4qsDePNEsTvJnINsFSdm4fXBIZtysyGAcfuvP55xCih
-	 Vn4TDHE3AW9Xdjc0myYQbHM5OfJ57tK4KCkqIBq1OUd3H6WOd3xW7JMMVF8FHkzsyt
-	 TvxgrH6Hys8n+Vu+fW+TXGrxCOEJdodVxW7If4bo=
+	b=okR0KrKMNLnGr4j9Wpr9QtRW1XLLaPkQThbg1Uf95NV4weCWJt+i/E3jlAUikEdB2
+	 LKZNr6Wa02RFQhat6qR+zkfVmpS+VyAg9o6Bx3r/bcxlT6ymuHKC/zuHs+xv3k3t8J
+	 Sp9XCqqUIOkrUbFMhriEp+wgLm9cPJ8JD63WtwvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Paul Moore <paul@paul-moore.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 7.1 447/518] landlock: Account all audit data allocations to user space
-Date: Thu, 16 Jul 2026 15:31:55 +0200
-Message-ID: <20260716133057.621484252@linuxfoundation.org>
+	Ranjan Kumar <kumarranja@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.1 483/518] Input: elan_i2c - prevent division by zero and arithmetic underflow
+Date: Thu, 16 Jul 2026 15:32:31 +0200
+Message-ID: <20260716133058.416995509@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -45,83 +44,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Ranjan Kumar <kumarranja@chromium.org>
 
-commit b232bd12789fa57405b5092f28788be97aae9999 upstream.
+commit df2b818fa009c10ff6ba875a1663ff001cda9558 upstream.
 
-Mark the kzalloc_flex() of struct landlock_details with
-GFP_KERNEL_ACCOUNT so the allocation is charged to the calling task,
-like the other Landlock per-domain allocations which have used
-GFP_KERNEL_ACCOUNT forever.
+The Elan I2C touchpad driver queries the device for its physical
+dimensions and trace counts to calculate the device resolution and width.
+However, if the device firmware or device tree provides invalid zero
+values for x_traces or y_traces, it results in a fatal division-by-zero
+exception leading to a kernel panic during device probe.
 
-Every property of landlock_details is caller-attributable: allocated by
-landlock_restrict_self(2), owned by the caller's landlock_hierarchy,
-contents are the caller's pid, uid, comm, and exe_path, lifetime bounded
-by the caller's domain.  While the caller may not know nor control the
-size of this allocation (i.e. exe_path), this data should still be
-accounted for it.
+Add checks to ensure these parameters are non-zero before performing
+the division. If invalid trace values are detected, fall back to a safe
+default of 1.
 
-The deciding factor is whether userspace can trigger the allocation, not
-whether the size of the data is known nor controlled by the caller.
-This aligns with the kmemcg accounting policy established by commit
-5d097056c9a0 ("kmemcg: account certain kmem allocations to memcg").
+Additionally, prevent an arithmetic underflow in the touch reporting
+logic. Previously, if the calculated or fallback width was smaller than
+ETP_FWIDTH_REDUCE (90), the subtraction would underflow, resulting in a
+massive unsigned integer being reported to userspace. Clamp the adjusted
+width to a minimum of 0 to safely handle small physical dimensions and
+fallback scenarios.
 
-No new failure modes: the hierarchy and ruleset are allocated before
-details and are already accounted, so landlock_restrict_self(2) already
-returns -ENOMEM under memcg pressure.  This change widens that existing
-failure window slightly; it does not introduce a new error code.
+Completing the probe with safe fallback values ensures the sysfs nodes
+are created, keeping the firmware update path intact so a recovery
+firmware can be flashed to the device.
 
-Cc: Günther Noack <gnoack@google.com>
-Cc: Paul Moore <paul@paul-moore.com>
+Fixes: 6696777c6506 ("Input: add driver for Elan I2C/SMbus touchpad")
+Fixes: e3a9a1290688 ("Input: elan_i2c - do not query the info if they are provided")
+Signed-off-by: Ranjan Kumar <kumarranja@chromium.org>
+Link: https://patch.msgid.link/20260612060339.3829666-1-kumarranja@chromium.org
 Cc: stable@vger.kernel.org
-Fixes: 1d636984e088 ("landlock: Add AUDIT_LANDLOCK_DOMAIN and log domain status")
-Link: https://patch.msgid.link/20260513180309.165840-1-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/landlock/domain.c |    9 +++++----
- security/landlock/domain.h |    5 +----
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/input/mouse/elan_i2c_core.c |   36 ++++++++++++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 6 deletions(-)
 
---- a/security/landlock/domain.c
-+++ b/security/landlock/domain.c
-@@ -90,11 +90,12 @@ static struct landlock_details *get_curr
- 		return ERR_CAST(buffer);
+--- a/drivers/input/mouse/elan_i2c_core.c
++++ b/drivers/input/mouse/elan_i2c_core.c
+@@ -428,8 +428,17 @@ static int elan_query_device_parameters(
+ 		if (error)
+ 			return error;
+ 	}
+-	data->width_x = data->max_x / x_traces;
+-	data->width_y = data->max_y / y_traces;
++
++	if (!x_traces || !y_traces) {
++		dev_warn(&client->dev,
++			 "invalid trace numbers: x=%u, y=%u\n",
++			 x_traces, y_traces);
++		data->width_x = 1;
++		data->width_y = 1;
++	} else {
++		data->width_x = data->max_x / x_traces;
++		data->width_y = data->max_y / y_traces;
++	}
  
- 	/*
--	 * Create the new details according to the path's length.  Do not
--	 * allocate with GFP_KERNEL_ACCOUNT because it is independent from the
--	 * caller.
-+	 * Create the new details according to the path's length.  Account to
-+	 * the calling task's memcg, like the other Landlock per-domain
-+	 * allocations, even if it may not control the related size.
- 	 */
--	details = kzalloc_flex(*details, exe_path, path_size);
-+	details =
-+		kzalloc_flex(*details, exe_path, path_size, GFP_KERNEL_ACCOUNT);
- 	if (!details)
- 		return ERR_PTR(-ENOMEM);
+ 	if (device_property_read_u32(&client->dev,
+ 				     "touchscreen-x-mm", &x_mm) ||
+@@ -443,8 +452,16 @@ static int elan_query_device_parameters(
+ 		data->x_res = elan_convert_resolution(hw_x_res, data->pattern);
+ 		data->y_res = elan_convert_resolution(hw_y_res, data->pattern);
+ 	} else {
+-		data->x_res = (data->max_x + 1) / x_mm;
+-		data->y_res = (data->max_y + 1) / y_mm;
++		if (unlikely(x_mm == 0 || y_mm == 0)) {
++			dev_warn(&client->dev,
++				 "invalid physical dimensions: x_mm=%u, y_mm=%u\n",
++				 x_mm, y_mm);
++			data->x_res = 1;
++			data->y_res = 1;
++		} else {
++			data->x_res = (data->max_x + 1) / x_mm;
++			data->y_res = (data->max_y + 1) / y_mm;
++		}
+ 	}
  
---- a/security/landlock/domain.h
-+++ b/security/landlock/domain.h
-@@ -33,10 +33,7 @@ enum landlock_log_status {
-  * Rarely accessed, mainly when logging the first domain's denial.
-  *
-  * The contained pointers are initialized at the domain creation time and never
-- * changed again.  Contrary to most other Landlock object types, this one is
-- * not allocated with GFP_KERNEL_ACCOUNT because its size may not be under the
-- * caller's control (e.g. unknown exe_path) and the data is not explicitly
-- * requested nor used by tasks.
-+ * changed again.
-  */
- struct landlock_details {
- 	/**
+ 	if (device_property_read_bool(&client->dev, "elan,clickpad"))
+@@ -956,6 +973,7 @@ static void elan_report_contact(struct e
+ 
+ 		if (data->report_features & ETP_FEATURE_REPORT_MK) {
+ 			unsigned int mk_x, mk_y, area_x, area_y;
++			int adj_width_x, adj_width_y;
+ 			u8 mk_data = high_precision ?
+ 				packet[ETP_MK_DATA_OFFSET + contact_num] :
+ 				finger_data[3];
+@@ -967,8 +985,14 @@ static void elan_report_contact(struct e
+ 			 * To avoid treating large finger as palm, let's reduce
+ 			 * the width x and y per trace.
+ 			 */
+-			area_x = mk_x * (data->width_x - ETP_FWIDTH_REDUCE);
+-			area_y = mk_y * (data->width_y - ETP_FWIDTH_REDUCE);
++
++			adj_width_x = data->width_x > ETP_FWIDTH_REDUCE ?
++					data->width_x - ETP_FWIDTH_REDUCE : 0;
++			adj_width_y = data->width_y > ETP_FWIDTH_REDUCE ?
++					data->width_y - ETP_FWIDTH_REDUCE : 0;
++
++			area_x = mk_x * adj_width_x;
++			area_y = mk_y * adj_width_y;
+ 
+ 			input_report_abs(input, ABS_TOOL_WIDTH, mk_x);
+ 			input_report_abs(input, ABS_MT_TOUCH_MAJOR,
 
 
