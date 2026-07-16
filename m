@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCF83161AD;
-	Thu, 16 Jul 2026 14:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28853F54B6;
+	Thu, 16 Jul 2026 14:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211565; cv=none; b=l/MK5bVbxFY7SqDQpRDFqtL9ReO7OWfT7Y1kqMAMTX8WdqDqf1BAydLr8PNQZ5uUlW8+Ae7FxLrXIMMkQc96Z1bLs+fv/g0mFdKMVVYi8Dh3EzP9662lr1uwYY1z5+qITDbyXEzFYMmG+qs70hYPet8Wdv8IWOT+uS22/OTnRMk=
+	t=1784211568; cv=none; b=PV+zienDbBt29Qt8LDkRlfltW8nCY3hMGrpPMpQs9QeemFDDnnSETbhKpee1x+DGrJbE+8Dtx+K7O54WdBjptqM7KpR44Ev5XovzBww/AiNt9xQJamR5/jZ6kc/PCFdWV6tGWiDmO3aUtQWHro4+dgJucE+WGhIFkAdGqZWCpn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211565; c=relaxed/simple;
-	bh=Ii980Vpp7Eo2U6oBsHET7RIRbBpuwJ92xx9NdPxiMMo=;
+	s=arc-20240116; t=1784211568; c=relaxed/simple;
+	bh=gOC9SK9MQE+77yrRN9O5MCHtp0YkcsEUL/KnQXoKEqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WF2YlXe+wXiq0JK3IedM83Mqmu9iutb0BdbyUFYUGG5Yo3YAM9VRT7+FfIzoLLN7pT+MVnfR1joBnbj0rmTuqhx3Xnl20NXAOAcnGAk1FsFVhBK7fRiYpg23+jzlyptlTeeVcjoTkPjPEzExsnMJlt5IApDxqVc9wLBvaOaZtjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1mOi8FH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QkckjynuSihT+lVp7MOnCTQ+0llUr6DliB2KOFmNkiuz5/gwpW9FtLgt722jDI2qyhP6rr4aLfyOvJm5MrjlkPxQACiCzi7pqZA4q0jNWRo4nDAcgNdM+9JSr0hvprRESRHOgO3Tv6cCtg4xIKbP2m6yrOXqrIak2RlkEmeYk4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWK7Xooo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1mOi8FH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B363E1F000E9;
-	Thu, 16 Jul 2026 14:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWK7Xooo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548151F000E9;
+	Thu, 16 Jul 2026 14:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211564;
-	bh=/6e/beUcld7PnqpcZkDIlCG1WKQUPpN3e4yNrqmsoWs=;
+	s=korg; t=1784211566;
+	bh=LymJ1bWyJOPGcYcIIvju35ILeSjBVi/6Yb41mQqNYvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1mOi8FHrVfth3fCXnvAq9pOoJI5t5AM8FxBMsaV+Vv7ZKpDJ2bcdfbQ13VcyyGCr
-	 k7nC3UUhtlA5yvJJ6fnP3arJ1/lpkKjLRjhrOkAxTMMxsMR7FfUjwG5xT7ZlLb9D1i
-	 +hVCxtVG8mx5+rfpoXk3WNiZ5xYybfdqpPEQ66Zo=
+	b=KWK7Xoook4rxbuU8z0N1YuxTnbQ81wQNUlvSMVh0dAgULky8f6AXklUKgtlD7tXad
+	 y+nQ60M6ch/5m0e6lFOrtjH5sd7QCtyCMT1vX8ychz3PBm2dhDLf5fX/WZj2d6yZrv
+	 W/ioQgz3D7nUdHRsO1pneSTRWCIb/VQnsoHeRZ0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Neill Kapron <nkapron@google.com>
-Subject: [PATCH 6.18 477/480] usb: gadget: f_fs: Initialize epfile->in early to fix endpoint direction checks
-Date: Thu, 16 Jul 2026 15:33:44 +0200
-Message-ID: <20260716133055.142920450@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Oleg Nesterov <oleg@redhat.com>
+Subject: [PATCH 6.18 478/480] timekeeping: Register default clocksource before taking tk_core.lock
+Date: Thu, 16 Jul 2026 15:33:45 +0200
+Message-ID: <20260716133055.165089944@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,47 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit 82cfd4739011bdc7e87b5d585703427e89ddfaa5 upstream.
+commit 8fa30821180a9a19e78e9f4df1c0ba710252801e upstream.
 
-When parsing endpoint descriptors, ffs_data_got_descs() generates the
-eps_addrmap which contains the endpoint direction. However, epfile->in
-was previously only populated in ffs_func_eps_enable() which executes
-upon USB host connection. As a result, early userspace ioctls like
-FUNCTIONFS_DMABUF_ATTACH that run before the host connects would see
-epfile->in as 0, leading to incorrect DMA directions.
+Commit f24df84cbe05 ("time/jiffies: Register jiffies clocksource before
+usage") moved the jiffies clocksource registration into
+clocksource_default_clock(), so that it is registered lazily on the first
+call. __clocksource_register() acquires clocksource_mutex, but the first
+caller is timekeeping_init(), which invokes clocksource_default_clock()
+while holding tk_core.lock, a raw spinlock.
 
-By moving the initialization to ffs_epfiles_create(), epfile->in is
-accurate before userspace opens the endpoint files.
+Acquiring a sleeping mutex while holding a raw spinlock is invalid.
 
-Fixes: 7b07a2a7ca02 ("usb: gadget: functionfs: Add DMABUF import interface")
-Cc: stable <stable@kernel.org>
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://patch.msgid.link/20260619040609.4010746-2-nkapron@google.com
+The default clocksource only has to be registered before
+tk_setup_internals() consumes its mult/shift/maxadj. Neither
+clocksource_default_clock(), the ->enable() callback, nor the registration
+itself need tk_core.lock, so fetch and enable the clock before acquiring
+the lock. This preserves the "register before usage" ordering while
+keeping clocksource_mutex out of the raw spinlock section.
+
+clocksource_default_clock() has a second caller,
+clocksource_done_booting(), which invokes it with clocksource_mutex already
+held. That path avoids a recursive lock because timekeeping_init() has
+already run and set cs_jiffies_registered, so the registration is skipped
+there. This change does not alter that; it only fixes the invalid wait
+context in timekeeping_init().
+
+Fixes: f24df84cbe05 ("time/jiffies: Register jiffies clocksource before usage")
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reported-by: Breno Leitao <leitao@debian.org>
+Reported-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260616070914.65818-1-mikhail.v.gavrilov@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/timekeeping.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -2354,6 +2354,7 @@ static int ffs_epfiles_create(struct ffs
- 			sprintf(epfile->name, "ep%02x", ffs->eps_addrmap[i]);
- 		else
- 			sprintf(epfile->name, "ep%u", i);
-+		epfile->in = (ffs->eps_addrmap[i] & USB_ENDPOINT_DIR_MASK) ? 1 : 0;
- 		epfile->dentry = ffs_sb_create_file(ffs->sb, epfile->name,
- 						 epfile,
- 						 &ffs_epfile_operations);
-@@ -2440,7 +2441,6 @@ static int ffs_func_eps_enable(struct ff
- 		ret = usb_ep_enable(ep->ep);
- 		if (!ret) {
- 			epfile->ep = ep;
--			epfile->in = usb_endpoint_dir_in(ep->ep->desc);
- 			epfile->isoc = usb_endpoint_xfer_isoc(ep->ep->desc);
- 		} else {
- 			break;
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -1825,13 +1825,14 @@ void __init timekeeping_init(void)
+ 	 */
+ 	wall_to_mono = timespec64_sub(boot_offset, wall_time);
+ 
++	clock = clocksource_default_clock();
++	if (clock->enable)
++		clock->enable(clock);
++
+ 	guard(raw_spinlock_irqsave)(&tk_core.lock);
+ 
+ 	ntp_init();
+ 
+-	clock = clocksource_default_clock();
+-	if (clock->enable)
+-		clock->enable(clock);
+ 	tk_setup_internals(tks, clock);
+ 
+ 	tk_set_xtime(tks, &wall_time);
 
 
