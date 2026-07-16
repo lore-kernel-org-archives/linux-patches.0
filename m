@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A54A426D0B;
-	Thu, 16 Jul 2026 13:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB8B37E5CB;
+	Thu, 16 Jul 2026 13:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209625; cv=none; b=rxLPRVfoPupww4GJooav7YWdWBX5BHO7SaGl+qiRwum/dRT6THSueFqqSwiW819urjcuhQIbUGXkrACFeUJ3buwhh+NoFAtRK/e7P16HvEQDwfeydf02UBtbthNe5v35dlKAvH6VTrgwhkO2RuMthHvt34Rvada0nynHU1fuEsY=
+	t=1784209626; cv=none; b=lSINnJIBrqsNI738FmmnOrqXFEkOfBsEEb+pbI8JZX/Bw/SvpT+POw9IJuk31PFLboUldk33K6g8R6CBPm2MzJJR+BoYirpAoFEpDm4Pnl8u7B+bOxb4cge8vx51p/Nnh8alpLZToBVvJ26faVPZSjLU2YBIf4UAS3VX0908GPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209625; c=relaxed/simple;
-	bh=Q301GwRPQ8ithOKPd+2eHZeWuOb9RaoaM2WS/se5bBY=;
+	s=arc-20240116; t=1784209626; c=relaxed/simple;
+	bh=aXjOE3x6DLrrtG5VjBdynjgtiSWq+ON6MwAPfSX7WKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dt7MtWA7ASHn85+s0x1D79k43S4nLSW9pRwNPsTMOOw6E4s1Whnpn3gwGlPFQsLw1HHIHsn9mCNQAd3WZE1m+GoktpE1h62mESOFhhrxBVWTFomIT4gKCWV30vwvV+Olrkf12KHAhzTuhl+KW0hTFy9hlXo6hDuyyOjeHHeYg80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzBeGu8/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ET7OwUnst0Rt6NMWvhxNptBljeqmn7/9Tz/3iadNooRc9jNS5/IgD57b4pInXSfZn3EhK7h7hglVuAEcQ8WOv74ZaxivWAU0ak53eAityssFNSP76/rmuuE1lKZknjE7+vjne99ACUNNoq2n5QjHi3cQ4adkzAAaBoQWEBrY5xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3Yfx8Qc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzBeGu8/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E49D1F000E9;
-	Thu, 16 Jul 2026 13:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3Yfx8Qc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4851F00A3F;
+	Thu, 16 Jul 2026 13:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209620;
-	bh=BzeGJcRlWqmVIB2eEQlOVyhEspRRe+k62fuX/LY5IdE=;
+	s=korg; t=1784209623;
+	bh=jeCXQn1z5SLkbSg7fkqEFkNod680NlhZnPuvcS320WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fzBeGu8/T2X6u+QyE8heE3Vqm/TKPpnFYVkiO1PtK4nnyXz2JfNfCOh0mP+x7qzWW
-	 rgtjVFiZHXeDqN/stIycpiDdRb0o4bZzhM76jst6zfhIh1QY1cilSBl+wFQABQrzxq
-	 VHLO06PcasovPwXIlC/8wiky5616FwH/oDHHdrSQ=
+	b=k3Yfx8QcX1EOToeRgDfU5YgWNKd8uQD5oFm7Zik/IpP73ZU/WrSfOc3LR1V/eiHDE
+	 9LDxBMlDkSpQ6K2Dg26UpLPCnXqxS6frFjBPjWwgZwTeEk35K3s/wKQ/UraZT/b7qI
+	 ZOJzDDns/CcdPGiKGjKKrYHPuJCBFyRz2aveHgCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianxiang Chen <nanmu@xiaomi.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.1 253/518] cpufreq: Fix hotplug-suspend race during reboot
-Date: Thu, 16 Jul 2026 15:28:41 +0200
-Message-ID: <20260716133053.352692954@linuxfoundation.org>
+Subject: [PATCH 7.1 254/518] cpufreq: pcc: fix use-after-free and double free in _OSC evaluation
+Date: Thu, 16 Jul 2026 15:28:42 +0200
+Message-ID: <20260716133053.375344571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,62 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianxiang Chen <nanmu@xiaomi.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-commit a9029dd55696c651ee46912afa2a166fa456bb3e upstream.
+commit 266d3dd8b757b48a576e90f018b51f7b7563cc32 upstream.
 
-During system reboot, cpufreq_suspend() is called via the
-kernel_restart() -> device_shutdown() path. Unlike the normal system
-suspend path, the reboot path does not call freeze_processes(), so
-userspace processes and kernel threads remain active.
+pcc_cpufreq_do_osc() calls acpi_evaluate_object() twice for the
+two-phase _OSC negotiation. Between the two calls it freed
+output.pointer but left output.length unchanged. Since
+acpi_evaluate_object() treats a non-zero length with a non-NULL
+pointer as an existing buffer to write into, the second call wrote
+into freed memory (use-after-free). The subsequent kfree(output.pointer)
+at out_free then freed the same pointer a second time (double free).
 
-This allows CPU hotplug operations to run concurrently with
-cpufreq_suspend(). The original code has no synchronization with CPU
-hotplug, leading to a race condition where governor_data can be freed
-by the hotplug path while cpufreq_suspend() is still accessing it,
-resulting in a null pointer dereference:
+Reset output.pointer to NULL and output.length to ACPI_ALLOCATE_BUFFER
+after freeing the first result, so ACPICA allocates a fresh buffer for
+each phase independently.
 
-  Unable to handle kernel NULL pointer dereference
-  Call Trace:
-   do_kernel_fault+0x28/0x3c
-   cpufreq_suspend+0xdc/0x160
-   device_shutdown+0x18/0x200
-   kernel_restart+0x40/0x80
-   arm64_sys_reboot+0x1b0/0x200
-
-Fix this by adding cpus_read_lock()/cpus_read_unlock() to
-cpufreq_suspend() to block CPU hotplug operations while suspend is in
-progress.
-
-Fixes: 65650b35133f ("cpufreq: Avoid cpufreq_suspend() deadlock on system shutdown")
-Signed-off-by: Tianxiang Chen <nanmu@xiaomi.com>
+Fixes: 0f1d683fb35d ("[CPUFREQ] Processor Clocking Control interface driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 Cc: All applicable <stable@vger.kernel.org>
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20260408141914.35281-1-nanmu@xiaomi.com
+Link: https://patch.msgid.link/20260416144621.93964-1-dbgh9129@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c |    2 ++
+ drivers/cpufreq/pcc-cpufreq.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1972,6 +1972,7 @@ void cpufreq_suspend(void)
- 	if (!cpufreq_driver)
- 		return;
+--- a/drivers/cpufreq/pcc-cpufreq.c
++++ b/drivers/cpufreq/pcc-cpufreq.c
+@@ -352,6 +352,8 @@ static int __init pcc_cpufreq_do_osc(acp
+ 	}
  
-+	cpus_read_lock();
- 	if (!has_target() && !cpufreq_driver->suspend)
- 		goto suspend;
+ 	kfree(output.pointer);
++	output.pointer = NULL;
++	output.length = ACPI_ALLOCATE_BUFFER;
+ 	capabilities[0] = 0x0;
+ 	capabilities[1] = 0x1;
  
-@@ -1991,6 +1992,7 @@ void cpufreq_suspend(void)
- 
- suspend:
- 	cpufreq_suspended = true;
-+	cpus_read_unlock();
- }
- 
- /**
 
 
