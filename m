@@ -1,49 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9252F12CE;
-	Thu, 16 Jul 2026 14:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389D82F12CE;
+	Thu, 16 Jul 2026 14:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211369; cv=none; b=DbOEUkwfvR3jh200Kt+vrVvEFMfQXJUD9m0zoK4cFv38AtaOG09+ssXuqHZ7i/ueQZhHO2OVnaKBSDz7rl2s++GL3h/1MKKRYbgsq0nkfVsBcsuLPqeHdAc55lgCQXlIhvEJbetCU1QuF1y8zcCQq+i6cKHUvt0OYoEI+DlGHJw=
+	t=1784211371; cv=none; b=PWaGBvBJiX/GBtjSqojCzZEBeMEG6KJOran+heUoUHv55jXGwNyJYqoRj+E9iWA6sJ8UBRXhHVs3D/K4pAUiarSi5BERH2aGUwdU1gg1bRkaDQf4lqMYNUK/qIntsqL5jO07+9kWdEWqc463g/NTbN7H6yz7GstFY12ECRY7cqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211369; c=relaxed/simple;
-	bh=PHbh8g8YNq5iHOf0pmWxmEUfHWFeb7j+UU8+bZlzXm8=;
+	s=arc-20240116; t=1784211371; c=relaxed/simple;
+	bh=jKkZfELNJszDGy0KZ3BAK0ETD397aMwIhjIL4nCbP0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2NPdsyONbMePOz0Ikc2jzXYHSbA7++NxtjLa+UfcX6l5YtePxbSxkvFmY6guJaQ2Y6Ka5U3Uv3xDYexJfVJqFfwydm3jI/JTpqTjsSOUoOCipcOjhcYxQpKtNCKBXLt0E/bqnXvOPvdl6WzPQyZ1D29hyvSR2zwtLyzycs6Yv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeUxpGZZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sDIJsSZROKhW/ESq1STDmYIHzphTgC5k7eGF6iesQSusMjqV9eUuvrNIDCOFwTzkeoa40Ug0ra0CysOz0MBg1hazuCeJKb3hfOHJzr+F7xLacvzap8Sl2X61JGYH1NnkzqL7mnSiPNawIrJMiMgIEqABYkOvSE0OpBS9CgltCwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJKy150k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeUxpGZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB30D1F000E9;
-	Thu, 16 Jul 2026 14:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJKy150k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721E41F000E9;
+	Thu, 16 Jul 2026 14:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211367;
-	bh=y8E2ear7j6tUwFxrvI+1A5bBoh9LCV55xxLTISmsSmk=;
+	s=korg; t=1784211370;
+	bh=0kkGzKT1YdYhfZOz7Ea/irJ7h0EGDjB+CZQkcDjGvTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UeUxpGZZHV3xhvtJAc4aIL6y6PZDVL4MGPrcHdHBE+GrJPddz7jxJuUtQuFfG0MkU
-	 vS8Kzc2TzqB2td4zreBAWsyUdhgJKuQ3o3Ml0JnRW5rSYPHhzVzQT836cLdr8I6PFB
-	 jJCo4Mna43NyvltGgxCnh0U0LB6zUmtmAnpqL2qA=
+	b=RJKy150krjtkzYtl+NmDUrzCSSJv7I72Ps4k0eYcY5d36OWwyLNvf8LONX0jc2x8g
+	 wfbyB+43EWzR3QBtYJLj/3N+8QI2CgkKDrlXS81nKYVp09xuZqUuz3XrOEVhO0uCRX
+	 Y3bkHE8S/SjkStd5DNv7XhONKO0w1z6/5dV6zfqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Yznaga <anthony.yznaga@oracle.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Aishwarya TCV <Aishwarya.TCV@arm.com>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Dev Jain <dev.jain@arm.com>,
+	SeongJae Park <sj@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Anthony Yznaga <anthony.yznaga@oracle.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Mark Brown <broonie@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	"Jason A. Donenfeld" <jason@zx2c4.com>,
-	Liam Howlett <liam@infradead.org>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
 	Shuah Khan <shuah@kernel.org>,
 	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 400/480] mm: fix mmap errno value when MAP_DROPPABLE is not supported
-Date: Thu, 16 Jul 2026 15:32:27 +0200
-Message-ID: <20260716133053.459079642@linuxfoundation.org>
+Subject: [PATCH 6.18 401/480] selftests: mm: fix and speedup "droppable" test
+Date: Thu, 16 Jul 2026 15:32:28 +0200
+Message-ID: <20260716133053.481896286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -62,72 +65,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Yznaga <anthony.yznaga@oracle.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-commit d86c9e971af2315119a78c564a802fafcebf1b6b upstream.
+commit cc13a7a618fe8354f16d74c06aaf9565a68e9ebd upstream.
 
-Patch series "fix MAP_DROPPABLE not supported errno", v4.
+The droppable test currently relies on creating memory pressure in a child
+process to trigger dropping the droppable pages.
 
-Mark Brown reported seeing a regression in -next on 32 bit arm with the
-mlock selftests.  Before exiting and marking the tests failed, the
-following message was logged after an attempt to create a MAP_DROPPABLE
-mapping:
+That not only takes a long time on some machines (allocating and filling
+all that memory), on large machines this will not work as we hardcode the
+area size to 134217728 bytes.
 
-Bail out! mmap error: Unknown error 524
+...  further, we rely on timeouts to detect that memory was not dropped,
+which is really suboptimal.
 
-It turns out error 524 is ENOTSUPP which is an error that userspace is not
-supposed to see, but it indicates in this instance that MAP_DROPPABLE is
-not supported.
+Instead, let's just use MADV_PAGEOUT on a 2 MiB region.  MADV_PAGEOUT
+works with droppable memory even without swap.
 
-The first patch changes the errno returned to EOPNOTSUPP.  The second
-patch is a second version of a prior patch to introduce selftests to
-verify locking behavior with droppable mappings with the additional change
-to skip the tests when MAP_DROPPABLE is not supported.  The third patch
-fixes the MAP_DROPPABLE selftest so that it is run by the framework and
-skips if MAP_DROPPABLE is not supported.
+There is the low chance of MADV_PAGEOUT failing to drop a page because of
+speculative references.  We'll wait 1s and retry 10 times to rule that
+unlikely case out as best as we can.
 
+On a machine without swap:
 
-This patch (of 3):
+	$ ./droppable
+	TAP version 13
+	1..1
+	ok 1 madvise(MADV_PAGEOUT) behavior
+	# Totals: pass:1 fail:0 xfail:0 xpass:0 skip:0 error:0
 
-On configs where MAP_DROPPABLE is not supported (currently any 32-bit
-config except for PPC32), mmap fails with errno set to ENOTSUPP.  However,
-ENOTSUPP is not a standard error value that userspace knows about.  The
-acceptable userspace-visible errno to use is EOPNOTSUPP.  checkpatch.pl
-has a warning to this effect.
-
-Link: https://lore.kernel.org/20260416033939.49981-1-anthony.yznaga@oracle.com
-Link: https://lore.kernel.org/20260416033939.49981-2-anthony.yznaga@oracle.com
+Link: https://lore.kernel.org/20260611-droppable_test-v1-1-b6a73d99f658@kernel.org
 Fixes: 9651fcedf7b9 ("mm: add MAP_DROPPABLE for designating always lazily freeable mappings")
-Signed-off-by: Anthony Yznaga <anthony.yznaga@oracle.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reported-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jason A. Donenfeld <jason@zx2c4.com>
-Cc: Liam Howlett <liam@infradead.org>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Reported-by: Aishwarya TCV <Aishwarya.TCV@arm.com>
+Tested-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Tested-by: Lorenzo Stoakes <ljs@kernel.org>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Anthony Yznaga <anthony.yznaga@oracle.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Mark Brown <broonie@kernel.org>
 Cc: Michal Hocko <mhocko@suse.com>
 Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Shuah Khan <shuah@kernel.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/mm/droppable.c |   46 ++++++++++++++++++---------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -502,7 +502,7 @@ unsigned long do_mmap(struct file *file,
- 			break;
- 		case MAP_DROPPABLE:
- 			if (VM_DROPPABLE == VM_NONE)
--				return -ENOTSUPP;
-+				return -EOPNOTSUPP;
- 			/*
- 			 * A locked or stack area makes no sense to be droppable.
- 			 *
+--- a/tools/testing/selftests/mm/droppable.c
++++ b/tools/testing/selftests/mm/droppable.c
+@@ -17,10 +17,10 @@
+ 
+ int main(int argc, char *argv[])
+ {
+-	size_t alloc_size = 134217728;
+-	size_t page_size = getpagesize();
++	const size_t alloc_size = 2 * 1024 * 1024;
++	int retry_count = 10;
++	bool dropped;
+ 	void *alloc;
+-	pid_t child;
+ 
+ 	ksft_print_header();
+ 	ksft_set_plan(1);
+@@ -28,26 +28,32 @@ int main(int argc, char *argv[])
+ 	alloc = mmap(0, alloc_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_DROPPABLE, -1, 0);
+ 	assert(alloc != MAP_FAILED);
+ 	memset(alloc, 'A', alloc_size);
+-	for (size_t i = 0; i < alloc_size; i += page_size)
+-		assert(*(uint8_t *)(alloc + i));
+ 
+-	child = fork();
+-	assert(child >= 0);
+-	if (!child) {
+-		for (;;)
+-			*(char *)malloc(page_size) = 'B';
+-	}
+-
+-	for (bool done = false; !done;) {
+-		for (size_t i = 0; i < alloc_size; i += page_size) {
+-			if (!*(uint8_t *)(alloc + i)) {
+-				done = true;
+-				break;
++	while (retry_count--) {
++		if (madvise(alloc, alloc_size, MADV_PAGEOUT)) {
++			if (errno == EINVAL) {
++				ksft_test_result_skip("madvise(MADV_PAGEOUT) not supported\n");
++				exit(KSFT_SKIP);
+ 			}
++			ksft_test_result_fail("madvise(MADV_PAGEOUT) error: %s\n", strerror(errno));
++			exit(KSFT_FAIL);
+ 		}
++
++		dropped = memchr(alloc, 'A', alloc_size) == NULL;
++
++		/*
++		 * Speculative reference can temporarily prevent some
++		 * pages from getting dropped. So sleep and retry.
++		 *
++		 * If a page is not droppable for 10s, something
++		 * is seriously messed up and we want to fail.
++		 */
++		if (dropped)
++			break;
++		sleep(1);
+ 	}
+-	kill(child, SIGTERM);
+ 
+-	ksft_test_result_pass("MAP_DROPPABLE: PASS\n");
+-	exit(KSFT_PASS);
++	ksft_test_result(dropped, "madvise(MADV_PAGEOUT) behavior\n");
++
++	ksft_finished();
+ }
 
 
