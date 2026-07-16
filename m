@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B70427FA6;
-	Thu, 16 Jul 2026 13:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19663FD96B;
+	Thu, 16 Jul 2026 13:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209436; cv=none; b=HoTKmZNEO4+thovWgXujq7HT0H1alv7JW+64LjBNWEZ07y0uSpZIZkRZbPKDLVtnJLVhO3RKrRD3Vltyi5VX13oJbCNZ7voZOmofIexS+Z2UdjjfJ4booJSSLW+OLGec9pTWgQmhkM1MQDl8OW/DVScc0WHeBvYnpktTR2vT5fo=
+	t=1784209437; cv=none; b=g0uXL/2rgxFyBBSgWWuU8U7AJ8r1VKXGLYZIPbey4b0oRGkfwKt9sK7X+QDLuEVd6p2UnQ9A2058Gh+F248Mi1ab9JSF/o+E1OGG3JZfM5eFVuyG9PebTLxdzHA5Gr9Df6vuGlaSEbQKNa4JL3Jm6ZJaHqXT4C6caDDZlT2kYIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209436; c=relaxed/simple;
-	bh=IxNjLssrzzuV68n07tPkGIUPilacdsnNZPWEsGdT2Ng=;
+	s=arc-20240116; t=1784209437; c=relaxed/simple;
+	bh=Bbn09k3gatgDUipqwbu/y9VTXI3qw4DWBBfmlt5zPpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6Wwx6D5kU3NhOkzA3y0Xz3xnzpZQQl90uUylU/zkrkSjgzXqwl8X1dHEksr5WG/1UAEVotAokADRzvXJSUI7mWYwWTj5Ughb/2JNN4/v0Rpj+mmn/HGkS4qVvMQoCe4PFDMJ9y6CmIXURnZcRxBh7SU0GgxPSCDOVB2p4T1FAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUylhvdr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pAdpXBizhT9PT6/aXo/2LLHAAVlmVvBhjc8eDuF08eX01tckpKc4qsorzYEzuCNLQwxULgmBjnCXCBR0khWL2CcCPJClmQzHv3bi1Q4Q10xX+K09a7uF0cld18b9J8HikWDSk/1UQmuhtQykns4cQbRAKhMZm1Buz43PKYuPzM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zT0Dmh76; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUylhvdr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F861F000E9;
-	Thu, 16 Jul 2026 13:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zT0Dmh76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324F11F00A3F;
+	Thu, 16 Jul 2026 13:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209432;
-	bh=lpghmCAYUyPU2fE/LtfFquTVaZOQv0YvqZcJlAI5fmI=;
+	s=korg; t=1784209434;
+	bh=Bj5I9ob+/FXQ5shhL+BISyLyoBJDFdjekSb/40znZLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUylhvdrnBhwSF32p+/MaIzKCv5zVXFm60RvR/EUAE+DHolg6eQzsyAkjcz01j4NQ
-	 MfEDzsyL/djd4pEN3PqKvqdGrXSKdL4lqx2ck8gp9cVBCwqiKpFI5WkvfX4mjPLkkk
-	 6q46vQLZ31r72wi7ao+AfOSV6D7aoqZnqtC/fLs4=
+	b=zT0Dmh76DQ/NOK80P9moG2XQS/WyJiR5gf8YY08Pmf9TGbuTo7CZPeh6yjeVirFoR
+	 7w4ba5U++VetiSRgFBoSl0/xEZiiZ3aOK/nHoALLhXhYnQ5uWX+YikQg3Q9ibxfYsh
+	 Is4xUb4FlZJfrbzrt0ZyjJU0nIAvl23xqPRidKqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>
-Subject: [PATCH 7.1 166/518] staging: rtl8723bs: fix OOB reads in rtw_get_sec_ie(), rtw_get_wapi_ie(), and rtw_get_wps_attr()
-Date: Thu, 16 Jul 2026 15:27:14 +0200
-Message-ID: <20260716133051.472620824@linuxfoundation.org>
+	syzbot+2cd473471e77bda12b0e@syzkaller.appspotmail.com,
+	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.1 184/518] io_uring/nop: fix file reference leak with IOSQE_FIXED_FILE
+Date: Thu, 16 Jul 2026 15:27:32 +0200
+Message-ID: <20260716133051.862752642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,89 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
 
-commit 1463ca3ec6601cbb097d8d87dbf5dcf1cb86a344 upstream.
+commit 2564ca2e31bd8ee8348362941af2ee4671e487ca upstream.
 
-Three IE/attribute parsing functions have missing bounds checks.
+NOP file-acquisition support choses between a fixed (registered) file and
+a normal fget()'d file based on its own IORING_NOP_FIXED_FILE flag in
+sqe->nop_flags. However, a request's REQ_F_FIXED_FILE is set
+independently from the generic IOSQE_FIXED_FILE sqe flag during request
+init, before the issue handler runs.
 
-rtw_get_sec_ie() and rtw_get_wapi_ie() iterate over a raw IE buffer
-without verifying that the header bytes (tag + length) are within the
-remaining buffer before reading them.  Additionally, rtw_get_sec_ie()
-compares the 4-byte WPA OUI at cnt+2 without checking that at least
-6 bytes remain, and rtw_get_wapi_ie() compares a 4-byte WAPI OUI at
-cnt+6 without checking that at least 10 bytes remain.
+If a NOP is submitted with IOSQE_FIXED_FILE set (so REQ_F_FIXED_FILE is
+set) but without IORING_NOP_FIXED_FILE, io_nop() takes the normal path
+and grabs a real reference via io_file_get_normal(). On completion,
+io_put_file() only drops the reference when REQ_F_FIXED_FILE is clear,
+so the fget()'d file is never released and leaks:
 
-rtw_get_wps_attr() reads wps_ie[0] and wps_ie+2 unconditionally at
-entry, before verifying that wps_ielen is large enough to contain
-the 6-byte WPS IE header (element_id + length + 4-byte OUI).  Inside
-the attribute loop, get_unaligned_be16() is called on attr_ptr and
-attr_ptr+2 without checking that 4 bytes remain in the buffer.
+  BUG: memory leak
+  unreferenced object 0xffff88800f42c240 (size 176):
+    kmem_cache_alloc_noprof+0x358/0x440
+    alloc_empty_file+0x57/0x180
+    path_openat+0x44/0x1e50
+    do_file_open+0x121/0x200
+    do_sys_openat2+0xa7/0x150
+    __x64_sys_openat+0x82/0xf0
 
-Add a cnt+2 bounds check before each loop body in rtw_get_sec_ie()
-and rtw_get_wapi_ie(), guard each multi-byte comparison with a minimum
-IE length requirement, add a wps_ielen < 6 early return in
-rtw_get_wps_attr(), and add a 4-byte bounds check in its inner loop.
+Decide between fixed and normal file acquisition from REQ_F_FIXED_FILE,
+the same way io_assign_file() does for every other opcode, and fold
+IORING_NOP_FIXED_FILE into REQ_F_FIXED_FILE at prep time.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260522004531.1038924-8-hossu.alexandru@gmail.com
+Cc: stable@vger.kernel.org
+Fixes: a85f31052bce ("io_uring/nop: add support for testing registered files and buffers")
+Reported-by: syzbot+2cd473471e77bda12b0e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?id=879092631b98f73a28ea405adacfa5bb34a14a25
+Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+Link: https://patch.msgid.link/20260615144619.482749-1-vasilisalmpanis@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ io_uring/nop.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -583,9 +583,14 @@ int rtw_get_wapi_ie(u8 *in_ie, uint in_l
- 	cnt = (_TIMESTAMP_ + _BEACON_ITERVAL_ + _CAPABILITY_);
+--- a/io_uring/nop.c
++++ b/io_uring/nop.c
+@@ -41,6 +41,8 @@ int io_nop_prep(struct io_kiocb *req, co
+ 		nop->fd = READ_ONCE(sqe->fd);
+ 	else
+ 		nop->fd = -1;
++	if (nop->flags & IORING_NOP_FIXED_FILE)
++		req->flags |= REQ_F_FIXED_FILE;
+ 	if (nop->flags & IORING_NOP_FIXED_BUFFER)
+ 		req->buf_index = READ_ONCE(sqe->buf_index);
+ 	if (nop->flags & IORING_NOP_CQE32) {
+@@ -60,12 +62,10 @@ int io_nop(struct io_kiocb *req, unsigne
+ 	int ret = nop->result;
  
- 	while (cnt < in_len) {
-+		if (cnt + 2 > in_len)
-+			break;
-+		if (cnt + 2 + in_ie[cnt + 1] > in_len)
-+			break;
- 		authmode = in_ie[cnt];
- 
- 		if (authmode == WLAN_EID_BSS_AC_ACCESS_DELAY &&
-+		    in_ie[cnt + 1] >= 8 &&
- 		    (!memcmp(&in_ie[cnt + 6], wapi_oui1, 4) ||
- 		     !memcmp(&in_ie[cnt + 6], wapi_oui2, 4))) {
- 			if (wapi_ie)
-@@ -616,9 +621,14 @@ void rtw_get_sec_ie(u8 *in_ie, uint in_l
- 	cnt = (_TIMESTAMP_ + _BEACON_ITERVAL_ + _CAPABILITY_);
- 
- 	while (cnt < in_len) {
-+		if (cnt + 2 > in_len)
-+			break;
-+		if (cnt + 2 + in_ie[cnt + 1] > in_len)
-+			break;
- 		authmode = in_ie[cnt];
- 
- 		if ((authmode == WLAN_EID_VENDOR_SPECIFIC) &&
-+		    in_ie[cnt + 1] >= 4 &&
- 		    (!memcmp(&in_ie[cnt + 2], &wpa_oui[0], 4))) {
- 			if (wpa_ie)
- 				memcpy(wpa_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
-@@ -699,6 +709,9 @@ u8 *rtw_get_wps_attr(u8 *wps_ie, uint wp
- 	if (len_attr)
- 		*len_attr = 0;
- 
-+	if (wps_ielen < 6)
-+		return attr_ptr;
-+
- 	if ((wps_ie[0] != WLAN_EID_VENDOR_SPECIFIC) ||
- 		(memcmp(wps_ie + 2, wps_oui, 4))) {
- 		return attr_ptr;
-@@ -709,6 +722,8 @@ u8 *rtw_get_wps_attr(u8 *wps_ie, uint wp
- 
- 	while (attr_ptr - wps_ie < wps_ielen) {
- 		/*  4 = 2(Attribute ID) + 2(Length) */
-+		if (attr_ptr + 4 > wps_ie + wps_ielen)
-+			break;
- 		u16 attr_id = get_unaligned_be16(attr_ptr);
- 		u16 attr_data_len = get_unaligned_be16(attr_ptr + 2);
- 		u16 attr_len = attr_data_len + 4;
+ 	if (nop->flags & IORING_NOP_FILE) {
+-		if (nop->flags & IORING_NOP_FIXED_FILE) {
++		if (req->flags & REQ_F_FIXED_FILE)
+ 			req->file = io_file_get_fixed(req, nop->fd, issue_flags);
+-			req->flags |= REQ_F_FIXED_FILE;
+-		} else {
++		else
+ 			req->file = io_file_get_normal(req, nop->fd);
+-		}
+ 		if (!req->file) {
+ 			ret = -EBADF;
+ 			goto done;
 
 
