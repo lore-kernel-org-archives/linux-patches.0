@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D8D433BDE;
-	Thu, 16 Jul 2026 14:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC56A42CB16;
+	Thu, 16 Jul 2026 14:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212391; cv=none; b=SeTanUMw/mr22YVjdrqSPUjm6sJH54Mdte+QolmaUf5SKKR/dq0ofyckuLMAbk0IN2/o1tuK+B3umAmvoloI5gyJljkCnVpyJKfKsr6dyAlYCeanyq20x3hodoQG+PHdnRplZgwoBduVIVDoND7w562prtl2rbu3pKFPxvkFmmU=
+	t=1784212393; cv=none; b=PLp6HIx5rf475PtmxC7cCRA4vbQ87vvsqIpxUcp7pTHag+SEJlNPTtFaSpNT18T26TkpTyrrKuCMLwi9e20oqPO51RiAv+fvOG0KbuUd9sNX4zfm7oyBbD0rpYuUA5/A1rgG6NpIbnf/VdgzJvg3TZMyN5xiZjzLSv5/pUJYVbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212391; c=relaxed/simple;
-	bh=akvRBUNIdq7R/tRIuRAJ0k5LrBn6OnsO+bDv3z22cwM=;
+	s=arc-20240116; t=1784212393; c=relaxed/simple;
+	bh=v/YD01RVw/TXUwa+G3BJgiBPpLKbAH7I1/5r1E4yKx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0MyxHr1S3hyaFfr/nQsuIhrjYemwYFDvf2nLK+LtcAJZWP2rOWtpPdeR+nM/kqTglGMwjEvqwCPtJ9XEFkzlYMeACbwKwrhP0/vtPMlfBjVyLlufcYqLkrDkq2tdfJ8SIC6CJjbjpRPB46kuBvVKKzt4lIJGYuKSngnQRfo0zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8ekEZa+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kehLYoG6/7HhXaS6gsnN+okidIVrwb13hmaVR5fgO2OjvfAjLiTnq2Y4g+rTkoaM3ccxgGukL7j5sfAR5Nh0NIsdCS1qP9CTCG1oqk9Gw1JFX3/KKDL6Cc1QB7dsYxOwe9y7/xcYw7Wq+7ATd8mPIHbe/BBYH+yFQ4a+rg3i6dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxpUvpwI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8ekEZa+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C20D1F000E9;
-	Thu, 16 Jul 2026 14:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxpUvpwI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F731F000E9;
+	Thu, 16 Jul 2026 14:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212389;
-	bh=jCbox+FOQS2m/7rYJ049DCEa+EXrExg1of7fnaDdrFY=;
+	s=korg; t=1784212392;
+	bh=ZB/aS4LiNlLn68Id8JlhwePL7QeHHun92B6G1qgczZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8ekEZa+/76Z4uwvx3zXNsACGhqgWRQjdv3J+Z+m2Hb+H1o0iCqzvZVB1jRlHfqSy
-	 7+Yvyy+KzLKz8/zM2I5tzFdfGMWwInWHyyOh8EOQDLRoPXWF09OBTuw7jGqa4PpVwN
-	 YZybExL97P3U2mFfpdsu9x8lPuuyiRLDF4PVUCaY=
+	b=NxpUvpwIKjNfpUUznp2Ix0a8gQQhkCxielK969slDXWns0T9SexgrqDVeJrzCZ0t+
+	 0Bmppo80ZpJ5GfgsepmppNhWrrzRZxohexkejjLSKLEvIS5DF/u1ps+dMSPgfQPxJB
+	 OedhASk/SHh03pUbGz1hkCPPZacppSofwwrdn32A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.12 309/349] NTB: epf: Fix request_irq() unwind in ntb_epf_init_isr()
-Date: Thu, 16 Jul 2026 15:34:03 +0200
-Message-ID: <20260716133040.231775693@linuxfoundation.org>
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 283/349] crypto: qat - notify fatal error before AER reset preparation
+Date: Thu, 16 Jul 2026 15:33:37 +0200
+Message-ID: <20260716133039.670410089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,59 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-commit fcba26efe5efc7441f5505f4ccc69791214b40be upstream.
+commit 6931835f2fdd0cb9b1c7791748d7e67d0749056a upstream.
 
-ntb_epf_init_isr() requests multiple MSI/MSI-X vectors in a loop. If
-request_irq() fails part-way through, it jumps straight to
-pci_free_irq_vectors() without freeing already requested IRQs.
+Send fatal error notifications to subsystems and VFs as soon as
+AER error detection starts, before entering the reset preparation
+shutdown sequence.
 
-Fix the error path by freeing any successfully requested IRQs before
-releasing the vectors.
+This reduces notification latency and ensures peers are informed
+immediately on fatal detection, rather than after restart-state setup
+and arbitration teardown.
 
-Fixes: 812ce2f8d14e ("NTB: Add support for EPF PCI Non-Transparent Bridge")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Cc: stable@vger.kernel.org # v5.12+
-Link: https://patch.msgid.link/20260304083028.1391068-2-den@valinux.co.jp
+Cc: stable@vger.kernel.org
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/hw/epf/ntb_hw_epf.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_aer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/ntb/hw/epf/ntb_hw_epf.c
-+++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
-@@ -357,7 +357,7 @@ static int ntb_epf_init_isr(struct ntb_e
- 				  0, "ntb_epf", ndev);
- 		if (ret) {
- 			dev_err(dev, "Failed to request irq\n");
--			goto err_request_irq;
-+			goto err_free_irq;
- 		}
+--- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
+@@ -33,13 +33,13 @@ static pci_ers_result_t adf_error_detect
+ 		return PCI_ERS_RESULT_DISCONNECT;
  	}
  
-@@ -367,16 +367,14 @@ static int ntb_epf_init_isr(struct ntb_e
- 				   argument | irq);
- 	if (ret) {
- 		dev_err(dev, "Failed to configure doorbell\n");
--		goto err_configure_db;
-+		goto err_free_irq;
++	adf_error_notifier(accel_dev);
++	adf_pf2vf_notify_fatal_error(accel_dev);
+ 	set_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 	if (accel_dev->hw_device->exit_arb) {
+ 		dev_dbg(&pdev->dev, "Disabling arbitration\n");
+ 		accel_dev->hw_device->exit_arb(accel_dev);
  	}
- 
- 	return 0;
- 
--err_configure_db:
--	for (i = 0; i < ndev->db_count + 1; i++)
-+err_free_irq:
-+	while (i--)
- 		free_irq(pci_irq_vector(pdev, i), ndev);
--
--err_request_irq:
- 	pci_free_irq_vectors(pdev);
- 
- 	return ret;
+-	adf_error_notifier(accel_dev);
+-	adf_pf2vf_notify_fatal_error(accel_dev);
+ 	adf_dev_restarting_notify(accel_dev);
+ 	pci_clear_master(pdev);
+ 	adf_dev_down(accel_dev);
 
 
