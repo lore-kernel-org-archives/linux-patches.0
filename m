@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAC342901C;
-	Thu, 16 Jul 2026 14:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B901442903B;
+	Thu, 16 Jul 2026 14:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211337; cv=none; b=MEhVZik+yMUsskiL4IcFRz0Pmel0ncg7pfFt7sPSGtA7d0lGTWOKDHshBjDX0Jufi7nkpU7xkcbGhRlypt3oYqXzzJOt9EP4ltlJk2+QmcwxQYVBgqDn2xKxsmHx0yFiqaJA50O/OVmpgEXdJGsC9sAoAVxZfE0UrAVBfRCPQzs=
+	t=1784211339; cv=none; b=GWNkQv0M5t0ABx766UyZQ50EhH5cfAM/fM5QoRkHHd7aopmeuey2qMIHsw4C/RZQmXCqgdRv+OBJJkmDkJiSSRQ5gSxMcUEQrxhm6X3UQVTE8nN9RNZ0QTPNyqMxwKyE9v04olKv8DB9/cVrXktTjFKliwrCCwptEaF08MKvQyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211337; c=relaxed/simple;
-	bh=0pSEsu/LWjaLvR1F6EJ2WjNQ5ZS2CC1iQR+e1X31hUE=;
+	s=arc-20240116; t=1784211339; c=relaxed/simple;
+	bh=0gZ+LHBZ/V8gwtIp3pwMuaNBIdaI/K3vW8gQk8X9dE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PNl+BRn+3sVRyMxHlTyz5AsRMf27wL9SZR7H6lAp4NQXl25XPm1EASdpdgg7zwDgPUXJvlLw+z9EBvpnn43NxCXfY1BRtHZG+jU2NyZJ5fISzZt73XAhIcVsFQ7XS49g80iPLMl1/qZJjbS1SRhLPtGfxUxf48VS+WwfvEBzoaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULOYAX8T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sBh6ZsbNNCrkMXB6sv3g1hvOcWXo4fcoTB01jcnep+rARr3gfdbCtB1JTHwC2gy1fmLXjNbMdgEvmnXI2KjUkDwjsUpKPup7B4LT6R8emJcgeeZcUGbe2JlMgztoqa+33DJV65VOTNhm1fW5F+vE087SKoWc6YFU9kzIKlmGQxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmqlrDem; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULOYAX8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7868E1F000E9;
-	Thu, 16 Jul 2026 14:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmqlrDem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BB91F000E9;
+	Thu, 16 Jul 2026 14:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211336;
-	bh=uBw/rjbXjIUVlX41ZujI5IfzTKnlTNgrz8xfnQN2vW4=;
+	s=korg; t=1784211338;
+	bh=kToMn4EQq0b39Wn1884w9LhnEtWO0UBxEe+A24iHmu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ULOYAX8TSS/T7wPEQTHTzeNYlU7fuHpYWOFtisD+iUoi0d/Qzb3T70t8FZnejSCwb
-	 lBUchzNe49ADV7SHICrxSHlOn7AH6HIIw/hjYOnKfnZazs9pXuPgzqaWoQWb7yR7J2
-	 wIYxOrRsLCzjuq3SHuYtBARPO1J64dMeqD2QIOYE=
+	b=pmqlrDemoNRgaMZsy2NzTNkAT3XryJciYe5kQaq7ow6Tb39lhxGC5B4TufyoX+7UX
+	 WOsDceFmYgdSpPKl5PjgumsSQP8Co0Qm3mgZzzufLBGTZiLJqcjJf3AwC12fFridla
+	 k0nryEapxOqb0Et1+BbVk0wjUrTKHbPJ9rS2yG+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Reid <preid@electromag.com.au>,
-	Johan Hovold <johan@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.18 389/480] i2c: core: fix hang on adapter registration failure
-Date: Thu, 16 Jul 2026 15:32:16 +0200
-Message-ID: <20260716133053.214070044@linuxfoundation.org>
+	Lee Jia Jie <jiajie.lee@starlabs.sg>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.18 390/480] perf/aux: Fix page UAF in map_range()
+Date: Thu, 16 Jul 2026 15:32:17 +0200
+Message-ID: <20260716133053.236847920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,109 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Lee Jia Jie <jiajie.lee@starlabs.sg>
 
-commit 3c7e164344e5bcf6f274bbf59a3274f5caad9bc1 upstream.
+commit 5948aaf64f81f217a25dcc2bf6c0779bca19566c upstream.
 
-Clients may be registered from bus notifier callbacks when the adapter
-is registered. On a subsequent error during registration, the adapter
-references taken by such clients prevent the wait for the references to
-be released from ever completing.
+map_range() reads rb->aux_pages[], rb->aux_nr_pages and rb->aux_pgoff via
+perf_mmap_to_page() while holding only event->mmap_mutex. Those fields are
+serialized by rb->aux_mutex, and mmap_mutex is per event.
 
-Fix this by refactoring client deregistration and deregistering also on
-late adapter registration failures.
+Thus, two events sharing one rb via PERF_EVENT_IOC_SET_OUTPUT can race
+rb_alloc_aux() with map_range(), leading to a page-UAF scenario as follows:
 
-Fixes: f8756c67b3de ("i2c: core: call of_i2c_setup_smbus_alert in i2c_register_adapter")
-Cc: stable@vger.kernel.org	# 4.15
-Cc: Phil Reid <preid@electromag.com.au>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+  CPU 0                           CPU 1
+  =====                           =====
+  rb_alloc_aux()                  map_range()
+  [1]: allocate rb->aux_pages[0]
+  [2]: rb->aux_nr_pages++
+                                  [3]: perf_mmap_to_page()
+                                         returns rb->aux_pages[0]
+                                  [4]: map it as VM_PFNMAP
+  [5]: rb->aux_pgoff = 1
+
+  munmap the page
+  [6]: free rb->aux_pages[0]
+
+Pages mapped as VM_PFNMAP have no refcount protection, so CPU 1 holds a
+mapping to a freed physical frame.
+
+Fix this by taking rb->aux_mutex across the page walk in map_range().
+
+Fixes: b709eb872e19 ("perf: map pages in advance")
+Signed-off-by: Lee Jia Jie <jiajie.lee@starlabs.sg>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |   49 ++++++++++++++++++++++++++------------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ kernel/events/core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -63,6 +63,7 @@
- static DEFINE_MUTEX(core_lock);
- static DEFINE_IDR(i2c_adapter_idr);
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6879,6 +6879,8 @@ static int map_range(struct perf_buffer
+ 	int err = 0;
+ 	unsigned long pagenum;
  
-+static void i2c_deregister_clients(struct i2c_adapter *adap);
- static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver);
- 
- static DEFINE_STATIC_KEY_FALSE(i2c_trace_msg_key);
-@@ -1609,6 +1610,7 @@ static int i2c_register_adapter(struct i
- 	return 0;
- 
- out_reg:
-+	i2c_deregister_clients(adap);
- 	debugfs_remove_recursive(adap->debugfs);
- 	init_completion(&adap->dev_released);
- 	device_unregister(&adap->dev);
-@@ -1748,29 +1750,10 @@ static int __process_removed_adapter(str
- 	return 0;
- }
- 
--/**
-- * i2c_del_adapter - unregister I2C adapter
-- * @adap: the adapter being unregistered
-- * Context: can sleep
-- *
-- * This unregisters an I2C adapter which was previously registered
-- * by @i2c_add_adapter or @i2c_add_numbered_adapter.
-- */
--void i2c_del_adapter(struct i2c_adapter *adap)
-+static void i2c_deregister_clients(struct i2c_adapter *adap)
- {
--	struct i2c_adapter *found;
- 	struct i2c_client *client, *next;
- 
--	/* First make sure that this adapter was ever added */
--	mutex_lock(&core_lock);
--	found = idr_find(&i2c_adapter_idr, adap->nr);
--	mutex_unlock(&core_lock);
--	if (found != adap) {
--		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
--		return;
--	}
--
--	i2c_acpi_remove_space_handler(adap);
- 	/* Tell drivers about this removal */
- 	mutex_lock(&core_lock);
- 	bus_for_each_drv(&i2c_bus_type, NULL, adap,
-@@ -1796,6 +1779,32 @@ void i2c_del_adapter(struct i2c_adapter
- 	 * them up properly, so we give them a chance to do that first. */
- 	device_for_each_child(&adap->dev, NULL, __unregister_client);
- 	device_for_each_child(&adap->dev, NULL, __unregister_dummy);
-+}
++	guard(mutex)(&rb->aux_mutex);
 +
-+/**
-+ * i2c_del_adapter - unregister I2C adapter
-+ * @adap: the adapter being unregistered
-+ * Context: can sleep
-+ *
-+ * This unregisters an I2C adapter which was previously registered
-+ * by @i2c_add_adapter or @i2c_add_numbered_adapter.
-+ */
-+void i2c_del_adapter(struct i2c_adapter *adap)
-+{
-+	struct i2c_adapter *found;
-+
-+	/* First make sure that this adapter was ever added */
-+	mutex_lock(&core_lock);
-+	found = idr_find(&i2c_adapter_idr, adap->nr);
-+	mutex_unlock(&core_lock);
-+	if (found != adap) {
-+		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
-+		return;
-+	}
-+
-+	i2c_acpi_remove_space_handler(adap);
-+
-+	i2c_deregister_clients(adap);
- 
- 	/* device name is gone after device_unregister */
- 	dev_dbg(&adap->dev, "adapter [%s] unregistered\n", adap->name);
+ 	/*
+ 	 * We map this as a VM_PFNMAP VMA.
+ 	 *
 
 
