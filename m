@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C7741F7D5;
-	Thu, 16 Jul 2026 13:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4913141C302;
+	Thu, 16 Jul 2026 13:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784208991; cv=none; b=WnHAHpJRgdYWeaqxc35FyuPEmObHOtopoDvfc6DCX8g0KpG7kaNTXE2JaM2kvUaxt6t3a4GVllNG0WTTAKpZUvQ5B/DLxwdWrTfelSKJhaQmj48k7yGFsUrJ/SlLLUzsTYO95LyJ/c/9zM/SdQecFMq0EjA2euCr3l4ONeZmHU0=
+	t=1784208993; cv=none; b=MHlRjXB30YqEqqmGh4tpsriep3r7g6PdemwqkpxS2uaKBtw85uavhy4hDVxR1585QK5SwebUHsVIwXiPNxuQiNWBT7y1agv7l953vl1x9qy2uMxGc2sxcQQ5xck5ouERBQNAbJQzF4NOu8cEnfYyrX/auO+Xk6NC3t7Fws95ryU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784208991; c=relaxed/simple;
-	bh=8MHRpwezBIXIICCFOL7+P3hLSTbBErHsDDcZWuErmdU=;
+	s=arc-20240116; t=1784208993; c=relaxed/simple;
+	bh=xTWO/DJpB8jaP4xPHNqMgS5YxXAtqyUm+nC2yFqwo9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T3aqa21exQjAcn9GvKNxnMZH1NrP9me+qzrF+7DeG4x7feiO7P2X/SQdBRjTXOmQI+pweei7MOGl3hOGlBe8NnYwCf9s1ldMKB1JGUiyHqswKj3m+hHz0evMWgDEbr1crN/2mHRiMH28/erW3GBI2kbbjtDLNeGrby5RtJikQq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmJYILjo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZYygpJb7a7efwVa3e9W/G9GuF5ETTbOFEZCdYa47eL/eOJXSvPQVIdC85waezl4V29CfnNsPtYEfvkpPu6NAZTCFHnUukTpCKqr8/9MgPuZVZQc6qzhsfjIVwLWb9f0QvuBqFB1tOZswRWXKHsW9EF2qOp17kHOJfGJO5/IoTKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whq8VB6J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmJYILjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114A91F000E9;
-	Thu, 16 Jul 2026 13:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whq8VB6J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6671F000E9;
+	Thu, 16 Jul 2026 13:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784208989;
-	bh=1c4lhQGadjnlWz+/S4cWQF9FtHrKZAXS1uu0fFuzYR4=;
+	s=korg; t=1784208992;
+	bh=IGUk/4MNVi28KF0qi2fcF8PRmJfIfMoa0JICN49H5hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VmJYILjoqQaqpqIVisTL9PSwFfuMtx4x3NNoTgRziDriRTM+Bw15sCXSDCgxrtNeY
-	 9zujopgrzYirKtHgVdtGC+mZ0+Fz1v8TLSHsRcekyS0XJFGYOhzKnCwwXmAwDvzSWt
-	 qukiXITSMiKOR5WmSkcOzSHY1aG6+ADAaCyGt36c=
+	b=whq8VB6JXHnjbCkct3fnh2VlrdURh4qhYJpMjxVz6MZy+KIvFbiHD/kXE0vrd83wc
+	 6neWPs24YyG61VZUWzxlXTmUlg/CxqR4J51HA4JSmydbjTokmWbzDlU68LhApdDqSC
+	 2HOiE9dJQspf29m04iCx903Hs+KaR0WdlXIK3zzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Alice Ryhl <aliceryhl@google.com>,
 	Gary Guo <gary@garyguo.net>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.1 016/518] rust: cpufreq: clean new `clippy::map_or_identity` lint for Rust 1.98.0
-Date: Thu, 16 Jul 2026 15:24:44 +0200
-Message-ID: <20260716133048.132006117@linuxfoundation.org>
+Subject: [PATCH 7.1 017/518] rust: kasan: KASAN+RUST requires clang
+Date: Thu, 16 Jul 2026 15:24:45 +0200
+Message-ID: <20260716133048.154850103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,55 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 3473e0a219fdb2cb013da0a5d917e66fef052325 upstream.
+commit 5b271543d0f08e9733d4732721e960e285f6448f upstream.
 
-Starting with Rust 1.98.0 (expected 2026-08-20), Clippy is likely
-introducing a new lint `clippy::map_or_identity` [1][2], which currently
-triggers in a single case:
+Kernel KASAN involves passing various llvm/gcc specific arguments to
+the C and Rust compiler. Since these arguments differ between llvm and
+gcc, it's not safe to mix an llvm-based rustc with a gcc build when
+kasan is enabled.
 
-    warning: expression can be simplified using `Result::unwrap_or()`
-        --> rust/kernel/cpufreq.rs:1326:60
-         |
-    1326 |         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
-         |                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-         |
-         = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#map_or_identity
-         = note: `-W clippy::map-or-identity` implied by `-W clippy::all`
-         = help: to override `-W clippy::all` add `#[allow(clippy::map_or_identity)]`
-    help: consider using `unwrap_or`
-         |
-    1326 -         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
-    1326 +         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).unwrap_or(0))
-         |
-
-The suggestion is valid, thus clean it up.
-
-Cc: stable@vger.kernel.org # Needed in 6.18.y and later.
-Link: https://github.com/rust-lang/rust-clippy/issues/15801 [1]
-Link: https://github.com/rust-lang/rust-clippy/pull/16052 [2]
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20260530095809.213611-1-ojeda@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: e3117404b411 ("kbuild: rust: Enable KASAN support")
+Link: https://patch.msgid.link/20260408-kasan-rust-sw-tags-v3-1-e07964d14363@google.com
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/cpufreq.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ init/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/rust/kernel/cpufreq.rs
-+++ b/rust/kernel/cpufreq.rs
-@@ -1323,7 +1323,7 @@ impl<T: Driver> Registration<T> {
-         // SAFETY: The C API guarantees that `cpu` refers to a valid CPU number.
-         let cpu_id = unsafe { CpuId::from_u32_unchecked(cpu) };
- 
--        PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
-+        PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).unwrap_or(0))
-     }
- 
-     /// Driver's `update_limit` callback.
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -2198,6 +2198,7 @@ config RUST
+ 	depends on !DEBUG_INFO_BTF || (PAHOLE_HAS_LANG_EXCLUDE && !LTO)
+ 	depends on !CFI || HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
+ 	select CFI_ICALL_NORMALIZE_INTEGERS if CFI
++	depends on !KASAN || CC_IS_CLANG
+ 	depends on !KASAN_SW_TAGS
+ 	help
+ 	  Enables Rust support in the kernel.
 
 
