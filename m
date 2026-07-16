@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A526E400DE8;
-	Thu, 16 Jul 2026 14:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324AA3F822B;
+	Thu, 16 Jul 2026 14:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210761; cv=none; b=sgNutyKlCp9hG2EJu3hG9HAqK4vb/msYiRdvj8piv8qnpOo9gRakwYikY4d0J3rCcvUGAO7Pbir1gkiS5QynHY/z6NXETl1dnhQOuQRQDaHFqIzukOwWONDx+7rLphM0q96IYPwjY0SvhbJdJg5FYJWx+ID/xMElplXLDjdfwnw=
+	t=1784210765; cv=none; b=nNNOilvCdz4ttSy8TwC0f8MnOU3wkpu7wpAfC4iysI5xcbo7b0WfArs8567xWnMaF2R1VSXya6zFFwmU7eLNi6VZyMmnP/1ckeQRmqxuzgU4yGVoq9I3kz+BTz26gVZtily/nlAbWQiLx2HbExJnMaqHQdhuugG1HNxm7A6/TO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210761; c=relaxed/simple;
-	bh=y6A6SfzrqmY5KyH9VqIRA14EZ2yaywR7TyrwENtJjiI=;
+	s=arc-20240116; t=1784210765; c=relaxed/simple;
+	bh=uMFygVSznNbERzPJBSqw45uxD+M1PVstiVdQg5BlhMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3kqMeHc8hUbvncNuym7scQCsL/JmTfkB209tOga/xy5xiWDnN0+BLY83IYaOdwTXH5qCo99su+aRdIoKjlDMURSoRYfjyGur9+xKW61FA1n1y8sYegGCeEHBIMYyLi8x/Kc7NKv2lf6j6V3tnGRNIXeu08hgUf30UEJxBwhV9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfUhGhY7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RZwEFltrXFxcrWuhZT7Sv64yiu7nHhd0rdnoHoNafot7EViccOzGoLFY62aT39kUBOvHK3ViZDrB67+anNIgS67MzIAER6SF4ifHH2wsmReBvoxQ5iYe2bnvfNYHpqWqtFwbe3T50EsLiSJCMYv2Yh9E81zRNi1ekoXMuy138Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qo1hmbcH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfUhGhY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D481F000E9;
-	Thu, 16 Jul 2026 14:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qo1hmbcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05E21F000E9;
+	Thu, 16 Jul 2026 14:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210760;
-	bh=6fevS00BnYZKmkmg0xavueMywYjmtZsUPuTAh15wNVI=;
+	s=korg; t=1784210763;
+	bh=25Ls++YWsUCtq/aXmQu8UouBMVmEoLK0KsYty9+21aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nfUhGhY7BuRjX+jjL1Q+GK7aC/+GkLzq02W5ArXD7qMutCTZNSZ2gROHZl9B/JDHk
-	 /luqDrbpaReqSGMs+PO8t59Uosp4R3gctXmAU1Wg6nPsqbpFC1Ay3gL3wjX4LhAtNd
-	 gGL1E3U2GtwsZFbIKpjhKnAYbKQ7R6eK7zupnEd8=
+	b=qo1hmbcHcN6/jLbDKvRPdxFvOBhuEC4vX+pEbNTQN7gm8iVWSMRkbKJ6wXnuwkjhG
+	 y21hBrhVxE9mSU4ht7Q1v5BmtZsHGNh25D4Lors7tHBm7v51XLXR6K5SroZlmP+PsH
+	 UY8mzZvsWVw3hs9OULeMGP6bos4I/hYL+VYVgrog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 169/480] crypto: amlogic - avoid double cleanup in meson_crypto_probe()
-Date: Thu, 16 Jul 2026 15:28:36 +0200
-Message-ID: <20260716133048.363938440@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Michael Bommarito <michael.bommarito@gmail.com>
+Subject: [PATCH 6.18 170/480] crypto: krb5 - filter out async aead implementations at alloc
+Date: Thu, 16 Jul 2026 15:28:37 +0200
+Message-ID: <20260716133048.386942616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,137 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 6d827ade51a24e18d81afb9f32756d339520a14c upstream.
+commit 6c9dddeb582fde005360f4fe02c760d45ca05fb5 upstream.
 
-When meson_allocate_chanlist() fails after a partial allocation, it already
-unwinds the allocated chanlist state through its local error path.
-meson_crypto_probe() then jump to error_flow and calls
-meson_free_chanlist() again, causing the same per-flow resources to be torn
-down twice. In the reproduced failure path, the second teardown
-re-entered crypto_engine_exit() on an already destroyed worker and KASAN
-reported a slab-use-after-free in kthread_destroy_worker().
+krb5_aead_encrypt(), krb5_aead_decrypt() in rfc3961_simplified.c and
+rfc8009_encrypt(), rfc8009_decrypt() in rfc8009_aes2.c set a NULL
+completion callback and treat any negative return from
+crypto_aead_{encrypt,decrypt}() as terminal, falling through to
+kfree_sensitive(buffer).  When the encrypt_name resolves to an
+async AEAD instance the request returns -EINPROGRESS, the buffer
+is freed while the backend's worker still holds a pointer, and the
+worker dereferences the freed slab on completion.
 
-Prevent double-free by handling partial allocation failures locally within
-meson_allocate_chanlist() and skipping the outer cleanup path.
+KASAN report under UML+SLUB with a synthetic async aead backend
+bound to krb5->encrypt_name:
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available.
+  BUG: KASAN: slab-use-after-free in t5_stub_complete+0x7d/0xc7
 
-The bug was reproduced in a QEMU x86_64 guest booted with KASAN on v7.1,
-using the reproducer under tools/testing/meson_crypto_probe. The reproducer
-forces the second dma_alloc_attrs() call in the gxl-crypto probe path to
-return NULL, making meson_allocate_chanlist() fail after partial
-initialization. On the unpatched kernel this reliably triggered a
-slab-use-after-free. With this fix applied, the same reproducer no longer
-emits any KASAN report and the probe fails cleanly with -ENOMEM.
+The helpers were written synchronously, so filter the async
+instances out at allocation time instead of plumbing
+crypto_wait_req() through every call site.
 
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in kthread_destroy_worker+0xb2/0xd0
-    Read of size 8 at addr ff1100010c057a68 by task insmod/265
+Reachable via net/rxrpc/rxgk.c, fs/afs/cm_security.c and
+net/ceph/crypto.c on systems with an async AEAD provider bound to
+the krb5 enctype name.
 
-    CPU: 1 UID: 0 PID: 265 Comm: insmod Tainted: G           O        7.1.0-rc2-00376-g810af9adc907-dirty #10 PREEMPT(lazy)
-    Tainted: [O]=OOT_MODULE
-    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x68/0xa0
-     print_report+0xcb/0x5e0
-     ? __virt_addr_valid+0x21d/0x3f0
-     ? kthread_destroy_worker+0xb2/0xd0
-     ? kthread_destroy_worker+0xb2/0xd0
-     kasan_report+0xca/0x100
-     ? kthread_destroy_worker+0xb2/0xd0
-     kthread_destroy_worker+0xb2/0xd0
-     meson_crypto_probe+0x4d0/0xc10 [amlogic_gxl_crypto]
-     platform_probe+0x99/0x140
-     really_probe+0x1c6/0x6a0
-     ? __pfx___device_attach_driver+0x10/0x10
-     __driver_probe_device+0x248/0x310
-     ? acpi_driver_match_device+0xb0/0x100
-     driver_probe_device+0x48/0x210
-     ? __pfx___device_attach_driver+0x10/0x10
-     __device_attach_driver+0x160/0x320
-     bus_for_each_drv+0x104/0x190
-     ? __pfx_bus_for_each_drv+0x10/0x10
-     ? _raw_spin_unlock_irqrestore+0x2c/0x50
-     __device_attach+0x19d/0x3b0
-     ? __pfx___device_attach+0x10/0x10
-     ? do_raw_spin_unlock+0x53/0x220
-     device_initial_probe+0x78/0xa0
-     bus_probe_device+0x5b/0x130
-     device_add+0xcfd/0x1430
-     ? __pfx_device_add+0x10/0x10
-     ? insert_resource+0x34/0x50
-     ? lock_release+0xc9/0x290
-     platform_device_add+0x24e/0x590
-     ? __pfx_meson_crypto_probe_repro_init+0x10/0x10 [meson_crypto_probe_repro]
-     meson_crypto_probe_repro_init+0x330/0xff0 [meson_crypto_probe_repro]
-     do_one_initcall+0xc0/0x450
-     ? __pfx_do_one_initcall+0x10/0x10
-     ? _raw_spin_unlock_irqrestore+0x2c/0x50
-     ? __create_object+0x59/0x80
-     ? kasan_unpoison+0x27/0x60
-     do_init_module+0x27b/0x7d0
-     ? __pfx_do_init_module+0x10/0x10
-     ? kasan_quarantine_put+0x84/0x1d0
-     ? kfree+0x32c/0x510
-     ? load_module+0x561e/0x5ff0
-     load_module+0x54fe/0x5ff0
-     ? __pfx_load_module+0x10/0x10
-     ? security_file_permission+0x20/0x40
-     ? kernel_read_file+0x23d/0x6e0
-     ? mmap_region+0x235/0x4a0
-     ? __pfx_kernel_read_file+0x10/0x10
-     ? __file_has_perm+0x2c0/0x3e0
-     init_module_from_file+0x158/0x180
-     ? __pfx_init_module_from_file+0x10/0x10
-     ? __lock_acquire+0x45a/0x1ba0
-     ? idempotent_init_module+0x315/0x610
-     ? lock_release+0xc9/0x290
-     ? lockdep_init_map_type+0x4b/0x220
-     ? do_raw_spin_unlock+0x53/0x220
-     idempotent_init_module+0x330/0x610
-     ? __pfx_idempotent_init_module+0x10/0x10
-     ? __pfx_cred_has_capability.isra.0+0x10/0x10
-     ? ksys_mmap_pgoff+0x385/0x520
-     __x64_sys_finit_module+0xbe/0x120
-     do_syscall_64+0x115/0x690
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f7d6d31690d
-    Code: 5b 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d f3 b4 0f 00 f7 d8 >
-    RSP: 002b:00007fffc027ac68 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-    RAX: ffffffffffffffda RBX: 000055f7b81967c0 RCX: 00007f7d6d31690d
-    RDX: 0000000000000000 RSI: 000055f79a0d6cd2 RDI: 0000000000000003
-    RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000003 R11: 0000000000000246 R12: 000055f79a0d6cd2
-    R13: 000055f7b8196790 R14: 000055f79a0d5888 R15: 000055f7b81968e0
-     </TASK>
-
-Fixes: 48fe583fe541 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
+Fixes: 00244da40f78 ("crypto/krb5: Implement the Kerberos5 rfc3961 encrypt and decrypt functions")
+Fixes: 6c3c0e86c2ac ("crypto/krb5: Implement the AES enctypes from rfc8009")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/amlogic/amlogic-gxl-core.c |    2 +-
+ crypto/krb5/krb5_api.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/amlogic/amlogic-gxl-core.c
-+++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
-@@ -291,8 +291,8 @@ static int meson_crypto_probe(struct pla
- 	return 0;
- error_alg:
- 	meson_unregister_algs(mc);
--error_flow:
- 	meson_free_chanlist(mc, MAXFLOW - 1);
-+error_flow:
- 	clk_disable_unprepare(mc->busclk);
- 	return err;
- }
+--- a/crypto/krb5/krb5_api.c
++++ b/crypto/krb5/krb5_api.c
+@@ -207,7 +207,7 @@ struct crypto_aead *krb5_prepare_encrypt
+ 	struct crypto_aead *ci = NULL;
+ 	int ret = -ENOMEM;
+ 
+-	ci = crypto_alloc_aead(krb5->encrypt_name, 0, 0);
++	ci = crypto_alloc_aead(krb5->encrypt_name, 0, CRYPTO_ALG_ASYNC);
+ 	if (IS_ERR(ci)) {
+ 		ret = PTR_ERR(ci);
+ 		if (ret == -ENOENT)
 
 
