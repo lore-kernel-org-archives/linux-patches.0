@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A39136A35E;
-	Thu, 16 Jul 2026 13:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2741D3F482E;
+	Thu, 16 Jul 2026 13:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209280; cv=none; b=b7yFvX3jMAEud6E0ovgSKTrJit5v6gG8LeZlJSM1xZH5uujQvQX6mcb7tpS2CqhCxdhUXu3Du1sYY4kBfXcm6knnuM+UhuZvyXVNbLhPEUL5jYlaLLdb+ldAcDTZ7398/8ITozX2VNbNhY32NpGfxSkyEUYFJsc/RQHUjs59DPs=
+	t=1784209283; cv=none; b=K5SRWpKMQZm8D0wjAxbWW8TRB76yWFUeiyATD8Eo8m/86w0xYAhQlCx9ersapBrqX1IpdhUUhYg+XuQPlS92i8n52TEpluhPqGhQ1eIJ0KGKvXYnwR5K3IHw/n8G/8xmZTysKZzExs3/g+LpbmEgWbSz+UivEa6i4VLwPvMTXYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209280; c=relaxed/simple;
-	bh=Sly6tAyOcbyYJpiKm77FWocTo2UgqoMH0UOlB4GUEdI=;
+	s=arc-20240116; t=1784209283; c=relaxed/simple;
+	bh=JniobTQ9T9Cn5zztvm8bkirYgbTDEZ355KlN5fayMnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVb83blsR0jmVUooTJWlczDHJOGMGV4r1Q9lzRF0vlvKn/1b6k6U4SzmMsSz6aaa2P8vUenls3AqPK23u/2qGMe00KHDIgL+ubSWGqpGVyIhY7+Maw+joqlrLgr57Ycb30aPG6xZqZiiLx8jIZWTz0MXlAgYukfCrO/ktGFhWCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZ6aMEVo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XPg6LN3gx+tqtiYKvdRV+43XeUBowXKWyIzpunMYN2DP7CH5i88Z//rjgmbchnC+xQCGOhLYVcCZTigE5FY+rvVXyX1Do2HpBfhtps528cGS/zbfcX7QEg4CQ+lW81TP5s4aUoEqUhkrwgRSmXtoauYxSXk40Sgujq1attvBwoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfqQWYyD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZ6aMEVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5A21F000E9;
-	Thu, 16 Jul 2026 13:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfqQWYyD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B18F1F00A3A;
+	Thu, 16 Jul 2026 13:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209279;
-	bh=qcHt0LeoZxPeJo/i8KrvWmICIpozYPpTUgvzh6a+KbQ=;
+	s=korg; t=1784209282;
+	bh=AT8+9W/kuo/QUZHZhDPYbrqmGzH0sNePZz7WT7H4kOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oZ6aMEVokbuyjhvhtLnGFNevz2BwbuLOrJ4cDq3Yyiw8CmOkXlZzl9+FnfjejwbHk
-	 nHmE0vlXTIHmor1Lrupq+N6DfZIPpl9dkpo0Op7hQQiIGu62LmoI6TrF0UDSSjDnhw
-	 9jOfNRcXafwQDU1aeC1EjR2ompbfS9yOioQhkzFo=
+	b=WfqQWYyDESzvCVCMUR2IdEobKvXBw4yhVJtx+JS7WGxI9fEdKMkPRM8maBEsHwwVk
+	 DqUeuipHATpwbifPd/52/xkQ6+v7bqZ9EeP31SPD1NtQkf8yMFjqqX4p5vU0G6BHcz
+	 oycmkE1G0AcA6yYOgKypZN21PtRFBuWZQqyKO0EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biren Pandya <birenpandya@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 072/518] iio: pressure: mpl115: fix runtime PM leak on read error
-Date: Thu, 16 Jul 2026 15:25:40 +0200
-Message-ID: <20260716133049.363135450@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 7.1 119/518] rust_binder: use a u64 stride when cleaning up the offsets array
+Date: Thu, 16 Jul 2026 15:26:27 +0200
+Message-ID: <20260716133050.457221481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,51 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit fbe67ff37a6fd855a6c097f84f3738bd13d0a898 upstream.
+commit 803c8a9502e9b97cd6ae937618ef4a8fd6274343 upstream.
 
-mpl115_read_raw() takes a runtime PM reference with pm_runtime_get_sync()
-before reading the processed pressure or raw temperature, but on the read
-error path it returns without calling pm_runtime_put_autosuspend(). Each
-failed read therefore leaks a runtime PM reference and prevents the device
-from autosuspending.
+Allocation's Drop walks the offsets array (binder_size_t = u64 entries),
+cleaning up the objects, but it used usize instead of u64 for both the
+stride and the per-entry read.
 
-Drop the reference before checking the return value so both the success
-and error paths are balanced.
+On 64-bit kernels (usize == u64) this is harmless, but on 32-bit kernels
+it walks the 8-byte entries in 4-byte steps, iterating an N-entry array
+2N times, and reads the always-zero high word as offset 0, cleaning up
+the object at offset 0 N extra times. As a result the referenced node or
+handle ends up with a lower reference count than it actually has (a
+refcount over-decrement), and binder's reference accounting is corrupted;
+for example, the owner can be notified of a strong reference release
+(BR_RELEASE) even though references still remain.
 
-Fixes: 0c3a333524a3 ("iio: pressure: mpl115: Implementing low power mode by shutdown gpio")
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Assisted-by: Claude:claude-opus-4-8 coccinelle
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Change the stride to u64, and read each entry as a u64, narrowing it to
+usize with try_into().
+
+On 32-bit ARM, when this over-decrement would drive a count below zero,
+the driver's existing refcount guard refuses it and fires:
+
+  rust_binder: Failure: refcount underflow!
+
+Cc: stable <stable@kernel.org>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/ahw3tFhLz9bMMJAO@v4bel
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/mpl115.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/android/binder/allocation.rs |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/pressure/mpl115.c
-+++ b/drivers/iio/pressure/mpl115.c
-@@ -106,18 +106,18 @@ static int mpl115_read_raw(struct iio_de
- 	case IIO_CHAN_INFO_PROCESSED:
- 		pm_runtime_get_sync(data->dev);
- 		ret = mpl115_comp_pressure(data, val, val2);
-+		pm_runtime_put_autosuspend(data->dev);
- 		if (ret < 0)
- 			return ret;
--		pm_runtime_put_autosuspend(data->dev);
+--- a/drivers/android/binder/allocation.rs
++++ b/drivers/android/binder/allocation.rs
+@@ -259,7 +259,7 @@ impl Drop for Allocation {
  
- 		return IIO_VAL_INT_PLUS_MICRO;
- 	case IIO_CHAN_INFO_RAW:
- 		pm_runtime_get_sync(data->dev);
- 		/* temperature -5.35 C / LSB, 472 LSB is 25 C */
- 		ret = mpl115_read_temp(data);
-+		pm_runtime_put_autosuspend(data->dev);
- 		if (ret < 0)
- 			return ret;
--		pm_runtime_put_autosuspend(data->dev);
- 		*val = ret >> 6;
+             if let Some(offsets) = info.offsets.clone() {
+                 let view = AllocationView::new(self, offsets.start);
+-                for i in offsets.step_by(size_of::<usize>()) {
++                for i in offsets.step_by(size_of::<u64>()) {
+                     if view.cleanup_object(i).is_err() {
+                         pr_warn!("Error cleaning up object at offset {}\n", i)
+                     }
+@@ -420,7 +420,8 @@ impl<'a> AllocationView<'a> {
+     }
  
- 		return IIO_VAL_INT;
+     fn cleanup_object(&self, index_offset: usize) -> Result {
+-        let offset = self.alloc.read(index_offset)?;
++        let offset = self.alloc.read::<u64>(index_offset)?;
++        let offset: usize = offset.try_into().map_err(|_| EINVAL)?;
+         let header = self.read::<BinderObjectHeader>(offset)?;
+         match header.type_ {
+             BINDER_TYPE_WEAK_BINDER | BINDER_TYPE_BINDER => {
 
 
