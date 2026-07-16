@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D5231E856;
-	Thu, 16 Jul 2026 14:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961BD2FFDE1;
+	Thu, 16 Jul 2026 14:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210654; cv=none; b=c83OvaDhV9dJAR1vqww8JQIiLVp49DQNf7YutHXqcTXC/BNYldqJHs7q4Db56tLXjcV9cPw/x7AyX8kDzAPdj3gEEwcvaTN/zbosqHIIGyooiQwj+vfkRMJm9ALa6PzMrBlzOKVwMv20wLZsVhjeU6cr0wWFfyHCsw+OfTA8S4c=
+	t=1784210656; cv=none; b=IIGvjFpTadUxc79xA4rSHT9Hv7mdpE1j/cfnDBm3eMXgh34bEX2t2FVZcQojmbJYml9WKNd+ews7bTDNiGAW+bTT9cGhTkx8l2ZZW77GRXHyiFaK81XANubsGI+DXpdLsyibUrEY/aJthu48ve/eGzcyUGlPQFNHoXEq18f1VxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210654; c=relaxed/simple;
-	bh=ImXlwcsOTCx1B4pFl2xJAh/S2uBbuvRlqEqtZlrqtBc=;
+	s=arc-20240116; t=1784210656; c=relaxed/simple;
+	bh=35pvq0LBlzsvyfsCK+8J1dVk+KV7k3X8JNsMJpYbJDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PN9//BrU/kGb4FKeMdr17AmdUV9poeKZLcNUX5YLmMKDp5De6dcUSTca95Tb/brdvXQuj8HzC3/sYewBNaxZAPjze5/Lb3Hr6718CL4M9K8+PhNcn9T9x9rIZTCUh+J2A3ySIyFwLnrjE+QDdE6yjJejdtlTExH20Hu9XkxxvqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9nyB5Qn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OR1xeoh9HcAH6fwoeWWga3nvvMEUE6B/54MKaMD1tRERg9QVYNL9JfnZYkbphhq5BNvKaRCc4loD8eBMbEEwVQRPzsTKH0LkTRXbNfasFEmSQcAY5kAUo7/Zq342Jvt4v9EVnKuB2W4wF5BngDhQwxXvZP52pj9kLycbT1pp1Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aW2m2aWt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9nyB5Qn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688501F000E9;
-	Thu, 16 Jul 2026 14:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aW2m2aWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087F01F000E9;
+	Thu, 16 Jul 2026 14:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210652;
-	bh=AJgv1BIdZooa0hMkCdQWlJspTcGtAHa0aHAEQ8QtWVg=;
+	s=korg; t=1784210655;
+	bh=+Z/AE6etlP5OFAQKS3FZI9Cfa4/9vLF5KlbU9mNoq7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i9nyB5QnvUSgNEyHIm9inSE21Mo30uAcJJ7W0U+dxQMQ5byCgupqDnkmPi1By/hPD
-	 Xu7vEdgBCzAVqEyGRCGvIx2PXkLaKbuU3bEhs6bsaeUCxRT80gM3ZvH66WidknuIBC
-	 U9TXhdjDHpQb24Z7u0ktvT4QONui20KUSsHtb6yk=
+	b=aW2m2aWtqf3A4qNXzXQ2t6eltmZ55hD8gbQnahRQB8ghtCjzduVPvIQnxPRYfRSAB
+	 ZfCHRDOjFcLK6pSmbXQRy2TxYYocVUNR+NzCjWAjgiBz1qAozqwPW0jC7SXg2/FZmj
+	 zyt6wA+G2BDvVH258THhipBWZ0AXq5mT7SVpdZmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 6.18 128/480] rust_binder: use a u64 stride when cleaning up the offsets array
-Date: Thu, 16 Jul 2026 15:27:55 +0200
-Message-ID: <20260716133047.478141667@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 093/480] ALSA: virtio: Validate control metadata from the device
+Date: Thu, 16 Jul 2026 15:27:20 +0200
+Message-ID: <20260716133046.722367596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -46,68 +44,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 803c8a9502e9b97cd6ae937618ef4a8fd6274343 upstream.
+commit c77a6cbb36ff8cbc1f084d94f8dcda5250935271 upstream.
 
-Allocation's Drop walks the offsets array (binder_size_t = u64 entries),
-cleaning up the objects, but it used usize instead of u64 for both the
-stride and the per-entry read.
+virtio-snd control handling trusts the device-provided control type and
+value count returned by the device.
 
-On 64-bit kernels (usize == u64) this is harmless, but on 32-bit kernels
-it walks the 8-byte entries in 4-byte steps, iterating an N-entry array
-2N times, and reads the always-zero high word as offset 0, cleaning up
-the object at offset 0 N extra times. As a result the referenced node or
-handle ends up with a lower reference count than it actually has (a
-refcount over-decrement), and binder's reference accounting is corrupted;
-for example, the owner can be notified of a strong reference release
-(BR_RELEASE) even though references still remain.
+That metadata is then used directly to index g_v2a_type_map[] in
+virtsnd_kctl_info(), and to size loops and memcpy() operations in
+virtsnd_kctl_get() and virtsnd_kctl_put() against fixed-size
+virtio_snd_ctl_value and snd_ctl_elem_value arrays.
 
-Change the stride to u64, and read each entry as a u64, narrowing it to
-usize with try_into().
+A buggy or malicious device can therefore trigger out-of-bounds access by
+advertising an invalid control type or an oversized value count.
 
-On 32-bit ARM, when this over-decrement would drive a count below zero,
-the driver's existing refcount guard refuses it and fires:
+Validate control type and count once in virtsnd_kctl_parse_cfg(), before
+querying enumerated items or exposing the control to ALSA.
 
-  rust_binder: Failure: refcount underflow!
-
-Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/ahw3tFhLz9bMMJAO@v4bel
+Fixes: d6568e3de42d ("ALSA: virtio: add support for audio controls")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260507-alsa-virtio-validate-kctl-info-v1-1-7404fb12ec37@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/allocation.rs |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/virtio/virtio_kctl.c |   50 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
---- a/drivers/android/binder/allocation.rs
-+++ b/drivers/android/binder/allocation.rs
-@@ -261,7 +261,7 @@ impl Drop for Allocation {
+--- a/sound/virtio/virtio_kctl.c
++++ b/sound/virtio/virtio_kctl.c
+@@ -18,6 +18,21 @@ static const snd_ctl_elem_type_t g_v2a_t
+ 	[VIRTIO_SND_CTL_TYPE_IEC958] = SNDRV_CTL_ELEM_TYPE_IEC958
+ };
  
-             if let Some(offsets) = info.offsets.clone() {
-                 let view = AllocationView::new(self, offsets.start);
--                for i in offsets.step_by(size_of::<usize>()) {
-+                for i in offsets.step_by(size_of::<u64>()) {
-                     if view.cleanup_object(i).is_err() {
-                         pr_warn!("Error cleaning up object at offset {}\n", i)
-                     }
-@@ -419,7 +419,8 @@ impl<'a> AllocationView<'a> {
-     }
++/* Map for converting VirtIO types to maximum value counts. */
++static const unsigned int g_v2a_count_map[] = {
++	[VIRTIO_SND_CTL_TYPE_BOOLEAN] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer),
++	[VIRTIO_SND_CTL_TYPE_INTEGER] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer),
++	[VIRTIO_SND_CTL_TYPE_INTEGER64] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer64),
++	[VIRTIO_SND_CTL_TYPE_ENUMERATED] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.enumerated),
++	[VIRTIO_SND_CTL_TYPE_BYTES] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.bytes),
++	[VIRTIO_SND_CTL_TYPE_IEC958] = 1
++};
++
+ /* Map for converting VirtIO access rights to ALSA access rights. */
+ static const unsigned int g_v2a_access_map[] = {
+ 	[VIRTIO_SND_CTL_ACCESS_READ] = SNDRV_CTL_ELEM_ACCESS_READ,
+@@ -36,6 +51,37 @@ static const unsigned int g_v2a_mask_map
+ 	[VIRTIO_SND_CTL_EVT_MASK_TLV] = SNDRV_CTL_EVENT_MASK_TLV
+ };
  
-     fn cleanup_object(&self, index_offset: usize) -> Result {
--        let offset = self.alloc.read(index_offset)?;
-+        let offset = self.alloc.read::<u64>(index_offset)?;
-+        let offset: usize = offset.try_into().map_err(|_| EINVAL)?;
-         let header = self.read::<BinderObjectHeader>(offset)?;
-         match header.type_ {
-             BINDER_TYPE_WEAK_BINDER | BINDER_TYPE_BINDER => {
++static int virtsnd_kctl_validate_info(struct virtio_snd *snd, u32 cid,
++				      struct virtio_snd_ctl_info *kinfo)
++{
++	struct virtio_device *vdev = snd->vdev;
++	unsigned int type = le32_to_cpu(kinfo->type);
++	unsigned int count = le32_to_cpu(kinfo->count);
++
++	if (type >= ARRAY_SIZE(g_v2a_type_map)) {
++		dev_err(&vdev->dev, "control #%u: unknown type %u\n",
++			cid, type);
++		return -EINVAL;
++	}
++
++	if (count > g_v2a_count_map[type] ||
++	    (type == VIRTIO_SND_CTL_TYPE_IEC958 && count != 1)) {
++		dev_err(&vdev->dev, "control #%u: invalid count %u for type %u\n",
++			cid, count, type);
++		return -EINVAL;
++	}
++
++	if (type == VIRTIO_SND_CTL_TYPE_ENUMERATED &&
++	    !le32_to_cpu(kinfo->value.enumerated.items)) {
++		dev_err(&vdev->dev,
++			"control #%u: no items for enumerated control\n",
++			cid);
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ /**
+  * virtsnd_kctl_info() - Returns information about the control.
+  * @kcontrol: ALSA control element.
+@@ -385,6 +431,10 @@ int virtsnd_kctl_parse_cfg(struct virtio
+ 		struct virtio_snd_ctl_info *kinfo = &snd->kctl_infos[i];
+ 		unsigned int type = le32_to_cpu(kinfo->type);
+ 
++		rc = virtsnd_kctl_validate_info(snd, i, kinfo);
++		if (rc)
++			return rc;
++
+ 		if (type == VIRTIO_SND_CTL_TYPE_ENUMERATED) {
+ 			rc = virtsnd_kctl_get_enum_items(snd, i);
+ 			if (rc)
 
 
