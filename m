@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649EE426429;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08AD424651;
 	Thu, 16 Jul 2026 13:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209425; cv=none; b=UK61y2I4pF+s1UScCe1BynKM+yoHPo6nvODfH0YziY84u/mEsJuRtGcTu6iaAUD6tqgYJZpf0obodt9GDyhzea8GlbmRyzEr5O3sUhGdltZnJ8QeFXDvRHN1DR6eKIcf7QrkOxS+c/CRr5M7ZZ8CbLjQq3uypFbY+ZHPxox30tg=
+	t=1784209425; cv=none; b=ji9rNFI+XwevLmvQfiWHuyP7DoMSLQAxIHq59h/QoJMIM1EtvQdD37hnrz4p+jy6SeYWM+U5rQxn2k3oDzhga6AubZ8YNRQ3kPZwmBovpgTsy4kJ26leC7WhNcaxLCS597YjWm3PhC6bQIg03Fju+vJ6CXTBJJOOmqw4VZPOxLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784209425; c=relaxed/simple;
-	bh=yulUo+3I8MUGAV+36FsuMQNUnvWos2xB92hM1y3+Xf0=;
+	bh=1smfPu4pw+haYiUXircSJwFBkntxnbYDyr0e41HNptM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kqp1X6FsgrJnL+z+zHvCXpAiXRw+Xqkw4aTFpIPQ7eIxnzZdfFsbMlOjCCn6njxRxO25F3KtbdJ3ASs10I23hyvQ6oawdghaNlquhxun2YMudkkvKN5+8PPDmkAB2eQHdfHhRnBngKVPtYTBPLzeSABExMbp7H90zueBiX7Z0Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5BWnkb4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rs75RwibdiX3UX5T6G/Elbn3QuX9zs12QW3GDauoroI5GDZ4pHdTcn1Jzp3zTP86pecTiQ2Lm9Y4MZYfyBopxRhvqvPrTQKIvALGRMqWas7K+9k+OT8eXZblAWg4Et/X3u54dsuuHKJ3fLzv8AV7bC46gvYbMbMYkjZSm5KAtHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqQ232zH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5BWnkb4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2231F01558;
-	Thu, 16 Jul 2026 13:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqQ232zH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEBD1F00AC4;
+	Thu, 16 Jul 2026 13:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209418;
-	bh=RV29dvZ7CsF+U9S2nOPbpPbRTulyYwLapTEnr4VPY+Q=;
+	s=korg; t=1784209416;
+	bh=W3npcK1trsQjK6yM+cqUnWoNrbQ5n/hJw8NfSqOhc9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W5BWnkb4vaJomTqbaXYVNza4EeMZ18L2yx7oXOxlp6azkK/MshkfaUfnk6UkZ/HiT
-	 eM+7YESKPczYmdNLywJRMUfk20PwaKOjOlmZviNTZNDGKVD784sCXCBCfVCqQIG+NF
-	 mfYuePj9lpw7pniCcOm9Qu3RIjGKHLIEYhTJQrig=
+	b=lqQ232zH6O3v5tnkcpfojd39b1o49yaT6GywyzRtLPf1TqbQjS2B3zLdltcwRW5y2
+	 UQVH6TEQd27JqYr16Zr+XKECpvuOOSSYZn8OI94oZ97hw+Vci4ZUs+4YTOx2oSfp1d
+	 BxE/QZ4/8Aym+ajbZkCOuXH9B4XD6gamd4ruV928=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valeriy Yashnikov <yashnikov.valeriy@gmail.com>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 179/518] ntfs: avoid calling post_write_mst_fixup() for invalid index_block
-Date: Thu, 16 Jul 2026 15:27:27 +0200
-Message-ID: <20260716133051.754092805@linuxfoundation.org>
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Peiyuan Xu <paulbucket12@gmail.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.1 178/518] fs/ntfs3: validate Dirty Page Table capacity in log_replay copy_lcns
+Date: Thu, 16 Jul 2026 15:27:26 +0200
+Message-ID: <20260716133051.733030582@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,102 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valeriy Yashnikov <yashnikov.valeriy@gmail.com>
+From: Yunpeng Tian <shionthanatos@gmail.com>
 
-commit 5b6eedd7cc2936f9238e852b553a1b326105bde8 upstream.
+commit 57382ec6ac63b63dce2789e835fded28b698ae79 upstream.
 
-ntfs_icx_ib_sync_write() calls post_write_mst_fixup() when ntfs_ib_write()
-returns an error, intending to restore the buffer after a failed write.
+In the analysis pass of $LogFile journal replay, log_replay() copies
+LCNs from each action log record into an existing Dirty Page Table
+(DPT) entry without bounding the destination index. A crafted NTFS
+image with DPT entry lcns_follow=1 and an action log record with
+lcns_follow=2 produces a kernel slab out-of-bounds write at mount
+time:
 
-However, ntfs_ib_write() returns an error immediately if
-pre_write_mst_fixup() validation fails. The caller,
-ntfs_icx_ib_sync_write(), interprets any error as a write failure
-requiring rollback. It does not differentiate between I/O errors and
-validation failures, and calls post_write_mst_fixup() anyway.
+  BUG: KASAN: slab-out-of-bounds in log_replay+0x654c/0xdb60
+  Write of size 8 at addr ffff8880095e1040 by task mount
 
-Since post_write_mst_fixup() assumes that the index_block contents is
-correct, it doesn't perform the boundary checks, which results in
-out-of-bounds memory access.
+Two attacker-controlled fields can drive j+i past the allocated
+page_lcns[] array:
 
-An attacker can craft a malicious NTFS image with:
-  - large index_block.usa_ofs offset, pointing outside the ntfs_record
-  - index_block.usa_count = 0, causing integer underflow
-  - or index_block.usa_count larger than actual number of sectors in the
-    ntfs_record, causing out-of-bounds access
+  1. dp->lcns_follow (capacity) can be smaller than lrh->lcns_follow.
+  2. lrh->target_vcn may be smaller than dp->vcn, making the u64
+     subtraction wrap to a huge size_t.
 
-KASAN reports describing the memory corruption:
-  ==================================================================
-  BUG: KASAN: slab-out-of-bounds in post_write_mst_fixup+0x19c/0x1d0
-  Read of size 2 at addr ffff8881586c9018 by task p/9428
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x100/0x190
-   print_report+0x139/0x4ad
-   ? post_write_mst_fixup+0x19c/0x1d0
-   ? __virt_addr_valid+0x262/0x500
-   ? post_write_mst_fixup+0x19c/0x1d0
-   kasan_report+0xe4/0x1d0
-   ? post_write_mst_fixup+0x19c/0x1d0
-   post_write_mst_fixup+0x19c/0x1d0
-   ntfs_icx_ib_sync_write+0x179/0x220
-   ntfs_inode_sync_filename+0x83d/0x1080
-   __ntfs_write_inode+0x1049/0x1480
-   ntfs_file_fsync+0x131/0x9b0
-  ==================================================================
-  BUG: KASAN: slab-out-of-bounds in post_write_mst_fixup+0x1aa/0x1d0
-  Write of size 2 at addr ffff8881586c91fe by task p/9428
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x100/0x190
-   print_report+0x139/0x4ad
-   ? post_write_mst_fixup+0x1aa/0x1d0
-   ? __virt_addr_valid+0x262/0x500
-   ? post_write_mst_fixup+0x1aa/0x1d0
-   kasan_report+0xe4/0x1d0
-   ? post_write_mst_fixup+0x1aa/0x1d0
-   post_write_mst_fixup+0x1aa/0x1d0
-   ntfs_icx_ib_sync_write+0x179/0x220
-   ntfs_inode_sync_filename+0x83d/0x1080
-   __ntfs_write_inode+0x1049/0x1480
-   ntfs_file_fsync+0x131/0x9b0
-  ==================================================================
+Validate target VCN delta and per-record LCN count against the
+DPT entry capacity, bail via the existing out: cleanup label with
+-EINVAL.
 
-Let's move the post_write_mst_fixup() call to ntfs_ib_write().
-The ntfs_ib_write() function calls pre_write_mst_fixup() at the beginning.
-If the index_block contents is invalid, pre_write_mst_fixup() fails and
-ntfs_ib_write() returns early without calling post_write_mst_fixup() on
-bad index_block.
+This mirrors the bounds-check pattern added in commit b2bc7c44ed17
+("fs/ntfs3: Fix slab-out-of-bounds read in DeleteIndexEntryRoot")
+and commit 0ca0485e4b2e ("fs/ntfs3: validate rec->used in
+journal-replay file record check").
 
-Fixes: 0a8ac0c1fa0b ("ntfs: update directory operations")
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Peiyuan Xu <paulbucket12@gmail.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Valeriy Yashnikov <yashnikov.valeriy@gmail.com>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/index.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ntfs3/fslog.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/fs/ntfs/index.c
-+++ b/fs/ntfs/index.c
-@@ -141,6 +141,10 @@ static int ntfs_ib_write(struct ntfs_ind
- 	ret = ntfs_inode_attr_pwrite(VFS_I(icx->ia_ni),
- 			ntfs_ib_vcn_to_pos(icx, vcn), icx->block_size,
- 			(u8 *)ib, icx->sync_write);
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -4547,11 +4547,21 @@ copy_lcns:
+ 		 * whole routine a loop, case Lcns do not fit below.
+ 		 */
+ 		t16 = le16_to_cpu(lrh->lcns_follow);
+-		for (i = 0; i < t16; i++) {
+-			size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
+-					    le64_to_cpu(dp->vcn));
+-			dp->page_lcns[j + i] = lrh->page_lcns[i];
+-		}
++                t32 = le32_to_cpu(dp->lcns_follow);
++                if (le64_to_cpu(lrh->target_vcn) < le64_to_cpu(dp->vcn)) {
++                        err = -EINVAL;
++                        goto out;
++                }
 +
-+	/* Perform data restoration before returning */
-+	post_write_mst_fixup((struct ntfs_record *)ib);
-+
- 	if (ret != icx->block_size) {
- 		ntfs_debug("Failed to write index block %lld, inode %llu",
- 				vcn, (unsigned long long)icx->idx_ni->mft_no);
-@@ -178,7 +182,6 @@ int ntfs_icx_ib_sync_write(struct ntfs_i
- 		icx->ib = NULL;
- 		icx->ib_dirty = false;
- 	} else {
--		post_write_mst_fixup((struct ntfs_record *)icx->ib);
- 		icx->sync_write = false;
- 	}
++                for (i = 0; i < t16; i++) {
++                        size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
++                                            le64_to_cpu(dp->vcn));
++                        if (j >= t32 || i >= t32 - j) {
++                                err = -EINVAL;
++                                goto out;
++                        }
++                        dp->page_lcns[j + i] = lrh->page_lcns[i];
++                }
+ 
+ 		goto next_log_record_analyze;
  
 
 
