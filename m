@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDA22DF137;
-	Thu, 16 Jul 2026 13:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F392D41F7D5;
+	Thu, 16 Jul 2026 13:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209188; cv=none; b=rCyFMwXR/Kj8Q7GvDO/tyunKF60Tf3wZlo7Pr5NQ+MsW/T7UM6bkpDykpvnx7mEBeuE9Ztv9vXblcfpnUhiN8cfs8weu4QsmYoPT9Ht+U8BJ4LUHLqfNJB8Sr4R+7JMUouBvbzlw29DZSlr6b5llQzRGZnHWJ3E5SD8oq/1RXv8=
+	t=1784209191; cv=none; b=PeFSTV9wtcRwtBBflhwCqFMfWyXhlYylJY9J+G6J94N4CsRnCmkP3YFOB7CtprEHnI4C5SpBpNByaIVyQt9NV1qNZYFnNHhVRS5s/rYCya2X9K2HdFxMC5vreMel+WIYC0maKczx5egHRuHjlhZ2MiT4wZzHpsOBmEqgvtUhWRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209188; c=relaxed/simple;
-	bh=Byu42aoNs2rdz9glAEEkLiuyP1DaQ57DKJlQyDVHd7c=;
+	s=arc-20240116; t=1784209191; c=relaxed/simple;
+	bh=pQ847XG6XD/s0F5pShDECYo67fhPdq8ssFjycOsK7Ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pze73RF2brVAcFjSN1ROmI4Fx/DCgjs58KHSbmNDx2lwYCBhslxCwziH9IrqM/9oRuwyPiCEsad+hWq9esX+/2sW882fEfugrIzdk/KLqry6Xub2dOj0L8+aiMLM5poe9pY9Fjba+UNpbpZtu2io0gShdSu1ep/7HBrxwbbni6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dB8TcMZI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lneLEhNYEQGsZRErfbxd+wK1Mc9tiJ59wUroRWTMz0jiMzkzSDJFD6MgvWcR85FnKMVR4QVoE6Mwo3q9L0V73bolVrTvoyZlIdAFStW9retFKT07aU3XE3rQ8O/gDndAxL3ZzBd0gy4XW4uOccgrJjO5IFFLrmALaXiZ1+K1ABo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gD4XdzTU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dB8TcMZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AC71F000E9;
-	Thu, 16 Jul 2026 13:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gD4XdzTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2FA1F000E9;
+	Thu, 16 Jul 2026 13:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209187;
-	bh=HOnO4yP5YYy8m5ELFu7h9flwfj6mkak3rqgJWyvf7B0=;
+	s=korg; t=1784209189;
+	bh=x5DxWwW6bKoMUpRCHpkcqwbbEMFV6qV0ulmsX1vWsCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dB8TcMZIPtE/0tO4Qs1fC6UmXv4m5cIZVt6RiUcuTvw9zdb081FT9/y4vQ9WOqa4V
-	 YPXv/opjlXlM0UppdV+TyMO7jMn2MKRxIUWmWh/Of2Fx+TSwxAOcDvxa2T2+WmcpEQ
-	 BK5kTa23Fxjgouhh+UmRrz/ANfHIhKRlJdQOnZrg=
+	b=gD4XdzTU50oRzaPi0yokq0kMs0mvdUbnJxdGLdjGjTs/LJokyGEgWh02IOznvxBP2
+	 HRVOg3/A5azF1ljvVOEEqbe+LKtoA/YRBN8IfiFGSiEH3gy7WCZVVn7pyJiILl4l+r
+	 9oO9F5MNAfxTq0hwk5lgX04s9TaCDe7E/FhybEtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 091/518] ALSA: hda/cs35l41: Fix firmware load work teardown
-Date: Thu, 16 Jul 2026 15:25:59 +0200
-Message-ID: <20260716133049.858050861@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.1 074/518] iio: resolver: ad2s1210: notify trigger and clear state on fault read error
+Date: Thu, 16 Jul 2026 15:25:42 +0200
+Message-ID: <20260716133049.406108348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -45,178 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit b65020d5398f499c09498c9786dba6d67ae57664 upstream.
+commit 70247658d0e783c93b48fcbc3b81d99e992ff478 upstream.
 
-cs35l41_hda creates ALSA controls whose private data points at the
-cs35l41_hda object. The firmware load control can also queue
-fw_load_work.
+ad2s1210_trigger_handler() walks several scan-mask branches and uses
+"goto error_ret" to land on the iio_trigger_notify_done() teardown at
+the bottom of the function for every I/O error -- except the
+MOD_CONFIG fault-register read, which uses a bare "return ret":
 
-Those controls are not removed on component unbind, and device remove
-only cancels fw_load_work through cs35l41_remove_dsp(). That helper is
-skipped when halo_initialized is false. With firmware_autostart
-disabled, a firmware load can be requested before the DSP has been
-initialized. If the component or device is removed before the queued
-work runs, the worker can run after teardown and dereference driver
-state that is no longer valid.
+	if (st->fixed_mode == MOD_CONFIG) {
+		unsigned int reg_val;
 
-Track the created controls and remove them on unbind so no new control
-callback can reach the driver data or queue more work. Then cancel
-fw_load_work to drain any request that was already queued. Also cancel
-the work unconditionally during device remove before runtime PM teardown.
+		ret = regmap_read(st->regmap, AD2S1210_REG_FAULT, &reg_val);
+		if (ret < 0)
+			return ret;
+		...
+	}
 
-Fixes: 47ceabd99a28 ("ALSA: hda: cs35l41: Support Firmware switching and reloading")
-Fixes: 4c870513fbb0 ("ALSA: hda: cs35l41: Add read-only ALSA control for forced mute")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Reviewed-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260511-alsa-hda-cs35l41-fw-work-teardown-v1-1-1184e9bc4f25@gmail.com
+Two problems on that path:
+
+  - the handler returns a negative errno where the prototype expects
+    an irqreturn_t (IRQ_HANDLED / IRQ_NONE), so the caller in the
+    IIO core sees a value outside the enum;
+  - iio_trigger_notify_done() is skipped, leaving the trigger
+    busy-flag set. A single transient SPI/regmap error on the fault
+    read then wedges the trigger so subsequent samples are dropped
+    until the consumer is detached.
+
+Convert the error path to "goto error_ret" so the failure path goes
+through the same notify_done() teardown as every other error in the
+handler.
+
+Fixes: f9b9ff95be8c ("iio: resolver: ad2s1210: add support for adi,fixed-mode")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/side-codecs/cs35l41_hda.c |   77 ++++++++++++++++++++---------
- sound/hda/codecs/side-codecs/cs35l41_hda.h |    5 +
- 2 files changed, 60 insertions(+), 22 deletions(-)
+ drivers/iio/resolver/ad2s1210.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/hda/codecs/side-codecs/cs35l41_hda.c
-+++ b/sound/hda/codecs/side-codecs/cs35l41_hda.c
-@@ -1325,6 +1325,43 @@ static int cs35l41_fw_type_ctl_info(stru
- 	return snd_ctl_enum_info(uinfo, 1, ARRAY_SIZE(cs35l41_hda_fw_ids), cs35l41_hda_fw_ids);
- }
+--- a/drivers/iio/resolver/ad2s1210.c
++++ b/drivers/iio/resolver/ad2s1210.c
+@@ -1334,7 +1334,7 @@ static irqreturn_t ad2s1210_trigger_hand
  
-+static void cs35l41_remove_controls(struct cs35l41_hda *cs35l41)
-+{
-+	if (!cs35l41->codec)
-+		return;
-+
-+	snd_ctl_remove(cs35l41->codec->card, cs35l41->mute_override_ctl);
-+	cs35l41->mute_override_ctl = NULL;
-+
-+	snd_ctl_remove(cs35l41->codec->card, cs35l41->fw_load_ctl);
-+	cs35l41->fw_load_ctl = NULL;
-+
-+	snd_ctl_remove(cs35l41->codec->card, cs35l41->fw_type_ctl);
-+	cs35l41->fw_type_ctl = NULL;
-+}
-+
-+static int cs35l41_add_control(struct cs35l41_hda *cs35l41,
-+			       struct snd_kcontrol_new *ctl,
-+			       struct snd_kcontrol **kctl)
-+{
-+	int ret;
-+
-+	*kctl = snd_ctl_new1(ctl, cs35l41);
-+	if (!*kctl)
-+		return -ENOMEM;
-+
-+	ret = snd_ctl_add(cs35l41->codec->card, *kctl);
-+	if (ret) {
-+		dev_err(cs35l41->dev, "Failed to add KControl %s = %d\n", ctl->name, ret);
-+		*kctl = NULL;
-+		return ret;
-+	}
-+
-+	dev_dbg(cs35l41->dev, "Added Control %s\n", ctl->name);
-+
-+	return 0;
-+}
-+
- static int cs35l41_create_controls(struct cs35l41_hda *cs35l41)
- {
- 	char fw_type_ctl_name[SNDRV_CTL_ELEM_ID_NAME_MAXLEN];
-@@ -1360,32 +1397,23 @@ static int cs35l41_create_controls(struc
- 	scnprintf(mute_override_ctl_name, SNDRV_CTL_ELEM_ID_NAME_MAXLEN, "%s Forced Mute Status",
- 		  cs35l41->amp_name);
+ 		ret = regmap_read(st->regmap, AD2S1210_REG_FAULT, &reg_val);
+ 		if (ret < 0)
+-			return ret;
++			goto error_ret;
  
--	ret = snd_ctl_add(cs35l41->codec->card, snd_ctl_new1(&fw_type_ctl, cs35l41));
--	if (ret) {
--		dev_err(cs35l41->dev, "Failed to add KControl %s = %d\n", fw_type_ctl.name, ret);
--		return ret;
--	}
--
--	dev_dbg(cs35l41->dev, "Added Control %s\n", fw_type_ctl.name);
--
--	ret = snd_ctl_add(cs35l41->codec->card, snd_ctl_new1(&fw_load_ctl, cs35l41));
--	if (ret) {
--		dev_err(cs35l41->dev, "Failed to add KControl %s = %d\n", fw_load_ctl.name, ret);
--		return ret;
--	}
--
--	dev_dbg(cs35l41->dev, "Added Control %s\n", fw_load_ctl.name);
-+	ret = cs35l41_add_control(cs35l41, &fw_type_ctl, &cs35l41->fw_type_ctl);
-+	if (ret)
-+		goto err;
- 
--	ret = snd_ctl_add(cs35l41->codec->card, snd_ctl_new1(&mute_override_ctl, cs35l41));
--	if (ret) {
--		dev_err(cs35l41->dev, "Failed to add KControl %s = %d\n", mute_override_ctl.name,
--			ret);
--		return ret;
--	}
-+	ret = cs35l41_add_control(cs35l41, &fw_load_ctl, &cs35l41->fw_load_ctl);
-+	if (ret)
-+		goto err;
- 
--	dev_dbg(cs35l41->dev, "Added Control %s\n", mute_override_ctl.name);
-+	ret = cs35l41_add_control(cs35l41, &mute_override_ctl, &cs35l41->mute_override_ctl);
-+	if (ret)
-+		goto err;
- 
- 	return 0;
-+
-+err:
-+	cs35l41_remove_controls(cs35l41);
-+	return ret;
- }
- 
- static bool cs35l41_dsm_supported(acpi_handle handle, unsigned int commands)
-@@ -1522,6 +1550,10 @@ static void cs35l41_hda_unbind(struct de
- 		device_link_remove(&cs35l41->codec->core.dev, cs35l41->dev);
- 		unlock_system_sleep(sleep_flags);
- 		memset(comp, 0, sizeof(*comp));
-+
-+		cs35l41_remove_controls(cs35l41);
-+		cancel_work_sync(&cs35l41->fw_load_work);
-+		cs35l41->codec = NULL;
+ 		st->sample.fault = reg_val;
  	}
- }
- 
-@@ -2060,6 +2092,7 @@ void cs35l41_hda_remove(struct device *d
- 	struct cs35l41_hda *cs35l41 = dev_get_drvdata(dev);
- 
- 	component_del(cs35l41->dev, &cs35l41_hda_comp_ops);
-+	cancel_work_sync(&cs35l41->fw_load_work);
- 
- 	pm_runtime_get_sync(cs35l41->dev);
- 	pm_runtime_dont_use_autosuspend(cs35l41->dev);
---- a/sound/hda/codecs/side-codecs/cs35l41_hda.h
-+++ b/sound/hda/codecs/side-codecs/cs35l41_hda.h
-@@ -57,6 +57,8 @@ enum control_bus {
- 	SPI
- };
- 
-+struct snd_kcontrol;
-+
- struct cs35l41_hda {
- 	struct device *dev;
- 	struct regmap *regmap;
-@@ -75,6 +77,9 @@ struct cs35l41_hda {
- 	int speaker_id;
- 	struct mutex fw_mutex;
- 	struct work_struct fw_load_work;
-+	struct snd_kcontrol *fw_type_ctl;
-+	struct snd_kcontrol *fw_load_ctl;
-+	struct snd_kcontrol *mute_override_ctl;
- 
- 	struct regmap_irq_chip_data *irq_data;
- 	bool firmware_running;
 
 
