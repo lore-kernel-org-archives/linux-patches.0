@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0DC3BED2D;
-	Thu, 16 Jul 2026 13:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5BD41F5EC;
+	Thu, 16 Jul 2026 13:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209252; cv=none; b=WxeQMFNnHUwcjJWevzlPJVPCFMSIXho2HgGSSmbWzsyi//C1b0k1rtpHb68XmMfJY+GOK5ky1GjIsvUdpnYl2ZMgSvdzPuH8d5lYiQQcSraPteOgN1v35zePV/q/1Uyx5WErVkPgZ1UJldmqrKg42MwR3leb4YZSsUFFyV1DCpY=
+	t=1784209254; cv=none; b=W1MDVGrBmdnUUoRAhxB6km0wHclKIV6cNK9dptExpR5K5OzbiPL+yP7PDO3OdAPMePYUfotpICJ+uvSOgD4u+1uIZq2SZWI1OES5uETGzgqar4HGmRWHmgDL6LsxSRDoEFPzJOxhfnzAWRI8Q3ONbaftPCD+1EbP1/pExRBG2zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209252; c=relaxed/simple;
-	bh=0raAx3s8/oVfXAXyMAsz2H4T7IrH/t5B6LjxGYJz/sw=;
+	s=arc-20240116; t=1784209254; c=relaxed/simple;
+	bh=Z2BUtwnbaBRomjT81vAWbot1U5HOo4rhsrxXP1A5YaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6c5kQ2EygL7NeMw5EQSzsJ00XWmGaiPA/oEppVWgWRkOwISUSvublsTHSiJxCUEYjnlusJDFSWl5NK+d/1LYzIOeQCNzlR60QOS9EzXAZyATVebDZOmlyp40xAuYmeSLhis/+2DRMAFh4A5yfwMbOh0F5127yI3DNXWoMIazQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqjaEFMi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=koSgs73V7p+Q8zkvOHBlxanKaiQaOqa5xA3kHBO/zZ64zVNw/cp6mF1Nio3t5sL+31HrEuUZAhkWGGQFu67Mj5iVkvPZ+33xRaj+6asiQCyWFBa/21rd8xFlIq2qrO9ZaWBfXdBwc1qeJ6K2EbkXCidpL16Zql0lXy73XDSy37A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAjJ3Q2q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqjaEFMi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38CF1F000E9;
-	Thu, 16 Jul 2026 13:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAjJ3Q2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4D71F000E9;
+	Thu, 16 Jul 2026 13:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209250;
-	bh=YGs0+L6lFk8E/eoUSC15YWVJDpRMRNxVr12O8PILOFY=;
+	s=korg; t=1784209253;
+	bh=dCA5IR0b+s9Ax3cSJOjTdsfadpmIss81BLV5AntJr/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KqjaEFMierUtxPsGpOgKr68sI8+p0STduJS6kB80WyepSTeN/wMixyN/eo7xabFrf
-	 tIyGWKjDyeVbqVqY0G/NNX+gLV5CWiFKa3VayPXcAi3vQnQVzgaUU3Uw/OHcfKKCbV
-	 Wxzdu5x3yg+xhkOBmD5xHxojwGD2EQYlVE/wo2kw=
+	b=UAjJ3Q2q3nv1w6Ao+9/X6fB2zalYnLJVlnV3oR6is+FkM/69Kb8F7GWz0K/kAwGsm
+	 iWOTv7f/3ezdoJBrQEpZxctcPvo7Dul1h4rbxf10FnijlG4CDz1vKqvbg13YSAp5rX
+	 UYlWhF8FvDNNttsQd6hZa3VRtaLgGgRXqX5BBAhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Alex Williamson <alex.williamson@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 7.1 112/518] vfio/mlx5: Fix racy bitfields and tighten struct layout
-Date: Thu, 16 Jul 2026 15:26:20 +0200
-Message-ID: <20260716133050.302256478@linuxfoundation.org>
+	Zenm Chen <zenmchen@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.1 113/518] Bluetooth: btusb: Add USB ID 2c4e:0128 for Mercusys MA60XNB
+Date: Thu, 16 Jul 2026 15:26:21 +0200
+Message-ID: <20260716133050.323856066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,92 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-commit f2365a63b02ddea32e7db78b742c2503ec7b81f1 upstream.
+commit 88b4d528eda4ac71c2952b3458f2abbc80a91cd2 upstream.
 
-Bitfield operations are not atomic, they use a read-modify-write
-pattern, therefore we should be careful not to pack bitfields that
-can be concurrently updated into the same storage unit.
+Add USB ID 2c4e:0128 for Mercusys MA60XNB, an RTL8851BU-based
+Wi-Fi + Bluetooth adapter.
 
-This split takes a binary approach: flags that are only modified
-pre/post open/close remain bitfields, flags modified from user
-action, including actions that reach across to another device (ex.
-reset) use dedicated storage units.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below:
 
-Note mlx5_vhca_page_tracker.status is relocated to fill the alignment
-hole this split exposes.
+T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c4e ProdID=0128 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=802.11ax WLAN Adapter
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=rtw89_8851bu
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Bitfield justifications:
-
-  migrate_cap: written only in mlx5vf_cmd_set_migratable() at probe
-  chunk_mode: written only in mlx5vf_cmd_set_migratable() at probe
-  mig_state_cap: written only in mlx5vf_cmd_set_migratable() at probe
-
-Dedicated storage units:
-
-  mdev_detach: written in the VF attach/detach event notifier
-               mlx5fv_vf_event() at runtime
-  log_active: written in mlx5vf_start_page_tracker()/
-              mlx5vf_stop_page_tracker() during runtime dirty tracking
-  deferred_reset: written in mlx5vf_state_mutex_unlock()/
-                  mlx5vf_pci_aer_reset_done() during runtime reset handling
-  is_err: set by tracker error handling and dirty-log polling at runtime
-  object_changed: set by tracker event handling and cleared by dirty-log
-                  polling at runtime
-
-Fixes: 61a2f1460fd0 ("vfio/mlx5: Manage the VF attach/detach callback from the PF")
-Fixes: 79c3cf279926 ("vfio/mlx5: Init QP based resources for dirty tracking")
-Fixes: f886473071d6 ("vfio/mlx5: Add support for tracker object change event")
-Cc: Yishai Hadas <yishaih@nvidia.com>
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260615191241.688297-5-alex.williamson@nvidia.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Cc: stable@vger.kernel.org # 6.6.x
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/mlx5/cmd.h |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/vfio/pci/mlx5/cmd.h
-+++ b/drivers/vfio/pci/mlx5/cmd.h
-@@ -158,26 +158,29 @@ struct mlx5_vhca_qp {
- struct mlx5_vhca_page_tracker {
- 	u32 id;
- 	u32 pdn;
--	u8 is_err:1;
--	u8 object_changed:1;
-+	/* Flags modified at runtime - dedicated storage unit */
-+	u8 is_err;
-+	u8 object_changed;
-+	int status;
- 	struct mlx5_uars_page *uar;
- 	struct mlx5_vhca_cq cq;
- 	struct mlx5_vhca_qp *host_qp;
- 	struct mlx5_vhca_qp *fw_qp;
- 	struct mlx5_nb nb;
--	int status;
- };
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -531,6 +531,8 @@ static const struct usb_device_id quirks
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x7392, 0xe611), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x2c4e, 0x0128), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
- struct mlx5vf_pci_core_device {
- 	struct vfio_pci_core_device core_device;
- 	int vf_id;
- 	u16 vhca_id;
-+	/* Flags only modified on setup/release - bitfield ok */
- 	u8 migrate_cap:1;
--	u8 deferred_reset:1;
--	u8 mdev_detach:1;
--	u8 log_active:1;
- 	u8 chunk_mode:1;
- 	u8 mig_state_cap:1;
-+	/* Flags modified at runtime - dedicated storage unit */
-+	u8 mdev_detach;
-+	u8 log_active;
-+	u8 deferred_reset;
- 	struct completion tracker_comp;
- 	/* protect migration state */
- 	struct mutex state_mutex;
+ 	/* Realtek 8852AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0x2852), .driver_info = BTUSB_REALTEK |
 
 
