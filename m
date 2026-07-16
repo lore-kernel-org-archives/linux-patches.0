@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C64432BEE;
-	Thu, 16 Jul 2026 14:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E626432E78;
+	Thu, 16 Jul 2026 14:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212297; cv=none; b=D8bYFcK5uGWsfZi8K4bDPrbT6O/hfK3Q6O1XkBCgIVLj+6FTzg1Wk992OFFj8kY9gjoV32B5hAAIDbrj/wCZkwt2dqkRaT+eUXZP6xdebgYeoS5qRcw68aiYJ19KfxJLiwPqqbMgqx1FtuEZtyrdNJbhty0wD6V2d5roM0rfFmA=
+	t=1784212300; cv=none; b=NJMFx2nu8xQrWwPUaCK3Ib8o2SmFvKXb6JMcayOgGuBpkkyu8QhC9bV0YaC9Z9gdIqfKTuQZ5oF98Em+T0ShZq+97WqU3rUsQFC0J+2Bhr3UyHreIkexEHoDHelFUR3Akh1rWkeVZ/ihMuQw5mTNY+USzFVe5TUGyNdpuqK9rTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212297; c=relaxed/simple;
-	bh=62QwFdJ+/BmVeYK5EGtlIg3xnYRPmwy6KmdQKp1hi6w=;
+	s=arc-20240116; t=1784212300; c=relaxed/simple;
+	bh=4HxuOMhUQlkuuaG2zStrNkT4lJeyzST6WruNxIDPZCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RNY49MDAr9VO9+NImjC5Dr7SA4xWHJZZ24j+watGC2LHvdXJBmVo4PX2mhpM1Ey8snULdky4Q00sDUz3u5/7mVP57srM3eZ4MKkwzLWkXMdyPlW3LBCr6F2Y4/l5I9NQqEnvhXUwXbf+UvxZzmzJVwyJ4Dsmg2sw2dr6UkKehSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqEECALL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wn4lb9EXKyn8/dQRDeg3JBV58a8vS0bH+3rCA7fj+HT4gOLyS1zTLuC+QCpTrjuWHMD9y2galQURgtfD68biHOslHGMeZjHLmyiy7m9vbz2LjK1ymPignJl172Xy4EBabLm81Y0tyQ5rShoqAoC11PZWmQbUsYB7/jZ7BQFo6u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVAi3mbX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqEECALL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D6A1F000E9;
-	Thu, 16 Jul 2026 14:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVAi3mbX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A561F00A3A;
+	Thu, 16 Jul 2026 14:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212295;
-	bh=+HdXJExjSmc942s0C24E0ntE+WDRmfmUU+KoL2Z9YEU=;
+	s=korg; t=1784212298;
+	bh=phWAInPh2b6vFnRnP3YLgX++S+Oqv+px2UrXTbPgwiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uqEECALLqRu7RK8/oSiQnAtpHloSMS4o7FLluexyuN5D+eHU2moJM61IbFEsQ9cYl
-	 C22+liFoykbju6O1Ml3RS9+pKRz00vBCeU9Z+YJQKy5Fo7egZJwbRRlweNcVDjfpet
-	 GjD8aQwh/b/OgR1sh4dgnldBrDKg+mVWxGae5HvQ=
+	b=FVAi3mbX2P6yOSo0Ph0qMSDccNELzZKb62vntGoNcVgvCPui+/S03YTPtfJ958fdL
+	 t0/er47ZC2nTHRfEjX3StGFB8A5b4sjFnyA9O1y31+mlKjPLZFHokBfxOqaRrRQjDN
+	 5G23S7y0mCHv4EY2ywjIguPRadSMEWoeCCwR3nUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Anastasia Tishchenko <sv3iry@gmail.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 272/349] crypto: caam - use print_hex_dump_devel to guard key hex dumps again
-Date: Thu, 16 Jul 2026 15:33:26 +0200
-Message-ID: <20260716133039.423209755@linuxfoundation.org>
+Subject: [PATCH 6.12 273/349] crypto: ecc - Fix carry overflow in vli multiplication
+Date: Thu, 16 Jul 2026 15:33:27 +0200
+Message-ID: <20260716133039.444943846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,79 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Anastasia Tishchenko <sv3iry@gmail.com>
 
-commit 8005dc808bcce7d6cc2ae015a3cde1683bee602d upstream.
+commit 27b536a2ec8e2f85a0380c2d13c9ecbc7aaab406 upstream.
 
-Use print_hex_dump_devel() for dumping sensitive key material in
-*_setkey() to avoid leaking secrets at runtime when CONFIG_DYNAMIC_DEBUG
-is enabled.
+The carry flag calculation fails when r01.m_high is saturated
+(0xFFFFFFFFFFFFFFFF) and addition of lower bits overflows.
 
-Fixes: 8d818c105501 ("crypto: caam/qi2 - add DPAA2-CAAM driver")
-Fixes: 226853ac3ebe ("crypto: caam/qi2 - add skcipher algorithms")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+The condition (r01.m_high < product.m_high) doesn't handle the case
+where r01.m_high == product.m_high and an additional carry exists
+from lower-bit overflow.
+
+When commit 3c4b23901a0c ("crypto: ecdh - Add ECDH software support")
+introduced crypto/ecc.c, it split the muladd() function in the
+micro-ecc library into separate mul_64_64() and add_128_128() helpers.
+It seems the check got lost in translation.
+
+Add proper handling for this boundary by accounting for the carry
+from the lower addition.
+
+Fixes: 3c4b23901a0c ("crypto: ecdh - Add ECDH software support")
+Signed-off-by: Anastasia Tishchenko <sv3iry@gmail.com>
+Cc: stable@vger.kernel.org # v4.8+
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/caam/caamalg_qi2.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ crypto/ecc.c |   31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/drivers/crypto/caam/caamalg_qi2.c
-+++ b/drivers/crypto/caam/caamalg_qi2.c
-@@ -299,7 +299,7 @@ static int aead_setkey(struct crypto_aea
- 	dev_dbg(dev, "keylen %d enckeylen %d authkeylen %d\n",
- 		keys.authkeylen + keys.enckeylen, keys.enckeylen,
- 		keys.authkeylen);
--	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
-+	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+--- a/crypto/ecc.c
++++ b/crypto/ecc.c
+@@ -402,14 +402,26 @@ static uint128_t mul_64_64(u64 left, u64
+ 	return result;
+ }
  
- 	ctx->adata.keylen = keys.authkeylen;
-@@ -313,7 +313,7 @@ static int aead_setkey(struct crypto_aea
- 	memcpy(ctx->key + ctx->adata.keylen_pad, keys.enckey, keys.enckeylen);
- 	dma_sync_single_for_device(dev, ctx->key_dma, ctx->adata.keylen_pad +
- 				   keys.enckeylen, ctx->dir);
--	print_hex_dump_debug("ctx.key@" __stringify(__LINE__)": ",
-+	print_hex_dump_devel("ctx.key@" __stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, ctx->key,
- 			     ctx->adata.keylen_pad + keys.enckeylen, 1);
+-static uint128_t add_128_128(uint128_t a, uint128_t b)
++/* Calculate addition with overflow checking. Returns true on wrap-around,
++ * false otherwise.
++ */
++static bool check_add_128_128_overflow(uint128_t *result, uint128_t a,
++				       uint128_t b)
+ {
+-	uint128_t result;
++	bool carry;
  
-@@ -730,7 +730,7 @@ static int gcm_setkey(struct crypto_aead
- 	ret = aes_check_keylen(keylen);
- 	if (ret)
- 		return ret;
--	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
-+	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+-	result.m_low = a.m_low + b.m_low;
+-	result.m_high = a.m_high + b.m_high + (result.m_low < a.m_low);
++	result->m_low = a.m_low + b.m_low;
++	carry = (result->m_low < a.m_low);
  
- 	memcpy(ctx->key, key, keylen);
-@@ -826,7 +826,7 @@ static int rfc4106_setkey(struct crypto_
- 	if (ret)
- 		return ret;
+-	return result;
++	result->m_high = a.m_high + b.m_high + carry;
++
++	/* Using constant-time bitwise arithmetic to prevent timing
++	 * side-channels.
++	 */
++	carry = (result->m_high < a.m_high) |
++		((result->m_high == a.m_high) & carry);
++
++	return carry;
+ }
  
--	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
-+	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ static void vli_mult(u64 *result, const u64 *left, const u64 *right,
+@@ -434,9 +446,7 @@ static void vli_mult(u64 *result, const
+ 			uint128_t product;
  
- 	memcpy(ctx->key, key, keylen);
-@@ -925,7 +925,7 @@ static int rfc4543_setkey(struct crypto_
- 	if (ret)
- 		return ret;
+ 			product = mul_64_64(left[i], right[k - i]);
+-
+-			r01 = add_128_128(r01, product);
+-			r2 += (r01.m_high < product.m_high);
++			r2 += check_add_128_128_overflow(&r01, r01, product);
+ 		}
  
--	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
-+	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 		result[k] = r01.m_low;
+@@ -459,7 +469,7 @@ static void vli_umult(u64 *result, const
+ 		uint128_t product;
  
- 	memcpy(ctx->key, key, keylen);
-@@ -953,7 +953,7 @@ static int skcipher_setkey(struct crypto
- 	u32 *desc;
- 	const bool is_rfc3686 = alg->caam.rfc3686;
+ 		product = mul_64_64(left[k], right);
+-		r01 = add_128_128(r01, product);
++		check_add_128_128_overflow(&r01, r01, product);
+ 		/* no carry */
+ 		result[k] = r01.m_low;
+ 		r01.m_low = r01.m_high;
+@@ -496,8 +506,7 @@ static void vli_square(u64 *result, cons
+ 				product.m_low <<= 1;
+ 			}
  
--	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
-+	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+-			r01 = add_128_128(r01, product);
+-			r2 += (r01.m_high < product.m_high);
++			r2 += check_add_128_128_overflow(&r01, r01, product);
+ 		}
  
- 	ctx->cdata.keylen = keylen;
+ 		result[k] = r01.m_low;
 
 
