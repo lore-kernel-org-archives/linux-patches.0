@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343142FFDE1;
-	Thu, 16 Jul 2026 14:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C7B2F2619;
+	Thu, 16 Jul 2026 14:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210567; cv=none; b=JhqqWMe3S1alMdZBHgCF1JXabiHI9OLMOitL4vW8InzHs5odPm51C2JPfsN6XD2flHzNw6yiWEOmYPklEuziyMRCA15K0VWzfJ7LD6Er38dND3tL2s/z1dniQlyMg+Au/+wnJgcZcbvu/ABYdYS5PFs2pHiGpd8Gcf9f1fTxjz0=
+	t=1784210569; cv=none; b=DEaumudI2OLToq1CDDHSJSNyrETf1fae3Q9eCyi3bTZ7TQ4iLliN9vDl/ydGuAlOmh2OmrNnmL8Vk6ar3Q2FhhshzLvoSKczmlRBXz3cB6EHbWje0QrigKE3LHVVG3F7QHDeiYL123ODBgRP/rdFbe8rheIzbmOam83mAU8FV5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210567; c=relaxed/simple;
-	bh=W2sXNCcIF/HfFkqkQliuLWOjDFxjcFeBjEzwmahepjE=;
+	s=arc-20240116; t=1784210569; c=relaxed/simple;
+	bh=Z/zlpF3CENEtulf0sS1JbZxLnkLFxOkXKUmkxbxFxtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXMl55qTSQrjslcqvzPVNpxAFuIxfv5XbVfiXZXrOvm6l7Lp07EOExy9Azp4P1QeWFlaP1faujM56z1Bywiy2YKA+CJ8fswqWXwKbHWcTR1uSEbExTH32CxDrJsyIUQry8gdp7gJo4LfdFbiWNH3zpLxFzw2pEaIfU4r/ZoxtFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7CKaLvY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pyQJr+RsxbLKF+51Aw/o6VF+crSvCYw6+kzpdTqN4hyHr6LqJOrR6hYxh0NvqbVk5/B0M/IW90M2a3cPT6/XH1y/+qZlajBIlMw/hrwisgl+VzTfTEq/ZY6bve3GbYBh4pRkcyQXnUqgv9+xg1S7tdzYeu5OQdAqcKrTu7Zihiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6GbH8vI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7CKaLvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990AA1F000E9;
-	Thu, 16 Jul 2026 14:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6GbH8vI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE681F000E9;
+	Thu, 16 Jul 2026 14:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210566;
-	bh=jgLyeg2t7ho//JqIIOX7hHhWUHzBruD5ePXKudWOuCM=;
+	s=korg; t=1784210568;
+	bh=A7Myl3LNAFisfx/Gy51q0X8wwoGInmuzckm1mhAaMPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V7CKaLvYwJGea8gqrtRYWQnbI+XrF4hnntCnvsM+Hb0dl6CH7wOevyamBwG9NPl6k
-	 ShB/I4c4LYqV2HWajuIpjZp8rsmuTUSykJ+fCHbws33gkI3d2FTm7HEVvSfUHf1Z90
-	 hUlp2g5FpEfWSDHTUvBOBhgAV8Ufk2ZkJ0JvEhTw=
+	b=d6GbH8vIUSFrxpdCWzqPI/+hLbne829GqnRY8sMsYjt6w+7Rz57f4JGvrSZ2kRtlg
+	 cnsxwgEjglpCE2gDSFI30Y/VNUpVW4sV2BNl7l+QBFhnMYVgz/YFErSzHIoGqgvhB3
+	 oyG3C25gA1IHuhCIuW6IV8SGO31PCPhwZKQlfhGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/480] rust: kasan: KASAN+RUST requires clang
-Date: Thu, 16 Jul 2026 15:26:30 +0200
-Message-ID: <20260716133045.635557779@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.18 090/480] iio: temperature: tmp006: use devm_iio_trigger_register
+Date: Thu, 16 Jul 2026 15:27:17 +0200
+Message-ID: <20260716133046.658032174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,40 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit 5b271543d0f08e9733d4732721e960e285f6448f ]
+commit 3c5eed894efd93d68d7f6a359a81ddef0e928774 upstream.
 
-Kernel KASAN involves passing various llvm/gcc specific arguments to
-the C and Rust compiler. Since these arguments differ between llvm and
-gcc, it's not safe to mix an llvm-based rustc with a gcc build when
-kasan is enabled.
+tmp006_probe() allocates the DRDY trigger with devm_iio_trigger_alloc()
+but registers it with plain iio_trigger_register(). The driver has no
+.remove() callback, so on module unload the trigger stays in the global
+trigger list while its memory is freed by devm, leaving a dangling
+entry.
 
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
+Switch to devm_iio_trigger_register() so the registration is undone in
+the same devm scope as the allocation.
+
+Fixes: 91f75ccf9f03 ("iio: temperature: tmp006: add triggered buffer support")
 Cc: stable@vger.kernel.org
-Fixes: e3117404b411 ("kbuild: rust: Enable KASAN support")
-Link: https://patch.msgid.link/20260408-kasan-rust-sw-tags-v3-1-e07964d14363@google.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/temperature/tmp006.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index cab3ad28ca49e7..0c25e78e10f47e 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -2096,6 +2096,7 @@ config RUST
- 	depends on !CFI || HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
- 	select CFI_ICALL_NORMALIZE_INTEGERS if CFI
- 	depends on !CALL_PADDING || RUSTC_VERSION >= 108100
-+	depends on !KASAN || CC_IS_CLANG
- 	depends on !KASAN_SW_TAGS
- 	depends on !(MITIGATION_RETHUNK && KASAN) || RUSTC_VERSION >= 108300
- 	help
--- 
-2.53.0
-
+--- a/drivers/iio/temperature/tmp006.c
++++ b/drivers/iio/temperature/tmp006.c
+@@ -350,7 +350,7 @@ static int tmp006_probe(struct i2c_clien
+ 
+ 		data->drdy_trig->ops = &tmp006_trigger_ops;
+ 		iio_trigger_set_drvdata(data->drdy_trig, indio_dev);
+-		ret = iio_trigger_register(data->drdy_trig);
++		ret = devm_iio_trigger_register(&client->dev, data->drdy_trig);
+ 		if (ret)
+ 			return ret;
+ 
 
 
