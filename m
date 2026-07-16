@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F57B400982;
-	Thu, 16 Jul 2026 14:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD8C3C4555;
+	Thu, 16 Jul 2026 14:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211871; cv=none; b=Hw8r0K17ikIL2hVDw64zYdz9qADqtBPa0zbv/tv/8Zy+WzdhcSPTk5KWO7dQZ6HHutzhyJwj1P7Ghmk1lHcBfyobxDk1pV7R5RYX5yyWDsEa99W87+wWkBPKVYf6cpqhK17UZ9QD7Rs295vleN9u0vbeUVRlLtFsj0AGcnOJ7wg=
+	t=1784211873; cv=none; b=EvHgzNM+LEevnch4bdlTg5XPV0Cw6bUdfEebRCDrBOy3csGeo43/39m5lpDuttoMjZX6LhJdJdWWHUc3zH/KLusEmo+KHz7hJbwKBK3qBrQA57/WIl8xE1dUJ0tftk3BBLXh7ur5ED2r7RhKX+xPAlK86KhB+iDEbVPd+bJ7PLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211871; c=relaxed/simple;
-	bh=1JyGZOe6bjqXPsD6aaxITED/vjKgPXsn3wcQtBg/PwE=;
+	s=arc-20240116; t=1784211873; c=relaxed/simple;
+	bh=BdHGNqGgRrxTaVbt078SOUMTtGcJGvxNW8DC1OZozlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSLkBSuw6g5hn9aTplKWgvZdUXTPUSeuz5mAUcggiG88gMvkJbPD36k7B04jdABlboJF4cwvAVx7GhJOpCcRMNI6cmbGOrm9J3z6z5nLzRL7eugj4UN+HvhGVGJ9oUznOFQ2ZS7NqCRIa/IQ+7kDnxIbRSHT6fQY17YpECLDZQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKJ3YVmu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2g/A2gIPi/A8FpATMs7XOkS8X3TVgk7kFEyPeotcHd5/S1D8I+cDjeMf7tiM1AJ8jMCSY3hsKnzjb7FntIq/MF6tFz7z6+AcKH3o/6C1aGYhHF7rg+4i9cwGfnjyoq4FE3nfZF5XQ9lRILwODDqQAAvV8qLCrPeRF9pnxWH6Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqF7k4Fu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKJ3YVmu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719DD1F000E9;
-	Thu, 16 Jul 2026 14:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqF7k4Fu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA401F00A3A;
+	Thu, 16 Jul 2026 14:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211868;
-	bh=wcWKGPsi78kYAz11jP6qoDGuJol2YNFLx/1NOHFVW1U=;
+	s=korg; t=1784211871;
+	bh=eSJ1gSSFYZXsKmNqzXs3uWwudB3qk1dK6i/hWoXo4W8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cKJ3YVmupUcxAAA2LAj3HqyYAm1goPEHnXZ3zZEHhGrcUcb7NLJhQELWhxKYh4p9N
-	 ZLBHRTGeP4KgPeu1OI0Dko+RLcwH7ZQZ0O3XxYNBer9YdkPNTbaMEisQrRF/ZgwRX9
-	 7jtviPzqqklVJmrs9SkCUUHZ06aH2xowieL54whU=
+	b=qqF7k4Fudf4dB3A9GwaDLtkByrlsudTGnUZek0TKbTWjaA8UKmck9ru9k+EIFU9+f
+	 nG+S37GLWYfpVyQJIVqJUpFgXjZeH2//jXU/WWPo4DqksCtAMCF/TUEbn1GkxIMLFM
+	 l6F0OnA4XwlD4EfvBrsY1XyqaVLXhrQVdAhRtPRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Alexander Aring <aahringo@redhat.com>,
+	Samuel Page <sam@bynar.io>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 112/349] 6lowpan: fix NHC entry use-after-free on error path
-Date: Thu, 16 Jul 2026 15:30:46 +0200
-Message-ID: <20260716133035.820098761@linuxfoundation.org>
+Subject: [PATCH 6.12 113/349] tipc: fix out-of-bounds read in broadcast Gap ACK blocks
+Date: Thu, 16 Jul 2026 15:30:47 +0200
+Message-ID: <20260716133035.842164108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -56,66 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Samuel Page <sam@bynar.io>
 
-commit 1720db928e5a58ca7d75ac1d514c3b73fd7061a7 upstream.
+commit 2b66974a1b6134a4bbc3bfed181f7418f688eb54 upstream.
 
-lowpan_nhc_do_uncompression() looks up an NHC descriptor while holding
-lowpan_nhc_lock.  If the descriptor has no uncompress callback, the error
-path drops the lock before printing nhc->name.
+A broadcast PROTOCOL/STATE_MSG can carry a Gap ACK blocks record in its
+data area. tipc_get_gap_ack_blks() only verifies that the record's len
+field is self-consistent with its ugack_cnt/bgack_cnt counts
+(sz == struct_size(p, gacks, ugack_cnt + bgack_cnt)); it does not check
+that the record actually fits in the message data area, msg_data_sz().
 
-lowpan_nhc_del() removes descriptors under the same lock and then relies
-on synchronize_net() before the owning module can be unloaded.  That only
-waits for net RX RCU readers.  lowpan_header_decompress() is also exported
-and can be reached from callers that are not necessarily covered by the net
-core RX critical section, for example the Bluetooth 6LoWPAN L2CAP receive
-path.
+The unicast caller tipc_link_proto_rcv() bounds it ("if (glen > dlen)
+break;"), but the broadcast caller tipc_bcast_sync_rcv() discards the
+returned size, so tipc_link_advance_transmq() copies the record off the
+receive skb with an attacker-controlled count:
 
-This leaves a race where one task drops lowpan_nhc_lock in the error path,
-another task unregisters and frees the matching descriptor after
-synchronize_net() returns, and the first task then dereferences nhc->name
-for the warning.
+	this_ga = kmemdup(ga, struct_size(ga, gacks, ga->bgack_cnt),
+			  GFP_ATOMIC);
 
-With the post-unlock window widened, KASAN reports:
+A TIPC neighbour that negotiated TIPC_GAP_ACK_BLOCK triggers it with one
+ordinary broadcast STATE_MSG (msg_bc_ack_invalid() clear), sized so its
+data area is short, carrying a Gap ACK record with len = 0x400,
+bgack_cnt = 0xff and ugack_cnt = 0. len then equals
+struct_size(p, gacks, 255), so the consistency check passes and ga is
+non-NULL; kmemdup() reads struct_size(ga, gacks, 255) = 1024 bytes out
+of the much smaller skb:
 
-  BUG: KASAN: slab-use-after-free in lowpan_nhc_do_uncompression+0x1f4/0x220
-  Read of size 8
-  lowpan_nhc_do_uncompression
-  lowpan_header_decompress
+  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x48/0x60
+  Read of size 1024 at addr ffff0000c7030d38 by task poc864/69
+  Call trace:
+   kmemdup_noprof+0x48/0x60
+   tipc_link_advance_transmq+0x86c/0xb80
+   tipc_link_bc_ack_rcv+0x19c/0x1e0
+   tipc_bcast_sync_rcv+0x1c4/0x2c4
+   tipc_rcv+0x85c/0x1340
+   tipc_l2_rcv_msg+0xac/0x104
+  The buggy address belongs to the object at ffff0000c7030d00
+   which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 56 bytes inside of
+   allocated 704-byte region [ffff0000c7030d00, ffff0000c7030fc0)
 
-Fix this by printing the warning before dropping lowpan_nhc_lock, so the
-descriptor name is read while unregister is still excluded.  The malformed
-packet is still rejected with -ENOTSUPP.
+The copied-out bytes are subsequently consumed as gap/ack values, but
+the read is already out of bounds at the kmemdup() regardless of how
+they are used.
 
-Fixes: 92aa7c65d295 ("6lowpan: add generic nhc layer interface")
+The unicast STATE path drops such a message: "if (glen > dlen) break;"
+skips the rest of STATE_MSG handling and the skb is freed. Make the
+broadcast path drop it too. tipc_bcast_sync_rcv() now bounds the record
+against msg_data_sz() and, when it does not fit, reports it back through
+tipc_node_bc_sync_rcv() to tipc_rcv() so the skb is discarded rather than
+processed. ga is not cleared on this path: ga == NULL already means
+"legacy peer without Selective ACK", a distinct legitimate state.
+
+Fixes: d7626b5acff9 ("tipc: introduce Gap ACK blocks for broadcast link")
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Link: https://patch.msgid.link/20260609080054.4541-1-zhaoyz24@mails.tsinghua.edu.cn
+Signed-off-by: Samuel Page <sam@bynar.io>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260625143815.1525412-1-sam@bynar.io
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/6lowpan/nhc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/bcast.c |   22 ++++++++++++++--------
+ net/tipc/bcast.h |    2 +-
+ net/tipc/node.c  |   15 ++++++++++++---
+ 3 files changed, 27 insertions(+), 12 deletions(-)
 
---- a/net/6lowpan/nhc.c
-+++ b/net/6lowpan/nhc.c
-@@ -117,9 +117,9 @@ int lowpan_nhc_do_uncompression(struct s
- 				return ret;
- 			}
- 		} else {
--			spin_unlock_bh(&lowpan_nhc_lock);
- 			netdev_warn(dev, "received nhc id for %s which is not implemented.\n",
- 				    nhc->name);
-+			spin_unlock_bh(&lowpan_nhc_lock);
- 			return -ENOTSUPP;
+--- a/net/tipc/bcast.c
++++ b/net/tipc/bcast.c
+@@ -497,12 +497,13 @@ void tipc_bcast_ack_rcv(struct net *net,
+  */
+ int tipc_bcast_sync_rcv(struct net *net, struct tipc_link *l,
+ 			struct tipc_msg *hdr,
+-			struct sk_buff_head *retrq)
++			struct sk_buff_head *retrq, bool *valid)
+ {
+ 	struct sk_buff_head *inputq = &tipc_bc_base(net)->inputq;
+ 	struct tipc_gap_ack_blks *ga;
+ 	struct sk_buff_head xmitq;
+ 	int rc = 0;
++	u16 glen;
+ 
+ 	__skb_queue_head_init(&xmitq);
+ 
+@@ -510,13 +511,18 @@ int tipc_bcast_sync_rcv(struct net *net,
+ 	if (msg_type(hdr) != STATE_MSG) {
+ 		tipc_link_bc_init_rcv(l, hdr);
+ 	} else if (!msg_bc_ack_invalid(hdr)) {
+-		tipc_get_gap_ack_blks(&ga, l, hdr, false);
+-		if (!sysctl_tipc_bc_retruni)
+-			retrq = &xmitq;
+-		rc = tipc_link_bc_ack_rcv(l, msg_bcast_ack(hdr),
+-					  msg_bc_gap(hdr), ga, &xmitq,
+-					  retrq);
+-		rc |= tipc_link_bc_sync_rcv(l, hdr, &xmitq);
++		glen = tipc_get_gap_ack_blks(&ga, l, hdr, false);
++		if (glen > msg_data_sz(hdr)) {
++			/* Malformed Gap ACK blocks; caller drops the msg */
++			*valid = false;
++		} else {
++			if (!sysctl_tipc_bc_retruni)
++				retrq = &xmitq;
++			rc = tipc_link_bc_ack_rcv(l, msg_bcast_ack(hdr),
++						  msg_bc_gap(hdr), ga, &xmitq,
++						  retrq);
++			rc |= tipc_link_bc_sync_rcv(l, hdr, &xmitq);
++		}
+ 	}
+ 	tipc_bcast_unlock(net);
+ 
+--- a/net/tipc/bcast.h
++++ b/net/tipc/bcast.h
+@@ -97,7 +97,7 @@ void tipc_bcast_ack_rcv(struct net *net,
+ 			struct tipc_msg *hdr);
+ int tipc_bcast_sync_rcv(struct net *net, struct tipc_link *l,
+ 			struct tipc_msg *hdr,
+-			struct sk_buff_head *retrq);
++			struct sk_buff_head *retrq, bool *valid);
+ int tipc_nl_add_bc_link(struct net *net, struct tipc_nl_msg *msg,
+ 			struct tipc_link *bcl);
+ int tipc_nl_bc_link_set(struct net *net, struct nlattr *attrs[]);
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1831,12 +1831,15 @@ static void tipc_node_mcast_rcv(struct t
+ }
+ 
+ static void tipc_node_bc_sync_rcv(struct tipc_node *n, struct tipc_msg *hdr,
+-				  int bearer_id, struct sk_buff_head *xmitq)
++				  int bearer_id, struct sk_buff_head *xmitq,
++				  bool *valid)
+ {
+ 	struct tipc_link *ucl;
+ 	int rc;
+ 
+-	rc = tipc_bcast_sync_rcv(n->net, n->bc_entry.link, hdr, xmitq);
++	rc = tipc_bcast_sync_rcv(n->net, n->bc_entry.link, hdr, xmitq, valid);
++	if (!*valid)
++		return;
+ 
+ 	if (rc & TIPC_LINK_DOWN_EVT) {
+ 		tipc_node_reset_links(n);
+@@ -2140,12 +2143,18 @@ rcv:
+ 
+ 	/* Ensure broadcast reception is in synch with peer's send state */
+ 	if (unlikely(usr == LINK_PROTOCOL)) {
++		bool valid = true;
++
+ 		if (unlikely(skb_linearize(skb))) {
+ 			tipc_node_put(n);
+ 			goto discard;
  		}
- 	} else {
+ 		hdr = buf_msg(skb);
+-		tipc_node_bc_sync_rcv(n, hdr, bearer_id, &xmitq);
++		tipc_node_bc_sync_rcv(n, hdr, bearer_id, &xmitq, &valid);
++		if (!valid) {
++			tipc_node_put(n);
++			goto discard;
++		}
+ 	} else if (unlikely(tipc_link_acked(n->bc_entry.link) != bc_ack)) {
+ 		tipc_bcast_ack_rcv(net, n->bc_entry.link, hdr);
+ 	}
 
 
