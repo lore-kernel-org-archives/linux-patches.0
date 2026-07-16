@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F17C36A35E;
-	Thu, 16 Jul 2026 13:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51BA3BED2D;
+	Thu, 16 Jul 2026 13:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209159; cv=none; b=IRDqToEiRCd7SO1Fa603HPvzesDod6QiFN6gHO+QqKQlEJiRdmwMmuCBjxSlD2GB9Toaqn5yYSqI1IcM1VTPhBRI1ZqAzT2VW77IoJr9jlOc5Mc5+pv1onJZm8G82gJOQuoFTYP8JsSPrOtuQVeOJtpyWS2gs/cWJwBIBTylZDU=
+	t=1784209161; cv=none; b=Qc9u3gKeGzH5v8kA1UVz8HZPmRNii68zrURvT6x8QoMvGeJYWScmeAJ+SnKrAvJM8L4QKXjd80WaC0utj61q9pDs3XpKIQlMG3Rm0CexLLuedlkzdp+NIEWO6yw8CcbEluqQbIru+tx8HOe9gbJ+O2efiQKbp7vub4RG81E/5lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209159; c=relaxed/simple;
-	bh=cd1bMZ56QCT/edpUYL7yShllOGOldVqzAzQxelIyRLw=;
+	s=arc-20240116; t=1784209161; c=relaxed/simple;
+	bh=tV1G2ADWClrTZ+Jy36IsV8qqBpfHPqLpxzxwNs4jIJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnhefxEVhjG9fARZiJDGdpSjYDefYCFJSOlHNlw4o32uFhZRZF1ScKC9DJKjCD0VGLrsl5HPqDIg5L1dnVqC8QCfO1TRcvXkLDcDgJHCGLRUUMUrgTA+DXhZ95ElC+EcQUNnyKVC5KB2ELW3EX/P2F/O3Z5DIZtbT08Y+z2FQ8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZEMzLjG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RECR4Szq90YOqhpTXCZVKwym63yttTKaT4Jnu6eFdk2voMU8mcWeRnQNpboovCp3JSG/ecbkXj7M2yRVl6bOhhlAJd/3WwMjtsZnSUdRehjrlJp9T4LT4yhnzx07N2Qksjjzc2hwk5U9OzCkEcFcSdF7yI0SPymzTAsFUljCsIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l67JCihD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZEMzLjG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49441F000E9;
-	Thu, 16 Jul 2026 13:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l67JCihD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470121F000E9;
+	Thu, 16 Jul 2026 13:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209158;
-	bh=NjAGLeipk3L6s91ORfXEmKJhdRttyNrO32h48dWbQAs=;
+	s=korg; t=1784209160;
+	bh=L0PgQR+pKj+iQJHr2kIfPi3QBB7BRFf3U7y70wRxY54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZEMzLjG5HvQ+AfJLYYKk7jlrS0WykaP4M7n+uBqStjSlMbuPQ7QhGVpUA6HHrigC
-	 Er26ZRDXUXzydxCpNHOx/O8Tjjlt/Wa2Sk0oUOlR4bj6xSXrR7j35yJvsuqhXDGipX
-	 vkaihUJ1Gaz9XWncW0BSw4v1MhhYeDC2EUBN+gzg=
+	b=l67JCihD162acJWgp/IwyQu0OEupZ+qvMK3eGPlDJIlM7iv4jw4FMpTnBVdPFSzrO
+	 OgiP/DRhf+ERFSRvhcv+KxihecDsdSHpAK6IBUWhTrRcMEBTVZGm8PFAN9dppurDW2
+	 PD91wWt4keIfKY5VQso/CvPVOdVJ5A3sWw/aJBWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 025/518] x86/bugs: Enable IBPB flush on BPF JIT allocation
-Date: Thu, 16 Jul 2026 15:24:53 +0200
-Message-ID: <20260716133048.326689568@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.1 073/518] iio: proximity: vl53l0x: notify trigger and clear IRQ on error paths
+Date: Thu, 16 Jul 2026 15:25:41 +0200
+Message-ID: <20260716133049.384546997@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,143 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit a3af84b0fa00ead01fcd0e28b5d773ff25990a0d upstream.
+commit be843b0579f872ec7590d825e2c9a656d4790c4b upstream.
 
-Enable hardening against JIT spraying when Spectre-v2 mitigations are in
-use. Specifically, issue an IBPB flush on BPF JIT memory reuse. Skip
-enabling the IBPB flush if the BPF dispatcher is already using a retpoline
-sequence.
+vl53l0x_trigger_handler() returns directly on the I2C read failure
+paths without calling iio_trigger_notify_done() or vl53l0x_clear_irq().
 
-This hardening applies only when BPF-JIT is in use. Guard the enabling
-under CONFIG_BPF_JIT so that bugs.c still builds with CONFIG_BPF_JIT=n.
+A single transient i2c_smbus_read_i2c_block_data() failure (negative
+errno or a short read) therefore leaves two pieces of state behind:
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  - iio_trigger_notify_done() never decrements the trigger's use_count,
+    so iio_trigger_poll_nested() silently drops further dispatches
+    (see industrialio-trigger.c, the !atomic_read(&trig->use_count)
+    guard);
+  - vl53l0x_clear_irq() never writes SYSTEM_INTERRUPT_CLEAR, so the
+    chip keeps the DRDY interrupt asserted.
+
+The sensor's buffer mode stays wedged from then on, recoverable only
+by re-binding the driver. The sibling driver vl53l1x-i2c.c handles
+exactly the same case correctly by jumping to a "notify_and_clear_irq"
+label that always calls both helpers; mirror that here.
+
+The bogus negative-int return value cast to irqreturn_t also goes
+away as a side effect.
+
+Fixes: 762186c6e7b1 ("iio: proximity: vl53l0x-i2c: Added continuous mode support")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |  4 +++
- arch/x86/kernel/cpu/bugs.c           | 50 +++++++++++++++++++++++++---
- 2 files changed, 49 insertions(+), 5 deletions(-)
+ drivers/iio/proximity/vl53l0x-i2c.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/include/asm/nospec-branch.h b/arch/x86/include/asm/nospec-branch.h
-index 4f4b5e8a157430..b68892e6d58c47 100644
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -388,6 +388,10 @@ extern void srso_alias_return_thunk(void);
- extern void entry_untrain_ret(void);
- extern void write_ibpb(void);
+--- a/drivers/iio/proximity/vl53l0x-i2c.c
++++ b/drivers/iio/proximity/vl53l0x-i2c.c
+@@ -87,15 +87,14 @@ static irqreturn_t vl53l0x_trigger_handl
+ 	ret = i2c_smbus_read_i2c_block_data(data->client,
+ 					VL_REG_RESULT_RANGE_STATUS,
+ 					sizeof(buffer), buffer);
+-	if (ret < 0)
+-		return ret;
+-	else if (ret != 12)
+-		return -EREMOTEIO;
++	if (ret != 12)
++		goto done;
  
-+#ifdef CONFIG_BPF_JIT
-+extern void bpf_arch_ibpb(void);
-+#endif
-+
- #ifdef CONFIG_X86_64
- extern void clear_bhb_loop(void);
- #endif
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 83f51cab0b1e39..d9af230c051259 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -16,6 +16,7 @@
- #include <linux/sched/smt.h>
- #include <linux/pgtable.h>
- #include <linux/bpf.h>
-+#include <linux/filter.h>
- #include <linux/kvm_types.h>
+ 	scan.chan = get_unaligned_be16(&buffer[10]);
+ 	iio_push_to_buffers_with_ts(indio_dev, &scan, sizeof(scan),
+ 				    iio_get_time_ns(indio_dev));
  
- #include <asm/spec-ctrl.h>
-@@ -1651,8 +1652,21 @@ static inline const char *spectre_v2_module_string(void)
- {
- 	return spectre_v2_bad_module ? " - vulnerable module loaded" : "";
- }
-+
-+/*
-+ * The "retpoline sequence" is the "call;mov;ret" sequence that
-+ * replaces normal indirect branch instructions. Differentiate
-+ * *the* retpoline sequence from the LFENCE-prefixed indirect
-+ * branches that simply use the retpoline infrastructure.
-+ */
-+static inline bool retpoline_seq_enabled(void)
-+{
-+	return boot_cpu_has(X86_FEATURE_RETPOLINE) && !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE);
-+}
-+
- #else
- static inline const char *spectre_v2_module_string(void) { return ""; }
-+static inline bool retpoline_seq_enabled(void) { return false; }
- #endif
++done:
+ 	iio_trigger_notify_done(indio_dev->trig);
+ 	vl53l0x_clear_irq(data);
  
- #define SPECTRE_V2_LFENCE_MSG "WARNING: LFENCE mitigation is not recommended for this CPU, data leaks possible!\n"
-@@ -2095,8 +2109,7 @@ static void __init bhi_apply_mitigation(void)
- 		return;
- 
- 	/* Retpoline mitigates against BHI unless the CPU has RRSBA behavior */
--	if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
--	    !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE)) {
-+	if (retpoline_seq_enabled()) {
- 		spec_ctrl_disable_kernel_rrsba();
- 		if (rrsba_disabled)
- 			return;
-@@ -2238,6 +2251,27 @@ static void __init spectre_v2_update_mitigation(void)
- 		pr_info("%s\n", spectre_v2_strings[spectre_v2_enabled]);
- }
- 
-+#ifdef CONFIG_BPF_JIT
-+static void __bpf_arch_ibpb(void *unused)
-+{
-+	write_ibpb();
-+}
-+
-+void bpf_arch_ibpb(void)
-+{
-+	on_each_cpu(__bpf_arch_ibpb, NULL, 1);
-+}
-+
-+static bool __init cpu_wants_ibpb_bpf(void)
-+{
-+	/* A genuine retpoline already neutralizes ring0 indirect predictions */
-+	if (retpoline_seq_enabled())
-+		return false;
-+
-+	return boot_cpu_has(X86_FEATURE_IBPB);
-+}
-+#endif
-+
- static void __init spectre_v2_apply_mitigation(void)
- {
- 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
-@@ -2314,6 +2348,14 @@ static void __init spectre_v2_apply_mitigation(void)
- 		setup_force_cpu_cap(X86_FEATURE_USE_IBRS_FW);
- 		pr_info("Enabling Restricted Speculation for firmware calls\n");
- 	}
-+
-+#ifdef CONFIG_BPF_JIT
-+	if (cpu_wants_ibpb_bpf()) {
-+		static_call_update(bpf_arch_pred_flush, bpf_arch_ibpb);
-+		static_branch_enable(&bpf_pred_flush_enabled);
-+		pr_info("Enabling IBPB for BPF\n");
-+	}
-+#endif
- }
- 
- static void update_stibp_msr(void * __unused)
-@@ -3490,9 +3532,7 @@ static const char *spectre_bhi_state(void)
- 		return "; BHI: BHI_DIS_S";
- 	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
- 		return "; BHI: SW loop, KVM: SW loop";
--	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
--		 !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE) &&
--		 rrsba_disabled)
-+	else if (retpoline_seq_enabled() && rrsba_disabled)
- 		return "; BHI: Retpoline";
- 	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_VMEXIT))
- 		return "; BHI: Vulnerable, KVM: SW loop";
--- 
-2.53.0
-
 
 
