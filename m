@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E64C5A79B;
-	Thu, 16 Jul 2026 14:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31B430D3F6;
+	Thu, 16 Jul 2026 14:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210730; cv=none; b=nRD93hsTr4zJjwA/8ofcoUX/3vVTj73C0gfMtu1qo7VFLGE8PPAMRtfR7Ts6ouvY3jOPw0xUNmZeDTcYo7Rpxtoby1Wf3CnBdKsr5ZnXGffDlK/cqS268tPISwG6S9j5ZWNPy8lViZ0I5r4ThIP4k5H3YV3dNembmSGYMVUOjqg=
+	t=1784210732; cv=none; b=N6YB8GSlb+7pTf0DiXWipGtwW68XTp0s3iSnFyhzfKfAwAi2L6lPvKh+ml5I2J5COCXPro+QuOy7IlO9McpOcfXrtjarKRIKM1dku9gGdifB8w6tW0JVjO7n/6VATIc559vMNEg/N9DtqKTxcvfDTZN+njIGMw9yzPy4XwItAkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210730; c=relaxed/simple;
-	bh=qegqbCrctBpi/9ylOArKAvoziz2dmsiUfKHX68a+GKc=;
+	s=arc-20240116; t=1784210732; c=relaxed/simple;
+	bh=tRGTnS2kNQzPHhF33hI7fJVu10+UvqPFShoqm6cY64o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7ZQPgp/mrvzFLQcd5LxRMq8AemLLlgDyZGm3UfVmRLeLbbwoTJGUsAme7n/QmhivXfGnaO7tnUOC2gZpth041Kt54wavuKU38Dz+cBWhyncsyM5t/haM/zJiz6qCB0qGhOARn23jLuUyQmEUpJh9pSKBIQBZqzHla0tRujuzeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgF4aHi+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bshPGvyDqPWLEJeTwsAayP1qihY02M2so/W5hZ3rQWJe+PMwgUPdHnUrgtmADRpXhojBssZwAiVnn7fBgKUc4958XaegnMUoD+aRK5l8jz+2vtFq5Cem3izdzxxwZVkmOFpV3tMkGQuotb3hR/67S/P/RpDFf+2GRenMkIjefyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiizZBKu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgF4aHi+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841C21F000E9;
-	Thu, 16 Jul 2026 14:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiizZBKu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2599F1F000E9;
+	Thu, 16 Jul 2026 14:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210729;
-	bh=PvQy081JP9PoZTY8v962hLZfo2DHKnhHf+CL9rvCiU4=;
+	s=korg; t=1784210731;
+	bh=huyXtr9H/BfhFUN9gAB3w3j8+sUqORQ0+tRZYpML0DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QgF4aHi+1h3yPae1cmMTvcPrU3YvZLIskFFvkJr/0dcCgG2+/K8xyFAEaSNXQSznT
-	 pEk/GXp24pTB24oTdBm/eKwCdjph4BC/6J9Sh0pcXBJ3OrqT7DI0szCxYaqYvBe1U0
-	 gro0usF55czXGwNYjeVMk1iS8rvcbzkOs7TfiwHY=
+	b=FiizZBKuZHAtKLUSUEx0u9U5EIIc+WBeP3MZX39UjgLmBa4sLohV48oHdw6jjxZwx
+	 SzdR2ZVoS8Xtiw2UDNLYxGMkl7MQPLJIEPxvq2CVKeFJ1lE0czY/RFQ9cJClxoBprW
+	 uyZA4H34i7UB4DUyKOK10fjPTnArDph7i1oVK60E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Martyn Welch <martyn@welchs.me.uk>,
-	Hao-Qun Huang <alvinhuang0603@gmail.com>
-Subject: [PATCH 6.18 158/480] staging: vme_user: fix location monitor leak in tsi148 bridge
-Date: Thu, 16 Jul 2026 15:28:25 +0200
-Message-ID: <20260716133048.126357174@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 159/480] media: staging: ipu3-imgu: Add range check for imgu_css_cfg_acc_stripe
+Date: Thu, 16 Jul 2026 15:28:26 +0200
+Message-ID: <20260716133048.148445356@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,53 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao-Qun Huang <alvinhuang0603@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 151edde741f8bc7f2931c5f44ab376d32b0c8beb upstream.
+commit c32fe4c4918c9aa49f61359e3b42619c4d8686de upstream.
 
-tsi148_probe() allocates a location monitor resource and links it into
-tsi148_bridge->lm_resources. The probe error path frees this list, but
-tsi148_remove() only frees the dma, slave and master resource lists, so
-the location monitor resource is leaked on device unbind or module
-unload.
+If the driver's stripe information is invalid it can result in an integer
+underflow. Add a range check to avoid this kind of error.
 
-Free the lm_resources list in tsi148_remove() as well, before
-tsi148_bridge is freed.
+This patch fixes the following smatch error:
+drivers/staging/media/ipu3/ipu3-css-params.c:1792 imgu_css_cfg_acc_stripe() warn: 'acc->stripe.bds_out_stripes[0]->width - 2 * f' 4294967168 can't fit into 65535 'acc->stripe.bds_out_stripes[1]->offset'
 
-Fixes: d22b8ed9a3b0 ("Staging: vme: add Tundra TSI148 VME-PCI Bridge driver")
-Cc: stable <stable@kernel.org>
-Cc: Martyn Welch <martyn@welchs.me.uk>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
-Link: https://patch.msgid.link/20260704065817.403111-2-alvinhuang0603@gmail.com
+Cc: stable@vger.kernel.org
+Fixes: e11110a5b744 ("media: staging/intel-ipu3: css: Compute and program ccs")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/vme_user/vme_tsi148.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/staging/media/ipu3/ipu3-css-params.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/staging/vme_user/vme_tsi148.c
-+++ b/drivers/staging/vme_user/vme_tsi148.c
-@@ -2536,6 +2536,7 @@ static void tsi148_remove(struct pci_dev
- {
- 	struct list_head *pos = NULL;
- 	struct list_head *tmplist;
-+	struct vme_lm_resource *lm;
- 	struct vme_master_resource *master_image;
- 	struct vme_slave_resource *slave_image;
- 	struct vme_dma_resource *dma_ctrlr;
-@@ -2593,6 +2594,13 @@ static void tsi148_remove(struct pci_dev
- 	tsi148_crcsr_exit(tsi148_bridge, pdev);
- 
- 	/* resources are stored in link list */
-+	list_for_each_safe(pos, tmplist, &tsi148_bridge->lm_resources) {
-+		lm = list_entry(pos, struct vme_lm_resource, list);
-+		list_del(pos);
-+		kfree(lm);
-+	}
+--- a/drivers/staging/media/ipu3/ipu3-css-params.c
++++ b/drivers/staging/media/ipu3/ipu3-css-params.c
+@@ -1770,6 +1770,8 @@ static int imgu_css_cfg_acc_stripe(struc
+ 		acc->stripe.bds_out_stripes[0].width =
+ 			ALIGN(css_pipe->rect[IPU3_CSS_RECT_BDS].width, f);
+ 	} else {
++		u32 offset;
 +
-+	/* resources are stored in link list */
- 	list_for_each_safe(pos, tmplist, &tsi148_bridge->dma_resources) {
- 		dma_ctrlr = list_entry(pos, struct vme_dma_resource, list);
- 		list_del(pos);
+ 		/* Image processing is divided into two stripes */
+ 		acc->stripe.bds_out_stripes[0].width =
+ 			acc->stripe.bds_out_stripes[1].width =
+@@ -1788,8 +1790,10 @@ static int imgu_css_cfg_acc_stripe(struc
+ 			acc->stripe.bds_out_stripes[1].width += f;
+ 		}
+ 		/* Overlap between stripes is IPU3_UAPI_ISP_VEC_ELEMS * 4 */
+-		acc->stripe.bds_out_stripes[1].offset =
+-			acc->stripe.bds_out_stripes[0].width - 2 * f;
++		offset = acc->stripe.bds_out_stripes[0].width - 2 * f;
++		if (offset > 65535)
++			return -EINVAL;
++		acc->stripe.bds_out_stripes[1].offset = offset;
+ 	}
+ 
+ 	acc->stripe.effective_stripes[0].height =
 
 
