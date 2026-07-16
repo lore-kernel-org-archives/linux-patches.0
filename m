@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051B7319601;
-	Thu, 16 Jul 2026 14:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86434248AD;
+	Thu, 16 Jul 2026 14:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210843; cv=none; b=SvEIyUcZPd9Np8eVVJY3dloWYdapYAmOKAe1YsjJMf3V4TbLIyxX1ZX/rrKwJc2QnAULLkIsMNaraJCLYDA6T7Z2WBe/AY33O2bXrbdKcaobKcKDSn6PWm6sipwbdM1lgiYdlRfxeqg/FuxbpqGfZqumbJgC+NslrPKgDBR8Q2Y=
+	t=1784210846; cv=none; b=fckQ0SUQF7vvU+q+jLb43+nEFKAVfD5PRu7CNmufnGpx7YsLdtErkrEjtX5C9isRHv/sJPaXqI0TGCn4nzFGkt4k4w9LhpUTy+IhIn0hsDHFB6DQU2RCUpI3aLvJG01cwXVIdzKvR3cRjRCmku+66mudrcHndjY321r4H/1krSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210843; c=relaxed/simple;
-	bh=bPF0pXwLMx2anq9dZPvt6BwQbgLaHOl+FA+WPGvDJDc=;
+	s=arc-20240116; t=1784210846; c=relaxed/simple;
+	bh=zVeZk+MiRSWMbMwdM/FAOrMDEYCZcBqczr4msNrMn7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SnZQTvAZy5FNMZ5FZdMZtjWSHnTv+wM+EriI+scOo+OjzpuKzHSb8ya8+Kh9JfFdxmVQpqaqiM3Hig1s/oll1hfyIEqcOvBWfxza2nbjUjqVSFvsGJ2y3qLnRQBk73MLmoIcpm6v/hT77ZTYlp9cMJmjPHX4cPNJwCLjbrLcWhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxoTWuds; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KF5FLBUc8G9QTfUIN07gqsDdRFGltC/hhxoegWgW9amXgvFNS+qOB+3+KE0xkR8PVaLEWkBQIF29WUwrBDlQZ2bPMAp20y8QewFgu4np4DrnAjGYzFdPD2MaKELIbPU0TmC/WpEtFOagLpzqBAlbaxY7qhaalax17/G+d/b0PSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2SgSQVh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxoTWuds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2647B1F00A3D;
-	Thu, 16 Jul 2026 14:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2SgSQVh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1DD1F00A3D;
+	Thu, 16 Jul 2026 14:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210841;
-	bh=+l8QN3le2aCLEn8zrEEIhRX81rM8VQ51J0omG3FKRnU=;
+	s=korg; t=1784210844;
+	bh=hMW3LC9pn7PkqWkN415nJpNqshjQMwTF2LH4Zghl2XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AxoTWuds602/R4BaWcuAnTBKRhbxVhA7MJMx4LBDigsx+5BrVK9yoEwDlNe1AhW/t
-	 e1DV4uplGs0oJNqqpwrITrArSILUM27xR7h2P7AAI4N5Z+2oNjf3D2L5n6NFESFR6P
-	 btJhYLLop17Z7YimmpWfO/zB83hoZBUjxqmX2BIA=
+	b=P2SgSQVhvMOrLqCANedZdQDRj9+IpV7nbSP+Vly38hFRhxv0fqAPksrKfU6HuJSVo
+	 lIVeU9EsKWPcVsjXrpawsNPTcg/dRD5CPgSL4cDJznAzt6TiNuIZyNjTpR+w0VEHXZ
+	 66ddy/l3d2MoPyVGBIh7dn2zl2Qm51hA7fUKHEHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Wigham <michael@wigham.net>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 184/480] io_uring/rw: preserve partial result for iopoll
-Date: Thu, 16 Jul 2026 15:28:51 +0200
-Message-ID: <20260716133048.706322708@linuxfoundation.org>
+	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 202/480] Bluetooth: btnxpuart: Fix out-of-bounds firmware read in nxp_recv_fw_req_v3()
+Date: Thu, 16 Jul 2026 15:29:09 +0200
+Message-ID: <20260716133049.096550840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,54 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Wigham <michael@wigham.net>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit c554246ff4c68abf71b61a89c6e39d3cf94f523e upstream.
+commit badff6c3bed8923a1257a853f137d447976eec30 upstream.
 
-A partial read will store the completed byte count in io->bytes_done.
-The regular completion path applies io_fixup_rw_res() so that, when the
-following operation reaches EOF, the number of bytes already read is
-returned.
+During the v3 firmware download the controller sends a v3_data_req with a
+32 bit offset and a 16 bit len. nxp_recv_fw_req_v3() checks only the lower
+bound of the offset and then sends firmware from that offset.
 
-The iopoll completion path does not apply this fixup to the return value
-and can return zero instead.
+  nxpdev->fw_dnld_v3_offset = offset - nxpdev->fw_v3_offset_correction;
+  serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data +
+                          nxpdev->fw_dnld_v3_offset, len);
 
-Use the fixup result when updating the CQE, and the raw result for the
-reissue check.
+Nothing checks that fw_dnld_v3_offset + len stays within nxpdev->fw->size,
+so a controller that asks for an offset or length past the firmware image
+makes the driver read past the end of nxpdev->fw->data and send that
+memory back over UART.
 
+nxp_recv_fw_req_v1() already bounds the same write. Add the equivalent
+check to the v3 path, reject the request when it falls outside the firmware
+image, and zero len on the error path so the fw_v3_prev_sent bookkeeping at
+free_skb stays consistent.
+
+Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
+Suggested-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Reviewed-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 Cc: stable@vger.kernel.org
-Fixes: 4d9cb92ca41d ("io_uring/rw: fix short rw error handling")
-Signed-off-by: Michael Wigham <michael@wigham.net>
-Link: https://patch.msgid.link/20260613225240.34032-1-michael@wigham.net
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rw.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/bluetooth/btnxpuart.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -611,15 +611,15 @@ static void io_complete_rw_iopoll(struct
- {
- 	struct io_rw *rw = container_of(kiocb, struct io_rw, kiocb);
- 	struct io_kiocb *req = cmd_to_io_kiocb(rw);
-+	int final_res = io_fixup_rw_res(req, res);
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -1267,6 +1267,12 @@ static int nxp_recv_fw_req_v3(struct hci
+ 	}
  
- 	if (kiocb->ki_flags & IOCB_WRITE)
- 		io_req_end_write(req);
--	if (unlikely(res != req->cqe.res)) {
--		if (res == -EAGAIN && io_rw_should_reissue(req))
--			req->flags |= REQ_F_REISSUE | REQ_F_BL_NO_RECYCLE;
--		else
--			req->cqe.res = res;
--	}
-+
-+	if (res == -EAGAIN && io_rw_should_reissue(req))
-+		req->flags |= REQ_F_REISSUE | REQ_F_BL_NO_RECYCLE;
-+	else if (unlikely(final_res != req->cqe.res))
-+		req->cqe.res = final_res;
+ 	nxpdev->fw_dnld_v3_offset = offset - nxpdev->fw_v3_offset_correction;
++	if (nxpdev->fw_dnld_v3_offset >= nxpdev->fw->size ||
++	    len > nxpdev->fw->size - nxpdev->fw_dnld_v3_offset) {
++		bt_dev_err(hdev, "FW download out of bounds, ignoring request");
++		len = 0;
++		goto free_skb;
++	}
+ 	serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data +
+ 				nxpdev->fw_dnld_v3_offset, len);
  
- 	/* order with io_iopoll_complete() checking ->iopoll_completed */
- 	smp_store_release(&req->iopoll_completed, 1);
 
 
