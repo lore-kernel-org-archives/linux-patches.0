@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02072400979;
-	Thu, 16 Jul 2026 13:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491AB3F0774;
+	Thu, 16 Jul 2026 13:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210053; cv=none; b=dggWK2YJUs7CZ0XLgnEGfYTqZigAv+rszihtiBCmmQ6p4NIipYxsRQx/xolD52FslHldrIfIQXL1d7AJCZHSjizjJs4dytINf35RljyKoQ7v8PxnYN8dE+Mw4gTha9Os1lSckAkpYKbDCu2HWbl0inzViTKBtpo/u8GTFqmu1vY=
+	t=1784210055; cv=none; b=ZTdtTFWNBk5UDFASJ+5B0/YvCndto4To6lGmv2pktUW/nxT2dpzgU+dZ1R3lL9KMS63gja85jL3xyLc6X7rc0Oj7uCdrFdVxJkOozRFBnG5pDzjMfrRN1skVVps/BBGPq/Un0Ijku51JkSYhPfgWDAkT6OVwxVc7oOibNLR2LUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210053; c=relaxed/simple;
-	bh=Hd8EqmIQ1douS6P29MzynvP4cv9SVjvo+rtxQ+xoIts=;
+	s=arc-20240116; t=1784210055; c=relaxed/simple;
+	bh=wAyiwsZ7f0NquDP0DMd4kT3vww8rydvRb9rdghnSnfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmVLN05Q9oXj/baRLUvMHt6OKS15etffbxc/aThRQHp6QN35KI2joNQxuObM+lyLP+0optGcwIyR2bfA6U153YPqsnsVsRLkmnoMaZCZcFPQV67OyOX0+9+bq7ZR9tQqpHbIS1cCjxk39b1bgNB0QW+1LRXfj3u46xHHXVECWX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ox/vtL3S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qdKVbRjMg3VTD7x3Q02rpIlqAugbVuLgKnXnBaNVkJKZYpT8rkFcQUEHjhqXVWZa5waQg8oTqyc0bbbk0AfAlnPa4K2ZDUJyXGDuJkS3vRNzTEH2G/Ecx4aAFajfETu3TVl2eG9b5hsMGLkW6RgtBRNKKS0sVObwny4FwhV+b+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYDICxOJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ox/vtL3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16ED81F000E9;
-	Thu, 16 Jul 2026 13:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYDICxOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4DC1F000E9;
+	Thu, 16 Jul 2026 13:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210051;
-	bh=6mBGabxFysiWgUjl9Lb5WvAUXgsFSnP/G3U8NH04Dn8=;
+	s=korg; t=1784210054;
+	bh=gtbuYPQT6D6NqMR5S+vE+5StG/2tyAcyVij8rl8QYzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ox/vtL3SIl5LTU0hmcU03IZnuLJvBAlgnhDX0iP6hvkRukBzMdoa0AIkjeNuxe5FL
-	 T8r7IcgFLG+SX/PirOIttsfo4E//RqhfYHgvbTaQJhD/36IuTsiSMoAeFOfYPyL4ps
-	 1j90vBXBgrX9x0vfNc56+xgSTEtQR2F8XUGuEnYI=
+	b=lYDICxOJmdNqKy4QeNesYh/wG0D2aM5O39e/K3s/KLRNuAleyzvvGA4B0cQcgTfjG
+	 ExtwVoCOhygVXWHScwz/dibuJtIAyKxp4Ibbw8PbtxVlZWE2B39wAhKkjVi3NjtPK+
+	 u6lUkYr1ibBOKfZ4x+/gS1kVkrKtxwlOC1EI/Le4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 7.1 419/518] NTB: epf: Fix request_irq() unwind in ntb_epf_init_isr()
-Date: Thu, 16 Jul 2026 15:31:27 +0200
-Message-ID: <20260716133057.005961314@linuxfoundation.org>
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Paul Walmsley <pjw@kernel.org>,
+	Han Gao <gaohan@iscas.ac.cn>
+Subject: [PATCH 7.1 420/518] riscv: mm: Define DIRECT_MAP_PHYSMEM_END
+Date: Thu, 16 Jul 2026 15:31:28 +0200
+Message-ID: <20260716133057.027407102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,59 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Vivian Wang <wangruikang@iscas.ac.cn>
 
-commit fcba26efe5efc7441f5505f4ccc69791214b40be upstream.
+commit f3336b48cf9d3f2d1fc78e3289c0ded2f00876ee upstream.
 
-ntb_epf_init_isr() requests multiple MSI/MSI-X vectors in a loop. If
-request_irq() fails part-way through, it jumps straight to
-pci_free_irq_vectors() without freeing already requested IRQs.
+On RISC-V, the actual mappable range of physical address space is
+dependent on the current MMU mode i.e. satp_mode (See
+Documentation/arch/riscv/vm-layout.rst).
 
-Fix the error path by freeing any successfully requested IRQs before
-releasing the vectors.
+Define the DIRECT_MAP_PHYSMEM_END macro based on the existing virtual
+address space layout macros to expose this information to
+get_free_mem_region(). Otherwise, it returns a region that couldn't be
+mapped, which breaks ZONE_DEVICE.
 
-Fixes: 812ce2f8d14e ("NTB: Add support for EPF PCI Non-Transparent Bridge")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Cc: stable@vger.kernel.org # v5.12+
-Link: https://patch.msgid.link/20260304083028.1391068-2-den@valinux.co.jp
+Cc: stable@vger.kernel.org # v6.13+
+Tested-by: Han Gao <gaohan@iscas.ac.cn> # SG2044
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Link: https://patch.msgid.link/20260309-riscv-sparsemem-vmemmap-limits-v1-2-f40efe18e3cd@iscas.ac.cn
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/hw/epf/ntb_hw_epf.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/riscv/include/asm/pgtable.h |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/ntb/hw/epf/ntb_hw_epf.c
-+++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
-@@ -357,7 +357,7 @@ static int ntb_epf_init_isr(struct ntb_e
- 				  0, "ntb_epf", ndev);
- 		if (ret) {
- 			dev_err(dev, "Failed to request irq\n");
--			goto err_request_irq;
-+			goto err_free_irq;
- 		}
- 	}
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -93,6 +93,16 @@
+  */
+ #define vmemmap		((struct page *)VMEMMAP_START - vmemmap_start_pfn)
  
-@@ -367,16 +367,14 @@ static int ntb_epf_init_isr(struct ntb_e
- 				   argument | irq);
- 	if (ret) {
- 		dev_err(dev, "Failed to configure doorbell\n");
--		goto err_configure_db;
-+		goto err_free_irq;
- 	}
- 
- 	return 0;
- 
--err_configure_db:
--	for (i = 0; i < ndev->db_count + 1; i++)
-+err_free_irq:
-+	while (i--)
- 		free_irq(pci_irq_vector(pdev, i), ndev);
--
--err_request_irq:
- 	pci_free_irq_vectors(pdev);
- 
- 	return ret;
++/* Needed to limit get_free_mem_region() */
++#if defined(CONFIG_FLATMEM)
++#define DIRECT_MAP_PHYSMEM_END (phys_ram_base + KERN_VIRT_SIZE - 1)
++#elif defined(CONFIG_SPARSEMEM_VMEMMAP)
++#define DIRECT_MAP_PHYSMEM_END \
++	((vmemmap_start_pfn + VMEMMAP_SIZE / sizeof(struct page)) * PAGE_SIZE - 1)
++#elif defined(CONFIG_SPARSEMEM)
++/* DIRECT_MAP_PHYSMEM_END is not limited by VA space assignment in this case */
++#endif
++
+ #define PCI_IO_SIZE      SZ_16M
+ #define PCI_IO_END       VMEMMAP_START
+ #define PCI_IO_START     (PCI_IO_END - PCI_IO_SIZE)
 
 
