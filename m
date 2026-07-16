@@ -1,36 +1,36 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010058.outbound.protection.outlook.com [40.93.198.58])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011032.outbound.protection.outlook.com [52.101.62.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E14443991B;
-	Thu, 16 Jul 2026 17:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B52A437879;
+	Thu, 16 Jul 2026 17:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784221426; cv=fail; b=dEEzfF2ORfKtM8V3z+Q1k94gx6NVG/yjag5CQOJJGv2cDQwxYbeC5GZlo3GYWt1H2SAPVBDo2x5iCJnhiikPtcowvhUUWjr4/b11fX2RK86m490Rjr8FUZ3n2yvOLBW0jhMSjVRyMKslNHqj+tv1v3UQK49mmtMSFLk/XanB9c8=
+	t=1784221428; cv=fail; b=t0dvaJRUldoQY0C1I1WgtTfpYVoaoF+wMjiecwYZInf8OmC8TCtKbofsV45+dBUJryhI9btRsAt/MnsdS5irg7fjqRYovgKutA7YRo8KOh6x2fj+xu9QQ/yHn602tS3AxqbzG4lFOszYNvehDCCh+OqHHyv18HGlerUtX4fSkGE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784221426; c=relaxed/simple;
-	bh=nROhSdID9rtuFbMhRBkvHRX3KWOs9SCSl14QS8T0ndA=;
+	s=arc-20240116; t=1784221428; c=relaxed/simple;
+	bh=g20GflVCdMtlCOP29hXHw30Wj7pUiGVoQ4SVMnedTXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=FH1ySDF7Fbhto4XG91xAXwZIoqin9QDBtWdRceYBQL+h74XN6eT64T9WaoGHIvPC/MhP7EaitjV3tGwRpb/evu8C4SibjkzmI7tWkh2UpDxZdyWLtunAuvnkZdy3/I9N5FNFRq5hCk0HZro/MYpb2jAnEpCTYTRTKHPmqibCWgM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=B3bgcA7R; arc=fail smtp.client-ip=40.93.198.58
+	 Content-Type:MIME-Version; b=cq6VD96KQjKvUb929I/i8+5/X4Iwp4zFZ+FnBC1/re2IbxtumTv8Y6g2IAErp0P/6PUnnHsqB92vugErNpTKhWTIqyHw8xHhDHyj7ei9yNRHH7luN81tkF/u6zBg+NZbzQWfqRq/pJYtYiBMhlQKWlDwY76M8j9X6VD3JgfVR3w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=s5zSYC/e; arc=fail smtp.client-ip=52.101.62.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="B3bgcA7R"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="s5zSYC/e"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GvVVvlQVxqXy+WcpykRcXEdCpquypuXf+KWsZbD2sQTAUtDgiaJFWCfWbZdefisUfG1PJvSrrA+b92bMWDY/ErtHYIGbGryGsGf6hwGNVYWC41HYuEsBjYWkJtfl5lzuxDGWYtvsC8tn/oQ9Pz1txxUwHtPvVUaXM55tokKeXoqamjoL0ZjAnYxNwRBoLfyhbDuohZe+H5ODRPtdUAHu4ibZs72j1qJyA6W+B+P5M5PPfWrnZiawOY0M23nj6YykJDXc59cnFlcx+cDZk/Cxcg0lacY53W5vg8L0DgqdOIU2ZdCm4SBbwXfTXlM+6PWgPImL9pT/1ayi7T20Kunnqw==
+ b=Ppqw0RT7oNvj/sFQ201ITCxl14vAIJH3YCRUdnBooxjVbHPEtJe+Ai29zjto08X8wyxunUrtqsAAbEVTuBFflP5wGwxqQcJAFpXoGVFzKQ0FJsoVCWZny7pOinoFHuxhAR0dSpbgcCigUw3xOpegCvGK236WZ0QXxq+2tsJkBmNpqH/HqXWntHMCmFJZDCCFj5qSJw92KnkNUDsBVAzfZiT+RtqbG2s2ibKQ3vZh5ELHcUxO1Yb45ioS7afNdKqsQQ8uWA6/HOoxAu6hASnizJ4adQQYHv8hx9OkiiYyx8aG8UCMyZe+jswBdn0ene/6223Llo0caotONKzuvu8fEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qHlhszfoLcDO8N4YgMUHwbXPVKa0ql6Xjos2u9xf7QY=;
- b=UhOPYdgMkaZaU5crsbLSRFJSCoyb/mzSdbvkmyUOmeVXDMqEnxv93mDdqBELKmg45HKHVt/3Bwdqjsal1BbyiQcwi+NCgBVilAj6Z8oxGkODDVk/i0vjnCUQzKXkLv4U7S63RLAvqokV7j21Cq/jTpw847iNn/g48La5zy5oQBKND3PMlCb4jTKFCPxG1uIb+2UE0uGTLrZXGKZTr9qt5THb3SJinTdqfIWaD4oJfC0OKqAe63mCFAI5SVIcJhWCImb64WmHfruyDWMY4FMt9FyR2exrlGML+FdFazh0T0k2gpnaLWKjRVb2W+goNuTkTk0GdtkQlBmXYe8CeIGYlg==
+ bh=JKufnMG3CmHwZo9Vt58rtWA9hvjBV0WMkWJZ+4Mi1YI=;
+ b=QNcA2eIBPNWpEtc0VOSygysD8W7BazkZh4HlKhX5OjIT8UDWzmIsU8vqAsoL2Hq1mp0kZxj6Wh55z7uqLioe47bPLzi5uDFQ9ni/KHyKSQQD4jaz9RpwzoHCtig0ET7FQ3ONxmfqtvVHJabDXi56Se04W7hVJpfWx7iXrDw/1FqtTdz1JJbkzIT8WU6ECf4WEmEi697IPgtNiDcpcvkhHESXsdnBPB8Rc21LpsR/rf1krT78ZWE1Y09Nh+HuwwRNzb/oSxFQ3Zk7X6KPiRq06jbkX3nrikY9m5fp01rFocaDR4CWGgARcyWE8rJGqVijDdYxi3G6LI4doHF+VvU4fg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qHlhszfoLcDO8N4YgMUHwbXPVKa0ql6Xjos2u9xf7QY=;
- b=B3bgcA7Rk63lHkIQ/9vyTkXCWl0DrtvDHJ0xfvEmiOLktcTyTcQAyiXgv9N0HEGZlAaaa9n19Fz0PxMlTtVn7UzsmAkRMehrx+v/07BXLDkayGg361X+aiZ2J8v36miWbi8BawN81jDLM7FrAAPKh5DmCWcEINXSlyhDCI1Cq2ZgKxZEo6fvZGzBrxcLaMVHYLui+RWZlGgXvdZyuqWqH14T/VBbJfC0q2YlxGZghlDNFk4L6WcBfAEECB3ZZNTvjHEkDl3u6zunZKaOSSMviRH9hgLaEZYs4zVP/iwccCdo+1xIlhi1USepG3yq9fq9yJrkoTjWao9knqEV61XHZA==
+ bh=JKufnMG3CmHwZo9Vt58rtWA9hvjBV0WMkWJZ+4Mi1YI=;
+ b=s5zSYC/eFTHvEbahtTQ0zTQcFvV/r9MSAzcArBLCduEH+cr5tNHgkPdZAiWcRpFIT7wLjQvPagQ+9ybCaw/p3bMN51zHkAKApaOToEYKhGxGOnEpffkXlqfPjTPrrAtuNvHraTClEjYj8pXG2Oo6XIap2qALzmvliO1DVWf23TnPpFQ5keEFcg7TTj0eZT4Ww0979Z6/jCvSaYeCU+IhB34p9V7JO/QoAjjU8dn4u6Sqk5hkuswBOfeabA/I1QHgzhuNNZiIltzeSVnWXs51JRSdzfY5JZ/FlYRJwaT7F/DjGpmQaHQxAXRcSDPEa0t7QYX397bBV7d3ZqF1DxCZBA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
@@ -59,15 +59,15 @@ To: Alex Williamson <alex@shazbot.org>,
 	Shuah Khan <shuah@kernel.org>,
 	Tariq Toukan <tariqt@nvidia.com>
 Cc: patches@lists.linux.dev
-Subject: [PATCH v3 05/11] selftests: Add additional kernel functions to tools/include/
-Date: Thu, 16 Jul 2026 14:03:21 -0300
-Message-ID: <5-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com>
+Subject: [PATCH v3 06/11] selftests: Fix arm64 IO barriers to match kernel
+Date: Thu, 16 Jul 2026 14:03:22 -0300
+Message-ID: <6-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com>
 In-Reply-To: <0-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: YT3PR01CA0026.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:86::14) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: YT3PR01CA0027.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:86::13) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -77,185 +77,134 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS7PR12MB6216:EE_
-X-MS-Office365-Filtering-Correlation-Id: e5a62b2e-ff62-41bb-1017-08dee35c28f5
+X-MS-Office365-Filtering-Correlation-Id: 6601fe98-d325-415c-4d06-08dee35c2984
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|7416014|366016|1800799024|921020|11063799006|10067099003|56012099006|6133799003|22082099003|18002099003;
+	BCL:0;ARA:13230040|376014|23010399003|7416014|366016|1800799024|921020|3023799007|11063799006|10067099003|56012099006|6133799003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	Rl6jFtMqfb79lzwMg3WHpNBG/6JY1q48GdlcvwLA09nxjoodPSbqelEP2vVxO8vcRvd1rWxLt1f8t6ecI2f9D4+u5BXDSiNm7aQD5HQgXcIl+owDcnXtqQ7Sylfi8upR53tANBKqObf7o7gEKOMyD4vxazVQKH8J6UHERjSfX+hvy1GlXRVMOxzJE+F7LMy3fxqzOP8PWgpAefLm15LG1f/4N392JjpeH26Vhzd2WUpFH2v7TNQqTmmNBvnoYLVFs882Mpb2eRMTVMogvjIcId0eBUHjErl5JrQ0xXY0TuZ2nLFC+EO9oulhw7AM1aN1zc3fAy1n3EnBG+ln05x93O3vIfFWEq+zQQBY2fcFcH+YKiUwonAS7sbFkNRNmph2/NHOozsZb5/9E8XHyHvmflYkxvHknDHNdBmydVNJiACo4voDq3/8OBza+nXRApKGULUsrAKrIhOk/OeffJU2dUCM150GpC4oxpiPKFuA104V7G60/JCm2qb6kqP2GigHd7MFyNe0lUGTcz/lSVxkeLg9FILIBpLRMSDmqyjK6OvCQdXy9+jcUCyte/wM56Lg+Lx/22TwwjTm+IJcF3p6MSSgUko92Vc/AeB6aio9RwvXzezR6d7zEa1lnmCiQ1TkWS1L7lMbB6EU5Kky0FvAG2vanv/ozKY0YPRqoLrZbs2CHRh34KNHzC46UI7oIs72ly2xxMn7ifUm2W28TX4rSg==
+	ENf7WkAL/A20WuiaJZMWjE+PuUCcK385lp7BsRdcDMOjDgquh2XfGvNfsaqExOjEjlowuR8OlVAUjvutOpokJ3RgW5/8uOHuU5jLJfDuUqxKe4iRkaJIC2Ep6zwbnCrmQ6edb5l1gWZ7CwFg4umzqKVTgkFc2jONJ6lvVVOTPZcp5Is3dFrMsSxOYLhFPjFXn62EpWR64fyeFGTk4ZtDGDBRHE1WUgeS9dCt1R4uDM6Zxl15l9+n5CVZHAgVDv75MPyzVGYWHqvSXZ+O9hLG6m99A2izL5hMiVKi25PdmIRnHCczE2e/HptZGBn36O/Wu2hNisaeHB6ryhn0yefY4w1R3JMQQGguFpJto2yyZBYBSsF6+5eVTJ0nu47gL57ZSLrsJxlSaIeQgY0D4Jbdt739yeHP1YfLEj5kOx8aa4cM3g+u0+sdOMgWLTO1VlqaMigQul4SCc3eAXKFtofQ4ieitGGyz2DkC9bx9NTYklgtYtAlxRFkMBJH5kZa8wNphSBAgQEu7vATZc57QSZr85gDCCrsayqA61HziHUFrvxLCZcUsg48f9N47YKRpxVFKrbq8udpgeJY5ms6N565ZcqWVst9HuZpNCBO80dZKC1SqU5/bJyCDL2sfnruY6Fw8hoD0NnaiQerseTkw/+dP51GR35O1AYi2CfVG4HqMtPDn6ejlZwEH4nXwyXfK54DdrhJBDDAok8c/tAyZ1QBCw==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(7416014)(366016)(1800799024)(921020)(11063799006)(10067099003)(56012099006)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(7416014)(366016)(1800799024)(921020)(3023799007)(11063799006)(10067099003)(56012099006)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?pl32ZRJOuAIABsDYYUiZ/4x+jK9ayYeYz60xwLsv5AhZv7toBmid+WOMn5me?=
- =?us-ascii?Q?Az8H80UaiHVcpL74K0ftOEFGO0+KSgrYDxpPez4NeGVtHt+GKHcHOuSNIX4L?=
- =?us-ascii?Q?Z/U+zQLfiX0pW4FEojW0BUYHB/EMlBI6xyS2W72gsOoRsg6IgWMYLAZDSPqK?=
- =?us-ascii?Q?EEofZF2LjymYyGmRBaFELw80Xt6+ourITtWdmQORw6jozisAMTmHhAt+bI9X?=
- =?us-ascii?Q?B+O4c9Zc6+p6veG6WqlJA752uivmxiPly2SOJFz0hNbp36EH52tD8i6a98VN?=
- =?us-ascii?Q?piY0YgzM0Fih0nrd8SluyX8iVqQTd0AmE+jjdYmQlr+usX1kJwScV5jr3Rm+?=
- =?us-ascii?Q?n9DDacN47alrsFdB+ntcS0D9kbQXhLBX6u6JS31lqPfJnCFHPpWG8zoKA3Hl?=
- =?us-ascii?Q?JhkfuqgAR2Amrz+1t0yj1JatOTQqIUOUS6tU8YQodz3uBrD0MXHEKwUIoOfp?=
- =?us-ascii?Q?MTKR+DXeI2seGgRBhOnewwUtyzXtMakzrr7Zvn89OqJ11dKyE1k85Fr1Ebgb?=
- =?us-ascii?Q?ajrSiyqGPP8pov3OelCtqdSm59fiJy2TpyyfMGfCkp9JCO6gVHbvsWfcUIck?=
- =?us-ascii?Q?DVpHWNJ/LpyyZI4KnJvl8bK94qfx2tt4z6rerZjMu8Wr2XqtYCRBzz0YNSnT?=
- =?us-ascii?Q?OfgmsgQyV0OIWTkIt7gHie4vnrIOSBq5IcZd/2LXCXL3bhq1awfJLG1AHlRz?=
- =?us-ascii?Q?As1NQHj81yiE7phyDY54dJv2on3yH2N1Ehjvbe0SA46qB2tqNYhcde7bqfiU?=
- =?us-ascii?Q?A/I6vegbHCvw9zX52LTABtJOcro1pxYolPIn8bALRsFx/yD85luYsWXbqbGU?=
- =?us-ascii?Q?8T0rzBzZPZHcJNvmZ+ECnh0olInRz2C0vcCUPEZGGoxPDxIH1cnoOOYraIer?=
- =?us-ascii?Q?TrawNJdIlEdAoX+mx+5iEslL2yERbNk810tIKTaNjflBwX4dDiGbVzTNWc4l?=
- =?us-ascii?Q?cocZJOEIcxbxUv2ePBxIY9z9Olz3sUDg/+pRZQjoukjFCglbSJo5+fsewUE8?=
- =?us-ascii?Q?3J004p6oj9+G74JGGi6wK8Ihf7c8Qi/xr1PtIp+M8HzgFLsKuuEvHtmQE84w?=
- =?us-ascii?Q?BNHEIvLo841YE5d3TSfrWsAUE7dNrAdJI707jg2+BLyJgOMX09f2t0F61nEF?=
- =?us-ascii?Q?uhTZfkTlS8tHvP5QX2oT7shO0dvv+TftHlJOtpcPOAkYG0XffhmSipFZmOk7?=
- =?us-ascii?Q?cRESUn3DMFPUC8SUO347n2Dg51pAA5NNp8Y1C0x2j3PWZfHYbj4KYg7bbqbQ?=
- =?us-ascii?Q?cJeuswWpkqEgRXaY7gB1h2T8c8sdzEVoALg0MpRS3JAAuvGGRuQ9Nhjc8Rcz?=
- =?us-ascii?Q?4UrCxym9G5lP7xmfrrCy5czsBMh5Q/TEnsulfNSBr+rLrwZWVEGrDFuXaJJi?=
- =?us-ascii?Q?AF0FpvhxAw+CM1+YlivwqsuKDxwmHXRtc1wHfHOuAIu1BHlLDMO+SaRrgP1A?=
- =?us-ascii?Q?RS+NTnfjHha2qyvdTWcQqbI6rXSLIhxHJSv6SnObeYexm3QSQZdpp2NO+IOy?=
- =?us-ascii?Q?WgXCYuPpqHkq1ScK+9GWETw2MjfqXPzyzDfymSSlYHHivN8X3PRABvjAaodQ?=
- =?us-ascii?Q?IEFu9TXeYX/mhtqJH9/W8R6h0rSTgbYzPuDsmM1FcXjNPRLdwyYWOOVsMHcL?=
- =?us-ascii?Q?fixmq35umAXBrNj6/2Fq8DHpc1r0hWd/n47+1KHlkvvoXoeXfns4zh/soO6c?=
- =?us-ascii?Q?OBOGe8bE0ryqGBwt0P/n5ghmSlokLfP7rWge84pDAYEI7sD+?=
+	=?us-ascii?Q?QUzI2xowqqyykQy7PqWCXkYWTI0k9O1XYOdLhG4fwYWssFPSa77DJB7AfksS?=
+ =?us-ascii?Q?u+kkoHyGZ0aopdhdqY+SSMdnzD5P058NHDRCdCg/vHyDHvWAfehs7wWvR2CX?=
+ =?us-ascii?Q?/+1SbQ1hu31jiEMLLVYUvd2CQP0K2UfpyyKtSRaWnu8tqRBLUbDsclvSWFgZ?=
+ =?us-ascii?Q?4mXzzKJt0/cvaoJ7kOzn5yaxjoeOf6bomw5WG3Vka2dO7VvLrE+Imezj7Ouc?=
+ =?us-ascii?Q?VRgJ/R9FRgtiJkHhYn3Xarjoo6tHnqzu5VvGyqchd/RtuWKHUV5Ez8IfXHMf?=
+ =?us-ascii?Q?Gc2ovqeE387bHADCheKIXEAk+1OUzXUNWvZEoX0T7+u/Ui7YxUfib7c+6YRY?=
+ =?us-ascii?Q?jdJTd5AOynXZn+3ktAO8wHN8aAcONotm7L00FOCxdOAe6Cz4180mGxhoTpMa?=
+ =?us-ascii?Q?jbzi9czq11arW1ziXT6r0htSYscO9sIWvpLhHiKpCDhI4RSxGbXXdfw9804Q?=
+ =?us-ascii?Q?L/X4U57Z7vmfAF6MDZ+yzdTlJXJ8TXelDKKbHb5/7yoTIQB+CIq4480FGAjj?=
+ =?us-ascii?Q?jcHYL5S1krGkbJL8LR843ebIGe0AKFfjHqWIkORNxk8eOUr58qcd2rT4Nljj?=
+ =?us-ascii?Q?PnXmHnNnz+jVFq2oe3aOpNl8+ULwRsHQZ0MNu5aLKeQ5jsy/xs34jj0Rkyut?=
+ =?us-ascii?Q?DPDB2MCymEMiDoo+KCx7P4wkybtdVgLOgegPsUEkqDgzIGo8oPVjKYFEuKrl?=
+ =?us-ascii?Q?FD7mJVlfPuZGzTfkuk/4k1nDMl0385+Vn9T5iSL5DkRZGGMy2L0i3tkhFLnJ?=
+ =?us-ascii?Q?e9h9ZbrkRDioJKIGL4DB+9Vc4Lb6L9lWXNrwX/BXOPCvPrc9c3iWcgdlYmlP?=
+ =?us-ascii?Q?YK7Jqz6hivGJlqdsIXV721EfU5MdZYJ1/2uRGX/e+qz4NZUMSf17w5aVZ499?=
+ =?us-ascii?Q?HlPtgm+nDwmAoJhApvBVOmnv/fJ//yuQ/wxL2KTP7ZOx63gaM1ChaPJndUKB?=
+ =?us-ascii?Q?Ea7q5Q5K6dOWpVmkmKqJTbtw9d40nTLDC0FEla02MqONO2bL+64AlldVns+4?=
+ =?us-ascii?Q?d/a06DlTOcdFity/V0alDlJEDcD5Jg1xezeIXTZs5+wdQS3g8RpBO1j9P1ZR?=
+ =?us-ascii?Q?pD6AYbFRTBhFn4/zi3FdUWdMpwSA3MzcvoWD58IPwpLmL6azi5952wGgBMfl?=
+ =?us-ascii?Q?vx1810UOZVSDCUJ37Y9iy5Ol1tmZASAdV3tBZDHruJKzS8RU19f/sUEv0S9T?=
+ =?us-ascii?Q?WK9SkdxWZlYiHDVM8LrGJ4y2jSgwMUM4xu2vv2wxz0fdCIQZRokIE31yagNa?=
+ =?us-ascii?Q?70V4DwmtzMbtn/+RraBucJlLJuAv19b7OoKXoOrN473g1tpumWqGchk1yDeM?=
+ =?us-ascii?Q?O1E14aOg07VDxlIEXAVSvYGDNs+cnM+nR42dEPUVD/LFtpxufvvOtg7s0jRT?=
+ =?us-ascii?Q?zdORIyX/Kx5ldUlpA+YsNkTzpcqgbZuM6rx68EyvQ90GtYBflgn+H8qWOFwu?=
+ =?us-ascii?Q?DGQwis0toPw4Rcb1G1l/S6beSvk+UB9iQoTrjFJf/sZmTzc1mwWYYV0xy5fQ?=
+ =?us-ascii?Q?MpgkEd3JejCDkWWomPAp2rIS/Copryg0betkRNkIGJVm6yEAiBX5dDoOpluE?=
+ =?us-ascii?Q?HeAiHX7IsbaYlKFeCfqUGxXRECuJJUpU8ikP02nMDOLdSmQw7RjcArazzwXO?=
+ =?us-ascii?Q?c+Q530GvBCwIVc1MzsuCZbsAPf7wS3RYF6OCFIARuF06tWHZWoTAZswdaREF?=
+ =?us-ascii?Q?1zwce+JJCDfqezVSi8kbNthd3D1J366/g9iK/N6uiqVy4N0P?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e5a62b2e-ff62-41bb-1017-08dee35c28f5
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6601fe98-d325-415c-4d06-08dee35c2984
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 17:03:30.0801
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 17:03:30.7448
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: NPndnPqFfd4dR2QvHDeMZKuGDOAoforqTQDS81b41WBeP4/ix/C8saWwmZykcV61
+X-MS-Exchange-CrossTenant-UserPrincipalName: jmetoMYqqvXK8aFmg9oTnI4FjRwEFpv5NbTII/LQ02rLRJ147Z+RKbRF55wB6Z7O
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6216
 
-These are needed by the VFIO mlx5 selftest in the following patches,
-which includes some headers from mlx5 and also needs a few more
-MMIO-related features.
+The tools/include readl/writel MMIO accessors on arm64 use
+inner-shareable barriers (dmb ish) while the kernel uses
+outer-shareable (dmb osh).  Fix them to match.
 
-- DECLARE_FLEX_ARRAY in new tools/include/linux/stddef.h (wraps
-  existing __DECLARE_FLEX_ARRAY from uapi/linux/stddef.h)
-
-- dma_wmb/dma_rmb barriers: x86 uses compiler barrier
-  (DMA-coherent), arm64 uses dmb oshst/oshld (outer-shareable for
-  device visibility), generic fallback uses wmb/rmb
-
-- ioread32be/iowrite32be in tools/include/asm-generic/io.h for
-  big-endian MMIO register access
+Add __io_bw() and __io_ar() definitions matching the kernel's
+arch/arm64/include/asm/io.h, including the dummy control dependency
+in __io_ar() that orders MMIO reads against all subsequent
+instructions.
 
 Assisted-by: Claude:claude-opus-4.6
-Reviewed-by: David Matlack <dmatlack@google.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- tools/arch/arm64/include/asm/barrier.h |  4 ++++
- tools/arch/x86/include/asm/barrier.h   |  5 +++++
- tools/include/asm-generic/io.h         | 28 ++++++++++++++++++++++++++
- tools/include/asm/barrier.h            |  8 ++++++++
- tools/include/linux/stddef.h           | 10 +++++++++
- 5 files changed, 55 insertions(+)
- create mode 100644 tools/include/linux/stddef.h
+ tools/arch/arm64/include/asm/io.h | 20 ++++++++++++++++++++
+ tools/include/asm/io.h            |  2 ++
+ tools/testing/selftests/lib.mk    |  5 +++++
+ 3 files changed, 27 insertions(+)
+ create mode 100644 tools/arch/arm64/include/asm/io.h
 
-diff --git a/tools/arch/arm64/include/asm/barrier.h b/tools/arch/arm64/include/asm/barrier.h
-index 3b9b41331c4f16..abdc64fc3c70f0 100644
---- a/tools/arch/arm64/include/asm/barrier.h
-+++ b/tools/arch/arm64/include/asm/barrier.h
-@@ -24,6 +24,10 @@
- #define smp_wmb()	asm volatile("dmb ishst" ::: "memory")
- #define smp_rmb()	asm volatile("dmb ishld" ::: "memory")
- 
-+/* DMA barriers use outer-shareable (osh) for device visibility */
-+#define dma_rmb()	asm volatile("dmb oshld" ::: "memory")
-+#define dma_wmb()	asm volatile("dmb oshst" ::: "memory")
-+
- #define smp_store_release(p, v)						\
- do {									\
- 	union { typeof(*p) __val; char __c[1]; } __u =			\
-diff --git a/tools/arch/x86/include/asm/barrier.h b/tools/arch/x86/include/asm/barrier.h
-index 0adf295dd5b6aa..0b51431fa530ea 100644
---- a/tools/arch/x86/include/asm/barrier.h
-+++ b/tools/arch/x86/include/asm/barrier.h
-@@ -43,4 +43,9 @@ do {						\
- 	___p1;					\
- })
- #endif /* defined(__x86_64__) */
-+
-+/* x86 is DMA-coherent so DMA barriers are just compiler barriers */
-+#define dma_rmb()	barrier()
-+#define dma_wmb()	barrier()
-+
- #endif /* _TOOLS_LINUX_ASM_X86_BARRIER_H */
-diff --git a/tools/include/asm-generic/io.h b/tools/include/asm-generic/io.h
-index e5a0b07ad452a6..0d89decdafb818 100644
---- a/tools/include/asm-generic/io.h
-+++ b/tools/include/asm-generic/io.h
-@@ -479,4 +479,32 @@ static inline void writesq(volatile void __iomem *addr, const void *buffer,
- }
- #endif
- 
-+/*
-+ * ioread/iowrite for big-endian MMIO registers.
-+ */
-+
-+#ifndef ioread32be
-+#define ioread32be ioread32be
-+static inline u32 ioread32be(const volatile void __iomem *addr)
-+{
-+	return bswap_32(readl(addr));
-+}
-+#endif
-+
-+#ifndef iowrite32be
-+#define iowrite32be iowrite32be
-+static inline void iowrite32be(u32 value, volatile void __iomem *addr)
-+{
-+	writel(bswap_32(value), addr);
-+}
-+#endif
-+
-+#ifndef iowrite64be
-+#define iowrite64be iowrite64be
-+static inline void iowrite64be(u64 value, volatile void __iomem *addr)
-+{
-+	writeq(bswap_64(value), addr);
-+}
-+#endif
-+
- #endif /* _TOOLS_ASM_GENERIC_IO_H */
-diff --git a/tools/include/asm/barrier.h b/tools/include/asm/barrier.h
-index 0c21678ac5e65f..e7e0c7de5a2ffe 100644
---- a/tools/include/asm/barrier.h
-+++ b/tools/include/asm/barrier.h
-@@ -47,6 +47,14 @@
- # define smp_mb()	mb()
- #endif
- 
-+#ifndef dma_rmb
-+# define dma_rmb()	rmb()
-+#endif
-+
-+#ifndef dma_wmb
-+# define dma_wmb()	wmb()
-+#endif
-+
- #ifndef smp_store_release
- # define smp_store_release(p, v)		\
- do {						\
-diff --git a/tools/include/linux/stddef.h b/tools/include/linux/stddef.h
+diff --git a/tools/arch/arm64/include/asm/io.h b/tools/arch/arm64/include/asm/io.h
 new file mode 100644
-index 00000000000000..99182ea4a1419b
+index 00000000000000..0d38f75a477682
 --- /dev/null
-+++ b/tools/include/linux/stddef.h
-@@ -0,0 +1,10 @@
++++ b/tools/arch/arm64/include/asm/io.h
+@@ -0,0 +1,20 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _TOOLS_LINUX_STDDEF_H
-+#define _TOOLS_LINUX_STDDEF_H
++#ifndef _TOOLS_ASM_ARM64_IO_H
++#define _TOOLS_ASM_ARM64_IO_H
 +
-+#include_next <linux/stddef.h>
++#define __io_bw()	dma_wmb()
++#define __io_ar(v)							\
++({									\
++	unsigned long tmp;						\
++									\
++	dma_rmb();							\
++									\
++	asm volatile("eor	%0, %1, %1\n"				\
++		     "cbnz	%0, ."					\
++		     : "=r" (tmp) : "r" ((unsigned long)(v))		\
++		     : "memory");					\
++})
 +
-+#define DECLARE_FLEX_ARRAY(TYPE, NAME) \
-+	__DECLARE_FLEX_ARRAY(TYPE, NAME)
++#include <asm-generic/io.h>
 +
-+#endif /* _TOOLS_LINUX_STDDEF_H */
++#endif /* _TOOLS_ASM_ARM64_IO_H */
+diff --git a/tools/include/asm/io.h b/tools/include/asm/io.h
+index eed5066f25c450..1090a2c387f40d 100644
+--- a/tools/include/asm/io.h
++++ b/tools/include/asm/io.h
+@@ -4,6 +4,8 @@
+ 
+ #if defined(__i386__) || defined(__x86_64__)
+ #include "../../arch/x86/include/asm/io.h"
++#elif defined(__aarch64__)
++#include "../../arch/arm64/include/asm/io.h"
+ #else
+ #include <asm-generic/io.h>
+ #endif
+diff --git a/tools/testing/selftests/lib.mk b/tools/testing/selftests/lib.mk
+index f02cc8a2e4ae32..fdd22df9174b88 100644
+--- a/tools/testing/selftests/lib.mk
++++ b/tools/testing/selftests/lib.mk
+@@ -5,9 +5,14 @@ ifneq ($(filter %/,$(LLVM)),)
+ LLVM_PREFIX := $(LLVM)
+ else ifneq ($(filter -%,$(LLVM)),)
+ LLVM_SUFFIX := $(LLVM)
++else ifneq ($(LLVM),1)
++$(error Invalid value for LLVM, see Documentation/kbuild/llvm.rst)
+ endif
+ 
+ CLANG := $(LLVM_PREFIX)clang$(LLVM_SUFFIX)
++LD := $(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX)
++# Selftests link through $(CC), so point clang at the LLVM linker.
++LDFLAGS += --ld-path=$(LD)
+ 
+ CLANG_TARGET_FLAGS_arm          := arm-linux-gnueabi
+ CLANG_TARGET_FLAGS_arm64        := aarch64-linux-gnu
 -- 
 2.43.0
 
