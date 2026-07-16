@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB103876DE;
-	Thu, 16 Jul 2026 13:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1724D330D35;
+	Thu, 16 Jul 2026 13:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210039; cv=none; b=u6HvO+k8Py4gE5XJ8S7HVCsjjtK9bsW+kmX+agMU4EIOkZ7xqGdpuJM+W/nzJL0IX3PyYHsyzem27tB7u03Un18owbJ5e3fL/V0Es0rmb81ZyKucl44AkbFL8pdQiy3WbJd+MOzyU8KmBwgqFA8js6yF7bveNG3eptHJyzNIhBk=
+	t=1784210042; cv=none; b=aE7+4hlrZVBWAwWhSxjYgVwDQ+Maes3c901eflQaMTyzXDqrxm23566Zf7O1Mw78Zdu9syDTsVtmlDikRAHEMwvYKQTemj7VhbZsnUhHxkxj2cWr7lqkr0X/vMtDVcE8wELyedpUj9KvBtAfuRVofaqgPRf4Jkg/rcwTA2i1EJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210039; c=relaxed/simple;
-	bh=1slGzhAAkC0LMirN+iP8pz8iYlW81xplY+FDGVwymn4=;
+	s=arc-20240116; t=1784210042; c=relaxed/simple;
+	bh=JwEzYZSo1K4MERnMctkJnBvhlK98sJay0zGHMYXdUV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcKlVBCx6+fcmSVK8PAhBsdn73olFJ2Ajz0h3cc7gIbWWHnU+jLMH+KZpS/rUDbGLig2BUZuW/TpVDVUePO2VDRU2s6Ugdwv9m2SLcS31+UacFZlT60LG2cfWCsDTB7klu252eyPUKE1fgjbwm3HNAiRU5AVPXrGYLukYgRwQvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2YoQO3p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UzuzAKS103XebucciAKlstzKKoxE/DmC4L0v5h5qtAxlsGqYg6hSuEXFSjD0bcOg2ok2j72nNcfYaodYhcYU1n17CzLC7Adv3U4v/1EaeI9JlgZYKGZIKx/gsmYx3vUclNNwCHNUUdK3AcL3vVD3vX0NYLN6FiZS0r/xRaxb7V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJqJoKC9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2YoQO3p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C447A1F000E9;
-	Thu, 16 Jul 2026 13:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJqJoKC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48211F000E9;
+	Thu, 16 Jul 2026 13:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210038;
-	bh=Jv/tLUa+w2a/MmMXl3eNXsm9fpo0JMeQrRzzEvhA0KQ=;
+	s=korg; t=1784210041;
+	bh=3aRwX4OiBOIFh89Yn0OGdnZ9vNKTma4GTV0INQes5EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2YoQO3pyE5bOZcZt/XJMxTZEVVWEgWuQhQbSyGD58C3aS/sTen3iudsL9DjYdr6r
-	 ISF/bHiBk9hAPDyE0YWBdBSnVS8Av5rL/i6l839hv/IGzbgBXiTN+vdjpVVWbsbBVV
-	 OUxkFsRhjYiUC/06rnHamSFa+1KKA/XSWIJQDyV0=
+	b=PJqJoKC9N3q+DkTjCeUeLq7CgZ+vuoIOG6KtY9LD/cner81iIQxLaGP0gkmQp06e/
+	 g/3S1VjKUbuJ2q0eydOfukqno8TYABoNE6caOwH6rqpHs6vfGQKwkigToN6Iqzg4Ku
+	 ScU8pPhiZ8nqX6bUak3xa1Fk9FAmEQRef9+RipTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Andrii Kuchmenko <capyenglishlite@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>
-Subject: [PATCH 7.1 415/518] module: decompress: check return value of module_extend_max_pages()
-Date: Thu, 16 Jul 2026 15:31:23 +0200
-Message-ID: <20260716133056.917815317@linuxfoundation.org>
+	Alexey Gladkov <legion@kernel.org>,
+	stable <stable@kernel.org>,
+	Nicolas Pitre <npitre@baylibre.com>
+Subject: [PATCH 7.1 416/518] vt: fix spurious modifier in CSI/cursor key sequences
+Date: Thu, 16 Jul 2026 15:31:24 +0200
+Message-ID: <20260716133056.940259242@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,48 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Kuchmenko <capyenglishlite@gmail.com>
+From: Nicolas Pitre <npitre@baylibre.com>
 
-commit 786d2d84416a9a1c1a47b71a68d679d886284be2 upstream.
+commit e9ad4d5ca309cb517d3f7a85251c3c5328f40f1f upstream.
 
-module_extend_max_pages() calls kvrealloc() internally and returns
--ENOMEM on allocation failure. The return value is never checked.
+csi_modifier_param() builds the xterm modifier parameter from
+shift_state, counting KG_SHIFTL/KG_SHIFTR as Shift, KG_ALTGR as Alt
+and KG_CTRLL/KG_CTRLR as Ctrl in addition to the canonical KG_SHIFT,
+KG_ALT and KG_CTRL.
 
-If the initial allocation fails, info->pages remains NULL and
-info->max_pages remains 0. Subsequent calls to module_get_next_page()
-will attempt to dynamically grow the array by calling
-module_extend_max_pages(info, 0) since info->used_pages is 0. This
-results in kvrealloc(NULL, 0) returning ZERO_SIZE_PTR, which is treated
-as a success, leading to a dereference of ZERO_SIZE_PTR and a kernel
-oops.
+That is wrong when those weights are not plain modifiers. Keymaps
+derived from XKB layouts (by kbd's xkbsupport, and by the
+console-setup used in Debian, Ubuntu and others) encode the active
+layout group using KG_SHIFTL/KG_SHIFTR:
 
-Fix: add the missing error check after module_extend_max_pages() and
-return immediately on failure. This matches the pattern used by every
-other kvrealloc() caller in the module loading path.
+	group 1: -
+	group 2: shiftl
+	group 3: shiftr
+	group 4: shiftl | shiftr
 
-Fixes: b1ae6dc41eaa ("module: add in-kernel support for decompressing")
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrii Kuchmenko <capyenglishlite@gmail.com>
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-[Sami: Corrected the analysis in the commit message.]
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+So while a non-default layout group is selected, KG_SHIFTL and/or
+KG_SHIFTR are set in shift_state with no Shift key held.
+csi_modifier_param() then adds a spurious Shift to every cursor and
+CSI key: pressing Up while group 2 is active emits ESC[1;2A (Shift+Up)
+instead of ESC[A. KG_ALTGR has the same problem since it is the
+standard third-level selector.
+
+Normal keymaps bind the physical Shift/Ctrl/Alt keys to KG_SHIFT,
+KG_CTRL and KG_ALT, leaving the left/right and AltGr weights free for
+layout and level selection. Count only those canonical weights, so
+genuine modifiers are still encoded while layout/level selectors are
+not.
+
+Fixes: 4af70f151671 ("vt: add modifier support to cursor keys")
+Reported-by: Alexey Gladkov <legion@kernel.org>
+Closes: https://lore.kernel.org/kbd/aj2gR0Y7sM6i9s2G@example.org/
+Cc: stable <stable@kernel.org>
+Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+Link: https://patch.msgid.link/20260626024833.3419086-1-nico@fluxnic.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/module/decompress.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/vt/keyboard.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/kernel/module/decompress.c
-+++ b/kernel/module/decompress.c
-@@ -307,6 +307,8 @@ int module_decompress(struct load_info *
- 	 */
- 	n_pages = DIV_ROUND_UP(size, PAGE_SIZE) * 2;
- 	error = module_extend_max_pages(info, n_pages);
-+	if (error)
-+		return error;
+diff --git a/drivers/tty/vt/keyboard.c b/drivers/tty/vt/keyboard.c
+index dfdea0842149..763a3f1b7be0 100644
+--- a/drivers/tty/vt/keyboard.c
++++ b/drivers/tty/vt/keyboard.c
+@@ -765,16 +765,22 @@ static void k_fn(struct vc_data *vc, unsigned char value, char up_flag)
+ /*
+  * Compute xterm-style modifier parameter for CSI sequences.
+  * Returns 1 + (shift ? 1 : 0) + (alt ? 2 : 0) + (ctrl ? 4 : 0)
++ *
++ * Only the canonical modifier weights are counted. The left/right variants
++ * (KG_SHIFTL, KG_SHIFTR, KG_CTRLL, KG_CTRLR) and KG_ALTGR are commonly
++ * repurposed as keymap layout-group or level selectors rather than as plain
++ * modifiers (for instance XKB-derived keymaps select the layout group with
++ * KG_SHIFTL/KG_SHIFTR), so counting them would encode a spurious modifier.
+  */
+ static int csi_modifier_param(void)
+ {
+ 	int mod = 1;
  
- 	data_size = MODULE_DECOMPRESS_FN(info, buf, size);
- 	if (data_size < 0) {
+-	if (shift_state & (BIT(KG_SHIFT) | BIT(KG_SHIFTL) | BIT(KG_SHIFTR)))
++	if (shift_state & BIT(KG_SHIFT))
+ 		mod += 1;
+-	if (shift_state & (BIT(KG_ALT) | BIT(KG_ALTGR)))
++	if (shift_state & BIT(KG_ALT))
+ 		mod += 2;
+-	if (shift_state & (BIT(KG_CTRL) | BIT(KG_CTRLL) | BIT(KG_CTRLR)))
++	if (shift_state & BIT(KG_CTRL))
+ 		mod += 4;
+ 	return mod;
+ }
+-- 
+2.55.0
+
 
 
