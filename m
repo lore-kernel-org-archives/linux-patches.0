@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2741742588C;
-	Thu, 16 Jul 2026 13:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A79429022;
+	Thu, 16 Jul 2026 13:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209959; cv=none; b=DIGY3xa6QKORnRIONZovJviLlwFJQTjsmvGy0yvAImc7+T/Qder1kP7xphmcWh51Mg8eikr++RhmtX5w/oXR92rmRN11mVl2t8XorcNxoJbRRtDiHNuTVRlYtcaNmfFNL3ohhbHcvUQaE5SvJFx3GOJKZo8xHj0ysJ4953D0Pcg=
+	t=1784209964; cv=none; b=LNHn91P+k6Of7/JmUyiaO9qbYmLQij+GAVeUDrbIQ44lKig8jDsdo/8lKHOwj+cmLZ/OBnH3xC/uCHKKRnTK2tVfCYXwaMiChCfZnGtdnLQL8TjUX2Le7kxynoXKs5p5zm8rBPtD7ok7c0QF4AHel+jawGZ6Nz305QzLxtY7DVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209959; c=relaxed/simple;
-	bh=Q/i3XBzs2N05uMJx/9Iyi3cwmnC7ahy1Co3XC3eOb+c=;
+	s=arc-20240116; t=1784209964; c=relaxed/simple;
+	bh=ak4a5JNjCRYsdxHhwsWj5G5GQ1AdxVVDC/z1B9iVQVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/7ysGEQlWSrh8HOUcP0YpdmAasHBjg/o1AbGFynbpR4Mk8IlNmhGhD4LJofD5VGYD2LDML3XODM4kU2VlIttIcIqRNpb6AFzQUmqfbJwlWr35zIzFNokbyhqSnX9mfReIHpb0cLYNjaXUS7xI+IVJslvTVneAu2pekmsdynjAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMMMVUar; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i5qbaJa1b/wJph2TIqqJ5EOmaveWOc2aTlwyqZlvaB+cDe08Od8coUp8xRVRbjbkVTTU78kKdlgK8AIljGwPOdoMOU5JFTO3iUlhg3d+jwYm15J2lojR7SqOKWFBw3xUNCvLqFm7Qebc89K7BmG30cl16aLP9ae9lR76dPZeSnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4EUIJ8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMMMVUar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD401F00A3E;
-	Thu, 16 Jul 2026 13:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4EUIJ8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AA01F00A3A;
+	Thu, 16 Jul 2026 13:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209951;
-	bh=rA4iuR/hI1Q/Lfk8aOk5St8hDbgGXmA72PjlQNvW+YU=;
+	s=korg; t=1784209954;
+	bh=RoU39pwboXEZcxCmVNAK4M1/TfbtGtukfgcdp709Uek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZMMMVUar+Y0q1ml4T6rNHt7zNvwjVUVBFRr6jdnaSbeVmeEl/iD8QifY2mdtYb8R2
-	 uTFYqOUkfEPDxEwr/4U8r4fbG3m2EB39qM/LokwvHN84jh9lHgTqzJ5GS7BGv8jKU4
-	 1DkicJnawe79xoUlvCrsms0tDmouJG+QG1ghTrAg=
+	b=r4EUIJ8/BmFeCd4LoLKX2YWU/jfzxLG65Hauk29qg8J4j2YMe39pCFj9DpbvviAWk
+	 exR97o/XLA3++YC1ISGt+hKuz0pRqfm3HGqSUEjfcyKXesJFEYVXsdYDKWqpVkh3ho
+	 59z7mEAdeE0WXswgIyEvlGkDm/XjeXzuOWzV/j2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ahsan Atta <ahsan.atta@intel.com>,
+	Maksim Lukoshkov <maksim.lukoshkov@intel.com>,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 380/518] crypto: qat - centralize bus master enable
-Date: Thu, 16 Jul 2026 15:30:48 +0200
-Message-ID: <20260716133056.139600595@linuxfoundation.org>
+Subject: [PATCH 7.1 381/518] crypto: qat - fix restarting state leak on allocation failure
+Date: Thu, 16 Jul 2026 15:30:49 +0200
+Message-ID: <20260716133056.165111390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -54,195 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Ahsan Atta <ahsan.atta@intel.com>
 
-commit e5712ff82947dd02d118cee119ed36cec671d814 upstream.
+commit 7d3ed20f7e46b3e991936fedd7a28f3ff4aec8d2 upstream.
 
-QAT driver currently toggles PCI bus mastering in multiple places
-(probe paths, and reset callbacks). This makes BME state depend on
-call ordering and on what PCI command bits were captured in saved PCI
-config state.
+In adf_dev_aer_schedule_reset(), ADF_STATUS_RESTARTING is set before
+allocating reset_data. If the allocation fails, the function returns
+-ENOMEM without queuing reset work, so nothing ever clears the bit.
+This leaves the device permanently stuck in the restarting state,
+causing all subsequent reset attempts to be silently skipped.
 
-Make BME control explicit and deterministic:
-- remove pci_set_master() from device-specific probe paths
-- add adf_set_bme() and call it from adf_dev_init() so BME is enabled
-  at one point before device bring-up
-- drop redundant pci_set_master() and pci_clear_master from adf_aer.c
-  and rely on the unified init path for BME enablement
-
-This is in preparation for adding reset_prepare() and reset_done()
-hooks. In the PCI reset callback flow, the PCI core saves and
-restores device configuration state around reset_prepare() and
-reset_done(). This change is needed to ensure that we are able to
-properly shutdown or reinitialize the device post sysfs triggered
-resets.
+Fix this by using test_and_set_bit() to atomically claim the
+RESTARTING state, preventing duplicate reset scheduling races under
+concurrent fatal error reporting. If the subsequent allocation fails,
+clear the bit to restore clean state so future reset attempts can
+proceed.
 
 Cc: stable@vger.kernel.org
+Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
 Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Co-developed-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
+Signed-off-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
 Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_420xx/adf_drv.c         |    2 --
- drivers/crypto/intel/qat/qat_4xxx/adf_drv.c          |    2 --
- drivers/crypto/intel/qat/qat_6xxx/adf_drv.c          |    2 --
- drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c         |    1 -
- drivers/crypto/intel/qat/qat_c3xxxvf/adf_drv.c       |    1 -
- drivers/crypto/intel/qat/qat_c62x/adf_drv.c          |    1 -
- drivers/crypto/intel/qat/qat_c62xvf/adf_drv.c        |    1 -
- drivers/crypto/intel/qat/qat_common/adf_aer.c        |   10 +++++++---
- drivers/crypto/intel/qat/qat_common/adf_common_drv.h |    1 +
- drivers/crypto/intel/qat/qat_common/adf_init.c       |    2 ++
- drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c      |    1 -
- drivers/crypto/intel/qat/qat_dh895xccvf/adf_drv.c    |    1 -
- 12 files changed, 10 insertions(+), 15 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_aer.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
-@@ -146,8 +146,6 @@ static int adf_probe(struct pci_dev *pde
- 		}
- 	}
- 
--	pci_set_master(pdev);
--
- 	if (pci_save_state(pdev)) {
- 		dev_err(&pdev->dev, "Failed to save pci state.\n");
- 		ret = -ENOMEM;
---- a/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-@@ -148,8 +148,6 @@ static int adf_probe(struct pci_dev *pde
- 		}
- 	}
- 
--	pci_set_master(pdev);
--
- 	if (pci_save_state(pdev)) {
- 		dev_err(&pdev->dev, "Failed to save pci state.\n");
- 		ret = -ENOMEM;
---- a/drivers/crypto/intel/qat/qat_6xxx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_6xxx/adf_drv.c
-@@ -189,8 +189,6 @@ static int adf_probe(struct pci_dev *pde
- 		}
- 	}
- 
--	pci_set_master(pdev);
--
- 	/*
- 	 * The PCI config space is saved at this point and will be restored
- 	 * after a Function Level Reset (FLR) as the FLR does not completely
---- a/drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c
-@@ -167,7 +167,6 @@ static int adf_probe(struct pci_dev *pde
- 			goto out_err_free_reg;
- 		}
- 	}
--	pci_set_master(pdev);
- 
- 	if (pci_save_state(pdev)) {
- 		dev_err(&pdev->dev, "Failed to save pci state\n");
---- a/drivers/crypto/intel/qat/qat_c3xxxvf/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_c3xxxvf/adf_drv.c
-@@ -163,7 +163,6 @@ static int adf_probe(struct pci_dev *pde
- 			goto out_err_free_reg;
- 		}
- 	}
--	pci_set_master(pdev);
- 	/* Completion for VF2PF request/response message exchange */
- 	init_completion(&accel_dev->vf.msg_received);
- 
---- a/drivers/crypto/intel/qat/qat_c62x/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_c62x/adf_drv.c
-@@ -167,7 +167,6 @@ static int adf_probe(struct pci_dev *pde
- 			goto out_err_free_reg;
- 		}
- 	}
--	pci_set_master(pdev);
- 
- 	if (pci_save_state(pdev)) {
- 		dev_err(&pdev->dev, "Failed to save pci state\n");
---- a/drivers/crypto/intel/qat/qat_c62xvf/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_c62xvf/adf_drv.c
-@@ -163,7 +163,6 @@ static int adf_probe(struct pci_dev *pde
- 			goto out_err_free_reg;
- 		}
- 	}
--	pci_set_master(pdev);
- 	/* Completion for VF2PF request/response message exchange */
- 	init_completion(&accel_dev->vf.msg_received);
- 
 --- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
 +++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
-@@ -41,7 +41,6 @@ static pci_ers_result_t adf_error_detect
- 	adf_error_notifier(accel_dev);
- 	adf_pf2vf_notify_fatal_error(accel_dev);
- 	adf_dev_restarting_notify(accel_dev);
--	pci_clear_master(pdev);
- 	adf_dev_down(accel_dev);
+@@ -162,13 +162,14 @@ static int adf_dev_aer_schedule_reset(st
+ 	struct adf_reset_dev_data *reset_data;
  
- 	return PCI_ERS_RESULT_NEED_RESET;
-@@ -106,6 +105,13 @@ void adf_dev_restore(struct adf_accel_de
- 	}
- }
+ 	if (!adf_dev_started(accel_dev) ||
+-	    test_bit(ADF_STATUS_RESTARTING, &accel_dev->status))
++	    test_and_set_bit(ADF_STATUS_RESTARTING, &accel_dev->status))
+ 		return 0;
  
-+void adf_set_bme(struct adf_accel_dev *accel_dev)
-+{
-+	struct pci_dev *pdev = accel_to_pci_dev(accel_dev);
-+
-+	pci_set_master(pdev);
-+}
-+
- static void adf_device_sriov_worker(struct work_struct *work)
- {
- 	struct adf_sriov_dev_data *sriov_data =
-@@ -198,8 +204,6 @@ static pci_ers_result_t adf_slot_reset(s
- 		return PCI_ERS_RESULT_DISCONNECT;
- 	}
- 
--	if (!pdev->is_busmaster)
--		pci_set_master(pdev);
- 	pci_restore_state(pdev);
- 	res = adf_dev_up(accel_dev, false);
- 	if (res && res != -EALREADY)
---- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-@@ -84,6 +84,7 @@ extern const struct pci_error_handlers a
- void adf_reset_sbr(struct adf_accel_dev *accel_dev);
- void adf_reset_flr(struct adf_accel_dev *accel_dev);
- void adf_dev_restore(struct adf_accel_dev *accel_dev);
-+void adf_set_bme(struct adf_accel_dev *accel_dev);
- int adf_init_aer(void);
- void adf_exit_aer(void);
- int adf_init_arb(struct adf_accel_dev *accel_dev);
---- a/drivers/crypto/intel/qat/qat_common/adf_init.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
-@@ -74,6 +74,8 @@ static int adf_dev_init(struct adf_accel
- 		return -EFAULT;
- 	}
- 
-+	adf_set_bme(accel_dev);
-+
- 	if (!test_bit(ADF_STATUS_CONFIGURED, &accel_dev->status) &&
- 	    !accel_dev->is_vf) {
- 		dev_err(&GET_DEV(accel_dev), "Device not configured\n");
---- a/drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c
-@@ -167,7 +167,6 @@ static int adf_probe(struct pci_dev *pde
- 			goto out_err_free_reg;
- 		}
- 	}
--	pci_set_master(pdev);
- 
- 	if (pci_save_state(pdev)) {
- 		dev_err(&pdev->dev, "Failed to save pci state\n");
---- a/drivers/crypto/intel/qat/qat_dh895xccvf/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_dh895xccvf/adf_drv.c
-@@ -163,7 +163,6 @@ static int adf_probe(struct pci_dev *pde
- 			goto out_err_free_reg;
- 		}
- 	}
--	pci_set_master(pdev);
- 	/* Completion for VF2PF request/response message exchange */
- 	init_completion(&accel_dev->vf.msg_received);
- 
+-	set_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 	reset_data = kzalloc_obj(*reset_data);
+-	if (!reset_data)
++	if (!reset_data) {
++		clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 		return -ENOMEM;
++	}
+ 	reset_data->accel_dev = accel_dev;
+ 	init_completion(&reset_data->compl);
+ 	reset_data->mode = mode;
 
 
