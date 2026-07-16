@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E499142D740;
-	Thu, 16 Jul 2026 14:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9869142D752;
+	Thu, 16 Jul 2026 14:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212004; cv=none; b=UMGk55XHEEct5gexC0W39jfBKLG9o9mCfG+qDaoqgLosl9d3WHJUaw1kOjTjbNqZg5DoxYvAQkcxFUx75d2Ow0OO1F7fvAuEXyik1+rg1Gg2An1ptrgu6zsc0JLjFEr7ppZ4EQA07ph+WVLhDEV1HpE1pitu7AaHQebXjXkPZmg=
+	t=1784212006; cv=none; b=A3Kwzx/X0bsEhZYLAr0SK+iTCokGld3ZrvrZzeuhlZFDh4I83yAS2u9syDuK6lRGewVhEW46Oy97cPu+CdkLQUwVIQrPto3YYeAubDAwIjnFfZylUPfeyi4qSCT5M4+a8ClRld/XSJnNw2iQxrAT5AZxUih0BEw45Bj0T0sVrrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212004; c=relaxed/simple;
-	bh=uTrsc55MHd9vLUCcopgih+DkArxs6c2lFwYaiO7/O80=;
+	s=arc-20240116; t=1784212006; c=relaxed/simple;
+	bh=+lhvoitCRwaTr2iwkdqmkHN0rw6YT1m4vFZIeH6k8jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0QCjs3ypNFMdg8krsVxRX/c32+8Ld7djhxrGjtE30La/TcPIDMD27Ne0KJLO+ycjX83NY4zbKm+VGQv498t24M6TGyzbJ5TXDMVCED+MhrzNYmd+aYCzimL0CbN6Pij7cbFVQVPenFXi926qHYUYp/jOndSE08Fzbzkd+wWC0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jC1qSWPw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HNYjxMgBtthoMs6bXelqx1XJWaLrF2OqkFq84INShV2dp3iib8aB9gPpDvGr7anYIp8Z/DXi3heljESoB5zVHlAbHJ2RokFrtKDpuPfFSgz0FU5IXBEpVKii+TK/rZX/toOL+vsO1gaAsk70laz8Uo8Wj7nAxtWyyRR4QP7+yJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHXsoM6c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jC1qSWPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DC91F000E9;
-	Thu, 16 Jul 2026 14:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHXsoM6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF40D1F00A3E;
+	Thu, 16 Jul 2026 14:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212002;
-	bh=tcCIeOKlC6nNLpULaZQD8AibiikyGg715Qa5U6xXGtY=;
+	s=korg; t=1784212005;
+	bh=CGV816c7qbceuumOx0ZVaP2MHbPxsq5PibGaaUls6u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jC1qSWPwv3VbY0wixAzSw65xV/JCjT3c9qWuO8bSva3eA2wAUqC7v0yqi1tEF5WM9
-	 qtWkZGgOkpx0bJMgajs+u95831BV1FCSEqwm/RS8v9gxWaBGMPe7A4R1fK/WxTB82K
-	 k2YiVYO30AE6moVxSFXEbb5M0Q0yrstGAERNNqr8=
+	b=KHXsoM6c2Ulf032t0cAstqaU9flwu2SZPgDXv+YuXQ55GLUJ9rqOy19aJ98dHAN6R
+	 yyOs5Irl0dxg5G7u1MOIpVtbKI5bp2bXwAEw2thYLgh0emlWCt5Y2ukgFNsPFK3K6f
+	 gleY88ORux7VfMmF1RDM52/5pZVCiCQrj9akNeRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dan Carpenter <error27@gmail.com>,
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 162/349] smb/client: Fix error code in smb2_aead_req_alloc()
-Date: Thu, 16 Jul 2026 15:31:36 +0200
-Message-ID: <20260716133037.006309316@linuxfoundation.org>
+Subject: [PATCH 6.12 163/349] ksmbd: add permission checks for FSCTL_DUPLICATE_EXTENTS_TO_FILE
+Date: Thu, 16 Jul 2026 15:31:37 +0200
+Message-ID: <20260716133037.029411629@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit 61f28012e5650c619223decdb7970e0d3162e949 upstream.
+commit 388e4139db27a9e3612c9d356b826f5b1ff6a9e3 upstream.
 
-The "*num_sgs" variable is a u32 so "ERR_PTR(*num_sgs)" doesn't work.
-We would have to do something similar to the previous line where it's
-cast to int and then long.  However, it's simpler to store the return in
-an int ret variable.
+The FSCTL_DUPLICATE_EXTENTS_TO_FILE arm of smb2_ioctl() overwrites the
+destination file's data via vfs_clone_file_range() with neither the
+share-level KSMBD_TREE_CONN_FLAG_WRITABLE check nor a per-handle
+fp->daccess check that the other write-bearing arms carry. A client can
+overwrite destination data on a read-only share, or from a handle opened
+with only FILE_WRITE_ATTRIBUTES (which still yields an FMODE_WRITE filp).
+FILE_WRITE_ATTRIBUTES-only destination handle overwrote the file's data via
+the clone. Add both checks, matching the FSCTL_SET_SPARSE permission fix;
+require FILE_WRITE_DATA since this writes data.
 
-This bug would eventually result in a crash when dereference the invalid
-error pointer.
-
-Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
-Cc: stable@kernel.org
-Signed-off-by: Dan Carpenter <error27@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4253,11 +4253,13 @@ static void *smb2_aead_req_alloc(struct
- 	unsigned int req_size = sizeof(**req) + crypto_aead_reqsize(tfm);
- 	unsigned int iv_size = crypto_aead_ivsize(tfm);
- 	unsigned int len;
-+	int ret;
- 	u8 *p;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8492,6 +8492,17 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			goto dup_ext_out;
+ 		}
  
--	*num_sgs = cifs_get_num_sgs(rqst, num_rqst, sig);
--	if (IS_ERR_VALUE((long)(int)*num_sgs))
--		return ERR_PTR(*num_sgs);
-+	ret = cifs_get_num_sgs(rqst, num_rqst, sig);
-+	if (ret < 0)
-+		return ERR_PTR(ret);
-+	*num_sgs = ret;
- 
- 	len = iv_size;
- 	len += crypto_aead_alignmask(tfm) & ~(crypto_tfm_ctx_alignment() - 1);
++		if (!test_tree_conn_flag(work->tcon,
++					 KSMBD_TREE_CONN_FLAG_WRITABLE)) {
++			ret = -EACCES;
++			goto dup_ext_out;
++		}
++
++		if (!(fp_out->daccess & FILE_WRITE_DATA_LE)) {
++			ret = -EACCES;
++			goto dup_ext_out;
++		}
++
+ 		src_off = le64_to_cpu(dup_ext->SourceFileOffset);
+ 		dst_off = le64_to_cpu(dup_ext->TargetFileOffset);
+ 		length = le64_to_cpu(dup_ext->ByteCount);
 
 
