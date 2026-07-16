@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7AB28505E;
-	Thu, 16 Jul 2026 14:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C767428505E;
+	Thu, 16 Jul 2026 14:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211271; cv=none; b=C7iWJMAAqE2Sw2SRxCQfVoHkv4W9M6EjnM6rWnXuu/48epovEGXNBE/j+9XBSn10d/oxpXci6HyAQT9qtaB1iCkYq/BRD9NHebGukQOFoHib9eRvmIIgxZjOKJBqLnbcP++ZF/HmgYgW/DCN+bGNre7Cvgwco/Tcal22CnS2eVw=
+	t=1784211274; cv=none; b=M9HwaF3EWGJKgfy00vCCIlMN1cPq6T5DwSi5MClhumUfVHb5dustZWWdxVxZTNnZttqRnklfInZkOw119BNazGppSS5EAPYqQCQp77vzXL0SM1jdtM5VFgexf1MsRQaEFBf3Y3THPwMeDe1pQ1UdgLxycC4dEowP42PK/yt0FhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211271; c=relaxed/simple;
-	bh=XjyeqK70nPsnYq7nIYqM66/gsVzLKV1RIA7Wzghk04A=;
+	s=arc-20240116; t=1784211274; c=relaxed/simple;
+	bh=MJm+IqLOrRbcbd4lWsl/nGnK5A7R5OuA9V6pqj5sZo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HiP5OCz+nUue1E8z6jr8VWUMKovlzvQBbwd22VxGUuaaZVkn0s5YusXkFor5Cv3QokSQViq2YamEB56TDe/lNxsQ70C0zQ9hV1sz8YEuGOHFOpvHm1HTKS8Th0Twbdk7f/0ulJ3swlvhh5CjJnmdkf3DwJTo2TV1Hl9LeHa08BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyDEAITU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DigoHN2eGNxbzZwQ32c9nnYBbYfu7oC93dQgn9hYqe3auZx6VnzxmNHdh8TEcHvGqwAVWSfsPu5jzxALeGZItpe17cv8Rg9aoDT8vE1ojnuGIFGdmzmu56ZZ9+3+gsFUH8feAP+IrVlGwPxdXC6ZUfdqyJeuPx3KC5X1FRMWXyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHewsX+Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyDEAITU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839271F00A3A;
-	Thu, 16 Jul 2026 14:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHewsX+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295781F00A3A;
+	Thu, 16 Jul 2026 14:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211270;
-	bh=GM/JoFIsOAenAHVdSWncGJOn+AaulQCO3YLkwoVIXSw=;
+	s=korg; t=1784211272;
+	bh=PokDfbCV/3SVtbDpqLvlxTLUHOWmZ/6GxDhNIhoRysM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XyDEAITUvXHQP9YqW6niXCXWhi5tZ2r7i4wequp9Yu5KlnNTTHzB08MfEPw/pZkWG
-	 8LPHCwlnby3zvqdePVfAIkHBxiBMSNuvNjrSoPNohTE+8FcI3gCQ3oObueAVfkSoWn
-	 zAWbbnz7ExEEja0RDU4UbnsUmsYQzsIbmEqHgH1c=
+	b=VHewsX+Qr5HAUjhE7nxjejxMnicOxVKGUZlV8hiojOY7/3StAkNiELpXNMk9Gn6e7
+	 UI5djlaNpNeDWTgAHSrQAcwFeHFsUbY16e/RXF/Gf37q1WQk4uuzWwP2TIozcK/tkL
+	 oNUzh5dQoCE2x/ig76OC5x19/JpbWWHaqDq9crQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 327/480] bpf: Restrict JIT predictor flush to cBPF
-Date: Thu, 16 Jul 2026 15:31:14 +0200
-Message-ID: <20260716133051.893012611@linuxfoundation.org>
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 363/480] crypto: qat - centralize bus master enable
+Date: Thu, 16 Jul 2026 15:31:50 +0200
+Message-ID: <20260716133052.655236708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,236 +52,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-commit 0bb99f2cfaae6822d734d69722de30af823efdf3 upstream.
+commit e5712ff82947dd02d118cee119ed36cec671d814 upstream.
 
-Currently predictor flush on memory reuse is done for all BPF JIT
-allocations, but only cBPF programs can be loaded by an unprivileged user.
-eBPF is privileged by default, and flushing predictors for all CPUs on
-every eBPF reuse penalizes the common case for no security benefit.
+QAT driver currently toggles PCI bus mastering in multiple places
+(probe paths, and reset callbacks). This makes BME state depend on
+call ordering and on what PCI command bits were captured in saved PCI
+config state.
 
-eBPF allocations can be frequent on busy systems, only flush predictors
-for cBPF programs. Trampoline and dispatcher allocations also skip the
-flush as they are eBPF-only.
+Make BME control explicit and deterministic:
+- remove pci_set_master() from device-specific probe paths
+- add adf_set_bme() and call it from adf_dev_init() so BME is enabled
+  at one point before device bring-up
+- drop redundant pci_set_master() and pci_clear_master from adf_aer.c
+  and rely on the unified init path for BME enablement
 
-  [pawan: backport had various conflicts in arches bpf_int_jit_compile().
-	  loongarch bpf_int_jit_compile() doesn't use pack allocator,
-	  dropped was_classic hunk. ]
+This is in preparation for adding reset_prepare() and reset_done()
+hooks. In the PCI reset callback flow, the PCI core saves and
+restores device configuration state around reset_prepare() and
+reset_done(). This change is needed to ensure that we are able to
+properly shutdown or reinitialize the device post sysfs triggered
+resets.
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/net/bpf_jit_comp.c   |  4 ++--
- arch/loongarch/net/bpf_jit.c    |  2 +-
- arch/powerpc/net/bpf_jit_comp.c |  4 ++--
- arch/riscv/net/bpf_jit_comp64.c |  2 +-
- arch/riscv/net/bpf_jit_core.c   |  3 ++-
- arch/x86/net/bpf_jit_comp.c     |  5 +++--
- include/linux/filter.h          |  5 +++--
- kernel/bpf/core.c               | 13 ++++++++-----
- kernel/bpf/dispatcher.c         |  2 +-
- 9 files changed, 23 insertions(+), 17 deletions(-)
+ drivers/crypto/intel/qat/qat_420xx/adf_drv.c         |    2 --
+ drivers/crypto/intel/qat/qat_4xxx/adf_drv.c          |    2 --
+ drivers/crypto/intel/qat/qat_6xxx/adf_drv.c          |    2 --
+ drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c         |    1 -
+ drivers/crypto/intel/qat/qat_c3xxxvf/adf_drv.c       |    1 -
+ drivers/crypto/intel/qat/qat_c62x/adf_drv.c          |    1 -
+ drivers/crypto/intel/qat/qat_c62xvf/adf_drv.c        |    1 -
+ drivers/crypto/intel/qat/qat_common/adf_aer.c        |   10 +++++++---
+ drivers/crypto/intel/qat/qat_common/adf_common_drv.h |    1 +
+ drivers/crypto/intel/qat/qat_common/adf_init.c       |    2 ++
+ drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c      |    1 -
+ drivers/crypto/intel/qat/qat_dh895xccvf/adf_drv.c    |    1 -
+ 12 files changed, 10 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 873c1b784a872d..c563bae8fce1c2 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -2117,7 +2117,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- 	image_size = extable_offset + extable_size;
- 	ro_header = bpf_jit_binary_pack_alloc(image_size, &ro_image_ptr,
- 					      sizeof(u64), &header, &image_ptr,
--					      jit_fill_hole);
-+					      jit_fill_hole, was_classic);
- 	if (!ro_header) {
- 		prog = orig_prog;
- 		goto out_off;
-@@ -2754,7 +2754,7 @@ int arch_bpf_trampoline_size(const struct btf_func_model *m, u32 flags,
+--- a/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
+@@ -146,8 +146,6 @@ static int adf_probe(struct pci_dev *pde
+ 		}
+ 	}
  
- void *arch_alloc_bpf_trampoline(unsigned int size)
- {
--	return bpf_prog_pack_alloc(size, jit_fill_hole);
-+	return bpf_prog_pack_alloc(size, jit_fill_hole, false);
+-	pci_set_master(pdev);
+-
+ 	if (pci_save_state(pdev)) {
+ 		dev_err(&pdev->dev, "Failed to save pci state.\n");
+ 		ret = -ENOMEM;
+--- a/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
+@@ -148,8 +148,6 @@ static int adf_probe(struct pci_dev *pde
+ 		}
+ 	}
+ 
+-	pci_set_master(pdev);
+-
+ 	if (pci_save_state(pdev)) {
+ 		dev_err(&pdev->dev, "Failed to save pci state.\n");
+ 		ret = -ENOMEM;
+--- a/drivers/crypto/intel/qat/qat_6xxx/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_6xxx/adf_drv.c
+@@ -162,8 +162,6 @@ static int adf_probe(struct pci_dev *pde
+ 		}
+ 	}
+ 
+-	pci_set_master(pdev);
+-
+ 	/*
+ 	 * The PCI config space is saved at this point and will be restored
+ 	 * after a Function Level Reset (FLR) as the FLR does not completely
+--- a/drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c
+@@ -167,7 +167,6 @@ static int adf_probe(struct pci_dev *pde
+ 			goto out_err_free_reg;
+ 		}
+ 	}
+-	pci_set_master(pdev);
+ 
+ 	if (pci_save_state(pdev)) {
+ 		dev_err(&pdev->dev, "Failed to save pci state\n");
+--- a/drivers/crypto/intel/qat/qat_c3xxxvf/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_c3xxxvf/adf_drv.c
+@@ -163,7 +163,6 @@ static int adf_probe(struct pci_dev *pde
+ 			goto out_err_free_reg;
+ 		}
+ 	}
+-	pci_set_master(pdev);
+ 	/* Completion for VF2PF request/response message exchange */
+ 	init_completion(&accel_dev->vf.msg_received);
+ 
+--- a/drivers/crypto/intel/qat/qat_c62x/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_c62x/adf_drv.c
+@@ -167,7 +167,6 @@ static int adf_probe(struct pci_dev *pde
+ 			goto out_err_free_reg;
+ 		}
+ 	}
+-	pci_set_master(pdev);
+ 
+ 	if (pci_save_state(pdev)) {
+ 		dev_err(&pdev->dev, "Failed to save pci state\n");
+--- a/drivers/crypto/intel/qat/qat_c62xvf/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_c62xvf/adf_drv.c
+@@ -163,7 +163,6 @@ static int adf_probe(struct pci_dev *pde
+ 			goto out_err_free_reg;
+ 		}
+ 	}
+-	pci_set_master(pdev);
+ 	/* Completion for VF2PF request/response message exchange */
+ 	init_completion(&accel_dev->vf.msg_received);
+ 
+--- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
+@@ -41,7 +41,6 @@ static pci_ers_result_t adf_error_detect
+ 	adf_error_notifier(accel_dev);
+ 	adf_pf2vf_notify_fatal_error(accel_dev);
+ 	adf_dev_restarting_notify(accel_dev);
+-	pci_clear_master(pdev);
+ 	adf_dev_down(accel_dev);
+ 
+ 	return PCI_ERS_RESULT_NEED_RESET;
+@@ -106,6 +105,13 @@ void adf_dev_restore(struct adf_accel_de
+ 	}
  }
  
- void arch_free_bpf_trampoline(void *image, unsigned int size)
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index e9d666508ae28f..a000620ca99da7 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -1474,7 +1474,7 @@ static void invoke_bpf_mod_ret(struct jit_ctx *ctx, struct bpf_tramp_links *tl,
- 
- void *arch_alloc_bpf_trampoline(unsigned int size)
++void adf_set_bme(struct adf_accel_dev *accel_dev)
++{
++	struct pci_dev *pdev = accel_to_pci_dev(accel_dev);
++
++	pci_set_master(pdev);
++}
++
+ static void adf_device_sriov_worker(struct work_struct *work)
  {
--	return bpf_prog_pack_alloc(size, jit_fill_hole);
-+	return bpf_prog_pack_alloc(size, jit_fill_hole, false);
- }
+ 	struct adf_sriov_dev_data *sriov_data =
+@@ -198,8 +204,6 @@ static pci_ers_result_t adf_slot_reset(s
+ 		return PCI_ERS_RESULT_DISCONNECT;
+ 	}
  
- void arch_free_bpf_trampoline(void *image, unsigned int size)
-diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
-index 189ef7b72081d2..cedab25aa3a823 100644
---- a/arch/powerpc/net/bpf_jit_comp.c
-+++ b/arch/powerpc/net/bpf_jit_comp.c
-@@ -246,7 +246,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
- 	alloclen = proglen + FUNCTION_DESCR_SIZE + fixup_len + extable_len;
+-	if (!pdev->is_busmaster)
+-		pci_set_master(pdev);
+ 	pci_restore_state(pdev);
+ 	res = adf_dev_up(accel_dev, false);
+ 	if (res && res != -EALREADY)
+--- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
++++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
+@@ -84,6 +84,7 @@ extern const struct pci_error_handlers a
+ void adf_reset_sbr(struct adf_accel_dev *accel_dev);
+ void adf_reset_flr(struct adf_accel_dev *accel_dev);
+ void adf_dev_restore(struct adf_accel_dev *accel_dev);
++void adf_set_bme(struct adf_accel_dev *accel_dev);
+ int adf_init_aer(void);
+ void adf_exit_aer(void);
+ int adf_init_arb(struct adf_accel_dev *accel_dev);
+--- a/drivers/crypto/intel/qat/qat_common/adf_init.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
+@@ -73,6 +73,8 @@ static int adf_dev_init(struct adf_accel
+ 		return -EFAULT;
+ 	}
  
- 	fhdr = bpf_jit_binary_pack_alloc(alloclen, &fimage, 4, &hdr, &image,
--					      bpf_jit_fill_ill_insns);
-+					 bpf_jit_fill_ill_insns, bpf_prog_was_classic(fp));
- 	if (!fhdr) {
- 		fp = org_fp;
- 		goto out_addrs;
-@@ -468,7 +468,7 @@ bool bpf_jit_supports_insn(struct bpf_insn *insn, bool in_arena)
++	adf_set_bme(accel_dev);
++
+ 	if (!test_bit(ADF_STATUS_CONFIGURED, &accel_dev->status) &&
+ 	    !accel_dev->is_vf) {
+ 		dev_err(&GET_DEV(accel_dev), "Device not configured\n");
+--- a/drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c
+@@ -167,7 +167,6 @@ static int adf_probe(struct pci_dev *pde
+ 			goto out_err_free_reg;
+ 		}
+ 	}
+-	pci_set_master(pdev);
  
- void *arch_alloc_bpf_trampoline(unsigned int size)
- {
--	return bpf_prog_pack_alloc(size, bpf_jit_fill_ill_insns);
-+	return bpf_prog_pack_alloc(size, bpf_jit_fill_ill_insns, false);
- }
+ 	if (pci_save_state(pdev)) {
+ 		dev_err(&pdev->dev, "Failed to save pci state\n");
+--- a/drivers/crypto/intel/qat/qat_dh895xccvf/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_dh895xccvf/adf_drv.c
+@@ -163,7 +163,6 @@ static int adf_probe(struct pci_dev *pde
+ 			goto out_err_free_reg;
+ 		}
+ 	}
+-	pci_set_master(pdev);
+ 	/* Completion for VF2PF request/response message exchange */
+ 	init_completion(&accel_dev->vf.msg_received);
  
- void arch_free_bpf_trampoline(void *image, unsigned int size)
-diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index 45cbc7c6fe490c..9e9e6dcfc48254 100644
---- a/arch/riscv/net/bpf_jit_comp64.c
-+++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -1268,7 +1268,7 @@ int arch_bpf_trampoline_size(const struct btf_func_model *m, u32 flags,
- 
- void *arch_alloc_bpf_trampoline(unsigned int size)
- {
--	return bpf_prog_pack_alloc(size, bpf_fill_ill_insns);
-+	return bpf_prog_pack_alloc(size, bpf_fill_ill_insns, false);
- }
- 
- void arch_free_bpf_trampoline(void *image, unsigned int size)
-diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
-index 191bf0e66c8243..e4ab5bb9c9f646 100644
---- a/arch/riscv/net/bpf_jit_core.c
-+++ b/arch/riscv/net/bpf_jit_core.c
-@@ -125,7 +125,8 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- 				bpf_jit_binary_pack_alloc(prog_size + extable_size,
- 							  &jit_data->ro_image, sizeof(u32),
- 							  &jit_data->header, &jit_data->image,
--							  bpf_fill_ill_insns);
-+							  bpf_fill_ill_insns,
-+							  bpf_prog_was_classic(prog));
- 			if (!jit_data->ro_header) {
- 				prog = orig_prog;
- 				goto out_offset;
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 788671a32d8ee0..c3798cab3b7db0 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -3447,7 +3447,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- 
- void *arch_alloc_bpf_trampoline(unsigned int size)
- {
--	return bpf_prog_pack_alloc(size, jit_fill_hole);
-+	return bpf_prog_pack_alloc(size, jit_fill_hole, false);
- }
- 
- void arch_free_bpf_trampoline(void *image, unsigned int size)
-@@ -3780,7 +3780,8 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- 			/* allocate module memory for x86 insns and extable */
- 			header = bpf_jit_binary_pack_alloc(roundup(proglen, align) + extable_size,
- 							   &image, align, &rw_header, &rw_image,
--							   jit_fill_hole);
-+							   jit_fill_hole,
-+							   bpf_prog_was_classic(prog));
- 			if (!header) {
- 				prog = orig_prog;
- 				goto out_addrs;
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index 3c4dd718beced8..2469fd2e401578 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -1290,7 +1290,7 @@ void bpf_jit_free(struct bpf_prog *fp);
- struct bpf_binary_header *
- bpf_jit_binary_pack_hdr(const struct bpf_prog *fp);
- 
--void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns);
-+void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool was_classic);
- void bpf_prog_pack_free(void *ptr, u32 size);
- 
- static inline bool bpf_prog_kallsyms_verify_off(const struct bpf_prog *fp)
-@@ -1304,7 +1304,8 @@ bpf_jit_binary_pack_alloc(unsigned int proglen, u8 **ro_image,
- 			  unsigned int alignment,
- 			  struct bpf_binary_header **rw_hdr,
- 			  u8 **rw_image,
--			  bpf_jit_fill_hole_t bpf_fill_ill_insns);
-+			  bpf_jit_fill_hole_t bpf_fill_ill_insns,
-+			  bool was_classic);
- int bpf_jit_binary_pack_finalize(struct bpf_binary_header *ro_header,
- 				 struct bpf_binary_header *rw_header);
- void bpf_jit_binary_pack_free(struct bpf_binary_header *ro_header,
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index a043fccb917e86..338a806e25c045 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -924,7 +924,7 @@ static struct bpf_prog_pack *alloc_new_pack(bpf_jit_fill_hole_t bpf_fill_ill_ins
- 	return NULL;
- }
- 
--void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
-+void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool was_classic)
- {
- 	unsigned int nbits = BPF_PROG_SIZE_TO_NBITS(size);
- 	struct bpf_prog_pack *pack;
-@@ -939,7 +939,7 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
- 		 * safe because cBPF programs (the unprivileged attack surface)
- 		 * are bounded well below a pack size.
- 		 */
--		if (static_branch_unlikely(&bpf_pred_flush_enabled))
-+		if (was_classic && static_branch_unlikely(&bpf_pred_flush_enabled))
- 			pr_warn_once("BPF: Predictors not flushed for allocations greater than BPF_PROG_PACK_SIZE\n");
- 		size = round_up(size, PAGE_SIZE);
- 		ptr = bpf_jit_alloc_exec(size);
-@@ -971,7 +971,9 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
- 	pos = 0;
- 
- found_free_area:
--	static_call_cond(bpf_arch_pred_flush)();
-+	/* Flush only for cBPF as it may contain a crafted gadget */
-+	if (static_branch_unlikely(&bpf_pred_flush_enabled) && was_classic)
-+		static_call_cond(bpf_arch_pred_flush)();
- 	bitmap_set(pack->bitmap, pos, nbits);
- 	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
- 
-@@ -1131,7 +1133,8 @@ bpf_jit_binary_pack_alloc(unsigned int proglen, u8 **image_ptr,
- 			  unsigned int alignment,
- 			  struct bpf_binary_header **rw_header,
- 			  u8 **rw_image,
--			  bpf_jit_fill_hole_t bpf_fill_ill_insns)
-+			  bpf_jit_fill_hole_t bpf_fill_ill_insns,
-+			  bool was_classic)
- {
- 	struct bpf_binary_header *ro_header;
- 	u32 size, hole, start;
-@@ -1144,7 +1147,7 @@ bpf_jit_binary_pack_alloc(unsigned int proglen, u8 **image_ptr,
- 
- 	if (bpf_jit_charge_modmem(size))
- 		return NULL;
--	ro_header = bpf_prog_pack_alloc(size, bpf_fill_ill_insns);
-+	ro_header = bpf_prog_pack_alloc(size, bpf_fill_ill_insns, was_classic);
- 	if (!ro_header) {
- 		bpf_jit_uncharge_modmem(size);
- 		return NULL;
-diff --git a/kernel/bpf/dispatcher.c b/kernel/bpf/dispatcher.c
-index b77db7413f8c70..ea2d60dc1feeb7 100644
---- a/kernel/bpf/dispatcher.c
-+++ b/kernel/bpf/dispatcher.c
-@@ -145,7 +145,7 @@ void bpf_dispatcher_change_prog(struct bpf_dispatcher *d, struct bpf_prog *from,
- 
- 	mutex_lock(&d->mutex);
- 	if (!d->image) {
--		d->image = bpf_prog_pack_alloc(PAGE_SIZE, bpf_jit_fill_hole_with_zero);
-+		d->image = bpf_prog_pack_alloc(PAGE_SIZE, bpf_jit_fill_hole_with_zero, false);
- 		if (!d->image)
- 			goto out;
- 		d->rw_image = bpf_jit_alloc_exec(PAGE_SIZE);
--- 
-2.53.0
-
 
 
