@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E3E424D44;
-	Thu, 16 Jul 2026 13:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5E13D4133;
+	Thu, 16 Jul 2026 13:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209393; cv=none; b=mz99k7Zna3fDCM17mOD1R0PJKdTlBFJEAm2M0Md5mD3X9yUFbPUXeqFv4jrlwW8ibUzJ3wBvht787g+8JioUW9iHDc18b3hxYA9Bt8J/p/OFPo0m/kT3DXdqwbx0xuj5/MXGb/6oCGkztXetaNeUOImEPjFtVhpuAH7FAH+38BQ=
+	t=1784209394; cv=none; b=by5tzFhf/fxuJ0xGYR15KqI8paMzJD3OcJmnO/nGBxa+2JlMn5hyI8/oz1s37Y9Ue3M+IetOA50h4yUGeJIaqfpQG724yLxoArcUNztbMzW9y01Ghwh98B/RqJWG7AkTwx74Z5IuFf799ILU1MAGH/KtFOgXAXUVkSmfVckm9vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209393; c=relaxed/simple;
-	bh=DW9FoZo5GXpXkMV3SrY/RQneaWY66d6dHh91XprmNs4=;
+	s=arc-20240116; t=1784209394; c=relaxed/simple;
+	bh=sJbOQbn9lKk1y8a6NslR+G3CZYNyeOR0aFLJMF3Tfr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=geEru3DK2lbxzS78A7pHwnXDrbrW7rrn8BAlXRwHnWq/w9c+sqy9rVMCzCDejKofjkj6EA5U6yFa56lW0hLkzALDAQqx3+Le+XucnidFJ5dJdmTlGcABb2SaJtqvNhduoLHfFiocKNLZDud4Yq/g7YWyKH4dV6CM+6Htf/ViaAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsSZEIPo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fQVyySvh1qSL0qkwrssXMdy86DXhcp4kSU/VHcpqzpZVvVJYip9hXwHgkpQiScD1ykIsKt+ZSiZEFuAc04ogUtdhe9if+5bhv55VFn4r1udkXm0d6UxDMbBGYHpNNO6BeXtFuEKzrgmaHy14gfT/EC7EypeajE3g2rBSZV1rcHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3ZRxg84; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsSZEIPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8208E1F00A3D;
-	Thu, 16 Jul 2026 13:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3ZRxg84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4EF1F000E9;
+	Thu, 16 Jul 2026 13:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209390;
-	bh=hA1wq9RDzmGVd0ww/AXiczDNuTkuKwGw2Lo/6j+Dj8s=;
+	s=korg; t=1784209392;
+	bh=Xz09Um8uJoFUimtxWHL12KCvxYAC7PDFVsqo8oRIAvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsSZEIPoB2qvyKMbiLA8jmeSssjMZNXWFXPw9StxOm6of65ChnRXznAuSG9j75Kz5
-	 3JfjRPzv8C7L9l4eVr69cTqwmhjxkh3yFDpYOha81siUQ0AVYG5h9U8GTMRBLY/NJB
-	 x0sdTSW+9vYXG5/4GGF1kh/3e/MQ3+J+Ocwm1+bg=
+	b=O3ZRxg84l7sWTeVXdkthQPwdUPG/xOyzCE3lOkATKgFrJqkFAGMOfqGH8Iy1aYTTr
+	 t9Ib4BBLcCVsEoQ9zcPeSk1xWGF/SkCiOL1XFKSLm/rMsMB0mW5sMf2vNsI5wqE8Bb
+	 Qx3/5ydZIwcn66W9wcbWaUy4dMSdNdLuz2Imw9Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Lianqin Hu <hulianqin@vivo.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 7.1 124/518] usb: xhci: Fix sleep in atomic context in xhci_free_streams()
-Date: Thu, 16 Jul 2026 15:26:32 +0200
-Message-ID: <20260716133050.570588970@linuxfoundation.org>
+Subject: [PATCH 7.1 125/518] xhci: sideband: fix ring sg table pages leak
+Date: Thu, 16 Jul 2026 15:26:33 +0200
+Message-ID: <20260716133050.591173816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -45,93 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 胡连勤 <hulianqin@vivo.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 42c37c4b75d38b51d84f31a8e29427f5e06a7c2a upstream.
+commit 49f6e3c3ef19f04f6657ed8dce550e36c763abb8 upstream.
 
-When a USB device with active stream endpoints is disconnected,
-xhci_free_streams() is called from the hub_event workqueue to
-free the stream resources.  It calls xhci_free_stream_info()
-while holding xhci->lock with irqs disabled.
+xhci_ring_to_sgtable() allocates a temporary pages array and
+uses it to build the returned sg_table with
+sg_alloc_table_from_pages().
 
-xhci_free_stream_info() invokes xhci_free_stream_ctx(), which
-calls dma_free_coherent() for large stream context arrays.
+The error paths free the pages array, but the success path
+returns the sg_table without freeing it. This leaks the temporary
+array every time a sideband client gets an endpoint or event ring
+buffer.
 
-dma_free_coherent() can sleep (e.g. via vunmap), triggering
-a BUG when called from atomic context.
+Free the pages array after sg_alloc_table_from_pages() succeeds.
+The returned sg_table has its own scatterlist entries and does not
+depend on the temporary array after construction.
 
-Call trace:
- dma_free_attrs+0x174/0x220
- xhci_free_stream_info+0xd0/0x11c
- xhci_free_streams+0x278/0x37c
- usb_free_streams+0x98/0xc0
- usb_unbind_interface+0x1b8/0x2f8
- device_release_driver_internal+0x1d4/0x2cc
- device_release_driver+0x18/0x28
- bus_remove_device+0x160/0x1a4
- device_del+0x1ec/0x350
- usb_disable_device+0x98/0x214
- usb_disconnect+0xf0/0x35c
- hub_event+0xab4/0x19ec
- process_one_work+0x278/0x63c
-
-Fix this by saving the stream_info pointers and clearing the
-ep references under the lock, then calling xhci_free_stream_info()
-outside the lock where sleeping is allowed.
-
-Fixes: 8df75f42f8e6 ("USB: xhci: Add memory allocation for USB3 bulk streams.")
+Fixes: de66754e9f80 ("xhci: sideband: add initial api to register a secondary interrupter entity")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260703144033.483286-3-mathias.nyman@linux.intel.com
+Link: https://patch.msgid.link/20260703144033.483286-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-sideband.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -3788,6 +3788,7 @@ static int xhci_free_streams(struct usb_
- 	struct xhci_virt_device *vdev;
- 	struct xhci_command *command;
- 	struct xhci_input_control_ctx *ctrl_ctx;
-+	struct xhci_stream_info *stream_info[EP_CTX_PER_DEV];
- 	unsigned int ep_index;
- 	unsigned long flags;
- 	u32 changed_ep_bitmask;
-@@ -3848,10 +3849,15 @@ static int xhci_free_streams(struct usb_
- 	if (ret < 0)
- 		return ret;
+--- a/drivers/usb/host/xhci-sideband.c
++++ b/drivers/usb/host/xhci-sideband.c
+@@ -58,6 +58,8 @@ xhci_ring_to_sgtable(struct xhci_sideban
+ 	if (sg_alloc_table_from_pages(sgt, pages, n_pages, 0, sz, GFP_KERNEL))
+ 		goto err;
  
-+	/*
-+	 * dma_free_coherent() called by xhci_free_stream_info() may sleep,
-+	 * so save stream_info pointers and clear references under lock,
-+	 * then free the memory outside lock.
-+	 */
- 	spin_lock_irqsave(&xhci->lock, flags);
- 	for (i = 0; i < num_eps; i++) {
- 		ep_index = xhci_get_endpoint_index(&eps[i]->desc);
--		xhci_free_stream_info(xhci, vdev->eps[ep_index].stream_info);
-+		stream_info[i] = vdev->eps[ep_index].stream_info;
- 		vdev->eps[ep_index].stream_info = NULL;
- 		/* FIXME Unset maxPstreams in endpoint context and
- 		 * update deq ptr to point to normal string ring.
-@@ -3861,6 +3867,9 @@ static int xhci_free_streams(struct usb_
- 	}
- 	spin_unlock_irqrestore(&xhci->lock, flags);
- 
-+	for (i = 0; i < num_eps; i++)
-+		xhci_free_stream_info(xhci, stream_info[i]);
++	kvfree(pages);
 +
- 	return 0;
- }
- 
+ 	/*
+ 	 * Save first segment dma address to sg dma_address field for the sideband
+ 	 * client to have access to the IOVA of the ring.
 
 
