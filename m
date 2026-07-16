@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A20B42A144;
-	Thu, 16 Jul 2026 14:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1626F42BEA6;
+	Thu, 16 Jul 2026 14:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211985; cv=none; b=aM1HNhUFsdvNPRTvIkBc8ErJN+It5jPG4EIN/RDaKcsOndppLyr66eUXx2q4hgg8OE4l66uHDUydHaRXBCD1RWp6GSKAABqHPLUhH0lzE8klT5ykPlSh+VzBoRDRHvcq787dzR6IlxQ7kaf1/us+YdSR3nY0f2pexwa9IxfnKco=
+	t=1784211988; cv=none; b=hr/rJIFgQ847MuPaVmQU3JKPugaC7Mb7rpc7+oYFp5fw1KU3pB7MaD/Sv/uEu/p8KOqjG95DbNBEYRzQHzrzyY7cNzpnyLdWnjWlXvP4mrZAJKsBcK9Vf1GlB7XEWxZxyYUEsvF5+ZYSi0l88ZVFBok1oRERHFmTVfFctNN728I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211985; c=relaxed/simple;
-	bh=n9SJZglZn60h5oAfXo12iaTu0Acxmq9Zr2Y22SI8VAI=;
+	s=arc-20240116; t=1784211988; c=relaxed/simple;
+	bh=TuKqoB3lRVE/L0GRW1PJ0JDhp/2jEbESs9wDZw5eWnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FclLNQc/tDSnysWC53g5bcXfoHjP8DszAcdIb7b6uUChBpgdV8tRJC2/lHgfy3JRezQYZt9KltvXMzQKHV943MdS3vEhd9QnE74qpBIox2cfEqaIGUToHC3u/92VN5E4iwCwiLYzqRf50mfJGu83SHdBL2z3mVN3N7fp5edOKqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqpUppBS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NOOJdau0JhviOlbMrkj0ht0VYdUMz8UPndQv35qMI/xFZ9+1TQMT2XzXtnMMjv+bjo0H6HdhCid9H/Ks9DNKCtDZ35WDPaVyG2OB5wjxb/1WAXglta+TJQv5fqlCxAnyILL5Bfh8hkDrU47dv1IBhY0+yVZ3VRDLlZ+LHLYzwhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mbd+iCs9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqpUppBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBA51F000E9;
-	Thu, 16 Jul 2026 14:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mbd+iCs9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A19A1F000E9;
+	Thu, 16 Jul 2026 14:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211984;
-	bh=VF9KnYIRjSrgg0dD7PpqUx3rF/G/XOH6v0/1bqPjvNw=;
+	s=korg; t=1784211987;
+	bh=imUIWsdkVqxAw+aiXCt+UdOAfNhfTdrCXGa0Ek31buY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqpUppBS2WPT+SkFXqgd/NUebWPJOYNRVuJSLRKEds/eWvVTlt0VhVD/FNsb0ux0J
-	 RRfty8amQ4PzdLGJdYW6Nkn7Eogf9Bd9q4xZgHmf/axGX6d+mM0MSUwVGbSZX4hEgC
-	 O2QT6rNdryoKZpcVKGblqsqpvXQ4RQTsWgzLGKYA=
+	b=Mbd+iCs9EEr6Hon9a3rKFLx43byiB93nw/sLFsnAHztUrEKzggyH4ix9On2G/LpJ0
+	 6zRnGGn8c6RL+iY6CAN1ythwoW7xMY8w4jwHBZ7QAER8RFIeCgoOJEa69+aCRdmkOL
+	 2GG+wI9PGn7hq2QslsAl+nQZKitwP2BWQnp/vp+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 156/349] Bluetooth: L2CAP: validate option length before reading conf opt value
-Date: Thu, 16 Jul 2026 15:31:30 +0200
-Message-ID: <20260716133036.874751112@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 157/349] fs/ntfs3: rename ni_readpage_cmpr into ni_read_folio_cmpr
+Date: Thu, 16 Jul 2026 15:31:31 +0200
+Message-ID: <20260716133036.896341617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,135 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 687617555cedfb74c9e3cb85d759b908dcb17856 upstream.
+[ Upstream commit 4248f563f0b76f3fb74b2a28ee068bf66fcbbedf ]
 
-l2cap_get_conf_opt() derives the option length from the
-attacker-controlled opt->len field and immediately dereferences
-opt->val (as u8, get_unaligned_le16() or get_unaligned_le32(), or a
-raw pointer for the default case) before any caller has confirmed
-that opt->len bytes are present in the buffer. The callers
-(l2cap_parse_conf_req(), l2cap_parse_conf_rsp() and
-l2cap_conf_rfc_get()) only detect a malformed option afterwards, once
-the running length has gone negative, by which point the
-out-of-bounds read has already executed.
+The old "readpage" naming is still used in ni_readpage_cmpr(), even though
+the vfs has transitioned to the folio-based read_folio() API.
 
-An existing post-hoc length check keeps the garbage value from being
-consumed, so this is not a data leak in the current control flow. It
-is still a validate-after-use ordering bug: up to 4 bytes are read
-past the end of the buffer before it is known to contain them, and it
-is fragile to future changes in the callers.
+This patch performs a straightforward renaming of the helper:
+ni_readpage_cmpr() -> ni_read_folio_cmpr().
 
-Fix it at the source. Pass the end of the buffer into
-l2cap_get_conf_opt() and refuse to touch opt->val unless the full
-option (header + value) fits. Each caller computes an end pointer
-once before the loop and checks the return value directly instead of
-inferring the error from a negative length.
-
-Fixes: 7c9cbd0b5e38 ("Bluetooth: Verify that l2cap_get_conf_opt provides large enough buffer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: d7ea8495fd30 ("fs/ntfs3: fix missing run load for vcn0 in attr_data_get_block_locked()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c |   36 ++++++++++++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ fs/ntfs3/frecord.c | 8 ++++----
+ fs/ntfs3/inode.c   | 2 +-
+ fs/ntfs3/ntfs_fs.h | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3000,13 +3000,24 @@ fail:
- 	return NULL;
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 6b04ad5d5f519c..bb1feb80d5cb79 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2101,18 +2101,18 @@ static struct page *ntfs_lock_new_page(struct address_space *mapping,
  }
  
--static inline int l2cap_get_conf_opt(void **ptr, int *type, int *olen,
--				     unsigned long *val)
-+static inline int l2cap_get_conf_opt(void **ptr, void *end, int *type,
-+				     int *olen, unsigned long *val)
+ /*
+- * ni_readpage_cmpr
++ * ni_read_folio_cmpr
+  *
+  * When decompressing, we typically obtain more than one page per reference.
+  * We inject the additional pages into the page cache.
+  */
+-int ni_readpage_cmpr(struct ntfs_inode *ni, struct folio *folio)
++int ni_read_folio_cmpr(struct ntfs_inode *ni, struct folio *folio)
  {
- 	struct l2cap_conf_opt *opt = *ptr;
- 	int len;
+ 	int err;
+ 	struct ntfs_sb_info *sbi = ni->mi.sbi;
+ 	struct address_space *mapping = folio->mapping;
+-	pgoff_t index = folio->index;
+-	u64 frame_vbo, vbo = (u64)index << PAGE_SHIFT;
++	pgoff_t index;
++	u64 frame_vbo, vbo = folio_pos(folio);
+ 	struct page **pages = NULL; /* Array of at most 16 pages. stack? */
+ 	u8 frame_bits;
+ 	CLST frame;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index b50c9dff327d28..5e240d7fb03709 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -736,7 +736,7 @@ static int ntfs_read_folio(struct file *file, struct folio *folio)
  
-+	/* opt->len is attacker-controlled. Validate that the full option
-+	 * (header + value) actually fits in the buffer before touching
-+	 * opt->val, otherwise the switch below reads past the end of the
-+	 * caller's buffer.
-+	 */
-+	if (end - *ptr < L2CAP_CONF_OPT_SIZE)
-+		return -EINVAL;
-+
- 	len = L2CAP_CONF_OPT_SIZE + opt->len;
-+	if (end - *ptr < len)
-+		return -EINVAL;
-+
- 	*ptr += len;
- 
- 	*type = opt->type;
-@@ -3374,6 +3385,7 @@ static int l2cap_parse_conf_req(struct l
- 	void *ptr = rsp->data;
- 	void *endptr = data + data_size;
- 	void *req = chan->conf_req;
-+	void *req_end = req + chan->conf_len;
- 	int len = chan->conf_len;
- 	int type, hint, olen;
- 	unsigned long val;
-@@ -3387,9 +3399,11 @@ static int l2cap_parse_conf_req(struct l
- 	BT_DBG("chan %p", chan);
- 
- 	while (len >= L2CAP_CONF_OPT_SIZE) {
--		len -= l2cap_get_conf_opt(&req, &type, &olen, &val);
--		if (len < 0)
-+		int ret = l2cap_get_conf_opt(&req, req_end, &type, &olen, &val);
-+
-+		if (ret < 0)
- 			break;
-+		len -= ret;
- 
- 		hint  = type & L2CAP_CONF_HINT;
- 		type &= L2CAP_CONF_MASK;
-@@ -3617,6 +3631,7 @@ static int l2cap_parse_conf_rsp(struct l
- 	struct l2cap_conf_req *req = data;
- 	void *ptr = req->data;
- 	void *endptr = data + size;
-+	void *rsp_end = rsp + len;
- 	int type, olen;
- 	unsigned long val;
- 	struct l2cap_conf_rfc rfc = { .mode = L2CAP_MODE_BASIC };
-@@ -3625,9 +3640,11 @@ static int l2cap_parse_conf_rsp(struct l
- 	BT_DBG("chan %p, rsp %p, len %d, req %p", chan, rsp, len, data);
- 
- 	while (len >= L2CAP_CONF_OPT_SIZE) {
--		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
--		if (len < 0)
-+		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
-+
-+		if (ret < 0)
- 			break;
-+		len -= ret;
- 
- 		switch (type) {
- 		case L2CAP_CONF_MTU:
-@@ -3878,6 +3895,7 @@ static void l2cap_conf_rfc_get(struct l2
- {
- 	int type, olen;
- 	unsigned long val;
-+	void *rsp_end = rsp + len;
- 	/* Use sane default values in case a misbehaving remote device
- 	 * did not send an RFC or extended window size option.
- 	 */
-@@ -3896,9 +3914,11 @@ static void l2cap_conf_rfc_get(struct l2
- 		return;
- 
- 	while (len >= L2CAP_CONF_OPT_SIZE) {
--		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
--		if (len < 0)
-+		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
-+
-+		if (ret < 0)
- 			break;
-+		len -= ret;
- 
- 		switch (type) {
- 		case L2CAP_CONF_RFC:
+ 	if (is_compressed(ni)) {
+ 		ni_lock(ni);
+-		err = ni_readpage_cmpr(ni, folio);
++		err = ni_read_folio_cmpr(ni, folio);
+ 		ni_unlock(ni);
+ 		return err;
+ 	}
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index a1040060b081f5..e860529e1ff996 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -567,7 +567,7 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint);
+ #define _ni_write_inode(i, w) ni_write_inode(i, w, __func__)
+ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 	      __u64 vbo, __u64 len);
+-int ni_readpage_cmpr(struct ntfs_inode *ni, struct folio *folio);
++int ni_read_folio_cmpr(struct ntfs_inode *ni, struct folio *folio);
+ int ni_decompress_file(struct ntfs_inode *ni);
+ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
+ 		  u32 pages_per_frame);
+-- 
+2.53.0
+
 
 
