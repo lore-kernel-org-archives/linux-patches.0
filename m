@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297B2425894;
-	Thu, 16 Jul 2026 13:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B9E3CF1F4;
+	Thu, 16 Jul 2026 13:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209620; cv=none; b=WHBkNrnD1LOyBdMmAsK30TDkNSwjLW9v7obqC6LqtEeGnRstvfD5wA24t6vXRuqu+PG2yK12yJOS4O7/P3/psKgk08e6Yndxh3uRxmbjPN88KkcW0ub6Ys7IagBqYfIGd1OISG2ic0SkGtZE03UBoeUBB/oYbeVXhZxQXlLjH50=
+	t=1784209623; cv=none; b=QqWyoUA9rCBBzHiCyh8pRceqcZ/g0tABuMucLfuuyQDuyF4PXMLgc/ftgLR6aGsqHdDHff+Q+sUwh7vOzQmgutdenBDdKhsF/TSK4/nlGfZCczAz5UMuDnLTX09DLJQ/3HQueJLU1UT1YyyM/wmkZ3JLBmMLQh8/uaPG2qybIiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209620; c=relaxed/simple;
-	bh=3KcnqzGZt1AssIRM/CHKpEQ9LCO/b5VS3F0QTvufbYQ=;
+	s=arc-20240116; t=1784209623; c=relaxed/simple;
+	bh=d+U9e01Lm8tSeVnR+4C+6QAP7EVeJQJZC29iIM4+3Ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/97kkYHL4qZmjwkgRzFh6Dlz2+2eJXYOoOHgdQM4EYd6/GxyeeAqdAqtYgZHtQG7V8e+lR0s/pOWAx6gfi8yqMwg6beGvi1gCQcy+6L0wNQ59nP3Nn5XbDPMktoCP/UpEP/kgnJovQWFas4+1uypIKm1MMafuZC7SC7fSXkXG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5B6Wosi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pMH1iy0XtV5Kder6KZWX3wgm7a4/AzLB3UpftXytBwAEn2OIZ3LY5qmTSYdRWasqTESGqzBdMkUP63vNx3qZ3QsvrZ0mXwabAlOCzZYMefcc4BtpnMbNdRvVaRunS+vseT202YeAXlC/Zzon5JiwtgyQa+NzOAYokdUg4/9kofc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oy05GNCM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5B6Wosi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B9C1F000E9;
-	Thu, 16 Jul 2026 13:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oy05GNCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113461F00A3A;
+	Thu, 16 Jul 2026 13:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209610;
-	bh=fyO+On32SJbuAhyzJnG/w7dq4ua/qI/RJUp7dDpH3G4=;
+	s=korg; t=1784209615;
+	bh=HXE762AGKpCRvTPoPHrCwEW1FDn0Kez7lEHllncNBNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v5B6WosijT4SI/GlSggfKe+TArmK5BiNQLCcDZzqXoO+eMch7hpIpLogpurBhOAHN
-	 ugoikrNewNjCHQrQvpimzvIfnoolUByaj7kPtE82p/aRex+jYKKhKt5qH0SbV0wiUP
-	 XLMDT9Y9uRwQKf6rpNmPVFlIoKWzWATm48ss5+DY=
+	b=oy05GNCM9Tp91gO2fLHyCpkoMy1eoEwCmc73Irye5sqiLxpe9A2CW/bKgIeXntFEf
+	 v9eK/m4dMO/gj6AstnTjqkRklr+zl26xw95MR1qGVl6y8cWZ/qiY1kZfgFIHkIAOA+
+	 WIrgVyZkpLmlT7bXg+Wtcugtk2Qz/3iRIaQ4Q5/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>
-Subject: [PATCH 7.1 250/518] perf/x86/intel/uncore: Defer ADL global PMON enable to enable_box()
-Date: Thu, 16 Jul 2026 15:28:38 +0200
-Message-ID: <20260716133053.286592746@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 7.1 251/518] cpufreq: intel_pstate: Sync policy->cur during CPU offline
+Date: Thu, 16 Jul 2026 15:28:39 +0200
+Message-ID: <20260716133053.308552805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,52 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-commit 9a0bb848a37150aeccc10088e141339917d995dc upstream.
+commit bcbdaa1086c25a8a5d48e04e1b82fdfb0682b681 upstream.
 
-On some Raptor Cove CPUs, enabling uncore PMON globally at driver init
-may increase power consumption even when no perf events are in use.
+When a CPU goes offline with HWP disabled, intel_pstate_set_min_pstate()
+sets the MSR_IA32_PERF_CTL to minimum frequency to prevent SMT siblings
+from being restricted. However, the policy->cur value was not updated,
+leaving it at the previous value.
 
-Drop adl_uncore_msr_init_box() and defer programming the global control
-register to enable_box(), so it is only set when a box is actually used.
+When the CPU comes back online, governor->limits() checks if target_freq
+equals policy->cur and skips the frequency adjustment if they match. Since
+policy->cur still holds the previous value, the governor does not call
+cpufreq_driver->target to update MSR_IA32_PERF_CTL.
 
-IMC and IMC freerunning counters use a separate control path and are
-unaffected.
+Fix this by synchronizing policy->cur with the hardware state when setting
+minimum pstate during CPU offline.
 
-Fixes: 772ed05f3c5c ("perf/x86/intel/uncore: Add Alder Lake support")
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260602144908.263680-5-zide.chen@intel.com
+Fixes: bb18008f8086 ("intel_pstate: Set core to min P state during core offline")
+Cc: stable@vger.kernel.org # 3.15+
+Suggested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+[ rjw: Subject refinement ]
+Link: https://patch.msgid.link/20260520032119.30615-1-fushuai.wang@linux.dev
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore_snb.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/cpufreq/intel_pstate.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/events/intel/uncore_snb.c
-+++ b/arch/x86/events/intel/uncore_snb.c
-@@ -563,12 +563,6 @@ void tgl_uncore_cpu_init(void)
- 	skl_uncore_msr_ops.init_box = rkl_uncore_msr_init_box;
- }
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2984,10 +2984,12 @@ static int intel_cpufreq_cpu_offline(str
+ 	 * from getting to lower performance levels, so force the minimum
+ 	 * performance on CPU offline to prevent that from happening.
+ 	 */
+-	if (hwp_active)
++	if (hwp_active) {
+ 		intel_pstate_hwp_offline(cpu);
+-	else
++	} else {
+ 		intel_pstate_set_min_pstate(cpu);
++		policy->cur = cpu->pstate.min_freq;
++	}
  
--static void adl_uncore_msr_init_box(struct intel_uncore_box *box)
--{
--	if (box->pmu->pmu_idx == 0)
--		wrmsrq(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
--}
--
- static void adl_uncore_msr_enable_box(struct intel_uncore_box *box)
- {
- 	wrmsrq(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
-@@ -587,7 +581,6 @@ static void adl_uncore_msr_exit_box(stru
- }
+ 	intel_pstate_exit_perf_limits(policy);
  
- static struct intel_uncore_ops adl_uncore_msr_ops = {
--	.init_box	= adl_uncore_msr_init_box,
- 	.enable_box	= adl_uncore_msr_enable_box,
- 	.disable_box	= adl_uncore_msr_disable_box,
- 	.exit_box	= adl_uncore_msr_exit_box,
 
 
