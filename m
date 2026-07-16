@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE3342CB11;
-	Thu, 16 Jul 2026 14:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1F342CAF3;
+	Thu, 16 Jul 2026 14:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212319; cv=none; b=Ur7NfGgL//Y5WRsmZQf7dQsND0AT0FZuvnY8Q91ERwxiHyEHw/eow46RyiSn4Jv6q5k87quvlPY3BmqqPt0AzOtfgoeGPfLeie16KjW6/yuEOUoPoSFJG1cAYHK3g2VA/nfe7RxPdegcxuvDAceJXdmIIM8QFzn0S9gR4QOU8g0=
+	t=1784212321; cv=none; b=n+F7wKDCVCNrPHMplKnebpFOl4dbG5Zvc0BVkkGrANJJcQtXj+muOfd2jiuc+s0EW/F2DuYLTS60Ll92Hcte5PQrNPNsmJwAyBvd+bxvxTRzuQ/SzrpruLU9xd6ssydMGd8ojRhHtlDniT1mqumdqVLgFD2v1BdJCLtlymi8jZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212319; c=relaxed/simple;
-	bh=kYWF4YLBL3l9h/TGYJAcIqvkFc7biqtuY4f8xBbpuJA=;
+	s=arc-20240116; t=1784212321; c=relaxed/simple;
+	bh=mesEE3Feg8kuXmn7bgibYIDYxLvMt91Jjsi/j4K7ZDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=li14igburbXP9a+18upZQR7oYQ58+nvPRKApoQ6FrfpytLnhi8CslwQtqXdMhNhHQKLeUB0yVnLab2c7fKkoZ+raIkMBRt/LQV9jJKw7R+9ABhrLCSG7tQ6WopVpQWyv2br6QTLfrQDBtqE8zwX1xHDqaSHZNpBSzG+ZF4wmpcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqEekuPO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L8WJD8+Zu+AJqIP2MSmmX4PWd/9+gVvWqvhmUjBeSxnD8jpfLKSWdo8JerHApSMDi8eglBHN5E0P4eZ56K6b8ki+5XsBsmpFKzOuklyazt8gHhi+O4JN4GX4nYNpvZG4KjFpSYZXy6uoPjAI2OO+yZ6tQ6fmfhmPMW/yy3GDZKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFCp4EEj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqEekuPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8A61F00A3A;
-	Thu, 16 Jul 2026 14:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFCp4EEj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E3D1F000E9;
+	Thu, 16 Jul 2026 14:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212316;
-	bh=zffR7h2i/5b0Pt8gKp/G8tcTx8CzqMi3NtbnF8QteMM=;
+	s=korg; t=1784212319;
+	bh=vAd676zcl5teaKYkSz0cppWnfJlyHN38wJFWaCswAAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BqEekuPO0CMe5c2eW357NkppNjhIjloM3OIbCLA6St8pAWYcpiopcBCSi+REtTlp/
-	 FOwva+g5IOqv+KV2wI0k2h1IuMykX7oOhVxKYAod/eZJOne7OEjd+KrA4HaG1yVlyw
-	 yPZ/Heq2vc7zVeylhD+b8Polrw5Lcz2nLd+5ZBwA=
+	b=SFCp4EEjgfC3iRtq2or1EYHd/Pru2LgD4O+yulzcKHwwOTJp7uunZrL1rLH0R4DPA
+	 qnpxC5ahFH9tY+zxqWsIMFgGSXk5dYxsvNP7BokuOqKHtwXJDpUhWnMtqlqN3eABkM
+	 3HqTZxw8NGmD/y2mt4/gqfoLDjQBkMsqX4Xt70J4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 279/349] crypto: drbg - Fix returning success on failure in CTR_DRBG
-Date: Thu, 16 Jul 2026 15:33:33 +0200
-Message-ID: <20260716133039.584486536@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 239/349] USB: serial: digi_acceleport: fix broken rx after throttle
+Date: Thu, 16 Jul 2026 15:32:53 +0200
+Message-ID: <20260716133038.710179939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,32 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 39a31ad9e2a5ed7e9c9c6f711dca96c8c8f5f26b upstream.
+commit 83a3dfc018943b05b6daf3a6f891833e1aabfa1f upstream.
 
-drbg_ctr_generate() sometimes returns success when it fails, leaving the
-output buffer uninitialized.  Fix it.
+If the port is closed while throttled, the read urb is never resubmitted
+and the port will not receive any further data until the device is
+reconnected (or the driver is rebound).
 
-Fixes: cde001e4c3c3 ("crypto: rng - RNGs must return 0 in success case")
+Clear the throttle flags and submit the urb if needed when opening the
+port.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/drbg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/digi_acceleport.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/crypto/drbg.c
-+++ b/crypto/drbg.c
-@@ -591,7 +591,7 @@ static int drbg_ctr_generate(struct drbg
- 	if (addtl && !list_empty(addtl)) {
- 		ret = drbg_ctr_update(drbg, addtl, 2);
- 		if (ret)
--			return 0;
-+			return ret;
- 	}
+--- a/drivers/usb/serial/digi_acceleport.c
++++ b/drivers/usb/serial/digi_acceleport.c
+@@ -1071,6 +1071,7 @@ static int digi_open(struct tty_struct *
+ 	unsigned char buf[32];
+ 	struct digi_port *priv = usb_get_serial_port_data(port);
+ 	struct ktermios not_termios;
++	int throttled;
  
- 	/* 10.2.1.5.2 step 4.1 */
+ 	/* be sure the device is started up */
+ 	if (digi_startup_device(port->serial) != 0)
+@@ -1098,6 +1099,21 @@ static int digi_open(struct tty_struct *
+ 		not_termios.c_iflag = ~tty->termios.c_iflag;
+ 		digi_set_termios(tty, port, &not_termios);
+ 	}
++
++	spin_lock_irq(&priv->dp_port_lock);
++	throttled = priv->dp_throttle_restart;
++	priv->dp_throttled = 0;
++	priv->dp_throttle_restart = 0;
++	spin_unlock_irq(&priv->dp_port_lock);
++
++	if (throttled) {
++		ret = usb_submit_urb(port->read_urb, GFP_KERNEL);
++		if (ret) {
++			dev_err(&port->dev, "failed to submit read urb: %d\n", ret);
++			return ret;
++		}
++	}
++
+ 	return 0;
+ }
+ 
 
 
