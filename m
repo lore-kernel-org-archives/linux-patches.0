@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7191740097C;
-	Thu, 16 Jul 2026 14:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE005A79B;
+	Thu, 16 Jul 2026 14:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210501; cv=none; b=ZGPgvVz/OKvFcEkvBtxR4NFzyuh7dSG5FyZGMzIx2k97FBi2sYrLIQtzA4f5OhlVsPpVJIcJWFcD2zUJf/BdjnbuPBjUuXDcWphSQEYnUJTWfSIZohYzh/OO2kFYCm3TMJFl3PGGymh/YcBzQcJO5eewosA/bxKelJPQKJF2T6M=
+	t=1784210504; cv=none; b=JV/tPj/9CRNlIgoS8bjY8xK8uCmJHqHPwJSyRn+LvrNEiieCih8FEJIlvoq77p3VNY+9PTDXRriRTx0Xf3LbpquUkTwSiYbhT1db9YeB7oraa3h/RfCSC9ljXGAC/xvO+rKLsdHKQx6MCi5nKKLRVQMBc8sHNJI/47dnDxQCFBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210501; c=relaxed/simple;
-	bh=+p7eHprKZeD1NY2L3amnijDenIvb+BcAove2WlStLt0=;
+	s=arc-20240116; t=1784210504; c=relaxed/simple;
+	bh=2qhJzOBX7NSHPqXCbod7zj1lSKJOfoRT/+ONfZM2ayE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlP7yfmlI2dVGtPeOpMqUfsPHiJaS+q2xvzWNPsEJ6ETy3u7dMke9hVzDBcLEI9QM4a4b4huKVSc3dDb5ZobppBcC8wS13IoqK0NIhiynVXn424fVMQX2tg+V1KFdrCbezOXI6s5NaCooE+Fby745MJMvFrEx0ra7OceVoY8W4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3cwdYBB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=snjK9/NOfbFygWE/ZAzQ8v5PMFMODait/zBs4G5Fk7yMnnyhJ3zWd38afBF9gZxlGMRMdUAWu/4OVsc4aAUd14G+RbtTSKDcjlQYr8UtyOrBUHcarrOa1pbXRzMl6BdXJKbdOmQDViAEOMk9LUhKTzGwVLVK63Jt9NdQiX/1epY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbpbSIT5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3cwdYBB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6EA01F000E9;
-	Thu, 16 Jul 2026 14:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbpbSIT5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE241F000E9;
+	Thu, 16 Jul 2026 14:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210500;
-	bh=/x5+rdaxJW8oYLTTJdy7Th58yz+jMkigtTW6G5podT0=;
+	s=korg; t=1784210503;
+	bh=c5KS+WrUYV2G7HmYyj/uzvkl08Kpbo3WD/uu8vmnuiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b3cwdYBBKDPdtHKh7J4XZR45XYtrgze5X+NJiaYFLIc9D8XsFIWgAPdLiMdCTXcte
-	 XcygmnRWPKZl6F9SbrEbkIqi8/LI0eCsPychdMAGGNSlnqXIArrzsDCL5+5XD+8PNS
-	 j9ZomO7pIIqIzIAtVx5ykbQACg6TTjwagPFF2IPA=
+	b=YbpbSIT5mKc+PkzceMrmss7z2b7w7n+agMq0h677YL21FblwBhNc8sRlhXkTFJH0k
+	 ya6lRtI9fnmi3uY0ltkFptWqwq0KU+qbpxhvqvH4AOioSFLnXwBHBs8VK6FhgdF0Sk
+	 N+tSbXEnXDgC9TRTfexefdorL3KwS8KiGduFvH2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kempe <andreas.kempe@actia.se>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	David Heidelberg <david@ixit.cz>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 071/480] iio: imu: st_lsm6dsx: deselect shub page before reading whoami
-Date: Thu, 16 Jul 2026 15:26:58 +0200
-Message-ID: <20260716133046.246677703@linuxfoundation.org>
+Subject: [PATCH 6.18 072/480] iio: light: al3000a: add missing REGMAP_I2C to Kconfig
+Date: Thu, 16 Jul 2026 15:26:59 +0200
+Message-ID: <20260716133046.269338353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,85 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kempe <andreas.kempe@actia.se>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-commit aede83625ff5d9539508582036df30c809d51058 upstream.
+commit a2d30022b7c316ad845d1b696e724058b88e5a4e upstream.
 
-As part of driver initialization, e.g. st_lsm6dsx_init_shub() selects
-the shub register page using st_lsm6dsx_set_page(). Selecting the shub
-register page shadows the regular register space so whoami, among other
-registers, is no longer accessible.
+The KConfig entry for the al3000a is missing a `select REGMAP_I2C`,
+causing build failures.
 
-In applications where the IMU is permanently powered separately from the
-processor, there is a window where a reset of the CPU leaves the IMU in
-the shub register page. Once this occurs, any subsequent probe attempt
-fails because of the register shadowing.
-
-Using the ism330dlc, the error typically looks like
-
-    st_lsm6dsx_i2c 3-006a: unsupported whoami [10]
-
-with the unknown whoami read from a reserved register in the shub page.
-
-The reset register is also shadowed by the page select, preventing a
-reset from recovering the chip.
-
-Unconditionally clear the shub page before the whoami readout to ensure
-normal register access and allow the initialization to proceed.
-
-Place the fix in st_lsm6dsx_check_whoami() before the whoami check
-because hw->settings, which st_lsm6dsx_set_page() relies on, is first
-assigned in that function.
-
-Placing the fix in a more logical place than the whoami check would
-require a bigger restructuring of the code.
-
-Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
-Signed-off-by: Andreas Kempe <andreas.kempe@actia.se>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Fixes: d531b9f78949 ("iio: light: Add support for AL3000a illuminance sensor")
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: David Heidelberg <david@ixit.cz>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/iio/light/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-@@ -1597,6 +1597,26 @@ static int st_lsm6dsx_check_whoami(struc
- 		return -ENODEV;
- 	}
+--- a/drivers/iio/light/Kconfig
++++ b/drivers/iio/light/Kconfig
+@@ -45,6 +45,7 @@ config ADUX1020
  
-+	hw->settings = &st_lsm6dsx_sensor_settings[i];
-+
-+	if (hw->settings->shub_settings.page_mux.addr) {
-+		/*
-+		 * If the IMU has the shub page selected on init, for example
-+		 * after a CPU watchdog reset while the page is selected, the
-+		 * regular register space is shadowed. While the regular
-+		 * register space is shadowed, the registers needed for
-+		 * initializing the IMU are not available.
-+		 *
-+		 * Unconditionally clear the shub page selection to ensure
-+		 * normal register access.
-+		 */
-+		err = st_lsm6dsx_set_page(hw, false);
-+		if (err < 0) {
-+			dev_err(hw->dev, "failed to clear shub page\n");
-+			return err;
-+		}
-+	}
-+
- 	err = regmap_read(hw->regmap, ST_LSM6DSX_REG_WHOAMI_ADDR, &data);
- 	if (err < 0) {
- 		dev_err(hw->dev, "failed to read whoami register\n");
-@@ -1609,7 +1629,6 @@ static int st_lsm6dsx_check_whoami(struc
- 	}
- 
- 	*name = st_lsm6dsx_sensor_settings[i].id[j].name;
--	hw->settings = &st_lsm6dsx_sensor_settings[i];
- 
- 	return 0;
- }
+ config AL3000A
+ 	tristate "AL3000a ambient light sensor"
++	select REGMAP_I2C
+ 	depends on I2C
+ 	help
+ 	  Say Y here if you want to build a driver for the Dyna Image AL3000a
 
 
