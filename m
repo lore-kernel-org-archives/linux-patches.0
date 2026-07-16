@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F57D42BEB1;
-	Thu, 16 Jul 2026 14:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C6642CAF2;
+	Thu, 16 Jul 2026 14:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211972; cv=none; b=HrOQqD6Z5MtH3TdXPA5RwPy1/MiATxuRBji4L66OxO+cbLUkygTWpY9JcaL2ZBz4YPFpwNDg+KInoJcPi1n88bKH9dYdZhP+tqISiFINp53fgYC92cTseLhGAFCYGwlKr6ppYt4ekmzNa4NpiXWXYy+QMIqwEfJwXFEuPngxt3s=
+	t=1784211975; cv=none; b=HdbV5EdzlqG/cDBj/Rv3JxXV+8Hd1NmZnbdi2vL9arsGVpKDNQeCnl4Haj5vLkprzW4lw7pH/FsiFipi4xYhPx25+faCFgRNI/NitZW7nV2n5nHtoeVuUGYb145c3LaYMC7no/yJnEKaWFHFkDkMnfay2RKKBX7xYVuz4Aq3Zt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211972; c=relaxed/simple;
-	bh=JWuhPfJ04yjsqIrq7JIo55LSOwKbDoAnZSchWM+QJ70=;
+	s=arc-20240116; t=1784211975; c=relaxed/simple;
+	bh=pv1YweZHNYtOHPIrXtz9c/rg0Kew6CJV4RszhbzblK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DU//L+bjLSlf5UjLAaufrwEDEtc/rh6m+S8eJbbl+tNgB3aGWMaCd05tG4qqzVkgF1ic1sgsxGQLLYovp7vvktFadBpG4IXSamTCyHo+PcVm47CCni6oAw4+VQbR+oNd8J889ExUH/4Q3yXh0bmpBPnlZwitn/gM+BF2anjdmDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaMY/eja; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WZhm8dc7zacwyqNnrHTzvHbMOdc5X6Xb7GWE7EIG8EyfT2NsDeDDQEJ54Nw/6tFdcfqMKCeAHstBtz2aRp5qq/GFYfLVz6nsK56qyJEy86J0HV1Jyi2s23975UeZzopbLd5Oj+AEHYWA3b/NQIBJCI/FjkuGge1QiTXi37pmsG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXvFqE8M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaMY/eja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A569A1F000E9;
-	Thu, 16 Jul 2026 14:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXvFqE8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9501F000E9;
+	Thu, 16 Jul 2026 14:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211971;
-	bh=Y9Li25PhC0Iy0Zu2zQeX12+QtIVo2XFWnYj19mSUj0Y=;
+	s=korg; t=1784211973;
+	bh=a+y8NjUiSVIHErtkCtF5bhxWybeKLUTFsLV/6mKOpLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AaMY/ejaQmflAkixOl9N9+ZgKXclBi2KEOZJxCO+Sms+BrSNX/o3hlo7pYenaQ/Wm
-	 IxR1Kl7rRojXJyyick6dPjFNG4rpvabpEDPR91RX8kSK5I3r9abmG0fgD32kyx0H7i
-	 N38Xq9YvenIsABv7eeDE3ZrU8XmkdRpLAPq97wCI=
+	b=UXvFqE8MFy6d8LpjKPrnMU3CYYYF/TuMNyB33ftDhFrt0jyOipGvpahMbjhjB97mM
+	 Wb1h2cBaPCstFtK6MX+fdjVbScUlI7LgRK+TTqA2I7DPYiSi+k4Zey1VVZmQ41/DG8
+	 48kksGXce1KGoMMIXx6Fm79snJLuOlgOLXRkFoGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Dave Chinner <david@fromorbit.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 143/349] mm: shrinker: fix shrinker_info teardown race with expansion
-Date: Thu, 16 Jul 2026 15:31:17 +0200
-Message-ID: <20260716133036.568386433@linuxfoundation.org>
+	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 152/349] Bluetooth: btnxpuart: Fix out-of-bounds firmware read in nxp_recv_fw_req_v3()
+Date: Thu, 16 Jul 2026 15:31:26 +0200
+Message-ID: <20260716133036.787242982@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,112 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 65476d31d8056e859c48580f82295ce159196ffe upstream.
+commit badff6c3bed8923a1257a853f137d447976eec30 upstream.
 
-expand_shrinker_info() iterates all visible memcgs under shrinker_mutex,
-including memcgs that have not finished ->css_online() yet.
+During the v3 firmware download the controller sends a v3_data_req with a
+32 bit offset and a 16 bit len. nxp_recv_fw_req_v3() checks only the lower
+bound of the offset and then sends firmware from that offset.
 
-Once pn->shrinker_info has been published, teardown must stay serialized
-with expand_shrinker_info() until that memcg is either fully online or no
-longer visible to iteration.  Today alloc_shrinker_info() breaks that rule
-by dropping shrinker_mutex before freeing a partially initialized
-shrinker_info array, which may cause the following race:
+  nxpdev->fw_dnld_v3_offset = offset - nxpdev->fw_v3_offset_correction;
+  serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data +
+                          nxpdev->fw_dnld_v3_offset, len);
 
-CPU0                   CPU1
-====                   ====
+Nothing checks that fw_dnld_v3_offset + len stays within nxpdev->fw->size,
+so a controller that asks for an offset or length past the firmware image
+makes the driver read past the end of nxpdev->fw->data and send that
+memory back over UART.
 
-css_create
---> list_add_tail_rcu(&css->sibling, &parent_css->children);
-    online_css
-    --> mem_cgroup_css_online
-        --> alloc_shrinker_info
-            --> alloc node0 info
-                rcu_assign_pointer(C->node0->shrinker_info, old0)
-                alloc node1 info -> FAIL -> goto err
-                mutex_unlock(shrinker_mutex)
+nxp_recv_fw_req_v1() already bounds the same write. Add the equivalent
+check to the v3 path, reject the request when it falls outside the firmware
+image, and zero len on the error path so the fw_v3_prev_sent bookkeeping at
+free_skb stays consistent.
 
-                       shrinker_alloc()
-                       --> shrinker_memcg_alloc
-                           --> mutex_lock(shrinker_mutex)
-                               expand_shrinker_info
-                               --> mem_cgroup_iter see the memcg
-                                   expand_one_shrinker_info
-                                   --> old0 = C->node0->shrinker_info
-                                       memcpy(new->unit, old0->unit, ...);
-
-                free_shrinker_info
-                --> kvfree(old0);
-
-                                       /* double free !! */
-                                       kvfree_rcu(old0, rcu);
-
-The same problem exists later in mem_cgroup_css_online().  If
-alloc_shrinker_info() succeeds but a subsequent objcg allocation fails,
-the free_objcg -> free_shrinker_info() unwind path tears down the already
-published pn->shrinker_info arrays without shrinker_mutex.  The
-expand_one_shrinker_info() can race with that teardown in the same way,
-leading to use-after-free or double-free of the old shrinker_info.
-
-Fix this by serializing shrinker_info teardown with shrinker_mutex, and by
-keeping alloc_shrinker_info() error cleanup inside the locked section.
-
-Link: https://lore.kernel.org/20260617085658.27096-1-qi.zheng@linux.dev
-Fixes: 307bececcd12 ("mm: shrinker: add a secondary array for shrinker_info::{map, nr_deferred}")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
+Suggested-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Reviewed-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btnxpuart.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/mm/shrinker.c
-+++ b/mm/shrinker.c
-@@ -59,12 +59,14 @@ static inline int shrinker_unit_alloc(st
- 	return 0;
- }
- 
--void free_shrinker_info(struct mem_cgroup *memcg)
-+static void __free_shrinker_info(struct mem_cgroup *memcg)
- {
- 	struct mem_cgroup_per_node *pn;
- 	struct shrinker_info *info;
- 	int nid;
- 
-+	lockdep_assert_held(&shrinker_mutex);
-+
- 	for_each_node(nid) {
- 		pn = memcg->nodeinfo[nid];
- 		info = rcu_dereference_protected(pn->shrinker_info, true);
-@@ -74,6 +76,13 @@ void free_shrinker_info(struct mem_cgrou
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -1086,6 +1086,12 @@ static int nxp_recv_fw_req_v3(struct hci
  	}
- }
  
-+void free_shrinker_info(struct mem_cgroup *memcg)
-+{
-+	mutex_lock(&shrinker_mutex);
-+	__free_shrinker_info(memcg);
-+	mutex_unlock(&shrinker_mutex);
-+}
-+
- int alloc_shrinker_info(struct mem_cgroup *memcg)
- {
- 	int nid, ret = 0;
-@@ -98,8 +107,8 @@ int alloc_shrinker_info(struct mem_cgrou
- 	return ret;
- 
- err:
-+	__free_shrinker_info(memcg);
- 	mutex_unlock(&shrinker_mutex);
--	free_shrinker_info(memcg);
- 	return -ENOMEM;
- }
+ 	nxpdev->fw_dnld_v3_offset = offset - nxpdev->fw_v3_offset_correction;
++	if (nxpdev->fw_dnld_v3_offset >= nxpdev->fw->size ||
++	    len > nxpdev->fw->size - nxpdev->fw_dnld_v3_offset) {
++		bt_dev_err(hdev, "FW download out of bounds, ignoring request");
++		len = 0;
++		goto free_skb;
++	}
+ 	serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data +
+ 				nxpdev->fw_dnld_v3_offset, len);
  
 
 
