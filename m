@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F7A3BCD05;
-	Thu, 16 Jul 2026 14:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95E73D8127;
+	Thu, 16 Jul 2026 14:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211032; cv=none; b=U9c0hbu4JHEvb827myrFY2KIoJYc8VJdI3QeO+YQn6p2rYuYf/mIpdGy6HRuH4uNFnevh9pCgGxhikc7KOWcRH1zw7HOq5dwroea4pbFQB/gA4ZLrNDJva9yiy2giGf08ZuzwZx03n2Y0sWSCR3E1RzVwIX+ZyxS30BKEpvW+io=
+	t=1784211034; cv=none; b=HLsMjFmdV2C+PgEAmCczBcT93GUWsU03GUxGHJegsOKejU5wF0mAD6GJ9h+04vTXoRCgkIf1M4D9QIkjCsJvq7uBfuh/KBzT9fqVsld/oVkmeicT53iv9NwuCLyVlgdL1zyIsUH+1dCaXQWbYaqElYs3F3DQgF11TWgfh1KclvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211032; c=relaxed/simple;
-	bh=SGQx2NoRwSpwBU9VuHGhvDpr2zAkPbCFGHoKckmUbW0=;
+	s=arc-20240116; t=1784211034; c=relaxed/simple;
+	bh=bi3iId1u+ZvQ3SxcSZrsni90X2+GjU4gu7G+apLHIVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9toUvnRQy45e8Lb2vBMLW90+DiEMMOwjXYscAaaszbDvQuW2FdfV4W0FUKbx9CNQjv9crId42w9kG5cwWWB0tcExHs5zapkGE/126ray2F+PPOgIyfAQRY0XzklCDGSQEUW3t+rEfI0heDEcrVAvR6ushoW33ltggYKN/00U4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kex5M9wL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZP8Rzp3f4egdusk1/vhEcuhwein3KcY9aMDsS02AcGlXqGgqMVP7AFmD/jf07/sdg4MlPCp6+bZZve47UlyntnK+x6kyPIaOeE/sdeaeUvcrFrH613u/fSclJ5fqcrfA7sWJatSzGYiai3w2Qm3UxwL7Afc7YSCoTWoRWxROH5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I63GFMGZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kex5M9wL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243F71F000E9;
-	Thu, 16 Jul 2026 14:10:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I63GFMGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4451F000E9;
+	Thu, 16 Jul 2026 14:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211030;
-	bh=q/bGCFrdB/bLrDXgM4BOhW/2P3txCYq8R7iyNIaVwLk=;
+	s=korg; t=1784211033;
+	bh=dXScIzTszRuZxUbdYBI45PkIJtUAEazcrmDxbs+hxWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kex5M9wLa3VQTomqXTjE3l/sWIOiTuXxuLh+ZQOAsgce2J5SWoBG0BJpdhnGaUVea
-	 1iweHg0Bfuv5RIQyPo/6IuR1pkt1iYsBhTqXjKOAzdJckD6OaMqRxxAnHCeOaZr8Jl
-	 4Nsc8tLY1c6XKA+5PcrihY76vZ3Y/SZkSiQMwaMk=
+	b=I63GFMGZEADXspIUcQiarvrtYpWxHe3hRx8CNY0xqlNSwGwwewjwsKvogczL2h2Co
+	 bEEJefJXhplsX2yIZ2umpIl7g07tkhUo9b5DryIq/VY+73WJrgUWOV94CqjMRb1YMn
+	 u+3pzeRBl2srEmI0SIc80s0T8iA5fn2Fd81OnYto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>
-Subject: [PATCH 6.18 271/480] nilfs2: reject CLEAN_SEGMENTS ioctl with out-of-range segment numbers
-Date: Thu, 16 Jul 2026 15:30:18 +0200
-Message-ID: <20260716133050.686872882@linuxfoundation.org>
+	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 272/480] media: mtk-jpeg: cancel workqueue on release for supported platforms only
+Date: Thu, 16 Jul 2026 15:30:19 +0200
+Message-ID: <20260716133050.709323648@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,114 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
 
-commit 0e7a690fe435f8d5ea3feb7c1d8d73ba7e8b8aa9 upstream.
+commit b1845a227fda37b2fe5327df3ca0015d7e290235 upstream.
 
-Syzbot reported a hung task in nilfs_transaction_begin() where multiple
-tasks performing chmod() on a nilfs2 mount blocked for over 143 seconds
-waiting to acquire ns_segctor_sem for read:
+Since a recent fix the mtk_jpeg_release function cancels any pending
+or running work present in the driver workqueue using
+cancel_work_sync function.
+Currently, only the multicore based variants use this workqueue and they
+have the jpeg_worker platform data field initialized with a workqueue
+callback function. For the others, this field value remain NULL by
+default.
+The cancel_work_sync function is unconditionally called in
+mtk_jpeg_release function, even for the variants that do not use the
+workqueue. This call generates a WARN_ON print in __flush_work because
+the workqueue callback function presence check fails in __flush_work
+function (used by cancel_work_sync).
 
-  INFO: task syz.0.17:5918 blocked for more than 143 seconds.
-  Call Trace:
-   schedule+0x164/0x360
-   rwsem_down_read_slowpath+0x6d9/0x940
-   down_read+0x99/0x2e0
-   nilfs_transaction_begin+0x364/0x710 fs/nilfs2/segment.c:221
-   nilfs_setattr+0x124/0x2c0 fs/nilfs2/inode.c:921
-   notify_change+0xc1a/0xf40
-   chmod_common+0x273/0x4a0
-   do_fchmodat+0x12d/0x230
+So, to avoid these warnings, call cancel_work_sync only if a workqueue
+callback is defined in platform data.
 
-The writer holding ns_segctor_sem was a concurrent
-NILFS_IOCTL_CLEAN_SEGMENTS caller, stuck inside printk while emitting
-per-element warnings from nilfs_sufile_updatev():
-
-   __nilfs_msg+0x373/0x450 fs/nilfs2/super.c:78
-   nilfs_sufile_updatev+0x21c/0x6d0 fs/nilfs2/sufile.c:186
-   nilfs_sufile_freev fs/nilfs2/sufile.h:93 [inline]
-   nilfs_free_segments fs/nilfs2/segment.c:1140 [inline]
-   nilfs_segctor_collect_blocks fs/nilfs2/segment.c:1261 [inline]
-   nilfs_segctor_do_construct+0x1f55/0x76c0
-   nilfs_clean_segments+0x3bd/0xa50
-   nilfs_ioctl_clean_segments fs/nilfs2/ioctl.c:922 [inline]
-   nilfs_ioctl+0x261f/0x2780
-
-The root cause is that user-supplied segment numbers are not validated
-before nilfs_clean_segments() begins doing work; the range check on
-each segnum is performed deep inside the call chain by
-nilfs_sufile_updatev(), which emits a nilfs_warn() per invalid entry
-while still holding the segctor lock and the sufile mi_sem.  Under load
-(repeated invocations across multiple mounts saturating the global
-printk path), the cumulative printk latency keeps ns_segctor_sem held
-long enough to trip the hung_task watchdog, blocking concurrent
-operations such as chmod() that need ns_segctor_sem for read.
-
-Fix by validating the contents of kbufs[4] in nilfs_clean_segments()
-immediately after acquiring ns_segctor_sem via nilfs_transaction_lock().
-Holding ns_segctor_sem serializes the check against
-nilfs_ioctl_resize(), which can modify ns_nsegments, so the validation
-uses a consistent value.  Out-of-range segment numbers are rejected
-with -EINVAL before any segment-cleaning work begins, so the bad
-entries never reach the per-element diagnostic path inside
-nilfs_sufile_updatev().
-
-Reported-by: syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=62f0f99d2f2bb8e3bbd7
-Tested-by: syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com
+Fixes: 34c519feef3e ("media: mtk-jpeg: fix use-after-free in release path due to uncancelled work")
 Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Fixes: 071cb4b81987 ("nilfs2: eliminate removal list of segments")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2512,12 +2512,33 @@ int nilfs_clean_segments(struct super_bl
- 	struct nilfs_sc_info *sci = nilfs->ns_writer;
- 	struct nilfs_transaction_info ti;
- 	int err;
-+	size_t i, nfreesegs = argv[4].v_nmembs;
-+	__u64 *segnumv = kbufs[4];
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1209,7 +1209,8 @@ static int mtk_jpeg_release(struct file
+ 	struct mtk_jpeg_dev *jpeg = video_drvdata(file);
+ 	struct mtk_jpeg_ctx *ctx = mtk_jpeg_file_to_ctx(file);
  
- 	if (unlikely(!sci))
- 		return -EROFS;
- 
- 	nilfs_transaction_lock(sb, &ti, 1);
- 
-+	/*
-+	 * Validate segment numbers under ns_segctor_sem (held for write
-+	 * by nilfs_transaction_lock above) so the check is serialized
-+	 * against nilfs_ioctl_resize(), which can modify ns_nsegments.
-+	 * Rejecting bad input here, before any segment-cleaning work
-+	 * begins, avoids the per-element diagnostic path inside
-+	 * nilfs_sufile_updatev() that would otherwise run under this
-+	 * same lock and stall concurrent readers.
-+	 */
-+	for (i = 0; i < nfreesegs; i++) {
-+		if (segnumv[i] >= nilfs->ns_nsegments) {
-+			nilfs_err(sb,
-+				 "Segment number %llu to be freed is out of range",
-+				 (unsigned long long)segnumv[i]);
-+			err = -EINVAL;
-+			goto bail_unlock;
-+		}
-+	}
-+
- 	err = nilfs_mdt_save_to_shadow_map(nilfs->ns_dat);
- 	if (unlikely(err))
- 		goto out_unlock;
-@@ -2558,6 +2579,7 @@ int nilfs_clean_segments(struct super_bl
- 	sci->sc_freesegs = NULL;
- 	sci->sc_nfreesegs = 0;
- 	nilfs_mdt_clear_shadow_map(nilfs->ns_dat);
-+ bail_unlock:
- 	nilfs_transaction_unlock(sb);
- 	return err;
- }
+-	cancel_work_sync(&ctx->jpeg_work);
++	if (jpeg->variant->jpeg_worker)
++		cancel_work_sync(&ctx->jpeg_work);
+ 	mutex_lock(&jpeg->lock);
+ 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
+ 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
 
 
