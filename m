@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA3C3128CC;
-	Thu, 16 Jul 2026 14:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB6F27732;
+	Thu, 16 Jul 2026 14:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211649; cv=none; b=dABth9xFLzSP+MZek2s4nTSLzIOZ135ngT9GU2OUxXukK0TorqvhL3yApV+98oDTLRerNR2IkMt2/9QrPk1/0EUXcC/y4xxmizru6HYm9vZIWWbf5WV765+Twf3nOn78xdDU4qu/Eb55OLDHi4roi2q5QoRJY+aDhJouwAtbvmw=
+	t=1784211652; cv=none; b=g3Jnidsb+vI0L90PVhA582+bK3RxItXSla6CRsW0+frrYKs/paiw0C8KmSsKBtc/ideFpbSDEWdDC5X8AdNsgFLbe5rTZYMl5CMIDJ8movU4vA6TzdoTU5QsfbYzOpSaPkJEK6zaqR6TfcLZ8PmI3E+xDyVaX3IeLPDNe6DhfQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211649; c=relaxed/simple;
-	bh=oAywu44tBaanhltz0sDbHHPdXet3HWO8G5ui+5trb7U=;
+	s=arc-20240116; t=1784211652; c=relaxed/simple;
+	bh=yLaQRxOLih5K3RF+G622vRyQI/TBbfMmfbqdvSen/1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kVEzDjZFmpRZ0/ShCYxSIQJIoBYg3z7qq3ihWVNg+GvjQQqI0Jjwvx/UiJ4WGhMDvCBTiACe0QBnLc3s4R1cb1JtFcdQAesL9hVzy1t1qvMZpsrW5EnGZUvbQH4s1duRFP9IPRjeQsJueGmzUs/xV13nNm6dvkSGpFPz80gOPok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mW+RPsCR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lj47Y6FP2X8O0tKSdlsLOWeJYha0Y3xkwNEEz2+0kWdorgKxNps1YaFMVG4Xz89rovDNYktqhJpfrYrKNayvP/Gk/5Z60NoNvjZ4qOyDTTVBEdqVD8pmkGyOvqw6GDNNTsIf5o6S366lW8+aX6x+04O4iNfdS6DhEUv14kPrAWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kg290IVl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mW+RPsCR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28191F000E9;
-	Thu, 16 Jul 2026 14:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kg290IVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8403C1F000E9;
+	Thu, 16 Jul 2026 14:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211648;
-	bh=bOx0+kkH5j6miWZtqUGvUaW98cHNSInK+tUUrpoVlpM=;
+	s=korg; t=1784211651;
+	bh=OnJ3kZePuIu/2OnsTKuaSvD1KSr8k+1WLwz5nGwv4oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mW+RPsCRu4WwW4JIxuPCC/YOi3GQpOCo+KHPsezxSoRaMck15OV+k7kY3NHYx2XGG
-	 apurGG2E4E/nL5Nd3TZ4U1Rb8iZC+9bWs/RzzrxxxnthJAQnhhJ2+FtJc77XOybT2a
-	 t0VD5vji8uov4MxRLehQWA930sg+iJ7/pdSK2PlU=
+	b=kg290IVlXo/hMJo4JEkxxjVc0t4U2RUksOF3UF5o7s7j7nI3WVGe/a3oGJcAUwLEG
+	 XoKvaueRlXyFKmPCfMLY/niAmFEkMMtag299ZMaLqkg8QVrX3NsMBtOvE5JGo28A16
+	 MsMPUrBRcUjqD+9ElNTfxxO2l3TBTn7SIuKdxM+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/349] nfsd: move name lookup out of nfsd4_list_rec_dir()
-Date: Thu, 16 Jul 2026 15:29:21 +0200
-Message-ID: <20260716133033.918989085@linuxfoundation.org>
+Subject: [PATCH 6.12 028/349] nfsd: change nfs4_client_to_reclaim() to allocate data
+Date: Thu, 16 Jul 2026 15:29:22 +0200
+Message-ID: <20260716133033.940559660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,138 +52,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@ownmail.net>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 89bd77cf436bf25e448817a662ebf76515f22863 ]
+[ Upstream commit 4552f4e3f2c96597914f07b060d5c5db84420ddd ]
 
-nfsd4_list_rec_dir() is called with two different callbacks.
-One of the callbacks uses vfs_rmdir() to remove the directory.
-The other doesn't use the dentry at all, just the name.
+The calling convention for nfs4_client_to_reclaim() is clumsy in that
+the caller needs to free memory if the function fails.  It is much
+cleaner if the function frees its own memory.
 
-As only one callback needs the dentry, this patch moves the lookup into
-that callback.  This prepares of changes to how directory operations
-are locked.
+This patch changes nfs4_client_to_reclaim() to re-allocate the .data
+fields to be stored in the newly allocated struct nfs4_client_reclaim,
+and to free everything on failure.
+
+__cld_pipe_inprogress_downcall() needs to allocate the data anyway to
+copy it from user-space, so now that data is allocated twice.  I think
+that is a small price to pay for a cleaner interface.
 
 Signed-off-by: NeilBrown <neil@brown.name>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: 4552f4e3f2c9 ("nfsd: change nfs4_client_to_reclaim() to allocate data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 53 +++++++++++++++++++++----------------------
- 1 file changed, 26 insertions(+), 27 deletions(-)
+ fs/nfsd/nfs4recover.c | 67 +++++++++++++++----------------------------
+ fs/nfsd/nfs4state.c   | 22 ++++++++++++--
+ 2 files changed, 42 insertions(+), 47 deletions(-)
 
 diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 075715998648a0..4c63f46985c2ea 100644
+index 4c63f46985c2ea..a8182962a28618 100644
 --- a/fs/nfsd/nfs4recover.c
 +++ b/fs/nfsd/nfs4recover.c
-@@ -255,7 +255,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
- 	nfs4_reset_creds(original_cred);
- }
+@@ -168,24 +168,13 @@ legacy_recdir_name_error(struct nfs4_client *clp, int error)
  
--typedef int (recdir_func)(struct dentry *, struct dentry *, struct nfsd_net *);
-+typedef int (recdir_func)(struct dentry *, char *, struct nfsd_net *);
- 
- struct name_list {
- 	char name[HEXDIR_LEN];
-@@ -309,23 +309,14 @@ nfsd4_list_rec_dir(recdir_func *f, struct nfsd_net *nn)
- 	}
- 
- 	status = iterate_dir(nn->rec_file, &ctx.ctx);
--	inode_lock_nested(d_inode(dir), I_MUTEX_PARENT);
- 
- 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
--		if (!status) {
--			struct dentry *dentry;
--			dentry = lookup_one_len(entry->name, dir, HEXDIR_LEN-1);
--			if (IS_ERR(dentry)) {
--				status = PTR_ERR(dentry);
--				break;
--			}
--			status = f(dir, dentry, nn);
--			dput(dentry);
--		}
-+		if (!status)
-+			status = f(dir, entry->name, nn);
-+
- 		list_del(&entry->list);
- 		kfree(entry);
- 	}
--	inode_unlock(d_inode(dir));
- 	nfs4_reset_creds(original_cred);
- 
- 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
-@@ -423,18 +414,19 @@ nfsd4_remove_clid_dir(struct nfs4_client *clp)
- }
- 
- static int
--purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
-+purge_old(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ static void
+ __nfsd4_create_reclaim_record_grace(struct nfs4_client *clp,
+-		const char *dname, int len, struct nfsd_net *nn)
++				    char *dname, struct nfsd_net *nn)
  {
- 	int status;
-+	struct dentry *child;
- 	struct xdr_netobj name;
+-	struct xdr_netobj name;
++	struct xdr_netobj name = { .len = strlen(dname), .data = dname };
+ 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
+ 	struct nfs4_client_reclaim *crp;
  
--	if (child->d_name.len != HEXDIR_LEN - 1) {
--		printk("%s: illegal name %pd in recovery directory\n",
--				__func__, child);
-+	if (strlen(cname) != HEXDIR_LEN - 1) {
-+		printk("%s: illegal name %s in recovery directory\n",
-+				__func__, cname);
- 		/* Keep trying; maybe the others are OK: */
- 		return 0;
- 	}
--	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
-+	name.data = kstrdup(cname, GFP_KERNEL);
- 	if (!name.data) {
- 		dprintk("%s: failed to allocate memory for name.data!\n",
- 			__func__);
-@@ -444,10 +436,17 @@ purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
- 	if (nfs4_has_reclaimed_state(name, nn))
- 		goto out_free;
- 
--	status = vfs_rmdir(&nop_mnt_idmap, d_inode(parent), child);
--	if (status)
--		printk("failed to remove client recovery directory %pd\n",
--				child);
-+	inode_lock_nested(d_inode(parent), I_MUTEX_PARENT);
-+	child = lookup_one_len(cname, parent, HEXDIR_LEN-1);
-+	if (!IS_ERR(child)) {
-+		status = vfs_rmdir(&nop_mnt_idmap, d_inode(parent), child);
-+		if (status)
-+			printk("failed to remove client recovery directory %pd\n",
-+			       child);
-+		dput(child);
-+	}
-+	inode_unlock(d_inode(parent));
-+
- out_free:
- 	kfree(name.data);
- out:
-@@ -478,18 +477,18 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
+-	name.data = kmemdup(dname, len, GFP_KERNEL);
+-	if (!name.data) {
+-		dprintk("%s: failed to allocate memory for name.data!\n",
+-			__func__);
+-		return;
+-	}
+-	name.len = len;
+ 	crp = nfs4_client_to_reclaim(name, princhash, nn);
+-	if (!crp) {
+-		kfree(name.data);
+-		return;
+-	}
+ 	crp->cr_clp = clp;
  }
  
+@@ -241,8 +230,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
+ 	inode_unlock(d_inode(dir));
+ 	if (status == 0) {
+ 		if (nn->in_grace)
+-			__nfsd4_create_reclaim_record_grace(clp, dname,
+-					HEXDIR_LEN, nn);
++			__nfsd4_create_reclaim_record_grace(clp, dname, nn);
+ 		vfs_fsync(nn->rec_file, 0);
+ 	} else {
+ 		printk(KERN_ERR "NFSD: failed to write recovery record"
+@@ -479,7 +467,7 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
  static int
--load_recdir(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
-+load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
  {
- 	struct xdr_netobj name;
+-	struct xdr_netobj name;
++	struct xdr_netobj name = { .len = HEXDIR_LEN, .data = cname };
  	struct xdr_netobj princhash = { .len = 0, .data = NULL };
  
--	if (child->d_name.len != HEXDIR_LEN - 1) {
--		printk("%s: illegal name %pd in recovery directory\n",
--				__func__, child);
-+	if (strlen(cname) != HEXDIR_LEN - 1) {
-+		printk("%s: illegal name %s in recovery directory\n",
-+				__func__, cname);
+ 	if (strlen(cname) != HEXDIR_LEN - 1) {
+@@ -488,16 +476,7 @@ load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
  		/* Keep trying; maybe the others are OK: */
  		return 0;
  	}
--	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
-+	name.data = kstrdup(cname, GFP_KERNEL);
- 	if (!name.data) {
- 		dprintk("%s: failed to allocate memory for name.data!\n",
- 			__func__);
+-	name.data = kstrdup(cname, GFP_KERNEL);
+-	if (!name.data) {
+-		dprintk("%s: failed to allocate memory for name.data!\n",
+-			__func__);
+-		goto out;
+-	}
+-	name.len = HEXDIR_LEN;
+-	if (!nfs4_client_to_reclaim(name, princhash, nn))
+-		kfree(name.data);
+-out:
++	nfs4_client_to_reclaim(name, princhash, nn);
+ 	return 0;
+ }
+ 
+@@ -796,6 +775,8 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ {
+ 	uint8_t cmd, princhashlen;
+ 	struct xdr_netobj name, princhash = { .len = 0, .data = NULL };
++	char *namecopy __free(kfree) = NULL;
++	char *princhashcopy __free(kfree) = NULL;
+ 	uint16_t namelen;
+ 
+ 	if (get_user(cmd, &cmsg->cm_cmd)) {
+@@ -813,20 +794,20 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 				dprintk("%s: invalid namelen (%u)", __func__, namelen);
+ 				return -EINVAL;
+ 			}
+-			name.data = memdup_user(&ci->cc_name.cn_id, namelen);
+-			if (IS_ERR(name.data))
+-				return PTR_ERR(name.data);
++			namecopy = memdup_user(&ci->cc_name.cn_id, namelen);
++			if (IS_ERR(namecopy))
++				return PTR_ERR(namecopy);
++			name.data = namecopy;
+ 			name.len = namelen;
+ 			if (get_user(princhashlen, &ci->cc_princhash.cp_len))
+ 				return -EFAULT;
+ 			if (princhashlen > 0) {
+-				princhash.data = memdup_user(
+-						&ci->cc_princhash.cp_data,
+-						princhashlen);
+-				if (IS_ERR(princhash.data)) {
+-					kfree(name.data);
+-					return PTR_ERR(princhash.data);
+-				}
++				princhashcopy = memdup_user(
++					&ci->cc_princhash.cp_data,
++					princhashlen);
++				if (IS_ERR(princhashcopy))
++					return PTR_ERR(princhashcopy);
++				princhash.data = princhashcopy;
+ 				princhash.len = princhashlen;
+ 			} else
+ 				princhash.len = 0;
+@@ -840,9 +821,10 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 				dprintk("%s: invalid namelen (%u)", __func__, namelen);
+ 				return -EINVAL;
+ 			}
+-			name.data = memdup_user(&cnm->cn_id, namelen);
+-			if (IS_ERR(name.data))
+-				return PTR_ERR(name.data);
++			namecopy = memdup_user(&cnm->cn_id, namelen);
++			if (IS_ERR(namecopy))
++				return PTR_ERR(namecopy);
++			name.data = namecopy;
+ 			name.len = namelen;
+ 		}
+ #ifdef CONFIG_NFSD_LEGACY_CLIENT_TRACKING
+@@ -850,15 +832,12 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 			struct cld_net *cn = nn->cld_net;
+ 
+ 			name.len = name.len - 5;
+-			memmove(name.data, name.data + 5, name.len);
++			name.data = name.data + 5;
+ 			cn->cn_has_legacy = true;
+ 		}
+ #endif
+-		if (!nfs4_client_to_reclaim(name, princhash, nn)) {
+-			kfree(name.data);
+-			kfree(princhash.data);
++		if (!nfs4_client_to_reclaim(name, princhash, nn))
+ 			return -EFAULT;
+-		}
+ 		return nn->client_tracking_ops->msglen;
+ 	}
+ 	return -EFAULT;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index e18d70adcdb903..8c13fa68c08a84 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -8557,9 +8557,6 @@ nfs4_has_reclaimed_state(struct xdr_netobj name, struct nfsd_net *nn)
+ 
+ /*
+  * failure => all reset bets are off, nfserr_no_grace...
+- *
+- * The caller is responsible for freeing name.data if NULL is returned (it
+- * will be freed in nfs4_remove_reclaim_record in the normal case).
+  */
+ struct nfs4_client_reclaim *
+ nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
+@@ -8568,6 +8565,22 @@ nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
+ 	unsigned int strhashval;
+ 	struct nfs4_client_reclaim *crp;
+ 
++	name.data = kmemdup(name.data, name.len, GFP_KERNEL);
++	if (!name.data) {
++		dprintk("%s: failed to allocate memory for name.data!\n",
++			__func__);
++		return NULL;
++	}
++	if (princhash.len) {
++		princhash.data = kmemdup(princhash.data, princhash.len, GFP_KERNEL);
++		if (!princhash.data) {
++			dprintk("%s: failed to allocate memory for princhash.data!\n",
++				__func__);
++			kfree(name.data);
++			return NULL;
++		}
++	} else
++		princhash.data = NULL;
+ 	crp = alloc_reclaim();
+ 	if (crp) {
+ 		strhashval = clientstr_hashval(name);
+@@ -8579,6 +8592,9 @@ nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
+ 		crp->cr_princhash.len = princhash.len;
+ 		crp->cr_clp = NULL;
+ 		nn->reclaim_str_hashtbl_size++;
++	} else {
++		kfree(name.data);
++		kfree(princhash.data);
+ 	}
+ 	return crp;
+ }
 -- 
 2.53.0
 
