@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8E8423E99;
-	Thu, 16 Jul 2026 14:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275A042D76E;
+	Thu, 16 Jul 2026 14:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212406; cv=none; b=IUQhdRYrfmnbdDYeae5dswjVAh/9H8uQ9zwhsbFy4XAJ0DzOJdUYEYeJF2mXDfQ4jIE68RHOK71Rga6ZXSoSU84u3TcKqku2IJdTuC0lSIfog0b2aMHN5RXidNV6nZDvGgHOCqOnxXzU4WoRTHgqjFwgcsFG3GFCnE7LRmVpnsM=
+	t=1784212409; cv=none; b=MeGchzFxK3wElG3VGgdzM2lCaB8cyTWrymT1fpgQKq99etGAoGGKfg43fUk9/N9vhH/5B71N6U64Wco4pMV9NvfMPxS/jJe0jpF8lmfBe9QlBr1LgjxRV9qPbwHGfNjRAKDO/BJ3ayKRF/pZwyGSPk4JygocgjFlYcDnEwuHPtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212406; c=relaxed/simple;
-	bh=lHjgRGCMLVig/J8adh18HWya2bJsmX3R4OzfMKHc1Ok=;
+	s=arc-20240116; t=1784212409; c=relaxed/simple;
+	bh=45Pjoarp4oydZdl0ljfD0iSnNdH/qGGTqvYwqlfaN1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1J1mqTt9iQ7+JWyPbRWiXMGW3ybIATn56yi6Mvq2iVKl4vScCf966PbaTQwtY0tN6GE33M8UUZxOL/Fn7dQirGLvBoGgw40A/O6/NACiQbFYFSlXKv+1DgeGed+PxUD2NJHECTPs/8oHMEhEO71rC9xOlhrHHAP5g0QcXYFNdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3hhJeV/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rV0i/bkgdxyNTC6zHM3K5NlCz7RklMe7jDaZB+lChDQZjnWyV1uw+cGoEihmmpZ6WUBVpf9G0sNhrwHAy50mUkHylF9Yclaay9mk624lymgAfdOsY/gDXIDDjp/YTJp8TMHTD4Myo3/bjjaVFwZTTi2QANXMPzkRMhasSrLsWhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2CXfc4G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3hhJeV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218531F000E9;
-	Thu, 16 Jul 2026 14:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2CXfc4G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C271F000E9;
+	Thu, 16 Jul 2026 14:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212405;
-	bh=sOfqYRXGZzEBqC70O3EOdtg167qER13DdxfxhKElmrs=;
+	s=korg; t=1784212408;
+	bh=uedVHNG69OW9u1XDfrRXlvRwVbsGfckOSl+Mt4WDTrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r3hhJeV/RSJYFIozCLzoNWYe5PyZze8E4XxOKyh6eSnYSGkah6v7Bp+gm2flG65cv
-	 2iX2P8P8BzO73JXhSHE2ANFl2KnG0sLBGMhht9kUDe0gS3SpQePOxwO8zsmHOxq8Sk
-	 TGwJprKAb+AH6GGjpbDLvEKoYRlvPrA+ZyEsKqJc=
+	b=w2CXfc4G7HTGHh2CYqFnT83Y8w9nPaCZOPYv3y3KbCBFlhx7myMFK3oc9KKQGPdAr
+	 GUxKEVft4JgnVhWafI0V5JSJ6io50hhTshKqsLANIViUAQqgAf8r9vToEMUrjsIKiD
+	 hkn0losX8C8fk88whbbW42tpbku6Dp+ieevFuUfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Jann Horn <jannh@google.com>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	David Hildenbrand <david@kernel.org>,
 	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 314/349] mm: do file ownership checks with the proper mount idmap
-Date: Thu, 16 Jul 2026 15:34:08 +0200
-Message-ID: <20260716133040.345796952@linuxfoundation.org>
+Subject: [PATCH 6.12 315/349] selftests/mm: pagemap_ioctl: use the correct page size for transact_test()
+Date: Thu, 16 Jul 2026 15:34:09 +0200
+Message-ID: <20260716133040.367200738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -58,102 +59,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Zenghui Yu <zenghui.yu@linux.dev>
 
-commit e187bc02f8fa4226d62814592cf064ee4557c470 upstream.
+commit dccf636bf1e68c3fda92f0c9e1018ab7e0ac8b2c upstream.
 
-Ever since idmapped mounts were introduced, inode ownership checks (for
-side-channel protection) in mincore() and madvise(MADV_PAGEOUT) were done
-against the nop_mnt_idmap, which completely ignores the file's mount's
-idmap.  This results in odd edgecases like:
+There are several places in transact_test() where we use the hardcoded
+0x1000 (4k) as page size, which is not always correct for architectures
+supporting multiple page sizes.
 
-1) mount/bind-mount with an idmap userA:userB:1
-2) userB runs an owner_or_capable() check on file that is owned by userA
-on-disk/in-memory, but owned by userB after idmap translation
-3) owner_or_capable() mysteriously fails as the correct idmap wasn't supplied
+Switch to use the correct page size.  Otherwise ./ksft_pagemap.sh on a
+16k-page-size arm64 box fails with
 
-In the case of mincore/madvise MADV_PAGEOUT, this is usually benign,
-because file_permission(file, MAY_WRITE) will probably succeed, as it uses
-the proper idmap internally, but it does not need to be the case on e.g a
-0444 file where even the owner itself doesn't have permissions to write to
-it.
+ $ ./ksft_pagemap.sh
+ [...]
+ # ok 96 mprotect_tests Both pages written after remap and mprotect
+ # ok 97 mprotect_tests Clear and make the pages written
+ # Bail out! ioctl failed
+ # # Planned tests != run tests (117 != 97)
+ # # Totals: pass:97 fail:0 xfail:0 xpass:0 skip:0 error:0
+ # [FAIL]
+ not ok 1 pagemap_ioctl # exit=1
+ # SUMMARY: PASS=0 SKIP=0 FAIL=1
+ 1..1
 
-Since this is clearly not trivial to get right, introduce a
-file_owner_or_capable() that can carry the correct semantics, and switch
-the various users in mm to it.
-
-The issue was found by manual code inspection & an off-list discussion
-with Jan Kara.
-
-Link: https://lore.kernel.org/20260625153853.913949-1-pfalcato@suse.de
-Fixes: 9caccd41541a ("fs: introduce MOUNT_ATTR_IDMAP")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/20260628101118.35861-1-zenghui.yu@linux.dev
+Fixes: 46fd75d4a3c9 ("selftests: mm: add pagemap ioctl tests")
+Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: Muhammad Usama Anjum <usama.anjum@arm.com>
+Cc: David Hildenbrand <david@kernel.org>
 Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Zenghui Yu <zenghui.yu@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fs.h |    5 +++++
- mm/filemap.c       |    2 +-
- mm/madvise.c       |    3 +--
- mm/mincore.c       |    3 +--
- 4 files changed, 8 insertions(+), 5 deletions(-)
+ tools/testing/selftests/mm/pagemap_ioctl.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2704,6 +2704,11 @@ static inline struct mnt_idmap *file_mnt
- 	return mnt_idmap(file->f_path.mnt);
- }
+--- a/tools/testing/selftests/mm/pagemap_ioctl.c
++++ b/tools/testing/selftests/mm/pagemap_ioctl.c
+@@ -1366,7 +1366,7 @@ void *thread_proc(void *mem)
+ 			ksft_exit_fail_msg("pthread_barrier_wait\n");
  
-+static inline bool file_owner_or_capable(const struct file *file)
-+{
-+	return inode_owner_or_capable(file_mnt_idmap(file), file_inode(file));
-+}
-+
- /**
-  * is_idmapped_mnt - check whether a mount is mapped
-  * @mnt: the mount to check
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -4420,7 +4420,7 @@ static inline bool can_do_cachestat(stru
- {
- 	if (f->f_mode & FMODE_WRITE)
- 		return true;
--	if (inode_owner_or_capable(file_mnt_idmap(f), file_inode(f)))
-+	if (file_owner_or_capable(f))
- 		return true;
- 	return file_permission(f, MAY_WRITE) == 0;
- }
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -316,8 +316,7 @@ static inline bool can_do_file_pageout(s
- 	 * otherwise we'd be including shared non-exclusive mappings, which
- 	 * opens a side channel.
- 	 */
--	return inode_owner_or_capable(&nop_mnt_idmap,
--				      file_inode(vma->vm_file)) ||
-+	return file_owner_or_capable(vma->vm_file) ||
- 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
- }
+ 		for (i = 0; i < access_per_thread; ++i)
+-			__atomic_add_fetch(m + i * (0x1000 / sizeof(*m)), 1, __ATOMIC_SEQ_CST);
++			__atomic_add_fetch(m + i * (page_size / sizeof(*m)), 1, __ATOMIC_SEQ_CST);
  
---- a/mm/mincore.c
-+++ b/mm/mincore.c
-@@ -167,8 +167,7 @@ static inline bool can_do_mincore(struct
- 	 * for writing; otherwise we'd be including shared non-exclusive
- 	 * mappings, which opens a side channel.
- 	 */
--	return inode_owner_or_capable(&nop_mnt_idmap,
--				      file_inode(vma->vm_file)) ||
-+	return file_owner_or_capable(vma->vm_file) ||
- 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
- }
+ 		ret = pthread_barrier_wait(&end_barrier);
+ 		if (ret && ret != PTHREAD_BARRIER_SERIAL_THREAD)
+@@ -1401,15 +1401,15 @@ static void transact_test(int page_size)
+ 	if (pthread_barrier_init(&end_barrier, NULL, nthreads + 1))
+ 		ksft_exit_fail_msg("pthread_barrier_init\n");
  
+-	mem = mmap(NULL, 0x1000 * nthreads * pages_per_thread, PROT_READ | PROT_WRITE,
++	mem = mmap(NULL, page_size * nthreads * pages_per_thread, PROT_READ | PROT_WRITE,
+ 		   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+ 	if (mem == MAP_FAILED)
+ 		ksft_exit_fail_msg("Error mmap %s.\n", strerror(errno));
+ 
+-	wp_init(mem, 0x1000 * nthreads * pages_per_thread);
+-	wp_addr_range(mem, 0x1000 * nthreads * pages_per_thread);
++	wp_init(mem, page_size * nthreads * pages_per_thread);
++	wp_addr_range(mem, page_size * nthreads * pages_per_thread);
+ 
+-	memset(mem, 0, 0x1000 * nthreads * pages_per_thread);
++	memset(mem, 0, page_size * nthreads * pages_per_thread);
+ 
+ 	count = get_dirty_pages_reset(mem, nthreads * pages_per_thread, 1, page_size);
+ 	ksft_test_result(count > 0, "%s count %d\n", __func__, count);
+@@ -1418,7 +1418,7 @@ static void transact_test(int page_size)
+ 
+ 	finish = 0;
+ 	for (i = 0; i < nthreads; ++i)
+-		pthread_create(&th, NULL, thread_proc, mem + 0x1000 * i * pages_per_thread);
++		pthread_create(&th, NULL, thread_proc, mem + page_size * i * pages_per_thread);
+ 
+ 	extra_pages = 0;
+ 	for (i = 0; i < iter_count; ++i) {
 
 
