@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5615A28505E;
-	Thu, 16 Jul 2026 14:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CB63195EF;
+	Thu, 16 Jul 2026 14:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211255; cv=none; b=nlQElP6/fUpKU3HF9IS0UNN6oEmSHcFie5qN/U3p5xIsJGiORY4jRKmSEZSH2EiAZ02ohsDCJuL+/i2kuZtLarf29HD6B4/1uNsFk7AereATLKVwbsp2esfNb3f3DxKWulqbslYTLUq3J+Syx+MdqdAAzkm6z1rF/DkPgGVRLik=
+	t=1784211258; cv=none; b=pDAKE6ven78Ger+7S0wsZcM/itrbgcFBocIwh2r39trAfBuoO+kkEOdo4y5D6k8LIiKmAdPB66v1jVroIy2z18sPjHMBNR0Lea+qePyZxTkSIO3ii1SJXim3OqjwuTwcvXggwmpnXpx4FjdJ8asDdPozPEDKKSlKe5IemKdBrXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211255; c=relaxed/simple;
-	bh=yIYv86QmFR/2YQmcq2wu1hgGjjcvKCmsVvegZOS8s0c=;
+	s=arc-20240116; t=1784211258; c=relaxed/simple;
+	bh=amP/a9HbK5xgc+lKvaSZpMCr+P/vH1tgVwdpeIzrzD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FeR27+M9Y1Lmc0KBSBXVlLWNMgiI7Q3zr1phX1JOjXcGNWyFD7dRz+Vi2LRHp/GsBMsS3FpH7AZoHasKO43MsrN5zGK7+gD/o0jHM+YzEpABAKbkfRGpkPQf+NNAbK5B05zNGYEA/pGwStZtPrIVvv3ClFSdb+LFftt8tmVjBsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjBoBVN2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Er20yzYFXx9/ZohAgmN1d+Mo33o+/ahuQaGTHbta/qmsrEeHc9lvfIvMP9Qx/TNnPo6DytJe4mbuvcFli+YSZfiqP6kuElFX7FpvzTFfBU99A0BmwUSdf2z1LnGGiO497B0bcNUM+L/M6J9zlmi0ZKsTuSRB6ctNzSbTrQ1ClYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nndqi/yr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjBoBVN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18EF1F00A3A;
-	Thu, 16 Jul 2026 14:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nndqi/yr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EFD1F000E9;
+	Thu, 16 Jul 2026 14:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211254;
-	bh=lgPkXbOupSmTV+rSkz1iataMR62GA8HcCo+iKP5bXU0=;
+	s=korg; t=1784211256;
+	bh=Ho7oywLmlcDkwfxhzgrC1HmYS/5CtsTlVbKe1DymCOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xjBoBVN27WvAMRlnE8IWsxBgUmeEIZ1qQaEFXNa6Fj2xGSVQGeQkRlJo8cVPt3LCJ
-	 LZtX6CP7eFsfzyI5GzK+49d2fcqSQCD+m2mqmJGjq1FzL+5X4oje5dCUuoPRIPRuao
-	 S3rUBxGZ8IOkelP2IjK5jAQ1TmV/IAqWBYMSgPHA=
+	b=Nndqi/yrJmw9Uc2KONYxZ3rYiAEjBwg20YKh85ySVKSwGGuj+M12qdGCxoxv+LMN5
+	 /kYucbFUS9YDE8Q2eyew57ASdkvuMnLoB05Fol5U7uJJag4sv901LiCIyIB0pP+/Ci
+	 kzUW5fWjxmwiDBXzWKSO7UkmE35b92/jNmWnhxQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Tycho Andersen (AMD)" <tycho@kernel.org>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 357/480] crypto: ccp - Do not initialize SNP for ioctl(SNP_COMMIT)
-Date: Thu, 16 Jul 2026 15:31:44 +0200
-Message-ID: <20260716133052.526259215@linuxfoundation.org>
+Subject: [PATCH 6.18 358/480] crypto: ccp - Do not initialize SNP for ioctl(SNP_VLEK_LOAD)
+Date: Thu, 16 Jul 2026 15:31:45 +0200
+Message-ID: <20260716133052.548169480@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Tycho Andersen (AMD) <tycho@kernel.org>
 
-commit 5a1364da2f04217a36e2fdfa2db4ee025b383a20 upstream.
+commit f91e9dbb5845d1e5abf1028e6df57dcf61583e1b upstream.
 
 Sashiko notes:
 
@@ -63,12 +63,17 @@ Sashiko notes:
 > execution for an active VM trigger a general protection fault and crash the
 > host?
 
-The SNP_COMMIT command does not require the firmware to be in any
-particular state. Skip initializing it if it was previously uninitialized.
+The SEV firmware docs for SNP_VLEK_LOAD note:
 
-The SEV-SNP firmware specification doc 56860 does not mention SNP_COMMIT in
-Table 5 as a command that is allowed in the UNINIT state, but it is in fact
-allowed and a future documentation update will reflect that.
+> On SNP_SHUTDOWN, the VLEK is deleted.
+
+That is, the initialization/shutdown wrapper here is pointless, because the
+firmware immediately throws away the key anyway. Instead, refuse to do
+anything if SNP has not been previously initialized.
+
+This is an ABI break: before, this was a no-op and almost certainly a
+mistake by userspace, and now it returns -ENODEV. ABI compatibility could be
+maintained here by simply returning 0 in the check instead.
 
 Fixes: ceac7fb89e8d ("crypto: ccp - Ensure implicit SEV/SNP init and shutdown in ioctls")
 Reported-by: Sashiko
@@ -80,36 +85,50 @@ Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c |   13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |   17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
 --- a/drivers/crypto/ccp/sev-dev.c
 +++ b/drivers/crypto/ccp/sev-dev.c
-@@ -2411,24 +2411,13 @@ cleanup:
- 
- static int sev_ioctl_do_snp_commit(struct sev_issue_cmd *argp)
+@@ -2455,9 +2455,8 @@ static int sev_ioctl_do_snp_vlek_load(st
  {
--	struct sev_device *sev = psp_master->sev_data;
- 	struct sev_data_snp_commit buf;
+ 	struct sev_device *sev = psp_master->sev_data;
+ 	struct sev_user_data_snp_vlek_load input;
 -	bool shutdown_required = false;
 -	int ret, error;
--
+ 	void *blob;
++	int ret;
+ 
+ 	if (!argp->data)
+ 		return -EINVAL;
+@@ -2465,6 +2464,9 @@ static int sev_ioctl_do_snp_vlek_load(st
+ 	if (!writable)
+ 		return -EPERM;
+ 
++	if (!sev->snp_initialized)
++		return -ENODEV;
++
+ 	if (copy_from_user(&input, u64_to_user_ptr(argp->data), sizeof(input)))
+ 		return -EFAULT;
+ 
+@@ -2478,18 +2480,7 @@ static int sev_ioctl_do_snp_vlek_load(st
+ 
+ 	input.vlek_wrapped_address = __psp_pa(blob);
+ 
 -	if (!sev->snp_initialized) {
 -		ret = snp_move_to_init_state(argp, &shutdown_required);
 -		if (ret)
--			return ret;
+-			goto cleanup;
 -	}
-+	int ret;
- 
- 	buf.len = sizeof(buf);
- 
- 	ret = __sev_do_cmd_locked(SEV_CMD_SNP_COMMIT, &buf, &argp->error);
- 
+-
+ 	ret = __sev_do_cmd_locked(SEV_CMD_SNP_VLEK_LOAD, &input, &argp->error);
+-
 -	if (shutdown_required)
 -		__sev_snp_shutdown_locked(&error, false);
 -
- 	return ret;
- }
+-cleanup:
+ 	kfree(blob);
  
+ 	return ret;
 
 
