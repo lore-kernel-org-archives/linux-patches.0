@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4663428505E;
-	Thu, 16 Jul 2026 14:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E6528505E;
+	Thu, 16 Jul 2026 14:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211804; cv=none; b=o9NNsK+9Wf462ocXWrOOuSShUzQ2HTqov54WP4nfoEyf6fy68VFq+beQEPIJNfveQToKIM/gTIgZ10zqOn6jO7ZorHUFVkwBynQCvV7vvuB0T1EPIorR0qNmFtajOIyYQgl8dg7f93C5UkCfLMkqdsgy9VuGigCb6cQkcQ7up/A=
+	t=1784211807; cv=none; b=ke+1HPkJgDDfuoo5sMrXDLVMslgpkeLHyZo/sPC7k7GXzZjuqwOZ5Y/hY4N3q3mjdoAv1tidSzR+/kWerLR0ifZs4azZ+IQVQVFyH6pr73mY3jlfBs7fZdqcGUzVA3qDKkhIfBbTI/OULp+cFMT37hdaSBaafNFvuJg1k6FPlGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211804; c=relaxed/simple;
-	bh=doV2ocj3kpB+54HneNQMAjTjVnXYt74cDmQjVcgb+vg=;
+	s=arc-20240116; t=1784211807; c=relaxed/simple;
+	bh=5cUia11MesdAwNvAaN4JDqwRpcXbf0UD/RbeOuJ2nrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LI6UMXCqPxJi0m2DO5sUaWuunKGexhNhJaoFRHE+mDjbyVYhgC0b7J/pfCtHRLY/Z4TMQs8bN4p7CSW9jueLNiOqjVZwZJDv5y2YaHDysN9wtNfFcU9W9sDpnM9p/5fmadQcsS2J2KvUwQzHXrEwGsXDXnKeEmVibcQHYFyp8Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9THDR6Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sNxxlSzicLz57i35noW3Tv3mEawD5IVBHCsZkA5gbcOs1nCOl/eSjFRBbR03ReFaO24v0vxfBVXswSx1fx/NdikIoX6Wy3YdWq9ClGO7FsWBmkBGqrBWXRT3ErfqHVRVJKJJDEwgWTMRoNjtowtL9bQ+hKcbXOfeDRanUal+Kw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qK0Tl2tt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9THDR6Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5631F000E9;
-	Thu, 16 Jul 2026 14:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qK0Tl2tt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CD31F000E9;
+	Thu, 16 Jul 2026 14:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211803;
-	bh=JB9XMvCYi6ckeE6X8aqkXwKcfaiyre6DIPFOxWWs/0w=;
+	s=korg; t=1784211805;
+	bh=A3ema9bId7+b4jhGNo+oAddpep8XSWD2IEPH7do7Nj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F9THDR6YkmEFyGVw2uHdkMmRcBIic44Frw8zX6ZR4dKcYw10U0fKvJcy+rTPIMUU5
-	 X18BtWMrup6tZtk38CQ0yHWqJ7X1E/VYxg3hGeKxE28HM2WVW1c/MdkOc4pEVh3EsI
-	 aGhocwYR7F81C1YqAKuqPlhJvc1fNy9o01ODCK6s=
+	b=qK0Tl2ttgkT82wNc4KLwyBTv870faaXMAyc7AwxfApmv9UhV9bpg144KdDx/ECV2p
+	 WuUzjOQeqW9Fl5QmRtF3sFm+9bh45Tgd8PZU+k2MR8F/9yOeZG5ITRvIjlj9ncRykg
+	 uvJGbGWrbTg2FDXN+1ncIkFPs5h7C1VPpB6V/fuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 085/349] ALSA: usb-audio: Update Babyface Pro control caches only after successful writes
-Date: Thu, 16 Jul 2026 15:30:19 +0200
-Message-ID: <20260716133035.216642271@linuxfoundation.org>
+Subject: [PATCH 6.12 086/349] ALSA: usb-audio: Update US-16x08 EQ/comp shadow state after successful writes
+Date: Thu, 16 Jul 2026 15:30:20 +0200
+Message-ID: <20260716133035.237588069@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,64 +53,151 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit d8f802ccf1fdbeb89d62748d6a0d0fbd442c8127 upstream.
+commit a440c17869ecd71da0f295b62868fc742d09a8ba upstream.
 
-snd_bbfpro_ctl_put() and snd_bbfpro_vol_put()
-cache the requested packed control state in
-kcontrol->private_value before issuing the USB write.
+snd_us16x08_comp_put() and snd_us16x08_eq_put() update their
+software stores before sending the USB write. If the transfer
+fails, later get callbacks report a value the hardware never
+accepted.
 
-Their get and resume paths use that cached value directly,
-so a failed write can leave the driver reporting and later
-replaying a setting the hardware never accepted.
+Build the outgoing message from the current store plus the
+pending value, then commit the store only after a successful
+write.
 
-Update the cached state only after a successful USB write.
-
-Fixes: 3e8f3bd04716 ("ALSA: usb-audio: RME Babyface Pro mixer patch")
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260429-alsa-usb-quirks-cache-rollback-v1-2-01b35c688b80@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-4-5a3bd4a673ae@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ sound/usb/mixer_us16x08.c |   78 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 52 insertions(+), 26 deletions(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -2958,12 +2958,14 @@ static int snd_bbfpro_ctl_put(struct snd
- 	if (val == old_value)
- 		return 0;
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -436,6 +436,7 @@ static int snd_us16x08_comp_put(struct s
+ 	int index = ucontrol->id.index;
+ 	char buf[sizeof(comp_msg)];
+ 	int val_idx, val;
++	int threshold, ratio, attack, release, gain, switch_on;
+ 	int err;
  
-+	err = snd_bbfpro_ctl_update(mixer, reg, idx, val);
-+	if (err < 0)
-+		return err;
+ 	val = ucontrol->value.integer.value[0];
+@@ -448,36 +449,61 @@ static int snd_us16x08_comp_put(struct s
+ 	/* new control value incl. bias*/
+ 	val_idx = elem->head.id - SND_US16X08_ID_COMP_BASE;
+ 
+-	store->val[val_idx][index] = ucontrol->value.integer.value[0];
++	threshold = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD)]
++		[index];
++	ratio = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO)][index];
++	attack = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK)][index];
++	release = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE)]
++		[index];
++	gain = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN)][index];
++	switch_on = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH)]
++		[index];
 +
- 	kcontrol->private_value = reg
- 		| ((idx & SND_BBFPRO_CTL_IDX_MASK) << SND_BBFPRO_CTL_IDX_SHIFT)
- 		| ((val & SND_BBFPRO_CTL_VAL_MASK) << SND_BBFPRO_CTL_VAL_SHIFT);
--
--	err = snd_bbfpro_ctl_update(mixer, reg, idx, val);
--	return err < 0 ? err : 1;
-+	return 1;
++	switch (val_idx) {
++	case COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD):
++		threshold = val;
++		break;
++	case COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO):
++		ratio = val;
++		break;
++	case COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK):
++		attack = val;
++		break;
++	case COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE):
++		release = val;
++		break;
++	case COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN):
++		gain = val;
++		break;
++	case COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH):
++		switch_on = val;
++		break;
++	}
+ 
+ 	/* prepare compressor URB message from template  */
+ 	memcpy(buf, comp_msg, sizeof(comp_msg));
+ 
+ 	/* place comp values in message buffer watch bias! */
+-	buf[8] = store->val[
+-		COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD)][index]
+-		- SND_US16X08_COMP_THRESHOLD_BIAS;
+-	buf[11] = ratio_map[store->val[
+-		COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO)][index]];
+-	buf[14] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK)][index]
+-		+ SND_US16X08_COMP_ATTACK_BIAS;
+-	buf[17] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE)][index]
+-		+ SND_US16X08_COMP_RELEASE_BIAS;
+-	buf[20] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN)][index];
+-	buf[26] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH)][index];
++	buf[8] = threshold - SND_US16X08_COMP_THRESHOLD_BIAS;
++	buf[11] = ratio_map[ratio];
++	buf[14] = attack + SND_US16X08_COMP_ATTACK_BIAS;
++	buf[17] = release + SND_US16X08_COMP_RELEASE_BIAS;
++	buf[20] = gain;
++	buf[26] = switch_on;
+ 
+ 	/* place channel selector in message buffer */
+ 	buf[5] = index + 1;
+ 
+ 	err = snd_us16x08_send_urb(chip, buf, sizeof(comp_msg));
+ 
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set compressor, err:%d\n", err);
++		return err;
+ 	}
+ 
++	store->val[val_idx][index] = val;
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
+ 	return 1;
  }
  
- static int snd_bbfpro_ctl_resume(struct usb_mixer_elem_list *list)
-@@ -3156,11 +3158,13 @@ static int snd_bbfpro_vol_put(struct snd
+@@ -579,11 +605,10 @@ static int snd_us16x08_eq_put(struct snd
+ 	/* copy URB buffer from EQ template */
+ 	memcpy(buf, eqs_msq, sizeof(eqs_msq));
  
- 	new_val = uvalue & SND_BBFPRO_MIXER_VAL_MASK;
+-	store->val[b_idx][p_idx][index] = val;
+-	buf[20] = store->val[b_idx][3][index];
+-	buf[17] = store->val[b_idx][2][index];
+-	buf[14] = store->val[b_idx][1][index];
+-	buf[11] = store->val[b_idx][0][index];
++	buf[20] = p_idx == 3 ? val : store->val[b_idx][3][index];
++	buf[17] = p_idx == 2 ? val : store->val[b_idx][2][index];
++	buf[14] = p_idx == 1 ? val : store->val[b_idx][1][index];
++	buf[11] = p_idx == 0 ? val : store->val[b_idx][0][index];
  
-+	err = snd_bbfpro_vol_update(mixer, idx, new_val);
-+	if (err < 0)
+ 	/* place channel index in URB buffer */
+ 	buf[5] = index + 1;
+@@ -593,14 +618,15 @@ static int snd_us16x08_eq_put(struct snd
+ 
+ 	err = snd_us16x08_send_urb(chip, buf, sizeof(eqs_msq));
+ 
+-	if (err > 0) {
+-		/* store new value in EQ band cache */
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set eq param, err:%d\n", err);
 +		return err;
-+
- 	kcontrol->private_value = idx
- 		| (new_val << SND_BBFPRO_MIXER_VAL_SHIFT);
--
--	err = snd_bbfpro_vol_update(mixer, idx, new_val);
--	return err < 0 ? err : 1;
-+	return 1;
+ 	}
+ 
++	store->val[b_idx][p_idx][index] = val;
++	/* store new value in EQ band cache */
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
+ 	return 1;
  }
  
- static int snd_bbfpro_vol_resume(struct usb_mixer_elem_list *list)
 
 
