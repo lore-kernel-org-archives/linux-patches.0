@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC013F482E;
-	Thu, 16 Jul 2026 14:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1E0306754;
+	Thu, 16 Jul 2026 14:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211263; cv=none; b=R1A8lTPxbf+Rrt1CD0C2O/8wRdRHgIggHsCK5748jiHRkZh6QIGRUy8mivq1czL6z6uH9SY/QCSnqlgt4G5D+QBr8flxdYMeSFs9MfNtdLkIRo1kA2cO0ehXgZbePsA1b05Qj6MTqoynuOLmHNOOpSbJBD59M6Y4VNFTN2+pLhk=
+	t=1784211265; cv=none; b=efhp6md2eksDL64gWFR9iBQm+IA1lOk2lc8XGXJC53vGssc98AjDFkA8mLJIZce4L8I//JhFPu0n2RB2r1BbeFy0fBnM3+idkjWD//JqDXgLamyvDrpEf7T+MVKIaDZGFrDcEoiVcePvD1qD01LIHwQ3xUEFwTuD8/GIK4hvQTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211263; c=relaxed/simple;
-	bh=ZrY0CtFweRssdApxfaSnstWWGBSxBx6pecHslIAFfkk=;
+	s=arc-20240116; t=1784211265; c=relaxed/simple;
+	bh=7OcLnIr/TFH40FSfK5Vs6qHp+9VgIAH6aHfW1oFqO28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rGz0Cwo5dFrNqJ1dZz+k7pLFaKPU1k7iU/ArfmfWidiiEil5WM1Uv7c69W2wLFXTcgvu42KWgzgDHYJuJPVfALB4cxunDl+GvRR1QLZQ/xA7miwjsnNwOZR9AHBhCcKQsLNxKVMh5h1OwAOVeyErdYQJWReZCWDyIFbwgXhJFrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VT+9S8F8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m0FHhyegk9pAjhAcJNkaC1+IM8b9NJNG/Bq4azX7uf1/itjqldEsdoE3rhpe6UnFcpuvTR+7wG9LAx/BKVHY6YRu6G1OeMVGDfEumJLkk/U8xQW1n8UuSmJ+m4M4W1ZcYctOxCibbIcETmTQOMdYZLV5Aj7NrHA4i79ZkWYWgDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1UMYTZ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VT+9S8F8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987081F000E9;
-	Thu, 16 Jul 2026 14:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1UMYTZ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFEC1F000E9;
+	Thu, 16 Jul 2026 14:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211262;
-	bh=EPXm3njPzGtSVjKIiN4XuQWbDSwg/nAGvs1u9JyYde0=;
+	s=korg; t=1784211264;
+	bh=+8BBJ9pulPRqEx7HCkI9WDWEoIlOC9sDEjdBRIrSPfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VT+9S8F8Y6tGR8uNJKtij374spsuQ8oxLY2eAxTXJV/NpgRtefmMmiwgqa7eTckSn
-	 oMio5bdE4a7HLCFXpcUsjGVXQsQ0niS52RSd3t5ESVIJSA+PqMKzGuR0WzyWlp4Y+w
-	 8C2M29XzgQKXFFsqCMTt1Xsvea/7Aa0f+cMFBCds=
+	b=z1UMYTZ2Z3uE6CEjdjcTC2Z+70Fv3T5OJL5RkZKLZoBbiVCv9YIgwYCR0bjMb+VVs
+	 krZiOvxS0LCmXOtGR9pg6+chH+djHy+s4frdt/eaDNvGkZ0wgtJoRoeOIEiGFDo+gE
+	 nZ4yedn23qEbDUpa0KcEovHUxYSox8jyIm2m1O2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Biggers <ebiggers@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 360/480] crypto: drbg - Fix returning success on failure in CTR_DRBG
-Date: Thu, 16 Jul 2026 15:31:47 +0200
-Message-ID: <20260716133052.591256840@linuxfoundation.org>
+Subject: [PATCH 6.18 361/480] crypto: drbg - Fix drbg_max_addtl() on 64-bit kernels
+Date: Thu, 16 Jul 2026 15:31:48 +0200
+Message-ID: <20260716133052.612886293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,30 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit 39a31ad9e2a5ed7e9c9c6f711dca96c8c8f5f26b upstream.
+commit 6f49f00c981bbb9ef602966f19bfdbef46b681d2 upstream.
 
-drbg_ctr_generate() sometimes returns success when it fails, leaving the
-output buffer uninitialized.  Fix it.
+On 64-bit kernels, drbg_max_addtl() returns 2**35 bytes.  That's too
+large, for two reasons:
 
-Fixes: cde001e4c3c3 ("crypto: rng - RNGs must return 0 in success case")
+1. SP800-90A says the maximum limit is 2**35 *bits*, not 2**35 bytes.
+   So the implemented limit has confused bits and bytes.
+
+2. When drbg_kcapi_hash() calls crypto_shash_update() on the additional
+   information string, the length is implicitly cast to 'unsigned int'.
+   That truncates the additional information string to U32_MAX bytes.
+
+Fix the maximum additional information string length to always be
+U32_MAX - 1, causing an error to be returned for any longer lengths.
+
+Fixes: 541af946fe13 ("crypto: drbg - SP800-90A Deterministic Random Bit Generator")
 Cc: stable@vger.kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/drbg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/crypto/drbg.h |   18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
---- a/crypto/drbg.c
-+++ b/crypto/drbg.c
-@@ -592,7 +592,7 @@ static int drbg_ctr_generate(struct drbg
- 	if (addtl && !list_empty(addtl)) {
- 		ret = drbg_ctr_update(drbg, addtl, 2);
- 		if (ret)
--			return 0;
-+			return ret;
- 	}
+--- a/include/crypto/drbg.h
++++ b/include/crypto/drbg.h
+@@ -171,19 +171,15 @@ static inline size_t drbg_max_request_by
+ 	return (1 << 16);
+ }
  
- 	/* 10.2.1.5.2 step 4.1 */
++/*
++ * SP800-90A allows implementations to support additional info / personalization
++ * strings of up to 2**35 bits.  Implementations can have a smaller maximum.  We
++ * use 2**35 - 16 bits == U32_MAX - 1 bytes so that the max + 1 always fits in a
++ * size_t, allowing drbg_healthcheck_sanity() to verify its enforcement.
++ */
+ static inline size_t drbg_max_addtl(struct drbg_state *drbg)
+ {
+-	/* SP800-90A requires 2**35 bytes additional info str / pers str */
+-#if (__BITS_PER_LONG == 32)
+-	/*
+-	 * SP800-90A allows smaller maximum numbers to be returned -- we
+-	 * return SIZE_MAX - 1 to allow the verification of the enforcement
+-	 * of this value in drbg_healthcheck_sanity.
+-	 */
+-	return (SIZE_MAX - 1);
+-#else
+-	return (1UL<<35);
+-#endif
++	return U32_MAX - 1;
+ }
+ 
+ static inline size_t drbg_max_requests(struct drbg_state *drbg)
 
 
