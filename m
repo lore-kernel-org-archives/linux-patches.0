@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB97332604;
-	Thu, 16 Jul 2026 14:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4E0332604;
+	Thu, 16 Jul 2026 14:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211597; cv=none; b=pI9s0YnOwb3PvuELmoJqPtpxcvaB6CuZHFzT25zrSkbduco0HdHIuF0iteqFEd8O9qy6SHXxS4mx/zGj65dJC6qIVuF2PBiZyoFBbsm9LgVsb9h8RYt6dgVw6HwQgkxRZ6qvVR/GsMQPg3nlXTCIuQ30QU4xZkaA3caK2r1pfGk=
+	t=1784211599; cv=none; b=SdgU1FyqOduUxwBK3gpa4EanyMvKrje0po7vGo0X+jvfMwI6apk9lesm5Fr5KO3reMj+oeCKicT9gfNk2oI3JJoBWnPtIlr8Kvxwo7PyzuBO+jWVAkhEFtb7d4Azg0DVZYeDZszs/utNoweOkHEQm2hKmKOP15nG6uQ6YuDyPD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211597; c=relaxed/simple;
-	bh=23z/xQH4zyebIqIq/bBrz6Ec4jU94vjyE1uaYACM7Z4=;
+	s=arc-20240116; t=1784211599; c=relaxed/simple;
+	bh=iExS352W1lupQRUD/fIwRv+7KTgXgu1oPRIGx1vrnNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKnkP5KufRduqG/Oz/6U3J82fAfDVEnfizDH0dkAQIz/Q7RamF+YtgayUPs+ztkDk6KDz5pKKiMDN2oea6raMPzsDyE0SLxyHqspqq59CKP/lMEQoS7eP8pxLVq4d+FxCWhW1MFCFDed09cbGMdd2NZEsjnhuHqqTxZXJgjbn20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dt1uS0Lt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IVtUjW0UZwmwpvaKqCz9yN+yaAwMLLXk5tikS0glUgTUh4bMLw+iVS+nbYtkDQfuqKHjYHCObJeqhFb26/2MczB3SNbip8D1MhpJZf5z48ZPDqrgcJAR2fCASymQ+gKPEDSbTpwA08+2JdBFtuQ5czjvaRJXTeTIB26ldZVRxjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDmDHys2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dt1uS0Lt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF4F1F000E9;
-	Thu, 16 Jul 2026 14:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDmDHys2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47531F00A3A;
+	Thu, 16 Jul 2026 14:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211595;
-	bh=/IEnvs/nmtuzzep22sPDhDbNdikfYnrcaZut9FoS2mo=;
+	s=korg; t=1784211598;
+	bh=BUbp4NAxt5YehB2Nf7Kws3L/DsHGKNbgY2wmPtSEcHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dt1uS0LtvAW8OZ0hTLZquxeHDeMZyzQ4QvhirqY+RnPwn2oNpmJ5mSCxEIQJR+RDN
-	 pYD4gCYKc9pZ5OxafinDTcwDxDEnKS9iksaXgjboBJrwDYMAPZGXe9ulqHyPEQwRne
-	 lKluNVcbTqnu1ptKvJUu5QCUZ6VT7959gVBxsZ0U=
+	b=ZDmDHys2ZfuJ1wa6jjup6uYV3/DehBogDSGysf6Rv0SCSGTaCfbetRdO8uNDgVSc5
+	 24IBc+Dl/EOAgfEnvC1atYsRTXTsPua7hOLoV5mEBX0sH6EYy5xZV6b9w6qimzESkC
+	 9pZeJ8kTQU2NOnCk5Dn5NTd09hyOZ3PAOgEwBAsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew R. Ochs" <mochs@nvidia.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.18 462/480] fuse: back uncached readdir buffers with pages
-Date: Thu, 16 Jul 2026 15:33:29 +0200
-Message-ID: <20260716133054.818535751@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/349] bpf, arm64: Reject out-of-range B.cond targets
+Date: Thu, 16 Jul 2026 15:28:55 +0200
+Message-ID: <20260716133033.322811323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
-References: <20260716133044.672218725@linuxfoundation.org>
+In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
+References: <20260716133033.287196923@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,170 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew R. Ochs <mochs@nvidia.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 4dd6f6d3085a84e74b0a1efec3a05ed0b5125dce upstream.
+commit 48d83d94930eb4db4c93d2de44838b9455cff626 upstream.
 
-Commit dabb90391028 ("fuse: increase readdir buffer size") changed
-fuse_readdir_uncached() to size its temporary buffer from ctx->count.
-This is useful for overlayfs and other in-kernel callers that use
-INT_MAX to indicate an unlimited directory read.
+aarch64_insn_gen_cond_branch_imm() calls label_imm_common() to
+compute a 19-bit signed byte offset for a conditional branch,
+but unlike its siblings aarch64_insn_gen_branch_imm() and
+aarch64_insn_gen_comp_branch_imm(), it does not check whether
+label_imm_common() returned its out-of-range sentinel (range)
+before feeding the value to aarch64_insn_encode_immediate().
 
-The larger buffer is currently supplied as a kvec output argument. For
-virtiofs, kvec arguments are copied through req->argbuf, which is
-allocated with kmalloc(..., GFP_ATOMIC). A large uncached readdir buffer
-can therefore require a multi-megabyte contiguous atomic allocation
-before the request is queued.
+aarch64_insn_encode_immediate() unconditionally masks the value
+with the 19-bit field mask, so an offset that was rejected by
+label_imm_common() gets silently truncated. With the sentinel
+value SZ_1M, the resulting field ends up with bit 18 (the sign
+bit of the 19-bit signed displacement) set, and the CPU decodes
+it as a ~1 MiB *backward* branch, producing an incorrectly
+targeted B.cond instruction. For code-gen locations like the
+emit_bpf_tail_call() this function is the only barrier between
+an overflowing displacement and a silently miscompiled branch.
 
-Avoid the large bounce-buffer allocation by backing uncached readdir
-output with pages and setting out_pages. Transports such as virtiofs can
-then pass the pages as scatter-gather entries instead of copying the
-output through argbuf.
+Fix it by returning AARCH64_BREAK_FAULT when the offset is out
+of range, so callers see a loud failure instead of a silently
+misencoded branch. validate_code() scans the generated image
+for any AARCH64_BREAK_FAULT and then lets the JIT fail.
 
-Map the pages with vm_map_ram() only while parsing the returned dirents.
-The existing parser can then continue to use a linear kernel mapping.
-
-[SzM: separate allocation of pages into a helper function]
-
-Fixes: dabb90391028 ("fuse: increase readdir buffer size")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 345e0d35ecdd ("arm64: introduce aarch64_insn_gen_cond_branch_imm()")
+Fixes: c94ae4f7c5ec ("arm64: insn: remove BUG_ON from codegen")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
+Link: https://lore.kernel.org/r/20260415121403.639619-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/readdir.c |   85 ++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 67 insertions(+), 18 deletions(-)
+ arch/arm64/lib/insn.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/fuse/readdir.c
-+++ b/fs/fuse/readdir.c
-@@ -12,6 +12,7 @@
- #include <linux/posix_acl.h>
- #include <linux/pagemap.h>
- #include <linux/highmem.h>
-+#include <linux/vmalloc.h>
+diff --git a/arch/arm64/lib/insn.c b/arch/arm64/lib/insn.c
+index 36d33e064ea01b..b7cabd64bcc860 100644
+--- a/arch/arm64/lib/insn.c
++++ b/arch/arm64/lib/insn.c
+@@ -338,6 +338,8 @@ u32 aarch64_insn_gen_cond_branch_imm(unsigned long pc, unsigned long addr,
+ 	long offset;
  
- static bool fuse_use_readdirplus(struct inode *dir, struct dir_context *ctx)
- {
-@@ -335,6 +336,43 @@ static int parse_dirplusfile(char *buf,
- 	return 0;
- }
+ 	offset = label_imm_common(pc, addr, SZ_1M);
++	if (offset >= SZ_1M)
++		return AARCH64_BREAK_FAULT;
  
-+static struct page **fuse_readdir_alloc_buf(struct fuse_args_pages *ap, size_t *bufsize)
-+{
-+	unsigned int i, nr_alloc, nr_pages = DIV_ROUND_UP(*bufsize, PAGE_SIZE);
-+	struct page **pages = kcalloc(nr_pages, sizeof(*pages), GFP_KERNEL);
-+
-+	if (!pages)
-+		return NULL;
-+
-+	nr_alloc = alloc_pages_bulk(GFP_KERNEL, nr_pages, pages);
-+	if (!nr_alloc)
-+		goto free_array;
-+
-+	if (nr_alloc < nr_pages) {
-+		nr_pages = nr_alloc;
-+		*bufsize = (size_t) nr_pages << PAGE_SHIFT;
-+	}
-+
-+	ap->folios = fuse_folios_alloc(nr_pages, GFP_KERNEL, &ap->descs);
-+	if (!ap->folios)
-+		goto release_pages;
-+
-+	for (i = 0; i < nr_pages; i++) {
-+		ap->folios[i] = page_folio(pages[i]);
-+		ap->descs[i].length = min_t(size_t, *bufsize - (size_t)i * PAGE_SIZE, PAGE_SIZE);
-+	}
-+	ap->num_folios = nr_pages;
-+	ap->args.out_pages = true;
-+
-+	return pages;
-+
-+release_pages:
-+	release_pages(pages, nr_pages);
-+free_array:
-+	kfree(pages);
-+	return NULL;
-+}
-+
- static int fuse_readdir_uncached(struct file *file, struct dir_context *ctx)
- {
- 	int plus;
-@@ -343,18 +381,16 @@ static int fuse_readdir_uncached(struct
- 	struct fuse_mount *fm = get_fuse_mount(inode);
- 	struct fuse_conn *fc = fm->fc;
- 	struct fuse_io_args ia = {};
--	struct fuse_args *args = &ia.ap.args;
-+	struct fuse_args_pages *ap = &ia.ap;
- 	void *buf;
- 	size_t bufsize = clamp((unsigned int) ctx->count, PAGE_SIZE, fc->max_pages << PAGE_SHIFT);
- 	u64 attr_version = 0, evict_ctr = 0;
- 	bool locked;
-+	struct page **pages = fuse_readdir_alloc_buf(ap, &bufsize);
+ 	insn = aarch64_insn_get_bcond_value();
  
--	buf = kvmalloc(bufsize, GFP_KERNEL);
--	if (!buf)
-+	if (!pages)
- 		return -ENOMEM;
- 
--	args->out_args[0].value = buf;
--
- 	plus = fuse_use_readdirplus(inode, ctx);
- 	if (plus) {
- 		attr_version = fuse_get_attr_version(fm->fc);
-@@ -364,24 +400,37 @@ static int fuse_readdir_uncached(struct
- 		fuse_read_args_fill(&ia, file, ctx->pos, bufsize, FUSE_READDIR);
- 	}
- 	locked = fuse_lock_inode(inode);
--	res = fuse_simple_request(fm, args);
-+	res = fuse_simple_request(fm, &ap->args);
- 	fuse_unlock_inode(inode, locked);
--	if (res >= 0) {
--		if (!res) {
--			struct fuse_file *ff = file->private_data;
--
--			if (ff->open_flags & FOPEN_CACHE_DIR)
--				fuse_readdir_cache_end(file, ctx->pos);
--		} else if (plus) {
--			res = parse_dirplusfile(buf, res, file, ctx, attr_version,
--						evict_ctr);
--		} else {
-+	if (res < 0)
-+		goto out;
-+
-+	if (!res) {
-+		struct fuse_file *ff = file->private_data;
-+
-+		if (ff->open_flags & FOPEN_CACHE_DIR)
-+			fuse_readdir_cache_end(file, ctx->pos);
-+		goto out;
-+	}
-+
-+	buf = vm_map_ram(pages, ap->num_folios, -1);
-+	if (!buf) {
-+		res = -ENOMEM;
-+	} else {
-+		if (plus)
-+			res = parse_dirplusfile(buf, res, file, ctx, attr_version, evict_ctr);
-+		else
- 			res = parse_dirfile(buf, res, file, ctx);
--		}
-+
-+		vm_unmap_ram(buf, ap->num_folios);
- 	}
-+out:
-+	kfree(ap->folios);
-+	release_pages(pages, ap->num_folios);
-+	kfree(pages);
- 
--	kvfree(buf);
- 	fuse_invalidate_atime(inode);
-+
- 	return res;
- }
- 
+-- 
+2.53.0
+
 
 
