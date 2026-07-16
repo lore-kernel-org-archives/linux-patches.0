@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B52027732;
-	Thu, 16 Jul 2026 14:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2355C30C361;
+	Thu, 16 Jul 2026 14:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211759; cv=none; b=CfPvN819cjgClEpnuFP4JLZEZ3OIPrW2/FAraZxfn03GVVcJWoiX0jt3ec8nRx+eW2zQLFp3CmH+ouUziagTTzMgctluHBEVY8eFTRdzTufgOebDOO8OkyscHU79Im3gR7HZYafzfwH6JyxuuGn6uF/pk74TUq8izbtBlpJbBSw=
+	t=1784211762; cv=none; b=iPl+OeDmIXVfax98StTOj/vBhqqecdN/PJGRgpDHZndpEW1jWM5lA5OKjZtS3bRx7ZIZDLYN3NE4mTFf5xD/hMXGorDCoTdhByKgEfazpEXLWnmqasjr3M7KP0RTIkqSUYOI1DA3K7aTbEDpKzXZt9TMtZxGoBRa2N061d8tlc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211759; c=relaxed/simple;
-	bh=edHrbQZP+2WQKMyM1Y4kmuIp8whvvQc25dvr6TzzVHc=;
+	s=arc-20240116; t=1784211762; c=relaxed/simple;
+	bh=j+/iMsermM/HuMjZRZoEZgbkHSr+/yaKfWDcW0WnwyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UoKvzXQZUxafwW/KiccNYBt6pn1aGE4sHaA4YNJvAv2Xf70ldN/pEY5evzWIe1LHEe9wW2rrnFvWAk3ZMVBqGwPLwuU289RRJHcOs9dwdcIJC1T2gflfODHfHCeZ+kjyD1NR7qR6IJkqWJvWkYA6zHWASSBHdCjx36OseOnYqz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9tiqaZx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mGhhHKWGGmH45q2vPil4v/G+l5edmVipXziTDoZjMBsQWRmziunK8qPHUfM/TsRtahFsdPq6o7T0aPzrWdZz4tewIwqixrv8sLe3R/WsNHazH/JkY7HlKSyVT+uOWIVc1arbXo2j2CLnPyCsW4oJRiSjYEuKO9ddeM9p8zKICQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMJ+r6JW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9tiqaZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03AC1F000E9;
-	Thu, 16 Jul 2026 14:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMJ+r6JW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884A21F000E9;
+	Thu, 16 Jul 2026 14:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211758;
-	bh=4UNj5A9Y/ycahC0Rv+ujRqCO+fK0PTDm75ktFrck1Qg=;
+	s=korg; t=1784211761;
+	bh=+lZzrCvhJbYu6L6JuMGIL9RLt1q6sBIbnLJKZGLjuEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B9tiqaZxd2cp/nmSbVSLFzFmAn1kC/5UcplQg4Vc9DhqXoQveddPpBhIhCqu5xI4m
-	 NdxdkiR2Y2QP+9I1nz/PQGHRMqfahcbGI6bTLuUwVaIUps1gNOe8WRXDwqnQSV/6MW
-	 774B7ij4E2f+LAEQa21eTUJYgvIq54/m3QwREAjA=
+	b=wMJ+r6JW3YlfGU5bir+rKblVgYWX1vszp+uoX1k/Q4GkJ0HREZcgNFHzlOboLajoi
+	 fvssoLvggo+IQske5Dlr32SyYKanRPP0AsUGnimq8iZLSC6SnjtH3kekoq7pIS3T+w
+	 BHCBzVWfSLRPDkShWFslbQdpKG5+rNrbGFT6q0+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Liviu Stan <liviu.stan@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.12 069/349] iio: temperature: ltc2983: Fix n_wires default bypassing rotation check
-Date: Thu, 16 Jul 2026 15:30:03 +0200
-Message-ID: <20260716133034.865406597@linuxfoundation.org>
+Subject: [PATCH 6.12 070/349] iio: temperature: ltc2983: Fix reinit_completion() called after conversion start
+Date: Thu, 16 Jul 2026 15:30:04 +0200
+Message-ID: <20260716133034.888984092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,16 +53,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Liviu Stan <liviu.stan@analog.com>
 
-commit 434c150752675f44dc52c384a7fa22e5176bc35a upstream.
+commit 5cb9fdb446bfc3ae0524496f53fb68e67051701b upstream.
 
-When adi,number-of-wires is absent, n_wires is left at 0. The binding
-documents a default of 2 wires, matching the hardware default. However
-the current-rotate validation checks n_wires == 2 || n_wires == 3, so
-with n_wires = 0 the guard is bypassed and adi,current-rotate is accepted
-for a 2-wire RTD.
+reinit_completion() was called after regmap_write() initiated the hardware
+conversion, creating a race window where the interrupt could fire and call
+complete() before reinit_completion() reset the completion.
 
-Initialize n_wires = 2 to match the binding default and ensure the
-rotation check fires correctly when the property is absent.
+Move reinit_completion() before the regmap_write() to close the race.
+ltc2983_eeprom_cmd() already does it in the correct order.
 
 Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
 Signed-off-by: Liviu Stan <liviu.stan@analog.com>
@@ -70,19 +68,24 @@ Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/ltc2983.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/temperature/ltc2983.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/drivers/iio/temperature/ltc2983.c
 +++ b/drivers/iio/temperature/ltc2983.c
-@@ -741,7 +741,7 @@ ltc2983_rtd_new(const struct fwnode_hand
- 	struct ltc2983_rtd *rtd;
- 	int ret = 0;
- 	struct device *dev = &st->spi->dev;
--	u32 excitation_current = 0, n_wires = 0;
-+	u32 excitation_current = 0, n_wires = 2;
- 
- 	rtd = devm_kzalloc(dev, sizeof(*rtd), GFP_KERNEL);
- 	if (!rtd)
+@@ -1177,12 +1177,11 @@ static int ltc2983_chan_read(struct ltc2
+ 	start_conversion |= LTC2983_STATUS_CHAN_SEL(sensor->chan);
+ 	dev_dbg(&st->spi->dev, "Start conversion on chan:%d, status:%02X\n",
+ 		sensor->chan, start_conversion);
++	reinit_completion(&st->completion);
+ 	/* start conversion */
+ 	ret = regmap_write(st->regmap, LTC2983_STATUS_REG, start_conversion);
+ 	if (ret)
+ 		return ret;
+-
+-	reinit_completion(&st->completion);
+ 	/*
+ 	 * wait for conversion to complete.
+ 	 * 300 ms should be more than enough to complete the conversion.
 
 
