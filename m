@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DECF3B42FC;
-	Thu, 16 Jul 2026 13:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD33E3FD121;
+	Thu, 16 Jul 2026 13:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209376; cv=none; b=uRfmESdanL6cAO/ZGc1bNgebA8GxlmePmEz+QnlB4E3P1flVM6rgJ+Ecs3hkfmwrV10oMFXkMd/xml9C8+5QMmOX3VwYDw9WElZBANn+Ibzg6Vx87JxDq0bUsbt936D4yfPHSey+2HY7VGqEF4u5p57lg2ZF2pLjl8ZsY8pIECY=
+	t=1784209377; cv=none; b=n1xpvfEhF6rZ5mH0Vywjy0vsyP92aULrmXdAiaK5A9FhPhSy3EYo4IEdN/PdqW8LJWVzQKEvVfbOMAP/uMTAOSNbTgE05l/uFMMWgsjnmV9W8nuYYpjUIG9YrVEqCPUNqA7ZD3bp+KeBkbl/OvuDUFdELMWRS7/Gru/XuzcVFXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209376; c=relaxed/simple;
-	bh=NhThcSCUprRGD6jvyVjChOMoGkMlDv4TFu1r8HIq2jA=;
+	s=arc-20240116; t=1784209377; c=relaxed/simple;
+	bh=2WOFIHVMiF0XGGfsWBZND8xCvvZLCO0xhi8qZvcO3TE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZFe2ZhU4hyuhZ0r/nTsoRNvfNsISJVFbFDRae3+61K+oi6lZIoWKhRzN9sAJlN2nsHdW6+5Zx7/OGXRp0lOw8rerCxQ2gKGw//K+RfOg/EQCikKyG134UYLDZT6cyr96bwygt7T++HYMJjMZDR6f3zg1ev4lGT28mq5mrbKs1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdSCCyZT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h1snP76QI5tsv1hcKf33eLvOrbq4zUcL2oTbMvEXutLoSbquhhRnw3weBrk65DhH5lkKZDiE+WRy0vQSMkQFL9MPoWQQT2Jnw53wwKR7gipguYf6h7iBwGEM+WmXcL0GgpA7jv0qA+a46tPqcJIEJL8NVmLnv2stKxG4Ylox0tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pimO6Q25; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdSCCyZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF881F000E9;
-	Thu, 16 Jul 2026 13:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pimO6Q25"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36B41F00A3D;
+	Thu, 16 Jul 2026 13:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209371;
-	bh=lJ06DvYOvlDNoGUQrq1NIzHzStjQFgzov/pJjcbN+4c=;
+	s=korg; t=1784209374;
+	bh=MZX5qVTHo1k+Gah9Zl8f323qAAgb+zSyJ4CRYu/KgXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tdSCCyZTGBntpX9ZpxzRDokNLQhzVH3N6TKCNtU2+QwpoBuGNLWSWRlTW97K+zfvr
-	 TFZmPKo2kMzRl4DRiXbe+pzVBMwhvIuD+uEUOmjj+uEFzX3bcIwuK3i3cQMnan93gA
-	 8KTKLK58jdOde84THOUHePDr4C5uf6bgSYitsL/o=
+	b=pimO6Q25JzUMTQDm3RQYnTocwZJsB15TSva4/DnFa4NSARYhKBjXNaQH0f60Tej2e
+	 M6onh/3jRN3eW1o/42j6Tp8Gjj6i76//tx2rjvJwH8Y8xyVVF9grrr203rmbQPJJKI
+	 fNThekURDe2L5SkpmpT9mHeOasDFjxfSpO4P54MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 7.1 158/518] staging: media: ipu7: fix double-free and use-after-free in error paths
-Date: Thu, 16 Jul 2026 15:27:06 +0200
-Message-ID: <20260716133051.299967368@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Christopher Mackle <christophermackle01@gmail.com>
+Subject: [PATCH 7.1 159/518] staging: rtl8723bs: dont drop short TX frames in _rtw_pktfile_read()
+Date: Thu, 16 Jul 2026 15:27:07 +0200
+Message-ID: <20260716133051.321694298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,102 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Christopher Mackle <christophermackle01@gmail.com>
 
-commit d3a9a8cf2d7fd61a2f63df61f6cbc0a9bb007cc0 upstream.
+commit 252f8c681adc8614b70f844ba3de3a138c33a783 upstream.
 
-In both ipu7_isys_init() and ipu7_psys_init(), pdata is allocated and
-then passed to ipu7_bus_initialize_device(), which stores it in
-adev->pdata. The ipu7_bus_release() function frees adev->pdata when the
-device's reference count drops to zero.
+Commit bc4df274dca6 ("staging: rtl8723bs: update _rtw_pktfile_read() to
+return error codes") changed _rtw_pktfile_read() to fail when the caller
+asks for more bytes than remain in the packet:
 
-Two error paths incorrectly call kfree(pdata) after the device teardown
-has already freed it:
+	if (rtw_remainder_len(pfile) < rlen)
+		return -EINVAL;
 
-1. When ipu7_mmu_init() fails: put_device() is called, which drops the
-   reference count to zero and triggers ipu7_bus_release() ->
-   kfree(pdata). The subsequent kfree(pdata) is a double-free.
+That breaks the assumption made by the data TX path.  In
+rtw_xmitframe_coalesce() (core/rtw_xmit.c) the per-fragment copy is
+issued with the full fragment length, mpdu_len, which is derived from
+pxmitpriv->frag_len (~2300 bytes), and the code relies on the historical
+behaviour of copying only what is left and returning the number of bytes
+actually copied:
 
-2. When ipu7_bus_add_device() fails: it calls auxiliary_device_uninit()
-   internally, which calls put_device() -> ipu7_bus_release() ->
-   kfree(pdata). The subsequent kfree(pdata) is again a double-free.
+	mem_sz = _rtw_pktfile_read(&pktfile, pframe, mpdu_len);
+	if (mem_sz < 0)
+		return mem_sz;
 
-Note that the kfree(pdata) when ipu7_bus_initialize_device() itself
-fails is correct, because in that case auxiliary_device_init() failed
-and the release function was never set up, so pdata must be freed
-manually.
+So for every outbound packet smaller than the fragmentation threshold -
+i.e. essentially all normal traffic, including the EAPOL frames of the
+WPA 4-way handshake and DHCP - rlen is larger than the bytes remaining,
+_rtw_pktfile_read() returns -EINVAL, rtw_xmitframe_coalesce() aborts, and
+the frame is dropped before it is queued to the hardware.  The driver
+floods the log with:
 
-Additionally, the error code was not saved before calling put_device(),
-causing ERR_CAST() to dereference the already-freed adev pointer when
-constructing the return value. Fix this by saving the error from
-dev_err_probe() before put_device() and returning ERR_PTR() instead.
+	rtl8723bs ...: xmit_xmitframes: coalesce failed with error -22
 
-Remove the redundant kfree(pdata) calls and fix the use-after-free in
-the return values of the two affected error paths.
+Management frames (authentication/association) use a different path and
+still go out, so the interface scans and associates, but no data frame is
+ever transmitted.  The 4-way handshake therefore never completes and
+wpa_supplicant misreports it as:
 
-Fixes: b7fe4c0019b1 ("media: staging/ipu7: add Intel IPU7 PCI device driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+	WPA: 4-Way Handshake failed - pre-shared key may be incorrect
+
+AP mode is unaffected.  The net effect is that the chip is unusable in
+station mode on any kernel carrying the offending commit.
+
+This was confirmed with a wpa_supplicant -dd trace on an RTL8723BS SDIO
+adapter (Bay Trail): message 1/4 is received and the PTK is derived, but
+each "Sending EAPOL-Key 2/4" coincides 1:1 with a "coalesce failed with
+error -22", so message 2/4 never reaches the AP, which keeps retrying
+message 1/4 until the handshake times out.
+
+Restore the original semantics: clamp the requested length to the bytes
+remaining in the packet and return that length.  The skb_copy_bits()
+error path is kept, so genuine copy failures are still propagated.
+
+Fixes: bc4df274dca6 ("staging: rtl8723bs: update _rtw_pktfile_read() to return error codes")
+Cc: stable <stable@kernel.org>
+Tested-by: Christopher Mackle <christophermackle01@gmail.com>
+Signed-off-by: Christopher Mackle <christophermackle01@gmail.com>
+Link: https://patch.msgid.link/20260620013916.7148-1-christophermackle01@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/ipu7/ipu7.c |   22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/xmit_linux.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/staging/media/ipu7/ipu7.c
-+++ b/drivers/staging/media/ipu7/ipu7.c
-@@ -2169,21 +2169,18 @@ ipu7_isys_init(struct pci_dev *pdev, str
- 	isys_adev->mmu = ipu7_mmu_init(dev, base, ISYS_MMID,
- 				       &ipdata->hw_variant);
- 	if (IS_ERR(isys_adev->mmu)) {
--		dev_err_probe(dev, PTR_ERR(isys_adev->mmu),
--			      "ipu7_mmu_init(isys_adev->mmu) failed\n");
-+		ret = dev_err_probe(dev, PTR_ERR(isys_adev->mmu),
-+				    "ipu7_mmu_init(isys_adev->mmu) failed\n");
- 		put_device(&isys_adev->auxdev.dev);
--		kfree(pdata);
--		return ERR_CAST(isys_adev->mmu);
-+		return ERR_PTR(ret);
- 	}
+diff --git a/drivers/staging/rtl8723bs/os_dep/xmit_linux.c b/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
+index d5bb1c7932fc..4260ed5f4e97 100644
+--- a/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
++++ b/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
+@@ -24,9 +24,11 @@ void _rtw_open_pktfile(struct sk_buff *pktptr, struct pkt_file *pfile)
+ int _rtw_pktfile_read(struct pkt_file *pfile, u8 *rmem, unsigned int rlen)
+ {
+ 	int ret;
++	unsigned int remain = rtw_remainder_len(pfile);
  
- 	isys_adev->mmu->dev = &isys_adev->auxdev.dev;
- 	isys_adev->subsys = IPU_IS;
+-	if (rtw_remainder_len(pfile) < rlen)
+-		return -EINVAL;
++	/* clamp to bytes remaining; the coalesce loop relies on short reads */
++	if (rlen > remain)
++		rlen = remain;
  
- 	ret = ipu7_bus_add_device(isys_adev);
--	if (ret) {
--		kfree(pdata);
-+	if (ret)
- 		return ERR_PTR(ret);
--	}
- 
- 	return isys_adev;
- }
-@@ -2216,21 +2213,18 @@ ipu7_psys_init(struct pci_dev *pdev, str
- 	psys_adev->mmu = ipu7_mmu_init(&pdev->dev, base, PSYS_MMID,
- 				       &ipdata->hw_variant);
- 	if (IS_ERR(psys_adev->mmu)) {
--		dev_err_probe(&pdev->dev, PTR_ERR(psys_adev->mmu),
--			      "ipu7_mmu_init(psys_adev->mmu) failed\n");
-+		ret = dev_err_probe(&pdev->dev, PTR_ERR(psys_adev->mmu),
-+				    "ipu7_mmu_init(psys_adev->mmu) failed\n");
- 		put_device(&psys_adev->auxdev.dev);
--		kfree(pdata);
--		return ERR_CAST(psys_adev->mmu);
-+		return ERR_PTR(ret);
- 	}
- 
- 	psys_adev->mmu->dev = &psys_adev->auxdev.dev;
- 	psys_adev->subsys = IPU_PS;
- 
- 	ret = ipu7_bus_add_device(psys_adev);
--	if (ret) {
--		kfree(pdata);
-+	if (ret)
- 		return ERR_PTR(ret);
--	}
- 
- 	return psys_adev;
- }
+ 	if (rmem) {
+ 		ret = skb_copy_bits(pfile->pkt, pfile->buf_len - pfile->pkt_len, rmem, rlen);
+-- 
+2.55.0
+
 
 
