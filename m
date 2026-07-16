@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F9A2475F7;
-	Thu, 16 Jul 2026 13:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5BD31E849;
+	Thu, 16 Jul 2026 13:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209106; cv=none; b=l6PNRrXJSPkN1tgniQ5tOUoOcMcEFyL6Vk81jpgkV0bKnxZijrk6nx3AWZjI52CCTbnxL5WFgRJ1AfeXfc42kMQzr3IR6gUQIb4sgXDuJTZNSK3RPoI6sRnuscvM58w/11sxlciXFH/oF8gN9SN/oa56V6ZUeL9W7iRqCJQmLfg=
+	t=1784209109; cv=none; b=VW49VH38mCJ2SMpI7QrbLfBaUsoEFE2qKiEAAv/zlN6uudh1c2Z8gMEZs4VPJJojOXKwoXGaMnBDag6noYI/JZWTi57VyI2hU+M+HVvbBjVdXWNdyWZ07ZS9cnYk5UrUQ/pNcpSX1VOsE3U0PgdqPXq6t1OkbW9M6xJs+oL4png=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209106; c=relaxed/simple;
-	bh=nSeWyk0Vav+vjHvc1DOegHk61ACQCUTJ9tgeqpYeggU=;
+	s=arc-20240116; t=1784209109; c=relaxed/simple;
+	bh=SnN83gRH22mNayxl/OsrN/XkHlT9AQhAXDJTJoaayCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VPYqu/4hwhocTS91cLsGCsN6g0mrke8VCOXOUQM09IsEgz0oDchEorlBSKKJnzE3dQeMlWvIPTUqAx++sr/Oex5dvw+gLS36dLJ/1ihCB+1uN+IElYDSat0q8WiwvQcIFhuCDhlO6mrVHGlDKkp2XecJ2cpWsqj6Yh6y/myONSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfNq0lRX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b0m35fruknRETLLEtmVxwO+nUTQVcSQaSmcnTWNdBYVIaZarVnD+X6bN53jj7BNda/e64nZZ033rhjpuCUR2hQjCHcPP8kLdXvo2/2Fef0hZmg+hDBK87Kf4t1YKzJWcBeFcdCCzK+SlsDiDhyOdI9QHcygbMmeMfjGllnxlIwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3+ec4bW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfNq0lRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D041F000E9;
-	Thu, 16 Jul 2026 13:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3+ec4bW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EDB1F000E9;
+	Thu, 16 Jul 2026 13:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209105;
-	bh=/JGtZgSbFQTCdv+6w9Rdbxsv8xRnwcSsrAbsrN4ewsE=;
+	s=korg; t=1784209108;
+	bh=FxtFzM7buJ9vTRp6uEDNrKdZzFVb3gv4CEbJKlshDr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XfNq0lRXckULq69NCgl48+1pVGMQ5Xjf4FXvGk0JmtpWEbdW4TNu+PHB5K1P4zkY3
-	 9h1Jp6rMmS6CxafABrvR8Om2mSF2Aan2rhGrCDlvQZ1GyY+QWmpAmRgG/6Cq669VYl
-	 4K6GPrp5rniItR0OvK8XIgfMsExrDORmpQLpiTVY=
+	b=z3+ec4bWrlYHO4J5WwqQInysvdpPwNn1P5tSUd5WKEE46ZItxL5Xe4e45e+SqHq4+
+	 BAfkF3jOer00gV8zJzMouRRl4eaWdaCmVcn/cAsLAgYm5cnkrhPiw0PWOv+QoJUBB0
+	 spY2zzorhvHUd/6nzPezXQLjJ2kSiWgfj9PpTEfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Andreas Kempe <andreas.kempe@actia.se>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 058/518] iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading
-Date: Thu, 16 Jul 2026 15:25:26 +0200
-Message-ID: <20260716133049.054839314@linuxfoundation.org>
+Subject: [PATCH 7.1 059/518] iio: imu: st_lsm6dsx: deselect shub page before reading whoami
+Date: Thu, 16 Jul 2026 15:25:27 +0200
+Message-ID: <20260716133049.075921597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,68 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Andreas Kempe <andreas.kempe@actia.se>
 
-commit affe3f077d7a4eeb25937f5323ff059a54b4712c upstream.
+commit aede83625ff5d9539508582036df30c809d51058 upstream.
 
-Timestamps are made by measuring the chip clock using the watermark
-interrupts. If we read more than watermark samples as done today, we
-are reducing the period between interrupts and distort the time
-measurement. Fix that by reading only watermark samples in the
-interrupt case.
+As part of driver initialization, e.g. st_lsm6dsx_init_shub() selects
+the shub register page using st_lsm6dsx_set_page(). Selecting the shub
+register page shadows the regular register space so whoami, among other
+registers, is no longer accessible.
 
-Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+In applications where the IMU is permanently powered separately from the
+processor, there is a window where a reset of the CPU leaves the IMU in
+the shub register page. Once this occurs, any subsequent probe attempt
+fails because of the register shadowing.
+
+Using the ism330dlc, the error typically looks like
+
+    st_lsm6dsx_i2c 3-006a: unsupported whoami [10]
+
+with the unknown whoami read from a reserved register in the shub page.
+
+The reset register is also shadowed by the page select, preventing a
+reset from recovering the chip.
+
+Unconditionally clear the shub page before the whoami readout to ensure
+normal register access and allow the initialization to proceed.
+
+Place the fix in st_lsm6dsx_check_whoami() before the whoami check
+because hw->settings, which st_lsm6dsx_set_page() relies on, is first
+assigned in that function.
+
+Placing the fix in a more logical place than the whoami check would
+require a bigger restructuring of the code.
+
+Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
+Signed-off-by: Andreas Kempe <andreas.kempe@actia.se>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |    9 +++++----
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h |    1 +
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -248,6 +248,7 @@ int inv_icm42600_buffer_update_watermark
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
+@@ -1660,6 +1660,26 @@ static int st_lsm6dsx_check_whoami(struc
+ 		return -ENODEV;
+ 	}
  
- 	/* compute watermark value in bytes */
- 	wm_size = watermark * packet_size;
-+	st->fifo.watermark.value = watermark;
++	hw->settings = &st_lsm6dsx_sensor_settings[i];
++
++	if (hw->settings->shub_settings.page_mux.addr) {
++		/*
++		 * If the IMU has the shub page selected on init, for example
++		 * after a CPU watchdog reset while the page is selected, the
++		 * regular register space is shadowed. While the regular
++		 * register space is shadowed, the registers needed for
++		 * initializing the IMU are not available.
++		 *
++		 * Unconditionally clear the shub page selection to ensure
++		 * normal register access.
++		 */
++		err = st_lsm6dsx_set_page(hw, false);
++		if (err < 0) {
++			dev_err(hw->dev, "failed to clear shub page\n");
++			return err;
++		}
++	}
++
+ 	err = regmap_read(hw->regmap, ST_LSM6DSX_REG_WHOAMI_ADDR, &data);
+ 	if (err < 0) {
+ 		dev_err(hw->dev, "failed to read whoami register\n");
+@@ -1672,7 +1692,6 @@ static int st_lsm6dsx_check_whoami(struc
+ 	}
  
- 	/* changing FIFO watermark requires to turn off watermark interrupt */
- 	ret = regmap_update_bits_check(st->map, INV_ICM42600_REG_INT_SOURCE0,
-@@ -454,11 +455,10 @@ int inv_icm42600_buffer_fifo_read(struct
- 	st->fifo.nb.accel = 0;
- 	st->fifo.nb.total = 0;
+ 	*name = st_lsm6dsx_sensor_settings[i].id[j].name;
+-	hw->settings = &st_lsm6dsx_sensor_settings[i];
  
--	/* compute maximum FIFO read size */
-+	/* compute maximum FIFO read size (watermark for max = 0 interrupt case) */
- 	if (max == 0)
--		max_count = sizeof(st->fifo.data);
--	else
--		max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
-+		max = st->fifo.watermark.value;
-+	max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
- 
- 	/* read FIFO count value */
- 	raw_fifo_count = (__be16 *)st->buffer;
-@@ -574,6 +574,7 @@ int inv_icm42600_buffer_init(struct inv_
- 
- 	st->fifo.watermark.eff_gyro = 1;
- 	st->fifo.watermark.eff_accel = 1;
-+	st->fifo.watermark.value = 1;
- 
- 	/*
- 	 * Default FIFO configuration (bits 7 to 5)
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-@@ -34,6 +34,7 @@ struct inv_icm42600_fifo {
- 		unsigned int accel;
- 		unsigned int eff_gyro;
- 		unsigned int eff_accel;
-+		unsigned int value;
- 	} watermark;
- 	size_t count;
- 	struct {
+ 	return 0;
+ }
 
 
