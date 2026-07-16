@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97556400973;
-	Thu, 16 Jul 2026 13:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263423D953E;
+	Thu, 16 Jul 2026 13:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210263; cv=none; b=fC6jVyCExhQiImyg4pVjw7XGBJUq//ARSoLEa7OvVVeZ6A6Z7xkGzhzcdXbiEJ9i8utOgrLW1omC1iRUuoEv/Czgi+QDx1HHx+YMZNf2aVoOA/QfMMyPYjmOedP1BxkXcdkqFfLzInxNu/F6TWX+OjP91NVwi1cK8UgybhH4yIA=
+	t=1784210265; cv=none; b=lS4ws0esex63mSmHeJsAJybLe/exUITB3Bw6O+axetw9vHIS9pcvtpRQ4nu91DQNEDKFqoClcSblGF7QdHt/JB0mIBIs4zbvkQpuGU4mu1MVIbrZz+JXut+X2+5aARl3Hx1XG5qD/bMfLVsJ8PsJpsUT2n3+0RAmKd+Q9AEW9EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210263; c=relaxed/simple;
-	bh=SWmxEeaNyX3rpNNcL4byQP5dDuwI6J/H6RjUy9LYrd0=;
+	s=arc-20240116; t=1784210265; c=relaxed/simple;
+	bh=p2q8hejajuJbcTG/OE0RE7aNAx7l9XqFi0mDqu3K0Bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xst6v0C4eTIE/ZS3VZdsFmKmKE8XJ2Tigp+FKs+U3LmVeAlGcSNmrIVZ2AmprM88BTUqR8AaVUJHdZfFKOYUM7KDy28W5uKUAIe3vH+kZMdSO37F4v80BjSK/gwxpl36HEUVL1Ac1sD8hz/9SRWrZE6wKlgKybyLMRBzHcbvedU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2STQulc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CSfiuCDyHKCbZlfV5Qf90WVXHdyTW8be7U+VgMG/GAnPOv7h00On6laDkIRvK/5u+a/t0hEuH2dyMCYsT7mhn8uoz0IoajwB3wn7WkQr2NVn5bMe7ayLeVL6R6eTiO9MJ38NyPDZ3hyvqviHhapQshFhr2S1QenXRDcCcn7KYbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ut+8p9Jv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2STQulc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B861F000E9;
-	Thu, 16 Jul 2026 13:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ut+8p9Jv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6F31F000E9;
+	Thu, 16 Jul 2026 13:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210261;
-	bh=WsTZG/GRy+ZrNIbhgbDbkZ9GfsX0vc37Eri3Zk4uxiI=;
+	s=korg; t=1784210264;
+	bh=um1alQsJDvvHscmLhKKRsLVGh4WBKFzro8IKCvD/2ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2STQulcxH/4gLpkouudYkYJmiFAFCvV6pAvtTdb/BhhoEUlCJnlGPmUPfeW0jh8i
-	 +aDnSQOpoX/S23ALLF3TmQnTG80NlAopWiDrpbu1qnqwGiqQnBhxYz1UTtlyMDeVPR
-	 pyqvYpCpiNO0babWmmG5Us7c9aDRUdJKgQIsDUmM=
+	b=Ut+8p9JvFGqDHjASnXusMNmyZ3B4jRLnIdRE0Q7sgRPaS9MCzIcb2dZJV+VzmDI2B
+	 JFpCzHdTwDwrlXMiub2W4l9cWkz6ThpPkAqXl80GspBLRx1Luu/53F9scDtzb7f6Eo
+	 AZcel5jyoB+q/7hTUyhlzK54HSDC0P3tIZXefz4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
+	=?UTF-8?q?=D0=90=D1=80=D1=82=D0=B5=D0=BC=20=D0=9B=D0=B0=D0=B1=D0=B0=D0=B7=D0=BE=D0=B2?= <123321artyom@gmail.com>,
+	NeilBrown <neilb@ownmail.net>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 7.1 500/518] fuse: avoid 32-bit prune notification count wrap
-Date: Thu, 16 Jul 2026 15:32:48 +0200
-Message-ID: <20260716133058.782918624@linuxfoundation.org>
+Subject: [PATCH 7.1 501/518] Revert "fuse: fix conversion of fuse_reverse_inval_entry() to start_removing()"
+Date: Thu, 16 Jul 2026 15:32:49 +0200
+Message-ID: <20260716133058.803990632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -45,491 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit 54243797cedf55447b4c5d560e8cd709900061ae upstream.
+commit c12bbaf7c2d19325913ffd7002e580e63952d9e2 upstream.
 
-FUSE_NOTIFY_PRUNE validates the nodeid payload length with:
+This reverts commit cab012375122304a6343c1ed09404e5143b9dc01.
 
-    size - sizeof(outarg) != outarg.count * sizeof(u64)
+Commit c9ba789dad15 ("VFS: introduce start_creating_noperm() and
+start_removing_noperm()") caused a regression in FUSE_NOTIFY_INVAL_ENTRY,
+which failed to invalidate negative dentries.
 
-On 32-bit kernels, size_t is also 32 bits, so the daemon-controlled
-count multiplication can wrap.  A prune notification with count
-0x20000000 and no nodeid payload passes the check, enters the copy
-loop, and asks the device copy path to read nodeids that are not
-present in the userspace write buffer.  In QEMU this reaches the
-fuse_copy_fill() BUG_ON(!err) path.
+This manifests in the filesystem returning -ENOENT for operations on an
+existing file.
 
-Validate the payload length with array_size() instead.  That accepts
-exactly the same valid messages, but avoids wrapping arithmetic before
-the copy loop consumes the count.
+Fixing it properly while still keeping the start_removing* infrastructure
+would add much additional complexity.
 
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Fixes: 3f29d59e92a9 ("fuse: add prune notification")
-Cc: stable@vger.kernel.org
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Instead revert to the original simple implementation.
+
+The start_removing* infrastructure is needed in VFS to abstract the
+filesystem locking.  However filesystem code can still safely use the raw
+locking primitives without affacting other filesystems.
+
+This is part one of the revert.
+
+Reported-by: Артем Лабазов <123321artyom@gmail.com>
+Closes: https://lore.kernel.org/all/CAFbF8N7++zopZuEcsKRxBV_sgOGCbzCY0hOyMw1SiGAtuzGhyQ@mail.gmail.com/
+Fixes: c9ba789dad15 ("VFS: introduce start_creating_noperm() and start_removing_noperm()")
+Cc: stable@vger.kernel.org # 6.19
+Cc: NeilBrown <neilb@ownmail.net>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c    |    2 
- fs/fuse/notify.c |  434 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 435 insertions(+), 1 deletion(-)
- create mode 100644 fs/fuse/notify.c
+ fs/fuse/dir.c | 23 +++++++----------------
+ 1 file changed, 7 insertions(+), 16 deletions(-)
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -2072,7 +2072,7 @@ static int fuse_notify_prune(struct fuse
- 	if (err)
- 		return err;
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index b658b6baf72f..6b05846c9bed 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1587,8 +1587,8 @@ int fuse_reverse_inval_entry(struct fuse_conn *fc, u64 parent_nodeid,
+ {
+ 	int err = -ENOTDIR;
+ 	struct inode *parent;
+-	struct dentry *dir = NULL;
+-	struct dentry *entry = NULL;
++	struct dentry *dir;
++	struct dentry *entry;
  
--	if (size - sizeof(outarg) != outarg.count * sizeof(u64))
-+	if (size - sizeof(outarg) != array_size(outarg.count, sizeof(u64)))
- 		return -EINVAL;
+ 	parent = fuse_ilookup(fc, parent_nodeid, NULL);
+ 	if (!parent)
+@@ -1601,19 +1601,11 @@ int fuse_reverse_inval_entry(struct fuse_conn *fc, u64 parent_nodeid,
+ 	dir = d_find_alias(parent);
+ 	if (!dir)
+ 		goto put_parent;
+-	while (!entry) {
+-		struct dentry *child = try_lookup_noperm(name, dir);
+-		if (!child || IS_ERR(child))
+-			goto put_parent;
+-		entry = start_removing_dentry(dir, child);
+-		dput(child);
+-		if (IS_ERR(entry))
+-			goto put_parent;
+-		if (!d_same_name(entry, dir, name)) {
+-			end_removing(entry);
+-			entry = NULL;
+-		}
+-	}
++
++	entry = start_removing_noperm(dir, name);
++	dput(dir);
++	if (IS_ERR(entry))
++		goto put_parent;
  
- 	for (; outarg.count; outarg.count -= num) {
---- /dev/null
-+++ b/fs/fuse/notify.c
-@@ -0,0 +1,434 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+#include "dev.h"
-+#include "fuse_i.h"
-+#include <linux/pagemap.h>
-+
-+static int fuse_notify_poll(struct fuse_conn *fc, unsigned int size,
-+			    struct fuse_copy_state *cs)
-+{
-+	struct fuse_notify_poll_wakeup_out outarg;
-+	int err;
-+
-+	if (size != sizeof(outarg))
-+		return -EINVAL;
-+
-+	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
-+	if (err)
-+		return err;
-+
-+	fuse_copy_finish(cs);
-+	return fuse_notify_poll_wakeup(fc, &outarg);
-+}
-+
-+static int fuse_notify_inval_inode(struct fuse_conn *fc, unsigned int size,
-+				   struct fuse_copy_state *cs)
-+{
-+	struct fuse_notify_inval_inode_out outarg;
-+	int err;
-+
-+	if (size != sizeof(outarg))
-+		return -EINVAL;
-+
-+	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
-+	if (err)
-+		return err;
-+	fuse_copy_finish(cs);
-+
-+	down_read(&fc->killsb);
-+	err = fuse_reverse_inval_inode(fc, outarg.ino,
-+				       outarg.off, outarg.len);
-+	up_read(&fc->killsb);
-+	return err;
-+}
-+
-+static int fuse_notify_inval_entry(struct fuse_conn *fc, unsigned int size,
-+				   struct fuse_copy_state *cs)
-+{
-+	struct fuse_notify_inval_entry_out outarg;
-+	int err;
-+	char *buf;
-+	struct qstr name;
-+
-+	if (size < sizeof(outarg))
-+		return -EINVAL;
-+
-+	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
-+	if (err)
-+		return err;
-+
-+	if (outarg.namelen > fc->name_max)
-+		return -ENAMETOOLONG;
-+
-+	err = -EINVAL;
-+	if (size != sizeof(outarg) + outarg.namelen + 1)
-+		return -EINVAL;
-+
-+	buf = kzalloc(outarg.namelen + 1, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	name.name = buf;
-+	name.len = outarg.namelen;
-+	err = fuse_copy_one(cs, buf, outarg.namelen + 1);
-+	if (err)
-+		goto err;
-+	fuse_copy_finish(cs);
-+	buf[outarg.namelen] = 0;
-+
-+	down_read(&fc->killsb);
-+	err = fuse_reverse_inval_entry(fc, outarg.parent, 0, &name, outarg.flags);
-+	up_read(&fc->killsb);
-+err:
-+	kfree(buf);
-+	return err;
-+}
-+
-+static int fuse_notify_delete(struct fuse_conn *fc, unsigned int size,
-+			      struct fuse_copy_state *cs)
-+{
-+	struct fuse_notify_delete_out outarg;
-+	int err;
-+	char *buf;
-+	struct qstr name;
-+
-+	if (size < sizeof(outarg))
-+		return -EINVAL;
-+
-+	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
-+	if (err)
-+		return err;
-+
-+	if (outarg.namelen > fc->name_max)
-+		return -ENAMETOOLONG;
-+
-+	if (size != sizeof(outarg) + outarg.namelen + 1)
-+		return -EINVAL;
-+
-+	buf = kzalloc(outarg.namelen + 1, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	name.name = buf;
-+	name.len = outarg.namelen;
-+	err = fuse_copy_one(cs, buf, outarg.namelen + 1);
-+	if (err)
-+		goto err;
-+	fuse_copy_finish(cs);
-+	buf[outarg.namelen] = 0;
-+
-+	down_read(&fc->killsb);
-+	err = fuse_reverse_inval_entry(fc, outarg.parent, outarg.child, &name, 0);
-+	up_read(&fc->killsb);
-+err:
-+	kfree(buf);
-+	return err;
-+}
-+
-+static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
-+			     struct fuse_copy_state *cs)
-+{
-+	struct fuse_notify_store_out outarg;
-+	struct inode *inode;
-+	struct address_space *mapping;
-+	u64 nodeid;
-+	int err;
-+	unsigned int num;
-+	loff_t file_size;
-+	loff_t pos;
-+	loff_t end;
-+
-+	if (size < sizeof(outarg))
-+		return -EINVAL;
-+
-+	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
-+	if (err)
-+		return err;
-+
-+	if (size - sizeof(outarg) != outarg.size)
-+		return -EINVAL;
-+
-+	if (outarg.offset >= MAX_LFS_FILESIZE)
-+		return -EINVAL;
-+
-+	nodeid = outarg.nodeid;
-+	pos = outarg.offset;
-+	num = min(outarg.size, MAX_LFS_FILESIZE - pos);
-+
-+	down_read(&fc->killsb);
-+
-+	err = -ENOENT;
-+	inode = fuse_ilookup(fc, nodeid,  NULL);
-+	if (!inode)
-+		goto out_up_killsb;
-+
-+	mapping = inode->i_mapping;
-+	file_size = i_size_read(inode);
-+	end = pos + num;
-+	if (end > file_size) {
-+		file_size = end;
-+		fuse_write_update_attr(inode, file_size, num);
-+	}
-+
-+	while (num) {
-+		struct folio *folio;
-+		unsigned int folio_offset;
-+		unsigned int nr_bytes;
-+		pgoff_t index = pos >> PAGE_SHIFT;
-+
-+		folio = filemap_grab_folio(mapping, index);
-+		err = PTR_ERR(folio);
-+		if (IS_ERR(folio))
-+			goto out_iput;
-+
-+		folio_offset = offset_in_folio(folio, pos);
-+		nr_bytes = min(num, folio_size(folio) - folio_offset);
-+
-+		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes, 0);
-+		if (!folio_test_uptodate(folio) && !err && folio_offset == 0 &&
-+		    (nr_bytes == folio_size(folio) || file_size == end)) {
-+			folio_zero_segment(folio, nr_bytes, folio_size(folio));
-+			folio_mark_uptodate(folio);
-+		}
-+		folio_unlock(folio);
-+		folio_put(folio);
-+
-+		if (err)
-+			goto out_iput;
-+
-+		pos += nr_bytes;
-+		num -= nr_bytes;
-+	}
-+
-+	err = 0;
-+
-+out_iput:
-+	iput(inode);
-+out_up_killsb:
-+	up_read(&fc->killsb);
-+	return err;
-+}
-+
-+struct fuse_retrieve_args {
-+	struct fuse_args_pages ap;
-+	struct fuse_notify_retrieve_in inarg;
-+};
-+
-+static void fuse_retrieve_end(struct fuse_args *args, int error)
-+{
-+	struct fuse_retrieve_args *ra =
-+		container_of(args, typeof(*ra), ap.args);
-+
-+	release_pages(ra->ap.folios, ra->ap.num_folios);
-+	kfree(ra);
-+}
-+
-+static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
-+			 struct fuse_notify_retrieve_out *outarg)
-+{
-+	int err;
-+	struct address_space *mapping = inode->i_mapping;
-+	loff_t file_size;
-+	unsigned int num;
-+	unsigned int offset;
-+	size_t total_len = 0;
-+	unsigned int num_pages;
-+	struct fuse_conn *fc = fm->fc;
-+	struct fuse_retrieve_args *ra;
-+	size_t args_size = sizeof(*ra);
-+	struct fuse_args_pages *ap;
-+	struct fuse_args *args;
-+	loff_t pos = outarg->offset;
-+
-+	offset = offset_in_page(pos);
-+	file_size = i_size_read(inode);
-+
-+	num = min(outarg->size, fc->max_write);
-+	if (pos > file_size)
-+		num = 0;
-+	else if (num > file_size - pos)
-+		num = file_size - pos;
-+
-+	num_pages = DIV_ROUND_UP(num + offset, PAGE_SIZE);
-+	num_pages = min(num_pages, fc->max_pages);
-+	num = min(num, num_pages << PAGE_SHIFT);
-+
-+	args_size += num_pages * (sizeof(ap->folios[0]) + sizeof(ap->descs[0]));
-+
-+	ra = kzalloc(args_size, GFP_KERNEL);
-+	if (!ra)
-+		return -ENOMEM;
-+
-+	ap = &ra->ap;
-+	ap->folios = (void *) (ra + 1);
-+	ap->descs = (void *) (ap->folios + num_pages);
-+
-+	args = &ap->args;
-+	args->nodeid = outarg->nodeid;
-+	args->opcode = FUSE_NOTIFY_REPLY;
-+	args->in_numargs = 3;
-+	args->in_pages = true;
-+	args->end = fuse_retrieve_end;
-+
-+	while (num && ap->num_folios < num_pages) {
-+		struct folio *folio;
-+		unsigned int folio_offset;
-+		unsigned int nr_bytes;
-+		pgoff_t index = pos >> PAGE_SHIFT;
-+
-+		folio = filemap_get_folio(mapping, index);
-+		if (IS_ERR(folio))
-+			break;
-+
-+		folio_offset = offset_in_folio(folio, pos);
-+		nr_bytes = min(folio_size(folio) - folio_offset, num);
-+
-+		ap->folios[ap->num_folios] = folio;
-+		ap->descs[ap->num_folios].offset = folio_offset;
-+		ap->descs[ap->num_folios].length = nr_bytes;
-+		ap->num_folios++;
-+
-+		pos += nr_bytes;
-+		num -= nr_bytes;
-+		total_len += nr_bytes;
-+	}
-+	ra->inarg.offset = outarg->offset;
-+	ra->inarg.size = total_len;
-+	fuse_set_zero_arg0(args);
-+	args->in_args[1].size = sizeof(ra->inarg);
-+	args->in_args[1].value = &ra->inarg;
-+	args->in_args[2].size = total_len;
-+
-+	err = fuse_simple_notify_reply(fm, args, outarg->notify_unique);
-+	if (err)
-+		fuse_retrieve_end(args, err);
-+
-+	return err;
-+}
-+
-+static int fuse_notify_retrieve(struct fuse_conn *fc, unsigned int size,
-+				struct fuse_copy_state *cs)
-+{
-+	struct fuse_notify_retrieve_out outarg;
-+	struct fuse_mount *fm;
-+	struct inode *inode;
-+	u64 nodeid;
-+	int err;
-+
-+	if (size != sizeof(outarg))
-+		return -EINVAL;
-+
-+	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
-+	if (err)
-+		return err;
-+
-+	fuse_copy_finish(cs);
-+
-+	if (outarg.offset >= MAX_LFS_FILESIZE)
-+		return -EINVAL;
-+
-+	down_read(&fc->killsb);
-+	err = -ENOENT;
-+	nodeid = outarg.nodeid;
-+
-+	inode = fuse_ilookup(fc, nodeid, &fm);
-+	if (inode) {
-+		err = fuse_retrieve(fm, inode, &outarg);
-+		iput(inode);
-+	}
-+	up_read(&fc->killsb);
-+
-+	return err;
-+}
-+
-+static int fuse_notify_resend(struct fuse_conn *fc)
-+{
-+	fuse_chan_resend(fc->chan);
-+	return 0;
-+}
-+
-+/*
-+ * Increments the fuse connection epoch.  This will result of dentries from
-+ * previous epochs to be invalidated.  Additionally, if inval_wq is set, a work
-+ * queue is scheduled to trigger the invalidation.
-+ */
-+static int fuse_notify_inc_epoch(struct fuse_conn *fc)
-+{
-+	atomic_inc(&fc->epoch);
-+	if (inval_wq)
-+		schedule_work(&fc->epoch_work);
-+
-+	return 0;
-+}
-+
-+static int fuse_notify_prune(struct fuse_conn *fc, unsigned int size,
-+			     struct fuse_copy_state *cs)
-+{
-+	struct fuse_notify_prune_out outarg;
-+	const unsigned int batch = 512;
-+	u64 *nodeids __free(kfree) = kmalloc(sizeof(u64) * batch, GFP_KERNEL);
-+	unsigned int num, i;
-+	int err;
-+
-+	if (!nodeids)
-+		return -ENOMEM;
-+
-+	if (size < sizeof(outarg))
-+		return -EINVAL;
-+
-+	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
-+	if (err)
-+		return err;
-+
-+	if (size - sizeof(outarg) != array_size(outarg.count, sizeof(u64)))
-+		return -EINVAL;
-+
-+	for (; outarg.count; outarg.count -= num) {
-+		num = min(batch, outarg.count);
-+		err = fuse_copy_one(cs, nodeids, num * sizeof(u64));
-+		if (err)
-+			return err;
-+
-+		scoped_guard(rwsem_read, &fc->killsb) {
-+			for (i = 0; i < num; i++)
-+				fuse_try_prune_one_inode(fc, nodeids[i]);
-+		}
-+	}
-+	return 0;
-+}
-+
-+int fuse_notify(struct fuse_conn *fc, enum fuse_notify_code code,
-+		unsigned int size, struct fuse_copy_state *cs)
-+{
-+	switch (code) {
-+	case FUSE_NOTIFY_POLL:
-+		return fuse_notify_poll(fc, size, cs);
-+
-+	case FUSE_NOTIFY_INVAL_INODE:
-+		return fuse_notify_inval_inode(fc, size, cs);
-+
-+	case FUSE_NOTIFY_INVAL_ENTRY:
-+		return fuse_notify_inval_entry(fc, size, cs);
-+
-+	case FUSE_NOTIFY_STORE:
-+		return fuse_notify_store(fc, size, cs);
-+
-+	case FUSE_NOTIFY_RETRIEVE:
-+		return fuse_notify_retrieve(fc, size, cs);
-+
-+	case FUSE_NOTIFY_DELETE:
-+		return fuse_notify_delete(fc, size, cs);
-+
-+	case FUSE_NOTIFY_RESEND:
-+		return fuse_notify_resend(fc);
-+
-+	case FUSE_NOTIFY_INC_EPOCH:
-+		return fuse_notify_inc_epoch(fc);
-+
-+	case FUSE_NOTIFY_PRUNE:
-+		return fuse_notify_prune(fc, size, cs);
-+
-+	default:
-+		return -EINVAL;
-+	}
-+}
+ 	fuse_dir_changed(parent);
+ 	if (!(flags & FUSE_EXPIRE_ONLY))
+@@ -1651,7 +1643,6 @@ int fuse_reverse_inval_entry(struct fuse_conn *fc, u64 parent_nodeid,
+ 
+ 	end_removing(entry);
+  put_parent:
+-	dput(dir);
+ 	iput(parent);
+ 	return err;
+ }
+-- 
+2.55.0
+
 
 
