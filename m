@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1456E3D522F;
-	Thu, 16 Jul 2026 13:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B374248C8;
+	Thu, 16 Jul 2026 13:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209861; cv=none; b=Pn+ckfBmsUP7EiR4dFl8lJau/BT3FYoU0XcwVUuHvZ7ET6N6Ds+F0J8fC717T2xl5Hgcf0BiuVsAKUWp/OVXYlbCattWBKiNj2mBQuLxrFv+y7YKAhMijGLmqJVDt65/tIKfTgf//4DkAQXM3l2Wd0z8F5NAymZaLcvlwmFGsZc=
+	t=1784209863; cv=none; b=YwShrq/bqIwmSHcjK/ENI8AeFHnKxQb3nj2gcCXb5VQD4HXoLTSemwAUw/4L6h3wc/vEWNSFcb3B1AMouCNgG0xbTKizQoTxCTqdxJN8KnzQq/Wz+YzTvf7EhBzTQMlKv4NwuoYzZ7QszJiO7BUdlRULGRfOJu1+peNOeVOOdXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209861; c=relaxed/simple;
-	bh=Wx5hOG2kRsOO7FydzvE7g2aGVR5EeW8wHnu8LaejXgk=;
+	s=arc-20240116; t=1784209863; c=relaxed/simple;
+	bh=RwYjgBe1TmOEOp2dO494DTMty6yxA1pfa8tkgIRtF9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYPA49y0/kcs5wH9l9dSOfPEL3pnuqnqosym1/wLeuvxDN8o3TVVYDx8mZPYCKO29uA40h4XVG4NfJFlcgTATsSxyUOdLwuTSYHVCBOXTBBn8MZg+ESVq2U1pTknbED7Tfy1azgESW7rLemwdwgGs63yO7wX/hUUpg2jyw+XqTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2QZaWK2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m/FCfpsoI4bitrGjetp7FcNQkXIPVwrPvu/FTIE06vJvuGPk5428xQ7+0WTTvdb2qVnDWozYg9jviu9C6wQo0S2sbVE2rgZYoQRuUHeMKf6vCJZrFBjn0t7k+QgtEybG8ga13VeKm29fjhLD12xWwOzalU1EkBkCXhlWvFMmixI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXhvPi/x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2QZaWK2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C6D1F000E9;
-	Thu, 16 Jul 2026 13:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXhvPi/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC031F00A3A;
+	Thu, 16 Jul 2026 13:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209860;
-	bh=sPZyhbjcy07ne02Qjn+TinRkuu0BT0xwDoDuMTcTz8g=;
+	s=korg; t=1784209862;
+	bh=Xtb/2S5nepfidfan3xf3yHVc6ik5NojS345u1P9yk2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q2QZaWK26FDl4ruBeagVz2IRh5uRYNCW/zNnBwmIF4qzwwm0irYZ76oyOzj4zfyM6
-	 fC5uycWWXLT3gwfIqkMwxfvwCgDCpcFRis14e0RQ+GmybeGaQKcSdxGz9f7b0PIwwF
-	 Eu8M+DzZpUhcKR2sjl7kQtGIe+5Qce6eWpoa0uuA=
+	b=PXhvPi/xBU1sMeI4bd9gxVxGRb60ZgoDVI4gsUngGV0CVwTlkXux9MmhHlHSO/5BI
+	 knGhyfr84I9ss50noViQWMPK0PrvKyBOcQVmYPOAg0H8mV9n6bsLIC88Fx+ubZVgXT
+	 20gkdrtm6KwGIiJMU7jNMJCyGgVW3KzEI1mufPxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 7.1 344/518] udf: validate sparing table length as an entry count, not a byte count
-Date: Thu, 16 Jul 2026 15:30:12 +0200
-Message-ID: <20260716133055.348523009@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.1 345/518] hwrng: jh7110 - fix refcount leak in starfive_trng_read()
+Date: Thu, 16 Jul 2026 15:30:13 +0200
+Message-ID: <20260716133055.369547685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,57 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 3ec997bd5508e9b25210b5bbec89031629cdb093 upstream.
+commit 8d13f7a8450206e3f820cdb26e33e91d181071b4 upstream.
 
-udf_load_sparable_map() accepts a sparing table when
+The starfive_trng_read() function acquires a runtime PM reference
+via pm_runtime_get_sync() but fails to release it on two error
+paths.  If starfive_trng_wait_idle() or starfive_trng_cmd() returns
+an error, the function exits without calling
+pm_runtime_put_sync_autosuspend(), leaving the runtime PM usage
+counter permanently elevated and preventing the device from entering
+runtime suspend.
 
-	sizeof(*st) + le16_to_cpu(st->reallocationTableLen) > sb->s_blocksize
+Refactor the function to use a unified error path that calls
+pm_runtime_put_sync_autosuspend() before returning.
 
-is false, i.e. it treats reallocationTableLen as a number of BYTES that
-must fit in the block.  But the table is walked as an array of 8-byte
-sparingEntry elements:
-
-	for (i = 0; i < le16_to_cpu(st->reallocationTableLen); i++) {
-		struct sparingEntry *entry = &st->mapEntry[i];
-		... entry->origLocation ...
-	}
-
-in udf_get_pblock_spar15() and udf_relocate_blocks().  A
-reallocationTableLen of N therefore passes the check whenever
-sizeof(*st) + N <= blocksize, yet the consumers index
-sizeof(*st) + N * sizeof(struct sparingEntry) bytes -- up to ~8x the
-block.  On a crafted UDF image this is an out-of-bounds read in
-udf_get_pblock_spar15(); udf_relocate_blocks() additionally feeds the
-same length to udf_update_tag(), whose crc_itu_t() reads far past the
-block, and its memmove() through st->mapEntry[] is an out-of-bounds
-write.
-
-Validate reallocationTableLen as the entry count it is, with
-struct_size().
-
-Fixes: 1df2ae31c724 ("udf: Fortify loading of sparing table")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260612-b4-disp-91780c4e-v1-1-f15112ff6882@proton.me
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: c388f458bc34 ("hwrng: starfive - Add TRNG driver for StarFive SoC")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/char/hw_random/jh7110-trng.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1426,7 +1426,8 @@ static int udf_load_sparable_map(struct
- 		if (ident != 0 ||
- 		    strncmp(st->sparingIdent.ident, UDF_ID_SPARING,
- 			    strlen(UDF_ID_SPARING)) ||
--		    sizeof(*st) + le16_to_cpu(st->reallocationTableLen) >
-+		    struct_size(st, mapEntry,
-+				le16_to_cpu(st->reallocationTableLen)) >
- 							sb->s_blocksize) {
- 			brelse(bh);
- 			continue;
+--- a/drivers/char/hw_random/jh7110-trng.c
++++ b/drivers/char/hw_random/jh7110-trng.c
+@@ -256,19 +256,22 @@ static int starfive_trng_read(struct hwr
+ 
+ 	if (wait) {
+ 		ret = starfive_trng_wait_idle(trng);
+-		if (ret)
+-			return -ETIMEDOUT;
++		if (ret) {
++			ret = -ETIMEDOUT;
++			goto out_put;
++		}
+ 	}
+ 
+ 	ret = starfive_trng_cmd(trng, STARFIVE_CTRL_GENE_RANDNUM, wait);
+ 	if (ret)
+-		return ret;
++		goto out_put;
+ 
+ 	memcpy_fromio(buf, trng->base + STARFIVE_RAND0, max);
++	ret = max;
+ 
++out_put:
+ 	pm_runtime_put_sync_autosuspend(trng->dev);
+-
+-	return max;
++	return ret;
+ }
+ 
+ static int starfive_trng_probe(struct platform_device *pdev)
 
 
