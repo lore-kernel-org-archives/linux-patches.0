@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0363D9DB3;
-	Thu, 16 Jul 2026 13:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CF43876DE;
+	Thu, 16 Jul 2026 13:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210268; cv=none; b=pkpO6mKSEhPplq8o0wfo5aD6NBh5TQ2FAJYylcq03z26Z/qZLI99dK9tThX0VqtvCClshdtawFuRJZOG+4k8KotmRT89fgByJVj2WwItRC6LHC0pVh+gQxv8c44RM6tQXWqAFAYTtMzo3lfISXiOpw1ZHMOpFSCjwDWsDEQLBEY=
+	t=1784210271; cv=none; b=RRy1XKXq5CChngyfF/XBpelpiiG5HVQE0FREL3VoDi13V5QmXn8jHTyIhT82DKHIhg5i7wKUxQcw752G8uoKvvC68W21epC56geMw0e0t5mJx/CPCfQXRwsUddVNv5ZFo9ScI5oxDfde0c9avEpBi5ssYGpdGqcIbu/5eKGOV1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210268; c=relaxed/simple;
-	bh=HXzK6Rzf1SIuWBiKCPVnVjpz0gI+E3eyLqM/3K4KyQ4=;
+	s=arc-20240116; t=1784210271; c=relaxed/simple;
+	bh=K/4P7H+WbZPsgqK9e9YHhSodNvezWIbgfu86Z74mPC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1Gr2ym1jL/vFJsSFWPGGlOWe2X/jQXa8xltEzWjFtZpen3AVJ2CWAyIVJw2MjVPAacM4+d3lfK2ZdobV+RrPicavhti1A9HUW0n8OpWUPBrJlJ3v+KtLk5wmiKanmtL4nUZxLt6bB6BuHSuWzRsKfPhedmAPR2JV8AD1eXT+Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WD6cNW8l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FevRzw5klx2rgr1q321pQM9cb+Nn9m/9re5mfhuJnCtxkMmrVCpqhrofRoWUTtTryy4qxJv1zz0bZuVNNXXW8r4Xf47Fc3j/EkW+BG8kuvh6DZf7U5c+VpFZXUsHf/njSqTEmD2vRWJImKAghXrmIhLb4xjJLFtXV9XWb3kfXzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHJgrnVL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WD6cNW8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA931F000E9;
-	Thu, 16 Jul 2026 13:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHJgrnVL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42B91F000E9;
+	Thu, 16 Jul 2026 13:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210266;
-	bh=uQORSBY45Nq3Tqu5NemXdU5H0XU9fIKH7G6AbQfw+G8=;
+	s=korg; t=1784210269;
+	bh=nTh9MWN2iFCPdH6TJ9wP8O1Y2ry153sDPHo6bpERB8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WD6cNW8lIlTpJYuqu60oEqZMXNT1UzvAikSsRkR0qMItra4IShfMCUJZ3/OAVHQ4p
-	 3bYXSDF0BWHtDK5QQv9TlNSPlRujMTrLzcWIWPITE3w7PlQT4lfQJdHGOoGQSloBdP
-	 ZyK1BqvR2nxSqsDwJjl6SbGYoUHauk4i+vD6JmMc=
+	b=NHJgrnVLssDbbxcMs9V2i2sm6l/ye2YT1moTMD+84PVazEDuEkJUDl5Yf+sO8wbWX
+	 pKY6U45MOt1rnINeDlb/AdHb81BvK0Lw2MFz85bbgZC10v9Pw0Bd6xpZKVgzUdATRX
+	 a1DENXrJwC3w6vEr1mjVd/IiWbKTPxcTVu2LOhqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alberto Ruiz <aruiz@redhat.com>,
+	=?UTF-8?q?=D0=90=D1=80=D1=82=D0=B5=D0=BC=20=D0=9B=D0=B0=D0=B1=D0=B0=D0=B7=D0=BE=D0=B2?= <123321artyom@gmail.com>,
+	NeilBrown <neilb@ownmail.net>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 7.1 502/518] fuse: fix device node leak in cuse_process_init_reply()
-Date: Thu, 16 Jul 2026 15:32:50 +0200
-Message-ID: <20260716133058.825721167@linuxfoundation.org>
+Subject: [PATCH 7.1 503/518] fuse: do not use start_removing_noperm()
+Date: Thu, 16 Jul 2026 15:32:51 +0200
+Message-ID: <20260716133058.846673195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,74 +45,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alberto Ruiz <aruiz@redhat.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit 9fa4f7a53406430ee9982f2f636a15b338185122 upstream.
+commit 6e1b235627bb1172d27c1b2ea7bf53e67dbced8d upstream.
 
-If device_add() succeeds during CUSE initialization but a subsequent
-step (cdev_alloc() or cdev_add()) fails, the error path calls
-put_device() without first calling device_del().  This leaks the
-devtmpfs entry created by device_add(), leaving a stale /dev/<name>
-node that persists until reboot.
+Revert the fuse part of commit c9ba789dad15 ("VFS: introduce
+start_creating_noperm() and start_removing_noperm()").
 
-Since the cuse_conn is never linked into cuse_conntbl on the failure
-path, cuse_channel_release() sees cc->dev == NULL and skips
-device_unregister(), so no other code path cleans up the node.
+Commit c9ba789dad15 ("VFS: introduce start_creating_noperm() and
+start_removing_noperm()") caused a regression in FUSE_NOTIFY_INVAL_ENTRY,
+which failed to invalidate negative dentries.
 
-This has several consequences:
+This manifests in the filesystem returning -ENOENT for operations on an
+existing file.
 
- - The device name is permanently poisoned: any subsequent attempt to
-   create a CUSE device with the same name hits the stale sysfs entry,
-   device_add() fails, and the new device is aborted.
+Fixing it properly while still keeping the start_removing* infrastructure
+would add much additional complexity.
 
- - The collision manifests as ENODEV returned to userspace with no
-   dmesg diagnostic, making it very difficult to debug.
+Instead revert to the original simple implementation.
 
- - The failure is self-perpetuating: once a name is leaked, all future
-   attempts with that name fail identically.
+The start_removing* infrastructure is needed in VFS to abstract the
+filesystem locking.  However filesystem code can still safely use the raw
+locking primitives without affacting other filesystems.
 
-Fix this by introducing an err_dev label that calls device_del() to
-undo device_add() before falling through to err_unlock.  The existing
-err_unlock path from a device_add() failure correctly skips device_del()
-since the device was never added.
+This is part two of the revert.
 
-Testing instructions can be found at the lore link below.
-
-Link: https://lore.kernel.org/all/20260408-wip-cuse-leak-fix-v1-0-1c028d575e97@redhat.com/
-Signed-off-by: Alberto Ruiz <aruiz@redhat.com>
-Fixes: 151060ac1314 ("CUSE: implement CUSE - Character device in Userspace")
-Cc: stable@vger.kernel.org
+Reported-by: Артем Лабазов <123321artyom@gmail.com>
+Closes: https://lore.kernel.org/all/CAFbF8N7++zopZuEcsKRxBV_sgOGCbzCY0hOyMw1SiGAtuzGhyQ@mail.gmail.com/
+Fixes: c9ba789dad15 ("VFS: introduce start_creating_noperm() and start_removing_noperm()")
+Cc: stable@vger.kernel.org # 6.19
+Cc: NeilBrown <neilb@ownmail.net>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/cuse.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/fuse/dir.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/fs/fuse/cuse.c
-+++ b/fs/fuse/cuse.c
-@@ -391,7 +391,7 @@ static void cuse_process_init_reply(stru
- 	rc = -ENOMEM;
- 	cdev = cdev_alloc();
- 	if (!cdev)
--		goto err_unlock;
-+		goto err_dev;
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index 6b05846c9bed..97751bacb79c 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1594,25 +1594,27 @@ int fuse_reverse_inval_entry(struct fuse_conn *fc, u64 parent_nodeid,
+ 	if (!parent)
+ 		return -ENOENT;
  
- 	cdev->owner = THIS_MODULE;
- 	cdev->ops = &cuse_frontend_fops;
-@@ -417,6 +417,8 @@ out:
++	inode_lock_nested(parent, I_MUTEX_PARENT);
+ 	if (!S_ISDIR(parent->i_mode))
+-		goto put_parent;
++		goto unlock;
  
- err_cdev:
- 	cdev_del(cdev);
-+err_dev:
-+	device_del(dev);
- err_unlock:
- 	mutex_unlock(&cuse_lock);
- 	put_device(dev);
+ 	err = -ENOENT;
+ 	dir = d_find_alias(parent);
+ 	if (!dir)
+-		goto put_parent;
++		goto unlock;
+ 
+-	entry = start_removing_noperm(dir, name);
++	name->hash = full_name_hash(dir, name->name, name->len);
++	entry = d_lookup(dir, name);
+ 	dput(dir);
+-	if (IS_ERR(entry))
+-		goto put_parent;
++	if (!entry)
++		goto unlock;
+ 
+ 	fuse_dir_changed(parent);
+ 	if (!(flags & FUSE_EXPIRE_ONLY))
+ 		d_invalidate(entry);
+ 	fuse_invalidate_entry_cache(entry);
+ 
+-	if (child_nodeid != 0) {
++	if (child_nodeid != 0 && d_really_is_positive(entry)) {
+ 		inode_lock(d_inode(entry));
+ 		if (get_node_id(d_inode(entry)) != child_nodeid) {
+ 			err = -ENOENT;
+@@ -1640,9 +1642,10 @@ int fuse_reverse_inval_entry(struct fuse_conn *fc, u64 parent_nodeid,
+ 	} else {
+ 		err = 0;
+ 	}
++	dput(entry);
+ 
+-	end_removing(entry);
+- put_parent:
++ unlock:
++	inode_unlock(parent);
+ 	iput(parent);
+ 	return err;
+ }
+-- 
+2.55.0
+
 
 
