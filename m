@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113F13161AD;
-	Thu, 16 Jul 2026 14:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE053195EF;
+	Thu, 16 Jul 2026 14:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211205; cv=none; b=qqJ9Q8K612pQab9QIznBDiHn+SqAanEJki8zL6+YHeemAFsMVWodQOP1uy+jT8cSYG3GRAnaUoPU/wLlgEj1BkzESBR3cqTcLysCclc40qzfW5yzLPWUaVIzmLMbaBQ6YzXHN05cqx+P4wLb56dUfxLljIuAIbAWh9eHRD0TLgo=
+	t=1784211207; cv=none; b=eQkgihiRNmMGrWqiHeTCkmPdg45Pm53QE0S2DhtcLgkR64X0wKbSdwExkeuHTrHeSIWPVXajLn8WUJ74s6mNg9IKG2Nft4wRGVhdtWZBIdgy3TYcG3upkkgff3BKOQ+J1cuxcUJoQ8BzhPA6WD030j8EGRccFs0C6UBNH0s0q4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211205; c=relaxed/simple;
-	bh=opiGihyuADyth+4MRlrqskKCUF1Tqlg8h/+QBjIRZbM=;
+	s=arc-20240116; t=1784211207; c=relaxed/simple;
+	bh=tNUnu8RiB1jGyeNhLcGf0w8qm6NIS6jt+CL0bOIdZ4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGgh+gzm9t8rLy+ctOmzMZ7tOILfrqdgowX5SW9fUgRv5XtqNQL/fgVNvOsK31hy+1DIXaCXLMXb0HiP/YHRLJAZ7ddLhoxhZMBCqPASPj0/Fk7M5jB1/SIhbnUovKz1Vv9w4P3weUA4YncX4/FvdP8vj0QxKZfSshtrvLdEBb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKGoG/xM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JEnkIFZMFulX3Pu+W07GefZksR1XLePyCSZJvrR52ZZYuJ7ISeZ46LW8dzdvKMeyKawE4z1AVkYOJFLBW/4WRpKlg0Dynkxg6UtwMXzDnZZImVTMtleWXH7Opi/8FMUtzmB1Ig2ZlZFUoMRM0XiF36TefBnBb/N1poGDRRoXnM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMQNIFFX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKGoG/xM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777F61F000E9;
-	Thu, 16 Jul 2026 14:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMQNIFFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0AF1F000E9;
+	Thu, 16 Jul 2026 14:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211204;
-	bh=bR+ZOln68a+sCSiHpmF2Y1iZDPVZ1nwuEwVWqTg2Gkg=;
+	s=korg; t=1784211206;
+	bh=lEiXzFF6Uah+m9/Bt8E2jcWCDvt1EEBTP1pRddIaYBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QKGoG/xMvp2hZHNPu/IndguL/sQUUjzccY51LAJiDh/APryJHi4tY4+dZkYwaK72O
-	 4ZzwyGxs0DeOkpBEipUICKJ1NZVwVqzqcFqiwU21r84D+8WZ8aJsUJO8JPW5N0S7Bb
-	 RJA6tsccV8LlkLuSYH3MlgGouf0ziMMF+Lh1o3Uo=
+	b=dMQNIFFXM3XTcg2ln+OE8Bi2hrLSolZdebH/89/1eYpwUULUXyllOaXoDWUliwQUU
+	 Hh0z3QP7cXiu2TL8y5foUz5ZJBIFJYW/YEJIcCIuxtGfxfTHGnRLy4cnhPPDXbrN/I
+	 2iLqkKoi0FjXAZdJ+tBvs2N/gt10ILwDaOgS89Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Hannes Reinecke <hare@kernel.org>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 340/480] nvmet: fix pre-auth out-of-bounds heap read in Discovery Get Log Page
-Date: Thu, 16 Jul 2026 15:31:27 +0200
-Message-ID: <20260716133052.164498553@linuxfoundation.org>
+Subject: [PATCH 6.18 341/480] nvmet-auth: validate reply message payload bounds against transfer length
+Date: Thu, 16 Jul 2026 15:31:28 +0200
+Message-ID: <20260716133052.186175388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,101 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 53cd102a7a56079b11b897835bd9b94c14e6322c upstream.
+commit 3a413ece2504c70aa34a20be4dafec04e8c741f9 upstream.
 
-nvmet_execute_disc_get_log_page() validates only the dword alignment
-of the host-supplied Log Page Offset (lpo).  The 64-bit offset is then
-added to a small kzalloc'd buffer that holds the discovery log page
-and the result is passed straight to nvmet_copy_to_sgl(), which
-memcpy()s data_len bytes out to the host with no source-side bound
-check:
+nvmet_auth_reply() accesses the variable-length rval[] array using
+attacker-controlled hl (hash length) and dhvlen (DH value length) fields
+without verifying they fit within the allocated buffer of tl bytes.
 
-    u64 offset      = nvmet_get_log_page_offset(req->cmd);  /* 64-bit host */
-    size_t data_len = nvmet_get_log_page_len(req->cmd);     /* 32-bit host */
-    ...
-    if (offset & 0x3) { ... }                               /* only check */
-    ...
-    alloc_len = sizeof(*hdr) + entry_size * discovery_log_entries(req);
-    buffer = kzalloc(alloc_len, GFP_KERNEL);
-    ...
-    status = nvmet_copy_to_sgl(req, 0, buffer + offset, data_len);
+A malicious NVMe-oF initiator can craft a DHCHAP_REPLY message with a
+small transfer length but large hl/dhvlen values, causing out-of-bounds
+heap reads when the target processes the DH public key (rval + 2*hl) or
+performs the host response memcmp.
 
-The Discovery controller is unauthenticated -- nvmet_host_allowed()
-returns true unconditionally for the discovery subsystem -- so the call
-is reachable pre-authentication by any TCP/RDMA/FC peer that can reach
-the nvmet target.  With a discovery log page of ~1 KiB, an attacker
-requesting up to 4 KiB starting at offset == alloc_len reads the next
-slab page out and gets its content returned over the fabric (an
-empirical run on a default nvmet-tcp loopback target leaked 81
-canonical kernel pointers in one Get Log Page response).  Pointing the
-offset at unmapped kernel memory faults the in-kernel memcpy and
-crashes (or panics, on panic_on_oops=1) the target host instead.
+With DH authentication configured, the OOB pointer is passed directly to
+sg_init_one() and read by crypto_kpp_compute_shared_secret(), reaching
+up to 526 bytes past the buffer. This is exploitable pre-authentication.
 
-The attacker-controlled source-side offset pattern
-"nvmet_copy_to_sgl(req, 0, buffer + ATTACKER_OFFSET, ...)" is unique
-to nvmet_execute_disc_get_log_page in the entire nvmet codebase: every
-other Get Log Page handler in admin-cmd.c either ignores lpo (and
-silently starts every response at offset 0) or tracks a local
-destination offset with a fixed source pointer.
+Add bounds validation ensuring sizeof(*data) + 2*hl + dhvlen <= tl before
+any access to the variable-length fields.
 
-Validate the host-supplied offset against the log page size, cap the
-copy length to what is actually available, and zero-fill any remainder
-of the host transfer buffer.  The zero-fill matches the existing
-short-response pattern in nvmet_execute_get_log_changed_ns()
-(admin-cmd.c) and prevents leaking transport SGL contents when the
-host asks for more bytes than the log page contains.
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
 
-Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
 Cc: stable@vger.kernel.org
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/discovery.c |   23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ drivers/nvme/target/fabrics-cmd-auth.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/nvme/target/discovery.c
-+++ b/drivers/nvme/target/discovery.c
-@@ -166,6 +166,7 @@ static void nvmet_execute_disc_get_log_p
- 	u64 offset = nvmet_get_log_page_offset(req->cmd);
- 	size_t data_len = nvmet_get_log_page_len(req->cmd);
- 	size_t alloc_len;
-+	size_t copy_len;
- 	struct nvmet_subsys_link *p;
- 	struct nvmet_port *r;
- 	u32 numrec = 0;
-@@ -242,7 +243,27 @@ static void nvmet_execute_disc_get_log_p
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -134,13 +134,22 @@ static u8 nvmet_auth_negotiate(struct nv
+ 	return 0;
+ }
  
- 	up_read(&nvmet_config_sem);
+-static u8 nvmet_auth_reply(struct nvmet_req *req, void *d)
++static u8 nvmet_auth_reply(struct nvmet_req *req, void *d, u32 tl)
+ {
+ 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
+ 	struct nvmf_auth_dhchap_reply_data *data = d;
+-	u16 dhvlen = le16_to_cpu(data->dhvlen);
++	u16 dhvlen;
+ 	u8 *response;
  
--	status = nvmet_copy_to_sgl(req, 0, buffer + offset, data_len);
-+	/*
-+	 * Validate the host-supplied log page offset before copying out.
-+	 * Without this check, the host controls a 64-bit byte offset into
-+	 * a small kzalloc'd buffer: a value past the log page lets the
-+	 * subsequent memcpy read adjacent kernel heap, and a value aimed
-+	 * at unmapped kernel memory faults the in-kernel copy and crashes
-+	 * the target host. The Discovery controller is unauthenticated,
-+	 * so the bug is reachable from any reachable fabric peer.
-+	 */
-+	if (offset > alloc_len) {
-+		req->error_loc =
-+			offsetof(struct nvme_get_log_page_command, lpo);
-+		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
-+		goto out_free_buffer;
-+	}
++	if (tl < sizeof(*data))
++		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
 +
-+	copy_len = min_t(size_t, data_len, alloc_len - offset);
-+	status = nvmet_copy_to_sgl(req, 0, buffer + offset, copy_len);
-+	if (!status && copy_len < data_len)
-+		status = nvmet_zero_sgl(req, copy_len, data_len - copy_len);
-+out_free_buffer:
- 	kfree(buffer);
- out:
- 	nvmet_req_complete(req, status);
++	dhvlen = le16_to_cpu(data->dhvlen);
++
++	/* Validate that hl and dhvlen fit within the transfer length */
++	if (sizeof(*data) + 2 * (size_t)data->hl + dhvlen > tl)
++		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
++
+ 	pr_debug("%s: ctrl %d qid %d: data hl %d cvalid %d dhvlen %u\n",
+ 		 __func__, ctrl->cntlid, req->sq->qid,
+ 		 data->hl, data->cvalid, dhvlen);
+@@ -339,7 +348,7 @@ void nvmet_execute_auth_send(struct nvme
+ 
+ 	switch (data->auth_id) {
+ 	case NVME_AUTH_DHCHAP_MESSAGE_REPLY:
+-		dhchap_status = nvmet_auth_reply(req, d);
++		dhchap_status = nvmet_auth_reply(req, d, tl);
+ 		if (dhchap_status == 0)
+ 			req->sq->dhchap_step =
+ 				NVME_AUTH_DHCHAP_MESSAGE_SUCCESS1;
 
 
