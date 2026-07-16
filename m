@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152973D45DD;
-	Thu, 16 Jul 2026 13:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADA33BE161;
+	Thu, 16 Jul 2026 13:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209369; cv=none; b=ropk8vgOB5yw+xZCvNDyXG8iF/N1IN38iKlGJSP/FheYBE0eHehNqeRgY7AWVrdkhhmY0oEMUFSKLPJ23twYubaYijzB89rNiE8egxcMcw6ci7yrCHu04nDok85NKhSpJ/EROJIGp+1zXhZg2diHLlPhdbBinFzmQaEXl7pDTJU=
+	t=1784209374; cv=none; b=tgFVTszTH4qw+xXvh2LzNnHTIf8KqbBsZddIcxeMpEZuztJsSlUiXjR088s8jeS5Ytyl0GnW2kquASYFhEA8xxYQJJ/4F1XHYji275Z3zTg8gdutrY6EPeTHByBYp0EYAYaKFdS/nIBRFsn0upWm3JyWNFvYM0rxScY/6FXKtnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209369; c=relaxed/simple;
-	bh=t9eRv0GHUx4055ti7sCiK/FoZJiFNlM7rvl5fJs2gVM=;
+	s=arc-20240116; t=1784209374; c=relaxed/simple;
+	bh=pMgmzWFV9D2ABB+y13en6AUb/fI+9ztBEwcLc4fQqoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYohtogw27iSc3lmVz4Z901WqNjzQUMyMa0E3srUhZe3oHE5JJs3jcBYBzFvarAxstAqfVYjcua6pNvYD9EtcrU+WiLe0F3r/6nKuaP4KmXlCbt4XIgMScBk/nMMXL9HDYtNhLCUzfG+9iINGeZl4Zj1MI7W41XGRHvPo8xnIO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbIuj0Pn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZL/eOATscw5gECBUd7wm4H2Ofwd5pIVhQEY6rKVGRhvGuurZnVzE0IHGuVcpWtXk5vucw5Q47P3dSndGEfh5Yq7ZF7ed+b1FmMUaWIThSKhBCyF4a/Axb9adFJvxxk6Ae0EfHDdogKv48ox1bNoOpBJn2VGV4YcLDdQaO/0SioY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B30nNFhe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbIuj0Pn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF53C1F000E9;
-	Thu, 16 Jul 2026 13:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B30nNFhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C341F00A3A;
+	Thu, 16 Jul 2026 13:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209366;
-	bh=dUf0V+uEG9L9w6sE2A/vZtjJtiNUx82NwlZoMGbOaTc=;
+	s=korg; t=1784209369;
+	bh=Oh91/EjTaXJB0lJ3hZWhxLVcTRpMaTx4FQcf89VfIwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hbIuj0Pn0H+hQlNCStwmXJxhm5XW+9DNuIRq0GhWHjoFnqZAkVqxXy9s+P/BQTKdv
-	 GiC5mY6feFD6qksUtud8ozU0ROsnc7IOltyIABD+Hh+H5Lhuk6TN/jRZanyq1IaXhc
-	 h2VbnrynkHtrtlCgsASoD4QdxIk4YB78TWCTtROA=
+	b=B30nNFhemRVqZErog2go6GOCpOru1pjdmYMhS0ZtAiMg0lQ5yqX1B5owV0wc2tdZv
+	 YQoAIG8turbgGeHyX0IvUgv5Xcoxdq6gPlfLVwDvRIBlwF1cjlRXKWSTmQmaE76dgj
+	 xXZf7hSdGpQg31MGHhaOy3kqf94dZwbe5qBQAiVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 7.1 157/518] staging: media: atomisp: reduce load_primary_binaries() stack usage
-Date: Thu, 16 Jul 2026 15:27:05 +0200
-Message-ID: <20260716133051.278375682@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Keshav Verma <iganschel@gmail.com>
+Subject: [PATCH 7.1 122/518] rust_binder: synchronize Rust Binder stats with freeze commands
+Date: Thu, 16 Jul 2026 15:26:30 +0200
+Message-ID: <20260716133050.525915050@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,60 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Keshav Verma <iganschel@gmail.com>
 
-commit f4d51e55dd47ef467fbe37d8575e20eee41b092d upstream.
+commit eb1645bf10190e71f6f0316e37ff70755d719b53 upstream.
 
-The load_primary_binaries() function is overly complex and has som large
-variables on the stack, which can cause warnings depending on CONFIG_FRAME_WARN
-setting:
+Rust Binder stats use BC_COUNT and BR_COUNT to size the command and
+return counters, and use event string tables when printing debug
+statistics.
 
-drivers/staging/media/atomisp/pci/sh_css.c: In function 'load_primary_binaries':
-drivers/staging/media/atomisp/pci/sh_css.c:5260:1: error: the frame size of 1560 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]
+The Binder protocol includes freeze-related commands and return codes,
+but the Rust Binder statistics code was not updated to cover them. As a
+result, those commands and return codes are not accounted for or printed
+by the stats debug output.
 
-Half of the stack usage is for the prim_descr[] array, but only one
-member of the array is used at any given time.
+Update the counts and event string tables so these commands and return
+codes are included in the debug statistics output.
 
-Reduce the stack usage by turning the array into a single structure.
-
-Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Cc: stable <stable@kernel.org>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Keshav Verma <iganschel@gmail.com>
+Link: https://patch.msgid.link/20260615211743.734-1-iganschel@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/atomisp/pci/sh_css.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/android/binder/rust_binder_events.c |    7 ++++++-
+ drivers/android/binder/stats.rs             |    4 ++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/media/atomisp/pci/sh_css.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css.c
-@@ -5020,7 +5020,6 @@ static int load_primary_binaries(
- 	struct ia_css_capture_settings *mycs;
- 	unsigned int i;
- 	bool need_extra_yuv_scaler = false;
--	struct ia_css_binary_descr prim_descr[MAX_NUM_PRIMARY_STAGES];
+--- a/drivers/android/binder/rust_binder_events.c
++++ b/drivers/android/binder/rust_binder_events.c
+@@ -28,6 +28,9 @@ const char * const binder_command_string
+ 	"BC_DEAD_BINDER_DONE",
+ 	"BC_TRANSACTION_SG",
+ 	"BC_REPLY_SG",
++	"BC_REQUEST_FREEZE_NOTIFICATION",
++	"BC_CLEAR_FREEZE_NOTIFICATION",
++	"BC_FREEZE_NOTIFICATION_DONE",
+ };
  
- 	IA_CSS_ENTER_PRIVATE("");
- 	assert(pipe);
-@@ -5189,15 +5188,16 @@ static int load_primary_binaries(
+ const char * const binder_return_strings[] = {
+@@ -51,7 +54,9 @@ const char * const binder_return_strings
+ 	"BR_FAILED_REPLY",
+ 	"BR_FROZEN_REPLY",
+ 	"BR_ONEWAY_SPAM_SUSPECT",
+-	"BR_TRANSACTION_PENDING_FROZEN"
++	"BR_TRANSACTION_PENDING_FROZEN",
++	"BR_FROZEN_BINDER",
++	"BR_CLEAR_FREEZE_NOTIFICATION_DONE",
+ };
  
- 	/* Primary */
- 	for (i = 0; i < mycs->num_primary_stage; i++) {
-+		struct ia_css_binary_descr prim_descr;
- 		struct ia_css_frame_info *local_vf_info = NULL;
+ #define CREATE_TRACE_POINTS
+--- a/drivers/android/binder/stats.rs
++++ b/drivers/android/binder/stats.rs
+@@ -8,8 +8,8 @@ use crate::defs::*;
+ use kernel::sync::atomic::{ordering::Relaxed, Atomic};
+ use kernel::{ioctl::_IOC_NR, seq_file::SeqFile, seq_print};
  
- 		if (pipe->enable_viewfinder[IA_CSS_PIPE_OUTPUT_STAGE_0] &&
- 		    (i == mycs->num_primary_stage - 1))
- 			local_vf_info = &vf_info;
--		ia_css_pipe_get_primary_binarydesc(pipe, &prim_descr[i],
-+		ia_css_pipe_get_primary_binarydesc(pipe, &prim_descr,
- 						   &prim_in_info, &prim_out_info,
- 						   local_vf_info, i);
--		err = ia_css_binary_find(&prim_descr[i], &mycs->primary_binary[i]);
-+		err = ia_css_binary_find(&prim_descr, &mycs->primary_binary[i]);
- 		if (err) {
- 			IA_CSS_LEAVE_ERR_PRIVATE(err);
- 			return err;
+-const BC_COUNT: usize = _IOC_NR(BC_REPLY_SG) as usize + 1;
+-const BR_COUNT: usize = _IOC_NR(BR_TRANSACTION_PENDING_FROZEN) as usize + 1;
++const BC_COUNT: usize = _IOC_NR(BC_FREEZE_NOTIFICATION_DONE) as usize + 1;
++const BR_COUNT: usize = _IOC_NR(BR_CLEAR_FREEZE_NOTIFICATION_DONE) as usize + 1;
+ 
+ pub(crate) static GLOBAL_STATS: BinderStats = BinderStats::new();
+ 
 
 
