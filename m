@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DBC3D522F;
-	Thu, 16 Jul 2026 13:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E271640A954;
+	Thu, 16 Jul 2026 13:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209557; cv=none; b=sfvmIlcP/7hzw03vpM2vN4vGT5YCN+4t0tUCL7BuSWKrpgEVMJT4M4dPJLOvxTsCHG8yPRzulFw650LKl/CpE1ajdKhIhQQA1O4zvUfYkkGy2wuoCy1XdUc7tU0UMl6/zOz8YtEHEzOS6WUnwEYCpAcEWi6NCszVZp9pQrtgCx4=
+	t=1784209560; cv=none; b=EmKibBnKFTxhOG4HUmpr2dt/GH46rVVKeJDlLlo+aDAVktGoQlUAv+c1UHI9JMnbl6FzuEcZKuRZkzFsOJikX+waswfgRRMhQ7ACjYfBIv5JoEZ7vLOKkg84CrqeOXRLmn43rs9UHWORVJlUlK9qpKnKECHohNZvFJqIts1f454=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209557; c=relaxed/simple;
-	bh=YanmnAdWiy5qDtBisOI8o3qIuExPsk9mArLbprY2bE8=;
+	s=arc-20240116; t=1784209560; c=relaxed/simple;
+	bh=bBvx0WQ8De1pEgqf77tyTZmVoZWjQ+9Fbc/srGAS2Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKXYJOox9I96eNuTgFksYtxLkICOkJviWJYi6rmho3D9VluD5h0xrWsKSfkf4OmiybaAybMvsVnxCev349u2uOvV9zOX1bh7urNkiKlz94Kfxy+bTrrkGaT1VuShbRYQUCAVPQpBxY2pK5MXJiwIqzmC8mJ8+E0ZK6UUTUbPvKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0+8pZr8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rzHxXFMnI73aECd+nW/sSAKIkuzJzj7F6umffI7fTejchwZPXGI6+PfdCelll7LSHCcwyFqQL9Ppqr9p0YrCyWFHYhPKi22+dLjLKQfjw1/LOJ9FLnU8P38KvsAxMhzKA9DNnGOSZOklqSPs4nXc+x1DmRrt2Woi/Hd7HlF6lPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMSXMO3n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0+8pZr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DA31F000E9;
-	Thu, 16 Jul 2026 13:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMSXMO3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2F91F00A3A;
+	Thu, 16 Jul 2026 13:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209552;
-	bh=/5QKkv/FRe1QHRsAe+rPdaxhQfeoqi98kZMFsrtsAvM=;
+	s=korg; t=1784209555;
+	bh=IiVgfoHVEIkjEWj1WpBX5DtRGvqLIjSkuqq3Fa4Gdu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t0+8pZr8SQm5xXf/gwzx4TwZKhJMy0TrsGhW80psUALEjxl33omiVYwWD1MRb/5jO
-	 7qbji37J/PTcYkeQRAQPAB/GSNy9zlQ9MOD7AeoHJsP+g7RBK+DOO2Ba6BcVnjnOKn
-	 FAroE8D/0WNLd6LOlCD3cZ0fF7bATmftSHtIXSNc=
+	b=UMSXMO3nIMoRms+I2XnOXF+cck37KMyarFF80Q7hmnqkJccT0P8sWKr91YWaqS4oy
+	 DphSRWccj3jVd/86RW5OUT2dy1cwW61fK41kwoVc/EivCnlxBM4RbrHA5XUPtPo25x
+	 Blx7VOFsgFpnq4BUBWveBVr4jj++suwY3/Uof97A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralph Boehme <slow@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 230/518] smb/client: fix chown/chgrp with SMB3 POSIX Extensions
-Date: Thu, 16 Jul 2026 15:28:18 +0200
-Message-ID: <20260716133052.855258485@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 7.1 213/518] coresight: ultrasoc-smb: Fix OOB write in smb_sync_perf_buffer()
+Date: Thu, 16 Jul 2026 15:28:01 +0200
+Message-ID: <20260716133052.477534189@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,37 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralph Boehme <slow@samba.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 760ef2c579c2609cf17fb1cd5392f64d42d43d33 upstream.
+commit 98495b5a4d77dd22e106f462b76e1093a55b29a7 upstream.
 
-Ownership (chown) and group (chgrp) modifications were being ignored when
-mounting with SMB3 POSIX Extensions unless CIFS_MOUNT_CIFS_ACL or
-CIFS_MOUNT_MODE_FROM_SID were also explicitly set.
+When the SMB sink is used as a perf AUX sink, smb_update_buffer() calls
+smb_sync_perf_buffer() to copy hardware trace data into the perf AUX ring
+buffer pages. It derives pg_idx = head >> PAGE_SHIFT from @head, which is
+handle->head, and indexes dst_pages[pg_idx]. The pg_idx %= nr_pages
+normalization is only applied after the first loop iteration.
 
-Fix this by checking for posix_extensions in cifs_setattr_nounix() when
-updating UID and GID, ensuring that id_mode_to_cifs_acl() is called to map
-and set the ownership/group information on the server.
+This leaves the initial page index underived from the buffer size, which
+can result in an out-of-bounds write past dst_pages[] when head exceeds
+the AUX buffer size.
 
+Normalize head modulo the AUX buffer size before deriving the page index
+and offset, mirroring tmc_etr_sync_perf_buffer().
+
+Fixes: 06f5c2926aaa ("drivers/coresight: Add UltraSoc System Memory Buffer driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ralph Boehme <slow@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/SYBPR01MB788156B3380A36835DB22290AF102@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwtracing/coresight/ultrasoc-smb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3348,7 +3348,8 @@ cifs_setattr_nounix(struct dentry *diren
- 	if (attrs->ia_valid & ATTR_GID)
- 		gid = attrs->ia_gid;
+--- a/drivers/hwtracing/coresight/ultrasoc-smb.c
++++ b/drivers/hwtracing/coresight/ultrasoc-smb.c
+@@ -337,6 +337,7 @@ static void smb_sync_perf_buffer(struct
+ 	unsigned long to_copy;
+ 	long pg_idx, pg_offset;
  
--	if (sbflags & (CIFS_MOUNT_CIFS_ACL | CIFS_MOUNT_MODE_FROM_SID)) {
-+	if ((sbflags & (CIFS_MOUNT_CIFS_ACL | CIFS_MOUNT_MODE_FROM_SID)) ||
-+	    cifs_sb_master_tcon(cifs_sb)->posix_extensions) {
- 		if (uid_valid(uid) || gid_valid(gid)) {
- 			mode = NO_CHANGE_64;
- 			rc = id_mode_to_cifs_acl(inode, full_path, &mode,
++	head %= (unsigned long)buf->nr_pages << PAGE_SHIFT;
+ 	pg_idx = head >> PAGE_SHIFT;
+ 	pg_offset = head & (PAGE_SIZE - 1);
+ 
 
 
