@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042FA3F54B6;
-	Thu, 16 Jul 2026 14:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0F1313E30;
+	Thu, 16 Jul 2026 14:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210932; cv=none; b=nsWJZbI7UXUjHq4bTCGtHZKA0a7xk9ZjM0CM90pVWGgdTV94W2vFlTTugcfFrak4c4RyTV8EpXvD+efa6GKWhX8yQXjk22R3IkeIu+xj4cSW+Lbn9XWDfJOHVaJi4uQoxWXWZd6JY7SWO17oeOP7MeVGxUIXQkD0tn8XkdZTosM=
+	t=1784210935; cv=none; b=ngfRdGUdOHpkX4P8LUTCRblwciFCnhL63xveKU2Qq5EEywcGDGmIRCSdzlYQqeRj/GOMN+03DNESrpVWa+TvfQ/bmm2mfNVFi6ZOsmpCYA2kXhCRc11kmCsHxT7oKyenfrXXpZhbLQJhI5Iiv7xvvDkEJTSvXdQlvmkAXeCtDsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210932; c=relaxed/simple;
-	bh=X+lS8XK7TGPG5sRlnl0qkOfLQhz9edKqUBI2uAmPRgk=;
+	s=arc-20240116; t=1784210935; c=relaxed/simple;
+	bh=Mto55vdJ3SOjE2VEfqsPTbvWWtVnakw4ov+alywScp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AtlDiHit885NbG49AFA9e19rVkje6UPAgHMlesiiutodm6lGx0PfAHTCLcZ4VjYYXHeG0pN9SrGOyiKc3xwGKWzv0nt7eAkUq7IvlE2TAZGaJEVabUDoJvKs/5w/nONfBvQTe7iCQ5zUXq54IcK/XkTMnZxAg1vUWPDvt80nE+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lA9zG5+J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HLR3XjTZ5kXcL8kMXVXLx2WtHjIFJgkcJiH/YL5Hlnh+mREGMblFaK4r5uP/KlE01Izva0DBHJN4IB1TRlqnCUf3sf7DrfdjOoFfx2q5pMgPmF6MQAy/kUlmpmSrmrALARJiMFHOnTbotFT8hw6ctvfrbpSp1B23C0H0FvrN1EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ve1O2jdU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lA9zG5+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632001F000E9;
-	Thu, 16 Jul 2026 14:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ve1O2jdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087941F000E9;
+	Thu, 16 Jul 2026 14:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210930;
-	bh=dkHyFA90d7ar7kDXHQpH50fh+EXqlJtQ2NIbg01wAvE=;
+	s=korg; t=1784210933;
+	bh=U2KxE5WBuF5s0dGHfrXNFyyyFw9fE9jwjgPwwWUFUFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lA9zG5+JkPitG6wUxZxNdR1w+Z1F5nKVHAoFoIJprLtKCxo0NTt/e2jmMvCSPbkb/
-	 kKkubO2tjydHZgWtcVbwokK5YJwwG/Hr0xkH/AmXiroERRgZWdlYphEI88f8KQa7H0
-	 LufZaZSPWInrFCxbVIV3V7ACMd/2d/DnpNud832U=
+	b=Ve1O2jdU7qCId0r0BSp/5dMIfle0e396fUj1nh99fJjnCZeCbPSuyJLUp8FlwwG7X
+	 R1eVNpaOajk4TQLhoqcKpvduGSBby8geNUxDJeZPnO1/xinOLTfIQgyF4x5hLTiKEb
+	 f3fIuV914gSsH0A3mK+rvKH7FjGyCNiMLy5kQsdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Dave Chinner <david@fromorbit.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 191/480] mm: shrinker: fix NULL pointer dereference in debugfs
-Date: Thu, 16 Jul 2026 15:28:58 +0200
-Message-ID: <20260716133048.859575894@linuxfoundation.org>
+	syzbot+2cd473471e77bda12b0e@syzkaller.appspotmail.com,
+	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 182/480] io_uring/nop: fix file reference leak with IOSQE_FIXED_FILE
+Date: Thu, 16 Jul 2026 15:28:49 +0200
+Message-ID: <20260716133048.659981277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,73 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
 
-commit e30453c61e185e914fde83c650e268067b140218 upstream.
+commit 2564ca2e31bd8ee8348362941af2ee4671e487ca upstream.
 
-shrinker_debugfs_add() creates both "count" and "scan" debugfs files
-unconditionally.
+NOP file-acquisition support choses between a fixed (registered) file and
+a normal fget()'d file based on its own IORING_NOP_FIXED_FILE flag in
+sqe->nop_flags. However, a request's REQ_F_FIXED_FILE is set
+independently from the generic IOSQE_FIXED_FILE sqe flag during request
+init, before the issue handler runs.
 
-That assumes every shrinker implements both count_objects() and
-scan_objects(), which is not guaranteed.  For example, the xen-backend
-shrinker sets count_objects() but leaves scan_objects() NULL, so writing
-to its scan file calls through a NULL function pointer and panics the
-kernel:
+If a NOP is submitted with IOSQE_FIXED_FILE set (so REQ_F_FIXED_FILE is
+set) but without IORING_NOP_FIXED_FILE, io_nop() takes the normal path
+and grabs a real reference via io_file_get_normal(). On completion,
+io_put_file() only drops the reference when REQ_F_FIXED_FILE is clear,
+so the fget()'d file is never released and leaks:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-RIP: 0010:0x0
-Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-Call Trace:
- <TASK>
- shrinker_debugfs_scan_write+0x12e/0x270
- full_proxy_write+0x5f/0x90
- vfs_write+0xde/0x420
- ? filp_flush+0x75/0x90
- ? filp_close+0x1d/0x30
- ? do_dup2+0xb8/0x120
- ksys_write+0x68/0xf0
- ? filp_flush+0x75/0x90
- do_syscall_64+0xb3/0x5b0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  BUG: memory leak
+  unreferenced object 0xffff88800f42c240 (size 176):
+    kmem_cache_alloc_noprof+0x358/0x440
+    alloc_empty_file+0x57/0x180
+    path_openat+0x44/0x1e50
+    do_file_open+0x121/0x200
+    do_sys_openat2+0xa7/0x150
+    __x64_sys_openat+0x82/0xf0
 
-The count path has the same issue in principle if a shrinker omits
-count_objects().
+Decide between fixed and normal file acquisition from REQ_F_FIXED_FILE,
+the same way io_assign_file() does for every other opcode, and fold
+IORING_NOP_FIXED_FILE into REQ_F_FIXED_FILE at prep time.
 
-To fix it, only create "count" and "scan" debugfs files when the
-corresponding callbacks are present.
-
-Link: https://lore.kernel.org/20260617090052.27325-1-qi.zheng@linux.dev
-Fixes: bbf535fd6f06 ("mm: shrinkers: add scan interface for shrinker debugfs")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: a85f31052bce ("io_uring/nop: add support for testing registered files and buffers")
+Reported-by: syzbot+2cd473471e77bda12b0e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?id=879092631b98f73a28ea405adacfa5bb34a14a25
+Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+Link: https://patch.msgid.link/20260615144619.482749-1-vasilisalmpanis@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker_debug.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ io_uring/nop.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -182,10 +182,12 @@ int shrinker_debugfs_add(struct shrinker
- 	}
- 	shrinker->debugfs_entry = entry;
+--- a/io_uring/nop.c
++++ b/io_uring/nop.c
+@@ -41,6 +41,8 @@ int io_nop_prep(struct io_kiocb *req, co
+ 		nop->fd = READ_ONCE(sqe->fd);
+ 	else
+ 		nop->fd = -1;
++	if (nop->flags & IORING_NOP_FIXED_FILE)
++		req->flags |= REQ_F_FIXED_FILE;
+ 	if (nop->flags & IORING_NOP_FIXED_BUFFER)
+ 		req->buf_index = READ_ONCE(sqe->buf_index);
+ 	if (nop->flags & IORING_NOP_CQE32) {
+@@ -60,12 +62,10 @@ int io_nop(struct io_kiocb *req, unsigne
+ 	int ret = nop->result;
  
--	debugfs_create_file("count", 0440, entry, shrinker,
--			    &shrinker_debugfs_count_fops);
--	debugfs_create_file("scan", 0220, entry, shrinker,
--			    &shrinker_debugfs_scan_fops);
-+	if (shrinker->count_objects)
-+		debugfs_create_file("count", 0440, entry, shrinker,
-+				    &shrinker_debugfs_count_fops);
-+	if (shrinker->scan_objects)
-+		debugfs_create_file("scan", 0220, entry, shrinker,
-+				    &shrinker_debugfs_scan_fops);
- 	return 0;
- }
- 
+ 	if (nop->flags & IORING_NOP_FILE) {
+-		if (nop->flags & IORING_NOP_FIXED_FILE) {
++		if (req->flags & REQ_F_FIXED_FILE)
+ 			req->file = io_file_get_fixed(req, nop->fd, issue_flags);
+-			req->flags |= REQ_F_FIXED_FILE;
+-		} else {
++		else
+ 			req->file = io_file_get_normal(req, nop->fd);
+-		}
+ 		if (!req->file) {
+ 			ret = -EBADF;
+ 			goto done;
 
 
