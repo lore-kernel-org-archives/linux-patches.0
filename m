@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7741A413D69;
-	Thu, 16 Jul 2026 14:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21983424668;
+	Thu, 16 Jul 2026 14:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211305; cv=none; b=TCPSlGBbJ2ngwIDSTjxLiTDkjnnXfkaXQub3K/FiUqgZ5oL+JXNgpFmCj40moW93faI6lqz+AxLiDSF8JlIMZWG00WgAvfOWjO/BrQNXiq0Yh86K1xx2qwtb3Fxe+S0odzwQhLgzpHDrr50hHK6bPVPNLsLVe2Br9BCvXUG/uus=
+	t=1784211308; cv=none; b=bDrTUowxzYiWebwGmLb9NyE7ydKIbxjhCoXIb31xs5rcYJ2sWTjvMXtYo35OYBPRHQ/zrwM3F3e6DTp04MoaGSJQ3DHh7d8wVxz5BNmW3JAVTJ5P9NXchXTYY/f6SQYizp3XWg/lBzTLa6tuFGn9PJlC/vL0X5PsaXUJLZ+rD/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211305; c=relaxed/simple;
-	bh=OMsUxEdn3R+mjV84yEHyr7aVTgIRgLnG5KdOWaADwPA=;
+	s=arc-20240116; t=1784211308; c=relaxed/simple;
+	bh=rXAIjse0KE2+fhK+agvD7AsBbYh2hZRcwupri/Y12DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioyfuYCWqn0FXiKHdq4nNrlU2g8zcujhHzifRhylZFtBpP9im3NUUh7cDBm515suYe8C+cilZ9i+M7QxqrasZ+Y95qcBWy21tWI+amyKaWLdfamlG9h95D2+pwJLQHIA5hfTTekq4T9IYZZ4wmyh0OzVgDOxr3nloLuuwUXg6Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8BkhLxy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VZ3FSSTKIss4SpdEGIX3b0IGzQ0fV3x8oJNQJsRVZGIjhk1kskYfQQCUQ4+DvED3WLofJcfVYohABOiWUz9ZeIKH8sZuPQOe1rBfbujH42Q/KmhLadmEEbC8qPdSVoqlkmxsjyo0H8rlIKELs4vqi2HBrf37OL7NbnnDVXgSkaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URoVrUWo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8BkhLxy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC90D1F000E9;
-	Thu, 16 Jul 2026 14:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URoVrUWo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865F61F000E9;
+	Thu, 16 Jul 2026 14:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211304;
-	bh=2keNvvzMn4wdZDyorZy8sP7yWSzvL/Ma4W7kTRwHruk=;
+	s=korg; t=1784211307;
+	bh=n7taABjFnZVApT2yfH7t9b/uAfRjM2Y0M6sGoZPFHsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g8BkhLxyRLhAHMrGkHHcV3YCSiO5j3eY4Wg2JZvQHR3D4zTsLordQWZyNEXDMYdfQ
-	 tbA33lW95Up+QV0PFWLyI26V6m4iLmy/8ZNw4QnexTbaKyIgxmYE+IGNy97NDi+ciy
-	 cRoL2QWnZ0k5lgCyqx3JYvnvW0+rSwnQmsK7Sdko=
+	b=URoVrUWonnIu5hmmi9Fd4Fyrg7wwUtaYwO8zzuIw7d45uALMbTSlLnrH5i0VGa4ZS
+	 7XqYA8yA3i5WrUa+Y1PEURwKpDVJHtkm+u8Q9bDIqPATfWn63yZIQgE2TCrPxmwPqy
+	 YOpO/q68qdo9E+F7pV4WwsPvTKxpCMyrk3KKjV+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Damian Muszynski <damian.muszynski@intel.com>,
+	Paul Louvel <paul.louvel@bootlin.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 370/480] crypto: qat - factor out AER reset helpers
-Date: Thu, 16 Jul 2026 15:31:57 +0200
-Message-ID: <20260716133052.811297255@linuxfoundation.org>
+Subject: [PATCH 6.18 379/480] crypto: talitos/hash - rename first_desc/last_desc to first_request/last_request
+Date: Thu, 16 Jul 2026 15:32:06 +0200
+Message-ID: <20260716133053.003932122@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,148 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit 56707afb92fee371c0f2e04332c9aa03cdb89793 upstream.
+commit 8bcf00671400ac3b3a4cc3011e6c1496dbd880fd upstream.
 
-Move the shutdown and recovery sequences out of adf_error_detected()
-and adf_slot_reset() into reset_prepare() and reset_done() helpers.
-
-This makes the AER recovery path easier to follow and prepares the
-common reset flow for reuse by additional PCI reset callbacks without
-duplicating the logic.
-
-No functional change intended.
+In talitos_ahash_req_ctx and talitos_export_state, the fields
+first_desc and last_desc describe request-level (not descriptor-level)
+state.  Rename them to first_request and last_request for clarity.
+last_desc is also removed from talitos_ahash_req_ctx as it is no
+longer used.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
+Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_aer.c |   86 ++++++++++++++++----------
- 1 file changed, 53 insertions(+), 33 deletions(-)
+ drivers/crypto/talitos.c |   29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
-@@ -17,27 +17,18 @@ struct adf_fatal_error_data {
- static struct workqueue_struct *device_reset_wq;
- static struct workqueue_struct *device_sriov_wq;
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -944,8 +944,7 @@ struct talitos_ahash_req_ctx {
+ 	u8 buf[2][HASH_MAX_BLOCK_SIZE];
+ 	int buf_idx;
+ 	unsigned int swinit;
+-	unsigned int first_desc;
+-	unsigned int last_desc;
++	unsigned int first_request;
+ 	unsigned int last_request;
+ 	unsigned int to_hash_later;
+ 	unsigned int nbuf;
+@@ -957,8 +956,8 @@ struct talitos_export_state {
+ 	u32 hw_context[TALITOS_MDEU_MAX_CONTEXT_SIZE / sizeof(u32)];
+ 	u8 buf[HASH_MAX_BLOCK_SIZE];
+ 	unsigned int swinit;
+-	unsigned int first_desc;
+-	unsigned int last_desc;
++	unsigned int first_request;
++	unsigned int last_request;
+ 	unsigned int to_hash_later;
+ 	unsigned int nbuf;
+ };
+@@ -1822,8 +1821,7 @@ static void ahash_done(struct device *de
+ 		 container_of(desc, struct talitos_edesc, desc);
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
  
--static pci_ers_result_t adf_error_detected(struct pci_dev *pdev,
--					   pci_channel_state_t state)
-+static pci_ers_result_t reset_prepare(struct pci_dev *pdev)
- {
- 	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
+-
+-	if (!req_ctx->last_desc && req_ctx->to_hash_later) {
++	if (!req_ctx->last_request && req_ctx->to_hash_later) {
+ 		/* Position any partial block for next update/final/finup */
+ 		req_ctx->buf_idx = (req_ctx->buf_idx + 1) & 1;
+ 		req_ctx->nbuf = req_ctx->to_hash_later;
+@@ -1872,7 +1870,7 @@ static void common_nonsnoop_hash(struct
+ 	/* first DWORD empty */
  
--	dev_info(&pdev->dev, "Acceleration driver hardware error detected.\n");
- 	if (!accel_dev) {
- 		dev_err(&pdev->dev, "Can't find acceleration device\n");
- 		return PCI_ERS_RESULT_DISCONNECT;
+ 	/* hash context in */
+-	if (!edesc->first || !req_ctx->first_desc || req_ctx->swinit) {
++	if (!edesc->first || !req_ctx->first_request || req_ctx->swinit) {
+ 		map_single_talitos_ptr_nosync(dev, &desc->ptr[1],
+ 					      req_ctx->hw_context_size,
+ 					      req_ctx->hw_context,
+@@ -1880,7 +1878,7 @@ static void common_nonsnoop_hash(struct
+ 		req_ctx->swinit = 0;
  	}
+ 	/* Indicate next op is not the first. */
+-	req_ctx->first_desc = 0;
++	req_ctx->first_request = 0;
  
--	if (state == pci_channel_io_perm_failure) {
--		dev_err(&pdev->dev, "Can't recover from device error\n");
--		return PCI_ERS_RESULT_DISCONNECT;
--	}
--
- 	if (!adf_dev_started(accel_dev))
- 		return PCI_ERS_RESULT_CAN_RECOVER;
+ 	/* HMAC key */
+ 	if (ctx->keylen)
+@@ -1975,14 +1973,14 @@ ahash_process_req_prepare(struct ahash_r
+ 			edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_CONT;
  
--	adf_error_notifier(accel_dev);
--	adf_pf2vf_notify_fatal_error(accel_dev);
- 	set_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
- 	if (accel_dev->hw_device->exit_arb) {
- 		dev_dbg(&pdev->dev, "Disabling arbitration\n");
-@@ -49,6 +40,57 @@ static pci_ers_result_t adf_error_detect
- 	return PCI_ERS_RESULT_NEED_RESET;
- }
+ 		/* request SEC to INIT hash. */
+-		if (req_ctx->first_desc && edesc->first && !req_ctx->swinit)
++		if (req_ctx->first_request && edesc->first && !req_ctx->swinit)
+ 			edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_INIT;
  
-+static pci_ers_result_t reset_done(struct pci_dev *pdev)
-+{
-+	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
-+	int res;
-+
-+	if (!accel_dev) {
-+		dev_err(&pdev->dev, "Can't find acceleration device\n");
-+		return PCI_ERS_RESULT_DISCONNECT;
-+	}
-+
-+	if (!adf_devmgr_in_reset(accel_dev))
-+		goto reset_complete;
-+
-+	pci_restore_state(pdev);
-+	res = adf_dev_up(accel_dev, false);
-+	if (res && res != -EALREADY)
-+		return PCI_ERS_RESULT_DISCONNECT;
-+
-+	adf_reenable_sriov(accel_dev);
-+	adf_pf2vf_notify_restarted(accel_dev);
-+	adf_dev_restarted_notify(accel_dev);
-+	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
-+
-+reset_complete:
-+	dev_info(&pdev->dev, "Device reset completed successfully\n");
-+
-+	return PCI_ERS_RESULT_RECOVERED;
-+}
-+
-+static pci_ers_result_t adf_error_detected(struct pci_dev *pdev,
-+					   pci_channel_state_t state)
-+{
-+	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
-+
-+	dev_info(&pdev->dev, "Acceleration driver hardware error detected.\n");
-+	if (!accel_dev) {
-+		dev_err(&pdev->dev, "Can't find acceleration device\n");
-+		return PCI_ERS_RESULT_DISCONNECT;
-+	}
-+
-+	if (state == pci_channel_io_perm_failure) {
-+		dev_err(&pdev->dev, "Can't recover from device error\n");
-+		return PCI_ERS_RESULT_DISCONNECT;
-+	}
-+
-+	adf_error_notifier(accel_dev);
-+	adf_pf2vf_notify_fatal_error(accel_dev);
-+
-+	return reset_prepare(pdev);
-+}
-+
- /* reset dev data */
- struct adf_reset_dev_data {
- 	int mode;
-@@ -199,29 +241,7 @@ static int adf_dev_aer_schedule_reset(st
+ 		/*
+ 		 * When the tfm context has a keylen, it's an HMAC.
+ 		 * A first or last (ie. not middle) descriptor must request HMAC.
+ 		 */
+-		if (ctx->keylen && ((req_ctx->first_desc && edesc->first) ||
++		if (ctx->keylen && ((req_ctx->first_request && edesc->first) ||
+ 				    (req_ctx->last_request && edesc->last)))
+ 			edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_HMAC;
  
- static pci_ers_result_t adf_slot_reset(struct pci_dev *pdev)
- {
--	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
--	int res = 0;
--
--	if (!accel_dev) {
--		pr_err("QAT: Can't find acceleration device\n");
--		return PCI_ERS_RESULT_DISCONNECT;
--	}
--
--	if (!adf_devmgr_in_reset(accel_dev))
--		goto reset_complete;
--
--	pci_restore_state(pdev);
--	res = adf_dev_up(accel_dev, false);
--	if (res && res != -EALREADY)
--		return PCI_ERS_RESULT_DISCONNECT;
--
--	adf_reenable_sriov(accel_dev);
--	adf_pf2vf_notify_restarted(accel_dev);
--	adf_dev_restarted_notify(accel_dev);
--	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
--
--reset_complete:
--	return PCI_ERS_RESULT_RECOVERED;
-+	return reset_done(pdev);
- }
+@@ -2103,14 +2101,13 @@ static int ahash_init(struct ahash_reque
+ 	/* Initialize the context */
+ 	req_ctx->buf_idx = 0;
+ 	req_ctx->nbuf = 0;
+-	req_ctx->first_desc = 1; /* first_desc indicates h/w must init its context */
++	req_ctx->first_request = 1;
+ 	req_ctx->swinit = 0; /* assume h/w init of context */
+ 	size =	(crypto_ahash_digestsize(tfm) <= SHA256_DIGEST_SIZE)
+ 			? TALITOS_MDEU_CONTEXT_SIZE_MD5_SHA1_SHA256
+ 			: TALITOS_MDEU_CONTEXT_SIZE_SHA384_SHA512;
+ 	req_ctx->hw_context_size = size;
+ 	req_ctx->last_request = 0;
+-	req_ctx->last_desc = 0;
  
- static void adf_resume(struct pci_dev *pdev)
+ 	dma = dma_map_single(dev, req_ctx->hw_context, req_ctx->hw_context_size,
+ 			     DMA_TO_DEVICE);
+@@ -2202,8 +2199,8 @@ static int ahash_export(struct ahash_req
+ 	       req_ctx->hw_context_size);
+ 	memcpy(export->buf, req_ctx->buf[req_ctx->buf_idx], req_ctx->nbuf);
+ 	export->swinit = req_ctx->swinit;
+-	export->first_desc = req_ctx->first_desc;
+-	export->last_desc = req_ctx->last_desc;
++	export->first_request = req_ctx->first_request;
++	export->last_request = req_ctx->last_request;
+ 	export->to_hash_later = req_ctx->to_hash_later;
+ 	export->nbuf = req_ctx->nbuf;
+ 
+@@ -2228,8 +2225,8 @@ static int ahash_import(struct ahash_req
+ 	memcpy(req_ctx->hw_context, export->hw_context, size);
+ 	memcpy(req_ctx->buf[0], export->buf, export->nbuf);
+ 	req_ctx->swinit = export->swinit;
+-	req_ctx->first_desc = export->first_desc;
+-	req_ctx->last_desc = export->last_desc;
++	req_ctx->first_request = export->first_request;
++	req_ctx->last_request = export->last_request;
+ 	req_ctx->to_hash_later = export->to_hash_later;
+ 	req_ctx->nbuf = export->nbuf;
+ 
 
 
