@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115024252DE;
-	Thu, 16 Jul 2026 13:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2611D4229A6;
+	Thu, 16 Jul 2026 13:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209452; cv=none; b=StTiyHs1VmpTaSJN3nuwDfzOYcDXltgFWin3eKO8PdlH6QTv6JLTdNZ1ODEtMzBv6QXy1Ov8/k1mTVI2wBQoo4N0A+6B2jnyjQtuEvi/Yn4LySZZrof5VDRhWAxfL6osCaEGGiklhFrQpZFzpf1k4E2Lc3WMLBW2tEkX49Iw9Qs=
+	t=1784209453; cv=none; b=DFbxIJ3juwwX7VDo4SaHlLpAzh/RKEyUfOEn7hqLzv7hoBB7uxqVVNR6gX7sy/OH2e5Noq1mDa+aaQVfAPH2juwshJZtWUv5KOHrPqRQvkY8xrfBhBIjGnpX0WvVqsvQlwoiAwuzqdgOfuG7C2OZRObSqzYH5KbKpRK5RoffMvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209452; c=relaxed/simple;
-	bh=ZJWKcb9xkv5hr7ndM1DlSDZqYZWOMYUWQj8ULu6k6HE=;
+	s=arc-20240116; t=1784209453; c=relaxed/simple;
+	bh=ALb5ILqDIt3TDt2RTGg7rpLqlle+i4Ns2zEQO/Qm1+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4OF1WR5fupzC0V0Wm7IVtmwuByIR5gfSlK1wbuq2eQ0oT7gvnjtE3goKlzDfM8xjNRkwfgPrPCeirPdVOfzxNwS8SKND3HBBJfxEcishd/vkhfT/JofQNxlbrqzcDYKH5zfZB4zC6+Gz0iiN68BvwXEJ0JtO4ZjxXuXgLfxNxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgXKLH8D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uwyYx8ob2yw26tHmD9cHqT8NPnYiL3u1mZjWq4IVBV7/m9jZ33Zfj4rRGwrAxz4hKRczOMsW4AT8bO3Evp/Yc/ABH+gIa7IHFKgorJerBTlK4QzlKgoOWB7QiPXyYwNKVwZokFLWTYyf0k3/Ds7l4s9if9b9YvNA8Eh1Lky0mmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IHFMk99; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgXKLH8D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640BD1F00A3D;
-	Thu, 16 Jul 2026 13:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IHFMk99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E891F00A3A;
+	Thu, 16 Jul 2026 13:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209447;
-	bh=5j4CAuUNTtFQEKyvuDWuu4jh7HoWIyxVWAJ73keXbow=;
+	s=korg; t=1784209450;
+	bh=4WkeAbO9k4NbYhNkNVzyNlmqF+juh6cfUPhjlTAlHmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lgXKLH8DnYDav3U59sc9QKyjRracHr4UZVYi2nnx0kPVZGVbUk1g4tDxScK9ULAGj
-	 bYwfWtT9xHN9tkVBCzeu7/XIhqa5pMZWRPirsEmc52xzRpptXm4UyOgfqyghnQWIbB
-	 uc/J+TvXf1qdH2iq5f+ougRJm4sxzev+hNy3iHRQ=
+	b=2IHFMk99qnwMc0qBUB+seJQWko5XTP/7RjhbgAGASKo4Kd/Zg5v7mu+iFLpACF1w8
+	 xtUyPi8kZPNd5OygaHws5cLMrK7tQ7StoNpwtdTnRTuGiuQy6gD67XDT0nMHcF16r5
+	 +SZX5oh1zmuifYRCip1VoH7IkiJe0rVBjQW1Q3NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Eric Dumazet <edumazet@google.com>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 189/518] net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes
-Date: Thu, 16 Jul 2026 15:27:37 +0200
-Message-ID: <20260716133051.968703576@linuxfoundation.org>
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.1 190/518] media: nxp: imx8-isi: Fix use-after-free on remove
+Date: Thu, 16 Jul 2026 15:27:38 +0200
+Message-ID: <20260716133051.990318197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -55,100 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit efb8763d7bbb40cff4cc55a6b62c3095a038149c upstream.
+commit b670bf89824ede5d07d20bb9bfbafb754846081d upstream.
 
-Reject invalid `net.ipv4.tcp_reordering` values before they reach TCP
-socket state. The sysctl is stored as an `int` but copied into the
-`u32` `tp->reordering` field for new sockets, so negative writes wrap
-to large values.
+KASAN reports a slab-use-after-free in __media_entity_remove_link()
+during rmmod of imx8_isi:
 
-With `tcp_mtu_probing=2`, the wrapped value can overflow the
-`tcp_mtu_probe()` size calculation and drive the MTU probing path into
-an out-of-bounds read. Route `tcp_reordering` writes through
-`proc_dointvec_minmax()` and require it to be at least 1. Also require
-`tcp_max_reordering` to be at least 1 so the configured maximum cannot
-become negative either.
+  BUG: KASAN: slab-use-after-free in __media_entity_remove_link+0x608/0x650
+  Read of size 2 at addr ffff0000d47cb02a by task rmmod/724
 
-When registering the table for a non-init network namespace, relocate
-`extra2` pointers that refer into `init_net.ipv4` so the
-`tcp_reordering` upper bound follows that namespace's
-`tcp_max_reordering`.
+  Call trace:
+   __media_entity_remove_link+0x608/0x650
+   __media_entity_remove_links+0x78/0x144
+   __media_device_unregister_entity+0x150/0x280
+   media_device_unregister_entity+0x48/0x68
+   v4l2_device_unregister_subdev+0x158/0x300
+   v4l2_async_unbind_subdev_one+0x22c/0x358
+   v4l2_async_nf_unbind_all_subdevs+0xfc/0x1c0
+   v4l2_async_nf_unregister+0x5c/0x14c
+   mxc_isi_remove+0x124/0x2a0 [imx8_isi]
 
-Harden `tcp_mtu_probe()` itself by computing `size_needed` as `u64`.
-This keeps the send queue and window checks from being bypassed through
-signed integer overflow.
+  Allocated by task 249:
+   __kmalloc_noprof+0x27c/0x690
+   mxc_isi_crossbar_init+0x22c/0x560 [imx8_isi]
 
-Fixes: 91cc17c0e5e5 ("[TCP]: MTUprobe: receiver window & data available checks fixed")
+  Freed by task 724:
+   kfree+0x1e4/0x5b0
+   mxc_isi_crossbar_cleanup+0x34/0x80 [imx8_isi]
+   mxc_isi_remove+0x11c/0x2a0 [imx8_isi]
+
+The problem is that mxc_isi_remove() calls mxc_isi_crossbar_cleanup()
+before mxc_isi_v4l2_cleanup(). The crossbar cleanup frees the media
+entity pads, but the subsequent v4l2 cleanup still tries to remove
+media links that reference those pads.
+
+Fix this by calling mxc_isi_v4l2_cleanup() before
+mxc_isi_crossbar_cleanup() to ensure all media entities are properly
+unregistered while the pads are still valid.
+
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/1a5b7e1ef4d70fbad8c8ee0b82d8405f3c964a3d.1781395200.git.bronzed_45_vested@icloud.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20260507041318.491594-2-xiaolei.wang@windriver.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/sysctl_net_ipv4.c |   10 ++++++++--
- net/ipv4/tcp_output.c      |    4 ++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -1058,7 +1058,9 @@ static struct ctl_table ipv4_net_table[]
- 		.data		= &init_net.ipv4.sysctl_tcp_reordering,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ONE,
-+		.extra2		= &init_net.ipv4.sysctl_tcp_max_reordering,
- 	},
- 	{
- 		.procname	= "tcp_retries1",
-@@ -1293,7 +1295,8 @@ static struct ctl_table ipv4_net_table[]
- 		.data		= &init_net.ipv4.sysctl_tcp_max_reordering,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ONE,
- 	},
- 	{
- 		.procname	= "tcp_dsack",
-@@ -1676,6 +1679,9 @@ static __net_init int ipv4_sysctl_init_n
- 				 */
- 				table[i].mode &= ~0222;
- 			}
-+			if (table[i].extra2 >= (void *)&init_net.ipv4 &&
-+			    table[i].extra2 < (void *)(&init_net.ipv4 + 1))
-+				table[i].extra2 += (void *)net - (void *)&init_net;
- 		}
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
+@@ -556,8 +556,8 @@ static void mxc_isi_remove(struct platfo
+ 		mxc_isi_pipe_cleanup(pipe);
  	}
  
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2687,7 +2687,7 @@ static int tcp_mtu_probe(struct sock *sk
- 	struct sk_buff *skb, *nskb, *next;
- 	struct net *net = sock_net(sk);
- 	int probe_size;
--	int size_needed;
-+	u64 size_needed;
- 	int copy, len;
- 	int mss_now;
- 	int interval;
-@@ -2711,7 +2711,7 @@ static int tcp_mtu_probe(struct sock *sk
- 	mss_now = tcp_current_mss(sk);
- 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
- 				    icsk->icsk_mtup.search_low) >> 1);
--	size_needed = probe_size + (tp->reordering + 1) * tp->mss_cache;
-+	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
- 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
- 	/* When misfortune happens, we are reprobing actively,
- 	 * and then reprobe timer has expired. We stick with current
+-	mxc_isi_crossbar_cleanup(&isi->crossbar);
+ 	mxc_isi_v4l2_cleanup(isi);
++	mxc_isi_crossbar_cleanup(&isi->crossbar);
+ }
+ 
+ static const struct of_device_id mxc_isi_of_match[] = {
 
 
