@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC6A429827;
-	Thu, 16 Jul 2026 13:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987033DA5C1;
+	Thu, 16 Jul 2026 13:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209924; cv=none; b=dmbSfonC/XD7MCUgKRyiu9BKJgYtp0GhNSvoyLQWkujNLnv34tsrteOTNxLx86lIflIJJHaIOuql+KhB7uZvhFeODhqUXYwCwQjawpXDlKlSp6+epUYrDSHi7lb+BsLWTGcux7aiXqZDxJhm9CcXxH+8sxt3Y52V0P1rayOYoQg=
+	t=1784209926; cv=none; b=rjEOjdg6NHHy4fOTUm7OUxKBD7tL0fXcGDVTJieqs0hmFx+9S0GBy5leaUY36htL5QCZAkRK0mO7v7clZy4aEYuO0Abl4uQvX84H3xfSJNJOhSuLWvLN/V1cwxp6V52YW4Nv4r+oaK6t3caDP86byzLEwZLDJ5C4BLzxQKooxmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209924; c=relaxed/simple;
-	bh=H4ODoyibi7GMoZ9zq4AVpbEZsrSHfklibyhol34OklI=;
+	s=arc-20240116; t=1784209926; c=relaxed/simple;
+	bh=EtKV73iIIKTKdTcAhcdmI+X/EtB6rwE0HHSPZTTIUv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFlbP9CJuOcqrJIciMO/iuv5lcfCdKsrNnbOx10JG236vguhsdFgHl8M02qiRw3RS3BgD8xepY4tRqyvlgNEv1OZ9H6gY2EuWv4rMB0CnCXHSIz8s3Q4z83qRsldbviMlivyxEoGt4QxrJjdg3MeF8PRnceLlKF8SM1jkZSi07k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlER/5Se; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LBp7pUSF7PnmDPBDT9z0Z7SUd9esuJM5ELQ9cGbzR4EpVhJsdnwqzC/OwAaA7X1yghb71RhCFALWY5Zw/Gmxai+kl6ANW7D6cv7c5w8UXB2YGi5C3gdDKQ2isMLQTEO9blTXx70iv4hk2yuDsCqLfsRNFGGLvsZmWLWrKyf6wy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krq5R0cS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlER/5Se"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BDB1F000E9;
-	Thu, 16 Jul 2026 13:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krq5R0cS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082B91F000E9;
+	Thu, 16 Jul 2026 13:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209922;
-	bh=b0qaOe4rlhNdzMZft674KFtLww0D8ZOmzpCjazoD6RA=;
+	s=korg; t=1784209925;
+	bh=ewwsj6L6Qhiz68odWJZFYWfOeCI6xCzBMRzzip2Cloc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZlER/5SeSvPugEnjhdjDPc8isd3SuvFnqpDVfAnLFgpl2euVTf3cV/eQAQ0lPoSWS
-	 xK6nYkM/NZpCIkvvy7oDViMgSAtHRtR7MJ/zqRY0yS3ERWQ5XOtv7YzvJp4TbqgPG/
-	 bbWKYfQ7cZ/ey05plyG3sugpd103D9ZUlORroKN4=
+	b=krq5R0cSVWffCS80roMP6uFRDk32+cM+Gk/3DNfYL6lGwoc3l4P/BIl21eM3BS7Hy
+	 6FoGtE7CK237fwvafIoV+raF7Zr9LokhVHGAOLE65Gw4MW8Vtz0A8KVfjf3eWJI7d1
+	 ncfyRbFD0MZ797HCRR4tyTIN24Tyf6QatJGqLn30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
+	"Tycho Andersen (AMD)" <tycho@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 370/518] crypto: loongson - Remove broken and unused loongson-rng
-Date: Thu, 16 Jul 2026 15:30:38 +0200
-Message-ID: <20260716133055.924321732@linuxfoundation.org>
+Subject: [PATCH 7.1 371/518] crypto: ccp - Do not initialize SNP for SEV ioctls
+Date: Thu, 16 Jul 2026 15:30:39 +0200
+Message-ID: <20260716133055.946183594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,323 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Tycho Andersen (AMD) <tycho@kernel.org>
 
-commit af3d1bb9a09daf928fc3f173689fb7904d6a6d4f upstream.
+commit fb1758e74b8061aacfbce7bbb7a7cc650537e167 upstream.
 
-The loongson-rng rng_alg has several vulnerabilities, including not
-providing forward security, and a use-after-free bug due to the use of
-wait_for_completion_interruptible().
+Sashiko notes:
 
-Meanwhile, the rng_alg framework doesn't really have any purpose in the
-first place other than to access the software algorithms crypto/drbg.c
-and crypto/jitterentropy.c.  Hardware-specific rng_algs have no
-in-kernel user, and unlike hwrng there's no feed into the actual Linux
-RNG.  As such, there's really no point to this code.  There are of
-course other rng_alg drivers that are similarly unused, but they're
-similarly in the process of being phased out, e.g.
-https://lore.kernel.org/r/20260529193648.18172-1-ebiggers@kernel.org and
-https://lore.kernel.org/r/20260529220430.34135-1-ebiggers@kernel.org
+> if SEV initialization fails and KVM is actively running normal VMs, could a
+> userspace process trigger this code path via /dev/sev ioctls (e.g.,
+> SEV_PDH_GEN) and zero out MSR_VM_HSAVE_PA globally? Would the next VMRUN
+> execution for an active VM trigger a general protection fault and crash the
+> host?
 
-Given that, there's no point in fixing forward these vulnerabilities,
-and it makes much more sense to simply roll back the addition of this
-driver.  If this platform provides TRNG (not PRNG) functionality, it
-could make sense to add a hwrng driver, but it would be quite different.
+sev_move_to_init_state() is called for ioctls requiring only SEV firmware:
+SEV_PEK_GEN, SEV_PDH_GEN, SEV_PEK_CSR, SEV_PEK_CERT_IMPORT, and
+SEV_PDH_CERT_EXPORT. After the firmware command, it does SEV_SHUTDOWN on
+the SEV firmware. Since these commands do not require SNP to be
+initialized, skip it by calling __sev_platform_init_locked() which only
+initializes the SEV firmware. This way SNP is not Initialized at all, and
+HSAVE_PA is not cleared.
 
-Link: https://lore.kernel.org/linux-crypto/20260525145939.GC2018@quark/
-Fixes: 766b2d724c8d ("crypto: loongson - add Loongson RNG driver support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+The previous code saved any SEV initialization firmware error to
+init_args.error and then threw it away and hardcoded the return value of
+INVALID_PLATFORM_STATE regardless of the real firmware error. This patch
+changes it to surface the underlying error, which is hopefully both more
+useful and doesn't cause any problems.
+
+Note that it is still safe to call __sev_firmware_shutdown() directly: it
+calls __sev_snp_shutdown_locked(), which skips SNP shutdown if SNP was not
+initialized.
+
+Fixes: ceac7fb89e8d ("crypto: ccp - Ensure implicit SEV/SNP init and shutdown in ioctls")
+Reported-by: Sashiko
+Assisted-by: Gemini:gemini-3.1-pro-preview
+Link: https://sashiko.dev/#/patchset/20260324161301.1353976-1-tycho%40kernel.org
+CC: <stable@vger.kernel.org>
+Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- MAINTAINERS                                 |    1 
- arch/loongarch/configs/loongson32_defconfig |    1 
- arch/loongarch/configs/loongson64_defconfig |    1 
- drivers/crypto/Kconfig                      |    1 
- drivers/crypto/Makefile                     |    1 
- drivers/crypto/loongson/Kconfig             |    6 
- drivers/crypto/loongson/Makefile            |    1 
- drivers/crypto/loongson/loongson-rng.c      |  209 ----------------------------
- 8 files changed, 221 deletions(-)
- delete mode 100644 drivers/crypto/loongson/Kconfig
- delete mode 100644 drivers/crypto/loongson/Makefile
- delete mode 100644 drivers/crypto/loongson/loongson-rng.c
+ drivers/crypto/ccp/sev-dev.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -15087,7 +15087,6 @@ M:	Qunqin Zhao <zhaoqunqin@loongson.cn>
- L:	linux-crypto@vger.kernel.org
- S:	Maintained
- F:	drivers/char/tpm/tpm_loongson.c
--F:	drivers/crypto/loongson/
- F:	drivers/mfd/loongson-se.c
- F:	include/linux/mfd/loongson-se.h
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1716,14 +1716,11 @@ static int sev_get_platform_state(int *s
  
---- a/arch/loongarch/configs/loongson32_defconfig
-+++ b/arch/loongarch/configs/loongson32_defconfig
-@@ -1091,7 +1091,6 @@ CONFIG_CRYPTO_USER_API_SKCIPHER=m
- CONFIG_CRYPTO_USER_API_RNG=m
- CONFIG_CRYPTO_USER_API_AEAD=m
- CONFIG_CRYPTO_DEV_VIRTIO=m
--CONFIG_CRYPTO_DEV_LOONGSON_RNG=m
- CONFIG_DMA_CMA=y
- CONFIG_CMA_SIZE_MBYTES=0
- CONFIG_PRINTK_TIME=y
---- a/arch/loongarch/configs/loongson64_defconfig
-+++ b/arch/loongarch/configs/loongson64_defconfig
-@@ -1124,7 +1124,6 @@ CONFIG_CRYPTO_USER_API_SKCIPHER=m
- CONFIG_CRYPTO_USER_API_RNG=m
- CONFIG_CRYPTO_USER_API_AEAD=m
- CONFIG_CRYPTO_DEV_VIRTIO=m
--CONFIG_CRYPTO_DEV_LOONGSON_RNG=m
- CONFIG_DMA_CMA=y
- CONFIG_DMA_NUMA_CMA=y
- CONFIG_CMA_SIZE_MBYTES=0
---- a/drivers/crypto/Kconfig
-+++ b/drivers/crypto/Kconfig
-@@ -845,7 +845,6 @@ config CRYPTO_DEV_CCREE
- 	  If unsure say Y.
+ static int sev_move_to_init_state(struct sev_issue_cmd *argp, bool *shutdown_required)
+ {
+-	struct sev_platform_init_args init_args = {0};
+ 	int rc;
  
- source "drivers/crypto/hisilicon/Kconfig"
--source "drivers/crypto/loongson/Kconfig"
- 
- source "drivers/crypto/amlogic/Kconfig"
- 
---- a/drivers/crypto/Makefile
-+++ b/drivers/crypto/Makefile
-@@ -43,7 +43,6 @@ obj-y += inside-secure/
- obj-$(CONFIG_CRYPTO_DEV_ARTPEC6) += axis/
- obj-y += xilinx/
- obj-y += hisilicon/
--obj-y += loongson/
- obj-$(CONFIG_CRYPTO_DEV_AMLOGIC_GXL) += amlogic/
- obj-y += intel/
- obj-y += starfive/
---- a/drivers/crypto/loongson/Kconfig
-+++ /dev/null
-@@ -1,6 +0,0 @@
--config CRYPTO_DEV_LOONGSON_RNG
--	tristate "Support for Loongson RNG Driver"
--	depends on MFD_LOONGSON_SE
--	select CRYPTO_RNG
--	help
--	  Support for Loongson RNG Driver.
---- a/drivers/crypto/loongson/Makefile
-+++ /dev/null
-@@ -1 +0,0 @@
--obj-$(CONFIG_CRYPTO_DEV_LOONGSON_RNG)  += loongson-rng.o
---- a/drivers/crypto/loongson/loongson-rng.c
-+++ /dev/null
-@@ -1,209 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--/* Copyright (c) 2019 HiSilicon Limited. */
--/* Copyright (c) 2025 Loongson Technology Corporation Limited. */
--
--#include <linux/crypto.h>
--#include <linux/err.h>
--#include <linux/hw_random.h>
--#include <linux/io.h>
--#include <linux/iopoll.h>
--#include <linux/kernel.h>
--#include <linux/list.h>
--#include <linux/mfd/loongson-se.h>
--#include <linux/module.h>
--#include <linux/mutex.h>
--#include <linux/platform_device.h>
--#include <linux/random.h>
--#include <crypto/internal/rng.h>
--
--#define SE_SEED_SIZE 32
--
--struct loongson_rng_list {
--	struct mutex lock;
--	struct list_head list;
--	int registered;
--};
--
--struct loongson_rng {
--	u32 used;
--	struct loongson_se_engine *engine;
--	struct list_head list;
--	struct mutex lock;
--};
--
--struct loongson_rng_ctx {
--	struct loongson_rng *rng;
--};
--
--struct loongson_rng_cmd {
--	u32 cmd_id;
--	union {
--		u32 len;
--		u32 ret;
--	} u;
--	u32 seed_off;
--	u32 out_off;
--	u32 pad[4];
--};
--
--static struct loongson_rng_list rng_devices = {
--	.lock = __MUTEX_INITIALIZER(rng_devices.lock),
--	.list = LIST_HEAD_INIT(rng_devices.list),
--};
--
--static int loongson_rng_generate(struct crypto_rng *tfm, const u8 *src,
--			  unsigned int slen, u8 *dstn, unsigned int dlen)
--{
--	struct loongson_rng_ctx *ctx = crypto_rng_ctx(tfm);
--	struct loongson_rng *rng = ctx->rng;
--	struct loongson_rng_cmd *cmd = rng->engine->command;
--	int err, len;
--
--	mutex_lock(&rng->lock);
--	cmd->seed_off = 0;
--	do {
--		len = min(dlen, rng->engine->buffer_size);
--		cmd = rng->engine->command;
--		cmd->u.len = len;
--		err = loongson_se_send_engine_cmd(rng->engine);
--		if (err)
--			break;
--
--		cmd = rng->engine->command_ret;
--		if (cmd->u.ret) {
--			err = -EIO;
--			break;
--		}
--
--		memcpy(dstn, rng->engine->data_buffer, len);
--		dlen -= len;
--		dstn += len;
--	} while (dlen > 0);
--	mutex_unlock(&rng->lock);
--
--	return err;
--}
--
--static int loongson_rng_init(struct crypto_tfm *tfm)
--{
--	struct loongson_rng_ctx *ctx = crypto_tfm_ctx(tfm);
--	struct loongson_rng *rng;
--	u32 min_used = U32_MAX;
--
--	mutex_lock(&rng_devices.lock);
--	list_for_each_entry(rng, &rng_devices.list, list) {
--		if (rng->used < min_used) {
--			ctx->rng = rng;
--			min_used = rng->used;
--		}
+-	rc = _sev_platform_init_locked(&init_args);
+-	if (rc) {
+-		argp->error = SEV_RET_INVALID_PLATFORM_STATE;
++	rc = __sev_platform_init_locked(&argp->error);
++	if (rc)
+ 		return rc;
 -	}
--	ctx->rng->used++;
--	mutex_unlock(&rng_devices.lock);
--
--	return 0;
--}
--
--static void loongson_rng_exit(struct crypto_tfm *tfm)
--{
--	struct loongson_rng_ctx *ctx = crypto_tfm_ctx(tfm);
--
--	mutex_lock(&rng_devices.lock);
--	ctx->rng->used--;
--	mutex_unlock(&rng_devices.lock);
--}
--
--static int loongson_rng_seed(struct crypto_rng *tfm, const u8 *seed,
--			     unsigned int slen)
--{
--	struct loongson_rng_ctx *ctx = crypto_rng_ctx(tfm);
--	struct loongson_rng *rng = ctx->rng;
--	struct loongson_rng_cmd *cmd;
--	int err;
--
--	if (slen < SE_SEED_SIZE)
--		return -EINVAL;
--
--	slen = min(slen, rng->engine->buffer_size);
--
--	mutex_lock(&rng->lock);
--	cmd = rng->engine->command;
--	cmd->u.len = slen;
--	cmd->seed_off = rng->engine->buffer_off;
--	memcpy(rng->engine->data_buffer, seed, slen);
--	err = loongson_se_send_engine_cmd(rng->engine);
--	if (err)
--		goto out;
--
--	cmd = rng->engine->command_ret;
--	if (cmd->u.ret)
--		err = -EIO;
--out:
--	mutex_unlock(&rng->lock);
--
--	return err;
--}
--
--static struct rng_alg loongson_rng_alg = {
--	.generate = loongson_rng_generate,
--	.seed =	loongson_rng_seed,
--	.seedsize = SE_SEED_SIZE,
--	.base = {
--		.cra_name = "stdrng",
--		.cra_driver_name = "loongson_stdrng",
--		.cra_priority = 300,
--		.cra_ctxsize = sizeof(struct loongson_rng_ctx),
--		.cra_module = THIS_MODULE,
--		.cra_init = loongson_rng_init,
--		.cra_exit = loongson_rng_exit,
--	},
--};
--
--static int loongson_rng_probe(struct platform_device *pdev)
--{
--	struct loongson_rng_cmd *cmd;
--	struct loongson_rng *rng;
--	int ret = 0;
--
--	rng = devm_kzalloc(&pdev->dev, sizeof(*rng), GFP_KERNEL);
--	if (!rng)
--		return -ENOMEM;
--
--	rng->engine = loongson_se_init_engine(pdev->dev.parent, SE_ENGINE_RNG);
--	if (!rng->engine)
--		return -ENODEV;
--	cmd = rng->engine->command;
--	cmd->cmd_id = SE_CMD_RNG;
--	cmd->out_off = rng->engine->buffer_off;
--	mutex_init(&rng->lock);
--
--	mutex_lock(&rng_devices.lock);
--
--	if (!rng_devices.registered) {
--		ret = crypto_register_rng(&loongson_rng_alg);
--		if (ret) {
--			dev_err(&pdev->dev, "failed to register crypto(%d)\n", ret);
--			goto out;
--		}
--		rng_devices.registered = 1;
--	}
--
--	list_add_tail(&rng->list, &rng_devices.list);
--out:
--	mutex_unlock(&rng_devices.lock);
--
--	return ret;
--}
--
--static struct platform_driver loongson_rng_driver = {
--	.probe		= loongson_rng_probe,
--	.driver		= {
--		.name	= "loongson-rng",
--	},
--};
--module_platform_driver(loongson_rng_driver);
--
--MODULE_ALIAS("platform:loongson-rng");
--MODULE_LICENSE("GPL");
--MODULE_AUTHOR("Yinggang Gu <guyinggang@loongson.cn>");
--MODULE_AUTHOR("Qunqin Zhao <zhaoqunqin@loongson.cn>");
--MODULE_DESCRIPTION("Loongson Random Number Generator driver");
+ 
+ 	*shutdown_required = true;
+ 
 
 
