@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211FB3D2FF0;
-	Thu, 16 Jul 2026 13:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B509242A796;
+	Thu, 16 Jul 2026 13:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209806; cv=none; b=YP0C00Gxa0Bxa4KtOKzFbG9frqsHed2nTt0xsGtrEOhCjSznu/4kqCvsCiYd694lxOgPRp4+tzdtpmwV+VT/cNB/S6a4+5F2tI/msrCA/2aArv5ioa1yr1oMBV9Pi3BrqTP7N4xGzxU/SJChag/fD5aIrzBIABOi5uWtxWTpeUA=
+	t=1784209809; cv=none; b=flQaA5YQEK/eSA3eeibpTpkMqQu02lDNU3upYKgOWPLoMSxHDtWSHubgAN+NvE712ZeqlZ1H0ttxz183LLt+BxMqJgre7x9XvMfv02tQPabVGbPibn3cVLkd7IlShF3pDotpOLRwXPJOnE9u9f/153GYdIHAt4SXOUq/Skx1+fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209806; c=relaxed/simple;
-	bh=GQ351JHYiHiLJHRqPj48UVcDuKfJrxEbeGmPZAi1STo=;
+	s=arc-20240116; t=1784209809; c=relaxed/simple;
+	bh=JbXaOSs9YbY8VLOtfczpeIo1Ac0VTNDKEmYdZcWPvFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+R3dToxwsJtikOAEKhRSgY8kAMpW8hDr1Nl8JvA/epH7LEt++sFfQE85xssmmO3DMOgixEmzu8tLSpOAyI5xZjw08Zzq232DJIXBq9NPvY1zz2A0u1LWhc0dd4lsujwLYjbLvx1xS4dXekrfvhvqVCfSTRTwlo07yifCIDJMy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adDRmBbL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ThYWTzuKSnR5LOmy3t96Xu2fKlCmXJbnJavl6L5v7JYdAGwsSlsOqRPzujPS/jA34Wm5hBacxNXahJtU4CEIkuMU6kfW52ktImn8IQpQi9/8+6J6bC2bw6TseWJu7iTVlglqvzHwuzQad7/EUdA9s9lu5r4rYkqexsnYXUwhCqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWGrug6c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adDRmBbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8031F000E9;
-	Thu, 16 Jul 2026 13:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWGrug6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032991F000E9;
+	Thu, 16 Jul 2026 13:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209804;
-	bh=ICQfL467Fnr/zd4qsgwHsomu1mO4f2+VEa9c0WT+djI=;
+	s=korg; t=1784209807;
+	bh=h3LvohnQ87AvLnE+boBstgVaZMW9RD0x1DqfiXknq+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adDRmBbLDW7Y0e3aF8pchnbLll85OeRpOq76sjaNhwV8/v04TQiBuSrirxQ8v/2Xo
-	 rua0KPlPP8mkCCjQPAf/cdd8IYgATyFmef6hSj5qzg2syfo6olyZa8cRriYvEh4qPT
-	 dgK5JU/tr5qXGlHjLP7+xo23mzvl11gJpU8FKkks=
+	b=uWGrug6cyYrVE78XZPS7Vzc4NxDRoW7FCdOsnTX6d93u+xw0nAXpRhDvFUks8f2e8
+	 5EooEv0ir7RG8AAItu6en2yMuBgPZIiwlcaa4CLZo9m2/moOJA2takSlkMHovtGDnL
+	 QlvZq5wt6SmFJvnsPDILl9P6Iv0R+1Ko9HXb055I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 7.1 325/518] usbip: tools: support SuperSpeedPlus devices
-Date: Thu, 16 Jul 2026 15:29:53 +0200
-Message-ID: <20260716133054.927921187@linuxfoundation.org>
+	Igor Kotrasinski <i.kotrasinsk@samsung.com>,
+	Sam Day <me@samcday.com>
+Subject: [PATCH 7.1 326/518] usbip: vudc: fix NULL deref in vep_dequeue()
+Date: Thu, 16 Jul 2026 15:29:54 +0200
+Message-ID: <20260716133054.948508317@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,68 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Sam Day <me@samcday.com>
 
-commit 195e667c8719480c320cd48ac0fbf1cb81d6ffe0 upstream.
+commit c5371e0b91b24159a3ebaa61e70b0980bcf03c0a upstream.
 
-USB devices running at SuperSpeedPlus report "10000" or "20000" in
-their sysfs speed attribute. usbip currently maps only "5000" to
-USB_SPEED_SUPER, so a SuperSpeedPlus device is imported as
-USB_SPEED_UNKNOWN.
+vep_alloc_request() wasn't initializing vrequest->udc, so cancellations
+on the FunctionFS AIO path were arriving in vep_dequeue without a valid
+UDC reference.
 
-The attach request is then rejected by vhci_hcd:
+Since vrequest->udc is never actually properly used anywhere, we opt to
+remove it, and update vep_dequeue to obtain a reference to the udc with
+ep_to_vudc(), consistent with the other vep_ ops.
 
-  vhci_hcd: Failed attach request for unsupported USB speed: UNKNOWN
+AFAICT this bug has existed for ~10 years. Seems that nobody has really
+stressed the FunctionFS AIO path on usbip's vudc.
 
-Map the SuperSpeedPlus sysfs speed values to USB_SPEED_SUPER_PLUS, use
-the SuperSpeed VHCI hub for SuperSpeedPlus devices, and recognize the
-gadget current_speed string used by the kernel.
+I tested this fix in a QEMU aarch64 guest driving FunctionFS endpoints
+via AIO. Before the fix, running `usbip attach` from the host would
+cause the guest to oops with the following backtrace:
 
-Fixes: b2316645ca5e ("usb: show speed "10000" in sysfs for USB 3.1 SuperSpeedPlus devices")
+Call trace:
+ vep_dequeue+0x1c/0xe4 (P)
+ usb_ep_dequeue+0x14/0x20
+ ffs_aio_cancel+0x24/0x34
+ __arm64_sys_io_cancel+0xb0/0x124
+ do_el0_svc+0x68/0x100
+ el0_svc+0x18/0x5c
+ el0t_64_sync_handler+0x98/0xdc
+ el0t_64_sync+0x154/0x158
+
+Assisted-by: opencode:openai/gpt-5.5
 Cc: stable <stable@kernel.org>
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://patch.msgid.link/00C828F338E43447+20260617020613.199086-1-chenyichong@uniontech.com
+Fixes: b6a0ca111867 ("usbip: vudc: Add UDC specific ops")
+Reviewed-by: Igor Kotrasinski <i.kotrasinsk@samsung.com>
+Signed-off-by: Sam Day <me@samcday.com>
+Link: https://patch.msgid.link/20260626-usbip-vudc-deque-fix-v3-1-98c2dc4d6a48@samcday.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/usb/usbip/libsrc/usbip_common.c        |    2 ++
- tools/usb/usbip/libsrc/usbip_device_driver.c |    4 ++++
- tools/usb/usbip/libsrc/vhci_driver.c         |    1 +
- 3 files changed, 7 insertions(+)
+ drivers/usb/usbip/vudc.h     |    1 -
+ drivers/usb/usbip/vudc_dev.c |    4 +---
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
---- a/tools/usb/usbip/libsrc/usbip_common.c
-+++ b/tools/usb/usbip/libsrc/usbip_common.c
-@@ -29,6 +29,8 @@ static const struct speed_string speed_s
- 	{ USB_SPEED_HIGH, "480", "High Speed(480Mbps)" },
- 	{ USB_SPEED_WIRELESS, "53.3-480", "Wireless"},
- 	{ USB_SPEED_SUPER, "5000", "Super Speed(5000Mbps)" },
-+	{ USB_SPEED_SUPER_PLUS, "10000", "Super Speed Plus(10000Mbps)" },
-+	{ USB_SPEED_SUPER_PLUS, "20000", "Super Speed Plus(20000Mbps)" },
- 	{ 0, NULL, NULL }
+--- a/drivers/usb/usbip/vudc.h
++++ b/drivers/usb/usbip/vudc.h
+@@ -38,7 +38,6 @@ struct vep {
+ 
+ struct vrequest {
+ 	struct usb_request req;
+-	struct vudc *udc;
+ 	struct list_head req_entry; /* Request queue */
  };
  
---- a/tools/usb/usbip/libsrc/usbip_device_driver.c
-+++ b/tools/usb/usbip/libsrc/usbip_device_driver.c
-@@ -57,6 +57,10 @@ static struct {
- 		.speed = USB_SPEED_SUPER,
- 		.name = "super-speed",
- 	},
-+	{
-+		.speed = USB_SPEED_SUPER_PLUS,
-+		.name = "super-speed-plus",
-+	},
- };
+--- a/drivers/usb/usbip/vudc_dev.c
++++ b/drivers/usb/usbip/vudc_dev.c
+@@ -333,7 +333,6 @@ static int vep_queue(struct usb_ep *_ep,
+ static int vep_dequeue(struct usb_ep *_ep, struct usb_request *_req)
+ {
+ 	struct vep *ep;
+-	struct vrequest *req;
+ 	struct vudc *udc;
+ 	struct vrequest *lst;
+ 	unsigned long flags;
+@@ -343,8 +342,7 @@ static int vep_dequeue(struct usb_ep *_e
+ 		return ret;
  
- static
---- a/tools/usb/usbip/libsrc/vhci_driver.c
-+++ b/tools/usb/usbip/libsrc/vhci_driver.c
-@@ -338,6 +338,7 @@ int usbip_vhci_get_free_port(uint32_t sp
+ 	ep = to_vep(_ep);
+-	req = to_vrequest(_req);
+-	udc = req->udc;
++	udc = ep_to_vudc(ep);
  
- 		switch (speed) {
- 		case	USB_SPEED_SUPER:
-+		case	USB_SPEED_SUPER_PLUS:
- 			if (vhci_driver->idev[i].hub != HUB_SPEED_SUPER)
- 				continue;
- 		break;
+ 	if (!udc->driver)
+ 		return -ESHUTDOWN;
 
 
