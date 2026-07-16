@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACAA36A35E;
-	Thu, 16 Jul 2026 13:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C13941F5EB;
+	Thu, 16 Jul 2026 13:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209209; cv=none; b=qV32lHgCw3BN2JIRvfPe4fPMtQH+HwtJQn7jJ88+hx6Y00qHqve+w/sGtRBysFYOglpAwYG6qJK4bwc2Lsv93ox2JriNvk4b/8DalwWLBIWHZotSNEeNu89zJOKpeGXGOZ/3aEItkFF/uXOEVjOCyjzKM1+ZPT3Gmb4YnmFb7lw=
+	t=1784209212; cv=none; b=mEDR+YcDR6kpCcO6tlYFYxXNnhGxAOphhAcfIwcatXQMhwbhqKABp/OKFJeqWusBsimnMx9v+v6iNuNdL7SdneCFaUd2Ss27OKy/O89BtQomEmR/1M7ms7kgXVzU133b0M6HQBC8NskAnLA8T8jQ8XA5RPlz8/n4p6GK5yuBmtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209209; c=relaxed/simple;
-	bh=mJX5wvTlliU+5AK8odpndehHqRwZwjJr+AaE1cK2sXs=;
+	s=arc-20240116; t=1784209212; c=relaxed/simple;
+	bh=O4TLsdnEpo4K7XLXMJ2Ntib9ImbPViR42q3YT+Pjdu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XEjVHlFFj1yu3sRIX7ymhVJSIgEAaLfqEvra/p7HIKU+oGIZE1G0CdAeSJaqCY/tqq4wddcPo0GjdUff5YU/CIBLs2F13mhG06REJd9vJtkg6NxJA9gtqQl5Wibb4VPehNRNJjfc7LvFILMUzMf0yBLyN9G//jmwP9HjsUapb5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOnXJt9x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k8AWm7BwoLLSIzm6f3A8eXUg5831DwFjt2AvEWUJdFjf0q+H/V8HCIyFDOqjOuTe/ehLjmk/pXc4uT4JMvb9aQy71gIUq9Di25MKC02NwRBXzV/pgBoKaKAT0EjAg6DVbrSLKN0gLjw+CvpHbFxBlafGrSQXNvGE49ZqAkDYvzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtN1Fd+L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOnXJt9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C511F000E9;
-	Thu, 16 Jul 2026 13:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtN1Fd+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693A11F000E9;
+	Thu, 16 Jul 2026 13:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209208;
-	bh=NkrIkAB70VpTEAIIE7VKOnCYJIcGkARD9Pi4LUsZtwM=;
+	s=korg; t=1784209210;
+	bh=ehrcx5QojO1Nq4jX4XTIVJDAIwwp+xeRgSoUYEO6t08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YOnXJt9xA6WJ0jk8rUHGMOKmrtGXzVolKK2i7dQir0wYR0rFeXcUhWwJHdKNqkN+N
-	 QVifyjMX33Rcl02fgW2xkk5DMG60PSEYOfJuc75pG8C+IpeoCKEgQ8jWy1VLI2h5Cr
-	 8sWfTl0hMEP9Up9ifHcPYTsGJY5TOFtSCQW+BLxE=
+	b=HtN1Fd+LZbJOXcMbFrW9yEPesVYI7E9icv9LxZjR2du+XwvoWf81CFeSgeemJJt6S
+	 TGOv6yjy2opEktFwSAUj/v39vgzJ+Okj93v5G09PAbd6ciSfPh50GT5k2E0XctzszM
+	 h2fJp+d792coghzdYKGTykccluWI4tP20K2MO9VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gordon Chen <chengordon326@gmail.com>,
+	Darvell Long <contact@darvell.me>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 098/518] ALSA: usb-audio: add IFB_SILENCE_ON_EMPTY quirk for Behringer Flow 8
-Date: Thu, 16 Jul 2026 15:26:06 +0200
-Message-ID: <20260716133050.009483936@linuxfoundation.org>
+Subject: [PATCH 7.1 099/518] ALSA: usb-audio: avoid kobject path lookup in DualSense match
+Date: Thu, 16 Jul 2026 15:26:07 +0200
+Message-ID: <20260716133050.030257957@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,124 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gordon Chen <chengordon326@gmail.com>
+From: Darvell Long <contact@darvell.me>
 
-commit a23812004228d4b041a858b927db787a7ff80f50 upstream.
+commit 7693c0cc415f3a16a7a3355f245474a5e661be4e upstream.
 
-The Behringer Flow 8 (1397:050c) is an 8-channel USB mixer that
-declares OUT EP 0x01 with implicit feedback from capture EP 0x81 via
-its UAC2 endpoint companion descriptor. After 5-35 minutes of
-continuous playback, the device occasionally returns a capture URB in
-which every iso_frame_desc has a non-zero status (-EXDEV bursts,
-visible as rate-limited "frame N active: -18" lines in dmesg from
-pcm.c).
+The DualSense jack-detection input handler verifies that a matching input
+device belongs to the same physical controller by building kobject path
+strings for both the input device and the USB audio device, then comparing
+the path prefix.
 
-In that case snd_usb_handle_sync_urb() at endpoint.c counts bytes==0
-and falls into the early "skip empty packets" return originally added
-for M-Audio Fast Track Ultra. As a result the playback EP loses its
-sole IFB-driven feeder and the OUT ring starves permanently: hw_ptr
-stops advancing while substream state remains RUNNING. Only USB
-re-enumeration recovers.
+This was observed when a weak physical connection caused the controller
+to rapidly disconnect and reconnect. During that repeated hotplug,
+snd_dualsense_ih_match() can run while the controller's USB device is
+being disconnected. kobject_get_path() walks ancestor kobjects and
+dereferences their names; if the USB device kobject name is no longer
+valid, this can fault in strlen():
 
-Three independent ftrace captures (taken at the moment of stall via a
-userspace watchdog) consistently show:
+  RIP: 0010:strlen+0x10/0x30
+  Call Trace:
+   kobject_get_path+0x34/0x150
+   snd_dualsense_ih_match+0x49/0xd0 [snd_usb_audio]
+   input_register_device+0x566/0x6a0
+   ps_probe+0xb89/0x1590 [hid_playstation]
 
-  - 60-70 capture URB completions in the 70ms window before the marker
-  - 0 retire_playback_urb / queue_pending_output_urbs /
-    snd_usb_endpoint_implicit_feedback_sink calls
-  - every usb_submit_urb in the window comes from
-    snd_complete_urb+0x64e (capture self-resubmit), none from the
-    queue_pending_output_urbs path
+The same ownership check can be done without building kobject path
+strings. The input device is parented below the HID device, USB interface
+and USB device, so walking the input device parent chain and comparing
+against the mixer USB device preserves the check without dereferencing
+kobject names during disconnect.
 
-Add a new opt-in quirk QUIRK_FLAG_IFB_SILENCE_ON_EMPTY: when set, the
-early return is skipped and we fall through to enqueue a packet_info
-whose packet_size[i] are all 0 (the existing loop already maps
-status!=0 packets to size 0). prepare_outbound_urb then emits a
-silence packet, the OUT ring keeps moving, and the device rides
-through the glitch.
-
-The default behaviour (early return) is preserved for all existing
-devices including M-Audio Fast Track Ultra. Only Flow 8 opts in here.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Gordon Chen <chengordon326@gmail.com>
-Link: https://patch.msgid.link/20260526072906.90106-1-chengordon326@gmail.com
+Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
+Cc: <stable@vger.kernel.org>
+Assisted-by: Cute:gpt-5.5
+Signed-off-by: Darvell Long <contact@darvell.me>
+Link: https://patch.msgid.link/20260624143723.2986353-1-contact@darvell.me
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c |   10 +++++++++-
- sound/usb/quirks.c   |    3 +++
- sound/usb/usbaudio.h |    8 ++++++++
- 3 files changed, 20 insertions(+), 1 deletion(-)
+ sound/usb/mixer_quirks.c |   40 ++++++++++++----------------------------
+ 1 file changed, 12 insertions(+), 28 deletions(-)
 
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -1780,8 +1780,16 @@ static void snd_usb_handle_sync_urb(stru
- 		/*
- 		 * skip empty packets. At least M-Audio's Fast Track Ultra stops
- 		 * streaming once it received a 0-byte OUT URB
-+		 *
-+		 * However, on devices where bytes==0 means every sync-source
-+		 * packet errored (e.g. Behringer Flow 8 returning -EXDEV bursts
-+		 * for entire capture URBs), an unconditional return starves the
-+		 * IFB-fed OUT ring permanently. Such devices set
-+		 * QUIRK_FLAG_IFB_SILENCE_ON_EMPTY to fall through and enqueue a
-+		 * packet_info with size 0 packets, so playback emits silence
-+		 * and the OUT ring keeps moving.
- 		 */
--		if (bytes == 0)
-+		if (bytes == 0 && !(ep->chip->quirk_flags & QUIRK_FLAG_IFB_SILENCE_ON_EMPTY))
- 			return;
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -567,46 +567,30 @@ static bool snd_dualsense_ih_match(struc
+ {
+ 	struct dualsense_mixer_elem_info *mei;
+ 	struct usb_device *snd_dev;
+-	char *input_dev_path, *usb_dev_path;
+-	size_t usb_dev_path_len;
+-	bool match = false;
++	struct device *parent;
  
- 		spin_lock_irqsave(&ep->lock, flags);
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2365,6 +2365,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x1397, 0x0509, /* Behringer UMC404HD */
- 		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
-+	DEVICE_FLG(0x1397, 0x050c, /* Behringer Flow 8 */
-+		   QUIRK_FLAG_IFB_SILENCE_ON_EMPTY),
- 	DEVICE_FLG(0x13e5, 0x0001, /* Serato Phono */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x152a, 0x880a, /* NeuralDSP Quad Cortex */
-@@ -2606,6 +2608,7 @@ static const char *const snd_usb_audio_q
- 	QUIRK_STRING_ENTRY(SKIP_IFACE_SETUP),
- 	QUIRK_STRING_ENTRY(MIXER_PLAYBACK_LINEAR_VOL),
- 	QUIRK_STRING_ENTRY(MIXER_CAPTURE_LINEAR_VOL),
-+	QUIRK_STRING_ENTRY(IFB_SILENCE_ON_EMPTY),
- 	NULL
- };
+ 	mei = container_of(handler, struct dualsense_mixer_elem_info, ih);
+ 	snd_dev = mei->info.head.mixer->chip->dev;
  
---- a/sound/usb/usbaudio.h
-+++ b/sound/usb/usbaudio.h
-@@ -236,6 +236,12 @@ extern bool snd_usb_skip_validation;
-  * QUIRK_FLAG_MIXER_CAPTURE_LINEAR_VOL
-  *  Similar to QUIRK_FLAG_MIXER_PLAYBACK_LINEAR_VOL, but for capture streams.
-  *  Overrides QUIRK_FLAG_MIXER_CAPTURE_MIN_MUTE
-+ * QUIRK_FLAG_IFB_SILENCE_ON_EMPTY
-+ *  In implicit feedback mode, when an entire capture URB returns with
-+ *  all iso_frame_desc[i].status != 0 (bytes==0), do not silently return
-+ *  from snd_usb_handle_sync_urb. Instead fall through and enqueue a
-+ *  packet_info containing only size-0 packets, so the OUT ring keeps
-+ *  moving (emits silence). Needed by Behringer Flow 8 (1397:050c).
-  */
+-	input_dev_path = kobject_get_path(&dev->dev.kobj, GFP_KERNEL);
+-	if (!input_dev_path) {
+-		dev_warn(&snd_dev->dev, "Failed to get input dev path\n");
+-		return false;
+-	}
+-
+-	usb_dev_path = kobject_get_path(&snd_dev->dev.kobj, GFP_KERNEL);
+-	if (!usb_dev_path) {
+-		dev_warn(&snd_dev->dev, "Failed to get USB dev path\n");
+-		goto free_paths;
+-	}
+-
+ 	/*
+ 	 * Ensure the VID:PID matched input device supposedly owned by the
+ 	 * hid-playstation driver belongs to the actual hardware handled by
+-	 * the current USB audio device, which implies input_dev_path being
+-	 * a subpath of usb_dev_path.
++	 * the current USB audio device.
+ 	 *
+ 	 * This verification is necessary when there is more than one identical
+ 	 * controller attached to the host system.
++	 *
++	 * The input device is registered below the HID device, USB interface and
++	 * USB device, so compare the parent chain directly instead of building
++	 * kobject path strings. This avoids dereferencing kobject names while the
++	 * USB device hierarchy is being torn down during disconnect.
+ 	 */
+-	usb_dev_path_len = strlen(usb_dev_path);
+-	if (usb_dev_path_len >= strlen(input_dev_path))
+-		goto free_paths;
+-
+-	usb_dev_path[usb_dev_path_len] = '/';
+-	match = !memcmp(input_dev_path, usb_dev_path, usb_dev_path_len + 1);
+-
+-free_paths:
+-	kfree(input_dev_path);
+-	kfree(usb_dev_path);
++	for (parent = dev->dev.parent; parent; parent = parent->parent) {
++		if (parent == &snd_dev->dev)
++			return true;
++	}
  
- enum {
-@@ -268,6 +274,7 @@ enum {
- 	QUIRK_TYPE_SKIP_IFACE_SETUP		= 26,
- 	QUIRK_TYPE_MIXER_PLAYBACK_LINEAR_VOL	= 27,
- 	QUIRK_TYPE_MIXER_CAPTURE_LINEAR_VOL	= 28,
-+	QUIRK_TYPE_IFB_SILENCE_ON_EMPTY		= 29,
- /* Please also edit snd_usb_audio_quirk_flag_names */
- };
+-	return match;
++	return false;
+ }
  
-@@ -302,5 +309,6 @@ enum {
- #define QUIRK_FLAG_SKIP_IFACE_SETUP		QUIRK_FLAG(SKIP_IFACE_SETUP)
- #define QUIRK_FLAG_MIXER_PLAYBACK_LINEAR_VOL	QUIRK_FLAG(MIXER_PLAYBACK_LINEAR_VOL)
- #define QUIRK_FLAG_MIXER_CAPTURE_LINEAR_VOL	QUIRK_FLAG(MIXER_CAPTURE_LINEAR_VOL)
-+#define QUIRK_FLAG_IFB_SILENCE_ON_EMPTY		QUIRK_FLAG(IFB_SILENCE_ON_EMPTY)
- 
- #endif /* __USBAUDIO_H */
+ static int snd_dualsense_ih_connect(struct input_handler *handler,
 
 
