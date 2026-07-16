@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481253B42FC;
-	Thu, 16 Jul 2026 14:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F845A79B;
+	Thu, 16 Jul 2026 14:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210979; cv=none; b=BDdNFXMPnuqk7gfQc5hCcc/xhe29i910t3qm871+EWmJ3+yjL1zKPYR1mS6F6fS552hGzLLPDH5+6zhJhKj0ZUh13/5C/XEt3KARvwtmLLIuaFHqd/RvLNlwjvQ5qd5RFFOiRmhXl73jb0DSfGrie+VbN73iMb3Zys/SUmiguOw=
+	t=1784210982; cv=none; b=PUDlJ2Yi96gvecW4Ct0IyHVJjeKmNQf6fIXQBh3SKjZGh5vXZe5c9J7AtdAI4gaHTz4seS+M9BZi2K4sHBNi2F2BMG4Jbv6C9U7udqoyBuFXvkMpqV7LOnQC/DJDtOoemxrgfuTBzf0moY2yY4yQqNCctJDpTU51KXhUUILYgAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210979; c=relaxed/simple;
-	bh=NTugKyvmJIbUL8YRO1cIfLWv/bQ3UQDQNd2y3tzszd0=;
+	s=arc-20240116; t=1784210982; c=relaxed/simple;
+	bh=wUB6Z1zbkgH1J5zIGadPPDdRg5o2DyiCS5HNV+vp0XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EeTQNLCem2MNCqDEDkA64YKS8li8g/f9IizKWxnfZnqPvQYWZosvobhH+IrEH4imVp44h9rK3u9pLA4LkRotnmJwKJ7SAinF21SolxTcda5YdrwLzqpqoTtH+5KwDVSHJR+p49KOrIz4o8oorq0xcHnLtQ+0l8aSo3MPoFDOR+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqlCmXl/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QTeZk89gK17TrE5J7WUxsXiLKi1QA13W2QByX/yRmjzBT77Zc8CyfxLqLKXfvCcNNTRj8N3efJfr5cQLutOxYvmr6d3HgmAPyPJRYS1DqSRb7Q63aakm3+DJ78dZxSewCGyGPqDoFsSFes6TziRWFqxJckFvGUSG2x1wm3rt+Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7crSLEL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqlCmXl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF7E1F000E9;
-	Thu, 16 Jul 2026 14:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7crSLEL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537571F000E9;
+	Thu, 16 Jul 2026 14:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210978;
-	bh=nWM1yKSkgv79yBfcORj0ZYusR62tNrkZoTEPjBiK1yA=;
+	s=korg; t=1784210980;
+	bh=1mfozgNW33a7P9RACdVz7tHF0Xf9rYuITPb0B8Mu3rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IqlCmXl/66wQ/2WAGvvkmTWsWRkvwbxE+v2li1QrTuTbnS5w7slTqRNq+6oT30J4t
-	 gJu4pbxjNaG63fee8zVc/DDVMKNyckeJG5ju5EKYcfFeX00azcBSmdMo24tahv3VbW
-	 isAuNtFqLHlPCT3r61pfz/itl41qJzBZvxgQseJA=
+	b=U7crSLELvbeChG4MrZexLnKI0RQk/eJC+wwxlMbQFsrA5FwmkVOdPdPA0RqZnxorU
+	 zyV9GvWfM5IIo28ED9xPFWF/XgUJiYOmlkZfUVQF59IxeCvy7rUaE+VHKUPkZAHuk3
+	 o4PujoRILU/dRDgPH3We9VxkmOcNrkCT0nnjtZ+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.18 253/480] s390: Revert support for DCACHE_WORD_ACCESS
-Date: Thu, 16 Jul 2026 15:30:00 +0200
-Message-ID: <20260716133050.288048115@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 254/480] perf/arm-cmn: Fix DVM node events
+Date: Thu, 16 Jul 2026 15:30:01 +0200
+Message-ID: <20260716133050.309288746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,141 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit 37540b8c287fc817bdbd0c62bb75ad6eab0e5d03 upstream.
+commit 5936245125f78d896fdb1bbc2ae79213e28a6579 upstream.
 
-load_unaligned_zeropad() reads eight bytes from unaligned addresses and may
-cross page boundaries. It handles exceptions which may happen if reading
-from the second page results in an exception.
+The new DVM node events added in CMN-700 also apply to CMN S3; fix
+the model encoding so that we can expose the aliases and handle
+occupancy filtering on newer CMNs too.
 
-For pages which are donated to the Ultravisor for secure execution purposes
-the do_secure_storage_access() exception handler however does not handle
-such exceptions correctly. Such an exception may result in an endless
-exception loop which will never be resolved.
-
-An attempt to fix this [1] turned out to be not sufficient. For now revert
-load_unaligned_zeropad() until this problem has been resolved in a proper
-way.
-
-Note that the implementation of load_unaligned_zeropad() itself is
-correct. The revert is just a temporary workaround until there is complete
-fix for secure storage access exceptions.
-
-[1] commit b00be77302d7 ("s390/mm: Add missing secure storage access fixups for donated memory")
-
-Fixes: 802ba53eefc5 ("s390: add support for DCACHE_WORD_ACCESS")
 Cc: stable@vger.kernel.org
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 0dc2f4963f7e ("perf/arm-cmn: Support CMN S3")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/Kconfig                      |    1 -
- arch/s390/include/asm/asm-extable.h    |    4 ----
- arch/s390/include/asm/word-at-a-time.h |   22 ----------------------
- arch/s390/mm/extable.c                 |   18 ------------------
- 4 files changed, 45 deletions(-)
+ drivers/perf/arm-cmn.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -161,7 +161,6 @@ config S390
- 	select ARCH_WANTS_THP_SWAP
- 	select BUILDTIME_TABLE_SORT
- 	select CLONE_BACKWARDS2
--	select DCACHE_WORD_ACCESS if !KMSAN
- 	select DYNAMIC_FTRACE if FUNCTION_TRACER
- 	select FUNCTION_ALIGNMENT_8B if CC_IS_GCC
- 	select FUNCTION_ALIGNMENT_16B if !CC_IS_GCC
---- a/arch/s390/include/asm/asm-extable.h
-+++ b/arch/s390/include/asm/asm-extable.h
-@@ -12,7 +12,6 @@
- #define EX_TYPE_UA_FAULT	3
- #define EX_TYPE_UA_LOAD_REG	5
- #define EX_TYPE_UA_LOAD_REGPAIR	6
--#define EX_TYPE_ZEROPAD		7
- #define EX_TYPE_FPC		8
- #define EX_TYPE_UA_MVCOS_TO	9
- #define EX_TYPE_UA_MVCOS_FROM	10
-@@ -80,9 +79,6 @@
- #define EX_TABLE_UA_LOAD_REGPAIR(_fault, _target, _regerr, _regzero)	\
- 	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_UA_LOAD_REGPAIR, _regerr, _regzero, 0)
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -197,13 +197,14 @@
+ enum cmn_model {
+ 	CMN600 = 1,
+ 	CMN650 = 2,
+-	CMN700 = 4,
+-	CI700 = 8,
++	CI700 = 4,
++	CMN700 = 8,
+ 	CMNS3 = 16,
+ 	/* ...and then we can use bitmap tricks for commonality */
+ 	CMN_ANY = -1,
+ 	NOT_CMN600 = -2,
+-	CMN_650ON = CMN650 | CMN700 | CMNS3,
++	CMN_700ON = ~(CMN700 - 1),
++	CMN_650ON = CMN_700ON | CMN650,
+ };
  
--#define EX_TABLE_ZEROPAD(_fault, _target, _regdata, _regaddr)		\
--	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_ZEROPAD, _regdata, _regaddr, 0)
--
- #define EX_TABLE_FPC(_fault, _target)					\
- 	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_FPC, __stringify(%%r0), __stringify(%%r0), 0)
+ /* Actual part numbers and revision IDs defined by the hardware */
+@@ -919,14 +920,14 @@ static struct attribute *arm_cmn_event_a
+ 	CMN_EVENT_DVM(NOT_CMN600, txsnp_stall,		0x0a),
+ 	CMN_EVENT_DVM(NOT_CMN600, trkfull,		0x0b),
+ 	CMN_EVENT_DVM_OCC(NOT_CMN600, trk_occupancy,	0x0c),
+-	CMN_EVENT_DVM_OCC(CMN700, trk_occupancy_cxha,	0x0d),
+-	CMN_EVENT_DVM_OCC(CMN700, trk_occupancy_pdn,	0x0e),
+-	CMN_EVENT_DVM(CMN700, trk_alloc,		0x0f),
+-	CMN_EVENT_DVM(CMN700, trk_cxha_alloc,		0x10),
+-	CMN_EVENT_DVM(CMN700, trk_pdn_alloc,		0x11),
+-	CMN_EVENT_DVM(CMN700, txsnp_stall_limit,	0x12),
+-	CMN_EVENT_DVM(CMN700, rxsnp_stall_starv,	0x13),
+-	CMN_EVENT_DVM(CMN700, txsnp_sync_stall_op,	0x14),
++	CMN_EVENT_DVM_OCC(CMN_700ON, trk_occupancy_cxha, 0x0d),
++	CMN_EVENT_DVM_OCC(CMN_700ON, trk_occupancy_pdn,	0x0e),
++	CMN_EVENT_DVM(CMN_700ON, trk_alloc,		0x0f),
++	CMN_EVENT_DVM(CMN_700ON, trk_cxha_alloc,	0x10),
++	CMN_EVENT_DVM(CMN_700ON, trk_pdn_alloc,		0x11),
++	CMN_EVENT_DVM(CMN_700ON, txsnp_stall_limit,	0x12),
++	CMN_EVENT_DVM(CMN_700ON, rxsnp_stall_starv,	0x13),
++	CMN_EVENT_DVM(CMN_700ON, txsnp_sync_stall_op,	0x14),
  
---- a/arch/s390/include/asm/word-at-a-time.h
-+++ b/arch/s390/include/asm/word-at-a-time.h
-@@ -4,7 +4,6 @@
- 
- #include <linux/bitops.h>
- #include <linux/wordpart.h>
--#include <asm/asm-extable.h>
- #include <asm/bitsperlong.h>
- 
- struct word_at_a_time {
-@@ -41,25 +40,4 @@ static inline unsigned long zero_bytemas
- 	return ~1UL << data;
- }
- 
--/*
-- * Load an unaligned word from kernel space.
-- *
-- * In the (very unlikely) case of the word being a page-crosser
-- * and the next page not being mapped, take the exception and
-- * return zeroes in the non-existing part.
-- */
--static inline unsigned long load_unaligned_zeropad(const void *addr)
--{
--	unsigned long data;
--
--	asm_inline volatile(
--		"0:	lg	%[data],0(%[addr])\n"
--		"1:	nopr	%%r7\n"
--		EX_TABLE_ZEROPAD(0b, 1b, %[data], %[addr])
--		EX_TABLE_ZEROPAD(1b, 1b, %[data], %[addr])
--		: [data] "=d" (data)
--		: [addr] "a" (addr), "m" (*(unsigned long *)addr));
--	return data;
--}
--
- #endif /* _ASM_WORD_AT_A_TIME_H */
---- a/arch/s390/mm/extable.c
-+++ b/arch/s390/mm/extable.c
-@@ -50,22 +50,6 @@ static bool ex_handler_ua_load_reg(const
- 	return true;
- }
- 
--static bool ex_handler_zeropad(const struct exception_table_entry *ex, struct pt_regs *regs)
--{
--	unsigned int reg_addr = FIELD_GET(EX_DATA_REG_ADDR, ex->data);
--	unsigned int reg_data = FIELD_GET(EX_DATA_REG_ERR, ex->data);
--	unsigned long data, addr, offset;
--
--	addr = regs->gprs[reg_addr];
--	offset = addr & (sizeof(unsigned long) - 1);
--	addr &= ~(sizeof(unsigned long) - 1);
--	data = *(unsigned long *)addr;
--	data <<= BITS_PER_BYTE * offset;
--	regs->gprs[reg_data] = data;
--	regs->psw.addr = extable_fixup(ex);
--	return true;
--}
--
- static bool ex_handler_fpc(const struct exception_table_entry *ex, struct pt_regs *regs)
- {
- 	fpu_sfpc(0);
-@@ -134,8 +118,6 @@ bool fixup_exception(struct pt_regs *reg
- 		return ex_handler_ua_load_reg(ex, false, regs);
- 	case EX_TYPE_UA_LOAD_REGPAIR:
- 		return ex_handler_ua_load_reg(ex, true, regs);
--	case EX_TYPE_ZEROPAD:
--		return ex_handler_zeropad(ex, regs);
- 	case EX_TYPE_FPC:
- 		return ex_handler_fpc(ex, regs);
- 	case EX_TYPE_UA_MVCOS_TO:
+ 	CMN_EVENT_HNF(CMN_ANY, cache_miss,		0x01),
+ 	CMN_EVENT_HNF(CMN_ANY, slc_sf_cache_access,	0x02),
 
 
