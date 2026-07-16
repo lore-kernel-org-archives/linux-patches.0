@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB093161AD;
-	Thu, 16 Jul 2026 14:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0663161AD;
+	Thu, 16 Jul 2026 14:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210769; cv=none; b=otAVh0rUQbRGURltFcB/lwhIMOX49eQyksvVVqyt5X6iQf5uHSNB1s3Z+M8wJRTL8HKDHhpbUs/gR627dNMCmF4mPhIHTZWjI9BfNFN7cYy/XAoLlEAKTw8UL4YEi78WnouljV06gynCaiRuGJFvIIqcYo64MkrvyOmEyJ4pnS8=
+	t=1784210772; cv=none; b=VFbDf1j/oOkUYhcj3KcFiYvzKr0j83wQUn2++k5AVHBxWdT+IlO7mng1qgMoc3aVVBgD+F0pkdFRoEbgoWqsQ9m4Ergk2S42El/JaORUMUCPe9JNB2NsYxwHf5eoVmmvQg16EpwlJCf7neNibekobsyluXa4e5fwvT9DWwBDFTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210769; c=relaxed/simple;
-	bh=K685th+/A8t5WAP/xcf0KAqJLoTYYlbpN7O3fzARyNo=;
+	s=arc-20240116; t=1784210772; c=relaxed/simple;
+	bh=VK8qWq9dMaxcXthrDsO48xbXNOogI9XCL+2Ew4iDd6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sz6H39ipeWJ9OpJ9JIHN1rQEYOlcWKVoUfXi4/6fHvVezDlwTFpBT/LTmeIsGwBghNgBer11Ijgm4EhWpInoB7zFdSYpylynvHMc7iYuKsXV3Bjhbp1Jo/m0/fhbt1nz0kk4AQCTwxH/tHuvbShR9Wk1IWusqITsGB4nE++sW6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKm1GodG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tX4VY+S3CiwzeC83OKHgCv/zzj+4DTgfHZdslXYrHQyCBe5E24U7/NPvegDA+BqV3626WcDxVqdbmLdOBPC3PF/T66fmZ0vASyw43D1lNYFH9K2EQFuyzhDmYTCNRXmgScuCwRqYczHXmIT81DiAEhftL24sgt9Id9bpd76K0MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtXtImly; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKm1GodG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED8C1F000E9;
-	Thu, 16 Jul 2026 14:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtXtImly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876291F00A3F;
+	Thu, 16 Jul 2026 14:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210768;
-	bh=6cZpCZYay6t9lHsz8FYm1fkkfL2LdndpNahyfnmqVvs=;
+	s=korg; t=1784210771;
+	bh=eLCXZdCzO86XNGyCtklH2ne+i04COz6nvZ0i064Rwgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKm1GodGF93hfG6rld6QXhPAi6HzQSlgwZ22/QBEhUNAoJkNiZD7KfQQ+db27URVW
-	 sjJzjQacgASS45zhN2Qrkoe5mf9OJ6F3TqAwtrDj+d9iaLFwFedlpLQFwTmtG4O+d4
-	 eZEWcnBTeLOOlZ9u91G6l87gV12gvlHv71SO1bC0=
+	b=jtXtImlyMf3+apmxpdt8IvW8WmsgJ+mbzu8hqSsu7BkjlZLIAaYZ57HG2sTR5hDzj
+	 r2/lM7ypEdTibWbg4E6va16P8fUAmeOPv2TvBeeCkjssw4LddjfHDwcAflvV7lWEuG
+	 zUJ/CfJHMCIfwdbj0MWfIPpNXatLLnP/MoOR2eHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijing Yin <yzjaurora@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.18 172/480] net: af_key: initialize alg_key_len for IPComp states
-Date: Thu, 16 Jul 2026 15:28:39 +0200
-Message-ID: <20260716133048.428795554@linuxfoundation.org>
+	Chi Wang <wangchi@kylinos.cn>,
+	Ricardo Robaina <rrobaina@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.18 173/480] audit: Fix data races of skb_queue_len() readers on audit_queue
+Date: Thu, 16 Jul 2026 15:28:40 +0200
+Message-ID: <20260716133048.452703926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -45,117 +45,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijing Yin <yzjaurora@gmail.com>
+From: Chi Wang <wangchi@kylinos.cn>
 
-commit d129c3177d7b1138fd5066fcc63a698b3ba415b0 upstream.
+commit c9a71daaecb2fb1d8c704545cc0b1c920b9bf5d7 upstream.
 
-pfkey_msg2xfrm_state() handles the IPComp (SADB_X_SATYPE_IPCOMP) case by
-allocating x->calg and copying only the algorithm name:
+Multiple readers access audit_queue.qlen via skb_queue_len() without
+holding the queue lock or using READ_ONCE(), while kauditd writes to
+this field via the skb_dequeue() → __skb_unlink() path with WRITE_ONCE()
+protected by a spinlock. This constitutes data races.
 
-	x->calg = kmalloc_obj(*x->calg);
-	if (!x->calg) {
-		err = -ENOMEM;
-		goto out;
-	}
-	strcpy(x->calg->alg_name, a->name);
-	x->props.calgo = sa->sadb_sa_encrypt;
+All affected skb_queue_len(&audit_queue) call sites:
+  - kauditd_thread() wait_event_freezable() condition
+  - audit_receive_msg() AUDIT_GET handler (s.backlog assignment)
+  - audit_receive() backlog check
+  - audit_log_start() backlog check and pr_warn()
 
-Unlike the authentication (x->aalg) and encryption (x->ealg) branches of
-the same function, the compression branch never initializes
-calg->alg_key_len.  IPComp carries no key and the allocation only
-reserves sizeof(struct xfrm_algo) (i.e. no room for a key), so the field
-is left containing uninitialized slab data.
+KCSAN reports the following conflicting access pattern (one example):
+==================================================================
+BUG: KCSAN: data-race in audit_log_start / skb_dequeue
 
-calg->alg_key_len is later used as a length by xfrm_algo_clone() when an
-IPComp state is cloned during XFRM_MSG_MIGRATE:
+write (marked) to 0xffffffff8512ee20 of 4 bytes by task 661 on cpu 57:
+ skb_dequeue+0x70/0xf0
+ kauditd_send_queue+0x71/0x220
+ kauditd_thread+0x1cb/0x430
+ kthread+0x1c2/0x210
+ ret_from_fork+0x162/0x1a0
+ ret_from_fork_asm+0x1a/0x30
 
-	xfrm_state_migrate()
-	  xfrm_state_clone_and_setup()
-	    x->calg = xfrm_algo_clone(orig->calg);
-	      kmemdup(orig, xfrm_alg_len(orig));
+read to 0xffffffff8512ee20 of 4 bytes by task 36586 on cpu 1:
+ audit_log_start+0x2a0/0x6b0
+ audit_core_dumps+0x64/0xa0
+ do_coredump+0x14b/0x1260
+ get_signal+0xeb2/0xf70
+ arch_do_signal_or_restart+0x41/0x170
+ exit_to_user_mode_loop+0xa2/0x1c0
+ do_syscall_64+0x1a3/0x1c0
+ entry_SYSCALL_64_after_hwframe+0x76/0xe0
 
-where xfrm_alg_len() returns sizeof(*alg) + (alg_key_len + 7) / 8.  With
-a non-zero garbage alg_key_len, kmemdup() reads past the end of the
-68-byte calg object.  Adding an IPComp SA via PF_KEY and then migrating
-it triggers (net-next, KASAN, init_on_alloc=0):
+value changed: 0x00000001 -> 0x00000000
+==================================================================
 
-  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x44/0x60
-  Read of size 4164 at addr ff11000025a74980 by task diag2/9287
-  CPU: 3 UID: 0 PID: 9287 Comm: diag2 7.1.0-rc6-g903db046d557 #1
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x10e/0x1f0
-   print_report+0xf7/0x600
-   kasan_report+0xe4/0x120
-   kasan_check_range+0x105/0x1b0
-   __asan_memcpy+0x23/0x60
-   kmemdup_noprof+0x44/0x60
-   xfrm_state_migrate+0x70a/0x1da0
-   xfrm_migrate+0x753/0x18a0
-   xfrm_do_migrate+0xb47/0xf10
-   xfrm_user_rcv_msg+0x411/0xb50
-   netlink_rcv_skb+0x158/0x420
-   xfrm_netlink_rcv+0x71/0x90
-   netlink_unicast+0x584/0x850
-   netlink_sendmsg+0x8b0/0xdc0
-   ____sys_sendmsg+0x9f7/0xb90
-   ___sys_sendmsg+0x134/0x1d0
-   __sys_sendmsg+0x16d/0x220
-   do_syscall_64+0x116/0x7d0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+Resolve the race by switching to lockless helper skb_queue_len_lockless(),
+which internally uses READ_ONCE() and properly pairs with the WRITE_ONCE()
+write accesses already present on the writer side.
 
-  Allocated by task 9287:
-   kasan_save_stack+0x33/0x60
-   kasan_save_track+0x14/0x30
-   __kasan_kmalloc+0xaa/0xb0
-   pfkey_add+0x2652/0x2ea0
-   pfkey_process+0x6d0/0x830
-   pfkey_sendmsg+0x42c/0x850
-   __sys_sendto+0x461/0x4b0
-   __x64_sys_sendto+0xe0/0x1c0
-   do_syscall_64+0x116/0x7d0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  The buggy address belongs to the object at ff11000025a74980
-   which belongs to the cache kmalloc-96 of size 96
-  The buggy address is located 0 bytes inside of
-   allocated 68-byte region [ff11000025a74980, ff11000025a749c4)
-
-Depending on the uninitialized value the same field can instead request
-an oversized kmemdup() allocation and make the migration clone fail.
-
-The XFRM netlink path is not affected: verify_one_alg() rejects an
-XFRMA_ALG_COMP attribute shorter than xfrm_alg_len(), so a calg added via
-XFRM_MSG_NEWSA is always self-consistent.
-
-Initialize calg->alg_key_len to 0, matching the aalg/ealg branches.
-
-Fixes: 80c9abaabf42 ("[XFRM]: Extension for dynamic update of endpoint address(es)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 3197542482df ("audit: rework audit_log_start()")
+Signed-off-by: Chi Wang <wangchi@kylinos.cn>
+Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
+[PM: line length tweak]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/key/af_key.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/audit.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -1218,6 +1218,7 @@ static struct xfrm_state * pfkey_msg2xfr
- 				goto out;
- 			}
- 			strcpy(x->calg->alg_name, a->name);
-+			x->calg->alg_key_len = 0;
- 			x->props.calgo = sa->sadb_sa_encrypt;
- 		} else {
- 			int keysize = 0;
+--- a/kernel/audit.c
++++ b/kernel/audit.c
+@@ -946,7 +946,7 @@ main_queue:
+ 		 *       do the multicast send and rotate records from the
+ 		 *       main queue to the retry/hold queues */
+ 		wait_event_freezable(kauditd_wait,
+-				     (skb_queue_len(&audit_queue) ? 1 : 0));
++				(skb_queue_len_lockless(&audit_queue) ? 1 : 0));
+ 	}
+ 
+ 	return 0;
+@@ -1279,7 +1279,7 @@ static int audit_receive_msg(struct sk_b
+ 		s.rate_limit		   = audit_rate_limit;
+ 		s.backlog_limit		   = audit_backlog_limit;
+ 		s.lost			   = atomic_read(&audit_lost);
+-		s.backlog		   = skb_queue_len(&audit_queue);
++		s.backlog		   = skb_queue_len_lockless(&audit_queue);
+ 		s.feature_bitmap	   = AUDIT_FEATURE_BITMAP_ALL;
+ 		s.backlog_wait_time	   = audit_backlog_wait_time;
+ 		s.backlog_wait_time_actual = atomic_read(&audit_backlog_wait_time_actual);
+@@ -1622,7 +1622,7 @@ static void audit_receive(struct sk_buff
+ 
+ 	/* can't block with the ctrl lock, so penalize the sender now */
+ 	if (audit_backlog_limit &&
+-	    (skb_queue_len(&audit_queue) > audit_backlog_limit)) {
++	    (skb_queue_len_lockless(&audit_queue) > audit_backlog_limit)) {
+ 		DECLARE_WAITQUEUE(wait, current);
+ 
+ 		/* wake kauditd to try and flush the queue */
+@@ -1928,7 +1928,7 @@ struct audit_buffer *audit_log_start(str
+ 		long stime = audit_backlog_wait_time;
+ 
+ 		while (audit_backlog_limit &&
+-		       (skb_queue_len(&audit_queue) > audit_backlog_limit)) {
++			(skb_queue_len_lockless(&audit_queue) > audit_backlog_limit)) {
+ 			/* wake kauditd to try and flush the queue */
+ 			wake_up_interruptible(&kauditd_wait);
+ 
+@@ -1948,7 +1948,7 @@ struct audit_buffer *audit_log_start(str
+ 			} else {
+ 				if (audit_rate_check() && printk_ratelimit())
+ 					pr_warn("audit_backlog=%d > audit_backlog_limit=%d\n",
+-						skb_queue_len(&audit_queue),
++						skb_queue_len_lockless(&audit_queue),
+ 						audit_backlog_limit);
+ 				audit_log_lost("backlog limit exceeded");
+ 				return NULL;
 
 
