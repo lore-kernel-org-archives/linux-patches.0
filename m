@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F68243305A;
-	Thu, 16 Jul 2026 14:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB42E433BC3;
+	Thu, 16 Jul 2026 14:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212106; cv=none; b=nfBrDjYgP6WQFCMd3Ukjc4I63eyS34JEEnPodPi0dOnshLrSPhIKnflAR7ajl1mOo9R/iqrJtmVu819gQH2C/vdyZlvTSd+9klfInu8wEsWwXLftCsSkQlaDraDGeeWKt1VoHQfmadcYl3+xJ17bvNkPtsmAgklJnxz+EIGNpPc=
+	t=1784212108; cv=none; b=Llxm5mEFjR47xcizx3paDYf6w22QJyzGoVRWXVtyfRPP0udBw8RWanwktTEQqSGR5oAJMgCu46BpqZJ1TTnFtpS0pkkgZn8Lz7dyVGrD2a4gxikHYVM+lLIscNKzdK44qIRSE70PghiUlXHBD9v6X8LIBiAKq/mXpJdqIeqyPTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212106; c=relaxed/simple;
-	bh=JQUvwrlD92cIxp1RLDFC5Zd8rj/vY2CNshvrOgrW3SA=;
+	s=arc-20240116; t=1784212108; c=relaxed/simple;
+	bh=WYGSbreKhzWUP8yozIGSe8RBvBMCeq+IEISMNc5RFQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qiDJQo1UAiSsVio6uIvM42Xa1PSXIMasl7sUeP1C5B+R95mAKhzZ8jbMrkzrW3wVsv/zIAN97yS4p/BbOJbhRS4WaI06ha+HEiaMKOTft21Uer0my0XI8KZzSysaajRrfabJFlxfDCx9EK5KoB3PgwQgGVeiqX25KeX+eLlxQ98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRY6rxsH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zh/UuVSIqqmbdHJporo4FDO60CYIH9C/AQ+Ybt/aYfvkxoVpb5iMZMdYzLkGsQ15dyusavA3nadQcwM7xDvJMCacJSJbt6FCt6zd5bCDx+Nf4yuX8Qe4d+Eid73sdj4LIZNdP+rcx02UAXC+WtdWhlyEF17jUaF6kHO2R1bQmbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXCmGTYI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRY6rxsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7361D1F000E9;
-	Thu, 16 Jul 2026 14:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXCmGTYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2E41F00A3E;
+	Thu, 16 Jul 2026 14:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212105;
-	bh=9hwUgL4MH5aI0PlpME7ps5MIcVh1ZwXU4te3jv3aZFU=;
+	s=korg; t=1784212107;
+	bh=h+cXd4AZUA3ivfmaf4n89D8fc3kL95ZU4M7InUOOg4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QRY6rxsHc9OzrhvNFNMHHG+gGxbrTGQPUEdG5TgkKL+glRIMCyqHY9W8JBacMJHt8
-	 o39r2n0AKpwx8tMpI6pTZJ5ov/Scu3M+AYu326NAFDN74RTCIraiv0lGM9+SnEgm7t
-	 /Dx6jgx2Vek9u0pYw4+s8tMgJ/pjQ4wQYF+mRSLg=
+	b=gXCmGTYIJRFXdjBoirXUS/F3pcMG5TpaAPqyvwBDOR5eJsqbb2LgBpwEsdTIpbyVZ
+	 vlObysvJpyoDgGiSKl46ro4PZKe+wfK+1RjP9HZDLnynz24sCHPBkVuXq5xmfFihfo
+	 E5gloKcBLjOvxRR/StCuHbo2Cz2otRoIi3wOOQ9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 202/349] HID: hid-goodix-spi: validate report size to prevent stack buffer overflow
-Date: Thu, 16 Jul 2026 15:32:16 +0200
-Message-ID: <20260716133037.889879799@linuxfoundation.org>
+Subject: [PATCH 6.12 203/349] HID: wacom: stop hardware after post-start probe failures
+Date: Thu, 16 Jul 2026 15:32:17 +0200
+Message-ID: <20260716133037.911413449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,48 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit db0a0768d09273aadadeb76730cd658d720333a4 upstream.
+commit ec2612b8ad9e642596db011dd8b6568ef1edeaa1 upstream.
 
-goodix_hid_set_raw_report() builds a protocol frame in a 128-byte stack
-buffer (tmp_buf), writing an 11-12 byte header followed by the
-caller-supplied report data.  The HID core caps report size at
-HID_MAX_BUFFER_SIZE (16384) by default, while the driver does not set
-hid_ll_driver.max_buffer_size and performs no bounds checking before
-copying the payload:
+wacom_parse_and_register() starts HID hardware before registering inputs
+and initializing pad LEDs/remotes. Those later steps can fail, but their
+error paths currently release Wacom resources without stopping the HID
+hardware.
 
-    memcpy(tmp_buf + tx_len, buf, len);
+Route post-hid_hw_start() failures through hid_hw_stop() before
+releasing driver resources.
 
-A hidraw SET_REPORT ioctl with a report larger than ~116 bytes
-overflows the stack buffer.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Add a size check after constructing the header, rejecting reports that
-would exceed the buffer capacity.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: 75e16c8ce283 ("HID: hid-goodix: Add Goodix HID-over-SPI driver")
+Fixes: c1d6708bf0d3 ("HID: wacom: Do not register input devices until after hid_hw_start")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-goodix-spi.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/wacom_sys.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/hid-goodix-spi.c
-+++ b/drivers/hid/hid-goodix-spi.c
-@@ -515,6 +515,9 @@ static int goodix_hid_set_raw_report(str
- 	memcpy(tmp_buf + tx_len, args, args_len);
- 	tx_len += args_len;
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2431,16 +2431,16 @@ static int wacom_parse_and_register(stru
  
-+	if (tx_len + len > sizeof(tmp_buf))
-+		return -EINVAL;
-+
- 	memcpy(tmp_buf + tx_len, buf, len);
- 	tx_len += len;
+ 	error = wacom_register_inputs(wacom);
+ 	if (error)
+-		goto fail;
++		goto fail_hw_stop;
  
+ 	if (wacom->wacom_wac.features.device_type & WACOM_DEVICETYPE_PAD) {
+ 		error = wacom_initialize_leds(wacom);
+ 		if (error)
+-			goto fail;
++			goto fail_hw_stop;
+ 
+ 		error = wacom_initialize_remotes(wacom);
+ 		if (error)
+-			goto fail;
++			goto fail_hw_stop;
+ 	}
+ 
+ 	if (!wireless) {
+@@ -2454,14 +2454,14 @@ static int wacom_parse_and_register(stru
+ 		cancel_delayed_work_sync(&wacom->init_work);
+ 		_wacom_query_tablet_data(wacom);
+ 		error = -ENODEV;
+-		goto fail_quirks;
++		goto fail_hw_stop;
+ 	}
+ 
+ 	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR) {
+ 		error = hid_hw_open(hdev);
+ 		if (error) {
+ 			hid_err(hdev, "hw open failed\n");
+-			goto fail_quirks;
++			goto fail_hw_stop;
+ 		}
+ 	}
+ 
+@@ -2470,7 +2470,7 @@ static int wacom_parse_and_register(stru
+ 
+ 	return 0;
+ 
+-fail_quirks:
++fail_hw_stop:
+ 	hid_hw_stop(hdev);
+ fail:
+ 	wacom_release_resources(wacom);
 
 
