@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A177015278E;
-	Thu, 16 Jul 2026 13:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4783922301;
+	Thu, 16 Jul 2026 13:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210377; cv=none; b=qewlttrhhBsHJvUGwRmLpRQ6K7e7BxQuV3Xwn6dfhv85bkgMI4ITd4FUFrjWgsElRdKydQxTX8F2OpmpuVWWU34CpPyyin5mrw3/QLKwcDO6qVg96+2miT+QhWA+WDAnE7lTLKz5Kp1odc9M9PL6VxXcc8rR2FQoyTd1mIMSed0=
+	t=1784210380; cv=none; b=QI3lulpfOtheiN2VUjhe5xlsW3E0aNKtkWzXTh+gdAVn5t0v9gfd3IHk3XJyS/COD9mDj+FBFGx68dLNRYP9FJjVL87zbiR4Lu17xDx4cUh6/GRL+9kWsBDyshXc0/gL+73URvIbAB4cJEu99907+qGo0mtju4oRdhd3U6nudIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210377; c=relaxed/simple;
-	bh=D+qUXH6uHZyJR3WY1robn5rZGBBEqQphroqLSL4NTEs=;
+	s=arc-20240116; t=1784210380; c=relaxed/simple;
+	bh=wh7um0C7iVaK0d5f0tLyiJ2/jdaDCCSoWjxSODJKMMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8JKXD6cXqO2GkolA7lIoOSVcEsuzQH3fhzhUgkExZ/S42AIvfkuVzxuRSuv26J1PIaOnbuKaZyfRMjggMeV35PJ7YFbh/eIXYlNDhuCFVlYiAAIgGVTPaV1v2z0ZPGYrEsgK4m6Tqlrqx7IY2N3hnE3WJmYgZ+6xDWqgugkCL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ToXXsNz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sukks6fBqakDLENYIubnHjFN28tnvAr3LkIwR1nbdDpGTOC73qmkQDrBoiYGp9DHaNzKi+Vfpsr14zqC0HzFogFp13DsQ+hREGOIUMb1ic4eU48HAjwDE7x0gEvJg8GER6kXDpNExmkqMYRZa6HmiZqdTNqoPWZ+bVc06Fer8/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1bg+vsZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ToXXsNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185321F000E9;
-	Thu, 16 Jul 2026 13:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1bg+vsZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC43B1F000E9;
+	Thu, 16 Jul 2026 13:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210376;
-	bh=RyhsPNNxAWVx3bnLMPG9AiYVKrythEkPtsUqFgNXgjQ=;
+	s=korg; t=1784210379;
+	bh=lalMuxbHT3YufJr2Llc+qRbnPSBas9PW2gLNrNEvQ88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ToXXsNz/pW7dJRYA5dINiHoUuMdUhM48qnIpAJQF/KP5gjb9kAph7GYT5u16BDe4
-	 pdai732mvc04tizo2slB9syXYudflF8JCH27JcU55MKDJq8TYMmZgJsWX+dQggtcc5
-	 TRjt8l5WiYELBX5pUGy7XX68hCj00cn1vtINyfSE=
+	b=o1bg+vsZq0flmFxn3S31hYrPgJ5o9reb16SggihpqIeaE2rJ/9CD+t7Dk3FSfg3NF
+	 m16/CqJj9r0/dScz+grvTmbi8tRPlQQzVuSYJR8ArofPsZqwUdCQvDVOcvvzZkKdar
+	 aLO5XBuTWZfZy932gOKE0ZSJL0iQyOb3iXZxw5n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Matthew Wilcox <willy@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Eric Hagberg <ehagberg@janestreet.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Gregg Leventhal <gleventhal@janestreet.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 024/480] mm/khugepaged: write all dirty file folios when collapsing
-Date: Thu, 16 Jul 2026 15:26:11 +0200
-Message-ID: <20260716133045.219157138@linuxfoundation.org>
+	Vlastimil Babka <vbabka@suse.cz>,
+	Kees Cook <kees@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.18 025/480] slab: Introduce kmalloc_flex() and family
+Date: Thu, 16 Jul 2026 15:26:12 +0200
+Message-ID: <20260716133045.240241184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -60,131 +51,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Kees Cook <kees@kernel.org>
 
-[There is no upstream commit, as this code was removed by upstream
- commit 044925f9b565 ("mm: fs: remove filemap_nr_thps*() functions and their users")]
+commit e4c8b46b924eb8de66c6f0accc9cdd0c2e8fa23b upstream.
 
-As-is, khugepaged and writable-file opening exclude each other. A file
-cannot be open writeable and have THPs (because the filesystem is not aware
-of them). khugepaged will never collapse file pages for files that are
-opened writeable. On an open(O_RDWR/O_WRONLY), the page cache for that
-particular file is dropped. This is fine because nothing could've been
-dirtied.
+As done for kmalloc_obj*(), introduce a type-aware allocator for flexible
+arrays, which may also have "counted_by" annotations:
 
-However, there is an edge-case: collapse_file() might not be able to
-coexist with concurrent writers, but it can coexist with dirty folios
-(from previous writers). Therefore, the following can happen:
+	ptr = kmalloc(struct_size(ptr, flex_member, count), gfp);
 
-open(file, O_RDWR)
-write(file)
-close(file)
-madvise(file_mapping, MADV_COLLAPSE, some non-dirty range)
-open(file, O_RDWR)
- nr_thps > 0
-  truncate_inode_pages()
-    /* THPs are cleared out, but so are the dirty folios */
+becomes:
 
-When this edge-case happens, there is data loss, as the dirty folios are
-fully discarded.
+	ptr = kmalloc_flex(*ptr, flex_member, count, gfp);
 
-Fix it by fully writing back the page cache (and waiting) when collapsing
-file THPs. Doing so provides the guarantee that no dirty folio will be
-observed while there are active THPs. To fully ensure this is safe, the
-invalidate_lock needs to be held while doing the writeout, so that
-do_dentry_open()'s page cache truncation excludes this write-and-wait.
+The internal use of __flex_counter() allows for automatically setting
+the counter member of a struct's flexible array member when it has
+been annotated with __counted_by(), avoiding any missed early size
+initializations while __counted_by() annotations are added to the
+kernel. Additionally, this also checks for "too large" allocations based
+on the type size of the counter variable. For example:
 
-As a side effect, move the nr_thps counter bumping outside the i_pages
-lock. This is correct since the counter itself is an atomic_t and the
-producer <-> consumer correctness is provided by a full memory barrier:
-smp_mb() in collapse_file()/memory barrier implied by full ordering in
-get_write_access() -> atomic_inc_unless_negative().
+	if (count > type_max(ptr->flex_counter))
+		fail...;
+	size = struct_size(ptr, flex_member, count);
+	ptr = kmalloc(size, gfp);
+	if (!ptr)
+		fail...;
+	ptr->flex_counter = count;
 
-Cc: stable@vger.kernel.org
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Eric Hagberg <ehagberg@janestreet.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Fixes: 99cb0dbd47a1 ("mm,thp: add read-only THP support for (non-shmem) FS")
-Reported-by: Gregg Leventhal <gleventhal@janestreet.com>
-Closes: https://lore.kernel.org/linux-mm/CAFN_u7H_0ECF3jixP=T=U7AH5=Q3wQNvJMo8an3VqUDMerQfUw@mail.gmail.com/
-Tested-by: Zi Yan <ziy@nvidia.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+becomes (n.b. unchanged from earlier example):
+
+	ptr = kmalloc_flex(*ptr, flex_member, count, gfp);
+	if (!ptr)
+		fail...;
+	ptr->flex_counter = count;
+
+Note that manual initialization of the flexible array counter is still
+required (at some point) after allocation as not all compiler versions
+support the __counted_by annotation yet. But doing it internally makes
+sure they cannot be missed when __counted_by _is_ available, meaning
+that the bounds checker will not trip due to the lack of "early enough"
+initializations that used to work before enabling the stricter bounds
+checking. For example:
+
+	ptr = kmalloc_flex(*ptr, flex_member, count, gfp);
+	fill(ptr->flex, count);
+	ptr->flex_count = count;
+
+This works correctly before adding a __counted_by annotation (since
+nothing is checking ptr->flex accesses against ptr->flex_count). After
+adding the annotation, the bounds sanitizer would trip during fill()
+because ptr->flex_count wasn't set yet. But with kmalloc_flex() setting
+ptr->flex_count internally at allocation time, the existing code works
+without needing to move the ptr->flex_count assignment before the call
+to fill(). (This has been a stumbling block for __counted_by adoption.)
+
+Link: https://patch.msgid.link/20251203233036.3212363-4-kees@kernel.org
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Kees Cook <kees@kernel.org>
+[Backport-notes: Removed the actual flex counter handling.  That's a new
+ feature, which isn't necessary for just adding the new allocation APIs
+ to get backports to apply cleanly.  Also, the allocation-time overflow
+ check in the upstream commit was reverted upstream.]
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ Documentation/process/deprecated.rst |    7 +++++
+ include/linux/slab.h                 |   42 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 3dcd884c844e8f..01a5d443ffc586 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2077,32 +2077,43 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 		goto xa_unlocked;
- 	}
+--- a/Documentation/process/deprecated.rst
++++ b/Documentation/process/deprecated.rst
+@@ -387,6 +387,7 @@ allocations. For example, these open cod
+ 	ptr = kzalloc(sizeof(*ptr), gfp);
+ 	ptr = kmalloc_array(count, sizeof(*ptr), gfp);
+ 	ptr = kcalloc(count, sizeof(*ptr), gfp);
++	ptr = kmalloc(struct_size(ptr, flex_member, count), gfp);
+ 	ptr = kmalloc(sizeof(struct foo, gfp);
  
--	if (!is_shmem) {
-+xa_locked:
-+	xas_unlock_irq(&xas);
-+xa_unlocked:
+ become, respectively::
+@@ -395,4 +396,10 @@ become, respectively::
+ 	ptr = kzalloc_obj(*ptr, gfp);
+ 	ptr = kmalloc_objs(*ptr, count, gfp);
+ 	ptr = kzalloc_objs(*ptr, count, gfp);
++	ptr = kmalloc_flex(*ptr, flex_member, count, gfp);
+ 	__auto_type ptr = kmalloc_obj(struct foo, gfp);
 +
-+	/*
-+	 * If collapse is successful, flush must be done now before copying.
-+	 * If collapse is unsuccessful, does flush actually need to be done?
-+	 * Do it anyway, to clear the state.
-+	 */
-+	try_to_unmap_flush();
-+
-+	if (result == SCAN_SUCCEED && !is_shmem && !mapping_large_folio_support(mapping)) {
-+		/*
-+		 * invalidate_lock as shared excludes against concurrent opens
-+		 * in do_dentry_open() truncating the page cache. This is
-+		 * particularly important if there are dirty folios in transit.
-+		 */
-+		filemap_invalidate_lock_shared(mapping);
- 		filemap_nr_thps_inc(mapping);
- 		/*
- 		 * Paired with the fence in do_dentry_open() -> get_write_access()
- 		 * to ensure i_writecount is up to date and the update to nr_thps
- 		 * is visible. Ensures the page cache will be truncated if the
--		 * file is opened writable.
-+		 * file is opened writable. If collapse looks to be successful,
-+		 * flush any dirty pages out the page cache. With the nr_thps
-+		 * incremented, there won't be any new writers (nor new dirties).
- 		 */
- 		smp_mb();
--		if (inode_is_open_for_write(mapping->host)) {
-+		if (inode_is_open_for_write(mapping->host) || filemap_write_and_wait(mapping)) {
- 			result = SCAN_FAIL;
- 			filemap_nr_thps_dec(mapping);
-+			filemap_invalidate_unlock_shared(mapping);
-+			goto rollback;
- 		}
-+		filemap_invalidate_unlock_shared(mapping);
- 	}
++If `ptr->flex_member` is annotated with __counted_by(), the allocation
++will automatically fail if `count` is larger than the maximum
++representable value that can be stored in the counter member associated
++with `flex_member`.
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -983,6 +983,27 @@ void *kmalloc_nolock_noprof(size_t size,
+ })
  
--xa_locked:
--	xas_unlock_irq(&xas);
--xa_unlocked:
--
--	/*
--	 * If collapse is successful, flush must be done now before copying.
--	 * If collapse is unsuccessful, does flush actually need to be done?
--	 * Do it anyway, to clear the state.
--	 */
--	try_to_unmap_flush();
--
- 	if (result == SCAN_SUCCEED && nr_none &&
- 	    !shmem_charge(mapping->host, nr_none))
- 		result = SCAN_FAIL;
--- 
-2.53.0
-
+ /**
++ * __alloc_flex - Allocate an object that has a trailing flexible array
++ * @KMALLOC: kmalloc wrapper function to use for allocation.
++ * @GFP: GFP flags for the allocation.
++ * @TYPE: type of structure to allocate space for.
++ * @FAM: The name of the flexible array member of @TYPE structure.
++ * @COUNT: how many @FAM elements to allocate space for.
++ *
++ * Returns: Newly allocated pointer to @TYPE with @COUNT-many trailing
++ * @FAM elements, or NULL on failure or if @COUNT cannot be represented
++ * by the member of @TYPE that counts the @FAM elements (annotated via
++ * __counted_by()).
++ */
++#define __alloc_flex(KMALLOC, GFP, TYPE, FAM, COUNT)			\
++({									\
++	const size_t __count = (COUNT);					\
++	const size_t __obj_size = struct_size_t(TYPE, FAM, __count);	\
++	TYPE *__obj_ptr = KMALLOC(__obj_size, GFP);			\
++	__obj_ptr;							\
++})
++
++/**
+  * kmalloc_obj - Allocate a single instance of the given type
+  * @VAR_OR_TYPE: Variable or type to allocate.
+  * @GFP: GFP flags for the allocation.
+@@ -1005,23 +1026,44 @@ void *kmalloc_nolock_noprof(size_t size,
+ #define kmalloc_objs(VAR_OR_TYPE, COUNT, GFP)		\
+ 	__alloc_objs(kmalloc, GFP, typeof(VAR_OR_TYPE), COUNT)
+ 
++/**
++ * kmalloc_flex - Allocate a single instance of the given flexible structure
++ * @VAR_OR_TYPE: Variable or type to allocate (with its flex array).
++ * @FAM: The name of the flexible array member of the structure.
++ * @COUNT: How many flexible array member elements are desired.
++ * @GFP: GFP flags for the allocation.
++ *
++ * Returns: newly allocated pointer to @VAR_OR_TYPE on success, NULL on
++ * failure. If @FAM has been annotated with __counted_by(), the allocation
++ * will immediately fail if @COUNT is larger than what the type of the
++ * struct's counter variable can represent.
++ */
++#define kmalloc_flex(VAR_OR_TYPE, FAM, COUNT, GFP)	\
++	__alloc_flex(kmalloc, GFP, typeof(VAR_OR_TYPE),	FAM, COUNT)
++
+ /* All kzalloc aliases for kmalloc_(obj|objs|flex). */
+ #define kzalloc_obj(P, GFP)				\
+ 	__alloc_objs(kzalloc, GFP, typeof(P), 1)
+ #define kzalloc_objs(P, COUNT, GFP)			\
+ 	__alloc_objs(kzalloc, GFP, typeof(P), COUNT)
++#define kzalloc_flex(P, FAM, COUNT, GFP)		\
++	__alloc_flex(kzalloc, GFP, typeof(P), FAM, COUNT)
+ 
+ /* All kvmalloc aliases for kmalloc_(obj|objs|flex). */
+ #define kvmalloc_obj(P, GFP)				\
+ 	__alloc_objs(kvmalloc, GFP, typeof(P), 1)
+ #define kvmalloc_objs(P, COUNT, GFP)			\
+ 	__alloc_objs(kvmalloc, GFP, typeof(P), COUNT)
++#define kvmalloc_flex(P, FAM, COUNT, GFP)		\
++	__alloc_flex(kvmalloc, GFP, typeof(P), FAM, COUNT)
+ 
+ /* All kvzalloc aliases for kmalloc_(obj|objs|flex). */
+ #define kvzalloc_obj(P, GFP)				\
+ 	__alloc_objs(kvzalloc, GFP, typeof(P), 1)
+ #define kvzalloc_objs(P, COUNT, GFP)			\
+ 	__alloc_objs(kvzalloc, GFP, typeof(P), COUNT)
++#define kvzalloc_flex(P, FAM, COUNT, GFP)		\
++	__alloc_flex(kvzalloc, GFP, typeof(P), FAM, COUNT)
+ 
+ #define kmem_buckets_alloc(_b, _size, _flags)	\
+ 	alloc_hooks(__kmalloc_node_noprof(PASS_BUCKET_PARAMS(_size, _b), _flags, NUMA_NO_NODE))
 
 
