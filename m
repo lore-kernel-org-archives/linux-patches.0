@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211A842378D;
-	Thu, 16 Jul 2026 14:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5C0424668;
+	Thu, 16 Jul 2026 14:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211863; cv=none; b=rgC6Bj4xQSbTjqCXpb3+5i2Y20C4n392Sa13nKo+DKxd7ZVujyyohjrrXSN3kC28RQVQAeFvuqBFe0ZBiVtlghPqbBfTO4qjRDAJ7rMYacTFviA8ahdlnKN49cut8icdTCnLKV1Y2djxp7+Z15pNc3GH4WCOfv72mdw3jm7+9qc=
+	t=1784211866; cv=none; b=E89+jW8ZWKHzZgt5Vkg/beCPCDH1c3DUaFJZlospJVDib6HKtHZT//posVDxO902vwBB7UrX6Fx+Mn3t9nTMqai5/ERJ159C+Lx/m7Qv2L6N4l6mH9HOfz4gI6hs7X5pyVBSw1Sjab/M3fLCcKxE+Jh256GtlXbLKC5SHfHm3dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211863; c=relaxed/simple;
-	bh=JwaD53xsmA4f0MLCyDetgsI3k7KAAS/zf9Q7/VibnGM=;
+	s=arc-20240116; t=1784211866; c=relaxed/simple;
+	bh=MOqysvvGeLkSupA3ATqIChtigDEAK7SbsD5CNIdaqkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R9NLrKQ3nsniddbU34WDP9NeG8sgJjeGHrA1pPPxyDgt258jxKSvnsExzUsMSJMweqvYo/GJhJVdEAzQ1css+/sSFJuJiSkUPf0pYDLTGh++AJh7qa4hPyOd2b7IFKhNgxEPrGogjq/m5y/TS4JF1xSh85X05DanIQUx/ird8Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxdowfit; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CGnTWYqHPb7RvnNTNMCiBoy0c7TTw84fgyVYvCJJilaHDNovMNeg4dhRgRhIPL9ndq9P25wkKgmGlbvSLXHMv0c7E3WLUdfDtpc/b+4zJUWvjJt+H05ZovLcDnaDiTSPHMVVPYaznADp0VNYEdNIZxfCERAEg8YAWSz36Yx986M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2roTn8t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxdowfit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEA61F00A3A;
-	Thu, 16 Jul 2026 14:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2roTn8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F6C1F000E9;
+	Thu, 16 Jul 2026 14:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211858;
-	bh=iIepcJgz6pjcK0/ON2O8whrikkvSg2WUgme24MTgjyA=;
+	s=korg; t=1784211863;
+	bh=7jcdSn/8JhZNmeFs+hJuQ4/eUVv8R7yb8o+K9R4KCrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pxdowfitZFnmx+67qNaJv8U/JujEboJIunuQHYTqotLMBZt77QmA2VG7P8xRMe0re
-	 k8IkrWZaw71+60GE/iBLz7WiePnFfghX7TnZzJNAztEPLjqfQM4KmPjDpyCT98MMoV
-	 zypmpoefNbPE9dtTM5gAM59AK+3Mz3Gd/3TjHuN0=
+	b=t2roTn8tSo0H9lCdUtxzj4o4DAIdK1jBundtfF3llp2VFJBAF6L3cMzA3CxPB0AGj
+	 VN19d5hruGd1YGAiCTg5TGqqek1EWlvso2k5+yM3IyzRonJWWoJGVCiiu2G7FpKXIL
+	 +7CrxdwZynXfLdJsz/2wM3+kZIpkKkR4Q+DI/eBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Moll <pawel.moll@arm.com>,
-	Johan Hovold <johan@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.12 108/349] virtio-mmio: fix device release warning on module unload
-Date: Thu, 16 Jul 2026 15:30:42 +0200
-Message-ID: <20260716133035.732224441@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 110/349] USB: chaoskey: Fix slab-use-after-free in chaoskey_release()
+Date: Thu, 16 Jul 2026 15:30:44 +0200
+Message-ID: <20260716133035.775596508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,103 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit c687bc35694698ec4c7f92bf929c3d659f0cecb8 upstream.
+commit abf76d3239dee97b66e7241ad04811f1ce562e28 upstream.
 
-Driver core expects devices to be allocated dynamically and complains
-loudly when a device that lacks a release function is freed.
+The chaoskey driver has a use-after-free bug in its release routine.
+If the user closes the device file after the USB device has been
+unplugged, a debugging log statement will try to access the
+usb_interface structure after it has been deallocated:
 
-Use __root_device_register() to allocate and register the root device
-instead of open coding using a static device.
+	BUG: KASAN: slab-use-after-free in dev_driver_string (drivers/base/core.c:2406)
+	Read of size 8 at addr ffff888168e8a0b8 by task chaoskey_raw_re/10106
 
-Note that root_device_register(), which also creates a link to the
-module, cannot be used as the device is registered when parsing the
-module parameters which happens before the module kobject has been set
-up.
+	Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+	Call Trace:
+	 <TASK>
+	 dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+	 print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+	 kasan_report (mm/kasan/report.c:595)
+	 dev_driver_string (drivers/base/core.c:2406)
+	 __dynamic_dev_dbg (lib/dynamic_debug.c:906)
+	 chaoskey_release (drivers/usb/misc/chaoskey.c:323)
+	 __fput (fs/file_table.c:510)
+	 fput_close_sync (fs/file_table.c:615)
+	 __x64_sys_close (fs/open.c:1507 fs/open.c:1492 fs/open.c:1492)
+	 do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+	 entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-Fixes: 81a054ce0b46 ("virtio-mmio: Devices parameter parsing")
-Cc: stable@vger.kernel.org	# 3.5
-Cc: Pawel Moll <pawel.moll@arm.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260427143710.14702-1-johan@kernel.org>
+The driver's last reference to the interface structure is dropped in
+the chaoskey_free() routine, so the code must not use the interface --
+even in a debugging statement -- after that routine returns.
+(Exception: If we know that another reference is held by someone else,
+such as the device core while the disconnect routine runs, there's no
+problem.  Thanks to Johan Hovold for pointing this out.)
+
+Since the bad access is part of an unimportant debugging statement,
+we can fix the problem simply by removing the whole statement.
+
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-usb/20EC9664-054E-438B-B411-2145D347F97B@gmail.com/
+Tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 66e3e591891d ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/bb5b1dc6-eb59-43e1-8d26-51e658e88bbe@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_mmio.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/usb/misc/chaoskey.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/virtio/virtio_mmio.c
-+++ b/drivers/virtio/virtio_mmio.c
-@@ -708,9 +708,7 @@ static void virtio_mmio_remove(struct pl
- 
- #if defined(CONFIG_VIRTIO_MMIO_CMDLINE_DEVICES)
- 
--static struct device vm_cmdline_parent = {
--	.init_name = "virtio-mmio-cmdline",
--};
-+static struct device *vm_cmdline_parent;
- 
- static int vm_cmdline_parent_registered;
- static int vm_cmdline_id;
-@@ -718,7 +716,6 @@ static int vm_cmdline_id;
- static int vm_cmdline_set(const char *device,
- 		const struct kernel_param *kp)
- {
--	int err;
- 	struct resource resources[2] = {};
- 	char *str;
- 	long long base, size;
-@@ -750,11 +747,10 @@ static int vm_cmdline_set(const char *de
- 	resources[1].start = resources[1].end = irq;
- 
- 	if (!vm_cmdline_parent_registered) {
--		err = device_register(&vm_cmdline_parent);
--		if (err) {
--			put_device(&vm_cmdline_parent);
-+		vm_cmdline_parent = __root_device_register("virtio-mmio-cmdline", NULL);
-+		if (IS_ERR(vm_cmdline_parent)) {
- 			pr_err("Failed to register parent device!\n");
--			return err;
-+			return PTR_ERR(vm_cmdline_parent);
- 		}
- 		vm_cmdline_parent_registered = 1;
- 	}
-@@ -765,7 +761,7 @@ static int vm_cmdline_set(const char *de
- 		       (unsigned long long)resources[0].end,
- 		       (int)resources[1].start);
- 
--	pdev = platform_device_register_resndata(&vm_cmdline_parent,
-+	pdev = platform_device_register_resndata(vm_cmdline_parent,
- 			"virtio-mmio", vm_cmdline_id++,
- 			resources, ARRAY_SIZE(resources), NULL, 0);
- 
-@@ -789,8 +785,12 @@ static int vm_cmdline_get_device(struct
- static int vm_cmdline_get(char *buffer, const struct kernel_param *kp)
- {
- 	buffer[0] = '\0';
--	device_for_each_child(&vm_cmdline_parent, buffer,
--			vm_cmdline_get_device);
-+
-+	if (vm_cmdline_parent_registered) {
-+		device_for_each_child(vm_cmdline_parent, buffer,
-+				vm_cmdline_get_device);
-+	}
-+
- 	return strlen(buffer) + 1;
+--- a/drivers/usb/misc/chaoskey.c
++++ b/drivers/usb/misc/chaoskey.c
+@@ -320,7 +320,6 @@ bail:
+ 	mutex_unlock(&dev->lock);
+ destruction:
+ 	mutex_unlock(&chaoskey_list_lock);
+-	usb_dbg(interface, "release success");
+ 	return rv;
  }
  
-@@ -812,9 +812,9 @@ static int vm_unregister_cmdline_device(
- static void vm_unregister_cmdline_devices(void)
- {
- 	if (vm_cmdline_parent_registered) {
--		device_for_each_child(&vm_cmdline_parent, NULL,
-+		device_for_each_child(vm_cmdline_parent, NULL,
- 				vm_unregister_cmdline_device);
--		device_unregister(&vm_cmdline_parent);
-+		root_device_unregister(vm_cmdline_parent);
- 		vm_cmdline_parent_registered = 0;
- 	}
- }
 
 
