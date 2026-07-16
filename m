@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05E041F5CB;
-	Thu, 16 Jul 2026 13:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFB141DEF6;
+	Thu, 16 Jul 2026 13:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209686; cv=none; b=bDH0WwKYCITMS0o/eo+k//pbyPJAwaZpjjL4RyQKdoUBHvL2E4RzrXDWmZCryCxHthSjGGq/WQ9isHuJsh4HiKdwXSeHrhUjJ5WhmSN+5sSRrjbRrLC6byT1pU5oFWcAqPWBwU/t+IlbL7vPTvjZgnyGHPwQF/pKrSfvW/azKKg=
+	t=1784209690; cv=none; b=sjTcSp4kS5GJM0fi/cUuk2zDG6YsWyAnI5uTGW4/gdgpYwPmkiaZXrOYI7mzyCy/DeVPRLOqx6QsFUzkkyviUDE3+KOeKftTPvK6WhqPV68Gh6IHyq/GyCoKNIUreKV/dEetz8rasc5rBzY1nj2C6TQNCC2BOYewElWD42IlYEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209686; c=relaxed/simple;
-	bh=LvBz3x27micrnITn1v5O2hBCUOcAKVrR651fdRtrI+I=;
+	s=arc-20240116; t=1784209690; c=relaxed/simple;
+	bh=4EmMSUvfSgBqfF+yzATog4tlCa2FwcD5SoK/Qz2rTmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDQ1n8vGVGHknvOj/wLp0/HutNBs8tMn0kKbx+Tc3yGLztV/cnRf7rAhKiOa5M4gkgp9PGskxt3zrWLhN6ievlqCP8atbwkzU3uSY5e6XfJ7DR3jFvhEHoBM3q0BH6eR5A/EBSAIJIcfs5rEngRMY42IqhtmzZ/O6O3My2nl1AI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ht0dtJ6o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qC7hDngdhjLSFND/vStvgEKWeKMflg500tcx6cd5BtEWofPO81jNC/tjEusOWh0qvY9rJnhnw+SeeQgh85h1T6g3nMBRJI1XPBmu0ePYA2SBKTvji7/eVsW34Fjx711iTA96KkiD6bwWlaK2kM+1VgZnejBox0+rDyPJ6Old2wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfyFw8m/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ht0dtJ6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC03C1F00A3D;
-	Thu, 16 Jul 2026 13:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfyFw8m/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2866E1F00AC4;
+	Thu, 16 Jul 2026 13:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209668;
-	bh=Stn9Fc0jmb9ILkvJ12xQIbCiuMDo2bbL2Ay7LNzp70E=;
+	s=korg; t=1784209678;
+	bh=2NZDtjA2Y8t6c2ipNUYA9DgSmX+6tWUW2/NGmuqe8dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ht0dtJ6oBDQHpjxjxt+LMirGS9+IhcUuiI/MjBn3mHu1RAH3xkfDvFp8YjVJeMGwf
-	 OXSSkT+75GP7tSiacW8av+ksXODnieyJfz55R/0Grb9Zd/A0MNmXR0rMRYAM9alcxc
-	 hvu74Z3X07eO7h1hrFP7c0f85z+rEpHmhtIE3bSc=
+	b=jfyFw8m/iFPO37e1tVnTDJac9m7Tz8fWSo+Amd2KUaNFHYOMHAevwQchVShDFAwV5
+	 oul02LTrfnY01ORcHF+oMlXeSeZpokhvYRuU+p/LDB2Blof/pV0cEVLKLA5EZL5nWA
+	 h1HEKMIPaDh5e/yfora3dWN+lkeg1pKQn5KnxXFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Khadka <maskmemanish@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.1 274/518] HID: appleir: fix UAF on pending key_up_timer in remove()
-Date: Thu, 16 Jul 2026 15:29:02 +0200
-Message-ID: <20260716133053.809697750@linuxfoundation.org>
+	syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com,
+	syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 7.1 277/518] hfs/hfsplus: fix u32 overflow in check_and_correct_requested_length
+Date: Thu, 16 Jul 2026 15:29:05 +0200
+Message-ID: <20260716133053.875141554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,146 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Khadka <maskmemanish@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 75fe87e19d8aff81eb2c64d15d244ab8da4de945 upstream.
+commit 966cb76fb2857a4242cab6ea2ea17acf818a3da7 upstream.
 
-appleir_remove() runs hid_hw_stop() before timer_delete_sync().
-hid_hw_stop() synchronously unregisters the HID input device via
-hid_disconnect() -> hidinput_disconnect() -> input_unregister_device(),
-which drops the last reference and frees the underlying input_dev when
-no userspace handle holds it open.
+check_and_correct_requested_length() compares (off + len) against
+node_size using u32 arithmetic.  When the caller passes a large len
+value (e.g. from an underflowed subtraction in hfs_brec_remove()),
+off + len can wrap past 2^32 and produce a small result, causing the
+bounds check to pass when it should fail.
 
-key_up_tick() reads appleir->input_dev and calls input_report_key() /
-input_sync() on it.  The timer is armed from appleir_raw_event() with
-a HZ/8 (~125 ms) timeout on every keydown and key-repeat report.  If a
-key was pressed shortly before the device is disconnected, the timer
-can fire after hid_hw_stop() has freed input_dev but before the
-teardown drains it.
+For example, with off=14 and len=0xFFFFFFF2 (underflowed from
+data_off - keyoffset - size in hfs_brec_remove), off + len wraps to 6,
+which is less than a typical node_size of 512, so the check passes and
+the subsequent memmove reads ~4GB past the node buffer.
 
-A simple reorder is not sufficient.  Putting the timer drain first
-still leaves a window where a USB URB completion (raw_event) running
-during hid_hw_stop() can call mod_timer() and re-arm the timer, which
-then fires after hidinput_disconnect() has freed input_dev.  The same
-URB-completion window also lets raw_event() reach key_up(), key_down()
-and battery_flat() directly, all of which dereference
-appleir->input_dev.
+Fix this by widening the addition to u64 before comparing against
+node_size.  This prevents the u32 wrap while keeping the logic
+straightforward.
 
-Introduce a 'removing' flag on struct appleir, gated by the existing
-spinlock.  appleir_remove() sets the flag under the lock and then
-shuts down the timer with timer_shutdown_sync(), which both drains any
-in-flight callback and permanently disables further mod_timer() calls.
-appleir_raw_event() and key_up_tick() bail out early if the flag is
-set, so no path can arm or run the timer, or dereference
-appleir->input_dev, after remove() has started tearing down.
-
-The keyrepeat and flatbattery branches of appleir_raw_event()
-previously called into the input layer without holding the spinlock;
-take it now so the flag check is well-defined.  This incidentally
-closes a pre-existing read-side race on appleir->current_key in the
-keyrepeat branch.
-
-This bug is structurally a sibling of commit 4db2af929279 ("HID:
-appletb-kbd: fix UAF in inactivity-timer cleanup path") and has been
-present since the driver was introduced.
-
-Fixes: 9a4a5574ce42 ("HID: appleir: add support for Apple ir devices")
+Reported-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6df204b70bf3261691c5
+Tested-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
+Reported-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e76bf3d19b85350571ac
+Tested-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
+Fixes: a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Manish Khadka <maskmemanish@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260505111300.3592757-2-tristmd@gmail.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-appleir.c |   45 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 35 insertions(+), 10 deletions(-)
+ fs/hfs/bnode.c          |    2 +-
+ fs/hfsplus/hfsplus_fs.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-appleir.c
-+++ b/drivers/hid/hid-appleir.c
-@@ -109,9 +109,10 @@ struct appleir {
- 	struct hid_device *hid;
- 	unsigned short keymap[ARRAY_SIZE(appleir_key_table)];
- 	struct timer_list key_up_timer;	/* timer for key up */
--	spinlock_t lock;		/* protects .current_key */
-+	spinlock_t lock;		/* protects .current_key, .removing */
- 	int current_key;		/* the currently pressed key */
- 	int prev_key_idx;		/* key index in a 2 packets message */
-+	bool removing;			/* set during teardown; gates input_dev access */
- };
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -41,7 +41,7 @@ u32 check_and_correct_requested_length(s
  
- static int get_key(int data)
-@@ -172,7 +173,7 @@ static void key_up_tick(struct timer_lis
- 	unsigned long flags;
+ 	node_size = node->tree->node_size;
  
- 	spin_lock_irqsave(&appleir->lock, flags);
--	if (appleir->current_key) {
-+	if (!appleir->removing && appleir->current_key) {
- 		key_up(hid, appleir, appleir->current_key);
- 		appleir->current_key = 0;
- 	}
-@@ -195,6 +196,10 @@ static int appleir_raw_event(struct hid_
- 		int index;
+-	if ((off + len) > node_size) {
++	if ((u64)off + len > node_size) {
+ 		u32 new_len = node_size - off;
  
- 		spin_lock_irqsave(&appleir->lock, flags);
-+		if (appleir->removing) {
-+			spin_unlock_irqrestore(&appleir->lock, flags);
-+			goto out;
-+		}
- 		/*
- 		 * If we already have a key down, take it up before marking
- 		 * this one down
-@@ -229,17 +234,25 @@ static int appleir_raw_event(struct hid_
- 	appleir->prev_key_idx = 0;
+ 		pr_err("requested length has been corrected: "
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -600,7 +600,7 @@ u32 check_and_correct_requested_length(s
  
- 	if (!memcmp(data, keyrepeat, sizeof(keyrepeat))) {
--		key_down(hid, appleir, appleir->current_key);
--		/*
--		 * Remote doesn't do key up, either pull them up, in the test
--		 * above, or here set a timer which pulls them up after 1/8 s
--		 */
--		mod_timer(&appleir->key_up_timer, jiffies + HZ / 8);
-+		spin_lock_irqsave(&appleir->lock, flags);
-+		if (!appleir->removing) {
-+			key_down(hid, appleir, appleir->current_key);
-+			/*
-+			 * Remote doesn't do key up, either pull them up, in
-+			 * the test above, or here set a timer which pulls them
-+			 * up after 1/8 s
-+			 */
-+			mod_timer(&appleir->key_up_timer, jiffies + HZ / 8);
-+		}
-+		spin_unlock_irqrestore(&appleir->lock, flags);
- 		goto out;
- 	}
+ 	node_size = node->tree->node_size;
  
- 	if (!memcmp(data, flatbattery, sizeof(flatbattery))) {
--		battery_flat(appleir);
-+		spin_lock_irqsave(&appleir->lock, flags);
-+		if (!appleir->removing)
-+			battery_flat(appleir);
-+		spin_unlock_irqrestore(&appleir->lock, flags);
- 		/* Fall through */
- 	}
+-	if ((off + len) > node_size) {
++	if ((u64)off + len > node_size) {
+ 		u32 new_len = node_size - off;
  
-@@ -318,8 +331,20 @@ fail:
- static void appleir_remove(struct hid_device *hid)
- {
- 	struct appleir *appleir = hid_get_drvdata(hid);
-+	unsigned long flags;
-+
-+	/*
-+	 * Mark the driver as tearing down so that any concurrent raw_event
-+	 * (e.g. from a USB URB completion that hid_hw_stop() has not yet
-+	 * killed) and the key_up_timer softirq stop touching input_dev
-+	 * before hid_hw_stop() frees it via hidinput_disconnect().
-+	 */
-+	spin_lock_irqsave(&appleir->lock, flags);
-+	appleir->removing = true;
-+	spin_unlock_irqrestore(&appleir->lock, flags);
-+
-+	timer_shutdown_sync(&appleir->key_up_timer);
- 	hid_hw_stop(hid);
--	timer_delete_sync(&appleir->key_up_timer);
- }
- 
- static const struct hid_device_id appleir_devices[] = {
+ 		pr_err("requested length has been corrected: "
 
 
