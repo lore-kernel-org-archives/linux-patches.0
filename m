@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0603161AD;
-	Thu, 16 Jul 2026 14:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D1F3B0ADE;
+	Thu, 16 Jul 2026 14:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211623; cv=none; b=Ej0Hb/J/YKKlxnGnPjp07t6SWTqfYiXJl+4aWLBymXE9HRMAuruChkaBbu+ngaZs/JQunnlG/oxKNDdc6p3w1o0F2ReUtmJSMjiZTNAAjD75Kag902FDQ3XWZmd0Nx/ODRG7mTCL7G55uLPojpS/Qe8BJATo6DJUBjFJiyKLi6Y=
+	t=1784211627; cv=none; b=q4pk2XmBiwOjwwJOrjFbPV1F3H6CwfC84/fizmeXzVbVsCZEA1XdXZU5b5KW1J3DSGOvP+aQqsiIoBjN5fumi23+o/rDc6kvklN549QLsKAQXv96FctFi8p4VMEsICLiFXOhKE+I0jhoCjGsdfcy/rJzTk/b95JJPR+cn/rBro8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211623; c=relaxed/simple;
-	bh=tv51XpGlRmgBxzkdnMNUjxHPh7QEqaBR9BvOK3kLPcU=;
+	s=arc-20240116; t=1784211627; c=relaxed/simple;
+	bh=ejM/q5t8vU2XR702g25XujLIhS0sMXTv2AvmLqJUnY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnycR0LJVIEasl9eh+0Gg/UoyeD0Nv9YxjiyuBx6xEp8MP+HEx5dkVoUTpblVaf09zv+OzqIOBdS2X0o293Mr6B2Nzgb9Lxycd1QR65RWZE4XPfKJ+RLdLFzoUDVv0j3Erj4iSIzVHYW8kkJ9hwEAiwlUcymZUhUnHweXF2wrSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLVHC5k4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mMDu0YxjbxrzNIKcqi/x5kBtkza7SY5s+OiTRt1u/YZIohKGvDOncDPyKNKp2tGadKyHwN4YqN8l9PkW/0yiznfWVdk4m8ZzXWkqznR8dLu7326fVvbcvD7rR6P2F1POh5N2g2Nerw8AeTzU2xDhSx75frKpm+9ez6AeZe5OsJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aegaBRJV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLVHC5k4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FEE1F000E9;
-	Thu, 16 Jul 2026 14:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aegaBRJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611881F000E9;
+	Thu, 16 Jul 2026 14:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211622;
-	bh=Qw1dmwAnS9w9/+Y31zB/VPM+ERlF071KT6q/jdwROOY=;
+	s=korg; t=1784211624;
+	bh=z43Hgxl2avAbGAJ1T/+bF2xOVa0ATuBa+bSgGmvy7fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lLVHC5k4ZaLt21CXK1nx+veN8k55l6jOJWIQEAv0SKmRxwSV8BBXOe1Sk2AAizCau
-	 FGiaqZQyIQfx7/P+5K3EpecQnbrdUpzb3RpXkg0GeAcGLsmLhf9YYuJ76HXOMsLJ/2
-	 SEJhCjbIYxqg/2i8Pt8MUjm4yitOPqXGbllw12NY=
+	b=aegaBRJVnNknJ7GWRPP2e//iOte28Z1bdluIxfhbF2WfNsSSHHBVqS2clkBbJtfSu
+	 II/fTiVi1opiFYMjWJNNOHxc8PpOe430FmDXuA04mKGW/8O7ZOOrTfzwg8y5mCaYIv
+	 SuGfJLcr9Pc86ZN5Cq84xMl0lQsDqSQOIsPauE5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Keshav Verma <iganschel@gmail.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/349] f2fs: fix listxattr handling of corrupted xattr entries
-Date: Thu, 16 Jul 2026 15:29:12 +0200
-Message-ID: <20260716133033.703510522@linuxfoundation.org>
+Subject: [PATCH 6.12 019/349] fbdev: fbcon: fix out-of-bounds read in err_out of fbcon_do_set_font()
+Date: Thu, 16 Jul 2026 15:29:13 +0200
+Message-ID: <20260716133033.726084943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,48 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keshav Verma <iganschel@gmail.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit 5ef5bc304f23c3fe255d4936472378dcb74d0e94 ]
+[ Upstream commit 8fdc8c2057eea08d40ce2c8eed41ff9e451c65c2 ]
 
-Validate the xattr entry before reading its fields in f2fs_listxattr().
-Return -EFSCORRUPTED when the entry is outside the valid xattr storage
-area instead of returning a successful partial result.
+When fbcon_do_set_font() fails (e.g., due to a memory allocation failure
+inside vc_resize() under heavy memory pressure), it jumps to the `err_out`
+label to roll back the console state. However, the current rollback logic
+forgets to restore the `hi_font` state, leading to a severe state machine
+corruption.
 
-Fixes: 688078e7f36c ("f2fs: fix to avoid memory leakage in f2fs_listxattr")
-Cc: stable@kernel.org
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Keshav Verma <iganschel@gmail.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Earlier in the function, `set_vc_hi_font()` might be called to change
+`vc->vc_hi_font_mask` and mutate the screen buffer. If `vc_resize()`
+subsequently fails, the `err_out` path restores `vc_font.charcount`
+but entirely skips rolling back the `vc_hi_font_mask` and the screen
+buffer.
+
+This mismatch leaves the terminal in a desynchronized state. Because
+`vc_hi_font_mask` remains set, the VT subsystem will still accept
+character indices greater than 255 from userspace and write them to the
+screen buffer. Subsequent rendering calls (e.g., `fbcon_putcs()`) will
+then use these inflated indices to access the reverted, 256-character
+font array, leading to a deterministic out-of-bounds read and potential
+kernel memory disclosure.
+
+Fix this by adding the missing rollback logic for the `hi_font` mask
+and screen buffer in the error path.
+
+Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/xattr.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/core/fbcon.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -581,8 +581,6 @@ ssize_t f2fs_listxattr(struct dentry *de
- 		size_t prefix_len;
- 		size_t size;
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2427,6 +2427,7 @@ static int fbcon_do_set_font(struct vc_d
+ 	struct fbcon_display *p = &fb_display[vc->vc_num];
+ 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
+ 	u8 *old_data = vc->vc_font.data;
++	unsigned short old_hi_font_mask = vc->vc_hi_font_mask;
  
--		prefix = f2fs_xattr_prefix(entry->e_name_index, dentry);
--
- 		if ((void *)(entry) + sizeof(__u32) > last_base_addr ||
- 			(void *)XATTR_NEXT_ENTRY(entry) > last_base_addr) {
- 			f2fs_err(F2FS_I_SB(inode), "list inode (%lu) has corrupted xattr",
-@@ -590,9 +588,11 @@ ssize_t f2fs_listxattr(struct dentry *de
- 			set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
- 			f2fs_handle_error(F2FS_I_SB(inode),
- 						ERROR_CORRUPTED_XATTR);
--			break;
-+			error = -EFSCORRUPTED;
-+			goto cleanup;
- 		}
+ 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
+ 	vc->vc_font.data = (void *)(p->fontdata = data);
+@@ -2480,6 +2481,12 @@ err_out:
+ 	vc->vc_font.height = old_height;
+ 	vc->vc_font.charcount = old_charcount;
  
-+		prefix = f2fs_xattr_prefix(entry->e_name_index, dentry);
- 		if (!prefix)
- 			continue;
++	/* Restore the hi_font state and screen buffer */
++	if (old_hi_font_mask && !vc->vc_hi_font_mask)
++		set_vc_hi_font(vc, true);
++	else if (!old_hi_font_mask && vc->vc_hi_font_mask)
++		set_vc_hi_font(vc, false);
++
+ 	return ret;
+ }
  
 
 
