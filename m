@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED7C22301;
-	Thu, 16 Jul 2026 13:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00AF3B42FC;
+	Thu, 16 Jul 2026 13:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210278; cv=none; b=Rs/slXsPZ/Y4VS07du+CmoTFVgDejeWLMMXudnT6lsrd0cRw1SUegtbCJwKDK26/U2VNBOq0cEK5Sy8ikZyn9AtvIHq3tZ3KBEZvd5GfqNd0dqRikO+k3dEVb+c7r0TllYmg9SBKTlRqU+IPOvnNP5pkXw5QwXbS0/nR1u6+iEg=
+	t=1784210280; cv=none; b=J1QTeocpbad7G2CKL67xzzk6nkDiab4V3tnA5+gwphse6hzyWUxqAfmih+0u03bs1x4fIyA8lP4vhGal5la2+FrATEdWc1Nj663hwB2cE2RZcft1iHyJVwMSuBTwEsfi3bFfDL+J6dA8PS8+MuWTyj+CDCoapzxVKveWqXPxmh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210278; c=relaxed/simple;
-	bh=aPJbYBrkrLag62ifjZd1RiKCtrHUAKbG6E4OHVJ1KAc=;
+	s=arc-20240116; t=1784210280; c=relaxed/simple;
+	bh=SMOJpIkrMCG3g0UuI3I0e6KAR5xoe8saGpJODfDT1TU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwYqSexpkMJLnB3IEXOoc3nk1kb9m0Ah4V10mMT4XvJTRvOkhGkWIzhRc6QSkN/YhUXSpjPp/dcxOVis1lL4np3VA/RmS+5G0t3mVg+HamrKnMW7U+TUaUeokl8KgqmM+HoHL+WWi2E3jr2dv08tzFWLKmVKGyJY0eWNcXC9tXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhWCM565; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AkPG/q2BFivpUm1jGNK3it3YvbcPajC1UVqFWLb4HNUSeAVE5sASC8DMEyYpK3Pmur1BQ9lTZLs8fp7NUlcdk19ahxoR2VzxS6vikVA8FU8vEgS4rWAI5DN1o3OJMOIl/Uuq3aAUZ1cS4Sr1c9sceY+x1Vwn7Vz6MSyq/8M3n6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+SBOwEZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhWCM565"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CEB1F000E9;
-	Thu, 16 Jul 2026 13:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+SBOwEZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4029D1F000E9;
+	Thu, 16 Jul 2026 13:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210277;
-	bh=MzATjpfcz8F7yPXqY01WudthUp+805eknYPmjM/kQ+M=;
+	s=korg; t=1784210279;
+	bh=MW657jJ48fJ4Icl8qD39P/HeWYeCDr0aBql8qqr1DiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhWCM565D9zT/1zjrlUl50LUIdi3asZT1dJndff1//1mh/ptbOn/xAurMNgUyaddR
-	 jHna7ruL/BKEBu0U+pnMa4xKS9OSpnrqEyAmJ04Ej6njBuM8QTIlUcR3z0sounYM2Z
-	 naObAr1yo1LuoHwQE4lqor8rRR7c9EiC4mNu5Ic0=
+	b=Z+SBOwEZ3lN3+tFbDWS1zljj4XJ249O4MZajJkFa7sZBroFLNOSoeoQgxupUvtico
+	 D+ztOl2uLnJCFm7zU55BB/Vfn2N+4sY/X6xIDt0zc7nKIsLa8kh8/bbDElPk3jWIFh
+	 Uz4bU/r/NGXvSqc2mQQwj3YDRsuzqqTC2goHUz6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Joanne Koong <joannelkoong@gmail.com>,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 7.1 506/518] fuse: dont block in fuse_get_dev() for non-sync_init case
-Date: Thu, 16 Jul 2026 15:32:54 +0200
-Message-ID: <20260716133058.912267404@linuxfoundation.org>
+Subject: [PATCH 7.1 507/518] fuse: clear intr_entry in fuse_resend and fuse_remove_pending_req
+Date: Thu, 16 Jul 2026 15:32:55 +0200
+Message-ID: <20260716133058.933183638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,49 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
 
-commit 9f6f44aa5a58aaae0838126dc09460c3e1f56ccb upstream.
+commit f8fce75fedf73ac72aa09163deb8f4291fdcaad2 upstream.
 
-Commit a8dd5f1b73bc ("fuse: create fuse_dev on /dev/fuse open instead of
-mount") changed behavior so that fuse_get_dev() now unconditionally
-blocks waiting for a connection, even in the case where sync_init was
-not set. Previously, non-sync_init opens returned -EPERM immediately.
+When fuse_resend() moves a request from fpq->processing back to
+fiq->pending, it sets FR_PENDING and clears FR_SENT but does not
+remove the requests intr_entry from fiq->interrupts.  If the
+request had FR_INTERRUPTED set from a prior signal, intr_entry
+remains dangling on fiq->interrupts.  When the requesting task
+then receives a fatal signal, fuse_remove_pending_req() sees
+FR_PENDING=1, removes the request from fiq->pending and frees it
+via the refcount path, also without cleaning intr_entry.  The
+stale intr_entry causes use-after-free when fuse_read_interrupt()
+iterates fiq->interrupts:
+  - list_del_init(&req->intr_entry) -> UAF write on freed slab
+  - req->in.h.unique -> UAF read, data leaked to userspace
 
-Restore the previous behavior of returning -EPERM.
+Remove intr_entry from fiq->interrupts in fuse_resend() for
+interrupted requests before they are placed back on fiq->pending.
 
-Fixes: a8dd5f1b73bc ("fuse: create fuse_dev on /dev/fuse open instead of mount")
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://lore.kernel.org/all/3c9f8396-41f4-4c88-b883-34bede72b427@sirena.org.uk/
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Tested-by: Mark Brown <broonie@kernel.org>
+Add a WARN_ON if the intr_entry is not empty on request destruction.
+
+Fixes: 760eac73f9f6 ("fuse: Introduce a new notification type for resend pending requests")
+Cc: stable@vger.kernel.org # 6.9
+Signed-off-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/fuse/dev.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 --- a/fs/fuse/dev.c
 +++ b/fs/fuse/dev.c
-@@ -1560,9 +1560,15 @@ struct fuse_dev *fuse_get_dev(struct fil
- 	struct fuse_dev *fud = fuse_file_to_fud(file);
- 	int err;
+@@ -148,6 +148,7 @@ static struct fuse_req *fuse_request_all
  
--	err = wait_event_interruptible(fuse_dev_waitq, fuse_dev_fc_get(fud) != NULL);
--	if (err)
--		return ERR_PTR(err);
-+	if (unlikely(!fuse_dev_fc_get(fud))) {
-+		/* only block waiting for mount if sync init was requested */
-+		if (!fud->sync_init)
-+			return ERR_PTR(-EPERM);
-+
-+		err = wait_event_interruptible(fuse_dev_waitq, fuse_dev_fc_get(fud) != NULL);
-+		if (err)
-+			return ERR_PTR(err);
-+	}
- 
- 	return fud;
+ static void fuse_request_free(struct fuse_req *req)
+ {
++	WARN_ON(!list_empty(&req->intr_entry));
+ 	kmem_cache_free(fuse_req_cachep, req);
  }
+ 
+@@ -2041,6 +2042,14 @@ static void fuse_resend(struct fuse_conn
+ 		fuse_dev_end_requests(&to_queue);
+ 		return;
+ 	}
++	/*
++	 * Remove interrupt entries for resent requests to prevent stale
++	 * intr_entry on fiq->interrupts after the request is re-queued.
++	 */
++	list_for_each_entry(req, &to_queue, list) {
++		if (test_bit(FR_INTERRUPTED, &req->flags))
++			list_del_init(&req->intr_entry);
++	}
+ 	/* iq and pq requests are both oldest to newest */
+ 	list_splice(&to_queue, &fiq->pending);
+ 	fuse_dev_wake_and_unlock(fiq);
 
 
