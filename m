@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6346429CD0;
-	Thu, 16 Jul 2026 13:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7386C42901D;
+	Thu, 16 Jul 2026 13:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209709; cv=none; b=hxyRp4vYYKTYoeKT+WKx0hI7I2la5XfPMFRxiW7k4EXLF7XaEt/mHufd6/We+6AUK/FHUgzfUNLkOifNP9Be5YbBHKJTMsAsYRScQSppA+Tf4BNNJH84CgvJZjrv1ni/sAychMXPFbYmbuU2jqy5fWgRrBzDM0nsC3OwNM9oO6Q=
+	t=1784209712; cv=none; b=q4nX7A0cwYZG/pS2i9cL+/0YzrgBldgUULicUI710EPoGvZaEcccXqMxPObZAS+z78jD8C6lPPY1VH/hZl7anZOMd50gVGd6yjZjUHc/kzEKrKRzAfRqxJxB1rTsQRnF+8WNGlv8uxv6DQC64YY1F1kdmQvAejCo88nz1HJFoPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209709; c=relaxed/simple;
-	bh=RDcTLqCZksYwmFip7/neuWX18XMJDvjHBfFVSrOcqjs=;
+	s=arc-20240116; t=1784209712; c=relaxed/simple;
+	bh=04K/21zSDsknCefG9T29gWw4G67QWhw7YMTxKZJ7n8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDxKE5xki6W2QUNPr5q1CskPuAhzCs0yQioXQKCWY26DaLuxdS5eDrodnffRyN1TVqUBHCpNB0qLh+IwQ6EHyyCKdnHQnAv7jjnQJR6b/BnuPlLDB0VQT03YHKOEzwHeOlB5d99bAnP40k5QRrOm6VJXDpdFUEu3PRk9n9PM1o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBwwJRch; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qCdTaUu2mAn0E8nsnd49yIOevfEw9BQS5xd1lyTU4VfzWFY7e5FYjkfRpywsI+2GGeA06y/fa//4xVECzKKSU4KeAgSXZSARHP9x+opdjAIMVcMX4AXeUv4x3gNeJsjseyTrWd0K8tqgM4DwYufCB1BIYx4oVpHfl8HtuDoM+sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbGZeaMJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBwwJRch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9132B1F00A3E;
-	Thu, 16 Jul 2026 13:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbGZeaMJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7528C1F00A3D;
+	Thu, 16 Jul 2026 13:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209697;
-	bh=WzF//aFToG0oJdcA6nLNO5bcvcVszC+CG5l9LnfWg1U=;
+	s=korg; t=1784209705;
+	bh=BWS5W9J/NpJpL9uWC5aSgsFDKUKxsVCO6nLpEdPqWHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBwwJRchqgk7qxxtwDfch13Jpddy40NFxiLnk1Sa8EcCBzXHGRq1vR+W06ZDw1zQq
-	 W9+D1gYG5BH5YN2OgOAo7+aUs+tuEJ/tCErwbjWSbUBIw9w/oEGYFhslJ8oWakdB6l
-	 ZYV47G934jB7EoNTOUUL0YWsn338R/TkNmJGKM4Y=
+	b=MbGZeaMJyzwDD5LEEgDsqX9umgmCY0mO/Qm4o/JCc+zHk4R2EFoOnk+FJ8k3GNhe+
+	 imUhh/cpQNLDExAnFV0nYrpdQ1ScK/oJO5e6tWjJQNKucWDhyjXRePQlYc52GeQW/5
+	 PwnZQz9YskGFH+mjWeyKV1MhyZjzSWFX/MAUHY5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.1 284/518] xfs: pass back updated nb from xfs_growfs_compute_deltas
-Date: Thu, 16 Jul 2026 15:29:12 +0200
-Message-ID: <20260716133054.029956563@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.1 260/518] perf/arm-cmn: Fix DVM node events
+Date: Thu, 16 Jul 2026 15:28:48 +0200
+Message-ID: <20260716133053.507861583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,96 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit 4cb6e89a3d901d4da515977e55f9a9a779238660 upstream.
+commit 5936245125f78d896fdb1bbc2ae79213e28a6579 upstream.
 
-xfs_growfs_compute_deltas can update nb for corner cases like a number
-of blocks that would create a less the minimal sized AG, or running
-past the max AG limit.  Pass back the calculated value to the caller,
-as it relies on to calculate the new number of perag structures.
+The new DVM node events added in CMN-700 also apply to CMN S3; fix
+the model encoding so that we can expose the aliases and handle
+occupancy filtering on newer CMNs too.
 
-Note that the grown file system size is not affected by this
-miscalculation as it uses the passed back delta value.
-
-Fixes: a49b7ff63f98 ("xfs: Refactoring the nagcount and delta calculation")
-Cc: stable@vger.kernel.org # v7.0
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 0dc2f4963f7e ("perf/arm-cmn: Support CMN S3")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_ag.c | 10 +++++-----
- fs/xfs/libxfs/xfs_ag.h |  2 +-
- fs/xfs/xfs_fsops.c     |  2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/perf/arm-cmn.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_ag.c b/fs/xfs/libxfs/xfs_ag.c
-index dcd2f93b6a6c..0c5f0548021f 100644
---- a/fs/xfs/libxfs/xfs_ag.c
-+++ b/fs/xfs/libxfs/xfs_ag.c
-@@ -866,7 +866,7 @@ xfs_ag_shrink_space(
- void
- xfs_growfs_compute_deltas(
- 	struct xfs_mount	*mp,
--	xfs_rfsblock_t		nb,
-+	xfs_rfsblock_t		*nb,
- 	int64_t			*deltap,
- 	xfs_agnumber_t		*nagcountp)
- {
-@@ -874,19 +874,19 @@ xfs_growfs_compute_deltas(
- 	int64_t		delta;
- 	xfs_agnumber_t	nagcount;
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -197,13 +197,14 @@
+ enum cmn_model {
+ 	CMN600 = 1,
+ 	CMN650 = 2,
+-	CMN700 = 4,
+-	CI700 = 8,
++	CI700 = 4,
++	CMN700 = 8,
+ 	CMNS3 = 16,
+ 	/* ...and then we can use bitmap tricks for commonality */
+ 	CMN_ANY = -1,
+ 	NOT_CMN600 = -2,
+-	CMN_650ON = CMN650 | CMN700 | CMNS3,
++	CMN_700ON = ~(CMN700 - 1),
++	CMN_650ON = CMN_700ON | CMN650,
+ };
  
--	nb_div = nb;
-+	nb_div = *nb;
- 	nb_mod = do_div(nb_div, mp->m_sb.sb_agblocks);
- 	if (nb_mod && nb_mod >= XFS_MIN_AG_BLOCKS)
- 		nb_div++;
- 	else if (nb_mod)
--		nb = nb_div * mp->m_sb.sb_agblocks;
-+		*nb = nb_div * mp->m_sb.sb_agblocks;
+ /* Actual part numbers and revision IDs defined by the hardware */
+@@ -919,14 +920,14 @@ static struct attribute *arm_cmn_event_a
+ 	CMN_EVENT_DVM(NOT_CMN600, txsnp_stall,		0x0a),
+ 	CMN_EVENT_DVM(NOT_CMN600, trkfull,		0x0b),
+ 	CMN_EVENT_DVM_OCC(NOT_CMN600, trk_occupancy,	0x0c),
+-	CMN_EVENT_DVM_OCC(CMN700, trk_occupancy_cxha,	0x0d),
+-	CMN_EVENT_DVM_OCC(CMN700, trk_occupancy_pdn,	0x0e),
+-	CMN_EVENT_DVM(CMN700, trk_alloc,		0x0f),
+-	CMN_EVENT_DVM(CMN700, trk_cxha_alloc,		0x10),
+-	CMN_EVENT_DVM(CMN700, trk_pdn_alloc,		0x11),
+-	CMN_EVENT_DVM(CMN700, txsnp_stall_limit,	0x12),
+-	CMN_EVENT_DVM(CMN700, rxsnp_stall_starv,	0x13),
+-	CMN_EVENT_DVM(CMN700, txsnp_sync_stall_op,	0x14),
++	CMN_EVENT_DVM_OCC(CMN_700ON, trk_occupancy_cxha, 0x0d),
++	CMN_EVENT_DVM_OCC(CMN_700ON, trk_occupancy_pdn,	0x0e),
++	CMN_EVENT_DVM(CMN_700ON, trk_alloc,		0x0f),
++	CMN_EVENT_DVM(CMN_700ON, trk_cxha_alloc,	0x10),
++	CMN_EVENT_DVM(CMN_700ON, trk_pdn_alloc,		0x11),
++	CMN_EVENT_DVM(CMN_700ON, txsnp_stall_limit,	0x12),
++	CMN_EVENT_DVM(CMN_700ON, rxsnp_stall_starv,	0x13),
++	CMN_EVENT_DVM(CMN_700ON, txsnp_sync_stall_op,	0x14),
  
- 	if (nb_div > XFS_MAX_AGNUMBER + 1) {
- 		nb_div = XFS_MAX_AGNUMBER + 1;
--		nb = nb_div * mp->m_sb.sb_agblocks;
-+		*nb = nb_div * mp->m_sb.sb_agblocks;
- 	}
- 	nagcount = nb_div;
--	delta = nb - mp->m_sb.sb_dblocks;
-+	delta = *nb - mp->m_sb.sb_dblocks;
- 	*deltap = delta;
- 	*nagcountp = nagcount;
- }
-diff --git a/fs/xfs/libxfs/xfs_ag.h b/fs/xfs/libxfs/xfs_ag.h
-index 16a9b43a3c27..8aa4266c5571 100644
---- a/fs/xfs/libxfs/xfs_ag.h
-+++ b/fs/xfs/libxfs/xfs_ag.h
-@@ -330,7 +330,7 @@ int xfs_ag_init_headers(struct xfs_mount *mp, struct aghdr_init_data *id);
- int xfs_ag_shrink_space(struct xfs_perag *pag, struct xfs_trans **tpp,
- 			xfs_extlen_t delta);
- void
--xfs_growfs_compute_deltas(struct xfs_mount *mp, xfs_rfsblock_t nb,
-+xfs_growfs_compute_deltas(struct xfs_mount *mp, xfs_rfsblock_t *nb,
- 			int64_t *deltap, xfs_agnumber_t *nagcountp);
- int xfs_ag_extend_space(struct xfs_perag *pag, struct xfs_trans *tp,
- 			xfs_extlen_t len);
-diff --git a/fs/xfs/xfs_fsops.c b/fs/xfs/xfs_fsops.c
-index 8d64d904d73c..436857356a0a 100644
---- a/fs/xfs/xfs_fsops.c
-+++ b/fs/xfs/xfs_fsops.c
-@@ -124,7 +124,7 @@ xfs_growfs_data_private(
- 			mp->m_sb.sb_rextsize);
- 	if (error)
- 		return error;
--	xfs_growfs_compute_deltas(mp, nb, &delta, &nagcount);
-+	xfs_growfs_compute_deltas(mp, &nb, &delta, &nagcount);
- 
- 	/*
- 	 * Reject filesystems with a single AG because they are not
--- 
-2.55.0
-
+ 	CMN_EVENT_HNF(CMN_ANY, cache_miss,		0x01),
+ 	CMN_EVENT_HNF(CMN_ANY, slc_sf_cache_access,	0x02),
 
 
