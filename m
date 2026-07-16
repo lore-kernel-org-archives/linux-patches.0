@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D73640099B;
-	Thu, 16 Jul 2026 13:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311613D953E;
+	Thu, 16 Jul 2026 13:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210254; cv=none; b=OCzQ6T6RIDrWwmy/hYnnoVAqOoJQFjZ9wHJHgn7sP4qRJYM4qLQpbov6wAdAV5o0hGmhXNrLvtPakj/9No5v6acARCToBub3qFwLVZdaGnm9cyPG96ajgFyibzThbwgDDmCbY2v/4daqNaQFNJ8n21j5tJvV17nx5VRcypkiG4Q=
+	t=1784210257; cv=none; b=mcLlzmmrBnt0QRdwVS2Gx7nFI369im8EW99hzUlYtDmrySO7sDa/Z29BFlRm+Mb5k545gWw0SyPZKioVSjDhp0jHBwgVWY16p0eRm7vDIxsjFjj9RW54Jvik6a3VOMQxjpSWzG5ntIJCcuE9IJ+xfgld9Y7JpWR/6VWFYCwB7T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210254; c=relaxed/simple;
-	bh=1+EVJ/PuR6npRWmiP/WmvAmgkt/P9yve0qjdrWa0vOk=;
+	s=arc-20240116; t=1784210257; c=relaxed/simple;
+	bh=WByqwjqHmVcCwXyzoel0sLlExyBmL/5oJSwvqGgtj+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIXLnNMz1FpZTsu0BQjBLazqvljeRe53qtVtJBT+qEm+D1uChdve+vo9zcvDRCXczGcnxM0OawRT6MYe6peAGSsbYTbvoiyUOZZSpXEBf+C6SNieQ3FOY3vo8Lh6l6HrchNAZiFzVbuiRN26iYUeVpqh4F0ZeTNY0QKI8PJD7Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHXYEVyJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MN3uZdFxQjqpY+8QLOyxQu7ZmwkPdm010+8GV2yAIVs43qv4vv62ikoMF9UARRW4MWJ8wfowVZLJZ61umRjz0AC4yZyXJ9b24o8vlw+mmRryw0UWEgezj+g2p9lWPslWUMI+xSOeaVT4IbegxgSvf//GMtNru+8ZLWAEOEN5RJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EtYXpWY3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHXYEVyJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F417A1F000E9;
-	Thu, 16 Jul 2026 13:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EtYXpWY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C2D1F000E9;
+	Thu, 16 Jul 2026 13:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210253;
-	bh=pe+Gtk4sNlybhxknrns01x+0+2bem54Mhd7gBq0jCyE=;
+	s=korg; t=1784210256;
+	bh=/vudjgnR5ev+jtNAundNX8wKGdGY2OD9oBUU0x3jiB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wHXYEVyJRWyaU4C0M7SzyAI0PwiB1XBio1QoUZuFgjaPPreYT2Vsbi/2/yc8bSjgZ
-	 7sImgMv+8LxGM3XVz5QJZucb83l8+gv4MEkFbcsbG1ZFqxpdqKiNcSHHvAT8+76dK5
-	 ut+wUaPTwh7ps1pb7Ux5KsHqKv73VMcfLhtYda0Y=
+	b=EtYXpWY3Tc9rNWfFroks/hPPUHdkH9dY0bcG3s512MGywSO19BOFoDVdiQbRYptnu
+	 yLkBusmlHF7ssz3DRxsy7zIira5eUH+NO/AqgGPtGZighQ4B2nH/eFV0hSAWwKR8mo
+	 Jd87TiFBwm/DJ8GU42MuW0EU1dAdGOV/7L5o+X78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.1 452/518] KVM: arm64: Bound used_lrs when flushing the pKVM hyp vCPU
-Date: Thu, 16 Jul 2026 15:32:00 +0200
-Message-ID: <20260716133057.734717099@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 7.1 443/518] iommufd: Set upper bounds on cache invalidation entry_num and entry_len
+Date: Thu, 16 Jul 2026 15:31:51 +0200
+Message-ID: <20260716133057.532302041@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,83 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 8cc8bbbfab14c22c5551d0dd19b208a44b141c76 upstream.
+commit 4d70986002f2f3eaaed89124fb2522bded38b016 upstream.
 
-flush_hyp_vcpu() copies the host vGIC state into the hyp's private vCPU
-on every run. The vGIC list register save and restore use used_lrs as
-their loop bound and expect it to stay within the number of implemented
-list registers. While this is generally the case, flush_hyp_vcpu()
-copies vgic_v3 verbatim and does not enforce this, so a value provided
-by the host is used at EL2 to index vgic_lr[] and access ICH_LR<n>_EL2
-(host -> EL2).
+iommufd_hwpt_invalidate() takes a user-controlled entry_num and entry_len,
+each bounded only by U32_MAX. An entry_len beyond the kernel's struct size
+makes the copy helper verify the extra bytes are zero, scanning that excess
+in one uninterruptible pass; a multi-gigabyte value over zeroed user memory
+trips the soft-lockup watchdog.
 
-Fix by clamping used_lrs to the number of implemented list registers
-after the copy, as the trusted path already does in
-vgic_flush_lr_state(). The number of implemented list registers is
-constant after init, so it is replicated once from
-kvm_vgic_global_state.nr_lr into hyp_gicv3_nr_lr rather than read on
-every entry.
+A large entry_num is the other half, driving the backend invalidation loop
+with no reschedule. The VT-d nested handler, for one, copies each entry and
+flushes caches per iteration, pinning the CPU on a non-preemptible kernel.
 
+Cap both in the ioctl. entry_len is held under PAGE_SIZE, above any request
+struct, and entry_num under 1 << 19, the order of a hardware invalidation
+queue and well beyond any real batch, bounding the per-call loop length.
+
+Fixes: 8c6eabae3807 ("iommufd: Add IOMMU_HWPT_INVALIDATE")
+Link: https://patch.msgid.link/r/447fa93663f7526eb361719e83fa8b649464483d.1780521606.git.nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
-Fixes: be66e67f1750 ("KVM: arm64: Use the pKVM hyp vCPU structure in handle___kvm_vcpu_run()")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Fuad Tabba <tabba@google.com>
-Tested-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260606175614.83273-3-imv4bel@gmail.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_hyp.h   |    1 +
- arch/arm64/kvm/arm.c               |    2 ++
- arch/arm64/kvm/hyp/nvhe/hyp-main.c |    9 +++++++++
- 3 files changed, 12 insertions(+)
+ drivers/iommu/iommufd/hw_pagetable.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/kvm_hyp.h
-+++ b/arch/arm64/include/asm/kvm_hyp.h
-@@ -157,5 +157,6 @@ extern unsigned long kvm_nvhe_sym(__icac
- extern unsigned int kvm_nvhe_sym(kvm_arm_vmid_bits);
- extern unsigned int kvm_nvhe_sym(kvm_host_sve_max_vl);
- extern unsigned long kvm_nvhe_sym(hyp_nr_cpus);
-+extern unsigned int kvm_nvhe_sym(hyp_gicv3_nr_lr);
- 
- #endif /* __ARM64_KVM_HYP_H__ */
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -2426,6 +2426,8 @@ static int __init init_subsystems(void)
- 	switch (err) {
- 	case 0:
- 		vgic_present = true;
-+		if (static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif))
-+			kvm_nvhe_sym(hyp_gicv3_nr_lr) = kvm_vgic_global_state.nr_lr;
- 		break;
- 	case -ENODEV:
- 	case -ENXIO:
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -24,6 +24,9 @@
- 
- DEFINE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
- 
-+/* Number of implemented GICv3 LRs. Used by flush_hyp_vcpu(). */
-+unsigned int hyp_gicv3_nr_lr;
-+
- void __kvm_hyp_host_forward_smc(struct kvm_cpu_context *host_ctxt);
- 
- static void __hyp_sve_save_guest(struct kvm_vcpu *vcpu)
-@@ -139,6 +142,12 @@ static void flush_hyp_vcpu(struct pkvm_h
- 
- 	hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3 = host_vcpu->arch.vgic_cpu.vgic_v3;
- 
-+	/* Bound used_lrs by the number of implemented list registers. */
-+	hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3.used_lrs =
-+		min_t(unsigned int,
-+		      hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3.used_lrs,
-+		      hyp_gicv3_nr_lr);
-+
- 	hyp_vcpu->vcpu.arch.pid = host_vcpu->arch.pid;
+--- a/drivers/iommu/iommufd/hw_pagetable.c
++++ b/drivers/iommu/iommufd/hw_pagetable.c
+@@ -489,6 +489,9 @@ int iommufd_hwpt_get_dirty_bitmap(struct
+ 	return rc;
  }
  
++/* An arbitrary entry_num cap, far above any realistic invalidation batch */
++#define IOMMU_HWPT_INVALIDATE_ENTRY_NUM_MAX (1U << 19)
++
+ int iommufd_hwpt_invalidate(struct iommufd_ucmd *ucmd)
+ {
+ 	struct iommu_hwpt_invalidate *cmd = ucmd->cmd;
+@@ -507,7 +510,13 @@ int iommufd_hwpt_invalidate(struct iommu
+ 		goto out;
+ 	}
+ 
+-	if (cmd->entry_num && (!cmd->data_uptr || !cmd->entry_len)) {
++	/*
++	 * Bound entry_num and entry_len so a single call cannot pin the CPU;
++	 * entry_len also caps the copy_struct_from_user() trailing-zero scan.
++	 */
++	if (cmd->entry_num &&
++	    (!cmd->data_uptr || !cmd->entry_len || cmd->entry_len > PAGE_SIZE ||
++	     cmd->entry_num > IOMMU_HWPT_INVALIDATE_ENTRY_NUM_MAX)) {
+ 		rc = -EINVAL;
+ 		goto out;
+ 	}
 
 
