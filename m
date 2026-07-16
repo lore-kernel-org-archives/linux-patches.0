@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AE440A954;
-	Thu, 16 Jul 2026 14:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D513D9535;
+	Thu, 16 Jul 2026 14:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210827; cv=none; b=m2Q6RtbmTdO3m1Mk0UsDCqx7wuiIe+4RTrjGuh/B4Df/3ZVREdNk7b68sI81mDsSkamnyTiG4CQclnFBm0UflngV3JW+9Nuk9nRcrHTkzGKZXb7rfUCSmq2Ou9k9we8MiEu7NAbpm7d1W1J67XQwfAjiLUzAa5GDQS1Ni11G2K0=
+	t=1784210829; cv=none; b=p7gwj6P7fOWZgx9ukcf/Uo4uGpodIP5M/cx84FaTsAkIzju3bNfkj4y7WkbZ8wmWMhvkzAyM+IkPKu1ZjqXdUAo2T0rtTQUf5ADYVg3qj00R3WZvtAqMEB2rYz5Sg8LbDjS0BcY9kuBt3FjOh21QWYhZyUYSbkoKNdSO3qv8v9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210827; c=relaxed/simple;
-	bh=tNXMof+0LAt0VqJcOfYCCObaKwBpLROocr3ALU7vHMY=;
+	s=arc-20240116; t=1784210829; c=relaxed/simple;
+	bh=NUtNbJLDiWWM9p/2vLStGyhCn8gM362jkYvub0cUGdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlgH68YxEjYdzNwRJ/mOXd4EedgMwfU4wMyzztloSz/efktp53pbaEPOnuhtf4bYzLaSYZ/KMKQSqUMvLIRqCS3s6ELwuT3oPCCuRkFXeXgIhHtv6oSYYtD337KuhPksQc7Q2n1gei9yagY2BmIPvCnONBykXdUfBgsMUpvDRn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7Xwy7oA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N7M1JMj+RVKuUddebb5dWym/SBRm1C0sbXONjsBjHnuJlG5jwmrxYWWnWqHkXkjLeJePl8CxmUM1UmUGuqMy5oE3TlzMKp8KiY9ASjvx1KUqws2tyBwAn14BekgQM+aUzSCQVCYSW9ornlJsPMbGBSWCPyXabJPL7wBhosl+6WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVrssOaN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7Xwy7oA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A9A1F000E9;
-	Thu, 16 Jul 2026 14:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVrssOaN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045631F000E9;
+	Thu, 16 Jul 2026 14:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210825;
-	bh=W2ux/E2JBqKTPL98NFiVoXz2Wi7BCd7igK6X8Hr9Ni8=;
+	s=korg; t=1784210828;
+	bh=D2J1NyN5s8ffblmWwYxUT+JiSHgEbau2ngbT5gVW3kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7Xwy7oAO7rBZRwRBqUiWe7rkDKPNY+HdnA0k4K+XxwXs60C1kx8o0HBjLbROgqDE
-	 OYoSpWLsWjx3+Cg/aknFmXTenET6GcqRNPsRbjXgvd+nDDKmmhq2ZxRnRmkTly8fYx
-	 xLSOOJIvUIIE5JTlXHc6QpyG66fkAe9w4WkFD+Cc=
+	b=zVrssOaNJKiztarjhF1fUYQ756aIq7YJ8UGyt6kBvoImPQ+hXq8TIjptcSDG9yHAd
+	 Yf0nvoCs1gM+Gq+hj/3CN/OpTeaf1ZG2Ks+wdfefcfyQKQa1pVJ1U04jhd9U07Cs2c
+	 ZobFoTOVdoGTWuu+SmG7qaaMCWJC8UvnCSwF9jEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.18 196/480] netfilter: ebtables: zero chainstack array
-Date: Thu, 16 Jul 2026 15:29:03 +0200
-Message-ID: <20260716133048.968881059@linuxfoundation.org>
+Subject: [PATCH 6.18 197/480] netfilter: ebtables: module names must be null-terminated
+Date: Thu, 16 Jul 2026 15:29:04 +0200
+Message-ID: <20260716133048.989474668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,40 +51,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-commit cbfe53599eebffd188938ab6774cc41794f6f9d5 upstream.
+commit 084d23f818321390509e9738a0b08bbf46df6425 upstream.
 
-sashiko reports:
- looking at ebtables table
- translation, could a sparse cpu_possible_mask lead to an uninitialized pointer
- free?
-
- If cpu_possible_mask is sparse (for example, CPU 0 and CPU 2 are possible,
- but CPU 1 is not), the allocation loop skips CPU 1. If vmalloc_node() fails at
- CPU 2, the cleanup loop will blindly decrement and call vfree() on
- newinfo->chainstack[1].
-
-Not a real-world bug, such allocation isn't expected to fail
-in the first place.
+We need to explicitly check the length, else we may pass non-null
+terminated string to request_module().
 
 Cc: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: bcf493428840 ("netfilter: ebtables: Fix extension lookup with identical name")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/bridge/netfilter/ebtables.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/net/bridge/netfilter/ebtables.c
 +++ b/net/bridge/netfilter/ebtables.c
-@@ -921,8 +921,7 @@ static int translate_table(struct net *n
- 		 * if an error occurs
- 		 */
- 		newinfo->chainstack =
--			vmalloc_array(nr_cpu_ids,
--				      sizeof(*(newinfo->chainstack)));
-+			vcalloc(nr_cpu_ids, sizeof(*(newinfo->chainstack)));
- 		if (!newinfo->chainstack)
- 			return -ENOMEM;
- 		for_each_possible_cpu(i) {
+@@ -403,6 +403,9 @@ ebt_check_match(struct ebt_entry_match *
+ 	    left - sizeof(struct ebt_entry_match) < m->match_size)
+ 		return -EINVAL;
+ 
++	if (strnlen(m->u.name, XT_EXTENSION_MAXNAMELEN) == XT_EXTENSION_MAXNAMELEN)
++		return -EINVAL;
++
+ 	match = xt_find_match(NFPROTO_BRIDGE, m->u.name, m->u.revision);
+ 	if (IS_ERR(match) || match->family != NFPROTO_BRIDGE) {
+ 		if (!IS_ERR(match))
 
 
