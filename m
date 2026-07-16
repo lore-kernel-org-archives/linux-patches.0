@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAA84248BC;
-	Thu, 16 Jul 2026 14:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DDA3195EF;
+	Thu, 16 Jul 2026 14:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211118; cv=none; b=QXcaNWC+sSyen0y6W0igHdKjWoGKsmEjOByyZlbY/c1abbQ8mrNVmR68DO2cM+Ax+OsaL53x/2ho2Fl/uN233YdYWb5HJXRFcZ98QAejnRLStF99EKqNI2QcLF1RAnXCRH5jbViu1bhcb5bGgFgAbyR5PsIk/BOuXJRJ0b3KFQU=
+	t=1784211121; cv=none; b=G7mvFsVBtUg5uACGn3ZIZQMvfQh+ChqjP/H+gJ2GOezbAEM8IXVgPY/aAmWKpP4Ez3JmhP53Z43o/7Ly45cxvdumkDKbm8lTeBXEcFgeV3pZZsD+CHVvzuMwE/is0w2YIi15H5wGLRgIFsEpuCX3h6kbUesVf17zR3WaafAdcWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211118; c=relaxed/simple;
-	bh=57KshtylMSzKlqmJe60g7OWaWzZZXYEtN2Tll9CITuM=;
+	s=arc-20240116; t=1784211121; c=relaxed/simple;
+	bh=DiLFRNJdW1MOU+S+sMm3NtquUhNm2PKNzSqobnxDj9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OUepHat6ES/12LdX/g0FJI4EacJ5/Fs25hQ9X8m9K4EVoM72BQigD6g8/cr2YXMFwxIjAVhrZNobGUIBEmPLS3icRHDbGL/sWr6xq63DnwYRsAgfudf5ITR9WPzApUZ5coyND67HaPswcC33UDN0qXlDgxq9C5/9AhLgKn/VBPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1KttJCy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fX4aTpohr8vNkYHTzx2pE0KWDaTAMMpu5jZPYLMatbRo+pB3JRVanRxygZU+xsTGZUr4wqySiLSvkfWTd38mmjZiJg5YLAzHZRb8KO7EmVdRPXGqitusAW7w8QW6wFFVMzNlJAOScqN9n0MgY+akyHMXiFQfyoei5fDR146AZAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlNQ3EDu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1KttJCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0D21F00A3A;
-	Thu, 16 Jul 2026 14:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlNQ3EDu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DE41F000E9;
+	Thu, 16 Jul 2026 14:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211117;
-	bh=d6qwOovvDc8uGqOlcxRiry0Aw0mnaKuWizImlAHUJho=;
+	s=korg; t=1784211119;
+	bh=juib058C3yrhQ5fGmCYZoB7AkKKFBkgNeMgnttoiOww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F1KttJCyU2iSChWj9381+7CfwAZNU+efXB87dmERe3XI4/V1gn2cjBSO9GCZGHXqs
-	 rqoauIie1lNG5BklndHoUvDLAH5yesQKvwyciHCVhC5ZaWB6hOhXZmdF9tkqReCRDs
-	 aPp+X48BRwvsZ0bYRLEPVBCaWJErIdFdxp/wb7mQ=
+	b=NlNQ3EDuwjXYuNk9mtj53do+vSsKF2rzzsQhT20H97H9SOAZNcy7eWxIzQrLui2EB
+	 kjMvqLbn0qQHt5eK0MN1LfXdwwSBdunv4QoR6az0JeytNdILg8oXSdYo7GSolWYJ4x
+	 nvmZUNfhdtyLF7n1KxsxeCEEGPy74JYY4hAUAbH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 279/480] xfs: fix memory leak in xfs_dqinode_metadir_create()
-Date: Thu, 16 Jul 2026 15:30:26 +0200
-Message-ID: <20260716133050.860432377@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 306/480] USB: serial: digi_acceleport: fix write buffer corruption
+Date: Thu, 16 Jul 2026 15:30:53 +0200
+Message-ID: <20260716133051.438500294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,75 +49,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 45de375b25060edf46e20abb36521ba530336ceb upstream.
+commit 24ca1fea8f2753bf33e1d458ec1ae5d9b7796a65 upstream.
 
-If xfs_metadir_create() fails in xfs_dqinode_metadir_create(), the current
-code returns directly, leaking the allocated update and transaction state.
-If the subsequent commit fails, the caller-owned inode reference is left
-behind.
+The digi_write_inb_command() is supposed to wait for the write urb to
+become available or return an error, but instead it updates the transfer
+buffer and tries to resubmit the urb on timeout.
 
-Fix this memory leak by routing the create failure path through
-xfs_metadir_cancel().  For both create and commit failures, finish and
-release any inode returned to the caller, mirroring the unwind pattern in
-xfs_metadir_mkdir().
+To make things worse, for commands like break control where no timeout
+is used, the driver would corrupt the urb immediately due to a broken
+jiffies comparison (on 32-bit machines this takes five minutes of uptime
+to trigger due to INITIAL_JIFFIES).
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
+Fix this by adding the missing return on timeout and waiting
+indefinitely when no timeout has been specified as intended.
 
-An x86_64 allyesconfig build showed no new warnings. Runtime validation
-used kprobe fault injection during `mount -o uquota` on a metadir XFS
-image. Injecting xfs_metadir_create() reproduced the old active-update path
-that left mount stuck later in mount setup; after this change, the same
-injection reported cancel_hits=1 and irele_hits=1. Injecting
-xfs_metadir_commit() exercised the old inode-reference leak path; after
-this change, it reported irele_hits=1.
+This issue was (sort of) flagged by Sashiko when reviewing an unrelated
+change to the driver.
 
-Fixes: e80fbe1ad8ef ("xfs: use metadir for quota inodes")
-Cc: stable@vger.kernel.org # v6.13
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260610132232.356139-1-johan%40kernel.org?part=11
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_dquot_buf.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/usb/serial/digi_acceleport.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_dquot_buf.c
-+++ b/fs/xfs/libxfs/xfs_dquot_buf.c
-@@ -436,17 +436,27 @@ xfs_dqinode_metadir_create(
+--- a/drivers/usb/serial/digi_acceleport.c
++++ b/drivers/usb/serial/digi_acceleport.c
+@@ -431,20 +431,22 @@ static int digi_write_inb_command(struct
+ 	int len;
+ 	struct digi_port *priv = usb_get_serial_port_data(port);
+ 	unsigned char *data = port->write_urb->transfer_buffer;
++	unsigned long expire;
+ 	unsigned long flags;
  
- 	error = xfs_metadir_create(&upd, S_IFREG);
- 	if (error)
--		return error;
-+		goto out_cancel;
+ 	dev_dbg(&port->dev, "digi_write_inb_command: TOP: port=%d, count=%d\n",
+ 		priv->dp_port_num, count);
  
- 	xfs_trans_log_inode(upd.tp, upd.ip, XFS_ILOG_CORE);
+ 	if (timeout)
+-		timeout += jiffies;
+-	else
+-		timeout = ULONG_MAX;
++		expire = jiffies + timeout;
  
- 	error = xfs_metadir_commit(&upd);
- 	if (error)
--		return error;
-+		goto out_irele;
+ 	spin_lock_irqsave(&priv->dp_port_lock, flags);
+ 	while (count > 0 && ret == 0) {
+-		while (priv->dp_write_urb_in_use &&
+-		       time_before(jiffies, timeout)) {
++		while (priv->dp_write_urb_in_use) {
++			if (timeout && time_after(jiffies, expire)) {
++				ret = -ETIMEDOUT;
++				break;
++			}
+ 			cond_wait_interruptible_timeout_irqrestore(
+ 				&priv->write_wait, DIGI_RETRY_TIMEOUT,
+ 				&priv->dp_port_lock, flags);
+@@ -453,6 +455,9 @@ static int digi_write_inb_command(struct
+ 			spin_lock_irqsave(&priv->dp_port_lock, flags);
+ 		}
  
- 	xfs_finish_inode_setup(upd.ip);
- 	*ipp = upd.ip;
- 	return 0;
++		if (ret)
++			break;
 +
-+out_cancel:
-+	xfs_metadir_cancel(&upd, error);
-+out_irele:
-+	/* Have to finish setting up the inode to ensure it's deleted. */
-+	if (upd.ip) {
-+		xfs_finish_inode_setup(upd.ip);
-+		xfs_irele(upd.ip);
-+	}
-+	return error;
- }
- 
- #ifndef __KERNEL__
+ 		/* len must be a multiple of 4 and small enough to */
+ 		/* guarantee the write will send buffered data first, */
+ 		/* so commands are in order with data and not split */
 
 
