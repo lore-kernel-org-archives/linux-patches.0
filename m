@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5302FFDEA;
-	Thu, 16 Jul 2026 13:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFF0220F3E;
+	Thu, 16 Jul 2026 13:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210026; cv=none; b=txUhJktGd8k9oB9+RyySgEN3eq+ZPZrFOcX2G6jN1P8AIGEO5CrasTZbWkITxOfJxjqKk85ioBL0WyVg1RTcD8Y2rotFFL1A8wcFQ0bxTvGO1K9WTVOc7Hrdd/Ejxf8L2jyO5o49Q7PmyTy7Lq8mnTp4g943HWoQEEwTcu4h+ww=
+	t=1784210029; cv=none; b=K5gYGLsDmikV317LodOs6RbIB/sIBlAx7GfUhsSQs23wcjNXTBg4VO2fSAEGyJj0FLXWiPW050WDrTomb/UixmojBpB2dFbyiMi/7Nht5nTETRyzPj65tsCaC1CECRubDNTlOudTvHsCcFMpL3+85XPde/8B/rH/N5iHPBLN/Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210026; c=relaxed/simple;
-	bh=htlrUc83Au3YK1xhzuUaKyVtU8MxH45Lst+ezHu3Zig=;
+	s=arc-20240116; t=1784210029; c=relaxed/simple;
+	bh=bkuf6Yid6MDq5nisGurz8zhYXvJP055gcPlXPjAgR+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEyC29Gg5OyL5/8e5ET3uExTFO2/XwDWx0D2oRKNn9mmGFJrdlNAjnV6C5nbHRa0FfGIm06VZ2iUxnI3oTWevZh6Zs2C+K06aCxPpwfJl2MMHQakCaFOI++0jgux/F4KzQvXGhwK8LNferxNInCkc+ft8j0JNS5mVDXTAxQ50SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUSksZjP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oUWTg89yGrf8s1rbzkrNb5w3OmUSUhS7OE5YSqNTkw+805voIRddq0OinCh2bOoWwASiOO/O3iK7a1YJKTZUYGrXetgYZ3WPX+iR1l30RIqeozKyWPPPJL8JYEFYAh4zw0Ttam+OyYtK1s5FJsmOhfGZqcEmYnqFmP0ycqMP+vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzSYBOr2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUSksZjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8931F000E9;
-	Thu, 16 Jul 2026 13:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzSYBOr2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CDD1F000E9;
+	Thu, 16 Jul 2026 13:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210025;
-	bh=aboiseWatDAitN9imXT85hXhMw8SWrjkcjJKq9VPisk=;
+	s=korg; t=1784210027;
+	bh=mykUbkPnnIUHpBZLF+IqCATM2hf1zBI663XxYtoNCgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gUSksZjPsgzS3S8x1BgmFTgyiN1KFY2DwHa0Af1DJoGOx6zVMOK7QLELTYusHMAVj
-	 1vn1Ba8+l3H6paYV8Vj2OEPKnuzi3gAd8pPi0WYgrqfJGDipVxRvygUUn7KnHM+DdI
-	 gMQmgyvu1YO6Akfvp75qqsxqnQ9oPYBVb/39urF4=
+	b=dzSYBOr22F7v5uhiN2FkWBXi9EnmEGOl8ZaKAFMEuHNt0Eg45r1Jo/Vt6Zxd4YYIW
+	 WdLfP068vQsv4aTAq/88PfDsWL5fcxBY5nJdYQ/96sulu/vRBBg48G02DuFDnB1/2Q
+	 gukrYXVthTw09XRXP/z81AXxA7dpcwm8qTzefMJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Boccassi <luca.boccassi@gmail.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Subject: [PATCH 7.1 410/518] selftests/liveupdate: add test cases for LIVEUPDATE_IOCTL_CREATE_SESSION calls with invalid length
-Date: Thu, 16 Jul 2026 15:31:18 +0200
-Message-ID: <20260716133056.804983743@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Huihui Huang <hhhuang@smu.edu.sg>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.1 411/518] tracing: Prevent out-of-bounds read in glob matching
+Date: Thu, 16 Jul 2026 15:31:19 +0200
+Message-ID: <20260716133056.825778224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,74 +57,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Boccassi <luca.boccassi@gmail.com>
+From: Huihui Huang <hhhuang@smu.edu.sg>
 
-commit dab2b4c66aa0f44ccb6a0096906e5680c604fe39 upstream.
+commit 0a6070839b1ef276d5b05bedfb787743e140fb17 upstream.
 
-Verify that LIVEUPDATE_IOCTL_CREATE_SESSION ioctl which provide a name
-that is an empty string or too long are not allowed.
+String event fields are not necessarily NUL-terminated, so the filter
+predicate functions (filter_pred_string(), filter_pred_strloc() and
+filter_pred_strrelloc()) pass the field length to the regex match
+callbacks, and the length-aware matchers honour it.
 
+regex_match_glob() was the exception: it ignored the length and called
+glob_match(), which scans the string until it hits a NUL byte. Some
+string fields are not NUL-terminated. One example is the dynamic char
+array of the xfs_* namespace tracepoints, which is copied without a
+trailing NUL. For such a field, glob matching reads past the end of
+the event field, causing a KASAN slab-out-of-bounds read in
+glob_match(), reached via regex_match_glob() and filter_match_preds()
+from the xfs_lookup tracepoint.
+
+Add a length-bounded glob_match_len() and use it from regex_match_glob()
+so glob matching always stops at the field boundary. The matching loop
+is factored into a shared helper so glob_match() keeps its behaviour.
+
+Fixes: 60f1d5e3bac4 ("ftrace: Support full glob matching")
 Cc: stable@vger.kernel.org
-
-Signed-off-by: Luca Boccassi <luca.boccassi@gmail.com>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Link: https://lore.kernel.org/r/20260429212221.814107-3-luca.boccassi@gmail.com
-Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Link: https://patch.msgid.link/da1aaf125fc3b63320b0c540fd6afa7c3d5b4f1a.1782836943.git.hhhuang@smu.edu.sg
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/liveupdate/liveupdate.c |   42 ++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ include/linux/glob.h               |    1 +
+ kernel/trace/trace_events_filter.c |    6 ++----
+ lib/glob.c                         |   31 +++++++++++++++++++++++++++++--
+ 3 files changed, 32 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/liveupdate/liveupdate.c
-+++ b/tools/testing/selftests/liveupdate/liveupdate.c
-@@ -386,4 +386,46 @@ TEST_F(liveupdate_device, prevent_double
- 	ASSERT_EQ(close(session_fd2), 0);
+--- a/include/linux/glob.h
++++ b/include/linux/glob.h
+@@ -6,5 +6,6 @@
+ #include <linux/compiler.h>	/* For __pure */
+ 
+ bool __pure glob_match(char const *pat, char const *str);
++bool __pure glob_match_len(char const *pat, char const *str, size_t len);
+ 
+ #endif	/* _LINUX_GLOB_H */
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -1056,11 +1056,9 @@ static int regex_match_end(char *str, st
+ 	return 0;
  }
  
-+/*
-+ * Test Case: Create Session with No Null Termination
-+ *
-+ * Verifies that filling the entire 64-byte name field with non-null characters
-+ * (no '\0' terminator) is rejected by the kernel with EINVAL.
-+ */
-+TEST_F(liveupdate_device, create_session_no_null_termination)
-+{
-+	struct liveupdate_ioctl_create_session args = {};
+-static int regex_match_glob(char *str, struct regex *r, int len __maybe_unused)
++static int regex_match_glob(char *str, struct regex *r, int len)
+ {
+-	if (glob_match(r->pattern, str))
+-		return 1;
+-	return 0;
++	return glob_match_len(r->pattern, str, len) ? 1 : 0;
+ }
+ 
+ /**
+--- a/lib/glob.c
++++ b/lib/glob.c
+@@ -11,6 +11,9 @@
+ MODULE_DESCRIPTION("glob(7) matching");
+ MODULE_LICENSE("Dual MIT/GPL");
+ 
++static bool __pure glob_match_str(char const *pat, char const *str,
++				  char const *str_end);
 +
-+	self->fd1 = open(LIVEUPDATE_DEV, O_RDWR);
-+	if (self->fd1 < 0 && errno == ENOENT)
-+		SKIP(return, "%s does not exist", LIVEUPDATE_DEV);
-+	ASSERT_GE(self->fd1, 0);
-+
-+	/* Fill entire name field with 'X', no null terminator */
-+	args.size = sizeof(args);
-+	memset(args.name, 'X', sizeof(args.name));
-+
-+	EXPECT_LT(ioctl(self->fd1, LIVEUPDATE_IOCTL_CREATE_SESSION, &args), 0);
-+	EXPECT_EQ(errno, EINVAL);
+ /**
+  * glob_match - Shell-style pattern matching, like !fnmatch(pat, str, 0)
+  * @pat: Shell-style pattern to match, e.g. "*.[ch]".
+@@ -41,6 +44,29 @@ MODULE_LICENSE("Dual MIT/GPL");
+  */
+ bool __pure glob_match(char const *pat, char const *str)
+ {
++	return glob_match_str(pat, str, NULL);
 +}
++EXPORT_SYMBOL(glob_match);
 +
-+/*
-+ * Test Case: Create Session with Empty Name
++/**
++ * glob_match_len - glob match against a length-bounded string
++ * @pat: Shell-style pattern to match.
++ * @str: String to match.  Need not be NUL-terminated.
++ * @len: Number of bytes of @str that may be read.
 + *
-+ * Verifies that creating a session with an empty string name fails
-+ * with EINVAL.
++ * Like glob_match(), but @str is only read up to @len bytes, so it can be
++ * used on buffers that are not NUL-terminated (e.g. trace event fields).
++ * A NUL byte within @len still terminates the string.
 + */
-+TEST_F(liveupdate_device, create_session_empty_name)
++bool __pure glob_match_len(char const *pat, char const *str, size_t len)
 +{
-+	int session_fd;
-+
-+	self->fd1 = open(LIVEUPDATE_DEV, O_RDWR);
-+	if (self->fd1 < 0 && errno == ENOENT)
-+		SKIP(return, "%s does not exist", LIVEUPDATE_DEV);
-+	ASSERT_GE(self->fd1, 0);
-+
-+	session_fd = create_session(self->fd1, "");
-+	EXPECT_EQ(session_fd, -EINVAL);
++	return glob_match_str(pat, str, str + len);
 +}
++EXPORT_SYMBOL(glob_match_len);
 +
- TEST_HARNESS_MAIN
++static bool __pure glob_match_str(char const *pat, char const *str,
++				  char const *str_end)
++{
+ 	/*
+ 	 * Backtrack to previous * on mismatch and retry starting one
+ 	 * character later in the string.  Because * matches all characters
+@@ -55,9 +81,11 @@ bool __pure glob_match(char const *pat,
+ 	 * on mismatch, or true after matching the trailing nul bytes.
+ 	 */
+ 	for (;;) {
+-		unsigned char c = *str++;
++		unsigned char c = (str_end && str >= str_end) ? '\0' : *str;
+ 		unsigned char d = *pat++;
+ 
++		str++;
++
+ 		switch (d) {
+ 		case '?':	/* Wildcard: anything but nul */
+ 			if (c == '\0')
+@@ -125,4 +153,3 @@ backtrack:
+ 		}
+ 	}
+ }
+-EXPORT_SYMBOL(glob_match);
 
 
