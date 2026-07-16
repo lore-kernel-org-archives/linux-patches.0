@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF72F2FDC53;
-	Thu, 16 Jul 2026 14:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8045831E831;
+	Thu, 16 Jul 2026 14:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211413; cv=none; b=X8kuWJWz8zeOM6qBmLOpPKkpTka0v558wjQdRkQ4n0kymEs/JnNe0UHw88JDvRkUXYwKcXW79Xir2y187O2eQFfi+dBOBzT7Ch0GOTnvGqRFYqZKyTo92W/ik799uLaIkMz5ya7wQP79mVzOjnVtgeKsFl20YiyJCdOkz2Swdd8=
+	t=1784211415; cv=none; b=kbpHmPCAkPnemPbor5KPMTUTGIN5iFlHDamK/1M2Bi2AZowyN5VUCRRgooCeYzv4WOpoE37boodw2P11DUpvlFmjo/fzUP2o2zWX2dgrUqup6pQG/PsVETRM7EhbuhC6ToGflLRxKyv8BDKIkR9++3GXUszNyRI4iXamfqRGZCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211413; c=relaxed/simple;
-	bh=l/9U97nRaEEx2Xs/HsNOcmMMucWm5H0OO0HH0gt2J/Q=;
+	s=arc-20240116; t=1784211415; c=relaxed/simple;
+	bh=7h1IdQJdpkucPWW8bCLZiMpjUr3H5G1kAwX+h04Ve6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mg+0LjvDbqMQ03O0tFb3F1PrsGn5opTEQTqm3pgZKvtkw8fP7vC2JfKhNpbx8+ZyPioEuvErE44/bdGXHUsZj/0vh6DSI2k8WmOEAs75pFoph+QZ/DhiF20aiQEa93sBrImdvIG9MwDzrPcfecHLFgfbxoVmF5tRJu03JLmk50Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEMsXbF5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZSG+7bcxW7JZLrs5bQN3zTAOJUqbNfwZqXFP9PfSlEeRNBibJeXjo5KJAQQc6L7zYkaL5GNI1j2vjaMlyFRF3zYlLY0DSJZKZtRF5UftbRs5vEW1WOLgg/CIUXL7MR7lc/NM9dklEE1+CpyoFm3aNjfdz+Z9Dx/ztQq0BZ05coo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lzh9IYMV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEMsXbF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506D21F000E9;
-	Thu, 16 Jul 2026 14:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lzh9IYMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76CB1F000E9;
+	Thu, 16 Jul 2026 14:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211411;
-	bh=BwE/iot68Y/0v+H0n+pp7E9XNqFxVD+YPYFefObyop8=;
+	s=korg; t=1784211414;
+	bh=3jxL36o8wJPdZpusH6+VovGsR8uMJFBUu/JF/jyOAoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PEMsXbF5rjbPlbt4snkvEml4CqeUen1bGIQBH2Pi+e3fgJPg55w6aIBWoCblQlpHc
-	 wFweAig5x75cG0uAAlYlEea6yGE/s2Et34jzqBjTtfgx5sxLy0QPB4xoUduO4WFp/+
-	 8dJAOxcBlF+rONJLr8E81t/8qhziCNliR2v7wDVk=
+	b=Lzh9IYMVyM4RDR2HOZhUDdAwGX9l6h1o9JS+bGsskaccVRFjLd9sX7jIn9ZsfDJs5
+	 KFkMGUiO9X1JWo8Ax6TBwZBsxLrScy6ZGvM3SYP9PQv1k8Utm1An/M34FYN2dwrES0
+	 iLc5ODOGTBdYqYQqcfm2lr+RzubV0nBgtU+srPGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paul Louvel <paul.louvel@bootlin.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 375/480] crypto: talitos - move code in current_desc_hdr() into a standalone function
-Date: Thu, 16 Jul 2026 15:32:02 +0200
-Message-ID: <20260716133052.917998244@linuxfoundation.org>
+Subject: [PATCH 6.18 376/480] crypto: talitos/hash - prepare SEC1 descriptor chaining, remove additional descriptor
+Date: Thu, 16 Jul 2026 15:32:03 +0200
+Message-ID: <20260716133052.938593826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,78 +52,194 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit f8713d9e6091755dd30f7f1cfa25f8440cddf81b upstream.
+commit 59b5d899e33701665f18abe6bebf987427876e3e upstream.
 
-Previously added code in current_desc_hdr() in order to add support for
-searching an offending descriptor inside a descriptor chain.
+Currently, when SEC1 has buffered data (nbuf != 0), the ahash code
+creates an additional descriptor on the fly inside
+common_nonsnoop_hash() to handle the remainder of the data. This
+approach is incompatible with the arbitrary-length descriptor chaining
+that follows.
 
-Move that code into a standalone function to improve readability.
+Remove the "additional descriptor" logic from common_nonsnoop_hash()
+and common_nonsnoop_hash_unmap().
+
+Also remove the nbytes adjustment for SEC1 in ahash_edesc_alloc()
+that subtracted nbuf.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/talitos.c |   35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ drivers/crypto/talitos.c |  101 ++---------------------------------------------
+ 1 file changed, 6 insertions(+), 95 deletions(-)
 
 --- a/drivers/crypto/talitos.c
 +++ b/drivers/crypto/talitos.c
-@@ -520,6 +520,24 @@ DEF_TALITOS2_DONE(ch0, TALITOS2_ISR_CH_0
- DEF_TALITOS2_DONE(ch0_2, TALITOS2_ISR_CH_0_2_DONE)
- DEF_TALITOS2_DONE(ch1_3, TALITOS2_ISR_CH_1_3_DONE)
- 
-+static __be32 search_desc_hdr_in_request(struct talitos_request *request,
-+					 dma_addr_t cur_desc, bool is_sec1)
-+{
-+	struct talitos_edesc *edesc;
-+
-+	if (request->dma_desc == cur_desc) {
-+		return request->desc->hdr;
-+	} else if (is_sec1) {
-+		edesc = container_of(request->desc, struct talitos_edesc, desc);
-+		while (edesc->next_desc) {
-+			if (edesc->desc.next_desc == cpu_to_be32(cur_desc))
-+				return edesc->next_desc->desc.hdr1;
-+			edesc = edesc->next_desc;
-+		}
-+	}
-+	return 0;
-+}
-+
- /*
-  * locate current (offending) descriptor
-  */
-@@ -528,7 +546,6 @@ static __be32 current_desc_hdr(struct de
+@@ -1788,15 +1788,9 @@ static void common_nonsnoop_hash_unmap(s
  	struct talitos_private *priv = dev_get_drvdata(dev);
  	bool is_sec1 = has_ftr_sec1(priv);
- 	struct talitos_request *request;
--	struct talitos_edesc *edesc;
- 	int tail, iter;
- 	dma_addr_t cur_desc;
- 	__be32 hdr = 0;
-@@ -546,21 +563,7 @@ static __be32 current_desc_hdr(struct de
- 	do {
- 		request = &priv->chan[ch].fifo[iter];
- 
--		if (request->dma_desc == cur_desc) {
--			hdr = request->desc->hdr;
--		} else if (is_sec1) {
--			edesc = container_of(request->desc,
--					     struct talitos_edesc, desc);
--			while (edesc->next_desc) {
--				if (edesc->desc.next_desc ==
--				    cpu_to_be32(cur_desc)) {
--					hdr = edesc->next_desc->desc.hdr1;
--					break;
--				}
--				edesc = edesc->next_desc;
--			}
--		}
+ 	struct talitos_desc *desc = &edesc->desc;
+-	struct talitos_desc *desc2;
 -
-+		hdr = search_desc_hdr_in_request(request, cur_desc, is_sec1);
- 		if (hdr)
- 			break;
+-	if (desc->next_desc)
+-		desc2 = &edesc->next_desc->desc;
+ 
+ 	unmap_single_talitos_ptr(dev, &desc->ptr[5], DMA_FROM_DEVICE);
+-	if (desc->next_desc &&
+-	    desc->ptr[5].ptr != desc2->ptr[5].ptr)
+-		unmap_single_talitos_ptr(dev, &desc2->ptr[5], DMA_FROM_DEVICE);
++
+ 	if (req_ctx->last_desc)
+ 		memcpy(areq->result, req_ctx->hw_context,
+ 		       crypto_ahash_digestsize(tfm));
+@@ -1808,13 +1802,6 @@ static void common_nonsnoop_hash_unmap(s
+ 	if (from_talitos_ptr_len(&desc->ptr[1], is_sec1))
+ 		unmap_single_talitos_ptr(dev, &desc->ptr[1],
+ 					 DMA_TO_DEVICE);
+-	else if (desc->next_desc)
+-		unmap_single_talitos_ptr(dev, &desc2->ptr[1],
+-					 DMA_TO_DEVICE);
+-
+-	if (is_sec1 && req_ctx->nbuf)
+-		unmap_single_talitos_ptr(dev, &desc->ptr[3],
+-					 DMA_TO_DEVICE);
+ 
+ 	if (edesc->dma_len)
+ 		dma_unmap_single(dev, edesc->dma_link_tbl, edesc->dma_len,
+@@ -1922,9 +1909,6 @@ static int common_nonsnoop_hash(struct t
+ 		to_talitos_ptr(&desc->ptr[2], ctx->dma_key, ctx->keylen,
+ 			       is_sec1);
+ 
+-	if (is_sec1 && req_ctx->nbuf)
+-		length -= req_ctx->nbuf;
+-
+ 	sg_count = edesc->src_nents ?: 1;
+ 	if (is_sec1 && sg_count > 1)
+ 		sg_copy_to_buffer(req_ctx->psrc, sg_count, edesc->buf, length);
+@@ -1934,16 +1918,10 @@ static int common_nonsnoop_hash(struct t
+ 	/*
+ 	 * data in
+ 	 */
+-	if (is_sec1 && req_ctx->nbuf) {
+-		map_single_talitos_ptr(dev, &desc->ptr[3], req_ctx->nbuf,
+-				       req_ctx->buf[req_ctx->buf_idx],
+-				       DMA_TO_DEVICE);
+-	} else {
+-		sg_count = talitos_sg_map(dev, req_ctx->psrc, length, edesc,
+-					  &desc->ptr[3], sg_count, 0, 0);
+-		if (sg_count > 1)
+-			sync_needed = true;
+-	}
++	sg_count = talitos_sg_map(dev, req_ctx->psrc, length, edesc,
++					&desc->ptr[3], sg_count, 0, 0);
++	if (sg_count > 1)
++		sync_needed = true;
+ 
+ 	/* fifth DWORD empty */
+ 
+@@ -1963,49 +1941,6 @@ static int common_nonsnoop_hash(struct t
+ 	if (is_sec1 && from_talitos_ptr_len(&desc->ptr[3], true) == 0)
+ 		talitos_handle_buggy_hash(ctx, edesc, &desc->ptr[3]);
+ 
+-	if (is_sec1 && req_ctx->nbuf && length) {
+-		struct talitos_edesc *edesc2;
+-		struct talitos_desc *desc2;
+-
+-		edesc2 = kzalloc(sizeof(*edesc2),
+-				 areq->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
+-					 GFP_KERNEL :
+-					 GFP_ATOMIC);
+-		if (!edesc2) {
+-			ret = -ENOMEM;
+-			goto err;
+-		}
+-		edesc->next_desc = edesc2;
+-
+-		desc2 = &edesc2->desc;
+-
+-		desc2->hdr = desc->hdr;
+-		desc2->hdr &= ~DESC_HDR_MODE0_MDEU_INIT;
+-		desc->hdr &= ~DESC_HDR_MODE0_MDEU_PAD;
+-		desc->hdr |= DESC_HDR_MODE0_MDEU_CONT;
+-		desc->hdr &= ~DESC_HDR_DONE_NOTIFY;
+-
+-		if (desc->ptr[1].ptr)
+-			copy_talitos_ptr(&desc2->ptr[1], &desc->ptr[1],
+-					 is_sec1);
+-		else
+-			map_single_talitos_ptr_nosync(dev, &desc2->ptr[1],
+-						      req_ctx->hw_context_size,
+-						      req_ctx->hw_context,
+-						      DMA_TO_DEVICE);
+-		copy_talitos_ptr(&desc2->ptr[2], &desc->ptr[2], is_sec1);
+-		sg_count = talitos_sg_map(dev, req_ctx->psrc, length, edesc,
+-					  &desc2->ptr[3], sg_count, 0, 0);
+-		if (sg_count > 1)
+-			sync_needed = true;
+-		copy_talitos_ptr(&desc2->ptr[5], &desc->ptr[5], is_sec1);
+-		if (req_ctx->last_desc)
+-			map_single_talitos_ptr_nosync(dev, &desc->ptr[5],
+-						      req_ctx->hw_context_size,
+-						      req_ctx->hw_context,
+-						      DMA_FROM_DEVICE);
+-	}
+-
+ 	if (sync_needed)
+ 		dma_sync_single_for_device(dev, edesc->dma_link_tbl,
+ 					   edesc->dma_len, DMA_BIDIRECTIONAL);
+@@ -2028,11 +1963,6 @@ static struct talitos_edesc *ahash_edesc
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
+ 	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
+-	struct talitos_private *priv = dev_get_drvdata(ctx->dev);
+-	bool is_sec1 = has_ftr_sec1(priv);
+-
+-	if (is_sec1)
+-		nbytes -= req_ctx->nbuf;
+ 
+ 	return talitos_edesc_alloc(ctx->dev, req_ctx->psrc, NULL, NULL, 0,
+ 				   nbytes, 0, 0, 0, areq->base.flags, false);
+@@ -2051,8 +1981,6 @@ static int ahash_process_req_one(struct
+ 	unsigned int nsg;
+ 	int nents;
+ 	struct device *dev = ctx->dev;
+-	struct talitos_private *priv = dev_get_drvdata(dev);
+-	bool is_sec1 = has_ftr_sec1(priv);
+ 	u8 *ctx_buf = req_ctx->buf[req_ctx->buf_idx];
+ 
+ 	if (!req_ctx->last_desc && (nbytes + req_ctx->nbuf <= blocksize)) {
+@@ -2084,30 +2012,13 @@ static int ahash_process_req_one(struct
+ 	}
+ 
+ 	/* Chain in any previously buffered data */
+-	if (!is_sec1 && req_ctx->nbuf) {
++	if (req_ctx->nbuf) {
+ 		nsg = (req_ctx->nbuf < nbytes_to_hash) ? 2 : 1;
+ 		sg_init_table(req_ctx->bufsl, nsg);
+ 		sg_set_buf(req_ctx->bufsl, ctx_buf, req_ctx->nbuf);
+ 		if (nsg > 1)
+ 			sg_chain(req_ctx->bufsl, 2, req_ctx->request_sl);
+ 		req_ctx->psrc = req_ctx->bufsl;
+-	} else if (is_sec1 && req_ctx->nbuf && req_ctx->nbuf < blocksize) {
+-		int offset;
+-
+-		if (nbytes_to_hash > blocksize)
+-			offset = blocksize - req_ctx->nbuf;
+-		else
+-			offset = nbytes_to_hash - req_ctx->nbuf;
+-		nents = sg_nents_for_len(req_ctx->request_sl, offset);
+-		if (nents < 0) {
+-			dev_err(dev, "Invalid number of src SG.\n");
+-			return nents;
+-		}
+-		sg_copy_to_buffer(req_ctx->request_sl, nents,
+-				  ctx_buf + req_ctx->nbuf, offset);
+-		req_ctx->nbuf += offset;
+-		req_ctx->psrc = scatterwalk_ffwd(req_ctx->bufsl, req_ctx->request_sl,
+-						 offset);
+ 	} else
+ 		req_ctx->psrc = req_ctx->request_sl;
  
 
 
