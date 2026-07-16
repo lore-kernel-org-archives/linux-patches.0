@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F2B3FE370;
-	Thu, 16 Jul 2026 13:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BF23FD121;
+	Thu, 16 Jul 2026 13:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209473; cv=none; b=sbXAvwu0oC7lxS4cQxkk06Q41e/QNj6aJRKrobIVAzCKtwOFLDS78EEPAUT5dKPRbJLEpvaLejur6f+aRxOB5PInB3GRsmALXB3LeK7LzQ4iK6V3OMJusi9F5kQCMhJNQMJnt6kPn+XGsubBKNO/Ul3Wdqex7I7Z/d7Dhv60ppA=
+	t=1784209476; cv=none; b=hxYS2cpWqGLBiqCIHycNlshcVwQdnm/mKu7/2/XPesEy9W9gzLA1PVdVIitqlvF0gZqzMpEFL46Qd9e6SVYV49Y950rG2IY1rDdvQUd+8pff+QAekU5MnlvdCOUxKI82S4oXveVPmuLfnx/6r1r2HDU3+gwdA1favJdz5ImYEec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209473; c=relaxed/simple;
-	bh=1t3LGiguFsB8SmHtYPPk3CKm0ifakIDVG3aPdci5Hto=;
+	s=arc-20240116; t=1784209476; c=relaxed/simple;
+	bh=NVFzsd3v4jgJ3K83/vzngt9NU4WklnBxl5D1ESJUQQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9A5PCSTbhMxl3Z7s4IFHErMPwKjtydqSJd5PNa/WFUUWtbL8ZV56LJB1uYBK693j7WfEn01MK9uXbdsN44p0iKlbCpZ8hTEKt2L5VnqtsU1P+akcsyITJwa66RDTfsuKtLMvgxpwG98d0W/+MZQvHhY/+aOqFfjcqYuTQO/ros=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1EBgSyH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FO0WhzlpVNxX81zOk+3Dn6M2sFzeSQCS2V/Vvhzm2D22GAii6v1mf6JRPx+v/8BYZ71mkA+HByD3IKFI7Y3PQh+Wc4nXD+27YPdeV6nwvLQBXiohyIJvy9C+PuLR8y4ghOCAyYlCtCpakjSDeYlFGCxxqq4XffF/4XH+lE9NgFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxS7GO1H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1EBgSyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1EA1F000E9;
-	Thu, 16 Jul 2026 13:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxS7GO1H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474531F00A3F;
+	Thu, 16 Jul 2026 13:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209471;
-	bh=FVsqoHTfXkMFLuenF7C1LNhsFcuPIzuuLS7czQb2hRU=;
+	s=korg; t=1784209473;
+	bh=r8mJB6lVl87gfF8lxNLk7NjMLVkzFWb6SOPaZBwVFnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y1EBgSyHUs2Q8U8Wy9lpBuKjyXZ+uifjWqMUbngXkH/VD5XtfK4nevSvDO9MdMKI9
-	 BxfqbvB68vk2MfAjR8ugPMrziBwXHCzxN8IaYQlFOcLKm38Jyb6UoS3buCq4rVrVbB
-	 xUg8WeqVUPF2HmdkpbrsTWwbcdU/XwpbiQOYCyns=
+	b=RxS7GO1H7/qBOL0+Og/XERSwvQIhezm1UdiPZAc7JvVG7rrvlPa+QFswH466MDSPd
+	 826AEtaC8dgNthdEyn6HXKL+twKLwFKqTLK0maOZ4lvQPNeM4OHUCKvqr0hijGc11/
+	 ovICrMXlco8ebKVZ8cvCKRsbkFEXcZRU/uyA3DjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratham Gupta <pratham36gupta@gmail.com>,
+	Mina Almasry <almasrymina@google.com>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 197/518] netfilter: ctnetlink: use nf_ct_exp_net() in expectation dump
-Date: Thu, 16 Jul 2026 15:27:45 +0200
-Message-ID: <20260716133052.137410001@linuxfoundation.org>
+Subject: [PATCH 7.1 198/518] netfilter: handle unreadable frags
+Date: Thu, 16 Jul 2026 15:27:46 +0200
+Message-ID: <20260716133052.158447136@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,40 +50,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratham Gupta <pratham36gupta@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit a7f57320bbbc67e347bf5fff4b4a9bab980d5956 upstream.
+commit da5b58478a9c1b85608c9e40a3b8432d071b409e upstream.
 
-Commit 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
-introduced exp->net so RCU-only expectation paths no longer need to
-dereference exp->master for netns lookups.
+sashiko reports:
+ When an skb with unreadable fragments (such as from devmem TCP, where
+ skb_frags_readable(skb) returns false) is processed by the u32 module,
+ skb_copy_bits() will safely return a negative error code [..]
 
-Commit 3db5647984de ("netfilter: nf_conntrack_expect: skip expectations in other netns via proc")
-updated the proc path accordingly, but ctnetlink_exp_dump_table() still
-compares against nf_ct_net(exp->master).
+xt_u32: bail out with hotdrop in this case.
+gather_frags: return -1, just as if we had no fragment header.
+nfnetlink_queue: restrict to the linear part.
+nfnetlink_log: restrict to the linear part.
 
-Use nf_ct_exp_net(exp) here as well so the netlink dump path matches
-the rest of the March 2026 expectation netns/RCU cleanup.
+v2:
+ - skb_zerocopy helpers don't copy readable flag, i.e. nfnetlink_queue
+ is broken too
+ xt_u32 shouldn't return true if hotdrop was set.
 
-Fixes: 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
+Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pratham Gupta <pratham36gupta@gmail.com>
+Acked-by: Mina Almasry <almasrymina@google.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/netfilter/nf_conntrack_reasm.c |    2 +-
+ net/netfilter/nfnetlink_log.c           |   26 +++++++++++++++++---------
+ net/netfilter/nfnetlink_queue.c         |   16 ++++++++++++----
+ net/netfilter/xt_u32.c                  |   16 +++++++++++-----
+ 4 files changed, 41 insertions(+), 19 deletions(-)
 
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3173,7 +3173,7 @@ restart:
- 			if (l3proto && exp->tuple.src.l3num != l3proto)
- 				continue;
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -418,7 +418,7 @@ find_prev_fhdr(struct sk_buff *skb, u8 *
+ 			return -1;
+ 		}
+ 		if (skb_copy_bits(skb, start, &hdr, sizeof(hdr)))
+-			BUG();
++			return -1;
+ 		if (nexthdr == NEXTHDR_AUTH)
+ 			hdrlen = ipv6_authlen(&hdr);
+ 		else
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -676,7 +676,7 @@ __build_packet_message(struct nfnl_log_n
+ 			goto nla_put_failure;
  
--			if (!net_eq(nf_ct_net(exp->master), net))
-+			if (!net_eq(nf_ct_exp_net(exp), net))
- 				continue;
+ 		if (skb_copy_bits(skb, 0, nla_data(nla), data_len))
+-			BUG();
++			goto nla_put_failure;
+ 	}
  
- 			if (cb->args[1]) {
+ 	nlh->nlmsg_len = inst->skb->tail - old_tail;
+@@ -698,6 +698,21 @@ static const struct nf_loginfo default_l
+ 	},
+ };
+ 
++static unsigned int nfulnl_get_copy_len(const struct nf_loginfo *li,
++					const struct sk_buff *skb,
++					unsigned int copy_len)
++{
++	unsigned int len = skb->len;
++
++	if ((li->u.ulog.flags & NF_LOG_F_COPY_LEN) &&
++	    li->u.ulog.copy_len < copy_len)
++		copy_len = li->u.ulog.copy_len;
++	if (!skb_frags_readable(skb))
++		len = skb_headlen(skb);
++
++	return min(len, copy_len);
++}
++
+ /* log handler for internal netfilter logging api */
+ static void
+ nfulnl_log_packet(struct net *net,
+@@ -790,14 +805,7 @@ nfulnl_log_packet(struct net *net,
+ 		break;
+ 
+ 	case NFULNL_COPY_PACKET:
+-		data_len = inst->copy_range;
+-		if ((li->u.ulog.flags & NF_LOG_F_COPY_LEN) &&
+-		    (li->u.ulog.copy_len < data_len))
+-			data_len = li->u.ulog.copy_len;
+-
+-		if (data_len > skb->len)
+-			data_len = skb->len;
+-
++		data_len = nfulnl_get_copy_len(li, skb, inst->copy_range);
+ 		size += nla_total_size(data_len);
+ 		break;
+ 
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -690,6 +690,17 @@ static int nfqnl_put_master_ifindex(stru
+ }
+ #endif
+ 
++static unsigned int nfqnl_get_data_len(const struct sk_buff *entskb,
++				       unsigned int copy_range)
++{
++	unsigned int data_len = entskb->len;
++
++	if (!skb_frags_readable(entskb))
++		data_len = skb_headlen(entskb);
++
++	return min(data_len, copy_range);
++}
++
+ static struct sk_buff *
+ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
+ 			   struct nf_queue_entry *entry,
+@@ -755,10 +766,7 @@ nfqnl_build_packet_message(struct net *n
+ 		    nf_queue_checksum_help(entskb))
+ 			return NULL;
+ 
+-		data_len = READ_ONCE(queue->copy_range);
+-		if (data_len > entskb->len)
+-			data_len = entskb->len;
+-
++		data_len = nfqnl_get_data_len(entskb, READ_ONCE(queue->copy_range));
+ 		hlen = skb_zerocopy_headlen(entskb);
+ 		hlen = min_t(unsigned int, hlen, data_len);
+ 		size += sizeof(struct nlattr) + hlen;
+--- a/net/netfilter/xt_u32.c
++++ b/net/netfilter/xt_u32.c
+@@ -14,8 +14,8 @@
+ #include <linux/netfilter/x_tables.h>
+ #include <linux/netfilter/xt_u32.h>
+ 
+-static bool u32_match_it(const struct xt_u32 *data,
+-			 const struct sk_buff *skb)
++static int u32_match_it(const struct xt_u32 *data,
++			const struct sk_buff *skb)
+ {
+ 	const struct xt_u32_test *ct;
+ 	unsigned int testind;
+@@ -40,7 +40,8 @@ static bool u32_match_it(const struct xt
+ 			return false;
+ 
+ 		if (skb_copy_bits(skb, pos, &n, sizeof(n)) < 0)
+-			BUG();
++			return -1;
++
+ 		val   = ntohl(n);
+ 		nnums = ct->nnums;
+ 
+@@ -68,7 +69,7 @@ static bool u32_match_it(const struct xt
+ 
+ 				if (skb_copy_bits(skb, at + pos, &n,
+ 						    sizeof(n)) < 0)
+-					BUG();
++					return -1;
+ 				val = ntohl(n);
+ 				break;
+ 			}
+@@ -90,9 +91,14 @@ static bool u32_match_it(const struct xt
+ static bool u32_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ {
+ 	const struct xt_u32 *data = par->matchinfo;
+-	bool ret;
++	int ret;
+ 
+ 	ret = u32_match_it(data, skb);
++	if (ret < 0) {
++		par->hotdrop = true;
++		return false;
++	}
++
+ 	return ret ^ data->invert;
+ }
+ 
 
 
