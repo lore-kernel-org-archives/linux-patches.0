@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708D231E85C;
-	Thu, 16 Jul 2026 13:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE2822301;
+	Thu, 16 Jul 2026 13:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210241; cv=none; b=UEfaQOjxjkdl5kn1DQS5hJ2NmJuD+iCtROou8C1QnGWPfYgc+FCCZxmCAUqbnJ6e8TYESuQonsInoEBQDuW1p76vxJAsxyVVuGt3rLfnv62t0wlvp7cvOp9+FrsDIf5q6XawNRI+jQOg5zKE1aT89wKY7xP4EQMKsgTPYi3Egfs=
+	t=1784210244; cv=none; b=jW8pZLEsEsKAgZIEoKFeoq0YzMoao9/roXCPDNetuK8lGGc8IyKH6+oUm/bWDoS1HIax+Bp5VBTuTy2FknrNuPru2gAst6DCZMO5uA8wddTWMbzNWpyOqMAqru39xr69tN5Qga04EoeluIE8AVBeXyYSK5JZx5dRHm1+CC4mRzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210241; c=relaxed/simple;
-	bh=0ReYwNaEXEznxjLZHP+AcJF082ptHzxR9TXw5FZRJPc=;
+	s=arc-20240116; t=1784210244; c=relaxed/simple;
+	bh=W0QRMQGXBniCRTLBcywpeJ9FdH0kazi2jC9M9tc+oFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4NixfcN489xHAyE85dKjdfQnMaSNIW72/19CEO+I6t63JfiIIkypmu6DARXac4sIXUmGivhVO2gjE1oc9fVWc4roE32BuvNiBVKIW3WoT9Na8mP/et2NwJCx6ytjJ/x9tQQFoe4NOqVkvMd17OMQzhG6uC85v4VIdTx2ZqJtJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFbzPVJw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EFEcmxMUm3p2RoSjSmu2kcBsiKwbE+urtRbdE5dIoiXxAk1IRyjsUEtWlaaBrfDDs3ThrVho1DktloRPbNgVoQcd+Jwd5eFAmZ2M0qz4faCF/nAGT2NLibgHMyS3KMSQzsL35WVWfDUYJFdolQVSsrYUAI8WvXcVvc/7603Rj+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWfmWlPn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFbzPVJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02521F000E9;
-	Thu, 16 Jul 2026 13:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWfmWlPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727EB1F000E9;
+	Thu, 16 Jul 2026 13:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210240;
-	bh=PkfavtIUXml3Og6M6cxGXHYMTzTiQT8HKdgVRJu1XTg=;
+	s=korg; t=1784210242;
+	bh=T+2WfNMQjbBkJtvSM40UAUnbp/kkFsXvkg1m28txXrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QFbzPVJw27ye8PbXpVe1INIuIGrp5QmQq0knwlzc+wyWS26rxDclhlVRj6kS9wPqZ
-	 RcxQ/+CWRHcXhdAWMdEzQJgZfEb9sXU7T0phoa7qUqFwySGfMOcz5J1nH2fUBGB3K+
-	 O3xSdwZ1keSBMSLqR9wGVriHgkXqjLzlj+n3D4OA=
+	b=HWfmWlPn4uefEvyQDItbPZkmTL5nj1QZK39HW4jejIvt6Y849BBIxCQANM0fDlh03
+	 2u6KDxONbsVbJRSvDNXO3TWIFzxmIDArS1ZabMNEOvTWd4k6Cmw1VfQRX0KD6VPyOF
+	 q05/WJP0dzSjXmvq/Xzw9GcOoeboOMZMfzVgve3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 489/518] Input: mms114 - reject an oversized device packet size
-Date: Thu, 16 Jul 2026 15:32:37 +0200
-Message-ID: <20260716133058.545527033@linuxfoundation.org>
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 7.1 448/518] selftests/landlock: Filter dealloc records in audit_count_records()
+Date: Thu, 16 Jul 2026 15:31:56 +0200
+Message-ID: <20260716133057.645448959@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,68 +45,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit 66725039f7090afe14c31bd259e2059a68f04023 upstream.
+commit 26679fad81a471428707d2dd7b0418204c52b7e4 upstream.
 
-mms114_interrupt() reads a packet of touch data from the device into a
-fixed-size on-stack buffer
+audit_count_records() counts both AUDIT_LANDLOCK_DOMAIN allocation and
+deallocation records in records.domain .  Domain deallocation is tied to
+asynchronous credential freeing via kworker threads
+(landlock_put_ruleset_deferred), so the dealloc record can arrive after
+the drain in audit_init() and after the preceding audit_match_record()
+call.  This causes flaky failures in tests that assert an exact
+records.domain count: a stale dealloc record from a previous test's
+domain inflates the count by one.
 
-	struct mms114_touch touch[MMS114_MAX_TOUCH];
+Observed on x86_64 under build configurations that delay the kworker
+firing the dealloc callback (e.g. coverage instrumentation): the
+audit_layout1 tests in fs_test.c intermittently saw records.domain == 2
+where 1 was expected.  The fix is in the shared helper, so those
+existing checks become robust without needing a fs_test.c edit.
 
-which holds MMS114_MAX_TOUCH (10) events of MMS114_EVENT_SIZE (8) bytes,
-i.e. 80 bytes. The length of the I2C read into it is taken verbatim from
-the device:
+Filter audit_count_records() with a regex to skip records containing
+deallocation status.  The remaining domain records (allocation, emitted
+synchronously during landlock_log_denial()) are deterministic.
+Deallocation records are already tested explicitly via
+matches_log_domain_deallocated() in audit_test.c, which uses its own
+domain-ID-based filtering and longer timeout.
 
-	packet_size = mms114_read_reg(data, MMS114_PACKET_SIZE);
-	if (packet_size <= 0)
-		goto out;
-	...
-	error = __mms114_read_reg(data, MMS114_INFORMATION, packet_size,
-			(u8 *)touch);
+With this filter in place, re-add the records.domain == 0 checks that
+were removed in commit 3647a4977fb7 ("selftests/landlock: Drain stale
+audit records on init") as a workaround for this race.
 
-packet_size is a single device register byte (0x0F) and the only check
-is the lower bound packet_size <= 0; it is never bounded against the
-size of touch[]. A malfunctioning, malicious or counterfeit controller
-(or an attacker tampering with the I2C bus) can report a packet_size of
-up to 255, so __mms114_read_reg() writes up to 175 bytes past the end of
-touch[] on the IRQ-thread stack: a stack out-of-bounds write that can
-overwrite the stack canary, saved registers and the return address.
-
-A well-formed device never reports more than the buffer holds, so reject
-an oversized packet and drop the report, consistent with the handler's
-other error paths, rather than reading past the buffer.
-
-Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Cc: Günther Noack <gnoack@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260612-b4-disp-dc4b8dc4-v1-1-d7cb0a828d92@proton.me
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Depends-on: 07c2572a8757 ("selftests/landlock: Skip stale records in audit_match_record()")
+Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
+Tested-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://patch.msgid.link/20260513105112.140137-1-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/mms114.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/landlock/audit.h                     |   39 +++++++----
+ tools/testing/selftests/landlock/audit_test.c                |    2 
+ tools/testing/selftests/landlock/ptrace_test.c               |    1 
+ tools/testing/selftests/landlock/scoped_abstract_unix_test.c |    1 
+ 4 files changed, 30 insertions(+), 13 deletions(-)
 
---- a/drivers/input/touchscreen/mms114.c
-+++ b/drivers/input/touchscreen/mms114.c
-@@ -228,6 +228,12 @@ static irqreturn_t mms114_interrupt(int
- 	if (packet_size <= 0)
- 		goto out;
+--- a/tools/testing/selftests/landlock/audit.h
++++ b/tools/testing/selftests/landlock/audit.h
+@@ -381,18 +381,24 @@ struct audit_records {
+ };
  
-+	if (packet_size > sizeof(touch)) {
-+		dev_err(&client->dev, "Invalid packet size %d (max %zu)\n",
-+			packet_size, sizeof(touch));
-+		goto out;
-+	}
+ /*
+- * WARNING: Do not assert records.domain == 0 without a preceding
+- * audit_match_record() call.  Domain deallocation records are emitted
+- * asynchronously from kworker threads and can arrive after the drain in
+- * audit_init(), corrupting the domain count.  A preceding audit_match_record()
+- * call consumes stale records while scanning, making the assertion safe in
+- * practice because stale deallocation records arrive before the expected access
+- * records.
++ * Counts remaining audit records by type, skipping domain deallocation records.
++ * Deallocation records are emitted asynchronously from kworker threads after a
++ * previous test's child has exited, so they can arrive after the drain in
++ * audit_init() and after the preceding audit_match_record() call.  Allocation
++ * records are emitted synchronously during landlock_log_denial() in the current
++ * test's syscall context, so only those are counted in records->domain.
+  */
+ static int audit_count_records(int audit_fd, struct audit_records *records)
+ {
++	static const char dealloc_pattern[] = REGEX_LANDLOCK_PREFIX
++		" status=deallocated ";
+ 	struct audit_message msg;
+-	int err;
++	regex_t dealloc_re;
++	int ret, err = 0;
 +
- 	/* MMS136 has slightly different event size */
- 	if (data->type == TYPE_MMS134S || data->type == TYPE_MMS136)
- 		event_size = MMS136_EVENT_SIZE;
++	ret = regcomp(&dealloc_re, dealloc_pattern, 0);
++	if (ret)
++		return -ENOMEM;
+ 
+ 	records->access = 0;
+ 	records->domain = 0;
+@@ -402,9 +408,8 @@ static int audit_count_records(int audit
+ 		err = audit_recv(audit_fd, &msg);
+ 		if (err) {
+ 			if (err == -EAGAIN)
+-				return 0;
+-			else
+-				return err;
++				err = 0;
++			break;
+ 		}
+ 
+ 		switch (msg.header.nlmsg_type) {
+@@ -412,12 +417,20 @@ static int audit_count_records(int audit
+ 			records->access++;
+ 			break;
+ 		case AUDIT_LANDLOCK_DOMAIN:
+-			records->domain++;
++			ret = regexec(&dealloc_re, msg.data, 0, NULL, 0);
++			if (ret == REG_NOMATCH) {
++				records->domain++;
++			} else if (ret != 0) {
++				err = -EIO;
++				goto out;
++			}
+ 			break;
+ 		}
+ 	} while (true);
+ 
+-	return 0;
++out:
++	regfree(&dealloc_re);
++	return err;
+ }
+ 
+ static int audit_init(void)
+--- a/tools/testing/selftests/landlock/audit_test.c
++++ b/tools/testing/selftests/landlock/audit_test.c
+@@ -730,6 +730,7 @@ TEST_F(audit_flags, signal)
+ 		} else {
+ 			EXPECT_EQ(1, records.access);
+ 		}
++		EXPECT_EQ(0, records.domain);
+ 
+ 		/* Updates filter rules to match the drop record. */
+ 		set_cap(_metadata, CAP_AUDIT_CONTROL);
+@@ -915,6 +916,7 @@ TEST_F(audit_exec, signal_and_open)
+ 	/* Tests that there was no denial until now. */
+ 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
+ 	EXPECT_EQ(0, records.access);
++	EXPECT_EQ(0, records.domain);
+ 
+ 	/*
+ 	 * Wait for the child to do a first denied action by layer1 and
+--- a/tools/testing/selftests/landlock/ptrace_test.c
++++ b/tools/testing/selftests/landlock/ptrace_test.c
+@@ -342,6 +342,7 @@ TEST_F(audit, trace)
+ 	/* Makes sure there is no superfluous logged records. */
+ 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
+ 	EXPECT_EQ(0, records.access);
++	EXPECT_EQ(0, records.domain);
+ 
+ 	yama_ptrace_scope = get_yama_ptrace_scope();
+ 	ASSERT_LE(0, yama_ptrace_scope);
+--- a/tools/testing/selftests/landlock/scoped_abstract_unix_test.c
++++ b/tools/testing/selftests/landlock/scoped_abstract_unix_test.c
+@@ -312,6 +312,7 @@ TEST_F(scoped_audit, connect_to_child)
+ 	/* Makes sure there is no superfluous logged records. */
+ 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
+ 	EXPECT_EQ(0, records.access);
++	EXPECT_EQ(0, records.domain);
+ 
+ 	ASSERT_EQ(0, pipe2(pipe_child, O_CLOEXEC));
+ 	ASSERT_EQ(0, pipe2(pipe_parent, O_CLOEXEC));
 
 
