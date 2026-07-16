@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1805742902A;
-	Thu, 16 Jul 2026 14:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56B6429CCC;
+	Thu, 16 Jul 2026 14:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211891; cv=none; b=rpphr+Vy9d1qLnVSiavWPpJJHluq8lEnS+2ZTGNxZJs0j0enKPMoQsH17+HICoSlHv8rSjHH0FoqASBp05wBPJTeCIqy4M+5mzoAnV91U4F0y1B9OqzL6U2fZk8Hn29w7R03Juv/9VPNLQrns6eyBYPFLTDrDI3+hrQWgD56qI4=
+	t=1784211893; cv=none; b=lRP/5C9RMisH75nCk5pLSHPVsJksNkBe6/fNXyYBbbSOmS7txdprO9KTGmvAGnYQ2RPTFCRHE4CYb/1Q8SEXsj3PbutXWXydba4UxB+f3f0SNiENUmaDx/k3LonuPVejzM6w1loKKvcRqGcuCB3KIsoZITgS3DWSblQ1L/hRa08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211891; c=relaxed/simple;
-	bh=qc5vPWaJ6jxUZrgofcEzEUMHNb3onhLjirt9mYNuy9s=;
+	s=arc-20240116; t=1784211893; c=relaxed/simple;
+	bh=n4RfWphk9BP3qDwMXCIkVCV4QXGbHuYzTPlbBf+9WN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7QwDYSXtbxurIf1M/BwpDhDDzv2NKlAV3B115RXKZT1EePpWYXL/pSicwWwp0P7yFy9FalDp56kGfyRZAhgx19x/H7DQ9/yGI0Lmz/YNFbE/G85jZJzOKUsUZkOwLBxrF5JBgCm0A4YT0AfHlhujuzSVZt73JTHXchwoqKvjZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcD5WlPd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l6TVQnucPKAalLde2XQVTvmCMdQqqvKMXR0ht4ByWCLkAOxTzsHrAKP2095nWvUCEEwSaFps2dylK4Q/ytJKFrmysyqRjyEGw/1fCjDDnFl0KouOhtV1Lv3VmGN9IE8/kxpsAhxMUNgbwW1YTbm3a9qlG2HXPb1fSGyquCwVI8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOu3C0oL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcD5WlPd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4B31F00AC4;
-	Thu, 16 Jul 2026 14:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOu3C0oL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1661E1F00AC4;
+	Thu, 16 Jul 2026 14:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211889;
-	bh=wSzI1kivuq0IZAYi7j4Q2RZFLLqvmO+bIcMfGHIc5Rg=;
+	s=korg; t=1784211892;
+	bh=JoxqbgyUW8mm8JGB5+lMEK6SwIhGxOiWDGndU+DsXBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wcD5WlPdzMnPTiQlyk/hxK5ZTBd/7XTON2flJkPUB/x6Uru6D/VNza5T+ZPuUzQVq
-	 4YRvVW5Q/cc34ZG8bKWLHm6f/kQWyLumZ2uGw1FrHQYxAQW2g69ueIcxjFzGmWY1ZO
-	 /9tKMFi+wgDx38pVfxzsXzK7lDJ9Ef+ze7b1/m9c=
+	b=vOu3C0oLzujfUm3af3pkcy9CQiFQ5zfQkxRGdqhdwvMBLCTn/LMK4m2x/bS7aS2ik
+	 92unbMgzGGKv5LaVkIyK4JfXrrOuaBRYbq88A9BetBT78lhbqAlewXrzbBycYMu7b4
+	 /+BNNDpSADIrVVDJw7aezN64xLBVBrDlXAHwHwfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.12 119/349] staging: media: atomisp: reduce load_primary_binaries() stack usage
-Date: Thu, 16 Jul 2026 15:30:53 +0200
-Message-ID: <20260716133036.022879527@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>
+Subject: [PATCH 6.12 120/349] staging: rtl8723bs: fix heap buffer overflow in rtw_cfg80211_set_wpa_ie()
+Date: Thu, 16 Jul 2026 15:30:54 +0200
+Message-ID: <20260716133036.044798274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,60 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit f4d51e55dd47ef467fbe37d8575e20eee41b092d upstream.
+commit 5a752a616e756844388a1a45404db9fc29fec655 upstream.
 
-The load_primary_binaries() function is overly complex and has som large
-variables on the stack, which can cause warnings depending on CONFIG_FRAME_WARN
-setting:
+supplicant_ie is a 256-byte array in struct security_priv. The WPA and
+WPA2 IE copy paths use:
 
-drivers/staging/media/atomisp/pci/sh_css.c: In function 'load_primary_binaries':
-drivers/staging/media/atomisp/pci/sh_css.c:5260:1: error: the frame size of 1560 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]
+    memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen + 2);
 
-Half of the stack usage is for the prim_descr[] array, but only one
-member of the array is used at any given time.
+where wpa_ielen is the raw IE length field (u8, 0-255). When a local user
+supplies a connect request via nl80211 with a crafted WPA IE of length 255,
+wpa_ielen + 2 equals 257, overflowing the 256-byte buffer by one byte into
+the adjacent last_mic_err_time field.
 
-Reduce the stack usage by turning the array into a single structure.
+rtw_parse_wpa_ie() does not prevent this: its length consistency check
+compares *(wpa_ie+1) against (u8)(wpa_ie_len-2), which is (u8)(255) == 255
+when wpa_ie_len = 257, so the check passes silently.
 
-Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Add explicit bounds checks for both the WPA and WPA2 paths before the
+memcpy, rejecting any IE whose total size (wpa_ielen + 2) exceeds the
+supplicant_ie buffer.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Link: https://patch.msgid.link/20260522004531.1038924-4-hossu.alexandru@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/atomisp/pci/sh_css.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/staging/media/atomisp/pci/sh_css.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css.c
-@@ -5057,7 +5057,6 @@ static int load_primary_binaries(
- 	struct ia_css_capture_settings *mycs;
- 	unsigned int i;
- 	bool need_extra_yuv_scaler = false;
--	struct ia_css_binary_descr prim_descr[MAX_NUM_PRIMARY_STAGES];
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -1455,6 +1455,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
  
- 	IA_CSS_ENTER_PRIVATE("");
- 	assert(pipe);
-@@ -5227,15 +5226,16 @@ static int load_primary_binaries(
+ 	pwpa = rtw_get_wpa_ie(buf, &wpa_ielen, ielen);
+ 	if (pwpa && wpa_ielen > 0) {
++		if (wpa_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		if (rtw_parse_wpa_ie(pwpa, wpa_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
+ 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
+ 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPAPSK;
+@@ -1464,6 +1468,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
  
- 	/* Primary */
- 	for (i = 0; i < mycs->num_primary_stage; i++) {
-+		struct ia_css_binary_descr prim_descr;
- 		struct ia_css_frame_info *local_vf_info = NULL;
- 
- 		if (pipe->enable_viewfinder[IA_CSS_PIPE_OUTPUT_STAGE_0] &&
- 		    (i == mycs->num_primary_stage - 1))
- 			local_vf_info = &vf_info;
--		ia_css_pipe_get_primary_binarydesc(pipe, &prim_descr[i],
-+		ia_css_pipe_get_primary_binarydesc(pipe, &prim_descr,
- 						   &prim_in_info, &prim_out_info,
- 						   local_vf_info, i);
--		err = ia_css_binary_find(&prim_descr[i], &mycs->primary_binary[i]);
-+		err = ia_css_binary_find(&prim_descr, &mycs->primary_binary[i]);
- 		if (err) {
- 			IA_CSS_LEAVE_ERR_PRIVATE(err);
- 			return err;
+ 	pwpa2 = rtw_get_wpa2_ie(buf, &wpa2_ielen, ielen);
+ 	if (pwpa2 && wpa2_ielen > 0) {
++		if (wpa2_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
+ 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
+ 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPA2PSK;
 
 
