@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3E342CB10;
-	Thu, 16 Jul 2026 14:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E499142D740;
+	Thu, 16 Jul 2026 14:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212001; cv=none; b=TobWX1Df6Qd6U0KIvXfFERYdBpIVNl6Eo8VOycbvOJ+NAa1nFyBzAejnUhZ1VzAQgD/lfLUkUkADA2lTVW5VePq4COrLYFTlyN3dCNJwCaHalqT4k8PBqhhtxIvUqq68iONUR/bkIy3elglAbk0AiHA/iE88Q8mLdeMuaF5FMq4=
+	t=1784212004; cv=none; b=UMGk55XHEEct5gexC0W39jfBKLG9o9mCfG+qDaoqgLosl9d3WHJUaw1kOjTjbNqZg5DoxYvAQkcxFUx75d2Ow0OO1F7fvAuEXyik1+rg1Gg2An1ptrgu6zsc0JLjFEr7ppZ4EQA07ph+WVLhDEV1HpE1pitu7AaHQebXjXkPZmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212001; c=relaxed/simple;
-	bh=pwu+UMr/HQnyKOLm8/rIyYyENR+ZfMbeDCXcE3IntTo=;
+	s=arc-20240116; t=1784212004; c=relaxed/simple;
+	bh=uTrsc55MHd9vLUCcopgih+DkArxs6c2lFwYaiO7/O80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCwx8ojahKiaFB0nSnJ4Eis80Ye6ZtG7giL/jGGsHuBvuAQ3mKt89VD3LSMH5YPvyfAA5z4HyyjufmYeE8ifAHYJ22RkQoeI4euRvmM5h6aildGIGWJxeF+HQEv/CuTMeXjG9zMhZoAVvxgiL9I/8dS0fV2Cq+WnuYkq7gijxn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XE/K08FC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s0QCjs3ypNFMdg8krsVxRX/c32+8Ld7djhxrGjtE30La/TcPIDMD27Ne0KJLO+ycjX83NY4zbKm+VGQv498t24M6TGyzbJ5TXDMVCED+MhrzNYmd+aYCzimL0CbN6Pij7cbFVQVPenFXi926qHYUYp/jOndSE08Fzbzkd+wWC0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jC1qSWPw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XE/K08FC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F8F1F00A3A;
-	Thu, 16 Jul 2026 14:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jC1qSWPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DC91F000E9;
+	Thu, 16 Jul 2026 14:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212000;
-	bh=aDTfOyZrLJ0y2i04alF3XZO8X20LAlQXCfWWo73RHgA=;
+	s=korg; t=1784212002;
+	bh=tcCIeOKlC6nNLpULaZQD8AibiikyGg715Qa5U6xXGtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XE/K08FCq1oeJ/hKo9dTrQ65LaVPREfFAzHGPgsXwllW05BCjw7lE/vp/sZbbQ4i6
-	 Tj4I/PWRU/m69fauYELqfd/Hmi5GVeKkNyEBc5ndPEVRbSjafYworNu1j5jsHZZe2k
-	 phs4fuk0njnUDfPk0txeywLxO1Oa1nxea6t/qUSY=
+	b=jC1qSWPwv3VbY0wixAzSw65xV/JCjT3c9qWuO8bSva3eA2wAUqC7v0yqi1tEF5WM9
+	 qtWkZGgOkpx0bJMgajs+u95831BV1FCSEqwm/RS8v9gxWaBGMPe7A4R1fK/WxTB82K
+	 k2YiVYO30AE6moVxSFXEbb5M0Q0yrstGAERNNqr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Dave Chinner <david@fromorbit.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 144/349] mm: shrinker: fix NULL pointer dereference in debugfs
-Date: Thu, 16 Jul 2026 15:31:18 +0200
-Message-ID: <20260716133036.592244840@linuxfoundation.org>
+	stable@kernel.org,
+	Dan Carpenter <error27@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 162/349] smb/client: Fix error code in smb2_aead_req_alloc()
+Date: Thu, 16 Jul 2026 15:31:36 +0200
+Message-ID: <20260716133037.006309316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,73 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Dan Carpenter <error27@gmail.com>
 
-commit e30453c61e185e914fde83c650e268067b140218 upstream.
+commit 61f28012e5650c619223decdb7970e0d3162e949 upstream.
 
-shrinker_debugfs_add() creates both "count" and "scan" debugfs files
-unconditionally.
+The "*num_sgs" variable is a u32 so "ERR_PTR(*num_sgs)" doesn't work.
+We would have to do something similar to the previous line where it's
+cast to int and then long.  However, it's simpler to store the return in
+an int ret variable.
 
-That assumes every shrinker implements both count_objects() and
-scan_objects(), which is not guaranteed.  For example, the xen-backend
-shrinker sets count_objects() but leaves scan_objects() NULL, so writing
-to its scan file calls through a NULL function pointer and panics the
-kernel:
+This bug would eventually result in a crash when dereference the invalid
+error pointer.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-RIP: 0010:0x0
-Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-Call Trace:
- <TASK>
- shrinker_debugfs_scan_write+0x12e/0x270
- full_proxy_write+0x5f/0x90
- vfs_write+0xde/0x420
- ? filp_flush+0x75/0x90
- ? filp_close+0x1d/0x30
- ? do_dup2+0xb8/0x120
- ksys_write+0x68/0xf0
- ? filp_flush+0x75/0x90
- do_syscall_64+0xb3/0x5b0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-The count path has the same issue in principle if a shrinker omits
-count_objects().
-
-To fix it, only create "count" and "scan" debugfs files when the
-corresponding callbacks are present.
-
-Link: https://lore.kernel.org/20260617090052.27325-1-qi.zheng@linux.dev
-Fixes: bbf535fd6f06 ("mm: shrinkers: add scan interface for shrinker debugfs")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
+Cc: stable@kernel.org
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker_debug.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/smb/client/smb2ops.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -182,10 +182,12 @@ int shrinker_debugfs_add(struct shrinker
- 	}
- 	shrinker->debugfs_entry = entry;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4253,11 +4253,13 @@ static void *smb2_aead_req_alloc(struct
+ 	unsigned int req_size = sizeof(**req) + crypto_aead_reqsize(tfm);
+ 	unsigned int iv_size = crypto_aead_ivsize(tfm);
+ 	unsigned int len;
++	int ret;
+ 	u8 *p;
  
--	debugfs_create_file("count", 0440, entry, shrinker,
--			    &shrinker_debugfs_count_fops);
--	debugfs_create_file("scan", 0220, entry, shrinker,
--			    &shrinker_debugfs_scan_fops);
-+	if (shrinker->count_objects)
-+		debugfs_create_file("count", 0440, entry, shrinker,
-+				    &shrinker_debugfs_count_fops);
-+	if (shrinker->scan_objects)
-+		debugfs_create_file("scan", 0220, entry, shrinker,
-+				    &shrinker_debugfs_scan_fops);
- 	return 0;
- }
+-	*num_sgs = cifs_get_num_sgs(rqst, num_rqst, sig);
+-	if (IS_ERR_VALUE((long)(int)*num_sgs))
+-		return ERR_PTR(*num_sgs);
++	ret = cifs_get_num_sgs(rqst, num_rqst, sig);
++	if (ret < 0)
++		return ERR_PTR(ret);
++	*num_sgs = ret;
  
+ 	len = iv_size;
+ 	len += crypto_aead_alignmask(tfm) & ~(crypto_tfm_ctx_alignment() - 1);
 
 
