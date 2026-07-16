@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2235413D69;
-	Thu, 16 Jul 2026 14:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7741A413D69;
+	Thu, 16 Jul 2026 14:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211303; cv=none; b=DMTJ1PY5AF/dJAMSiRA2AD88Hf6jc/rrZv4dLbXNwrN+NNj5OkF+1c6ZzXrXLpdlLM4m1FuPjL1lGNgLH7ijQQtjpKtanaLhRCRCCECRGS8QYY+CqSA/RX5rfYEm3LC0X+R4Gm2OL8+6w4oNCZpa/6vRT/C/F1R3rhINDDrw+gU=
+	t=1784211305; cv=none; b=TCPSlGBbJ2ngwIDSTjxLiTDkjnnXfkaXQub3K/FiUqgZ5oL+JXNgpFmCj40moW93faI6lqz+AxLiDSF8JlIMZWG00WgAvfOWjO/BrQNXiq0Yh86K1xx2qwtb3Fxe+S0odzwQhLgzpHDrr50hHK6bPVPNLsLVe2Br9BCvXUG/uus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211303; c=relaxed/simple;
-	bh=1nM0MbIin9U9EKM+OyUoMuzvuKZP8mf53RUje838IqQ=;
+	s=arc-20240116; t=1784211305; c=relaxed/simple;
+	bh=OMsUxEdn3R+mjV84yEHyr7aVTgIRgLnG5KdOWaADwPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgNz+b/mynhgiTmnB+oe/dqmLI1ZQyneoKWAZwLmuvihm6oU7yEBBJ2L8JxGF5la7I96bJMf7nr5lTHu7wnQaop+1TTqxUfjgU7/ma+RQ9gWxanXa8c9yOEGhuPdct8vxsLDUKCYE5wSVHpN1RgStFPBVcttGq+agp2EVTZJmPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ckq8/tIt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ioyfuYCWqn0FXiKHdq4nNrlU2g8zcujhHzifRhylZFtBpP9im3NUUh7cDBm515suYe8C+cilZ9i+M7QxqrasZ+Y95qcBWy21tWI+amyKaWLdfamlG9h95D2+pwJLQHIA5hfTTekq4T9IYZZ4wmyh0OzVgDOxr3nloLuuwUXg6Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8BkhLxy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ckq8/tIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB531F000E9;
-	Thu, 16 Jul 2026 14:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8BkhLxy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC90D1F000E9;
+	Thu, 16 Jul 2026 14:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211301;
-	bh=PcTjLBKNr1O0zDSznZENLhK47M8tyJf6lkU53jqYwT4=;
+	s=korg; t=1784211304;
+	bh=2keNvvzMn4wdZDyorZy8sP7yWSzvL/Ma4W7kTRwHruk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ckq8/tItIL9aKZ0bR7sx9L7BvoLt3IwkVdhy3Jz3QiDas7kI+W+akDB3Sd2BwuVpH
-	 9UyOvepPP8++FezOBNm6R3LHTcJrHLGqxt6APD+BJU0/yzJdKYci+TggI4FiHicp7n
-	 mR9T75ED/589GatSJVo+K0qBHQYG80JLY3Osmg3I=
+	b=g8BkhLxyRLhAHMrGkHHcV3YCSiO5j3eY4Wg2JZvQHR3D4zTsLordQWZyNEXDMYdfQ
+	 tbA33lW95Up+QV0PFWLyI26V6m4iLmy/8ZNw4QnexTbaKyIgxmYE+IGNy97NDi+ciy
+	 cRoL2QWnZ0k5lgCyqx3JYvnvW0+rSwnQmsK7Sdko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 323/480] rust_binder: introduce TransactionInfo
-Date: Thu, 16 Jul 2026 15:31:10 +0200
-Message-ID: <20260716133051.805692854@linuxfoundation.org>
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 370/480] crypto: qat - factor out AER reset helpers
+Date: Thu, 16 Jul 2026 15:31:57 +0200
+Message-ID: <20260716133052.811297255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,668 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 5326a18e3e640061ca4b65c1b732feaeace61c39 ]
+commit 56707afb92fee371c0f2e04332c9aa03cdb89793 upstream.
 
-Rust Binder exposes information about transactions that are sent in
-various ways: printing to the kernel log, tracepoints, files in
-binderfs, and the upcoming netlink support. Currently all these
-mechanisms use disparate ways of obtaining the same information, so
-let's introduce a single Info struct that collects all the required
-information in a single place, so that all of these different mechanisms
-can operate in a more uniform way.
+Move the shutdown and recovery sequences out of adf_error_detected()
+and adf_slot_reset() into reset_prepare() and reset_done() helpers.
 
-For now, the new info struct is only used to replace a few things:
-* The BinderTransactionDataSg struct that is passed as an argument to
-  several methods is removed as the information is moved into the new
-  info struct and passed down that way.
-* The oneway spam detection fields on Transaction and Allocation can be
-  removed, as the information can be returned to the caller via the
-  mutable info struct instead.
-But several other uses of the info struct are planned in follow-up
-patches.
+This makes the AER recovery path easier to follow and prepares the
+common reset flow for reuse by additional PCI reset callbacks without
+duplicating the logic.
 
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260306-transaction-info-v1-1-fda58fca558b@google.com
+No functional change intended.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[aliceryhl: explicitly impl Zeroable for UserPtr instead of using derive]
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder/allocation.rs  |   3 -
- drivers/android/binder/error.rs       |  10 +-
- drivers/android/binder/process.rs     |  15 +-
- drivers/android/binder/thread.rs      | 190 +++++++++++++++-----------
- drivers/android/binder/transaction.rs |  83 ++++++-----
- rust/kernel/uaccess.rs                |   3 +
- 6 files changed, 170 insertions(+), 134 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_aer.c |   86 ++++++++++++++++----------
+ 1 file changed, 53 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/android/binder/allocation.rs b/drivers/android/binder/allocation.rs
-index a9475e136d76fe..3aaeefef6bdd99 100644
---- a/drivers/android/binder/allocation.rs
-+++ b/drivers/android/binder/allocation.rs
-@@ -56,7 +56,6 @@ pub(crate) struct Allocation {
-     pub(crate) process: Arc<Process>,
-     allocation_info: Option<AllocationInfo>,
-     free_on_drop: bool,
--    pub(crate) oneway_spam_detected: bool,
-     #[allow(dead_code)]
-     pub(crate) debug_id: usize,
- }
-@@ -68,7 +67,6 @@ impl Allocation {
-         offset: usize,
-         size: usize,
-         ptr: usize,
--        oneway_spam_detected: bool,
-     ) -> Self {
-         Self {
-             process,
-@@ -76,7 +74,6 @@ impl Allocation {
-             size,
-             ptr,
-             debug_id,
--            oneway_spam_detected,
-             allocation_info: None,
-             free_on_drop: true,
-         }
-diff --git a/drivers/android/binder/error.rs b/drivers/android/binder/error.rs
-index 9921827267d0d6..c6a834071f8cef 100644
---- a/drivers/android/binder/error.rs
-+++ b/drivers/android/binder/error.rs
-@@ -12,7 +12,7 @@ pub(crate) type BinderResult<T = ()> = core::result::Result<T, BinderError>;
- /// errno.
- pub(crate) struct BinderError {
-     pub(crate) reply: u32,
--    source: Option<Error>,
-+    pub(crate) source: Option<Error>,
- }
+--- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
+@@ -17,27 +17,18 @@ struct adf_fatal_error_data {
+ static struct workqueue_struct *device_reset_wq;
+ static struct workqueue_struct *device_sriov_wq;
  
- impl BinderError {
-@@ -40,14 +40,6 @@ impl BinderError {
-     pub(crate) fn is_dead(&self) -> bool {
-         self.reply == BR_DEAD_REPLY
-     }
+-static pci_ers_result_t adf_error_detected(struct pci_dev *pdev,
+-					   pci_channel_state_t state)
++static pci_ers_result_t reset_prepare(struct pci_dev *pdev)
+ {
+ 	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
+ 
+-	dev_info(&pdev->dev, "Acceleration driver hardware error detected.\n");
+ 	if (!accel_dev) {
+ 		dev_err(&pdev->dev, "Can't find acceleration device\n");
+ 		return PCI_ERS_RESULT_DISCONNECT;
+ 	}
+ 
+-	if (state == pci_channel_io_perm_failure) {
+-		dev_err(&pdev->dev, "Can't recover from device error\n");
+-		return PCI_ERS_RESULT_DISCONNECT;
+-	}
 -
--    pub(crate) fn as_errno(&self) -> kernel::ffi::c_int {
--        self.source.unwrap_or(EINVAL).to_errno()
--    }
--
--    pub(crate) fn should_pr_warn(&self) -> bool {
--        self.source.is_some()
--    }
+ 	if (!adf_dev_started(accel_dev))
+ 		return PCI_ERS_RESULT_CAN_RECOVER;
+ 
+-	adf_error_notifier(accel_dev);
+-	adf_pf2vf_notify_fatal_error(accel_dev);
+ 	set_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 	if (accel_dev->hw_device->exit_arb) {
+ 		dev_dbg(&pdev->dev, "Disabling arbitration\n");
+@@ -49,6 +40,57 @@ static pci_ers_result_t adf_error_detect
+ 	return PCI_ERS_RESULT_NEED_RESET;
  }
  
- /// Convert an errno into a `BinderError` and store the errno used to construct it. The errno
-diff --git a/drivers/android/binder/process.rs b/drivers/android/binder/process.rs
-index 8ccc9ffbcd90e3..d33af8a043676c 100644
---- a/drivers/android/binder/process.rs
-+++ b/drivers/android/binder/process.rs
-@@ -47,6 +47,7 @@ use crate::{
-     range_alloc::{RangeAllocator, ReserveNew, ReserveNewArgs},
-     stats::BinderStats,
-     thread::{PushWorkRes, Thread},
-+    transaction::TransactionInfo,
-     BinderfsProcFile, DArc, DLArc, DTRWrap, DeliverToRead,
- };
- 
-@@ -981,16 +982,15 @@ impl Process {
-         self: &Arc<Self>,
-         debug_id: usize,
-         size: usize,
--        is_oneway: bool,
--        from_pid: i32,
-+        info: &mut TransactionInfo,
-     ) -> BinderResult<NewAllocation> {
-         use kernel::page::PAGE_SIZE;
- 
-         let mut reserve_new_args = ReserveNewArgs {
-             debug_id,
-             size,
--            is_oneway,
--            pid: from_pid,
-+            is_oneway: info.is_oneway(),
-+            pid: info.from_pid,
-             ..ReserveNewArgs::default()
-         };
- 
-@@ -1006,13 +1006,13 @@ impl Process {
-             reserve_new_args = alloc_request.make_alloc()?;
-         };
- 
-+        info.oneway_spam_suspect = new_alloc.oneway_spam_detected;
-         let res = Allocation::new(
-             self.clone(),
-             debug_id,
-             new_alloc.offset,
-             size,
-             addr + new_alloc.offset,
--            new_alloc.oneway_spam_detected,
-         );
- 
-         // This allocation will be marked as in use until the `Allocation` is used to free it.
-@@ -1044,7 +1044,7 @@ impl Process {
-         let mapping = inner.mapping.as_mut()?;
-         let offset = ptr.checked_sub(mapping.address)?;
-         let (size, debug_id, odata) = mapping.alloc.reserve_existing(offset).ok()?;
--        let mut alloc = Allocation::new(self.clone(), debug_id, offset, size, ptr, false);
-+        let mut alloc = Allocation::new(self.clone(), debug_id, offset, size, ptr);
-         if let Some(data) = odata {
-             alloc.set_info(data);
-         }
-@@ -1397,8 +1397,7 @@ impl Process {
-                 .alloc
-                 .take_for_each(|offset, size, debug_id, odata| {
-                     let ptr = offset + address;
--                    let mut alloc =
--                        Allocation::new(self.clone(), debug_id, offset, size, ptr, false);
-+                    let mut alloc = Allocation::new(self.clone(), debug_id, offset, size, ptr);
-                     if let Some(data) = odata {
-                         alloc.set_info(data);
-                     }
-diff --git a/drivers/android/binder/thread.rs b/drivers/android/binder/thread.rs
-index 6a2ddf0039c145..93aa98c2a173a0 100644
---- a/drivers/android/binder/thread.rs
-+++ b/drivers/android/binder/thread.rs
-@@ -19,7 +19,7 @@ use kernel::{
-     sync::{Arc, SpinLock},
-     task::Task,
-     types::ARef,
--    uaccess::UserSlice,
-+    uaccess::{UserPtr, UserSlice, UserSliceReader},
-     uapi,
- };
- 
-@@ -30,7 +30,7 @@ use crate::{
-     process::{GetWorkOrRegister, Process},
-     ptr_align,
-     stats::GLOBAL_STATS,
--    transaction::Transaction,
-+    transaction::{Transaction, TransactionInfo},
-     BinderReturnWriter, DArc, DLArc, DTRWrap, DeliverCode, DeliverToRead,
- };
- 
-@@ -948,13 +948,11 @@ impl Thread {
-     pub(crate) fn copy_transaction_data(
-         &self,
-         to_process: Arc<Process>,
--        tr: &BinderTransactionDataSg,
-+        info: &mut TransactionInfo,
-         debug_id: usize,
-         allow_fds: bool,
-         txn_security_ctx_offset: Option<&mut usize>,
-     ) -> BinderResult<NewAllocation> {
--        let trd = &tr.transaction_data;
--        let is_oneway = trd.flags & TF_ONE_WAY != 0;
-         let mut secctx = if let Some(offset) = txn_security_ctx_offset {
-             let secid = self.process.cred.get_secid();
-             let ctx = match security::SecurityCtx::from_secid(secid) {
-@@ -969,10 +967,10 @@ impl Thread {
-             None
-         };
- 
--        let data_size = trd.data_size.try_into().map_err(|_| EINVAL)?;
-+        let data_size = info.data_size;
-         let aligned_data_size = ptr_align(data_size).ok_or(EINVAL)?;
--        let offsets_size: usize = trd.offsets_size.try_into().map_err(|_| EINVAL)?;
--        let buffers_size: usize = tr.buffers_size.try_into().map_err(|_| EINVAL)?;
-+        let offsets_size = info.offsets_size;
-+        let buffers_size = info.buffers_size;
-         let aligned_secctx_size = match secctx.as_ref() {
-             Some((_offset, ctx)) => ptr_align(ctx.len()).ok_or(EINVAL)?,
-             None => 0,
-@@ -995,32 +993,25 @@ impl Thread {
-             size_of::<u64>(),
-         );
-         let secctx_off = aligned_data_size + offsets_size + buffers_size;
--        let mut alloc =
--            match to_process.buffer_alloc(debug_id, len, is_oneway, self.process.task.pid()) {
--                Ok(alloc) => alloc,
--                Err(err) => {
--                    pr_warn!(
--                        "Failed to allocate buffer. len:{}, is_oneway:{}",
--                        len,
--                        is_oneway
--                    );
--                    return Err(err);
--                }
--            };
-+        let mut alloc = match to_process.buffer_alloc(debug_id, len, info) {
-+            Ok(alloc) => alloc,
-+            Err(err) => {
-+                pr_warn!(
-+                    "Failed to allocate buffer. len:{}, is_oneway:{}",
-+                    len,
-+                    info.is_oneway(),
-+                );
-+                return Err(err);
-+            }
-+        };
- 
--        // SAFETY: This accesses a union field, but it's okay because the field's type is valid for
--        // all bit-patterns.
--        let trd_data_ptr = unsafe { &trd.data.ptr };
--        let mut buffer_reader =
--            UserSlice::new(UserPtr::from_addr(trd_data_ptr.buffer as _), data_size).reader();
-+        let mut buffer_reader = UserSlice::new(info.data_ptr, data_size).reader();
-         let mut end_of_previous_object = 0;
-         let mut sg_state = None;
- 
-         // Copy offsets if there are any.
-         if offsets_size > 0 {
--            let mut offsets_reader =
--                UserSlice::new(UserPtr::from_addr(trd_data_ptr.offsets as _), offsets_size)
--                    .reader();
-+            let mut offsets_reader = UserSlice::new(info.offsets_ptr, offsets_size).reader();
- 
-             let offsets_start = aligned_data_size;
-             let offsets_end = aligned_data_size + offsets_size;
-@@ -1194,37 +1185,92 @@ impl Thread {
-         }
-     }
- 
--    fn transaction<T>(self: &Arc<Self>, tr: &BinderTransactionDataSg, inner: T)
--    where
--        T: FnOnce(&Arc<Self>, &BinderTransactionDataSg) -> BinderResult,
--    {
--        if let Err(err) = inner(self, tr) {
--            if err.should_pr_warn() {
--                let mut ee = self.inner.lock().extended_error;
--                ee.command = err.reply;
--                ee.param = err.as_errno();
--                pr_warn!(
--                    "Transaction failed: {:?} my_pid:{}",
--                    err,
--                    self.process.pid_in_current_ns()
--                );
-+    // No inlining avoids allocating stack space for `BinderTransactionData` for the entire
-+    // duration of `transaction()`.
-+    #[inline(never)]
-+    fn read_transaction_info(
-+        &self,
-+        cmd: u32,
-+        reader: &mut UserSliceReader,
-+        info: &mut TransactionInfo,
-+    ) -> Result<()> {
-+        let td = match cmd {
-+            BC_TRANSACTION | BC_REPLY => {
-+                reader.read::<BinderTransactionData>()?.with_buffers_size(0)
-+            }
-+            BC_TRANSACTION_SG | BC_REPLY_SG => reader.read::<BinderTransactionDataSg>()?,
-+            _ => return Err(EINVAL),
-+        };
++static pci_ers_result_t reset_done(struct pci_dev *pdev)
++{
++	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
++	int res;
 +
-+        // SAFETY: Above `read` call initializes all bytes, so this union read is ok.
-+        let trd_data_ptr = unsafe { &td.transaction_data.data.ptr };
++	if (!accel_dev) {
++		dev_err(&pdev->dev, "Can't find acceleration device\n");
++		return PCI_ERS_RESULT_DISCONNECT;
++	}
 +
-+        info.is_reply = matches!(cmd, BC_REPLY | BC_REPLY_SG);
-+        info.from_pid = self.process.task.pid();
-+        info.from_tid = self.id;
-+        info.code = td.transaction_data.code;
-+        info.flags = td.transaction_data.flags;
-+        info.data_ptr = UserPtr::from_addr(trd_data_ptr.buffer as usize);
-+        info.data_size = td.transaction_data.data_size as usize;
-+        info.offsets_ptr = UserPtr::from_addr(trd_data_ptr.offsets as usize);
-+        info.offsets_size = td.transaction_data.offsets_size as usize;
-+        info.buffers_size = td.buffers_size as usize;
-+        // SAFETY: Above `read` call initializes all bytes, so this union read is ok.
-+        info.target_handle = unsafe { td.transaction_data.target.handle };
-+        Ok(())
-+    }
++	if (!adf_devmgr_in_reset(accel_dev))
++		goto reset_complete;
 +
-+    #[inline(never)]
-+    fn transaction(self: &Arc<Self>, cmd: u32, reader: &mut UserSliceReader) -> Result<()> {
-+        let mut info = TransactionInfo::zeroed();
-+        self.read_transaction_info(cmd, reader, &mut info)?;
++	pci_restore_state(pdev);
++	res = adf_dev_up(accel_dev, false);
++	if (res && res != -EALREADY)
++		return PCI_ERS_RESULT_DISCONNECT;
 +
-+        let ret = if info.is_reply {
-+            self.reply_inner(&mut info)
-+        } else if info.is_oneway() {
-+            self.oneway_transaction_inner(&mut info)
-+        } else {
-+            self.transaction_inner(&mut info)
-+        };
++	adf_reenable_sriov(accel_dev);
++	adf_pf2vf_notify_restarted(accel_dev);
++	adf_dev_restarted_notify(accel_dev);
++	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
 +
-+        if let Err(err) = ret {
-+            if err.reply != BR_TRANSACTION_COMPLETE {
-+                info.reply = err.reply;
-             }
- 
-             self.push_return_work(err.reply);
-+            if let Some(source) = &err.source {
-+                info.errno = source.to_errno();
-+                info.reply = err.reply;
++reset_complete:
++	dev_info(&pdev->dev, "Device reset completed successfully\n");
 +
-+                {
-+                    let mut ee = self.inner.lock().extended_error;
-+                    ee.command = err.reply;
-+                    ee.param = source.to_errno();
-+                }
-+
-+                pr_warn!(
-+                    "{}:{} transaction to {} failed: {source:?}",
-+                    info.from_pid,
-+                    info.from_tid,
-+                    info.to_pid
-+                );
-+            }
-         }
-+
-+        Ok(())
-     }
- 
--    fn transaction_inner(self: &Arc<Self>, tr: &BinderTransactionDataSg) -> BinderResult {
--        // SAFETY: Handle's type has no invalid bit patterns.
--        let handle = unsafe { tr.transaction_data.target.handle };
--        let node_ref = self.process.get_transaction_node(handle)?;
-+    fn transaction_inner(self: &Arc<Self>, info: &mut TransactionInfo) -> BinderResult {
-+        let node_ref = self.process.get_transaction_node(info.target_handle)?;
-+        info.to_pid = node_ref.node.owner.task.pid();
-         security::binder_transaction(&self.process.cred, &node_ref.node.owner.cred)?;
-         // TODO: We need to ensure that there isn't a pending transaction in the work queue. How
-         // could this happen?
-         let top = self.top_of_transaction_stack()?;
-         let list_completion = DTRWrap::arc_try_new(DeliverCode::new(BR_TRANSACTION_COMPLETE))?;
-         let completion = list_completion.clone_arc();
--        let transaction = Transaction::new(node_ref, top, self, tr)?;
-+        let transaction = Transaction::new(node_ref, top, self, info)?;
- 
-         // Check that the transaction stack hasn't changed while the lock was released, then update
-         // it with the new transaction.
-@@ -1240,7 +1286,7 @@ impl Thread {
-             inner.push_work_deferred(list_completion);
-         }
- 
--        if let Err(e) = transaction.submit() {
-+        if let Err(e) = transaction.submit(info) {
-             completion.skip();
-             // Define `transaction` first to drop it after `inner`.
-             let transaction;
-@@ -1253,18 +1299,21 @@ impl Thread {
-         }
-     }
- 
--    fn reply_inner(self: &Arc<Self>, tr: &BinderTransactionDataSg) -> BinderResult {
-+    fn reply_inner(self: &Arc<Self>, info: &mut TransactionInfo) -> BinderResult {
-         let orig = self.inner.lock().pop_transaction_to_reply(self)?;
-         if !orig.from.is_current_transaction(&orig) {
-             return Err(EINVAL.into());
-         }
- 
-+        info.to_tid = orig.from.id;
-+        info.to_pid = orig.from.process.task.pid();
-+
-         // We need to complete the transaction even if we cannot complete building the reply.
-         let out = (|| -> BinderResult<_> {
-             let completion = DTRWrap::arc_try_new(DeliverCode::new(BR_TRANSACTION_COMPLETE))?;
-             let process = orig.from.process.clone();
-             let allow_fds = orig.flags & TF_ACCEPT_FDS != 0;
--            let reply = Transaction::new_reply(self, process, tr, allow_fds)?;
-+            let reply = Transaction::new_reply(self, process, info, allow_fds)?;
-             self.inner.lock().push_work(completion);
-             orig.from.deliver_reply(Ok(reply), &orig);
-             Ok(())
-@@ -1285,16 +1334,12 @@ impl Thread {
-         out
-     }
- 
--    fn oneway_transaction_inner(self: &Arc<Self>, tr: &BinderTransactionDataSg) -> BinderResult {
--        // SAFETY: The `handle` field is valid for all possible byte values, so reading from the
--        // union is okay.
--        let handle = unsafe { tr.transaction_data.target.handle };
--        let node_ref = self.process.get_transaction_node(handle)?;
-+    fn oneway_transaction_inner(self: &Arc<Self>, info: &mut TransactionInfo) -> BinderResult {
-+        let node_ref = self.process.get_transaction_node(info.target_handle)?;
-+        info.to_pid = node_ref.node.owner.task.pid();
-         security::binder_transaction(&self.process.cred, &node_ref.node.owner.cred)?;
--        let transaction = Transaction::new(node_ref, None, self, tr)?;
--        let code = if self.process.is_oneway_spam_detection_enabled()
--            && transaction.oneway_spam_detected
--        {
-+        let transaction = Transaction::new(node_ref, None, self, info)?;
-+        let code = if self.process.is_oneway_spam_detection_enabled() && info.oneway_spam_suspect {
-             BR_ONEWAY_SPAM_SUSPECT
-         } else {
-             BR_TRANSACTION_COMPLETE
-@@ -1302,7 +1347,7 @@ impl Thread {
-         let list_completion = DTRWrap::arc_try_new(DeliverCode::new(code))?;
-         let completion = list_completion.clone_arc();
-         self.inner.lock().push_work(list_completion);
--        match transaction.submit() {
-+        match transaction.submit(info) {
-             Ok(()) => Ok(()),
-             Err(err) => {
-                 completion.skip();
-@@ -1323,29 +1368,8 @@ impl Thread {
-             GLOBAL_STATS.inc_bc(cmd);
-             self.process.stats.inc_bc(cmd);
-             match cmd {
--                BC_TRANSACTION => {
--                    let tr = reader.read::<BinderTransactionData>()?.with_buffers_size(0);
--                    if tr.transaction_data.flags & TF_ONE_WAY != 0 {
--                        self.transaction(&tr, Self::oneway_transaction_inner);
--                    } else {
--                        self.transaction(&tr, Self::transaction_inner);
--                    }
--                }
--                BC_TRANSACTION_SG => {
--                    let tr = reader.read::<BinderTransactionDataSg>()?;
--                    if tr.transaction_data.flags & TF_ONE_WAY != 0 {
--                        self.transaction(&tr, Self::oneway_transaction_inner);
--                    } else {
--                        self.transaction(&tr, Self::transaction_inner);
--                    }
--                }
--                BC_REPLY => {
--                    let tr = reader.read::<BinderTransactionData>()?.with_buffers_size(0);
--                    self.transaction(&tr, Self::reply_inner)
--                }
--                BC_REPLY_SG => {
--                    let tr = reader.read::<BinderTransactionDataSg>()?;
--                    self.transaction(&tr, Self::reply_inner)
-+                BC_TRANSACTION | BC_TRANSACTION_SG | BC_REPLY | BC_REPLY_SG => {
-+                    self.transaction(cmd, &mut reader)?;
-                 }
-                 BC_FREE_BUFFER => {
-                     let buffer = self.process.buffer_get(reader.read()?);
-diff --git a/drivers/android/binder/transaction.rs b/drivers/android/binder/transaction.rs
-index 50bd1cee0f1a36..733f452d8f49dd 100644
---- a/drivers/android/binder/transaction.rs
-+++ b/drivers/android/binder/transaction.rs
-@@ -8,7 +8,7 @@ use kernel::{
-     seq_file::SeqFile,
-     seq_print,
-     sync::{Arc, SpinLock},
--    task::Kuid,
-+    task::{Kuid, Pid},
-     time::{Instant, Monotonic},
-     types::ScopeGuard,
- };
-@@ -24,6 +24,33 @@ use crate::{
-     BinderReturnWriter, DArc, DLArc, DTRWrap, DeliverToRead,
- };
- 
-+#[derive(Zeroable)]
-+pub(crate) struct TransactionInfo {
-+    pub(crate) from_pid: Pid,
-+    pub(crate) from_tid: Pid,
-+    pub(crate) to_pid: Pid,
-+    pub(crate) to_tid: Pid,
-+    pub(crate) code: u32,
-+    pub(crate) flags: u32,
-+    pub(crate) data_ptr: UserPtr,
-+    pub(crate) data_size: usize,
-+    pub(crate) offsets_ptr: UserPtr,
-+    pub(crate) offsets_size: usize,
-+    pub(crate) buffers_size: usize,
-+    pub(crate) target_handle: u32,
-+    pub(crate) errno: i32,
-+    pub(crate) reply: u32,
-+    pub(crate) oneway_spam_suspect: bool,
-+    pub(crate) is_reply: bool,
++	return PCI_ERS_RESULT_RECOVERED;
 +}
 +
-+impl TransactionInfo {
-+    #[inline]
-+    pub(crate) fn is_oneway(&self) -> bool {
-+        self.flags & TF_ONE_WAY != 0
-+    }
++static pci_ers_result_t adf_error_detected(struct pci_dev *pdev,
++					   pci_channel_state_t state)
++{
++	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
++
++	dev_info(&pdev->dev, "Acceleration driver hardware error detected.\n");
++	if (!accel_dev) {
++		dev_err(&pdev->dev, "Can't find acceleration device\n");
++		return PCI_ERS_RESULT_DISCONNECT;
++	}
++
++	if (state == pci_channel_io_perm_failure) {
++		dev_err(&pdev->dev, "Can't recover from device error\n");
++		return PCI_ERS_RESULT_DISCONNECT;
++	}
++
++	adf_error_notifier(accel_dev);
++	adf_pf2vf_notify_fatal_error(accel_dev);
++
++	return reset_prepare(pdev);
 +}
 +
- #[pin_data(PinnedDrop)]
- pub(crate) struct Transaction {
-     pub(crate) debug_id: usize,
-@@ -41,7 +68,6 @@ pub(crate) struct Transaction {
-     data_address: usize,
-     sender_euid: Kuid,
-     txn_security_ctx_off: Option<usize>,
--    pub(crate) oneway_spam_detected: bool,
-     start_time: Instant<Monotonic>,
+ /* reset dev data */
+ struct adf_reset_dev_data {
+ 	int mode;
+@@ -199,29 +241,7 @@ static int adf_dev_aer_schedule_reset(st
+ 
+ static pci_ers_result_t adf_slot_reset(struct pci_dev *pdev)
+ {
+-	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
+-	int res = 0;
+-
+-	if (!accel_dev) {
+-		pr_err("QAT: Can't find acceleration device\n");
+-		return PCI_ERS_RESULT_DISCONNECT;
+-	}
+-
+-	if (!adf_devmgr_in_reset(accel_dev))
+-		goto reset_complete;
+-
+-	pci_restore_state(pdev);
+-	res = adf_dev_up(accel_dev, false);
+-	if (res && res != -EALREADY)
+-		return PCI_ERS_RESULT_DISCONNECT;
+-
+-	adf_reenable_sriov(accel_dev);
+-	adf_pf2vf_notify_restarted(accel_dev);
+-	adf_dev_restarted_notify(accel_dev);
+-	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+-
+-reset_complete:
+-	return PCI_ERS_RESULT_RECOVERED;
++	return reset_done(pdev);
  }
  
-@@ -54,17 +80,16 @@ impl Transaction {
-         node_ref: NodeRef,
-         from_parent: Option<DArc<Transaction>>,
-         from: &Arc<Thread>,
--        tr: &BinderTransactionDataSg,
-+        info: &mut TransactionInfo,
-     ) -> BinderResult<DLArc<Self>> {
-         let debug_id = super::next_debug_id();
--        let trd = &tr.transaction_data;
-         let allow_fds = node_ref.node.flags & FLAT_BINDER_FLAG_ACCEPTS_FDS != 0;
-         let txn_security_ctx = node_ref.node.flags & FLAT_BINDER_FLAG_TXN_SECURITY_CTX != 0;
-         let mut txn_security_ctx_off = if txn_security_ctx { Some(0) } else { None };
-         let to = node_ref.node.owner.clone();
-         let mut alloc = match from.copy_transaction_data(
-             to.clone(),
--            tr,
-+            info,
-             debug_id,
-             allow_fds,
-             txn_security_ctx_off.as_mut(),
-@@ -77,15 +102,14 @@ impl Transaction {
-                 return Err(err);
-             }
-         };
--        let oneway_spam_detected = alloc.oneway_spam_detected;
--        if trd.flags & TF_ONE_WAY != 0 {
-+        if info.is_oneway() {
-             if from_parent.is_some() {
-                 pr_warn!("Oneway transaction should not be in a transaction stack.");
-                 return Err(EINVAL.into());
-             }
-             alloc.set_info_oneway_node(node_ref.node.clone());
-         }
--        if trd.flags & TF_CLEAR_BUF != 0 {
-+        if info.flags & TF_CLEAR_BUF != 0 {
-             alloc.set_info_clear_on_drop();
-         }
-         let target_node = node_ref.node.clone();
-@@ -99,15 +123,14 @@ impl Transaction {
-             sender_euid: from.process.task.euid(),
-             from: from.clone(),
-             to,
--            code: trd.code,
--            flags: trd.flags,
--            data_size: trd.data_size as _,
--            offsets_size: trd.offsets_size as _,
-+            code: info.code,
-+            flags: info.flags,
-+            data_size: info.data_size,
-+            offsets_size: info.offsets_size,
-             data_address,
-             allocation <- kernel::new_spinlock!(Some(alloc.success()), "Transaction::new"),
-             is_outstanding: AtomicBool::new(false),
-             txn_security_ctx_off,
--            oneway_spam_detected,
-             start_time: Instant::now(),
-         }))?)
-     }
-@@ -115,21 +138,19 @@ impl Transaction {
-     pub(crate) fn new_reply(
-         from: &Arc<Thread>,
-         to: Arc<Process>,
--        tr: &BinderTransactionDataSg,
-+        info: &mut TransactionInfo,
-         allow_fds: bool,
-     ) -> BinderResult<DLArc<Self>> {
-         let debug_id = super::next_debug_id();
--        let trd = &tr.transaction_data;
--        let mut alloc = match from.copy_transaction_data(to.clone(), tr, debug_id, allow_fds, None)
--        {
--            Ok(alloc) => alloc,
--            Err(err) => {
--                pr_warn!("Failure in copy_transaction_data: {:?}", err);
--                return Err(err);
--            }
--        };
--        let oneway_spam_detected = alloc.oneway_spam_detected;
--        if trd.flags & TF_CLEAR_BUF != 0 {
-+        let mut alloc =
-+            match from.copy_transaction_data(to.clone(), info, debug_id, allow_fds, None) {
-+                Ok(alloc) => alloc,
-+                Err(err) => {
-+                    pr_warn!("Failure in copy_transaction_data: {:?}", err);
-+                    return Err(err);
-+                }
-+            };
-+        if info.flags & TF_CLEAR_BUF != 0 {
-             alloc.set_info_clear_on_drop();
-         }
-         Ok(DTRWrap::arc_pin_init(pin_init!(Transaction {
-@@ -139,15 +160,14 @@ impl Transaction {
-             sender_euid: from.process.task.euid(),
-             from: from.clone(),
-             to,
--            code: trd.code,
--            flags: trd.flags,
--            data_size: trd.data_size as _,
--            offsets_size: trd.offsets_size as _,
-+            code: info.code,
-+            flags: info.flags,
-+            data_size: info.data_size,
-+            offsets_size: info.offsets_size,
-             data_address: alloc.ptr,
-             allocation <- kernel::new_spinlock!(Some(alloc.success()), "Transaction::new"),
-             is_outstanding: AtomicBool::new(false),
-             txn_security_ctx_off: None,
--            oneway_spam_detected,
-             start_time: Instant::now(),
-         }))?)
-     }
-@@ -237,7 +257,7 @@ impl Transaction {
-     /// stack, otherwise uses the destination process.
-     ///
-     /// Not used for replies.
--    pub(crate) fn submit(self: DLArc<Self>) -> BinderResult {
-+    pub(crate) fn submit(self: DLArc<Self>, info: &mut TransactionInfo) -> BinderResult {
-         // Defined before `process_inner` so that the destructor runs after releasing the lock.
-         let _t_outdated;
-         let _oneway_node;
-@@ -295,6 +315,7 @@ impl Transaction {
-         }
- 
-         let res = if let Some(thread) = self.find_target_thread() {
-+            info.to_tid = thread.id;
-             match thread.push_work(self) {
-                 PushWorkRes::Ok => Ok(()),
-                 PushWorkRes::FailedDead(me) => Err((BinderError::new_dead(), me)),
-diff --git a/rust/kernel/uaccess.rs b/rust/kernel/uaccess.rs
-index a8fb4764185a1a..2035c2877a2b2f 100644
---- a/rust/kernel/uaccess.rs
-+++ b/rust/kernel/uaccess.rs
-@@ -21,6 +21,9 @@ use core::mem::{size_of, MaybeUninit};
- #[derive(Copy, Clone)]
- pub struct UserPtr(*mut c_void);
- 
-+// SAFETY: Null pointer is a valid value.
-+unsafe impl Zeroable for UserPtr {}
-+
- impl UserPtr {
-     /// Create a `UserPtr` from an integer representing the userspace address.
-     #[inline]
--- 
-2.53.0
-
+ static void adf_resume(struct pci_dev *pdev)
 
 
