@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A862FDC53;
-	Thu, 16 Jul 2026 14:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77A230AD05;
+	Thu, 16 Jul 2026 14:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211279; cv=none; b=PYs0MhJgOgJhKk+MZc1diRjHvTrSQ/i7pLEiYwyB22L449/m20XyOcd3qr9vWuN2+tla90rdxVDibklicliHmuz40OZBNT4RFBfKQQ/IcS2v18J0b+PEBJbXATW1PM4PK5/i6znO6fNCXwU23ayTjQqyKdjwS7reqCjZTvhK214=
+	t=1784211281; cv=none; b=SCexfTxkxjoomUsC0shQIsvT05h85vvFckCKYQFOd5Y5O7AUSUhrBq6mOzaKMzCaxfwCXsQgw/bfqG/i3w5BQSO6jbbCR9tsxPa9xMsmLHAsRknutng5iz8NCo7DAI+Wa2N9Sjbq3cLsbK3w5E4i8bhx3ICxYGd0hMA+A1T5uho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211279; c=relaxed/simple;
-	bh=AT7GJRmedARs7bx8jMA7EuEYpek6gg7scov+4ZagERo=;
+	s=arc-20240116; t=1784211281; c=relaxed/simple;
+	bh=9PKIltJC6tm/IttaQ6+UzW0R3gW/0p22tFG9Gx2wqe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MILPdbWrECicRp9qRvbEQk+0XZmhz/awBv/++51aI6EX8rQ7Xx3YilLtZt5MW75R94L2se72xQiVr0na48gE+2JxITkRQq0XumSISlPisK+Pfn+9vRCSqPRNa9sG8e3BWvamkrn6j2gzPtYh5ptzisNMcrPSd2eOswvxXFFh+T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoDn2nQv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A7D+ynYzDBCLRhLl8D8KV7VBlTkc8D5H7QeH+KWUtpGve88BSejOncOaNx7yiSzi+u33hsc/b06larpwK6wI3huP4WNPLTkbTPFe2Aoq91Chk1FdF2HnBvcBaQYb3a/HanQem3U/1DSdtf+TRFrfOCbxPS50Jox0axIdBDK23og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBs9iT0P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoDn2nQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4E31F000E9;
-	Thu, 16 Jul 2026 14:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBs9iT0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110F81F000E9;
+	Thu, 16 Jul 2026 14:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211277;
-	bh=BrrYMVC7gjhojONF6D6ZGHHN05U8MZrvoTg0QQM3zLM=;
+	s=korg; t=1784211280;
+	bh=IRQIQ2/j05RO3lY1RT/QFj9kJGnS2rSZYNktLr82dDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JoDn2nQvhjT422U+Ne7UEyv08OIUs4mKzZHSlnEDHgatdV/vG4ffuazGH9b2WNvMM
-	 oYjmj1WyTdYlWzbJw4hqg4h9gqvIx7lJ1tZUdehF8FsRGlKT+or9jLaS422zn4GGrS
-	 eqhMtHXy45c92sg9mSt2isuQC8sKwnZv4tXDo7WQ=
+	b=XBs9iT0PuEaVuD2JZdIHxGWNGwYI71JnxsrXPBijbGu/2J+RVdHhPQtN9azcZZcyL
+	 Qh1SJbxUhY3Ip8CLr8wzl36IQQHGb+VDfj4lssNRuo9ph4VqeERTu5Yczh/nG2sqUU
+	 0HdTlOliolyDEDrH3QvEIx8LxKdx99kHoDj3UsSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Damian Muszynski <damian.muszynski@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 365/480] crypto: qat - keep VFs enabled during reset
-Date: Thu, 16 Jul 2026 15:31:52 +0200
-Message-ID: <20260716133052.698120913@linuxfoundation.org>
+Subject: [PATCH 6.18 366/480] crypto: qat - notify fatal error before AER reset preparation
+Date: Thu, 16 Jul 2026 15:31:53 +0200
+Message-ID: <20260716133052.720825850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -54,28 +54,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Ahsan Atta <ahsan.atta@intel.com>
 
-commit 57518500053987672050dc2f7bf8a774d5d52fd9 upstream.
+commit 6931835f2fdd0cb9b1c7791748d7e67d0749056a upstream.
 
-When a reset is triggered via sysfs, the PCI core invokes the
-reset_prepare() callback while holding pci_dev_lock(), which includes
-the PCI configuration space access semaphore. If reset_prepare() calls
-adf_dev_down(), the call chain adf_dev_stop() -> adf_disable_sriov()
--> pci_disable_sriov() attempts to acquire the same semaphore,
-resulting in a deadlock.
+Send fatal error notifications to subsystems and VFs as soon as
+AER error detection starts, before entering the reset preparation
+shutdown sequence.
 
-Avoid this by skipping pci_disable_sriov() when ADF_STATUS_RESTARTING
-is set. During reset the PCI topology is preserved, so VF devices
-remain valid and enumerated across the reset. VF notification and the
-quiesce handshake via adf_pf2vf_notify_restarting() are still
-performed unconditionally so that VFs stop submitting work before the
-PF shuts down.
-
-Correspondingly, skip pci_enable_sriov() in adf_enable_sriov() when
-VFs are already present, since their PCI devices were preserved from
-before the restart.
-
-This is in preparation for adding reset_prepare() and reset_done()
-callbacks in adf_aer.c.
+This reduces notification latency and ensures peers are informed
+immediately on fatal detection, rather than after restart-state setup
+and arbitration teardown.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
@@ -84,36 +71,26 @@ Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_sriov.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/crypto/intel/qat/qat_common/adf_aer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_common/adf_sriov.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_sriov.c
-@@ -77,6 +77,10 @@ static int adf_enable_sriov(struct adf_a
- 	/* Enable VF to PF interrupts for all VFs */
- 	adf_enable_vf2pf_interrupts(accel_dev, BIT_ULL(totalvfs) - 1);
+--- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
+@@ -33,13 +33,13 @@ static pci_ers_result_t adf_error_detect
+ 		return PCI_ERS_RESULT_DISCONNECT;
+ 	}
  
-+	/* Do not enable SR-IOV if already enabled */
-+	if (pci_num_vf(pdev))
-+		return 0;
-+
- 	/*
- 	 * Due to the hardware design, when SR-IOV and the ring arbiter
- 	 * are enabled all the VFs supported in hardware must be enabled in
-@@ -247,7 +251,13 @@ void adf_disable_sriov(struct adf_accel_
++	adf_error_notifier(accel_dev);
++	adf_pf2vf_notify_fatal_error(accel_dev);
+ 	set_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 	if (accel_dev->hw_device->exit_arb) {
+ 		dev_dbg(&pdev->dev, "Disabling arbitration\n");
+ 		accel_dev->hw_device->exit_arb(accel_dev);
+ 	}
+-	adf_error_notifier(accel_dev);
+-	adf_pf2vf_notify_fatal_error(accel_dev);
+ 	adf_dev_restarting_notify(accel_dev);
+ 	adf_dev_down(accel_dev);
  
- 	adf_pf2vf_notify_restarting(accel_dev);
- 	adf_pf2vf_wait_for_restarting_complete(accel_dev);
--	pci_disable_sriov(accel_to_pci_dev(accel_dev));
-+	/*
-+	 * When the device is restarting, preserve VF PCI devices across
-+	 * the reset by skipping pci_disable_sriov(). VFs are notified to
-+	 * quiesce regardless so the PF can safely shut down.
-+	 */
-+	if (!test_bit(ADF_STATUS_RESTARTING, &accel_dev->status))
-+		pci_disable_sriov(accel_to_pci_dev(accel_dev));
- 
- 	/* Disable VF to PF interrupts */
- 	adf_disable_all_vf2pf_interrupts(accel_dev);
 
 
