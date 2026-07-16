@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A64C423EB5;
-	Thu, 16 Jul 2026 14:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698474248C3;
+	Thu, 16 Jul 2026 14:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211613; cv=none; b=P2wFFQPe1DmgqwRgsIbhvL1Wf2UV5mNwSIU4rpyL2LFy9ftzKmDtkX4lAmDYE8pMkJi7hBI4a1JMpP7lSzABJOKu/hO4pZYO+2K8t2QB+QG59QFKJpTnQ1IXjIwTdYf7qzw7npNGjSy0nugaESWIaJ1e0TZwvp3+yPnlMfar8sg=
+	t=1784211615; cv=none; b=fNlTQtZmtat3Xwino2wHZJQw8NyYUxQ5gh5VFSRo6NivgT2xshI+teDE9DbZxVanDlJYvnOHVnH7WYUkU2hwR5TFaTuZM5h/bENqOAa1bqLuN5goLZ5UzhokKAQQ7FIxC/3EVGbS98R8d9JQily6EThgTkSY4mC4xNGoxAbHeqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211613; c=relaxed/simple;
-	bh=0Jl0Blz4MbLEiKNWbHCcU4XeYuibURNjG7Tz3PImBfM=;
+	s=arc-20240116; t=1784211615; c=relaxed/simple;
+	bh=fk97WhehiebCZhvRXTfIAS6BlP76Mirkkk8i5Rh3EdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iN+bkt5IAsPfmu0DhzXK7zfiNra2F0o0FLJ0tTynmDp1Q7lXbmdUWjNNQiX1tukaNn9QDm0zJ1tqtNUcEvKi2bCxOQ2p7HpJ0zLI2AuWUm5vaC+BBG4tr8NpNCfhp3jPz936Oqqfj4IXrRO/6HU9IpHg8bqJsxY8dJgeBT7nN/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUIUXnJU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JoiqMsAFWFraHZMzpXQr0e0VndYEU+Pw3ujq9uvWj3r0p3yk1myMPWAjbY20e/Pb01J81ldih550w+jHBSQqx5aPCUnW7T0kQ9do1qh4pIXMEzlljS36xoPjM7iPLGmcx/vOcuWVtJjr5ZfzYDlGfOQX1McqZZxACXqr+Q/mM34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPJSUewX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUIUXnJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2FC1F000E9;
-	Thu, 16 Jul 2026 14:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPJSUewX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF12F1F000E9;
+	Thu, 16 Jul 2026 14:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211611;
-	bh=oM1hGrAu7Z6OrnXaxVeVmdmtmsD7JIumA6mRG6N+eRA=;
+	s=korg; t=1784211614;
+	bh=SGiYAfrfwFDCYzBI8m/h+ZjVH6GIWBOs679Z/iag99M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUIUXnJUs/74WIaWhILbHUM138iLli+lzMWHQY6QOfFbcb6ShtDSGwqIZvG8cfpZ1
-	 fSKVFHtfzOsL5XX9VqEEtmiQV5GEZ38FAQJEY/RuppIRT/R7rX2okrIc5IRJEd55Fe
-	 X0l2h5YOn+O1WbiFZe8kGLoU0PKtUVAjnHlZz47g=
+	b=CPJSUewXUz9TznSTmDMGxwl9UstHOCLuTjtvko7pjmqcmKDPByQKpxTSPX8fxE/jL
+	 BnteHIKhy3ZfL1Xkoz1TJFr76x5KfEZu+ZhtU8I8DMr2Go3K84KkwXl+9l7nD6UbC+
+	 oNJI43HpF0PiO+xR2TImhQl6/OvTCISpNg2VBDjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/349] f2fs: atomic: fix UAF issue on f2fs_inode_info.atomic_inode
-Date: Thu, 16 Jul 2026 15:29:08 +0200
-Message-ID: <20260716133033.612895993@linuxfoundation.org>
+Subject: [PATCH 6.12 015/349] f2fs: bound i_inline_xattr_size for non-inline-xattr inodes
+Date: Thu, 16 Jul 2026 15:29:09 +0200
+Message-ID: <20260716133033.636811515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -54,165 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit e0288584baa5dc41df4a829a023c4c1b33fe53d7 ]
+[ Upstream commit 378acf3cf19b6af6cba55e8dd1154c4e1504bae8 ]
 
-- ioctl(F2FS_IOC_GARBAGE_COLLECT_RANGE)		- shrink
- - f2fs_gc
-  - gc_data_segment
-   - ra_data_block(cow_inode)
-    - mapping = F2FS_I(inode)->atomic_inode->i_mapping
-    : f2fs_is_cow_file(cow_inode) is true
-						 - f2fs_evict_inode(atomic_inode)
-						  - clear_inode_flag(fi->cow_inode, FI_COW_FILE)
-						  - F2FS_I(fi->cow_inode)->atomic_inode = NULL
-						  ...
-						  - truncate_inode_pages_final(atomic_inode)
-    - f2fs_grab_cache_folio(mapping)
-    : create folio in atomic_inode->mapping
-						  - clear_inode(atomic_inode)
-						   - BUG_ON(atomic_inode->i_data.nrpages)
+When the flexible_inline_xattr feature is enabled, do_read_inode() loads
+the on-disk i_inline_xattr_size unconditionally:
 
-We need to add a reference on fi->atomic_inode before using its mapping
-field during garbage collection, otherwise, it will cause UAF issue.
+	if (f2fs_sb_has_flexible_inline_xattr(sbi))
+		fi->i_inline_xattr_size = le16_to_cpu(ri->i_inline_xattr_size);
 
-Cc: stable@kernel.org
-Cc: Daeho Jeong <daehojeong@google.com>
-Cc: Sunmin Jeong <s_min.jeong@samsung.com>
-Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
-Fixes: f18d00769336 ("f2fs: use meta inode for GC of COW file")
-Signed-off-by: Chao Yu <chao@kernel.org>
+but sanity_check_inode() only range-checks it when the inode also has the
+FI_INLINE_XATTR flag set.  An inode that carries an inline dentry or inline
+data but not FI_INLINE_XATTR -- the normal layout for an inline
+directory -- therefore keeps a fully attacker-controlled
+i_inline_xattr_size from a crafted image.
+
+get_inline_xattr_addrs() returns that value with no flag gating, so it
+feeds the inode geometry:
+
+	MAX_INLINE_DATA()  = 4 * (CUR_ADDRS_PER_INODE - i_inline_xattr_size - 1)
+	NR_INLINE_DENTRY() = MAX_INLINE_DATA() * BITS_PER_BYTE / (...)
+	addrs_per_page()   = CUR_ADDRS_PER_INODE - i_inline_xattr_size
+
+A large i_inline_xattr_size drives MAX_INLINE_DATA() and NR_INLINE_DENTRY()
+negative, so make_dentry_ptr_inline() sets d->max (int) to a negative
+value.  The inline directory walk then compares an unsigned long bit_pos
+against that negative d->max, which is promoted to a huge unsigned bound,
+and reads far past the inline area:
+
+	while (bit_pos < d->max)		/* fs/f2fs/dir.c */
+		... test_bit_le(bit_pos, d->bitmap) / d->dentry[bit_pos] ...
+
+Mounting a crafted image and reading such a directory triggers an
+out-of-bounds read in f2fs_fill_dentries(); the same underflow also
+corrupts ADDRS_PER_INODE for regular files.
+
+Validate i_inline_xattr_size against MAX_INLINE_XATTR_SIZE whenever the
+flexible_inline_xattr feature is enabled -- i.e. whenever the value is
+loaded from disk and consumed -- and keep the lower MIN_INLINE_XATTR_SIZE
+bound gated on inodes that actually carry an inline xattr, so legitimate
+inodes with i_inline_xattr_size == 0 are still accepted.
+
+Cc: stable@vger.kernel.org
+Fixes: 6afc662e68b5 ("f2fs: support flexible inline xattr size")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c    |   50 ++++++++++++++++++++++++++++++++++++++++++--------
- fs/f2fs/inode.c |   11 ++++++++---
- 2 files changed, 50 insertions(+), 11 deletions(-)
+ fs/f2fs/inode.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1213,8 +1213,8 @@ static bool is_alive(struct f2fs_sb_info
- static int ra_data_block(struct inode *inode, pgoff_t index)
- {
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
--	struct address_space *mapping = f2fs_is_cow_file(inode) ?
--				F2FS_I(inode)->atomic_inode->i_mapping : inode->i_mapping;
-+	struct address_space *mapping = inode->i_mapping;
-+	struct inode *atomic_inode = NULL;
- 	struct dnode_of_data dn;
- 	struct page *page;
- 	struct f2fs_io_info fio = {
-@@ -1229,9 +1229,22 @@ static int ra_data_block(struct inode *i
- 	};
- 	int err;
- 
-+	f2fs_down_read(&F2FS_I(inode)->i_sem);
-+	if (f2fs_is_cow_file(inode)) {
-+		atomic_inode = igrab(F2FS_I(inode)->atomic_inode);
-+		if (!atomic_inode) {
-+			f2fs_up_read(&F2FS_I(inode)->i_sem);
-+			return -EBUSY;
-+		}
-+		mapping = atomic_inode->i_mapping;
-+	}
-+	f2fs_up_read(&F2FS_I(inode)->i_sem);
-+
- 	page = f2fs_grab_cache_page(mapping, index, true);
--	if (!page)
--		return -ENOMEM;
-+	if (!page) {
-+		err = -ENOMEM;
-+		goto out_iput;
-+	}
- 
- 	if (f2fs_lookup_read_extent_cache_block(inode, index,
- 						&dn.data_blkaddr)) {
-@@ -1288,11 +1301,16 @@ got_it:
- 	f2fs_update_iostat(sbi, inode, FS_DATA_READ_IO, F2FS_BLKSIZE);
- 	f2fs_update_iostat(sbi, NULL, FS_GDATA_READ_IO, F2FS_BLKSIZE);
- 
-+	if (atomic_inode)
-+		iput(atomic_inode);
- 	return 0;
- put_encrypted_page:
- 	f2fs_put_page(fio.encrypted_page, 1);
- put_page:
- 	f2fs_put_page(page, 1);
-+out_iput:
-+	if (atomic_inode)
-+		iput(atomic_inode);
- 	return err;
- }
- 
-@@ -1303,8 +1321,8 @@ put_page:
- static int move_data_block(struct inode *inode, block_t bidx,
- 				int gc_type, unsigned int segno, int off)
- {
--	struct address_space *mapping = f2fs_is_cow_file(inode) ?
--				F2FS_I(inode)->atomic_inode->i_mapping : inode->i_mapping;
-+	struct address_space *mapping = inode->i_mapping;
-+	struct inode *atomic_inode = NULL;
- 	struct f2fs_io_info fio = {
- 		.sbi = F2FS_I_SB(inode),
- 		.ino = inode->i_ino,
-@@ -1326,10 +1344,23 @@ static int move_data_block(struct inode
- 				(fio.sbi->gc_mode != GC_URGENT_HIGH) ?
- 				CURSEG_ALL_DATA_ATGC : CURSEG_COLD_DATA;
- 
-+	f2fs_down_read(&F2FS_I(inode)->i_sem);
-+	if (f2fs_is_cow_file(inode)) {
-+		atomic_inode = igrab(F2FS_I(inode)->atomic_inode);
-+		if (!atomic_inode) {
-+			f2fs_up_read(&F2FS_I(inode)->i_sem);
-+			return -EBUSY;
-+		}
-+		mapping = atomic_inode->i_mapping;
-+	}
-+	f2fs_up_read(&F2FS_I(inode)->i_sem);
-+
- 	/* do not read out */
- 	page = f2fs_grab_cache_page(mapping, bidx, false);
--	if (!page)
--		return -ENOMEM;
-+	if (!page) {
-+		err = -ENOMEM;
-+		goto out_iput;
-+	}
- 
- 	if (!check_valid_map(F2FS_I_SB(inode), segno, off)) {
- 		err = -ENOENT;
-@@ -1456,6 +1487,9 @@ put_out:
- 	f2fs_put_dnode(&dn);
- out:
- 	f2fs_put_page(page, 1);
-+out_iput:
-+	if (atomic_inode)
-+		iput(atomic_inode);
- 	return err;
- }
- 
 --- a/fs/f2fs/inode.c
 +++ b/fs/f2fs/inode.c
-@@ -839,10 +839,15 @@ void f2fs_evict_inode(struct inode *inod
- 	f2fs_abort_atomic_write(inode, true);
- 
- 	if (fi->cow_inode && f2fs_is_cow_file(fi->cow_inode)) {
--		clear_inode_flag(fi->cow_inode, FI_COW_FILE);
--		F2FS_I(fi->cow_inode)->atomic_inode = NULL;
--		iput(fi->cow_inode);
-+		struct inode *cow_inode = fi->cow_inode;
-+
-+		f2fs_down_write(&F2FS_I(cow_inode)->i_sem);
-+		clear_inode_flag(cow_inode, FI_COW_FILE);
-+		F2FS_I(cow_inode)->atomic_inode = NULL;
- 		fi->cow_inode = NULL;
-+		f2fs_up_write(&F2FS_I(cow_inode)->i_sem);
-+
-+		iput(cow_inode);
+@@ -308,15 +308,6 @@ static bool sanity_check_inode(struct in
+ 				  F2FS_TOTAL_EXTRA_ATTR_SIZE);
+ 			return false;
+ 		}
+-		if (f2fs_sb_has_flexible_inline_xattr(sbi) &&
+-			f2fs_has_inline_xattr(inode) &&
+-			(!fi->i_inline_xattr_size ||
+-			fi->i_inline_xattr_size > MAX_INLINE_XATTR_SIZE)) {
+-			f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_inline_xattr_size: %d, max: %lu",
+-				  __func__, inode->i_ino, fi->i_inline_xattr_size,
+-				  MAX_INLINE_XATTR_SIZE);
+-			return false;
+-		}
+ 		if (f2fs_sb_has_compression(sbi) &&
+ 			fi->i_flags & F2FS_COMPR_FL &&
+ 			F2FS_FITS_IN_INODE(ri, fi->i_extra_isize,
+@@ -326,6 +317,16 @@ static bool sanity_check_inode(struct in
+ 		}
  	}
  
- 	trace_f2fs_evict_inode(inode);
++	if (f2fs_sb_has_flexible_inline_xattr(sbi) &&
++		(fi->i_inline_xattr_size > MAX_INLINE_XATTR_SIZE ||
++		(f2fs_has_inline_xattr(inode) &&
++		fi->i_inline_xattr_size < MIN_INLINE_XATTR_SIZE))) {
++		f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_inline_xattr_size: %d, min: %zu, max: %lu",
++			  __func__, inode->i_ino, fi->i_inline_xattr_size,
++			  MIN_INLINE_XATTR_SIZE, MAX_INLINE_XATTR_SIZE);
++		return false;
++	}
++
+ 	if (!f2fs_sb_has_extra_attr(sbi)) {
+ 		if (f2fs_sb_has_project_quota(sbi)) {
+ 			f2fs_warn(sbi, "%s: corrupted inode ino=%lx, wrong feature flag: %u, run fsck to fix.",
 
 
