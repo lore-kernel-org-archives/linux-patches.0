@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCD4425875;
-	Thu, 16 Jul 2026 14:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EA8423EA0;
+	Thu, 16 Jul 2026 14:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211591; cv=none; b=UBDy9Gs3URoq9LHH3O5ZhSmpuAy+/8H8CCnnwbIInW/PMekBdSXGBtG51fN4FkpOhmosBcRyN5OdeH/UHcxWr6VzgrYOfhs4Ekg7hUZmmgVtDKCuDl8fD71dN6WczZwcXJP2EzHG4y2h1xrW8ld+5VI7Jhv2dPUuRYqZT0oPLMg=
+	t=1784211594; cv=none; b=AbrrG9jtvNPid7cFyhZu2LTwW9EgvU7ubcmnb38wLqXavjrMyjWVrX3dW5asPo50uLZHQnj6SmajXze0AGH+1S2sdVH+6LyCih4nqInkGfpoCOTgZ53UeRB6LcEv+Unn46rBrGKA4KS0JIQAAU5nVNzDkbbgh0aJvtHaMgLC7es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211591; c=relaxed/simple;
-	bh=SA2I9iKuGKmwveWgODGkj8GRlLtXDg4MS/+QCj5Naqk=;
+	s=arc-20240116; t=1784211594; c=relaxed/simple;
+	bh=tJm8UXJqO74HFGJMxLMKFEvfL/+eqz/CzTb8ACE8snI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ovjz0Xbfkf3zdFb0P5sDG3RsSCFu+moVaqqQkb3FO7enyFFFDQD9cYMTU14fteqEQu+oO5kYucbLRshzXs7zzzbIGpgswCPfxJw1QpDhx06gH8Sv1OVPmLFupcXkbcelxh2ECKg9EYs8ygTjATl1/AjqvnxoYNHN6qAr3mgJXnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yxl6eZVw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O9+7BLle5Vyi1MrgbG823TWHQ2oeqYRMbXghN6Q2WOlzwucV8h1JU2qBvoNSX7sHZo1VWdwS1gRu6ITp1oDyR/8wHY7ZdBthm/GQ2iiNGTXM32Y2MA55sbGW6sTlIuKpF6p8X0cuvdAyw4nfcDhXZAlzHR2pJYseoZ396iS1RUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNbVq/mQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yxl6eZVw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050C41F00A3E;
-	Thu, 16 Jul 2026 14:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNbVq/mQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5A11F00A3A;
+	Thu, 16 Jul 2026 14:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211590;
-	bh=4YuYY8GtCTOwA34JjFfe9w9RSeITJ7XfPoQtfJYUOck=;
+	s=korg; t=1784211593;
+	bh=eXxTOb3dUMClLufIXcts7p9ak9IZxPI1rLNGn8IlxKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yxl6eZVwKt4q0mYGR4/0h0DpCDlOtCr9AarhgrSreiltNN4KcfTFlFTpbDdfapszO
-	 RklheU4EvA8X8tOJO/F2C9mxWOHwqRAdhl7/8FbDxwgyWeW8ploTQJ3eWduH2hO/4j
-	 uMr+upfObeETrt4ci0oALvhHzrOHmZMQYjn8SGlk=
+	b=eNbVq/mQHMHQhcidEZUMwcglUhnoljjTh5cWS/uwiuV2rNaEadmUHPO1rnJIfS7eX
+	 P8Qbc3VCrvNBn1UNj0oWBWt3BCF42OyEQvJMpk8HXXgdq90NfyWKvllwFB6mneddv9
+	 LZdsE6xivnKFRPkX1wdLZnJMqgsJGJhX3aBDb7tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heechan Kang <gganji11@naver.com>,
-	Bernd Schubert <bernd@bsbernd.com>,
-	Jian Huang Li <ali@ddn.com>,
-	Horst Birthelmer <horst@birthelmer.de>,
 	Joanne Koong <joannelkoong@gmail.com>,
+	Chris Mason <clm@meta.com>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.18 470/480] fuse-uring: fix moving cancelled entry to ent_in_userspace list
-Date: Thu, 16 Jul 2026 15:33:37 +0200
-Message-ID: <20260716133054.987086062@linuxfoundation.org>
+Subject: [PATCH 6.18 471/480] fuse-uring: end fuse_req on io-uring cancel task work
+Date: Thu, 16 Jul 2026 15:33:38 +0200
+Message-ID: <20260716133055.008710328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -54,79 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Chris Mason <clm@meta.com>
 
-commit 198f45eeb9f78b2a2d6d8be95e4e43468eb2c6bc upstream.
+commit bea4fe98204b6ce7eb8e29f7bf867dd7619b3ddd upstream.
 
-fuse_uring_cancel() moves entries that are available (these have no reqs
-attached) to the ent_in_userspace list. ent_list_request_expired()
-checks the first entry on ent_in_userspace and dereferences
-ent->fuse_req unconditionally, which will crash on a cancelled entry
-that was moved to this list.
+When io_uring delivers task work with tw.cancel set (PF_EXITING,
+PF_KTHREAD fallback, or percpu_ref_is_dying on the ring context),
+fuse_uring_send_in_task() takes the cancel branch, assigns
+-ECANCELED, and falls through to fuse_uring_send(). That path only
+flips the entry to FRRS_USERSPACE and completes the io_uring cmd;
+it never discharges the ring entry's owning reference to the
+fuse_req that fuse_uring_add_req_to_ring_ent() handed it at
+dispatch time.
 
-Fix this by freeing the entry and dropping queue_refs directly in
-fuse_uring_cancel(). This is safe because cancel is the cancel handler
-itself - after io_uring_cmd_done(), no more cancels will be dispatched
-for this command, and teardown serializes with cancel via queue->lock.
+    fuse_uring_send_in_task()
+      tw.cancel == true
+        err = -ECANCELED
+      fuse_uring_send(ent, cmd, err, issue_flags)
+        ent->state = FRRS_USERSPACE
+        list_move(&ent->list, &queue->ent_in_userspace)
+        ent->cmd = NULL
+        io_uring_cmd_done(-ECANCELED)
+        /* ent->fuse_req still set, req still hashed */
 
-Since cancel now decrements queue_refs, fuse_uring_abort() must no
-longer gate fuse_uring_abort_end_requests() on queue_refs > 0, as
-cancelled entries may have already dropped queue_refs while requests are
-still queued. Remove the gate so abort always flushes requests and stops
-queues.
+The fuse_req stays linked on fpq->processing[hash] and
+fuse_request_end() is never invoked. The originating syscall
+thread blocks in D-state in request_wait_answer() until
+fuse_abort_conn() runs, which can be the entire connection
+lifetime. For FR_BACKGROUND requests fc->num_background is never
+decremented either, so repeated cancels inflate the counter until
+max_background is hit and all later background ops stall. tw.cancel does
+not imply a connection abort (e.g. a single io_uring worker thread exits
+while the fuse connection stays up), so this cannot be left for
+fuse_abort_conn() to clean up.
 
-Reported-by: Heechan Kang <gganji11@naver.com>
-Tested-by: Heechan Kang <gganji11@naver.com>
-Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
-Fixes: 4fea593e625c ("fuse: optimize over-io-uring request expiration check")
+Ending the req but still routing the entry through fuse_uring_send()
+is not enough: that leaves a req-less entry on ent_in_userspace, and
+ent_list_request_expired() dereferences ent->fuse_req unconditionally
+on the head of that list, which would then NULL-deref.
+
+Fix the cancel branch to release the entry directly. Remove it from the
+queue, complete the io_uring cmd, end the fuse_req, free the entry, and
+drop its queue_refs (waking the teardown waiter if it was the last).
+
+Fixes: c2c9af9a0b13 ("fuse: Allow to queue fg requests through io-uring")
 Cc: stable@vger.kernel.org
-Suggested-by: Jian Huang Li <ali@ddn.com>
-Suggested-by: Horst Birthelmer <horst@birthelmer.de>
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev_uring.c   |    6 ++++--
- fs/fuse/dev_uring_i.h |    6 +++---
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ fs/fuse/dev_uring.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 --- a/fs/fuse/dev_uring.c
 +++ b/fs/fuse/dev_uring.c
-@@ -512,8 +512,7 @@ static void fuse_uring_cancel(struct io_
- 	queue = ent->queue;
- 	spin_lock(&queue->lock);
- 	if (ent->state == FRRS_AVAILABLE) {
--		ent->state = FRRS_USERSPACE;
--		list_move_tail(&ent->list, &queue->ent_in_userspace);
+@@ -1226,11 +1226,21 @@ static void fuse_uring_send_in_task(stru
+ 			fuse_uring_next_fuse_req(ent, queue, issue_flags);
+ 			return;
+ 		}
++		fuse_uring_send(ent, cmd, err, issue_flags);
+ 	} else {
+ 		err = -ECANCELED;
+-	}
+ 
+-	fuse_uring_send(ent, cmd, err, issue_flags);
++		spin_lock(&queue->lock);
 +		list_del_init(&ent->list);
- 		need_cmd_done = true;
- 		ent->cmd = NULL;
- 	}
-@@ -522,6 +521,9 @@ static void fuse_uring_cancel(struct io_
- 	if (need_cmd_done) {
- 		/* no queue lock to avoid lock order issues */
- 		io_uring_cmd_done(cmd, -ENOTCONN, issue_flags);
++		spin_unlock(&queue->lock);
++
++		io_uring_cmd_done(cmd, err, issue_flags);
++
++		fuse_uring_req_end(ent, ent->fuse_req, err);
 +		kfree(ent);
 +		if (atomic_dec_and_test(&queue->ring->queue_refs))
 +			wake_up_all(&queue->ring->stop_waitq);
- 	}
++	}
  }
  
---- a/fs/fuse/dev_uring_i.h
-+++ b/fs/fuse/dev_uring_i.h
-@@ -152,10 +152,10 @@ static inline void fuse_uring_abort(stru
- 	if (ring == NULL)
- 		return;
- 
--	if (atomic_read(&ring->queue_refs) > 0) {
--		fuse_uring_abort_end_requests(ring);
-+	fuse_uring_abort_end_requests(ring);
-+
-+	if (atomic_read(&ring->queue_refs) > 0)
- 		fuse_uring_stop_queues(ring);
--	}
- }
- 
- static inline void fuse_uring_wait_stopped_queues(struct fuse_conn *fc)
+ static struct fuse_ring_queue *fuse_uring_task_to_queue(struct fuse_ring *ring)
 
 
