@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BEC3009E2;
-	Thu, 16 Jul 2026 14:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3923148C2;
+	Thu, 16 Jul 2026 14:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210662; cv=none; b=c4tGr27cPadtV/UV3EAheTioockwsu6k9GdThWaWl25tAnrpMClP5HrqR+cJz5sEHP2gVNaodqnOPnzX8ZSz81egFh6j7UXtZhGAZ3nYue8Il6mgHOafxXdEdSLnqRbniHd3mC50ZDu69Yk714+ZUioOxI6DqynqHTf3YXqe7s8=
+	t=1784210664; cv=none; b=QfmoXdjHnVsc3SHWN4ms9FV3STvpz6HbHs3rZa/nY+K2hF7cwXutgAN/1/0+yIoOlDV6qHYxbxNPPAy+YtYixNB/RcpcwlSq75hj6+WGU4LCkhnneXnarkIdiFfSjLtOGkYBHVj0Mo9r6nDCBIA6T8Eku9YAuSvV/WSgavzeEmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210662; c=relaxed/simple;
-	bh=IVPIwS0eDnFleSJ+goaN4NUv7tCJjqKhGOabmyroXxA=;
+	s=arc-20240116; t=1784210664; c=relaxed/simple;
+	bh=35S/K1P7j02Azb9BrXUiiLqUSyUENBPojBb887O+Nvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsaaL+iLYcso6W4Gq2X8+oYFHQT1OT9tuPLwfrn9URsXl1d+oJdo3/8X/D/X0kT8m73M1EogtLMzBzL5TdOcahdFCTswtu4kY9b5JRyUu8TqTDRGLRnz99dIxFkJwvc0bpA//tQbdhjUzjvUDhDpqbQxgayoyiOFA0WWjQ6bD5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5s3pGFk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VNARpsFrZ4EaFyy6AXPNoWTQgXZsZWaqf7VpyccAzYnM8Vi1e7U/d6Fk5R85Otz5VuUabdoDxDBLBV/tJgWdTmcPNclgRGAnrG5zxpfHb/Xe0PzDsRdZwyDhBSUFNAdrcUitbPRkzD/gQShHV20cS+2T0SnUMCwZjpRJ1mVbmjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1y3chC+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5s3pGFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467F91F000E9;
-	Thu, 16 Jul 2026 14:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1y3chC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D641F000E9;
+	Thu, 16 Jul 2026 14:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210660;
-	bh=IZrYTm789vQbrzY359E5PwFtI4ik9Erwum+NKauC318=;
+	s=korg; t=1784210663;
+	bh=4ZUew7XCn7ud8qxwMG/oiK+J5mN/UsK71d+PO6uya9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q5s3pGFkKgphOufmIh8jW85FiqSZTK6uCvMWmsFn96e+DiaYsUXst5vOb9BBrn/HW
-	 74swPwfbG9fsf2SdBBc9rlmclxvbW6Jy0YIxT6OwGlLQvM0EdSaStzNV/fQn8f2kK2
-	 Fkpc5/+JUI2n86/JN6Y1a3lNRSd6t8gwHGsWM5M8=
+	b=b1y3chC+p/nBDlnUUF1A06ZiJ84nPVLmRLpHVQF9gfiGI5bzgmAdhuPbBpzvy3fyB
+	 PT7JYHqga1zFPVfPR+IPjOcXlku6OBgH461Ea477sSoo+LNmUIu5R49kJELVZBnXpk
+	 +h/0trxZw6Wb1IWOIcSIiUdVEAeBE8y0A9n6ykhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Keshav Verma <iganschel@gmail.com>
-Subject: [PATCH 6.18 130/480] rust_binder: synchronize Rust Binder stats with freeze commands
-Date: Thu, 16 Jul 2026 15:27:57 +0200
-Message-ID: <20260716133047.521638331@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.18 131/480] rust_binder: clear freeze listener on node removal
+Date: Thu, 16 Jul 2026 15:27:58 +0200
+Message-ID: <20260716133047.544562106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,70 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keshav Verma <iganschel@gmail.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit eb1645bf10190e71f6f0316e37ff70755d719b53 upstream.
+commit bc4a9828897871ff3e5a1f8a1d346decbf4ee95e upstream.
 
-Rust Binder stats use BC_COUNT and BR_COUNT to size the command and
-return counters, and use event string tables when printing debug
-statistics.
+Generally userspace is supposed to explicitly clear freeze listeners
+before they drop the refcount on the node ref to zero, but there's
+nothing forcing that. Currently, in this scenario the freeze listener
+remains in the freeze_listeners rbtree and in the remote node's freeze
+listener list, even though the ref for which the listener is registered
+is gone. This could potentially lead to a memory leak due to a refcount
+cycle. Thus, remove the freeze listener in this scenario.
 
-The Binder protocol includes freeze-related commands and return codes,
-but the Rust Binder statistics code was not updated to cover them. As a
-result, those commands and return codes are not accounted for or printed
-by the stats debug output.
-
-Update the counts and event string tables so these commands and return
-codes are included in the debug statistics output.
-
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
 Cc: stable <stable@kernel.org>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Keshav Verma <iganschel@gmail.com>
-Link: https://patch.msgid.link/20260615211743.734-1-iganschel@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260703-remove-freeze-on-remove-node-v3-1-6e0c4547af46@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/rust_binder_events.c |    7 ++++++-
- drivers/android/binder/stats.rs             |    4 ++--
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/android/binder/freeze.rs  |   11 +++++++++--
+ drivers/android/binder/node.rs    |   10 ++++++----
+ drivers/android/binder/process.rs |   12 +++++++++++-
+ 3 files changed, 26 insertions(+), 7 deletions(-)
 
---- a/drivers/android/binder/rust_binder_events.c
-+++ b/drivers/android/binder/rust_binder_events.c
-@@ -28,6 +28,9 @@ const char * const binder_command_string
- 	"BC_DEAD_BINDER_DONE",
- 	"BC_TRANSACTION_SG",
- 	"BC_REPLY_SG",
-+	"BC_REQUEST_FREEZE_NOTIFICATION",
-+	"BC_CLEAR_FREEZE_NOTIFICATION",
-+	"BC_FREEZE_NOTIFICATION_DONE",
- };
+--- a/drivers/android/binder/freeze.rs
++++ b/drivers/android/binder/freeze.rs
+@@ -154,10 +154,17 @@ impl DeliverToRead for FreezeMessage {
+ }
  
- const char * const binder_return_strings[] = {
-@@ -51,7 +54,9 @@ const char * const binder_return_strings
- 	"BR_FAILED_REPLY",
- 	"BR_FROZEN_REPLY",
- 	"BR_ONEWAY_SPAM_SUSPECT",
--	"BR_TRANSACTION_PENDING_FROZEN"
-+	"BR_TRANSACTION_PENDING_FROZEN",
-+	"BR_FROZEN_BINDER",
-+	"BR_CLEAR_FREEZE_NOTIFICATION_DONE",
- };
+ impl FreezeListener {
+-    pub(crate) fn on_process_exit(&self, proc: &Arc<Process>) {
++    /// Called when this freeze listener is cleared abnormally.
++    ///
++    /// This occurs either because the process exited or because the process dropped its last
++    /// refcount on the node ref without explicitly removing the freeze listener first.
++    ///
++    /// The returned `KVVec` is just a value that should be dropped outside of the lock.
++    pub(crate) fn on_process_cleanup(&self, proc: &Process) -> KVVec<Arc<Process>> {
+         if !self.is_clearing {
+-            self.node.remove_freeze_listener(proc);
++            return self.node.remove_freeze_listener(proc);
+         }
++        KVVec::new()
+     }
+ }
  
- #define CREATE_TRACE_POINTS
---- a/drivers/android/binder/stats.rs
-+++ b/drivers/android/binder/stats.rs
-@@ -8,8 +8,8 @@ use crate::defs::*;
- use core::sync::atomic::{AtomicU32, Ordering::Relaxed};
- use kernel::{ioctl::_IOC_NR, seq_file::SeqFile, seq_print};
+--- a/drivers/android/binder/node.rs
++++ b/drivers/android/binder/node.rs
+@@ -674,12 +674,13 @@ impl Node {
+         }
+     }
  
--const BC_COUNT: usize = _IOC_NR(BC_REPLY_SG) as usize + 1;
--const BR_COUNT: usize = _IOC_NR(BR_TRANSACTION_PENDING_FROZEN) as usize + 1;
-+const BC_COUNT: usize = _IOC_NR(BC_FREEZE_NOTIFICATION_DONE) as usize + 1;
-+const BR_COUNT: usize = _IOC_NR(BR_CLEAR_FREEZE_NOTIFICATION_DONE) as usize + 1;
+-    pub(crate) fn remove_freeze_listener(&self, p: &Arc<Process>) {
+-        let _unused_capacity;
++    pub(crate) fn remove_freeze_listener(&self, p: &Process) -> KVVec<Arc<Process>> {
+         let mut guard = self.owner.inner.lock();
+         let inner = self.inner.access_mut(&mut guard);
+         let len = inner.freeze_list.len();
+-        inner.freeze_list.retain(|proc| !Arc::ptr_eq(proc, p));
++        inner
++            .freeze_list
++            .retain(|proc| !core::ptr::eq::<Process>(&**proc, p));
+         if len == inner.freeze_list.len() {
+             pr_warn!(
+                 "Could not remove freeze listener for {}\n",
+@@ -687,8 +688,9 @@ impl Node {
+             );
+         }
+         if inner.freeze_list.is_empty() {
+-            _unused_capacity = mem::take(&mut inner.freeze_list);
++            return mem::take(&mut inner.freeze_list);
+         }
++        KVVec::new()
+     }
  
- pub(crate) static GLOBAL_STATS: BinderStats = BinderStats::new();
+     pub(crate) fn freeze_list<'a>(&'a self, guard: &'a ProcessInner) -> &'a [Arc<Process>] {
+--- a/drivers/android/binder/process.rs
++++ b/drivers/android/binder/process.rs
+@@ -919,6 +919,8 @@ impl Process {
+ 
+         // To preserve original binder behaviour, we only fail requests where the manager tries to
+         // increment references on itself.
++        let _to_free_freeze_listener;
++        let _to_free_freeze_listener_cleanup;
+         let mut refs = self.node_refs.lock();
+         if let Some(info) = refs.by_handle.get_mut(&handle) {
+             if info.node_ref().update(inc, strong) {
+@@ -934,6 +936,14 @@ impl Process {
+                 unsafe { info.node_ref2().node.remove_node_info(info) };
+ 
+                 let id = info.node_ref().node.global_id();
++
++                if let Some(freeze) = *info.freeze() {
++                    if let Some(fl) = refs.freeze_listeners.remove(&freeze) {
++                        _to_free_freeze_listener_cleanup = fl.on_process_cleanup(&self);
++                        _to_free_freeze_listener = fl;
++                    }
++                }
++
+                 refs.by_handle.remove(&handle);
+                 refs.by_node.remove(&id);
+             }
+@@ -1348,7 +1358,7 @@ impl Process {
+         // Clean up freeze listeners.
+         let freeze_listeners = take(&mut self.node_refs.lock().freeze_listeners);
+         for listener in freeze_listeners.values() {
+-            listener.on_process_exit(&self);
++            listener.on_process_cleanup(&self);
+         }
+         drop(freeze_listeners);
  
 
 
