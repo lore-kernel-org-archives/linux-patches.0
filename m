@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330CB30677E;
-	Thu, 16 Jul 2026 14:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92603195EF;
+	Thu, 16 Jul 2026 14:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211126; cv=none; b=E3jcWKrp4lTeKxsn2+WttIiZKxXhLRWUOWekJ88L34f77O4/uD3ifvkpt1hfyuJLuj4MiJs9vfk7HG16mCKk4bVR0fWcbIchIcBHSYeZwEq4fQoh6Ay+t926NgpUbxEnOobSTlULzJDi5H48fViXtS7l+I38sxKYiMM+P9TtDqc=
+	t=1784211128; cv=none; b=IZMiD3q9ZYtR5S24qhQicyCxbdvHJ3NgibP3H6l/noSVfSRlShXCjJMsVbZ6ULJxAxzQqxgKwY32a7DIXBPbG2NbR6v0Jg0gyuDZPGmHAr5SM7mCpqDR35tQTa651HLT4wix7i2905EQc/1YM4zckWK6b628dtp38VQeI0oTV/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211126; c=relaxed/simple;
-	bh=KuTTha8Mow8lCR4jnrwljpaiQ93R2otDm6moQJoXVaE=;
+	s=arc-20240116; t=1784211128; c=relaxed/simple;
+	bh=glmPlX/nB0Aj+USaq1ApTevVsFlk6Pt8iNm/68QDW80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUb6IEyeHaZgqWdh8GBiOU60kOAFbCqqn1Dis6ARw+Stt3T8+Xzr1qkt4WvYHDeo9bTeW2zyb42btGsscjVBHP4urlGbKGmXYjYY0sIlZgaTHYTZAzcvuH/Nq6UGQY5YBB0x46jq0B6KCKJmxZ2+fB48QO67U1tenMtQCDE3Gg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ys/+umss; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AvIbKPQP8KRF3sB4f8kco0YUupsMP5URNG/P9QX0V/G4qR/uCBo2XAiLzX/CH71ESTyUt1fPTMzY6s2Tir/DdDmKXRjl379NX3RIU0JfQY4WXR379lYCjZeySjU6Ga6xlDl8NYkJoXYf9SV2QiP7i52L0BUeAVdd6WNPl7BY8kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIUQaubm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ys/+umss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993451F00A3A;
-	Thu, 16 Jul 2026 14:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIUQaubm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B11B1F000E9;
+	Thu, 16 Jul 2026 14:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211125;
-	bh=2XQox0973Y6tpaEqERVlspJFGGZD9fLNyCenYIvNovM=;
+	s=korg; t=1784211127;
+	bh=WdMA6yVO8jNzcaJQCijO8ikM/YPvEF2u4o+J7j89JFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ys/+umssiXZqUGSKoub/T9J77POmDnEcIF9XhKFvjVcTvD7LI7HSC8GY6fqUSZcjg
-	 PC5I9f7PTYR9cdjeznBKbU8GAPnENjVYmjD1W6e2YgPT7kFid5rpF88rHLzbzjY83x
-	 /6N9x0kxB6s5T0x0Cqk9eVIewVDBfU03bnUVKZu8=
+	b=iIUQaubmuDIlvVrteOlLj0ur25/HeB26HivaTYS48EOMbzcBPJ6WHBixr0kaDLe8U
+	 TyAIgvMhnDywHEKLMv/Du67IBWMrPjtU936lNzzn+fJAnx7WHxiwKFmu+QiUVxir6j
+	 E/4bozuA7pDy04BQp2/mLLOUGI+8Z0X0gCpcKcrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Xu Rao <raoxu@uniontech.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.18 308/480] USB: usb-storage: ene_ub6250: restore media-ready check
-Date: Thu, 16 Jul 2026 15:30:55 +0200
-Message-ID: <20260716133051.483699372@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.18 309/480] usbip: tools: support SuperSpeedPlus devices
+Date: Thu, 16 Jul 2026 15:30:56 +0200
+Message-ID: <20260716133051.504877749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,47 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 5fc3f333c001f1e308bbcdeecdec0d054d24338b upstream.
+commit 195e667c8719480c320cd48ac0fbf1cb81d6ffe0 upstream.
 
-Commit 1892bf90677a ("USB: usb-storage: Fix use of bitfields for
-hardware data in ene_ub6250.c") converted the media status fields from
-bitfields to bit masks.
+USB devices running at SuperSpeedPlus report "10000" or "20000" in
+their sysfs speed attribute. usbip currently maps only "5000" to
+USB_SPEED_SUPER, so a SuperSpeedPlus device is imported as
+USB_SPEED_UNKNOWN.
 
-The original ene_transport() test called ene_init() only when neither
-media type was ready:
+The attach request is then rejected by vhci_hcd:
 
-        !(sd_ready || ms_ready)
+  vhci_hcd: Failed attach request for unsupported USB speed: UNKNOWN
 
-The converted test became:
+Map the SuperSpeedPlus sysfs speed values to USB_SPEED_SUPER_PLUS, use
+the SuperSpeed VHCI hub for SuperSpeedPlus devices, and recognize the
+gadget current_speed string used by the kernel.
 
-        !sd_ready || ms_ready
-
-This is not equivalent. Restore the original semantics by testing that
-both ready bits are clear before calling ene_init().
-
-Fixes: 1892bf90677a ("USB: usb-storage: Fix use of bitfields for hardware data in ene_ub6250.c")
+Fixes: b2316645ca5e ("usb: show speed "10000" in sysfs for USB 3.1 SuperSpeedPlus devices")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/F42641386E32404F+20260626070607.4119527-1-raoxu@uniontech.com
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/00C828F338E43447+20260617020613.199086-1-chenyichong@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/ene_ub6250.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/usb/usbip/libsrc/usbip_common.c        |    2 ++
+ tools/usb/usbip/libsrc/usbip_device_driver.c |    4 ++++
+ tools/usb/usbip/libsrc/vhci_driver.c         |    1 +
+ 3 files changed, 7 insertions(+)
 
---- a/drivers/usb/storage/ene_ub6250.c
-+++ b/drivers/usb/storage/ene_ub6250.c
-@@ -2306,7 +2306,8 @@ static int ene_transport(struct scsi_cmn
+--- a/tools/usb/usbip/libsrc/usbip_common.c
++++ b/tools/usb/usbip/libsrc/usbip_common.c
+@@ -29,6 +29,8 @@ static const struct speed_string speed_s
+ 	{ USB_SPEED_HIGH, "480", "High Speed(480Mbps)" },
+ 	{ USB_SPEED_WIRELESS, "53.3-480", "Wireless"},
+ 	{ USB_SPEED_SUPER, "5000", "Super Speed(5000Mbps)" },
++	{ USB_SPEED_SUPER_PLUS, "10000", "Super Speed Plus(10000Mbps)" },
++	{ USB_SPEED_SUPER_PLUS, "20000", "Super Speed Plus(20000Mbps)" },
+ 	{ 0, NULL, NULL }
+ };
  
- 	/*US_DEBUG(usb_stor_show_command(us, srb)); */
- 	scsi_set_resid(srb, 0);
--	if (unlikely(!(info->SD_Status & SD_Ready) || (info->MS_Status & MS_Ready)))
-+	if (unlikely(!(info->SD_Status & SD_Ready) &&
-+		     !(info->MS_Status & MS_Ready)))
- 		result = ene_init(us);
- 	if (result == USB_STOR_XFER_GOOD) {
- 		result = USB_STOR_TRANSPORT_ERROR;
+--- a/tools/usb/usbip/libsrc/usbip_device_driver.c
++++ b/tools/usb/usbip/libsrc/usbip_device_driver.c
+@@ -57,6 +57,10 @@ static struct {
+ 		.speed = USB_SPEED_SUPER,
+ 		.name = "super-speed",
+ 	},
++	{
++		.speed = USB_SPEED_SUPER_PLUS,
++		.name = "super-speed-plus",
++	},
+ };
+ 
+ static
+--- a/tools/usb/usbip/libsrc/vhci_driver.c
++++ b/tools/usb/usbip/libsrc/vhci_driver.c
+@@ -338,6 +338,7 @@ int usbip_vhci_get_free_port(uint32_t sp
+ 
+ 		switch (speed) {
+ 		case	USB_SPEED_SUPER:
++		case	USB_SPEED_SUPER_PLUS:
+ 			if (vhci_driver->idev[i].hub != HUB_SPEED_SUPER)
+ 				continue;
+ 		break;
 
 
