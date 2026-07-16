@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39755A79B;
-	Thu, 16 Jul 2026 14:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF1B3FE357;
+	Thu, 16 Jul 2026 14:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210625; cv=none; b=Qleo12QKDPmtyLvbiOKW05mFK5hgsRCI/ifsKmSmxk122srSC5xXikPky0c5sAbXYRMZ9AZ6Wf4bvNMmvI8MWdKnD0YCqhXbO8CTy8sNr987ncKQXMwU4O5ZsrHE8woF8JVNpfp5N4Ndta7kNIUadME6F7IpNcn2aAUSV70i2hU=
+	t=1784210627; cv=none; b=qq01iyQrZE0ltjr6ASUQoLaB81wpzHZFRBCraQ5Rby/dUFZgREZgPkT+Xqdul1NFmeNAb+QDuCs+JmpTdkH0s7xx7OrQVULjNE0P9bg60UVGL1WwF1A6v7M57l06lov2KZFt2sRX82eNaOqu41aFQakjl9Iqp8+rfrm8hnCfraQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210625; c=relaxed/simple;
-	bh=s/5r9FPMElCKj9Wa5E7VFfPgwQMZDaxuQ+aWSpfwNP0=;
+	s=arc-20240116; t=1784210627; c=relaxed/simple;
+	bh=sYobMBTPr1fwbR9BKqliUgiRnIdFGi+hSYy8sjA6ehI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJtpMHlZGxa2veTssl1YhCg+a0o/vURw9bNqb4C86ZXdmyK8CaqV/0FoKK3kyIXz1ofPhFsnU6Sa08yyvXRBOyEH4YqlBErJpwHSaTXxiOItE9HIYol5UlCi3JXCexTf0aCvNUqi9qpGv45pxTQygKwT+CqTjm360ZUEZ2/tnsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkF/3aIe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WozgcD5MKoYMgjdV8fI0U7qmnQnpiLra6ttB3BU5L7LAXnswerrZ2abrsA+6V6KAdPsdp6Jm6YBi0OVE/AVTpG2VX0ow06Cx8DojUyyRrWctjYBYRbbEfrDwyKzXShQ1IrewajeWSM3Se6fjcvL1tWw58gPfg/y+7A3uJopCIxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr43fbon; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkF/3aIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649641F000E9;
-	Thu, 16 Jul 2026 14:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr43fbon"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB771F00A3A;
+	Thu, 16 Jul 2026 14:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210623;
-	bh=QWnh2GwsP1I4ods9HGDDRU5GuJaRyI84Nlq2WRYamt4=;
+	s=korg; t=1784210626;
+	bh=xP6CK2TXdx3jJizk1VK0ikOWzzMceHSykpxRXgDHzgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TkF/3aIe8C9ZEi7v4OzoLBhQat1XnlQsllAM2i5uutUIiU+BNrai1vEgspqB51XF/
-	 aIVxUt/R+wdtKlW5p+8yxixxjIDGGs+yM+UIDHES+hfcUg23QrFi+VwOpGklbpGUfE
-	 vnPD8te+9FaJVT4FzNf/cwkw4bj3zLgxFzXKPJ4E=
+	b=Yr43fbonwxKFJph5jukXXQQzGTBM+s7k1cJJWBebCFkHCd/a3KMHRnPbUbDjQRAsN
+	 BqF/g72d4GJrcbMUoIWJfPcx+opuwjHtZh88TFUnLSlf+ns1LzHdhkb36W3qTo50w0
+	 JzTY9Jsf94Hnfshg7OgJ9zOFTUU6ZhHC4ZVo+Sf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex.williamson@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 6.18 118/480] vfio/pci: Release the VGA arbiter client on register_device() failure
-Date: Thu, 16 Jul 2026 15:27:45 +0200
-Message-ID: <20260716133047.258363326@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 092/480] ALSA: virtio: Add missing 384 kHz PCM rate mapping
+Date: Thu, 16 Jul 2026 15:27:19 +0200
+Message-ID: <20260716133046.699614817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -45,48 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit daedde7f024ecf88bc8e832ed40cf2c795f0796a upstream.
+commit 83fbbcb7935ec6d2c8ba3bc133e8a0ead2ab0b2d upstream.
 
-The re-order in the Fixes commit below displaced vfio_pci_vga_init() as
-the last failure point of what is now vfio_pci_core_register_device()
-without introducing an unwind for the VGA arbiter registration.
+The VirtIO sound UAPI defines VIRTIO_SND_PCM_RATE_384000, and ALSA
+has SNDRV_PCM_RATE_384000. However, virtio-snd's rate conversion
+tables stop at 192 kHz.
 
-In current kernels this is mostly benign because vfio_pci_set_decode()
-only uses pci_dev state, but the original failure path could leave a
-callback with a freed vdev cookie.  The stale registration also becomes
-unsafe again once the callback follows drvdata to the vfio device.
+A device advertising only 384 kHz is rejected as having no supported
+PCM frame rates. A device advertising 384 kHz together with lower rates
+does not expose 384 kHz through the ALSA hardware constraints. The
+selected ALSA rate also needs a reverse mapping for SET_PARAMS.
 
-Add the required VGA unwind callout.
+Add the missing 384 kHz entries to both conversion tables.
 
-Fixes: 4aeec3984ddc ("vfio/pci: Re-order vfio_pci_probe()")
+Fixes: 29b96bf50ba9 ("ALSA: virtio: build PCM devices and substream hardware descriptors")
+Fixes: da76e9f3e43a ("ALSA: virtio: PCM substream operators")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260615191241.688297-3-alex.williamson@nvidia.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260515-alsa-virtio-384k-rate-v1-1-35ecb5df835c@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/vfio_pci_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/virtio/virtio_pcm.c     |    3 ++-
+ sound/virtio/virtio_pcm_ops.c |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -2237,6 +2237,7 @@ out_power:
- 		pm_runtime_get_noresume(dev);
+--- a/sound/virtio/virtio_pcm.c
++++ b/sound/virtio/virtio_pcm.c
+@@ -77,7 +77,8 @@ static const struct virtsnd_v2a_rate g_v
+ 	[VIRTIO_SND_PCM_RATE_88200] = { SNDRV_PCM_RATE_88200, 88200 },
+ 	[VIRTIO_SND_PCM_RATE_96000] = { SNDRV_PCM_RATE_96000, 96000 },
+ 	[VIRTIO_SND_PCM_RATE_176400] = { SNDRV_PCM_RATE_176400, 176400 },
+-	[VIRTIO_SND_PCM_RATE_192000] = { SNDRV_PCM_RATE_192000, 192000 }
++	[VIRTIO_SND_PCM_RATE_192000] = { SNDRV_PCM_RATE_192000, 192000 },
++	[VIRTIO_SND_PCM_RATE_384000] = { SNDRV_PCM_RATE_384000, 384000 }
+ };
  
- 	pm_runtime_forbid(dev);
-+	vfio_pci_vga_uninit(vdev);
- out_vf:
- 	vfio_pci_vf_uninit(vdev);
- 	return ret;
+ /**
+--- a/sound/virtio/virtio_pcm_ops.c
++++ b/sound/virtio/virtio_pcm_ops.c
+@@ -90,7 +90,8 @@ static const struct virtsnd_a2v_rate g_a
+ 	{ 88200, VIRTIO_SND_PCM_RATE_88200 },
+ 	{ 96000, VIRTIO_SND_PCM_RATE_96000 },
+ 	{ 176400, VIRTIO_SND_PCM_RATE_176400 },
+-	{ 192000, VIRTIO_SND_PCM_RATE_192000 }
++	{ 192000, VIRTIO_SND_PCM_RATE_192000 },
++	{ 384000, VIRTIO_SND_PCM_RATE_384000 }
+ };
+ 
+ static int virtsnd_pcm_sync_stop(struct snd_pcm_substream *substream);
 
 
