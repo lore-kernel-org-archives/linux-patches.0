@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516C0400972;
-	Thu, 16 Jul 2026 13:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7860385D76;
+	Thu, 16 Jul 2026 13:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209399; cv=none; b=lE36UAzEh1Z4OgppGK4L+CciXHj1tvllUGGb95DTFq52JzqBq9ncXrO5DetJ9MwO7DLIGmAAFh37WhG2kb5KJ7eaXJaQ8w8Mmh/xruBW4/7J42Q/psf44P5i7+lV6Z5ZJqZbrthYL2klDKCcO/sJGnVWV8RI8b7MV4xsxwEVBNE=
+	t=1784209402; cv=none; b=vBKHlOkOOW5OGmOlTojtSjWS+HZyuGsFPLhYeIWqY9Q7abLrh5B8JsSzE9ouCZdEkCrffY4Zl62g4w9HdfjQx8kYENcn1SRb2At8wOxR1KI5y5apKox6xLyejk8JEZ+e591lE6aGZWXBWk9M11OJFAWH1NvMKXH/qXT+ae8SlFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209399; c=relaxed/simple;
-	bh=IHtndzkGUmCAS5ng8bvdx1OJ0ZEYCwEA5JwLrkEBmmU=;
+	s=arc-20240116; t=1784209402; c=relaxed/simple;
+	bh=BHFytvLIEpYWtMKpxYeTt69EVTxs03hSzr3PI2T/rUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+riJicuBuS7QtwfjhmfodvsPf6PdZcY/dZU/A9mbZJezWN6dTXi0SE2/hHPzoh9Z62sLKekLO95IGlt2qDrsXS6HN32b5wyFA8rhD5b+fM52Z3KpRhy2Z2mLRPmLs6WOnltY2eudMPReI5Vo1jegSwy4RunJYI3jys4JG0CJS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb4H0lBS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bmkG6ewMpWsM4YEuDXuuCsotXSccv77ph+o1nFLhbu9EYXfo5DvBXoC9Ivbd8ps4OLDVLyaz8t8Utqi36MtaJ2cCQRVJoS73jP32dhBfF1BPwbt2maYaYiG/QT+v8db38S21Y2RuhVBjLIDdrFG8xLPjIXhYGi8MXUjAnfXYFMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGyyQ1ht; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb4H0lBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E40B1F000E9;
-	Thu, 16 Jul 2026 13:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGyyQ1ht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116851F00A3A;
+	Thu, 16 Jul 2026 13:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209397;
-	bh=WCkR/Izihq/zJqX+AUsJqEm3lIaoGNeIeGR/3+Hh8oo=;
+	s=korg; t=1784209400;
+	bh=NuxaGIz14Z+woqsXH/sRIWsUC+4a0hZoDQrz9K0tGpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pb4H0lBSm60ei480lBnDervzdBwI7iq0JH2DZ/rc6mU24z4Yk36DCK0AzT8QS8FLf
-	 /CSYgMST7poenKj0MA7t3mmUUgUz1QzwxOrrGHiByXHw8qsC598c2sjnBBDXpYP4T8
-	 PomGyQ8X67kMWmg4MifeY0K32vh/jL+CQjVlEmqQ=
+	b=dGyyQ1htEbVp9aTXA9yDS/5ksxa1/I8eEFj+B0VZSC6O5IDgOxGI3NbJfGhvl3mAw
+	 aX7w7fOMYVTAT7N4HICWnzu9d7O/Tmwo5hI7VJwsXG8msHzqPeVVSWsFBO5Csw89O1
+	 k0KpvqFCdzCasFbCApdRtehu7zbORj81zJPwftus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <gaohan@iscas.ac.cn>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Chen Wang <unicorn_wang@outlook.com>
-Subject: [PATCH 7.1 127/518] riscv: dts: sophgo: Add dma-coherent to SG2042 PCIe controllers
-Date: Thu, 16 Jul 2026 15:26:35 +0200
-Message-ID: <20260716133050.636896850@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 7.1 118/518] binder: fix UAF in binder_free_transaction()
+Date: Thu, 16 Jul 2026 15:26:26 +0200
+Message-ID: <20260716133050.436263274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,58 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Gao <gaohan@iscas.ac.cn>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 2647eabde8de748ee2c9a2816615d4af3bd4bf9d upstream.
+commit f223d27a546c1e1f48d38fd67760e78f068fe8c4 upstream.
 
-SG2042's PCIe root complexes are cache-coherent with the CPU. Mark all
-four PCIe controller nodes (pcie_rc0 through pcie_rc3) as dma-coherent
-so the kernel uses coherent DMA mappings instead of non-coherent bounce
-buffering.
+In binder_free_transaction(), the t->to_proc is read under the t->lock.
+However, once the t->lock is dropped, the to_proc can die in parallel.
+This leads to a use-after-free error when we attempt to acquire its
+inner lock right afterwards:
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
-Link: https://patch.msgid.link/20260331171248.973014-3-gaohan@iscas.ac.cn
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x1a0
+  Write of size 4 at addr ffff00001125da70 by task B/672
+
+  CPU: 20 UID: 0 PID: 672 Comm: B Not tainted 7.1.0-rc6-00284-g8e65320d91cd #4 PREEMPT
+  Hardware name: linux,dummy-virt (DT)
+  Call trace:
+   _raw_spin_lock+0xe4/0x1a0
+   binder_free_transaction+0x8c/0x320
+   binder_send_failed_reply+0x21c/0x2f8
+   binder_thread_release+0x488/0x7e0
+   binder_ioctl+0x12c0/0x29a0
+  [...]
+
+  Allocated by task 675:
+   __kmalloc_cache_noprof+0x174/0x444
+   binder_open+0x118/0xb70
+   do_dentry_open+0x374/0x1040
+   vfs_open+0x58/0x3bc
+  [...]
+
+  Freed by task 212:
+   __kasan_slab_free+0x58/0x80
+   kfree+0x1a0/0x4a4
+   binder_proc_dec_tmpref+0x32c/0x5e0
+   binder_deferred_func+0xc48/0x104c
+   process_one_work+0x53c/0xbc0
+  [...]
+  ==================================================================
+
+To prevent this, pin the target thread (t->to_thread) to guarantee the
+target process remains alive. Undelivered transactions without a target
+thread are already safe, as the target process can only be the current
+context in those paths.
+
+Cc: stable <stable@kernel.org>
+Reported-by: Alice Ryhl <aliceryhl@google.com>
+Closes: https://lore.kernel.org/all/aikJKVuny_eOivwN@google.com/
+Fixes: a370003cc301 ("binder: fix possible UAF when freeing buffer")
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260619185233.2194678-2-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/boot/dts/sophgo/sg2042.dtsi |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/android/binder.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-@@ -417,6 +417,7 @@
- 			vendor-id = <0x1f1c>;
- 			device-id = <0x2042>;
- 			cdns,no-bar-match-nbits = <48>;
-+			dma-coherent;
- 			msi-parent = <&msi>;
- 			status = "disabled";
- 		};
-@@ -439,6 +440,7 @@
- 			vendor-id = <0x1f1c>;
- 			device-id = <0x2042>;
- 			cdns,no-bar-match-nbits = <48>;
-+			dma-coherent;
- 			msi-parent = <&msi>;
- 			status = "disabled";
- 		};
-@@ -461,6 +463,7 @@
- 			vendor-id = <0x1f1c>;
- 			device-id = <0x2042>;
- 			cdns,no-bar-match-nbits = <48>;
-+			dma-coherent;
- 			msi-parent = <&msi>;
- 			status = "disabled";
- 		};
-@@ -483,6 +486,7 @@
- 			vendor-id = <0x1f1c>;
- 			device-id = <0x2042>;
- 			cdns,no-bar-match-nbits = <48>;
-+			dma-coherent;
- 			msi-parent = <&msi>;
- 			status = "disabled";
- 		};
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -1658,10 +1658,19 @@ static void binder_txn_latency_free(stru
+ 
+ static void binder_free_transaction(struct binder_transaction *t)
+ {
++	struct binder_thread *target_thread;
+ 	struct binder_proc *target_proc;
+ 
+ 	spin_lock(&t->lock);
+ 	target_proc = t->to_proc;
++	target_thread = t->to_thread;
++	/*
++	 * Pin target_thread to keep target_proc alive. Undelivered
++	 * transactions with !target_thread are safe, as target_proc
++	 * can only be the current context there.
++	 */
++	if (target_thread)
++		atomic_inc(&target_thread->tmp_ref);
+ 	spin_unlock(&t->lock);
+ 
+ 	if (target_proc) {
+@@ -1676,6 +1685,10 @@ static void binder_free_transaction(stru
+ 			t->buffer->transaction = NULL;
+ 		binder_inner_proc_unlock(target_proc);
+ 	}
++
++	if (target_thread)
++		binder_thread_dec_tmpref(target_thread);
++
+ 	if (trace_binder_txn_latency_free_enabled())
+ 		binder_txn_latency_free(t);
+ 	/*
 
 
