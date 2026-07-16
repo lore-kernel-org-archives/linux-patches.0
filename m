@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E4A3D812C;
-	Thu, 16 Jul 2026 14:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FF6400990;
+	Thu, 16 Jul 2026 14:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210401; cv=none; b=W1T/Ez4ltSQJpU92PZYJfkAbhHM+FHalo9vqZeYyddSGNTmcW0NzQagq4GHIlPYSCeAvTYLpVMkVoGqe+r2dRWRl5XuayBpAqUeZb9YqM60WtBWQb8E3FnmNnAWyCfRGRVfdvbEfpqPQHE2yCm+8KJCrUfBvam/R6UegDmLUbZY=
+	t=1784210404; cv=none; b=YtoRxMJ922VyBmSOxp48StEC4T7viMrO1zNKBqyNDyvufnUnTeg2e8K3r8/JiHse/TmWisgdeyeuAIuxcTD6iy9FPwWJFwRdCcfddstPwwgBV0HBcUzLcTOcJhjjWCwMc1Nz68JuRN2jTTSOqaLPpTAkT61zxaff3H6ZutoV1Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210401; c=relaxed/simple;
-	bh=JY23HAp5rvYR2fJWpYcmBwm0AIPxm9OuqIlmq8fPkg8=;
+	s=arc-20240116; t=1784210404; c=relaxed/simple;
+	bh=GIuFrLIf+O5v9OzFdX+xVIF3FYZAoPo4ofBF8d12D/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hqSy3DV0wHq6poJacU/ybS4zZEIWgSOD5K1uqZWNKMDAvYpICn/hg5d9Rmm+FefbqChWaNwJ4ULtWNdBYa3yTJswErF23YYOwka87XpEblm6nSyq+SJFcQg3oikYylsCT4J5L/bzEOgjDzaA0qg7g9mh8VPPDFsr0cqBoMBr7A0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx4Bt2SK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CbqaNH5OlnYmZtHOJamV9xAoB/uRpy5aA12vqV9oYuCXkuq3ygVUT5nxWKlqdOjNVKjVfFP5wUx5JKNNeYgEX0am9/PN1gaVuWF6kk/BUbhOXD9NdS3KVx1eLBocx7LZEEN33FEhCDZUAJo14opx3ontCMkqY3vUAzB0dGKYYWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdaD2jB9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx4Bt2SK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A161F000E9;
-	Thu, 16 Jul 2026 13:59:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdaD2jB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45A91F000E9;
+	Thu, 16 Jul 2026 14:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210400;
-	bh=Z0uTgiJ3tsqr6XSUKCKFlInCQ++cCPkOUyRaAo7+xeg=;
+	s=korg; t=1784210403;
+	bh=5O6Z4ahs4ktb+SlE8WsbLLvc3s9M9KrlOuu5uOnsRy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yx4Bt2SKlPB0cavctxNHGb5GMECqbIrE148e65A43zzWrkAUhyFwxO1gvFg7mJGbU
-	 4hd5ZUNUmsNP9H6uT5m0Gln8poRFk+t2710bQ1zJKgKdhaVoovxMSN7odmGsVogv+z
-	 M5S4RGXVFsSs0TghKeanV0fyx3R3VjgN1auAncE4=
+	b=bdaD2jB9rRjfESURVaPOvdvMHWmN6Hv4ZsWPbNosfE/ij2Jfwq3GIhp6NdFrmAJLB
+	 neIM3920BfsgyQzD9TrLvBUxsRLSuFrU0pQvTujXf0+0iud3GEc1pt7TQCFqZzxh+3
+	 QMT3gH5cxLKtU1mY3iYbzIOE/wXBmguCtr7DtcGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 032/480] KVM: x86: Unconditionally recompute CR8 intercept on PPR update
-Date: Thu, 16 Jul 2026 15:26:19 +0200
-Message-ID: <20260716133045.394438396@linuxfoundation.org>
+	Jeremy Linton <jeremy.linton@arm.com>,
+	Jarred White <jarredwhite@linux.microsoft.com>,
+	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 033/480] ACPI: CPPC: Suppress UBSAN warning caused by field misuse
+Date: Thu, 16 Jul 2026 15:26:20 +0200
+Message-ID: <20260716133045.415478906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -46,108 +46,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Carlos L�pez" <clopez@suse.de>
+From: Jeremy Linton <jeremy.linton@arm.com>
 
-[ Upstream commit bb365a506b1e6fb050c0fceaad354fe395385ef0 ]
+commit 1b1acf2dada0cc3931bb2cb9ff8832edfbee46a1 upstream.
 
-The TPR_THRESHOLD field in the VMCS is used by VMX to induce VM exits
-when the guest's virtual TPR falls under the specified threshold,
-allowing KVM to inject previously masked interrupts.
+The definition of reg->access_width changes depending on the
+reg->space_id type.  Type ACPI_ADR_SPACE_PLATFORM_COMM uses
+access_width to indicate the PCC region, which can result in a UBSAN
+if the value is greater than 4.
 
-KVM handles these VM exits in handle_tpr_below_threshold().
-Commit eb90f3417a0c ("KVM: vmx: speed up TPR below threshold vmexits")
-optimized this function by calling apic_update_ppr() instead of raising
-KVM_REQ_EVENT. apic_update_ppr() then raises KVM_REQ_EVENT if there is
-a pending, deliverable interrupt.
+For example:
 
-However, if there are no new interrupts pending, apic_update_ppr() does
-not issue the request. Thus, kvm_lapic_update_cr8_intercept() and
-vmx_update_cr8_intercept() are not called before VM entry, which results
-in a high, stale TPR_THRESHOLD. This is problematic due to the following
-sentence in 28.2.1.1 "VM-Execution Control Fields" in the SDM:
+ UBSAN: shift-out-of-bounds in drivers/acpi/cppc_acpi.c:1090:9
+ shift exponent 32 is too large for 32-bit type 'int'
+ CPU: 61 UID: 0 PID: 1220 Comm: (udev-worker) Not tainted 7.0.10-201.fc44.aarch64 #1 PREEMPT(lazy)
+ Hardware name: To be filled by O.E.M.
+ Call trace:
+  ...(trimming)
+  ubsan_epilogue+0x10/0x48
+  __ubsan_handle_shift_out_of_bounds+0xdc/0x1e0
+  cpc_write+0x4d0/0x670
+  cppc_set_perf+0x18c/0x490
+  cppc_cpufreq_cpu_init+0x1c8/0x380 [cppc_cpufreq]
+  ... (trimming)
 
-  The following check is performed if the “use TPR shadow” VM-execution
-  control is 1 and the “virtualize APIC accesses” and “virtual-interrupt
-  delivery” VM-execution controls are both 0: the value of bits 3:0 of
-  the TPR threshold VM-execution control field should not be greater
-  than the value of bits 7:4 of VTPR.
+Lets fix this by validating the region type, as well as whether
+access_width has a value. Then since we are returning bit_width
+directly for ACPI_ADR_SPACE_PLATFORM_COMM, drop the code correcting
+the size.
 
-This error condition is typically not observed when KVM runs on a bare
-metal system because modern processors support APICv, which enables
-virtual-interrupt delivery, and which KVM uses when possible. This
-causes the processor to no longer generate TPR-below-threshold exits
-and to no longer check TPR_THRESHOLD on entry. However, when running
-on older platforms, or under nested virtualization on a hypervisor that
-does not support virtual-interrupt delivery and enforces this check
-(like Hyper-V) this can cause a VM entry failure with hardware error
-0x7, as seen in [1].
-
-Call kvm_lapic_update_cr8_intercept() if apic_update_ppr() does not
-find a deliverable interrupt (and thus does not raise KVM_REQ_EVENT).
-Remove calls to kvm_lapic_update_cr8_intercept() on paths that end up in
-apic_update_ppr(), as they now become redundant. This ensures that any
-path that updates the guest's PPR also figures out if KVM needs to wait
-for a TPR change (using TPR_THRESHOLD on VMX or CR8 intercepts on SVM).
-
-Link: https://github.com/coconut-svsm/svsm/issues/1081 [1]
-Tested-by: Stefano Garzarella <sgarzare@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: eb90f3417a0c ("KVM: vmx: speed up TPR below threshold vmexits")
-Signed-off-by: Carlos López <clopez@suse.de>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260618174347.1981064-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
+Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+Tested-by: Jarred White <jarredwhite@linux.microsoft.com>
+Reviewed-by: Jarred White <jarredwhite@linux.microsoft.com>
+Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260601235808.1113137-1-jeremy.linton@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    2 ++
- arch/x86/kvm/x86.c   |    5 +----
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ drivers/acpi/cppc_acpi.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -1001,6 +1001,8 @@ static void apic_update_ppr(struct kvm_l
- 	if (__apic_update_ppr(apic, &ppr) &&
- 	    apic_has_interrupt_for_ppr(apic, ppr) != -1)
- 		kvm_make_request(KVM_REQ_EVENT, apic->vcpu);
-+	else
-+		kvm_lapic_update_cr8_intercept(apic->vcpu);
- }
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -185,8 +185,13 @@ show_cppc_data(cppc_get_perf_caps, cppc_
+ show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, reference_perf);
+ show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, wraparound_time);
  
- void kvm_apic_update_ppr(struct kvm_vcpu *vcpu)
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -5356,7 +5356,6 @@ static int kvm_vcpu_ioctl_set_lapic(stru
- 	r = kvm_apic_set_state(vcpu, s);
- 	if (r)
- 		return r;
--	kvm_lapic_update_cr8_intercept(vcpu);
+-/* Check for valid access_width, otherwise, fallback to using bit_width */
+-#define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
++/*
++ * PCC reuses the access_width field as the subspace id, so only decode access
++ * size for non-PCC registers. Otherwise, use the bit_width.
++ */
++#define GET_BIT_WIDTH(reg) (((reg)->access_width &&				\
++			     (reg)->space_id != ACPI_ADR_SPACE_PLATFORM_COMM) ? \
++			    (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
  
- 	return 0;
- }
-@@ -12366,8 +12365,6 @@ static int __set_sregs_common(struct kvm
- 	kvm_register_mark_dirty(vcpu, VCPU_EXREG_CR3);
- 	kvm_x86_call(post_set_cr3)(vcpu, sregs->cr3);
- 
--	kvm_set_cr8(vcpu, sregs->cr8);
--
- 	*mmu_reset_needed |= vcpu->arch.efer != sregs->efer;
- 	kvm_x86_call(set_efer)(vcpu, sregs->efer);
- 
-@@ -12396,7 +12393,7 @@ static int __set_sregs_common(struct kvm
- 	kvm_set_segment(vcpu, &sregs->tr, VCPU_SREG_TR);
- 	kvm_set_segment(vcpu, &sregs->ldt, VCPU_SREG_LDTR);
- 
--	kvm_lapic_update_cr8_intercept(vcpu);
-+	kvm_set_cr8(vcpu, sregs->cr8);
- 
- 	/* Older userspace won't unhalt the vcpu on reset. */
- 	if (kvm_vcpu_is_bsp(vcpu) && kvm_rip_read(vcpu) == 0xfff0 &&
+ /* Shift and apply the mask for CPC reads/writes */
+ #define MASK_VAL_READ(reg, val) (((val) >> (reg)->bit_offset) &				\
+@@ -1036,7 +1041,6 @@ static int cpc_read(int cpu, struct cpc_
+ 		 * by the bit width field; the access size is used to indicate
+ 		 * the PCC subspace id.
+ 		 */
+-		size = reg->bit_width;
+ 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
+ 	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
+@@ -1109,7 +1113,6 @@ static int cpc_write(int cpu, struct cpc
+ 		 * by the bit width field; the access size is used to indicate
+ 		 * the PCC subspace id.
+ 		 */
+-		size = reg->bit_width;
+ 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
+ 	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
 
 
