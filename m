@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5FF3F888C;
-	Thu, 16 Jul 2026 13:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D09425874;
+	Thu, 16 Jul 2026 13:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209890; cv=none; b=Xg77fZtof9Zbf2fJoYlminLWxtjq5a9N/iETkRCL5jIW3UhU245fXIdh/9u4wrURDcAHC5EDNBlk0gni5aoSeilky9+E04+oEQPUb+vGSIDNL58JkoiomI7i2mOgkJ1pLA9hBGadhp5+Iymie+rHzId5SM+zpvv+4es/2+hwfLk=
+	t=1784209893; cv=none; b=JUa5B3cLAUvuuYkh9zJy/ejaW5z7olhbMvvbIGOtbTBPGG3bOcgOuaQdZoqg/qqVX4KKmVIGJJE3icWwkdLJMnqjXSI4QiDhkbKXlFJsgVQWVkDl+E+ukpJFtxy4UNExpafhrMz0UuogYX3kuvlz+MCBhWCkIb/SUPcwADw3o3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209890; c=relaxed/simple;
-	bh=rL01Jz+fT48toQ8fRe6AXC4fTC1ZWnKYG6UN4/CPYpw=;
+	s=arc-20240116; t=1784209893; c=relaxed/simple;
+	bh=dVkHbp4YoGrEOj9hmrIrNwwE3lPWimCK/n6UF72tYN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUVzotfy2yZiaiYJ8z7h0M49XSc2bFSAGBbyUKG30UYgi0a9UyIP/L43EaxWQoCPtGg/NKHkE2celFBbMcgn6wIMQ+AyHgwGesQbCA8/6DFPbMyI1VR58HVSG4dn/EGP1UHlp2IKdiwnuFOC5RSWh1QWVB5E3A1k/eQ+xz5eGw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOngEZrk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PN8wp2FtZHYcBIEL+j+QFkWHtYNCVuIM2VENMjw+34X8h2O2qvciShmMEMmt0eq0DEPeu8StQIShn36HqK6dc/pqJDO8ITfoeg8O9zG6jJDe9RLRB9Jc6jmg6vPIn9Ncjz6p7Ff8u8pX67ctthix1Il66J2p034i/hSCO3pBOAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5s7g4tU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOngEZrk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593FB1F000E9;
-	Thu, 16 Jul 2026 13:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5s7g4tU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1621F000E9;
+	Thu, 16 Jul 2026 13:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209888;
-	bh=qfWYROYafpS3uGn3GgPCsJVqRxJmyIgbbt1lrdxo12s=;
+	s=korg; t=1784209891;
+	bh=GCzm6l7kjMh1Zv2Hh1xKH+G0Jc+WsQ2efIkBTUbs9D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IOngEZrkPvnmpNJVl1a40ziQ3QYjcTIGp+JqmBEu4KdgquN+OrOmaFTviySkv2JPC
-	 Qbby4QUQXgC3DDFeyP0BG/xkmujSjeHwkWxGo08chZYnJmmnSbAy/DNP5U2zhZ3KC+
-	 58tNFp9n0vpII00ztjT4B7S/KKPuPZdAynSJ9TzE=
+	b=M5s7g4tU6j45pFbWcMe8J87bDARMNLbKmTWJ6SRuO9hygLgkaQ8aB/0PQw8ojUU1m
+	 5E6oZidDDHEHg3V/33LzaxN0VVW9LhliH97jej+0VzbZBOm9+Ci4poi86n+APmHGui
+	 XIwELi5TgGsOdiZDv5u6iKadrw6LbjA9kb+Zxl4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Maoyi Xie <maoyixie.tju@gmail.com>
-Subject: [PATCH 7.1 304/518] usb: gadget: composite: fix dead empty check in the USB_DT_OTG handler
-Date: Thu, 16 Jul 2026 15:29:32 +0200
-Message-ID: <20260716133054.476159796@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Igor Achkinazi <igor.achkinazi@dell.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.1 351/518] nvme-multipath: set BIO_REMAPPED on bios remapped to per-path namespace disks
+Date: Thu, 16 Jul 2026 15:30:19 +0200
+Message-ID: <20260716133055.503571818@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,61 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Achkinazi, Igor <Igor.Achkinazi@dell.com>
 
-commit f8f680609c2b3ab795ffcd6f21585b6dfc46d395 upstream.
+commit 88bac2c1a72b8f4f71e9845699aa872df04e5850 upstream.
 
-The OTG branch of composite_setup() falls back to the first
-configuration when none is selected:
+When nvme_ns_head_submit_bio() remaps a bio from the multipath head to a
+per-path namespace, bio_set_dev() clears BIO_REMAPPED.  The remapped bio
+is then resubmitted through submit_bio_noacct() which calls
+bio_check_eod() because BIO_REMAPPED is not set.
 
-	if (cdev->config)
-		config = cdev->config;
-	else
-		config = list_first_entry(&cdev->configs,
-					  struct usb_configuration, list);
-	if (!config)
-		goto done;
-	...
-	memcpy(req->buf, config->descriptors[0], value);
+This races with nvme_ns_remove() which zeroes the per-path capacity
+before synchronize_srcu():
 
-list_first_entry() never returns NULL. On an empty list it returns
-container_of() of the list head. So the "if (!config)" check is dead.
+  CPU 0 (IO submission)
+  ---------------------
+  srcu_read_lock()
+  nvme_find_path() -> ns
+    [NVME_NS_READY is set]
 
-When cdev->configs is empty, config points at the head inside struct
-usb_composite_dev. config->descriptors[0] reads whatever sits at that
-offset. The memcpy copies up to w_length bytes of it into the response
-buffer.
+  CPU 1 (namespace removal)
+  -------------------------
+  clear_bit(NVME_NS_READY)
+  set_capacity(ns->disk, 0)
+  synchronize_srcu()  <- blocks
 
-cdev->configs can be empty in two cases. One is a teardown race on
-gadget unbind with a control transfer in flight. The other is a driver
-that sets is_otg before it adds a config. A reproducer that holds
-cdev->configs empty triggers a KASAN fault in this branch.
+  CPU 0 (IO submission)
+  ---------------------
+  bio_set_dev(bio, ns->disk->part0)
+    [clears BIO_REMAPPED]
+  submit_bio_noacct(bio)
+    -> bio_check_eod() sees capacity=0
+    -> bio fails with IO error
 
-Use list_first_entry_or_null() so the existing check does its job.
+The SRCU read lock prevents synchronize_srcu() from completing, but does
+not prevent set_capacity(0) from executing.  The bio fails the EOD check
+before it reaches the NVMe driver, so nvme_failover_req() never gets a
+chance to redirect it to another path of multipath.  IO errors are
+reported to the application despite another path being available.
 
-Fixes: 53e6242db8d6 ("usb: gadget: composite: add USB_DT_OTG request handling")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260527150832.2943293-1-maoyixie.tju@gmail.com
+On older kernels (before commit 0b64682e78f7 "block: skip unnecessary
+checks for split bio"), the same race was also reachable through split
+remainders resubmitted via submit_bio_noacct().
+
+Fix this by setting BIO_REMAPPED after bio_set_dev() in
+nvme_ns_head_submit_bio().  This skips bio_check_eod() on the per-path
+device; the EOD check already passed on the multipath head.
+
+NVMe per-path namespace devices are always whole disks (bd_partno=0), so
+the blk_partition_remap() skip also gated by BIO_REMAPPED is a no-op.
+The flag does not persist across failover and cannot go stale if the
+namespace geometry changes between attempts: nvme_failover_req() calls
+bio_set_dev() to redirect the bio back to the multipath head, which
+clears BIO_REMAPPED.  When nvme_requeue_work() resubmits through
+submit_bio_noacct(), bio_check_eod() runs normally against the current
+capacity.
+
+Same approach as commit 3a905c37c351 ("block: skip bio_check_eod for
+partition-remapped bios").
+
+Fixes: a7c7f7b2b641 ("nvme: use bio_set_dev to assign ->bi_bdev")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Igor Achkinazi <igor.achkinazi@dell.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/multipath.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -1863,9 +1863,10 @@ composite_setup(struct usb_gadget *gadge
- 				if (cdev->config)
- 					config = cdev->config;
- 				else
--					config = list_first_entry(
-+					config = list_first_entry_or_null(
- 							&cdev->configs,
--						struct usb_configuration, list);
-+							struct usb_configuration,
-+							list);
- 				if (!config)
- 					goto done;
- 
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -511,6 +511,12 @@ static void nvme_ns_head_submit_bio(stru
+ 	ns = nvme_find_path(head);
+ 	if (likely(ns)) {
+ 		bio_set_dev(bio, ns->disk->part0);
++		/*
++		 * Use BIO_REMAPPED to skip bio_check_eod() when this bio
++		 * enters submit_bio_noacct() for the per-path device. The EOD
++		 * check already passed on the multipath head.
++		 */
++		bio_set_flag(bio, BIO_REMAPPED);
+ 		bio->bi_opf |= REQ_NVME_MPATH;
+ 		trace_block_bio_remap(bio, disk_devt(ns->head->disk),
+ 				      bio->bi_iter.bi_sector);
 
 
