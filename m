@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8DE22301;
-	Thu, 16 Jul 2026 13:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F243101BF;
+	Thu, 16 Jul 2026 13:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210299; cv=none; b=j9YdxAnDn6IbydDo0q0SXb2iQ2YVZlkZD6XDWMJ5Fs9XvBsbmrDu/yfVubbWTm6Nnx0c4xiBM2fMs9H2eI/QviPvOIOoeZe62kuZSDQHeZrNYTCwjS8IXzdDbnAbJsPzbxX293T30Fr/2qi2kuCsBtFp1m2TRX4XJ6M3Hj7uMMs=
+	t=1784210302; cv=none; b=h91rwJiIGsksQUYlxjzaBdiBiOFcTa0fBn+DEtpumRa+yTMExGvbJoVRJ5aUDWVwC6Y5Rf+gb/ljcjHKuaR7lpsyNuuee852DaxNbix8c59Yyr+JVzKZeFMsOzFqObzNtuyi8R2aw3z3IFWoFFyZ8fNHOXwjQsq8o3+B13RP7Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210299; c=relaxed/simple;
-	bh=B/0lWOhxMM74wN6dSFwQgYzUfpv03i+G3GEGvHpQdo0=;
+	s=arc-20240116; t=1784210302; c=relaxed/simple;
+	bh=WE7L+TUa5RbSbRjo2PfGO0aHnxRKfadLyREIo93fTKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f5Yufn/1zLHutw6wqupIDL4ELLvhmQcBxgppIVhVsl2OXlKovNmfrZTIJd2WVGel66CG2NcSyZRh6v5A0GdnlAAlLejacLZ8DTTKg2U9zpz3kG5AeF4XwHLBLrqcqI3+bc0WWH+YLzilyHh77EP/31/YVyMCufhS6l30SseOWA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePEPkWAh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QhE0UUEVK2Bnoh0znR4c4hDIIOH0uXZGwx8ByXjSiZGzlSznplU0cbLCUOuLka2hcU6jhaC16Gd5FBkNxyXk1WCOksZL+P/sXpmWUGvZK7fTaUqDB7Hbe+3uCvCJ6xVPJipHJKQRh2hmWkEdoGQAr+FtzI5C4AdA6YlXrdYxqcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AE/yAAgr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePEPkWAh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD811F000E9;
-	Thu, 16 Jul 2026 13:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AE/yAAgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB8B1F000E9;
+	Thu, 16 Jul 2026 13:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210298;
-	bh=v7eBKfoEepEX6NvViTNzGMtdzmjWW1onNLBXSI4nnuo=;
+	s=korg; t=1784210300;
+	bh=Ug6y+7YfgQIv3p8ELKldICzYJqfuiPaumIZltwK/t/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ePEPkWAhhJu9p0bdWMQodt8Zszf49jCYItn+051wjeySZUM3FEid2ZJWLN2Itysi7
-	 tm7B9LkZvRd1VPI3pN43hqLz8kPzLKkisGgM6dKusZY+YKiKmjiFVUu30JqVlcuv7N
-	 f1j4vVZj1UopwCQgtNoTfea9AzitFnGNA8fFMGgQ=
+	b=AE/yAAgr47N/hdeEbQqla0Yis0N9KDh/gkt30RYo3TkPdyCWuQeKRtU0M8CoN/NVD
+	 jYAv78eV6h/f9fLDZpPO68UmK1XM9UXNsnKgtPwF5vk1eEjdYbhfRcpTnvztjqih+X
+	 YkJfS2TZuKjAHQP1v1vF7HlkyOco5MjIw/e/+VHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Berkant Koc <me@berkoc.com>,
 	xlabai <xlabai@tencent.com>,
+	Berkant Koc <me@berkoc.com>,
 	Bernd Schubert <bernd@bsbernd.com>,
 	Joanne Koong <joannelkoong@gmail.com>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	stable@kernel.org
-Subject: [PATCH 7.1 513/518] fuse-uring: Avoid queue->stopped races and set/read that value under lock
-Date: Thu, 16 Jul 2026 15:33:01 +0200
-Message-ID: <20260716133059.062059348@linuxfoundation.org>
+Subject: [PATCH 7.1 514/518] fuse-uring: make a fuse_req on SQE commit only findable after memcpy
+Date: Thu, 16 Jul 2026 15:33:02 +0200
+Message-ID: <20260716133059.086073068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -56,76 +56,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernd Schubert <bernd@bsbernd.com>
 
-commit b70a3aca16934c196f92abb17b01c1647b9bb63c upstream.
+commit 1efd3d474fc0ba74dfd984249bca78807d739812 upstream.
 
-There are several readers of queue->stopped that check the value
-under lock, but fuse_uring_commit_fetch() did not and actually
-the value was not set under the lock in fuse_uring_abort_end_requests()
-either. Especially in fuse_uring_commit_fetch it is important
-to check under a lock, because due to races 'struct fuse_req'
-might be freed with fuse_request_end, but another thread/cpu
-might already do teardown work.
+Bad userspace might try to trick us and send commit SQEs request
+unique / commit-id of requests that are not even send to
+fuse-server (io_uring_cmd_done() not called) yet.
 
-Cc: stable@kernel.org # 6.14
-Fixes: 4a9bfb9b6850fec ("fuse: {io-uring} Handle teardown of ring entries")
-Reported-by: Berkant Koc <me@berkoc.com>
+fuse_uring_commit_fetch() ends the fuse request when the ring entry
+has a wrong state, but that could have caused a use-after-free
+with the memcpy operations in fuse_uring_send_in_task().
+In order to avoid such races the call of fuse_uring_add_to_pq()
+is moved after the copy operations and just before completing
+the io-uring request - malicious userspace cannot find the request
+anymore until all prepration work in fuse-client/kernel is completed.
+
+This also moves fuse_uring_add_to_pq() a bit up in the code to
+avoid a forward declaration. Also not with a preparation commit,
+to make it easier to back port to older kernels.
+
 Reported-by: xlabai <xlabai@tencent.com>
+Reported-by: Berkant Koc <me@berkoc.com>
+Fixes: c090c8abae4b6b ("fuse: Add io-uring sqe commit and fetch support")
+Cc: stable@kernel.org # 6.14
 Signed-off-by: Bernd Schubert <bernd@bsbernd.com>
 Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev_uring.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/fuse/dev_uring.c |   33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
 --- a/fs/fuse/dev_uring.c
 +++ b/fs/fuse/dev_uring.c
-@@ -131,10 +131,9 @@ void fuse_uring_abort_end_requests(struc
- 		if (!queue)
- 			continue;
- 
--		queue->stopped = true;
--
- 		WARN_ON_ONCE(ring->fc->max_background != UINT_MAX);
- 		spin_lock(&queue->lock);
-+		queue->stopped = true;
- 		spin_lock(&fc->bg_lock);
- 		fuse_uring_flush_bg(queue);
- 		spin_unlock(&fc->bg_lock);
-@@ -467,7 +466,7 @@ static void fuse_uring_async_stop_queues
- 				      FUSE_URING_TEARDOWN_INTERVAL);
- 	} else {
- 		wake_up_all(&ring->stop_waitq);
--		fuse_conn_put(ring->chan->conn);
-+		fuse_conn_put(ring->fc);
- 	}
+@@ -714,6 +714,19 @@ static int fuse_uring_prepare_send(struc
+ 	return err;
  }
  
-@@ -479,7 +478,7 @@ void fuse_uring_stop_queues(struct fuse_
- 	fuse_uring_teardown_all_queues(ring);
- 
- 	if (atomic_read(&ring->queue_refs) > 0) {
--		fuse_conn_get(ring->chan->conn);
-+		fuse_conn_get(ring->fc);
- 		ring->teardown_time = jiffies;
- 		INIT_DELAYED_WORK(&ring->async_teardown_work,
- 				  fuse_uring_async_stop_queues);
-@@ -900,10 +899,15 @@ static int fuse_uring_commit_fetch(struc
- 		return err;
- 	fpq = &queue->fpq;
- 
--	if (!READ_ONCE(fc->connected) || READ_ONCE(queue->stopped))
-+	if (!READ_ONCE(fc->connected))
- 		return err;
- 
- 	spin_lock(&queue->lock);
-+	if (unlikely(queue->stopped)) {
-+		spin_unlock(&queue->lock);
-+		return err;
-+	}
++/* Used to find the request on SQE commit */
++static void fuse_uring_add_to_pq(struct fuse_ring_ent *ent)
++{
++	struct fuse_ring_queue *queue = ent->queue;
++	struct fuse_pqueue *fpq = &queue->fpq;
++	unsigned int hash;
++	struct fuse_req *req = ent->fuse_req;
 +
- 	/* Find a request based on the unique ID of the fuse request
- 	 * This should get revised, as it needs a hash calculation and list
- 	 * search. And full struct fuse_pqueue is needed (memory overhead).
++	req->ring_entry = ent;
++	hash = fuse_req_hash(req->in.h.unique);
++	list_move_tail(&req->list, &fpq->processing[hash]);
++}
++
+ /*
+  * Write data to the ring buffer and send the request to userspace,
+  * userspace will read it
+@@ -736,6 +749,7 @@ static int fuse_uring_send_next_to_ring(
+ 	ent->cmd = NULL;
+ 	ent->state = FRRS_USERSPACE;
+ 	list_move_tail(&ent->list, &queue->ent_in_userspace);
++	fuse_uring_add_to_pq(ent);
+ 	spin_unlock(&queue->lock);
+ 
+ 	io_uring_cmd_done(cmd, 0, issue_flags);
+@@ -753,19 +767,6 @@ static void fuse_uring_ent_avail(struct
+ 	ent->state = FRRS_AVAILABLE;
+ }
+ 
+-/* Used to find the request on SQE commit */
+-static void fuse_uring_add_to_pq(struct fuse_ring_ent *ent,
+-				 struct fuse_req *req)
+-{
+-	struct fuse_ring_queue *queue = ent->queue;
+-	struct fuse_pqueue *fpq = &queue->fpq;
+-	unsigned int hash;
+-
+-	req->ring_entry = ent;
+-	hash = fuse_req_hash(req->in.h.unique);
+-	list_move_tail(&req->list, &fpq->processing[hash]);
+-}
+-
+ /*
+  * Assign a fuse queue entry to the given entry
+  */
+@@ -783,10 +784,13 @@ static void fuse_uring_add_req_to_ring_e
+ 	}
+ 
+ 	clear_bit(FR_PENDING, &req->flags);
++
++	/* Until fuse_uring_add_to_pq() the req is not attached to any list */
++	list_del_init(&req->list);
++
+ 	ent->fuse_req = req;
+ 	ent->state = FRRS_FUSE_REQ;
+ 	list_move_tail(&ent->list, &queue->ent_w_req_queue);
+-	fuse_uring_add_to_pq(ent, req);
+ }
+ 
+ /* Fetch the next fuse request if available */
+@@ -1207,6 +1211,7 @@ static void fuse_uring_send(struct fuse_
+ 	ent->state = FRRS_USERSPACE;
+ 	list_move_tail(&ent->list, &queue->ent_in_userspace);
+ 	ent->cmd = NULL;
++	fuse_uring_add_to_pq(ent);
+ 	spin_unlock(&queue->lock);
+ 
+ 	io_uring_cmd_done(cmd, ret, issue_flags);
 
 
