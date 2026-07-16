@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43D7403AFD;
-	Thu, 16 Jul 2026 14:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9007228505E;
+	Thu, 16 Jul 2026 14:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211748; cv=none; b=V0buADXHzGVRAvn/ZyIbj3hK3WULSv/ftxXfne8N/0MtNB77BEoeqJIbAHKtIBEPiOZrMR00SvlEoeX3/QYWCsQIQUPb+F60L5y7rjPKFq3TFTt2Sdp5cBXmqokyMXk5neCpm2QqZB1vKYADha86NaHWrMbJQ9ESmCHTqP1X6IY=
+	t=1784211751; cv=none; b=TsxbOdVvqS73+XLltlpWq7/BZkGVoDp4TKILPKCJA7WsryhitPDHBJjt1yP/x38oQoNgLD5lrDsE6gMp3oya0VVmGTZk8+TPiaarJtOa31VYf3T7+JY4zZQyEvAU5Vef+fusFjnyIIl5fStuJ/hNksMuKUVgGXihGu2vEpGR3uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211748; c=relaxed/simple;
-	bh=+MprV9RUeGjfGUg88tZZiuxJRayTtlDfoIlIO+T0NvU=;
+	s=arc-20240116; t=1784211751; c=relaxed/simple;
+	bh=gZ8IgD33JGGDDRB9GybaI98BDYHY35dG4C5Zz9grCME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijcP9ATc+nM++QGC1Anoi/YI2KT7Uhum0tDdZ0DzbQ2jpL7qqGEZj75g684e3SIBJLNhu9m4PUVfNxWjm+hMSTjuDkUkP3CXhi4MYrXR/aeoAvSbpR8+LfcUYTxVL8h5AVe8ZS2Q9AUGEEr/pVPuQ2D83meZxo6cahhpkDe2rhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWDW5S7d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K8ZlVwwvnrH4S0O7/X5QQCt3G7uKAbShL4KAyqiLfv4drqY5UUY5LtpVmvv4qcDBJhgwNtk1n2SCnD/qvApQEcBTDdyCSzRPbRuUZ4S3O2aAuxyDeb07nKIDS87it52MeUhL9AeDI2xTGs5gi5vPB8HpShNY3aM9e2pD3fo6KFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAyBUBbI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWDW5S7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 567C71F000E9;
-	Thu, 16 Jul 2026 14:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAyBUBbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39C71F000E9;
+	Thu, 16 Jul 2026 14:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211747;
-	bh=C3qaGTRaDi+W/ljxStSvKllaGp0f3Y7hqypUM21Cu6A=;
+	s=korg; t=1784211750;
+	bh=eKwFT/CloNpe8/G7pb5rG6skSc9ejeFyFiQm0ZyiVwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RWDW5S7dj6V8qmzL9g015Qu+tT8Yu/RPigAI1YfV4536/pV/mgCvm9ZklT4/uX31Z
-	 gLYpY7pUd4OZPRL+dB3jLv4PJivrie417N36n9G/cj0lsk/1myIwnB1pJrDl+iBkVK
-	 wd3DLkLtowt7L4G02zsL39CnbcoyuM0amEkMcl/Y=
+	b=lAyBUBbImM4lWEG7sO82YxgsiZMmTbeVh+2ZQMBIAXdaxBBkoqP3Ez7ZEpssou5Uq
+	 Rmpf2zXbkOhIpoBDBs15VplwRqNHgwPcVyKNxnfKWZlHsV6lTiyU0gzktZQUfRHPey
+	 Qp5lFbjgcrwps/tFPLI5GEbKTDkCIyt83Sc4WMVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.12 066/349] iio: magnetometer: ak8975: Add missed pm_runtime_put_autosuspend() call
-Date: Thu, 16 Jul 2026 15:30:00 +0200
-Message-ID: <20260716133034.800851195@linuxfoundation.org>
+Subject: [PATCH 6.12 067/349] iio: resolver: ad2s1210: notify trigger and clear state on fault read error
+Date: Thu, 16 Jul 2026 15:30:01 +0200
+Message-ID: <20260716133034.822259377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,34 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit e94944d7364d3ddb273539492f9bd9c9a622549a upstream.
+commit 70247658d0e783c93b48fcbc3b81d99e992ff478 upstream.
 
-On the failure in the ak8975_read_axis() the PM runtime gets unbalanced.
-Balance it by calling pm_runtime_put_autosuspend() on error path as well.
+ad2s1210_trigger_handler() walks several scan-mask branches and uses
+"goto error_ret" to land on the iio_trigger_notify_done() teardown at
+the bottom of the function for every I/O error -- except the
+MOD_CONFIG fault-register read, which uses a bare "return ret":
 
-Fixes: cde4cb5dd422 ("iio: magn: ak8975: deploy runtime and system PM")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260505-magnetometer-fixes-v5-0-831b9b5550fc%40gmail.com
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+	if (st->fixed_mode == MOD_CONFIG) {
+		unsigned int reg_val;
+
+		ret = regmap_read(st->regmap, AD2S1210_REG_FAULT, &reg_val);
+		if (ret < 0)
+			return ret;
+		...
+	}
+
+Two problems on that path:
+
+  - the handler returns a negative errno where the prototype expects
+    an irqreturn_t (IRQ_HANDLED / IRQ_NONE), so the caller in the
+    IIO core sees a value outside the enum;
+  - iio_trigger_notify_done() is skipped, leaving the trigger
+    busy-flag set. A single transient SPI/regmap error on the fault
+    read then wedges the trigger so subsequent samples are dropped
+    until the consumer is detached.
+
+Convert the error path to "goto error_ret" so the failure path goes
+through the same notify_done() teardown as every other error in the
+handler.
+
+Fixes: f9b9ff95be8c ("iio: resolver: ad2s1210: add support for adi,fixed-mode")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/ak8975.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/resolver/ad2s1210.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -785,6 +785,7 @@ static int ak8975_read_axis(struct iio_d
+--- a/drivers/iio/resolver/ad2s1210.c
++++ b/drivers/iio/resolver/ad2s1210.c
+@@ -1334,7 +1334,7 @@ static irqreturn_t ad2s1210_trigger_hand
  
- exit:
- 	mutex_unlock(&data->lock);
-+	pm_runtime_put_autosuspend(&data->client->dev);
- 	dev_err(&client->dev, "Error in reading axis\n");
- 	return ret;
- }
+ 		ret = regmap_read(st->regmap, AD2S1210_REG_FAULT, &reg_val);
+ 		if (ret < 0)
+-			return ret;
++			goto error_ret;
+ 
+ 		st->sample.fault = reg_val;
+ 	}
 
 
