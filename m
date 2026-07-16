@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E4B42F6FA;
-	Thu, 16 Jul 2026 14:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD8A42DFF4;
+	Thu, 16 Jul 2026 14:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212177; cv=none; b=XZ/3Tl42BDKWvSjbA6E14vokMwFu6vJKFk3K5icelODXES/E7pM6Y2meAcP59rczB1ZR58nsGsLTlJeYgYrwsMhNbfo14NsesUMR5k5p5ms2AXbqXVS+qhMDA269hJOO6A66vXgbii/NSzVaMn6a40hBnahtdHlhiyQQmn6IX3s=
+	t=1784212179; cv=none; b=Ec0fa1g/DaxUBYlrBQ9Wqf4YXy7PbcXMFQQMhQFDi5vQCeQBKuIXzBfBIkXgEUPDk0BoMSuVU6T45aTQjrrQPuELPpZahPHMIIQillVWnjHtpAICEQU6GCq2Qeg74Ty9ObD8ZPJRFdFz1Dp+R2V47JAyqwI/tptdtmUc+GPjkiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212177; c=relaxed/simple;
-	bh=MxtEEeMBUQskrK4CbJuKjm6gPWX4zovh/NvX0TqKE0E=;
+	s=arc-20240116; t=1784212179; c=relaxed/simple;
+	bh=Mus+BXaLMvjqt6pNms7Qrm+T15m7qHSQ3Taa985lm80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jLsFjs90a85pzyC1EaUVjPm6RWV6yhqZazu60u7FUECF69kNPFteMAtM3cho9Q2wcxHb1wlyNgxo8hSvWA8URqqyw+GBQAraFF/TotwxPycMqHdgTYfIXO9iT0Tv2RldhHlfqahiCI3wQ63YYMqYbcwb5TVw+7Lc0tdiOg8dqT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uD86B22K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RDIrBIJEvgff0TJ0hlRXzPUGXcLOi3Bpnu5F9fFx+qt+FHmNkAKMUWJwGYSYOetspMfJje4fyvaTI57tve5dob3j9tmayMAwCwu/TqV4o7dviGPqStB86rqo/gd13E90jOxhNqViAWRi+iWZyHtnjeSh0Oe8Zv7v1MsVpbdvvvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNZikYbh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uD86B22K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623A31F000E9;
-	Thu, 16 Jul 2026 14:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNZikYbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0705E1F000E9;
+	Thu, 16 Jul 2026 14:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212175;
-	bh=U1BbS6IjYlM3Q2d6USXi6S02DPJuLcjDKBGghgEZpr4=;
+	s=korg; t=1784212178;
+	bh=lXcB60hz5NeNe50yKrCgRV1A5B2XNm8RHbXjBao3Fj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uD86B22K6kiWxK7oAGWO7SUJ6vC/1z30i34mBe4embg7zDmpdJs+sNz6CGZtsv6dg
-	 exgGrvlIZLM1Gjyuzwc1xdO/YDU6h+ByGCrOkXufFt2BdQQT8NG+wdZDcGhK80910I
-	 gZAzdRRhBnJZOOA5MRVKoijDfieOnxE/CgOCqbUk=
+	b=HNZikYbhR5XEnSNJJPuyQMxLV5hw/3wF5cbkyPv5WQHskuYgaj/HJe6PQ10Bbjk+3
+	 3y+wc1Cac2TQGAkavmhAgGar4gkVC4XaEtAjz+Zssg6aj9zWxt2rhZ2ix1EHIGu8xc
+	 F7dEsGFkIRGOS9oiIbl9P1IAqNTSQa6nRuOlDxo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Xu Rao <raoxu@uniontech.com>
-Subject: [PATCH 6.12 227/349] usb: gadget: f_printer: take kref only for successful open
-Date: Thu, 16 Jul 2026 15:32:41 +0200
-Message-ID: <20260716133038.442212885@linuxfoundation.org>
+	Tianxiang Chen <nanmu@xiaomi.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 192/349] cpufreq: Fix hotplug-suspend race during reboot
+Date: Thu, 16 Jul 2026 15:32:06 +0200
+Message-ID: <20260716133037.672947086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,41 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Tianxiang Chen <nanmu@xiaomi.com>
 
-commit 30adce93d5c4a5a1ec29d9249e3fdfcc391d406b upstream.
+commit a9029dd55696c651ee46912afa2a166fa456bb3e upstream.
 
-printer_open() returns -EBUSY when the character device is already
-open, but it increments dev->kref regardless of the return value. VFS
-does not call ->release() for a failed open, so every rejected second
-open permanently leaks one reference.
+During system reboot, cpufreq_suspend() is called via the
+kernel_restart() -> device_shutdown() path. Unlike the normal system
+suspend path, the reboot path does not call freeze_processes(), so
+userspace processes and kernel threads remain active.
 
-Move kref_get() into the successful-open branch.
+This allows CPU hotplug operations to run concurrently with
+cpufreq_suspend(). The original code has no synchronization with CPU
+hotplug, leading to a race condition where governor_data can be freed
+by the hotplug path while cpufreq_suspend() is still accessing it,
+resulting in a null pointer dereference:
 
-Fixes: e8d5f92b8d30 ("usb: gadget: function: printer: fix use-after-free in __lock_acquire")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/80295742B820DA9B+20260626064617.4090626-1-raoxu@uniontech.com
+  Unable to handle kernel NULL pointer dereference
+  Call Trace:
+   do_kernel_fault+0x28/0x3c
+   cpufreq_suspend+0xdc/0x160
+   device_shutdown+0x18/0x200
+   kernel_restart+0x40/0x80
+   arm64_sys_reboot+0x1b0/0x200
+
+Fix this by adding cpus_read_lock()/cpus_read_unlock() to
+cpufreq_suspend() to block CPU hotplug operations while suspend is in
+progress.
+
+Fixes: 65650b35133f ("cpufreq: Avoid cpufreq_suspend() deadlock on system shutdown")
+Signed-off-by: Tianxiang Chen <nanmu@xiaomi.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20260408141914.35281-1-nanmu@xiaomi.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_printer.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/cpufreq/cpufreq.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/function/f_printer.c
-+++ b/drivers/usb/gadget/function/f_printer.c
-@@ -363,12 +363,11 @@ printer_open(struct inode *inode, struct
- 		ret = 0;
- 		/* Change the printer status to show that it's on-line. */
- 		dev->printer_status |= PRINTER_SELECTED;
-+		kref_get(&dev->kref);
- 	}
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1958,6 +1958,7 @@ void cpufreq_suspend(void)
+ 	if (!cpufreq_driver)
+ 		return;
  
- 	spin_unlock_irqrestore(&dev->lock, flags);
++	cpus_read_lock();
+ 	if (!has_target() && !cpufreq_driver->suspend)
+ 		goto suspend;
  
--	kref_get(&dev->kref);
--
- 	return ret;
+@@ -1977,6 +1978,7 @@ void cpufreq_suspend(void)
+ 
+ suspend:
+ 	cpufreq_suspended = true;
++	cpus_read_unlock();
  }
  
+ /**
 
 
