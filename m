@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AC44229AB;
-	Thu, 16 Jul 2026 13:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BDA305692;
+	Thu, 16 Jul 2026 13:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209797; cv=none; b=f2M2N0pa7mkc92luDcjsdw5Mad3V6RPkYnnp7hA6tSGH6jWLFXoqIJ+wpbYWMQjlYDVproVp5mnU78BgOa2WzWfTUO0lV+Zy1xDb/HG1iaEfD6kBAdjl8wlMX06b/UP7m+sliSXLP9KxH54lgugd3Whxor+TAm92bv0McPXQlak=
+	t=1784209799; cv=none; b=a0HuM/Zv/00l2Fa7hbUs2czUodImIhiHwI0juOHuBtfktQRT5uUE3DuSz4MxerhTR7G0nJoNAFbDxOkpaVOr/66YSKNQCSbagsPV8soxczu/e2r97KfMyC8xXoefC1flz0LGTPPc7jzU8EDKoyM0dEqinYSDXAFpuXcCQ3ZR4go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209797; c=relaxed/simple;
-	bh=0RpdNitw2SjukNSS9cWBQpb+axWY1qIGCSmY1/fVqaE=;
+	s=arc-20240116; t=1784209799; c=relaxed/simple;
+	bh=bEYtAwIdIwggsXEegotaKOfbqg9IwVfJvaemvePGmQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ry8G9EKQ5LTxEcEnXwRlOr6FCzFJaSXXPVFkEKpq2jp8Qh2wXamFAJIOcQPO1wzjc+BNYdu+q6tk7LkMpzqYLWsr0Eq7qNtxynE2jkCiswGsPIQfDAyxrJDwnWi3pnx33JTjG80yL0O2i1Zmgm+APHYBydWEo3pIiRHXJRGUJy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFd+ymc5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eKf0eqY2ZfPbdmAu+WxJCn/6D4Qe1zmQGqMD4GsXespYIAiNJi13uMTao3bMGrb65qsscr5MTGoFrxqj/Ab3/YX0JiBD3Q8MRwQbpj4SgI50BplYmguDHf43nsdWh5kF5ryCGkE2BoFhak6RC4gi/heyQf2eUUsL7Z51fH6stYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuhH0TqM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFd+ymc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C119F1F00A3D;
-	Thu, 16 Jul 2026 13:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuhH0TqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B061F00A3A;
+	Thu, 16 Jul 2026 13:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209794;
-	bh=zxkBrsouUlU07VNPYFbldTVANT+TD5emveIsHFh09Ok=;
+	s=korg; t=1784209796;
+	bh=T+0WeNfWuaHucDsut+a+Z2uWa+9r6aGoxV6WUAwdBP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mFd+ymc5jqE+tppXgbsIlkJWHhL6zMwvRMKbOitPj4yA9SZhdYd66WtsIxYmMX8Za
-	 qHQJimipZUXhQ18ntPP1L2K85vSZb8oPzIKvFmgTrMcHZ1LODBxSSYMJYnSGlMxZtp
-	 KUhjzixs6p9bAgJf6OiWpFlv8ipFVWHiXnFUgkAM=
+	b=VuhH0TqMBsWCY6NlB9O4fa8jKFcb7Il4+KV9L8sGl4RUFTOxfuQr5BMcxBEtJfyCW
+	 KTMts36+FOrZ7u9BNB8BV/WGjKo4WKMF+EnBmYunsvKUGQtCi3f7DtvkYYWavhT6KA
+	 iABr7EMOnw+lK7cTc+2rHUePUiSlkqGeScunH1Hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.1 322/518] USB: serial: digi_acceleport: fix write buffer corruption
-Date: Thu, 16 Jul 2026 15:29:50 +0200
-Message-ID: <20260716133054.863093076@linuxfoundation.org>
+Subject: [PATCH 7.1 323/518] USB: ulpi: fix memory leak on registration failure
+Date: Thu, 16 Jul 2026 15:29:51 +0200
+Message-ID: <20260716133054.884681328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,72 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 24ca1fea8f2753bf33e1d458ec1ae5d9b7796a65 upstream.
+commit 8af6812795869a66e9b26044f455b13deecdb69c upstream.
 
-The digi_write_inb_command() is supposed to wait for the write urb to
-become available or return an error, but instead it updates the transfer
-buffer and tries to resubmit the urb on timeout.
+The allocated device name is never freed on early ULPI device
+registration failures.
 
-To make things worse, for commands like break control where no timeout
-is used, the driver would corrupt the urb immediately due to a broken
-jiffies comparison (on 32-bit machines this takes five minutes of uptime
-to trigger due to INITIAL_JIFFIES).
+Fix this by initialising the device structure earlier and releasing the
+initial reference whenever registration fails.
 
-Fix this by adding the missing return on timeout and waiting
-indefinitely when no timeout has been specified as intended.
-
-This issue was (sort of) flagged by Sashiko when reviewing an unrelated
-change to the driver.
-
-Link: https://sashiko.dev/#/patchset/20260610132232.356139-1-johan%40kernel.org?part=11
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 289fcff4bcdb ("usb: add bus type for USB ULPI")
+Cc: stable <stable@kernel.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260608145803.69360-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/digi_acceleport.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/usb/common/ulpi.c |   23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/serial/digi_acceleport.c
-+++ b/drivers/usb/serial/digi_acceleport.c
-@@ -431,20 +431,22 @@ static int digi_write_inb_command(struct
- 	int len;
- 	struct digi_port *priv = usb_get_serial_port_data(port);
- 	unsigned char *data = port->write_urb->transfer_buffer;
-+	unsigned long expire;
- 	unsigned long flags;
- 
- 	dev_dbg(&port->dev, "digi_write_inb_command: TOP: port=%d, count=%d\n",
- 		priv->dp_port_num, count);
- 
- 	if (timeout)
--		timeout += jiffies;
--	else
--		timeout = ULONG_MAX;
-+		expire = jiffies + timeout;
- 
- 	spin_lock_irqsave(&priv->dp_port_lock, flags);
- 	while (count > 0 && ret == 0) {
--		while (priv->dp_write_urb_in_use &&
--		       time_before(jiffies, timeout)) {
-+		while (priv->dp_write_urb_in_use) {
-+			if (timeout && time_after(jiffies, expire)) {
-+				ret = -ETIMEDOUT;
-+				break;
-+			}
- 			cond_wait_interruptible_timeout_irqrestore(
- 				&priv->write_wait, DIGI_RETRY_TIMEOUT,
- 				&priv->dp_port_lock, flags);
-@@ -453,6 +455,9 @@ static int digi_write_inb_command(struct
- 			spin_lock_irqsave(&priv->dp_port_lock, flags);
- 		}
- 
-+		if (ret)
-+			break;
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -281,28 +281,24 @@ static int ulpi_register(struct device *
+ 	ulpi->dev.parent = dev; /* needed early for ops */
+ 	ulpi->dev.bus = &ulpi_bus;
+ 	ulpi->dev.type = &ulpi_dev_type;
 +
- 		/* len must be a multiple of 4 and small enough to */
- 		/* guarantee the write will send buffered data first, */
- 		/* so commands are in order with data and not split */
++	device_initialize(&ulpi->dev);
++
+ 	dev_set_name(&ulpi->dev, "%s.ulpi", dev_name(dev));
+ 
+ 	ACPI_COMPANION_SET(&ulpi->dev, ACPI_COMPANION(dev));
+ 
+ 	ret = ulpi_of_register(ulpi);
+-	if (ret) {
+-		kfree(ulpi);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	ret = ulpi_read_id(ulpi);
+-	if (ret) {
+-		of_node_put(ulpi->dev.of_node);
+-		kfree(ulpi);
++	if (ret)
+ 		return ret;
+-	}
+ 
+-	ret = device_register(&ulpi->dev);
+-	if (ret) {
+-		put_device(&ulpi->dev);
++	ret = device_add(&ulpi->dev);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	root = debugfs_create_dir(dev_name(&ulpi->dev), ulpi_root);
+ 	debugfs_create_file("regs", 0444, root, ulpi, &ulpi_regs_fops);
+@@ -334,9 +330,10 @@ struct ulpi *ulpi_register_interface(str
+ 	ulpi->ops = ops;
+ 
+ 	ret = ulpi_register(dev, ulpi);
+-	if (ret)
++	if (ret) {
++		put_device(&ulpi->dev);
+ 		return ERR_PTR(ret);
+-
++	}
+ 
+ 	return ulpi;
+ }
 
 
