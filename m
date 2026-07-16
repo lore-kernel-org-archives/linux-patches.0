@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F94E400982;
-	Thu, 16 Jul 2026 14:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B54400982;
+	Thu, 16 Jul 2026 14:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211791; cv=none; b=Yeh0hM9nvUs7fQKf5nDp55OWLgT5qJahiJjEx7+wyDnIHFOuPtxU+TEBUHI/XCxc+D+KXFC5RH3b3jP/Ja3Su/Cr724LJ0y7XNEUtQmKn10pVeLJaqOxqeJa2duiOIOKCqlZgGvvjuVSLYtJydWn8tN3S4jKVtH2DX8c7qIQ3WM=
+	t=1784211793; cv=none; b=aEJy0c2hnGpbfJM+KlcEgqXaCbFB52cGm2GZgYePMa6EDRJRrYzSSAq05IgZFc9K9hcXanV5UZsCl7dZndA6qK71qtGg9Uk1MMdRQTRj5ZFkOABURfvIL2rdTQoaYUnwtyvupdBkzge1aBMTc4PHMiYI6jIugM6/dcTQXx3G+xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211791; c=relaxed/simple;
-	bh=pGLxMQlMjDj7XQd6yIb3vUlNck2t6HBF3SScWvnzjAs=;
+	s=arc-20240116; t=1784211793; c=relaxed/simple;
+	bh=EMQNFkHaXGWiL7lgOefKYzy3WyiuXZG7uZFq3SnMFK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s/pcSJWwKHiYNNbdjTtjXqCxWgvdk7pON4XPkA6R9QQ92fNDQxHpx9iFPZXzYurDV+dFbvIOlgVC71v/svNkJd7pxfWUwqVhIs0G/jF8r89VPwDOjd+eUxZLD8rMccUzHyzA7xdZbrcZCathKaTdirFC61A3BVTbWNHbNuaSxl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TI2NONQF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B7j7S13HmrhSqNYOZOL0q6vnqflgyRyYS2ro7zpCACcdIK/f2zz6ycbveFsK91QqihnTDRoHss0SPex5OexIQHu1evop+6xC4ptaaxchE2Y3P3uY7bwrFkbuC/ScuVvzAhNJMTM61BkqY5+tmp2AOEa2WUBbe3z43jjlfaA2y0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQ40G/UI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TI2NONQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8535D1F00A3A;
-	Thu, 16 Jul 2026 14:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQ40G/UI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280CF1F000E9;
+	Thu, 16 Jul 2026 14:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211790;
-	bh=Lfokem7yn0f4afWlThDkLDav1Wbm37iBjlgoTviuBXs=;
+	s=korg; t=1784211792;
+	bh=TDXTd9fMEcu03n/aW7OL3CaXDH/h+R/sizBXIzjw3Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TI2NONQF0kOt8gnz5TAG2Ei51iFJU4uWHiuv1m0wz3puNX0OfSgpjArpHqZqh2uKw
-	 4swrlmzS6NHTxbh9StJ1EUNUT/VbSywkmesV2aj+M6BaCUiCI6X4NZjN+HDX+xDexb
-	 kyx9QE67jFEnWO6gKbNbhuYMMAHwlMkyGhcnttvY=
+	b=lQ40G/UIs12fiPjW+oNQE6lHGROnW+R72RCiDaJ8UHomZatlHQtxcCywteWQo7e+I
+	 BFrw/KupithKlAlqmYdfpPoYzMW6/IZeSwrLMNYtEhW/lyfKg6Ln9ETKGpLMGtW9f0
+	 HICwN99zH7qVTwRxgFGthlCVsE9gIV3t4XZgBM8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Darvell Long <contact@darvell.me>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 080/349] ALSA: seq: Fix uninitialised heap leak in snd_seq_event_dup()
-Date: Thu, 16 Jul 2026 15:30:14 +0200
-Message-ID: <20260716133035.106850897@linuxfoundation.org>
+Subject: [PATCH 6.12 081/349] ALSA: usb-audio: avoid kobject path lookup in DualSense match
+Date: Thu, 16 Jul 2026 15:30:15 +0200
+Message-ID: <20260716133035.130625989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,55 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Darvell Long <contact@darvell.me>
 
-commit 435990e25bf1f4af3e6df12a6fbfd1f7ba4a97d4 upstream.
+commit 7693c0cc415f3a16a7a3355f245474a5e661be4e upstream.
 
-snd_seq_event_dup() copies an incoming event into a pool cell and, in
-the UMP-enabled build, clears the trailing cell->ump.raw.extra word that
-the memcpy() did not cover.  The guard deciding whether to clear it
-compares the copied size against sizeof(cell->event):
+The DualSense jack-detection input handler verifies that a matching input
+device belongs to the same physical controller by building kobject path
+strings for both the input device and the USB audio device, then comparing
+the path prefix.
 
-	memcpy(&cell->ump, event, size);
-	if (size < sizeof(cell->event))
-		cell->ump.raw.extra = 0;
+This was observed when a weak physical connection caused the controller
+to rapidly disconnect and reconnect. During that repeated hotplug,
+snd_dualsense_ih_match() can run while the controller's USB device is
+being disconnected. kobject_get_path() walks ancestor kobjects and
+dereferences their names; if the USB device kobject name is no longer
+valid, this can fault in strlen():
 
-For a legacy (non-UMP) event, size == sizeof(struct snd_seq_event) ==
-sizeof(cell->event), so the condition is false and the extra word keeps
-stale data.  The cell pool is allocated with kvmalloc() (not zeroed) and
-cells are reused via a free list, so that word holds uninitialised heap
-or leftover event data.
+  RIP: 0010:strlen+0x10/0x30
+  Call Trace:
+   kobject_get_path+0x34/0x150
+   snd_dualsense_ih_match+0x49/0xd0 [snd_usb_audio]
+   input_register_device+0x566/0x6a0
+   ps_probe+0xb89/0x1590 [hid_playstation]
 
-When such a cell is delivered to a UMP client (client->midi_version > 0)
-that set SNDRV_SEQ_FILTER_NO_CONVERT -- so the legacy event reaches it
-unconverted -- snd_seq_read() reads it out as the larger struct
-snd_seq_ump_event and copies the stale word to user space, a 4-byte
-kernel heap infoleak to an unprivileged /dev/snd/seq client.
+The same ownership check can be done without building kobject path
+strings. The input device is parented below the HID device, USB interface
+and USB device, so walking the input device parent chain and comparing
+against the mixer USB device preserves the check without dereferencing
+kobject names during disconnect.
 
-Compare against sizeof(cell->ump) instead, so the trailing word is zeroed
-for every event shorter than the UMP cell.
-
-Fixes: 46397622a3fa ("ALSA: seq: Add UMP support")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260623233841.853326-1-sammiee5311@gmail.com
+Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
+Cc: <stable@vger.kernel.org>
+Assisted-by: Cute:gpt-5.5
+Signed-off-by: Darvell Long <contact@darvell.me>
+Link: https://patch.msgid.link/20260624143723.2986353-1-contact@darvell.me
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_memory.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer_quirks.c |   40 ++++++++++++----------------------------
+ 1 file changed, 12 insertions(+), 28 deletions(-)
 
---- a/sound/core/seq/seq_memory.c
-+++ b/sound/core/seq/seq_memory.c
-@@ -364,7 +364,7 @@ int snd_seq_event_dup(struct snd_seq_poo
- 	size = snd_seq_event_packet_size(event);
- 	memcpy(&cell->ump, event, size);
- #if IS_ENABLED(CONFIG_SND_SEQ_UMP)
--	if (size < sizeof(cell->event))
-+	if (size < sizeof(cell->ump))
- 		cell->ump.raw.extra = 0;
- #endif
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -571,46 +571,30 @@ static bool snd_dualsense_ih_match(struc
+ {
+ 	struct dualsense_mixer_elem_info *mei;
+ 	struct usb_device *snd_dev;
+-	char *input_dev_path, *usb_dev_path;
+-	size_t usb_dev_path_len;
+-	bool match = false;
++	struct device *parent;
  
+ 	mei = container_of(handler, struct dualsense_mixer_elem_info, ih);
+ 	snd_dev = mei->info.head.mixer->chip->dev;
+ 
+-	input_dev_path = kobject_get_path(&dev->dev.kobj, GFP_KERNEL);
+-	if (!input_dev_path) {
+-		dev_warn(&snd_dev->dev, "Failed to get input dev path\n");
+-		return false;
+-	}
+-
+-	usb_dev_path = kobject_get_path(&snd_dev->dev.kobj, GFP_KERNEL);
+-	if (!usb_dev_path) {
+-		dev_warn(&snd_dev->dev, "Failed to get USB dev path\n");
+-		goto free_paths;
+-	}
+-
+ 	/*
+ 	 * Ensure the VID:PID matched input device supposedly owned by the
+ 	 * hid-playstation driver belongs to the actual hardware handled by
+-	 * the current USB audio device, which implies input_dev_path being
+-	 * a subpath of usb_dev_path.
++	 * the current USB audio device.
+ 	 *
+ 	 * This verification is necessary when there is more than one identical
+ 	 * controller attached to the host system.
++	 *
++	 * The input device is registered below the HID device, USB interface and
++	 * USB device, so compare the parent chain directly instead of building
++	 * kobject path strings. This avoids dereferencing kobject names while the
++	 * USB device hierarchy is being torn down during disconnect.
+ 	 */
+-	usb_dev_path_len = strlen(usb_dev_path);
+-	if (usb_dev_path_len >= strlen(input_dev_path))
+-		goto free_paths;
+-
+-	usb_dev_path[usb_dev_path_len] = '/';
+-	match = !memcmp(input_dev_path, usb_dev_path, usb_dev_path_len + 1);
+-
+-free_paths:
+-	kfree(input_dev_path);
+-	kfree(usb_dev_path);
++	for (parent = dev->dev.parent; parent; parent = parent->parent) {
++		if (parent == &snd_dev->dev)
++			return true;
++	}
+ 
+-	return match;
++	return false;
+ }
+ 
+ static int snd_dualsense_ih_connect(struct input_handler *handler,
 
 
