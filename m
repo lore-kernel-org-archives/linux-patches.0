@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DEE3F482E;
-	Thu, 16 Jul 2026 13:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8E52DF137;
+	Thu, 16 Jul 2026 13:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209067; cv=none; b=B5aLZ7aaIbA8BGvfixWZ1hV0OjQaeG/7uX/G0ouHnz6k6jV8MCeJkMnUHfjW6J4EJLrDhdGCZFjqDNiqE+we2eKn7YtT2TKTlcsNgv9PGdhfpTVRFRSgCusNbxDvGehDkLh8oI5Ku/vj/hSyiKVo4bdLbBJx15NPMKkiqy3dP3Q=
+	t=1784209069; cv=none; b=c/AGmANAUMQWw2ttheQoLcvE5Yc0PUWbBBJnBKKjUAgyc6AvEkTQqSs5vWylIDxOmgUfcPXOkOQTV+KvLG6CUHfGDGNfGNawc7XzX33rH/ElA3in5ijGl3Evl8wTWieSaziBQxKkDNHdDmrST9Igi0qdcyGRyEbJkOFm0jUwU2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209067; c=relaxed/simple;
-	bh=ZfllxAK9/3+DB5yBLZJmkxCTGiFRc9N+1hNfsyNS8co=;
+	s=arc-20240116; t=1784209069; c=relaxed/simple;
+	bh=dTDSE2koosqkX15b0WuntUMRynn2Blfb3wCfUtET8so=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNakEOYHd8+tyJm08Q3x8H9ZdbPREcCGWJ4RQ+BumQ+D7GQkaIfDRf/OFZoZRsTCLppFdxiTvpgzjuUm1oW4sldvdEXjCuz+dskHKEvePDKpTdRkKEodpc00IfGWPSb/GiNIsXi+vCw0DmmytATlj4+ilNpoEHG7YA/ANDSAcSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BQpUmK3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fCg0dAMqm0XfU0Wra0d0YelYY0qWi/qmBwU6Z6DlgGhVdl1WDSt+l56iKNjGa+dr03hhdW/eFCRxWUaiw4f0AAVTK0+D9FDOWl1U+obuS0Q/pNyafi0Ye2NHWAtwUTXd3PCt53P2EdLoIdlce8KE9czlmm+GFrBgXfB6hcCu6no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yg6CI3Nj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BQpUmK3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8858A1F000E9;
-	Thu, 16 Jul 2026 13:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yg6CI3Nj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF421F000E9;
+	Thu, 16 Jul 2026 13:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209066;
-	bh=1tOXBo8KbhTnOWIl145sEw5pkveKcnU8+h81odiahb0=;
+	s=korg; t=1784209068;
+	bh=wHXwIZJwRI9gTg+4shHSLW0sFTvRcdmcpPujGxffMfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2BQpUmK3K+W3MJSg4Nvva1GENsvaEWqNUsZoUgF49jG41qJJFzBxyYVjeL8II+Eiv
-	 31tmTjpVwsUhJY9SE8F4LhfjifSsyv2pL+mxPfkyr1Qp9ztjAqGpcrjzjaeLwD2wFW
-	 LIGjOD0cpzUCxgGdJOu02Pk0t0iGi2nC/D9jpct4=
+	b=Yg6CI3NjqxU9wBTulHMOPZ9TvL4SoAiBQzSvKGiLSua6zN1M79uyhbBy9m3g11DiE
+	 cQtiuqth9gwpp0DwoNkx9jW02Q0w+eXbOvJx4YMAXwJe+5W5xtotRdANi8CckiNQlx
+	 MXQBKpSBAEI81FyJIiwUFQaNFOuCikAj//AtCz+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 027/518] bpf: Skip redundant IBPB in pack allocator
-Date: Thu, 16 Jul 2026 15:24:55 +0200
-Message-ID: <20260716133048.370978119@linuxfoundation.org>
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.1 045/518] iio: adc: ti-ads124s08: Return reset GPIO lookup errors
+Date: Thu, 16 Jul 2026 15:25:13 +0200
+Message-ID: <20260716133048.769494754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,81 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit a23c1c5396a91680703360d1ee28a44657c503c4 upstream.
+commit 7dc4de2aa6316f1d044cde21f5acfec5f3ec6b47 upstream.
 
-bpf_prog_pack_alloc() issues IBPB on all CPUs on every cBPF allocation,
-even when reusing chunks from an existing pack where no new memory was
-touched since the last IBPB.
+devm_gpiod_get_optional() returns NULL when the optional GPIO is absent,
+but returns an ERR_PTR when the GPIO provider lookup fails, including
+probe deferral.
 
-Since IBPB on all CPUs is heavy, Dave Hansen suggested to track allocation
-since last IBPB, and only issue IBPB at reuse for the chunks that have not
-seen an IBPB since they were last freed.
+Probe currently logs the ERR_PTR case as if the reset GPIO were simply
+absent and keeps the error pointer in reset_gpio. Later ads124s_reset()
+treats any non-NULL reset_gpio as a valid descriptor and passes it to
+gpiod_set_value_cansleep().
 
-Track per-pack whether an IBPB is needed via arch_flush_needed. Set it when
-allocating a chunk, reset on IBPB flush. On reuse, conditionally issue the
-flush. Since IBPB invalidates all BTB entries, clear the flag on all packs
-after flushing.
+Return the lookup error instead of retaining the ERR_PTR.
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
+Cc: stable@vger.kernel.org
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/core.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ti-ads124s08.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 1b7e74e63bd4bc..1bf4b8dffe9158 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -876,6 +876,7 @@ int bpf_jit_add_poke_descriptor(struct bpf_prog *prog,
- struct bpf_prog_pack {
- 	struct list_head list;
- 	void *ptr;
-+	bool arch_flush_needed;
- 	unsigned long bitmap[];
- };
+--- a/drivers/iio/adc/ti-ads124s08.c
++++ b/drivers/iio/adc/ti-ads124s08.c
+@@ -321,7 +321,8 @@ static int ads124s_probe(struct spi_devi
+ 	ads124s_priv->reset_gpio = devm_gpiod_get_optional(&spi->dev,
+ 						   "reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(ads124s_priv->reset_gpio))
+-		dev_info(&spi->dev, "Reset GPIO not defined\n");
++		return dev_err_probe(&spi->dev, PTR_ERR(ads124s_priv->reset_gpio),
++				     "Failed to get reset GPIO\n");
  
-@@ -928,6 +929,8 @@ static struct bpf_prog_pack *alloc_new_pack(bpf_jit_fill_hole_t bpf_fill_ill_ins
- 	bpf_fill_ill_insns(pack->ptr, BPF_PROG_PACK_SIZE);
- 	bitmap_zero(pack->bitmap, BPF_PROG_PACK_SIZE / BPF_PROG_CHUNK_SIZE);
+ 	ads124s_priv->chip_info = &ads124s_chip_info_tbl[spi_id->driver_data];
  
-+	if (static_branch_unlikely(&bpf_pred_flush_enabled))
-+		pack->arch_flush_needed = true;
- 	set_vm_flush_reset_perms(pack->ptr);
- 	err = set_memory_rox((unsigned long)pack->ptr,
- 			     BPF_PROG_PACK_SIZE / PAGE_SIZE);
-@@ -990,8 +993,15 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool
- 
- found_free_area:
- 	/* Flush only for cBPF as it may contain a crafted gadget */
--	if (static_branch_unlikely(&bpf_pred_flush_enabled) && was_classic)
-+	if (static_branch_unlikely(&bpf_pred_flush_enabled) &&
-+	    pack->arch_flush_needed &&
-+	    was_classic) {
-+		struct bpf_prog_pack *p;
-+
- 		static_call_cond(bpf_arch_pred_flush)();
-+		list_for_each_entry(p, &pack_list, list)
-+			p->arch_flush_needed = false;
-+	}
- 	bitmap_set(pack->bitmap, pos, nbits);
- 	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
- 
-@@ -1029,6 +1039,9 @@ void bpf_prog_pack_free(void *ptr, u32 size)
- 		  "bpf_prog_pack bug: missing bpf_arch_text_invalidate?\n");
- 
- 	bitmap_clear(pack->bitmap, pos, nbits);
-+
-+	if (static_branch_unlikely(&bpf_pred_flush_enabled))
-+		pack->arch_flush_needed = true;
- 	if (bitmap_find_next_zero_area(pack->bitmap, BPF_PROG_CHUNK_COUNT, 0,
- 				       BPF_PROG_CHUNK_COUNT, 0) == 0) {
- 		list_del(&pack->list);
--- 
-2.53.0
-
 
 
