@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324AA3F822B;
-	Thu, 16 Jul 2026 14:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD7F3F822B;
+	Thu, 16 Jul 2026 14:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210765; cv=none; b=nNNOilvCdz4ttSy8TwC0f8MnOU3wkpu7wpAfC4iysI5xcbo7b0WfArs8567xWnMaF2R1VSXya6zFFwmU7eLNi6VZyMmnP/1ckeQRmqxuzgU4yGVoq9I3kz+BTz26gVZtily/nlAbWQiLx2HbExJnMaqHQdhuugG1HNxm7A6/TO8=
+	t=1784210766; cv=none; b=UjJn+PNtzSgd+KjsXn4FCHwdZeQ95FOJlOhq9YmbhOHZlkwXrh9G3Cgnh2qCjXM+y3bt4zv+C6OWAk17v7JjJWVS9StlMRw6mMPyIztXMoipYYGbNz3gBRVKG1RdjJxri2mUUsJolOGwQN3HDJkVNawLsdAT+Jo1OREKYrQbLwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210765; c=relaxed/simple;
-	bh=uMFygVSznNbERzPJBSqw45uxD+M1PVstiVdQg5BlhMg=;
+	s=arc-20240116; t=1784210766; c=relaxed/simple;
+	bh=neGrDEl2twTZJ0PGZxzvIRZbUtPuX/xcAoxdj0rVB2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZwEFltrXFxcrWuhZT7Sv64yiu7nHhd0rdnoHoNafot7EViccOzGoLFY62aT39kUBOvHK3ViZDrB67+anNIgS67MzIAER6SF4ifHH2wsmReBvoxQ5iYe2bnvfNYHpqWqtFwbe3T50EsLiSJCMYv2Yh9E81zRNi1ekoXMuy138Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qo1hmbcH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p5WXbrT4GJhJ08eKJpozVGX3zulVXDt1szABuf4YrqlrhOPFGToBFmQQ/IA1xEZT5tz84XyF75KrYgZBKFEw0XP9xBLh6U3gmhC9iKH1fSBA37hiFaGtSO97AN8qGfK4slBlLMZEcs4D0tmQzb0HaFs+9VTtJqefhenkEOJjv4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKp6Qcc8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qo1hmbcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05E21F000E9;
-	Thu, 16 Jul 2026 14:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKp6Qcc8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D021F00A3A;
+	Thu, 16 Jul 2026 14:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210763;
-	bh=25Ls++YWsUCtq/aXmQu8UouBMVmEoLK0KsYty9+21aY=;
+	s=korg; t=1784210765;
+	bh=oWa6G/LnmWlmk8TIVt/nxBtoOaOv0Uz9JgCoLkXBeHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qo1hmbcHcN6/jLbDKvRPdxFvOBhuEC4vX+pEbNTQN7gm8iVWSMRkbKJ6wXnuwkjhG
-	 y21hBrhVxE9mSU4ht7Q1v5BmtZsHGNh25D4Lors7tHBm7v51XLXR6K5SroZlmP+PsH
-	 UY8mzZvsWVw3hs9OULeMGP6bos4I/hYL+VYVgrog=
+	b=cKp6Qcc8zVdFrBk9UmTUtVyrGt30aQ7WytBJYbPcF1jO6R1AroI0YXvQXFGNBu3Kg
+	 MkptDD5Dv08Ek9ONXCY77FDl4LVpGmaWDjla/7ao3anFclSn153SsiCaVkO0wKAZiX
+	 vv22blQoZtXznB+FcaW6++2cKUAok9wx2tW6I/Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Michael Bommarito <michael.bommarito@gmail.com>
-Subject: [PATCH 6.18 170/480] crypto: krb5 - filter out async aead implementations at alloc
-Date: Thu, 16 Jul 2026 15:28:37 +0200
-Message-ID: <20260716133048.386942616@linuxfoundation.org>
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 171/480] ksmbd: fix use-after-free of a deferred file_lock on SMB2_CLOSE then SMB2_CANCEL
+Date: Thu, 16 Jul 2026 15:28:38 +0200
+Message-ID: <20260716133048.408330267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,54 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit 6c9dddeb582fde005360f4fe02c760d45ca05fb5 upstream.
+commit 10f293a07f9e10e988b0ae44e2e99c631f5a68e0 upstream.
 
-krb5_aead_encrypt(), krb5_aead_decrypt() in rfc3961_simplified.c and
-rfc8009_encrypt(), rfc8009_decrypt() in rfc8009_aes2.c set a NULL
-completion callback and treat any negative return from
-crypto_aead_{encrypt,decrypt}() as terminal, falling through to
-kfree_sensitive(buffer).  When the encrypt_name resolves to an
-async AEAD instance the request returns -EINPROGRESS, the buffer
-is freed while the backend's worker still holds a pointer, and the
-worker dereferences the freed slab on completion.
+Commit f580d27e8928 ("ksmbd: fix use-after-free of a deferred file_lock on
+double SMB2_CANCEL") made smb2_cancel() skip a work whose state is
+KSMBD_WORK_CANCELLED, so its cancel_fn cannot be fired a second time. But
+KSMBD_WORK has three states (ACTIVE, CANCELLED, CLOSED), and the same
+freeing producer path is reached for CLOSED too:
 
-KASAN report under UML+SLUB with a synthetic async aead backend
-bound to krb5->encrypt_name:
+  SMB2_CLOSE on the locking handle -> set_close_state_blocked_works() sets
+  the deferred work's state to KSMBD_WORK_CLOSED and wakes the smb2_lock()
+  worker. The worker takes the non-ACTIVE early-exit, locks_free_lock()s
+  the file_lock and, because the state is not KSMBD_WORK_CANCELLED, takes
+  the STATUS_RANGE_NOT_LOCKED branch with "goto out2" -- which, like the
+  cancelled branch, skips release_async_work(). The work stays on
+  conn->async_requests with a live cancel_fn = smb2_remove_blocked_lock
+  pointing at the freed file_lock.
 
-  BUG: KASAN: slab-use-after-free in t5_stub_complete+0x7d/0xc7
+A subsequent SMB2_CANCEL for the same AsyncId then passes the
+KSMBD_WORK_CANCELLED-only guard (its state is KSMBD_WORK_CLOSED), so
+smb2_cancel() fires cancel_fn again over the freed file_lock -- the same
+use-after-free fixed, via SMB2_CLOSE instead of a first SMB2_CANCEL:
 
-The helpers were written synchronously, so filter the async
-instances out at allocation time instead of plumbing
-crypto_wait_req() through every call site.
+  BUG: KASAN: slab-use-after-free in __locks_delete_block
+    __locks_delete_block
+    locks_delete_block
+    ksmbd_vfs_posix_lock_unblock
+    smb2_remove_blocked_lock
+    smb2_cancel                 <- 2nd SMB2_CANCEL fires cancel_fn
+    handle_ksmbd_work
+  Allocated by ...: locks_alloc_lock <- smb2_lock
+  Freed by ...:     locks_free_lock  <- smb2_lock (non-ACTIVE early-exit)
+  ... cache file_lock_cache of size 192
 
-Reachable via net/rxrpc/rxgk.c, fs/afs/cm_security.c and
-net/ceph/crypto.c on systems with an async AEAD provider bound to
-the krb5 enctype name.
+Reproduced on mainline 7.1-rc7 (which already contains f580d27e8928) with
+KASAN by an authenticated SMB client; the double-SMB2_CANCEL control is
+silent on that kernel, so the splat is attributable to the CLOSE trigger.
 
-Fixes: 00244da40f78 ("crypto/krb5: Implement the Kerberos5 rfc3961 encrypt and decrypt functions")
-Fixes: 6c3c0e86c2ac ("crypto/krb5: Implement the AES enctypes from rfc8009")
+Only an ACTIVE deferred work may have its cancel_fn fired: both terminal
+states (CANCELLED and CLOSED) reach the smb2_lock() early-exit that frees
+the file_lock and skips release_async_work(). Guard on KSMBD_WORK_ACTIVE
+so any non-active work is skipped.
+
+Fixes: f580d27e8928 ("ksmbd: fix use-after-free of a deferred file_lock on double SMB2_CANCEL")
 Cc: stable@vger.kernel.org
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/krb5/krb5_api.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/crypto/krb5/krb5_api.c
-+++ b/crypto/krb5/krb5_api.c
-@@ -207,7 +207,7 @@ struct crypto_aead *krb5_prepare_encrypt
- 	struct crypto_aead *ci = NULL;
- 	int ret = -ENOMEM;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -7334,14 +7334,14 @@ int smb2_cancel(struct ksmbd_work *work)
+ 				continue;
  
--	ci = crypto_alloc_aead(krb5->encrypt_name, 0, 0);
-+	ci = crypto_alloc_aead(krb5->encrypt_name, 0, CRYPTO_ALG_ASYNC);
- 	if (IS_ERR(ci)) {
- 		ret = PTR_ERR(ci);
- 		if (ret == -ENOENT)
+ 			/*
+-			 * A cancelled deferred byte-range lock frees its
+-			 * file_lock and takes the smb2_lock() early-exit that
+-			 * skips release_async_work(), so the work stays on
+-			 * conn->async_requests with a live cancel_fn pointing
+-			 * at the freed file_lock.  Re-firing it on a second
+-			 * SMB2_CANCEL is a use-after-free.
++			 * Only an ACTIVE deferred work may have its cancel_fn
++			 * fired.  A CANCELLED or CLOSED work already took the
++			 * smb2_lock() non-ACTIVE early-exit that frees the
++			 * file_lock and skips release_async_work(), so it is
++			 * still on conn->async_requests with a live cancel_fn
++			 * pointing at the freed file_lock.
+ 			 */
+-			if (iter->state == KSMBD_WORK_CANCELLED)
++			if (iter->state != KSMBD_WORK_ACTIVE)
+ 				break;
+ 
+ 			ksmbd_debug(SMB,
 
 
