@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E5D32ED24;
-	Thu, 16 Jul 2026 13:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FFF377A9B;
+	Thu, 16 Jul 2026 13:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209594; cv=none; b=nl8UYX5zAZCNLVasVTqFhc8mXfdxQs2wPlC1NUGfiIXsST+ZLLy+AF+Z7A5VJqAmnR5N2hZSwDwKN7+PRwpjcq6CMM1xlbEtJXIuz/KbTVQlhA32rj7cGvF9qu6Vi3+XvIbgZEmiib51IdcBQQAt78fvUO+nAP6ZZ1xUhDw33Qg=
+	t=1784209596; cv=none; b=kXcYRMCdicfZlU6/QryI0DJRPbV+cD0EboPCDQHV09qPV5KgYqUxIDcbodEkvSCvgufyxK3CaF3cQhv0yRcLtd3pCYomLhXTpIBbxQ+jxbaP/yzvNq1c3Pdy7ncFCb05tvYPhkmlx6mN68Z4rOS6SDbmgpsGaHMjZ0NX0zyNsBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209594; c=relaxed/simple;
-	bh=zXkRMgwVdXk4wSg79XZaEcttxH5+JOiCZWE3fQNFJKo=;
+	s=arc-20240116; t=1784209596; c=relaxed/simple;
+	bh=0gagzX9wyw54jUJVbgm4A0RZ6ccF1w5cWoVuHGfn4sI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DD4SQ2jKw6h1RALX6/MR21emDGRONGmOWAGWjSaFpZQji63sMUSGVr4WQPMyUK7RDdxBqixHibydGVe4YlBXdXBfubPt1bkWKmLJ2A/zepgjxprZbqkhXzqmpOdSFns2/jj046eoNpS89LJiSNAom3DHPYk/KZT2xLCqO5EMknk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6jPj2UC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=otzcgGien6YLNWVZOE+vhtujheizowzqEnaJAUjtjJz5t8Z4t9b41lFjMcsTO96cKX3rgdmP4G4F7E0fSuMSbilTP20eVg0xnHbaRnxTmsN5fXxRvwEu6dxLddZOW3pzx5XDs7Gi7v1/JsLb56U830biR1pQHFp+8ErDzpwxQqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXxjYzQ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6jPj2UC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356A81F00A3E;
-	Thu, 16 Jul 2026 13:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXxjYzQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF251F00A3A;
+	Thu, 16 Jul 2026 13:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209586;
-	bh=Ejzi3rSmO7O248Ni6NgSXnhEzxpAsf3TK5t0uC9KyhU=;
+	s=korg; t=1784209589;
+	bh=RQfSZsIYfBcM7ANCqgmwsVk6SWhVsvEnZ0qlPm54iUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N6jPj2UC/c+30zkqkC2mKOqa5XqrqWcjgl9gvlqD3u2at6OJRk9Y9eTNnaYtdDPF7
-	 0Me2BByzgoX/HkuZ1QZFhjBjuGJ2TpqR3FWRbKY1ho3Err80IMrEh/9EKSrVb3+vbk
-	 O1M2DRcPfvfQZNOffnb5nfFUb755TIzpI8OA9/w0=
+	b=mXxjYzQ9gy6CnylRIzm8LNlL4LeuMUs3L9btESuZy4WoqJnK4CNtl5XX2vb7brztP
+	 ZgIjdKB3Og+6XhLgk7YRvD8Vf9xspYzrM324m5WxeG1Qp1SA8shz6jnd/a6j6byy8d
+	 8UCTF3zPq0W+QM+LWVvaVPxcP+MdFMn4Kn/1Ulxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
+	Norbert Manthey <nmanthey@amazon.de>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 241/518] smb: client: fix atime clamp check in read completion
-Date: Thu, 16 Jul 2026 15:28:29 +0200
-Message-ID: <20260716133053.094246111@linuxfoundation.org>
+Subject: [PATCH 7.1 242/518] smb: client: mask server-provided mode to 07777 in modefromsid
+Date: Thu, 16 Jul 2026 15:28:30 +0200
+Message-ID: <20260716133053.114802855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,53 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Norbert Manthey <nmanthey@amazon.de>
 
-commit 0b043279e73880bee21d3b1f221bafda5af1b27e upstream.
+commit e3d9c7160d483fc8f9e225aafad8ecbbc43f3151 upstream.
 
-cifs_rreq_done() updates the inode atime to current_time(inode) after a
-netfs read.  It then preserves the CIFS rule that atime should not be
-older than mtime, because some applications break if atime is less than
-mtime.  That rule only requires clamping when atime < mtime.
+When modefromsid is active, parse_dacl() applies the server-provided
+sub_auth[2] value from the NFS mode SID to cf_mode without masking to
+07777. Apply the correct masking, same as in the read path.
 
-The current check uses the raw non-zero result of timespec64_compare().
-It therefore takes the clamp path for both atime < mtime and
-atime > mtime.  The latter is the normal case when reading an older file:
-the newly recorded atime is newer than the file mtime.  The completion
-handler then immediately moves atime back to mtime, losing the access
-time that was just recorded.  Userspace tools that rely on atime, such as
-stat, find -atime, backup tools or cold-data classifiers, can therefore
-see a recently read CIFS file as not recently accessed.
-
-This is easy to miss because the bug is silent: read I/O still succeeds,
-no error is reported, and many systems either do not check atime after
-reads or mount with policies such as relatime/noatime.  It becomes
-visible when a CIFS file has an mtime older than the current time, the
-file is read, and the local inode atime is inspected before a later
-revalidation replaces the cached timestamps.
-
-Clamp only when atime is actually older than mtime.  This matches the
-same atime/mtime rule used when applying CIFS inode attributes.
-
-Fixes: 69c3c023af25 ("cifs: Implement netfslib hooks")
+Fixes: e2f8fbfb8d09c ("cifs: get mode bits from special sid on stat")
+Signed-off-by: Norbert Manthey <nmanthey@amazon.de>
+Assisted-by: Kiro:claude-opus-4.6
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    2 +-
+ fs/smb/client/cifsacl.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -301,7 +301,7 @@ static void cifs_rreq_done(struct netfs_
- 	/* we do not want atime to be less than mtime, it broke some apps */
- 	atime = inode_set_atime_to_ts(inode, current_time(inode));
- 	mtime = inode_get_mtime(inode);
--	if (timespec64_compare(&atime, &mtime))
-+	if (timespec64_compare(&atime, &mtime) < 0)
- 		inode_set_atime_to_ts(inode, inode_get_mtime(inode));
- }
- 
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -889,7 +889,7 @@ static void parse_dacl(struct smb_acl *p
+ 				 */
+ 				fattr->cf_mode &= ~07777;
+ 				fattr->cf_mode |=
+-					le32_to_cpu(ppace[i]->sid.sub_auth[2]);
++					le32_to_cpu(ppace[i]->sid.sub_auth[2]) & 07777;
+ 				break;
+ 			} else {
+ 				if (compare_sids(&(ppace[i]->sid), pownersid) == 0) {
 
 
