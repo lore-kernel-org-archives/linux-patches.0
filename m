@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A033161AD;
-	Thu, 16 Jul 2026 14:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73463195EF;
+	Thu, 16 Jul 2026 14:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210646; cv=none; b=t/M/Uv17Eopwj/Ue0FYR7yISFO1B1dIcDXlZms2kL0qwvQxFuz+WOl/uZ3Px1MU92H4vJTkzhF3eaLlWVoVZHpGEYUbHUw04U7EueH1QDELOC0dfeJ7SFf7+ya56fMWlHJRPHtbMrcjQhqOX0oMEevL9XYGcJifTqqCoKBUptTI=
+	t=1784210648; cv=none; b=SpZ2DLE1ddkf6vnUI3ZWCnYQW+/EGSCV0TjC39CZ5GQZ9bqdDyVPCDXxeE0HJsxnx8nolcMaH+BHEdPfE41afoCr4Zz/G7jhLIJY29hIWDPSSeAxAnTikU2PItdV4HfetZ+AUHez2JjOCYc5KrS/AiaoRGcs9Bid/+InaU37UEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210646; c=relaxed/simple;
-	bh=O/dW9VDoabGSK774t0kdf8YbJlx3dscanU8CiFJvLf8=;
+	s=arc-20240116; t=1784210648; c=relaxed/simple;
+	bh=djhziHhsyk3FYhYrl3tv2rm0bS3KG7d4vkk4lY4mZD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHsnK5kDW5+q6f7QW0O2fK3fUFZg6o+KBafkg5zV5inLSqoPa/KfhxrlufOvWCjHbxVVDcdrLWN+aBEX0o9l+dkUv49r7FmqztjbRy9mzsmPicdJnI5wPxV2ikLIGFN9hT2Vs2JF7ECxRGIBYQnmqeSX9Zi5JzTe4RizDCknnrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcKyzcIZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sHkV/UIxrnF94BYCxFAu692gdsAZQCUI0fkRm8pugkLAyTD66NwQC1MnUnrrlmBprYAzAQxigzfijPsJgU97KhXfxxXuw0P+N06qXxn/PieVyQtJeKfQCvd2e0qNOeQtyPhl5FYANAQoAzcwC+KKhuZ7RLAV5RwUZmFCpxDDdFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DDBBFuq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcKyzcIZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A651F000E9;
-	Thu, 16 Jul 2026 14:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DDBBFuq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296571F000E9;
+	Thu, 16 Jul 2026 14:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210645;
-	bh=SehjEWcoEluM3iACZIT+Q+QTngi4VwdFRBFJLb+IhM4=;
+	s=korg; t=1784210647;
+	bh=o1vHh3JkiSbk9AVk29lx29kQ/fcrQhXJkCWzRkSvzlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fcKyzcIZOhCt2e63xu/N9V9dtkLtwIWWDJKZXg/TMhTFMEeyhJaZVZYlq+jYqKBOh
-	 EevFkWBD7JI6PoY7GAq8Abn4IX0uZVCtfb2t/e81a5bURy/r2vxJJ2jSqfqVbS947R
-	 9Sc1gKv5BcWxeyIepfnK2iW6WzrwX3lO6z6YPZW4=
+	b=0DDBBFuqEwHIoHJcH9w5ZVvEVf0pFwIXY3LiPbgo10VOLGgeemLFVCwLW71rhvs4y
+	 dYiNu3hJkETr6SVbSmeBnJvMWLtiXXN569pDjpQbaslrR5Nuhwr1WJkbeQFVqx+MsU
+	 GSbN8vTuCy7eS6HFPDs2tF1M3qqTduwDUxzxyVow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Jain <rajatja@google.com>,
-	Johan Hovold <johan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 125/480] Bluetooth: btusb: fix wakeup source leak on probe failure
-Date: Thu, 16 Jul 2026 15:27:52 +0200
-Message-ID: <20260716133047.413568199@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.18 126/480] binder: fix UAF in binder_thread_release()
+Date: Thu, 16 Jul 2026 15:27:53 +0200
+Message-ID: <20260716133047.435581068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,78 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 3d93e1bb0fb881fe3ef961d1120556658e9cac4d upstream.
+commit 114a116aaa5f0295376cdf12da743c5bce3b20ce upstream.
 
-Make sure to disable wakeup on probe failure to avoid leaking the wakeup
-source.
+When a thread exits, binder_thread_release() walks its transaction stack
+to clear the t->from and t->to_proc that correspond with the exiting
+thread. However, a process dying in parallel might attempt to kfree some
+of these transactions. And if one of them has no associated t->to_proc,
+the t->to_proc->inner_lock will not be acquired.
 
-Fixes: fd913ef7ce61 ("Bluetooth: btusb: Add out-of-band wakeup support")
-Cc: stable@vger.kernel.org	# 4.11
-Cc: Rajat Jain <rajatja@google.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This means that transaction accesses in binder_thread_release() after
+t->to_proc has been cleared might race with binder_free_transaction()
+and cause a use-after-free error as reported by KASAN:
+
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in binder_thread_release+0x5d0/0x798
+  Write of size 8 at addr ffff000016627500 by task X/715
+
+  CPU: 17 UID: 0 PID: 715 Comm: X Not tainted 7.1.0-rc5-00149-g8fde5d1d47f6 #30 PREEMPT
+  Hardware name: linux,dummy-virt (DT)
+  Call trace:
+   binder_thread_release+0x5d0/0x798
+   binder_ioctl+0x12c0/0x299c
+   [...]
+
+  Allocated by task 717 on cpu 18 at 67.267803s:
+   __kasan_kmalloc+0xa0/0xbc
+   __kmalloc_cache_noprof+0x174/0x444
+   binder_transaction+0x554/0x8150
+   binder_thread_write+0xa30/0x4354
+   binder_ioctl+0x20f0/0x299c
+   [...]
+
+  Freed by task 202 on cpu 18 at 90.416221s:
+   __kasan_slab_free+0x58/0x80
+   kfree+0x1a0/0x4a4
+   binder_free_transaction+0x150/0x294
+   binder_send_failed_reply+0x398/0x6d8
+   binder_release_work+0x3e4/0x4ec
+   binder_deferred_func+0xbd8/0x104c
+   [...]
+  ==================================================================
+
+In order to avoid this, make sure that binder_free_transaction() reads
+the t->to_proc under the transaction lock. This will serialize the
+transaction release with the accesses in binder_thread_release(). Plus,
+it matches the documented locking rules for @to_proc.
+
+Cc: stable <stable@kernel.org>
+Fixes: 7a4408c6bd3e ("binder: make sure accesses to proc/thread are safe")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://patch.msgid.link/20260619185233.2194678-1-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/android/binder.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2934,6 +2934,11 @@ static int marvell_config_oob_wake(struc
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -1658,7 +1658,11 @@ static void binder_txn_latency_free(stru
  
- 	return 0;
- }
-+#else
-+static inline int marvell_config_oob_wake(struct hci_dev *hdev)
-+{
-+	return 0;
-+}
- #endif
- 
- static int btusb_set_bdaddr_marvell(struct hci_dev *hdev,
-@@ -3793,6 +3798,11 @@ static int btusb_config_oob_wake(struct
- 	bt_dev_info(hdev, "OOB Wake-on-BT configured at IRQ %u", irq);
- 	return 0;
- }
-+#else
-+static inline int btusb_config_oob_wake(struct hci_dev *hdev)
-+{
-+	return 0;
-+}
- #endif
- 
- static void btusb_check_needs_reset_resume(struct usb_interface *intf)
-@@ -4147,7 +4157,6 @@ static int btusb_probe(struct usb_interf
- 	hdev->wakeup  = btusb_wakeup;
- 	hdev->hci_drv = &btusb_hci_drv;
- 
--#ifdef CONFIG_PM
- 	err = btusb_config_oob_wake(hdev);
- 	if (err)
- 		goto out_free_dev;
-@@ -4156,9 +4165,9 @@ static int btusb_probe(struct usb_interf
- 	if (id->driver_info & BTUSB_MARVELL && data->oob_wake_irq) {
- 		err = marvell_config_oob_wake(hdev);
- 		if (err)
--			goto out_free_dev;
-+			goto err_disable_wakeup;
- 	}
--#endif
+ static void binder_free_transaction(struct binder_transaction *t)
+ {
+-	struct binder_proc *target_proc = t->to_proc;
++	struct binder_proc *target_proc;
 +
- 	if (id->driver_info & BTUSB_CW6622)
- 		hci_set_quirk(hdev, HCI_QUIRK_BROKEN_STORED_LINK_KEY);
++	spin_lock(&t->lock);
++	target_proc = t->to_proc;
++	spin_unlock(&t->lock);
  
-@@ -4401,6 +4410,9 @@ err_release_siblings:
- 	}
- err_kill_tx_urbs:
- 	usb_kill_anchored_urbs(&data->tx_anchor);
-+err_disable_wakeup:
-+	if (data->oob_wake_irq)
-+		device_init_wakeup(&data->udev->dev, false);
- out_free_dev:
- 	if (data->reset_gpio)
- 		gpiod_put(data->reset_gpio);
+ 	if (target_proc) {
+ 		binder_inner_proc_lock(target_proc);
 
 
