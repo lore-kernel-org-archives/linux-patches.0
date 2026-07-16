@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2741D3F482E;
-	Thu, 16 Jul 2026 13:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1569423775;
+	Thu, 16 Jul 2026 13:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209283; cv=none; b=K5SRWpKMQZm8D0wjAxbWW8TRB76yWFUeiyATD8Eo8m/86w0xYAhQlCx9ersapBrqX1IpdhUUhYg+XuQPlS92i8n52TEpluhPqGhQ1eIJ0KGKvXYnwR5K3IHw/n8G/8xmZTysKZzExs3/g+LpbmEgWbSz+UivEa6i4VLwPvMTXYo=
+	t=1784209286; cv=none; b=JP0QUP0FF5XFoulCbUrFSDRkcFPCYX9hyr91uHNxz28mha36CHxr7QjsZTSuvScz/KsHCnJRy4MDYXWybBhUfUMZUYm9Ul4Klzn9WKzhYXrNjrHswxrHipD4V0l6tWmFNomXIahOaGCekBHw3MPjcXZjUJu7qapbxplBgEj7Z54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209283; c=relaxed/simple;
-	bh=JniobTQ9T9Cn5zztvm8bkirYgbTDEZ355KlN5fayMnU=;
+	s=arc-20240116; t=1784209286; c=relaxed/simple;
+	bh=t77sGluvXpG+Wkj/OIah5ByYgJx4VUmHI8wINSFJZug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XPg6LN3gx+tqtiYKvdRV+43XeUBowXKWyIzpunMYN2DP7CH5i88Z//rjgmbchnC+xQCGOhLYVcCZTigE5FY+rvVXyX1Do2HpBfhtps528cGS/zbfcX7QEg4CQ+lW81TP5s4aUoEqUhkrwgRSmXtoauYxSXk40Sgujq1attvBwoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfqQWYyD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QkDhNJfnZORTec9jEnToHsS2boPLw8s/ffQWm59oj403RpQk4LclPv/P8FzU0O29fviGVOG4A4NoCzmsMfQG4RX5cd7l+Glc6y+SezjUENj9YH8w7Hr2fKA+tOxEY05WEGuALlsYPeb5sQiZpEddp02j+doHD6ifymDzShYRjBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQa/gCR6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfqQWYyD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B18F1F00A3A;
-	Thu, 16 Jul 2026 13:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQa/gCR6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316FA1F00A3A;
+	Thu, 16 Jul 2026 13:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209282;
-	bh=AT8+9W/kuo/QUZHZhDPYbrqmGzH0sNePZz7WT7H4kOQ=;
+	s=korg; t=1784209284;
+	bh=/tpw+RZ2LeICIr+lMG28qzP6AVvXDdNNRFfZzKmwdpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WfqQWYyDESzvCVCMUR2IdEobKvXBw4yhVJtx+JS7WGxI9fEdKMkPRM8maBEsHwwVk
-	 DqUeuipHATpwbifPd/52/xkQ6+v7bqZ9EeP31SPD1NtQkf8yMFjqqX4p5vU0G6BHcz
-	 oycmkE1G0AcA6yYOgKypZN21PtRFBuWZQqyKO0EQ=
+	b=hQa/gCR6jWfLFueLDopDTxxW6Ac4mfM6ZZhYqgm3GOKnpY+YrjU0xDLD0qCLUlP9N
+	 WNtC2q+SvFcGw9oXPduVuwXCsaldTWPb2av9M+qPgqnNDQc4LWXxazzc7xkegqwgmR
+	 9A7be4YNFc8zbd6rhtEeGuF4VoDf6gjSc0+ZeRrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 7.1 119/518] rust_binder: use a u64 stride when cleaning up the offsets array
-Date: Thu, 16 Jul 2026 15:26:27 +0200
-Message-ID: <20260716133050.457221481@linuxfoundation.org>
+	Ayden Meng <aydenmeng@yeah.net>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Ziyao Li <liziyao@uniontech.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lain Fearyncess Yang <fsf@live.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 7.1 128/518] PCI: loongson: Override PCIe bridge supported speeds for Loongson-3C6000 series
+Date: Thu, 16 Jul 2026 15:26:36 +0200
+Message-ID: <20260716133050.658633404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,62 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Ziyao Li <liziyao@uniontech.com>
 
-commit 803c8a9502e9b97cd6ae937618ef4a8fd6274343 upstream.
+commit e373c789bac0ad73b472d8b44714df3bd18a4edf upstream.
 
-Allocation's Drop walks the offsets array (binder_size_t = u64 entries),
-cleaning up the objects, but it used usize instead of u64 for both the
-stride and the per-entry read.
+Older steppings of the Loongson-3C6000 series incorrectly report the
+supported link speeds on their PCIe bridges (device IDs 0x3c19, 0x3c29)
+as only 2.5 GT/s, despite the upstream bus supporting speeds from
+2.5 GT/s up to 16 GT/s.
 
-On 64-bit kernels (usize == u64) this is harmless, but on 32-bit kernels
-it walks the 8-byte entries in 4-byte steps, iterating an N-entry array
-2N times, and reads the always-zero high word as offset 0, cleaning up
-the object at offset 0 N extra times. As a result the referenced node or
-handle ends up with a lower reference count than it actually has (a
-refcount over-decrement), and binder's reference accounting is corrupted;
-for example, the owner can be notified of a strong reference release
-(BR_RELEASE) even though references still remain.
+As a result, since commit 774c71c52aa4 ("PCI/bwctrl: Enable only if more
+than one speed is supported"), bwctrl will be disabled if there's only
+one 2.5 GT/s value in vector 'supported_speeds'.
 
-Change the stride to u64, and read each entry as a u64, narrowing it to
-usize with try_into().
+Manually override the 'supported_speeds' field for affected PCIe bridges
+with those found on the upstream bus to correctly reflect the supported
+link speeds.  Updating the speeds to reflect what the hardware actually
+supports avoids quirks in drivers consuming the speed information.
 
-On 32-bit ARM, when this over-decrement would drive a count below zero,
-the driver's existing refcount guard refuses it and fires:
+This commit was originally found from AOSC OS[1].
 
-  rust_binder: Failure: refcount underflow!
-
-Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/ahw3tFhLz9bMMJAO@v4bel
+Fixes: cd89edda4002 ("PCI: loongson: Add ACPI init support")
+Signed-off-by: Ayden Meng <aydenmeng@yeah.net>
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+[Ziyao Li: move from drivers/pci/quirks.c to drivers/pci/controller/pci-loongson.c]
+Signed-off-by: Ziyao Li <liziyao@uniontech.com>
+[Xi Ruoyao: Fixed falling through logic, added debug log, Fixes tag and rebased to 7.0-rc7]
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: commit log, https://lore.kernel.org/all/9d815df3b33a63223112b97440c01247935363c1.camel@xry111.site]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Lain Fearyncess Yang <fsf@live.com>
+Tested-by: Ayden Meng <aydenmeng@yeah.net>
+Tested-by: Mingcong Bai <jeffbai@aosc.io>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: stable@vger.kernel.org
+Link: https://github.com/AOSC-Tracking/linux/commit/4392f441363abdf6fa0a0433d73175a17f493454
+Link: https://github.com/AOSC-Tracking/linux/pull/2 #1
+Link: https://patch.msgid.link/20260412101731.107059-1-xry111@xry111.site
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/allocation.rs |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-loongson.c |   36 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
---- a/drivers/android/binder/allocation.rs
-+++ b/drivers/android/binder/allocation.rs
-@@ -259,7 +259,7 @@ impl Drop for Allocation {
+--- a/drivers/pci/controller/pci-loongson.c
++++ b/drivers/pci/controller/pci-loongson.c
+@@ -176,6 +176,42 @@ static void loongson_pci_msi_quirk(struc
+ }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, DEV_LS7A_PCIE_PORT5, loongson_pci_msi_quirk);
  
-             if let Some(offsets) = info.offsets.clone() {
-                 let view = AllocationView::new(self, offsets.start);
--                for i in offsets.step_by(size_of::<usize>()) {
-+                for i in offsets.step_by(size_of::<u64>()) {
-                     if view.cleanup_object(i).is_err() {
-                         pr_warn!("Error cleaning up object at offset {}\n", i)
-                     }
-@@ -420,7 +420,8 @@ impl<'a> AllocationView<'a> {
-     }
- 
-     fn cleanup_object(&self, index_offset: usize) -> Result {
--        let offset = self.alloc.read(index_offset)?;
-+        let offset = self.alloc.read::<u64>(index_offset)?;
-+        let offset: usize = offset.try_into().map_err(|_| EINVAL)?;
-         let header = self.read::<BinderObjectHeader>(offset)?;
-         match header.type_ {
-             BINDER_TYPE_WEAK_BINDER | BINDER_TYPE_BINDER => {
++/*
++ * Older steppings of the Loongson-3C6000 series incorrectly report the
++ * supported link speeds on their PCIe bridges (device IDs 0x3c19,
++ * 0x3c29) as only 2.5 GT/s, despite the upstream bus supporting speeds
++ * from 2.5 GT/s up to 16 GT/s.
++ */
++static void loongson_pci_bridge_speed_quirk(struct pci_dev *pdev)
++{
++	u8 old_supported_speeds = pdev->supported_speeds;
++
++	switch (pdev->bus->max_bus_speed) {
++	case PCIE_SPEED_16_0GT:
++		pdev->supported_speeds |= PCI_EXP_LNKCAP2_SLS_16_0GB;
++		fallthrough;
++	case PCIE_SPEED_8_0GT:
++		pdev->supported_speeds |= PCI_EXP_LNKCAP2_SLS_8_0GB;
++		fallthrough;
++	case PCIE_SPEED_5_0GT:
++		pdev->supported_speeds |= PCI_EXP_LNKCAP2_SLS_5_0GB;
++		fallthrough;
++	case PCIE_SPEED_2_5GT:
++		pdev->supported_speeds |= PCI_EXP_LNKCAP2_SLS_2_5GB;
++		break;
++	default:
++		pci_warn(pdev, "unexpected max bus speed");
++
++		return;
++	}
++
++	if (pdev->supported_speeds != old_supported_speeds)
++		pci_info(pdev, "fixed up supported link speeds: 0x%x => 0x%x",
++			 old_supported_speeds, pdev->supported_speeds);
++}
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_LOONGSON, 0x3c19, loongson_pci_bridge_speed_quirk);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_LOONGSON, 0x3c29, loongson_pci_bridge_speed_quirk);
++
+ static struct loongson_pci *pci_bus_to_loongson_pci(struct pci_bus *bus)
+ {
+ 	struct pci_config_window *cfg;
 
 
