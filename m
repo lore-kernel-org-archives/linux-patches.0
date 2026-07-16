@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CE328505E;
-	Thu, 16 Jul 2026 14:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C75327732;
+	Thu, 16 Jul 2026 14:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211722; cv=none; b=RSrma5FXJW+FcEYle/YtTz3KmPFGdS74IGsdyghlTksG/v9Hz93Eb3z2/meOCNLQTHxww1s1HWGhhFfOHarz8SU4WO+OgTvVxOkixSRo3JvS932NMR3/2h1Xbgr6JsPIkzgh64XKIGVf3+u/T2vLhQvEGYahXp90rYdz9UP5sgk=
+	t=1784211725; cv=none; b=Pkcdr/leV3eTLDT/fjtVGOOg3zaKSDrNTx1RMESmJddhZbwDUxEcDSlvF5DTPvHDqjgGnYM5vM0L40Qky4h3cK2q5NeUsQSWfmUexqOmpSGuWX15c5kfd4QxRAS4QSksDq1I6K6pSDvEHVFcC/9oQ1khhpZJlIibKNHSEwO4UMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211722; c=relaxed/simple;
-	bh=KnWWdBq3lA2TV9QtQ5vKLFpUYnyapf3qwT5y4/qyBKQ=;
+	s=arc-20240116; t=1784211725; c=relaxed/simple;
+	bh=41LjK1vHii88HlyzxHaVmct/9uGyjd/+xfXfrpR6INg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7Wxgw3oQpxPdx3sCFTsZngwLSdqIh/FbWeM/5cP26+YUBKR9kjq/gfO02v61k8cW8U72akjPHW2ZdbzrSLt7U8sWl1ou1lszU7rmQQFqcHoNu/kF8VGZmieS8E3QsqXxT20pACATtz0T7hcU2hEKC5bJytIxt5PKXyKgiLEGJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSxXuPrv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mla6iPjjsOCi8Ra1FzXVpA3tOqoK0a2mDfVA1/PSu927VMKy4Uaa7914zQNSWCWc0TuegClfSmiXlbVCTSqU2xgbcTb3EKNlotglZCYx05ocrb/ICdx3yxGsdzA7vZQIjVZA2mrfbVkh2ExDB0qrDvFIGPBp7Pq3nqQj6nRmkw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BaaOvaaS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSxXuPrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A37B1F00A3A;
-	Thu, 16 Jul 2026 14:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaaOvaaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13851F000E9;
+	Thu, 16 Jul 2026 14:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211721;
-	bh=O7pwyXk9BE0sGgr3OvdScgWpgloSFeKuyaNQtk4Uc+Y=;
+	s=korg; t=1784211724;
+	bh=ceCNqE5P+kliQXWQV3O/t5wASv5MoeEojRS9ickg75M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSxXuPrvpU8U24lhSwYIJYUbyvWM+CNVfoZailI3DqWUpBtd+yxPbk6Ek4SX/NQHf
-	 dKU0T9ywbiVGGKzBq/CNfzyPvNfj+VkoNAkcImEhpgWwOiyb/OeA4smWz7DJ1Uk/pJ
-	 tbL2NMzbsr4RwZzwuMRpqdTITPIPo4zOz798wqh4=
+	b=BaaOvaaScgEKct8cVXEao+ds2xO0X6dc5V/OHbqq3u+p5e6Uxv7n0bvsIyCJB21mn
+	 vgEJjbuKvWuViZs7WKtAzUxO4CdR8wmC4NXWAJQGfQTnCht0rhksfQaALsgohTBEUf
+	 MowLiOlkzXhDs+XXg5V1EcEnicXz8QnucO3Sz8ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/349] device property: initialize the remaining fields of fwnode_handle in fwnode_init()
-Date: Thu, 16 Jul 2026 15:29:06 +0200
-Message-ID: <20260716133033.567844817@linuxfoundation.org>
+Subject: [PATCH 6.12 003/349] nfsd: release layout stid on setlease failure
+Date: Thu, 16 Jul 2026 15:28:57 +0200
+Message-ID: <20260716133033.364558823@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -54,46 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 7eba000621fff223dd7bab484d48918c7c77a307 ]
+commit 30d55c8aabb261bc3f427d6b9aae7ef6206063f9 upstream.
 
-If a firmware node is allocated on the stack (for instance: temporary
-software node whose life-time we control) or on the heap - but using a
-non-zeroing allocation function - and initialized using fwnode_init(),
-its secondary pointer will contain uninitialized memory which likely
-will be neither NULL nor IS_ERR() and so may end up being dereferenced
-(for example: in dev_to_swnode()). Set fwnode->secondary to NULL on
-initialization. While at it: initialize the remaining fields of struct
-fwnode_handle too just to be sure.
+nfs4_alloc_stid() publishes the new stid into cl->cl_stateids via
+idr_alloc_cyclic() under cl_lock before returning to
+nfsd4_alloc_layout_stateid(). When nfsd4_layout_setlease() then
+fails, the error path frees the layout stateid directly with
+kmem_cache_free() without ever calling idr_remove(), leaving the
+IDR slot pointing at freed slab memory. Any subsequent IDR walker
+(states_show, client teardown) dereferences the dangling pointer.
 
+The correct teardown for an IDR-published stid is nfs4_put_stid(),
+which removes the IDR slot under cl_lock, dispatches sc_free
+(nfsd4_free_layout_stateid) to release ls->ls_file via
+nfsd4_close_layout(), and drops the nfs4_file reference in its
+tail.
+
+Replace the manual nfsd_file_put + put_nfs4_file + kmem_cache_free
+cleanup with a single nfs4_put_stid(stp).
+
+Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
 Cc: stable@vger.kernel.org
-Fixes: 01bb86b380a3 ("driver core: Add fwnode_init()")
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260511074927.9473-1-bartosz.golaszewski@oss.qualcomm.com
-[ Fix typo in commit message. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ cel: no ls_fence_work in 6.12.y; dropped INIT_DELAYED_WORK hunk ]
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fwnode.h |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4layouts.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/include/linux/fwnode.h
-+++ b/include/linux/fwnode.h
-@@ -202,8 +202,10 @@ static inline void fwnode_init(struct fw
- {
- 	fwnode->secondary = NULL;
- 	fwnode->ops = ops;
-+	fwnode->dev = NULL;
- 	INIT_LIST_HEAD(&fwnode->consumers);
- 	INIT_LIST_HEAD(&fwnode->suppliers);
-+	fwnode->flags = 0;
- }
+diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
+index fc5e82eddaa1af..c08bc2d0d37796 100644
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -256,9 +256,7 @@ nfsd4_alloc_layout_stateid(struct nfsd4_compound_state *cstate,
+ 	BUG_ON(!ls->ls_file);
  
- static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
+ 	if (nfsd4_layout_setlease(ls)) {
+-		nfsd_file_put(ls->ls_file);
+-		put_nfs4_file(fp);
+-		kmem_cache_free(nfs4_layout_stateid_cache, ls);
++		nfs4_put_stid(stp);
+ 		return NULL;
+ 	}
+ 
+-- 
+2.53.0
+
 
 
