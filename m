@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DB93F54B6;
-	Thu, 16 Jul 2026 14:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6753F54B6;
+	Thu, 16 Jul 2026 14:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210851; cv=none; b=IElwruU2/f657khd2uiuXo84Sc9YDQKps/5YhwsxdMOP5YIql3WeNkt1qzyTjFf+ii5PeLgz789sBSFAGWuoQUgE+iUyJaMeuPCrVq9hla2UqbzsdoLrv0mI1+4zqlOTwSHV9jEhLvVM6fwllFk3+UIFvw/kxRDPBt3yRwfTLAc=
+	t=1784210853; cv=none; b=J5brW8lHlS7X96CCLZq0Lr9fwXx+1t8smpcDFCAXqk9XoaEnGm9OfKItNa0NJZRkYxyVAR6Zb6FPQQm3GbwTjsvWWkqvBKr5zNTNfHSJcjXYtMKBURwTwsFlcrkGRmSX31V/eiR7tgN89EOgDDNOLsKfFozZEbx3tWXvLBDUs7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210851; c=relaxed/simple;
-	bh=XP7dR/N00SMH/NdrSJ+JjDsOs8guHdHvWT4ybrgWW+Y=;
+	s=arc-20240116; t=1784210853; c=relaxed/simple;
+	bh=tIutXDufgBMOedgGLjJy9sEp1eb6pr/FVimFuQz3UFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MrIFqKrHXuAIBwlJ7uRjait9VlCPfx7SS2+HNyPW8gbUYAZRwb/+p6DUd04ZZqmWvYQVIQ+ogb9sEWOzW6PQGwaxTaYutKAVyyBGTILEtVM9z2xietKQo2gBVt3ps8COZM+Wb6NKkql5j//q6bv/bbDZn/SK/FkgceGXzl0HQk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fypKuVuP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QVnKDoKaTEwd5JlZsrNq+L+7v4aIqiB5g4KjBrXpcYo5l10qnyQr8hxl8w/2BPosBsEUVqBovxVnhL7exAT5XAm54CeqIJWbmgJr4J9iVRgyopYLS96K/etFM485TQgfBbq+dVRg8M0c+rfOAn4XqNmmmwxum5v863/MllgGvO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coUEE9CR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fypKuVuP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069281F000E9;
-	Thu, 16 Jul 2026 14:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coUEE9CR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A365D1F000E9;
+	Thu, 16 Jul 2026 14:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210849;
-	bh=LMQL7Etn5p9rKDu+2OvasEYDk0isIp7KEwiq3VSYP/Y=;
+	s=korg; t=1784210852;
+	bh=VEUa3SMZCfvIOJa7nnFuOzJm7BEdu3SEdQT3JfLLr4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fypKuVuPHqKrcs/h/ybPub+jpVMSbGEydUYnEAg7hE0Ry9wO0WHIH5M/LXpezI+k/
-	 BtF6IUR71pRoa/hZvK8xP/N2s/fwmsDuctvejX5xjtB/ZfWIeJ4qgLx9uamc2fNC6q
-	 YXw1PTNrWWt09z0LXxho61Ogp2Tzb0gbHSmHgSpw=
+	b=coUEE9CRhOQhbBDhg/sIQCVClxx5sxChXOxEc8RBOABeOSwJ0gzpd0rw+MqMrla9X
+	 5CZOd4L3Y7UGBap1xiKepS8Qsc3kPrnMB7Sz0vJeBK4wg9zUNnTifLlDjmYhXvSjbt
+	 QS24x612fhyIgVNK0bXw+nHPuHWcr+UnVtqB5ez4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	XIAO WU <xiaowu.417@qq.com>,
-	Siwei Zhang <oss@fourdim.xyz>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 204/480] Bluetooth: hci_conn: Fix null ptr deref in hci_abort_conn()
-Date: Thu, 16 Jul 2026 15:29:11 +0200
-Message-ID: <20260716133049.138770058@linuxfoundation.org>
+Subject: [PATCH 6.18 205/480] Bluetooth: hci_uart: clear HCI_UART_SENDING when write_work is canceled
+Date: Thu, 16 Jul 2026 15:29:12 +0200
+Message-ID: <20260716133049.160606402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,279 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit 12917f591cea1af36087dba5b9ec888652f0b42a upstream.
+commit 1b0d946d6f08bd39211385bc703a440911b41e46 upstream.
 
-hci_abort_conn() read hci_skb_event(hdev->sent_cmd) when a connection
-was pending, but hdev->sent_cmd can be NULL while req_status is still
-HCI_REQ_PEND, leading to a NULL pointer dereference and a general
-protection fault from the hci_rx_work() receive path.
+HCI_UART_SENDING bit in tx_state means write_work is pending and blocks
+queueing it again.  Currently this bit is not cleared when canceling the
+work in hci_uart_close(), which blocks future writes when device is
+reopened later if write_work was pending.
 
-Instead of inspecting hdev->sent_cmd, track the in-flight create
-connection command with a new per-connection HCI_CONN_CREATE flag and
-route all cancellation through hci_cancel_connect_sync(), which
-dispatches to a dedicated per-type cancel function. The create command
-is in exactly one of two states: still queued, or in flight. The cancel
-function holds cmd_sync_work_lock across the whole decision: the worker
-takes this lock to dequeue every entry, so while it is held a queued
-command cannot start running and an in-flight command cannot complete
-and let the next command become pending. This keeps the flag test and
-hci_cmd_sync_cancel() atomic with respect to the worker, so a queued
-command is simply dequeued, and an in-flight command owned by this
-connection is cancelled without the risk of cancelling an unrelated
-command that became pending in the meantime. CIS uses the same flag
-mechanism via HCI_CONN_CREATE_CIS but cannot be dequeued per-connection.
+Fix by clearing HCI_UART_SENDING when canceling the work.
 
-hci_acl_create_conn_sync() and hci_le_create_conn_sync() clear
-HCI_CONN_CREATE after the create command completes, but the command
-status handler can free conn via hci_conn_del() (for example when the
-controller rejects the connection) while the worker is still blocked on
-the connection complete event. Hold a reference on conn across the
-create command so the flag can be cleared without a use-after-free.
+Also make clearing of tx_skb safe by using disable_work_sync +
+enable_work instead of just cancel_work_sync.  hci_uart_flush() purges
+the proto tx queue so we can cancel the pending write_work there,
+instead of doing it just in hci_uart_close().  Re-enable and possibly
+requeue the work after queue flush.
 
-Fixes: a13f316e90fd ("Bluetooth: hci_conn: Consolidate code for aborting connections")
+Fixes: c1bb9336ae6b ("Bluetooth: hci_uart: fix UAFs and race conditions in close and init paths")
+Link: https://lore.kernel.org/linux-bluetooth/07e0a28650773abec711ee492fdb1bf5d21a6c98.camel@iki.fi/
 Cc: stable@vger.kernel.org
-Suggested-by: XIAO WU <xiaowu.417@qq.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    1 
- net/bluetooth/hci_conn.c         |   21 ------
- net/bluetooth/hci_sync.c         |  133 ++++++++++++++++++++++++++++++++++-----
- 3 files changed, 123 insertions(+), 32 deletions(-)
+ drivers/bluetooth/hci_ldisc.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -984,6 +984,7 @@ enum {
- 	HCI_CONN_AUTH_FAILURE,
- 	HCI_CONN_PER_ADV,
- 	HCI_CONN_BIG_CREATED,
-+	HCI_CONN_CREATE,
- 	HCI_CONN_CREATE_CIS,
- 	HCI_CONN_CREATE_BIG_SYNC,
- 	HCI_CONN_BIG_SYNC,
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2979,26 +2979,11 @@ int hci_abort_conn(struct hci_conn *conn
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -239,6 +239,8 @@ static int hci_uart_flush(struct hci_dev
  
- 	conn->abort_reason = reason;
+ 	BT_DBG("hdev %p tty %p", hdev, tty);
  
--	/* If the connection is pending check the command opcode since that
--	 * might be blocking on hci_cmd_sync_work while waiting its respective
--	 * event so we need to hci_cmd_sync_cancel to cancel it.
--	 *
--	 * hci_connect_le serializes the connection attempts so only one
--	 * connection can be in BT_CONNECT at time.
-+	/* Cancel the connect attempt. A return of 0 means the create command
-+	 * was still queued and got dequeued, so there is nothing to disconnect.
- 	 */
--	if (conn->state == BT_CONNECT && READ_ONCE(hdev->req_status) == HCI_REQ_PEND) {
--		switch (hci_skb_event(hdev->sent_cmd)) {
--		case HCI_EV_CONN_COMPLETE:
--		case HCI_EV_LE_CONN_COMPLETE:
--		case HCI_EV_LE_ENHANCED_CONN_COMPLETE:
--		case HCI_EVT_LE_CIS_ESTABLISHED:
--			hci_cmd_sync_cancel(hdev, ECANCELED);
--			break;
--		}
--	/* Cancel connect attempt if still queued/pending */
--	} else if (!hci_cancel_connect_sync(hdev, conn)) {
-+	if (!hci_cancel_connect_sync(hdev, conn))
- 		return 0;
--	}
- 
- 	/* Run immediately if on cmd_sync_work since this may be called
- 	 * as a result to MGMT_OP_DISCONNECT/MGMT_OP_UNPAIR which does
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6556,6 +6556,11 @@ static int hci_le_create_conn_sync(struc
- 
- 	bt_dev_dbg(hdev, "conn %p", conn);
- 
-+	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
-+	 * clear_bit() at done.
-+	 */
-+	hci_conn_get(conn);
++	disable_work_sync(&hu->write_work);
 +
- 	clear_bit(HCI_CONN_SCANNING, &conn->flags);
- 	conn->state = BT_CONNECT;
- 
-@@ -6568,6 +6573,7 @@ static int hci_le_create_conn_sync(struc
- 		    hdev->le_scan_type == LE_SCAN_ACTIVE &&
- 		    !hci_dev_test_flag(hdev, HCI_LE_SIMULTANEOUS_ROLES)) {
- 			hci_conn_del(conn);
-+			hci_conn_put(conn);
- 			return -EBUSY;
- 		}
- 
-@@ -6613,6 +6619,12 @@ static int hci_le_create_conn_sync(struc
- 					     &own_addr_type);
- 	if (err)
- 		goto done;
-+
-+	/* Mark create connection in flight so hci_cancel_connect_sync() can
-+	 * cancel it while blocking on the connection complete event.
-+	 */
-+	set_bit(HCI_CONN_CREATE, &conn->flags);
-+
- 	/* Send command LE Extended Create Connection if supported */
- 	if (use_ext_conn(hdev)) {
- 		err = hci_le_ext_create_conn_sync(hdev, conn, own_addr_type);
-@@ -6648,11 +6660,14 @@ static int hci_le_create_conn_sync(struc
- 				       conn->conn_timeout, NULL);
- 
- done:
-+	clear_bit(HCI_CONN_CREATE, &conn->flags);
-+
- 	if (err == -ETIMEDOUT)
- 		hci_le_connect_cancel_sync(hdev, conn, 0x00);
- 
- 	/* Re-enable advertising after the connection attempt is finished. */
- 	hci_resume_advertising_sync(hdev);
-+	hci_conn_put(conn);
- 	return err;
- }
- 
-@@ -6927,10 +6942,25 @@ static int hci_acl_create_conn_sync(stru
- 	else
- 		cp.role_switch = 0x00;
- 
--	return __hci_cmd_sync_status_sk(hdev, HCI_OP_CREATE_CONN,
--					sizeof(cp), &cp,
--					HCI_EV_CONN_COMPLETE,
--					conn->conn_timeout, NULL);
-+	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
-+	 * clear_bit() below.
-+	 */
-+	hci_conn_get(conn);
-+
-+	/* Mark create connection in flight so hci_cancel_connect_sync() can
-+	 * cancel it while blocking on the connection complete event.
-+	 */
-+	set_bit(HCI_CONN_CREATE, &conn->flags);
-+
-+	err = __hci_cmd_sync_status_sk(hdev, HCI_OP_CREATE_CONN,
-+				       sizeof(cp), &cp,
-+				       HCI_EV_CONN_COMPLETE,
-+				       conn->conn_timeout, NULL);
-+
-+	clear_bit(HCI_CONN_CREATE, &conn->flags);
-+	hci_conn_put(conn);
-+
-+	return err;
- }
- 
- int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
-@@ -6976,22 +7006,97 @@ int hci_connect_le_sync(struct hci_dev *
- 				       create_le_conn_complete);
- }
- 
--int hci_cancel_connect_sync(struct hci_dev *hdev, struct hci_conn *conn)
-+static int hci_acl_cancel_create_conn_sync(struct hci_dev *hdev,
-+					   struct hci_conn *conn)
-+{
-+	struct hci_cmd_sync_work_entry *entry;
-+	int err = -EBUSY;
-+
-+	/* cmd_sync_work_lock makes the HCI_CONN_CREATE test and the cancel
-+	 * atomic against the worker, which takes this lock to dequeue every
-+	 * entry: while it is held no other command can become pending, so
-+	 * hci_cmd_sync_cancel() cannot cancel an unrelated command.
-+	 */
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+
-+	/* In flight: this connection owns the pending request, cancel it. */
-+	if (test_bit(HCI_CONN_CREATE, &conn->flags)) {
-+		hci_cmd_sync_cancel(hdev, ECANCELED);
-+		goto unlock;
-+	}
-+
-+	/* Still queued: a successful dequeue means it never started, so there
-+	 * is nothing to disconnect.
-+	 */
-+	entry = _hci_cmd_sync_lookup_entry(hdev, hci_acl_create_conn_sync, conn,
-+					   NULL);
-+	if (entry) {
-+		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
-+		err = 0;
-+	}
-+
-+unlock:
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+	return err;
-+}
-+
-+static int hci_le_cancel_create_conn_sync(struct hci_dev *hdev,
-+					  struct hci_conn *conn)
- {
--	if (conn->state != BT_OPEN)
--		return -EINVAL;
-+	struct hci_cmd_sync_work_entry *entry;
-+	int err = -EBUSY;
-+
-+	/* cmd_sync_work_lock keeps the HCI_CONN_CREATE test and the cancel
-+	 * atomic against the cmd_sync worker.
-+	 */
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+
-+	if (test_bit(HCI_CONN_CREATE, &conn->flags)) {
-+		hci_cmd_sync_cancel(hdev, ECANCELED);
-+		goto unlock;
-+	}
- 
-+	entry = _hci_cmd_sync_lookup_entry(hdev, hci_le_create_conn_sync, conn,
-+					   create_le_conn_complete);
-+	if (entry) {
-+		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
-+		err = 0;
-+	}
-+
-+unlock:
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+	return err;
-+}
-+
-+static int hci_cis_cancel_create_conn_sync(struct hci_dev *hdev,
-+					   struct hci_conn *conn)
-+{
-+	/* LE Create CIS is shared by the whole CIG and cannot be dequeued
-+	 * per-connection, so only an in-flight command can be cancelled.
-+	 * cmd_sync_work_lock keeps the test and the cancel atomic against the
-+	 * cmd_sync worker.
-+	 */
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+
-+	if (test_bit(HCI_CONN_CREATE_CIS, &conn->flags))
-+		hci_cmd_sync_cancel(hdev, ECANCELED);
-+
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+	return -EBUSY;
-+}
-+
-+int hci_cancel_connect_sync(struct hci_dev *hdev, struct hci_conn *conn)
-+{
- 	switch (conn->type) {
- 	case ACL_LINK:
--		return !hci_cmd_sync_dequeue_once(hdev,
--						  hci_acl_create_conn_sync,
--						  conn, NULL);
-+		return hci_acl_cancel_create_conn_sync(hdev, conn);
- 	case LE_LINK:
--		return !hci_cmd_sync_dequeue_once(hdev, hci_le_create_conn_sync,
--						  conn, create_le_conn_complete);
-+		return hci_le_cancel_create_conn_sync(hdev, conn);
-+	case CIS_LINK:
-+		return hci_cis_cancel_create_conn_sync(hdev, conn);
-+	default:
-+		return -ENOENT;
+ 	if (hu->tx_skb) {
+ 		kfree_skb(hu->tx_skb); hu->tx_skb = NULL;
  	}
--
--	return -ENOENT;
+@@ -254,6 +256,14 @@ static int hci_uart_flush(struct hci_dev
+ 
+ 	percpu_up_read(&hu->proto_lock);
+ 
++	/* Resume TX. Also reschedule in case work was queued concurrently;
++	 * this may schedule write_work although there's nothing to do.
++	 */
++	enable_work(&hu->write_work);
++	clear_bit(HCI_UART_SENDING, &hu->tx_state);
++	if (test_bit(HCI_UART_TX_WAKEUP, &hu->tx_state))
++		hci_uart_tx_wakeup(hu);
++
+ 	return 0;
  }
  
- int hci_le_conn_update_sync(struct hci_dev *hdev, struct hci_conn *conn,
+@@ -271,12 +281,8 @@ static int hci_uart_open(struct hci_dev
+ /* Close device */
+ static int hci_uart_close(struct hci_dev *hdev)
+ {
+-	struct hci_uart *hu = hci_get_drvdata(hdev);
+-
+ 	BT_DBG("hdev %p", hdev);
+ 
+-	cancel_work_sync(&hu->write_work);
+-
+ 	hci_uart_flush(hdev);
+ 	hdev->flush = NULL;
+ 	return 0;
 
 
