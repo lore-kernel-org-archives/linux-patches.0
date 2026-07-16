@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F4B41F7CC;
-	Thu, 16 Jul 2026 14:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9F841F7CC;
+	Thu, 16 Jul 2026 14:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210462; cv=none; b=la/SrVaiiEiie3o5jclXG8TI1UUWNtRzAC0BnTbiyc4RlCQLkCZ6Ky3cVCUwWs6U2AYqZ1khd1vjg90SP67KNXLtU124DDiFe5ULwfJ3pZGUSn29YeDt+vjY4Uj+AHQU9W3iciry0hOSRtLz4Ztp98tdmHDRxnGLNth+KmzxziE=
+	t=1784210464; cv=none; b=YkBV857dJ8dAH29eAAeOnvrUIcn1TWKvbuEiIjyoccMriljruvql4VIcERjS03j6eHr830cofaix6hDSsb6FujtFt8qY/L41TyOck9F+8cc1tZy3At9RcL68WHOA1NORI6+mnk4fgcxtFpSgPGisufVbqH046X9EP3lgGQhBNm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210462; c=relaxed/simple;
-	bh=VpuzV9ln3+zwtxAYj/YhtYcEoy8byrnFrMqXJq0pvII=;
+	s=arc-20240116; t=1784210464; c=relaxed/simple;
+	bh=5psE3hiTk+05dIVDGDI0l0Tc8fWwR8SWBxjC10zi71Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XR7+lMkd77zX8+TIvREaBvz6XebXE91K4mXw9pv3QtGaiyLHjy4V3jnZ7QYsYTO5kKoYpSVC49P/3xveoczGOYvqjNkxKgrMH9Y0q0K00QUqrxKEsoP5mstMyV/K+iDAXddYjIpo4PhS3BPreog8Z1xqkhDElRuus0Uzqt+eHhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTuYuEEh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DaTMVIIR/wvhqavIGZGeU+gitASd3ZHuh9+NxPBSy15NzadZ8hMCU1rvByOihLgyTvJ2LV+WEUYnpG0oJiBKYxoI5CB+kMVuEKFVg6v+aMYRjIX4ae2tv2pPR17UrN7tPs2FSdkesH/CBrd15jFtlWG17i6OFJiNKGW/aSStl1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cm5IABIj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTuYuEEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45DA1F000E9;
-	Thu, 16 Jul 2026 14:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cm5IABIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F9A1F00A3A;
+	Thu, 16 Jul 2026 14:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210461;
-	bh=mKRglfUve2HQ+kELQA/AKmOUP0GopwscP7/K+00wOt8=;
+	s=korg; t=1784210463;
+	bh=GGtcStnEl/aiYGwYduP+WnrDkKzdaKvHdkDFoD52iUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xTuYuEEh7FBebY2xzFlW6K7Nv2K7mS14lP/HIFI0Ucrcl2RQyCkm78lJG2SJo2A9U
-	 QlkqgKRH3/FAdJJeHCjkuiMniozai/aFccyN0m2LBv20GYhJ1B0ZIZOcqn3fIKwkJA
-	 N4LKPkO+EW8CX24vnI++ZExYLb18BPnVgG+w4FQ4=
+	b=cm5IABIjCbYhivuB8B6jvEZKfvuB6tYRltfVpjb0B1DAOviBnZ0YNIg1bptzDESlV
+	 T48f2fKrLWFWu+DAcOsM0Or1yCoZ2gsjLv/PSJogDr7aDowQP0Jic8ozH5O/xrMWZf
+	 QraMCFM6uhnchazOj7vbKHkFqbxKni9b6k9lp/I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Stable@vger.kernel.org,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 057/480] iio: adc: ti-ads1119: fix PM reference leak in buffer preenable
-Date: Thu, 16 Jul 2026 15:26:44 +0200
-Message-ID: <20260716133045.946076879@linuxfoundation.org>
+Subject: [PATCH 6.18 058/480] iio: adc: ti-ads124s08: Return reset GPIO lookup errors
+Date: Thu, 16 Jul 2026 15:26:45 +0200
+Message-ID: <20260716133045.968086383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,44 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit adf4bc07f814da8329278d32600147f5a150938c upstream.
+commit 7dc4de2aa6316f1d044cde21f5acfec5f3ec6b47 upstream.
 
-ads1119_triggered_buffer_preenable() resumes the device with
-pm_runtime_resume_and_get() before starting a conversion.
+devm_gpiod_get_optional() returns NULL when the optional GPIO is absent,
+but returns an ERR_PTR when the GPIO provider lookup fails, including
+probe deferral.
 
-If i2c_smbus_write_byte() fails, the function returns the error directly
-and leaves the runtime PM usage counter elevated. The matching
-postdisable callback is not called when preenable fails, so the reference
-is leaked and the device may remain runtime-active indefinitely.
+Probe currently logs the ERR_PTR case as if the reset GPIO were simply
+absent and keeps the error pointer in reset_gpio. Later ads124s_reset()
+treats any non-NULL reset_gpio as a valid descriptor and passes it to
+gpiod_set_value_cansleep().
 
-Store the I2C transfer result in ret and drop the runtime PM reference on
-failure before returning the error.
+Return the lookup error instead of retaining the ERR_PTR.
 
-Fixes: a9306887eba41 ("iio: adc: ti-ads1119: Add driver")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: <Stable@vger.kernel.org>
+Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
+Cc: stable@vger.kernel.org
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-ads1119.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ti-ads124s08.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ti-ads1119.c
-+++ b/drivers/iio/adc/ti-ads1119.c
-@@ -459,7 +459,11 @@ static int ads1119_triggered_buffer_pree
- 	if (ret)
- 		return ret;
+--- a/drivers/iio/adc/ti-ads124s08.c
++++ b/drivers/iio/adc/ti-ads124s08.c
+@@ -321,7 +321,8 @@ static int ads124s_probe(struct spi_devi
+ 	ads124s_priv->reset_gpio = devm_gpiod_get_optional(&spi->dev,
+ 						   "reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(ads124s_priv->reset_gpio))
+-		dev_info(&spi->dev, "Reset GPIO not defined\n");
++		return dev_err_probe(&spi->dev, PTR_ERR(ads124s_priv->reset_gpio),
++				     "Failed to get reset GPIO\n");
  
--	return i2c_smbus_write_byte(st->client, ADS1119_CMD_START_SYNC);
-+	ret = i2c_smbus_write_byte(st->client, ADS1119_CMD_START_SYNC);
-+	if (ret)
-+		pm_runtime_put_autosuspend(dev);
-+
-+	return ret;
- }
+ 	ads124s_priv->chip_info = &ads124s_chip_info_tbl[spi_id->driver_data];
  
- static int ads1119_triggered_buffer_postdisable(struct iio_dev *indio_dev)
 
 
