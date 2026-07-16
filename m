@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011D2319601;
-	Thu, 16 Jul 2026 14:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7ED319601;
+	Thu, 16 Jul 2026 14:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210953; cv=none; b=PDEMKi4YIYsEUrLkLuYdywXLr5ZQM1AmwPo9FSzh68c9eGNmhmuhbraLrNzcAIBV/byBtiHAwXcIwlqinJTTqYA+8Z8MXqRgDvx8UWtzY1lKn4/kvK4+hnLz9Oy72TSX+gA/U6YwerBKtKhXuFFDdnz1W5VhwWx7S1r9osqnUHg=
+	t=1784210955; cv=none; b=BkI2nvhX0fIz0P+SW8BrrdokiP7CfkeYtdDA/P9SJbdQ5vRQL67ups4Ht7ZQG/ix60f+mfNEfICGQLEpI7MlmfMmD8Ot+f4Ymr6gvTW32sYN4JUWB570hbRymL5RF7jig7i7Q7mZ4cC0C4BNjr+dV60e7QtyJYaV4w+cKUhQWxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210953; c=relaxed/simple;
-	bh=t8snrNzG5IiqGmqjAA1/CYa4A5SZKrSwVMu0eR9XjBM=;
+	s=arc-20240116; t=1784210955; c=relaxed/simple;
+	bh=yzn0JkJXGsnZ1Iymkc5Ujr8LWMCh+hKvOlYB0jKI37s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnXaaSdlileINqDpEEVGDY0+xVf2BI9q4fpTQJ65YcfI3RD5ZOlAnOUAW2iGo4bLBAHphrpb90X9Ig0qiH+rNSuv8YJng3tPcbDYmyNNQaSVyM/RVn4W5uYNO7DLGM3zzz3ufMjeW5EvQ6GVnKtyZTsRQKJJyA4piwwsy/d50yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VO3qswuk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yra32t10skvszscq5a53+WI8WSCyzSXU18AERAu6kTGHcUZohcyoB+9QUr9wlxKrlfu8bscTTiqUMIcZW6nPpwm3nn1zl3bjl5b2cP3LEJMb9mzUQ02+C7DQr0vj9QFASr+bkmy6skp1EiAbdvSTnCbj3vY/89bExRpXza5cHmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qhGFCz9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VO3qswuk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667891F00A3E;
-	Thu, 16 Jul 2026 14:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qhGFCz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6EC1F000E9;
+	Thu, 16 Jul 2026 14:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210951;
-	bh=G8NGwg21AmPSnSp/Bm/88X9D4cDLy0KvX6Skc1BYnGQ=;
+	s=korg; t=1784210954;
+	bh=lpsTsAMitGnQTDZS9Gk2NRd2kaaSSDVl+n9OfUMgY5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VO3qswuk9Bt9lMZfNr/hTuDd8kSTiRTarkVAIuwxM//J5ojRRLrCXBxm5V6TuVAFF
-	 VPlHWlMfT7i2fTVzp2Ok9qTqtSN6ML2T6u11GogGhRrXMXDqWygMTwLS6Op3WqZAEg
-	 +gv9bf+4By4ux+2+KRVY8GOyoCeANi+oqsmpX4os=
+	b=1qhGFCz9iH6NJJLTsT0nDBCC354ayyX1T6J8VFfsddzS3qmtTHRUOXxY6HOYE2hpj
+	 OvkWgcpYRvKCA7IWw+juvQhs96Z4r4k2EXIMw6+oWIsGIy8y1r+FwuDtrGluaNllX5
+	 +3TiYMkY0sYkCwx3mVLSeqQ/xBym35RFAlklYVfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	John Hubbard <jhubbard@nvidia.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 244/480] libfs: set SB_I_NOEXEC and SB_I_NODEV by default in init_pseudo()
-Date: Thu, 16 Jul 2026 15:29:51 +0200
-Message-ID: <20260716133050.098474420@linuxfoundation.org>
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>
+Subject: [PATCH 6.18 245/480] perf/x86/intel/uncore: Defer ADL global PMON enable to enable_box()
+Date: Thu, 16 Jul 2026 15:29:52 +0200
+Message-ID: <20260716133050.119742181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,56 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Hubbard <jhubbard@nvidia.com>
+From: Zide Chen <zide.chen@intel.com>
 
-commit 6de2aeffabaafaeda819e60ec8d04f199711e11a upstream.
+commit 9a0bb848a37150aeccc10088e141339917d995dc upstream.
 
-Since commit 1e7ab6f67824 ("anon_inode: rework assertions"),
-path_noexec() warns when an anonymous-inode file is mmap'd from a
-superblock that has not set SB_I_NOEXEC. dma-buf backs its files this
-way and never set the flag, so mmap of any exported buffer trips the
-warning on a CONFIG_DEBUG_VFS=y kernel:
+On some Raptor Cove CPUs, enabling uncore PMON globally at driver init
+may increase power consumption even when no perf events are in use.
 
-  WARNING: CPU: 11 PID: 121813 at fs/exec.c:118 path_noexec+0x47/0x50
-   do_mmap+0x2b5/0x680
-   vm_mmap_pgoff+0x129/0x210
-   ksys_mmap_pgoff+0x177/0x240
-   __x64_sys_mmap+0x33/0x70
+Drop adl_uncore_msr_init_box() and defer programming the global control
+register to enable_box(), so it is only set when a box is actually used.
 
-init_pseudo() sets up internal SB_NOUSER mounts that are never
-path-reachable. Set both flags here so every pseudo filesystem gets
-them by default instead of each caller setting them.
+IMC and IMC freerunning counters use a separate control path and are
+unaffected.
 
-SB_I_NODEV is inert for unreachable mounts. SB_I_NOEXEC has one
-visible effect: an executable mapping of a pseudo-fs fd, such as a
-dma-buf, now fails with -EPERM, which is the invariant the assertion
-enforces. No in-tree caller maps these executable.
-
-Reproduce on CONFIG_DEBUG_VFS=y:
-
-  make -C tools/testing/selftests/dmabuf-heaps
-  sudo ./tools/testing/selftests/dmabuf-heaps/dmabuf-heap -t system
-
-Fixes: 1e7ab6f67824 ("anon_inode: rework assertions")
-Suggested-by: Christoph Hellwig <hch@infradead.org>
+Fixes: 772ed05f3c5c ("perf/x86/intel/uncore: Add Alder Lake support")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-Link: https://patch.msgid.link/20260604025315.245910-2-jhubbard@nvidia.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://patch.msgid.link/20260602144908.263680-5-zide.chen@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/libfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/events/intel/uncore_snb.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -721,6 +721,7 @@ struct pseudo_fs_context *init_pseudo(st
- 		fc->fs_private = ctx;
- 		fc->ops = &pseudo_fs_context_ops;
- 		fc->sb_flags |= SB_NOUSER;
-+		fc->s_iflags |= SB_I_NOEXEC | SB_I_NODEV;
- 		fc->global = true;
- 	}
- 	return ctx;
+--- a/arch/x86/events/intel/uncore_snb.c
++++ b/arch/x86/events/intel/uncore_snb.c
+@@ -539,12 +539,6 @@ void tgl_uncore_cpu_init(void)
+ 	skl_uncore_msr_ops.init_box = rkl_uncore_msr_init_box;
+ }
+ 
+-static void adl_uncore_msr_init_box(struct intel_uncore_box *box)
+-{
+-	if (box->pmu->pmu_idx == 0)
+-		wrmsrq(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
+-}
+-
+ static void adl_uncore_msr_enable_box(struct intel_uncore_box *box)
+ {
+ 	wrmsrq(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
+@@ -563,7 +557,6 @@ static void adl_uncore_msr_exit_box(stru
+ }
+ 
+ static struct intel_uncore_ops adl_uncore_msr_ops = {
+-	.init_box	= adl_uncore_msr_init_box,
+ 	.enable_box	= adl_uncore_msr_enable_box,
+ 	.disable_box	= adl_uncore_msr_disable_box,
+ 	.exit_box	= adl_uncore_msr_exit_box,
 
 
