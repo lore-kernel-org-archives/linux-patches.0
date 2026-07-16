@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0963161AD;
-	Thu, 16 Jul 2026 14:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2073B0ADE;
+	Thu, 16 Jul 2026 14:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211667; cv=none; b=Udi07mv269PfAXMmkmc6/W7Ft5wMt89Xbu3jZCvPUBc+vBkLz+p54qeJ4CFJKJahWm/IEAkMfgccpWE+hMKNTJCchfiVVlnZ/Us/zG2HfHvyfNgRt/TGWyMov9le9dnNkd4nGnL/iPm0IzBwpeNf3RQIKdMI3YnR+DYZ3cMP6PA=
+	t=1784211670; cv=none; b=Bo3LkmqiUHCQGCb5Ngb5x7hsJnXkXyGhL+6dfHPAfSS+qHMX3B6C7zBnzbA1IOr9ksfl5OIPMa+8HeI0kXuKeAqSMIeHgMWLUO1lNjevLKnG9aANg++NoiI1UXWggSVEH58qpGDpPCFCUsch3t9e4pdR4/Zh+0I/sWJ9IyGRDo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211667; c=relaxed/simple;
-	bh=Bm0EVJ/KFLp6Ek1H+61ZJp75NA5OQwxa782Ejpv9gaE=;
+	s=arc-20240116; t=1784211670; c=relaxed/simple;
+	bh=zwVL/1AHjrOwhte6SxnIajCy0dSVM02o0IEw6n7Ew7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5ZvbMlyx9dXWS+PPlTbanfYAvuwfq6XNeIfrPUK0xcmA27LzdezdeIaA8D/9Tsy+46dWQx6vX/IuTu7GWIARgzaIl+MVQkaOfEAn2Xm0/GBxsGdS6jUPqt4cGUy1psg4v4PKjNsN7ftkO92WB9+EVZXS9CQiIxTZ1tdQsz/8B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MreRj+0j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R2WndtU9xdOVURwie8ZPvg/ahDOQInD1K4GrXPyEyE6sLewaIKI2fd0do3DBKO5yqRu3ukAsrh8JMK6fYTuUdnGO/iON1SxohCe7soRfVOH2zUf31WU/LWCt+tui8g+TbWV9wvEqJ3r6rSxN5CNczyV1ryd6cYQ/CeeRDfTQDJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShuX0mmX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MreRj+0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5541F000E9;
-	Thu, 16 Jul 2026 14:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShuX0mmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EC61F000E9;
+	Thu, 16 Jul 2026 14:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211666;
-	bh=iRjF+VMrQuhUIs5FGyhgvi0bhIGbxNSK7cffuwD6clU=;
+	s=korg; t=1784211669;
+	bh=mUI6h6lUBf87JpxLzwG2adgefXw6BdzTzirX/KYt8Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MreRj+0jxXJN4asNk6QORQKjVOSEsrlRGAmte8kKNKZ2Wf5K36Ctor9ZTf3jHINwJ
-	 ZPH/8UG01TCVCQlqpApsAtHyVIQMoQRv7FTGnGaQTaepTeomfHtA5vdNaw4XSO35+5
-	 xHcCdD7QNfX6FbWMYLXfsFmXtaLTZfhlMij7j6DY=
+	b=ShuX0mmXLTacAIR7di6fmPUevgi+oJ9brJbIZ+8NBGITPDxELi18b6uEZvQQ8gH04
+	 jzJ41zdc7/PwyYLsTAmzM9sRFFnT8piKHXuAOyuMIehxKBq2O9uPIv++Xfigl2iewD
+	 gHWG4rL0f7H5KkePsvx/kkmylX7IgWzvdaa2CdK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Markus Mayer <mmayer@broadcom.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.12 033/349] perf trace beauty fcntl: Fix build with older kernel headers
-Date: Thu, 16 Jul 2026 15:29:27 +0200
-Message-ID: <20260716133034.051011875@linuxfoundation.org>
+	Jeremy Linton <jeremy.linton@arm.com>,
+	Jarred White <jarredwhite@linux.microsoft.com>,
+	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 034/349] ACPI: CPPC: Suppress UBSAN warning caused by field misuse
+Date: Thu, 16 Jul 2026 15:29:28 +0200
+Message-ID: <20260716133034.073858585@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -60,60 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Jeremy Linton <jeremy.linton@arm.com>
 
-commit 7ee7f48413c42b90230de4a8e40898b757bc8e82 upstream.
+commit 1b1acf2dada0cc3931bb2cb9ff8832edfbee46a1 upstream.
 
-Toolchains with older kernel headers that do not include upstream commit
-c75b1d9421f80f41 ("fs: add fcntl() interface for setting/getting write
-life time hints") will now fail to build perf due to missing definitions
-for F_GET_RW_HINT/F_SET_RW_HINT/F_GET_FILE_RW_HINT/F_SET_FILE_RW_HINT.
+The definition of reg->access_width changes depending on the
+reg->space_id type.  Type ACPI_ADR_SPACE_PLATFORM_COMM uses
+access_width to indicate the PCC region, which can result in a UBSAN
+if the value is greater than 4.
 
-Provide a fallback definition for these when they are not already
-defined.
+For example:
 
-Fixes: 9c47f66748381ecb ("perf trace beauty fcntl: Basic 'arg' beautifier")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Markus Mayer <mmayer@broadcom.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+ UBSAN: shift-out-of-bounds in drivers/acpi/cppc_acpi.c:1090:9
+ shift exponent 32 is too large for 32-bit type 'int'
+ CPU: 61 UID: 0 PID: 1220 Comm: (udev-worker) Not tainted 7.0.10-201.fc44.aarch64 #1 PREEMPT(lazy)
+ Hardware name: To be filled by O.E.M.
+ Call trace:
+  ...(trimming)
+  ubsan_epilogue+0x10/0x48
+  __ubsan_handle_shift_out_of_bounds+0xdc/0x1e0
+  cpc_write+0x4d0/0x670
+  cppc_set_perf+0x18c/0x490
+  cppc_cpufreq_cpu_init+0x1c8/0x380 [cppc_cpufreq]
+  ... (trimming)
+
+Lets fix this by validating the region type, as well as whether
+access_width has a value. Then since we are returning bit_width
+directly for ACPI_ADR_SPACE_PLATFORM_COMM, drop the code correcting
+the size.
+
+Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
+Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+Tested-by: Jarred White <jarredwhite@linux.microsoft.com>
+Reviewed-by: Jarred White <jarredwhite@linux.microsoft.com>
+Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260601235808.1113137-1-jeremy.linton@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/trace/beauty/fcntl.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/acpi/cppc_acpi.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/tools/perf/trace/beauty/fcntl.c
-+++ b/tools/perf/trace/beauty/fcntl.c
-@@ -9,6 +9,22 @@
- #include <linux/kernel.h>
- #include <linux/fcntl.h>
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -172,8 +172,13 @@ show_cppc_data(cppc_get_perf_caps, cppc_
+ show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, reference_perf);
+ show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, wraparound_time);
  
-+#ifndef F_GET_RW_HINT
-+#define F_GET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 11)
-+#endif
-+
-+#ifndef F_SET_RW_HINT
-+#define F_SET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 12)
-+#endif
-+
-+#ifndef F_GET_FILE_RW_HINT
-+#define F_GET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 13)
-+#endif
-+
-+#ifndef F_SET_FILE_RW_HINT
-+#define F_SET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 14)
-+#endif
-+
- static size_t fcntl__scnprintf_getfd(unsigned long val, char *bf, size_t size, bool show_prefix)
- {
- 	return val ? scnprintf(bf, size, "%s", "0") :
+-/* Check for valid access_width, otherwise, fallback to using bit_width */
+-#define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
++/*
++ * PCC reuses the access_width field as the subspace id, so only decode access
++ * size for non-PCC registers. Otherwise, use the bit_width.
++ */
++#define GET_BIT_WIDTH(reg) (((reg)->access_width &&				\
++			     (reg)->space_id != ACPI_ADR_SPACE_PLATFORM_COMM) ? \
++			    (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
+ 
+ /* Shift and apply the mask for CPC reads/writes */
+ #define MASK_VAL_READ(reg, val) (((val) >> (reg)->bit_offset) &				\
+@@ -1031,7 +1036,6 @@ static int cpc_read(int cpu, struct cpc_
+ 		 * by the bit width field; the access size is used to indicate
+ 		 * the PCC subspace id.
+ 		 */
+-		size = reg->bit_width;
+ 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
+ 	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
+@@ -1103,7 +1107,6 @@ static int cpc_write(int cpu, struct cpc
+ 		 * by the bit width field; the access size is used to indicate
+ 		 * the PCC subspace id.
+ 		 */
+-		size = reg->bit_width;
+ 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
+ 	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
 
 
