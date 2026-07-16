@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57FC2DF137;
-	Thu, 16 Jul 2026 13:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDA22DF137;
+	Thu, 16 Jul 2026 13:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209185; cv=none; b=VdNn76u/0yQe2QDpFN4oFixgwVdrVqIZ+JEHA3L1NCbJBsvSy2fC//WmPVoDLG1j3DgoE9l9FiccRTTZb1SltMJL0LVYEebhxp+9E37JJrVQSS4pQHiqhbUXkvpioFImsAVhDTE1HpiJ6aajV4qTpxSHv4Kex5wIEbqWzOG3+Ok=
+	t=1784209188; cv=none; b=rCyFMwXR/Kj8Q7GvDO/tyunKF60Tf3wZlo7Pr5NQ+MsW/T7UM6bkpDykpvnx7mEBeuE9Ztv9vXblcfpnUhiN8cfs8weu4QsmYoPT9Ht+U8BJ4LUHLqfNJB8Sr4R+7JMUouBvbzlw29DZSlr6b5llQzRGZnHWJ3E5SD8oq/1RXv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209185; c=relaxed/simple;
-	bh=fblYd+/4Mp5doZ61cahUGFDErn2jrTsphKua/VkzoKg=;
+	s=arc-20240116; t=1784209188; c=relaxed/simple;
+	bh=Byu42aoNs2rdz9glAEEkLiuyP1DaQ57DKJlQyDVHd7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DoKe5E05TcnV1gdgYeizYPn7PKtuZA+uBifQgXIqJ3c8p2RzbGBSWIAtFr6ROCm6Q1hcF/8mVy9I6g9/4mnqskGOBqeMuqXUwA5ed5dW9qwZLDN3wZqVesdi1gaPkaWgZUhTOADfmiJgfof5mFU+zfXFXkVnMn6HyTgL2HljH/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srQMvx/m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pze73RF2brVAcFjSN1ROmI4Fx/DCgjs58KHSbmNDx2lwYCBhslxCwziH9IrqM/9oRuwyPiCEsad+hWq9esX+/2sW882fEfugrIzdk/KLqry6Xub2dOj0L8+aiMLM5poe9pY9Fjba+UNpbpZtu2io0gShdSu1ep/7HBrxwbbni6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dB8TcMZI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srQMvx/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163B11F000E9;
-	Thu, 16 Jul 2026 13:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dB8TcMZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AC71F000E9;
+	Thu, 16 Jul 2026 13:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209184;
-	bh=BOyhCZIjsIHj6kDf5NJfVbGp1dsIPXqyW6VLT2xqwxE=;
+	s=korg; t=1784209187;
+	bh=HOnO4yP5YYy8m5ELFu7h9flwfj6mkak3rqgJWyvf7B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srQMvx/moENxrVhS1vaHbzGxS+TJToRoWZxmI+Zz0yP0S2ZoAaea9bHCrNmkNVSIb
-	 Y2HvVapX85MhfBlKlrT0ftaOMHxULBQ+A9OgkYOGCPGzQcAOn5Va8Eb1oHaVhLWTcU
-	 t4IpU4Fch5dB/L931+RxSYgRca7K+i9neeE9pjLM=
+	b=dB8TcMZIPtE/0tO4Qs1fC6UmXv4m5cIZVt6RiUcuTvw9zdb081FT9/y4vQ9WOqa4V
+	 YPXv/opjlXlM0UppdV+TyMO7jMn2MKRxIUWmWh/Of2Fx+TSwxAOcDvxa2T2+WmcpEQ
+	 BK5kTa23Fxjgouhh+UmRrz/ANfHIhKRlJdQOnZrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Dongdong <zhaodongdong@kylinos.cn>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 090/518] ALSA: gus: check snd_ctl_new1() return value
-Date: Thu, 16 Jul 2026 15:25:58 +0200
-Message-ID: <20260716133049.835366334@linuxfoundation.org>
+Subject: [PATCH 7.1 091/518] ALSA: hda/cs35l41: Fix firmware load work teardown
+Date: Thu, 16 Jul 2026 15:25:59 +0200
+Message-ID: <20260716133049.858050861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,44 +45,178 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Dongdong <zhaodongdong@kylinos.cn>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit c7fa99d30c7a166a5e5db5a585ce7501ff68326b upstream.
+commit b65020d5398f499c09498c9786dba6d67ae57664 upstream.
 
-snd_ctl_new1() can return NULL when memory allocation fails.
-snd_gf1_pcm_volume_control() does not check the return value before
-dereferencing kctl->id.index, which can lead to a NULL pointer
-dereference.
+cs35l41_hda creates ALSA controls whose private data points at the
+cs35l41_hda object. The firmware load control can also queue
+fw_load_work.
 
-Add a NULL check after snd_ctl_new1() and return -ENOMEM if it fails.
+Those controls are not removed on component unbind, and device remove
+only cancels fw_load_work through cs35l41_remove_dsp(). That helper is
+skipped when halo_initialized is false. With firmware_autostart
+disabled, a firmware load can be requested before the DSP has been
+initialized. If the component or device is removed before the queued
+work runs, the worker can run after teardown and dereference driver
+state that is no longer valid.
 
-Assisted-by: Opencode:DeepSeek-V4-Flash
+Track the created controls and remove them on unbind so no new control
+callback can reach the driver data or queue more work. Then cancel
+fw_load_work to drain any request that was already queued. Also cancel
+the work unconditionally during device remove before runtime PM teardown.
+
+Fixes: 47ceabd99a28 ("ALSA: hda: cs35l41: Support Firmware switching and reloading")
+Fixes: 4c870513fbb0 ("ALSA: hda: cs35l41: Add read-only ALSA control for forced mute")
 Cc: stable@vger.kernel.org
-Fixes: c5ae57b1bb99 ("ALSA: gus: Fix kctl->id initialization")
-Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
-Link: https://patch.msgid.link/tencent_F644A3DCAD32945D62DB2FEEBE8A996F6809@qq.com
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Reviewed-by: Stefan Binding <sbinding@opensource.cirrus.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260511-alsa-hda-cs35l41-fw-work-teardown-v1-1-1184e9bc4f25@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/isa/gus/gus_pcm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/side-codecs/cs35l41_hda.c |   77 ++++++++++++++++++++---------
+ sound/hda/codecs/side-codecs/cs35l41_hda.h |    5 +
+ 2 files changed, 60 insertions(+), 22 deletions(-)
 
---- a/sound/isa/gus/gus_pcm.c
-+++ b/sound/isa/gus/gus_pcm.c
-@@ -851,6 +851,8 @@ int snd_gf1_pcm_new(struct snd_gus_card
- 		kctl = snd_ctl_new1(&snd_gf1_pcm_volume_control1, gus);
- 	else
- 		kctl = snd_ctl_new1(&snd_gf1_pcm_volume_control, gus);
-+	if (!kctl)
+--- a/sound/hda/codecs/side-codecs/cs35l41_hda.c
++++ b/sound/hda/codecs/side-codecs/cs35l41_hda.c
+@@ -1325,6 +1325,43 @@ static int cs35l41_fw_type_ctl_info(stru
+ 	return snd_ctl_enum_info(uinfo, 1, ARRAY_SIZE(cs35l41_hda_fw_ids), cs35l41_hda_fw_ids);
+ }
+ 
++static void cs35l41_remove_controls(struct cs35l41_hda *cs35l41)
++{
++	if (!cs35l41->codec)
++		return;
++
++	snd_ctl_remove(cs35l41->codec->card, cs35l41->mute_override_ctl);
++	cs35l41->mute_override_ctl = NULL;
++
++	snd_ctl_remove(cs35l41->codec->card, cs35l41->fw_load_ctl);
++	cs35l41->fw_load_ctl = NULL;
++
++	snd_ctl_remove(cs35l41->codec->card, cs35l41->fw_type_ctl);
++	cs35l41->fw_type_ctl = NULL;
++}
++
++static int cs35l41_add_control(struct cs35l41_hda *cs35l41,
++			       struct snd_kcontrol_new *ctl,
++			       struct snd_kcontrol **kctl)
++{
++	int ret;
++
++	*kctl = snd_ctl_new1(ctl, cs35l41);
++	if (!*kctl)
 +		return -ENOMEM;
- 	kctl->id.index = control_index;
- 	err = snd_ctl_add(card, kctl);
- 	if (err < 0)
++
++	ret = snd_ctl_add(cs35l41->codec->card, *kctl);
++	if (ret) {
++		dev_err(cs35l41->dev, "Failed to add KControl %s = %d\n", ctl->name, ret);
++		*kctl = NULL;
++		return ret;
++	}
++
++	dev_dbg(cs35l41->dev, "Added Control %s\n", ctl->name);
++
++	return 0;
++}
++
+ static int cs35l41_create_controls(struct cs35l41_hda *cs35l41)
+ {
+ 	char fw_type_ctl_name[SNDRV_CTL_ELEM_ID_NAME_MAXLEN];
+@@ -1360,32 +1397,23 @@ static int cs35l41_create_controls(struc
+ 	scnprintf(mute_override_ctl_name, SNDRV_CTL_ELEM_ID_NAME_MAXLEN, "%s Forced Mute Status",
+ 		  cs35l41->amp_name);
+ 
+-	ret = snd_ctl_add(cs35l41->codec->card, snd_ctl_new1(&fw_type_ctl, cs35l41));
+-	if (ret) {
+-		dev_err(cs35l41->dev, "Failed to add KControl %s = %d\n", fw_type_ctl.name, ret);
+-		return ret;
+-	}
+-
+-	dev_dbg(cs35l41->dev, "Added Control %s\n", fw_type_ctl.name);
+-
+-	ret = snd_ctl_add(cs35l41->codec->card, snd_ctl_new1(&fw_load_ctl, cs35l41));
+-	if (ret) {
+-		dev_err(cs35l41->dev, "Failed to add KControl %s = %d\n", fw_load_ctl.name, ret);
+-		return ret;
+-	}
+-
+-	dev_dbg(cs35l41->dev, "Added Control %s\n", fw_load_ctl.name);
++	ret = cs35l41_add_control(cs35l41, &fw_type_ctl, &cs35l41->fw_type_ctl);
++	if (ret)
++		goto err;
+ 
+-	ret = snd_ctl_add(cs35l41->codec->card, snd_ctl_new1(&mute_override_ctl, cs35l41));
+-	if (ret) {
+-		dev_err(cs35l41->dev, "Failed to add KControl %s = %d\n", mute_override_ctl.name,
+-			ret);
+-		return ret;
+-	}
++	ret = cs35l41_add_control(cs35l41, &fw_load_ctl, &cs35l41->fw_load_ctl);
++	if (ret)
++		goto err;
+ 
+-	dev_dbg(cs35l41->dev, "Added Control %s\n", mute_override_ctl.name);
++	ret = cs35l41_add_control(cs35l41, &mute_override_ctl, &cs35l41->mute_override_ctl);
++	if (ret)
++		goto err;
+ 
+ 	return 0;
++
++err:
++	cs35l41_remove_controls(cs35l41);
++	return ret;
+ }
+ 
+ static bool cs35l41_dsm_supported(acpi_handle handle, unsigned int commands)
+@@ -1522,6 +1550,10 @@ static void cs35l41_hda_unbind(struct de
+ 		device_link_remove(&cs35l41->codec->core.dev, cs35l41->dev);
+ 		unlock_system_sleep(sleep_flags);
+ 		memset(comp, 0, sizeof(*comp));
++
++		cs35l41_remove_controls(cs35l41);
++		cancel_work_sync(&cs35l41->fw_load_work);
++		cs35l41->codec = NULL;
+ 	}
+ }
+ 
+@@ -2060,6 +2092,7 @@ void cs35l41_hda_remove(struct device *d
+ 	struct cs35l41_hda *cs35l41 = dev_get_drvdata(dev);
+ 
+ 	component_del(cs35l41->dev, &cs35l41_hda_comp_ops);
++	cancel_work_sync(&cs35l41->fw_load_work);
+ 
+ 	pm_runtime_get_sync(cs35l41->dev);
+ 	pm_runtime_dont_use_autosuspend(cs35l41->dev);
+--- a/sound/hda/codecs/side-codecs/cs35l41_hda.h
++++ b/sound/hda/codecs/side-codecs/cs35l41_hda.h
+@@ -57,6 +57,8 @@ enum control_bus {
+ 	SPI
+ };
+ 
++struct snd_kcontrol;
++
+ struct cs35l41_hda {
+ 	struct device *dev;
+ 	struct regmap *regmap;
+@@ -75,6 +77,9 @@ struct cs35l41_hda {
+ 	int speaker_id;
+ 	struct mutex fw_mutex;
+ 	struct work_struct fw_load_work;
++	struct snd_kcontrol *fw_type_ctl;
++	struct snd_kcontrol *fw_load_ctl;
++	struct snd_kcontrol *mute_override_ctl;
+ 
+ 	struct regmap_irq_chip_data *irq_data;
+ 	bool firmware_running;
 
 
