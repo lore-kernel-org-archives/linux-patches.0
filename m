@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C333427F80;
-	Thu, 16 Jul 2026 13:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F2B3FE370;
+	Thu, 16 Jul 2026 13:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209472; cv=none; b=Tf8go+9x8F5dpbjsUM7WtHA1sErpUZeyGiMN75VWnNrRwlurwi3C7sfBQGlvLNBb1ejlklbRowr/O+d1GYi+EtgGlLy4XVDvxD4/+OJe5r4sfH7LR/zX6f5xnD2a8prWpZB//2DisCAwW+r360e5qtFY54Hm+mIgc7aTGry3fCk=
+	t=1784209473; cv=none; b=sbXAvwu0oC7lxS4cQxkk06Q41e/QNj6aJRKrobIVAzCKtwOFLDS78EEPAUT5dKPRbJLEpvaLejur6f+aRxOB5PInB3GRsmALXB3LeK7LzQ4iK6V3OMJusi9F5kQCMhJNQMJnt6kPn+XGsubBKNO/Ul3Wdqex7I7Z/d7Dhv60ppA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209472; c=relaxed/simple;
-	bh=7lGnnYZoBbVQNlMW5OIurAJ8Uqx/1ZNNWsnWxuUEAWQ=;
+	s=arc-20240116; t=1784209473; c=relaxed/simple;
+	bh=1t3LGiguFsB8SmHtYPPk3CKm0ifakIDVG3aPdci5Hto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxW5sNtA8toPOWGd0vzQgYZJtyaAzeuEWHqp/fYhUS0hEmjqS88FcYtqPW4s5nNUOL+9oN4H9Tu2Au06Lra3kfr7YDFU2WL30oqa9jI+F6ycfJ35N1bqL9O9wMh52Z/hs4Sugag6fq0gUeiVVKrrxRa9A+q/E6BYZkvY+OFd5bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBO+9FtZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H9A5PCSTbhMxl3Z7s4IFHErMPwKjtydqSJd5PNa/WFUUWtbL8ZV56LJB1uYBK693j7WfEn01MK9uXbdsN44p0iKlbCpZ8hTEKt2L5VnqtsU1P+akcsyITJwa66RDTfsuKtLMvgxpwG98d0W/+MZQvHhY/+aOqFfjcqYuTQO/ros=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1EBgSyH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBO+9FtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098A81F00A3D;
-	Thu, 16 Jul 2026 13:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1EBgSyH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1EA1F000E9;
+	Thu, 16 Jul 2026 13:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209468;
-	bh=KbyP+3/Muy4mvdVusm024ezhMdujS/ROrrQex/x0Xok=;
+	s=korg; t=1784209471;
+	bh=FVsqoHTfXkMFLuenF7C1LNhsFcuPIzuuLS7czQb2hRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fBO+9FtZxo92T9ge2Bb2zlRvwioGihPpN4WlNpE8XiK5sRKB9LXKuZbaVx6ptCE7E
-	 sBF9V4LGusL2F5LOQeGGJZVdq1SWKmSSpMmeHK8UUXjr12ApFubl24X6wjRijpvZk/
-	 FTkXOlYbOMKDUXTpIslsD2KnKHulDpHb09oL+Dbk=
+	b=Y1EBgSyHUs2Q8U8Wy9lpBuKjyXZ+uifjWqMUbngXkH/VD5XtfK4nevSvDO9MdMKI9
+	 BxfqbvB68vk2MfAjR8ugPMrziBwXHCzxN8IaYQlFOcLKm38Jyb6UoS3buCq4rVrVbB
+	 xUg8WeqVUPF2HmdkpbrsTWwbcdU/XwpbiQOYCyns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijiang Huang <kerayhuang@tencent.com>,
-	Kairui Song <kasong@tencent.com>,
-	Hao Peng <flyingpeng@tencent.com>,
-	albinwyang <albinwyang@tencent.com>,
-	Baoquan He <baoquan.he@linux.dev>,
-	Chris Li <chrisl@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Youngjun Park <youngjun.park@lge.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 196/518] mm/swap: add cond_resched() in swap_reclaim_full_clusters to prevent softlockup
-Date: Thu, 16 Jul 2026 15:27:44 +0200
-Message-ID: <20260716133052.116293186@linuxfoundation.org>
+	Pratham Gupta <pratham36gupta@gmail.com>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 7.1 197/518] netfilter: ctnetlink: use nf_ct_exp_net() in expectation dump
+Date: Thu, 16 Jul 2026 15:27:45 +0200
+Message-ID: <20260716133052.137410001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -59,63 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijiang Huang <huangzjsmile@gmail.com>
+From: Pratham Gupta <pratham36gupta@gmail.com>
 
-commit 66366d291f666ddeda5f8c84f253e308de3e6b55 upstream.
+commit a7f57320bbbc67e347bf5fff4b4a9bab980d5956 upstream.
 
-We hit a real softlockup in an internal stress test environment.  The
-workload was LTP memory/swap stress on a large arm64 machine, with 320
-CPUs, about 1TB memory and an 8.6GB swap device.  The system was under
-heavy load and the swap device had a large number of full clusters.  The
-softlockup was triggered during a stress test after about 3 days.
+Commit 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
+introduced exp->net so RCU-only expectation paths no longer need to
+dereference exp->master for netns lookups.
 
-So, add periodic cond_resched() calls during large full_clusters
-reclaim operations to prevent softlockup issues.
+Commit 3db5647984de ("netfilter: nf_conntrack_expect: skip expectations in other netns via proc")
+updated the proc path accordingly, but ctnetlink_exp_dump_table() still
+compares against nf_ct_net(exp->master).
 
-Detailed call trace as follow:
+Use nf_ct_exp_net(exp) here as well so the netlink dump path matches
+the rest of the March 2026 expectation netns/RCU cleanup.
 
-PID: 3817773  TASK: ffff0883bb28b780  CPU: 48   COMMAND: "kworker/48:7"
-   #0 [ffff800080183d10] __crash_kexec at ffffa4c1361e5de4
-   #1 [ffff800080183d90] panic at ffffa4c1360d5e9c
-   #2 [ffff800080183e20] watchdog_timer_fn at ffffa4c136231fa8
-   ...
-  #16 [ffff8000c4ad3cb0] swap_cache_del_folio at ffffa4c1363e1614
-  #17 [ffff8000c4ad3ce0] __try_to_reclaim_swap at ffffa4c1363e4bfc
-  #18 [ffff8000c4ad3d40] swap_reclaim_full_clusters at ffffa4c1363e5474
-  #19 [ffff8000c4ad3da0] swap_reclaim_work at ffffa4c1363e550c
-  #20 [ffff8000c4ad3dc0] process_one_work at ffffa4c136102edc
-  #21 [ffff8000c4ad3e10] worker_thread at ffffa4c136103398
-  #22 [ffff8000c4ad3e70] kthread at ffffa4c13610d95c
-
-Link: https://lore.kernel.org/20260506130919.2298807-1-kerayhuang@tencent.com
-Fixes: 5168a68eb78f ("mm, swap: avoid over reclaim of full clusters")
-Signed-off-by: Zijiang Huang <kerayhuang@tencent.com>
-Reviewed-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Hao Peng <flyingpeng@tencent.com>
-Reviewed-by: albinwyang <albinwyang@tencent.com>
-Reviewed-by: Baoquan He <baoquan.he@linux.dev>
-Acked-by: Chris Li <chrisl@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Youngjun Park <youngjun.park@lge.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pratham Gupta <pratham36gupta@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/swapfile.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_conntrack_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/swapfile.c
-+++ b/mm/swapfile.c
-@@ -1054,6 +1054,7 @@ static void swap_reclaim_full_clusters(s
- 		swap_cluster_unlock(ci);
- 		if (to_scan <= 0)
- 			break;
-+		cond_resched();
- 	}
- }
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3173,7 +3173,7 @@ restart:
+ 			if (l3proto && exp->tuple.src.l3num != l3proto)
+ 				continue;
  
+-			if (!net_eq(nf_ct_net(exp->master), net))
++			if (!net_eq(nf_ct_exp_net(exp), net))
+ 				continue;
+ 
+ 			if (cb->args[1]) {
 
 
