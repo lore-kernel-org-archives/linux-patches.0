@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203A742F705;
-	Thu, 16 Jul 2026 14:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B538342A14C;
+	Thu, 16 Jul 2026 14:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212422; cv=none; b=Oy/m9kAtvWpG7JTTws6x/pyy28kk5rgEHs2lVxJRL4InlMWjj/p9pdSPBnesOcQpXmz2EucE0d54oQpIy1tp+IqYlKRRK+TW6S7dVKTEe/sdBg0XxNY/NtqBL/eKbEibyJaZITghI5qdt7AvSXEcNPwRI1KyQsH8WaGjDvnYA9U=
+	t=1784212424; cv=none; b=phJXwBb4Sa9omty5qJAccxPrPm7YdW5iYYZsdjlAwo01qLZT2GaLv+hXFx124h/EuShoGz93Z3kSgPYrSZfSkvdwtmk8VzFCMgaiGEVrQi5elcbFmYKyAoh5vU7p+LSYC+VaTiopTIkEdXKOvvWO1tGAo7cUVNbsXJE7J1mzLVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212422; c=relaxed/simple;
-	bh=QHZOwbtAcuiRER8/7FuUS+utg2Ir2izidnKZsKTpU84=;
+	s=arc-20240116; t=1784212424; c=relaxed/simple;
+	bh=g64v3oYteSk+zi/qNj+Wq/xSNmLp45uGnF3AYnVapN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2+7hllb0qSnQUI27+AT/bo5GU1kME/5X+L6pm4R3EQRgwTCImbcRwXls6aKpg92irIryxQjmEQkKafaCSjRSWGnBlZJt92nhzsX63fNNp5GW6hqZynu+YH1BNOes7yJHCB6zT7RBiNUVePN8BUlp5TWsL9FeI03D+26RvkJulw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adxjzKU+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iBtIvYrYKtKcYxn2CskIn3Qtrcqo2Ud2TgRd9Ux28oYJLPcKRNHt5geAwU3E8chnUuW5vUS0qe0TSnOcZE3o4v5o69XSlFShQQmCY1Q/pRvRGzpstYQh+i1ojX3KOV4L2UYmKWVCAi6iohfWOutZOI0Qc4XdT7iS+uZsgGYQbps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAAxiTZK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adxjzKU+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD861F000E9;
-	Thu, 16 Jul 2026 14:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAAxiTZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2799F1F000E9;
+	Thu, 16 Jul 2026 14:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212421;
-	bh=ASZpr7EMVoSBiT7h4e+sqY/ZbRD2tlIKLPKUp+aQp78=;
+	s=korg; t=1784212423;
+	bh=kOyPsVwz9ecZKsPGUqNdnfD766YuKJL+XhGubQmb184=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adxjzKU+mF7ZYlCO4JUnTBYVAKbNx+XgzC3fMAs8qUieHlcHRgWI+XZq3929UrsLc
-	 ApwUeWNQmBaHtg2M+k/TGEk8bhth2wqyWn173kglHVKOG6d3ofXiW49PbioNH/W3S4
-	 ulqcExYGcVDmSoq/pEwjsxE9S7lD1SFPx4MyDdBI=
+	b=TAAxiTZKoX8DWAHEmH7YpnT49vS5Da0+54f7d2aBq+AnLop4/V7/P68hxkto7cZfm
+	 pS0sRvItQZHoAguvcwtR55qigilV+vPYwWkZ1U2Y0wDx6oWSB5cvMeqMIckr84c6C8
+	 zONuhgHjHp9bcu+jQVjsRgMqFpBCvx5ZDQuAFHHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Maksim Lukoshkov <maksim.lukoshkov@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 284/349] crypto: qat - protect service table iterations with service_lock
-Date: Thu, 16 Jul 2026 15:33:38 +0200
-Message-ID: <20260716133039.691469077@linuxfoundation.org>
+	syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 320/349] KVM: VMX: Grab vmcs12 on CR8 interception update iff vCPU is in guest mode
+Date: Thu, 16 Jul 2026 15:34:14 +0200
+Message-ID: <20260716133040.476131441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,156 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 5c6f845e77ec35f9b7b047cc8f9789bf397cdd3e upstream.
+commit 7ef78d71ca713d8c00f7c34ddcf276c808143f77 upstream.
 
-The service_table list is protected by service_lock when entries are
-added or removed (in adf_service_add() and adf_service_remove()), but
-several functions iterate over the list without holding this lock.
+When updating CR8 intercepts, get vmcs12 if and only if the vCPU is in
+guest mode so that a future change can have update CR8 intercepts during
+vCPU creation, without running afoul of get_vmcs12()'s lockdep assertion.
 
-A concurrent adf_service_register() or adf_service_unregister() call
-could modify the list during traversal, leading to list corruption or
-a use-after-free.
+  ------------[ cut here ]------------
+  debug_locks && !(lock_is_held(&(&vcpu->mutex)->dep_map) || !refcount_read(&vcpu->kvm->users_count))
+  WARNING: arch/x86/kvm/vmx/nested.h:61 at get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline], CPU#0: syz.2.19/5879
+  WARNING: arch/x86/kvm/vmx/nested.h:61 at vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879, CPU#0: syz.2.19/5879
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 5879 Comm: syz.2.19 Not tainted syzkaller #0 PREEMPT(full)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+  RIP: 0010:get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline]
+  RIP: 0010:vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879
+  Call Trace:
+   <TASK>
+   apic_update_ppr arch/x86/kvm/lapic.c:984 [inline]
+   kvm_lapic_reset+0x1c24/0x2980 arch/x86/kvm/lapic.c:3023
+   kvm_vcpu_reset+0x44c/0x1bf0 arch/x86/kvm/x86.c:12986
+   kvm_arch_vcpu_create+0x746/0x8b0 arch/x86/kvm/x86.c:12847
+   kvm_vm_ioctl_create_vcpu+0x428/0x930 virt/kvm/kvm_main.c:4201
+   kvm_vm_ioctl+0x893/0xd50 virt/kvm/kvm_main.c:5159
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
 
-Fix this by holding service_lock across all list_for_each_entry()
-iterations of service_table in adf_dev_init(), adf_dev_start(),
-adf_dev_stop(), adf_dev_shutdown(), adf_dev_restarting_notify(),
-adf_dev_restarted_notify(), and adf_error_notifier().
+No functional change intended.
 
-The lock ordering is safe: callers of the static helpers (adf_dev_up()
-and adf_dev_down()) acquire state_lock before service_lock, and no
-event_hld callback or service_lock holder ever acquires state_lock in
-the reverse order.
-
+Reported-by: syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>
+Closes: https://lore.kernel.org/all/6a2adf3b.3b0a2d4e.8c8d1.0012.GAE@google.com
 Cc: stable@vger.kernel.org
-Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Co-developed-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
-Signed-off-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260618174347.1981064-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_init.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/x86/kvm/vmx/vmx.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_common/adf_init.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
-@@ -152,15 +152,18 @@ static int adf_dev_init(struct adf_accel
- 	 * This is to facilitate any ordering dependencies between services
- 	 * prior to starting any of the accelerators.
- 	 */
-+	mutex_lock(&service_lock);
- 	list_for_each_entry(service, &service_table, list) {
- 		if (service->event_hld(accel_dev, ADF_EVENT_INIT)) {
- 			dev_err(&GET_DEV(accel_dev),
- 				"Failed to initialise service %s\n",
- 				service->name);
-+			mutex_unlock(&service_lock);
- 			return -EFAULT;
- 		}
- 		set_bit(accel_dev->accel_id, service->init_status);
- 	}
-+	mutex_unlock(&service_lock);
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6707,11 +6707,10 @@ static noinstr void vmx_l1d_flush(struct
  
- 	return 0;
- }
-@@ -229,15 +232,18 @@ static int adf_dev_start(struct adf_acce
- 	if (ret && ret != -EOPNOTSUPP)
- 		return ret;
- 
-+	mutex_lock(&service_lock);
- 	list_for_each_entry(service, &service_table, list) {
- 		if (service->event_hld(accel_dev, ADF_EVENT_START)) {
- 			dev_err(&GET_DEV(accel_dev),
- 				"Failed to start service %s\n",
- 				service->name);
-+			mutex_unlock(&service_lock);
- 			return -EFAULT;
- 		}
- 		set_bit(accel_dev->accel_id, service->start_status);
- 	}
-+	mutex_unlock(&service_lock);
- 
- 	clear_bit(ADF_STATUS_STARTING, &accel_dev->status);
- 	set_bit(ADF_STATUS_STARTED, &accel_dev->status);
-@@ -308,6 +314,7 @@ static void adf_dev_stop(struct adf_acce
- 		qat_comp_algs_unregister();
- 	clear_bit(ADF_STATUS_COMP_ALGS_REGISTERED, &accel_dev->status);
- 
-+	mutex_lock(&service_lock);
- 	list_for_each_entry(service, &service_table, list) {
- 		if (!test_bit(accel_dev->accel_id, service->start_status))
- 			continue;
-@@ -319,6 +326,7 @@ static void adf_dev_stop(struct adf_acce
- 			clear_bit(accel_dev->accel_id, service->start_status);
- 		}
- 	}
-+	mutex_unlock(&service_lock);
- 
- 	if (hw_data->stop_timer)
- 		hw_data->stop_timer(accel_dev);
-@@ -368,6 +376,7 @@ static void adf_dev_shutdown(struct adf_
- 				  &accel_dev->status);
- 	}
- 
-+	mutex_lock(&service_lock);
- 	list_for_each_entry(service, &service_table, list) {
- 		if (!test_bit(accel_dev->accel_id, service->init_status))
- 			continue;
-@@ -378,6 +387,7 @@ static void adf_dev_shutdown(struct adf_
- 		else
- 			clear_bit(accel_dev->accel_id, service->init_status);
- 	}
-+	mutex_unlock(&service_lock);
- 
- 	adf_rl_exit(accel_dev);
- 
-@@ -412,12 +422,14 @@ int adf_dev_restarting_notify(struct adf
+ void vmx_update_cr8_intercept(struct kvm_vcpu *vcpu, int tpr, int irr)
  {
- 	struct service_hndl *service;
+-	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
+ 	int tpr_threshold;
  
-+	mutex_lock(&service_lock);
- 	list_for_each_entry(service, &service_table, list) {
- 		if (service->event_hld(accel_dev, ADF_EVENT_RESTARTING))
- 			dev_err(&GET_DEV(accel_dev),
- 				"Failed to restart service %s.\n",
- 				service->name);
- 	}
-+	mutex_unlock(&service_lock);
- 	return 0;
- }
+ 	if (is_guest_mode(vcpu) &&
+-		nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW))
++	    nested_cpu_has(get_vmcs12(vcpu), CPU_BASED_TPR_SHADOW))
+ 		return;
  
-@@ -425,12 +437,14 @@ int adf_dev_restarted_notify(struct adf_
- {
- 	struct service_hndl *service;
- 
-+	mutex_lock(&service_lock);
- 	list_for_each_entry(service, &service_table, list) {
- 		if (service->event_hld(accel_dev, ADF_EVENT_RESTARTED))
- 			dev_err(&GET_DEV(accel_dev),
- 				"Failed to restart service %s.\n",
- 				service->name);
- 	}
-+	mutex_unlock(&service_lock);
- 	return 0;
- }
- 
-@@ -438,12 +452,14 @@ void adf_error_notifier(struct adf_accel
- {
- 	struct service_hndl *service;
- 
-+	mutex_lock(&service_lock);
- 	list_for_each_entry(service, &service_table, list) {
- 		if (service->event_hld(accel_dev, ADF_EVENT_FATAL_ERROR))
- 			dev_err(&GET_DEV(accel_dev),
- 				"Failed to send error event to %s.\n",
- 				service->name);
- 	}
-+	mutex_unlock(&service_lock);
- }
- 
- int adf_dev_down(struct adf_accel_dev *accel_dev)
+ 	tpr_threshold = (irr == -1 || tpr < irr) ? 0 : irr;
 
 
