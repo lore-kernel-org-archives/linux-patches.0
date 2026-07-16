@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E389400982;
-	Thu, 16 Jul 2026 14:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133603D25D0;
+	Thu, 16 Jul 2026 14:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211696; cv=none; b=M7MKypQnEh0rgHkbCuwE8wMPf9yG0einjdl1KOb73EG9RS2c77f7toANh4TjaA7nsNiGr3RiEvPLsph+u6M5fomxQtwdC398Vh/0xhCOb66/0ptFH/f6wUkC4kZpoebMcrFrrP8OlrvLqHayYO2276XA1rKgZBo1a1HTwiADL3o=
+	t=1784211699; cv=none; b=fW2tK3TgtwdCYRlMjzrT8VnfA43OsZ96huSwehv5FUKgbCLS03GpJZ0vQOBJ0bs+9POXO3jrqFacgsRIkD1r7wI1iYnXmtP4kEn1NDn+mGC+qeG2L9NQhjNCP9y34qcEE98o47TNfWYOQ8mK/tm7vTcsitBtk48dop7guie3v48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211696; c=relaxed/simple;
-	bh=oa7UQwqv/5atAQaygE/jntUuW+8IanIiqnEZUPz9MBI=;
+	s=arc-20240116; t=1784211699; c=relaxed/simple;
+	bh=OJHAfMDeLaQwwTh/obb0F8xKULNCJfEbVkQDxb3GPZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6CmDdOF+yVc4NsYDm40meQKJoUzPkQNGAF0vc/qPs7wS5C6xgHrWTg8yq3vNR/0XdG+QI+86o8tqwzXg3lQ6i9lXOlBBUHvdGxXIfHJ8OPiAIg/CK4eRZjWwo/Z+RAQylyGcwyJxsVhTFvvjMx91ZCb97k1izw4UXOh7Enw5tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GswmRIYd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YzlEcMxAd9rssmyrJjpAJJxISWRyDZkDPY5qVm6ue0H7iEXFPx8B0T0ZP9fjCBw+vxm7aaUUJJWltDwibwuEnBGa+PUHOpIKcHiGuijEsEY4cY9ilPWejQ01ID2mGHIOWwzDXnrjB+w5hC1av2x2W7EUZ3zM8rGNRaqUgddZfWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjKBXmu2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GswmRIYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6B21F000E9;
-	Thu, 16 Jul 2026 14:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjKBXmu2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F141F000E9;
+	Thu, 16 Jul 2026 14:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211695;
-	bh=Wlnglj/zfRAnA624mCILjzSwdtsT4qcLMP6JaJ0xIe0=;
+	s=korg; t=1784211698;
+	bh=JWYvHCoVlwL2NdrjsKUfuJ6fj7HYBOKiYlx4sjp/Smg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GswmRIYd9NdwxnOFqrjLFE3oL0zpUNUPJmyBvnVUTSADB79S417dQNTAwH8SaT2tS
-	 33p+u59IbeOmlhPJxy0tKQG2AKt4G++4WPQ9s6vdaddVAAOzRDpoKqOp5t51gVlZM1
-	 nCdn9H8a9o6ulLRTPMFplaWZWy1jDbHdNqtkiqJU=
+	b=VjKBXmu2SKMbEA3eAT4e4TQOricWsUIxD/qMaZl+fcUgdM5GHfJk+R6m+S1YSsAq7
+	 iIZm+KiAl0uPs27u+xXDCZ/Z36nzDu82Jvp46H78o1aHOYyAd5vU/SMgcjeuIjnN09
+	 NokLSUDyU7sNDyoJBq5+Xy1gLkV/6WUmP9b1TFsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 6.12 043/349] usb: gadget: function: rndis: add length check for header
-Date: Thu, 16 Jul 2026 15:29:37 +0200
-Message-ID: <20260716133034.288853001@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.12 044/349] iio: accel: bmc150: clamp the device-reported FIFO frame count
+Date: Thu, 16 Jul 2026 15:29:38 +0200
+Message-ID: <20260716133034.310666331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,37 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 21b5bf155435008e0fb0736795289788e63d426f upstream.
+commit ce0e1cae26096fe959a0da5563a6d6d5a801d5fb upstream.
 
-Add a length check for the rndis header in rndis_rm_hdr, to ensure that
-MessageType, MessageLength, DataOffset, and DataLength fields are
-present before they are accessed.
+__bmc150_accel_fifo_flush() copies the number of samples the device
+reports in its hardware FIFO into an on-stack buffer
 
-Assisted-by: gkh_clanker_2000
-Cc: stable <stable@kernel.org>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Link: https://patch.msgid.link/20260708-usb-gadget-rndis-v1-2-e77e026dcc6a@kroah.com
+	u16 buffer[BMC150_ACCEL_FIFO_LENGTH * 3];
+
+which is sized for at most BMC150_ACCEL_FIFO_LENGTH (32) samples. The
+frame count is read from the FIFO_STATUS register and only masked to its
+7 valid bits:
+
+	count = val & 0x7F;
+
+so it can be 0..127. The only other limit applied to it is the optional
+caller-supplied sample budget:
+
+	if (samples && count > samples)
+		count = samples;
+
+which does not constrain count on the flush-all path (samples == 0), and
+leaves it well above 32 whenever samples is larger. count samples are
+then transferred into buffer[]:
+
+	bmc150_accel_fifo_transfer(data, (u8 *)buffer, count);
+
+bmc150_accel_fifo_transfer() reads count * 6 bytes through regmap, so a
+malfunctioning, malicious or counterfeit accelerometer (or an attacker
+tampering with the I2C/SPI bus) that reports up to 127 frames writes up
+to 762 bytes into the 192-byte buffer: a stack out-of-bounds write of up
+to 570 bytes that clobbers the stack canary, saved registers and the
+return address.
+
+Clamp count to BMC150_ACCEL_FIFO_LENGTH, the number of samples buffer[]
+is sized for, before the transfer, mirroring the watermark clamp already
+done in bmc150_accel_set_watermark(). A well-formed flush reports at most
+BMC150_ACCEL_FIFO_LENGTH frames, so legitimate devices are unaffected.
+
+Fixes: 3bbec9773389 ("iio: bmc150_accel: add support for hardware fifo")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/rndis.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/accel/bmc150-accel-core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/function/rndis.c
-+++ b/drivers/usb/gadget/function/rndis.c
-@@ -1080,6 +1080,12 @@ int rndis_rm_hdr(struct gether *port,
- 	/* tmp points to a struct rndis_packet_msg_type */
- 	__le32 *tmp = (void *)skb->data;
+--- a/drivers/iio/accel/bmc150-accel-core.c
++++ b/drivers/iio/accel/bmc150-accel-core.c
+@@ -997,6 +997,8 @@ static int __bmc150_accel_fifo_flush(str
+ 	if (samples && count > samples)
+ 		count = samples;
  
-+	/* Need at least MessageType, MessageLength, DataOffset, DataLength */
-+	if (skb->len < 16) {
-+		dev_kfree_skb_any(skb);
-+		return -EINVAL;
-+	}
++	count = min_t(u8, count, BMC150_ACCEL_FIFO_LENGTH);
 +
- 	/* MessageType, MessageLength */
- 	if (cpu_to_le32(RNDIS_MSG_PACKET)
- 			!= get_unaligned(tmp++)) {
+ 	ret = bmc150_accel_fifo_transfer(data, (u8 *)buffer, count);
+ 	if (ret)
+ 		return ret;
 
 
