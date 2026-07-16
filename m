@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5C0424668;
-	Thu, 16 Jul 2026 14:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634271D435F;
+	Thu, 16 Jul 2026 14:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211866; cv=none; b=E89+jW8ZWKHzZgt5Vkg/beCPCDH1c3DUaFJZlospJVDib6HKtHZT//posVDxO902vwBB7UrX6Fx+Mn3t9nTMqai5/ERJ159C+Lx/m7Qv2L6N4l6mH9HOfz4gI6hs7X5pyVBSw1Sjab/M3fLCcKxE+Jh256GtlXbLKC5SHfHm3dM=
+	t=1784211869; cv=none; b=dC1D7veTvMZD3G7F+4M6Uz+Q3NBpyJRkUDW6Vo6ZvPVnkpx21e9dWLAuDYB2F/l57cwlGhthPRCgd5bnw3w2gYsNW3eJUO3XqKBquX+7VnNwWOXZNRverNBxDvnGA3sOiNKtltNlXmRyMSfrRYjqla3r973GvHixLNM+gmiDSZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211866; c=relaxed/simple;
-	bh=MOqysvvGeLkSupA3ATqIChtigDEAK7SbsD5CNIdaqkM=;
+	s=arc-20240116; t=1784211869; c=relaxed/simple;
+	bh=FtCjhcD4VZn8yat0sUo1NFles8/RoS1+mkZHNBJyTNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGnTWYqHPb7RvnNTNMCiBoy0c7TTw84fgyVYvCJJilaHDNovMNeg4dhRgRhIPL9ndq9P25wkKgmGlbvSLXHMv0c7E3WLUdfDtpc/b+4zJUWvjJt+H05ZovLcDnaDiTSPHMVVPYaznADp0VNYEdNIZxfCERAEg8YAWSz36Yx986M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2roTn8t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sGnoHVmvr5ve9vG/XjgBpzOg27q3kENgO2VLSIDfd2+I8GLYItCfTFZy3h5YscEnbuW8+POPnKUZ/jO0cvWkBjW7pih0Ew1luMgednL7TW8COBqpW0JEJKNyw3vn8UV5X2mp3H2p0T21iPD1CU5xey8c2te5SZALNzJtSaF3erY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijK0qfRL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2roTn8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F6C1F000E9;
-	Thu, 16 Jul 2026 14:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijK0qfRL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F771F00A3A;
+	Thu, 16 Jul 2026 14:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211863;
-	bh=7jcdSn/8JhZNmeFs+hJuQ4/eUVv8R7yb8o+K9R4KCrU=;
+	s=korg; t=1784211866;
+	bh=t6VMbnFqQRQBa13nVIELVPoykV5OqzvQWKm7p33lSWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t2roTn8tSo0H9lCdUtxzj4o4DAIdK1jBundtfF3llp2VFJBAF6L3cMzA3CxPB0AGj
-	 VN19d5hruGd1YGAiCTg5TGqqek1EWlvso2k5+yM3IyzRonJWWoJGVCiiu2G7FpKXIL
-	 +7CrxdwZynXfLdJsz/2wM3+kZIpkKkR4Q+DI/eBU=
+	b=ijK0qfRLnrZkq7dRuAaV8ZSn/FLQiLWAfEJCzW0EJF1gS51cG50KOj7HF3oROnnoO
+	 iw0hzG9HJyRggPLS4+fWbAHbux7/gv4g+2XYRSmjGLlz6s9NGXtzFF5UgZTcD6lAPm
+	 ftZXtKcstjGqpSwhQPTcMmg6epbFrmUJYB20yHFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
 	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 110/349] USB: chaoskey: Fix slab-use-after-free in chaoskey_release()
-Date: Thu, 16 Jul 2026 15:30:44 +0200
-Message-ID: <20260716133035.775596508@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.12 111/349] usb: dwc3: run gadget disconnect from sleepable suspend context
+Date: Thu, 16 Jul 2026 15:30:45 +0200
+Message-ID: <20260716133035.797810429@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,65 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit abf76d3239dee97b66e7241ad04811f1ce562e28 upstream.
+commit 010382937fb69892b3469ac4d30af072262f59e8 upstream.
 
-The chaoskey driver has a use-after-free bug in its release routine.
-If the user closes the device file after the USB device has been
-unplugged, a debugging log statement will try to access the
-usb_interface structure after it has been deallocated:
+dwc3_gadget_suspend() takes dwc->lock with IRQs disabled and then calls
+dwc3_disconnect_gadget().  For async callbacks that helper only uses
+plain spin_unlock()/spin_lock(), so the gadget ->disconnect() callback
+still runs with IRQs disabled and any sleepable callback trips Lockdep.
 
-	BUG: KASAN: slab-use-after-free in dev_driver_string (drivers/base/core.c:2406)
-	Read of size 8 at addr ffff888168e8a0b8 by task chaoskey_raw_re/10106
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-	Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-	Call Trace:
-	 <TASK>
-	 dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-	 print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-	 kasan_report (mm/kasan/report.c:595)
-	 dev_driver_string (drivers/base/core.c:2406)
-	 __dynamic_dev_dbg (lib/dynamic_debug.c:906)
-	 chaoskey_release (drivers/usb/misc/chaoskey.c:323)
-	 __fput (fs/file_table.c:510)
-	 fput_close_sync (fs/file_table.c:615)
-	 __x64_sys_close (fs/open.c:1507 fs/open.c:1492 fs/open.c:1492)
-	 do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-	 entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+The grounded PoC kept the dwc3_gadget_suspend() ->
+dwc3_disconnect_gadget() -> gadget_driver->disconnect() chain, and
+Lockdep reported:
 
-The driver's last reference to the interface structure is dropped in
-the chaoskey_free() routine, so the code must not use the interface --
-even in a debugging statement -- after that routine returns.
-(Exception: If we know that another reference is held by someone else,
-such as the device core while the disconnect routine runs, there's no
-problem.  Thanks to Johan Hovold for pointing this out.)
+  BUG: sleeping function called from invalid context
+  gadget_disconnect+0x21/0x39 [vuln_msv]
+  dwc3_gadget_suspend.constprop.0+0x2b/0x42 [vuln_msv]
 
-Since the bad access is part of an unimportant debugging statement,
-we can fix the problem simply by removing the whole statement.
+Keep the disconnect callback selection in one common helper, but add a
+sleepable suspend-side wrapper which snapshots the callback under
+dwc->lock and then runs it after spin_unlock_irqrestore().  The regular
+event path still uses the existing spin_unlock()/spin_lock() window.
 
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-usb/20EC9664-054E-438B-B411-2145D347F97B@gmail.com/
-Tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 66e3e591891d ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
+Fixes: c8540870af4c ("usb: dwc3: gadget: Improve dwc3_gadget_suspend() and dwc3_gadget_resume()")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/bb5b1dc6-eb59-43e1-8d26-51e658e88bbe@rowland.harvard.edu
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260612052005.3849659-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/chaoskey.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |   43 ++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/misc/chaoskey.c
-+++ b/drivers/usb/misc/chaoskey.c
-@@ -320,7 +320,6 @@ bail:
- 	mutex_unlock(&dev->lock);
- destruction:
- 	mutex_unlock(&chaoskey_list_lock);
--	usb_dbg(interface, "release success");
- 	return rv;
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3902,15 +3902,48 @@ static void dwc3_endpoint_interrupt(stru
+ 	}
  }
  
++static bool dwc3_prepare_disconnect_gadget(struct dwc3 *dwc,
++					   struct usb_gadget_driver **driver,
++					   struct usb_gadget **gadget)
++{
++	if (!dwc->async_callbacks || !dwc->gadget_driver ||
++	    !dwc->gadget_driver->disconnect)
++		return false;
++
++	*driver = dwc->gadget_driver;
++	*gadget = dwc->gadget;
++
++	return true;
++}
++
+ static void dwc3_disconnect_gadget(struct dwc3 *dwc)
+ {
+-	if (dwc->async_callbacks && dwc->gadget_driver->disconnect) {
++	struct usb_gadget_driver *driver;
++	struct usb_gadget *gadget;
++
++	if (dwc3_prepare_disconnect_gadget(dwc, &driver, &gadget)) {
+ 		spin_unlock(&dwc->lock);
+-		dwc->gadget_driver->disconnect(dwc->gadget);
++		driver->disconnect(gadget);
+ 		spin_lock(&dwc->lock);
+ 	}
+ }
+ 
++static void dwc3_disconnect_gadget_sleepable(struct dwc3 *dwc)
++{
++	struct usb_gadget_driver *driver;
++	struct usb_gadget *gadget;
++	unsigned long flags;
++
++	spin_lock_irqsave(&dwc->lock, flags);
++	if (!dwc3_prepare_disconnect_gadget(dwc, &driver, &gadget)) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return;
++	}
++
++	spin_unlock_irqrestore(&dwc->lock, flags);
++	driver->disconnect(gadget);
++}
++
+ static void dwc3_suspend_gadget(struct dwc3 *dwc)
+ {
+ 	if (dwc->async_callbacks && dwc->gadget_driver->suspend) {
+@@ -4804,7 +4837,6 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
+ 
+ int dwc3_gadget_suspend(struct dwc3 *dwc)
+ {
+-	unsigned long flags;
+ 	int ret;
+ 
+ 	ret = dwc3_gadget_soft_disconnect(dwc);
+@@ -4818,10 +4850,7 @@ int dwc3_gadget_suspend(struct dwc3 *dwc
+ 		return -EAGAIN;
+ 	}
+ 
+-	spin_lock_irqsave(&dwc->lock, flags);
+-	if (dwc->gadget_driver)
+-		dwc3_disconnect_gadget(dwc);
+-	spin_unlock_irqrestore(&dwc->lock, flags);
++	dwc3_disconnect_gadget_sleepable(dwc);
+ 
+ 	return 0;
+ }
 
 
