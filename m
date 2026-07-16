@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636E8423E84;
-	Thu, 16 Jul 2026 13:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107602DF137;
+	Thu, 16 Jul 2026 13:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209259; cv=none; b=EmqSkbEYCoZO2x+mtZxg+0RyzKOF8nabzQrmUXwyrOIr0e0b7NTEWhxAwo8FYnJYlXqywOIQfZn8PGpcEM4ytzC6uJg69LHtEz1uUL7kcBH/YFoYguqzB0UUySA8QiS6vBGr6cvaGRhSf64icl9hFVksCIkba3XZfaJbKtDB5IU=
+	t=1784209262; cv=none; b=pwRAb4BVqylzLVhcL8ZDg6zEwIR5RCs3BCA9EAphjbsYmIqLOmK9PpjN3IMMhBgBEjc16xsC0cOOkinq8kzds6qymfixECqzGWj5IBWL97NAEIF1JnNFKJWZWKrM0GQSjJREEm0hFM7qIgs3iuRkcY3BwmNEpdl2g9lYlzlX1hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209259; c=relaxed/simple;
-	bh=ARseLUq06c9hgHJs6WPoSl7eK3L9wLjDAAdH01CPaus=;
+	s=arc-20240116; t=1784209262; c=relaxed/simple;
+	bh=gZGXyJLmH+BGXJTK/wBdIyPeNovuAcITbsRsh78PfmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mIkU0Ja0KnTNBvX6Yo+wU3mAxpEyHjT1gvUXk8l/Sq4HuWlUbPYzavj2rk/jjYh+G1gf2Oa2KWiqm1k5p5MC8TlEXuLwJXtshTAQT89hw4/9NX89W9KeCoAX6papGRezUu0efxUxNoWTSiEwD4YytLu2kFhUSdxq6NlNXJKViyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VFSy5eO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bWxORe/stV9xk68Eibej/y5d0/IkkqSOEXEuzpT5adUNhnkC6+ZORpFh1siTC7bl6wIDEB/EH3KQTHfdrELzpyBH2tjzZp9iY8Cqwa3ekSo03qid6RP2oFEEQ2+7oEqpnpbZ3hPOzRQPbeeB6N8CEHFZE7WE1YfzlhIj7SS9DwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bOr/vAy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VFSy5eO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B151F00A3A;
-	Thu, 16 Jul 2026 13:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bOr/vAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8E71F000E9;
+	Thu, 16 Jul 2026 13:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209258;
-	bh=9x3IPFGJVmX59k0aAoMXkeb1sXfz20WN6RShaIEZWuQ=;
+	s=korg; t=1784209261;
+	bh=oBM/ND6Wll4+dC3+qsrrOXAvOM5puWFrXofOEHFJc+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0VFSy5eOzqz3zw8xTXqHqmGDaNTLCtmvZial6mZpBF+5U/rXFxnsDP5X+8nmjwplM
-	 OPgjG7UBJlqWEsChnhOVrPhr/S+XE5oyRw1A46dXYuwf3B5wx5TX05rWMo1K0ZVjdo
-	 bdK9HfBWPADnqoXj3pg6rQrQcIAlJyJIEQI6dVs0=
+	b=0bOr/vAy3HlweQjzDR8B+VsOMQ8ekA1sN0Hg0iPKux1KZbHNs67mcgfi/O+QCcQvB
+	 OwrnV2t8T5cTaJ5WnhXKEnSbYs+b/kcXMhqz9zPle71n7MCQ/NN8/GBhkf3FxtXw3n
+	 f/fFeY2P6dqqQ8fcZ/KBWaxtss39mYGPr3pKPhRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rajat Jain <rajatja@google.com>,
 	Johan Hovold <johan@kernel.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.1 115/518] Bluetooth: btusb: fix use-after-free on marvell probe failure
-Date: Thu, 16 Jul 2026 15:26:23 +0200
-Message-ID: <20260716133050.368861313@linuxfoundation.org>
+Subject: [PATCH 7.1 116/518] Bluetooth: btusb: fix wakeup source leak on probe failure
+Date: Thu, 16 Jul 2026 15:26:24 +0200
+Message-ID: <20260716133050.393743306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,61 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit c5b600a3c05b1a7a110d558df935a8fc8a471c79 upstream.
+commit 3d93e1bb0fb881fe3ef961d1120556658e9cac4d upstream.
 
-Make sure to stop any TX URBs submitted during Marvell OOB wakeup
-configuration on later probe failures to avoid use-after-free in the
-completion callback.
+Make sure to disable wakeup on probe failure to avoid leaking the wakeup
+source.
 
-This issue was reported by Sashiko while reviewing a fix for a wakeup
-source leak in the btusb probe errors paths.
-
-Link: https://sashiko.dev/#/patchset/20260402092704.2346710-1-johan%40kernel.org
-Fixes: a4ccc9e33d2f ("Bluetooth: btusb: Configure Marvell to use one of the pins for oob wakeup")
+Fixes: fd913ef7ce61 ("Bluetooth: btusb: Add out-of-band wakeup support")
 Cc: stable@vger.kernel.org	# 4.11
 Cc: Rajat Jain <rajatja@google.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btusb.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -4220,7 +4220,7 @@ static int btusb_probe(struct usb_interf
- 	if (id->driver_info & BTUSB_INTEL_COMBINED) {
- 		err = btintel_configure_setup(hdev, btusb_driver.name);
+@@ -2996,6 +2996,11 @@ static int marvell_config_oob_wake(struc
+ 
+ 	return 0;
+ }
++#else
++static inline int marvell_config_oob_wake(struct hci_dev *hdev)
++{
++	return 0;
++}
+ #endif
+ 
+ static int btusb_set_bdaddr_marvell(struct hci_dev *hdev,
+@@ -3838,6 +3843,11 @@ static int btusb_config_oob_wake(struct
+ 	bt_dev_info(hdev, "OOB Wake-on-BT configured at IRQ %u", irq);
+ 	return 0;
+ }
++#else
++static inline int btusb_config_oob_wake(struct hci_dev *hdev)
++{
++	return 0;
++}
+ #endif
+ 
+ static void btusb_check_needs_reset_resume(struct usb_interface *intf)
+@@ -4174,7 +4184,6 @@ static int btusb_probe(struct usb_interf
+ 	hdev->wakeup  = btusb_wakeup;
+ 	hdev->hci_drv = &btusb_hci_drv;
+ 
+-#ifdef CONFIG_PM
+ 	err = btusb_config_oob_wake(hdev);
+ 	if (err)
+ 		goto out_free_dev;
+@@ -4183,9 +4192,9 @@ static int btusb_probe(struct usb_interf
+ 	if (id->driver_info & BTUSB_MARVELL && data->oob_wake_irq) {
+ 		err = marvell_config_oob_wake(hdev);
  		if (err)
 -			goto out_free_dev;
-+			goto err_kill_tx_urbs;
- 
- 		/* Transport specific configuration */
- 		hdev->send = btusb_send_frame_intel;
-@@ -4383,7 +4383,7 @@ static int btusb_probe(struct usb_interf
- 		err = usb_set_interface(data->udev, 0, 0);
- 		if (err < 0) {
- 			BT_ERR("failed to set interface 0, alt 0 %d", err);
--			goto out_free_dev;
-+			goto err_kill_tx_urbs;
- 		}
++			goto err_disable_wakeup;
  	}
+-#endif
++
+ 	if (id->driver_info & BTUSB_CW6622)
+ 		hci_set_quirk(hdev, HCI_QUIRK_BROKEN_STORED_LINK_KEY);
  
-@@ -4391,7 +4391,7 @@ static int btusb_probe(struct usb_interf
- 		err = usb_driver_claim_interface(&btusb_driver,
- 						 data->isoc, data);
- 		if (err < 0)
--			goto out_free_dev;
-+			goto err_kill_tx_urbs;
+@@ -4429,6 +4438,9 @@ err_release_siblings:
  	}
- 
- 	if (IS_ENABLED(CONFIG_BT_HCIBTUSB_BCM) && data->diag) {
-@@ -4427,6 +4427,8 @@ err_release_siblings:
- 		usb_set_intfdata(data->isoc, NULL);
- 		usb_driver_release_interface(&btusb_driver, data->isoc);
- 	}
-+err_kill_tx_urbs:
-+	usb_kill_anchored_urbs(&data->tx_anchor);
+ err_kill_tx_urbs:
+ 	usb_kill_anchored_urbs(&data->tx_anchor);
++err_disable_wakeup:
++	if (data->oob_wake_irq)
++		device_init_wakeup(&data->udev->dev, false);
  out_free_dev:
  	if (data->reset_gpio)
  		gpiod_put(data->reset_gpio);
