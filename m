@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36805A79B;
-	Thu, 16 Jul 2026 13:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8133148C2;
+	Thu, 16 Jul 2026 13:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210396; cv=none; b=bKey9kQFplFvN5nEWMzFsgqzwjTWqBiyj0GRmQS5GSeZ/o77umddGtSGVCDMm2p4GoQcq7eEDlCExfRUI0Cnz64OoQQOKSMgSkahuVxoJS9E9u6JbMRzfydCA7Q+zOorsdKtXqW8bA9Jgw4kmRhLqGVOQJIfnjfHfYXW6CdNtGg=
+	t=1784210398; cv=none; b=u9pa0+hD19n75K26gYSs3Pk0mqp9tCyq9szQhhBr5ovlEnPEHCQezKG2areabBSoSe+WpsSMT7XTJdibkx7wNpfgF+txxGvrJx3binEMED8R830BvYF2gErFVn3Nr0xgea7tM4t3ZYv6oRnbF/VjPZC0dndZo48Uc5yxC1voZYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210396; c=relaxed/simple;
-	bh=7GVRgDSfcFr5evdA5OgxE7+z0DB7tPzEHg2P+sj1i4k=;
+	s=arc-20240116; t=1784210398; c=relaxed/simple;
+	bh=mF3aSPKbjHpM4ZVjd3b6+hqt4O7ilaNJqLZcEesQygM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bq0bz6QhLkwRf4dz60BUSw2uSJ86zseWflBh7zr+GIVNU//sqgLSxAtnDGcQS62npVIsEQ2uW3te0Pf9OW6rQL9zg18tnXB6+P7x/XfEtGp9p5PoQBUXhZ8Kxq04w5Pf3rAYLxKMJZJobQJ3nee5pRs8abS5MkIS4O5XDpZ9T+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIjLMHG6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QSK986CbZdHNlQkcnhQc6COB5Y+G0eaM8MG0IZqRoQMq52NK2AVzmLG3pgDRBVfZgL/N2EFhOI1U+52DyJDOYpvgCFI/eAGFTbjXTnqK+NSeTuKd6Hbd3QpD3iUN06YFlje25FY/C0Vu9lOJfSxoiFoGCiTdd1B6uFgkv9ZR5c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4EQQCdj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIjLMHG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AA61F00A3D;
-	Thu, 16 Jul 2026 13:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4EQQCdj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25291F000E9;
+	Thu, 16 Jul 2026 13:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210394;
-	bh=3gzqO5ZdIjmvG9VT5M3fbBmvAqh6Rs0560bwgTBWu+g=;
+	s=korg; t=1784210397;
+	bh=c+/QxgcEpJP86GSpnDAEqwA4ebDLPkP22hQO/G5HGN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIjLMHG6ohFMa/JcDxe0tItNN5iiuTucsfFf3wSTxIRaD4o1HAI65QxkQP6uSuzev
-	 UTtIGhW471zeBMoJcVaSNsaOJccp4+7l15QOdUOxutHIcuf1ofJXdhnF6ljUg6GWcp
-	 jqxsSDO4VSH6JmLS3KUkFGw0HytOccWX2mRvqgOc=
+	b=D4EQQCdjJibKxIkNqxjh2DmOwlAsRPfhc4yrG/qTLhYAS0EbUFHYxMWo1A9zKNXaS
+	 2chlGJo6U3njBlX6OsIsoz+tzQW5hJsgNPQ1PQleqN+Iu3Usa24AreqJ7XX9u4s1WX
+	 xTWlEnKDSa8rWV3AZm1fHTmfDWhqvVnZgnxPq5q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Huang <kai.huang@intel.com>,
-	Yosry Ahmed <yosry@kernel.org>,
+	syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>,
 	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>
-Subject: [PATCH 6.18 030/480] KVM: x86: Move update_cr8_intercept() to lapic.c
-Date: Thu, 16 Jul 2026 15:26:17 +0200
-Message-ID: <20260716133045.349089504@linuxfoundation.org>
+Subject: [PATCH 6.18 031/480] KVM: VMX: Grab vmcs12 on CR8 interception update iff vCPU is in guest mode
+Date: Thu, 16 Jul 2026 15:26:18 +0200
+Message-ID: <20260716133045.372039198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -55,142 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream Commit c7722e5e1daeeabbd9f969554d52bb7158120b27 ]
+[ Upstream commit 7ef78d71ca713d8c00f7c34ddcf276c808143f77 ]
 
-Move update_cr8_intercept() to lapic.c so that it's globally visible
-in anticipation of extracting most of the register-specific code out of
-x86.c and into a new compilation unit.  Opportunistically prefix the
-helper kvm_lapic_ to make its role/scope more obvious.
+When updating CR8 intercepts, get vmcs12 if and only if the vCPU is in
+guest mode so that a future change can have update CR8 intercepts during
+vCPU creation, without running afoul of get_vmcs12()'s lockdep assertion.
+
+  ------------[ cut here ]------------
+  debug_locks && !(lock_is_held(&(&vcpu->mutex)->dep_map) || !refcount_read(&vcpu->kvm->users_count))
+  WARNING: arch/x86/kvm/vmx/nested.h:61 at get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline], CPU#0: syz.2.19/5879
+  WARNING: arch/x86/kvm/vmx/nested.h:61 at vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879, CPU#0: syz.2.19/5879
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 5879 Comm: syz.2.19 Not tainted syzkaller #0 PREEMPT(full)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+  RIP: 0010:get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline]
+  RIP: 0010:vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879
+  Call Trace:
+   <TASK>
+   apic_update_ppr arch/x86/kvm/lapic.c:984 [inline]
+   kvm_lapic_reset+0x1c24/0x2980 arch/x86/kvm/lapic.c:3023
+   kvm_vcpu_reset+0x44c/0x1bf0 arch/x86/kvm/x86.c:12986
+   kvm_arch_vcpu_create+0x746/0x8b0 arch/x86/kvm/x86.c:12847
+   kvm_vm_ioctl_create_vcpu+0x428/0x930 virt/kvm/kvm_main.c:4201
+   kvm_vm_ioctl+0x893/0xd50 virt/kvm/kvm_main.c:5159
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
 
 No functional change intended.
 
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260529222223.870923-14-seanjc@google.com
+Reported-by: syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>
+Closes: https://lore.kernel.org/all/6a2adf3b.3b0a2d4e.8c8d1.0012.GAE@google.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260618174347.1981064-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Carlos López <clopez@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |   26 ++++++++++++++++++++++++++
- arch/x86/kvm/lapic.h |    1 +
- arch/x86/kvm/x86.c   |   34 +++-------------------------------
- 3 files changed, 30 insertions(+), 31 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2754,6 +2754,32 @@ u64 kvm_lapic_get_cr8(struct kvm_vcpu *v
- 	return (tpr & 0xf0) >> 4;
- }
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6734,11 +6734,10 @@ static noinstr void vmx_l1d_flush(struct
  
-+void kvm_lapic_update_cr8_intercept(struct kvm_vcpu *vcpu)
-+{
-+	int max_irr, tpr;
-+
-+	if (!kvm_x86_ops.update_cr8_intercept)
-+		return;
-+
-+	if (!lapic_in_kernel(vcpu))
-+		return;
-+
-+	if (vcpu->arch.apic->apicv_active)
-+		return;
-+
-+	if (!vcpu->arch.apic->vapic_addr)
-+		max_irr = kvm_lapic_find_highest_irr(vcpu);
-+	else
-+		max_irr = -1;
-+
-+	if (max_irr != -1)
-+		max_irr >>= 4;
-+
-+	tpr = kvm_lapic_get_cr8(vcpu);
-+
-+	kvm_x86_call(update_cr8_intercept)(vcpu, tpr, max_irr);
-+}
-+
- static void __kvm_apic_set_base(struct kvm_vcpu *vcpu, u64 value)
+ void vmx_update_cr8_intercept(struct kvm_vcpu *vcpu, int tpr, int irr)
  {
- 	u64 old_value = vcpu->arch.apic_base;
---- a/arch/x86/kvm/lapic.h
-+++ b/arch/x86/kvm/lapic.h
-@@ -100,6 +100,7 @@ int kvm_apic_accept_events(struct kvm_vc
- void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event);
- u64 kvm_lapic_get_cr8(struct kvm_vcpu *vcpu);
- void kvm_lapic_set_tpr(struct kvm_vcpu *vcpu, unsigned long cr8);
-+void kvm_lapic_update_cr8_intercept(struct kvm_vcpu *vcpu);
- void kvm_lapic_set_eoi(struct kvm_vcpu *vcpu);
- void kvm_apic_set_version(struct kvm_vcpu *vcpu);
- void kvm_apic_after_set_mcg_cap(struct kvm_vcpu *vcpu);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -126,7 +126,6 @@ static u64 __read_mostly efer_reserved_b
- 				    KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST	| \
- 				    KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST)
+-	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
+ 	int tpr_threshold;
  
--static void update_cr8_intercept(struct kvm_vcpu *vcpu);
- static void process_nmi(struct kvm_vcpu *vcpu);
- static void __kvm_set_rflags(struct kvm_vcpu *vcpu, unsigned long rflags);
- static void store_regs(struct kvm_vcpu *vcpu);
-@@ -5357,7 +5356,7 @@ static int kvm_vcpu_ioctl_set_lapic(stru
- 	r = kvm_apic_set_state(vcpu, s);
- 	if (r)
- 		return r;
--	update_cr8_intercept(vcpu);
-+	kvm_lapic_update_cr8_intercept(vcpu);
+ 	if (is_guest_mode(vcpu) &&
+-		nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW))
++	    nested_cpu_has(get_vmcs12(vcpu), CPU_BASED_TPR_SHADOW))
+ 		return;
  
- 	return 0;
- }
-@@ -10565,33 +10564,6 @@ static void post_kvm_run_save(struct kvm
- 		kvm_run->flags |= KVM_RUN_X86_GUEST_MODE;
- }
- 
--static void update_cr8_intercept(struct kvm_vcpu *vcpu)
--{
--	int max_irr, tpr;
--
--	if (!kvm_x86_ops.update_cr8_intercept)
--		return;
--
--	if (!lapic_in_kernel(vcpu))
--		return;
--
--	if (vcpu->arch.apic->apicv_active)
--		return;
--
--	if (!vcpu->arch.apic->vapic_addr)
--		max_irr = kvm_lapic_find_highest_irr(vcpu);
--	else
--		max_irr = -1;
--
--	if (max_irr != -1)
--		max_irr >>= 4;
--
--	tpr = kvm_lapic_get_cr8(vcpu);
--
--	kvm_x86_call(update_cr8_intercept)(vcpu, tpr, max_irr);
--}
--
--
- int kvm_check_nested_events(struct kvm_vcpu *vcpu)
- {
- 	if (kvm_test_request(KVM_REQ_TRIPLE_FAULT, vcpu)) {
-@@ -11298,7 +11270,7 @@ static int vcpu_enter_guest(struct kvm_v
- 			kvm_x86_call(enable_irq_window)(vcpu);
- 
- 		if (kvm_lapic_enabled(vcpu)) {
--			update_cr8_intercept(vcpu);
-+			kvm_lapic_update_cr8_intercept(vcpu);
- 			kvm_lapic_sync_to_vapic(vcpu);
- 		}
- 	}
-@@ -12424,7 +12396,7 @@ static int __set_sregs_common(struct kvm
- 	kvm_set_segment(vcpu, &sregs->tr, VCPU_SREG_TR);
- 	kvm_set_segment(vcpu, &sregs->ldt, VCPU_SREG_LDTR);
- 
--	update_cr8_intercept(vcpu);
-+	kvm_lapic_update_cr8_intercept(vcpu);
- 
- 	/* Older userspace won't unhalt the vcpu on reset. */
- 	if (kvm_vcpu_is_bsp(vcpu) && kvm_rip_read(vcpu) == 0xfff0 &&
+ 	tpr_threshold = (irr == -1 || tpr < irr) ? 0 : irr;
 
 
