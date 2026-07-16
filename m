@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49AB4252B9;
-	Thu, 16 Jul 2026 14:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797C24279FD;
+	Thu, 16 Jul 2026 14:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211003; cv=none; b=CRtTDmC1pfguxdes2PEor2tFjRgwLZ9GN3bMxuR/Fx2JrbOUIAdIi96TMi/Aswz/zR2u8M3CnQTt+j2lx4fCUkteu5I2IpIZItt5xtmq4h8p9UGUtgsogUTM2PmGkj/tpYyzYzI2m8RnnnRTkAd0GLSnw2bLu+7coXZmmXpXX7A=
+	t=1784211005; cv=none; b=UUTWsO+n86fSLM2t/+xL/jAzUo9u3gL6qJ1WCzbZIHy+UBzEaaFcX6YMJxbI3H5eQzKTLgL8rVP4yV7tJYajZeySDYyNGw3V8ovHZHLsvHXQYoYUTslVmAcMxfe+N5eICUswufj5BhxPdUySMt77VX9HxLrAiWZPu9vuAJFJZ7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211003; c=relaxed/simple;
-	bh=TqpkfcRHPHR87AzqS1po5yTy+fDBfM7sWc0dd5Y6AlI=;
+	s=arc-20240116; t=1784211005; c=relaxed/simple;
+	bh=lMsX8h8kcVNc0NcIAyAe53MnDFGPj4CpfKXS+vMyMQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cpfum4/OHFhfayJbpZOGaCpNAic2zbuaC3zyCUq0R4jhdSg31LjRCZkfit+h++VT0Wjuuw+2GxRMEhQTkYsRukHh4GuW3fHjN7Vm5JzpIjlxedV8NhEhzknNF8dx2biUP9Va5ZxR4rPPgGkD6J3gfYO6c5xZY0Mf156MvbgACHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfJkJ+dJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uj3UAHduP0TE0NgL3kqZQvg1dZ3sRuw5cR+Em49yhU3TsBBNWTA3oyEDJCHRoh/OnZyih2k9tOGJTlW0UQ3rVhHhnoa1lrCzGwo131cG4IZ5sg0Vodn8Pz1D6z8QZfj37z/SjVoqpM0NjjZfV4oAp/QEVBHMwyjkA3dQbrfRdPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdYJQxXV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfJkJ+dJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463E41F00A3F;
-	Thu, 16 Jul 2026 14:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdYJQxXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA671F000E9;
+	Thu, 16 Jul 2026 14:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211001;
-	bh=SE589NUpZJO/QqXLE1a6/0jKfwmQAY245QKJzEyL8V0=;
+	s=korg; t=1784211004;
+	bh=PsONKhhwOnfLKgHnJPpph0ISHaH7yYebIgPyf5lXmH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BfJkJ+dJqnA2v5RTn7vEe/+ZuQnuuJtgQiHZI6CuHGc7X3VuArr3bahg4Unv0aDgK
-	 QzzMEoWd3oMjJ6QQ7fJfy1LxF0141PrPxI4YllQoxximHwRFxBAP/MEE1LaqqeavDR
-	 VjwNz37nv43ELsvFOXGpDFeay9b2hixmNERwSgQ8=
+	b=kdYJQxXVWjUY9PGzAIcILfrOji6PZsD0MLbbgg0uttuOGl+Wfny761ZeOao20a1/2
+	 mq12v85teS2IqqbbYx4P04bqzToVAQu486H/NJeyfFm2ri3cH87lfpxDQqUjWDfLb9
+	 4cAe/E4833M+HORnvKqgH2dTvXzb8hser83oFFfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Oliver Roundtree <oroundtree1@gmail.com>,
+	=?UTF-8?q?Ryno=20Kotz=C3=A9?= <lemon.xah@gmail.com>,
+	Oleg Makarenko <oleg@makarenk.ooo>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 261/480] HID: wacom: stop hardware after post-start probe failures
-Date: Thu, 16 Jul 2026 15:30:08 +0200
-Message-ID: <20260716133050.461995873@linuxfoundation.org>
+Subject: [PATCH 6.18 262/480] HID: pidff: Use correct effect type in effect update
+Date: Thu, 16 Jul 2026 15:30:09 +0200
+Message-ID: <20260716133050.484855572@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -46,86 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Oleg Makarenko <oleg@makarenk.ooo>
 
-commit ec2612b8ad9e642596db011dd8b6568ef1edeaa1 upstream.
+commit b251598b8bf37300510868f739a79e07800d41ce upstream.
 
-wacom_parse_and_register() starts HID hardware before registering inputs
-and initializing pad LEDs/remotes. Those later steps can fail, but their
-error paths currently release Wacom resources without stopping the HID
-hardware.
+When updating an existing effect, the effect type from the last created
+effect was sent to the device instead of the updated one.
+This caused incorrect reports when a game creates multiple different
+effects and updates only one that is not the last created.
 
-Route post-hid_hw_start() failures through hid_hw_stop() before
-releasing driver resources.
+Fixes FFB in multiple games that create multiple simultaneous effects
+(Forza Horizon 5/6).
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: c1d6708bf0d3 ("HID: wacom: Do not register input devices until after hid_hw_start")
+Fixes: 224ee88fe395 ("Input: add force feedback driver for PID devices")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Tested-by: Oliver Roundtree <oroundtree1@gmail.com>
+Co-developed-by: Ryno Kotzé <lemon.xah@gmail.com>
+Signed-off-by: Ryno Kotzé <lemon.xah@gmail.com>
+Signed-off-by: Oleg Makarenko <oleg@makarenk.ooo>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/hid/usbhid/hid-pidff.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -2462,16 +2462,16 @@ static int wacom_parse_and_register(stru
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -521,7 +521,7 @@ static void pidff_set_effect_report(stru
+ 	pidff->set_effect[PID_EFFECT_BLOCK_INDEX].value[0] =
+ 		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
+ 	pidff->set_effect_type->value[0] =
+-		pidff->create_new_effect_type->value[0];
++		pidff_get_effect_type_id(pidff, effect);
  
- 	error = wacom_register_inputs(wacom);
- 	if (error)
--		goto fail;
-+		goto fail_hw_stop;
- 
- 	if (wacom->wacom_wac.features.device_type & WACOM_DEVICETYPE_PAD) {
- 		error = wacom_initialize_leds(wacom);
- 		if (error)
--			goto fail;
-+			goto fail_hw_stop;
- 
- 		error = wacom_initialize_remotes(wacom);
- 		if (error)
--			goto fail;
-+			goto fail_hw_stop;
- 	}
- 
- 	if (!wireless) {
-@@ -2485,14 +2485,14 @@ static int wacom_parse_and_register(stru
- 		cancel_delayed_work_sync(&wacom->init_work);
- 		_wacom_query_tablet_data(wacom);
- 		error = -ENODEV;
--		goto fail_quirks;
-+		goto fail_hw_stop;
- 	}
- 
- 	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR) {
- 		error = hid_hw_open(hdev);
- 		if (error) {
- 			hid_err(hdev, "hw open failed\n");
--			goto fail_quirks;
-+			goto fail_hw_stop;
- 		}
- 	}
- 
-@@ -2501,7 +2501,7 @@ static int wacom_parse_and_register(stru
- 
- 	return 0;
- 
--fail_quirks:
-+fail_hw_stop:
- 	hid_hw_stop(hdev);
- fail:
- 	wacom_release_resources(wacom);
+ 	pidff_set_duration(&pidff->set_effect[PID_DURATION],
+ 			   effect->replay.length);
 
 
