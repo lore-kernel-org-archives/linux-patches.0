@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E13C433E9E;
-	Thu, 16 Jul 2026 14:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C566B42D76E;
+	Thu, 16 Jul 2026 14:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212119; cv=none; b=SZ9HRkDKx5+70W5PfaH+IC+CHzr0qHzNS8mFz3xoqjLUeO+WavyXvqA8XgWwPsdX8G8aCYL0Ylq0bmbHAhwDlYPSj7fTRKb82yxer35KD2xx4pAcXvoyb67ss16JnpCMeIGgRFDxyPl2SZUTJ8qY99f3ACE3JWkmMDDBoduN3ak=
+	t=1784212121; cv=none; b=bdjlva3KLuAY5s/EXGW6G8M1d1vv8HQyjkcn/ctAb22wIHczp0+ZT4CScE/3okfqOd1+LNd29+rLOexZDjF17WuJ2aUvvY/VW+9LXg5P90/q8nZ7B58fLpVe0NJ5gCM1INATZw6+RxsARVYmz+f39Pm+gXf+VA42Q4ZwWPjFcqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212119; c=relaxed/simple;
-	bh=99ruKii0Qyvy6J46CZeK2xzzsM8R1bXNhCiNzK6IgOo=;
+	s=arc-20240116; t=1784212121; c=relaxed/simple;
+	bh=yXVEJ1U58naEojeOpDZqAsHZUsi7g9BfrloyJPiJciE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XsXCnsV1AQeTz3PmeEiRBhnuJUuEL5Oykcum3AqIN28pcfstG4PRsBYlByJgKNHO/7llH7Kj+Ndz/yK1fjEiaH9noMaBzJLBVP1lUunhvll//hWzN5qkiwnHx/V6Xj1H+XDLO1c9doCgSho9NqkLdhngOcRLz05qBs4Ud1c1oFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAnV0I/m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U5LgIOSApo/SNidn0Xk+PrbK/iJJZ691jGUpMPu3SqwhZAYrNp+VDnWGOHewDegimbsBJ1GajJGpm9fyvq/imVnjPn5fuTbGf4e0FfcJ+q29sES36foFI15kiJlgcRGZhnoVy0qlnD8zbAspPNSjiHgp4xuv+5CNSSX+/C59jNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4DTWng0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAnV0I/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3DD1F00A3D;
-	Thu, 16 Jul 2026 14:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4DTWng0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D341F00A3A;
+	Thu, 16 Jul 2026 14:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212118;
-	bh=UJKg4GdADRPJOaJusMUFmA5a2TGnaIO/by5uelq78EY=;
+	s=korg; t=1784212120;
+	bh=IUT2C1Pt7j3otVpLdJh8KygMCUU97jgySkCtoCe31Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BAnV0I/mfTCccIuwxdQzbyhCyRdLAGgTvlX6m/f5v/48Bl/4c1sdAmEVkN8SdN9RO
-	 ULsYLm9eY3QjFeYUjIvLDE3peM5JIemKR89Jl234sXvh9B+OmynBYnaO+F0AJBh+rQ
-	 YwLAlAo2Dr4jXPPnWM6Baigsd1XUd+opIIDfGFMs=
+	b=j4DTWng0R112jwu2jujId/B330NY6oP2w5hhxSciP5GZNJNGhA70hZv4sRRoE7F44
+	 8eDkX2fHk2DpTzYU7GR7NLibcOKgs3ipq5AKeLWjFivabFAZVGxdAuXtahXutNd6/F
+	 qY3jVeFwLvNSSYUs4UJntiN9STTs+eNVRmIs8wT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+217eb327242d08197efb@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>
-Subject: [PATCH 6.12 207/349] hfs/hfsplus: zero-initialize buffer in hfs_bnode_read
-Date: Thu, 16 Jul 2026 15:32:21 +0200
-Message-ID: <20260716133037.998587678@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 190/349] cpufreq: intel_pstate: Sync policy->cur during CPU offline
+Date: Thu, 16 Jul 2026 15:32:04 +0200
+Message-ID: <20260716133037.629707848@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,58 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-commit d67aadee19ffdf3cc8520c5a4f4d5b2916d30baf upstream.
+commit bcbdaa1086c25a8a5d48e04e1b82fdfb0682b681 upstream.
 
-hfs_bnode_read() can return early without writing to the output buffer
-when is_bnode_offset_valid() fails or when check_and_correct_requested_
-length() corrects the length to zero.  Callers such as hfs_bnode_read_
-u16() and hfs_bnode_read_u8() pass stack-allocated buffers and use the
-result unconditionally, leading to KMSAN uninit-value reports.
+When a CPU goes offline with HWP disabled, intel_pstate_set_min_pstate()
+sets the MSR_IA32_PERF_CTL to minimum frequency to prevent SMT siblings
+from being restricted. However, the policy->cur value was not updated,
+leaving it at the previous value.
 
-Rather than initializing at each individual call site, zero the buffer
-at the start of hfs_bnode_read() before any validation checks.  This
-ensures all callers in both hfs and hfsplus get a deterministic zero
-value regardless of which early-return path is taken.
+When the CPU comes back online, governor->limits() checks if target_freq
+equals policy->cur and skips the frequency adjustment if they match. Since
+policy->cur still holds the previous value, the governor does not call
+cpufreq_driver->target to update MSR_IA32_PERF_CTL.
 
-Reported-by: syzbot+217eb327242d08197efb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=217eb327242d08197efb
-Tested-by: syzbot+217eb327242d08197efb@syzkaller.appspotmail.com
-Fixes: a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260505111300.3592757-3-tristmd@gmail.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fix this by synchronizing policy->cur with the hardware state when setting
+minimum pstate during CPU offline.
+
+Fixes: bb18008f8086 ("intel_pstate: Set core to min P state during core offline")
+Cc: stable@vger.kernel.org # 3.15+
+Suggested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+[ rjw: Subject refinement ]
+Link: https://patch.msgid.link/20260520032119.30615-1-fushuai.wang@linux.dev
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c     |    2 ++
- fs/hfsplus/bnode.c |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/cpufreq/intel_pstate.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -64,6 +64,8 @@ void hfs_bnode_read(struct hfs_bnode *no
- 	int bytes_read;
- 	int bytes_to_read;
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2926,10 +2926,12 @@ static int intel_cpufreq_cpu_offline(str
+ 	 * from getting to lower performance levels, so force the minimum
+ 	 * performance on CPU offline to prevent that from happening.
+ 	 */
+-	if (hwp_active)
++	if (hwp_active) {
+ 		intel_pstate_hwp_offline(cpu);
+-	else
++	} else {
+ 		intel_pstate_set_min_pstate(cpu);
++		policy->cur = cpu->pstate.min_freq;
++	}
  
-+	memset(buf, 0, len);
-+
- 	if (!is_bnode_offset_valid(node, off))
- 		return;
- 
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -25,6 +25,8 @@ void hfs_bnode_read(struct hfs_bnode *no
- 	struct page **pagep;
- 	int l;
- 
-+	memset(buf, 0, len);
-+
- 	if (!is_bnode_offset_valid(node, off))
- 		return;
+ 	intel_pstate_exit_perf_limits(policy);
  
 
 
