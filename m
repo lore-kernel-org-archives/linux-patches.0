@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BE8414A36;
-	Thu, 16 Jul 2026 13:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE6B2475F7;
+	Thu, 16 Jul 2026 13:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209012; cv=none; b=NKVA29GmwPzEVSFs9KH+Pmqpxx4pOxxHCWiwlaweStjVxTBGwfvRzzgsK8j2C38Trf/btjzbrrF0e/Y4CgljFmaXEn9AmVUHY8cW3rzAjQaqbAqncsSRbbT47hQAPjen9QzZ60ovsn85OWjZGL9eE3R/upiYiOR6NrWvFRn10KI=
+	t=1784209014; cv=none; b=UTVKDYTe09vSYrMfaXhcqVnrHnSWFJ81qq/Og24mb2AjgJx1r1Qwo3Jhlsz227RiEBCcyQNtS1agtTHm/EcUjnD7ZwzggoobxEicabLBe5arpxE1USvXHlQl1Ek90W5z8X2/2P+Trtgs+0g5ChiS2slAHObsRMezOvowpo83yk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209012; c=relaxed/simple;
-	bh=6+4N1p0qn6aNuiAunZ/oTKmseIdQE1rkbhpgyQ0uXrI=;
+	s=arc-20240116; t=1784209014; c=relaxed/simple;
+	bh=27GlXaCtg5ZHWkIaaLzdTs8amlrT6mnF8DDkrFRd3kU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mH8CsL87Jjt2jKBVNG2y2d3O9UUIUwiv+Kpk52XxV/fUV5RQ17HgdWXe6SjJc9Tbgpn5RB1wSQqncbj11jZjQKvY4N63bUw/zrahSd56UvGSHvg+Hafuj0L4EN8/lbYhaavPGnxNaC2bWhr2tBlbuHwMXj9mEZ9QCaLgTCypq6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkzRB/sb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iVi9iL9uk2f25rYt3+WEe9eIscGyZ8axjIioqjr06pCzbhS5lRwDb98mAu4Bw4anETPTuvQ6QWKnSjXalM2025aGPLdvKZtyd8KZaJct9m/XgblXJAsjvoXXnxcYPr6KaSlovEqsKVdquqdS4s+xQsSkPivqRHG8an1bmCF1obM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcrsrdnO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkzRB/sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4321F000E9;
-	Thu, 16 Jul 2026 13:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcrsrdnO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B838C1F000E9;
+	Thu, 16 Jul 2026 13:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209010;
-	bh=uMVQcP0/QJLAhHp8x07HlCrHfnFqcVHd0Z/0QSJlObs=;
+	s=korg; t=1784209013;
+	bh=1ldsGzvc+medmLmMqHEfOvS74+s3iiaC0Kfy9Sf+a/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TkzRB/sbOdDdyF1wvHXBOMCOB7G+JqEjm+XhUhhjvzQeNANVRlzs5lZnpx2W9epOv
-	 8Qs9YxwLttnt63DkgGeVCzflZQdoZ4pk+isDxMKlHkjuimvhxWpT82PGjouw2fEF5U
-	 G01Jooo8i4fbt2skQsDAtohIi44ZFYIuiL4pw6jQ=
+	b=vcrsrdnOSEOHB5od2WJEMb4ZUhUQP9r0K0HMRcSnS1wcJM7OxcDao+4hC8OWMRHkn
+	 uGvJLy0WctXZEBYY/1doiAU/8lpm9yqiesh2bUHw/D6SHAkYtqm5Vpnfw8Iz6fgm04
+	 EE8i4xXFgnKP7WtJyZzqa4QvI92pTr891yPjTKZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 023/518] perf/core: Detach event groups during remove_on_exec
-Date: Thu, 16 Jul 2026 15:24:51 +0200
-Message-ID: <20260716133048.284182718@linuxfoundation.org>
+Subject: [PATCH 7.1 024/518] bpf: Support for hardening against JIT spraying
+Date: Thu, 16 Jul 2026 15:24:52 +0200
+Message-ID: <20260716133048.304231952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,108 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taeyang Lee <0wn@theori.io>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-[ Upstream commit 037a3c43edfb597665dd34457cd22b14692f2ba3 ]
+commit 96cce16e26dd02a8678f1e87f88a4b5cdb63b995 upstream.
 
-perf_event_remove_on_exec() removes events by calling
-perf_event_exit_event(). For top-level events, this removes the event from
-the context with DETACH_EXIT only.
+The BPF JIT allocator packs many small programs into larger executable
+allocations and reuses space within those allocations as programs are
+loaded and freed. When fresh code is written into space that a previous
+program occupied, an indirect jump into the new program can reuse a branch
+prediction left behind by the old one.
 
-This can leave inconsistent group state when a removed event is a group
-leader and the group contains siblings without remove_on_exec. If the group
-was active, the surviving siblings can remain active and attached to the
-removed leader's sibling list, but are no longer represented by a valid
-group leader on the PMU context active lists.
+Flush the indirect branch predictors before reusing JIT memory so that
+indirect jumps into a newly written program don't reuse predictions from an
+old program that occupied the same space.
 
-A later close of the removed leader uses DETACH_GROUP and can promote the
-still-active siblings from this stale group state. The next schedule-in can
-then add an already-linked active_list entry again, corrupting the PMU
-context active list.
+Introduce bpf_arch_pred_flush_enabled static key and bpf_arch_pred_flush
+static call for flushing the branch predictors on JIT memory reuse.
+Architectures that need a flush, can update it to a predictor flush
+function. By default, its a NOP and does not emit any CALL.
 
-With DEBUG_LIST enabled, this is caught as a list_add double-add in
-merge_sched_in().
+Allocations larger than a pack are not covered by this flush. That is safe
+because cBPF programs (the unprivileged attack surface) are bounded well
+below a pack size. Issue a warning if this assumption is ever violated
+while the flush is active.
 
-Fix this by detaching group relationships when remove_on_exec removes an
-event. This preserves the existing task-exit and revoke behavior, while
-ensuring surviving siblings are ungrouped before the removed event leaves
-the context.
-
-Fixes: 2e498d0a74e5 ("perf: Add support for event removal on exec")
-Signed-off-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/ai65GgZcC0LAlWLG@Taeyangs-MacBook-Pro.local
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ include/linux/filter.h | 10 ++++++++++
+ kernel/bpf/core.c      | 19 +++++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 7935d5663944ee..bab0f3bd4fa8d8 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4728,7 +4728,7 @@ static void perf_remove_from_owner(struct perf_event *event);
- static void perf_event_exit_event(struct perf_event *event,
- 				  struct perf_event_context *ctx,
- 				  struct task_struct *task,
--				  bool revoke);
-+				  unsigned long detach_flags);
+diff --git a/include/linux/filter.h b/include/linux/filter.h
+index 88a241aac36a27..2a7e6cbbbe1d3f 100644
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -21,6 +21,7 @@
+ #include <linux/if_vlan.h>
+ #include <linux/vmalloc.h>
+ #include <linux/sockptr.h>
++#include <linux/static_call.h>
+ #include <linux/u64_stats_sync.h>
  
- /*
-  * Removes all events from the current task that have been marked
-@@ -4755,7 +4755,7 @@ static void perf_event_remove_on_exec(struct perf_event_context *ctx)
+ #include <net/sch_generic.h>
+@@ -1291,6 +1292,15 @@ extern long bpf_jit_limit_max;
  
- 		modified = true;
+ typedef void (*bpf_jit_fill_hole_t)(void *area, unsigned int size);
  
--		perf_event_exit_event(event, ctx, ctx->task, false);
-+		perf_event_exit_event(event, ctx, ctx->task, DETACH_GROUP);
- 	}
- 
- 	raw_spin_lock_irqsave(&ctx->lock, flags);
-@@ -12900,7 +12900,7 @@ static void __pmu_detach_event(struct pmu *pmu, struct perf_event *event,
- 	/*
- 	 * De-schedule the event and mark it REVOKED.
- 	 */
--	perf_event_exit_event(event, ctx, ctx->task, true);
-+	perf_event_exit_event(event, ctx, ctx->task, DETACH_REVOKE);
- 
- 	/*
- 	 * All _free_event() bits that rely on event->pmu:
-@@ -14488,12 +14488,13 @@ static void
- perf_event_exit_event(struct perf_event *event,
- 		      struct perf_event_context *ctx,
- 		      struct task_struct *task,
--		      bool revoke)
-+		      unsigned long detach_flags)
- {
- 	struct perf_event *parent_event = event->parent;
--	unsigned long detach_flags = DETACH_EXIT;
- 	unsigned int attach_state;
- 
-+	detach_flags |= DETACH_EXIT;
++/*
++ * Flush the indirect branch predictors before reusing JIT memory, so that
++ * indirect jumps into a newly written program don't reuse predictions left
++ * behind by an old program that occupied the same space.
++ */
++void bpf_arch_pred_flush(void);
++DECLARE_STATIC_CALL(bpf_arch_pred_flush, bpf_arch_pred_flush);
++DECLARE_STATIC_KEY_FALSE(bpf_pred_flush_enabled);
 +
- 	if (parent_event) {
- 		/*
- 		 * Do not destroy the 'original' grouping; because of the
-@@ -14516,8 +14517,8 @@ perf_event_exit_event(struct perf_event *event,
- 			sync_child_event(event, task);
- 	}
+ void bpf_jit_fill_hole_with_zero(void *area, unsigned int size);
  
--	if (revoke)
--		detach_flags |= DETACH_GROUP | DETACH_REVOKE;
-+	if (detach_flags & DETACH_REVOKE)
-+		detach_flags |= DETACH_GROUP;
+ struct bpf_binary_header *
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 6aa2a8b2403065..f49b9b23f95e60 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -20,6 +20,7 @@
+ #include <uapi/linux/btf.h>
+ #include <linux/filter.h>
+ #include <linux/skbuff.h>
++#include <linux/static_call.h>
+ #include <linux/vmalloc.h>
+ #include <linux/prandom.h>
+ #include <linux/bpf.h>
+@@ -883,6 +884,15 @@ void bpf_jit_fill_hole_with_zero(void *area, unsigned int size)
+ 	memset(area, 0, size);
+ }
  
- 	perf_remove_from_context(event, detach_flags);
- 	/*
-@@ -14605,7 +14606,7 @@ static void perf_event_exit_task_context(struct task_struct *task, bool exit)
- 		perf_event_task(task, ctx, 0);
++DEFINE_STATIC_CALL_NULL(bpf_arch_pred_flush, bpf_arch_pred_flush);
++
++/*
++ * Enabled once bpf_arch_pred_flush points at a real flush routine. Lets the
++ * pack allocator test "is a predictor flush wired up at all" with a cheap
++ * static branch instead of repeatedly querying the static call target.
++ */
++DEFINE_STATIC_KEY_FALSE(bpf_pred_flush_enabled);
++
+ #define BPF_PROG_SIZE_TO_NBITS(size)	(round_up(size, BPF_PROG_CHUNK_SIZE) / BPF_PROG_CHUNK_SIZE)
  
- 	list_for_each_entry_safe(child_event, next, &ctx->event_list, event_entry)
--		perf_event_exit_event(child_event, ctx, exit ? task : NULL, false);
-+		perf_event_exit_event(child_event, ctx, exit ? task : NULL, 0);
+ static DEFINE_MUTEX(pack_mutex);
+@@ -941,6 +951,14 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
  
- 	mutex_unlock(&ctx->mutex);
+ 	mutex_lock(&pack_mutex);
+ 	if (size > BPF_PROG_PACK_SIZE) {
++		/*
++		 * Allocations larger than a pack get their own pages, and
++		 * predictors are not flushed for such allocation. This is only
++		 * safe because cBPF programs (the unprivileged attack surface)
++		 * are bounded well below a pack size.
++		 */
++		if (static_branch_unlikely(&bpf_pred_flush_enabled))
++			pr_warn_once("BPF: Predictors not flushed for allocations greater than BPF_PROG_PACK_SIZE\n");
+ 		size = round_up(size, PAGE_SIZE);
+ 		ptr = bpf_jit_alloc_exec(size);
+ 		if (ptr) {
+@@ -971,6 +989,7 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
+ 	pos = 0;
+ 
+ found_free_area:
++	static_call_cond(bpf_arch_pred_flush)();
+ 	bitmap_set(pack->bitmap, pos, nbits);
+ 	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
  
 -- 
 2.53.0
