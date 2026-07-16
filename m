@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79ED128505E;
-	Thu, 16 Jul 2026 14:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3922030FC33;
+	Thu, 16 Jul 2026 14:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211523; cv=none; b=Zko3kfoSM0L2gyiCxxVaI9UzefS5uAQotM+nZO9m2l2RjVWbyDMz/+96h+P0cxo6EHXdhWALpdTbyWKKu/FFsrH8wyq/8isOCuPe581ylelTpazdpX+raU5/EyLBO+l+1A61uJurJhrhSWfwAenqOuL9/ZCqI8Oaw7YYFLBDaNg=
+	t=1784211526; cv=none; b=aUqnqS6QX1NrnbBGWY3quXjr6XhxBJAivTqwf5fu1Abk6MFCjRFfUG/PjbYmRmvOswjtBkj/hFPbjjZfQFx0pWy2RMTNsb6HMkgjGjRJCxeavNWRzHVFiBNEPRNjr1CN/F5Q30X3PFSIhgLaYBsq6o2zfXxohvdoi4niZZYTt58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211523; c=relaxed/simple;
-	bh=4iyuOYnQTMu7WDAjeH+6Fp7Mx0DgBpzutRyKHm+BwNs=;
+	s=arc-20240116; t=1784211526; c=relaxed/simple;
+	bh=sNtxU2SRQ6wu/L3Ra8kTsDDDZl68xfkpT/k4yIh7Okk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hjajcm9N0uut5dQIUK3PpnLslI/Ioh6DGni1XfmIzQL6/HIn1eyTh6DI+pix7HJAhgtjhq6kbLjwCZubzsHdHk4/M1gHgscnkX4tH7LYsAeK7xi48icthQb3iCKBOEDU/sJXhJFg9OtL653SM6tItyVVco0lKxQN13qmjOyy5R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIp2i/Sn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dnsPM2Sza9ZiQAc9KcHh+esGaoR0sTvkBmQg+0G6HI3xlUM7UXaRnhAnaBdB4+ndiw75eB8WJqoH2Ayxc4ODZseTGo0Lqc4/e/qd7EjZZJOte/BX/hfMmWO4BvFMoIMN2gu7ytnJawXaxHyj50Yl8AE+FPyqsJIBw/aiZoeV0Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/Vg+wBK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIp2i/Sn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11921F000E9;
-	Thu, 16 Jul 2026 14:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/Vg+wBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EEE1F00A3D;
+	Thu, 16 Jul 2026 14:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211522;
-	bh=gyoEKs4/5Cjm2t/94GA+rmdtxMa5ZHnVQIzk5vGNmig=;
+	s=korg; t=1784211524;
+	bh=E/ooay9pKaJjURYlfc4fs1K17SPRTL+gLL28MF1yZV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iIp2i/Snpr55QHMj9X2ok8iR1I4BoEyaPLMVthsvFl/ovuTi7wPYqu9DLEmjA97yJ
-	 Mb52Du/x2gZYt8Hj9r3FvGdNXYU0A6mfgbA7MRNRjMKXcBmR8e707H38p/z1RVM3vl
-	 BHpi4/TEhOrdvx6mIHelFi3WHvbXlWmV1HuPjK/Q=
+	b=U/Vg+wBKrFHX7Us+eB/pB0EhFtwb1aED/7yY75yd+7KnqTTe9vE/lJg5ov7smWXhs
+	 YYJSpntlCCLDv6LY6klRPuPwWzMBE/ABvq7QFhGGraBg3kP4iu/X8gqKG26MMgMe3j
+	 nuM7d3pqLhiLmFO2JSLDho/Qm8KWeFGPEl/7hI04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 458/480] Input: maplecontrol - set driver data before registering input device
-Date: Thu, 16 Jul 2026 15:33:25 +0200
-Message-ID: <20260716133054.731862233@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Zhenhao Wan <whi4ed0g@gmail.com>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 459/480] RDMA/rtrs-srv: Bound RDMA-Write length to chunk size in rdma_write_sg
+Date: Thu, 16 Jul 2026 15:33:26 +0200
+Message-ID: <20260716133054.753484606@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,42 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Zhenhao Wan <whi4ed0g@gmail.com>
 
-commit fe938ee497d58c644f6910cfe6ae155f6fb3e523 upstream.
+commit 963af8d97a8c6a117134a8d0db1415e0489200b1 upstream.
 
-Set maple driver data before calling input_register_device() to
-ensure that it is available if the device is opened immediately and
-the callback is triggered.
+When the server answers an RTRS READ, rdma_write_sg() builds the source
+scatter/gather entry for the IB_WR_RDMA_WRITE that returns data to the
+peer. Its length is taken directly from the wire descriptor:
 
+  plist->length = le32_to_cpu(id->rd_msg->desc[0].len);
+
+rd_msg points into the chunk buffer that the remote peer filled via
+RDMA-WRITE-WITH-IMM (rtrs_srv_rdma_done() -> process_io_req() ->
+process_read()), so desc[0].len is attacker-controlled and, before this
+change, was only rejected when zero. The source address is the fixed
+chunk start (dma_addr[msg_id]) and the source lkey is the PD-wide
+local_dma_lkey, which is not tied to the chunk's MR mapping, so the verbs
+layer does not constrain the transfer length to max_chunk_size. msg_id
+and off are bounded against queue_depth and max_chunk_size in
+rtrs_srv_rdma_done(), but desc[0].len is a separate field that was not
+checked against the chunk size.
+
+A peer that advertises desc[0].len larger than max_chunk_size can make
+the posted RDMA write read past the chunk's mapped region. The resulting
+behaviour depends on the IOMMU configuration: with no IOMMU or in
+passthrough mode the read may extend into memory adjacent to the chunk
+and be returned to the peer, which can disclose host memory; with a
+translating IOMMU the out-of-range access is expected to fault and abort
+the connection. In either case the transfer exceeds what the protocol
+permits and is driven by a remote peer.
+
+Reject a descriptor length above max_chunk_size, mirroring the existing
+off >= max_chunk_size bound in rtrs_srv_rdma_done(). Legitimate clients
+do not exceed it: the client sets desc[0].len to its MR length, which is
+capped at the negotiated max_io_size (max_chunk_size - MAX_HDR_SIZE).
+
+Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
+Link: https://patch.msgid.link/r/20260612-master-v1-1-70cde5c6fdc9@gmail.com
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Tested-by: Florian Fuchs <fuchsfl@gmail.com>
-Link: https://patch.msgid.link/akNYib9hQFNN1fA9@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/maplecontrol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/ulp/rtrs/rtrs-srv.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/input/joystick/maplecontrol.c
-+++ b/drivers/input/joystick/maplecontrol.c
-@@ -112,6 +112,8 @@ static int probe_maple_controller(struct
- 	pad->dev = idev;
- 	pad->mdev = mdev;
- 
-+	maple_set_drvdata(mdev, pad);
-+
- 	idev->open = dc_pad_open;
- 	idev->close = dc_pad_close;
- 
-@@ -146,7 +148,6 @@ static int probe_maple_controller(struct
- 		goto fail;
- 
- 	mdev->driver = mdrv;
--	maple_set_drvdata(mdev, pad);
- 
- 	return 0;
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+@@ -227,8 +227,9 @@ static int rdma_write_sg(struct rtrs_srv
+ 	/* WR will fail with length error
+ 	 * if this is 0
+ 	 */
+-	if (plist->length == 0) {
+-		rtrs_err(s, "Invalid RDMA-Write sg list length 0\n");
++	if (plist->length == 0 || plist->length > max_chunk_size) {
++		rtrs_err(s, "Invalid RDMA-Write sg list length %u\n",
++			 plist->length);
+ 		return -EINVAL;
+ 	}
  
 
 
