@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A446425864;
-	Thu, 16 Jul 2026 14:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF84429810;
+	Thu, 16 Jul 2026 14:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210488; cv=none; b=KYnPiFm0CDkPC+c887r+BZBQkeQiw77BhqM/yKMT9rjU2Wg6AOis0Mp+kAQ38t/aTLf3NnLXe3PVrQvWVHMj6ZU/oeAUHlz/GhnMKUXbwH5OUiOHtzw8IG9OxicShxmGYjTaANlGIueRFvv4NpjhueOGjqOo+EUDFv9PJZiEFEQ=
+	t=1784210491; cv=none; b=dfUz3X3QqulgIuvj3IDZ2rzagusND56U9BcKVk/hLLPzdDB5fK9vR/Gp9kis+NHL3xi1RllmrvtWxWG2jq8xXzN8Wg6mD/6fA21zZnyGkRf1ihefWM7RxB6bNWgkH3vWaxp0dEPMTym1naIyOWMIdP2a5D0U0wJ9jJVF8b5ZQUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210488; c=relaxed/simple;
-	bh=H1pVIiz2UoCBXSEnYaKxblfCKxklRMW+xkyDXt2p6xQ=;
+	s=arc-20240116; t=1784210491; c=relaxed/simple;
+	bh=gTFkNqotiEG05TLnYSuEYxqxFGVxP74YWcUvCCXayxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Itn5z3fdQr9ZCe0vZNWcTda1dEF0ugL69yiDjxJHed3GuTSMl3MxEWA88e8AG5jjOXZ2XBftHDu3XT1iHE6SCMtDclAgqv1J2ydJ+1GNBupOhCQfBSPi78zS8JhSfo+kfsbXUTxCsoPQq93WhdRNjIUnkp8Ah3vqWsLDqr36hBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e34ugAFc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aTTCXrybnV1LoZ0bEuhDy8foAoD3On0oVFIB71dK4ow2YNvFyDbrgyfbtwrIzDkbP7B0C/YLiqG+PDaS7SmwxCbtd4EZIGJ5oWfxy9GxIMVP1A4ssAtuc0JP1BMr9J6kQ8tPTzoRP59b/AfD1gox4KXieJx9rgmb5F/V1vuZJmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWc+ZfOW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e34ugAFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF22B1F000E9;
-	Thu, 16 Jul 2026 14:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWc+ZfOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615261F000E9;
+	Thu, 16 Jul 2026 14:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210487;
-	bh=yiWzQ4Z6VhlZ7VASysEsYEjVH5pIqoBNOzZnNFjv1iA=;
+	s=korg; t=1784210489;
+	bh=G+rKzHz9UdqSt2lTmZhCp+7d+0ignWk3I2uzyLO3kas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e34ugAFcFR3aDU5D2pz4o85MXZ9CeuwaxF7+SBSzu0wFCMVmnrJQKbaDvzc2eTG/T
-	 XfB4toUkj4r9lSsnPGODY8Dou0AcrAU9Zepi4psil9aBzzM3zv3kxhBo+POlgqPtMF
-	 MynuQ1G19qsc1Z4s2jr4EOTi6GFaesQxxih70fik=
+	b=EWc+ZfOWTT3FunGltPO5dZJzlwjCjIlZUUpbml/ugTvaZWVCNHPSaxeHI+4W7F49/
+	 ZRvMl/rB/hI7mr44Cco/kPKNNaAeVNMwh+uq4ryMhIn2TB856m9sKOKgKcju4DUsUz
+	 NQY8cJlqz00B4pf8lTtuedOd+hmOQKYUQKLZ/mnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Stable@vger.kernel.org,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 066/480] iio: gyro: bmg160: wait full startup time after mode change at probe
-Date: Thu, 16 Jul 2026 15:26:53 +0200
-Message-ID: <20260716133046.137717626@linuxfoundation.org>
+Subject: [PATCH 6.18 067/480] iio: imu: adis: add IRQF_NO_THREAD to non-FIFO trigger IRQ
+Date: Thu, 16 Jul 2026 15:26:54 +0200
+Message-ID: <20260716133046.158922683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,52 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 088fcb9b567f8723074ad9eb1bf5cb46f8a0096b upstream.
+commit 6e1b9bff1202da55c464e36bd34a2b6863d7fe30 upstream.
 
-bmg160_chip_init() calls bmg160_set_mode(BMG160_MODE_NORMAL) and
-then waits only 500-1000 us. Per the BMG160 datasheet
-(BST-BMG160-DS000-07 Rev. 1.0, May 2013), the start-up and wake-up
-times (tsu, twusm) are 30 ms.
+devm_adis_probe_trigger() registers iio_trigger_generic_data_rdy_poll()
+through devm_request_irq() on the non-FIFO path, but it does not add
+IRQF_NO_THREAD to the IRQ flags.
 
-The same file already waits BMG160_MAX_STARTUP_TIME_MS (80 ms)
-in bmg160_runtime_resume() after the same set_mode(NORMAL)
-operation. The 500 us value at probe was likely a unit mix-up;
-the old comment said "500 ms" while the code used microseconds.
+When the kernel is booted with forced IRQ threading, the parent IRQ can
+otherwise be threaded by the IRQ core and the subsequent IIO trigger
+child IRQ is then dispatched from irq/... thread context instead of
+hardirq context. Because iio_trigger_generic_data_rdy_poll()
+immediately drives iio_trigger_poll(), this violates the hardirq-only
+IIO trigger helper contract and can push downstream trigger consumers
+through the wrong execution context.
 
-Reuse the same constant via msleep() and add a code comment
-explaining the datasheet basis for the wait. Without this,
-register writes that follow the mode change can hit the chip
-before it is ready.
+Add IRQF_NO_THREAD on top of the existing adis->irq_flag value for the
+non-FIFO request_irq() path, while preserving the current trigger
+polarity and IRQF_NO_AUTOEN behavior.
 
-Fixes: 22b46c45fb9b ("iio:gyro:bmg160 Gyro Sensor driver")
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Cc: <Stable@vger.kernel.org>
+Fixes: fec86c6b8369 ("iio: imu: adis: Add Managed device functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/bmg160_core.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/iio/imu/adis_trigger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/gyro/bmg160_core.c
-+++ b/drivers/iio/gyro/bmg160_core.c
-@@ -264,8 +264,14 @@ static int bmg160_chip_init(struct bmg16
- 	if (ret < 0)
- 		return ret;
- 
--	/* Wait upto 500 ms to be ready after changing mode */
--	usleep_range(500, 1000);
-+	/*
-+	 * Wait for the chip to be ready after switching to normal mode.
-+	 * The BMG160 datasheet (BST-BMG160-DS000-07 Rev. 1.0, May 2013)
-+	 * specifies a start-up / wake-up time (tsu, twusm) of 30 ms; use
-+	 * BMG160_MAX_STARTUP_TIME_MS (80 ms) as a safety margin, matching
-+	 * what bmg160_runtime_resume() already does.
-+	 */
-+	msleep(BMG160_MAX_STARTUP_TIME_MS);
- 
- 	/* Set Bandwidth */
- 	ret = bmg160_set_bw(data, BMG160_DEF_BW);
+--- a/drivers/iio/imu/adis_trigger.c
++++ b/drivers/iio/imu/adis_trigger.c
+@@ -94,7 +94,7 @@ int devm_adis_probe_trigger(struct adis
+ 	else
+ 		ret = devm_request_irq(&adis->spi->dev, adis->spi->irq,
+ 				       &iio_trigger_generic_data_rdy_poll,
+-				       adis->irq_flag,
++				       adis->irq_flag | IRQF_NO_THREAD,
+ 				       indio_dev->name,
+ 				       adis->trig);
+ 	if (ret)
 
 
