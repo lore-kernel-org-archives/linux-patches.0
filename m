@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910DE40A954;
-	Thu, 16 Jul 2026 14:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1753DB336;
+	Thu, 16 Jul 2026 14:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211683; cv=none; b=CUrWGdp+787Xv8kEAITXG4vjhl270rNd3mcEA3xHp7lfj5XaImmf2mGjTKhZmGDktHliDekLncuY88x4pY+vyNuHGoTiAmBvMBgdfHltso9RnGrLSgCCl4b9hCUUPaQn6OvIoaRDyHL0UjsAg+G7FTCpHQ0jH1QgWGXQAZjnu3w=
+	t=1784211685; cv=none; b=MT580jpoSPdridlRSyP1pyt2QqDy1aEjfnZNjyqMLZAJkXiUt7dtQLz+w3SrSAg44heDf4Z09EQsqzCgsXc2dKT/KJ4wiPfffkX6+aHO7zrptbVn4SYPqwA0KXb/1jCVC8xA8EbQ5I/st3chBQUe8ezmGgfGVQGfgQOz4PiLwTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211683; c=relaxed/simple;
-	bh=/V1aldFiaHlJoqBlRMAITF6kKQwnWMjyWtganpTQOWU=;
+	s=arc-20240116; t=1784211685; c=relaxed/simple;
+	bh=YUCmkcOE2XIZBvVZjTbDywPq4VMinojAfjlXPANSmjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NrzkhROJSaCZMucHcmPbcY7TTxhwyNOS5WnjCgL/GUl97MGLFB42NJUC4e9Np6oJqTQy44kXqlhHAOQ+kaChaRp/2BOxO8gXhIhkh/Jmuz9Abybs042t0/+GqRwtj6tf4HaW2SjQ+Kq54Gp/y3RtkN/UlEi/JpX4G/J7SvvqQNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCPkcZDS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AAWfaHn3jzsaZi3EQbj9QieLXPyAe1cOMFm6oWUNzit0/ZUz+AnORL32ock2H1CrtAxmKwHFtB3FACrd7ogkXHGFPk3IVPK9If5R5oPrTEncXZy2wGyDZ5Z8sikUVuQD2yigW9BXEu48JeY1qVTNtxw14z5NYkPByef85kgp4RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQwRoxm3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCPkcZDS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3F61F000E9;
-	Thu, 16 Jul 2026 14:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQwRoxm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F6031F000E9;
+	Thu, 16 Jul 2026 14:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211682;
-	bh=AOmRZOxDAIyrNyKY5FJukVTKD7WVViFo6sGLbkSjAAw=;
+	s=korg; t=1784211684;
+	bh=JyJOspfEXuatUhyAiPUZki7nLuOV59U5dLcmdG5H8Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SCPkcZDSNkoY+G6kf87uie0vZDE5q/mc4L7ays6APnceagNzSi5ODbWoF9w5oOcEs
-	 oPhIp44kPJstZ19g7OSBbKBuSxyfXyAMex9xp6fovHT1GtzCdxZzcyjoOOd7S9U18F
-	 weOaDUTgsu2GfjlLgIroMtvxu4vjPbJ9Xfl2aI+c=
+	b=SQwRoxm3C5W07BrOCkveQ7IeJRCy5P/NNUkb3kmBtyxwbBESc6Yr6ANXz6DnYgucM
+	 RGEhUgc7DJj6zlMggyiD8/tUqNb2y0i1sfDYwFXzSFPFaKRc1KJEjcJMFOQZ2VQ7t+
+	 ZlVzO9KYMyDaZmNqDTQzzZ3rX6N/BxEy8gKEyRvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/349] perf/core: Detach event groups during remove_on_exec
-Date: Thu, 16 Jul 2026 15:29:33 +0200
-Message-ID: <20260716133034.193934636@linuxfoundation.org>
+Subject: [PATCH 6.12 040/349] rust: kasan: KASAN+RUST requires clang
+Date: Thu, 16 Jul 2026 15:29:34 +0200
+Message-ID: <20260716133034.218085151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,97 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taeyang Lee <0wn@theori.io>
+From: Alice Ryhl <aliceryhl@google.com>
 
-[ Upstream commit 037a3c43edfb597665dd34457cd22b14692f2ba3 ]
+[ Upstream commit 5b271543d0f08e9733d4732721e960e285f6448f ]
 
-perf_event_remove_on_exec() removes events by calling
-perf_event_exit_event(). For top-level events, this removes the event from
-the context with DETACH_EXIT only.
+Kernel KASAN involves passing various llvm/gcc specific arguments to
+the C and Rust compiler. Since these arguments differ between llvm and
+gcc, it's not safe to mix an llvm-based rustc with a gcc build when
+kasan is enabled.
 
-This can leave inconsistent group state when a removed event is a group
-leader and the group contains siblings without remove_on_exec. If the group
-was active, the surviving siblings can remain active and attached to the
-removed leader's sibling list, but are no longer represented by a valid
-group leader on the PMU context active lists.
-
-A later close of the removed leader uses DETACH_GROUP and can promote the
-still-active siblings from this stale group state. The next schedule-in can
-then add an already-linked active_list entry again, corrupting the PMU
-context active list.
-
-With DEBUG_LIST enabled, this is caught as a list_add double-add in
-merge_sched_in().
-
-Fix this by detaching group relationships when remove_on_exec removes an
-event. This preserves the existing task-exit and revoke behavior, while
-ensuring surviving siblings are ungrouped before the removed event leaves
-the context.
-
-Fixes: 2e498d0a74e5 ("perf: Add support for event removal on exec")
-Signed-off-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/ai65GgZcC0LAlWLG@Taeyangs-MacBook-Pro.local
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Cc: stable@vger.kernel.org
+Fixes: e3117404b411 ("kbuild: rust: Enable KASAN support")
+Link: https://patch.msgid.link/20260408-kasan-rust-sw-tags-v3-1-e07964d14363@google.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ init/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 8fa3ee209a5be6..da77f856e1c83b 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4536,7 +4536,8 @@ static void perf_event_enable_on_exec(struct perf_event_context *ctx)
- 
- static void perf_remove_from_owner(struct perf_event *event);
- static void perf_event_exit_event(struct perf_event *event,
--				  struct perf_event_context *ctx);
-+				  struct perf_event_context *ctx,
-+				  unsigned long detach_flags);
- 
- /*
-  * Removes all events from the current task that have been marked
-@@ -4563,7 +4564,7 @@ static void perf_event_remove_on_exec(struct perf_event_context *ctx)
- 
- 		modified = true;
- 
--		perf_event_exit_event(event, ctx);
-+		perf_event_exit_event(event, ctx, DETACH_GROUP);
- 	}
- 
- 	raw_spin_lock_irqsave(&ctx->lock, flags);
-@@ -13477,10 +13478,11 @@ static void sync_child_event(struct perf_event *child_event)
- }
- 
- static void
--perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
-+perf_event_exit_event(struct perf_event *event,
-+		      struct perf_event_context *ctx,
-+		      unsigned long detach_flags)
- {
- 	struct perf_event *parent_event = event->parent;
--	unsigned long detach_flags = 0;
- 
- 	if (parent_event) {
- 		/*
-@@ -13495,7 +13497,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
- 		 * Do destroy all inherited groups, we don't care about those
- 		 * and being thorough is better.
- 		 */
--		detach_flags = DETACH_GROUP | DETACH_CHILD;
-+		detach_flags |= DETACH_GROUP | DETACH_CHILD;
- 		mutex_lock(&parent_event->child_mutex);
- 	}
- 
-@@ -13574,7 +13576,7 @@ static void perf_event_exit_task_context(struct task_struct *child)
- 	perf_event_task(child, child_ctx, 0);
- 
- 	list_for_each_entry_safe(child_event, next, &child_ctx->event_list, event_entry)
--		perf_event_exit_event(child_event, child_ctx);
-+		perf_event_exit_event(child_event, child_ctx, 0);
- 
- 	mutex_unlock(&child_ctx->mutex);
- 
+diff --git a/init/Kconfig b/init/Kconfig
+index f4b91b1857bf86..53eba5cd88ff51 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1974,6 +1974,7 @@ config RUST
+ 	depends on !CFI_CLANG || HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
+ 	select CFI_ICALL_NORMALIZE_INTEGERS if CFI_CLANG
+ 	depends on !CALL_PADDING || RUSTC_VERSION >= 108100
++	depends on !KASAN || CC_IS_CLANG
+ 	depends on !KASAN_SW_TAGS
+ 	depends on !(MITIGATION_RETHUNK && KASAN) || RUSTC_VERSION >= 108300
+ 	help
 -- 
 2.53.0
 
