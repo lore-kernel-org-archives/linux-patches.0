@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE2822301;
-	Thu, 16 Jul 2026 13:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EE03D953E;
+	Thu, 16 Jul 2026 13:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210244; cv=none; b=jW8pZLEsEsKAgZIEoKFeoq0YzMoao9/roXCPDNetuK8lGGc8IyKH6+oUm/bWDoS1HIax+Bp5VBTuTy2FknrNuPru2gAst6DCZMO5uA8wddTWMbzNWpyOqMAqru39xr69tN5Qga04EoeluIE8AVBeXyYSK5JZx5dRHm1+CC4mRzA=
+	t=1784210247; cv=none; b=cr7HO8FsFfxpYsSZscLvs78xwfMMojqTP9EG7to/taMDQsMm2FlwHq5rkFa3MuOGijSBMKa0sSjNZgoFqgMfOemDhy7MHJuAk7f7dBeddvsgZ2hJc7bxIvwMWk5j2SEvop7fzEiQ4JtbWxQ/NvzvOtf6VPWZ5aoIpoF4qm1ITOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210244; c=relaxed/simple;
-	bh=W0QRMQGXBniCRTLBcywpeJ9FdH0kazi2jC9M9tc+oFw=;
+	s=arc-20240116; t=1784210247; c=relaxed/simple;
+	bh=SjIZTmOAKdOZ5ddeco/roo3ibvHj0J2gyshCBtpPouU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EFEcmxMUm3p2RoSjSmu2kcBsiKwbE+urtRbdE5dIoiXxAk1IRyjsUEtWlaaBrfDDs3ThrVho1DktloRPbNgVoQcd+Jwd5eFAmZ2M0qz4faCF/nAGT2NLibgHMyS3KMSQzsL35WVWfDUYJFdolQVSsrYUAI8WvXcVvc/7603Rj+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWfmWlPn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mFycK9NlfxZh3TnFD95M38dOWCNpceai6CH3cLQ4xHA8rl4F7y6EWnpiC/Omoj0saCJJrEjXNLKIDEvmXRdxbyniKN2UEMUZmVYbwmiuNmzwE4fBwL0lExeDbATV/IGwzT6tNa0Gf8++hGNg8el4IhlwfuIhL7vFmUFHWozcpQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOJr8spC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWfmWlPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727EB1F000E9;
-	Thu, 16 Jul 2026 13:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOJr8spC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164261F000E9;
+	Thu, 16 Jul 2026 13:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210242;
-	bh=T+2WfNMQjbBkJtvSM40UAUnbp/kkFsXvkg1m28txXrI=;
+	s=korg; t=1784210245;
+	bh=fI3k0L4AfUUssQryZrHQ6EkDdDosPmBqjcbFb/hVJ+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HWfmWlPn4uefEvyQDItbPZkmTL5nj1QZK39HW4jejIvt6Y849BBIxCQANM0fDlh03
-	 2u6KDxONbsVbJRSvDNXO3TWIFzxmIDArS1ZabMNEOvTWd4k6Cmw1VfQRX0KD6VPyOF
-	 q05/WJP0dzSjXmvq/Xzw9GcOoeboOMZMfzVgve3k=
+	b=lOJr8spCkb2XXHcbT8XPXAZk1fN0bWQTh01v0IAIV4rAOnR5aYH+1pxQftqlQwp+M
+	 wiLrW5abxvXAUfGkFFh6D6zrIPO1fVHheyCrpFIIwIa92zwRmIsdMzjApvs1pRUB0C
+	 SpXISqTJBu8Y3pUcZOgX8xRHr4qvNGV2RoCn66Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	kernel test robot <oliver.sang@intel.com>,
 	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 7.1 448/518] selftests/landlock: Filter dealloc records in audit_count_records()
-Date: Thu, 16 Jul 2026 15:31:56 +0200
-Message-ID: <20260716133057.645448959@linuxfoundation.org>
+Subject: [PATCH 7.1 449/518] selftests/landlock: Increase default audit socket timeout
+Date: Thu, 16 Jul 2026 15:31:57 +0200
+Message-ID: <20260716133057.668369229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -54,156 +56,208 @@ Content-Transfer-Encoding: 8bit
 
 From: Mickaël Salaün <mic@digikod.net>
 
-commit 26679fad81a471428707d2dd7b0418204c52b7e4 upstream.
+commit d8dfb4c7faa87c3e41a8678f38f136c2c7c036fa upstream.
 
-audit_count_records() counts both AUDIT_LANDLOCK_DOMAIN allocation and
-deallocation records in records.domain .  Domain deallocation is tied to
-asynchronous credential freeing via kworker threads
-(landlock_put_ruleset_deferred), so the dealloc record can arrive after
-the drain in audit_init() and after the preceding audit_match_record()
-call.  This causes flaky failures in tests that assert an exact
-records.domain count: a stale dealloc record from a previous test's
-domain inflates the count by one.
+matches_log_fs() and other audit_match_record() callers intermittently
+return -EAGAIN under heavy debug configs (KASAN, lockdep).  The audit
+record delivery pipeline is asynchronous: landlock_log_denial() queues
+the record to audit_queue, and kauditd_thread dequeues and delivers via
+netlink.  Under debug configs, kauditd scheduling between
+audit_log_end() and netlink_unicast() can exceed a syscall round trip
+(more than 1 usec), which was the value of the socket timeout used for
+the recvfrom() calls.
 
-Observed on x86_64 under build configurations that delay the kworker
-firing the dealloc callback (e.g. coverage instrumentation): the
-audit_layout1 tests in fs_test.c intermittently saw records.domain == 2
-where 1 was expected.  The fix is in the shared helper, so those
-existing checks become robust without needing a fs_test.c edit.
+The observed failure [1] is an EAGAIN error code (-11) which means that
+the access record had not arrived within the 1 usec timeout of
+recvfrom().  The expected record does arrive, but only after
+matches_log_fs() has already returned.  It is then consumed by a later
+audit_count_records() call, making records.access == 1 instead of 0.
 
-Filter audit_count_records() with a regex to skip records containing
-deallocation status.  The remaining domain records (allocation, emitted
-synchronously during landlock_log_denial()) are deterministic.
-Deallocation records are already tested explicitly via
-matches_log_domain_deallocated() in audit_test.c, which uses its own
-domain-ID-based filtering and longer timeout.
+Switch the default socket timeout to the slow value (1 second) so all
+audit_match_record() callers wait long enough for kauditd delivery, and
+lower it to the fast value (1 usec) only on the two paths that expect no
+record: audit_count_records() and the expected_domain_id == 0 probe in
+matches_log_domain_deallocated().  audit_init() drains stale records
+with the fast timeout (terminating on -EAGAIN once the backlog is empty)
+and switches to the patient default before returning.  1 second gives
+~10x margin over the observed maximum (~100 ms, while the happy path is
+~23 us).
 
-With this filter in place, re-add the records.domain == 0 checks that
-were removed in commit 3647a4977fb7 ("selftests/landlock: Drain stale
-audit records on init") as a workaround for this race.
+Rename the timeval constants to reflect their new roles:
+- audit_tv_dom_drop (1 second) -> audit_tv_default: default socket
+  timeout, patient enough for asynchronous kauditd delivery.
+- audit_tv_default (1 usec) -> audit_tv_fast: fast timeout for paths
+  that expect no record (drain, audit_count_records(), probes).
+
+Invert the conditional in matches_log_domain_deallocated().  Check
+setsockopt returns on both the lower and restore paths; preserve the
+first error via !err when the restore fails after a prior error so the
+actionable return code is not masked by a bookkeeping failure.
 
 Cc: Günther Noack <gnoack@google.com>
+Cc: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 Cc: stable@vger.kernel.org
 Depends-on: 07c2572a8757 ("selftests/landlock: Skip stale records in audit_match_record()")
 Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
+Reported-by: Günther Noack <gnoack3000@gmail.com>
+Closes: https://lore.kernel.org/r/20260402.eb5c4e85f472@gnoack.org [1]
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202605111649.a8b30a62-lkp@intel.com
+Closes: https://lore.kernel.org/oe-lkp/202604300436.a07fae12-lkp@intel.com
 Tested-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://patch.msgid.link/20260513105112.140137-1-mic@digikod.net
+Link: https://patch.msgid.link/20260513105112.140137-2-mic@digikod.net
 Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/landlock/audit.h                     |   39 +++++++----
- tools/testing/selftests/landlock/audit_test.c                |    2 
- tools/testing/selftests/landlock/ptrace_test.c               |    1 
- tools/testing/selftests/landlock/scoped_abstract_unix_test.c |    1 
- 4 files changed, 30 insertions(+), 13 deletions(-)
+ tools/testing/selftests/landlock/audit.h |   80 ++++++++++++++++++++++++-------
+ 1 file changed, 63 insertions(+), 17 deletions(-)
 
 --- a/tools/testing/selftests/landlock/audit.h
 +++ b/tools/testing/selftests/landlock/audit.h
-@@ -381,18 +381,24 @@ struct audit_records {
+@@ -45,17 +45,25 @@ struct audit_message {
+ 	};
  };
  
- /*
-- * WARNING: Do not assert records.domain == 0 without a preceding
-- * audit_match_record() call.  Domain deallocation records are emitted
-- * asynchronously from kworker threads and can arrive after the drain in
-- * audit_init(), corrupting the domain count.  A preceding audit_match_record()
-- * call consumes stale records while scanning, making the assertion safe in
-- * practice because stale deallocation records arrive before the expected access
-- * records.
-+ * Counts remaining audit records by type, skipping domain deallocation records.
-+ * Deallocation records are emitted asynchronously from kworker threads after a
-+ * previous test's child has exited, so they can arrive after the drain in
-+ * audit_init() and after the preceding audit_match_record() call.  Allocation
-+ * records are emitted synchronously during landlock_log_denial() in the current
-+ * test's syscall context, so only those are counted in records->domain.
+-static const struct timeval audit_tv_dom_drop = {
++static const struct timeval audit_tv_default = {
+ 	/*
+-	 * Because domain deallocation is tied to asynchronous credential
+-	 * freeing, receiving such event may take some time.  In practice,
+-	 * on a small VM, it should not exceed 100k usec, but let's wait up
+-	 * to 1 second to be safe.
++	 * Default socket timeout for audit_match_record() callers that expect a
++	 * record to arrive.  Asynchronous kauditd delivery can exceed 1 usec
++	 * under heavy debug configs (KASAN, lockdep), where kauditd_thread
++	 * scheduling between audit_log_end() and netlink_unicast() takes longer
++	 * than the previous 1 usec timeout. 1 second is a generous ceiling: on
++	 * the happy path, kauditd delivers within dozens of usec.
+ 	 */
+ 	.tv_sec = 1,
+ };
+ 
+-static const struct timeval audit_tv_default = {
++static const struct timeval audit_tv_fast = {
++	/*
++	 * Fast timeout for paths that expect no record (audit_init() drain,
++	 * audit_count_records(), probes).  Causes audit_recv() to return
++	 * -EAGAIN once the socket buffer is empty, naturally terminating the
++	 * read loop.
++	 */
+ 	.tv_usec = 1,
+ };
+ 
+@@ -334,8 +342,13 @@ static int __maybe_unused matches_log_do
+  * Matches a domain deallocation record.  When expected_domain_id is non-zero,
+  * the pattern includes the specific domain ID so that stale deallocation
+  * records from a previous test (with a different domain ID) are skipped by
+- * audit_match_record(), and the socket timeout is temporarily increased to
+- * audit_tv_dom_drop to wait for the asynchronous kworker deallocation.
++ * audit_match_record(), waiting for the asynchronous kworker deallocation with
++ * the default patient timeout.
++ *
++ * When expected_domain_id is zero, the caller is probing for any dealloc record
++ * that may or may not arrive.  Temporarily lowers the socket timeout to
++ * audit_tv_fast for this probe so it returns promptly when no record is
++ * pending; restores audit_tv_default after.
+  */
+ static int __maybe_unused
+ matches_log_domain_deallocated(int audit_fd, unsigned int num_denials,
+@@ -361,16 +374,21 @@ matches_log_domain_deallocated(int audit
+ 	if (log_match_len >= sizeof(log_match))
+ 		return -E2BIG;
+ 
+-	if (expected_domain_id)
+-		setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
+-			   &audit_tv_dom_drop, sizeof(audit_tv_dom_drop));
++	if (!expected_domain_id) {
++		if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
++			       &audit_tv_fast, sizeof(audit_tv_fast)))
++			return -errno;
++	}
+ 
+ 	err = audit_match_record(audit_fd, AUDIT_LANDLOCK_DOMAIN, log_match,
+ 				 domain_id);
+ 
+-	if (expected_domain_id)
+-		setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
+-			   sizeof(audit_tv_default));
++	if (!expected_domain_id) {
++		if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
++			       &audit_tv_default, sizeof(audit_tv_default)) &&
++		    !err)
++			err = -errno;
++	}
+ 
+ 	return err;
+ }
+@@ -387,6 +405,11 @@ struct audit_records {
+  * audit_init() and after the preceding audit_match_record() call.  Allocation
+  * records are emitted synchronously during landlock_log_denial() in the current
+  * test's syscall context, so only those are counted in records->domain.
++ *
++ * Temporarily lowers SO_RCVTIMEO to audit_tv_fast for the read loop: this is a
++ * "no record expected" path that should terminate on the first -EAGAIN.  The
++ * default patient timeout is restored on exit for subsequent
++ * audit_match_record() callers.
   */
  static int audit_count_records(int audit_fd, struct audit_records *records)
  {
-+	static const char dealloc_pattern[] = REGEX_LANDLOCK_PREFIX
-+		" status=deallocated ";
- 	struct audit_message msg;
--	int err;
-+	regex_t dealloc_re;
-+	int ret, err = 0;
-+
-+	ret = regcomp(&dealloc_re, dealloc_pattern, 0);
-+	if (ret)
-+		return -ENOMEM;
- 
+@@ -403,6 +426,12 @@ static int audit_count_records(int audit
  	records->access = 0;
  	records->domain = 0;
-@@ -402,9 +408,8 @@ static int audit_count_records(int audit
- 		err = audit_recv(audit_fd, &msg);
- 		if (err) {
- 			if (err == -EAGAIN)
--				return 0;
--			else
--				return err;
-+				err = 0;
-+			break;
- 		}
  
- 		switch (msg.header.nlmsg_type) {
-@@ -412,12 +417,20 @@ static int audit_count_records(int audit
- 			records->access++;
- 			break;
- 		case AUDIT_LANDLOCK_DOMAIN:
--			records->domain++;
-+			ret = regexec(&dealloc_re, msg.data, 0, NULL, 0);
-+			if (ret == REG_NOMATCH) {
-+				records->domain++;
-+			} else if (ret != 0) {
-+				err = -EIO;
-+				goto out;
-+			}
- 			break;
- 		}
++	if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_fast,
++		       sizeof(audit_tv_fast))) {
++		err = -errno;
++		goto out;
++	}
++
+ 	do {
+ 		memset(&msg, 0, sizeof(msg));
+ 		err = audit_recv(audit_fd, &msg);
+@@ -429,6 +458,10 @@ static int audit_count_records(int audit
  	} while (true);
  
--	return 0;
-+out:
-+	regfree(&dealloc_re);
-+	return err;
+ out:
++	if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
++		       sizeof(audit_tv_default)) &&
++	    !err)
++		err = -errno;
+ 	regfree(&dealloc_re);
+ 	return err;
  }
+@@ -449,9 +482,9 @@ static int audit_init(void)
+ 	if (err)
+ 		goto err_close;
  
- static int audit_init(void)
---- a/tools/testing/selftests/landlock/audit_test.c
-+++ b/tools/testing/selftests/landlock/audit_test.c
-@@ -730,6 +730,7 @@ TEST_F(audit_flags, signal)
- 		} else {
- 			EXPECT_EQ(1, records.access);
- 		}
-+		EXPECT_EQ(0, records.domain);
+-	/* Sets a timeout for negative tests. */
+-	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
+-			 sizeof(audit_tv_default));
++	/* Uses the fast timeout to drain stale records below. */
++	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_fast,
++			 sizeof(audit_tv_fast));
+ 	if (err) {
+ 		err = -errno;
+ 		goto err_close;
+@@ -467,6 +500,19 @@ static int audit_init(void)
+ 	while (audit_recv(fd, NULL) == 0)
+ 		;
  
- 		/* Updates filter rules to match the drop record. */
- 		set_cap(_metadata, CAP_AUDIT_CONTROL);
-@@ -915,6 +916,7 @@ TEST_F(audit_exec, signal_and_open)
- 	/* Tests that there was no denial until now. */
- 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
- 	EXPECT_EQ(0, records.access);
-+	EXPECT_EQ(0, records.domain);
++	/*
++	 * Restores the default timeout for audit_match_record() callers that
++	 * expect a record to arrive.  Paths that expect no record restore the
++	 * fast timeout locally (audit_count_records(), the expected_domain_id
++	 * == 0 probe in matches_log_domain_deallocated()).
++	 */
++	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
++			 sizeof(audit_tv_default));
++	if (err) {
++		err = -errno;
++		goto err_close;
++	}
++
+ 	return fd;
  
- 	/*
- 	 * Wait for the child to do a first denied action by layer1 and
---- a/tools/testing/selftests/landlock/ptrace_test.c
-+++ b/tools/testing/selftests/landlock/ptrace_test.c
-@@ -342,6 +342,7 @@ TEST_F(audit, trace)
- 	/* Makes sure there is no superfluous logged records. */
- 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
- 	EXPECT_EQ(0, records.access);
-+	EXPECT_EQ(0, records.domain);
- 
- 	yama_ptrace_scope = get_yama_ptrace_scope();
- 	ASSERT_LE(0, yama_ptrace_scope);
---- a/tools/testing/selftests/landlock/scoped_abstract_unix_test.c
-+++ b/tools/testing/selftests/landlock/scoped_abstract_unix_test.c
-@@ -312,6 +312,7 @@ TEST_F(scoped_audit, connect_to_child)
- 	/* Makes sure there is no superfluous logged records. */
- 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
- 	EXPECT_EQ(0, records.access);
-+	EXPECT_EQ(0, records.domain);
- 
- 	ASSERT_EQ(0, pipe2(pipe_child, O_CLOEXEC));
- 	ASSERT_EQ(0, pipe2(pipe_parent, O_CLOEXEC));
+ err_close:
 
 
