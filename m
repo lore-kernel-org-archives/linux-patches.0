@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9803C401A0A;
-	Thu, 16 Jul 2026 14:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40435400981;
+	Thu, 16 Jul 2026 14:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211628; cv=none; b=LhupKALhU5nyuzSWAVjYByAkqqBkYm7FrmzeIAcWPJ5JEPD247ta/c37e8bXFLqHlQvb+Jy7OXPTtzkH4yhiPh7+H6MMaXzaxZ4ATpk3GtFFABvLNeeMNm3FzUaU3coL4SIMJ40EH8uuRXRYQlPpQE9AbHpS0mq3jVZSq3jtPug=
+	t=1784211631; cv=none; b=tfUiASmUvx6t/QMW12TBdrk70yEs+8Vf23rpbauRxUsTYAZ6wAMPsT6sKfwx8wSeemYO+FNQzY3oZ0wzaT6BkrrZRWfciXJC8/HAuXgqVcm+8m/jb96KdoTlsgFxZLQ1r9qk75n84l3fUyOBFp74mCfBv97EDD0M4RzB9OHo9do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211628; c=relaxed/simple;
-	bh=Ic8mslHDzNmj2/60HgUKhlpC0qGbj8xq8a+UQbC9p/w=;
+	s=arc-20240116; t=1784211631; c=relaxed/simple;
+	bh=C+EUy9L8OBqoFzXYa9depN28zM2EalMkuWYvqBf7qHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrzgZKuLyspKR8aBu02CarAnQatRgpbkCamA37FWYUn9hs647qbRrCoGWNO5xbnQaWl4ZtHGJRIbnB+USR4VFVy2pcCy5ZGogWJkcjdyCsMZkKzQmIT1kHudyEfSYNRgC8WuhddJosrj+5vFwLQsuAi+tWOh7XOJCaGwUYGxtRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBzGQlWs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M94RB9hCAsHH9Em7NqoZVsIc2hGPVwGbBpwuvckqGowDX+cnJbR/hftkzF2VRk/PomMJYYH2xTuKH4s//eOzN+WyaO/NtYeZYaNa7RmcDlsev3gocsXQLa8wshRGzQGF/HvcXqm6r0tqqFvl/mb+Xq2VzfpyI3oR67RgPBZYB4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1taYS9ce; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBzGQlWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093CA1F00A3D;
-	Thu, 16 Jul 2026 14:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1taYS9ce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DF51F000E9;
+	Thu, 16 Jul 2026 14:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211627;
-	bh=PubHpJicT71FyMDlYHDNSO5Ey8q+L9fzzQBZyLBmcxE=;
+	s=korg; t=1784211630;
+	bh=He7Dmfgv6aWqSGSVn21cM9rWF7SlTrkKGh+bPNDuHYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dBzGQlWseMUUQW7BtGddMHaGokdArvY5tOSB8bfyoElCRngvBud8RcWq6G474pGbB
-	 ikx2UyWRyZnpGmlWBwP7T9xK/H4KWxjdhiyUfGrUj1A6mbCm5M7EeWndVXqFrUo7VS
-	 2JcFHmehUd9v7gKw0Vb27ExhWIfNCacs0w0ivNwM=
+	b=1taYS9cej0dFkp85Ey9x/P5Vf7ojlDyzv8KLgJ+NknioS2nq0iM1j4/Lxq5EDmYsb
+	 vqiMX9hz/e8WWXEo6FniwWyd/aELKlnUKpjeA3zr47oTimTTArBJYCDPXfXXFEhtOp
+	 i8MZPgMHzV8bJMYx7NmUEfsUN3uv28YGvP5b2UrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mike Snitzer <snitzer@kernel.org>,
+	NeilBrown <neilb@suse.de>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
 	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/349] nfsd: add nfsd_file_{get,put} to nfs_to nfsd_localio_operations
-Date: Thu, 16 Jul 2026 15:29:14 +0200
-Message-ID: <20260716133033.750724772@linuxfoundation.org>
+Subject: [PATCH 6.12 021/349] nfs_common: rename functions that invalidate LOCALIO nfs_clients
+Date: Thu, 16 Jul 2026 15:29:15 +0200
+Message-ID: <20260716133033.773622468@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -55,44 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit a61466315d7afca032342183a57e62d5e3a3157c ]
+[ Upstream commit b49f049a22227df701bfbca083d6cc859496e615 ]
 
-In later a commit LOCALIO must call both nfsd_file_get and
-nfsd_file_put to manage extra nfsd_file references.
+Rename nfs_uuid_invalidate_one_client to nfs_localio_disable_client.
+Rename nfs_uuid_invalidate_clients to nfs_localio_invalidate_clients.
 
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Reviewed-by: NeilBrown <neilb@suse.de>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Stable-dep-of: 2c6bb3c40bc2 ("NFSv4/flexfiles: reject zero filehandle version count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/localio.c          |    2 ++
- include/linux/nfslocalio.h |    2 ++
- 2 files changed, 4 insertions(+)
+ fs/nfs/localio.c           |    2 +-
+ fs/nfs_common/nfslocalio.c |    8 ++++----
+ fs/nfsd/nfsctl.c           |    4 ++--
+ include/linux/nfslocalio.h |    5 +++--
+ 4 files changed, 10 insertions(+), 9 deletions(-)
 
---- a/fs/nfsd/localio.c
-+++ b/fs/nfsd/localio.c
-@@ -29,6 +29,8 @@ static const struct nfsd_localio_operati
- 	.nfsd_net_put  = nfsd_net_put,
- 	.nfsd_open_local_fh = nfsd_open_local_fh,
- 	.nfsd_file_put_local = nfsd_file_put_local,
-+	.nfsd_file_get = nfsd_file_get,
-+	.nfsd_file_put = nfsd_file_put,
- 	.nfsd_file_file = nfsd_file_file,
- };
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -141,7 +141,7 @@ void nfs_local_disable(struct nfs_client
+ 	spin_lock(&clp->cl_localio_lock);
+ 	if (test_and_clear_bit(NFS_CS_LOCAL_IO, &clp->cl_flags)) {
+ 		trace_nfs_local_disable(clp);
+-		nfs_uuid_invalidate_one_client(&clp->cl_uuid);
++		nfs_localio_disable_client(&clp->cl_uuid);
+ 	}
+ 	spin_unlock(&clp->cl_localio_lock);
+ }
+--- a/fs/nfs_common/nfslocalio.c
++++ b/fs/nfs_common/nfslocalio.c
+@@ -107,7 +107,7 @@ static void nfs_uuid_put_locked(nfs_uuid
+ 	list_del_init(&nfs_uuid->list);
+ }
+ 
+-void nfs_uuid_invalidate_clients(struct list_head *list)
++void nfs_localio_invalidate_clients(struct list_head *list)
+ {
+ 	nfs_uuid_t *nfs_uuid, *tmp;
+ 
+@@ -116,9 +116,9 @@ void nfs_uuid_invalidate_clients(struct
+ 		nfs_uuid_put_locked(nfs_uuid);
+ 	spin_unlock(&nfs_uuid_lock);
+ }
+-EXPORT_SYMBOL_GPL(nfs_uuid_invalidate_clients);
++EXPORT_SYMBOL_GPL(nfs_localio_invalidate_clients);
+ 
+-void nfs_uuid_invalidate_one_client(nfs_uuid_t *nfs_uuid)
++void nfs_localio_disable_client(nfs_uuid_t *nfs_uuid)
+ {
+ 	if (nfs_uuid->net) {
+ 		spin_lock(&nfs_uuid_lock);
+@@ -126,7 +126,7 @@ void nfs_uuid_invalidate_one_client(nfs_
+ 		spin_unlock(&nfs_uuid_lock);
+ 	}
+ }
+-EXPORT_SYMBOL_GPL(nfs_uuid_invalidate_one_client);
++EXPORT_SYMBOL_GPL(nfs_localio_disable_client);
+ 
+ /*
+  * Caller is responsible for calling nfsd_net_put and
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2296,14 +2296,14 @@ out_export_error:
+  * nfsd_net_pre_exit - Disconnect localio clients from net namespace
+  * @net: a network namespace that is about to be destroyed
+  *
+- * This invalidated ->net pointers held by localio clients
++ * This invalidates ->net pointers held by localio clients
+  * while they can still safely access nn->counter.
+  */
+ static __net_exit void nfsd_net_pre_exit(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 
+-	nfs_uuid_invalidate_clients(&nn->local_clients);
++	nfs_localio_invalidate_clients(&nn->local_clients);
+ }
+ #endif
  
 --- a/include/linux/nfslocalio.h
 +++ b/include/linux/nfslocalio.h
-@@ -56,6 +56,8 @@ struct nfsd_localio_operations {
- 						const struct nfs_fh *,
- 						const fmode_t);
- 	struct net *(*nfsd_file_put_local)(struct nfsd_file *);
-+	struct nfsd_file *(*nfsd_file_get)(struct nfsd_file *);
-+	void (*nfsd_file_put)(struct nfsd_file *);
- 	struct file *(*nfsd_file_file)(struct nfsd_file *);
- } ____cacheline_aligned;
+@@ -37,8 +37,9 @@ bool nfs_uuid_begin(nfs_uuid_t *);
+ void nfs_uuid_end(nfs_uuid_t *);
+ void nfs_uuid_is_local(const uuid_t *, struct list_head *,
+ 		       struct net *, struct auth_domain *, struct module *);
+-void nfs_uuid_invalidate_clients(struct list_head *list);
+-void nfs_uuid_invalidate_one_client(nfs_uuid_t *nfs_uuid);
++
++void nfs_localio_disable_client(nfs_uuid_t *nfs_uuid);
++void nfs_localio_invalidate_clients(struct list_head *list);
  
+ /* localio needs to map filehandle -> struct nfsd_file */
+ extern struct nfsd_file *
 
 
