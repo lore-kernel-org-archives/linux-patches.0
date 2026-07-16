@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2C03FE351;
-	Thu, 16 Jul 2026 13:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A9C414A2C;
+	Thu, 16 Jul 2026 13:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209580; cv=none; b=MnvB++w2LMizpSehMicgUQg5/ZqJCv+3KiInPC1YojTMHb3V1xKXc0Bd3sCtl9eL+Rz6jmDeHhHqHMBobrMY1FJhNroG5MW/DfezIzisofH+85Hcgid+0WvBK3wqJTsxe86o30JnoKfbTqTid+gcwlujZYhwItM3npO04Qs3+pY=
+	t=1784209582; cv=none; b=KgE0rN3L130va/EmzIV5MPeHw2nJkHucUO1BBLr/I3KDQPxZO0hUyuB4DY6QF4vhmTUrZiuH00A7q5TN9RUa3eheGez76I3nJ/bhrDjgM/q64zBIju0oEhJoMjzKZsnklLXe5r0fD4vGABIoU7WwdTWe4SVP8aBfC4ieeZrQZRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209580; c=relaxed/simple;
-	bh=RWSrMvcibIGM6sLTDaZLrUZ56Y5cdPgJVYS/qHFxBRI=;
+	s=arc-20240116; t=1784209582; c=relaxed/simple;
+	bh=m62d1+2cT8qV9zsi7k3H9Rhb0jdTbWNLLSPTB/9tqrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=txLeGbLfTINaRf0mwLFufhzyIPQsAEZffLKJDfu3Niv3WfmBM71wD8tUvurEiLA1SdkxzqLyqe2+cdnh4+lbMQUrYPH0EnDZg/XbkQNWR2FCS4gEibzCxzr+hw092yYfGVT7b1Jv2gFtbEMUskizfHFOwc3rXdtYsTz7jc6mr7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzJQMhRU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ONIzduTZo5W6JBotwQsyK1+BgxgGVFFwqxjFW5gABCE9TUKna/5gkKJH7scVw3U0tC+vXrtmbeWrS9bnyVg3px2OCLX+I7Y/508MkqL+bTHI0e6CzN/OGOwnmkD7zUhJtJQcoXNo/IR8xbBPr7J9mfMFwWT1HRvei6W15eUSWJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aC42lF7K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzJQMhRU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB531F00A3A;
-	Thu, 16 Jul 2026 13:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aC42lF7K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634BC1F000E9;
+	Thu, 16 Jul 2026 13:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209576;
-	bh=2OBUh67HERDCJbarrAaumLibbXMtGi0/ccBcZP+xxKc=;
+	s=korg; t=1784209578;
+	bh=3WRs3yNSDwq+eWFPX3+O9xg7feZmuVJd6CQ1gatoh+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzJQMhRUhXpb8WadiZkBaLSPUY8LfObNBj07W9G4oaKSnVXfXM6EmvesynaRYI9YX
-	 Rl60AFjutUV4oS9FN5vCQul/Pds/tM/NJROfOl/z6L/Zvq7qd3SRAJ/Gt+JF2RpE8Z
-	 0scvG/V+9SzalX/5d6Af5iNekXcEpmiYbY00eZc4=
+	b=aC42lF7KPpvF4VpZC0v9tp2kHSimE1tAvD1yUn7qhkNqyTzpqFERIz7foM5BKeQbB
+	 o/xNWl6yGoVoduL1gvD1vsdMKr3Dql7xZ7KTKUBjToqzJlnpC7UGDX66o4jaBtk/Yu
+	 FcnGVIiLU09UXMOvHokXBIxYOBY2k8a6NDdxFW5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
+	Zihan Xi <xizh2024@lzu.edu.cn>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 238/518] smb: client: Fix next buffer leak in receive_encrypted_standard()
-Date: Thu, 16 Jul 2026 15:28:26 +0200
-Message-ID: <20260716133053.028361726@linuxfoundation.org>
+Subject: [PATCH 7.1 239/518] smb: client: use unaligned reads in parse_posix_ctxt()
+Date: Thu, 16 Jul 2026 15:28:27 +0200
+Message-ID: <20260716133053.051640704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,52 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Zihan Xi <xizh2024@lzu.edu.cn>
 
-commit 1c6267a1d5cf4c73b656f8181b310cbbb3e4767b upstream.
+commit b86467cd2691192ad4809a5a6e922fc24b8e9839 upstream.
 
-receive_encrypted_standard() allocates next_buffer before checking
-whether the number of compound PDUs already reached MAX_COMPOUND. If
-the limit check fails, the function returns immediately and the newly
-allocated next_buffer is not assigned to server->smallbuf/server->bigbuf,
-making it leaked.
+The server controls create-context DataOffset, so the POSIX context data
+pointer may be misaligned on strict-alignment architectures. Use
+get_unaligned_le32() when reading nlink, reparse_tag, and mode.
 
-Move the MAX_COMPOUND check before allocating next_buffer.
-
-Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
+Fixes: 69dda3059e7a ("cifs: add SMB2_open() arg to return POSIX data")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/smb/client/smb2pdu.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5111,6 +5111,12 @@ receive_encrypted_standard(struct TCP_Se
- one_more:
- 	shdr = (struct smb2_hdr *)buf;
- 	next_cmd = le32_to_cpu(shdr->NextCommand);
-+
-+	if (*num_mids >= MAX_COMPOUND) {
-+		cifs_server_dbg(VFS, "too many PDUs in compound\n");
-+		return -1;
-+	}
-+
- 	if (next_cmd) {
- 		if (WARN_ON_ONCE(next_cmd > pdu_length))
- 			return -1;
-@@ -5134,10 +5140,6 @@ one_more:
- 		mid_entry->resp_buf_size = server->pdu_size;
- 	}
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2371,9 +2371,9 @@ parse_posix_ctxt(struct create_context *
  
--	if (*num_mids >= MAX_COMPOUND) {
--		cifs_server_dbg(VFS, "too many PDUs in compound\n");
--		return -1;
--	}
- 	bufs[*num_mids] = buf;
- 	mids[(*num_mids)++] = mid_entry;
+ 	memset(posix, 0, sizeof(*posix));
  
+-	posix->nlink = le32_to_cpu(*(__le32 *)(beg + 0));
+-	posix->reparse_tag = le32_to_cpu(*(__le32 *)(beg + 4));
+-	posix->mode = le32_to_cpu(*(__le32 *)(beg + 8));
++	posix->nlink = get_unaligned_le32(beg);
++	posix->reparse_tag = get_unaligned_le32(beg + 4);
++	posix->mode = get_unaligned_le32(beg + 8);
+ 
+ 	sid = beg + 12;
+ 	sid_len = posix_info_sid_size(sid, end);
 
 
