@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E946400DE8;
-	Thu, 16 Jul 2026 14:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAA84248BC;
+	Thu, 16 Jul 2026 14:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211115; cv=none; b=bYR5KK8CDT0WEZqIo46DvPmt602fdXXlD6KIRjxx74hdTsBNmfCGB4n9hTnHaLxZJtpKboTAjQf92UbIxaqSxbM2WKXUEOJTuZ5XXhvm0oHRKYVxNIT1D0Dye//jt0QTOaClXvf2ZvZ5bnultWmvwB1Umq5ESOpulnzPJhw4FN4=
+	t=1784211118; cv=none; b=QXcaNWC+sSyen0y6W0igHdKjWoGKsmEjOByyZlbY/c1abbQ8mrNVmR68DO2cM+Ax+OsaL53x/2ho2Fl/uN233YdYWb5HJXRFcZ98QAejnRLStF99EKqNI2QcLF1RAnXCRH5jbViu1bhcb5bGgFgAbyR5PsIk/BOuXJRJ0b3KFQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211115; c=relaxed/simple;
-	bh=dynrULiBJQ/RqJscYSt9G/TCRrbIWU0y/jl5pFaN5PE=;
+	s=arc-20240116; t=1784211118; c=relaxed/simple;
+	bh=57KshtylMSzKlqmJe60g7OWaWzZZXYEtN2Tll9CITuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3L8pvSnWAAPTIgUNlFMHtwOGxsSof4hu/N9TOC4U3PxffgldYQPUXg18QPLzoy6/Y59riVJ3SA842yrpm9N/R2dqNWRUtZnE2+5fG4B+hZgMzIOnz2onT/tfAtT4UJx1hdCqJlA7I74YPG4CpVtiMWEdNfm8td0OehDNq6+QW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juLpoOtG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OUepHat6ES/12LdX/g0FJI4EacJ5/Fs25hQ9X8m9K4EVoM72BQigD6g8/cr2YXMFwxIjAVhrZNobGUIBEmPLS3icRHDbGL/sWr6xq63DnwYRsAgfudf5ITR9WPzApUZ5coyND67HaPswcC33UDN0qXlDgxq9C5/9AhLgKn/VBPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1KttJCy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juLpoOtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FADB1F00A3D;
-	Thu, 16 Jul 2026 14:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1KttJCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0D21F00A3A;
+	Thu, 16 Jul 2026 14:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211114;
-	bh=+0EsA2gl77il5aorjL7TlD2kL91VbM1CJ9boGMCRdUA=;
+	s=korg; t=1784211117;
+	bh=d6qwOovvDc8uGqOlcxRiry0Aw0mnaKuWizImlAHUJho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=juLpoOtG9keEriB927+0I73g+9t08zVwzQUQM7f9u/V9tBYI6U09CyhOvRaoYp3Eb
-	 DbyZYBZA333lM65nEkjzZItRGKaLMnTV++PvlHlm666DsWrD04d8IAwfvz8/OUbo7L
-	 ITFkwoi3uXfpnfiXAAck/koUXCl75hMsdLPcpCfs=
+	b=F1KttJCyU2iSChWj9381+7CfwAZNU+efXB87dmERe3XI4/V1gn2cjBSO9GCZGHXqs
+	 rqoauIie1lNG5BklndHoUvDLAH5yesQKvwyciHCVhC5ZaWB6hOhXZmdF9tkqReCRDs
+	 aPp+X48BRwvsZ0bYRLEPVBCaWJErIdFdxp/wb7mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 305/480] USB: serial: digi_acceleport: fix hard lockup on disconnect
-Date: Thu, 16 Jul 2026 15:30:52 +0200
-Message-ID: <20260716133051.418383900@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 279/480] xfs: fix memory leak in xfs_dqinode_metadir_create()
+Date: Thu, 16 Jul 2026 15:30:26 +0200
+Message-ID: <20260716133050.860432377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -49,52 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 5c1ea24b53bf3bfb859f0a05573997487975da23 upstream.
+commit 45de375b25060edf46e20abb36521ba530336ceb upstream.
 
-If submitting the OOB write urb fails persistently (e.g if the device is
-being disconnected) the driver would loop indefinitely with interrupts
-disabled.
+If xfs_metadir_create() fails in xfs_dqinode_metadir_create(), the current
+code returns directly, leaking the allocated update and transaction state.
+If the subsequent commit fails, the caller-owned inode reference is left
+behind.
 
-Check for urb submission errors when sending OOB commands to avoid
-hanging if, for example, open(), set_termios() or close() races with a
-physical disconnect.
+Fix this memory leak by routing the create failure path through
+xfs_metadir_cancel().  For both create and commit failures, finish and
+release any inode returned to the caller, mirroring the unwind pattern in
+xfs_metadir_mkdir().
 
-This is issue was flagged by Sashiko when reviewing an unrelated change
-to the driver.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
 
-Link: https://sashiko.dev/#/patchset/20260610132232.356139-1-johan%40kernel.org?part=1
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+An x86_64 allyesconfig build showed no new warnings. Runtime validation
+used kprobe fault injection during `mount -o uquota` on a metadir XFS
+image. Injecting xfs_metadir_create() reproduced the old active-update path
+that left mount stuck later in mount setup; after this change, the same
+injection reported cancel_hits=1 and irele_hits=1. Injecting
+xfs_metadir_commit() exercised the old inode-reference leak path; after
+this change, it reported irele_hits=1.
+
+Fixes: e80fbe1ad8ef ("xfs: use metadir for quota inodes")
+Cc: stable@vger.kernel.org # v6.13
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/digi_acceleport.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/xfs/libxfs/xfs_dquot_buf.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/digi_acceleport.c
-+++ b/drivers/usb/serial/digi_acceleport.c
-@@ -394,12 +394,14 @@ static int digi_write_oob_command(struct
- 			len &= ~3;
- 		memcpy(oob_port->write_urb->transfer_buffer, buf, len);
- 		oob_port->write_urb->transfer_buffer_length = len;
+--- a/fs/xfs/libxfs/xfs_dquot_buf.c
++++ b/fs/xfs/libxfs/xfs_dquot_buf.c
+@@ -436,17 +436,27 @@ xfs_dqinode_metadir_create(
+ 
+ 	error = xfs_metadir_create(&upd, S_IFREG);
+ 	if (error)
+-		return error;
++		goto out_cancel;
+ 
+ 	xfs_trans_log_inode(upd.tp, upd.ip, XFS_ILOG_CORE);
+ 
+ 	error = xfs_metadir_commit(&upd);
+ 	if (error)
+-		return error;
++		goto out_irele;
+ 
+ 	xfs_finish_inode_setup(upd.ip);
+ 	*ipp = upd.ip;
+ 	return 0;
 +
- 		ret = usb_submit_urb(oob_port->write_urb, GFP_ATOMIC);
--		if (ret == 0) {
--			oob_priv->dp_write_urb_in_use = 1;
--			count -= len;
--			buf += len;
--		}
-+		if (ret)
-+			break;
-+
-+		oob_priv->dp_write_urb_in_use = 1;
-+		count -= len;
-+		buf += len;
- 	}
- 	spin_unlock_irqrestore(&oob_priv->dp_port_lock, flags);
- 	if (ret)
++out_cancel:
++	xfs_metadir_cancel(&upd, error);
++out_irele:
++	/* Have to finish setting up the inode to ensure it's deleted. */
++	if (upd.ip) {
++		xfs_finish_inode_setup(upd.ip);
++		xfs_irele(upd.ip);
++	}
++	return error;
+ }
+ 
+ #ifndef __KERNEL__
 
 
