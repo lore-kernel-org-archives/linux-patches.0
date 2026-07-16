@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56B6429CCC;
-	Thu, 16 Jul 2026 14:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A007429CCA;
+	Thu, 16 Jul 2026 14:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211893; cv=none; b=lRP/5C9RMisH75nCk5pLSHPVsJksNkBe6/fNXyYBbbSOmS7txdprO9KTGmvAGnYQ2RPTFCRHE4CYb/1Q8SEXsj3PbutXWXydba4UxB+f3f0SNiENUmaDx/k3LonuPVejzM6w1loKKvcRqGcuCB3KIsoZITgS3DWSblQ1L/hRa08=
+	t=1784211896; cv=none; b=dhAF+FGpfvFEbenGUJJkxG9hCCU6dbPiwqGEnkcSEwBz5IEE2q8vDwKEDV0cXkzDE0ri560ZHyewWW1IICtpxQOhESIqv/o1N3eBvrGEVyjOc41SVu5cnNhZUfXk62L7ICRDOsdNa2VGvrGAC3usG8r7vJ8WO24rm89eH9owmYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211893; c=relaxed/simple;
-	bh=n4RfWphk9BP3qDwMXCIkVCV4QXGbHuYzTPlbBf+9WN0=;
+	s=arc-20240116; t=1784211896; c=relaxed/simple;
+	bh=ydZk+vFeBDhMtcrK89fICFurD1BJW2YPrTe8ECs4u+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l6TVQnucPKAalLde2XQVTvmCMdQqqvKMXR0ht4ByWCLkAOxTzsHrAKP2095nWvUCEEwSaFps2dylK4Q/ytJKFrmysyqRjyEGw/1fCjDDnFl0KouOhtV1Lv3VmGN9IE8/kxpsAhxMUNgbwW1YTbm3a9qlG2HXPb1fSGyquCwVI8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOu3C0oL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EWTajc5ayVIiVfuakKc+b10E1xD5ZMqbZ1rp9yTcYJMZjYkaVmggj2+m0SH7D4nQa/hL2w20XtC0iTRwAzhOgdgDxw0PLe6zoT4uxwaO/+6oz6Z72hJllRgd+nkVe7YoJC/mx2PzLJYC9Mz5jWNBFOskBWiyCnYJxF3ixpTLSLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLbVHXk/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOu3C0oL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1661E1F00AC4;
-	Thu, 16 Jul 2026 14:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLbVHXk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD661F00ACF;
+	Thu, 16 Jul 2026 14:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211892;
-	bh=JoxqbgyUW8mm8JGB5+lMEK6SwIhGxOiWDGndU+DsXBI=;
+	s=korg; t=1784211895;
+	bh=TioZ3EMv6Z+IR4vCzs1inHRDAB3clOH3Y39wWGIbCuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vOu3C0oLzujfUm3af3pkcy9CQiFQ5zfQkxRGdqhdwvMBLCTn/LMK4m2x/bS7aS2ik
-	 92unbMgzGGKv5LaVkIyK4JfXrrOuaBRYbq88A9BetBT78lhbqAlewXrzbBycYMu7b4
-	 /+BNNDpSADIrVVDJw7aezN64xLBVBrDlXAHwHwfY=
+	b=fLbVHXk/ViN+wTrmYoKUv2cqufnZFB1uLnL29oVccdsnEYjgYXOilq48UZoA1yvoF
+	 WzvVPhB0BK/VR5wdOLX7xDo4JtVSzjdBz/Jn0YKiKgcFcGKFsrTEd5YGqfmxMHrWUn
+	 QWzNYX1MT/mSKdtG9jJPsqTUs0S/qMGGFuX4M02w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Luka Gejak <luka.gejak@linux.dev>,
 	Alexandru Hossu <hossu.alexandru@gmail.com>
-Subject: [PATCH 6.12 120/349] staging: rtl8723bs: fix heap buffer overflow in rtw_cfg80211_set_wpa_ie()
-Date: Thu, 16 Jul 2026 15:30:54 +0200
-Message-ID: <20260716133036.044798274@linuxfoundation.org>
+Subject: [PATCH 6.12 121/349] staging: rtl8723bs: fix WEP length underflow and OOB read in OnAuth()
+Date: Thu, 16 Jul 2026 15:30:55 +0200
+Message-ID: <20260716133036.066952275@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,59 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit 5a752a616e756844388a1a45404db9fc29fec655 upstream.
+commit a1fc19d61f661d47204f095b593de507884849f7 upstream.
 
-supplicant_ie is a 256-byte array in struct security_priv. The WPA and
-WPA2 IE copy paths use:
+OnAuth() has two bugs in the shared-key authentication path.
 
-    memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen + 2);
+When the Privacy bit is set, rtw_wep_decrypt() is called without
+verifying that the frame is long enough to contain a valid WEP IV and
+ICV.  Inside rtw_wep_decrypt(), length is computed as:
 
-where wpa_ielen is the raw IE length field (u8, 0-255). When a local user
-supplies a connect request via nl80211 with a crafted WPA IE of length 255,
-wpa_ielen + 2 equals 257, overflowing the 256-byte buffer by one byte into
-the adjacent last_mic_err_time field.
+    length = len - WLAN_HDR_A3_LEN - iv_len
 
-rtw_parse_wpa_ie() does not prevent this: its length consistency check
-compares *(wpa_ie+1) against (u8)(wpa_ie_len-2), which is (u8)(255) == 255
-when wpa_ie_len = 257, so the check passes silently.
+and then passed as (length - 4) to crc32_le().  If len is less than
+WLAN_HDR_A3_LEN + iv_len + icv_len (32 bytes), length - 4 is negative
+and, after the implicit cast to size_t, causes crc32_le() to read far
+beyond the frame buffer.  Add a minimum length check before accessing
+the IV field and calling the decryption path.
 
-Add explicit bounds checks for both the WPA and WPA2 paths before the
-memcpy, rejecting any IE whose total size (wpa_ielen + 2) exceeds the
-supplicant_ie buffer.
+When processing a seq=3 response, rtw_get_ie() stores the Challenge
+Text IE length in ie_len, but the subsequent memcmp() always reads 128
+bytes regardless of ie_len.  IEEE 802.11 mandates a challenge text of
+exactly 128 bytes; reject any IE whose length field differs, matching
+the check already applied to OnAuthClient().
 
 Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
 Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260522004531.1038924-4-hossu.alexandru@gmail.com
+Link: https://patch.msgid.link/20260522004605.1039209-1-hossu.alexandru@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -1455,6 +1455,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -694,6 +694,9 @@ unsigned int OnAuth(struct adapter *pada
+ 	if ((pmlmeinfo->state&0x03) != WIFI_FW_AP_STATE)
+ 		return _FAIL;
  
- 	pwpa = rtw_get_wpa_ie(buf, &wpa_ielen, ielen);
- 	if (pwpa && wpa_ielen > 0) {
-+		if (wpa_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
-+			ret = -EINVAL;
-+			goto exit;
-+		}
- 		if (rtw_parse_wpa_ie(pwpa, wpa_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
- 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
- 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPAPSK;
-@@ -1464,6 +1468,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
++	if (len < WLAN_HDR_A3_LEN)
++		return _FAIL;
++
+ 	sa = GetAddr2Ptr(pframe);
  
- 	pwpa2 = rtw_get_wpa2_ie(buf, &wpa2_ielen, ielen);
- 	if (pwpa2 && wpa2_ielen > 0) {
-+		if (wpa2_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
-+			ret = -EINVAL;
-+			goto exit;
-+		}
- 		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
- 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
- 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPA2PSK;
+ 	auth_mode = psecuritypriv->dot11AuthAlgrthm;
+@@ -705,6 +708,9 @@ unsigned int OnAuth(struct adapter *pada
+ 		prxattrib->hdrlen = WLAN_HDR_A3_LEN;
+ 		prxattrib->encrypt = _WEP40_;
+ 
++		if (len < WLAN_HDR_A3_LEN + 8)
++			return _FAIL;
++
+ 		iv = pframe+prxattrib->hdrlen;
+ 		prxattrib->key_index = ((iv[3]>>6)&0x3);
+ 
+@@ -809,7 +815,7 @@ unsigned int OnAuth(struct adapter *pada
+ 			p = rtw_get_ie(pframe + WLAN_HDR_A3_LEN + 4 + _AUTH_IE_OFFSET_, WLAN_EID_CHALLENGE, (int *)&ie_len,
+ 					len - WLAN_HDR_A3_LEN - _AUTH_IE_OFFSET_ - 4);
+ 
+-			if (!p || ie_len <= 0) {
++			if (!p || ie_len != 128) {
+ 				status = WLAN_STATUS_CHALLENGE_FAIL;
+ 				goto auth_fail;
+ 			}
 
 
