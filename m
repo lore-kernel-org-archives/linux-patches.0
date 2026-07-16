@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD38A403E82;
-	Thu, 16 Jul 2026 14:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31C4429020;
+	Thu, 16 Jul 2026 14:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211930; cv=none; b=r4h+yldgo3C7uABazWMbqKTeBir9FOPGGV6L/Ezxkk6esakjiYF6kaw7DzDmjSsQLMqJbEcG8qA4pnuZnCHUnnoU2bHt0jZAg15FqYtwycFnF+IeVep3Joe/0PqTNqJlxKFwLGY1FNJKBKWAHOTPdDg460iL0Oz008lZyb+VmI4=
+	t=1784211933; cv=none; b=u0kwFB+tu3bNVdlxpYijzW93ckj9kNNznDz9W4TCYBA//epuYUZBQM+uWBgXw/5wx9FJnDvQwbK8FWLmIa2yGASjpKOK8AT57OkV/mj4r3diAaOpb2ogETtw4wIiyob6aU7FApMw0n7JAjANToH4jupTmdZg8wF1B9dsJZeGJxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211930; c=relaxed/simple;
-	bh=AcYoUSxGLBkDjiadwui+gjMHHyohOS0FyXGIpcPAnGg=;
+	s=arc-20240116; t=1784211933; c=relaxed/simple;
+	bh=mNqKv+x691Mp3AnepOntGaHAa5evtPcCCDg5PVPEfX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZP/dlHfHPepbYFMTAjAI+t6oH3npkqmC1YAf0+ZzERVs7/TiczIyRkvMVUVpYkxymBJ7graISCnU57mhn1hJWp+oX/Tzechy04hQQKGYkVImY9xqb1QasmXCV+OAXYr/HnsY5CoAxC8m0XPN4xR9+RjhFsctqnhzQxGV3mE/7Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/P0J5jD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kuy075G6NL8/MTZ4Z0++y6a2nR8AyrlK1tykvmyMYDc5SFW50U1A4Tg73xtpp1pOPI6j4+8RLDE2aBW1m7R5BIkzy+98sQqvnq1sa8PLcgBBWZnJqux4VRNYcyODjhdj8j/DqQIyUFgi3VdilBp+f1f9pPdrlsb0BROgjyM8X0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLvRIyVI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/P0J5jD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5521F00A3F;
-	Thu, 16 Jul 2026 14:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLvRIyVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632E71F00A3A;
+	Thu, 16 Jul 2026 14:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211929;
-	bh=fxu1J8mKM2/AkBOHGbkwPIfsCb2c1uHTf/z4AuqH1sU=;
+	s=korg; t=1784211931;
+	bh=2I0yyTJ+O25BMxnaBETr9ZANMb+UCdNMZVUcbrMfFgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V/P0J5jDAx+maNKg3+oXuCmC2fhmAdMLm5iRtG2mXjcI21+cStByd+vK1NPlbiCt6
-	 Ct1uYU/ZjvpuI/+XC9tD2+hm1g7kgiYJSzUBanp+IwRAC1qYMqUw5/8DiMdUC666y3
-	 62jGGRqLuz8utWoePClE/9ijN47k/jkianwSptbw=
+	b=RLvRIyVIuA1xmQmCaxnReFLdLsnN8WGyVLhy0/TYSOUJXqz8E1zvd/duVCYUi7DiM
+	 e5GzO5XIX6jw2bJ8p8rk/bdQJGmaUZaLyj5KDHD2s4e7bSL3QZeq49cJ91xDP6c3ug
+	 uizKTP4f1Vx0TQs3/h7AXoUsv/2QRB0zWfAk8klE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5e8dda76ca21dae314b6@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.12 133/349] debugobjects: Plug race against a concurrent OOM disable
-Date: Thu, 16 Jul 2026 15:31:07 +0200
-Message-ID: <20260716133036.341241161@linuxfoundation.org>
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Peiyuan Xu <paulbucket12@gmail.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.12 134/349] fs/ntfs3: validate Dirty Page Table capacity in log_replay copy_lcns
+Date: Thu, 16 Jul 2026 15:31:08 +0200
+Message-ID: <20260716133036.362167660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,111 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@kernel.org>
+From: Yunpeng Tian <shionthanatos@gmail.com>
 
-commit b81dde13cc163450dcb402dcc915ef13ba241e01 upstream.
+commit 57382ec6ac63b63dce2789e835fded28b698ae79 upstream.
 
-syzbot reported a puzzling splat:
+In the analysis pass of $LogFile journal replay, log_replay() copies
+LCNs from each action log record into an existing Dirty Page Table
+(DPT) entry without bounding the destination index. A crafted NTFS
+image with DPT entry lcns_follow=1 and an action log record with
+lcns_follow=2 produces a kernel slab out-of-bounds write at mount
+time:
 
-   WARNING: kernel/time/hrtimer.c:443 at stub_timer+0xa/0x20
+  BUG: KASAN: slab-out-of-bounds in log_replay+0x654c/0xdb60
+  Write of size 8 at addr ffff8880095e1040 by task mount
 
-stub_timer() is installed as timer callback function in
-hrtimer_fixup_assert_init(), which is invoked when
-debug_object_assert_init() can't find a shadow object. In that case debug
-objects emits a warning about it before invoking the fixup.
+Two attacker-controlled fields can drive j+i past the allocated
+page_lcns[] array:
 
-Though the provided console log lacks this warning and instead has the
-following a few seconds before the splat:
+  1. dp->lcns_follow (capacity) can be smaller than lrh->lcns_follow.
+  2. lrh->target_vcn may be smaller than dp->vcn, making the u64
+     subtraction wrap to a huge size_t.
 
-     ODEBUG: Out of memory. ODEBUG disabled
+Validate target VCN delta and per-record LCN count against the
+DPT entry capacity, bail via the existing out: cleanup label with
+-EINVAL.
 
-So the object was looked up in debug_object_assert_init() and the lookup
-failed due a concurrent out of memory situation which disabled debug
-objects and freed the shadow objects:
+This mirrors the bounds-check pattern added in commit b2bc7c44ed17
+("fs/ntfs3: Fix slab-out-of-bounds read in DeleteIndexEntryRoot")
+and commit 0ca0485e4b2e ("fs/ntfs3: validate rec->used in
+journal-replay file record check").
 
-debug_object_assert_init()
-        if (!debug_objects_enabled)
-        	return;                         obj = alloc();
-                				if (!obj) {
-							// Out of memory
-                                                	debug_objects_enabled = false;
-                                                        free_objects();
-        obj = lookup_or_alloc();
-
-        // The lookup failed because the other side
-        // removed the objects, so this returns
-        // an error code as the object in question
-        // is not statically initialized
-
-	if (!IS_ERR_OR_NULL(obj))
-        	return;
-        if (!obj) {
-        	debug_oom();
-                return;
-        }
-
-        print(...)
-           if (!debug_objects_enabled)
-                return;
-
-        fixup(...)
-
-The debug object splat is skipped because debug_objects_enabled is false,
-but the fixup callback is invoked unconditionally, which makes the timer
-disfunctional.
-
-This is only a problem in debug_object_assert_init() and
-debug_object_activate() as both have to handle statically initialized
-objects and therefore must handle the error pointer return case
-gracefully. All other places only handle the found/not found case and the
-NULL pointer return is a signal for OOM. Otherwise they get a valid shadow
-object.
-
-Plug the hole by checking whether debug objects are still enabled before
-invoking the print and fixup function in those two places.
-
-Fixes: b84d435cc228 ("debugobjects: Extend to assert that an object is initialized")
-Reported-by: syzbot+5e8dda76ca21dae314b6@syzkaller.appspotmail.com
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Peiyuan Xu <paulbucket12@gmail.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/874iiwlzlb.ffs@fw13
+Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/ntfs3/fslog.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -767,6 +767,14 @@ int debug_object_activate(void *addr, co
- 	}
- 
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -4548,11 +4548,21 @@ copy_lcns:
+ 		 * whole routine a loop, case Lcns do not fit below.
+ 		 */
+ 		t16 = le16_to_cpu(lrh->lcns_follow);
+-		for (i = 0; i < t16; i++) {
+-			size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
+-					    le64_to_cpu(dp->vcn));
+-			dp->page_lcns[j + i] = lrh->page_lcns[i];
+-		}
++                t32 = le32_to_cpu(dp->lcns_follow);
++                if (le64_to_cpu(lrh->target_vcn) < le64_to_cpu(dp->vcn)) {
++                        err = -EINVAL;
++                        goto out;
++                }
 +
-+	/*
-+	 * lookup_object_or_alloc() might have raced with a concurrent
-+	 * allocation failure which disabled debug objects.
-+	 */
-+	if (!debug_objects_enabled)
-+		return 0;
-+
- 	debug_print_object(&o, "activate");
++                for (i = 0; i < t16; i++) {
++                        size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
++                                            le64_to_cpu(dp->vcn));
++                        if (j >= t32 || i >= t32 - j) {
++                                err = -EINVAL;
++                                goto out;
++                        }
++                        dp->page_lcns[j + i] = lrh->page_lcns[i];
++                }
  
- 	switch (o.state) {
-@@ -944,6 +952,15 @@ void debug_object_assert_init(void *addr
- 		return;
- 	}
+ 		goto next_log_record_analyze;
  
-+	/*
-+	 * lookup_object_or_alloc() might have raced with a concurrent
-+	 * allocation failure which disabled debug objects. Don't run the fixup
-+	 * as it might turn a valid object useless. See for example
-+	 * hrtimer_fixup_assert_init().
-+	 */
-+	if (!debug_objects_enabled)
-+		return;
-+
- 	/* Object is neither tracked nor static. It's not initialized. */
- 	debug_print_object(&o, "assert_init");
- 	debug_object_fixup(descr->fixup_assert_init, addr, ODEBUG_STATE_NOTAVAILABLE);
 
 
