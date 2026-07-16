@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92B222301;
-	Thu, 16 Jul 2026 13:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826F93B42FC;
+	Thu, 16 Jul 2026 13:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210348; cv=none; b=LkTgNQUybh0D897mv+rVnfjmY7+UcBhwv7nZxQ0nNDcyyRr3QliL424TtzH4fx2fLAZhjxkxH1WoeSdtAmYg2ibilJzgy1ZhlmZGmcIgkg3GQGc0EZXEKVkRiOJStY0CPG7J+2QhvVVxyF5Yt1qNrY0gMVoCJSdRb8Hoau+6wcM=
+	t=1784210351; cv=none; b=iKGOMMH5A8FybybZ053MGwEBKTmu4QDWYm4vsJHX3yJUA0tIFEe7gHab4jvu/sIQAueHdG8yqVJlQGAS+Io8STAk6AG/WlVZJAYjlBFxfkiUBI6VLnhIChFX1hf5Hfx5GteDWqRbaHRYGg+juzRshwQRozqawaIQ1a4wRcBk4zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210348; c=relaxed/simple;
-	bh=5lyApN1bAcBRmVZuDvf10hq8PZbLCUM3h5IJLE9dhbQ=;
+	s=arc-20240116; t=1784210351; c=relaxed/simple;
+	bh=+Ti+yhV4/iFq1KpUENhb6IW9inzU+pONWlZwW3CHfZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWvDoHMSsoIweRwLonrB+w4PiCNgNOcbMNtsKOBQlf0klTeTLj5MvGl8M8gGc+fX38F3Awrs5TtVOKhfGG3lP+AnyXm5WzrZZYweLe3pdAmPD4UUivHwPcGHkEGI0AMVCbe6R8sfEbac4wklOTCXLHoHCOjWDc2Vi/y3lXT8ytE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxWeGJi7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GrzJsF1HxTbaL9oKG4/lF5p+sAm2fuFSf0KWDVMnbn9ZPQCkM+Dhafq/BKKwlHX7zW6PfOvHGtYO0j3BUZmsHnNq4ZVA9adN6xi2Rf+1ACKC7B7R3smuHq419XG0Z4FCzBIMfUTu264gIVdHbCW0O8utCWLZPwCWfUD6+Bgr+w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckeaBnK/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxWeGJi7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2701F000E9;
-	Thu, 16 Jul 2026 13:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckeaBnK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C951F000E9;
+	Thu, 16 Jul 2026 13:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210347;
-	bh=icyhJgobSYP4zvv438DUlD+7NlK3W58oDWXnOO+6mNQ=;
+	s=korg; t=1784210350;
+	bh=sKh2toCKqUKen1p5IvZn5SdFY6i81b+MNIkrixbI3p8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wxWeGJi7/wRD1zITAXBchmt9iG7iqcKx5G3xgZfaD7/g4t7dG7mw5Tj4ZFpb3ez6B
-	 Ec8ESQ6tF4Qrud6CTxBqZM8g1yfZDvm0wd8WgPi3jbRMa26j0q7M1Z7lqXTK0qdQMC
-	 7R5PdYXHk3oJ0P1vX61+iM9lwKtLsekGwqi3kVp0=
+	b=ckeaBnK/BwqX4NKiqNLnAjLomb533OfEm6H21sWJ9vQl+lu7VPezL6DZb5Kf9tA5Q
+	 kb/87aegr7PebwShJkwPbOagi529x+9am2NBbUtv7uTa/ODQ+EMdHZ+I1xEG5UtCKt
+	 mehpdFPAahQq5EmU/vuC2dJG7AiDGX/FBCWKNW7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
 	Chao Yu <chao@kernel.org>,
-	Keshav Verma <iganschel@gmail.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/480] f2fs: fix listxattr handling of corrupted xattr entries
-Date: Thu, 16 Jul 2026 15:26:01 +0200
-Message-ID: <20260716133044.999223574@linuxfoundation.org>
+Subject: [PATCH 6.18 015/480] f2fs: use memalloc_retry_wait() as much as possible
+Date: Thu, 16 Jul 2026 15:26:02 +0200
+Message-ID: <20260716133045.021456522@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,48 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keshav Verma <iganschel@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 5ef5bc304f23c3fe255d4936472378dcb74d0e94 ]
+[ Upstream commit 30a8496694f1a93328e5d7f19206380346918b5a ]
 
-Validate the xattr entry before reading its fields in f2fs_listxattr().
-Return -EFSCORRUPTED when the entry is outside the valid xattr storage
-area instead of returning a successful partial result.
+memalloc_retry_wait() is recommended in memory allocation retry logic,
+use it as much as possible.
 
-Fixes: 688078e7f36c ("f2fs: fix to avoid memory leakage in f2fs_listxattr")
-Cc: stable@kernel.org
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Keshav Verma <iganschel@gmail.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 8712353ed80f ("f2fs: fix to do sanity check on f2fs_get_node_folio_ra()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/xattr.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/f2fs/segment.c |    2 +-
+ fs/f2fs/super.c   |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -581,8 +581,6 @@ ssize_t f2fs_listxattr(struct dentry *de
- 		size_t prefix_len;
- 		size_t size;
- 
--		prefix = f2fs_xattr_prefix(entry->e_name_index, dentry);
--
- 		if ((void *)(entry) + sizeof(__u32) > last_base_addr ||
- 			(void *)XATTR_NEXT_ENTRY(entry) > last_base_addr) {
- 			f2fs_err(F2FS_I_SB(inode), "list inode (%lu) has corrupted xattr",
-@@ -590,9 +588,11 @@ ssize_t f2fs_listxattr(struct dentry *de
- 			set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
- 			f2fs_handle_error(F2FS_I_SB(inode),
- 						ERROR_CORRUPTED_XATTR);
--			break;
-+			error = -EFSCORRUPTED;
-+			goto cleanup;
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -234,7 +234,7 @@ retry:
+ 	err = f2fs_get_dnode_of_data(&dn, index, ALLOC_NODE);
+ 	if (err) {
+ 		if (err == -ENOMEM) {
+-			f2fs_io_schedule_timeout(DEFAULT_IO_TIMEOUT);
++			memalloc_retry_wait(GFP_NOFS);
+ 			goto retry;
  		}
- 
-+		prefix = f2fs_xattr_prefix(entry->e_name_index, dentry);
- 		if (!prefix)
- 			continue;
- 
+ 		return err;
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3128,7 +3128,7 @@ retry:
+ 							&folio, &fsdata);
+ 		if (unlikely(err)) {
+ 			if (err == -ENOMEM) {
+-				f2fs_io_schedule_timeout(DEFAULT_IO_TIMEOUT);
++				memalloc_retry_wait(GFP_NOFS);
+ 				goto retry;
+ 			}
+ 			set_sbi_flag(F2FS_SB(sb), SBI_QUOTA_NEED_REPAIR);
 
 
