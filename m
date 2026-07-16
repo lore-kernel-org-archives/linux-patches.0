@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88C7423EB4;
-	Thu, 16 Jul 2026 13:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92D7424D4C;
+	Thu, 16 Jul 2026 13:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209483; cv=none; b=eUR/5I/p2h6xCH5Ap1gfB19OCVrnNdltrRfIHZaSWPyZ+XmkOzzmivrN6WSlpf6gvg3MmanBmF3oy0sKZR+a1jj6Wwxju0sV8qNwFt3uMEO0iiHobg6srJ5pCX2XvkzMa2gq3YDU8hoQmbpJP4PKaSNnsobiQ/6zqvUECbwgto0=
+	t=1784209488; cv=none; b=Q/aFZ7KZd2KTQAqzJZxnSwr5qscMntJ/ZKlTGfPim/4ntPciewyLkJuxQWUuAIP4RKeFhqtuJGueWu5thz58OwiocKq1k5WY9Wj8LnxbjO0T5GElxawyFZVdjobxE4k3zpU/KGMYE4AtfzAHuvBoto6UH/S7ODDsEcqPH4jkv4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209483; c=relaxed/simple;
-	bh=x9+cwROZhK4hlZzQMgwbt5aefctOAhtvPWE4rE/8S5s=;
+	s=arc-20240116; t=1784209488; c=relaxed/simple;
+	bh=PHa5jWC8NgTxK2fJ5s/nvdfAieViM1m31V1zYuhwOFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYmUS46vhHqx40jG6zU+mVH/ufRiSoe8WY0qpVLMLa8LA0snTEruDNZ2Xs9K+kP/V0Uyf28WpmiUErY4+zM1A7d9KwOzOjhddgt7wJsoYcil0oaA4/8HzqyieS++mJ4xBypyc4qQ9MFy8mgnNaeYOjdNGlPBPdzlvxS1L30JH6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVl9Wj3d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WI27q6FW9Vl02hRnFWs54VtNfgvzmz04aDzX48t/q3cX/59V7Ldfe+syN85goV/AMGxym90LMqzHaqRnWzpJrKewqayHXOXoH2KkNSQmS6QmK24w1sIsNEzyY8S4mAqJGEYNO380bGumu4E+mg+Gh7uPNefktpSMGxv2XU+dm0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kErGFu9p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVl9Wj3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346211F00A3A;
-	Thu, 16 Jul 2026 13:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kErGFu9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40A01F00A3A;
+	Thu, 16 Jul 2026 13:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209481;
-	bh=lYydsvhUkCRzyV2D9R3trZPCvkWY+lOnxw3+dDIC6SE=;
+	s=korg; t=1784209484;
+	bh=oW+A1VYrR+Vhx1441VqBYOUTE46lIqMzzbXDzzs9xeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RVl9Wj3d7WohYZu06xT80VWwtZUms1wm1LEFbq4kL8kK6mJLet5EKatNbd47E9PwW
-	 iefXIBq6qqIpleMnao/1/TkKHrM9AaYUlnnRR6fOThdVT4v/Ucg+GY+VKgTNnTWq3P
-	 f+414gbecd4p5+bCXTgy8BNG0nI7ms8M6UIdo+A8=
+	b=kErGFu9pFb0G2NppYdv6mIj2tCZJDmiPdLXJS8r2+xvYUgJq8TNHQ2CEyRqHJDZEX
+	 hIqJve1Y14xbmyQr8a8JCd6elYRze4daUr4JlMgrmlK2qm6BoBQRglfIWUFe4T075E
+	 f9Ng0Syq/z6LJ74hyq4hAbxvP2r+qN00gnz8GHVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 201/518] netfilter: ebtables: terminate table name before find_table_lock()
-Date: Thu, 16 Jul 2026 15:27:49 +0200
-Message-ID: <20260716133052.221144040@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Adrian Bente <adibente@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 7.1 202/518] netfilter: flowtable: fix offloaded ct timeout never being extended
+Date: Thu, 16 Jul 2026 15:27:50 +0200
+Message-ID: <20260716133052.242684360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,77 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Adrian Bente <adibente@gmail.com>
 
-commit a622d2e9608c9dff47fc2e5759ac7aa3a836b45d upstream.
+commit 53b3e60edb674b442b2b3bbdba484667b0f47a5d upstream.
 
-update_counters() and compat_update_counters() forward a user-supplied
-32-byte table name to find_table_lock() without NUL-terminating it. On a
-lookup miss, find_inlist_lock() calls try_then_request_module(..., "%s%s",
-"ebtable_", name), and vsnprintf() reads past the name field and the
-stack object until it hits a zero byte.
+OpenWrt has recently migrated many platforms to kernel 6.18. On the
+MediaTek platform, which supports hardware network offloading, WiFi
+connections accelerated via the WED path were observed to drop after
+roughly 300 seconds.
 
-  BUG: KASAN: stack-out-of-bounds in string (lib/vsprintf.c:648 lib/vsprintf.c:730)
-  Read of size 1 at addr ffff8880119dfb20 by task exploit/147
-  Call Trace:
-  ...
-   string (lib/vsprintf.c:648 lib/vsprintf.c:730)
-   vsnprintf (lib/vsprintf.c:2945)
-   __request_module (kernel/module/kmod.c:150)
-   do_update_counters.isra.0 (net/bridge/netfilter/ebtables.c:371 net/bridge/netfilter/ebtables.c:380)
-   update_counters (net/bridge/netfilter/ebtables.c:1440)
-   do_ebt_set_ctl (net/bridge/netfilter/ebtables.c:2573)
-   nf_setsockopt (net/netfilter/nf_sockopt.c:101)
-   ip_setsockopt (net/ipv4/ip_sockglue.c:1424)
-   raw_setsockopt (net/ipv4/raw.c:847)
-   __sys_setsockopt (net/socket.c:2393)
-  ...
+After several debugging sessions, assisted by the Claude LLM, the
+problem was narrowed down as follows:
 
-compat_do_replace() shares the same unterminated name via
-compat_copy_ebt_replace_from_user(); terminate it there too so all
-find_table_lock() callers behave alike. The other callers already
-terminate the name after the copy.
+nf_flow_table_extend_ct_timeout() extends ct->timeout for offloaded
+flows using:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
+	cmpxchg(&ct->timeout, expires, new_timeout);
+
+'expires' comes from nf_ct_expires(ct) and is a relative value, while
+ct->timeout holds an absolute timestamp. The two are never equal, so
+the cmpxchg always fails and the timeout is never extended.
+
+This goes unnoticed for most flows, but a long-lived hardware (WED)
+offloaded flow on MediaTek MT7986 eventually has ct->timeout decay to
+zero, the conntrack entry is reaped and the connection breaks.
+
+Open-code the relative value from a single READ_ONCE(ct->timeout)
+snapshot and compare against that same absolute snapshot in the
+cmpxchg, so the timeout extension actually takes effect while the
+datapath remains authoritative if it updates ct->timeout concurrently.
+
+Fixes: 03428ca5cee9 ("netfilter: conntrack: rework offload nf_conn timeout extension logic")
 Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Adrian Bente <adibente@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/netfilter/nf_flow_table_core.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1436,6 +1436,8 @@ static int update_counters(struct net *n
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
- 
-+	hlp.name[sizeof(hlp.name) - 1] = '\0';
+--- a/net/netfilter/nf_flow_table_core.c
++++ b/net/netfilter/nf_flow_table_core.c
+@@ -505,8 +505,13 @@ static u32 nf_flow_table_tcp_timeout(con
+  */
+ static void nf_flow_table_extend_ct_timeout(struct nf_conn *ct)
+ {
+-	static const u32 min_timeout = 5 * 60 * HZ;
+-	u32 expires = nf_ct_expires(ct);
++	static const s32 min_timeout = 5 * 60 * HZ;
++	u32 ct_timeout = READ_ONCE(ct->timeout);
++	s32 expires;
 +
- 	if (len != sizeof(hlp) + hlp.num_counters * sizeof(struct ebt_counter))
- 		return -EINVAL;
++	expires = ct_timeout - nfct_time_stamp;
++	if (expires <= 0) /* already expired */
++		return;
  
-@@ -2275,6 +2277,8 @@ static int compat_copy_ebt_replace_from_
+ 	/* normal case: large enough timeout, nothing to do. */
+ 	if (likely(expires >= min_timeout))
+@@ -524,7 +529,7 @@ static void nf_flow_table_extend_ct_time
+ 	if (nf_ct_is_confirmed(ct) &&
+ 	    test_bit(IPS_OFFLOAD_BIT, &ct->status)) {
+ 		u8 l4proto = nf_ct_protonum(ct);
+-		u32 new_timeout = true;
++		u32 new_timeout = 1;
  
- 	memcpy(repl, &tmp, offsetof(struct ebt_replace, hook_entry));
+ 		switch (l4proto) {
+ 		case IPPROTO_UDP:
+@@ -549,7 +554,7 @@ static void nf_flow_table_extend_ct_time
+ 		 */
+ 		if (new_timeout) {
+ 			new_timeout += nfct_time_stamp;
+-			cmpxchg(&ct->timeout, expires, new_timeout);
++			cmpxchg(&ct->timeout, ct_timeout, new_timeout);
+ 		}
+ 	}
  
-+	repl->name[sizeof(repl->name) - 1] = '\0';
-+
- 	/* starting with hook_entry, 32 vs. 64 bit structures are different */
- 	for (i = 0; i < NF_BR_NUMHOOKS; i++)
- 		repl->hook_entry[i] = compat_ptr(tmp.hook_entry[i]);
-@@ -2397,6 +2401,8 @@ static int compat_update_counters(struct
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
- 
-+	hlp.name[sizeof(hlp.name) - 1] = '\0';
-+
- 	/* try real handler in case userland supplied needed padding */
- 	if (len != sizeof(hlp) + hlp.num_counters * sizeof(struct ebt_counter))
- 		return update_counters(net, arg, len);
 
 
