@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4419036A35E;
-	Thu, 16 Jul 2026 13:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4402DF137;
+	Thu, 16 Jul 2026 13:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209217; cv=none; b=lHMoLyPMj6r9FClCjzFmPdoCa951AEe3g/HKWmBUgFJkCKy4cqEFrfLaxBI7UK4UMf/nOQMrIsWeo+gDiqA4fcsm1YZKQxZ/ryAQD6AtBF+LeD3oMTwGAyjmDIk6HEj9e779XxIxlHn9n7N8G2wkCOvvq5987Ik1CAN7Rq7luJg=
+	t=1784209220; cv=none; b=se3s/WgHIWsudObvKOGQrCrrlv0XC/g+Qr4t3TUbGXPdLS4JDdJpgFwBhO/QxtxQ5/lW0eUxdwrAcjzrbzyregqe/Jn9BLH6eREj1c4tqAR/VWH49bXCsRrq8dQIdVAjS0PH/WdTiDoTgwmXwuFEjJ2aReAsXfhyPCbmvLt4GPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209217; c=relaxed/simple;
-	bh=ZYRz+4SpphAYGPpXXSF38U+7Ymdo/K4o8P7bamY9k+U=;
+	s=arc-20240116; t=1784209220; c=relaxed/simple;
+	bh=uUxQZpYHj5OpcHYEzi5TmvnqdboDUv0nnB+i1zaD17Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nw/JkZSI2I/7q4CD60eAfuL8vx6uzVB5qzl7yF59F0y6hXwfp5llJtYI8B3d8bar/+kxupcxnw2hnQqKcln7zrBv0VRsBHMuZnHloOnwtsP4iYgyAgP65bf1/bZ55RfXaOcWD6CVwcJz0+vTRNspc/vA/vw6A28KST52dsjKDhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1c3XSnTX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ixJqwvnhYZCYPOPXLPoqVmUxpwgqss7uuvM8HhgdRVSIryQrDyfSLPC+7VOEulmzjtN+R20x7aXVn2pvdF4eA+V/w3TD/3Ew8gB5CS4efygynB7ppMVv2DYpqSA3oh3Qc63oa5L487v4CI9xtce0OYgZYBL1h9dD0CdWE6Mh0E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAGLLkJ0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1c3XSnTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92191F000E9;
-	Thu, 16 Jul 2026 13:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAGLLkJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5955B1F000E9;
+	Thu, 16 Jul 2026 13:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209216;
-	bh=8pzfJwsZUoiuRzYkIr3nfA4u+hWCN/8LC6LCToZoJfs=;
+	s=korg; t=1784209218;
+	bh=dnaXz85+Xjq8mNZNccG/ObxtdZEPqX1+iqMujME4QC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1c3XSnTXJzixmhvvCwBzB765GpPDdT8taK72xi6gy+9IRnpMdyYa0N6xIeCf52unO
-	 ZhV4syh2yvo5AGC8ZWKxjA1YVKM4I/u+MnmQ4lL2hy7UIToyjUyQySmbhJRWr+1RM/
-	 /IhJtBSZwMvmS43+mFs9XgFzZnnP+Ja5XbrcMVfk=
+	b=FAGLLkJ0/X0vKD67qob3psymO9/apPW9hzXHkCQPhZJp7b+E4CNxOnLfjomLS3Rl2
+	 94nfYmzW0HD5nuAC64+cWG71W0qGTYJ9tWqI5dJBJ4dsNSm9omtN48Yro2DNcDn6n0
+	 pzQvQi8mnU1TUkb9wQK1colwKvgMruN4hnX/5QTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 101/518] ALSA: usb-audio: Propagate US-16x08 write errors in route/mix EQ-switch put callbacks
-Date: Thu, 16 Jul 2026 15:26:09 +0200
-Message-ID: <20260716133050.072906919@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Crt Mori <cmo@melexis.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.1 075/518] iio: temperature: Build mlx90635 with CONFIG_MLX90635
+Date: Thu, 16 Jul 2026 15:25:43 +0200
+Message-ID: <20260716133049.426900386@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,138 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 3c06aec8abda6ba068b58a8b7119cdb2a48456b1 upstream.
+commit 63a76e3a587c4143e8e24e8a6b0c232fa0676034 upstream.
 
-Several US-16x08 mixer put callbacks log failed control URBs but
-still return success to userspace. That hides device write failures
-even though the requested value was not applied.
+drivers/iio/temperature/Kconfig has a dedicated MLX90635 option, but
+the Makefile currently builds mlx90635.o under CONFIG_MLX90632.
 
-Return the negative write error instead in the route, master, bus,
-channel, and EQ switch put callbacks.
+This means enabling CONFIG_MLX90635 alone does not carry its provider
+object into the build, while enabling CONFIG_MLX90632 unexpectedly also
+builds mlx90635.o.
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Gate mlx90635.o on the matching generated Kconfig symbol.
+
+Fixes: a1d1ba5e1c28 ("iio: temperature: mlx90635 MLX90635 IR Temperature sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-3-5a3bd4a673ae@gmail.com
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Acked-by: Crt Mori <cmo@melexis.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_us16x08.c |   49 ++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 25 deletions(-)
+ drivers/iio/temperature/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -224,14 +224,14 @@ static int snd_us16x08_route_put(struct
- 
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(route_msg));
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set routing, err:%d\n", err);
-+		return err;
- 	}
- 
--	return err > 0 ? 1 : 0;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
-+	return 1;
- }
- 
- static int snd_us16x08_master_info(struct snd_kcontrol *kcontrol,
-@@ -283,14 +283,14 @@ static int snd_us16x08_master_put(struct
- 	buf[5] = index + 1;
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(mix_msg_out));
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set master, err:%d\n", err);
-+		return err;
- 	}
- 
--	return err > 0 ? 1 : 0;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
-+	return 1;
- }
- 
- static int snd_us16x08_bus_put(struct snd_kcontrol *kcontrol,
-@@ -324,14 +324,14 @@ static int snd_us16x08_bus_put(struct sn
- 		break;
- 	}
- 
--	if (err > 0) {
--		elem->cached |= 1;
--		elem->cache_val[0] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set bus parameter, err:%d\n", err);
-+		return err;
- 	}
- 
--	return err > 0 ? 1 : 0;
-+	elem->cached |= 1;
-+	elem->cache_val[0] = val;
-+	return 1;
- }
- 
- static int snd_us16x08_bus_get(struct snd_kcontrol *kcontrol,
-@@ -392,14 +392,14 @@ static int snd_us16x08_channel_put(struc
- 
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(mix_msg_in));
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set channel, err:%d\n", err);
-+		return err;
- 	}
- 
--	return err > 0 ? 1 : 0;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
-+	return 1;
- }
- 
- static int snd_us16x08_mix_info(struct snd_kcontrol *kcontrol,
-@@ -529,13 +529,13 @@ static int snd_us16x08_eqswitch_put(stru
- 		msleep(15);
- 	}
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set eq switch, err:%d\n", err);
-+		return err;
- 	}
- 
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
- 	return 1;
- }
- 
-@@ -1418,4 +1418,3 @@ int snd_us16x08_controls_create(struct u
- 
- 	return 0;
- }
--
+--- a/drivers/iio/temperature/Makefile
++++ b/drivers/iio/temperature/Makefile
+@@ -13,7 +13,7 @@ obj-$(CONFIG_MAX31865) += max31865.o
+ obj-$(CONFIG_MCP9600) += mcp9600.o
+ obj-$(CONFIG_MLX90614) += mlx90614.o
+ obj-$(CONFIG_MLX90632) += mlx90632.o
+-obj-$(CONFIG_MLX90632) += mlx90635.o
++obj-$(CONFIG_MLX90635) += mlx90635.o
+ obj-$(CONFIG_TMP006) += tmp006.o
+ obj-$(CONFIG_TMP007) += tmp007.o
+ obj-$(CONFIG_TMP117) += tmp117.o
 
 
