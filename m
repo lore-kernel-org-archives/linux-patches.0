@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46113009E2;
-	Thu, 16 Jul 2026 14:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD613009E2;
+	Thu, 16 Jul 2026 14:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210809; cv=none; b=AwohcFPOXSh/5vOLDHTpEr2eO7rwrukOjEFSy5YuXGkXOSGCsafJFx92txhm8dgcV2f5AOX7F65Ru+qGXYCgeVlWb0n14Pbj3fuGl+sQxj69yqUbMsQzOhly5IvtoDWObSqPnLGl2Sa6Ap9t1rsy9GaJzRrmKADJQ5L/ag79GnY=
+	t=1784210811; cv=none; b=W62KdWvH++r7AODQA01qsuGkvjb5FsqWbC2aUuqasPzovZD8USFHSplZCKgkTDhWkxMmOccADtPD7lxsbttMI0Abc4sa7lWalO6tjz9C24vrTX14f7U5WeQ7gIzcax7QFrj3QBuTKuhfizFf6aAJ4AYVzKay68D/1GrNWhw/21E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210809; c=relaxed/simple;
-	bh=1SgS2jz/2QYoVPDkp96WZaDTeTHf/uvAsClKlFyo45Y=;
+	s=arc-20240116; t=1784210811; c=relaxed/simple;
+	bh=tM8Lsed56o5OG51zwWHbWqMUNc0X5vydZE5WJZn5DJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RinLs+woTjnrNw0emzuK7I2soQG4vIdxOxNt1IJz8sW6a7VT+sph/I+CPr4iS4pOTIY93DDm6/Ph2Z9lz6JCxx0SeluTKm8jLUbUaWJsMKIFzRKFfLCl9sgklpIDmaQGR9rUJKdN3H/3nF0D2afBbKZvIxQqtbhp6tMYKP2jGUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5WsUqJB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T/fZvcu5HKnzOsy3Q0qLgTd9OVxktGhbBcbPxWb9GjFjyzYIFdVDKRRdiAhSRsm2rL/v0FfvQKuHmjBqgQSfPCyO23uzz8eVG1vz3KJEVe4J/WMiS67oQWMqKnf/cydN/LYPKe4sa1QLMShTMfw4oYD+HO8elvo2gk5/eXmCzzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2b1wb2aS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5WsUqJB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5694C1F000E9;
-	Thu, 16 Jul 2026 14:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2b1wb2aS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F277A1F000E9;
+	Thu, 16 Jul 2026 14:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210807;
-	bh=MyQTkR00IPs2l6jI/hPF8l00/w2QwQtHN/VeEnT6UD0=;
+	s=korg; t=1784210810;
+	bh=Qd+rzvh1xoWHXYUkuapSQOmSzqxKWfmVAD37g+KUPpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n5WsUqJBDHCrAranxdhdB7eX0Bvlpu0eqZS2nR8+rBR2IV7H2BgPjDJ8Xa5lLIj2G
-	 oFIcrQNBxvt225p+uzH4s+OZISkXceg/G3k0MK4fEB2H34QIo60QWLWms/3mCRxeIj
-	 Yqcnw5ySkqqJAkYf66p/S08RHiMQrQS7cy4tuNEU=
+	b=2b1wb2aSdZrzEllAixVfjoe5NJdkzXPvS79gnVpGhMKTESTHSqpNlFY0aewZ/LU0K
+	 TVVSekUy8YAw+9oyr8K7fmXyqyNsewBdaptDO9CE+Z8T8aNLb9JEdFRm5G7H/os52A
+	 Gyb70WYKiJt3YuG2osXfwtioxIKfPC9BMhV84A6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 145/480] mm/damon/ops-common: handle extreme intervals in damon_hot_score()
-Date: Thu, 16 Jul 2026 15:28:12 +0200
-Message-ID: <20260716133047.847064012@linuxfoundation.org>
+	Mahesh Vaidya <mahesh.vaidya@altera.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Subhransu S. Prusty" <subhransu.sekhar.prusty@altera.com>
+Subject: [PATCH 6.18 136/480] PCI: altera: Do not dispose parent IRQ mapping
+Date: Thu, 16 Jul 2026 15:28:03 +0200
+Message-ID: <20260716133047.652806590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,90 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Mahesh Vaidya <mahesh.vaidya@altera.com>
 
-commit 35d4a3cf70a855b50e53189ac2f8463e20a02046 upstream.
+commit 5ef4bac02189bee0b7c170e352d7a38e13fe9678 upstream.
 
-Fix three issues in damon_hot_score() that comes from wrong handling of
-extreme (zero or too high) monitoring intervals user setup.
+altera_pcie_irq_teardown() calls irq_dispose_mapping() on pcie->irq.
+However, pcie->irq is the parent IRQ returned by platform_get_irq(), not
+the mapping created by Altera INTx irq_domain.
 
-When the user sets sampling interval zero, damon_max_nr_accesses(), which
-is called from damon_hot_score(), causes a divide-by-zero.  Needless to
-say, it is a problem.
+The Altera driver only sets the chained handler on the parent IRQ. It
+should detach that handler during teardown, but it should not dispose the
+parent IRQ mapping, which belongs to the parent interrupt controller's
+irq_domain.
 
-When the user sets the aggregation interval zero, the function returns
-zero.  It is wrong, since the real maximum nr_acceses in the setup should
-be one.  Worse yet, it can cause another divide-by-zero from its caller,
-damon_hot_score(), since it uses damon_max_nr_accesses() return value as a
-denominator.
+Drop irq_dispose_mapping(pcie->irq) from the teardown path.
 
-When the user sets the aggregation interval very high, damon_hot_score()
-could return a value out of [0, DAMOS_MAX_SCORE] range.  Since the return
-value is used as an index to the regions_score_histogram array, which is
-DAMOS_MAX_SCORE+1 size, it causes out of bounds array access.
+Note that during irqchip remove(), the child IRQs should've disposed. But
+since the chained handler itself is removed, there is no way the stale
+child IRQs (if exists) could fire. So it is safe here.
 
-The issues can be relatively easily reproduced like below.  The sysfs
-write permission is required, though.
-
-    # ./damo start --damos_action lru_prio --damos_quota_space 100M \
-            --damos_quota_interval 1s
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0
-    # echo 0 > contexts/0/monitoring_attrs/intervals/sample_us
-    # echo 0 > contexts/0/monitoring_attrs/intervals/aggr_us
-    # echo commit > state
-    # dmesg
-    [...]
-    [  131.329762] Oops: divide error: 0000 [#1] SMP NOPTI
-    [...]
-    [  131.336089] RIP: 0010:damon_hot_score+0x27/0xd0
-    [...]
-
-Fix the divide-by-zero intervals problems by explicitly handling the zero
-intervals in damon_max_nr_accesses().  Fix the out-of-bound array access
-by applying [0, DAMOS_MAX_SCORE] bounds before returning from
-damon_hot_score().
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260623135834.67189-1-sj@kernel.org
-Link: https://lore.kernel.org/20260619202459.145010-1-sj@kernel.org [1]
-Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ec15c4d0d5d2 ("PCI: altera: Allow building as module")
+Signed-off-by: Mahesh Vaidya <mahesh.vaidya@altera.com>
+[mani: added a note about IRQ disposal]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Subhransu S. Prusty <subhransu.sekhar.prusty@altera.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260430204330.3121003-2-mahesh.vaidya@altera.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    8 ++++++--
- mm/damon/ops-common.c |    1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-altera.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -939,9 +939,13 @@ static inline bool damon_target_has_pid(
- 
- static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs)
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -868,7 +868,6 @@ static void altera_pcie_irq_teardown(str
  {
--	/* {aggr,sample}_interval are unsigned long, hence could overflow */
--	return min(attrs->aggr_interval / attrs->sample_interval,
-+	unsigned long sample_interval;
-+	unsigned long max_nr_accesses;
-+
-+	sample_interval = attrs->sample_interval ? : 1;
-+	max_nr_accesses = min(attrs->aggr_interval / sample_interval,
- 			(unsigned long)UINT_MAX);
-+	return max_nr_accesses ? : 1;
+ 	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
+ 	irq_domain_remove(pcie->irq_domain);
+-	irq_dispose_mapping(pcie->irq);
  }
  
- 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -128,6 +128,7 @@ int damon_hot_score(struct damon_ctx *c,
- 	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
- 	 */
- 	hotness = hotness * DAMOS_MAX_SCORE / DAMON_MAX_SUBSCORE;
-+	hotness = max(min(hotness, DAMOS_MAX_SCORE), 0);
- 
- 	return hotness;
- }
+ static int altera_pcie_parse_dt(struct altera_pcie *pcie)
 
 
