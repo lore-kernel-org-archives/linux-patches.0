@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0493FCB3D;
-	Thu, 16 Jul 2026 13:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C682DC79B;
+	Thu, 16 Jul 2026 13:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209766; cv=none; b=QboAZm6xwMSFxNdjZhFsf73g0qOd0qnOYo0chF1Dw12OUn2ABUJDd5ce3SnLYx1FBLB4ks/LThtv/Ubnkc9tQrT13sxlHbkqNnxyr0m38WnG1QsiOaenVEr6ogLCcA9ETHKvxY70lAo8DTaKGD1yuYGJ2gx1jz11ByL23M63fRs=
+	t=1784209771; cv=none; b=f9OMRhIBzC/kAm9AAu8Iw3CPu8prbphrHP2J/1r7liXPokWtCRgzGaju8IU+P8u8IeDOT+GDb9ZaDFO343LIkEaQC31Rv1o26hrkiXkHVn3mNpRWD7YtdV3ij6f1RVCLTa6qRwYAOi7BTjwqcJjckkMbVLhV2K8+nMmxNAGDmzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209766; c=relaxed/simple;
-	bh=vfxJ1Tm7lrMkI2RJ9zEC3GIfuPWPeQSLCcH7qWt4tY8=;
+	s=arc-20240116; t=1784209771; c=relaxed/simple;
+	bh=MtOZAJrV3vxcWw6LXDKQyNy0cLjpa/Z/Tqm1PSQz4dE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mf6rWpS9AVrH+E69jGNpT5YNoNGWXma488F7KZLjAh7SbBP3lejKu6cChkzAmJDcqTYVvRMjLr1oMVm3eG+PqdzxZeKpkxl17QUJDmavEn/8jwrUMcZBPhNnagJESlNhviKfzGyfavTnCTBl0v/eRpTNQj9vc7DfPFVW9PyQU9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9MbyDWQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BCnIgUBXN7fR3Az80Ge+8q8T9o4nLYC0LlUqbooIxWQGdstO+uPGocYFeGSDCVo03gvs+vvr5+DIeO78akdXN2NaSIRdMrHZHB6qpgw3Tukf+BPKN9GSH4CvIaBG5YW9v018cx7PB+tJrTsN3p0jnCVOKcmnDmLftffvgLm8ecM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyf04kG/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9MbyDWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EE01F000E9;
-	Thu, 16 Jul 2026 13:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyf04kG/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C439A1F00A3A;
+	Thu, 16 Jul 2026 13:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209762;
-	bh=aLddMztgXEuF/+MkarrAZm8SaTEAqsAzfskM/4fINlM=;
+	s=korg; t=1784209765;
+	bh=sny/7p9wD3kU1Z6pP0CU9Sb1A33BUcAmpZTqDaH8yrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9MbyDWQ3c7MBvc9tdgRhEwzzvHtxWdD64QVuuSizcN4Iqjs0VLKcs8gV4679ArIE
-	 +JmXnK3C0rXhvXHxeXDHGZZUJJtIoNw1tOF3ctme5j6HxIsmfo9JpgovOKlVq7CBy9
-	 qZ8y0y1D/E0Lblji6n6vckgmi4BWNdE1wlw/5ftI=
+	b=cyf04kG/Ty/5SC2/Q2pYlUbhw4tn8pz8tQ9b48CQcuJdF20zpL6kyHCdR5rjuoakO
+	 O4o3/xjdFChdUA/2CJiWZwLg+AXgKwiUsobGCJoHDrn3zjv8r8qs+12KCy21stKTK2
+	 dfM+F9vjBwOiNDeQ9I0/m21s9KDlhmq2feFpVkQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Lee Jones <lee@kernel.org>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.1 265/518] HID: hid-goodix-spi: validate report size to prevent stack buffer overflow
-Date: Thu, 16 Jul 2026 15:28:53 +0200
-Message-ID: <20260716133053.616419217@linuxfoundation.org>
+Subject: [PATCH 7.1 266/518] HID: uhid: convert to hid_safe_input_report()
+Date: Thu, 16 Jul 2026 15:28:54 +0200
+Message-ID: <20260716133053.637979146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,48 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit db0a0768d09273aadadeb76730cd658d720333a4 upstream.
+commit 63a694c51bf120a37550890b8e7736b4888985e9 upstream.
 
-goodix_hid_set_raw_report() builds a protocol frame in a 128-byte stack
-buffer (tmp_buf), writing an 11-12 byte header followed by the
-caller-supplied report data.  The HID core caps report size at
-HID_MAX_BUFFER_SIZE (16384) by default, while the driver does not set
-hid_ll_driver.max_buffer_size and performs no bounds checking before
-copying the payload:
+Commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
+bogus memset()"), added a check in hid_report_raw_event() to reject
+reports if the received data size is smaller than expected. This was
+intended to prevent OOB errors by no longer allowing zeroing-out of
+shorter reports due to the lack of buffer size information.
 
-    memcpy(tmp_buf + tx_len, buf, len);
+However, this leads to regressions in hid_report_raw_event(), where
+shorter than expected reports are rejected, even though their buffers
+are sufficiently large to be zero-padded.
 
-A hidraw SET_REPORT ioctl with a report larger than ~116 bytes
-overflows the stack buffer.
+To solve this issue, Benjamin introduced a safer alternative in commit
+206342541fc8 ("HID: core: introduce hid_safe_input_report()"), which
+forwards the buffer size and allows hid_report_raw_event() to safely
+zero-pad the data.
 
-Add a size check after constructing the header, rejecting reports that
-would exceed the buffer capacity.
+Convert uhid to use hid_safe_input_report() and pass UHID_DATA_MAX as
+the buffer size. This prevents the reported regressions [1], allowing
+hid core to zero-pad the shorter reports safely as expected.
 
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: 75e16c8ce283 ("HID: hid-goodix: Add Goodix HID-over-SPI driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
+Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/ [1]
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-goodix-spi.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/uhid.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/hid-goodix-spi.c
-+++ b/drivers/hid/hid-goodix-spi.c
-@@ -520,6 +520,9 @@ static int goodix_hid_set_raw_report(str
- 	memcpy(tmp_buf + tx_len, args, args_len);
- 	tx_len += args_len;
+--- a/drivers/hid/uhid.c
++++ b/drivers/hid/uhid.c
+@@ -595,8 +595,8 @@ static int uhid_dev_input(struct uhid_de
+ 	if (!READ_ONCE(uhid->running))
+ 		return -EINVAL;
  
-+	if (tx_len + len > sizeof(tmp_buf))
-+		return -EINVAL;
-+
- 	memcpy(tmp_buf + tx_len, buf, len);
- 	tx_len += len;
+-	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data,
+-			 min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
++	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data, UHID_DATA_MAX,
++			      min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
  
+ 	return 0;
+ }
+@@ -606,8 +606,8 @@ static int uhid_dev_input2(struct uhid_d
+ 	if (!READ_ONCE(uhid->running))
+ 		return -EINVAL;
+ 
+-	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data,
+-			 min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
++	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data, UHID_DATA_MAX,
++			      min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
+ 
+ 	return 0;
+ }
 
 
