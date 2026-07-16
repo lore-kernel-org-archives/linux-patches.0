@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342893B42FC;
-	Thu, 16 Jul 2026 14:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC0A3161AD;
+	Thu, 16 Jul 2026 14:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210961; cv=none; b=kk7MAxKuOirQ8f5Skd8u7LFtag4mc+N1S4uXlpbUsxD3HdPNENcuHVCCaXCtulSmIlqdejAU69p5Oq2olyIKvgVfRoSI14/W/n7un3DGPY0I+WPSG36vkLlATBu3MiqsshKQ4qJshnJ7eE5CksfoQdVkg4zreWD4cnoxDsuk2ZM=
+	t=1784210963; cv=none; b=hBltcJcq/tWJUS64A01Pz6RS6ddPQ4H4Tkevk+xCe/aw2GrKtoq9wKCCneZwE7LpVdvzGoq5yfb3PqALieQl419NjCUuLOYlvvIrSMH27qOLC4+Xrik7DJSX9ycU75CXvVuc4KEgPSQ6hJBJLl9aN04QH6D8COjeV3doq1fLFYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210961; c=relaxed/simple;
-	bh=J+g0nCVgOYdLJeczEZHSlYZaOf0xAcdSSMiLsiCA8oc=;
+	s=arc-20240116; t=1784210963; c=relaxed/simple;
+	bh=AjSP8gLezF5NGMjB/a300am3YKpdluNeBrGNKmZWUjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PPO/w6L8zTfeycM6O4UwfOkcw0hd06TBy8xpXFi02nBxqhWi0tM9yLUHAkZPdoMh0cKbj2QP3bm7g6t87Mc/TCgr6t/u98Ggv131G2ASrzwmnKokbUbdzgXUC1VxFQUt2Gg7StreFslhzUfcJV0OY3ML/ZzxikoG++T91W9qQvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQGRoj2z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kM5id9V6mDuhUudrHpkq3RG4ga/PZlnam6e2Ft4jAcuhp0xYRL4uwZHUFIAFEFS2cqgW9a5AhHWh/6RU8ggIVL1kBeY+2HoipNaBWAfeT4OV4Rkstk6rCU1DxWbhD+jWv7Qsd9OQvsvED++y5P6cNzBOdCYFtcVNCYj3plHc/jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWOsFopC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQGRoj2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521861F000E9;
-	Thu, 16 Jul 2026 14:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWOsFopC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90271F000E9;
+	Thu, 16 Jul 2026 14:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210959;
-	bh=JbeJyDss399PkPRMSrvBOVz6RbLt7e1BKueDkBjUY8w=;
+	s=korg; t=1784210962;
+	bh=W/Kz15uU+6bNy/3Xp9Zkr8dMyCr8+gGhCxE500jQRKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AQGRoj2zQwC4VrQQU+EmhMe2fA0Y2/EvJx+7xewZKv69qT1E4bgfRqpPMwiOE7f+3
-	 GU4n9sSUOuvUg4zAww7sbA+U7lgHCMxJyDwqxsd1jRMOU+i2tRk9Y6QKlFQ8Y/O/gF
-	 D95yTrtiJA+cvBuKbRWFmFTxnRb+gV/TIyxrS7WI=
+	b=DWOsFopC1VQUqZzRXU8iXGnDskHBjR07ONFDNMOmjdpscm0LptrVqdByz4iI2q9Iv
+	 xgBdjwRUklRdlHwCE8BN+pa+DcVfvY/jUubdcLc03fyJ+b+LXXvTze5q8jhIBV+U58
+	 YwDC076lRphwoqJ5ReAi2jTrlvJRvHOPNJoUlCwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.18 247/480] sched/rt: Have RT_PUSH_IPI be default off for non PREEMPT_RT
-Date: Thu, 16 Jul 2026 15:29:54 +0200
-Message-ID: <20260716133050.162802170@linuxfoundation.org>
+	Tianxiang Chen <nanmu@xiaomi.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 248/480] cpufreq: Fix hotplug-suspend race during reboot
+Date: Thu, 16 Jul 2026 15:29:55 +0200
+Message-ID: <20260716133050.183211012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,100 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Tianxiang Chen <nanmu@xiaomi.com>
 
-commit dd29c017aed628076e915fe4cdfb5392fd4c5cab upstream.
+commit a9029dd55696c651ee46912afa2a166fa456bb3e upstream.
 
-RT migration is done aggressively. When a CPU schedules out a high
-priority RT task for a lower priority task, it will look to see if there's
-any RT tasks that are waiting to run on another CPU that is of higher
-priority than the task this CPU is about to run. If it finds one, it will
-pull that task over to the CPU and allow it to run there instead.
+During system reboot, cpufreq_suspend() is called via the
+kernel_restart() -> device_shutdown() path. Unlike the normal system
+suspend path, the reboot path does not call freeze_processes(), so
+userspace processes and kernel threads remain active.
 
-Normally, this pulling is done by looking at the RT overloaded mask (rto)
-which contains all the CPUs in the scheduler domain with RT tasks that are
-waiting to run due to a higher priority RT task currently running on their
-CPU. The CPU that is about to schedule a lower priority task will grab the
-rq lock of the overloaded CPU and move the RT task from that CPU's runqueue
-to the local one and schedule the higher priority RT task.
+This allows CPU hotplug operations to run concurrently with
+cpufreq_suspend(). The original code has no synchronization with CPU
+hotplug, leading to a race condition where governor_data can be freed
+by the hotplug path while cpufreq_suspend() is still accessing it,
+resulting in a null pointer dereference:
 
-This caused issues when a lot of CPUs would schedule a lower priority task
-at the same time. They would all try to grab the same runqueue lock of
-the CPU with the overloaded RT tasks. Only the first CPU that got in will
-get that task. All the others would wait until they got the runqueue lock
-and see there's nothing to pull and do nothing. On systems with lots of
-CPUs, this caused a large latency (up to 500us) which is beyond what
-PREEMPT_RT is to allow.
+  Unable to handle kernel NULL pointer dereference
+  Call Trace:
+   do_kernel_fault+0x28/0x3c
+   cpufreq_suspend+0xdc/0x160
+   device_shutdown+0x18/0x200
+   kernel_restart+0x40/0x80
+   arm64_sys_reboot+0x1b0/0x200
 
-The solution to that was to create an RT_PUSH_IPI logic. When any CPU
-wanted to pull a task, instead of grabbing the runqueue lock of the
-overloaded CPU, it would start by sending an IPI to the overloaded CPU,
-and that IPI handler would have the CPU with the waiting RT task do a push
-instead. Then that handler would send an IPI to the next CPU with
-overloaded RT tasks, and so on. Note, after the first CPU starts this
-process, if another CPU wanted to do a pull, it would see that the process
-has already begun and would only increment a counter to have the IPIs
-continue again.
+Fix this by adding cpus_read_lock()/cpus_read_unlock() to
+cpufreq_suspend() to block CPU hotplug operations while suspend is in
+progress.
 
-The RT_PUSH_IPI solved the latency problem with PREEMPT_RT but could cause
-a new issue with non PREEMPT_RT. Namely, softirqs run in a threaded
-context on PREEMPT_RT but they can run in an interrupt context in non-RT.
-
-If an IPI lands on a CPU that has just woken up multiple RT tasks and the
-current CPU is running a non RT or a low priority RT task, instead of
-doing a push, it would simply do a schedule on that CPU. But if a softirq
-was also executing on this CPU, the schedule would need to wait until the
-softirq finished. Until then, the CPU would still be considered overloaded
-as there are RT tasks still waiting to run on it.
-
-A live lock occurred on a workload that was doing heavy networking traffic
-on a large machine where the softirqs would run 500us out of 750us. And it
-would also be waking up RT tasks, causing the RT pull logic to be
-constantly executed.
-
-When a softirq triggered on a CPU with RT tasks queued but not running
-yet, and the other CPUs would see this CPU as being overloaded, they would
-send an IPI over to it. The CPU would notice that the waiting RT tasks are
-of higher priority than the currently running task and simply schedule
-that CPU instead. But because the softirq was executing, before it could
-schedule, it would receive another IPI to do the same. The amount of IPIs
-would slow down the currently running softirq so much that before it could
-return back to task context, it would execute another softirq never
-allowing the CPU to schedule. This live locked that CPU.
-
-As RT_PUSH_IPI was created to help PREEMPT_RT, make it default off if
-PREEMPT_RT is not enabled.
-
-Fixes: b6366f048e0c ("sched/rt: Use IPI to trigger RT task push migration instead of pulling")
-Closes: https://lore.kernel.org/all/20260506235716.2530720-1-tj@kernel.org/
-Reported-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260515103740.25ccbed8@gandalf.local.home
+Fixes: 65650b35133f ("cpufreq: Avoid cpufreq_suspend() deadlock on system shutdown")
+Signed-off-by: Tianxiang Chen <nanmu@xiaomi.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20260408141914.35281-1-nanmu@xiaomi.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/features.h |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/cpufreq/cpufreq.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/sched/features.h
-+++ b/kernel/sched/features.h
-@@ -103,8 +103,16 @@ SCHED_FEAT(WARN_DOUBLE_CLOCK, false)
-  * rq lock and possibly create a large contention, sending an
-  * IPI to that CPU and let that CPU push the RT task to where
-  * it should go may be a better scenario.
-+ *
-+ * This is best for PREEMPT_RT, but for non-RT it can cause issues
-+ * when preemption is disabled for long periods of time. Have
-+ * it only default enabled for PREEMPT_RT.
-  */
-+# ifdef CONFIG_PREEMPT_RT
- SCHED_FEAT(RT_PUSH_IPI, true)
-+# else
-+SCHED_FEAT(RT_PUSH_IPI, false)
-+# endif
- #endif
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1973,6 +1973,7 @@ void cpufreq_suspend(void)
+ 	if (!cpufreq_driver)
+ 		return;
  
- SCHED_FEAT(RT_RUNTIME_SHARE, false)
++	cpus_read_lock();
+ 	if (!has_target() && !cpufreq_driver->suspend)
+ 		goto suspend;
+ 
+@@ -1992,6 +1993,7 @@ void cpufreq_suspend(void)
+ 
+ suspend:
+ 	cpufreq_suspended = true;
++	cpus_read_unlock();
+ }
+ 
+ /**
 
 
