@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49E03F482E;
-	Thu, 16 Jul 2026 13:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5529B22301;
+	Thu, 16 Jul 2026 13:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210104; cv=none; b=QFmLv7uCIqJ+EmU+9pHHijQgE9v/SAc4bjXrtnGvCxqCV1kE5SdZ+WdAiyfeWM5npsJI7NBEFN0WDlZBKEwnqQ87NVJusAUxvkGezE8evmHUprS/uNdmSiI1LHOW/UjlPPnvd0ASe5Z1NDAS9wGDNK9jtymMIGF2hbCmE3v4gyw=
+	t=1784210107; cv=none; b=nR2Lckv5GCsPZHhenL+4ZV8WZfDgwlfxAK5Iqaa/D552/PoaHn6ENXEuWpT8sSwd5csQdECS8IVq7Ee+pfZT2BUvfnPXXW5yVS2T43egKkFBG+Sd15aPoCxSFZ/ueX/HrCt1xojJSo6pHo9zr9yiQDE6nHJi64QkAT5z1H3VBAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210104; c=relaxed/simple;
-	bh=+JnPoPUA7V7Yz3p3vXLQAtBSjJcV0NQWA/8/v6JqZg0=;
+	s=arc-20240116; t=1784210107; c=relaxed/simple;
+	bh=0kuKDOpce1UJBSCa5tEyMpH/rsD4QjCGuGVUVLxSqM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grtgq38IPUaz+cQbbXxxoKY/6+J3+9CiO1637Ru0YN1OnJqpQYkdTKQ5dcYmlViKJkZI5pATsC7WCXkkQpDniXqVAYB0ttlc5zsDE/BTJXs+hYMW4bt33X155BDxZmKCEOO5TGjCYKXn+pxdkqsAjnB0zsz/bzTTxR41AXlGonE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d27dBKOB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pcmouQH+hVSuyR/kktlALkW5ykeXPOeRc0mLDjYXO408a8Eev3uaXC8OfHWzvjSZrjUKhhSMYX9jFBxPcC0QjeZmnJywz2iz728RX7G3Donc03+e6/W/b1OJ5NlVayICxCuiHHURWm7hStClaUfEotDLNTP+DpH4+cE63bb1Lic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4fQ1FBF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d27dBKOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214CD1F000E9;
-	Thu, 16 Jul 2026 13:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4fQ1FBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA761F000E9;
+	Thu, 16 Jul 2026 13:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210103;
-	bh=O2TCrL48GBK+OKfjDqYMnC0nu7iMXXGPpaltX5G2QJ8=;
+	s=korg; t=1784210106;
+	bh=Y81g0Q1yFp8IEr6aLNHqo7PimbuHt4qhjEzG8844lgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d27dBKOBWAaf0R29nUawEJ53iYD88SWoUI4btbeXmBKKogxOiYcZgSJzxZwXkjt6h
-	 rIYhazT62wqEFTv5clS1WeF+TqaZNjO/PzO4E2cvcDFpds/A95Z+f16+TZAZ57y5Ww
-	 pyADFNTyjmz5Pj5Kh4B6jEUrnORltgMafsu5BY3o=
+	b=G4fQ1FBFeu/uuxCBX5d4dZu974drK8AAxcUjNJFrCr8Ku8K8JNYXyakOiRwrZYpGg
+	 1+06ZxBMXsjShwz8WqQnCLlT7v9SgQusmLFRvQ7rzZm8HT8kWWoJxe+YNBK55h8uGP
+	 Mp3o64kcdvlUIgvxNoqu1Dvg6Du8lsAjePo8rsdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pranjal Shrivastava <praan@google.com>,
 	Kevin Tian <kevin.tian@intel.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.1 437/518] iommufd: Rewind header length in done if iommufd_veventq_fops_read() fails
-Date: Thu, 16 Jul 2026 15:31:45 +0200
-Message-ID: <20260716133057.405148745@linuxfoundation.org>
+Subject: [PATCH 7.1 438/518] iommufd: Reject invalid read count in iommufd_veventq_fops_read()
+Date: Thu, 16 Jul 2026 15:31:46 +0200
+Message-ID: <20260716133057.425473571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -54,15 +54,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 01e41ad76c12ae5c49ab4ef4fc7dd54e9b8784d6 upstream.
+commit 00203ca8323f9714630408c19a209b52397975e6 upstream.
 
-When the first event copy fails, rc = -EFAULT will not be reported as done
-is set to the length of the copied header.
+The read count must be large enough to hold a vEVENT header. For a normal
+vEVENT, it must also hold the trailing data following the header.
 
-Rewind it to report rc correctly.
+iommufd_veventq_fops_read() does not validate the count, but returns 0 as
+if the read had succeeded while leaving the pending event in the queue.
+
+Return -EINVAL in both undersize cases.
 
 Fixes: e36ba5ab808e ("iommufd: Add IOMMUFD_OBJ_VEVENTQ and IOMMUFD_CMD_VEVENTQ_ALLOC")
-Link: https://patch.msgid.link/r/78f8caeb6a5d667a26b870e3068cec47dd4b5be1.1780343944.git.nicolinc@nvidia.com
+Link: https://patch.msgid.link/r/e1111adcc8a8882fbfd84accd6674dc846dc5689.1780343944.git.nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Pranjal Shrivastava <praan@google.com>
@@ -70,18 +73,30 @@ Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/eventq.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/iommufd/eventq.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/iommu/iommufd/eventq.c
 +++ b/drivers/iommu/iommufd/eventq.c
-@@ -336,6 +336,7 @@ static ssize_t iommufd_veventq_fops_read
- 		if (cur->data_len &&
- 		    copy_to_user(buf + done, cur->event_data, cur->data_len)) {
+@@ -310,6 +310,9 @@ static ssize_t iommufd_veventq_fops_read
+ 
+ 	if (*ppos)
+ 		return -ESPIPE;
++	/* Minimum read count is a vEVENT header */
++	if (count < sizeof(*hdr))
++		return -EINVAL;
+ 
+ 	while ((cur = iommufd_veventq_deliver_fetch(veventq))) {
+ 		/* Validate the remaining bytes against the header size */
+@@ -323,6 +326,9 @@ static ssize_t iommufd_veventq_fops_read
+ 		if (!vevent_for_lost_events_header(cur) &&
+ 		    sizeof(*hdr) + cur->data_len > count - done) {
  			iommufd_veventq_deliver_restore(veventq, cur);
-+			done -= sizeof(*hdr);
- 			rc = -EFAULT;
++			/* Read count doesn't fit a single normal vEVENT */
++			if (done == 0)
++				rc = -EINVAL;
  			break;
  		}
+ 
 
 
