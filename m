@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E44828505E;
-	Thu, 16 Jul 2026 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CE328505E;
+	Thu, 16 Jul 2026 14:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211720; cv=none; b=SZ1rBu3wiWPpQeO6HLrvvubkeBSQl7f32RMwoM85LxLlZNeLys2aCE91RE54B4wasBWXuBTFOryG8nTSVRBmws9GJRHO23Hnsln3lR3T5p0MftB4rM0r/j5m5MZDSDVYbts/rl+1hOv3xNsmvk5txg79EE7NDkAEaMrswqYiemY=
+	t=1784211722; cv=none; b=RSrma5FXJW+FcEYle/YtTz3KmPFGdS74IGsdyghlTksG/v9Hz93Eb3z2/meOCNLQTHxww1s1HWGhhFfOHarz8SU4WO+OgTvVxOkixSRo3JvS932NMR3/2h1Xbgr6JsPIkzgh64XKIGVf3+u/T2vLhQvEGYahXp90rYdz9UP5sgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211720; c=relaxed/simple;
-	bh=ZsjsqXiTW8pLq7AEq0SfxhRxXQdzIhhUDvfahqcq6vc=;
+	s=arc-20240116; t=1784211722; c=relaxed/simple;
+	bh=KnWWdBq3lA2TV9QtQ5vKLFpUYnyapf3qwT5y4/qyBKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tV5d4OqdICQhVjXLgylm/A2OgTiTn4O8lmdpb4jU+dvEz8L4SggENB4rD0pNvmyGYrs/zsmIlM/1tgiTURzdi9mS16WLhvzFuRzoxCblygNo4nwoRoKMBZjMvSUzArqPwc1GvoP+x/4iPpJyLx0Db9/6SGtVLF1Q+jSMB87oOmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCFGZfrJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d7Wxgw3oQpxPdx3sCFTsZngwLSdqIh/FbWeM/5cP26+YUBKR9kjq/gfO02v61k8cW8U72akjPHW2ZdbzrSLt7U8sWl1ou1lszU7rmQQFqcHoNu/kF8VGZmieS8E3QsqXxT20pACATtz0T7hcU2hEKC5bJytIxt5PKXyKgiLEGJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSxXuPrv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCFGZfrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729C01F000E9;
-	Thu, 16 Jul 2026 14:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSxXuPrv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A37B1F00A3A;
+	Thu, 16 Jul 2026 14:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211719;
-	bh=KWZvmvoCxqQRL2KxKk1AolnGGVAVHo157l3eGToa7+s=;
+	s=korg; t=1784211721;
+	bh=O7pwyXk9BE0sGgr3OvdScgWpgloSFeKuyaNQtk4Uc+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZCFGZfrJNQPZZZjtlhj66GTkPfhllnZ756KjrJjrbEVIVWcsZLRSt1VL04IJnGKJd
-	 oy87+5uu7wGcXn+Fpla0D4UvCl4+rwC4tXnps+JVCXFu5CmQvQkKr94SQ33foic9ty
-	 CwDO2QYK3SwxnH6bUf0PH+JSTY+NYUEP9DbnvGPY=
+	b=TSxXuPrvpU8U24lhSwYIJYUbyvWM+CNVfoZailI3DqWUpBtd+yxPbk6Ek4SX/NQHf
+	 dKU0T9ywbiVGGKzBq/CNfzyPvNfj+VkoNAkcImEhpgWwOiyb/OeA4smWz7DJ1Uk/pJ
+	 tbL2NMzbsr4RwZzwuMRpqdTITPIPo4zOz798wqh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Baoquan He <baoquan.he@linux.dev>,
-	chenyichong <chenyichong@uniontech.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/349] mm/vmalloc: take vmap_purge_lock in shrinker
-Date: Thu, 16 Jul 2026 15:29:05 +0200
-Message-ID: <20260716133033.544413641@linuxfoundation.org>
+Subject: [PATCH 6.12 012/349] device property: initialize the remaining fields of fwnode_handle in fwnode_init()
+Date: Thu, 16 Jul 2026 15:29:06 +0200
+Message-ID: <20260716133033.567844817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -53,48 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uladzislau Rezki (Sony) <urezki@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit ec05f51f1e65bce95528543eb73fda56fd201d94 ]
+[ Upstream commit 7eba000621fff223dd7bab484d48918c7c77a307 ]
 
-decay_va_pool_node() can be invoked concurrently from two paths:
-__purge_vmap_area_lazy() when pools are being purged, and the shrinker via
-vmap_node_shrink_scan().
+If a firmware node is allocated on the stack (for instance: temporary
+software node whose life-time we control) or on the heap - but using a
+non-zeroing allocation function - and initialized using fwnode_init(),
+its secondary pointer will contain uninitialized memory which likely
+will be neither NULL nor IS_ERR() and so may end up being dereferenced
+(for example: in dev_to_swnode()). Set fwnode->secondary to NULL on
+initialization. While at it: initialize the remaining fields of struct
+fwnode_handle too just to be sure.
 
-However, decay_va_pool_node() is not safe to run concurrently, and the
-shrinker path currently lacks serialization, leading to races and possible
-leaks.
-
-Protect decay_va_pool_node() by taking vmap_purge_lock in the shrinker
-path to ensure serialization with purge users.
-
-Link: https://lore.kernel.org/20260413192646.14683-1-urezki@gmail.com
-Fixes: 7679ba6b36db ("mm: vmalloc: add a shrinker to drain vmap pools")
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Reviewed-by: Baoquan He <baoquan.he@linux.dev>
-Cc: chenyichong <chenyichong@uniontech.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ kept index-based loop instead of for_each_vmap_node() helper ]
+Cc: stable@vger.kernel.org
+Fixes: 01bb86b380a3 ("driver core: Add fwnode_init()")
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260511074927.9473-1-bartosz.golaszewski@oss.qualcomm.com
+[ Fix typo in commit message. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/fwnode.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/vmalloc.c b/mm/vmalloc.c
-index 1d2262fb541850..d4a42980b4d028 100644
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -5204,6 +5204,7 @@ vmap_node_shrink_scan(struct shrinker *shrink, struct shrink_control *sc)
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -202,8 +202,10 @@ static inline void fwnode_init(struct fw
  {
- 	int i;
+ 	fwnode->secondary = NULL;
+ 	fwnode->ops = ops;
++	fwnode->dev = NULL;
+ 	INIT_LIST_HEAD(&fwnode->consumers);
+ 	INIT_LIST_HEAD(&fwnode->suppliers);
++	fwnode->flags = 0;
+ }
  
-+	guard(mutex)(&vmap_purge_lock);
- 	for (i = 0; i < nr_vmap_nodes; i++)
- 		decay_va_pool_node(&vmap_nodes[i], true);
- 
--- 
-2.53.0
-
+ static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
 
 
