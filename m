@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77051432E82;
-	Thu, 16 Jul 2026 14:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCEC42CAF3;
+	Thu, 16 Jul 2026 14:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212330; cv=none; b=AJ3QVsoyYfatX2MGft3QXmdvF7Otjhr1/kaho2Zk/dQ4KH3kIzhWf+ElW8UDENGzhhBK/Su0XE5uq1RW08Iz8VVTyY/CEO2mto2W2wSRsjKCRtMx8u596jqJP7gPe3fjfKlq2v+aS32bPZg/bSwbfUrvdPCzUbh9bv3xo50MZ+w=
+	t=1784212333; cv=none; b=nRlYqRX1vcv/WhpEq2d7qGF2KsuZmDFx8IfXpBQD+kQPTKKzlak9cAvcM89pGVzGUKwtLqNmJ6rLa5Y0x+q4QxdL6Ln42sfUX9iBB0xrwYywkjqO5uROVnI9ULL4rOjCC/fnpejopJOV5WCpb4fZWam0HVtRZAMvvxllcnPksu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212330; c=relaxed/simple;
-	bh=rDnDzPdU0ttqKka4qE3RBdnG6GTQU1aZf8sB4SB4AIg=;
+	s=arc-20240116; t=1784212333; c=relaxed/simple;
+	bh=7DCToQnkzmL/pQmcK1auj+tQ8X6R7XqoG8LfbO9vWAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FiHk0kMiSXndyF9YnsYnh5GrQ4Jut8hgJAtDeEZ1Jv6iRpQDomseEo+4sjJL7rgnu71le+KJU+a01D4fYU96r/Yw7Te+jQzvLbB9kT3H3NqGmp1i2NhLd34zU++t8SSxl1WqFNVQ/U9R7+Hal1BA2rorNEl0AVYq80nRt5/d9fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sd75Z255; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AgdCqeTEc0mLldU9gZGxsfDW0SfwQuzNGHbcFbXy5Li79iUyEFuE4tSn14KIVAONoIw+99R/Q5lz8LZ0CL+wiJBW0DeCWNKaYLNGr6XDyRTGolJI5ASaA7pY5kj7/xFVtEbBsvTNgsXLQ1Rrhiyhl/p7WEzWecUaNedb5g6QamQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kS+oaohW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sd75Z255"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CDE1F000E9;
-	Thu, 16 Jul 2026 14:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kS+oaohW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5821F00A3E;
+	Thu, 16 Jul 2026 14:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212327;
-	bh=xtLPFQtDv4yR29enA/Ud0VMQtO+8p5DQtmUIOhklkHU=;
+	s=korg; t=1784212329;
+	bh=9s5stWowGzWKjiHZuN7yjg4ZvWafDKCGCMqSiVLBFFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sd75Z255I26iK8UjQ30TTNVSQkQ1vNoxAEPq4qQa1MdwMiARVs7F3tA8B+/YaOwNC
-	 ozeg8oVK9A7Cn4CSRmKTJmg0vKTjduaCSr11G5KaSA1l1cu9kyGmC9pDmTKwe7sbYN
-	 EJmtVI4xPdOJiOC28wnuOQP8mSfC8XTC3gwtc2nU=
+	b=kS+oaohWwdrol0buNN3bIaZzwelMG7pRcw75uueOZWaWaj63H5GtZQxrdSo50Dxyv
+	 SmP9Sd2uWZRLI6mV1COQQjQAu7l1YHp6MfXFd22H7EDizPY8Nx9PNxlAKkQHJh+l7O
+	 WRhk23mzLIhBb+02hn8wMzvkYnrfPCQ2R5qaImHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 242/349] USB: ulpi: fix memory leak on registration failure
-Date: Thu, 16 Jul 2026 15:32:56 +0200
-Message-ID: <20260716133038.775647939@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.12 243/349] USB: usb-storage: ene_ub6250: restore media-ready check
+Date: Thu, 16 Jul 2026 15:32:57 +0200
+Message-ID: <20260716133038.797577403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,76 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 8af6812795869a66e9b26044f455b13deecdb69c upstream.
+commit 5fc3f333c001f1e308bbcdeecdec0d054d24338b upstream.
 
-The allocated device name is never freed on early ULPI device
-registration failures.
+Commit 1892bf90677a ("USB: usb-storage: Fix use of bitfields for
+hardware data in ene_ub6250.c") converted the media status fields from
+bitfields to bit masks.
 
-Fix this by initialising the device structure earlier and releasing the
-initial reference whenever registration fails.
+The original ene_transport() test called ene_init() only when neither
+media type was ready:
 
-Fixes: 289fcff4bcdb ("usb: add bus type for USB ULPI")
+        !(sd_ready || ms_ready)
+
+The converted test became:
+
+        !sd_ready || ms_ready
+
+This is not equivalent. Restore the original semantics by testing that
+both ready bits are clear before calling ene_init().
+
+Fixes: 1892bf90677a ("USB: usb-storage: Fix use of bitfields for hardware data in ene_ub6250.c")
 Cc: stable <stable@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260608145803.69360-1-johan@kernel.org
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/F42641386E32404F+20260626070607.4119527-1-raoxu@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/common/ulpi.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/usb/storage/ene_ub6250.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -281,28 +281,24 @@ static int ulpi_register(struct device *
- 	ulpi->dev.parent = dev; /* needed early for ops */
- 	ulpi->dev.bus = &ulpi_bus;
- 	ulpi->dev.type = &ulpi_dev_type;
-+
-+	device_initialize(&ulpi->dev);
-+
- 	dev_set_name(&ulpi->dev, "%s.ulpi", dev_name(dev));
+--- a/drivers/usb/storage/ene_ub6250.c
++++ b/drivers/usb/storage/ene_ub6250.c
+@@ -2306,7 +2306,8 @@ static int ene_transport(struct scsi_cmn
  
- 	ACPI_COMPANION_SET(&ulpi->dev, ACPI_COMPANION(dev));
- 
- 	ret = ulpi_of_register(ulpi);
--	if (ret) {
--		kfree(ulpi);
-+	if (ret)
- 		return ret;
--	}
- 
- 	ret = ulpi_read_id(ulpi);
--	if (ret) {
--		of_node_put(ulpi->dev.of_node);
--		kfree(ulpi);
-+	if (ret)
- 		return ret;
--	}
- 
--	ret = device_register(&ulpi->dev);
--	if (ret) {
--		put_device(&ulpi->dev);
-+	ret = device_add(&ulpi->dev);
-+	if (ret)
- 		return ret;
--	}
- 
- 	root = debugfs_create_dir(dev_name(&ulpi->dev), ulpi_root);
- 	debugfs_create_file("regs", 0444, root, ulpi, &ulpi_regs_fops);
-@@ -334,9 +330,10 @@ struct ulpi *ulpi_register_interface(str
- 	ulpi->ops = ops;
- 
- 	ret = ulpi_register(dev, ulpi);
--	if (ret)
-+	if (ret) {
-+		put_device(&ulpi->dev);
- 		return ERR_PTR(ret);
--
-+	}
- 
- 	return ulpi;
- }
+ 	/*US_DEBUG(usb_stor_show_command(us, srb)); */
+ 	scsi_set_resid(srb, 0);
+-	if (unlikely(!(info->SD_Status & SD_Ready) || (info->MS_Status & MS_Ready)))
++	if (unlikely(!(info->SD_Status & SD_Ready) &&
++		     !(info->MS_Status & MS_Ready)))
+ 		result = ene_init(us);
+ 	if (result == USB_STOR_XFER_GOOD) {
+ 		result = USB_STOR_TRANSPORT_ERROR;
 
 
