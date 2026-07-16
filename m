@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467C22DF137;
-	Thu, 16 Jul 2026 13:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C350541F5F6;
+	Thu, 16 Jul 2026 13:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209096; cv=none; b=t4lRiIThOdNXI+MuOqhuC54a/0a/dVi7e9BlP54yZwEL7Fei0JkCTqoMPlySp6bnl/axqaip+7Hv9h8M2+YsLJVabO8Vx87BOGOuFr4mJJF0/Sd+hPfNzOQHct2CDK+QtrTSszGlPeulVlFHIvYVyZIuvWThtoic5QiKr4QE/UE=
+	t=1784209098; cv=none; b=eL/bsOcsuDo3Smowryf0hXG0dkTECcFt6Q0rinmwfgTpPBafMHD8ie/piW4b0G0NY9tPsyriS+Vw4CIx72M4tyuq7DlFr5kQrYX9/5MdM6lGLO5FCROFZnyJmN4aIMeEB/KcL83yz5fMY15Swt1NereGHhN4O/45YX8bjP8IGAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209096; c=relaxed/simple;
-	bh=sg6/hhhBh79ukfGQs39tKOuf5ZQDFlgD+ZUgjkr3j7I=;
+	s=arc-20240116; t=1784209098; c=relaxed/simple;
+	bh=Xq91+QOwnIaMmFuj9YMJHv407UumcpzYUu+/Po93Q/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mF/DgA61FlZnqzYHpiKkkcAH4Sm16/utN0L4PGx4wiFJkbEylzJkw+Ycd3Mc0f2fCSKVvvi0gskEVP3jMCYIHz3FZb/VFKqVXCQnnVyQuNJ6C8EJk3JVYdDRHS2C2HEiqI+VpouBIK8ZDIJEmgVwPPDU1a5bBzrmbU9fD+7rKYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIj0HMgw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eMK0T0joqnMUTNTt5pRR+OINtbiN/xs1mLy99oEyRVYEIe9RURWf4RBt6cVDLOR1U9MW/id1JSzrAe1vXDF3a+C3TeFz74VotxaRsNhs3W+6qXFfP0OUE7qdJ6O3HEbaEf0AaMd6C/wk67kqMyTG8cLiAlROHAR2vVrw+8pAso8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyswbFTP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIj0HMgw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E1B1F000E9;
-	Thu, 16 Jul 2026 13:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyswbFTP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3529B1F000E9;
+	Thu, 16 Jul 2026 13:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209095;
-	bh=ofRkNzb9+VVAEY6190kK2h+4iT7R0MM+Tnp4EQPJC28=;
+	s=korg; t=1784209097;
+	bh=KjNdpcFYfUZ9HrJe9pTm+RxnXTbYwDQKgEius5Iy/6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sIj0HMgwL4aSPVQ6hnG/Qnfo68JBXVXwpqlDMew7f736Rc5KoGyB5Q9hQDk/mgc4O
-	 AjhATBrK8E4qyDcB7lKcHvET3diOy2OvQgDxws8MPoe7Ac1J8Uph4sZ+jlJoPG8LxQ
-	 6OrHEJHJx2ipsbUzQwNKSPkeckk8Rw69kqjuk0jw=
+	b=SyswbFTPkZ8lmm6tT935Hb/MAJjcFZ2zP8GTVQqdYOvzz+J5TcTzQaP5I24CQ80ba
+	 ZYP8AB2JhDVy5U6iC/yf9FYgKuZmvyFOf/FSeOXsgPujnK7kg2zceKNsqEtSgZsCOz
+	 yvoaEDDBvjQ3Ul7EZqqI2wGAV4NPHTX1neDZv0HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 028/518] bpf: Prefer packs that wont trigger an IBPB flush on allocation
-Date: Thu, 16 Jul 2026 15:24:56 +0200
-Message-ID: <20260716133048.391809646@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.1 055/518] iio: imu: adis: add IRQF_NO_THREAD to non-FIFO trigger IRQ
+Date: Thu, 16 Jul 2026 15:25:23 +0200
+Message-ID: <20260716133048.991266316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,88 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit a9b1f19a6a673ba06820898d0f1ad02883ea1639 upstream.
+commit 6e1b9bff1202da55c464e36bd34a2b6863d7fe30 upstream.
 
-Currently BPF pack allocator picks the chunks from the first available
-pack. While this is okay, it naturally leads to more frequent flushes
-when there are multiple packs in the system that weren't used since the
-last flush.
+devm_adis_probe_trigger() registers iio_trigger_generic_data_rdy_poll()
+through devm_request_irq() on the non-FIFO path, but it does not add
+IRQF_NO_THREAD to the IRQ flags.
 
-As an optimization prefer allocating the new programs from packs that
-are unused since last flush. When all packs are dirty, allocation forces
-a flush and marks all packs clean.
+When the kernel is booted with forced IRQ threading, the parent IRQ can
+otherwise be threaded by the IRQ core and the subsequent IIO trigger
+child IRQ is then dispatched from irq/... thread context instead of
+hardirq context. Because iio_trigger_generic_data_rdy_poll()
+immediately drives iio_trigger_poll(), this violates the hardirq-only
+IIO trigger helper contract and can push downstream trigger consumers
+through the wrong execution context.
 
-Below are some future optimizations ideas:
+Add IRQF_NO_THREAD on top of the existing adis->irq_flag value for the
+non-FIFO request_irq() path, while preserving the current trigger
+polarity and IRQF_NO_AUTOEN behavior.
 
-  1. Currently, the "dirty" tracking is only done at the pack-level.
-     Flush frequency can further be reduced with chunk-level tracking.
-     This requires a new bitmap per-pack to track the dirty state.
-  2. IBPB flush is done on all CPUs, even if only a single CPU ran the
-     BPF program. On a system with hundreds of CPUs this could be a
-     major bottleneck forcing hundreds of IPIs to deliver the flush.
-     The solution is to track the CPUs where a BPF program ran, and
-     issue IBPB only on those CPUs.
-  3. Avoid IBPB when flush is already done at other sources (e.g.
-     context switch).
-
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fec86c6b8369 ("iio: imu: adis: Add Managed device functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/core.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ drivers/iio/imu/adis_trigger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 1bf4b8dffe9158..bba4acd61d4126 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -948,8 +948,8 @@ static struct bpf_prog_pack *alloc_new_pack(bpf_jit_fill_hole_t bpf_fill_ill_ins
- void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool was_classic)
- {
- 	unsigned int nbits = BPF_PROG_SIZE_TO_NBITS(size);
--	struct bpf_prog_pack *pack;
--	unsigned long pos;
-+	struct bpf_prog_pack *pack, *fallback_pack = NULL;
-+	unsigned long pos, fallback_pos = 0;
- 	void *ptr = NULL;
- 
- 	mutex_lock(&pack_mutex);
-@@ -981,8 +981,29 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool
- 	list_for_each_entry(pack, &pack_list, list) {
- 		pos = bitmap_find_next_zero_area(pack->bitmap, BPF_PROG_CHUNK_COUNT, 0,
- 						 nbits, 0);
--		if (pos < BPF_PROG_CHUNK_COUNT)
-+		if (pos >= BPF_PROG_CHUNK_COUNT)
-+			continue;
-+		/* Flush not enabled, use any pack */
-+		if (!static_branch_unlikely(&bpf_pred_flush_enabled))
- 			goto found_free_area;
-+		/*
-+		 * cBPF reuse of a dirty pack triggers a flush, so prefer a
-+		 * clean pack for cBPF. eBPF never flushes, so pick the first
-+		 * free pack, dirty or clean.
-+		 */
-+		if (!was_classic || !pack->arch_flush_needed)
-+			goto found_free_area;
-+		if (!fallback_pack) {
-+			fallback_pack = pack;
-+			fallback_pos = pos;
-+		}
-+	}
-+
-+	/* No preferred pack found */
-+	if (fallback_pack) {
-+		pack = fallback_pack;
-+		pos = fallback_pos;
-+		goto found_free_area;
- 	}
- 
- 	pack = alloc_new_pack(bpf_fill_ill_insns);
--- 
-2.53.0
-
+--- a/drivers/iio/imu/adis_trigger.c
++++ b/drivers/iio/imu/adis_trigger.c
+@@ -94,7 +94,7 @@ int devm_adis_probe_trigger(struct adis
+ 	else
+ 		ret = devm_request_irq(&adis->spi->dev, adis->spi->irq,
+ 				       &iio_trigger_generic_data_rdy_poll,
+-				       adis->irq_flag,
++				       adis->irq_flag | IRQF_NO_THREAD,
+ 				       indio_dev->name,
+ 				       adis->trig);
+ 	if (ret)
 
 
