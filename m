@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442B53B2D18;
-	Thu, 16 Jul 2026 13:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371CF2DF137;
+	Thu, 16 Jul 2026 13:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209246; cv=none; b=NjS0f0+iukFygtXHQFQlld+q3Y+wsMF1ZRm8Ft432LfH7nsXSvD9uzwy//la63WaUEzXqrIAWtSkxSoqdo4emJuGhRXUlZjqvQzb5VC/3JK5BwFN/dQVMnr1trn/Rf9IdOee2o+mAzRC9QNVO6XzFHWLCGeKf19qTaHtTR4YS4k=
+	t=1784209249; cv=none; b=QPYCIQThlO+bsMAP1u4T4bpLb/h8fJrIg6ReaB1HTK53SWUYRr9QvIDDiqIJSJr/bvFmrsbYpcp/3DXnfNqJFeW0++gOngZ98v/AluaJ1XL2a/T7PAtKi2tok3JzblHBK3tcHfVMC4PkxEi1J8b/sNcGa4CJdEZEYxgD3Wjs4UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209246; c=relaxed/simple;
-	bh=gLmiAt0UmA3oR9IfDGGe8aPzu1W+jXCNCDf1Tm6xJ0o=;
+	s=arc-20240116; t=1784209249; c=relaxed/simple;
+	bh=5Dpty0ehQcp6Pnykv2RfCWXtq7DKOSfycIQIiALwao0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGRJQFis5lYOb89WE9sFYrarUPIyo6bB2RjJYWHwIVJvvsHQEqNmbjwXbzYCQtRjnHUxQPkw8xWkmbxfxaxXx82MM3wr/MtaYFJGYLBS7Pum2Nf0R1lJ0zL9z41cyPw98FcEVH4I7m7WxGQsQoVoG4pHRtqKnpm/4ZNlbRKMa7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8+DNFTa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VogcA7HLSd8WUSxP2+/UF3vYVERpH78dYPbVVKMA+kb/gyCMbqmHKcJAr3oV8vGBtCRL1xD4rOtDIgiXw4P7PGJQImGn9dCgm1U//yNxFdPQwhGdWtcv0pKUbJNqnnqMvsamYEmS06G8+Kju2x/jK4+s9yhSpzSE+Y2auRYwuOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvHLEvpv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8+DNFTa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F2E1F000E9;
-	Thu, 16 Jul 2026 13:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvHLEvpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA7D1F000E9;
+	Thu, 16 Jul 2026 13:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209245;
-	bh=DcP7OQdYle5ZaDayMCKPuMT9aXahHQuF//miJojmb3E=;
+	s=korg; t=1784209247;
+	bh=+z2+FfjLaNUZmk10qKXUb5uP47u2eTtDGwIAVJT+oR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W8+DNFTa9zTZCPhwEmZOjB6dpNEopyFnk4BEJSbJr14nq4ywIkSDZ68WkatvwNZV9
-	 OWNG8JerI/uOx1nw3HuCNfsIUGyoxWmWUyRy5K30/kTZVVeE4y1ggeII5owBD+8Ize
-	 ZTkuvA0BEN6MOxzHElS7xYOqFDBc+FtVE27yROrM=
+	b=mvHLEvpv0NsoINp7iLK7EpwrYUVrfcNij0UKXQmW3k5pWdOuWi4vCxKGI5X5+Q/V/
+	 D3cXWQqCxlPoS/DyO6n344FgIXux23p4gbL9yeMxGoavm77zP460QubrqntNnp8jit
+	 SNs7yWIf5rCOGhE8KMpL5qfAr8ORoUYF3ECXoKJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI Review <sashiko-bot@kernel.org>,
-	Longfang Liu <liulongfang@huawei.com>,
-	Alex Williamson <alex.williamson@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 7.1 111/518] vfio: Remove device debugfs before releasing devres
-Date: Thu, 16 Jul 2026 15:26:19 +0200
-Message-ID: <20260716133050.281205291@linuxfoundation.org>
+	Liviu Stan <liviu.stan@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.1 076/518] iio: temperature: ltc2983: Fix n_wires default bypassing rotation check
+Date: Thu, 16 Jul 2026 15:25:44 +0200
+Message-ID: <20260716133049.447969789@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,76 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Liviu Stan <liviu.stan@analog.com>
 
-commit dc7fe87de492ea7f33a72b78d26650b75bf37f4f upstream.
+commit 434c150752675f44dc52c384a7fa22e5176bc35a upstream.
 
-VFIO device debugfs files created with debugfs_create_devm_seqfile()
-store a devres allocated debugfs_devm_entry as inode private data.
-vfio_unregister_group_dev() currently calls vfio_device_del() before
-vfio_device_debugfs_exit(), but device_del() releases devres.  This can
-leave debugfs entries visible with stale inode private data while
-unregister waits for userspace references to drain.
+When adi,number-of-wires is absent, n_wires is left at 0. The binding
+documents a default of 2 wires, matching the hardware default. However
+the current-rotate validation checks n_wires == 2 || n_wires == 3, so
+with n_wires = 0 the guard is bypassed and adi,current-rotate is accepted
+for a 2-wire RTD.
 
-Remove the per-device debugfs tree before vfio_device_del().  The debugfs
-view is diagnostic only, so losing it at the start of unregister is
-preferable to preserving entries whose backing storage may already have
-been released.
+Initialize n_wires = 2 to match the binding default and ensure the
+rotation check fires correctly when the property is absent.
 
-Complete the teardown by clearing the per-device debugfs root after
-removal.  This matches the global debugfs root cleanup and prevents
-future users from mistaking a removed dentry for a live debugfs tree
-during the remainder of unregister.
-
-Fixes: 2202844e4468 ("vfio/migration: Add debugfs to live migration driver")
-Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/r/20260615192725.6A2221F000E9@smtp.kernel.org
-Cc: stable@vger.kernel.org
-Cc: Longfang Liu <liulongfang@huawei.com>
-Assisted-by: OpenAI Codex:gpt-5
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260615204717.735302-1-alex.williamson@nvidia.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
+Signed-off-by: Liviu Stan <liviu.stan@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/debugfs.c   |    1 +
- drivers/vfio/vfio_main.c |    8 +++++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/iio/temperature/ltc2983.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vfio/debugfs.c
-+++ b/drivers/vfio/debugfs.c
-@@ -97,6 +97,7 @@ void vfio_device_debugfs_init(struct vfi
- void vfio_device_debugfs_exit(struct vfio_device *vdev)
- {
- 	debugfs_remove_recursive(vdev->debug_root);
-+	vdev->debug_root = NULL;
- }
+--- a/drivers/iio/temperature/ltc2983.c
++++ b/drivers/iio/temperature/ltc2983.c
+@@ -741,7 +741,7 @@ ltc2983_rtd_new(const struct fwnode_hand
+ 	struct ltc2983_rtd *rtd;
+ 	int ret = 0;
+ 	struct device *dev = &st->spi->dev;
+-	u32 excitation_current = 0, n_wires = 0;
++	u32 excitation_current = 0, n_wires = 2;
  
- void vfio_debugfs_create_root(void)
---- a/drivers/vfio/vfio_main.c
-+++ b/drivers/vfio/vfio_main.c
-@@ -407,6 +407,13 @@ void vfio_unregister_group_dev(struct vf
- 	vfio_device_group_unregister(device);
- 
- 	/*
-+	 * Remove debugfs before device_del(), which releases devres.  Some
-+	 * debugfs entries are created with debugfs_create_devm_seqfile() and
-+	 * therefore rely on devres-managed inode private data.
-+	 */
-+	vfio_device_debugfs_exit(device);
-+
-+	/*
- 	 * Balances vfio_device_add() in register path, also prevents
- 	 * new device opened by userspace in the cdev path.
- 	 */
-@@ -435,7 +442,6 @@ void vfio_unregister_group_dev(struct vf
- 		}
- 	}
- 
--	vfio_device_debugfs_exit(device);
- 	/* Balances vfio_device_set_group in register path */
- 	vfio_device_remove_group(device);
- }
+ 	rtd = devm_kzalloc(dev, sizeof(*rtd), GFP_KERNEL);
+ 	if (!rtd)
 
 
