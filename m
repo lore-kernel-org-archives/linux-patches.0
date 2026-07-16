@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DB1413D69;
-	Thu, 16 Jul 2026 14:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F7A400973;
+	Thu, 16 Jul 2026 14:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210577; cv=none; b=kPamgYYKpkHCylS2KUAH6pzpV6gwKsVXFkzI/xSv3YJTTXJsCkbsF21HPQ/w+o9Lxo7eB5lPiP2U3d5N1reEH98HrGC8BeZCttR3udorcl17NdxagV6w8LXbVV8khGOLGE6Rwbn+BYPLwNGnD8ZDb/uktc3Lrp+ZeuBOSjZMdtU=
+	t=1784210580; cv=none; b=sLHWtUeqhzKbNmsZfC6QyND6ZnLmakMbvd2G9Epbt1rnwAvoHM3lMOM2FNXlLCfIxMZHTUyudc64T4gb7naA1cWmARZyq16Tc8VorSt+39pB3sk7ZIvU8jOHZWT3EPB/7xM5aXE+0FJz8YEPk+BR+SX3tBAhRH3VHDZ7Tj2W8Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210577; c=relaxed/simple;
-	bh=drd/X3zGc3v9gFUok+BpJERwMmaiOoqxDVMER43wU/k=;
+	s=arc-20240116; t=1784210580; c=relaxed/simple;
+	bh=0BHJGReUrPek+vdLtbI2nn1dRWsSViiD/9dy4K0N8HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lLlwwS+wAWXk/rzg19klskSQp5BKeYrwd6036Irci3K1JOWwMrm6P4BIxOKZ82W6zlyidOtngmkQWGnNmw41/uiZA9YoKPF7KseBuKvrx48YLFQFy3eDvxNFMGLA/k43ab5q2Zizc4AZfuDikMGV2g7XiuIO9IPxhChsx4SMCN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6Y634q9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dTlKqmBaD0uMbB3pI3VPlG2Neig9+fF8gz75xGDShHD8qiTLKO1J2XZlwYg1ggi0pvhvxWZm/akvPriEYxC8vLaWt81PsKJOrG+E/BjQu09Itgf6DYKCk8oozqTjDC1cvncyiGE7ZV6iLhN98pURNEkL5Ue75k5Lvax6l0xWmt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3LkrnOf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6Y634q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222401F00A3A;
-	Thu, 16 Jul 2026 14:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3LkrnOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5251F000E9;
+	Thu, 16 Jul 2026 14:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210576;
-	bh=z80AaVmz0pELMr/FOoDDsBoPzL1YsUQ5NnZshUb9FcI=;
+	s=korg; t=1784210579;
+	bh=c104K+9C3jFDWzaKL31hEvvfl19Tz3UQEUmfSN3Y8Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F6Y634q9L+eZXVM6sNx3bQmsFZbhOg632ktb8Ug6wa5xw0rTin9qfkovlj+nlMY1Z
-	 edFErlzGpdJKuFESbXnXtQogmfAKbhsS3UIgUTktvljhlc4ljJaOAXaL0ivBBOqf8A
-	 oKrQwIAvmPriqzkBPAgswTQEhIjnuiRX8I/AkBvQ=
+	b=q3LkrnOfX5o8EWNZVbhYnJBj2ndM9tnz9Wxkrkud3zM7Ez6CxHnPJW7ATN7SmMDmZ
+	 92wE1eZ0bGoHYGjfDlBKD3u/V+ihvo/J/VbcxtAP/OCxmti99C6Q2G4UjafwhBgCzG
+	 OrI8XwFZETA+ZkUYh6dwZjisuqrHz3+2vVEdNuvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 101/480] ALSA: firewire: isight: bound the sample count to the packet payload
-Date: Thu, 16 Jul 2026 15:27:28 +0200
-Message-ID: <20260716133046.897116905@linuxfoundation.org>
+Subject: [PATCH 6.18 102/480] ALSA: gus: check snd_ctl_new1() return value
+Date: Thu, 16 Jul 2026 15:27:29 +0200
+Message-ID: <20260716133046.921010886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,55 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit 29b9667982e4df2ed7744f86b1144f8bb58eb698 upstream.
+commit c7fa99d30c7a166a5e5db5a585ce7501ff68326b upstream.
 
-isight_packet() takes the frame count from the device iso packet and
-checks it only against the device claimed iso length.
+snd_ctl_new1() can return NULL when memory allocation fails.
+snd_gf1_pcm_volume_control() does not check the return value before
+dereferencing kctl->id.index, which can lead to a NULL pointer
+dereference.
 
-	count = be32_to_cpu(payload->sample_count);
-	if (likely(count <= (length - 16) / 4))
-		isight_samples(isight, payload->samples, count);
+Add a NULL check after snd_ctl_new1() and return -ENOMEM if it fails.
 
-length is the iso header data_length. It can be up to 0xffff. So the
-gate allows a count up to about 16379. isight_samples() then copies
-count frames out of payload->samples into the PCM DMA buffer.
-
-payload->samples holds only 2 * MAX_FRAMES_PER_PACKET values. The
-device multiplexes two samples per frame. A count past
-MAX_FRAMES_PER_PACKET reads past the payload. A count past the buffer
-size writes past runtime->dma_area. The smallest PCM buffer is larger
-than MAX_FRAMES_PER_PACKET. Bounding the count to MAX_FRAMES_PER_PACKET
-keeps both the read and the write in range.
-
-A malicious or faulty Apple iSight on the FireWire bus reaches this
-during a normal capture.
-
-Add the MAX_FRAMES_PER_PACKET bound to the gate.
-
-Fixes: 3a691b28a0ca ("ALSA: add Apple iSight microphone driver")
-Suggested-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Assisted-by: Opencode:DeepSeek-V4-Flash
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/178205454729.1900991.7807310178296762772@maoyixie.com
+Fixes: c5ae57b1bb99 ("ALSA: gus: Fix kctl->id initialization")
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Link: https://patch.msgid.link/tencent_F644A3DCAD32945D62DB2FEEBE8A996F6809@qq.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/isight.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/isa/gus/gus_pcm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/firewire/isight.c
-+++ b/sound/firewire/isight.c
-@@ -179,7 +179,8 @@ static void isight_packet(struct fw_iso_
- 	if (likely(length >= 16 &&
- 		   payload->signature == cpu_to_be32(0x73676874/*"sght"*/))) {
- 		count = be32_to_cpu(payload->sample_count);
--		if (likely(count <= (length - 16) / 4)) {
-+		if (likely(count <= (length - 16) / 4 &&
-+			   count <= MAX_FRAMES_PER_PACKET)) {
- 			total = be32_to_cpu(payload->sample_total);
- 			if (unlikely(total != isight->total_samples)) {
- 				if (!isight->first_packet)
+--- a/sound/isa/gus/gus_pcm.c
++++ b/sound/isa/gus/gus_pcm.c
+@@ -849,6 +849,8 @@ int snd_gf1_pcm_new(struct snd_gus_card
+ 		kctl = snd_ctl_new1(&snd_gf1_pcm_volume_control1, gus);
+ 	else
+ 		kctl = snd_ctl_new1(&snd_gf1_pcm_volume_control, gus);
++	if (!kctl)
++		return -ENOMEM;
+ 	kctl->id.index = control_index;
+ 	err = snd_ctl_add(card, kctl);
+ 	if (err < 0)
 
 
