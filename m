@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A2E5A79B;
-	Thu, 16 Jul 2026 14:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481253B42FC;
+	Thu, 16 Jul 2026 14:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210976; cv=none; b=d7/nijW5WneTHbKZjgaIM2VwkeQQem7iDzHk00OGb+Su9y6/HuKldrHLHvTr0VPJBXifATrWU2pEKqUPtbsClhg52gak8LPYk0GFboH6T/apHopjQXaLkjeYCUWfcUpSa2QCA/TyHj6Bdw8X1C0izIS7SP26N1iykQJRvuxjXL8=
+	t=1784210979; cv=none; b=BDdNFXMPnuqk7gfQc5hCcc/xhe29i910t3qm871+EWmJ3+yjL1zKPYR1mS6F6fS552hGzLLPDH5+6zhJhKj0ZUh13/5C/XEt3KARvwtmLLIuaFHqd/RvLNlwjvQ5qd5RFFOiRmhXl73jb0DSfGrie+VbN73iMb3Zys/SUmiguOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210976; c=relaxed/simple;
-	bh=8gbCArPnJIh9CdqhbIB8hEKy+zaPcHyvmSHFMqQQsY8=;
+	s=arc-20240116; t=1784210979; c=relaxed/simple;
+	bh=NTugKyvmJIbUL8YRO1cIfLWv/bQ3UQDQNd2y3tzszd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQATeL8B44zAjE8A632tIgWstA9vrZnETjfkzytJoS3moJxUIBU1CQ6M8QfMImNwQYUDCdKj3RogvbyvJOWx1Y5TXP1VdOX1D2psGu9nZ8xhKUxwILpsOU7WBwt6JLRk4wC6N+UiTL0FnnHOMUytJ+seRitQMHuaq8lWJu7jwC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwz7GT7g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EeTQNLCem2MNCqDEDkA64YKS8li8g/f9IizKWxnfZnqPvQYWZosvobhH+IrEH4imVp44h9rK3u9pLA4LkRotnmJwKJ7SAinF21SolxTcda5YdrwLzqpqoTtH+5KwDVSHJR+p49KOrIz4o8oorq0xcHnLtQ+0l8aSo3MPoFDOR+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqlCmXl/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwz7GT7g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164241F000E9;
-	Thu, 16 Jul 2026 14:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqlCmXl/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF7E1F000E9;
+	Thu, 16 Jul 2026 14:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210975;
-	bh=4P7m7FwoX9BMugbSbN27plj+lrXs6qwsNtr1Ctb53zQ=;
+	s=korg; t=1784210978;
+	bh=nWM1yKSkgv79yBfcORj0ZYusR62tNrkZoTEPjBiK1yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cwz7GT7gOFWo33V10MbRwABzdaAtzw2UtJ2QX6OYfw+tNmgRiFM8jnOJgS0loXpZZ
-	 DHcISSLy1Tb8Xyc1vDSJ0GkmW2ah18WtJkTjk6AG05DRUuTWUIr4OjldZ9iYAUXN7V
-	 v4Ctn4V8evm8KYXbZNMlZDCAw3o1Ax1UZAJa0oVg=
+	b=IqlCmXl/66wQ/2WAGvvkmTWsWRkvwbxE+v2li1QrTuTbnS5w7slTqRNq+6oT30J4t
+	 gJu4pbxjNaG63fee8zVc/DDVMKNyckeJG5ju5EKYcfFeX00azcBSmdMo24tahv3VbW
+	 isAuNtFqLHlPCT3r61pfz/itl41qJzBZvxgQseJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Jon Hunter <jonathanh@nvidia.com>
-Subject: [PATCH 6.18 252/480] clocksource/drivers/timer-tegra186: Fix support for multiple watchdog instances
-Date: Thu, 16 Jul 2026 15:29:59 +0200
-Message-ID: <20260716133050.267355787@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.18 253/480] s390: Revert support for DCACHE_WORD_ACCESS
+Date: Thu, 16 Jul 2026 15:30:00 +0200
+Message-ID: <20260716133050.288048115@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,41 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit ca57bf46e7a94f8c53d05c376df9fcfdcb482100 upstream.
+commit 37540b8c287fc817bdbd0c62bb75ad6eab0e5d03 upstream.
 
-Tegra SoCs support multiple watchdogs; currently only one (WDT0) is
-used. When multiple watchdogs are registered, tegra186_wdt_enable()
-overwrites the TKEIE(x) register, discarding any existing watchdog
-interrupt enable bits. As a result, enabling one watchdog inadvertently
-disables interrupts for the others.
+load_unaligned_zeropad() reads eight bytes from unaligned addresses and may
+cross page boundaries. It handles exceptions which may happen if reading
+from the second page results in an exception.
 
-Fix this by preserving the existing TKEIE(x) value and updating it
-using a read-modify-write sequence.
+For pages which are donated to the Ultravisor for secure execution purposes
+the do_secure_storage_access() exception handler however does not handle
+such exceptions correctly. Such an exception may result in an endless
+exception loop which will never be resolved.
 
-Fixes: 42cee19a9f83 ("clocksource: Add Tegra186 timers support")
+An attempt to fix this [1] turned out to be not sufficient. For now revert
+load_unaligned_zeropad() until this problem has been resolved in a proper
+way.
+
+Note that the implementation of load_unaligned_zeropad() itself is
+correct. The revert is just a temporary workaround until there is complete
+fix for secure storage access exceptions.
+
+[1] commit b00be77302d7 ("s390/mm: Add missing secure storage access fixups for donated memory")
+
+Fixes: 802ba53eefc5 ("s390: add support for DCACHE_WORD_ACCESS")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260507154557.2082697-2-kkartik@nvidia.com
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/timer-tegra186.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/Kconfig                      |    1 -
+ arch/s390/include/asm/asm-extable.h    |    4 ----
+ arch/s390/include/asm/word-at-a-time.h |   22 ----------------------
+ arch/s390/mm/extable.c                 |   18 ------------------
+ 4 files changed, 45 deletions(-)
 
---- a/drivers/clocksource/timer-tegra186.c
-+++ b/drivers/clocksource/timer-tegra186.c
-@@ -149,7 +149,8 @@ static void tegra186_wdt_enable(struct t
- 	u32 value;
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -161,7 +161,6 @@ config S390
+ 	select ARCH_WANTS_THP_SWAP
+ 	select BUILDTIME_TABLE_SORT
+ 	select CLONE_BACKWARDS2
+-	select DCACHE_WORD_ACCESS if !KMSAN
+ 	select DYNAMIC_FTRACE if FUNCTION_TRACER
+ 	select FUNCTION_ALIGNMENT_8B if CC_IS_GCC
+ 	select FUNCTION_ALIGNMENT_16B if !CC_IS_GCC
+--- a/arch/s390/include/asm/asm-extable.h
++++ b/arch/s390/include/asm/asm-extable.h
+@@ -12,7 +12,6 @@
+ #define EX_TYPE_UA_FAULT	3
+ #define EX_TYPE_UA_LOAD_REG	5
+ #define EX_TYPE_UA_LOAD_REGPAIR	6
+-#define EX_TYPE_ZEROPAD		7
+ #define EX_TYPE_FPC		8
+ #define EX_TYPE_UA_MVCOS_TO	9
+ #define EX_TYPE_UA_MVCOS_FROM	10
+@@ -80,9 +79,6 @@
+ #define EX_TABLE_UA_LOAD_REGPAIR(_fault, _target, _regerr, _regzero)	\
+ 	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_UA_LOAD_REGPAIR, _regerr, _regzero, 0)
  
- 	/* unmask hardware IRQ, this may have been lost across powergate */
--	value = TKEIE_WDT_MASK(wdt->index, 1);
-+	value = readl(tegra->regs + TKEIE(wdt->tmr->hwirq));
-+	value |= TKEIE_WDT_MASK(wdt->index, 1);
- 	writel(value, tegra->regs + TKEIE(wdt->tmr->hwirq));
+-#define EX_TABLE_ZEROPAD(_fault, _target, _regdata, _regaddr)		\
+-	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_ZEROPAD, _regdata, _regaddr, 0)
+-
+ #define EX_TABLE_FPC(_fault, _target)					\
+ 	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_FPC, __stringify(%%r0), __stringify(%%r0), 0)
  
- 	/* clear interrupt */
+--- a/arch/s390/include/asm/word-at-a-time.h
++++ b/arch/s390/include/asm/word-at-a-time.h
+@@ -4,7 +4,6 @@
+ 
+ #include <linux/bitops.h>
+ #include <linux/wordpart.h>
+-#include <asm/asm-extable.h>
+ #include <asm/bitsperlong.h>
+ 
+ struct word_at_a_time {
+@@ -41,25 +40,4 @@ static inline unsigned long zero_bytemas
+ 	return ~1UL << data;
+ }
+ 
+-/*
+- * Load an unaligned word from kernel space.
+- *
+- * In the (very unlikely) case of the word being a page-crosser
+- * and the next page not being mapped, take the exception and
+- * return zeroes in the non-existing part.
+- */
+-static inline unsigned long load_unaligned_zeropad(const void *addr)
+-{
+-	unsigned long data;
+-
+-	asm_inline volatile(
+-		"0:	lg	%[data],0(%[addr])\n"
+-		"1:	nopr	%%r7\n"
+-		EX_TABLE_ZEROPAD(0b, 1b, %[data], %[addr])
+-		EX_TABLE_ZEROPAD(1b, 1b, %[data], %[addr])
+-		: [data] "=d" (data)
+-		: [addr] "a" (addr), "m" (*(unsigned long *)addr));
+-	return data;
+-}
+-
+ #endif /* _ASM_WORD_AT_A_TIME_H */
+--- a/arch/s390/mm/extable.c
++++ b/arch/s390/mm/extable.c
+@@ -50,22 +50,6 @@ static bool ex_handler_ua_load_reg(const
+ 	return true;
+ }
+ 
+-static bool ex_handler_zeropad(const struct exception_table_entry *ex, struct pt_regs *regs)
+-{
+-	unsigned int reg_addr = FIELD_GET(EX_DATA_REG_ADDR, ex->data);
+-	unsigned int reg_data = FIELD_GET(EX_DATA_REG_ERR, ex->data);
+-	unsigned long data, addr, offset;
+-
+-	addr = regs->gprs[reg_addr];
+-	offset = addr & (sizeof(unsigned long) - 1);
+-	addr &= ~(sizeof(unsigned long) - 1);
+-	data = *(unsigned long *)addr;
+-	data <<= BITS_PER_BYTE * offset;
+-	regs->gprs[reg_data] = data;
+-	regs->psw.addr = extable_fixup(ex);
+-	return true;
+-}
+-
+ static bool ex_handler_fpc(const struct exception_table_entry *ex, struct pt_regs *regs)
+ {
+ 	fpu_sfpc(0);
+@@ -134,8 +118,6 @@ bool fixup_exception(struct pt_regs *reg
+ 		return ex_handler_ua_load_reg(ex, false, regs);
+ 	case EX_TYPE_UA_LOAD_REGPAIR:
+ 		return ex_handler_ua_load_reg(ex, true, regs);
+-	case EX_TYPE_ZEROPAD:
+-		return ex_handler_zeropad(ex, regs);
+ 	case EX_TYPE_FPC:
+ 		return ex_handler_fpc(ex, regs);
+ 	case EX_TYPE_UA_MVCOS_TO:
 
 
