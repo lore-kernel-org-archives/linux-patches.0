@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F0642A164;
-	Thu, 16 Jul 2026 14:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB2242B75A;
+	Thu, 16 Jul 2026 14:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212056; cv=none; b=iOguM2pruCIf1CalEQGbWaQ5F+qFSfthbe7A0vMie2yHl6Nefw/3CZdpBsj6t27WC8BLao+8jErkVsUqexXvFunbPwIuQtQC0IpkSleuU2Wu+tSepsa2rH/xq1lbzxazHew8QKAT+mMCHGq9k73vldTcJD7mX/K9UjJsbJ/GL7g=
+	t=1784212058; cv=none; b=X/3Zvy3DNO3g8mLPSb6ZW5njoH1SO8Ho9JpikUHrHYBYWE7PCIjORBDQZYh67HjP1samsZQ5VfRNumGmSX2SqAn5EZQPZIwrBB5ooU0wffypW0h81gZYjfgrBKT58gJUTFBc7mT2xi0003+XWiGvmzWEdbNILzlr+AKY2pvO2jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212056; c=relaxed/simple;
-	bh=LMKSot5pIK60dMPyYOS+Uwwtnlc2Jaqcj0oVaITfK20=;
+	s=arc-20240116; t=1784212058; c=relaxed/simple;
+	bh=j6CIlLnYXbLVVpntFjZzJr9ljukoYUF0LSimURj4Y7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9n/8k3nGvFnqCLtvTx2uRzEucEIXAZNvD+XpsZX7LrVU0vdesas7OWVTmmQpkCDBOC4j8w0XyiwiV0a71yqameGjSfAp7u8KJOObSwR8efNtxV3RueLHfKyXf5k47ASnziMfLP0MojJr9YpUkI3rpdbv1FyJMfNTPwPVIh+1B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6FOjjCA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EAO1zo6/R0PIwSKFuIo/gdYZkE45t2zTwwicz4puXzysD1kVVGgoLntUmRC8Jp+zB3HO11pT/qzRzwEA8BYdSzdT6Zs2+xHlFmYH/gKbBDE59x/1zN5fwdIfOnanUPnTAK5C0sR4F6DqPXLwARDWUJaPLCoqZc+ddTMxp0L7W0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pqNNBZD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6FOjjCA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99AFB1F000E9;
-	Thu, 16 Jul 2026 14:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pqNNBZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC8B1F00A3D;
+	Thu, 16 Jul 2026 14:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212055;
-	bh=O6qHucfEd+t0oS8vwa4Grq8iFv44cHI9Xlyjko+cfqU=;
+	s=korg; t=1784212057;
+	bh=Zd7XFta6AXPdfIq2xwC3n9LS8SN262TAKygApD9T3+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G6FOjjCAQJZ4LVPh+/QO2d0YXDHz5MRVdPoCdUpDt1UmiumDz/Q7FCkbcjcLhH3BS
-	 V4CWVll5zMIk87xjKgXWwVqzSDooln68l4KYuWJKJcxgLND20fq78PEsTbarVruuqa
-	 21WSB/PdXT9SywltIYrlM6ejwPm0P6jW/Jp2bUAo=
+	b=1pqNNBZDlLgrJQk8puFATcZTHrPVphrsbDLQ+dq1VLFaTGnZ/hZCBnuFVRRUjxeoU
+	 65KnfFZTUidWpSxi2rZlceJbeR/QOwuvCDVV92LrQPtvEMjYw18rQ2WF1GVaXM4Kqu
+	 3siiuiO0ABLWeUUiZlBnZEHXt+WuFkf0xyBCOLkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 181/349] smb: client: Fix next buffer leak in receive_encrypted_standard()
-Date: Thu, 16 Jul 2026 15:31:55 +0200
-Message-ID: <20260716133037.429973041@linuxfoundation.org>
+	Pratham Gupta <pratham36gupta@gmail.com>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.12 146/349] netfilter: ctnetlink: use nf_ct_exp_net() in expectation dump
+Date: Thu, 16 Jul 2026 15:31:20 +0200
+Message-ID: <20260716133036.639956266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,52 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Pratham Gupta <pratham36gupta@gmail.com>
 
-commit 1c6267a1d5cf4c73b656f8181b310cbbb3e4767b upstream.
+commit a7f57320bbbc67e347bf5fff4b4a9bab980d5956 upstream.
 
-receive_encrypted_standard() allocates next_buffer before checking
-whether the number of compound PDUs already reached MAX_COMPOUND. If
-the limit check fails, the function returns immediately and the newly
-allocated next_buffer is not assigned to server->smallbuf/server->bigbuf,
-making it leaked.
+Commit 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
+introduced exp->net so RCU-only expectation paths no longer need to
+dereference exp->master for netns lookups.
 
-Move the MAX_COMPOUND check before allocating next_buffer.
+Commit 3db5647984de ("netfilter: nf_conntrack_expect: skip expectations in other netns via proc")
+updated the proc path accordingly, but ctnetlink_exp_dump_table() still
+compares against nf_ct_net(exp->master).
 
-Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
+Use nf_ct_exp_net(exp) here as well so the netlink dump path matches
+the rest of the March 2026 expectation netns/RCU cleanup.
+
+Fixes: 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Pratham Gupta <pratham36gupta@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5035,6 +5035,12 @@ receive_encrypted_standard(struct TCP_Se
- one_more:
- 	shdr = (struct smb2_hdr *)buf;
- 	next_cmd = le32_to_cpu(shdr->NextCommand);
-+
-+	if (*num_mids >= MAX_COMPOUND) {
-+		cifs_server_dbg(VFS, "too many PDUs in compound\n");
-+		return -1;
-+	}
-+
- 	if (next_cmd) {
- 		if (WARN_ON_ONCE(next_cmd > pdu_length))
- 			return -1;
-@@ -5058,10 +5064,6 @@ one_more:
- 		mid_entry->resp_buf_size = server->pdu_size;
- 	}
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3154,7 +3154,7 @@ restart:
+ 			if (l3proto && exp->tuple.src.l3num != l3proto)
+ 				continue;
  
--	if (*num_mids >= MAX_COMPOUND) {
--		cifs_server_dbg(VFS, "too many PDUs in compound\n");
--		return -1;
--	}
- 	bufs[*num_mids] = buf;
- 	mids[(*num_mids)++] = mid_entry;
+-			if (!net_eq(nf_ct_net(exp->master), net))
++			if (!net_eq(nf_ct_exp_net(exp), net))
+ 				continue;
  
+ 			if (cb->args[1]) {
 
 
