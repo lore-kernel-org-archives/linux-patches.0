@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B013128CC;
-	Thu, 16 Jul 2026 14:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C103161AD;
+	Thu, 16 Jul 2026 14:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211536; cv=none; b=YtdxuzxBWTYEYPtoaVydLkc5sIzfw84oI2AtDXQJberE701Ot/LZ+mh/nblRJD4vBfzuq8nDbctRddqljQLGMr77SQLYnjUASXvNzh7n9yxhNVYMgdGufX6g0R9DTklWbOIBCFyTeK3FnhgVocW4ztC6EXzAZxlVMdHrAFMjo4s=
+	t=1784211539; cv=none; b=cVOKtFQH0T70sHWtjJY5xB7WUdI0Ogw22MPi8Ae80cpZr2Q7F7pztBYVyP9Oi1VOrr7ABle+wFinvpA93hCW61zg/Ig5iIbJO2Y/h/02EIhh2FtuDva+8jKjGvJEXx1y+cmJO/UAe53M70UwL9dKxiomRJ4DYSxLw5D2NasydO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211536; c=relaxed/simple;
-	bh=ValBm4v0aPX0NlVjPq2awW3ymkmGIcpSeJ4N6EAMceU=;
+	s=arc-20240116; t=1784211539; c=relaxed/simple;
+	bh=vvJEB9mqQm4zNnf6tYRInYSmypvmvMWV5EpvsZVpu4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pSnepQW/YFsWesbgtfxHNUVD5KcMEq+vwP7NPSZ4KS4+fCELz2WTrHoGViSdmu+89l018cGDQVjg0LjRwwhBXqkHchVrxq1yx6KBQk1kuz5zrjmksI1jbg/Aly7GMdFN0N2UQdNGE2xT183oGfQl3Q3odlbcyUyJLWOuCkRjbJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuyeSDVC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NhLg7E2dVJsfjttlw510RN8JBlqWml9BChr/O0FX2wdqQL3yntOyRjNDE25u7z44UrM+P3pHTMxTN9jSAhN/LBlyRPiQnOtd2wNhV/aaWF+Hbp9dyB+Dqm+b+YzG0k9DK2BUHvxgSG3Y0utfLjnV1OUl56f26WEHpVpwcCg+e6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7KAUDPd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuyeSDVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D021F000E9;
-	Thu, 16 Jul 2026 14:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7KAUDPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9BA1F000E9;
+	Thu, 16 Jul 2026 14:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211535;
-	bh=fG9qLTvuVz9s4Gm8HPuSy4wUaLupcr0Xvtdx3Ye8pJA=;
+	s=korg; t=1784211538;
+	bh=qgkBv6S5h0CL/O/ygAJ8pCt7Iuc7AzdoK6Js62taBz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vuyeSDVCyC9FKao66TilskWjZLxghuso+pivXtXjyaEz21tdmgmmDWHBudGKNQ7MZ
-	 Yu33CcuAYaFNvS1r9fUoYDyO9HzNzhfG14EFGvdb0+3fI3jIoMqnD36mrTIBGkMFCU
-	 68FzexiT7teXGIwVM1nBdzBT7TYRzTBPdOL9M2hk=
+	b=M7KAUDPdw6DCM7KKhsYSSARRaWGkPXBWJWQPABg7ybvR+FklPDDi+yVZsUgFkRgmG
+	 KwekGchFBGPq4nNo4KrhQiMEdqAK5R2dCO9M9zuANQevH0+uZQ3vgLr8vUmgg+032f
+	 Aa37ScZBiSmiCZ5U2yZ8LPkeoq9lL9XKtHnfnURU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Zeng Chi <zengchi@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 421/480] LoongArch: KVM: Add missing slots_lock for device register/unregister
-Date: Thu, 16 Jul 2026 15:32:48 +0200
-Message-ID: <20260716133053.922200852@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.18 422/480] KVM: arm64: Clear __hyp_running_vcpu when flushing the pKVM hyp vCPU
+Date: Thu, 16 Jul 2026 15:32:49 +0200
+Message-ID: <20260716133053.943230285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,77 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Chi <zengchi@kylinos.cn>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit aeded601d6aceb57cdda4b2701d2ee00c43a8b69 upstream.
+commit e8042f6e1d7befb2fb6b10a75918642bcd0acf9a upstream.
 
-kvm_io_bus_register_dev() and kvm_io_bus_unregister_dev() should be
-called under kvm->slots_lock. The unregister calls in ipi.c, eiointc.c
-and pch_pic.c were also missing this protection. Add it to match the
-register side.
+flush_hyp_vcpu() copies the host vCPU context into the hyp's private
+vCPU on every run. ctxt_to_vcpu() expects a guest context to have a
+NULL __hyp_running_vcpu, which is only ever set on the host context, so
+that it resolves the vCPU via container_of(). While this is generally
+the case, flush_hyp_vcpu() copies the context verbatim and does not
+enforce this, so a value provided by the host is dereferenced at EL2
+(host -> EL2).
+
+Fix by clearing __hyp_running_vcpu after the copy.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: be66e67f1750 ("KVM: arm64: Use the pKVM hyp vCPU structure in handle___kvm_vcpu_run()")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Fuad Tabba <tabba@google.com>
+Tested-by: Fuad Tabba <tabba@google.com>
+Link: https://patch.msgid.link/20260606175614.83273-2-imv4bel@gmail.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/eiointc.c |    6 ++++++
- arch/loongarch/kvm/intc/ipi.c     |    2 ++
- arch/loongarch/kvm/intc/pch_pic.c |    2 ++
- 3 files changed, 10 insertions(+)
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/loongarch/kvm/intc/eiointc.c
-+++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -654,10 +654,14 @@ static int kvm_eiointc_create(struct kvm
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+@@ -126,6 +126,9 @@ static void flush_hyp_vcpu(struct pkvm_h
  
- 	device = &s->device_vext;
- 	kvm_iodevice_init(device, &kvm_eiointc_virt_ops);
-+	mutex_lock(&kvm->slots_lock);
- 	ret = kvm_io_bus_register_dev(kvm, KVM_IOCSR_BUS,
- 			EIOINTC_VIRT_BASE, EIOINTC_VIRT_SIZE, device);
-+	mutex_unlock(&kvm->slots_lock);
- 	if (ret < 0) {
-+		mutex_lock(&kvm->slots_lock);
- 		kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &s->device);
-+		mutex_unlock(&kvm->slots_lock);
- 		kfree(s);
- 		return ret;
- 	}
-@@ -676,8 +680,10 @@ static void kvm_eiointc_destroy(struct k
+ 	hyp_vcpu->vcpu.arch.ctxt	= host_vcpu->arch.ctxt;
  
- 	kvm = dev->kvm;
- 	eiointc = kvm->arch.eiointc;
-+	mutex_lock(&kvm->slots_lock);
- 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &eiointc->device);
- 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &eiointc->device_vext);
-+	mutex_unlock(&kvm->slots_lock);
- 	kfree(eiointc);
- 	kfree(dev);
- }
---- a/arch/loongarch/kvm/intc/ipi.c
-+++ b/arch/loongarch/kvm/intc/ipi.c
-@@ -457,7 +457,9 @@ static void kvm_ipi_destroy(struct kvm_d
- 
- 	kvm = dev->kvm;
- 	ipi = kvm->arch.ipi;
-+	mutex_lock(&kvm->slots_lock);
- 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &ipi->device);
-+	mutex_unlock(&kvm->slots_lock);
- 	kfree(ipi);
- 	kfree(dev);
- }
---- a/arch/loongarch/kvm/intc/pch_pic.c
-+++ b/arch/loongarch/kvm/intc/pch_pic.c
-@@ -473,7 +473,9 @@ static void kvm_pch_pic_destroy(struct k
- 	kvm = dev->kvm;
- 	s = kvm->arch.pch_pic;
- 	/* unregister pch pic device and free it's memory */
-+	mutex_lock(&kvm->slots_lock);
- 	kvm_io_bus_unregister_dev(kvm, KVM_MMIO_BUS, &s->device);
-+	mutex_unlock(&kvm->slots_lock);
- 	kfree(s);
- 	kfree(dev);
- }
++	/* __hyp_running_vcpu must be NULL in a guest context. */
++	hyp_vcpu->vcpu.arch.ctxt.__hyp_running_vcpu = NULL;
++
+ 	hyp_vcpu->vcpu.arch.mdcr_el2	= host_vcpu->arch.mdcr_el2;
+ 	hyp_vcpu->vcpu.arch.hcr_el2 &= ~(HCR_TWI | HCR_TWE);
+ 	hyp_vcpu->vcpu.arch.hcr_el2 |= READ_ONCE(host_vcpu->arch.hcr_el2) &
 
 
