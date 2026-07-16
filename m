@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E296828505E;
-	Thu, 16 Jul 2026 14:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8697A41F7CC;
+	Thu, 16 Jul 2026 14:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211221; cv=none; b=lb9WyU/LJubnKTS4QPUlAFahm4z+KJW4zMj39qitO2e0AaD8AQa8h81mkoOKiQivekn8ElcJgyEkVuddEJr5go3rWzZnKgBbAU3HSp+n6T4EiZZ15gUVxiZ1wT03q6loqsZCWvq0IrSTPXJKrx8qEleJwyTttkUBV8zT4IEraKk=
+	t=1784211223; cv=none; b=t+lFoInORlo+KZz/I4jj8E+uNgt5PMHWlU+8Ltf5ypuxtQdXUqf2oH2Ll05N6+2sWr1gmbjLktSCwo+f67hhvSistwB0e8H46wRk+UsItQE2G5hbij0qOpYSJGulSW3478eIxUyNPvz5YG+PzuJ+drf4l4jbxdhrH7SHtTn78Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211221; c=relaxed/simple;
-	bh=hQAz8S5rgPH8n+tKKfuHCU5LuQWlpKeqYw65b2bvlRw=;
+	s=arc-20240116; t=1784211223; c=relaxed/simple;
+	bh=jLXOixdcz6GUpbHfkNYgmPFCkOFj2gFhO9MXs2NpdjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BoHvo1T4NJO+446ORC/nPcoOgjEqur1FuxE/RZuHCjG0a3Sk8cMu8erzbTR4h1UYyoWAuzGUb7hi0VtQoLiGtnNnPHeJVJOoCZj6MfJcyMVDOxberkS4CrrU82DaNhXQ+/2aFqOMUaeR0Ponh7aV+U8FyxosSKzikp8sOoOiCWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UPyP624; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vGS1giVwrBKGftq6TmproPrF/uWApGqM2X0540DrrBIe3zo5B22g42agW4CLOGh3hDush+/5+nkLnnKAYq6ayX9mgkSE3LpTVbdl5rnLpzVwXvLE4RfjeKVznz8+GLRBfnXfk2+lVLhEb6xzJukGZX8bdPKDT8gszyheE5end1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvQGTkw0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UPyP624"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535011F000E9;
-	Thu, 16 Jul 2026 14:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvQGTkw0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC07B1F00A3A;
+	Thu, 16 Jul 2026 14:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211219;
-	bh=mRKkj0zk9JYZRUqytn4KPcbI70f0rgEar4Gf5gWQfRs=;
+	s=korg; t=1784211222;
+	bh=zXj31aeEZJh4+wskAYIT/j/4AqkVoNp2TxD273/K6KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1UPyP624Zz1DvC/OrazRf2M4+Jhwpou2quS9DBcu0xQxxwY+m59tE71gJdMzHH2XM
-	 8GBzuxtw2fsCuiRepoJCi57P4yP7/lEjQgtYRhf/iggvg89Y4N9B1O0frdiJDa08MY
-	 YgSCVXJ5fa3pUEfTupN48Izz4p7ZlDwKfDjgKnL0=
+	b=EvQGTkw02L6lxv0Z674SgoAkUC29CkndapaVhtQK8krREKjzJYhdvCfPJTiJyUJHk
+	 746yLVKFiD2nkkOwwIHvvB72yyu03F9mtZgDbBRI1tlIejb+Q0Y4zT3qmJ1lQvjSIW
+	 vD591MSUZ3yTmYEGFq0cLhvVZIT+MiOoVWW2jFCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.18 345/480] isofs: bound Rock Ridge symlink components to the SL record
-Date: Thu, 16 Jul 2026 15:31:32 +0200
-Message-ID: <20260716133052.273864650@linuxfoundation.org>
+	Taeyang Lee <0wn@theori.io>,
+	Feng Ning <feng@innora.ai>,
+	Demi Marie Obenour <demiobenour@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 346/480] crypto: af_alg - Remove zero-copy support from skcipher and aead
+Date: Thu, 16 Jul 2026 15:31:33 +0200
+Message-ID: <20260716133052.294198920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,74 +53,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 5fa1d6a5ec2356d2107dead614437c66fa7138b1 upstream.
+commit ffdd2bc378953b525aca61902534e753f1f8e734 upstream.
 
-get_symlink_chunk() and the SL handling in
-parse_rock_ridge_inode_internal() walk the variable-length components of
-a Rock Ridge "SL" (symbolic link) record.  Each component is a two-byte
-header (flags, len) followed by len bytes of text, so it occupies
-slp->len + 2 bytes.  Both loops read slp->len and advance to the next
-component, and get_symlink_chunk() additionally does
-memcpy(rpnt, slp->text, slp->len), but neither checks that the component
-lies within the SL record before dereferencing it.
+The zero-copy support is one of the riskiest aspects of AF_ALG.  It
+allows userspace to request cryptographic operations directly on
+pagecache pages of files like the 'su' binary.  It also allows userspace
+to concurrently modify the memory which is being operated on, a recipe
+for TOCTOU vulnerabilities.
 
-A crafted SL record whose component declares a len that runs past the
-record (rr->len) therefore triggers an out-of-bounds read of up to 255
-bytes.  When the record sits at the tail of its backing buffer - for
-example a small kmalloc()ed continuation block reached through a CE
-record - the read crosses the allocation; get_symlink_chunk() then
-copies the out-of-bounds bytes into the symlink body returned to user
-space by readlink(), disclosing adjacent kernel memory.
+While zero-copy support is more valuable in other areas of the kernel
+like the frequently used networking and file I/O code, it has far less
+value in AF_ALG, which is a niche UAPI.  AF_ALG primarily just exists
+for backwards compatibility with a small set of userspace programs such
+as 'iwd' that haven't yet been fixed to use userspace crypto code.
 
-ISO 9660 images are routinely mounted from untrusted removable media -
-desktop environments auto-mount them (e.g. via udisks2) without
-CAP_SYS_ADMIN - so the record contents are attacker-controlled.
+Originally AF_ALG was intended to be used to access hardware crypto
+accelerators.  However, it isn't an efficient interface for that anyway,
+and it turned out to be rarely used in this way in practice.
 
-Reject any component that does not fit in the remaining record bytes
-before using it.  In get_symlink_chunk() return NULL, like the existing
-output-buffer (plimit) checks, so a malformed record makes readlink()
-fail with -EIO rather than silently returning a truncated target; in
-parse_rock_ridge_inode_internal() stop the inode-size walk.
+Thus, the risks of the zero-copy support in AF_ALG vastly outweigh its
+benefits.  Let's just remove it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+This commit removes it from the "skcipher" and "aead" algorithm types.
+"hash" will be handled separately.
+
+This is a soft break, not a hard break.  Even after this commit, it
+still works to use splice() or sendfile() to transfer data to an AF_ALG
+request socket from a pipe or any file, respectively.  What changes is
+just that the kernel now makes an internal, stable copy of the data
+before doing the crypto operation.  So performance is slightly reduced,
+but the UAPI isn't broken.  And, very importantly, it's much safer.
+
+Tested with libkcapi/test.sh.  All its test cases still pass.  I also
+verified that this would have prevented the copy.fail exploit as well.
+I also used a custom test program to verify that sendfile() still works.
+
+Fixes: 8ff590903d5f ("crypto: algif_skcipher - User-space interface for skcipher operations")
+Fixes: 400c40cf78da ("crypto: algif - add AEAD support")
+Reported-by: Taeyang Lee <0wn@theori.io>
+Link: https://copy.fail/
+Reported-by: Feng Ning <feng@innora.ai>
+Closes: https://lore.kernel.org/r/afYcc-tZFwvZZo76@ans-MacBook-Pro.local
+Reviewed-by: Demi Marie Obenour <demiobenour@gmail.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260607011823.217748-1-hexlabsecurity@proton.me
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/rock.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ Documentation/crypto/userspace-if.rst |   31 +-------------
+ crypto/af_alg.c                       |   71 +++++++++++-----------------------
+ crypto/algif_aead.c                   |    8 +--
+ 3 files changed, 32 insertions(+), 78 deletions(-)
 
---- a/fs/isofs/rock.c
-+++ b/fs/isofs/rock.c
-@@ -466,6 +466,9 @@ repeat:
- 				inode->i_size = symlink_len;
- 				while (slen > 1) {
- 					rootflag = 0;
-+					/* keep the component within the SL record */
-+					if (slp->len + 2 > slen)
-+						goto eio;
- 					switch (slp->flags & ~1) {
- 					case 0:
- 						inode->i_size +=
-@@ -621,6 +624,14 @@ static char *get_symlink_chunk(char *rpn
- 	slp = &rr->u.SL.link;
- 	while (slen > 1) {
- 		rootflag = 0;
-+		/*
-+		 * A component is slp->len + 2 bytes (a two-byte header plus
-+		 * len bytes of text).  If it does not fit in the bytes left in
-+		 * the SL record the record is malformed: fail like the plimit
-+		 * checks below so readlink() returns -EIO, not a truncated path.
-+		 */
-+		if (slp->len + 2 > slen)
-+			return NULL;
- 		switch (slp->flags & ~1) {
- 		case 0:
- 			if (slp->len > plimit - rpnt)
+--- a/Documentation/crypto/userspace-if.rst
++++ b/Documentation/crypto/userspace-if.rst
+@@ -328,33 +328,10 @@ CRYPTO_USER_API_RNG_CAVP option:
+ Zero-Copy Interface
+ -------------------
+ 
+-In addition to the send/write/read/recv system call family, the AF_ALG
+-interface can be accessed with the zero-copy interface of
+-splice/vmsplice. As the name indicates, the kernel tries to avoid a copy
+-operation into kernel space.
+-
+-The zero-copy operation requires data to be aligned at the page
+-boundary. Non-aligned data can be used as well, but may require more
+-operations of the kernel which would defeat the speed gains obtained
+-from the zero-copy interface.
+-
+-The system-inherent limit for the size of one zero-copy operation is 16
+-pages. If more data is to be sent to AF_ALG, user space must slice the
+-input into segments with a maximum size of 16 pages.
+-
+-Zero-copy can be used with the following code example (a complete
+-working example is provided with libkcapi):
+-
+-::
+-
+-    int pipes[2];
+-
+-    pipe(pipes);
+-    /* input data in iov */
+-    vmsplice(pipes[1], iov, iovlen, SPLICE_F_GIFT);
+-    /* opfd is the file descriptor returned from accept() system call */
+-    splice(pipes[0], NULL, opfd, NULL, ret, 0);
+-    read(opfd, out, outlen);
++AF_ALG used to have zero-copy support, but it was removed due to it being a
++frequent source of vulnerabilities.  For backwards compatibility the splice()
++and sendfile() system calls are still supported, but the kernel will make an
++internal copy of the data before passing it to the crypto code.
+ 
+ 
+ Setsockopt Interface
+--- a/crypto/af_alg.c
++++ b/crypto/af_alg.c
+@@ -977,7 +977,7 @@ int af_alg_sendmsg(struct socket *sock,
+ 		ssize_t plen;
+ 
+ 		/* use the existing memory in an allocated page */
+-		if (ctx->merge && !(msg->msg_flags & MSG_SPLICE_PAGES)) {
++		if (ctx->merge) {
+ 			sgl = list_entry(ctx->tsgl_list.prev,
+ 					 struct af_alg_tsgl, list);
+ 			sg = sgl->sg + sgl->cur - 1;
+@@ -1021,60 +1021,37 @@ int af_alg_sendmsg(struct socket *sock,
+ 		if (sgl->cur)
+ 			sg_unmark_end(sg + sgl->cur - 1);
+ 
+-		if (msg->msg_flags & MSG_SPLICE_PAGES) {
+-			struct sg_table sgtable = {
+-				.sgl		= sg,
+-				.nents		= sgl->cur,
+-				.orig_nents	= sgl->cur,
+-			};
+-
+-			plen = extract_iter_to_sg(&msg->msg_iter, len, &sgtable,
+-						  MAX_SGL_ENTS - sgl->cur, 0);
+-			if (plen < 0) {
+-				err = plen;
++		do {
++			struct page *pg;
++			unsigned int i = sgl->cur;
++
++			plen = min_t(size_t, len, PAGE_SIZE);
++
++			pg = alloc_page(GFP_KERNEL);
++			if (!pg) {
++				err = -ENOMEM;
+ 				goto unlock;
+ 			}
+ 
+-			for (; sgl->cur < sgtable.nents; sgl->cur++)
+-				get_page(sg_page(&sg[sgl->cur]));
++			sg_assign_page(sg + i, pg);
++
++			err = memcpy_from_msg(page_address(sg_page(sg + i)),
++					      msg, plen);
++			if (err) {
++				__free_page(sg_page(sg + i));
++				sg_assign_page(sg + i, NULL);
++				goto unlock;
++			}
++
++			sg[i].length = plen;
+ 			len -= plen;
+ 			ctx->used += plen;
+ 			copied += plen;
+ 			size -= plen;
+-		} else {
+-			do {
+-				struct page *pg;
+-				unsigned int i = sgl->cur;
+-
+-				plen = min_t(size_t, len, PAGE_SIZE);
+-
+-				pg = alloc_page(GFP_KERNEL);
+-				if (!pg) {
+-					err = -ENOMEM;
+-					goto unlock;
+-				}
+-
+-				sg_assign_page(sg + i, pg);
+-
+-				err = memcpy_from_msg(
+-					page_address(sg_page(sg + i)),
+-					msg, plen);
+-				if (err) {
+-					__free_page(sg_page(sg + i));
+-					sg_assign_page(sg + i, NULL);
+-					goto unlock;
+-				}
+-
+-				sg[i].length = plen;
+-				len -= plen;
+-				ctx->used += plen;
+-				copied += plen;
+-				size -= plen;
+-				sgl->cur++;
+-			} while (len && sgl->cur < MAX_SGL_ENTS);
++			sgl->cur++;
++		} while (len && sgl->cur < MAX_SGL_ENTS);
+ 
+-			ctx->merge = plen & (PAGE_SIZE - 1);
+-		}
++		ctx->merge = plen & (PAGE_SIZE - 1);
+ 
+ 		if (!size)
+ 			sg_mark_end(sg + sgl->cur - 1);
+--- a/crypto/algif_aead.c
++++ b/crypto/algif_aead.c
+@@ -9,10 +9,10 @@
+  * The following concept of the memory management is used:
+  *
+  * The kernel maintains two SGLs, the TX SGL and the RX SGL. The TX SGL is
+- * filled by user space with the data submitted via sendmsg (maybe with
+- * MSG_SPLICE_PAGES).  Filling up the TX SGL does not cause a crypto operation
+- * -- the data will only be tracked by the kernel. Upon receipt of one recvmsg
+- * call, the caller must provide a buffer which is tracked with the RX SGL.
++ * filled by user space with the data submitted via sendmsg.  Filling up the TX
++ * SGL does not cause a crypto operation -- the data will only be tracked by the
++ * kernel. Upon receipt of one recvmsg call, the caller must provide a buffer
++ * which is tracked with the RX SGL.
+  *
+  * During the processing of the recvmsg operation, the cipher request is
+  * allocated and prepared. As part of the recvmsg operation, the processed
 
 
