@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2092E8897;
-	Thu, 16 Jul 2026 13:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115024252DE;
+	Thu, 16 Jul 2026 13:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209448; cv=none; b=qafYTtxJ2B9p1iabnSRXn6GVIsvijyRqVEvnHttbeB9dCzECnfAk4a1rhLi3XkmqRaOsZYjax1Y9ivGhMnF3b8J9Ytgq32/Xo2Qxa6Rqe6Kfq+UHa6VotbsfA/0fgX5AStFHNn7czDmDQORtZjblgSg4tc/oJ8tTluyzuLhVwBo=
+	t=1784209452; cv=none; b=StTiyHs1VmpTaSJN3nuwDfzOYcDXltgFWin3eKO8PdlH6QTv6JLTdNZ1ODEtMzBv6QXy1Ov8/k1mTVI2wBQoo4N0A+6B2jnyjQtuEvi/Yn4LySZZrof5VDRhWAxfL6osCaEGGiklhFrQpZFzpf1k4E2Lc3WMLBW2tEkX49Iw9Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209448; c=relaxed/simple;
-	bh=xVV7hbUOFs7aeZL3hlfybGwRvuQw9ClBO1Va92LF+2c=;
+	s=arc-20240116; t=1784209452; c=relaxed/simple;
+	bh=ZJWKcb9xkv5hr7ndM1DlSDZqYZWOMYUWQj8ULu6k6HE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmmMrINc+/Uw6kMQlwqm2viLSqTXIj55s7eBl880JPQrmQafSEkOidXQGO0sM2ZYeJnsm8UOPZVutoI/bmvZbqZGMCRKPyusdva45/9UBY+JjmWMskqo5lSFQJ9dZZ1t5uZg55ZR8N7SoDGIYPzfyK6bb/l6C35thfhqVWDXJos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYsNr8tK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o4OF1WR5fupzC0V0Wm7IVtmwuByIR5gfSlK1wbuq2eQ0oT7gvnjtE3goKlzDfM8xjNRkwfgPrPCeirPdVOfzxNwS8SKND3HBBJfxEcishd/vkhfT/JofQNxlbrqzcDYKH5zfZB4zC6+Gz0iiN68BvwXEJ0JtO4ZjxXuXgLfxNxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgXKLH8D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYsNr8tK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB7A1F00A3A;
-	Thu, 16 Jul 2026 13:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgXKLH8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640BD1F00A3D;
+	Thu, 16 Jul 2026 13:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209445;
-	bh=EVW8L5IE0tLF0U1bm/XzOZQtqjoj33XZ8MWYtJLpW7g=;
+	s=korg; t=1784209447;
+	bh=5j4CAuUNTtFQEKyvuDWuu4jh7HoWIyxVWAJ73keXbow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYsNr8tKoUff1JKQXFKrlnFGpB03kwHLXT4hlfeTbK+5NsreTEHEI18OEZciyDgbQ
-	 38rqElfxCwAG558GaHPlEduzuaIMidZyGzNTdisS+DjmRpUNSVbaNOiOHBPuwlHJws
-	 s1oRvBv7Jzj7w/XBUC0ZETwDTGWwFuRIsBvShf48=
+	b=lgXKLH8DnYDav3U59sc9QKyjRracHr4UZVYi2nnx0kPVZGVbUk1g4tDxScK9ULAGj
+	 bYwfWtT9xHN9tkVBCzeu7/XIhqa5pMZWRPirsEmc52xzRpptXm4UyOgfqyghnQWIbB
+	 uc/J+TvXf1qdH2iq5f+ougRJm4sxzev+hNy3iHRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuyang Huang <yuyanghuang@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 188/518] ipv4: igmp: remove multicast group from hash table on device destruction
-Date: Thu, 16 Jul 2026 15:27:36 +0200
-Message-ID: <20260716133051.948130587@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Eric Dumazet <edumazet@google.com>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 189/518] net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes
+Date: Thu, 16 Jul 2026 15:27:37 +0200
+Message-ID: <20260716133051.968703576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,84 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuyang Huang <yuyanghuang@google.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-commit 7993211bde166471dffac074dc965489f86531f8 upstream.
+commit efb8763d7bbb40cff4cc55a6b62c3095a038149c upstream.
 
-When a device is destroyed under RTNL, ip_mc_destroy_dev() iterates through
-the multicast list and calls ip_ma_put() on each membership, scheduling
-them for RCU reclamation. However, they are not unlinked from the device's
-multicast hash table (mc_hash).
+Reject invalid `net.ipv4.tcp_reordering` values before they reach TCP
+socket state. The sysctl is stored as an `int` but copied into the
+`u32` `tp->reordering` field for new sockets, so negative writes wrap
+to large values.
 
-Since the device remains published in dev->ip_ptr until after
-ip_mc_destroy_dev() completes, concurrent RCU readers traversing mc_hash
-can still locate and access the multicast group after its refcount is
-decremented. If the RCU callback runs and frees the group while a reader is
-accessing it, a use-after-free occurs.
+With `tcp_mtu_probing=2`, the wrapped value can overflow the
+`tcp_mtu_probe()` size calculation and drive the MTU probing path into
+an out-of-bounds read. Route `tcp_reordering` writes through
+`proc_dointvec_minmax()` and require it to be at least 1. Also require
+`tcp_max_reordering` to be at least 1 so the configured maximum cannot
+become negative either.
 
-Fix this by unlinking the multicast group from mc_hash using
-ip_mc_hash_remove() before scheduling it for reclamation.
+When registering the table for a non-init network namespace, relocate
+`extra2` pointers that refer into `init_net.ipv4` so the
+`tcp_reordering` upper bound follows that namespace's
+`tcp_max_reordering`.
 
-BUG: KASAN: slab-use-after-free in ip_check_mc_rcu+0x149/0x3f0
-Read of size 4 at addr ffff888009bf1408 by task mausezahn/2276
+Harden `tcp_mtu_probe()` itself by computing `size_needed` as `u64`.
+This keeps the send queue and window checks from being bypassed through
+signed integer overflow.
 
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x67/0x90
- print_report+0x175/0x7c0
- kasan_report+0x147/0x180
- ip_check_mc_rcu+0x149/0x3f0
- udp_v4_early_demux+0x36d/0x12d0
- ip_rcv_finish_core+0xb8b/0x1390
- ip_rcv_finish+0x54/0x120
- NF_HOOK+0x213/0x2b0
- __netif_receive_skb+0x126/0x340
- process_backlog+0x4f2/0xf00
- __napi_poll+0x92/0x2c0
- net_rx_action+0x583/0xc60
- handle_softirqs+0x236/0x7f0
- do_softirq+0x57/0x80
- </IRQ>
-
-Allocated by task 2239:
- kasan_save_track+0x3e/0x80
- __kasan_kmalloc+0x72/0x90
- ____ip_mc_inc_group+0x31a/0xa40
- __ip_mc_join_group+0x334/0x3f0
- do_ip_setsockopt+0x16fa/0x2010
- ip_setsockopt+0x3f/0x90
- do_sock_setsockopt+0x1ad/0x300
-
-Freed by task 0:
- kasan_save_track+0x3e/0x80
- kasan_save_free_info+0x40/0x50
- __kasan_slab_free+0x3a/0x60
- __rcu_free_sheaf_prepare+0xd4/0x220
- rcu_free_sheaf+0x36/0x190
- rcu_core+0x8d9/0x12f0
- handle_softirqs+0x236/0x7f0
-
-Fixes: e9897071350b ("igmp: hash a hash table to speedup ip_check_mc_rcu()")
+Fixes: 91cc17c0e5e5 ("[TCP]: MTUprobe: receiver window & data available checks fixed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260701235014.73505-1-yuyanghuang@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/1a5b7e1ef4d70fbad8c8ee0b82d8405f3c964a3d.1781395200.git.bronzed_45_vested@icloud.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/igmp.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/sysctl_net_ipv4.c |   10 ++++++++--
+ net/ipv4/tcp_output.c      |    4 ++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -1918,6 +1918,7 @@ void ip_mc_destroy_dev(struct in_device
- #endif
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -1058,7 +1058,9 @@ static struct ctl_table ipv4_net_table[]
+ 		.data		= &init_net.ipv4.sysctl_tcp_reordering,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ONE,
++		.extra2		= &init_net.ipv4.sysctl_tcp_max_reordering,
+ 	},
+ 	{
+ 		.procname	= "tcp_retries1",
+@@ -1293,7 +1295,8 @@ static struct ctl_table ipv4_net_table[]
+ 		.data		= &init_net.ipv4.sysctl_tcp_max_reordering,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "tcp_dsack",
+@@ -1676,6 +1679,9 @@ static __net_init int ipv4_sysctl_init_n
+ 				 */
+ 				table[i].mode &= ~0222;
+ 			}
++			if (table[i].extra2 >= (void *)&init_net.ipv4 &&
++			    table[i].extra2 < (void *)(&init_net.ipv4 + 1))
++				table[i].extra2 += (void *)net - (void *)&init_net;
+ 		}
+ 	}
  
- 	while ((i = rtnl_dereference(in_dev->mc_list)) != NULL) {
-+		ip_mc_hash_remove(in_dev, i);
- 		in_dev->mc_list = i->next_rcu;
- 		in_dev->mc_count--;
- 		ip_mc_clear_src(i);
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -2687,7 +2687,7 @@ static int tcp_mtu_probe(struct sock *sk
+ 	struct sk_buff *skb, *nskb, *next;
+ 	struct net *net = sock_net(sk);
+ 	int probe_size;
+-	int size_needed;
++	u64 size_needed;
+ 	int copy, len;
+ 	int mss_now;
+ 	int interval;
+@@ -2711,7 +2711,7 @@ static int tcp_mtu_probe(struct sock *sk
+ 	mss_now = tcp_current_mss(sk);
+ 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
+ 				    icsk->icsk_mtup.search_low) >> 1);
+-	size_needed = probe_size + (tp->reordering + 1) * tp->mss_cache;
++	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
+ 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
+ 	/* When misfortune happens, we are reprobing actively,
+ 	 * and then reprobe timer has expired. We stick with current
 
 
