@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AED8425877;
-	Thu, 16 Jul 2026 13:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4421C424673;
+	Thu, 16 Jul 2026 13:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209650; cv=none; b=aZ6Sw8lmMC4W0oLHM3LLTwJkcCSqS/EctiRU2DaXuw/Mc6ICy6fjAfkA7RoLNyfW5teJoQcBXhj9efvczwMUUkiWsBTO1vcDs90aMTpc8XatCei3m2ZlrQVlXbegVMx5Brh1lgPk1GeyTm2cyqQWcNzOpuqsivajl1ysKmFJ2TM=
+	t=1784209652; cv=none; b=mK6JvMZ2sSrm2eT52HyVdklSIMP+kJuYTq+5GRorGOpfNL5KRSeIAzDwI1X1n++Vl/rmLBNLgu9ylmAFe+VVjdzmn+qnfU3CZsHU/EVb3v6nCkG1T+/YrbqdKw6dZO0rm1R7Qn8fpt7EN0J9C2pYfEHb/V2NhhdfP9LFouAgkwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209650; c=relaxed/simple;
-	bh=ov3kLOyx53QPb1DUXQ4Rqfe04DQWlPuyjgauSk90Kgc=;
+	s=arc-20240116; t=1784209652; c=relaxed/simple;
+	bh=STwTv9ZdTuoYLJx70zbrMJ0Zy3wMpTRUh+7Yis451rY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Un/2vWWW/OHvl2Z54+UMM8liQNNGqszlMIVwspxzMOdBJc1he6m3YsFcHOKkOWVa+q+YKUjtyWUGm2y+zgzSmnBWv1o9vjdMGgQbFZG2OztuK5NaVa3JDA1LnPvyPJKVxUCboSlFg3RvTF5TqowRsu+L45Uf0TcZuixkuKyhPhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9SfvokB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=seGxSr1GM5BkHxjouGgGZtPRdB/5ZT/PvvztyK4NRQ3xli0k0j/BlRv3r0poWb/mIfpgfozmF68sxbJISQ17v9YNUXWk2Viq+N8SCETAII++7h75JXt114HP+L3+qb3fw0kc0E5pNILxxyPjKnXAKyk05e47N2ILsNbPG0RhqNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pmm1LvpB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9SfvokB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C81C1F000E9;
-	Thu, 16 Jul 2026 13:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pmm1LvpB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AAD1F00A3A;
+	Thu, 16 Jul 2026 13:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209647;
-	bh=5vXLZ2iWyYt88SWfmxm+9rv50Vq+6y+dDBwwf3WDSCQ=;
+	s=korg; t=1784209649;
+	bh=QsKcE2NTKSP6ubZ39RXLzPMxzcuNUfzZwnFZpZ80zl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9SfvokB9uX9X1BZPiWbQHWQBC0nvrQltn+wk/Gu3LXp18EMGtIwxrUZAGxhMiUcA
-	 /73UChQkx349ZtAkFtAowFI+CwJ9Bh4Lp7WNW1qQmqRaVvXB8/Z7uMInzCLzgmUywo
-	 kMZx/VHIRixTCAj87woNuWRBnRd97zUaUw8IlmHM=
+	b=Pmm1LvpBX+oWd9jhSAw1ZgvejqL2oCyWO6CgB2FKyjJr7Cj/yOTFEZ27lTKapZ92G
+	 qdlaiZlI7KmpdQdBmvPlkgBpu6FdkUPsZjyVi9aeZTzNQry3IinsN8GTnPj6f+Nc/d
+	 qsOR5w12CIrGdM4tlIcCIY5bnVd7PZkJoLaWy3gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Jon Hunter <jonathanh@nvidia.com>
-Subject: [PATCH 7.1 258/518] clocksource/drivers/timer-tegra186: Fix support for multiple watchdog instances
-Date: Thu, 16 Jul 2026 15:28:46 +0200
-Message-ID: <20260716133053.464280583@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.1 267/518] HID: wacom: stop hardware after post-start probe failures
+Date: Thu, 16 Jul 2026 15:28:55 +0200
+Message-ID: <20260716133053.659514479@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,41 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit ca57bf46e7a94f8c53d05c376df9fcfdcb482100 upstream.
+commit ec2612b8ad9e642596db011dd8b6568ef1edeaa1 upstream.
 
-Tegra SoCs support multiple watchdogs; currently only one (WDT0) is
-used. When multiple watchdogs are registered, tegra186_wdt_enable()
-overwrites the TKEIE(x) register, discarding any existing watchdog
-interrupt enable bits. As a result, enabling one watchdog inadvertently
-disables interrupts for the others.
+wacom_parse_and_register() starts HID hardware before registering inputs
+and initializing pad LEDs/remotes. Those later steps can fail, but their
+error paths currently release Wacom resources without stopping the HID
+hardware.
 
-Fix this by preserving the existing TKEIE(x) value and updating it
-using a read-modify-write sequence.
+Route post-hid_hw_start() failures through hid_hw_stop() before
+releasing driver resources.
 
-Fixes: 42cee19a9f83 ("clocksource: Add Tegra186 timers support")
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: c1d6708bf0d3 ("HID: wacom: Do not register input devices until after hid_hw_start")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260507154557.2082697-2-kkartik@nvidia.com
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/timer-tegra186.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/wacom_sys.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/clocksource/timer-tegra186.c
-+++ b/drivers/clocksource/timer-tegra186.c
-@@ -149,7 +149,8 @@ static void tegra186_wdt_enable(struct t
- 	u32 value;
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2462,16 +2462,16 @@ static int wacom_parse_and_register(stru
  
- 	/* unmask hardware IRQ, this may have been lost across powergate */
--	value = TKEIE_WDT_MASK(wdt->index, 1);
-+	value = readl(tegra->regs + TKEIE(wdt->tmr->hwirq));
-+	value |= TKEIE_WDT_MASK(wdt->index, 1);
- 	writel(value, tegra->regs + TKEIE(wdt->tmr->hwirq));
+ 	error = wacom_register_inputs(wacom);
+ 	if (error)
+-		goto fail;
++		goto fail_hw_stop;
  
- 	/* clear interrupt */
+ 	if (wacom->wacom_wac.features.device_type & WACOM_DEVICETYPE_PAD) {
+ 		error = wacom_initialize_leds(wacom);
+ 		if (error)
+-			goto fail;
++			goto fail_hw_stop;
+ 
+ 		error = wacom_initialize_remotes(wacom);
+ 		if (error)
+-			goto fail;
++			goto fail_hw_stop;
+ 	}
+ 
+ 	if (!wireless) {
+@@ -2485,14 +2485,14 @@ static int wacom_parse_and_register(stru
+ 		cancel_delayed_work_sync(&wacom->init_work);
+ 		_wacom_query_tablet_data(wacom);
+ 		error = -ENODEV;
+-		goto fail_quirks;
++		goto fail_hw_stop;
+ 	}
+ 
+ 	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR) {
+ 		error = hid_hw_open(hdev);
+ 		if (error) {
+ 			hid_err(hdev, "hw open failed\n");
+-			goto fail_quirks;
++			goto fail_hw_stop;
+ 		}
+ 	}
+ 
+@@ -2501,7 +2501,7 @@ static int wacom_parse_and_register(stru
+ 
+ 	return 0;
+ 
+-fail_quirks:
++fail_hw_stop:
+ 	hid_hw_stop(hdev);
+ fail:
+ 	wacom_release_resources(wacom);
 
 
