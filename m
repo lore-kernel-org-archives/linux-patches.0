@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7303FE370;
-	Thu, 16 Jul 2026 13:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CF033C1BE;
+	Thu, 16 Jul 2026 13:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209466; cv=none; b=XnQAbjTEd7gh65NkMETO3M508bb+51IkfkoZ7oYTJqQ7tDIzDyww9lAocLKmfEZDHREe+S20kIkWE49fmaZwVAwVyf9FzIWO/7fYAubi96vuryYTVca/g6UpGODRZisw2TuvomTbGtt8w9AjBoTZFb+GrEhGLrVPW2UxJDUFzq4=
+	t=1784209470; cv=none; b=n0ZgRnhXApDJtFHGKQC0eCxNR/aKWiQ3vqhdTB1jwxUQLwof8GV157jGViZlaQxj/C8gnpzRFUs789estS/X0fM1ypBCw1Rz8i8E/ft0brFfSbg6xPgJAHQUI3qOnmn4fjQtclRUJ+1tbGKcdStDGxicICro34o4oBvGyB7S/rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209466; c=relaxed/simple;
-	bh=Vo6YEjNd2cbvoYzRcB0YQn2ePa1IWC1YT3fz2IOUDkE=;
+	s=arc-20240116; t=1784209470; c=relaxed/simple;
+	bh=HqbRNSEowqj2Sv7myHDnGXewwNo8Wcj3O5hAYe+3jXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1f+Nmqy7hs3lpwTKkIIVsvfC3gSpi5GNiepH02aQA5SE2di0pBqjUJs69GeITner+Vm+UkSHiSiqjT/1g/tj932/SCOTl/qEQnAWLNEII7J9ZKc69kbbSYiB4cd/09a4FOf/c8RPFxoVooiKRMBlYP3RtlScqbS9O/iOenZjjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UD/Lroyu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l6Fq58oEl+2G/6H/dK6agkII8EIDVY2cFWtfbtuhY2ebSpnaLUm/Okmmzl45SiaNoEhLlnxMGsJiiXJ+tPo8gDi3UTPV0+XsaaTbSbKDw/vHe+8B9JpI8RDRwbUd5Rzxw99SfUDo/2Rx6BCQCQf6RlvOWoLem+Qw2J28QFCPShM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUn6nLEv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UD/Lroyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF8D1F00A3A;
-	Thu, 16 Jul 2026 13:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUn6nLEv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8BB1F000E9;
+	Thu, 16 Jul 2026 13:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209463;
-	bh=EFOTj/tqNkKMUBIFWD0M96KEP9xdkf71MPhJJz5xBqI=;
+	s=korg; t=1784209466;
+	bh=LN4UaWeyHIxo2Cxw7UAjZK7vD2PE3hIs2GqrvtxqtSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UD/Lroyuv8m31nAcABwd1P9g8XDuLh6CivV+VsB4WQeJ15b+1lqMWkZARdrsUlA99
-	 XSZ0yb53OlEozHFbxNsXZT2MC70j/vWwDv2FfW2CBRvvx7pSpzqmI3cIRAhViih695
-	 DkBJWtfocJhFVMCeXu+vbowIrZuQlDea5yh9VxAk=
+	b=oUn6nLEv2hrGBwmhRRmok89VcyYnW7ccCqjiR6rGmSUxo75lfu8yXj02RVii5aGtD
+	 bCaB6VidTjUH5YwoaX60dlKiPONf08XXU8Wx3UEdnxn9USHTArNFi4U4DnRTgiTp5s
+	 e50Iq2NcDHc0n7VhJQaeiLKzdKlLtWcucRs9CCbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	syzbot+e12bd9ca48157add237a@syzkaller.appspotmail.com,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kairui Song <ryncsn@gmail.com>,
+	Michal Hocko <mhocko@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
-	Dave Chinner <david@fromorbit.com>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 194/518] mm: shrinker: fix NULL pointer dereference in debugfs
-Date: Thu, 16 Jul 2026 15:27:42 +0200
-Message-ID: <20260716133052.074007890@linuxfoundation.org>
+Subject: [PATCH 7.1 195/518] mm: swap_cgroup: fix NULL deref in lookup_swap_cgroup_id on swapless host
+Date: Thu, 16 Jul 2026 15:27:43 +0200
+Message-ID: <20260716133052.095622851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,72 +60,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
 
-commit e30453c61e185e914fde83c650e268067b140218 upstream.
+commit 63b02a9409cb5180398491b093e48bcb5315f5fb upstream.
 
-shrinker_debugfs_add() creates both "count" and "scan" debugfs files
-unconditionally.
+lookup_swap_cgroup_id() passes swap_cgroup_ctrl[type].map to
+__swap_cgroup_id_lookup() without checking that the type was ever
+registered via swap_cgroup_swapon().  On a swapless host every ctrl->map
+is NULL, so __swap_cgroup_id_lookup() dereferences NULL + a scaled
+swp_offset().
 
-That assumes every shrinker implements both count_objects() and
-scan_objects(), which is not guaranteed.  For example, the xen-backend
-shrinker sets count_objects() but leaves scan_objects() NULL, so writing
-to its scan file calls through a NULL function pointer and panics the
-kernel:
+Since commit bea67dcc5eea ("mm: attempt to batch free swap entries for
+zap_pte_range()"), zap_pte_range() -> swap_pte_batch() calls
+lookup_swap_cgroup_id() on any non-present, non-none PTE that decodes as a
+real swap entry, without first validating it against swap_info[].  A
+single PTE corrupted into a type-0 swap entry takes the host down at
+process exit.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-RIP: 0010:0x0
-Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-Call Trace:
- <TASK>
- shrinker_debugfs_scan_write+0x12e/0x270
- full_proxy_write+0x5f/0x90
- vfs_write+0xde/0x420
- ? filp_flush+0x75/0x90
- ? filp_close+0x1d/0x30
- ? do_dup2+0xb8/0x120
- ksys_write+0x68/0xf0
- ? filp_flush+0x75/0x90
- do_syscall_64+0xb3/0x5b0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+We hit this in production on a swapless 6.12.58 host: ~1s of
+"get_swap_device: Bad swap file entry 3f800204222bb" (do_swap_page() being
+correctly defensive about the same entry) followed by
 
-The count path has the same issue in principle if a shrinker omits
-count_objects().
+  BUG: unable to handle page fault for address: 000003f800204220
+  RIP: 0010:lookup_swap_cgroup_id+0x2b/0x60
+  Call Trace:
+   swap_pte_batch+0xbf/0x230
+   zap_pte_range+0x4c8/0x780
+   unmap_page_range+0x190/0x3e0
+   exit_mmap+0xd9/0x3c0
+   do_exit+0x20c/0x4b0
 
-To fix it, only create "count" and "scan" debugfs files when the
-corresponding callbacks are present.
+syzbot has reported the identical stack.
 
-Link: https://lore.kernel.org/20260617090052.27325-1-qi.zheng@linux.dev
-Fixes: bbf535fd6f06 ("mm: shrinkers: add scan interface for shrinker debugfs")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+The source of the PTE corruption is a separate bug; this change makes the
+teardown path as robust as the fault path already is.  Every other caller
+of lookup_swap_cgroup_id() is downstream of a get_swap_device() that has
+already validated the entry, so the new branch is cold.
+
+Link: https://lore.kernel.org/20260504-swap-cgroup-fix-7-0-v1-1-f53ff41ee553@linux.dev
+Fixes: bea67dcc5eea ("mm: attempt to batch free swap entries for zap_pte_range()")
+Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Reported-by: syzbot+e12bd9ca48157add237a@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/69859728.050a0220.3b3015.0033.GAE@google.com
+Assisted-by: Claude:unspecified
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kairui Song <ryncsn@gmail.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
 Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker_debug.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ mm/swap_cgroup.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -183,10 +183,12 @@ int shrinker_debugfs_add(struct shrinker
- 	}
- 	shrinker->debugfs_entry = entry;
+--- a/mm/swap_cgroup.c
++++ b/mm/swap_cgroup.c
+@@ -124,6 +124,8 @@ unsigned short lookup_swap_cgroup_id(swp
+ 		return 0;
  
--	debugfs_create_file("count", 0440, entry, shrinker,
--			    &shrinker_debugfs_count_fops);
--	debugfs_create_file("scan", 0220, entry, shrinker,
--			    &shrinker_debugfs_scan_fops);
-+	if (shrinker->count_objects)
-+		debugfs_create_file("count", 0440, entry, shrinker,
-+				    &shrinker_debugfs_count_fops);
-+	if (shrinker->scan_objects)
-+		debugfs_create_file("scan", 0220, entry, shrinker,
-+				    &shrinker_debugfs_scan_fops);
- 	return 0;
+ 	ctrl = &swap_cgroup_ctrl[swp_type(ent)];
++	if (unlikely(!ctrl->map))
++		return 0;
+ 	return __swap_cgroup_id_lookup(ctrl->map, swp_offset(ent));
  }
  
 
