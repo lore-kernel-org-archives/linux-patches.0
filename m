@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441EE425884;
-	Thu, 16 Jul 2026 13:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04B8424651;
+	Thu, 16 Jul 2026 13:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209604; cv=none; b=g6EWKfkdkNqVHPnYDcGhCA7asGnWVfuUpNpPQdwU9OK3LfhLNXFvH7jXm9rSs0dVDCBhmfAFnL3ghSIThwnaV8rkLkXwVOX1+SAPbCIqwJkm9ys28skC+v0j1z97oKSJgw24wggQ6pkbO406Z4nVOK4FrhhCB6SxetOM5CxSEDM=
+	t=1784209604; cv=none; b=XuiqoygN+AOKb7q4I+JyaAW9uyBhsGF0PE7pVab4CWFXlMIP5XRGxUJV8edCC/okv7aydGOuyhbrif/mP+sbHoSMCC2hfNzsUElfoIf5Meszb06eeEh3nmE+79SOvvoKpFsSDcXWiyTVPEkT8eupjF/nFT5JTkmgxe+WEWyMMj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784209604; c=relaxed/simple;
-	bh=IX3UOlldFA0VrbVwcH7qyqBAdbCjxFvTbLG5Jvmfl2U=;
+	bh=8NDGrpGiD3Wpqjo+z4ic39O451sDrjPtTzZSgUQFqIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmzdhSKaItCfObdzSv3kllNZJM2FLNPR4OkamBPOoVg6Q+yasc5qYlxoV7UBN9QtANbZ1yFN6npbdMI+OdYvZveDU9i7939LqnXXAVfJL7nfZBt2sUAPjTF3GerYH7ypsJZXLLB1QecL9yw4/+wuSIxlD9tczVQmm6x2GXC6wF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eR1YXCeJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FgKp7+HknqdKpffQsPJ4QTLLEv7OcnAGnYanjfj7vomg51XIRXzqd+8hspb/nimMog70UTXl18Aca+j5nxjA18DZGkr7dE9a83BsbOdTyqyg+hoWFFuMY3LqmJatgoRwmdtj5PH8RPHMAieZkSQIDl1tSXL+erjfNg77/rijHC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URd3scne; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eR1YXCeJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93361F00A3F;
-	Thu, 16 Jul 2026 13:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URd3scne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5241F00A3A;
+	Thu, 16 Jul 2026 13:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209597;
-	bh=Fwg+OskGfapwxgmRo8oZUyC2sC0nPmlufCQyLujAwJM=;
+	s=korg; t=1784209599;
+	bh=a1Atr5etb33g5ToQfL7lBB6JHL5cQnOH6MTUIJ1MGfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eR1YXCeJmfZNtDX+GYWHwBNT4wMf7fIvv28P2ldBCppKU82cvgoayVSsA7159lI/d
-	 fZ3165XqhNDkIxGBAzFoF/9qQLAB7Mu1EJHUG3CGemgNrk5USE2hnTZyKsFYR9QkJE
-	 YgV4RC5NNTI4szXx49r0GhK19GdWMfx9ou/VZyiU=
+	b=URd3scnemi3Rhf2KMQ/f4IT0klQIBKb+jHSukvCt/qk3LyHbvUQTbo+fg9nKrG5yr
+	 WrbtlPZuHnmslj0l8nqTqp/ckv+DfjFMtwjLyUICIS2wbeD8FWABfOBvEOmoD1Ht74
+	 3VXmhcpyCzsgxxUKRQ7fUPDA6cI+3j/V+8DpKRlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 7.1 245/518] OPP: of: Fix potential memory leak in opp_parse_supplies()
-Date: Thu, 16 Jul 2026 15:28:33 +0200
-Message-ID: <20260716133053.178430415@linuxfoundation.org>
+Subject: [PATCH 7.1 246/518] cpufreq: qcom-cpufreq-hw: Fix possible double free
+Date: Thu, 16 Jul 2026 15:28:34 +0200
+Message-ID: <20260716133053.199349063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,41 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 69f888381d2ecbe18ed9f112c096f8fd3623db98 upstream.
+commit bcb8889c4981fdde42d4fd2c29a77d510fe21da2 upstream.
 
-The memory allocated for microvolt, microamp and microwatt is not freed
-in one of the paths in opp_parse_supplies() which returns directly.
-Fix that by adding a goto to the error unwind ladder.
+qcom_cpufreq.data is allocated with devm_kzalloc() in probe() as an
+array of per-domain data. qcom_cpufreq_hw_cpu_init() stores a pointer to
+one element of this array in policy->driver_data.
 
-Fixes: 2eedf62e66c2 ("OPP: decouple dt properties in opp_parse_supplies()")
+qcom_cpufreq_hw_cpu_exit() currently calls kfree() on policy->driver_data.
+This is not valid because the memory is devm-managed. For the first
+domain, this can free the devm-managed allocation while the devres entry
+is still active, leading to a possible double free when the platform
+device is later detached. For other domains, the pointer may refer to an
+element inside the array rather than the allocation base.
+
+Remove the kfree(data) call and let devres release qcom_cpufreq.data.
+
+This issue was found by a static analysis tool I am developing.
+
+Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/opp/of.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/opp/of.c
-+++ b/drivers/opp/of.c
-@@ -673,7 +673,7 @@ static int opp_parse_supplies(struct dev
- 	 */
- 	if (unlikely(opp_table->regulator_count == -1)) {
- 		opp_table->regulator_count = 0;
--		return 0;
-+		goto free_microwatt;
- 	}
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -578,7 +578,6 @@ static void qcom_cpufreq_hw_cpu_exit(str
+ 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
+ 	qcom_cpufreq_hw_lmh_exit(data);
+ 	kfree(policy->freq_table);
+-	kfree(data);
+ }
  
- 	for (i = 0, j = 0; i < opp_table->regulator_count; i++) {
-@@ -696,6 +696,7 @@ static int opp_parse_supplies(struct dev
- 			opp->supplies[i].u_watt = microwatt[i];
- 	}
- 
-+free_microwatt:
- 	kfree(microwatt);
- free_microamp:
- 	kfree(microamp);
+ static void qcom_cpufreq_ready(struct cpufreq_policy *policy)
 
 
