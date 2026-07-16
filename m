@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEC6425889;
-	Thu, 16 Jul 2026 13:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E98A424D77;
+	Thu, 16 Jul 2026 13:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209494; cv=none; b=nDrUSzGE3VBj8vr1OP2l0ogyFPxMj86DsR9bCsuOLkt4yENqzL9hZFSDDB/MreAFSXNismPh0ZPcEbYTCkilHnyQY7tvEEh17Mh/A4VzLfLhtl2J2u7/re0q7WVOwZmNNb4UT1ur2zOHxWIekcAkPXBbTnL2H+1lUUF01CHAbhw=
+	t=1784209495; cv=none; b=j4I4kEIsG5YX34Qwh05RbbESUB5Xe9Lp0ug7xnRJF3z1tKgwB8fyL3o8S4zkx/IU4yZuRS7nNkQ0+rpNVPKsC6Qn3ptT2wu9xaRqD1h+T2HDRwMFCAcMkZ/FKUn+LeppP9gpnhtsolv0pX5RPr9sap9sawlxlA02N1VYrUpHNTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209494; c=relaxed/simple;
-	bh=SNxwso3cmufWEOtXNF6HUVRm+doYlZZhdGG9YTxjboI=;
+	s=arc-20240116; t=1784209495; c=relaxed/simple;
+	bh=Z+4exnC3Le3xxO6gLzYQulFq8b/aoo4FlQvEcID4YuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQmWMyJCePwMJv/gZIR7EuMetemppGKsZNkNFgxheq4v/7+XxPsrvkFi81qfoCwe9iBn5wlFpQrWgkdBstOqPZRrXHv/C/nZ3eqIdylrfJ5JpXMFBqA9hQQkqrjq1Wm08acVg6byv2AxI6l8B22G1Ws6pIENY7re6JWbumdQdcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0b7WGstu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OehsMZbG+22aO2M+R1bnLwRwg+yLTWSdqocpSwgMw9aTzMFQO4FHyyCXtsWckYfeHLOBJrfRWxo2nkBURGGPHn1MJlL8KLdGL0mm6AyJc7HqzO+yfQPiSMCPKGfN0lLtNh85Zf8Fwqk6AoR8fvS27raJySxKBjHVkD6n5Efj4QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecMGhZWL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0b7WGstu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191B81F00A3A;
-	Thu, 16 Jul 2026 13:44:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecMGhZWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F341F00A3D;
+	Thu, 16 Jul 2026 13:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209489;
-	bh=NajZdSxaYJhRJW9ar1OsMRPD5/b/7dKrzufWSXXA70o=;
+	s=korg; t=1784209492;
+	bh=NuQsP7OAgIPIsNt/TrnCg+lB61IGZEMo9LQln5q/yhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0b7WGstuzCcKtt0HgNvwkK0+Ux2bwyte4KLgT85PuW57Hou28XPYWZNFcgqvTzjjx
-	 nOnZoH5PD6TyYZ4/HCc5xHEej9OjryIgD1yfG7mKtveoSvDg49epbsNfj1MpYp5Irx
-	 OzCeqvwRlpR5SExWFUtEgoRPVKrLqtzdCNR53UN4=
+	b=ecMGhZWLs3YbL+knU/JJQeEN/gzcMH70WI2IdF2b22Yu7y98/sqObHW89p+L5wnju
+	 GC3+jMdQpyQNQsNf2D0Glc+QJOiA1bnyAlYURehhKi/D/loOnjBWL/08W7fYYAm0cR
+	 xqi9YfPmi9OQxWxnHhSSJoXaxTMvrXr0a/3cIKBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 168/518] crypto: amlogic - avoid double cleanup in meson_crypto_probe()
-Date: Thu, 16 Jul 2026 15:27:16 +0200
-Message-ID: <20260716133051.515835014@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.1 204/518] Bluetooth: btmtksdio: fix infinite loop in btmtksdio_txrx_work()
+Date: Thu, 16 Jul 2026 15:27:52 +0200
+Message-ID: <20260716133052.285004289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,137 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-commit 6d827ade51a24e18d81afb9f32756d339520a14c upstream.
+commit a257407e2bbbb099ed427719a50563f67fa366d8 upstream.
 
-When meson_allocate_chanlist() fails after a partial allocation, it already
-unwinds the allocated chanlist state through its local error path.
-meson_crypto_probe() then jump to error_flow and calls
-meson_free_chanlist() again, causing the same per-flow resources to be torn
-down twice. In the reproduced failure path, the second teardown
-re-entered crypto_engine_exit() on an already destroyed worker and KASAN
-reported a slab-use-after-free in kthread_destroy_worker().
+Every once in a while we see a hung btmtksdio_flush() task:
 
-Prevent double-free by handling partial allocation failures locally within
-meson_allocate_chanlist() and skipping the outer cleanup path.
+ INFO: task kworker/u17:0:189 blocked for more than 122 seconds.
+ __cancel_work_timer+0x3f4/0x460
+ cancel_work_sync+0x1c/0x2c
+ btmtksdio_flush+0x2c/0x40
+ hci_dev_open_sync+0x10c4/0x2190
+ [..]
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available.
+It all boils down to incorrect time_is_before_jiffies() usage in
+btmtksdio_txrx_work().  The btmtksdio_txrx_work() loop is expected
+to be terminated if running for longer than 5*HZ.  However the
+timeout check is twisted:  time_is_before_jiffies(old_jiffies + 5*HZ)
+evaluates to true when old_jiffies + 5*HZ is in the past i.e. when a
+timeout has occurred.  Using OR with time_is_before_jiffies(txrx_timeout)
+means that:
+- before the 5-second timeout: the condition is `int_status || false`,
+  so it loops as long as there are pending interrupts.
+- after the 5-second timeout: the condition becomes `int_status || true`,
+  which is always true.
 
-The bug was reproduced in a QEMU x86_64 guest booted with KASAN on v7.1,
-using the reproducer under tools/testing/meson_crypto_probe. The reproducer
-forces the second dma_alloc_attrs() call in the gxl-crypto probe path to
-return NULL, making meson_allocate_chanlist() fail after partial
-initialization. On the unpatched kernel this reliably triggered a
-slab-use-after-free. With this fix applied, the same reproducer no longer
-emits any KASAN report and the probe fails cleanly with -ENOMEM.
+When the loop becomes infinite btmtksdio_txrx_work() loop never
+terminates and never releases the SDIO host.
 
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in kthread_destroy_worker+0xb2/0xd0
-    Read of size 8 at addr ff1100010c057a68 by task insmod/265
+Fix loop termination condition to actually enforce a 5*HZ timeout.
 
-    CPU: 1 UID: 0 PID: 265 Comm: insmod Tainted: G           O        7.1.0-rc2-00376-g810af9adc907-dirty #10 PREEMPT(lazy)
-    Tainted: [O]=OOT_MODULE
-    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x68/0xa0
-     print_report+0xcb/0x5e0
-     ? __virt_addr_valid+0x21d/0x3f0
-     ? kthread_destroy_worker+0xb2/0xd0
-     ? kthread_destroy_worker+0xb2/0xd0
-     kasan_report+0xca/0x100
-     ? kthread_destroy_worker+0xb2/0xd0
-     kthread_destroy_worker+0xb2/0xd0
-     meson_crypto_probe+0x4d0/0xc10 [amlogic_gxl_crypto]
-     platform_probe+0x99/0x140
-     really_probe+0x1c6/0x6a0
-     ? __pfx___device_attach_driver+0x10/0x10
-     __driver_probe_device+0x248/0x310
-     ? acpi_driver_match_device+0xb0/0x100
-     driver_probe_device+0x48/0x210
-     ? __pfx___device_attach_driver+0x10/0x10
-     __device_attach_driver+0x160/0x320
-     bus_for_each_drv+0x104/0x190
-     ? __pfx_bus_for_each_drv+0x10/0x10
-     ? _raw_spin_unlock_irqrestore+0x2c/0x50
-     __device_attach+0x19d/0x3b0
-     ? __pfx___device_attach+0x10/0x10
-     ? do_raw_spin_unlock+0x53/0x220
-     device_initial_probe+0x78/0xa0
-     bus_probe_device+0x5b/0x130
-     device_add+0xcfd/0x1430
-     ? __pfx_device_add+0x10/0x10
-     ? insert_resource+0x34/0x50
-     ? lock_release+0xc9/0x290
-     platform_device_add+0x24e/0x590
-     ? __pfx_meson_crypto_probe_repro_init+0x10/0x10 [meson_crypto_probe_repro]
-     meson_crypto_probe_repro_init+0x330/0xff0 [meson_crypto_probe_repro]
-     do_one_initcall+0xc0/0x450
-     ? __pfx_do_one_initcall+0x10/0x10
-     ? _raw_spin_unlock_irqrestore+0x2c/0x50
-     ? __create_object+0x59/0x80
-     ? kasan_unpoison+0x27/0x60
-     do_init_module+0x27b/0x7d0
-     ? __pfx_do_init_module+0x10/0x10
-     ? kasan_quarantine_put+0x84/0x1d0
-     ? kfree+0x32c/0x510
-     ? load_module+0x561e/0x5ff0
-     load_module+0x54fe/0x5ff0
-     ? __pfx_load_module+0x10/0x10
-     ? security_file_permission+0x20/0x40
-     ? kernel_read_file+0x23d/0x6e0
-     ? mmap_region+0x235/0x4a0
-     ? __pfx_kernel_read_file+0x10/0x10
-     ? __file_has_perm+0x2c0/0x3e0
-     init_module_from_file+0x158/0x180
-     ? __pfx_init_module_from_file+0x10/0x10
-     ? __lock_acquire+0x45a/0x1ba0
-     ? idempotent_init_module+0x315/0x610
-     ? lock_release+0xc9/0x290
-     ? lockdep_init_map_type+0x4b/0x220
-     ? do_raw_spin_unlock+0x53/0x220
-     idempotent_init_module+0x330/0x610
-     ? __pfx_idempotent_init_module+0x10/0x10
-     ? __pfx_cred_has_capability.isra.0+0x10/0x10
-     ? ksys_mmap_pgoff+0x385/0x520
-     __x64_sys_finit_module+0xbe/0x120
-     do_syscall_64+0x115/0x690
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f7d6d31690d
-    Code: 5b 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d f3 b4 0f 00 f7 d8 >
-    RSP: 002b:00007fffc027ac68 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-    RAX: ffffffffffffffda RBX: 000055f7b81967c0 RCX: 00007f7d6d31690d
-    RDX: 0000000000000000 RSI: 000055f79a0d6cd2 RDI: 0000000000000003
-    RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000003 R11: 0000000000000246 R12: 000055f79a0d6cd2
-    R13: 000055f7b8196790 R14: 000055f79a0d5888 R15: 000055f7b81968e0
-     </TASK>
-
-Fixes: 48fe583fe541 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
+Fixes: 26270bc189ea4 ("Bluetooth: btmtksdio: move interrupt service to work")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/amlogic/amlogic-gxl-core.c |    2 +-
+ drivers/bluetooth/btmtksdio.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/amlogic/amlogic-gxl-core.c
-+++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
-@@ -291,8 +291,8 @@ static int meson_crypto_probe(struct pla
- 	return 0;
- error_alg:
- 	meson_unregister_algs(mc);
--error_flow:
- 	meson_free_chanlist(mc, MAXFLOW - 1);
-+error_flow:
- 	clk_disable_unprepare(mc->busclk);
- 	return err;
- }
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -620,7 +620,7 @@ static void btmtksdio_txrx_work(struct w
+ 			if (btmtksdio_rx_packet(bdev, rx_size) < 0)
+ 				bdev->hdev->stat.err_rx++;
+ 		}
+-	} while (int_status || time_is_before_jiffies(txrx_timeout));
++	} while (int_status && time_is_after_jiffies(txrx_timeout));
+ 
+ 	/* Enable interrupt */
+ 	if (bdev->func->irq_handler)
 
 
