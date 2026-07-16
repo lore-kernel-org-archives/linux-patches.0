@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC46931E85C;
-	Thu, 16 Jul 2026 13:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97556400973;
+	Thu, 16 Jul 2026 13:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210259; cv=none; b=I9w2dHZJnC5asT93kHm72snczfmGucTTVlIITFVh9zjLOwulyWy6JMO0oLHY5fLVzAkXddtitBD5FA1jiOVk5THdRPGJL6poIGKJngYSHbC+ksSmbP2159rd7A6TErBI7AZnBNsWkZFgTOCSzOp0mhAeGgg+AUldtgGoJQQceoQ=
+	t=1784210263; cv=none; b=fC6jVyCExhQiImyg4pVjw7XGBJUq//ARSoLEa7OvVVeZ6A6Z7xkGzhzcdXbiEJ9i8utOgrLW1omC1iRUuoEv/Czgi+QDx1HHx+YMZNf2aVoOA/QfMMyPYjmOedP1BxkXcdkqFfLzInxNu/F6TWX+OjP91NVwi1cK8UgybhH4yIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210259; c=relaxed/simple;
-	bh=PS1uIHaQeJ/2RLu+sG35d1y/UfQBa79ym8XQKEMd+T4=;
+	s=arc-20240116; t=1784210263; c=relaxed/simple;
+	bh=SWmxEeaNyX3rpNNcL4byQP5dDuwI6J/H6RjUy9LYrd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2Na9yVO+7dVCG4AyiqtWeoSD+hsTybAPNHETt6H1GEL7nmI9dXQq0wSM3mv716eBLCGnVnjI3Es0mZ3B0HDXLAWjIUQ7ZuxaxMEzqY/YUxt4TfHQ2J8jU/m+HYx34oooHc+3045vvDUmp89Nq3vk/Y1T3stq8eXO+b/o+BJ/lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNfN94if; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xst6v0C4eTIE/ZS3VZdsFmKmKE8XJ2Tigp+FKs+U3LmVeAlGcSNmrIVZ2AmprM88BTUqR8AaVUJHdZfFKOYUM7KDy28W5uKUAIe3vH+kZMdSO37F4v80BjSK/gwxpl36HEUVL1Ac1sD8hz/9SRWrZE6wKlgKybyLMRBzHcbvedU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2STQulc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNfN94if"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0691F000E9;
-	Thu, 16 Jul 2026 13:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2STQulc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B861F000E9;
+	Thu, 16 Jul 2026 13:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210258;
-	bh=z2PckZdGGF/PCkrhWuIy7FYcZ5QXPqLP3MgWm0OkWOg=;
+	s=korg; t=1784210261;
+	bh=WsTZG/GRy+ZrNIbhgbDbkZ9GfsX0vc37Eri3Zk4uxiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sNfN94ifvBGwRHM2HsKuHSbIt+JqUnQulhpycbOO7OXdJdgeJiNggswINj3zBzTX/
-	 X27iFgSLgs/pfI8imxb95R3bbObW879x3sJir2jghuH5GloDsAqDemXTEPavRuiaL+
-	 9byeQLWwavqBlpk7vqgE8ZuROrMQcx8f6yzwSO08=
+	b=F2STQulcxH/4gLpkouudYkYJmiFAFCvV6pAvtTdb/BhhoEUlCJnlGPmUPfeW0jh8i
+	 +aDnSQOpoX/S23ALLF3TmQnTG80NlAopWiDrpbu1qnqwGiqQnBhxYz1UTtlyMDeVPR
+	 pyqvYpCpiNO0babWmmG5Us7c9aDRUdJKgQIsDUmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 491/518] Input: maplemouse - fix NULL pointer dereference in open()
-Date: Thu, 16 Jul 2026 15:32:39 +0200
-Message-ID: <20260716133058.588293642@linuxfoundation.org>
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 7.1 500/518] fuse: avoid 32-bit prune notification count wrap
+Date: Thu, 16 Jul 2026 15:32:48 +0200
+Message-ID: <20260716133058.782918624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,62 +51,485 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-commit ee89db004238bd0b034f2a6176e175561658750b upstream.
+commit 54243797cedf55447b4c5d560e8cd709900061ae upstream.
 
-Commit 555c765b0cc2 ("Input: mouse - drop unnecessary calls to
-input_set_drvdata") dropped the input_set_drvdata() call in probe
-because the data appeared to be unused. However, dc_mouse_open() and
-dc_mouse_close() were using maple_get_drvdata(to_maple_dev(&dev->dev)).
-This appears to be accessing the data attached to an instance of
-maple_device structure, while in reality this actually retrieves driver
-data from the input device's embedded struct device (doing invalid
-conversion of input device structure to maple device). After
-input_set_drvdata() was removed, that lookup started returning NULL and
-opening the input device dereferences mse->mdev.
+FUSE_NOTIFY_PRUNE validates the nodeid payload length with:
 
-Restore input_set_drvdata() and convert open() and close() to use
-input_get_drvdata() so the dependency is no longer hidden.
+    size - sizeof(outarg) != outarg.count * sizeof(u64)
 
-Fixes: 6b3480855aad ("maple: input: fix up maple mouse driver")
-Fixes: 555c765b0cc2 ("Input: mouse - drop unnecessary calls to input_set_drvdata")
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Link: https://patch.msgid.link/20260628230715.2982552-1-fuchsfl@gmail.com
+On 32-bit kernels, size_t is also 32 bits, so the daemon-controlled
+count multiplication can wrap.  A prune notification with count
+0x20000000 and no nodeid payload passes the check, enters the copy
+loop, and asks the device copy path to read nodeids that are not
+present in the userspace write buffer.  In QEMU this reaches the
+fuse_copy_fill() BUG_ON(!err) path.
+
+Validate the payload length with array_size() instead.  That accepts
+exactly the same valid messages, but avoids wrapping arithmetic before
+the copy loop consumes the count.
+
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Fixes: 3f29d59e92a9 ("fuse: add prune notification")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/maplemouse.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/fuse/dev.c    |    2 
+ fs/fuse/notify.c |  434 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 435 insertions(+), 1 deletion(-)
+ create mode 100644 fs/fuse/notify.c
 
---- a/drivers/input/mouse/maplemouse.c
-+++ b/drivers/input/mouse/maplemouse.c
-@@ -48,7 +48,7 @@ static void dc_mouse_callback(struct map
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -2072,7 +2072,7 @@ static int fuse_notify_prune(struct fuse
+ 	if (err)
+ 		return err;
  
- static int dc_mouse_open(struct input_dev *dev)
- {
--	struct dc_mouse *mse = maple_get_drvdata(to_maple_dev(&dev->dev));
-+	struct dc_mouse *mse = input_get_drvdata(dev);
+-	if (size - sizeof(outarg) != outarg.count * sizeof(u64))
++	if (size - sizeof(outarg) != array_size(outarg.count, sizeof(u64)))
+ 		return -EINVAL;
  
- 	maple_getcond_callback(mse->mdev, dc_mouse_callback, HZ/50,
- 		MAPLE_FUNC_MOUSE);
-@@ -58,7 +58,7 @@ static int dc_mouse_open(struct input_de
- 
- static void dc_mouse_close(struct input_dev *dev)
- {
--	struct dc_mouse *mse = maple_get_drvdata(to_maple_dev(&dev->dev));
-+	struct dc_mouse *mse = input_get_drvdata(dev);
- 
- 	maple_getcond_callback(mse->mdev, dc_mouse_callback, 0,
- 		MAPLE_FUNC_MOUSE);
-@@ -88,6 +88,7 @@ static int probe_maple_mouse(struct devi
- 	mse->dev = input_dev;
- 	mse->mdev = mdev;
- 
-+	input_set_drvdata(input_dev, mse);
- 	input_dev->evbit[0] = BIT_MASK(EV_KEY) | BIT_MASK(EV_REL);
- 	input_dev->keybit[BIT_WORD(BTN_MOUSE)] = BIT_MASK(BTN_LEFT) |
- 		BIT_MASK(BTN_RIGHT) | BIT_MASK(BTN_MIDDLE);
+ 	for (; outarg.count; outarg.count -= num) {
+--- /dev/null
++++ b/fs/fuse/notify.c
+@@ -0,0 +1,434 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++#include "dev.h"
++#include "fuse_i.h"
++#include <linux/pagemap.h>
++
++static int fuse_notify_poll(struct fuse_conn *fc, unsigned int size,
++			    struct fuse_copy_state *cs)
++{
++	struct fuse_notify_poll_wakeup_out outarg;
++	int err;
++
++	if (size != sizeof(outarg))
++		return -EINVAL;
++
++	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
++	if (err)
++		return err;
++
++	fuse_copy_finish(cs);
++	return fuse_notify_poll_wakeup(fc, &outarg);
++}
++
++static int fuse_notify_inval_inode(struct fuse_conn *fc, unsigned int size,
++				   struct fuse_copy_state *cs)
++{
++	struct fuse_notify_inval_inode_out outarg;
++	int err;
++
++	if (size != sizeof(outarg))
++		return -EINVAL;
++
++	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
++	if (err)
++		return err;
++	fuse_copy_finish(cs);
++
++	down_read(&fc->killsb);
++	err = fuse_reverse_inval_inode(fc, outarg.ino,
++				       outarg.off, outarg.len);
++	up_read(&fc->killsb);
++	return err;
++}
++
++static int fuse_notify_inval_entry(struct fuse_conn *fc, unsigned int size,
++				   struct fuse_copy_state *cs)
++{
++	struct fuse_notify_inval_entry_out outarg;
++	int err;
++	char *buf;
++	struct qstr name;
++
++	if (size < sizeof(outarg))
++		return -EINVAL;
++
++	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
++	if (err)
++		return err;
++
++	if (outarg.namelen > fc->name_max)
++		return -ENAMETOOLONG;
++
++	err = -EINVAL;
++	if (size != sizeof(outarg) + outarg.namelen + 1)
++		return -EINVAL;
++
++	buf = kzalloc(outarg.namelen + 1, GFP_KERNEL);
++	if (!buf)
++		return -ENOMEM;
++
++	name.name = buf;
++	name.len = outarg.namelen;
++	err = fuse_copy_one(cs, buf, outarg.namelen + 1);
++	if (err)
++		goto err;
++	fuse_copy_finish(cs);
++	buf[outarg.namelen] = 0;
++
++	down_read(&fc->killsb);
++	err = fuse_reverse_inval_entry(fc, outarg.parent, 0, &name, outarg.flags);
++	up_read(&fc->killsb);
++err:
++	kfree(buf);
++	return err;
++}
++
++static int fuse_notify_delete(struct fuse_conn *fc, unsigned int size,
++			      struct fuse_copy_state *cs)
++{
++	struct fuse_notify_delete_out outarg;
++	int err;
++	char *buf;
++	struct qstr name;
++
++	if (size < sizeof(outarg))
++		return -EINVAL;
++
++	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
++	if (err)
++		return err;
++
++	if (outarg.namelen > fc->name_max)
++		return -ENAMETOOLONG;
++
++	if (size != sizeof(outarg) + outarg.namelen + 1)
++		return -EINVAL;
++
++	buf = kzalloc(outarg.namelen + 1, GFP_KERNEL);
++	if (!buf)
++		return -ENOMEM;
++
++	name.name = buf;
++	name.len = outarg.namelen;
++	err = fuse_copy_one(cs, buf, outarg.namelen + 1);
++	if (err)
++		goto err;
++	fuse_copy_finish(cs);
++	buf[outarg.namelen] = 0;
++
++	down_read(&fc->killsb);
++	err = fuse_reverse_inval_entry(fc, outarg.parent, outarg.child, &name, 0);
++	up_read(&fc->killsb);
++err:
++	kfree(buf);
++	return err;
++}
++
++static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
++			     struct fuse_copy_state *cs)
++{
++	struct fuse_notify_store_out outarg;
++	struct inode *inode;
++	struct address_space *mapping;
++	u64 nodeid;
++	int err;
++	unsigned int num;
++	loff_t file_size;
++	loff_t pos;
++	loff_t end;
++
++	if (size < sizeof(outarg))
++		return -EINVAL;
++
++	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
++	if (err)
++		return err;
++
++	if (size - sizeof(outarg) != outarg.size)
++		return -EINVAL;
++
++	if (outarg.offset >= MAX_LFS_FILESIZE)
++		return -EINVAL;
++
++	nodeid = outarg.nodeid;
++	pos = outarg.offset;
++	num = min(outarg.size, MAX_LFS_FILESIZE - pos);
++
++	down_read(&fc->killsb);
++
++	err = -ENOENT;
++	inode = fuse_ilookup(fc, nodeid,  NULL);
++	if (!inode)
++		goto out_up_killsb;
++
++	mapping = inode->i_mapping;
++	file_size = i_size_read(inode);
++	end = pos + num;
++	if (end > file_size) {
++		file_size = end;
++		fuse_write_update_attr(inode, file_size, num);
++	}
++
++	while (num) {
++		struct folio *folio;
++		unsigned int folio_offset;
++		unsigned int nr_bytes;
++		pgoff_t index = pos >> PAGE_SHIFT;
++
++		folio = filemap_grab_folio(mapping, index);
++		err = PTR_ERR(folio);
++		if (IS_ERR(folio))
++			goto out_iput;
++
++		folio_offset = offset_in_folio(folio, pos);
++		nr_bytes = min(num, folio_size(folio) - folio_offset);
++
++		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes, 0);
++		if (!folio_test_uptodate(folio) && !err && folio_offset == 0 &&
++		    (nr_bytes == folio_size(folio) || file_size == end)) {
++			folio_zero_segment(folio, nr_bytes, folio_size(folio));
++			folio_mark_uptodate(folio);
++		}
++		folio_unlock(folio);
++		folio_put(folio);
++
++		if (err)
++			goto out_iput;
++
++		pos += nr_bytes;
++		num -= nr_bytes;
++	}
++
++	err = 0;
++
++out_iput:
++	iput(inode);
++out_up_killsb:
++	up_read(&fc->killsb);
++	return err;
++}
++
++struct fuse_retrieve_args {
++	struct fuse_args_pages ap;
++	struct fuse_notify_retrieve_in inarg;
++};
++
++static void fuse_retrieve_end(struct fuse_args *args, int error)
++{
++	struct fuse_retrieve_args *ra =
++		container_of(args, typeof(*ra), ap.args);
++
++	release_pages(ra->ap.folios, ra->ap.num_folios);
++	kfree(ra);
++}
++
++static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
++			 struct fuse_notify_retrieve_out *outarg)
++{
++	int err;
++	struct address_space *mapping = inode->i_mapping;
++	loff_t file_size;
++	unsigned int num;
++	unsigned int offset;
++	size_t total_len = 0;
++	unsigned int num_pages;
++	struct fuse_conn *fc = fm->fc;
++	struct fuse_retrieve_args *ra;
++	size_t args_size = sizeof(*ra);
++	struct fuse_args_pages *ap;
++	struct fuse_args *args;
++	loff_t pos = outarg->offset;
++
++	offset = offset_in_page(pos);
++	file_size = i_size_read(inode);
++
++	num = min(outarg->size, fc->max_write);
++	if (pos > file_size)
++		num = 0;
++	else if (num > file_size - pos)
++		num = file_size - pos;
++
++	num_pages = DIV_ROUND_UP(num + offset, PAGE_SIZE);
++	num_pages = min(num_pages, fc->max_pages);
++	num = min(num, num_pages << PAGE_SHIFT);
++
++	args_size += num_pages * (sizeof(ap->folios[0]) + sizeof(ap->descs[0]));
++
++	ra = kzalloc(args_size, GFP_KERNEL);
++	if (!ra)
++		return -ENOMEM;
++
++	ap = &ra->ap;
++	ap->folios = (void *) (ra + 1);
++	ap->descs = (void *) (ap->folios + num_pages);
++
++	args = &ap->args;
++	args->nodeid = outarg->nodeid;
++	args->opcode = FUSE_NOTIFY_REPLY;
++	args->in_numargs = 3;
++	args->in_pages = true;
++	args->end = fuse_retrieve_end;
++
++	while (num && ap->num_folios < num_pages) {
++		struct folio *folio;
++		unsigned int folio_offset;
++		unsigned int nr_bytes;
++		pgoff_t index = pos >> PAGE_SHIFT;
++
++		folio = filemap_get_folio(mapping, index);
++		if (IS_ERR(folio))
++			break;
++
++		folio_offset = offset_in_folio(folio, pos);
++		nr_bytes = min(folio_size(folio) - folio_offset, num);
++
++		ap->folios[ap->num_folios] = folio;
++		ap->descs[ap->num_folios].offset = folio_offset;
++		ap->descs[ap->num_folios].length = nr_bytes;
++		ap->num_folios++;
++
++		pos += nr_bytes;
++		num -= nr_bytes;
++		total_len += nr_bytes;
++	}
++	ra->inarg.offset = outarg->offset;
++	ra->inarg.size = total_len;
++	fuse_set_zero_arg0(args);
++	args->in_args[1].size = sizeof(ra->inarg);
++	args->in_args[1].value = &ra->inarg;
++	args->in_args[2].size = total_len;
++
++	err = fuse_simple_notify_reply(fm, args, outarg->notify_unique);
++	if (err)
++		fuse_retrieve_end(args, err);
++
++	return err;
++}
++
++static int fuse_notify_retrieve(struct fuse_conn *fc, unsigned int size,
++				struct fuse_copy_state *cs)
++{
++	struct fuse_notify_retrieve_out outarg;
++	struct fuse_mount *fm;
++	struct inode *inode;
++	u64 nodeid;
++	int err;
++
++	if (size != sizeof(outarg))
++		return -EINVAL;
++
++	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
++	if (err)
++		return err;
++
++	fuse_copy_finish(cs);
++
++	if (outarg.offset >= MAX_LFS_FILESIZE)
++		return -EINVAL;
++
++	down_read(&fc->killsb);
++	err = -ENOENT;
++	nodeid = outarg.nodeid;
++
++	inode = fuse_ilookup(fc, nodeid, &fm);
++	if (inode) {
++		err = fuse_retrieve(fm, inode, &outarg);
++		iput(inode);
++	}
++	up_read(&fc->killsb);
++
++	return err;
++}
++
++static int fuse_notify_resend(struct fuse_conn *fc)
++{
++	fuse_chan_resend(fc->chan);
++	return 0;
++}
++
++/*
++ * Increments the fuse connection epoch.  This will result of dentries from
++ * previous epochs to be invalidated.  Additionally, if inval_wq is set, a work
++ * queue is scheduled to trigger the invalidation.
++ */
++static int fuse_notify_inc_epoch(struct fuse_conn *fc)
++{
++	atomic_inc(&fc->epoch);
++	if (inval_wq)
++		schedule_work(&fc->epoch_work);
++
++	return 0;
++}
++
++static int fuse_notify_prune(struct fuse_conn *fc, unsigned int size,
++			     struct fuse_copy_state *cs)
++{
++	struct fuse_notify_prune_out outarg;
++	const unsigned int batch = 512;
++	u64 *nodeids __free(kfree) = kmalloc(sizeof(u64) * batch, GFP_KERNEL);
++	unsigned int num, i;
++	int err;
++
++	if (!nodeids)
++		return -ENOMEM;
++
++	if (size < sizeof(outarg))
++		return -EINVAL;
++
++	err = fuse_copy_one(cs, &outarg, sizeof(outarg));
++	if (err)
++		return err;
++
++	if (size - sizeof(outarg) != array_size(outarg.count, sizeof(u64)))
++		return -EINVAL;
++
++	for (; outarg.count; outarg.count -= num) {
++		num = min(batch, outarg.count);
++		err = fuse_copy_one(cs, nodeids, num * sizeof(u64));
++		if (err)
++			return err;
++
++		scoped_guard(rwsem_read, &fc->killsb) {
++			for (i = 0; i < num; i++)
++				fuse_try_prune_one_inode(fc, nodeids[i]);
++		}
++	}
++	return 0;
++}
++
++int fuse_notify(struct fuse_conn *fc, enum fuse_notify_code code,
++		unsigned int size, struct fuse_copy_state *cs)
++{
++	switch (code) {
++	case FUSE_NOTIFY_POLL:
++		return fuse_notify_poll(fc, size, cs);
++
++	case FUSE_NOTIFY_INVAL_INODE:
++		return fuse_notify_inval_inode(fc, size, cs);
++
++	case FUSE_NOTIFY_INVAL_ENTRY:
++		return fuse_notify_inval_entry(fc, size, cs);
++
++	case FUSE_NOTIFY_STORE:
++		return fuse_notify_store(fc, size, cs);
++
++	case FUSE_NOTIFY_RETRIEVE:
++		return fuse_notify_retrieve(fc, size, cs);
++
++	case FUSE_NOTIFY_DELETE:
++		return fuse_notify_delete(fc, size, cs);
++
++	case FUSE_NOTIFY_RESEND:
++		return fuse_notify_resend(fc);
++
++	case FUSE_NOTIFY_INC_EPOCH:
++		return fuse_notify_inc_epoch(fc);
++
++	case FUSE_NOTIFY_PRUNE:
++		return fuse_notify_prune(fc, size, cs);
++
++	default:
++		return -EINVAL;
++	}
++}
 
 
