@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31C4429020;
-	Thu, 16 Jul 2026 14:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9251042BE9A;
+	Thu, 16 Jul 2026 14:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211933; cv=none; b=u0kwFB+tu3bNVdlxpYijzW93ckj9kNNznDz9W4TCYBA//epuYUZBQM+uWBgXw/5wx9FJnDvQwbK8FWLmIa2yGASjpKOK8AT57OkV/mj4r3diAaOpb2ogETtw4wIiyob6aU7FApMw0n7JAjANToH4jupTmdZg8wF1B9dsJZeGJxM=
+	t=1784211935; cv=none; b=bhnx76BuLuRUvGfuqepnQjoOj8+HePdrIF+ebJRksfkYlvNZl3vU4cZAE8wx8L6F/rw1R68iRky9+mr2kSHRtC2esLbVAn7VDAfUyIK7UMhVz2LJpq2DGKilkqZOakWtSyETrAm56vw5CyTBn6WpEoRoECn1TlWmLy7xiuo8Pb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211933; c=relaxed/simple;
-	bh=mNqKv+x691Mp3AnepOntGaHAa5evtPcCCDg5PVPEfX4=;
+	s=arc-20240116; t=1784211935; c=relaxed/simple;
+	bh=o5kU25A+LayZ8OFU+TaMYAhjQYfNEcBU4Fg0lo3ThCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kuy075G6NL8/MTZ4Z0++y6a2nR8AyrlK1tykvmyMYDc5SFW50U1A4Tg73xtpp1pOPI6j4+8RLDE2aBW1m7R5BIkzy+98sQqvnq1sa8PLcgBBWZnJqux4VRNYcyODjhdj8j/DqQIyUFgi3VdilBp+f1f9pPdrlsb0BROgjyM8X0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLvRIyVI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJqyxMsq4dN85Z9LdKuptoG7KcFMjgnNMbMxJKLJW64WirmZEK3zNjbu0XM+eaM1yqGXes6EVdKOhK4QD0eM5GlTUQMV8jUli6tlZUnq68a8yPwcR0ROgguJKrYnx9Z+ikM7XeWDMrCQ9TIrifEOmtyjVGnIUvhF9mDEYeSG0yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7bTMBfS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLvRIyVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632E71F00A3A;
-	Thu, 16 Jul 2026 14:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7bTMBfS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E1E1F000E9;
+	Thu, 16 Jul 2026 14:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211931;
-	bh=2I0yyTJ+O25BMxnaBETr9ZANMb+UCdNMZVUcbrMfFgA=;
+	s=korg; t=1784211934;
+	bh=qxcBLiwx/4WKzDQnqAKpvuOgMPRVY2Dw+TRlUKdb2Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RLvRIyVIuA1xmQmCaxnReFLdLsnN8WGyVLhy0/TYSOUJXqz8E1zvd/duVCYUi7DiM
-	 e5GzO5XIX6jw2bJ8p8rk/bdQJGmaUZaLyj5KDHD2s4e7bSL3QZeq49cJ91xDP6c3ug
-	 uizKTP4f1Vx0TQs3/h7AXoUsv/2QRB0zWfAk8klE=
+	b=r7bTMBfSYZ9hDtsME+jHnQpiPbsVoQXwUD6/H5Jox7rbKSZticjVrwFm2KkryshoW
+	 sl1a732NjbFVCHks1oLsEcflHnjL6t2d4Lc/UrzlqrZgczU2Yok5KOgLYyDwy4wlnL
+	 OuDdfqrwmo50aDPlq10rUEtzj4bHIIZdTjdvT6Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunpeng Tian <shionthanatos@gmail.com>,
-	Mingda Zhang <npczmd@qq.com>,
-	Gongming Wang <gmwgg05@gmail.com>,
-	Peiyuan Xu <paulbucket12@gmail.com>,
-	Qinrun Dai <jupmouse@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.12 134/349] fs/ntfs3: validate Dirty Page Table capacity in log_replay copy_lcns
-Date: Thu, 16 Jul 2026 15:31:08 +0200
-Message-ID: <20260716133036.362167660@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.12 135/349] NTB: epf: Avoid calling pci_irq_vector() from hardirq context
+Date: Thu, 16 Jul 2026 15:31:09 +0200
+Message-ID: <20260716133036.384987870@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -54,78 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunpeng Tian <shionthanatos@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 57382ec6ac63b63dce2789e835fded28b698ae79 upstream.
+commit 4dcddc1c794d1c65eda68f1f8dd04a0fecc0870f upstream.
 
-In the analysis pass of $LogFile journal replay, log_replay() copies
-LCNs from each action log record into an existing Dirty Page Table
-(DPT) entry without bounding the destination index. A crafted NTFS
-image with DPT entry lcns_follow=1 and an action log record with
-lcns_follow=2 produces a kernel slab out-of-bounds write at mount
-time:
+ntb_epf_vec_isr() calls pci_irq_vector() in hardirq context to derive
+the vector number. pci_irq_vector() calls msi_get_virq() that takes a
+mutex and can therefore trigger "scheduling while atomic" splats:
 
-  BUG: KASAN: slab-out-of-bounds in log_replay+0x654c/0xdb60
-  Write of size 8 at addr ffff8880095e1040 by task mount
+  BUG: scheduling while atomic: kworker/u33:0/55/0x00010001
+  ...
+  Call trace:
+   ...
+   schedule+0x38/0x110
+   schedule_preempt_disabled+0x28/0x50
+   __mutex_lock.constprop.0+0x848/0x908
+   __mutex_lock_slowpath+0x18/0x30
+   mutex_lock+0x4c/0x60
+   msi_domain_get_virq+0xe8/0x138
+   pci_irq_vector+0x2c/0x60
+   ntb_epf_vec_isr+0x28/0x120 [ntb_hw_epf]
+   __handle_irq_event_percpu+0x70/0x3a8
+   handle_irq_event+0x48/0x100
+   handle_edge_irq+0x100/0x1c8
+   ...
 
-Two attacker-controlled fields can drive j+i past the allocated
-page_lcns[] array:
+Cache the Linux IRQ number for vector 0 when vectors are allocated and
+use it as a base in the ISR. Running the ISR in a threaded IRQ handler
+would also avoid the problem, but that would be unnecessary here.
 
-  1. dp->lcns_follow (capacity) can be smaller than lrh->lcns_follow.
-  2. lrh->target_vcn may be smaller than dp->vcn, making the u64
-     subtraction wrap to a huge size_t.
-
-Validate target VCN delta and per-record LCN count against the
-DPT entry capacity, bail via the existing out: cleanup label with
--EINVAL.
-
-This mirrors the bounds-check pattern added in commit b2bc7c44ed17
-("fs/ntfs3: Fix slab-out-of-bounds read in DeleteIndexEntryRoot")
-and commit 0ca0485e4b2e ("fs/ntfs3: validate rec->used in
-journal-replay file record check").
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
-Reported-by: Mingda Zhang <npczmd@qq.com>
-Reported-by: Gongming Wang <gmwgg05@gmail.com>
-Reported-by: Peiyuan Xu <paulbucket12@gmail.com>
-Reported-by: Qinrun Dai <jupmouse@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 812ce2f8d14e ("NTB: Add support for EPF PCI Non-Transparent Bridge")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Cc: stable@vger.kernel.org # v5.12+
+Link: https://patch.msgid.link/20260304083028.1391068-3-den@valinux.co.jp
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/ntb/hw/epf/ntb_hw_epf.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -4548,11 +4548,21 @@ copy_lcns:
- 		 * whole routine a loop, case Lcns do not fit below.
- 		 */
- 		t16 = le16_to_cpu(lrh->lcns_follow);
--		for (i = 0; i < t16; i++) {
--			size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
--					    le64_to_cpu(dp->vcn));
--			dp->page_lcns[j + i] = lrh->page_lcns[i];
--		}
-+                t32 = le32_to_cpu(dp->lcns_follow);
-+                if (le64_to_cpu(lrh->target_vcn) < le64_to_cpu(dp->vcn)) {
-+                        err = -EINVAL;
-+                        goto out;
-+                }
-+
-+                for (i = 0; i < t16; i++) {
-+                        size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
-+                                            le64_to_cpu(dp->vcn));
-+                        if (j >= t32 || i >= t32 - j) {
-+                                err = -EINVAL;
-+                                goto out;
-+                        }
-+                        dp->page_lcns[j + i] = lrh->page_lcns[i];
-+                }
+--- a/drivers/ntb/hw/epf/ntb_hw_epf.c
++++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
+@@ -92,6 +92,7 @@ struct ntb_epf_dev {
  
- 		goto next_log_record_analyze;
+ 	int db_val;
+ 	u64 db_valid_mask;
++	int irq_base;
+ };
  
+ #define ntb_ndev(__ntb) container_of(__ntb, struct ntb_epf_dev, ntb)
+@@ -318,7 +319,7 @@ static irqreturn_t ntb_epf_vec_isr(int i
+ 	struct ntb_epf_dev *ndev = dev;
+ 	int irq_no;
+ 
+-	irq_no = irq - pci_irq_vector(ndev->ntb.pdev, 0);
++	irq_no = irq - ndev->irq_base;
+ 	ndev->db_val = irq_no + 1;
+ 
+ 	if (irq_no == 0)
+@@ -350,6 +351,7 @@ static int ntb_epf_init_isr(struct ntb_e
+ 		argument &= ~MSIX_ENABLE;
+ 	}
+ 
++	ndev->irq_base = pci_irq_vector(pdev, 0);
+ 	for (i = 0; i < irq; i++) {
+ 		ret = request_irq(pci_irq_vector(pdev, i), ntb_epf_vec_isr,
+ 				  0, "ntb_epf", ndev);
 
 
