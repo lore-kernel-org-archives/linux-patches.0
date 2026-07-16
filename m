@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E877E3C3BF7;
-	Thu, 16 Jul 2026 13:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CCF2E8897;
+	Thu, 16 Jul 2026 13:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209459; cv=none; b=Lg/6YZRHKSWptxvuYIC7/cnodi8Dtg/+xQu8XuVGDpYk7jaTxsXWYFo4Ck/9Din5LVlT8zOvBCAWuBXXRIPL3Bw1r8RjLtOEqxMrFuODuDbiblUseGqYm153zC6tYOe+lnQQTCYmyOK5M9HZcSVXPHaMAyCa7cCjR8dO8tZ/TGM=
+	t=1784209462; cv=none; b=i0zJEaF7ZuvTkzL60KZ3CUds37FiXSaWngSKDMw6+/GN61OxxJ7Hyzx5MpO4yHp5I1SUf1JepBEe7qnTc+6XXmIdiGqw4y2ln4mHqEn1FCB06+m70ATD2eMofU45ladkcqvUd51IUlKsqDtdwei1lVJoYnJiZ/bHzdvPAes/u8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209459; c=relaxed/simple;
-	bh=irErblq2KPWjvZaPOMUh1jXRz5L8aryCj+UEn2fkbR0=;
+	s=arc-20240116; t=1784209462; c=relaxed/simple;
+	bh=oS/TaL0ayXuugzRtu4p8WufR+vEKKGOZnTKGWFCnYq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVeN3vQBBpXYpNDBkrcX/qKSldURsOuQlQApEKSXF/sfYjM5uW2sM358tN56C6jth5SnSwFA90vo9it6QyAaabUUCuF2EDBOEvV5FwK2UhHMOp8Op0h5bQlQykDuUv4i02YzCHW2JSJRSHpyaB6ewFnXyYaLYKo6c603GPnFnvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcKg16O1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fwtgiRR8KRVAHT/kwSfIXnRXNhONuRh01Ctj/KRzJONR7vTxAAyF2hcHDaCOjl0gtQt11RtkHTw7dEUpoWdICS/1f2DQ5OLH5v0GdzHbZuBv53EKYdARSamnAdk993POaSIgpVaWNYQnjCNUUvurcpGgGrF8GmKpzRVzMEFIZ7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvvYPuuy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcKg16O1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAD01F00A3A;
-	Thu, 16 Jul 2026 13:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvvYPuuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56431F000E9;
+	Thu, 16 Jul 2026 13:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209455;
-	bh=UNUPVvMArhAOGBpqdr08av3OTGHCKNzG063STDnT/uM=;
+	s=korg; t=1784209458;
+	bh=rdB+gCyhac9JzpZTf2ip2zCeMEBZTdMMhEd/xWbaQRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IcKg16O1XvRzQ+tXFg0FVdPOVIbrY0D0slooQCbUNgZbsD3OM3ISuY9d/RLSvLbkx
-	 ZHOrA7Z+r7OB55fahq/TZjlkMJiMdj00vnIFavDnkxGxMbQY/+xL5o00S7M9lbZFNd
-	 Aq4H4wnn7gqIGRy8po/IJNVmHe8bcBCDnxO/6rpI=
+	b=xvvYPuuyDkRIU3NoAQy5pSEQnL1TqyJc977zJDWMgeQFapqkbQMBRNbd7ajtNyuzd
+	 V2sK064YO9phy39Bmo32EIPF3b0B2vMs23GkW7MGHuM68v0GrRJu96m8QCa128OhME
+	 UOk+92Gh1xl10qrP5VP4KvVsDQ9o1LML8t3xI9iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Zenghui Yu <zenghui.yu@linux.dev>,
-	Nhat Pham <nphamcs@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Qi Zheng <qi.zheng@linux.dev>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
 	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
 	Dave Chinner <david@fromorbit.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 192/518] mm/shrinker: do not hold RCU lock in shrinker_debugfs_count_show()
-Date: Thu, 16 Jul 2026 15:27:40 +0200
-Message-ID: <20260716133052.032056984@linuxfoundation.org>
+Subject: [PATCH 7.1 193/518] mm: shrinker: fix shrinker_info teardown race with expansion
+Date: Thu, 16 Jul 2026 15:27:41 +0200
+Message-ID: <20260716133052.053625186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -57,74 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit b902890c62d200b3509cb5e09cf1e0a66553c128 upstream.
+commit 65476d31d8056e859c48580f82295ce159196ffe upstream.
 
-Reading the debugfs "count" file of a memcg-aware shrinker can sleep
-inside an RCU read-side critical section:
+expand_shrinker_info() iterates all visible memcgs under shrinker_mutex,
+including memcgs that have not finished ->css_online() yet.
 
-  BUG: sleeping function called from invalid context at kernel/cgroup/rstat.c:421
-  RCU nest depth: 1, expected: 0
-   css_rstat_flush
-   mem_cgroup_flush_stats
-   zswap_shrinker_count
-   shrinker_debugfs_count_show
+Once pn->shrinker_info has been published, teardown must stay serialized
+with expand_shrinker_info() until that memcg is either fully online or no
+longer visible to iteration.  Today alloc_shrinker_info() breaks that rule
+by dropping shrinker_mutex before freeing a partially initialized
+shrinker_info array, which may cause the following race:
 
-shrinker_debugfs_count_show() invokes the ->count_objects() callback under
-rcu_read_lock().  The zswap callback flushes memcg stats via
-css_rstat_flush(), which may sleep, so it must not run under RCU.
+CPU0                   CPU1
+====                   ====
 
-The RCU lock is not needed here.  mem_cgroup_iter() takes RCU internally
-and returns a memcg holding a css reference (dropped on the next iteration
-or by mem_cgroup_iter_break()), so the memcg stays alive without it.  The
-shrinker is kept alive by the open debugfs file: shrinker_free() removes
-the debugfs entries via debugfs_remove_recursive(), which waits for
-in-flight readers to drain, before call_rcu(..., shrinker_free_rcu_cb).
-The sibling "scan" handler already invokes the sleeping ->scan_objects()
-callback with no RCU section.
+css_create
+--> list_add_tail_rcu(&css->sibling, &parent_css->children);
+    online_css
+    --> mem_cgroup_css_online
+        --> alloc_shrinker_info
+            --> alloc node0 info
+                rcu_assign_pointer(C->node0->shrinker_info, old0)
+                alloc node1 info -> FAIL -> goto err
+                mutex_unlock(shrinker_mutex)
 
-Drop the rcu_read_lock()/rcu_read_unlock().
+                       shrinker_alloc()
+                       --> shrinker_memcg_alloc
+                           --> mutex_lock(shrinker_mutex)
+                               expand_shrinker_info
+                               --> mem_cgroup_iter see the memcg
+                                   expand_one_shrinker_info
+                                   --> old0 = C->node0->shrinker_info
+                                       memcpy(new->unit, old0->unit, ...);
 
-Link: https://lore.kernel.org/20260610232048.62930-1-shakeel.butt@linux.dev
-Fixes: 5035ebc644ae ("mm: shrinkers: introduce debugfs interface for memory shrinkers")
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
-Closes: https://lore.kernel.org/all/c052a064-cddb-494f-a0d8-f8a10b4b1c4d@linux.dev/
-Suggested-by: Nhat Pham <nphamcs@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
-Tested-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
+                free_shrinker_info
+                --> kvfree(old0);
+
+                                       /* double free !! */
+                                       kvfree_rcu(old0, rcu);
+
+The same problem exists later in mem_cgroup_css_online().  If
+alloc_shrinker_info() succeeds but a subsequent objcg allocation fails,
+the free_objcg -> free_shrinker_info() unwind path tears down the already
+published pn->shrinker_info arrays without shrinker_mutex.  The
+expand_one_shrinker_info() can race with that teardown in the same way,
+leading to use-after-free or double-free of the old shrinker_info.
+
+Fix this by serializing shrinker_info teardown with shrinker_mutex, and by
+keeping alloc_shrinker_info() error cleanup inside the locked section.
+
+Link: https://lore.kernel.org/20260617085658.27096-1-qi.zheng@linux.dev
+Fixes: 307bececcd12 ("mm: shrinker: add a secondary array for shrinker_info::{map, nr_deferred}")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
 Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: Dave Chinner <david@fromorbit.com>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker_debug.c |    4 ----
- 1 file changed, 4 deletions(-)
+ mm/shrinker.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -57,8 +57,6 @@ static int shrinker_debugfs_count_show(s
- 	if (!count_per_node)
- 		return -ENOMEM;
- 
--	rcu_read_lock();
--
- 	memcg_aware = shrinker->flags & SHRINKER_MEMCG_AWARE;
- 
- 	memcg = mem_cgroup_iter(NULL, NULL, NULL);
-@@ -88,8 +86,6 @@ static int shrinker_debugfs_count_show(s
- 		}
- 	} while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
- 
--	rcu_read_unlock();
--
- 	kfree(count_per_node);
- 	return ret;
+--- a/mm/shrinker.c
++++ b/mm/shrinker.c
+@@ -59,12 +59,14 @@ static inline int shrinker_unit_alloc(st
+ 	return 0;
  }
+ 
+-void free_shrinker_info(struct mem_cgroup *memcg)
++static void __free_shrinker_info(struct mem_cgroup *memcg)
+ {
+ 	struct mem_cgroup_per_node *pn;
+ 	struct shrinker_info *info;
+ 	int nid;
+ 
++	lockdep_assert_held(&shrinker_mutex);
++
+ 	for_each_node(nid) {
+ 		pn = memcg->nodeinfo[nid];
+ 		info = rcu_dereference_protected(pn->shrinker_info, true);
+@@ -74,6 +76,13 @@ void free_shrinker_info(struct mem_cgrou
+ 	}
+ }
+ 
++void free_shrinker_info(struct mem_cgroup *memcg)
++{
++	mutex_lock(&shrinker_mutex);
++	__free_shrinker_info(memcg);
++	mutex_unlock(&shrinker_mutex);
++}
++
+ int alloc_shrinker_info(struct mem_cgroup *memcg)
+ {
+ 	int nid, ret = 0;
+@@ -98,8 +107,8 @@ int alloc_shrinker_info(struct mem_cgrou
+ 	return ret;
+ 
+ err:
++	__free_shrinker_info(memcg);
+ 	mutex_unlock(&shrinker_mutex);
+-	free_shrinker_info(memcg);
+ 	return -ENOMEM;
+ }
+ 
 
 
