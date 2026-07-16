@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F6F42A172;
-	Thu, 16 Jul 2026 13:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC2142BEBE;
+	Thu, 16 Jul 2026 13:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209842; cv=none; b=sir2pxBds+3BT47Pxtzwj7KIBORJ/GTlpLIEvF1AlfzLN5vkD+3HEs+vhTdZHnsG0y3K5uOIJA2zhcB4ielQdVPVTY6bYCHJQzofhhJbS3VpqbVQV5fbmqudmGDnyxZcf9Yz5tQTX0N2HMUQtfWyHJ2n30irgWZJNo8GpW7dVd8=
+	t=1784209845; cv=none; b=IpNs7z/SpunLR6vdDFuOnnE95o5MpX4ZhHJzEfP8fRQu5PmWavxevEnwtDQf0RvUDNSglZWB0AnNJPGrEDp6BDmRIsH0mqoV+mhz5lJjGH/Ql/7JtCTceKIOLvekpMh/RLlA0R4JQVESjaAzcJ65un17CmKogEaEgfFm/iKaYPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209842; c=relaxed/simple;
-	bh=KV7cO7ly27NLTPrsA5aljKqKt/A8NbN6XQ4PgZDAybQ=;
+	s=arc-20240116; t=1784209845; c=relaxed/simple;
+	bh=fSet7o1ECWC91GgpluaXSWlDc1Kb+jp9wSOK7Lo+e00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FF65J5tFFSPr5pSg7tgPIyr9RMKYSCwU+BEWDmgxZTqKZrn63z6ikCZjWTtbBT0BogbDKPMF6dgJVNoimbiA3SFpiGQFuI7QrGTY8sShtvwwwAlqFyS4S+mQ8dCy6/vajfR/7q0iYU99ne2KIjO9WXw0R1YoHw3eRr4FmhPibgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRDQ9dsu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ct1cFA96/VmgJgl1A0wgnuyZnk1Y0bwSfFeXOSU1eSuxfz/5HECA1s+Pnz5Av922kxMr41rLuqrMcaJBvYAD+amX7vc9+nRQAewTWI1PTSIaA6DqD6HUJHdxVI4VAq5TZ/CzC/ovG3z2DHnuwwBSbPUXRWj7Pnd0mP8nBUbBddc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kb1KlG8p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRDQ9dsu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF751F000E9;
-	Thu, 16 Jul 2026 13:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kb1KlG8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F761F00A3A;
+	Thu, 16 Jul 2026 13:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209841;
-	bh=bMr6/7MyArv04JdoujiP5GHGCFHk13PcTePf/LXedE4=;
+	s=korg; t=1784209844;
+	bh=MnfTulu8CFve1iPPtNSck+kq3WHSvVaQeyP2SKJ7acU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rRDQ9dsuwCDzWWBzuiw2x7S1A02/ZDKcj6+/6NyBCdusMd7cTY8a33VEdDcUUWXW5
-	 UNL+AxHez1DXl60RgXYdH8teitIUJrA7SxpvJyLflOH+Ea6Gtr2Qw//csAYDMrnC7O
-	 lFw70QUYFsR3cOdbDQa6wmqQENtYmr2OtySD9s6Q=
+	b=Kb1KlG8py1hHSDdxyaI9kCpqARBE2kGkApteVm3UqoQy9id5FPY47E9LqNLps4tm+
+	 dTqdwGWuE61bkWJJOVqr5hQpJHRCmAcfDeW78mYhi4Btnlmt7vu5vnzVsYthZj7iFH
+	 kz0Q6/QcU+J7x4Yl20ZJXMDmfBR5zfjAILCcCNUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Neill Kapron <nkapron@google.com>
-Subject: [PATCH 7.1 338/518] usb: gadget: f_fs: Initialize epfile->in early to fix endpoint direction checks
-Date: Thu, 16 Jul 2026 15:30:06 +0200
-Message-ID: <20260716133055.208123874@linuxfoundation.org>
+Subject: [PATCH 7.1 339/518] usb: gadget: f_fs: Tie read_buffer lifetime to ffs_epfile
+Date: Thu, 16 Jul 2026 15:30:07 +0200
+Message-ID: <20260716133055.230028229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,6 +44,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
@@ -52,23 +53,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Neill Kapron <nkapron@google.com>
 
-commit 82cfd4739011bdc7e87b5d585703427e89ddfaa5 upstream.
+commit 8bdcf96eb135aebacac319667f87db034fb38406 upstream.
 
-When parsing endpoint descriptors, ffs_data_got_descs() generates the
-eps_addrmap which contains the endpoint direction. However, epfile->in
-was previously only populated in ffs_func_eps_enable() which executes
-upon USB host connection. As a result, early userspace ioctls like
-FUNCTIONFS_DMABUF_ATTACH that run before the host connects would see
-epfile->in as 0, leading to incorrect DMA directions.
+Currently, ffs_epfile_release unconditionally frees the endpoint's
+read_buffer when a file descriptor is closed. If userspace explicitly
+opens the endpoint multiple times and closes one, the read_buffer is
+destroyed. This can lead to silent data loss if other file descriptors
+are still actively reading from the endpoint.
 
-By moving the initialization to ffs_epfiles_create(), epfile->in is
-accurate before userspace opens the endpoint files.
+By tying the lifetime of the read_buffer to the ffs_epfile structure itself
+(which is destroyed when the functionfs instance is torn down in
+ffs_epfiles_destroy), we eliminate the brittle dependency on open/release
+calls while correctly matching the conceptual lifetime of unread data on
+the hardware endpoint.
 
-Fixes: 7b07a2a7ca02 ("usb: gadget: functionfs: Add DMABUF import interface")
+Fixes: 9353afbbfa7b ("usb: gadget: f_fs: buffer data from ‘oversized’ OUT requests")
 Cc: stable <stable@kernel.org>
 Assisted-by: Antigravity:gemini-3.1-pro
 Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://patch.msgid.link/20260619040609.4010746-2-nkapron@google.com
+Link: https://patch.msgid.link/20260619040609.4010746-3-nkapron@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/usb/gadget/function/f_fs.c |    2 +-
@@ -76,21 +79,21 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/gadget/function/f_fs.c
 +++ b/drivers/usb/gadget/function/f_fs.c
-@@ -2367,6 +2367,7 @@ static int ffs_epfiles_create(struct ffs
- 			sprintf(epfile->name, "ep%02x", ffs->eps_addrmap[i]);
- 		else
- 			sprintf(epfile->name, "ep%u", i);
-+		epfile->in = (ffs->eps_addrmap[i] & USB_ENDPOINT_DIR_MASK) ? 1 : 0;
- 		err = ffs_sb_create_file(ffs->sb, epfile->name,
- 					 epfile, &ffs_epfile_operations);
- 		if (err) {
-@@ -2456,7 +2457,6 @@ static int ffs_func_eps_enable(struct ff
- 		ret = usb_ep_enable(ep->ep);
- 		if (!ret) {
- 			epfile->ep = ep;
--			epfile->in = usb_endpoint_dir_in(ep->ep->desc);
- 			epfile->isoc = usb_endpoint_xfer_isoc(ep->ep->desc);
- 		} else {
- 			break;
+@@ -1375,7 +1375,6 @@ ffs_epfile_release(struct inode *inode,
+ 
+ 	mutex_unlock(&epfile->dmabufs_mutex);
+ 
+-	__ffs_epfile_read_buffer_free(epfile);
+ 	ffs_data_closed(epfile->ffs);
+ 
+ 	return 0;
+@@ -2393,6 +2392,7 @@ static void ffs_epfiles_destroy(struct s
+ 
+ 	for (; count; --count, ++epfile) {
+ 		BUG_ON(mutex_is_locked(&epfile->mutex));
++		__ffs_epfile_read_buffer_free(epfile);
+ 		simple_remove_by_name(root, epfile->name, clear_one);
+ 	}
+ 
 
 
