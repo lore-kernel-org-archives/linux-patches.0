@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8567332604;
-	Thu, 16 Jul 2026 14:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA37332604;
+	Thu, 16 Jul 2026 14:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211672; cv=none; b=A1KFlZQPe5DtlAfhZqSVpYPTPCx1DL03gjwhOvS0yoTPWQIEG14V+8B19yntA4atIH7rWouOPSRSPHan2LCcEn+qdR7NB4xEYAxkefxeebkkk2D14dSi6EPhMpwVVdcDrpfqheIcuXmdfISG3AlEtt1noRfM85ysg8f9Xk6vuts=
+	t=1784211675; cv=none; b=IlOfCYi+8nBXG14rqn4hebCsDacAL6HYkuEo+M8v3GbXD5QTuGVA0MP8vTyv1kJ6MEPTJb5vYhb+BuoDSgdfuaVj2Va4Tiz90MBRl5KHfPuHU9cVyxxHdLQEfXEl7q6q56QPmRD8v6slZrqbbgZq9DpCajpQCFjpPzEmJ/aB0+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211672; c=relaxed/simple;
-	bh=UCEgjnsdSQqs5qFEDuaAOpQbrTo931WKxUMbILOSTqY=;
+	s=arc-20240116; t=1784211675; c=relaxed/simple;
+	bh=fTpS+O9qiPiUZmkVYSsKirfKqmdyiNDCPyH/B1ITlLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eG3xf3A/jVbcB2g1IDG2yWq4No3d/BZcg/hqjeFLRKOV+ACp0HR5encqbM29xHQuwBt97R40Qd6qFYskrVNB5rXIwM0wwp7iVNB9RdYa1qN4dwtG9ynieOoTnxPR+NOE2CL7iKARpzRpYMt9AzAwrb/uzP1Jdd5HEL/DnKVhgyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2+C3RCr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Xzp5ULiXv5PtHRvKstrgID71RoUJXr3dSLUAW5nThCS5M+77bhY3ceN6Z+ARPipxz8VsPG4lhftmJppH5ZcuHY9/f2f8MI3qNTWTMVbOEX5JQSZOzZm+DocV/QOagoXk2dPmMPLmuaR/8DoE1byWItWPZemjOi6P4qAFnSD2ebc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUMGtHLN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2+C3RCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F8F1F000E9;
-	Thu, 16 Jul 2026 14:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUMGtHLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17791F000E9;
+	Thu, 16 Jul 2026 14:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211671;
-	bh=yzy846CSZS6FOxRKpXc2TJSSSy9rjbCib3tywJYmmTM=;
+	s=korg; t=1784211674;
+	bh=qBNswmGI/QaEkQt4J9TGwJtV8zzpwLAXjdX0zij+stw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L2+C3RCr8qi5JKR92HjWKE1ZqpkBL4NedA+2mUuwb+Fo3tLtrRR1xbaLDFJp5P53e
-	 xbOjrs/DuInWfwyDXN9GjlWBxOsdi3mS6dPbsER1riHTK3fpUxlOUGWo1tl4hzu7IE
-	 8RtwGFlaDv46WYzGmttkPgy+jxC27XFhfmoJH71g=
+	b=hUMGtHLNAEdGnaZu57S+HGgtNN5euO8YOBHgXW46RLWBhMQLIoxCUTX94qVh03k2q
+	 DzbyEx4KIMU5BHH7X9Tjd9TTjfnB5V1VfIQ5iC7Xwoj6OXAsKeKtm2np4rKi270kd+
+	 5YeZxoclwmQBhWnxZc5X9WxDMrQFwT20nL+XiMDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.12 035/349] ACPI: NFIT: core: Fix possible NULL pointer dereference
-Date: Thu, 16 Jul 2026 15:29:29 +0200
-Message-ID: <20260716133034.095670512@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 036/349] platform/x86: intel-hid: Protect ACPI notify handler against recursion
+Date: Thu, 16 Jul 2026 15:29:30 +0200
+Message-ID: <20260716133034.119954788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -44,49 +44,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 027e128abb82788189d6d45b68e3e8e7329b67be upstream.
+commit c085d82613d5618814b84406c8b2d64f1bc305e7 upstream.
 
-After commit 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before
-getting NFIT table"), acpi_nfit_probe() installs an ACPI notify handler
-for the NFIT device before checking the presence of the NFIT table.  If
-that table is not there, 0 is returned without allocating the acpi_desc
-object and setting the driver data pointer of the NFIT device.  If the
-platform firmware triggers an NFIT_NOTIFY_UC_MEMORY_ERROR notification
-on the NFIT device at that point, acpi_nfit_uc_error_notify() will
-dereference a NULL pointer.
+Since commit e2ffcda16290 ("ACPI: OSL: Allow Notify () handlers to run on
+all CPUs") ACPI notify handlers like the intel-hid notify_handler() may
+run on multiple CPU cores racing with themselves.
 
-Prevent that from occurring by adding an acpi_desc check against NULL
-to acpi_nfit_uc_error_notify().
+On convertibles and detachables (matched by DMI chassis-type 31 and 32 in
+dmi_auto_add_switch[]) the SW_TABLET_MODE input device is registered
+lazily from notify_handler() on the first tablet-mode event, via
+intel_hid_switches_setup(). When two such events race on different CPUs
+both can pass the !priv->switches check and register the priv->switches
+input device twice, resulting in a duplicate sysfs entry and a subsequent
+NULL pointer dereference.
 
-Fixes: 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before getting NFIT table")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: All applicable <stable@vger.kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/2418508.ElGaqSPkdT@rafael.j.wysocki
+This is the same class of bug fixed by commit e075c3b13a0a ("platform/x86:
+intel-vbtn: Protect ACPI notify handler against recursion") for the
+sibling intel-vbtn driver.
+
+Protect intel-hid notify_handler() from racing with itself with a mutex
+to fix this.
+
+Fixes: e2ffcda16290 ("ACPI: OSL: Allow Notify () handlers to run on all CPUs")
+Cc: stable@vger.kernel.org
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260605174905.131095-1-sammiee5311@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/intel/hid.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -3447,6 +3447,9 @@ static void acpi_nfit_uc_error_notify(st
- {
- 	struct acpi_nfit_desc *acpi_desc = dev_get_drvdata(dev);
+--- a/drivers/platform/x86/intel/hid.c
++++ b/drivers/platform/x86/intel/hid.c
+@@ -7,11 +7,13 @@
+  */
  
-+	if (!acpi_desc)
-+		return;
+ #include <linux/acpi.h>
++#include <linux/cleanup.h>
+ #include <linux/dmi.h>
+ #include <linux/input.h>
+ #include <linux/input/sparse-keymap.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/platform_device.h>
+ #include <linux/string_choices.h>
+ #include <linux/suspend.h>
+@@ -215,6 +217,7 @@ static const struct dmi_system_id dmi_au
+ };
+ 
+ struct intel_hid_priv {
++	struct mutex mutex; /* Avoid notify_handler() racing with itself */
+ 	struct input_dev *input_dev;
+ 	struct input_dev *array;
+ 	struct input_dev *switches;
+@@ -550,6 +553,8 @@ static void notify_handler(acpi_handle h
+ 	struct key_entry *ke;
+ 	int err;
+ 
++	guard(mutex)(&priv->mutex);
 +
- 	if (acpi_desc->scrub_mode == HW_ERROR_SCRUB_ON)
- 		acpi_nfit_ars_rescan(acpi_desc, ARS_REQ_LONG);
- 	else
+ 	/*
+ 	 * Some convertible have unreliable VGBS return which could cause incorrect
+ 	 * SW_TABLET_MODE report, in these cases we enable support when receiving
+@@ -705,6 +710,10 @@ static int intel_hid_probe(struct platfo
+ 		return -ENOMEM;
+ 	dev_set_drvdata(&device->dev, priv);
+ 
++	err = devm_mutex_init(&device->dev, &priv->mutex);
++	if (err)
++		return err;
++
+ 	/* See dual_accel_detect.h for more info on the dual_accel check. */
+ 	if (enable_sw_tablet_mode == TABLET_SW_AUTO) {
+ 		if (dmi_check_system(dmi_vgbs_allow_list))
 
 
