@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8601E36F900;
-	Thu, 16 Jul 2026 13:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BF442643D;
+	Thu, 16 Jul 2026 13:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209913; cv=none; b=AFiOON9u8Kc/hxlJQn5OpWscOxUZKtPYWtF0xzVeEpjgej51CHWFHXlu4SKw04UulBro6JHVkPOYmBJTjtUN4kyNPa+sT0h3lRRW4dBzuFjXwH7CLh4P3nNMzVBOispQ5BBmk1a9R66/Y0QxtWlO7dtX2bvLBze302yTkXRILDs=
+	t=1784209916; cv=none; b=JUJFUOlIR4Y87dktLUTTJgUZdQQZYNHnVCYDwDW2bZHZaE6Hd7fQ4tHAkhzPrvov780bnNaDCnwaYVxSh+DeXUTP27ZtH3FK6vUwgTQQgovCpPrp2OGnTPHtVE0q0+t5e7QfS93Af4sR11vtVVcBHIXDA11dinjRapeLdBGW9/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209913; c=relaxed/simple;
-	bh=1RP2zZAt6PRT1BoKbQA6NiQRnbBPPm8jY0W8SST+Efk=;
+	s=arc-20240116; t=1784209916; c=relaxed/simple;
+	bh=ORcRePxz1OWYKiA6nNW27/4ufIUoy4i2Q/iY5lpna0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nozbPE4bTpNtYGaY7qjkiAYy4/TgzX+ieg58j3FADG456npmCFKP3aKv+9DYgPWiUQpMdQHgvRLCrL1n/awgYqRwTKwfgq8vj0oZ6l3FVfRI04O9rLPohAEThWH9uqIzNuUaGfGYPJJ5vtH0DNz370x8ZZ6kXUeTZ0lIEgxzo1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXLyVA/z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f3Se07ACk2bbYDXJes74FYhqVTL7HQUkpfgJlWGVEp1fqvlaD61pf2p5BEfHRizglR33gnzqjGgMP5e+mChvMsPg3C7Y/Gk1SPOdzr+Zu1V08O/9+j5ZCmlbKg4TSH7B37Pdrw1/xNmpU4hpwoDJ6BiINF6iLGQfcn+KycQ2dTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzfCEIjR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXLyVA/z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E981F000E9;
-	Thu, 16 Jul 2026 13:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzfCEIjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9232A1F000E9;
+	Thu, 16 Jul 2026 13:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209912;
-	bh=1IO9ky3XEaLO3S8rjQRaRRuYFrs3oDGH48HsfbqzbS8=;
+	s=korg; t=1784209915;
+	bh=CD7waZv0l77fzu4FSYpnr7SxGIxdX2goh6lOkR/9Mec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gXLyVA/zP0DIrouJrk/bDYyp7NYRl+0IdPjiqgrd79XnjwpaVEGkpQlTRkK0Jp2ou
-	 +OqAxbAIhnP2lojAfM53L5GJA2ivp7Aa4jx5TH5gYLVeHMACFrii5LvyauqlECiWwR
-	 33I5HUOgPDPBO9y+3QQK15lDZbqV9wOnEasFD+0Q=
+	b=wzfCEIjRAPp4R/I9+AyouflL0wKqgFN0jzUnnSQ+5ngO4CeFWZ3dSlEYBTLMTdLoJ
+	 YyQOeeCHY8vrHlqZdINL7KNThNP9SHJGs5ScFzLWxE0Za+JPNkOV8nXDdirLtE/CF9
+	 u2BZ8eJZLtPU0O7kxk3dq91ZG2+hPbkQbyzlqHJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ruijie Li <ruijieli51@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Akhil R <akhilrajeev@nvidia.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 367/518] crypto: pcrypt - restore callback for non-parallel fallback
-Date: Thu, 16 Jul 2026 15:30:35 +0200
-Message-ID: <20260716133055.859362395@linuxfoundation.org>
+Subject: [PATCH 7.1 368/518] crypto: tegra - fix refcount leak in tegra_se_host1x_submit()
+Date: Thu, 16 Jul 2026 15:30:36 +0200
+Message-ID: <20260716133055.881310827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -57,57 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruijie Li <ruijieli51@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit ed459fe319376e876de433d12b6c6772e612ca36 upstream.
+commit 6ea0ce3a19f9c37a014099e2b0a46b27fa164564 upstream.
 
-pcrypt installs pcrypt_aead_done() on the child AEAD request before
-trying to submit it through padata.  If padata_do_parallel() returns
--EBUSY, pcrypt falls back to calling the child AEAD directly.
+The timeout error path in tegra_se_host1x_submit() returns without
+calling host1x_job_put(), while all other paths (success, submit
+error, pin error) properly release the job reference through the
+job_put label.  Since host1x_job_alloc() initializes the reference
+count and host1x_job_put() is required to drop it, omitting it on
+timeout causes a permanent refcount leak.
 
-That fallback must not keep the padata completion callback.  Otherwise
-an asynchronous completion runs pcrypt_aead_done() even though the
-request was never enrolled in padata.
+Fix this by redirecting the timeout return to the existing job_put
+label, ensuring the job reference and any associated syncpt
+references are consistently released.
 
-Restore the original request callback and callback data before calling
-the child AEAD directly.  This keeps the fallback path aligned with a
-direct AEAD request while leaving the parallel path unchanged.
-
-Fixes: 662f2f13e66d ("crypto: pcrypt - Call crypto layer directly when padata_do_parallel() return -EBUSY")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Cc: stable@vger.kernel.org
+Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Akhil R <akhilrajeev@nvidia.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/pcrypt.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/crypto/tegra/tegra-se-main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/crypto/pcrypt.c
-+++ b/crypto/pcrypt.c
-@@ -122,6 +122,8 @@ static int pcrypt_aead_encrypt(struct ae
- 		return -EINPROGRESS;
- 	if (err == -EBUSY) {
- 		/* try non-parallel mode */
-+		aead_request_set_callback(creq, flags, req->base.complete,
-+					  req->base.data);
- 		return crypto_aead_encrypt(creq);
+--- a/drivers/crypto/tegra/tegra-se-main.c
++++ b/drivers/crypto/tegra/tegra-se-main.c
+@@ -180,7 +180,7 @@ int tegra_se_host1x_submit(struct tegra_
+ 				 MAX_SCHEDULE_TIMEOUT, NULL);
+ 	if (ret) {
+ 		dev_err(se->dev, "host1x job timed out\n");
+-		return ret;
++		goto job_put;
  	}
  
-@@ -173,6 +175,8 @@ static int pcrypt_aead_decrypt(struct ae
- 		return -EINPROGRESS;
- 	if (err == -EBUSY) {
- 		/* try non-parallel mode */
-+		aead_request_set_callback(creq, flags, req->base.complete,
-+					  req->base.data);
- 		return crypto_aead_decrypt(creq);
- 	}
- 
+ 	host1x_job_put(job);
 
 
