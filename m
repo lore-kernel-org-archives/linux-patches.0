@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCB83D953E;
-	Thu, 16 Jul 2026 13:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CA22FFDEA;
+	Thu, 16 Jul 2026 13:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210021; cv=none; b=ZvCP+BDVx/4dUxwn9p0ERt9L7bFjnVHx4UUBL5KPOneqmj8nTaRTx/cNH13zJjWwfJ5lcOZPc2xUDUCuZlW78v15D7w8XijycQvdeNlf2ff5pIShF/SXjMK1sae2EBGmmR2ZjYQlNtwZP1Cvr5sfD7y0grtHIgD4GL1tjUBQnOs=
+	t=1784210023; cv=none; b=NDsTTXmQJII6WK5AxFDomtbH7X6vSUV9UE8YVhzC4NHoqTkJrW1ovNL8yqQeZCRKznycpU+VAVyVfvXt91AyhWC1SDqYN18pOqtSGD2t/4eHtC3tWYK6Joa4RiVLJFkfU/p9Va2446hNrEQ3ltSry4yjkULfGhGdzuEpff1hXhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210021; c=relaxed/simple;
-	bh=pMrNaJqsgfgQie9a9xRsgnbWHQ/tHfGWybdB0uNssGY=;
+	s=arc-20240116; t=1784210023; c=relaxed/simple;
+	bh=GEkmYicLDIHFKV1+K80mygTpvGLNlVqB9AwTKxPfMRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2RYq3uFuE5QRCAmjc00RGg6v1rMPoU4b5qrWhOB9FWz/Kr60YRDmo9EHOWDttq439o/+OKx9CtZJLacJvpo0k0vouev+WvP1bz2uQ5Rz3WrrNhBlWje+zGRunPcsEQRMOebN8weufCA+icd1g4+BfpPar09JqbMQXniy2SfsRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFcSgaIz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ws/NXZjei3P/ug+yvLMrA8eOILJL505sNamxxJkrnguclDHnP364QGiPgTo8a3FnnYbvip5L8OlCnnQOAwRmXQpQa7h6Zn65KQxIuP6nCMwNwAGXtipMh4nyscklfzpQEyILtWM7kv2+5pTHbD5xcpN3ho1Dq3aBSmV8RDBmqfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMEn26+k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFcSgaIz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7271B1F000E9;
-	Thu, 16 Jul 2026 13:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMEn26+k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133B21F000E9;
+	Thu, 16 Jul 2026 13:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210019;
-	bh=U+WRszF+BYH+tPCtxojp/tJs3LhPPFYn+/rWbaJcsFc=;
+	s=korg; t=1784210022;
+	bh=4YQrXMSgMoF9Wa2D1TzNjBKfypzq2XnF9iAQv33YRYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RFcSgaIz8yQSihTpvqW0IqvznvgUWbePLpKUUMZHZJuCLvA6LK4V1fMDpD9HMwWtG
-	 pIeDX1jA7iNrV3jLZwil2FnkzkixN2os9+4Qw0kYl61FqMGwmBWwlivrVoaVX5Cyvu
-	 E3qykkKaaOeTfEFKfFTJQdYWt1Cr2HuyxYzd/wyI=
+	b=dMEn26+klQqsSqyVjqU8Js8yFYCG9isorp8dVV6tVr3WLw4De7w2YS4g00BVHONJH
+	 rk+vnFae9oEZmqKDVVJqxYkczfA1JoFZOfhdKoh+/L/pTykukSi8ZJzbiES58loh2Y
+	 6hNIrBYEmes+ffmcDY7H+HQkTOHLxsZuZCL0XLFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jia Jie <jiajie.lee@starlabs.sg>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 7.1 408/518] perf/aux: Fix page UAF in map_range()
-Date: Thu, 16 Jul 2026 15:31:16 +0200
-Message-ID: <20260716133056.761777785@linuxfoundation.org>
+	Luca Boccassi <luca.boccassi@gmail.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
+Subject: [PATCH 7.1 409/518] liveupdate: reject LIVEUPDATE_IOCTL_CREATE_SESSION with invalid name length
+Date: Thu, 16 Jul 2026 15:31:17 +0200
+Message-ID: <20260716133056.783140568@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,57 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jia Jie <jiajie.lee@starlabs.sg>
+From: Luca Boccassi <luca.boccassi@gmail.com>
 
-commit 5948aaf64f81f217a25dcc2bf6c0779bca19566c upstream.
+commit e947433cd0d2b95a277757451b9b9c2714136dc2 upstream.
 
-map_range() reads rb->aux_pages[], rb->aux_nr_pages and rb->aux_pgoff via
-perf_mmap_to_page() while holding only event->mmap_mutex. Those fields are
-serialized by rb->aux_mutex, and mmap_mutex is per event.
+A session name must not be an empty string, and must not exceed the
+maximum size define in the uapi header, including null termination.
 
-Thus, two events sharing one rb via PERF_EVENT_IOC_SET_OUTPUT can race
-rb_alloc_aux() with map_range(), leading to a page-UAF scenario as follows:
-
-  CPU 0                           CPU 1
-  =====                           =====
-  rb_alloc_aux()                  map_range()
-  [1]: allocate rb->aux_pages[0]
-  [2]: rb->aux_nr_pages++
-                                  [3]: perf_mmap_to_page()
-                                         returns rb->aux_pages[0]
-                                  [4]: map it as VM_PFNMAP
-  [5]: rb->aux_pgoff = 1
-
-  munmap the page
-  [6]: free rb->aux_pages[0]
-
-Pages mapped as VM_PFNMAP have no refcount protection, so CPU 1 holds a
-mapping to a freed physical frame.
-
-Fix this by taking rb->aux_mutex across the page walk in map_range().
-
-Fixes: b709eb872e19 ("perf: map pages in advance")
-Signed-off-by: Lee Jia Jie <jiajie.lee@starlabs.sg>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Fixes: 0153094d03df ("liveupdate: luo_session: add sessions support")
 Cc: stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
+
+Signed-off-by: Luca Boccassi <luca.boccassi@gmail.com>
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20260429212221.814107-2-luca.boccassi@gmail.com
+Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/liveupdate/luo_session.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -7150,6 +7150,8 @@ static int map_range(struct perf_buffer
- 	int err = 0;
- 	unsigned long pagenum;
+--- a/kernel/liveupdate/luo_session.c
++++ b/kernel/liveupdate/luo_session.c
+@@ -382,9 +382,13 @@ static int luo_session_getfile(struct lu
  
-+	guard(mutex)(&rb->aux_mutex);
+ int luo_session_create(const char *name, struct file **filep)
+ {
++	size_t len = strnlen(name, LIVEUPDATE_SESSION_NAME_LENGTH);
+ 	struct luo_session *session;
+ 	int err;
+ 
++	if (len == 0 || len > LIVEUPDATE_SESSION_NAME_LENGTH - 1)
++		return -EINVAL;
 +
- 	/*
- 	 * We map this as a VM_PFNMAP VMA.
- 	 *
+ 	session = luo_session_alloc(name);
+ 	if (IS_ERR(session))
+ 		return PTR_ERR(session);
 
 
