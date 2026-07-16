@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACA05A79B;
-	Thu, 16 Jul 2026 14:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C202313E30;
+	Thu, 16 Jul 2026 14:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210947; cv=none; b=ZbxPJ+YLw10nhmWOZQ6KjqI0v25VhcO0c96NJCqHHpljpWVE9Gsey/TJFsmhQjAA8D7yWfoEjiFQUs3p1aovhaEtHdQPpPz90dP40wXSHgwCBOkWpNVqDfpL1mVdYtD/pC40idAxEqCJbp/ovh5G8r3WqgToeulA6zK+2IOpmhM=
+	t=1784210950; cv=none; b=MBdVVVZo4TpAx/9kyFKUPIRRLp8fzTVuAVOp+4KkZCCY30fNZkT4dqL/8sucZZew4gEa97Zqi1AXXoxuuaa3+fkK6ELfrp9UyjFvZ5CTCMSwIxgiooweO4F93hyuJ3Gm5Ty1ylIkH33ZJBRhUIxJmMi5qW+o3vn8qLSqCXYXy3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210947; c=relaxed/simple;
-	bh=Zlb42PEGaM2vOAcshm0WOE5HpBH6jWg/10Lsu5qdQ7I=;
+	s=arc-20240116; t=1784210950; c=relaxed/simple;
+	bh=+d+Kqgz12aQMA7VUX2GAPiUgB6ju7skXIEBZhCKkQAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8zgPZgHPXKpdffCCr8JZo/gPzmzlLXwAXeQSdzUJYuUJyXQATZ7qGtNSIoMs6pp+jL1CAF/ZHK+PXpBZDq207X5NP8tHiJAPANmpQBJwlwKmkOOtDPTTnUaRWeoGN5b90pBapVzMjn9tvZxTAVmaV8nVxpVhDkCjrr+QTIYiKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ymu5ZQO5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WUgrtI/sF4dBo+O6SWY2HzkVcTgCRNRFYRDN2uWogAjZHmhpj7hY4wZnmf9U3rDGBvjPSOZ7dOv0vt/pIzy4qDdt3nQ7PVxzw58t0MSMSTFOZ+CW+nwwJzgkGybJ9HY37R/gO2zACASB6615pOaFR/WCtLdJX51lUNFMex5/wQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbpbFx2O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ymu5ZQO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B90D1F00A3A;
-	Thu, 16 Jul 2026 14:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbpbFx2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E101F00A3D;
+	Thu, 16 Jul 2026 14:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210946;
-	bh=b327tT7kwg5akJdnHozj9I1Hreaa5cdnPOdAwi93UqU=;
+	s=korg; t=1784210949;
+	bh=e+C2qSBM+wRQGQ15hEyGCNGY6Pph/dvPj1OVuBGd0EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ymu5ZQO5CDy05n1wEDtXqY/ZMo/OE4+TO2raNTnOlZXCIHTJDLzsb9AfZkYE6+b8+
-	 ZTlRsl6XyRDPg9cAC/ZqV2IlmRqKO7N19hnVal2MxZuvzJkh/6Znwg/FG9mbt0aKic
-	 UnWZ8tLx14TkiI9CUwetQsMqKR2AuXzfCwP+BTXE=
+	b=kbpbFx2OM+NERu0LnfwX17ID4BOoG7tyPY8gH6Bpl/jGG6u6M9Rs+f+V0E4ii1JQi
+	 a+IoHoKA4N7vlFU42y3gjwGqZHD8Fz+i6S5KRXq4N28CzOWk0ZtWIjou0DUc5YS0DI
+	 7+x9kYZbYsdMcZtB9kA/mV1TCqThthUJjmkkx/GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guangshuo Li <lgs201920130244@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 6.18 242/480] cpufreq: qcom-cpufreq-hw: Fix possible double free
-Date: Thu, 16 Jul 2026 15:29:49 +0200
-Message-ID: <20260716133050.055844085@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 243/480] firmware_loader: fix device reference leak in firmware_upload_register()
+Date: Thu, 16 Jul 2026 15:29:50 +0200
+Message-ID: <20260716133050.076565387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,42 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit bcb8889c4981fdde42d4fd2c29a77d510fe21da2 upstream.
+commit 896df22ee57648b0c505bd76ddbc6b2341834696 upstream.
 
-qcom_cpufreq.data is allocated with devm_kzalloc() in probe() as an
-array of per-domain data. qcom_cpufreq_hw_cpu_init() stores a pointer to
-one element of this array in policy->driver_data.
+firmware_upload_register()
+  -> fw_create_instance()
+     -> device_initialize()
 
-qcom_cpufreq_hw_cpu_exit() currently calls kfree() on policy->driver_data.
-This is not valid because the memory is devm-managed. For the first
-domain, this can free the devm-managed allocation while the devres entry
-is still active, leading to a possible double free when the platform
-device is later detached. For other domains, the pointer may refer to an
-element inside the array rather than the allocation base.
+After fw_create_instance() succeeds, the lifetime of the embedded struct
+device is expected to be managed through the device core reference
+counting, since fw_create_instance() has already called
+device_initialize().
 
-Remove the kfree(data) call and let devres release qcom_cpufreq.data.
+In firmware_upload_register(), if alloc_lookup_fw_priv() fails after
+fw_create_instance() succeeds, the code reaches free_fw_sysfs and frees
+fw_sysfs directly instead of releasing the device reference with
+put_device(). This may leave the reference count of the embedded struct
+device unbalanced, resulting in a refcount leak.
 
-This issue was found by a static analysis tool I am developing.
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review. Fix this by using put_device(fw_dev) in the
+failure path and letting fw_dev_release() handle the final cleanup,
+instead of freeing the instance directly from the error path.
 
-Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
+Fixes: 97730bbb242c ("firmware_loader: Add firmware-upload support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20260505091231.607089-1-lgs201920130244@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/base/firmware_loader/sysfs_upload.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -578,7 +578,6 @@ static void qcom_cpufreq_hw_cpu_exit(str
- 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
- 	qcom_cpufreq_hw_lmh_exit(data);
- 	kfree(policy->freq_table);
--	kfree(data);
- }
+--- a/drivers/base/firmware_loader/sysfs_upload.c
++++ b/drivers/base/firmware_loader/sysfs_upload.c
+@@ -341,7 +341,6 @@ firmware_upload_register(struct module *
+ 		goto free_fw_upload_priv;
+ 	}
+ 	fw_upload->priv = fw_sysfs;
+-	fw_sysfs->fw_upload_priv = fw_upload_priv;
+ 	fw_dev = &fw_sysfs->dev;
  
- static void qcom_cpufreq_ready(struct cpufreq_policy *policy)
+ 	ret = alloc_lookup_fw_priv(name, &fw_cache, &fw_priv,  NULL, 0, 0,
+@@ -349,10 +348,12 @@ firmware_upload_register(struct module *
+ 	if (ret != 0) {
+ 		if (ret > 0)
+ 			ret = -EINVAL;
+-		goto free_fw_sysfs;
++		put_device(fw_dev);
++		goto free_fw_upload_priv;
+ 	}
+ 	fw_priv->is_paged_buf = true;
+ 	fw_sysfs->fw_priv = fw_priv;
++	fw_sysfs->fw_upload_priv = fw_upload_priv;
+ 
+ 	ret = device_add(fw_dev);
+ 	if (ret) {
+@@ -363,9 +364,6 @@ firmware_upload_register(struct module *
+ 
+ 	return fw_upload;
+ 
+-free_fw_sysfs:
+-	kfree(fw_sysfs);
+-
+ free_fw_upload_priv:
+ 	kfree(fw_upload_priv);
+ 
 
 
