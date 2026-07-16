@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2BC3148C2;
-	Thu, 16 Jul 2026 14:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCB93148C2;
+	Thu, 16 Jul 2026 14:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210454; cv=none; b=IlcdKpF2wM+eEnPtxvpQa9wGL0EvtyddyThSJykkUihttOspvdm+JHkuzU17WC31OuPvVMTQ3wiHcvUOlo74XwZUa+9V3Zzx69JZ3AgHY1t9YOHtTyXjN3LyVfEzpSei986UZx1Ssc+AOghoXHXN2aYPFxaJiV13wQS/k6UJWlA=
+	t=1784210456; cv=none; b=oO6YNuhgHecAgUh3qL6c32CkUGSECVkSH1/A9Vllr29KxmLw2facRdECWLq09tBiuG9YwV4FL+zN8gC2boZibnHjWu7z5g1FSs67QzNN3W5RdGGlqH/DzR8RBKw6U60FHWeDpM1g52c98uM8UdPoTiGqUgIFynw7ES+JQ9z8uF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210454; c=relaxed/simple;
-	bh=oSmiGqZ+NKR01Yzz3qAOklsl2MkVU8ST+IfMH9r+Emk=;
+	s=arc-20240116; t=1784210456; c=relaxed/simple;
+	bh=1ag7GunHUa2eCyHF9MMI6E/DkgXedM85tsBFJLqwAQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEnOeojE4IpyT3fnzibGWiJ3DVYQFIpA/6xGu5WOXVzekp99G0maG9kxZhvl4eYd9vdCuE65mUouhS04CZTyj2s+5rj62KX3xQ6wOsXKCYHJssugi73g2wpDZ+cA7VTk7hjCs5PqLWfKXY36z+bxVfen3uXsDKeLduUEFP/nCOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snLLUNDv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NWfvGMnICPQQu0Efce0BVMEVh1c/EG6/0cLZ7CNCQFdR9TV4TjyZyL4N1sFK5OjQfj/TD6qrrtsbInYjWvCszZfB+PBJl7yh93D8+gdetcGiRdxCdCNQnXjXTqRRIxFIf78thmU5j5kkIVx4E2lqDJHFAkEEVGXI5K7IeZQuUL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9uBZDQL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snLLUNDv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D821F000E9;
-	Thu, 16 Jul 2026 14:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9uBZDQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4866A1F000E9;
+	Thu, 16 Jul 2026 14:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210453;
-	bh=0S6kepu3koNU7eozoc0VrNFoGynkZF7+WWjRopQYvbk=;
+	s=korg; t=1784210455;
+	bh=IhHn0PjAVqjgs69cu2IiQI6NFqIUQRQLn0kksC/pxEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=snLLUNDvoW8iiJixppgtDMUpNUSJEjnL+dmt0gfUZPuMMQVYtmPfye8cuJ+UM3aRJ
-	 ngYSpjwrTidhXwQNVFqfOjUKEsJ1aYycr+9nBaOzi2LicduX5OOB1KowPfPaPjmRC6
-	 JOKArxIe7Na8saBPNVAtSXGPDefkiDLpdroXW+dk=
+	b=K9uBZDQLhdoJdeliCrU9uwY/hYli4DqHNqFk50nmbD2OAiITFH27/Tci3V+mRkneR
+	 G5a4377R/7OdXkxHQ+38mhiaCjJdZP2Wv4T3ZYD0n78YZrnVLS1xRIaCo0/WAB0I0E
+	 WDYEdoeJn+gAjgWfKIhhcfU7NX3F7ELS9Ni3UpMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radu Sabau <radu.sabau@analog.com>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Maxwell Doose <m32285159@gmail.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 054/480] iio: adc: ad_sigma_delta: fix CS held asserted and state leaks
-Date: Thu, 16 Jul 2026 15:26:41 +0200
-Message-ID: <20260716133045.880877532@linuxfoundation.org>
+Subject: [PATCH 6.18 055/480] iio: adc: lpc32xx: Initialize completion before requesting IRQ
+Date: Thu, 16 Jul 2026 15:26:42 +0200
+Message-ID: <20260716133045.901932925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,69 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radu Sabau <radu.sabau@analog.com>
+From: Maxwell Doose <m32285159@gmail.com>
 
-commit c72da0688575e5ef39c36bb44fed53aa18f8ae65 upstream.
+commit e561b35633f450ee607e87a6401d97f156a0cd54 upstream.
 
-In ad_sigma_delta_single_conversion(), set_mode(AD_SD_MODE_IDLE) and
-disable_one() were called from the out: block while keep_cs_asserted
-was still true. This caused any SPI transfer issued by those callbacks
-to carry cs_change=1, leaving CS permanently asserted after the
-conversion. Fix by moving both calls into the out_unlock: block, after
-keep_cs_asserted is cleared, matching the pattern already used in
-ad_sd_calibrate().
+In the report from Jaeyoung Chung:
 
-In the error path of ad_sd_buffer_postenable(), if an operation fails
-after set_mode(AD_SD_MODE_CONTINUOUS) has already succeeded (e.g.
-spi_offload_trigger_enable()), the device is left in continuous
-conversion mode with CS physically asserted. Additionally,
-bus_locked remaining true after spi_bus_unlock() causes subsequent
-SPI operations to call spi_sync_locked() without the bus lock actually
-held, allowing concurrent SPI access.
+"lpc32xx_adc_probe() in drivers/iio/adc/lpc32xx_adc.c registers its
+interrupt handler with devm_request_irq() before it initializes
+st->completion with init_completion(). If an interrupt arrives after
+devm_request_irq() and before init_completion(), the handler calls
+complete() on an uninitialized completion, causing a kernel panic.
 
-Fix the error path by clearing keep_cs_asserted first, then calling
-set_mode(AD_SD_MODE_IDLE) to revert the device mode and deassert CS,
-then clearing bus_locked before releasing the bus.
+The probe path, in lpc32xx_adc_probe():
 
-For devices that implement neither set_mode nor disable_one (such as
-MAX11205, which has no physical CS pin), no SPI transfer is issued
-during cleanup and the cs_change flag has no effect on any physical
-line.
+    iodev = devm_iio_device_alloc(&pdev->dev, sizeof(*st)); /* st kzalloc-zeroed */
+    ...
+    retval = devm_request_irq(&pdev->dev, irq, lpc32xx_adc_isr, 0,
+                              LPC32XXAD_NAME, st);           /* register handler */
+    ...
+    init_completion(&st->completion);                       /* initialize completion */
 
-Fixes: 132d44dc6966 ("iio: adc: ad_sigma_delta: Check for previous ready signals")
-Signed-off-by: Radu Sabau <radu.sabau@analog.com>
+lpc32xx_adc_isr() calls complete():
+
+    complete(&st->completion);
+
+If the device raises an interrupt before init_completion() runs,
+complete() acquires the uninitialized wait.lock and walks the zeroed
+task_list in swake_up_locked(). The zeroed task_list makes list_empty()
+return false, so swake_up_locked() dereferences a NULL list entry,
+triggering a KASAN wild-memory-access."
+
+Fix the chance of a spurious IRQ causing an uninitialized pointer
+dereference by moving init_completion() above devm_request_irq().
+
+Fixes: 7901b2a1453e ("staging:iio:adc:lpc32xx rename local state structure to _state")
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Closes: https://lore.kernel.org/linux-iio/20260610115700.774689-1-jjy600901@snu.ac.kr/
+Signed-off-by: Maxwell Doose <m32285159@gmail.com>
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/iio/adc/lpc32xx_adc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -466,11 +466,10 @@ int ad_sigma_delta_single_conversion(str
- out:
- 	ad_sd_disable_irq(sigma_delta);
+--- a/drivers/iio/adc/lpc32xx_adc.c
++++ b/drivers/iio/adc/lpc32xx_adc.c
+@@ -179,6 +179,8 @@ static int lpc32xx_adc_probe(struct plat
+ 	if (irq < 0)
+ 		return irq;
  
--	ad_sigma_delta_set_mode(sigma_delta, AD_SD_MODE_IDLE);
--	ad_sigma_delta_disable_one(sigma_delta, chan->address);
++	init_completion(&st->completion);
++
+ 	retval = devm_request_irq(&pdev->dev, irq, lpc32xx_adc_isr, 0,
+ 				  LPC32XXAD_NAME, st);
+ 	if (retval < 0) {
+@@ -197,8 +199,6 @@ static int lpc32xx_adc_probe(struct plat
+ 
+ 	platform_set_drvdata(pdev, iodev);
+ 
+-	init_completion(&st->completion);
 -
- out_unlock:
- 	sigma_delta->keep_cs_asserted = false;
-+	ad_sigma_delta_set_mode(sigma_delta, AD_SD_MODE_IDLE);
-+	ad_sigma_delta_disable_one(sigma_delta, chan->address);
- 	sigma_delta->bus_locked = false;
- 	spi_bus_unlock(sigma_delta->spi->controller);
- out_release:
-@@ -603,6 +602,9 @@ static int ad_sd_buffer_postenable(struc
- 	return 0;
- 
- err_unlock:
-+	sigma_delta->keep_cs_asserted = false;
-+	ad_sigma_delta_set_mode(sigma_delta, AD_SD_MODE_IDLE);
-+	sigma_delta->bus_locked = false;
- 	spi_bus_unlock(sigma_delta->spi->controller);
- 	spi_unoptimize_message(&sigma_delta->sample_msg);
- 
+ 	iodev->name = LPC32XXAD_NAME;
+ 	iodev->info = &lpc32xx_adc_iio_info;
+ 	iodev->modes = INDIO_DIRECT_MODE;
 
 
