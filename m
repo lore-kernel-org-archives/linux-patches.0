@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5D732ED24;
-	Thu, 16 Jul 2026 13:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297B2425894;
+	Thu, 16 Jul 2026 13:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209619; cv=none; b=sNZy7Zbj4B7Yp8IHrhVOyFpUAcNnC+T4zIA8sxLxAYt4Cg2ZAohvpaU7lnW1eS5OMNMYMndOIVZ7q+rvTthhf4JucakjTJ21x6ECIaQxpLIMVA9pXeRxcfBosmPoW5mcDIc1Rp4ZKDzOZ0jNh2b7l6DHmmqG7g+vpswVgozH5VE=
+	t=1784209620; cv=none; b=WHBkNrnD1LOyBdMmAsK30TDkNSwjLW9v7obqC6LqtEeGnRstvfD5wA24t6vXRuqu+PG2yK12yJOS4O7/P3/psKgk08e6Yndxh3uRxmbjPN88KkcW0ub6Ys7IagBqYfIGd1OISG2ic0SkGtZE03UBoeUBB/oYbeVXhZxQXlLjH50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209619; c=relaxed/simple;
-	bh=GANpnAT/x5suSxbPJVtPUYI0/VktAgWtxyADv2rqcQ8=;
+	s=arc-20240116; t=1784209620; c=relaxed/simple;
+	bh=3KcnqzGZt1AssIRM/CHKpEQ9LCO/b5VS3F0QTvufbYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXNFoWRZiVrmJOSxn9jmivIThbeleqSRcRVeeh0G0ETlA4T+K++K57Y55CzVZOaBU2GR5WlufmbqIh5nH6c8rh56fSPH9K6VziBZUuGWvw/iwLHWP0Kh7jSUoPrG1eNTDIGsMyciTlEb4igfHd/no0cFGJ8gxloaHhLwb7/JmtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUWp800k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C/97kkYHL4qZmjwkgRzFh6Dlz2+2eJXYOoOHgdQM4EYd6/GxyeeAqdAqtYgZHtQG7V8e+lR0s/pOWAx6gfi8yqMwg6beGvi1gCQcy+6L0wNQ59nP3Nn5XbDPMktoCP/UpEP/kgnJovQWFas4+1uypIKm1MMafuZC7SC7fSXkXG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5B6Wosi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUWp800k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3551F00A3D;
-	Thu, 16 Jul 2026 13:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5B6Wosi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B9C1F000E9;
+	Thu, 16 Jul 2026 13:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209612;
-	bh=L8FhVbNi8pgtkT3wf75wSsBh0JxzTYdDwCsvw4lwfFQ=;
+	s=korg; t=1784209610;
+	bh=fyO+On32SJbuAhyzJnG/w7dq4ua/qI/RJUp7dDpH3G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hUWp800kQPXVuVU3NswqobcjLvpCnY5WtNjzidZH6N5DfhAVFfUX5X9Kb1QbTmdTg
-	 S2bkW6Ys6Zd8kg7lrh33GLAFlZMx90xiLYvOwuIkgM1nzw+3Lqpy0hFjnqG3GmU41k
-	 VB7FgrvDSIqKDteyH8MOUg3+zPjLkcXkS4jt1IUY=
+	b=v5B6WosijT4SI/GlSggfKe+TArmK5BiNQLCcDZzqXoO+eMch7hpIpLogpurBhOAHN
+	 ugoikrNewNjCHQrQvpimzvIfnoolUByaj7kPtE82p/aRex+jYKKhKt5qH0SbV0wiUP
+	 XLMDT9Y9uRwQKf6rpNmPVFlIoKWzWATm48ss5+DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dan Carpenter <error27@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 215/518] smb/client: Fix error code in smb2_aead_req_alloc()
-Date: Thu, 16 Jul 2026 15:28:03 +0200
-Message-ID: <20260716133052.520665805@linuxfoundation.org>
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>
+Subject: [PATCH 7.1 250/518] perf/x86/intel/uncore: Defer ADL global PMON enable to enable_box()
+Date: Thu, 16 Jul 2026 15:28:38 +0200
+Message-ID: <20260716133053.286592746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,45 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Zide Chen <zide.chen@intel.com>
 
-commit 61f28012e5650c619223decdb7970e0d3162e949 upstream.
+commit 9a0bb848a37150aeccc10088e141339917d995dc upstream.
 
-The "*num_sgs" variable is a u32 so "ERR_PTR(*num_sgs)" doesn't work.
-We would have to do something similar to the previous line where it's
-cast to int and then long.  However, it's simpler to store the return in
-an int ret variable.
+On some Raptor Cove CPUs, enabling uncore PMON globally at driver init
+may increase power consumption even when no perf events are in use.
 
-This bug would eventually result in a crash when dereference the invalid
-error pointer.
+Drop adl_uncore_msr_init_box() and defer programming the global control
+register to enable_box(), so it is only set when a box is actually used.
 
-Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
-Cc: stable@kernel.org
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+IMC and IMC freerunning counters use a separate control path and are
+unaffected.
+
+Fixes: 772ed05f3c5c ("perf/x86/intel/uncore: Add Alder Lake support")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260602144908.263680-5-zide.chen@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/x86/events/intel/uncore_snb.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4359,11 +4359,13 @@ static void *smb2_aead_req_alloc(struct
- 	unsigned int req_size = sizeof(**req) + crypto_aead_reqsize(tfm);
- 	unsigned int iv_size = crypto_aead_ivsize(tfm);
- 	unsigned int len;
-+	int ret;
- 	u8 *p;
+--- a/arch/x86/events/intel/uncore_snb.c
++++ b/arch/x86/events/intel/uncore_snb.c
+@@ -563,12 +563,6 @@ void tgl_uncore_cpu_init(void)
+ 	skl_uncore_msr_ops.init_box = rkl_uncore_msr_init_box;
+ }
  
--	*num_sgs = cifs_get_num_sgs(rqst, num_rqst, sig);
--	if (IS_ERR_VALUE((long)(int)*num_sgs))
--		return ERR_PTR(*num_sgs);
-+	ret = cifs_get_num_sgs(rqst, num_rqst, sig);
-+	if (ret < 0)
-+		return ERR_PTR(ret);
-+	*num_sgs = ret;
+-static void adl_uncore_msr_init_box(struct intel_uncore_box *box)
+-{
+-	if (box->pmu->pmu_idx == 0)
+-		wrmsrq(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
+-}
+-
+ static void adl_uncore_msr_enable_box(struct intel_uncore_box *box)
+ {
+ 	wrmsrq(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
+@@ -587,7 +581,6 @@ static void adl_uncore_msr_exit_box(stru
+ }
  
- 	len = iv_size;
- 	len += crypto_aead_alignmask(tfm) & ~(crypto_tfm_ctx_alignment() - 1);
+ static struct intel_uncore_ops adl_uncore_msr_ops = {
+-	.init_box	= adl_uncore_msr_init_box,
+ 	.enable_box	= adl_uncore_msr_enable_box,
+ 	.disable_box	= adl_uncore_msr_disable_box,
+ 	.exit_box	= adl_uncore_msr_exit_box,
 
 
