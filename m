@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7036442D76E;
-	Thu, 16 Jul 2026 14:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12849434E30;
+	Thu, 16 Jul 2026 14:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212414; cv=none; b=CVCmjUhxzsyJLqmMEp8gVL+Qqhh+vBZ6mhDYF3dTYXnFIicOv9ew8m4lzN8MAR+a294xQGS5LY96RuB18SRjlWlYsShpfhd9gdOiPrdq9DTHUrPiSllQ/EfX9SGQziYBoZgZaUhSmmaiKQFIZcSEhWfjlqKwA7xqdZ2S+er7jjI=
+	t=1784212417; cv=none; b=fyW9o2fVPzKbjXUmuTKv33BYT6uuO6bBLCDwLYGrZvgGRm1Sw4OY88tMPuQC3Uq5xoPrLWBitGtw41tfPDruasTqw/PjleDjVy2YfPwDJOA742fEfoLxUnqBv+VYBk/sCdiZAwSMyT+d7RFEBTUJuNvpWisLU09nD7t+1fQELTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212414; c=relaxed/simple;
-	bh=NzLcOAvBuB11J7+L+GLhrXuJBOarz6uiBO0KvPhCxgM=;
+	s=arc-20240116; t=1784212417; c=relaxed/simple;
+	bh=9u3fFYIC+oHNwSl+PpenQQCEm19aBFHRY2DhPcl6Phg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpAMNKAs6Bwm+VKM751662gQWcgA29uExEbN/mMQaS2ePuq8ewRu41DvnQW90fALYFeiOL0E/lpHLgioHgKf9s0cZ4R6CMyUzS4D1vAuHsPU1k6EKPdk3akXAvKzEtN5V2J/CpLB1XveSHS6OeSDn2FHoufwDa6k2YdkAdSyxjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cE5CA2ZF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uVyYYu7L3F6mbwxBg31P9kUAAVg2seluREx+YKw4yYz1nLl4I+UoR0xS57Aflyxa4FlbI4Bpuv6iUT3DXCa5AHTroEqSKRzgbQ9sFtFDBgdqQwKCyNW3nL2KsYlop8YgPZzP00bDIGp/dwdh50h0mYRF+nwtPwYDOsV8zB9VQ6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCLPTWP4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cE5CA2ZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AA71F000E9;
-	Thu, 16 Jul 2026 14:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCLPTWP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC9E1F000E9;
+	Thu, 16 Jul 2026 14:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212413;
-	bh=9Tc+Qx58r3tlG/c0GV5LEIMAo5P02PSfmBTA0CwY3K0=;
+	s=korg; t=1784212415;
+	bh=mQGlTprebXPkOBqKzcuK0wnoiAAdlDDwVDaE6j2j0a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cE5CA2ZFDEnofXlDvNIfHxEWpwt6kASsBH33JBU2DpIUvlWUcdoP3adcKgJ7N9S3C
-	 5J9w4cFvinsvy2LvyREXnawcRvmj2+l0U4HMVDD7y8FECfV7lbernCY06zz/XXLmG4
-	 Q8bC9PDYUnUiqMzrKG90JOUTD/fLVoTIoZQ5qpNw=
+	b=hCLPTWP4pk91ldJg0Krb+FOg5MDw/EIKaeVquut/+WBbUP/nI2RCXcWQZNds8BqAo
+	 sFcQbD1nWx2lMrzFjKqscWYQSqYe8f+5vW41uHl2ETUOc8VT7rZ1LvOLCHKTiX5nh9
+	 dpuY+BwzYa+E1axnJT1KtAaiTva41bx1f57tBWyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.12 317/349] iommufd: Set upper bounds on cache invalidation entry_num and entry_len
-Date: Thu, 16 Jul 2026 15:34:11 +0200
-Message-ID: <20260716133040.410756490@linuxfoundation.org>
+	Hou Wenlong <houwenlong.hwl@antgroup.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 318/349] KVM: VMX: Refresh GUEST_PENDING_DBG_EXCEPTIONS.BS on all injected #DBs
+Date: Thu, 16 Jul 2026 15:34:12 +0200
+Message-ID: <20260716133040.432303590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,62 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 4d70986002f2f3eaaed89124fb2522bded38b016 upstream.
+commit c5bad4fa2d5dfd8c25140051a9807eba387a19b8 upstream.
 
-iommufd_hwpt_invalidate() takes a user-controlled entry_num and entry_len,
-each bounded only by U32_MAX. An entry_len beyond the kernel's struct size
-makes the copy helper verify the extra bytes are zero, scanning that excess
-in one uninterruptible pass; a multi-gigabyte value over zeroed user memory
-trips the soft-lockup watchdog.
+Move KVM's stuffing of GUEST_PENDING_DBG_EXCEPTIONS.BS when RFLAGS.TF=1 and
+MOV/POP SS or STI blocking is active into the exception injection code so
+that KVM fixes up the VMCS for all injected #DBs, not only those that are
+reflected back into the guest after #DB interception.  E.g. if KVM queues
+a #DB in the emulator, or more importantly if userspace does save/restore
+exactly on the #DB+shadow boundary, then KVM needs to massage the VMCS to
+avoid the VM-Entry consistency check.
 
-A large entry_num is the other half, driving the backend invalidation loop
-with no reschedule. The VT-d nested handler, for one, copies each entry and
-flushes caches per iteration, pinning the CPU on a non-preemptible kernel.
+Opportunistically update the wording of the comment to describe the
+behavior as a workaround of flawed CPU behavior/architecture, to make it
+clear that the *only* thing KVM is doing is fudging around a consistency
+check.  Per the SDM:
 
-Cap both in the ioctl. entry_len is held under PAGE_SIZE, above any request
-struct, and entry_num under 1 << 19, the order of a hardware invalidation
-queue and well beyond any real batch, bounding the per-call loop length.
+  There are no pending debug exceptions after VM entry if any of the
+  following are true:
 
-Fixes: 8c6eabae3807 ("iommufd: Add IOMMU_HWPT_INVALIDATE")
-Link: https://patch.msgid.link/r/447fa93663f7526eb361719e83fa8b649464483d.1780521606.git.nicolinc@nvidia.com
+    * The VM entry is vectoring with one of the following interruption
+      types: external interrupt, non-maskable interrupt (NMI), hardware
+      exception, or privileged software exception.
+
+I.e. forcing GUEST_PENDING_DBG_EXCEPTIONS.BS does *not* impact guest-
+visible behavior.
+
+Fixes: b9bed78e2fa9 ("KVM: VMX: Set vmcs.PENDING_DBG.BS on #DB in STI/MOVSS blocking shadow")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reported-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
+Closes: https://lore.kernel.org/all/b1a294bc9ed4dae532474a5dc6c8cb6e5962de7c.1757416809.git.houwenlong.hwl@antgroup.com
+Reviewed-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
+Link: https://patch.msgid.link/20260515222638.1949982-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/hw_pagetable.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/vmx.c |   35 ++++++++++++++++++-----------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
---- a/drivers/iommu/iommufd/hw_pagetable.c
-+++ b/drivers/iommu/iommufd/hw_pagetable.c
-@@ -406,6 +406,9 @@ int iommufd_hwpt_get_dirty_bitmap(struct
- 	return rc;
- }
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -1833,6 +1833,24 @@ void vmx_inject_exception(struct kvm_vcp
+ 	u32 intr_info = ex->vector | INTR_INFO_VALID_MASK;
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
  
-+/* An arbitrary entry_num cap, far above any realistic invalidation batch */
-+#define IOMMU_HWPT_INVALIDATE_ENTRY_NUM_MAX (1U << 19)
-+
- int iommufd_hwpt_invalidate(struct iommufd_ucmd *ucmd)
- {
- 	struct iommu_hwpt_invalidate *cmd = ucmd->cmd;
-@@ -424,7 +427,13 @@ int iommufd_hwpt_invalidate(struct iommu
- 		goto out;
- 	}
- 
--	if (cmd->entry_num && (!cmd->data_uptr || !cmd->entry_len)) {
 +	/*
-+	 * Bound entry_num and entry_len so a single call cannot pin the CPU;
-+	 * entry_len also caps the copy_struct_from_user() trailing-zero scan.
++	 * When injecting a #DB, single-stepping is enabled in RFLAGS, and STI
++	 * or MOV-SS blocking is active, set vmcs.PENDING_DBG_EXCEPTIONS.BS to
++	 * prevent a false positive from VM-Entry consistency check.  VM-Entry
++	 * asserts that a single-step #DB _must_ be pending in this scenario,
++	 * as the previous instruction cannot have toggled RFLAGS.TF 0=>1
++	 * (because STI and POP/MOV don't modify RFLAGS), therefore the one
++	 * instruction delay when activating single-step breakpoints must have
++	 * already expired.  However, the CPU isn't smart enough to peek at
++	 * vmcs.VM_ENTRY_INTR_INFO_FIELD and so doesn't realize that yes, there
++	 * is indeed a #DB pending/imminent.
 +	 */
-+	if (cmd->entry_num &&
-+	    (!cmd->data_uptr || !cmd->entry_len || cmd->entry_len > PAGE_SIZE ||
-+	     cmd->entry_num > IOMMU_HWPT_INVALIDATE_ENTRY_NUM_MAX)) {
- 		rc = -EINVAL;
- 		goto out;
- 	}
++	if (ex->vector == DB_VECTOR &&
++	    (vmx_get_rflags(vcpu) & X86_EFLAGS_TF) &&
++	    vmx_get_interrupt_shadow(vcpu))
++		vmcs_writel(GUEST_PENDING_DBG_EXCEPTIONS,
++			    vmcs_readl(GUEST_PENDING_DBG_EXCEPTIONS) | DR6_BS);
++
+ 	kvm_deliver_exception_payload(vcpu, ex);
+ 
+ 	if (ex->has_error_code) {
+@@ -5323,26 +5341,9 @@ static int handle_exception_nmi(struct k
+ 			 * avoid single-step #DB and MTF updates, as ICEBP is
+ 			 * higher priority.  Note, skipping ICEBP still clears
+ 			 * STI and MOVSS blocking.
+-			 *
+-			 * For all other #DBs, set vmcs.PENDING_DBG_EXCEPTIONS.BS
+-			 * if single-step is enabled in RFLAGS and STI or MOVSS
+-			 * blocking is active, as the CPU doesn't set the bit
+-			 * on VM-Exit due to #DB interception.  VM-Entry has a
+-			 * consistency check that a single-step #DB is pending
+-			 * in this scenario as the previous instruction cannot
+-			 * have toggled RFLAGS.TF 0=>1 (because STI and POP/MOV
+-			 * don't modify RFLAGS), therefore the one instruction
+-			 * delay when activating single-step breakpoints must
+-			 * have already expired.  Note, the CPU sets/clears BS
+-			 * as appropriate for all other VM-Exits types.
+ 			 */
+ 			if (is_icebp(intr_info))
+ 				WARN_ON(!skip_emulated_instruction(vcpu));
+-			else if ((vmx_get_rflags(vcpu) & X86_EFLAGS_TF) &&
+-				 (vmcs_read32(GUEST_INTERRUPTIBILITY_INFO) &
+-				  (GUEST_INTR_STATE_STI | GUEST_INTR_STATE_MOV_SS)))
+-				vmcs_writel(GUEST_PENDING_DBG_EXCEPTIONS,
+-					    vmcs_readl(GUEST_PENDING_DBG_EXCEPTIONS) | DR6_BS);
+ 
+ 			kvm_queue_exception_p(vcpu, DB_VECTOR, dr6);
+ 			return 1;
 
 
