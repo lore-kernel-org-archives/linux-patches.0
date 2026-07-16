@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF213148C2;
-	Thu, 16 Jul 2026 14:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BEC3009E2;
+	Thu, 16 Jul 2026 14:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210659; cv=none; b=X4k6H3v5EF88aAEnfYKHE2y77tntKWowtctvBRCEE5oZIUiSFPu8cYJTXHb48Lb818SGQ3IvkCghFeprwQaxA58tlKvIdovX0jAW7SRWk88o3jS8mR9chORa+u/8wgNJpDaKJlmfNZFbUZg65FvQMyCSh+K7Q5jUDO9mT4If6GY=
+	t=1784210662; cv=none; b=c4tGr27cPadtV/UV3EAheTioockwsu6k9GdThWaWl25tAnrpMClP5HrqR+cJz5sEHP2gVNaodqnOPnzX8ZSz81egFh6j7UXtZhGAZ3nYue8Il6mgHOafxXdEdSLnqRbniHd3mC50ZDu69Yk714+ZUioOxI6DqynqHTf3YXqe7s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210659; c=relaxed/simple;
-	bh=0Icyq7uzqxi5qQVo1boGpm6UdtagCtufGEwElTMD+uE=;
+	s=arc-20240116; t=1784210662; c=relaxed/simple;
+	bh=IVPIwS0eDnFleSJ+goaN4NUv7tCJjqKhGOabmyroXxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qht86GEQcQkF4tqvoRtHhgr4jijHNztPtHomdDITY7564pFOGECGjUS3TVJGR58gjZvNImaF0krwvdS0WDggojGZs6O/eJTLTmxNtxByDXXNwDkkf1eCZohMxE2upHc82L5efNYpZCj8TdGY5mitGQiTT5IQgHt5VNUS2Aab7Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cABPWzrR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZsaaL+iLYcso6W4Gq2X8+oYFHQT1OT9tuPLwfrn9URsXl1d+oJdo3/8X/D/X0kT8m73M1EogtLMzBzL5TdOcahdFCTswtu4kY9b5JRyUu8TqTDRGLRnz99dIxFkJwvc0bpA//tQbdhjUzjvUDhDpqbQxgayoyiOFA0WWjQ6bD5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5s3pGFk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cABPWzrR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A395B1F000E9;
-	Thu, 16 Jul 2026 14:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5s3pGFk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467F91F000E9;
+	Thu, 16 Jul 2026 14:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210658;
-	bh=tnH5rIg4RhglEKWXBpOrsPvat8ebnl/RLJ8UvZ8rUzQ=;
+	s=korg; t=1784210660;
+	bh=IZrYTm789vQbrzY359E5PwFtI4ik9Erwum+NKauC318=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cABPWzrR9gAHe80dZ1naJQP7Ywu46y8VJqIIbeZIqF9wUqkSjZCqJZhy8FYm3opv7
-	 DbNKrixrTSxb4ANEp1FyK//UncEB+DSSq7b31y2sLfXTwlzlVJRIj3nW5111+XxQHj
-	 bpRB/hJABg5J9fXnwtgJYYhGGM9lVoFljQIaBE2k=
+	b=q5s3pGFkKgphOufmIh8jW85FiqSZTK6uCvMWmsFn96e+DiaYsUXst5vOb9BBrn/HW
+	 74swPwfbG9fsf2SdBBc9rlmclxvbW6Jy0YIxT6OwGlLQvM0EdSaStzNV/fQn8f2kK2
+	 Fkpc5/+JUI2n86/JN6Y1a3lNRSd6t8gwHGsWM5M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Keshav Verma <iganschel@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 6.18 129/480] rust_binder: reject context manager self-transaction
-Date: Thu, 16 Jul 2026 15:27:56 +0200
-Message-ID: <20260716133047.500477531@linuxfoundation.org>
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Keshav Verma <iganschel@gmail.com>
+Subject: [PATCH 6.18 130/480] rust_binder: synchronize Rust Binder stats with freeze commands
+Date: Thu, 16 Jul 2026 15:27:57 +0200
+Message-ID: <20260716133047.521638331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,44 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Keshav Verma <iganschel@gmail.com>
 
-commit 6849cabfd30fb5727cfd31e8241e15801e17ebf9 upstream.
+commit eb1645bf10190e71f6f0316e37ff70755d719b53 upstream.
 
-Rust binder resolved handle 0 to the context manager node, but it does not
-reject the case where the caller owns the same node.
+Rust Binder stats use BC_COUNT and BR_COUNT to size the command and
+return counters, and use event string tables when printing debug
+statistics.
 
-The C binder driver rejects transactions from the context-manager process
-to handle 0 after resolving the target node. Match that behavior in Rust
-Binder by rejecting handle 0 transactions when the resolved context-manager
-node is owned by the calling process.
+The Binder protocol includes freeze-related commands and return codes,
+but the Rust Binder statistics code was not updated to cover them. As a
+result, those commands and return codes are not accounted for or printed
+by the stats debug output.
 
-This applies to both synchronous and oneway transactions because both paths
-resolve the target through Process::get_transaction_node().
+Update the counts and event string tables so these commands and return
+codes are included in the debug statistics output.
 
-Cc: stable <stable@kernel.org>
 Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Keshav Verma <iganschel@gmail.com>
+Cc: stable <stable@kernel.org>
+Acked-by: Carlos Llamas <cmllamas@google.com>
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260625103957.730-1-iganschel@gmail.com
+Signed-off-by: Keshav Verma <iganschel@gmail.com>
+Link: https://patch.msgid.link/20260615211743.734-1-iganschel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/process.rs |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/android/binder/rust_binder_events.c |    7 ++++++-
+ drivers/android/binder/stats.rs             |    4 ++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/android/binder/process.rs
-+++ b/drivers/android/binder/process.rs
-@@ -873,7 +873,11 @@ impl Process {
-     pub(crate) fn get_transaction_node(&self, handle: u32) -> BinderResult<NodeRef> {
-         // When handle is zero, try to get the context manager.
-         if handle == 0 {
--            Ok(self.ctx.get_manager_node(true)?)
-+            let node_ref = self.ctx.get_manager_node(true)?;
-+            if core::ptr::eq(self, &*node_ref.node.owner) {
-+                return Err(EINVAL.into());
-+            }
-+            Ok(node_ref)
-         } else {
-             Ok(self.get_node_from_handle(handle, true)?)
-         }
+--- a/drivers/android/binder/rust_binder_events.c
++++ b/drivers/android/binder/rust_binder_events.c
+@@ -28,6 +28,9 @@ const char * const binder_command_string
+ 	"BC_DEAD_BINDER_DONE",
+ 	"BC_TRANSACTION_SG",
+ 	"BC_REPLY_SG",
++	"BC_REQUEST_FREEZE_NOTIFICATION",
++	"BC_CLEAR_FREEZE_NOTIFICATION",
++	"BC_FREEZE_NOTIFICATION_DONE",
+ };
+ 
+ const char * const binder_return_strings[] = {
+@@ -51,7 +54,9 @@ const char * const binder_return_strings
+ 	"BR_FAILED_REPLY",
+ 	"BR_FROZEN_REPLY",
+ 	"BR_ONEWAY_SPAM_SUSPECT",
+-	"BR_TRANSACTION_PENDING_FROZEN"
++	"BR_TRANSACTION_PENDING_FROZEN",
++	"BR_FROZEN_BINDER",
++	"BR_CLEAR_FREEZE_NOTIFICATION_DONE",
+ };
+ 
+ #define CREATE_TRACE_POINTS
+--- a/drivers/android/binder/stats.rs
++++ b/drivers/android/binder/stats.rs
+@@ -8,8 +8,8 @@ use crate::defs::*;
+ use core::sync::atomic::{AtomicU32, Ordering::Relaxed};
+ use kernel::{ioctl::_IOC_NR, seq_file::SeqFile, seq_print};
+ 
+-const BC_COUNT: usize = _IOC_NR(BC_REPLY_SG) as usize + 1;
+-const BR_COUNT: usize = _IOC_NR(BR_TRANSACTION_PENDING_FROZEN) as usize + 1;
++const BC_COUNT: usize = _IOC_NR(BC_FREEZE_NOTIFICATION_DONE) as usize + 1;
++const BR_COUNT: usize = _IOC_NR(BR_CLEAR_FREEZE_NOTIFICATION_DONE) as usize + 1;
+ 
+ pub(crate) static GLOBAL_STATS: BinderStats = BinderStats::new();
+ 
 
 
