@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC84252B4;
-	Thu, 16 Jul 2026 14:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC65426424;
+	Thu, 16 Jul 2026 14:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211316; cv=none; b=WCR7EPKxg/P+OypXdNMgUBVtZC4Nd+B6kN8+e5rYU/MhCXFqG01onsmsNZhUKftsSG5xIzN9+wSNpvuTExT9wH5H6YGc4Umy+0gW7lcK6DzNpwjRWTuI8zATwHKP0ij6eHbW7uIoFd+RXx7/vVaeC4OuI1z/F03Xkcxod/Rqs4I=
+	t=1784211319; cv=none; b=X33uKoEnoV7cHHEtpyJIM9LsP07SEK9YeUeMqcZCdmJcKkVHP1e81GZOR9xAWvjQ8xdpe/yxQXsRvGOzvINcITxY/sNsBPi6aBeuRyVsHsGAQjOIJe/jTgDM8zKSiGv/0dVoVColVVf3n5f3RaYs0OQWj7mb6TK73BMs+WIqhns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211316; c=relaxed/simple;
-	bh=aCzTRr+KQuWhXLqyj7fuIKL0fzxPrGySIPvdiyNXN5M=;
+	s=arc-20240116; t=1784211319; c=relaxed/simple;
+	bh=UChsHLzGOXeBldc47unrdnPe+Gl3Keh2hhv9D5UISBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dHe52i1I38FfibNXlhJAL8I3SiIIJwFsdY4lzke2TdMftBd2SZ0ELEefeZ0OsSiwF8eKwdJ4hsGVrsnCIEHvr22XKIE/tv/iQdWWlPY9dl35yLRl3L7Gp1BhEgDXSQN0eLSqtJy4VtQ70gbyOPTgCSgRBwCOA8ZOh3DiaZwy1zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fU3LIyIW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WT4u/i7tG2rZY+4x8SNm6Kux0Zau+GiU0x1D47YZc88l7l55xJN4IdG31OhU2THevulxrZNdE45zVDGe/TU93kPiSQgYkK4SdmnnJSt3X1g6wsQAZ7scXEi++9XmNFOyIhjpQJXle4aEZ1yvJfJUKZX0KqHZxYWqcsNqP4JrgTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=We3rwjvj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fU3LIyIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6201F000E9;
-	Thu, 16 Jul 2026 14:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="We3rwjvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114BE1F000E9;
+	Thu, 16 Jul 2026 14:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211314;
-	bh=uNew7mtC9LH2wsF2j7mzZ/R7m5DZGL2n0et31EloBgs=;
+	s=korg; t=1784211317;
+	bh=LOIz9fGifVu7+JWqAZowRfY6zq+t7ONTN5BdhxLTeZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fU3LIyIWMIYk9u72ds+ci+75/qbyzfJ/D8pB9j1trytycNMfupfUqhyEdnb1CLVQL
-	 vdpiEHZqq1i04FTJIFParIOTdc7Zt2jofpOs5wgfo8Co058Bs9nf/mQIa71PYAgY7/
-	 yEGIVj0pJdfvxasjw6Tu7kPcWwfU4u/LdonXZKn8=
+	b=We3rwjvjJTSx0AZs1llDod79JU6lCg+om6cj6lz0fHkGNUULgDqh+lnFsvDHg4LHW
+	 xpXt8a1ycCcrXBljfuhllIJImeitVNdO5RhZQhtWv/KYSj+14FE8UEOvXpKTHRCldr
+	 S3y/JmvGSzuWTQw8QAIXyCBgHbFGeVnir/AwfTLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Fuad Tabba <tabba@google.com>,
-	James Morse <james.morse@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.18 382/480] arm64: fpsimd: Fix type mismatch in sme_{save,load}_state()
-Date: Thu, 16 Jul 2026 15:32:09 +0200
-Message-ID: <20260716133053.066005120@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 383/480] spi: fsl-lpspi: replace dmaengine_terminate_all() with dmaengine_terminate_sync()
+Date: Thu, 16 Jul 2026 15:32:10 +0200
+Message-ID: <20260716133053.087317859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -57,78 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit 247bd153905085c18ff9006cca1ccb96dfd18e7f upstream.
+commit e703ce47691b967fe9b4057fb1d062273211afa9 upstream.
 
-The sme_save_state() and sme_load_state() functions take a 32-bit int
-argument that describes whether to save/restore ZT0. Their assembly
-implementations consume the entire 64-bit register containing this
-32-bit value, and will attempt to save/restore ZT0 if any bit of
-that 64-bit register is non-zero.
+dmaengine_terminate_all() has been deprecated, so replace it with
+dmaengine_terminate_sync().
 
-Per the AAPCS64 parameter passing rules, the callee is responsible for
-any necessary widening, and the upper 32-bits are permitted to contain
-arbitrary values. If the upper 32 bits are non-zero, this could result
-in an unexpected attempt to save/restore ZT0, and consequently could
-lead to unexpected traps/undefs/faults.
-
-In practice compilers are very unlikely to generate code where the upper
-32-bits would be non-zero, but they are permitted to do so.
-
-Fix this by only consuming the low 32 bits of the register, and update
-comments accordingly.
-
-Fixes: 95fcec713259 ("arm64/sme: Implement context switching for ZT0")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Fuad Tabba <tabba@google.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Oliver Upton <oupton@kernel.org>
-Cc: Vladimir Murzin <vladimir.murzin@arm.com>
-Cc: Will Deacon <will@kernel.org>
+Fixes: 09c04466ce7e ("spi: lpspi: add dma mode support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://patch.msgid.link/20260525062357.3191349-2-carlos.song@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/entry-fpsimd.S |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/spi/spi-fsl-lpspi.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/arch/arm64/kernel/entry-fpsimd.S
-+++ b/arch/arm64/kernel/entry-fpsimd.S
-@@ -103,13 +103,13 @@ SYM_FUNC_END(sme_set_vq)
-  * Save the ZA and ZT state
-  *
-  * x0 - pointer to buffer for state
-- * x1 - number of ZT registers to save
-+ * w1 - number of ZT registers to save
-  */
- SYM_FUNC_START(sme_save_state)
- 	_sme_rdsvl	2, 1		// x2 = VL/8
- 	sme_save_za 0, x2, 12		// Leaves x0 pointing to the end of ZA
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -619,7 +619,7 @@ static int fsl_lpspi_dma_transfer(struct
+ 				tx->sgl, tx->nents, DMA_MEM_TO_DEV,
+ 				DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+ 	if (!desc_tx) {
+-		dmaengine_terminate_all(controller->dma_tx);
++		dmaengine_terminate_sync(controller->dma_tx);
+ 		return -EINVAL;
+ 	}
  
--	cbz	x1, 1f
-+	cbz	w1, 1f
- 	_str_zt 0
- 1:
- 	ret
-@@ -119,13 +119,13 @@ SYM_FUNC_END(sme_save_state)
-  * Load the ZA and ZT state
-  *
-  * x0 - pointer to buffer for state
-- * x1 - number of ZT registers to save
-+ * w1 - number of ZT registers to save
-  */
- SYM_FUNC_START(sme_load_state)
- 	_sme_rdsvl	2, 1		// x2 = VL/8
- 	sme_load_za 0, x2, 12		// Leaves x0 pointing to the end of ZA
- 
--	cbz	x1, 1f
-+	cbz	w1, 1f
- 	_ldr_zt 0
- 1:
- 	ret
+@@ -640,8 +640,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 							transfer_timeout);
+ 		if (!time_left) {
+ 			dev_err(fsl_lpspi->dev, "I/O Error in DMA TX\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -ETIMEDOUT;
+ 		}
+@@ -650,8 +650,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 							transfer_timeout);
+ 		if (!time_left) {
+ 			dev_err(fsl_lpspi->dev, "I/O Error in DMA RX\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -ETIMEDOUT;
+ 		}
+@@ -660,8 +660,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 			fsl_lpspi->target_aborted) {
+ 			dev_dbg(fsl_lpspi->dev,
+ 				"I/O Error in DMA TX interrupted\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -EINTR;
+ 		}
+@@ -670,8 +670,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 			fsl_lpspi->target_aborted) {
+ 			dev_dbg(fsl_lpspi->dev,
+ 				"I/O Error in DMA RX interrupted\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -EINTR;
+ 		}
 
 
