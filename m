@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6228B424673;
-	Thu, 16 Jul 2026 13:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC52424674;
+	Thu, 16 Jul 2026 13:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209043; cv=none; b=eNV0+DueCH0bmXhGnNbHJgzvJ6S46vp1PSVDFGVx/BaGizaKyVbM653QMuSSNrgJs+MbzeZv+Jf0XBBrApqvlgimgnPmeNVGhOvn13eSaLIeWnuL1gQFWcWqg1oiOl74pd3dmKxE1hm6aMsO+JNqgUZ5ijk2luqqZdvGlQKyi4E=
+	t=1784209047; cv=none; b=d1fTkPmruJ1R1bC6I15jOqSdVxmn1nig4eQdPoaTK5IALLOHFays7c2r2KodP1/ITyOfBWDLP+kqxYXkSs6EQi7d/P9WglwoXd4by2ootnAre2oeCypMOkBx5CQ/71BZlguqDNJoa4eWOD9e7P0EjHGRCcJMPBdu+9tL1wLyzSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209043; c=relaxed/simple;
-	bh=n2/mQxtXCzBes+IVWLX5e/F44V/R+Op8rPkoxsiHYZA=;
+	s=arc-20240116; t=1784209047; c=relaxed/simple;
+	bh=cjy3AJrbt5Nm1BiGBbDJe06fSQXiNFrRaF9frO9x/kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=STiLkj7czryLg+Xd0MvOPowHNMhgdp8USZ1C/fJqCL+iUVk6A9duoZycQKsdmVNauX2M4F7syCnylrDb3BXh/AjQ43EvM1Kw1+khbSnLQk6/zVmKppNk+VPEaAMJqlvjqz4o9IoiRNTqxRVG3+LOtYEGPaZ2xzHI7t6U+SuX9Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jf8oiRCH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PJ661FFx+V6l3AUaRGqA+1BDNJiZMZyLcxd6SKprBVr1ZaTRzXzanicbDksGK6u99oZCExt9YfpXoTmSfWV5AMU0zb+5uqMClbjwh5gq5A2z8PMVNvYaVZLAjOh4UHIIdfKhp79UlHcIKGfdM9f7qZMdKZShlTbWh02HPcWVjz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBLrEcQW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jf8oiRCH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B3E1F000E9;
-	Thu, 16 Jul 2026 13:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBLrEcQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C8F1F000E9;
+	Thu, 16 Jul 2026 13:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209042;
-	bh=sOijDjjmFvSUuoo+oogH1nBpA5qWJBuvlY5j1FcRELA=;
+	s=korg; t=1784209044;
+	bh=RhuGgdffJ3HO1nUONlbUnCWPnxzQ3ecW+bJqDLL+rUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jf8oiRCH+S/Bhu/BqcVm4DZ+DdR4B8JC05AjtUwDzDICFABoC+Fc0ky49rJFd/XPJ
-	 2kFOz16UeBr5mf8AQgLNoH+wuoojn6zi3UJQjrfhAkd1qPiv5OHpU5ov2E3H55KaVy
-	 KrtcInOMClOIBcOtWMptoaNsZnTZocYLBTZWD8pg=
+	b=YBLrEcQWVDQMLx6pRQzu59c6MAcCJ1s6FlL+wbendgFPa63pqPjCFVQ+6W/AaZkC4
+	 YNm4O1/OwNqxby4qc3re0x4b7f7rXUNwGYOrBO1jIutQcm7RvM3C5wr3HojMGrpecW
+	 8uX81sEUZldMAqFx5rTQuwXRAM6RquQK88+zvrVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <samuel.moelius@trailofbits.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	kernel test robot <lkp@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 036/518] iio: adc: ad7380: select REGMAP
-Date: Thu, 16 Jul 2026 15:25:04 +0200
-Message-ID: <20260716133048.569332526@linuxfoundation.org>
+Subject: [PATCH 7.1 037/518] iio: adc: ad7768-1: Select GPIOLIB
+Date: Thu, 16 Jul 2026 15:25:05 +0200
+Message-ID: <20260716133048.590686887@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -47,29 +46,29 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Moelius <samuel.moelius@trailofbits.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-commit 6697091b386a4e2830bdd38512c87a4befff2b32 upstream.
+commit 5a9c90350be4f6f175bdd193e8bd60a7aedfb4d2 upstream.
 
-The AD7380 driver uses generic regmap types and APIs. However, its
-Kconfig entry does not select REGMAP.
+This driver provides a gpio chip a some related functions are not
+stubbed if GPIOLIB is not built.
 
-As a result, AD7380 can be enabled from an allnoconfig-derived config
-with SPI_MASTER=y while REGMAP remains unset, causing ad7380.o to fail
-to build.
+ad7768-1.c:420: undefined reference to `gpiochip_get_data'
+ad7768-1.c:498: undefined reference to `devm_gpiochip_add_data_with_key'
 
-Fixes: b095217c104b ("iio: adc: ad7380: new driver for AD7380 ADCs")
-Signed-off-by: Samuel Moelius <samuel.moelius@trailofbits.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Cc: <Stable@vger.kernel.org>
+Dual sign off reflects change of affiliation whilst this was under review.
+
+Fixes: d569ae0f052e ("iio: adc: ad7768-1: Add GPIO controller support")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512271235.WwAmAbOa-lkp@intel.com/
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -78,13 +77,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/iio/adc/Kconfig
 +++ b/drivers/iio/adc/Kconfig
-@@ -312,6 +312,7 @@ config AD7298
- config AD7380
- 	tristate "Analog Devices AD7380 ADC driver"
- 	depends on SPI_MASTER
-+	select REGMAP
- 	select SPI_OFFLOAD
- 	select IIO_BUFFER
- 	select IIO_BUFFER_DMAENGINE
+@@ -416,6 +416,7 @@ config AD7766
+ config AD7768_1
+ 	tristate "Analog Devices AD7768-1 ADC driver"
+ 	depends on SPI
++	select GPIOLIB
+ 	select REGULATOR
+ 	select REGMAP_SPI
+ 	select RATIONAL
 
 
