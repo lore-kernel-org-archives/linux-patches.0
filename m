@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71548305678;
-	Thu, 16 Jul 2026 13:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C5A2BEC5F;
+	Thu, 16 Jul 2026 13:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209535; cv=none; b=B8x7PJ7IHTTS2Hw5+Pj2GnFxX6GNVxc5hBY5sVjsVmo/VW8kQlnZepp9eqStsjQ3qhZIY1N9fJlaLOjJT6w+sqyPW4/liNM/6C3/hs+F9l5+4OYNZVlZwE9r7TPOL60bXP1dcMMS/kMG/+U8wj45RQr9Wr+sf3gQfBxwqmdgYAQ=
+	t=1784209538; cv=none; b=tQyJ+DQ2t+HuFH6547K5YCo1iW0cE5rPMQ2I6ZeBQrfZyoGlbOWmJuzG05kiGwdUt6jd2P7vdhoaksJvz0XmEl9uN9pxnCO2xr8L/c+MWtNsXw7k+z/qFkW3cSWwbYYXmHFnBYkkydcn8QJ9whg0L3oCAr/q5pwbJXRs3zApvUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209535; c=relaxed/simple;
-	bh=k0TZstvSv819D10lB1hEZAFC/ucmbiC4KrDvlpPkjLQ=;
+	s=arc-20240116; t=1784209538; c=relaxed/simple;
+	bh=GiougjYX+JGdvDe+7tKnTRL01TMFbnIJb8pRPJADSs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atC+IX70lvLgBiwxKftzazM1XBp7uMNUgbY92eW1hK8X5TIDoDUS9LYgEgIh9x6JMEFHJk/bEDXtHI0ni8+lSx+OZP9UiOMLcbJQK+8LyiNMFnwrw4npRQBMRiuPRWI7Nc5MBnoncfWXo/3cKsFHLuPxHzVPC4Fr8wzC+G0hkSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vj8uAKrw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=INtxCCW3LApc56kVEQc/ieYmedSccXT7p+UuTxuARmCVaNkYczay7rMspYtUFYa/FXrRhWvIqks2B7oxXYBAMQ7Sl870kIouKab0ZnZuhNHbtEh871jOime6UCvDxPgRtINrOG5DAE5QcSvlMZHvgCc1vLCQpEWooF9g/nW7Bvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9JInRLE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vj8uAKrw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59091F000E9;
-	Thu, 16 Jul 2026 13:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9JInRLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6991F000E9;
+	Thu, 16 Jul 2026 13:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209534;
-	bh=Bm/fOPjlhPv/G9nBhwdnTfVPAQsvaStkzFgi5oLf4T4=;
+	s=korg; t=1784209537;
+	bh=VwyskEfbxtKdw8l5gD5juOJBQl0+awoL7tHPkGkJDQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vj8uAKrw24uYoCXFzCWWbJRSh+brFXHP0rWuBZT7oeYwVUgUgGZlquIi5YjzhUxir
-	 d0NZd7G6O7OHnvoZgw9lKsXe6FfM6y+cskyF8BCba1nql8zAFkcSGVGOQrY7nRsp99
-	 eCUo0G12MejwGG2+ovuUZY1qa7Rs3GnxVgtvUZa0=
+	b=z9JInRLEqFSqxYnL1jQqTYJYdfEe73dLF3YqxJd5pex5827TkV5HRYjcQOG4e0TlH
+	 WBbinaqPbKFoaYBMfZgPK6Zv4CAGCiAeumDZgJ28rS0Y5LFOzs1mSZq7mb/2ZJXJWt
+	 2yp88cna6PSKHLqtlhCoB0ZrheE5QkVWvS3nCD9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Musaab Khan <musaab.khan@protonmail.com>,
+	Gil Portnoy <dddhkts1@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 223/518] ksmbd: run set info with opener credentials
-Date: Thu, 16 Jul 2026 15:28:11 +0200
-Message-ID: <20260716133052.698627293@linuxfoundation.org>
+Subject: [PATCH 7.1 224/518] ksmbd: enforce FILE_READ_ATTRIBUTES on SMB_FIND_FILE_POSIX_INFORMATION
+Date: Thu, 16 Jul 2026 15:28:12 +0200
+Message-ID: <20260716133052.721089455@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,68 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit b383bcad3d2fe634b26efbce53e22bbb5753a520 upstream.
+commit 20c8442dc1003f9f7bb522d3dcd81d09ea59a79e upstream.
 
-SMB2 SET_INFO handlers call path-based VFS helpers after checking the
-access mask granted to the SMB handle. Those helpers perform their owner,
-inode permission and LSM checks using the current ksmbd worker credentials.
+find_file_posix_info() in smb2_query_info() returns file metadata (owner
+uid, group gid, mode, inode, size, allocation size, hard-link count and all
+four timestamps) but performs no per-handle access check. Every sibling
+query handler gates on the handle's granted access first --
+get_file_basic_info(), get_file_all_info(), get_file_network_open_info()
+and get_file_attribute_tag_info() all reject a handle lacking
+FILE_READ_ATTRIBUTES_LE with -EACCES. The POSIX handler is gated only by
+the connection-scoped tcon->posix_extensions flag, which is not a
+per-handle authorization, so a handle opened with only FILE_WRITE_DATA is
+correctly denied FileBasicInformation yet is allowed the strict-superset
+POSIX info. Mirror the FILE_READ_ATTRIBUTES_LE gate the sibling info
+handlers already use.
 
-Run the complete SET_INFO dispatch with the credentials captured when the
-handle was opened. This also removes the separate security information
-credential setup and keeps all SET_INFO classes under one credential scope.
-
-Direct override_creds() is used because it can nest with the request
-credential overrides already used by rename and link helpers.
-
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Reported-by: Musaab Khan <musaab.khan@protonmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/smb/server/smb2pdu.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -6630,6 +6630,7 @@ static int smb2_set_info_sec(struct ksmb
-  */
- int smb2_set_info(struct ksmbd_work *work)
- {
-+	const struct cred *saved_cred;
- 	struct smb2_set_info_req *req;
- 	struct smb2_set_info_rsp *rsp;
- 	struct ksmbd_file *fp = NULL;
-@@ -6671,6 +6672,7 @@ int smb2_set_info(struct ksmbd_work *wor
- 		goto err_out;
- 	}
+@@ -5337,6 +5337,12 @@ static int find_file_posix_info(struct s
+ 	int out_buf_len = sizeof(struct smb311_posix_qinfo) + 32;
+ 	int ret;
  
-+	saved_cred = override_creds(fp->filp->f_cred);
- 	switch (req->InfoType) {
- 	case SMB2_O_INFO_FILE:
- 		ksmbd_debug(SMB, "GOT SMB2_O_INFO_FILE\n");
-@@ -6678,19 +6680,15 @@ int smb2_set_info(struct ksmbd_work *wor
- 		break;
- 	case SMB2_O_INFO_SECURITY:
- 		ksmbd_debug(SMB, "GOT SMB2_O_INFO_SECURITY\n");
--		if (ksmbd_override_fsids(work)) {
--			rc = -ENOMEM;
--			goto err_out;
--		}
- 		rc = smb2_set_info_sec(fp,
- 				       le32_to_cpu(req->AdditionalInformation),
- 				       (char *)req + le16_to_cpu(req->BufferOffset),
- 				       le32_to_cpu(req->BufferLength));
--		ksmbd_revert_fsids(work);
- 		break;
- 	default:
- 		rc = -EOPNOTSUPP;
- 	}
-+	revert_creds(saved_cred);
- 
- 	if (rc < 0)
- 		goto err_out;
++	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
++		pr_err("no right to read the attributes : 0x%x\n",
++		       fp->daccess);
++		return -EACCES;
++	}
++
+ 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+ 			  AT_STATX_SYNC_AS_STAT);
+ 	if (ret)
 
 
