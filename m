@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD33E3FD121;
-	Thu, 16 Jul 2026 13:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73D6400968;
+	Thu, 16 Jul 2026 13:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209377; cv=none; b=n1xpvfEhF6rZ5mH0Vywjy0vsyP92aULrmXdAiaK5A9FhPhSy3EYo4IEdN/PdqW8LJWVzQKEvVfbOMAP/uMTAOSNbTgE05l/uFMMWgsjnmV9W8nuYYpjUIG9YrVEqCPUNqA7ZD3bp+KeBkbl/OvuDUFdELMWRS7/Gru/XuzcVFXY=
+	t=1784209380; cv=none; b=G4JVYw7gB0RtZcXvber1F5aXdIGVSXktnzwBWpb/sv+VDal12WG34Yau1bJLhDf28V4B1oWxj1G4WLhp/Z812oSeE18JqrrV5wncJ47e/0gzRm4haVliS2hdSVHgqiT1oZHme7Kfa2ZjyaLxXr15zJ9KW7r+2Ojz3q1lTAbopHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209377; c=relaxed/simple;
-	bh=2WOFIHVMiF0XGGfsWBZND8xCvvZLCO0xhi8qZvcO3TE=;
+	s=arc-20240116; t=1784209380; c=relaxed/simple;
+	bh=imboU9NSjNF/Zz1XQgX/mUwsWJP+5nyR5oTs8q8XXd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h1snP76QI5tsv1hcKf33eLvOrbq4zUcL2oTbMvEXutLoSbquhhRnw3weBrk65DhH5lkKZDiE+WRy0vQSMkQFL9MPoWQQT2Jnw53wwKR7gipguYf6h7iBwGEM+WmXcL0GgpA7jv0qA+a46tPqcJIEJL8NVmLnv2stKxG4Ylox0tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pimO6Q25; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IboMShbvLoLrlZOYWPrIjWWqOA46X4DxEI0THYKk8nwckmJg0wzseR01SUYOG+6dKo8y+1ij/laYj08nxV6pvAoxO5LRcy+iHkVPR06XdsWIlHmAF5+CXw7NzPipiI3uXg8mfCPjALn5wCuWgGMcQ+r+kyJ5xMemj/L4YXA8ous=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHvGHpmP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pimO6Q25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36B41F00A3D;
-	Thu, 16 Jul 2026 13:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHvGHpmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1E11F00A3A;
+	Thu, 16 Jul 2026 13:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209374;
-	bh=MZX5qVTHo1k+Gah9Zl8f323qAAgb+zSyJ4CRYu/KgXE=;
+	s=korg; t=1784209376;
+	bh=95hxTl5TqO+7t+VEbHqO7QMkeAx2Vk2er5NPU7T02Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pimO6Q25JzUMTQDm3RQYnTocwZJsB15TSva4/DnFa4NSARYhKBjXNaQH0f60Tej2e
-	 M6onh/3jRN3eW1o/42j6Tp8Gjj6i76//tx2rjvJwH8Y8xyVVF9grrr203rmbQPJJKI
-	 fNThekURDe2L5SkpmpT9mHeOasDFjxfSpO4P54MY=
+	b=XHvGHpmPLGeuZB0F2D1mb+P8j928q9mrrmMVAkgn7ZPbX3V3iBPpclp/oq6k59aFI
+	 Wlx9r+9GXNA7kPch8AuEd1QAINyInU5mCKI0Gf4ZqQhLjzbrnyvAtNfxv51xzjwndr
+	 wUyneuZzTpw6+1DnyJy9laM7YRr4EtzqS8knr1ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Christopher Mackle <christophermackle01@gmail.com>
-Subject: [PATCH 7.1 159/518] staging: rtl8723bs: dont drop short TX frames in _rtw_pktfile_read()
-Date: Thu, 16 Jul 2026 15:27:07 +0200
-Message-ID: <20260716133051.321694298@linuxfoundation.org>
+	Luka Gejak <luka.gejak@linux.dev>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>
+Subject: [PATCH 7.1 160/518] staging: rtl8723bs: fix heap buffer overflow in rtw_cfg80211_set_wpa_ie()
+Date: Thu, 16 Jul 2026 15:27:08 +0200
+Message-ID: <20260716133051.344064523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,87 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Mackle <christophermackle01@gmail.com>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit 252f8c681adc8614b70f844ba3de3a138c33a783 upstream.
+commit 5a752a616e756844388a1a45404db9fc29fec655 upstream.
 
-Commit bc4df274dca6 ("staging: rtl8723bs: update _rtw_pktfile_read() to
-return error codes") changed _rtw_pktfile_read() to fail when the caller
-asks for more bytes than remain in the packet:
+supplicant_ie is a 256-byte array in struct security_priv. The WPA and
+WPA2 IE copy paths use:
 
-	if (rtw_remainder_len(pfile) < rlen)
-		return -EINVAL;
+    memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen + 2);
 
-That breaks the assumption made by the data TX path.  In
-rtw_xmitframe_coalesce() (core/rtw_xmit.c) the per-fragment copy is
-issued with the full fragment length, mpdu_len, which is derived from
-pxmitpriv->frag_len (~2300 bytes), and the code relies on the historical
-behaviour of copying only what is left and returning the number of bytes
-actually copied:
+where wpa_ielen is the raw IE length field (u8, 0-255). When a local user
+supplies a connect request via nl80211 with a crafted WPA IE of length 255,
+wpa_ielen + 2 equals 257, overflowing the 256-byte buffer by one byte into
+the adjacent last_mic_err_time field.
 
-	mem_sz = _rtw_pktfile_read(&pktfile, pframe, mpdu_len);
-	if (mem_sz < 0)
-		return mem_sz;
+rtw_parse_wpa_ie() does not prevent this: its length consistency check
+compares *(wpa_ie+1) against (u8)(wpa_ie_len-2), which is (u8)(255) == 255
+when wpa_ie_len = 257, so the check passes silently.
 
-So for every outbound packet smaller than the fragmentation threshold -
-i.e. essentially all normal traffic, including the EAPOL frames of the
-WPA 4-way handshake and DHCP - rlen is larger than the bytes remaining,
-_rtw_pktfile_read() returns -EINVAL, rtw_xmitframe_coalesce() aborts, and
-the frame is dropped before it is queued to the hardware.  The driver
-floods the log with:
+Add explicit bounds checks for both the WPA and WPA2 paths before the
+memcpy, rejecting any IE whose total size (wpa_ielen + 2) exceeds the
+supplicant_ie buffer.
 
-	rtl8723bs ...: xmit_xmitframes: coalesce failed with error -22
-
-Management frames (authentication/association) use a different path and
-still go out, so the interface scans and associates, but no data frame is
-ever transmitted.  The 4-way handshake therefore never completes and
-wpa_supplicant misreports it as:
-
-	WPA: 4-Way Handshake failed - pre-shared key may be incorrect
-
-AP mode is unaffected.  The net effect is that the chip is unusable in
-station mode on any kernel carrying the offending commit.
-
-This was confirmed with a wpa_supplicant -dd trace on an RTL8723BS SDIO
-adapter (Bay Trail): message 1/4 is received and the PTK is derived, but
-each "Sending EAPOL-Key 2/4" coincides 1:1 with a "coalesce failed with
-error -22", so message 2/4 never reaches the AP, which keeps retrying
-message 1/4 until the handshake times out.
-
-Restore the original semantics: clamp the requested length to the bytes
-remaining in the packet and return that length.  The skb_copy_bits()
-error path is kept, so genuine copy failures are still propagated.
-
-Fixes: bc4df274dca6 ("staging: rtl8723bs: update _rtw_pktfile_read() to return error codes")
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
-Tested-by: Christopher Mackle <christophermackle01@gmail.com>
-Signed-off-by: Christopher Mackle <christophermackle01@gmail.com>
-Link: https://patch.msgid.link/20260620013916.7148-1-christophermackle01@gmail.com
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Link: https://patch.msgid.link/20260522004531.1038924-4-hossu.alexandru@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/xmit_linux.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/xmit_linux.c b/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
-index d5bb1c7932fc..4260ed5f4e97 100644
---- a/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
-+++ b/drivers/staging/rtl8723bs/os_dep/xmit_linux.c
-@@ -24,9 +24,11 @@ void _rtw_open_pktfile(struct sk_buff *pktptr, struct pkt_file *pfile)
- int _rtw_pktfile_read(struct pkt_file *pfile, u8 *rmem, unsigned int rlen)
- {
- 	int ret;
-+	unsigned int remain = rtw_remainder_len(pfile);
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -1445,6 +1445,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
  
--	if (rtw_remainder_len(pfile) < rlen)
--		return -EINVAL;
-+	/* clamp to bytes remaining; the coalesce loop relies on short reads */
-+	if (rlen > remain)
-+		rlen = remain;
+ 	pwpa = rtw_get_wpa_ie(buf, &wpa_ielen, ielen);
+ 	if (pwpa && wpa_ielen > 0) {
++		if (wpa_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		if (rtw_parse_wpa_ie(pwpa, wpa_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
+ 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
+ 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPAPSK;
+@@ -1454,6 +1458,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
  
- 	if (rmem) {
- 		ret = skb_copy_bits(pfile->pkt, pfile->buf_len - pfile->pkt_len, rmem, rlen);
--- 
-2.55.0
-
+ 	pwpa2 = rtw_get_wpa2_ie(buf, &wpa2_ielen, ielen);
+ 	if (pwpa2 && wpa2_ielen > 0) {
++		if (wpa2_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
+ 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
+ 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPA2PSK;
 
 
