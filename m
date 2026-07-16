@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E4E29D265;
-	Thu, 16 Jul 2026 14:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95C03195EF;
+	Thu, 16 Jul 2026 14:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210562; cv=none; b=PBmWTNrGVVJbei5F8Udi+WeK4rxjMKRrJUnXbt7tqqVM9hA0xqiurP24o875YMnbRanURyaVtCXO67Je3NXKq+N/r43h4fvVO4I+nSSeZoVeTXfPiT6pRJIxO+piBnUvFrOn22Fem/wFXClv9I3TT/tSdSAYsFLnMCdZtCs3TIw=
+	t=1784210564; cv=none; b=edFEZwF1hk3Eqttv2VulXIhE2tmT0pY8DobZyefJsXL6irBF5pgLGQrhaELOOa2rnxYYI7xI4sjytmh1dAQ+w21gI9JvAJNt2qvDkCilI9kjq3RIs+6Bty9tCqAWcQiX4sRlzXg44C+GJ9MYp0IHcpYYx1r1L0HkbsFnrFvkjjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210562; c=relaxed/simple;
-	bh=7BviYQBABeC+M2svBlUVm6EHR6CoBHh/kH/jWbOuJBE=;
+	s=arc-20240116; t=1784210564; c=relaxed/simple;
+	bh=0s+uqtmMB5EXxFAeaJ6xRLk7HmpJnxIPgj28jDaI3oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxv9cP2r8ddTIS0ki+ysaxSsUt+nHhXbij5BVJ6AnnnLkuezRmTEMCf7pPCGjxykKVVg4ZmD7YwtcZbz0T1IVo7Yq052JxDXTtQMfFGOCVAFCKSE4UGHf2UzK9xbFSHRGQFAs4aNXTwXDLJotegnnm9Upf3DWa7PYvXKcVZJpDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTMY7/lX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mBHr1ybYjGflNOkGxHDtP3bd5WFZ5FYkKflNJSw6QbA+wE8aUnsxWgO4gXJ0heSvt37550TDrbwxnQ2fb9VzAt7QNdfPp6aIhLKlwSKzS7f0kv5iGhtVVsukmI5v7QOm7ShJ6u4bOfDtmDfOaEkTEGClu/P1PjVrV0JsjtkbbUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5HgpvM8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTMY7/lX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550401F000E9;
-	Thu, 16 Jul 2026 14:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5HgpvM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B161F000E9;
+	Thu, 16 Jul 2026 14:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210560;
-	bh=p/mqsbeb1N8+r4/cvdH+Y348P2vBwsSYjmJPskW6plc=;
+	s=korg; t=1784210563;
+	bh=Z50H+hL5V3lI3BSER8awbZL1PNQc00YNCtHYg2PIbcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTMY7/lXRoDjz2wgetbVVw+bIQv6jJ1IamcVqCAOCt6mnhG5ygGA8qv3vJ+EG4vYd
-	 7tFZTSN3Hy68dnY/wzl9oQBzLZ0zVYEaIdRu6/wfYAjA50N1E9KE8WARk4N+RA3Tz0
-	 CWf55wMailzwAszREP/ldLBTK32BcacyRRToHvN4=
+	b=w5HgpvM8ZOYXaK54/V7Zb3pvwNXV0knssJAWoSdQ0LfxHKjqwyujBITXMqlDCI31l
+	 FIGvHMMIqmhP6dBnb7NkW/WCTYQYPYECLnSSO6MlwysNgo94aE1B6I2VGOizwntWoa
+	 oGBBavjOcFscKDWwDB1j31ZRPELAm7GRLA9/ITT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Stable@vger.kernel.org,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 051/480] iio: adc: ad7768-1: Select GPIOLIB
-Date: Thu, 16 Jul 2026 15:26:38 +0200
-Message-ID: <20260716133045.814255671@linuxfoundation.org>
+Subject: [PATCH 6.18 052/480] iio: adc: ad7779: add missing select IIO_TRIGGERED_BUFFER to Kconfig
+Date: Thu, 16 Jul 2026 15:26:39 +0200
+Message-ID: <20260716133045.837044964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,23 +51,18 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-commit 5a9c90350be4f6f175bdd193e8bd60a7aedfb4d2 upstream.
+commit fd354554af1d2b33232ca6c8a3d79ed82413d715 upstream.
 
-This driver provides a gpio chip a some related functions are not
-stubbed if GPIOLIB is not built.
+The Kconfig entry for the AD7779 is missing a
+'select IIO_TRIGGERED_BUFFER' parameter, causing build failures.
 
-ad7768-1.c:420: undefined reference to `gpiochip_get_data'
-ad7768-1.c:498: undefined reference to `devm_gpiochip_add_data_with_key'
-
-Dual sign off reflects change of affiliation whilst this was under review.
-
-Fixes: d569ae0f052e ("iio: adc: ad7768-1: Add GPIO controller support")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512271235.WwAmAbOa-lkp@intel.com/
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Stable@vger.kernel.org
+Fixes: c9a3f8c7bfcb ("drivers: iio: adc: add support for ad777x family")
+Cc: stable@vger.kernel.org
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -77,13 +71,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/iio/adc/Kconfig
 +++ b/drivers/iio/adc/Kconfig
-@@ -386,6 +386,7 @@ config AD7766
- config AD7768_1
- 	tristate "Analog Devices AD7768-1 ADC driver"
+@@ -404,6 +404,7 @@ config AD7779
  	depends on SPI
-+	select GPIOLIB
- 	select REGULATOR
- 	select REGMAP_SPI
+ 	select CRC8
  	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
+ 	select IIO_BACKEND
+ 	help
+ 	  Say yes here to build support for Analog Devices AD777X family
 
 
