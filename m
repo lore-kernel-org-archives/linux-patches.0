@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077F541E6D4;
-	Thu, 16 Jul 2026 13:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0CB414A36;
+	Thu, 16 Jul 2026 13:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209022; cv=none; b=M/t+cFdXblq3PwGr8C08sVOdpwJ0Sz1lKGv3lw2804MhyvfLWz/4WkiqZT4VWXRd97eR7JuUV0Cn3YHRup13ZfPQvwqe4/34aRw0WWQemmfEw+6xdREh9DlVEYV+JAYyEVg7OpJlyWHbOcCEaTVqrxvs8kWnOXDz9q61gTEKEkE=
+	t=1784209025; cv=none; b=T/3S5ndii1zNzwqPP2IkgDy0VYq6nUK9LRTzw/OwOjsynHhtVZBgTZT8NcG1rCe86vFbyYuSnIVs0ZIUwMs9fqFLNdDr9yNy7ZrnM+AvhCFGmroIrvuRjTIrY7X0pRnBh/qaUC48vqozs/PT5MqVPSfjRKelhQhI2wVTbXzqDa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209022; c=relaxed/simple;
-	bh=P3T+9yKf3+j0YxvhP5YMb8BsCv73lscN10oMsqPYZjw=;
+	s=arc-20240116; t=1784209025; c=relaxed/simple;
+	bh=F7YZ1a/B4Fq4PDyFayN9XF+/dG0xGfol0dY9U1Ijnkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VC+DpDTuVTQEb2P7mGZnFSCvIO/CobOtWDulYx63ciiXo1L1/owI0R0Gx95jOBfeUINn3yyPX9V4aDnJGnpqgl6b8LNI44cOqlflk/xt91Qpc6ZfyznfqlOv02mXMl2mAdNYm/pBkkU2qhWQSgY60djuYclJ0RDDj+JaQCIAJRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7oqQ8m7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e3gKrD7xCYr+X8AtShPfEuPfsF2M/dp9kBcdtlUIYKUwCWC0YEJ+tMZ6XeaN/wMu/udZN/8/uRsCd5jSAHHNh/MHCI5dipQUE1e3/U+xd0DR/QZwLpvg6EFQR6HQMMaZD8WkaGz+ijRahazois9IFo8+a1AbiK81RDCmEDRIL+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmCisyGF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7oqQ8m7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7145F1F000E9;
-	Thu, 16 Jul 2026 13:37:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmCisyGF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176EC1F000E9;
+	Thu, 16 Jul 2026 13:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209020;
-	bh=OP/38dWgX7PGbSG3j4d/D5dWc3sfheljAyVkoNKABls=;
+	s=korg; t=1784209023;
+	bh=gpfFV3V5XB3Jd52wLluXX/JRgEvz06CGfInlwMX0UKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u7oqQ8m7p2Fd3LmHx6kPElbwpwlLLjfJu6ICNHgoOpIbk3cJHt0YcxW7GXpaoph3I
-	 ll2ME+/mfmNPkwHBOEYDk/viFGZ8uNBivgionONVFJUMQ4jNXZ/uHXlWkOSQ8B1dEW
-	 YqNHhDOGm3JRD9Y+Q1jbWOmc6K73RS2OiI6JQ91E=
+	b=JmCisyGFyA1rqsKBCTT1SG//KSzF4T8GDb+0QuD5Iw4+gG4Av8OGWXMCQUpYIltdV
+	 bGMTt4ImAOfd1M/P3bKOAnIkskvFqnkwqVxO5K3JGJsKDBuaDnku/+qO9I34YcypyU
+	 YUG00CeLe12iyVbc/7swiY57bpeKLgH6TISGt9Qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Matthew Wilcox <willy@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Eric Hagberg <ehagberg@janestreet.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Gregg Leventhal <gleventhal@janestreet.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 005/518] mm/khugepaged: write all dirty file folios when collapsing
-Date: Thu, 16 Jul 2026 15:24:33 +0200
-Message-ID: <20260716133047.896514416@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 7.1 006/518] slab: recognize @GFP parameter as optional in kernel-doc
+Date: Thu, 16 Jul 2026 15:24:34 +0200
+Message-ID: <20260716133047.917597710@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -60,131 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[There is no upstream commit, as this code was removed by upstream
- commit 044925f9b565 ("mm: fs: remove filemap_nr_thps*() functions and their users")]
+commit 7b5f5865fb11e60edd03c5e063e2d228b7062317 upstream.
 
-As-is, khugepaged and writable-file opening exclude each other. A file
-cannot be open writeable and have THPs (because the filesystem is not aware
-of them). khugepaged will never collapse file pages for files that are
-opened writeable. On an open(O_RDWR/O_WRONLY), the page cache for that
-particular file is dropped. This is fine because nothing could've been
-dirtied.
+Since the @GFP parameter in kmalloc_obj() etc. is now optional, change
+the kernel-doc to indicate that it is optional. This avoids kernel-doc
+warnings:
 
-However, there is an edge-case: collapse_file() might not be able to
-coexist with concurrent writers, but it can coexist with dirty folios
-(from previous writers). Therefore, the following can happen:
+WARNING: include/linux/slab.h:1101 Excess function parameter 'GFP' description in 'kmalloc_obj'
+WARNING: include/linux/slab.h:1113 Excess function parameter 'GFP' description in 'kmalloc_objs'
+WARNING: include/linux/slab.h:1128 Excess function parameter 'GFP' description in 'kmalloc_flex'
 
-open(file, O_RDWR)
-write(file)
-close(file)
-madvise(file_mapping, MADV_COLLAPSE, some non-dirty range)
-open(file, O_RDWR)
- nr_thps > 0
-  truncate_inode_pages()
-    /* THPs are cleared out, but so are the dirty folios */
-
-When this edge-case happens, there is data loss, as the dirty folios are
-fully discarded.
-
-Fix it by fully writing back the page cache (and waiting) when collapsing
-file THPs. Doing so provides the guarantee that no dirty folio will be
-observed while there are active THPs. To fully ensure this is safe, the
-invalidate_lock needs to be held while doing the writeout, so that
-do_dentry_open()'s page cache truncation excludes this write-and-wait.
-
-As a side effect, move the nr_thps counter bumping outside the i_pages
-lock. This is correct since the counter itself is an atomic_t and the
-producer <-> consumer correctness is provided by a full memory barrier:
-smp_mb() in collapse_file()/memory barrier implied by full ordering in
-get_write_access() -> atomic_inc_unless_negative().
-
-Cc: stable@vger.kernel.org
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Eric Hagberg <ehagberg@janestreet.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Fixes: 99cb0dbd47a1 ("mm,thp: add read-only THP support for (non-shmem) FS")
-Reported-by: Gregg Leventhal <gleventhal@janestreet.com>
-Closes: https://lore.kernel.org/linux-mm/CAFN_u7H_0ECF3jixP=T=U7AH5=Q3wQNvJMo8an3VqUDMerQfUw@mail.gmail.com/
-Tested-by: Zi Yan <ziy@nvidia.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e19e1b480ac7 ("add default_gfp() helper macro and use it in the new *alloc_obj() helpers")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Harry Yoo (Oracle) <harry@kernel.org>
+Link: https://patch.msgid.link/20260617163125.2716279-1-rdunlap@infradead.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ include/linux/slab.h |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index b8452dbdb043f8..d6e04041f5dc11 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2094,32 +2094,43 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
- 		goto xa_unlocked;
- 	}
- 
--	if (!is_shmem) {
-+xa_locked:
-+	xas_unlock_irq(&xas);
-+xa_unlocked:
-+
-+	/*
-+	 * If collapse is successful, flush must be done now before copying.
-+	 * If collapse is unsuccessful, does flush actually need to be done?
-+	 * Do it anyway, to clear the state.
-+	 */
-+	try_to_unmap_flush();
-+
-+	if (result == SCAN_SUCCEED && !is_shmem && !mapping_large_folio_support(mapping)) {
-+		/*
-+		 * invalidate_lock as shared excludes against concurrent opens
-+		 * in do_dentry_open() truncating the page cache. This is
-+		 * particularly important if there are dirty folios in transit.
-+		 */
-+		filemap_invalidate_lock_shared(mapping);
- 		filemap_nr_thps_inc(mapping);
- 		/*
- 		 * Paired with the fence in do_dentry_open() -> get_write_access()
- 		 * to ensure i_writecount is up to date and the update to nr_thps
- 		 * is visible. Ensures the page cache will be truncated if the
--		 * file is opened writable.
-+		 * file is opened writable. If collapse looks to be successful,
-+		 * flush any dirty pages out the page cache. With the nr_thps
-+		 * incremented, there won't be any new writers (nor new dirties).
- 		 */
- 		smp_mb();
--		if (inode_is_open_for_write(mapping->host)) {
-+		if (inode_is_open_for_write(mapping->host) || filemap_write_and_wait(mapping)) {
- 			result = SCAN_FAIL;
- 			filemap_nr_thps_dec(mapping);
-+			filemap_invalidate_unlock_shared(mapping);
-+			goto rollback;
- 		}
-+		filemap_invalidate_unlock_shared(mapping);
- 	}
- 
--xa_locked:
--	xas_unlock_irq(&xas);
--xa_unlocked:
--
--	/*
--	 * If collapse is successful, flush must be done now before copying.
--	 * If collapse is unsuccessful, does flush actually need to be done?
--	 * Do it anyway, to clear the state.
--	 */
--	try_to_unmap_flush();
--
- 	if (result == SCAN_SUCCEED && nr_none &&
- 	    !shmem_charge(mapping->host, nr_none))
- 		result = SCAN_FAIL;
--- 
-2.53.0
-
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -1000,7 +1000,7 @@ void *kmalloc_nolock_noprof(size_t size,
+ /**
+  * kmalloc_obj - Allocate a single instance of the given type
+  * @VAR_OR_TYPE: Variable or type to allocate.
+- * @GFP: GFP flags for the allocation.
++ * @...: optional GFP flags for the allocation (GFP_KERNEL when not specified).
+  *
+  * Returns: newly allocated pointer to a @VAR_OR_TYPE on success, or NULL
+  * on failure.
+@@ -1012,7 +1012,7 @@ void *kmalloc_nolock_noprof(size_t size,
+  * kmalloc_objs - Allocate an array of the given type
+  * @VAR_OR_TYPE: Variable or type to allocate an array of.
+  * @COUNT: How many elements in the array.
+- * @GFP: GFP flags for the allocation.
++ * @...: optional GFP flags for the allocation (GFP_KERNEL when not specified).
+  *
+  * Returns: newly allocated pointer to array of @VAR_OR_TYPE on success,
+  * or NULL on failure.
+@@ -1025,7 +1025,7 @@ void *kmalloc_nolock_noprof(size_t size,
+  * @VAR_OR_TYPE: Variable or type to allocate (with its flex array).
+  * @FAM: The name of the flexible array member of the structure.
+  * @COUNT: How many flexible array member elements are desired.
+- * @GFP: GFP flags for the allocation.
++ * @...: optional GFP flags for the allocation (GFP_KERNEL when not specified).
+  *
+  * Returns: newly allocated pointer to @VAR_OR_TYPE on success, NULL on
+  * failure. If @FAM has been annotated with __counted_by(), the allocation
 
 
