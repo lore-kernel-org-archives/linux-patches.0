@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A64142A7B7;
-	Thu, 16 Jul 2026 14:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F57D42BEB1;
+	Thu, 16 Jul 2026 14:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211969; cv=none; b=hvafFtgR7q2vMgvH2q4dZ9Kf7R4om1aFz2KU52ZZ8GwBMcDgQkXQ1O5piCYUwX6Yc0zFsq7wQLqfFnIWIem6FzUrD4Ihx9+AYw+HnI06ZuYiGNipnMGJlXsZeWcO6it1Cd83wIyTOixm58IPUkLpmeoeiAPPOQ67keHzmemYPqk=
+	t=1784211972; cv=none; b=HrOQqD6Z5MtH3TdXPA5RwPy1/MiATxuRBji4L66OxO+cbLUkygTWpY9JcaL2ZBz4YPFpwNDg+KInoJcPi1n88bKH9dYdZhP+tqISiFINp53fgYC92cTseLhGAFCYGwlKr6ppYt4ekmzNa4NpiXWXYy+QMIqwEfJwXFEuPngxt3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211969; c=relaxed/simple;
-	bh=luWDKyAT/h/9gF/fFQY53aUbDf8ej7ZafqHW7Zfo2LI=;
+	s=arc-20240116; t=1784211972; c=relaxed/simple;
+	bh=JWuhPfJ04yjsqIrq7JIo55LSOwKbDoAnZSchWM+QJ70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U532sHE+rGyMxdRSpmUwEPj+mNhS/nIvx2Ck3iuCHReBKWj9dsVVRRm/dfbEKAyrdZKRHn1d8oGsEUZ1hu5UHBGz0c0lcOHDJTSGafy+DiDCG1wjpq4ZJqfKa7m/QdQKz4QC22GOoeAc4PaVjDnAxU8abJVOHfEjyo70Zcg17Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODNspzQX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DU//L+bjLSlf5UjLAaufrwEDEtc/rh6m+S8eJbbl+tNgB3aGWMaCd05tG4qqzVkgF1ic1sgsxGQLLYovp7vvktFadBpG4IXSamTCyHo+PcVm47CCni6oAw4+VQbR+oNd8J889ExUH/4Q3yXh0bmpBPnlZwitn/gM+BF2anjdmDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaMY/eja; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODNspzQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C70B1F000E9;
-	Thu, 16 Jul 2026 14:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaMY/eja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A569A1F000E9;
+	Thu, 16 Jul 2026 14:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211968;
-	bh=GGl1aaWo2WRLkkO+jeHBJFrXYJ78GDvFuro0ugaNMGY=;
+	s=korg; t=1784211971;
+	bh=Y9Li25PhC0Iy0Zu2zQeX12+QtIVo2XFWnYj19mSUj0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ODNspzQXtt6gQVfh3MynZTvmkRjhw6OYGdn9JwarB+c5d4jlLRlQdZPW/KF6R0nPn
-	 IY782QBO1510GkD24uF5ZpGMuvDQLpPdEJG/rjAyvTX82WI1QYjU2rDYNEa5wGlgbk
-	 JVd6c/NCf72dn2wzjG+lHWdIuLsp/qbtYfTyHFT0=
+	b=AaMY/ejaQmflAkixOl9N9+ZgKXclBi2KEOZJxCO+Sms+BrSNX/o3hlo7pYenaQ/Wm
+	 IxR1Kl7rRojXJyyick6dPjFNG4rpvabpEDPR91RX8kSK5I3r9abmG0fgD32kyx0H7i
+	 N38Xq9YvenIsABv7eeDE3ZrU8XmkdRpLAPq97wCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Jain <rajatja@google.com>,
-	Johan Hovold <johan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 096/349] Bluetooth: btusb: fix wakeup source leak on probe failure
-Date: Thu, 16 Jul 2026 15:30:30 +0200
-Message-ID: <20260716133035.464135775@linuxfoundation.org>
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Dave Chinner <david@fromorbit.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 143/349] mm: shrinker: fix shrinker_info teardown race with expansion
+Date: Thu, 16 Jul 2026 15:31:17 +0200
+Message-ID: <20260716133036.568386433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,78 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit 3d93e1bb0fb881fe3ef961d1120556658e9cac4d upstream.
+commit 65476d31d8056e859c48580f82295ce159196ffe upstream.
 
-Make sure to disable wakeup on probe failure to avoid leaking the wakeup
-source.
+expand_shrinker_info() iterates all visible memcgs under shrinker_mutex,
+including memcgs that have not finished ->css_online() yet.
 
-Fixes: fd913ef7ce61 ("Bluetooth: btusb: Add out-of-band wakeup support")
-Cc: stable@vger.kernel.org	# 4.11
-Cc: Rajat Jain <rajatja@google.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Once pn->shrinker_info has been published, teardown must stay serialized
+with expand_shrinker_info() until that memcg is either fully online or no
+longer visible to iteration.  Today alloc_shrinker_info() breaks that rule
+by dropping shrinker_mutex before freeing a partially initialized
+shrinker_info array, which may cause the following race:
+
+CPU0                   CPU1
+====                   ====
+
+css_create
+--> list_add_tail_rcu(&css->sibling, &parent_css->children);
+    online_css
+    --> mem_cgroup_css_online
+        --> alloc_shrinker_info
+            --> alloc node0 info
+                rcu_assign_pointer(C->node0->shrinker_info, old0)
+                alloc node1 info -> FAIL -> goto err
+                mutex_unlock(shrinker_mutex)
+
+                       shrinker_alloc()
+                       --> shrinker_memcg_alloc
+                           --> mutex_lock(shrinker_mutex)
+                               expand_shrinker_info
+                               --> mem_cgroup_iter see the memcg
+                                   expand_one_shrinker_info
+                                   --> old0 = C->node0->shrinker_info
+                                       memcpy(new->unit, old0->unit, ...);
+
+                free_shrinker_info
+                --> kvfree(old0);
+
+                                       /* double free !! */
+                                       kvfree_rcu(old0, rcu);
+
+The same problem exists later in mem_cgroup_css_online().  If
+alloc_shrinker_info() succeeds but a subsequent objcg allocation fails,
+the free_objcg -> free_shrinker_info() unwind path tears down the already
+published pn->shrinker_info arrays without shrinker_mutex.  The
+expand_one_shrinker_info() can race with that teardown in the same way,
+leading to use-after-free or double-free of the old shrinker_info.
+
+Fix this by serializing shrinker_info teardown with shrinker_mutex, and by
+keeping alloc_shrinker_info() error cleanup inside the locked section.
+
+Link: https://lore.kernel.org/20260617085658.27096-1-qi.zheng@linux.dev
+Fixes: 307bececcd12 ("mm: shrinker: add a secondary array for shrinker_info::{map, nr_deferred}")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ mm/shrinker.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2925,6 +2925,11 @@ static int marvell_config_oob_wake(struc
- 
+--- a/mm/shrinker.c
++++ b/mm/shrinker.c
+@@ -59,12 +59,14 @@ static inline int shrinker_unit_alloc(st
  	return 0;
  }
-+#else
-+static inline int marvell_config_oob_wake(struct hci_dev *hdev)
-+{
-+	return 0;
-+}
- #endif
  
- static int btusb_set_bdaddr_marvell(struct hci_dev *hdev,
-@@ -3739,6 +3744,11 @@ static int btusb_config_oob_wake(struct
- 	bt_dev_info(hdev, "OOB Wake-on-BT configured at IRQ %u", irq);
- 	return 0;
- }
-+#else
-+static inline int btusb_config_oob_wake(struct hci_dev *hdev)
-+{
-+	return 0;
-+}
- #endif
+-void free_shrinker_info(struct mem_cgroup *memcg)
++static void __free_shrinker_info(struct mem_cgroup *memcg)
+ {
+ 	struct mem_cgroup_per_node *pn;
+ 	struct shrinker_info *info;
+ 	int nid;
  
- static void btusb_check_needs_reset_resume(struct usb_interface *intf)
-@@ -3962,7 +3972,6 @@ static int btusb_probe(struct usb_interf
- 	hdev->notify = btusb_notify;
- 	hdev->wakeup = btusb_wakeup;
- 
--#ifdef CONFIG_PM
- 	err = btusb_config_oob_wake(hdev);
- 	if (err)
- 		goto out_free_dev;
-@@ -3971,9 +3980,9 @@ static int btusb_probe(struct usb_interf
- 	if (id->driver_info & BTUSB_MARVELL && data->oob_wake_irq) {
- 		err = marvell_config_oob_wake(hdev);
- 		if (err)
--			goto out_free_dev;
-+			goto err_disable_wakeup;
- 	}
--#endif
++	lockdep_assert_held(&shrinker_mutex);
 +
- 	if (id->driver_info & BTUSB_CW6622)
- 		set_bit(HCI_QUIRK_BROKEN_STORED_LINK_KEY, &hdev->quirks);
- 
-@@ -4216,6 +4225,9 @@ err_release_siblings:
+ 	for_each_node(nid) {
+ 		pn = memcg->nodeinfo[nid];
+ 		info = rcu_dereference_protected(pn->shrinker_info, true);
+@@ -74,6 +76,13 @@ void free_shrinker_info(struct mem_cgrou
  	}
- err_kill_tx_urbs:
- 	usb_kill_anchored_urbs(&data->tx_anchor);
-+err_disable_wakeup:
-+	if (data->oob_wake_irq)
-+		device_init_wakeup(&data->udev->dev, false);
- out_free_dev:
- 	if (data->reset_gpio)
- 		gpiod_put(data->reset_gpio);
+ }
+ 
++void free_shrinker_info(struct mem_cgroup *memcg)
++{
++	mutex_lock(&shrinker_mutex);
++	__free_shrinker_info(memcg);
++	mutex_unlock(&shrinker_mutex);
++}
++
+ int alloc_shrinker_info(struct mem_cgroup *memcg)
+ {
+ 	int nid, ret = 0;
+@@ -98,8 +107,8 @@ int alloc_shrinker_info(struct mem_cgrou
+ 	return ret;
+ 
+ err:
++	__free_shrinker_info(memcg);
+ 	mutex_unlock(&shrinker_mutex);
+-	free_shrinker_info(memcg);
+ 	return -ENOMEM;
+ }
+ 
 
 
