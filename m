@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86A0435AA7;
-	Thu, 16 Jul 2026 14:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B6A42FCD2;
+	Thu, 16 Jul 2026 14:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212459; cv=none; b=Zipeqy6nHNOMJ3AlWNEFVcDsiVPeBCvfcGzvK531jryipcPRVykV4k4BUC9aoCuOvL1u3dhedOBh2hrpyDLVh8Mz5DbuPeYQw7u6Z8zhqvU4ttsjPkr6fiwzPxfzDwxKrX4yI5D4h5v4R1gH4m+HY78uGqJ62izzeeJbZI7jnQw=
+	t=1784212461; cv=none; b=DrGXSnYtRVi2MT+iqQx6QF57VHYFtXf18Qu/9gMBxHO6jysMR7Gptvmxu8eGLsDmQ72u5P4LqUVNx++Jc8JpPpGURThbJBE78lT75QVrADyKZw6IzfDjQLFZ+dGXoy/yLrHY2GQbzpM6FzO7+IG7WbJ2SgqjizVGy3vvBq5OBGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212459; c=relaxed/simple;
-	bh=946gLydALgPWPMPokeORHGwxe2VbYDoStSgw2V8kY20=;
+	s=arc-20240116; t=1784212461; c=relaxed/simple;
+	bh=6otqPC0SWzf5rPMG4tdF0qS3ZUhg6zzJ+m8Ab+fheHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r87d7x5yHbqtdwVgArtsxB53WOkMvikHDElLg+uLFQEPS4XzO1rXlUzQPoeq90vOxxZFilFaIjShxtTijTlJL3GYkBSwrmR9eJtHyMXEIODNyy5xVQeVZCyTbQhIaNUml8L4leiL3Svx82aBVxzNvpn+W/qQFW/DU3XPGY2i0FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJbRGnq3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sEsYPLIwe3vVvXg0S6HXE7VyiXsn1lqoxzxDcGVHaCRQhbBiB2ooRp3bqZNpabp3I5SN7Cp5PfSy/dtoI9TI6eYFsvU2FL3a2ZsAldXgIPO9+LSEvHliK3ETyta8dMFNDrWgbAZrVHs6M+yPpfkqTsc5leVu9R52E2+v0GFOkGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSNYJHog; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJbRGnq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4671F000E9;
-	Thu, 16 Jul 2026 14:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSNYJHog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13201F000E9;
+	Thu, 16 Jul 2026 14:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212457;
-	bh=O85hOOw/XrMJo17PdwuO1T9pmEXotMo4yzBEhSceqh4=;
+	s=korg; t=1784212460;
+	bh=kjYepyMxHejmPy5pHuazfqPe9OuvK9vZVY4E8AcT4O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aJbRGnq3RLAt1uX7M9XraU7Kfm8rUIOQNUSR7P0sL/cK/QkOPhU4pV25Jk1nVftZA
-	 p4KJcJuc0Q3+tquvCxmcW6dkUBqhZAyoxdNex7OHC37/ovYxGI2aaGuLyFXcdgwdfQ
-	 gLujh0s4WWGEsUOKPWhWN/927d6C6BpHvSZGnCnM=
+	b=zSNYJHogt3kPfBlhyNnXjn+d8dDt75OL6QhzXKFWQh3kwaavXLeAoylrWyTzDcADl
+	 /6rPCrqLedHVTIQYBgFh8q8iKhSERYH0pU8sB//tOUhS0MSObU77NACUSv2Df37NXM
+	 cb6LLuzg8WDg5iC576sZ1xhkTqtO22uUgaY1/d9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 328/349] i2c: mpc: Fix timeout calculations
-Date: Thu, 16 Jul 2026 15:34:22 +0200
-Message-ID: <20260716133040.654241081@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 337/349] Input: touchwin - reset the packet index on every complete packet
+Date: Thu, 16 Jul 2026 15:34:31 +0200
+Message-ID: <20260716133040.851608937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,48 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 2e9a7f68329be41792c0b123c28e6c53c2fa2249 upstream.
+commit 478cdd736f2ce3114f90e775d7358136d3977b94 upstream.
 
-At first glance the harmless cleanup of the driver does nothing bad.
-However, as the operator precedence list states the '*' (multiplication)
-and '/' division operators have order 5 with left-to-right associativity
-the *= has order 17 and associativity right-to-left. It wouldn't be
-a problem to replace
+tw_interrupt() accumulates each non-zero serial byte into a fixed
+three-byte buffer with a running index that is only reset once a full
+packet has been received *and* the device's two Y bytes agree:
 
-	foo = foo * HZ / 1000000;
+	tw->data[tw->idx++] = data;
+	if (tw->idx == TW_LENGTH && tw->data[1] == tw->data[2]) {
+		...
+		tw->idx = 0;
+	}
 
-with
+The reset is gated on tw->data[1] == tw->data[2], a value the device
+controls.  A malicious, malfunctioning or counterfeit Touchwindow
+peripheral can stream non-zero bytes whose 2nd and 3rd bytes differ: the
+index reaches TW_LENGTH without the equality holding, is never reset, and
+keeps growing, so tw->data[tw->idx++] walks off the end of the three-byte
+array and the rest of the heap-allocated struct tw, one attacker-chosen
+byte at a time -- an unbounded, device-driven heap out-of-bounds write.
 
-	foo *= HZ / 1000000;
+Reset the index on every completed packet and report an event only when
+the two Y bytes match, like the other serio touchscreen drivers do.
 
-if HZ constant is in Hertz. The problem is that in the Linux kernel HZ is
-defined in jiffy units, which is order of magnitude smaller than a million.
-That's why operator precedence has a crucial role here. Fix the regression
-by reverting pre-optimized calculations.
-
-Fixes: be40a3ae719f ("i2c: mpc: Use of_property_read_u32 instead of of_get_property")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v6.4+
-Reviewed-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260618144934.3249950-1-andriy.shevchenko@linux.intel.com
+Fixes: 11ea3173d5f2 ("Input: add driver for Touchwin serial touchscreens")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260613-b4-disp-69921bfd-v1-1-82c036899959@proton.me
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-mpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/touchscreen/touchwin.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/i2c/busses/i2c-mpc.c
-+++ b/drivers/i2c/busses/i2c-mpc.c
-@@ -844,7 +844,7 @@ static int fsl_i2c_probe(struct platform
- 					      "fsl,timeout", &mpc_ops.timeout);
- 
- 	if (!result) {
--		mpc_ops.timeout *= HZ / 1000000;
-+		mpc_ops.timeout = mpc_ops.timeout * HZ / 1000000;
- 		if (mpc_ops.timeout < 5)
- 			mpc_ops.timeout = 5;
- 	} else {
+--- a/drivers/input/touchscreen/touchwin.c
++++ b/drivers/input/touchscreen/touchwin.c
+@@ -63,12 +63,15 @@ static irqreturn_t tw_interrupt(struct s
+ 	if (data) {		/* touch */
+ 		tw->touched = 1;
+ 		tw->data[tw->idx++] = data;
+-		/* verify length and that the two Y's are the same */
+-		if (tw->idx == TW_LENGTH && tw->data[1] == tw->data[2]) {
+-			input_report_abs(dev, ABS_X, tw->data[0]);
+-			input_report_abs(dev, ABS_Y, tw->data[1]);
+-			input_report_key(dev, BTN_TOUCH, 1);
+-			input_sync(dev);
++		/* a full packet ends the accumulation, valid or not */
++		if (tw->idx == TW_LENGTH) {
++			/* report only if the two Y's are the same */
++			if (tw->data[1] == tw->data[2]) {
++				input_report_abs(dev, ABS_X, tw->data[0]);
++				input_report_abs(dev, ABS_Y, tw->data[1]);
++				input_report_key(dev, BTN_TOUCH, 1);
++				input_sync(dev);
++			}
+ 			tw->idx = 0;
+ 		}
+ 	} else if (tw->touched) {	/* untouch */
 
 
