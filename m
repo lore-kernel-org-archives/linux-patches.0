@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9263D9DD4;
-	Thu, 16 Jul 2026 14:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C8942A16C;
+	Thu, 16 Jul 2026 14:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212239; cv=none; b=qDJzE7XhZi7Z1BMWGhEp2+rxbcCOqSHu79Zjv5zPu1ANHEqbSb+FlRz9t0S25m+alu11p/A9p6ZUspJ1b/iOa0fv1m3C+2i9teNBl8p9pFSqZINtD9IA5UT6mwfWZ4YeQo7vGcK4UkBe+HrSyEmM40iuRa5SFdav1angPg7jsjw=
+	t=1784212241; cv=none; b=StMwJQpL+DPLCgNdmN1oE4x557Lf+1NMRjX2LxatSJtwa3CpqT7/LgzD7hdCk0sUYcPcRifUkw2NuJa8uwzbmGw99CoQKYtfnXFsy7Q3x6uvu+Rr4qUwxr2hvuL9vN9mwLwxxVOCWGNgKPp9F4/uE82VgBTsqPI7JVZywUPpMhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212239; c=relaxed/simple;
-	bh=eJ9tVaHI8PS3+XcdKXPjYfnEcepKMrJz2MM40olTglU=;
+	s=arc-20240116; t=1784212241; c=relaxed/simple;
+	bh=Vx/C+KpSh2LCZPhc6QwK9cnCZkvCQ6Regaj6pNSwLTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OuzU8H9wfzluDw31NJqQ3JHnQ72MoG3HI6zY1GUq6n2Vbkwvuhbqdif7s60RRCZIBPhGkeAQqJL2riS+PmGnm2V+2I119Mrh2hEYyRLdi7yku36m8SKCNFN82iHORFaJ/LG8JZEg5PkrYoFgAB4o/n/ImOKJGv7OevVHCYPcL/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzs/8gd3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T+t4SyeTjyss5Ylm37XkMtm4/pnCuWejX2y7aYlfQAqHgM9VBzcSxCnSaMbCQg3z5Y00LgwVY2s1fomVQWCQOJzsa+dCWr7Rrs5BfVsM3rSNNRQANozWho7GFELelYERldPmITI9GnGWh8xED/S04H85wO2kzxZ/Ofdn1PxqO5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtP8M5IH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzs/8gd3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77EE1F00A3D;
-	Thu, 16 Jul 2026 14:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtP8M5IH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5E11F000E9;
+	Thu, 16 Jul 2026 14:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212237;
-	bh=LjHWl8eTQNJH1EVBD3vq+K3fxm6/6TStbAN/W1v8lUo=;
+	s=korg; t=1784212239;
+	bh=OCzrXtzZrItB3AxIkznkAUO32p0fpp4/t+Q0tsnluqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lzs/8gd3qsn6WekL/ibQg5ODO+4V5rC5hahuBX72+rfJTjdv6PNV+lXUFSKPp66P0
-	 Hpb0RrkxpNnkoXZVtr00DVgt5jiLoadEr9DAA4zIZz6iPxUvi0+4ytxmIXnDPtj4pb
-	 ok3r2v8HKcoWZQtt7E/x/AEKTDQHYhIVT+Y0IDYg=
+	b=QtP8M5IHZtDMbjhU4sKFVmz/0zYqiFy+Y8YnRIsBWAD99nKvZxzF3HKKx8IPfqO71
+	 D4OXSdi8m/7npkJQmnQCddSdw7QU5ANNEdN62nPJb9rO7moSK4l9XYGNIceH6329Sg
+	 tzvL399VBd9/nv2dpCrJtpg0wOV9DcEt7LHfwoEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 252/349] usb: typec: ucsi: ccg: Fix use-after-free of ucsi on remove
-Date: Thu, 16 Jul 2026 15:33:06 +0200
-Message-ID: <20260716133038.989159721@linuxfoundation.org>
+Subject: [PATCH 6.12 253/349] usb: typec: ucsi: cancel pending work on system suspend
+Date: Thu, 16 Jul 2026 15:33:07 +0200
+Message-ID: <20260716133039.011512880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,51 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-commit 1f0bdc2884b67de337215079bba166df0cdf4ac5 upstream.
+commit 7c4a234bd31a64a8dbd0140dc812da592c5e0787 upstream.
 
-The threaded IRQ handler ccg_irq_handler() calls ucsi_notify_common(),
-which on a connector-change event calls ucsi_connector_change() and
-schedules connector work.  In ucsi_ccg_remove(), ucsi_destroy() frees
-uc->ucsi (kfree) before free_irq() is called, so a handler invocation
-already in flight may access the freed object after ucsi_destroy().
+On a Dell XPS 13 9360 (BIOS 2.21.0), entering system suspend (deep/S3)
+races a pending UCSI connector-change worker against the ACPI EC teardown.
+The worker evaluates the UCSI _DSM (GET_CONNECTOR_STATUS), whose AML
+accesses the Embedded Controller. By that point the ACPI EC has already
+been stopped for suspend, so the EC address space handler rejects the
+access with AE_BAD_PARAMETER, aborting the AML and failing the connector
+query:
 
-  CPU 0 (remove)            | CPU 1 (threaded IRQ)
-    ucsi_destroy(uc->ucsi)  |   ccg_irq_handler()
-      kfree(ucsi) // FREE   |     ucsi_notify_common(uc->ucsi) // USE
+    [22314.689495] ACPI: EC: interrupt blocked
+    [22314.711981] ACPI: PM: Preparing to enter system sleep state S3
+    [22314.743260] ACPI: EC: event blocked
+    [22314.743265] ACPI: EC: EC stopped
+    [22314.743267] ACPI: PM: Saving platform NVS memory
+    [22314.744241] ACPI Error: AE_BAD_PARAMETER, Returned by Handler for [EmbeddedControl] (20260408/evregion-303)
+    [22314.744432] ACPI Error: Aborting method \_SB.PCI0.LPCB.ECDV.ECW1 due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
+    [22314.744673] ACPI Error: Aborting method \ECWB due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
+    [22314.745201] ACPI Error: Aborting method \_SB.UBTC._DSM due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
+    [22314.745394] ACPI: \_SB_.UBTC: failed to evaluate _DSM c298836f-a47c-e411-ad36-631042b5008f rev:1 func:1 (0x1001)
+    [22314.745414] ucsi_acpi USBC000:00: ucsi_acpi_dsm: failed to evaluate _DSM 1
+    [22314.745424] ucsi_acpi USBC000:00: ucsi_handle_connector_change: GET_CONNECTOR_STATUS failed (-5)
 
-Move free_irq() before ucsi_destroy() in the remove path.  It is kept
-after ucsi_unregister(): ucsi_unregister() cancels connector work whose
-handler issues GET_CONNECTOR_STATUS through ucsi_send_command_common(),
-which waits for a completion that is signalled from the IRQ handler, so
-the IRQ must stay active until that work has been cancelled.
+ucsi_acpi implements a resume callback but no suspend callback, so nothing
+cancels the connector-change work before the firmware/EC is torn down.
 
-The probe error path already orders free_irq() before ucsi_destroy().
+Add a `ucsi_suspend()` core helper that cancels the pending init and
+connector-change work, and wire it into ucsi_acpi's PM ops. The connector
+state is re-read on resume by `ucsi_resume()`, so cancelling the work loses
+nothing.
 
-This bug was found by static analysis.
-
-Fixes: e32fd989ac1c ("usb: typec: ucsi: ccg: Move to the new API")
+Fixes: 4e3a50293c2b ("usb: typec: ucsi: acpi: Implement resume callback")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Assisted-by: Claude Opus 4.8
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260616132011.103279-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260703110738.8457-2-pmenzel@molgen.mpg.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c      |   20 ++++++++++++++++++++
+ drivers/usb/typec/ucsi/ucsi.h      |    1 +
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   10 +++++++++-
+ 3 files changed, 30 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -1502,8 +1502,8 @@ static void ucsi_ccg_remove(struct i2c_c
- 	cancel_work_sync(&uc->work);
- 	pm_runtime_disable(uc->dev);
- 	ucsi_unregister(uc->ucsi);
--	ucsi_destroy(uc->ucsi);
- 	free_irq(uc->irq, uc);
-+	ucsi_destroy(uc->ucsi);
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1883,6 +1883,26 @@ static void ucsi_resume_work(struct work
+ 	}
  }
  
- static const struct of_device_id ucsi_ccg_of_match_table[] = {
++int ucsi_suspend(struct ucsi *ucsi)
++{
++	int i;
++
++	/*
++	 * Cancel pending work so it cannot access the firmware after the ACPI
++	 * EC is stopped for suspend; state is re-read on resume.
++	 */
++	cancel_delayed_work_sync(&ucsi->work);
++
++	if (!ucsi->connector)
++		return 0;
++
++	for (i = 0; i < ucsi->cap.num_connectors; i++)
++		cancel_work_sync(&ucsi->connector[i].work);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(ucsi_suspend);
++
+ int ucsi_resume(struct ucsi *ucsi)
+ {
+ 	if (ucsi->connector)
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -465,6 +465,7 @@ int ucsi_send_command(struct ucsi *ucsi,
+ 		      void *retval, size_t size);
+ 
+ void ucsi_altmode_update_active(struct ucsi_connector *con);
++int ucsi_suspend(struct ucsi *ucsi);
+ int ucsi_resume(struct ucsi *ucsi);
+ 
+ void ucsi_notify_common(struct ucsi *ucsi, u32 cci);
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -259,6 +259,13 @@ static void ucsi_acpi_remove(struct plat
+ 				   ucsi_acpi_notify);
+ }
+ 
++static int ucsi_acpi_suspend(struct device *dev)
++{
++	struct ucsi_acpi *ua = dev_get_drvdata(dev);
++
++	return ucsi_suspend(ua->ucsi);
++}
++
+ static int ucsi_acpi_resume(struct device *dev)
+ {
+ 	struct ucsi_acpi *ua = dev_get_drvdata(dev);
+@@ -266,7 +273,8 @@ static int ucsi_acpi_resume(struct devic
+ 	return ucsi_resume(ua->ucsi);
+ }
+ 
+-static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, NULL, ucsi_acpi_resume);
++static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, ucsi_acpi_suspend,
++				ucsi_acpi_resume);
+ 
+ static const struct acpi_device_id ucsi_acpi_match[] = {
+ 	{ "PNP0CA0", 0 },
 
 
