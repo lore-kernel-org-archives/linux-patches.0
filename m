@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A585427FA6;
-	Thu, 16 Jul 2026 13:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AD0424D68;
+	Thu, 16 Jul 2026 13:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209430; cv=none; b=HjgEG6w3CAKgdokn6hKw5j27o+QnYzoy4jyBRxH3f7jszL2/oWATeXKYBZIDsuTpu8jIPb16Tvv8BotoA/mky+OxHd3GiBqaD2uW+bfd3pFcPy62r7cHgDwet6wVCeu2s07A3SE1zU723FLHXZxwIehaxb8U9mTyJ6RFi8EnBD0=
+	t=1784209434; cv=none; b=b2D3aZGVRzXQMcYZZTajfju4TAra8p2AWd+4GMZRgINQwDcv7c/FmzDuja5xy39NBkU6SgYbuSzBJZ9+u06cCVL0Dh5xArnw6vTYfIPvhMGUHaYFlEBPpwlL2TmHLfpgliqSF5FlxQXjIV9GsAcFDNHc0/Jw2ctQgWlyXG15cvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209430; c=relaxed/simple;
-	bh=k9+busSwEgctHCQvQmnovYSj56FAffHi10UWfimMkUE=;
+	s=arc-20240116; t=1784209434; c=relaxed/simple;
+	bh=RIDMjfQuF3tFPW6dW6BjxHJsHtDXSLlurPwCPJ6QYlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FF1D3KzdZsCZMX2b8xMti6mEVt+Mo9p1znBuPnunwRyxb/pL4BiWrSiwlZEgcToLzX2JaD70EwMNTuHcnPiyz6FMT8g5n519A9buBiMMac/5XIi+j1mB/i+/CzMXOP1rOR3Gti7CJ0V+MaoWhaySpDB5T8Pu8RVFuRkVIHENEr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+j5b1F0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c6WtA6ZCppWjCrLEtYaBCPKKmH8pVuHrlR8cx5nHvRTis+Wa1hBUzLayTO7WUXNJva1O/c3kx3MjVR3O1IFQ3JDFT/JCUEUoAGhVd95aY4oGGQwHXJojtgeToy6fsa5KJCy00kJqnqgeHUwlVGD0qt1FZYNsTExXVhg2YRlfKFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4GyPgJ4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+j5b1F0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5481F000E9;
-	Thu, 16 Jul 2026 13:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4GyPgJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18A91F00A3A;
+	Thu, 16 Jul 2026 13:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209426;
-	bh=76sE83dmhbubnotlKBAkN+zmfa+Fti9gGR1ojqCeRDA=;
+	s=korg; t=1784209429;
+	bh=l5SuFzuhWG4FS007MmdktvH5fUiRtOB5xPhBWV6lkL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q+j5b1F0glW3kY++Of3G6YylIEDCfwWff/nRHrvoX6qUsQXaTO8/RsO45bMqpgKuo
-	 EhG38HSdsXwMmgpyUO5RQDAdwKWw51j7TCtB+6nBtgcbaWPEZv0EE4enGuqzPrDJh+
-	 K0iXF/O/5Kofq765gzy362sO5ERFd4kH1lI9Lf/E=
+	b=b4GyPgJ4BvNElwXkFX4jtfzglX6F9V0TMxhR6lc8OdXgl26T89iVXQsq0BzwiAMaq
+	 wn/tIPmIStNOewd0RFci2SlL+tigUxQrl6vXvmrswjnUyelW4tbUhsW5aeuSJhfAeU
+	 uQZZJNRWif0kJCKg12klqZNvEyGYcq8RfOCezE/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.1 182/518] gpio: sch: use raw_spinlock_t in the irq startup path
-Date: Thu, 16 Jul 2026 15:27:30 +0200
-Message-ID: <20260716133051.817916098@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.1 183/518] HID: logitech-dj: Fix maxfield check in DJ short report validation
+Date: Thu, 16 Jul 2026 15:27:31 +0200
+Message-ID: <20260716133051.841319283@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,159 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 286533cb14a3c8a8bd39ff64ea2fc8e1aa0f638b upstream.
+commit 590cc4d782487632a52f37c2171bee1eeea29627 upstream.
 
-sch_irq_unmask() enables the GPIO IRQ and then updates the controller
-state through sch_irq_mask_unmask(), which takes sch->lock with
-spin_lock_irqsave().  The callback can be reached from irq_startup()
-while setting up a requested IRQ.  That path is not sleepable, but on
-PREEMPT_RT a regular spinlock_t becomes a sleeping lock.
+Commit b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT
+related user initiated OOB write") added validation for the DJ short
+output report, but the error path dereferences rep->field[0] even when
+rep->maxfield is zero.
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+Commit 8b9a097eb2fc ("HID: logitech-dj: fix wrong detection of bad
+DJ_SHORT output report") made the check conditional on rep being present,
+but a crafted descriptor can still create report ID 0x20 with only padding
+output items. hid-core registers the report, ignores the padding field,
+and leaves rep->maxfield as zero.
 
-The grounded PoC kept the request_threaded_irq() -> __setup_irq() ->
-irq_startup() -> sch_irq_unmask() -> sch_irq_mask_unmask() carrier and
-used the original spin_lock_irqsave(&sch->lock) edge.  Lockdep reported:
+In that case the validation enters the rep->maxfield < 1 branch and then
+dereferences rep->field[0]->report_count while printing the error message,
+causing a NULL pointer dereference during probe. This is reproducible with
+uhid by emulating a Logitech receiver with a padding-only DJ short output
+report:
 
-  BUG: sleeping function called from invalid context
-  hardirqs last disabled at ... __setup_irq.constprop.0 ... [vuln_msv]
-  sch_rt_spin_lock_irqsave+0x1c/0x30 [vuln_msv]
-  sch_irq_mask_unmask.constprop.0+0x31/0x70 [vuln_msv]
-  __setup_irq.constprop.0+0xd/0x30 [vuln_msv]
+  BUG: KASAN: null-ptr-deref in logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
+  Read of size 4 at addr 0000000000000028 by task kworker/4:1/129
+  ...
+  Call Trace:
+   logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
+   hid_device_probe+0x329/0x3f0 [hid]
+   really_probe+0x162/0x570
+   __device_attach+0x137/0x2c0
+   bus_probe_device+0x38/0xc0
+   device_add+0xa56/0xce0
+   hid_add_device+0x19c/0x280 [hid]
+   uhid_device_add_worker+0x2c/0xb0 [uhid]
 
-Convert the SCH controller lock to raw_spinlock_t.  The same lock is
-also used by the GPIO direction and value callbacks, but those critical
-sections only update MMIO-backed GPIO registers and do not contain
-sleepable operations.  Keeping this register lock non-sleeping is
-therefore appropriate for the irqchip callbacks and does not change the
-GPIO-side locking contract.
+Reject the zero-field report before printing the field report_count.
 
-Fixes: 7a81638485c1 ("gpio: sch: Add edge event support")
+Fixes: b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/20260617154035.1199948-2-runyu.xiao@seu.edu.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-sch.c |   32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ drivers/hid/hid-logitech-dj.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-sch.c
-+++ b/drivers/gpio/gpio-sch.c
-@@ -39,7 +39,7 @@
- struct sch_gpio {
- 	struct gpio_chip chip;
- 	void __iomem *regs;
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- 	unsigned short resume_base;
+diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
+index 381e4dc5aba7..9c574ab8b60b 100644
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1907,8 +1907,13 @@ static int logi_dj_probe(struct hid_device *hdev,
+ 	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
+ 	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
  
- 	/* GPE handling */
-@@ -104,9 +104,9 @@ static int sch_gpio_direction_in(struct
- 	struct sch_gpio *sch = gpiochip_get_data(gc);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&sch->lock, flags);
-+	raw_spin_lock_irqsave(&sch->lock, flags);
- 	sch_gpio_reg_set(sch, gpio_num, GIO, 1);
--	spin_unlock_irqrestore(&sch->lock, flags);
-+	raw_spin_unlock_irqrestore(&sch->lock, flags);
- 	return 0;
- }
- 
-@@ -122,9 +122,9 @@ static int sch_gpio_set(struct gpio_chip
- 	struct sch_gpio *sch = gpiochip_get_data(gc);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&sch->lock, flags);
-+	raw_spin_lock_irqsave(&sch->lock, flags);
- 	sch_gpio_reg_set(sch, gpio_num, GLV, val);
--	spin_unlock_irqrestore(&sch->lock, flags);
-+	raw_spin_unlock_irqrestore(&sch->lock, flags);
- 
- 	return 0;
- }
-@@ -135,9 +135,9 @@ static int sch_gpio_direction_out(struct
- 	struct sch_gpio *sch = gpiochip_get_data(gc);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&sch->lock, flags);
-+	raw_spin_lock_irqsave(&sch->lock, flags);
- 	sch_gpio_reg_set(sch, gpio_num, GIO, 0);
--	spin_unlock_irqrestore(&sch->lock, flags);
-+	raw_spin_unlock_irqrestore(&sch->lock, flags);
- 
- 	/*
- 	 * according to the datasheet, writing to the level register has no
-@@ -196,14 +196,14 @@ static int sch_irq_type(struct irq_data
+-	if (rep && (rep->maxfield < 1 ||
+-		    rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1)) {
++	if (rep && rep->maxfield < 1) {
++		hid_err(hdev, "Expected size of DJ short report is %d, but got 0",
++			DJREPORT_SHORT_LENGTH - 1);
++		return -EINVAL;
++	}
++
++	if (rep && rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
+ 		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
+ 			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
  		return -EINVAL;
- 	}
- 
--	spin_lock_irqsave(&sch->lock, flags);
-+	raw_spin_lock_irqsave(&sch->lock, flags);
- 
- 	sch_gpio_reg_set(sch, gpio_num, GTPE, rising);
- 	sch_gpio_reg_set(sch, gpio_num, GTNE, falling);
- 
- 	irq_set_handler_locked(d, handle_edge_irq);
- 
--	spin_unlock_irqrestore(&sch->lock, flags);
-+	raw_spin_unlock_irqrestore(&sch->lock, flags);
- 
- 	return 0;
- }
-@@ -215,9 +215,9 @@ static void sch_irq_ack(struct irq_data
- 	irq_hw_number_t gpio_num = irqd_to_hwirq(d);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&sch->lock, flags);
-+	raw_spin_lock_irqsave(&sch->lock, flags);
- 	sch_gpio_reg_set(sch, gpio_num, GTS, 1);
--	spin_unlock_irqrestore(&sch->lock, flags);
-+	raw_spin_unlock_irqrestore(&sch->lock, flags);
- }
- 
- static void sch_irq_mask_unmask(struct gpio_chip *gc, irq_hw_number_t gpio_num, int val)
-@@ -225,9 +225,9 @@ static void sch_irq_mask_unmask(struct g
- 	struct sch_gpio *sch = gpiochip_get_data(gc);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&sch->lock, flags);
-+	raw_spin_lock_irqsave(&sch->lock, flags);
- 	sch_gpio_reg_set(sch, gpio_num, GGPE, val);
--	spin_unlock_irqrestore(&sch->lock, flags);
-+	raw_spin_unlock_irqrestore(&sch->lock, flags);
- }
- 
- static void sch_irq_mask(struct irq_data *d)
-@@ -268,12 +268,12 @@ static u32 sch_gpio_gpe_handler(acpi_han
- 	int offset;
- 	u32 ret;
- 
--	spin_lock_irqsave(&sch->lock, flags);
-+	raw_spin_lock_irqsave(&sch->lock, flags);
- 
- 	core_status = ioread32(sch->regs + CORE_BANK_OFFSET + GTS);
- 	resume_status = ioread32(sch->regs + RESUME_BANK_OFFSET + GTS);
- 
--	spin_unlock_irqrestore(&sch->lock, flags);
-+	raw_spin_unlock_irqrestore(&sch->lock, flags);
- 
- 	pending = (resume_status << sch->resume_base) | core_status;
- 	for_each_set_bit(offset, &pending, sch->chip.ngpio)
-@@ -343,7 +343,7 @@ static int sch_gpio_probe(struct platfor
- 
- 	sch->regs = regs;
- 
--	spin_lock_init(&sch->lock);
-+	raw_spin_lock_init(&sch->lock);
- 	sch->chip = sch_gpio_chip;
- 	sch->chip.label = dev_name(dev);
- 	sch->chip.parent = dev;
+-- 
+2.55.0
+
 
 
