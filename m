@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0663161AD;
-	Thu, 16 Jul 2026 14:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3443161AD;
+	Thu, 16 Jul 2026 14:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210772; cv=none; b=VFbDf1j/oOkUYhcj3KcFiYvzKr0j83wQUn2++k5AVHBxWdT+IlO7mng1qgMoc3aVVBgD+F0pkdFRoEbgoWqsQ9m4Ergk2S42El/JaORUMUCPe9JNB2NsYxwHf5eoVmmvQg16EpwlJCf7neNibekobsyluXa4e5fwvT9DWwBDFTM=
+	t=1784210775; cv=none; b=GtV+FL+Qb6Hd0gSy3lqyeuuNkSwIDQFFzMyMtkOIbdfJEmH/BFyWc4oWJCelioUsLUIlPYeu9sWGyNVWbaRhvlxak8hg/bRzRzXAjtPw+8ZeAqhKdH2y10GVdQSmSLmkXtVsbZMDTg1pYU+V/gkU66HWVvmilSAof729p63xhPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210772; c=relaxed/simple;
-	bh=VK8qWq9dMaxcXthrDsO48xbXNOogI9XCL+2Ew4iDd6w=;
+	s=arc-20240116; t=1784210775; c=relaxed/simple;
+	bh=pLg+9+6tqH91OJNjwQn+w+DyFMu/MplAmRbvnqL584k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tX4VY+S3CiwzeC83OKHgCv/zzj+4DTgfHZdslXYrHQyCBe5E24U7/NPvegDA+BqV3626WcDxVqdbmLdOBPC3PF/T66fmZ0vASyw43D1lNYFH9K2EQFuyzhDmYTCNRXmgScuCwRqYczHXmIT81DiAEhftL24sgt9Id9bpd76K0MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtXtImly; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fDFUOBIaWBYmuvZ7VJKAHkmkUL3qGsxy2GeHt0oZjKRBY0MqSzTREeIsMz10Qek5222GW+TYlopSWDvBfvM/QWLUo1tQTMw6pHUPnG739mpU9dvt4nzCcWxrAl/pdIxZyKt+0RMgdiXCxF3ePw+KDikhGiyKMGaUo7350UbIyMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXKqDTFI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtXtImly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876291F00A3F;
-	Thu, 16 Jul 2026 14:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXKqDTFI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1DC1F000E9;
+	Thu, 16 Jul 2026 14:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210771;
-	bh=eLCXZdCzO86XNGyCtklH2ne+i04COz6nvZ0i064Rwgc=;
+	s=korg; t=1784210773;
+	bh=CwiAli16GVHyJL9aa8J2VjVD0sjeh0kThGtP7vUME+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jtXtImlyMf3+apmxpdt8IvW8WmsgJ+mbzu8hqSsu7BkjlZLIAaYZ57HG2sTR5hDzj
-	 r2/lM7ypEdTibWbg4E6va16P8fUAmeOPv2TvBeeCkjssw4LddjfHDwcAflvV7lWEuG
-	 zUJ/CfJHMCIfwdbj0MWfIPpNXatLLnP/MoOR2eHs=
+	b=EXKqDTFI4T709G0mIW4NXFiWh/PdIGMr5C63w+8xHMVLkooMgzR2UKlG0iq04ruw8
+	 IufP6aIhGmzl51jrTSEPBAuPsKnL8kh5udDUF6/gw1GtglptvZ1pmfm2WNBl0GV5gW
+	 lNoK0iNgXzaLy8vPOrvxJzed+k6Gd/GzzBoKk4Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Wang <wangchi@kylinos.cn>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.18 173/480] audit: Fix data races of skb_queue_len() readers on audit_queue
-Date: Thu, 16 Jul 2026 15:28:40 +0200
-Message-ID: <20260716133048.452703926@linuxfoundation.org>
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marco Elver <elver@google.com>
+Subject: [PATCH 6.18 174/480] Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref
+Date: Thu, 16 Jul 2026 15:28:41 +0200
+Message-ID: <20260716133048.476761842@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -45,114 +45,248 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chi Wang <wangchi@kylinos.cn>
+From: Marco Elver <elver@google.com>
 
-commit c9a71daaecb2fb1d8c704545cc0b1c920b9bf5d7 upstream.
+commit b66774b48dd98f07254951f74ea6f513efe7ff8b upstream.
 
-Multiple readers access audit_queue.qlen via skb_queue_len() without
-holding the queue lock or using READ_ONCE(), while kauditd writes to
-this field via the skb_dequeue() → __skb_unlink() path with WRITE_ONCE()
-protected by a spinlock. This constitutes data races.
+l2cap_chan_timeout() runs asynchronously and accesses chan->conn. If
+the connection is torn down while the timer is running or pending,
+chan->conn can be freed, leading to a use-after-free when the timer
+worker attempts to lock conn->lock:
 
-All affected skb_queue_len(&audit_queue) call sites:
-  - kauditd_thread() wait_event_freezable() condition
-  - audit_receive_msg() AUDIT_GET handler (s.backlog assignment)
-  - audit_receive() backlog check
-  - audit_log_start() backlog check and pr_warn()
+| BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
+| BUG: KASAN: slab-use-after-free in atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
+| BUG: KASAN: slab-use-after-free in __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
+| BUG: KASAN: slab-use-after-free in mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
+| Write of size 8 at addr ffff8881298d9550 by task kworker/2:1/83
+|
+| CPU: 2 UID: 0 PID: 83 Comm: kworker/2:1 Not tainted 7.1.0-rc6-next-20260601-dirty #6 PREEMPT(full)
+| Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+| Workqueue: events l2cap_chan_timeout
+| Call Trace:
+|  <TASK>
+|  instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
+|  atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
+|  __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
+|  mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
+|  l2cap_chan_timeout+0x5d/0x1b0 net/bluetooth/l2cap_core.c:422
+|  process_one_work kernel/workqueue.c:3326 [inline]
+|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
+|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
+|  kthread+0x346/0x430 kernel/kthread.c:436
+|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
+|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+|  </TASK>
+|
+| Allocated by task 320:
+|  l2cap_conn_add+0xa7/0x820 net/bluetooth/l2cap_core.c:7075
+|  l2cap_connect_cfm+0xdb/0xd70 net/bluetooth/l2cap_core.c:7452
+|  hci_connect_cfm include/net/bluetooth/hci_core.h:2139 [inline]
+|  hci_remote_features_evt+0x52f/0x9f0 net/bluetooth/hci_event.c:3760
+|  hci_event_func net/bluetooth/hci_event.c:7796 [inline]
+|  hci_event_packet+0x561/0xa70 net/bluetooth/hci_event.c:7847
+|  hci_rx_work+0x370/0x890 net/bluetooth/hci_core.c:4040
+|  process_one_work kernel/workqueue.c:3326 [inline]
+|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
+|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
+|  kthread+0x346/0x430 kernel/kthread.c:436
+|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
+|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+|
+| Freed by task 322:
+|  hci_disconn_cfm include/net/bluetooth/hci_core.h:2154 [inline]
+|  hci_conn_hash_flush+0x101/0x1f0 net/bluetooth/hci_conn.c:2736
+|  hci_dev_close_sync+0x889/0xde0 net/bluetooth/hci_sync.c:5405
+|  hci_dev_do_close net/bluetooth/hci_core.c:502 [inline]
+|  hci_unregister_dev+0x1f7/0x370 net/bluetooth/hci_core.c:2679
+|  vhci_release+0x12a/0x180 drivers/bluetooth/hci_vhci.c:690
+|  __fput+0x369/0x890 fs/file_table.c:510
+|  task_work_run+0x160/0x1d0 kernel/task_work.c:233
+|  get_signal+0xf5b/0x1120 kernel/signal.c:2810
+|  arch_do_signal_or_restart+0x4d/0x600 arch/x86/kernel/signal.c:337
+|  __exit_to_user_mode_loop kernel/entry/common.c:64 [inline]
+|  exit_to_user_mode_loop+0x85/0x510 kernel/entry/common.c:98
+|  do_syscall_64+0x263/0x3d0 arch/x86/entry/syscall_64.c:100
+|  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+|
+| The buggy address belongs to the object at ffff8881298d9400
+|  which belongs to the cache kmalloc-512 of size 512
+| The buggy address is located 336 bytes inside of
+|  freed 512-byte region [ffff8881298d9400, ffff8881298d9600)
 
-KCSAN reports the following conflicting access pattern (one example):
-==================================================================
-BUG: KCSAN: data-race in audit_log_start / skb_dequeue
+Fix it by having chan->conn hold a reference to l2cap_conn (via
+l2cap_conn_get) when the channel is added to the connection, and
+releasing it in the channel destructor. This ensures the l2cap_conn
+remains alive as long as the channel exists.
 
-write (marked) to 0xffffffff8512ee20 of 4 bytes by task 661 on cpu 57:
- skb_dequeue+0x70/0xf0
- kauditd_send_queue+0x71/0x220
- kauditd_thread+0x1cb/0x430
- kthread+0x1c2/0x210
- ret_from_fork+0x162/0x1a0
- ret_from_fork_asm+0x1a/0x30
+A new FLAG_DEL channel flag is introduced to indicate that the channel
+has been deleted from its connection. l2cap_chan_del() atomically sets
+this flag using test_and_set_bit() instead of setting chan->conn to
+NULL. All asynchronous workers (l2cap_chan_timeout, l2cap_ack_timeout,
+l2cap_monitor_timeout, l2cap_retrans_timeout) and l2cap_chan_send()
+check FLAG_DEL to determine whether the channel has been torn down,
+rather than testing chan->conn for NULL.
 
-read to 0xffffffff8512ee20 of 4 bytes by task 36586 on cpu 1:
- audit_log_start+0x2a0/0x6b0
- audit_core_dumps+0x64/0xa0
- do_coredump+0x14b/0x1260
- get_signal+0xeb2/0xf70
- arch_do_signal_or_restart+0x41/0x170
- exit_to_user_mode_loop+0xa2/0x1c0
- do_syscall_64+0x1a3/0x1c0
- entry_SYSCALL_64_after_hwframe+0x76/0xe0
-
-value changed: 0x00000001 -> 0x00000000
-==================================================================
-
-Resolve the race by switching to lockless helper skb_queue_len_lockless(),
-which internally uses READ_ONCE() and properly pairs with the WRITE_ONCE()
-write accesses already present on the writer side.
-
-Cc: stable@vger.kernel.org
-Fixes: 3197542482df ("audit: rework audit_log_start()")
-Signed-off-by: Chi Wang <wangchi@kylinos.cn>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: line length tweak]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 8c8e620467a7 ("Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()")
+Cc: <stable@vger.kernel.org>
+Cc: Siwei Zhang <oss@fourdim.xyz>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: Gemini:gemini-3.1-pro-preview
+Reported-by: https://sashiko.dev/#/patchset/20260521021249.3258069-1-oss%40fourdim.xyz
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/net/bluetooth/l2cap.h |    1 +
+ net/bluetooth/l2cap_core.c    |   34 ++++++++++++++++++++--------------
+ 2 files changed, 21 insertions(+), 14 deletions(-)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -946,7 +946,7 @@ main_queue:
- 		 *       do the multicast send and rotate records from the
- 		 *       main queue to the retry/hold queues */
- 		wait_event_freezable(kauditd_wait,
--				     (skb_queue_len(&audit_queue) ? 1 : 0));
-+				(skb_queue_len_lockless(&audit_queue) ? 1 : 0));
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -748,6 +748,7 @@ enum {
+ 	FLAG_ECRED_CONN_REQ_SENT,
+ 	FLAG_PENDING_SECURITY,
+ 	FLAG_HOLD_HCI_CONN,
++	FLAG_DEL,
+ };
+ 
+ /* Lock nesting levels for L2CAP channels. We need these because lockdep
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -411,7 +411,7 @@ static void l2cap_chan_timeout(struct wo
+ 
+ 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
+ 
+-	if (!conn) {
++	if (test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_put(chan);
+ 		return;
+ 	}
+@@ -422,6 +422,9 @@ static void l2cap_chan_timeout(struct wo
+ 	 */
+ 	l2cap_chan_lock(chan);
+ 
++	if (test_bit(FLAG_DEL, &chan->flags))
++		goto unlock;
++
+ 	if (chan->state == BT_CONNECTED || chan->state == BT_CONFIG)
+ 		reason = ECONNREFUSED;
+ 	else if (chan->state == BT_CONNECT &&
+@@ -434,10 +437,10 @@ static void l2cap_chan_timeout(struct wo
+ 
+ 	chan->ops->close(chan);
+ 
++unlock:
+ 	l2cap_chan_unlock(chan);
+-	l2cap_chan_put(chan);
+-
+ 	mutex_unlock(&conn->lock);
++	l2cap_chan_put(chan);
+ }
+ 
+ struct l2cap_chan *l2cap_chan_create(void)
+@@ -490,6 +493,9 @@ static void l2cap_chan_destroy(struct kr
+ 	list_del(&chan->global_l);
+ 	write_unlock(&chan_list_lock);
+ 
++	if (chan->conn)
++		l2cap_conn_put(chan->conn);
++
+ 	kfree(chan);
+ }
+ 
+@@ -593,7 +599,7 @@ void __l2cap_chan_add(struct l2cap_conn
+ 
+ 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
+ 
+-	chan->conn = conn;
++	chan->conn = l2cap_conn_get(conn);
+ 
+ 	switch (chan->chan_type) {
+ 	case L2CAP_CHAN_CONN_ORIENTED:
+@@ -648,30 +654,26 @@ void l2cap_chan_add(struct l2cap_conn *c
+ 
+ void l2cap_chan_del(struct l2cap_chan *chan, int err)
+ {
+-	struct l2cap_conn *conn = chan->conn;
+-
+ 	__clear_chan_timer(chan);
+ 
+-	BT_DBG("chan %p, conn %p, err %d, state %s", chan, conn, err,
++	BT_DBG("chan %p, err %d, state %s", chan, err,
+ 	       state_to_string(chan->state));
+ 
+ 	chan->ops->teardown(chan, err);
+ 
+-	if (conn) {
++	if (!test_and_set_bit(FLAG_DEL, &chan->flags)) {
+ 		/* Delete from channel list */
+ 		list_del(&chan->list);
+ 
+ 		l2cap_chan_put(chan);
+ 
+-		chan->conn = NULL;
+-
+ 		/* Reference was only held for non-fixed channels or
+ 		 * fixed channels that explicitly requested it using the
+ 		 * FLAG_HOLD_HCI_CONN flag.
+ 		 */
+ 		if (chan->chan_type != L2CAP_CHAN_FIXED ||
+ 		    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
+-			hci_conn_drop(conn->hcon);
++			hci_conn_drop(chan->conn->hcon);
  	}
  
- 	return 0;
-@@ -1279,7 +1279,7 @@ static int audit_receive_msg(struct sk_b
- 		s.rate_limit		   = audit_rate_limit;
- 		s.backlog_limit		   = audit_backlog_limit;
- 		s.lost			   = atomic_read(&audit_lost);
--		s.backlog		   = skb_queue_len(&audit_queue);
-+		s.backlog		   = skb_queue_len_lockless(&audit_queue);
- 		s.feature_bitmap	   = AUDIT_FEATURE_BITMAP_ALL;
- 		s.backlog_wait_time	   = audit_backlog_wait_time;
- 		s.backlog_wait_time_actual = atomic_read(&audit_backlog_wait_time_actual);
-@@ -1622,7 +1622,7 @@ static void audit_receive(struct sk_buff
+ 	if (test_bit(CONF_NOT_COMPLETE, &chan->conf_state))
+@@ -1903,7 +1905,7 @@ static void l2cap_monitor_timeout(struct
  
- 	/* can't block with the ctrl lock, so penalize the sender now */
- 	if (audit_backlog_limit &&
--	    (skb_queue_len(&audit_queue) > audit_backlog_limit)) {
-+	    (skb_queue_len_lockless(&audit_queue) > audit_backlog_limit)) {
- 		DECLARE_WAITQUEUE(wait, current);
+ 	l2cap_chan_lock(chan);
  
- 		/* wake kauditd to try and flush the queue */
-@@ -1928,7 +1928,7 @@ struct audit_buffer *audit_log_start(str
- 		long stime = audit_backlog_wait_time;
+-	if (!chan->conn) {
++	if (test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+ 		return;
+@@ -1924,7 +1926,7 @@ static void l2cap_retrans_timeout(struct
  
- 		while (audit_backlog_limit &&
--		       (skb_queue_len(&audit_queue) > audit_backlog_limit)) {
-+			(skb_queue_len_lockless(&audit_queue) > audit_backlog_limit)) {
- 			/* wake kauditd to try and flush the queue */
- 			wake_up_interruptible(&kauditd_wait);
+ 	l2cap_chan_lock(chan);
  
-@@ -1948,7 +1948,7 @@ struct audit_buffer *audit_log_start(str
- 			} else {
- 				if (audit_rate_check() && printk_ratelimit())
- 					pr_warn("audit_backlog=%d > audit_backlog_limit=%d\n",
--						skb_queue_len(&audit_queue),
-+						skb_queue_len_lockless(&audit_queue),
- 						audit_backlog_limit);
- 				audit_log_lost("backlog limit exceeded");
- 				return NULL;
+-	if (!chan->conn) {
++	if (test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+ 		return;
+@@ -2565,7 +2567,7 @@ int l2cap_chan_send(struct l2cap_chan *c
+ 	int err;
+ 	struct sk_buff_head seg_queue;
+ 
+-	if (!chan->conn)
++	if (test_bit(FLAG_DEL, &chan->flags))
+ 		return -ENOTCONN;
+ 
+ 	/* Connectionless channel */
+@@ -3160,12 +3162,16 @@ static void l2cap_ack_timeout(struct wor
+ 
+ 	l2cap_chan_lock(chan);
+ 
++	if (test_bit(FLAG_DEL, &chan->flags))
++		goto unlock;
++
+ 	frames_to_ack = __seq_offset(chan, chan->buffer_seq,
+ 				     chan->last_acked_seq);
+ 
+ 	if (frames_to_ack)
+ 		l2cap_send_rr_or_rnr(chan, 0);
+ 
++unlock:
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ }
 
 
