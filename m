@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C131D435F;
-	Thu, 16 Jul 2026 14:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAFB424676;
+	Thu, 16 Jul 2026 14:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211855; cv=none; b=XTFl2I1M77ihPzpMiVFcxLAvaECnQy/qDC6RRqm7fBRckyajwyjZsaEcSM1iLpK103z6aZG0sDC/iTmTKgeKjIxwflx5aUJcjZ2XVP36PechsvQAs8Pr55JYt95XwqQXfnqbOX4NaNWz39DeCmvuK2wWq74IhecCXcS5aRfwy9I=
+	t=1784211861; cv=none; b=AzqIlcj8svo3mVIbUqtJ/34cxEmaVcn9bgtJYkv2CdYWIKR9GKHc47exZBrLd/vMBVQtSOVFAxCCwYjxm2hzX6URGNAHDLnp56qk/vvlBnZfY07X+SmDRP7w83p0mAr1155BteEFD1ak1Mgv8EAcVWnOcriM2axy8aHErj2HCV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211855; c=relaxed/simple;
-	bh=r/vb6rzJZK3a1fkwpAxDVHdOSH3yxug+HkOWaW0sQCA=;
+	s=arc-20240116; t=1784211861; c=relaxed/simple;
+	bh=OYNQHyvwPu4Nt6Zq2kNhvTF3MLqjiYonnZSVOH1fzDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NRz35SXn7ngSC8UxaPR9j/8GnhNnYMxlrndXa7g3/R6BI1bMWeaawhxbGVmiU6ohePxQXr5U8Si/UMcrwSJtS2fi9oP9vFBMY4ZWCQc471O+NPsREvySS2PK/Tc1esnmuAteuUqL3CaGb91eW1I4ayBI3iQqLYVHMpydpdm+oDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAmzTsMY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XGwltGg5zOU8e6xREulSmftsV6ud9rjY8GY6EMiBbcDRankNMy1Yfe1l56hxnaTDeekHqkUbScV5ELJ0Z5T7mDiMAttFyi97I2Ex8+O8Kp4GAcvLzZQvNyKStOGRzvGO0eWEXhIExkn8EueOQl5el1W4E67GbaiZuBXTrtGseBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMIj5/J7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAmzTsMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048231F00A3A;
-	Thu, 16 Jul 2026 14:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMIj5/J7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6171F00A3D;
+	Thu, 16 Jul 2026 14:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211850;
-	bh=LKL6KdnPRGMfB0wZ6JoPFSP9IN9rAJ+i8qf61rBg8MY=;
+	s=korg; t=1784211853;
+	bh=g9Yif76dRFh236n0yUdqIABF0Y8pCpCUfqRhOFPrIqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CAmzTsMYbOunk/a4XpfgoAw//74oT5nx0gcKWe20WSsxRFmDEijXzsX+5njGULnxG
-	 8aeXM8is9kuT+PjB0l4tfhiRGflfWQb9Mtd8xlJuWKIGobmwkfg+A68Ywr1blDROlv
-	 M5n0z2gBa0s7C957UtWqgwwUG1RBqFBCsWfSyLc4=
+	b=jMIj5/J7cttgCmGwi07BOglKY9ZVOATmHnXHx3FnM4FIpfJeeYbyGk+fDVX12uVqw
+	 byoL3im1SDhE96EInnIkZQXhJWtM5ewjyjAgKloEwFhlI8pKX+lxE7cBOkKNPq3tnR
+	 DLwCtTsYdJ9wpByyRgXOEfBOuga64CNnIYzwsAXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.12 097/349] binder: fix UAF in binder_thread_release()
-Date: Thu, 16 Jul 2026 15:30:31 +0200
-Message-ID: <20260716133035.486547713@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.12 106/349] netfilter: ipset: fix race between dump and ip_set_list resize
+Date: Thu, 16 Jul 2026 15:30:40 +0200
+Message-ID: <20260716133035.687912424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,79 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 114a116aaa5f0295376cdf12da743c5bce3b20ce upstream.
+commit 7cd9103283b26b917360ec99d7d2f2d761bcf1ab upstream.
 
-When a thread exits, binder_thread_release() walks its transaction stack
-to clear the t->from and t->to_proc that correspond with the exiting
-thread. However, a process dying in parallel might attempt to kfree some
-of these transactions. And if one of them has no associated t->to_proc,
-the t->to_proc->inner_lock will not be acquired.
+The release path of ip_set_dump_do() and ip_set_dump_done() read
+inst->ip_set_list via ip_set_ref_netlink(), a plain rcu_dereference_raw()
+of the array pointer. These run from netlink_recvmsg() without the nfnl
+mutex and without an RCU read-side critical section.
 
-This means that transaction accesses in binder_thread_release() after
-t->to_proc has been cleared might race with binder_free_transaction()
-and cause a use-after-free error as reported by KASAN:
+A concurrent ip_set_create() can grow the array: it publishes the new
+array, calls synchronize_net() and then kvfree()s the old one. Since the
+dump paths read the array outside any RCU reader, synchronize_net() does
+not wait for them and the old array can be freed while they still index
+into it, causing a use-after-free.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in binder_thread_release+0x5d0/0x798
-  Write of size 8 at addr ffff000016627500 by task X/715
+The dumped set itself stays pinned via set->ref_netlink, so only the
+array load needs protecting. Take rcu_read_lock() around it, matching
+ip_set_get_byname() and __ip_set_put_byindex().
 
-  CPU: 17 UID: 0 PID: 715 Comm: X Not tainted 7.1.0-rc5-00149-g8fde5d1d47f6 #30 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   binder_thread_release+0x5d0/0x798
-   binder_ioctl+0x12c0/0x299c
-   [...]
+  BUG: KASAN: slab-use-after-free in ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
+  Read of size 8 at addr ffff88800b5c4018 by task exploit/150
+  Call Trace:
+   ...
+   kasan_report (mm/kasan/report.c:595)
+   ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
+   netlink_dump (net/netlink/af_netlink.c:2325)
+   netlink_recvmsg (net/netlink/af_netlink.c:1976)
+   sock_recvmsg (net/socket.c:1159)
+   __sys_recvfrom (net/socket.c:2315)
+   ...
+  Oops: general protection fault, probably for non-canonical address ... KASAN NOPTI
+  KASAN: maybe wild-memory-access in range [0x02d6...d0-0x02d6...d7]
+  RIP: 0010:ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1698)
+  Kernel panic - not syncing: Fatal exception
 
-  Allocated by task 717 on cpu 18 at 67.267803s:
-   __kasan_kmalloc+0xa0/0xbc
-   __kmalloc_cache_noprof+0x174/0x444
-   binder_transaction+0x554/0x8150
-   binder_thread_write+0xa30/0x4354
-   binder_ioctl+0x20f0/0x299c
-   [...]
-
-  Freed by task 202 on cpu 18 at 90.416221s:
-   __kasan_slab_free+0x58/0x80
-   kfree+0x1a0/0x4a4
-   binder_free_transaction+0x150/0x294
-   binder_send_failed_reply+0x398/0x6d8
-   binder_release_work+0x3e4/0x4ec
-   binder_deferred_func+0xbd8/0x104c
-   [...]
-  ==================================================================
-
-In order to avoid this, make sure that binder_free_transaction() reads
-the t->to_proc under the transaction lock. This will serialize the
-transaction release with the accesses in binder_thread_release(). Plus,
-it matches the documented locking rules for @to_proc.
-
-Cc: stable <stable@kernel.org>
-Fixes: 7a4408c6bd3e ("binder: make sure accesses to proc/thread are safe")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260619185233.2194678-1-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8a02bdd50b2e ("netfilter: ipset: Fix calling ip_set() macro at dumping")
+Cc: stable@vger.kernel.org
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/ipset/ip_set_core.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -1654,7 +1654,11 @@ static void binder_txn_latency_free(stru
- 
- static void binder_free_transaction(struct binder_transaction *t)
- {
--	struct binder_proc *target_proc = t->to_proc;
-+	struct binder_proc *target_proc;
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -1480,7 +1480,11 @@ ip_set_dump_done(struct netlink_callback
+ 		struct ip_set_net *inst =
+ 			(struct ip_set_net *)cb->args[IPSET_CB_NET];
+ 		ip_set_id_t index = (ip_set_id_t)cb->args[IPSET_CB_INDEX];
+-		struct ip_set *set = ip_set_ref_netlink(inst, index);
++		struct ip_set *set;
 +
-+	spin_lock(&t->lock);
-+	target_proc = t->to_proc;
-+	spin_unlock(&t->lock);
++		rcu_read_lock();
++		set = ip_set_ref_netlink(inst, index);
++		rcu_read_unlock();
  
- 	if (target_proc) {
- 		binder_inner_proc_lock(target_proc);
+ 		if (set->variant->uref)
+ 			set->variant->uref(set, cb, false);
+@@ -1685,7 +1689,9 @@ next_set:
+ release_refcount:
+ 	/* If there was an error or set is done, release set */
+ 	if (ret || !cb->args[IPSET_CB_ARG0]) {
++		rcu_read_lock();
+ 		set = ip_set_ref_netlink(inst, index);
++		rcu_read_unlock();
+ 		if (set->variant->uref)
+ 			set->variant->uref(set, cb, false);
+ 		pr_debug("release set %s\n", set->name);
 
 
