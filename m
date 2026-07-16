@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077F741F36A;
-	Thu, 16 Jul 2026 13:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E00041F5EC;
+	Thu, 16 Jul 2026 13:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209307; cv=none; b=p/CFN8aO7uljYPuBWtllKErArdoq7ov/YOlH2sLfBrsr/tWgO1OHs6fKhZce900zDL+FRu6YRJdahxpblU5inxa6G2a2G6TDYu9NxUi/2kNo7972j85l5Z79lQPKtCEO6X9VUAtBGLfb5TzmW0HhoaPu0K3majkxSNkhk5ddGfE=
+	t=1784209309; cv=none; b=WobhP53hkO6IJZJzM4OSb+e1LGVUe2tbfE0VBX7WlkmcZaYPgEm7eCY35JsSOQUm0psA4jbD2H6HCzIiaj1EvLBCbDJtr5SS+jpzHqnYJbBM32uwMErQI/sCzAKxvaYA1JjOf8rX2BeirLfJ3smnVaPBoy/tkcHj/R/AmCpmHkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209307; c=relaxed/simple;
-	bh=MX2TOtVuvA1K0B5JqoglGG9Dl5bdNXKTSHSRi3ZCfrw=;
+	s=arc-20240116; t=1784209309; c=relaxed/simple;
+	bh=ad7SV9QK+nvX/PkpsNAkfoj8FnGGqwI/qA328bf5Mww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YgWe5UXZENH25xcz9A/GpMnhNX7DPhuIAOaJBK7JyKO6QgLm12SvCzJI5zBEkse5cg2Z7L7rnnrACddf8kFRzac9WVVUcMFKA8ho4yK7P1NChFQolFMcghV4i3mr+5OdjjrkjJHzQ39Cko46f0F2r1UDG+nGD+vQeGiM+1XzbrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBPxK9Cx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qW56cVtzTdVY7TOxCj+CC195+PmXyrpXr8znfqrUBiJQy6ld2qqr3sAu/B7/5hly+GUP3e4pXCyOtnJmDDk4v+uRb7D7D9e1JO8vaZYoYfstP3MI/V9VqiiLONk/5JukB0nZ0osbBFkN+oA4bXy3CGTk3ffSIKlu+ekpsK2Ff2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVwtJ9Kz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBPxK9Cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA991F000E9;
-	Thu, 16 Jul 2026 13:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVwtJ9Kz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46A11F000E9;
+	Thu, 16 Jul 2026 13:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209305;
-	bh=kbMkqXveGMJdk6SXtarcqckbmx+LW2S7yctgglMLOGk=;
+	s=korg; t=1784209308;
+	bh=e0GC92UoQD3jlrSL1ZLI/qXkX6UoATgMUFbSp5bK9QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBPxK9CxCdwNgeh4OhfeQlTXghJHFrpiHy2DeUiIw0qeyAgLoHqTB6Vx/5MloHF5L
-	 Uj2LcsijyGhY6CzF3gk3eea03FEK2i8XjAAAc52H67AahIsEnbADOj3jHImqhmqrVC
-	 JSa9UMIRZjbMSi+d36NJqhXJbK/L/M5Aj67XcfiQ=
+	b=LVwtJ9Kzypc2g7HRiF14MthA3Llv9VXzb5XXJvrSC7dqcTvjtkRVZvgZ20fQuUFtL
+	 Bhf/fTz84IDtyorPKZo76G17zEy6ggZTfpL5uxtkGDC8BDdLAXGCrJRaKg9R9iP1/T
+	 mgR15t0pbVtoDiQUkWT2EbwnP+PqDVNnt2hz6O4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Yadu M G <yadu.mg@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Caleb James DeLisle <cjd@cjdns.fr>
-Subject: [PATCH 7.1 136/518] PCI: mediatek: Fix IRQ domain leak when port fails to enable
-Date: Thu, 16 Jul 2026 15:26:44 +0200
-Message-ID: <20260716133050.830354852@linuxfoundation.org>
+	stable@kernel.org
+Subject: [PATCH 7.1 137/518] PCI: qcom: Initialize DWC MSI lock for firmware-managed ECAM hosts
+Date: Thu, 16 Jul 2026 15:26:45 +0200
+Message-ID: <20260716133050.851611176@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,162 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Yadu M G <yadu.mg@oss.qualcomm.com>
 
-commit f865a57896bd92d7662eb2818d8f48872e2cbbc7 upstream.
+commit e0779713a1e2f891aeec53e629dbbd33f423c629 upstream.
 
-When mtk_pcie_enable_port() fails, mtk_pcie_port_free() removes the port
-from pcie->ports and frees the port structure. However, the IRQ domains set
-up earlier by mtk_pcie_init_irq_domain() are never freed.
+A lockdep warning is observed during boot on a Qcom firmware-managed
+platform:
 
-Fix this by refactoring mtk_pcie_irq_teardown() into a per-port helper,
-mtk_pcie_irq_teardown_port(), and calling it from mtk_pcie_setup() when
-mtk_pcie_enable_port() fails. Since the IRQ teardown must only happen in
-the probe error path (during resume, child devices may have active MSI
-mappings and the NOIRQ context prohibits sleeping locks),
-mtk_pcie_enable_port() is changed to return an error code so callers can
-distinguish the two paths and act accordingly.
+  INFO: trying to register non-static key.
+  The code is fine but needs lockdep annotation, or maybe
+  you didn't initialize this object before use?
+  turning off the locking correctness validator.
+  ...
+  Call trace:
+   register_lock_class+0x128/0x4d8
+   __lock_acquire+0x110/0x1db0
+   lock_acquire+0x278/0x3d8
+   _raw_spin_lock_irq+0x6c/0xc0
+   dw_pcie_irq_domain_alloc+0x48/0x190
+   irq_domain_alloc_irqs_parent+0x2c/0x48
+   msi_domain_alloc+0x90/0x160
+  ...
 
-This issue was reported by Sashiko while reviewing the EcoNet EN7528 SoC
-support series.
+dw_pcie_irq_domain_alloc() takes pp->lock while allocating MSI
+interrupts. pp->lock is normally initialized by dw_pcie_host_init(), but
+Qcom firmware-managed hosts use the ECAM init path instead:
 
-Fixes: b099631df160 ("PCI: mediatek: Add controller support for MT2712 and MT7622")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+  pci_host_common_ecam_create()
+    pci_ecam_create()
+      qcom_pcie_ecam_host_init()
+        dw_pcie_msi_host_init()
+          dw_pcie_allocate_domains()
+
+That path constructs a fresh struct dw_pcie_rp and calls
+dw_pcie_msi_host_init() directly, without going through
+dw_pcie_host_init(). As a result, pp->lock was not initialized, which
+triggers the warning.
+
+Initialize pp->lock in qcom_pcie_ecam_host_init() before registering the
+MSI domains so the firmware-managed ECAM path matches the normal DWC host
+initialization sequence.
+
+Fixes: 7d944c0f1469 ("PCI: qcom: Add support for Qualcomm SA8255p based PCIe Root Complex")
+Signed-off-by: Yadu M G <yadu.mg@oss.qualcomm.com>
+[mani: added fixes tag and CCed stable]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Cc: stable@vger.kernel.org # 5.10
-Cc: Caleb James DeLisle <cjd@cjdns.fr>
-Link: https://patch.msgid.link/20260521174617.17692-1-mani@kernel.org
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20260604122418.727274-1-yadu.mg@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-mediatek.c |   63 ++++++++++++++++++++-------------
- 1 file changed, 40 insertions(+), 23 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/pci/controller/pcie-mediatek.c
-+++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -529,23 +529,27 @@ static void mtk_pcie_enable_msi(struct m
- 	writel(val, port->base + PCIE_INT_MASK);
- }
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1674,6 +1674,12 @@ static int qcom_pcie_ecam_host_init(stru
+ 	pci->dbi_base = cfg->win;
+ 	pp->num_vectors = MSI_DEF_NUM_VECTORS;
  
--static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
-+static void mtk_pcie_irq_teardown_port(struct mtk_pcie_port *port)
- {
--	struct mtk_pcie_port *port, *tmp;
-+	irq_set_chained_handler_and_data(port->irq, NULL, NULL);
- 
--	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
--		irq_set_chained_handler_and_data(port->irq, NULL, NULL);
-+	if (port->irq_domain)
-+		irq_domain_remove(port->irq_domain);
- 
--		if (port->irq_domain)
--			irq_domain_remove(port->irq_domain);
-+	if (IS_ENABLED(CONFIG_PCI_MSI)) {
-+		if (port->inner_domain)
-+			irq_domain_remove(port->inner_domain);
-+	}
- 
--		if (IS_ENABLED(CONFIG_PCI_MSI)) {
--			if (port->inner_domain)
--				irq_domain_remove(port->inner_domain);
--		}
-+	irq_dispose_mapping(port->irq);
-+}
- 
--		irq_dispose_mapping(port->irq);
--	}
-+static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
-+{
-+	struct mtk_pcie_port *port, *tmp;
++	/*
++	 * dw_pcie_msi_host_init() is called directly here, bypassing
++	 * dw_pcie_host_init() where pp->lock is normally initialized.
++	 */
++	raw_spin_lock_init(&pp->lock);
 +
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+		mtk_pcie_irq_teardown_port(port);
- }
- 
- static int mtk_pcie_intx_map(struct irq_domain *domain, unsigned int irq,
-@@ -865,7 +869,7 @@ static int mtk_pcie_startup_port_an7583(
- 	return mtk_pcie_startup_port_v2(port);
- }
- 
--static void mtk_pcie_enable_port(struct mtk_pcie_port *port)
-+static int mtk_pcie_enable_port(struct mtk_pcie_port *port)
- {
- 	struct mtk_pcie *pcie = port->pcie;
- 	struct device *dev = pcie->dev;
-@@ -874,7 +878,7 @@ static void mtk_pcie_enable_port(struct
- 	err = clk_prepare_enable(port->sys_ck);
- 	if (err) {
- 		dev_err(dev, "failed to enable sys_ck%d clock\n", port->slot);
--		goto err_sys_clk;
-+		return err;
- 	}
- 
- 	err = clk_prepare_enable(port->ahb_ck);
-@@ -922,11 +926,15 @@ static void mtk_pcie_enable_port(struct
- 		goto err_phy_on;
- 	}
- 
--	if (!pcie->soc->startup(port))
--		return;
-+	err = pcie->soc->startup(port);
-+	if (err) {
-+		dev_info(dev, "Port%d link down\n", port->slot);
-+		goto err_soc_startup;
-+	}
- 
--	dev_info(dev, "Port%d link down\n", port->slot);
-+	return 0;
- 
-+err_soc_startup:
- 	phy_power_off(port->phy);
- err_phy_on:
- 	phy_exit(port->phy);
-@@ -942,8 +950,8 @@ err_aux_clk:
- 	clk_disable_unprepare(port->ahb_ck);
- err_ahb_clk:
- 	clk_disable_unprepare(port->sys_ck);
--err_sys_clk:
--	mtk_pcie_port_free(port);
-+
-+	return err;
- }
- 
- static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
-@@ -1109,8 +1117,13 @@ static int mtk_pcie_setup(struct mtk_pci
- 		return err;
- 
- 	/* enable each port, and then check link status */
--	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
--		mtk_pcie_enable_port(port);
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
-+		err = mtk_pcie_enable_port(port);
-+		if (err) {
-+			mtk_pcie_irq_teardown_port(port);
-+			mtk_pcie_port_free(port);
-+		}
-+	}
- 
- 	/* power down PCIe subsys if slots are all empty (link down) */
- 	if (list_empty(&pcie->ports))
-@@ -1209,14 +1222,18 @@ static int mtk_pcie_resume_noirq(struct
- {
- 	struct mtk_pcie *pcie = dev_get_drvdata(dev);
- 	struct mtk_pcie_port *port, *tmp;
-+	int err;
- 
- 	if (list_empty(&pcie->ports))
- 		return 0;
- 
- 	clk_prepare_enable(pcie->free_ck);
- 
--	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
--		mtk_pcie_enable_port(port);
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
-+		err = mtk_pcie_enable_port(port);
-+		if (err)
-+			mtk_pcie_port_free(port);
-+	}
- 
- 	/* In case of EP was removed while system suspend. */
- 	if (list_empty(&pcie->ports))
+ 	ret = dw_pcie_msi_host_init(pp);
+ 	if (ret)
+ 		return ret;
 
 
