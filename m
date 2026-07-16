@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564CD3B42FC;
-	Thu, 16 Jul 2026 14:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7D93BCD11;
+	Thu, 16 Jul 2026 14:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211013; cv=none; b=jbrHwR51oiqV/qGM0R0neN57WRMl/9s/n4A3cAdI3zyjoDDw3j5b2v4i5DuZPPkzBH6eq9sX7vQuR0fJ8cgInumSxOoWUEqfMWsK2W83vm3mjnJkINO5bte7y5JdT0bPVC5HoLUiDvaRwu4otXVzd6rTiX5ezu9YE9yu3oKpzso=
+	t=1784211016; cv=none; b=Xh1vTJYaNOB56KGX/ib8+oQv/gnuKbwlLT/adNwJQH1pbARxKy8cFonoscTVMjklM0X7ff8SX5Yl/GplXlDnsFwad0F2oxNXogbuDHoJBKdBSVsgQfjBx+JRyyo6wiog4c82KzVtI+4i9FnPo6JPurlA9MtfHTawc+dtmM4xhrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211013; c=relaxed/simple;
-	bh=orpb1c+yzJQfSIewugOgwqaBz6u89VwDDvuseD2eGwc=;
+	s=arc-20240116; t=1784211016; c=relaxed/simple;
+	bh=1UwinEc6YyWd5SMPnM3xJ8xUvBD/O1zSAL39WfeC53A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzcw6lCXVeL5fs1l0IL46bHHuEtlJHAkSM41N7paaw0vG5KMBvJZoGVSFEnUM+OTWWviXD5vlQSYFhp8O0JCf5PQVTkEitXXIUdKzbPMe07n1uPKqXdojHwAH+4GSLkdR+6j4v9WPLb7PbBIYndc3ixbF5X0R2O7SNrrI9A/yrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GUb/xamh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FzxG9nCpeDXD6jll+OxCn7tSmEZXANlbv1TuB4SUw5h/ViMIV2bO3pGbYAy225Li5GQ6YOhvX8EUxLCIlc1KvAp4ctblE7cjJGYTECOo4FGLwc61JNGKiamRD7Zy8Jc9vEkX75QAC+CE17lAkh241fYQ+oBmRRVPHTqx6WBrRGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEvU5KU8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUb/xamh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBB31F00A3D;
-	Thu, 16 Jul 2026 14:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEvU5KU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFF61F00A3A;
+	Thu, 16 Jul 2026 14:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211012;
-	bh=7GVsEcY76PUE4YsAWCX8Yhdth46nZGOpC1WSN1Y1BAk=;
+	s=korg; t=1784211014;
+	bh=cJcr9pN3t4ggv2MhQtJ1aFh84/mWVgzoDc3L5MkJMWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GUb/xamhaa0p/nBHrQWOj4tuanaZbk55/iBw+OIsqGPwPZcLB4h91aYN+QHk2fITO
-	 eSgfo5UmFse792SzK/f0CnTtIJhZQzDjncn6In/PIa4BjNCFJvMX4kF2i2BdszYCEK
-	 J3/pMU/gejxANmpzDAKzutjqHAyRZMthY8fJ6GT0=
+	b=xEvU5KU8BXQsKOgcXxo135rza5ndTKhwL7eOoPE989kEzDZ7nUGtSJ6ZV5Q4da5He
+	 4/HI1vrtT/FNi6yLBKEVjCgNZ62z+BxOJ6N7Sv7jSRWIhHyTZVnxf9elAErhSAr6qt
+	 VcJHbFFQ7SwflR6sy3MwsY6UFNGzNY/jzLe3cnvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Khadka <maskmemanish@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 265/480] HID: letsketch: fix UAF on inrange_timer at driver unbind
-Date: Thu, 16 Jul 2026 15:30:12 +0200
-Message-ID: <20260716133050.552372726@linuxfoundation.org>
+	Trung Nguyen <trungnh@cystack.net>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.18 266/480] HID: multitouch: fix out-of-bounds bit access on mt_io_flags
+Date: Thu, 16 Jul 2026 15:30:13 +0200
+Message-ID: <20260716133050.573204262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,105 +50,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Khadka <maskmemanish@gmail.com>
+From: Trung Nguyen <trungnh@cystack.net>
 
-commit 46c8beeccd8ab2c863827254a85ea877654a3534 upstream.
+commit 8813b0612275cc61fe9e6603d0ee019247ade6be upstream.
 
-letsketch_driver does not provide a .remove callback, but
-letsketch_probe() arms a per-device timer:
+mt_io_flags is a single unsigned long, but mt_process_slot(),
+mt_release_pending_palms() and mt_release_contacts() use it as a
+per-slot bitmap indexed by the slot number. That slot number is only
+bounded by td->maxcontacts, which is taken from the device's
+ContactCountMaximum feature report and can be up to 255, not by
+BITS_PER_LONG.
 
-    timer_setup(&data->inrange_timer, letsketch_inrange_timeout, 0);
+As a result, a multitouch device that advertises a large contact count
+makes set_bit()/clear_bit() operate past the mt_io_flags word and
+corrupt the adjacent members of struct mt_device. The sticky-fingers
+release timer is the easiest way to reach this. mt_release_contacts()
+runs
 
-The timer is re-armed from letsketch_raw_event() with a 100 ms
-timeout on every pen-in-range report, and its callback dereferences
-data->input_tablet to deliver a synthetic BTN_TOOL_PEN release.
+	for (i = 0; i < mt->num_slots; i++)
+		clear_bit(i, &td->mt_io_flags);
 
-letsketch_data is allocated with devm_kzalloc(), and its input_dev
-fields are devm-allocated via letsketch_setup_input_tablet().  On
-device unbind (USB unplug or rmmod), the HID core runs its default
-teardown and devm cleanup frees both letsketch_data and the input
-devices.  Because no .remove callback exists, nothing drains the
-timer first: if raw_event armed it within ~100 ms of the unbind,
-the pending timer fires on freed memory.  This is a UAF read of
-data and of data->input_tablet, followed by input_report_key() /
-input_sync() into the freed input_dev.
+with num_slots == maxcontacts. For maxcontacts around 250 the loop
+clears the bits that overlap td->applications.next, zeroing that list
+head, and the list_for_each_entry() that immediately follows then
+dereferences NULL. The kernel panics from timer (softirq) context. On a
+KASAN build this shows up as a general protection fault in
+mt_release_contacts() with a null-ptr-deref at offset 0x58, which is
+offsetof(struct mt_application, num_received).
 
-The same problem can occur on the probe error path: if
-hid_hw_start() enabled I/O on an always-poll-quirk device and then
-failed, raw_event may have armed the timer before devm releases
-data.
+The state is reachable from an untrusted USB or Bluetooth HID
+multitouch device; no local privileges are required.
 
-Fix by adding a .remove callback that calls hid_hw_stop() first.
-hid_hw_stop() synchronously kills the URBs that deliver raw_event(),
-so once it returns no path can re-arm the timer.  timer_shutdown_sync()
-then drains any in-flight callback and permanently disables further
-mod_timer() calls.  Apply the same timer_shutdown_sync() in the probe
-error path so the timer is guaranteed not to outlive data.
+Store the per-slot active state in a separately allocated bitmap sized
+for maxcontacts, the same pattern already used for pending_palm_slots,
+and keep only MT_IO_FLAGS_RUNNING in mt_io_flags. The two
+"mt_io_flags & MT_IO_SLOTS_MASK" arming checks become
+bitmap_empty(td->active_slots, td->maxcontacts).
 
-Fixes: 33a5c2793451 ("HID: Add new Letsketch tablet driver")
+Move MT_IO_FLAGS_RUNNING back to bit 0. It was bumped to bit 32 by the
+same commit to leave the low byte for the slot bits; with the slot bits
+gone it fits in bit 0 again, which also keeps it within the unsigned
+long on 32-bit.
+
+Fixes: 46f781e0d151 ("HID: multitouch: fix sticky fingers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Manish Khadka <maskmemanish@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Trung Nguyen <trungnh@cystack.net>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-letsketch.c |   36 +++++++++++++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ drivers/hid/hid-multitouch.c |   32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
---- a/drivers/hid/hid-letsketch.c
-+++ b/drivers/hid/hid-letsketch.c
-@@ -296,13 +296,42 @@ static int letsketch_probe(struct hid_de
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -31,6 +31,7 @@
+  * [1] https://gitlab.freedesktop.org/libevdev/hid-tools
+  */
  
- 	ret = letsketch_setup_input_tablet(data);
- 	if (ret)
--		return ret;
-+		goto err_shutdown_timer;
- 
- 	ret = letsketch_setup_input_tablet_pad(data);
- 	if (ret)
--		return ret;
-+		goto err_shutdown_timer;
- 
--	return hid_hw_start(hdev, HID_CONNECT_HIDRAW);
-+	ret = hid_hw_start(hdev, HID_CONNECT_HIDRAW);
-+	if (ret)
-+		goto err_shutdown_timer;
-+
-+	return 0;
-+
-+err_shutdown_timer:
-+	/*
-+	 * Drain any pending callback and permanently disable the timer
-+	 * before devm releases data: if hid_hw_start() enabled I/O on an
-+	 * always-poll-quirk device and then failed, raw_event may have
-+	 * armed the timer already.
-+	 */
-+	timer_shutdown_sync(&data->inrange_timer);
-+	return ret;
-+}
-+
-+static void letsketch_remove(struct hid_device *hdev)
-+{
-+	struct letsketch_data *data = hid_get_drvdata(hdev);
-+
-+	/*
-+	 * hid_hw_stop() synchronously kills the URBs that deliver
-+	 * raw_event(), so once it returns no path can re-arm
-+	 * inrange_timer.  timer_shutdown_sync() then drains any
-+	 * in-flight callback and permanently disables further
-+	 * mod_timer() calls before devm releases data.
-+	 */
-+	hid_hw_stop(hdev);
-+	timer_shutdown_sync(&data->inrange_timer);
- }
- 
- static const struct hid_device_id letsketch_devices[] = {
-@@ -315,6 +344,7 @@ static struct hid_driver letsketch_drive
- 	.name = "letsketch",
- 	.id_table = letsketch_devices,
- 	.probe = letsketch_probe,
-+	.remove = letsketch_remove,
- 	.raw_event = letsketch_raw_event,
++#include <linux/bitmap.h>
+ #include <linux/bits.h>
+ #include <linux/device.h>
+ #include <linux/hid.h>
+@@ -96,8 +97,7 @@ enum report_mode {
+ 	TOUCHPAD_REPORT_ALL = TOUCHPAD_REPORT_BUTTONS | TOUCHPAD_REPORT_CONTACTS,
  };
- module_hid_driver(letsketch_driver);
+ 
+-#define MT_IO_SLOTS_MASK		GENMASK(7, 0) /* reserve first 8 bits for slot tracking */
+-#define MT_IO_FLAGS_RUNNING		32
++#define MT_IO_FLAGS_RUNNING		0
+ 
+ static const bool mtrue = true;		/* default for true */
+ static const bool mfalse;		/* default for false */
+@@ -173,10 +173,9 @@ struct mt_device {
+ 	struct timer_list release_timer;	/* to release sticky fingers */
+ 	struct hid_haptic_device *haptic;	/* haptic related configuration */
+ 	struct hid_device *hdev;	/* hid_device we're attached to */
+-	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING)
+-					 * first 8 bits are reserved for keeping the slot
+-					 * states, this is fine because we only support up
+-					 * to 250 slots (MT_MAX_MAXCONTACT)
++	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING) */
++	unsigned long *active_slots;	/* bitmap of slots with an active
++					 * contact, sized for maxcontacts
+ 					 */
+ 	__u8 inputmode_value;	/* InputMode HID feature value */
+ 	__u8 maxcontacts;
+@@ -1025,7 +1024,7 @@ static void mt_release_pending_palms(str
+ 
+ 	for_each_set_bit(slotnum, app->pending_palm_slots, td->maxcontacts) {
+ 		clear_bit(slotnum, app->pending_palm_slots);
+-		clear_bit(slotnum, &td->mt_io_flags);
++		clear_bit(slotnum, td->active_slots);
+ 
+ 		input_mt_slot(input, slotnum);
+ 		input_mt_report_slot_inactive(input);
+@@ -1236,9 +1235,9 @@ static int mt_process_slot(struct mt_dev
+ 		input_event(input, EV_ABS, ABS_MT_TOUCH_MAJOR, major);
+ 		input_event(input, EV_ABS, ABS_MT_TOUCH_MINOR, minor);
+ 
+-		set_bit(slotnum, &td->mt_io_flags);
++		set_bit(slotnum, td->active_slots);
+ 	} else {
+-		clear_bit(slotnum, &td->mt_io_flags);
++		clear_bit(slotnum, td->active_slots);
+ 	}
+ 
+ 	return 0;
+@@ -1373,7 +1372,7 @@ static void mt_touch_report(struct hid_d
+ 	 * defect.
+ 	 */
+ 	if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
+-		if (td->mt_io_flags & MT_IO_SLOTS_MASK)
++		if (!bitmap_empty(td->active_slots, td->maxcontacts))
+ 			mod_timer(&td->release_timer,
+ 				  jiffies + msecs_to_jiffies(100));
+ 		else
+@@ -1430,6 +1429,15 @@ static int mt_touch_input_configured(str
+ 	if (td->is_buttonpad)
+ 		__set_bit(INPUT_PROP_BUTTONPAD, input->propbit);
+ 
++	if (!td->active_slots) {
++		td->active_slots = devm_kcalloc(&td->hdev->dev,
++						BITS_TO_LONGS(td->maxcontacts),
++						sizeof(long),
++						GFP_KERNEL);
++		if (!td->active_slots)
++			return -ENOMEM;
++	}
++
+ 	app->pending_palm_slots = devm_kcalloc(&hi->input->dev,
+ 					       BITS_TO_LONGS(td->maxcontacts),
+ 					       sizeof(long),
+@@ -1907,7 +1915,7 @@ static void mt_release_contacts(struct h
+ 			for (i = 0; i < mt->num_slots; i++) {
+ 				input_mt_slot(input_dev, i);
+ 				input_mt_report_slot_inactive(input_dev);
+-				clear_bit(i, &td->mt_io_flags);
++				clear_bit(i, td->active_slots);
+ 			}
+ 			input_mt_sync_frame(input_dev);
+ 			input_sync(input_dev);
+@@ -1930,7 +1938,7 @@ static void mt_expired_timeout(struct ti
+ 	 */
+ 	if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
+ 		return;
+-	if (td->mt_io_flags & MT_IO_SLOTS_MASK)
++	if (!bitmap_empty(td->active_slots, td->maxcontacts))
+ 		mt_release_contacts(hdev);
+ 	clear_bit_unlock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags);
+ }
 
 
