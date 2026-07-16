@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A265B22301;
-	Thu, 16 Jul 2026 13:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3352F22301;
+	Thu, 16 Jul 2026 13:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210086; cv=none; b=MjjG31yqByvu8Xiq6pXGmwXO3/7iltSuzc3Y0nNCxZlzM1XmTS6tJ/TEnbJO66b349s3BLLVdITiG+AUShyg0zZqt+Zs92J86WiAI5Gd+8gB3wkJ1RJTdRCMMzkp7ZZC0Go1amYYp1n2K3J7VkXzQeAJdBgMWWBfMHbDStB6lO4=
+	t=1784210089; cv=none; b=L+x6cgIGhL05bmfon4bk88yblIE9DbTURkYTS0I7v7cREJ6jCGY3pmvZw6GYGlvjGwh3A5J5o7K2e/FGveFoSFYW9xRFAqfyfnceXZsvorPxU8h5pSpjYxb823MfA1qhR42af5r6xUHhzumVeTWWwVmM68+CBogSVHyhEk814wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210086; c=relaxed/simple;
-	bh=E5ZOIl2bm0hune65r3c44Pxep2FE1Wk8W4sQb7kpYpc=;
+	s=arc-20240116; t=1784210089; c=relaxed/simple;
+	bh=N8Ryppdf2sUFgC5wmPWdRJcdI2c7gH5k+FgyEejceaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/UOOLMH2Ou6LvLMuTa/GwJtKcn3zUtG7otUXfwWd51RheM5AbRPUGto3tlGSN4phbUct1no7syUb10PeGIkADRyLcSd27CwEfGzcEzIVhaG4pe7Iu86VeMkNoVgmgZoLUb+32u3Dl8/gE29OcqfK8zKXvZ5aXKvzOJ4MPzpId4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eipNLy3K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FDrRMdpVRMHe/bJw/YGVOqc19fgWEG36gU0kQqngQ7/PPKaW3e0nYLPb5ywkajwOrLtQBkwPE16FFqWoc7xLeIwKgTOp3cC7Iv2SRBWTw2NwkRFypDMfyES+JpVS0HR9hg9E/uF7s90HBe/sYOu/zCsT90nKoqZS3CoOVDZoVwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1de1xq7z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eipNLy3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00CE1F000E9;
-	Thu, 16 Jul 2026 13:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1de1xq7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712071F000E9;
+	Thu, 16 Jul 2026 13:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210085;
-	bh=V15FWg2zcdEjw3/v/Avp1ve1iM4mj8Q+Qf42DD5L2eI=;
+	s=korg; t=1784210087;
+	bh=Ipu7B+ZVZ1Lw425KiRCN4XcYQ7NgFjJLWV2ByCGOmoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eipNLy3KpGyTkmgZ6t7Zqyf/bgKv0rkw3Hme4xgu3U8ije/Gmuc8ofFh/ipoLaEIj
-	 rpdhuL4JH/NEylApf9gisj8BwtGhRSbjweTemWvVhaleG/kYZK9FBfXXUIXz9wFJ2o
-	 lvjoSvb3CJ9mf0ByhpAnOa82AwkUGjCgKAaQP4Lc=
+	b=1de1xq7zN4IkRGImlQkizdUCUh2BxU2NxGFg2QHS9n7bV+g0fxTGXfoucsb0oqQXC
+	 1Vd4/m7gKoUrEw9wiWNfW+tKHmWqL98GK+etRlXSV1Pb4tIwQrDIiETe9cGXtHbRvO
+	 lX+d/zLiA8Nbjcj6d02qx92iBtFlYaQPdjklY+9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nareshkumar Gollakoti <naresh.kumar.g@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Weinan Liu <wnliu@google.com>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 7.1 431/518] iommu/vt-d: Avoid WARNING in sva unbind path
-Date: Thu, 16 Jul 2026 15:31:39 +0200
-Message-ID: <20260716133057.271996390@linuxfoundation.org>
+Subject: [PATCH 7.1 432/518] iommu/amd: Dont split flush for amd_iommu_domain_flush_all()
+Date: Thu, 16 Jul 2026 15:31:40 +0200
+Message-ID: <20260716133057.294834336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,103 +56,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Weinan Liu <wnliu@google.com>
 
-commit 534b5f98ab7319d8004bbc7dab6481462243e883 upstream.
+commit 69fe699afe1afcb730164b86c228483c2da05f94 upstream.
 
-The Intel IOMMU driver allows SVA on devices even if they do not support
-PCI/PRI. Commit 39c20c4e83b9 ("iommu/vt-d: Only handle IOPF for SVA when
-PRI is supported") modified the SVA bind path to allow this configuration
-by skipping IOPF enablement when PRI is missing. However, it failed to
-update the unbind path.
+We have observed multiple full invalidations occurring during device
+detach when we are done using the vfio-device.
 
-This creates an imbalance: the unbind path attempts to disable IOPF for
-a device that never had it enabled, triggering a WARNING in
-intel_iommu_disable_iopf():
+blocked_domain_attach_device()
+  -> detach_device()
+    -> amd_iommu_domain_flush_all()
+      -> amd_iommu_domain_flush_pages(..., CMD_INV_IOMMU_ALL_PAGES_ADDRESS)
 
- WARNING: drivers/iommu/intel/iommu.c:3475 at intel_iommu_disable_iopf+0x4f/0x90d
- Call Trace:
-  <TASK>
-  blocking_domain_set_dev_pasid+0x50/0x70
-  iommu_detach_device_pasid+0x89/0xc0
-  iommu_sva_unbind_device+0x73/0x150
-  xe_vm_close_and_put+0x4d2/0x1200 [xe]
+      	while (size != 0) {
 
-Fix this by bypassing IOPF operations for SVA domains on non-PRI hardware
-in both the bind and unbind paths.
+          -> __domain_flush_pages( flush_size /* power of 2 flush_size */)
+            -> domain_flush_pages_v1()
+              -> build_inv_iommu_pages()
+                -> build_inv_address()
 
-Fixes: 39c20c4e83b9 ("iommu/vt-d: Only handle IOPF for SVA when PRI is supported")
+         }
+
+build_inv_address() will trigger a full invalidation  if the chunk
+size > (1 << 51). Consequently, the guest will issue multiple full
+invalidations for a single call to  amd_iommu_domain_flush_all()
+
+Without this patch, we will see 10 time instead of 1 time full
+invalidations for every amd_iommu_domain_flush_all().
+
 Cc: stable@vger.kernel.org
-Reported-by: Nareshkumar Gollakoti <naresh.kumar.g@intel.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260519052917.3729796-1-baolu.lu@linux.intel.com
+Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
+Suggested-by: Josef Bacik <josef@toxicpanda.com>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Weinan Liu <wnliu@google.com>
+Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.h |   11 +++++++++++
- drivers/iommu/intel/svm.c   |   12 ++++--------
- 2 files changed, 15 insertions(+), 8 deletions(-)
+ drivers/iommu/amd/iommu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -1254,18 +1254,29 @@ void intel_iommu_disable_iopf(struct dev
- static inline int iopf_for_domain_set(struct iommu_domain *domain,
- 				      struct device *dev)
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -1774,7 +1774,8 @@ void amd_iommu_domain_flush_pages(struct
  {
-+	struct device_domain_info *info = dev_iommu_priv_get(dev);
-+
- 	if (!domain || !domain->iopf_handler)
- 		return 0;
+ 	lockdep_assert_held(&domain->lock);
  
-+	/* SVA with non-IOMMU/PRI IOPF handling is allowed. */
-+	if (domain->type == IOMMU_DOMAIN_SVA && !info->pri_supported)
-+		return 0;
-+
- 	return intel_iommu_enable_iopf(dev);
- }
+-	if (likely(!amd_iommu_np_cache)) {
++	if (likely(!amd_iommu_np_cache) ||
++		size >= (1ULL<<52)) {
+ 		__domain_flush_pages(domain, address, size);
  
- static inline void iopf_for_domain_remove(struct iommu_domain *domain,
- 					  struct device *dev)
- {
-+	struct device_domain_info *info = dev_iommu_priv_get(dev);
-+
- 	if (!domain || !domain->iopf_handler)
- 		return;
- 
-+	if (domain->type == IOMMU_DOMAIN_SVA && !info->pri_supported)
-+		return;
-+
- 	intel_iommu_disable_iopf(dev);
- }
- 
---- a/drivers/iommu/intel/svm.c
-+++ b/drivers/iommu/intel/svm.c
-@@ -164,12 +164,9 @@ static int intel_svm_set_dev_pasid(struc
- 	if (IS_ERR(dev_pasid))
- 		return PTR_ERR(dev_pasid);
- 
--	/* SVA with non-IOMMU/PRI IOPF handling is allowed. */
--	if (info->pri_supported) {
--		ret = iopf_for_domain_replace(domain, old, dev);
--		if (ret)
--			goto out_remove_dev_pasid;
--	}
-+	ret = iopf_for_domain_replace(domain, old, dev);
-+	if (ret)
-+		goto out_remove_dev_pasid;
- 
- 	/* Setup the pasid table: */
- 	sflags = cpu_feature_enabled(X86_FEATURE_LA57) ? PASID_FLAG_FL5LP : 0;
-@@ -184,8 +181,7 @@ static int intel_svm_set_dev_pasid(struc
- 
- 	return 0;
- out_unwind_iopf:
--	if (info->pri_supported)
--		iopf_for_domain_replace(old, domain, dev);
-+	iopf_for_domain_replace(old, domain, dev);
- out_remove_dev_pasid:
- 	domain_remove_dev_pasid(domain, dev, pasid);
- 	return ret;
+ 		/* Wait until IOMMU TLB and all device IOTLB flushes are complete */
 
 
