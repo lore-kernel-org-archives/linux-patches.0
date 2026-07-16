@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4402DF137;
-	Thu, 16 Jul 2026 13:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA08424672;
+	Thu, 16 Jul 2026 13:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209220; cv=none; b=se3s/WgHIWsudObvKOGQrCrrlv0XC/g+Qr4t3TUbGXPdLS4JDdJpgFwBhO/QxtxQ5/lW0eUxdwrAcjzrbzyregqe/Jn9BLH6eREj1c4tqAR/VWH49bXCsRrq8dQIdVAjS0PH/WdTiDoTgwmXwuFEjJ2aReAsXfhyPCbmvLt4GPU=
+	t=1784209223; cv=none; b=rMlLoylXf7FsIMKNIY19KGLtlGgF9Cw3Qv1XFEUrTXwg8Vcik0ipCbuJR56z48UGDK/DyeEiSHsJs6/JSs+uDX2STtyV012anNvnxJKQA2yPwjJeZKtvC5uEgDZVQlG3MJ+SdZIrbk28qAV6TwnEUWOCn86Gbzp5JuEX127f47w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209220; c=relaxed/simple;
-	bh=uUxQZpYHj5OpcHYEzi5TmvnqdboDUv0nnB+i1zaD17Y=;
+	s=arc-20240116; t=1784209223; c=relaxed/simple;
+	bh=k+rbWHIfGUPYcfcUfBHrMd2aZd3Bvwroo9S6O4N9QP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixJqwvnhYZCYPOPXLPoqVmUxpwgqss7uuvM8HhgdRVSIryQrDyfSLPC+7VOEulmzjtN+R20x7aXVn2pvdF4eA+V/w3TD/3Ew8gB5CS4efygynB7ppMVv2DYpqSA3oh3Qc63oa5L487v4CI9xtce0OYgZYBL1h9dD0CdWE6Mh0E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAGLLkJ0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DS7nLBKNHudYMQKbEknSx+Vc7CN8brvtcyBmiA+BuawmMg5cv8wr7Mqe0nxy3d6fVZ5L9RpQSb0Rrsiujv6GzXLrimfOuv7ZbwiYo6QK4Nb1C4G1dssHn9PsV4BOEr+DJxiqX1Fjr0c+uN/PCggxaI9npNX72LeUlR73x4eBPLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVntl18j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAGLLkJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5955B1F000E9;
-	Thu, 16 Jul 2026 13:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVntl18j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003D41F000E9;
+	Thu, 16 Jul 2026 13:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209218;
-	bh=dnaXz85+Xjq8mNZNccG/ObxtdZEPqX1+iqMujME4QC8=;
+	s=korg; t=1784209221;
+	bh=hW2yRVGIOhH+S/cHlrRBWkstaj8Xu8ht1In1GuwXAGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FAGLLkJ0/X0vKD67qob3psymO9/apPW9hzXHkCQPhZJp7b+E4CNxOnLfjomLS3Rl2
-	 94nfYmzW0HD5nuAC64+cWG71W0qGTYJ9tWqI5dJBJ4dsNSm9omtN48Yro2DNcDn6n0
-	 pzQvQi8mnU1TUkb9wQK1colwKvgMruN4hnX/5QTM=
+	b=yVntl18jmh3YVCmMZhGNJgxC4NZLohaKOt/RXdl2uoXGVPLBFXf4Q9QoID8m494nL
+	 bk71NwEjQign6sn0RHWpA5lc539Rq0673a6OUaQFLeDm+8EbXnD9iTfrk3ujFMRONx
+	 WoEJYr3t44OaDJ5qMtptR8o92B/TUBJ7eqQsFlv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Crt Mori <cmo@melexis.com>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 075/518] iio: temperature: Build mlx90635 with CONFIG_MLX90635
-Date: Thu, 16 Jul 2026 15:25:43 +0200
-Message-ID: <20260716133049.426900386@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.1 102/518] ALSA: usb-audio: Roll back quirk control caches on write errors
+Date: Thu, 16 Jul 2026 15:26:10 +0200
+Message-ID: <20260716133050.093067309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -46,46 +44,169 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 63a76e3a587c4143e8e24e8a6b0c232fa0676034 upstream.
+commit 6380957fa24251856a532e48a46a4dc3d1ae26b6 upstream.
 
-drivers/iio/temperature/Kconfig has a dedicated MLX90635 option, but
-the Makefile currently builds mlx90635.o under CONFIG_MLX90632.
+Several mixer quirk callbacks cache the requested
+control value in kcontrol->private_value before
+issuing a single vendor or class write.
 
-This means enabling CONFIG_MLX90635 alone does not carry its provider
-object into the build, while enabling CONFIG_MLX90632 unexpectedly also
-builds mlx90635.o.
+Their paired get and resume paths consume that cache
+directly, so a failed write currently leaves software
+state changed even though the update did not succeed.
+That can make later reads report a value the device
+never accepted and can replay the stale cache on resume.
 
-Gate mlx90635.o on the matching generated Kconfig symbol.
+Restore the previous cached value on failure in
+the Audigy2NX LED, Emu0204 channel switch,
+Xonar U1 output switch, Native Instruments controls,
+FTU effect program switch, and Sound Blaster E1 input source switch.
 
-Fixes: a1d1ba5e1c28 ("iio: temperature: mlx90635 MLX90635 IR Temperature sensor")
+Fixes: 9cf3689bfe07 ("ALSA: usb-audio: Add audigy2nx resume support")
+Fixes: 5f503ee9e270 ("ALSA: usb-audio: Add Emu0204 channel switch resume support")
+Fixes: 2bfb14c3b8fb ("ALSA: usb-audio: Add Xonar U1 resume support")
+Fixes: da6d276957ea ("ALSA: usb-audio: Add resume support for Native Instruments controls")
+Fixes: 0b4e9cfcef05 ("ALSA: usb-audio: Add resume support for FTU controls")
+Fixes: 388fdb8f882a ("ALSA: usb-audio: Support changing input on Sound Blaster E1")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Acked-by: Crt Mori <cmo@melexis.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260429-alsa-usb-quirks-cache-rollback-v1-1-01b35c688b80@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer_quirks.c |   45 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 8 deletions(-)
 
---- a/drivers/iio/temperature/Makefile
-+++ b/drivers/iio/temperature/Makefile
-@@ -13,7 +13,7 @@ obj-$(CONFIG_MAX31865) += max31865.o
- obj-$(CONFIG_MCP9600) += mcp9600.o
- obj-$(CONFIG_MLX90614) += mlx90614.o
- obj-$(CONFIG_MLX90632) += mlx90632.o
--obj-$(CONFIG_MLX90632) += mlx90635.o
-+obj-$(CONFIG_MLX90635) += mlx90635.o
- obj-$(CONFIG_TMP006) += tmp006.o
- obj-$(CONFIG_TMP007) += tmp007.o
- obj-$(CONFIG_TMP117) += tmp117.o
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -333,6 +333,7 @@ static int snd_audigy2nx_led_put(struct
+ 	int index = kcontrol->private_value & 0xff;
+ 	unsigned int value = ucontrol->value.integer.value[0];
+ 	int old_value = kcontrol->private_value >> 8;
++	unsigned long old_pval = kcontrol->private_value;
+ 	int err;
+ 
+ 	if (value > 1)
+@@ -341,7 +342,11 @@ static int snd_audigy2nx_led_put(struct
+ 		return 0;
+ 	kcontrol->private_value = (value << 8) | index;
+ 	err = snd_audigy2nx_led_update(mixer, value, index);
+-	return err < 0 ? err : 1;
++	if (err < 0) {
++		kcontrol->private_value = old_pval;
++		return err;
++	}
++	return 1;
+ }
+ 
+ static int snd_audigy2nx_led_resume(struct usb_mixer_elem_list *list)
+@@ -487,6 +492,7 @@ static int snd_emu0204_ch_switch_put(str
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kcontrol);
+ 	struct usb_mixer_interface *mixer = list->mixer;
+ 	unsigned int value = ucontrol->value.enumerated.item[0];
++	unsigned long old_pval = kcontrol->private_value;
+ 	int err;
+ 
+ 	if (value > 1)
+@@ -497,7 +503,11 @@ static int snd_emu0204_ch_switch_put(str
+ 
+ 	kcontrol->private_value = value;
+ 	err = snd_emu0204_ch_switch_update(mixer, value);
+-	return err < 0 ? err : 1;
++	if (err < 0) {
++		kcontrol->private_value = old_pval;
++		return err;
++	}
++	return 1;
+ }
+ 
+ static int snd_emu0204_ch_switch_resume(struct usb_mixer_elem_list *list)
+@@ -805,7 +815,11 @@ static int snd_xonar_u1_switch_put(struc
+ 
+ 	kcontrol->private_value = new_status;
+ 	err = snd_xonar_u1_switch_update(list->mixer, new_status);
+-	return err < 0 ? err : 1;
++	if (err < 0) {
++		kcontrol->private_value = old_status;
++		return err;
++	}
++	return 1;
+ }
+ 
+ static int snd_xonar_u1_switch_resume(struct usb_mixer_elem_list *list)
+@@ -1143,7 +1157,8 @@ static int snd_nativeinstruments_control
+ 					     struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kcontrol);
+-	u8 oldval = (kcontrol->private_value >> 24) & 0xff;
++	unsigned long old_pval = kcontrol->private_value;
++	u8 oldval = (old_pval >> 24) & 0xff;
+ 	u8 newval = ucontrol->value.integer.value[0];
+ 	int err;
+ 
+@@ -1153,7 +1168,11 @@ static int snd_nativeinstruments_control
+ 	kcontrol->private_value &= ~(0xff << 24);
+ 	kcontrol->private_value |= (unsigned int)newval << 24;
+ 	err = snd_ni_update_cur_val(list);
+-	return err < 0 ? err : 1;
++	if (err < 0) {
++		kcontrol->private_value = old_pval;
++		return err;
++	}
++	return 1;
+ }
+ 
+ static const struct snd_kcontrol_new snd_nativeinstruments_ta6_mixers[] = {
+@@ -1308,7 +1327,8 @@ static int snd_ftu_eff_switch_put(struct
+ 				  struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kctl);
+-	unsigned int pval = list->kctl->private_value;
++	unsigned long old_pval = list->kctl->private_value;
++	unsigned int pval = old_pval;
+ 	int cur_val, err, new_val;
+ 
+ 	cur_val = pval >> 24;
+@@ -1319,7 +1339,11 @@ static int snd_ftu_eff_switch_put(struct
+ 	kctl->private_value &= ~(0xff << 24);
+ 	kctl->private_value |= new_val << 24;
+ 	err = snd_ftu_eff_switch_update(list);
+-	return err < 0 ? err : 1;
++	if (err < 0) {
++		kctl->private_value = old_pval;
++		return err;
++	}
++	return 1;
+ }
+ 
+ static int snd_ftu_create_effect_switch(struct usb_mixer_interface *mixer,
+@@ -2098,13 +2122,18 @@ static int snd_soundblaster_e1_switch_pu
+ {
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kcontrol);
+ 	unsigned char value = !!ucontrol->value.integer.value[0];
++	unsigned long old_pval = kcontrol->private_value;
+ 	int err;
+ 
+ 	if (kcontrol->private_value == value)
+ 		return 0;
+ 	kcontrol->private_value = value;
+ 	err = snd_soundblaster_e1_switch_update(list->mixer, value);
+-	return err < 0 ? err : 1;
++	if (err < 0) {
++		kcontrol->private_value = old_pval;
++		return err;
++	}
++	return 1;
+ }
+ 
+ static int snd_soundblaster_e1_switch_resume(struct usb_mixer_elem_list *list)
 
 
