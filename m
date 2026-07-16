@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B9E3CF1F4;
-	Thu, 16 Jul 2026 13:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21594252C1;
+	Thu, 16 Jul 2026 13:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209623; cv=none; b=QqWyoUA9rCBBzHiCyh8pRceqcZ/g0tABuMucLfuuyQDuyF4PXMLgc/ftgLR6aGsqHdDHff+Q+sUwh7vOzQmgutdenBDdKhsF/TSK4/nlGfZCczAz5UMuDnLTX09DLJQ/3HQueJLU1UT1YyyM/wmkZ3JLBmMLQh8/uaPG2qybIiI=
+	t=1784209623; cv=none; b=ggBxx69nyZ5mD4dS17NHo0ik3UxcKTNAMhHlpL0ymNt3z0tYaaSQM1FiOubUlGY6yBriPS4siUe3CXlQg1QUGvK3uQOGt1q04rZ4DooTHbtrD9NcLOzwwa10TbqiME/+XiSCJW/Bcr5JsgmxfaGRKuoBJ1NCZLhnqY6kQjbfgw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784209623; c=relaxed/simple;
-	bh=d+U9e01Lm8tSeVnR+4C+6QAP7EVeJQJZC29iIM4+3Ik=;
+	bh=RsNVRT0xKvLVxeymUJdV1wYmRmWCmgwbWxcmL3G6EOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pMH1iy0XtV5Kder6KZWX3wgm7a4/AzLB3UpftXytBwAEn2OIZ3LY5qmTSYdRWasqTESGqzBdMkUP63vNx3qZ3QsvrZ0mXwabAlOCzZYMefcc4BtpnMbNdRvVaRunS+vseT202YeAXlC/Zzon5JiwtgyQa+NzOAYokdUg4/9kofc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oy05GNCM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tIypFnX2yHOnvfZhFvG8FvLOK+JO69zL5e9Dl08TCtMDvR3g8oRe2tQ+t9FBxcRJdK+hiPhDeMyiVJvd/SsWz4W0FMe2o2q7ocmfPnaLqRu1tnm9AuJqHmMKs/BF5Kr/v2rfvdbrPzmTXAuMDOqTyPNK8GnYRiEAV143mHsklHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZekQ1s+P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oy05GNCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113461F00A3A;
-	Thu, 16 Jul 2026 13:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZekQ1s+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC2A1F00A3E;
+	Thu, 16 Jul 2026 13:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209615;
-	bh=HXE762AGKpCRvTPoPHrCwEW1FDn0Kez7lEHllncNBNs=;
+	s=korg; t=1784209618;
+	bh=FTqax0ao+qlNeW7R/iNns4bkotod3r/CGd0piZVpDA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oy05GNCM9Tp91gO2fLHyCpkoMy1eoEwCmc73Irye5sqiLxpe9A2CW/bKgIeXntFEf
-	 v9eK/m4dMO/gj6AstnTjqkRklr+zl26xw95MR1qGVl6y8cWZ/qiY1kZfgFIHkIAOA+
-	 WIrgVyZkpLmlT7bXg+Wtcugtk2Qz/3iRIaQ4Q5/E=
+	b=ZekQ1s+PWpiipx8NpH3WlgteJpId07kIu73vh8vrybIrBh9tkt69VkJwanY6WyEHC
+	 2KyzKz34SvSV6cejtfd/TDTcuy1ppqXI5CxIO6eaaXKbP9xW5tFs09tnKrUm2asF80
+	 Hr1cb1xxyi5X0KGjddWoLSzhzk+OATfY9mBddz2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Fushuai Wang <wangfushuai@baidu.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.1 251/518] cpufreq: intel_pstate: Sync policy->cur during CPU offline
-Date: Thu, 16 Jul 2026 15:28:39 +0200
-Message-ID: <20260716133053.308552805@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 7.1 252/518] sched/rt: Have RT_PUSH_IPI be default off for non PREEMPT_RT
+Date: Thu, 16 Jul 2026 15:28:40 +0200
+Message-ID: <20260716133053.331686115@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,51 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fushuai Wang <wangfushuai@baidu.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit bcbdaa1086c25a8a5d48e04e1b82fdfb0682b681 upstream.
+commit dd29c017aed628076e915fe4cdfb5392fd4c5cab upstream.
 
-When a CPU goes offline with HWP disabled, intel_pstate_set_min_pstate()
-sets the MSR_IA32_PERF_CTL to minimum frequency to prevent SMT siblings
-from being restricted. However, the policy->cur value was not updated,
-leaving it at the previous value.
+RT migration is done aggressively. When a CPU schedules out a high
+priority RT task for a lower priority task, it will look to see if there's
+any RT tasks that are waiting to run on another CPU that is of higher
+priority than the task this CPU is about to run. If it finds one, it will
+pull that task over to the CPU and allow it to run there instead.
 
-When the CPU comes back online, governor->limits() checks if target_freq
-equals policy->cur and skips the frequency adjustment if they match. Since
-policy->cur still holds the previous value, the governor does not call
-cpufreq_driver->target to update MSR_IA32_PERF_CTL.
+Normally, this pulling is done by looking at the RT overloaded mask (rto)
+which contains all the CPUs in the scheduler domain with RT tasks that are
+waiting to run due to a higher priority RT task currently running on their
+CPU. The CPU that is about to schedule a lower priority task will grab the
+rq lock of the overloaded CPU and move the RT task from that CPU's runqueue
+to the local one and schedule the higher priority RT task.
 
-Fix this by synchronizing policy->cur with the hardware state when setting
-minimum pstate during CPU offline.
+This caused issues when a lot of CPUs would schedule a lower priority task
+at the same time. They would all try to grab the same runqueue lock of
+the CPU with the overloaded RT tasks. Only the first CPU that got in will
+get that task. All the others would wait until they got the runqueue lock
+and see there's nothing to pull and do nothing. On systems with lots of
+CPUs, this caused a large latency (up to 500us) which is beyond what
+PREEMPT_RT is to allow.
 
-Fixes: bb18008f8086 ("intel_pstate: Set core to min P state during core offline")
-Cc: stable@vger.kernel.org # 3.15+
-Suggested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
-[ rjw: Subject refinement ]
-Link: https://patch.msgid.link/20260520032119.30615-1-fushuai.wang@linux.dev
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The solution to that was to create an RT_PUSH_IPI logic. When any CPU
+wanted to pull a task, instead of grabbing the runqueue lock of the
+overloaded CPU, it would start by sending an IPI to the overloaded CPU,
+and that IPI handler would have the CPU with the waiting RT task do a push
+instead. Then that handler would send an IPI to the next CPU with
+overloaded RT tasks, and so on. Note, after the first CPU starts this
+process, if another CPU wanted to do a pull, it would see that the process
+has already begun and would only increment a counter to have the IPIs
+continue again.
+
+The RT_PUSH_IPI solved the latency problem with PREEMPT_RT but could cause
+a new issue with non PREEMPT_RT. Namely, softirqs run in a threaded
+context on PREEMPT_RT but they can run in an interrupt context in non-RT.
+
+If an IPI lands on a CPU that has just woken up multiple RT tasks and the
+current CPU is running a non RT or a low priority RT task, instead of
+doing a push, it would simply do a schedule on that CPU. But if a softirq
+was also executing on this CPU, the schedule would need to wait until the
+softirq finished. Until then, the CPU would still be considered overloaded
+as there are RT tasks still waiting to run on it.
+
+A live lock occurred on a workload that was doing heavy networking traffic
+on a large machine where the softirqs would run 500us out of 750us. And it
+would also be waking up RT tasks, causing the RT pull logic to be
+constantly executed.
+
+When a softirq triggered on a CPU with RT tasks queued but not running
+yet, and the other CPUs would see this CPU as being overloaded, they would
+send an IPI over to it. The CPU would notice that the waiting RT tasks are
+of higher priority than the currently running task and simply schedule
+that CPU instead. But because the softirq was executing, before it could
+schedule, it would receive another IPI to do the same. The amount of IPIs
+would slow down the currently running softirq so much that before it could
+return back to task context, it would execute another softirq never
+allowing the CPU to schedule. This live locked that CPU.
+
+As RT_PUSH_IPI was created to help PREEMPT_RT, make it default off if
+PREEMPT_RT is not enabled.
+
+Fixes: b6366f048e0c ("sched/rt: Use IPI to trigger RT task push migration instead of pulling")
+Closes: https://lore.kernel.org/all/20260506235716.2530720-1-tj@kernel.org/
+Reported-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260515103740.25ccbed8@gandalf.local.home
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/sched/features.h |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2984,10 +2984,12 @@ static int intel_cpufreq_cpu_offline(str
- 	 * from getting to lower performance levels, so force the minimum
- 	 * performance on CPU offline to prevent that from happening.
- 	 */
--	if (hwp_active)
-+	if (hwp_active) {
- 		intel_pstate_hwp_offline(cpu);
--	else
-+	} else {
- 		intel_pstate_set_min_pstate(cpu);
-+		policy->cur = cpu->pstate.min_freq;
-+	}
+--- a/kernel/sched/features.h
++++ b/kernel/sched/features.h
+@@ -110,8 +110,16 @@ SCHED_FEAT(WARN_DOUBLE_CLOCK, false)
+  * rq lock and possibly create a large contention, sending an
+  * IPI to that CPU and let that CPU push the RT task to where
+  * it should go may be a better scenario.
++ *
++ * This is best for PREEMPT_RT, but for non-RT it can cause issues
++ * when preemption is disabled for long periods of time. Have
++ * it only default enabled for PREEMPT_RT.
+  */
++# ifdef CONFIG_PREEMPT_RT
+ SCHED_FEAT(RT_PUSH_IPI, true)
++# else
++SCHED_FEAT(RT_PUSH_IPI, false)
++# endif
+ #endif
  
- 	intel_pstate_exit_perf_limits(policy);
- 
+ SCHED_FEAT(RT_RUNTIME_SHARE, false)
 
 
