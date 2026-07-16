@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275DF42D76F;
-	Thu, 16 Jul 2026 14:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32BF42E001;
+	Thu, 16 Jul 2026 14:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212485; cv=none; b=k36iofozcgby8AgUE/JKQMF7x4GlIB2CZvcieuA0O+cvARyXluut1Zvfwi6AdP0oL3CL78qJkaxgYJUbyDoaf/FktbhIEJmX7El9mTiQbusjkm76LN5GB1MOs0q4MTrwN3ojNz1Pn7+Wn3YnplMNxbRHFxQmS829yvnY+Dr28/Y=
+	t=1784212488; cv=none; b=cPRV2hbXTo/DOmOrPL3lVi22VDXMJJPZ1HD11XV4KwjUjOn0MN5qPdG+h62KdcnyxzVhUF1NxalBaFhbO07XcwCB/4Cxt5Ig/0P6iSxqb05YsKtmY8Vp1fhN+B5SMy0U0yrS9OxElu7bfI34TFolyd1JJZIMOha5+om2K2k6GxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212485; c=relaxed/simple;
-	bh=FZjKhVagkArLY3HbBbIXx2TYyXNm90obJHYnsC/Djrg=;
+	s=arc-20240116; t=1784212488; c=relaxed/simple;
+	bh=GNPp4S+PkcXbGlAGvqa03iGg+M8sNybReO4Ay034TEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FGEpHJa0Tb9qj921eTzpCJaCFGcJ3RAfT2gVw6fChikzy2x6NdgM3fdFfPsveiKrmXmlwFEknZwhGCccNji4RtNgzvxEiXRTQ0ZVZaAAQkZPjKrUWipmCqzezg4mL2tKxjXJIrg5pBXChpaA1oy8rkgsqofTddx8gJt0CuQ42D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCJ9U1ZA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r86Lrcd5vcq2/ECMuk7C5zRLj6NqAnr/23EvIFFGPntBIr4H+k2v0be0GPdVB+4rcdKrxoKmd+Hz1o9Yd241bOlBZ/Xp5BfBnUCfGxNrXwB80dU2sKk0LHgCOqc96n7zhMvOA+NbuXRRMnb2/nsY24EPREjt75PasgNicRbpeGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lc6l+Eue; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCJ9U1ZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D28B1F000E9;
-	Thu, 16 Jul 2026 14:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lc6l+Eue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343AF1F000E9;
+	Thu, 16 Jul 2026 14:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212484;
-	bh=UqeFJvBSxVaRJyFYrPPLlnQp3Bs6YrQFm6jb3gwXC1U=;
+	s=korg; t=1784212486;
+	bh=4jSBc8lgk3ysjvg5gAhe3AN/rqNMVktmM70Bq+foOj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rCJ9U1ZA/jaIsbiQCCBqDI5Sppt15hfmHZyqZ0IdXhZaUWqwYHCxsHi0uFJ0+sKCO
-	 ohuumbbHKiI9OFCorq7DeBx/KRn00w/Wd755FjXys2ofTsQon3bEopJrVK/WO9Qf3+
-	 qPaebcf48AfOdtpwcIL7XbqB5F+RORVtcW6YfY8A=
+	b=lc6l+EueMdeddKBA47hFFKh3AeMjTIxeEZeeycHjpBIsY72QZOTVNTy7Cfaf+H42D
+	 CI8wJ22st5HgHCcmRT7an+3O4l9zd7wP7kmvAYKemlPJZvYrzWuHuNv46PEsSc/u5k
+	 F83t/Td+irvKT305JYKrNVl1v5RygApWuYRft5CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alberto Ruiz <aruiz@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.12 346/349] fuse: fix device node leak in cuse_process_init_reply()
-Date: Thu, 16 Jul 2026 15:34:40 +0200
-Message-ID: <20260716133041.047587550@linuxfoundation.org>
+	=?UTF-8?q?Guillermo=20Rodr=C3=ADguez?= <guille.rodriguez@gmail.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 329/349] i2c: stm32f7: truncate clock period instead of rounding it
+Date: Thu, 16 Jul 2026 15:34:23 +0200
+Message-ID: <20260716133040.678130845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -44,74 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alberto Ruiz <aruiz@redhat.com>
+From: Guillermo Rodríguez <guille.rodriguez@gmail.com>
 
-commit 9fa4f7a53406430ee9982f2f636a15b338185122 upstream.
+commit 111bb7f9f4a90b32e495d70a607c67b137f3074a upstream.
 
-If device_add() succeeds during CUSE initialization but a subsequent
-step (cdev_alloc() or cdev_add()) fails, the error path calls
-put_device() without first calling device_del().  This leaks the
-devtmpfs entry created by device_add(), leaving a stale /dev/<name>
-node that persists until reboot.
+stm32f7_i2c_compute_timing() derives the I2C clock source period
+(i2cclk) with DIV_ROUND_CLOSEST, which may round it up. When the
+period is overestimated, all timings computed from it (SCLDEL,
+SDADEL, SCLL, SCLH) come out shorter on the wire than calculated,
+and the resulting bus rate can exceed the requested speed, violating
+the I2C specification minimums for tLOW and tHIGH.
 
-Since the cuse_conn is never linked into cuse_conntbl on the failure
-path, cuse_channel_release() sees cc->dev == NULL and skips
-device_unregister(), so no other code path cleans up the node.
+For example, with a 104.45 MHz clock source (e.g. PCLK1, the
+reset-default I2C clock source on STM32MP1), i2cclk is rounded from
+9.574 ns up to 10 ns. Requesting a 400 kHz fast mode bus with
+72/27 ns rise/fall times and no analog/digital filters then produces
+an actual bus rate of 415.6 kHz with tLOW = 1254 ns, violating both
+the 400 kHz maximum rate and the 1300 ns tLOW minimum of the
+specification.
 
-This has several consequences:
+Truncate the period instead, so that it can only be underestimated.
+The error then falls on the safe side: the programmed timings come
+out slightly longer than computed and the bus runs marginally below
+the target rate (375.3 kHz in the example above) while meeting the
+specification.
 
- - The device name is permanently poisoned: any subsequent attempt to
-   create a CUSE device with the same name hits the stale sysfs entry,
-   device_add() fails, and the new device is aborted.
+i2cbus is left rounded-to-closest: it is only used as the target of
+the clk_error comparison and is never multiplied into the programmed
+timings, so nearest rounding remains accurate there.
 
- - The collision manifests as ENODEV returned to userspace with no
-   dmesg diagnostic, making it very difficult to debug.
-
- - The failure is self-perpetuating: once a name is leaked, all future
-   attempts with that name fail identically.
-
-Fix this by introducing an err_dev label that calls device_del() to
-undo device_add() before falling through to err_unlock.  The existing
-err_unlock path from a device_add() failure correctly skips device_del()
-since the device was never added.
-
-Testing instructions can be found at the lore link below.
-
-Link: https://lore.kernel.org/all/20260408-wip-cuse-leak-fix-v1-0-1c028d575e97@redhat.com/
-Signed-off-by: Alberto Ruiz <aruiz@redhat.com>
-Fixes: 151060ac1314 ("CUSE: implement CUSE - Character device in Userspace")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: aeb068c57214 ("i2c: i2c-stm32f7: add driver")
+Signed-off-by: Guillermo Rodríguez <guille.rodriguez@gmail.com>
+Cc: <stable@vger.kernel.org> # v4.14+
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Reviewed-by: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260611104857.242153-1-guille.rodriguez@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/cuse.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-stm32f7.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/fuse/cuse.c
-+++ b/fs/fuse/cuse.c
-@@ -390,7 +390,7 @@ static void cuse_process_init_reply(stru
- 	rc = -ENOMEM;
- 	cdev = cdev_alloc();
- 	if (!cdev)
--		goto err_unlock;
-+		goto err_dev;
- 
- 	cdev->owner = THIS_MODULE;
- 	cdev->ops = &cuse_frontend_fops;
-@@ -416,6 +416,8 @@ out:
- 
- err_cdev:
- 	cdev_del(cdev);
-+err_dev:
-+	device_del(dev);
- err_unlock:
- 	mutex_unlock(&cuse_lock);
- 	put_device(dev);
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -463,8 +463,13 @@ static int stm32f7_i2c_compute_timing(st
+ {
+ 	struct stm32f7_i2c_spec *specs;
+ 	u32 p_prev = STM32F7_PRESC_MAX;
+-	u32 i2cclk = DIV_ROUND_CLOSEST(NSEC_PER_SEC,
+-				       setup->clock_src);
++	/*
++	 * Truncate instead of rounding to closest: if the clock period is
++	 * overestimated, the computed SCL timings will come out shorter on
++	 * the wire, which can push the bus above the target rate and below
++	 * the spec's tLOW/tHIGH minimums.
++	 */
++	u32 i2cclk = NSEC_PER_SEC / setup->clock_src;
+ 	u32 i2cbus = DIV_ROUND_CLOSEST(NSEC_PER_SEC,
+ 				       setup->speed_freq);
+ 	u32 clk_error_prev = i2cbus;
 
 
