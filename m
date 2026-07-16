@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65C73F0774;
-	Thu, 16 Jul 2026 14:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A8222F74A;
+	Thu, 16 Jul 2026 14:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210409; cv=none; b=nSw5WpGmcWWtW8AYZnHJJYER6UZqJj/egY7b+j5k2Mf3C5fExcYNff4Seb5A+2ZSOgdb5oE5XibfM5BZJKDjIKkHtjvZv0birpas2LsNhTcT3E8k0+InbsxBmpOCWw+SNxDSwsOY/inH/6PEk3QHCVUzAUi/eN9Dai5zyhtPZcY=
+	t=1784210412; cv=none; b=sQa4UucJBWB6ORtiITUr4FMA0fvURAGnXyHdF+gghmZi18S1jPVBZxSmUmbLOUtEvDRyIPBAHCtM07holyrTuntg0MJOWFqJBLbCu8QlqvesHPNw878nl1tfDZChdfxgOXk5uQ0EnmRFLGv1vXfRLEfk/j4t/kxUy0vkXAGZ3hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210409; c=relaxed/simple;
-	bh=7lGmVyNKIy5KKKX+AC9K56KjwXBqkCi0/eJslNmNbWQ=;
+	s=arc-20240116; t=1784210412; c=relaxed/simple;
+	bh=wA3ldRCPPXV78136pc9RYTwsYEtkHPRqar+bZnZ0svc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JEePE77gusz1oZhs8MLiPz4JdcSoAERdpsUXWYodaNx1GFolpD65jPq1rVgqRa5oOQY/BE3c+LJo5f0ILPpTUYlHhUNSC1qF2z6K96xu2uXSUoOh1joqME0Zrin3yCUH1oL/5BkAZuil8RRrfBzK73vWW1y5UbMzUArS/X9P7Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGZeZZTW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=srw3ooO2uaxZE8zpso6mk7LOjsI8/w5+MV0HQlE9k6AeD2wLSURBRkd1o5t3WTaBPvwtF2q7JHTKdYm17oMvR7eiybegE1DvXMbhEl6uem6spAFaYRCUT5chlytoLDh1m8jnV0b7GNMsbxRB7VJfEDgsPJ/RV9fzwUk4ymWxYaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Eb7rFDo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGZeZZTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13891F000E9;
-	Thu, 16 Jul 2026 14:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Eb7rFDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A83E1F000E9;
+	Thu, 16 Jul 2026 14:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210408;
-	bh=6hEcPY2b+wNz3JRXSrPy1l4UanK0bEXeH/eR8BNKU+g=;
+	s=korg; t=1784210410;
+	bh=qqiTJ4l44YPBTLCoNeUoA1NmPy45b7HEsOUBR5hx2uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CGZeZZTWaLhGjGSg7tI2RfwGpv5TcEaAuEY5M3o2+pPKU0mtnzYGTXlfaoaa6bJ/D
-	 6ZtMDmAbkRjR9Xjp6cZra+iXq7PLUH5KpSfL3RWOXSjDQCfA02kcBOn7jcMVJy66MH
-	 gEe6DmWk55YDYMwkKHD5js2yKusq5pps3jjKNqaY=
+	b=0Eb7rFDoxndik9RK2QUAiQ/KkgzyZbzxuMjPOLhQPIdiBvKPEI9/doWIZr8JJP3ZP
+	 4GFVhycRqmE5oS3nVK8K1entlt0hfJNgK4OlprUZZx3g2zb5yuC+zmqp2kQPeon5ej
+	 GvRoRKXH7fVGM2aCyPc2s05wsqrgTFjhVVXprz/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 035/480] platform/x86: intel-hid: Protect ACPI notify handler against recursion
-Date: Thu, 16 Jul 2026 15:26:22 +0200
-Message-ID: <20260716133045.459994899@linuxfoundation.org>
+	Yuanzhen Gan <elysia-best@simplelinux.cn.eu.org>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 036/480] LoongArch: Add PIO for early access before ACPI PCI root register
+Date: Thu, 16 Jul 2026 15:26:23 +0200
+Message-ID: <20260716133045.481355349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -44,90 +44,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit c085d82613d5618814b84406c8b2d64f1bc305e7 upstream.
+commit 6061e65f95713b01f4313cda6637dfe3aa5412b4 upstream.
 
-Since commit e2ffcda16290 ("ACPI: OSL: Allow Notify () handlers to run on
-all CPUs") ACPI notify handlers like the intel-hid notify_handler() may
-run on multiple CPU cores racing with themselves.
+For ACPI system we suppose the ISA/LPC PIO range is registered together
+with PCI root bridge. But the fact is there may be some early access to
+the ISA/LPC PIO range before ACPI PCI root register (most of them are
+due to abnormal BIOS). Unconditionally register the ISA/LPC PIO range
+usually causes ACPI PCI root register fail because of the address range
+confliction. So we add a pair of helpers: acpi_add_early_pio() to add
+PIO for early access, and acpi_remove_early_pio() to remove PIO before
+PCI root register. Since acpi_remove_early_pio() may be called multiple
+times, we add an acpi_pio flag to ensure PIO be removed only once.
 
-On convertibles and detachables (matched by DMI chassis-type 31 and 32 in
-dmi_auto_add_switch[]) the SW_TABLET_MODE input device is registered
-lazily from notify_handler() on the first tablet-mode event, via
-intel_hid_switches_setup(). When two such events race on different CPUs
-both can pass the !priv->switches check and register the priv->switches
-input device twice, resulting in a duplicate sysfs entry and a subsequent
-NULL pointer dereference.
-
-This is the same class of bug fixed by commit e075c3b13a0a ("platform/x86:
-intel-vbtn: Protect ACPI notify handler against recursion") for the
-sibling intel-vbtn driver.
-
-Protect intel-hid notify_handler() from racing with itself with a mutex
-to fix this.
-
-Fixes: e2ffcda16290 ("ACPI: OSL: Allow Notify () handlers to run on all CPUs")
-Cc: stable@vger.kernel.org
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260605174905.131095-1-sammiee5311@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Tested-by: Yuanzhen Gan <elysia-best@simplelinux.cn.eu.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/hid.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/loongarch/include/asm/acpi.h |    2 ++
+ arch/loongarch/kernel/acpi.c      |   28 ++++++++++++++++++++++++++++
+ arch/loongarch/kernel/setup.c     |    2 ++
+ arch/loongarch/pci/acpi.c         |    2 ++
+ 4 files changed, 34 insertions(+)
 
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -7,11 +7,13 @@
-  */
+--- a/arch/loongarch/include/asm/acpi.h
++++ b/arch/loongarch/include/asm/acpi.h
+@@ -38,6 +38,8 @@ static inline bool acpi_has_cpu_in_madt(
+ extern struct list_head acpi_wakeup_device_list;
+ extern struct acpi_madt_core_pic acpi_core_pic[MAX_CORE_PIC];
  
- #include <linux/acpi.h>
-+#include <linux/cleanup.h>
- #include <linux/dmi.h>
- #include <linux/input.h>
- #include <linux/input/sparse-keymap.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/string_choices.h>
- #include <linux/suspend.h>
-@@ -224,6 +226,7 @@ static const struct dmi_system_id dmi_au
- };
++extern void acpi_add_early_pio(void);
++extern void acpi_remove_early_pio(void);
+ extern int __init parse_acpi_topology(void);
  
- struct intel_hid_priv {
-+	struct mutex mutex; /* Avoid notify_handler() racing with itself */
- 	struct input_dev *input_dev;
- 	struct input_dev *array;
- 	struct input_dev *switches;
-@@ -559,6 +562,8 @@ static void notify_handler(acpi_handle h
- 	struct key_entry *ke;
- 	int err;
+ static inline u32 get_acpi_id_for_cpu(unsigned int cpu)
+--- a/arch/loongarch/kernel/acpi.c
++++ b/arch/loongarch/kernel/acpi.c
+@@ -16,6 +16,7 @@
+ #include <linux/memblock.h>
+ #include <linux/of_fdt.h>
+ #include <linux/serial_core.h>
++#include <linux/vmalloc.h>
+ #include <asm/io.h>
+ #include <asm/numa.h>
+ #include <asm/loongson.h>
+@@ -59,6 +60,33 @@ void __iomem *acpi_os_ioremap(acpi_physi
+ 		return ioremap_cache(phys, size);
+ }
  
-+	guard(mutex)(&priv->mutex);
++#define PIO_BASE (unsigned long)PCI_IOBASE
++#define PIO_SIZE ALIGN(ISA_IOSIZE, PAGE_SIZE)
 +
- 	/*
- 	 * Some convertible have unreliable VGBS return which could cause incorrect
- 	 * SW_TABLET_MODE report, in these cases we enable support when receiving
-@@ -714,6 +719,10 @@ static int intel_hid_probe(struct platfo
- 		return -ENOMEM;
- 	dev_set_drvdata(&device->dev, priv);
- 
-+	err = devm_mutex_init(&device->dev, &priv->mutex);
-+	if (err)
-+		return err;
++static bool acpi_pio;
 +
- 	/* See dual_accel_detect.h for more info on the dual_accel check. */
- 	if (enable_sw_tablet_mode == TABLET_SW_AUTO) {
- 		if (dmi_check_system(dmi_vgbs_allow_list))
++/* Add PIO for early access */
++void acpi_add_early_pio(void)
++{
++	if (!acpi_disabled) {
++		acpi_pio = true;
++		vmap_page_range(PIO_BASE, PIO_BASE + PIO_SIZE,
++				LOONGSON_LIO_BASE, pgprot_device(PAGE_KERNEL));
++	}
++}
++
++/* Remove PIO for PCI register */
++void acpi_remove_early_pio(void)
++{
++	if (!acpi_pio)
++		return;
++
++	if (!acpi_disabled) {
++		acpi_pio = false;
++		vunmap_range(PIO_BASE, PIO_BASE + PIO_SIZE);
++	}
++}
++
+ #ifdef CONFIG_SMP
+ static int set_processor_mask(u32 id, u32 pass)
+ {
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -510,6 +510,8 @@ static __init int arch_reserve_pio_range
+ {
+ 	struct device_node *np;
+ 
++	acpi_add_early_pio();
++
+ 	for_each_node_by_name(np, "isa") {
+ 		struct of_range range;
+ 		struct of_range_parser parser;
+--- a/arch/loongarch/pci/acpi.c
++++ b/arch/loongarch/pci/acpi.c
+@@ -65,6 +65,8 @@ static int acpi_prepare_root_resources(s
+ 	struct resource_entry *entry, *tmp;
+ 	struct acpi_device *device = ci->bridge;
+ 
++	acpi_remove_early_pio();
++
+ 	status = acpi_pci_probe_root_resources(ci);
+ 	if (status > 0) {
+ 		acpi_evaluate_integer(device->handle, "PCIH", NULL, &pci_h);
 
 
