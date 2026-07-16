@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6695B4248C3;
-	Thu, 16 Jul 2026 13:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6146A429CC1;
+	Thu, 16 Jul 2026 13:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209694; cv=none; b=GXr6lrO9xSt7utxw1kYNd9+lYf4BkkyuD+dCWl5w/NXSIMxTrsw/yTu6ebheehyjoSASmNw6vXI3F+oJ5v+gPSFhvO9GEmVEXJnogtGBMwWsU9z/TMHvH9sUWchtmZ7dAMrXaMRsqB11JwRFmiW7QrS1MQFtSp/6GwDP7uMsjCk=
+	t=1784209697; cv=none; b=pZJI4E/9VisQSBg7/iv9fG3fiCAhunn3MOAjuAsU+C4fgP89uklMhUHdlkgNLaxS8VGT67oBb6Wssc3sqtTROrVLu51s00N9yOCWc40P0MP5Exj62ReVt4dGKo1F5gYf9Z89FATLc0klY6eO+fR0MAVphIEoXsVaqpO4yv4yEfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209694; c=relaxed/simple;
-	bh=r8mbELM2rtZDdKbXYLeuRF9rk2j16XMKDLd2TKWcTgw=;
+	s=arc-20240116; t=1784209697; c=relaxed/simple;
+	bh=1jygYR/uGFCRIqkdFf8uQA/hXoLZPKNjnrCsrBJNEU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWtZcpOqVT3G646QXEr6+Vsk9jwNERkp5goSy2bz0E35Mh07RhAs6KoEbkDBp3lMfwag9CVARYhViSROWwlCdr0aHiO6geHIZt59PAqS2/6h0fgvpX5dvS1GmjLcsgvLHRdDPWKIwFoCWQJiZxV6wRRLxb8AR7l4oT2p84A5paI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leTmj3/u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pNI5N6Q/E0tsMQPAGRzOVIgBZ1CFxcrIC/jxL7l8ELbeDINPPjQpuIGqv+Am3pZWfo3+On3+DGYSeOCATZ4nuxXV8Ov+KJbE5Be3zuLa3l6FdomNw8Qo6ayaBnqjZqY/uNlWbM/fM42/DHfcnQzjUfwlgDjxJmJ1nK1/8nVkPAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdDgdjqk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leTmj3/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3BE1F00A3E;
-	Thu, 16 Jul 2026 13:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdDgdjqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B3E1F000E9;
+	Thu, 16 Jul 2026 13:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209670;
-	bh=Y2Cru2pd9RY17a15KTr1CfZHPL6lPGewlXz+VL4hlWk=;
+	s=korg; t=1784209686;
+	bh=YfE5xiTjO8eFnHfp/2bItZQDvKRDv/ZF9cdjnax5wsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=leTmj3/udh1HMmU+8mCYM4AA4blvafKdGyBrUSmXpMTqo5grmgLo/ivN8JA0i1Eat
-	 rPIBK0hIStXaooxpUQOQbjC7RJ+/Pqg+7QWG62d1KEYw7gbCwhbgzTh2qq0F/0/Fch
-	 nO1sCXSnufVLv/YjMwr9I6pLFTZsVIPfMlih+3To=
+	b=YdDgdjqkg/z9mP3QvecS8PPJvphw4ds5+K30IvQ7lyrsgCBo4e0D704YkWwoarPER
+	 s2W6b/5eVYrAh8iznBy0Kz0lFj8PxbLLHxeUY/aiX6W5n/L/WVTi1E18GYm8sMVGCx
+	 1ogmHO3wwtPwswVi7y3y/by032KnRJ6ExQwwXBUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.1 275/518] HID: lg-g15: cancel pending work on remove to fix a use-after-free
-Date: Thu, 16 Jul 2026 15:29:03 +0200
-Message-ID: <20260716133053.831574184@linuxfoundation.org>
+	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.1 280/518] media: mtk-jpeg: cancel workqueue on release for supported platforms only
+Date: Thu, 16 Jul 2026 15:29:08 +0200
+Message-ID: <20260716133053.939420551@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,68 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
 
-commit 7705b4140d188ce22656f6e541ae7ef834c7e11a upstream.
+commit b1845a227fda37b2fe5327df3ca0015d7e290235 upstream.
 
-lg_g15_data is allocated with devm and holds a work item. The report
-handlers schedule that work straight from device input.
-lg_g15_event() and lg_g15_v2_event() do it on the backlight cycle key,
-and lg_g510_leds_event() does it too. The worker dereferences the
-lg_g15_data back through container_of.
+Since a recent fix the mtk_jpeg_release function cancels any pending
+or running work present in the driver workqueue using
+cancel_work_sync function.
+Currently, only the multicore based variants use this workqueue and they
+have the jpeg_worker platform data field initialized with a workqueue
+callback function. For the others, this field value remain NULL by
+default.
+The cancel_work_sync function is unconditionally called in
+mtk_jpeg_release function, even for the variants that do not use the
+workqueue. This call generates a WARN_ON print in __flush_work because
+the workqueue callback function presence check fails in __flush_work
+function (used by cancel_work_sync).
 
-The driver had no remove callback and never cancelled the work. So if a
-report scheduled the work and the keyboard was then unplugged, devres
-freed lg_g15_data while the work was still pending or running, and the
-worker touched freed memory. This is a use-after-free. It is reachable
-as a race on device unplug.
+So, to avoid these warnings, call cancel_work_sync only if a workqueue
+callback is defined in platform data.
 
-Add a remove callback that cancels the work before devres frees the
-state. g15->work is only initialized for the models that schedule it
-(G15, G15 v2, G510). The G13 and Z-10 leave it zeroed, so guard the
-cancel on g15->work.func to avoid cancelling a work that was never set
-up. The g15 NULL test mirrors the one already in lg_g15_raw_event().
-
-Fixes: 97b741aba918 ("HID: lg-g15: Add keyboard and LCD backlight control")
+Fixes: 34c519feef3e ("media: mtk-jpeg: fix use-after-free in release path due to uncancelled work")
 Cc: stable@vger.kernel.org
-Suggested-by: Hans de Goede <hansg@kernel.org>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-lg-g15.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-lg-g15.c
-+++ b/drivers/hid/hid-lg-g15.c
-@@ -1374,11 +1374,27 @@ static const struct hid_device_id lg_g15
- };
- MODULE_DEVICE_TABLE(hid, lg_g15_devices);
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1202,7 +1202,8 @@ static int mtk_jpeg_release(struct file
+ 	struct mtk_jpeg_dev *jpeg = video_drvdata(file);
+ 	struct mtk_jpeg_ctx *ctx = mtk_jpeg_file_to_ctx(file);
  
-+static void lg_g15_remove(struct hid_device *hdev)
-+{
-+	struct lg_g15_data *g15 = hid_get_drvdata(hdev);
-+
-+	/*
-+	 * g15->work is only initialized for the models that schedule it
-+	 * (G15, G15 v2, G510). The G13 and Z-10 leave it zeroed, so only
-+	 * cancel it when it was set up.
-+	 */
-+	if (g15 && g15->work.func)
-+		cancel_work_sync(&g15->work);
-+
-+	hid_hw_stop(hdev);
-+}
-+
- static struct hid_driver lg_g15_driver = {
- 	.name			= "lg-g15",
- 	.id_table		= lg_g15_devices,
- 	.raw_event		= lg_g15_raw_event,
- 	.probe			= lg_g15_probe,
-+	.remove			= lg_g15_remove,
- };
- module_hid_driver(lg_g15_driver);
- 
+-	cancel_work_sync(&ctx->jpeg_work);
++	if (jpeg->variant->jpeg_worker)
++		cancel_work_sync(&ctx->jpeg_work);
+ 	mutex_lock(&jpeg->lock);
+ 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
+ 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
 
 
