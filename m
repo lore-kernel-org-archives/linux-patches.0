@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A400325701;
-	Thu, 16 Jul 2026 14:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF0C31ED7C;
+	Thu, 16 Jul 2026 14:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211423; cv=none; b=MIUv+9759v39yqwGbicBXXas8o5ediQWM57DugnlqXvF0v8i8b/sdDZUiE4Hp+Tn0Z9/gcFGHBmVwiiP81orgVsLByWK400ihxHCCEQDDWHgC8tYWPOmopfR8giqSDmuQND19xDdpeK8RFVKlA8HS8W4hcbvA5Mag33skbkDafA=
+	t=1784211426; cv=none; b=ujrZSpE5HdsGMp3URUcak6hJxt5fp0cVWLkt9qu2+EPjNhtGn/SnEAqGeK/DpSOmpmDJ51+6/ek0QAJQls9xbsTfEFQWYM3V+t2A5mNf8I8kxKJ/iZpTlbpGx9/94fmvGbJABD2/LyeDnBQh7VXz5NqUeMnQIEJccp0hMavpOyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211423; c=relaxed/simple;
-	bh=9eNvRHpRDfy9PgLG7mWJ2LUhw3U8fU3Dpp+3YAr1y0c=;
+	s=arc-20240116; t=1784211426; c=relaxed/simple;
+	bh=21/4BcNkK2vvpi6Er8FYClhEjGQM8m2gSqzd5cLxED8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoAuOMHCeF4u76aKwCr5+q2XHiYKyIDiwZIYQCZyE2n1Lwn0kpzf38KpqEKioKeHeCUA66d36YrDeOkiWrhL7KbHGCBhbZhIdQvFzdRzhqTD9coqnq1os1qdZRC2ZM1ptTc2RbMPg5xJ/QHdR6ABzdS9Zd1jRCW5M6FnrB9KWWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9TTo18Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gDF/yACVj+P4Hwps03czmSQS5SYeluYEKix5P1aV7k+G2xloFJdgV1m7ZRbB2SOm1xt8tF3dAINva134YRABL0wUl41CRZLTNZAVypM0tGuBTFxlEN9qQFwKEfODB9aQUSpygMLv7o40s5WQVfaJOLs2mLmckM3JMcDo3hxvHJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmU/SI1l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9TTo18Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00F21F000E9;
-	Thu, 16 Jul 2026 14:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmU/SI1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB351F000E9;
+	Thu, 16 Jul 2026 14:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211422;
-	bh=wDdKbCKKMMq7cUrCSzwFu+JNYDfgnff8UVeP2vY3aLQ=;
+	s=korg; t=1784211424;
+	bh=vSxwQA4OmwzAJNIfT1sRBSsSm+lu/mZNIcXZaTYPfzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I9TTo18Yfqo7lk9JanhNWhkgEVZFdf2YDnNYNLRW24s+qfJ97uLwEnzyDbiKux1zg
-	 qYILs1l9aldnLctHwD5bPbNHnIixK3+SbfKZCD1z7LxwCt70A8ZS8gG4JeEQS8zcuq
-	 n/P3Rg0HTUelnjwPQSuuhpYLsWYwa2G/7pzubaqw=
+	b=rmU/SI1luf6ruwFKGw5nkkG/9kWcYTC5/tOH8yHwfkKkYyKyVX6NJRWRFUVZJGd5e
+	 IrvuI2OltViGO/Moyrn+T8MHlR9feclCOUfoeoiuAXchoKu6JGfJ3GTzcme0mlTLUx
+	 NTr3yGZW0QVAxTXQVyiMU0/ZFn2XIa0So5XRIfpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Laurent M Coquerel <laurent.m.coquerel@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 369/480] crypto: qat - validate RSA CRT component lengths
-Date: Thu, 16 Jul 2026 15:31:56 +0200
-Message-ID: <20260716133052.788100430@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 416/480] iommufd: Set upper bounds on cache invalidation entry_num and entry_len
+Date: Thu, 16 Jul 2026 15:32:43 +0200
+Message-ID: <20260716133053.813787555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,83 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit b3ac78756588059729b9195fcc9f4b37d54057a5 upstream.
+commit 4d70986002f2f3eaaed89124fb2522bded38b016 upstream.
 
-The generic RSA key parser (rsa_helper.c) bounds each CRT component (p,
-q, dp, dq, qinv) by the modulus size n_sz, but qat_rsa_setkey_crt()
-allocates half-size DMA buffers (key_sz / 2) and right-aligns each
-component with:
+iommufd_hwpt_invalidate() takes a user-controlled entry_num and entry_len,
+each bounded only by U32_MAX. An entry_len beyond the kernel's struct size
+makes the copy helper verify the extra bytes are zero, scanning that excess
+in one uninterruptible pass; a multi-gigabyte value over zeroed user memory
+trips the soft-lockup watchdog.
 
-    memcpy(dst + half_key_sz - len, src, len)
+A large entry_num is the other half, driving the backend invalidation loop
+with no reschedule. The VT-d nested handler, for one, copies each entry and
+flushes caches per iteration, pinning the CPU on a non-preemptible kernel.
 
-When a CRT component is larger than half_key_sz the subtraction
-underflows and memcpy writes past the DMA buffer, causing memory
-corruption.
+Cap both in the ioctl. entry_len is held under PAGE_SIZE, above any request
+struct, and entry_num under 1 << 19, the order of a hardware invalidation
+queue and well beyond any real batch, bounding the per-call loop length.
 
-Add a len > half_key_sz check next to the existing !len check for each
-of the five CRT components so the driver falls back to the non-CRT path
-instead of writing out of bounds.
-
-Fixes: 879f77e9071f ("crypto: qat - Add RSA CRT mode")
+Fixes: 8c6eabae3807 ("iommufd: Add IOMMU_HWPT_INVALIDATE")
+Link: https://patch.msgid.link/r/447fa93663f7526eb361719e83fa8b649464483d.1780521606.git.nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Laurent M Coquerel <laurent.m.coquerel@intel.com>
-Tested-by: Laurent M Coquerel <laurent.m.coquerel@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_asym_algs.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/iommu/iommufd/hw_pagetable.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-@@ -1085,7 +1085,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->p;
- 	len = rsa_key->p_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto err;
- 	ctx->p = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_p, GFP_KERNEL);
- 	if (!ctx->p)
-@@ -1096,7 +1096,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->q;
- 	len = rsa_key->q_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto free_p;
- 	ctx->q = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_q, GFP_KERNEL);
- 	if (!ctx->q)
-@@ -1107,7 +1107,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->dp;
- 	len = rsa_key->dp_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto free_q;
- 	ctx->dp = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_dp,
- 				     GFP_KERNEL);
-@@ -1119,7 +1119,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->dq;
- 	len = rsa_key->dq_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto free_dp;
- 	ctx->dq = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_dq,
- 				     GFP_KERNEL);
-@@ -1131,7 +1131,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->qinv;
- 	len = rsa_key->qinv_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto free_dq;
- 	ctx->qinv = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_qinv,
- 				       GFP_KERNEL);
+--- a/drivers/iommu/iommufd/hw_pagetable.c
++++ b/drivers/iommu/iommufd/hw_pagetable.c
+@@ -489,6 +489,9 @@ int iommufd_hwpt_get_dirty_bitmap(struct
+ 	return rc;
+ }
+ 
++/* An arbitrary entry_num cap, far above any realistic invalidation batch */
++#define IOMMU_HWPT_INVALIDATE_ENTRY_NUM_MAX (1U << 19)
++
+ int iommufd_hwpt_invalidate(struct iommufd_ucmd *ucmd)
+ {
+ 	struct iommu_hwpt_invalidate *cmd = ucmd->cmd;
+@@ -507,7 +510,13 @@ int iommufd_hwpt_invalidate(struct iommu
+ 		goto out;
+ 	}
+ 
+-	if (cmd->entry_num && (!cmd->data_uptr || !cmd->entry_len)) {
++	/*
++	 * Bound entry_num and entry_len so a single call cannot pin the CPU;
++	 * entry_len also caps the copy_struct_from_user() trailing-zero scan.
++	 */
++	if (cmd->entry_num &&
++	    (!cmd->data_uptr || !cmd->entry_len || cmd->entry_len > PAGE_SIZE ||
++	     cmd->entry_num > IOMMU_HWPT_INVALIDATE_ENTRY_NUM_MAX)) {
+ 		rc = -EINVAL;
+ 		goto out;
+ 	}
 
 
