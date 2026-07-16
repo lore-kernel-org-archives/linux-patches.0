@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202F83FE65F;
-	Thu, 16 Jul 2026 13:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EBA3FE660;
+	Thu, 16 Jul 2026 13:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209757; cv=none; b=Kqegv0cf1rN9rnDU27kSUZxKaPUA0yVQQU2GSjedITYuMDaEShesAWHLiGWdHOFrfY8rhgxWJDNSyjVYGprrLPTVp8e8gaL9kUZX4Zm7kM+hQGcALpe+YvPLarYOyiYhKa6V5hQ2J8yN6qk/EmqEr/2Chs7vCU7S3F+pun2BT8U=
+	t=1784209759; cv=none; b=tRtYdSKXivhosyvHADgeQTkvxekQDRpPrYC6iRfBFshQubWiNKivI6fcNdYybEG9XSPOrTAnzQAPLYO08BKUPLnwP8rbmlYpjp9ZFGinLqfZOgU8qWK3EMfoN0kKqpIOvHCjau2sAdO70DrLOzXw2AwBJni5gQRgV2X+5eyToUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209757; c=relaxed/simple;
-	bh=dgsaGy/lszAAH6xUYAHwLhtejVB6SZuMw2JMMP2taAg=;
+	s=arc-20240116; t=1784209759; c=relaxed/simple;
+	bh=C2vW+CDG0G7+Aqll2AzBFfRceHmkjL98MQjVZJCnNt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pe/vqIzSdC7/pOgwZCWnG9WECMOSfRHUuyYp1pzbPBmXsG5ilJnzwvvX1NOgeJb2eW2gZkhdSPjnWb9q1oHUm89PjZDBiUoQV5FFEbwptC9bKM6MrQ160y+wBO+LAPb6+U9PlK+ZhIcBa2kD9bUhnirntYH0X82MBmmiV7VORdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZamYYqgd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rb2Ai7varwqv/kYfTjPE2oZSvFc+/6y+T94NWkpEanICQ2v+zjR13Wxr18q8xH0pMmNzP/9mHTsajGZiuhegzBPSchM5RfIu0SDZYrrD9R3Gs21GqhtaSdButCVXUfeRxY2Hn9LN8w4R/ZPoicf1LPFNKg6KI0MB9sZzCVk8cuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3p49ksc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZamYYqgd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993661F00A3A;
-	Thu, 16 Jul 2026 13:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3p49ksc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CB81F000E9;
+	Thu, 16 Jul 2026 13:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209752;
-	bh=/z3gXu5EDZO9fVXST3k0T2+7xAcp42Y96Jz3K85zLtM=;
+	s=korg; t=1784209754;
+	bh=tSrUZYYQc1vzJa3odsfyX/uKq91LSeatZZfUYka0eb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZamYYqgdECqwVPh2BwajOkZpLHDMApGUA3MFoIqixM+NEo9hArtheHujIVBNC+13k
-	 L/i3pOpjvwpPJj7Ij91f6lTBYxxAa4pJKBZkgPbVkLhb07jGyfTQjO0iHzTg9r63OG
-	 WT/9l9teeisy1SnDqEmL2kcmFPkvVp1muFq8LKFo=
+	b=q3p49kscFLZevSQKVA4u1oqH4rasnm2TdneHKBeblrWlfIegK0eH3guWx3Z02wVOe
+	 2IbV9KQJ3a2RlTseVsU+BvQECu8LuSxHu9wvpa/TfM5AvE2H1p+qPMcVFmoQIEzMZP
+	 pR1tpkQKMT67wJXWsAMxN/1DLMiwMrkAsI0LzkVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 7.1 303/518] usb: free iso schedules on failed submit
-Date: Thu, 16 Jul 2026 15:29:31 +0200
-Message-ID: <20260716133054.455264464@linuxfoundation.org>
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Hao Li <hao.li@linux.dev>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 7.1 262/518] mm/slab: do not limit zeroing to orig_size when only red zoning is enabled
+Date: Thu, 16 Jul 2026 15:28:50 +0200
+Message-ID: <20260716133053.553646440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,105 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 
-commit b9399d25fbb34a05bbe76eeedd730f62ff2670e9 upstream.
+commit 648927ceb84021a25a0fbd5673740956f318d534 upstream.
 
-EHCI and FOTG210 isochronous submits build an ehci_iso_sched before
-linking the URB to the endpoint queue, and keep the staged schedule in
-urb->hcpriv until iso_stream_schedule() and the link helpers consume it.
-If the controller is no longer accessible, or usb_hcd_link_urb_to_ep()
-fails, submit jumps to done_not_linked before that handoff happens and
-leaks the staged schedule still attached to urb->hcpriv.
+When init (zeroing) on allocation is requested, for kmalloc() we
+generally have to zero the full object size even if a smaller size is
+requested, in order to provide krealloc()'s __GFP_ZERO guarantees.
 
-Free the staged schedule from done_not_linked when submit fails before
-the URB is linked and clear urb->hcpriv after the free.
+But if we track the requested size, krealloc() uses that information to
+do the right thing, so we can zero only the requested size. With red
+zoning also enabled, any extra size became part of the red zone, so it
+must not be zeroed and thus we must zero only the requested size.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
+However the current check is imprecise, and will trigger also when only
+SLAB_RED_ZONE is enabled without SLAB_STORE_USER (which enables tracking
+the requested size). This means enabling red zoning alone can compromise
+krealloc()'s __GFP_ZERO contract.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-EHCI host controller with a USB isochronous device to test with, no
-runtime testing was able to be performed.
+Fix this by using slub_debug_orig_size() instead, which is the exact
+check for whether the requested size is tracked. We don't need to care
+if red zoning is also enabled or not. Also update and expand the
+comment accordingly.
 
-Fixes: 8de98402652c ("[PATCH] USB: Fix USB suspend/resume crasher (#2)")
-Fixes: e9df41c5c589 ("USB: make HCDs responsible for managing endpoint queues")
-Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260630071419.349161-1-dawei.feng@seu.edu.cn
+Fixes: 9ce67395f5a0 ("mm/slub: only zero requested size of buffer for kzalloc when debug enabled")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260610-slab_alloc_flags-v2-1-7190909db118@kernel.org
+Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
+Reviewed-by: Hao Li <hao.li@linux.dev>
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/fotg210/fotg210-hcd.c |    6 ++++--
- drivers/usb/host/ehci-sched.c     |   11 +++++++++--
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ mm/slub.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/fotg210/fotg210-hcd.c
-+++ b/drivers/usb/fotg210/fotg210-hcd.c
-@@ -4267,8 +4267,6 @@ static int iso_stream_schedule(struct fo
- 	return 0;
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -4537,15 +4537,17 @@ bool slab_post_alloc_hook(struct kmem_ca
+ 	gfp_t init_flags = flags & gfp_allowed_mask;
  
- fail:
--	iso_sched_free(stream, sched);
--	urb->hcpriv = NULL;
- 	return status;
- }
+ 	/*
+-	 * For kmalloc object, the allocated memory size(object_size) is likely
+-	 * larger than the requested size(orig_size). If redzone check is
+-	 * enabled for the extra space, don't zero it, as it will be redzoned
+-	 * soon. The redzone operation for this extra space could be seen as a
+-	 * replacement of current poisoning under certain debug option, and
+-	 * won't break other sanity checks.
++	 * For kmalloc object, the allocated size (object_size) can be larger
++	 * than the requested size (orig_size). We however need to zero the
++	 * whole object_size to handle possible later krealloc() with
++	 *__GFP_ZERO properly.
++	 *
++	 * But if we keep track of the requested size, krealloc() uses that
++	 * information. Additionally if red zoning is enabled, the extra space
++	 * is also red zone, so we should not overwrite it. So limit zeroing to
++	 * orig_size if we track it.
+ 	 */
+-	if (kmem_cache_debug_flags(s, SLAB_STORE_USER | SLAB_RED_ZONE) &&
+-	    (s->flags & SLAB_KMALLOC))
++	if (slub_debug_orig_size(s))
+ 		zero_size = orig_size;
  
-@@ -4562,6 +4560,10 @@ static int itd_submit(struct fotg210_hcd
- 	else
- 		usb_hcd_unlink_urb_from_ep(fotg210_to_hcd(fotg210), urb);
- done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&fotg210->lock, flags);
- done:
- 	return status;
---- a/drivers/usb/host/ehci-sched.c
-+++ b/drivers/usb/host/ehci-sched.c
-@@ -1623,6 +1623,7 @@ iso_stream_schedule(
- 			status = 1;	/* and give it back immediately */
- 			iso_sched_free(stream, sched);
- 			sched = NULL;
-+			urb->hcpriv = NULL;
- 		}
- 	}
- 	urb->error_count = skip / period;
-@@ -1653,8 +1654,6 @@ iso_stream_schedule(
- 	return status;
- 
-  fail:
--	iso_sched_free(stream, sched);
--	urb->hcpriv = NULL;
- 	return status;
- }
- 
-@@ -1966,6 +1965,10 @@ static int itd_submit(struct ehci_hcd *e
- 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
- 	}
-  done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&ehci->lock, flags);
-  done:
- 	return status;
-@@ -2343,6 +2346,10 @@ static int sitd_submit(struct ehci_hcd *
- 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
- 	}
-  done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&ehci->lock, flags);
-  done:
- 	return status;
+ 	/*
 
 
