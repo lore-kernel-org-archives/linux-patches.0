@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213D931D381;
-	Thu, 16 Jul 2026 14:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603F131E847;
+	Thu, 16 Jul 2026 14:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211387; cv=none; b=d9e/xR0HTEDk2VNzHzzeiQ5kveHQJyUfmwkuZDfzRgnpLLYvhVApapOLvJ2fPpKT8lHdswY4I7qsC9VcS1yoAQN/8274UsBzwFVHntB9dLly78u12Fsi5fPsy2zYmlmaYvhDKzGOAbbbXFAV7GWoLWKlIQILB9ChqVwiDIn/cd4=
+	t=1784211389; cv=none; b=UdmHqZkyx+dhrRiXTHkemq7PWhoZZOOEyjSlC7TSoKvk1whyUPBeMxT3M/4bjmD4mWUrHhgYGs3seB8oRGeTG80/TrYC9gLYmDsQjLVFW3YC1AHphYXreGpNemAlhZmc4YmnXUGyQWDaYJdHYAd5huIcpio98FjdD3G1ZOGGx8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211387; c=relaxed/simple;
-	bh=6a9k8mRDj/+oQr0PB9yQFaDaRUdjnP6IulrdH1Cy/xM=;
+	s=arc-20240116; t=1784211389; c=relaxed/simple;
+	bh=Xju0gP1vNMk55cN0arypZsEC5OlJN/+NwznbDTsb9Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGeiFycsbDRWjrrDfpZZTflrZFC7/akZQRZRn0WJHZx83uIRDxDo6PATE9Lo8q4Md5/2b+N8ozoWpDuA78MdpHXZnhJKKHV2swbbpSOsnvDwqCnJ4aybSzsEkwLKkTv6Pb/Xjin7t4sGdfaLBHVgrTp9YEs0nq6id9Y6DxWevYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1z1r5Ld; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fWeH7JXVHtCZ04FwdcN2rypqwkgMZZcpHQUIZGIsZfoXGUwZa1lKA+846mXrmKwtl7eEt+xzTMOv0eIb3vgYg2zMVVaLM3FPcftO1lz6tsuXBUIrNkGX1KzQh0FMiWkik0JVSq2wKaObA937V0sHDH/JEZVv5VlPy8CE9nurJhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/qmo3lj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1z1r5Ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3798A1F00A3A;
-	Thu, 16 Jul 2026 14:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/qmo3lj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BA51F000E9;
+	Thu, 16 Jul 2026 14:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211385;
-	bh=j83Is8w/spco17VRx+uJzsVCg0ik5KiABXw3AjjNYeI=;
+	s=korg; t=1784211388;
+	bh=a/heqclkgazoJRBX6ZqXWzDaEtUzdsyzlZ/7i5xnq1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X1z1r5LdC0vCCFyDKjCeSwEFRU+mrYAgrOOx15w2aKFjJy0VwLMdspOtXcTcYMQYE
-	 V0f1Zw5zUm3W2C8YGP1MrGxD8tHDzgUkXl+oLHZhhBj58M8ydflJIugnbuvA82ul06
-	 EyiX4z6SsuUSvf1QQlNSV+6lCOoYqrGwReEgEMTI=
+	b=x/qmo3ljdecig1Anjn1EzAQSd94iMMTB0r7w1xB7pRZiaT0nSu3vVG4k9fdYsrGEd
+	 2SfsipHEVeHiLGS8OroNFxI3swtJYPY1pt2c0xv0AAGh6NpCppdbpz7jSgx6lvgnWf
+	 +5C8TjkEG3UYP8Rx7h+2yEkOzwRrJc3iKwtokqck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Weinan Liu <wnliu@google.com>,
-	Wei Wang <wei.w.wang@hotmail.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 407/480] iommu/amd: Dont split flush for amd_iommu_domain_flush_all()
-Date: Thu, 16 Jul 2026 15:32:34 +0200
-Message-ID: <20260716133053.616187940@linuxfoundation.org>
+	Kai Aizen <kai.aizen.dev@gmail.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 408/480] iommufd: Use sizeof(*hdr) instead of sizeof(hdr) in veventq read
+Date: Thu, 16 Jul 2026 15:32:35 +0200
+Message-ID: <20260716133053.637322181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -56,61 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weinan Liu <wnliu@google.com>
+From: Kai Aizen <kai.aizen.dev@gmail.com>
 
-commit 69fe699afe1afcb730164b86c228483c2da05f94 upstream.
+commit be93d186ae88a92e7aa77e122d4e661fa57b1e39 upstream.
 
-We have observed multiple full invalidations occurring during device
-detach when we are done using the vfio-device.
+The bound-check in iommufd_veventq_fops_read() for the normal vEVENT
+path uses sizeof(hdr) where the surrounding code uses sizeof(*hdr):
 
-blocked_domain_attach_device()
-  -> detach_device()
-    -> amd_iommu_domain_flush_all()
-      -> amd_iommu_domain_flush_pages(..., CMD_INV_IOMMU_ALL_PAGES_ADDRESS)
+	if (!vevent_for_lost_events_header(cur) &&
+	    sizeof(hdr) + cur->data_len > count - done) {
 
-      	while (size != 0) {
+hdr is declared as struct iommufd_vevent_header *, so sizeof(hdr)
+evaluates to the size of the pointer.  Surrounding code uses
+sizeof(*hdr) consistently:
 
-          -> __domain_flush_pages( flush_size /* power of 2 flush_size */)
-            -> domain_flush_pages_v1()
-              -> build_inv_iommu_pages()
-                -> build_inv_address()
+	if (done >= count || sizeof(*hdr) > count - done) {
+	...
+	if (copy_to_user(buf + done, hdr, sizeof(*hdr))) {
+	...
+	done += sizeof(*hdr);
 
-         }
+struct iommufd_vevent_header is currently 8 bytes (two __u32 fields,
+flags and sequence), so on 64-bit (sizeof(void *) == 8) the two
+expressions happen to be equal and the check works as intended.
 
-build_inv_address() will trigger a full invalidation  if the chunk
-size > (1 << 51). Consequently, the guest will issue multiple full
-invalidations for a single call to  amd_iommu_domain_flush_all()
+On 32-bit (sizeof(void *) == 4) the check under-counts the header by
+4 bytes: a vEVENT whose data_len causes 8 + cur->data_len to exceed
+count - done while 4 + cur->data_len does not will pass the check,
+then the loop will copy_to_user 8 bytes of header followed by data_len
+bytes of payload, writing past the user-supplied buffer.
 
-Without this patch, we will see 10 time instead of 1 time full
-invalidations for every amd_iommu_domain_flush_all().
+It is also a latent bug for any future expansion of struct
+iommufd_vevent_header beyond sizeof(void *) on 64-bit; the check
+should not depend on the type happening to match the host pointer
+width.
 
+Use sizeof(*hdr) to match the rest of the function and the actual
+amount that will be copied.
+
+Fixes: e36ba5ab808e ("iommufd: Add IOMMUFD_OBJ_VEVENTQ and IOMMUFD_CMD_VEVENTQ_ALLOC")
+Link: https://patch.msgid.link/r/20260430175630.67078-1-kai.aizen.dev@gmail.com
 Cc: stable@vger.kernel.org
-Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
-Suggested-by: Josef Bacik <josef@toxicpanda.com>
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Weinan Liu <wnliu@google.com>
-Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Reported-by: Kai Aizen <kai.aizen.dev@gmail.com>
+Signed-off-by: Kai Aizen <kai.aizen.dev@gmail.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/iommu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/iommufd/eventq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1689,7 +1689,8 @@ void amd_iommu_domain_flush_pages(struct
- {
- 	lockdep_assert_held(&domain->lock);
+--- a/drivers/iommu/iommufd/eventq.c
++++ b/drivers/iommu/iommufd/eventq.c
+@@ -321,7 +321,7 @@ static ssize_t iommufd_veventq_fops_read
  
--	if (likely(!amd_iommu_np_cache)) {
-+	if (likely(!amd_iommu_np_cache) ||
-+		size >= (1ULL<<52)) {
- 		__domain_flush_pages(domain, address, size);
- 
- 		/* Wait until IOMMU TLB and all device IOTLB flushes are complete */
+ 		/* If being a normal vEVENT, validate against the full size */
+ 		if (!vevent_for_lost_events_header(cur) &&
+-		    sizeof(hdr) + cur->data_len > count - done) {
++		    sizeof(*hdr) + cur->data_len > count - done) {
+ 			iommufd_veventq_deliver_restore(veventq, cur);
+ 			break;
+ 		}
 
 
