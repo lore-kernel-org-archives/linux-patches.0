@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3417E426429;
-	Thu, 16 Jul 2026 14:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB26F422E10;
+	Thu, 16 Jul 2026 14:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211147; cv=none; b=KUTD4KT7cvj4T5mRYfXSS2SRPdwwX34g2hjkGr4UIm2Tmdh0HrGto1TXoFUuHNwt5tTorXi8OkchN9J54mbQDXS5T0HRrBoTZKA9HC0nFNG1csl4K97/2AOqplh+y5pSZH36TZ/rvx9WNCj0HOSIVnWcUydwnd/5AbDxJvDaCFQ=
+	t=1784211149; cv=none; b=bNeZtLyShs2fm9BIYlSWCfYBvgvk6t/MLG27xt73qCZKSYXgpWnZQWiSoBppD3NJE4rPK01lXURu+KIMOAfHYqAiA00OX4bS6g7DRG4DWtBAJc8smNXwcpYhwk7z0uDnOslQmbbyewRG2RvjebHMEPCQ6zzzpnIWR/F+lWP1tIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211147; c=relaxed/simple;
-	bh=K5SqbKoKuhfjrfg8xE8eZznVM9ieUJY1bhZnse6mlDs=;
+	s=arc-20240116; t=1784211149; c=relaxed/simple;
+	bh=7BwQ/9jxUO9U9ONrAWz8eyyykH5pD12OSuFzIMM2gBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jb0dJYOhDbCyvZQk+bxFbmDdMZcUZM5sA1bPV/ocabPnWnvC2UqayhVpaPAg7SCdGo4Kcaso86bVk+qzV5fmf11x9KNu60XOZhWG62KCtP0pQB20Z8cFARa0XZJ0Ibw4aO+8NBGheP8WP/fAX4kw85hm/iicqb7aA6DoLbaavnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n75bELXg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aSlBuSq6SkoneLHdSL8MNSFpAvUXev9a8cJqJ3WK0Mh5BRh+59qpbxgBjONeQpfYKl2sB+VCmfOwAFZ4Qsfawn6DypnkE5b+G1qHtoS4+fjo1jWE5l62QdiWPMtekRMtMUANMPN77egLOfsOKlyg/A9nIf2z3UwTnXZ+xKkBrmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwrnGloK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n75bELXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A070D1F000E9;
-	Thu, 16 Jul 2026 14:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwrnGloK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D24E1F000E9;
+	Thu, 16 Jul 2026 14:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211146;
-	bh=/hXN8bhCOtyEGEG7JR6Ta3z+adW6NjHiqzPpsmtbtD8=;
+	s=korg; t=1784211148;
+	bh=cX8g2bVjRPS6t6Hf17hoI8Ijaidk76GfAL34UL1c8q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n75bELXgcgTKRIuVfjvIK93E8ixU8UakSoxWvT7VlAgHb2AoMDTEoO5HYEU6oCsXI
-	 Lm8nmeHIOF/XPfYULNz15m9YRLb/HbyInABwFlIX5QNZqIa/Vbn67gTthj+o0YXO8A
-	 k8LB2Nm/oJUhf5jkI6l77yew99/SMu6kgB6OdbaY=
+	b=OwrnGloKy6TVIijGzdXQJzJm9eu5jxA0QixFsXmy6e93HAz/LHRjpPuq3dm1l5F/p
+	 x8Ljdrue6umcuIrp8uAovmzMaqpP4GbEV8MFNOt4S82K6w3bU+sMJXGd+M+lV6SMDg
+	 PjYJ6wMCw/75aOtNcGpYS7CRYglw810Ze4LVQG/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhao Zhang <zzhan461@ucr.edu>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.18 280/480] bpf: Reject fragmented frames in devmap
-Date: Thu, 16 Jul 2026 15:30:27 +0200
-Message-ID: <20260716133050.884374580@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Madhu M <madhu.m@intel.com>,
+	Jameson Thies <jthies@google.com>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.18 316/480] usb: typec: ucsi: Pass full DP config payload in SET_NEW_CAM for DP alt mode
+Date: Thu, 16 Jul 2026 15:31:03 +0200
+Message-ID: <20260716133051.657960599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,73 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Zhang <zzhan461@ucr.edu>
+From: Madhu M <madhu.m@intel.com>
 
-commit aa496720618f1a6054f1c870bf10b4f6c99bf656 upstream.
+commit 735a461d060d4eeb2f9732aba1295bc32a3982e2 upstream.
 
-Devmap broadcast redirects clone the packet for all but the last
-destination.
+In the UCSI Specification Revision 3.1 RC1, bits 32-63 of the SET_NEW_CAM
+command hold the 32-bit Alternate Mode Specific (AMSpecific) field.
 
-For native XDP, that clone path copies only the linear xdp_frame data,
-while fragmented frames keep skb_shared_info in tailroom outside the
-linear area. Cloning such a frame leaves XDP_FLAGS_HAS_FRAGS set but
-without valid frag metadata, and the later free path can interpret
-uninitialized tail data as skb_shared_info, leading to an out-of-bounds
-access during frame return.
+For DisplayPort Alternate Mode, this field must contain the full
+32-bit DisplayPort configuration VDO payload that the OPM wants the
+connector to operate in, rather than just the pin assignment value.
+This AMSpecific value follows the DisplayPort Configurations defined
+in the DisplayPort Alt Mode on USB Type-C Specification v2.1a,
+Table 5-13: SOP DisplayPort Configurations.
 
-Reject fragmented native XDP frames in dev_map_enqueue_clone().
-
-Add the same restriction to the generic XDP clone path in
-dev_map_redirect_clone(). Generic XDP represents fragmented packets as
-nonlinear skbs, and rejecting them here keeps clone-based broadcast
-support aligned between native and generic XDP.
-
-Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/21c2d153dd25603d359069a02bf06779b51f6423.1780385378.git.zzhan461@ucr.edu
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Madhu M <madhu.m@intel.com>
+Reviewed-by: Jameson Thies <jthies@google.com>
+Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260619153311.3526083-1-madhu.m@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/devmap.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/typec/ucsi/displayport.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -581,6 +581,10 @@ static int dev_map_enqueue_clone(struct
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -185,13 +185,12 @@ static int ucsi_displayport_status_updat
+ 
+ static int ucsi_displayport_configure(struct ucsi_dp *dp)
  {
- 	struct xdp_frame *nxdpf;
+-	u32 pins = DP_CONF_GET_PIN_ASSIGN(dp->data.conf);
+ 	u64 command;
  
-+	/* Frags live outside the linear frame and cannot be cloned safely. */
-+	if (unlikely(xdp_frame_has_frags(xdpf)))
-+		return -EOPNOTSUPP;
-+
- 	nxdpf = xdpf_clone(xdpf);
- 	if (!nxdpf)
- 		return -ENOMEM;
-@@ -726,6 +730,9 @@ static int dev_map_redirect_clone(struct
- 	struct sk_buff *nskb;
- 	int err;
+ 	if (!dp->override)
+ 		return 0;
  
-+	if (unlikely(skb_is_nonlinear(skb)))
-+		return -EOPNOTSUPP;
-+
- 	nskb = skb_clone(skb, GFP_ATOMIC);
- 	if (!nskb)
- 		return -ENOMEM;
+-	command = UCSI_CMD_SET_NEW_CAM(dp->con->num, 1, dp->offset, pins);
++	command = UCSI_CMD_SET_NEW_CAM(dp->con->num, 1, dp->offset, dp->data.conf);
+ 
+ 	return ucsi_send_command(dp->con->ucsi, command, NULL, 0);
+ }
 
 
