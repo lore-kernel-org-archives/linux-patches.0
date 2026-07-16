@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36F12F2619;
-	Thu, 16 Jul 2026 14:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C775A79B;
+	Thu, 16 Jul 2026 14:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210427; cv=none; b=AN++oy/qrl0IcTX4WgjKBXrlId2J17vJlBH1ZBsue5omGRJb1b2Qt+2D0NUkkF3WqIhmkT3nPmyqyHF89m+Lh8eI5ncjIACwFqCez/kKxhB/7eId3QFTZexc4pKzLxEGcnBwL6Xjtkn/MAjaFwy1eUeGUCIzZS/vixnhnqsTBLI=
+	t=1784210431; cv=none; b=KGGzaTLQ58Revg3fHFzpp/SOUuwbXN7kxozp9Zw0G4ti6I4KaJkqTZD07a8ArqP2eVrhVvDIksvhscfO0+/eD394Oja2dMd1w5hLTv0YuExM+CWXGF/9je1txH3C2fTEXguM2l5wl3ST52Jqt3tHWDRGVZ/U3F35jEIANSB+Fg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210427; c=relaxed/simple;
-	bh=PW65laiQCcILz+7aRS4IHd5lhj9ywIQJm/C8j8KYKoo=;
+	s=arc-20240116; t=1784210431; c=relaxed/simple;
+	bh=IKKrz+bPLuMTEPjNUGeNKstGUwJoGtGjJR3P64RW00A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QLZoM5Dk7GIMmAdUPO4jIgNkCRCVlNKdRGgH3Qrol9ITmhp+wQwxYhtKx8okqlX18s8ghEEbnNpQY9ZhJT+vYhZP4RlWTBVDLRrv+YN9QkN+q++MM8JzYIVmRrHNxPr5RuxPtgvcqY60oLIdwjxylIFBzBeNeglR1w+CJXTDDps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAZKtYJq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A/iDlIkRVdiJ9g7CKRHYt1zzOmGlSfhjmQZ7apv5Mev983KaGbxHIJ5AxS5VjIpLsTuOTxdHxij70X+3dG6GmvpbOrczdFKmXCL5f5RILlU7OtSqAVctpdlQad0wO9AuviRrOL6BgTO9W9UIgasyAlrRqRvzuu8A33cDgIrHHKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUrWaF+s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAZKtYJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349AB1F000E9;
-	Thu, 16 Jul 2026 14:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUrWaF+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D4D1F000E9;
+	Thu, 16 Jul 2026 14:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210426;
-	bh=fxnMfqNyQlNaXCMtZtUU5hOK6jzRcsSbe5+A5yp0lWU=;
+	s=korg; t=1784210429;
+	bh=/KlmWl69WJcHg1QgZgTSUrqsrGpOw+9xNlCRz4pvp/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hAZKtYJq3JdLRevJ3JSeEpW0mmnZnTHWjKGyDFnCliD63B7d9VJHdJRSDLFzaPATp
-	 3awcG1TLvbvdnJY/dNDv97b1MmPhu5DLsJ9oa49fMM7u37WTPvEnTnr+eGOQ0k6NMb
-	 C61Gt8EIjc+pL/SPP9vSEanUFTPF7apP+JGhL6uA=
+	b=IUrWaF+sz0IpOM0gLjjIbH3b7DSM57+Jv/lTJbx/efH/0Qf4tEiGdY6v5STsULjs6
+	 tk06+d6q+nZpStubH7KSK3dyNhqr77KjrROSp8kTNRJs5X9lhSm9lkm7brnTm8+ZJ5
+	 BDg3Cv9XN1V0Nxh3j9a0sHmAnz5HyWxa4seI6WaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.18 041/480] futex/requeue: Revert "Prevent NULL pointer dereference in remove_waiter() on self-deadlock""
-Date: Thu, 16 Jul 2026 15:26:28 +0200
-Message-ID: <20260716133045.593088326@linuxfoundation.org>
+	Taeyang Lee <0wn@theori.io>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 042/480] perf/core: Detach event groups during remove_on_exec
+Date: Thu, 16 Jul 2026 15:26:29 +0200
+Message-ID: <20260716133045.614100734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,50 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Taeyang Lee <0wn@theori.io>
 
-commit 39def6d250d370298f86c116f4ac60093cefadaa upstream.
+[ Upstream commit 037a3c43edfb597665dd34457cd22b14692f2ba3 ]
 
-The commit cited below should not have been merged. It attemted to fix an
-existing problem ansd thereby introduced new problems by keeping the
-pi_state in state Q_REQUEUE_PI_IN_PROGRESS and leaking it.
+perf_event_remove_on_exec() removes events by calling
+perf_event_exit_event(). For top-level events, this removes the event from
+the context with DETACH_EXIT only.
 
-Based on the commit description the intention was to handle the case
-when task_blocks_on_rt_mutex() returns -EDEADLK and the following
-remove_waiter() dereferences the NULL pointer in waiter->task.
+This can leave inconsistent group state when a removed event is a group
+leader and the group contains siblings without remove_on_exec. If the group
+was active, the surviving siblings can remain active and attached to the
+removed leader's sibling list, but are no longer represented by a valid
+group leader on the PMU context active lists.
 
-That is already handled by Davidlohr in commit 40a25d59e85b3
-("locking/rtmutex: Skip remove_waiter() when waiter is not enqueued") and
-requires no further acting.
+A later close of the removed leader uses DETACH_GROUP and can promote the
+still-active siblings from this stale group state. The next schedule-in can
+then add an already-linked active_list entry again, corrupting the PMU
+context active list.
 
-Revert the commit breaking the "waiter == owner" case again.
+With DEBUG_LIST enabled, this is caught as a list_add double-add in
+merge_sched_in().
 
-Fixes: 74e144274af39 ("futex/requeue: Prevent NULL pointer dereference in remove_waiter() on self-deadlock")
-Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260701131150.0Ijhq4Dw@linutronix.de
-Closes: https://lore.kernel.org/all/20260629020049.2082397-1-michael.bommarito@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by detaching group relationships when remove_on_exec removes an
+event. This preserves the existing task-exit and revoke behavior, while
+ensuring surviving siblings are ungrouped before the removed event leaves
+the context.
+
+Fixes: 2e498d0a74e5 ("perf: Add support for event removal on exec")
+Signed-off-by: Taeyang Lee <0wn@theori.io>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/ai65GgZcC0LAlWLG@Taeyangs-MacBook-Pro.local
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/requeue.c |    6 ------
- 1 file changed, 6 deletions(-)
+ kernel/events/core.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/kernel/futex/requeue.c
-+++ b/kernel/futex/requeue.c
-@@ -643,12 +643,6 @@ retry_private:
- 				continue;
- 			}
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 6b6fea8d33e044..449550b3bb286a 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4586,7 +4586,7 @@ static void perf_remove_from_owner(struct perf_event *event);
+ static void perf_event_exit_event(struct perf_event *event,
+ 				  struct perf_event_context *ctx,
+ 				  struct task_struct *task,
+-				  bool revoke);
++				  unsigned long detach_flags);
  
--			/* Self-deadlock: non-top waiter already owns the PI futex. */
--			if (rt_mutex_owner(&pi_state->pi_mutex) == this->task) {
--				ret = -EDEADLK;
--				break;
--			}
--
- 			ret = rt_mutex_start_proxy_lock(&pi_state->pi_mutex,
- 							this->rt_waiter,
- 							this->task);
+ /*
+  * Removes all events from the current task that have been marked
+@@ -4613,7 +4613,7 @@ static void perf_event_remove_on_exec(struct perf_event_context *ctx)
+ 
+ 		modified = true;
+ 
+-		perf_event_exit_event(event, ctx, ctx->task, false);
++		perf_event_exit_event(event, ctx, ctx->task, DETACH_GROUP);
+ 	}
+ 
+ 	raw_spin_lock_irqsave(&ctx->lock, flags);
+@@ -12511,7 +12511,7 @@ static void __pmu_detach_event(struct pmu *pmu, struct perf_event *event,
+ 	/*
+ 	 * De-schedule the event and mark it REVOKED.
+ 	 */
+-	perf_event_exit_event(event, ctx, ctx->task, true);
++	perf_event_exit_event(event, ctx, ctx->task, DETACH_REVOKE);
+ 
+ 	/*
+ 	 * All _free_event() bits that rely on event->pmu:
+@@ -14095,12 +14095,13 @@ static void
+ perf_event_exit_event(struct perf_event *event,
+ 		      struct perf_event_context *ctx,
+ 		      struct task_struct *task,
+-		      bool revoke)
++		      unsigned long detach_flags)
+ {
+ 	struct perf_event *parent_event = event->parent;
+-	unsigned long detach_flags = DETACH_EXIT;
+ 	unsigned int attach_state;
+ 
++	detach_flags |= DETACH_EXIT;
++
+ 	if (parent_event) {
+ 		/*
+ 		 * Do not destroy the 'original' grouping; because of the
+@@ -14123,8 +14124,8 @@ perf_event_exit_event(struct perf_event *event,
+ 			sync_child_event(event, task);
+ 	}
+ 
+-	if (revoke)
+-		detach_flags |= DETACH_GROUP | DETACH_REVOKE;
++	if (detach_flags & DETACH_REVOKE)
++		detach_flags |= DETACH_GROUP;
+ 
+ 	perf_remove_from_context(event, detach_flags);
+ 	/*
+@@ -14212,7 +14213,7 @@ static void perf_event_exit_task_context(struct task_struct *task, bool exit)
+ 		perf_event_task(task, ctx, 0);
+ 
+ 	list_for_each_entry_safe(child_event, next, &ctx->event_list, event_entry)
+-		perf_event_exit_event(child_event, ctx, exit ? task : NULL, false);
++		perf_event_exit_event(child_event, ctx, exit ? task : NULL, 0);
+ 
+ 	mutex_unlock(&ctx->mutex);
+ 
+-- 
+2.53.0
+
 
 
