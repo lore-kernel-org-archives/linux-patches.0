@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D46400997;
-	Thu, 16 Jul 2026 14:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4B2424D75;
+	Thu, 16 Jul 2026 14:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212097; cv=none; b=jruo1biAkRcm4InJO+Vfoj/LHyoz+MNaGoTugbA87l8h+M4AP37ZA9yIXNqOSOnJpck45xFIyIL0WuOcanHQsaoH/usHbm91Kob1QszRizYfzenVsxeC0VPCcikt+CffGB/j4l7LD0+lQK1rbdEdmptshlc2K2SYQAljNPsAi1M=
+	t=1784212100; cv=none; b=jrkb277v5/sbJRbSCPuNlMOVoZbFuht0TLPDTqqU3mPtWqn+YpAV4QrkhLg9ZyAo8Jus3EwEWbgZGwZTcKvBpRqIr3KzjPeKVcrnIZY3aD0Y3Jm0/qbfa5lgvHgDaOqZnVBIVMf+3T3fp3rJfUzNixzFAMGv7mnyrMFEk2rwqkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212097; c=relaxed/simple;
-	bh=TjUAUfcC5PjyVhaHX2Fsfnh6l+P+GyolXBqCHrPQgMU=;
+	s=arc-20240116; t=1784212100; c=relaxed/simple;
+	bh=3BTpaSILyIfUYiMFPzcn0oFRQV/idQnKiREY1T9anIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qi933r0y3mJqID/HEknGjlzPMIItu+Yb1bKfMQZDRAs4UcE2jCxsJvSfw5QW5egDLs7QdNIXiHtk1m9Ayrmw2ZiZkN/um9MDDpkJ9j3HGp8Spo4/+PIVV8y/Gs2h10IpcvIQTX8Y/LkYm9LCb8t5Y9jg6jbaB8eR0olSODbqm1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMFWe3/s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ha2H52QWj742UJf9dHCT32x52MrSwdVsGWpCf9+dvdpIlK0LBvQWpROE7U1JrM1KpCSjykjZQtJXUzToHOSeQ6qlI3Ki/RICXGPokdzJj7e6+Lq3SaZGlOnpHDJ1WZ2DHGYfXy7S1ZJS+/HASi4P1KfVWom5HBOS0UKZ3EVcGoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgWv6a9p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMFWe3/s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB66E1F000E9;
-	Thu, 16 Jul 2026 14:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgWv6a9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAAE1F00A3A;
+	Thu, 16 Jul 2026 14:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212089;
-	bh=VCd6/gqn2Ae0G7wqX0fokM5Cc+G+Mfo56JxYH/xngoE=;
+	s=korg; t=1784212091;
+	bh=NpXe5BA5UjFCi2etONYXkOWGyrNIfpolFX/D+M4hRFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMFWe3/s8jXTdME1sr0DPQZOHT/NtrUVFzX68UFf3p+bdhaObZoJ9hmWd9Nt90SeW
-	 1+YcBKo84lLTFgEwVXVbv4WAsXtILTj28Fbf6O/PcSi1r+tmkDZHBwmi22KsFbP+m8
-	 e3l+mCbAdzCAEWKKr4ZgVCTFkdsgdVRx+98DGgcE=
+	b=xgWv6a9plo5Y0GfmMV7Xx4wKj+VLsmjSrl/qAR/s/7u4l3PUANQwPfB0ys8eqIaVl
+	 9yj/kItr2h+xfjEBl7dU/HSL14st4GLZWARAila46q38KC/wm32c14/s4aAjSwN5Y0
+	 jMHi2lkkcSUDiqdQMVHX4XASFY5pWDwriOyQEyow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Zenghui Yu <zenghui.yu@linux.dev>,
-	Nhat Pham <nphamcs@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Dave Chinner <david@fromorbit.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 142/349] mm/shrinker: do not hold RCU lock in shrinker_debugfs_count_show()
-Date: Thu, 16 Jul 2026 15:31:16 +0200
-Message-ID: <20260716133036.546483319@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.12 189/349] firmware_loader: fix device reference leak in firmware_upload_register()
+Date: Thu, 16 Jul 2026 15:32:03 +0200
+Message-ID: <20260716133037.607524994@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -57,74 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit b902890c62d200b3509cb5e09cf1e0a66553c128 upstream.
+commit 896df22ee57648b0c505bd76ddbc6b2341834696 upstream.
 
-Reading the debugfs "count" file of a memcg-aware shrinker can sleep
-inside an RCU read-side critical section:
+firmware_upload_register()
+  -> fw_create_instance()
+     -> device_initialize()
 
-  BUG: sleeping function called from invalid context at kernel/cgroup/rstat.c:421
-  RCU nest depth: 1, expected: 0
-   css_rstat_flush
-   mem_cgroup_flush_stats
-   zswap_shrinker_count
-   shrinker_debugfs_count_show
+After fw_create_instance() succeeds, the lifetime of the embedded struct
+device is expected to be managed through the device core reference
+counting, since fw_create_instance() has already called
+device_initialize().
 
-shrinker_debugfs_count_show() invokes the ->count_objects() callback under
-rcu_read_lock().  The zswap callback flushes memcg stats via
-css_rstat_flush(), which may sleep, so it must not run under RCU.
+In firmware_upload_register(), if alloc_lookup_fw_priv() fails after
+fw_create_instance() succeeds, the code reaches free_fw_sysfs and frees
+fw_sysfs directly instead of releasing the device reference with
+put_device(). This may leave the reference count of the embedded struct
+device unbalanced, resulting in a refcount leak.
 
-The RCU lock is not needed here.  mem_cgroup_iter() takes RCU internally
-and returns a memcg holding a css reference (dropped on the next iteration
-or by mem_cgroup_iter_break()), so the memcg stays alive without it.  The
-shrinker is kept alive by the open debugfs file: shrinker_free() removes
-the debugfs entries via debugfs_remove_recursive(), which waits for
-in-flight readers to drain, before call_rcu(..., shrinker_free_rcu_cb).
-The sibling "scan" handler already invokes the sleeping ->scan_objects()
-callback with no RCU section.
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review. Fix this by using put_device(fw_dev) in the
+failure path and letting fw_dev_release() handle the final cleanup,
+instead of freeing the instance directly from the error path.
 
-Drop the rcu_read_lock()/rcu_read_unlock().
-
-Link: https://lore.kernel.org/20260610232048.62930-1-shakeel.butt@linux.dev
-Fixes: 5035ebc644ae ("mm: shrinkers: introduce debugfs interface for memory shrinkers")
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
-Closes: https://lore.kernel.org/all/c052a064-cddb-494f-a0d8-f8a10b4b1c4d@linux.dev/
-Suggested-by: Nhat Pham <nphamcs@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
-Tested-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 97730bbb242c ("firmware_loader: Add firmware-upload support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260505091231.607089-1-lgs201920130244@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker_debug.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/base/firmware_loader/sysfs_upload.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -57,8 +57,6 @@ static int shrinker_debugfs_count_show(s
- 	if (!count_per_node)
- 		return -ENOMEM;
+--- a/drivers/base/firmware_loader/sysfs_upload.c
++++ b/drivers/base/firmware_loader/sysfs_upload.c
+@@ -341,7 +341,6 @@ firmware_upload_register(struct module *
+ 		goto free_fw_upload_priv;
+ 	}
+ 	fw_upload->priv = fw_sysfs;
+-	fw_sysfs->fw_upload_priv = fw_upload_priv;
+ 	fw_dev = &fw_sysfs->dev;
  
--	rcu_read_lock();
+ 	ret = alloc_lookup_fw_priv(name, &fw_cache, &fw_priv,  NULL, 0, 0,
+@@ -349,10 +348,12 @@ firmware_upload_register(struct module *
+ 	if (ret != 0) {
+ 		if (ret > 0)
+ 			ret = -EINVAL;
+-		goto free_fw_sysfs;
++		put_device(fw_dev);
++		goto free_fw_upload_priv;
+ 	}
+ 	fw_priv->is_paged_buf = true;
+ 	fw_sysfs->fw_priv = fw_priv;
++	fw_sysfs->fw_upload_priv = fw_upload_priv;
+ 
+ 	ret = device_add(fw_dev);
+ 	if (ret) {
+@@ -363,9 +364,6 @@ firmware_upload_register(struct module *
+ 
+ 	return fw_upload;
+ 
+-free_fw_sysfs:
+-	kfree(fw_sysfs);
 -
- 	memcg_aware = shrinker->flags & SHRINKER_MEMCG_AWARE;
+ free_fw_upload_priv:
+ 	kfree(fw_upload_priv);
  
- 	memcg = mem_cgroup_iter(NULL, NULL, NULL);
-@@ -88,8 +86,6 @@ static int shrinker_debugfs_count_show(s
- 		}
- 	} while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
- 
--	rcu_read_unlock();
--
- 	kfree(count_per_node);
- 	return ret;
- }
 
 
