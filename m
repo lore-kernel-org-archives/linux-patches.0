@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00AF3B42FC;
-	Thu, 16 Jul 2026 13:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED333101BF;
+	Thu, 16 Jul 2026 13:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210280; cv=none; b=J1QTeocpbad7G2CKL67xzzk6nkDiab4V3tnA5+gwphse6hzyWUxqAfmih+0u03bs1x4fIyA8lP4vhGal5la2+FrATEdWc1Nj663hwB2cE2RZcft1iHyJVwMSuBTwEsfi3bFfDL+J6dA8PS8+MuWTyj+CDCoapzxVKveWqXPxmh4=
+	t=1784210284; cv=none; b=Y2vEFp2o8l7T0Y44+RuhzI1j5purxu6OWnoT55L+KI9cgojfNzukS9hORsy9by4932GPZbQ2utGHPRNizQExXkgH786Trn63RJyecJ8i4wi4x3f31xHE9zfrUap928PuaCWHmMTgPhD+HoszsmSwOzgLtkfqJYeUmL+w01yzuZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210280; c=relaxed/simple;
-	bh=SMOJpIkrMCG3g0UuI3I0e6KAR5xoe8saGpJODfDT1TU=;
+	s=arc-20240116; t=1784210284; c=relaxed/simple;
+	bh=DJeUomWBi14GJ2ghbaoYpH/kkw9ZPIHd8h2a3LrilAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkPG/q2BFivpUm1jGNK3it3YvbcPajC1UVqFWLb4HNUSeAVE5sASC8DMEyYpK3Pmur1BQ9lTZLs8fp7NUlcdk19ahxoR2VzxS6vikVA8FU8vEgS4rWAI5DN1o3OJMOIl/Uuq3aAUZ1cS4Sr1c9sceY+x1Vwn7Vz6MSyq/8M3n6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+SBOwEZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L0nuZC7lgedUAGPgXB3p7AloSCFSPk8WWoWbrupXKKCbyWULkCioB7TISS68f9o2EMvfIZ95vJIMpJIR9oDioNCcG2qYHMWa/zPDdBlCq+VXx+cocgAlHhPBLfGOStsCCb+6d9FEj+5Q5LCyn4ObxzgxuWoLiDt5CJ710MLnGkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x09fUB+N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+SBOwEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4029D1F000E9;
-	Thu, 16 Jul 2026 13:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x09fUB+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBD41F000E9;
+	Thu, 16 Jul 2026 13:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210279;
-	bh=MW657jJ48fJ4Icl8qD39P/HeWYeCDr0aBql8qqr1DiI=;
+	s=korg; t=1784210282;
+	bh=IFaNUUVW3zzIrBuYmHRuTzCuuE3pyS39JFiJ6MgobsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z+SBOwEZ3lN3+tFbDWS1zljj4XJ249O4MZajJkFa7sZBroFLNOSoeoQgxupUvtico
-	 D+ztOl2uLnJCFm7zU55BB/Vfn2N+4sY/X6xIDt0zc7nKIsLa8kh8/bbDElPk3jWIFh
-	 Uz4bU/r/NGXvSqc2mQQwj3YDRsuzqqTC2goHUz6w=
+	b=x09fUB+NYMeKjVnlbW6tjWqzZpmDWbIJtJhTpehdCsBSgI0ggq+xRhAR7UOGG2lpM
+	 2VWkG9ATW9wgUoy/gCjABAI46sYvBJMrjCnf1iWXEYCury1ZTphZ6UcwcV+lGIYNib
+	 qnuuPdgdgVPiXLdEruUmEQvZ8M7pmaQkQiE5atco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Chris Mason <clm@meta.com>,
+	Bernd Schubert <bernd@bsbernd.com>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 7.1 507/518] fuse: clear intr_entry in fuse_resend and fuse_remove_pending_req
-Date: Thu, 16 Jul 2026 15:32:55 +0200
-Message-ID: <20260716133058.933183638@linuxfoundation.org>
+Subject: [PATCH 7.1 508/518] fuse-uring: fix EFAULT clobber in fuse_uring_commit
+Date: Thu, 16 Jul 2026 15:32:56 +0200
+Message-ID: <20260716133058.955490277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,61 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+From: Chris Mason <clm@meta.com>
 
-commit f8fce75fedf73ac72aa09163deb8f4291fdcaad2 upstream.
+commit 3a0a8bc51a13951c5141262bf770eeea3e0b6228 upstream.
 
-When fuse_resend() moves a request from fpq->processing back to
-fiq->pending, it sets FR_PENDING and clears FR_SENT but does not
-remove the requests intr_entry from fiq->interrupts.  If the
-request had FR_INTERRUPTED set from a prior signal, intr_entry
-remains dangling on fiq->interrupts.  When the requesting task
-then receives a fatal signal, fuse_remove_pending_req() sees
-FR_PENDING=1, removes the request from fiq->pending and frees it
-via the refcount path, also without cleaning intr_entry.  The
-stale intr_entry causes use-after-free when fuse_read_interrupt()
-iterates fiq->interrupts:
-  - list_del_init(&req->intr_entry) -> UAF write on freed slab
-  - req->in.h.unique -> UAF read, data leaked to userspace
+copy_from_user() returns the number of bytes not copied as an unsigned
+residual on failure (1..sizeof(struct fuse_out_header)). fuse_uring_commit
+stores that residual in ssize_t err, sets req->out.h.error to -EFAULT,
+then jumps to out: with err still holding the positive residual.
 
-Remove intr_entry from fiq->interrupts in fuse_resend() for
-interrupted requests before they are placed back on fiq->pending.
+    err = copy_from_user(&req->out.h, &ent->headers->in_out,
+                         sizeof(req->out.h));
+    if (err) {
+        req->out.h.error = -EFAULT;
+        goto out;          /* err is the positive residual */
+    }
+    ...
+    out:
+        fuse_uring_req_end(ent, req, err);
 
-Add a WARN_ON if the intr_entry is not empty on request destruction.
+fuse_uring_req_end() then runs
 
-Fixes: 760eac73f9f6 ("fuse: Introduce a new notification type for resend pending requests")
-Cc: stable@vger.kernel.org # 6.9
-Signed-off-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+    if (error)
+        req->out.h.error = error;
+
+which overwrites the just-assigned -EFAULT with the positive residual.
+FUSE callers such as fuse_simple_request() test err < 0 to detect
+failure, so the positive value is interpreted as success and the
+caller proceeds with an uninitialised or partial req->out.args.
+
+Fix by assigning err = -EFAULT in the failure branch before jumping
+to out, so fuse_uring_req_end() receives a negative errno and sets
+req->out.h.error to -EFAULT.
+
+Fixes: c090c8abae4b ("fuse: Add io-uring sqe commit and fetch support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/fuse/dev_uring.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -148,6 +148,7 @@ static struct fuse_req *fuse_request_all
- 
- static void fuse_request_free(struct fuse_req *req)
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -814,14 +814,11 @@ static void fuse_uring_commit(struct fus
  {
-+	WARN_ON(!list_empty(&req->intr_entry));
- 	kmem_cache_free(fuse_req_cachep, req);
- }
+ 	struct fuse_ring *ring = ent->queue->ring;
+ 	struct fuse_conn *fc = ring->fc;
+-	ssize_t err = 0;
++	ssize_t err = -EFAULT;
  
-@@ -2041,6 +2042,14 @@ static void fuse_resend(struct fuse_conn
- 		fuse_dev_end_requests(&to_queue);
- 		return;
- 	}
-+	/*
-+	 * Remove interrupt entries for resent requests to prevent stale
-+	 * intr_entry on fiq->interrupts after the request is re-queued.
-+	 */
-+	list_for_each_entry(req, &to_queue, list) {
-+		if (test_bit(FR_INTERRUPTED, &req->flags))
-+			list_del_init(&req->intr_entry);
-+	}
- 	/* iq and pq requests are both oldest to newest */
- 	list_splice(&to_queue, &fiq->pending);
- 	fuse_dev_wake_and_unlock(fiq);
+-	err = copy_from_user(&req->out.h, &ent->headers->in_out,
+-			     sizeof(req->out.h));
+-	if (err) {
+-		req->out.h.error = -EFAULT;
++	if (copy_from_user(&req->out.h, &ent->headers->in_out,
++			   sizeof(req->out.h)))
+ 		goto out;
+-	}
+ 
+ 	err = fuse_uring_out_header_has_err(&req->out.h, req, fc);
+ 	if (err) {
 
 
