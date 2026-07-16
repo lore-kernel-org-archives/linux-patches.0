@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFE1332604;
-	Thu, 16 Jul 2026 14:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A19322301;
+	Thu, 16 Jul 2026 14:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211662; cv=none; b=tQwclCoDfZ0x1eq31ZrLSR3WX3V2XxmXpaCG/jZPFHazj1KrtzEXurh1nWcjeYJt2OS8Jvx7FZ9rhhO+TBzhbDZ5Qexuv8chHDGBdJrlbdKndIaP3fL2FWmFfKBJtA05giE6f74gUhi5ofKZs9wiAsgSgBAA1ixqmX2tjfp3M44=
+	t=1784211665; cv=none; b=ltoHSYAbAhKGQeKKPVphpYM3ldeDeG4flm7vgOJ0mhaSWuv2Xbll+rSDqy2fHZXCAUnHobR6p2Pl4BjpdAoEe44oLjP8jBC7DJEOP2ljXoCVVBKCWy7iFm45AQvQ8Mt0r9ZDkz0lHeBEKMCmEgGU9buEX8plF/q2ajgU1kfnhJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211662; c=relaxed/simple;
-	bh=FKxALDVSmMS4A0urNLT2/m/A386dpQ0ExcvDRZRXFXQ=;
+	s=arc-20240116; t=1784211665; c=relaxed/simple;
+	bh=jjt7qrxuFvg97VlgQSyRRxwPcCUoLGrczcJlc8xRYfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQqJRDVMFf31UybU5KRub6XGvTT4E8kjl2mPyL2FRmk/opnSBb5D69sRVwk6URIKaiMfKg9V+Dga9d77hhC0GWlDFS4JAJHiBgZC4dnUupasOIRycKBfSD9acLwKK7pJf1v6n0Hq34qvJD4yrl3+lrHnLWICYt8RRrFlxPeh3as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyT3F6Vf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MI1CasVOmhQ4al8Pyq5e/eKGjubPujnrBFwnRdnPZXm+5mgzMta4kZAbOIIOhVo6jKPnAW3Z0B08f+2zJTJrMbPxWiIrC/T1DLrH62BxICLFCdz3CQO0mg441xBLcUmmkdP+IxpAWYdkuLxhDP70q0VHLYvZMlNtkLU1npTwmic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qy/ys1UU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyT3F6Vf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97A31F000E9;
-	Thu, 16 Jul 2026 14:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qy/ys1UU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9371F000E9;
+	Thu, 16 Jul 2026 14:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211661;
-	bh=n6gP6Rp9nBjhRBp9thRXv/JrdI0TowmdyxYzSuqK4lg=;
+	s=korg; t=1784211663;
+	bh=mYtAhoz1Nj02MRoxz7akLB54501otlF0/s6f0y5CmjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nyT3F6Vfaygar5VhjTksHZIlpSJ7HT+bqB14U+JTcVLggEWEXWlHQpH+9VROSEWeG
-	 VDkbSkfdTSUC53xSOCNiUITGJZZ/9PRD6hTUkPnd/VsRcZODuKwzp+Zfnzf1nMJBt2
-	 OOJ4MQxl/SDcjinWW5vbWe3RyCpTQq4GcWOazZF0=
+	b=qy/ys1UU6Zfhv5o9kJhbHC44XolvcQMcox/n0f9IKpyNGjls171+PcuKetOXm0gZw
+	 S198N/1RBg6Hc+bG9DjdUcQ9svLy2KuHJYr3ncdgApq7Pps2D0hsgGD1vXleFGi9sG
+	 QavN7H705wsGBRBif0QYVhZ2PEwrP0b1AXeRUXvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Matthew Wilcox <willy@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Eric Hagberg <ehagberg@janestreet.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Gregg Leventhal <gleventhal@janestreet.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/349] mm/khugepaged: write all dirty file folios when collapsing
-Date: Thu, 16 Jul 2026 15:29:26 +0200
-Message-ID: <20260716133034.028783083@linuxfoundation.org>
+Subject: [PATCH 6.12 006/349] bcachefs: avoid truncating fiemap extent length
+Date: Thu, 16 Jul 2026 15:29:00 +0200
+Message-ID: <20260716133033.430994445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -60,131 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
 
-[There is no upstream commit, as this code was removed by upstream
- commit 044925f9b565 ("mm: fs: remove filemap_nr_thps*() functions and their users")]
+No upstream commit exists for this patch.
 
-As-is, khugepaged and writable-file opening exclude each other. A file
-cannot be open writeable and have THPs (because the filesystem is not aware
-of them). khugepaged will never collapse file pages for files that are
-opened writeable. On an open(O_RDWR/O_WRONLY), the page cache for that
-particular file is dropped. This is fine because nothing could've been
-dirtied.
+bkey sizes are stored in sectors as u32, while fiemap reports byte
+lengths as u64. Shifting k.k->size before widening performs the
+conversion in 32 bits, so an extent of 4 GiB or larger can wrap before
+it is passed to fiemap_fill_next_extent().
 
-However, there is an edge-case: collapse_file() might not be able to
-coexist with concurrent writers, but it can coexist with dirty folios
-(from previous writers). Therefore, the following can happen:
+Compute the byte length after casting the sector count to u64 and reuse
+it for all bch2_fill_extent() cases.
 
-open(file, O_RDWR)
-write(file)
-close(file)
-madvise(file_mapping, MADV_COLLAPSE, some non-dirty range)
-open(file, O_RDWR)
- nr_thps > 0
-  truncate_inode_pages()
-    /* THPs are cleared out, but so are the dirty folios */
+The same issue was fixed in bcachefs-tools, but there is no Linux
+upstream commit to backport to 6.12. The affected 6.12 implementation lives
+in fs/bcachefs/fs.c, while the bcachefs-tools fix touches
+fs/bcachefs/vfs/fiemap.c.
 
-When this edge-case happens, there is data loss, as the dirty folios are
-fully discarded.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fix it by fully writing back the page cache (and waiting) when collapsing
-file THPs. Doing so provides the guarantee that no dirty folio will be
-observed while there are active THPs. To fully ensure this is safe, the
-invalidate_lock needs to be held while doing the writeout, so that
-do_dentry_open()'s page cache truncation excludes this write-and-wait.
-
-As a side effect, move the nr_thps counter bumping outside the i_pages
-lock. This is correct since the counter itself is an atomic_t and the
-producer <-> consumer correctness is provided by a full memory barrier:
-smp_mb() in collapse_file()/memory barrier implied by full ordering in
-get_write_access() -> atomic_inc_unless_negative().
-
-Cc: stable@vger.kernel.org
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Eric Hagberg <ehagberg@janestreet.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Fixes: 99cb0dbd47a1 ("mm,thp: add read-only THP support for (non-shmem) FS")
-Reported-by: Gregg Leventhal <gleventhal@janestreet.com>
-Closes: https://lore.kernel.org/linux-mm/CAFN_u7H_0ECF3jixP=T=U7AH5=Q3wQNvJMo8an3VqUDMerQfUw@mail.gmail.com/
-Tested-by: Zi Yan <ziy@nvidia.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/linux-bcachefs/20260610105547.129545-1-mdmitrichenko@astralinux.ru/
+Link: https://evilpiepirate.org/git/bcachefs-tools.git/commit/?id=6d9a895ed00d4b3868312df93253d2a817b0c6a3
+Signed-off-by: Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
+Acked-by: Kent Overstreet <kent.overstreet@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ fs/bcachefs/fs.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index a97b20617869ae..95b49ca6b196cc 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2017,32 +2017,43 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 		goto xa_unlocked;
- 	}
- 
--	if (!is_shmem) {
-+xa_locked:
-+	xas_unlock_irq(&xas);
-+xa_unlocked:
+--- a/fs/bcachefs/fs.c
++++ b/fs/bcachefs/fs.c
+@@ -1184,6 +1184,8 @@ static int bch2_fill_extent(struct bch_f
+ 			    struct fiemap_extent_info *info,
+ 			    struct bkey_s_c k, unsigned flags)
+ {
++	u64 len = (u64)k.k->size << 9;
 +
-+	/*
-+	 * If collapse is successful, flush must be done now before copying.
-+	 * If collapse is unsuccessful, does flush actually need to be done?
-+	 * Do it anyway, to clear the state.
-+	 */
-+	try_to_unmap_flush();
-+
-+	if (result == SCAN_SUCCEED && !is_shmem && !mapping_large_folio_support(mapping)) {
-+		/*
-+		 * invalidate_lock as shared excludes against concurrent opens
-+		 * in do_dentry_open() truncating the page cache. This is
-+		 * particularly important if there are dirty folios in transit.
-+		 */
-+		filemap_invalidate_lock_shared(mapping);
- 		filemap_nr_thps_inc(mapping);
- 		/*
- 		 * Paired with the fence in do_dentry_open() -> get_write_access()
- 		 * to ensure i_writecount is up to date and the update to nr_thps
- 		 * is visible. Ensures the page cache will be truncated if the
--		 * file is opened writable.
-+		 * file is opened writable. If collapse looks to be successful,
-+		 * flush any dirty pages out the page cache. With the nr_thps
-+		 * incremented, there won't be any new writers (nor new dirties).
- 		 */
- 		smp_mb();
--		if (inode_is_open_for_write(mapping->host)) {
-+		if (inode_is_open_for_write(mapping->host) || filemap_write_and_wait(mapping)) {
- 			result = SCAN_FAIL;
- 			filemap_nr_thps_dec(mapping);
-+			filemap_invalidate_unlock_shared(mapping);
-+			goto rollback;
+ 	if (bkey_extent_is_direct_data(k.k)) {
+ 		struct bkey_ptrs_c ptrs = bch2_bkey_ptrs_c(k);
+ 		const union bch_extent_entry *entry;
+@@ -1212,7 +1214,7 @@ static int bch2_fill_extent(struct bch_f
+ 			ret = fiemap_fill_next_extent(info,
+ 						bkey_start_offset(k.k) << 9,
+ 						offset << 9,
+-						k.k->size << 9, flags|flags2);
++						len, flags | flags2);
+ 			if (ret)
+ 				return ret;
  		}
-+		filemap_invalidate_unlock_shared(mapping);
- 	}
- 
--xa_locked:
--	xas_unlock_irq(&xas);
--xa_unlocked:
--
--	/*
--	 * If collapse is successful, flush must be done now before copying.
--	 * If collapse is unsuccessful, does flush actually need to be done?
--	 * Do it anyway, to clear the state.
--	 */
--	try_to_unmap_flush();
--
- 	if (result == SCAN_SUCCEED && nr_none &&
- 	    !shmem_charge(mapping->host, nr_none))
- 		result = SCAN_FAIL;
--- 
-2.53.0
-
+@@ -1221,13 +1223,13 @@ static int bch2_fill_extent(struct bch_f
+ 	} else if (bkey_extent_is_inline_data(k.k)) {
+ 		return fiemap_fill_next_extent(info,
+ 					       bkey_start_offset(k.k) << 9,
+-					       0, k.k->size << 9,
++					       0, len,
+ 					       flags|
+ 					       FIEMAP_EXTENT_DATA_INLINE);
+ 	} else if (k.k->type == KEY_TYPE_reservation) {
+ 		return fiemap_fill_next_extent(info,
+ 					       bkey_start_offset(k.k) << 9,
+-					       0, k.k->size << 9,
++					       0, len,
+ 					       flags|
+ 					       FIEMAP_EXTENT_DELALLOC|
+ 					       FIEMAP_EXTENT_UNWRITTEN);
 
 
