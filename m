@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA8841A55A;
-	Thu, 16 Jul 2026 14:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90757423EA0;
+	Thu, 16 Jul 2026 14:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211037; cv=none; b=G6jOrVamDMqaXMfYimBirZJYVPgfJj14x4ANZqNKqcHPVjpFl0uKNo0kPIjN5cr/nT5zL5VChdxmW5g6oxNQR3+QWsBQjO2cSWkd8jK/n6GhYXHABf8M+PKPWifyk9rIWm7LSlbdBozcQ985L/HTZLZLReZsP/VccTRe721MalM=
+	t=1784211039; cv=none; b=WQF2yl4YcTHle70uwl4sGK80AyFdcr+xCklM3Zxi8KyeByiPonBRCd3bG3NUHWtmLSa7s2yhs9WSDNYuDXmW46nEls8x+9m0uJmUHWRuKw5hacwGaWafqN+ajXlcyJM/0D49ydnSqTrnMVnYAPbmj4CMmsTGk/ipQh/hml9hBVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211037; c=relaxed/simple;
-	bh=Gp1v8nOlaPxvurphM7hm6qCduDoE9F/c3pfoyCUisQc=;
+	s=arc-20240116; t=1784211039; c=relaxed/simple;
+	bh=P7g6aljonxMT1lFg/oIBVtvfrPbPsQQtZHJQKd8K1wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GfOCJh8S2PGg7FuSPnNiUrUySr7qNaEMu8K/gjzKUpDRKDb4Lynu12n94b06RbHSthDVpQm2CyuMRPm/r8KGc7EAdvDAYgg8Flre35TwpPILlEj7ZlDIl58vD85L2aAxmXvaq2AQkjMDKRaN73WJu6Qx8+NlwinAHKQwhQWVLDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SU3wqUzP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MhlClOmpOLa6OCBhCimQIDoVrymBksDzxtCFZcpkyBrtBKpXtz7KAcjj7WwzDnOWvphiTqNCE7VFp/3IC1FIk5g72HXTwKfXkqVI5Su2PeUPouJ6iMb+cz9U76MIuh9scXOmWBVtxsd/zM9spJnwi9KrqFyQ8yXyEmDzBHG9F8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2FKPt/A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SU3wqUzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D27B1F000E9;
-	Thu, 16 Jul 2026 14:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2FKPt/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014E31F000E9;
+	Thu, 16 Jul 2026 14:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211035;
-	bh=/DhLv0yTboJk5f0HCyjKHqf6UfzEsu42SCkgI6FWC1g=;
+	s=korg; t=1784211038;
+	bh=W0Li9nfXZ0lPUWUafkC6J78U0D7TxyM/BN6NVEzKuUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SU3wqUzPeA/oTjH8OPjABrblCgrcFk7B3RfQAq3QCftTAkcy3n9mckIjC/GXBHE9D
-	 HqgAupNDmo0Cr2vAXqQm2vh+Rhk2oezMB2mVb+IY/mh+8rw7Wzjxzbmu6A6Tcizczc
-	 dzC9V7a4Zc/8hqdTK9Dz06iQzyHAqE/gdIHgzZUE=
+	b=Q2FKPt/AmqkuFfMfaLljSg5uLclem8UloLMMDtlXMt3kpo1WvMR6M1jMLXt+jBTNm
+	 d/Ah3xFCp3IeDNNajprtOmxXvHpkmqcEpzv0aAzz3K9eW5lDPJnOyPa1zjKySdrkvM
+	 dCsfkWaU+eLbfws0kTQMlXKr3oLgBKijYdlfi9cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	micas-opensource <zjianan156@gmail.com>,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.18 273/480] serial: 8250_mid: Disable DMA for selected platforms
-Date: Thu, 16 Jul 2026 15:30:20 +0200
-Message-ID: <20260716133050.730291840@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	syzbot+b7dfbed0c6c2b5e9fd34@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 274/480] xfs: use null daddr for unset first bad log block
+Date: Thu, 16 Jul 2026 15:30:21 +0200
+Message-ID: <20260716133050.752559360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,59 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-commit b1b4efea05a56c0995e4702a86d6624b4fdff32f upstream.
+commit cc9af5e461ea5f6e37738f3f1e41c45a9b7f45d6 upstream.
 
-In accordance with Errata (specification updates)
-HSUART May Stop Functioning when DMA is Active.
+xlog_do_recovery_pass() may return before setting first_bad.  The caller
+must distinguish that case from an error at a valid log block, including
+block zero after the log wraps.
 
-- Denverton document #572409, rev 3.4, DNV60
-- Ice Lake Xeon D document #714070, ICXD65
-- Snowridge document #731931, SNR44
+Initialize first_bad to XFS_BUF_DADDR_NULL and test it explicitly before
+treating the error as a torn write.
 
-For a quick fix just disable the respective callbacks during the device probe.
-Depending on the future development we might remove them completely.
-
-Reported-by: micas-opensource <zjianan156@gmail.com>
-Closes: https://lore.kernel.org/linux-serial/20250625031409.2404219-1-opensource@ruijie.com.cn/
-Fixes: 6ede6dcd87aa ("serial: 8250_mid: add support for DMA engine handling from UART MMIO")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260626094937.561776-1-andriy.shevchenko@linux.intel.com
+Fixes: 7088c4136fa1 ("xfs: detect and trim torn writes during log recovery")
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Reported-by: syzbot+b7dfbed0c6c2b5e9fd34@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b7dfbed0c6c2b5e9fd34
+Cc: stable@vger.kernel.org # v4.5
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mid.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_log_recover.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/pci.h>
- #include <linux/rational.h>
-+#include <linux/util_macros.h>
- 
- #include <linux/dma/hsu.h>
- 
-@@ -368,8 +369,16 @@ static const struct mid8250_board dnv_bo
- 	.freq = 133333333,
- 	.base_baud = 115200,
- 	.bar = 1,
--	.setup = dnv_setup,
--	.exit = dnv_exit,
-+	/*
-+	 * Errata:
-+	 * HSUART May Stop Functioning when DMA is Active.
-+	 *
-+	 * - Denverton document #572409, rev 3.4, DNV60
-+	 * - Ice Lake Xeon D document #714070, ICXD65
-+	 * - Snowridge document #731931, SNR44
-+	 */
-+	.setup = PTR_IF(false, dnv_setup),
-+	.exit = PTR_IF(false, dnv_exit),
- };
- 
- static const struct pci_device_id pci_ids[] = {
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -1028,7 +1028,7 @@ xlog_verify_head(
+ {
+ 	struct xlog_rec_header	*tmp_rhead;
+ 	char			*tmp_buffer;
+-	xfs_daddr_t		first_bad;
++	xfs_daddr_t		first_bad = XFS_BUF_DADDR_NULL;
+ 	xfs_daddr_t		tmp_rhead_blk;
+ 	int			found;
+ 	int			error;
+@@ -1057,7 +1057,8 @@ xlog_verify_head(
+ 	 */
+ 	error = xlog_do_recovery_pass(log, *head_blk, tmp_rhead_blk,
+ 				      XLOG_RECOVER_CRCPASS, &first_bad);
+-	if ((error == -EFSBADCRC || error == -EFSCORRUPTED) && first_bad) {
++	if ((error == -EFSBADCRC || error == -EFSCORRUPTED) &&
++	    first_bad != XFS_BUF_DADDR_NULL) {
+ 		/*
+ 		 * We've hit a potential torn write. Reset the error and warn
+ 		 * about it.
+@@ -3582,4 +3583,3 @@ xlog_recover_cancel(
+ 	if (xlog_recovery_needed(log))
+ 		xlog_recover_cancel_intents(log);
+ }
+-
 
 
