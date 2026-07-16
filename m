@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961BD2FFDE1;
-	Thu, 16 Jul 2026 14:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF213148C2;
+	Thu, 16 Jul 2026 14:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210656; cv=none; b=IIGvjFpTadUxc79xA4rSHT9Hv7mdpE1j/cfnDBm3eMXgh34bEX2t2FVZcQojmbJYml9WKNd+ews7bTDNiGAW+bTT9cGhTkx8l2ZZW77GRXHyiFaK81XANubsGI+DXpdLsyibUrEY/aJthu48ve/eGzcyUGlPQFNHoXEq18f1VxU=
+	t=1784210659; cv=none; b=X4k6H3v5EF88aAEnfYKHE2y77tntKWowtctvBRCEE5oZIUiSFPu8cYJTXHb48Lb818SGQ3IvkCghFeprwQaxA58tlKvIdovX0jAW7SRWk88o3jS8mR9chORa+u/8wgNJpDaKJlmfNZFbUZg65FvQMyCSh+K7Q5jUDO9mT4If6GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210656; c=relaxed/simple;
-	bh=35pvq0LBlzsvyfsCK+8J1dVk+KV7k3X8JNsMJpYbJDk=;
+	s=arc-20240116; t=1784210659; c=relaxed/simple;
+	bh=0Icyq7uzqxi5qQVo1boGpm6UdtagCtufGEwElTMD+uE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OR1xeoh9HcAH6fwoeWWga3nvvMEUE6B/54MKaMD1tRERg9QVYNL9JfnZYkbphhq5BNvKaRCc4loD8eBMbEEwVQRPzsTKH0LkTRXbNfasFEmSQcAY5kAUo7/Zq342Jvt4v9EVnKuB2W4wF5BngDhQwxXvZP52pj9kLycbT1pp1Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aW2m2aWt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qht86GEQcQkF4tqvoRtHhgr4jijHNztPtHomdDITY7564pFOGECGjUS3TVJGR58gjZvNImaF0krwvdS0WDggojGZs6O/eJTLTmxNtxByDXXNwDkkf1eCZohMxE2upHc82L5efNYpZCj8TdGY5mitGQiTT5IQgHt5VNUS2Aab7Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cABPWzrR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aW2m2aWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087F01F000E9;
-	Thu, 16 Jul 2026 14:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cABPWzrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A395B1F000E9;
+	Thu, 16 Jul 2026 14:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210655;
-	bh=+Z/AE6etlP5OFAQKS3FZI9Cfa4/9vLF5KlbU9mNoq7E=;
+	s=korg; t=1784210658;
+	bh=tnH5rIg4RhglEKWXBpOrsPvat8ebnl/RLJ8UvZ8rUzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aW2m2aWtqf3A4qNXzXQ2t6eltmZ55hD8gbQnahRQB8ghtCjzduVPvIQnxPRYfRSAB
-	 ZfCHRDOjFcLK6pSmbXQRy2TxYYocVUNR+NzCjWAjgiBz1qAozqwPW0jC7SXg2/FZmj
-	 zyt6wA+G2BDvVH258THhipBWZ0AXq5mT7SVpdZmA=
+	b=cABPWzrR9gAHe80dZ1naJQP7Ywu46y8VJqIIbeZIqF9wUqkSjZCqJZhy8FYm3opv7
+	 DbNKrixrTSxb4ANEp1FyK//UncEB+DSSq7b31y2sLfXTwlzlVJRIj3nW5111+XxQHj
+	 bpRB/hJABg5J9fXnwtgJYYhGGM9lVoFljQIaBE2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 093/480] ALSA: virtio: Validate control metadata from the device
-Date: Thu, 16 Jul 2026 15:27:20 +0200
-Message-ID: <20260716133046.722367596@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Keshav Verma <iganschel@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.18 129/480] rust_binder: reject context manager self-transaction
+Date: Thu, 16 Jul 2026 15:27:56 +0200
+Message-ID: <20260716133047.500477531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -44,113 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Keshav Verma <iganschel@gmail.com>
 
-commit c77a6cbb36ff8cbc1f084d94f8dcda5250935271 upstream.
+commit 6849cabfd30fb5727cfd31e8241e15801e17ebf9 upstream.
 
-virtio-snd control handling trusts the device-provided control type and
-value count returned by the device.
+Rust binder resolved handle 0 to the context manager node, but it does not
+reject the case where the caller owns the same node.
 
-That metadata is then used directly to index g_v2a_type_map[] in
-virtsnd_kctl_info(), and to size loops and memcpy() operations in
-virtsnd_kctl_get() and virtsnd_kctl_put() against fixed-size
-virtio_snd_ctl_value and snd_ctl_elem_value arrays.
+The C binder driver rejects transactions from the context-manager process
+to handle 0 after resolving the target node. Match that behavior in Rust
+Binder by rejecting handle 0 transactions when the resolved context-manager
+node is owned by the calling process.
 
-A buggy or malicious device can therefore trigger out-of-bounds access by
-advertising an invalid control type or an oversized value count.
+This applies to both synchronous and oneway transactions because both paths
+resolve the target through Process::get_transaction_node().
 
-Validate control type and count once in virtsnd_kctl_parse_cfg(), before
-querying enumerated items or exposing the control to ALSA.
-
-Fixes: d6568e3de42d ("ALSA: virtio: add support for audio controls")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260507-alsa-virtio-validate-kctl-info-v1-1-7404fb12ec37@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable <stable@kernel.org>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Keshav Verma <iganschel@gmail.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260625103957.730-1-iganschel@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/virtio/virtio_kctl.c |   50 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ drivers/android/binder/process.rs |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/sound/virtio/virtio_kctl.c
-+++ b/sound/virtio/virtio_kctl.c
-@@ -18,6 +18,21 @@ static const snd_ctl_elem_type_t g_v2a_t
- 	[VIRTIO_SND_CTL_TYPE_IEC958] = SNDRV_CTL_ELEM_TYPE_IEC958
- };
- 
-+/* Map for converting VirtIO types to maximum value counts. */
-+static const unsigned int g_v2a_count_map[] = {
-+	[VIRTIO_SND_CTL_TYPE_BOOLEAN] =
-+		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer),
-+	[VIRTIO_SND_CTL_TYPE_INTEGER] =
-+		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer),
-+	[VIRTIO_SND_CTL_TYPE_INTEGER64] =
-+		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer64),
-+	[VIRTIO_SND_CTL_TYPE_ENUMERATED] =
-+		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.enumerated),
-+	[VIRTIO_SND_CTL_TYPE_BYTES] =
-+		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.bytes),
-+	[VIRTIO_SND_CTL_TYPE_IEC958] = 1
-+};
-+
- /* Map for converting VirtIO access rights to ALSA access rights. */
- static const unsigned int g_v2a_access_map[] = {
- 	[VIRTIO_SND_CTL_ACCESS_READ] = SNDRV_CTL_ELEM_ACCESS_READ,
-@@ -36,6 +51,37 @@ static const unsigned int g_v2a_mask_map
- 	[VIRTIO_SND_CTL_EVT_MASK_TLV] = SNDRV_CTL_EVENT_MASK_TLV
- };
- 
-+static int virtsnd_kctl_validate_info(struct virtio_snd *snd, u32 cid,
-+				      struct virtio_snd_ctl_info *kinfo)
-+{
-+	struct virtio_device *vdev = snd->vdev;
-+	unsigned int type = le32_to_cpu(kinfo->type);
-+	unsigned int count = le32_to_cpu(kinfo->count);
-+
-+	if (type >= ARRAY_SIZE(g_v2a_type_map)) {
-+		dev_err(&vdev->dev, "control #%u: unknown type %u\n",
-+			cid, type);
-+		return -EINVAL;
-+	}
-+
-+	if (count > g_v2a_count_map[type] ||
-+	    (type == VIRTIO_SND_CTL_TYPE_IEC958 && count != 1)) {
-+		dev_err(&vdev->dev, "control #%u: invalid count %u for type %u\n",
-+			cid, count, type);
-+		return -EINVAL;
-+	}
-+
-+	if (type == VIRTIO_SND_CTL_TYPE_ENUMERATED &&
-+	    !le32_to_cpu(kinfo->value.enumerated.items)) {
-+		dev_err(&vdev->dev,
-+			"control #%u: no items for enumerated control\n",
-+			cid);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- /**
-  * virtsnd_kctl_info() - Returns information about the control.
-  * @kcontrol: ALSA control element.
-@@ -385,6 +431,10 @@ int virtsnd_kctl_parse_cfg(struct virtio
- 		struct virtio_snd_ctl_info *kinfo = &snd->kctl_infos[i];
- 		unsigned int type = le32_to_cpu(kinfo->type);
- 
-+		rc = virtsnd_kctl_validate_info(snd, i, kinfo);
-+		if (rc)
-+			return rc;
-+
- 		if (type == VIRTIO_SND_CTL_TYPE_ENUMERATED) {
- 			rc = virtsnd_kctl_get_enum_items(snd, i);
- 			if (rc)
+--- a/drivers/android/binder/process.rs
++++ b/drivers/android/binder/process.rs
+@@ -873,7 +873,11 @@ impl Process {
+     pub(crate) fn get_transaction_node(&self, handle: u32) -> BinderResult<NodeRef> {
+         // When handle is zero, try to get the context manager.
+         if handle == 0 {
+-            Ok(self.ctx.get_manager_node(true)?)
++            let node_ref = self.ctx.get_manager_node(true)?;
++            if core::ptr::eq(self, &*node_ref.node.owner) {
++                return Err(EINVAL.into());
++            }
++            Ok(node_ref)
+         } else {
+             Ok(self.get_node_from_handle(handle, true)?)
+         }
 
 
