@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AFE3BED2D;
-	Thu, 16 Jul 2026 13:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D932DF137;
+	Thu, 16 Jul 2026 13:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209164; cv=none; b=aEh7CHS8LsMmImNfS3KWZ5GJ/LyAE1PDhQdEr/bwtj560MCoyBK84a19XcDeUYB8cvomHafFQ0OfxTJTEciEvJxwejwoXgLnQ3HTSAbr+y3+6LvUGAiM5xxVmZ3QayBCc9qUGVWqAq3PK4KY05RFBB0WEVzmEVLPs8TiECrhSyI=
+	t=1784209167; cv=none; b=lnpTmLStBAlz9GqcSe1ffZD0VA6GBkZGmJIXYc70Mw0ksziNQATLpZ34SFXiaga4ojuYpg8zFDnYY9aLLPwOSZXEX3IXoCcR+lr4G4mzAXwfEW0OWuDC3p1ovMTqJMnsONjwMQBACxkhmuJ4HEByY80d5PMWW+WHrZyiYbAsqOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209164; c=relaxed/simple;
-	bh=MMV7bQ87v+ou9TGdoEbJUAlR0XK+hj+2iCzjeWla03Y=;
+	s=arc-20240116; t=1784209167; c=relaxed/simple;
+	bh=U2Qlfh/D5wP+SO0a4rpXiT/5H1u5iyZwOxuOqmGzLm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VrPNyuy3ZVFlRCU2NS+j4bs6PTyppVrZgQqE8uFbPDkfXJT95CWsv9B72fsNZNm24q9jbE5iG0soE8v0l13xONE/h4YBXHLelmECBbkZqnj6iMO2s0XHnsWm0hZmC+ei8tPtsmxDzUNqYzLcjQ+BhouZ9OUNMgcFceJ9oJLXkRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0SX9UUs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eCsk0E2y9Lrjz20YZ00nJwE9Vpo9AIXjQgheD289hvyfOsl3Bt4djanVz43fw3HiLSTCX3I65l/HR4lnSTarGL09EA05+0eY9UlI1Tsx2bHwz6UtkaHi4vN3MhVIb3NTsyurTpbDZn3ztxvZ7VVJ9SLW0SW1CQrxkR3nGhtAK2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEcIkSft; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0SX9UUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51E51F000E9;
-	Thu, 16 Jul 2026 13:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEcIkSft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB6D1F000E9;
+	Thu, 16 Jul 2026 13:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209163;
-	bh=NW4gjR0Lldap8UzJYX0WQmYYasBRoMzzhYIWDZHBtGg=;
+	s=korg; t=1784209166;
+	bh=tVAzGJ4EseYij5Zbi+9sIHZroTkwfxY7piKHqZnFMvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0SX9UUs72iu6aIckVh3Bbdtv4lFzODe+hfJLTnml7GQ4hmaijzyltnUtCc90FIud
-	 WzovRjwQ8GD9/YTWXz1jarJT6jxQ4FKFFgfURnJWn7NDGrVH84motcaHbzm4NMtF3y
-	 uzZ79ShknlRLEjlDG+4oAtIGuXDVIMeBCZFvVFbU=
+	b=YEcIkSft+UZyWSIq1YCNrCSzQ6Cx1+DuRp131HhZ/cL21P/YIqenLnY0ogY2Ms2DM
+	 +YtRYG+66YWjo6lzOasVyvHFeLr8dEsO+du7hh8GTDqfBjxjgJPTDQhNlT24/NxUTp
+	 quVbjbfEj26o/KOTeYQbD6mZ9AC3Ms+Gyi6pSoik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Dongdong <zhaodongdong@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 082/518] ALSA: ymfpci: check snd_ctl_new1() return value
-Date: Thu, 16 Jul 2026 15:25:50 +0200
-Message-ID: <20260716133049.582965530@linuxfoundation.org>
+Subject: [PATCH 7.1 083/518] ALSA: aoa: check snd_ctl_new1() return value
+Date: Thu, 16 Jul 2026 15:25:51 +0200
+Message-ID: <20260716133049.605213871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,51 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit e64d170346d00b580c0043de3e5ccb3e331c47d4 upstream.
+commit 8df560fefe6fed6a20b7e06720eeaeccec349ac0 upstream.
 
-snd_ctl_new1() can return NULL when memory allocation fails.
-snd_ymfpci_create_spdif_controls() does not check the return value
-before dereferencing kctl->id.device, which can lead to a NULL pointer
-dereference.
+snd_ctl_new1() can return NULL when memory allocation fails. In
+layout.c, the function does not check the return value before
+dereferencing ctl->id.name or passing to aoa_snd_ctl_add(), which can
+lead to a NULL pointer dereference.
 
-Add NULL checks after snd_ctl_new1() calls and return -ENOMEM if any
+Add NULL checks after snd_ctl_new1() calls and return early if any
 fails.
 
 Assisted-by: Opencode:DeepSeek-V4-Flash
 Cc: stable@vger.kernel.org
-Fixes: c9b83ae4a160 ("ALSA: ymfpci: Fix kctl->id initialization")
+Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
 Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
-Link: https://patch.msgid.link/tencent_4745C5DC2333325C0EDAB1EFC88A136E6809@qq.com
+Link: https://patch.msgid.link/tencent_35F3A25FEEBF190A2E15ED787754C57E3708@qq.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ymfpci/ymfpci_main.c |    6 ++++++
+ sound/aoa/fabrics/layout.c |    6 ++++++
  1 file changed, 6 insertions(+)
 
---- a/sound/pci/ymfpci/ymfpci_main.c
-+++ b/sound/pci/ymfpci/ymfpci_main.c
-@@ -1781,16 +1781,22 @@ int snd_ymfpci_mixer(struct snd_ymfpci *
- 	if (snd_BUG_ON(!chip->pcm_spdif))
- 		return -ENXIO;
- 	kctl = snd_ctl_new1(&snd_ymfpci_spdif_default, chip);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = chip->pcm_spdif->device;
- 	err = snd_ctl_add(chip->card, kctl);
- 	if (err < 0)
- 		return err;
- 	kctl = snd_ctl_new1(&snd_ymfpci_spdif_mask, chip);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = chip->pcm_spdif->device;
- 	err = snd_ctl_add(chip->card, kctl);
- 	if (err < 0)
- 		return err;
- 	kctl = snd_ctl_new1(&snd_ymfpci_spdif_stream, chip);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = chip->pcm_spdif->device;
- 	err = snd_ctl_add(chip->card, kctl);
- 	if (err < 0)
+--- a/sound/aoa/fabrics/layout.c
++++ b/sound/aoa/fabrics/layout.c
+@@ -948,6 +948,8 @@ static void layout_attached_codec(struct
+ 			if (lineout == 1)
+ 				ldev->gpio.methods->set_lineout(codec->gpio, 1);
+ 			ctl = snd_ctl_new1(&lineout_ctl, codec->gpio);
++			if (!ctl)
++				return;
+ 			if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 				strscpy(ctl->id.name, "Headphone Switch");
+ 			ldev->lineout_ctrl = ctl;
+@@ -961,12 +963,16 @@ static void layout_attached_codec(struct
+ 			if (ldev->have_lineout_detect) {
+ 				ctl = snd_ctl_new1(&lineout_detect_choice,
+ 						   ldev);
++				if (!ctl)
++					return;
+ 				if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 					strscpy(ctl->id.name,
+ 						"Headphone Detect Autoswitch");
+ 				aoa_snd_ctl_add(ctl);
+ 				ctl = snd_ctl_new1(&lineout_detected,
+ 						   ldev);
++				if (!ctl)
++					return;
+ 				if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 					strscpy(ctl->id.name,
+ 						"Headphone Detected");
 
 
