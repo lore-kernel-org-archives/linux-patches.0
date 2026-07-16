@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4554E3D953E;
-	Thu, 16 Jul 2026 13:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDB83D9DB3;
+	Thu, 16 Jul 2026 13:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210207; cv=none; b=k9UAlVWkYgBPNxZupU5H55tmMIcUXQOV9EQ0TonKe9XbQlbVCmUQYOmGi1z0rJeunpBZ2HTdcO9fTtw8hzlxykV/Wr5Ju9h+wtSSSewv+2bTPpHo64aiESXeFLynBRlB0t6enUngg2ZaRPf9g7P4Dt/Q8t+uF6+0TlWWvyOgvIA=
+	t=1784210210; cv=none; b=FYTMMVl7VAwTu3qpaItOxTgn4ZxAB0k7YsOaBAdRGseHrp3uVqRVJggGsovVJsR5kpyd7aWzP+1YzmeKwixc1zoVXRM+PbCsn4giQ/FVc52cR045enbF4INSzELuTjhT58ZKJ3prz29RHdns518IyxuT3tBijlY8xtSkkvojc34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210207; c=relaxed/simple;
-	bh=BTqUkVQ2QbRw9kh1enpRJFRR2qLKd5QxVoqCWZSwAL8=;
+	s=arc-20240116; t=1784210210; c=relaxed/simple;
+	bh=YOQgrSD8gDio/8NHbcL/DXoyY278c5CyK6xy6GY69/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OtF6EPAvBwU6Z/cmEFhttusmGMyTN++lu6kO+CbVYDaCDK66M5rUj3v6dFlQAuWRU6L2xHpmr9S62U1cov4pVtw6imapFmXjyIFYNjz6UJfKhStOyZQ1/CxC6AUYbxXtbZ/8g4zZGW9yNWNY3DC17BGopr7w/04SRlKTdEwgDYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phdpvdgn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gJ2Z7UhsisQO7eH2EosisWINSh7dpIVzNgcnwLPQn50gibBamij/AByZArkuFMxxRPwAeWfZmT9moLqp/0JX8QTbbNPDusFf6pnjPK2UOuKK+mn5mEcG4EJrcewNMuGRTJ8MGkyB7ObrLlSGJv/rL1UncDVljxuQY36C9JBT3qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAxbWnEF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phdpvdgn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5991F000E9;
-	Thu, 16 Jul 2026 13:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAxbWnEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E301F000E9;
+	Thu, 16 Jul 2026 13:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210206;
-	bh=1PirFdHn2lZOeofGMKhbEv0HmmuQEzNNkhb2F8+yGUI=;
+	s=korg; t=1784210208;
+	bh=OKVBfXy4dBWNhDRDLb5QdnEuC0T1ikm6OgN1vGmK76c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=phdpvdgnW8xWTJsyXj5aZNfdC5+ao+78TI8orgo7l8MCkdO7QK3TaQ1FxIRZOHhyJ
-	 nytFRFF2rGwsjIDm8sL7hHUjlcVNXjDsjFY96NF+SZ/KWstl6DZq1SkruxdrLPzf8U
-	 jHTyn+1jdquI/4xrPcGx/khSyCtYx1Bsas0aDVWg=
+	b=QAxbWnEF6xwo2BT2eQjvJXg6MI32M/BJ6aosetDY/w+eYDz41Nj9/FS/9YPeKV9vU
+	 SgX6bvjIw+1Ga6HxRG+1goYXh2rEBdlHE1YlPu3G9afc8ekrP8KXNXztWDANKzzjbw
+	 YE351yJrdXm/fCbIG6/P2NJdcIwMrRegG5O1bl70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Guillermo=20Rodr=C3=ADguez?= <guille.rodriguez@gmail.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.1 477/518] i2c: stm32f7: truncate clock period instead of rounding it
-Date: Thu, 16 Jul 2026 15:32:25 +0200
-Message-ID: <20260716133058.283677305@linuxfoundation.org>
+Subject: [PATCH 7.1 478/518] i2c: imx-lpi2c: mark I2C adapter when hardware is powered down
+Date: Thu, 16 Jul 2026 15:32:26 +0200
+Message-ID: <20260716133058.305303784@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -46,71 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guillermo Rodríguez <guille.rodriguez@gmail.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit 111bb7f9f4a90b32e495d70a607c67b137f3074a upstream.
+commit 218cfe364b55b2768221629bd4a69ad190b7fbbc upstream.
 
-stm32f7_i2c_compute_timing() derives the I2C clock source period
-(i2cclk) with DIV_ROUND_CLOSEST, which may round it up. When the
-period is overestimated, all timings computed from it (SCLDEL,
-SDADEL, SCLL, SCLH) come out shorter on the wire than calculated,
-and the resulting bus rate can exceed the requested speed, violating
-the I2C specification minimums for tLOW and tHIGH.
+On some i.MX platforms, certain I2C client drivers keep a periodic
+workqueue which continues to trigger I2C transfers.
 
-For example, with a 104.45 MHz clock source (e.g. PCLK1, the
-reset-default I2C clock source on STM32MP1), i2cclk is rounded from
-9.574 ns up to 10 ns. Requesting a 400 kHz fast mode bus with
-72/27 ns rise/fall times and no analog/digital filters then produces
-an actual bus rate of 415.6 kHz with tLOW = 1254 ns, violating both
-the 400 kHz maximum rate and the 1300 ns tLOW minimum of the
-specification.
+During system suspend/resume, there exists a time window between:
+  - suspend_noirq and the system entering suspend
+  - the system starting to resume and resume_noirq
 
-Truncate the period instead, so that it can only be underestimated.
-The error then falls on the safe side: the programmed timings come
-out slightly longer than computed and the bus runs marginally below
-the target rate (375.3 kHz in the example above) while meeting the
-specification.
+In this window, the I2C controller resources such as clock and pinctrl
+may already be disabled or not yet restored.
 
-i2cbus is left rounded-to-closest: it is only used as the target of
-the clk_error comparison and is never multiplied into the programmed
-timings, so nearest rounding remains accurate there.
+If a workqueue triggers an I2C transfer in this period, the driver
+attempts to access I2C registers while the hardware resources are
+unavailable, which may lead to system hang.
 
-Fixes: aeb068c57214 ("i2c: i2c-stm32f7: add driver")
-Signed-off-by: Guillermo Rodríguez <guille.rodriguez@gmail.com>
-Cc: <stable@vger.kernel.org> # v4.14+
-Acked-by: Alain Volmat <alain.volmat@foss.st.com>
-Reviewed-by: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
+Mark the I2C adapter as suspended during noirq suspend and block new
+transfers until resume, ensuring that I2C transfers are only issued
+when hardware resources are available.
+
+Fixes: 1ee867e465c1 ("i2c: imx-lpi2c: add target mode support")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Cc: <stable@vger.kernel.org> # v6.14+
+Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260611104857.242153-1-guille.rodriguez@gmail.com
+Link: https://lore.kernel.org/r/20260525031450.3183421-1-carlos.song@oss.nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32f7.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-imx-lpi2c.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -464,8 +464,13 @@ static int stm32f7_i2c_compute_timing(st
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -1646,7 +1646,18 @@ static int __maybe_unused lpi2c_runtime_
+ 
+ static int __maybe_unused lpi2c_suspend_noirq(struct device *dev)
  {
- 	struct stm32f7_i2c_spec *specs;
- 	u32 p_prev = STM32F7_PRESC_MAX;
--	u32 i2cclk = DIV_ROUND_CLOSEST(NSEC_PER_SEC,
--				       setup->clock_src);
-+	/*
-+	 * Truncate instead of rounding to closest: if the clock period is
-+	 * overestimated, the computed SCL timings will come out shorter on
-+	 * the wire, which can push the bus above the target rate and below
-+	 * the spec's tLOW/tHIGH minimums.
-+	 */
-+	u32 i2cclk = NSEC_PER_SEC / setup->clock_src;
- 	u32 i2cbus = DIV_ROUND_CLOSEST(NSEC_PER_SEC,
- 				       setup->speed_freq);
- 	u32 clk_error_prev = i2cbus;
+-	return pm_runtime_force_suspend(dev);
++	struct lpi2c_imx_struct *lpi2c_imx = dev_get_drvdata(dev);
++	int ret;
++
++	i2c_mark_adapter_suspended(&lpi2c_imx->adapter);
++
++	ret = pm_runtime_force_suspend(dev);
++	if (ret) {
++		i2c_mark_adapter_resumed(&lpi2c_imx->adapter);
++		return ret;
++	}
++
++	return 0;
+ }
+ 
+ static int __maybe_unused lpi2c_resume_noirq(struct device *dev)
+@@ -1666,6 +1677,8 @@ static int __maybe_unused lpi2c_resume_n
+ 	if (lpi2c_imx->target)
+ 		lpi2c_imx_target_init(lpi2c_imx);
+ 
++	i2c_mark_adapter_resumed(&lpi2c_imx->adapter);
++
+ 	return 0;
+ }
+ 
 
 
