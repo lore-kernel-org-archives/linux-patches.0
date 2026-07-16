@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C202313E30;
-	Thu, 16 Jul 2026 14:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011D2319601;
+	Thu, 16 Jul 2026 14:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210950; cv=none; b=MBdVVVZo4TpAx/9kyFKUPIRRLp8fzTVuAVOp+4KkZCCY30fNZkT4dqL/8sucZZew4gEa97Zqi1AXXoxuuaa3+fkK6ELfrp9UyjFvZ5CTCMSwIxgiooweO4F93hyuJ3Gm5Ty1ylIkH33ZJBRhUIxJmMi5qW+o3vn8qLSqCXYXy3Q=
+	t=1784210953; cv=none; b=PDEMKi4YIYsEUrLkLuYdywXLr5ZQM1AmwPo9FSzh68c9eGNmhmuhbraLrNzcAIBV/byBtiHAwXcIwlqinJTTqYA+8Z8MXqRgDvx8UWtzY1lKn4/kvK4+hnLz9Oy72TSX+gA/U6YwerBKtKhXuFFDdnz1W5VhwWx7S1r9osqnUHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210950; c=relaxed/simple;
-	bh=+d+Kqgz12aQMA7VUX2GAPiUgB6ju7skXIEBZhCKkQAs=;
+	s=arc-20240116; t=1784210953; c=relaxed/simple;
+	bh=t8snrNzG5IiqGmqjAA1/CYa4A5SZKrSwVMu0eR9XjBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WUgrtI/sF4dBo+O6SWY2HzkVcTgCRNRFYRDN2uWogAjZHmhpj7hY4wZnmf9U3rDGBvjPSOZ7dOv0vt/pIzy4qDdt3nQ7PVxzw58t0MSMSTFOZ+CW+nwwJzgkGybJ9HY37R/gO2zACASB6615pOaFR/WCtLdJX51lUNFMex5/wQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbpbFx2O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lnXaaSdlileINqDpEEVGDY0+xVf2BI9q4fpTQJ65YcfI3RD5ZOlAnOUAW2iGo4bLBAHphrpb90X9Ig0qiH+rNSuv8YJng3tPcbDYmyNNQaSVyM/RVn4W5uYNO7DLGM3zzz3ufMjeW5EvQ6GVnKtyZTsRQKJJyA4piwwsy/d50yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VO3qswuk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbpbFx2O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E101F00A3D;
-	Thu, 16 Jul 2026 14:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VO3qswuk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667891F00A3E;
+	Thu, 16 Jul 2026 14:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210949;
-	bh=e+C2qSBM+wRQGQ15hEyGCNGY6Pph/dvPj1OVuBGd0EM=;
+	s=korg; t=1784210951;
+	bh=G8NGwg21AmPSnSp/Bm/88X9D4cDLy0KvX6Skc1BYnGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kbpbFx2OM+NERu0LnfwX17ID4BOoG7tyPY8gH6Bpl/jGG6u6M9Rs+f+V0E4ii1JQi
-	 a+IoHoKA4N7vlFU42y3gjwGqZHD8Fz+i6S5KRXq4N28CzOWk0ZtWIjou0DUc5YS0DI
-	 7+x9kYZbYsdMcZtB9kA/mV1TCqThthUJjmkkx/GM=
+	b=VO3qswuk9Bt9lMZfNr/hTuDd8kSTiRTarkVAIuwxM//J5ojRRLrCXBxm5V6TuVAFF
+	 VPlHWlMfT7i2fTVzp2Ok9qTqtSN6ML2T6u11GogGhRrXMXDqWygMTwLS6Op3WqZAEg
+	 +gv9bf+4By4ux+2+KRVY8GOyoCeANi+oqsmpX4os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 243/480] firmware_loader: fix device reference leak in firmware_upload_register()
-Date: Thu, 16 Jul 2026 15:29:50 +0200
-Message-ID: <20260716133050.076565387@linuxfoundation.org>
+	Christoph Hellwig <hch@infradead.org>,
+	John Hubbard <jhubbard@nvidia.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 244/480] libfs: set SB_I_NOEXEC and SB_I_NODEV by default in init_pseudo()
+Date: Thu, 16 Jul 2026 15:29:51 +0200
+Message-ID: <20260716133050.098474420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,73 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: John Hubbard <jhubbard@nvidia.com>
 
-commit 896df22ee57648b0c505bd76ddbc6b2341834696 upstream.
+commit 6de2aeffabaafaeda819e60ec8d04f199711e11a upstream.
 
-firmware_upload_register()
-  -> fw_create_instance()
-     -> device_initialize()
+Since commit 1e7ab6f67824 ("anon_inode: rework assertions"),
+path_noexec() warns when an anonymous-inode file is mmap'd from a
+superblock that has not set SB_I_NOEXEC. dma-buf backs its files this
+way and never set the flag, so mmap of any exported buffer trips the
+warning on a CONFIG_DEBUG_VFS=y kernel:
 
-After fw_create_instance() succeeds, the lifetime of the embedded struct
-device is expected to be managed through the device core reference
-counting, since fw_create_instance() has already called
-device_initialize().
+  WARNING: CPU: 11 PID: 121813 at fs/exec.c:118 path_noexec+0x47/0x50
+   do_mmap+0x2b5/0x680
+   vm_mmap_pgoff+0x129/0x210
+   ksys_mmap_pgoff+0x177/0x240
+   __x64_sys_mmap+0x33/0x70
 
-In firmware_upload_register(), if alloc_lookup_fw_priv() fails after
-fw_create_instance() succeeds, the code reaches free_fw_sysfs and frees
-fw_sysfs directly instead of releasing the device reference with
-put_device(). This may leave the reference count of the embedded struct
-device unbalanced, resulting in a refcount leak.
+init_pseudo() sets up internal SB_NOUSER mounts that are never
+path-reachable. Set both flags here so every pseudo filesystem gets
+them by default instead of each caller setting them.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review. Fix this by using put_device(fw_dev) in the
-failure path and letting fw_dev_release() handle the final cleanup,
-instead of freeing the instance directly from the error path.
+SB_I_NODEV is inert for unreachable mounts. SB_I_NOEXEC has one
+visible effect: an executable mapping of a pseudo-fs fd, such as a
+dma-buf, now fails with -EPERM, which is the invariant the assertion
+enforces. No in-tree caller maps these executable.
 
-Fixes: 97730bbb242c ("firmware_loader: Add firmware-upload support")
+Reproduce on CONFIG_DEBUG_VFS=y:
+
+  make -C tools/testing/selftests/dmabuf-heaps
+  sudo ./tools/testing/selftests/dmabuf-heaps/dmabuf-heap -t system
+
+Fixes: 1e7ab6f67824 ("anon_inode: rework assertions")
+Suggested-by: Christoph Hellwig <hch@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260505091231.607089-1-lgs201920130244@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+Link: https://patch.msgid.link/20260604025315.245910-2-jhubbard@nvidia.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/firmware_loader/sysfs_upload.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/libfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/base/firmware_loader/sysfs_upload.c
-+++ b/drivers/base/firmware_loader/sysfs_upload.c
-@@ -341,7 +341,6 @@ firmware_upload_register(struct module *
- 		goto free_fw_upload_priv;
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -721,6 +721,7 @@ struct pseudo_fs_context *init_pseudo(st
+ 		fc->fs_private = ctx;
+ 		fc->ops = &pseudo_fs_context_ops;
+ 		fc->sb_flags |= SB_NOUSER;
++		fc->s_iflags |= SB_I_NOEXEC | SB_I_NODEV;
+ 		fc->global = true;
  	}
- 	fw_upload->priv = fw_sysfs;
--	fw_sysfs->fw_upload_priv = fw_upload_priv;
- 	fw_dev = &fw_sysfs->dev;
- 
- 	ret = alloc_lookup_fw_priv(name, &fw_cache, &fw_priv,  NULL, 0, 0,
-@@ -349,10 +348,12 @@ firmware_upload_register(struct module *
- 	if (ret != 0) {
- 		if (ret > 0)
- 			ret = -EINVAL;
--		goto free_fw_sysfs;
-+		put_device(fw_dev);
-+		goto free_fw_upload_priv;
- 	}
- 	fw_priv->is_paged_buf = true;
- 	fw_sysfs->fw_priv = fw_priv;
-+	fw_sysfs->fw_upload_priv = fw_upload_priv;
- 
- 	ret = device_add(fw_dev);
- 	if (ret) {
-@@ -363,9 +364,6 @@ firmware_upload_register(struct module *
- 
- 	return fw_upload;
- 
--free_fw_sysfs:
--	kfree(fw_sysfs);
--
- free_fw_upload_priv:
- 	kfree(fw_upload_priv);
- 
+ 	return ctx;
 
 
