@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7BC313E30;
-	Thu, 16 Jul 2026 14:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042FA3F54B6;
+	Thu, 16 Jul 2026 14:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210929; cv=none; b=dmvhvNjnIe9bqK0yLGFtkoSoufRm/+K+zqKXNKxUBgXaMokdfzeKj39kK8DUMOfRjs5CQWFtk1elrmeLhHIYIpkDEhggaigGxnLHF4RPUoGvrSq5Lj45gcIvV1eKQNRyWfD+J4Nqk9Hg9xeJCwbtSIQI68sqzDBPwqXKgPKmitw=
+	t=1784210932; cv=none; b=nsWJZbI7UXUjHq4bTCGtHZKA0a7xk9ZjM0CM90pVWGgdTV94W2vFlTTugcfFrak4c4RyTV8EpXvD+efa6GKWhX8yQXjk22R3IkeIu+xj4cSW+Lbn9XWDfJOHVaJi4uQoxWXWZd6JY7SWO17oeOP7MeVGxUIXQkD0tn8XkdZTosM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210929; c=relaxed/simple;
-	bh=LQZ0+VNtcy5e3xjLAAD/Rj4W/cdHvfH3Qe8SZ/77bVM=;
+	s=arc-20240116; t=1784210932; c=relaxed/simple;
+	bh=X+lS8XK7TGPG5sRlnl0qkOfLQhz9edKqUBI2uAmPRgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvxMBFpZ/UdmdOTKITWcvijGO2JxXnuKst0CMXPTbr2AK5awrwGvljh9WCp29mOI1JSfbE0qu6vTspv3SK0gpuL/RiWlx7Equ7LWZlTvsa584UThzUrRxYy5LQZmnLvkZt5yclRDnn3m1ls/UahufAP7UwVrlITmJyhvhNoam0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmplMMTg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AtlDiHit885NbG49AFA9e19rVkje6UPAgHMlesiiutodm6lGx0PfAHTCLcZ4VjYYXHeG0pN9SrGOyiKc3xwGKWzv0nt7eAkUq7IvlE2TAZGaJEVabUDoJvKs/5w/nONfBvQTe7iCQ5zUXq54IcK/XkTMnZxAg1vUWPDvt80nE+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lA9zG5+J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmplMMTg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B071F00A3D;
-	Thu, 16 Jul 2026 14:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lA9zG5+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632001F000E9;
+	Thu, 16 Jul 2026 14:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210928;
-	bh=7Xeq56SF+Z8Z1cZbHj64yGpw4Vsz1rm6vEbVdUMl548=;
+	s=korg; t=1784210930;
+	bh=dkHyFA90d7ar7kDXHQpH50fh+EXqlJtQ2NIbg01wAvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UmplMMTggeff+c+HRbIdfknNAnMsK8sXNU3apcRU4Jog5z986HfT066pRpN9rOwtw
-	 fwAEDqqY+m+ocN9JDMmnybUJRjLAsQFW0e1mGiagL9jh8Y7wSx4ave8WovK7yOKDgJ
-	 mnpQPG5XzNCUb2Y+pWMZK/tPWeCSpigsQ65BgvPQ=
+	b=lA9zG5+JkPitG6wUxZxNdR1w+Z1F5nKVHAoFoIJprLtKCxo0NTt/e2jmMvCSPbkb/
+	 kKkubO2tjydHZgWtcVbwokK5YJwwG/Hr0xkH/AmXiroERRgZWdlYphEI88f8KQa7H0
+	 LufZaZSPWInrFCxbVIV3V7ACMd/2d/DnpNud832U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Chinner <david@fromorbit.com>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 190/480] mm: shrinker: fix shrinker_info teardown race with expansion
-Date: Thu, 16 Jul 2026 15:28:57 +0200
-Message-ID: <20260716133048.837513761@linuxfoundation.org>
+Subject: [PATCH 6.18 191/480] mm: shrinker: fix NULL pointer dereference in debugfs
+Date: Thu, 16 Jul 2026 15:28:58 +0200
+Message-ID: <20260716133048.859575894@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -55,59 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit 65476d31d8056e859c48580f82295ce159196ffe upstream.
+commit e30453c61e185e914fde83c650e268067b140218 upstream.
 
-expand_shrinker_info() iterates all visible memcgs under shrinker_mutex,
-including memcgs that have not finished ->css_online() yet.
+shrinker_debugfs_add() creates both "count" and "scan" debugfs files
+unconditionally.
 
-Once pn->shrinker_info has been published, teardown must stay serialized
-with expand_shrinker_info() until that memcg is either fully online or no
-longer visible to iteration.  Today alloc_shrinker_info() breaks that rule
-by dropping shrinker_mutex before freeing a partially initialized
-shrinker_info array, which may cause the following race:
+That assumes every shrinker implements both count_objects() and
+scan_objects(), which is not guaranteed.  For example, the xen-backend
+shrinker sets count_objects() but leaves scan_objects() NULL, so writing
+to its scan file calls through a NULL function pointer and panics the
+kernel:
 
-CPU0                   CPU1
-====                   ====
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+RIP: 0010:0x0
+Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+Call Trace:
+ <TASK>
+ shrinker_debugfs_scan_write+0x12e/0x270
+ full_proxy_write+0x5f/0x90
+ vfs_write+0xde/0x420
+ ? filp_flush+0x75/0x90
+ ? filp_close+0x1d/0x30
+ ? do_dup2+0xb8/0x120
+ ksys_write+0x68/0xf0
+ ? filp_flush+0x75/0x90
+ do_syscall_64+0xb3/0x5b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-css_create
---> list_add_tail_rcu(&css->sibling, &parent_css->children);
-    online_css
-    --> mem_cgroup_css_online
-        --> alloc_shrinker_info
-            --> alloc node0 info
-                rcu_assign_pointer(C->node0->shrinker_info, old0)
-                alloc node1 info -> FAIL -> goto err
-                mutex_unlock(shrinker_mutex)
+The count path has the same issue in principle if a shrinker omits
+count_objects().
 
-                       shrinker_alloc()
-                       --> shrinker_memcg_alloc
-                           --> mutex_lock(shrinker_mutex)
-                               expand_shrinker_info
-                               --> mem_cgroup_iter see the memcg
-                                   expand_one_shrinker_info
-                                   --> old0 = C->node0->shrinker_info
-                                       memcpy(new->unit, old0->unit, ...);
+To fix it, only create "count" and "scan" debugfs files when the
+corresponding callbacks are present.
 
-                free_shrinker_info
-                --> kvfree(old0);
-
-                                       /* double free !! */
-                                       kvfree_rcu(old0, rcu);
-
-The same problem exists later in mem_cgroup_css_online().  If
-alloc_shrinker_info() succeeds but a subsequent objcg allocation fails,
-the free_objcg -> free_shrinker_info() unwind path tears down the already
-published pn->shrinker_info arrays without shrinker_mutex.  The
-expand_one_shrinker_info() can race with that teardown in the same way,
-leading to use-after-free or double-free of the old shrinker_info.
-
-Fix this by serializing shrinker_info teardown with shrinker_mutex, and by
-keeping alloc_shrinker_info() error cleanup inside the locked section.
-
-Link: https://lore.kernel.org/20260617085658.27096-1-qi.zheng@linux.dev
-Fixes: 307bececcd12 ("mm: shrinker: add a secondary array for shrinker_info::{map, nr_deferred}")
+Link: https://lore.kernel.org/20260617090052.27325-1-qi.zheng@linux.dev
+Fixes: bbf535fd6f06 ("mm: shrinkers: add scan interface for shrinker debugfs")
 Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
 Cc: Dave Chinner <david@fromorbit.com>
 Cc: Qi Zheng <zhengqi.arch@bytedance.com>
 Cc: Roman Gushchin <roman.gushchin@linux.dev>
@@ -115,49 +99,26 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ mm/shrinker_debug.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/mm/shrinker.c
-+++ b/mm/shrinker.c
-@@ -59,12 +59,14 @@ static inline int shrinker_unit_alloc(st
- 	return 0;
- }
- 
--void free_shrinker_info(struct mem_cgroup *memcg)
-+static void __free_shrinker_info(struct mem_cgroup *memcg)
- {
- 	struct mem_cgroup_per_node *pn;
- 	struct shrinker_info *info;
- 	int nid;
- 
-+	lockdep_assert_held(&shrinker_mutex);
-+
- 	for_each_node(nid) {
- 		pn = memcg->nodeinfo[nid];
- 		info = rcu_dereference_protected(pn->shrinker_info, true);
-@@ -74,6 +76,13 @@ void free_shrinker_info(struct mem_cgrou
+--- a/mm/shrinker_debug.c
++++ b/mm/shrinker_debug.c
+@@ -182,10 +182,12 @@ int shrinker_debugfs_add(struct shrinker
  	}
- }
+ 	shrinker->debugfs_entry = entry;
  
-+void free_shrinker_info(struct mem_cgroup *memcg)
-+{
-+	mutex_lock(&shrinker_mutex);
-+	__free_shrinker_info(memcg);
-+	mutex_unlock(&shrinker_mutex);
-+}
-+
- int alloc_shrinker_info(struct mem_cgroup *memcg)
- {
- 	int nid, ret = 0;
-@@ -98,8 +107,8 @@ int alloc_shrinker_info(struct mem_cgrou
- 	return ret;
- 
- err:
-+	__free_shrinker_info(memcg);
- 	mutex_unlock(&shrinker_mutex);
--	free_shrinker_info(memcg);
- 	return -ENOMEM;
+-	debugfs_create_file("count", 0440, entry, shrinker,
+-			    &shrinker_debugfs_count_fops);
+-	debugfs_create_file("scan", 0220, entry, shrinker,
+-			    &shrinker_debugfs_scan_fops);
++	if (shrinker->count_objects)
++		debugfs_create_file("count", 0440, entry, shrinker,
++				    &shrinker_debugfs_count_fops);
++	if (shrinker->scan_objects)
++		debugfs_create_file("scan", 0220, entry, shrinker,
++				    &shrinker_debugfs_scan_fops);
+ 	return 0;
  }
  
 
