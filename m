@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F154D30AD05;
-	Thu, 16 Jul 2026 14:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CE5306754;
+	Thu, 16 Jul 2026 14:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211213; cv=none; b=BIhfR8s5KBag0sQ0myggJNi7Lf8vFGeyec2ovJW+6pEu1muDtVJqiToKqjBYjASpD0CEyFYT6lUb0kcaiBapnvqYjjR4V7aN+FT543A+feqvaOJCjbEqreNdDeA7isM2upTICoEnRCG+s9llOpfq1FLDI+Q7W2l5xSbUrjqn8D4=
+	t=1784211215; cv=none; b=CBbmzqItCgovsL8JzlBgsiVvHrV2a6zZ6besGsaK8DxBv9VMfmnZNkqttKBJOyZdVLqKjKK7opmXRtYNqzXi3b/fqU2Ul59Wzzs6NJCP3sf+HcBNPgIHwFW79NFFGheTRkhUA2DFVD8AovNbq18kRT28eptJcqXwIqdqZ9dLmHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211213; c=relaxed/simple;
-	bh=zDn2yUl8rfoRHRhO5h+a+KkXrUJ+cxpnruTEJFmiyCQ=;
+	s=arc-20240116; t=1784211215; c=relaxed/simple;
+	bh=N9YsSmEwOqifkPQTH6GHmtXDwhQY45bI10iRxGUU6+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZCZgfRIgJVobnTd0V/aLCX6R18AEAEAI/8EkbLc1KIV0D0Pw0hWfi4FkizL5QTYLa6cixiLubkBAVslNVKHvFTlFR3yu0c1yT/nqtXSc62blLvR3rbjUm+TAXM1oC+UgR1i+Ann8O1sxsO/lALVWaQEyH2U8t1lYloBlpXkynA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YefUxbM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qtcprjZ172pgfkjMBdm76UhF1SS0TL6gpzBOPs4wOhixylknpI32qQ/PcjXiNa1L4FqZro60Bcp2v5AUNukA7+FHLdMUDUBeIHgs3SjVxTntQHBNIDtfbnaTmzLemIT5fxz3hj76z+r4kKs5f42tK3IefzlfVYjw5CW3FkL9dmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVoAtsIG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YefUxbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616261F00A3A;
-	Thu, 16 Jul 2026 14:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVoAtsIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091B91F000E9;
+	Thu, 16 Jul 2026 14:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211211;
-	bh=E7nkXul6nxPW8zmLSAtsSVBO3WaG+3jA5DkR5eNP82g=;
+	s=korg; t=1784211214;
+	bh=NOqge7zawgX/qAiKVdnTPgjP0sz2YtSgRGlPC7jJTH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2YefUxbMxbTw+LVrbpQ8BCmNSFjC1ljYGmUcIeRCZTfHxXZuytYTAQE1AgP7O2JUo
-	 f1Abjii+KnC06kHMYcMCNY4oFkx0BfaM+pHg3tM/3vz9m+0DIZSZE55F6vsTErb6xl
-	 mmwJor6XMlh3vNQ8SyKUoIwoEvhu7zrtd97xVoF8=
+	b=rVoAtsIGuBDrOASymTijWwdwQW+H5rV1aCKhLtQ0qvTsIcc3tyhgXf0WpELq8h/fb
+	 2uAJWJGUjsglOFtfszTS6RqMxFMH0+4rLeJOLFHR0Akpo3Q4pyucQ4XwLKGW8LxvWS
+	 fvgdY+DDpvzWVyEzXwLej3vaH50IggVS7xM1Unjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 325/480] bpf: Support for hardening against JIT spraying
-Date: Thu, 16 Jul 2026 15:31:12 +0200
-Message-ID: <20260716133051.849217269@linuxfoundation.org>
+	Su Yue <glass.su@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.18 343/480] btrfs: do not trim a device which is not writeable
+Date: Thu, 16 Jul 2026 15:31:30 +0200
+Message-ID: <20260716133052.231170660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,120 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 96cce16e26dd02a8678f1e87f88a4b5cdb63b995 upstream.
+commit 1b1937eb08f51319bf71575484cde2b8c517aedc upstream.
 
-The BPF JIT allocator packs many small programs into larger executable
-allocations and reuses space within those allocations as programs are
-loaded and freed. When fresh code is written into space that a previous
-program occupied, an indirect jump into the new program can reuse a branch
-prediction left behind by the old one.
+[BUG]
+There is a bug report that btrfs/242 can randomly fail with the
+following NULL pointer dereference:
 
-Flush the indirect branch predictors before reusing JIT memory so that
-indirect jumps into a newly written program don't reuse predictions from an
-old program that occupied the same space.
+  run fstests btrfs/242 at 2026-06-01 10:25:08
+  BTRFS: device fsid d4d7f234-487c-4787-88e4-47a8b68c9874 devid 1 transid 9 /dev/sdc (8:32) scanned by mount (122609)
+  BTRFS info (device sdc): first mount of filesystem d4d7f234-487c-4787-88e4-47a8b68c9874
+  BTRFS info (device sdc): using crc32c checksum algorithm
+  BTRFS warning (device sdc): devid 2 uuid fbe72d72-3272-482d-80fb-ab88ed398192 is missing
+  BTRFS warning (device sdc): devid 2 uuid fbe72d72-3272-482d-80fb-ab88ed398192 is missing
+  BTRFS info (device sdc): allowing degraded mounts
+  BTRFS info (device sdc): turning on async discard
+  BTRFS info (device sdc): enabling free space tree
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
+  user pgtable: 4k pages, 48-bit VAs, pgdp=000000013fd6b000
+  CPU: 4 UID: 0 PID: 122625 Comm: fstrim Not tainted 7.0.10-2-default #1 PREEMPT(full) openSUSE Tumbleweed e9a5f6b24978fba3bf015a992f865837fdfff3dd
+  Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20250812-19.fc42 08/12/2025
+  pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : btrfs_trim_fs+0x34c/0xa00 [btrfs]
+  lr : btrfs_trim_fs+0x1f0/0xa00 [btrfs]
+  Call trace:
+   btrfs_trim_fs+0x34c/0xa00 [btrfs f02c1d570ceea621c69d302ba75dd61868083840] (P)
+   btrfs_ioctl_fitrim+0xe8/0x178 [btrfs f02c1d570ceea621c69d302ba75dd61868083840]
+   btrfs_ioctl+0xdd4/0x2bd8 [btrfs f02c1d570ceea621c69d302ba75dd61868083840]
+   __arm64_sys_ioctl+0xac/0x108
+   invoke_syscall.constprop.0+0x5c/0xd0
+   el0_svc_common.constprop.0+0x40/0xf0
+   do_el0_svc+0x24/0x40
+   el0_svc+0x40/0x1d0
+   el0t_64_sync_handler+0xa0/0xe8
+   el0t_64_sync+0x1b0/0x1b8
+  Code: 17ffff83 f94017e0 f9002be0 f9402ea0 (f9400c00)
+  ---[ end trace 0000000000000000  ]---
 
-Introduce bpf_arch_pred_flush_enabled static key and bpf_arch_pred_flush
-static call for flushing the branch predictors on JIT memory reuse.
-Architectures that need a flush, can update it to a predictor flush
-function. By default, its a NOP and does not emit any CALL.
+Also the reporter is very kind to test the following ASSERT() added to
+btrfs_trim_free_extents_throttle():
 
-Allocations larger than a pack are not covered by this flush. That is safe
-because cBPF programs (the unprivileged attack surface) are bounded well
-below a pack size. Issue a warning if this assumption is ever violated
-while the flush is active.
+	ASSERT(device->bdev,
+	       "devid=%llu path=%s dev_state=0x%lx\n",
+	       device->devid, btrfs_dev_name(device), device->dev_state);
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+And it shows the following output:
+
+  assertion failed: device->bdev, in extent-tree.c:6630 (devid=2 path=/dev/sdd dev_state=0x82)
+
+Which means the device->bdev is NULL, and the dev_state is
+BTRFS_DEV_STATE_IN_FS_METADATA | BTRFS_DEV_STATE_ITEM_FOUND, without
+BTRFS_DEV_STATE_WRITEABLE flag set.
+
+[CAUSE]
+The pc points to the following call chain:
+
+  btrfs_trim_fs()
+  |- btrfs_trim_free_extents()
+     |- btrfs_trim_free_extents_throttle()
+        |- bdev_max_discard_sectors(device->bdev)
+
+So the NULL pointer dereference is caused by device->bdev being NULL.
+
+This looks impossible by a quick glance, as just before calling
+btrfs_trim_free_extents_throttle(), we have skipped any device that has
+BTRFS_DEV_STATE_MISSING flag set.
+
+However in this particular case, there is a window where the missing
+device is later re-scanned, causing btrfs to remove the
+BTRFS_DEV_STATE_MISSING flag:
+
+  btrfs_control_ioctl()
+  |- btrfs_scan_one_device()
+     |- device_list_add()
+        |- rcu_assign_pointer(device->name, name);
+        |  This updates the missing device's path to the new good path.
+        |
+        |- clear_bit(BTRFS_DEV_STATE_MISSING, &device->dev_state)
+           This removes the BTRFS_DEV_STATE_MISSING flag.
+
+This allows the missing device to re-appear and clear the
+BTRFS_DEV_STATE_MISSING flag.  However the device still does not have
+the BTRFS_DEV_STATE_WRITEABLE flag set, nor is its bdev pointer updated.
+
+The bdev pointer remains NULL, triggering the crash later.
+
+[FIX]
+This is a big de-synchronization between BTRFS_DEV_STATE_MISSING and
+device->bdev pointer, and shows a gap in btrfs's re-appearing-device
+handling.
+
+The proper handling of re-appearing device will need quite some extra
+work, which is out of the context of this small fix.
+
+Thankfully the regular bbio submission path has already handled it well
+by checking if the device->bdev is NULL before submitting.
+
+So here we just fix the crash by checking if the device is writeable and
+has a bdev pointer before calling bdev_max_discard_sectors().
+
+Reported-by: Su Yue <glass.su@suse.com>
+Link: https://lore.kernel.org/linux-btrfs/wlwir19t.fsf@damenly.org/
+Fixes: 499f377f49f0 ("btrfs: iterate over unused chunk space in FITRIM")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/filter.h | 10 ++++++++++
- kernel/bpf/core.c      | 19 +++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ fs/btrfs/extent-tree.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index cf7a0bce1bb6d8..3c4dd718beced8 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -22,6 +22,7 @@
- #include <linux/vmalloc.h>
- #include <linux/sockptr.h>
- #include <crypto/sha1.h>
-+#include <linux/static_call.h>
- #include <linux/u64_stats_sync.h>
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -6411,12 +6411,16 @@ static int btrfs_trim_free_extents(struc
  
- #include <net/sch_generic.h>
-@@ -1266,6 +1267,15 @@ extern long bpf_jit_limit_max;
+ 	*trimmed = 0;
  
- typedef void (*bpf_jit_fill_hole_t)(void *area, unsigned int size);
+-	/* Discard not supported = nothing to do. */
+-	if (!bdev_max_discard_sectors(device->bdev))
++	/*
++	 * The caller only filters out MISSING devices, but a device that was
++	 * missing at mount and later rescanned has MISSING cleared while bdev
++	 * is still NULL and WRITEABLE is still unset. Skip those here.
++	 */
++	if (!test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state) || !device->bdev)
+ 		return 0;
  
-+/*
-+ * Flush the indirect branch predictors before reusing JIT memory, so that
-+ * indirect jumps into a newly written program don't reuse predictions left
-+ * behind by an old program that occupied the same space.
-+ */
-+void bpf_arch_pred_flush(void);
-+DECLARE_STATIC_CALL(bpf_arch_pred_flush, bpf_arch_pred_flush);
-+DECLARE_STATIC_KEY_FALSE(bpf_pred_flush_enabled);
-+
- void bpf_jit_fill_hole_with_zero(void *area, unsigned int size);
+-	/* Not writable = nothing to do. */
+-	if (!test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state))
++	/* Discard not supported = nothing to do. */
++	if (!bdev_max_discard_sectors(device->bdev))
+ 		return 0;
  
- struct bpf_binary_header *
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 931a4ddd8530ce..a043fccb917e86 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -21,6 +21,7 @@
- #include <crypto/sha1.h>
- #include <linux/filter.h>
- #include <linux/skbuff.h>
-+#include <linux/static_call.h>
- #include <linux/vmalloc.h>
- #include <linux/prandom.h>
- #include <linux/bpf.h>
-@@ -864,6 +865,15 @@ void bpf_jit_fill_hole_with_zero(void *area, unsigned int size)
- 	memset(area, 0, size);
- }
- 
-+DEFINE_STATIC_CALL_NULL(bpf_arch_pred_flush, bpf_arch_pred_flush);
-+
-+/*
-+ * Enabled once bpf_arch_pred_flush points at a real flush routine. Lets the
-+ * pack allocator test "is a predictor flush wired up at all" with a cheap
-+ * static branch instead of repeatedly querying the static call target.
-+ */
-+DEFINE_STATIC_KEY_FALSE(bpf_pred_flush_enabled);
-+
- #define BPF_PROG_SIZE_TO_NBITS(size)	(round_up(size, BPF_PROG_CHUNK_SIZE) / BPF_PROG_CHUNK_SIZE)
- 
- static DEFINE_MUTEX(pack_mutex);
-@@ -923,6 +933,14 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
- 
- 	mutex_lock(&pack_mutex);
- 	if (size > BPF_PROG_PACK_SIZE) {
-+		/*
-+		 * Allocations larger than a pack get their own pages, and
-+		 * predictors are not flushed for such allocation. This is only
-+		 * safe because cBPF programs (the unprivileged attack surface)
-+		 * are bounded well below a pack size.
-+		 */
-+		if (static_branch_unlikely(&bpf_pred_flush_enabled))
-+			pr_warn_once("BPF: Predictors not flushed for allocations greater than BPF_PROG_PACK_SIZE\n");
- 		size = round_up(size, PAGE_SIZE);
- 		ptr = bpf_jit_alloc_exec(size);
- 		if (ptr) {
-@@ -953,6 +971,7 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
- 	pos = 0;
- 
- found_free_area:
-+	static_call_cond(bpf_arch_pred_flush)();
- 	bitmap_set(pack->bitmap, pos, nbits);
- 	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
- 
--- 
-2.53.0
-
+ 	/* No free space = nothing to do. */
 
 
