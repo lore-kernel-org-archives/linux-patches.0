@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E642475F7;
-	Thu, 16 Jul 2026 13:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4892475F7;
+	Thu, 16 Jul 2026 13:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209197; cv=none; b=at+XMsej3EbQEJiTYn5mIKR4Gicta9ThVClN6MVFY7lALpQK8OqteE2pYKZNLaljL8fH72ffjAc1C2VmnoQaaVAbisukIauIu7lo0YZDIzp9gpHKSBPMqBOAiAjQhcdShwIfMYb53Ihdr02ssDKxYDvAfm9w4f4iNA4QBJRY6ZQ=
+	t=1784209199; cv=none; b=mej1AoHJa7A68qakGxoJZXL8pbeKroYwoaU/Zlv8ysGmk9IPRloZkFynn5oj/Yd5bFPf8ilNvLwQu1Lmi0WgIEdgYVm3jyGzswNfmVwco1Qmp4bHys4WOzK2e/xyDA+LZ8lgQDMWxyxezcOgPV3bGSLrqOCJ2b/5qGOtMVNrvL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209197; c=relaxed/simple;
-	bh=Hq5w2nB3wRJn+ldyZizDmiSGkL2ylBl3B19ZYkMyUlg=;
+	s=arc-20240116; t=1784209199; c=relaxed/simple;
+	bh=ed7DHEFxkzQpWAcFJpulMGU013L4iBgVlFnyDGBetb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQupragr824Fk6h7h6q9b8ZLUNyYT7TWNos7vul9VwRmcpIQZFh94IGVCYcRm2Ox6nJoIoxuDqwhLAIuPergVUO1fFRqp2hqVJqhgmuDJup2vNPh3YP0vBfX9y3YSz5SG1WQwOMOtpTESG8NvWiq+UZOG+2IloXu8ITfKFhgmtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0Quphe4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uv/eBsPu7eRD+bxi4sUAJk8XyPGGPqIepVXrwe+LfI/jAePPdOS3FklNI1huX83VFdM1j3eFF/CNnhfIUYP5r6ytno5buBsXbMmEt2HEhX8+xDLH2ZkeC1bZOzs24lriVhIgjDSgyyFdhGMPCpNKSBowknWQvcsgJSrZxNmnOK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6hGpuJ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0Quphe4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC821F000E9;
-	Thu, 16 Jul 2026 13:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6hGpuJ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4574D1F000E9;
+	Thu, 16 Jul 2026 13:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209195;
-	bh=6OgdYhoGcw2ngiCXmbalotlT/GiYxiMKpiFmPMdsMzI=;
+	s=korg; t=1784209197;
+	bh=tbQZAP5oqddh3/Q5ragNU4CFRAInIjMcPfbTSOTgsUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m0Quphe4sWHbFiEFRlzV4mZ3fnOYa05tp+q/hVME5/29TX7vhR9vOShODpLmUL76q
-	 +Opzb7OVgro6/ScW2Jqur8ALcSgkehFw7s8nv3jdGJjhKaXotwjG9qMDeA65FG7Y3M
-	 udZ3i2lt1wysSFbhZgJnRk7nF91Ax0mOm2YjAZBc=
+	b=l6hGpuJ2syVLLaqCnt3NJ9xBPcRetXEylqONDmBcrHZJ1BhitMwiF4pxVoaH0MCV5
+	 YO7MbT5I4m9qaVXspeyXJyUZWnyQAwZ3Exa/2pK88elDsVi8eenvmFA1NawnB6U1So
+	 FG3Fam8+zg3DXyqctrKpv4I/SlaYae9PuE1c6EUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoqi Zhang <zhangbaoqi@loongson.cn>,
-	Haowei Zheng <zhenghaowei@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Aaron Erhardt <aer@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 093/518] ALSA: hda/hdmi: Use AC_PINSENSE_ELDV to detect pinsense for Loongson
-Date: Thu, 16 Jul 2026 15:26:01 +0200
-Message-ID: <20260716133049.900097830@linuxfoundation.org>
+Subject: [PATCH 7.1 094/518] ALSA: hda/realtek: Fix noisy mic for Clevo V6xxAW
+Date: Thu, 16 Jul 2026 15:26:02 +0200
+Message-ID: <20260716133049.921052882@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,84 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Aaron Erhardt <aer@tuxedocomputers.com>
 
-commit 958e4450e961d75bd9d8f5bfe245fb15bc78e02a upstream.
+commit 493765b8e922a506e09e22e80b6cc9ff05e8295b upstream.
 
-Due to a hardware defect, for Loongson PCI HDMI devices with a reversion
-ID of 2, the pin sense status must be determined via the ELD.
+Add a PCI quirk to reduce the volume of the internal microphone to prevent
+extremely noisy signal.
 
-Add a codec flag, eld_jack_detect, to indicate this case, and do special
-handlings in read_pin_sense().
-
+Signed-off-by: Aaron Erhardt <aer@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Baoqi Zhang <zhangbaoqi@loongson.cn>
-Signed-off-by: Haowei Zheng <zhenghaowei@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://patch.msgid.link/20260527140841.3407183-1-chenhuacai@loongson.cn
+Link: https://patch.msgid.link/20260519155047.106096-1-wse@tuxedocomputers.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/sound/hda_codec.h    |    1 +
- sound/hda/codecs/hdmi/hdmi.c |    8 +++++++-
- sound/hda/common/jack.c      |    6 ++++++
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/sound/hda_codec.h
-+++ b/include/sound/hda_codec.h
-@@ -259,6 +259,7 @@ struct hda_codec {
- 	unsigned int forced_resume:1; /* forced resume for jack */
- 	unsigned int no_stream_clean_at_suspend:1; /* do not clean streams at suspend */
- 	unsigned int ctl_dev_id:1; /* old control element id build behaviour */
-+	unsigned int eld_jack_detect:1;	/* Machine jack-detection by ELD */
- 
- 	unsigned long power_on_acct;
- 	unsigned long power_off_acct;
---- a/sound/hda/codecs/hdmi/hdmi.c
-+++ b/sound/hda/codecs/hdmi/hdmi.c
-@@ -2286,6 +2286,7 @@ EXPORT_SYMBOL_NS_GPL(snd_hda_hdmi_acomp_
- enum {
- 	MODEL_GENERIC,
- 	MODEL_GF,
-+	MODEL_LOONGSON,
- };
- 
- static int generichdmi_probe(struct hda_codec *codec,
-@@ -2303,6 +2304,11 @@ static int generichdmi_probe(struct hda_
- 	if (id->driver_data == MODEL_GF)
- 		codec->no_sticky_stream = 1;
- 
-+	if (id->driver_data == MODEL_LOONGSON) {
-+		if (codec->bus && codec->bus->pci->revision == 0x2)
-+			codec->eld_jack_detect = 1; /* Jack-detection by ELD */
-+	}
-+
- 	return 0;
- }
- 
-@@ -2320,7 +2326,7 @@ static const struct hda_codec_ops generi
- /*
-  */
- static const struct hda_device_id snd_hda_id_generichdmi[] = {
--	HDA_CODEC_ID_MODEL(0x00147a47, "Loongson HDMI",		MODEL_GENERIC),
-+	HDA_CODEC_ID_MODEL(0x00147a47, "Loongson HDMI",		MODEL_LOONGSON),
- 	HDA_CODEC_ID_MODEL(0x10951390, "SiI1390 HDMI",		MODEL_GENERIC),
- 	HDA_CODEC_ID_MODEL(0x10951392, "SiI1392 HDMI",		MODEL_GENERIC),
- 	HDA_CODEC_ID_MODEL(0x11069f84, "VX11 HDMI/DP",		MODEL_GENERIC),
---- a/sound/hda/common/jack.c
-+++ b/sound/hda/common/jack.c
-@@ -58,6 +58,12 @@ static u32 read_pin_sense(struct hda_cod
- 				  AC_VERB_GET_PIN_SENSE, dev_id);
- 	if (codec->inv_jack_detect)
- 		val ^= AC_PINSENSE_PRESENCE;
-+	if (codec->eld_jack_detect) {
-+		if (val & AC_PINSENSE_ELDV)
-+			val |= AC_PINSENSE_PRESENCE;
-+		else
-+			val &= ~AC_PINSENSE_PRESENCE;
-+	}
- 	return val;
- }
- 
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7567,6 +7567,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1558, 0x51b3, "Clevo NS70AU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x5630, "Clevo NP50RNJS", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x5700, "Clevo X560WN[RST]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0x6480, "Clevo V6xxAW", ALC245_FIXUP_CLEVO_NOISY_MIC),
+ 	SND_PCI_QUIRK(0x1558, 0x70a1, "Clevo NB70T[HJK]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70b3, "Clevo NK70SB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70f2, "Clevo NH79EPY", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
