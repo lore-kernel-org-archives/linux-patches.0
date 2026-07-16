@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06A731E85C;
-	Thu, 16 Jul 2026 13:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3CD2FFDEA;
+	Thu, 16 Jul 2026 13:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210125; cv=none; b=fjZSGkaBou2Y7/8M2pb82FgpzZOHgmf7OuctDxpfgfhL3JEdiV03l+mbZYaCvY8gIOIvQZ4uxkzhbc7+oZn7mM6wXmtqJs61o8YShQgLprCR8RRcdKwD+oMYQX5AlX0j2gH7m00VI08WH2X7BbDTm+QXfy5IBHFNCuFG5AoRgkI=
+	t=1784210128; cv=none; b=rL8vtWsJQWlYR/CS+7Hxnp2wgs1QjzI25cxc4afwDQ767i13SWzDgUlyqrQUcUGX6lDZFCoyF/cfnrVHXkAMvw3BDUa5VuqebiGtXhZA3d2mbyyh++8V7+pgTAAFisQsTzi/PATF0R7jFrKyMoZoxlylG4brdH3l53JO4t8jfiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210125; c=relaxed/simple;
-	bh=OE7Gwb3Qsp44mc9pBEetnnjXeppdkrzhz7kFAl8U+VA=;
+	s=arc-20240116; t=1784210128; c=relaxed/simple;
+	bh=XnMJoFqlD4bGKg4+2kNsvHV1b6LQ7OoaqSEwu0qajD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=re4qYMLlsXzXqE7ograaK/X5Wv0uzWG8/Bty8gcIeUInkLBgzEN67cteiGLS0Y3x/90ZXxOo5+hlzJ6sIpbqMIv8VK8mOGEyAp1otXbCgE/a+sOp18q2BPQZ1/ZIVssYYvSUtNKGqBht40QI4IR+X7z47AU8ZSdsXk0VX5UlD+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPbAu7yY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uiRnowmmMUfLonGgG6yJupiJBQBe5EAOhcb+3nIdpLtdMVeYPQ9Z02zSUPOKdw4ZYcp9BkpcZMb90Po1iZ86G1nf4YLtczS/b0VbyqrLbrucRSKEuYhGxw39+C4gR2LgSPJS8Bx4otw15eFhaaUX5rAXjshNHP5KM5FuO7Kai38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVNb2kqu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPbAu7yY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7621F000E9;
-	Thu, 16 Jul 2026 13:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVNb2kqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE2E1F000E9;
+	Thu, 16 Jul 2026 13:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210124;
-	bh=tFLdT6vWmKxs5rMi+6yjwEYWClG0WWvVXPyTbEU0doY=;
+	s=korg; t=1784210127;
+	bh=ftSeLRcwn316T+3l7DpFKBk+5gq7xXDFzcWYc5k57PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPbAu7yYjZhXyLW2ceOqPrTFMB7SNH1lEuXCYh6a8/SYmbyPREDINptysmLnjCwFm
-	 Izh3LL2mREoDBKbM+QednfFJG4zYrhJJHDaoLbMOS6NAEcIJVgE+EtV0uyFXda5Zdi
-	 IE1uNDjhgb819HejXYslHt+fr/9KqRMViogKDcBo=
+	b=mVNb2kqupaxmsBR0tt4ZJ8zB0eAWE2WF/o4RN2pAEyfa0EB6vWzhMBDKq6cuQCySa
+	 I/HyRLXJ8zYuAzS0BG/Kl0FJi9tHj0EG+vPhvz5hcBo4fJtPKY8GO4sd2JvUXPlAjn
+	 dOVhy2fB9HVYwBT4ovfFsL7fM9HB00IZ2bjrkJLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Khoruzhick <vasilykh@arista.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Subject: [PATCH 7.1 404/518] EDAC/i10nm: Dont fail probing if ADXL is missing
-Date: Thu, 16 Jul 2026 15:31:12 +0200
-Message-ID: <20260716133056.673756605@linuxfoundation.org>
+	Neal Gompa <neal@gompa.dev>,
+	Janne Grunau <j@jannau.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 7.1 405/518] watchdog: apple: Add "apple,t8103-wdt" compatible
+Date: Thu, 16 Jul 2026 15:31:13 +0200
+Message-ID: <20260716133056.697407992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,63 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Khoruzhick <vasilykh@arista.com>
+From: Janne Grunau <j@jannau.net>
 
-commit e360a6d65bb46c527a5909430a31d640cdd5036e upstream.
+commit 14ca4868886f2188401fe06cd7bf01a330b3fb99 upstream.
 
-ADXL is not present in Coreboot- or Slimbootloader-based BIOSes and as
-result, the driver fails to probe there.
+After discussion with the devicetree maintainers we agreed to not extend
+lists with the generic compatible "apple,wdt" anymore [1]. Use
+"apple,t8103-wdt" as base compatible as it is the SoC the driver and
+bindings were written for.
 
-Since commit 2738c69a8813 ("EDAC/i10nm: Add driver decoder for Ice Lake
-and Tremont CPUs"), i10nm_edac supports driver decoder. Switch to driver
-decoding when ADXL is not present.
+[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
 
-Signed-off-by: Vasily Khoruzhick <vasilykh@arista.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Cc: stable@vger.kernel.org # v6.1+
-Link: https://patch.msgid.link/20260414181735.87023-1-anarsoul@gmail.com
+Fixes: 4ed224aeaf66 ("watchdog: Add Apple SoC watchdog driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Link: https://lore.kernel.org/r/20251231-watchdog-apple-t8103-base-compat-v1-1-1702a02e0c45@jannau.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/i10nm_base.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/watchdog/apple_wdt.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -79,6 +79,7 @@ static struct res_config *res_cfg;
- static int retry_rd_err_log;
- static int decoding_via_mca;
- static bool mem_cfg_2lm;
-+static bool no_adxl;
+--- a/drivers/watchdog/apple_wdt.c
++++ b/drivers/watchdog/apple_wdt.c
+@@ -218,6 +218,7 @@ static int apple_wdt_suspend(struct devi
+ static DEFINE_SIMPLE_DEV_PM_OPS(apple_wdt_pm_ops, apple_wdt_suspend, apple_wdt_resume);
  
- static struct reg_rrl icx_reg_rrl_ddr = {
- 	.set_num = 2,
-@@ -1222,8 +1223,14 @@ static int __init i10nm_init(void)
- 	}
- 
- 	rc = skx_adxl_get();
--	if (rc)
--		goto fail;
-+	if (rc) {
-+		/* Decoding errors via MCA banks for 2LM isn't supported yet */
-+		if (rc != -ENODEV || mem_cfg_2lm)
-+			goto fail;
-+		i10nm_printk(KERN_INFO, "ADXL not found, falling back to MCA-based decoding.\n");
-+		no_adxl = true;
-+		decoding_via_mca = true;
-+	}
- 
- 	opstate_init();
- 	mce_register_decode_chain(&i10nm_mce_dec);
-@@ -1257,7 +1264,8 @@ static void __exit i10nm_exit(void)
- 
- 	skx_teardown_debug();
- 	mce_unregister_decode_chain(&i10nm_mce_dec);
--	skx_adxl_put();
-+	if (!no_adxl)
-+		skx_adxl_put();
- 	skx_remove();
- }
- 
+ static const struct of_device_id apple_wdt_of_match[] = {
++	{ .compatible = "apple,t8103-wdt" },
+ 	{ .compatible = "apple,wdt" },
+ 	{},
+ };
 
 
