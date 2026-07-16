@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF001424677;
-	Thu, 16 Jul 2026 13:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6228B424673;
+	Thu, 16 Jul 2026 13:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209041; cv=none; b=ETLRHnVmnYBkUdO8CU/R6LVRVkeV/WkWbAgdyrkzZzhyZC3aX99eYwTPd0xeHGZyGwFIdNIbSxId7Nea0+9wB8fS4yBFjQETF++4tumEhceU+mqhOr4bvOQIAYPe0Of/cME/4sOExFU+rQebJLX9A9CeSW7oV6NQeuz0h/OAlTw=
+	t=1784209043; cv=none; b=eNV0+DueCH0bmXhGnNbHJgzvJ6S46vp1PSVDFGVx/BaGizaKyVbM653QMuSSNrgJs+MbzeZv+Jf0XBBrApqvlgimgnPmeNVGhOvn13eSaLIeWnuL1gQFWcWqg1oiOl74pd3dmKxE1hm6aMsO+JNqgUZ5ijk2luqqZdvGlQKyi4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209041; c=relaxed/simple;
-	bh=PQjxohLReOdoN8CuvZ3hoyUM8E9ihptvr+07NQyar2U=;
+	s=arc-20240116; t=1784209043; c=relaxed/simple;
+	bh=n2/mQxtXCzBes+IVWLX5e/F44V/R+Op8rPkoxsiHYZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7bsQ+cND0pWxNaZ+uBOej+lvVOqsiUCU1vyX/MkQ0MfEftcKFiKxBnrqZa4zBvfMylXtyQzuGRcbh7hviv+xVK2LtjVBAkcLE0OVQAcJ5JvNo9D7zU9u4ivrrgUwquX6Ov8LNro7j5Y+pCE4LeI4cMeDik3Eva3iVDCv3MCLnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tWy0vYT0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=STiLkj7czryLg+Xd0MvOPowHNMhgdp8USZ1C/fJqCL+iUVk6A9duoZycQKsdmVNauX2M4F7syCnylrDb3BXh/AjQ43EvM1Kw1+khbSnLQk6/zVmKppNk+VPEaAMJqlvjqz4o9IoiRNTqxRVG3+LOtYEGPaZ2xzHI7t6U+SuX9Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jf8oiRCH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tWy0vYT0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E351F00A3D;
-	Thu, 16 Jul 2026 13:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jf8oiRCH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B3E1F000E9;
+	Thu, 16 Jul 2026 13:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209039;
-	bh=H1RYel4xZPjR9uCQOgw4h4bvL973cFWBFhz++YspfVU=;
+	s=korg; t=1784209042;
+	bh=sOijDjjmFvSUuoo+oogH1nBpA5qWJBuvlY5j1FcRELA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tWy0vYT0/bQvHCqqHgBpPPgaKSLFIGq7/PcuLj4BGSkQeNKHsQ2AYlFP/QQsOiFSF
-	 WpjPQkiNHVTftNc17QaxgT/i2l1AZGsM1FeQc9ZDhYQgylvxQq9cPXiMi1MjmX7iYW
-	 9QA+r8vxuCYeh8Ud8gfmVBM9oU83U5yxehlq1HDg=
+	b=jf8oiRCH+S/Bhu/BqcVm4DZ+DdR4B8JC05AjtUwDzDICFABoC+Fc0ky49rJFd/XPJ
+	 2kFOz16UeBr5mf8AQgLNoH+wuoojn6zi3UJQjrfhAkd1qPiv5OHpU5ov2E3H55KaVy
+	 KrtcInOMClOIBcOtWMptoaNsZnTZocYLBTZWD8pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Samuel Moelius <samuel.moelius@trailofbits.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 035/518] iio: adc: ad4062: add GPIOLIB dependency
-Date: Thu, 16 Jul 2026 15:25:03 +0200
-Message-ID: <20260716133048.547248621@linuxfoundation.org>
+Subject: [PATCH 7.1 036/518] iio: adc: ad7380: select REGMAP
+Date: Thu, 16 Jul 2026 15:25:04 +0200
+Message-ID: <20260716133048.569332526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -45,26 +47,28 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Samuel Moelius <samuel.moelius@trailofbits.com>
 
-commit a5b7991d5a737df71a5e4230554481255af64ed4 upstream.
+commit 6697091b386a4e2830bdd38512c87a4befff2b32 upstream.
 
-The ad4062 driver gained support for the gpiochip and now fails
-to build when GPIOLIB is disabled:
+The AD7380 driver uses generic regmap types and APIs. However, its
+Kconfig entry does not select REGMAP.
 
-390-linux-ld: drivers/iio/adc/ad4062.o: in function `ad4062_gpio_get':
-drivers/iio/adc/ad4062.c:1383:(.text+0x3dc): undefined reference to `gpiochip_get_data`
+As a result, AD7380 can be enabled from an allnoconfig-derived config
+with SPI_MASTER=y while REGMAP remains unset, causing ad7380.o to fail
+to build.
 
-Add a Kconfig dependency for this.
-
-Fixes: da1d3596b1e4 ("iio: adc: ad4062: Add GPIO Controller support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: b095217c104b ("iio: adc: ad7380: new driver for AD7380 ADCs")
+Signed-off-by: Samuel Moelius <samuel.moelius@trailofbits.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -74,13 +78,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/iio/adc/Kconfig
 +++ b/drivers/iio/adc/Kconfig
-@@ -78,6 +78,7 @@ config AD4030
- config AD4062
- 	tristate "Analog Devices AD4062 Driver"
- 	depends on I3C
-+	depends on GPIOLIB
- 	select REGMAP_I3C
+@@ -312,6 +312,7 @@ config AD7298
+ config AD7380
+ 	tristate "Analog Devices AD7380 ADC driver"
+ 	depends on SPI_MASTER
++	select REGMAP
+ 	select SPI_OFFLOAD
  	select IIO_BUFFER
- 	select IIO_TRIGGERED_BUFFER
+ 	select IIO_BUFFER_DMAENGINE
 
 
