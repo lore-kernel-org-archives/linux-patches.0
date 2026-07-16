@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B220429810;
-	Thu, 16 Jul 2026 14:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AFB42902A;
+	Thu, 16 Jul 2026 14:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212111; cv=none; b=XuszeOYxtnf16D0Uw1XCn1WPDn6uMP4wT8UFHyEG/Hyp2AvlLE0NTaVPgLVtLPKQD8ZOiTp5dcOe352xc/FAk5KYzQYlPDELx6d4scPyuBrIrh7XQxXrIpzx8rkeEA7dXPVBsT72NhB95R859oi0i74MBLbOrfenUGnwlo4RRtE=
+	t=1784212114; cv=none; b=YSrhJb5FitjD7kxEk/xMvgC6cpgHPv11MpdNoNaT1szZgli2TObvqgePCaQFYJEUebtuZJ9t+53NpFfqLml0M281d7db5eT5RfcqoJ3idaAW+gkYTSEplbMQQ00HU5nFnopiL8b1Sn/c/FnKeb2x4wH/5KPHPax0k/KlJ2KU5YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212111; c=relaxed/simple;
-	bh=KzQeXOoUCstc7YzDXfhsGFgXqVoX13SM9zji2n2dF6Q=;
+	s=arc-20240116; t=1784212114; c=relaxed/simple;
+	bh=7tcA7/PZE4mzFRPjSp8IN+O9vecIXja3jDZ+7UhB3as=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtyfMPMcRe5dCnYe5okSPo/4Yftp05yhNtmCXWTWtjX+kuuIxJTciGGuFZysltJZT4O/Ak83JY0WxCo/nbAyA2ULEmVR0KQUgIKNwP85Lgyj+FZMv8zJbIAfuZ66V1jObFaRuXSJhn2L4sUXwHDHTNBqC2d0kV7WYK97aV+SyDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k++TQ54K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aA1xiSD/YZLG9s86J+bS5pfchJaf+3/Ru3fUIsQgxQie+bS30aHQ5mLxIzlkuQOhn4frrxxuGaAvnIwd2qneqV/yJcD4jkwTXP2UxLVu7OmUjFGgMiN6ivTkxmCfcH9n8OatSYLRS0ODZE/uuCl2DAPtOp20JyZ/B2CrDeGUT9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCqQzesN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k++TQ54K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B169C1F00A3A;
-	Thu, 16 Jul 2026 14:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCqQzesN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591031F000E9;
+	Thu, 16 Jul 2026 14:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212110;
-	bh=oDBs8Kyriiw6EpjIEwawAGOMDnPDeVUuhViOzKxJoN4=;
+	s=korg; t=1784212112;
+	bh=EPmoWDrkAT5MYMltdC6omA7vxOtPLGIlBg+q03fr57g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k++TQ54Kts5LrI++8Ksx/3BpKAZbm4ffCFJuomdtwdWZNwkGQwqyyxDgq4IDBJQte
-	 YiCTD55mdgZ+UkCByZqaGkCQl6i5h4dUXhIKAP2c+H52hDCjwFX9fYWk9uGGfVn9VD
-	 gmnU4XixRlfoIs9QXTqs5RN18h7m+9L7wK+m1Koo=
+	b=gCqQzesNLPizAsmL/dwFpAy9wG2D5ggG9T2FwN9XhBdZBul4YMjuKUGwv8O+93c4F
+	 fTBvnVJ9+3w99baU1NzRtN1AtJRP1BSxMwZbDGXQxSNzhj4WbCefNQXlXgsvI2kG5F
+	 V6R5p0dCG59zu1RDVPYOcfkMdzgoks+DumRr6n7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Khadka <maskmemanish@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 204/349] HID: letsketch: fix UAF on inrange_timer at driver unbind
-Date: Thu, 16 Jul 2026 15:32:18 +0200
-Message-ID: <20260716133037.933314350@linuxfoundation.org>
+Subject: [PATCH 6.12 205/349] HID: lg-g15: cancel pending work on remove to fix a use-after-free
+Date: Thu, 16 Jul 2026 15:32:19 +0200
+Message-ID: <20260716133037.955281260@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,105 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Khadka <maskmemanish@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 46c8beeccd8ab2c863827254a85ea877654a3534 upstream.
+commit 7705b4140d188ce22656f6e541ae7ef834c7e11a upstream.
 
-letsketch_driver does not provide a .remove callback, but
-letsketch_probe() arms a per-device timer:
+lg_g15_data is allocated with devm and holds a work item. The report
+handlers schedule that work straight from device input.
+lg_g15_event() and lg_g15_v2_event() do it on the backlight cycle key,
+and lg_g510_leds_event() does it too. The worker dereferences the
+lg_g15_data back through container_of.
 
-    timer_setup(&data->inrange_timer, letsketch_inrange_timeout, 0);
+The driver had no remove callback and never cancelled the work. So if a
+report scheduled the work and the keyboard was then unplugged, devres
+freed lg_g15_data while the work was still pending or running, and the
+worker touched freed memory. This is a use-after-free. It is reachable
+as a race on device unplug.
 
-The timer is re-armed from letsketch_raw_event() with a 100 ms
-timeout on every pen-in-range report, and its callback dereferences
-data->input_tablet to deliver a synthetic BTN_TOOL_PEN release.
+Add a remove callback that cancels the work before devres frees the
+state. g15->work is only initialized for the models that schedule it
+(G15, G15 v2, G510). The G13 and Z-10 leave it zeroed, so guard the
+cancel on g15->work.func to avoid cancelling a work that was never set
+up. The g15 NULL test mirrors the one already in lg_g15_raw_event().
 
-letsketch_data is allocated with devm_kzalloc(), and its input_dev
-fields are devm-allocated via letsketch_setup_input_tablet().  On
-device unbind (USB unplug or rmmod), the HID core runs its default
-teardown and devm cleanup frees both letsketch_data and the input
-devices.  Because no .remove callback exists, nothing drains the
-timer first: if raw_event armed it within ~100 ms of the unbind,
-the pending timer fires on freed memory.  This is a UAF read of
-data and of data->input_tablet, followed by input_report_key() /
-input_sync() into the freed input_dev.
-
-The same problem can occur on the probe error path: if
-hid_hw_start() enabled I/O on an always-poll-quirk device and then
-failed, raw_event may have armed the timer before devm releases
-data.
-
-Fix by adding a .remove callback that calls hid_hw_stop() first.
-hid_hw_stop() synchronously kills the URBs that deliver raw_event(),
-so once it returns no path can re-arm the timer.  timer_shutdown_sync()
-then drains any in-flight callback and permanently disables further
-mod_timer() calls.  Apply the same timer_shutdown_sync() in the probe
-error path so the timer is guaranteed not to outlive data.
-
-Fixes: 33a5c2793451 ("HID: Add new Letsketch tablet driver")
+Fixes: 97b741aba918 ("HID: lg-g15: Add keyboard and LCD backlight control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Manish Khadka <maskmemanish@gmail.com>
+Suggested-by: Hans de Goede <hansg@kernel.org>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-letsketch.c |   36 +++++++++++++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ drivers/hid/hid-lg-g15.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/hid/hid-letsketch.c
-+++ b/drivers/hid/hid-letsketch.c
-@@ -295,13 +295,42 @@ static int letsketch_probe(struct hid_de
+--- a/drivers/hid/hid-lg-g15.c
++++ b/drivers/hid/hid-lg-g15.c
+@@ -945,11 +945,27 @@ static const struct hid_device_id lg_g15
+ };
+ MODULE_DEVICE_TABLE(hid, lg_g15_devices);
  
- 	ret = letsketch_setup_input_tablet(data);
- 	if (ret)
--		return ret;
-+		goto err_shutdown_timer;
- 
- 	ret = letsketch_setup_input_tablet_pad(data);
- 	if (ret)
--		return ret;
-+		goto err_shutdown_timer;
- 
--	return hid_hw_start(hdev, HID_CONNECT_HIDRAW);
-+	ret = hid_hw_start(hdev, HID_CONNECT_HIDRAW);
-+	if (ret)
-+		goto err_shutdown_timer;
++static void lg_g15_remove(struct hid_device *hdev)
++{
++	struct lg_g15_data *g15 = hid_get_drvdata(hdev);
 +
-+	return 0;
-+
-+err_shutdown_timer:
 +	/*
-+	 * Drain any pending callback and permanently disable the timer
-+	 * before devm releases data: if hid_hw_start() enabled I/O on an
-+	 * always-poll-quirk device and then failed, raw_event may have
-+	 * armed the timer already.
++	 * g15->work is only initialized for the models that schedule it
++	 * (G15, G15 v2, G510). The G13 and Z-10 leave it zeroed, so only
++	 * cancel it when it was set up.
 +	 */
-+	timer_shutdown_sync(&data->inrange_timer);
-+	return ret;
++	if (g15 && g15->work.func)
++		cancel_work_sync(&g15->work);
++
++	hid_hw_stop(hdev);
 +}
 +
-+static void letsketch_remove(struct hid_device *hdev)
-+{
-+	struct letsketch_data *data = hid_get_drvdata(hdev);
-+
-+	/*
-+	 * hid_hw_stop() synchronously kills the URBs that deliver
-+	 * raw_event(), so once it returns no path can re-arm
-+	 * inrange_timer.  timer_shutdown_sync() then drains any
-+	 * in-flight callback and permanently disables further
-+	 * mod_timer() calls before devm releases data.
-+	 */
-+	hid_hw_stop(hdev);
-+	timer_shutdown_sync(&data->inrange_timer);
- }
- 
- static const struct hid_device_id letsketch_devices[] = {
-@@ -314,6 +343,7 @@ static struct hid_driver letsketch_drive
- 	.name = "letsketch",
- 	.id_table = letsketch_devices,
- 	.probe = letsketch_probe,
-+	.remove = letsketch_remove,
- 	.raw_event = letsketch_raw_event,
+ static struct hid_driver lg_g15_driver = {
+ 	.name			= "lg-g15",
+ 	.id_table		= lg_g15_devices,
+ 	.raw_event		= lg_g15_raw_event,
+ 	.probe			= lg_g15_probe,
++	.remove			= lg_g15_remove,
  };
- module_hid_driver(letsketch_driver);
+ module_hid_driver(lg_g15_driver);
+ 
 
 
