@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855773876DE;
-	Thu, 16 Jul 2026 13:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B4831E85C;
+	Thu, 16 Jul 2026 13:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210170; cv=none; b=FtB6azAuXeCYivu6Oe2hZPzefJHHVS+SkjBhoyotGUV6qBof/xv0hurS6afs8hfSHF9NNvY4U6UCX27XD4kGPVBCyidZDkA7pYuZG6BesCr8t71+ooAGHJRm4UWTjQAlUOVsLuenYiWdzeYMlC9X1zUkH/qL+0MBqD2S9tmkE9M=
+	t=1784210173; cv=none; b=NizCuGAVVImhZigE9ooPAQT1vDggKhTPYi/YIgkHZ/HSdha7ElSbcvgOaHKvY0KzsKpOgQE2CvnIWHshmO1FpsNASYCx48jTtlOuIGkEEt+65ZvAHdoAwq0pNZfLwcdPrzg+EvW369OauKHCx+t2eS6g6zMcRli7HcJoAhIDYd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210170; c=relaxed/simple;
-	bh=WGdwUSYXhlIzDB5n1Q3DwHhagjfkBDNqBt/oUIjpXmQ=;
+	s=arc-20240116; t=1784210173; c=relaxed/simple;
+	bh=ALv32CdcBcHFx9/9jZiLOqBUEYtF9RgzyBNHNHGaGGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLZYTGM0dNCHsuQ0O+KMdZsdBA/teLfAxga9S6g65myG0BXoZ+Tun44O9BndJ1haWbaXG2j5RjYjpwjeXuubz6foitvhn/pizLAfOtkR80uNwXZWFqVE+vENEjezZ5CdbmyyodpSEJxKgJ9KnpULiy6/gCQasO4zKzDzWAz0M+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0CDit7n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ILrltgA3CibGuoDUKbDuvTAi20zoaHx48ANgYc5h2AtWm4PGMVpD3PLJtNqJIVAqVv0SC2gSuXVxpdtil9a58bjOQphNlEI+rOziA1/2n5CFe/3S2V2ZUfsBWl5bcaoIqz89eKrqeKVL9JX/h7M0UeBgGDCno4YZYFV9Mi6yIBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxcAGfhF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0CDit7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B461F00AC4;
-	Thu, 16 Jul 2026 13:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxcAGfhF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA861F000E9;
+	Thu, 16 Jul 2026 13:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210169;
-	bh=C0vOg07z3BVlZdMTPOmYWKgpkpxSrBf+6TFjiwbw1OY=;
+	s=korg; t=1784210172;
+	bh=oVRA0F4HKI5eY+RojFTqCdBHdwlTXKj1RF6zEDNKorE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h0CDit7nQFAXhowSY3aCJVfC8E0Hmt/aDNrP9+OhqYIbUGvxeBLYKMhkV/gLWddCa
-	 DWihR/k+Wd1hwzQKtxriqEfs3Cp1PhkpvjEh5jRy9W+LWKq9VzNgTZncDM8jV/AHxp
-	 T1r22WSEoSpcA4Jj6XBdbSzFi98X1W3v43sfO5LE=
+	b=mxcAGfhFldTRttuNJf1a6gu1oLNEF1VKMhdlssdYmfv1iPvT+J1inzrVjHeaVKAhk
+	 OdKkPswB66gyIj12DWayoA1uV4/lptZ7yWu0FMomhCxiMIu+eIUzGsXyGb1Wk+tAWS
+	 8oQ8e80n0UQ3FZDSaPdtwTppStQbUWD+RwbPiF4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.1 464/518] KVM: arm64: Dont leak PFN when kvm_translate_vncr() races MMU notifier
-Date: Thu, 16 Jul 2026 15:32:12 +0200
-Message-ID: <20260716133057.996762681@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>
+Subject: [PATCH 7.1 465/518] udmabuf: fix DMA direction mismatch in release_udmabuf()
+Date: Thu, 16 Jul 2026 15:32:13 +0200
+Message-ID: <20260716133058.019065604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,38 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oupton@kernel.org>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit 9f76b039a72d7e06374aa96862f0232ed53f7787 upstream.
+commit fb7b1a0ab25a6077d26cb3829e31743972d4f31d upstream.
 
-In the case that kvm_translate_vncr() races with an MMU notifier the
-early return does not release a reference on the faulted in PFN. Add
-the necessary call to kvm_release_faultin_page() for the unused PFN.
+begin_cpu_udmabuf() maps the sg_table with the caller-provided direction
+(e.g., DMA_TO_DEVICE for a write-only sync), and caches it in ubuf->sg
+for reuse.  However, release_udmabuf() always unmaps this sg_table with
+a hardcoded DMA_BIDIRECTIONAL, regardless of the direction that was
+originally used for the mapping.
 
+With CONFIG_DMA_API_DEBUG=y this produces:
+
+  DMA-API: misc udmabuf: device driver frees DMA memory with different
+  direction [device address=0x000000044a123000] [size=4096 bytes]
+  [mapped with DMA_TO_DEVICE] [unmapped with DMA_BIDIRECTIONAL]
+
+The issue was found during video playback when GStreamer performed a
+write-only DMA_BUF_IOCTL_SYNC on a udmabuf.  It can be reproduced
+with CONFIG_DMA_API_DEBUG=y by creating a udmabuf from a memfd,
+performing a write-only sync (DMA_BUF_SYNC_WRITE without
+DMA_BUF_SYNC_READ), and closing the file descriptor.
+
+Fix this by storing the DMA direction used when the sg_table is first
+created in begin_cpu_udmabuf(), and passing that same direction to
+put_sg_table() in release_udmabuf().
+
+Fixes: 284562e1f348 ("udmabuf: implement begin_cpu_access/end_cpu_access hooks")
 Cc: stable@vger.kernel.org
-Fixes: 069a05e535496 ("KVM: arm64: nv: Handle VNCR_EL2-triggered faults")
-Reported-by: Sashiko (local):gemini-3.1-pro
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20260602235450.103057-2-oupton@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Reviewed-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patch.msgid.link/20260314232722.15555-1-mikhail.v.gavrilov@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/nested.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma-buf/udmabuf.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -1327,8 +1327,10 @@ static int kvm_translate_vncr(struct kvm
- 	}
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -40,6 +40,7 @@ struct udmabuf {
+ 	struct folio **pinned_folios;
  
- 	scoped_guard(write_lock, &vcpu->kvm->mmu_lock) {
--		if (mmu_invalidate_retry(vcpu->kvm, mmu_seq))
-+		if (mmu_invalidate_retry(vcpu->kvm, mmu_seq)) {
-+			kvm_release_faultin_page(vcpu->kvm, page, true, false);
- 			return -EAGAIN;
-+		}
+ 	struct sg_table *sg;
++	enum dma_data_direction sg_dir;
+ 	struct miscdevice *device;
+ 	pgoff_t *offsets;
+ };
+@@ -235,7 +236,7 @@ static void release_udmabuf(struct dma_b
+ 	struct device *dev = ubuf->device->this_device;
  
- 		vt->gva = va;
- 		vt->hpa = pfn << PAGE_SHIFT;
+ 	if (ubuf->sg)
+-		put_sg_table(dev, ubuf->sg, DMA_BIDIRECTIONAL);
++		put_sg_table(dev, ubuf->sg, ubuf->sg_dir);
+ 
+ 	deinit_udmabuf(ubuf);
+ 	kfree(ubuf);
+@@ -253,6 +254,8 @@ static int begin_cpu_udmabuf(struct dma_
+ 		if (IS_ERR(ubuf->sg)) {
+ 			ret = PTR_ERR(ubuf->sg);
+ 			ubuf->sg = NULL;
++		} else {
++			ubuf->sg_dir = direction;
+ 		}
+ 	} else {
+ 		dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
 
 
