@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDFD42FCD4;
-	Thu, 16 Jul 2026 14:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BB1436BE1;
+	Thu, 16 Jul 2026 14:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212150; cv=none; b=gqIMR5rfzlNlbA8LG08OAN7tFkF+y6t7aFBxg3QIcx8Ggb3fzGSdhAiABjowGJSR80nCXmIJncEGoKbp2cEYkJdsgRHBz05PHlh3bASHufLKqDbXwY5IjMaSUwMr96P9Cdg+Hg4gKDQhY7+1WTU7aYV71FOBQj/bYNs/9goO47I=
+	t=1784212153; cv=none; b=OJRT5jeKaHEN0H1f6OsgZ//7gPCkzq2t5b531d0VtC01OzH79QpEMFokBVaw2+n41Ix+I0tFnqVeROYOaxwgr5Ns6iLnWIgJlibS3ty9beNoP32IO30P35oPzug9YA0ExzLI3/ZuU3/2/ehZA4Zy/6t/mkUXu8N0jU5AZ5a0vbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212150; c=relaxed/simple;
-	bh=x4SWN3Zflv2sXCtHDHmgnrer88e6vOSA1vXnw/TYPFA=;
+	s=arc-20240116; t=1784212153; c=relaxed/simple;
+	bh=d9r0E56TGxyhgUo3gt97GUBArKDIkR05AoCihytbK8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3WgiZdRN24LG1Pou1sTGpdHX9g/7klpbxyMP5VT1WIaV59IMdDcvy1mxhHy7gFL44ZI1b/VwRJ9VViRfrMAOe8u82CvRxeMoCBQaSunFp7q9lkjVHmoEeXtFcIu27U9MiuLUOs6Ce6spgI5aDWQP7kLTa6aztNkpOgsKdP96gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgAl5V02; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZLySydFIHTARI0Kurpus+iQqC6fkVZmCVYFdgecI+SbRSis774byNeh0zeBuJ7S+LSyHu4sJ4wwZi1hxLuoMFwgj/z/TkoWG7I1BWG7lhf/Feo0TwjjZKQ5PReh8vwO/jAmCnnO/qmNrQhjI6H40rY0UCUISFZIHkZqJBeAzNpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+w2udgf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgAl5V02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC241F00ADF;
-	Thu, 16 Jul 2026 14:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+w2udgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7D51F00ADF;
+	Thu, 16 Jul 2026 14:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212149;
-	bh=z+wd7aOZmGyo9tREOha7bW/Bxy97m9rJYwQk08csWMo=;
+	s=korg; t=1784212152;
+	bh=U7tD4PBGVZnohviLgIBH8lyXEAzYry4xnmPwFCdFm8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sgAl5V02zuNm9EzBMD/2IEMk+kXbv8JnM+VYl1pK8hq9WwG5CL+iworGSTFTMwU2V
-	 xLyw+XLneYrsFmcAOo29WGrbJxXRSG8aSlbcK73XW7u0NkMdwXgoXHUb2VaN9q6IDN
-	 o0yM0O8LXDFjs19CFw+cROR3xNa5BE1PAeWpZyjw=
+	b=Q+w2udgfU7cwrUf0IrsCt0wJaG+nMgT3RaLEiQNZsJj3jPZR8hPLPBjgRN5nA9IQc
+	 z1zPZfw4XklDQDdHJyFZw6u56+5c1mvlr23Jwb1+ZlcoH+Psv6Oig3PGt3XpTLjERe
+	 CNPVF0dNEBryhn5kAwX3qtVMgaXd9AdZQh9yk/mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 191/349] sched/rt: Have RT_PUSH_IPI be default off for non PREEMPT_RT
-Date: Thu, 16 Jul 2026 15:32:05 +0200
-Message-ID: <20260716133037.651623581@linuxfoundation.org>
+	Paul Moses <p@1g4.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Subject: [PATCH 6.12 218/349] bpf: Validate BTF repeated field counts before expansion
+Date: Thu, 16 Jul 2026 15:32:32 +0200
+Message-ID: <20260716133038.241269074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,100 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Paul Moses <p@1g4.org>
 
-commit dd29c017aed628076e915fe4cdfb5392fd4c5cab upstream.
+commit b9452b594fd3aecbfd4aa0a6a1f741330a37dab7 upstream.
 
-RT migration is done aggressively. When a CPU schedules out a high
-priority RT task for a lower priority task, it will look to see if there's
-any RT tasks that are waiting to run on another CPU that is of higher
-priority than the task this CPU is about to run. If it finds one, it will
-pull that task over to the CPU and allow it to run there instead.
+btf_parse_struct_metas() walks user-supplied BTF during BPF_BTF_LOAD,
+and btf_repeat_fields() expands repeatable fields from array elements
+into the fixed BTF_FIELDS_MAX scratch array used by btf_parse_fields().
 
-Normally, this pulling is done by looking at the RT overloaded mask (rto)
-which contains all the CPUs in the scheduler domain with RT tasks that are
-waiting to run due to a higher priority RT task currently running on their
-CPU. The CPU that is about to schedule a lower priority task will grab the
-rq lock of the overloaded CPU and move the RT task from that CPU's runqueue
-to the local one and schedule the higher priority RT task.
+The remaining-capacity check performs the expanded field count calculation
+in u32. A malformed BTF can wrap that calculation, causing the check to
+pass even when the expanded field count exceeds the scratch array
+capacity. The following memcpy() can then write past the end of the
+array.
 
-This caused issues when a lot of CPUs would schedule a lower priority task
-at the same time. They would all try to grab the same runqueue lock of
-the CPU with the overloaded RT tasks. Only the first CPU that got in will
-get that task. All the others would wait until they got the runqueue lock
-and see there's nothing to pull and do nothing. On systems with lots of
-CPUs, this caused a large latency (up to 500us) which is beyond what
-PREEMPT_RT is to allow.
+Use checked addition and multiplication before copying repeated fields
+and reject impossible counts.
 
-The solution to that was to create an RT_PUSH_IPI logic. When any CPU
-wanted to pull a task, instead of grabbing the runqueue lock of the
-overloaded CPU, it would start by sending an IPI to the overloaded CPU,
-and that IPI handler would have the CPU with the waiting RT task do a push
-instead. Then that handler would send an IPI to the next CPU with
-overloaded RT tasks, and so on. Note, after the first CPU starts this
-process, if another CPU wanted to do a pull, it would see that the process
-has already begun and would only increment a counter to have the IPIs
-continue again.
-
-The RT_PUSH_IPI solved the latency problem with PREEMPT_RT but could cause
-a new issue with non PREEMPT_RT. Namely, softirqs run in a threaded
-context on PREEMPT_RT but they can run in an interrupt context in non-RT.
-
-If an IPI lands on a CPU that has just woken up multiple RT tasks and the
-current CPU is running a non RT or a low priority RT task, instead of
-doing a push, it would simply do a schedule on that CPU. But if a softirq
-was also executing on this CPU, the schedule would need to wait until the
-softirq finished. Until then, the CPU would still be considered overloaded
-as there are RT tasks still waiting to run on it.
-
-A live lock occurred on a workload that was doing heavy networking traffic
-on a large machine where the softirqs would run 500us out of 750us. And it
-would also be waking up RT tasks, causing the RT pull logic to be
-constantly executed.
-
-When a softirq triggered on a CPU with RT tasks queued but not running
-yet, and the other CPUs would see this CPU as being overloaded, they would
-send an IPI over to it. The CPU would notice that the waiting RT tasks are
-of higher priority than the currently running task and simply schedule
-that CPU instead. But because the softirq was executing, before it could
-schedule, it would receive another IPI to do the same. The amount of IPIs
-would slow down the currently running softirq so much that before it could
-return back to task context, it would execute another softirq never
-allowing the CPU to schedule. This live locked that CPU.
-
-As RT_PUSH_IPI was created to help PREEMPT_RT, make it default off if
-PREEMPT_RT is not enabled.
-
-Fixes: b6366f048e0c ("sched/rt: Use IPI to trigger RT task push migration instead of pulling")
-Closes: https://lore.kernel.org/all/20260506235716.2530720-1-tj@kernel.org/
-Reported-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 797d73ee232d ("bpf: Check the remaining info_cnt before repeating btf fields")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260515103740.25ccbed8@gandalf.local.home
+Signed-off-by: Paul Moses <p@1g4.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260605234301.1109063-1-p@1g4.org
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/features.h |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/bpf/btf.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/kernel/sched/features.h
-+++ b/kernel/sched/features.h
-@@ -104,8 +104,16 @@ SCHED_FEAT(WARN_DOUBLE_CLOCK, false)
-  * rq lock and possibly create a large contention, sending an
-  * IPI to that CPU and let that CPU push the RT task to where
-  * it should go may be a better scenario.
-+ *
-+ * This is best for PREEMPT_RT, but for non-RT it can cause issues
-+ * when preemption is disabled for long periods of time. Have
-+ * it only default enabled for PREEMPT_RT.
-  */
-+# ifdef CONFIG_PREEMPT_RT
- SCHED_FEAT(RT_PUSH_IPI, true)
-+# else
-+SCHED_FEAT(RT_PUSH_IPI, false)
-+# endif
- #endif
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -3530,7 +3530,7 @@ end:
+ static int btf_repeat_fields(struct btf_field_info *info, int info_cnt,
+ 			     u32 field_cnt, u32 repeat_cnt, u32 elem_size)
+ {
+-	u32 i, j;
++	u32 i, j, total_cnt, total_repeats;
+ 	u32 cur;
  
- SCHED_FEAT(RT_RUNTIME_SHARE, false)
+ 	/* Ensure not repeating fields that should not be repeated. */
+@@ -3547,10 +3547,9 @@ static int btf_repeat_fields(struct btf_
+ 		}
+ 	}
+ 
+-	/* The type of struct size or variable size is u32,
+-	 * so the multiplication will not overflow.
+-	 */
+-	if (field_cnt * (repeat_cnt + 1) > info_cnt)
++	if (check_add_overflow(repeat_cnt, 1, &total_repeats) ||
++	    check_mul_overflow(field_cnt, total_repeats, &total_cnt) ||
++	    total_cnt > (u32)info_cnt)
+ 		return -E2BIG;
+ 
+ 	cur = field_cnt;
 
 
