@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643CB422E3D;
-	Thu, 16 Jul 2026 13:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077F541E6D4;
+	Thu, 16 Jul 2026 13:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209019; cv=none; b=ApyavnJWbjg93bgkHfWnYpkeXVUDbP/AScJfaKVfjWv7No/DbceeJ+xRkkmnbeD2DFgq9iQ0OLklNgkb3YxH+A3UoOa7PrppfuMPGFWknFO85tHrS3+JoeauXWeMcS6yKGIgZ+95IAkG/OHGzyNJUHKQoKAClD3rGa/8pk26omE=
+	t=1784209022; cv=none; b=M/t+cFdXblq3PwGr8C08sVOdpwJ0Sz1lKGv3lw2804MhyvfLWz/4WkiqZT4VWXRd97eR7JuUV0Cn3YHRup13ZfPQvwqe4/34aRw0WWQemmfEw+6xdREh9DlVEYV+JAYyEVg7OpJlyWHbOcCEaTVqrxvs8kWnOXDz9q61gTEKEkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209019; c=relaxed/simple;
-	bh=1lnHNfll0hOa7MgIxgn64paUMjBkltSDvw79WX8Gito=;
+	s=arc-20240116; t=1784209022; c=relaxed/simple;
+	bh=P3T+9yKf3+j0YxvhP5YMb8BsCv73lscN10oMsqPYZjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWD3d33ZiPO6ymiQKof0HCwpChvvr+jbI5sx9zjQx8ljIagTW2mk+8GlEDlVEMlIm4Skfsh8iO70UToq+WNO6WS+6jTYzn+GQ5GmPe41Y8UbtQMz/cxdoouGqdYAN4XaLHWwokMZB50DaxT4Lgf8Oekw39TSVo+FKs69nQOLJAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljhIayIA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VC+DpDTuVTQEb2P7mGZnFSCvIO/CobOtWDulYx63ciiXo1L1/owI0R0Gx95jOBfeUINn3yyPX9V4aDnJGnpqgl6b8LNI44cOqlflk/xt91Qpc6ZfyznfqlOv02mXMl2mAdNYm/pBkkU2qhWQSgY60djuYclJ0RDDj+JaQCIAJRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7oqQ8m7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljhIayIA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8191F000E9;
-	Thu, 16 Jul 2026 13:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7oqQ8m7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7145F1F000E9;
+	Thu, 16 Jul 2026 13:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209018;
-	bh=G3YE36ewu/7+ft9FhbU6C4ZiTMKX5gm5IFatW0bAGAY=;
+	s=korg; t=1784209020;
+	bh=OP/38dWgX7PGbSG3j4d/D5dWc3sfheljAyVkoNKABls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ljhIayIAB25qvKqOgiSaqIQY8iyJ+E6tF4Kb0JCiK3/wVCnQNZVWV11qHwb5xH97d
-	 U3U/pvfYYWlCTwSrTvmtjOiFGBS5DIfcBbGpwN8++Yw+UMmjS5JuA8wnP5Zd87Fdmb
-	 SSUIM0DaZ1aO/IratnHRSFtKamLVdikAFg8L6uec=
+	b=u7oqQ8m7p2Fd3LmHx6kPElbwpwlLLjfJu6ICNHgoOpIbk3cJHt0YcxW7GXpaoph3I
+	 ll2ME+/mfmNPkwHBOEYDk/viFGZ8uNBivgionONVFJUMQ4jNXZ/uHXlWkOSQ8B1dEW
+	 YqNHhDOGm3JRD9Y+Q1jbWOmc6K73RS2OiI6JQ91E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingquan Liu <b1n@b1n.io>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 004/518] net/sched: dualpi2: fix GSO backlog accounting
-Date: Thu, 16 Jul 2026 15:24:32 +0200
-Message-ID: <20260716133047.874896720@linuxfoundation.org>
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Matthew Wilcox <willy@infradead.org>,
+	Song Liu <song@kernel.org>,
+	Eric Hagberg <ehagberg@janestreet.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Gregg Leventhal <gleventhal@janestreet.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 005/518] mm/khugepaged: write all dirty file folios when collapsing
+Date: Thu, 16 Jul 2026 15:24:33 +0200
+Message-ID: <20260716133047.896514416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,68 +60,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingquan Liu <b1n@b1n.io>
+From: Pedro Falcato <pfalcato@suse.de>
 
-commit 05ed733b65ab977dd931e7f7ac0f62fdb81205c2 upstream.
+[There is no upstream commit, as this code was removed by upstream
+ commit 044925f9b565 ("mm: fs: remove filemap_nr_thps*() functions and their users")]
 
-When DualPI2 splits a GSO skb into N segments, it propagates N
-additional packets to its parent before returning NET_XMIT_SUCCESS.
-The parent then accounts for the original skb once more, leaving its
-qlen one larger than the number of packets actually queued.
+As-is, khugepaged and writable-file opening exclude each other. A file
+cannot be open writeable and have THPs (because the filesystem is not aware
+of them). khugepaged will never collapse file pages for files that are
+opened writeable. On an open(O_RDWR/O_WRONLY), the page cache for that
+particular file is dropped. This is fine because nothing could've been
+dirtied.
 
-With QFQ as the parent, after all real packets are dequeued, QFQ still
-has a non-zero qlen while its in-service aggregate has no active
-classes. qfq_choose_next_agg() returns NULL and qfq_dequeue() passes
-the result to qfq_peek_skb(), causing a NULL pointer dereference.
+However, there is an edge-case: collapse_file() might not be able to
+coexist with concurrent writers, but it can coexist with dirty folios
+(from previous writers). Therefore, the following can happen:
 
-Follow the same pattern used by tbf_segment() and taprio: count only
-successfully queued segments, propagate the difference between the
-original skb and those segments, and return NET_XMIT_SUCCESS whenever
-at least one segment was queued.
+open(file, O_RDWR)
+write(file)
+close(file)
+madvise(file_mapping, MADV_COLLAPSE, some non-dirty range)
+open(file, O_RDWR)
+ nr_thps > 0
+  truncate_inode_pages()
+    /* THPs are cleared out, but so are the dirty folios */
 
-Fixes: 8f9516daedd6 ("sched: Add enqueue/dequeue of dualpi2 qdisc")
+When this edge-case happens, there is data loss, as the dirty folios are
+fully discarded.
+
+Fix it by fully writing back the page cache (and waiting) when collapsing
+file THPs. Doing so provides the guarantee that no dirty folio will be
+observed while there are active THPs. To fully ensure this is safe, the
+invalidate_lock needs to be held while doing the writeout, so that
+do_dentry_open()'s page cache truncation excludes this write-and-wait.
+
+As a side effect, move the nr_thps counter bumping outside the i_pages
+lock. This is correct since the counter itself is an atomic_t and the
+producer <-> consumer correctness is provided by a full memory barrier:
+smp_mb() in collapse_file()/memory barrier implied by full ordering in
+get_write_access() -> atomic_inc_unless_negative().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Xingquan Liu <b1n@b1n.io>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260619151447.223640-1-b1n@b1n.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Song Liu <song@kernel.org>
+Cc: Eric Hagberg <ehagberg@janestreet.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Fixes: 99cb0dbd47a1 ("mm,thp: add read-only THP support for (non-shmem) FS")
+Reported-by: Gregg Leventhal <gleventhal@janestreet.com>
+Closes: https://lore.kernel.org/linux-mm/CAFN_u7H_0ECF3jixP=T=U7AH5=Q3wQNvJMo8an3VqUDMerQfUw@mail.gmail.com/
+Tested-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_dualpi2.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ mm/khugepaged.c | 39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
---- a/net/sched/sch_dualpi2.c
-+++ b/net/sched/sch_dualpi2.c
-@@ -461,7 +461,7 @@ static int dualpi2_qdisc_enqueue(struct
- 		if (IS_ERR_OR_NULL(nskb))
- 			return qdisc_drop(skb, sch, to_free);
- 
--		cnt = 1;
-+		cnt = 0;
- 		byte_len = 0;
- 		orig_len = qdisc_pkt_len(skb);
- 		skb_list_walk_safe(nskb, nskb, next) {
-@@ -488,16 +488,15 @@ static int dualpi2_qdisc_enqueue(struct
- 				byte_len += nskb->len;
- 			}
- 		}
--		if (cnt > 1) {
-+		if (cnt > 0) {
- 			/* The caller will add the original skb stats to its
- 			 * backlog, compensate this if any nskb is enqueued.
- 			 */
--			--cnt;
--			byte_len -= orig_len;
-+			qdisc_tree_reduce_backlog(sch, 1 - cnt,
-+						  orig_len - byte_len);
- 		}
--		qdisc_tree_reduce_backlog(sch, -cnt, -byte_len);
- 		consume_skb(skb);
--		return err;
-+		return cnt > 0 ? NET_XMIT_SUCCESS : err;
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index b8452dbdb043f8..d6e04041f5dc11 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -2094,32 +2094,43 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
+ 		goto xa_unlocked;
  	}
- 	return dualpi2_enqueue_skb(skb, sch, to_free);
- }
+ 
+-	if (!is_shmem) {
++xa_locked:
++	xas_unlock_irq(&xas);
++xa_unlocked:
++
++	/*
++	 * If collapse is successful, flush must be done now before copying.
++	 * If collapse is unsuccessful, does flush actually need to be done?
++	 * Do it anyway, to clear the state.
++	 */
++	try_to_unmap_flush();
++
++	if (result == SCAN_SUCCEED && !is_shmem && !mapping_large_folio_support(mapping)) {
++		/*
++		 * invalidate_lock as shared excludes against concurrent opens
++		 * in do_dentry_open() truncating the page cache. This is
++		 * particularly important if there are dirty folios in transit.
++		 */
++		filemap_invalidate_lock_shared(mapping);
+ 		filemap_nr_thps_inc(mapping);
+ 		/*
+ 		 * Paired with the fence in do_dentry_open() -> get_write_access()
+ 		 * to ensure i_writecount is up to date and the update to nr_thps
+ 		 * is visible. Ensures the page cache will be truncated if the
+-		 * file is opened writable.
++		 * file is opened writable. If collapse looks to be successful,
++		 * flush any dirty pages out the page cache. With the nr_thps
++		 * incremented, there won't be any new writers (nor new dirties).
+ 		 */
+ 		smp_mb();
+-		if (inode_is_open_for_write(mapping->host)) {
++		if (inode_is_open_for_write(mapping->host) || filemap_write_and_wait(mapping)) {
+ 			result = SCAN_FAIL;
+ 			filemap_nr_thps_dec(mapping);
++			filemap_invalidate_unlock_shared(mapping);
++			goto rollback;
+ 		}
++		filemap_invalidate_unlock_shared(mapping);
+ 	}
+ 
+-xa_locked:
+-	xas_unlock_irq(&xas);
+-xa_unlocked:
+-
+-	/*
+-	 * If collapse is successful, flush must be done now before copying.
+-	 * If collapse is unsuccessful, does flush actually need to be done?
+-	 * Do it anyway, to clear the state.
+-	 */
+-	try_to_unmap_flush();
+-
+ 	if (result == SCAN_SUCCEED && nr_none &&
+ 	    !shmem_charge(mapping->host, nr_none))
+ 		result = SCAN_FAIL;
+-- 
+2.53.0
+
 
 
