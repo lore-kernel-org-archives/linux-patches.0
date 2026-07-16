@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B614424D75;
-	Thu, 16 Jul 2026 14:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90382FFDE1;
+	Thu, 16 Jul 2026 14:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211392; cv=none; b=ibF37Z3Y13k+3ge5FgJBXYvWOMxREnoKGuZyNHfmP0IFLSRvE6rD0QnzU/RvxSQOgJsbdKM63NAHKrFKcFmWZBnTsfnsAXl8hRr5w7d2yaDm+iWTfj5I61PwppCtp9PwhAU6uZ8IBnzhZ5XUMLylcL9iASIRaZP7f7P1l5Re1CU=
+	t=1784211394; cv=none; b=oH44e3qaIAtGagHiOgKTw3hErY9YzGU7lnbHuApQU/AcPod8kn0OOaKudtCYUC6RKXToCqn6TtIO8JKqURobubPt/TzBJp6eLiuVRvjT5do6fOqA8OXaNCufrQpDxTNoDki0A+3OpOoOVG7yzcIeoKXxbFBVNrjplGjdVuOn3rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211392; c=relaxed/simple;
-	bh=P7cUw6hSMf+px9VvtFxl8+k5KwCs7ormMUE91vamB1A=;
+	s=arc-20240116; t=1784211394; c=relaxed/simple;
+	bh=oXBpuef6ND1UhbolNdySs/rk8CDv+49QVRhVvm5yxuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2CREB7XNuCyLmgeXXeuNOfpi9Fok8SBEHKp3oeeea8pqdM6yuK/qxln9V/e0xXCPO5HvypHWYpZsn4AuOI8qnTsUw23omUvGzlSEQ9D/1ZQSOufsOuVw+rarskOCK2nys+mb+SFPTkFBODFE+uokT8dR0T2dnxiLsfBjAuFNBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XheIynSK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CB2iUtZAuqOTJFn28YwaJaB+hu7LuGnWWo4ROp6fR67QFBVwmGvzmRNKDy+IrZxJfVEkYK1KZfhRLt5kXLdhMkA85s/5xoJYQ/jpa8wVYckRSlzl0EjA7bO4HJVyN38OZF6GsbfC8e6rwOeolWwXFkk65FgUkNeP7MsmKt+Q3aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEItpNIQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XheIynSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854401F000E9;
-	Thu, 16 Jul 2026 14:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEItpNIQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BC21F000E9;
+	Thu, 16 Jul 2026 14:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211390;
-	bh=rkcu0ItZFAXPSYdC62UD/My2MyixkJ2C4g0Sk4EDe0o=;
+	s=korg; t=1784211393;
+	bh=Gh9qnaSFZUyIUbqIZ+o5QfMGkHlkJvAI5KSVkIIofZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XheIynSKyXnL/9HIDuLsl0rK1XDTKHE/gPKHISYNHa0O2C8bMNpkGRyn5qvW1ps07
-	 fJsL5F+7NDpNwFLxYiKvWc7wKQjDX4SOmnvBCU87yu1sOxdwh006ZX8NRyuNOsVVQ6
-	 W0zKN48DyH6SXyoIvJPPco4SawRjztHlsQ9ISZiI=
+	b=jEItpNIQlT8niIWmlkqXblhFbnWN7sUc1cutOqIW5cYfWeJpqhjtvwJEYV0p+34q+
+	 B3u1LG3zlxqmghblG/VNlWYEUY0Hu07qFGDlQgYEXQX4BVIs+PGq5OyPg65SOUqK9U
+	 Byu9ABVt+iP4SWkMw78ne28Lrp6XPXQCYWD5/jH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Louvel <paul.louvel@bootlin.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 373/480] crypto: talitos - move dma unmapping code in flush_channel() into a standalone dma_unmap_request() function
-Date: Thu, 16 Jul 2026 15:32:00 +0200
-Message-ID: <20260716133052.876979136@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>
+Subject: [PATCH 6.18 409/480] iommufd: Fix data_len byte-count vs element-count mismatch
+Date: Thu, 16 Jul 2026 15:32:36 +0200
+Message-ID: <20260716133053.660186978@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,84 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Louvel <paul.louvel@bootlin.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 4d9b0b7415b9e79a3d54d18b5ff230974ea78740 upstream.
+commit 85345becfead3255a5f875d4b4d82ea01d926239 upstream.
 
-Previously added code to flush_channel() in order to unmap an entire
-descriptor.
+kzalloc_flex() computes the allocation size. With event_data typed as u64,
+data_len is interpreted as a u64 element count. Yet, every caller and the
+read path treat data_len as a byte count. The current code over-allocates
+by sizeof(u64) and the __counted_by() annotation overstates the length by
+the same factor.
 
-Move that code into a standalone function to improve readability.
+Re-type event_data as u8. No functional change in user-visible behavior.
 
+Fixes: e36ba5ab808e ("iommufd: Add IOMMUFD_OBJ_VEVENTQ and IOMMUFD_CMD_VEVENTQ_ALLOC")
+Link: https://patch.msgid.link/r/f7665f839b9dce917d6bd394375a1cf56568d86b.1779408671.git.nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/talitos.c |   39 ++++++++++++++++++++++-----------------
- 1 file changed, 22 insertions(+), 17 deletions(-)
+ drivers/iommu/iommufd/iommufd_private.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/talitos.c
-+++ b/drivers/crypto/talitos.c
-@@ -372,6 +372,27 @@ static __be32 get_request_hdr(struct dev
- 	return edesc->desc.hdr1;
- }
+--- a/drivers/iommu/iommufd/iommufd_private.h
++++ b/drivers/iommu/iommufd/iommufd_private.h
+@@ -599,7 +599,7 @@ struct iommufd_vevent {
+ 	struct iommufd_vevent_header header;
+ 	struct list_head node; /* for iommufd_eventq::deliver */
+ 	ssize_t data_len;
+-	u64 event_data[] __counted_by(data_len);
++	u8 event_data[] __counted_by(data_len);
+ };
  
-+static void dma_unmap_request(struct device *dev,
-+			      struct talitos_request *request, bool is_sec1)
-+{
-+	struct talitos_edesc *edesc;
-+
-+	if (is_sec1) {
-+		dma_unmap_single(dev, request->dma_desc, TALITOS_DESC_SIZE,
-+				 DMA_BIDIRECTIONAL);
-+		edesc = container_of(request->desc, struct talitos_edesc, desc);
-+		while (edesc->next_desc) {
-+			dma_unmap_single(dev,
-+					 be32_to_cpu(edesc->desc.next_desc),
-+					 TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
-+			edesc = edesc->next_desc;
-+		}
-+	} else {
-+		dma_unmap_single(dev, request->dma_desc, TALITOS_DESC_SIZE,
-+				 DMA_BIDIRECTIONAL);
-+	}
-+}
-+
- /*
-  * process what was done, notify callback of error if not
-  */
-@@ -379,7 +400,6 @@ static void flush_channel(struct device
- {
- 	struct talitos_private *priv = dev_get_drvdata(dev);
- 	struct talitos_request *request, saved_req;
--	struct talitos_edesc *edesc;
- 	unsigned long flags;
- 	int tail, status;
- 	bool is_sec1 = has_ftr_sec1(priv);
-@@ -404,22 +424,7 @@ static void flush_channel(struct device
- 			else
- 				status = error;
- 
--		if (is_sec1) {
--			dma_unmap_single(dev, request->dma_desc,
--					 TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
--			edesc = container_of(request->desc,
--					     struct talitos_edesc, desc);
--			while (edesc->next_desc) {
--				dma_unmap_single(
--					dev, be32_to_cpu(edesc->desc.next_desc),
--					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
--				edesc = edesc->next_desc;
--			}
--		} else {
--			dma_unmap_single(dev, request->dma_desc,
--					TALITOS_DESC_SIZE,
--					DMA_BIDIRECTIONAL);
--		}
-+		dma_unmap_request(dev, request, is_sec1);
- 
- 		/* copy entries so we can call callback outside lock */
- 		saved_req.desc = request->desc;
+ #define vevent_for_lost_events_header(vevent) \
 
 
