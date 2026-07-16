@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439DD400989;
-	Thu, 16 Jul 2026 13:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB4A323417;
+	Thu, 16 Jul 2026 13:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209787; cv=none; b=t9CSsz4B+JuijM/+ZJiKw3xe1N16hGMWoKhqtcqiOuOcfqLracQlB/jUeU+rxYwwAnZ/Kd0CN88XdpvdoV0DeU0KEmz9uHVIgk58lo+LBzs214ywQnTAF7WZKTOTgmQHAEUuFs5aWhgRYGabiKFmVkE1b2567EwP7QFiGl6wvAg=
+	t=1784209790; cv=none; b=lMkKfer9mxX/AOlbCyIMK0XWjyiZA8KmaozX5O7VEDgbpYi6KEg4zhNO90BAu6BszN2BP84msTq/VtpIZZSjLnu8bnET9UWVyUY4wqjQ2yI3pyFUHGJCGRyUNsOTawanVNZV4LoXh/g1Hl3XnAl1QvHyqUWpsqGsaZtjy13YXJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209787; c=relaxed/simple;
-	bh=8VHpvgArdfUOJJl+rmIQ7SVKC5+aTdW5GN5AI7q+HEI=;
+	s=arc-20240116; t=1784209790; c=relaxed/simple;
+	bh=bP7srZXETvNP3FjWjfmZ1CobqwmXjnNPmQ2l4KUhTKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alTC5KFFBihqpoh/5BKnpdXfonVEAy4V7i2wb7ZDxsDffBbhVPXe1TBG9AZ5Bymyt+9OS05ZfA52Pm1Ngn1ujAhLj/SWaXSlRYbv9Ype8oJ+8d3RU1X8OWx+Hj0VxCbxO4VSOBhXvMqeU+pF0nGQe181pvEYDMT4uWrEdZt1mj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CemjlTSB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CB8ioI84KCoEjEjYVEFwuGwX0SHjDO+6qopHqPv0TiX5BvZ740YHsZXFLoJooZfyMDTfJ+vMgrSgVnbILDEMFkPZl4oy9WbmV/BNtR0MZdrwdgoyzyMh91Em46GBZKINjYFI/J1SrojgBPYyh6vWPiKa7Ws2gH7HPz88hSsoVlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSjFUizS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CemjlTSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCE71F000E9;
-	Thu, 16 Jul 2026 13:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSjFUizS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D462A1F00A3A;
+	Thu, 16 Jul 2026 13:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209783;
-	bh=Ang6aq7ZiUGoA1h7EHPjdsU/wwoVZexc3IZp9FvT40o=;
+	s=korg; t=1784209786;
+	bh=KO4DDAZ25TWTMmykVSR+MC1pBimqI9LQ7Zwb7oJntkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CemjlTSBLw31BYTv/IXmgG48EwQ2fyJgnbufZis2y3PTzEIoL5BI+rp4uQVh5cD9N
-	 TuEIsA001ALmNGQ6sLRBzHvKmEAUl7IECS7J0AIGK69wie4+GOFiJTXgdnf0JVcgmL
-	 HJhDujls9IU1dBw/0kiLyNBjgGufORSTjx08D9z0=
+	b=VSjFUizSXhHWmKPUYWiAdoV4iAnLWR+JAt1xgqC+j++jDclOB6hURSABld0v9Nobw
+	 cveuNkSd3QmtPheSDJBWiz5m1+MniXwKbdGsdlr29FL9vn/vC2yxrjkZB43JMhWDpO
+	 C1WdRVEKdh7PJGBrDBmRuzZufxbi7zNrlQmvNQMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.1 318/518] USB: serial: keyspan_pda: fix information leak
-Date: Thu, 16 Jul 2026 15:29:46 +0200
-Message-ID: <20260716133054.779656904@linuxfoundation.org>
+Subject: [PATCH 7.1 319/518] USB: serial: option: add Telit Cinterion FE990D50 compositions
+Date: Thu, 16 Jul 2026 15:29:47 +0200
+Message-ID: <20260716133054.800618656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -49,38 +50,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 6bfc8d01ac4068eced509f8fc74d0cd205e4dcec upstream.
+commit b33ab1dd80f5c1742f49eb6ec7b337c5ffcf3d32 upstream.
 
-The write() callback is supposed to return the number of characters
-accepted or a negative errno. Since the addition of write fifo support
-the keyspan_pda implementation will however return the number characters
-submitted to the device if the write urb is not already in use. If this
-number is larger than the number of characters passed to write(), the
-line discipline continues writing data from beyond the tty write buffer.
+Add support for Telit Cinterion FE990D50 compositions:
 
-Fix the information leak by making sure that keyspan_pda_write_start()
-returns zero on success as intended.
+0x990: RNDIS + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+       tty (diag) + ADPL + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=06 Cnt=03 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=0990 Rev=06.06
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE990
+S:  SerialNumber=90b6a3ed
+C:  #Ifs=10 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fixes: 034e38e8f687 ("USB: serial: keyspan_pda: add write-fifo support")
-Cc: stable@vger.kernel.org	# 5.11
+0x991: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+       tty (diag) + ADPL + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=06 Cnt=03 Dev#=  9 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=0991 Rev=06.06
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE990
+S:  SerialNumber=90b6a3ed
+C:  #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=(none)
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x992: MBIM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+       tty (diag) + ADPL + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=06 Cnt=03 Dev#= 12 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=0992 Rev=06.06
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE990
+S:  SerialNumber=90b6a3ed
+C:  #Ifs=10 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x993: ECM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+       tty (diag) + ADPL + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=06 Cnt=03 Dev#= 15 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=0993 Rev=06.06
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE990
+S:  SerialNumber=90b6a3ed
+C:  #Ifs=10 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/keyspan_pda.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/usb/serial/keyspan_pda.c
-+++ b/drivers/usb/serial/keyspan_pda.c
-@@ -518,7 +518,7 @@ static int keyspan_pda_write_start(struc
- 	if (count == room)
- 		schedule_work(&priv->unthrottle_work);
- 
--	return count;
-+	return 0;
- }
- 
- static void keyspan_pda_write_bulk_callback(struct urb *urb)
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1326,6 +1326,22 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_CC864_SINGLE) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_DE910_DUAL) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_UE910_V2) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0990, 0xff, 0xff, 0x30),	/* Telit FE990D50 (RNDIS) */
++	  .driver_info = NCTRL(6) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0990, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0990, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0991, 0xff, 0xff, 0x30),	/* Telit FE990D50 (rmnet) */
++	  .driver_info = NCTRL(5) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0991, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0991, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0992, 0xff, 0xff, 0x30),	/* Telit FE990D50 (MBIM) */
++	  .driver_info = NCTRL(6) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0992, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0992, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0993, 0xff, 0xff, 0x30),	/* Telit FE990D50 (ECM) */
++	  .driver_info = NCTRL(6) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0993, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x0993, 0xff, 0xff, 0x60) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1031, 0xff),	/* Telit LE910C1-EUX */
+ 	 .driver_info = NCTRL(0) | RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1033, 0xff),	/* Telit LE910C1-EUX (ECM) */
 
 
