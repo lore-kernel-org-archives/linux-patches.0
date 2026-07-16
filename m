@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E478330D35;
-	Thu, 16 Jul 2026 13:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C978732A3FF;
+	Thu, 16 Jul 2026 13:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210081; cv=none; b=bHn6Vx0brkxOdap86aHXxAU/CUSqjqMOp4My5ppr99QjOOWJpLvKEmawNjA3Fqh0IVKHsZiNJQ6JeUZeWAo9tPGFDF4Ir6dmQtRTsGgysHriUPI0AsNWSkm+k+aAEQ3oSD/oLXoXtUqoo+P5UsZ89diy252MgVkSM1lg0tFunuo=
+	t=1784210084; cv=none; b=VNFOj47rjOEHs10Za6R86+ODgDe5bKJZKbq8gBiPtH3lsavpmswqzbZ4t9p8A1bMtzZCGiP2iBzURWvjHbOyPT01wW5SlhGt648KgIF4859tBIv4bjfaCbRYz/yj38kfnrBWYN0rMTzXcqJj45wEhoWrvRzZz7dQPdl+Bxl8KUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210081; c=relaxed/simple;
-	bh=KwzSYk63ApxnM3ML3IlS8kH98OCLZ2wBOZ4iYMrjzdU=;
+	s=arc-20240116; t=1784210084; c=relaxed/simple;
+	bh=Of4+p8JIa+qfarAgHqW+lvFzBP68iaFoPzQKJXxJFSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C55m/RxifrpJh6hI6GNO5cHtoapTGwvFzeBpAB3Bg5rZIElB3h03KBIHooALyc+IiWoFQ8r35lN9Uzx15Qrs+HrM9R7vkG6pgjVfYcaz4icywEXimo18Gcgnk10wiaZ2gVm6Sw62gnflnsrH2m5pgtafi6Y18AjifVWOAfoqkZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRVrp1CX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XOGTuuyMvp9q4VX/BF18l/ZB2rib4gCOMHjlgTKRW7EfjXDKup/XUO2jjzD1qAH7iQSWyamxMBZ9XenaxUfMIdyqwpqXw4eoSZLi2MccZCaK7Y9WFZ4mGskw3hU3BImym8s3Al4/1IlgXJl+AUkKNpheW7He0AATZ97BedWFI6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eudfFOVU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRVrp1CX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B3E1F00A3A;
-	Thu, 16 Jul 2026 13:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eudfFOVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3E71F000E9;
+	Thu, 16 Jul 2026 13:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210080;
-	bh=M5rVNk1wzs3SnxmGWKWnvrwKzBQ574RGKkSUhaP1Qxk=;
+	s=korg; t=1784210082;
+	bh=RNnYotNKg0vp9IswbZ5jvWm+u8nut6nG3La5CnqeMaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fRVrp1CXtCy0G9F14D5CuuFstFekY8EruRQanPevXXHq7sV6Fny3vZZEHm99En0Tq
-	 wyjRkFZF4LXOPc1H3HW0PaodX2Snc8TQHY03UtvE2dpqJWkIjreirLT9Oj2dM/t/bU
-	 vkbdg6F4ZJAs5loJhjaXpdwLuIIi0Mv0NuH7XNcs=
+	b=eudfFOVUylHRqNws+fUdclFIoejqUCFMBWSLbFbzx1wlAHpeNyJtPvjzgVI93asgn
+	 cjzt90KFkG8O9rlTEErCdheAL86iGaPBJY/9NVVXbX4GXDIRvbRpkFsfRnL4y8IdNR
+	 j/IkqFvNXB4vxQzhGqjc09Y20G78IXEiC+XKnl+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 7.1 429/518] nouveau/vmm: fix another SPT/LPT race
-Date: Thu, 16 Jul 2026 15:31:37 +0200
-Message-ID: <20260716133057.227982039@linuxfoundation.org>
+	oxsignal <awo@kakao.com>,
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Amery Hung <ameryhung@gmail.com>
+Subject: [PATCH 7.1 430/518] bpf: Reject BPF_MAP_TYPE_INODE_STORAGE creation if BPF LSM is uninitialized
+Date: Thu, 16 Jul 2026 15:31:38 +0200
+Message-ID: <20260716133057.249840957@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,84 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-commit 6763a0aea6d658d69b9215ab9151d7bd4c1c314b upstream.
+commit a6f0643e4f63cfaa0d5d4a69de4f132eac4b8fe4 upstream.
 
-We've had an unknown Turing issue for a while with page faults since
-large pages and compression.
+When CONFIG_BPF_LSM=y is set, BPF inode storage maps
+(BPF_MAP_TYPE_INODE_STORAGE) are compiled into the kernel. However,
+if the BPF LSM is not explicitly enabled at boot time (e.g. omitted
+from the "lsm=" boot parameter), lsm_prepare() is never executed for
+the BPF LSM.
 
-I've got a patch series that syncs all our L2 handling with ogkm and it
-made this fault happen more.
+Consequently, the BPF inode security blob offset
+(bpf_lsm_blob_sizes.lbs_inode) is never initialized and remains at
+its default compiled size of 8 bytes instead of being updated to a
+valid offset past the reserved struct rcu_head (typically 16 bytes
+or more).
 
-After writing a bunch of debugging patches, I spotted an invalid LPT
-entry where there should have been a valid one.
+When a privileged user creates and updates a BPF_MAP_TYPE_INODE_STORAGE
+map, bpf_inode() evaluates inode->i_security + 8. This erroneously
+aliases the struct rcu_head.func callback pointer at the beginning
+of the inode->i_security blob. During subsequent map element cleanup
+or inode destruction, writing NULL to owner_storage clears the queued
+RCU callback pointer. When rcu_do_batch() later executes the queued
+callback, it attempts an instruction fetch at address 0x0, triggering
+an immediate kernel panic.
 
-A 64K MAP succeeds on a range, but a subsequent SPT put drops SPT refs
-across multiple ranges,
+Fix this by introducing a global bpf_lsm_initialized boolean flag
+marked with __ro_after_init. Set this flag to true inside bpf_lsm_init()
+when the LSM framework successfully registers the BPF LSM. Gate map
+allocation in inode_storage_map_alloc() on this flag, returning
+-EOPNOTSUPP if the BPF LSM is in turn uninitialized.
 
-We shouldn't assume all ranges where SPTEs go away will have the same
-sparse/invalid/valid state, just iterate over each instead and do the
-right thing.
+This fail-fast approach prevents userspace from allocating inode
+storage maps when the supporting BPF LSM infrastructure is absent,
+avoiding zombie map states.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Fixes: d19512f5abb1 ("nouveau/vmm: start tracking if the LPT PTE is valid. (v6)")
-Link: https://patch.msgid.link/20260615044737.3419585-1-airlied@gmail.com
-[ Properly format commit message. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-(cherry picked from commit d008141ed4ce924167a03d46fbce9ad1fe4efa29)
-Signed-off-by: Dave Airlie <airlied@redhat.com>
+Fixes: 8ea636848aca ("bpf: Implement bpf_local_storage for inodes")
+Reported-by: oxsignal <awo@kakao.com>
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://lore.kernel.org/bpf/20260628201103.3624525-1-mattbobrowski@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmm.c |   31 +++++++++++---------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ include/linux/bpf_lsm.h        |    4 ++++
+ kernel/bpf/bpf_inode_storage.c |    9 +++++++++
+ security/bpf/hooks.c           |    3 +++
+ 3 files changed, 16 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmm.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/mmu/vmm.c
-@@ -230,29 +230,26 @@ nvkm_vmm_unref_sptes(struct nvkm_vmm_ite
- 		 * covered by a number of LPTEs, the LPTEs once again take
- 		 * control over their address range.
- 		 *
--		 * Determine how many LPTEs need to transition state.
-+		 * Transition each LPTE individually as each may have a
-+		 * different target state (sparse, invalid, or valid).
- 		 */
--		pgt->pte[ptei].s.spte_valid = false;
--		for (ptes = 1, ptei++; ptei < lpti; ptes++, ptei++) {
-+		for (ptei++; ptei < lpti; ptei++) {
- 			if (pgt->pte[ptei].s.sptes)
- 				break;
--			pgt->pte[ptei].s.spte_valid = false;
- 		}
+--- a/include/linux/bpf_lsm.h
++++ b/include/linux/bpf_lsm.h
+@@ -14,6 +14,8 @@
  
--		if (pgt->pte[pteb].s.sparse) {
--			TRA(it, "LPTE %05x: U -> S %d PTEs", pteb, ptes);
--			pair->func->sparse(vmm, pgt->pt[0], pteb, ptes);
--		} else if (!pgt->pte[pteb].s.lpte_valid) {
--			if (pair->func->invalid) {
--				/* If the MMU supports it, restore the LPTE to the
--				 * INVALID state to tell the MMU there is no point
--				 * trying to fetch the corresponding SPTEs.
--				 */
--				TRA(it, "LPTE %05x: U -> I %d PTEs", pteb, ptes);
--				pair->func->invalid(vmm, pgt->pt[0], pteb, ptes);
-+		while (pteb < ptei) {
-+			pgt->pte[pteb].s.spte_valid = false;
-+			if (pgt->pte[pteb].s.sparse) {
-+				TRA(it, "LPTE %05x: U -> S", pteb);
-+				pair->func->sparse(vmm, pgt->pt[0], pteb, 1);
-+			} else if (!pgt->pte[pteb].s.lpte_valid) {
-+				if (pair->func->invalid) {
-+					TRA(it, "LPTE %05x: U -> I", pteb);
-+					pair->func->invalid(vmm, pgt->pt[0], pteb, 1);
-+				}
- 			}
--		} else {
--			TRA(it, "LPTE %05x: V %d PTEs", pteb, ptes);
-+			pteb++;
- 		}
- 	}
+ #ifdef CONFIG_BPF_LSM
+ 
++extern bool bpf_lsm_initialized __ro_after_init;
++
+ #define LSM_HOOK(RET, DEFAULT, NAME, ...) \
+ 	RET bpf_lsm_##NAME(__VA_ARGS__);
+ #include <linux/lsm_hook_defs.h>
+@@ -55,6 +57,8 @@ bool bpf_lsm_has_d_inode_locked(const st
+ 
+ #else /* !CONFIG_BPF_LSM */
+ 
++#define bpf_lsm_initialized false
++
+ static inline bool bpf_lsm_is_sleepable_hook(u32 btf_id)
+ {
+ 	return false;
+--- a/kernel/bpf/bpf_inode_storage.c
++++ b/kernel/bpf/bpf_inode_storage.c
+@@ -178,6 +178,15 @@ static int notsupp_get_next_key(struct b
+ 
+ static struct bpf_map *inode_storage_map_alloc(union bpf_attr *attr)
+ {
++	/*
++	 * Do not allow allocation of BPF_MAP_TYPE_INODE_STORAGE if the BPF LSM
++	 * was not initialized by the LSM framework at boot. Without proper
++	 * initialization, the BPF inode security blob offset remains unprepared,
++	 * causing bpf_inode() to calculate an invalid memory offset and corrupt
++	 * inode->i_security.
++	 */
++	if (!bpf_lsm_initialized)
++		return ERR_PTR(-EOPNOTSUPP);
+ 	return bpf_local_storage_map_alloc(attr, &inode_cache);
+ }
+ 
+--- a/security/bpf/hooks.c
++++ b/security/bpf/hooks.c
+@@ -7,6 +7,8 @@
+ #include <linux/bpf_lsm.h>
+ #include <uapi/linux/lsm.h>
+ 
++bool bpf_lsm_initialized __ro_after_init;
++
+ static struct security_hook_list bpf_lsm_hooks[] __ro_after_init = {
+ 	#define LSM_HOOK(RET, DEFAULT, NAME, ...) \
+ 	LSM_HOOK_INIT(NAME, bpf_lsm_##NAME),
+@@ -24,6 +26,7 @@ static int __init bpf_lsm_init(void)
+ {
+ 	security_add_hooks(bpf_lsm_hooks, ARRAY_SIZE(bpf_lsm_hooks),
+ 			   &bpf_lsmid);
++	bpf_lsm_initialized = true;
+ 	pr_info("LSM support for eBPF active\n");
+ 	return 0;
  }
 
 
