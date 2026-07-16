@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7860385D76;
-	Thu, 16 Jul 2026 13:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F55400972;
+	Thu, 16 Jul 2026 13:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209402; cv=none; b=vBKHlOkOOW5OGmOlTojtSjWS+HZyuGsFPLhYeIWqY9Q7abLrh5B8JsSzE9ouCZdEkCrffY4Zl62g4w9HdfjQx8kYENcn1SRb2At8wOxR1KI5y5apKox6xLyejk8JEZ+e591lE6aGZWXBWk9M11OJFAWH1NvMKXH/qXT+ae8SlFI=
+	t=1784209404; cv=none; b=mMUqBdlWiXYeZQ8vAcAasOWcYJEHdvLLilytTA+Qb0JPrlrkVr43iScw65AS875ccYSGje5p1FUXLykzAXl13Cc3+cdhRBMOS5FZXbzYzGNUekac/rQgC1InkHqDBKdZn9JxE3+AD+fJY9rrHbM7zlEPO2jTmFVpm5mrhw0ZkfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209402; c=relaxed/simple;
-	bh=BHFytvLIEpYWtMKpxYeTt69EVTxs03hSzr3PI2T/rUg=;
+	s=arc-20240116; t=1784209404; c=relaxed/simple;
+	bh=raQAIAXs22vp7D6u5GBsChOA+ZtovtXHZoE81gRl+C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmkG6ewMpWsM4YEuDXuuCsotXSccv77ph+o1nFLhbu9EYXfo5DvBXoC9Ivbd8ps4OLDVLyaz8t8Utqi36MtaJ2cCQRVJoS73jP32dhBfF1BPwbt2maYaYiG/QT+v8db38S21Y2RuhVBjLIDdrFG8xLPjIXhYGi8MXUjAnfXYFMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGyyQ1ht; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gyr53e+SgEihJJl92z0nLahBgRknJHuo3eah3r4xse6uMYnxt6NpvHTgRvloq1p/lN7rFyOiny7RI+6LIIXDFOKvSTQ9xxegjetk/aw4gQDo5k8HtinQLhN+qQpbYVvqVQRADRb+DQTeduR9Psx+FyWW4z/c7eOXnooRTFkwZNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPbDRmRE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGyyQ1ht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116851F00A3A;
-	Thu, 16 Jul 2026 13:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPbDRmRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3911F000E9;
+	Thu, 16 Jul 2026 13:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209400;
-	bh=NuxaGIz14Z+woqsXH/sRIWsUC+4a0hZoDQrz9K0tGpM=;
+	s=korg; t=1784209403;
+	bh=Zw0Pi3bT1DNW3ZF+YhL2KjJoIk3rCCsZcU6z7WAuAuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dGyyQ1htEbVp9aTXA9yDS/5ksxa1/I8eEFj+B0VZSC6O5IDgOxGI3NbJfGhvl3mAw
-	 aX7w7fOMYVTAT7N4HICWnzu9d7O/Tmwo5hI7VJwsXG8msHzqPeVVSWsFBO5Csw89O1
-	 k0KpvqFCdzCasFbCApdRtehu7zbORj81zJPwftus=
+	b=WPbDRmRE4QqpoTCTZ3ZBMvIY3PRKGNETq0D3l0qM4TWk9azx03++7aEhVjwgl29nm
+	 2JPSRCGkx00/2ipWp0folMv/W0e07HGbST4BkNtuB0SdQT/I12LX63ILF6HQ8peN0w
+	 uhJwqn9vMe/Exdj3f/tyG+YIaCbyYDmWTf8zqMCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 7.1 118/518] binder: fix UAF in binder_free_transaction()
-Date: Thu, 16 Jul 2026 15:26:26 +0200
-Message-ID: <20260716133050.436263274@linuxfoundation.org>
+	Alexandru Hossu <hossu.alexandru@gmail.com>
+Subject: [PATCH 7.1 165/518] staging: rtl8723bs: fix OOB reads in is_ap_in_tkip() IE loop
+Date: Thu, 16 Jul 2026 15:27:13 +0200
+Message-ID: <20260716133051.451505932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,95 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit f223d27a546c1e1f48d38fd67760e78f068fe8c4 upstream.
+commit 3bf39f711ff27c64be8680a8938bcc5001982e81 upstream.
 
-In binder_free_transaction(), the t->to_proc is read under the t->lock.
-However, once the t->lock is dropped, the to_proc can die in parallel.
-This leads to a use-after-free error when we attempt to acquire its
-inner lock right afterwards:
+The loop in is_ap_in_tkip() iterates over IEs without verifying that
+enough bytes remain before dereferencing the IE header or its payload:
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x1a0
-  Write of size 4 at addr ffff00001125da70 by task B/672
+- pIE->element_id and pIE->length are read without checking that
+  i + sizeof(*pIE) <= ie_length, so a truncated IE at the end of the
+  buffer causes an OOB read.
 
-  CPU: 20 UID: 0 PID: 672 Comm: B Not tainted 7.1.0-rc6-00284-g8e65320d91cd #4 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   _raw_spin_lock+0xe4/0x1a0
-   binder_free_transaction+0x8c/0x320
-   binder_send_failed_reply+0x21c/0x2f8
-   binder_thread_release+0x488/0x7e0
-   binder_ioctl+0x12c0/0x29a0
-  [...]
+- For WLAN_EID_VENDOR_SPECIFIC the code compares pIE->data + 12,
+  which requires pIE->length >= 16.  For WLAN_EID_RSN it compares
+  pIE->data + 8, requiring pIE->length >= 12.  Neither requirement
+  is checked.
 
-  Allocated by task 675:
-   __kmalloc_cache_noprof+0x174/0x444
-   binder_open+0x118/0xb70
-   do_dentry_open+0x374/0x1040
-   vfs_open+0x58/0x3bc
-  [...]
+Add the missing IE header and payload bounds checks and guard each
+data access with an explicit pIE->length minimum, matching the
+pattern established in update_beacon_info().
 
-  Freed by task 212:
-   __kasan_slab_free+0x58/0x80
-   kfree+0x1a0/0x4a4
-   binder_proc_dec_tmpref+0x32c/0x5e0
-   binder_deferred_func+0xc48/0x104c
-   process_one_work+0x53c/0xbc0
-  [...]
-  ==================================================================
-
-To prevent this, pin the target thread (t->to_thread) to guarantee the
-target process remains alive. Undelivered transactions without a target
-thread are already safe, as the target process can only be the current
-context in those paths.
-
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://lore.kernel.org/all/aikJKVuny_eOivwN@google.com/
-Fixes: a370003cc301 ("binder: fix possible UAF when freeing buffer")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260619185233.2194678-2-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Link: https://patch.msgid.link/20260522004531.1038924-7-hossu.alexandru@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_wlan_util.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -1658,10 +1658,19 @@ static void binder_txn_latency_free(stru
+--- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
++++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
+@@ -1334,15 +1334,23 @@ unsigned int is_ap_in_tkip(struct adapte
+ 		for (i = sizeof(struct ndis_802_11_fix_ie); i < pmlmeinfo->network.ie_length;) {
+ 			pIE = (struct ndis_80211_var_ie *)(pmlmeinfo->network.ies + i);
  
- static void binder_free_transaction(struct binder_transaction *t)
- {
-+	struct binder_thread *target_thread;
- 	struct binder_proc *target_proc;
- 
- 	spin_lock(&t->lock);
- 	target_proc = t->to_proc;
-+	target_thread = t->to_thread;
-+	/*
-+	 * Pin target_thread to keep target_proc alive. Undelivered
-+	 * transactions with !target_thread are safe, as target_proc
-+	 * can only be the current context there.
-+	 */
-+	if (target_thread)
-+		atomic_inc(&target_thread->tmp_ref);
- 	spin_unlock(&t->lock);
- 
- 	if (target_proc) {
-@@ -1676,6 +1685,10 @@ static void binder_free_transaction(stru
- 			t->buffer->transaction = NULL;
- 		binder_inner_proc_unlock(target_proc);
- 	}
++			if (i + sizeof(*pIE) > pmlmeinfo->network.ie_length)
++				break;
++			if (i + sizeof(*pIE) + pIE->length > pmlmeinfo->network.ie_length)
++				break;
 +
-+	if (target_thread)
-+		binder_thread_dec_tmpref(target_thread);
-+
- 	if (trace_binder_txn_latency_free_enabled())
- 		binder_txn_latency_free(t);
- 	/*
+ 			switch (pIE->element_id) {
+ 			case WLAN_EID_VENDOR_SPECIFIC:
+-				if ((!memcmp(pIE->data, RTW_WPA_OUI, 4)) && (!memcmp((pIE->data + 12), WPA_TKIP_CIPHER, 4)))
++				if (pIE->length >= 16 &&
++				    !memcmp(pIE->data, RTW_WPA_OUI, 4) &&
++				    !memcmp((pIE->data + 12), WPA_TKIP_CIPHER, 4))
+ 					return true;
+ 
+ 				break;
+ 
+ 			case WLAN_EID_RSN:
+-				if (!memcmp((pIE->data + 8), RSN_TKIP_CIPHER, 4))
++				if (pIE->length >= 12 &&
++				    !memcmp((pIE->data + 8), RSN_TKIP_CIPHER, 4))
+ 					return true;
+ 				break;
+ 
+@@ -1350,7 +1358,7 @@ unsigned int is_ap_in_tkip(struct adapte
+ 				break;
+ 			}
+ 
+-			i += (pIE->length + 2);
++			i += sizeof(*pIE) + pIE->length;
+ 		}
+ 
+ 		return false;
 
 
