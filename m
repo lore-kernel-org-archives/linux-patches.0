@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F5E5A79B;
-	Thu, 16 Jul 2026 14:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B793148C2;
+	Thu, 16 Jul 2026 14:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210711; cv=none; b=Nb45KPJplqwX5ZMomC5PddzYXfyt3iYg3H8QN8GtaaMYYiXddYwYo/dphX/fseNnQKBB5WU32BCHA2PQOA0S9EAh/AxIA/ugIF2G61gVmJOvAH7SHKsw+GsYUH7oXKKHIPjTMfdtbZmxrGKcIZQ3GwBKkA/tyW/TTfCJrFOnla0=
+	t=1784210714; cv=none; b=n5WsAQbM9TlJEI0v/alwYqcy2HpXv/zRdRjT9feQnCw68RjSStlT6EL1EabbrsHcczFctCEeW2+JT7SQIHh9aDM2CO+mC8fWXqcWEXcJkfhot1a/gwUlFh+x+W7WAqNOksBqm53GiLMfNQKadDmUrWWny0fOhe24Cv700uVw91Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210711; c=relaxed/simple;
-	bh=fMqJeUW2jy2jMdetVWwRQXneqykNGhe+T+z+o2pw7iw=;
+	s=arc-20240116; t=1784210714; c=relaxed/simple;
+	bh=IACUrF0xObfDxpIz+vlxvFfwrvYHuH9yQkVGPDuSdg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acfpgan8TVGb/H3cn6qnTLd22eqx8yb4V/RXuJHYrRNLSh9amj/cEwBZwlpoeqmllBev0ml20O9j43Fy6Y1RrcwCXbc/7ERl8KiP3nHd0fuyZ1PnOwekkBrwHKTiQVVf2vnh7sU+p5zCfbmo6M1a8aKkeyvpI22cebG6wuBF8n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJTuDrza; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FYL8z7ozVKGt/N1oh7Qi/VIDo6Mmlmzj11+6xahj+qvYi6gSI4wO1mvMPWP3Z2CenD3SyxtnuWgNWLmK4wJIDzj+q6mM0d1SMzRspubyO5XDnef4KOHFiaUZd/9rsv86aTMevAkanUpBIPiZjxT3Xe+/Mpu2y7dA7pY3iT4hTu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijskvI47; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJTuDrza"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1F31F000E9;
-	Thu, 16 Jul 2026 14:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijskvI47"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E7C1F000E9;
+	Thu, 16 Jul 2026 14:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210710;
-	bh=3uuzPy2QyWLtmpbo5of2JmTd6Ynjege6RVloTiJjCKg=;
+	s=korg; t=1784210713;
+	bh=fhwBf1reJzwJ3orFozmolnx6ZdGxXplDWYLxalBY2Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fJTuDrzaBBHAlNYCRbEEWklPqD74K81Wcn8YjTDG5plqQQG6kVhidfLMg6bvvNc+9
-	 BqcC/9gMjUne0oGz0Es00TFiPpWrxlS4WjsJNk2wOrlB+BJCJKUu5NiMvHjs/K4vf/
-	 bTR6wsxoFMIVIYy3o9VgkMkwXr6F5eRcq25iksN4=
+	b=ijskvI47ier/6IIo0KMxiTz6SfQBKNmDDRVoiWL6z7E4E74ZMye33290pfCzGHRh8
+	 TQcdTlc5ScI4MSuYmiRklago+QyvjnxSNtOu3cPESWrE76zine0tTKysAeBKcZFwD/
+	 T0x681gurUdTvw7i9sZf4CagR5q2jgQHrP0WMZ0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.18 152/480] usb: misc: usbio: fix disconnect UAF in client teardown
-Date: Thu, 16 Jul 2026 15:28:19 +0200
-Message-ID: <20260716133047.994847633@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Alexander Aring <aahringo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 153/480] 6lowpan: fix NHC entry use-after-free on error path
+Date: Thu, 16 Jul 2026 15:28:20 +0200
+Message-ID: <20260716133048.016310086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,149 +56,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit 0bfeec21984fedd32987f4e4c0cde34b445af404 upstream.
+commit 1720db928e5a58ca7d75ac1d514c3b73fd7061a7 upstream.
 
-usbio_disconnect() walks usbio->cli_list in reverse and uninitializes each
-auxiliary device. auxiliary_device_uninit() drops the device reference, and
-for an unbound child that can run usbio_auxdev_release() and free the
-containing struct usbio_client.
+lowpan_nhc_do_uncompression() looks up an NHC descriptor while holding
+lowpan_nhc_lock.  If the descriptor has no uncompress callback, the error
+path drops the lock before printing nhc->name.
 
-list_for_each_entry_reverse() advances after the loop body by reading
-client->link.prev. If the current client is freed by
-auxiliary_device_uninit(), the iterator dereferences freed memory.
+lowpan_nhc_del() removes descriptors under the same lock and then relies
+on synchronize_net() before the owning module can be unloaded.  That only
+waits for net RX RCU readers.  lowpan_header_decompress() is also exported
+and can be reached from callers that are not necessarily covered by the net
+core RX critical section, for example the Bluetooth 6LoWPAN L2CAP receive
+path.
 
-Use list_for_each_entry_safe_reverse() so the previous client is
-cached before the body can drop the final reference. This preserves
-reverse teardown order while keeping the next iterator cursor independent
-of the current client's lifetime.
+This leaves a race where one task drops lowpan_nhc_lock in the error path,
+another task unregisters and frees the matching descriptor after
+synchronize_net() returns, and the first task then dereferences nhc->name
+for the warning.
 
-Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in usbio_disconnect+0x12e/0x150
+With the post-unlock window widened, KASAN reports:
 
-Call Trace:
- <TASK>
- dump_stack_lvl+0x66/0xa0
- print_report+0xce/0x630
- ? usbio_disconnect+0x12e/0x150
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __virt_addr_valid+0x188/0x320
- ? usbio_disconnect+0x12e/0x150
- kasan_report+0xe0/0x110
- ? usbio_disconnect+0x12e/0x150
- usbio_disconnect+0x12e/0x150
- usb_unbind_interface+0xf3/0x400
- really_probe+0x316/0x660
- __driver_probe_device+0x106/0x240
- driver_probe_device+0x4a/0x110
- __device_attach_driver+0xf1/0x1a0
- ? __pfx___device_attach_driver+0x10/0x10
- bus_for_each_drv+0xf9/0x160
- ? __pfx_bus_for_each_drv+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? trace_hardirqs_on+0x18/0x130
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? _raw_spin_unlock_irqrestore+0x44/0x60
- __device_attach+0x133/0x2a0
- ? __pfx___device_attach+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? do_raw_spin_unlock+0x9a/0x100
- ? srso_alias_return_thunk+0x5/0xfbef5
- device_initial_probe+0x55/0x70
- bus_probe_device+0x4a/0xd0
- device_add+0x9b9/0xc10
- ? __pfx_device_add+0x10/0x10
- ? _raw_spin_unlock_irqrestore+0x44/0x60
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? lockdep_hardirqs_on_prepare+0xea/0x1a0
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? usb_enable_lpm+0x3c/0x260
- usb_set_configuration+0xb64/0xf20
- usb_generic_driver_probe+0x5f/0x90
- usb_probe_device+0x71/0x1b0
- really_probe+0x46b/0x660
- __driver_probe_device+0x106/0x240
- driver_probe_device+0x4a/0x110
- __device_attach_driver+0xf1/0x1a0
- ? __pfx___device_attach_driver+0x10/0x10
- bus_for_each_drv+0xf9/0x160
- ? __pfx_bus_for_each_drv+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? trace_hardirqs_on+0x18/0x130
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? _raw_spin_unlock_irqrestore+0x44/0x60
- __device_attach+0x133/0x2a0
- ? __pfx___device_attach+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? do_raw_spin_unlock+0x9a/0x100
- ? srso_alias_return_thunk+0x5/0xfbef5
- device_initial_probe+0x55/0x70
- bus_probe_device+0x4a/0xd0
- device_add+0x9b9/0xc10
- ? __pfx_device_add+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? add_device_randomness+0xb7/0xf0
- usb_new_device+0x492/0x870
- hub_event+0x1b10/0x29c0
- ? __pfx_hub_event+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? lock_acquire+0x187/0x300
- ? process_one_work+0x475/0xb90
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? lock_release+0xc8/0x290
- ? srso_alias_return_thunk+0x5/0xfbef5
- process_one_work+0x4d7/0xb90
- ? __pfx_process_one_work+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __list_add_valid_or_report+0x37/0xf0
- ? __pfx_hub_event+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- worker_thread+0x2d8/0x570
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x1ad/0x1f0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x3c9/0x540
- ? __pfx_ret_from_fork+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __switch_to+0x2e9/0x730
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+  BUG: KASAN: slab-use-after-free in lowpan_nhc_do_uncompression+0x1f4/0x220
+  Read of size 8
+  lowpan_nhc_do_uncompression
+  lowpan_header_decompress
 
-Fixes: 121a0f839dbb ("usb: misc: Add Intel USBIO bridge driver")
-Cc: stable <stable@kernel.org>
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/20260618124029.3704089-1-zzzccc427@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by printing the warning before dropping lowpan_nhc_lock, so the
+descriptor name is read while unregister is still excluded.  The malformed
+packet is still rejected with -ENOTSUPP.
+
+Fixes: 92aa7c65d295 ("6lowpan: add generic nhc layer interface")
+Cc: stable@vger.kernel.org
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Link: https://patch.msgid.link/20260609080054.4541-1-zhaoyz24@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/usbio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/6lowpan/nhc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/misc/usbio.c
-+++ b/drivers/usb/misc/usbio.c
-@@ -518,7 +518,7 @@ static int usbio_resume(struct usb_inter
- static void usbio_disconnect(struct usb_interface *intf)
- {
- 	struct usbio_device *usbio = usb_get_intfdata(intf);
--	struct usbio_client *client;
-+	struct usbio_client *client, *next;
- 
- 	/* Wakeup any clients waiting for a reply */
- 	usbio->rxdat_len = 0;
-@@ -535,7 +535,7 @@ static void usbio_disconnect(struct usb_
- 	usb_kill_urb(usbio->urb);
- 	usb_free_urb(usbio->urb);
- 
--	list_for_each_entry_reverse(client, &usbio->cli_list, link) {
-+	list_for_each_entry_safe_reverse(client, next, &usbio->cli_list, link) {
- 		auxiliary_device_delete(&client->auxdev);
- 		auxiliary_device_uninit(&client->auxdev);
- 	}
+--- a/net/6lowpan/nhc.c
++++ b/net/6lowpan/nhc.c
+@@ -117,9 +117,9 @@ int lowpan_nhc_do_uncompression(struct s
+ 				return ret;
+ 			}
+ 		} else {
+-			spin_unlock_bh(&lowpan_nhc_lock);
+ 			netdev_warn(dev, "received nhc id for %s which is not implemented.\n",
+ 				    nhc->name);
++			spin_unlock_bh(&lowpan_nhc_lock);
+ 			return -ENOTSUPP;
+ 		}
+ 	} else {
 
 
