@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD253FBB46;
-	Thu, 16 Jul 2026 13:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E3E424D44;
+	Thu, 16 Jul 2026 13:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209391; cv=none; b=XNrU9m7459ZqjhMFBm9fZ58JllowSat9D0nQdz2Kj4uOiIbowD9BXQ7D0swAERfQDC/iQ2F4estmMPg64gSVAuMrgP1ahxWegPlIvxQHel2JbDaUMNLx7mTOoNwlxT4Kh+UJGJ8ve4stTdhLtH92AkzQKWGfWlFLCSj7Npv8XYY=
+	t=1784209393; cv=none; b=mz99k7Zna3fDCM17mOD1R0PJKdTlBFJEAm2M0Md5mD3X9yUFbPUXeqFv4jrlwW8ibUzJ3wBvht787g+8JioUW9iHDc18b3hxYA9Bt8J/p/OFPo0m/kT3DXdqwbx0xuj5/MXGb/6oCGkztXetaNeUOImEPjFtVhpuAH7FAH+38BQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209391; c=relaxed/simple;
-	bh=ToyAdaRinRzEBvio24F8rpVXA/eaOSsKCRMgmMzm1mQ=;
+	s=arc-20240116; t=1784209393; c=relaxed/simple;
+	bh=DW9FoZo5GXpXkMV3SrY/RQneaWY66d6dHh91XprmNs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qEzek80b7V2BLaj0I9viHViJTGHoBw/7R1D5gOxyxF+fdxZYJMcuDfqNYfL03ZlgeNMQN/h0DvkqrUQKYl8TggyAM4gdhbwWnEkDJZSDsJt9Dn7wLDcVeAm1YEhJ77tqZUSB6fc+Fp+NdRDvB8UiNBmn9wOnTj6YFpPx0HIJiiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jus+JUCt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=geEru3DK2lbxzS78A7pHwnXDrbrW7rrn8BAlXRwHnWq/w9c+sqy9rVMCzCDejKofjkj6EA5U6yFa56lW0hLkzALDAQqx3+Le+XucnidFJ5dJdmTlGcABb2SaJtqvNhduoLHfFiocKNLZDud4Yq/g7YWyKH4dV6CM+6Htf/ViaAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsSZEIPo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jus+JUCt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09C11F00A3A;
-	Thu, 16 Jul 2026 13:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsSZEIPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8208E1F00A3D;
+	Thu, 16 Jul 2026 13:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209387;
-	bh=5LUCIypnRljXOyuI0ez18eo4FHBQOWx56Sc9pk21Ig4=;
+	s=korg; t=1784209390;
+	bh=hA1wq9RDzmGVd0ww/AXiczDNuTkuKwGw2Lo/6j+Dj8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jus+JUCtmsuagpnSbq6dzBQDaFqZjN/PLj3lQOGugzH7mIjANLujMwqnOMGdgd3W7
-	 z6Sq+vVeA0Gn7RxITFF/VEyHzmxaj3q3qzs4vjtlWKy82Awne57oCOWTYvUq0w+KpA
-	 5YjKst5SLk1OrYflohNo3wO7UloLlQNYuldrsv8Q=
+	b=rsSZEIPoB2qvyKMbiLA8jmeSssjMZNXWFXPw9StxOm6of65ChnRXznAuSG9j75Kz5
+	 3JfjRPzv8C7L9l4eVr69cTqwmhjxkh3yFDpYOha81siUQ0AVYG5h9U8GTMRBLY/NJB
+	 x0sdTSW+9vYXG5/4GGF1kh/3e/MQ3+J+Ocwm1+bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 7.1 123/518] rust_binder: clear freeze listener on node removal
-Date: Thu, 16 Jul 2026 15:26:31 +0200
-Message-ID: <20260716133050.548324453@linuxfoundation.org>
+	Lianqin Hu <hulianqin@vivo.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 7.1 124/518] usb: xhci: Fix sleep in atomic context in xhci_free_streams()
+Date: Thu, 16 Jul 2026 15:26:32 +0200
+Message-ID: <20260716133050.570588970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -44,121 +45,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: 胡连勤 <hulianqin@vivo.com>
 
-commit bc4a9828897871ff3e5a1f8a1d346decbf4ee95e upstream.
+commit 42c37c4b75d38b51d84f31a8e29427f5e06a7c2a upstream.
 
-Generally userspace is supposed to explicitly clear freeze listeners
-before they drop the refcount on the node ref to zero, but there's
-nothing forcing that. Currently, in this scenario the freeze listener
-remains in the freeze_listeners rbtree and in the remote node's freeze
-listener list, even though the ref for which the listener is registered
-is gone. This could potentially lead to a memory leak due to a refcount
-cycle. Thus, remove the freeze listener in this scenario.
+When a USB device with active stream endpoints is disconnected,
+xhci_free_streams() is called from the hub_event workqueue to
+free the stream resources.  It calls xhci_free_stream_info()
+while holding xhci->lock with irqs disabled.
 
+xhci_free_stream_info() invokes xhci_free_stream_ctx(), which
+calls dma_free_coherent() for large stream context arrays.
+
+dma_free_coherent() can sleep (e.g. via vunmap), triggering
+a BUG when called from atomic context.
+
+Call trace:
+ dma_free_attrs+0x174/0x220
+ xhci_free_stream_info+0xd0/0x11c
+ xhci_free_streams+0x278/0x37c
+ usb_free_streams+0x98/0xc0
+ usb_unbind_interface+0x1b8/0x2f8
+ device_release_driver_internal+0x1d4/0x2cc
+ device_release_driver+0x18/0x28
+ bus_remove_device+0x160/0x1a4
+ device_del+0x1ec/0x350
+ usb_disable_device+0x98/0x214
+ usb_disconnect+0xf0/0x35c
+ hub_event+0xab4/0x19ec
+ process_one_work+0x278/0x63c
+
+Fix this by saving the stream_info pointers and clearing the
+ep references under the lock, then calling xhci_free_stream_info()
+outside the lock where sleeping is allowed.
+
+Fixes: 8df75f42f8e6 ("USB: xhci: Add memory allocation for USB3 bulk streams.")
 Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260703-remove-freeze-on-remove-node-v3-1-6e0c4547af46@google.com
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260703144033.483286-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/freeze.rs  |   11 +++++++++--
- drivers/android/binder/node.rs    |   10 ++++++----
- drivers/android/binder/process.rs |   12 +++++++++++-
- 3 files changed, 26 insertions(+), 7 deletions(-)
+ drivers/usb/host/xhci.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder/freeze.rs
-+++ b/drivers/android/binder/freeze.rs
-@@ -154,10 +154,17 @@ impl DeliverToRead for FreezeMessage {
- }
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -3788,6 +3788,7 @@ static int xhci_free_streams(struct usb_
+ 	struct xhci_virt_device *vdev;
+ 	struct xhci_command *command;
+ 	struct xhci_input_control_ctx *ctrl_ctx;
++	struct xhci_stream_info *stream_info[EP_CTX_PER_DEV];
+ 	unsigned int ep_index;
+ 	unsigned long flags;
+ 	u32 changed_ep_bitmask;
+@@ -3848,10 +3849,15 @@ static int xhci_free_streams(struct usb_
+ 	if (ret < 0)
+ 		return ret;
  
- impl FreezeListener {
--    pub(crate) fn on_process_exit(&self, proc: &Arc<Process>) {
-+    /// Called when this freeze listener is cleared abnormally.
-+    ///
-+    /// This occurs either because the process exited or because the process dropped its last
-+    /// refcount on the node ref without explicitly removing the freeze listener first.
-+    ///
-+    /// The returned `KVVec` is just a value that should be dropped outside of the lock.
-+    pub(crate) fn on_process_cleanup(&self, proc: &Process) -> KVVec<Arc<Process>> {
-         if !self.is_clearing {
--            self.node.remove_freeze_listener(proc);
-+            return self.node.remove_freeze_listener(proc);
-         }
-+        KVVec::new()
-     }
- }
++	/*
++	 * dma_free_coherent() called by xhci_free_stream_info() may sleep,
++	 * so save stream_info pointers and clear references under lock,
++	 * then free the memory outside lock.
++	 */
+ 	spin_lock_irqsave(&xhci->lock, flags);
+ 	for (i = 0; i < num_eps; i++) {
+ 		ep_index = xhci_get_endpoint_index(&eps[i]->desc);
+-		xhci_free_stream_info(xhci, vdev->eps[ep_index].stream_info);
++		stream_info[i] = vdev->eps[ep_index].stream_info;
+ 		vdev->eps[ep_index].stream_info = NULL;
+ 		/* FIXME Unset maxPstreams in endpoint context and
+ 		 * update deq ptr to point to normal string ring.
+@@ -3861,6 +3867,9 @@ static int xhci_free_streams(struct usb_
+ 	}
+ 	spin_unlock_irqrestore(&xhci->lock, flags);
  
---- a/drivers/android/binder/node.rs
-+++ b/drivers/android/binder/node.rs
-@@ -682,12 +682,13 @@ impl Node {
-         }
-     }
- 
--    pub(crate) fn remove_freeze_listener(&self, p: &Arc<Process>) {
--        let _unused_capacity;
-+    pub(crate) fn remove_freeze_listener(&self, p: &Process) -> KVVec<Arc<Process>> {
-         let mut guard = self.owner.inner.lock();
-         let inner = self.inner.access_mut(&mut guard);
-         let len = inner.freeze_list.len();
--        inner.freeze_list.retain(|proc| !Arc::ptr_eq(proc, p));
-+        inner
-+            .freeze_list
-+            .retain(|proc| !core::ptr::eq::<Process>(&**proc, p));
-         if len == inner.freeze_list.len() {
-             pr_warn!(
-                 "Could not remove freeze listener for {}\n",
-@@ -695,8 +696,9 @@ impl Node {
-             );
-         }
-         if inner.freeze_list.is_empty() {
--            _unused_capacity = mem::take(&mut inner.freeze_list);
-+            return mem::take(&mut inner.freeze_list);
-         }
-+        KVVec::new()
-     }
- 
-     pub(crate) fn freeze_list<'a>(&'a self, guard: &'a ProcessInner) -> &'a [Arc<Process>] {
---- a/drivers/android/binder/process.rs
-+++ b/drivers/android/binder/process.rs
-@@ -946,6 +946,8 @@ impl Process {
- 
-         // To preserve original binder behaviour, we only fail requests where the manager tries to
-         // increment references on itself.
-+        let _to_free_freeze_listener;
-+        let _to_free_freeze_listener_cleanup;
-         let mut refs = self.node_refs.lock();
-         if let Some(info) = refs.by_handle.get_mut(&handle) {
-             if info.node_ref().update(inc, strong) {
-@@ -961,6 +963,14 @@ impl Process {
-                 unsafe { info.node_ref2().node.remove_node_info(info) };
- 
-                 let id = info.node_ref().node.global_id();
++	for (i = 0; i < num_eps; i++)
++		xhci_free_stream_info(xhci, stream_info[i]);
 +
-+                if let Some(freeze) = *info.freeze() {
-+                    if let Some(fl) = refs.freeze_listeners.remove(&freeze) {
-+                        _to_free_freeze_listener_cleanup = fl.on_process_cleanup(&self);
-+                        _to_free_freeze_listener = fl;
-+                    }
-+                }
-+
-                 refs.by_handle.remove(&handle);
-                 refs.by_node.remove(&id);
-                 refs.handle_is_present.release_id(handle as usize);
-@@ -1384,7 +1394,7 @@ impl Process {
-         // Clean up freeze listeners.
-         let freeze_listeners = take(&mut self.node_refs.lock().freeze_listeners);
-         for listener in freeze_listeners.values() {
--            listener.on_process_exit(&self);
-+            listener.on_process_cleanup(&self);
-         }
-         drop(freeze_listeners);
+ 	return 0;
+ }
  
 
 
