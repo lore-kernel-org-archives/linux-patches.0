@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193B6435A8E;
-	Thu, 16 Jul 2026 14:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDFD42FCD4;
+	Thu, 16 Jul 2026 14:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212148; cv=none; b=EP28naI6kte/IOCBxKiElYnaODxTsfsEnuhs9eBr0Yg5HygSqWcnO+F+6tYVco+kA7WjHoEExM+1Wz/2+yG6AG4L08baFmfF7fSh+kqizSQi+pjjNoSnn3aDas0xBGgHCJYFYSjfY2KRwAsVrl9bwNXWSXz+kmKzg2pEOmr4CrU=
+	t=1784212150; cv=none; b=gqIMR5rfzlNlbA8LG08OAN7tFkF+y6t7aFBxg3QIcx8Ggb3fzGSdhAiABjowGJSR80nCXmIJncEGoKbp2cEYkJdsgRHBz05PHlh3bASHufLKqDbXwY5IjMaSUwMr96P9Cdg+Hg4gKDQhY7+1WTU7aYV71FOBQj/bYNs/9goO47I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212148; c=relaxed/simple;
-	bh=EX1HGehAD1j0Lj4zNRq7tjdmcIXrH0c9uGiuHw15drk=;
+	s=arc-20240116; t=1784212150; c=relaxed/simple;
+	bh=x4SWN3Zflv2sXCtHDHmgnrer88e6vOSA1vXnw/TYPFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QMfd4s/hN4j3PpPGTz+c/EbWYpthOz24bcAJG6E1mLFbplG/bCwQKqza28qeL3XNMv3OLWspAcR4pXTi6CCegzYZuPE5U5pBpsqAFaCOLoETsrcFCHCxwFn0x4ixHueAier1Dbd65HbgfqOSwA9nlvEOKZsmIvvAIA05HbApOm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L75vDW6V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h3WgiZdRN24LG1Pou1sTGpdHX9g/7klpbxyMP5VT1WIaV59IMdDcvy1mxhHy7gFL44ZI1b/VwRJ9VViRfrMAOe8u82CvRxeMoCBQaSunFp7q9lkjVHmoEeXtFcIu27U9MiuLUOs6Ce6spgI5aDWQP7kLTa6aztNkpOgsKdP96gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgAl5V02; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L75vDW6V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855691F00AC4;
-	Thu, 16 Jul 2026 14:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgAl5V02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC241F00ADF;
+	Thu, 16 Jul 2026 14:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212147;
-	bh=VjVPLaa8qkjAUuSJqGxqGT/lXvV9BL6NsCRkPJt6I40=;
+	s=korg; t=1784212149;
+	bh=z+wd7aOZmGyo9tREOha7bW/Bxy97m9rJYwQk08csWMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L75vDW6Vg3XvStcAg+xcYk3Lm8FYjiYR8q1m/oe2vNs8Wkmo5SqDTYOFzIycI0hhu
-	 snzmKyCkHfJPi+EvCPSvG30nD22LNt6Mw+s9fb02VDygPDXnKTTI2n1BEZISmUZL7L
-	 16WueSZUgirhfFL//cVDdck+R6xGQO4DVzdTyw94=
+	b=sgAl5V02zuNm9EzBMD/2IEMk+kXbv8JnM+VYl1pK8hq9WwG5CL+iworGSTFTMwU2V
+	 xLyw+XLneYrsFmcAOo29WGrbJxXRSG8aSlbcK73XW7u0NkMdwXgoXHUb2VaN9q6IDN
+	 o0yM0O8LXDFjs19CFw+cROR3xNa5BE1PAeWpZyjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 217/349] bpf: Restore sysctl new-value from 1 to 0
-Date: Thu, 16 Jul 2026 15:32:31 +0200
-Message-ID: <20260716133038.220142986@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.12 191/349] sched/rt: Have RT_PUSH_IPI be default off for non PREEMPT_RT
+Date: Thu, 16 Jul 2026 15:32:05 +0200
+Message-ID: <20260716133037.651623581@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -54,52 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 2566c3b24219c5b30e35205cba029ff34ff7c78b upstream.
+commit dd29c017aed628076e915fe4cdfb5392fd4c5cab upstream.
 
-Commit 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value
-helpers") changed the success return value to 0, but failed to update the
-corresponding check in __cgroup_bpf_run_filter_sysctl(). Since
-bpf_prog_run_array_cg() now returns 0 on success, the legacy ret == 1
-condition is never satisfied. As a result, the modified value is ignored,
-and bpf_sysctl_set_new_value() fails to replace the write buffer.
+RT migration is done aggressively. When a CPU schedules out a high
+priority RT task for a lower priority task, it will look to see if there's
+any RT tasks that are waiting to run on another CPU that is of higher
+priority than the task this CPU is about to run. If it finds one, it will
+pull that task over to the CPU and allow it to run there instead.
 
-Fix this by checking for a return value of 0 instead, so cgroup/sysctl
-programs can correctly replace the pending sysctl buffer.
+Normally, this pulling is done by looking at the RT overloaded mask (rto)
+which contains all the CPUs in the scheduler domain with RT tasks that are
+waiting to run due to a higher priority RT task currently running on their
+CPU. The CPU that is about to schedule a lower priority task will grab the
+rq lock of the overloaded CPU and move the RT task from that CPU's runqueue
+to the local one and schedule the higher priority RT task.
 
-This bug was discovered during a manual code review. Tested via a
-cgroup/sysctl BPF reproducer overriding writes to a target sysctl.
-Pre-fix, bpf_sysctl_set_new_value("foo") was silently ignored: the write
-returned 8192 and the value remained "600". Post-fix, the BPF replacement
-buffer properly propagates: the write returns 3 and the value updates to
-"foo".
+This caused issues when a lot of CPUs would schedule a lower priority task
+at the same time. They would all try to grab the same runqueue lock of
+the CPU with the overloaded RT tasks. Only the first CPU that got in will
+get that task. All the others would wait until they got the runqueue lock
+and see there's nothing to pull and do nothing. On systems with lots of
+CPUs, this caused a large latency (up to 500us) which is beyond what
+PREEMPT_RT is to allow.
 
-Fixes: f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err instead of allow boolean")
+The solution to that was to create an RT_PUSH_IPI logic. When any CPU
+wanted to pull a task, instead of grabbing the runqueue lock of the
+overloaded CPU, it would start by sending an IPI to the overloaded CPU,
+and that IPI handler would have the CPU with the waiting RT task do a push
+instead. Then that handler would send an IPI to the next CPU with
+overloaded RT tasks, and so on. Note, after the first CPU starts this
+process, if another CPU wanted to do a pull, it would see that the process
+has already begun and would only increment a counter to have the IPIs
+continue again.
+
+The RT_PUSH_IPI solved the latency problem with PREEMPT_RT but could cause
+a new issue with non PREEMPT_RT. Namely, softirqs run in a threaded
+context on PREEMPT_RT but they can run in an interrupt context in non-RT.
+
+If an IPI lands on a CPU that has just woken up multiple RT tasks and the
+current CPU is running a non RT or a low priority RT task, instead of
+doing a push, it would simply do a schedule on that CPU. But if a softirq
+was also executing on this CPU, the schedule would need to wait until the
+softirq finished. Until then, the CPU would still be considered overloaded
+as there are RT tasks still waiting to run on it.
+
+A live lock occurred on a workload that was doing heavy networking traffic
+on a large machine where the softirqs would run 500us out of 750us. And it
+would also be waking up RT tasks, causing the RT pull logic to be
+constantly executed.
+
+When a softirq triggered on a CPU with RT tasks queued but not running
+yet, and the other CPUs would see this CPU as being overloaded, they would
+send an IPI over to it. The CPU would notice that the waiting RT tasks are
+of higher priority than the currently running task and simply schedule
+that CPU instead. But because the softirq was executing, before it could
+schedule, it would receive another IPI to do the same. The amount of IPIs
+would slow down the currently running softirq so much that before it could
+return back to task context, it would execute another softirq never
+allowing the CPU to schedule. This live locked that CPU.
+
+As RT_PUSH_IPI was created to help PREEMPT_RT, make it default off if
+PREEMPT_RT is not enabled.
+
+Fixes: b6366f048e0c ("sched/rt: Use IPI to trigger RT task push migration instead of pulling")
+Closes: https://lore.kernel.org/all/20260506235716.2530720-1-tj@kernel.org/
+Reported-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/20260603105317.944304-4-dawei.feng@seu.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260515103740.25ccbed8@gandalf.local.home
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/cgroup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/features.h |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1773,7 +1773,7 @@ int __cgroup_bpf_run_filter_sysctl(struc
+--- a/kernel/sched/features.h
++++ b/kernel/sched/features.h
+@@ -104,8 +104,16 @@ SCHED_FEAT(WARN_DOUBLE_CLOCK, false)
+  * rq lock and possibly create a large contention, sending an
+  * IPI to that CPU and let that CPU push the RT task to where
+  * it should go may be a better scenario.
++ *
++ * This is best for PREEMPT_RT, but for non-RT it can cause issues
++ * when preemption is disabled for long periods of time. Have
++ * it only default enabled for PREEMPT_RT.
+  */
++# ifdef CONFIG_PREEMPT_RT
+ SCHED_FEAT(RT_PUSH_IPI, true)
++# else
++SCHED_FEAT(RT_PUSH_IPI, false)
++# endif
+ #endif
  
- 	kfree(ctx.cur_val);
- 
--	if (ret == 1 && ctx.new_updated) {
-+	if (!ret && ctx.new_updated) {
- 		kvfree(*buf);
- 		*buf = ctx.new_val;
- 		*pcount = ctx.new_len;
+ SCHED_FEAT(RT_RUNTIME_SHARE, false)
 
 
