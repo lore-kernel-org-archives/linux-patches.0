@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19663FD96B;
-	Thu, 16 Jul 2026 13:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AFB400984;
+	Thu, 16 Jul 2026 13:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209437; cv=none; b=g0uXL/2rgxFyBBSgWWuU8U7AJ8r1VKXGLYZIPbey4b0oRGkfwKt9sK7X+QDLuEVd6p2UnQ9A2058Gh+F248Mi1ab9JSF/o+E1OGG3JZfM5eFVuyG9PebTLxdzHA5Gr9Df6vuGlaSEbQKNa4JL3Jm6ZJaHqXT4C6caDDZlT2kYIo=
+	t=1784209439; cv=none; b=JSGgLvCmPXZkuV4wHxgj3vvXSBwBhJEV1Wg2UtnidlGCHeFKotYEl69rFARsG4FVFlKWe5wI9LtBK+sNu8TdVhqpEEsqO8daHr1FepsQxbsVm0XecfdTHHkqbmC/u8h7kW707Xkfbb164NogoLWR/ZuNFHWER3AdE1RD3DjS2k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209437; c=relaxed/simple;
-	bh=Bbn09k3gatgDUipqwbu/y9VTXI3qw4DWBBfmlt5zPpA=;
+	s=arc-20240116; t=1784209439; c=relaxed/simple;
+	bh=8Ub5g93GpZ7MbBpkyWoFKuTTox7k3s7TZYEbmvClokA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pAdpXBizhT9PT6/aXo/2LLHAAVlmVvBhjc8eDuF08eX01tckpKc4qsorzYEzuCNLQwxULgmBjnCXCBR0khWL2CcCPJClmQzHv3bi1Q4Q10xX+K09a7uF0cld18b9J8HikWDSk/1UQmuhtQykns4cQbRAKhMZm1Buz43PKYuPzM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zT0Dmh76; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gk826OW70QUj2FharMFIPM+Ev1tsu0L8S81On0Tizx8fW+/zQUNQlyImBuNNoVx1aS7i13B4SnfGYT6/A7kuipmJnZti9311egHfcimSLOux6V87F0Q+yPUVDRLyAH5SEcyvaCMsldSYwjwf3f0N+3wFspypovelZcQ3N+o8ksc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sY+Mwn2c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zT0Dmh76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324F11F00A3F;
-	Thu, 16 Jul 2026 13:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sY+Mwn2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4A81F000E9;
+	Thu, 16 Jul 2026 13:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209434;
-	bh=Bj5I9ob+/FXQ5shhL+BISyLyoBJDFdjekSb/40znZLg=;
+	s=korg; t=1784209437;
+	bh=pC+jg4xH6q5QD/BZAG2X8ECUjolJG69VqWZmjP5VC/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zT0Dmh76DQ/NOK80P9moG2XQS/WyJiR5gf8YY08Pmf9TGbuTo7CZPeh6yjeVirFoR
-	 7w4ba5U++VetiSRgFBoSl0/xEZiiZ3aOK/nHoALLhXhYnQ5uWX+YikQg3Q9ibxfYsh
-	 Is4xUb4FlZJfrbzrt0ZyjJU0nIAvl23xqPRidKqM=
+	b=sY+Mwn2cLIFWMT9reEqvUYbsWM7phUIyx6Cc1XsO/vJ/McSNYIVgrOhGJbBr8HPak
+	 N2sDyjO+H6CSjBw/0zEdIDYVpOGaXVPpBJ/2CDG5b3sejzMYiQVdMw+8O3JyI/XDzR
+	 sh/d7qhR5sucZ5/MZsKrKkwfNg1cSEBG448KHAck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2cd473471e77bda12b0e@syzkaller.appspotmail.com,
-	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.1 184/518] io_uring/nop: fix file reference leak with IOSQE_FIXED_FILE
-Date: Thu, 16 Jul 2026 15:27:32 +0200
-Message-ID: <20260716133051.862752642@linuxfoundation.org>
+Subject: [PATCH 7.1 185/518] io_uring/io-wq: re-check IO_WQ_BIT_EXIT for each linked work item
+Date: Thu, 16 Jul 2026 15:27:33 +0200
+Message-ID: <20260716133051.884406112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,72 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 2564ca2e31bd8ee8348362941af2ee4671e487ca upstream.
+commit 29bef9934b2521f787bb15dd1985d4c0d12ae02a upstream.
 
-NOP file-acquisition support choses between a fixed (registered) file and
-a normal fget()'d file based on its own IORING_NOP_FIXED_FILE flag in
-sqe->nop_flags. However, a request's REQ_F_FIXED_FILE is set
-independently from the generic IOSQE_FIXED_FILE sqe flag during request
-init, before the issue handler runs.
+commit 10dc95939817 ("io_uring/io-wq: check IO_WQ_BIT_EXIT inside work
+run loop") fixed the obvious case where io_worker_handle_work() took one
+exit-bit snapshot before draining pending work, but the fix stops one
+level too early.
 
-If a NOP is submitted with IOSQE_FIXED_FILE set (so REQ_F_FIXED_FILE is
-set) but without IORING_NOP_FIXED_FILE, io_nop() takes the normal path
-and grabs a real reference via io_file_get_normal(). On completion,
-io_put_file() only drops the reference when REQ_F_FIXED_FILE is clear,
-so the fget()'d file is never released and leaks:
+io_worker_handle_work() now re-checks IO_WQ_BIT_EXIT in its outer work
+run loop, yet it still snapshots that bit once before processing a whole
+dependent linked-work chain. If io_wq_exit_start() sets IO_WQ_BIT_EXIT
+after the first linked item has started, the remaining linked items can
+still reuse stale do_kill = false, skip IO_WQ_WORK_CANCEL, and continue
+running after exit has begun.
 
-  BUG: memory leak
-  unreferenced object 0xffff88800f42c240 (size 176):
-    kmem_cache_alloc_noprof+0x358/0x440
-    alloc_empty_file+0x57/0x180
-    path_openat+0x44/0x1e50
-    do_file_open+0x121/0x200
-    do_sys_openat2+0xa7/0x150
-    __x64_sys_openat+0x82/0xf0
+Move the check further inside, so it covers linked items too. Note: this
+is a syzbot special as it loves setting up tons of slow linked work on
+weird devices like msr that take forever to read, and immediately close
+the ring. Exit then takes a long time.
 
-Decide between fixed and normal file acquisition from REQ_F_FIXED_FILE,
-the same way io_assign_file() does for every other opcode, and fold
-IORING_NOP_FIXED_FILE into REQ_F_FIXED_FILE at prep time.
-
+Fixes: 10dc95939817 ("io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop")
 Cc: stable@vger.kernel.org
-Fixes: a85f31052bce ("io_uring/nop: add support for testing registered files and buffers")
-Reported-by: syzbot+2cd473471e77bda12b0e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=879092631b98f73a28ea405adacfa5bb34a14a25
-Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
-Link: https://patch.msgid.link/20260615144619.482749-1-vasilisalmpanis@gmail.com
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260527172203.2043962-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/nop.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ io_uring/io-wq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/nop.c
-+++ b/io_uring/nop.c
-@@ -41,6 +41,8 @@ int io_nop_prep(struct io_kiocb *req, co
- 		nop->fd = READ_ONCE(sqe->fd);
- 	else
- 		nop->fd = -1;
-+	if (nop->flags & IORING_NOP_FIXED_FILE)
-+		req->flags |= REQ_F_FIXED_FILE;
- 	if (nop->flags & IORING_NOP_FIXED_BUFFER)
- 		req->buf_index = READ_ONCE(sqe->buf_index);
- 	if (nop->flags & IORING_NOP_CQE32) {
-@@ -60,12 +62,10 @@ int io_nop(struct io_kiocb *req, unsigne
- 	int ret = nop->result;
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -602,7 +602,6 @@ static void io_worker_handle_work(struct
+ 	struct io_wq *wq = worker->wq;
  
- 	if (nop->flags & IORING_NOP_FILE) {
--		if (nop->flags & IORING_NOP_FIXED_FILE) {
-+		if (req->flags & REQ_F_FIXED_FILE)
- 			req->file = io_file_get_fixed(req, nop->fd, issue_flags);
--			req->flags |= REQ_F_FIXED_FILE;
--		} else {
-+		else
- 			req->file = io_file_get_normal(req, nop->fd);
--		}
- 		if (!req->file) {
- 			ret = -EBADF;
- 			goto done;
+ 	do {
+-		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 		struct io_wq_work *work;
+ 
+ 		/*
+@@ -638,6 +637,7 @@ static void io_worker_handle_work(struct
+ 
+ 		/* handle a whole dependent link */
+ 		do {
++			bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 			struct io_wq_work *next_hashed, *linked;
+ 			unsigned int work_flags = atomic_read(&work->flags);
+ 			unsigned int hash = __io_wq_is_hashed(work_flags)
 
 
