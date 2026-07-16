@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138914314B7;
-	Thu, 16 Jul 2026 14:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF434314A8;
+	Thu, 16 Jul 2026 14:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212207; cv=none; b=ln2gYjet/afhgAqCKYxVtM8CiMk0W536JzbSlzIMPbUWkSOiBES0QwckHu+NcNDZz0txXoTcR29uD8tpc+zHrhupYukwaPIxeHw/UxD51SdHZT7b+8DXMmrQZToOJUrHgiROwaYPEj3xn8gxM5oWoXgUfCW+LeTMT7jcVcN4G/c=
+	t=1784212209; cv=none; b=P41POyRrZVr7hN1PfCaVtqG1iQgsUSWtOlpuzLgg4rU1tc2C7An6j+zgKvbwMhreiR0zlDc4AVqIDrnsv5QDT5Sal9o1TznC0KMNRQUOdDQAX+CTQ2sfbTYWlNQXwsHdPl8n4A6jlvJvIzAgnOsfFkyKFXJ9j9J6tkbcR399vu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212207; c=relaxed/simple;
-	bh=Q8Wwu0zKIDje3RYUCTvuIgwrJQk3N+ZObF1x1gRjMxg=;
+	s=arc-20240116; t=1784212209; c=relaxed/simple;
+	bh=gp3AUb2lfD0nUzEOj2ee6uzRqsIOOxOlNla51EEIvrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCyQquWlop4CSx7a539GLj+3RFo/E0+S6mxF+/S0+je48mONp+QlZEgNX6HHfKlU1fy7qSjqGen+CUm3WahOg6nPhLF937yuXkmH+7Rl+jrSoDD8tKA7FRzOTBQpcZ/xFk+hcN8wQRhao4DulqPdm4QnyPTTswpsVg/csvAlMJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6pHLyB0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LdZ9+lZIc22t/GcLrvkCI3JtPDeaTBeJB1iogJUrO6QQ955zIpYvCBLJJpzXg12BeRZQ6ZGF/I2NOrf2hCD2zVz8XB1n/0VAF2H8ka+XVYP9xjkfLs1n+Svmj3QVcrAECtldlIrrg7rT+Vf5Jg2gD2sLEu4CnoGA8BC+y2QwJvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=US3yapns; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6pHLyB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388FD1F000E9;
-	Thu, 16 Jul 2026 14:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="US3yapns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4CD51F00A3D;
+	Thu, 16 Jul 2026 14:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212205;
-	bh=ev4W5UitjEpZ74kBe7T4Dd2Qj0r1asmRLBMtb+iF084=;
+	s=korg; t=1784212208;
+	bh=EDnL3AL0r8lUsaUdcmatzG5vHqH81+be0YkdXACM8WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j6pHLyB0Rwd940z1baOimrgAq3QGZ5YCAO1GOzZVzbHf5CUMWJf+bkCL07fdPkkvO
-	 hHL3TSVy4lTduVa5c0J99XXRLUUjktV9ljB35RR3ixrpGed1Ahkj0o6AxObYxHpOWP
-	 CWVqmdkqTCSBwltJ3v5zZvltD+dW0SnPOoexxppc=
+	b=US3yapns0LwkscVcMBkcDvCOnupftQj8bhX1V6vjGt9sZC4auVyIfUH9IArC09ajE
+	 I6SnNMxtKBr80fQZeWk4swzBDuOiMuByYgW/f88TstIw8gidHUqb07KeNpTAu+m8uH
+	 XPUv0Iybk03qGZ27RK3aVPxtJSwm4CKOwjiRogJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Jon Hunter <jonathanh@nvidia.com>
-Subject: [PATCH 6.12 196/349] clocksource/drivers/timer-tegra186: Fix support for multiple watchdog instances
-Date: Thu, 16 Jul 2026 15:32:10 +0200
-Message-ID: <20260716133037.760832652@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 197/349] perf/arm-cmn: Fix DVM node events
+Date: Thu, 16 Jul 2026 15:32:11 +0200
+Message-ID: <20260716133037.781278901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,41 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit ca57bf46e7a94f8c53d05c376df9fcfdcb482100 upstream.
+commit 5936245125f78d896fdb1bbc2ae79213e28a6579 upstream.
 
-Tegra SoCs support multiple watchdogs; currently only one (WDT0) is
-used. When multiple watchdogs are registered, tegra186_wdt_enable()
-overwrites the TKEIE(x) register, discarding any existing watchdog
-interrupt enable bits. As a result, enabling one watchdog inadvertently
-disables interrupts for the others.
+The new DVM node events added in CMN-700 also apply to CMN S3; fix
+the model encoding so that we can expose the aliases and handle
+occupancy filtering on newer CMNs too.
 
-Fix this by preserving the existing TKEIE(x) value and updating it
-using a read-modify-write sequence.
-
-Fixes: 42cee19a9f83 ("clocksource: Add Tegra186 timers support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260507154557.2082697-2-kkartik@nvidia.com
+Fixes: 0dc2f4963f7e ("perf/arm-cmn: Support CMN S3")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/timer-tegra186.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/perf/arm-cmn.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/drivers/clocksource/timer-tegra186.c
-+++ b/drivers/clocksource/timer-tegra186.c
-@@ -144,7 +144,8 @@ static void tegra186_wdt_enable(struct t
- 	u32 value;
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -197,13 +197,14 @@
+ enum cmn_model {
+ 	CMN600 = 1,
+ 	CMN650 = 2,
+-	CMN700 = 4,
+-	CI700 = 8,
++	CI700 = 4,
++	CMN700 = 8,
+ 	CMNS3 = 16,
+ 	/* ...and then we can use bitmap tricks for commonality */
+ 	CMN_ANY = -1,
+ 	NOT_CMN600 = -2,
+-	CMN_650ON = CMN650 | CMN700 | CMNS3,
++	CMN_700ON = ~(CMN700 - 1),
++	CMN_650ON = CMN_700ON | CMN650,
+ };
  
- 	/* unmask hardware IRQ, this may have been lost across powergate */
--	value = TKEIE_WDT_MASK(wdt->index, 1);
-+	value = readl(tegra->regs + TKEIE(wdt->tmr->hwirq));
-+	value |= TKEIE_WDT_MASK(wdt->index, 1);
- 	writel(value, tegra->regs + TKEIE(wdt->tmr->hwirq));
+ /* Actual part numbers and revision IDs defined by the hardware */
+@@ -921,14 +922,14 @@ static struct attribute *arm_cmn_event_a
+ 	CMN_EVENT_DVM(NOT_CMN600, txsnp_stall,		0x0a),
+ 	CMN_EVENT_DVM(NOT_CMN600, trkfull,		0x0b),
+ 	CMN_EVENT_DVM_OCC(NOT_CMN600, trk_occupancy,	0x0c),
+-	CMN_EVENT_DVM_OCC(CMN700, trk_occupancy_cxha,	0x0d),
+-	CMN_EVENT_DVM_OCC(CMN700, trk_occupancy_pdn,	0x0e),
+-	CMN_EVENT_DVM(CMN700, trk_alloc,		0x0f),
+-	CMN_EVENT_DVM(CMN700, trk_cxha_alloc,		0x10),
+-	CMN_EVENT_DVM(CMN700, trk_pdn_alloc,		0x11),
+-	CMN_EVENT_DVM(CMN700, txsnp_stall_limit,	0x12),
+-	CMN_EVENT_DVM(CMN700, rxsnp_stall_starv,	0x13),
+-	CMN_EVENT_DVM(CMN700, txsnp_sync_stall_op,	0x14),
++	CMN_EVENT_DVM_OCC(CMN_700ON, trk_occupancy_cxha, 0x0d),
++	CMN_EVENT_DVM_OCC(CMN_700ON, trk_occupancy_pdn,	0x0e),
++	CMN_EVENT_DVM(CMN_700ON, trk_alloc,		0x0f),
++	CMN_EVENT_DVM(CMN_700ON, trk_cxha_alloc,	0x10),
++	CMN_EVENT_DVM(CMN_700ON, trk_pdn_alloc,		0x11),
++	CMN_EVENT_DVM(CMN_700ON, txsnp_stall_limit,	0x12),
++	CMN_EVENT_DVM(CMN_700ON, rxsnp_stall_starv,	0x13),
++	CMN_EVENT_DVM(CMN_700ON, txsnp_sync_stall_op,	0x14),
  
- 	/* clear interrupt */
+ 	CMN_EVENT_HNF(CMN_ANY, cache_miss,		0x01),
+ 	CMN_EVENT_HNF(CMN_ANY, slc_sf_cache_access,	0x02),
 
 
