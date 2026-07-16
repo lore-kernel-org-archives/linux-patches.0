@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5E43148C2;
-	Thu, 16 Jul 2026 14:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041333161AD;
+	Thu, 16 Jul 2026 14:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210916; cv=none; b=e7ClhZaKXtNn3git1XqHfHWLFbZVUJxJQJPQb4Cw1/zQVa/xS///h4uBc1KcKv5k5jehGJPa4mrZ01swhIOfOUiUx6P9np9NX6XjLiUpS7Ej5SAUwnO/tnhq+N3ofPTOQu2oU4to8RIMOzYwuCMYgiTk+zqCXuYHAbsOLmD2Lq0=
+	t=1784210919; cv=none; b=XScPx4/evzWqHDHpwTPbZyQYXuOybAmWcdWbZSc09ps9WdL2Yt1SnDMxQ4zamHdRkI3V+r7BojfSy05LV1PUPkPjd8W+Gm3/Sj/zo14Ry8BN9fKtY3d14KwhevFjv5/r7vEjvCQPEv0mrhAUWgwTbIh0E21Euq8fewo77Bg0Glk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210916; c=relaxed/simple;
-	bh=kMZ5U7EeWQXgWRuQlTDN+EKqAKkN3wWpTalB1uz2L3I=;
+	s=arc-20240116; t=1784210919; c=relaxed/simple;
+	bh=ikuw5MxBTgY3mhpAqjOVbh5SSRfhy5ftfdJctljT4bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BX+KAZFtxZbVmogs3fwemmX1gCJx577h8MhQUeC2Ua6k1ggkcDcPMUh/AClqdwbtlKuo8OqMhD2pW/CgdpvNGohzK4FoO4nluCB337rF7vU75fG7GTSfyEVFvifv85iCl5NMfaOqvt2uyCmGt1KHmaf5PvLMhCIhmMmZRtyvP8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Shpmt9wq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mU0mOoqyhUjy/m6jENNqRYbkXzDvkle6nhURjEpraSQA/ifJxD0dnpLcxmKb0HaCcgOlw4ddmXC4KxocQeB8tBXgZkjVllPAe3fj2TGdpOFWoZmNauQFP9dwYnd4mK7PdpiMvJjWreDDjU0QM/NbFHjVcJxX1xRgiv3bB+xev+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUqF4sBq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Shpmt9wq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D0F1F000E9;
-	Thu, 16 Jul 2026 14:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUqF4sBq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B3D1F000E9;
+	Thu, 16 Jul 2026 14:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210915;
-	bh=nsPotdvgttC4yDrorQWqYRdTGmxKQvNrhS4l3SwOxuA=;
+	s=korg; t=1784210917;
+	bh=Z+Jo0eJI/CheOn3kcDgWWDaJoD5HcLyBZsOtobWoKY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Shpmt9wqJSlAqkFxoZbdwD9IzVw3KImSHZtkCpyMEFS6Bv7+yyQ/nk1WM3Yu1vx6J
-	 +4B7uFhUSONA8ZYnHZC6dqUC/0U74bcc6ZTWKoaFO09EBjGlaKEeNk23f1HwzdePDR
-	 g1HQ2GaCT+185kU+2VeU9qIvVXUJB+cKyypFcUG0=
+	b=SUqF4sBqoCDpM1FVGxIl4Ys13mIccS9LtD5PtXrGv2a5rGchufGIDRhjgH/NHUooW
+	 I+/0tKugTdNBqETnvxnG4rlIXU/L1jqdDLIU5bfMhlFmZX/Opdinr1W30Ns8/TAIXL
+	 nYTDbFt1y/v40B4Gh5MJFcCGRKbMI53JW9LOvWcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Musaab Khan <musaab.khan@protonmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 227/480] ksmbd: use opener credentials for ADS I/O
-Date: Thu, 16 Jul 2026 15:29:34 +0200
-Message-ID: <20260716133049.724763893@linuxfoundation.org>
+Subject: [PATCH 6.18 228/480] smb: client: fix query directory replay double-free
+Date: Thu, 16 Jul 2026 15:29:35 +0200
+Message-ID: <20260716133049.746486307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,89 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-commit baa5e094886fffa7e6272edcb5e08be5ce28262c upstream.
+commit 9647492b5e41954be59d5157eddbcd4cdc1656f7 upstream.
 
-Alternate data streams are stored as xattrs. Unlike regular file I/O,
-their read and write paths therefore call VFS xattr helpers which recheck
-inode permissions and LSM policy using the current task credentials.
+A response-bearing attempt can return a replayable error and free its
+response buffer. If SMB2_query_directory_init() fails before the next send,
+cleanup retains the previous buffer type and frees that response again.
 
-Run ADS I/O with the credentials captured when the SMB handle was opened.
+Reset response bookkeeping before each attempt to prevent the stale free.
 
+Fixes: 4f1fffa23769 ("cifs: commands that are retried should have replay flag set")
 Cc: stable@vger.kernel.org
-Reported-by: Musaab Khan <musaab.khan@protonmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2pdu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -278,17 +278,20 @@ out:
- static int ksmbd_vfs_stream_read(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 				 size_t count)
- {
-+	const struct cred *saved_cred;
- 	ssize_t v_len;
- 	char *stream_buf = NULL;
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -5668,6 +5668,8 @@ send_set_info(const unsigned int xid, st
  
- 	ksmbd_debug(VFS, "read stream data pos : %llu, count : %zd\n",
- 		    *pos, count);
+ replay_again:
+ 	/* reinitialize for possible replay */
++	resp_buftype = CIFS_NO_BUFFER;
++	memset(&rsp_iov, 0, sizeof(rsp_iov));
+ 	flags = 0;
+ 	server = cifs_pick_channel(ses);
  
-+	saved_cred = override_creds(fp->filp->f_cred);
- 	v_len = ksmbd_vfs_getcasexattr(file_mnt_idmap(fp->filp),
- 				       fp->filp->f_path.dentry,
- 				       fp->stream.name,
- 				       fp->stream.size,
- 				       &stream_buf);
-+	revert_creds(saved_cred);
- 	if ((int)v_len <= 0)
- 		return (int)v_len;
- 
-@@ -411,6 +414,7 @@ int ksmbd_vfs_read(struct ksmbd_work *wo
- static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 				  size_t count)
- {
-+	const struct cred *saved_cred;
- 	char *stream_buf = NULL, *wbuf;
- 	struct mnt_idmap *idmap = file_mnt_idmap(fp->filp);
- 	size_t size;
-@@ -431,6 +435,7 @@ static int ksmbd_vfs_stream_write(struct
- 		count = XATTR_SIZE_MAX - *pos;
- 	}
- 
-+	saved_cred = override_creds(fp->filp->f_cred);
- 	v_len = ksmbd_vfs_getcasexattr(idmap,
- 				       fp->filp->f_path.dentry,
- 				       fp->stream.name,
-@@ -439,14 +444,14 @@ static int ksmbd_vfs_stream_write(struct
- 	if (v_len < 0) {
- 		pr_err("not found stream in xattr : %zd\n", v_len);
- 		err = v_len;
--		goto out;
-+		goto out_revert;
- 	}
- 
- 	if (v_len < size) {
- 		wbuf = kvzalloc(size, KSMBD_DEFAULT_GFP);
- 		if (!wbuf) {
- 			err = -ENOMEM;
--			goto out;
-+			goto out_revert;
- 		}
- 
- 		if (v_len > 0)
-@@ -464,6 +469,8 @@ static int ksmbd_vfs_stream_write(struct
- 				 size,
- 				 0,
- 				 true);
-+out_revert:
-+	revert_creds(saved_cred);
- 	if (err < 0)
- 		goto out;
- 	else
 
 
