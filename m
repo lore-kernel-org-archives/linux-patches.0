@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478994229AB;
-	Thu, 16 Jul 2026 13:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48EF3F482E;
+	Thu, 16 Jul 2026 13:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209346; cv=none; b=DffsovNIIEMYSXgHGhWnUCJt5m/u12JgNoHXI4nN0Qulai4IYmGCb89WOJfyRIgNHdYmANHRiQ4VOlchD1+Ba2rCklxC08awiFIgwI16uofaeMVOuE7/NH3brNkiTj+RhQ75dX62DnWoEnMRBIEtdKq6fEx614rPwkupg/4EQxU=
+	t=1784209349; cv=none; b=OG9x1m2WS9uWClIPDiYUX75h1lJ5Bq++5C6oJn3/0bkLGyT3D2gIkTfzKNCPFukgqhKUHl+s6t+rO2f0YQq7QCNQo2UQn6fEeRUuJ1YhGYmI7swUZ2vyHxFitZz0TdFmTmZW+2nxkMoJUPFgn1GmNXp1zKX5yq4rv9NY04i8gX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209346; c=relaxed/simple;
-	bh=/Mg3z4qkshBCDi+TuUQOjhbJrdgED/9JLchkHR+zsLw=;
+	s=arc-20240116; t=1784209349; c=relaxed/simple;
+	bh=DhB67bsz95hVuCFqnBobi1ktEt4M7dpjj31YiCQbh6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=meOu2CQFMbsKSJv7Zre8PIzkzJpkglI3w48nZfHeH7aPQw6zOvkcsSOJCORgouOqRet3VwSXKUxax+ieyrg3zh/aujtrcuL2Vlfe+3oHv7aVtRG/W6h4cbvLc8ujPC1hYj+A/o+wTIWKzAq7qFoWY2yBtCtUupWVqyas+T+cfTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+0S8WD2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OJVltE1JjNPbuGWMfuKWuZD76btCP6YWhjfEAylPivyW8kvMkTcVP6AmonDDWpkrTm+4il1oWL4Cd5+OsKsLwJCSvIJP/fFIId77mkbvMa501pwgmhsS5KyM6Sem19JcGgKJdHTGg1XYqZpKgPaNboNYlEWyKcJB7a7+uUQNLqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2Q1LqJe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+0S8WD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E9B1F000E9;
-	Thu, 16 Jul 2026 13:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2Q1LqJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557A91F000E9;
+	Thu, 16 Jul 2026 13:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209345;
-	bh=mAiroLLcLUzXGQGzAbKY9cxD7L8RDxrWU06ds98JR3k=;
+	s=korg; t=1784209347;
+	bh=BeF5Auu0aQI4RQc6AKG15ovLNSdLtJsVe4ISgeCyjDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v+0S8WD26QEfnhYGixuzXvcYmRxe2QBvaXQqroJHgV+fKqw8WsG/GxfDlZHtttoYx
-	 Oue6/pom6WTllF2LEcLgAg/8KsqSxAivRQZ/XewkUWX24ygHgG/jpmoyi6U2kKx3sc
-	 2SqsaleduaFQqEDRQu8TbyGfS6Ymy2r0zEDdumq4=
+	b=l2Q1LqJe/v+ckB2kwAgmNLIxOIdfEKLdMdHHEx8/CYl6JkzTc/HItkqyMzJTgAOaG
+	 6VERz33qgI14hzAHQtGfgJZQAbYmWy2vpSZZ5T0l7djvCp9WdfjRoyrUOLgWQ2h9S8
+	 oILTBb5tjKwUbDCu09gnjGPpA78irYkQt5XtlWYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Alexander Aring <aahringo@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 149/518] 6lowpan: fix NHC entry use-after-free on error path
-Date: Thu, 16 Jul 2026 15:26:57 +0200
-Message-ID: <20260716133051.108847043@linuxfoundation.org>
+	Yuanhe Shu <xiangzao@linux.alibaba.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.1 150/518] tracing: Fix NULL pointer dereference in func_set_flag()
+Date: Thu, 16 Jul 2026 15:26:58 +0200
+Message-ID: <20260716133051.130662065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -56,66 +50,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Yuanhe Shu <xiangzao@linux.alibaba.com>
 
-commit 1720db928e5a58ca7d75ac1d514c3b73fd7061a7 upstream.
+commit c3e94604675e3db186111b8942650d86577df9b0 upstream.
 
-lowpan_nhc_do_uncompression() looks up an NHC descriptor while holding
-lowpan_nhc_lock.  If the descriptor has no uncompress callback, the error
-path drops the lock before printing nhc->name.
+func_set_flag() dereferences tr->current_trace_flags before verifying
+that the current tracer is actually the function tracer. When the active
+tracer has been switched away from "function" (e.g., to "wakeup_rt"),
+tr->current_trace_flags can be NULL, leading to a NULL pointer
+dereference and kernel crash.
 
-lowpan_nhc_del() removes descriptors under the same lock and then relies
-on synchronize_net() before the owning module can be unloaded.  That only
-waits for net RX RCU readers.  lowpan_header_decompress() is also exported
-and can be reached from callers that are not necessarily covered by the net
-core RX critical section, for example the Bluetooth 6LoWPAN L2CAP receive
-path.
+The call chain that triggers this is:
 
-This leaves a race where one task drops lowpan_nhc_lock in the error path,
-another task unregisters and frees the matching descriptor after
-synchronize_net() returns, and the first task then dereferences nhc->name
-for the warning.
+  trace_options_write()
+    -> __set_tracer_option()
+      -> trace->set_flag()          /* func_set_flag */
 
-With the post-unlock window widened, KASAN reports:
+In func_set_flag(), the first operation is:
 
-  BUG: KASAN: slab-use-after-free in lowpan_nhc_do_uncompression+0x1f4/0x220
-  Read of size 8
-  lowpan_nhc_do_uncompression
-  lowpan_header_decompress
+  if (!!set == !!(tr->current_trace_flags->val & bit))
 
-Fix this by printing the warning before dropping lowpan_nhc_lock, so the
-descriptor name is read while unregister is still excluded.  The malformed
-packet is still rejected with -ENOTSUPP.
+This dereferences tr->current_trace_flags unconditionally. The safety
+check that guards against a non-function tracer:
 
-Fixes: 92aa7c65d295 ("6lowpan: add generic nhc layer interface")
+  if (tr->current_trace != &function_trace)
+      return 0;
+
+is placed *after* the dereference, which is too late.
+
+This was observed with the following crash dump:
+
+  BUG: unable to handle page fault at 0000000000000000
+  RIP: func_set_flag+0xd
+
+  Call Trace:
+   __set_tracer_option+0x27
+   trace_options_write+0x75
+   vfs_write+0x12a
+   ksys_write+0x66
+   do_syscall_64+0x5b
+
+  RIP: ffffffff914c973d  RSP: ff67ec88b01dfdf0  RFLAGS: 00010202
+  RAX: 0000000000000000  RBX: ff3a826e80354580  RCX: 0000000000000001
+  RDX: 0000000000000001  RSI: 0000000000000000  RDI: ffffffff93918080
+
+The disassembly confirms the fault:
+
+  func_set_flag+0:   mov 0x1f08(%rdi), %rax  ; RAX = tr->current_trace_flags = NULL
+  func_set_flag+13:  mov (%rax), %eax        ; page fault: dereference NULL
+
+At the time of the crash:
+  tr->current_trace_flags = 0x0 (NULL)
+  tr->current_trace = wakeup_rt_tracer (not function_trace)
+
+The scenario is that a process opens a function tracer option file (such
+as "func_stack_trace"), then the current tracer is switched to another
+tracer (e.g., "wakeup_rt"), which sets current_trace_flags to NULL. When
+the process subsequently writes to the option file, func_set_flag() is
+invoked and crashes on the NULL dereference.
+
+Fix this by moving the current_trace check before the
+current_trace_flags dereference, so that func_set_flag() returns early
+when the function tracer is not active.
+
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Link: https://patch.msgid.link/20260609080054.4541-1-zhaoyz24@mails.tsinghua.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260624061715.1445655-1-xiangzao@linux.alibaba.com
+Fixes: 76680d0d2825 ("tracing: Have function tracer define options per instance")
+Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/6lowpan/nhc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_functions.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/6lowpan/nhc.c
-+++ b/net/6lowpan/nhc.c
-@@ -117,9 +117,9 @@ int lowpan_nhc_do_uncompression(struct s
- 				return ret;
- 			}
- 		} else {
--			spin_unlock_bh(&lowpan_nhc_lock);
- 			netdev_warn(dev, "received nhc id for %s which is not implemented.\n",
- 				    nhc->name);
-+			spin_unlock_bh(&lowpan_nhc_lock);
- 			return -ENOTSUPP;
- 		}
- 	} else {
+--- a/kernel/trace/trace_functions.c
++++ b/kernel/trace/trace_functions.c
+@@ -458,12 +458,12 @@ func_set_flag(struct trace_array *tr, u3
+ 	ftrace_func_t func;
+ 	u32 new_flags;
+ 
+-	/* Do nothing if already set. */
+-	if (!!set == !!(tr->current_trace_flags->val & bit))
++	/* We can change this flag only when current tracer is function. */
++	if (tr->current_trace != &function_trace)
+ 		return 0;
+ 
+-	/* We can change this flag only when not running. */
+-	if (tr->current_trace != &function_trace)
++	/* Do nothing if already set. */
++	if (!!set == !!(tr->current_trace_flags->val & bit))
+ 		return 0;
+ 
+ 	new_flags = (tr->current_trace_flags->val & ~bit) | (set ? bit : 0);
 
 
