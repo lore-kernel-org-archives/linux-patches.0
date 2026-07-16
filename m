@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423194229A6;
-	Thu, 16 Jul 2026 13:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C173426433;
+	Thu, 16 Jul 2026 13:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209812; cv=none; b=gGyhSwxWUwi3J/QBOKCsUzuKHkM+cEy0MCGa7wdJai6C1TrhbUCwfxLJIZByfjsI7zeFUjdrFDCjkNnP+QlJSZQtGYbuR4Aryf0PL3U1k8jaUwDawqhFBDoTvr/yAhhx68BR9hyQTnkBV//Sk3yOOdc0HjGfXmb72+Rz6dvfwl8=
+	t=1784209815; cv=none; b=nZ0uGOag4jpS84xRe3ypOrOM2bzaNda4NkqoO3AB5J1BL+BdeoYcjky01ugF/bFBOGYvEo0XUhHLxgSuDp1DQ7cdUIHsxrd/2X+oDGLNm4Iice1H71nbpJcmyRtLXUkeUJFF3PFgIKHbEHeD1RBGLPyDLBmbUOJO/ibZM7E30LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209812; c=relaxed/simple;
-	bh=9G92QlbPuXNP5h6/e2FDM4l0cEfcAAu3wrnttE2p0kk=;
+	s=arc-20240116; t=1784209815; c=relaxed/simple;
+	bh=/k/LjMmccc3l9F1XtlQNdprqcGZeofPiEBILydPDpOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JE/ye9w6iBi+n3QvAwe95CWqX8NHkCP22qGv85y1dBJAf9rH4/HOSPbQ/c2TYCqLv9q1VODZGO5XTvVwHOg7B/5CXw2enHcR9dGfV+UxIglvhSusHF3Sj6szZ0YlQPLFfnCHuXjXLot3qb5arLHOBEZQAxc228VJqhZ+MV7rFMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8qwyMl/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RxJoJGf5DoCZXLAaVNdGX2jVnhBWZmPsfJa7aIdnsIM+Um+rSacRVOGZEwEgCvXCOJhaVqdH2AzFDZ+2vEDTcTjIk/nWiVEKkhxfsgMr0QnScH8TrSUmumon7wWiFh5lt2nm6zv7aMtqwpyVCE09lg9kRVU6DPwzET2JK8zqbKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQ5zU4P4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8qwyMl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0D21F00A3D;
-	Thu, 16 Jul 2026 13:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQ5zU4P4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410651F00A3A;
+	Thu, 16 Jul 2026 13:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209810;
-	bh=HTc80Dg6x2gGB6rokYdTYAkQCZOQuqZtE6eMcor2aMg=;
+	s=korg; t=1784209812;
+	bh=KsCq32zdABNi/AOQaMapPwHnws4SoP42Rm24F+eqA0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v8qwyMl/NZLQQdQTNBC0l7UuIMPkBlC+ZKUu8CYigb12J39a7Z0ygPLOcJG0luPYI
-	 wPlsExWBawcQzJPRZEAZNaV2M1f75FxzpG1L/pOSdFfyYGVYeaH+AMCsyCuK6OFpuO
-	 CwELCCQpI0qLQR/TCibxFt7lZ42weCHneahBdwF8=
+	b=OQ5zU4P4dj0oTJbrR8K2KnHxAtLQwC2hog5QSpnMuRe7YU6YDG0ekL1oHJgK+GV59
+	 doM+9ktR2RT5/mrZ9RSFHs+kvoU718CllVz6N89Dt3/WfnnKH2CfnoFayTB19TjTWK
+	 c5Pq+OwLaWchjbJKafY8Jr2+XtJcPJRbqPokh3c4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.1 327/518] usb: typec: anx7411: use devm_pm_runtime_enable()
-Date: Thu, 16 Jul 2026 15:29:55 +0200
-Message-ID: <20260716133054.969165051@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Subject: [PATCH 7.1 328/518] usb: typec: class: drop PD lookup reference
+Date: Thu, 16 Jul 2026 15:29:56 +0200
+Message-ID: <20260716133054.990185512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,45 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit 0ef7cc27da8b9e315a4a5a665c68c44206f5e559 upstream.
+commit 43ae2f90b70cda374c487c1639a01d0f14e5d583 upstream.
 
-anx7411_i2c_probe() enables runtime PM before returning successfully, but
-anx7411_i2c_remove() tears down the Type-C partner state, workqueue, dummy
-I2C device, mux, switch and port without disabling runtime PM.
+usb_power_delivery_find() wraps class_find_device_by_name(). That helper
+returns a device reference that must be released by the caller.
 
-Use devm_pm_runtime_enable() so runtime PM is disabled automatically on
-driver detach. Since devres action registration can fail, route that
-failure through the existing probe unwind path.
+select_usb_power_delivery_store() only needs this reference while calling
+the pd_set callback. Drop it once the callback returns. Otherwise the sysfs
+write can pin the selected USB Power Delivery object and prevent it from
+being released on unregister.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: fe6d8a9c8e64 ("usb: typec: anx7411: Add Analogix PD ANX7411 support")
+Fixes: a7cff92f0635 ("usb: typec: USB Power Delivery helpers for ports and partners")
 Cc: stable <stable@kernel.org>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260701114006.75738-1-mhun512@gmail.com
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260702191329.2648043-1-shuangpeng.kernel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/anx7411.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/typec/class.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/typec/anx7411.c
-+++ b/drivers/usb/typec/anx7411.c
-@@ -1537,7 +1537,9 @@ static int anx7411_i2c_probe(struct i2c_
- 	if (anx7411_typec_check_connection(plat))
- 		dev_err(dev, "check status\n");
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -1619,6 +1619,7 @@ static ssize_t select_usb_power_delivery
+ 		return -EINVAL;
  
--	pm_runtime_enable(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		goto free_wq;
- 
- 	return 0;
+ 	ret = port->ops->pd_set(port, pd);
++	put_device(&pd->dev);
+ 	if (ret)
+ 		return ret;
  
 
 
