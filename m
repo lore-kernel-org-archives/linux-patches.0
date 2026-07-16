@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2E93876DE;
-	Thu, 16 Jul 2026 13:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7898F31E85C;
+	Thu, 16 Jul 2026 13:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210118; cv=none; b=koLSnKHZBeU9IBTbv/0LUlW/kxkhy6eIIJgSLvb+UTC8BzGiWiN+HGG3ZXSjxqYBKgshQo7L8PJs7aQIZ328rwQ5tzZlxYpvTBNvbYxdoWK2ekg3PdLKgR9bnmkb9+saXGqSujQdSfzAzkrw68nlDz6C50glHWb4lPH2eN21IzA=
+	t=1784210120; cv=none; b=WeFltf2/EM76IfYgfFs9+mBK4cg3Rp02wkk68ZK6eMuaA/Pt9stZJeqHROQ0bFiMEwkXYyD2MxTgPjls9S1TuWUnLokeiINbZwJa0ktsfILnBQbU/BZx5ZeWRMo2ujdM1CRG91qVimR7Ac6du1gu+Cv7N932hdj0nIVptH+4oL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210118; c=relaxed/simple;
-	bh=1MXBEJKbcYV46zvJNFrgxuAXCoLteVj/72+2vbSQA/I=;
+	s=arc-20240116; t=1784210120; c=relaxed/simple;
+	bh=N1wcpWRl3Xle5Xgfc/nnwWwNjS+TwQqCom5stSB1qxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkrwmS02tCBxIVdtmOfYxnve2JN9l51W4EQFYgkCVLUItBc8m+miRG6o3F/KoB+oyj/H8Z84MKq+lhJcATRmHrnZrQ24xFJPfYGQAqcV87wtwlep33BfmRxXI7Oj/K/rzCTuyVjfQkv7vfHFrNqYa+4zzjsEWnfg+uxJ+GiNBhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6bET2Bs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k7fOWKBaTnNvfMzx1kZmLlLozHkX/2JgjobAfumTHKbULTKrJvLwHMF81zq26pLQw6O6stWts9uyN/Du151UYO3azyddyCYPqK9OBKo8tn0LHZbD5ORgGWq4DXAvnwt4LIJCrHa6LnedUuR9k+ZHsjPdDzTpU0zlh/kz1Aw1mME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VA8724tV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6bET2Bs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416DC1F000E9;
-	Thu, 16 Jul 2026 13:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VA8724tV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFC41F000E9;
+	Thu, 16 Jul 2026 13:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210116;
-	bh=xDQVUfLupA1E84pZxlihVarHYWNDgTlVrukejKqVJrc=;
+	s=korg; t=1784210119;
+	bh=NKrOMsDQkKUjebgNdD3SM+X18rwADrcSa08Je2bgHng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6bET2BsMEhoBROGGrevR88UpnFXhf/wEQa5ZTyW9i0izGrg36guKsiCml6hty6UF
-	 FCzMTJIwKFZKQ4GLuMfp90i8Mr+Ll81wceJqtKVWwnkdd9SJ+UFz0ZxvIgrBU+gTBe
-	 JBt9SYa8qifIVMPPJ5dkqbAOCsKW4v4EJkxMn/f0=
+	b=VA8724tVhYL5rqghzvvm7zt9NkDHASy5q7BmjzHchmINLsPpsQQY3ImZ13pK29IVt
+	 qwcKYdlhgd1wO25sqnV5yTilSLGvyYhm2QNnfJjORveADPhFx9drNGlecOfTZ2HSRj
+	 VGGksfvI8KHgRQMesed1G0ClD0tIe6n/CQH/5Arg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.1 442/518] iommufd: Avoid partial fault group delivery in iommufd_fault_fops_read()
-Date: Thu, 16 Jul 2026 15:31:50 +0200
-Message-ID: <20260716133057.511635062@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.1 402/518] spi: fsl-lpspi: terminate the RX channel on TX prepare failure path
+Date: Thu, 16 Jul 2026 15:31:10 +0200
+Message-ID: <20260716133056.631911288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,70 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit 091ab6d70dc444f56ed14faedbcacfc979f4c613 upstream.
+commit 01980b5da56e573d62798d0ff6c86bcaa2b22cbe upstream.
 
-The cookie returned by xa_alloc() in iommufd_fault_fops_read() is per fault
-group, but the inner copy_to_user() runs per fault inside the group. If a
-copy fails mid-group, xa_erase clears the cookie and the group is restored
-to the deliver list, yet done is not rolled back. The function returns the
-partial byte count, with the successfully copied faults sitting at offsets
-below done carrying the now-erased cookie. The next read() then re-fetches
-the group, allocates a fresh cookie, and re-delivers every fault including
-the ones already copied; userspace sees duplicates carrying the new cookie,
-and a stale cookie that can never be responded to.
+When dmaengine_prep_slave_sg() fails for the TX channel, the error path
+terminates the TX DMA channel but leaves the RX channel running. Since
+the RX channel was already submitted and issued prior to preparing
+the TX descriptor, returning -EINVAL causes the SPI core to unmap the
+DMA buffers while the RX DMA engine continues writing to them, leading
+to potential memory corruption or use-after-free.
 
-Use a local group_done variable that tracks the per-group progress inside
-the inner loop, and only commit done = group_done after the inner loop has
-finished successfully. On a copy_to_user failure the outer break skips the
-commit, so done remains at its prior start-of-group baseline; the partial
-bytes already written past done are undefined to userspace per the read(2)
-contract, and the next read re-delivers the whole group atomically.
+Terminate the RX channel before returning on the TX prepare failure path.
 
-Fixes: 07838f7fd529 ("iommufd: Add iommufd fault object")
-Link: https://patch.msgid.link/r/360cab4d4aeccb0bae275a970e2b3c340a71e0e0.1780343944.git.nicolinc@nvidia.com
+Fixes: 09c04466ce7e ("spi: lpspi: add dma mode support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://patch.msgid.link/20260525062357.3191349-3-carlos.song@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/eventq.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/spi/spi-fsl-lpspi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/iommufd/eventq.c
-+++ b/drivers/iommu/iommufd/eventq.c
-@@ -139,6 +139,8 @@ static ssize_t iommufd_fault_fops_read(s
- 
- 	mutex_lock(&fault->mutex);
- 	while ((group = iommufd_fault_deliver_fetch(fault))) {
-+		size_t group_done = done;
-+
- 		if (done >= count ||
- 		    group->fault_count * fault_size > count - done) {
- 			iommufd_fault_deliver_restore(fault, group);
-@@ -160,16 +162,17 @@ static ssize_t iommufd_fault_fops_read(s
- 			iommufd_compose_fault_message(&iopf->fault,
- 						      &data, idev,
- 						      group->cookie);
--			if (copy_to_user(buf + done, &data, fault_size)) {
-+			if (copy_to_user(buf + group_done, &data, fault_size)) {
- 				xa_erase(&fault->response, group->cookie);
- 				iommufd_fault_deliver_restore(fault, group);
- 				rc = -EFAULT;
- 				break;
- 			}
--			done += fault_size;
-+			group_done += fault_size;
- 		}
- 		if (rc)
- 			break;
-+		done = group_done;
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -647,7 +647,7 @@ static int fsl_lpspi_dma_transfer(struct
+ 				tx->sgl, tx->nents, DMA_MEM_TO_DEV,
+ 				DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+ 	if (!desc_tx) {
+-		dmaengine_terminate_sync(controller->dma_tx);
++		dmaengine_terminate_sync(controller->dma_rx);
+ 		return -EINVAL;
  	}
- 	mutex_unlock(&fault->mutex);
  
 
 
