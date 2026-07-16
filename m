@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3691400973;
-	Thu, 16 Jul 2026 14:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43745413D69;
+	Thu, 16 Jul 2026 14:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210414; cv=none; b=fhvsFTwT/qEjqYzUjxeTwqCePhHKbtHsG41V0fBujAnGkKTrJH/EVaFNJSngA0vnopjYNMzs+WZ6xD/Iz1Bws4da6Re8+mOXzKf087JLVg94phL6so2g9vlw5HfqiPijI/8Ttj5vpXN5Lhfqp+MNF9VmzbUztP2cGDujwK346RY=
+	t=1784210417; cv=none; b=PJXtLLsP7DpWML8fbZG2dYAE+xuhbznBet8LyS+yaCxBDNCZHp2IcXu4zbE0UjPOcrkiGRQCWkmTg3/iaQh7Rovje5dDmW37N1xE+r4a2gCPtr+wquqAT9SqJBuaneCv5YOCb2ko4BxjwpBWSr31Ioi9lYLcy9/IfXCQkZPq3EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210414; c=relaxed/simple;
-	bh=HlItblnNQ4MIF60u/uCAS9Jo02rkYcsuNuTYDRQZCgs=;
+	s=arc-20240116; t=1784210417; c=relaxed/simple;
+	bh=OPyOIaC81L0VSm7u3UAKl2+aJiRLphSlAA20ivqHKFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dTmaDfK38C2bBZhCSHBFHQJqlUpMMf2ogcD6qlahVAwIn/TZDA3rwG7a9GYMmjynNkbcv3/M5ubNQW6S1hK68HyD8GlWtdXqTJfJe+8IaTahaQpsP63/vTwtCjQ3NGaKw312MOaOlCd8VrrrcB1jhAI6MzGmk3t5Y2kgrOHnE/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZLfAx1+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iJymRXwumeVQMoVKKzi0Qa3+0UWTWUa9zX0rFGSuS1qbQTz3UPawuIzeOb3uKu7i62ra8vltXrde88KvjJJn8qGcGXFtyfF+SD0hzsF+/sybHgx3eE9kCcUmeK7CvIWLot+laStrOauvz7T0genNx0bnxi4EXCiALfQTPQzLXXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFvR7TK8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZLfAx1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E9C1F000E9;
-	Thu, 16 Jul 2026 14:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFvR7TK8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2321F000E9;
+	Thu, 16 Jul 2026 14:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210413;
-	bh=YNMhqzGjjf9gds7VTjz7EKauIBvKs4+BXfu01MzB3iE=;
+	s=korg; t=1784210416;
+	bh=AnPllCbKl2gIJ+JhTu2XXRgymtqpinM3RstsX7Dqxe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JZLfAx1+eBdG31FRGWYYFOtBbk3rLEC7tXa8nTPXFbVtp7bdbnw3nXhnTyIXiKeES
-	 F/nFAt8KP3ZVsVwXHvTlyXXqmL7/9KljxLiv/DU7bXvRffngniIqhdYdzF9YoNjmc7
-	 IbV/mENthwCBQL+4C7proFciLTpy34NCu3ri01X0=
+	b=cFvR7TK8QuzhHCYZPwka+wlvrPcYvSBIYVQ6SxV5tcAHkOGOPOJ+E8LWfkpYcq8rK
+	 PzRIIxQ47efNNUG9p8dlGGkIpru/19OS+wabWrYNCDJ/ellYwdz8SBg4rUUANP5cb1
+	 4ZaJ76MBQ2dEQLcjRQ2gb/e8+sT0N7q3u8PujOg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Gary Guo <gary@garyguo.net>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 037/480] rust: cpufreq: clean new `clippy::map_or_identity` lint for Rust 1.98.0
-Date: Thu, 16 Jul 2026 15:26:24 +0200
-Message-ID: <20260716133045.503461247@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Haoze Xie <royenheart@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 038/480] rust: block: fix GenDisk cleanup paths
+Date: Thu, 16 Jul 2026 15:26:25 +0200
+Message-ID: <20260716133045.528049599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,55 +55,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Haoze Xie <royenheart@gmail.com>
 
-commit 3473e0a219fdb2cb013da0a5d917e66fef052325 upstream.
+commit 2957771379fa335103a4b539db57bb2271e12142 upstream.
 
-Starting with Rust 1.98.0 (expected 2026-08-20), Clippy is likely
-introducing a new lint `clippy::map_or_identity` [1][2], which currently
-triggers in a single case:
+GenDiskBuilder::build() still has fallible work after
+__blk_mq_alloc_disk(), but its error path only recovers the
+foreign queue data. That leaks the temporary gendisk and
+request_queue until later teardown. If the caller moved the last
+Arc<TagSet<T>> into build(), the leaked queue can retain blk-mq
+state after the tag set is dropped.
 
-    warning: expression can be simplified using `Result::unwrap_or()`
-        --> rust/kernel/cpufreq.rs:1326:60
-         |
-    1326 |         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
-         |                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-         |
-         = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#map_or_identity
-         = note: `-W clippy::map-or-identity` implied by `-W clippy::all`
-         = help: to override `-W clippy::all` add `#[allow(clippy::map_or_identity)]`
-    help: consider using `unwrap_or`
-         |
-    1326 -         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
-    1326 +         PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).unwrap_or(0))
-         |
+Fix the pre-registration failure path by dropping the temporary
+gendisk reference with put_disk() before recovering queue_data,
+so disk_release() can tear down the owned queue.
 
-The suggestion is valid, thus clean it up.
+Also pair GenDisk::drop() with put_disk() after del_gendisk().
+Once a Rust GenDisk has been added with device_add_disk(),
+del_gendisk() only unregisters it; the final gendisk reference
+still has to be dropped to complete the release path.
 
-Cc: stable@vger.kernel.org # Needed in 6.18.y and later.
-Link: https://github.com/rust-lang/rust-clippy/issues/15801 [1]
-Link: https://github.com/rust-lang/rust-clippy/pull/16052 [2]
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20260530095809.213611-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
+Signed-off-by: Haoze Xie <royenheart@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/b70aff9a920cc42110fe5cf454c3099561863519.1780063368.git.royenheart@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/cpufreq.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/block/mq/gen_disk.rs |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/rust/kernel/cpufreq.rs
-+++ b/rust/kernel/cpufreq.rs
-@@ -1323,7 +1323,7 @@ impl<T: Driver> Registration<T> {
-         // SAFETY: The C API guarantees that `cpu` refers to a valid CPU number.
-         let cpu_id = unsafe { CpuId::from_u32_unchecked(cpu) };
+--- a/rust/kernel/block/mq/gen_disk.rs
++++ b/rust/kernel/block/mq/gen_disk.rs
+@@ -153,6 +153,19 @@ impl GenDiskBuilder {
+         // SAFETY: `gendisk` is a valid pointer as we initialized it above
+         unsafe { (*gendisk).fops = &TABLE };
  
--        PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).map_or(0, |f| f))
-+        PolicyCpu::from_cpu(cpu_id).map_or(0, |mut policy| T::get(&mut policy).unwrap_or(0))
-     }
++        let cleanup_failure = ScopeGuard::new_with_data((gendisk, data), |(gendisk, data)| {
++            // SAFETY: `gendisk` came from `__blk_mq_alloc_disk()` above and
++            // has not been added to the VFS on this cleanup path.
++            unsafe { bindings::put_disk(gendisk) };
++            // SAFETY: `data` came from `into_foreign()` above and has not been
++            // converted back on this cleanup path.
++            drop(unsafe { T::QueueData::from_foreign(data) });
++        });
++
++        // The failure guard now owns both pieces of cleanup; the early guard
++        // must not run on this path anymore.
++        recover_data.dismiss();
++
+         let mut writer = NullTerminatedFormatter::new(
+             // SAFETY: `gendisk` points to a valid and initialized instance. We
+             // have exclusive access, since the disk is not added to the VFS
+@@ -175,7 +188,7 @@ impl GenDiskBuilder {
+             },
+         )?;
  
-     /// Driver's `update_limit` callback.
+-        recover_data.dismiss();
++        cleanup_failure.dismiss();
+ 
+         // INVARIANT: `gendisk` was initialized above.
+         // INVARIANT: `gendisk` was added to the VFS via `device_add_disk` above.
+@@ -218,6 +231,11 @@ impl<T: Operations> Drop for GenDisk<T>
+         // to the VFS.
+         unsafe { bindings::del_gendisk(self.gendisk) };
+ 
++        // SAFETY: By type invariant, `self.gendisk` was added to the VFS, so
++        // `put_disk()` must follow `del_gendisk()` to drop the final gendisk
++        // reference and trigger the remaining release path.
++        unsafe { bindings::put_disk(self.gendisk) };
++
+         // SAFETY: `queue.queuedata` was created by `GenDiskBuilder::build` with
+         // a call to `ForeignOwnable::into_foreign` to create `queuedata`.
+         // `ForeignOwnable::from_foreign` is only called here.
 
 
