@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BF442643D;
-	Thu, 16 Jul 2026 13:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20043424641;
+	Thu, 16 Jul 2026 13:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209916; cv=none; b=JUJFUOlIR4Y87dktLUTTJgUZdQQZYNHnVCYDwDW2bZHZaE6Hd7fQ4tHAkhzPrvov780bnNaDCnwaYVxSh+DeXUTP27ZtH3FK6vUwgTQQgovCpPrp2OGnTPHtVE0q0+t5e7QfS93Af4sR11vtVVcBHIXDA11dinjRapeLdBGW9/U=
+	t=1784209919; cv=none; b=a7zn2zZG5lPBm4jzy0OmlwTCDJIlg0kOdIZclXV12/kIs7j0QSO/ekz2m6yni6r2G08y8qp9ol/7a33r7TWueVPiLK1S54FFH/a6EstxocamP9/DuZVDlN/zITowdvdeF+8pzrKmy/O+AQrVE11NrDnsKKPZrDPTya9XYtS7aok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209916; c=relaxed/simple;
-	bh=ORcRePxz1OWYKiA6nNW27/4ufIUoy4i2Q/iY5lpna0Q=;
+	s=arc-20240116; t=1784209919; c=relaxed/simple;
+	bh=VZTAt/iYdyUzYJaQ6AlTHVz6sT4H6kY7VetS+7Uf9jQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3Se07ACk2bbYDXJes74FYhqVTL7HQUkpfgJlWGVEp1fqvlaD61pf2p5BEfHRizglR33gnzqjGgMP5e+mChvMsPg3C7Y/Gk1SPOdzr+Zu1V08O/9+j5ZCmlbKg4TSH7B37Pdrw1/xNmpU4hpwoDJ6BiINF6iLGQfcn+KycQ2dTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzfCEIjR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uBHHkpTCCKIFleoap135GS+3i992ruZLBNErvXC3dT0meaH/yFPl4hOE6Ur4x4bVeYhw9NDkZnx4ClGyb9M3XscuddIk2aFKBYLc2tS6XKY810VcEm8VTsy6XMszt/pRGMRANi7na9KCNZiy/pBzJsfpxzAsWIvZOFL1AyX+u9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyQNuWiq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzfCEIjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9232A1F000E9;
-	Thu, 16 Jul 2026 13:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyQNuWiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D22B1F000E9;
+	Thu, 16 Jul 2026 13:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209915;
-	bh=CD7waZv0l77fzu4FSYpnr7SxGIxdX2goh6lOkR/9Mec=;
+	s=korg; t=1784209917;
+	bh=JpWpu0H1VxCnDLZwXtFdPNq/NvtJrYgX5gfE59XIRiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wzfCEIjRAPp4R/I9+AyouflL0wKqgFN0jzUnnSQ+5ngO4CeFWZ3dSlEYBTLMTdLoJ
-	 YyQOeeCHY8vrHlqZdINL7KNThNP9SHJGs5ScFzLWxE0Za+JPNkOV8nXDdirLtE/CF9
-	 u2BZ8eJZLtPU0O7kxk3dq91ZG2+hPbkQbyzlqHJ0=
+	b=hyQNuWiqsQyeITMesy27xNk3PsVP7lVlZw1SbC5yIbFaawyIUbEII5oIIb64EK7bV
+	 MNmnsP51pK3/t0gfdypsgP/+yeiCJ5bjt/+mH+eFJiihinmG6UGAKZyg60iio9lcA4
+	 bZDin3AXmybjUREj+eI49mHZZJ5EYZDoMbee8mEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Akhil R <akhilrajeev@nvidia.com>,
+	kernel test robot <lkp@intel.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 368/518] crypto: tegra - fix refcount leak in tegra_se_host1x_submit()
-Date: Thu, 16 Jul 2026 15:30:36 +0200
-Message-ID: <20260716133055.881310827@linuxfoundation.org>
+Subject: [PATCH 7.1 369/518] crypto: loongson - Select CRYPTO_RNG
+Date: Thu, 16 Jul 2026 15:30:37 +0200
+Message-ID: <20260716133055.902992689@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,41 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 6ea0ce3a19f9c37a014099e2b0a46b27fa164564 upstream.
+commit 4c600ab0d8cfc9d75b92f3426dbcb2ad85eac91d upstream.
 
-The timeout error path in tegra_se_host1x_submit() returns without
-calling host1x_job_put(), while all other paths (success, submit
-error, pin error) properly release the job reference through the
-job_put label.  Since host1x_job_alloc() initializes the reference
-count and host1x_job_put() is required to drop it, omitting it on
-timeout causes a permanent refcount leak.
+This driver registers a rng_alg, so it requires CRYPTO_RNG.
 
-Fix this by redirecting the timeout return to the existing job_put
-label, ensuring the job reference and any associated syncpt
-references are consistently released.
-
+Fixes: 766b2d724c8d ("crypto: loongson - add Loongson RNG driver support")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202605201622.qWOiiZTV-lkp@intel.com/
 Cc: stable@vger.kernel.org
-Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Akhil R <akhilrajeev@nvidia.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/tegra/tegra-se-main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/loongson/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/tegra/tegra-se-main.c
-+++ b/drivers/crypto/tegra/tegra-se-main.c
-@@ -180,7 +180,7 @@ int tegra_se_host1x_submit(struct tegra_
- 				 MAX_SCHEDULE_TIMEOUT, NULL);
- 	if (ret) {
- 		dev_err(se->dev, "host1x job timed out\n");
--		return ret;
-+		goto job_put;
- 	}
- 
- 	host1x_job_put(job);
+--- a/drivers/crypto/loongson/Kconfig
++++ b/drivers/crypto/loongson/Kconfig
+@@ -1,5 +1,6 @@
+ config CRYPTO_DEV_LOONGSON_RNG
+ 	tristate "Support for Loongson RNG Driver"
+ 	depends on MFD_LOONGSON_SE
++	select CRYPTO_RNG
+ 	help
+ 	  Support for Loongson RNG Driver.
 
 
