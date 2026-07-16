@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708FD3195EF;
-	Thu, 16 Jul 2026 14:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F4B41F7CC;
+	Thu, 16 Jul 2026 14:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210459; cv=none; b=p+MopuW2pyljIoZv9GHWMKHMp832Z3/6ZymywfS90RwNrE+e6q7BFo0su3gV2RhfjAoKc53ZaZ5zSox1UZF6RP6TCQ+jTcRWE8TbZjVwK/Qjp+Wm/yWmbc4e6OBMX1YmOa83uWtzm6GSqr4USvRlko263wVgMxbLtYS8N1lUo2w=
+	t=1784210462; cv=none; b=la/SrVaiiEiie3o5jclXG8TI1UUWNtRzAC0BnTbiyc4RlCQLkCZ6Ky3cVCUwWs6U2AYqZ1khd1vjg90SP67KNXLtU124DDiFe5ULwfJ3pZGUSn29YeDt+vjY4Uj+AHQU9W3iciry0hOSRtLz4Ztp98tdmHDRxnGLNth+KmzxziE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210459; c=relaxed/simple;
-	bh=8C1n8pmoDhGXZmPartEjW9A+CynwluDCDk9PYGxoKjk=;
+	s=arc-20240116; t=1784210462; c=relaxed/simple;
+	bh=VpuzV9ln3+zwtxAYj/YhtYcEoy8byrnFrMqXJq0pvII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKF5Oh7mmu9dF8Tf43QO4Uwcjolwr6mBycCPI0u9NtbTPdJR+NsjZUuToEkXl4NkxJQajZGtEXnjkOI4VGmIcKKbVScLUsh19ZlDLqKE38ZKDRhytX0/KDunSlpBjErK1Odi4bbyezkZ1FQ8NN1W3xH+JUhBZIiZAVuoyqfrmlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxaKYjGu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XR7+lMkd77zX8+TIvREaBvz6XebXE91K4mXw9pv3QtGaiyLHjy4V3jnZ7QYsYTO5kKoYpSVC49P/3xveoczGOYvqjNkxKgrMH9Y0q0K00QUqrxKEsoP5mstMyV/K+iDAXddYjIpo4PhS3BPreog8Z1xqkhDElRuus0Uzqt+eHhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTuYuEEh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxaKYjGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAB11F000E9;
-	Thu, 16 Jul 2026 14:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTuYuEEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45DA1F000E9;
+	Thu, 16 Jul 2026 14:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210458;
-	bh=THCCD17fNbAywAJTD8U8FyHj1FD9rIniVdyd0Dxy3ws=;
+	s=korg; t=1784210461;
+	bh=mKRglfUve2HQ+kELQA/AKmOUP0GopwscP7/K+00wOt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bxaKYjGulWHMMmALIpbpiL/FJBJtR1qDtPzwa1lyy+40TN88F3ioIHNOfkYQdY5RZ
-	 Vr+CbNxu1MLSBUx/ZL//yL/qjVetrfEpcIr/tXflZ27f+YeNKiZ/wQJZZ64w6N1ULi
-	 2I0jH4R3VDv/U5Mlui3MYM7H9QJMeOlfG5tNtkFM=
+	b=xTuYuEEh7FBebY2xzFlW6K7Nv2K7mS14lP/HIFI0Ucrcl2RQyCkm78lJG2SJo2A9U
+	 QlkqgKRH3/FAdJJeHCjkuiMniozai/aFccyN0m2LBv20GYhJ1B0ZIZOcqn3fIKwkJA
+	 N4LKPkO+EW8CX24vnI++ZExYLb18BPnVgG+w4FQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Maxwell Doose <m32285159@gmail.com>,
-	Vladimir Zapolskiy <vz@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 056/480] iio: adc: spear: Initialize completion before requesting IRQ
-Date: Thu, 16 Jul 2026 15:26:43 +0200
-Message-ID: <20260716133045.924351852@linuxfoundation.org>
+Subject: [PATCH 6.18 057/480] iio: adc: ti-ads1119: fix PM reference leak in buffer preenable
+Date: Thu, 16 Jul 2026 15:26:44 +0200
+Message-ID: <20260716133045.946076879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -55,72 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxwell Doose <m32285159@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 3ee2128b6f0eb0be7b6cb8f6e0f1f113a65201a0 upstream.
+commit adf4bc07f814da8329278d32600147f5a150938c upstream.
 
-In the report from Jaeyoung Chung:
+ads1119_triggered_buffer_preenable() resumes the device with
+pm_runtime_resume_and_get() before starting a conversion.
 
-"spear_adc_probe() in drivers/iio/adc/spear_adc.c registers its
-interrupt handler with devm_request_irq() before it initializes
-st->completion with init_completion(). If an interrupt arrives after
-devm_request_irq() and before init_completion(), the handler calls
-complete() on an uninitialized completion, causing a kernel panic.
+If i2c_smbus_write_byte() fails, the function returns the error directly
+and leaves the runtime PM usage counter elevated. The matching
+postdisable callback is not called when preenable fails, so the reference
+is leaked and the device may remain runtime-active indefinitely.
 
-The probe path, in spear_adc_probe():
+Store the I2C transfer result in ret and drop the runtime PM reference on
+failure before returning the error.
 
-    iodev = devm_iio_device_alloc(&pdev->dev, sizeof(*st)); /* st kzalloc-zeroed */
-    ...
-    retval = devm_request_irq(&pdev->dev, irq, spear_adc_isr, 0,
-                              LPC32XXAD_NAME, st);           /* register handler */
-    ...
-    init_completion(&st->completion);                       /* initialize completion */
-
-spear_adc_isr() calls complete():
-
-    complete(&st->completion);
-
-If the device raises an interrupt before init_completion() runs,
-complete() acquires the uninitialized wait.lock and walks the zeroed
-task_list in swake_up_locked(). The zeroed task_list makes list_empty()
-return false, so swake_up_locked() dereferences a NULL list entry,
-triggering a KASAN wild-memory-access."
-
-Fix the chance of a spurious IRQ causing an uninitialized pointer
-dereference by moving init_completion() above devm_request_irq().
-
-Fixes: b586e5d9eee0 ("staging:iio:adc:spear rename device specific state structure to _state")
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Closes: https://lore.kernel.org/linux-iio/20260610115700.774689-1-jjy600901@snu.ac.kr/
-Signed-off-by: Maxwell Doose <m32285159@gmail.com>
-Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
+Fixes: a9306887eba41 ("iio: adc: ti-ads1119: Add driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/spear_adc.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/adc/ti-ads1119.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/spear_adc.c
-+++ b/drivers/iio/adc/spear_adc.c
-@@ -280,6 +280,7 @@ static int spear_adc_probe(struct platfo
- 	st = iio_priv(indio_dev);
- 	st->dev = dev;
+--- a/drivers/iio/adc/ti-ads1119.c
++++ b/drivers/iio/adc/ti-ads1119.c
+@@ -459,7 +459,11 @@ static int ads1119_triggered_buffer_pree
+ 	if (ret)
+ 		return ret;
  
-+	init_completion(&st->completion);
- 	mutex_init(&st->lock);
+-	return i2c_smbus_write_byte(st->client, ADS1119_CMD_START_SYNC);
++	ret = i2c_smbus_write_byte(st->client, ADS1119_CMD_START_SYNC);
++	if (ret)
++		pm_runtime_put_autosuspend(dev);
++
++	return ret;
+ }
  
- 	/*
-@@ -326,8 +327,6 @@ static int spear_adc_probe(struct platfo
- 
- 	spear_adc_configure(st);
- 
--	init_completion(&st->completion);
--
- 	indio_dev->name = SPEAR_ADC_MOD_NAME;
- 	indio_dev->info = &spear_adc_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
+ static int ads1119_triggered_buffer_postdisable(struct iio_dev *indio_dev)
 
 
