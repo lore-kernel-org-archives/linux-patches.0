@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604D522301;
-	Thu, 16 Jul 2026 13:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D3522301;
+	Thu, 16 Jul 2026 13:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210047; cv=none; b=nb1tSKcbOfmgq1EOGHhldkgA7EIFE7SxITeTW0IwfI/nyJ8lyXnYcjidAAGs/hCYMYesYCM0/zaIjlx3bQjUqWLYcYh5oirXFd22Iyg3rtZXvzKa8NGztnHp+ANcQGuKk7ln7dikncUCuZodMBLIKoxCMB33Uxs0Zv4l/MMHQrY=
+	t=1784210050; cv=none; b=bnHVIhNzSpAA1BxFt3pbu61MOVT8bfnytqc7lYRt/0mDoiovr36SWjVk1LZJD2W/gBBD6kjWIcSOKq0siLcQc4wUSiuTvYXiWvfWpVMjA1D33ls5+fsDQ3klRzgFLlM0X+9WTA8NkTD+rODQ4c4FIocopIzf+R1u0YnfSFfVUyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210047; c=relaxed/simple;
-	bh=Li/isg9iof8aUT0YU6c/k7KZHGrZX22eGSCHLMh8cW4=;
+	s=arc-20240116; t=1784210050; c=relaxed/simple;
+	bh=8vOp2Tvluf7+ddtS7F0A52HDfzDJK/vMkNkTHzLnhNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NR5hGDG7vxn1I12jYOU4ibss+/vLxkSA0fOEY31JXehCoH9jTlwgdjbhXZeB5njEQd6jaTa2N5r5V6me8wyi3dA1auyqnOVBTMaqJl4dO3QSpwaeliNHIixnALVnONL+2Pk/umngN12ntV6WxI/ptqZTkpIVf+edIGvJ/xeMHL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9dD/0XM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ek9CN1dxQneIuu1Z8v3yfKTKiIGt5VwUkxw0hkEoZu4urgMidU0jx4rTyctulJkYRIJljHejJ66vNgZFcjZbQRu1mVjEMYOZ7S1PH7GrLZ26YynddtXJE/7Exg4Sw5pajaCt4q/9pz0RjBQPf1eK4apYiR8A1GZYXmtrXuR12rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lx+I7UeC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9dD/0XM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B431F00A3A;
-	Thu, 16 Jul 2026 13:54:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lx+I7UeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D74E1F000E9;
+	Thu, 16 Jul 2026 13:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210046;
-	bh=NaFp78P2iwFf8MWZXAljzSW7SpNweKjPyAq7OPi5qWg=;
+	s=korg; t=1784210048;
+	bh=j6KEugn6LYfVlmx8w41V+aIHu7aAHkZRVv3c7Sg/NkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h9dD/0XMqVRwDz5S6LNMK4HaxKHKYwVv4JEpf4o/UCL3seRrv+hsxKZhVkdpgGUav
-	 pMnzREycIFlk/qBdy3KTvGDTZoqnHUnzFiAo9r4WlakfHFaPpTtfviUZGZ1aBbRpfF
-	 x5xe4vz9b70qylCnyM58u1RkA5Qr5n5TImcLsXkg=
+	b=lx+I7UeCVoL700ghOukdZQCedN1XIzUGDv21nfEhlpys4zgP/n7Pfqp8MfLou2eKV
+	 LYfkrI2/+dE2fMTpmU+gJPderqXrO2/GDEmPnCIVbB0LxPJ+oe4+TJdmYNLhPdMMAM
+	 +yhUf8SNav3HXYw8GbVA3Gf2hW/0ZvfhHn5JpyBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rochan Avlur <rochan.avlur@gmail.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 417/518] exfat: preserve benign secondary entries during rename and move
-Date: Thu, 16 Jul 2026 15:31:25 +0200
-Message-ID: <20260716133056.961955576@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>
+Subject: [PATCH 7.1 418/518] exfat: bound uniname advance in exfat_find_dir_entry()
+Date: Thu, 16 Jul 2026 15:31:26 +0200
+Message-ID: <20260716133056.984792842@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,338 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rochan Avlur <rochan.avlur@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 942296784b2a9439651750c42f540bf2579b330f upstream.
+commit 3a1230e7b043c62737b05a3e9275ca83a43ad20a upstream.
 
-Commit 8258ef28001a ("exfat: handle unreconized benign secondary
-entries") added cluster freeing for benign secondary entries inside
-exfat_remove_entries().  However, exfat_remove_entries() is also called
-from the rename and move paths (exfat_rename_file and exfat_move_file),
-where the old entry set is being relocated rather than deleted.  This
-causes benign secondary entries such as vendor extension entries to be
-silently destroyed on rename or cross-directory move, violating the
-exFAT spec requirement (section 8.2) that implementations preserve
-unrecognized benign secondary entries.
+In exfat_find_dir_entry(), each TYPE_EXTEND (file name) entry advances the
+output pointer by a fixed amount while the loop guard only tracks the
+accumulated name length:
 
-Fix this by adding a free_benign parameter to exfat_remove_entries()
-so callers can suppress cluster freeing during relocation, and
-extending exfat_init_ext_entry() to copy trailing benign secondary
-entries from the old entry set into the new one internally.  Also
-clean up the error paths to delete newly allocated entries on failure.
+	if (++order == 2)
+		uniname = p_uniname->name;
+	else
+		uniname += EXFAT_FILE_NAME_LEN;
+	len = exfat_extract_uni_name(ep, entry_uniname);
+	name_len += len;
+	unichar = *(uniname+len);
+	*(uniname+len) = 0x0;
 
-Fixes: 8258ef28001a ("exfat: handle unreconized benign secondary entries")
+uniname grows by EXFAT_FILE_NAME_LEN (15) per name entry, but name_len
+grows only by the actual extracted length, which is shorter when a name
+fragment contains an early NUL.  The only guard is
+`name_len >= MAX_NAME_LENGTH`, so a crafted directory with many short
+name fragments lets uniname run far past the
+p_uniname->name[MAX_NAME_LENGTH + 3] buffer while name_len stays small,
+causing an out-of-bounds read and write at *(uniname+len).
+
+The sibling extractor exfat_get_uniname_from_ext_entry() already stops
+on a short fragment (the lockstep `len != EXFAT_FILE_NAME_LEN` guard
+added in commit d42334578eba ("exfat: check if filename entries exceeds
+max filename length")); exfat_find_dir_entry() never got the
+equivalent.  Track the per-entry write offset as a count and reject a
+fragment once the offset, or the offset plus the extracted length, would
+exceed MAX_NAME_LENGTH, before forming the output pointer.
+
+Fixes: ca06197382bd ("exfat: add directory operations")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-fsdevel/CAG7tbBV--waov7XVu2FHQEc6paR92dufS=em9DW5Kzsrpu3iQg@mail.gmail.com/
-Signed-off-by: Rochan Avlur <rochan.avlur@gmail.com>
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/dir.c      |   50 +++++++++++++++++++++++++----
- fs/exfat/exfat_fs.h |    5 +-
- fs/exfat/namei.c    |   89 ++++++++++++++++++++++++++++++++++++++++------------
- 3 files changed, 116 insertions(+), 28 deletions(-)
+ fs/exfat/dir.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 --- a/fs/exfat/dir.c
 +++ b/fs/exfat/dir.c
-@@ -470,32 +470,70 @@ static void exfat_free_benign_secondary_
- 	exfat_free_cluster(inode, &dir);
- }
+@@ -1067,6 +1067,7 @@ rewind:
  
-+/*
-+ * exfat_init_ext_entry - initialize extension entries in a directory entry set
-+ * @es:          target entry set
-+ * @num_entries: number of entries excluding benign secondary entries
-+ * @p_uniname:   filename to store
-+ * @old_es:      optional source entry set with benign secondary entries, or NULL
-+ * @num_extra:   number of benign secondary entries to copy from @old_es
-+ *
-+ * Set up the file, stream extension, and filename entries in @es, optionally
-+ * preserving @num_extra benign secondary entries from @old_es.  @es and @old_es
-+ * may refer to the same entry set; excess entries are marked as deleted.
-+ */
- void exfat_init_ext_entry(struct exfat_entry_set_cache *es, int num_entries,
--		struct exfat_uni_name *p_uniname)
-+		struct exfat_uni_name *p_uniname,
-+		struct exfat_entry_set_cache *old_es, int num_extra)
- {
--	int i;
-+	int i, src_start = 0, old_num;
- 	unsigned short *uniname = p_uniname->name;
- 	struct exfat_dentry *ep;
+ 			if (entry_type == TYPE_EXTEND) {
+ 				unsigned short entry_uniname[16], unichar;
++				unsigned int offset;
  
--	es->num_entries = num_entries;
-+	if (WARN_ON(num_extra < 0 || (num_extra && (!old_es ||
-+		    old_es->num_entries < ES_IDX_FIRST_FILENAME + num_extra))))
-+		num_extra = 0;
-+
-+	/*
-+	 * Save old entry count and source position before modifying
-+	 * es->num_entries, since old_es and es may point to the same
-+	 * entry set.
-+	 */
-+	old_num = es->num_entries;
-+	if (old_es && num_extra > 0)
-+		src_start = old_es->num_entries - num_extra;
-+
-+	es->num_entries = num_entries + num_extra;
- 	ep = exfat_get_dentry_cached(es, ES_IDX_FILE);
--	ep->dentry.file.num_ext = (unsigned char)(num_entries - 1);
-+	ep->dentry.file.num_ext = (unsigned char)(num_entries - 1 + num_extra);
+ 				if (step != DIRENT_STEP_NAME ||
+ 				    name_len >= MAX_NAME_LENGTH) {
+@@ -1075,13 +1076,15 @@ rewind:
+ 					continue;
+ 				}
  
- 	ep = exfat_get_dentry_cached(es, ES_IDX_STREAM);
- 	ep->dentry.stream.name_len = p_uniname->name_len;
- 	ep->dentry.stream.name_hash = cpu_to_le16(p_uniname->name_hash);
- 
-+	if (old_es && num_extra > 0) {
-+		for (i = 0; i < num_extra; i++)
-+			*exfat_get_dentry_cached(es, num_entries + i) =
-+				*exfat_get_dentry_cached(old_es, src_start + i);
-+	}
-+
- 	for (i = ES_IDX_FIRST_FILENAME; i < num_entries; i++) {
- 		ep = exfat_get_dentry_cached(es, i);
- 		exfat_init_name_entry(ep, uniname);
- 		uniname += EXFAT_FILE_NAME_LEN;
- 	}
- 
-+	/* Mark excess old entries as deleted (in-place shrink) */
-+	for (i = num_entries + num_extra; i < old_num; i++) {
-+		ep = exfat_get_dentry_cached(es, i);
-+		exfat_set_entry_type(ep, TYPE_DELETED);
-+	}
-+
- 	exfat_update_dir_chksum(es);
- }
- 
- void exfat_remove_entries(struct inode *inode, struct exfat_entry_set_cache *es,
--		int order)
-+		int order, bool free_benign)
- {
- 	int i;
- 	struct exfat_dentry *ep;
-@@ -503,7 +541,7 @@ void exfat_remove_entries(struct inode *
- 	for (i = order; i < es->num_entries; i++) {
- 		ep = exfat_get_dentry_cached(es, i);
- 
--		if (exfat_get_entry_type(ep) & TYPE_BENIGN_SEC)
-+		if (free_benign && (exfat_get_entry_type(ep) & TYPE_BENIGN_SEC))
- 			exfat_free_benign_secondary_clusters(inode, ep);
- 
- 		exfat_set_entry_type(ep, TYPE_DELETED);
---- a/fs/exfat/exfat_fs.h
-+++ b/fs/exfat/exfat_fs.h
-@@ -524,9 +524,10 @@ void exfat_init_dir_entry(struct exfat_e
- 		unsigned int type, unsigned int start_clu,
- 		unsigned long long size, struct timespec64 *ts);
- void exfat_init_ext_entry(struct exfat_entry_set_cache *es, int num_entries,
--		struct exfat_uni_name *p_uniname);
-+		struct exfat_uni_name *p_uniname,
-+		struct exfat_entry_set_cache *old_es, int num_extra);
- void exfat_remove_entries(struct inode *inode, struct exfat_entry_set_cache *es,
--		int order);
-+		int order, bool free_benign);
- void exfat_update_dir_chksum(struct exfat_entry_set_cache *es);
- int exfat_calc_num_entries(struct exfat_uni_name *p_uniname);
- int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -503,7 +503,7 @@ static int exfat_add_entry(struct inode
- 	 * the first cluster is not determined yet. (0)
- 	 */
- 	exfat_init_dir_entry(&es, type, start_clu, clu_size, &ts);
--	exfat_init_ext_entry(&es, num_entries, &uniname);
-+	exfat_init_ext_entry(&es, num_entries, &uniname, NULL, 0);
- 
- 	ret = exfat_put_dentry_set(&es, IS_DIRSYNC(inode));
- 	if (ret)
-@@ -814,7 +814,7 @@ static int exfat_unlink(struct inode *di
- 	exfat_set_volume_dirty(sb);
- 
- 	/* update the directory entry */
--	exfat_remove_entries(inode, &es, ES_IDX_FILE);
-+	exfat_remove_entries(inode, &es, ES_IDX_FILE, true);
- 
- 	err = exfat_put_dentry_set(&es, IS_DIRSYNC(inode));
- 	if (err)
-@@ -969,7 +969,7 @@ static int exfat_rmdir(struct inode *dir
- 
- 	exfat_set_volume_dirty(sb);
- 
--	exfat_remove_entries(inode, &es, ES_IDX_FILE);
-+	exfat_remove_entries(inode, &es, ES_IDX_FILE, true);
- 
- 	err = exfat_put_dentry_set(&es, IS_DIRSYNC(dir));
- 	if (err)
-@@ -996,6 +996,23 @@ unlock:
- 	return err;
- }
- 
-+/*
-+ * Count benign secondary entries beyond the filename entries.
-+ * Returns the count, or -EIO if the entry set is inconsistent.
-+ */
-+static int exfat_count_extra_entries(struct exfat_entry_set_cache *es)
-+{
-+	struct exfat_dentry *stream;
-+	unsigned int name_entries;
-+	int extra;
-+
-+	stream = exfat_get_dentry_cached(es, ES_IDX_STREAM);
-+	name_entries = EXFAT_FILENAME_ENTRY_NUM(stream->dentry.stream.name_len);
-+	extra = es->num_entries - (ES_IDX_FIRST_FILENAME + name_entries);
-+
-+	return extra >= 0 ? extra : -EIO;
-+}
-+
- static int exfat_rename_file(struct inode *parent_inode,
- 		struct exfat_uni_name *p_uniname, struct exfat_inode_info *ei)
- {
-@@ -1004,6 +1021,7 @@ static int exfat_rename_file(struct inod
- 	struct super_block *sb = parent_inode->i_sb;
- 	struct exfat_entry_set_cache old_es, new_es;
- 	int sync = IS_DIRSYNC(parent_inode);
-+	unsigned int num_extra_entries, num_total_entries;
- 
- 	if (unlikely(exfat_forced_shutdown(sb)))
- 		return -EIO;
-@@ -1013,19 +1031,23 @@ static int exfat_rename_file(struct inod
- 		return num_new_entries;
- 
- 	ret = exfat_get_dentry_set_by_ei(&old_es, sb, ei);
--	if (ret) {
--		ret = -EIO;
--		return ret;
--	}
-+	if (ret)
-+		return -EIO;
- 
- 	epold = exfat_get_dentry_cached(&old_es, ES_IDX_FILE);
- 
--	if (old_es.num_entries < num_new_entries) {
-+	ret = exfat_count_extra_entries(&old_es);
-+	if (ret < 0)
-+		goto put_old_es;
-+	num_extra_entries = ret;
-+	num_total_entries = num_new_entries + num_extra_entries;
-+
-+	if (old_es.num_entries < num_total_entries) {
- 		int newentry;
- 		struct exfat_chain dir;
- 
- 		newentry = exfat_find_empty_entry(parent_inode, &dir,
--				num_new_entries, &new_es);
-+				num_total_entries, &new_es);
- 		if (newentry < 0) {
- 			ret = newentry; /* -EIO or -ENOSPC */
- 			goto put_old_es;
-@@ -1042,13 +1064,23 @@ static int exfat_rename_file(struct inod
- 		epnew = exfat_get_dentry_cached(&new_es, ES_IDX_STREAM);
- 		*epnew = *epold;
- 
--		exfat_init_ext_entry(&new_es, num_new_entries, p_uniname);
-+		exfat_init_ext_entry(&new_es, num_new_entries, p_uniname,
-+				     &old_es, num_extra_entries);
- 
- 		ret = exfat_put_dentry_set(&new_es, sync);
--		if (ret)
-+		if (ret) {
-+			/* Best-effort delete to avoid duplicate entries */
-+			if (!exfat_get_dentry_set(&new_es, sb,
-+						  &dir, newentry,
-+						  ES_ALL_ENTRIES)) {
-+				exfat_remove_entries(parent_inode, &new_es,
-+						    ES_IDX_FILE, false);
-+				exfat_put_dentry_set(&new_es, false);
-+			}
- 			goto put_old_es;
-+		}
- 
--		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FILE);
-+		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FILE, false);
- 		ei->dir = dir;
- 		ei->entry = newentry;
- 	} else {
-@@ -1057,8 +1089,8 @@ static int exfat_rename_file(struct inod
- 			ei->attr |= EXFAT_ATTR_ARCHIVE;
- 		}
- 
--		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FIRST_FILENAME + 1);
--		exfat_init_ext_entry(&old_es, num_new_entries, p_uniname);
-+		exfat_init_ext_entry(&old_es, num_new_entries, p_uniname,
-+				     &old_es, num_extra_entries);
- 	}
- 	return exfat_put_dentry_set(&old_es, sync);
- 
-@@ -1074,6 +1106,7 @@ static int exfat_move_file(struct inode
- 	struct exfat_dentry *epmov, *epnew;
- 	struct exfat_entry_set_cache mov_es, new_es;
- 	struct exfat_chain newdir;
-+	unsigned int num_extra_entries, num_total_entries;
- 
- 	num_new_entries = exfat_calc_num_entries(p_uniname);
- 	if (num_new_entries < 0)
-@@ -1083,8 +1116,14 @@ static int exfat_move_file(struct inode
- 	if (ret)
- 		return -EIO;
- 
-+	ret = exfat_count_extra_entries(&mov_es);
-+	if (ret < 0)
-+		goto put_mov_es;
-+	num_extra_entries = ret;
-+	num_total_entries = num_new_entries + num_extra_entries;
-+
- 	newentry = exfat_find_empty_entry(parent_inode, &newdir,
--			num_new_entries, &new_es);
-+			num_total_entries, &new_es);
- 	if (newentry < 0) {
- 		ret = newentry; /* -EIO or -ENOSPC */
- 		goto put_mov_es;
-@@ -1102,21 +1141,31 @@ static int exfat_move_file(struct inode
- 	epnew = exfat_get_dentry_cached(&new_es, ES_IDX_STREAM);
- 	*epnew = *epmov;
- 
--	exfat_init_ext_entry(&new_es, num_new_entries, p_uniname);
--	exfat_remove_entries(parent_inode, &mov_es, ES_IDX_FILE);
-+	exfat_init_ext_entry(&new_es, num_new_entries, p_uniname,
-+			     &mov_es, num_extra_entries);
-+
-+	exfat_remove_entries(parent_inode, &mov_es, ES_IDX_FILE, false);
- 
- 	ei->dir = newdir;
- 	ei->entry = newentry;
- 
- 	ret = exfat_put_dentry_set(&new_es, IS_DIRSYNC(parent_inode));
--	if (ret)
-+	if (ret) {
-+		/* Best-effort delete to avoid duplicate entries */
-+		if (!exfat_get_dentry_set(&new_es, parent_inode->i_sb,
-+					  &newdir, newentry,
-+					  ES_ALL_ENTRIES)) {
-+			exfat_remove_entries(parent_inode, &new_es,
-+					    ES_IDX_FILE, false);
-+			exfat_put_dentry_set(&new_es, false);
-+		}
- 		goto put_mov_es;
-+	}
- 
- 	return exfat_put_dentry_set(&mov_es, IS_DIRSYNC(parent_inode));
- 
- put_mov_es:
- 	exfat_put_dentry_set(&mov_es, false);
+-				if (++order == 2)
+-					uniname = p_uniname->name;
+-				else
+-					uniname += EXFAT_FILE_NAME_LEN;
 -
- 	return ret;
- }
++				offset = (++order - 2) * EXFAT_FILE_NAME_LEN;
+ 				len = exfat_extract_uni_name(ep, entry_uniname);
+ 				brelse(bh);
++				if (offset > MAX_NAME_LENGTH ||
++				    len > MAX_NAME_LENGTH - offset) {
++					step = DIRENT_STEP_FILE;
++					continue;
++				}
++				uniname = p_uniname->name + offset;
+ 				name_len += len;
  
-@@ -1190,7 +1239,7 @@ static int __exfat_rename(struct inode *
- 			goto del_out;
- 		}
- 
--		exfat_remove_entries(new_inode, &es, ES_IDX_FILE);
-+		exfat_remove_entries(new_inode, &es, ES_IDX_FILE, true);
- 
- 		ret = exfat_put_dentry_set(&es, IS_DIRSYNC(new_inode));
- 		if (ret)
+ 				unichar = *(uniname+len);
 
 
