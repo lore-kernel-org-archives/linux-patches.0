@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05BB42DA51;
-	Thu, 16 Jul 2026 14:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D2742A172;
+	Thu, 16 Jul 2026 14:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211952; cv=none; b=MMRTjMradJUWFGiMrEEy+HzyrXKZ6pklrhGBS9TFF5NNLbXuX2byFssvZRdlmTHaWY0k67WfUlQU8pIhp6Lyo6yTuOk+VHnb1Ic93mQEaoxm4NJsA3xc2fNKSVkgUkrFodJRBPTG64WIddmRa8cPqCfxLoDr5T0PtZFxLcwiFe4=
+	t=1784211954; cv=none; b=AsbVCuYmS3UIvV76rE9v5ftqqsnWhzhomMc5pjUhKwjODGmuW16QMHy9tI22wn+gypeZ8nWYWDc8ke6tlSEQZ+RTofIUTloKQzSvWFrmxevgvpx+aqPN13Yqcj1mb6ZPjAV2TZv0Q+KIr08mykOdIyGFT0VDBLbP5GV6qiQTC6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211952; c=relaxed/simple;
-	bh=tHlxeni1yLO0HuOwaHYcOPKfJxfB6UsGM7HG2/QbhaQ=;
+	s=arc-20240116; t=1784211954; c=relaxed/simple;
+	bh=MHZsaI9C9XOELruDVrg2DIAmxPjPU5tgXJaV7cBu1n4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZtsDtGTc+FSCVWvUL/tfkghsxXNIjyLddv1W69z0vTxiEodnJw0mcDWfawbNV6ye8ZgOZsmEA0Fk3igH/QjBFwtKchQdUsJTUI8crV9gdwgRy5/Ry222+qgbbJ/B5ZLIkpDfY2xY49pSv8FkrJ1HYh/o5V0UQXHiaF/HkIADFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MaSzhlBt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eBJPlGd7YntNW1BfPtM6SgEDBnZF+D2wziiR3RxbbkIoi34Uq4CSU2t9TpYxYfWWYUx2V0GBzpAQ7gydrkrsrGnWovJ8gwgyS10rCZTnq9SBNHDV4pwTg+UNQXzwUYS3zqrH/m3EicsYf0zuX58UZGv9Fo6Gwj7zr38ekLJ+hss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldc3YzfN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MaSzhlBt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EAA1F000E9;
-	Thu, 16 Jul 2026 14:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldc3YzfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D0A1F000E9;
+	Thu, 16 Jul 2026 14:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211950;
-	bh=WVHe/oEruW/ApM8Rd9MfKPqrCtY5gWssJAkdy1fxkHQ=;
+	s=korg; t=1784211952;
+	bh=VIKNo6WfK0QHUP7EtNbOplvufFJI/yja2zZTyEaxSmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MaSzhlBtbyj2iyzVBI+8iVSh5YThYM5Tmz3QNfQBs3ehN+HzCYj5LcCEJJlfBj2MT
-	 XkkipNCAniYfdvHx0ZGFk1PY+uY0B0IKEdcXb/k2BC1bE9WXFUv2fWMK8OCSdxhoWR
-	 GRmeyLcMH148DXulOOgX3rjDTBDm7zSCqjYJPFCA=
+	b=ldc3YzfNJecG2mLA8iBT+GCXe7/iIZnFci+AJCGuaOGy/+o/pIHO3+vFPPBfMsyzi
+	 ZIpKY6EtMNeU8aj193OIaOp3UBokuZZhaSBNyLlmW7IMSCCQhikSVyt2iNselJ0vCK
+	 1oNy9H24cLLNOFKDVPdgP8r1Bpj5tozr4KQkChDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Eric Dumazet <edumazet@google.com>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 140/349] net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes
-Date: Thu, 16 Jul 2026 15:31:14 +0200
-Message-ID: <20260716133036.498307977@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Benson Leung <bleung@chromium.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 141/349] mfd: cros_ec: Delay dev_set_drvdata() until probe success
+Date: Thu, 16 Jul 2026 15:31:15 +0200
+Message-ID: <20260716133036.521436890@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -55,100 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-commit efb8763d7bbb40cff4cc55a6b62c3095a038149c upstream.
+commit 8b2c1d41bc36c100b38ce5ee6def246c527eaf8a upstream.
 
-Reject invalid `net.ipv4.tcp_reordering` values before they reach TCP
-socket state. The sysctl is stored as an `int` but copied into the
-`u32` `tp->reordering` field for new sockets, so negative writes wrap
-to large values.
+If ec_device_probe() fails, cros_ec_class_release releases memory for the
+cros_ec_dev structure. However, because the drvdata was already set,
+sub-drivers like cros_ec_typec can still retrieve the stale pointer via the
+platform device. This leads to a use-after-free when cros_ec_typec attempts
+to access &typec->ec->ec->dev on a device that has already been released.
+Move dev_set_drvdata() to ensure that the pointer is only made available
+once all initialization steps have succeeded.
 
-With `tcp_mtu_probing=2`, the wrapped value can overflow the
-`tcp_mtu_probe()` size calculation and drive the MTU probing path into
-an out-of-bounds read. Route `tcp_reordering` writes through
-`proc_dointvec_minmax()` and require it to be at least 1. Also require
-`tcp_max_reordering` to be at least 1 so the configured maximum cannot
-become negative either.
+ sysfs: cannot create duplicate filename '/class/chromeos/cros_ec'
+ Call trace:
+  sysfs_do_create_link_sd+0x94/0xdc
+  sysfs_create_link+0x30/0x44
+  device_add_class_symlinks+0x90/0x13c
+  device_add+0xf0/0x50c
+  ec_device_probe+0x150/0x4f0
+  platform_probe+0xa0/0xe0
+ ...
+ BUG: KASAN: invalid-access in __memcpy+0x44/0x230
+ Write at addr f5ffff809e2d33ac by task kworker/u32:5/125
+ Pointer tag: [f5], memory tag: [fe]
+ Tainted : [W]=WARN, [O]=OOT_MODULE
+ Hardware name: Google Navi unprovisioned 0x7FFFFFFF/sku0 board/sku3
+ Workqueue: events_unbound deferred_probe_work_func
+ Call trace:
+  __memcpy+0x44/0x230
+  cros_ec_check_features+0x60/0xcc [cros_ec_proto]
+  cros_typec_probe+0xe8/0x6e0 [cros_ec_typec]
+  platform_probe+0xa0/0xe0
 
-When registering the table for a non-init network namespace, relocate
-`extra2` pointers that refer into `init_net.ipv4` so the
-`tcp_reordering` upper bound follows that namespace's
-`tcp_max_reordering`.
-
-Harden `tcp_mtu_probe()` itself by computing `size_needed` as `u64`.
-This keeps the send queue and window checks from being bypassed through
-signed integer overflow.
-
-Fixes: 91cc17c0e5e5 ("[TCP]: MTUprobe: receiver window & data available checks fixed")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/1a5b7e1ef4d70fbad8c8ee0b82d8405f3c964a3d.1781395200.git.bronzed_45_vested@icloud.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1c1d152cc5ac ("platform/chrome: cros_ec_dev - utilize new cdev_device_add helper function")
+Co-developed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://patch.msgid.link/20260427131721.1165078-1-akuchynski@chromium.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/sysctl_net_ipv4.c |   10 ++++++++--
- net/ipv4/tcp_output.c      |    4 ++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/mfd/cros_ec_dev.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -1019,7 +1019,9 @@ static struct ctl_table ipv4_net_table[]
- 		.data		= &init_net.ipv4.sysctl_tcp_reordering,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ONE,
-+		.extra2		= &init_net.ipv4.sysctl_tcp_max_reordering,
- 	},
- 	{
- 		.procname	= "tcp_retries1",
-@@ -1245,7 +1247,8 @@ static struct ctl_table ipv4_net_table[]
- 		.data		= &init_net.ipv4.sysctl_tcp_max_reordering,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ONE,
- 	},
- 	{
- 		.procname	= "tcp_dsack",
-@@ -1601,6 +1604,9 @@ static __net_init int ipv4_sysctl_init_n
- 				 */
- 				table[i].mode &= ~0222;
- 			}
-+			if (table[i].extra2 >= (void *)&init_net.ipv4 &&
-+			    table[i].extra2 < (void *)(&init_net.ipv4 + 1))
-+				table[i].extra2 += (void *)net - (void *)&init_net;
- 		}
- 	}
+--- a/drivers/mfd/cros_ec_dev.c
++++ b/drivers/mfd/cros_ec_dev.c
+@@ -191,7 +191,6 @@ static int ec_device_probe(struct platfo
+ 	if (!ec)
+ 		return retval;
  
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2452,7 +2452,7 @@ static int tcp_mtu_probe(struct sock *sk
- 	struct sk_buff *skb, *nskb, *next;
- 	struct net *net = sock_net(sk);
- 	int probe_size;
--	int size_needed;
-+	u64 size_needed;
- 	int copy, len;
- 	int mss_now;
- 	int interval;
-@@ -2476,7 +2476,7 @@ static int tcp_mtu_probe(struct sock *sk
- 	mss_now = tcp_current_mss(sk);
- 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
- 				    icsk->icsk_mtup.search_low) >> 1);
--	size_needed = probe_size + (tp->reordering + 1) * tp->mss_cache;
-+	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
- 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
- 	/* When misfortune happens, we are reprobing actively,
- 	 * and then reprobe timer has expired. We stick with current
+-	dev_set_drvdata(dev, ec);
+ 	ec->ec_dev = dev_get_drvdata(dev->parent);
+ 	ec->dev = dev;
+ 	ec->cmd_offset = ec_platform->cmd_offset;
+@@ -233,6 +232,8 @@ static int ec_device_probe(struct platfo
+ 	if (retval)
+ 		goto failed;
+ 
++	dev_set_drvdata(dev, ec);
++
+ 	/* check whether this EC is a sensor hub. */
+ 	if (cros_ec_get_sensor_count(ec) > 0) {
+ 		retval = mfd_add_hotplug_devices(ec->dev,
 
 
