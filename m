@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3F63161AD;
-	Thu, 16 Jul 2026 14:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB2C3161AD;
+	Thu, 16 Jul 2026 14:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211491; cv=none; b=U+bDRvu2G3yftfnM8cXy5RHbVtNfMNmQPMyAdDuX3x5/ThSwlOGQb3XKkUepzssr2lNDh6Hl4/FPXNI6AWmwikPh8zgB4N3Q2lDMkPRnaBRtAIEsJ74b0VRpppMcMPfuL0L9FaH9MvDJYFOtGaYv/h1QV6T36duvTP6P6EboVnw=
+	t=1784211494; cv=none; b=XsoC4IonKG5TRBDlwMha7ZqOXla41jcSXeM/lgVbKMuAdvuTmsXbR2nHJWVVHcgND3WnoPRPCmCH3GTebG6XyO/dHlyI/cIa1NtEX417Mxcuaaibrm+lg459+GV2Yk5/gI0QdOBEdPOvYNQV8Ke/Fg4ZNuN/8g1j/xjltkApzwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211491; c=relaxed/simple;
-	bh=Jl+cxZD21mFvsVnVSBCEK2n5iZY1x8TumMDJ/AKkb4w=;
+	s=arc-20240116; t=1784211494; c=relaxed/simple;
+	bh=ZIRoIUJUoItxV9ch8KN9edyP3HsN4DUUQCOHvMC93iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3CWSg/vHK0M6Hs9NeTONlsKpTWD3fMP/KwUhlJYre3KUqay5unbUKwn6cY26CnOe3lqLkNuOD15x5+OJj9QV5Y2ZDU3jcpXXggmdHOrFTiZ5V9vBy5U/e92IgiJLYXL2b1OT3Jj4c1SsX7xG2AczrEtq2I5pHail9PK3yOKkPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u48I6dJS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kx4un2PxmwEvw1ueiau2B5Xg9JV96FzbCLyZA3OghusItSxL5ZOVcuVAjHu4s/Gu6qQy9UYjyqoRUxBT+Hcp5xv80JnOfS2dk9Y3zZbs8m2AxKm0P4NPgIRef5z/ieyBea8vn6UrsKXAhM+0JduFxXqofzg7cBfhLeBkTLkj8uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2Pf8WkF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u48I6dJS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB611F000E9;
-	Thu, 16 Jul 2026 14:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2Pf8WkF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57921F000E9;
+	Thu, 16 Jul 2026 14:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211490;
-	bh=Yx6V3i4qLOwB20MuM3faQg4nmfwwSH5cUOBQ8l8PZSI=;
+	s=korg; t=1784211493;
+	bh=X8FECx6tK+bG6marDWY+UEta7sY27lHMqPy0hgtjbKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u48I6dJSlbR5VB/qF6eOwg9ho8eBBtXTTpjj3AIrTbBaneroYArUhNtgvgjwQfkmq
-	 /TOq5ZE7+2Nqmss4bH1ymi9xrmlhUByNZbUEX7nYeKs80PaOMXXVyI9Q636QR3CEjT
-	 qQrHXzPXRbhanOClty0zQjYIcwKc6StZFpAkQiR8=
+	b=r2Pf8WkF0d59ipsML/2neuEWfoRJsmo3NgVIPSJ7HSJVhe/K+ujNeMKdi2UM235eB
+	 n8JJRlLn1QaYbSWrV+51Cqz7gTdAFoPwlGu9fWKe4V3moT668e1nO8OgqhWtu7iGZa
+	 G5UxY+I6dAC4UcKJTBSKEY2YkkmN98zonXOSMWhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bryam Vargas <hexlabsecurity@proton.me>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 447/480] Input: goodix - clamp the device-reported contact count
-Date: Thu, 16 Jul 2026 15:33:14 +0200
-Message-ID: <20260716133054.492383131@linuxfoundation.org>
+Subject: [PATCH 6.18 448/480] Input: iforce - bound the device-reported force-feedback effect index
+Date: Thu, 16 Jul 2026 15:33:15 +0200
+Message-ID: <20260716133054.514208348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,53 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 5ed62a96e06be4e94b8296b7932afee550a70e04 upstream.
+commit 0e9943d2e4c63496b6ca84bc66fd3c71d40558e2 upstream.
 
-goodix_ts_read_input_report() copies the number of touch points reported
-by the device into an on-stack buffer
+iforce_process_packet() handles a status report (packet id 0x02) by
+taking a force-feedback effect index straight from the device wire and
+using it to address the per-effect state array:
 
-	u8 point_data[2 + GOODIX_MAX_CONTACT_SIZE * GOODIX_MAX_CONTACTS];
+	i = data[1] & 0x7f;
+	if (data[1] & 0x80) {
+		if (!test_and_set_bit(FF_CORE_IS_PLAYED,
+				      iforce->core_effects[i].flags))
+			...
+	} else if (test_and_clear_bit(FF_CORE_IS_PLAYED,
+				      iforce->core_effects[i].flags)) {
+		...
+	}
 
-which is sized for at most GOODIX_MAX_CONTACTS (10) contacts. The only
-runtime check bounds the per-interrupt count against ts->max_touch_num,
-but that value is taken verbatim from a 4-bit field of the device
-configuration block and is never clamped:
+The index is masked only with 0x7f, so it ranges 0..127, but
+core_effects[] holds only IFORCE_EFFECTS_MAX (32) entries.  For an index
+of 32..127 the test_and_set_bit()/test_and_clear_bit() is an
+out-of-bounds single-bit read-modify-write past the array.  core_effects[]
+is the second-to-last member of struct iforce, so the write lands in the
+trailing members and beyond the embedding kzalloc()'d iforce_serio /
+iforce_usb object.
 
-	ts->max_touch_num = ts->config[MAX_CONTACTS_LOC] & 0x0f;
+data[1] is unvalidated device payload on both transports (the USB
+interrupt endpoint and serio), and the status path is not gated on force
+feedback being present, so a malicious or counterfeit device can set or
+clear a bit at an attacker-chosen offset past the object.
 
-The nibble can be 0..15, so a malfunctioning, malicious or counterfeit
-controller (or an attacker tampering with the I2C bus) can advertise up
-to 15 contacts. goodix_ts_read_input_report() then accepts a touch_num
-of up to 15 and the second goodix_i2c_read() writes
-ts->contact_size * (touch_num - 1) bytes past the one-contact header into
-point_data - up to 30 bytes (45 with the 9-byte report format) beyond the
-92-byte buffer: a stack out-of-bounds write.
+Reject an out-of-range index instead of indexing with it.  Bound against
+the array dimension IFORCE_EFFECTS_MAX rather than dev->ff->max_effects so
+the check guarantees memory safety regardless of how many effects the
+device registered.  A legitimate "effect started/stopped" status always
+carries an index below IFORCE_EFFECTS_MAX, so well-formed devices are
+unaffected; the neighbouring mark_core_as_ready() loop is already bounded
+and is left untouched.
 
-Clamp max_touch_num to GOODIX_MAX_CONTACTS, the number of contacts
-point_data[] is sized for, when reading it from the configuration.
-
-Fixes: a7ac7c95d468 ("Input: goodix - use max touch number from device config")
-Cc: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260612-b4-disp-6844625d-v1-1-df0aed080c9d@proton.me
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260613-b4-disp-4828d263-v1-1-02320e1a89dd@proton.me
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/goodix.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/joystick/iforce/iforce-packets.c |   18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
---- a/drivers/input/touchscreen/goodix.c
-+++ b/drivers/input/touchscreen/goodix.c
-@@ -1057,7 +1057,8 @@ static void goodix_read_config(struct go
- 	}
+--- a/drivers/input/joystick/iforce/iforce-packets.c
++++ b/drivers/input/joystick/iforce/iforce-packets.c
+@@ -186,14 +186,18 @@ void iforce_process_packet(struct iforce
  
- 	ts->int_trigger_type = ts->config[TRIGGER_LOC] & 0x03;
--	ts->max_touch_num = ts->config[MAX_CONTACTS_LOC] & 0x0f;
-+	ts->max_touch_num = min(ts->config[MAX_CONTACTS_LOC] & 0x0f,
-+				GOODIX_MAX_CONTACTS);
+ 		/* Check if an effect was just started or stopped */
+ 		i = data[1] & 0x7f;
+-		if (data[1] & 0x80) {
+-			if (!test_and_set_bit(FF_CORE_IS_PLAYED, iforce->core_effects[i].flags)) {
+-				/* Report play event */
+-				input_report_ff_status(dev, i, FF_STATUS_PLAYING);
++		if (i < IFORCE_EFFECTS_MAX) {
++			if (data[1] & 0x80) {
++				if (!test_and_set_bit(FF_CORE_IS_PLAYED,
++						      iforce->core_effects[i].flags)) {
++					/* Report play event */
++					input_report_ff_status(dev, i, FF_STATUS_PLAYING);
++				}
++			} else if (test_and_clear_bit(FF_CORE_IS_PLAYED,
++						      iforce->core_effects[i].flags)) {
++				/* Report stop event */
++				input_report_ff_status(dev, i, FF_STATUS_STOPPED);
+ 			}
+-		} else if (test_and_clear_bit(FF_CORE_IS_PLAYED, iforce->core_effects[i].flags)) {
+-			/* Report stop event */
+-			input_report_ff_status(dev, i, FF_STATUS_STOPPED);
+ 		}
  
- 	x_max = get_unaligned_le16(&ts->config[RESOLUTION_LOC]);
- 	y_max = get_unaligned_le16(&ts->config[RESOLUTION_LOC + 2]);
+ 		for (j = 3; j < len; j += 2)
 
 
