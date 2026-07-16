@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D4843305A;
-	Thu, 16 Jul 2026 14:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F069A43305A;
+	Thu, 16 Jul 2026 14:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212375; cv=none; b=gQcC37hK9EtaBLw/BGn/AsRuix6BqUHaO76FBz8rsXeueq1evq984M+2F6INyGOW15NLh7GAuwNZEx9iN1QpYNhlmSBu+CgC3wmaZlEp7cf8tOT2ShgbN+4wgkXQt6jG0yxwG0QJN426IpLafoUkeqFHuEQaUpTntfLKU3FeJOA=
+	t=1784212378; cv=none; b=l7ev6tAdKWnlimyezdm4/4XoOp9vlZIVVbhWPHZDjGDBCM8ZpQH/R0zc0PPO8loXmT3c1DFQDtTtN8nfF9e41BXtFkkYdKsCQcA9nfZGbLzFYkNeJViza5pTmGKH+0MlfdIkj5JxfEeeLdT0NAq/poGYIbouQa6YSmImFhamIgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212375; c=relaxed/simple;
-	bh=baEemSSxWqKEe7IwK4vwQMlj51NHWdSPoGhnaiNcN+0=;
+	s=arc-20240116; t=1784212378; c=relaxed/simple;
+	bh=2YfuJRSjT2HbjEGuqakYyZLH9n1KIFx+mvLVi1mfOes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFLKMFNzrnYBGPQNeXSm7drv5AAo3cIduCiJiWiaNak2b7dzBLZm7hm7iwjQqjulntXezQ1sj7soG/kXahWkZU93UJTXfyzxEtbKafxO0J9Rjym96yWhaYTd97sYwbZBK86rwAXLTkKrUFrpVLGpozDJJoPmIHMrClh+1veSzsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXMePpGT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kD9LckFVq9pkGDzxwzoi5Z+yQH6djiB1erFkElpH1gscLRBhVE42xL+T1tzOrYDSJWqxbQepT17fGjkoIIcq0d/kPTmHF5P90XgnulHHpnLZDCfwOhVHbvEpxrWzY6perqZ3cwHS1HOEBfIKVUNck+lnxQ5Z0KKL3RveryvnS8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5yKtPwC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXMePpGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14331F000E9;
-	Thu, 16 Jul 2026 14:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5yKtPwC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9B71F000E9;
+	Thu, 16 Jul 2026 14:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212374;
-	bh=7MOfT8chf1GQXDlbBrPztiYtBeWKYU5AcK8ZaS/tFvE=;
+	s=korg; t=1784212376;
+	bh=D2rR9NwuTXXvHQffp8wxGAxSWsx182CMb2pLDNVlaH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oXMePpGT1s7lsZHH8AVWC1Beb7Qwedp+jENGSF/sJyRyBSuAulMvYX2wSRjHvXKYV
-	 qOogYb4qZRZ0aEbhsfapHs2LHvmE4YpJSAVGqqJwm3qWTmP/UtWQjbiIAEoulbe79k
-	 cPrr1ekwV81M0C3tfxkBkiRUUefPCQPzznGb5U+Y=
+	b=F5yKtPwCPrAaNZ+emqanXSgPgqyuldmmGvCd4HtE5ut6KksVG/d3avA7661QS0n7k
+	 Ctg6pFdlqjtjfEtsqOkhDX9yBcw82z6bsmRidg3tV1lp7xXcTB8qZiU9JKvjq7Av9g
+	 TMc4x/UgXI9Ho+zZZpSaBK5e7Wmu7P79QJ0H0jKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Reid <preid@electromag.com.au>,
-	Johan Hovold <johan@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.12 303/349] i2c: core: fix hang on adapter registration failure
-Date: Thu, 16 Jul 2026 15:33:57 +0200
-Message-ID: <20260716133040.101858681@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Huihui Huang <hhhuang@smu.edu.sg>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 304/349] tracing: Prevent out-of-bounds read in glob matching
+Date: Thu, 16 Jul 2026 15:33:58 +0200
+Message-ID: <20260716133040.125269277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,109 +57,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Huihui Huang <hhhuang@smu.edu.sg>
 
-commit 3c7e164344e5bcf6f274bbf59a3274f5caad9bc1 upstream.
+commit 0a6070839b1ef276d5b05bedfb787743e140fb17 upstream.
 
-Clients may be registered from bus notifier callbacks when the adapter
-is registered. On a subsequent error during registration, the adapter
-references taken by such clients prevent the wait for the references to
-be released from ever completing.
+String event fields are not necessarily NUL-terminated, so the filter
+predicate functions (filter_pred_string(), filter_pred_strloc() and
+filter_pred_strrelloc()) pass the field length to the regex match
+callbacks, and the length-aware matchers honour it.
 
-Fix this by refactoring client deregistration and deregistering also on
-late adapter registration failures.
+regex_match_glob() was the exception: it ignored the length and called
+glob_match(), which scans the string until it hits a NUL byte. Some
+string fields are not NUL-terminated. One example is the dynamic char
+array of the xfs_* namespace tracepoints, which is copied without a
+trailing NUL. For such a field, glob matching reads past the end of
+the event field, causing a KASAN slab-out-of-bounds read in
+glob_match(), reached via regex_match_glob() and filter_match_preds()
+from the xfs_lookup tracepoint.
 
-Fixes: f8756c67b3de ("i2c: core: call of_i2c_setup_smbus_alert in i2c_register_adapter")
-Cc: stable@vger.kernel.org	# 4.15
-Cc: Phil Reid <preid@electromag.com.au>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Add a length-bounded glob_match_len() and use it from regex_match_glob()
+so glob matching always stops at the field boundary. The matching loop
+is factored into a shared helper so glob_match() keeps its behaviour.
+
+Fixes: 60f1d5e3bac4 ("ftrace: Support full glob matching")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/da1aaf125fc3b63320b0c540fd6afa7c3d5b4f1a.1782836943.git.hhhuang@smu.edu.sg
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |   49 ++++++++++++++++++++++++++------------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ include/linux/glob.h               |    1 +
+ kernel/trace/trace_events_filter.c |    6 ++----
+ lib/glob.c                         |   31 +++++++++++++++++++++++++++++--
+ 3 files changed, 32 insertions(+), 6 deletions(-)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -63,6 +63,7 @@
- static DEFINE_MUTEX(core_lock);
- static DEFINE_IDR(i2c_adapter_idr);
+--- a/include/linux/glob.h
++++ b/include/linux/glob.h
+@@ -6,5 +6,6 @@
+ #include <linux/compiler.h>	/* For __pure */
  
-+static void i2c_deregister_clients(struct i2c_adapter *adap);
- static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver);
+ bool __pure glob_match(char const *pat, char const *str);
++bool __pure glob_match_len(char const *pat, char const *str, size_t len);
  
- static DEFINE_STATIC_KEY_FALSE(i2c_trace_msg_key);
-@@ -1598,6 +1599,7 @@ static int i2c_register_adapter(struct i
- 	return 0;
- 
- out_reg:
-+	i2c_deregister_clients(adap);
- 	debugfs_remove_recursive(adap->debugfs);
- 	init_completion(&adap->dev_released);
- 	device_unregister(&adap->dev);
-@@ -1739,29 +1741,10 @@ static int __process_removed_adapter(str
+ #endif	/* _LINUX_GLOB_H */
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -1056,11 +1056,9 @@ static int regex_match_end(char *str, st
  	return 0;
  }
  
--/**
-- * i2c_del_adapter - unregister I2C adapter
-- * @adap: the adapter being unregistered
-- * Context: can sleep
-- *
-- * This unregisters an I2C adapter which was previously registered
-- * by @i2c_add_adapter or @i2c_add_numbered_adapter.
-- */
--void i2c_del_adapter(struct i2c_adapter *adap)
-+static void i2c_deregister_clients(struct i2c_adapter *adap)
+-static int regex_match_glob(char *str, struct regex *r, int len __maybe_unused)
++static int regex_match_glob(char *str, struct regex *r, int len)
  {
--	struct i2c_adapter *found;
- 	struct i2c_client *client, *next;
+-	if (glob_match(r->pattern, str))
+-		return 1;
+-	return 0;
++	return glob_match_len(r->pattern, str, len) ? 1 : 0;
+ }
  
--	/* First make sure that this adapter was ever added */
--	mutex_lock(&core_lock);
--	found = idr_find(&i2c_adapter_idr, adap->nr);
--	mutex_unlock(&core_lock);
--	if (found != adap) {
--		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
--		return;
--	}
--
--	i2c_acpi_remove_space_handler(adap);
- 	/* Tell drivers about this removal */
- 	mutex_lock(&core_lock);
- 	bus_for_each_drv(&i2c_bus_type, NULL, adap,
-@@ -1787,6 +1770,32 @@ void i2c_del_adapter(struct i2c_adapter
- 	 * them up properly, so we give them a chance to do that first. */
- 	device_for_each_child(&adap->dev, NULL, __unregister_client);
- 	device_for_each_child(&adap->dev, NULL, __unregister_dummy);
+ /**
+--- a/lib/glob.c
++++ b/lib/glob.c
+@@ -9,6 +9,9 @@
+ MODULE_DESCRIPTION("glob(7) matching");
+ MODULE_LICENSE("Dual MIT/GPL");
+ 
++static bool __pure glob_match_str(char const *pat, char const *str,
++				  char const *str_end);
++
+ /**
+  * glob_match - Shell-style pattern matching, like !fnmatch(pat, str, 0)
+  * @pat: Shell-style pattern to match, e.g. "*.[ch]".
+@@ -39,6 +42,29 @@ MODULE_LICENSE("Dual MIT/GPL");
+  */
+ bool __pure glob_match(char const *pat, char const *str)
+ {
++	return glob_match_str(pat, str, NULL);
 +}
++EXPORT_SYMBOL(glob_match);
 +
 +/**
-+ * i2c_del_adapter - unregister I2C adapter
-+ * @adap: the adapter being unregistered
-+ * Context: can sleep
++ * glob_match_len - glob match against a length-bounded string
++ * @pat: Shell-style pattern to match.
++ * @str: String to match.  Need not be NUL-terminated.
++ * @len: Number of bytes of @str that may be read.
 + *
-+ * This unregisters an I2C adapter which was previously registered
-+ * by @i2c_add_adapter or @i2c_add_numbered_adapter.
++ * Like glob_match(), but @str is only read up to @len bytes, so it can be
++ * used on buffers that are not NUL-terminated (e.g. trace event fields).
++ * A NUL byte within @len still terminates the string.
 + */
-+void i2c_del_adapter(struct i2c_adapter *adap)
++bool __pure glob_match_len(char const *pat, char const *str, size_t len)
 +{
-+	struct i2c_adapter *found;
++	return glob_match_str(pat, str, str + len);
++}
++EXPORT_SYMBOL(glob_match_len);
 +
-+	/* First make sure that this adapter was ever added */
-+	mutex_lock(&core_lock);
-+	found = idr_find(&i2c_adapter_idr, adap->nr);
-+	mutex_unlock(&core_lock);
-+	if (found != adap) {
-+		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
-+		return;
-+	}
-+
-+	i2c_acpi_remove_space_handler(adap);
-+
-+	i2c_deregister_clients(adap);
++static bool __pure glob_match_str(char const *pat, char const *str,
++				  char const *str_end)
++{
+ 	/*
+ 	 * Backtrack to previous * on mismatch and retry starting one
+ 	 * character later in the string.  Because * matches all characters
+@@ -53,9 +79,11 @@ bool __pure glob_match(char const *pat,
+ 	 * on mismatch, or true after matching the trailing nul bytes.
+ 	 */
+ 	for (;;) {
+-		unsigned char c = *str++;
++		unsigned char c = (str_end && str >= str_end) ? '\0' : *str;
+ 		unsigned char d = *pat++;
  
- 	/* device name is gone after device_unregister */
- 	dev_dbg(&adap->dev, "adapter [%s] unregistered\n", adap->name);
++		str++;
++
+ 		switch (d) {
+ 		case '?':	/* Wildcard: anything but nul */
+ 			if (c == '\0')
+@@ -122,4 +150,3 @@ backtrack:
+ 		}
+ 	}
+ }
+-EXPORT_SYMBOL(glob_match);
 
 
