@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910E741A79A;
-	Thu, 16 Jul 2026 13:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C80636A35E;
+	Thu, 16 Jul 2026 13:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209322; cv=none; b=UIDG3076mopFGRUOIO2pL+DPc00g3Xtb9IwFAbUW1T/xWRjHq2y/RX4DjWKg9bctYAEzxh17NnFeWVclWQFaW7SCRA4Y/qFBWCh6sH9z3Ur7vber5tyzGn5xwnQpRx5621/crEQO7Ojdw3gfq5JcDeovS5mFhPPULhVIb695eL0=
+	t=1784209325; cv=none; b=AhRBkzIP0AAUUiKZnbmD+F2n2HtWlpVkhAU7pm3kl8nZIzf7+K94iqbm4hsKpEbujEUzqnjhJuwk0dWH/N9/iD0ubma9QyX7S/j8NQ/UBqP03x2EiC9A3Q4qjwDmCzwERe/IuhmGbHhOn7zDMGtOwYexqQ0SII87atYsvVQzsfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209322; c=relaxed/simple;
-	bh=PMNfahuPoVZygtLtl/5/aqPIctn5B6aFj39M3sN+RXE=;
+	s=arc-20240116; t=1784209325; c=relaxed/simple;
+	bh=Jv9fF1PB0QiUWQ0zuYxKvF9W/Mfo8AhQB1XVW+MHBqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJXv5TY5Cy9PuXX1wkHEZbUSQYWpHSfl8wkLBnjI2p/pWnvBytz5Ey9X9NVpDJNQh81RJuIlhuO9DbMPOuDSRTJP88PehFXhEeUKn6v93PKZRlzVhqCoQ2DoOKCaX6tSaVVEuFZRVN65RahVtqP8S9KJyEeuZb6C6SwxKV401dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+gmQTAt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X43y79KQIRRLc9x+7qigwZLDRxbEaF5zqYvAexZuw2/xbdesE+a5hU6QSoD7Suekg7ivci/5rDAipq8kbfGpe1ezK+C86d7JdBW0UNJgP2QLOCXSjk7doUnCQXtItsPym/0F0vTnG/7KhC7vUSf2qPBpCBRThsQUcuL0ZvrpZjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cu6mjQUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+gmQTAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C4C1F000E9;
-	Thu, 16 Jul 2026 13:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cu6mjQUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18751F000E9;
+	Thu, 16 Jul 2026 13:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209321;
-	bh=2SzWoxgukB1HgLJB1whbMuLaW/MX4qRJbfvZbSojHK4=;
+	s=korg; t=1784209324;
+	bh=7aqKiN+ZVE5oNyF/30HUpbPdB2JvkGvxaQGZIf4a0VA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v+gmQTAtApUrcrRriakp74Wr73fjl+Ii8aXCp7bmPE9GAPoun7DdRkfUztpCujJNX
-	 gUx2NVlWap3vNsN5DMRU1iuLcTHfmPcCx+EPkF1DDjRBaNAtrdPHbRxDu8PjrTR5zl
-	 Bq8itzGwaeOmUHs0cBnjoq65Z3AKXzbgniw4xkAY=
+	b=cu6mjQUalAWsw91S9MR70gZhqHo3tYDKsiGFelo9e6w1sne96XlKeL1JB1Bh2FoHO
+	 LqksYlqwZJ54smtCOo4yH79NdH0f+VMm9F2naSyYh0MjwRoIGh5Y9rgHdfY3ct6q/u
+	 U2oDEolYPPl+XNnmhcfGvyi+CdlJ6KWEYhOJFEtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 141/518] mm/damon/ops-common: handle extreme intervals in damon_hot_score()
-Date: Thu, 16 Jul 2026 15:26:49 +0200
-Message-ID: <20260716133050.938202701@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 7.1 142/518] netfilter: ipset: fix race between dump and ip_set_list resize
+Date: Thu, 16 Jul 2026 15:26:50 +0200
+Message-ID: <20260716133050.960726646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,90 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 35d4a3cf70a855b50e53189ac2f8463e20a02046 upstream.
+commit 7cd9103283b26b917360ec99d7d2f2d761bcf1ab upstream.
 
-Fix three issues in damon_hot_score() that comes from wrong handling of
-extreme (zero or too high) monitoring intervals user setup.
+The release path of ip_set_dump_do() and ip_set_dump_done() read
+inst->ip_set_list via ip_set_ref_netlink(), a plain rcu_dereference_raw()
+of the array pointer. These run from netlink_recvmsg() without the nfnl
+mutex and without an RCU read-side critical section.
 
-When the user sets sampling interval zero, damon_max_nr_accesses(), which
-is called from damon_hot_score(), causes a divide-by-zero.  Needless to
-say, it is a problem.
+A concurrent ip_set_create() can grow the array: it publishes the new
+array, calls synchronize_net() and then kvfree()s the old one. Since the
+dump paths read the array outside any RCU reader, synchronize_net() does
+not wait for them and the old array can be freed while they still index
+into it, causing a use-after-free.
 
-When the user sets the aggregation interval zero, the function returns
-zero.  It is wrong, since the real maximum nr_acceses in the setup should
-be one.  Worse yet, it can cause another divide-by-zero from its caller,
-damon_hot_score(), since it uses damon_max_nr_accesses() return value as a
-denominator.
+The dumped set itself stays pinned via set->ref_netlink, so only the
+array load needs protecting. Take rcu_read_lock() around it, matching
+ip_set_get_byname() and __ip_set_put_byindex().
 
-When the user sets the aggregation interval very high, damon_hot_score()
-could return a value out of [0, DAMOS_MAX_SCORE] range.  Since the return
-value is used as an index to the regions_score_histogram array, which is
-DAMOS_MAX_SCORE+1 size, it causes out of bounds array access.
+  BUG: KASAN: slab-use-after-free in ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
+  Read of size 8 at addr ffff88800b5c4018 by task exploit/150
+  Call Trace:
+   ...
+   kasan_report (mm/kasan/report.c:595)
+   ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
+   netlink_dump (net/netlink/af_netlink.c:2325)
+   netlink_recvmsg (net/netlink/af_netlink.c:1976)
+   sock_recvmsg (net/socket.c:1159)
+   __sys_recvfrom (net/socket.c:2315)
+   ...
+  Oops: general protection fault, probably for non-canonical address ... KASAN NOPTI
+  KASAN: maybe wild-memory-access in range [0x02d6...d0-0x02d6...d7]
+  RIP: 0010:ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1698)
+  Kernel panic - not syncing: Fatal exception
 
-The issues can be relatively easily reproduced like below.  The sysfs
-write permission is required, though.
-
-    # ./damo start --damos_action lru_prio --damos_quota_space 100M \
-            --damos_quota_interval 1s
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0
-    # echo 0 > contexts/0/monitoring_attrs/intervals/sample_us
-    # echo 0 > contexts/0/monitoring_attrs/intervals/aggr_us
-    # echo commit > state
-    # dmesg
-    [...]
-    [  131.329762] Oops: divide error: 0000 [#1] SMP NOPTI
-    [...]
-    [  131.336089] RIP: 0010:damon_hot_score+0x27/0xd0
-    [...]
-
-Fix the divide-by-zero intervals problems by explicitly handling the zero
-intervals in damon_max_nr_accesses().  Fix the out-of-bound array access
-by applying [0, DAMOS_MAX_SCORE] bounds before returning from
-damon_hot_score().
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260623135834.67189-1-sj@kernel.org
-Link: https://lore.kernel.org/20260619202459.145010-1-sj@kernel.org [1]
-Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8a02bdd50b2e ("netfilter: ipset: Fix calling ip_set() macro at dumping")
+Cc: stable@vger.kernel.org
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    8 ++++++--
- mm/damon/ops-common.c |    1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ net/netfilter/ipset/ip_set_core.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -979,9 +979,13 @@ static inline bool damon_target_has_pid(
- 
- static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs)
- {
--	/* {aggr,sample}_interval are unsigned long, hence could overflow */
--	return min(attrs->aggr_interval / attrs->sample_interval,
-+	unsigned long sample_interval;
-+	unsigned long max_nr_accesses;
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -1480,7 +1480,11 @@ ip_set_dump_done(struct netlink_callback
+ 		struct ip_set_net *inst =
+ 			(struct ip_set_net *)cb->args[IPSET_CB_NET];
+ 		ip_set_id_t index = (ip_set_id_t)cb->args[IPSET_CB_INDEX];
+-		struct ip_set *set = ip_set_ref_netlink(inst, index);
++		struct ip_set *set;
 +
-+	sample_interval = attrs->sample_interval ? : 1;
-+	max_nr_accesses = min(attrs->aggr_interval / sample_interval,
- 			(unsigned long)UINT_MAX);
-+	return max_nr_accesses ? : 1;
- }
++		rcu_read_lock();
++		set = ip_set_ref_netlink(inst, index);
++		rcu_read_unlock();
  
- 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -140,6 +140,7 @@ int damon_hot_score(struct damon_ctx *c,
- 	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
- 	 */
- 	hotness = hotness * DAMOS_MAX_SCORE / DAMON_MAX_SUBSCORE;
-+	hotness = max(min(hotness, DAMOS_MAX_SCORE), 0);
- 
- 	return hotness;
- }
+ 		if (set->variant->uref)
+ 			set->variant->uref(set, cb, false);
+@@ -1686,7 +1690,9 @@ next_set:
+ release_refcount:
+ 	/* If there was an error or set is done, release set */
+ 	if (ret || !cb->args[IPSET_CB_ARG0]) {
++		rcu_read_lock();
+ 		set = ip_set_ref_netlink(inst, index);
++		rcu_read_unlock();
+ 		if (set->variant->uref)
+ 			set->variant->uref(set, cb, false);
+ 		pr_debug("release set %s\n", set->name);
 
 
