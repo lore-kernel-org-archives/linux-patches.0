@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40BB3DB336;
-	Thu, 16 Jul 2026 14:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898A730FC33;
+	Thu, 16 Jul 2026 14:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211505; cv=none; b=ulnH4QJo4gGG/d8Va5fCsAEG/16Xni6u7rS5doKegKcu8fOSTxIjHVQdiWdKU4F/jjp8dSwCJZZm11GdiW4P04VvpKUj8T67CFln4D98HfCTTOnZAxNPt0coVG6F0bMkkInzTM06HI2E779be5xMhfm6S7ZKlqS6Om8Vu5BWExA=
+	t=1784211507; cv=none; b=Zs4LZaXJCg2q0FgYAYLQirokv6LqQQVcu/yG/eK0ORVNC706Tu3MFBYhEzget2CS4vMh8qrKm8/dlZzx+WsHyKMXCPEd2TX+msD4zAGVkfjhzoTPr+23Tp5zBKLrRrBduOc4axEgayGNAb2xF01yDi7BCJ7lfPQw5F8s8qmEfz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211505; c=relaxed/simple;
-	bh=BoypxkLk23S1vB8srOQ/2sZsnC6gwvwQKwPzKaiNjEo=;
+	s=arc-20240116; t=1784211507; c=relaxed/simple;
+	bh=q9zqjhGtXLT9SVSbhGnCMejjl1RocOriCr7cE3LJzBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtY/vr3Ho3rX6mmf6DzRR3/mvHKxZCStaHwMXPeZx9crT+6URwYJs0RjD9hYiGDTtuZtzd9Y3LQ+5BLXoVT4EUUvIEJsNa1lzDFsrJG8nBYSuXBE1+D0QLPyt6HObpjR6FqQMHfG5eyTKnIwWH2bSHk3CawPmUqDfGgm2yBNXSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AasBpWC/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gSa3zCRLph0y7u1X27/IK3lr9bGxzmP2HnsHmSs2cyuwPQEH0Q08RPTeDPyA7y2P92idEYFrtDbwqkd+wKxYQFgvU88yPYNZX9lqavXO31k9297G7rbBfAYgGgtpvkYdN9bt6lBVtpy/5CJRY7Hd9+Etn+iZj/x1UpzCM43tXC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzFwV2pE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AasBpWC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AB51F000E9;
-	Thu, 16 Jul 2026 14:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzFwV2pE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DA41F000E9;
+	Thu, 16 Jul 2026 14:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211503;
-	bh=Q190IZ/w9Leqnk3gJiIAkn/K62VaG5OPIS5c29sXIXg=;
+	s=korg; t=1784211506;
+	bh=AOTNJyS8r4tUC0vw7Xotv90tWiyjLKzRakiS1rfYctE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AasBpWC/macn4p/fDhkLM2LIBpNURYyM3U39uV9HwQfNyxk6ErcFjtLajv0Q+ZGJF
-	 MZZ2BHBj8N/bh+6jt7L1rSs6ORPdbKlAqxuNrxVE7Ybi1Q0v5JRpmU0qSnoEUOYVJX
-	 MzhJLJj+oR5Mr0Au3Dpil7GViix+8/Q+jQ9q+xHA=
+	b=gzFwV2pE04BfM9eaIjItEUw7Rpj+3wDXSpIZVom3TQjJznd6MXW4VrX7qbKfcXlQp
+	 IIIjvTvQjD6D9GNH2wkPueYUAQhn+XWcC6C1aVrRvq7KVBCG2ZiZgbikbGZLpQieLs
+	 5bAE7rGVhIRaaGqSzUCFzQh5niTHYRlKEiBbpyPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Xu Rao <raoxu@uniontech.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 452/480] Input: mms114 - reject an oversized device packet size
-Date: Thu, 16 Jul 2026 15:33:19 +0200
-Message-ID: <20260716133054.600521536@linuxfoundation.org>
+Subject: [PATCH 6.18 453/480] Input: gscps2 - advance receive buffer write index
+Date: Thu, 16 Jul 2026 15:33:20 +0200
+Message-ID: <20260716133054.621411520@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,62 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 66725039f7090afe14c31bd259e2059a68f04023 upstream.
+commit d86d4f8cbb5a55a3b9b86f7b5ab8c4cdda600a3f upstream.
 
-mms114_interrupt() reads a packet of touch data from the device into a
-fixed-size on-stack buffer
+Commit 44f920069911 ("Input: gscps2 - use guard notation when
+acquiring spinlock") moved the receive loop into gscps2_read_data()
+and gscps2_report_data().
 
-	struct mms114_touch touch[MMS114_MAX_TOUCH];
+While moving the code, it preserved the writes to
+buffer[ps2port->append], but omitted the following producer index
+update from the original loop:
 
-which holds MMS114_MAX_TOUCH (10) events of MMS114_EVENT_SIZE (8) bytes,
-i.e. 80 bytes. The length of the I2C read into it is taken verbatim from
-the device:
+	ps2port->append = (ps2port->append + 1) & BUFFER_SIZE;
 
-	packet_size = mms114_read_reg(data, MMS114_PACKET_SIZE);
-	if (packet_size <= 0)
-		goto out;
-	...
-	error = __mms114_read_reg(data, MMS114_INFORMATION, packet_size,
-			(u8 *)touch);
+As a result, append never advances. Since gscps2_report_data() only
+reports bytes while act != append, the receive buffer always appears
+empty and no keyboard or mouse data reaches the serio core.
 
-packet_size is a single device register byte (0x0F) and the only check
-is the lower bound packet_size <= 0; it is never bounded against the
-size of touch[]. A malfunctioning, malicious or counterfeit controller
-(or an attacker tampering with the I2C bus) can report a packet_size of
-up to 255, so __mms114_read_reg() writes up to 175 bytes past the end of
-touch[] on the IRQ-thread stack: a stack out-of-bounds write that can
-overwrite the stack canary, saved registers and the return address.
+Restore the omitted index update.
 
-A well-formed device never reports more than the buffer holds, so reject
-an oversized packet and drop the report, consistent with the handler's
-other error paths, rather than reading past the buffer.
-
-Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260612-b4-disp-dc4b8dc4-v1-1-d7cb0a828d92@proton.me
+Fixes: 44f920069911 ("Input: gscps2 - use guard notation when acquiring spinlock")
+Cc: stable@vger.kernel.org # 6.13+
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/460B5655BA580C60+20260624094739.850306-1-raoxu@uniontech.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/mms114.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/input/serio/gscps2.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/touchscreen/mms114.c
-+++ b/drivers/input/touchscreen/mms114.c
-@@ -236,6 +236,12 @@ static irqreturn_t mms114_interrupt(int
- 	if (packet_size <= 0)
- 		goto out;
+--- a/drivers/input/serio/gscps2.c
++++ b/drivers/input/serio/gscps2.c
+@@ -219,6 +219,7 @@ static void gscps2_read_data(struct gscp
+ 		ps2port->buffer[ps2port->append].str = status;
+ 		ps2port->buffer[ps2port->append].data =
+ 				gscps2_readb_input(ps2port->addr);
++		ps2port->append = (ps2port->append + 1) & BUFFER_SIZE;
+ 	} while (true);
+ }
  
-+	if (packet_size > sizeof(touch)) {
-+		dev_err(&client->dev, "Invalid packet size %d (max %zu)\n",
-+			packet_size, sizeof(touch));
-+		goto out;
-+	}
-+
- 	/* MMS136 has slightly different event size */
- 	if (data->type == TYPE_MMS134S || data->type == TYPE_MMS136)
- 		event_size = MMS136_EVENT_SIZE;
 
 
