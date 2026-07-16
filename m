@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C94D27732;
-	Thu, 16 Jul 2026 14:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363C128505E;
+	Thu, 16 Jul 2026 14:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211528; cv=none; b=Jfcwo04xN/9yOGvJqRAJVE5FupE2xYJ1qfjVxrGhDUiGfmXdk26iX4+MWL71zQMKmEC3pr2XnhoMZaHupgduIslZsMpPCxDlVKUzebTGMc5tg1wFnyCjruuKj+4BdsFfqG5Z64O2FeJ43g43AMN+0rcCgjHIsUQ9e4RGmHvKRnk=
+	t=1784211531; cv=none; b=cupV5Xbfjtj17Bkm0YW7fAHVXfVd4z3lOcczTZCySJtRMNuyO317uo9AA8NpTleX+mKygO5Mpd2reEHv8eWqum0zSDjnsUHJySdBmcEdXFg9/jwoysDSF9Uk3D6ZCkkz7UhdQU7yLpfwqX2cjFSHqyubiFMpM6Hm9mQyKXsIgDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211528; c=relaxed/simple;
-	bh=jCR3KnSPx84bcR8JqGpAbZvtno7L49tTI4d6xx2LxSU=;
+	s=arc-20240116; t=1784211531; c=relaxed/simple;
+	bh=0KHm3eYycvsdRXXJ178RxJlx1BXwGMbnogdZznayrsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tHNSc5BIIx5PbN/gM+W2QGei0mh2H5rGQpx5HZjackrgvMwCz0i1kFytEino+QfwNQeqWEPf6kiRaVN8OqMpgUYeTUU6a+yJS8PY+P2cADvmv8pYH7l16rMJqEudTHeD6C+iO+ylJKvf+m/UcQ1F0SbBVIzPtFyZihlHdrRj7Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBHohdKi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OupJiUgAsXWpYPie4ah7nMjQOaSZvm0B82+mzuMQjc+ZBGar/r3im7HRSposwizrr7662RxSNq92FyfOQRDa2X+UBNiJwOEkM6udymETQc9ql8/a5Ul7f+zYGz51yKEHth08PPg0uc73J8uwud+/zSznr6APT/Hw83wONOBABMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krYAolOW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBHohdKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20F01F000E9;
-	Thu, 16 Jul 2026 14:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krYAolOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA491F000E9;
+	Thu, 16 Jul 2026 14:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211527;
-	bh=Dny8JwAqIccs8vd4HP7/FAglSqTV7Q42YBDP3lvm1fU=;
+	s=korg; t=1784211530;
+	bh=Vc3oHIQBCDJSc7XNCdRccPwgXY/zYuTsoMaAIkhuzdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBHohdKip93hm/HINybPznwz4BkR4mfVTt6B62NU0NtDBfhemd9xPzoLiIuqDawxT
-	 iK8GkMZ6+KECSjg9H2lbVfpKgkfKUKVKtwVzE8nHkv4r+hicwRQSB0diyKmqnkPKVv
-	 QBivoob6TP5ble/GaPTd1ENl6c85/BxaQ/QG4KxE=
+	b=krYAolOWhM/3T+k9hFdN0SYORdQcOkke9bsWvBEPRQHlUsoVPzO5NGwYHTQBlDBhy
+	 Q7wuQr01Y4QKdm4KfQNTe68I0Zg5URenDoxZyD9H4B33IZU3EiJxXkHQonnKUUkIN+
+	 CivWgibFfx6m6f4Jn6HVo+khHBtp6kPC3uw8XU2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Vlad Dumitrescu <vdumitrescu@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 460/480] RDMA/core: Fix broadcast address falsely detected as local
-Date: Thu, 16 Jul 2026 15:33:27 +0200
-Message-ID: <20260716133054.775970825@linuxfoundation.org>
+Subject: [PATCH 6.18 461/480] RDMA/siw: bound Read Response placement to the RREAD length
+Date: Thu, 16 Jul 2026 15:33:28 +0200
+Message-ID: <20260716133054.797598957@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,44 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 942cd47faa2047b46dfd85745603eba9006973e6 upstream.
+commit 7d29f7e9dbd844cae4d3e559cf78324b9642fd6b upstream.
 
-When rdma_resolve_addr() is invoked with a broadcast destination on an
-IPoIB interface, is_dst_local() inspects the resolved route and
-incorrectly concludes that the address is local. As a result, the
-resolution fails with -ENODEV.
-The issue stems from using '&' to compare rt_type with RTN_LOCAL. The
-RTN_* values form a sequential enum, not a bitmask (RTN_LOCAL=2,
-RTN_BROADCAST=3). Thus, "rt_type & RTN_LOCAL" yields a non-zero result
-for a broadcast route as well.
+In drivers/infiniband/sw/siw/siw_qp_rx.c, siw_proc_rresp() places each
+inbound Read Response DDP segment at sge->laddr + wqe->processed and then
+accumulates wqe->processed, but it never checks the running total against
+the sink buffer length on continuation segments. siw_check_sge() resolves
+and validates the sink memory only on the first fragment (the if (!*mem)
+branch), and siw_rresp_check_ntoh() compares the cumulative length against
+wqe->bytes only on the final segment (the !frx->more_ddp_segs guard).
 
-Replace '&' with '==' when comparing rt_type against RTN_LOCAL.
+A connected siw peer that answers an outstanding RREAD with Read Response
+segments that keep the DDP Last flag clear, carrying more total payload
+than the RREAD requested, drives wqe->processed past the validated sink
+buffer; the next siw_rx_data() call writes out of bounds at
+sge->laddr + wqe->processed. siw runs iWARP over ordinary routable TCP,
+so the peer is the remote end of an established RDMA connection and needs
+no local privilege.
 
-Link: https://patch.msgid.link/r/20260609-fix-rdma-resolve-addr-v1-1-449b8b4e6c09@nvidia.com
+Bound every segment before placement, exactly as siw_proc_send() and
+siw_proc_write() already do for their tagged and untagged paths, and
+terminate the connection with a base-or-bounds DDP error when the
+Read Response would overrun the sink buffer.
+
+This is the second receive-path length fix for this file. A separate
+change rejects an MPA FPDU length that underflows the per-fragment
+remainder in the header decode; that guard does not cover this case,
+because here each individual segment length is self-consistent and only
+the accumulated placement offset overruns the buffer.
+
+Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
+Link: https://patch.msgid.link/r/20260602194700.2273758-1-michael.bommarito@gmail.com
 Cc: stable@vger.kernel.org
-Fixes: c31e4038c97f ("RDMA/core: Use route entry flag to decide on loopback traffic")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/addr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_qp_rx.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/infiniband/core/addr.c
-+++ b/drivers/infiniband/core/addr.c
-@@ -439,7 +439,7 @@ static int addr6_resolve(struct sockaddr
- static bool is_dst_local(const struct dst_entry *dst)
- {
- 	if (dst->ops->family == AF_INET)
--		return !!(dst_rtable(dst)->rt_type & RTN_LOCAL);
-+		return dst_rtable(dst)->rt_type == RTN_LOCAL;
- 	else if (dst->ops->family == AF_INET6)
- 		return !!(dst_rt6_info(dst)->rt6i_flags & RTF_LOCAL);
- 	else
+--- a/drivers/infiniband/sw/siw/siw_qp_rx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
+@@ -844,6 +844,15 @@ int siw_proc_rresp(struct siw_qp *qp)
+ 	}
+ 	mem_p = *mem;
+ 
++	if (unlikely(wqe->processed + srx->fpdu_part_rem > wqe->bytes)) {
++		siw_dbg_qp(qp, "rresp len: %d + %d > %d\n",
++			   wqe->processed, srx->fpdu_part_rem, wqe->bytes);
++		wqe->wc_status = SIW_WC_LOC_LEN_ERR;
++		siw_init_terminate(qp, TERM_ERROR_LAYER_DDP,
++				   DDP_ETYPE_TAGGED_BUF,
++				   DDP_ECODE_T_BASE_BOUNDS, 0);
++		return -EINVAL;
++	}
+ 	bytes = min(srx->fpdu_part_rem, srx->skb_new);
+ 	rv = siw_rx_data(mem_p, srx, &frx->pbl_idx,
+ 			 sge->laddr + wqe->processed, bytes);
 
 
