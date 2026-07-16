@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7EF424645;
-	Thu, 16 Jul 2026 14:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681FE424D79;
+	Thu, 16 Jul 2026 14:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211433; cv=none; b=MsJIkJ7rUzvk03xVj5pMK9/CJiNuxxkvhL7wDbDKBmGu5cxSff2qaW6H5XMAUMa5uFcn8RPz7mml4evIJTy80tFfZfkdwZpx0rz/YIacnL9gwiYUIMyKng6P3YbYcAxE0cPfMcKSBiFmNT/JB/SvhacsESPHOyIOz4GCmCgKSCs=
+	t=1784211436; cv=none; b=Rt8Kv+0M1i6F1QnDphc95ziSaZQOTtk7hcm2HVMIrx0tKySdSqp2ZFWkXO12jgd+VPnIvkdXpXOJPbb8EnffYM6WtN4utflSULd9dD5dPHDE8bePWETV11c7QCt215lEaq2m8hL6gQpaSU3LsUB+LkWrcGV7rNgrntYqGcgNRIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211433; c=relaxed/simple;
-	bh=VE240+SNYvearYol1VPh9aSN0MCCLtEWTufQ4RP8UrI=;
+	s=arc-20240116; t=1784211436; c=relaxed/simple;
+	bh=QSAPNI9jvCqe7qQRwbUY3NrrE4FyZ/fgI7FNitUkI5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZBMwak4vmk4VIhdzbz3BLHwuw2ss6w6k2VcRs+shO3+8ObMGfWX/II2NyTzI8gLvuOlU/Nd8llX/A67pZsGKRzTqQJcvH3ORMX2VeZvb+MVOO8YTXDleM/agygaIqkiJQ6PjpUy3howQ0n7XVuJTFOUPLmBNNRY/Md7ckhCPkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9RwsGLM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OIQt/tj0DF/UAsqLk5llEusDGMV8hoLpq85GYWM2zQI1IKrPR7aL25PsNa9U+V+1gtuBbC4dDXMuJssagnw3Wb+jO12DizhJKdHnuj/hd8J7B1ELlzjr1KhWQYmA62DDLUGF6t0dC0iUxPXNkiQHmzDrbw0fS3hscE00OPC1UI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeW7k3Ta; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9RwsGLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8701F00A3F;
-	Thu, 16 Jul 2026 14:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeW7k3Ta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7181F000E9;
+	Thu, 16 Jul 2026 14:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211432;
-	bh=mIhaAnALC4k+r6Lyg9LNu22ysY0L88p2TkQ2r9cuaWI=;
+	s=korg; t=1784211435;
+	bh=qUEFpyKH3il2/TSbQc4HO7Yp4LNZ/en+WAuS5OJEV64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t9RwsGLMxdmTWlke/vyOTK0QR4tfEf6hYb5UFkSzmtGSui9/0bQZYhSkENDsQ54YJ
-	 0BQBX/K9U3GqHNyGa/VLrXUx7sO8u+GmErO+5QsoMaI9xDn9emW/SqRPqYCDxD/YAa
-	 RUKtU1X/PbcCt+J6NpGEEzHD6F05nk36vQ1RTJq8=
+	b=qeW7k3Ta9vGSIUDSaO8GLlBHVaShuqnnybVtMNfaOBte4ej3U3MbuJntsFnNNsp6U
+	 MU8NP7zX2MMavvwB5h2G/sw8Co2DJ0X+8bjGOhWohpj4xD8jo0lARMpr8LNIkzAgfK
+	 9DB0Y/K/DGQikatEnDDj0kKnxoe5+nGchU2cKDiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikunj A. Dadhania" <nikunj@amd.com>,
-	Kai Huang <kai.huang@intel.com>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 427/480] KVM: x86: Ensure vendors exit handler runs before fastpath userspace exits
-Date: Thu, 16 Jul 2026 15:32:54 +0200
-Message-ID: <20260716133054.052094359@linuxfoundation.org>
+Subject: [PATCH 6.18 428/480] KVM: x86: Add dedicated API for getting mask of accelerated x2APIC MSRs
+Date: Thu, 16 Jul 2026 15:32:55 +0200
+Message-ID: <20260716133054.073248560@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,67 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 0ffedf43910e44b76c2c1db4e9fbf12b268190c1 upstream.
+commit 8ba621f335a519b47cb7d3e3f4f15b5101b3a56f upstream.
 
-Move the handling of fastpath userspace exits into vendor code to ensure
-KVM runs vendor specific operations that need to run before userspace gains
-control of the vCPU.  E.g. for VMX (and soon to be for SVM as well), KVM
-needs to flush the PML buffer prior to exiting to userspace, otherwise any
-memory written by the final KVM_RUN might never be flagged as dirty.
+Add a dedicated local APIC API, kvm_x2apic_disable_intercept_reg_mask(),
+to provide the mask of x2APIC registers whose MSRs can and should be passed
+through to the guest when x2APIC virtualization is enable, and use it in
+lieu of the open-coded equivalent VMX logic.  Providing a common helper
+will allow sharing the logic with SVM (x2AVIC), and as a bonus eliminates
+the somewhat confusing code where KVM enables interception for MSR_TYPE_RW,
+even though only the READ case actually needs to be updated.
 
-Note, waiting to snapshot CR0 and CR3 until svm_handle_exit() is flawed in
-general, as that risks consuming stale state in a fastpath handler.  That
-will be addressed in a future change.
+No functional change intended.
 
-Fixes: f7f39c50edb9 ("KVM: x86: Exit to userspace if fastpath triggers one on instruction skip")
 Cc: stable@vger.kernel.org
-Cc: Nikunj A. Dadhania <nikunj@amd.com>
-Reviewed-by: Nikunj A. Dadhania <nikunj@amd.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20260423162628.490962-2-seanjc@google.com
+Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://patch.msgid.link/20260514213115.1637082-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    3 +++
- arch/x86/kvm/vmx/vmx.c |    3 +++
- arch/x86/kvm/x86.c     |    3 ---
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ arch/x86/kvm/lapic.c   |   21 +++++++++++++++++++--
+ arch/x86/kvm/lapic.h   |    2 +-
+ arch/x86/kvm/vmx/vmx.c |    3 +--
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -3569,6 +3569,9 @@ static int svm_handle_exit(struct kvm_vc
- 			vcpu->arch.cr3 = svm->vmcb->save.cr3;
- 	}
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -1745,7 +1745,7 @@ static inline struct kvm_lapic *to_lapic
+ #define APIC_REGS_MASK(first, count) \
+ 	(APIC_REG_MASK(first) * ((1ull << (count)) - 1))
  
-+	if (unlikely(exit_fastpath == EXIT_FASTPATH_EXIT_USERSPACE))
+-u64 kvm_lapic_readable_reg_mask(struct kvm_lapic *apic)
++static u64 kvm_lapic_readable_reg_mask(struct kvm_lapic *apic)
+ {
+ 	/* Leave bits '0' for reserved and write-only registers. */
+ 	u64 valid_reg_mask =
+@@ -1781,7 +1781,24 @@ u64 kvm_lapic_readable_reg_mask(struct k
+ 
+ 	return valid_reg_mask;
+ }
+-EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_lapic_readable_reg_mask);
++
++u64 kvm_x2apic_disable_read_intercept_reg_mask(struct kvm_vcpu *vcpu)
++{
++	if (WARN_ON_ONCE(!lapic_in_kernel(vcpu)))
 +		return 0;
 +
- 	if (is_guest_mode(vcpu)) {
- 		int vmexit;
++	/*
++	 * TMMCT, a.k.a. the current APIC timer count, reads aren't accelerated
++	 * by hardware (Intel or AMD) as the timer is emulated in software (by
++	 * KVM), i.e. reads from the virtual APIC page would return garbage.
++	 * Intercept RDMSR, as handling the fault-like APIC-access VM-Exit is
++	 * more expensive than handling a RDMSR VM-Exit (the APIC-access exit
++	 * requires slow emulation of the code stream).
++	 */
++	return kvm_lapic_readable_reg_mask(vcpu->arch.apic) &
++	       ~APIC_REG_MASK(APIC_TMCCT);
++}
++EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_x2apic_disable_read_intercept_reg_mask);
  
+ static int kvm_lapic_reg_read(struct kvm_lapic *apic, u32 offset, int len,
+ 			      void *data)
+--- a/arch/x86/kvm/lapic.h
++++ b/arch/x86/kvm/lapic.h
+@@ -150,7 +150,7 @@ int kvm_hv_vapic_msr_read(struct kvm_vcp
+ int kvm_lapic_set_pv_eoi(struct kvm_vcpu *vcpu, u64 data, unsigned long len);
+ void kvm_lapic_exit(void);
+ 
+-u64 kvm_lapic_readable_reg_mask(struct kvm_lapic *apic);
++u64 kvm_x2apic_disable_read_intercept_reg_mask(struct kvm_vcpu *vcpu);
+ 
+ static inline void kvm_lapic_set_irr(int vec, struct kvm_lapic *apic)
+ {
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6499,6 +6499,9 @@ static int __vmx_handle_exit(struct kvm_
- 	if (enable_pml && !is_guest_mode(vcpu))
- 		vmx_flush_pml_buffer(vcpu);
+@@ -4080,7 +4080,7 @@ static void vmx_update_msr_bitmap_x2apic
+ 	 * mode, only the current timer count needs on-demand emulation by KVM.
+ 	 */
+ 	if (mode & MSR_BITMAP_MODE_X2APIC_APICV)
+-		msr_bitmap[read_idx] = ~kvm_lapic_readable_reg_mask(vcpu->arch.apic);
++		msr_bitmap[read_idx] = ~kvm_x2apic_disable_read_intercept_reg_mask(vcpu);
+ 	else
+ 		msr_bitmap[read_idx] = ~0ull;
+ 	msr_bitmap[write_idx] = ~0ull;
+@@ -4093,7 +4093,6 @@ static void vmx_update_msr_bitmap_x2apic
+ 				  !(mode & MSR_BITMAP_MODE_X2APIC));
  
-+	if (unlikely(exit_fastpath == EXIT_FASTPATH_EXIT_USERSPACE))
-+		return 0;
-+
- 	/*
- 	 * KVM should never reach this point with a pending nested VM-Enter.
- 	 * More specifically, short-circuiting VM-Entry to emulate L2 due to
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -11498,9 +11498,6 @@ static int vcpu_enter_guest(struct kvm_v
- 	if (vcpu->arch.apic_attention)
- 		kvm_lapic_sync_from_vapic(vcpu);
- 
--	if (unlikely(exit_fastpath == EXIT_FASTPATH_EXIT_USERSPACE))
--		return 0;
--
- 	r = kvm_x86_call(handle_exit)(vcpu, exit_fastpath);
- 	return r;
- 
+ 	if (mode & MSR_BITMAP_MODE_X2APIC_APICV) {
+-		vmx_enable_intercept_for_msr(vcpu, X2APIC_MSR(APIC_TMCCT), MSR_TYPE_RW);
+ 		vmx_disable_intercept_for_msr(vcpu, X2APIC_MSR(APIC_EOI), MSR_TYPE_W);
+ 		vmx_disable_intercept_for_msr(vcpu, X2APIC_MSR(APIC_SELF_IPI), MSR_TYPE_W);
+ 		if (enable_ipiv)
 
 
