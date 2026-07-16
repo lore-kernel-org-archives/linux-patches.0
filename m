@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4B53B0ADE;
-	Thu, 16 Jul 2026 14:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CB03B0ADE;
+	Thu, 16 Jul 2026 14:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211786; cv=none; b=WoWJ8uKloOO4nt1v891ARni8yXslzPOHk6ZuVCh1i4O1Q3/n2/dxOz6sJ6BX/UcdalVaBX3rbxU38E+GFywmxZHR6ssrCn8886RHdPxMkwBV9WNnGPjmIXd4ULl8jo1aqIILd4hj8ZTX3Q/clzyEEMDzCiZSyT7qBXglLml8zJY=
+	t=1784211788; cv=none; b=UJl2bMeCzKFgQDUOAL0MI3/olUFfsho+QbMdUH1WuRV6USXnsRkSSjQD9AWhbHYx2AXFk+vbqacFvTnPbZRBlRkLPXhekf1kkclt0JTAH3uUfq+taEUKXG7/qBoegoOJC22EAs5wa5/U8a7uHBa3kP+849x1Ly1LyFBD60Mfebg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211786; c=relaxed/simple;
-	bh=rofNE/oUlscFFzmIGQWIVeWOn5OiyjEz7ZKrwb61pPE=;
+	s=arc-20240116; t=1784211788; c=relaxed/simple;
+	bh=iCFPimdr0bwTrRI5jBb/sR874AeiwnJK0HLmz06HFss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AgDS4SVx0OwfdXo7orVuPLivz4cxIjpqEnj585n/We3t+0ul0Ycq9nQHurPOeVNx5h82ztUF4rAD8qtzCd8z/L2kGL3Pnq069DQ9tgL87y3T7KLIXxnffPZf44OH6TiWqc/hgaKbjjZ9AZMsNh8UEhbXCei1hvlBJipMrS8E3Oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdI+11Fv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IbZYG2TfP3C09U9W4XNGPAS5YWvEwCO95KAv71VJ2tCvTmIe3+XFFXb6AiKBVC1KAib3vbhyrYTi7rNtHqnVpNm5+H1cOilyWueL9ry5Tva4bAioWjtQ0p11SDb5/4SflE5MYQ5Nt3hY/6X5db/4LA7xnFRlHb+H0sA/SiPCMhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8rnK1r2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdI+11Fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406261F000E9;
-	Thu, 16 Jul 2026 14:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8rnK1r2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFBB1F000E9;
+	Thu, 16 Jul 2026 14:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211784;
-	bh=vg1aNoYga5b4JCuf/Ync6CcYkec+0HyomkIlNDy+7Ig=;
+	s=korg; t=1784211787;
+	bh=Am4FkwMw8lDnnm3DbN6pFkunkrQnfxWrTMLzavmgCJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XdI+11FvvVmbAtUJwETgoHNP5qpgl7n83hDpF+zXd3SVuVw+/c3TbyVbUUahB97gO
-	 JRpSqcvEHmdBEafv6rC78fMH2KSyvD2vGE1PeMiWgqP+spiWwyQRqTra+45hJ6WSEn
-	 oVY9bbZ+GKfxMUnlnUD+Yofv6YU5LQHUueH8JXAo=
+	b=R8rnK1r2k0YfWzz11AtWwwXNHA8Dp28g3EjDDYXVN8qdMWQpUiX5nlzskAJopL85K
+	 cQEsY/Od5ZORVqZPYPoBfgFaVK8LYRUORyiEYOtFRwRA3tkh74XcFaJF7FikUwOEVL
+	 pBxPffn9u9Vv4PLTza/Ru8Sdy7h8reAhqUpwEhKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.12 052/349] iio: common: st_sensors: honour channel endianness in read_axis_data
-Date: Thu, 16 Jul 2026 15:29:46 +0200
-Message-ID: <20260716133034.488002420@linuxfoundation.org>
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 079/349] ALSA: ice1712: check snd_ctl_new1() return value
+Date: Thu, 16 Jul 2026 15:30:13 +0200
+Message-ID: <20260716133035.085625019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -45,112 +44,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit 55052184ac9011db2ea983e54d6c21f0b1079a12 upstream.
+commit 2b929b91b0f3bc6de8a844370049cd99ee8e31ff upstream.
 
-st_sensors_read_axis_data() unconditionally decoded multi-byte
-results with get_unaligned_le16() / get_unaligned_le24() regardless
-of the channel's declared scan_type.endianness.
+snd_ctl_new1() can return NULL when memory allocation fails. The
+ice1712 driver calls snd_ctl_new1() without checking the return value
+before dereferencing the pointer in multiple places (ice1712.c,
+ice1724.c, aureon.c), which can lead to NULL pointer dereferences.
 
-For every ST sensor that has used this helper since it was introduced
-this happened to be fine because the ST IMU/accel/gyro/pressure
-families publish their data registers as little-endian and the
-channel specs in those drivers declare IIO_LE accordingly.
+Add NULL checks after snd_ctl_new1() calls and return -ENOMEM if any
+fails.
 
-The LSM303DLH magnetometer however publishes its X/Y/Z output as a
-pair of big-endian bytes (the H register sits at the lower address,
-0x03/0x05/0x07, and the L register immediately after), and its
-channel specs in st_magn_core.c correctly declare IIO_BE -- but
-read_axis_data() ignored that and decoded as little-endian, swapping
-the high and low bytes of every magnetometer sample. The LSM303DLHC
-and LSM303DLM share the same st_magn_16bit_channels (IIO_BE) and
-were therefore byte-swapped by the same bug; users of those parts
-will see different in_magn_*_raw values after this fix lands.
-
-The bug is most visible on a stationary chip: in earth's field the
-true X reading is small and the high byte sits at 0x00, so swapping
-the bytes pins sysfs X at exactly the low byte's pattern (e.g. 0x00F0
-= 240). Y and Z still appear "to vary" because their magnitudes are
-larger and the noise in the low byte produces big swings in the
-swapped high byte:
-
-  before (LSM303DLH flat, sysfs in_magn_*_raw):
-      X=240 (stuck), Y= 12032..23296, Z=-16128..-9728
-
-  after (direct i2c-dev big-endian decode, same chip same orientation):
-      X≈-4096, Y≈210, Z≈80     (sensible values reflecting earth's
-                                ambient field at low gauss range)
-
-Fix read_axis_data() to dispatch on ch->scan_type.endianness and
-call get_unaligned_be16() / get_unaligned_be24() when the channel
-declares IIO_BE. Existing IIO_LE consumers (st_accel, st_gyro,
-st_pressure, st_lsm6dsx and others) are unaffected because their
-channel specs already declare IIO_LE and the LE path is unchanged.
-
-While restructuring the branches, replace the previously implicit
-silent-success-with-uninitialised-*data fall-through for
-byte_for_channel outside 1..3 with an explicit return -EINVAL. No
-in-tree ST sensor publishes such a channel, but the new behaviour
-is strictly safer than handing userspace garbage.
-
-Fixes: 23491b513bcd ("iio:common: Add STMicroelectronics common library")
+Assisted-by: Opencode:DeepSeek-V4-Flash
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7 sparse smatch clang-analyzer coccinelle checkpatch
-Assisted-by: Sashiko:claude-opus-4-7
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: b9a4efd61b6b ("ALSA: ice1712,ice1724: fix the kcontrol->id initialization")
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Link: https://patch.msgid.link/tencent_42E5E2AB1B6A5101F7EE8C2117F1F687BB07@qq.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/st_sensors/st_sensors_core.c |   23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ sound/pci/ice1712/aureon.c  |    2 ++
+ sound/pci/ice1712/ice1712.c |    8 ++++++++
+ sound/pci/ice1712/ice1724.c |    6 ++++++
+ 3 files changed, 16 insertions(+)
 
---- a/drivers/iio/common/st_sensors/st_sensors_core.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_core.c
-@@ -498,6 +498,7 @@ static int st_sensors_read_axis_data(str
- 	u8 *outdata;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
- 	unsigned int byte_for_channel;
-+	u32 tmp;
- 
- 	byte_for_channel = DIV_ROUND_UP(ch->scan_type.realbits +
- 					ch->scan_type.shift, 8);
-@@ -510,12 +511,22 @@ static int st_sensors_read_axis_data(str
+--- a/sound/pci/ice1712/aureon.c
++++ b/sound/pci/ice1712/aureon.c
+@@ -1900,6 +1900,8 @@ static int aureon_add_controls(struct sn
+ 			for (i = 0; i < ARRAY_SIZE(cs8415_controls); i++) {
+ 				struct snd_kcontrol *kctl;
+ 				kctl = snd_ctl_new1(&cs8415_controls[i], ice);
++				if (!kctl)
++					return -ENOMEM;
+ 				if (i > 1)
+ 					kctl->id.device = ice->pcm->device;
+ 				err = snd_ctl_add(ice->card, kctl);
+--- a/sound/pci/ice1712/ice1712.c
++++ b/sound/pci/ice1712/ice1712.c
+@@ -2372,21 +2372,29 @@ int snd_ice1712_spdif_build_controls(str
+ 	if (snd_BUG_ON(!ice->pcm_pro))
+ 		return -EIO;
+ 	kctl = snd_ctl_new1(&snd_ice1712_spdif_default, ice);
++	if (!kctl)
++		return -ENOMEM;
+ 	kctl->id.device = ice->pcm_pro->device;
+ 	err = snd_ctl_add(ice->card, kctl);
  	if (err < 0)
- 		goto st_sensors_free_memory;
+ 		return err;
+ 	kctl = snd_ctl_new1(&snd_ice1712_spdif_maskc, ice);
++	if (!kctl)
++		return -ENOMEM;
+ 	kctl->id.device = ice->pcm_pro->device;
+ 	err = snd_ctl_add(ice->card, kctl);
+ 	if (err < 0)
+ 		return err;
+ 	kctl = snd_ctl_new1(&snd_ice1712_spdif_maskp, ice);
++	if (!kctl)
++		return -ENOMEM;
+ 	kctl->id.device = ice->pcm_pro->device;
+ 	err = snd_ctl_add(ice->card, kctl);
+ 	if (err < 0)
+ 		return err;
+ 	kctl = snd_ctl_new1(&snd_ice1712_spdif_stream, ice);
++	if (!kctl)
++		return -ENOMEM;
+ 	kctl->id.device = ice->pcm_pro->device;
+ 	err = snd_ctl_add(ice->card, kctl);
+ 	if (err < 0)
+--- a/sound/pci/ice1712/ice1724.c
++++ b/sound/pci/ice1712/ice1724.c
+@@ -2393,16 +2393,22 @@ static int snd_vt1724_spdif_build_contro
+ 		return err;
  
--	if (byte_for_channel == 1)
--		*data = (s8)*outdata;
--	else if (byte_for_channel == 2)
--		*data = (s16)get_unaligned_le16(outdata);
--	else if (byte_for_channel == 3)
--		*data = (s32)sign_extend32(get_unaligned_le24(outdata), 23);
-+	if (byte_for_channel == 1) {
-+		tmp = *outdata;
-+	} else if (byte_for_channel == 2) {
-+		if (ch->scan_type.endianness == IIO_BE)
-+			tmp = get_unaligned_be16(outdata);
-+		else
-+			tmp = get_unaligned_le16(outdata);
-+	} else if (byte_for_channel == 3) {
-+		if (ch->scan_type.endianness == IIO_BE)
-+			tmp = get_unaligned_be24(outdata);
-+		else
-+			tmp = get_unaligned_le24(outdata);
-+	} else {
-+		return -EINVAL;
-+	}
-+	*data = sign_extend32(tmp, BYTES_TO_BITS(byte_for_channel) - 1);
- 
- st_sensors_free_memory:
- 	kfree(outdata);
+ 	kctl = snd_ctl_new1(&snd_vt1724_spdif_default, ice);
++	if (!kctl)
++		return -ENOMEM;
+ 	kctl->id.device = ice->pcm->device;
+ 	err = snd_ctl_add(ice->card, kctl);
+ 	if (err < 0)
+ 		return err;
+ 	kctl = snd_ctl_new1(&snd_vt1724_spdif_maskc, ice);
++	if (!kctl)
++		return -ENOMEM;
+ 	kctl->id.device = ice->pcm->device;
+ 	err = snd_ctl_add(ice->card, kctl);
+ 	if (err < 0)
+ 		return err;
+ 	kctl = snd_ctl_new1(&snd_vt1724_spdif_maskp, ice);
++	if (!kctl)
++		return -ENOMEM;
+ 	kctl->id.device = ice->pcm->device;
+ 	err = snd_ctl_add(ice->card, kctl);
+ 	if (err < 0)
 
 
