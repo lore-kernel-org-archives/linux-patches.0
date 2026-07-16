@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDAF2FFDE1;
-	Thu, 16 Jul 2026 14:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40BB3DB336;
+	Thu, 16 Jul 2026 14:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211502; cv=none; b=fajMn2kMPLF6nvDDG6uuFS0Mzms55TFYTBeWBXN8ni+el4e/FZTFbdFtJ635vOOd2RnW2YArHqCztv6XHLs12zLsNowgxROJOEaip1AS6cQqC4D8jtVhcLb/iEmqsvilRe3QWFf5Tpd/fXWGvTTmMnNrtuFEpeBDHtNMTZmjQr0=
+	t=1784211505; cv=none; b=ulnH4QJo4gGG/d8Va5fCsAEG/16Xni6u7rS5doKegKcu8fOSTxIjHVQdiWdKU4F/jjp8dSwCJZZm11GdiW4P04VvpKUj8T67CFln4D98HfCTTOnZAxNPt0coVG6F0bMkkInzTM06HI2E779be5xMhfm6S7ZKlqS6Om8Vu5BWExA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211502; c=relaxed/simple;
-	bh=7UKpMFaq491IUhYul1TgA1g5sFg/J9hbAtNPiyvuFpI=;
+	s=arc-20240116; t=1784211505; c=relaxed/simple;
+	bh=BoypxkLk23S1vB8srOQ/2sZsnC6gwvwQKwPzKaiNjEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIPzpD1i2NQ9ofDPY2LK9FPg5clTq5Gp1Oq++yWaCdgDZPkCOxXnm/X1P54AfA2cLAFBjE+51te4kV3pOXbLmw3AYzJmLziTNuhhaiaW6ky8gQXkBtUeixYd+l9TZ6DrcCq+qneK7XiX3ygL/b2yxqc3ErtD79pR9662W48ORb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoBct12U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dtY/vr3Ho3rX6mmf6DzRR3/mvHKxZCStaHwMXPeZx9crT+6URwYJs0RjD9hYiGDTtuZtzd9Y3LQ+5BLXoVT4EUUvIEJsNa1lzDFsrJG8nBYSuXBE1+D0QLPyt6HObpjR6FqQMHfG5eyTKnIwWH2bSHk3CawPmUqDfGgm2yBNXSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AasBpWC/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoBct12U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09221F000E9;
-	Thu, 16 Jul 2026 14:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AasBpWC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AB51F000E9;
+	Thu, 16 Jul 2026 14:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211501;
-	bh=DyBDKNiWYPecbZK+yYJcCm5YwmH5DNGVJhc60M8aR4o=;
+	s=korg; t=1784211503;
+	bh=Q190IZ/w9Leqnk3gJiIAkn/K62VaG5OPIS5c29sXIXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FoBct12U2qKdn5SO5kCslrkvGeu57tkEdU7U34E+QeGaaeMA6mL6S/qe8h+ZEfvGO
-	 TngzLh5TWntcHwq3K4/HSB7NmvO3NfZOHqeYhqdUl1DxfsESxleEqFtW4S+7s8onWb
-	 ybxkUtbh9wr4Pe6bR9NFdwVZOpm6pDyyFF6kEw4M=
+	b=AasBpWC/macn4p/fDhkLM2LIBpNURYyM3U39uV9HwQfNyxk6ErcFjtLajv0Q+ZGJF
+	 MZZ2BHBj8N/bh+6jt7L1rSs6ORPdbKlAqxuNrxVE7Ybi1Q0v5JRpmU0qSnoEUOYVJX
+	 MzhJLJj+oR5Mr0Au3Dpil7GViix+8/Q+jQ9q+xHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bryam Vargas <hexlabsecurity@proton.me>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 451/480] Input: touchwin - reset the packet index on every complete packet
-Date: Thu, 16 Jul 2026 15:33:18 +0200
-Message-ID: <20260716133054.578854445@linuxfoundation.org>
+Subject: [PATCH 6.18 452/480] Input: mms114 - reject an oversized device packet size
+Date: Thu, 16 Jul 2026 15:33:19 +0200
+Message-ID: <20260716133054.600521536@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,62 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 478cdd736f2ce3114f90e775d7358136d3977b94 upstream.
+commit 66725039f7090afe14c31bd259e2059a68f04023 upstream.
 
-tw_interrupt() accumulates each non-zero serial byte into a fixed
-three-byte buffer with a running index that is only reset once a full
-packet has been received *and* the device's two Y bytes agree:
+mms114_interrupt() reads a packet of touch data from the device into a
+fixed-size on-stack buffer
 
-	tw->data[tw->idx++] = data;
-	if (tw->idx == TW_LENGTH && tw->data[1] == tw->data[2]) {
-		...
-		tw->idx = 0;
-	}
+	struct mms114_touch touch[MMS114_MAX_TOUCH];
 
-The reset is gated on tw->data[1] == tw->data[2], a value the device
-controls.  A malicious, malfunctioning or counterfeit Touchwindow
-peripheral can stream non-zero bytes whose 2nd and 3rd bytes differ: the
-index reaches TW_LENGTH without the equality holding, is never reset, and
-keeps growing, so tw->data[tw->idx++] walks off the end of the three-byte
-array and the rest of the heap-allocated struct tw, one attacker-chosen
-byte at a time -- an unbounded, device-driven heap out-of-bounds write.
+which holds MMS114_MAX_TOUCH (10) events of MMS114_EVENT_SIZE (8) bytes,
+i.e. 80 bytes. The length of the I2C read into it is taken verbatim from
+the device:
 
-Reset the index on every completed packet and report an event only when
-the two Y bytes match, like the other serio touchscreen drivers do.
+	packet_size = mms114_read_reg(data, MMS114_PACKET_SIZE);
+	if (packet_size <= 0)
+		goto out;
+	...
+	error = __mms114_read_reg(data, MMS114_INFORMATION, packet_size,
+			(u8 *)touch);
 
-Fixes: 11ea3173d5f2 ("Input: add driver for Touchwin serial touchscreens")
-Cc: stable@vger.kernel.org
+packet_size is a single device register byte (0x0F) and the only check
+is the lower bound packet_size <= 0; it is never bounded against the
+size of touch[]. A malfunctioning, malicious or counterfeit controller
+(or an attacker tampering with the I2C bus) can report a packet_size of
+up to 255, so __mms114_read_reg() writes up to 175 bytes past the end of
+touch[] on the IRQ-thread stack: a stack out-of-bounds write that can
+overwrite the stack canary, saved registers and the return address.
+
+A well-formed device never reports more than the buffer holds, so reject
+an oversized packet and drop the report, consistent with the handler's
+other error paths, rather than reading past the buffer.
+
+Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
 Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260613-b4-disp-69921bfd-v1-1-82c036899959@proton.me
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260612-b4-disp-dc4b8dc4-v1-1-d7cb0a828d92@proton.me
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/touchwin.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/input/touchscreen/mms114.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/input/touchscreen/touchwin.c
-+++ b/drivers/input/touchscreen/touchwin.c
-@@ -63,12 +63,15 @@ static irqreturn_t tw_interrupt(struct s
- 	if (data) {		/* touch */
- 		tw->touched = 1;
- 		tw->data[tw->idx++] = data;
--		/* verify length and that the two Y's are the same */
--		if (tw->idx == TW_LENGTH && tw->data[1] == tw->data[2]) {
--			input_report_abs(dev, ABS_X, tw->data[0]);
--			input_report_abs(dev, ABS_Y, tw->data[1]);
--			input_report_key(dev, BTN_TOUCH, 1);
--			input_sync(dev);
-+		/* a full packet ends the accumulation, valid or not */
-+		if (tw->idx == TW_LENGTH) {
-+			/* report only if the two Y's are the same */
-+			if (tw->data[1] == tw->data[2]) {
-+				input_report_abs(dev, ABS_X, tw->data[0]);
-+				input_report_abs(dev, ABS_Y, tw->data[1]);
-+				input_report_key(dev, BTN_TOUCH, 1);
-+				input_sync(dev);
-+			}
- 			tw->idx = 0;
- 		}
- 	} else if (tw->touched) {	/* untouch */
+--- a/drivers/input/touchscreen/mms114.c
++++ b/drivers/input/touchscreen/mms114.c
+@@ -236,6 +236,12 @@ static irqreturn_t mms114_interrupt(int
+ 	if (packet_size <= 0)
+ 		goto out;
+ 
++	if (packet_size > sizeof(touch)) {
++		dev_err(&client->dev, "Invalid packet size %d (max %zu)\n",
++			packet_size, sizeof(touch));
++		goto out;
++	}
++
+ 	/* MMS136 has slightly different event size */
+ 	if (data->type == TYPE_MMS134S || data->type == TYPE_MMS136)
+ 		event_size = MMS136_EVENT_SIZE;
 
 
