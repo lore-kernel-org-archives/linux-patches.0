@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50001324B06;
-	Thu, 16 Jul 2026 14:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E731642E8DC;
+	Thu, 16 Jul 2026 14:31:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212275; cv=none; b=I0xEu2Yt4K0IgW4kx8gkQFFnIiK7l3e9zpp8TaKjWX2YPUsYYU4cNcwrLhEHGyskmtfE18sEjqeLzuQSFwZ6f8Itt93RdpOVStQpNEr/bwr+rpUkJC1FnG4HlUP9hZKNDGfjC2wsRRf28gaTl1HwqCk+Nn/WJRJgF5BrQhm/RVU=
+	t=1784212278; cv=none; b=ks+FQppB8O2fxoel64DebnYmZ+1ndLrPTfLIn2KGTkdpnTIrdlfIOt5pSUQXBRUVpzCVY/x/47K7OWyn7YbrUbQ4dfa4KyvR1gq6hdPBwybaxPgOL9Wi2R8PSU8pxb9bViG16TGfOAkJObfWXWvAQP60IJv61sMiHRCSIL4isIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212275; c=relaxed/simple;
-	bh=fBFEGfZL7K60rk7KCHz00HVwVqh/xGFCRpVmaiLRnf0=;
+	s=arc-20240116; t=1784212278; c=relaxed/simple;
+	bh=p4dHlS+hIaQhHbrwnrC6DOgboamMUrJIULFBB44JB30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVw2xcuujxcdAo/r/zKYmBk2pSLckvEFkadCRLIHZh/Wvx9T1lsRq6RpXKKnrJnCfkDXz67E0oMX077/qtTlgY5Hnwthifi87YWuGIgbv9h+K4Wkj3gIcmw86VRph83iqX7qzMlml/3/slXlt+Yz6Fm2zwWegbx7F9UA7tI1BzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3/ej2Ca; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eaF+CnFJCbTDTI3KfwiFap+8sqbpBf3Mbc4Trqq5o1GIM4THBo3DP3aMet8INMidg6V8rpGA24q3woSygYEvzumughcf4OYEQsSRulih/Ssz3ZkpGrutQBWaDd71iSNdsXCMeVIq2M0ci/DPZrAo3L3hLBcMQ8n6ndyJUA6AT2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYlvDki0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3/ej2Ca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B453C1F000E9;
-	Thu, 16 Jul 2026 14:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYlvDki0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587D11F00A3A;
+	Thu, 16 Jul 2026 14:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212274;
-	bh=EH8Ywb8Vo5DppwweW3ZFRsBEsA3kIWpp/XAALkoO82c=;
+	s=korg; t=1784212276;
+	bh=sbhpeaP8ZRB3tsXxxwFbe6EJmtV4zB5vtaMkhCEHBLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a3/ej2Ca60q5Xd2XGrtsX+UT6FGLeykovP85cwqYwYlT6Hv65pCOdQO0QhxvzS6Q+
-	 mPzM2UT708I/uTyjHgisBNeLfXWPdYvovPpN/vFMNws9aNO2uU4sQWy42rksoPgiKI
-	 PAuQL06j03FzeNhDy3mdYO7c5DzBzL+ERrXrNdbQ=
+	b=UYlvDki0AgV7ABtW9HJTqOBR+OSijj6ovjDEh4SX8PLiRap1J260ry2PrxlYH4WHK
+	 GoCNFznF9cO9MnCNdDT3iQOTCbmjG0O2c3Ft3mMTo3pUmtlML6L8hMZKEsfORDA7ed
+	 cISfHGJ0fVdDjwHXiUcEhBXAPlZq4DvPCe2eW/sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Igor Achkinazi <igor.achkinazi@dell.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 264/349] nvme-multipath: set BIO_REMAPPED on bios remapped to per-path namespace disks
-Date: Thu, 16 Jul 2026 15:33:18 +0200
-Message-ID: <20260716133039.255503670@linuxfoundation.org>
+Subject: [PATCH 6.12 265/349] nvmet: fix pre-auth out-of-bounds heap read in Discovery Get Log Page
+Date: Thu, 16 Jul 2026 15:33:19 +0200
+Message-ID: <20260716133039.276685242@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,88 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Achkinazi, Igor <Igor.Achkinazi@dell.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 88bac2c1a72b8f4f71e9845699aa872df04e5850 upstream.
+commit 53cd102a7a56079b11b897835bd9b94c14e6322c upstream.
 
-When nvme_ns_head_submit_bio() remaps a bio from the multipath head to a
-per-path namespace, bio_set_dev() clears BIO_REMAPPED.  The remapped bio
-is then resubmitted through submit_bio_noacct() which calls
-bio_check_eod() because BIO_REMAPPED is not set.
+nvmet_execute_disc_get_log_page() validates only the dword alignment
+of the host-supplied Log Page Offset (lpo).  The 64-bit offset is then
+added to a small kzalloc'd buffer that holds the discovery log page
+and the result is passed straight to nvmet_copy_to_sgl(), which
+memcpy()s data_len bytes out to the host with no source-side bound
+check:
 
-This races with nvme_ns_remove() which zeroes the per-path capacity
-before synchronize_srcu():
+    u64 offset      = nvmet_get_log_page_offset(req->cmd);  /* 64-bit host */
+    size_t data_len = nvmet_get_log_page_len(req->cmd);     /* 32-bit host */
+    ...
+    if (offset & 0x3) { ... }                               /* only check */
+    ...
+    alloc_len = sizeof(*hdr) + entry_size * discovery_log_entries(req);
+    buffer = kzalloc(alloc_len, GFP_KERNEL);
+    ...
+    status = nvmet_copy_to_sgl(req, 0, buffer + offset, data_len);
 
-  CPU 0 (IO submission)
-  ---------------------
-  srcu_read_lock()
-  nvme_find_path() -> ns
-    [NVME_NS_READY is set]
+The Discovery controller is unauthenticated -- nvmet_host_allowed()
+returns true unconditionally for the discovery subsystem -- so the call
+is reachable pre-authentication by any TCP/RDMA/FC peer that can reach
+the nvmet target.  With a discovery log page of ~1 KiB, an attacker
+requesting up to 4 KiB starting at offset == alloc_len reads the next
+slab page out and gets its content returned over the fabric (an
+empirical run on a default nvmet-tcp loopback target leaked 81
+canonical kernel pointers in one Get Log Page response).  Pointing the
+offset at unmapped kernel memory faults the in-kernel memcpy and
+crashes (or panics, on panic_on_oops=1) the target host instead.
 
-  CPU 1 (namespace removal)
-  -------------------------
-  clear_bit(NVME_NS_READY)
-  set_capacity(ns->disk, 0)
-  synchronize_srcu()  <- blocks
+The attacker-controlled source-side offset pattern
+"nvmet_copy_to_sgl(req, 0, buffer + ATTACKER_OFFSET, ...)" is unique
+to nvmet_execute_disc_get_log_page in the entire nvmet codebase: every
+other Get Log Page handler in admin-cmd.c either ignores lpo (and
+silently starts every response at offset 0) or tracks a local
+destination offset with a fixed source pointer.
 
-  CPU 0 (IO submission)
-  ---------------------
-  bio_set_dev(bio, ns->disk->part0)
-    [clears BIO_REMAPPED]
-  submit_bio_noacct(bio)
-    -> bio_check_eod() sees capacity=0
-    -> bio fails with IO error
+Validate the host-supplied offset against the log page size, cap the
+copy length to what is actually available, and zero-fill any remainder
+of the host transfer buffer.  The zero-fill matches the existing
+short-response pattern in nvmet_execute_get_log_changed_ns()
+(admin-cmd.c) and prevents leaking transport SGL contents when the
+host asks for more bytes than the log page contains.
 
-The SRCU read lock prevents synchronize_srcu() from completing, but does
-not prevent set_capacity(0) from executing.  The bio fails the EOD check
-before it reaches the NVMe driver, so nvme_failover_req() never gets a
-chance to redirect it to another path of multipath.  IO errors are
-reported to the application despite another path being available.
-
-On older kernels (before commit 0b64682e78f7 "block: skip unnecessary
-checks for split bio"), the same race was also reachable through split
-remainders resubmitted via submit_bio_noacct().
-
-Fix this by setting BIO_REMAPPED after bio_set_dev() in
-nvme_ns_head_submit_bio().  This skips bio_check_eod() on the per-path
-device; the EOD check already passed on the multipath head.
-
-NVMe per-path namespace devices are always whole disks (bd_partno=0), so
-the blk_partition_remap() skip also gated by BIO_REMAPPED is a no-op.
-The flag does not persist across failover and cannot go stale if the
-namespace geometry changes between attempts: nvme_failover_req() calls
-bio_set_dev() to redirect the bio back to the multipath head, which
-clears BIO_REMAPPED.  When nvme_requeue_work() resubmits through
-submit_bio_noacct(), bio_check_eod() runs normally against the current
-capacity.
-
-Same approach as commit 3a905c37c351 ("block: skip bio_check_eod for
-partition-remapped bios").
-
-Fixes: a7c7f7b2b641 ("nvme: use bio_set_dev to assign ->bi_bdev")
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
 Cc: stable@vger.kernel.org
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Igor Achkinazi <igor.achkinazi@dell.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/multipath.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/target/discovery.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -467,6 +467,12 @@ static void nvme_ns_head_submit_bio(stru
- 	ns = nvme_find_path(head);
- 	if (likely(ns)) {
- 		bio_set_dev(bio, ns->disk->part0);
-+		/*
-+		 * Use BIO_REMAPPED to skip bio_check_eod() when this bio
-+		 * enters submit_bio_noacct() for the per-path device. The EOD
-+		 * check already passed on the multipath head.
-+		 */
-+		bio_set_flag(bio, BIO_REMAPPED);
- 		bio->bi_opf |= REQ_NVME_MPATH;
- 		trace_block_bio_remap(bio, disk_devt(ns->head->disk),
- 				      bio->bi_iter.bi_sector);
+--- a/drivers/nvme/target/discovery.c
++++ b/drivers/nvme/target/discovery.c
+@@ -166,6 +166,7 @@ static void nvmet_execute_disc_get_log_p
+ 	u64 offset = nvmet_get_log_page_offset(req->cmd);
+ 	size_t data_len = nvmet_get_log_page_len(req->cmd);
+ 	size_t alloc_len;
++	size_t copy_len;
+ 	struct nvmet_subsys_link *p;
+ 	struct nvmet_port *r;
+ 	u32 numrec = 0;
+@@ -239,7 +240,27 @@ static void nvmet_execute_disc_get_log_p
+ 
+ 	up_read(&nvmet_config_sem);
+ 
+-	status = nvmet_copy_to_sgl(req, 0, buffer + offset, data_len);
++	/*
++	 * Validate the host-supplied log page offset before copying out.
++	 * Without this check, the host controls a 64-bit byte offset into
++	 * a small kzalloc'd buffer: a value past the log page lets the
++	 * subsequent memcpy read adjacent kernel heap, and a value aimed
++	 * at unmapped kernel memory faults the in-kernel copy and crashes
++	 * the target host. The Discovery controller is unauthenticated,
++	 * so the bug is reachable from any reachable fabric peer.
++	 */
++	if (offset > alloc_len) {
++		req->error_loc =
++			offsetof(struct nvme_get_log_page_command, lpo);
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
++		goto out_free_buffer;
++	}
++
++	copy_len = min_t(size_t, data_len, alloc_len - offset);
++	status = nvmet_copy_to_sgl(req, 0, buffer + offset, copy_len);
++	if (!status && copy_len < data_len)
++		status = nvmet_zero_sgl(req, copy_len, data_len - copy_len);
++out_free_buffer:
+ 	kfree(buffer);
+ out:
+ 	nvmet_req_complete(req, status);
 
 
