@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D893009E2;
-	Thu, 16 Jul 2026 14:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2B25A79B;
+	Thu, 16 Jul 2026 14:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210717; cv=none; b=IZmFRDbzl6WyXt/gZwki/Wx56Sk65J2WFnybbkWpk9QSVxt19FmO+DMbKkCMB/pfQ6qE0rcc3tykwidMQSxv2VJaztGRkGWxVxE/FsAdMaW7oAeV7Y5Az8YqjypnBFhIvit0Wbp74g9D28qopq0elhI1I/s+k2lWmZeBNsFMi7w=
+	t=1784210719; cv=none; b=XVQHHHyUOTffekfwArF4BsUX9hPNR1DIsaKZO9Bu57WhSFOgKsoRCmoWWAgqzYJ7lT/zqKUZsWfrAzE98aUQQtOdt4cSZ4Nxr58mE3m+nqke6aAsNystmvtNJE5no4s/1MTgoiP+mIcgpaZVZzk3XLXxgAHi0WKEov1Yl3rEyDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210717; c=relaxed/simple;
-	bh=9ssHvzs2irI8ApprUUboezrjuaOSOSC/pJZwXCgDYuc=;
+	s=arc-20240116; t=1784210719; c=relaxed/simple;
+	bh=V7bo7bf3Hc+EdvK55DjTQyzINT1TvmVjXoGrKrwV+ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KPKj9HTgFBb7uMlUyYopfMexUFf3mnAitXzkGRNQmizkH9dYu9RaP9ByFb59FfSx6LJUwe4Kptw0kQwcdZb4WXKyUwP0cF34rlySKzop5HYDksPF2ya54gEEZecA9KlXvwa/Re1V1St8YA7C0fQ9OTEQ6+ijPZzk87ja5JQdFko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhnHLcB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tZkFF57PEV7OGsaKU4x50M3g6Ox1EOWIfDMNBWvtcav9/yMq7Ox0VylSahkhG7wIKVPBNt4WzlyKMlOS4qCaHzZVu2b3Gx13eixeDQzXFpnmcwpgwYrWtO7M+jrw/B6iqGGaRkiVe0iWwuYfp462f9TnkciSLjTtziq4m8WJkzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNKaxpM5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhnHLcB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637861F000E9;
-	Thu, 16 Jul 2026 14:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNKaxpM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3E21F000E9;
+	Thu, 16 Jul 2026 14:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210715;
-	bh=UquJuNue0+5iZVy5GYWX9V+9xfik3asyC2CyaUktNVw=;
+	s=korg; t=1784210718;
+	bh=4FzPJOkFc/DHcjzjm/shviL9s8KaTIMgMuxrbmDJZ1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LhnHLcB9asxyItmEqVvh3icc5ldmlCvMgJEOZyrHFVhsgBr04NCdJXiB8CxqomRLn
-	 QrwXKnEQ7/pld5s0+p27dASmwJp5OjlCaw21s8VtNl35AhKHlB8qhcSN78w61dueJ5
-	 9A5ddpHk6qjX9DoDt+kfj2YnBvszqPrmRx77D7OQ=
+	b=MNKaxpM5AR4zVCp3sASTyHOGgogi9qQ5hyNs3DuGm9k0pdRKwM+WULSy4ETyJqFmw
+	 5vlojcpOJdV5mQ/rW/lHbuJ32DgWlRalsO3tJvLwix13Nct8UgrbqNzxp2grHE5A90
+	 lyEj0QcjvRLLbeUunLMtAwtqP7azF53kmTlxNCJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 154/480] tipc: fix out-of-bounds read in broadcast Gap ACK blocks
-Date: Thu, 16 Jul 2026 15:28:21 +0200
-Message-ID: <20260716133048.037084107@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Michael Tautschnig <tautschn@amazon.com>
+Subject: [PATCH 6.18 155/480] staging: vme_user: bound slave read/write to the kern_buf size
+Date: Thu, 16 Jul 2026 15:28:22 +0200
+Message-ID: <20260716133048.057984397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,164 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Michael Tautschnig <tautschn@amazon.com>
 
-commit 2b66974a1b6134a4bbc3bfed181f7418f688eb54 upstream.
+commit 9f32f38265014fac7f5dc9490fb01a638ce6e121 upstream.
 
-A broadcast PROTOCOL/STATE_MSG can carry a Gap ACK blocks record in its
-data area. tipc_get_gap_ack_blks() only verifies that the record's len
-field is self-consistent with its ugack_cnt/bgack_cnt counts
-(sz == struct_size(p, gacks, ugack_cnt + bgack_cnt)); it does not check
-that the record actually fits in the message data area, msg_data_sz().
+The SLAVE-path helpers buffer_to_user() and buffer_from_user() copy
+'count' bytes into/out of the fixed-size kern_buf (size_buf ==
+PCI_BUF_SIZE == 0x20000, 128 KiB) using *ppos as the offset, without
+bounding *ppos + count against size_buf.
 
-The unicast caller tipc_link_proto_rcv() bounds it ("if (glen > dlen)
-break;"), but the broadcast caller tipc_bcast_sync_rcv() discards the
-returned size, so tipc_link_advance_transmq() copies the record off the
-receive skb with an attacker-controlled count:
+vme_user_write()/vme_user_read() only clamp count to the VME window size
+(image_size = vme_get_size(resource)), which VME_SET_SLAVE sets from the
+user-supplied slave.size -- validated against the VME address space (up
+to VME_A32_MAX = 4 GiB), not against PCI_BUF_SIZE.  When the window
+exceeds 128 KiB, a write()/read() copies past the kern_buf allocation.
 
-	this_ga = kmemdup(ga, struct_size(ga, gacks, ga->bgack_cnt),
-			  GFP_ATOMIC);
+Clamp count against size_buf in both helpers, with an early return when
+*ppos is already at/after the buffer end.  *ppos is >= 0 here (the caller
+rejects negative offsets), so size_buf - *ppos cannot wrap.  This mirrors
+the existing clamp in the MASTER-path helpers resource_to_user() /
+resource_from_user(), and matches the read()/write() convention of a
+short transfer at end-of-buffer.
 
-A TIPC neighbour that negotiated TIPC_GAP_ACK_BLOCK triggers it with one
-ordinary broadcast STATE_MSG (msg_bc_ack_invalid() clear), sized so its
-data area is short, carrying a Gap ACK record with len = 0x400,
-bgack_cnt = 0xff and ugack_cnt = 0. len then equals
-struct_size(p, gacks, 255), so the consistency check passes and ga is
-non-NULL; kmemdup() reads struct_size(ga, gacks, 255) = 1024 bytes out
-of the much smaller skb:
+Found by static analysis (CodeQL taint tracking + CBMC bounded model
+checking) and confirmed dynamically under KASAN with the vme_fake bridge:
 
-  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x48/0x60
-  Read of size 1024 at addr ffff0000c7030d38 by task poc864/69
-  Call trace:
-   kmemdup_noprof+0x48/0x60
-   tipc_link_advance_transmq+0x86c/0xb80
-   tipc_link_bc_ack_rcv+0x19c/0x1e0
-   tipc_bcast_sync_rcv+0x1c4/0x2c4
-   tipc_rcv+0x85c/0x1340
-   tipc_l2_rcv_msg+0xac/0x104
-  The buggy address belongs to the object at ffff0000c7030d00
-   which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 56 bytes inside of
-   allocated 704-byte region [ffff0000c7030d00, ffff0000c7030fc0)
+  BUG: KASAN: slab-out-of-bounds in _copy_from_user+0x2d/0x80
+  Write of size 262144 at addr ffff888004100000 by task trigger/68
+    _copy_from_user+0x2d/0x80
+    vme_user_write+0x13e/0x240 [vme_user]
+    vfs_write+0x1b8/0x7a0
+    ksys_write+0xb8/0x150
 
-The copied-out bytes are subsequently consumed as gap/ack values, but
-the read is already out of bounds at the kmemdup() regardless of how
-they are used.
-
-The unicast STATE path drops such a message: "if (glen > dlen) break;"
-skips the rest of STATE_MSG handling and the skb is freed. Make the
-broadcast path drop it too. tipc_bcast_sync_rcv() now bounds the record
-against msg_data_sz() and, when it does not fit, reports it back through
-tipc_node_bc_sync_rcv() to tipc_rcv() so the skb is discarded rather than
-processed. ga is not cleared on this path: ga == NULL already means
-"legacy peer without Selective ACK", a distinct legitimate state.
-
-Fixes: d7626b5acff9 ("tipc: introduce Gap ACK blocks for broadcast link")
-Cc: stable@vger.kernel.org
-Signed-off-by: Samuel Page <sam@bynar.io>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260625143815.1525412-1-sam@bynar.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f00a86d98a1e ("Staging: vme: add VME userspace driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Michael Tautschnig <tautschn@amazon.com>
+Link: https://patch.msgid.link/20260618114709.72499-1-tautschn@amazon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/bcast.c |   22 ++++++++++++++--------
- net/tipc/bcast.h |    2 +-
- net/tipc/node.c  |   15 ++++++++++++---
- 3 files changed, 27 insertions(+), 12 deletions(-)
+ drivers/staging/vme_user/vme_user.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
---- a/net/tipc/bcast.c
-+++ b/net/tipc/bcast.c
-@@ -497,12 +497,13 @@ void tipc_bcast_ack_rcv(struct net *net,
-  */
- int tipc_bcast_sync_rcv(struct net *net, struct tipc_link *l,
- 			struct tipc_msg *hdr,
--			struct sk_buff_head *retrq)
-+			struct sk_buff_head *retrq, bool *valid)
+--- a/drivers/staging/vme_user/vme_user.c
++++ b/drivers/staging/vme_user/vme_user.c
+@@ -156,6 +156,17 @@ static ssize_t buffer_to_user(unsigned i
  {
- 	struct sk_buff_head *inputq = &tipc_bc_base(net)->inputq;
- 	struct tipc_gap_ack_blks *ga;
- 	struct sk_buff_head xmitq;
- 	int rc = 0;
-+	u16 glen;
+ 	void *image_ptr;
  
- 	__skb_queue_head_init(&xmitq);
- 
-@@ -510,13 +511,18 @@ int tipc_bcast_sync_rcv(struct net *net,
- 	if (msg_type(hdr) != STATE_MSG) {
- 		tipc_link_bc_init_rcv(l, hdr);
- 	} else if (!msg_bc_ack_invalid(hdr)) {
--		tipc_get_gap_ack_blks(&ga, l, hdr, false);
--		if (!sysctl_tipc_bc_retruni)
--			retrq = &xmitq;
--		rc = tipc_link_bc_ack_rcv(l, msg_bcast_ack(hdr),
--					  msg_bc_gap(hdr), ga, &xmitq,
--					  retrq);
--		rc |= tipc_link_bc_sync_rcv(l, hdr, &xmitq);
-+		glen = tipc_get_gap_ack_blks(&ga, l, hdr, false);
-+		if (glen > msg_data_sz(hdr)) {
-+			/* Malformed Gap ACK blocks; caller drops the msg */
-+			*valid = false;
-+		} else {
-+			if (!sysctl_tipc_bc_retruni)
-+				retrq = &xmitq;
-+			rc = tipc_link_bc_ack_rcv(l, msg_bcast_ack(hdr),
-+						  msg_bc_gap(hdr), ga, &xmitq,
-+						  retrq);
-+			rc |= tipc_link_bc_sync_rcv(l, hdr, &xmitq);
-+		}
- 	}
- 	tipc_bcast_unlock(net);
- 
---- a/net/tipc/bcast.h
-+++ b/net/tipc/bcast.h
-@@ -97,7 +97,7 @@ void tipc_bcast_ack_rcv(struct net *net,
- 			struct tipc_msg *hdr);
- int tipc_bcast_sync_rcv(struct net *net, struct tipc_link *l,
- 			struct tipc_msg *hdr,
--			struct sk_buff_head *retrq);
-+			struct sk_buff_head *retrq, bool *valid);
- int tipc_nl_add_bc_link(struct net *net, struct tipc_nl_msg *msg,
- 			struct tipc_link *bcl);
- int tipc_nl_bc_link_set(struct net *net, struct nlattr *attrs[]);
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -1831,12 +1831,15 @@ static void tipc_node_mcast_rcv(struct t
- }
- 
- static void tipc_node_bc_sync_rcv(struct tipc_node *n, struct tipc_msg *hdr,
--				  int bearer_id, struct sk_buff_head *xmitq)
-+				  int bearer_id, struct sk_buff_head *xmitq,
-+				  bool *valid)
- {
- 	struct tipc_link *ucl;
- 	int rc;
- 
--	rc = tipc_bcast_sync_rcv(n->net, n->bc_entry.link, hdr, xmitq);
-+	rc = tipc_bcast_sync_rcv(n->net, n->bc_entry.link, hdr, xmitq, valid);
-+	if (!*valid)
-+		return;
- 
- 	if (rc & TIPC_LINK_DOWN_EVT) {
- 		tipc_node_reset_links(n);
-@@ -2140,12 +2143,18 @@ rcv:
- 
- 	/* Ensure broadcast reception is in synch with peer's send state */
- 	if (unlikely(usr == LINK_PROTOCOL)) {
-+		bool valid = true;
++	/*
++	 * The slave window (image_size) can exceed the fixed kern_buf
++	 * (size_buf == PCI_BUF_SIZE), so bound the copy to kern_buf.
++	 * *ppos is >= 0 here (checked by the caller), so the
++	 * subtraction below cannot wrap.
++	 */
++	if (*ppos >= image[minor].size_buf)
++		return 0;
++	if (count > image[minor].size_buf - *ppos)
++		count = image[minor].size_buf - *ppos;
 +
- 		if (unlikely(skb_linearize(skb))) {
- 			tipc_node_put(n);
- 			goto discard;
- 		}
- 		hdr = buf_msg(skb);
--		tipc_node_bc_sync_rcv(n, hdr, bearer_id, &xmitq);
-+		tipc_node_bc_sync_rcv(n, hdr, bearer_id, &xmitq, &valid);
-+		if (!valid) {
-+			tipc_node_put(n);
-+			goto discard;
-+		}
- 	} else if (unlikely(tipc_link_acked(n->bc_entry.link) != bc_ack)) {
- 		tipc_bcast_ack_rcv(net, n->bc_entry.link, hdr);
- 	}
+ 	image_ptr = image[minor].kern_buf + *ppos;
+ 	if (copy_to_user(buf, image_ptr, (unsigned long)count))
+ 		return -EFAULT;
+@@ -168,6 +179,17 @@ static ssize_t buffer_from_user(unsigned
+ {
+ 	void *image_ptr;
+ 
++	/*
++	 * The slave window (image_size) can exceed the fixed kern_buf
++	 * (size_buf == PCI_BUF_SIZE), so bound the copy to kern_buf.
++	 * *ppos is >= 0 here (checked by the caller), so the
++	 * subtraction below cannot wrap.
++	 */
++	if (*ppos >= image[minor].size_buf)
++		return 0;
++	if (count > image[minor].size_buf - *ppos)
++		count = image[minor].size_buf - *ppos;
++
+ 	image_ptr = image[minor].kern_buf + *ppos;
+ 	if (copy_from_user(image_ptr, buf, (unsigned long)count))
+ 		return -EFAULT;
 
 
