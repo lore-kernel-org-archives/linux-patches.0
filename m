@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6001642BE99;
-	Thu, 16 Jul 2026 14:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AB94248CD;
+	Thu, 16 Jul 2026 14:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211980; cv=none; b=B9sUj/TzXmxrhPsxwxTQIlxNuwHPo/4HMwX3PFvm0vDKUAftKbfVF8YtFgvfHXum9Hw79DY9uq6i2P7FeHEsZt9oocKpVdoFsu+4AHcLqoxbgz6VRUASLH+VPmT2hOCLPSRRf1Y7SBgtgJghJmqbe9odnC4qKhDaYIB2qRrPz6E=
+	t=1784211982; cv=none; b=XTyzUoDR05k1MVb48k86Wri5oX25TIorzqKf3+WD7DR0YS90b6XZCd7684rDsXjonkKg/6D4LbdaxO8Kwd1iMqDzcNqFIQ8p7XYAun3/cdJqCUAkjm6jMPuXXFeVf59i4oKphjLHpXdgRzp5lteYV0cg35ftLASVhW79m6elbqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211980; c=relaxed/simple;
-	bh=wUgyaxTUqeQVE9ZRloXn+MaPJa1UWuLMw+aS3E3B4bI=;
+	s=arc-20240116; t=1784211982; c=relaxed/simple;
+	bh=iRdNTlYY/SUVTFrqTwiTFbMWpOM7UqTAYhSVoG5UvWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ExRGKXLaCBx+9y66lu8e2JiIEhejT+8WuzYO83RxZrpv1zym3fvfARhkXpLS9mJ6sKVSqJHR3sEaHEeYbgoVOnrncw8SLBeizg2FRyIaEvwl4k09io/bPi55cr31B1dXf6vYHmk9IEGCjH9l+335+XVZwfffTsoQAXYTRgO3gG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDWhjhxe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JgxynxDbDwIutx7oIu3Qz5WqEahMnTVPVo8H9BRpaPlvcvXZ+PRWYTvmdsIfvR/jmQ+NDJF90I2T5mj9k4gPnPlr1RMKlSwo/CAHUfabeDZ3Kya5cXB2Oo6a+RUUsApMKE3+R/6Qm1ppMr4E89RHLSzZkUWMpFC11DaJXsSRrhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJo3gpXc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDWhjhxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7571F000E9;
-	Thu, 16 Jul 2026 14:26:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJo3gpXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3434F1F000E9;
+	Thu, 16 Jul 2026 14:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211979;
-	bh=s4NnnP1kFBLD8b57XFN4a/IgWJltlTtxRAdMFEp+rds=;
+	s=korg; t=1784211981;
+	bh=QaMnI4GhAtbEBmt0t4DhZ1oS9ODLTBokDSFKg1gneII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rDWhjhxe7cwftQgNN0MA0m/zOk9acTA8huFslGkfoNLnRNGXmR9rsvEhRG3jhycYr
-	 o/iA7SdLx497gyHJWb2PBiKKu7VtiDnwufZrOggywVMOZYUswWzOC5t9WRQ65UrD09
-	 OtM7en5s+R80rQtiA7hBpz4HykkUaep+Hwzb5WaU=
+	b=mJo3gpXc91wIoUYs4hlMYdcV9wEepk5sL/RJ2IXVsHkP6+6mBlcap75QDrwQNqzpD
+	 l83t80Al5Abb0JXs+1zhkdR7q2y4gHM+/guBuBgw5FT6u7SKjlA1Ycqos6pC3v2WLt
+	 5KRvnMek7yme6sfyVfLDtRBjDHhpDpa5Ooq1b5gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Muhammad Bilal <meatuni001@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 154/349] Bluetooth: hci_uart: clear HCI_UART_SENDING when write_work is canceled
-Date: Thu, 16 Jul 2026 15:31:28 +0200
-Message-ID: <20260716133036.831055700@linuxfoundation.org>
+Subject: [PATCH 6.12 155/349] Bluetooth: ISO: avoid NULL deref of conn in iso_conn_big_sync()
+Date: Thu, 16 Jul 2026 15:31:29 +0200
+Message-ID: <20260716133036.853463692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,71 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 1b0d946d6f08bd39211385bc703a440911b41e46 upstream.
+commit d5541eb148da72d5e0a1bca8ecd171f9fc8b366f upstream.
 
-HCI_UART_SENDING bit in tx_state means write_work is pending and blocks
-queueing it again.  Currently this bit is not cleared when canceling the
-work in hci_uart_close(), which blocks future writes when device is
-reopened later if write_work was pending.
+iso_conn_big_sync() drops the socket lock to call hci_get_route() and
+then re-acquires it, but dereferences iso_pi(sk)->conn->hcon afterwards
+without re-checking that conn is still valid.
 
-Fix by clearing HCI_UART_SENDING when canceling the work.
+While the lock is dropped, the connection can be torn down under the
+same socket lock: iso_disconn_cfm() -> iso_conn_del() -> iso_chan_del()
+sets iso_pi(sk)->conn to NULL (and the broadcast teardown path can also
+clear conn->hcon on its own). When iso_conn_big_sync() re-acquires the
+lock and reads conn->hcon, conn may be NULL, causing a NULL pointer
+dereference (hcon is the first member of struct iso_conn).
 
-Also make clearing of tx_skb safe by using disable_work_sync +
-enable_work instead of just cancel_work_sync.  hci_uart_flush() purges
-the proto tx queue so we can cancel the pending write_work there,
-instead of doing it just in hci_uart_close().  Re-enable and possibly
-requeue the work after queue flush.
+This path is reached from iso_sock_recvmsg() for a PA-sync broadcast
+sink socket (BT_SK_DEFER_SETUP | BT_SK_PA_SYNC), so the dropped-lock
+window can race with connection teardown driven by controller events.
 
-Fixes: c1bb9336ae6b ("Bluetooth: hci_uart: fix UAFs and race conditions in close and init paths")
-Link: https://lore.kernel.org/linux-bluetooth/07e0a28650773abec711ee492fdb1bf5d21a6c98.camel@iki.fi/
+Re-validate iso_pi(sk)->conn and its hcon after re-acquiring the socket
+lock and bail out if the connection went away, as already done in the
+sibling iso_sock_rebind_bc().
+
+Fixes: 7a17308c17880d ("Bluetooth: iso: Fix circular lock in iso_conn_big_sync")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_ldisc.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/bluetooth/iso.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -239,6 +239,8 @@ static int hci_uart_flush(struct hci_dev
- 
- 	BT_DBG("hdev %p tty %p", hdev, tty);
- 
-+	disable_work_sync(&hu->write_work);
-+
- 	if (hu->tx_skb) {
- 		kfree_skb(hu->tx_skb); hu->tx_skb = NULL;
- 	}
-@@ -254,6 +256,14 @@ static int hci_uart_flush(struct hci_dev
- 
- 	percpu_up_read(&hu->proto_lock);
- 
-+	/* Resume TX. Also reschedule in case work was queued concurrently;
-+	 * this may schedule write_work although there's nothing to do.
-+	 */
-+	enable_work(&hu->write_work);
-+	clear_bit(HCI_UART_SENDING, &hu->tx_state);
-+	if (test_bit(HCI_UART_TX_WAKEUP, &hu->tx_state))
-+		hci_uart_tx_wakeup(hu);
-+
- 	return 0;
- }
- 
-@@ -271,12 +281,8 @@ static int hci_uart_open(struct hci_dev
- /* Close device */
- static int hci_uart_close(struct hci_dev *hdev)
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1443,6 +1443,7 @@ static void iso_conn_big_sync(struct soc
  {
--	struct hci_uart *hu = hci_get_drvdata(hdev);
--
- 	BT_DBG("hdev %p", hdev);
+ 	int err;
+ 	struct hci_dev *hdev;
++	struct iso_conn *conn;
+ 	bdaddr_t src, dst;
+ 	u8 src_type;
  
--	cancel_work_sync(&hu->write_work);
--
- 	hci_uart_flush(hdev);
- 	hdev->flush = NULL;
- 	return 0;
+@@ -1465,8 +1466,17 @@ static void iso_conn_big_sync(struct soc
+ 	hci_dev_lock(hdev);
+ 	lock_sock(sk);
+ 
++	/* The socket lock was dropped for hci_get_route(), so the connection
++	 * may have been torn down meanwhile: iso_chan_del() clears conn and
++	 * the broadcast teardown path can clear conn->hcon on its own. Check
++	 * both before dereferencing conn->hcon.
++	 */
++	conn = iso_pi(sk)->conn;
++	if (!conn || !conn->hcon)
++		goto unlock;
++
+ 	if (!test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
+-		err = hci_conn_big_create_sync(hdev, iso_pi(sk)->conn->hcon,
++		err = hci_conn_big_create_sync(hdev, conn->hcon,
+ 					       &iso_pi(sk)->qos,
+ 					       iso_pi(sk)->sync_handle,
+ 					       iso_pi(sk)->bc_num_bis,
+@@ -1475,6 +1485,7 @@ static void iso_conn_big_sync(struct soc
+ 			bt_dev_err(hdev, "hci_big_create_sync: %d", err);
+ 	}
+ 
++unlock:
+ 	release_sock(sk);
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
 
 
