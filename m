@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FF230C361;
-	Thu, 16 Jul 2026 14:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6861400DE8;
+	Thu, 16 Jul 2026 14:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211182; cv=none; b=AuEOKpDmuK55kRvzJnOJcNziEGeZ7BlwvITvGLiGGS/i7uoJBxjPQQmDLHiBuwpjAHUdr9K/3Mto4L4mRN452FdhQlcnxn3Ecpq1v94PHxoRsP4Vd0lj9Oek+O3O8UqOp+NVCZCxrTvJp6B0/dNnxMTT8ukLwqKpwngBaH+/WjM=
+	t=1784211184; cv=none; b=U70oKR66xJm9+7F/cxaDlWI4hVtyw5E5+4szK1QwwV1/tx9SEWyXL1R53Et7IbWpE0NraldaATdf7VbNlN0/8SkD2x679r3t26Vyotk7Ty7bMAWh2VJ0a5AG7qbTVNcuCBIpU/4eC1K75tUjOMcgiVGZje/9q6ODYvOuE7nIY0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211182; c=relaxed/simple;
-	bh=1zpm30A9AHzkRlb12XNdqk3gLcZM2KSK3Tywo7Jmt2U=;
+	s=arc-20240116; t=1784211184; c=relaxed/simple;
+	bh=64JytIEgWpmn7nCFfb2fFfsEUujca88P4AzcXvZ2RD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wxr8yz8jQUKyNobVxBfxGqnB6xEzCBJqvoK+Ryi4XfoDhiAEjUAHmtyfSuvzJbjVAzSCXgQ/OAy3v4n2PAnaAWzy4EhOMfhR4xY4akgDcreXmL9ZrISQ9QA6AX9n26UprxB5iegB3CJ5RrGmQRtprkRU1a+6VS73M/frxQcjB70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsaaOqJn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J9mLp32zGP4wgLDFjn/WMcOM/HzsWptnmwN5d+kim198+ET/jnXrP0m0boN7qwx/gzNfsn0jOwNXCEXx5t0q8uN3YGZHbYXXS+JSYPVzwLqMh6P3+YJHb3WwkJqTDgXJ5Rvg+eYYpeFz4pu2pDuDoMF2lKOA9AJOJ0QuJ9sTCL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c08UpkGK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsaaOqJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30D61F000E9;
-	Thu, 16 Jul 2026 14:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c08UpkGK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B3C1F00A3A;
+	Thu, 16 Jul 2026 14:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211180;
-	bh=uDfJHOq+UbbqHLTeVlAMIBEtBWHgp/s+F6A+NNuFOj8=;
+	s=korg; t=1784211182;
+	bh=iPhmeMqe3wQ/dbi7KNK749uTnYBZ110pqcJ7mZXOJHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GsaaOqJnD7PVzdmJ1PSiqd1nxQ0WlGZ6bCvEZKlrEUWEp0Yrn2uXS4pW0sZ/LdH6p
-	 E7iDoIPqiGcyHZzmaVJO+aQEo9NcwKYmkCor2uBbwkIZ38aRJz940I0qNS6up97dgq
-	 StRv91S+quwBNHz6R0yRblNhunN2xzg3ZxFHbuuI=
+	b=c08UpkGKphFHahUoiBzZRmHpOkX+1jmIuaOwxdeT5iUnzJoQJH6xjo21aD6nd1+0h
+	 M/sklcBML2JMmKbhiJWHDjxdvPZ12GZkPN2GwczynHy4iENO5zDG3Wv8eC1B3e3hfg
+	 QSmYlx473lM3Csgoq11+WBZEwENFnSmVjiuOI2C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Nepomnyashih <sdl@nppct.ru>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Allison Henderson <achender@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 276/480] xfs: fix unreachable BIGTIME check in dquot flush validation
-Date: Thu, 16 Jul 2026 15:30:23 +0200
-Message-ID: <20260716133050.795675474@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 324/480] rust_binder: fix BINDER_GET_EXTENDED_ERROR
+Date: Thu, 16 Jul 2026 15:31:11 +0200
+Message-ID: <20260716133051.826744040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,59 +52,287 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Nepomnyashih <sdl@nppct.ru>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 03866d130ed33ab68cc7faaf4bf2c4abef96d42e upstream.
+[ Upstream commit 77bfebf110773f5a0d6b5ff8110896adb2c9c335 ]
 
-The dqp->q_id == 0 check inside the XFS_DQTYPE_BIGTIME block is
-unreachable because root dquots return successfully earlier. Reject root
-dquots with XFS_DQTYPE_BIGTIME before that early return, preserving the
-intended validation and removing the unreachable condition.
+This code currently copies the ExtendedError struct to the stack,
+modifies the copy, and then doesn't modify the original. Thus, fix it.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Furthermore, errors when replying must be delivered directly to the
+remote thread, so update deliver_reply() to take an extended error
+argument.
 
-Fixes: 4ea1ff3b4968 ("xfs: widen ondisk quota expiration timestamps to handle y2038+")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Link: https://patch.msgid.link/20260605-set-extended-error-v3-1-d60b69a75f97@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_dquot.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/android/binder/error.rs       | 13 +++---
+ drivers/android/binder/thread.rs      | 65 +++++++++++++++++++--------
+ drivers/android/binder/transaction.rs | 15 +++----
+ 3 files changed, 58 insertions(+), 35 deletions(-)
 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -1241,6 +1241,14 @@ xfs_qm_dqflush_check(
- 	    type != XFS_DQTYPE_PROJ)
- 		return __this_address;
+diff --git a/drivers/android/binder/error.rs b/drivers/android/binder/error.rs
+index c6a834071f8cef..fd9e9d9e5658b1 100644
+--- a/drivers/android/binder/error.rs
++++ b/drivers/android/binder/error.rs
+@@ -72,20 +72,17 @@ impl core::fmt::Debug for BinderError {
+     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+         match self.reply {
+             BR_FAILED_REPLY => match self.source.as_ref() {
+-                Some(source) => f
+-                    .debug_struct("BR_FAILED_REPLY")
+-                    .field("source", source)
+-                    .finish(),
++                Some(source) => source.fmt(f),
+                 None => f.pad("BR_FAILED_REPLY"),
+             },
+             BR_DEAD_REPLY => f.pad("BR_DEAD_REPLY"),
+             BR_FROZEN_REPLY => f.pad("BR_FROZEN_REPLY"),
+             BR_TRANSACTION_PENDING_FROZEN => f.pad("BR_TRANSACTION_PENDING_FROZEN"),
+             BR_TRANSACTION_COMPLETE => f.pad("BR_TRANSACTION_COMPLETE"),
+-            _ => f
+-                .debug_struct("BinderError")
+-                .field("reply", &self.reply)
+-                .finish(),
++            _ => match self.source.as_ref() {
++                Some(source) => source.fmt(f),
++                None => self.reply.fmt(f),
++            },
+         }
+     }
+ }
+diff --git a/drivers/android/binder/thread.rs b/drivers/android/binder/thread.rs
+index 93aa98c2a173a0..ad8bdf762ddc6f 100644
+--- a/drivers/android/binder/thread.rs
++++ b/drivers/android/binder/thread.rs
+@@ -498,9 +498,16 @@ impl Thread {
+         Ok(())
+     }
  
-+	/* bigtime flag should never be set on root dquots */
-+	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
-+		if (!xfs_has_bigtime(dqp->q_mount))
-+			return __this_address;
-+		if (dqp->q_id == 0)
-+			return __this_address;
-+	}
++    pub(crate) fn clear_extended_error(&self, debug_id: usize) {
++        self.inner.lock().extended_error = ExtendedError::new(debug_id as u32, BR_OK, 0);
++    }
 +
- 	if (dqp->q_id == 0)
- 		return NULL;
+     pub(crate) fn get_extended_error(&self, data: UserSlice) -> Result {
+         let mut writer = data.writer();
+-        let ee = self.inner.lock().extended_error;
++        let mut inner = self.inner.lock();
++        let ee = inner.extended_error;
++        inner.extended_error = ExtendedError::new(0, BR_OK, 0);
++        drop(inner);
+         writer.write(&ee)?;
+         Ok(())
+     }
+@@ -1105,7 +1112,10 @@ impl Thread {
+             inner.pop_transaction_to_reply(thread.as_ref())
+         } {
+             let reply = Err(BR_DEAD_REPLY);
+-            if !transaction.from.deliver_single_reply(reply, &transaction) {
++            if !transaction
++                .from
++                .deliver_single_reply(reply, &transaction, None)
++            {
+                 break;
+             }
  
-@@ -1256,14 +1264,6 @@ xfs_qm_dqflush_check(
- 	    !dqp->q_rtb.timer)
- 		return __this_address;
+@@ -1117,8 +1127,9 @@ impl Thread {
+         &self,
+         reply: Result<DLArc<Transaction>, u32>,
+         transaction: &DArc<Transaction>,
++        extended_error: Option<ExtendedError>,
+     ) {
+-        if self.deliver_single_reply(reply, transaction) {
++        if self.deliver_single_reply(reply, transaction, extended_error) {
+             transaction.from.unwind_transaction_stack();
+         }
+     }
+@@ -1132,6 +1143,7 @@ impl Thread {
+         &self,
+         reply: Result<DLArc<Transaction>, u32>,
+         transaction: &DArc<Transaction>,
++        extended_error: Option<ExtendedError>,
+     ) -> bool {
+         if let Ok(transaction) = &reply {
+             transaction.set_outstanding(&mut self.process.inner.lock());
+@@ -1147,6 +1159,12 @@ impl Thread {
+                 return true;
+             }
  
--	/* bigtime flag should never be set on root dquots */
--	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
--		if (!xfs_has_bigtime(dqp->q_mount))
--			return __this_address;
--		if (dqp->q_id == 0)
--			return __this_address;
--	}
++            if let Some(ee) = extended_error {
++                if inner.extended_error.command == BR_OK {
++                    inner.extended_error = ee;
++                }
++            }
++
+             match reply {
+                 Ok(work) => {
+                     inner.push_work(work);
+@@ -1217,6 +1235,9 @@ impl Thread {
+         info.buffers_size = td.buffers_size as usize;
+         // SAFETY: Above `read` call initializes all bytes, so this union read is ok.
+         info.target_handle = unsafe { td.transaction_data.target.handle };
++
++        info.debug_id = super::next_debug_id();
++
+         Ok(())
+     }
+ 
+@@ -1225,6 +1246,8 @@ impl Thread {
+         let mut info = TransactionInfo::zeroed();
+         self.read_transaction_info(cmd, reader, &mut info)?;
+ 
++        self.clear_extended_error(info.debug_id);
++
+         let ret = if info.is_reply {
+             self.reply_inner(&mut info)
+         } else if info.is_oneway() {
+@@ -1234,23 +1257,21 @@ impl Thread {
+         };
+ 
+         if let Err(err) = ret {
+-            if err.reply != BR_TRANSACTION_COMPLETE {
+-                info.reply = err.reply;
+-            }
 -
- 	return NULL;
+             self.push_return_work(err.reply);
+-            if let Some(source) = &err.source {
+-                info.errno = source.to_errno();
++            if err.reply != BR_TRANSACTION_COMPLETE {
+                 info.reply = err.reply;
++                if let Some(source) = &err.source {
++                    info.errno = source.to_errno();
+ 
+-                {
+-                    let mut ee = self.inner.lock().extended_error;
+-                    ee.command = err.reply;
+-                    ee.param = source.to_errno();
++                    {
++                        let mut inner = self.inner.lock();
++                        inner.extended_error =
++                            ExtendedError::new(info.debug_id as u32, err.reply, source.to_errno());
++                    }
+                 }
+ 
+                 pr_warn!(
+-                    "{}:{} transaction to {} failed: {source:?}",
++                    "{}:{} transaction to {} failed: {err:?}",
+                     info.from_pid,
+                     info.from_tid,
+                     info.to_pid
+@@ -1315,18 +1336,24 @@ impl Thread {
+             let allow_fds = orig.flags & TF_ACCEPT_FDS != 0;
+             let reply = Transaction::new_reply(self, process, info, allow_fds)?;
+             self.inner.lock().push_work(completion);
+-            orig.from.deliver_reply(Ok(reply), &orig);
++            orig.from.deliver_reply(Ok(reply), &orig, None);
+             Ok(())
+         })()
+         .map_err(|mut err| {
+             // At this point we only return `BR_TRANSACTION_COMPLETE` to the caller, and we must let
+             // the sender know that the transaction has completed (with an error in this case).
++
+             pr_warn!(
+-                "Failure {:?} during reply - delivering BR_FAILED_REPLY to sender.",
+-                err
++                "{}:{} reply to {} failed: {err:?}",
++                info.from_pid,
++                info.from_tid,
++                info.to_pid
+             );
+-            let reply = Err(BR_FAILED_REPLY);
+-            orig.from.deliver_reply(reply, &orig);
++
++            let param = err.source.as_ref().map_or(0, |e| e.to_errno());
++            let ee = ExtendedError::new(info.debug_id as u32, err.reply, param);
++            orig.from
++                .deliver_reply(Err(BR_FAILED_REPLY), &orig, Some(ee));
+             err.reply = BR_TRANSACTION_COMPLETE;
+             err
+         });
+diff --git a/drivers/android/binder/transaction.rs b/drivers/android/binder/transaction.rs
+index 733f452d8f49dd..b5434a2ae8193c 100644
+--- a/drivers/android/binder/transaction.rs
++++ b/drivers/android/binder/transaction.rs
+@@ -42,6 +42,7 @@ pub(crate) struct TransactionInfo {
+     pub(crate) reply: u32,
+     pub(crate) oneway_spam_suspect: bool,
+     pub(crate) is_reply: bool,
++    pub(crate) debug_id: usize,
  }
  
+ impl TransactionInfo {
+@@ -82,7 +83,6 @@ impl Transaction {
+         from: &Arc<Thread>,
+         info: &mut TransactionInfo,
+     ) -> BinderResult<DLArc<Self>> {
+-        let debug_id = super::next_debug_id();
+         let allow_fds = node_ref.node.flags & FLAT_BINDER_FLAG_ACCEPTS_FDS != 0;
+         let txn_security_ctx = node_ref.node.flags & FLAT_BINDER_FLAG_TXN_SECURITY_CTX != 0;
+         let mut txn_security_ctx_off = if txn_security_ctx { Some(0) } else { None };
+@@ -90,7 +90,7 @@ impl Transaction {
+         let mut alloc = match from.copy_transaction_data(
+             to.clone(),
+             info,
+-            debug_id,
++            info.debug_id,
+             allow_fds,
+             txn_security_ctx_off.as_mut(),
+         ) {
+@@ -117,7 +117,7 @@ impl Transaction {
+         let data_address = alloc.ptr;
+ 
+         Ok(DTRWrap::arc_pin_init(pin_init!(Transaction {
+-            debug_id,
++            debug_id: info.debug_id,
+             target_node: Some(target_node),
+             from_parent,
+             sender_euid: from.process.task.euid(),
+@@ -141,9 +141,8 @@ impl Transaction {
+         info: &mut TransactionInfo,
+         allow_fds: bool,
+     ) -> BinderResult<DLArc<Self>> {
+-        let debug_id = super::next_debug_id();
+         let mut alloc =
+-            match from.copy_transaction_data(to.clone(), info, debug_id, allow_fds, None) {
++            match from.copy_transaction_data(to.clone(), info, info.debug_id, allow_fds, None) {
+                 Ok(alloc) => alloc,
+                 Err(err) => {
+                     pr_warn!("Failure in copy_transaction_data: {:?}", err);
+@@ -154,7 +153,7 @@ impl Transaction {
+             alloc.set_info_clear_on_drop();
+         }
+         Ok(DTRWrap::arc_pin_init(pin_init!(Transaction {
+-            debug_id,
++            debug_id: info.debug_id,
+             target_node: None,
+             from_parent: None,
+             sender_euid: from.process.task.euid(),
+@@ -380,7 +379,7 @@ impl DeliverToRead for Transaction {
+         let send_failed_reply = ScopeGuard::new(|| {
+             if self.target_node.is_some() && self.flags & TF_ONE_WAY == 0 {
+                 let reply = Err(BR_FAILED_REPLY);
+-                self.from.deliver_reply(reply, &self);
++                self.from.deliver_reply(reply, &self, None);
+             }
+             self.drop_outstanding_txn();
+         });
+@@ -462,7 +461,7 @@ impl DeliverToRead for Transaction {
+         // If this is not a reply or oneway transaction, then send a dead reply.
+         if self.target_node.is_some() && self.flags & TF_ONE_WAY == 0 {
+             let reply = Err(BR_DEAD_REPLY);
+-            self.from.deliver_reply(reply, &self);
++            self.from.deliver_reply(reply, &self, None);
+         }
+ 
+         self.drop_outstanding_txn();
+-- 
+2.53.0
+
 
 
