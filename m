@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB9E430CD5;
-	Thu, 16 Jul 2026 14:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A244342F719;
+	Thu, 16 Jul 2026 14:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212493; cv=none; b=ZFmuXAZi2k/GdJqI8KeSJlObLChn6CqVCgNxC3Y433d9xztrcKwCF3j9q4+gL+Y1apOIbB/ki6GAZcoZrFcrmhRSvx7Krshyl05Kp1GglLadgOCX8akhxjwKBNpCwx7n6dG+ahtWvqlsKLDikPOClI7uI6b6lHNtFyTJ4FxzSoA=
+	t=1784212495; cv=none; b=a0Wku4EIuypoxljExR2ZwHXheAaPVUN4NC3hqTzpt7qj7+6KCyZzqDAIcOHk7SbFFMAkkb4YLy0M1bdg4/Q4SjPC8TxdjU7n1Sj35VaKr0SI6HEK+LCKVrocXnpZw5rXO8ue6RMx/0bkRmm8ieup3g8wu8UGAwT1HO8HgxtA3aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212493; c=relaxed/simple;
-	bh=XmTK78UA6Amsk+qC+DRZb9LsS/w7JQD1vP7H0S729Bs=;
+	s=arc-20240116; t=1784212495; c=relaxed/simple;
+	bh=+dBk2MROOkkRSBeYatVEFmJTFrXhKYhXg8svSctW3wU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=moQm2svuTwHvRARJMmzB0IoNLqOmH+BMyJHtC65lwBIxqXOpxgNOxk5U5bOvrGrdjDrPA/yiK5t1sYd3rOyK0ey3Whm3yf2jKC16jFRLAfdx5nlAO0dXK40KNrJiJY+1h5vqjGe02Z7v2lY53EVzlQaPyqNYJZ9iTwn8ToMjd84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vh/A18M0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fXOYu3oZ/pJocscPB68lKJqCnMwC6lXmZCwLLcJHqcpsZOzN+3MIPESLCypGOPDevnH9I/rmDW7xmhNUqqrcfOWdqqcsekekfDlNe48cqpBOeDqBYuQ6cKwKnWUWpgWPx8vsk5RkgrhJAuD1rvfzB5gvdgUf6E5VbZEHujgNEWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izFu1Fpg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vh/A18M0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744461F000E9;
-	Thu, 16 Jul 2026 14:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izFu1Fpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150721F000E9;
+	Thu, 16 Jul 2026 14:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212492;
-	bh=2IoshdUB5NlvqvtTl7KNiyZkEwPbNEGK26YE16pXYfM=;
+	s=korg; t=1784212494;
+	bh=JeIYn29MU0T0MBYzlPsLLHll432ZYr4StMKwt0XfnZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vh/A18M0RhIlmFstA/9Gq4nYJUuzULkpK0QfPXH2QcdBRVdsn0GdZeeMzurt2Ngkx
-	 mNJsbB/b/AtYfGwSl30g2kkFMOs3yNQ/6MJAxkXDqO4NaIwXCmpDBgqQniRy6v/OKJ
-	 DIwE2S3FGhGC93QdyA/fcMrKpi8JI96ynjO1C+S8=
+	b=izFu1Fpgrrn+VcYqCx5NUH186WsFMnG2ur4UH3YsO7PEWLlwcgxsmcWIdcoe5qwtw
+	 8/VCukWoh5jgSpby9YMtTS/WxyDNSpM8BS27NxvcqYjLJEaIccOYmjTNGA0Ltc38Qp
+	 k6nxocmqAogIPoI108YkK7HawNu9tqvezz8tm6Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.12 348/349] fuse: clear intr_entry in fuse_resend and fuse_remove_pending_req
-Date: Thu, 16 Jul 2026 15:34:42 +0200
-Message-ID: <20260716133041.089724104@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Neill Kapron <nkapron@google.com>
+Subject: [PATCH 6.12 349/349] usb: gadget: f_fs: Initialize epfile->in early to fix endpoint direction checks
+Date: Thu, 16 Jul 2026 15:34:43 +0200
+Message-ID: <20260716133041.111909802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,61 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+From: Neill Kapron <nkapron@google.com>
 
-commit f8fce75fedf73ac72aa09163deb8f4291fdcaad2 upstream.
+commit 82cfd4739011bdc7e87b5d585703427e89ddfaa5 upstream.
 
-When fuse_resend() moves a request from fpq->processing back to
-fiq->pending, it sets FR_PENDING and clears FR_SENT but does not
-remove the requests intr_entry from fiq->interrupts.  If the
-request had FR_INTERRUPTED set from a prior signal, intr_entry
-remains dangling on fiq->interrupts.  When the requesting task
-then receives a fatal signal, fuse_remove_pending_req() sees
-FR_PENDING=1, removes the request from fiq->pending and frees it
-via the refcount path, also without cleaning intr_entry.  The
-stale intr_entry causes use-after-free when fuse_read_interrupt()
-iterates fiq->interrupts:
-  - list_del_init(&req->intr_entry) -> UAF write on freed slab
-  - req->in.h.unique -> UAF read, data leaked to userspace
+When parsing endpoint descriptors, ffs_data_got_descs() generates the
+eps_addrmap which contains the endpoint direction. However, epfile->in
+was previously only populated in ffs_func_eps_enable() which executes
+upon USB host connection. As a result, early userspace ioctls like
+FUNCTIONFS_DMABUF_ATTACH that run before the host connects would see
+epfile->in as 0, leading to incorrect DMA directions.
 
-Remove intr_entry from fiq->interrupts in fuse_resend() for
-interrupted requests before they are placed back on fiq->pending.
+By moving the initialization to ffs_epfiles_create(), epfile->in is
+accurate before userspace opens the endpoint files.
 
-Add a WARN_ON if the intr_entry is not empty on request destruction.
-
-Fixes: 760eac73f9f6 ("fuse: Introduce a new notification type for resend pending requests")
-Cc: stable@vger.kernel.org # 6.9
-Signed-off-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: 7b07a2a7ca02 ("usb: gadget: functionfs: Add DMABUF import interface")
+Cc: stable <stable@kernel.org>
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://patch.msgid.link/20260619040609.4010746-2-nkapron@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/gadget/function/f_fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -66,6 +66,7 @@ static struct fuse_req *fuse_request_all
- 
- static void fuse_request_free(struct fuse_req *req)
- {
-+	WARN_ON(!list_empty(&req->intr_entry));
- 	kmem_cache_free(fuse_req_cachep, req);
- }
- 
-@@ -1881,6 +1882,14 @@ static void fuse_resend(struct fuse_conn
- 		end_requests(&to_queue);
- 		return;
- 	}
-+	/*
-+	 * Remove interrupt entries for resent requests to prevent stale
-+	 * intr_entry on fiq->interrupts after the request is re-queued.
-+	 */
-+	list_for_each_entry(req, &to_queue, list) {
-+		if (test_bit(FR_INTERRUPTED, &req->flags))
-+			list_del_init(&req->intr_entry);
-+	}
- 	/* iq and pq requests are both oldest to newest */
- 	list_splice(&to_queue, &fiq->pending);
- 	fuse_dev_wake_and_unlock(fiq);
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -2364,6 +2364,7 @@ static int ffs_epfiles_create(struct ffs
+ 			sprintf(epfile->name, "ep%02x", ffs->eps_addrmap[i]);
+ 		else
+ 			sprintf(epfile->name, "ep%u", i);
++		epfile->in = (ffs->eps_addrmap[i] & USB_ENDPOINT_DIR_MASK) ? 1 : 0;
+ 		epfile->dentry = ffs_sb_create_file(ffs->sb, epfile->name,
+ 						 epfile,
+ 						 &ffs_epfile_operations);
+@@ -2451,7 +2452,6 @@ static int ffs_func_eps_enable(struct ff
+ 		ret = usb_ep_enable(ep->ep);
+ 		if (!ret) {
+ 			epfile->ep = ep;
+-			epfile->in = usb_endpoint_dir_in(ep->ep->desc);
+ 			epfile->isoc = usb_endpoint_xfer_isoc(ep->ep->desc);
+ 		} else {
+ 			break;
 
 
