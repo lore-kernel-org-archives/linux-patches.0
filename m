@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280AD3DB62F;
-	Thu, 16 Jul 2026 13:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C501A400990;
+	Thu, 16 Jul 2026 13:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209979; cv=none; b=Lb2UOkLgFKVv5ixFQ+iMIqU/KBzqVR+J24J6jgjgAkuhaQK0BfaHTDyrCfkbCggeV/zYhhem/nPx9Rfd77+Hm+N9cVLJdOYkVxUlEgrEebKVzMoXoaVYMcmvycJZRedzOwaPivuMPsB4CLtV68kbB/iuoOC8S0nwRYNcSp5/+x4=
+	t=1784209982; cv=none; b=taRgi/CgCmiZNvT8L/MYnCvgZCKR+qY0YbUSbyFVkyDj82K0AyfXvumFXBdBEngIOM+sJji3+oXa/d07hn5YNQIcXkQ0qYWJTR6kKzwLKesK3GHBXo+H5xmylM8lOAtwrdL+pL1c2rLOgXEUp+aUyR0ohed3h/QrAVH4Mx6J80Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209979; c=relaxed/simple;
-	bh=zoLcJL7mS2eyBjPanrQHGWOrfzDFI4Jw2zJijo3HlcQ=;
+	s=arc-20240116; t=1784209982; c=relaxed/simple;
+	bh=nI4I7kP6vNWYkGxX1U/5u6/XEQSKp2o//Gl0quZoqdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsnB15jQPsJXxQOEMIgg3sMl63pr0UYYMuhZ49yTUaR9kRV9LAo3RjsF3AjRtFNINi/oWHXjwuacDOIGUsWEQQoSGXDPRIymCjU4hTqGCIdSeQVCoqUkDN3taUMBAlx1n+bCpcnK+6C/aowP33lJ64cg9FBadRSQrR0QtlJB6+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rov8iAgc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=urJ1Z4Xe6j3x/LBZS4KvVn3l0X1yGOtpaD07WE5vliOgc4/h6vh/QgdGB/YoRQxqArK/VbBFW2LFxrrWDkmu7xFDASKYzYfGNKcrYlFuYYRuoVfXLLCzHSpoY89RXxhyc09cFTWwk0uIRWIYhnT/VhTvFNuS/CYo20gC0lk5CO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVE9HiW/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rov8iAgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4BE1F000E9;
-	Thu, 16 Jul 2026 13:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVE9HiW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351A31F000E9;
+	Thu, 16 Jul 2026 13:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209978;
-	bh=kOxL7Q9QNw8t9x7JOUT0F1mnbShSlOy+Z35c4tMyagE=;
+	s=korg; t=1784209980;
+	bh=4PSKRgirREjM862FITX23oVbYKT+qYBLDlSdLf1+6+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rov8iAgc4/CyIQJVt9nXv+uizLObmgF5UH8uSlbyZmpnwu9H+NQdSZyb3iZm+/lsK
-	 1xV+lTDz+vWuPSS5uSWCim7KGVE4SphUrXX17KtXn322YPhFTu2EzzQV2XSPCzNMKL
-	 qPbhjVHD46G8wvsMOETNAltewY1y5lS2GTyR5ZpQ=
+	b=dVE9HiW/g9BPEFo2KQ0T7AuBS7RlfHbj2lCbJdVJEqc4w/QErGPbyKdSZohWQxC/6
+	 LHlxZLJzy+dGCR9MhU4Uh35KJ+eT4/AWS1QbbF6QHyoNjdUUBmOchsBpdjMakjzUmI
+	 hT8/e4i/nGg7Gz0O0+HmrcJEWv2uBYvbcf7/ZqbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.1 354/518] nvmet-auth: validate reply message payload bounds against transfer length
-Date: Thu, 16 Jul 2026 15:30:22 +0200
-Message-ID: <20260716133055.572009463@linuxfoundation.org>
+	Paul Louvel <paul.louvel@bootlin.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.1 390/518] crypto: talitos - add chaining of arbitrary number of descriptor for the SEC1
+Date: Thu, 16 Jul 2026 15:30:58 +0200
+Message-ID: <20260716133056.364598836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,73 +50,352 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit 3a413ece2504c70aa34a20be4dafec04e8c741f9 upstream.
+commit f126384ed55279c3b676f89d5ab547b8de8df782 upstream.
 
-nvmet_auth_reply() accesses the variable-length rval[] array using
-attacker-controlled hl (hash length) and dhvlen (DH value length) fields
-without verifying they fit within the allocated buffer of tl bytes.
+The SEC1 hardware can process a chain of descriptors without host
+intervention. Only the hash implementation currently use this feature,
+but with a chain of at most 2 descriptors added in commit 37b5e8897eb5
+("crypto: talitos - chain in buffered data for ahash on SEC1").
 
-A malicious NVMe-oF initiator can craft a DHCHAP_REPLY message with a
-small transfer length but large hl/dhvlen values, causing out-of-bounds
-heap reads when the target processes the DH public key (rval + 2*hl) or
-performs the host response memcmp.
+Add supports for chaining an arbitrary number of descriptors in a chain.
 
-With DH authentication configured, the OOB pointer is passed directly to
-sg_init_one() and read by crypto_kpp_compute_shared_secret(), reaching
-up to 526 bytes past the buffer. This is exploitable pre-authentication.
+Adapt the ahash implementation to make it compatible.
 
-Add bounds validation ensuring sizeof(*data) + 2*hl + dhvlen <= tl before
-any access to the variable-length fields.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/crypto/talitos.c |  180 +++++++++++++++++++++++++++++++----------------
+ drivers/crypto/talitos.h |    2 
+ 2 files changed, 124 insertions(+), 58 deletions(-)
 
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -132,13 +132,22 @@ static u8 nvmet_auth_negotiate(struct nv
- 	return 0;
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -273,7 +273,10 @@ static int talitos_submit(struct device
+ 					   void *context, int error),
+ 			  void *context)
+ {
++	struct talitos_edesc *edesc = container_of(desc, struct talitos_edesc, desc);
+ 	struct talitos_private *priv = dev_get_drvdata(dev);
++	dma_addr_t dma_desc, prev_dma_desc;
++	struct talitos_edesc *prev_edesc = NULL;
+ 	struct talitos_request *request;
+ 	unsigned long flags;
+ 	int head;
+@@ -292,10 +295,31 @@ static int talitos_submit(struct device
+ 
+ 	/* map descriptor and save caller data */
+ 	if (is_sec1) {
+-		desc->hdr1 = desc->hdr;
+-		request->dma_desc = dma_map_single(dev, &desc->hdr1,
++		while (edesc) {
++			edesc->desc.hdr1 = edesc->desc.hdr;
++
++			dma_desc = dma_map_single(dev, &edesc->desc.hdr1,
++						  TALITOS_DESC_SIZE,
++						  DMA_BIDIRECTIONAL);
++
++			if (!prev_edesc) {
++				request->dma_desc = dma_desc;
++				goto next;
++			}
++
++			/* Chain in any previous descriptors. */
++
++			prev_edesc->desc.next_desc = cpu_to_be32(dma_desc);
++
++			dma_sync_single_for_device(dev, prev_dma_desc,
+ 						   TALITOS_DESC_SIZE,
+-						   DMA_BIDIRECTIONAL);
++						   DMA_TO_DEVICE);
++
++next:
++			prev_edesc = edesc;
++			prev_dma_desc = dma_desc;
++			edesc = edesc->next_desc;
++		}
+ 	} else {
+ 		request->dma_desc = dma_map_single(dev, desc,
+ 						   TALITOS_DESC_SIZE,
+@@ -326,6 +350,7 @@ static __be32 get_request_hdr(struct dev
+ 			      struct talitos_request *request, bool is_sec1)
+ {
+ 	struct talitos_edesc *edesc;
++	dma_addr_t dma_desc;
+ 
+ 	if (!is_sec1) {
+ 		dma_sync_single_for_cpu(dev, request->dma_desc,
+@@ -334,19 +359,17 @@ static __be32 get_request_hdr(struct dev
+ 		return request->desc->hdr;
+ 	}
+ 
+-	if (!request->desc->next_desc) {
+-		dma_sync_single_for_cpu(dev, request->dma_desc,
+-					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
+-		return request->desc->hdr1;
+-	} else {
+-		dma_sync_single_for_cpu(dev,
+-					be32_to_cpu(request->desc->next_desc),
+-					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
+-		edesc = container_of(request->desc, struct talitos_edesc, desc);
+-
+-		return ((struct talitos_desc *)(edesc->buf + edesc->dma_len))
+-			->hdr1;
++	edesc = container_of(request->desc, struct talitos_edesc, desc);
++	dma_desc = request->dma_desc;
++	while (edesc->next_desc) {
++		dma_desc = be32_to_cpu(edesc->desc.next_desc);
++		edesc = edesc->next_desc;
+ 	}
++
++	dma_sync_single_for_cpu(dev, dma_desc, TALITOS_DESC_SIZE,
++				DMA_BIDIRECTIONAL);
++
++	return edesc->desc.hdr1;
  }
  
--static u8 nvmet_auth_reply(struct nvmet_req *req, void *d)
-+static u8 nvmet_auth_reply(struct nvmet_req *req, void *d, u32 tl)
+ /*
+@@ -356,6 +379,7 @@ static void flush_channel(struct device
  {
- 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
- 	struct nvmf_auth_dhchap_reply_data *data = d;
--	u16 dhvlen = le16_to_cpu(data->dhvlen);
-+	u16 dhvlen;
- 	u8 *response;
+ 	struct talitos_private *priv = dev_get_drvdata(dev);
+ 	struct talitos_request *request, saved_req;
++	struct talitos_edesc *edesc;
+ 	unsigned long flags;
+ 	int tail, status;
+ 	bool is_sec1 = has_ftr_sec1(priv);
+@@ -380,9 +404,22 @@ static void flush_channel(struct device
+ 			else
+ 				status = error;
  
-+	if (tl < sizeof(*data))
-+		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
-+
-+	dhvlen = le16_to_cpu(data->dhvlen);
-+
-+	/* Validate that hl and dhvlen fit within the transfer length */
-+	if (sizeof(*data) + 2 * (size_t)data->hl + dhvlen > tl)
-+		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
-+
- 	pr_debug("%s: ctrl %d qid %d: data hl %d cvalid %d dhvlen %u\n",
- 		 __func__, ctrl->cntlid, req->sq->qid,
- 		 data->hl, data->cvalid, dhvlen);
-@@ -338,7 +347,7 @@ void nvmet_execute_auth_send(struct nvme
+-		dma_unmap_single(dev, request->dma_desc,
+-				 TALITOS_DESC_SIZE,
+-				 DMA_BIDIRECTIONAL);
++		if (is_sec1) {
++			dma_unmap_single(dev, request->dma_desc,
++					 TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
++			edesc = container_of(request->desc,
++					     struct talitos_edesc, desc);
++			while (edesc->next_desc) {
++				dma_unmap_single(
++					dev, be32_to_cpu(edesc->desc.next_desc),
++					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
++				edesc = edesc->next_desc;
++			}
++		} else {
++			dma_unmap_single(dev, request->dma_desc,
++					TALITOS_DESC_SIZE,
++					DMA_BIDIRECTIONAL);
++		}
  
- 	switch (data->auth_id) {
- 	case NVME_AUTH_DHCHAP_MESSAGE_REPLY:
--		dhchap_status = nvmet_auth_reply(req, d);
-+		dhchap_status = nvmet_auth_reply(req, d, tl);
- 		if (dhchap_status == 0)
- 			req->sq->dhchap_step =
- 				NVME_AUTH_DHCHAP_MESSAGE_SUCCESS1;
+ 		/* copy entries so we can call callback outside lock */
+ 		saved_req.desc = request->desc;
+@@ -477,8 +514,12 @@ DEF_TALITOS2_DONE(ch1_3, TALITOS2_ISR_CH
+ static __be32 current_desc_hdr(struct device *dev, int ch)
+ {
+ 	struct talitos_private *priv = dev_get_drvdata(dev);
++	bool is_sec1 = has_ftr_sec1(priv);
++	struct talitos_request *request;
++	struct talitos_edesc *edesc;
+ 	int tail, iter;
+ 	dma_addr_t cur_desc;
++	__be32 hdr = 0;
+ 
+ 	cur_desc = ((u64)in_be32(priv->chan[ch].reg + TALITOS_CDPR)) << 32;
+ 	cur_desc |= in_be32(priv->chan[ch].reg + TALITOS_CDPR_LO);
+@@ -489,27 +530,35 @@ static __be32 current_desc_hdr(struct de
+ 	}
+ 
+ 	tail = priv->chan[ch].tail;
+-
+ 	iter = tail;
+-	while (priv->chan[ch].fifo[iter].dma_desc != cur_desc &&
+-	       priv->chan[ch].fifo[iter].desc->next_desc != cpu_to_be32(cur_desc)) {
+-		iter = (iter + 1) & (priv->fifo_len - 1);
+-		if (iter == tail) {
+-			dev_err(dev, "couldn't locate current descriptor\n");
+-			return 0;
++	do {
++		request = &priv->chan[ch].fifo[iter];
++
++		if (request->dma_desc == cur_desc) {
++			hdr = request->desc->hdr;
++		} else if (is_sec1) {
++			edesc = container_of(request->desc,
++					     struct talitos_edesc, desc);
++			while (edesc->next_desc) {
++				if (edesc->desc.next_desc ==
++				    cpu_to_be32(cur_desc)) {
++					hdr = edesc->next_desc->desc.hdr1;
++					break;
++				}
++				edesc = edesc->next_desc;
++			}
+ 		}
+-	}
+ 
+-	if (priv->chan[ch].fifo[iter].desc->next_desc == cpu_to_be32(cur_desc)) {
+-		struct talitos_edesc *edesc;
++		if (hdr)
++			break;
+ 
+-		edesc = container_of(priv->chan[ch].fifo[iter].desc,
+-				     struct talitos_edesc, desc);
+-		return ((struct talitos_desc *)
+-			(edesc->buf + edesc->dma_len))->hdr;
+-	}
++		iter = (iter + 1) & (priv->fifo_len - 1);
++	} while (iter != tail);
++
++	if (!hdr)
++		dev_err(dev, "couldn't locate current descriptor\n");
+ 
+-	return priv->chan[ch].fifo[iter].desc->hdr;
++	return hdr;
+ }
+ 
+ /*
+@@ -1408,10 +1457,6 @@ static struct talitos_edesc *talitos_ede
+ 		dma_len = 0;
+ 	}
+ 	alloc_len += icv_stashing ? authsize : 0;
+-
+-	/* if its a ahash, add space for a second desc next to the first one */
+-	if (is_sec1 && !dst)
+-		alloc_len += sizeof(struct talitos_desc);
+ 	alloc_len += ivsize;
+ 
+ 	edesc = kmalloc(ALIGN(alloc_len, dma_get_cache_alignment()), flags);
+@@ -1427,6 +1472,7 @@ static struct talitos_edesc *talitos_ede
+ 	edesc->dst_nents = dst_nents;
+ 	edesc->iv_dma = iv_dma;
+ 	edesc->dma_len = dma_len;
++	edesc->next_desc = NULL;
+ 	if (dma_len)
+ 		edesc->dma_link_tbl = dma_map_single(dev, &edesc->link_tbl[0],
+ 						     edesc->dma_len,
+@@ -1727,8 +1773,10 @@ static void common_nonsnoop_hash_unmap(s
+ 	struct talitos_private *priv = dev_get_drvdata(dev);
+ 	bool is_sec1 = has_ftr_sec1(priv);
+ 	struct talitos_desc *desc = &edesc->desc;
+-	struct talitos_desc *desc2 = (struct talitos_desc *)
+-				     (edesc->buf + edesc->dma_len);
++	struct talitos_desc *desc2;
++
++	if (desc->next_desc)
++		desc2 = &edesc->next_desc->desc;
+ 
+ 	unmap_single_talitos_ptr(dev, &desc->ptr[5], DMA_FROM_DEVICE);
+ 	if (desc->next_desc &&
+@@ -1756,10 +1804,17 @@ static void common_nonsnoop_hash_unmap(s
+ 	if (edesc->dma_len)
+ 		dma_unmap_single(dev, edesc->dma_link_tbl, edesc->dma_len,
+ 				 DMA_BIDIRECTIONAL);
++}
+ 
+-	if (desc->next_desc)
+-		dma_unmap_single(dev, be32_to_cpu(desc->next_desc),
+-				 TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
++static void free_edesc_list_from(struct talitos_edesc *edesc)
++{
++	struct talitos_edesc *next;
++
++	while (edesc) {
++		next = edesc->next_desc;
++		kfree(edesc);
++		edesc = next;
++	}
+ }
+ 
+ static void ahash_done(struct device *dev,
+@@ -1778,7 +1833,7 @@ static void ahash_done(struct device *de
+ 	}
+ 	common_nonsnoop_hash_unmap(dev, edesc, areq);
+ 
+-	kfree(edesc);
++	free_edesc_list_from(edesc);
+ 
+ 	if (err) {
+ 		ahash_request_complete(areq, err);
+@@ -1894,14 +1949,23 @@ static int common_nonsnoop_hash(struct t
+ 		talitos_handle_buggy_hash(ctx, edesc, &desc->ptr[3]);
+ 
+ 	if (is_sec1 && req_ctx->nbuf && length) {
+-		struct talitos_desc *desc2 = (struct talitos_desc *)
+-					     (edesc->buf + edesc->dma_len);
+-		dma_addr_t next_desc;
++		struct talitos_edesc *edesc2;
++		struct talitos_desc *desc2;
++
++		edesc2 = kzalloc(sizeof(*edesc2),
++				 areq->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
++					 GFP_KERNEL :
++					 GFP_ATOMIC);
++		if (!edesc2) {
++			ret = -ENOMEM;
++			goto err;
++		}
++		edesc->next_desc = edesc2;
++
++		desc2 = &edesc2->desc;
+ 
+-		memset(desc2, 0, sizeof(*desc2));
+ 		desc2->hdr = desc->hdr;
+ 		desc2->hdr &= ~DESC_HDR_MODE0_MDEU_INIT;
+-		desc2->hdr1 = desc2->hdr;
+ 		desc->hdr &= ~DESC_HDR_MODE0_MDEU_PAD;
+ 		desc->hdr |= DESC_HDR_MODE0_MDEU_CONT;
+ 		desc->hdr &= ~DESC_HDR_DONE_NOTIFY;
+@@ -1925,21 +1989,21 @@ static int common_nonsnoop_hash(struct t
+ 						      req_ctx->hw_context_size,
+ 						      req_ctx->hw_context,
+ 						      DMA_FROM_DEVICE);
+-
+-		next_desc = dma_map_single(dev, &desc2->hdr1, TALITOS_DESC_SIZE,
+-					   DMA_BIDIRECTIONAL);
+-		desc->next_desc = cpu_to_be32(next_desc);
+ 	}
+ 
+ 	if (sync_needed)
+ 		dma_sync_single_for_device(dev, edesc->dma_link_tbl,
+ 					   edesc->dma_len, DMA_BIDIRECTIONAL);
+ 
+-	ret = talitos_submit(dev, ctx->ch, desc, callback, areq);
+-	if (ret != -EINPROGRESS) {
+-		common_nonsnoop_hash_unmap(dev, edesc, areq);
+-		kfree(edesc);
+-	}
++	ret = talitos_submit(dev, ctx->ch, desc, callback,
++			     areq);
++	if (ret != -EINPROGRESS)
++		goto err;
++
++	return -EINPROGRESS;
++err:
++	common_nonsnoop_hash_unmap(dev, edesc, areq);
++	kfree(edesc);
+ 	return ret;
+ }
+ 
+--- a/drivers/crypto/talitos.h
++++ b/drivers/crypto/talitos.h
+@@ -49,6 +49,7 @@ struct talitos_desc {
+  * @iv_dma: dma address of iv for checking continuity and link table
+  * @dma_len: length of dma mapped link_tbl space
+  * @dma_link_tbl: bus physical address of link_tbl/buf
++ * @next_desc: next descriptor
+  * @desc: h/w descriptor
+  * @link_tbl: input and output h/w link tables (if {src,dst}_nents > 1) (SEC2)
+  * @buf: input and output buffeur (if {src,dst}_nents > 1) (SEC1)
+@@ -63,6 +64,7 @@ struct talitos_edesc {
+ 	dma_addr_t iv_dma;
+ 	int dma_len;
+ 	dma_addr_t dma_link_tbl;
++	struct talitos_edesc *next_desc;
+ 	struct talitos_desc desc;
+ 	union {
+ 		DECLARE_FLEX_ARRAY(struct talitos_ptr, link_tbl);
 
 
