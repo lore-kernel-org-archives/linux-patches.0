@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C7B2F2619;
-	Thu, 16 Jul 2026 14:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702272FFDE1;
+	Thu, 16 Jul 2026 14:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210569; cv=none; b=DEaumudI2OLToq1CDDHSJSNyrETf1fae3Q9eCyi3bTZ7TQ4iLliN9vDl/ydGuAlOmh2OmrNnmL8Vk6ar3Q2FhhshzLvoSKczmlRBXz3cB6EHbWje0QrigKE3LHVVG3F7QHDeiYL123ODBgRP/rdFbe8rheIzbmOam83mAU8FV5M=
+	t=1784210572; cv=none; b=TdJEVmQnC8UF8TqsElMz4nTb4HQgi5pc3iZ9TLvzYEINljLkbcPNa58UWpQlBIwzPWf0UVskoRpuJBXyb7SySMrU6WOJcr2OZMBHsQoKQVp7SSZXbdbfHt5VxWjAEy7qidzoSYEUDYNUZL4F7JWns6xPRzvAXGgDDB+Q9Gefqpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210569; c=relaxed/simple;
-	bh=Z/zlpF3CENEtulf0sS1JbZxLnkLFxOkXKUmkxbxFxtI=;
+	s=arc-20240116; t=1784210572; c=relaxed/simple;
+	bh=MWNh5EMLT+G4dBEaPftWupKw/UVz+gce4hO20PhqxTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyQJr+RsxbLKF+51Aw/o6VF+crSvCYw6+kzpdTqN4hyHr6LqJOrR6hYxh0NvqbVk5/B0M/IW90M2a3cPT6/XH1y/+qZlajBIlMw/hrwisgl+VzTfTEq/ZY6bve3GbYBh4pRkcyQXnUqgv9+xg1S7tdzYeu5OQdAqcKrTu7Zihiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6GbH8vI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XmDh7a8BTwplWjDthl9KCK7I6/ZqBZJEjETzlDW+hFXWqyA0b1NH9X2oVaYA/wcUk7811kp9//5hm99LGKgMWe9Oly0vKDbKbKpThvmOJFCEbiUgMyvwlX4aNrgTkAKYjObfREQwtCZnSP8bLOlw0SCTjAon1Je0k5AJRiZpRMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F57h6Pr2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6GbH8vI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE681F000E9;
-	Thu, 16 Jul 2026 14:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F57h6Pr2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D583E1F000E9;
+	Thu, 16 Jul 2026 14:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210568;
-	bh=A7Myl3LNAFisfx/Gy51q0X8wwoGInmuzckm1mhAaMPM=;
+	s=korg; t=1784210571;
+	bh=4Nh+J2u0B+6nKmZB5/S9jg3HZCyeS7X8JM4iCHzlzS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d6GbH8vIUSFrxpdCWzqPI/+hLbne829GqnRY8sMsYjt6w+7Rz57f4JGvrSZ2kRtlg
-	 cnsxwgEjglpCE2gDSFI30Y/VNUpVW4sV2BNl7l+QBFhnMYVgz/YFErSzHIoGqgvhB3
-	 oyG3C25gA1IHuhCIuW6IV8SGO31PCPhwZKQlfhGk=
+	b=F57h6Pr2O4fQa32CAaa2rAYMvqDVz6HachrkiELvN/NhUoIoZq0rdOIwuhQlzAOQ2
+	 KhrZ6afMhIiD5HWo2qXfKXgaKJg2YrYoqA5eBYQRKjZ4lF2VWo63L+/8IH7TU2hCv/
+	 olyaZsG/8ERyBGAEy9HW1hFAih9UwmgykQ1y0a44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 090/480] iio: temperature: tmp006: use devm_iio_trigger_register
-Date: Thu, 16 Jul 2026 15:27:17 +0200
-Message-ID: <20260716133046.658032174@linuxfoundation.org>
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 099/480] ALSA: es1938: check snd_ctl_new1() return value
+Date: Thu, 16 Jul 2026 15:27:26 +0200
+Message-ID: <20260716133046.853688644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,38 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit 3c5eed894efd93d68d7f6a359a81ddef0e928774 upstream.
+commit 1edd1f02dddd20aeb6066ded41017615766ea42f upstream.
 
-tmp006_probe() allocates the DRDY trigger with devm_iio_trigger_alloc()
-but registers it with plain iio_trigger_register(). The driver has no
-.remove() callback, so on module unload the trigger stays in the global
-trigger list while its memory is freed by devm, leaving a dangling
-entry.
+snd_ctl_new1() can return NULL when memory allocation fails.
+snd_es1938_mixer() does not check the return value before dereferencing
+the pointer, which can lead to a NULL pointer dereference.
 
-Switch to devm_iio_trigger_register() so the registration is undone in
-the same devm scope as the allocation.
+Add a NULL check after snd_ctl_new1() and return -ENOMEM if it fails.
 
-Fixes: 91f75ccf9f03 ("iio: temperature: tmp006: add triggered buffer support")
+Assisted-by: Opencode:DeepSeek-V4-Flash
 Cc: stable@vger.kernel.org
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Link: https://patch.msgid.link/tencent_E0DC65165FDF2C8982BAFB6794B854B53B0A@qq.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/tmp006.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/es1938.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/temperature/tmp006.c
-+++ b/drivers/iio/temperature/tmp006.c
-@@ -350,7 +350,7 @@ static int tmp006_probe(struct i2c_clien
- 
- 		data->drdy_trig->ops = &tmp006_trigger_ops;
- 		iio_trigger_set_drvdata(data->drdy_trig, indio_dev);
--		ret = iio_trigger_register(data->drdy_trig);
-+		ret = devm_iio_trigger_register(&client->dev, data->drdy_trig);
- 		if (ret)
- 			return ret;
- 
+--- a/sound/pci/es1938.c
++++ b/sound/pci/es1938.c
+@@ -1655,6 +1655,8 @@ static int snd_es1938_mixer(struct es193
+ 	for (idx = 0; idx < ARRAY_SIZE(snd_es1938_controls); idx++) {
+ 		struct snd_kcontrol *kctl;
+ 		kctl = snd_ctl_new1(&snd_es1938_controls[idx], chip);
++		if (!kctl)
++			return -ENOMEM;
+ 		switch (idx) {
+ 			case 0:
+ 				chip->master_volume = kctl;
 
 
