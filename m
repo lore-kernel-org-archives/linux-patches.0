@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA22C42982C;
-	Thu, 16 Jul 2026 13:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FCB42A15E;
+	Thu, 16 Jul 2026 13:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209801; cv=none; b=MjG5vl55BVdrNYJKgOo2GE9BAZylmItjxfgLhLuhwQsi+jE8TIIX4+4XUHE5166clU8PYw5jWPjyyw23f6/IkuO3svflS6+tB34EzbdIDM08ldhF4X0K9ggSyXqscd3y1MkXLtQrTfAnoBDzXJ1o0cnAtbLyi+Ex2ntyrd/0Ypc=
+	t=1784209803; cv=none; b=sS4ZcM2qz6Wic6bkse/YILujhMZYgpngudiJShADQxrjbf8wf5L7a3cQ8VWAbTJ3HWX2BfBiyhDssuRgv4nmpfIKdsdFL5G0kufwni3O9kZHt/zdStS/rV1vFOWOc3vfsxY+Dlf1Ajd4qoCchNoqw9VNQA6+7n/DPLkKqqLXlfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209801; c=relaxed/simple;
-	bh=UIDMUfhLhouup9ffkuZTMtuCLQkkYEGNblPMkKVHp5I=;
+	s=arc-20240116; t=1784209803; c=relaxed/simple;
+	bh=6bxN9V4q/o5uZZv+g5t3xH6STpkOeoR0L8V4czKNL3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7/8KY3i50c7G9bZ/TKswJUCdh76yc14QVQZafPo34An62HXFH2TncstB/Alh2wMxOoLjrpvGqt4Gk07VUqW1T+LMi6yYxF4IAfAw9dL7a5YBxHQr+L285FRBunxK+STQRduxqkqlgYI0WHDxIQzCDvxSDuM0oZ4mYSgsp/2T3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKRx6aGC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QShjbwznNsR6RyUujgDWNiJ/Z7LAut7abOT4vlTssD1S6Gqvx0hOd3Hb0re7b5kWkgkd7BGsdEpyvfcDL+XxtwE8EnJgGK12Rzw7QAdMJO47aVRj/+/56exnvX8pj43mYozSlqIeXO7aT/n5locLVtg7oMt5Yj9/eWCXj747nWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZj1+Xdp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKRx6aGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E4F1F000E9;
-	Thu, 16 Jul 2026 13:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZj1+Xdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B100F1F00A3A;
+	Thu, 16 Jul 2026 13:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209799;
-	bh=UbP450/oBWdZ3dqSmoXjlu37XDPPC+wqEPCblchoZlI=;
+	s=korg; t=1784209802;
+	bh=QoV7YqLZRbaDnyBwPVRupYaEkioOwOTTZWDsbSurWWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sKRx6aGC0fZVc/Bh8uMdAiQXja7LOkdLaPMMYmq+WzAumsjP5zgLVFlT3K1j8gCcq
-	 1hxDmKMScN5JdlhI0midQ6+yUIf6M8c7WDtg7p1FSdqhaHhrPcNsIRj0eZ5LHg4TH2
-	 LbfQpwVpC1nBlmsOGzsiinYgZEZeaY9eMAeSazwk=
+	b=IZj1+XdpOBduI5A0neymEy/5fPEYcMFirQvl7chLMdidUwDEG33T8dbMzRpDbQYim
+	 1Nli4LopG+3k1Nx+PKZaUifzPzVzVzAOs7EYLzXAtfJE+ReSlo3ztpPruo9jCLHyxq
+	 VzVLtl8Bxphp6wm1RCX/LdlxBXo7x+nhUNKxqi7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Xu Rao <raoxu@uniontech.com>
-Subject: [PATCH 7.1 306/518] usb: gadget: f_printer: take kref only for successful open
-Date: Thu, 16 Jul 2026 15:29:34 +0200
-Message-ID: <20260716133054.518133606@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 7.1 324/518] USB: usb-storage: ene_ub6250: restore media-ready check
+Date: Thu, 16 Jul 2026 15:29:52 +0200
+Message-ID: <20260716133054.906221127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,39 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Xu Rao <raoxu@uniontech.com>
 
-commit 30adce93d5c4a5a1ec29d9249e3fdfcc391d406b upstream.
+commit 5fc3f333c001f1e308bbcdeecdec0d054d24338b upstream.
 
-printer_open() returns -EBUSY when the character device is already
-open, but it increments dev->kref regardless of the return value. VFS
-does not call ->release() for a failed open, so every rejected second
-open permanently leaks one reference.
+Commit 1892bf90677a ("USB: usb-storage: Fix use of bitfields for
+hardware data in ene_ub6250.c") converted the media status fields from
+bitfields to bit masks.
 
-Move kref_get() into the successful-open branch.
+The original ene_transport() test called ene_init() only when neither
+media type was ready:
 
-Fixes: e8d5f92b8d30 ("usb: gadget: function: printer: fix use-after-free in __lock_acquire")
+        !(sd_ready || ms_ready)
+
+The converted test became:
+
+        !sd_ready || ms_ready
+
+This is not equivalent. Restore the original semantics by testing that
+both ready bits are clear before calling ene_init().
+
+Fixes: 1892bf90677a ("USB: usb-storage: Fix use of bitfields for hardware data in ene_ub6250.c")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/80295742B820DA9B+20260626064617.4090626-1-raoxu@uniontech.com
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/F42641386E32404F+20260626070607.4119527-1-raoxu@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_printer.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/storage/ene_ub6250.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_printer.c
-+++ b/drivers/usb/gadget/function/f_printer.c
-@@ -363,12 +363,11 @@ printer_open(struct inode *inode, struct
- 		ret = 0;
- 		/* Change the printer status to show that it's on-line. */
- 		dev->printer_status |= PRINTER_SELECTED;
-+		kref_get(&dev->kref);
- 	}
+--- a/drivers/usb/storage/ene_ub6250.c
++++ b/drivers/usb/storage/ene_ub6250.c
+@@ -2305,7 +2305,8 @@ static int ene_transport(struct scsi_cmn
  
- 	spin_unlock_irqrestore(&dev->lock, flags);
- 
--	kref_get(&dev->kref);
--
- 	return ret;
- }
- 
+ 	/*US_DEBUG(usb_stor_show_command(us, srb)); */
+ 	scsi_set_resid(srb, 0);
+-	if (unlikely(!(info->SD_Status & SD_Ready) || (info->MS_Status & MS_Ready)))
++	if (unlikely(!(info->SD_Status & SD_Ready) &&
++		     !(info->MS_Status & MS_Ready)))
+ 		result = ene_init(us);
+ 	if (result == USB_STOR_XFER_GOOD) {
+ 		result = USB_STOR_TRANSPORT_ERROR;
 
 
