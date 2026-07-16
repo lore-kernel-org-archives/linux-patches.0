@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCB93148C2;
-	Thu, 16 Jul 2026 14:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708FD3195EF;
+	Thu, 16 Jul 2026 14:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210456; cv=none; b=oO6YNuhgHecAgUh3qL6c32CkUGSECVkSH1/A9Vllr29KxmLw2facRdECWLq09tBiuG9YwV4FL+zN8gC2boZibnHjWu7z5g1FSs67QzNN3W5RdGGlqH/DzR8RBKw6U60FHWeDpM1g52c98uM8UdPoTiGqUgIFynw7ES+JQ9z8uF0=
+	t=1784210459; cv=none; b=p+MopuW2pyljIoZv9GHWMKHMp832Z3/6ZymywfS90RwNrE+e6q7BFo0su3gV2RhfjAoKc53ZaZ5zSox1UZF6RP6TCQ+jTcRWE8TbZjVwK/Qjp+Wm/yWmbc4e6OBMX1YmOa83uWtzm6GSqr4USvRlko263wVgMxbLtYS8N1lUo2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210456; c=relaxed/simple;
-	bh=1ag7GunHUa2eCyHF9MMI6E/DkgXedM85tsBFJLqwAQU=;
+	s=arc-20240116; t=1784210459; c=relaxed/simple;
+	bh=8C1n8pmoDhGXZmPartEjW9A+CynwluDCDk9PYGxoKjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWfvGMnICPQQu0Efce0BVMEVh1c/EG6/0cLZ7CNCQFdR9TV4TjyZyL4N1sFK5OjQfj/TD6qrrtsbInYjWvCszZfB+PBJl7yh93D8+gdetcGiRdxCdCNQnXjXTqRRIxFIf78thmU5j5kkIVx4E2lqDJHFAkEEVGXI5K7IeZQuUL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9uBZDQL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hKF5Oh7mmu9dF8Tf43QO4Uwcjolwr6mBycCPI0u9NtbTPdJR+NsjZUuToEkXl4NkxJQajZGtEXnjkOI4VGmIcKKbVScLUsh19ZlDLqKE38ZKDRhytX0/KDunSlpBjErK1Odi4bbyezkZ1FQ8NN1W3xH+JUhBZIiZAVuoyqfrmlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxaKYjGu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9uBZDQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4866A1F000E9;
-	Thu, 16 Jul 2026 14:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxaKYjGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAB11F000E9;
+	Thu, 16 Jul 2026 14:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210455;
-	bh=IhHn0PjAVqjgs69cu2IiQI6NFqIUQRQLn0kksC/pxEk=;
+	s=korg; t=1784210458;
+	bh=THCCD17fNbAywAJTD8U8FyHj1FD9rIniVdyd0Dxy3ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9uBZDQLhdoJdeliCrU9uwY/hYli4DqHNqFk50nmbD2OAiITFH27/Tci3V+mRkneR
-	 G5a4377R/7OdXkxHQ+38mhiaCjJdZP2Wv4T3ZYD0n78YZrnVLS1xRIaCo0/WAB0I0E
-	 WDYEdoeJn+gAjgWfKIhhcfU7NX3F7ELS9Ni3UpMI=
+	b=bxaKYjGulWHMMmALIpbpiL/FJBJtR1qDtPzwa1lyy+40TN88F3ioIHNOfkYQdY5RZ
+	 Vr+CbNxu1MLSBUx/ZL//yL/qjVetrfEpcIr/tXflZ27f+YeNKiZ/wQJZZ64w6N1ULi
+	 2I0jH4R3VDv/U5Mlui3MYM7H9QJMeOlfG5tNtkFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vladimir Zapolskiy <vz@kernel.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 055/480] iio: adc: lpc32xx: Initialize completion before requesting IRQ
-Date: Thu, 16 Jul 2026 15:26:42 +0200
-Message-ID: <20260716133045.901932925@linuxfoundation.org>
+Subject: [PATCH 6.18 056/480] iio: adc: spear: Initialize completion before requesting IRQ
+Date: Thu, 16 Jul 2026 15:26:43 +0200
+Message-ID: <20260716133045.924351852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -57,26 +57,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxwell Doose <m32285159@gmail.com>
 
-commit e561b35633f450ee607e87a6401d97f156a0cd54 upstream.
+commit 3ee2128b6f0eb0be7b6cb8f6e0f1f113a65201a0 upstream.
 
 In the report from Jaeyoung Chung:
 
-"lpc32xx_adc_probe() in drivers/iio/adc/lpc32xx_adc.c registers its
+"spear_adc_probe() in drivers/iio/adc/spear_adc.c registers its
 interrupt handler with devm_request_irq() before it initializes
 st->completion with init_completion(). If an interrupt arrives after
 devm_request_irq() and before init_completion(), the handler calls
 complete() on an uninitialized completion, causing a kernel panic.
 
-The probe path, in lpc32xx_adc_probe():
+The probe path, in spear_adc_probe():
 
     iodev = devm_iio_device_alloc(&pdev->dev, sizeof(*st)); /* st kzalloc-zeroed */
     ...
-    retval = devm_request_irq(&pdev->dev, irq, lpc32xx_adc_isr, 0,
+    retval = devm_request_irq(&pdev->dev, irq, spear_adc_isr, 0,
                               LPC32XXAD_NAME, st);           /* register handler */
     ...
     init_completion(&st->completion);                       /* initialize completion */
 
-lpc32xx_adc_isr() calls complete():
+spear_adc_isr() calls complete():
 
     complete(&st->completion);
 
@@ -89,7 +89,7 @@ triggering a KASAN wild-memory-access."
 Fix the chance of a spurious IRQ causing an uninitialized pointer
 dereference by moving init_completion() above devm_request_irq().
 
-Fixes: 7901b2a1453e ("staging:iio:adc:lpc32xx rename local state structure to _state")
+Fixes: b586e5d9eee0 ("staging:iio:adc:spear rename device specific state structure to _state")
 Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
 Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
 Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
@@ -100,28 +100,27 @@ Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/lpc32xx_adc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/spear_adc.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/iio/adc/lpc32xx_adc.c
-+++ b/drivers/iio/adc/lpc32xx_adc.c
-@@ -179,6 +179,8 @@ static int lpc32xx_adc_probe(struct plat
- 	if (irq < 0)
- 		return irq;
+--- a/drivers/iio/adc/spear_adc.c
++++ b/drivers/iio/adc/spear_adc.c
+@@ -280,6 +280,7 @@ static int spear_adc_probe(struct platfo
+ 	st = iio_priv(indio_dev);
+ 	st->dev = dev;
  
 +	init_completion(&st->completion);
-+
- 	retval = devm_request_irq(&pdev->dev, irq, lpc32xx_adc_isr, 0,
- 				  LPC32XXAD_NAME, st);
- 	if (retval < 0) {
-@@ -197,8 +199,6 @@ static int lpc32xx_adc_probe(struct plat
+ 	mutex_init(&st->lock);
  
- 	platform_set_drvdata(pdev, iodev);
+ 	/*
+@@ -326,8 +327,6 @@ static int spear_adc_probe(struct platfo
+ 
+ 	spear_adc_configure(st);
  
 -	init_completion(&st->completion);
 -
- 	iodev->name = LPC32XXAD_NAME;
- 	iodev->info = &lpc32xx_adc_iio_info;
- 	iodev->modes = INDIO_DIRECT_MODE;
+ 	indio_dev->name = SPEAR_ADC_MOD_NAME;
+ 	indio_dev->info = &spear_adc_info;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
 
 
