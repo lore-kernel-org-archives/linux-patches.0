@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AAF31717E;
-	Thu, 16 Jul 2026 13:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADE1330D35;
+	Thu, 16 Jul 2026 13:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210157; cv=none; b=LSWdjtAfWHpkzdEb70zQhzM+yIk8NhwPegjSqw/YGyb4mK6QI04jx0vUxwSI9Ic8QdYbWNLvZPex2cuLQztvZBv065cBNdsj31KDGSWyuC/xLfhu2JLQb8sGZ5biX2d0LPTCA0+T4vUXbEvJZJOW8nUZhjvUqfdCnHVt0vXIc5A=
+	t=1784210160; cv=none; b=aUAtSloDlmkuYQdDiIh1tNkpPFJ3w/zLslJx5Z1IDA/sNGGaq1j+H+zBAqYjqMkcglUL1+4CCr8dO72rsdgBd06FvJCeWFKeeYmnSa2oK0V57PUG8Q+W8Bn9f95OMhtg3jss3AUXXxRuCYGqoZUW+Q5RatzVtjS4qCjEJipBrws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210157; c=relaxed/simple;
-	bh=YbpGH5Sa/fwM4N/GxOT3koiqD5wNOxPUjtDAaFaGwQQ=;
+	s=arc-20240116; t=1784210160; c=relaxed/simple;
+	bh=biDiJeld+8Povbn6GnMpVWQT0etvFcy3m6UFzUG6w2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGahkjassVJMYtqLofbZRm7qTruFKYzgntK/BwNR1IenK9gWPab2J1CNmQoMHrcTAuGB+2AoNRZLqQ9fataTHgoZH8X/4rBzdjYpCdEvXoaYu/ffOW6diYg/u5J0HaX15Pl6hkWuu/hU39u/BVyRvyBGiHfoOufzOAkzR1nti3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTQUXrrO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tH6xXBhQqgS5kUwyluapIf+sUOpd89k9R6Rlmqb8P9/IM7oJ+W+TECWdB63P7Rem4Wx8kfN8lJgmELgGpuyUNk/hEseqEXkxmEZ9LrHtItxyNi/ZKrtS0PXy1uRrRMfwrGxBg4wLmJCJE4EiQmeSg0YL8wffegUKQd0eOgpxLRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyxIVXpQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTQUXrrO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE281F000E9;
-	Thu, 16 Jul 2026 13:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyxIVXpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D53E1F00A3A;
+	Thu, 16 Jul 2026 13:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210156;
-	bh=T0R91PFh6yOfy4obe55AawY0lTKqHGPHRi7QcdnCaZs=;
+	s=korg; t=1784210158;
+	bh=/Il+6BokU2asFD0rH1FoDusSFQWLCy2VAuIe39M75/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fTQUXrrOPAVLXldYVyzYinQ2CmReVTftGhURaRkUfxpadSA4Z1WcMLf77Rx23vwDU
-	 +eyJynHtqR9ZX+Xvv9AEsB0SImr66uOxcVh3L4PQ97ieZtzZVl7BsS1S1QtCXx7zEl
-	 m+PO287E0hKirZOMZuKUHdmPzZGvzl0AXHI5G49c=
+	b=XyxIVXpQoaAPfa6pKxfBrw5jDLyeB+HAq1d+HsjFeXRT8DhUnc/MFWfPPGlbuVh+9
+	 cLNID2yMxYhlXAksYRhFdFGtC1TSZO5mlLu45qw3vuA/aghLM8W8EYWWyGY1VIUZmP
+	 p6adW3gHRYjkj/EEnmG/WAtjEm55DkrZv5+eyTf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Nikunj A. Dadhania" <nikunj@amd.com>,
 	Kai Huang <kai.huang@intel.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.1 460/518] KVM: TDX: Account all non-transient page allocations for per-TD structures
-Date: Thu, 16 Jul 2026 15:32:08 +0200
-Message-ID: <20260716133057.910544946@linuxfoundation.org>
+Subject: [PATCH 7.1 461/518] KVM: x86: Ensure vendors exit handler runs before fastpath userspace exits
+Date: Thu, 16 Jul 2026 15:32:09 +0200
+Message-ID: <20260716133057.932433058@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,79 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit a8b2924676ec42d76597f849baba31acc3ba1bfc upstream.
+commit 0ffedf43910e44b76c2c1db4e9fbf12b268190c1 upstream.
 
-Account all non-transient allocations associated with a single TD (or its
-vCPUs), as KVM's ABI is that allocations that are active for the lifetime
-of a VM are accounted.  Leave temporary allocations, i.e. allocations that
-are freed within a single function/ioctl, unaccounted, to again align with
-KVM's existing behavior, e.g. see commit dd103407ca31 ("KVM: X86: Remove
-unnecessary GFP_KERNEL_ACCOUNT for temporary variables").
+Move the handling of fastpath userspace exits into vendor code to ensure
+KVM runs vendor specific operations that need to run before userspace gains
+control of the vCPU.  E.g. for VMX (and soon to be for SVM as well), KVM
+needs to flush the PML buffer prior to exiting to userspace, otherwise any
+memory written by the final KVM_RUN might never be flagged as dirty.
 
-Fixes: 8d032b683c29 ("KVM: TDX: create/destroy VM structure")
-Fixes: a50f673f25e0 ("KVM: TDX: Do TDX specific vcpu initialization")
+Note, waiting to snapshot CR0 and CR3 until svm_handle_exit() is flawed in
+general, as that risks consuming stale state in a fastpath handler.  That
+will be addressed in a future change.
+
+Fixes: f7f39c50edb9 ("KVM: x86: Exit to userspace if fastpath triggers one on instruction skip")
 Cc: stable@vger.kernel.org
+Cc: Nikunj A. Dadhania <nikunj@amd.com>
+Reviewed-by: Nikunj A. Dadhania <nikunj@amd.com>
 Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Link: https://patch.msgid.link/20260129011517.3545883-4-seanjc@google.com
+Link: https://patch.msgid.link/20260423162628.490962-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/tdx.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/x86/kvm/svm/svm.c |    3 +++
+ arch/x86/kvm/vmx/vmx.c |    3 +++
+ arch/x86/kvm/x86.c     |    3 ---
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -2387,20 +2387,20 @@ static int __tdx_td_init(struct kvm *kvm
- 
- 	ret = -ENOMEM;
- 
--	tdr_page = alloc_page(GFP_KERNEL);
-+	tdr_page = alloc_page(GFP_KERNEL_ACCOUNT);
- 	if (!tdr_page)
- 		goto free_hkid;
- 
- 	kvm_tdx->td.tdcs_nr_pages = tdx_sysinfo->td_ctrl.tdcs_base_size / PAGE_SIZE;
- 	/* TDVPS = TDVPR(4K page) + TDCX(multiple 4K pages), -1 for TDVPR. */
- 	kvm_tdx->td.tdcx_nr_pages = tdx_sysinfo->td_ctrl.tdvps_base_size / PAGE_SIZE - 1;
--	tdcs_pages = kzalloc_objs(*kvm_tdx->td.tdcs_pages,
--				  kvm_tdx->td.tdcs_nr_pages);
-+	tdcs_pages = kzalloc_objs(*kvm_tdx->td.tdcs_pages, kvm_tdx->td.tdcs_nr_pages,
-+				  GFP_KERNEL_ACCOUNT);
- 	if (!tdcs_pages)
- 		goto free_tdr;
- 
- 	for (i = 0; i < kvm_tdx->td.tdcs_nr_pages; i++) {
--		tdcs_pages[i] = alloc_page(GFP_KERNEL);
-+		tdcs_pages[i] = alloc_page(GFP_KERNEL_ACCOUNT);
- 		if (!tdcs_pages[i])
- 			goto free_tdcs;
- 	}
-@@ -2875,7 +2875,7 @@ static int tdx_td_vcpu_init(struct kvm_v
- 	int ret, i;
- 	u64 err;
- 
--	page = alloc_page(GFP_KERNEL);
-+	page = alloc_page(GFP_KERNEL_ACCOUNT);
- 	if (!page)
- 		return -ENOMEM;
- 	tdx->vp.tdvpr_page = page;
-@@ -2888,14 +2888,14 @@ static int tdx_td_vcpu_init(struct kvm_v
- 	tdx->vp.tdvpr_pa = page_to_phys(tdx->vp.tdvpr_page);
- 
- 	tdx->vp.tdcx_pages = kcalloc(kvm_tdx->td.tdcx_nr_pages, sizeof(*tdx->vp.tdcx_pages),
--			       	     GFP_KERNEL);
-+				     GFP_KERNEL_ACCOUNT);
- 	if (!tdx->vp.tdcx_pages) {
- 		ret = -ENOMEM;
- 		goto free_tdvpr;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3663,6 +3663,9 @@ static int svm_handle_exit(struct kvm_vc
+ 			vcpu->arch.cr3 = svm->vmcb->save.cr3;
  	}
  
- 	for (i = 0; i < kvm_tdx->td.tdcx_nr_pages; i++) {
--		page = alloc_page(GFP_KERNEL);
-+		page = alloc_page(GFP_KERNEL_ACCOUNT);
- 		if (!page) {
- 			ret = -ENOMEM;
- 			goto free_tdcx;
++	if (unlikely(exit_fastpath == EXIT_FASTPATH_EXIT_USERSPACE))
++		return 0;
++
+ 	if (is_guest_mode(vcpu)) {
+ 		int vmexit;
+ 
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6698,6 +6698,9 @@ static int __vmx_handle_exit(struct kvm_
+ 	if (enable_pml && !is_guest_mode(vcpu))
+ 		vmx_flush_pml_buffer(vcpu);
+ 
++	if (unlikely(exit_fastpath == EXIT_FASTPATH_EXIT_USERSPACE))
++		return 0;
++
+ 	/*
+ 	 * KVM should never reach this point with a pending nested VM-Enter.
+ 	 * More specifically, short-circuiting VM-Entry to emulate L2 due to
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -11578,9 +11578,6 @@ static int vcpu_enter_guest(struct kvm_v
+ 	if (vcpu->arch.apic_attention)
+ 		kvm_lapic_sync_from_vapic(vcpu);
+ 
+-	if (unlikely(exit_fastpath == EXIT_FASTPATH_EXIT_USERSPACE))
+-		return 0;
+-
+ 	r = kvm_x86_call(handle_exit)(vcpu, exit_fastpath);
+ 	return r;
+ 
 
 
