@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB7B3F822B;
-	Thu, 16 Jul 2026 13:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2346E423EA3;
+	Thu, 16 Jul 2026 13:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209871; cv=none; b=Ht8fqVJimX/FiWAQSHupCIb0RbgqtIgiv/YAFn3lR7cWUjHMmo/83XdEVvC3ZvHFXk5YxVTkzvH1xPFt+M5xKo8FIGBeFlrZugOX/1iQvpTN7CRTAHTxPLfHt8yyJTT3s3snPNNK/YXf93m4HAUEPf2duzB91dLwbPQsm+84H3I=
+	t=1784209874; cv=none; b=CmRnHR5Yl5soEN3vsUylQs8akvvUUlhdia0PkvK0G+L+3VR+CQvxIvDOiLZBzI6687C6VkeAazkul3KZqa8EYzV5KJBsosaxMh6Vos9WS9I2zwf2Efx0OpFPfcZTsp4PfkLQzaTmeh3wKDTEBFA1EFQBjh7vdouKtAVrWajTyC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209871; c=relaxed/simple;
-	bh=iJgwTRyuUUulNNwlE3yhyXEo8IXEjlTk9LZkTJlKkxA=;
+	s=arc-20240116; t=1784209874; c=relaxed/simple;
+	bh=udLRSSqkldrhpBBOZVF7VdA86E8Pct1O8hfMWgwd1tY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVi9sOs+Kt1Eh49Mg5SUa7SMbOJblfFWZz7waKYBa9nglNhNr1q5VWMLw0Q+qo4k9T+dMNCHnymZg54IuHT9UEYdukNDLnRH6HiGPz8NZK7QLZKK39Duz5C7+PVECXiliCvrDtn9FcczQd863SSgA/3+r40MwKUOmaVBQlsx3Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amK0RAyG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EFsImJBHkYyZPH354/3k2s1HnO6Ymw8aJt7DYPRdA1Gm+TwlAb8yU3Mfkm5TfVT/HC/fjeqPLwrRxKsQYzUhizQMaG5dwm5b5xrFepyGkoQVSnpaysC44Xr7E9UIKwG0JxLyZ0x3sN8SkxyzHmeTtT2S6pHBW7QJP7fODU0hggk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ckQourh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amK0RAyG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02E01F00A3A;
-	Thu, 16 Jul 2026 13:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ckQourh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F081F000E9;
+	Thu, 16 Jul 2026 13:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209870;
-	bh=YxDchpKlM8HUHqD3Oyycl4GydfLzChmVwrSW33DvJPk=;
+	s=korg; t=1784209873;
+	bh=UtqsXDlVWIFkTUWaQdy0HUVOZ8yy8VQsPbkHNf4I5+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=amK0RAyGr3WGXZ/8GW6mZXZECD34oSMr7vkhC8i/44NrYkeic9tLxgtXb8Xh2WP2W
-	 wrXoKHQrFFzAA4ZdP3M3BqP+nuhVZ9wS1BlpcMvr72pPZKfmCf6AbrelLG905jfzwm
-	 CEC+Bq0s6tkgz6raMGRZAKrzD2aPaBOqwNJVwiec=
+	b=0ckQourhZl7uwOXvtYeO1g7KbZQJBs/fR1uoBnSN4gP3SI0LXlH0W6zghKy7ZqOx/
+	 zd8KC+aoF7BUNIDl/5jYaiToZZgKCOh5CYdozZK0Faav+6oK0B7R4QhI/BXkiFvbTZ
+	 WPhHsmSeaBDZ0x7hUyFZ/Ay5G4QV7vNlS3YYjuQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
 	Wentao Liang <vulab@iscas.ac.cn>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.1 348/518] nvme: target: rdma: fix ndev refcount leak on queue connect
-Date: Thu, 16 Jul 2026 15:30:16 +0200
-Message-ID: <20260716133055.437541023@linuxfoundation.org>
+	Md Haris Iqbal <haris.iqbal@linux.dev>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.1 349/518] block: partitions: fix of_node refcount leak in of_partition()
+Date: Thu, 16 Jul 2026 15:30:17 +0200
+Message-ID: <20260716133055.458473652@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,41 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit badc53620fe813b3a9f727ef9526f98567c2c898 upstream.
+commit 148cd4873115feb266c002d4d4618ea7f14342d9 upstream.
 
-nvmet_rdma_queue_connect() calls nvmet_rdma_find_get_device() which
-acquires a reference on the returned ndev via kref_get(). On the path
-where the host queue backlog is exceeded and the function returns
-NVME_SC_CONNECT_CTRL_BUSY, reference of ndev is not released, leaking
-the kref.
+of_partition() calls of_node_get() on the parent device node at the
+beginning of the function, storing the reference in 'partitions_np'.
+This reference is leaked in two paths:
 
-Fix this by adding a goto to the existing put_device label before the
-early return.
+1. The compatibility check at the top of the function returns 0
+   without releasing partitions_np when the node exists but is not
+   "fixed-partitions" compatible.
 
-Fixes: 31deaeb11ba7 ("nvmet-rdma: avoid circular locking dependency on install_queue()")
+2. The function returns 1 at the end after successfully processing
+   all partitions without releasing partitions_np.
+
+Fix both leaks by adding of_node_put(partitions_np) on each path.
+
+Fixes: 2e3a191e89f9 ("block: add support for partition table defined in OF")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@linux.dev>
+Link: https://patch.msgid.link/20260526102124.2283846-1-vulab@iscas.ac.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/rdma.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ block/partitions/of.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1598,8 +1598,10 @@ static int nvmet_rdma_queue_connect(stru
- 				pending++;
- 		}
- 		mutex_unlock(&nvmet_rdma_queue_mutex);
--		if (pending > NVMET_RDMA_BACKLOG)
--			return NVME_SC_CONNECT_CTRL_BUSY;
-+		if (pending > NVMET_RDMA_BACKLOG) {
-+			ret = NVME_SC_CONNECT_CTRL_BUSY;
-+			goto put_device;
-+		}
- 	}
+--- a/block/partitions/of.c
++++ b/block/partitions/of.c
+@@ -74,8 +74,10 @@ int of_partition(struct parsed_partition
+ 	struct device_node *partitions_np = of_node_get(ddev->of_node);
  
- 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
+ 	if (!partitions_np ||
+-	    !of_device_is_compatible(partitions_np, "fixed-partitions"))
++	    !of_device_is_compatible(partitions_np, "fixed-partitions")) {
++		of_node_put(partitions_np);
+ 		return 0;
++	}
+ 
+ 	slot = 1;
+ 	/* Validate parition offset and size */
+@@ -104,5 +106,6 @@ int of_partition(struct parsed_partition
+ 
+ 	seq_buf_puts(&state->pp_buf, "\n");
+ 
++	of_node_put(partitions_np);
+ 	return 1;
+ }
 
 
