@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1E0423775;
-	Thu, 16 Jul 2026 13:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AE73B2D18;
+	Thu, 16 Jul 2026 13:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209275; cv=none; b=I+lA3O2aVMYVHFkb6Rp8xAISimhAdEHPZkzMx8rI8ZxTcccDqvzii9WYrjcPx3NFB2J0l+foHcZspiEw6iequsWdq4Du3YWY97gT4zqUBlGdTxtvQ+EsxL41D/JA1zwAsCaBuK1nxXrpH7gaXjbCp3QVowETsv6SW4soB5zaoxg=
+	t=1784209278; cv=none; b=Vu1BF9FFtcWiHcCFzgSk2ILkVH6DPaikA+mYPBNEtiFfyb04PMG7/CWHg1lQyxcy6lDfkWpSWAm2N/f3apkjQ0hinogC/r9seEp2wi4aeqbUOiuydavzw7oSXri9kDp/GO06pY8ZKgphBlCMufT9GJPs7a9LAeMnZ/ZeISm05d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209275; c=relaxed/simple;
-	bh=ibruwFYhV58avkGUnxClX6Ika82KTJQtwbUJZwarqZU=;
+	s=arc-20240116; t=1784209278; c=relaxed/simple;
+	bh=fcc8iWjjkRicwryJIIQQh6Y0eo/1oxtM9YcgeX1R1oM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eDJs0Vez6ZoWPgS4NPqVbNz+1iEtW6owv9QUy3+I4iKJWpgnQ3vBnUjrJijKO/NTe7BQ98daSoIN0JOvXMS6B/Onl0I4JMUtf/hu1KDdy8nBAzpfqtRZdX5W1v5/rKzQD6tGYs1hpZeegJ3mxW2YOdwFi8UPZahFKm/c1H7lqzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcAHzvBO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jM44dNqYC6AfnDcAH4U+ogLMccpKeJVZbGAfcnqcNdeqafxt3WcZHRidOmgUzo+ryGIJGYv4QbyMsh1WbumscEVI4qBn1NaRT9qfI03yZb2PVmBWUhg03tnpJ5DqALs7btSklk79N1ZFrvo9UwJUyRBO4FGuXBqxafcDodsYrHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1koZXUb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcAHzvBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBD81F000E9;
-	Thu, 16 Jul 2026 13:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1koZXUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4361B1F000E9;
+	Thu, 16 Jul 2026 13:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209274;
-	bh=loHSGb8FDTbfwQZ1VtD0y3d4hf2gaotWrASzU977Cb0=;
+	s=korg; t=1784209276;
+	bh=ICq28E3ax+JfmHZjuW3rdvHSUv0hwoMAG8Pj+rUoUDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcAHzvBOiPG53yaWuytv0fgNWlJBY64SjRS2OSOyPXy13Wx8BzXIgAAyHdWuUjZ4I
-	 yz26nyqF2mnpA/a61Xh2nEl4wPBIpQVHB31v+j9tLsZMUWaxb5JMLglHCSPvZ/09HZ
-	 LWZU/MXj5aHYunbeD3evVp25dvMcOAQsUL7uLESs=
+	b=m1koZXUb9hqwXGqK3HbvMr+pxR33F6R93/iMzsy2JOdia9/r49K1e7fTnkBFZYoHz
+	 SGHDByKRuIkTUYhyXf+UoeOD8zRDRs1eqECDr4ci2OgRI6twCmlkoNd2tyMHPE7Neu
+	 XuAYXkFHZ5JLYbXwqnR7UUti2FYc8cPsjJ9ZGHJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 080/518] ALSA: virtio: Add missing 384 kHz PCM rate mapping
-Date: Thu, 16 Jul 2026 15:25:48 +0200
-Message-ID: <20260716133049.537644579@linuxfoundation.org>
+Subject: [PATCH 7.1 081/518] ALSA: virtio: Validate control metadata from the device
+Date: Thu, 16 Jul 2026 15:25:49 +0200
+Message-ID: <20260716133049.560397308@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,54 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 83fbbcb7935ec6d2c8ba3bc133e8a0ead2ab0b2d upstream.
+commit c77a6cbb36ff8cbc1f084d94f8dcda5250935271 upstream.
 
-The VirtIO sound UAPI defines VIRTIO_SND_PCM_RATE_384000, and ALSA
-has SNDRV_PCM_RATE_384000. However, virtio-snd's rate conversion
-tables stop at 192 kHz.
+virtio-snd control handling trusts the device-provided control type and
+value count returned by the device.
 
-A device advertising only 384 kHz is rejected as having no supported
-PCM frame rates. A device advertising 384 kHz together with lower rates
-does not expose 384 kHz through the ALSA hardware constraints. The
-selected ALSA rate also needs a reverse mapping for SET_PARAMS.
+That metadata is then used directly to index g_v2a_type_map[] in
+virtsnd_kctl_info(), and to size loops and memcpy() operations in
+virtsnd_kctl_get() and virtsnd_kctl_put() against fixed-size
+virtio_snd_ctl_value and snd_ctl_elem_value arrays.
 
-Add the missing 384 kHz entries to both conversion tables.
+A buggy or malicious device can therefore trigger out-of-bounds access by
+advertising an invalid control type or an oversized value count.
 
-Fixes: 29b96bf50ba9 ("ALSA: virtio: build PCM devices and substream hardware descriptors")
-Fixes: da76e9f3e43a ("ALSA: virtio: PCM substream operators")
+Validate control type and count once in virtsnd_kctl_parse_cfg(), before
+querying enumerated items or exposing the control to ALSA.
+
+Fixes: d6568e3de42d ("ALSA: virtio: add support for audio controls")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260515-alsa-virtio-384k-rate-v1-1-35ecb5df835c@gmail.com
+Link: https://patch.msgid.link/20260507-alsa-virtio-validate-kctl-info-v1-1-7404fb12ec37@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/virtio/virtio_pcm.c     |    3 ++-
- sound/virtio/virtio_pcm_ops.c |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ sound/virtio/virtio_kctl.c |   50 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
---- a/sound/virtio/virtio_pcm.c
-+++ b/sound/virtio/virtio_pcm.c
-@@ -77,7 +77,8 @@ static const struct virtsnd_v2a_rate g_v
- 	[VIRTIO_SND_PCM_RATE_88200] = { SNDRV_PCM_RATE_88200, 88200 },
- 	[VIRTIO_SND_PCM_RATE_96000] = { SNDRV_PCM_RATE_96000, 96000 },
- 	[VIRTIO_SND_PCM_RATE_176400] = { SNDRV_PCM_RATE_176400, 176400 },
--	[VIRTIO_SND_PCM_RATE_192000] = { SNDRV_PCM_RATE_192000, 192000 }
-+	[VIRTIO_SND_PCM_RATE_192000] = { SNDRV_PCM_RATE_192000, 192000 },
-+	[VIRTIO_SND_PCM_RATE_384000] = { SNDRV_PCM_RATE_384000, 384000 }
+--- a/sound/virtio/virtio_kctl.c
++++ b/sound/virtio/virtio_kctl.c
+@@ -18,6 +18,21 @@ static const snd_ctl_elem_type_t g_v2a_t
+ 	[VIRTIO_SND_CTL_TYPE_IEC958] = SNDRV_CTL_ELEM_TYPE_IEC958
  };
  
++/* Map for converting VirtIO types to maximum value counts. */
++static const unsigned int g_v2a_count_map[] = {
++	[VIRTIO_SND_CTL_TYPE_BOOLEAN] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer),
++	[VIRTIO_SND_CTL_TYPE_INTEGER] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer),
++	[VIRTIO_SND_CTL_TYPE_INTEGER64] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.integer64),
++	[VIRTIO_SND_CTL_TYPE_ENUMERATED] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.enumerated),
++	[VIRTIO_SND_CTL_TYPE_BYTES] =
++		ARRAY_SIZE(((struct virtio_snd_ctl_value *)0)->value.bytes),
++	[VIRTIO_SND_CTL_TYPE_IEC958] = 1
++};
++
+ /* Map for converting VirtIO access rights to ALSA access rights. */
+ static const unsigned int g_v2a_access_map[] = {
+ 	[VIRTIO_SND_CTL_ACCESS_READ] = SNDRV_CTL_ELEM_ACCESS_READ,
+@@ -36,6 +51,37 @@ static const unsigned int g_v2a_mask_map
+ 	[VIRTIO_SND_CTL_EVT_MASK_TLV] = SNDRV_CTL_EVENT_MASK_TLV
+ };
+ 
++static int virtsnd_kctl_validate_info(struct virtio_snd *snd, u32 cid,
++				      struct virtio_snd_ctl_info *kinfo)
++{
++	struct virtio_device *vdev = snd->vdev;
++	unsigned int type = le32_to_cpu(kinfo->type);
++	unsigned int count = le32_to_cpu(kinfo->count);
++
++	if (type >= ARRAY_SIZE(g_v2a_type_map)) {
++		dev_err(&vdev->dev, "control #%u: unknown type %u\n",
++			cid, type);
++		return -EINVAL;
++	}
++
++	if (count > g_v2a_count_map[type] ||
++	    (type == VIRTIO_SND_CTL_TYPE_IEC958 && count != 1)) {
++		dev_err(&vdev->dev, "control #%u: invalid count %u for type %u\n",
++			cid, count, type);
++		return -EINVAL;
++	}
++
++	if (type == VIRTIO_SND_CTL_TYPE_ENUMERATED &&
++	    !le32_to_cpu(kinfo->value.enumerated.items)) {
++		dev_err(&vdev->dev,
++			"control #%u: no items for enumerated control\n",
++			cid);
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
  /**
---- a/sound/virtio/virtio_pcm_ops.c
-+++ b/sound/virtio/virtio_pcm_ops.c
-@@ -90,7 +90,8 @@ static const struct virtsnd_a2v_rate g_a
- 	{ 88200, VIRTIO_SND_PCM_RATE_88200 },
- 	{ 96000, VIRTIO_SND_PCM_RATE_96000 },
- 	{ 176400, VIRTIO_SND_PCM_RATE_176400 },
--	{ 192000, VIRTIO_SND_PCM_RATE_192000 }
-+	{ 192000, VIRTIO_SND_PCM_RATE_192000 },
-+	{ 384000, VIRTIO_SND_PCM_RATE_384000 }
- };
+  * virtsnd_kctl_info() - Returns information about the control.
+  * @kcontrol: ALSA control element.
+@@ -385,6 +431,10 @@ int virtsnd_kctl_parse_cfg(struct virtio
+ 		struct virtio_snd_ctl_info *kinfo = &snd->kctl_infos[i];
+ 		unsigned int type = le32_to_cpu(kinfo->type);
  
- static int virtsnd_pcm_sync_stop(struct snd_pcm_substream *substream);
++		rc = virtsnd_kctl_validate_info(snd, i, kinfo);
++		if (rc)
++			return rc;
++
+ 		if (type == VIRTIO_SND_CTL_TYPE_ENUMERATED) {
+ 			rc = virtsnd_kctl_get_enum_items(snd, i);
+ 			if (rc)
 
 
