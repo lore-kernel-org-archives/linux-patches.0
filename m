@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4E631ED7C;
-	Thu, 16 Jul 2026 14:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967B331ED7C;
+	Thu, 16 Jul 2026 14:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210449; cv=none; b=eKqRHfSI0pXPTVd4pBkYB34JyI0C/Awmm+7IBxSChhdbcWAfQ5Ie6Bd1fMvwnz13eH5XQYuqbURz+nEhawnQRIET2sqlboFgu26bpgvrDRNcVmJRTfe8oJom2P5M8AAtCcuOxjBBDjb0huVltUXuPT+7Nd754THXk94hu/cBl6Q=
+	t=1784210451; cv=none; b=XodYPOfrlt6Qv/K0whs2Mr/Y1cpl3tBZ3O5nPUk7bWM1J7pGtp3ek6DB83YK2eEvzdkxKXj5rG0eefa4w6inwJyAAmGLUH2/y3ErSCzTY//84bh5/YT/GMBECwhh3fFACgdHJRw8u0tF2VanRMNF3aVe7/OHlQX8+eSKTkD7cUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210449; c=relaxed/simple;
-	bh=nqGyzkvsJAwXeAZnCjeo5SU7cAaoZqP2s466YCs8SLk=;
+	s=arc-20240116; t=1784210451; c=relaxed/simple;
+	bh=z5Mm23v4+dX4TL7WmT7c9FGJKmtrKmm13820qBf79E8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azt8oLYQVgFZoeduz9W0QDjjjhXVtOknOckgDlq0o1N9Nh4JYkjLSPiSlVJyKz+BJj9ftkH5BjlSYQmzW9XZwh6Tsr02/vJWmPU9nvcnUN/Hd0OFDxkD27MRI3BVxjPFHfeGyvHXe2aQWMGQgog82asRmw6sapXt3K/DxryehOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGaIBR9r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=q1mKrTG/NJ+feBZ5g4bpIwpO7tJVLQW2o+m+rotT/+azCTGbY9RIbP0hyCBjzWakzTPBHNx/ElWm1oC5d2WGmrz3GBcZe5tbm8qEYrBZiHUAAeaz76xBddxoC5p6kRDmQFegX+7ZeGwbHHkQpuR79BSRXj5wdKx7mWaxIHa1CZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bro5T4k7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGaIBR9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601A41F00A3A;
-	Thu, 16 Jul 2026 14:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bro5T4k7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069231F000E9;
+	Thu, 16 Jul 2026 14:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210447;
-	bh=tSCDaW4UPekYCBM1hCmAgvwM1/mC/BAK6ZaaWrZBhls=;
+	s=korg; t=1784210450;
+	bh=DO1wSSSuCKnDPzeNBYiTJgQcwmVUMBTMnOjfwstETQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HGaIBR9rmFDuGBQhA7gFYD8c7ikiqULguOZMKa7/rrRG1GJvtr+qyI60t9sGvClV3
-	 mW1/shfhg8WwRu86Aq9zIHsAYUMoxYFvpTvMm/iMNsP2o4Q6aTA0VihdTyQ/IKaXK0
-	 /ikX3NvrcBl8joumJALW54spgvgpXWqU69U4gxd4=
+	b=Bro5T4k7+xejVQxFUbZO1lgExpvNL8xXUD9017Vnd9QEQHVz9NZrln9tdc4WxBhIj
+	 1OgM92J+y0TraTwzJj19oZ4QhB9tdqX4FJwTleyCmjugjXZS2CidAQF8yWTXvGFB8i
+	 HeMvm4LIHK3kjuh8O1KuifNng3h2841VTMp00gTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/480] fscrypt: Fix key setup in edge case with multiple data unit sizes
-Date: Thu, 16 Jul 2026 15:26:31 +0200
-Message-ID: <20260716133045.656704408@linuxfoundation.org>
+	Radu Sabau <radu.sabau@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.18 053/480] iio: adc: ad_sigma_delta: fix clear_pending_event for registerless devices
+Date: Thu, 16 Jul 2026 15:26:40 +0200
+Message-ID: <20260716133045.858436341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -44,435 +45,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Radu Sabau <radu.sabau@analog.com>
 
-[ Upstream commit dd015b566d505d698386103e9c80b739c7336eb8 ]
+commit 91bc6767a4f55dc470d8a56b55b9f2ea09094efe upstream.
 
-The addition of support for customizable data unit sizes introduced an
-edge case where a file's contents can be en/decrypted with the wrong
-data unit size.  It occurs when there are multiple v2 policies that:
+ad_sigma_delta_clear_pending_event() falls through to the status register
+read path for devices with has_registers = false and no rdy_gpiod. For
+such devices, ad_sd_read_reg() skips the address byte entirely and clocks
+raw MISO bytes with no address phase — making it byte-for-byte identical
+to reading conversion data. If a pending conversion result is present,
+this partially consumes it and corrupts the data stream for the subsequent
+ad_sd_read_reg() call in ad_sigma_delta_single_conversion().
 
-- Have *different* data unit sizes, via the log2_data_unit_size field
+Furthermore, with num_resetclks = 0 on these devices, data_read_len
+evaluates to 0. If the clocked byte has bit 7 clear, pending_event is set
+and the code attempts memset(data + 2, 0xff, 0 - 1), overflowing to
+SIZE_MAX and corrupting the heap.
 
-- Share the same master_key_identifier, contents_encryption_mode, and
-  either FSCRYPT_POLICY_FLAG_DIRECT_KEY,
-  FSCRYPT_POLICY_FLAG_IV_INO_LBLK_32, or
-  FSCRYPT_POLICY_FLAG_IV_INO_LBLK_64
+Fix by returning 0 immediately when neither rdy_gpiod nor has_registers
+is set. This is safe for all current registerless devices: ad7191 and
+ad7780 (with powerdown GPIO) are reset between conversions by CS
+deassertion, so there is no stale result to drain; ad7780 (without
+powerdown GPIO) and max11205 are continuously-converting and cycle ~DRDY
+at the output data rate regardless of whether the previous result was
+read, so the next falling edge fires naturally.
 
-- Are being used on the same filesystem, which also must be mounted with
-  the "inlinecrypt" mount option.
+A future registerless device that holds ~DRDY asserted until data is read
+would be broken by this early return and would require either
+num_resetclks set or a rdy-gpio.
 
-Fortunately this edge case doesn't actually occur in practice.  I just
-found it via code review.  But it needs to be fixed regardless.
+The same heap corruption is reachable on any device with rdy_gpiod set
+but num_resetclks = 0: if the GPIO indicates a pending event, the drain
+path executes memset(data + 2, 0xff, 0 - 1) regardless of has_registers.
+Add an explicit data_read_len == 0 guard after the pending event check;
+the stale result is then consumed by the first ad_sd_read_reg() call in
+ad_sigma_delta_single_conversion().
 
-The bug is caused by the data unit size not being fully considered when
-blk_crypto_keys are cached in mk_direct_keys, mk_iv_ino_lblk_32_keys,
-and mk_iv_ino_lblk_64_keys.  They're differentiated only by master key,
-encryption mode, and flag.  However, each one actually has a data unit
-size too.  Only the first data unit size that is cached is used.
-
-To fix this, start using the data unit size to differentiate the cached
-keys.  For several reasons, including avoiding increasing the size of
-struct fscrypt_master_key, just replace all three arrays with a single
-linked list instead of changing them into two-dimensional arrays.  This
-works well when considering that in practice at most 2 entries are used
-across all three arrays, so it was already mostly wasted space.
-
-For simplicity, make the list also take over the publish/subscribe of
-the prepared key itself.  That is, create separate list nodes for
-blk_crypto_keys vs crypto_skciphers, and add nodes to the list only when
-their key is actually prepared.  (Note that the legacy
-fscrypt_direct_keys table in fs/crypto/keysetup_v1.c already works this
-way.)  This eliminates the need for the additional memory barriers when
-reading and writing the fields of struct fscrypt_prepared_key.
-
-Note that I technically should have included the data unit size in the
-HKDF info string as well.  But it's too late to change that.
-
-Fixes: 5b1188847180 ("fscrypt: support crypto data unit size less than filesystem block size")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260618180652.52742-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 132d44dc6966 ("iio: adc: ad_sigma_delta: Check for previous ready signals")
+Signed-off-by: Radu Sabau <radu.sabau@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/crypto/fscrypt_private.h |  52 +++++++++-------
- fs/crypto/inline_crypt.c    |   8 +--
- fs/crypto/keyring.c         |  23 ++++---
- fs/crypto/keysetup.c        | 118 ++++++++++++++++++++++--------------
- 4 files changed, 120 insertions(+), 81 deletions(-)
+ drivers/iio/adc/ad_sigma_delta.c |   31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/fs/crypto/fscrypt_private.h b/fs/crypto/fscrypt_private.h
-index 4e8e82a9ccf9a3..3bcde4b59efb0e 100644
---- a/fs/crypto/fscrypt_private.h
-+++ b/fs/crypto/fscrypt_private.h
-@@ -236,7 +236,7 @@ struct fscrypt_symlink_data {
-  * @tfm: crypto API transform object
-  * @blk_key: key for blk-crypto
-  *
-- * Normally only one of the fields will be non-NULL.
-+ * Only one of the fields is non-NULL.
-  */
- struct fscrypt_prepared_key {
- 	struct crypto_sync_skcipher *tfm;
-@@ -245,6 +245,15 @@ struct fscrypt_prepared_key {
- #endif
- };
- 
-+/* An entry in the linked list ->mk_mode_keys */
-+struct fscrypt_mode_key {
-+	struct fscrypt_prepared_key key;
-+	struct list_head link;
-+	u8 hkdf_context;
-+	u8 mode_num;
-+	u8 data_unit_bits;
-+};
-+
- /*
-  * fscrypt_inode_info - the "encryption key" for an inode
-  *
-@@ -433,20 +442,12 @@ int fscrypt_derive_sw_secret(struct super_block *sb,
-  * @prep_key, depending on which encryption implementation the file will use.
-  */
- static inline bool
--fscrypt_is_key_prepared(struct fscrypt_prepared_key *prep_key,
-+fscrypt_is_key_prepared(const struct fscrypt_prepared_key *prep_key,
- 			const struct fscrypt_inode_info *ci)
- {
--	/*
--	 * The two smp_load_acquire()'s here pair with the smp_store_release()'s
--	 * in fscrypt_prepare_inline_crypt_key() and fscrypt_prepare_key().
--	 * I.e., in some cases (namely, if this prep_key is a per-mode
--	 * encryption key) another task can publish blk_key or tfm concurrently,
--	 * executing a RELEASE barrier.  We need to use smp_load_acquire() here
--	 * to safely ACQUIRE the memory the other task published.
--	 */
- 	if (fscrypt_using_inline_encryption(ci))
--		return smp_load_acquire(&prep_key->blk_key) != NULL;
--	return smp_load_acquire(&prep_key->tfm) != NULL;
-+		return prep_key->blk_key != NULL;
-+	return prep_key->tfm != NULL;
- }
- 
- #else /* CONFIG_FS_ENCRYPTION_INLINE_CRYPT */
-@@ -489,10 +490,10 @@ fscrypt_derive_sw_secret(struct super_block *sb,
- }
- 
- static inline bool
--fscrypt_is_key_prepared(struct fscrypt_prepared_key *prep_key,
-+fscrypt_is_key_prepared(const struct fscrypt_prepared_key *prep_key,
- 			const struct fscrypt_inode_info *ci)
- {
--	return smp_load_acquire(&prep_key->tfm) != NULL;
-+	return prep_key->tfm != NULL;
- }
- #endif /* !CONFIG_FS_ENCRYPTION_INLINE_CRYPT */
- 
-@@ -580,8 +581,8 @@ struct fscrypt_master_key {
- 	/*
- 	 * Active and structural reference counts.  An active ref guarantees
- 	 * that the struct continues to exist, continues to be in the keyring
--	 * ->s_master_keys, and that any embedded subkeys (e.g.
--	 * ->mk_direct_keys) that have been prepared continue to exist.
-+	 * ->s_master_keys, and that any non-file-scoped subkeys (e.g.
-+	 * ->mk_mode_keys) that have been prepared continue to exist.
- 	 * A structural ref only guarantees that the struct continues to exist.
- 	 *
- 	 * There is one active ref associated with ->mk_present being true, and
-@@ -635,12 +636,21 @@ struct fscrypt_master_key {
- 	spinlock_t		mk_decrypted_inodes_lock;
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -260,11 +260,25 @@ static int ad_sigma_delta_clear_pending_
  
  	/*
--	 * Per-mode encryption keys for the various types of encryption policies
--	 * that use them.  Allocated and derived on-demand.
-+	 * A list of 'struct fscrypt_mode_key' for the (hkdf_context, mode_num,
-+	 * data_unit_bits, inlinecrypt) combinations that are in use for this
-+	 * master key, for hkdf_context in [HKDF_CONTEXT_DIRECT_KEY,
-+	 * HKDF_CONTEXT_IV_INO_LBLK_32_KEY, HKDF_CONTEXT_IV_INO_LBLK_64_KEY].
+ 	 * Read R̅D̅Y̅ pin (if possible) or status register to check if there is an
+-	 * old event.
++	 * old event. For devices with neither an RDY GPIO nor registers,
++	 * ad_sd_read_reg() transmits no address byte and clocks raw MISO bytes,
++	 * which is indistinguishable from reading conversion data and would
++	 * partially consume a pending result. Skip the check for such devices.
 +	 *
-+	 * This is a linked list and not a hash table because in practice
-+	 * there's just a single encryption policy per master key, using
-+	 * _at most_ 2 nodes in this list.  Per-file keys don't use this at all.
++	 * This is safe for all current registerless devices: ad7191 and ad7780
++	 * (with powerdown GPIO) are reset between conversions by CS deassertion,
++	 * so there is no stale result to drain; ad7780 (without powerdown GPIO)
++	 * and max11205 are continuously-converting and cycle ~DRDY at the output
++	 * data rate regardless of whether the previous result was read, so the
++	 * next falling edge fires naturally.
 +	 *
-+	 * This list is append-only until the master key is fully removed, at
-+	 * which time the list is cleared.  Before then,
-+	 * fscrypt_mode_key_setup_mutex synchronizes appends, and searches use
-+	 * the RCU read lock together with ->mk_sem held for read.
++	 * A future registerless device that holds ~DRDY asserted until data is
++	 * read would be broken by this early return and would need either
++	 * num_resetclks set or a rdy-gpio.
  	 */
--	struct fscrypt_prepared_key mk_direct_keys[FSCRYPT_MODE_MAX + 1];
--	struct fscrypt_prepared_key mk_iv_ino_lblk_64_keys[FSCRYPT_MODE_MAX + 1];
--	struct fscrypt_prepared_key mk_iv_ino_lblk_32_keys[FSCRYPT_MODE_MAX + 1];
-+	struct list_head	mk_mode_keys;
+ 	if (sigma_delta->rdy_gpiod) {
+ 		pending_event = gpiod_get_value(sigma_delta->rdy_gpiod);
+-	} else {
++	} else if (sigma_delta->info->has_registers) {
+ 		unsigned int status_reg;
  
- 	/* Hash key for inode numbers.  Initialized only when needed. */
- 	siphash_key_t		mk_ino_hash_key;
-diff --git a/fs/crypto/inline_crypt.c b/fs/crypto/inline_crypt.c
-index ed6e926226b51d..645cc493607294 100644
---- a/fs/crypto/inline_crypt.c
-+++ b/fs/crypto/inline_crypt.c
-@@ -198,13 +198,7 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
- 		goto fail;
- 	}
+ 		ret = ad_sd_read_reg(sigma_delta, AD_SD_REG_STATUS, 1, &status_reg);
+@@ -272,12 +286,25 @@ static int ad_sigma_delta_clear_pending_
+ 			return ret;
  
--	/*
--	 * Pairs with the smp_load_acquire() in fscrypt_is_key_prepared().
--	 * I.e., here we publish ->blk_key with a RELEASE barrier so that
--	 * concurrent tasks can ACQUIRE it.  Note that this concurrency is only
--	 * possible for per-mode keys, not for per-file keys.
--	 */
--	smp_store_release(&prep_key->blk_key, blk_key);
-+	prep_key->blk_key = blk_key;
- 	return 0;
- 
- fail:
-diff --git a/fs/crypto/keyring.c b/fs/crypto/keyring.c
-index 3adbd7167055a9..29bea5f3c98234 100644
---- a/fs/crypto/keyring.c
-+++ b/fs/crypto/keyring.c
-@@ -87,14 +87,14 @@ void fscrypt_put_master_key(struct fscrypt_master_key *mk)
- void fscrypt_put_master_key_activeref(struct super_block *sb,
- 				      struct fscrypt_master_key *mk)
- {
--	size_t i;
-+	struct fscrypt_mode_key *node, *tmp;
- 
- 	if (!refcount_dec_and_test(&mk->mk_active_refs))
- 		return;
- 	/*
- 	 * No active references left, so complete the full removal of this
- 	 * fscrypt_master_key struct by removing it from the keyring and
--	 * destroying any subkeys embedded in it.
-+	 * destroying any non-file-scoped subkeys.
- 	 */
- 
- 	if (WARN_ON_ONCE(!sb->s_master_keys))
-@@ -110,13 +110,16 @@ void fscrypt_put_master_key_activeref(struct super_block *sb,
- 	WARN_ON_ONCE(mk->mk_present);
- 	WARN_ON_ONCE(!list_empty(&mk->mk_decrypted_inodes));
- 
--	for (i = 0; i <= FSCRYPT_MODE_MAX; i++) {
--		fscrypt_destroy_prepared_key(
--				sb, &mk->mk_direct_keys[i]);
--		fscrypt_destroy_prepared_key(
--				sb, &mk->mk_iv_ino_lblk_64_keys[i]);
--		fscrypt_destroy_prepared_key(
--				sb, &mk->mk_iv_ino_lblk_32_keys[i]);
-+	/*
-+	 * Destroy any non-file-scoped subkeys.  Since ->mk_active_refs == 0,
-+	 * they're no longer referenced by any inodes.  Nor can key setup run
-+	 * and use them again.  So they're no longer needed.  (This implies no
-+	 * concurrent readers, so we don't need list_del_rcu() for example.)
-+	 */
-+	list_for_each_entry_safe(node, tmp, &mk->mk_mode_keys, link) {
-+		fscrypt_destroy_prepared_key(sb, &node->key);
-+		list_del(&node->link);
-+		kfree(node);
- 	}
- 	memzero_explicit(&mk->mk_ino_hash_key,
- 			 sizeof(mk->mk_ino_hash_key));
-@@ -445,6 +448,8 @@ static int add_new_master_key(struct super_block *sb,
- 	INIT_LIST_HEAD(&mk->mk_decrypted_inodes);
- 	spin_lock_init(&mk->mk_decrypted_inodes_lock);
- 
-+	INIT_LIST_HEAD(&mk->mk_mode_keys);
-+
- 	if (mk_spec->type == FSCRYPT_KEY_SPEC_TYPE_IDENTIFIER) {
- 		err = allocate_master_key_users_keyring(mk);
- 		if (err)
-diff --git a/fs/crypto/keysetup.c b/fs/crypto/keysetup.c
-index 4bd3918f50e3fa..f27997ef9a08c5 100644
---- a/fs/crypto/keysetup.c
-+++ b/fs/crypto/keysetup.c
-@@ -163,13 +163,7 @@ int fscrypt_prepare_key(struct fscrypt_prepared_key *prep_key,
- 	tfm = fscrypt_allocate_skcipher(ci->ci_mode, raw_key, ci->ci_inode);
- 	if (IS_ERR(tfm))
- 		return PTR_ERR(tfm);
--	/*
--	 * Pairs with the smp_load_acquire() in fscrypt_is_key_prepared().
--	 * I.e., here we publish ->tfm with a RELEASE barrier so that
--	 * concurrent tasks can ACQUIRE it.  Note that this concurrency is only
--	 * possible for per-mode keys, not for per-file keys.
--	 */
--	smp_store_release(&prep_key->tfm, tfm);
-+	prep_key->tfm = tfm;
- 	return 0;
- }
- 
-@@ -190,9 +184,37 @@ int fscrypt_set_per_file_enc_key(struct fscrypt_inode_info *ci,
- 	return fscrypt_prepare_key(&ci->ci_enc_key, raw_key, ci);
- }
- 
-+/*
-+ * Find the fscrypt_prepared_key (if any) for a particular (mk, hkdf_context,
-+ * mode_num, data_unit_bits, inlinecrypt) combination.
-+ *
-+ * The caller must hold ->mk_sem for reading and ->mk_present must be true,
-+ * ensuring that ->mk_mode_keys is still append-only.
-+ */
-+static struct fscrypt_prepared_key *
-+fscrypt_find_mode_key(struct fscrypt_master_key *mk, u8 hkdf_context,
-+		      u8 mode_num, const struct fscrypt_inode_info *ci)
-+{
-+	struct fscrypt_mode_key *node;
-+
-+	/*
-+	 * The RCU read lock here is used only to synchronize with concurrent
-+	 * list_add_tail_rcu().  Concurrent deletions are impossible here, so
-+	 * returning a pointer to a node without taking any refcount is safe.
-+	 */
-+	guard(rcu)();
-+	list_for_each_entry_rcu(node, &mk->mk_mode_keys, link) {
-+		if (node->hkdf_context == hkdf_context &&
-+		    node->mode_num == mode_num &&
-+		    node->data_unit_bits == ci->ci_data_unit_bits &&
-+		    fscrypt_is_key_prepared(&node->key, ci))
-+			return &node->key;
-+	}
-+	return NULL;
-+}
-+
- static int setup_per_mode_enc_key(struct fscrypt_inode_info *ci,
- 				  struct fscrypt_master_key *mk,
--				  struct fscrypt_prepared_key *keys,
- 				  u8 hkdf_context, bool include_fs_uuid)
- {
- 	const struct inode *inode = ci->ci_inode;
-@@ -200,7 +222,8 @@ static int setup_per_mode_enc_key(struct fscrypt_inode_info *ci,
- 	struct fscrypt_mode *mode = ci->ci_mode;
- 	const u8 mode_num = mode - fscrypt_modes;
- 	struct fscrypt_prepared_key *prep_key;
--	u8 mode_key[FSCRYPT_MAX_RAW_KEY_SIZE];
-+	struct fscrypt_mode_key *new_node;
-+	u8 raw_mode_key[FSCRYPT_MAX_RAW_KEY_SIZE];
- 	u8 hkdf_info[sizeof(mode_num) + sizeof(sb->s_uuid)];
- 	unsigned int hkdf_infolen = 0;
- 	bool use_hw_wrapped_key = false;
-@@ -223,48 +246,56 @@ static int setup_per_mode_enc_key(struct fscrypt_inode_info *ci,
- 		use_hw_wrapped_key = true;
- 	}
- 
--	prep_key = &keys[mode_num];
--	if (fscrypt_is_key_prepared(prep_key, ci)) {
-+	prep_key = fscrypt_find_mode_key(mk, hkdf_context, mode_num, ci);
-+	if (prep_key) {
- 		ci->ci_enc_key = *prep_key;
- 		return 0;
- 	}
- 
--	mutex_lock(&fscrypt_mode_key_setup_mutex);
-+	guard(mutex)(&fscrypt_mode_key_setup_mutex);
- 
--	if (fscrypt_is_key_prepared(prep_key, ci))
--		goto done_unlock;
-+	prep_key = fscrypt_find_mode_key(mk, hkdf_context, mode_num, ci);
-+	if (prep_key) {
-+		ci->ci_enc_key = *prep_key;
-+		return 0;
-+	}
-+
-+	new_node = kzalloc_obj(*new_node);
-+	if (!new_node)
-+		return -ENOMEM;
-+	new_node->hkdf_context = hkdf_context;
-+	new_node->mode_num = mode_num;
-+	new_node->data_unit_bits = ci->ci_data_unit_bits;
-+	prep_key = &new_node->key;
- 
- 	if (use_hw_wrapped_key) {
- 		err = fscrypt_prepare_inline_crypt_key(prep_key,
- 						       mk->mk_secret.bytes,
- 						       mk->mk_secret.size, true,
- 						       ci);
--		if (err)
--			goto out_unlock;
--		goto done_unlock;
+ 		pending_event = !(status_reg & AD_SD_REG_STATUS_RDY);
 +	} else {
-+		static_assert(sizeof(mode_num) == 1);
-+		static_assert(sizeof(sb->s_uuid) == 16);
-+		static_assert(sizeof(hkdf_info) == 17);
-+		hkdf_info[hkdf_infolen++] = mode_num;
-+		if (include_fs_uuid) {
-+			memcpy(&hkdf_info[hkdf_infolen], &sb->s_uuid,
-+			       sizeof(sb->s_uuid));
-+			hkdf_infolen += sizeof(sb->s_uuid);
-+		}
-+		fscrypt_hkdf_expand(&mk->mk_secret.hkdf, hkdf_context,
-+				    hkdf_info, hkdf_infolen, raw_mode_key,
-+				    mode->keysize);
-+		err = fscrypt_prepare_key(prep_key, raw_mode_key, ci);
-+		memzero_explicit(raw_mode_key, mode->keysize);
++		return 0;
  	}
--
--	BUILD_BUG_ON(sizeof(mode_num) != 1);
--	BUILD_BUG_ON(sizeof(sb->s_uuid) != 16);
--	BUILD_BUG_ON(sizeof(hkdf_info) != 17);
--	hkdf_info[hkdf_infolen++] = mode_num;
--	if (include_fs_uuid) {
--		memcpy(&hkdf_info[hkdf_infolen], &sb->s_uuid,
--		       sizeof(sb->s_uuid));
--		hkdf_infolen += sizeof(sb->s_uuid);
-+	if (err) {
-+		kfree(new_node);
-+		return err;
- 	}
--	fscrypt_hkdf_expand(&mk->mk_secret.hkdf, hkdf_context, hkdf_info,
--			    hkdf_infolen, mode_key, mode->keysize);
--	err = fscrypt_prepare_key(prep_key, mode_key, ci);
--	memzero_explicit(mode_key, mode->keysize);
--	if (err)
--		goto out_unlock;
--done_unlock:
-+	list_add_tail_rcu(&new_node->link, &mk->mk_mode_keys);
- 	ci->ci_enc_key = *prep_key;
--	err = 0;
--out_unlock:
--	mutex_unlock(&fscrypt_mode_key_setup_mutex);
--	return err;
-+	return 0;
- }
  
- /*
-@@ -311,8 +342,8 @@ static int fscrypt_setup_iv_ino_lblk_32_key(struct fscrypt_inode_info *ci,
- {
- 	int err;
+ 	if (!pending_event)
+ 		return 0;
  
--	err = setup_per_mode_enc_key(ci, mk, mk->mk_iv_ino_lblk_32_keys,
--				     HKDF_CONTEXT_IV_INO_LBLK_32_KEY, true);
-+	err = setup_per_mode_enc_key(ci, mk, HKDF_CONTEXT_IV_INO_LBLK_32_KEY,
-+				     true);
- 	if (err)
- 		return err;
- 
-@@ -364,8 +395,8 @@ static int fscrypt_setup_v2_file_key(struct fscrypt_inode_info *ci,
- 		 * encryption key.  This ensures that the master key is
- 		 * consistently used only for HKDF, avoiding key reuse issues.
- 		 */
--		err = setup_per_mode_enc_key(ci, mk, mk->mk_direct_keys,
--					     HKDF_CONTEXT_DIRECT_KEY, false);
-+		err = setup_per_mode_enc_key(ci, mk, HKDF_CONTEXT_DIRECT_KEY,
-+					     false);
- 	} else if (ci->ci_policy.v2.flags &
- 		   FSCRYPT_POLICY_FLAG_IV_INO_LBLK_64) {
- 		/*
-@@ -374,9 +405,8 @@ static int fscrypt_setup_v2_file_key(struct fscrypt_inode_info *ci,
- 		 * the IVs.  This format is optimized for use with inline
- 		 * encryption hardware compliant with the UFS standard.
- 		 */
--		err = setup_per_mode_enc_key(ci, mk, mk->mk_iv_ino_lblk_64_keys,
--					     HKDF_CONTEXT_IV_INO_LBLK_64_KEY,
--					     true);
-+		err = setup_per_mode_enc_key(
-+			ci, mk, HKDF_CONTEXT_IV_INO_LBLK_64_KEY, true);
- 	} else if (ci->ci_policy.v2.flags &
- 		   FSCRYPT_POLICY_FLAG_IV_INO_LBLK_32) {
- 		err = fscrypt_setup_iv_ino_lblk_32_key(ci, mk);
--- 
-2.53.0
-
+ 	/*
++	 * With num_resetclks = 0, data_read_len is 0 and the drain sequence
++	 * below would compute memset(data + 2, 0xff, 0 - 1), underflowing to
++	 * SIZE_MAX and corrupting the heap. There is no safe way to drain the
++	 * stale result without knowing the data register size; it will be
++	 * consumed by the first ad_sd_read_reg() call in
++	 * ad_sigma_delta_single_conversion().
++	 */
++	if (!data_read_len)
++		return 0;
++
++	/*
+ 	 * In general the size of the data register is unknown. It varies from
+ 	 * device to device, might be one byte longer if CONTROL.DATA_STATUS is
+ 	 * set and even varies on some devices depending on which input is
 
 
