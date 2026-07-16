@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA933D9DB3;
-	Thu, 16 Jul 2026 13:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707D63FE65F;
+	Thu, 16 Jul 2026 13:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209381; cv=none; b=fKCew0+BELE4BqlrmK8e+kfs1QYdbGBFUhYB4LN5KI575z4m1aWqEojEalmf67ejrMRl1lK6nrNsOs0RG9DxYSEC0YzOilB/CxE+BXhcrC45Ktmp745JqValB+pHOr4D694+XlMX2p48iPI/+8Fpue5RuRBKuVodiN8TnI+ckXI=
+	t=1784209383; cv=none; b=sA3puxLwRCVx1oorQKC92mkLHm2Ng3NfLMsr3k9xrOMSEiUyVFwV5gmN6WiGTxn/JP6XYXxwoLnX7cP3PaVlDA/syzOmthGWNtRduCOJ8TzSPfVMj0mn1A0xbd7k7A1dGZbydOB2S04wVZRRnIXHGdJ11xrxobHeqsegZf5A/WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209381; c=relaxed/simple;
-	bh=P9lOKb+9YXdk3fmmWeVbfBjbqhqzJLCKP7d5Mi/dwnQ=;
+	s=arc-20240116; t=1784209383; c=relaxed/simple;
+	bh=ad8MJ6xUiAlpmGonvyhyTAWTuNHrsqEgXVveE2hbSiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQRPh7ZcHyNn4lyYipOt56YgxG2SLFO47eM2GVAVokjMtgFJSUrFe9pryqV2fDEMhcv9Z5uxvmzJ1gcKX+PKrDO9c0MeDcowxRsML0nUZVh8A19E+v+iUCwGj9pjPBq0tXeNdbva5isBwCJQmLCuY0E1prumTT79KAA+875bAxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZumtdHu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ENCWsoJh/jg3j6q/IegUi/7jdgiikGZQuF2RDek4BaENdzaEdyM2onhP/Vs5RLtDyKoNhXQ28TcRgzbGFku/mTCDWphTWH/3xuWtynrtisC+1/0wkSxAtBmgo2KOc0j4AKUjcMW3tp2FQJy+AAsuafl9aKlSZWqfvtMmhHlbpZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKBKYxjO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZumtdHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067991F000E9;
-	Thu, 16 Jul 2026 13:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKBKYxjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C981F000E9;
+	Thu, 16 Jul 2026 13:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209379;
-	bh=IBrOMj/aIxOjTy23AlFOzbZF9ZjaOdyFRbKZLASZrhI=;
+	s=korg; t=1784209382;
+	bh=u4nKw1w/BGE1XdPxVpkuUAhlptjyL6RjakmSQsRML+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZZumtdHu4EDWuBoNNQM3fM070xsQ/Xz4pUhcd/BsCV+4Pe0ysa/OzJifm0JAmyXlM
-	 GQ5ikF0eYCMyF+976PrTiKpBsOYDr2LrnHYEoVcjH1/1Ik5swaBJpyalW2pSVzDtaI
-	 r/LcSSrRMZKX4ROMARNXvqOP+iGjb2F7qLTPa644=
+	b=gKBKYxjOQmEiRiX+5YGZZieA9AzMicW1t5FWDMnXZjV5q5gjmGuypwmfjYETZga0O
+	 LbkyuMktjY7kbE9zcyZ4qGa/7RuGuXWpzUnjogtOinAbIncjJdU73t6qvOGMUfgDGg
+	 o2vVGY823PV9wYA4JKmi1m75vDEQsUCeC1MaGSyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>
-Subject: [PATCH 7.1 161/518] staging: rtl8723bs: fix WEP length underflow and OOB read in OnAuth()
-Date: Thu, 16 Jul 2026 15:27:09 +0200
-Message-ID: <20260716133051.364571052@linuxfoundation.org>
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	Luka Gejak <luka.gejak@linux.dev>
+Subject: [PATCH 7.1 162/518] staging: rtl8723bs: fix OOB read in OnAssocRsp() IE loop
+Date: Thu, 16 Jul 2026 15:27:10 +0200
+Message-ID: <20260716133051.387107697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,67 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit a1fc19d61f661d47204f095b593de507884849f7 upstream.
+commit f9654207e92283e0acac5d64fe5f8835383b5a23 upstream.
 
-OnAuth() has two bugs in the shared-key authentication path.
+The IE parsing loop in OnAssocRsp() advances by (pIE->length + 2) each
+iteration but only guards on i < pkt_len. When a malicious AP sends an
+AssocResponse whose last IE has only one byte remaining in the frame
+(the element_id byte lands at pkt_len-1), the loop reads pIE->length
+from pframe[pkt_len], which is one byte past the allocated receive buffer.
 
-When the Privacy bit is set, rtw_wep_decrypt() is called without
-verifying that the frame is long enough to contain a valid WEP IV and
-ICV.  Inside rtw_wep_decrypt(), length is computed as:
+Additionally, even when the header bytes are in bounds, pIE->length
+itself can extend the data window beyond pkt_len, silently passing a
+truncated IE to the handler functions.
 
-    length = len - WLAN_HDR_A3_LEN - iv_len
-
-and then passed as (length - 4) to crc32_le().  If len is less than
-WLAN_HDR_A3_LEN + iv_len + icv_len (32 bytes), length - 4 is negative
-and, after the implicit cast to size_t, causes crc32_le() to read far
-beyond the frame buffer.  Add a minimum length check before accessing
-the IV field and calling the decryption path.
-
-When processing a seq=3 response, rtw_get_ie() stores the Challenge
-Text IE length in ie_len, but the subsequent memcmp() always reads 128
-bytes regardless of ie_len.  IEEE 802.11 mandates a challenge text of
-exactly 128 bytes; reject any IE whose length field differs, matching
-the check already applied to OnAuthClient().
+Add two guards at the top of the loop body:
+  1. Break if fewer than sizeof(*pIE) bytes remain (can't read header).
+  2. Break if the IE's declared data extends past pkt_len.
 
 Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260522004605.1039209-1-hossu.alexandru@gmail.com
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Link: https://patch.msgid.link/20260522004531.1038924-6-hossu.alexandru@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
 +++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -687,6 +687,9 @@ unsigned int OnAuth(struct adapter *pada
- 	if ((pmlmeinfo->state&0x03) != WIFI_FW_AP_STATE)
- 		return _FAIL;
+@@ -1406,7 +1406,11 @@ unsigned int OnAssocRsp(struct adapter *
+ 	/* to handle HT, WMM, rate adaptive, update MAC reg */
+ 	/* for not to handle the synchronous IO in the tasklet */
+ 	for (i = (6 + WLAN_HDR_A3_LEN); i < pkt_len;) {
++		if (i + sizeof(*pIE) > pkt_len)
++			break;
+ 		pIE = (struct ndis_80211_var_ie *)(pframe + i);
++		if (i + sizeof(*pIE) + pIE->length > pkt_len)
++			break;
  
-+	if (len < WLAN_HDR_A3_LEN)
-+		return _FAIL;
-+
- 	sa = GetAddr2Ptr(pframe);
- 
- 	auth_mode = psecuritypriv->dot11AuthAlgrthm;
-@@ -698,6 +701,9 @@ unsigned int OnAuth(struct adapter *pada
- 		prxattrib->hdrlen = WLAN_HDR_A3_LEN;
- 		prxattrib->encrypt = _WEP40_;
- 
-+		if (len < WLAN_HDR_A3_LEN + 8)
-+			return _FAIL;
-+
- 		iv = pframe+prxattrib->hdrlen;
- 		prxattrib->key_index = ((iv[3]>>6)&0x3);
- 
-@@ -802,7 +808,7 @@ unsigned int OnAuth(struct adapter *pada
- 			p = rtw_get_ie(pframe + WLAN_HDR_A3_LEN + 4 + _AUTH_IE_OFFSET_, WLAN_EID_CHALLENGE, (int *)&ie_len,
- 					len - WLAN_HDR_A3_LEN - _AUTH_IE_OFFSET_ - 4);
- 
--			if (!p || ie_len <= 0) {
-+			if (!p || ie_len != 128) {
- 				status = WLAN_STATUS_CHALLENGE_FAIL;
- 				goto auth_fail;
- 			}
+ 		switch (pIE->element_id) {
+ 		case WLAN_EID_VENDOR_SPECIFIC:
 
 
