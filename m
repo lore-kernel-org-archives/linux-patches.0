@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4F02DF137;
-	Thu, 16 Jul 2026 13:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED902DF137;
+	Thu, 16 Jul 2026 13:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209075; cv=none; b=QfCfdSgpGeKN7DLJAQGAsbmJMk9JLFq0hL2GXpGMhtkum97ZzwEkGiPoJRxKfGhoKGyMqbuzo9G9AcGy0yFdwVvEayqHKnMbTAzdhJnP1hII4hNE86fm66qNfqA7njFuGg353i6uu/2B935aDuCuv7+80jfXOyNIAfVfY0V/n8Q=
+	t=1784209078; cv=none; b=CjALqsy9JzL7TL/RGQPqrf1S2wrsKSVonI9q8p0XdWnSdkSvVcmupbWKZOzKKwCXUlSHkEQbAuFme6/EQOy/oOSU4JyQ7i1nm7ydz2HfJ/5NV64hxBJqDwG7bo85phuskWe10qIDw0rNUstK1q8l8l27dFkjq5lAjNeUdJ48D5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209075; c=relaxed/simple;
-	bh=q0gn6P9nM5EyKNBYZ30QGSXRSO24gXGWX8xkZJiSnoA=;
+	s=arc-20240116; t=1784209078; c=relaxed/simple;
+	bh=WxkuKYrS3v3VKK/yBRA8t1Rd8/aOUbMIXxWv7zrvJE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i9IeI+oWPmnLmRLzNIZrhKV5CcDHksV3S5Z66nuNm8aBfOGt8kbseIgm423f7r6ix5N3HTmrJPzqXwxgjzXowGPBF4rpuGHocU7jFFddA7tzF3/eYUrAz4499Ga8aKaOVyQtI54icQfyxFi7IoBVWmbcq2UUFgx+uKHpFx/IKWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/dyU9hj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uP+X4K6nx2mf7fhbIUqGVexXzQSjXsMBhwU/QTyG/NdVKctrRJYmV6DaJiJHBbU6gl/80vMDDzhQuqb7yjcOn3ysqRWWAs9gNUzS+hdrZH9hXKFM2+SHRx6MHGmFrAymrMq6stEcTXKcPoDP1NFZ5dtYRr1SRPM1aarhIFx47aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIeNi4zm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/dyU9hj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704251F000E9;
-	Thu, 16 Jul 2026 13:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIeNi4zm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189E01F00A3A;
+	Thu, 16 Jul 2026 13:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209073;
-	bh=aaWu+i95gtwiJdVL3enB2+UZGp0u8LF3WJAyxmUZkVI=;
+	s=korg; t=1784209076;
+	bh=4eMrM7HI7AHeCR2OeZYVnync5DkvNpvlfvLJCkuONVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w/dyU9hj+uBGJSNDo9zfgolMHtj2QHqNJHrZCK5hWg+ya0VGGsYVXvKhNHxprLz0G
-	 tG5yvE4yV1AJLLXxplNZYmKGjrGamS1YxKpOfbYc+OjO61Z04cISKpUuzuRKBg4IEl
-	 K5kOtsdcd5W9QTfbXHd4Q0DOochiFshUNMVF27X0=
+	b=ZIeNi4zmEJtbmfu0GeTUHJTuBitAQ0HPqkkxHMHDnKMtMcmp0I1VSElnmNsALhCnA
+	 6jF84ZrrlWey/2b9FSXUlUDy7UaYZPTc3AbO/gWIi/D2fLwmaADLKMyY18ZPW0IoZm
+	 p/Oqeabj5tAm6A5jA1i8Ja5PybzkOM+rahWklkSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	sashiko <sashiko-bot@kernel.org>,
+	Maxwell Doose <m32285159@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 047/518] iio: buffer: hw-consumer: free scan_mask on buffer release
-Date: Thu, 16 Jul 2026 15:25:15 +0200
-Message-ID: <20260716133048.815319150@linuxfoundation.org>
+Subject: [PATCH 7.1 048/518] iio: chemical: scd30: Cleanup initializations and fix sign-extension bug
+Date: Thu, 16 Jul 2026 15:25:16 +0200
+Message-ID: <20260716133048.837442344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -47,56 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Maxwell Doose <m32285159@gmail.com>
 
-commit 6325d6e2204327965b849c0a16efb6ac9202e5a8 upstream.
+commit 60d877910a43c305b5165131b258a17b1d772d57 upstream.
 
-The scan_mask lifetime changed in commit 9a2e1233d38c ("iio: buffer:
-hw-consumer: remove redundant scan_mask flexible array").
+Include linux/bitfield.h for FIELD_GET().
 
-Before that change, the scan mask storage was embedded in struct
-hw_consumer_buffer, so iio_hw_buf_release() could free the whole
-allocation with a single kfree(hw_buf).
+Create new macros for bit manipulation in combination with manual bit
+manipulation being replaced with FIELD_GET().
 
-That commit moved the scan mask to a separate bitmap_zalloc() allocation
-stored in buffer.scan_mask, but left iio_hw_buf_release() unchanged.
+The current variable declaration and initializations are barely readable
+and use comma separations across multiple lines. Refactor the
+initializations so that mantissa and exp have separate declarations and
+sign gets initialized later.
 
-Free the scan mask in iio_hw_buf_release() before freeing the buffer
-wrapper.
+In addition (and due to the nature of the cleanup), fix a sign-extension
+bug where, float32 would get bitwise anded with ~BIT(31)
+(which is 0xFFFFFFFF7FFFFFFF) which corrupted the exponent.
 
-Fixes: 9a2e1233d38c ("iio: buffer: hw-consumer: remove redundant scan_mask flexible array")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Fixes: 64b3d8b1b0f5c ("iio: chemical: scd30: add core driver")
+Reported-by: sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260524020309.18618-1-m32285159%40gmail.com
+Signed-off-by: Maxwell Doose <m32285159@gmail.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/buffer/industrialio-hw-consumer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/chemical/scd30_core.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/buffer/industrialio-hw-consumer.c b/drivers/iio/buffer/industrialio-hw-consumer.c
-index 700528c9a0a4..10e912bbf0c5 100644
---- a/drivers/iio/buffer/industrialio-hw-consumer.c
-+++ b/drivers/iio/buffer/industrialio-hw-consumer.c
-@@ -40,6 +40,8 @@ static void iio_hw_buf_release(struct iio_buffer *buffer)
- {
- 	struct hw_consumer_buffer *hw_buf =
- 		iio_buffer_to_hw_consumer_buffer(buffer);
+--- a/drivers/iio/chemical/scd30_core.c
++++ b/drivers/iio/chemical/scd30_core.c
+@@ -4,6 +4,8 @@
+  *
+  * Copyright (c) 2020 Tomasz Duszynski <tomasz.duszynski@octakon.com>
+  */
 +
-+	bitmap_free(buffer->scan_mask);
- 	kfree(hw_buf);
- }
++#include <linux/bitfield.h>
+ #include <linux/bits.h>
+ #include <linux/cleanup.h>
+ #include <linux/completion.h>
+@@ -43,6 +45,11 @@
+ #define SCD30_TEMP_OFFSET_MAX 655360
+ #define SCD30_EXTRA_TIMEOUT_PER_S 250
  
--- 
-2.55.0
-
++/* Floating point arithmetic macros */
++#define SCD30_FLOAT_MANTISSA_MSK GENMASK(22, 0)
++#define SCD30_FLOAT_EXP_MSK GENMASK(30, 23)
++#define SCD30_FLOAT_SIGN_MSK BIT(31)
++
+ enum {
+ 	SCD30_CONC,
+ 	SCD30_TEMP,
+@@ -89,10 +96,14 @@ static int scd30_reset(struct scd30_stat
+ /* simplified float to fixed point conversion with a scaling factor of 0.01 */
+ static int scd30_float_to_fp(int float32)
+ {
+-	int fraction, shift,
+-	    mantissa = float32 & GENMASK(22, 0),
+-	    sign = (float32 & BIT(31)) ? -1 : 1,
+-	    exp = (float32 & ~BIT(31)) >> 23;
++	int fraction, shift, sign;
++	int mantissa = FIELD_GET(SCD30_FLOAT_MANTISSA_MSK, float32);
++	int exp = FIELD_GET(SCD30_FLOAT_EXP_MSK, float32);
++
++	if (float32 & SCD30_FLOAT_SIGN_MSK)
++		sign = -1;
++	else
++		sign = 1;
+ 
+ 	/* special case 0 */
+ 	if (!exp && !mantissa)
 
 
