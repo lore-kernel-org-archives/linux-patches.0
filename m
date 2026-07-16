@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B4831E85C;
-	Thu, 16 Jul 2026 13:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46023876DE;
+	Thu, 16 Jul 2026 13:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210173; cv=none; b=NizCuGAVVImhZigE9ooPAQT1vDggKhTPYi/YIgkHZ/HSdha7ElSbcvgOaHKvY0KzsKpOgQE2CvnIWHshmO1FpsNASYCx48jTtlOuIGkEEt+65ZvAHdoAwq0pNZfLwcdPrzg+EvW369OauKHCx+t2eS6g6zMcRli7HcJoAhIDYd4=
+	t=1784210175; cv=none; b=QfB2UAgWuOVF4eg6oqb+AXts/lGFAPuw66uLD2cIC4h6vjF9f6KBjfXGeEU+aA6fE7z/wYXlvdB+oVUQBTxgBmDyVqBsAdGFURV/3QGZld1FQf4QnFxI0olEjXibK3FwFl3TFUy+U9Ji8KcyOAon+dRnRlJ5kxcnYmYkF2yJiYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210173; c=relaxed/simple;
-	bh=ALv32CdcBcHFx9/9jZiLOqBUEYtF9RgzyBNHNHGaGGk=;
+	s=arc-20240116; t=1784210175; c=relaxed/simple;
+	bh=fnqD7OV6u4ykMerQiNsRnZjI4Zg6srVOsvMqMNFAlIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILrltgA3CibGuoDUKbDuvTAi20zoaHx48ANgYc5h2AtWm4PGMVpD3PLJtNqJIVAqVv0SC2gSuXVxpdtil9a58bjOQphNlEI+rOziA1/2n5CFe/3S2V2ZUfsBWl5bcaoIqz89eKrqeKVL9JX/h7M0UeBgGDCno4YZYFV9Mi6yIBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxcAGfhF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jlzSl15So9gPl7hIdx+oe6TALFK6wRxvfUsfgoJrBrQh0yTaY2Bck3JfskopaMTgi8cXmuyfe3B0ZnZPjM//cGZREJ+S9zGlZR/yWsfrAoGW9CPQniAolFZESBBy5A9ZRzFUtrqI8I7wVLvgqjTCvGD3W5ZuIrkjP7DaKl910WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RR5yQte1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxcAGfhF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA861F000E9;
-	Thu, 16 Jul 2026 13:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RR5yQte1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351251F00A3A;
+	Thu, 16 Jul 2026 13:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210172;
-	bh=oVRA0F4HKI5eY+RojFTqCdBHdwlTXKj1RF6zEDNKorE=;
+	s=korg; t=1784210174;
+	bh=YLsYgJhz8V24M0aaJ3j+oaberEqzUeC6XoC6UjW20SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mxcAGfhFldTRttuNJf1a6gu1oLNEF1VKMhdlssdYmfv1iPvT+J1inzrVjHeaVKAhk
-	 OdKkPswB66gyIj12DWayoA1uV4/lptZ7yWu0FMomhCxiMIu+eIUzGsXyGb1Wk+tAWS
-	 8oQ8e80n0UQ3FZDSaPdtwTppStQbUWD+RwbPiF4I=
+	b=RR5yQte1oeVQNDZoR0cLTU9TZoPBXQ0dmC9nHR8YUVGidbnb0VvWiU3bzmGgiVjNF
+	 eS56UdJQGg7vSybfw0M9VvESe2izHdwmU/Kqw3A+B+pNLOCs1pF4EmBMBK7qZbrD2t
+	 3ui8fZjG/Ukpv+VBDSd/IadRHYklnzok/S341XEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
 	Vivek Kasireddy <vivek.kasireddy@intel.com>
-Subject: [PATCH 7.1 465/518] udmabuf: fix DMA direction mismatch in release_udmabuf()
-Date: Thu, 16 Jul 2026 15:32:13 +0200
-Message-ID: <20260716133058.019065604@linuxfoundation.org>
+Subject: [PATCH 7.1 466/518] dma-buf/udmabuf: skip redundant cpu sync to fix cacheline EEXIST warning
+Date: Thu, 16 Jul 2026 15:32:14 +0200
+Message-ID: <20260716133058.041462048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,68 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit fb7b1a0ab25a6077d26cb3829e31743972d4f31d upstream.
+commit 504e2b4ab97a51d56d966cd36d0997ad30b65b2d upstream.
 
-begin_cpu_udmabuf() maps the sg_table with the caller-provided direction
-(e.g., DMA_TO_DEVICE for a write-only sync), and caches it in ubuf->sg
-for reuse.  However, release_udmabuf() always unmaps this sg_table with
-a hardcoded DMA_BIDIRECTIONAL, regardless of the direction that was
-originally used for the mapping.
+When CONFIG_DMA_API_DEBUG_SG is enabled, importing a udmabuf into a DRM
+driver (e.g. amdgpu for video playback in GNOME Videos / Showtime)
+triggers a spurious warning:
 
-With CONFIG_DMA_API_DEBUG=y this produces:
+  DMA-API: amdgpu 0000:03:00.0: cacheline tracking EEXIST, \
+      overlapping mappings aren't supported
+  WARNING: kernel/dma/debug.c:619 at add_dma_entry+0x473/0x5f0
 
-  DMA-API: misc udmabuf: device driver frees DMA memory with different
-  direction [device address=0x000000044a123000] [size=4096 bytes]
-  [mapped with DMA_TO_DEVICE] [unmapped with DMA_BIDIRECTIONAL]
+The call chain is:
 
-The issue was found during video playback when GStreamer performed a
-write-only DMA_BUF_IOCTL_SYNC on a udmabuf.  It can be reproduced
-with CONFIG_DMA_API_DEBUG=y by creating a udmabuf from a memfd,
-performing a write-only sync (DMA_BUF_SYNC_WRITE without
-DMA_BUF_SYNC_READ), and closing the file descriptor.
+  amdgpu_cs_ioctl
+   -> amdgpu_ttm_backend_bind
+    -> dma_buf_map_attachment
+     -> [udmabuf] map_udmabuf -> get_sg_table
+      -> dma_map_sgtable(dev, sg, direction, 0)  // attrs=0
+       -> debug_dma_map_sg -> add_dma_entry -> EEXIST
 
-Fix this by storing the DMA direction used when the sg_table is first
-created in begin_cpu_udmabuf(), and passing that same direction to
-put_sg_table() in release_udmabuf().
+This happens because udmabuf builds a per-page scatter-gather list via
+sg_set_folio().  When begin_cpu_udmabuf() has already created an sg
+table mapped for the misc device, and an importer such as amdgpu maps
+the same pages for its own device via map_udmabuf(), the DMA debug
+infrastructure sees two active mappings whose physical addresses share
+cacheline boundaries and warns about the overlap.
+
+The DMA_ATTR_SKIP_CPU_SYNC flag suppresses this check in
+add_dma_entry() because it signals that no CPU cache maintenance is
+performed at map/unmap time, making the cacheline overlap harmless.
+
+All other major dma-buf exporters already pass this flag:
+  - drm_gem_map_dma_buf() passes DMA_ATTR_SKIP_CPU_SYNC
+  - amdgpu_dma_buf_map() passes DMA_ATTR_SKIP_CPU_SYNC
+
+The CPU sync at map/unmap time is also redundant for udmabuf:
+begin_cpu_udmabuf() and end_cpu_udmabuf() already perform explicit
+cache synchronization via dma_sync_sgtable_for_cpu/device() when CPU
+access is requested through the dma-buf interface.
+
+Pass DMA_ATTR_SKIP_CPU_SYNC to dma_map_sgtable() and
+dma_unmap_sgtable() in udmabuf to suppress the spurious warning and
+skip the redundant sync.
 
 Fixes: 284562e1f348 ("udmabuf: implement begin_cpu_access/end_cpu_access hooks")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Reviewed-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Link: https://patch.msgid.link/20260314232722.15555-1-mikhail.v.gavrilov@gmail.com
+Link: https://patch.msgid.link/20260331061657.79983-1-mikhail.v.gavrilov@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/udmabuf.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dma-buf/udmabuf.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/dma-buf/udmabuf.c
 +++ b/drivers/dma-buf/udmabuf.c
-@@ -40,6 +40,7 @@ struct udmabuf {
- 	struct folio **pinned_folios;
+@@ -163,7 +163,7 @@ static struct sg_table *get_sg_table(str
+ 		sg_set_folio(sgl, ubuf->folios[i], PAGE_SIZE,
+ 			     ubuf->offsets[i]);
  
- 	struct sg_table *sg;
-+	enum dma_data_direction sg_dir;
- 	struct miscdevice *device;
- 	pgoff_t *offsets;
- };
-@@ -235,7 +236,7 @@ static void release_udmabuf(struct dma_b
- 	struct device *dev = ubuf->device->this_device;
- 
- 	if (ubuf->sg)
--		put_sg_table(dev, ubuf->sg, DMA_BIDIRECTIONAL);
-+		put_sg_table(dev, ubuf->sg, ubuf->sg_dir);
- 
- 	deinit_udmabuf(ubuf);
- 	kfree(ubuf);
-@@ -253,6 +254,8 @@ static int begin_cpu_udmabuf(struct dma_
- 		if (IS_ERR(ubuf->sg)) {
- 			ret = PTR_ERR(ubuf->sg);
- 			ubuf->sg = NULL;
-+		} else {
-+			ubuf->sg_dir = direction;
- 		}
- 	} else {
- 		dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
+-	ret = dma_map_sgtable(dev, sg, direction, 0);
++	ret = dma_map_sgtable(dev, sg, direction, DMA_ATTR_SKIP_CPU_SYNC);
+ 	if (ret < 0)
+ 		goto err_map;
+ 	return sg;
+@@ -178,7 +178,7 @@ err_alloc:
+ static void put_sg_table(struct device *dev, struct sg_table *sg,
+ 			 enum dma_data_direction direction)
+ {
+-	dma_unmap_sgtable(dev, sg, direction, 0);
++	dma_unmap_sgtable(dev, sg, direction, DMA_ATTR_SKIP_CPU_SYNC);
+ 	sg_free_table(sg);
+ 	kfree(sg);
+ }
 
 
