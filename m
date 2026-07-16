@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EE03D953E;
-	Thu, 16 Jul 2026 13:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50576401A0A;
+	Thu, 16 Jul 2026 13:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210247; cv=none; b=cr7HO8FsFfxpYsSZscLvs78xwfMMojqTP9EG7to/taMDQsMm2FlwHq5rkFa3MuOGijSBMKa0sSjNZgoFqgMfOemDhy7MHJuAk7f7dBeddvsgZ2hJc7bxIvwMWk5j2SEvop7fzEiQ4JtbWxQ/NvzvOtf6VPWZ5aoIpoF4qm1ITOA=
+	t=1784210249; cv=none; b=FNLyvIh2Oq7PYJGKdZc6BEkHfHXpUxAJJC8/JXfBYbkugh0NfDmFLiYJnPn7/uxjwEESnZMRm8P/ZFlf6HvrP/LrKkVYMRg4T1TWResx/2v2/QpiYtYVAyTj05znrYBRZdlUDX2masWVD++yiqtgrAeb38IiEWlyGQXmm2QHiF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210247; c=relaxed/simple;
-	bh=SjIZTmOAKdOZ5ddeco/roo3ibvHj0J2gyshCBtpPouU=;
+	s=arc-20240116; t=1784210249; c=relaxed/simple;
+	bh=eYMRd/B5gxrxceoZFdpYdRX/US8xSjaVJFCsR5+rL9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mFycK9NlfxZh3TnFD95M38dOWCNpceai6CH3cLQ4xHA8rl4F7y6EWnpiC/Omoj0saCJJrEjXNLKIDEvmXRdxbyniKN2UEMUZmVYbwmiuNmzwE4fBwL0lExeDbATV/IGwzT6tNa0Gf8++hGNg8el4IhlwfuIhL7vFmUFHWozcpQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOJr8spC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P/g2WCEhy3cacJaWrHxrXwbbOuWqONSqmft5lhU4joqcDZAODLzTTQYnOYPULxFzxjBTh2AzavLji02B8eLxah3SHnUc4ShlM0yaIm6Xt0PxIsa2rF1baozgoZ2e+BJh32r+cZfN1j62rOPd2jHeasg+U4+0DDdx9CqE0QYRLmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTCnuzdW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOJr8spC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164261F000E9;
-	Thu, 16 Jul 2026 13:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTCnuzdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BB31F000E9;
+	Thu, 16 Jul 2026 13:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210245;
-	bh=fI3k0L4AfUUssQryZrHQ6EkDdDosPmBqjcbFb/hVJ+Y=;
+	s=korg; t=1784210248;
+	bh=gsQNocrqo5mnTklw/2e58Lg/YZPrbYxDZdvlf47obio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lOJr8spCkb2XXHcbT8XPXAZk1fN0bWQTh01v0IAIV4rAOnR5aYH+1pxQftqlQwp+M
-	 wiLrW5abxvXAUfGkFFh6D6zrIPO1fVHheyCrpFIIwIa92zwRmIsdMzjApvs1pRUB0C
-	 SpXISqTJBu8Y3pUcZOgX8xRHr4qvNGV2RoCn66Xw=
+	b=bTCnuzdWypDH184AS2ZZH9SJqvdAbO/OyAyRvOEdOlOxMR4fiL6KKWAn786rMNESu
+	 oA8jnmAji9x8RVxJmWTqavTJrZl2wrDb3crsRDlLrqH3LwL1NGWaInBUN2K+3lckFM
+	 T9I8S5mh57UazpjFYcPJIcqSDPkPHXtRww7cWTJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 7.1 449/518] selftests/landlock: Increase default audit socket timeout
-Date: Thu, 16 Jul 2026 15:31:57 +0200
-Message-ID: <20260716133057.668369229@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 7.1 450/518] KVM: arm64: nv: Avoid dereferencing NULL VNCR pseudo-TLB
+Date: Thu, 16 Jul 2026 15:31:58 +0200
+Message-ID: <20260716133057.690880054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -47,217 +45,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Marc Zyngier <maz@kernel.org>
 
-commit d8dfb4c7faa87c3e41a8678f38f136c2c7c036fa upstream.
+commit 4be6cbeb93d26994bd1827ddbce391e3c4395c8f upstream.
 
-matches_log_fs() and other audit_match_record() callers intermittently
-return -EAGAIN under heavy debug configs (KASAN, lockdep).  The audit
-record delivery pipeline is asynchronous: landlock_log_denial() queues
-the record to audit_queue, and kauditd_thread dequeues and delivers via
-netlink.  Under debug configs, kauditd scheduling between
-audit_log_end() and netlink_unicast() can exceed a syscall round trip
-(more than 1 usec), which was the value of the socket timeout used for
-the recvfrom() calls.
+VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions,
+and either can race against a vcpu not being onlined yet (no pseudo-TLB
+allocated). Similarly, the TLB might be invalid, and the invalidation
+should be skipped in this case.
 
-The observed failure [1] is an EAGAIN error code (-11) which means that
-the access record had not arrived within the 1 usec timeout of
-recvfrom().  The expected record does arrive, but only after
-matches_log_fs() has already returned.  It is then consumed by a later
-audit_count_records() call, making records.access == 1 instead of 0.
+Both kvm_invalidate_vncr_ipa() and kvm_invalidate_vncr_va() are
+expected to perform the same checks, except that the latter doesn't
+check for the allocation and blindly dereferences the pointer.
 
-Switch the default socket timeout to the slow value (1 second) so all
-audit_match_record() callers wait long enough for kauditd delivery, and
-lower it to the fast value (1 usec) only on the two paths that expect no
-record: audit_count_records() and the expected_domain_id == 0 probe in
-matches_log_domain_deallocated().  audit_init() drains stale records
-with the fast timeout (terminating on -EAGAIN once the backlog is empty)
-and switches to the patient default before returning.  1 second gives
-~10x margin over the observed maximum (~100 ms, while the happy path is
-~23 us).
+Solve this by introducing a new iterator built on top of the usual
+kvm_for_each_vcpu() that checks for both of the above conditions,
+and convert the two users to it.
 
-Rename the timeval constants to reflect their new roles:
-- audit_tv_dom_drop (1 second) -> audit_tv_default: default socket
-  timeout, patient enough for asynchronous kauditd delivery.
-- audit_tv_default (1 usec) -> audit_tv_fast: fast timeout for paths
-  that expect no record (drain, audit_count_records(), probes).
-
-Invert the conditional in matches_log_domain_deallocated().  Check
-setsockopt returns on both the lower and restore paths; preserve the
-first error via !err when the restore fails after a prior error so the
-actionable return code is not masked by a bookkeeping failure.
-
-Cc: Günther Noack <gnoack@google.com>
-Cc: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/r/aiUvSbrWndQeUPc8@v4bel
+Fixes: 4ffa72ad8f37 ("KVM: arm64: nv: Add S1 TLB invalidation primitive for VNCR_EL2")
 Cc: stable@vger.kernel.org
-Depends-on: 07c2572a8757 ("selftests/landlock: Skip stale records in audit_match_record()")
-Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
-Reported-by: Günther Noack <gnoack3000@gmail.com>
-Closes: https://lore.kernel.org/r/20260402.eb5c4e85f472@gnoack.org [1]
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202605111649.a8b30a62-lkp@intel.com
-Closes: https://lore.kernel.org/oe-lkp/202604300436.a07fae12-lkp@intel.com
-Tested-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://patch.msgid.link/20260513105112.140137-2-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Reviewed-by: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260607175745.297793-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/landlock/audit.h |   80 ++++++++++++++++++++++++-------
- 1 file changed, 63 insertions(+), 17 deletions(-)
+ arch/arm64/kvm/nested.c |   36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
---- a/tools/testing/selftests/landlock/audit.h
-+++ b/tools/testing/selftests/landlock/audit.h
-@@ -45,17 +45,25 @@ struct audit_message {
- 	};
- };
- 
--static const struct timeval audit_tv_dom_drop = {
-+static const struct timeval audit_tv_default = {
- 	/*
--	 * Because domain deallocation is tied to asynchronous credential
--	 * freeing, receiving such event may take some time.  In practice,
--	 * on a small VM, it should not exceed 100k usec, but let's wait up
--	 * to 1 second to be safe.
-+	 * Default socket timeout for audit_match_record() callers that expect a
-+	 * record to arrive.  Asynchronous kauditd delivery can exceed 1 usec
-+	 * under heavy debug configs (KASAN, lockdep), where kauditd_thread
-+	 * scheduling between audit_log_end() and netlink_unicast() takes longer
-+	 * than the previous 1 usec timeout. 1 second is a generous ceiling: on
-+	 * the happy path, kauditd delivers within dozens of usec.
- 	 */
- 	.tv_sec = 1,
- };
- 
--static const struct timeval audit_tv_default = {
-+static const struct timeval audit_tv_fast = {
-+	/*
-+	 * Fast timeout for paths that expect no record (audit_init() drain,
-+	 * audit_count_records(), probes).  Causes audit_recv() to return
-+	 * -EAGAIN once the socket buffer is empty, naturally terminating the
-+	 * read loop.
-+	 */
- 	.tv_usec = 1,
- };
- 
-@@ -334,8 +342,13 @@ static int __maybe_unused matches_log_do
-  * Matches a domain deallocation record.  When expected_domain_id is non-zero,
-  * the pattern includes the specific domain ID so that stale deallocation
-  * records from a previous test (with a different domain ID) are skipped by
-- * audit_match_record(), and the socket timeout is temporarily increased to
-- * audit_tv_dom_drop to wait for the asynchronous kworker deallocation.
-+ * audit_match_record(), waiting for the asynchronous kworker deallocation with
-+ * the default patient timeout.
-+ *
-+ * When expected_domain_id is zero, the caller is probing for any dealloc record
-+ * that may or may not arrive.  Temporarily lowers the socket timeout to
-+ * audit_tv_fast for this probe so it returns promptly when no record is
-+ * pending; restores audit_tv_default after.
-  */
- static int __maybe_unused
- matches_log_domain_deallocated(int audit_fd, unsigned int num_denials,
-@@ -361,16 +374,21 @@ matches_log_domain_deallocated(int audit
- 	if (log_match_len >= sizeof(log_match))
- 		return -E2BIG;
- 
--	if (expected_domain_id)
--		setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
--			   &audit_tv_dom_drop, sizeof(audit_tv_dom_drop));
-+	if (!expected_domain_id) {
-+		if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
-+			       &audit_tv_fast, sizeof(audit_tv_fast)))
-+			return -errno;
-+	}
- 
- 	err = audit_match_record(audit_fd, AUDIT_LANDLOCK_DOMAIN, log_match,
- 				 domain_id);
- 
--	if (expected_domain_id)
--		setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
--			   sizeof(audit_tv_default));
-+	if (!expected_domain_id) {
-+		if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
-+			       &audit_tv_default, sizeof(audit_tv_default)) &&
-+		    !err)
-+			err = -errno;
-+	}
- 
- 	return err;
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -904,9 +904,21 @@ static void invalidate_vncr(struct vncr_
+ 		clear_fixmap(vncr_fixmap(vt->cpu));
  }
-@@ -387,6 +405,11 @@ struct audit_records {
-  * audit_init() and after the preceding audit_match_record() call.  Allocation
-  * records are emitted synchronously during landlock_log_denial() in the current
-  * test's syscall context, so only those are counted in records->domain.
-+ *
-+ * Temporarily lowers SO_RCVTIMEO to audit_tv_fast for the read loop: this is a
-+ * "no record expected" path that should terminate on the first -EAGAIN.  The
-+ * default patient timeout is restored on exit for subsequent
-+ * audit_match_record() callers.
-  */
- static int audit_count_records(int audit_fd, struct audit_records *records)
+ 
++/*
++ * VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions, and
++ * either can race against a vcpu not being onlined yet (no pseudo-TLB
++ * allocated). Similarly, the TLB might be invalid.  Skip those, as they
++ * obviously don't participate in the invalidation at this stage.
++ */
++#define kvm_for_each_vncr_tlb(idx, vcpup, tlbp, kvm)	\
++	kvm_for_each_vcpu(idx, vcpup, kvm)		\
++		if (((tlbp) = vcpup->arch.vncr_tlb) &&	\
++		    (tlbp)->valid)
++
+ static void kvm_invalidate_vncr_ipa(struct kvm *kvm, u64 start, u64 end)
  {
-@@ -403,6 +426,12 @@ static int audit_count_records(int audit
- 	records->access = 0;
- 	records->domain = 0;
+ 	struct kvm_vcpu *vcpu;
++	struct vncr_tlb *vt;
+ 	unsigned long i;
  
-+	if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_fast,
-+		       sizeof(audit_tv_fast))) {
-+		err = -errno;
-+		goto out;
-+	}
-+
- 	do {
- 		memset(&msg, 0, sizeof(msg));
- 		err = audit_recv(audit_fd, &msg);
-@@ -429,6 +458,10 @@ static int audit_count_records(int audit
- 	} while (true);
+ 	lockdep_assert_held_write(&kvm->mmu_lock);
+@@ -914,24 +926,9 @@ static void kvm_invalidate_vncr_ipa(stru
+ 	if (!kvm_has_feat(kvm, ID_AA64MMFR4_EL1, NV_frac, NV2_ONLY))
+ 		return;
  
- out:
-+	if (setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
-+		       sizeof(audit_tv_default)) &&
-+	    !err)
-+		err = -errno;
- 	regfree(&dealloc_re);
- 	return err;
- }
-@@ -449,9 +482,9 @@ static int audit_init(void)
- 	if (err)
- 		goto err_close;
+-	kvm_for_each_vcpu(i, vcpu, kvm) {
+-		struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
++	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
+ 		u64 ipa_start, ipa_end, ipa_size;
  
--	/* Sets a timeout for negative tests. */
--	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
--			 sizeof(audit_tv_default));
-+	/* Uses the fast timeout to drain stale records below. */
-+	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_fast,
-+			 sizeof(audit_tv_fast));
- 	if (err) {
- 		err = -errno;
- 		goto err_close;
-@@ -467,6 +500,19 @@ static int audit_init(void)
- 	while (audit_recv(fd, NULL) == 0)
- 		;
+-		/*
+-		 * Careful here: We end-up here from an MMU notifier,
+-		 * and this can race against a vcpu not being onlined
+-		 * yet, without the pseudo-TLB being allocated.
+-		 *
+-		 * Skip those, as they obviously don't participate in
+-		 * the invalidation at this stage.
+-		 */
+-		if (!vt)
+-			continue;
+-
+-		if (!vt->valid)
+-			continue;
+-
+ 		ipa_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift,
+ 							    vt->wr.level));
+ 		ipa_start = vt->wr.pa & ~(ipa_size - 1);
+@@ -961,17 +958,14 @@ static void invalidate_vncr_va(struct kv
+ 			       struct s1e2_tlbi_scope *scope)
+ {
+ 	struct kvm_vcpu *vcpu;
++	struct vncr_tlb *vt;
+ 	unsigned long i;
  
-+	/*
-+	 * Restores the default timeout for audit_match_record() callers that
-+	 * expect a record to arrive.  Paths that expect no record restore the
-+	 * fast timeout locally (audit_count_records(), the expected_domain_id
-+	 * == 0 probe in matches_log_domain_deallocated()).
-+	 */
-+	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
-+			 sizeof(audit_tv_default));
-+	if (err) {
-+		err = -errno;
-+		goto err_close;
-+	}
-+
- 	return fd;
+ 	lockdep_assert_held_write(&kvm->mmu_lock);
  
- err_close:
+-	kvm_for_each_vcpu(i, vcpu, kvm) {
+-		struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
++	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
+ 		u64 va_start, va_end, va_size;
+ 
+-		if (!vt->valid)
+-			continue;
+-
+ 		va_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift,
+ 							   vt->wr.level));
+ 		va_start = vt->gva & ~(va_size - 1);
 
 
