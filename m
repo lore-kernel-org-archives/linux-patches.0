@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BDA305692;
-	Thu, 16 Jul 2026 13:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA22C42982C;
+	Thu, 16 Jul 2026 13:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209799; cv=none; b=a0HuM/Zv/00l2Fa7hbUs2czUodImIhiHwI0juOHuBtfktQRT5uUE3DuSz4MxerhTR7G0nJoNAFbDxOkpaVOr/66YSKNQCSbagsPV8soxczu/e2r97KfMyC8xXoefC1flz0LGTPPc7jzU8EDKoyM0dEqinYSDXAFpuXcCQ3ZR4go=
+	t=1784209801; cv=none; b=MjG5vl55BVdrNYJKgOo2GE9BAZylmItjxfgLhLuhwQsi+jE8TIIX4+4XUHE5166clU8PYw5jWPjyyw23f6/IkuO3svflS6+tB34EzbdIDM08ldhF4X0K9ggSyXqscd3y1MkXLtQrTfAnoBDzXJ1o0cnAtbLyi+Ex2ntyrd/0Ypc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209799; c=relaxed/simple;
-	bh=bEYtAwIdIwggsXEegotaKOfbqg9IwVfJvaemvePGmQI=;
+	s=arc-20240116; t=1784209801; c=relaxed/simple;
+	bh=UIDMUfhLhouup9ffkuZTMtuCLQkkYEGNblPMkKVHp5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKf0eqY2ZfPbdmAu+WxJCn/6D4Qe1zmQGqMD4GsXespYIAiNJi13uMTao3bMGrb65qsscr5MTGoFrxqj/Ab3/YX0JiBD3Q8MRwQbpj4SgI50BplYmguDHf43nsdWh5kF5ryCGkE2BoFhak6RC4gi/heyQf2eUUsL7Z51fH6stYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuhH0TqM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X7/8KY3i50c7G9bZ/TKswJUCdh76yc14QVQZafPo34An62HXFH2TncstB/Alh2wMxOoLjrpvGqt4Gk07VUqW1T+LMi6yYxF4IAfAw9dL7a5YBxHQr+L285FRBunxK+STQRduxqkqlgYI0WHDxIQzCDvxSDuM0oZ4mYSgsp/2T3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKRx6aGC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuhH0TqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B061F00A3A;
-	Thu, 16 Jul 2026 13:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKRx6aGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E4F1F000E9;
+	Thu, 16 Jul 2026 13:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209796;
-	bh=T+0WeNfWuaHucDsut+a+Z2uWa+9r6aGoxV6WUAwdBP4=;
+	s=korg; t=1784209799;
+	bh=UbP450/oBWdZ3dqSmoXjlu37XDPPC+wqEPCblchoZlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VuhH0TqMBsWCY6NlB9O4fa8jKFcb7Il4+KV9L8sGl4RUFTOxfuQr5BMcxBEtJfyCW
-	 KTMts36+FOrZ7u9BNB8BV/WGjKo4WKMF+EnBmYunsvKUGQtCi3f7DtvkYYWavhT6KA
-	 iABr7EMOnw+lK7cTc+2rHUePUiSlkqGeScunH1Hk=
+	b=sKRx6aGC0fZVc/Bh8uMdAiQXja7LOkdLaPMMYmq+WzAumsjP5zgLVFlT3K1j8gCcq
+	 1hxDmKMScN5JdlhI0midQ6+yUIf6M8c7WDtg7p1FSdqhaHhrPcNsIRj0eZ5LHg4TH2
+	 LbfQpwVpC1nBlmsOGzsiinYgZEZeaY9eMAeSazwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.1 323/518] USB: ulpi: fix memory leak on registration failure
-Date: Thu, 16 Jul 2026 15:29:51 +0200
-Message-ID: <20260716133054.884681328@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>
+Subject: [PATCH 7.1 306/518] usb: gadget: f_printer: take kref only for successful open
+Date: Thu, 16 Jul 2026 15:29:34 +0200
+Message-ID: <20260716133054.518133606@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,76 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 8af6812795869a66e9b26044f455b13deecdb69c upstream.
+commit 30adce93d5c4a5a1ec29d9249e3fdfcc391d406b upstream.
 
-The allocated device name is never freed on early ULPI device
-registration failures.
+printer_open() returns -EBUSY when the character device is already
+open, but it increments dev->kref regardless of the return value. VFS
+does not call ->release() for a failed open, so every rejected second
+open permanently leaks one reference.
 
-Fix this by initialising the device structure earlier and releasing the
-initial reference whenever registration fails.
+Move kref_get() into the successful-open branch.
 
-Fixes: 289fcff4bcdb ("usb: add bus type for USB ULPI")
+Fixes: e8d5f92b8d30 ("usb: gadget: function: printer: fix use-after-free in __lock_acquire")
 Cc: stable <stable@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260608145803.69360-1-johan@kernel.org
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/80295742B820DA9B+20260626064617.4090626-1-raoxu@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/common/ulpi.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/usb/gadget/function/f_printer.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -281,28 +281,24 @@ static int ulpi_register(struct device *
- 	ulpi->dev.parent = dev; /* needed early for ops */
- 	ulpi->dev.bus = &ulpi_bus;
- 	ulpi->dev.type = &ulpi_dev_type;
-+
-+	device_initialize(&ulpi->dev);
-+
- 	dev_set_name(&ulpi->dev, "%s.ulpi", dev_name(dev));
+--- a/drivers/usb/gadget/function/f_printer.c
++++ b/drivers/usb/gadget/function/f_printer.c
+@@ -363,12 +363,11 @@ printer_open(struct inode *inode, struct
+ 		ret = 0;
+ 		/* Change the printer status to show that it's on-line. */
+ 		dev->printer_status |= PRINTER_SELECTED;
++		kref_get(&dev->kref);
+ 	}
  
- 	ACPI_COMPANION_SET(&ulpi->dev, ACPI_COMPANION(dev));
+ 	spin_unlock_irqrestore(&dev->lock, flags);
  
- 	ret = ulpi_of_register(ulpi);
--	if (ret) {
--		kfree(ulpi);
-+	if (ret)
- 		return ret;
--	}
- 
- 	ret = ulpi_read_id(ulpi);
--	if (ret) {
--		of_node_put(ulpi->dev.of_node);
--		kfree(ulpi);
-+	if (ret)
- 		return ret;
--	}
- 
--	ret = device_register(&ulpi->dev);
--	if (ret) {
--		put_device(&ulpi->dev);
-+	ret = device_add(&ulpi->dev);
-+	if (ret)
- 		return ret;
--	}
- 
- 	root = debugfs_create_dir(dev_name(&ulpi->dev), ulpi_root);
- 	debugfs_create_file("regs", 0444, root, ulpi, &ulpi_regs_fops);
-@@ -334,9 +330,10 @@ struct ulpi *ulpi_register_interface(str
- 	ulpi->ops = ops;
- 
- 	ret = ulpi_register(dev, ulpi);
--	if (ret)
-+	if (ret) {
-+		put_device(&ulpi->dev);
- 		return ERR_PTR(ret);
+-	kref_get(&dev->kref);
 -
-+	}
- 
- 	return ulpi;
+ 	return ret;
  }
+ 
 
 
