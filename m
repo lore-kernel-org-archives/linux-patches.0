@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CE822301;
-	Thu, 16 Jul 2026 13:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4554E3D953E;
+	Thu, 16 Jul 2026 13:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210204; cv=none; b=mKYblocaJa385QeVBe/up/huYZ37tQ2dil0YpdDzcNy5pNByQ5tfcb2XBfp4dxYrKOpnswZ46jM7hvyWIK0XuDwzNyz5olOB0UtZBbdWrPJhPrN19Xo8h7gauXNYqED7gddgw5H8pOq0zcQPO5cSmId1OEbYwzMaoHL2Yml7EX4=
+	t=1784210207; cv=none; b=k9UAlVWkYgBPNxZupU5H55tmMIcUXQOV9EQ0TonKe9XbQlbVCmUQYOmGi1z0rJeunpBZ2HTdcO9fTtw8hzlxykV/Wr5Ju9h+wtSSSewv+2bTPpHo64aiESXeFLynBRlB0t6enUngg2ZaRPf9g7P4Dt/Q8t+uF6+0TlWWvyOgvIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210204; c=relaxed/simple;
-	bh=GLSrHbnl3USbfWu/cCutoDW7cPwAYQbB058RkMpMVSw=;
+	s=arc-20240116; t=1784210207; c=relaxed/simple;
+	bh=BTqUkVQ2QbRw9kh1enpRJFRR2qLKd5QxVoqCWZSwAL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cdt2rU+moPre7RNRaXfilwelamn1yyn1NI93yDnxK+q39j9+Zw4kaRZQpHxJXSXg9Yrj4iYFVM2W2TSAyrvK4vmi3iF2p/UDZpsp77Uxug0ugwko6ypelEt8sOwl3SXTxeOXFcOouaF8j0YLXWf8/mTv+rsaZg32nGULIA4mTNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3B4goPc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OtF6EPAvBwU6Z/cmEFhttusmGMyTN++lu6kO+CbVYDaCDK66M5rUj3v6dFlQAuWRU6L2xHpmr9S62U1cov4pVtw6imapFmXjyIFYNjz6UJfKhStOyZQ1/CxC6AUYbxXtbZ/8g4zZGW9yNWNY3DC17BGopr7w/04SRlKTdEwgDYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phdpvdgn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3B4goPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173BA1F000E9;
-	Thu, 16 Jul 2026 13:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phdpvdgn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5991F000E9;
+	Thu, 16 Jul 2026 13:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210203;
-	bh=CKWG6vfaQlvvuXhg9bm9OYPfHBWRbOoaRhD5H7368Sc=;
+	s=korg; t=1784210206;
+	bh=1PirFdHn2lZOeofGMKhbEv0HmmuQEzNNkhb2F8+yGUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A3B4goPckSZdDZlLIvmuPjQZkPd70SYvOQPNxAlkGsZNs4x0Ma7GzMybytnNDG7iq
-	 okPQSbfx6kKFDc/gt6Zg97Atuq0DgYbSMgeNpi4iso/2e7c0Vj25mMz9/NWkjTQSCf
-	 L7usv3TXqJrKScg8VjLEE5D5hi983en9rZFji6P4=
+	b=phdpvdgnW8xWTJsyXj5aZNfdC5+ao+78TI8orgo7l8MCkdO7QK3TaQ1FxIRZOHhyJ
+	 nytFRFF2rGwsjIDm8sL7hHUjlcVNXjDsjFY96NF+SZ/KWstl6DZq1SkruxdrLPzf8U
+	 jHTyn+1jdquI/4xrPcGx/khSyCtYx1Bsas0aDVWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	=?UTF-8?q?Guillermo=20Rodr=C3=ADguez?= <guille.rodriguez@gmail.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.1 476/518] i2c: davinci: Unregister cpufreq notifier on probe failure
-Date: Thu, 16 Jul 2026 15:32:24 +0200
-Message-ID: <20260716133058.261917336@linuxfoundation.org>
+Subject: [PATCH 7.1 477/518] i2c: stm32f7: truncate clock period instead of rounding it
+Date: Thu, 16 Jul 2026 15:32:25 +0200
+Message-ID: <20260716133058.283677305@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -45,51 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Guillermo Rodríguez <guille.rodriguez@gmail.com>
 
-commit e43f32816a1b1fe5a86279411626fe3a9be56d45 upstream.
+commit 111bb7f9f4a90b32e495d70a607c67b137f3074a upstream.
 
-davinci_i2c_probe() registers a cpufreq transition notifier before adding
-the I2C adapter.  If i2c_add_numbered_adapter() fails, the probe error path
-releases the device resources without unregistering the notifier.
+stm32f7_i2c_compute_timing() derives the I2C clock source period
+(i2cclk) with DIV_ROUND_CLOSEST, which may round it up. When the
+period is overestimated, all timings computed from it (SCLDEL,
+SDADEL, SCLL, SCLH) come out shorter on the wire than calculated,
+and the resulting bus rate can exceed the requested speed, violating
+the I2C specification minimums for tLOW and tHIGH.
 
-Add a dedicated error path to unregister the cpufreq notifier after
-i2c_add_numbered_adapter() fails.
+For example, with a 104.45 MHz clock source (e.g. PCLK1, the
+reset-default I2C clock source on STM32MP1), i2cclk is rounded from
+9.574 ns up to 10 ns. Requesting a 400 kHz fast mode bus with
+72/27 ns rise/fall times and no analog/digital filters then produces
+an actual bus rate of 415.6 kHz with tLOW = 1254 ns, violating both
+the 400 kHz maximum rate and the 1300 ns tLOW minimum of the
+specification.
 
-Fixes: 82c0de11b734 ("i2c: davinci: Add cpufreq support")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Cc: <stable@vger.kernel.org> # v2.6.36+
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Truncate the period instead, so that it can only be underestimated.
+The error then falls on the safe side: the programmed timings come
+out slightly longer than computed and the bus runs marginally below
+the target rate (375.3 kHz in the example above) while meeting the
+specification.
+
+i2cbus is left rounded-to-closest: it is only used as the target of
+the clk_error comparison and is never multiplied into the programmed
+timings, so nearest rounding remains accurate there.
+
+Fixes: aeb068c57214 ("i2c: i2c-stm32f7: add driver")
+Signed-off-by: Guillermo Rodríguez <guille.rodriguez@gmail.com>
+Cc: <stable@vger.kernel.org> # v4.14+
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Reviewed-by: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260610030513.2651018-1-haoxiang_li2024@163.com
+Link: https://lore.kernel.org/r/20260611104857.242153-1-guille.rodriguez@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-davinci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-stm32f7.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-davinci.c
-+++ b/drivers/i2c/busses/i2c-davinci.c
-@@ -818,12 +818,14 @@ static int davinci_i2c_probe(struct plat
- 	adap->nr = pdev->id;
- 	r = i2c_add_numbered_adapter(adap);
- 	if (r)
--		goto err_unuse_clocks;
-+		goto err_cpufreq;
- 
- 	pm_runtime_put_autosuspend(dev->dev);
- 
- 	return 0;
- 
-+err_cpufreq:
-+	i2c_davinci_cpufreq_deregister(dev);
- err_unuse_clocks:
- 	pm_runtime_dont_use_autosuspend(dev->dev);
- 	pm_runtime_put_sync(dev->dev);
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -464,8 +464,13 @@ static int stm32f7_i2c_compute_timing(st
+ {
+ 	struct stm32f7_i2c_spec *specs;
+ 	u32 p_prev = STM32F7_PRESC_MAX;
+-	u32 i2cclk = DIV_ROUND_CLOSEST(NSEC_PER_SEC,
+-				       setup->clock_src);
++	/*
++	 * Truncate instead of rounding to closest: if the clock period is
++	 * overestimated, the computed SCL timings will come out shorter on
++	 * the wire, which can push the bus above the target rate and below
++	 * the spec's tLOW/tHIGH minimums.
++	 */
++	u32 i2cclk = NSEC_PER_SEC / setup->clock_src;
+ 	u32 i2cbus = DIV_ROUND_CLOSEST(NSEC_PER_SEC,
+ 				       setup->speed_freq);
+ 	u32 clk_error_prev = i2cbus;
 
 
