@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9F841F7CC;
-	Thu, 16 Jul 2026 14:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5678742255C;
+	Thu, 16 Jul 2026 14:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210464; cv=none; b=YkBV857dJ8dAH29eAAeOnvrUIcn1TWKvbuEiIjyoccMriljruvql4VIcERjS03j6eHr830cofaix6hDSsb6FujtFt8qY/L41TyOck9F+8cc1tZy3At9RcL68WHOA1NORI6+mnk4fgcxtFpSgPGisufVbqH046X9EP3lgGQhBNm0=
+	t=1784210467; cv=none; b=lqnQsyrbhAh+QQ+EZ3c05S1IWZmHTuslacd5VvXqeCuMfy/sTrcygXVOCZkoPzKTuU+wBZJDHAyYw0tEz+xcuRDlXNM3qBxtJPWJkEnxrQDKNZrTScnUiwmAVDhAdKNFjwTlIqU/szrMZaKGKb1MsHS4vThE+xZWdizcIke0Flg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210464; c=relaxed/simple;
-	bh=5psE3hiTk+05dIVDGDI0l0Tc8fWwR8SWBxjC10zi71Y=;
+	s=arc-20240116; t=1784210467; c=relaxed/simple;
+	bh=T+Sm98oz0H6+sJhBqAH+42O/N8eiT3VT5ysLG+WRAgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DaTMVIIR/wvhqavIGZGeU+gitASd3ZHuh9+NxPBSy15NzadZ8hMCU1rvByOihLgyTvJ2LV+WEUYnpG0oJiBKYxoI5CB+kMVuEKFVg6v+aMYRjIX4ae2tv2pPR17UrN7tPs2FSdkesH/CBrd15jFtlWG17i6OFJiNKGW/aSStl1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cm5IABIj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q+fR0RnVCQagsN+iaYhiTyPeg6BhZIRuAqFUF2kBuPh9aURWRQ4foknPxWMpok8VlCq4/pkxsD3q4FyrDtc8wEFpMBbZopUyw87dTvHumzfjpKdYg+gE2kQz1sXmtN0d8z5b83WZNgP1gMQFa75o6AOxRLAEE/ul1JMlPss9+fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPyw1Ywc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cm5IABIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F9A1F00A3A;
-	Thu, 16 Jul 2026 14:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPyw1Ywc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCA71F000E9;
+	Thu, 16 Jul 2026 14:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210463;
-	bh=GGtcStnEl/aiYGwYduP+WnrDkKzdaKvHdkDFoD52iUQ=;
+	s=korg; t=1784210466;
+	bh=Dj528zfr3c2Vap8NMEA8VPoKXccp4begtjTm/FRb/Hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cm5IABIjCbYhivuB8B6jvEZKfvuB6tYRltfVpjb0B1DAOviBnZ0YNIg1bptzDESlV
-	 T48f2fKrLWFWu+DAcOsM0Or1yCoZ2gsjLv/PSJogDr7aDowQP0Jic8ozH5O/xrMWZf
-	 QraMCFM6uhnchazOj7vbKHkFqbxKni9b6k9lp/I8=
+	b=XPyw1YwcAGtedR46woBlJt7vSFi5ZqyV4YKLzB6je3xlwEKbCldS9w5htGkEN+8tV
+	 uT1mT3whB+Ice9xjLNHZ/v/75ShB7CZW6uUsX7TWCnzbwOermilo5JKyHZpELor4zS
+	 n/8VxgAMxLG4h27PDuJ9NVE/LUfbANpfA619WfzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 058/480] iio: adc: ti-ads124s08: Return reset GPIO lookup errors
-Date: Thu, 16 Jul 2026 15:26:45 +0200
-Message-ID: <20260716133045.968086383@linuxfoundation.org>
+Subject: [PATCH 6.18 059/480] iio: backend: fix uninitialized data in debugfs
+Date: Thu, 16 Jul 2026 15:26:46 +0200
+Message-ID: <20260716133045.988858941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Dan Carpenter <error27@gmail.com>
 
-commit 7dc4de2aa6316f1d044cde21f5acfec5f3ec6b47 upstream.
+commit a6e8b14a4897d0b6df9744f33d0a30e6b92368eb upstream.
 
-devm_gpiod_get_optional() returns NULL when the optional GPIO is absent,
-but returns an ERR_PTR when the GPIO provider lookup fails, including
-probe deferral.
+If the *ppos value is non-zero then simple_write_to_buffer() will not
+initialize the start of the buf[] buffer.  Non-zero ppos values aren't
+going to work at all.  Check for that at the start of the function and
+return -ENOSPC.
 
-Probe currently logs the ERR_PTR case as if the reset GPIO were simply
-absent and keeps the error pointer in reset_gpio. Later ads124s_reset()
-treats any non-NULL reset_gpio as a valid descriptor and passes it to
-gpiod_set_value_cansleep().
-
-Return the lookup error instead of retaining the ERR_PTR.
-
-Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
-Cc: stable@vger.kernel.org
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Fixes: cdf01e0809a4 ("iio: backend: add debugFs interface")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-ads124s08.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/industrialio-backend.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ti-ads124s08.c
-+++ b/drivers/iio/adc/ti-ads124s08.c
-@@ -321,7 +321,8 @@ static int ads124s_probe(struct spi_devi
- 	ads124s_priv->reset_gpio = devm_gpiod_get_optional(&spi->dev,
- 						   "reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(ads124s_priv->reset_gpio))
--		dev_info(&spi->dev, "Reset GPIO not defined\n");
-+		return dev_err_probe(&spi->dev, PTR_ERR(ads124s_priv->reset_gpio),
-+				     "Failed to get reset GPIO\n");
+--- a/drivers/iio/industrialio-backend.c
++++ b/drivers/iio/industrialio-backend.c
+@@ -155,7 +155,7 @@ static ssize_t iio_backend_debugfs_write
+ 	ssize_t rc;
+ 	int ret;
  
- 	ads124s_priv->chip_info = &ads124s_chip_info_tbl[spi_id->driver_data];
+-	if (count >= sizeof(buf))
++	if (*ppos != 0 || count >= sizeof(buf))
+ 		return -ENOSPC;
  
+ 	rc = simple_write_to_buffer(buf, sizeof(buf) - 1, ppos, userbuf, count);
 
 
