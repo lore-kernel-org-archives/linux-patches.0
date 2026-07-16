@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C058032A3FF;
-	Thu, 16 Jul 2026 13:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667B6322A1F;
+	Thu, 16 Jul 2026 13:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210196; cv=none; b=UBuUMOwM+dq2K7loMFq4u9aJ817ZIhMzyyLkL7c3xyovF+X1ah21EXqmWu/CLfVL0yuDS0uIQHutNrQzHT5NlgCGYfk9FJEAyjDM+T0v9FSy4vfgglFYZ7au8SHw4FRW2TMlke8Ob/ONWrOPBZkmCvgluQqMvG27CAsfER5qnr8=
+	t=1784210199; cv=none; b=FgqdaAnfPYChEmK8C3rKz5BoFSaRg98qxDfbzoLArINU3BVxy9gSC/JEWFE1JQcSiG4X8n8lE+8oxuaSf6J9LibCNKFdbEMMFDyQ5FcbTfwJWfEp6r3l83fK0pCt8INu6b2QWI12tTakvgq77uyIzEY5sgyxW3Ymgoa29VFTL+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210196; c=relaxed/simple;
-	bh=cdYB/BtnpMj3w5WOyGjLtk5lSBbBxKcLwF3KeEc3Aeg=;
+	s=arc-20240116; t=1784210199; c=relaxed/simple;
+	bh=vVnfzqfRA83k58VrUJJjywyabXEyrQ/FFxgH81RG4qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mk9Ygfp9lCgYsk8slrtTUsyeSubcGblH3LzL+EUE9pFhayT0E3oRz1uW5spLIaUR2SlYVnXVW/Wd1+0GGCeT0HpE63HBZGwnhCWaI24OXqa3FtZajzpkjeC9Slq5DE2ObMydQFHekzTD/paEEoC7VVEfMfm3hb4jCR57Gi+7HFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qr1L7Ugp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gT5iOGcnA/PvSnOZy5OnEL6RShVRxL0hZUHsi3XQUEnbAiC+iE1HNlgHWilDhdV9j80cOMueZz4U9vz5e0yE6SvRkQ4Y2+bR6UqZs+zCuE0aj3PGwqmgIn4R8jrmnRBgAvKnnDNPYZ6qq+8VgfXgMk3J4of4j5nI44PkoSEQLxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrCn1snw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qr1L7Ugp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E481F000E9;
-	Thu, 16 Jul 2026 13:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrCn1snw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7381F000E9;
+	Thu, 16 Jul 2026 13:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210195;
-	bh=KTyzgor69titnqXiipK4w+A6/b7daK8rMC+9CwbTz8Q=;
+	s=korg; t=1784210198;
+	bh=xabEY3fByJIYVHgdGp4FA6EJCXIfYYF7+PhKUqfTuig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qr1L7UgpQJsZLQf/ucOpZQt0gatQ1XK94K4t/ZHyGsZSmjSxzU+KLVQbBMiCwRj6c
-	 b/W1lz1dE+8fJ04gJOX6Sn8a2Q8AhY4yZcbV7U97Rkps7Lhugf5uuZAn3SLIA8zDvH
-	 OQq03WoHuZEGUjUnUltJKYIDXF3ePp59ogonLnFI=
+	b=JrCn1snwFwnwSVNSOu6SVDYVfXltQuDrnQGqhVQQRfsF6FHpsVlckTf5U0xEB1KmT
+	 IMQnQ2l5jabGO0RccmNFKrJDmpu8lSX8WG9GNIdVXAEU7u2vUzTPdqw5pT9XRlKOwc
+	 zCioRy5yGtP8czN9+DID0EJ3eQHw83HWu8+rt7vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.1 473/518] i2c: core: fix adapter debugfs creation
-Date: Thu, 16 Jul 2026 15:32:21 +0200
-Message-ID: <20260716133058.194901203@linuxfoundation.org>
+	Jean Delvare <khali@linux-fr.org>,
+	Johan Hovold <johan@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 7.1 474/518] i2c: core: fix adapter deregistration race
+Date: Thu, 16 Jul 2026 15:32:22 +0200
+Message-ID: <20260716133058.216700231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,78 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 07d5fb537928aad4369aaff0cbae73ba38a719af upstream.
+commit b1a58ed9eab146b36f41a55db8f5d7ce9fdedf3f upstream.
 
-Clients can be registered from bus notifier callbacks so the debugfs
-directory needs to be created before registering the adapter as clients
-use that directory as their debugfs parent.
+Adapters can be looked up by their id using i2c_get_adapter() which
+takes a reference to the embedded struct device.
 
-Move debugfs creation before adapter registration to avoid having
-clients create their debugfs directories in the debugfs root (which is
-also more likely to fail due to name collisions).
+Remove the adapter from the IDR before tearing it down during
+deregistration (and on registration failure) to make sure its resources
+are not accessed after having been freed (e.g. the device name).
 
-Note that failure to allocate the adapter name must now be handled
-explicitly as debugfs_create_dir() cannot handle a NULL name (unlike
-device_add() which returns an error).
-
-Fixes: 73febd775bdb ("i2c: create debugfs entry per adapter")
-Cc: stable@vger.kernel.org	# 6.8
-Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fixes: 35fc37f81881 ("i2c: Limit core locking to the necessary sections")
+Cc: stable@vger.kernel.org	# 2.6.31
+Cc: Jean Delvare <khali@linux-fr.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/i2c/i2c-core-base.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 --- a/drivers/i2c/i2c-core-base.c
 +++ b/drivers/i2c/i2c-core-base.c
-@@ -1556,7 +1556,10 @@ static int i2c_register_adapter(struct i
- 		goto out_list;
- 	}
- 
--	dev_set_name(&adap->dev, "i2c-%d", adap->nr);
-+	res = dev_set_name(&adap->dev, "i2c-%d", adap->nr);
-+	if (res)
-+		goto err_remove_irq_domain;
-+
- 	adap->dev.bus = &i2c_bus_type;
- 	adap->dev.type = &i2c_adapter_type;
- 	device_initialize(&adap->dev);
-@@ -1578,14 +1581,14 @@ static int i2c_register_adapter(struct i
- 	idr_replace(&i2c_adapter_idr, adap, adap->nr);
- 	mutex_unlock(&core_lock);
- 
-+	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
-+
+@@ -1586,7 +1586,7 @@ static int i2c_register_adapter(struct i
  	res = device_add(&adap->dev);
  	if (res) {
  		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
--		goto err_put_adap;
-+		goto err_remove_debugfs;
+-		goto err_remove_debugfs;
++		goto err_replace_id;
  	}
  
--	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
--
  	res = i2c_setup_smbus_alert(adap);
- 	if (res)
- 		goto out_reg;
-@@ -1609,13 +1612,14 @@ static int i2c_register_adapter(struct i
- 
+@@ -1613,7 +1613,10 @@ static int i2c_register_adapter(struct i
  out_reg:
  	i2c_deregister_clients(adap);
--	debugfs_remove_recursive(adap->debugfs);
  	device_del(&adap->dev);
-+err_remove_debugfs:
-+	debugfs_remove_recursive(adap->debugfs);
+-err_remove_debugfs:
++err_replace_id:
++	mutex_lock(&core_lock);
++	idr_replace(&i2c_adapter_idr, NULL, adap->nr);
++	mutex_unlock(&core_lock);
+ 	debugfs_remove_recursive(adap->debugfs);
  err_put_adap:
  	init_completion(&adap->dev_released);
- 	put_device(&adap->dev);
- 	wait_for_completion(&adap->dev_released);
--
-+err_remove_irq_domain:
- 	i2c_host_notify_irq_teardown(adap);
- out_list:
+@@ -1802,6 +1805,8 @@ void i2c_del_adapter(struct i2c_adapter
+ 	/* First make sure that this adapter was ever added */
  	mutex_lock(&core_lock);
+ 	found = idr_find(&i2c_adapter_idr, adap->nr);
++	if (found == adap)
++		idr_replace(&i2c_adapter_idr, NULL, adap->nr);
+ 	mutex_unlock(&core_lock);
+ 	if (found != adap) {
+ 		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
 
 
