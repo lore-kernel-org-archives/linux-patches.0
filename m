@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748E44248D7;
-	Thu, 16 Jul 2026 14:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192B0424D44;
+	Thu, 16 Jul 2026 14:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211081; cv=none; b=jQ3o6FsgAD5GTY9H9ZE0Oni0kf31e+avK6kf7aI8UtPSi+F9XgACYr2oP4b/hVtvhhi48Zy4wX7gSz/OK/6U6gRJcoBGiSQRMXLdrNM80tME13LWOacgPrQGY5Noxn26rhxbQX0PK7qjMfV8bfgxykDD4rIB0YQ5U9K2VnQkHkM=
+	t=1784211084; cv=none; b=Es8AZty1x5E4bbnQL96pfhTR4aYip2UsbD0LNtRkdJTDvB5U/j+xT+sI6vEsY0VcPs55dFMKC03Q196rAf5yLNWfzhPT6kTYQfuof0kq2tQwl4QJqILNPHfdF21GtwzvIVwk4VNcx5P+JqQ2g1OKmZ28FSRHz5n7BwW4BSiiN+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211081; c=relaxed/simple;
-	bh=GFSLS0Iq/AvMGTWAgBTHltQ8wYjEO/PCn+PawU4Z6tM=;
+	s=arc-20240116; t=1784211084; c=relaxed/simple;
+	bh=kGJQg3rb8atDqh0b8V+QDWuKkomv279hQ+cb4ZRrIsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mE1Bwn+i2DLPgfTcRIZPfbCntu+oXiKdbxVWg7Vo9OA/jQY4x22GKkZhF7YpyegGEB79sj8guqo624ljaD5uzqKTE6cFNoyTeAN3dHX3UwNGdUKovkjV5UpONIb5CPw/apUbPGqsszAvU+w/u3p067Unh2EZ8jheDUlrKQivNB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPJiRpIC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1l6xFUsv9VYczEbXsv6U9d/29ED6w6GQKbxuEmO3eCbGXZ98xohJLAqDbAQBdfVGeT2MlPBNt8YYZ+m315A2NHkfkQfEG2Jt52+dsX7tLN943feCwhHC+R73QJNGLVFORI2CYFibclqIZF8edFGd+o1OKLaldnNQG5evkRwYF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTOaJbqd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPJiRpIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96B61F000E9;
-	Thu, 16 Jul 2026 14:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTOaJbqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDBF1F000E9;
+	Thu, 16 Jul 2026 14:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211080;
-	bh=gjqKbNj1VSn/NsG5oMahyJR/qqpP6F5maxtTd5s2q+g=;
+	s=korg; t=1784211083;
+	bh=KQNPUvI+cJu2E87g7qocvYeBy5qTpImKB50bw6LOfpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xPJiRpICsmPFO3d2/2HeQwvQRLdTVvU1mgEouT5v8v/AVcbjJKZClIM7ta2+oouzf
-	 bBOp6Ce5wrNQSCACoh25tPv7OYDTZdCLnA2jzWLPz27DYEmHz2SpYOakIYm2Mbeh/S
-	 cXlNjBk7Bwp7Z5ydsq0k7Ym2iosuJHlRwmkZ2VZw=
+	b=fTOaJbqdH6VcNK53kPV2U+pVPXavqn8hXrKGUxgG1ps9S2ZI3sHXleLALmXm8IpZ5
+	 DGKc1TrgycEW/8ctqlpgd6pwSrnro1BAZUFtoL3FgjF9jfBbcQmAjIc5AULlJrS7fA
+	 g7falDRChXgRaF47j6qobERkr/o1vYzgXhZSIK8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+ad2aac2febc3bedf0962@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Daniel Walker <dwalker@mvista.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 293/480] USB: ldusb: fix use-after-free on disconnect race
-Date: Thu, 16 Jul 2026 15:30:40 +0200
-Message-ID: <20260716133051.159743036@linuxfoundation.org>
+Subject: [PATCH 6.18 294/480] USB: iowarrior: fix use-after-free on disconnect
+Date: Thu, 16 Jul 2026 15:30:41 +0200
+Message-ID: <20260716133051.180541733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -53,133 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 19bdfc7b3c179331eafa423d87e1336f43bbfeb8 upstream.
+commit bc0e4f16c44e50daa0b1ea729934baa3b4815dee upstream.
 
-mutex_unlock() may access the mutex structure after releasing the lock
-and therefore cannot be used to manage lifetime of objects directly
-(unlike spinlocks and refcounts). [1][2]
+Submitted write URBs are not stopped on close() and therefore need to be
+stopped unconditionally on disconnect() to avoid use-after-free in the
+completion handler.
 
-Use a kref to release the driver data to avoid use-after-free in
-mutex_unlock() when release() races with disconnect().
-
-[1] a51749ab34d9 ("locking/mutex: Document that mutex_unlock() is
-                   non-atomic")
-[2] 2b9d9e0a9ba0 ("locking/mutex: Clarify that mutex_unlock(), and most
-                   other sleeping locks, can still use the lock object
-                   after it's unlocked")
-
-Fixes: ce0d7d3f575f ("usb: ldusb: ld_usb semaphore to mutex")
+Fixes: b5f8d46867ca ("USB: iowarrior: fix use-after-free after driver unbind")
+Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
+Reported-by: syzbot+ad2aac2febc3bedf0962@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/6a0ce39b.170a0220.39a13.0007.GAE@google.com/
 Cc: stable <stable@kernel.org>
-Cc: Daniel Walker <dwalker@mvista.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260622152612.116422-4-johan@kernel.org
+Link: https://patch.msgid.link/20260523170523.1074563-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/ldusb.c |   38 ++++++++++++++++++--------------------
- 1 file changed, 18 insertions(+), 20 deletions(-)
+ drivers/usb/misc/iowarrior.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/misc/ldusb.c
-+++ b/drivers/usb/misc/ldusb.c
-@@ -150,6 +150,7 @@ MODULE_PARM_DESC(min_interrupt_out_inter
+--- a/drivers/usb/misc/iowarrior.c
++++ b/drivers/usb/misc/iowarrior.c
+@@ -919,13 +919,15 @@ static void iowarrior_disconnect(struct
+ 	/* prevent device read, write and ioctl */
+ 	dev->present = 0;
  
- /* Structure to hold all of our device specific stuff */
- struct ld_usb {
-+	struct kref		kref;
- 	struct mutex		mutex;		/* locks this structure */
- 	struct usb_interface	*intf;		/* save off the usb interface pointer */
- 	unsigned long		disconnected:1;
-@@ -201,8 +202,10 @@ static void ld_usb_abort_transfers(struc
- /*
-  *	ld_usb_delete
-  */
--static void ld_usb_delete(struct ld_usb *dev)
-+static void ld_usb_delete(struct kref *kref)
- {
-+	struct ld_usb *dev = container_of(kref, struct ld_usb, kref);
++	/* write urbs are not stopped on close() so kill unconditionally */
++	usb_kill_anchored_urbs(&dev->submitted);
 +
- 	/* free data structures */
- 	usb_free_urb(dev->interrupt_in_urb);
- 	usb_free_urb(dev->interrupt_out_urb);
-@@ -355,6 +358,8 @@ static int ld_usb_open(struct inode *ino
- 		goto unlock_exit;
- 	}
- 
-+	kref_get(&dev->kref);
-+
- 	/* save device in the file's private structure */
- 	file->private_data = dev;
- 
-@@ -381,17 +386,8 @@ static int ld_usb_release(struct inode *
- 
- 	mutex_lock(&dev->mutex);
- 
--	if (dev->open_count != 1) {
--		retval = -ENODEV;
-+	if (dev->disconnected)
- 		goto unlock_exit;
--	}
--	if (dev->disconnected) {
--		/* the device was unplugged before the file was released */
--		mutex_unlock(&dev->mutex);
--		/* unlock here as ld_usb_delete frees dev */
--		ld_usb_delete(dev);
--		goto exit;
--	}
- 
- 	/* wait until write transfer is finished */
- 	if (dev->interrupt_out_busy)
-@@ -401,7 +397,7 @@ static int ld_usb_release(struct inode *
- 
- unlock_exit:
- 	mutex_unlock(&dev->mutex);
--
-+	kref_put(&dev->kref, ld_usb_delete);
- exit:
- 	return retval;
- }
-@@ -659,6 +655,8 @@ static int ld_usb_probe(struct usb_inter
- 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
- 	if (!dev)
- 		goto exit;
-+
-+	kref_init(&dev->kref);
- 	mutex_init(&dev->mutex);
- 	spin_lock_init(&dev->rbsl);
- 	dev->intf = intf;
-@@ -740,7 +738,7 @@ exit:
- 	return retval;
- 
- error:
--	ld_usb_delete(dev);
-+	kref_put(&dev->kref, ld_usb_delete);
- 
- 	return retval;
- }
-@@ -768,18 +766,18 @@ static void ld_usb_disconnect(struct usb
- 
- 	mutex_lock(&dev->mutex);
- 
--	/* if the device is not opened, then we clean up right now */
--	if (!dev->open_count) {
--		mutex_unlock(&dev->mutex);
--		ld_usb_delete(dev);
--	} else {
--		dev->disconnected = 1;
-+	dev->disconnected = 1;
-+
-+	if (dev->open_count) {
- 		/* wake up pollers */
- 		wake_up_interruptible_all(&dev->read_wait);
- 		wake_up_interruptible_all(&dev->write_wait);
--		mutex_unlock(&dev->mutex);
- 	}
- 
-+	mutex_unlock(&dev->mutex);
-+
-+	kref_put(&dev->kref, ld_usb_delete);
-+
- 	dev_info(&intf->dev, "LD USB Device #%d now disconnected\n",
- 		 (minor - USB_LD_MINOR_BASE));
- }
+ 	if (dev->opened) {
+ 		/* There is a process that holds a filedescriptor to the device ,
+ 		   so we only shutdown read-/write-ops going on.
+ 		   Deleting the device is postponed until close() was called.
+ 		 */
+ 		usb_kill_urb(dev->int_in_urb);
+-		usb_kill_anchored_urbs(&dev->submitted);
+ 		wake_up_interruptible(&dev->read_wait);
+ 		wake_up_interruptible(&dev->write_wait);
+ 		mutex_unlock(&dev->mutex);
 
 
