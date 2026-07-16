@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7767742376D;
-	Thu, 16 Jul 2026 14:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAC342901C;
+	Thu, 16 Jul 2026 14:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211334; cv=none; b=PYEw07JNA/PlFaDlAwE+FDTEYOFSJQqUn1CLBVLtr1X6aJkgqwe+8DnOr4HsSSmrqePaJXXOYMlH+v4DN4GV5iZp3kdASo6rgUS1qCjKBdm+23JHIO6GGriP0jgycXOI/YRPfnR/XqYwBGNcIXfhGpp18EzZKdfMW8Dt+H5EaTI=
+	t=1784211337; cv=none; b=MEhVZik+yMUsskiL4IcFRz0Pmel0ncg7pfFt7sPSGtA7d0lGTWOKDHshBjDX0Jufi7nkpU7xkcbGhRlypt3oYqXzzJOt9EP4ltlJk2+QmcwxQYVBgqDn2xKxsmHx0yFiqaJA50O/OVmpgEXdJGsC9sAoAVxZfE0UrAVBfRCPQzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211334; c=relaxed/simple;
-	bh=SCKC6CEPxTU6vvWKfwW0lgiXLlteVVplC9wYbcqEpQI=;
+	s=arc-20240116; t=1784211337; c=relaxed/simple;
+	bh=0pSEsu/LWjaLvR1F6EJ2WjNQ5ZS2CC1iQR+e1X31hUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GurycOzIUBwaZc+krrEqqYx6BwxSgEt+bgC9AEDX/H6BRagYDVO4xRjQMZvMu60O2+GYdxv27Cifbvu9K9nM2MMK7EqZfFD3C/1/AWsy2b4Y7PmR1LxZgfQeVidXmmk1w2U8k2AqHkWLzwv4HiOOQUcvW9D5UJQa3gbqrSKUd+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSU0dV6D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PNl+BRn+3sVRyMxHlTyz5AsRMf27wL9SZR7H6lAp4NQXl25XPm1EASdpdgg7zwDgPUXJvlLw+z9EBvpnn43NxCXfY1BRtHZG+jU2NyZJ5fISzZt73XAhIcVsFQ7XS49g80iPLMl1/qZJjbS1SRhLPtGfxUxf48VS+WwfvEBzoaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULOYAX8T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSU0dV6D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42261F000E9;
-	Thu, 16 Jul 2026 14:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULOYAX8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7868E1F000E9;
+	Thu, 16 Jul 2026 14:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211333;
-	bh=C8KwDOiqsgHsg3UUGaQiuKg6Rx81tSDc2zlz6vL7/Lw=;
+	s=korg; t=1784211336;
+	bh=uBw/rjbXjIUVlX41ZujI5IfzTKnlTNgrz8xfnQN2vW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OSU0dV6D3K3z7ABn1me2VtgHoUmrnCCqjQ76KlvTSy7Y0BSihRAHizAtem8mkL+h6
-	 BPLCelo36CwNccWeJcJ+86Ist+7ByKt0EvU/GQVwbNJWAxoI8En3W5z9BOe5bDv5UT
-	 1ZqAlxpPu7SYS+5kKasgmdl94vo+mklWkWJIWsss=
+	b=ULOYAX8TSS/T7wPEQTHTzeNYlU7fuHpYWOFtisD+iUoi0d/Qzb3T70t8FZnejSCwb
+	 lBUchzNe49ADV7SHICrxSHlOn7AH6HIIw/hjYOnKfnZazs9pXuPgzqaWoQWb7yR7J2
+	 wIYxOrRsLCzjuq3SHuYtBARPO1J64dMeqD2QIOYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Louvel <paul.louvel@bootlin.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 371/480] crypto: talitos - use dma_sync_single_for_cpu() before reading descriptor header
-Date: Thu, 16 Jul 2026 15:31:58 +0200
-Message-ID: <20260716133052.833424876@linuxfoundation.org>
+	Phil Reid <preid@electromag.com.au>,
+	Johan Hovold <johan@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.18 389/480] i2c: core: fix hang on adapter registration failure
+Date: Thu, 16 Jul 2026 15:32:16 +0200
+Message-ID: <20260716133053.214070044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -50,77 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Louvel <paul.louvel@bootlin.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit e17ff3d6ff907dc8406261e8fd3e1fc8a908f0f6 upstream.
+commit 3c7e164344e5bcf6f274bbf59a3274f5caad9bc1 upstream.
 
-In order to know if a descriptor has been processed by the device,
-the driver polls the FIFO to see if DESC_HDR_DONE is set on a descriptor
-header to confirm completion.
-The current code does not make sure that the CPU gets up to date data
-before reading the descriptor.
+Clients may be registered from bus notifier callbacks when the adapter
+is registered. On a subsequent error during registration, the adapter
+references taken by such clients prevent the wait for the references to
+be released from ever completing.
 
-Fix this by calling dma_sync_single_for_cpu() before reading memory
-written by the device.
+Fix this by refactoring client deregistration and deregistering also on
+late adapter registration failures.
 
-Cc: stable@vger.kernel.org
-Fixes: 58cdbc6d2263 ("crypto: talitos - fix hash on SEC1.")
-Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: f8756c67b3de ("i2c: core: call of_i2c_setup_smbus_alert in i2c_register_adapter")
+Cc: stable@vger.kernel.org	# 4.15
+Cc: Phil Reid <preid@electromag.com.au>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/talitos.c |   28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ drivers/i2c/i2c-core-base.c |   49 ++++++++++++++++++++++++++------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
---- a/drivers/crypto/talitos.c
-+++ b/drivers/crypto/talitos.c
-@@ -322,19 +322,31 @@ static int talitos_submit(struct device
- 	return -EINPROGRESS;
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -63,6 +63,7 @@
+ static DEFINE_MUTEX(core_lock);
+ static DEFINE_IDR(i2c_adapter_idr);
+ 
++static void i2c_deregister_clients(struct i2c_adapter *adap);
+ static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver);
+ 
+ static DEFINE_STATIC_KEY_FALSE(i2c_trace_msg_key);
+@@ -1609,6 +1610,7 @@ static int i2c_register_adapter(struct i
+ 	return 0;
+ 
+ out_reg:
++	i2c_deregister_clients(adap);
+ 	debugfs_remove_recursive(adap->debugfs);
+ 	init_completion(&adap->dev_released);
+ 	device_unregister(&adap->dev);
+@@ -1748,29 +1750,10 @@ static int __process_removed_adapter(str
+ 	return 0;
  }
  
--static __be32 get_request_hdr(struct talitos_request *request, bool is_sec1)
-+static __be32 get_request_hdr(struct device *dev,
-+			      struct talitos_request *request, bool is_sec1)
+-/**
+- * i2c_del_adapter - unregister I2C adapter
+- * @adap: the adapter being unregistered
+- * Context: can sleep
+- *
+- * This unregisters an I2C adapter which was previously registered
+- * by @i2c_add_adapter or @i2c_add_numbered_adapter.
+- */
+-void i2c_del_adapter(struct i2c_adapter *adap)
++static void i2c_deregister_clients(struct i2c_adapter *adap)
  {
- 	struct talitos_edesc *edesc;
+-	struct i2c_adapter *found;
+ 	struct i2c_client *client, *next;
  
--	if (!is_sec1)
-+	if (!is_sec1) {
-+		dma_sync_single_for_cpu(dev, request->dma_desc,
-+					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
-+
- 		return request->desc->hdr;
-+	}
- 
--	if (!request->desc->next_desc)
-+	if (!request->desc->next_desc) {
-+		dma_sync_single_for_cpu(dev, request->dma_desc,
-+					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
- 		return request->desc->hdr1;
+-	/* First make sure that this adapter was ever added */
+-	mutex_lock(&core_lock);
+-	found = idr_find(&i2c_adapter_idr, adap->nr);
+-	mutex_unlock(&core_lock);
+-	if (found != adap) {
+-		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
+-		return;
+-	}
 -
--	edesc = container_of(request->desc, struct talitos_edesc, desc);
--
--	return ((struct talitos_desc *)(edesc->buf + edesc->dma_len))->hdr1;
-+	} else {
-+		dma_sync_single_for_cpu(dev,
-+					be32_to_cpu(request->desc->next_desc),
-+					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
-+		edesc = container_of(request->desc, struct talitos_edesc, desc);
+-	i2c_acpi_remove_space_handler(adap);
+ 	/* Tell drivers about this removal */
+ 	mutex_lock(&core_lock);
+ 	bus_for_each_drv(&i2c_bus_type, NULL, adap,
+@@ -1796,6 +1779,32 @@ void i2c_del_adapter(struct i2c_adapter
+ 	 * them up properly, so we give them a chance to do that first. */
+ 	device_for_each_child(&adap->dev, NULL, __unregister_client);
+ 	device_for_each_child(&adap->dev, NULL, __unregister_dummy);
++}
 +
-+		return ((struct talitos_desc *)(edesc->buf + edesc->dma_len))
-+			->hdr1;
++/**
++ * i2c_del_adapter - unregister I2C adapter
++ * @adap: the adapter being unregistered
++ * Context: can sleep
++ *
++ * This unregisters an I2C adapter which was previously registered
++ * by @i2c_add_adapter or @i2c_add_numbered_adapter.
++ */
++void i2c_del_adapter(struct i2c_adapter *adap)
++{
++	struct i2c_adapter *found;
++
++	/* First make sure that this adapter was ever added */
++	mutex_lock(&core_lock);
++	found = idr_find(&i2c_adapter_idr, adap->nr);
++	mutex_unlock(&core_lock);
++	if (found != adap) {
++		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
++		return;
 +	}
- }
++
++	i2c_acpi_remove_space_handler(adap);
++
++	i2c_deregister_clients(adap);
  
- /*
-@@ -358,7 +370,7 @@ static void flush_channel(struct device
- 
- 		/* descriptors with their done bits set don't get the error */
- 		rmb();
--		hdr = get_request_hdr(request, is_sec1);
-+		hdr = get_request_hdr(dev, request, is_sec1);
- 
- 		if ((hdr & DESC_HDR_DONE) == DESC_HDR_DONE)
- 			status = 0;
+ 	/* device name is gone after device_unregister */
+ 	dev_dbg(&adap->dev, "adapter [%s] unregistered\n", adap->name);
 
 
