@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F264248D7;
-	Thu, 16 Jul 2026 13:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8949F42901C;
+	Thu, 16 Jul 2026 13:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209678; cv=none; b=Zegd/tLOtkQpKDdb2Obmupa7KT6FoAALw26hmwSx8IkQ1uBStpxtLPj27XSvupg2QCW1ozuRl6hRKGKBJhuHO4yoHNRnmrkp4JQdMUy+cMA/PX/fZ9zJd8RS14H418idmDDlIYOz7qDtHq1YzSZIw0Wy6gozNTVVgTlPwkEyeZY=
+	t=1784209685; cv=none; b=oSmSFA1cePzzqHjvoKM1dmu8DP+KWEu8JVj2xLL5JjHQ2+MBSn8YhUEDJ6GvxEKgBUp5FTyjNi+71GNzBXs5Zxi2sa4yl2bIWM9ju40ukGYCAQJflGySmgCc0mn6AS8ODjuy7bum2dhdedt4FLz8se1IiL5EAJDdIYQIgufOksY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209678; c=relaxed/simple;
-	bh=WPYvkXmsirfyjGe9yQWS3Potgna6ICoNv5VDYmMe7BM=;
+	s=arc-20240116; t=1784209685; c=relaxed/simple;
+	bh=1Zb8/Tpo4KswQ/EqtFyiqYRllsAC90diMBApEBfobrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dknpAbL2z/AtQ6UdKFG37tZ9oN532KPsNNRwMH3LLyAFjlzf8f0ZXrnXSIPhx1kHy4IXWCKOc62IngBiv+MN4UHxIyyrbvZ8OY8sQLKmzTGlHYwqBnihBznE1sDZvXhvOnjpbMBsqRZecHuKxmKgtEbia998/ZE30Swcsphowaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMuSw5wm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z23NdJbmPXb632HIHTsKjvV0wP9JlSZyO+Vbuk+vRXezS2oKVpfhbSGtReAiLc05nzdRInOWilamPR6vroLYKnB8Me2WEdXSqG1BE8EZeXkTPfMFBCzPmewlFhnXq2nWuJ67ZR4vl/rvaRi8nME5DbUu05aEi/9NedKmz4PEfig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5mEG0ef; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMuSw5wm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1485C1F00A3A;
-	Thu, 16 Jul 2026 13:47:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5mEG0ef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EF31F000E9;
+	Thu, 16 Jul 2026 13:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209665;
-	bh=aMwxmDoqodWVlti/AX4iwZTidj/o6nsHW0e7zjdNBmE=;
+	s=korg; t=1784209673;
+	bh=JoTf/J1z9qcXCZBGeO6oBPC24zTmOkZjzJuk9EJXcoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lMuSw5wmHEPHT3+qdcUpoyrnlSn8W3sDBeKs01olFny22GuC4fQ8hRqQ4hE/MHJ+K
-	 SKPJJj0xKnzKs7BZ7ylBJY35XCWFLyTZG29RCs4EVrhZZ4jYkbro3qP7TlihVypjbV
-	 eklqu5X87ghWebuseE+q7eChCqijTVOHxgMwr1JQ=
+	b=F5mEG0ef8SSwBqmhu/tM+osCDtnmSFh3Emk9SsLkJyMNsqjGb2IaNVtRe6K+erXwN
+	 dnu7a3IkgyNZh2isK5M/EdiUeVC1FSi2/hZjn/wjbzU0RKpte+3At+6+QTnl4CASHo
+	 YoLT5VrztXG4FfqbB9yvHpoELJ+JRuLOm+bPHbnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trung Nguyen <trungnh@cystack.net>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 7.1 273/518] HID: multitouch: fix out-of-bounds bit access on mt_io_flags
-Date: Thu, 16 Jul 2026 15:29:01 +0200
-Message-ID: <20260716133053.788747695@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.1 276/518] HID: sensor-hub: Add sensor_hub_input_attr_read_values() for multi-byte reads
+Date: Thu, 16 Jul 2026 15:29:04 +0200
+Message-ID: <20260716133053.853694083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,154 +54,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trung Nguyen <trungnh@cystack.net>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit 8813b0612275cc61fe9e6603d0ee019247ade6be upstream.
+commit f784fcea450617055d2d12eec5b2f6e0e38bf878 upstream.
 
-mt_io_flags is a single unsigned long, but mt_process_slot(),
-mt_release_pending_palms() and mt_release_contacts() use it as a
-per-slot bitmap indexed by the slot number. That slot number is only
-bounded by td->maxcontacts, which is taken from the device's
-ContactCountMaximum feature report and can be up to 255, not by
-BITS_PER_LONG.
+sensor_hub_input_attr_get_raw_value() is limited to returning a single
+32-bit value, which is insufficient for sensors that report data larger
+than 32 bits, such as a quaternion with four s16 elements.
 
-As a result, a multitouch device that advertises a large contact count
-makes set_bit()/clear_bit() operate past the mt_io_flags word and
-corrupt the adjacent members of struct mt_device. The sticky-fingers
-release timer is the easiest way to reach this. mt_release_contacts()
-runs
+Add sensor_hub_input_attr_read_values() that accepts a caller-provided
+buffer and accumulates incoming data until the buffer is full. The two
+paths are distinguished in sensor_hub_raw_event() by pending.max_raw_size
+being non-zero, preserving backward compatibility.
 
-	for (i = 0; i < mt->num_slots; i++)
-		clear_bit(i, &td->mt_io_flags);
-
-with num_slots == maxcontacts. For maxcontacts around 250 the loop
-clears the bits that overlap td->applications.next, zeroing that list
-head, and the list_for_each_entry() that immediately follows then
-dereferences NULL. The kernel panics from timer (softirq) context. On a
-KASAN build this shows up as a general protection fault in
-mt_release_contacts() with a null-ptr-deref at offset 0x58, which is
-offsetof(struct mt_application, num_received).
-
-The state is reachable from an untrusted USB or Bluetooth HID
-multitouch device; no local privileges are required.
-
-Store the per-slot active state in a separately allocated bitmap sized
-for maxcontacts, the same pattern already used for pending_palm_slots,
-and keep only MT_IO_FLAGS_RUNNING in mt_io_flags. The two
-"mt_io_flags & MT_IO_SLOTS_MASK" arming checks become
-bitmap_empty(td->active_slots, td->maxcontacts).
-
-Move MT_IO_FLAGS_RUNNING back to bit 0. It was bumped to bit 32 by the
-same commit to leave the low byte for the slot bits; with the slot bits
-gone it fits in bit 0 again, which also keeps it within the unsigned
-long on 32-bit.
-
-Fixes: 46f781e0d151 ("HID: multitouch: fix sticky fingers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trung Nguyen <trungnh@cystack.net>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Co-developed-by: Zhang Lixu <lixu.zhang@intel.com>
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-multitouch.c |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/hid/hid-sensor-hub.c   |   77 +++++++++++++++++++++++++++++++++++++----
+ include/linux/hid-sensor-hub.h |   25 +++++++++++++
+ 2 files changed, 96 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -31,6 +31,7 @@
-  * [1] https://gitlab.freedesktop.org/libevdev/hid-tools
-  */
+--- a/drivers/hid/hid-sensor-hub.c
++++ b/drivers/hid/hid-sensor-hub.c
+@@ -286,6 +286,54 @@ done_proc:
+ }
+ EXPORT_SYMBOL_GPL(sensor_hub_get_feature);
  
-+#include <linux/bitmap.h>
- #include <linux/bits.h>
- #include <linux/device.h>
- #include <linux/hid.h>
-@@ -97,8 +98,7 @@ enum report_mode {
- 	TOUCHPAD_REPORT_ALL = TOUCHPAD_REPORT_BUTTONS | TOUCHPAD_REPORT_CONTACTS,
++int sensor_hub_input_attr_read_values(struct hid_sensor_hub_device *hsdev,
++				      u32 usage_id, u32 attr_usage_id,
++				      u32 report_id,
++				      enum sensor_hub_read_flags flag,
++				      u32 buffer_size, u8 *buffer)
++{
++	struct sensor_hub_data *data = hid_get_drvdata(hsdev->hdev);
++	struct hid_report *report;
++	unsigned long flags;
++	long cycles;
++	int ret;
++
++	report = sensor_hub_report(report_id, hsdev->hdev, HID_INPUT_REPORT);
++	if (!report)
++		return -EINVAL;
++
++	mutex_lock(hsdev->mutex_ptr);
++	if (flag == SENSOR_HUB_SYNC) {
++		memset(&hsdev->pending, 0, sizeof(hsdev->pending));
++		init_completion(&hsdev->pending.ready);
++		hsdev->pending.usage_id = usage_id;
++		hsdev->pending.attr_usage_id = attr_usage_id;
++		hsdev->pending.max_raw_size = buffer_size;
++		hsdev->pending.raw_data = buffer;
++
++		spin_lock_irqsave(&data->lock, flags);
++		hsdev->pending.status = true;
++		spin_unlock_irqrestore(&data->lock, flags);
++	}
++	mutex_lock(&data->mutex);
++	hid_hw_request(hsdev->hdev, report, HID_REQ_GET_REPORT);
++	mutex_unlock(&data->mutex);
++	ret = 0;
++	if (flag == SENSOR_HUB_SYNC) {
++		cycles = wait_for_completion_interruptible_timeout(&hsdev->pending.ready,
++								   HZ * 5);
++		if (cycles == 0)
++			ret = -ETIMEDOUT;
++		else if (cycles < 0)
++			ret = cycles;
++
++		hsdev->pending.status = false;
++	}
++	mutex_unlock(hsdev->mutex_ptr);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(sensor_hub_input_attr_read_values);
+ 
+ int sensor_hub_input_attr_get_raw_value(struct hid_sensor_hub_device *hsdev,
+ 					u32 usage_id,
+@@ -478,6 +526,8 @@ static int sensor_hub_raw_event(struct h
+ 	struct hid_collection *collection = NULL;
+ 	void *priv = NULL;
+ 	struct hid_sensor_hub_device *hsdev = NULL;
++	u32 copy_size;
++	u32 avail;
+ 
+ 	hid_dbg(hdev, "sensor_hub_raw_event report id:0x%x size:%d type:%d\n",
+ 			 report->id, size, report->type);
+@@ -518,12 +568,27 @@ static int sensor_hub_raw_event(struct h
+ 					      hsdev->pending.attr_usage_id ==
+ 					      report->field[i]->logical)) {
+ 			hid_dbg(hdev, "data was pending ...\n");
+-			hsdev->pending.raw_data = kmemdup(ptr, sz, GFP_ATOMIC);
+-			if (hsdev->pending.raw_data)
+-				hsdev->pending.raw_size = sz;
+-			else
+-				hsdev->pending.raw_size = 0;
+-			complete(&hsdev->pending.ready);
++			if (hsdev->pending.max_raw_size) {
++				if (hsdev->pending.index < hsdev->pending.max_raw_size) {
++					avail = hsdev->pending.max_raw_size - hsdev->pending.index;
++					copy_size = clamp(sz, 0U, avail);
++
++					memcpy(hsdev->pending.raw_data + hsdev->pending.index,
++					       ptr, copy_size);
++					hsdev->pending.index += copy_size;
++					if (hsdev->pending.index >= hsdev->pending.max_raw_size) {
++						hsdev->pending.raw_size = hsdev->pending.index;
++						complete(&hsdev->pending.ready);
++					}
++				}
++			} else {
++				hsdev->pending.raw_data = kmemdup(ptr, sz, GFP_ATOMIC);
++				if (hsdev->pending.raw_data)
++					hsdev->pending.raw_size = sz;
++				else
++					hsdev->pending.raw_size = 0;
++				complete(&hsdev->pending.ready);
++			}
+ 		}
+ 		if (callback->capture_sample) {
+ 			if (report->field[i]->logical)
+--- a/include/linux/hid-sensor-hub.h
++++ b/include/linux/hid-sensor-hub.h
+@@ -43,6 +43,8 @@ struct hid_sensor_hub_attribute_info {
+  * @attr_usage_id:	Usage Id of a field, e.g. X-axis for a gyro.
+  * @raw_size:		Response size for a read request.
+  * @raw_data:		Place holder for received response.
++ * @index:		Current write index into raw_data for multi-byte reads.
++ * @max_raw_size:	Total buffer size for multi-byte reads; 0 for single-value reads.
+  */
+ struct sensor_hub_pending {
+ 	bool status;
+@@ -51,6 +53,8 @@ struct sensor_hub_pending {
+ 	u32 attr_usage_id;
+ 	int raw_size;
+ 	u8  *raw_data;
++	u32 index;
++	u32 max_raw_size;
  };
  
--#define MT_IO_SLOTS_MASK		GENMASK(7, 0) /* reserve first 8 bits for slot tracking */
--#define MT_IO_FLAGS_RUNNING		32
-+#define MT_IO_FLAGS_RUNNING		0
+ /**
+@@ -184,6 +188,27 @@ int sensor_hub_input_attr_get_raw_value(
+ );
  
- static const bool mtrue = true;		/* default for true */
- static const bool mfalse;		/* default for false */
-@@ -174,10 +174,9 @@ struct mt_device {
- 	struct timer_list release_timer;	/* to release sticky fingers */
- 	struct hid_haptic_device *haptic;	/* haptic related configuration */
- 	struct hid_device *hdev;	/* hid_device we're attached to */
--	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING)
--					 * first 8 bits are reserved for keeping the slot
--					 * states, this is fine because we only support up
--					 * to 250 slots (MT_MAX_MAXCONTACT)
-+	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING) */
-+	unsigned long *active_slots;	/* bitmap of slots with an active
-+					 * contact, sized for maxcontacts
- 					 */
- 	__u8 inputmode_value;	/* InputMode HID feature value */
- 	__u8 maxcontacts;
-@@ -1033,7 +1032,7 @@ static void mt_release_pending_palms(str
- 
- 	for_each_set_bit(slotnum, app->pending_palm_slots, td->maxcontacts) {
- 		clear_bit(slotnum, app->pending_palm_slots);
--		clear_bit(slotnum, &td->mt_io_flags);
-+		clear_bit(slotnum, td->active_slots);
- 
- 		input_mt_slot(input, slotnum);
- 		input_mt_report_slot_inactive(input);
-@@ -1244,9 +1243,9 @@ static int mt_process_slot(struct mt_dev
- 		input_event(input, EV_ABS, ABS_MT_TOUCH_MAJOR, major);
- 		input_event(input, EV_ABS, ABS_MT_TOUCH_MINOR, minor);
- 
--		set_bit(slotnum, &td->mt_io_flags);
-+		set_bit(slotnum, td->active_slots);
- 	} else {
--		clear_bit(slotnum, &td->mt_io_flags);
-+		clear_bit(slotnum, td->active_slots);
- 	}
- 
- 	return 0;
-@@ -1381,7 +1380,7 @@ static void mt_touch_report(struct hid_d
- 	 * defect.
- 	 */
- 	if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
--		if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-+		if (!bitmap_empty(td->active_slots, td->maxcontacts))
- 			mod_timer(&td->release_timer,
- 				  jiffies + msecs_to_jiffies(100));
- 		else
-@@ -1440,6 +1439,15 @@ static int mt_touch_input_configured(str
- 	if (td->is_pressurepad)
- 		__set_bit(INPUT_PROP_PRESSUREPAD, input->propbit);
- 
-+	if (!td->active_slots) {
-+		td->active_slots = devm_kcalloc(&td->hdev->dev,
-+						BITS_TO_LONGS(td->maxcontacts),
-+						sizeof(long),
-+						GFP_KERNEL);
-+		if (!td->active_slots)
-+			return -ENOMEM;
-+	}
+ /**
++ * sensor_hub_input_attr_read_values() - Synchronous multi-byte read request
++ * @hsdev:		Hub device instance.
++ * @usage_id:		Attribute usage id of parent physical device as per spec
++ * @attr_usage_id:	Attribute usage id as per spec
++ * @report_id:		Report id to look for
++ * @flag:		Synchronous or asynchronous read
++ * @buffer_size:	Size of the buffer in bytes
++ * @buffer:		Buffer to store the read data
++ *
++ * Issues a synchronous or asynchronous read request for an input attribute,
++ * accumulating data into the provided buffer until it is full.
++ * Return: 0 on success, -ETIMEDOUT if the device did not respond, or a
++ * negative error code.
++ */
++int sensor_hub_input_attr_read_values(struct hid_sensor_hub_device *hsdev,
++				      u32 usage_id, u32 attr_usage_id,
++				      u32 report_id,
++				      enum sensor_hub_read_flags flag,
++				      u32 buffer_size, u8 *buffer);
 +
- 	app->pending_palm_slots = devm_kcalloc(&hi->input->dev,
- 					       BITS_TO_LONGS(td->maxcontacts),
- 					       sizeof(long),
-@@ -1917,7 +1925,7 @@ static void mt_release_contacts(struct h
- 			for (i = 0; i < mt->num_slots; i++) {
- 				input_mt_slot(input_dev, i);
- 				input_mt_report_slot_inactive(input_dev);
--				clear_bit(i, &td->mt_io_flags);
-+				clear_bit(i, td->active_slots);
- 			}
- 			input_mt_sync_frame(input_dev);
- 			input_sync(input_dev);
-@@ -1940,7 +1948,7 @@ static void mt_expired_timeout(struct ti
- 	 */
- 	if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
- 		return;
--	if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-+	if (!bitmap_empty(td->active_slots, td->maxcontacts))
- 		mt_release_contacts(hdev);
- 	clear_bit_unlock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags);
- }
++/**
+ * sensor_hub_set_feature() - Feature set request
+ * @hsdev:	Hub device instance.
+ * @report_id:	Report id to look for
 
 
