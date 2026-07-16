@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415983101BF;
-	Thu, 16 Jul 2026 13:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C56330D35;
+	Thu, 16 Jul 2026 13:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210312; cv=none; b=WEkxO6RIoAcRH4HHE26V/MjCO4VFCF6KqVhiYWDKRT697CsVR2e9VtxbVDeidwmjZmd0OpqCko1Cv8iDw9V+esIDp6HpvgcKjotMxkWPolEiDV5akMPJi6gtjAa5HF/GHXryMt58Scyj54awUyian+Q1MUSEw4pS6UTyeB2mOjQ=
+	t=1784210314; cv=none; b=CGlFS6C5iPuX7tgIXnOMCmh93FXL7AYX1Lt3ddfCmmAJKmUpe0WgJ3P7l6z/otmFoAoLhXzhz7Ro7mSsCzS5ZSt3PmNIXN8xfWy0Tp8cw601KtzlqbzIXDFz9SI9P82/g7lMXOed8zGrth86tUj0z+p1OWSfNwg1nN34qKQLoGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210312; c=relaxed/simple;
-	bh=d4JNdcBbc0qNNKkdXpOfM5IXEWPvE402KUJxRJFvddE=;
+	s=arc-20240116; t=1784210314; c=relaxed/simple;
+	bh=e3kiUzUkPjUwvX8b0DmYsC0rbtWtq9ADAOdzg6L3LQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ee9y6nf2Kw7qv38gK/GsyBon4mmMSS2p74Ab+5+bRAuEaUZgn44qB0QS1mOBg2dOoEcKuTqgPDLgZLfcjHKWAVWTZorJELeb+T3XCq/0nsaRQqrzBB5Jd9wbMfO+DZLFlSyyPF+aAUazUVJCr1rmj42YlWzuGJ9Lry/ryo18RDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zf0KDcZm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bR6EMJmJbHHIDs52GlK12YwbbfOkccIdwNl/w/erwFnHByTKRwLK2Nmakd78M3tcHLcLrAxhEy//89LVkE5JzNNnRETkG6lsbRjRNDKCSZTGlnfkT5MCvA6YvzUTanvBcKG3ahdIhXHQVvnuRUYze+OoQc+CxDfjQXkS97h+QeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+SDpDYu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zf0KDcZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B001F000E9;
-	Thu, 16 Jul 2026 13:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+SDpDYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4911F000E9;
+	Thu, 16 Jul 2026 13:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210311;
-	bh=XQ9vjiBmvnRcHbjW6Q628CMZY7DdSgcKMQQifRviJEY=;
+	s=korg; t=1784210313;
+	bh=SgN2+WZITZMFcHJNmhk2Sf+GvKl62L5femgdFEWdR7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zf0KDcZms0wQStOy9UtqCorjlEj93jfNZaxrR1r3ur5Z6UD9G243aIOYsITxwAUuv
-	 +9340XSq7NoT9gahzJwSCv+QGA+Ji7h6YVBz1ukKNpfjikopHcnNR14QUA392l5Vqn
-	 Zt3E/EO3AnHN989x4LOqV+UEX6Qju4bneZVSD/w0=
+	b=K+SDpDYuMdp5bt1pN4eXht0tKoBL1ZURF8qaB0PzkvOzCtlWgXWRsgJqelteEy261
+	 O4zQ0k3ev8+8NckoQPq+u3SJy8W0vSAjT0/eXjchHGaEv7XtX3VCUwrBYFqYkA3N80
+	 vjL8UoJrFAGtxNT1JSti/GIY8D7E8kxmxWAhIzyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.1 518/518] Bluetooth: 6lowpan: Fix using chan->conn as indication to no remote netdev
-Date: Thu, 16 Jul 2026 15:33:06 +0200
-Message-ID: <20260716133059.172919766@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.1 493/518] Input: maple_keyb - set driver data before registering input device
+Date: Thu, 16 Jul 2026 15:32:41 +0200
+Message-ID: <20260716133058.632385689@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -49,62 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit d38eaf611839b85ade3dd3db309dbc8aaaaf0095 upstream.
+commit 536394ec81419b67d9f4f0028812c4372397be1b upstream.
 
-b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding
-conn ref") don't reset the chan->conn to NULL anymore making the bt#
-netdev not be remove once the last l2cap_chan_del is removed.
+Set maple driver data before calling input_register_device() to
+ensure that it is available if the device is opened immediately and
+the callback is triggered.
 
-Instead of restoring the original behavior this remove the logic of
-keeping the interface after the last channel is removed because it
-never worked as intended and the l2cap_chan_del always detach its
-l2cap_conn which results in always removing the channel anyway.
-
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/6lowpan.c |   18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+ drivers/input/keyboard/maple_keyb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -777,20 +777,10 @@ static void chan_close_cb(struct l2cap_c
- 	struct lowpan_btle_dev *dev = NULL;
- 	struct lowpan_peer *peer;
- 	int err = -ENOENT;
--	bool last = false, remove = true;
-+	bool last = false;
+--- a/drivers/input/keyboard/maple_keyb.c
++++ b/drivers/input/keyboard/maple_keyb.c
+@@ -166,6 +166,8 @@ static int probe_maple_kbd(struct device
+ 	kbd->dev = idev;
+ 	memcpy(kbd->keycode, dc_kbd_keycode, sizeof(kbd->keycode));
  
- 	BT_DBG("chan %p conn %p", chan, chan->conn);
++	maple_set_drvdata(mdev, kbd);
++
+ 	idev->name = mdev->product_name;
+ 	idev->evbit[0] = BIT(EV_KEY) | BIT(EV_REP);
+ 	idev->keycode = kbd->keycode;
+@@ -190,8 +192,6 @@ static int probe_maple_kbd(struct device
  
--	if (chan->conn && chan->conn->hcon) {
--		if (!is_bt_6lowpan(chan->conn->hcon))
--			return;
+ 	mdev->driver = mdrv;
+ 
+-	maple_set_drvdata(mdev, kbd);
 -
--		/* If conn is set, then the netdev is also there and we should
--		 * not remove it.
--		 */
--		remove = false;
--	}
--
- 	spin_lock(&devices_lock);
+ 	return error;
  
- 	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
-@@ -817,10 +807,8 @@ static void chan_close_cb(struct l2cap_c
- 
- 		ifdown(dev->netdev);
- 
--		if (remove) {
--			INIT_WORK(&entry->delete_netdev, delete_netdev);
--			schedule_work(&entry->delete_netdev);
--		}
-+		INIT_WORK(&entry->delete_netdev, delete_netdev);
-+		schedule_work(&entry->delete_netdev);
- 	} else {
- 		spin_unlock(&devices_lock);
- 	}
+ fail_register:
 
 
