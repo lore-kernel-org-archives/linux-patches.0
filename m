@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B8442FCB2;
-	Thu, 16 Jul 2026 14:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BBE42FCC0;
+	Thu, 16 Jul 2026 14:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212140; cv=none; b=gIDHuObDqzV2OVbkahtaXLKpr/9pLeJjXuUY2Z6oMa2SffB952L7L2/SVdwojLSK5Xy/Cktl3Z6LjaGD1tXRMIJEPq/K9WsdLvDamvdZ7aTE03MxNm1VoX+I5D9dIDMnIR/avqCXR+Ph/b6ehN4L9GmgfyKA7EplqoG1lGiUtVw=
+	t=1784212142; cv=none; b=Px3EkOY4CfYOevjjP1GZo9/4zZD7npPZJKpUuC2jCfz+MJn2TKs215+mxxKv79sBLKeR8AYg8VasI/Zly17/01eP28+dyV79cnMCyQHbvCdt7hDZZmJFpofTOUYfQaSbZWybeJgTVRtENrrna2IVyCAK8EoUTOO8IRxTdc/9sec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212140; c=relaxed/simple;
-	bh=M4ez87YxzLRE7zHrukx9luiEHlwGjhj+Xark0UGuatI=;
+	s=arc-20240116; t=1784212142; c=relaxed/simple;
+	bh=vx7qoLJn+R8RO0QF7v2gbOW1+/Qxza7k9iOni78RykU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUmk7PMrHCgtCY5Jfeb1qB0xCvuEHm3qxlXdKbC1tCXfv7bmopaHN8z8yUHjkSnECPq13XquVmfa4eubLcXkjoQnx9OUYogU3woWFN+nvddQQdBigUQvye041/ijNtCVOO1U+pK+1gSVMhmX/cl2p3UmF0FIy6On73Ospbav14Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j766vbS7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ca7o9PElM4tjYhGlRCDC1XCIIlQ8t0Qrgno4KeFXnHRO+it5umMWMU5q0YneNgUWjS5tM2UsfbI8TYdsn+aR9RVJej8gZtd1qGEdBMLJwfKjXwYO+A0h2kkNVirsAdj3S2VIQGQuUK0FqEXz91nwwXQf2LifvLSXr8apdnvtm04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMCw0+tH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j766vbS7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D76C1F00ACF;
-	Thu, 16 Jul 2026 14:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMCw0+tH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495EC1F000E9;
+	Thu, 16 Jul 2026 14:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212139;
-	bh=B1juZfZSYkFteGnKyOY1bgFM5Bbw2HgRr16RzQ3s770=;
+	s=korg; t=1784212141;
+	bh=h8lbpJ0jNokKF38kxI6tcTS9lXePHcGx9XU7jz5HjuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j766vbS7//rIclz+IV8mdHYSFSe4BQN3PdWhCk+g1/bH/MjZsQkkowvga9DtiNXs0
-	 yFVC9NIZOBtQmAxtAJ9B/9o90PkoegRd9pfecOA/yYYmZ8hWegQ+WJvexB13qhdTnw
-	 a3vXDxMHra3qfSS650HaWRBweXf7dgD/2Dp2WoYc=
+	b=WMCw0+tHMefeOsUJmQYWpZovE5pUa8EO1GaAfSjOgmbg+2vPh0W9SOBp5iZ61iw50
+	 nDHaawUCKH63q+A7OML2RYocc4o8ultv0ag9F3TNGzAbHPqxp6Xms7N+pMKLpZZK1l
+	 vq1VmtuW6RH0ODq1dGDnKs5fh407cXGS5Sox7oGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yingjie Gao <gaoyingjie@uniontech.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 214/349] xfs: fix pointer arithmetic error on 32-bit systems
-Date: Thu, 16 Jul 2026 15:32:28 +0200
-Message-ID: <20260716133038.153318170@linuxfoundation.org>
+Subject: [PATCH 6.12 215/349] xfs: fix exchmaps reservation limit check
+Date: Thu, 16 Jul 2026 15:32:29 +0200
+Message-ID: <20260716133038.175439371@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,39 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Yingjie Gao <gaoyingjie@uniontech.com>
 
-commit 84eec3f7fc73144d1a230c9e8ad92721e37dcaab upstream.
+commit 0a5213bbff62b51c7d4999ac8c7e11ea57d00d45 upstream.
 
-The translation of the old XFS_BMBT_KEY_ADDR macro into a static
-function is not correct on 32-bit systems because the sizeof() argument
-went from being a xfs_bmbt_key_t (i.e. a struct) to a (struct
-xfs_bmbt_key *) (i.e. a pointer to the same struct).  On 64-bit systems
-this turns out ok because they are the same size, but on 32-bit systems
-this is catastrophic because they are not the same size.  So far there
-have been no complaints, most likely because the xfs developers urge
-against running it on 32-bit systems.  But this needs fixing asap.
+xfs_exchmaps_estimate_overhead() adds the bmbt and rmapbt
+overhead to a local resblks variable, but the final UINT_MAX
+check still tests req->resblks.  That is the reservation value
+from before the overhead was added.
 
-Cc: stable@vger.kernel.org # v6.12
-Fixes: 79124b37400635 ("xfs: replace shouty XFS_BM{BT,DR} macros")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+The computed value is stored back in req->resblks and later passed
+to xfs_trans_alloc(), whose block reservation argument is unsigned
+int.  Check the computed reservation so the existing limit applies
+to the value that will be used.
+
+Fixes: 966ceafc7a43 ("xfs: create deferred log items for file mapping exchanges")
+Cc: stable@vger.kernel.org # v6.10
+Signed-off-by: Yingjie Gao <gaoyingjie@uniontech.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_bmap_btree.h |    2 +-
+ fs/xfs/libxfs/xfs_exchmaps.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_bmap_btree.h
-+++ b/fs/xfs/libxfs/xfs_bmap_btree.h
-@@ -89,7 +89,7 @@ xfs_bmbt_key_addr(
- {
- 	return (struct xfs_bmbt_key *)
- 		((char *)block + xfs_bmbt_block_len(mp) +
--		 (index - 1) * sizeof(struct xfs_bmbt_key *));
-+		 (index - 1) * sizeof(struct xfs_bmbt_key));
- }
+--- a/fs/xfs/libxfs/xfs_exchmaps.c
++++ b/fs/xfs/libxfs/xfs_exchmaps.c
+@@ -709,7 +709,7 @@ xfs_exchmaps_estimate_overhead(
+ 		return -ENOSPC;
  
- static inline xfs_bmbt_ptr_t *
+ 	/* Can't actually reserve more than UINT_MAX blocks. */
+-	if (req->resblks > UINT_MAX)
++	if (resblks > UINT_MAX)
+ 		return -ENOSPC;
+ 
+ 	req->resblks = resblks;
 
 
