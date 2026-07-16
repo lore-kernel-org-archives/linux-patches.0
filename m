@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4349426D0B;
-	Thu, 16 Jul 2026 13:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DA9426420;
+	Thu, 16 Jul 2026 13:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209634; cv=none; b=NOH72fMHxNcPX3HTaWpz+9LRjvS1ndJ3VO5qkL9Cla3PSRntLeJE4bM3v5u0nQcNJbYSHz/X8KGiWmCQ5y/04bEdCFZ1UvFN9R2TjdNMzikTfIIlmiuso2wwPh19upKCFvJ/ouGR7Epvcbnqhm66JstUFNdfIAC2toC4FUrMgtw=
+	t=1784209642; cv=none; b=uI3WjAbEckXJvuBeiYJRIw88jKbUSot4JI+0YYrWSBzhS0k50gEF76NMXSmBPoiugpx6ZNzLUQFAVkOck9yieOVnSyoUwCQXBsSD022kBb7+mv2jZNZm7Eig3QfeKoLxwDcg2E04gFYm9av3t1eFQWuzTOzn9Q5OE3MoMGnMB1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209634; c=relaxed/simple;
-	bh=AiYHQn8yFVxNmchgNRzklcFAtoJ1UaHi/M0nGFqiLrU=;
+	s=arc-20240116; t=1784209642; c=relaxed/simple;
+	bh=7NTKuRWOgRYoy7UFz9JHLYffK009uoYdP8g4MD+OPtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E39LtNk0/Rpot9GiWKUS8hsT89StTlNXe+THVQe03DJU8riR1QDBZ5hebfGO0W2DY4IOzrR8Y4ZefiXPIdOkBOklhtTB8+iqeB8ISgy0N/ByTm+VeDILR8DCGXGUIxsIiZDmz1isxY+m3vp69G1aOB2dObdjdBqDnWbrZgnLB4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExlRdhWO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I0aZ9VJVv4pGeDophTU+Xw5JPrwGNtjFxtee0b3Pk6Y3Sv/V9TYL5VulboposhBm6zZoe7wy1r8nZPgnFWe7QbNmybiZ/d0YTaGZW2n+2ZtMpRgZyg6lPvAPrcsAlfQXeimQN/X4HcStsrAk2H+6Kvj7ge6OvN2tDIQs680u5mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKxOikoB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExlRdhWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A361F000E9;
-	Thu, 16 Jul 2026 13:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKxOikoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FBF71F00A3A;
+	Thu, 16 Jul 2026 13:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209631;
-	bh=OzhSw4a4q9jMSE5dpwmTWmlpVT8ElRkiBX2Sk8JPjCs=;
+	s=korg; t=1784209633;
+	bh=rNwJ1E4Z3B3Z3nepbB67Y5YRH16jbFnrRWa04/3zFpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ExlRdhWO4FAFPg433WLeGQxH6sSK+1al44XN2K1j8JIx5JNDhFMM8+yIC6FeygJUJ
-	 j4t9cydWx7KGGI5euhdysvVTdc+TdY7LQ/DZ/+dBHKEJk6GuZCMj09AGbpbmXBHlz+
-	 uWgn0G+teiMoimvW4kn+Uf72CMJ9/Pmg/DHmZ+VU=
+	b=fKxOikoBjVgvwyL234P67AJ9prtlX/ytTsJ/nNl3dmdLP/TLzEjKJ6irpp+NZvGKj
+	 CHvPjCfsMxXl9ePS4BnWKkb/PWp9jDb/aozkog9+3UY0XMr7B2tPPKx00gszJWdZl/
+	 HMMFzaf3OwvXKOtCIcrtHzwwxyij9XP+JD7jOrjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Y s65 <yu4ys@outlook.com>,
+	Gil Portnoy <dddhkts1@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 216/518] ksmbd: prevent path traversal bypass by restricting caseless retry
-Date: Thu, 16 Jul 2026 15:28:04 +0200
-Message-ID: <20260716133052.542389770@linuxfoundation.org>
+Subject: [PATCH 7.1 217/518] ksmbd: add permission checks for FSCTL_DUPLICATE_EXTENTS_TO_FILE
+Date: Thu, 16 Jul 2026 15:28:05 +0200
+Message-ID: <20260716133052.563719845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,47 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit 54bab9ba5a9f156ffa9324fcbe5a356fd0242f95 upstream.
+commit 388e4139db27a9e3612c9d356b826f5b1ff6a9e3 upstream.
 
-ksmbd_vfs_path_lookup() enforces LOOKUP_BENEATH to restrict path
-resolution within the share root. When a crafted path attempts to
-escape the share boundary using parent-directory components ('..'),
-vfs_path_parent_lookup() detects this and immediately fails,
-returning -EXDEV.
-
-However, a bug exists in __ksmbd_vfs_kern_path() under caseless mode.
-The function fails to intercept the -EXDEV error and erroneously
-falls through to the caseless retry logic, which is intended only
-for genuinely missing files. During this retry process, the path
-is reconstructed, leading to an unintended LOOKUP_BENEATH bypass
-that allows write-capable users to create zero-length files or
-directories outside the exported share.
-
-Fix this by ensuring that the execution only proceeds to the caseless
-lookup retry when the error is specifically -ENOENT. Any other errors,
-such as -EXDEV from a path traversal attempt, must be returned immediately.
+The FSCTL_DUPLICATE_EXTENTS_TO_FILE arm of smb2_ioctl() overwrites the
+destination file's data via vfs_clone_file_range() with neither the
+share-level KSMBD_TREE_CONN_FLAG_WRITABLE check nor a per-handle
+fp->daccess check that the other write-bearing arms carry. A client can
+overwrite destination data on a read-only share, or from a handle opened
+with only FILE_WRITE_ATTRIBUTES (which still yields an FMODE_WRITE filp).
+FILE_WRITE_ATTRIBUTES-only destination handle overwrote the file's data via
+the clone. Add both checks, matching the FSCTL_SET_SPARSE permission fix;
+require FILE_WRITE_DATA since this writes data.
 
 Cc: stable@vger.kernel.org
-Reported-by: Y s65 <yu4ys@outlook.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1149,7 +1149,7 @@ int __ksmbd_vfs_kern_path(struct ksmbd_w
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8562,6 +8562,17 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			goto dup_ext_out;
+ 		}
  
- retry:
- 	err = ksmbd_vfs_path_lookup(share_conf, filepath, flags, path, for_remove);
--	if (!err || !caseless)
-+	if (!err || err != -ENOENT || !caseless)
- 		return err;
- 
- 	path_len = strlen(filepath);
++		if (!test_tree_conn_flag(work->tcon,
++					 KSMBD_TREE_CONN_FLAG_WRITABLE)) {
++			ret = -EACCES;
++			goto dup_ext_out;
++		}
++
++		if (!(fp_out->daccess & FILE_WRITE_DATA_LE)) {
++			ret = -EACCES;
++			goto dup_ext_out;
++		}
++
+ 		src_off = le64_to_cpu(dup_ext->SourceFileOffset);
+ 		dst_off = le64_to_cpu(dup_ext->TargetFileOffset);
+ 		length = le64_to_cpu(dup_ext->ByteCount);
 
 
