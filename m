@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5D941A79A;
-	Thu, 16 Jul 2026 13:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F83424658;
+	Thu, 16 Jul 2026 13:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209312; cv=none; b=cls+rZXyGsu3YA+X0aRxo5AHY9kZMYATEp+MQbByZcg8c7bYHpEPMFZcHomTtDArJK9+VPQWY5jEQeLEAyE/w2xwTVdvJukD7BywgGPKLP4iYoyFKTuuJCniP+pkgqTPCu6K6gND+7as3CKNqk83kU03t3GoZkJ6nYiBNGYEAZU=
+	t=1784209314; cv=none; b=rRkXeuXjioEmw3Iu2CyPbqk/4T0cvQi/atC+9VYaMmxm5Kg0RjzKxvTEjndOIZgLdgWfOXGJQchd0aSbl3rJj+tj1rb6UFuxr449VWVbpevuyzBjVYAtSCLlp6QLkWRD9hp36gKn/JDygIo1I0TqfJR7C9+Hv4nbKYD2fgdNxKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209312; c=relaxed/simple;
-	bh=waJGgxqgC5hh7S0UqYAI6WY8+nzD2YznkxAh61xM7a0=;
+	s=arc-20240116; t=1784209314; c=relaxed/simple;
+	bh=YjECNBh0TofCK4QbQkDnqVq4cwq/m1ORttaEAsflHEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCDlHVj52ttCX+0iLANzqOispwC9ytfHw/PaJvKxOLP4xyp3UPN5H5OPJ8Cs9cTQTJ2WTZjY8TvxbRExH/pa9wMV1die9Bh8YBgpQLBxahFSnWnSttOVzi9ven7lmJT5/Pp0CGYDApZAJzqiKdhfYaw4DAmHD6whsal5iOIqYVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoSGfbRJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AnYqO7NmjtULNXDgmqXwf+b9h3iB+VlVkjeOXz/IKz3UE3HHc6eXwXv3/AKaRsWj2WHYn7zbcRAVxCK9s0nQZyWXUSSMHJWRZ//wju3/rM05AU9GGwFA2NgvM+CmCSqPIRg8VMXfGiHWGnBSRAzcTBVVQBo3dGp0H71r6UCCFeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQDIFLRW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoSGfbRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758DB1F000E9;
-	Thu, 16 Jul 2026 13:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQDIFLRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181C41F00A3A;
+	Thu, 16 Jul 2026 13:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209311;
-	bh=0OP76ppKBGZdZQ8f2P6i+qekWm2HjJm0kegNHC2O4ME=;
+	s=korg; t=1784209313;
+	bh=fI7K+Qe1ZSJk2FOtArJs3ZM6BEO8v5ELghez7wS9gOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AoSGfbRJ4YzeqNebiTHIQ+aTne1M2KJgP57WQrz9eQogOr0COafw1am3kygUdmjGM
-	 C+h1nFcfcXVBjIPxu2Kkd5K/mdpXP5dDVKflbOCLua1lQwjXT08EvOlG5LXH8UwtbC
-	 ctHKI6vDdHCqauR42b1g41ZtSrtG2mvRG1IqHpCg=
+	b=yQDIFLRWNdghiZoNjCjs2z1Szum/MybrhmFIJdfvVKAXImoYlsSiIrC/MHEakIFvr
+	 xyHPVBoO2vzg6OY1ohPpOOWRZNksGgdnQC+CSEgvPKvXDpnhXzEiLAjVQnDen7QU7m
+	 wyAL5poE/c2pWS4mtDiylG7AzPORmflGBcOmP9bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 7.1 120/518] rust_binder: fix BINDER_GET_EXTENDED_ERROR
-Date: Thu, 16 Jul 2026 15:26:28 +0200
-Message-ID: <20260716133050.480213348@linuxfoundation.org>
+	Marco Nenciarini <mnencia@kcore.it>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 7.1 138/518] PCI: Skip Resizable BAR restore on read error
+Date: Thu, 16 Jul 2026 15:26:46 +0200
+Message-ID: <20260716133050.873079508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,277 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Marco Nenciarini <mnencia@kcore.it>
 
-commit 77bfebf110773f5a0d6b5ff8110896adb2c9c335 upstream.
+commit ee7471fe968d210939be9046089a924cd23c8c3b upstream.
 
-This code currently copies the ExtendedError struct to the stack,
-modifies the copy, and then doesn't modify the original. Thus, fix it.
+pci_restore_rebar_state() uses the Resizable BAR Control register to decide
+how many BARs to restore (nbars) and which BAR each iteration addresses
+(bar_idx).
 
-Furthermore, errors when replying must be delivered directly to the
-remote thread, so update deliver_reply() to take an extended error
-argument.
+When a device does not respond, config reads typically return
+PCI_ERROR_RESPONSE (~0).  Both fields are 3 bits wide, so nbars and bar_idx
+both evaluate to 7, past the spec's valid ranges for both fields.
+pci_resource_n() then returns an unrelated resource slot, whose size is
+used to derive a nonsensical value written back to the Resizable BAR
+Control register.
 
-Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260605-set-extended-error-v3-1-d60b69a75f97@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Bail out if any Resizable BAR Control read returns PCI_ERROR_RESPONSE. No
+further BARs are touched, which is safe because a config read that returns
+PCI_ERROR_RESPONSE indicates the device is unreachable and restoration is
+pointless.
+
+Fixes: d3252ace0bc6 ("PCI: Restore resized BAR state on resume")
+Signed-off-by: Marco Nenciarini <mnencia@kcore.it>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/666cac19b5daa0ab0e0ab64454e76b4d24465dbd.1776429882.git.mnencia@kcore.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/error.rs       |   13 ++----
- drivers/android/binder/thread.rs      |   65 ++++++++++++++++++++++++----------
- drivers/android/binder/transaction.rs |   15 +++----
- 3 files changed, 58 insertions(+), 35 deletions(-)
+ drivers/pci/rebar.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/android/binder/error.rs
-+++ b/drivers/android/binder/error.rs
-@@ -73,20 +73,17 @@ impl fmt::Debug for BinderError {
-     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-         match self.reply {
-             BR_FAILED_REPLY => match self.source.as_ref() {
--                Some(source) => f
--                    .debug_struct("BR_FAILED_REPLY")
--                    .field("source", source)
--                    .finish(),
-+                Some(source) => source.fmt(f),
-                 None => f.pad("BR_FAILED_REPLY"),
-             },
-             BR_DEAD_REPLY => f.pad("BR_DEAD_REPLY"),
-             BR_FROZEN_REPLY => f.pad("BR_FROZEN_REPLY"),
-             BR_TRANSACTION_PENDING_FROZEN => f.pad("BR_TRANSACTION_PENDING_FROZEN"),
-             BR_TRANSACTION_COMPLETE => f.pad("BR_TRANSACTION_COMPLETE"),
--            _ => f
--                .debug_struct("BinderError")
--                .field("reply", &self.reply)
--                .finish(),
-+            _ => match self.source.as_ref() {
-+                Some(source) => source.fmt(f),
-+                None => self.reply.fmt(f),
-+            },
-         }
-     }
- }
---- a/drivers/android/binder/thread.rs
-+++ b/drivers/android/binder/thread.rs
-@@ -495,9 +495,16 @@ impl Thread {
-         Ok(())
-     }
+--- a/drivers/pci/rebar.c
++++ b/drivers/pci/rebar.c
+@@ -231,6 +231,9 @@ void pci_restore_rebar_state(struct pci_
+ 		return;
  
-+    pub(crate) fn clear_extended_error(&self, debug_id: usize) {
-+        self.inner.lock().extended_error = ExtendedError::new(debug_id as u32, BR_OK, 0);
-+    }
+ 	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
++	if (PCI_POSSIBLE_ERROR(ctrl))
++		return;
 +
-     pub(crate) fn get_extended_error(&self, data: UserSlice) -> Result {
-         let mut writer = data.writer();
--        let ee = self.inner.lock().extended_error;
-+        let mut inner = self.inner.lock();
-+        let ee = inner.extended_error;
-+        inner.extended_error = ExtendedError::new(0, BR_OK, 0);
-+        drop(inner);
-         writer.write(&ee)?;
-         Ok(())
-     }
-@@ -1109,7 +1116,10 @@ impl Thread {
-             inner.pop_transaction_to_reply(thread.as_ref())
-         } {
-             let reply = Err(BR_DEAD_REPLY);
--            if !transaction.from.deliver_single_reply(reply, &transaction) {
-+            if !transaction
-+                .from
-+                .deliver_single_reply(reply, &transaction, None)
-+            {
-                 break;
-             }
+ 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
  
-@@ -1121,8 +1131,9 @@ impl Thread {
-         &self,
-         reply: Result<DLArc<Transaction>, u32>,
-         transaction: &DArc<Transaction>,
-+        extended_error: Option<ExtendedError>,
-     ) {
--        if self.deliver_single_reply(reply, transaction) {
-+        if self.deliver_single_reply(reply, transaction, extended_error) {
-             transaction.from.unwind_transaction_stack();
-         }
-     }
-@@ -1136,6 +1147,7 @@ impl Thread {
-         &self,
-         reply: Result<DLArc<Transaction>, u32>,
-         transaction: &DArc<Transaction>,
-+        extended_error: Option<ExtendedError>,
-     ) -> bool {
-         if let Ok(transaction) = &reply {
-             crate::trace::trace_transaction(true, transaction, Some(&self.task));
-@@ -1152,6 +1164,12 @@ impl Thread {
-                 return true;
-             }
+ 	for (i = 0; i < nbars; i++, pos += 8) {
+@@ -238,6 +241,9 @@ void pci_restore_rebar_state(struct pci_
+ 		int bar_idx, size;
  
-+            if let Some(ee) = extended_error {
-+                if inner.extended_error.command == BR_OK {
-+                    inner.extended_error = ee;
-+                }
-+            }
+ 		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
++		if (PCI_POSSIBLE_ERROR(ctrl))
++			return;
 +
-             match reply {
-                 Ok(work) => {
-                     inner.push_work(work);
-@@ -1222,6 +1240,9 @@ impl Thread {
-         info.buffers_size = td.buffers_size as usize;
-         // SAFETY: Above `read` call initializes all bytes, so this union read is ok.
-         info.target_handle = unsafe { td.transaction_data.target.handle };
-+
-+        info.debug_id = super::next_debug_id();
-+
-         Ok(())
-     }
- 
-@@ -1230,6 +1251,8 @@ impl Thread {
-         let mut info = TransactionInfo::zeroed();
-         self.read_transaction_info(cmd, reader, &mut info)?;
- 
-+        self.clear_extended_error(info.debug_id);
-+
-         let ret = if info.is_reply {
-             self.reply_inner(&mut info)
-         } else if info.is_oneway() {
-@@ -1239,23 +1262,21 @@ impl Thread {
-         };
- 
-         if let Err(err) = ret {
--            if err.reply != BR_TRANSACTION_COMPLETE {
--                info.reply = err.reply;
--            }
--
-             self.push_return_work(err.reply);
--            if let Some(source) = &err.source {
--                info.errno = source.to_errno();
-+            if err.reply != BR_TRANSACTION_COMPLETE {
-                 info.reply = err.reply;
-+                if let Some(source) = &err.source {
-+                    info.errno = source.to_errno();
- 
--                {
--                    let mut ee = self.inner.lock().extended_error;
--                    ee.command = err.reply;
--                    ee.param = source.to_errno();
-+                    {
-+                        let mut inner = self.inner.lock();
-+                        inner.extended_error =
-+                            ExtendedError::new(info.debug_id as u32, err.reply, source.to_errno());
-+                    }
-                 }
- 
-                 pr_warn!(
--                    "{}:{} transaction to {} failed: {source:?}",
-+                    "{}:{} transaction to {} failed: {err:?}",
-                     info.from_pid,
-                     info.from_tid,
-                     info.to_pid
-@@ -1320,18 +1341,24 @@ impl Thread {
-             let allow_fds = orig.flags & TF_ACCEPT_FDS != 0;
-             let reply = Transaction::new_reply(self, process, info, allow_fds)?;
-             self.inner.lock().push_work(completion);
--            orig.from.deliver_reply(Ok(reply), &orig);
-+            orig.from.deliver_reply(Ok(reply), &orig, None);
-             Ok(())
-         })()
-         .map_err(|mut err| {
-             // At this point we only return `BR_TRANSACTION_COMPLETE` to the caller, and we must let
-             // the sender know that the transaction has completed (with an error in this case).
-+
-             pr_warn!(
--                "Failure {:?} during reply - delivering BR_FAILED_REPLY to sender.",
--                err
-+                "{}:{} reply to {} failed: {err:?}",
-+                info.from_pid,
-+                info.from_tid,
-+                info.to_pid
-             );
--            let reply = Err(BR_FAILED_REPLY);
--            orig.from.deliver_reply(reply, &orig);
-+
-+            let param = err.source.as_ref().map_or(0, |e| e.to_errno());
-+            let ee = ExtendedError::new(info.debug_id as u32, err.reply, param);
-+            orig.from
-+                .deliver_reply(Err(BR_FAILED_REPLY), &orig, Some(ee));
-             err.reply = BR_TRANSACTION_COMPLETE;
-             err
-         });
---- a/drivers/android/binder/transaction.rs
-+++ b/drivers/android/binder/transaction.rs
-@@ -42,6 +42,7 @@ pub(crate) struct TransactionInfo {
-     pub(crate) reply: u32,
-     pub(crate) oneway_spam_suspect: bool,
-     pub(crate) is_reply: bool,
-+    pub(crate) debug_id: usize,
- }
- 
- impl TransactionInfo {
-@@ -93,7 +94,6 @@ impl Transaction {
-         from: &Arc<Thread>,
-         info: &mut TransactionInfo,
-     ) -> BinderResult<DLArc<Self>> {
--        let debug_id = super::next_debug_id();
-         let allow_fds = node_ref.node.flags & FLAT_BINDER_FLAG_ACCEPTS_FDS != 0;
-         let txn_security_ctx = node_ref.node.flags & FLAT_BINDER_FLAG_TXN_SECURITY_CTX != 0;
-         let mut txn_security_ctx_off = if txn_security_ctx { Some(0) } else { None };
-@@ -101,7 +101,7 @@ impl Transaction {
-         let mut alloc = match from.copy_transaction_data(
-             to.clone(),
-             info,
--            debug_id,
-+            info.debug_id,
-             allow_fds,
-             txn_security_ctx_off.as_mut(),
-         ) {
-@@ -128,7 +128,7 @@ impl Transaction {
-         let data_address = alloc.ptr;
- 
-         Ok(DTRWrap::arc_pin_init(pin_init!(Transaction {
--            debug_id,
-+            debug_id: info.debug_id,
-             target_node: Some(target_node),
-             from_parent,
-             sender_euid: Kuid::current_euid(),
-@@ -152,9 +152,8 @@ impl Transaction {
-         info: &mut TransactionInfo,
-         allow_fds: bool,
-     ) -> BinderResult<DLArc<Self>> {
--        let debug_id = super::next_debug_id();
-         let mut alloc =
--            match from.copy_transaction_data(to.clone(), info, debug_id, allow_fds, None) {
-+            match from.copy_transaction_data(to.clone(), info, info.debug_id, allow_fds, None) {
-                 Ok(alloc) => alloc,
-                 Err(err) => {
-                     pr_warn!("Failure in copy_transaction_data: {:?}", err);
-@@ -165,7 +164,7 @@ impl Transaction {
-             alloc.set_info_clear_on_drop();
-         }
-         Ok(DTRWrap::arc_pin_init(pin_init!(Transaction {
--            debug_id,
-+            debug_id: info.debug_id,
-             target_node: None,
-             from_parent: None,
-             sender_euid: Kuid::current_euid(),
-@@ -394,7 +393,7 @@ impl DeliverToRead for Transaction {
-         let send_failed_reply = ScopeGuard::new(|| {
-             if self.target_node.is_some() && self.flags & TF_ONE_WAY == 0 {
-                 let reply = Err(BR_FAILED_REPLY);
--                self.from.deliver_reply(reply, &self);
-+                self.from.deliver_reply(reply, &self, None);
-             }
-             self.drop_outstanding_txn();
-         });
-@@ -478,7 +477,7 @@ impl DeliverToRead for Transaction {
-         // If this is not a reply or oneway transaction, then send a dead reply.
-         if self.target_node.is_some() && self.flags & TF_ONE_WAY == 0 {
-             let reply = Err(BR_DEAD_REPLY);
--            self.from.deliver_reply(reply, &self);
-+            self.from.deliver_reply(reply, &self, None);
-         }
- 
-         self.drop_outstanding_txn();
+ 		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
+ 		res = pci_resource_n(pdev, bar_idx);
+ 		size = pci_rebar_bytes_to_size(resource_size(res));
 
 
