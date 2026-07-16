@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6673D7D74;
-	Thu, 16 Jul 2026 13:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB103876DE;
+	Thu, 16 Jul 2026 13:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210036; cv=none; b=fZvCJZLfZvOirZy576fuBrHy32CqgTL0lii8iKFOOHfVW39hQEBXcWjN0jC7R5w8QVmoBfKZ2zPfd3VoKkflFM/VWup5Mj/ct9YLhQBV/e6Cdte2HbvWXO0Qly91llPvllo0fgadrZmaH0u7m3nkpIwXg3DdUV4/4/gvrJBeuXQ=
+	t=1784210039; cv=none; b=u6HvO+k8Py4gE5XJ8S7HVCsjjtK9bsW+kmX+agMU4EIOkZ7xqGdpuJM+W/nzJL0IX3PyYHsyzem27tB7u03Un18owbJ5e3fL/V0Es0rmb81ZyKucl44AkbFL8pdQiy3WbJd+MOzyU8KmBwgqFA8js6yF7bveNG3eptHJyzNIhBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210036; c=relaxed/simple;
-	bh=y9cB3lV8dah0t8da0NpB0CnsrTgdxp6q1slRKDpkOZs=;
+	s=arc-20240116; t=1784210039; c=relaxed/simple;
+	bh=1slGzhAAkC0LMirN+iP8pz8iYlW81xplY+FDGVwymn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOQqV0dDOG1YdZiX8XT4mr4rYmRO6yF1TKXyerMD8/pSJraU1uDYLKRc0mb0nIXlSni3cOWpJ8jLK5pRdPuoeb6ebGFzKUmTKzceMsmmTtaeHeZWBEvoeSxN+z0/nrcbH0MjBjWM9L4gdGt6VSKflgcFEIea2lQ00NUTCGhqcTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOPZoo53; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UcKlVBCx6+fcmSVK8PAhBsdn73olFJ2Ajz0h3cc7gIbWWHnU+jLMH+KZpS/rUDbGLig2BUZuW/TpVDVUePO2VDRU2s6Ugdwv9m2SLcS31+UacFZlT60LG2cfWCsDTB7klu252eyPUKE1fgjbwm3HNAiRU5AVPXrGYLukYgRwQvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2YoQO3p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOPZoo53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6BE1F000E9;
-	Thu, 16 Jul 2026 13:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2YoQO3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C447A1F000E9;
+	Thu, 16 Jul 2026 13:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210035;
-	bh=o/HOg2KqUh7+BkA7rxNIrK5UFcNLGx2VYF3pp1TGJtE=;
+	s=korg; t=1784210038;
+	bh=Jv/tLUa+w2a/MmMXl3eNXsm9fpo0JMeQrRzzEvhA0KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOPZoo53yedbmdfS7U4dawxYteNHqsaCbcPEq+SekvGv1Hzy+ksm7WWxaJYeqfRHX
-	 LtNMhr+SUEo8w0xrni2K+oGlKHtKn8/fz5vrSCjFQte58luHhCtTrc40QQsgIjtNhp
-	 nDRRFKwHM39S4Qf1evwvATCKdltXZwsbgK+y/3UI=
+	b=F2YoQO3pyE5bOZcZt/XJMxTZEVVWEgWuQhQbSyGD58C3aS/sTen3iudsL9DjYdr6r
+	 ISF/bHiBk9hAPDyE0YWBdBSnVS8Av5rL/i6l839hv/IGzbgBXiTN+vdjpVVWbsbBVV
+	 OUxkFsRhjYiUC/06rnHamSFa+1KKA/XSWIJQDyV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 7.1 414/518] rqspinlock: Fix order in raw_res_spin_(un)lock_irq to allow schedule
-Date: Thu, 16 Jul 2026 15:31:22 +0200
-Message-ID: <20260716133056.895637621@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Andrii Kuchmenko <capyenglishlite@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>
+Subject: [PATCH 7.1 415/518] module: decompress: check return value of module_extend_max_pages()
+Date: Thu, 16 Jul 2026 15:31:23 +0200
+Message-ID: <20260716133056.917815317@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -53,60 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Andrii Kuchmenko <capyenglishlite@gmail.com>
 
-commit b48bd16eb9fc57a463a337ca148516cdf3212d61 upstream.
+commit 786d2d84416a9a1c1a47b71a68d679d886284be2 upstream.
 
-raw_res_spin_unlock_irqrestore() calls raw_res_spin_unlock() and then
-restores interrupts, this means preemption is enabled when interrupts
-are still disabled (as part of raw_res_spin_unlock()) so this cannot
-trigger an actual preemption.
-This is inconsistent with other spinlock implementations
-(raw_spin_unlock_irqrestore() and bpf_res_spin_unlock_irqrestore()
-itself).
+module_extend_max_pages() calls kvrealloc() internally and returns
+-ENOMEM on allocation failure. The return value is never checked.
 
-Adjust the macro to ensure interrupts are enabled before enabling
-preemption, allowing to schedule at that point. Make the same
-modification in the error path of raw_res_spin_lock_irqsave().
+If the initial allocation fails, info->pages remains NULL and
+info->max_pages remains 0. Subsequent calls to module_get_next_page()
+will attempt to dynamically grow the array by calling
+module_extend_max_pages(info, 0) since info->used_pages is 0. This
+results in kvrealloc(NULL, 0) returning ZERO_SIZE_PTR, which is treated
+as a success, leading to a dereference of ZERO_SIZE_PTR and a kernel
+oops.
 
-Fixes: 101acd2e78b1 ("rqspinlock: Add macros for rqspinlock usage")
+Fix: add the missing error check after module_extend_max_pages() and
+return immediately on failure. This matches the pattern used by every
+other kvrealloc() caller in the module loading path.
+
+Fixes: b1ae6dc41eaa ("module: add in-kernel support for decompressing")
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
 Cc: stable@vger.kernel.org
-Acked-by: Arnd Bergmann <arnd@arndb.de> # asm-generic
-Acked-by: Waiman Long <longman@redhat.com>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
-Link: https://lore.kernel.org/r/20260610090431.32427-1-gmonaco@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Kuchmenko <capyenglishlite@gmail.com>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+[Sami: Corrected the analysis in the commit message.]
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/rqspinlock.h |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ kernel/module/decompress.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/asm-generic/rqspinlock.h
-+++ b/include/asm-generic/rqspinlock.h
-@@ -243,12 +243,20 @@ static __always_inline void res_spin_unl
- 	({                                        \
- 		int __ret;                        \
- 		local_irq_save(flags);            \
--		__ret = raw_res_spin_lock(lock);  \
--		if (__ret)                        \
-+		preempt_disable();                \
-+		__ret = res_spin_lock(lock);      \
-+		if (__ret) {                      \
- 			local_irq_restore(flags); \
-+			preempt_enable();         \
-+		}                                 \
- 		__ret;                            \
- 	})
+--- a/kernel/module/decompress.c
++++ b/kernel/module/decompress.c
+@@ -307,6 +307,8 @@ int module_decompress(struct load_info *
+ 	 */
+ 	n_pages = DIV_ROUND_UP(size, PAGE_SIZE) * 2;
+ 	error = module_extend_max_pages(info, n_pages);
++	if (error)
++		return error;
  
--#define raw_res_spin_unlock_irqrestore(lock, flags) ({ raw_res_spin_unlock(lock); local_irq_restore(flags); })
-+#define raw_res_spin_unlock_irqrestore(lock, flags) \
-+	({                                          \
-+		res_spin_unlock(lock);              \
-+		local_irq_restore(flags);           \
-+		preempt_enable();                   \
-+	})
- 
- #endif /* __ASM_GENERIC_RQSPINLOCK_H */
+ 	data_size = MODULE_DECOMPRESS_FN(info, buf, size);
+ 	if (data_size < 0) {
 
 
