@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49E041F7D5;
-	Thu, 16 Jul 2026 13:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B8441E6D4;
+	Thu, 16 Jul 2026 13:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784208999; cv=none; b=HWFIWtK4pWbZOLWdmQedI+BKvw4InNHIhXp79kwR2KVx2HnXzA/zZWGK0vPDTZt/m9NZq78RNVGD3tmCZdSghLvl0CDgQFADeitlRMJdvWEt4sogG+hKAJFZhWxsw2vSC77r682LKZdK+xk4wVmXa4msyE29r0GlcXuL7c7H3oo=
+	t=1784209001; cv=none; b=QPgs86dG8G0YqBJa1aDG9EMGuIZ4b9ssWEmwzpEei6O53bMrt7YvunhXvxOsYz3QT9/gbKsjuIDtU8qlY9eRCX18Rk9i6O/oRODwTf3XE74hYY1F6NvTFUPkTqrW8DxitX0t+PmxJDI411QTRFGqu7V8GuM2pzILp4Ontrub6a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784208999; c=relaxed/simple;
-	bh=vFaSiET22ZhNCrRjDJSnDY832HFF1N/+NZ4p1XVEfgU=;
+	s=arc-20240116; t=1784209001; c=relaxed/simple;
+	bh=6X8PpLPqa4fhydxuhgV9OY62xQi0MXe/YLnTowvMgcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iRJBzD1PdVsOrTn1pI2Kw8jR4EsC+1O+dTPXuFD62PZvsZjMhzmuKUT3VUMemmo/HiI9SJp/f9amCgRDqyj5lNeNF0XbJmEX/6oxYhKylwUrnr+dD6wCYVTpmLLBm4Gz/KhH5Y6C1VUnQU1pz7MVC0aLyWYhw5N5ZNTXKFdVZ0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnWa7ydN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s16gttYN9XLolxFT9v3nJK6wyVUG6BWUrffbMSw5ZvkWhpMeqzU2uoy3ml7qVECqrfBdD5mx6n92RWwOk0pycteYQlCCoyHhcbQlQzkzzvs0CvHifiwAIbdZScoBxzs9XDHzcrpnIc9caLQVxxWMJfNyxo4VsYEsFNnJiKCOP+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lq7tdJud; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnWa7ydN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECCE1F000E9;
-	Thu, 16 Jul 2026 13:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lq7tdJud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912AE1F000E9;
+	Thu, 16 Jul 2026 13:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784208997;
-	bh=NWX+Uf7vuzb/w1gB5tAjseIDx0NcVIlr/MFrNGS2XSk=;
+	s=korg; t=1784209000;
+	bh=iAwSMhtvFSNlmNKBaYyFiJnTBRpqQZ7ZmBiKLBBrN4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnWa7ydNmfv+RFXH5eqwVTRPrWOv13sGjmFXXh/EMRIcleMnnbmMoUm5FYsk0qUyc
-	 AF7T+UPm7HUSEizCtumNqXWLaGOLAG9s2sTLu0+4t+CytDrQQYJ1jsyE5N1KUsImQL
-	 CYXqjheJR+1LeYNfVX0DuyiPK5rjVyGa14an9z68=
+	b=Lq7tdJudmUUivntzK7JPFrj3+vC2HKN6tSvFyFlNm1snqhllCImSISq3a8XQurJ1U
+	 Pmft/n3+6yYhJd7UIieIOb7VNM1cN1rY5v+SeMDEh0gek7vD1zulEBTBdudxj6zXT9
+	 +e5UJzjjzCpzQLxg3vAFRe8GPS/VWbkoAp0yxcsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Haoze Xie <royenheart@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.1 019/518] rust: block: fix GenDisk cleanup paths
-Date: Thu, 16 Jul 2026 15:24:47 +0200
-Message-ID: <20260716133048.196970042@linuxfoundation.org>
+	Gary Guo <gary@garyguo.net>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 002/518] rust: str: clean unused import for Rust >= 1.98
+Date: Thu, 16 Jul 2026 15:24:30 +0200
+Message-ID: <20260716133047.830656300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -55,82 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoze Xie <royenheart@gmail.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 2957771379fa335103a4b539db57bb2271e12142 upstream.
+[ Upstream commit 3fff4271809b57182c4011811e96556bdd4cb2f9 ]
 
-GenDiskBuilder::build() still has fallible work after
-__blk_mq_alloc_disk(), but its error path only recovers the
-foreign queue data. That leaks the temporary gendisk and
-request_queue until later teardown. If the caller moved the last
-Arc<TagSet<T>> into build(), the leaked queue can retain blk-mq
-state after the tag set is dropped.
+Starting with Rust 1.98.0 (expected 2026-08-20), the compiler has changed
+how the resolution algorithm works [1] in upstream commit c4d84db5f184
+("Resolver: Batched import resolution."), and it now spots:
 
-Fix the pre-registration failure path by dropping the temporary
-gendisk reference with put_disk() before recovering queue_data,
-so disk_release() can tear down the owned queue.
+    error: unused import: `flags::*`
+     --> rust/kernel/str.rs:7:9
+      |
+    7 |         flags::*,
+      |         ^^^^^^^^
+      |
+      = note: `-D unused-imports` implied by `-D warnings`
+      = help: to override `-D warnings` add `#[allow(unused_imports)]`
 
-Also pair GenDisk::drop() with put_disk() after del_gendisk().
-Once a Rust GenDisk has been added with device_add_disk(),
-del_gendisk() only unregisters it; the final gendisk reference
-still has to be dropped to complete the release path.
+It happens to not be needed because the `prelude::*` already provides
+the flags.
 
-Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
-Signed-off-by: Haoze Xie <royenheart@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/b70aff9a920cc42110fe5cf454c3099561863519.1780063368.git.royenheart@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Thus clean it up.
+
+Cc: stable@vger.kernel.org # Needed in 6.18.y and later (prelude added to `str`).
+Link: https://github.com/rust-lang/rust/pull/145108 [1]
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260609104152.261145-2-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/block/mq/gen_disk.rs |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ rust/kernel/str.rs | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/rust/kernel/block/mq/gen_disk.rs
-+++ b/rust/kernel/block/mq/gen_disk.rs
-@@ -150,6 +150,19 @@ impl GenDiskBuilder {
-         // SAFETY: `gendisk` is a valid pointer as we initialized it above
-         unsafe { (*gendisk).fops = &TABLE };
+diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
+index a7fccd4c4f3b18..4517c1bc547afb 100644
+--- a/rust/kernel/str.rs
++++ b/rust/kernel/str.rs
+@@ -4,7 +4,6 @@
  
-+        let cleanup_failure = ScopeGuard::new_with_data((gendisk, data), |(gendisk, data)| {
-+            // SAFETY: `gendisk` came from `__blk_mq_alloc_disk()` above and
-+            // has not been added to the VFS on this cleanup path.
-+            unsafe { bindings::put_disk(gendisk) };
-+            // SAFETY: `data` came from `into_foreign()` above and has not been
-+            // converted back on this cleanup path.
-+            drop(unsafe { T::QueueData::from_foreign(data) });
-+        });
-+
-+        // The failure guard now owns both pieces of cleanup; the early guard
-+        // must not run on this path anymore.
-+        recover_data.dismiss();
-+
-         let mut writer = NullTerminatedFormatter::new(
-             // SAFETY: `gendisk` points to a valid and initialized instance. We
-             // have exclusive access, since the disk is not added to the VFS
-@@ -172,7 +185,7 @@ impl GenDiskBuilder {
-             },
-         )?;
- 
--        recover_data.dismiss();
-+        cleanup_failure.dismiss();
- 
-         // INVARIANT: `gendisk` was initialized above.
-         // INVARIANT: `gendisk` was added to the VFS via `device_add_disk` above.
-@@ -215,6 +228,11 @@ impl<T: Operations> Drop for GenDisk<T>
-         // to the VFS.
-         unsafe { bindings::del_gendisk(self.gendisk) };
- 
-+        // SAFETY: By type invariant, `self.gendisk` was added to the VFS, so
-+        // `put_disk()` must follow `del_gendisk()` to drop the final gendisk
-+        // reference and trigger the remaining release path.
-+        unsafe { bindings::put_disk(self.gendisk) };
-+
-         // SAFETY: `queue.queuedata` was created by `GenDiskBuilder::build` with
-         // a call to `ForeignOwnable::into_foreign` to create `queuedata`.
-         // `ForeignOwnable::from_foreign` is only called here.
+ use crate::{
+     alloc::{
+-        flags::*,
+         AllocError,
+         KVec, //
+     },
+-- 
+2.53.0
+
 
 
