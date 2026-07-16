@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C8942A16C;
-	Thu, 16 Jul 2026 14:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC14642BE9F;
+	Thu, 16 Jul 2026 14:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212241; cv=none; b=StMwJQpL+DPLCgNdmN1oE4x557Lf+1NMRjX2LxatSJtwa3CpqT7/LgzD7hdCk0sUYcPcRifUkw2NuJa8uwzbmGw99CoQKYtfnXFsy7Q3x6uvu+Rr4qUwxr2hvuL9vN9mwLwxxVOCWGNgKPp9F4/uE82VgBTsqPI7JVZywUPpMhw=
+	t=1784212244; cv=none; b=ItUNjztlFQdjWIDp71UOeESAGok7rx7Vm9XRVT5IN0oWwSmKwYWI5bkk7jrsnBZlQb6p66hUB4bXS43hRla3U9wGiSmmve02WPR+j3HoL9gTnMUKOs8fJ8ORiHM7Q8OMtRIqDe5YsxhiUjJM6JbNaJYO6LQqf/OSrE0AsqRX+Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212241; c=relaxed/simple;
-	bh=Vx/C+KpSh2LCZPhc6QwK9cnCZkvCQ6Regaj6pNSwLTY=;
+	s=arc-20240116; t=1784212244; c=relaxed/simple;
+	bh=daP+afJpHW4UHJQqQ56/zcwwvOO+BMJLhfUVyeTc3jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+t4SyeTjyss5Ylm37XkMtm4/pnCuWejX2y7aYlfQAqHgM9VBzcSxCnSaMbCQg3z5Y00LgwVY2s1fomVQWCQOJzsa+dCWr7Rrs5BfVsM3rSNNRQANozWho7GFELelYERldPmITI9GnGWh8xED/S04H85wO2kzxZ/Ofdn1PxqO5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtP8M5IH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X4bIwAq2PLjs0LAnc7JihN6KgmSOUj+ztWxhsubyYDHMPaZSlWe8S4qO4PR/eIAUnCYJ6FjAh3S9gfbPsYM8qkd/9ZrE8C8Z61LMtv+VF44/RKbH81aEj1yfXBH/Jp4WWyT156OEnNRVWyFTE4d8JJCeAiXfW8enwiUumdThlDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRIbwKH5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtP8M5IH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5E11F000E9;
-	Thu, 16 Jul 2026 14:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRIbwKH5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1748F1F00A3A;
+	Thu, 16 Jul 2026 14:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212239;
-	bh=OCzrXtzZrItB3AxIkznkAUO32p0fpp4/t+Q0tsnluqA=;
+	s=korg; t=1784212242;
+	bh=wrcs9f3QxkDxHP3sE3+7jDML9Wa+wpOOpxz5qu7Ju/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QtP8M5IHZtDMbjhU4sKFVmz/0zYqiFy+Y8YnRIsBWAD99nKvZxzF3HKKx8IPfqO71
-	 D4OXSdi8m/7npkJQmnQCddSdw7QU5ANNEdN62nPJb9rO7moSK4l9XYGNIceH6329Sg
-	 tzvL399VBd9/nv2dpCrJtpg0wOV9DcEt7LHfwoEI=
+	b=IRIbwKH5NAWWtvJzLfctXYNQYK7iD+M+LCYFA4rYBSYWbR5Y8UPKOV2AlwZLIqMlm
+	 8P6Iuc5P1gKLDdVbd7wMqtOKoYfjGoFrDjAf8CPuDVJRMq3obB/5TDb8jkPMOBO0SY
+	 affz83UWmY+l/4bbvZ90NpH6itr3qFQLoWSnLds4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 253/349] usb: typec: ucsi: cancel pending work on system suspend
-Date: Thu, 16 Jul 2026 15:33:07 +0200
-Message-ID: <20260716133039.011512880@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>
+Subject: [PATCH 6.12 236/349] usb: mtu3: unmap request DMA on queue failure
+Date: Thu, 16 Jul 2026 15:32:50 +0200
+Message-ID: <20260716133038.645054853@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,116 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Menzel <pmenzel@molgen.mpg.de>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 7c4a234bd31a64a8dbd0140dc812da592c5e0787 upstream.
+commit 0bddda5a11665c210339de76d27ebbd1a2e0b43c upstream.
 
-On a Dell XPS 13 9360 (BIOS 2.21.0), entering system suspend (deep/S3)
-races a pending UCSI connector-change worker against the ACPI EC teardown.
-The worker evaluates the UCSI _DSM (GET_CONNECTOR_STATUS), whose AML
-accesses the Embedded Controller. By that point the ACPI EC has already
-been stopped for suspend, so the EC address space handler rejects the
-access with AE_BAD_PARAMETER, aborting the AML and failing the connector
-query:
+mtu3_gadget_queue() maps the request before checking whether
+the QMU GPD ring can accept another transfer. the request is
+returned with -EAGAIN before it is linked on the endpoint
+request list if mtu3_prepare_transfer() fails.
 
-    [22314.689495] ACPI: EC: interrupt blocked
-    [22314.711981] ACPI: PM: Preparing to enter system sleep state S3
-    [22314.743260] ACPI: EC: event blocked
-    [22314.743265] ACPI: EC: EC stopped
-    [22314.743267] ACPI: PM: Saving platform NVS memory
-    [22314.744241] ACPI Error: AE_BAD_PARAMETER, Returned by Handler for [EmbeddedControl] (20260408/evregion-303)
-    [22314.744432] ACPI Error: Aborting method \_SB.PCI0.LPCB.ECDV.ECW1 due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
-    [22314.744673] ACPI Error: Aborting method \ECWB due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
-    [22314.745201] ACPI Error: Aborting method \_SB.UBTC._DSM due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
-    [22314.745394] ACPI: \_SB_.UBTC: failed to evaluate _DSM c298836f-a47c-e411-ad36-631042b5008f rev:1 func:1 (0x1001)
-    [22314.745414] ucsi_acpi USBC000:00: ucsi_acpi_dsm: failed to evaluate _DSM 1
-    [22314.745424] ucsi_acpi USBC000:00: ucsi_handle_connector_change: GET_CONNECTOR_STATUS failed (-5)
+Normal completion and dequeue paths unmap requests from
+mtu3_req_complete(), but this error path never reaches that
+helper, so the DMA mapping is left active. Unmap the request
+before returning from the failed queue path.
 
-ucsi_acpi implements a resume callback but no suspend callback, so nothing
-cancels the connector-change work before the firmware/EC is torn down.
-
-Add a `ucsi_suspend()` core helper that cancels the pending init and
-connector-change work, and wire it into ucsi_acpi's PM ops. The connector
-state is re-read on resume by `ucsi_resume()`, so cancelling the work loses
-nothing.
-
-Fixes: 4e3a50293c2b ("usb: typec: ucsi: acpi: Implement resume callback")
+Fixes: df2069acb005 ("usb: Add MediaTek USB3 DRD driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Assisted-by: Claude Opus 4.8
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260703110738.8457-2-pmenzel@molgen.mpg.de
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260623093325.2105323-1-haoxiang_li2024@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c      |   20 ++++++++++++++++++++
- drivers/usb/typec/ucsi/ucsi.h      |    1 +
- drivers/usb/typec/ucsi/ucsi_acpi.c |   10 +++++++++-
- 3 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/usb/mtu3/mtu3_gadget.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1883,6 +1883,26 @@ static void ucsi_resume_work(struct work
+--- a/drivers/usb/mtu3/mtu3_gadget.c
++++ b/drivers/usb/mtu3/mtu3_gadget.c
+@@ -304,6 +304,7 @@ static int mtu3_gadget_queue(struct usb_
+ 
+ 	if (mtu3_prepare_transfer(mep)) {
+ 		ret = -EAGAIN;
++		usb_gadget_unmap_request(&mtu->g, req, mep->is_in);
+ 		goto error;
  	}
- }
  
-+int ucsi_suspend(struct ucsi *ucsi)
-+{
-+	int i;
-+
-+	/*
-+	 * Cancel pending work so it cannot access the firmware after the ACPI
-+	 * EC is stopped for suspend; state is re-read on resume.
-+	 */
-+	cancel_delayed_work_sync(&ucsi->work);
-+
-+	if (!ucsi->connector)
-+		return 0;
-+
-+	for (i = 0; i < ucsi->cap.num_connectors; i++)
-+		cancel_work_sync(&ucsi->connector[i].work);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(ucsi_suspend);
-+
- int ucsi_resume(struct ucsi *ucsi)
- {
- 	if (ucsi->connector)
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -465,6 +465,7 @@ int ucsi_send_command(struct ucsi *ucsi,
- 		      void *retval, size_t size);
- 
- void ucsi_altmode_update_active(struct ucsi_connector *con);
-+int ucsi_suspend(struct ucsi *ucsi);
- int ucsi_resume(struct ucsi *ucsi);
- 
- void ucsi_notify_common(struct ucsi *ucsi, u32 cci);
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -259,6 +259,13 @@ static void ucsi_acpi_remove(struct plat
- 				   ucsi_acpi_notify);
- }
- 
-+static int ucsi_acpi_suspend(struct device *dev)
-+{
-+	struct ucsi_acpi *ua = dev_get_drvdata(dev);
-+
-+	return ucsi_suspend(ua->ucsi);
-+}
-+
- static int ucsi_acpi_resume(struct device *dev)
- {
- 	struct ucsi_acpi *ua = dev_get_drvdata(dev);
-@@ -266,7 +273,8 @@ static int ucsi_acpi_resume(struct devic
- 	return ucsi_resume(ua->ucsi);
- }
- 
--static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, NULL, ucsi_acpi_resume);
-+static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, ucsi_acpi_suspend,
-+				ucsi_acpi_resume);
- 
- static const struct acpi_device_id ucsi_acpi_match[] = {
- 	{ "PNP0CA0", 0 },
 
 
