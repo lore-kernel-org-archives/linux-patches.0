@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B538342A14C;
-	Thu, 16 Jul 2026 14:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD6742D77B;
+	Thu, 16 Jul 2026 14:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212424; cv=none; b=phJXwBb4Sa9omty5qJAccxPrPm7YdW5iYYZsdjlAwo01qLZT2GaLv+hXFx124h/EuShoGz93Z3kSgPYrSZfSkvdwtmk8VzFCMgaiGEVrQi5elcbFmYKyAoh5vU7p+LSYC+VaTiopTIkEdXKOvvWO1tGAo7cUVNbsXJE7J1mzLVs=
+	t=1784212427; cv=none; b=qk4Bonr6zPZqwhiFOio2wxh1shfjtFLtZ2Ltaj1gLDau1destgM8MVhNS6L9jCNG7ScedSEYdqnUur2AjWMk0RCtFoHHl7F/+PANXlGzs9d5aBsQRdY90x376zElFt+E8CihKcY32g3cK8/tHMpQE+NTCl/jalXhPzvZhXdmYnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212424; c=relaxed/simple;
-	bh=g64v3oYteSk+zi/qNj+Wq/xSNmLp45uGnF3AYnVapN8=;
+	s=arc-20240116; t=1784212427; c=relaxed/simple;
+	bh=JTUjTTgymsJDGZSl/bRaX5oG/FE+S6YV8pfup/rPWo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBtIvYrYKtKcYxn2CskIn3Qtrcqo2Ud2TgRd9Ux28oYJLPcKRNHt5geAwU3E8chnUuW5vUS0qe0TSnOcZE3o4v5o69XSlFShQQmCY1Q/pRvRGzpstYQh+i1ojX3KOV4L2UYmKWVCAi6iohfWOutZOI0Qc4XdT7iS+uZsgGYQbps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAAxiTZK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EdddWscZVytRjfU2PiDt665sIGi6abHASIHw25PCVu+h1RmPWfIgGs+F6UEwk4yKVG8XJ7A3mNOp8dnKP++TeMelz9LI5f5txephmF/6rjj08rodeCo4WMty9Dd0y0bBdOmMctVlx6RfNGfQY7M3df0F7WWNaJaBONJnyXHDXWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xcaiy0/3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAAxiTZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2799F1F000E9;
-	Thu, 16 Jul 2026 14:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xcaiy0/3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03441F000E9;
+	Thu, 16 Jul 2026 14:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212423;
-	bh=kOyPsVwz9ecZKsPGUqNdnfD766YuKJL+XhGubQmb184=;
+	s=korg; t=1784212426;
+	bh=7wbyyjYrYuSeAWfqoZJsTOqWfLWhcklYISUyQ1MD5Dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TAAxiTZKoX8DWAHEmH7YpnT49vS5Da0+54f7d2aBq+AnLop4/V7/P68hxkto7cZfm
-	 pS0sRvItQZHoAguvcwtR55qigilV+vPYwWkZ1U2Y0wDx6oWSB5cvMeqMIckr84c6C8
-	 zONuhgHjHp9bcu+jQVjsRgMqFpBCvx5ZDQuAFHHA=
+	b=Xcaiy0/37LnXplSFmoRmNtGg0KXTu0gTAye92nTGHzE9/xuGa6bKn2AWFwXeiLHJf
+	 VYFVubY2yVe7Aag9ONikxWNgFSoLTYSvYHOOsXQ8r4aRC9i8/mQyJQahyLRiLfIFfW
+	 41EemiOYvil29AF7kk7on1sQ8vp6Q26v8YrGNoqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 320/349] KVM: VMX: Grab vmcs12 on CR8 interception update iff vCPU is in guest mode
-Date: Thu, 16 Jul 2026 15:34:14 +0200
-Message-ID: <20260716133040.476131441@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>
+Subject: [PATCH 6.12 321/349] udmabuf: fix DMA direction mismatch in release_udmabuf()
+Date: Thu, 16 Jul 2026 15:34:15 +0200
+Message-ID: <20260716133040.497988476@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,66 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit 7ef78d71ca713d8c00f7c34ddcf276c808143f77 upstream.
+commit fb7b1a0ab25a6077d26cb3829e31743972d4f31d upstream.
 
-When updating CR8 intercepts, get vmcs12 if and only if the vCPU is in
-guest mode so that a future change can have update CR8 intercepts during
-vCPU creation, without running afoul of get_vmcs12()'s lockdep assertion.
+begin_cpu_udmabuf() maps the sg_table with the caller-provided direction
+(e.g., DMA_TO_DEVICE for a write-only sync), and caches it in ubuf->sg
+for reuse.  However, release_udmabuf() always unmaps this sg_table with
+a hardcoded DMA_BIDIRECTIONAL, regardless of the direction that was
+originally used for the mapping.
 
-  ------------[ cut here ]------------
-  debug_locks && !(lock_is_held(&(&vcpu->mutex)->dep_map) || !refcount_read(&vcpu->kvm->users_count))
-  WARNING: arch/x86/kvm/vmx/nested.h:61 at get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline], CPU#0: syz.2.19/5879
-  WARNING: arch/x86/kvm/vmx/nested.h:61 at vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879, CPU#0: syz.2.19/5879
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 5879 Comm: syz.2.19 Not tainted syzkaller #0 PREEMPT(full)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-  RIP: 0010:get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline]
-  RIP: 0010:vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879
-  Call Trace:
-   <TASK>
-   apic_update_ppr arch/x86/kvm/lapic.c:984 [inline]
-   kvm_lapic_reset+0x1c24/0x2980 arch/x86/kvm/lapic.c:3023
-   kvm_vcpu_reset+0x44c/0x1bf0 arch/x86/kvm/x86.c:12986
-   kvm_arch_vcpu_create+0x746/0x8b0 arch/x86/kvm/x86.c:12847
-   kvm_vm_ioctl_create_vcpu+0x428/0x930 virt/kvm/kvm_main.c:4201
-   kvm_vm_ioctl+0x893/0xd50 virt/kvm/kvm_main.c:5159
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:597 [inline]
-   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+With CONFIG_DMA_API_DEBUG=y this produces:
 
-No functional change intended.
+  DMA-API: misc udmabuf: device driver frees DMA memory with different
+  direction [device address=0x000000044a123000] [size=4096 bytes]
+  [mapped with DMA_TO_DEVICE] [unmapped with DMA_BIDIRECTIONAL]
 
-Reported-by: syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>
-Closes: https://lore.kernel.org/all/6a2adf3b.3b0a2d4e.8c8d1.0012.GAE@google.com
+The issue was found during video playback when GStreamer performed a
+write-only DMA_BUF_IOCTL_SYNC on a udmabuf.  It can be reproduced
+with CONFIG_DMA_API_DEBUG=y by creating a udmabuf from a memfd,
+performing a write-only sync (DMA_BUF_SYNC_WRITE without
+DMA_BUF_SYNC_READ), and closing the file descriptor.
+
+Fix this by storing the DMA direction used when the sg_table is first
+created in begin_cpu_udmabuf(), and passing that same direction to
+put_sg_table() in release_udmabuf().
+
+Fixes: 284562e1f348 ("udmabuf: implement begin_cpu_access/end_cpu_access hooks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260618174347.1981064-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Reviewed-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patch.msgid.link/20260314232722.15555-1-mikhail.v.gavrilov@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma-buf/udmabuf.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6707,11 +6707,10 @@ static noinstr void vmx_l1d_flush(struct
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -28,6 +28,7 @@ struct udmabuf {
+ 	pgoff_t pagecount;
+ 	struct folio **folios;
+ 	struct sg_table *sg;
++	enum dma_data_direction sg_dir;
+ 	struct miscdevice *device;
+ 	pgoff_t *offsets;
+ 	struct list_head unpin_list;
+@@ -193,7 +194,7 @@ static void release_udmabuf(struct dma_b
+ 	struct device *dev = ubuf->device->this_device;
  
- void vmx_update_cr8_intercept(struct kvm_vcpu *vcpu, int tpr, int irr)
- {
--	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
- 	int tpr_threshold;
+ 	if (ubuf->sg)
+-		put_sg_table(dev, ubuf->sg, DMA_BIDIRECTIONAL);
++		put_sg_table(dev, ubuf->sg, ubuf->sg_dir);
  
- 	if (is_guest_mode(vcpu) &&
--		nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW))
-+	    nested_cpu_has(get_vmcs12(vcpu), CPU_BASED_TPR_SHADOW))
- 		return;
- 
- 	tpr_threshold = (irr == -1 || tpr < irr) ? 0 : irr;
+ 	unpin_all_folios(&ubuf->unpin_list);
+ 	kvfree(ubuf->offsets);
+@@ -213,6 +214,8 @@ static int begin_cpu_udmabuf(struct dma_
+ 		if (IS_ERR(ubuf->sg)) {
+ 			ret = PTR_ERR(ubuf->sg);
+ 			ubuf->sg = NULL;
++		} else {
++			ubuf->sg_dir = direction;
+ 		}
+ 	} else {
+ 		dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
 
 
