@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBDC42CB11;
-	Thu, 16 Jul 2026 14:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AFB42CB1D;
+	Thu, 16 Jul 2026 14:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211883; cv=none; b=DKEBH/a7NCiH90Orh7XybpaveXl+OASCh2Zk0SaQ6LXmiV6FeuPF53/V4OOgeiCsWeMikXO9rPsRJLruJoEmBQ6A8arcojBmgVF2LGSaLV/E5SO7BgxxFKOq5VTe25MrXNgOAj5cd4lM+33qhQZGrKL71Dr9E7csbkIR5yZIGjE=
+	t=1784211886; cv=none; b=lpbROLEi+yt9xD/caN4LG9aUh5ZNonv0OfAneENYb66r1Ky1fGbR1N1t0EcaajsNtJqCZvynwKiTipGQtA2A81CXyEk+xV2azdhtGhhWpn6EOB26qKQsbMTQHxRvHzcnw0Ojf3r0masthmd1lcCGU/iDiXxBYA9LM//hQcoKkV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211883; c=relaxed/simple;
-	bh=Tl6O3pDTppWeYKlZsLMHz6fj5trjCnY89F6M1UYsub0=;
+	s=arc-20240116; t=1784211886; c=relaxed/simple;
+	bh=+J8su4jnRYqb3ASOv59GmficKAz8K1APO9sdEcCGv5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ksG+v0lXcFajkwqQI04CpqYtU1YINCsWCohOApqE6/dYmm69GFaZVzcptiqoQng3rEd+dweS7N7+e7vBQjGqoYisspVzZg18lHKSO7OMSqzogMb6OGTMtAb7JyTSXL6Fw1/WtcKIfn6rGwgLRVvCthVevCOM0Lt+M6hp7FC1mz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmrIzRn0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b+iJSI+orji2W4Zg5Xio99Ic9Q97JofigIQ1ql6uEWOrsJEcnG9oQkMA/hJbag4P/Y7EVsULP04QQbrD/gsQjEFdt+NV44V6G7A+8xt+3VFUqKG28TB8/ggQk2L8L7ZIeEIWO3oFqx53s8X7WwJS6rRe6xK+dhr7zM+w5d4mX+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSlUu5aF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmrIzRn0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21471F00A3F;
-	Thu, 16 Jul 2026 14:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSlUu5aF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894E01F00ADE;
+	Thu, 16 Jul 2026 14:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211879;
-	bh=y3FQTYZpP7DcvRLmEqnT2sthI8EQ/KiYzo8FvbSe6uk=;
+	s=korg; t=1784211882;
+	bh=npP6PREmRY7eHY8tD5yGWzkRvRIfpZS0NMgZfCoUNS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmrIzRn0M+y1r5Podi5+gDEE0D97JWBYDx5UPRJkUtJEqnCGllLJhf9Oi7N8KrnBC
-	 lU7wqbuPuX2w4YQ6aHq9X4vzFFLvn5jaXbuILwM3E3Kz/1Zr1Exo6I5a3YgUg27xTp
-	 aDDiyxWnDbGGIiWZGWb1vIGkt2nRzhCBd7f6qrZY=
+	b=qSlUu5aF5SsPfuuCL8hYIdBM4/bZhrgpvqMdiNp0qoa4aFInytyAghLbCm+1DarL/
+	 G27b6NF9vouQ8B69L5nwhJkpCdbe7xacaXrzb+VV/4qvy5hR79bRN5SXsNQu0W+onp
+	 PyGDywAIa4QSQjU+WQ6JpaXHRpLWOPo3prrvvgrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.12 098/349] binder: fix UAF in binder_free_transaction()
-Date: Thu, 16 Jul 2026 15:30:32 +0200
-Message-ID: <20260716133035.508681893@linuxfoundation.org>
+	Martyn Welch <martyn@welchs.me.uk>,
+	Hao-Qun Huang <alvinhuang0603@gmail.com>
+Subject: [PATCH 6.12 116/349] staging: vme_user: fix location monitor leak in fake bridge
+Date: Thu, 16 Jul 2026 15:30:50 +0200
+Message-ID: <20260716133035.954782112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,95 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit f223d27a546c1e1f48d38fd67760e78f068fe8c4 upstream.
+commit e8422d89e8af41d87f0e9db564be8e2634f4c602 upstream.
 
-In binder_free_transaction(), the t->to_proc is read under the t->lock.
-However, once the t->lock is dropped, the to_proc can die in parallel.
-This leads to a use-after-free error when we attempt to acquire its
-inner lock right afterwards:
+fake_init() allocates a location monitor resource and links it into
+fake_bridge->lm_resources. The init error path frees this list, but
+fake_exit() only frees the slave and master resource lists. Loading
+and unloading the module therefore triggers a kmemleak warning:
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x1a0
-  Write of size 4 at addr ffff00001125da70 by task B/672
+  unreferenced object 0xffff8b8b82aebe40 (size 64):
+    comm "init", pid 1, jiffies 4294894572
+    backtrace (crc c1e013ef):
+      kmemleak_alloc+0x4e/0x90
+      __kmalloc_cache_noprof+0x338/0x430
+      0xffffffffc0602246
+      do_one_initcall+0x4f/0x320
+      do_init_module+0x68/0x270
+      load_module+0x2a3b/0x2d90
 
-  CPU: 20 UID: 0 PID: 672 Comm: B Not tainted 7.1.0-rc6-00284-g8e65320d91cd #4 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   _raw_spin_lock+0xe4/0x1a0
-   binder_free_transaction+0x8c/0x320
-   binder_send_failed_reply+0x21c/0x2f8
-   binder_thread_release+0x488/0x7e0
-   binder_ioctl+0x12c0/0x29a0
-  [...]
+Free the lm_resources list in fake_exit() as well, before fake_bridge
+is freed.
 
-  Allocated by task 675:
-   __kmalloc_cache_noprof+0x174/0x444
-   binder_open+0x118/0xb70
-   do_dentry_open+0x374/0x1040
-   vfs_open+0x58/0x3bc
-  [...]
-
-  Freed by task 212:
-   __kasan_slab_free+0x58/0x80
-   kfree+0x1a0/0x4a4
-   binder_proc_dec_tmpref+0x32c/0x5e0
-   binder_deferred_func+0xc48/0x104c
-   process_one_work+0x53c/0xbc0
-  [...]
-  ==================================================================
-
-To prevent this, pin the target thread (t->to_thread) to guarantee the
-target process remains alive. Undelivered transactions without a target
-thread are already safe, as the target process can only be the current
-context in those paths.
-
+Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
 Cc: stable <stable@kernel.org>
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://lore.kernel.org/all/aikJKVuny_eOivwN@google.com/
-Fixes: a370003cc301 ("binder: fix possible UAF when freeing buffer")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260619185233.2194678-2-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Martyn Welch <martyn@welchs.me.uk>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Link: https://patch.msgid.link/20260704065817.403111-1-alvinhuang0603@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/staging/vme_user/vme_fake.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -1654,10 +1654,19 @@ static void binder_txn_latency_free(stru
- 
- static void binder_free_transaction(struct binder_transaction *t)
+--- a/drivers/staging/vme_user/vme_fake.c
++++ b/drivers/staging/vme_user/vme_fake.c
+@@ -1239,6 +1239,7 @@ static void __exit fake_exit(void)
  {
-+	struct binder_thread *target_thread;
- 	struct binder_proc *target_proc;
+ 	struct list_head *pos = NULL;
+ 	struct list_head *tmplist;
++	struct vme_lm_resource *lm;
+ 	struct vme_master_resource *master_image;
+ 	struct vme_slave_resource *slave_image;
+ 	int i;
+@@ -1269,6 +1270,13 @@ static void __exit fake_exit(void)
  
- 	spin_lock(&t->lock);
- 	target_proc = t->to_proc;
-+	target_thread = t->to_thread;
-+	/*
-+	 * Pin target_thread to keep target_proc alive. Undelivered
-+	 * transactions with !target_thread are safe, as target_proc
-+	 * can only be the current context there.
-+	 */
-+	if (target_thread)
-+		atomic_inc(&target_thread->tmp_ref);
- 	spin_unlock(&t->lock);
- 
- 	if (target_proc) {
-@@ -1672,6 +1681,10 @@ static void binder_free_transaction(stru
- 			t->buffer->transaction = NULL;
- 		binder_inner_proc_unlock(target_proc);
- 	}
+ 	fake_crcsr_exit(fake_bridge);
+ 	/* resources are stored in link list */
++	list_for_each_safe(pos, tmplist, &fake_bridge->lm_resources) {
++		lm = list_entry(pos, struct vme_lm_resource, list);
++		list_del(pos);
++		kfree(lm);
++	}
 +
-+	if (target_thread)
-+		binder_thread_dec_tmpref(target_thread);
-+
- 	if (trace_binder_txn_latency_free_enabled())
- 		binder_txn_latency_free(t);
- 	/*
++	/* resources are stored in link list */
+ 	list_for_each_safe(pos, tmplist, &fake_bridge->slave_resources) {
+ 		slave_image = list_entry(pos, struct vme_slave_resource, list);
+ 		list_del(pos);
 
 
