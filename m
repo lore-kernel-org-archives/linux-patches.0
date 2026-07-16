@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950103FE679;
-	Thu, 16 Jul 2026 13:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6346429CD0;
+	Thu, 16 Jul 2026 13:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209704; cv=none; b=sj8twrabKtyGT213EybLUVKEVAI5MiTfAeqi+rcAEXMsPlykz9vi4Z69tYAPTwhTIolXRh3z4mWWtoq/L+Gf6KJ+X8gzHPCcW+vsMBOb4cU0cyl6Q6c/JQvfgDaY4VADd7l1WFgd9lsFa9YmZBjyj0l4jXXHwlOEuPZxz8QS/qk=
+	t=1784209709; cv=none; b=hxyRp4vYYKTYoeKT+WKx0hI7I2la5XfPMFRxiW7k4EXLF7XaEt/mHufd6/We+6AUK/FHUgzfUNLkOifNP9Be5YbBHKJTMsAsYRScQSppA+Tf4BNNJH84CgvJZjrv1ni/sAychMXPFbYmbuU2jqy5fWgRrBzDM0nsC3OwNM9oO6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209704; c=relaxed/simple;
-	bh=SbrjAwK7BP27eKmSD5UY7pXuJ7TkYIaNKXbPePdFkJ4=;
+	s=arc-20240116; t=1784209709; c=relaxed/simple;
+	bh=RDcTLqCZksYwmFip7/neuWX18XMJDvjHBfFVSrOcqjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eh3R7Zum0eSoYO3z0WvAqnTRqR7Eir9gEZDX2djLnX1eItGtjPHl+pnJoHT/V0SBbyI0F4KL7hzCijugVHWODqOLa0wMRLdocSN2kitFuLWN78utgcpyNOC4Iu1MfQlkHKPCMnoRbK1xHOsfpCclg0k5NcUi4wi4yrYYPyCN2kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tqo0lhUS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nDxKE5xki6W2QUNPr5q1CskPuAhzCs0yQioXQKCWY26DaLuxdS5eDrodnffRyN1TVqUBHCpNB0qLh+IwQ6EHyyCKdnHQnAv7jjnQJR6b/BnuPlLDB0VQT03YHKOEzwHeOlB5d99bAnP40k5QRrOm6VJXDpdFUEu3PRk9n9PM1o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBwwJRch; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tqo0lhUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9F91F00A3F;
-	Thu, 16 Jul 2026 13:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBwwJRch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9132B1F00A3E;
+	Thu, 16 Jul 2026 13:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209691;
-	bh=f/gX4sl1d6AzYWPp4FGhbfghwhMEiNeAGfjdc/4PZ+s=;
+	s=korg; t=1784209697;
+	bh=WzF//aFToG0oJdcA6nLNO5bcvcVszC+CG5l9LnfWg1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tqo0lhUSIiwHCF3XL2maBi0Q+Yvc5l4jnH2e6cLw0nfyWO1JkTbVZyoPEheFTUbTt
-	 J8QO5Zd4Nv5iBs/47pS0/rZTp+0YAiJPxdqtRtMf+uqmMi/IysANRcOVP7GHFToMDH
-	 IQT+gugdiBz8x0+4sC4sRr0NAAwAVa5TLuifegNo=
+	b=RBwwJRchqgk7qxxtwDfch13Jpddy40NFxiLnk1Sa8EcCBzXHGRq1vR+W06ZDw1zQq
+	 W9+D1gYG5BH5YN2OgOAo7+aUs+tuEJ/tCErwbjWSbUBIw9w/oEGYFhslJ8oWakdB6l
+	 ZYV47G934jB7EoNTOUUL0YWsn338R/TkNmJGKM4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	syzbot+b7dfbed0c6c2b5e9fd34@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.1 282/518] xfs: use null daddr for unset first bad log block
-Date: Thu, 16 Jul 2026 15:29:10 +0200
-Message-ID: <20260716133053.982856864@linuxfoundation.org>
+Subject: [PATCH 7.1 284/518] xfs: pass back updated nb from xfs_growfs_compute_deltas
+Date: Thu, 16 Jul 2026 15:29:12 +0200
+Message-ID: <20260716133054.029956563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,55 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit cc9af5e461ea5f6e37738f3f1e41c45a9b7f45d6 upstream.
+commit 4cb6e89a3d901d4da515977e55f9a9a779238660 upstream.
 
-xlog_do_recovery_pass() may return before setting first_bad.  The caller
-must distinguish that case from an error at a valid log block, including
-block zero after the log wraps.
+xfs_growfs_compute_deltas can update nb for corner cases like a number
+of blocks that would create a less the minimal sized AG, or running
+past the max AG limit.  Pass back the calculated value to the caller,
+as it relies on to calculate the new number of perag structures.
 
-Initialize first_bad to XFS_BUF_DADDR_NULL and test it explicitly before
-treating the error as a torn write.
+Note that the grown file system size is not affected by this
+miscalculation as it uses the passed back delta value.
 
-Fixes: 7088c4136fa1 ("xfs: detect and trim torn writes during log recovery")
-Suggested-by: Darrick J. Wong <djwong@kernel.org>
-Reported-by: syzbot+b7dfbed0c6c2b5e9fd34@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b7dfbed0c6c2b5e9fd34
-Cc: stable@vger.kernel.org # v4.5
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Fixes: a49b7ff63f98 ("xfs: Refactoring the nagcount and delta calculation")
+Cc: stable@vger.kernel.org # v7.0
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_log_recover.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/xfs/libxfs/xfs_ag.c | 10 +++++-----
+ fs/xfs/libxfs/xfs_ag.h |  2 +-
+ fs/xfs/xfs_fsops.c     |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -1028,7 +1028,7 @@ xlog_verify_head(
+diff --git a/fs/xfs/libxfs/xfs_ag.c b/fs/xfs/libxfs/xfs_ag.c
+index dcd2f93b6a6c..0c5f0548021f 100644
+--- a/fs/xfs/libxfs/xfs_ag.c
++++ b/fs/xfs/libxfs/xfs_ag.c
+@@ -866,7 +866,7 @@ xfs_ag_shrink_space(
+ void
+ xfs_growfs_compute_deltas(
+ 	struct xfs_mount	*mp,
+-	xfs_rfsblock_t		nb,
++	xfs_rfsblock_t		*nb,
+ 	int64_t			*deltap,
+ 	xfs_agnumber_t		*nagcountp)
  {
- 	struct xlog_rec_header	*tmp_rhead;
- 	char			*tmp_buffer;
--	xfs_daddr_t		first_bad;
-+	xfs_daddr_t		first_bad = XFS_BUF_DADDR_NULL;
- 	xfs_daddr_t		tmp_rhead_blk;
- 	int			found;
- 	int			error;
-@@ -1057,7 +1057,8 @@ xlog_verify_head(
- 	 */
- 	error = xlog_do_recovery_pass(log, *head_blk, tmp_rhead_blk,
- 				      XLOG_RECOVER_CRCPASS, &first_bad);
--	if ((error == -EFSBADCRC || error == -EFSCORRUPTED) && first_bad) {
-+	if ((error == -EFSBADCRC || error == -EFSCORRUPTED) &&
-+	    first_bad != XFS_BUF_DADDR_NULL) {
- 		/*
- 		 * We've hit a potential torn write. Reset the error and warn
- 		 * about it.
-@@ -3575,4 +3576,3 @@ xlog_recover_cancel(
- 	if (xlog_recovery_needed(log))
- 		xlog_recover_cancel_intents(log);
+@@ -874,19 +874,19 @@ xfs_growfs_compute_deltas(
+ 	int64_t		delta;
+ 	xfs_agnumber_t	nagcount;
+ 
+-	nb_div = nb;
++	nb_div = *nb;
+ 	nb_mod = do_div(nb_div, mp->m_sb.sb_agblocks);
+ 	if (nb_mod && nb_mod >= XFS_MIN_AG_BLOCKS)
+ 		nb_div++;
+ 	else if (nb_mod)
+-		nb = nb_div * mp->m_sb.sb_agblocks;
++		*nb = nb_div * mp->m_sb.sb_agblocks;
+ 
+ 	if (nb_div > XFS_MAX_AGNUMBER + 1) {
+ 		nb_div = XFS_MAX_AGNUMBER + 1;
+-		nb = nb_div * mp->m_sb.sb_agblocks;
++		*nb = nb_div * mp->m_sb.sb_agblocks;
+ 	}
+ 	nagcount = nb_div;
+-	delta = nb - mp->m_sb.sb_dblocks;
++	delta = *nb - mp->m_sb.sb_dblocks;
+ 	*deltap = delta;
+ 	*nagcountp = nagcount;
  }
--
+diff --git a/fs/xfs/libxfs/xfs_ag.h b/fs/xfs/libxfs/xfs_ag.h
+index 16a9b43a3c27..8aa4266c5571 100644
+--- a/fs/xfs/libxfs/xfs_ag.h
++++ b/fs/xfs/libxfs/xfs_ag.h
+@@ -330,7 +330,7 @@ int xfs_ag_init_headers(struct xfs_mount *mp, struct aghdr_init_data *id);
+ int xfs_ag_shrink_space(struct xfs_perag *pag, struct xfs_trans **tpp,
+ 			xfs_extlen_t delta);
+ void
+-xfs_growfs_compute_deltas(struct xfs_mount *mp, xfs_rfsblock_t nb,
++xfs_growfs_compute_deltas(struct xfs_mount *mp, xfs_rfsblock_t *nb,
+ 			int64_t *deltap, xfs_agnumber_t *nagcountp);
+ int xfs_ag_extend_space(struct xfs_perag *pag, struct xfs_trans *tp,
+ 			xfs_extlen_t len);
+diff --git a/fs/xfs/xfs_fsops.c b/fs/xfs/xfs_fsops.c
+index 8d64d904d73c..436857356a0a 100644
+--- a/fs/xfs/xfs_fsops.c
++++ b/fs/xfs/xfs_fsops.c
+@@ -124,7 +124,7 @@ xfs_growfs_data_private(
+ 			mp->m_sb.sb_rextsize);
+ 	if (error)
+ 		return error;
+-	xfs_growfs_compute_deltas(mp, nb, &delta, &nagcount);
++	xfs_growfs_compute_deltas(mp, &nb, &delta, &nagcount);
+ 
+ 	/*
+ 	 * Reject filesystems with a single AG because they are not
+-- 
+2.55.0
+
 
 
