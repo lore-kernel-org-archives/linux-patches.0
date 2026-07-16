@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB503CEB92;
-	Thu, 16 Jul 2026 14:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D126043303D;
+	Thu, 16 Jul 2026 14:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212077; cv=none; b=mRfZ/6h3JOmL1OBzlPJplcOd/mCyIivATeG6RG644cTeYGbRZ8eOuNsFK7LlaqIg/mDF4BgeKLIFW40eb2xdvlvdIgQ9E6azjO+FtTpA4YKdSGf9KFfhJmaCxl39+YjCkboM/a6FJ34ce+BZgCmmsrxP22dJdv9tbgVI4oMNcpw=
+	t=1784212079; cv=none; b=HUXo2o746ZtUHmIBF8lM9G2UdxW4LUqqEWp5FHIYDdMdtFEsO1neS9gOW79De0WAKXxF3ElDjqurGxVHqwPmYhOVJEAfpx+lqHlrvtlhEorz6g/HrZZQFc9Dzz4SzMwB1wIf+qKv6/pUdT9XgTgrfhGq4Kok1hGlmKx576qH/rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212077; c=relaxed/simple;
-	bh=kYRuTfKM+3JcUpDmIaNsvdwAGWCjCbnVOCdrnijTIjw=;
+	s=arc-20240116; t=1784212079; c=relaxed/simple;
+	bh=tQKqmni8+1x60NHuaxAglm/Y9SmteR6WZduc11akzAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGQG3ijTfid2XyrbfNeZHA3MPtSfpZA7UV//MfrQ7tdoSoaOL9S18RcTQGORrfJQqS+DxyS1gQOg7bQ44qivqWVtg6/bgAnTNvPGCANGy9eN68QCdvONW8nKvYKSzYcXP83KHXySn8d3s9aH09Pdtw3SOsExTDLPHUSIzWpL39A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRGrqJut; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TjWRZXIFdauklzcAeFZmt5p+4lG04+pE2Bejo6jDd2vIiWPcfGCjazWjBR0kG67oU0z4kDEgpPpi3TDVUtpOia+xBh12Vm9oU5CUHt34GE/li3Fw5smzzLBe0Hvm/8cIQCu4NJRkovqI9rDJZQOitCKKmuG23RVgJ+SixxTPeaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va9+QKEu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRGrqJut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4F21F00A3A;
-	Thu, 16 Jul 2026 14:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va9+QKEu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A181F000E9;
+	Thu, 16 Jul 2026 14:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212076;
-	bh=idf6v/y0YT9/g5+YQyQ77QrL1sFzy/uVdA0UCrYjw4M=;
+	s=korg; t=1784212078;
+	bh=2w54GmhN0I8FgaBJoZ8K9V4mXBbhEVojCg2UHE/g050=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yRGrqJutpPj0KDopFupAFXebQrxQLRPcRg5SMHAKvyq6f0SveFF7LaVGteuh4KuF4
-	 DIUmTFIbhFj7pCA2NzG39KfAzmHEUMfoA4t8xJdKYKBPJ48IhRev4lRfNhR58+zMEc
-	 aJwPNOrgM+AtCQHiqWqCeT/jeH1QHigO81X2430s=
+	b=Va9+QKEuPao6XpyeL1Lp4Mp0I0/oMQBeQv9fQ6Oabx7jO0yxk+HvWE0Zqqc7P/lss
+	 NzBCFMAmZtk8AXasfMUGgcrjfBvB6JkMuoNDJELFOVoWfsyDeiwVazmrKydmVDMNzz
+	 goJT9WuW3h5g018Vi69ZOq18cU1hZ2MjezbtDf3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.12 147/349] netfilter: handle unreadable frags
-Date: Thu, 16 Jul 2026 15:31:21 +0200
-Message-ID: <20260716133036.664346260@linuxfoundation.org>
+Subject: [PATCH 6.12 148/349] netfilter: ebtables: module names must be null-terminated
+Date: Thu, 16 Jul 2026 15:31:22 +0200
+Message-ID: <20260716133036.689398839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -52,174 +51,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-commit da5b58478a9c1b85608c9e40a3b8432d071b409e upstream.
+commit 084d23f818321390509e9738a0b08bbf46df6425 upstream.
 
-sashiko reports:
- When an skb with unreadable fragments (such as from devmem TCP, where
- skb_frags_readable(skb) returns false) is processed by the u32 module,
- skb_copy_bits() will safely return a negative error code [..]
+We need to explicitly check the length, else we may pass non-null
+terminated string to request_module().
 
-xt_u32: bail out with hotdrop in this case.
-gather_frags: return -1, just as if we had no fragment header.
-nfnetlink_queue: restrict to the linear part.
-nfnetlink_log: restrict to the linear part.
-
-v2:
- - skb_zerocopy helpers don't copy readable flag, i.e. nfnetlink_queue
- is broken too
- xt_u32 shouldn't return true if hotdrop was set.
-
-Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
 Cc: stable@vger.kernel.org
-Acked-by: Mina Almasry <almasrymina@google.com>
+Fixes: bcf493428840 ("netfilter: ebtables: Fix extension lookup with identical name")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter/nf_conntrack_reasm.c |    2 +-
- net/netfilter/nfnetlink_log.c           |   26 +++++++++++++++++---------
- net/netfilter/nfnetlink_queue.c         |   16 ++++++++++++----
- net/netfilter/xt_u32.c                  |   16 +++++++++++-----
- 4 files changed, 41 insertions(+), 19 deletions(-)
+ net/bridge/netfilter/ebtables.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -415,7 +415,7 @@ find_prev_fhdr(struct sk_buff *skb, u8 *
- 			return -1;
- 		}
- 		if (skb_copy_bits(skb, start, &hdr, sizeof(hdr)))
--			BUG();
-+			return -1;
- 		if (nexthdr == NEXTHDR_AUTH)
- 			hdrlen = ipv6_authlen(&hdr);
- 		else
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -668,7 +668,7 @@ __build_packet_message(struct nfnl_log_n
- 			goto nla_put_failure;
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -402,6 +402,9 @@ ebt_check_match(struct ebt_entry_match *
+ 	    left - sizeof(struct ebt_entry_match) < m->match_size)
+ 		return -EINVAL;
  
- 		if (skb_copy_bits(skb, 0, nla_data(nla), data_len))
--			BUG();
-+			goto nla_put_failure;
- 	}
- 
- 	nlh->nlmsg_len = inst->skb->tail - old_tail;
-@@ -690,6 +690,21 @@ static const struct nf_loginfo default_l
- 	},
- };
- 
-+static unsigned int nfulnl_get_copy_len(const struct nf_loginfo *li,
-+					const struct sk_buff *skb,
-+					unsigned int copy_len)
-+{
-+	unsigned int len = skb->len;
++	if (strnlen(m->u.name, XT_EXTENSION_MAXNAMELEN) == XT_EXTENSION_MAXNAMELEN)
++		return -EINVAL;
 +
-+	if ((li->u.ulog.flags & NF_LOG_F_COPY_LEN) &&
-+	    li->u.ulog.copy_len < copy_len)
-+		copy_len = li->u.ulog.copy_len;
-+	if (!skb_frags_readable(skb))
-+		len = skb_headlen(skb);
-+
-+	return min(len, copy_len);
-+}
-+
- /* log handler for internal netfilter logging api */
- static void
- nfulnl_log_packet(struct net *net,
-@@ -782,14 +797,7 @@ nfulnl_log_packet(struct net *net,
- 		break;
- 
- 	case NFULNL_COPY_PACKET:
--		data_len = inst->copy_range;
--		if ((li->u.ulog.flags & NF_LOG_F_COPY_LEN) &&
--		    (li->u.ulog.copy_len < data_len))
--			data_len = li->u.ulog.copy_len;
--
--		if (data_len > skb->len)
--			data_len = skb->len;
--
-+		data_len = nfulnl_get_copy_len(li, skb, inst->copy_range);
- 		size += nla_total_size(data_len);
- 		break;
- 
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -676,6 +676,17 @@ static int nfqnl_put_master_ifindex(stru
- }
- #endif
- 
-+static unsigned int nfqnl_get_data_len(const struct sk_buff *entskb,
-+				       unsigned int copy_range)
-+{
-+	unsigned int data_len = entskb->len;
-+
-+	if (!skb_frags_readable(entskb))
-+		data_len = skb_headlen(entskb);
-+
-+	return min(data_len, copy_range);
-+}
-+
- static struct sk_buff *
- nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 			   struct nf_queue_entry *entry,
-@@ -741,10 +752,7 @@ nfqnl_build_packet_message(struct net *n
- 		    nf_queue_checksum_help(entskb))
- 			return NULL;
- 
--		data_len = READ_ONCE(queue->copy_range);
--		if (data_len > entskb->len)
--			data_len = entskb->len;
--
-+		data_len = nfqnl_get_data_len(entskb, READ_ONCE(queue->copy_range));
- 		hlen = skb_zerocopy_headlen(entskb);
- 		hlen = min_t(unsigned int, hlen, data_len);
- 		size += sizeof(struct nlattr) + hlen;
---- a/net/netfilter/xt_u32.c
-+++ b/net/netfilter/xt_u32.c
-@@ -14,8 +14,8 @@
- #include <linux/netfilter/x_tables.h>
- #include <linux/netfilter/xt_u32.h>
- 
--static bool u32_match_it(const struct xt_u32 *data,
--			 const struct sk_buff *skb)
-+static int u32_match_it(const struct xt_u32 *data,
-+			const struct sk_buff *skb)
- {
- 	const struct xt_u32_test *ct;
- 	unsigned int testind;
-@@ -40,7 +40,8 @@ static bool u32_match_it(const struct xt
- 			return false;
- 
- 		if (skb_copy_bits(skb, pos, &n, sizeof(n)) < 0)
--			BUG();
-+			return -1;
-+
- 		val   = ntohl(n);
- 		nnums = ct->nnums;
- 
-@@ -68,7 +69,7 @@ static bool u32_match_it(const struct xt
- 
- 				if (skb_copy_bits(skb, at + pos, &n,
- 						    sizeof(n)) < 0)
--					BUG();
-+					return -1;
- 				val = ntohl(n);
- 				break;
- 			}
-@@ -90,9 +91,14 @@ static bool u32_match_it(const struct xt
- static bool u32_mt(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct xt_u32 *data = par->matchinfo;
--	bool ret;
-+	int ret;
- 
- 	ret = u32_match_it(data, skb);
-+	if (ret < 0) {
-+		par->hotdrop = true;
-+		return false;
-+	}
-+
- 	return ret ^ data->invert;
- }
- 
+ 	match = xt_find_match(NFPROTO_BRIDGE, m->u.name, m->u.revision);
+ 	if (IS_ERR(match) || match->family != NFPROTO_BRIDGE) {
+ 		if (!IS_ERR(match))
 
 
