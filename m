@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BBA400981;
-	Thu, 16 Jul 2026 14:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0944C400981;
+	Thu, 16 Jul 2026 14:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210756; cv=none; b=E3SnMpjXqSHjmvS6Heb6Jx/hu380EqmDTpeaqm8v3IoAjqDSBdd4QUS2t7C2f7tjq+JRETdTTWZK+T2lf6M9RKu3nP2+K7OVO8bxOaW3ZNuCfTymRUlmKMGEBF+cKJqHHEbLLwyD0xFyQJKcLeWSgpXALsQBLsbiP7THkehJuTc=
+	t=1784210759; cv=none; b=LTHNWFWL4chm8pF5X0/jBw4nQ3i3hw5puWIw1IWzk763o+im9b/w9N0TRNnzLu0red/mO+Go0n06QWz2+IwNFmSxwONCgeS1t+C3UxNe7C7lgUJaDc6xSnopssQhDTLe/uMb0g3W3eGKZWg8MY+ifZv/Sv9ctxHbG7DO4iI03SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210756; c=relaxed/simple;
-	bh=aN/3YVUSNj5wQSrPFSRzjfYdzVq5sOzrQ+CFVK4gJaM=;
+	s=arc-20240116; t=1784210759; c=relaxed/simple;
+	bh=ta5AHVMyMyXgtYp9un91HKphm85n41sCQkkADj+tXcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8JKBWcHPzSEIZ/KEtgco8FCyvQyAB4W6fX6GQPjkR6jLgvYxVETy2AiQ4OGRN0VA/zBfbU/TEWb0Tt2JVAUpA+2eRMWhB1OX/HgSc6ok3FN93qYtuZopnqsghm7swZKRXLgcGdp7vlBkLe6Is6CCx0gAXKjYejlr8UKe5LYkcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eO/X6z2y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oJP9U3eP0AQEAnIL7pu1PHfPGsBflUHShgwaFfiI6dfeWcONt3wPtMoICa5brFJGdnEeHZgsK7+ZC2USQnJtJvzq5w5iiCN/PDhjJjRzLys7mosIEeOSXNUwD5vHRDMY7f91aVIdSoeE9sA1iU733czOtnqQ/tcoHWjKTj2uk8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofgkR8QY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eO/X6z2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3EF1F000E9;
-	Thu, 16 Jul 2026 14:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofgkR8QY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F69E1F00A3A;
+	Thu, 16 Jul 2026 14:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210755;
-	bh=I/MWnWJI/sahJozrRR4nlM+6xEcfnifXVCMiGwmD2+g=;
+	s=korg; t=1784210757;
+	bh=arLiRpzbOsE8JD4G2o8QdvUg62Wpcr8iWrGv0tH++pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eO/X6z2yhSBIy9GgvKskvnFVHZmY+KjVANZMTUPmaipds/2j3GyR8bYPYXmmt80la
-	 Q7lA2YsoO4foBNKc6C77Ko0dH2yy10lQFS7oDPuE9wGhVjA4M18LE48EQm0k7eHU8Z
-	 z1bwsGzg78v0AGlctOS7ZMQRUZsvS6KiCLRm2eRY=
+	b=ofgkR8QYkNp0rP9fFud9vpc63JdmHYsufoR1x5/nP2Ps3evKl1w2kqn+LC8ZwxOcN
+	 4cfOiqUcqDZLCVmdqSjjXInASVmdzI/XpJ0unP8jyp8WTB2Q1h/eWs5Nk4TdL6MfOp
+	 KISuouirUpG1fk87cngsYqp1V7/5hiRmODcOh7No=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>
-Subject: [PATCH 6.18 167/480] staging: rtl8723bs: fix OOB reads in is_ap_in_tkip() IE loop
-Date: Thu, 16 Jul 2026 15:28:34 +0200
-Message-ID: <20260716133048.320059002@linuxfoundation.org>
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	Luka Gejak <luka.gejak@linux.dev>
+Subject: [PATCH 6.18 168/480] staging: rtl8723bs: fix OOB write in HT_caps_handler()
+Date: Thu, 16 Jul 2026 15:28:35 +0200
+Message-ID: <20260716133048.343125271@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,69 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit 3bf39f711ff27c64be8680a8938bcc5001982e81 upstream.
+commit f8001e1a516ba3b495728c65b61f799cbfad6bd0 upstream.
 
-The loop in is_ap_in_tkip() iterates over IEs without verifying that
-enough bytes remain before dereferencing the IE header or its payload:
+HT_caps_handler() iterates pIE->length bytes and writes into
+HT_caps.u.HT_cap[], which is a fixed 26-byte array (sizeof struct
+HT_caps_element). Because pIE->length is a raw u8 from an over-the-air
+802.11 AssocResponse frame and is never validated, a malicious AP can
+set it up to 255, causing up to 229 bytes of out-of-bounds writes into
+adjacent fields of struct mlme_ext_info.
 
-- pIE->element_id and pIE->length are read without checking that
-  i + sizeof(*pIE) <= ie_length, so a truncated IE at the end of the
-  buffer causes an OOB read.
-
-- For WLAN_EID_VENDOR_SPECIFIC the code compares pIE->data + 12,
-  which requires pIE->length >= 16.  For WLAN_EID_RSN it compares
-  pIE->data + 8, requiring pIE->length >= 12.  Neither requirement
-  is checked.
-
-Add the missing IE header and payload bounds checks and guard each
-data access with an explicit pIE->length minimum, matching the
-pattern established in update_beacon_info().
+Truncate the iteration count to the size of HT_caps.u.HT_cap using
+umin() so that data from a longer-than-expected IE is silently ignored
+rather than written out of bounds, preserving interoperability with APs
+that pad the element. An early return on oversized IEs was considered
+but rejected: it would bypass the pmlmeinfo->HT_caps_enable = 1
+assignment that precedes the loop, silently disabling HT mode for APs
+that append extra bytes to the HT Capabilities IE.
 
 Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260522004531.1038924-7-hossu.alexandru@gmail.com
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Link: https://patch.msgid.link/20260522004531.1038924-5-hossu.alexandru@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_wlan_util.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_wlan_util.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
 +++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
-@@ -1333,15 +1333,23 @@ unsigned int is_ap_in_tkip(struct adapte
- 		for (i = sizeof(struct ndis_802_11_fix_ie); i < pmlmeinfo->network.ie_length;) {
- 			pIE = (struct ndis_80211_var_ie *)(pmlmeinfo->network.ies + i);
+@@ -935,7 +935,8 @@ void HT_caps_handler(struct adapter *pad
  
-+			if (i + sizeof(*pIE) > pmlmeinfo->network.ie_length)
-+				break;
-+			if (i + sizeof(*pIE) + pIE->length > pmlmeinfo->network.ie_length)
-+				break;
-+
- 			switch (pIE->element_id) {
- 			case WLAN_EID_VENDOR_SPECIFIC:
--				if ((!memcmp(pIE->data, RTW_WPA_OUI, 4)) && (!memcmp((pIE->data + 12), WPA_TKIP_CIPHER, 4)))
-+				if (pIE->length >= 16 &&
-+				    !memcmp(pIE->data, RTW_WPA_OUI, 4) &&
-+				    !memcmp((pIE->data + 12), WPA_TKIP_CIPHER, 4))
- 					return true;
+ 	pmlmeinfo->HT_caps_enable = 1;
  
- 				break;
- 
- 			case WLAN_EID_RSN:
--				if (!memcmp((pIE->data + 8), RSN_TKIP_CIPHER, 4))
-+				if (pIE->length >= 12 &&
-+				    !memcmp((pIE->data + 8), RSN_TKIP_CIPHER, 4))
- 					return true;
- 				break;
- 
-@@ -1349,7 +1357,7 @@ unsigned int is_ap_in_tkip(struct adapte
- 				break;
- 			}
- 
--			i += (pIE->length + 2);
-+			i += sizeof(*pIE) + pIE->length;
- 		}
- 
- 		return false;
+-	for (i = 0; i < (pIE->length); i++) {
++	for (i = 0; i < umin(pIE->length,
++			     sizeof(pmlmeinfo->HT_caps.u.HT_cap)); i++) {
+ 		if (i != 2) {
+ 			/* Commented by Albert 2010/07/12 */
+ 			/* Got the endian issue here. */
 
 
