@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688F625B0B4;
-	Thu, 16 Jul 2026 13:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BD12D0606;
+	Thu, 16 Jul 2026 13:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209509; cv=none; b=UPXAMPaLuGkSM40MfXvAGcoasWiTBhwC+EoXAORp/nUE8gAIlG87GDITeeVFRJuOB6msN/b1Yzu/PqT8z8gm81tETDzQm5Hc+B4qssVQPv+uTB5CX1iB6inPgqUH6c30xa773Nkv1WemZDR2Ig+uOgV8B0Ri4TxJ7OCMIhrS7hs=
+	t=1784209512; cv=none; b=HT1ssU1FrZEqYpRL3LcBIWqA8p5vfH5BZrPioAKXUQfl91aussduSSXxxEq8EbqFOStRCDXt+OjsflgLJl32sO8A10vYnHj2HjDs+Ep0W0ryDYncXPh/f/LDCFPaxMJHkC9HuQwn/GUlfsAAhEqFixLhFcQPmr1E84JgS/oYRcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209509; c=relaxed/simple;
-	bh=oz4Wkzjjp4b82invI/kLx9EpnxuLOYbix1tdJ/OEI04=;
+	s=arc-20240116; t=1784209512; c=relaxed/simple;
+	bh=zt6VTYJkIUXKe1wnHTF3aZXRfAUT11BwHIXvXIG/cDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vu8yR8bg1NlmeFYA2+mfYHe/MSD2KD4JlxO2w44pS5E5KDyQTRV4bCiI4lxLud5aPG+rZOoV8aqS1wfAoyWpHUr0Aa6Jsm8bpCEehegY+nfhMqmInqAD8Ot3qxQnjfdHDv9CrK2NjKBxC3eUpv1gsaIltZo4ccJP2O1pEFt2Ges=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zt+bP4vQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tv4j3hb4g4aXMOwIRsedgWgXDD7qrKX8VVOPAXkmSZbEgT4W7mRMrER/Mp6Yv9wSB5erIe26yl4DdPACVcXTBfqFsa+UjGycoj033R3DNqZj0dYmdtis2TczSKqQe1mTxASn9hT+xBOzPjvku8cqJHT6OqZ6kbSUm3tMhRx16pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtdv9y4e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zt+bP4vQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C7E1F000E9;
-	Thu, 16 Jul 2026 13:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtdv9y4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292D11F00A3F;
+	Thu, 16 Jul 2026 13:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209508;
-	bh=FdmErbzqvAXywxEFGZXuOGVa68BXNTbPIFUTEXGBKUg=;
+	s=korg; t=1784209510;
+	bh=+UnWIkmaZt81iCXNEbq0vUVCFC/EsRoyhfzwGFDdliQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zt+bP4vQv+m49ZYCUFkof5w+0MvhCyMTqouIlcPzpGcZ8ZiQzLWajefKB1BpPhoWc
-	 QW3GWnzdRbOfVxde6VtTD7qjXeKd3CoHGhC9u+yAyG9AcLSLb2ETTNf9SECGP/9Tn/
-	 ncOekmho1mS/pUV3YfOwzVLhIl/8Q2/j0zMVYAXQ=
+	b=rtdv9y4eZeGixCNdUjcZTKGq8JCk4m7WhKnzTDKzFp6qWnSE0j/VpRUaFdIzLS9aU
+	 chI4ge/HLmvbM14jbwA2PzBn5l22ahqkMt0OlOW2wy531/rGxhqzzp2uJiXFSENFZr
+	 YOrjdVAmUwyrrKEbdPSfvNBjcirnGzIXzEv1h7nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.1 210/518] Bluetooth: ISO: avoid NULL deref of conn in iso_conn_big_sync()
-Date: Thu, 16 Jul 2026 15:27:58 +0200
-Message-ID: <20260716133052.413240440@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Michael Bommarito <michael.bommarito@gmail.com>
+Subject: [PATCH 7.1 169/518] crypto: krb5 - filter out async aead implementations at alloc
+Date: Thu, 16 Jul 2026 15:27:17 +0200
+Message-ID: <20260716133051.538549305@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -50,74 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit d5541eb148da72d5e0a1bca8ecd171f9fc8b366f upstream.
+commit 6c9dddeb582fde005360f4fe02c760d45ca05fb5 upstream.
 
-iso_conn_big_sync() drops the socket lock to call hci_get_route() and
-then re-acquires it, but dereferences iso_pi(sk)->conn->hcon afterwards
-without re-checking that conn is still valid.
+krb5_aead_encrypt(), krb5_aead_decrypt() in rfc3961_simplified.c and
+rfc8009_encrypt(), rfc8009_decrypt() in rfc8009_aes2.c set a NULL
+completion callback and treat any negative return from
+crypto_aead_{encrypt,decrypt}() as terminal, falling through to
+kfree_sensitive(buffer).  When the encrypt_name resolves to an
+async AEAD instance the request returns -EINPROGRESS, the buffer
+is freed while the backend's worker still holds a pointer, and the
+worker dereferences the freed slab on completion.
 
-While the lock is dropped, the connection can be torn down under the
-same socket lock: iso_disconn_cfm() -> iso_conn_del() -> iso_chan_del()
-sets iso_pi(sk)->conn to NULL (and the broadcast teardown path can also
-clear conn->hcon on its own). When iso_conn_big_sync() re-acquires the
-lock and reads conn->hcon, conn may be NULL, causing a NULL pointer
-dereference (hcon is the first member of struct iso_conn).
+KASAN report under UML+SLUB with a synthetic async aead backend
+bound to krb5->encrypt_name:
 
-This path is reached from iso_sock_recvmsg() for a PA-sync broadcast
-sink socket (BT_SK_DEFER_SETUP | BT_SK_PA_SYNC), so the dropped-lock
-window can race with connection teardown driven by controller events.
+  BUG: KASAN: slab-use-after-free in t5_stub_complete+0x7d/0xc7
 
-Re-validate iso_pi(sk)->conn and its hcon after re-acquiring the socket
-lock and bail out if the connection went away, as already done in the
-sibling iso_sock_rebind_bc().
+The helpers were written synchronously, so filter the async
+instances out at allocation time instead of plumbing
+crypto_wait_req() through every call site.
 
-Fixes: 7a17308c17880d ("Bluetooth: iso: Fix circular lock in iso_conn_big_sync")
+Reachable via net/rxrpc/rxgk.c, fs/afs/cm_security.c and
+net/ceph/crypto.c on systems with an async AEAD provider bound to
+the krb5 enctype name.
+
+Fixes: 00244da40f78 ("crypto/krb5: Implement the Kerberos5 rfc3961 encrypt and decrypt functions")
+Fixes: 6c3c0e86c2ac ("crypto/krb5: Implement the AES enctypes from rfc8009")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ crypto/krb5/krb5_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1589,6 +1589,7 @@ static void iso_conn_big_sync(struct soc
- {
- 	int err;
- 	struct hci_dev *hdev;
-+	struct iso_conn *conn;
- 	bdaddr_t src, dst;
- 	u8 src_type;
+--- a/crypto/krb5/krb5_api.c
++++ b/crypto/krb5/krb5_api.c
+@@ -207,7 +207,7 @@ struct crypto_aead *krb5_prepare_encrypt
+ 	struct crypto_aead *ci = NULL;
+ 	int ret = -ENOMEM;
  
-@@ -1611,8 +1612,17 @@ static void iso_conn_big_sync(struct soc
- 	hci_dev_lock(hdev);
- 	lock_sock(sk);
- 
-+	/* The socket lock was dropped for hci_get_route(), so the connection
-+	 * may have been torn down meanwhile: iso_chan_del() clears conn and
-+	 * the broadcast teardown path can clear conn->hcon on its own. Check
-+	 * both before dereferencing conn->hcon.
-+	 */
-+	conn = iso_pi(sk)->conn;
-+	if (!conn || !conn->hcon)
-+		goto unlock;
-+
- 	if (!test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
--		err = hci_conn_big_create_sync(hdev, iso_pi(sk)->conn->hcon,
-+		err = hci_conn_big_create_sync(hdev, conn->hcon,
- 					       &iso_pi(sk)->qos,
- 					       iso_pi(sk)->sync_handle,
- 					       iso_pi(sk)->bc_num_bis,
-@@ -1621,6 +1631,7 @@ static void iso_conn_big_sync(struct soc
- 			bt_dev_err(hdev, "hci_big_create_sync: %d", err);
- 	}
- 
-+unlock:
- 	release_sock(sk);
- 	hci_dev_unlock(hdev);
- 	hci_dev_put(hdev);
+-	ci = crypto_alloc_aead(krb5->encrypt_name, 0, 0);
++	ci = crypto_alloc_aead(krb5->encrypt_name, 0, CRYPTO_ALG_ASYNC);
+ 	if (IS_ERR(ci)) {
+ 		ret = PTR_ERR(ci);
+ 		if (ret == -ENOENT)
 
 
