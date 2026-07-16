@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9822301;
-	Thu, 16 Jul 2026 13:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC12931717E;
+	Thu, 16 Jul 2026 13:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210181; cv=none; b=WS8lyTnWDXDohY/gkDunoa9siLrAro2JF24wLe11i2jO2d+nSZBd40KOFUHgqO+feerqzcH4ayJldLfAGyy0GWi0rZJ8ycygS+URC0AErVPIQ8CxjjN3WCeteWpFnrP69wnV5bN9TfrkfWz8H4aFbPO0XFnHZFLslgYd/StLyI4=
+	t=1784210183; cv=none; b=INg+oJ0/zYenrxqOROIh2FmzFFsVPc2VHYfxW0Gyd/ANvV0FmkQTn72JOKd9LkOAMReT7Q2a9e/7t7yUG6/Bc++et+f1UhaQPlgjILZd8XAD2173yqRzsYgrmUoOLDWYbjtETHWLhWHSByEKyRa4l0YDA8siH6Xn+Rhau4s9fFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210181; c=relaxed/simple;
-	bh=qi8zv4ILYFnE4ByuexvZyOGl51m7sjorfooI8eE6U20=;
+	s=arc-20240116; t=1784210183; c=relaxed/simple;
+	bh=2d1FY031txHO1/RvR9b6uIo27/pxiyJ1tNjWn/ePYBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNt1dzA4y5hrhadJ3RrFGoBb1uVmLPnv2RAA18FtJzR+oDvKmlrEeCDrVF/JKMAaR7K8MxDYQoQaSIoB9W6BiZrV6Zh4dP1bt8UPEGRm6Hm6wddUnEsJ+k6n7OL7o8nfddwnVresljBVubi+RTE1RlQMbUZOvAo64ITlioc49YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wU4dV8Cy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hgbQd1Q2i3N65RanqjRo6Zf7fC0rI/9a8YZZnP8qKAD77YmAadvajJfBmA9geIweVmPkm7I8VRNN8lbOjNVoEQ5g7mHo/Us7mOer8j4mSf/5JTyxvwSkUyONIHt4Bhj+muhk+014W4wEP/yViR6lT9kBk0//Hanmt8y/37L4utQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOgQ7Zii; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wU4dV8Cy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765E11F000E9;
-	Thu, 16 Jul 2026 13:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOgQ7Zii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCDE1F000E9;
+	Thu, 16 Jul 2026 13:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210180;
-	bh=FpCS9xyOx8Gp3gOno1vUZ8h1F17efs9h9vZIROBVVaA=;
+	s=korg; t=1784210182;
+	bh=VpjUPtlgIM2JM1PCSBqLenqfxnJyRAU7zHNDTxHqYPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wU4dV8CyXqbjWR8nJcaIilX8ZqAeQl95qZOIakq72/XgJnON6hMcU2qZGJ56FnCNG
-	 JpGWqi2fSdYIqMxVaMCy+Sk9QDeMO+nIOjIb9mL1BjN/krEeTTuHR1WHCVRCDm5iDk
-	 ssSnodYgQoNI/3VZ1/404fFywn/921geARFTdTKI=
+	b=XOgQ7ZiiOB+FOnMZrgETwwvdv30kCeXLJ7KekU0vPvUhDXVo/wyjMvbxevnWZh2cE
+	 emHNlU2FZuZM/vjBlyYgE2t0U5c2dzBde9UEBjlQTaM2A3QOV/ijpU33Lrx/kDUVR6
+	 KJd8BiwTYR9tauVoGNWCzm7FdLYJjEeqAiDX/irI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Flynn <jonathan.flynn@hammerspace.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.1 468/518] Revert "svcrdma: Use contiguous pages for RDMA Read sink buffers"
-Date: Thu, 16 Jul 2026 15:32:16 +0200
-Message-ID: <20260716133058.084467275@linuxfoundation.org>
+	Sebastian Alba Vives <sebasjosue84@gmail.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 7.1 469/518] fpga: dfl-afu: validate DMA mapping length in afu_dma_map_region()
+Date: Thu, 16 Jul 2026 15:32:17 +0200
+Message-ID: <20260716133058.106370850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,289 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Sebastian Alba Vives <sebasjosue84@gmail.com>
 
-commit a39f0ce0c9da20986b429e2db3e4e8739035d61b upstream.
+commit fc3b071a7c8dc0f5d56defddf6e6fd5aaa3e1e27 upstream.
 
-Jonathan Flynn reports that commit 18755b8c2f24 ("svcrdma: Use
-contiguous pages for RDMA Read sink buffers") regresses NFS/RDMA
-WRITE throughput from 73.9 GiB/s to 30.3 GiB/s on a 128-core
-single-NUMA-node server driving dual 400Gb/s links with 640 nfsd
-threads. Server CPU utilization rises from 8.5% to 76%, with
-roughly three quarters of all cycles spent spinning on zone->lock.
+afu_ioctl_dma_map() accepts a 64-bit length from userspace via
+DFL_FPGA_PORT_DMA_MAP ioctl without an upper bound check. The value
+is passed to afu_dma_pin_pages() where npages is derived as
+length >> PAGE_SHIFT and passed to pin_user_pages_fast() which takes
+int nr_pages, causing implicit truncation if length is very large.
 
-The sink buffers are allocated as high-order page blocks, split
-into single pages so each sub-page carries an independent refcount,
-and later released one page at a time through folio batches. The
-per-CPU page caches cannot satisfy an allocation stream whose alloc
-order differs from its free order, so every sink buffer page makes
-a round trip through the buddy allocator's free lists, serialized
-on the zone lock of the single NUMA node. The rq_pages entries that
-the split pages displace, bulk-allocated moments earlier by
-svc_alloc_arg(), are freed without ever being used, doubling the
-allocator traffic.
+Validate map.length at the ioctl entry point before calling
+afu_dma_map_region(), rejecting values whose page count exceeds
+INT_MAX.
 
-The regression cannot be addressed trivially. Revert the commit
-now; a reworked approach can return in an upcoming merge window.
-
-Reported-by: Jonathan Flynn <jonathan.flynn@hammerspace.com>
-Reported-by: Mike Snitzer <snitzer@kernel.org>
-Closes: https://lore.kernel.org/linux-nfs/aiHlPmeZq3WgMwoJ@kernel.org/
-Closes: https://lore.kernel.org/linux-nfs/3cb119b4b2a8aada30c0c60286778a54@mail.gmail.com/
-Fixes: 18755b8c2f24 ("svcrdma: Use contiguous pages for RDMA Read sink buffers")
+Fixes: fa8dda1edef9 ("fpga: dfl: afu: add DFL_FPGA_PORT_DMA_MAP/UNMAP ioctls support")
 Cc: stable@vger.kernel.org
-Tested-by: Jonathan Flynn <jonathan.flynn@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260518190742.61426-3-sebasjosue84@gmail.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_rw.c |  223 --------------------------------------
- 1 file changed, 223 deletions(-)
+ drivers/fpga/dfl-afu-main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -754,216 +754,6 @@ int svc_rdma_prepare_reply_chunk(struct
- 	return xdr->len;
- }
- 
--/*
-- * Cap contiguous RDMA Read sink allocations at order-4.
-- * Higher orders risk allocation failure under
-- * __GFP_NORETRY, which would negate the benefit of the
-- * contiguous fast path.
-- */
--#define SVC_RDMA_CONTIG_MAX_ORDER	4
--
--/**
-- * svc_rdma_alloc_read_pages - Allocate physically contiguous pages
-- * @nr_pages: number of pages needed
-- * @order: on success, set to the allocation order
-- *
-- * Attempts a higher-order allocation, falling back to smaller orders.
-- * The returned pages are split immediately so each sub-page has its
-- * own refcount and can be freed independently.
-- *
-- * Returns a pointer to the first page on success, or NULL if even
-- * order-1 allocation fails.
-- */
--static struct page *
--svc_rdma_alloc_read_pages(unsigned int nr_pages, unsigned int *order)
--{
--	unsigned int o;
--	struct page *page;
--
--	o = min(get_order(nr_pages << PAGE_SHIFT),
--		SVC_RDMA_CONTIG_MAX_ORDER);
--
--	while (o >= 1) {
--		page = alloc_pages(GFP_KERNEL | __GFP_NORETRY | __GFP_NOWARN,
--				   o);
--		if (page) {
--			split_page(page, o);
--			*order = o;
--			return page;
--		}
--		o--;
--	}
--	return NULL;
--}
--
--/*
-- * svc_rdma_fill_contig_bvec - Replace rq_pages with a contiguous allocation
-- * @rqstp: RPC transaction context
-- * @head: context for ongoing I/O
-- * @bv: bvec entry to fill
-- * @pages_left: number of data pages remaining in the segment
-- * @len_left: bytes remaining in the segment
-- *
-- * On success, fills @bv with a bvec spanning the contiguous range and
-- * advances rc_curpage/rc_page_count. Returns the byte length covered,
-- * or zero if the allocation failed or would overrun rq_maxpages.
-- */
--static unsigned int
--svc_rdma_fill_contig_bvec(struct svc_rqst *rqstp,
--			  struct svc_rdma_recv_ctxt *head,
--			  struct bio_vec *bv, unsigned int pages_left,
--			  unsigned int len_left)
--{
--	unsigned int order, npages, chunk_pages, chunk_len, i;
--	struct page *page;
--
--	page = svc_rdma_alloc_read_pages(pages_left, &order);
--	if (!page)
--		return 0;
--	npages = 1 << order;
--
--	if (head->rc_curpage + npages > rqstp->rq_maxpages) {
--		for (i = 0; i < npages; i++)
--			__free_page(page + i);
--		return 0;
--	}
--
--	/*
--	 * Replace rq_pages[] entries with pages from the contiguous
--	 * allocation. If npages exceeds chunk_pages, the extra pages
--	 * stay in rq_pages[] for later reuse or normal rqst teardown.
--	 */
--	for (i = 0; i < npages; i++) {
--		svc_rqst_page_release(rqstp,
--				      rqstp->rq_pages[head->rc_curpage + i]);
--		rqstp->rq_pages[head->rc_curpage + i] = page + i;
--	}
--
--	chunk_pages = min(npages, pages_left);
--	chunk_len = min_t(unsigned int, chunk_pages << PAGE_SHIFT, len_left);
--	bvec_set_page(bv, page, chunk_len, 0);
--	head->rc_page_count += chunk_pages;
--	head->rc_curpage += chunk_pages;
--	return chunk_len;
--}
--
--/*
-- * svc_rdma_fill_page_bvec - Add a single rq_page to the bvec array
-- * @head: context for ongoing I/O
-- * @ctxt: R/W context whose bvec array is being filled
-- * @cur: page to add
-- * @bvec_idx: pointer to current bvec index, not advanced on merge
-- * @len_left: bytes remaining in the segment
-- *
-- * If @cur is physically contiguous with the preceding bvec, it is
-- * merged by extending that bvec's length. Otherwise a new bvec
-- * entry is created. Returns the byte length covered.
-- */
--static unsigned int
--svc_rdma_fill_page_bvec(struct svc_rdma_recv_ctxt *head,
--			struct svc_rdma_rw_ctxt *ctxt, struct page *cur,
--			unsigned int *bvec_idx, unsigned int len_left)
--{
--	unsigned int chunk_len = min_t(unsigned int, PAGE_SIZE, len_left);
--
--	head->rc_page_count++;
--	head->rc_curpage++;
--
--	if (*bvec_idx > 0) {
--		struct bio_vec *prev = &ctxt->rw_bvec[*bvec_idx - 1];
--
--		if (page_to_phys(prev->bv_page) + prev->bv_offset +
--		    prev->bv_len == page_to_phys(cur)) {
--			prev->bv_len += chunk_len;
--			return chunk_len;
--		}
--	}
--
--	bvec_set_page(&ctxt->rw_bvec[*bvec_idx], cur, chunk_len, 0);
--	(*bvec_idx)++;
--	return chunk_len;
--}
--
--/**
-- * svc_rdma_build_read_segment_contig - Build RDMA Read WR with contiguous pages
-- * @rqstp: RPC transaction context
-- * @head: context for ongoing I/O
-- * @segment: co-ordinates of remote memory to be read
-- *
-- * Greedily allocates higher-order pages to cover the segment,
-- * building one bvec per contiguous chunk. Each allocation is
-- * split so sub-pages have independent refcounts. When a
-- * higher-order allocation fails, remaining pages are covered
-- * individually, merging adjacent pages into the preceding bvec
-- * when they are physically contiguous. The split sub-pages
-- * replace entries in rq_pages[] so downstream cleanup is
-- * unchanged.
-- *
-- * Returns:
-- *   %0: the Read WR was constructed successfully
-- *   %-ENOMEM: allocation failed
-- *   %-EIO: a DMA mapping error occurred
-- */
--static int svc_rdma_build_read_segment_contig(struct svc_rqst *rqstp,
--					      struct svc_rdma_recv_ctxt *head,
--					      const struct svc_rdma_segment *segment)
--{
--	struct svcxprt_rdma *rdma = svc_rdma_rqst_rdma(rqstp);
--	struct svc_rdma_chunk_ctxt *cc = &head->rc_cc;
--	unsigned int nr_data_pages, bvec_idx;
--	struct svc_rdma_rw_ctxt *ctxt;
--	unsigned int len_left;
--	int ret;
--
--	nr_data_pages = PAGE_ALIGN(segment->rs_length) >> PAGE_SHIFT;
--	if (head->rc_curpage + nr_data_pages > rqstp->rq_maxpages)
--		return -ENOMEM;
--
--	ctxt = svc_rdma_get_rw_ctxt(rdma, nr_data_pages);
--	if (!ctxt)
--		return -ENOMEM;
--
--	bvec_idx = 0;
--	len_left = segment->rs_length;
--	while (len_left) {
--		unsigned int pages_left = PAGE_ALIGN(len_left) >> PAGE_SHIFT;
--		unsigned int chunk_len = 0;
--
--		if (pages_left >= 2)
--			chunk_len = svc_rdma_fill_contig_bvec(rqstp, head,
--							      &ctxt->rw_bvec[bvec_idx],
--							      pages_left, len_left);
--		if (chunk_len) {
--			bvec_idx++;
--		} else {
--			struct page *cur =
--				rqstp->rq_pages[head->rc_curpage];
--			chunk_len = svc_rdma_fill_page_bvec(head, ctxt, cur,
--							    &bvec_idx,
--							    len_left);
--		}
--
--		len_left -= chunk_len;
--	}
--
--	ctxt->rw_nents = bvec_idx;
--
--	head->rc_pageoff = offset_in_page(segment->rs_length);
--	if (head->rc_pageoff)
--		head->rc_curpage--;
--
--	ret = svc_rdma_rw_ctx_init(rdma, ctxt, segment->rs_offset,
--				   segment->rs_handle, segment->rs_length,
--				   DMA_FROM_DEVICE);
--	if (ret < 0)
--		return -EIO;
--	percpu_counter_inc(&svcrdma_stat_read);
--
--	list_add(&ctxt->rw_list, &cc->cc_rwctxts);
--	cc->cc_sqecount += ret;
--	return 0;
--}
--
- /**
-  * svc_rdma_build_read_segment - Build RDMA Read WQEs to pull one RDMA segment
-  * @rqstp: RPC transaction context
-@@ -990,14 +780,6 @@ static int svc_rdma_build_read_segment(s
- 	if (check_add_overflow(head->rc_pageoff, len, &total))
+--- a/drivers/fpga/dfl-afu-main.c
++++ b/drivers/fpga/dfl-afu-main.c
+@@ -723,6 +723,9 @@ afu_ioctl_dma_map(struct dfl_feature_dev
+ 	if (map.argsz < minsz || map.flags)
  		return -EINVAL;
- 	nr_bvec = PAGE_ALIGN(total) >> PAGE_SHIFT;
--
--	if (head->rc_pageoff == 0 && nr_bvec >= 2) {
--		ret = svc_rdma_build_read_segment_contig(rqstp, head,
--							 segment);
--		if (ret != -ENOMEM)
--			return ret;
--	}
--
- 	ctxt = svc_rdma_get_rw_ctxt(rdma, nr_bvec);
- 	if (!ctxt)
- 		return -ENOMEM;
-@@ -1343,11 +1125,6 @@ static void svc_rdma_clear_rqst_pages(st
- {
- 	unsigned int i;
  
--	/*
--	 * Move only pages containing RPC data into rc_pages[]. Pages
--	 * from a contiguous allocation that were not used for the
--	 * payload remain in rq_pages[] for subsequent reuse.
--	 */
- 	for (i = 0; i < head->rc_page_count; i++) {
- 		head->rc_pages[i] = rqstp->rq_pages[i];
- 		rqstp->rq_pages[i] = NULL;
++	if (map.length >> PAGE_SHIFT > (u64)INT_MAX)
++		return -EINVAL;
++
+ 	ret = afu_dma_map_region(fdata, map.user_addr, map.length, &map.iova);
+ 	if (ret)
+ 		return ret;
 
 
