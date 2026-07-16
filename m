@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6839F2FFDE1;
-	Thu, 16 Jul 2026 14:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A80D5A79B;
+	Thu, 16 Jul 2026 14:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210672; cv=none; b=uknsGegzWYi2RTAJVO824ZZst98oXBZX+AMNFIMKXIT3jmr7HMLKjZ02kz3sxPSaoWJV6ICVplm21j93Q40toUNFhWaHQ52YuJJpvK0wmYkv1BZbQl0PglJnrIVgMYjCkswTrJ5GuU25rJmyX2+b/EJhJS1BLYktKIinAV4bwNk=
+	t=1784210675; cv=none; b=hYKm/GFp7JAfXyQZeasWbei51+z2gYK0YaOwl6JQ19IeLIZ/s0W7B+qVb3a1IilTCPLBv8HJZ+h/oXvKDHvFC6Or7QtLVMzwsb6XnsWGfcom2GYCojga/g95RBcSGd92/WTfL5rzSr+jzrIHmDQt3vOeq5urgPiJ9x3GhAgX7ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210672; c=relaxed/simple;
-	bh=RxfitwaitlcN3FwifejnlUZ6Em61LBOvx9G/m7txZww=;
+	s=arc-20240116; t=1784210675; c=relaxed/simple;
+	bh=k1TZTsQ6LmHoy9bd2T5nj+VctM3On6YNt/Ybr4yrLos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpzgWSdOu9+0voc4rCHqSEUojzYkbO003J4TzG+B6K5anPYSesDuFmAFZ6vL56VHMyrkhP4r4YDlHRmlCu8Z35uvQXHv4xnbzn2zDSsauxbHRVp9J7Aezpv32sxMPdzXhpNDHq4fTygxut+7XxhU5v9kahT1xe1h4efgX4lcWa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bfxr/zuk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eJ1FkzDj0gjWQ8lLeClphTT8p16OPZYirAbgFLAX2fOUFfaVtHqYByAtRFeP322/mrvsoSZWIUtbWdodboemw3xY4WXlgACss/BD+opXV7QxqfGXoR79JL0yAgcYhEyHx8iLq3EEkTA5nVeXidvfFV3iR262YP3yGcdGYiBjtOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EYBlZFp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bfxr/zuk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD66F1F000E9;
-	Thu, 16 Jul 2026 14:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EYBlZFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CD11F000E9;
+	Thu, 16 Jul 2026 14:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210671;
-	bh=Sw+rK6u0z24PxWJi/JTlffdI+w7Hieg7DJuUBORDmgI=;
+	s=korg; t=1784210673;
+	bh=t32AiqAso/vxrivtGbpP4HXkBiDkTCaoUVKXKwF2nDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bfxr/zukQq7E01b3aOo0sdjTJr45GKiqT93SYDhfWBhkK9RIEkDuUpEBZbnnp60kJ
-	 NAfZl6xrtVMC1l2aguLnybTKHFxL6/6hG9KzWfGw3GTRDAW6I8btdiJ22TZxzjyYhq
-	 kmcaaY7JamxS1nTZ1Eg3QiRcFfmCi0TBBF/NX7zU=
+	b=2EYBlZFpslgYf7sRv4vQ1cHh8565unpV/oeROs75JyRE6BrrXm97XZPufx/P5IXMX
+	 wrq1fhBqEmSjDz9KMc1ybDuYy1krLzxsi3Pw14+tlEl295W4/ZHSZRmULB36eXLL4W
+	 bMWbzekTxsa9ccn+/x4qiHlWBv6PA38/7t3DeNdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>
-Subject: [PATCH 6.18 134/480] usb: typec: tcpci_rt1711h: unregister TCPCI port with devres
-Date: Thu, 16 Jul 2026 15:28:01 +0200
-Message-ID: <20260716133047.610790367@linuxfoundation.org>
+	Ayden Meng <aydenmeng@yeah.net>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Ziyao Li <liziyao@uniontech.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lain Fearyncess Yang <fsf@live.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 135/480] PCI: loongson: Override PCIe bridge supported speeds for Loongson-3C6000 series
+Date: Thu, 16 Jul 2026 15:28:02 +0200
+Message-ID: <20260716133047.631865940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,77 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Ziyao Li <liziyao@uniontech.com>
 
-commit e8da46d99d3710106e7c44db14566bf9b57386b5 upstream.
+commit e373c789bac0ad73b472d8b44714df3bd18a4edf upstream.
 
-rt1711h_probe() registers the TCPCI port before requesting the interrupt
-and enabling alert interrupts. If either of those later steps fails, the
-probe function returns without unregistering the TCPCI port. The explicit
-unregister currently only happens from the remove callback.
+Older steppings of the Loongson-3C6000 series incorrectly report the
+supported link speeds on their PCIe bridges (device IDs 0x3c19, 0x3c29)
+as only 2.5 GT/s, despite the upstream bus supporting speeds from
+2.5 GT/s up to 16 GT/s.
 
-Register a devres action immediately after tcpci_register_port() succeeds,
-so tcpci_unregister_port() runs on later probe failures and on driver
-detach. Drop the remove callback to avoid unregistering the same port
-twice.
+As a result, since commit 774c71c52aa4 ("PCI/bwctrl: Enable only if more
+than one speed is supported"), bwctrl will be disabled if there's only
+one 2.5 GT/s value in vector 'supported_speeds'.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Manually override the 'supported_speeds' field for affected PCIe bridges
+with those found on the upstream bus to correctly reflect the supported
+link speeds.  Updating the speeds to reflect what the hardware actually
+supports avoids quirks in drivers consuming the speed information.
 
-Fixes: 302c570bf36e ("usb: typec: tcpci_rt1711h: avoid screaming irq causing boot hangs")
-Cc: stable <stable@kernel.org>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260706145312.37260-1-mhun512@gmail.com
+This commit was originally found from AOSC OS[1].
+
+Fixes: cd89edda4002 ("PCI: loongson: Add ACPI init support")
+Signed-off-by: Ayden Meng <aydenmeng@yeah.net>
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+[Ziyao Li: move from drivers/pci/quirks.c to drivers/pci/controller/pci-loongson.c]
+Signed-off-by: Ziyao Li <liziyao@uniontech.com>
+[Xi Ruoyao: Fixed falling through logic, added debug log, Fixes tag and rebased to 7.0-rc7]
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: commit log, https://lore.kernel.org/all/9d815df3b33a63223112b97440c01247935363c1.camel@xry111.site]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Lain Fearyncess Yang <fsf@live.com>
+Tested-by: Ayden Meng <aydenmeng@yeah.net>
+Tested-by: Mingcong Bai <jeffbai@aosc.io>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: stable@vger.kernel.org
+Link: https://github.com/AOSC-Tracking/linux/commit/4392f441363abdf6fa0a0433d73175a17f493454
+Link: https://github.com/AOSC-Tracking/linux/pull/2 #1
+Link: https://patch.msgid.link/20260412101731.107059-1-xry111@xry111.site
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpci_rt1711h.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/pci/controller/pci-loongson.c |   36 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpci_rt1711h.c
-+++ b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
-@@ -330,6 +330,8 @@ static int rt1711h_check_revision(struct
- 	return ret;
+--- a/drivers/pci/controller/pci-loongson.c
++++ b/drivers/pci/controller/pci-loongson.c
+@@ -176,6 +176,42 @@ static void loongson_pci_msi_quirk(struc
  }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, DEV_LS7A_PCIE_PORT5, loongson_pci_msi_quirk);
  
-+static void rt1711h_unregister_tcpci_port(void *tcpci);
++/*
++ * Older steppings of the Loongson-3C6000 series incorrectly report the
++ * supported link speeds on their PCIe bridges (device IDs 0x3c19,
++ * 0x3c29) as only 2.5 GT/s, despite the upstream bus supporting speeds
++ * from 2.5 GT/s up to 16 GT/s.
++ */
++static void loongson_pci_bridge_speed_quirk(struct pci_dev *pdev)
++{
++	u8 old_supported_speeds = pdev->supported_speeds;
 +
- static int rt1711h_probe(struct i2c_client *client)
- {
- 	int ret;
-@@ -381,6 +383,10 @@ static int rt1711h_probe(struct i2c_clie
- 	if (IS_ERR_OR_NULL(chip->tcpci))
- 		return PTR_ERR(chip->tcpci);
- 
-+	ret = devm_add_action_or_reset(chip->dev, rt1711h_unregister_tcpci_port, chip->tcpci);
-+	if (ret)
-+		return ret;
++	switch (pdev->bus->max_bus_speed) {
++	case PCIE_SPEED_16_0GT:
++		pdev->supported_speeds |= PCI_EXP_LNKCAP2_SLS_16_0GB;
++		fallthrough;
++	case PCIE_SPEED_8_0GT:
++		pdev->supported_speeds |= PCI_EXP_LNKCAP2_SLS_8_0GB;
++		fallthrough;
++	case PCIE_SPEED_5_0GT:
++		pdev->supported_speeds |= PCI_EXP_LNKCAP2_SLS_5_0GB;
++		fallthrough;
++	case PCIE_SPEED_2_5GT:
++		pdev->supported_speeds |= PCI_EXP_LNKCAP2_SLS_2_5GB;
++		break;
++	default:
++		pci_warn(pdev, "unexpected max bus speed");
 +
- 	ret = devm_request_threaded_irq(chip->dev, client->irq, NULL,
- 					rt1711h_irq,
- 					IRQF_ONESHOT | IRQF_TRIGGER_LOW,
-@@ -398,11 +404,9 @@ static int rt1711h_probe(struct i2c_clie
- 	return 0;
- }
- 
--static void rt1711h_remove(struct i2c_client *client)
-+static void rt1711h_unregister_tcpci_port(void *tcpci)
++		return;
++	}
++
++	if (pdev->supported_speeds != old_supported_speeds)
++		pci_info(pdev, "fixed up supported link speeds: 0x%x => 0x%x",
++			 old_supported_speeds, pdev->supported_speeds);
++}
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_LOONGSON, 0x3c19, loongson_pci_bridge_speed_quirk);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_LOONGSON, 0x3c29, loongson_pci_bridge_speed_quirk);
++
+ static struct loongson_pci *pci_bus_to_loongson_pci(struct pci_bus *bus)
  {
--	struct rt1711h_chip *chip = i2c_get_clientdata(client);
--
--	tcpci_unregister_port(chip->tcpci);
-+	tcpci_unregister_port(tcpci);
- }
- 
- static const struct rt1711h_chip_info rt1711h = {
-@@ -435,7 +439,6 @@ static struct i2c_driver rt1711h_i2c_dri
- 		.of_match_table = rt1711h_of_match,
- 	},
- 	.probe = rt1711h_probe,
--	.remove = rt1711h_remove,
- 	.id_table = rt1711h_id,
- };
- module_i2c_driver(rt1711h_i2c_driver);
+ 	struct pci_config_window *cfg;
 
 
