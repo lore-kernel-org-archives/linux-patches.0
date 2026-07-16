@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E32442DFF1;
-	Thu, 16 Jul 2026 14:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAF442DFF4;
+	Thu, 16 Jul 2026 14:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212169; cv=none; b=kwFB9wDnpgQh99fE2g6QG/cbz5trdeqzZv6cdUdfqP71M/HPKu1ynbZ13u/OgPgrR+2MIS2eqqfgY/sb2y4En3z1b2/NNWd/iz95j1xHhhKbUEfrllt8fvoBzE/oHvG14DtQQASCREWFRiizkf/dpZ2ZOOh6wdkc8fjGJLODsIc=
+	t=1784212171; cv=none; b=AydJ9kFb+53Ui/fHpTooZ4IX2GgHHFha7gjKtTN6VETNufMpefpt68e4IPGaYo6X3nh6OUfKw98fhjkfrVA+CuNxb1S/sbqqGc/rbW8GWb9W1gGyxzjx6il/a4lGbhH1oUohdreQp2u7lr2kTgZ3QUb/i08P8WtfAhNngdSFdv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212169; c=relaxed/simple;
-	bh=vVuE2rEot1++kv5lGThhlruXgH54Pn4XTpD9fSz0q/Q=;
+	s=arc-20240116; t=1784212171; c=relaxed/simple;
+	bh=0DUGNTXJ4i5pnoEqErbYje2ahpLC3BdZgjSs1mk/EQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VYQkKJxBL/MFFQpJiRxuzL21EDqQtbItKwVjH1DxQSSz+OBfy4R+M43MtmDo79+qVpOupo6zzfTCK6gUNSkd+nviOdeLXNuP3P5QxCZmxTtUz4vle1MJdyILTvi6vMfoOSQBF4iqNJjxhKGrjeCPcWRv6hFL+EFNMLYaQ/n2CUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mp0iLHXr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M4+6fHVFsgPSKCs0TswapAPCvxSjJR3ndIo+XjQ62uOoWFuajJ7VJSLOwoGRbtoHPl3sNrXcZmKbMoOQY2SORs3lrs9VfjUhWUuGp/NjIO5GaXUFy76OIYs72hITKkZNqJ2InWIXYfSTpAdWnvgod0X4sGxK/6CGipCjwQJ8v4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D09OmzTy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mp0iLHXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B8B1F000E9;
-	Thu, 16 Jul 2026 14:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D09OmzTy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E61C1F000E9;
+	Thu, 16 Jul 2026 14:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212168;
-	bh=1wT+vgysR3PWFsrhCn80ycd/jvWKEUpdDaiiiOUT0mw=;
+	s=korg; t=1784212170;
+	bh=/hWaLHJLsFRuSjM8v0WiRTE3vPDiJDFzj88PyYI2s9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mp0iLHXr1gt6sdrE8u3weIUvh7ZX1aEGULpZ2RLiKGfQ37M0DHJa8Ap0LKUyMiQIL
-	 mRqC+ZFo9JW+LF374eMBympDopGo4TxI/xdBYzl8bDv1Zuo1cxz0oSo+F6PJpBstLd
-	 cxlEgVeqR0MravcZvuimBhkCik393bk6aeefv27k=
+	b=D09OmzTycWvKJqpInsqptDbzfrgQ92aXnQm1LNAL1oBZsChr9anMYcpQ7P8T0wYg/
+	 DdQkBwX3FcNv3lPk6Q45yVu5JNzlYZjKxQSGQc6AV3DdRdruGCRXWt/suvaB2/hMU4
+	 VhOyb9Z5tTRKFtn5HUal4muuogtfGVulKHO9sPmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.12 224/349] usb: free iso schedules on failed submit
-Date: Thu, 16 Jul 2026 15:32:38 +0200
-Message-ID: <20260716133038.375120007@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>
+Subject: [PATCH 6.12 225/349] usb: gadget: composite: fix dead empty check in the USB_DT_OTG handler
+Date: Thu, 16 Jul 2026 15:32:39 +0200
+Message-ID: <20260716133038.399206256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,105 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit b9399d25fbb34a05bbe76eeedd730f62ff2670e9 upstream.
+commit f8f680609c2b3ab795ffcd6f21585b6dfc46d395 upstream.
 
-EHCI and FOTG210 isochronous submits build an ehci_iso_sched before
-linking the URB to the endpoint queue, and keep the staged schedule in
-urb->hcpriv until iso_stream_schedule() and the link helpers consume it.
-If the controller is no longer accessible, or usb_hcd_link_urb_to_ep()
-fails, submit jumps to done_not_linked before that handoff happens and
-leaks the staged schedule still attached to urb->hcpriv.
+The OTG branch of composite_setup() falls back to the first
+configuration when none is selected:
 
-Free the staged schedule from done_not_linked when submit fails before
-the URB is linked and clear urb->hcpriv after the free.
+	if (cdev->config)
+		config = cdev->config;
+	else
+		config = list_first_entry(&cdev->configs,
+					  struct usb_configuration, list);
+	if (!config)
+		goto done;
+	...
+	memcpy(req->buf, config->descriptors[0], value);
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
+list_first_entry() never returns NULL. On an empty list it returns
+container_of() of the list head. So the "if (!config)" check is dead.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-EHCI host controller with a USB isochronous device to test with, no
-runtime testing was able to be performed.
+When cdev->configs is empty, config points at the head inside struct
+usb_composite_dev. config->descriptors[0] reads whatever sits at that
+offset. The memcpy copies up to w_length bytes of it into the response
+buffer.
 
-Fixes: 8de98402652c ("[PATCH] USB: Fix USB suspend/resume crasher (#2)")
-Fixes: e9df41c5c589 ("USB: make HCDs responsible for managing endpoint queues")
-Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
+cdev->configs can be empty in two cases. One is a teardown race on
+gadget unbind with a control transfer in flight. The other is a driver
+that sets is_otg before it adds a config. A reproducer that holds
+cdev->configs empty triggers a KASAN fault in this branch.
+
+Use list_first_entry_or_null() so the existing check does its job.
+
+Fixes: 53e6242db8d6 ("usb: gadget: composite: add USB_DT_OTG request handling")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260630071419.349161-1-dawei.feng@seu.edu.cn
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Link: https://patch.msgid.link/20260527150832.2943293-1-maoyixie.tju@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/fotg210/fotg210-hcd.c |    6 ++++--
- drivers/usb/host/ehci-sched.c     |   11 +++++++++--
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/composite.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/fotg210/fotg210-hcd.c
-+++ b/drivers/usb/fotg210/fotg210-hcd.c
-@@ -4267,8 +4267,6 @@ static int iso_stream_schedule(struct fo
- 	return 0;
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -1887,9 +1887,10 @@ composite_setup(struct usb_gadget *gadge
+ 				if (cdev->config)
+ 					config = cdev->config;
+ 				else
+-					config = list_first_entry(
++					config = list_first_entry_or_null(
+ 							&cdev->configs,
+-						struct usb_configuration, list);
++							struct usb_configuration,
++							list);
+ 				if (!config)
+ 					goto done;
  
- fail:
--	iso_sched_free(stream, sched);
--	urb->hcpriv = NULL;
- 	return status;
- }
- 
-@@ -4562,6 +4560,10 @@ static int itd_submit(struct fotg210_hcd
- 	else
- 		usb_hcd_unlink_urb_from_ep(fotg210_to_hcd(fotg210), urb);
- done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&fotg210->lock, flags);
- done:
- 	return status;
---- a/drivers/usb/host/ehci-sched.c
-+++ b/drivers/usb/host/ehci-sched.c
-@@ -1624,6 +1624,7 @@ iso_stream_schedule(
- 			status = 1;	/* and give it back immediately */
- 			iso_sched_free(stream, sched);
- 			sched = NULL;
-+			urb->hcpriv = NULL;
- 		}
- 	}
- 	urb->error_count = skip / period;
-@@ -1654,8 +1655,6 @@ iso_stream_schedule(
- 	return status;
- 
-  fail:
--	iso_sched_free(stream, sched);
--	urb->hcpriv = NULL;
- 	return status;
- }
- 
-@@ -1967,6 +1966,10 @@ static int itd_submit(struct ehci_hcd *e
- 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
- 	}
-  done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&ehci->lock, flags);
-  done:
- 	return status;
-@@ -2344,6 +2347,10 @@ static int sitd_submit(struct ehci_hcd *
- 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
- 	}
-  done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&ehci->lock, flags);
-  done:
- 	return status;
 
 
