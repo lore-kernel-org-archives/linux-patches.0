@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3922030FC33;
-	Thu, 16 Jul 2026 14:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C94D27732;
+	Thu, 16 Jul 2026 14:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211526; cv=none; b=aUqnqS6QX1NrnbBGWY3quXjr6XhxBJAivTqwf5fu1Abk6MFCjRFfUG/PjbYmRmvOswjtBkj/hFPbjjZfQFx0pWy2RMTNsb6HMkgjGjRJCxeavNWRzHVFiBNEPRNjr1CN/F5Q30X3PFSIhgLaYBsq6o2zfXxohvdoi4niZZYTt58=
+	t=1784211528; cv=none; b=Jfcwo04xN/9yOGvJqRAJVE5FupE2xYJ1qfjVxrGhDUiGfmXdk26iX4+MWL71zQMKmEC3pr2XnhoMZaHupgduIslZsMpPCxDlVKUzebTGMc5tg1wFnyCjruuKj+4BdsFfqG5Z64O2FeJ43g43AMN+0rcCgjHIsUQ9e4RGmHvKRnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211526; c=relaxed/simple;
-	bh=sNtxU2SRQ6wu/L3Ra8kTsDDDZl68xfkpT/k4yIh7Okk=;
+	s=arc-20240116; t=1784211528; c=relaxed/simple;
+	bh=jCR3KnSPx84bcR8JqGpAbZvtno7L49tTI4d6xx2LxSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnsPM2Sza9ZiQAc9KcHh+esGaoR0sTvkBmQg+0G6HI3xlUM7UXaRnhAnaBdB4+ndiw75eB8WJqoH2Ayxc4ODZseTGo0Lqc4/e/qd7EjZZJOte/BX/hfMmWO4BvFMoIMN2gu7ytnJawXaxHyj50Yl8AE+FPyqsJIBw/aiZoeV0Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/Vg+wBK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tHNSc5BIIx5PbN/gM+W2QGei0mh2H5rGQpx5HZjackrgvMwCz0i1kFytEino+QfwNQeqWEPf6kiRaVN8OqMpgUYeTUU6a+yJS8PY+P2cADvmv8pYH7l16rMJqEudTHeD6C+iO+ylJKvf+m/UcQ1F0SbBVIzPtFyZihlHdrRj7Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBHohdKi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/Vg+wBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EEE1F00A3D;
-	Thu, 16 Jul 2026 14:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBHohdKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20F01F000E9;
+	Thu, 16 Jul 2026 14:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211524;
-	bh=E/ooay9pKaJjURYlfc4fs1K17SPRTL+gLL28MF1yZV4=;
+	s=korg; t=1784211527;
+	bh=Dny8JwAqIccs8vd4HP7/FAglSqTV7Q42YBDP3lvm1fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U/Vg+wBKrFHX7Us+eB/pB0EhFtwb1aED/7yY75yd+7KnqTTe9vE/lJg5ov7smWXhs
-	 YYJSpntlCCLDv6LY6klRPuPwWzMBE/ABvq7QFhGGraBg3kP4iu/X8gqKG26MMgMe3j
-	 nuM7d3pqLhiLmFO2JSLDho/Qm8KWeFGPEl/7hI04=
+	b=NBHohdKip93hm/HINybPznwz4BkR4mfVTt6B62NU0NtDBfhemd9xPzoLiIuqDawxT
+	 iK8GkMZ6+KECSjg9H2lbVfpKgkfKUKVKtwVzE8nHkv4r+hicwRQSB0diyKmqnkPKVv
+	 QBivoob6TP5ble/GaPTd1ENl6c85/BxaQ/QG4KxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Vlad Dumitrescu <vdumitrescu@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 459/480] RDMA/rtrs-srv: Bound RDMA-Write length to chunk size in rdma_write_sg
-Date: Thu, 16 Jul 2026 15:33:26 +0200
-Message-ID: <20260716133054.753484606@linuxfoundation.org>
+Subject: [PATCH 6.18 460/480] RDMA/core: Fix broadcast address falsely detected as local
+Date: Thu, 16 Jul 2026 15:33:27 +0200
+Message-ID: <20260716133054.775970825@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,66 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-commit 963af8d97a8c6a117134a8d0db1415e0489200b1 upstream.
+commit 942cd47faa2047b46dfd85745603eba9006973e6 upstream.
 
-When the server answers an RTRS READ, rdma_write_sg() builds the source
-scatter/gather entry for the IB_WR_RDMA_WRITE that returns data to the
-peer. Its length is taken directly from the wire descriptor:
+When rdma_resolve_addr() is invoked with a broadcast destination on an
+IPoIB interface, is_dst_local() inspects the resolved route and
+incorrectly concludes that the address is local. As a result, the
+resolution fails with -ENODEV.
+The issue stems from using '&' to compare rt_type with RTN_LOCAL. The
+RTN_* values form a sequential enum, not a bitmask (RTN_LOCAL=2,
+RTN_BROADCAST=3). Thus, "rt_type & RTN_LOCAL" yields a non-zero result
+for a broadcast route as well.
 
-  plist->length = le32_to_cpu(id->rd_msg->desc[0].len);
+Replace '&' with '==' when comparing rt_type against RTN_LOCAL.
 
-rd_msg points into the chunk buffer that the remote peer filled via
-RDMA-WRITE-WITH-IMM (rtrs_srv_rdma_done() -> process_io_req() ->
-process_read()), so desc[0].len is attacker-controlled and, before this
-change, was only rejected when zero. The source address is the fixed
-chunk start (dma_addr[msg_id]) and the source lkey is the PD-wide
-local_dma_lkey, which is not tied to the chunk's MR mapping, so the verbs
-layer does not constrain the transfer length to max_chunk_size. msg_id
-and off are bounded against queue_depth and max_chunk_size in
-rtrs_srv_rdma_done(), but desc[0].len is a separate field that was not
-checked against the chunk size.
-
-A peer that advertises desc[0].len larger than max_chunk_size can make
-the posted RDMA write read past the chunk's mapped region. The resulting
-behaviour depends on the IOMMU configuration: with no IOMMU or in
-passthrough mode the read may extend into memory adjacent to the chunk
-and be returned to the peer, which can disclose host memory; with a
-translating IOMMU the out-of-range access is expected to fault and abort
-the connection. In either case the transfer exceeds what the protocol
-permits and is driven by a remote peer.
-
-Reject a descriptor length above max_chunk_size, mirroring the existing
-off >= max_chunk_size bound in rtrs_srv_rdma_done(). Legitimate clients
-do not exceed it: the client sets desc[0].len to its MR length, which is
-capped at the negotiated max_io_size (max_chunk_size - MAX_HDR_SIZE).
-
-Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
-Link: https://patch.msgid.link/r/20260612-master-v1-1-70cde5c6fdc9@gmail.com
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Link: https://patch.msgid.link/r/20260609-fix-rdma-resolve-addr-v1-1-449b8b4e6c09@nvidia.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
-Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Fixes: c31e4038c97f ("RDMA/core: Use route entry flag to decide on loopback traffic")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/addr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -227,8 +227,9 @@ static int rdma_write_sg(struct rtrs_srv
- 	/* WR will fail with length error
- 	 * if this is 0
- 	 */
--	if (plist->length == 0) {
--		rtrs_err(s, "Invalid RDMA-Write sg list length 0\n");
-+	if (plist->length == 0 || plist->length > max_chunk_size) {
-+		rtrs_err(s, "Invalid RDMA-Write sg list length %u\n",
-+			 plist->length);
- 		return -EINVAL;
- 	}
- 
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -439,7 +439,7 @@ static int addr6_resolve(struct sockaddr
+ static bool is_dst_local(const struct dst_entry *dst)
+ {
+ 	if (dst->ops->family == AF_INET)
+-		return !!(dst_rtable(dst)->rt_type & RTN_LOCAL);
++		return dst_rtable(dst)->rt_type == RTN_LOCAL;
+ 	else if (dst->ops->family == AF_INET6)
+ 		return !!(dst_rt6_info(dst)->rt6i_flags & RTF_LOCAL);
+ 	else
 
 
