@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5A041F5E9;
-	Thu, 16 Jul 2026 14:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237503F54B6;
+	Thu, 16 Jul 2026 14:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211476; cv=none; b=PyIRoVxnQT593FHvwUEa6rXqqdCmZy5pamepBWuWBp9lh9bwgGYPl8WgzEu2C0iJV7m52JB6CSXvxnPQCaKLcCe62UBWLniOI4R6Rb3g0N9HZxLZD/vejgt1TuaDxnqHoWnUOyY8sjlD74VmZb3zG5Xk/WR7KtwWg99fQO1d4Yw=
+	t=1784211479; cv=none; b=WqTuE9SvjDNBv3/pQYKsYNOo5CewUwdlKRS3xoa1TlxYCp6xRSxIbysxek4k7NMx/vQG+ENvI5gdQrYNuv0CTTlarPQ1JrY5EWbvAVlF7pv+obqiCkszj+cJCriBNlCp6ggQwig0Agp85xRNl60nxb3iXbY3dI7PNuZxY/pQxGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211476; c=relaxed/simple;
-	bh=Oooqkdrm1Et/zPN582E/Tu2o+20/7R42mulR9Gj5ltE=;
+	s=arc-20240116; t=1784211479; c=relaxed/simple;
+	bh=4KUMefw2sp3iTfT9XSYeh8y0xLqP3btPAViDPnVri0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSHfKGX16VtdWJZF7pgmXXV9i+6flRuuGcaz+LRTMCT47B68llk1ydsk6lDMErCcB3lJohbMarYKR/SOm+GkvdcDcr7OklIGJG/FG2Ps7iyOHm1ccnADMwrWmKWVx4wvptb/Sa8f2W9vsDqwMtcLiiw2OckRsPJb8XrV8D/Fnxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USkNqTgn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KCiA0toD4ykoMI2ABrXyfKJN0hxJvNz5epOOpLQ8D0c9U82Yx4CEqWWgtAEY2nXUBAcA79PToZIcYDl+a1RlSawbeb/6b6DaeXR9ADeJs0oW2eqW7xGW7W1AJpM3snNT0KvhYjbVrtsBCR7xm0dHLYTC2TssSoWQM8e49TXXxH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5oj/EGj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USkNqTgn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3FC1F000E9;
-	Thu, 16 Jul 2026 14:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5oj/EGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457F11F00A3A;
+	Thu, 16 Jul 2026 14:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211472;
-	bh=UIGYW3JtFcf/WaeMjKxaKzRd3HmYxhg72RRohki8Y50=;
+	s=korg; t=1784211474;
+	bh=oIY+v9O57pnXn9rG6CHnPnLXoMEgfB4bUvUVdzPqJqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=USkNqTgnQih1mgZK6cqV8KovLWYUl9hQ8gA7tWNrDjfJ0Kv7vdXhDj8ZZUp/ksont
-	 8Leds23GL/A9lwXj1EjoPr0BD0YfBL467RtPWOtgXEtNYQJ3EJZsnRFsEKiJLSyWgD
-	 gjhP5OcGP3ftKxDW+ewjHToctaWPP6OA7i+ShqlI=
+	b=l5oj/EGj2/gfjSpegVTNLh7xFlzL+fmBXOPgZNWDA8ZIFhTmaduoUcQfNGtNFvmuu
+	 I5OM2CIGXYd1asCbw5Vb4BAblybra77LM/oO54od7gg1PWfGO1lNydxow0EvBYEe7f
+	 0iOBMVrsfw2vEqY1d0hlQnnWVmMfFRoUavI4P8kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 441/480] i2c: imx-lpi2c: mark I2C adapter when hardware is powered down
-Date: Thu, 16 Jul 2026 15:33:08 +0200
-Message-ID: <20260716133054.358967220@linuxfoundation.org>
+Subject: [PATCH 6.18 442/480] i2c: i801: fix hardware state machine corruption in error path
+Date: Thu, 16 Jul 2026 15:33:09 +0200
+Message-ID: <20260716133054.380688281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -52,70 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit 218cfe364b55b2768221629bd4a69ad190b7fbbc upstream.
+commit 10dd1a736d557e310a77117832874729a0175d57 upstream.
 
-On some i.MX platforms, certain I2C client drivers keep a periodic
-workqueue which continues to trigger I2C transfers.
+A severe livelock and subsequent Hung Task panic were observed in the
+i2c-i801 driver during concurrent Fuzzing. The crash is caused by an
+unconditional hardware register cleanup in the error handling path of
+i801_access().
 
-During system suspend/resume, there exists a time window between:
-  - suspend_noirq and the system entering suspend
-  - the system starting to resume and resume_noirq
+When i801_check_pre() fails (e.g., returning -EBUSY because the SMBus
+controller is actively used by BIOS/ACPI), the kernel does not actually
+acquire the hardware ownership. However, the code jumps to the 'out'
+label and executes:
 
-In this window, the I2C controller resources such as clock and pinctrl
-may already be disabled or not yet restored.
+    iowrite8(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
 
-If a workqueue triggers an I2C transfer in this period, the driver
-attempts to access I2C registers while the hardware resources are
-unavailable, which may lead to system hang.
+This forcefully clears the INUSE_STS lock and resets the hardware status
+flags without owning the controller. Doing so interrupts ongoing BIOS/ACPI
+transactions and totally corrupts the SMBus hardware state machine.
 
-Mark the I2C adapter as suspended during noirq suspend and block new
-transfers until resume, ensuring that I2C transfers are only issued
-when hardware resources are available.
+Consequently, all subsequent i801_access() calls fail at the pre-check
+stage, triggering an endless stream of "SMBus is busy, can't use it!"
+error logs. Over a slow serial console, this printk flood monopolizes
+the CPU (Console Livelock), starving other processes trying to acquire
+the mmap_lock down_read semaphore, ultimately triggering the hung task
+watchdog.
 
-Fixes: 1ee867e465c1 ("i2c: imx-lpi2c: add target mode support")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Cc: <stable@vger.kernel.org> # v6.14+
-Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fix this by moving the 'out' label below the hardware register cleanup.
+If i801_check_pre() fails, we safely bypass the iowrite8() and only
+release the software locks (pm_runtime and mutex), strictly adhering to
+the rule of not releasing resources that were never acquired.
+
+Fixes: 1f760b87e54c ("i2c: i801: Call i801_check_pre() from i801_access()")
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Cc: <stable@vger.kernel.org> # v6.3+
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260525031450.3183421-1-carlos.song@oss.nxp.com
+Link: https://lore.kernel.org/r/20260512093534.348655-1-w15303746062@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-i801.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -1588,7 +1588,18 @@ static int __maybe_unused lpi2c_runtime_
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -927,13 +927,13 @@ static s32 i801_access(struct i2c_adapte
+ 	 */
+ 	if (hwpec)
+ 		iowrite8(ioread8(SMBAUXCTL(priv)) & ~SMBAUXCTL_CRC, SMBAUXCTL(priv));
+-out:
+ 	/*
+ 	 * Unlock the SMBus device for use by BIOS/ACPI,
+ 	 * and clear status flags if not done already.
+ 	 */
+ 	iowrite8(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
  
- static int __maybe_unused lpi2c_suspend_noirq(struct device *dev)
- {
--	return pm_runtime_force_suspend(dev);
-+	struct lpi2c_imx_struct *lpi2c_imx = dev_get_drvdata(dev);
-+	int ret;
-+
-+	i2c_mark_adapter_suspended(&lpi2c_imx->adapter);
-+
-+	ret = pm_runtime_force_suspend(dev);
-+	if (ret) {
-+		i2c_mark_adapter_resumed(&lpi2c_imx->adapter);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static int __maybe_unused lpi2c_resume_noirq(struct device *dev)
-@@ -1608,6 +1619,8 @@ static int __maybe_unused lpi2c_resume_n
- 	if (lpi2c_imx->target)
- 		lpi2c_imx_target_init(lpi2c_imx);
- 
-+	i2c_mark_adapter_resumed(&lpi2c_imx->adapter);
-+
- 	return 0;
- }
- 
++out:
+ 	pm_runtime_put_autosuspend(&priv->pci_dev->dev);
+ 	mutex_unlock(&priv->acpi_lock);
+ 	return ret;
 
 
