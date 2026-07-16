@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804FB3BCD05;
-	Thu, 16 Jul 2026 13:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417583FD121;
+	Thu, 16 Jul 2026 13:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210005; cv=none; b=WV/ySl5ZlN6wh5FNWe0Bv8YbphP6VcMG+8wiryz9H1OOk/MI01tQcKiXW96wmSnxpTBqwPU08/p8E2YHsXdAa3w2qqS+XN4X/8NoRBnjgNB1sVPPZLXw6zbgD3hUrFezTU0dvqNF3hdEusMu930nYACx03T9L9wW9Pn4PabCufI=
+	t=1784210008; cv=none; b=YZRUlo7iBZAN0evyc3Or9qx+NBVb2A6Hx9BSUisfrydYruglMoJc4cMw1O0BtTZZyjVWuFBp7SxlLbRCQhSFKrEzkIOuQvaWJTufg9t3mczwe5GpkxnnmP1pDFTRpi3XaM0vTFJw13UfbQxH1tsli5pmHrtQ/OQeNAhbhIJ+fWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210005; c=relaxed/simple;
-	bh=IktqfzLAn7yZw73g57yBN8/+iilOsoaoBe2SElsCdYE=;
+	s=arc-20240116; t=1784210008; c=relaxed/simple;
+	bh=Azk+rC2AqcDacJS2PP1zC4/BOb2cXAN5lm7IxkHhL+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZpYacKX3IKqBBV95MHM5QCPWgNBgsAQLBNPVmwRlWVfIEgJ3c4d18ze79nQq2s4FfSPBHz8xpLUVOfvq7Y6DGVvNa5JV/1VwpV3PoZNV67GMMvm9SvU058zuKbslxxnYgR3lF6hqSQF4sy7GEMVk/VmiVyKko7VoI9gty3pO/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b32ujQXI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QW4mTCmC1c1Zfv+yxC4rgJlE2MiRjoadLMDYbAOaBOMPgp5XylLG76sKNJuEfMOlQJUHRrnbE/DVDXtOpMu3T/lb55D60p6avRjElKTir+yyvjglWNtViyrDZn1wdHAs/zalXVgrOCFwT8FYAFxodSnaWvAOD/6TzWrTaG00Qww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnG2qWbQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b32ujQXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B571F000E9;
-	Thu, 16 Jul 2026 13:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnG2qWbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544EE1F000E9;
+	Thu, 16 Jul 2026 13:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210004;
-	bh=p8TPahNm7d2IzSeEAiSAbzkIgmpWjJorP5hFuOIF1gg=;
+	s=korg; t=1784210006;
+	bh=yLtGwZffmZsk7VkD/FNTF02+fKAk3hB30j0C0aUohH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b32ujQXIALSS+uUT+KsgFtUM7J60W6mNbpKh9sGzpsMi2E+JJ7BJZ2g0Bar5psfYu
-	 9BSJBiOjIVfp9YiME937aksN1/VyU4zXIPFJfqSUFgWh3xE+7M8wV2FkSqFXGRsrLn
-	 yTPblfPHPoal2VtPuzriatvYsKygS4/yEcqdmcUY=
+	b=XnG2qWbQjzVA19thioUNppQZ5J8sVbWx5jnlc09+4wF3dj4A9keYE6Eb0aQZpTnhy
+	 RsxZCN9QWnF3fPa+NoFpvLTwmxjVAU1/06aZLnqMz/Vtivel8mAC/LBEsVpGMAN/Xg
+	 pNcA39XGFeUB3e3JDaC9FNnUHWwF3aTNPg+s7zPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Philippe De Muyter <phdm@macqel.be>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.1 357/518] partitions: aix: bound the pp_count scan to the ppe array
-Date: Thu, 16 Jul 2026 15:30:25 +0200
-Message-ID: <20260716133055.640531354@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 7.1 358/518] btrfs: fix incorrect buffered IO fallback for append direct writes
+Date: Thu, 16 Jul 2026 15:30:26 +0200
+Message-ID: <20260716133055.661009761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,62 +51,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 2dc0bfd2fe355fb930de63c2f2eb8ced8570c579 upstream.
+commit ff66fe6662330226b3f486014c375538d91c44aa upstream.
 
-aix_partition() reads the physical volume descriptor into a fixed-size
-struct pvd and then scans its physical-partition-extent array:
+[BUG]
+With the previous bug of short direct writes fixed, test case
+generic/362 (*) still fails with the following error with nodatasum
+mount option:
 
-	int numpps = be16_to_cpu(pvd->pp_count);
-	...
-	for (i = 0; i < numpps; i += 1) {
-		struct ppe *p = pvd->ppe + i;
-		...
-		lp_ix = be16_to_cpu(p->lp_ix);
+# generic/362  0s ... - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
+# - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
+#    --- tests/generic/362.out	2024-08-24 15:31:37.200000000 +0930
+#    +++ /home/adam/xfstests/results//generic/362.out.bad	2026-05-27 10:13:09.072485767 +0930
+#    @@ -1,2 +1,3 @@
+#     QA output created by 362
+#    +Wrong file size after first write, got 8192 expected 4096
+#     Silence is golden
+#    ...
 
-pvd points at a single kmalloc()'d struct pvd whose ppe[] member holds a
-fixed ARRAY_SIZE(pvd->ppe) (1016) entries, but the loop runs up to the
-on-disk pp_count.  pp_count is an unvalidated __be16 read straight from
-the descriptor, so a crafted AIX image with pp_count larger than 1016
-drives the loop to read pvd->ppe[i] past the end of the allocation (up
-to 65535 entries, ~2 MB out of bounds).
+*: If the test case has been executed before with default data checksum,
+the failure will not reproduce. Need the following fix to make it
+reliably reproducible:
+https://lore.kernel.org/linux-btrfs/20260528111659.87113-1-wqu@suse.com/
 
-The partition scan runs without mounting anything, when a block device
-with a crafted AIX/IBM partition table appears (an attacker-supplied
-image attached with losetup -P, or a device auto-scanned by udev), via
-msdos_partition() -> aix_partition().
+[CAUSE]
+Inside btrfs_dio_iomap_begin() for a direct write, we increase the isize
+if it's beyond the current isize.
 
-Clamp the scan to the number of entries the ppe[] array can hold.
+But if the direct io finished short, we do not revert the isize to the
+previous value nor to the short write end.
 
-Fixes: 6ceea22bbbc8 ("partitions: add aix lvm partition support files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Philippe De Muyter <phdm@macqel.be>
-Link: https://patch.msgid.link/20260607064137.302574-1-hexlabsecurity@proton.me
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Then if we need to fall back to buffered writes, and the write has
+IOCB_APPEND flag, then the buffered write will be positioned at the
+incorrect isize.
+
+The call chain looks like this:
+
+ btrfs_direct_write(pos=0, length=4K)
+ |- __iomap_dio_rw()
+ |  |- iomap_iter()
+ |  |  |- btrfs_dio_iomap_begin()
+ |  |     |- btrfs_get_blocks_direct_write()
+ |  |        |- i_size_write()
+ |  |           Which updates the isize to the write end (4K).
+ |  |
+ |  |- iomap_dio_iter()
+ |  |  Failed with -EFAULT on the first page.
+ |  |
+ |  |- iomap_iter()
+ |  |  |- btrfs_dio_iomap_end()
+ |  |     Detects a short write, return -ENOTBLK
+ |  |- if (ret == -ENOTBLK) { ret = 0;}
+ |     Which resets the return value.
+ |
+ |- ret = iomap_dio_complet()
+ |  Which returns 0.
+ |
+ |- btrfs_buffered_write(iocb, from);
+    |- generic_write_checks()
+       |- iocb->ki_pos = i_size_read()
+          Which is still the new size (4K), other than the original
+	  isize 0.
+
+[FIX]
+Introduce the following btrfs_dio_data members:
+
+- old_isize
+
+- updated_isize
+  If the direct write has enlarged the isize.
+
+Then if we got a short write, and btrfs_dio_data::updated_isize is set,
+revert to the correct isize based on old_isize and current file
+position.
+
+And here we call i_size_write() without holding an extent lock, which is
+a very special case that we're safe to do:
+
+ - Only a single writer can be enlarging isize
+   Enlarging isize will take the exclusive inode lock.
+
+ - Buffered readers need to wait for the OE we're holding
+   Buffered readers will lock extent and wait for OE of the folio range.
+   Sometimes we can skip the OE wait, but since all page cache is
+   invalidated, the OE wait can not be skipped.
+
+But I do not think this is the most elegant solution, nor covers all
+cases. E.g. if the bio is submitted but IO failed, we are unable to do
+the revert.
+
+I believe the more elegant one would be extend the EXTENT_DIO_LOCKED
+lifespan for direct writes, so that we can update the isize when a
+write beyond EOF finished successfully.
+
+However that change is too huge for a small bug fix.
+So only implement the minimal partial fix for now.
+
+[REASON FOR NO FIXES TAG]
+The bug is again very old, before commit f85781fb505e ("btrfs: switch to
+iomap for direct IO") we are already increasing isize without a
+proper rollback for short writes.
+
+Thus only a CC to stable.
+
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/partitions/aix.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/btrfs/direct-io.c |   43 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
---- a/block/partitions/aix.c
-+++ b/block/partitions/aix.c
-@@ -226,6 +226,15 @@ int aix_partition(struct parsed_partitio
- 		int next_lp_ix = 1;
- 		int lp_ix;
+--- a/fs/btrfs/direct-io.c
++++ b/fs/btrfs/direct-io.c
+@@ -15,10 +15,12 @@
  
-+		/*
-+		 * pvd was read into a fixed-size struct pvd whose ppe[] array
-+		 * holds ARRAY_SIZE(pvd->ppe) entries.  pp_count is an
-+		 * unvalidated on-disk __be16, so clamp the scan to the array
-+		 * size to avoid walking past the allocation.
-+		 */
-+		if (numpps > ARRAY_SIZE(pvd->ppe))
-+			numpps = ARRAY_SIZE(pvd->ppe);
+ struct btrfs_dio_data {
+ 	ssize_t submitted;
++	loff_t old_isize;
+ 	struct extent_changeset *data_reserved;
+ 	struct btrfs_ordered_extent *ordered;
+ 	bool data_space_reserved;
+ 	bool nocow_done;
++	bool updated_isize;
+ };
+ 
+ struct btrfs_dio_private {
+@@ -228,6 +230,7 @@ static int btrfs_get_blocks_direct_write
+ 	bool space_reserved = false;
+ 	u64 len = *lenp;
+ 	u64 prev_len;
++	loff_t old_isize;
+ 	int ret = 0;
+ 
+ 	/*
+@@ -341,8 +344,14 @@ static int btrfs_get_blocks_direct_write
+ 	 * Need to update the i_size under the extent lock so buffered
+ 	 * readers will get the updated i_size when we unlock.
+ 	 */
+-	if (start + len > i_size_read(inode))
++	old_isize = i_size_read(inode);
++	if (start + len > old_isize) {
++		if (!dio_data->updated_isize) {
++			dio_data->old_isize = old_isize;
++			dio_data->updated_isize = true;
++		}
+ 		i_size_write(inode, start + len);
++	}
+ out:
+ 	if (ret && space_reserved) {
+ 		btrfs_delalloc_release_extents(BTRFS_I(inode), len);
+@@ -626,6 +635,38 @@ static int btrfs_dio_iomap_end(struct in
+ 		length -= submitted;
+ 		if (write) {
+ 			/*
++			 * Got a short write and have updated the isize, need to
++			 * revert the isize change.
++			 *
++			 * Normally we need to update isize with extent lock hold,
++			 * but we're safe due to the following factors:
++			 *
++			 * - Only a single writer can be enlarging isize
++			 *   Enlarging isize will take the exclusive inode lock.
++			 *
++			 * - Buffered readers need to wait for the OE we're holding
++			 *   Buffered readers will lock extent and wait for OE
++			 *   of the folio range, and since page cache is invalidated
++			 *   the OE wait can not be skipped.
++			 *
++			 * So here we are safe to revert the isize before
++			 * finishing the OE, and no reader of the remaining range
++			 * can see the enlarged size.
++			 *
++			 * TODO: Extend the DIO_LOCKED lifespan for direct writes,
++			 * and only enlarge isize after a successful write.
++			 */
++			if (dio_data->updated_isize) {
++				u64 new_isize;
 +
- 		for (i = 0; i < numpps; i += 1) {
- 			struct ppe *p = pvd->ppe + i;
- 			unsigned int lv_ix;
++				if (submitted == 0)
++					new_isize = dio_data->old_isize;
++				else
++					new_isize = max(dio_data->old_isize, pos);
++				i_size_write(inode, new_isize);
++				dio_data->updated_isize = false;
++			}
++			/*
+ 			 * We have a short write, if there is any range
+ 			 * that is submitted properly, that part will have
+ 			 * its own OE split from the original one.
 
 
