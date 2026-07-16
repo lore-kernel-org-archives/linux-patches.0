@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8980D3009E1;
-	Thu, 16 Jul 2026 13:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DDF31717E;
+	Thu, 16 Jul 2026 13:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209525; cv=none; b=Mrad5P+Wxh4Vki8B2cVncybNNPr43xGlqr1LbLfPLdPNJl2FhqeltLp1bjz75MWiVFjHWGN3Sq6FkLflnzR749N2lD0wQdieFx2/PSzsGscjOiODOYok0JB44BQjilF3cJMHQYgInoZbitLYMHSUT4T1Iel9idLRRd+O7JxjBZM=
+	t=1784209528; cv=none; b=H7idv9rQvMXsRvCuL9GsMyP8DSvb2GrQBlD0Wt6zpOyCsyial2PxFs3yLm3edtHPDzRJcf1aEGoo/9j7EjTJWhU9XWyvjm1QwLesdf4u1VqUBUAyAsmbFk5SaRI7mLYuhGO1cvhEUCjNfads/PAVLxy6gCtOXpzvEnCZmIyFGfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209525; c=relaxed/simple;
-	bh=xIX3YW99XDtikc/wkt7a1P6DPlp8jlkGjwaFgebI/y0=;
+	s=arc-20240116; t=1784209528; c=relaxed/simple;
+	bh=lpD3Tm1hkR2cYWsH2pCY66n7Bf30a6p3jOGF7VOrIFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhzbprHFPIgd+w1zYZJSn7figiSnFxmX3FQ2bDAJxXWgxQUaqxcK0/NgjhuAWepHyo2azPUL3WkKk2MX0NkWYnabT77w89Ixy2CdPXpJ0BNfoz7axH0QLMKxGRs5f0AeDcY3Ywq9PN6wwPe5wZHUd5ITlJPQLWFyt50CGOJCk6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7t8FqS+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A9h2aDq86jiAnM66BSktFOuJnmvS4lkhvB4dptJJPet93aKoVX75FqlFNAb/eek2KjH8q3mnZxDo6k7GzflKuQwmCAJLshxJrdWnXHbQsv+20vT+Ht02f7uu+i/3gWK+KBKVahFT08yh1cPolqupZYTMqB9F28v56WcJe9crrWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCFA+Dua; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7t8FqS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DEA1F000E9;
-	Thu, 16 Jul 2026 13:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCFA+Dua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05BC1F000E9;
+	Thu, 16 Jul 2026 13:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209523;
-	bh=j7gvdarG/paqLmDYJ5eKBK/tR7ww9euZQhc7bzy+Miw=;
+	s=korg; t=1784209526;
+	bh=leUL5N7YI1sjBlanPXi2yim6njJD5plSmmQOf3pzKkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d7t8FqS+gvF2cG87L0DaE+LRnDTYMAE1BUlDkWdrC4AOe1zIZ0eq1AU8eJ/ees8bg
-	 UwWn9lg74RQpWG7YmOHzXIhoMqwgsrshWYsOyWDy4e0MHJQuRhfFuERq/70AR8OIHC
-	 UnoBRdQa061ygQ4vLf9LYV4Izn3KxpJhZe23tnOk=
+	b=lCFA+DuauOrUWDxAR2k4YVoU4SrWFSoehyYJ4KAUjzBjffDh8JL2kwU1QO8PLkrlR
+	 uEM0FF/o9iqvIYinW38i93rfBNiieYwzuuEm3KLz6FXXGbxFjy85A7H52zgk+yJOZP
+	 59WYbBTX0sfTebOpu525VQYQWuzMp3TKPfSbXCNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>
-Subject: [PATCH 7.1 164/518] staging: rtl8723bs: fix OOB reads in IE loops in issue_assocreq() and join_cmd_hdl()
-Date: Thu, 16 Jul 2026 15:27:12 +0200
-Message-ID: <20260716133051.429531992@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.1 212/518] Bluetooth: L2CAP: validate option length before reading conf opt value
+Date: Thu, 16 Jul 2026 15:28:00 +0200
+Message-ID: <20260716133052.455676643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,63 +50,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit ef61d628dfad38fead1fd2e08979ae9126d011d5 upstream.
+commit 687617555cedfb74c9e3cb85d759b908dcb17856 upstream.
 
-Two IE parsing loops are missing the header bounds checks before they
-dereference pIE->length:
+l2cap_get_conf_opt() derives the option length from the
+attacker-controlled opt->len field and immediately dereferences
+opt->val (as u8, get_unaligned_le16() or get_unaligned_le32(), or a
+raw pointer for the default case) before any caller has confirmed
+that opt->len bytes are present in the buffer. The callers
+(l2cap_parse_conf_req(), l2cap_parse_conf_rsp() and
+l2cap_conf_rfc_get()) only detect a malformed option afterwards, once
+the running length has gone negative, by which point the
+out-of-bounds read has already executed.
 
- - issue_assocreq() walks pmlmeinfo->network.ies to build the
-   association request. If the stored IE data ends with only an
-   element_id byte and no length byte, pIE->length is read one byte
-   past the end of the buffer.
+An existing post-hoc length check keeps the garbage value from being
+consumed, so this is not a data leak in the current control flow. It
+is still a validate-after-use ordering bug: up to 4 bytes are read
+past the end of the buffer before it is known to contain them, and it
+is fragile to future changes in the callers.
 
- - join_cmd_hdl() walks pnetwork->ies during station join and has
-   the same problem under the same conditions.
+Fix it at the source. Pass the end of the buffer into
+l2cap_get_conf_opt() and refuse to touch opt->val unless the full
+option (header + value) fits. Each caller computes an end pointer
+once before the loop and checks the return value directly instead of
+inferring the error from a negative length.
 
-Both buffers are filled from AP beacon and probe-response frames, so a
-malicious AP that sends a truncated final IE can trigger the issue.
-
-Apply the two-guard pattern established in update_beacon_info():
-  1. Break if fewer than sizeof(*pIE) bytes remain.
-  2. Break if the IE's declared data extends past the buffer end.
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260522004531.1038924-3-hossu.alexandru@gmail.com
+Fixes: 7c9cbd0b5e38 ("Bluetooth: Verify that l2cap_get_conf_opt provides large enough buffer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/l2cap_core.c |   36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -2935,7 +2935,11 @@ void issue_assocreq(struct adapter *pada
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3048,13 +3048,24 @@ fail:
+ 	return NULL;
+ }
  
- 	/* vendor specific IE, such as WPA, WMM, WPS */
- 	for (i = sizeof(struct ndis_802_11_fix_ie); i < pmlmeinfo->network.ie_length;) {
-+		if (i + sizeof(*pIE) > pmlmeinfo->network.ie_length)
-+			break;
- 		pIE = (struct ndis_80211_var_ie *)(pmlmeinfo->network.ies + i);
-+		if (i + sizeof(*pIE) + pIE->length > pmlmeinfo->network.ie_length)
-+			break;
+-static inline int l2cap_get_conf_opt(void **ptr, int *type, int *olen,
+-				     unsigned long *val)
++static inline int l2cap_get_conf_opt(void **ptr, void *end, int *type,
++				     int *olen, unsigned long *val)
+ {
+ 	struct l2cap_conf_opt *opt = *ptr;
+ 	int len;
  
- 		switch (pIE->element_id) {
- 		case WLAN_EID_VENDOR_SPECIFIC:
-@@ -5328,7 +5332,11 @@ u8 join_cmd_hdl(struct adapter *padapter
++	/* opt->len is attacker-controlled. Validate that the full option
++	 * (header + value) actually fits in the buffer before touching
++	 * opt->val, otherwise the switch below reads past the end of the
++	 * caller's buffer.
++	 */
++	if (end - *ptr < L2CAP_CONF_OPT_SIZE)
++		return -EINVAL;
++
+ 	len = L2CAP_CONF_OPT_SIZE + opt->len;
++	if (end - *ptr < len)
++		return -EINVAL;
++
+ 	*ptr += len;
  
- 	/* sizeof(struct ndis_802_11_fix_ie) */
- 	for (i = _FIXED_IE_LENGTH_; i < pnetwork->ie_length;) {
-+		if (i + sizeof(*pIE) > pnetwork->ie_length)
-+			break;
- 		pIE = (struct ndis_80211_var_ie *)(pnetwork->ies + i);
-+		if (i + sizeof(*pIE) + pIE->length > pnetwork->ie_length)
-+			break;
+ 	*type = opt->type;
+@@ -3426,6 +3437,7 @@ static int l2cap_parse_conf_req(struct l
+ 	void *ptr = rsp->data;
+ 	void *endptr = data + data_size;
+ 	void *req = chan->conf_req;
++	void *req_end = req + chan->conf_len;
+ 	int len = chan->conf_len;
+ 	int type, hint, olen;
+ 	unsigned long val;
+@@ -3439,9 +3451,11 @@ static int l2cap_parse_conf_req(struct l
+ 	BT_DBG("chan %p", chan);
  
- 		switch (pIE->element_id) {
- 		case WLAN_EID_VENDOR_SPECIFIC:/* Get WMM IE. */
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&req, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&req, req_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		hint  = type & L2CAP_CONF_HINT;
+ 		type &= L2CAP_CONF_MASK;
+@@ -3669,6 +3683,7 @@ static int l2cap_parse_conf_rsp(struct l
+ 	struct l2cap_conf_req *req = data;
+ 	void *ptr = req->data;
+ 	void *endptr = data + size;
++	void *rsp_end = rsp + len;
+ 	int type, olen;
+ 	unsigned long val;
+ 	struct l2cap_conf_rfc rfc = { .mode = L2CAP_MODE_BASIC };
+@@ -3677,9 +3692,11 @@ static int l2cap_parse_conf_rsp(struct l
+ 	BT_DBG("chan %p, rsp %p, len %d, req %p", chan, rsp, len, data);
+ 
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		switch (type) {
+ 		case L2CAP_CONF_MTU:
+@@ -3930,6 +3947,7 @@ static void l2cap_conf_rfc_get(struct l2
+ {
+ 	int type, olen;
+ 	unsigned long val;
++	void *rsp_end = rsp + len;
+ 	/* Use sane default values in case a misbehaving remote device
+ 	 * did not send an RFC or extended window size option.
+ 	 */
+@@ -3948,9 +3966,11 @@ static void l2cap_conf_rfc_get(struct l2
+ 		return;
+ 
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		switch (type) {
+ 		case L2CAP_CONF_RFC:
 
 
