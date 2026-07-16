@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33352433045;
-	Thu, 16 Jul 2026 14:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D46400997;
+	Thu, 16 Jul 2026 14:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212090; cv=none; b=QCwrLk62vkPyB4VvhLTwalr9pOURNiIWvg1RgoVbjEqtMcpTi5nONIvf7jmUyo4ZZd69S6ir8LUIZz5DbVzzprQXfQY0q7i5eDoVFszoLW+/j9sXP2j0aOsn/eGMxVaSCPfsdTVkYFQ6buu44o0eYoYXCKXo1OrXMqRthMW8AMs=
+	t=1784212097; cv=none; b=jruo1biAkRcm4InJO+Vfoj/LHyoz+MNaGoTugbA87l8h+M4AP37ZA9yIXNqOSOnJpck45xFIyIL0WuOcanHQsaoH/usHbm91Kob1QszRizYfzenVsxeC0VPCcikt+CffGB/j4l7LD0+lQK1rbdEdmptshlc2K2SYQAljNPsAi1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212090; c=relaxed/simple;
-	bh=gxZePhAwWpPoG5TstdY6EydsyMDTwy4PI0khKIhhqoo=;
+	s=arc-20240116; t=1784212097; c=relaxed/simple;
+	bh=TjUAUfcC5PjyVhaHX2Fsfnh6l+P+GyolXBqCHrPQgMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eFc7H1EUtZRe3YDieLzxqBopP2bKeHJAx5WiZ/oNPUjCVE8gIr0Fw9KWFdzV+ICGZJMokcuEX5zPwJ6/Wf0IeQndNSdoByzLKE5CoIo3RLBcD+PLgwh5Ow8VMaWfWB7xnqAq6vhtllJCL68xczZzLQgDKOeNoexlujk2aVAlfKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jm/bs/Hu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qi933r0y3mJqID/HEknGjlzPMIItu+Yb1bKfMQZDRAs4UcE2jCxsJvSfw5QW5egDLs7QdNIXiHtk1m9Ayrmw2ZiZkN/um9MDDpkJ9j3HGp8Spo4/+PIVV8y/Gs2h10IpcvIQTX8Y/LkYm9LCb8t5Y9jg6jbaB8eR0olSODbqm1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMFWe3/s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jm/bs/Hu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A801F00A3A;
-	Thu, 16 Jul 2026 14:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMFWe3/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB66E1F000E9;
+	Thu, 16 Jul 2026 14:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212086;
-	bh=rN8kBXupdd0bd/sHc+GcJZjmkoGu8RXqJuvrMtNEAv4=;
+	s=korg; t=1784212089;
+	bh=VCd6/gqn2Ae0G7wqX0fokM5Cc+G+Mfo56JxYH/xngoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jm/bs/HuJy5L+T8okdkN0BEfyNODoeh5pns5m16A676StqqNEZvIRSEIp9vO9dvJG
-	 Ir4W3yV1ZY4Y+OImvRYqYhOdW26Xk+2GDDAk8G6nCIgSsOj5E+3d0NQFhjRSDcP/hS
-	 IddSn+7nMQc+9uEKKS7pTOj2/EhzIdmnMhaNSx/s=
+	b=yMFWe3/s8jXTdME1sr0DPQZOHT/NtrUVFzX68UFf3p+bdhaObZoJ9hmWd9Nt90SeW
+	 1+YcBKo84lLTFgEwVXVbv4WAsXtILTj28Fbf6O/PcSi1r+tmkDZHBwmi22KsFbP+m8
+	 e3l+mCbAdzCAEWKKr4ZgVCTFkdsgdVRx+98DGgcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fed5dce4553262f3b35c@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 151/349] Bluetooth: bnep: pin L2CAP connection during netdev registration
-Date: Thu, 16 Jul 2026 15:31:25 +0200
-Message-ID: <20260716133036.763857705@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Nhat Pham <nphamcs@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Dave Chinner <david@fromorbit.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 142/349] mm/shrinker: do not hold RCU lock in shrinker_debugfs_count_show()
+Date: Thu, 16 Jul 2026 15:31:16 +0200
+Message-ID: <20260716133036.546483319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,91 +57,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit bb067a99a0356196c0b89a95721985485ebce5a5 upstream.
+commit b902890c62d200b3509cb5e09cf1e0a66553c128 upstream.
 
-bnep_add_connection() reads the L2CAP connection without holding the
-channel lock, then passes its HCI device to register_netdev(). Controller
-teardown can clear and release that connection concurrently, leaving the
-network device registration path to dereference a freed parent device.
+Reading the debugfs "count" file of a memcg-aware shrinker can sleep
+inside an RCU read-side critical section:
 
-Take a reference to the L2CAP connection while holding the channel lock.
-Retain it until register_netdev() has taken the parent device reference.
+  BUG: sleeping function called from invalid context at kernel/cgroup/rstat.c:421
+  RCU nest depth: 1, expected: 0
+   css_rstat_flush
+   mem_cgroup_flush_stats
+   zswap_shrinker_count
+   shrinker_debugfs_count_show
 
-Fixes: 65f53e9802db ("Bluetooth: Access BNEP session addresses through L2CAP channel")
-Reported-by: syzbot+fed5dce4553262f3b35c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fed5dce4553262f3b35c
-Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+shrinker_debugfs_count_show() invokes the ->count_objects() callback under
+rcu_read_lock().  The zswap callback flushes memcg stats via
+css_rstat_flush(), which may sleep, so it must not run under RCU.
+
+The RCU lock is not needed here.  mem_cgroup_iter() takes RCU internally
+and returns a memcg holding a css reference (dropped on the next iteration
+or by mem_cgroup_iter_break()), so the memcg stays alive without it.  The
+shrinker is kept alive by the open debugfs file: shrinker_free() removes
+the debugfs entries via debugfs_remove_recursive(), which waits for
+in-flight readers to drain, before call_rcu(..., shrinker_free_rcu_cb).
+The sibling "scan" handler already invokes the sleeping ->scan_objects()
+callback with no RCU section.
+
+Drop the rcu_read_lock()/rcu_read_unlock().
+
+Link: https://lore.kernel.org/20260610232048.62930-1-shakeel.butt@linux.dev
+Fixes: 5035ebc644ae ("mm: shrinkers: introduce debugfs interface for memory shrinkers")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
+Closes: https://lore.kernel.org/all/c052a064-cddb-494f-a0d8-f8a10b4b1c4d@linux.dev/
+Suggested-by: Nhat Pham <nphamcs@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
+Tested-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Reviewed-by: Nhat Pham <nphamcs@gmail.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/bnep/core.c |   27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ mm/shrinker_debug.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -562,14 +562,18 @@ static int bnep_session(void *arg)
- 	return 0;
+--- a/mm/shrinker_debug.c
++++ b/mm/shrinker_debug.c
+@@ -57,8 +57,6 @@ static int shrinker_debugfs_count_show(s
+ 	if (!count_per_node)
+ 		return -ENOMEM;
+ 
+-	rcu_read_lock();
+-
+ 	memcg_aware = shrinker->flags & SHRINKER_MEMCG_AWARE;
+ 
+ 	memcg = mem_cgroup_iter(NULL, NULL, NULL);
+@@ -88,8 +86,6 @@ static int shrinker_debugfs_count_show(s
+ 		}
+ 	} while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
+ 
+-	rcu_read_unlock();
+-
+ 	kfree(count_per_node);
+ 	return ret;
  }
- 
--static struct device *bnep_get_device(struct bnep_session *session)
-+static struct l2cap_conn *bnep_get_conn(struct bnep_session *session)
- {
--	struct l2cap_conn *conn = l2cap_pi(session->sock->sk)->chan->conn;
-+	struct l2cap_chan *chan = l2cap_pi(session->sock->sk)->chan;
-+	struct l2cap_conn *conn;
- 
--	if (!conn || !conn->hcon)
--		return NULL;
-+	l2cap_chan_lock(chan);
-+	conn = chan->conn;
-+	if (conn)
-+		l2cap_conn_get(conn);
-+	l2cap_chan_unlock(chan);
- 
--	return &conn->hcon->dev;
-+	return conn;
- }
- 
- static const struct device_type bnep_type = {
-@@ -581,6 +585,7 @@ int bnep_add_connection(struct bnep_conn
- 	u32 valid_flags = BIT(BNEP_SETUP_RESPONSE);
- 	struct net_device *dev;
- 	struct bnep_session *s, *ss;
-+	struct l2cap_conn *conn = NULL;
- 	u8 dst[ETH_ALEN], src[ETH_ALEN];
- 	int err;
- 
-@@ -640,10 +645,18 @@ int bnep_add_connection(struct bnep_conn
- 	bnep_set_default_proto_filter(s);
- #endif
- 
--	SET_NETDEV_DEV(dev, bnep_get_device(s));
-+	conn = bnep_get_conn(s);
-+	if (!conn) {
-+		err = -ENOTCONN;
-+		goto failed;
-+	}
-+
-+	SET_NETDEV_DEV(dev, &conn->hcon->dev);
- 	SET_NETDEV_DEVTYPE(dev, &bnep_type);
- 
- 	err = register_netdev(dev);
-+	l2cap_conn_put(conn);
-+	conn = NULL;
- 	if (err)
- 		goto failed;
- 
-@@ -665,6 +678,8 @@ int bnep_add_connection(struct bnep_conn
- 	return 0;
- 
- failed:
-+	if (conn)
-+		l2cap_conn_put(conn);
- 	up_write(&bnep_session_sem);
- 	free_netdev(dev);
- 	return err;
 
 
