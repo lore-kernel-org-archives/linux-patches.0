@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE6B3195EF;
-	Thu, 16 Jul 2026 14:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E32442DFF1;
+	Thu, 16 Jul 2026 14:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784212166; cv=none; b=gqL+NOOwGNvx25KggujQumkDP7g3JKJJfxRIhIFHvsXGxwm6eHZcVYjXcwJCPGz+cYkysxzsA0bPaWOxqP5ioZ2GaHvbDLb9DNSnuIwc+g7vuVZ9wGkLduW3n3I4PIBmfTSoj/uUM603LZFbRI0WbOXWyqAAlIkZHrgjN4R0UCY=
+	t=1784212169; cv=none; b=kwFB9wDnpgQh99fE2g6QG/cbz5trdeqzZv6cdUdfqP71M/HPKu1ynbZ13u/OgPgrR+2MIS2eqqfgY/sb2y4En3z1b2/NNWd/iz95j1xHhhKbUEfrllt8fvoBzE/oHvG14DtQQASCREWFRiizkf/dpZ2ZOOh6wdkc8fjGJLODsIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784212166; c=relaxed/simple;
-	bh=gxJ2mzBF3IPy//9017EkD486de3efpnwGrO8ImOiT2k=;
+	s=arc-20240116; t=1784212169; c=relaxed/simple;
+	bh=vVuE2rEot1++kv5lGThhlruXgH54Pn4XTpD9fSz0q/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AW+pwKpiU0j9TEiyat3d34klws5lwFW6FQOmN86a+oYS2A/6nc4yJ8ur9Y26Bb6FkEe0DA+pDvDFvDcO7JDHBlt3DP8Gn/2LCo6fyHS6ZOgi9CamVqSxQbtVAuFbEItAsN8MGpp8tTUiIc9cVL8R6gR+9O6xJ3GEY+rcofGZVTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdZg60RG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VYQkKJxBL/MFFQpJiRxuzL21EDqQtbItKwVjH1DxQSSz+OBfy4R+M43MtmDo79+qVpOupo6zzfTCK6gUNSkd+nviOdeLXNuP3P5QxCZmxTtUz4vle1MJdyILTvi6vMfoOSQBF4iqNJjxhKGrjeCPcWRv6hFL+EFNMLYaQ/n2CUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mp0iLHXr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdZg60RG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50921F000E9;
-	Thu, 16 Jul 2026 14:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mp0iLHXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B8B1F000E9;
+	Thu, 16 Jul 2026 14:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784212165;
-	bh=DQCqiBOOkqL8m4RMOJmcqGJO538ADdy0XuMFn8YM13k=;
+	s=korg; t=1784212168;
+	bh=1wT+vgysR3PWFsrhCn80ycd/jvWKEUpdDaiiiOUT0mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BdZg60RGcSCqOyfy8hedlM0o+Lol3his+Bb49p50j3Axv4wvER+fjRZ3Wd42roUW3
-	 GpKG1AzK6igukIUQcwtADC7mCKMQ1n56fiq/YeXXaWSfxmAhnTxXTfK8x59W499Tha
-	 EwPRzjiPE7Ibc1bAXfgjNLVj6nyvF+nrANSERsOo=
+	b=mp0iLHXr1gt6sdrE8u3weIUvh7ZX1aEGULpZ2RLiKGfQ37M0DHJa8Ap0LKUyMiQIL
+	 mRqC+ZFo9JW+LF374eMBympDopGo4TxI/xdBYzl8bDv1Zuo1cxz0oSo+F6PJpBstLd
+	 cxlEgVeqR0MravcZvuimBhkCik393bk6aeefv27k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	WenTao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH 6.12 223/349] usb: dwc3: meson-g12a: fix refcount leak in dwc3_meson_g12a_resume()
-Date: Thu, 16 Jul 2026 15:32:37 +0200
-Message-ID: <20260716133038.354681420@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.12 224/349] usb: free iso schedules on failed submit
+Date: Thu, 16 Jul 2026 15:32:38 +0200
+Message-ID: <20260716133038.375120007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -50,77 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 692c354bef03b77b30e57e61934da502c8a12d45 upstream.
+commit b9399d25fbb34a05bbe76eeedd730f62ff2670e9 upstream.
 
-If dwc3_meson_g12a_resume() succeeds in calling
-reset_control_reset(), an internal triggered_count reference is
-acquired. If any later step fails (usb_init, phy_init,
-phy_power_on, regulator_enable, or usb_post_init), the function
-returns the error without rearming the reset control. This leaks
-the reference and leaves the reset control in a triggered state,
-causing future reset_control_reset() calls to incorrectly return
-early as if already reset.
+EHCI and FOTG210 isochronous submits build an ehci_iso_sched before
+linking the URB to the endpoint queue, and keep the staged schedule in
+urb->hcpriv until iso_stream_schedule() and the link helpers consume it.
+If the controller is no longer accessible, or usb_hcd_link_urb_to_ep()
+fails, submit jumps to done_not_linked before that handoff happens and
+leaks the staged schedule still attached to urb->hcpriv.
 
-Add an error path that calls reset_control_rearm() to balance
-the reference before returning the error.
+Free the staged schedule from done_not_linked when submit fails before
+the URB is linked and clear urb->hcpriv after the free.
 
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have an
+EHCI host controller with a USB isochronous device to test with, no
+runtime testing was able to be performed.
+
+Fixes: 8de98402652c ("[PATCH] USB: Fix USB suspend/resume crasher (#2)")
+Fixes: e9df41c5c589 ("USB: make HCDs responsible for managing endpoint queues")
+Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
 Cc: stable <stable@kernel.org>
-Fixes: 5b0ba0caaf3a ("usb: dwc3: meson-g12a: refactor usb init")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260611131121.81784-1-vulab@iscas.ac.cn
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260630071419.349161-1-dawei.feng@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-meson-g12a.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/usb/fotg210/fotg210-hcd.c |    6 ++++--
+ drivers/usb/host/ehci-sched.c     |   11 +++++++++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-meson-g12a.c
-+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
-@@ -907,35 +907,39 @@ static int __maybe_unused dwc3_meson_g12
- 
- 	ret = priv->drvdata->usb_init(priv);
- 	if (ret)
--		return ret;
-+		goto err_rearm;
- 
- 	/* Init PHYs */
- 	for (i = 0 ; i < PHY_COUNT ; ++i) {
- 		ret = phy_init(priv->phys[i]);
- 		if (ret)
--			return ret;
-+			goto err_rearm;
- 	}
- 
- 	/* Set PHY Power */
- 	for (i = 0 ; i < PHY_COUNT ; ++i) {
- 		ret = phy_power_on(priv->phys[i]);
- 		if (ret)
--			return ret;
-+			goto err_rearm;
- 	}
- 
- 	if (priv->vbus && priv->otg_phy_mode == PHY_MODE_USB_HOST) {
- 		ret = regulator_enable(priv->vbus);
- 		if (ret)
--			return ret;
-+			goto err_rearm;
- 	}
- 
- 	if (priv->drvdata->usb_post_init) {
- 		ret = priv->drvdata->usb_post_init(priv);
- 		if (ret)
--			return ret;
-+			goto err_rearm;
- 	}
- 
+--- a/drivers/usb/fotg210/fotg210-hcd.c
++++ b/drivers/usb/fotg210/fotg210-hcd.c
+@@ -4267,8 +4267,6 @@ static int iso_stream_schedule(struct fo
  	return 0;
-+
-+err_rearm:
-+	reset_control_rearm(priv->reset);
-+	return ret;
+ 
+ fail:
+-	iso_sched_free(stream, sched);
+-	urb->hcpriv = NULL;
+ 	return status;
  }
  
- static const struct dev_pm_ops dwc3_meson_g12a_dev_pm_ops = {
+@@ -4562,6 +4560,10 @@ static int itd_submit(struct fotg210_hcd
+ 	else
+ 		usb_hcd_unlink_urb_from_ep(fotg210_to_hcd(fotg210), urb);
+ done_not_linked:
++	if (status < 0) {
++		iso_sched_free(stream, urb->hcpriv);
++		urb->hcpriv = NULL;
++	}
+ 	spin_unlock_irqrestore(&fotg210->lock, flags);
+ done:
+ 	return status;
+--- a/drivers/usb/host/ehci-sched.c
++++ b/drivers/usb/host/ehci-sched.c
+@@ -1624,6 +1624,7 @@ iso_stream_schedule(
+ 			status = 1;	/* and give it back immediately */
+ 			iso_sched_free(stream, sched);
+ 			sched = NULL;
++			urb->hcpriv = NULL;
+ 		}
+ 	}
+ 	urb->error_count = skip / period;
+@@ -1654,8 +1655,6 @@ iso_stream_schedule(
+ 	return status;
+ 
+  fail:
+-	iso_sched_free(stream, sched);
+-	urb->hcpriv = NULL;
+ 	return status;
+ }
+ 
+@@ -1967,6 +1966,10 @@ static int itd_submit(struct ehci_hcd *e
+ 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
+ 	}
+  done_not_linked:
++	if (status < 0) {
++		iso_sched_free(stream, urb->hcpriv);
++		urb->hcpriv = NULL;
++	}
+ 	spin_unlock_irqrestore(&ehci->lock, flags);
+  done:
+ 	return status;
+@@ -2344,6 +2347,10 @@ static int sitd_submit(struct ehci_hcd *
+ 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
+ 	}
+  done_not_linked:
++	if (status < 0) {
++		iso_sched_free(stream, urb->hcpriv);
++		urb->hcpriv = NULL;
++	}
+ 	spin_unlock_irqrestore(&ehci->lock, flags);
+  done:
+ 	return status;
 
 
