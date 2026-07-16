@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8430622301;
-	Thu, 16 Jul 2026 13:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFF9322A1F;
+	Thu, 16 Jul 2026 13:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784210099; cv=none; b=Z1DDbmsxGrtVThqsz+8qRHnYnAFTOXnd5usStCHJS/75DqNW/H87YzQhbyfyIvG+oAciVs27l7yq/unOlQPiXlkObH/vG9sFF+stPtSUO1X0ljxKZCh4TDI4z7R/AEF2wG2kj/vY1XMol5/lvhbLoD6GZkOQSI2EgkZBNP54rf0=
+	t=1784210102; cv=none; b=j0lmIYcTBvY6KYfvlZweSf5gQziv2kMMiZ10dsG5O6b9TxvIZmC/xhpr/inRCjhNZCg8WOWdVI0rV7jW2xTSdC3XgnERI3DJcvvrf+rAHL0YHFReLVtwXRMR/p7DFPynMadMkyPjw/QVPBF7OyM/soJkDnEouEtO7WljgWMoFOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784210099; c=relaxed/simple;
-	bh=/wiWA/0kF/QJZaJOpec4hjcFxnCuHRn3cHTUIFMIJ4U=;
+	s=arc-20240116; t=1784210102; c=relaxed/simple;
+	bh=cRbug4QBq9vy7AGMl2dJtsa5P/KLO3pozoSjCpMZQXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pK0rH0Yk4IFQ9GH51H/2M+bOLzg0QnqaJRhS7AiLeanC74XNy7mMCAeEHOHoohwowyVPn8HlV7UeqSVYFDAW1Fc/G1vMa67gwfRs7cixHe1XP5+/pWoDc880kHhvbYC8CL1o6ZOiCHl96iuGE9qh91wcIkMbA9Lfj+aiJxkHJjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTgTpnEv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N5ThcGSaaIXOvuXitZysSAvMW2gVa/V4jlbDEUL5aVuHMzqQJjtjFYdH2n/hOCyZFf+h8ricHpqSPgLpbOBoQk8o2gJuxFnCF/wczNHzQM4IjVGx6q4R+ytVF9WC4KJA8XdaLOEDo2sS0i3Yi07QmREem38cM7fmnxuD2uNqlmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8hIx0cC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTgTpnEv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3A91F000E9;
-	Thu, 16 Jul 2026 13:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8hIx0cC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CC21F000E9;
+	Thu, 16 Jul 2026 13:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784210098;
-	bh=nm8Uef3AyOOMq3HoOJ/HarzqYZVOUAjwVstoXYo3Q/Q=;
+	s=korg; t=1784210101;
+	bh=WJ1Ups43LZV+A0ZuUBK91ohQ0S8JhdO+faJBkN9HHwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gTgTpnEvF8wSBQKCfuFKuKSO1izQYCHGwx0HbaMs4JjzbVRoqp9oUWhUuNISEPnRs
-	 05a8td02rtB9ZNowR4CcefnHdCgjKREwPWqu5a5OklFKzGVr/ZFQdJ4+eCGXlMAhek
-	 A5BFESkggcv8KYmfGetmj/mDNKiQiLjKXYZ9yQKI=
+	b=A8hIx0cCGnrFP4s2/iQG4svfDKJVf5LtfHPdag/eEpvC0xt4QdM/bwHz+HPnp8ybl
+	 wOMYNXLD8fyqd7cT/Jnb//Y7VRR9gMm9iqH/ZP3TPnU1otDp/ptSzBVmRkm9eiN2d+
+	 WlQ0baJ//MiU9S0gsZ8UBokDfrhspARqLL6Vh00c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>
-Subject: [PATCH 7.1 436/518] iommufd: Set veventq_depth upper bound
-Date: Thu, 16 Jul 2026 15:31:44 +0200
-Message-ID: <20260716133057.383860683@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.1 401/518] spi: fsl-lpspi: replace dmaengine_terminate_all() with dmaengine_terminate_sync()
+Date: Thu, 16 Jul 2026 15:31:09 +0200
+Message-ID: <20260716133056.610332651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -51,51 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit 6ebf2eb46fbd5b40393ff8fbb847ba96925beaff upstream.
+commit e703ce47691b967fe9b4057fb1d062273211afa9 upstream.
 
-iommufd_veventq_alloc() accepts any !0 veventq_depth from userspace, with
-an upper bound at U32_MAX.
+dmaengine_terminate_all() has been deprecated, so replace it with
+dmaengine_terminate_sync().
 
-This leaves a vulnerability where userspace can allocate excessively large
-queues to exhaust kernel memory reserves.
-
-Cap the veventq_depth (maximum number of entries) to 1 << 19, matching the
-maximum number of entries in the SMMUv3 EVTQ (the largest use case today).
-
-Fixes: e36ba5ab808e ("iommufd: Add IOMMUFD_OBJ_VEVENTQ and IOMMUFD_CMD_VEVENTQ_ALLOC")
-Link: https://patch.msgid.link/r/8426cbaa5e8294472ec7f076ef427cc473be5985.1779408671.git.nicolinc@nvidia.com
+Fixes: 09c04466ce7e ("spi: lpspi: add dma mode support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://patch.msgid.link/20260525062357.3191349-2-carlos.song@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/eventq.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-lpspi.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/iommu/iommufd/eventq.c
-+++ b/drivers/iommu/iommufd/eventq.c
-@@ -473,6 +473,9 @@ int iommufd_fault_iopf_handler(struct io
- static const struct file_operations iommufd_veventq_fops =
- 	INIT_EVENTQ_FOPS(iommufd_veventq_fops_read, NULL);
- 
-+/* An arbitrary upper bound for veventq_depth that fits all existing HWs */
-+#define VEVENTQ_MAX_DEPTH (1U << 19)
-+
- int iommufd_veventq_alloc(struct iommufd_ucmd *ucmd)
- {
- 	struct iommu_veventq_alloc *cmd = ucmd->cmd;
-@@ -484,7 +487,7 @@ int iommufd_veventq_alloc(struct iommufd
- 	if (cmd->flags || cmd->__reserved ||
- 	    cmd->type == IOMMU_VEVENTQ_TYPE_DEFAULT)
- 		return -EOPNOTSUPP;
--	if (!cmd->veventq_depth)
-+	if (!cmd->veventq_depth || cmd->veventq_depth > VEVENTQ_MAX_DEPTH)
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -647,7 +647,7 @@ static int fsl_lpspi_dma_transfer(struct
+ 				tx->sgl, tx->nents, DMA_MEM_TO_DEV,
+ 				DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+ 	if (!desc_tx) {
+-		dmaengine_terminate_all(controller->dma_tx);
++		dmaengine_terminate_sync(controller->dma_tx);
  		return -EINVAL;
+ 	}
  
- 	viommu = iommufd_get_viommu(ucmd, cmd->viommu_id);
+@@ -668,8 +668,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 							transfer_timeout);
+ 		if (!time_left) {
+ 			dev_err(fsl_lpspi->dev, "I/O Error in DMA TX\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -ETIMEDOUT;
+ 		}
+@@ -678,8 +678,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 							transfer_timeout);
+ 		if (!time_left) {
+ 			dev_err(fsl_lpspi->dev, "I/O Error in DMA RX\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -ETIMEDOUT;
+ 		}
+@@ -688,8 +688,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 			fsl_lpspi->target_aborted) {
+ 			dev_dbg(fsl_lpspi->dev,
+ 				"I/O Error in DMA TX interrupted\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -EINTR;
+ 		}
+@@ -698,8 +698,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 			fsl_lpspi->target_aborted) {
+ 			dev_dbg(fsl_lpspi->dev,
+ 				"I/O Error in DMA RX interrupted\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -EINTR;
+ 		}
 
 
