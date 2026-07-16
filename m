@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5FC400982;
-	Thu, 16 Jul 2026 14:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AAA28505E;
+	Thu, 16 Jul 2026 14:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211833; cv=none; b=fSYEVG3oCSZat0BaW1DE3HPAFnUWHLwy9alpZxiUWPYRz9iTZ14R7Pmty4rW+Blm7Ftcw7DHMPbBDMdMQBcZqKsuq2lVzseJ7oV8CV5+jlotgdiqeLIXokxhoHm1ZSsUulIw1HJ6cWmyqq9TREjOW7ZBt2illujQGbeoJ9IbCOc=
+	t=1784211835; cv=none; b=ujS9fUE9ZZoGB19H2J6Zyi9OYpYJEItT3Qjx5sv232lN3O/vfVJz/FrcXjd2DrS5CjtfvbFObO8EoO74NLV7AbL0Ti38Duef2+W5IhO6N6+dvw7+m7tIoMONnwY6E40OxgUITA/pQBikj509tLw3RNCBDHHhofsuaQuqWOtrEuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211833; c=relaxed/simple;
-	bh=gXGPOCr8gCzp++C0WP3+8t8PXKnnyzv8/lCR2kZ2t2g=;
+	s=arc-20240116; t=1784211835; c=relaxed/simple;
+	bh=RZ9c32wP7rtassSrZFj3ufauMz0bUFQ6DDJkF+oATYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJ0dCYOq9b600jgP4ITwDFciOyRpE76fgw7Rs5MXaUktghFCiF4FNV0QzzKigsi7TqLfB+pHGpliC8Oxn1742y5bczhDMfzXAG6e7NX8yh3BzObdmsd3kK7mK6XLBwhMaG/3gpYfnaaTdBopGmATSeAJY2rGYfpwY6ZvvMYp85A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJCSKDcp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q1PPx9WebLtYXMdqsINVUCLR7sOTH8PGFEtFLjqcw9P3xYTjpZU9Eql7ABikpb2Qr4L/xv4sUYAJohBUgwq6LRT8Ivnb4YOkQXW/HNB+Cj3gUpxIWob93xsKmOenDOpFteJAvYEtvZsluzRuRHDQWyXZk3BdM4ugnjzi6hiktA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpI5xyXr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJCSKDcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9220F1F000E9;
-	Thu, 16 Jul 2026 14:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpI5xyXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388BF1F000E9;
+	Thu, 16 Jul 2026 14:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211832;
-	bh=iMQDZswxS4ruPUUIbmlJlyzgjG59o0uu3/Ku7Ky/Zzw=;
+	s=korg; t=1784211834;
+	bh=clUhW2bOaar4wJYFCmIW67loArVTGi8SoByKsKT5+bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJCSKDcphQL8d9b6hv+kc/1MAWAI8B0YNa/GhIs5yAWp4jI3bke4MmA0zvSBP4ZqH
-	 xiQl2zIE6KE5kM7tXaDOYpDy5suHg8ufLzqtICCsjxwFBazb3mnYjdbqpzDj4jUSrm
-	 3LgU4ReiMSQ48NjOp3Fg7xXGvgoZ1UJsx47UqyUI=
+	b=BpI5xyXrb2BC1YOQwtTl3f8hYlzBZcHYf4gVGJjTvqiWiuhLOHjuKXuE/pQqk5BxF
+	 tY9y01/rU4JI+7OnbnMYR8v02tNO382ZQiwG2JsswQq+D7VwVerM6WF8tdzK/GL+Zl
+	 V8GrMEH39J6naOW0tNqpwhjqJvR6XKmp7GGEd9Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Jain <rajatja@google.com>,
-	Johan Hovold <johan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 095/349] Bluetooth: btusb: fix use-after-free on marvell probe failure
-Date: Thu, 16 Jul 2026 15:30:29 +0200
-Message-ID: <20260716133035.441792932@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.12 054/349] iio: gyro: bmg160: bail out when bandwidth/filter is not in table
+Date: Thu, 16 Jul 2026 15:29:48 +0200
+Message-ID: <20260716133034.534591342@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 References: <20260716133033.287196923@linuxfoundation.org>
@@ -51,65 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit c5b600a3c05b1a7a110d558df935a8fc8a471c79 upstream.
+commit 8320c77e67382d5d55d77043a5f60a867d408a2b upstream.
 
-Make sure to stop any TX URBs submitted during Marvell OOB wakeup
-configuration on later probe failures to avoid use-after-free in the
-completion callback.
+bmg160_get_filter() walks bmg160_samp_freq_table[] looking for the entry
+matching the bw_bits value read from the chip:
 
-This issue was reported by Sashiko while reviewing a fix for a wakeup
-source leak in the btusb probe errors paths.
+	for (i = 0; i < ARRAY_SIZE(bmg160_samp_freq_table); ++i) {
+		if (bmg160_samp_freq_table[i].bw_bits == bw_bits)
+			break;
+	}
+	*val = bmg160_samp_freq_table[i].filter;
 
-Link: https://sashiko.dev/#/patchset/20260402092704.2346710-1-johan%40kernel.org
-Fixes: a4ccc9e33d2f ("Bluetooth: btusb: Configure Marvell to use one of the pins for oob wakeup")
-Cc: stable@vger.kernel.org	# 4.11
-Cc: Rajat Jain <rajatja@google.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+If no entry matches, i ends up equal to the array size and the next line
+reads one slot past the end. bmg160_set_filter() has the same shape, driven
+by 'val' instead of bw_bits.
+
+smatch flags both:
+
+  drivers/iio/gyro/bmg160_core.c:204 bmg160_get_filter() error:
+  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
+  drivers/iio/gyro/bmg160_core.c:222 bmg160_set_filter() error:
+  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
+
+Return -EINVAL when no entry matches.
+
+The set_filter() path is reachable from userspace via the sysfs
+in_anglvel_filter_low_pass_3db_frequency interface, so userspace can
+trivially trigger the out-of-bounds read with a value that is not in
+bmg160_samp_freq_table[].filter.
+
+Fixes: 22b46c45fb9b ("iio:gyro:bmg160 Gyro Sensor driver")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/iio/gyro/bmg160_core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4008,7 +4008,7 @@ static int btusb_probe(struct usb_interf
- 	if (id->driver_info & BTUSB_INTEL_COMBINED) {
- 		err = btintel_configure_setup(hdev, btusb_driver.name);
- 		if (err)
--			goto out_free_dev;
-+			goto err_kill_tx_urbs;
- 
- 		/* Transport specific configuration */
- 		hdev->send = btusb_send_frame_intel;
-@@ -4170,7 +4170,7 @@ static int btusb_probe(struct usb_interf
- 		err = usb_set_interface(data->udev, 0, 0);
- 		if (err < 0) {
- 			BT_ERR("failed to set interface 0, alt 0 %d", err);
--			goto out_free_dev;
-+			goto err_kill_tx_urbs;
- 		}
+--- a/drivers/iio/gyro/bmg160_core.c
++++ b/drivers/iio/gyro/bmg160_core.c
+@@ -204,6 +204,9 @@ static int bmg160_get_filter(struct bmg1
+ 			break;
  	}
  
-@@ -4178,7 +4178,7 @@ static int btusb_probe(struct usb_interf
- 		err = usb_driver_claim_interface(&btusb_driver,
- 						 data->isoc, data);
- 		if (err < 0)
--			goto out_free_dev;
-+			goto err_kill_tx_urbs;
++	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
++		return -EINVAL;
++
+ 	*val = bmg160_samp_freq_table[i].filter;
+ 
+ 	return ret ? ret : IIO_VAL_INT;
+@@ -221,6 +224,9 @@ static int bmg160_set_filter(struct bmg1
+ 			break;
  	}
  
- 	if (IS_ENABLED(CONFIG_BT_HCIBTUSB_BCM) && data->diag) {
-@@ -4214,6 +4214,8 @@ err_release_siblings:
- 		usb_set_intfdata(data->isoc, NULL);
- 		usb_driver_release_interface(&btusb_driver, data->isoc);
- 	}
-+err_kill_tx_urbs:
-+	usb_kill_anchored_urbs(&data->tx_anchor);
- out_free_dev:
- 	if (data->reset_gpio)
- 		gpiod_put(data->reset_gpio);
++	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
++		return -EINVAL;
++
+ 	ret = regmap_write(data->regmap, BMG160_REG_PMU_BW,
+ 			   bmg160_samp_freq_table[i].bw_bits);
+ 	if (ret < 0) {
 
 
