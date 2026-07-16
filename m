@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F030D41E6D4;
-	Thu, 16 Jul 2026 13:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BEE422550;
+	Thu, 16 Jul 2026 13:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209049; cv=none; b=uCjbShYOIcNFYyWVTt7VsfzqqeetFIcfSpzGMjQmSu2pB0AHi4bQWBeOZs3WZ/asQz/Ks7DczmxP3SRsaNyBjXGz5AHXhYsupEHYKjm8P/k2CnITxojkOTwDLNrI08SBwkI3jAxhEiNhf7FnSzLdV23dYcro3go3o+lMd8Ugjgk=
+	t=1784209051; cv=none; b=OCPlfbgdMBHgdcjj/JauO0Nb53mQ4uvQ0ndRgbYAg44UGjlpyaCaslvm04+BlLSvR+ogLzsCaQpWo55VSgONLhmRnOMa9GUy4fzBd5/btPmWXo9fIN/NdTzI74gIuWKfnqj4IxK0tKIaiDWbYi2Iq0cOfdW9UX6/a7rcnSAn01A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209049; c=relaxed/simple;
-	bh=d/EomMmnqdpPssVmiWXtMsXynV14InmWad2PcnPlP/k=;
+	s=arc-20240116; t=1784209051; c=relaxed/simple;
+	bh=gnuAPOXHX0T0koqQKBBrTpYvTL1WthgGNCVJ4Y7hVrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BfvGxrDFb+wjqEwvRqgIRl4pXz6jWwd2dOrnVC9s3/18vi0ixiHrCWje74X/S8sBWITp0mTf4agxjUKoPtbS/RykWn9Ku/sr3ms1m3r5NnFf5TlghOBsITHqKRx9hyot5GFy2BWvA7FaMgEnM5faqMbpRp8SOnK3FD3U7seOhTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rs3y2qiM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=V5chkiVV6IK3TuMUWhtNeBMOKGWu9kmn76mkc0f58xszgZDSsTWiRSZl2JqbbLicE9iDItLv8wvBKPQsOK/Z7SbDFWHtEItCZ/ECr7l+rz+YNBirmPaegX13wmu0k3Wy7QvT983y+ZgCt/uI+nObZpPHI/gfKsZ0MkEUAvGk1Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcSmd4o4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rs3y2qiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F061F00A3A;
-	Thu, 16 Jul 2026 13:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcSmd4o4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B691F00A3F;
+	Thu, 16 Jul 2026 13:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209047;
-	bh=Ib6Rj/D12J3qGTeKviVZ9Jh6fjJyYloRv/2q8RDwfDU=;
+	s=korg; t=1784209050;
+	bh=k/n/jFPQ+CES73yDpw7KHkO1q0m6Lnn1WjH+tj86770=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rs3y2qiMIjUp5lmTzwXm1JSkFZWeL18CxqeGV5hpbgN3hjXvQlRoYjKlEjydxMM9g
-	 TFUxfNO5q5TS7z0hNSwJQ2VnHG82xEZoTChJ2HX72UO2MfgAM52vUJoS9WMt05tOX7
-	 8V7BO+xn6wM5auwaKARA1VTGXmNNUfnZiiC56rIo=
+	b=bcSmd4o4vto/j07UhhUeowcF5t0Zm2B9tH3P7cTdkRuud5zmpfoozp9NQpVV0Ex+8
+	 t2ei24Tkm/flmcQ7Ci4B9klCTHoAgwwwLVnlrQrz2eEwXIHP3fH2aidceDaRi5IiGP
+	 ema7PCKtC2970KiJzelof7gCzOkc/z5+QMRzVz9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Radu Sabau <radu.sabau@analog.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 038/518] iio: adc: ad7779: add missing select IIO_TRIGGERED_BUFFER to Kconfig
-Date: Thu, 16 Jul 2026 15:25:06 +0200
-Message-ID: <20260716133048.613386406@linuxfoundation.org>
+Subject: [PATCH 7.1 039/518] iio: adc: ad_sigma_delta: fix clear_pending_event for registerless devices
+Date: Thu, 16 Jul 2026 15:25:07 +0200
+Message-ID: <20260716133048.634800086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -45,39 +45,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: Radu Sabau <radu.sabau@analog.com>
 
-commit fd354554af1d2b33232ca6c8a3d79ed82413d715 upstream.
+commit 91bc6767a4f55dc470d8a56b55b9f2ea09094efe upstream.
 
-The Kconfig entry for the AD7779 is missing a
-'select IIO_TRIGGERED_BUFFER' parameter, causing build failures.
+ad_sigma_delta_clear_pending_event() falls through to the status register
+read path for devices with has_registers = false and no rdy_gpiod. For
+such devices, ad_sd_read_reg() skips the address byte entirely and clocks
+raw MISO bytes with no address phase — making it byte-for-byte identical
+to reading conversion data. If a pending conversion result is present,
+this partially consumes it and corrupts the data stream for the subsequent
+ad_sd_read_reg() call in ad_sigma_delta_single_conversion().
 
-Fixes: c9a3f8c7bfcb ("drivers: iio: adc: add support for ad777x family")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Tested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Furthermore, with num_resetclks = 0 on these devices, data_read_len
+evaluates to 0. If the clocked byte has bit 7 clear, pending_event is set
+and the code attempts memset(data + 2, 0xff, 0 - 1), overflowing to
+SIZE_MAX and corrupting the heap.
+
+Fix by returning 0 immediately when neither rdy_gpiod nor has_registers
+is set. This is safe for all current registerless devices: ad7191 and
+ad7780 (with powerdown GPIO) are reset between conversions by CS
+deassertion, so there is no stale result to drain; ad7780 (without
+powerdown GPIO) and max11205 are continuously-converting and cycle ~DRDY
+at the output data rate regardless of whether the previous result was
+read, so the next falling edge fires naturally.
+
+A future registerless device that holds ~DRDY asserted until data is read
+would be broken by this early return and would require either
+num_resetclks set or a rdy-gpio.
+
+The same heap corruption is reachable on any device with rdy_gpiod set
+but num_resetclks = 0: if the GPIO indicates a pending event, the drain
+path executes memset(data + 2, 0xff, 0 - 1) regardless of has_registers.
+Add an explicit data_read_len == 0 guard after the pending event check;
+the stale result is then consumed by the first ad_sd_read_reg() call in
+ad_sigma_delta_single_conversion().
+
+Fixes: 132d44dc6966 ("iio: adc: ad_sigma_delta: Check for previous ready signals")
+Signed-off-by: Radu Sabau <radu.sabau@analog.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/ad_sigma_delta.c |   31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/Kconfig
-+++ b/drivers/iio/adc/Kconfig
-@@ -437,6 +437,7 @@ config AD7779
- 	depends on SPI
- 	select CRC8
- 	select IIO_BUFFER
-+	select IIO_TRIGGERED_BUFFER
- 	select IIO_BACKEND
- 	help
- 	  Say yes here to build support for Analog Devices AD777X family
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -262,11 +262,25 @@ static int ad_sigma_delta_clear_pending_
+ 
+ 	/*
+ 	 * Read R̅D̅Y̅ pin (if possible) or status register to check if there is an
+-	 * old event.
++	 * old event. For devices with neither an RDY GPIO nor registers,
++	 * ad_sd_read_reg() transmits no address byte and clocks raw MISO bytes,
++	 * which is indistinguishable from reading conversion data and would
++	 * partially consume a pending result. Skip the check for such devices.
++	 *
++	 * This is safe for all current registerless devices: ad7191 and ad7780
++	 * (with powerdown GPIO) are reset between conversions by CS deassertion,
++	 * so there is no stale result to drain; ad7780 (without powerdown GPIO)
++	 * and max11205 are continuously-converting and cycle ~DRDY at the output
++	 * data rate regardless of whether the previous result was read, so the
++	 * next falling edge fires naturally.
++	 *
++	 * A future registerless device that holds ~DRDY asserted until data is
++	 * read would be broken by this early return and would need either
++	 * num_resetclks set or a rdy-gpio.
+ 	 */
+ 	if (sigma_delta->rdy_gpiod) {
+ 		pending_event = gpiod_get_value(sigma_delta->rdy_gpiod);
+-	} else {
++	} else if (sigma_delta->info->has_registers) {
+ 		unsigned int status_reg;
+ 
+ 		ret = ad_sd_read_reg(sigma_delta, AD_SD_REG_STATUS, 1, &status_reg);
+@@ -274,12 +288,25 @@ static int ad_sigma_delta_clear_pending_
+ 			return ret;
+ 
+ 		pending_event = !(status_reg & AD_SD_REG_STATUS_RDY);
++	} else {
++		return 0;
+ 	}
+ 
+ 	if (!pending_event)
+ 		return 0;
+ 
+ 	/*
++	 * With num_resetclks = 0, data_read_len is 0 and the drain sequence
++	 * below would compute memset(data + 2, 0xff, 0 - 1), underflowing to
++	 * SIZE_MAX and corrupting the heap. There is no safe way to drain the
++	 * stale result without knowing the data register size; it will be
++	 * consumed by the first ad_sd_read_reg() call in
++	 * ad_sigma_delta_single_conversion().
++	 */
++	if (!data_read_len)
++		return 0;
++
++	/*
+ 	 * In general the size of the data register is unknown. It varies from
+ 	 * device to device, might be one byte longer if CONTROL.DATA_STATUS is
+ 	 * set and even varies on some devices depending on which input is
 
 
