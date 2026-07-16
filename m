@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BCF330FC33;
-	Thu, 16 Jul 2026 14:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A3C3B0ADE;
+	Thu, 16 Jul 2026 14:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211518; cv=none; b=lA/OKGdb5Z7RwqH85XG/dqvt06I7T4BMfiuGhMvGTBZl2dzZKl3P2ldBE49ZfFwNXW6pYOcoWja+9EoJ9FAZDavEr1Sjo/iTNubIbhwHt9NPfZDRLihpxGDdNXq/+obI3bGa9bvRxTamx+LiFKrqlfctRhB/4q1dItaN6w9T060=
+	t=1784211520; cv=none; b=Na8bucobj9om9X8RwqZAK7WkaaxkKnkJEn71ksVMQB2c9hmoLo1q3Vt7Z3h52OCjIcnb96YhBqmNSF4lJ96Llfp8Y5HRTmaQcNFXvY2KzM3Ukw5LEMMwikOdvam++/SPk0cwxnM6OujuyPLL8WSRz6zOSD8eNl2V7K+WQWagdSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211518; c=relaxed/simple;
-	bh=r+3YLoFGGhn8xkm5+PdKDHAWEiw2KLJdUnWKE9otCY8=;
+	s=arc-20240116; t=1784211520; c=relaxed/simple;
+	bh=FKfpQbfFkhxoPsU5Hw/yfXPGdgWsjWFEZGApJ4fcTbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HeplGWqafkg7bazNGvTLIZmF6ZLB/HH0sBq0IHS4xCUB/UgE6lxWXvqZei0XwN6OUkoZkmIlpkFydth7eOlZm4uuoHPdJQRo6w2WZy17R7JaYq7vMqRTOPX8lHakC95X6vZQbE6w61KcZlUDeKhICrer4NTWJneg8tcap2ar0II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkUB3QCo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PvDlvqa0fZGwF0TSCzgdCksJdp3ZGIS8C6LrbKW94D9chR9ltLkzyW2Ati8I2sfyA8jzcgTpwU4D2relmqsCVT/McJSvm0QPEhP4SIfRe9Yg8aMxsXtLlpdV7M0PAzKR8OJKVIVmNYFj9rA72jFfB+dNn+QP60FpvjlFm6O3+SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyD+Y/sO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkUB3QCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E631F000E9;
-	Thu, 16 Jul 2026 14:18:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyD+Y/sO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AFE1F000E9;
+	Thu, 16 Jul 2026 14:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211516;
-	bh=rUCD5gSlnglD3GutkW5IpjtoS4KkRSYB1ujJPwZFPj4=;
+	s=korg; t=1784211519;
+	bh=uhkd/X6ejbA98n7PLMM+CIb+pDs+kEJPLNi6U30GD8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkUB3QCoDvs+tYN8hZfXo19EujNgBws3reO7ypQGCKUD8fKCTdW9nyduJJmu0E/F3
-	 IwlPCe/dK6yxt/LoDROyYpD3dIweaQy8WPnLCbYKhH8SGM6iWc6QriDMIJZICl5u1R
-	 wywI2ad3J3SL7dJWWRryBi8ENqy9YQl0Da12pMMw=
+	b=kyD+Y/sOOXjRlT8HArjF+DcODRqDNJkwURO7Qbriu48KNID0MK2/EbyqymvapkmQp
+	 1s1FGs/eWcddOVnzUyITFEdwioF//FOXlYovfJowsQsd9kMZe7Q/QuOLJe8oXc+7MM
+	 TaQbUNijjUgBZsbRoeVIP1Jt8KUv9YPQGyx971xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Florian Fuchs <fuchsfl@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 456/480] Input: maple_keyb - set driver data before registering input device
-Date: Thu, 16 Jul 2026 15:33:23 +0200
-Message-ID: <20260716133054.690042855@linuxfoundation.org>
+Subject: [PATCH 6.18 457/480] Input: maplemouse - set driver data before registering input device
+Date: Thu, 16 Jul 2026 15:33:24 +0200
+Message-ID: <20260716133054.710957276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 536394ec81419b67d9f4f0028812c4372397be1b upstream.
+commit 738f24bbbc95dd50cb4229d1ed62a05f29db2bda upstream.
 
 Set maple driver data before calling input_register_device() to
 ensure that it is available if the device is opened immediately and
@@ -59,31 +60,38 @@ the callback is triggered.
 
 Cc: stable@vger.kernel.org
 Assisted-by: Antigravity:gemini-3.5-flash
+Tested-by: Florian Fuchs <fuchsfl@gmail.com>
+Link: https://patch.msgid.link/akNXw45L_8bxD6QV@google.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/maple_keyb.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/mouse/maplemouse.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/maple_keyb.c
-+++ b/drivers/input/keyboard/maple_keyb.c
-@@ -166,6 +166,8 @@ static int probe_maple_kbd(struct device
- 	kbd->dev = idev;
- 	memcpy(kbd->keycode, dc_kbd_keycode, sizeof(kbd->keycode));
+--- a/drivers/input/mouse/maplemouse.c
++++ b/drivers/input/mouse/maplemouse.c
+@@ -88,6 +88,8 @@ static int probe_maple_mouse(struct devi
+ 	mse->dev = input_dev;
+ 	mse->mdev = mdev;
  
-+	maple_set_drvdata(mdev, kbd);
++	maple_set_drvdata(mdev, mse);
 +
- 	idev->name = mdev->product_name;
- 	idev->evbit[0] = BIT(EV_KEY) | BIT(EV_REP);
- 	idev->keycode = kbd->keycode;
-@@ -190,8 +192,6 @@ static int probe_maple_kbd(struct device
+ 	input_set_drvdata(input_dev, mse);
+ 	input_dev->evbit[0] = BIT_MASK(EV_KEY) | BIT_MASK(EV_REL);
+ 	input_dev->keybit[BIT_WORD(BTN_MOUSE)] = BIT_MASK(BTN_LEFT) |
+@@ -103,12 +105,12 @@ static int probe_maple_mouse(struct devi
+ 		goto fail_register;
  
  	mdev->driver = mdrv;
+-	maple_set_drvdata(mdev, mse);
  
--	maple_set_drvdata(mdev, kbd);
--
  	return error;
  
  fail_register:
+ 	input_free_device(input_dev);
++	maple_set_drvdata(mdev, NULL);
+ fail_nomem:
+ 	kfree(mse);
+ fail:
 
 
