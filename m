@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192B0424D44;
-	Thu, 16 Jul 2026 14:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22A641F5E9;
+	Thu, 16 Jul 2026 14:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784211084; cv=none; b=Es8AZty1x5E4bbnQL96pfhTR4aYip2UsbD0LNtRkdJTDvB5U/j+xT+sI6vEsY0VcPs55dFMKC03Q196rAf5yLNWfzhPT6kTYQfuof0kq2tQwl4QJqILNPHfdF21GtwzvIVwk4VNcx5P+JqQ2g1OKmZ28FSRHz5n7BwW4BSiiN+U=
+	t=1784211086; cv=none; b=OKxpYGDhf6D0z+X9RKOJd+IHhbLnS16xT8+3aav6ImZ7tB8RupmN4E9EqTIy75upMuKXCvoZzvm7naHWHTq+QkMzmlpOgzcfHv6MPlITPBHfsM/insxOKzdV7V2NekcoeBiRbNzZ8J9nnTWRDq65W/f/8CqCtvYxSmmaFonnZJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784211084; c=relaxed/simple;
-	bh=kGJQg3rb8atDqh0b8V+QDWuKkomv279hQ+cb4ZRrIsc=;
+	s=arc-20240116; t=1784211086; c=relaxed/simple;
+	bh=6SRsWZyChfaCuIYmUgvQgujp2QqRtbkYxtMc0cplBK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1l6xFUsv9VYczEbXsv6U9d/29ED6w6GQKbxuEmO3eCbGXZ98xohJLAqDbAQBdfVGeT2MlPBNt8YYZ+m315A2NHkfkQfEG2Jt52+dsX7tLN943feCwhHC+R73QJNGLVFORI2CYFibclqIZF8edFGd+o1OKLaldnNQG5evkRwYF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTOaJbqd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jg3M+/PHTPjN13bG2f2EncMz0kE6W85+ztaul8QPjXYtPV+MY2Xuc7mGWOWD0RpVlwV7/Nt2ORxfRryvfP7XMsybSCxOLQROcvHOiEbGRtbT7uva0sZB8T8a8UKQVpgBcHpfJz7BdKiwEeluTgBhJ6qpKp086glrUUmPqISY5CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4UsrNPO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTOaJbqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDBF1F000E9;
-	Thu, 16 Jul 2026 14:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4UsrNPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2391A1F000E9;
+	Thu, 16 Jul 2026 14:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784211083;
-	bh=KQNPUvI+cJu2E87g7qocvYeBy5qTpImKB50bw6LOfpk=;
+	s=korg; t=1784211085;
+	bh=yWlMROhSjJ2tkcFUZtwxefe002UXZfKYA54PeLRtTcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fTOaJbqdH6VcNK53kPV2U+pVPXavqn8hXrKGUxgG1ps9S2ZI3sHXleLALmXm8IpZ5
-	 DGKc1TrgycEW/8ctqlpgd6pwSrnro1BAZUFtoL3FgjF9jfBbcQmAjIc5AULlJrS7fA
-	 g7falDRChXgRaF47j6qobERkr/o1vYzgXhZSIK8g=
+	b=V4UsrNPOiZxy5u9p1elapZDogtDHHSUeirs2qh+DPJWOi3PJwzLKBGpPCnuK7oHrc
+	 liF57X80puvEwXml157lR17kzY3qU0IlYUMspsfupxBfA+A7k9r9JsP7AYonc3tfND
+	 /vk+GszJjEvhQxhP++A1YUEuaL0Fa83GzwzMKy/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ad2aac2febc3bedf0962@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 294/480] USB: iowarrior: fix use-after-free on disconnect
-Date: Thu, 16 Jul 2026 15:30:41 +0200
-Message-ID: <20260716133051.180541733@linuxfoundation.org>
+	"Erich E. Hoover" <erich.e.hoover@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 295/480] USB: quirks: add NO_LPM for the Samsung T5 EVO Portable SSD
+Date: Thu, 16 Jul 2026 15:30:42 +0200
+Message-ID: <20260716133051.202465138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
 References: <20260716133044.672218725@linuxfoundation.org>
@@ -51,44 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Erich E. Hoover <erich.e.hoover@gmail.com>
 
-commit bc0e4f16c44e50daa0b1ea729934baa3b4815dee upstream.
+commit fc591787785b9709a0bb65a7df3ba2537d611c47 upstream.
 
-Submitted write URBs are not stopped on close() and therefore need to be
-stopped unconditionally on disconnect() to avoid use-after-free in the
-completion handler.
+The Samsung T5 EVO Portable SSD (04e8:6200) exhibit two forms of
+link instability when USB Link Power Management is enabled:
 
-Fixes: b5f8d46867ca ("USB: iowarrior: fix use-after-free after driver unbind")
-Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
-Reported-by: syzbot+ad2aac2febc3bedf0962@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/6a0ce39b.170a0220.39a13.0007.GAE@google.com/
+  1. The units fail to initialize properly on first detection,
+  resulting in a lockup in the drive where it must be power cycled
+  or the kernel will not recognize the presence of the device.
+
+  2. If used for sustained operations (small amounts of continuous
+  data are transferred to the unit) then the unit will "hiccup"
+  after roughly 8 hours of use and will disconnect and reconnect.
+  This has a certain probability of triggering the first issue,
+  but also causes mount points to become invalid since the device
+  gets issued a new letter.
+
+Signed-off-by: Erich E. Hoover <erich.e.hoover@gmail.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260523170523.1074563-1-johan@kernel.org
+Link: https://patch.msgid.link/20260602204508.48856-1-erich.e.hoover@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/iowarrior.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/misc/iowarrior.c
-+++ b/drivers/usb/misc/iowarrior.c
-@@ -919,13 +919,15 @@ static void iowarrior_disconnect(struct
- 	/* prevent device read, write and ioctl */
- 	dev->present = 0;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -297,6 +297,9 @@ static const struct usb_device_id usb_qu
+ 	/* CarrolTouch 4500U */
+ 	{ USB_DEVICE(0x04e7, 0x0030), .driver_info = USB_QUIRK_RESET_RESUME },
  
-+	/* write urbs are not stopped on close() so kill unconditionally */
-+	usb_kill_anchored_urbs(&dev->submitted);
++	/* Samsung T5 EVO Portable SSD */
++	{ USB_DEVICE(0x04e8, 0x6200), .driver_info = USB_QUIRK_NO_LPM },
 +
- 	if (dev->opened) {
- 		/* There is a process that holds a filedescriptor to the device ,
- 		   so we only shutdown read-/write-ops going on.
- 		   Deleting the device is postponed until close() was called.
- 		 */
- 		usb_kill_urb(dev->int_in_urb);
--		usb_kill_anchored_urbs(&dev->submitted);
- 		wake_up_interruptible(&dev->read_wait);
- 		wake_up_interruptible(&dev->write_wait);
- 		mutex_unlock(&dev->mutex);
+ 	/* Samsung Android phone modem - ID conflict with SPH-I500 */
+ 	{ USB_DEVICE(0x04e8, 0x6601), .driver_info =
+ 			USB_QUIRK_CONFIG_INTF_STRINGS },
 
 
