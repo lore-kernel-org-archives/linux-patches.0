@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F392D41F7D5;
-	Thu, 16 Jul 2026 13:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC0D2DF137;
+	Thu, 16 Jul 2026 13:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784209191; cv=none; b=PeFSTV9wtcRwtBBflhwCqFMfWyXhlYylJY9J+G6J94N4CsRnCmkP3YFOB7CtprEHnI4C5SpBpNByaIVyQt9NV1qNZYFnNHhVRS5s/rYCya2X9K2HdFxMC5vreMel+WIYC0maKczx5egHRuHjlhZ2MiT4wZzHpsOBmEqgvtUhWRQ=
+	t=1784209193; cv=none; b=ERMkxIc8EhHhrlo33o7ZT6S59hpZCxeu4vdWcEIZP5rJTtcWP3hsE/YaVfWRm6Y5RqBn9K5bOGvepr/r2uOz2lTCuiCB8VzYZ49ExVmWam7dVCImtippHRL+dbV1g5UkTNawWFEhoo/9Uonswce2jHK7rvJ+Q2jUG5TyzCgt5Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784209191; c=relaxed/simple;
-	bh=pQ847XG6XD/s0F5pShDECYo67fhPdq8ssFjycOsK7Ns=;
+	s=arc-20240116; t=1784209193; c=relaxed/simple;
+	bh=wzXeXSim8LlahByCgVJstEm6IIeaRggLF2SHZ0QTI0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lneLEhNYEQGsZRErfbxd+wK1Mc9tiJ59wUroRWTMz0jiMzkzSDJFD6MgvWcR85FnKMVR4QVoE6Mwo3q9L0V73bolVrTvoyZlIdAFStW9retFKT07aU3XE3rQ8O/gDndAxL3ZzBd0gy4XW4uOccgrJjO5IFFLrmALaXiZ1+K1ABo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gD4XdzTU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L1uVbXXNoGwXB1QfVXJEIej2/cFx6Xjkb9uIyqjlDEiyNZauxVWeXjogvP80X7+Nu6PJNfKQ+z1oczN4+N876rl/1XBkfvi1K0/KcYl3Q40CpeWIGWK9GIhHnOmg4HY3GsPoaqUzz+nFIzKJeB7KeK/GDQfmEGYiW2kN8aqV3os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4zDy3PG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gD4XdzTU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2FA1F000E9;
-	Thu, 16 Jul 2026 13:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4zDy3PG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35261F000E9;
+	Thu, 16 Jul 2026 13:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784209189;
-	bh=x5DxWwW6bKoMUpRCHpkcqwbbEMFV6qV0ulmsX1vWsCk=;
+	s=korg; t=1784209192;
+	bh=MOyWkBbuTyJE4xqLYgMzKxJYbCQF0JlMiAYfJJAHj8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gD4XdzTU50oRzaPi0yokq0kMs0mvdUbnJxdGLdjGjTs/LJokyGEgWh02IOznvxBP2
-	 HRVOg3/A5azF1ljvVOEEqbe+LKtoA/YRBN8IfiFGSiEH3gy7WCZVVn7pyJiILl4l+r
-	 9oO9F5MNAfxTq0hwk5lgX04s9TaCDe7E/FhybEtU=
+	b=y4zDy3PGx6OMMjqzNaAYrM1RJwMu6hTtAzo5LNUi4x8OeTPy0v5W5IxTnsrBuFdGI
+	 ixtJU5p5UPHePh/qolBD62Ob2vtu9oPNjZp+on2FfZ8/uDU/8U8WAOI8MX0AQ05HSz
+	 0ueRpsp0rdYjgtnkSsbsGo8Uu8bqaIxnm90hVnFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.1 074/518] iio: resolver: ad2s1210: notify trigger and clear state on fault read error
-Date: Thu, 16 Jul 2026 15:25:42 +0200
-Message-ID: <20260716133049.406108348@linuxfoundation.org>
+	Cameron Graham <cam.graham@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.1 092/518] ALSA: hda/hdmi: Add force-connect quirk for HP EliteDesk 800 G5 Mini
+Date: Thu, 16 Jul 2026 15:26:00 +0200
+Message-ID: <20260716133049.880007114@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
 References: <20260716133047.772246337@linuxfoundation.org>
@@ -52,58 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Cameron Graham <cam.graham@gmail.com>
 
-commit 70247658d0e783c93b48fcbc3b81d99e992ff478 upstream.
+commit 0ec17ee704615125c0b6e100c38129393a346bcc upstream.
 
-ad2s1210_trigger_handler() walks several scan-mask branches and uses
-"goto error_ret" to land on the iio_trigger_notify_done() teardown at
-the bottom of the function for every I/O error -- except the
-MOD_CONFIG fault-register read, which uses a bare "return ret":
+The HP EliteDesk 800 G5 Mini (PCI subsystem 103c:8595) uses
+Cannon Lake PCH cAVS HDA with DisplayPort audio pins 0x05 and
+0x06 set to AC_JACK_PORT_NONE (N/A) in BIOS defaults, causing
+hdmi_add_pin() to skip them and the DP audio device to not
+appear in ALSA.
 
-	if (st->fixed_mode == MOD_CONFIG) {
-		unsigned int reg_val;
+Add the board to the existing force_connect_list alongside the
+similar HP EliteDesk 800 G4 entries.
 
-		ret = regmap_read(st->regmap, AD2S1210_REG_FAULT, &reg_val);
-		if (ret < 0)
-			return ret;
-		...
-	}
-
-Two problems on that path:
-
-  - the handler returns a negative errno where the prototype expects
-    an irqreturn_t (IRQ_HANDLED / IRQ_NONE), so the caller in the
-    IIO core sees a value outside the enum;
-  - iio_trigger_notify_done() is skipped, leaving the trigger
-    busy-flag set. A single transient SPI/regmap error on the fault
-    read then wedges the trigger so subsequent samples are dropped
-    until the consumer is detached.
-
-Convert the error path to "goto error_ret" so the failure path goes
-through the same notify_done() teardown as every other error in the
-handler.
-
-Fixes: f9b9ff95be8c ("iio: resolver: ad2s1210: add support for adi,fixed-mode")
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Cameron Graham <cam.graham@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260612094601.1209845-1-cam.graham@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/resolver/ad2s1210.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/hdmi/hdmi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/resolver/ad2s1210.c
-+++ b/drivers/iio/resolver/ad2s1210.c
-@@ -1334,7 +1334,7 @@ static irqreturn_t ad2s1210_trigger_hand
- 
- 		ret = regmap_read(st->regmap, AD2S1210_REG_FAULT, &reg_val);
- 		if (ret < 0)
--			return ret;
-+			goto error_ret;
- 
- 		st->sample.fault = reg_val;
- 	}
+--- a/sound/hda/codecs/hdmi/hdmi.c
++++ b/sound/hda/codecs/hdmi/hdmi.c
+@@ -1549,6 +1549,7 @@ static const struct snd_pci_quirk force_
+ 	SND_PCI_QUIRK(0x103c, 0x83e2, "HP EliteDesk 800 G4", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x83ef, "HP MP9 G4 Retail System AMS", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x845a, "HP EliteDesk 800 G4 DM 65W", 1),
++	SND_PCI_QUIRK(0x103c, 0x8595, "HP EliteDesk 800 G5 Mini", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x83f3, "HP ProDesk 400", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
 
 
