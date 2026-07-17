@@ -1,111 +1,87 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7E7231A21
-	for <patches@lists.linux.dev>; Fri, 17 Jul 2026 19:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCF1324B06
+	for <patches@lists.linux.dev>; Fri, 17 Jul 2026 20:18:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784316086; cv=none; b=duQqn1AvyN6MMkvgflF4+n4QlC0rsfLLwhy1twXyhlyDy7J5Z77CBKD1LtEiEK+hGKOL9+fIvzqNbLdHTa5RpHWhHthoHdSx8pS6Fs6JLx258fm1FXgRzOhDagC7oMQuYkCDHC8EMchyyu3aG4Ujg/wKw3tjOVj+YDV0K5lRb6s=
+	t=1784319515; cv=none; b=UzAIQ9mWQkLGRkYzSvNP2GLPk579UDPRdBj1H512m5BHTeHTx54lZoL378F9PIem6KyzpZhGiuuQCP5ul3VaMJXTICRAU2cuHmJiprbiRiggABgqGbs8yaYceoU79dmwOJ25FSwBPy+JBdiEoi08MwKYhimI6Kk2MeCrettdqIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784316086; c=relaxed/simple;
-	bh=TNZU/YiFC+FsIbAl1irw5ZUIraHra9PmNSU39qnz7m0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UJ6KVXNtH77kXJO5cb7hwJt+baMdjVjNssoZXaEyCKYr7OhImR/g9j9KyBj6BwAKP40xXQabMLt+77urisTehxFWAj6ngQJuEaUvlDjzFCzuhe92oDSPe+Kqqn1myi6dmCY3vEhSVDE6gzXwLqW2BN5TVagsF09ow59nfSsIctA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YzvOoI32; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784319515; c=relaxed/simple;
+	bh=3ZU7P6DDmptsDou2WsA/6HlyD0jzKDzuCd3uK9RzrgU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PaBcXOzHxYrDaik65UmWTY3VTEh6N+IPmwOXAqEJKyRZTGL2JiueRT0G7LZxIB3/6FH8+suNU2bDFX1uyKf58t5G0UGZ0wjE1E1qjbyycMB671ZRhGX/MFxlSlFGkxXiGu4iq7vfyjaKb7EbzJyZy8b5XIXUA5OOV3wbTgxp42k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=cl2ebiy9; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YzvOoI32"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-92e6a434cabso361706085a.1
-        for <patches@lists.linux.dev>; Fri, 17 Jul 2026 12:21:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784316083; x=1784920883; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CDkCqE8cWXVEopMtK+O2wnclYWikImjloNtGs1ltFx8=;
-        b=YzvOoI32sd8/aMw3xhmw18KIOwlUMPjvWvBj7fN118xj1eqYyj+6uPI6PXoukuuDwU
-         x4Xcp5IrsSGtJMAbtLfBqYbtYlzvqkeocmeMk1DVvJgGdp3LssiIeNF4dYgB4BxDfOKQ
-         8qeB3+FYe2ZkLthxaZqhZOrYG1D36k6Wg8Zy9iNxVJPq8DVBiaw/Gkji9Ki1xUh3jkjT
-         3VnaA1fEUrwhTsXXWdaokk+ysBhxoBkH3Z0bhufMtAc+mvVdRfalw1N3E/PUv2/wHNMu
-         yP634E6Vv4L3tNSm/0KyLHnYDRsOBmG301AqxmIdZRTFrv+0t43za7Tar10k8I3TYben
-         StWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784316083; x=1784920883;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=CDkCqE8cWXVEopMtK+O2wnclYWikImjloNtGs1ltFx8=;
-        b=mu33Wlf0ozYA+18/EmbP76OXHAGGQODLlL8ytrd7GjuGE69HBeXQ8O1UNAUKvpl1FP
-         CDKT32lgUiGZTDjv6pMc0YNv+lRAssdZEwm04jMPwvzjNKNAo7BgLErYv3Yu2Eh5aBhY
-         139vYCbjMXxigogfYuuaxo6yoyoaNUG5fmfEEuIZSj2dsVjpGKRtNhQwAH/nQ4rWw0Wl
-         gwnaGq+SJvmsvoMC6XcSj9g0kqqq3uUdA6/JnwbAbD4S2bCv3/Y79g+NHOV03PrVEt0S
-         gAevDG3+ZZBdrxV3V/W30IW0UJejIa/IRJrt5/rgJzz/2BGR0HsNKaJW9hgth+XG7mfP
-         OoFA==
-X-Gm-Message-State: AOJu0YzY02Ma3NNgJha1VSBog0kTFSFyJgmqyCjQgGX/0+GP0oNBkeuO
-	cukme6DFmb58TRxoaVbZXunoK3LS29Ja2p5jIIMkie/ogguirCW/eScl
-X-Gm-Gg: AfdE7cmIxJZi4SczUQGLpNQwjA4kczP6fxBLUHre86IEK0NRe0+2++6rGoiEuZVDKEy
-	CV8LZwbDS8Fl8N+b2hC+gPJRGRxPwqqWY4kmKiMTtVelHdxlbPPM3RS+frQRrfQUmf3UnQovUex
-	LVRgMTuExNfqxP8nVJ88b/Wwr+jY746zgSyESjmUyde0g4XDgvepUCkocKVuINaZroHD6O4xjhn
-	q4eUN63bBhyQ2lv5eqYfPVMyKWqNE7+9extPlVpNr9NbbHFIGIF3J2NQNuxPRN/GJSEUJYMXobp
-	AxOxStDeZQpTq+ZnyVhTn5JRG7lvuIETYlpLkECK7OAVEUp2eBKe0w2hyCgjqH4rCclmBrYkFDM
-	0fjG0y2A20Iu1esj0E8420btsy9HbXURj8QUb3jjHeIYzwA4GocNGC7y9zVXfupcjTwKU9F5j/r
-	wUIsZHqig2Up1o/N33vTbDa3XYMRyg
-X-Received: by 2002:a05:620a:2246:10b0:930:bb30:6921 with SMTP id af79cd13be357-930bb30701dmr197590085a.29.1784316083411;
-        Fri, 17 Jul 2026 12:21:23 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b5494cf0sm229407685a.46.2026.07.17.12.21.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jul 2026 12:21:22 -0700 (PDT)
-Message-ID: <3caf8d09-8c05-40ff-bfbc-2c3695d10bf5@gmail.com>
-Date: Fri, 17 Jul 2026 12:21:20 -0700
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="cl2ebiy9"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2622511A325;
+	Fri, 17 Jul 2026 22:18:21 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1784319504;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=ywnV2+gC3IPCsOYna1FCD4oxX9f1gpg4d/FqQEx+t5I=;
+	b=cl2ebiy9I+bvh0dHTHKLoJAQw0NTXPuWtlHfmqPG/SOaL9RvHpfOxGeY8uvqECOKS7jUQh
+	WKEHgqjEDiygdhc2GyPwmbyGDYERDmovsv1jCd3Z7qSakx+zKn3v4+SrDVLeK9BipAIUAW
+	oJmopC1TfjNWwF4yOJ5fQWQMUY6hwIW0HIEZJ5pLKShhWqI3iYNAnw4+GYxRz+mPpnU3ZL
+	phclIVWRMAghphOcf6hcltKhJLNuWlGDtgGX4PbXvRs31F+TayZM2k4LaBroZF/OW4WeJp
+	U2fCvxB9x6o1Zuml4BDaolVZ0o7Y8uTgcYwk6a/JKt2dpON0Xwg1r2XNXTKBfg==
+Date: Fri, 17 Jul 2026 22:18:20 +0200
+From: Pavel Machek <pavel@nabladev.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.1 000/518] 7.1.4-rc1 review
+Message-ID: <alqODO1ptx4F394h@duo.ucw.cz>
+References: <20260716133047.772246337@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.1 000/533] 7.1.4-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260717101912.682013354@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260717101912.682013354@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="RwwfNTKNvHvOzMMZ"
+Content-Disposition: inline
+In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 7/17/26 03:41, Greg Kroah-Hartman wrote:
+
+--RwwfNTKNvHvOzMMZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hi!
+
 > This is the start of the stable review cycle for the 7.1.4 release.
-> There are 533 patches in this series, all will be posted as a response
+> There are 518 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sun, 19 Jul 2026 10:18:26 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.4-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+CIP testing did not find any problems here:
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-7.1.y
+
+Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
+
+Best regards,
+                                                                Pavel
+
+--RwwfNTKNvHvOzMMZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iFwEABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCalqODAAKCRAw5/Bqldv6
+8lWuAJj8f+I7c1f7gP9s9wlTerfCEgUBAJ0W8A0f+87gf6eAOCt5jOTGd3QnZQ==
+=Hoxt
+-----END PGP SIGNATURE-----
+
+--RwwfNTKNvHvOzMMZ--
