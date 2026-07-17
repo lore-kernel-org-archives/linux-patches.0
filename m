@@ -1,113 +1,110 @@
-Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DAA1D514E
-	for <patches@lists.linux.dev>; Fri, 17 Jul 2026 14:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9002C3BED69
+	for <patches@lists.linux.dev>; Fri, 17 Jul 2026 15:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784299682; cv=none; b=kNGFIb6YcOtGV7iqKN5RkubsuHQ7rce783GdodJ4yovDsiaiQ9xL1hA0N4WHK/PDZ8UddCdoTGsRSN7s1xXMZ3hvk/G9MDjkPlgK34vFa22oRdiI6A1mYzvTHkH7asodc1dH5tLAZI+bALkOkqWbqUQZdQ0mc6OR0jl6nXAtaew=
+	t=1784302112; cv=none; b=AT4r6W9JTt+s0Fa/yXnShmV+iiREXFxSKWPx8haZH0niZVc4eGKYkq/XwFtQudVKauVwr03pfscCsMpwSsJ2XerYpQZoY+BW32Rt7phL/kQoCiKYDrU34oN8TFQGFxWDGlX7pEhMbezi854IoQw5WCPB1LXKXGzHcKp9hGcrcaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784299682; c=relaxed/simple;
-	bh=8DC/CiaERW17Q5mUFwMipX/LNuykz/ZNwmGFCVVvf/U=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=C28+JGDVcGqmmaeCwzssXr3wpTq2FOquWMCgv+Vmpvj8lADAkypgoJRN6+SJIZcnv2Wm90zruHTol0VDncnrN8dRd/tS1/23dVgj58A5bJ9MBwAR7TnzrFGbpB7HqzoqfIpzrAKXQ6kjDYGsT6CodBOmp0pK290bW1t8+OjUoVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=JFirxtg3; arc=none smtp.client-ip=54.207.22.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	s=arc-20240116; t=1784302112; c=relaxed/simple;
+	bh=slActN+LG+kX4UR/U7IgxrFQHhsmFcw5paYWob5e1zE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iXUILGeGS/HKVWJBMGvyt/W8MB/SKcNZvGEo31YKAh9zYQ3fQNYHx86ATj/D1QQd/o5se1MNK9/4J2Co21aU0OBTCpugmStfwJqU3SCwhbMNS44huTGjkAtCW/ilG3pdSQ3AJ8ocAhjOhAURgrYn23rYoFfMfgI60/xchX7C6Yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6/jub1Q; arc=none smtp.client-ip=209.85.167.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="JFirxtg3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1784299659;
-	bh=6JzeASk9jwDLgL6o0FbyFZ25btIeFesG/TB+SvbFpwk=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=JFirxtg3sQOu1yh8AgTMh4CagTqljg4GFse1SXOV1y7MjaqE5KK4NLqjPx7kcDA7w
-	 cxj5TRvTEkC7IxP9e6brvCfhlllXLs+7HWmZFC/XP/aXbby9m4n5GOi6svbCj5MpVT
-	 21dmxNKfuGMc+HTpffAgalKm/XOzGVf84XUgYsnk=
-X-QQ-mid: esmtpsz16t1784299652tb02afd81
-X-QQ-Originating-IP: hZfxU+CzM6MzYjuR1wiZzMwDER2bSv9D9iNf1ncJYO0=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 17 Jul 2026 22:47:29 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 17506133365807019503
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.18 000/480] 6.18.39-rc1 review
-Date: Fri, 17 Jul 2026 22:47:24 +0800
-Message-Id: <20260717144724.111189-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260716133044.672218725@linuxfoundation.org>
-References: <20260716133044.672218725@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6/jub1Q"
+Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-497d3e4460aso1480785b6e.1
+        for <patches@lists.linux.dev>; Fri, 17 Jul 2026 08:28:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1784302109; x=1784906909; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rBq4hL5G4a9IGwnsXBItyfm3yXQ9D6Km3DzDTKJ1mgU=;
+        b=M6/jub1QGcxdFXzOhWbzLEldcfgYkvRZ593b6cTS4a7hDkE9Fr0Oy14XecMzx7ChY2
+         k/5wh8vCWmZesPvMYeJR4ZI0OH+yapcMTYL85Ww8MJeF9uKlW36eWeMdiky1d2SHJO7Y
+         0Wkde2nURyU3pXujoiMuAV0+NXHO4GjVC646s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784302109; x=1784906909;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rBq4hL5G4a9IGwnsXBItyfm3yXQ9D6Km3DzDTKJ1mgU=;
+        b=iHgMG0hp9brsZmgOpHRA/pWgoEpiR6+KUdLyqsyQX3HmhuFbNg4R4NQ6ioGgVOXbOl
+         g4uLU9m0fxOb1Ad2g40VyUysJLXwLtf6lSOFvpT9Y5+XEuKDI9aWE7wD7EyvKj4FO2c5
+         znD0c7KKRALTTLB3853bVsanYlE+qOU2KOpfSSnC6IVN1FEXSgGvEOg3DR/2gXRUHemi
+         QAQGazrh7A4RtnMRNJc/27izu1QZvKou2Z9RLHaNNXU5FCw/TVfX93GlPgPWutRuQDWg
+         suhzy13wT3oOwKujyFFVDv60OsFyexy+1yEvuvhHhDzzod4AO/FzR0rqipeRLcg+48BV
+         dV0w==
+X-Gm-Message-State: AOJu0Yx1mgmBYv3zchMZh9MH+t3tvpXpdIU03OQTqnnAMqURyv5dELZL
+	oYzr53l0/NoCr9HUMoFRgO2ehUsH1bw/ltZnzriwCoWQGJE0neUE5sTE+e0SL1vzqRg=
+X-Gm-Gg: AfdE7ckgbH2RO6I43HzYa79K0Z8GX/6JSRJGGoqDxAhSa9GqcFQXxQoneRLMCFJ6fAu
+	DvkZ3nvUUe+SHULiY9Rq09CNAFiVjwUSmd4+myCIsZANTixZXiRN7OyJw/FNf5vGkk8BgbY5WVQ
+	XEJPvp/JeGb/4Rk2BpaCxHy7GFH2+DNMLQHJsjADSEGnVOw9SlS7rE1tTL97s+OgynkXMPoCk2V
+	X8YW8psPSABUqMAAqnLAKCXjiY1TRoWf04tXUtimWucQtoWVU0LE5hV3XxYLjGGlSRDTLSFUOh2
+	zMqU8EfJfmdhZSZQJhBHzSAaS0Hjb9QqQ5B99FuNWApNBnNGjR9Q06ME8QsoKnwR+vyZVXsC1tS
+	LgViVq43Z/igXLvwY309mgJvp9Y+5lAUq8Bd3tNQeDTP+pyLbqs+7FuwKT23XOl+46dH4rLwTZ6
+	kXH44Uqb2COWw=
+X-Received: by 2002:a05:6808:2518:b0:495:7d58:77c0 with SMTP id 5614622812f47-4a4cf4f8db1mr1416900b6e.20.1784302108985;
+        Fri, 17 Jul 2026 08:28:28 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.57.99])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4a4d3d4aa0dsm983905b6e.17.2026.07.17.08.28.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Jul 2026 08:28:28 -0700 (PDT)
+Message-ID: <636105aa-266f-43b8-b648-af744c59ddfd@linuxfoundation.org>
+Date: Fri, 17 Jul 2026 09:28:24 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OKoUMtfBBN2HS6Um5Pmfi787bCc3ooq2LhfxUUSJphzv761yDZY1yO4R
-	/vnw3YkPZ0NJ0FcHStXICvmdxoI4QWnqXIwh8AJLW8fpaG9+fUlz9VzXuJxUoHdugPMw+Db
-	ZlcSxtEJv6/AG0ZDhUy97DcsoL5yTmLgG3OMiLzZ1iqTm0xILVfUABhPNNjmrZ3rYlcDTWf
-	PimDxmVfzOKfwIno/tCrxZNv8trAz9TGBQsWgi4cKq63cThvewddbgk4+FLGGknJEw1dNsq
-	j9963GOzN0KCytJDUjHa/umAW/DCpcTsUxcWQ3QSiL/pDxFXgzXi60GNjOnLe6dASc1nn++
-	wO/O8XiBn1VBn1S3U+Jqhu5cmhmq0DIFT5lCMUWfLorUeiAnOerHZJQmcRfCsSH17WyTI/A
-	prf4K8uIt+gwqWPmiRugGFEAvwpaOEWPhiRcbAVS0hFbAbvh0UcoPiMIruyKUh0A3jOH/wX
-	Ecb6TG1UhFmg6u8G3eQQ8Kk97uvc+u3laxjecOKhiJ5RfCq/+OvKjGIYiHGAxRM+9fBFvaF
-	gpgQbOF/JbBI2mQ/fsEZx+3Ipo/xOeFxKOJOmZJGcYccpb4yruQOFcjlQDe6/9BcUbTocZN
-	9I/e8gTRZo2J4ripxt5HANvNCYMrENErT/g3i16Ss+D3HjxIC3eGQyIMH0Qs1UQIB4N+s3i
-	wYrzvvfysw1qlH/WDpzy7qYA7gLhBb7p/erCoVK4UDMuZuZK3c26IerCh5w1gx6g5Vwi0py
-	ET8aLLclScPRPdsaXCGAVk1iUEpBDBdhNQbZA+/3YTG7zNnUw65zGwdgyhyeV6NAtBRDk+m
-	DZJar5WCFk0U4jNg3GuhvvYBloZK7XWs8ZR1zdr/0So1wCtbh78ZDzBcOh0rmYIfYZe7h0q
-	JfkPvCsPQOA+DkFpJTxWer6VwHcXTcBynxtDfcZonr3SAhss6YsDAqB2bOSPkrEKFQH+dJT
-	8/kLH/b3iNP89JjA9ubat2gx7sWRNPUADhwzqjLqmodVSKIIsjFRuGrwalIkmjV+H2l55+Q
-	R5pEmb+sCEgGcsZFHWCduIpZLFSeUB55z5YFAmdubqqNPr1W+b4Rhx7ulTEmFyIRGa+dW05
-	W57kAgSj+iE9UWL3fjPFjnUbycUg1r0S3exhY4IhY2E
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-RECHKSPAM: 0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.1 000/518] 7.1.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20260716133047.772246337@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20260716133047.772246337@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 7/16/26 07:24, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.1.4 release.
+> There are 518 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 18 Jul 2026 13:30:01 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Build tested in our x86,arm64,loongarch,riscv config successfully without error.
+Compiled and booted on my test system. No dmesg regressions.
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-BRs
-Wentao Guan
-
-defconfigs:
-https://gist.github.com/opsiff/a840ae9e3d6857f5b7bacb9cdc49f8e9
-
-Log:
-Linux version 6.18.39-rc1-g8b991bdbbd89 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
-Linux version 6.18.39-rc1-g8b991bdbbd89 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT_DYNAMIC Fri Jul 17 02:48:08 CST 2026
-Linux version 6.18.39-rc1-g8b991bdbbd89 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
-Linux version 6.18.39-rc1-g8b991bdbbd89 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT_DYNAMIC Fri Jul 17 03:05:33 CST 2026
-Linux version 6.18.39-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT 
-Linux version 6.18.39-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP PREEMPT Fri Jul 17 03:22:05 CST 2026
-Linux version 6.18.39-rc1-g8b991bdbbd89 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
-Linux version 6.18.39-rc1-g8b991bdbbd89 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Fri Jul 17 02:27:34 CST 2026
-
+thanks,
+-- Shuah
