@@ -1,40 +1,47 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2264D3B2FF8;
-	Fri, 17 Jul 2026 06:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AFF33A70E
+	for <patches@lists.linux.dev>; Fri, 17 Jul 2026 07:11:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784271192; cv=none; b=TKl87W1y0+wEpcsO5xW1ISZxJVgcV8to587GN1q3Y6enAQgtvLQUtEc8wO937ykZ3OaHK5CJKysxIh8Vm7ARDRgsGUObNkgsppXyNt+qhG+41txUsQ4xPsvUNMLiyeSaBdOMuvb68b1ush+svLMRQeHcNRSgMWGCx4G9rrGIhTA=
+	t=1784272305; cv=none; b=G4lDJrRDoOE3MWiqxosbHeJ7OnxwR54yTShpHOwt6+b/WvTO25RLvlUFQdW/WW7GXzpk3Amg0DZTFto7OxCez//wE41HZZSCbD/RHOrg+C2Mj6ZWsxoEKhs+6XHKINKl+DEwBmJxwBeHIY+tb6Wh8XAEoTFd+lxy2u9pYzx/iV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784271192; c=relaxed/simple;
-	bh=DEeUGkPwHTGpV0fjzPXj9aLIGJHB3aWvj3gdjRvI1Rw=;
+	s=arc-20240116; t=1784272305; c=relaxed/simple;
+	bh=zdYEFdYh5Vi5p0/dHgLRHxYa1qzgURg7xqg7EQy4tLc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UzdKIRmJsNapZnCsEazjMSJqD8S1YQDIslkgRiBiRgms2Z4N+xLKaRZCbu6E/E2DHZGx8xmxnn6JffEVFiFbwdsJe1M6A4mnKU0Qy3+p+jgBS2RhfmNucuaDqJHSCuay64h7XxrXqiPaSMZzeerTc3eJfQ4y/Cl7zszxDlZOrnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wy38+JtE; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=TuuRJA1FYRV/y7n4MjN2ucdLnAO4w4w08Pm9XQFl1lUWuHXqMZgF8/pYxRcvamji69uTyjYQwh9KSNvkurjcs3GxUX2pslB+mETfuimyt5Sfq12qA0QXrpp6EXhX5tiXZANDBfhsuSjf7SEvQUmhgtxcnj5oegjjCI6nzlWVGHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=rzx6KkfV; arc=none smtp.client-ip=217.194.8.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wy38+JtE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AED1F000E9;
-	Fri, 17 Jul 2026 06:53:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784271190;
-	bh=CuB1tVLbHxuXY7AT9F/TC+R0pRQO7FI/bBBqBYrLuz4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Wy38+JtEwsxh+2Vlql5DMY9zapHupBIHU5Ix5XX+YhDbOjtSsP9wE5ct42lyMDFTI
-	 eY/IAFJpdnL5lW5BdrVeEWrihPeqJssSzWetvlkBl7DuxHdRMlgw9ijyD25Yq3eLYZ
-	 Ls0JARzotfVQ2XEeW86onAAxb/unltev40k9sxa0=
-Date: Fri, 17 Jul 2026 08:53:03 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jiri Slaby <jirislaby@kernel.org>
+	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="rzx6KkfV"
+Received: from francesco-nb (xcpe-178-82-120-96.dyn.res.sunrise.net [178.82.120.96])
+	by mail11.truemail.it (Postfix) with ESMTPA id A269E1FC90;
+	Fri, 17 Jul 2026 09:11:40 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1784272301;
+	bh=vMFc0iOErG2mFY0W6+KC9yd275wehQJaR1fY2C6U4PA=; h=From:To:Subject;
+	b=rzx6KkfVCcHeiQQmfbGtDb6yoWc96Nbz5Z1YU93uwxeXInl+fiMn1KCLVPau0fO3z
+	 i3z5Ex/0XtlI1EDwCUiKUuaiN4f0gYtVqKCdoGJ1lcY5AqG65H4dAXq6apiBFu/7j0
+	 7zTxfFhxSAyXLVu/rhGvw1Sg8Ulck1RWsg96ipDIzILL+YZ6nsnuSnl5dkdOqFSdNQ
+	 13GR4i5tqCEA3BWcOprnU5g5/oMCb2Hhilbm2CXLH+zqN6id4Yy/V5cl3M3SGxLAqx
+	 i7/6A+9gXU755btz01kgGfFLGVrjtagRKqOUsnJmlOGzi9ItKhgeENxQdo1H3f+bzc
+	 OE6xIWE8jXbPg==
+Date: Fri, 17 Jul 2026 09:11:36 +0200
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: Re: [PATCH 7.1 153/518] smb: client: restrict implied bcc[0]
- exemption to responses without data area
-Message-ID: <2026071745-kindly-everybody-c37b@gregkh>
-References: <20260716133047.772246337@linuxfoundation.org>
- <20260716133051.194668994@linuxfoundation.org>
- <d97f8874-9281-4e33-abea-1a1df695fc0a@kernel.org>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/349] 6.12.96-rc1 review
+Message-ID: <20260717071136.GA373902@francesco-nb>
+References: <20260716133033.287196923@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,22 +50,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d97f8874-9281-4e33-abea-1a1df695fc0a@kernel.org>
+In-Reply-To: <20260716133033.287196923@linuxfoundation.org>
 
-On Fri, Jul 17, 2026 at 08:34:07AM +0200, Jiri Slaby wrote:
-> On 16. 07. 26, 15:27, Greg Kroah-Hartman wrote:
-> > 7.1-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
-> > 
-> > commit 53b7c271f06be4dd5cfc8c6ef552a8355c891a7f upstream.
-> 
-> Note there is a fix for this upstream:
-> 8986c932905e smb: client: reject overlapping data areas in SMB2 responses
+On Thu, Jul 16, 2026 at 03:28:54PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.96 release.
+> There are 349 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Thanks for the hint, this hadn't shown up in a release yet so I hadn't
-noticed it.  I've grabbed it now.
-
-greg k-h
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
