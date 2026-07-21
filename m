@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B19443A9D;
-	Tue, 21 Jul 2026 22:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098A8441035;
+	Tue, 21 Jul 2026 22:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674097; cv=none; b=Pv7xdHeAEsp3xMwXdQuae9vgd3ioPJSNVovXN22J0U9w+YqhlobmO9meWk2t9NIOeSUkCP59d9ICIDCP/r0XBZT38Vrvp5+0Iw4OVhUXT/SdwUBfWwKmxEKUK8Ezt5Ad7PgRBv1Z4j9pA5Yytck8HlUwKAN87f9xilxIFweb0oc=
+	t=1784674104; cv=none; b=JSQKttWVRKJDye1Q425/YBDJQ354y17hwiN01usBv4d/r0KibUXafAHEllRs78/rYGvFQbdLph2VCS0c7yDaJNr7undXvZv9+Vzki66shPs/OU2LKi5ovAghBFzdNc9UrVzANpRmB3FVXojYNIg22oL0PtVKJVZCPMFSJSUjqAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674097; c=relaxed/simple;
-	bh=3xwtTri2vnXX9zA/JiE8W4G1rFd0mczvMoTlww17Lng=;
+	s=arc-20240116; t=1784674104; c=relaxed/simple;
+	bh=xztZMgZmP4/nmxQK5XAA8hboz7XHZYxTNDQbAO7NkdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7jWYVOX5wVNk0xFd4JX0hKjJrD9xhiatvVvTfJXvvDofx72QNG0e9Ri2QF3KrYi6JyRzVveQkQ0lRQnO9fUgG+Uxd6VzgrtM5yPSlA/W4MmyNCvyfiR3Cvap0yhfPI7n4eHPgk6tnXIHe0YMi6Nu3D3SVYsAYejFbCcBcCi+ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TR4sHC0y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=osNbHXrJy5MjNS4DKAKfgMGw7d6271vWYpaNP1z5Ichwf+6woR8EtafA91hZkQR6HhlBB/JiIxn8n+JJoIgO/yaOSACbX7c6z1dGdQmvi5JivG48KtYnt/C1Pj9lvvpe1l+Ge5pHUvuPdHfs2I1YQ1ZEcmeRrYBwYgjUqxAEne8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKzanXff; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR4sHC0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D351F00A3A;
-	Tue, 21 Jul 2026 22:48:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKzanXff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAF91F00A3D;
+	Tue, 21 Jul 2026 22:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674088;
-	bh=EpYmeRjfQBCd1Qp8+DmBhk2ytt1gtbI5z/duBTQZKhs=;
+	s=korg; t=1784674091;
+	bh=d4IT+TkvJRGQSCs72LoAK/xVomSocglZYeujaAB4Pow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TR4sHC0yqCJaMyLNzQ2NMBkv815Ce26wdJ58tqboYdKAOaQZx9wp40c+GD+pOuLYi
-	 N151ycIwrZs5BsVmgc9P+h0eKywmRv12ngU8s/rO2lySKh+WirRikhfTEu95da/Hum
-	 qPqIWcaLWVKJ6ssxX1KWmHmokdHBdTNZiI7ypynA=
+	b=jKzanXffNsTVWI3l5RoHgpGBYzACIyVW61sRiQ0AP9u4/I0FMLZMA9QZDK+w87Ph6
+	 DgR3pb2pvzAvu78kILKY4mntGkfXH2el38XtbnhkjgkPSP6sRDJThl6x9XnSlUdJ1l
+	 xc7EhSSgFRvQ7pEYAUSZ6FHvFnBLq+g/DMkflqk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 366/699] ipv6: fix error handling in disable_policy sysctl
-Date: Tue, 21 Jul 2026 17:22:05 +0200
-Message-ID: <20260721152403.951834361@linuxfoundation.org>
+Subject: [PATCH 5.10 357/699] ipv4: fib: Dont ignore error route in local/main tables.
+Date: Tue, 21 Jul 2026 17:21:56 +0200
+Message-ID: <20260721152403.745161537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,42 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 3e0e51c0ee1d08cc9d48dc17f3248d5b31cf8066 ]
+[ Upstream commit b72f0db64205d9ce462038ba995d5d31eff32dc1 ]
 
-When writing to the disable_policy sysctl, if proc_dointvec() fails to
-parse the input, it returns a negative error code. The current
-implementation is resetting the position argument even if an error
-occurred during proc_dointvec() and not only during sysctl restart.
+When CONFIG_IP_MULTIPLE_TABLES is enabled but no rule is added,
+fib_lookup() performs route lookup directly on two tables.
 
-Fix this by checking the return value of proc_dointvec() and returning
-early on failure.
+Since the first lookup does not properly bail out, the result
+of an error route in the merged local/main table could be
+overwritten by another route in the default table:
 
-Fixes: df789fe75206 ("ipv6: Provide ipv6 version of "disable_policy" sysctl")
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+  # unshare -n
+  # ip link set lo up
+  # ip route add 192.168.0.0/24 dev lo table 253
+  # ip route add unreachable 192.168.0.0/24
+  # ip route get 192.168.0.1
+  192.168.0.1 dev lo table default uid 0
+      cache <local>
+
+Once a random rule is added, the error route is respected:
+
+  # ip rule add table 0
+  # ip rule del table 0
+  # ip route get 192.168.0.1
+  RTNETLINK answers: No route to host
+
+Let's fix the inconsistent behaviour.
+
+Fixes: f4530fa574df ("ipv4: Avoid overhead when no custom FIB rules are installed.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260622130857.5115-5-fmancera@suse.de
+Link: https://patch.msgid.link/20260619212753.3367244-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/ip_fib.h | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 288178ee2c72ce..199c14504444bd 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -6588,6 +6588,8 @@ static int addrconf_sysctl_disable_policy(struct ctl_table *ctl, int write,
- 	lctl = *ctl;
- 	lctl.data = &val;
- 	ret = proc_dointvec(&lctl, write, buffer, lenp, ppos);
-+	if (ret)
-+		return ret;
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index 0d3cb34c7abc5d..d01aa665512e55 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -365,7 +365,7 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
+ 			     struct fib_result *res, unsigned int flags)
+ {
+ 	struct fib_table *tb;
+-	int err = -ENETUNREACH;
++	int err = -EAGAIN;
  
- 	if (write && (*valp != val))
- 		ret = addrconf_disable_policy(ctl, valp, val);
+ 	flags |= FIB_LOOKUP_NOREF;
+ 	if (net->ipv4.fib_has_custom_rules)
+@@ -379,17 +379,16 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
+ 	if (tb)
+ 		err = fib_table_lookup(tb, flp, res, flags);
+ 
+-	if (!err)
++	if (err != -EAGAIN)
+ 		goto out;
+ 
+ 	tb = rcu_dereference_rtnl(net->ipv4.fib_default);
+ 	if (tb)
+ 		err = fib_table_lookup(tb, flp, res, flags);
+ 
+-out:
+ 	if (err == -EAGAIN)
+ 		err = -ENETUNREACH;
+-
++out:
+ 	rcu_read_unlock();
+ 
+ 	return err;
 -- 
 2.53.0
 
