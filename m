@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70138403EB9;
-	Tue, 21 Jul 2026 17:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A1046A603;
+	Tue, 21 Jul 2026 17:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654866; cv=none; b=Ghc3MobLjdV0GPaD57d7y7mVNtzmWxe/TTHvZtaM7Xtx+wruTjPbbVtpNCuxeu0cZhXjGTQ2g1NCsXP6xN2BMDy+Sj5do8D2VmcVw3Iu5yO1y1NMbRdThwVnD0LTpw5elULytSm4ozENaFuhuq9QJs3tMehmDYwTisH45FBfaAs=
+	t=1784654870; cv=none; b=vCuFiXywG/UjbfLhNAgSZpJC6eQTb0ryulGu+w+7flVqq5jMXVT7REhP+HRKaxmTDWPxDCkvNGJ7BfnmrnqE5KKMzKjC/600RxLUywmTiBB57L5nVasiEn7Y6EebZSFIv/wP3KZUoujHJwLpXEEneqBkets/3FykS4CkxIagzL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654866; c=relaxed/simple;
-	bh=ODzzi1kqGILyk8aE9QxxleZLWx8uqvDiLhHrsiT4Ot4=;
+	s=arc-20240116; t=1784654870; c=relaxed/simple;
+	bh=foPbdxKT44Ks2oMRZ/dBVmwUnnJY4yZB4upPKV8a9qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHG8a4NXNZrA7v6w9TMThbM5iBZ5Bt4VYJWtLNJTRNMIJMdTNgC3pRI8zJhKs4OKXbqhQmISdRHP/CycgI7O8OoeyAxVYdNR+CePM1bUYkTOEfgS1wWe0yXJKE41o2gYGFEjAE4azqTJ4Ur9DYFuOkpKiEm8rBBs2iOUZ7XUNWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpVNPNWq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ho3iyGQL/kg0iAQsYZcngXSzIavYDn6rJcBZ64uzsee4l3SaABUl/6OFGbdOMtgTHOSIl38O2zSx4i4eN4iB9o2B3s52aOzKjJWhjXToe9cnGjI0ZKUwMph4jbu4h8lD03BXoGQbxPRxJWJh8PqFu2Z+gDVB9ZgOULE6aNfjedU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+FjvkTz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpVNPNWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9621F00A3A;
-	Tue, 21 Jul 2026 17:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+FjvkTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DB71F00A3A;
+	Tue, 21 Jul 2026 17:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654865;
-	bh=ilqdOQaMfO0OjAAzSpOgq75JEb0vY5ifUdg25tr3xzI=;
+	s=korg; t=1784654868;
+	bh=l90Js79NjQgo9ft0+JelRSvpz/rhbSU/uLDTThO3Vf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rpVNPNWqF1EUWA+r/hs+4dCZjpC1gtlnBWedtqK5eGA1q2tncIV+qFsjGdMBVuLyq
-	 pWhYF+V8lb6puvR3J/uvqQoIH7/I3bWCTcJpRzwqSar73LMkJH8DkVYm9hZzxvco+s
-	 BjZZinIqdeLC2YuLqBWWdxeOSsyi3AYoQdijsgFc=
+	b=C+FjvkTzMBPyvZwz2g24KdZ2mm+eRW3a3fQhVIR5sxu3QikGGy3XLQzdxr9NxJEH6
+	 C0gvgoyLQ9IzyxusD/36hYvItLL/OBF22jilXyF+3tDpjezzkXQ+UVs4rbCoeydDMh
+	 Y+RmLnTpMu0yvIJLcoxsEKmvLfn0/gwCXRAup5aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
 	Lizhi Hou <lizhi.hou@amd.com>
-Subject: [PATCH 7.1 1867/2077] accel/amdxdna: reject user command submission without a command BO
-Date: Tue, 21 Jul 2026 17:25:40 +0200
-Message-ID: <20260721152636.768685558@linuxfoundation.org>
+Subject: [PATCH 7.1 1868/2077] accel/amdxdna: Use caller client for debug BO sync
+Date: Tue, 21 Jul 2026 17:25:41 +0200
+Message-ID: <20260721152636.791211647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,60 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-commit 261c1fe3327ad24508f54552c6366e3e4db82c15 upstream.
+commit 7caf2a2351d4053075670ff3e26a6815da0a9e1e upstream.
 
-amdxdna_drm_submit_execbuf() passes the user-supplied command BO handle
-straight into amdxdna_cmd_submit() with drv_cmd == NULL. When the handle
-is AMDXDNA_INVALID_BO_HANDLE (0), the block that fetches job->cmd_bo is
-skipped, leaving it NULL, and no check rejects it on the user path (the
-!job->cmd_bo guard lives inside the != INVALID branch).
+amdxdna_drm_sync_bo_ioctl() looks up args->handle in the ioctl caller's
+drm_file. For SYNC_DIRECT_FROM_DEVICE, it then calls
+amdxdna_hwctx_sync_debug_bo(), but passes abo->client.
 
-The job is then armed and pushed to the DRM scheduler.
-aie2_sched_job_run() takes the drv_cmd == NULL path and calls
-amdxdna_cmd_set_state(job->cmd_bo) -> amdxdna_gem_vmap(NULL) ->
-to_gobj(NULL)->dev, a NULL pointer dereference in the drm_sched worker.
-A process with access to the accel node on a system with a probed AMD NPU
-can trigger a kernel oops with a single AMDXDNA_EXEC_CMD ioctl
-(cmd_handles = 0).
+amdxdna_hwctx_sync_debug_bo() uses the passed client both as the handle
+namespace for debug_bo_hdl and as the owner of the hardware context xarray.
+Those must match the file that supplied args->handle. The BO's stored
+client pointer is object state, not the ioctl context.
 
-Only internal driver commands (SYNC_DEBUG_BO / ATTACH_DEBUG_BO)
-legitimately pass AMDXDNA_INVALID_BO_HANDLE, and they always set drv_cmd.
-Reject the invalid handle for user submissions (drv_cmd == NULL) at the
-submit choke point so every user path is covered.
+Pass filp->driver_priv instead, matching the original handle lookup.
 
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
-Cc: stable@vger.kernel.org
-Found by 0sec automated security-research tooling (https://0sec.ai).
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Fixes: 7ea046838021 ("accel/amdxdna: Support firmware debug buffer")
+Cc: stable@vger.kernel.org # v6.19+
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
 Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
 Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260713173030.87541-2-doruk@0sec.ai
+Link: https://patch.msgid.link/178155468039.81818.12173237984867749651@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/amdxdna/amdxdna_ctx.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/accel/amdxdna/amdxdna_gem.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/accel/amdxdna/amdxdna_ctx.c
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.c
-@@ -513,6 +513,16 @@ int amdxdna_cmd_submit(struct amdxdna_cl
- 			ret = -EINVAL;
- 			goto free_job;
- 		}
-+	} else if (!drv_cmd) {
-+		/*
-+		 * Only internal driver commands (drv_cmd != NULL) may omit a
-+		 * command BO. A user command submission with the invalid handle
-+		 * would leave job->cmd_bo NULL and later fault when the scheduler
-+		 * dereferences it in amdxdna_cmd_set_state().
-+		 */
-+		XDNA_DBG(xdna, "Command BO handle required for user submission");
-+		ret = -EINVAL;
-+		goto free_job;
- 	}
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -1039,6 +1039,7 @@ int amdxdna_drm_get_bo_info_ioctl(struct
+ int amdxdna_drm_sync_bo_ioctl(struct drm_device *dev,
+ 			      void *data, struct drm_file *filp)
+ {
++	struct amdxdna_client *client = filp->driver_priv;
+ 	struct amdxdna_dev *xdna = to_xdna_dev(dev);
+ 	struct amdxdna_drm_sync_bo *args = data;
+ 	struct amdxdna_gem_obj *abo;
+@@ -1073,7 +1074,7 @@ int amdxdna_drm_sync_bo_ioctl(struct drm
+ 		 args->handle, args->offset, args->size);
  
- 	ret = amdxdna_arg_bos_lookup(client, job, arg_bo_hdls, arg_bo_cnt);
+ 	if (args->direction == SYNC_DIRECT_FROM_DEVICE)
+-		ret = amdxdna_hwctx_sync_debug_bo(abo->client, args->handle);
++		ret = amdxdna_hwctx_sync_debug_bo(client, args->handle);
+ 
+ put_obj:
+ 	drm_gem_object_put(gobj);
 
 
