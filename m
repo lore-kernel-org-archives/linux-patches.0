@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5944F404BF6;
-	Tue, 21 Jul 2026 21:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9153ACEFE;
+	Tue, 21 Jul 2026 21:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670342; cv=none; b=MLcdCnRAGOsJ7yNvtI+l6rQtex77ltkrLWtbjxEV3/xdb89HwIFPlvbQbtgABq0yUZrYy9lc0tR8sZGF444C63MTcy/Xen45dsyvRjLqpsdvkHIZDwxtUwIplPktwbNiay1Dxyh6EebwOIfP05ftzVnVyr/JDWTiTOxyA4BhnmI=
+	t=1784670345; cv=none; b=gB8h0D5CxD+ECkwKwsMPmy8vLXpHU/2vcjlCJ3Nf+ftRPyYvfMnHdsTVI/VqCTULnduJ61BRxAgklhkSj3v03sq72Kqe6ejo7MUbqgmST6a8BT0Gf3nm0m/uuvLfmWD40OBkvQULbQ9UEBojexGcmDaB9A2yCkm3lQ4k3IYlT3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670342; c=relaxed/simple;
-	bh=MySz2bVH5l5PbikhecjQbCqAqu2WBtJvcwyDMuuRbPg=;
+	s=arc-20240116; t=1784670345; c=relaxed/simple;
+	bh=VZH6mC1tMEsgm2/jWLZsWNjTuNi/246FfTfipp9lwgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3Y2HCUFJOBQztCUmT4JnkSTu2YuOxQvwGowZTa57WRABrUzLa6IBlQVE2hattVc0I3felKvtsk6aiMSPxgX3j12xWV2C6tN8ymdSZ1mypUE/4mwr6kZqE3tTDvo+r3YeicGyL+8CjAd/2U+y3Y+mbxlYph4ZQdxxutOuotjrUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnbYVa1b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S2rSu9yJ7LsLjPr9zEnOyeXPlbr4Muqvng7GGAXOasU+0yVApl5O5t+h9LiFxJ8Osv5Fz+Bj8iSIHq35SHZ7QfHSqOWfxtaVMd/258CXkTKVB7KZH0bcgvIpMXP0TZIbSF658AYPgcIwdlCrNXSBwesTcQBOnlONeMQypNPFmug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBVT4oqp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnbYVa1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90841F000E9;
-	Tue, 21 Jul 2026 21:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBVT4oqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6501F000E9;
+	Tue, 21 Jul 2026 21:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670341;
-	bh=582ZS1VDw5kYiOejeq6GllPsk/+DDThAYfnJnST4988=;
+	s=korg; t=1784670344;
+	bh=BvzeDJ3zGl0PZffbUK1A7leZJboPlrmLuAy/pvZyBhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rnbYVa1btRGwb/qefJA1LXovRd3EZqBDIADEmrpk4Ef6azkxiw2jdoq2TITANb/yj
-	 DAeEIezSE8iZbSZZViCQJKbQe356AdYBh1SFEkrvQU7aZKQ4UPLU8UbkflJ9454cjB
-	 F02GRK9VlSeB92UZeVICDJXDqTwxOu6NndR5/O28=
+	b=zBVT4oqpQMWViQmzWy5fwWyX7Otj8FKLIBm1enu+SvwGO3kM2gYYjXGgljKqTFP6q
+	 0mMywXO4PrKk6HMvCi8pYYxb5RFIMfJjKhuzFn44xAokm+oTorT85mKUxP2A78t3ip
+	 m2KOjbgfmngN9ds4RbZophwtZ+ARj6/eGLNlCwEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 0897/1067] hwmon: (w83793) remove vrm sysfs file on probe failure
-Date: Tue, 21 Jul 2026 17:24:58 +0200
-Message-ID: <20260721152444.600064790@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 0898/1067] net: liquidio: fix BAR resource leak on PF number failure
+Date: Tue, 21 Jul 2026 17:24:59 +0200
+Message-ID: <20260721152444.621489827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,39 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 77b983757280c69b0290811669ff1d31022e5f1d upstream.
+commit c63ee62a3c4ac1a1542f4c1a4b87e2f41df5a496 upstream.
 
-w83793_probe() creates the vrm sysfs file after creating the VID files
-when VID support is present.
+If cn23xx_get_pf_num() fails, the function returns without
+unmapping either BAR. Unmap both BARs before returning from
+the error path.
 
-The normal remove path deletes vrm, but the probe error path only
-removes the sensor, SDA, VID, fan, PWM and temperature files.  A later
-probe failure can therefore leave vrm behind after the driver data has
-been freed.
+Found by manual code review.
 
-Remove vrm in the probe error path next to the VID files, matching the
-normal remove path.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20260615064806.51139-1-pengpeng@iscas.ac.cn
+Fixes: 0c45d7fe12c7 ("liquidio: fix use of pf in pass-through mode in a virtual machine")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://patch.msgid.link/20260624064013.2809570-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/w83793.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c |   18 ++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/hwmon/w83793.c
-+++ b/drivers/hwmon/w83793.c
-@@ -1918,6 +1918,7 @@ exit_remove:
+--- a/drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c
++++ b/drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c
+@@ -1334,18 +1334,14 @@ int setup_cn23xx_octeon_pf_device(struct
+ 	if (octeon_map_pci_barx(oct, 1, MAX_BAR1_IOREMAP_SIZE)) {
+ 		dev_err(&oct->pci_dev->dev, "%s CN23XX BAR1 map failed\n",
+ 			__func__);
+-		octeon_unmap_pci_barx(oct, 0);
+-		return 1;
++		goto err_unmap_bar0;
+ 	}
  
- 	for (i = 0; i < ARRAY_SIZE(w83793_vid); i++)
- 		device_remove_file(dev, &w83793_vid[i].dev_attr);
-+	device_remove_file(dev, &dev_attr_vrm);
+ 	if (cn23xx_get_pf_num(oct) != 0)
+-		return 1;
++		goto err_unmap_bar1;
  
- 	for (i = 0; i < ARRAY_SIZE(w83793_left_fan); i++)
- 		device_remove_file(dev, &w83793_left_fan[i].dev_attr);
+-	if (cn23xx_sriov_config(oct)) {
+-		octeon_unmap_pci_barx(oct, 0);
+-		octeon_unmap_pci_barx(oct, 1);
+-		return 1;
+-	}
++	if (cn23xx_sriov_config(oct))
++		goto err_unmap_bar1;
+ 
+ 	octeon_write_csr64(oct, CN23XX_SLI_MAC_CREDIT_CNT, 0x3F802080802080ULL);
+ 
+@@ -1376,6 +1372,12 @@ int setup_cn23xx_octeon_pf_device(struct
+ 	oct->coproc_clock_rate = 1000000ULL * cn23xx_coprocessor_clock(oct);
+ 
+ 	return 0;
++
++err_unmap_bar1:
++	octeon_unmap_pci_barx(oct, 1);
++err_unmap_bar0:
++	octeon_unmap_pci_barx(oct, 0);
++	return 1;
+ }
+ 
+ int validate_cn23xx_pf_config_info(struct octeon_device *oct,
 
 
