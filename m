@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF836403EA5;
-	Tue, 21 Jul 2026 21:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391093C0617;
+	Tue, 21 Jul 2026 21:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669669; cv=none; b=gG0AkLo895LWCmkY7QmLu+FBsHQVD+BIcW9opDjccSA+DAlt88UxRAbCfDWdjIus8/ld+dymJI/M/ftkpncOvQuGmvUIl7qN3ujOgl+Ualy0mdY0SE+ixWXj2PFyoOnBoJPyBuc9LQQ7ofC/9S8Q7xb/v7lOYixLoQMDCmdCO7I=
+	t=1784669671; cv=none; b=LqHXe/6pjOVKz2VZ2iWulI7Gpevvy8wEwKL3o4QdqlFweeLYkQd1joXyJwv0IWIXfxt/pa/pzxC7Jg4hZYTOcZgve3xEROZijyZTq0eHFvYS+o5JFuJtG9lBHFtui/i1JFhXvji9v7Vxw6WILw36UKA6D6Fq+R7Wq0dyFoqkhS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669669; c=relaxed/simple;
-	bh=UT8WoIGnEVakEczL8itx7hXdTQfIq5DDNVuzbW0rgBk=;
+	s=arc-20240116; t=1784669671; c=relaxed/simple;
+	bh=ELcG9J4AtZIMfKBAIzFuPsHJ+3jyeI37BMIM0lIYvx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8R+BBS8WF58sKEfpFid1QvWPAP85X2u0/MfM8tIeSnmpV6eMnMsZKRMYqn3LoqH8wsTsN9HwjpRIVSwPwkz0DfBqumf0hbHVH/LMz9mY+fYFXe6OwosimgOVXeyiKyKn6PjSGqnjX/kpHtW6CPbjJoXMptxmBngmtvLEKJKj6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGz0Iwhu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BXkuWLfnapaDh+2cLffiaf2URuGImwKKYo281j5E9hAsd5t4l25kGZHNg5CSPnYCVeb2M3tJJ/PAKXVA31jSuHC3JHs2aVMCmVeLqtERbaG/lF91xTU1xc43u7sUCjbtCa2v4tWIjCo/fkHrtpLBomNNPJjuKt3TFn84igCet9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYz8C+LW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGz0Iwhu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB631F00A3D;
-	Tue, 21 Jul 2026 21:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYz8C+LW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2E31F000E9;
+	Tue, 21 Jul 2026 21:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669666;
-	bh=4eoNoodR0sEM16vT6qI3bBkyntQHu/rVMYMWgY6Ck/0=;
+	s=korg; t=1784669660;
+	bh=y8kEPdYDeS3F1nJYLzG7ARefuIKFHsqOmqt3K9aOOUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UGz0IwhuyBAk4FKt0Eqzl/tCSoEXqvMz8LFPLUMPnDW/cgQkEOwLSvgfCDWTjACam
-	 eGj5wHzE62Ozs+idqdLG6yi0O4En0rR6cVZREBA4BUxSqfFIuck+SDR0ef7qOsfG4b
-	 J26C0hzFlJVq+6qzTNDcrx0Ppm0FQYzQVYAz2G9U=
+	b=RYz8C+LWSFcupN6gj+nziigLSUUq+v4B6yzXqgDUVqB75D83bRbrangxciZ72uEgd
+	 ZITCkCxEyO/7dXDd9yJQIwK/fL1gMDmjkvaJ05z5kzSPqjgh7bIVBXXls6AJ8nFoay
+	 W0HHQ7i+VmI/CdDeInnCqF9atDFpKyMZiPBZAdTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0640/1067] smb/client: preserve errors from smb2_set_sparse()
-Date: Tue, 21 Jul 2026 17:20:41 +0200
-Message-ID: <20260721152438.909110023@linuxfoundation.org>
+Subject: [PATCH 6.1 0638/1067] ipv6: fix error handling in forwarding sysctl
+Date: Tue, 21 Jul 2026 17:20:39 +0200
+Message-ID: <20260721152438.866530675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,109 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 2a4b3d2db5c6fcdba889baf7b2ae5661b0beac89 ]
+[ Upstream commit 058b9b19f9639fe1e1225a17c540f61b65bee6ad ]
 
-smb2_set_sparse() converts every FSCTL_SET_SPARSE failure to false and
-marks sparse support as broken for the share. Callers therefore report
-EOPNOTSUPP even for errors such as ENOSPC or EACCES, and later sparse
-operations remain disabled until the share is unmounted.
+When writing to the forwarding sysctl, if proc_dointvec() fails to parse
+the input, it returns a negative error code. The current implementation
+is overwriting that error for write operations.
 
-Return the SMB2 ioctl error directly. Set broken_sparse_sup only for
-EOPNOTSUPP, which indicates that the server does not support the request.
+This results in a silent failure, it returns a successful write although
+the configuration was not modified at all. When modifying the "all"
+variant it can also modify the configuration of existing interfaces to
+the wrong value.
 
-Update smb3_punch_hole() to propagate the error returned by
-smb2_set_sparse().
+Fix this by checking the return value of proc_dointvec() and returning
+early on failure. In addition, adjust return code of
+addrconf_fixup_forwarding() for successful operation.
 
-Fixes: 3d1a3745d8ca ("Add sparse file support to SMB2/SMB3 mounts")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: b325fddb7f86 ("ipv6: Fix sysctl unregistration deadlock")
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260622130857.5115-4-fmancera@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ net/ipv6/addrconf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 353f5ba1022502..65a6bd18a604b3 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -1924,8 +1924,9 @@ smb2_sync_write(const unsigned int xid, struct cifs_fid *pfid,
- }
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 7994b93ccaed9f..db66a8f1e16885 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -916,7 +916,7 @@ static int addrconf_fixup_forwarding(struct ctl_table *table, int *p, int newf)
  
- /* Set or clear the SPARSE_FILE attribute based on value passed in setsparse */
--static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
--		struct cifsFileInfo *cfile, struct inode *inode, __u8 setsparse)
-+static int smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
-+			   struct cifsFileInfo *cfile, struct inode *inode,
-+			   __u8 setsparse)
- {
- 	struct cifsInodeInfo *cifsi;
- 	int rc;
-@@ -1934,31 +1935,31 @@ static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
- 
- 	/* if file already sparse don't bother setting sparse again */
- 	if ((cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE) && setsparse)
--		return true; /* already sparse */
-+		return 0; /* already sparse */
- 
- 	if (!(cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE) && !setsparse)
--		return true; /* already not sparse */
-+		return 0; /* already not sparse */
- 
- 	/*
- 	 * Can't check for sparse support on share the usual way via the
- 	 * FS attribute info (FILE_SUPPORTS_SPARSE_FILES) on the share
- 	 * since Samba server doesn't set the flag on the share, yet
- 	 * supports the set sparse FSCTL and returns sparse correctly
--	 * in the file attributes. If we fail setting sparse though we
--	 * mark that server does not support sparse files for this share
--	 * to avoid repeatedly sending the unsupported fsctl to server
--	 * if the file is repeatedly extended.
-+	 * in the file attributes. If the server returns EOPNOTSUPP, mark
-+	 * that sparse files are not supported on this share to avoid
-+	 * repeatedly sending the unsupported FSCTL.
- 	 */
- 	if (tcon->broken_sparse_sup)
--		return false;
-+		return -EOPNOTSUPP;
- 
- 	rc = SMB2_ioctl(xid, tcon, cfile->fid.persistent_fid,
- 			cfile->fid.volatile_fid, FSCTL_SET_SPARSE,
- 			&setsparse, 1, CIFSMaxBufSize, NULL, NULL);
- 	if (rc) {
--		tcon->broken_sparse_sup = true;
-+		if (rc == -EOPNOTSUPP)
-+			tcon->broken_sparse_sup = true;
- 		cifs_dbg(FYI, "set sparse rc = %d\n", rc);
--		return false;
-+		return rc;
- 	}
- 
- 	if (setsparse)
-@@ -1966,7 +1967,7 @@ static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
- 	else
- 		cifsi->cifsAttrs &= (~FILE_ATTRIBUTE_SPARSE_FILE);
- 
--	return true;
+ 	if (newf)
+ 		rt6_purge_dflt_routers(net);
+-	return 1;
 +	return 0;
  }
  
- static int
-@@ -3576,10 +3577,9 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
- 	inode_lock(inode);
- 	/* Need to make file sparse, if not already, before freeing range. */
- 	/* Consider adding equivalent for compressed since it could also work */
--	if (!smb2_set_sparse(xid, tcon, cfile, inode, set_sparse)) {
--		rc = -EOPNOTSUPP;
-+	rc = smb2_set_sparse(xid, tcon, cfile, inode, set_sparse);
-+	if (rc)
- 		goto out;
--	}
+ static void addrconf_linkdown_change(struct net *net, __s32 newf)
+@@ -6279,6 +6279,8 @@ static int addrconf_sysctl_forward(struct ctl_table *ctl, int write,
+ 	lctl.data = &val;
  
- 	filemap_invalidate_lock(inode->i_mapping);
- 	/*
+ 	ret = proc_dointvec(&lctl, write, buffer, lenp, ppos);
++	if (ret)
++		return ret;
+ 
+ 	if (write)
+ 		ret = addrconf_fixup_forwarding(ctl, valp, val);
 -- 
 2.53.0
 
