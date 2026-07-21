@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4BE4307AD;
-	Tue, 21 Jul 2026 20:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207CB4307AD;
+	Tue, 21 Jul 2026 20:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664892; cv=none; b=Ob16p9ppBKnbi04v5HNVShBGFeZg/viyFacrIWeab6a84Rz3SzHoj6zLCtDfsewjxBzuQGlWiK4x97MBT4ngqOH8AoIRrvpNn9LvOX0qsAFTocVKW/NWgVtcP6YDS4Gv80qbeYcE/iHbogZnlawS6iEPvC4mF4U6m2PwflpFnWM=
+	t=1784664895; cv=none; b=u3eAnU8OQp81XITGRsuTk5IaqM2Ftx0RLbSVIhhzXggfHILr5OFoyUrHnYCtQy/m1/JP65ike6afyhguFRbq0yMMEPv9HUPFYbRvEnB0Hw+KRPWObYSrFne3MO5iixjIvip/Lvmxn0m3k1/oliBHg+RqO/C9lGIkOt/LylL42jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664892; c=relaxed/simple;
-	bh=X0IHYON+nBObM5VVkNVVQRSrb8UP0WGsrP4MuY0Xn/c=;
+	s=arc-20240116; t=1784664895; c=relaxed/simple;
+	bh=oWKrxSwIxbLn0FFwEP0OTYqejR0zshuzIPwAXjywtic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqoXFSSStud1zZ/cib8ot9BzAfjXi8ItECtu9641dAb2Xeq0gXKZKPJTyU0hX5Azoc3BufbQ7Vk1r9ItrWH12nanp6LF5v8Ard+GPehDompAthCYKfLm/HztyUxfSSFxQcrrnT5NQ90uFQtF5bCSdexoCu3cFqxdAZq5hB3cuAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sd9DQCZT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M5XznKpi7TN4p/ORZBvMJLjuMjHf5DYTFqftDy70mQWsuFXE0jExbsByhHH8+SPeircs+fXAm2wDh7TTXdvtNOKDcxSbpjc1fdPFD1kpvsIsboHfkZG81EMHgQu/c8wqF+Qdurbc1tCEnpxlrnWuiv2/OodioxqQWoR5bdL5/cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/fGETLJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sd9DQCZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3321F000E9;
-	Tue, 21 Jul 2026 20:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/fGETLJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8097B1F000E9;
+	Tue, 21 Jul 2026 20:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664891;
-	bh=R+4LcjJp4ybmtU5KvUUXJ1t9J7CZ0hi7R3U06+sJt4Q=;
+	s=korg; t=1784664894;
+	bh=w5mSFFIRY0Ug1ThxnKceboFZT/s4r4V8xPsTE5sFtaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sd9DQCZTN7UY+817rSqwvibHzF4StQ4ntMHEWzmFQGZuWj5aaK7Q9F3wIeRrMu5x1
-	 oIxL/wlomqnqRef2HamKZ77ETXLEtwCNBtM4K6BFRfMhHKHZHpE2BERtvFzmFwqvie
-	 TaliohEALlgu+z3NqUQmMOHxLkfhFeLjpwHrANCA=
+	b=y/fGETLJwIwpEy8Lsl81Zdipvfk4WJqk8jY0a1MVXU7f9mOwIMYmmjZ35pr4QrFjF
+	 RUW/AWukWhonP1FLcBGLujVPTNBUvvPEUBC0ldAo1UvKbK/ATsHHESWoFG8WkR0NZz
+	 O8bAAJAeYseXkuUpmtVhWuySGcW5S1Ol/0dHnXIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.6 0099/1266] iio: light: veml6030: fix channel type when pushing events
-Date: Tue, 21 Jul 2026 17:08:56 +0200
-Message-ID: <20260721152444.017894269@linuxfoundation.org>
+Subject: [PATCH 6.6 0100/1266] iio: magnetometer: ak8975: Add missed pm_runtime_put_autosuspend() call
+Date: Tue, 21 Jul 2026 17:08:57 +0200
+Message-ID: <20260721152444.041310312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,40 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit c52bb33b641ebaae3e209f97714cb1758206f7d9 upstream.
+commit e94944d7364d3ddb273539492f9bd9c9a622549a upstream.
 
-The events are registered for IIO_LIGHT and not for IIO_INTENSITY.
-Use the correct channel type.
+On the failure in the ak8975_read_axis() the PM runtime gets unbalanced.
+Balance it by calling pm_runtime_put_autosuspend() on error path as well.
 
-When at it, fix minor checkpatch code style warning (alignment).
-
-Cc: stable@vger.kernel.org
-Fixes: 7b779f573c48 ("iio: light: add driver for veml6030 ambient light sensor")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Fixes: cde4cb5dd422 ("iio: magn: ak8975: deploy runtime and system PM")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260505-magnetometer-fixes-v5-0-831b9b5550fc%40gmail.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/veml6030.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/iio/magnetometer/ak8975.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/light/veml6030.c
-+++ b/drivers/iio/light/veml6030.c
-@@ -710,9 +710,11 @@ static irqreturn_t veml6030_event_handle
- 	else
- 		evtdir = IIO_EV_DIR_FALLING;
+--- a/drivers/iio/magnetometer/ak8975.c
++++ b/drivers/iio/magnetometer/ak8975.c
+@@ -746,6 +746,7 @@ static int ak8975_read_axis(struct iio_d
  
--	iio_push_event(indio_dev, IIO_UNMOD_EVENT_CODE(IIO_INTENSITY,
--					0, IIO_EV_TYPE_THRESH, evtdir),
--					iio_get_time_ns(indio_dev));
-+	iio_push_event(indio_dev, IIO_UNMOD_EVENT_CODE(IIO_LIGHT,
-+						       0,
-+						       IIO_EV_TYPE_THRESH,
-+						       evtdir),
-+		       iio_get_time_ns(indio_dev));
- 
- 	return IRQ_HANDLED;
+ exit:
+ 	mutex_unlock(&data->lock);
++	pm_runtime_put_autosuspend(&data->client->dev);
+ 	dev_err(&client->dev, "Error in reading axis\n");
+ 	return ret;
  }
 
 
