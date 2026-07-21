@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C128346D560;
-	Tue, 21 Jul 2026 15:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847E2372B32;
+	Tue, 21 Jul 2026 15:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649246; cv=none; b=KgmT3+KBaLcv1n1RMLmQR4MVK+xFt7tZbK/Rj9P1/T226OecYNQzuSWNRUXhXHXqpz6fbugNb0QC71fkeIxdl8W4GzUtJOUGtm1kz3hbUVG2z8URPW1wAXBUUBHSSYt7jsFSFY0GYIO7s7trh5zkRHl36RuSyk0h7sHzjvfbrQA=
+	t=1784649248; cv=none; b=aJLB7e9bXKoLrgCRVFByy27phyvRKJXhqZHYTfRObfJ0M2xXZL1aKcCAafuVp+y9ofD2bMAnUlRQgHOxwEj5WULF+omIvTfXkvGOYSkgMvXii14cfn6744ld5L4UPJhGj4Tnk25DTNkv5AAsfLcZ1cwrKqETL0OSAt0llE/fvbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649246; c=relaxed/simple;
-	bh=+pwD7UDEEvKtE6C6BVujQCTm1T4xR6Avzxw5eJToK88=;
+	s=arc-20240116; t=1784649248; c=relaxed/simple;
+	bh=mJDgY+dPWXHPDEjPmV9hlNzvVi1rxo8lEhe9WiwzHxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdS0dC8GKhx3bh+JHR+c6Oi8aj0oGD8dSIpt9FU+mXJowzi1m60ELIrW3HuDTs5PMGvyzgK5BlYC8SaSk/Bjv2fpC8gFKgBD+l+5H4mlWs+qTIY19sT+g1GYIHJscftugKuYgYHz3j74+pbD0/cyotHXjDHAlsinKwpJRHc8jUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcSaVVe/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rMDSsrqfADSnjVpv7swv8K59EpJmsZaLErp3AzFgvExPIwI7bpqSxcAS4l0OZZeEhWK/eev4K81RKAdmZxSObz+EgseEBr3abn7EnAhjyS4ehlKt4CSwapBtx3HNnQRGob28u23fmbvM1D8TAgnYvh/c+BVbh1sL7jawUbIEWkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kB/yseM7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcSaVVe/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4191F000E9;
-	Tue, 21 Jul 2026 15:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kB/yseM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF0C1F00A3A;
+	Tue, 21 Jul 2026 15:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649244;
-	bh=htkk0E2+HWZxy8B2yCAKsgpDRYqx2FRXZB7W0lrd3cI=;
+	s=korg; t=1784649247;
+	bh=ADkWsB6IdhMl4b6Q4Wabu2qcuJTJQhKB0gc6R8MhBHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qcSaVVe/HvM02pK9vrOUnaPp/PzU7u8v0AkqqOOjWNUlsaDVQnz6JXXCkkd6CQOXL
-	 iJm2CKzG5Q9efCZvIP7g6RYMNbGBa4Z5bRXKg+khiXr9vKDOZR5UoC8Vd5f+erSQeL
-	 5pwUUnqv8bF0dKU1QFLxN1RBgW2dsFm6ZLbc8OfY=
+	b=kB/yseM72zFojsGSoc5pQ9W/L3puaaxcQWnqF4uGvTQHSHhM7Wq2fJT3uaTU7VC4F
+	 vvUZcnYskvLdpwvxseVPJuD3SEikQFv23jwttCpwVo35mj5t0lIOOVsR5eN7/ZMGQy
+	 25Ou1g7tv9Vm3gvAWN1k/vQmm75fEtT68tU33aMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0462/2077] eventpoll: wrap EP_UNACTIVE_PTR in typed sentinel helpers
-Date: Tue, 21 Jul 2026 17:02:15 +0200
-Message-ID: <20260721152603.688860825@linuxfoundation.org>
+Subject: [PATCH 7.1 0463/2077] perf/x86/amd/core: Always use the NMI latency mitigation
+Date: Tue, 21 Jul 2026 17:02:16 +0200
+Message-ID: <20260721152603.713230529@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,189 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit 0dcb726466a556f273beaadfb76f12d1b0087dd7 ]
+[ Upstream commit 73a4c02f94a98d94480c3e5c81450215a4da05ba ]
 
-ep->ovflist and epi->next both use EP_UNACTIVE_PTR (a cast to
-(void *)-1) as a sentinel, with distinct meanings at each site:
+Commit df4d29732fda ("perf/x86/amd: Change/fix NMI latency mitigation
+to use a timestamp") fixed handling of late-arriving NMIs but limited
+the mitigation to processors having X86_FEATURE_PERFCTR_CORE. However,
+it is unclear if processors without this feature are also affected.
+When Mediated vPMU is enabled on affected hardware, it is also possible
+to bypass the fix inside KVM guests if X86_FEATURE_PERFCTR_CORE is
+removed from the guest CPUID (e.g. using "-cpu host,-perfctr-core" with
+QEMU). Hence, use the mitigation at all times.
 
-  ep->ovflist == EP_UNACTIVE_PTR         no scan in progress
-  epi->next   == EP_UNACTIVE_PTR         epi not on ovflist
-
-Call sites had to know the sentinel's value and, by convention, what
-it meant in each context. Hide both behind inline helpers:
-
-  ep_is_scanning(ep)       predicate for "scan in progress"
-  ep_enter_scan(ep)        WRITE_ONCE flip to NULL (scan start)
-  ep_exit_scan(ep)         WRITE_ONCE flip to sentinel (scan end)
-  epi_on_ovflist(epi)      predicate for "epi is on ovflist"
-  epi_clear_ovflist(epi)   clear epi's ovflist link slot
-
-Convert ep_events_available(), ep_start_scan(), ep_done_scan(),
-ep_poll_callback(), and ep_alloc_epitem() to use the wrappers. The
-ovflist state-machine transitions are now named, not encoded in
-sentinel comparisons, and the top-of-file "Ready-list state machine"
-section is the single place that spells out the sentinel's meaning.
-
-ep_alloc() keeps the raw "ep->ovflist = EP_UNACTIVE_PTR" init (no
-concurrent access at that point) with an inline "not scanning"
-comment, and the tfile_check_list sentinel is left alone -- it will
-disappear entirely when the loop-check globals move into a
-stack-allocated ep_ctl_ctx in a later commit.
-
-Also rework ep_done_scan()'s for-loop: the combined initializer +
-update clause that advanced nepi AND cleared epi->next in one step
-was clever but hard to read; splitting the update into two
-statements inside the body makes the epi_clear_ovflist() call
-visible.
-
-No functional change.
-
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Link: https://patch.msgid.link/20260424-work-epoll-rework-v1-14-249ed00a20f3@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 0c4aefe3c2d0 ("eventpoll: Fix epoll_wait() report false negative")
+Fixes: df4d29732fda ("perf/x86/amd: Change/fix NMI latency mitigation to use a timestamp")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/29a3c970da289ab8f24282933bdb36545c0403e8.1780325517.git.sandipan.das@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 73 +++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 52 insertions(+), 21 deletions(-)
+ arch/x86/events/amd/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 94667f0f21546e..dc8dc529684bfb 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -372,6 +372,43 @@ static inline struct epitem *ep_item_from_wait(wait_queue_entry_t *p)
- 	return container_of(p, struct eppoll_entry, wait)->base;
- }
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index 0c92ed5f464b1c..abc84a92cd5902 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -1412,12 +1412,12 @@ static int __init amd_core_pmu_init(void)
+ 	u64 even_ctr_mask = 0ULL;
+ 	int i;
  
-+/*
-+ * Ready-list / ovflist state (see "Ready-list state machine" in the
-+ * top-of-file banner for the full state machine). EP_UNACTIVE_PTR is
-+ * the sentinel; these wrappers name each transition and each test so
-+ * call sites do not need to know the sentinel's value.
-+ */
-+
-+/* True iff @ep is between ep_enter_scan() and ep_exit_scan(). */
-+static inline bool ep_is_scanning(struct eventpoll *ep)
-+{
-+	return READ_ONCE(ep->ovflist) != EP_UNACTIVE_PTR;
-+}
-+
-+/* Called by ep_start_scan(): divert ep_poll_callback() to ovflist. */
-+static inline void ep_enter_scan(struct eventpoll *ep)
-+{
-+	WRITE_ONCE(ep->ovflist, NULL);
-+}
-+
-+/* Called by ep_done_scan(): redirect ep_poll_callback() back to rdllist. */
-+static inline void ep_exit_scan(struct eventpoll *ep)
-+{
-+	WRITE_ONCE(ep->ovflist, EP_UNACTIVE_PTR);
-+}
-+
-+/* True iff @epi is currently linked on its ep's ovflist. */
-+static inline bool epi_on_ovflist(const struct epitem *epi)
-+{
-+	return epi->next != EP_UNACTIVE_PTR;
-+}
-+
-+/* Mark @epi as not on any ovflist (init and post-drain). */
-+static inline void epi_clear_ovflist(struct epitem *epi)
-+{
-+	epi->next = EP_UNACTIVE_PTR;
-+}
-+
- /**
-  * ep_events_available - Checks if ready events might be available.
-  *
-@@ -382,8 +419,7 @@ static inline struct epitem *ep_item_from_wait(wait_queue_entry_t *p)
-  */
- static inline int ep_events_available(struct eventpoll *ep)
- {
--	return !list_empty_careful(&ep->rdllist) ||
--		READ_ONCE(ep->ovflist) != EP_UNACTIVE_PTR;
-+	return !list_empty_careful(&ep->rdllist) || ep_is_scanning(ep);
- }
+-	if (!boot_cpu_has(X86_FEATURE_PERFCTR_CORE))
+-		return 0;
+-
+ 	/* Avoid calculating the value each time in the NMI handler */
+ 	perf_nmi_window = msecs_to_jiffies(100);
  
- #ifdef CONFIG_NET_RX_BUSY_POLL
-@@ -736,7 +772,7 @@ static void ep_start_scan(struct eventpoll *ep, struct list_head *txlist)
- 	lockdep_assert_irqs_enabled();
- 	spin_lock_irq(&ep->lock);
- 	list_splice_init(&ep->rdllist, txlist);
--	WRITE_ONCE(ep->ovflist, NULL);
-+	ep_enter_scan(ep);
- 	spin_unlock_irq(&ep->lock);
- }
- 
-@@ -751,29 +787,24 @@ static void ep_done_scan(struct eventpoll *ep,
- 	 * other events might have been queued by the poll callback.
- 	 * We re-insert them inside the main ready-list here.
- 	 */
--	for (nepi = READ_ONCE(ep->ovflist); (epi = nepi) != NULL;
--	     nepi = epi->next, epi->next = EP_UNACTIVE_PTR) {
-+	for (nepi = READ_ONCE(ep->ovflist); (epi = nepi) != NULL; ) {
-+		nepi = epi->next;
-+		epi_clear_ovflist(epi);
- 		/*
--		 * We need to check if the item is already in the list.
--		 * During the "sproc" callback execution time, items are
--		 * queued into ->ovflist but the "txlist" might already
--		 * contain them, and the list_splice() below takes care of them.
-+		 * Skip items that the caller already returned via @txlist
-+		 * -- the list_splice() below takes care of those.
- 		 */
- 		if (!ep_is_linked(epi)) {
- 			/*
--			 * ->ovflist is LIFO, so we have to reverse it in order
--			 * to keep in FIFO.
-+			 * ovflist is LIFO; list_add() head-insert here
-+			 * reverses the iteration order into FIFO.
- 			 */
- 			list_add(&epi->rdllink, &ep->rdllist);
- 			ep_pm_stay_awake(epi);
- 		}
- 	}
--	/*
--	 * We need to set back ep->ovflist to EP_UNACTIVE_PTR, so that after
--	 * releasing the lock, events will be queued in the normal way inside
--	 * ep->rdllist.
--	 */
--	WRITE_ONCE(ep->ovflist, EP_UNACTIVE_PTR);
-+	/* Back out of scan mode; callbacks target ep->rdllist again. */
-+	ep_exit_scan(ep);
- 
++	if (!boot_cpu_has(X86_FEATURE_PERFCTR_CORE))
++		return 0;
++
  	/*
- 	 * Quickly re-inject items left on "txlist".
-@@ -1159,7 +1190,7 @@ static int ep_alloc(struct eventpoll **pep)
- 	init_waitqueue_head(&ep->poll_wait);
- 	INIT_LIST_HEAD(&ep->rdllist);
- 	ep->rbr = RB_ROOT_CACHED;
--	ep->ovflist = EP_UNACTIVE_PTR;
-+	ep->ovflist = EP_UNACTIVE_PTR;	/* not scanning */
- 	ep->user = get_current_user();
- 	refcount_set(&ep->refcount, 1);
- 
-@@ -1283,8 +1314,8 @@ static int ep_poll_callback(wait_queue_entry_t *wait, unsigned mode, int sync, v
- 	 * semantics). All the events that happen during that period of time are
- 	 * chained in ep->ovflist and requeued later on.
- 	 */
--	if (READ_ONCE(ep->ovflist) != EP_UNACTIVE_PTR) {
--		if (epi->next == EP_UNACTIVE_PTR) {
-+	if (ep_is_scanning(ep)) {
-+		if (!epi_on_ovflist(epi)) {
- 			epi->next = READ_ONCE(ep->ovflist);
- 			WRITE_ONCE(ep->ovflist, epi);
- 			ep_pm_stay_awake_rcu(epi);
-@@ -1591,7 +1622,7 @@ static struct epitem *ep_alloc_epitem(struct eventpoll *ep,
- 	epi->ep = ep;
- 	ep_set_ffd(&epi->ffd, tfile, fd);
- 	epi->event = *event;
--	epi->next = EP_UNACTIVE_PTR;
-+	epi_clear_ovflist(epi);
- 
- 	return epi;
- }
+ 	 * If core performance counter extensions exists, we must use
+ 	 * MSR_F15H_PERF_CTL/MSR_F15H_PERF_CTR msrs. See also
 -- 
 2.53.0
 
