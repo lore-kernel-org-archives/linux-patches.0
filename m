@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A0846D093;
-	Tue, 21 Jul 2026 18:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3363E471248;
+	Tue, 21 Jul 2026 18:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657577; cv=none; b=VSZifpFKhRmV1v/QKDDLWJkmzCGCUwSAnl6raBItO5JeHEKEXfSaGH2ZNLNw9y0w9vblKPnpYYoFYiDTmnzuigodiw+wV7miE9DNBx69BXUUWZiImJqbaMF3BtBFUGwZOxd42PWxVXcXsjJmJv8g+lqK0d9azEr5aZ8VBlWXgS0=
+	t=1784657580; cv=none; b=oKAUxdYTGxIyz/e7Zc88BEooWpe4hgtRNhMprT/Mepe8fC0SNNIxUDzQTa1qgixCgGk24pcSXDb0xe9Ac4Jui+OUGnbbyinl1MjJ1d1N4XRdHyxmf7vymCabkIrz2OsSojvwVQFwXojQiCUFX4cf36CQDzKukOPEqfg73Yb69+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657577; c=relaxed/simple;
-	bh=C9jXlBSq6Ha8FmIDvhAklBpdKYVuDhUQ6khvrrDhJUQ=;
+	s=arc-20240116; t=1784657580; c=relaxed/simple;
+	bh=00f7K+ibZIP2cegE7PA7SpKHZjvRDFA9cEMoo1AjlPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l982kmqmc5o/Fcel+T/VFDdd17UJ6V+dEuZTFqbnu6j9l65C82UM/npwMF4XFApgKJPGgIvIFT2ESBYny9NaqZ6pG63J2i5ZACR3SfBsNI8WrpP5J9wI1gj3LlC1ytk/U0U+m8YbzV3iojCYfXRnNAmhiYZrrvgwaZso5sP3EJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O20/WGx/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Usu3wDvMCX3vvbTED7yLrnJ5HwAk95UKQ1qBdbUYTM3cgvk5D183Iuota2k/wM9D5rm+eNwQc28EAsxmKhevmlHeNKfwx6k5LAhKC4dWgnYRaMc/VRzd8mXq/gCQFp1igo28Wvn7MsZ6DlDrAol95SZylWD28d+P7Hr4GCbl+C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m291DAEK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O20/WGx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020961F000E9;
-	Tue, 21 Jul 2026 18:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m291DAEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7751F000E9;
+	Tue, 21 Jul 2026 18:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657576;
-	bh=0l77YtAhtryqGCfc4vlYJ0Nh7PSnW0iXZsesL/fe2+s=;
+	s=korg; t=1784657579;
+	bh=vq7xShYUOAFGWcJ7b8P2QT97s6NSLKqcsFi6rQUptSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O20/WGx/FyVOYTFNzHNWxBirbShfNV7Hhs/czSrJyRNKROb3SDqi44aS/tJ4QbnNq
-	 ZJB9CKzNssG1eT7eBKHaOGMfR8cv9s9WOw5jDuMLxMcymV3bRSEhyR3UvrQeqI8L3A
-	 dtn/DlBt/XBGC2ulWPklzbQ7r7ct4E86N4A1PJ5Q=
+	b=m291DAEKRCs2OHN3C+ZcIEjYJxXeiaSQTpU8kHUU798IVY22KLc6obQu2vLl4hb/r
+	 +uMLz2BYp3s8bBScbhYnSj1Dkpv0sgceViCP5BcXY0VRKDcEyfo88e2ABUOcOavkdh
+	 wOoHfVa8HgO3LAmyDABlHpO7ndJ5Boklv3hCqWRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayen Yan <win847@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0817/1611] net: airoha: fix foe_check_time allocation size
-Date: Tue, 21 Jul 2026 17:15:33 +0200
-Message-ID: <20260721152533.766711956@linuxfoundation.org>
+Subject: [PATCH 6.18 0791/1611] ALSA: usb-audio: qcom: Free sideband sg_table objects
+Date: Tue, 21 Jul 2026 17:15:07 +0200
+Message-ID: <20260721152533.180919802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,41 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayen Yan <win847@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 5c121ee635680c93d7074becf14cfbaac140f80d ]
+[ Upstream commit 7d69804a35103a50852eae41bfe6a2e0061c68fd ]
 
-foe_check_time is declared as u16 pointer but was allocated with
-only ppe_num_entries bytes instead of ppe_num_entries * sizeof(u16).
+The Qualcomm USB audio offload driver obtains an endpoint transfer-ring
+table by calling xhci_sideband_get_endpoint_buffer(). This getter passes
+the endpoint ring to xhci_ring_to_sgtable(), which allocates the outer
+struct sg_table with kzalloc_obj(*sgt). The event-ring path is
+equivalent: xhci_sideband_get_event_buffer() also returns the result of
+xhci_ring_to_sgtable().
 
-When airoha_ppe_foe_verify_entry() is called with hash >= ppe_num_entries/2,
-it writes beyond the allocated buffer, causing heap buffer overflow and
-potential kernel crash.
+Inside xhci_ring_to_sgtable(), sg_alloc_table_from_pages() separately
+allocates the scatterlist storage referenced by sgt->sgl. The returned
+object therefore has two allocation layers: the outer struct sg_table
+and its internal scatterlist storage.
 
-Fixes: 6d5b601d52a2 ("net: airoha: ppe: Dynamically allocate foe_check_time array in airoha_ppe struct")
-Signed-off-by: Wayen Yan <win847@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/178161119471.2163752.14373384830691569758@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The Qualcomm caller only invokes sg_free_table(sgt). sg_free_table()
+releases the scatterlist storage owned by the table, but it does not
+free the separately allocated outer struct sg_table. The local sgt
+pointer is then discarded, so every successful endpoint or event-ring
+query leaks the outer object.
+
+Call kfree(sgt) after sg_free_table(sgt) in both setup paths, after the
+required page and DMA addresses have been copied out.
+
+Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/90B353283AA150C4+20260616115916.1222915-1-raoxu@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_ppe.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/qcom/qc_audio_offload.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
-index 005128717a45c9..798839aa1010b8 100644
---- a/drivers/net/ethernet/airoha/airoha_ppe.c
-+++ b/drivers/net/ethernet/airoha/airoha_ppe.c
-@@ -1538,7 +1538,8 @@ int airoha_ppe_init(struct airoha_eth *eth)
- 			return -ENOMEM;
- 	}
+diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
+index 962b5f27f04478..26b632baefadc9 100644
+--- a/sound/usb/qcom/qc_audio_offload.c
++++ b/sound/usb/qcom/qc_audio_offload.c
+@@ -1165,6 +1165,7 @@ uaudio_endpoint_setup(struct snd_usb_substream *subs,
+ 	tr_pa = page_to_phys(pg);
+ 	mem_info->dma = sg_dma_address(sgt->sgl);
+ 	sg_free_table(sgt);
++	kfree(sgt);
  
--	ppe->foe_check_time = devm_kzalloc(eth->dev, ppe_num_entries,
-+	ppe->foe_check_time = devm_kzalloc(eth->dev,
-+					   ppe_num_entries * sizeof(*ppe->foe_check_time),
- 					   GFP_KERNEL);
- 	if (!ppe->foe_check_time)
- 		return -ENOMEM;
+ 	/* data transfer ring */
+ 	iova = uaudio_iommu_map_pa(MEM_XFER_RING, dma_coherent, tr_pa,
+@@ -1234,6 +1235,7 @@ static int uaudio_event_ring_setup(struct snd_usb_substream *subs,
+ 	er_pa = page_to_phys(pg);
+ 	mem_info->dma = sg_dma_address(sgt->sgl);
+ 	sg_free_table(sgt);
++	kfree(sgt);
+ 
+ 	iova = uaudio_iommu_map_pa(MEM_EVENT_RING, dma_coherent, er_pa,
+ 				   PAGE_SIZE);
 -- 
 2.53.0
 
