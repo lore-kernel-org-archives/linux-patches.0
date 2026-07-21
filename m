@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D4347142F;
-	Tue, 21 Jul 2026 20:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0D947142C;
+	Tue, 21 Jul 2026 20:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664773; cv=none; b=fRzpH5eEqg7HlDX9FqiqchU7shWP/IzCN7ri8w3RuEfhK1a9Fmck8tHDlNXJisMhFzzpqPmSHW7uE1fcGS0L5CcczMI6pEdu3Ho+qO96sJUZznnMaUHmmr4Ewp7bTmgMzMVuGjaXbeALMUkPMRuirE6jyJ3P7/uHV0FkLwBTeSw=
+	t=1784664776; cv=none; b=rxPT5P8CMBBP5MKRYSy37k7QSZMzkvAM9IUa/5nZQoKfhFM8HEMFe9ddzg8YXRZS5zrey+61S1EAVjONYCiW+O+ut8g2OTfg8vs0Xw8qwl62uP2/EVXEXvY3RrWp3MnDPxbks0pk1S7oZA6QkKxIAYRjb2xWQReYjK22GbHN2Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664773; c=relaxed/simple;
-	bh=CTogLM8w2vZx/P3tBa+RSK07d+ZOn7tGFZXtfJHYgjQ=;
+	s=arc-20240116; t=1784664776; c=relaxed/simple;
+	bh=gYeO6xQKUH1IGEbILehvmWUroEr0sQNf8IuxUEN+yWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FL00mhn9uXxfO9uD3N4AUhPEBaZUK1zsndRko/e9BAOWrs5ctKwTxurgYipJRIt5s2IYeWsvMOoWUPiFWNTdTcEtEV86ounVDf0FuQHzVPgb97R3G7C2eZlwZ+2BQa7jR2BOoUqocjJoFwbqyPlDn7kBaDm68j0rylOiaeRfzmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvlOSHlS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eGzCz6vGhbzFnpX4AK/cT8J1JhZqLoZe2LyMoa5vypacFJ1VIFUSFmTPNjZsffYEDS/n4cNI1NhiA4i0cDgggkMHjxTlAP3uH63DVG1npq649jWwTUMfHwEU45LUJQi1BRaR7oM6juBxo3htIZfrWWwYbfXpaFZzJk7W6hH2BeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vndcain1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvlOSHlS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2971F00A3A;
-	Tue, 21 Jul 2026 20:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vndcain1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C661F000E9;
+	Tue, 21 Jul 2026 20:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664772;
-	bh=XStsiovzHE6nZYj0pXqHyzpM/cSMUr52V/aRmZtHavw=;
+	s=korg; t=1784664775;
+	bh=dF+6eL8+Nx0+tIVWhX86bGAjV62cNPwBG+Y5LbxB4NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KvlOSHlSr9241C6FrjLi6MLUFqa9MID9gsx3Aq/Hi2AajDJKbm3b3mr5gTulozTIW
-	 pTNUsATp7MhekXBRdRz9aARArpPAqyCb/6SGSebtMHy7EeV2ocCgoIYmf5sjVm91lt
-	 68w7OFARZmL9w0ieM0/dcHl3gIlwcMxRhzRwWEOc=
+	b=vndcain1OF7gN2xPL1mGvAoFp0Gw7Q8zElmQZhAZctQsTwM8NUmWEdBmlx84MzBaK
+	 xvrMjsU3ok+79m//4+ohyytPss8b/Rs5vqJEJNvgBip/aXfYv0Q76T1Xlp4ssOJfbL
+	 UD2I49ELp8yNbsS8BOFE/EZ/qylrtwNkAB3NzyoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingfu Zhou <yingfu.zhou@shopee.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Matthew Wilcox <willy@infradead.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0054/1266] mm/vmscan: flush deferred TLB before freeing large folios
-Date: Tue, 21 Jul 2026 17:08:11 +0200
-Message-ID: <20260721152443.009505171@linuxfoundation.org>
+Subject: [PATCH 6.6 0055/1266] xfs: recreate work items when recovering intent items
+Date: Tue, 21 Jul 2026 17:08:12 +0200
+Message-ID: <20260721152443.032083428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,58 +52,650 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-In reclaim, shrink_folio_list() unmaps PTEs with a deferred, batched TLB
-flush. The batch is only flushed by try_to_unmap_flush() near the end of
-the function, just before the order-0 folios collected in @free_folios are
-handed back to the allocator.
+commit e70fb328d5277297ea2d9169a3a046de6412d777 upstream.
 
-Large folios don't go through @free_folios -- they're freed inline at the
-free_it label via destroy_large_folio(), which runs before that flush. So
-a large folio's pages can be returned to the buddy allocator and reused
-while another CPU still holds a stale TLB entry for them, and that CPU then
-reads or executes through the stale translation into the reused page. For
-file-backed large folios (e.g. executable text) this shows up as random
-SIGSEGV/SIGILL in user space, with fault addresses that don't match the
-code being run.
+Recreate work items for each xfs_defer_pending object when we are
+recovering intent items.
 
-Flush the deferred batch before freeing a large folio inline, the same way
-the order-0 path already waits for the flush.
-
-Upstream this is fixed as a side effect of commit bc2ff4cbc329 ("mm: free
-folios in a batch in shrink_folio_list()"), which is a larger change; this
-is the minimal fix for -stable.
-
-Reported-by: Yingfu Zhou <yingfu.zhou@shopee.com>
-Fixes: bd4c82c22c36 ("mm, THP, swap: delay splitting THP after swapped out")
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+[ fp: fix conflict in calling xfs_attr_namecheck() with 2 args instead
+  of 3 due to backported ea0b3e814741 ("xfs: enforce one namespace per
+  attribute") ]
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/xfs/libxfs/xfs_defer.c  |   3 +-
+ fs/xfs/libxfs/xfs_defer.h  |   9 +++
+ fs/xfs/xfs_attr_item.c     |  92 +++++++++++++++++-------------
+ fs/xfs/xfs_bmap_item.c     |  55 +++++++++++-------
+ fs/xfs/xfs_extfree_item.c  |  49 +++++++++-------
+ fs/xfs/xfs_refcount_item.c |  60 ++++++++++----------
+ fs/xfs/xfs_rmap_item.c     | 112 ++++++++++++++++++++-----------------
+ 7 files changed, 216 insertions(+), 164 deletions(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index aba757e5c59784..8eb498351d9b30 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2123,10 +2123,12 @@ static unsigned int shrink_folio_list(struct list_head *folio_list,
- 		 * Is there need to periodically free_folio_list? It would
- 		 * appear not as the counts should be low
- 		 */
--		if (unlikely(folio_test_large(folio)))
-+		if (unlikely(folio_test_large(folio))) {
-+			try_to_unmap_flush();
- 			destroy_large_folio(folio);
--		else
-+		} else {
- 			list_add(&folio->lru, &free_folios);
-+		}
- 		continue;
+diff --git a/fs/xfs/libxfs/xfs_defer.c b/fs/xfs/libxfs/xfs_defer.c
+index 363da37a8e7fbe..8fb523e4f66931 100644
+--- a/fs/xfs/libxfs/xfs_defer.c
++++ b/fs/xfs/libxfs/xfs_defer.c
+@@ -676,9 +676,8 @@ xfs_defer_add(
+ 		list_add_tail(&dfp->dfp_list, &tp->t_dfops);
+ 	}
  
- activate_locked_split:
+-	list_add_tail(li, &dfp->dfp_work);
++	xfs_defer_add_item(dfp, li);
+ 	trace_xfs_defer_add_item(tp->t_mountp, dfp, li);
+-	dfp->dfp_count++;
+ }
+ 
+ /*
+diff --git a/fs/xfs/libxfs/xfs_defer.h b/fs/xfs/libxfs/xfs_defer.h
+index 5dce938ba3d594..bef5823f61fb82 100644
+--- a/fs/xfs/libxfs/xfs_defer.h
++++ b/fs/xfs/libxfs/xfs_defer.h
+@@ -130,6 +130,15 @@ void xfs_defer_start_recovery(struct xfs_log_item *lip,
+ void xfs_defer_cancel_recovery(struct xfs_mount *mp,
+ 		struct xfs_defer_pending *dfp);
+ 
++static inline void
++xfs_defer_add_item(
++	struct xfs_defer_pending	*dfp,
++	struct list_head		*work)
++{
++	list_add_tail(work, &dfp->dfp_work);
++	dfp->dfp_count++;
++}
++
+ int __init xfs_defer_init_item_caches(void);
+ void xfs_defer_destroy_item_caches(void);
+ 
+diff --git a/fs/xfs/xfs_attr_item.c b/fs/xfs/xfs_attr_item.c
+index 889fca3f8de1ce..929a53db22462f 100644
+--- a/fs/xfs/xfs_attr_item.c
++++ b/fs/xfs/xfs_attr_item.c
+@@ -546,43 +546,17 @@ xfs_attri_validate(
+ 	return xfs_verify_ino(mp, attrp->alfi_ino);
+ }
+ 
+-/*
+- * Process an attr intent item that was recovered from the log.  We need to
+- * delete the attr that it describes.
+- */
+-STATIC int
+-xfs_attri_item_recover(
++static inline struct xfs_attr_intent *
++xfs_attri_recover_work(
++	struct xfs_mount		*mp,
+ 	struct xfs_defer_pending	*dfp,
+-	struct list_head		*capture_list)
++	struct xfs_attri_log_format	*attrp,
++	struct xfs_inode		*ip,
++	struct xfs_attri_log_nameval	*nv)
+ {
+-	struct xfs_log_item		*lip = dfp->dfp_intent;
+-	struct xfs_attri_log_item	*attrip = ATTRI_ITEM(lip);
+ 	struct xfs_attr_intent		*attr;
+-	struct xfs_mount		*mp = lip->li_log->l_mp;
+-	struct xfs_inode		*ip;
+ 	struct xfs_da_args		*args;
+-	struct xfs_trans		*tp;
+-	struct xfs_trans_res		resv;
+-	struct xfs_attri_log_format	*attrp;
+-	struct xfs_attri_log_nameval	*nv = attrip->attri_nameval;
+-	int				error;
+-	int				total;
+ 	int				local;
+-	struct xfs_attrd_log_item	*done_item = NULL;
+-
+-	/*
+-	 * First check the validity of the attr described by the ATTRI.  If any
+-	 * are bad, then assume that all are bad and just toss the ATTRI.
+-	 */
+-	attrp = &attrip->attri_format;
+-	if (!xfs_attri_validate(mp, attrp) ||
+-	    !xfs_attr_namecheck(attrp->alfi_attr_filter, nv->name.i_addr,
+-				nv->name.i_len))
+-		return -EFSCORRUPTED;
+-
+-	error = xlog_recover_iget(mp,  attrp->alfi_ino, &ip);
+-	if (error)
+-		return error;
+ 
+ 	attr = kmem_zalloc(sizeof(struct xfs_attr_intent) +
+ 			   sizeof(struct xfs_da_args), KM_NOFS);
+@@ -624,19 +598,59 @@ xfs_attri_item_recover(
+ 	case XFS_ATTRI_OP_FLAGS_REMOVE:
+ 		attr->xattri_dela_state = xfs_attr_init_remove_state(args);
+ 		break;
+-	default:
+-		ASSERT(0);
+-		error = -EFSCORRUPTED;
+-		goto out;
+ 	}
+ 
++	xfs_defer_add_item(dfp, &attr->xattri_list);
++	return attr;
++}
++
++/*
++ * Process an attr intent item that was recovered from the log.  We need to
++ * delete the attr that it describes.
++ */
++STATIC int
++xfs_attri_item_recover(
++	struct xfs_defer_pending	*dfp,
++	struct list_head		*capture_list)
++{
++	struct xfs_log_item		*lip = dfp->dfp_intent;
++	struct xfs_attri_log_item	*attrip = ATTRI_ITEM(lip);
++	struct xfs_attr_intent		*attr;
++	struct xfs_mount		*mp = lip->li_log->l_mp;
++	struct xfs_inode		*ip;
++	struct xfs_da_args		*args;
++	struct xfs_trans		*tp;
++	struct xfs_trans_res		resv;
++	struct xfs_attri_log_format	*attrp;
++	struct xfs_attri_log_nameval	*nv = attrip->attri_nameval;
++	int				error;
++	int				total;
++	struct xfs_attrd_log_item	*done_item = NULL;
++
++	/*
++	 * First check the validity of the attr described by the ATTRI.  If any
++	 * are bad, then assume that all are bad and just toss the ATTRI.
++	 */
++	attrp = &attrip->attri_format;
++	if (!xfs_attri_validate(mp, attrp) ||
++	    !xfs_attr_namecheck(attrp->alfi_attr_filter, nv->name.i_addr,
++				nv->name.i_len))
++		return -EFSCORRUPTED;
++
++	error = xlog_recover_iget(mp,  attrp->alfi_ino, &ip);
++	if (error)
++		return error;
++
++	attr = xfs_attri_recover_work(mp, dfp, attrp, ip, nv);
++	args = attr->xattri_da_args;
++
+ 	xfs_init_attr_trans(args, &resv, &total);
+ 	resv = xlog_recover_resv(&resv);
+ 	error = xfs_trans_alloc(mp, &resv, total, 0, XFS_TRANS_RESERVE, &tp);
+ 	if (error)
+-		goto out;
+-
++		return error;
+ 	args->trans = tp;
++
+ 	done_item = xfs_trans_get_attrd(tp, attrip);
+ 	xlog_recover_transfer_intent(tp, dfp);
+ 
+@@ -667,8 +681,6 @@ xfs_attri_item_recover(
+ out_unlock:
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	xfs_irele(ip);
+-out:
+-	xfs_attr_free_item(attr);
+ 	return error;
+ }
+ 
+diff --git a/fs/xfs/xfs_bmap_item.c b/fs/xfs/xfs_bmap_item.c
+index 969cad575c3029..1be29b3db3e710 100644
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -481,6 +481,28 @@ xfs_bui_validate(
+ 	return xfs_verify_fsbext(mp, map->me_startblock, map->me_len);
+ }
+ 
++static inline struct xfs_bmap_intent *
++xfs_bui_recover_work(
++	struct xfs_mount		*mp,
++	struct xfs_defer_pending	*dfp,
++	struct xfs_map_extent		*map)
++{
++	struct xfs_bmap_intent		*bi;
++
++	bi = kmem_cache_zalloc(xfs_bmap_intent_cache, GFP_NOFS | __GFP_NOFAIL);
++	bi->bi_whichfork = (map->me_flags & XFS_BMAP_EXTENT_ATTR_FORK) ?
++			XFS_ATTR_FORK : XFS_DATA_FORK;
++	bi->bi_type = map->me_flags & XFS_BMAP_EXTENT_TYPE_MASK;
++	bi->bi_bmap.br_startblock = map->me_startblock;
++	bi->bi_bmap.br_startoff = map->me_startoff;
++	bi->bi_bmap.br_blockcount = map->me_len;
++	bi->bi_bmap.br_state = (map->me_flags & XFS_BMAP_EXTENT_UNWRITTEN) ?
++			XFS_EXT_UNWRITTEN : XFS_EXT_NORM;
++
++	xfs_defer_add_item(dfp, &bi->bi_list);
++	return bi;
++}
++
+ /*
+  * Process a bmap update intent item that was recovered from the log.
+  * We need to update some inode's bmbt.
+@@ -490,7 +512,6 @@ xfs_bui_item_recover(
+ 	struct xfs_defer_pending	*dfp,
+ 	struct list_head		*capture_list)
+ {
+-	struct xfs_bmap_intent		fake = { };
+ 	struct xfs_trans_res		resv;
+ 	struct xfs_log_item		*lip = dfp->dfp_intent;
+ 	struct xfs_bui_log_item		*buip = BUI_ITEM(lip);
+@@ -499,6 +520,7 @@ xfs_bui_item_recover(
+ 	struct xfs_mount		*mp = lip->li_log->l_mp;
+ 	struct xfs_map_extent		*map;
+ 	struct xfs_bud_log_item		*budp;
++	struct xfs_bmap_intent		*fake;
+ 	int				iext_delta;
+ 	int				error = 0;
+ 
+@@ -509,9 +531,7 @@ xfs_bui_item_recover(
+ 	}
+ 
+ 	map = &buip->bui_format.bui_extents[0];
+-	fake.bi_whichfork = (map->me_flags & XFS_BMAP_EXTENT_ATTR_FORK) ?
+-			XFS_ATTR_FORK : XFS_DATA_FORK;
+-	fake.bi_type = map->me_flags & XFS_BMAP_EXTENT_TYPE_MASK;
++	fake = xfs_bui_recover_work(mp, dfp, map);
+ 
+ 	error = xlog_recover_iget(mp, map->me_owner, &ip);
+ 	if (error)
+@@ -530,36 +550,31 @@ xfs_bui_item_recover(
+ 	xfs_ilock(ip, XFS_ILOCK_EXCL);
+ 	xfs_trans_ijoin(tp, ip, 0);
+ 
+-	if (fake.bi_type == XFS_BMAP_MAP)
++	if (fake->bi_type == XFS_BMAP_MAP)
+ 		iext_delta = XFS_IEXT_ADD_NOSPLIT_CNT;
+ 	else
+ 		iext_delta = XFS_IEXT_PUNCH_HOLE_CNT;
+ 
+-	error = xfs_iext_count_may_overflow(ip, fake.bi_whichfork, iext_delta);
++	error = xfs_iext_count_may_overflow(ip, fake->bi_whichfork, iext_delta);
+ 	if (error == -EFBIG)
+ 		error = xfs_iext_count_upgrade(tp, ip, iext_delta);
+ 	if (error)
+ 		goto err_cancel;
+ 
+-	fake.bi_owner = ip;
+-	fake.bi_bmap.br_startblock = map->me_startblock;
+-	fake.bi_bmap.br_startoff = map->me_startoff;
+-	fake.bi_bmap.br_blockcount = map->me_len;
+-	fake.bi_bmap.br_state = (map->me_flags & XFS_BMAP_EXTENT_UNWRITTEN) ?
+-			XFS_EXT_UNWRITTEN : XFS_EXT_NORM;
++	fake->bi_owner = ip;
+ 
+-	xfs_bmap_update_get_group(mp, &fake);
+-	error = xfs_trans_log_finish_bmap_update(tp, budp, &fake);
++	xfs_bmap_update_get_group(mp, fake);
++	error = xfs_trans_log_finish_bmap_update(tp, budp, fake);
+ 	if (error == -EFSCORRUPTED)
+-		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp, map,
+-				sizeof(*map));
+-	xfs_bmap_update_put_group(&fake);
++		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
++				&buip->bui_format, sizeof(buip->bui_format));
++	xfs_bmap_update_put_group(fake);
+ 	if (error)
+ 		goto err_cancel;
+ 
+-	if (fake.bi_bmap.br_blockcount > 0) {
+-		ASSERT(fake.bi_type == XFS_BMAP_UNMAP);
+-		xfs_bmap_unmap_extent(tp, ip, &fake.bi_bmap);
++	if (fake->bi_bmap.br_blockcount > 0) {
++		ASSERT(fake->bi_type == XFS_BMAP_UNMAP);
++		xfs_bmap_unmap_extent(tp, ip, &fake->bi_bmap);
+ 	}
+ 
+ 	/*
+diff --git a/fs/xfs/xfs_extfree_item.c b/fs/xfs/xfs_extfree_item.c
+index c9908fb337657a..41108a0b60c91a 100644
+--- a/fs/xfs/xfs_extfree_item.c
++++ b/fs/xfs/xfs_extfree_item.c
+@@ -651,6 +651,24 @@ xfs_efi_validate_ext(
+ 	return xfs_verify_fsbext(mp, extp->ext_start, extp->ext_len);
+ }
+ 
++static inline void
++xfs_efi_recover_work(
++	struct xfs_mount		*mp,
++	struct xfs_defer_pending	*dfp,
++	struct xfs_extent		*extp)
++{
++	struct xfs_extent_free_item	*xefi;
++
++	xefi = kmem_cache_zalloc(xfs_extfree_item_cache,
++			       GFP_KERNEL | __GFP_NOFAIL);
++	xefi->xefi_startblock = extp->ext_start;
++	xefi->xefi_blockcount = extp->ext_len;
++	xefi->xefi_agresv = XFS_AG_RESV_NONE;
++	xefi->xefi_owner = XFS_RMAP_OWN_UNKNOWN;
++
++	xfs_defer_add_item(dfp, &xefi->xefi_list);
++}
++
+ /*
+  * Process an extent free intent item that was recovered from
+  * the log.  We need to free the extents that it describes.
+@@ -666,6 +684,7 @@ xfs_efi_item_recover(
+ 	struct xfs_mount		*mp = lip->li_log->l_mp;
+ 	struct xfs_efd_log_item		*efdp;
+ 	struct xfs_trans		*tp;
++	struct xfs_extent_free_item	*fake;
+ 	int				i;
+ 	int				error = 0;
+ 	bool				requeue_only = false;
+@@ -683,6 +702,8 @@ xfs_efi_item_recover(
+ 					sizeof(efip->efi_format));
+ 			return -EFSCORRUPTED;
+ 		}
++
++		xfs_efi_recover_work(mp, dfp, &efip->efi_format.efi_extents[i]);
+ 	}
+ 
+ 	resv = xlog_recover_resv(&M_RES(mp)->tr_itruncate);
+@@ -693,22 +714,11 @@ xfs_efi_item_recover(
+ 	efdp = xfs_trans_get_efd(tp, efip, efip->efi_format.efi_nextents);
+ 	xlog_recover_transfer_intent(tp, dfp);
+ 
+-	for (i = 0; i < efip->efi_format.efi_nextents; i++) {
+-		struct xfs_extent_free_item	fake = {
+-			.xefi_owner		= XFS_RMAP_OWN_UNKNOWN,
+-			.xefi_agresv		= XFS_AG_RESV_NONE,
+-		};
+-		struct xfs_extent		*extp;
+-
+-		extp = &efip->efi_format.efi_extents[i];
+-
+-		fake.xefi_startblock = extp->ext_start;
+-		fake.xefi_blockcount = extp->ext_len;
+-
++	list_for_each_entry(fake, &dfp->dfp_work, xefi_list) {
+ 		if (!requeue_only) {
+-			xfs_extent_free_get_group(mp, &fake);
+-			error = xfs_trans_free_extent(tp, efdp, &fake);
+-			xfs_extent_free_put_group(&fake);
++			xfs_extent_free_get_group(mp, fake);
++			error = xfs_trans_free_extent(tp, efdp, fake);
++			xfs_extent_free_put_group(fake);
+ 		}
+ 
+ 		/*
+@@ -717,10 +727,10 @@ xfs_efi_item_recover(
+ 		 * run again later with a new transaction context.
+ 		 */
+ 		if (error == -EAGAIN || requeue_only) {
+-			error = xfs_free_extent_later(tp, fake.xefi_startblock,
+-					fake.xefi_blockcount,
++			error = xfs_free_extent_later(tp, fake->xefi_startblock,
++					fake->xefi_blockcount,
+ 					&XFS_RMAP_OINFO_ANY_OWNER,
+-					fake.xefi_agresv);
++					fake->xefi_agresv);
+ 			if (!error) {
+ 				requeue_only = true;
+ 				continue;
+@@ -729,7 +739,8 @@ xfs_efi_item_recover(
+ 
+ 		if (error == -EFSCORRUPTED)
+ 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-					extp, sizeof(*extp));
++					&efip->efi_format,
++					sizeof(efip->efi_format));
+ 		if (error)
+ 			goto abort_error;
+ 
+diff --git a/fs/xfs/xfs_refcount_item.c b/fs/xfs/xfs_refcount_item.c
+index f1b2592238022e..4ffc34e6f0a079 100644
+--- a/fs/xfs/xfs_refcount_item.c
++++ b/fs/xfs/xfs_refcount_item.c
+@@ -468,6 +468,23 @@ xfs_cui_validate_phys(
+ 	return xfs_verify_fsbext(mp, pmap->pe_startblock, pmap->pe_len);
+ }
+ 
++static inline void
++xfs_cui_recover_work(
++	struct xfs_mount		*mp,
++	struct xfs_defer_pending	*dfp,
++	struct xfs_phys_extent		*pmap)
++{
++	struct xfs_refcount_intent	*ri;
++
++	ri = kmem_cache_alloc(xfs_refcount_intent_cache,
++			GFP_NOFS | __GFP_NOFAIL);
++	ri->ri_type = pmap->pe_flags & XFS_REFCOUNT_EXTENT_TYPE_MASK;
++	ri->ri_startblock = pmap->pe_startblock;
++	ri->ri_blockcount = pmap->pe_len;
++
++	xfs_defer_add_item(dfp, &ri->ri_list);
++}
++
+ /*
+  * Process a refcount update intent item that was recovered from the log.
+  * We need to update the refcountbt.
+@@ -484,7 +501,7 @@ xfs_cui_item_recover(
+ 	struct xfs_trans		*tp;
+ 	struct xfs_btree_cur		*rcur = NULL;
+ 	struct xfs_mount		*mp = lip->li_log->l_mp;
+-	unsigned int			refc_type;
++	struct xfs_refcount_intent	*fake;
+ 	bool				requeue_only = false;
+ 	int				i;
+ 	int				error = 0;
+@@ -502,6 +519,8 @@ xfs_cui_item_recover(
+ 					sizeof(cuip->cui_format));
+ 			return -EFSCORRUPTED;
+ 		}
++
++		xfs_cui_recover_work(mp, dfp, &cuip->cui_format.cui_extents[i]);
+ 	}
+ 
+ 	/*
+@@ -525,35 +544,12 @@ xfs_cui_item_recover(
+ 	cudp = xfs_trans_get_cud(tp, cuip);
+ 	xlog_recover_transfer_intent(tp, dfp);
+ 
+-	for (i = 0; i < cuip->cui_format.cui_nextents; i++) {
+-		struct xfs_refcount_intent	fake = { };
+-		struct xfs_phys_extent		*pmap;
+-
+-		pmap = &cuip->cui_format.cui_extents[i];
+-		refc_type = pmap->pe_flags & XFS_REFCOUNT_EXTENT_TYPE_MASK;
+-		switch (refc_type) {
+-		case XFS_REFCOUNT_INCREASE:
+-		case XFS_REFCOUNT_DECREASE:
+-		case XFS_REFCOUNT_ALLOC_COW:
+-		case XFS_REFCOUNT_FREE_COW:
+-			fake.ri_type = refc_type;
+-			break;
+-		default:
+-			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-					&cuip->cui_format,
+-					sizeof(cuip->cui_format));
+-			error = -EFSCORRUPTED;
+-			goto abort_error;
+-		}
+-
+-		fake.ri_startblock = pmap->pe_startblock;
+-		fake.ri_blockcount = pmap->pe_len;
+-
++	list_for_each_entry(fake, &dfp->dfp_work, ri_list) {
+ 		if (!requeue_only) {
+-			xfs_refcount_update_get_group(mp, &fake);
++			xfs_refcount_update_get_group(mp, fake);
+ 			error = xfs_trans_log_finish_refcount_update(tp, cudp,
+-					&fake, &rcur);
+-			xfs_refcount_update_put_group(&fake);
++					fake, &rcur);
++			xfs_refcount_update_put_group(fake);
+ 		}
+ 		if (error == -EFSCORRUPTED)
+ 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+@@ -563,13 +559,13 @@ xfs_cui_item_recover(
+ 			goto abort_error;
+ 
+ 		/* Requeue what we didn't finish. */
+-		if (fake.ri_blockcount > 0) {
++		if (fake->ri_blockcount > 0) {
+ 			struct xfs_bmbt_irec	irec = {
+-				.br_startblock	= fake.ri_startblock,
+-				.br_blockcount	= fake.ri_blockcount,
++				.br_startblock	= fake->ri_startblock,
++				.br_blockcount	= fake->ri_blockcount,
+ 			};
+ 
+-			switch (fake.ri_type) {
++			switch (fake->ri_type) {
+ 			case XFS_REFCOUNT_INCREASE:
+ 				xfs_refcount_increase_extent(tp, &irec);
+ 				break;
+diff --git a/fs/xfs/xfs_rmap_item.c b/fs/xfs/xfs_rmap_item.c
+index 5e8a02d2b045de..9fb3ae4bfd5915 100644
+--- a/fs/xfs/xfs_rmap_item.c
++++ b/fs/xfs/xfs_rmap_item.c
+@@ -498,6 +498,58 @@ xfs_rui_validate_map(
+ 	return xfs_verify_fsbext(mp, map->me_startblock, map->me_len);
+ }
+ 
++static inline void
++xfs_rui_recover_work(
++	struct xfs_mount		*mp,
++	struct xfs_defer_pending	*dfp,
++	const struct xfs_map_extent	*map)
++{
++	struct xfs_rmap_intent		*ri;
++
++	ri = kmem_cache_alloc(xfs_rmap_intent_cache, GFP_NOFS | __GFP_NOFAIL);
++
++	switch (map->me_flags & XFS_RMAP_EXTENT_TYPE_MASK) {
++	case XFS_RMAP_EXTENT_MAP:
++		ri->ri_type = XFS_RMAP_MAP;
++		break;
++	case XFS_RMAP_EXTENT_MAP_SHARED:
++		ri->ri_type = XFS_RMAP_MAP_SHARED;
++		break;
++	case XFS_RMAP_EXTENT_UNMAP:
++		ri->ri_type = XFS_RMAP_UNMAP;
++		break;
++	case XFS_RMAP_EXTENT_UNMAP_SHARED:
++		ri->ri_type = XFS_RMAP_UNMAP_SHARED;
++		break;
++	case XFS_RMAP_EXTENT_CONVERT:
++		ri->ri_type = XFS_RMAP_CONVERT;
++		break;
++	case XFS_RMAP_EXTENT_CONVERT_SHARED:
++		ri->ri_type = XFS_RMAP_CONVERT_SHARED;
++		break;
++	case XFS_RMAP_EXTENT_ALLOC:
++		ri->ri_type = XFS_RMAP_ALLOC;
++		break;
++	case XFS_RMAP_EXTENT_FREE:
++		ri->ri_type = XFS_RMAP_FREE;
++		break;
++	default:
++		ASSERT(0);
++		return;
++	}
++
++	ri->ri_owner = map->me_owner;
++	ri->ri_whichfork = (map->me_flags & XFS_RMAP_EXTENT_ATTR_FORK) ?
++			XFS_ATTR_FORK : XFS_DATA_FORK;
++	ri->ri_bmap.br_startblock = map->me_startblock;
++	ri->ri_bmap.br_startoff = map->me_startoff;
++	ri->ri_bmap.br_blockcount = map->me_len;
++	ri->ri_bmap.br_state = (map->me_flags & XFS_RMAP_EXTENT_UNWRITTEN) ?
++			XFS_EXT_UNWRITTEN : XFS_EXT_NORM;
++
++	xfs_defer_add_item(dfp, &ri->ri_list);
++}
++
+ /*
+  * Process an rmap update intent item that was recovered from the log.
+  * We need to update the rmapbt.
+@@ -514,6 +566,7 @@ xfs_rui_item_recover(
+ 	struct xfs_trans		*tp;
+ 	struct xfs_btree_cur		*rcur = NULL;
+ 	struct xfs_mount		*mp = lip->li_log->l_mp;
++	struct xfs_rmap_intent		*fake;
+ 	int				i;
+ 	int				error = 0;
+ 
+@@ -530,6 +583,8 @@ xfs_rui_item_recover(
+ 					sizeof(ruip->rui_format));
+ 			return -EFSCORRUPTED;
+ 		}
++
++		xfs_rui_recover_work(mp, dfp, &ruip->rui_format.rui_extents[i]);
+ 	}
+ 
+ 	resv = xlog_recover_resv(&M_RES(mp)->tr_itruncate);
+@@ -541,60 +596,15 @@ xfs_rui_item_recover(
+ 	rudp = xfs_trans_get_rud(tp, ruip);
+ 	xlog_recover_transfer_intent(tp, dfp);
+ 
+-	for (i = 0; i < ruip->rui_format.rui_nextents; i++) {
+-		struct xfs_rmap_intent	fake = { };
+-		struct xfs_map_extent	*map;
+-
+-		map = &ruip->rui_format.rui_extents[i];
+-		switch (map->me_flags & XFS_RMAP_EXTENT_TYPE_MASK) {
+-		case XFS_RMAP_EXTENT_MAP:
+-			fake.ri_type = XFS_RMAP_MAP;
+-			break;
+-		case XFS_RMAP_EXTENT_MAP_SHARED:
+-			fake.ri_type = XFS_RMAP_MAP_SHARED;
+-			break;
+-		case XFS_RMAP_EXTENT_UNMAP:
+-			fake.ri_type = XFS_RMAP_UNMAP;
+-			break;
+-		case XFS_RMAP_EXTENT_UNMAP_SHARED:
+-			fake.ri_type = XFS_RMAP_UNMAP_SHARED;
+-			break;
+-		case XFS_RMAP_EXTENT_CONVERT:
+-			fake.ri_type = XFS_RMAP_CONVERT;
+-			break;
+-		case XFS_RMAP_EXTENT_CONVERT_SHARED:
+-			fake.ri_type = XFS_RMAP_CONVERT_SHARED;
+-			break;
+-		case XFS_RMAP_EXTENT_ALLOC:
+-			fake.ri_type = XFS_RMAP_ALLOC;
+-			break;
+-		case XFS_RMAP_EXTENT_FREE:
+-			fake.ri_type = XFS_RMAP_FREE;
+-			break;
+-		default:
+-			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-					&ruip->rui_format,
+-					sizeof(ruip->rui_format));
+-			error = -EFSCORRUPTED;
+-			goto abort_error;
+-		}
+-
+-		fake.ri_owner = map->me_owner;
+-		fake.ri_whichfork = (map->me_flags & XFS_RMAP_EXTENT_ATTR_FORK) ?
+-				XFS_ATTR_FORK : XFS_DATA_FORK;
+-		fake.ri_bmap.br_startblock = map->me_startblock;
+-		fake.ri_bmap.br_startoff = map->me_startoff;
+-		fake.ri_bmap.br_blockcount = map->me_len;
+-		fake.ri_bmap.br_state = (map->me_flags & XFS_RMAP_EXTENT_UNWRITTEN) ?
+-				XFS_EXT_UNWRITTEN : XFS_EXT_NORM;
+-
+-		xfs_rmap_update_get_group(mp, &fake);
+-		error = xfs_trans_log_finish_rmap_update(tp, rudp, &fake,
++	list_for_each_entry(fake, &dfp->dfp_work, ri_list) {
++		xfs_rmap_update_get_group(mp, fake);
++		error = xfs_trans_log_finish_rmap_update(tp, rudp, fake,
+ 				&rcur);
+ 		if (error == -EFSCORRUPTED)
+ 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-					map, sizeof(*map));
+-		xfs_rmap_update_put_group(&fake);
++					&ruip->rui_format,
++					sizeof(ruip->rui_format));
++		xfs_rmap_update_put_group(fake);
+ 		if (error)
+ 			goto abort_error;
+ 
 -- 
 2.53.0
 
