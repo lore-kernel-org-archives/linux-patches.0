@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE5D34B1A6;
-	Tue, 21 Jul 2026 22:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEE633A9FC;
+	Tue, 21 Jul 2026 22:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673597; cv=none; b=Izwph1qQg4QGO0ucwfPMSmwBAc87PNdA9RoTOuaF2Daq0ILuKaGDX93QnFkULxN7aWkBiwlRd7IB4440kogPAMYLHIROw20orIkOinwQjFoCmdbDwQh9oUtjItjRpypFR1labeqguxEqy3qFAk8+ymZ2muAN+hcAWS4t5xGIPVQ=
+	t=1784673599; cv=none; b=aIVJ6hDtHFaBuiBQzAPPzAXoj3ghLQz3fBV/YkcFfyPO/3vKXCGQbakxAtt1ZZ5wR3x717160e3weounxc7dmOb27SdC65p2SDbtXnTDQS0FqqfQuQNWN9QRuXJNyoqGPJIotvsw4ehalPkc2NPbrJOBDNavxlmIbdIk3ns/6dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673597; c=relaxed/simple;
-	bh=JVwbXNgI3COjURjPAGa8WFGf1hAZdO1zqeeheZGyeUw=;
+	s=arc-20240116; t=1784673599; c=relaxed/simple;
+	bh=4SZ5TqoGni6cmgS632Q2q5m9N1be+YthKGIz2zTjMLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXS3VQn0unjY0fFZLnWY5CwXxfcYxVUo78U+KyPncIoskH7CV3td025yLoV8tMx4aGm73BuU91Jqe+ogv018jMKqQJZcL6w3sHBWorHwEkc06vNn/qfl1nrWxmbRq32QgLpqygSce+FYgFcL0RNP/+lQ9tZGe4Ub37tttZi8oUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEZUW0U/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sQ0LqKRhKvI5RMgeTlAvl8NPWkkoFfb2mLplCF759SISweT03mpT0z1fbWQB9OYb2YebLZ4KGBRycJey9D1wOoVeKji7JvTjyCieRPfCelsTFp5XEB51DumpCgfIakd9PEMYTsKUn4yehUtBCDAxXCBB0gX7JwT/WCSISr1i0cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reGmLYAx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEZUW0U/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728C11F000E9;
-	Tue, 21 Jul 2026 22:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reGmLYAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BA11F000E9;
+	Tue, 21 Jul 2026 22:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673595;
-	bh=tzCxTesQp+WECwXppTPpkUPuEKiB82alOmzNGHMm1I0=;
+	s=korg; t=1784673598;
+	bh=20qunTeIVclUyez8Q4CUtk48eSvictQKGf+4O3hjYy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yEZUW0U/bru0//K9Re5Kv1GpaHPsGgf1fzxPC9jCZAnZM5vYh94+0v6Uw0JyCqFDA
-	 0ym6e5hFOBNGKOJid/wlK9w2ZeSPySLeyCzeztvaUZL0XBhA5hTn6RNv7DIkttWPP4
-	 MUX1JpdM6+etITJTDjf2TjCBlISuLIi3L/TSGlos=
+	b=reGmLYAxABnWWtrveVn/JupDzUv0f+XsLP0tMN0M3NVrjXjWXk07TZXmCvk6N9jT8
+	 ZXkU1A9iXRXjRBCZI3Ylqag/RharulWhdlwdKvOrrhg8b31MYpIQVR/HscLThiyyLo
+	 y2nl62dNYu1S4SmTdUf+JSxmoAVyjAgm4G8HBTMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 178/699] pinctrl: sunxi: fix regulator leak in sunxi_pmx_request() error path
-Date: Tue, 21 Jul 2026 17:18:57 +0200
-Message-ID: <20260721152359.714806868@linuxfoundation.org>
+Subject: [PATCH 5.10 179/699] crypto: atmel-sha204a - fix blocking and non-blocking rng logic
+Date: Tue, 21 Jul 2026 17:18:58 +0200
+Message-ID: <20260721152359.736987088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,37 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Lothar Rubusch <l.rubusch@gmail.com>
 
-[ Upstream commit 334f7bcbdc79dc8e5b938ac3372453a5368221cf ]
+[ Upstream commit 319400fc5ee15db5793aa45f854968141326effc ]
 
-In the error path of sunxi_pmx_request(), the code calls
-regulator_put(s_reg->regulator) to release the regulator. However,
-s_reg->regulator is only assigned after a successful regulator_enable().
-This causes a memory leak: the regulator obtained via regulator_get()
-is never properly released when regulator_enable() fails.
+The blocking and non-blocking paths were failing to provide valid entropy
+due to improper buffer management. Reading the buffer starting from byte 1,
+only fetch the 32 bytes of random data from the return message.
 
-Fixes: dc1445584177 ("pinctrl: sunxi: Fix and simplify pin bank regulator handling")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Tested on an Atmel SHA204A device.
+
+Before (here for blocking), tests showed repeatedly reading reduced bytes.
+$ head -c 32 /dev/hwrng | hexdump -C
+00000000  02 28 85 b3 47 40 f2 ee  00 00 00 00 00 00 00 00  |.(..G@..........|
+00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000020
+
+After, the result will be similar to the following:
+$ head -c 32 /dev/hwrng | hexdump -C
+00000000  5a fc 3f 13 14 68 fe 06  68 0a bd 04 83 6e 09 69  |Z.?..h..h....n.i|
+00000010  75 ff cf 87 10 84 3b c9  c1 df ae eb 45 53 4c c3  |u.....;.....ESL.|
+00000020
+
+Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Lothar Rubusch <l.rubusch@gmail.com>
+Tested-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunxi/pinctrl-sunxi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/atmel-sha204a.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-index 0a50f37c63f403..2c8113182080d5 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-@@ -813,7 +813,7 @@ static int sunxi_pmx_request(struct pinctrl_dev *pctldev, unsigned offset)
- 	return 0;
+diff --git a/drivers/crypto/atmel-sha204a.c b/drivers/crypto/atmel-sha204a.c
+index 64d5ba13f4baf4..550f81ef48ddcf 100644
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -47,8 +47,8 @@ static int atmel_sha204a_rng_read_nonblocking(struct hwrng *rng, void *data,
  
- out:
--	regulator_put(s_reg->regulator);
-+	regulator_put(reg);
+ 	if (rng->priv) {
+ 		work_data = (struct atmel_i2c_work_data *)rng->priv;
+-		max = min(sizeof(work_data->cmd.data), max);
+-		memcpy(data, &work_data->cmd.data, max);
++		max = min(RANDOM_RSP_SIZE - CMD_OVERHEAD_SIZE, max);
++		memcpy(data, &work_data->cmd.data[RSP_DATA_IDX], max);
+ 		rng->priv = 0;
+ 	} else {
+ 		work_data = kmalloc(sizeof(*work_data), GFP_ATOMIC);
+@@ -86,8 +86,8 @@ static int atmel_sha204a_rng_read(struct hwrng *rng, void *data, size_t max,
+ 	if (ret)
+ 		return ret;
  
- 	return ret;
+-	max = min(sizeof(cmd.data), max);
+-	memcpy(data, cmd.data, max);
++	max = min(RANDOM_RSP_SIZE - CMD_OVERHEAD_SIZE, max);
++	memcpy(data, &cmd.data[RSP_DATA_IDX], max);
+ 
+ 	return max;
  }
 -- 
 2.53.0
