@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C1F471257;
-	Tue, 21 Jul 2026 18:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0CC47126C;
+	Tue, 21 Jul 2026 18:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657208; cv=none; b=f0JDSe7LRJNlpEWk64UZK7NJ+ZZsLn6vDJ56+hfjr+qbLHjfKjXuCTClRxIT69KB4wTbgKCpV1HPKcdMvFlfRH+lXHutz5akwFsv8ykrmt4vbx5fz4EiICplYOx9G2YHqflJbtBzuczJxSzacMvkY9aM0EeETd1/I6kGhtmaP48=
+	t=1784657211; cv=none; b=f40KjfHfpxhjgCg1FbD+VD3S0Hlt5GEApQL0qN+sGRPpZgPQM+QgpxcY4CFWrEMySwBFCBxbucX/klOPkxytgztQCpXz0TX9rDYzmIZimEP/1GrHyz1OybAbbwma/DemPaokczcEyCek0KcuxcPon0JEjcvbaFUlqUw3t5QX5Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657208; c=relaxed/simple;
-	bh=sTfC3qxCKSEIzBqwvGD2/WFUWJs8XvEzGaTtY/8SyCI=;
+	s=arc-20240116; t=1784657211; c=relaxed/simple;
+	bh=w96iq2j2wFC+fEwtzMJgjtnAFOBkOl+hHyAoroVmlBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWQi4VA5+dGn1kGEgh2z+45KOBGZP6pE0ahC8NB/VbNEKpPTHELPiHLxXXMKhqxRbrZEzbTO4VMS20fXlVcwKl0FHzEoC4iO+xWnlGgDF/aXixqe3N1Jw5mQMpdv5eMi9JQG/p0rIdh4EGrh7ppoBS8qlC8HkU3aHn2WyIyZ+/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsdveiQ2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=imGxnTKsG6AEFLdGWyqrbm4fHKiWFVJomC9yrb0M+mR9cnYvyol2xfirtX5ZJRpZFPPK4dPe+J9fjRdtxLKvsrncWiDnG/T1wg8hZB3WCix+zuA0BdoMq+8qQWEMIhecr3LvRXRmCeMMTFg1qcSyqir9Jw176zWvvj3n2xPBXsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej8iVEWq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsdveiQ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD9F1F000E9;
-	Tue, 21 Jul 2026 18:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej8iVEWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BEF1F000E9;
+	Tue, 21 Jul 2026 18:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657207;
-	bh=QvHXXfy+jN9dxbxfB392GWc5giJIxndjUq9aOCmEw5w=;
+	s=korg; t=1784657210;
+	bh=Ro6himWcqKrgb6Dq0mwseceztC45BmtxzV9wUW+w0RQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XsdveiQ24Ac9PKTeOdkQxsZVodstmadFOrlFgGBp1+thm4++5zZHh0GVCJs7gzZBX
-	 N4hel286T9/pdc3dmXUF5aCasdpmvwhKBKFfpOGc34+yZONsHbI3LLfgE3bAqf+5M3
-	 QeRmmFePcxMO8QoGX0Ij5olWv145VkZMwoo0zFM4=
+	b=ej8iVEWq4nHLsxhtuMWKtG1qwvU3+h5nUBBNtsCpoiINXEPEBiCdAHr4rafxatzQ/
+	 h+76ZxCiG6Re+RAbG2gxqgLDEUiVCTpWQ6cxtovZ0SfEuvR36+Un5JBRjZidCBPVdr
+	 RsWzhMs7O0Qh+Hzs6rMCP3KIhbGcy3AyMm0erBVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuvam Pandey <shuvampandey1@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0678/1611] PCI: meson: Add missing remove callback
-Date: Tue, 21 Jul 2026 17:13:14 +0200
-Message-ID: <20260721152530.632430594@linuxfoundation.org>
+Subject: [PATCH 6.18 0652/1611] perf c2c: Fix use-after-free in he__get_c2c_hists() error path
+Date: Tue, 21 Jul 2026 17:12:48 +0200
+Message-ID: <20260721152530.053969727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,55 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 4b0dc84b293984f75598881809fb2d3daf54a2a8 ]
+[ Upstream commit 5e5e6196d737c5be03d20647428316b36621608d ]
 
-meson_pcie_probe() powers on the PHY and registers the DesignWare host
-bridge with dw_pcie_host_init(), but the driver has no remove callback.
-On driver unbind or module unload, the driver core therefore proceeds to
-devres cleanup without first unregistering the host bridge or powering off
-the PHY.
+he__get_c2c_hists() assigns c2c_he->hists before calling
+c2c_hists__init().  If init fails, the error path calls free(hists)
+but leaves c2c_he->hists pointing to freed memory.  On teardown,
+c2c_he_free() finds the non-NULL pointer and calls
+hists__delete_entries() on it, causing a use-after-free.
 
-Add a remove callback that deinitializes the DesignWare host bridge and
-powers off the PHY while device-managed resources are still valid.
+Set c2c_he->hists to NULL before freeing so teardown skips the
+already-freed allocation.
 
-Fixes: 9c0ef6d34fdb ("PCI: amlogic: Add the Amlogic Meson PCIe controller driver")
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/1a0c86ab264cdc1c79c917e984b90991af51d827.1779123847.git.shuvampandey1@gmail.com
+Fixes: b2252ae67b687d2b ("perf c2c report: Decode c2c_stats for hist entries")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-meson.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tools/perf/builtin-c2c.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controller/dwc/pci-meson.c
-index 8d495bcc3a41ae..225d887cd0a3e1 100644
---- a/drivers/pci/controller/dwc/pci-meson.c
-+++ b/drivers/pci/controller/dwc/pci-meson.c
-@@ -453,6 +453,14 @@ static int meson_pcie_probe(struct platform_device *pdev)
- 	return ret;
- }
+diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
+index 7efba102996439..0849092ef5fc1c 100644
+--- a/tools/perf/builtin-c2c.c
++++ b/tools/perf/builtin-c2c.c
+@@ -218,6 +218,7 @@ he__get_c2c_hists(struct hist_entry *he,
  
-+static void meson_pcie_remove(struct platform_device *pdev)
-+{
-+	struct meson_pcie *mp = platform_get_drvdata(pdev);
-+
-+	dw_pcie_host_deinit(&mp->pci.pp);
-+	meson_pcie_power_off(mp);
-+}
-+
- static const struct of_device_id meson_pcie_of_match[] = {
- 	{
- 		.compatible = "amlogic,axg-pcie",
-@@ -466,6 +474,7 @@ MODULE_DEVICE_TABLE(of, meson_pcie_of_match);
- 
- static struct platform_driver meson_pcie_driver = {
- 	.probe = meson_pcie_probe,
-+	.remove = meson_pcie_remove,
- 	.driver = {
- 		.name = "meson-pcie",
- 		.of_match_table = meson_pcie_of_match,
+ 	ret = c2c_hists__init(hists, sort, nr_header_lines, env);
+ 	if (ret) {
++		c2c_he->hists = NULL;
+ 		free(hists);
+ 		return NULL;
+ 	}
 -- 
 2.53.0
 
