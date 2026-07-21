@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB20442FC3;
-	Tue, 21 Jul 2026 22:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129FE43F8AD;
+	Tue, 21 Jul 2026 22:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672722; cv=none; b=f36k7x4+qR0cq3KcY6kbw08wNGwqAxznxhF7AZjWbh6y7o+2MUC1rrVUnIrffJScFB1dJa9c5Gwm1+IiCQ9e+fRKzrdJKnhVWJ2EvLppRSv0Ccjmm5nDRNeKuJfuvstZT/9dz2d2TKnaqHMgT6LGSPoI26hrC3OetZhSTDrk2XI=
+	t=1784672725; cv=none; b=uss87KYg37SPoilUIfBqkBtmhmyZfxvmoq1NnZKLN5MuUtk4GmyB2BeK1piv8VqPzmzWJ3dgnjad0Gg0nashuVmjNhl2sTjy1VrDgCBaVF90DlkJau7lFfNMHZTp8ysAlBgBapAjBXf0xdWMezyYtwJoWFf8oMUtbF3p9BKwGRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672722; c=relaxed/simple;
-	bh=dtn5xz5Vkrlh1c5tcGZL/P/If3U2XvbEi5SN3Z0B/S8=;
+	s=arc-20240116; t=1784672725; c=relaxed/simple;
+	bh=/EbFkmq1ZMZ0pnYdmjmxVH68apQQC4Q87EaivgL+/8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c//Ue3wrM+o+SEULxClZy6x5UIDwJ4Hpb6DplZNqxGAlNitKrHcjZingoqe2MagLIt4PliJobOhWkd5uDGDRphRytb5ZccEUZUYndqJIbTqdbE4Ok6VIYFtVAoIHdWP4ndXf1JUvUoZz76ybzZOEi3pGXvR07KzF9tgkUdiu2kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOc6ISGL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZZehOCtwJuoYAbHKz7h0vpeHKK5QqS+WfU+eX7GQjqL6uFIxCKHeSOVzEvO+lce2P9I719vMYZhyHW7TN1wsww0L+DbVBnhe0Ff2dyzO1kfxwTBsduVASz8nFWjI4zwd3bXgJHyCRn3E1eDOD7WMeQso033P2tc8a1hBT+UhFL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnG+xJbH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOc6ISGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FF41F000E9;
-	Tue, 21 Jul 2026 22:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnG+xJbH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789751F000E9;
+	Tue, 21 Jul 2026 22:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672721;
-	bh=i7PQ/mZsfw4AEQMleum+TIUjVJyjiWL6PKgDbRN8QyM=;
+	s=korg; t=1784672724;
+	bh=1o1CgsMDZXX2j8gKAOXozRO4/yCV2mA8KNycX1JbfSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MOc6ISGLKUupN1xpv5oS9Zyn/gdz81l7LtJ48egp7QQRQVXuykp+FwBb5IZrsVEzN
-	 GVakkOBy4YhBCt0xN23R2lw1x/YmY7c2sFfCFs2Aucf2bcI9JI9nR0bYs/nky3TkyM
-	 ywoxAIncmx1qU99RjLDzZmCZk3zhyAROQY6DWsmQ=
+	b=BnG+xJbH4l/FfMVuIqJDIdXVPHKFiU11lxfsCYCeFA7tnwUkLqShvNxe/GXdiluau
+	 O7OWztRT2bQUKCgt0suM1kNwFUCraJPPRYFsVOJ3QFYf1JXdFUKwCpFwikx3cSOVLo
+	 Y0CkrtWmLzzZR+340M/2WWaqDopXhEdYxHBkonGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 733/843] iio: hid-sensor-rotation: Fix stale or zero output when reading raw values
-Date: Tue, 21 Jul 2026 17:26:08 +0200
-Message-ID: <20260721152422.533972384@linuxfoundation.org>
+Subject: [PATCH 5.15 734/843] iio: imu: inv_icm42600: make timestamp module chip independent
+Date: Tue, 21 Jul 2026 17:26:09 +0200
+Message-ID: <20260721152422.558133896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,86 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit 3ce8d099e0afc5a7da75a2007a67f67c4f5a4af1 ]
+[ Upstream commit 6e9f2d8375cb24ba75e02e0272e9164d06a1522e ]
 
-When reading the raw quaternion attribute (in_rot_quaternion_raw), the
-driver currently returns either all zeros (if the sensor was never enabled)
-or stale data (if the sensor was previously enabled) because it reads from
-the internal buffer without explicitly requesting a new sample from the
-sensor.
+Move icm42600 dependent function inside the core module.
+Do some headers cleanup at the same time.
 
-To fix this, power up the sensor, call sensor_hub_input_attr_read_values()
-to issue a synchronous GET_REPORT and receive the full quaternion data
-directly into a local buffer, then decode the four components.
-
-Fixes: fc18dddc0625 ("iio: hid-sensors: Added device rotation support")
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20230606162147.79667-2-inv.git-commit@tdk.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: affe3f077d7a ("iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/orientation/hid-sensor-rotation.c |   40 ++++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 2 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_core.c      |   11 +++++++++++
+ drivers/iio/imu/inv_icm42600/inv_icm42600_timestamp.c |   14 +-------------
+ drivers/iio/imu/inv_icm42600/inv_icm42600_timestamp.h |    6 ------
+ 3 files changed, 12 insertions(+), 19 deletions(-)
 
---- a/drivers/iio/orientation/hid-sensor-rotation.c
-+++ b/drivers/iio/orientation/hid-sensor-rotation.c
-@@ -69,6 +69,13 @@ static int dev_rot_read_raw(struct iio_d
- 				long mask)
- {
- 	struct dev_rot_state *rot_state = iio_priv(indio_dev);
-+	struct hid_sensor_hub_device *hsdev = rot_state->common_attributes.hsdev;
-+	struct hid_sensor_hub_attribute_info *info = &rot_state->quaternion;
-+	u32 usage_id = HID_USAGE_SENSOR_ORIENT_QUATERNION;
-+	union {
-+		s16 val16[4];
-+		s32 val32[4];
-+	} raw_buf;
- 	int ret_type;
- 	int i;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
+@@ -522,6 +522,17 @@ static int inv_icm42600_irq_init(struct
+ 					 "inv_icm42600", st);
+ }
  
-@@ -78,8 +85,37 @@ static int dev_rot_read_raw(struct iio_d
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
- 		if (size >= 4) {
--			for (i = 0; i < 4; ++i)
--				vals[i] = rot_state->scan.sampled_vals[i];
-+			if (info->size <= 0 || info->size > sizeof(raw_buf))
-+				return -EINVAL;
++static int inv_icm42600_timestamp_setup(struct inv_icm42600_state *st)
++{
++	unsigned int val;
 +
-+			hid_sensor_power_state(&rot_state->common_attributes, true);
++	/* enable timestamp register */
++	val = INV_ICM42600_TMST_CONFIG_TMST_TO_REGS_EN |
++	      INV_ICM42600_TMST_CONFIG_TMST_EN;
++	return regmap_update_bits(st->map, INV_ICM42600_REG_TMST_CONFIG,
++				  INV_ICM42600_TMST_CONFIG_MASK, val);
++}
 +
-+			ret_type = sensor_hub_input_attr_read_values(hsdev,
-+								     hsdev->usage,
-+								     usage_id,
-+								     info->report_id,
-+								     SENSOR_HUB_SYNC,
-+								     info->size,
-+								     (u8 *)&raw_buf);
-+
-+			hid_sensor_power_state(&rot_state->common_attributes, false);
-+
-+			if (ret_type < 0)
-+				return ret_type;
-+
-+			switch (info->size) {
-+			case sizeof(raw_buf.val16):
-+				for (i = 0; i < ARRAY_SIZE(raw_buf.val16); i++)
-+					vals[i] = raw_buf.val16[i];
-+				break;
-+			case sizeof(raw_buf.val32):
-+				for (i = 0; i < ARRAY_SIZE(raw_buf.val32); i++)
-+					vals[i] = raw_buf.val32[i];
-+				break;
-+			default:
-+				return -EINVAL;
-+			}
-+
- 			ret_type = IIO_VAL_INT_MULTIPLE;
- 			*val_len =  4;
- 		} else
+ static int inv_icm42600_enable_regulator_vddio(struct inv_icm42600_state *st)
+ {
+ 	int ret;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_timestamp.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_timestamp.c
+@@ -3,11 +3,10 @@
+  * Copyright (C) 2020 Invensense, Inc.
+  */
+ 
++#include <linux/errno.h>
+ #include <linux/kernel.h>
+-#include <linux/regmap.h>
+ #include <linux/math64.h>
+ 
+-#include "inv_icm42600.h"
+ #include "inv_icm42600_timestamp.h"
+ 
+ /* internal chip period is 32kHz, 31250ns */
+@@ -56,17 +55,6 @@ void inv_icm42600_timestamp_init(struct
+ 	inv_update_acc(&ts->chip_period, INV_ICM42600_TIMESTAMP_PERIOD);
+ }
+ 
+-int inv_icm42600_timestamp_setup(struct inv_icm42600_state *st)
+-{
+-	unsigned int val;
+-
+-	/* enable timestamp register */
+-	val = INV_ICM42600_TMST_CONFIG_TMST_TO_REGS_EN |
+-	      INV_ICM42600_TMST_CONFIG_TMST_EN;
+-	return regmap_update_bits(st->map, INV_ICM42600_REG_TMST_CONFIG,
+-				  INV_ICM42600_TMST_CONFIG_MASK, val);
+-}
+-
+ int inv_icm42600_timestamp_update_odr(struct inv_icm42600_timestamp *ts,
+ 				      uint32_t period, bool fifo)
+ {
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_timestamp.h
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_timestamp.h
+@@ -6,10 +6,6 @@
+ #ifndef INV_ICM42600_TIMESTAMP_H_
+ #define INV_ICM42600_TIMESTAMP_H_
+ 
+-#include <linux/kernel.h>
+-
+-struct inv_icm42600_state;
+-
+ /**
+  * struct inv_icm42600_timestamp_interval - timestamps interval
+  * @lo:	interval lower bound
+@@ -53,8 +49,6 @@ struct inv_icm42600_timestamp {
+ void inv_icm42600_timestamp_init(struct inv_icm42600_timestamp *ts,
+ 				 uint32_t period);
+ 
+-int inv_icm42600_timestamp_setup(struct inv_icm42600_state *st);
+-
+ int inv_icm42600_timestamp_update_odr(struct inv_icm42600_timestamp *ts,
+ 				      uint32_t period, bool fifo);
+ 
 
 
