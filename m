@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D8746D0A0;
-	Tue, 21 Jul 2026 17:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06365326D44;
+	Tue, 21 Jul 2026 17:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656216; cv=none; b=PPoAnu48cOXUJT4eZfkOArj5as3ssesOmv5qNJ7oOmjJZSqkg3EwdfGyICyROloshsZ3+L3bP3HdMeMQfmSZHhLWo3r1NUGHwbLnPZKcgYyD7I6SXi29tWEpv+wjgxHGOj2aLsBqp4shBQ4sMmFpFvMYHSNspaRRSZ+5KQkYBtw=
+	t=1784656219; cv=none; b=lGP0DxJq3QYWJsb6Jcjs0ZlGBaEgaanrTsynVLwGRZCrxsUsUljYW90+Zh6AGAAggBz6G4BQerY5LH1rcYOm7dTd6yX6PwhmB1Fl72sfxxJPVCthGF6zv2hwfkBv84H35ayCpP8RcGOI3FckDQIkB3cqSYi8BfRnhOOKCdhAFGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656216; c=relaxed/simple;
-	bh=EbwCLEy3moSMHmauuVTVEDD4tGztRIOflfUqyYEO2ZQ=;
+	s=arc-20240116; t=1784656219; c=relaxed/simple;
+	bh=D5Z1EbdA0WYw7VMtvfyR0TULTBIbe+ijuQhRV8qY9+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ie8JzjEMpfsBIlKQJfoKRgTqK5mkkEAF+ritCWFEbUbqhZb6LkcR3cUbv8KYwyTyhjoe98ze7ULg9iS8gchtjGtKZqnMO+7QMZcU5lfHIrMyhuWBvBeHaDoJwa2tdhZHJ0qUI0xEkcgyro2YSjzP9ABZXXJftrJqTLtFqG2MOy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzxcNUnS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U5vPLUprVNUgA3BTL0Hd7YJJ0ZeDmH1F5p1sVd3Q+07vrbJKBJVUE55AZ2E2bMcsbtS+1WkoRaeG+K5JR5gaEjBEIhyvSbSng9ysF8u8a4gXE9R3nAJXkb2f66hdBCmz93MG2UgUqRT8bQriyA4OMDs9c6235dXHIW1RG1tjHj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9JhDs8g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzxcNUnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77B71F000E9;
-	Tue, 21 Jul 2026 17:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9JhDs8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3E71F000E9;
+	Tue, 21 Jul 2026 17:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656215;
-	bh=e8R1SWJcDTLuRi3odkzJ2v2UwK4pNNyClMSo0YspQMw=;
+	s=korg; t=1784656217;
+	bh=/J6J8gLsGqJieHrSSnFShcEtlE+pr1XyUfo2AjfMfOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XzxcNUnS4qeJWYcxR1prVadByb0eZgeq7wtNLPXIq4mPwGnPSGExXHzAOkMNMk97z
-	 iYpffd1rOBMAMJI4J2PT8ohPUgMex5sxQbf2+OkBXNHAF/P4wDN06X71pSISSMoRoF
-	 FTn44bJyWmD98DqG1Hzgdabhd4ffKR/Y/4TtFCWg=
+	b=L9JhDs8geIY3Sbf6V1xhWnmuObXS0/TWXMBzwJBhH2VI5++erddWdlt8WwWlWUqYW
+	 Ge9DdWW7/jshwpDuKfcd4/0L38EbWO3of5CR9wrpaECWgMVNTU0b0oyukXTEFfWbdw
+	 WKxOvm2y7GYw4itc9u8TqaAhVRxhWfxIGJqYZf6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KP Singh <kpsingh@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0303/1611] libbpf: Reject non-exclusive metadata maps in the signed loader
-Date: Tue, 21 Jul 2026 17:06:59 +0200
-Message-ID: <20260721152521.889842625@linuxfoundation.org>
+Subject: [PATCH 6.18 0304/1611] libbpf: Skip initial_value override on signed loaders
+Date: Tue, 21 Jul 2026 17:07:00 +0200
+Message-ID: <20260721152521.912012109@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,93 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: KP Singh <kpsingh@kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 0fb6c9ed6493b4af01be8bb0a384574eba7df636 ]
+[ Upstream commit 61e084152328867fe2279cc790573aae39959cd5 ]
 
-The loader verifies map->sha against the metadata hash in its
-instructions. map->sha is calculated when BPF_OBJ_GET_INFO_BY_FD is
-called on the frozen map.
+bpf_gen__map_update_elem() emits code that, when the host-supplied
+loader ctx provides a non-NULL map_desc[idx].initial_value, overwrites
+the blob value with bytes read from the host (bpf_copy_from_user /
+bpf_probe_read_kernel) before the BPF_MAP_UPDATE_ELEM that populates
+the program's .data/.rodata/.bss maps.
 
-While the map is frozen, the /signed loader/ must also ensure the map
-is exclusive, as, without exclusivity (which a hostile host could just
-omit when loading the loader), another BPF program with map access can
-mutate the contents afterwards, so the check passes on stale data.
+This override runs after emit_signature_match() has validated map->sha[],
+and initial_value is part of neither the signed loader instructions nor
+the hashed data blob. For a signed loader this lets an untrusted host
+substitute global-variable contents into a program whose code carries
+a valid signature, thus weakening what the signature attests to.
 
-With the extra check as part of the signed loader, it now refuses to
-move on with map->sha validation if the host set it up wrongly.
+The blob already contains the signer-provided value (added via add_data()
+and covered by the embedded, signed hash), so simply skip emitting the
+override for signed loaders (gen_hash). Runtime initialization stays
+available for the unsigned light-skeleton path as before. The jump
+offsets within the override block are internal to it, so guarding the
+whole block leaves them unchanged.
 
-Fixes: fb2b0e290147 ("libbpf: Update light skeleton for signing")
-Signed-off-by: KP Singh <kpsingh@kernel.org>
-Co-developed-by: Daniel Borkmann <daniel@iogearbox.net>
+Fixes: ea923080c145 ("libbpf: Embed and verify the metadata hash in the loader")
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260601150248.394863-4-daniel@iogearbox.net
+Link: https://lore.kernel.org/r/20260601150248.394863-5-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h        |  1 +
- kernel/bpf/syscall.c       |  7 +++++++
- tools/lib/bpf/gen_loader.c | 17 +++++++++++++++++
- 3 files changed, 25 insertions(+)
+ tools/lib/bpf/gen_loader.c | 39 +++++++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index e2dd3a6d495afd..f305ea93b9edd7 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -294,6 +294,7 @@ struct bpf_map_owner {
- 
- struct bpf_map {
- 	u8 sha[SHA256_DIGEST_SIZE];
-+	u32 excl;
- 	const struct bpf_map_ops *ops;
- 	struct bpf_map *inner_map_meta;
- #ifdef CONFIG_SECURITY
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index c27a0d66b420e2..209d0575d0ab44 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1579,6 +1579,13 @@ static int map_create(union bpf_attr *attr, bpfptr_t uattr)
- 			err = -EFAULT;
- 			goto free_map;
- 		}
-+
-+		/* See libbpf: emit_signature_match() */
-+		BUILD_BUG_ON(offsetof(struct bpf_map, excl) != SHA256_DIGEST_SIZE);
-+		BUILD_BUG_ON(!__same_type(map->excl, u32));
-+		BUILD_BUG_ON(offsetof(struct bpf_map, sha)  != 0);
-+		BUILD_BUG_ON(!__same_type(map->sha, u8[SHA256_DIGEST_SIZE]));
-+		map->excl = 1;
- 	} else if (attr->excl_prog_hash_size) {
- 		err = -EINVAL;
- 		goto free_map;
 diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index 637b26d1100bbd..5c54913185a33c 100644
+index 5c54913185a33c..f0898244f20ac9 100644
 --- a/tools/lib/bpf/gen_loader.c
 +++ b/tools/lib/bpf/gen_loader.c
-@@ -585,6 +585,23 @@ static void emit_signature_match(struct bpf_gen *gen)
- 	__s64 off;
- 	int i;
+@@ -1187,27 +1187,36 @@ void bpf_gen__map_update_elem(struct bpf_gen *gen, int map_idx, void *pvalue,
+ 	value = add_data(gen, pvalue, value_size);
+ 	key = add_data(gen, &zero, sizeof(zero));
  
+-	/* if (map_desc[map_idx].initial_value) {
 +	/*
-+	 * Reject if the metadata map is not exclusive. Without exclusivity
-+	 * the cached map->sha[] verified above can be stale: another BPF
-+	 * program with map access could have mutated the contents between
-+	 * BPF_OBJ_GET_INFO_BY_FD and loader execution.
-+	 */
-+	emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX,
-+					 0, 0, 0, 0));
-+	emit(gen, BPF_LDX_MEM(BPF_W, BPF_REG_2, BPF_REG_1, SHA256_DIGEST_LENGTH));
-+	off = -(gen->insn_cur - gen->insn_start - gen->cleanup_label) / 8 - 2;
-+	if (is_simm16(off)) {
-+		emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
-+		emit(gen, BPF_JMP_IMM(BPF_JNE, BPF_REG_2, 1, off));
-+	} else {
-+		gen->error = -ERANGE;
++	 * if (map_desc[map_idx].initial_value) {
+ 	 *    if (ctx->flags & BPF_SKEL_KERNEL)
+ 	 *        bpf_probe_read_kernel(value, value_size, initial_value);
+ 	 *    else
+ 	 *        bpf_copy_from_user(value, value_size, initial_value);
+ 	 * }
++	 *
++	 * The runtime initial_value comes from the host-supplied loader
++	 * ctx and would overwrite the blob value after emit_signature_match()
++	 * has already validated map->sha[]. For a signed loader (gen_hash)
++	 * the attested blob value must be authoritative, so skip the override
++	 * and leave the hashed value in place.
+ 	 */
+-	emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_3, BPF_REG_6,
+-			      sizeof(struct bpf_loader_ctx) +
+-			      sizeof(struct bpf_map_desc) * map_idx +
+-			      offsetof(struct bpf_map_desc, initial_value)));
+-	emit(gen, BPF_JMP_IMM(BPF_JEQ, BPF_REG_3, 0, 8));
+-	emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX_VALUE,
+-					 0, 0, 0, value));
+-	emit(gen, BPF_MOV64_IMM(BPF_REG_2, value_size));
+-	emit(gen, BPF_LDX_MEM(BPF_W, BPF_REG_0, BPF_REG_6,
+-			      offsetof(struct bpf_loader_ctx, flags)));
+-	emit(gen, BPF_JMP_IMM(BPF_JSET, BPF_REG_0, BPF_SKEL_KERNEL, 2));
+-	emit(gen, BPF_EMIT_CALL(BPF_FUNC_copy_from_user));
+-	emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, 1));
+-	emit(gen, BPF_EMIT_CALL(BPF_FUNC_probe_read_kernel));
++	if (!OPTS_GET(gen->opts, gen_hash, false)) {
++		emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_3, BPF_REG_6,
++				      sizeof(struct bpf_loader_ctx) +
++				      sizeof(struct bpf_map_desc) * map_idx +
++				      offsetof(struct bpf_map_desc, initial_value)));
++		emit(gen, BPF_JMP_IMM(BPF_JEQ, BPF_REG_3, 0, 8));
++		emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX_VALUE,
++						 0, 0, 0, value));
++		emit(gen, BPF_MOV64_IMM(BPF_REG_2, value_size));
++		emit(gen, BPF_LDX_MEM(BPF_W, BPF_REG_0, BPF_REG_6,
++				      offsetof(struct bpf_loader_ctx, flags)));
++		emit(gen, BPF_JMP_IMM(BPF_JSET, BPF_REG_0, BPF_SKEL_KERNEL, 2));
++		emit(gen, BPF_EMIT_CALL(BPF_FUNC_copy_from_user));
++		emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, 1));
++		emit(gen, BPF_EMIT_CALL(BPF_FUNC_probe_read_kernel));
 +	}
-+
- 	for (i = 0; i < SHA256_DWORD_SIZE; i++) {
- 		emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX,
- 						 0, 0, 0, 0));
+ 
+ 	map_update_attr = add_data(gen, &attr, attr_size);
+ 	pr_debug("gen: map_update_elem: idx %d, value: off %d size %d, attr: off %d size %d\n",
 -- 
 2.53.0
 
