@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFB9442100;
-	Tue, 21 Jul 2026 22:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D54442FC3;
+	Tue, 21 Jul 2026 22:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673094; cv=none; b=EDzlAeDPhkOPZ5BmzEWQZ+220yhZ24J8rHceaQeaWtTsrw89lkOCrP82+0ClOyjh2DKb2R5lb3O237MXvDtizkN2BqtNtWYp/77vrI2yIw9meXWmQMQRYoEd6aRzhL9nlQaULGGMIpCfuUji//pluDPcjMCuSoz9iyzu0Mxd0q0=
+	t=1784673096; cv=none; b=GJ9HtJtE4o/YrPWREHtIl1utmGtNC2/zFBXNwiol4nURG6x+tn0VsuS+diAKawg6bWMH2i6uPVTbT96N7HNoJsLlQjCa7FKvYhx5eOxz+j5s7K0fwgHCcCZpAvp4d2NhWIM1G5L0LupReckBP/Kj6SHCafnXI6DwuCMglmAly7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673094; c=relaxed/simple;
-	bh=2Hh5pjxWHQVw4rMyxoiqs1ta8wbcnMOhAenc9iYDa8g=;
+	s=arc-20240116; t=1784673096; c=relaxed/simple;
+	bh=al8UrAb8CQWI5w+ZeY2ejVLELk1In2iK2qJcCXWYSMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sh5kUrnOYuHC2OGLKCpPUgkfubzsrP920PvK96+eAqwFQm6pVu4mmW0KP48eR50bE2oVqO0Pukmz86QKBI79L8Vw3XIjzhvp3EtuCFUdEudSD3cpKu7t9Kp9Ho6FljNnri85wK53WKZTCY8ReWcmwz1MQBY7ZASK9RiiC7resSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABC6yqNC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=unM/zlgvHmRuEnE08gT1DrRY2kGSR/vWa1k/1VRQuVlNa7WU9+4NumXGAk+aEeSBq8RuDIKb6GiLluPYwjfuxd+rHQC7qRQcfdpDyBh9j5OivuGRUBMIvh0DLimT/SZd+ZtPRALHW0g83BpTB+k0sRW5rYzLYipcYj8G8qsbezM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhAfhGjg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABC6yqNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E47C1F000E9;
-	Tue, 21 Jul 2026 22:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhAfhGjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78D61F000E9;
+	Tue, 21 Jul 2026 22:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673092;
-	bh=M0EY5tucay+TWLqQ3ji8xtsK3GMun2Yeirk9bvIcytA=;
+	s=korg; t=1784673095;
+	bh=FpLKmn1taBWd6i4YLDa00fkUHmMhaiMQUYXnPIH4Cks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ABC6yqNCLIPvikEadhwwwG/7SS0dQS/HXPngF9a2/9TZBjR2A96neQhfkhVU2omjM
-	 0ZJEwR3CY75XQcu1QI3AnZQZNtbCoXV/2AzHpDHzwnLPj3sxZTTekMWp7p+3fLHT9Q
-	 6KVTuCHEV4/e69/cHipfu9nYbofiaRI8nHDyy2DQ=
+	b=dhAfhGjgd99Kto3AaAFikqWlDZ2OkSFRuxVRO0ezR18LlQfhOy7Sp4tQ7lcPG92n+
+	 HHrxeyjymSPw6gczpmVoB7qQcvy5zHPXoj0kRf93X+DiU5lMDp11z9+HHvNv7ryCVa
+	 NNy0y8zDtFWB2ut6wVkW9DxpceBAFglzOrMXt9Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kosiorek <mkosiorek121@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Mark Bundschuh <mkbund@amazon.com>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/699] xfrm: defensively unhash xfrm_state lists in __xfrm_state_delete
-Date: Tue, 21 Jul 2026 17:16:31 +0200
-Message-ID: <20260721152356.431866572@linuxfoundation.org>
+Subject: [PATCH 5.10 007/699] nfsd: change nfs4_client_to_reclaim() to allocate data
+Date: Tue, 21 Jul 2026 17:16:06 +0200
+Message-ID: <20260721152355.844150893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,121 +52,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Kosiorek <mkosiorek121@gmail.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 14acf9652e5690de3c7486c6db5fb8dafd0a32a3 ]
+[ Upstream commit 4552f4e3f2c96597914f07b060d5c5db84420ddd ]
 
-KASAN reproduces a slab-use-after-free in __xfrm_state_delete()'s
-hlist_del_rcu calls under syzkaller load on linux-6.12.y stable
-(reproduced on 6.12.47, also reachable via the same code path on
-torvalds/master and on the ipsec tree). Nine unique signatures cluster
-in the xfrm_state lifecycle, the load-bearing one being:
+The calling convention for nfs4_client_to_reclaim() is clumsy in that
+the caller needs to free memory if the function fails.  It is much
+cleaner if the function frees its own memory.
 
-  BUG: KASAN: slab-use-after-free in __hlist_del include/linux/list.h:990 [inline]
-  BUG: KASAN: slab-use-after-free in hlist_del_rcu include/linux/rculist.h:516 [inline]
-  BUG: KASAN: slab-use-after-free in __xfrm_state_delete net/xfrm/xfrm_state.c
-  Write of size 8 at addr ffff8881198bcb70 by task kworker/u8:9/435
+This patch changes nfs4_client_to_reclaim() to re-allocate the .data
+fields to be stored in the newly allocated struct nfs4_client_reclaim,
+and to free everything on failure.
 
-  Workqueue: netns cleanup_net
-  Call Trace:
-   __hlist_del / hlist_del_rcu
-   __xfrm_state_delete
-   xfrm_state_delete
-   xfrm_state_flush
-   xfrm_state_fini
-   ops_exit_list
-   cleanup_net
+__cld_pipe_inprogress_downcall() needs to allocate the data anyway to
+copy it from user-space, so now that data is allocated twice.  I think
+that is a small price to pay for a cleaner interface.
 
-The other observed signatures hit the same slab object from
-__xfrm_state_lookup, xfrm_alloc_spi, __xfrm_state_insert and an OOB
-write variant of __xfrm_state_delete, all on the byseq/byspi
-hash chains.
-
-__xfrm_state_delete() guards its byseq and byspi unhashes with
-value-based predicates:
-
-	if (x->km.seq)
-		hlist_del_rcu(&x->byseq);
-	if (x->id.spi)
-		hlist_del_rcu(&x->byspi);
-
-while everywhere else in the file (e.g. state_cache, state_cache_input)
-the safer hlist_unhashed() check is used. xfrm_alloc_spi() sets
-x->id.spi = newspi inside xfrm_state_lock and then immediately inserts
-into byspi, but a path that observes x->id.spi != 0 outside of
-xfrm_state_lock can still skip-or-hit the byspi unhash inconsistently
-with whether x is actually on the list. The same holds for x->km.seq
-versus byseq, and the bydst/bysrc unhashes have no predicate at all,
-so a second __xfrm_state_delete() on the same object writes through
-LIST_POISON pprev.
-
-The defensive change here:
-
-  - Use hlist_del_init_rcu() instead of hlist_del_rcu() on bydst,
-    bysrc, byseq and byspi so a second deletion is a no-op rather
-    than a write through LIST_POISON pprev. The byseq/byspi nodes
-    are already initialised in xfrm_state_alloc().
-  - Test hlist_unhashed() rather than the value predicate for
-    byseq/byspi, so the unhash decision tracks list state rather than
-    mutable scalar fields.
-
-Empirical verification: applied this patch on top of v6.12.47, rebuilt,
-and re-ran the same syzkaller harness for 1h16m on a previously-crashy
-configuration that produced ~100 hits each of slab-use-after-free
-Read in xfrm_alloc_spi / Read in __xfrm_state_lookup / Write in
-__xfrm_state_delete. After the patch, 7.1M execs across 32 VMs at
-~1550 exec/sec produced zero xfrm_state UAF/OOB hits. /proc/slabinfo
-confirms the xfrm_state slab is actively allocated and freed during
-the run (~143 KiB resident), so the fuzzer is still exercising those
-code paths -- they just no longer crash.
-
-Reproduction:
-
-  - Linux 6.12.47 x86_64 + KASAN_GENERIC + KASAN_INLINE + KCOV
-  - syzkaller @ 746545b8b1e4c3a128db8652b340d3df90ce61db
-  - 32 QEMU/KVM VMs x 2 vCPU on AWS c5.metal bare metal
-  - 9 unique signatures collected in ~9h, all within xfrm_state
-    lifecycle
-
-Fixes: fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
-Fixes: 7b4dc3600e48 ("[XFRM]: Do not add a state whose SPI is zero to the SPI hash.")
-Reported-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Tested-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-[ 5.10: drop state_cache{,_input} lines from context because 81a331a
-("xfrm: Add an inbound percpu state cache.") does not exist yet, drop
-xfrm_nat_keepalive_state_updated line from context because f531d13
-("xfrm: support sending NAT keepalives in ESP in UDP states") does not
-exist yet, and remove byseq since that optimization in fe9f1d8 ("xfrm:
-add state hashtable keyed by seq") does not exist yet ]
-Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
+Signed-off-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4recover.c | 67 +++++++++++++++----------------------------
+ fs/nfsd/nfs4state.c   | 22 ++++++++++++--
+ 2 files changed, 42 insertions(+), 47 deletions(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 61a0a5b843d9e7..8c742258952b8a 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -659,10 +659,11 @@ int __xfrm_state_delete(struct xfrm_state *x)
- 		x->km.state = XFRM_STATE_DEAD;
- 		spin_lock(&net->xfrm.xfrm_state_lock);
- 		list_del(&x->km.all);
--		hlist_del_rcu(&x->bydst);
--		hlist_del_rcu(&x->bysrc);
--		if (x->id.spi)
--			hlist_del_rcu(&x->byspi);
-+		hlist_del_init_rcu(&x->bydst);
-+		hlist_del_init_rcu(&x->bysrc);
-+
-+		if (!hlist_unhashed(&x->byspi))
-+			hlist_del_init_rcu(&x->byspi);
- 		net->xfrm.state_num--;
- 		spin_unlock(&net->xfrm.xfrm_state_lock);
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index c74c4023770694..8ff61f6184e24d 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -167,24 +167,13 @@ legacy_recdir_name_error(struct nfs4_client *clp, int error)
  
+ static void
+ __nfsd4_create_reclaim_record_grace(struct nfs4_client *clp,
+-		const char *dname, int len, struct nfsd_net *nn)
++				    char *dname, struct nfsd_net *nn)
+ {
+-	struct xdr_netobj name;
++	struct xdr_netobj name = { .len = strlen(dname), .data = dname };
+ 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
+ 	struct nfs4_client_reclaim *crp;
+ 
+-	name.data = kmemdup(dname, len, GFP_KERNEL);
+-	if (!name.data) {
+-		dprintk("%s: failed to allocate memory for name.data!\n",
+-			__func__);
+-		return;
+-	}
+-	name.len = len;
+ 	crp = nfs4_client_to_reclaim(name, princhash, nn);
+-	if (!crp) {
+-		kfree(name.data);
+-		return;
+-	}
+ 	crp->cr_clp = clp;
+ }
+ 
+@@ -240,8 +229,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
+ 	inode_unlock(d_inode(dir));
+ 	if (status == 0) {
+ 		if (nn->in_grace)
+-			__nfsd4_create_reclaim_record_grace(clp, dname,
+-					HEXDIR_LEN, nn);
++			__nfsd4_create_reclaim_record_grace(clp, dname, nn);
+ 		vfs_fsync(nn->rec_file, 0);
+ 	} else {
+ 		printk(KERN_ERR "NFSD: failed to write recovery record"
+@@ -478,7 +466,7 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
+ static int
+ load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ {
+-	struct xdr_netobj name;
++	struct xdr_netobj name = { .len = HEXDIR_LEN, .data = cname };
+ 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
+ 
+ 	if (strlen(cname) != HEXDIR_LEN - 1) {
+@@ -487,16 +475,7 @@ load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ 		/* Keep trying; maybe the others are OK: */
+ 		return 0;
+ 	}
+-	name.data = kstrdup(cname, GFP_KERNEL);
+-	if (!name.data) {
+-		dprintk("%s: failed to allocate memory for name.data!\n",
+-			__func__);
+-		goto out;
+-	}
+-	name.len = HEXDIR_LEN;
+-	if (!nfs4_client_to_reclaim(name, princhash, nn))
+-		kfree(name.data);
+-out:
++	nfs4_client_to_reclaim(name, princhash, nn);
+ 	return 0;
+ }
+ 
+@@ -792,6 +771,8 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ {
+ 	uint8_t cmd, princhashlen;
+ 	struct xdr_netobj name, princhash = { .len = 0, .data = NULL };
++	char *namecopy __free(kfree) = NULL;
++	char *princhashcopy __free(kfree) = NULL;
+ 	uint16_t namelen;
+ 	struct cld_net *cn = nn->cld_net;
+ 
+@@ -810,20 +791,20 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 				dprintk("%s: namelen should not be zero", __func__);
+ 				return -EINVAL;
+ 			}
+-			name.data = memdup_user(&ci->cc_name.cn_id, namelen);
+-			if (IS_ERR(name.data))
+-				return PTR_ERR(name.data);
++			namecopy = memdup_user(&ci->cc_name.cn_id, namelen);
++			if (IS_ERR(namecopy))
++				return PTR_ERR(namecopy);
++			name.data = namecopy;
+ 			name.len = namelen;
+ 			if (get_user(princhashlen, &ci->cc_princhash.cp_len))
+ 				return -EFAULT;
+ 			if (princhashlen > 0) {
+-				princhash.data = memdup_user(
+-						&ci->cc_princhash.cp_data,
+-						princhashlen);
+-				if (IS_ERR(princhash.data)) {
+-					kfree(name.data);
+-					return PTR_ERR(princhash.data);
+-				}
++				princhashcopy = memdup_user(
++					&ci->cc_princhash.cp_data,
++					princhashlen);
++				if (IS_ERR(princhashcopy))
++					return PTR_ERR(princhashcopy);
++				princhash.data = princhashcopy;
+ 				princhash.len = princhashlen;
+ 			} else
+ 				princhash.len = 0;
+@@ -837,23 +818,21 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 				dprintk("%s: namelen should not be zero", __func__);
+ 				return -EINVAL;
+ 			}
+-			name.data = memdup_user(&cnm->cn_id, namelen);
+-			if (IS_ERR(name.data))
+-				return PTR_ERR(name.data);
++			namecopy = memdup_user(&cnm->cn_id, namelen);
++			if (IS_ERR(namecopy))
++				return PTR_ERR(namecopy);
++			name.data = namecopy;
+ 			name.len = namelen;
+ 		}
+ #ifdef CONFIG_NFSD_V4
+ 		if (name.len > 5 && memcmp(name.data, "hash:", 5) == 0) {
+ 			name.len = name.len - 5;
+-			memmove(name.data, name.data + 5, name.len);
++			name.data = name.data + 5;
+ 			cn->cn_has_legacy = true;
+ 		}
+ #endif
+-		if (!nfs4_client_to_reclaim(name, princhash, nn)) {
+-			kfree(name.data);
+-			kfree(princhash.data);
++		if (!nfs4_client_to_reclaim(name, princhash, nn))
+ 			return -EFAULT;
+-		}
+ 		return nn->client_tracking_ops->msglen;
+ 	}
+ 	return -EFAULT;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 6b34bfac6194bb..c61e1a4ab620cc 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -8037,9 +8037,6 @@ nfs4_has_reclaimed_state(struct xdr_netobj name, struct nfsd_net *nn)
+ 
+ /*
+  * failure => all reset bets are off, nfserr_no_grace...
+- *
+- * The caller is responsible for freeing name.data if NULL is returned (it
+- * will be freed in nfs4_remove_reclaim_record in the normal case).
+  */
+ struct nfs4_client_reclaim *
+ nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
+@@ -8048,6 +8045,22 @@ nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
+ 	unsigned int strhashval;
+ 	struct nfs4_client_reclaim *crp;
+ 
++	name.data = kmemdup(name.data, name.len, GFP_KERNEL);
++	if (!name.data) {
++		dprintk("%s: failed to allocate memory for name.data!\n",
++			__func__);
++		return NULL;
++	}
++	if (princhash.len) {
++		princhash.data = kmemdup(princhash.data, princhash.len, GFP_KERNEL);
++		if (!princhash.data) {
++			dprintk("%s: failed to allocate memory for princhash.data!\n",
++				__func__);
++			kfree(name.data);
++			return NULL;
++		}
++	} else
++		princhash.data = NULL;
+ 	crp = alloc_reclaim();
+ 	if (crp) {
+ 		strhashval = clientstr_hashval(name);
+@@ -8059,6 +8072,9 @@ nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
+ 		crp->cr_princhash.len = princhash.len;
+ 		crp->cr_clp = NULL;
+ 		nn->reclaim_str_hashtbl_size++;
++	} else {
++		kfree(name.data);
++		kfree(princhash.data);
+ 	}
+ 	return crp;
+ }
 -- 
 2.53.0
 
