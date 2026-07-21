@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E5F3C0611;
-	Tue, 21 Jul 2026 22:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C361E3BE154;
+	Tue, 21 Jul 2026 22:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671921; cv=none; b=pkuS8WkNB1VyUL8ypY+hKTBkwBIGXT8NOv9hqUzCrK/pF4nQGIIht9BSXNwpeAV9eII4fcs0S2VD4MzGLTO+swgNz6oRji5/pnKZBUgWHh7NLezAuXraP5aNwB7JEkMpHPociap9iqdvtHl8VgusL555lD8pgKkEOInj4+somAc=
+	t=1784671924; cv=none; b=FoMRlcnkbPQpNffAdPNnQYcflq2TklwGIFptGtmwi3Pb4nzYUHWOK1eSlOU/aEcLyDCD+8h9gwP14KT/WzHHo94mn5q2mRDKzmpE7u/rczL7QmkXrRuWYqL4Fq+YlMF33HrfV1nuv64cW9ztyAupVx1qlqDDI7Rb4obc4/Dn0Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671921; c=relaxed/simple;
-	bh=E8a0Zc7eSEFXzBQTy+NK2998nv+gIubLRanr+jbGMeA=;
+	s=arc-20240116; t=1784671924; c=relaxed/simple;
+	bh=YE6Gbqah5I7WDoGCvRcW9L6j0ygRMBI4WO0iuqnYbV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkYASeiKQ7PE/vOHLsolxrzIvrP+/ZyKlWz3VdlRSFYiy01yG0YAAHP3j7uIReG3SuX7St9aVBX7adLqVkpaZ9dND4U+jR6glZdt2fqNFHT0FQj7FBooTs9K8hw+XGITxB4bzgfgBEYsCeH1v93bJRG1M9AHa+kY5b5u0ziyMDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5IZdCRT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LwEejpq60xLrT9YEloyFOG58iK7JpyHjUnpIRq8FHvmp6A07egfQvny9izrdjryWQLRb79KUhsWYA2/wsgozR8s6exkhiuWF71/4R5jyFbvLY77MSLom2p0FkDErdWRstYMecdZfuv91u2GtcvusCqOsZZ6RubOj4opdzSGth1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nlsgkw1c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5IZdCRT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904431F000E9;
-	Tue, 21 Jul 2026 22:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nlsgkw1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3508A1F000E9;
+	Tue, 21 Jul 2026 22:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671920;
-	bh=8t5RJM6TJcHWpyMWlQGP4g/W6pDXsEFOuFwcrZAX/1w=;
+	s=korg; t=1784671922;
+	bh=/zGcStt/GdDwotNyZuABw4kDlVdiJ8d2oRXdRP+yLKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V5IZdCRT3KbX0xuEx5PVRNJkFmvNgdN0YSfw/2CmTuEYoglAYU5xR+ctRPcFZo6JG
-	 DhOi4GHUeXdJrek5N6R5E82FRZH1DVQvSVJ7MgcpfE6XgAQKRSBScyQUuuJ57PmFaY
-	 W43WWkO83z4uuJMpSxZaKRwHZ0xcX75g3q6Px5eQ=
+	b=Nlsgkw1cg2tnxPobXt5ZePXRIZhOO3TzTGGT+vUQSOcu10ovgMXJT/UdD1507OLdq
+	 Ula9+4w5Yidl6iHXu3JnsudU13DDLaL9MbVaqF0alrq/6i5Yc85RZF6NVPpIwWrNp+
+	 UJPFuA7I0L30JKV9AxjoMZQkJaLWkJF3GicLuGP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Georgia Garcia <georgia.garcia@canonical.com>,
-	Ryan Lee <ryan.lee@canonical.com>,
+	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 429/843] apparmor: grab ns lock and refresh when looking up changehat child profiles
-Date: Tue, 21 Jul 2026 17:21:04 +0200
-Message-ID: <20260721152415.682661042@linuxfoundation.org>
+Subject: [PATCH 5.15 430/843] apparmor: fix potential UAF in aa_replace_profiles
+Date: Tue, 21 Jul 2026 17:21:05 +0200
+Message-ID: <20260721152415.706398678@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,114 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryan Lee <ryan.lee@canonical.com>
+From: Maxime Bélair <maxime.belair@canonical.com>
 
-[ Upstream commit 32e92764d6f8d251c1bca62be33793287b453a81 ]
+[ Upstream commit 7b42f95813dc9ceb6bda35afcf914630909a19f9 ]
 
-There was a race condition involving change_hat and profile replacement in
-which replacement of the parent profile during a changehat operation could
-result in the list of children becoming empty and the changehat operation
-failing. To prevent this:
- - grab the namespace lock until we've built the hat transition, and
- - use aa_get_newest_profile to avoid using stale profile objects.
+The function aa_replace_profiles was accessing udata->size after calling
+aa_put_loaddata(udata), causing a potential UAF.
 
-Link: https://bugs.launchpad.net/bugs/2139664
-Fixes: 89dbf1962aa63 ("apparmor: move change_hat mediation to using labels")
+Fixed this by saving the size to a local variable before dropping the
+reference.
+
+Fixes: 5ac8c355ae001 ("apparmor: allow introspecting the loaded policy pre internal transform")
 Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
+Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/domain.c | 33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ security/apparmor/policy.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
-index ec262513aedffd..a861089bcb65c7 100644
---- a/security/apparmor/domain.c
-+++ b/security/apparmor/domain.c
-@@ -13,6 +13,7 @@
- #include <linux/fs.h>
- #include <linux/file.h>
- #include <linux/mount.h>
-+#include <linux/mutex.h>
- #include <linux/syscalls.h>
- #include <linux/tracehook.h>
- #include <linux/personality.h>
-@@ -1037,6 +1038,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
- 				   int count, int flags)
- {
- 	struct aa_profile *profile, *root, *hat = NULL;
-+	struct aa_ns *ns, *new_ns;
- 	struct aa_label *new;
- 	struct label_it it;
- 	bool sibling = false;
-@@ -1047,6 +1049,32 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
- 	AA_BUG(!hats);
- 	AA_BUG(count < 1);
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -922,6 +922,7 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 	struct aa_loaddata *rawdata_ent;
+ 	const char *op;
+ 	ssize_t count, error;
++	ssize_t udata_sz;
+ 	LIST_HEAD(lh);
  
-+	/*
-+	 * Acquire the newest label and then hold the lock until we choose a
-+	 * hat, so that profile replacement doesn't atomically truncate the
-+	 * list of potential hats. Because we are getting the namespaces from
-+	 * the profiles and label, we can rely on the namespaces being live
-+	 * and avoid incrementing their refcounts while grabbing the lock.
-+	 */
-+	label = aa_get_label(label);
-+	ns = labels_ns(label);
+ 	op = mask & AA_MAY_REPLACE_POLICY ? OP_PROF_REPL : OP_PROF_LOAD;
+@@ -1106,13 +1107,15 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 	mutex_unlock(&ns->lock);
+ 
+ out:
++	udata_sz = udata->size;
 +
-+retry:
-+	mutex_lock_nested(&ns->lock, ns->level);
-+	if (label_is_stale(label)) {
-+		new = aa_get_newest_label(label);
-+		new_ns = labels_ns(new);
-+		if (new_ns != ns) {
-+			aa_put_label(new);
-+			mutex_unlock(&ns->lock);
-+			ns = new_ns;
-+			label = new;
-+			goto retry;
-+		}
-+		aa_put_label(label);
-+		label = new;
-+	}
-+
- 	if (PROFILE_IS_HAT(labels_profile(label)))
- 		sibling = true;
+ 	aa_put_ns(ns);
+ 	aa_put_profile_loaddata(udata);
+ 	kfree(ns_name);
  
-@@ -1055,7 +1083,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
- 		name = hats[i];
- 		label_for_each_in_ns(it, labels_ns(label), label, profile) {
- 			if (sibling && PROFILE_IS_HAT(profile)) {
--				root = aa_get_profile_rcu(&profile->parent);
-+				root = aa_get_profile(profile->parent);
- 			} else if (!sibling && !PROFILE_IS_HAT(profile)) {
- 				root = aa_get_profile(profile);
- 			} else {	/* conflicting change type */
-@@ -1114,6 +1142,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
- 				      GLOBAL_ROOT_UID, info, error);
- 		}
- 	}
-+	mutex_unlock(&ns->lock);
- 	return ERR_PTR(error);
+ 	if (error)
+ 		return error;
+-	return udata->size;
++	return udata_sz;
  
- build:
-@@ -1125,7 +1154,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
- 		error = -ENOMEM;
- 		goto fail;
- 	} /* else if (IS_ERR) build_change_hat has logged error so return new */
--
-+	mutex_unlock(&ns->lock);
- 	return new;
- }
- 
--- 
-2.53.0
-
+ fail_lock:
+ 	mutex_unlock(&ns->lock);
 
 
