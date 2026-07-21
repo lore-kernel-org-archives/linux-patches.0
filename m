@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE72145A28F;
-	Tue, 21 Jul 2026 21:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A1345A28C;
+	Tue, 21 Jul 2026 21:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671068; cv=none; b=vAb6H2ahaDZQFj1KbvcTl+0yzptlhCbpBJDwTInIzVtN/wSi/h3+X2b2AcBTvT7M0szHCGwrCa09KL+EZGJkdIOuorQWHMIA76w91oMkqi0+6SCJWSPIwL5EXkbA5SYUOsny6/tSNdIXT+fNjX+ithh0Tesn9ccOpHIc2W1tGrU=
+	t=1784671071; cv=none; b=MrBXbvTin6vM0f82ChDnTSb36g62gtXRTBwppdNZE9Zrgij6ktj4hHQ+JdR6tanoSOoZWKrxHWNOoSt/AeheM4SHqACm+FFrPPIBZ91J8y0mRkIl3/V+kFTUqry/FzeG3XgErQ2xfhiy/LkNnm3MG+WJf5IyptCn4KkHszAaXmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671068; c=relaxed/simple;
-	bh=1r34K53Wx32hHlpA5rNtFJJdFK/BL7hRn17vXRlGR8c=;
+	s=arc-20240116; t=1784671071; c=relaxed/simple;
+	bh=TpJXIBOO4JwVqfJW1RTJe4sQ3YvtWtlQEHhPFMI0g6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dhoOKCPEDM4oqnlbPnjAPTH90Pplk8wn55bQdugbG52Pz1PSD4Bl+yqNahUN3hDOItfv1iVBtI+JMDnALC7F92L5GnjLuyM5ceENpym/a6SexhLR60OZTBes+qrK9q+e73AsoQA2BZ+7yzYtmmXMqaP7Uwk4ax9lQqQ0NpCHVFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc8yvnQn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DLXA5Y/+QH5Rl/ofwtMbBbv9BRxWUkgsoIie7klkLEKuhd58Hw2Bs6ubTSx3Tu7rSb1ZI4bvf2WT44CFzDhxCgAV6IH8Slz24l0zy76Gz4qNQl7kdWLOCYZDpEnYRgd4v0HFAdXXz2pIjdAj86hEtcXsy88CoMWsPLWfgB2ioaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2VZeU8+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc8yvnQn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E704B1F000E9;
-	Tue, 21 Jul 2026 21:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2VZeU8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2DD1F00A3A;
+	Tue, 21 Jul 2026 21:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671066;
-	bh=sAwHE+/HoMNScTF1wXSHAB7/xbHv41veGN8GtsBLJp0=;
+	s=korg; t=1784671069;
+	bh=UQefpT0FFoXW9axPSlMay8Jrr956y3AnjlHbB46ycVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bc8yvnQnjmwJ/GW8+GNIImuqvJiLzqo0LBcU9kaoAsbmsqhfqp2LWU759l+KjnS6L
-	 9x2ZPfC2qip3A9phI13kaQh6+/u/IqHDZsQXTMW/JweO0OV2Ev63O4QbfX2XLxxCSS
-	 WsXMX0wzg+ubYAq/DXqoccLOOIm2e1KHpumU7NLs=
+	b=X2VZeU8+YHC0AvMga2tmLrDo4yli5PdxaVCh0tzfJdSuWDQpb6Q9Zxeq67LqIrx5C
+	 HBfoflvV7HIlq4kq2ztiRPKtBY2s1rX+TVFV5Q0H8XgmUpwUlUJquWwaFHUaME5uPE
+	 /9BkoQybzAVc6DXSmdlOJQpkIOQWPE4SWP34E8NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 106/843] io_uring/io-wq: re-check IO_WQ_BIT_EXIT for each linked work item
-Date: Tue, 21 Jul 2026 17:15:41 +0200
-Message-ID: <20260721152408.387515981@linuxfoundation.org>
+	Yuyang Huang <yuyanghuang@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 107/843] ipv4: igmp: remove multicast group from hash table on device destruction
+Date: Tue, 21 Jul 2026 17:15:42 +0200
+Message-ID: <20260721152408.410048489@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,54 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Yuyang Huang <yuyanghuang@google.com>
 
-commit 29bef9934b2521f787bb15dd1985d4c0d12ae02a upstream.
+commit 7993211bde166471dffac074dc965489f86531f8 upstream.
 
-commit 10dc95939817 ("io_uring/io-wq: check IO_WQ_BIT_EXIT inside work
-run loop") fixed the obvious case where io_worker_handle_work() took one
-exit-bit snapshot before draining pending work, but the fix stops one
-level too early.
+When a device is destroyed under RTNL, ip_mc_destroy_dev() iterates through
+the multicast list and calls ip_ma_put() on each membership, scheduling
+them for RCU reclamation. However, they are not unlinked from the device's
+multicast hash table (mc_hash).
 
-io_worker_handle_work() now re-checks IO_WQ_BIT_EXIT in its outer work
-run loop, yet it still snapshots that bit once before processing a whole
-dependent linked-work chain. If io_wq_exit_start() sets IO_WQ_BIT_EXIT
-after the first linked item has started, the remaining linked items can
-still reuse stale do_kill = false, skip IO_WQ_WORK_CANCEL, and continue
-running after exit has begun.
+Since the device remains published in dev->ip_ptr until after
+ip_mc_destroy_dev() completes, concurrent RCU readers traversing mc_hash
+can still locate and access the multicast group after its refcount is
+decremented. If the RCU callback runs and frees the group while a reader is
+accessing it, a use-after-free occurs.
 
-Move the check further inside, so it covers linked items too. Note: this
-is a syzbot special as it loves setting up tons of slow linked work on
-weird devices like msr that take forever to read, and immediately close
-the ring. Exit then takes a long time.
+Fix this by unlinking the multicast group from mc_hash using
+ip_mc_hash_remove() before scheduling it for reclamation.
 
-Fixes: 10dc95939817 ("io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop")
+BUG: KASAN: slab-use-after-free in ip_check_mc_rcu+0x149/0x3f0
+Read of size 4 at addr ffff888009bf1408 by task mausezahn/2276
+
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x67/0x90
+ print_report+0x175/0x7c0
+ kasan_report+0x147/0x180
+ ip_check_mc_rcu+0x149/0x3f0
+ udp_v4_early_demux+0x36d/0x12d0
+ ip_rcv_finish_core+0xb8b/0x1390
+ ip_rcv_finish+0x54/0x120
+ NF_HOOK+0x213/0x2b0
+ __netif_receive_skb+0x126/0x340
+ process_backlog+0x4f2/0xf00
+ __napi_poll+0x92/0x2c0
+ net_rx_action+0x583/0xc60
+ handle_softirqs+0x236/0x7f0
+ do_softirq+0x57/0x80
+ </IRQ>
+
+Allocated by task 2239:
+ kasan_save_track+0x3e/0x80
+ __kasan_kmalloc+0x72/0x90
+ ____ip_mc_inc_group+0x31a/0xa40
+ __ip_mc_join_group+0x334/0x3f0
+ do_ip_setsockopt+0x16fa/0x2010
+ ip_setsockopt+0x3f/0x90
+ do_sock_setsockopt+0x1ad/0x300
+
+Freed by task 0:
+ kasan_save_track+0x3e/0x80
+ kasan_save_free_info+0x40/0x50
+ __kasan_slab_free+0x3a/0x60
+ __rcu_free_sheaf_prepare+0xd4/0x220
+ rcu_free_sheaf+0x36/0x190
+ rcu_core+0x8d9/0x12f0
+ handle_softirqs+0x236/0x7f0
+
+Fixes: e9897071350b ("igmp: hash a hash table to speedup ip_check_mc_rcu()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260527172203.2043962-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260701235014.73505-1-yuyanghuang@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/igmp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -556,7 +556,6 @@ static void io_worker_handle_work(struct
- 	struct io_wq *wq = wqe->wq;
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -1816,6 +1816,7 @@ void ip_mc_destroy_dev(struct in_device
+ #endif
  
- 	do {
--		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
- 		struct io_wq_work *work;
- get_next:
- 		/*
-@@ -578,6 +577,7 @@ get_next:
- 
- 		/* handle a whole dependent link */
- 		do {
-+			bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
- 			struct io_wq_work *next_hashed, *linked;
- 			unsigned int hash = io_get_work_hash(work);
- 
+ 	while ((i = rtnl_dereference(in_dev->mc_list)) != NULL) {
++		ip_mc_hash_remove(in_dev, i);
+ 		in_dev->mc_list = i->next_rcu;
+ 		in_dev->mc_count--;
+ 		ip_mc_clear_src(i);
 
 
