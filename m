@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C62A46DFE0;
-	Tue, 21 Jul 2026 17:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC3D46DFF5;
+	Tue, 21 Jul 2026 17:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656676; cv=none; b=INdHzXxJY0koNZSVGoo1qKhqZWtt9V8z4Rg1MEGY+pW9AAa6cBvRo2r6ACKBM2Gx0xAVrbkbSrfigZd7JqP8npQkBOd04GG9IXXgxLH4Dusjl14p8j9NQS3ifQ3Uqf+gapqa2GuryhBQMMEf6G3kmkLPBl2K6MaM8FICiNLa9IU=
+	t=1784656678; cv=none; b=kh/4XjFExi+mEPJ0iqkajppJScoDz4GIdJK70GxLXPeklyOnwYsW4DbPKzPTqkrqIuG+wfbZTH+PTiwshJSKYxiUtUeTY3UT0/GBgaQEV2YNqV+8ir1qURvwDzSl1BCBhVox4BSvT42xmiAhLSTG/RfUNmE9d2wWhL9pR04RHUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656676; c=relaxed/simple;
-	bh=6ko9AqJVlyasmh6gNhbfceqAnjyArE7qnqw66exNPQA=;
+	s=arc-20240116; t=1784656678; c=relaxed/simple;
+	bh=MLsgvtadbjYiz9m1STOugnDnP/m1ZCWH+NB0YxFguE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5n2Oc5Lj5BQcAuQSNOmOt43IN354gIEoX6cZnKbAbhX99R4L/jhpQb7czDjhai8Qu9jJJR28ZG7JDZMmhYesxzjxAK8xx4p2lWwB9hORaWm/5t9eGNckCsdbsbyESQqJX9mfzB6K18Z5BT7A4iBipkchhQV68jvyHLqiQjSIIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fT1rgd3B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kall5K6Og7CdPC0Sshi4gr1p0jB9giRsWjOwHvKNPgixfNyCOgsUocCte0w1NzxZpIlv4coqcFIPNINMOfllquQypbLsmmDhcFK+W92IQa4cl04HqRTVffDiMNUH43CZTy8rt7hbC2lhZ8lQZKRoBKue7XIwYKcDYN3pxC+nFeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2GhCT/v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fT1rgd3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88A01F00A3A;
-	Tue, 21 Jul 2026 17:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2GhCT/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6111E1F000E9;
+	Tue, 21 Jul 2026 17:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656671;
-	bh=dbke2y/zwMdLPQ8etsNS8f2r394OSv70/Bt582tcmgQ=;
+	s=korg; t=1784656673;
+	bh=y2lnI+i1sSoh0y7IM+qWSZqF6gjtWcXf3kVQG1QkNTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fT1rgd3B0QjyF9KuEQv1Gjjgtu8wsCRG1pqg51x408p1ADWsFLzMOzy1YQhv8LJRQ
-	 SfJqW1BuOvYACn2owl6etrdaTFS1JdkmNP2nhYhmTD4zMeOkn84DRWMWoNTUAP0E48
-	 A64Ob8TZm+jknO8zkoVK09ujHOHqQKe/+cqb1FsM=
+	b=r2GhCT/vBYK3kwg/dZzPJmeIA5wkyBugszWFPxGc6zD22vFd9Jr3X6ImZrhpXVX5d
+	 jco9UJ6QBT94DQ+aIxkSDrt9/1xPmlAflFwY47m3G/GVBoT2pnvagwa3cqn7MrdR1O
+	 IxPmcfsTUih5V9dHddlcJZ8zXi6J1FOTvH0adELY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0476/1611] =?UTF-8?q?RDMA/mlx5:=20Release=20the=20HW=E2=80=91provided=20UAR?= =?UTF-8?q?=20index=20rather=20than=20the=20SW=20one?=
-Date: Tue, 21 Jul 2026 17:09:52 +0200
-Message-ID: <20260721152526.035155919@linuxfoundation.org>
+Subject: [PATCH 6.18 0477/1611] ASoC: SOF: Intel: hda-sdw-bpt: select SND_SOF_SOF_HDA_SDW_BPT properly
+Date: Tue, 21 Jul 2026 17:09:53 +0200
+Message-ID: <20260721152526.057690260@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,34 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 449ae7927152e46acbe5f19f97eafdae6d3a96b1 ]
+[ Upstream commit 999ec4c29d73ac85b639a31bbc85ad2ec00eb9d7 ]
 
-Free the UAR index returned by the hardware.
+When SND_SOC_SOF_INTEL_LNL is set, SND_SOF_SOF_HDA_SDW_BPT must also
+be enabled, in order to let the soundwire support call into it.
 
-Fixes: 4ed131d0bb15 ("IB/mlx5: Expose dynamic mmap allocation")
-Link: https://patch.msgid.link/r/20260611-fix-uar-release-v1-1-f5464d845dbf@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+However, there are configurations with SND_SOF_SOF_HDA_SDW_BPT=m
+and SND_SOF_SOF_HDA_SDW_BPT=m but SOUNDWIRE_INTEL=y, which still
+lead to a link failure:
+
+aarch64-linux-ld: drivers/soundwire/intel_ace2x.o: in function `intel_ace2x_bpt_wait':
+intel_ace2x.c:(.text+0xfc8): undefined reference to `hda_sdw_bpt_wait'
+aarch64-linux-ld: drivers/soundwire/intel_ace2x.o: in function `intel_ace2x_bpt_send_async':
+intel_ace2x.c:(.text+0x1ff8): undefined reference to `hda_sdw_bpt_get_buf_size_alignment'
+
+Address this by moving the 'select SND_SOF_SOF_HDA_SDW_BPT' into
+SND_SOC_SOF_HDA_GENERIC.
+
+Fixes: 614d416dd8ae ("ASoC: SOF: Intel: hda-sdw-bpt: fix SND_SOF_SOF_HDA_SDW_BPT dependencies")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260611132310.137688-2-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sof/intel/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 012386e8cdd4ad..09709ae5bd4712 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -2460,7 +2460,7 @@ static int uar_mmap(struct mlx5_ib_dev *dev, enum mlx5_ib_mmap_cmd cmd,
- 	if (!dyn_uar)
- 		return err;
+diff --git a/sound/soc/sof/intel/Kconfig b/sound/soc/sof/intel/Kconfig
+index 4f27f8c8debf8a..b299bcd80904dd 100644
+--- a/sound/soc/sof/intel/Kconfig
++++ b/sound/soc/sof/intel/Kconfig
+@@ -266,10 +266,8 @@ config SND_SOC_SOF_METEORLAKE
  
--	mlx5_cmd_uar_dealloc(dev->mdev, idx, context->devx_uid);
-+	mlx5_cmd_uar_dealloc(dev->mdev, uar_index, context->devx_uid);
+ config SND_SOC_SOF_INTEL_LNL
+ 	tristate
+-	select SOUNDWIRE_INTEL if SND_SOC_SOF_INTEL_SOUNDWIRE != n
+ 	select SND_SOC_SOF_HDA_GENERIC
+ 	select SND_SOC_SOF_INTEL_SOUNDWIRE_LINK_BASELINE
+-	select SND_SOF_SOF_HDA_SDW_BPT if SND_SOC_SOF_INTEL_SOUNDWIRE != n
+ 	select SND_SOC_SOF_IPC4
+ 	select SND_SOC_SOF_INTEL_MTL
  
- free_bfreg:
- 	mlx5_ib_free_bfreg(dev, bfregi, bfreg_dyn_idx);
+@@ -312,6 +310,8 @@ config SND_SOC_SOF_HDA_GENERIC
+ 	select SND_SOC_SOF_HDA_LINK_BASELINE
+ 	select SND_SOC_SOF_HDA_PROBES
+ 	select SND_SOC_SOF_HDA_MLINK if SND_SOC_SOF_HDA_LINK
++	select SND_SOF_SOF_HDA_SDW_BPT if SND_SOC_SOF_INTEL_LNL != n && \
++					  SND_SOC_SOF_INTEL_SOUNDWIRE !=n
+ 	help
+ 	  This option is not user-selectable but automagically handled by
+ 	  'select' statements at a higher level.
 -- 
 2.53.0
 
