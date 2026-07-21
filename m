@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309174266BF;
-	Tue, 21 Jul 2026 21:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729FB370AFB;
+	Tue, 21 Jul 2026 21:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671187; cv=none; b=JKf8yYqj6kzIuoBPmW7OkqAJsMoqgbAlQoImY5akmS3ebagqB9SKK2kSvBL9CojnKHK8zjSB4lm94uaGIfJzQZy8SV/aP3ZZ1RpD6K4VU39XWIbGjDXsukmAaMzqtrbuccsBgai5MOFzZedGsc6Xe6ORIhN2jPR+13ON2FWFiWI=
+	t=1784671189; cv=none; b=XXR3qVKzHu1HEXIUQn+PWQFxmi4tuoCcWumLV4ufx0FT/0q5/Fdhu8CBFhy0pKYrxLyOjpYaqgiB9cOHSKaJWM0i8B5pQOoNSe6KR+Zq8i22CnBtxxDNx5c9fJtGznKRkLm+pXsfGFRrrB29VL8mU4x12RhJVOt7KIPMst2tuXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671187; c=relaxed/simple;
-	bh=pqwJUaqCAYh32ReXUDNltoKLyv7dStEn+0SGNBOqegg=;
+	s=arc-20240116; t=1784671189; c=relaxed/simple;
+	bh=LBUTrRpB/KtssVVp0lEdIlUXRM0X8/R6VNMrFyy6/OA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lgserb29WuZzkczIjBhp2G0S32AgRNNS+JBHDPvJV7ydUL9z6k68WX+F/TrqK7NDiu4jX3gwkH6F65/hCqAsCG54L19fuvB9//eJxDqoEHM+TUDQjThb/C+cENFO2P+6gsJEfCfQfPsNVJaiBKoE1Lf2m/xGTlQN+k3x3QTcRB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhhllTtl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6miQ4eXXRYW9H2LLsPJOOz9vI6uBRhotlO/RdYosK4mRdyg23wOzGW+OMWz1gjzZ2jkB/GBUCPSRL4Hec/fmOZAJd+cqDEqu3MILezsIgXPlNemsnxFoiYMexDd9B17vB/eDDeY2hj8gACap1F4qADfxCq+CDI8uFWj1ognVO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUXnBCLM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhhllTtl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380F51F000E9;
-	Tue, 21 Jul 2026 21:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUXnBCLM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82C91F000E9;
+	Tue, 21 Jul 2026 21:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671185;
-	bh=tlWjE6mDJay/49UadbbvKqoOjouy5G+T7WDV39ESmOQ=;
+	s=korg; t=1784671188;
+	bh=2u4FqgKYHi2eI2ajcV3aAshG+h3PiC+q0Q5cPgy2c3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LhhllTtlsEEbGk/VdpmPL3/NXx6K3vaoPBocvhirMHKnMnvshEiv8LlTTpVaFArVO
-	 E/iz5SLr8M3tRFSma9oEO3nJW5HDMKbTvHQHhqeOMjhWZ3IdCWPTNZFB8NuRUlQZUV
-	 mWaCgVMf1lYkKJffEHui5j/RPXU8AmqB0T165XkY=
+	b=OUXnBCLMu21ETPdzErQior4gMXGdWT943+0Fawgv3RYuTYnDBrBQrRdcEXDM8DIP2
+	 OKGhlbCnOVZXtT8oIa7fTIWycs0SJWfRkNnqqiP2vEihpcrD74a0a67Zb7qok4PI1h
+	 OQCniI5xeElxYW7ko33Mla+0uH8zNheKTb9/JL/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Igor Kotrasinski <i.kotrasinsk@samsung.com>,
-	Sam Day <me@samcday.com>
-Subject: [PATCH 5.15 151/843] usbip: vudc: fix NULL deref in vep_dequeue()
-Date: Tue, 21 Jul 2026 17:16:26 +0200
-Message-ID: <20260721152409.411498548@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>,
+	RD Babiera <rdbabiera@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.15 152/843] usb: typec: tcpm: Validate SVID index in svdm_consume_modes()
+Date: Tue, 21 Jul 2026 17:16:27 +0200
+Message-ID: <20260721152409.433765128@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,76 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Day <me@samcday.com>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit c5371e0b91b24159a3ebaa61e70b0980bcf03c0a upstream.
+commit 7b681dd5fbf60b24a13c14661e5b7735759fb491 upstream.
 
-vep_alloc_request() wasn't initializing vrequest->udc, so cancellations
-on the FunctionFS AIO path were arriving in vep_dequeue without a valid
-UDC reference.
+In svdm_consume_modes(), the SVID value is read from pmdata->svids using
+pmdata->svid_index as an array index without bounds validation:
 
-Since vrequest->udc is never actually properly used anywhere, we opt to
-remove it, and update vep_dequeue to obtain a reference to the udc with
-ep_to_vudc(), consistent with the other vep_ ops.
+    paltmode->svid = pmdata->svids[pmdata->svid_index];
 
-AFAICT this bug has existed for ~10 years. Seems that nobody has really
-stressed the FunctionFS AIO path on usbip's vudc.
+If pmdata->svid_index is driven beyond SVID_DISCOVERY_MAX (16), it results
+in an out-of-bounds read of the pmdata->svids array. Because pd_mode_data
+is embedded inside struct tcpm_port, indexing past svids reads into
+adjacent fields. In particular:
+- At index 16, it reads the altmodes count.
+- At index 18 and beyond, it reads into altmode_desc[], which contains
+  partner-supplied SVDM Discovery Modes VDOs.
 
-I tested this fix in a QEMU aarch64 guest driving FunctionFS endpoints
-via AIO. Before the fix, running `usbip attach` from the host would
-cause the guest to oops with the following backtrace:
+By injecting a chosen SVID into altmode_desc[0].vdo and driving svid_index
+to 20, the partner can force paltmode->svid to be loaded with an arbitrary,
+partner- chosen SVID, which is then registered via
+typec_partner_register_altmode().
 
-Call trace:
- vep_dequeue+0x1c/0xe4 (P)
- usb_ep_dequeue+0x14/0x20
- ffs_aio_cancel+0x24/0x34
- __arm64_sys_io_cancel+0xb0/0x124
- do_el0_svc+0x68/0x100
- el0_svc+0x18/0x5c
- el0t_64_sync_handler+0x98/0xdc
- el0t_64_sync+0x154/0x158
+Fix this by validating that pmdata->svid_index is non-negative and strictly
+less than pmdata->nsvids before accessing the pmdata->svids array inside
+svdm_consume_modes().
 
-Assisted-by: opencode:openai/gpt-5.5
+Assisted-by: Antigravity:gemini-3.5-flash
+Fixes: 4ab8c18d4d67 ("usb: typec: Register a device for every mode")
 Cc: stable <stable@kernel.org>
-Fixes: b6a0ca111867 ("usbip: vudc: Add UDC specific ops")
-Reviewed-by: Igor Kotrasinski <i.kotrasinsk@samsung.com>
-Signed-off-by: Sam Day <me@samcday.com>
-Link: https://patch.msgid.link/20260626-usbip-vudc-deque-fix-v3-1-98c2dc4d6a48@samcday.com
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: RD Babiera <rdbabiera@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260622220803.305750-1-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/usbip/vudc.h     |    1 -
- drivers/usb/usbip/vudc_dev.c |    4 +---
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/usbip/vudc.h
-+++ b/drivers/usb/usbip/vudc.h
-@@ -38,7 +38,6 @@ struct vep {
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -1538,6 +1538,11 @@ static void svdm_consume_modes(struct tc
+ 		return;
+ 	}
  
- struct vrequest {
- 	struct usb_request req;
--	struct vudc *udc;
- 	struct list_head req_entry; /* Request queue */
- };
- 
---- a/drivers/usb/usbip/vudc_dev.c
-+++ b/drivers/usb/usbip/vudc_dev.c
-@@ -333,7 +333,6 @@ static int vep_queue(struct usb_ep *_ep,
- static int vep_dequeue(struct usb_ep *_ep, struct usb_request *_req)
- {
- 	struct vep *ep;
--	struct vrequest *req;
- 	struct vudc *udc;
- 	struct vrequest *lst;
- 	unsigned long flags;
-@@ -343,8 +342,7 @@ static int vep_dequeue(struct usb_ep *_e
- 		return ret;
- 
- 	ep = to_vep(_ep);
--	req = to_vrequest(_req);
--	udc = req->udc;
-+	udc = ep_to_vudc(ep);
- 
- 	if (!udc->driver)
- 		return -ESHUTDOWN;
++	if (pmdata->svid_index < 0 || pmdata->svid_index >= pmdata->nsvids) {
++		tcpm_log(port, "Invalid SVID index %d", pmdata->svid_index);
++		return;
++	}
++
+ 	for (i = 1; i < cnt; i++) {
+ 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
+ 		memset(paltmode, 0, sizeof(*paltmode));
 
 
