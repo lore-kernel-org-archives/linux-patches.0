@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE8F46E015;
-	Tue, 21 Jul 2026 18:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D2B46D089;
+	Tue, 21 Jul 2026 18:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658043; cv=none; b=pE23JmAkv56WYJBBbT1q+XlbmAH7+toRj4cYaeMQVsFOHWsDRd97G2UWDrTVgNJaONXHlUm+Zw0ovRazWf1WYly+acUJ6YxKuAX9QyBv70e7wb0SVlcp7T9CHTShyAD5Qv3t8Dp1wq+Y+cTLTfSa6NuuwgUdeIMFJut88kbgLBY=
+	t=1784658047; cv=none; b=Ed1PFMDXlDZMMASUiyQ1FqK62GxDix12lN6J/2AgUFJr8mMp+IvrORL4E1/hSowvi3OrvSS5FwzN54P5mzDhujYP2eHamTZemMqEgBsz7JDYBdLTUBcN9CO33KTXCV1sC3vI8mji+RKL37pQMkt6/QoI6U6atWRmVGR7TaDHPcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658043; c=relaxed/simple;
-	bh=t2VbMxUPlwbdlRguOFJYy0YJMwDW/Dprc1W0nyVlytY=;
+	s=arc-20240116; t=1784658047; c=relaxed/simple;
+	bh=e3U8NWnOP+UMjrqLEoAD/MLVHUWOireGKwmxJ5qzq3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2b8rDT9oaFNQkyqLCVYqI1kL9IEz0BKQBnmbGaDH5OFavpAbBIvdx8ktntjNEMkMUUtS2bV8dOk+HijV1r5F68k1CafeE606gvu4C3qLGFmH7f1Lf7bE2bkUHp9vM5tz6oqd3M8tN+XtUf/NzrEneGeKb9m85ZhgxWt2b5CT78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uErQf4Dv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VfPpL55BX8okn456x7Q/WFhdAHEkNtXHNw6CgpS5up9WsW1cyQ9dUzVHhos01PmuxTjdGeziCcwh51SyfdNFE9Row9c0URLt3iJ3H6FvkWnJAn2Izn9/FbQgGL04FXUXFcHLmDI3liC+9/G0GPKQTNbjjdYWTLG4YoJkZ+vo3ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcmqcRcH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uErQf4Dv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4DF1F000E9;
-	Tue, 21 Jul 2026 18:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcmqcRcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89081F000E9;
+	Tue, 21 Jul 2026 18:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658042;
-	bh=xahLY+848P64qBm1+zP+8axxTFZ5WBcRBv61tbfx9hs=;
+	s=korg; t=1784658045;
+	bh=zlpSwhcGjm4YdCOr+zxqjXhCHsTNIBJDVtL2FVkBnj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uErQf4Dvwvoz29mrAphDjHIKc0QaEoy8STFVc97CUwRSoAAV9z5cQbNmgKlWJddw9
-	 LrQdRGzH0pNGp2NpP2UaGlHG9qH7MkMCOId1kkeOhNdTsJ/Vn9zOCTajJ7m55lZvSi
-	 QEVHXeeprKtbd9oc1irsuZR1X8uMJyfgw2L2zqz8=
+	b=OcmqcRcHlWfPlcbxVxDaYRrZILwzyC3LCBpFW3sfKuVAX16Ddy/tiC1GrUvuUHdlo
+	 8AM8r9am3Buid2/sqaYpv+KXz5cKiCZ4eRbUD7HFksM1YgCLG9E4XK6STMzNdCNwsV
+	 TkUjNg82UG8DoLK4irZja+GK9NSK3krUBeB7EGME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
+	Viacheslav Bocharov <v@baodeep.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0994/1611] gpio: timberdale: Return -ENOMEM on dynamic memory allocation in probe
-Date: Tue, 21 Jul 2026 17:18:30 +0200
-Message-ID: <20260721152537.749858804@linuxfoundation.org>
+Subject: [PATCH 6.18 0995/1611] pinctrl: meson: restore non-sleeping GPIO access
+Date: Tue, 21 Jul 2026 17:18:31 +0200
+Message-ID: <20260721152537.771929029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,35 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Viacheslav Bocharov <v@baodeep.com>
 
-[ Upstream commit 8d7e62d5e9b2d2ff146f472a9215d7e29c7e2307 ]
+[ Upstream commit 9777530157e7b82fd994327ff878c4245dadc931 ]
 
-Out of memory situation on driver's probe is expected to be reported to
-the driver's framework with a proper -ENOMEM error code.
+Commit 28f240683871 ("pinctrl: meson: mark the GPIO controller as
+sleeping") set gpio_chip.can_sleep = true to work around
+gpio-shared-proxy holding a spinlock across a sleeping pinctrl config
+path. That locking bug is now fixed in the shared-proxy itself ("gpio:
+shared-proxy: always serialize with a sleeping mutex"), so the
+controller-wide workaround is no longer needed; the meson GPIO
+controller does not sleep.
 
-Fixes: 35570ac6039e ("gpio: add GPIO driver for the Timberdale FPGA")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Link: https://patch.msgid.link/20260630145148.4081967-1-vz@kernel.org
+meson_gpio_get/set/direction_* access MMIO through regmap. The
+regmap_mmio bus uses fast I/O (spinlock) locking, so these value
+callbacks do not contain sleeping operations. Since gpio_chip.can_sleep
+describes the get/set value path, restore can_sleep = false.
+
+Marking the controller sleeping also broke atomic value consumers such
+as w1-gpio (1-Wire bitbang): w1_io.c runs its read time slot under
+local_irq_save() and uses the non-cansleep gpiod_set_value() /
+gpiod_get_value(), which with can_sleep=true trigger WARN_ON(can_sleep)
+in gpiolib on every transferred bit (from w1_gpio_write_bit() /
+w1_gpio_read_bit() via w1_reset_bus() and w1_search()). The printk and
+stack dump inside the IRQs-off, microsecond-scale time slot destroy the
+bit timing, so reset/presence detection and ROM search fail: the bus
+master registers but w1_master_slave_count stays at 0 and no devices
+are found. Verified on an Amlogic A113X board (DS18B20 on GPIOA_14):
+with can_sleep restored to false the warnings are gone and the sensor
+is detected and read again.
+
+This must not be applied or backported without the shared-proxy locking
+fix above; otherwise the original Khadas VIM3 splat returns on boards
+that genuinely share a meson GPIO.
+
+Fixes: 28f240683871 ("pinctrl: meson: mark the GPIO controller as sleeping")
+Link: https://lore.kernel.org/all/20260105150509.56537-1-bartosz.golaszewski@oss.qualcomm.com/
+Signed-off-by: Viacheslav Bocharov <v@baodeep.com>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260625115718.1678991-3-v@baodeep.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-timberdale.c | 2 +-
+ drivers/pinctrl/meson/pinctrl-meson.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-timberdale.c b/drivers/gpio/gpio-timberdale.c
-index f488939dd00a8a..b77c9d16fd166a 100644
---- a/drivers/gpio/gpio-timberdale.c
-+++ b/drivers/gpio/gpio-timberdale.c
-@@ -235,7 +235,7 @@ static int timbgpio_probe(struct platform_device *pdev)
+diff --git a/drivers/pinctrl/meson/pinctrl-meson.c b/drivers/pinctrl/meson/pinctrl-meson.c
+index 4507dc8b5563c0..18295b15ecd9dd 100644
+--- a/drivers/pinctrl/meson/pinctrl-meson.c
++++ b/drivers/pinctrl/meson/pinctrl-meson.c
+@@ -619,7 +619,7 @@ static int meson_gpiolib_register(struct meson_pinctrl *pc)
+ 	pc->chip.set = meson_gpio_set;
+ 	pc->chip.base = -1;
+ 	pc->chip.ngpio = pc->data->num_pins;
+-	pc->chip.can_sleep = true;
++	pc->chip.can_sleep = false;
  
- 	tgpio = devm_kzalloc(dev, sizeof(*tgpio), GFP_KERNEL);
- 	if (!tgpio)
--		return -EINVAL;
-+		return -ENOMEM;
- 
- 	tgpio->irq_base = pdata->irq_base;
- 
+ 	ret = gpiochip_add_data(&pc->chip, pc);
+ 	if (ret) {
 -- 
 2.53.0
 
