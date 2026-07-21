@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D057443318;
-	Tue, 21 Jul 2026 22:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9010D44470C;
+	Tue, 21 Jul 2026 22:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673055; cv=none; b=A/+IAQ8CPtSWeKX0sgwIaJg6HC/Fga9IpPT/SAZEJvt82Mb4PahoAxu9jXc3eRgP7blEqwFhEycpnshDwf1ytM42ue24uqDDJA8Mnjxnd0+BVILicl/rSGo/IgI9OaTEz6cpF9GyIg4j5zl++L4M0nBcylxckL5WbSJ9soKx01U=
+	t=1784673056; cv=none; b=mZiPya9mM5+j41D0qBp1+SqwOvu3eXEl94ZJVP7aSbiUlaJ+PHE/ll6oRj+DcSlvX8OIcogfYb2v9gmZ8vcxvk+dJc3aV7vzLSWMRqH6XkmYhLA6qV4HBsZNqUt48pZaNb/uYqJFq1hMa0VDM9K40ZlCdmrQmKxcfGPBEnW7NoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673055; c=relaxed/simple;
-	bh=K6sHVwDN7GcRG3wJ9x4OrUUu19HbnwBorOPcmpZhZ7U=;
+	s=arc-20240116; t=1784673056; c=relaxed/simple;
+	bh=amDoj5ceFtRSP8SnW6+BMGNDB0Cu5ZNVU5n3DO7iv48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNtXHGPV9HZFhlSnKH7TBtIULvZLSXfAVZBudWiLP6Hfvug2eHtaRNEsU0/fiXYj3owRCaSqg4bSrv3NE5zqcUn1gIEvWH/ZCb/asiz9Mq602Q/jXj55BHSdgo0fEowHIkI+uhhTO+3Lpi6B9t5rdgj8ylNk6fsjpD0jQyeJd6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lr3AHs8s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Iyqw0lDWbZ6Xtl8hJLHotqUecAdAvasqpHJDHlkyXcnDJZRR6t7xg+kJ6IV5zEFLl8JwEKj4TZWBQAqtOB0tRDneZt83piS60+0i6RuD3toF3BLdX3Y6wEhT1s81rS92ElscKhWqQ2ieQhBRHLEMJThQP/fksrMlkAEtowqlWS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKVsq3bw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lr3AHs8s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790D11F00A3A;
-	Tue, 21 Jul 2026 22:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKVsq3bw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F0A1F000E9;
+	Tue, 21 Jul 2026 22:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673050;
-	bh=yPrUr7e/ZT/fnfYYSktIRlFsJCVWHsn4uToBpdy/Gtg=;
+	s=korg; t=1784673055;
+	bh=Y4hfAM9mGLOyOEtPCJB5569fmcAirYVgu/GHOar1eZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lr3AHs8s5CK4/uYPYC4vSMwgqhoK977H+sRfe/Dt/tcN8ujkSfnhKd83g0Dchoa6X
-	 oLUEwrTTkuTVTHliW4BQ89Lh3F2c+LdAn57DEmGpja3ROluswVij/N2kyqcNHh3ifv
-	 Iq9MEQRVmVBLHTjOSFVqUIhTB/tJEpp2tpWby+Tg=
+	b=YKVsq3bw9yg0XSVgJQLnt2yI1S2WuaHR5+y+RW7x+G++/5rqHgVXOnUlGVPoMXQoO
+	 x+mLXHHwAQoy+3d+pQAnBUYxnQ+qeuEdnZfS6bNPApXT4Gs0/01txyvjaZDaf9ZgGG
+	 z7pwrKrHco42I4tm3al3crFJgOwInOrJTjsMmNSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	John Johansen <john.johansen@canonical.com>,
+	Yunji Kang <yunji0.kang@samsung.com>,
+	Yeongjin Gil <youngjin.gil@samsung.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/699] apparmor: mediate the implicit connect of TCP fast open sendmsg
-Date: Tue, 21 Jul 2026 17:16:16 +0200
-Message-ID: <20260721152356.077615704@linuxfoundation.org>
+Subject: [PATCH 5.10 019/699] f2fs: fix to round down start offset of fallocate for pin file
+Date: Tue, 21 Jul 2026 17:16:18 +0200
+Message-ID: <20260721152356.123994061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,59 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Sunmin Jeong <s_min.jeong@samsung.com>
 
-[ Upstream commit 4d587cd8a72155089a627130bbd4716ec0856e21 ]
+[ Upstream commit 4275b59673eb60b02eec3997816c83f1f4b909c4 ]
 
-sendmsg()/sendto() with MSG_FASTOPEN is a combination of connect(2) and
-write(2): it opens the connection in the SYN. apparmor_socket_sendmsg()
-only checks AA_MAY_SEND, so a profile that grants send but denies connect
-lets a confined task open an outbound TCP/MPTCP connection that connect(2)
-would have refused, bypassing connect mediation.
+Currently, the length of fallocate for pin file is section-aligned to
+keep allocated sections from being selected as victims of GC. However,
+for the case that the start offset of fallocate is not aligned in
+section, the allocated sections can't be fully utilized. It's because a
+new section is allocated by f2fs_allocate_pinning_section() after using
+blks_per_sec blocks regardless of the start offset. As a result, several
+unexpected dirty segments may be created, including blocks assigned to
+the pinned file.
 
-Mediate the implicit connect when MSG_FASTOPEN is set and a destination
-is supplied. Add it to apparmor_socket_sendmsg() (not the shared
-aa_sock_msg_perm() helper, which recvmsg also uses) and call aa_sk_perm()
-directly, mirroring the selinux and tomoyo fixes. sk_is_tcp() does not
-cover MPTCP fast open, so the SOCK_STREAM/IPPROTO_MPTCP arm is explicit.
+To address this issue, let's round down the start offset of fallocate
+to the length of section.
 
-Fixes: cf60af03ca4e ("net-tcp: Fast Open client - sendmsg(MSG_FASTOPEN)")
+The reproducing scenario is as below
+
+chunk=$(((2<<20)+4096)) # 2MB + 4KB
+touch test
+f2fs_io pinfile set test
+f2fs_io fallocate 0 0 $chunk test
+f2fs_io fallocate 0 $chunk $chunk test
+f2fs_io fallocate 0 $((chunk*2)) $chunk test
+f2fs_io fiemap 0 $((chunk*3)) test
+
+Fiemap: offset = 0 len = 12288
+    logical addr.    physical addr.   length           flags
+0   0000000000000000 000000068c600000 0000000000400000 00001088
+1   0000000000400000 000000003d400000 0000000000001000 00001088
+2   0000000000401000 00000003eb200000 0000000000200000 00001088
+3   0000000000601000 00000005e4200000 0000000000001000 00001088
+4   0000000000602000 0000000605400000 0000000000200000 00001089
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-[ inlined absent sk_is_tcp()/sk_is_inet() helpers into the equivalent family/type/protocol checks ]
+Fixes: f5a53edcf01e ("f2fs: support aligned pinned file")
+Reviewed-by: Yunji Kang <yunji0.kang@samsung.com>
+Reviewed-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/lsm.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -951,7 +951,23 @@ static int aa_sock_msg_perm(const char *
- static int apparmor_socket_sendmsg(struct socket *sock,
- 				   struct msghdr *msg, int size)
- {
--	return aa_sock_msg_perm(OP_SENDMSG, AA_MAY_SEND, sock, msg, size);
-+	int error = aa_sock_msg_perm(OP_SENDMSG, AA_MAY_SEND, sock, msg, size);
-+
-+	if (error)
-+		return error;
-+
-+	/* TCP fast open carries connect() semantics in sendmsg(); mediate
-+	 * the implicit connect so it cannot bypass the connect permission.
-+	 */
-+	if ((msg->msg_flags & MSG_FASTOPEN) && msg->msg_name &&
-+	    (sock->sk->sk_family == AF_INET ||
-+	     sock->sk->sk_family == AF_INET6) &&
-+	    sock->sk->sk_type == SOCK_STREAM &&
-+	    (sock->sk->sk_protocol == IPPROTO_TCP ||
-+	     sock->sk->sk_protocol == IPPROTO_MPTCP))
-+		error = aa_sk_perm(OP_CONNECT, AA_MAY_CONNECT, sock->sk);
-+
-+	return error;
- }
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1682,8 +1682,15 @@ static int expand_inode_data(struct inod
  
- /**
+ 	if (f2fs_is_pinned_file(inode)) {
+ 		block_t sec_blks = CAP_BLKS_PER_SEC(sbi);
+-		block_t sec_len = roundup(map.m_len, sec_blks);
++		block_t sec_len;
+ 
++		if (map.m_lblk % sec_blks) {
++			map.m_lblk = rounddown(map.m_lblk, sec_blks);
++			map.m_len = pg_end - map.m_lblk;
++			if (off_end)
++				map.m_len++;
++		}
++		sec_len = roundup(map.m_len, sec_blks);
+ 		map.m_len = sec_blks;
+ next_alloc:
+ 		if (has_not_enough_free_secs(sbi, 0,
 
 
