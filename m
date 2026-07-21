@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C6746C4DD;
-	Tue, 21 Jul 2026 17:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806F53C276E;
+	Tue, 21 Jul 2026 17:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655428; cv=none; b=HVO0QYK77J8Uriha14WMaToo4S3DWEZR3YiThYZPYbdpHCCNCb12TMvvBLRCE9BZn3mW4iwkFFX0muPRRWf+c7P7fkM64BJmBIo6BQRM9/muSUOg/BeVg7QZz4Px7YjwlD4EXFyXJTocTy91xJzZRNG3bFFM0sxVgnztCHHBvk8=
+	t=1784655431; cv=none; b=iNi6EFrNVc+ee988Pi8xCuUD7H/mheO4j8F6tgIE33WM0JtMS17sy62rQ1Vrb9jbMRepQHK+w4jU1OdUUuPyMayY2BWwiDEkw/hwqeLFcJf9wmafdJ7IHWUllY1tKs1j81quCCMl1m440x1PFHBxMmUnw0J1YWgRR3kbmMmGsXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655428; c=relaxed/simple;
-	bh=bfvtR3c7xWBWvhVqNdfDs8tta6cZ/j48jFc5wqo+NOM=;
+	s=arc-20240116; t=1784655431; c=relaxed/simple;
+	bh=2PwqRLBlKz2NHU2nKX2/Soo+WdSeCliZveM6rVFEIJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/PRfibDvTYT/fTETBHzpZDX3tMUJgbg9ioS8kJF0hf8XVQyIs5bUgv5S4+W8qLPgAsnveWqWcFvbi61fDNXReuY7vCdp2SB5ICY+7TVREzA4ov/lQAEWe62NzEJiBGEFzHbzsLkQF67YrFxg+hoBp4UYfj4mfpeuzXhsazn5cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuejbudA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gT55J4io6tlaX06Vz03lJSDCFyozNlHLG61twpvm5jHBIgfKV2NU4TRd0h7yFmdStcMzj59dTnXUOPHSmfT05aGBUxL9fz6EA69DI7N3W9aqhr7dR+Jk/cSbPQZES3axpoV4zNlnR59NgacbqOiHl1g+9DEsEiYmUHTtJv8ai5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGucFc7M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuejbudA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483511F000E9;
-	Tue, 21 Jul 2026 17:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGucFc7M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60DB1F000E9;
+	Tue, 21 Jul 2026 17:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655427;
-	bh=FoCQRRYp0SpanUZV2WNoNKUFyTolGT5iUPXKGBKIflg=;
+	s=korg; t=1784655430;
+	bh=GgWQ2mL/jeyOPxJhogxazOSY3rwticLCv56riUnmrr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DuejbudAHKVWt3XaMdPBF0Y9AuYGtrBljVl1z7ddXafgfi3j2U04brg5UiwbJl9w/
-	 TTqO5MNLvUxv8xuzZVvn8YENjSARmJRj8D4Yr6qV8G7QJDgDq98GC8GOrYwMPXz1PT
-	 gY2R8qYUTfybadqGDinPrzgWzMZPIdaYMyGDBct8=
+	b=QGucFc7MfOpMKvooFxfUHh4xe8z1gsU/FmFFbS/ulS8TFs4KlR/QEjI1YVKoocHvq
+	 lB8uj1EAHlgRxmL5Y+fdoxwNtxKpGsEiFhMaEAjRwnzLn7STL5ABdEmfYLkO1FuhxW
+	 TiDhdjmv3N4xhIOju7Q6IkkpO/fldzPL4zsLlQ+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.1 2037/2077] mmc: sdhci-esdhc-imx: remove unnecessary mmc_card_wake_sdio_irq check for tuning save/restore
-Date: Tue, 21 Jul 2026 17:28:30 +0200
-Message-ID: <20260721152640.744086729@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 7.1 2028/2077] mtd: onenand: samsung: report DMA completion timeouts
+Date: Tue, 21 Jul 2026 17:28:21 +0200
+Message-ID: <20260721152640.530780955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,55 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 899160e2774d9952e9f2770b38f701ff1906c0b2 upstream.
+commit d03a19bd6c7f86b99ca8fb61a6ec2345cee1d9d6 upstream.
 
-The tuning save/restore during system PM is conditioned on
-mmc_card_wake_sdio_irq(), but this check is unrelated to whether
-tuning values need to be preserved. The actual requirement is that
-the card keeps power during suspend and the controller is a uSDHC.
+The S5PC110 OneNAND DMA helpers have bounded waits for transfer
+completion. The polling helper falls out of its timeout loop and returns
+success, and the IRQ helper ignores wait_for_completion_timeout().
 
-SDIO devices using out-of-band GPIO wakeup maintain power during
-suspend but do not set the SDIO IRQ wake flag. In this case the
-tuning delay values are not saved/restored.
+Return -ETIMEDOUT when the DMA transfer-done bit or completion does not
+arrive before the timeout so callers can treat the buffer transfer as
+failed.
 
-Remove the unnecessary mmc_card_wake_sdio_irq() condition from both
-the suspend save and resume restore paths.
-
-Fixes: c63d25cdc59a ("mmc: sdhci-esdhc-imx: Save tuning value when card stays powered in suspend")
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Fixes: e23abf4b7743 ("mtd: OneNAND: S5PC110: Implement DMA interrupt method")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/mtd/nand/onenand/onenand_samsung.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -2064,8 +2064,7 @@ static int sdhci_esdhc_suspend(struct de
- 	 * to save the tuning delay value just in case the usdhc
- 	 * lost power during system PM.
- 	 */
--	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
--	    esdhc_is_usdhc(imx_data))
-+	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data))
- 		sdhc_esdhc_tuning_save(host);
+--- a/drivers/mtd/nand/onenand/onenand_samsung.c
++++ b/drivers/mtd/nand/onenand/onenand_samsung.c
+@@ -554,6 +554,9 @@ static int s5pc110_dma_poll(dma_addr_t d
+ 	} while (!(status & S5PC110_DMA_TRANS_STATUS_TD) &&
+ 		time_before(jiffies, timeout));
  
- 	if (device_may_wakeup(dev)) {
-@@ -2130,8 +2129,7 @@ static int sdhci_esdhc_resume(struct dev
- 	 * restore the saved tuning delay value for the device which keep
- 	 * power during system PM.
- 	 */
--	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
--	    esdhc_is_usdhc(imx_data))
-+	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data))
- 		sdhc_esdhc_tuning_restore(host);
++	if (!(status & S5PC110_DMA_TRANS_STATUS_TD))
++		return -ETIMEDOUT;
++
+ 	writel(S5PC110_DMA_TRANS_CMD_TDC, base + S5PC110_DMA_TRANS_CMD);
  
- 	pm_runtime_put_autosuspend(dev);
+ 	return 0;
+@@ -608,7 +611,9 @@ static int s5pc110_dma_irq(dma_addr_t ds
+ 
+ 	writel(S5PC110_DMA_TRANS_CMD_TR, base + S5PC110_DMA_TRANS_CMD);
+ 
+-	wait_for_completion_timeout(&onenand->complete, msecs_to_jiffies(20));
++	if (!wait_for_completion_timeout(&onenand->complete,
++					 msecs_to_jiffies(20)))
++		return -ETIMEDOUT;
+ 
+ 	return 0;
+ }
 
 
