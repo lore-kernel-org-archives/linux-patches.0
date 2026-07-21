@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D4146C4D1;
-	Tue, 21 Jul 2026 15:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B49E44607D;
+	Tue, 21 Jul 2026 15:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648888; cv=none; b=o5QauHPhprsSDSSbY+hMebvFsKOtM7wntD8g+pO+PQikJNRmhtSVpzYdB37I7xmDIvOCtL+Ypcb5dwL4W9iG51L3Wk4uO2eQM8eqcrrfxDYg7+gwez3j0CyGiRmeE7TmP99ASuw+n9SRLnVkHftv975PUYrf2ER+tZjTwXYwSpY=
+	t=1784648893; cv=none; b=mXK8lWLhs9fhpP/3NKz8bh86MVnauNwfNlOAN6O3KXEomHppadtDT/qxW/FKRwiqjfVE/Gm2sGOjRewdlj5jw+21Rnr3uem6dUmfCK4KdUdWcwCW70+0zM+Cp9NnoBMmuBrEVZqljsopkjx3haTE4R0i6IVT0K6yF0wQY68q+nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648888; c=relaxed/simple;
-	bh=bHTHDjnUbVCjLQpUcgIF7Pnq0URmZLR9Vs0df0jcSEk=;
+	s=arc-20240116; t=1784648893; c=relaxed/simple;
+	bh=pYhS6EIVWqsVlCF47RjYSSpvEmxzN0DKPFqII9Pfv+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vu+A/APAc3vM/nt6SQs8+yVXCz6IJIz7pQlLKY+Hko428Y37IKdeSz5SsiUEr8hqwUhyDsra3RPByp79aqPAvUj9KExRGJNDP2HjvfKsi+V70gmjWSuKdaO5MD5lagD4M+TwELBIBnTPtNqjOmCDZNyFVQ3e2V2MkyxwAVzOD8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4zdx7at; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lQ4BZqcW5Ha8RucKcmb3gVy8etv+667t7ShhiOEy3QOi5JSxwJHpIxsaTuwAwF5em0Q2CJddk6Lpuh242d481JffP3VKp2V4JAKS0Z1+V5Hl+RqwqtoZlqhBURrhU4vIn+h/J0jKyMobOyt6Ip+21Bt9vz43+GPatxqVGJj5CGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgcbQ4Ko; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4zdx7at"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F0B1F000E9;
-	Tue, 21 Jul 2026 15:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgcbQ4Ko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1852C1F00A3A;
+	Tue, 21 Jul 2026 15:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648883;
-	bh=4EjHACqJ1zyrguC9XlbG01FyduTqC4H1ZlysOWxKNdk=;
+	s=korg; t=1784648886;
+	bh=A22w0IOE8zlkfE3DVjwkotETU7v0r4lADzouL5zowhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z4zdx7atRqieJbDLdRmkHYCl9U94vTbb7l1N1pzUJ56bPvWwHpN2EFK2QdAutUOYM
-	 BvVn/DVOQ1vxvdO5x45r5j3plYcD5MSA5kWtoAQY4OEanhwne1ITgPFd8ua/2RnaWL
-	 eFZOc3Rc703CrsVZqSexec9uDBrs9BGxsFQJtrXg=
+	b=rgcbQ4Ko3QPbXRq7wyPsWToI1AgYKi2cNvKqE6Oc4+k8JxByMpmRjeQXMEGnZWKz3
+	 RnKp4hw1fsYhiTVORVHhQCw6krgAI3NDSQRlMPTpoAyBqS6g43EBVeuDodereex0y/
+	 rpkA/kd52W4GFZIX9+y4N1tk6iSFbwB69A073Su4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Chul Kim <chul.kim@idt.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0314/2077] driver core: Fix missing jiffies conversion in deferred_probe_extend_timeout()
-Date: Tue, 21 Jul 2026 16:59:47 +0200
-Message-ID: <20260721152600.083664002@linuxfoundation.org>
+Subject: [PATCH 7.1 0362/2077] rapidio/tsi721: prevent a bad dereference in tsi721_db_dpc()
+Date: Tue, 21 Jul 2026 17:00:35 +0200
+Message-ID: <20260721152601.225894899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,39 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit f9e6da99fe49277979798a1c3b9790ae10aaa18a ]
+[ Upstream commit fc15e3a30ddd950f009c76765331783b9af94a87 ]
 
-mod_delayed_work() takes jiffies, not seconds. Thus, restore the dropped
-conversion.
+With a list_for_each() loop, if we don't find the item we are looking for
+in the list, then the loop exits with the iterator, which is "dbell" in
+this loop, pointing to invalid memory.
 
-While at it, fix incorrect indentation.
+This code uses the "found" variable to determine if we have found the
+doorbell we are looking for or not.  However, the problem that the "found"
+variable needs to be set to false at the start of each iteration,
+otherwise after the first correct doorbell, then everything is marked as
+found.
 
-Fixes: 1137838865bf ("driver core: Use mod_delayed_work to prevent lost deferred probe work")
-Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260525012340.3860581-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Reset the "found" to false at the start of the iteration and move the
+variable inside the loop.
+
+Link: https://lore.kernel.org/af2WHMZiqMwdYveO@stanley.mountain
+Fixes: 48618fb4e522 ("RapidIO: add mport driver for Tsi721 bridge")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Chul Kim <chul.kim@idt.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/dd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rapidio/devices/tsi721.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 3523a5d8ec5030..6ced7272b97e3c 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -324,7 +324,7 @@ void deferred_probe_extend_timeout(void)
- 	 * start a new one.
- 	 */
- 	if (mod_delayed_work(system_wq, &deferred_probe_timeout_work,
--						 driver_deferred_probe_timeout))
-+			     secs_to_jiffies(driver_deferred_probe_timeout)))
- 		pr_debug("Extended deferred probe timeout by %d secs\n",
- 					driver_deferred_probe_timeout);
- }
+diff --git a/drivers/rapidio/devices/tsi721.c b/drivers/rapidio/devices/tsi721.c
+index 66331e67cf4efc..71b87bf8c31d85 100644
+--- a/drivers/rapidio/devices/tsi721.c
++++ b/drivers/rapidio/devices/tsi721.c
+@@ -394,7 +394,6 @@ static void tsi721_db_dpc(struct work_struct *work)
+ 						    idb_work);
+ 	struct rio_mport *mport;
+ 	struct rio_dbell *dbell;
+-	int found = 0;
+ 	u32 wr_ptr, rd_ptr;
+ 	u64 *idb_entry;
+ 	u32 regval;
+@@ -412,6 +411,8 @@ static void tsi721_db_dpc(struct work_struct *work)
+ 	rd_ptr = ioread32(priv->regs + TSI721_IDQ_RP(IDB_QUEUE)) % IDB_QSIZE;
+ 
+ 	while (wr_ptr != rd_ptr) {
++		int found = 0;
++
+ 		idb_entry = (u64 *)(priv->idb_base +
+ 					(TSI721_IDB_ENTRY_SIZE * rd_ptr));
+ 		rd_ptr++;
 -- 
 2.53.0
 
