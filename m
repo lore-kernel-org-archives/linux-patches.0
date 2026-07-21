@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9602E736D;
-	Tue, 21 Jul 2026 17:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012883F12CE;
+	Tue, 21 Jul 2026 17:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654563; cv=none; b=pFCdCjWWC1epM7LrDbQxP+JJ6WuhBMiau5vt1OHTYyz9n2Gx/oOhMxOrilYmUIsiLVEw68aN3udwou7KEOiZzxkj1RkkL61Ev5ZrDPpoghtZVKF6bKVjceFjlkXeOFjLtEFuaaAuGJ9JumEKxCcPYOfRn9vZTNPuH6aEMWb2ETw=
+	t=1784654566; cv=none; b=J0uSwklHvIQAOiCpyzFTaQ2dhEAl5/G9jFM9gH94oxl3oKKTadv9PorowC1XzRDwEGLc+XXtsbw8v9yrcBmSNNDP9LSbipVrjSyv6u6L6/6+7ySB7iObkJjutq3qC5Wk0YjdP/ptQTRi21EMvwz19X7YfJN+Er3mmmKOtZKyaJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654563; c=relaxed/simple;
-	bh=lY8ODcRSsyrCuUiOIfjzoSAWIzSEWPXKgs9CWMHSwa0=;
+	s=arc-20240116; t=1784654566; c=relaxed/simple;
+	bh=HiXavy9TGcuUv4PIEhhV9F/I/7uRPup00ghwlK2Gulo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRvOc8V7qJA2OyWJtnSr9DDK9EteKBvFb2VVOmCPYOIxL3zm2gAfWwwJph32dHn3Lhalz29GxO7b3LiZy8RT5RaASWWrGqFhI/ij1LwEH9kXz1F2evN5cRmNEm7lnL6HEPa4/GhtflFccnX9G2pEPB46xNbGH0SSm0X+8M9vP9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cznZPb25; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ctFaNjPxMZwRj4pZuT/Rc31vYeSFMQkbmjP2tsNfq6bqedf1RL8QCkivDYOr5Y88X73H23fBocj2+KetXZW67pNycIkfypE5/z4U+gf6X8iGr2JK2zjUuZdx4sAtnCGZWR7Ixn0Xy6cIVHo2PNNkhspwKo16uyUGwyewFwDGI0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0DawGJp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cznZPb25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8A41F00A3A;
-	Tue, 21 Jul 2026 17:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0DawGJp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CB01F000E9;
+	Tue, 21 Jul 2026 17:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654562;
-	bh=gb0O3i7KkP1YfFnDUhAyLQxmSwDGHVwylABWfzLVy8A=;
+	s=korg; t=1784654564;
+	bh=41r9YJsPXZucVLillndeXMXLc90T+hNH6zIL9r+eQuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cznZPb25XRt6VjQ15jsY4HZ6BUtP2xsySRjU5CZ3r4pPv+sJLkSZJasXhe4SbSnyY
-	 jTXeM8Xx8SScgqBEZ9CFidKBfSi2MMy6TcgKxruB2kH1pDBCGgUi+A2ly6O35SJmOp
-	 nfkgAZKHdFG5KKEQ9fJW66ep3G+ab7jR0s5QfnK8=
+	b=Q0DawGJpmqBcTdHKfifkTXWXDrTpcmU2z1ZIi8bQl3QsaEtwzf/vV1JVIdini4qb9
+	 kIzbhUM4s17j7Gc0tqXIr3tkR+bgwxCvDcVJkWnI9QAY/8oQcA4MujeHQ8/Cck93xL
+	 Scxc2XBDEdeWdbAFL+s0LM8LTzeceshmWfi2BcEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	syzbot+e9c15ff790cea6a0cfae@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 1750/2077] ocfs2: fix NULL h_transaction deref in ocfs2_assure_trans_credits
-Date: Tue, 21 Jul 2026 17:23:43 +0200
-Message-ID: <20260721152634.020896305@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.1 1710/2077] ntfs3: validate split-point offset in indx_insert_into_buffer
+Date: Tue, 21 Jul 2026 17:23:03 +0200
+Message-ID: <20260721152633.091333704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -58,67 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit f9ab30c96b0f00c20c6dac93681bdae3a033d229 upstream.
+commit f1df9d771df47aa40de6d70949c28720ae1e430d upstream.
 
-[BUG]
-A direct write over unwritten extents can panic the kernel in
-ocfs2_assure_trans_credits() when the journal aborts during DIO
-completion. The crash is a general protection fault from a NULL pointer
-dereference.
+indx_insert_into_buffer() computes
 
-[CAUSE]
-ocfs2_dio_end_io_write() loops over a direct write's unwritten extents,
-marking each written under a single journal handle. If the journal
-aborts (for example after an I/O error) while the extent tree is being
-updated, the handle is left aborted with its transaction pointer
-cleared. The extent merge treats that failure as not critical and
-reports success, so the loop keeps using the handle.
-ocfs2_assure_trans_credits() reads the handle's remaining credits
-without first checking whether the handle is aborted, and that read
-dereferences the cleared transaction pointer.
+    used = used1 - to_copy - sp_size;
+    memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
 
-[FIX]
-A journal abort is recorded in the handle itself, so callers are
-expected to test the handle rather than rely on a returned error.
-Make ocfs2_assure_trans_credits() do that, as the other ocfs2 journal
-helpers already do, and return -EROFS when the handle is aborted.
+where sp and sp_size come from hdr_find_split().  hdr_find_split()
+walks entries by le16_to_cpu(e->size) without validating that each
+step stays within hdr->used or that the size field is at least
+sizeof(struct NTFS_DE).  index_hdr_check(), the on-load gatekeeper,
+only validates header-level fields (used, total, de_off) and does
+not walk per-entry sizes.
 
-Link: https://lore.kernel.org/airKTsM1fRVN-Wj7@dev
-Fixes: be346c1a6eeb ("ocfs2: fix DIO failure due to insufficient transaction credits")
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Reported-by: syzbot+e9c15ff790cea6a0cfae@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e9c15ff790cea6a0cfae
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+A crafted NTFS image whose leaf INDEX_HDR reports used == total but
+contains one interior NTFS_DE with size = 0xFFF0 therefore passes
+validation, descends to indx_insert_into_buffer() through the
+ntfs_create() -> indx_insert_entry() path, and makes hdr_find_split()
+return an sp whose sp_size (0xFFF0) greatly exceeds the remaining
+bytes in the buffer.  The u32 subtraction underflows and the memmove
+count becomes a near-4-GiB value, producing an out-of-bounds kernel
+write that corrupts adjacent allocations and panics the kernel.
+
+Reproduced on 7.0.0-rc7 with UML + KASAN via a crafted image and a
+single 'touch' inside the mounted directory; crash site resolves to
+fs/ntfs3/index.c at the memmove.  Trigger requires only local mount
+of an attacker-supplied filesystem image (USB, loopback, or removable
+media auto-mount).
+
+Reject the split whenever the chosen sp plus its declared size
+already extends past hdr1->used.  This is the minimal fix; it
+preserves the existing hdr_find_split() contract and relies on the
+same out: cleanup path as the pre-existing error returns.
+
+A prior OOB read in the very same indx_insert_into_buffer() memmove
+was fixed in commit b8c44949044e ("fs/ntfs3: Fix OOB read in
+indx_insert_into_buffer") by tightening hdr_find_e(), but that fix
+does not cover the split-point size field path addressed here: sp is
+returned by hdr_find_split(), not hdr_find_e(), and the underflow is
+driven by sp->size rather than hdr->used exceeding hdr->total.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Cc: stable@vger.kernel.org
+Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/journal.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ntfs3/index.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -473,8 +473,12 @@ bail:
-  */
- int ocfs2_assure_trans_credits(handle_t *handle, int nblocks)
- {
--	int old_nblks = jbd2_handle_buffer_credits(handle);
-+	int old_nblks;
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1862,6 +1862,20 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	memcpy(up_e, sp, sp_size);
  
-+	if (is_handle_aborted(handle))
-+		return -EROFS;
+ 	used1 = le32_to_cpu(hdr1->used);
 +
-+	old_nblks = jbd2_handle_buffer_credits(handle);
- 	trace_ocfs2_assure_trans_credits(old_nblks);
- 	if (old_nblks >= nblocks)
- 		return 0;
++	/*
++	 * hdr_find_split does not validate per-entry sizes, so a crafted
++	 * NTFS_DE whose le16 size field is out of range can place sp such
++	 * that (PtrOffset(hdr1, sp) + sp_size) exceeds used1. Without this
++	 * guard the u32 'used = used1 - to_copy - sp_size' underflows and
++	 * the subsequent memmove count becomes a near-4-GiB value,
++	 * triggering an out-of-bounds kernel write.
++	 */
++	if (PtrOffset(hdr1, sp) + sp_size > used1) {
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
+ 	if (!hdr1_saved) {
+ 		err = -ENOMEM;
 
 
