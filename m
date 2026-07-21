@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE3044AB9E;
-	Tue, 21 Jul 2026 21:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58CA44AB61;
+	Tue, 21 Jul 2026 21:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670122; cv=none; b=GqOTq3xGwSvIVQ5BcWxm3oH5jrF/5CakPSFHDEjIdHD6lLnBfcsP3mEECNUTG9G/BWSLmxiCyULCyloZjWy4vFq6VY42Tf0KVrZq4qMJqLSImk0ukT8iChKuZvznOEmPk/Rl6/G2Jwdri3+MI12+ctNjXeOSV36GhmFETlzEuzU=
+	t=1784670124; cv=none; b=M+4Fo47+pSNNrUdFD7sZt7Uo1oncxzHWRTVi5ssu4K3cITQ1ozSyMUQSvqdaW54349dOYsiuN2+FBXd36sBOc0mydmyRixSEFyKUxZq3znHj7RSRNwx33F4s2lwZ92F3rBnpaY5yzbknPKPN+DJCanrdPkdBLeVuXet/pyqlrVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670122; c=relaxed/simple;
-	bh=lX/0QgrSmgthpSBMre8UZxorWKRscgRYr/hP+iGUgC4=;
+	s=arc-20240116; t=1784670124; c=relaxed/simple;
+	bh=eNptxZ2yN+sNHnvpnGFR+sxkdQuH6D1llMZuZzyYf3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pkdy7OnBo/7EkUKbN5Ek7r7oB6dM8Sv4OE9V9GcbANPFe6cO/4j1ju2+2urAJBBF2BdNpt32LdGpF9tF7KOxQWlFEbt+A1cCwuEbr2UzwQtnmE5ZvOGBbJ5v9MJ6DQPAUfNHe6qlENkBTYlOIXxTuVtZFdGmPmkCZHbczy9nnu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfKK9GW0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ofgFPfEGH0cbd7iFkCRFHLwwxf3QrNTqJtSLjGQ3uvR5nISegFeUeZs9991/M+gsVLejWDqCwwol5n6SqHrQyF/NlJeO6sfU8vnRAXxF1vFJEpb+sqnSqT+lLBhepss94dlbJMMI/5q7NVWx2Adfhmz1HUWjrTU6xE5krdF6bZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9eOKR19; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfKK9GW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3CB1F000E9;
-	Tue, 21 Jul 2026 21:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9eOKR19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280601F000E9;
+	Tue, 21 Jul 2026 21:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670121;
-	bh=zvoGfHwapFkcYGiCb+Ao4R8nsWufw49dNsGSiR795EQ=;
+	s=korg; t=1784670123;
+	bh=XG6LtmRg8v0mK4WAvmu/hz5sQm9AgjfW8Od4jEVkObo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NfKK9GW0sGZPk0KNvLd6l3G7oRIcniT1y1i7wFFrFHciJArTyUKLfO7EJeDcVlIBs
-	 4L6wiVkPPEplz2PhtflodhkIvmd06r7UmRzbC5f7v4scfB4tADrQfM0kTHnpdWFWdp
-	 6FnAmnonUW+O6N+cLOo9Irj8qzKGSqsozEvTVbVE=
+	b=l9eOKR19dgnteZ2EPgp4SZrw/K/FLxSDKEltHC9lAR7BPt5Z1AdFnpO1Y4HmJMY/F
+	 1974XnvJPMCs26/63ARgMewq5lpakcPF4t03FSC2BWh+Wx5Hw6RQN3ghC5mSsSP/9c
+	 S4lSgFv6UEB7rMle0CjdbX8UZlHzXHTBG1f94Jqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: [PATCH 6.1 0813/1067] bus: mhi: ep: Protect mhi_ep_handle_syserr() in the error path
-Date: Tue, 21 Jul 2026 17:23:34 +0200
-Message-ID: <20260721152442.740587401@linuxfoundation.org>
+	Sebastian Alba Vives <sebasjosue84@gmail.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 6.1 0814/1067] fpga: microchip-spi: fix zero header_size OOB read in mpf_ops_parse_header()
+Date: Tue, 21 Jul 2026 17:23:35 +0200
+Message-ID: <20260721152442.763446309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -49,34 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Sebastian Alba Vives <sebasjosue84@gmail.com>
 
-commit 519ddf194b158b91439319f6b977b8a465fda0fb upstream.
+commit 43a1974da6bc7ce8f4d1dc1d03d56997428c29c3 upstream.
 
-All the callers of mhi_ep_handle_syserr() except mhi_ep_process_cmd_ring()
-are holding the 'state_lock' to avoid the race in setting the MHI state. So
-do the same in mhi_ep_process_cmd_ring() for sanity.
+mpf_ops_parse_header() reads header_size from the bitstream at
+MPF_HEADER_SIZE_OFFSET (24). When header_size is zero, the expression
+*(buf + header_size - 1) reads one byte before the buffer start.
 
-Fixes: e827569062a8 ("bus: mhi: ep: Add support for processing command rings")
-Cc: stable@vger.kernel.org # 5.18
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260302085612.18725-1-manivannan.sadhasivam@oss.qualcomm.com
+Since initial_header_size is set to 71 in mpf_ops, the fpga-mgr core
+guarantees the buffer is large enough to reach MPF_HEADER_SIZE_OFFSET.
+The only real gap is the zero header_size case, which cannot be
+resolved by providing a larger buffer, so return -EINVAL.
+
+Fixes: 5f8d4a900830 ("fpga: microchip-spi: add Microchip MPF FPGA manager")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260518190742.61426-4-sebasjosue84@gmail.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/ep/main.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/fpga/microchip-spi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -207,7 +207,9 @@ static int mhi_ep_process_cmd_ring(struc
- 			ret = mhi_ep_create_device(mhi_cntrl, ch_id);
- 			if (ret) {
- 				dev_err(dev, "Error creating device for channel (%u)\n", ch_id);
-+				mutex_lock(&mhi_cntrl->state_lock);
- 				mhi_ep_handle_syserr(mhi_cntrl);
-+				mutex_unlock(&mhi_cntrl->state_lock);
- 				return ret;
- 			}
- 		}
+diff --git a/drivers/fpga/microchip-spi.c b/drivers/fpga/microchip-spi.c
+index 6134cea86ac8..cc8f6d7bb978 100644
+--- a/drivers/fpga/microchip-spi.c
++++ b/drivers/fpga/microchip-spi.c
+@@ -116,6 +116,9 @@ static int mpf_ops_parse_header(struct fpga_manager *mgr,
+ 	}
+ 
+ 	header_size = *(buf + MPF_HEADER_SIZE_OFFSET);
++	if (!header_size)
++		return -EINVAL;
++
+ 	if (header_size > count) {
+ 		info->header_size = header_size;
+ 		return -EAGAIN;
+-- 
+2.55.0
+
 
 
