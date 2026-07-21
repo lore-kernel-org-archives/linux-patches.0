@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08A23BB680;
-	Tue, 21 Jul 2026 22:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A0244AB9F;
+	Tue, 21 Jul 2026 22:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673443; cv=none; b=DiUglX+g5g8ESt4teRicV9EQZAoQG9M7GxnfdGAb7CvTGWdfi7Bxywwspa/YXXON5pXOGuD24VJRqyE557xW/OqHRYEcZEVR3hishjKHaAMvkgnyx42skX13MBW6DNUZTAVBHxmi1Oj68TtP+O8lHZX83TLsgBUK92tZbsEmLqA=
+	t=1784673445; cv=none; b=cyAqyv90I+JwEQ2CytuSUa0MsrUykUMDz+cw65XfKSC49IHRZAYLuNy1rF9BI0b657WSF/c5SQtY757G6xtnAAEZz6yrNaDMB3hiVU1lay8k/hjkD2hKZwQcsof1PcrJr48bz77OBK3qlL/c5x5kC1TgRxlCTlLc4bw0GMg7oLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673443; c=relaxed/simple;
-	bh=YQkJevpstgLPO/VyyyDW06WQtZlj8s4m4V6ml1vCSxE=;
+	s=arc-20240116; t=1784673445; c=relaxed/simple;
+	bh=lFhGLh8zcLo+uGzALtLeO47daQmTajUmstIWl3LalfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxGC9kHRDLhj2KFhpSb6kOMjOxKHnukNhXw9vvZi/BSr7jvYj9Ro2lfa7XQ8W/ggyHTTbtpUFGlZOM/7Kkmk9BPAJBrjAoQRm6ikUjbGDcPrW8vKVqiekZEeP/tcmxvihsovWdqBBWeXjfEOUO/0LHS6dBnOVjK7SKIAVB8+GQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBHXd+81; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S2Uq04xoOwlSaGbzJA414lU3CVA3K23CENRwUUDhKVTTkivEfgsV6M4oJBJhukeB7MjN97lAa8SktbiuwCRMQT9duhFx5+zRXqVykT5QpMgSdGZe2VmewYLU28062pCS67RZYeXwaHR9wkApoDakYppAz9ouBlSGzPwP5o2UCS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=riTmnaeR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBHXd+81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F041F000E9;
-	Tue, 21 Jul 2026 22:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="riTmnaeR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC9F1F000E9;
+	Tue, 21 Jul 2026 22:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673441;
-	bh=AFzLN0nwqJmOA6/YHpwSbDWBB5jpmRbsm1b0PZiiN58=;
+	s=korg; t=1784673444;
+	bh=14fgoDcK/uCREYxrB0Vt/nZU/J0g0n45xTlKUGRByhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rBHXd+81LkgOT5BxAhA+eIzPFpuy2zVAKcfWU3weS9Z5wCv1Qn2SyThX5N/bFzp7a
-	 AOiZMUgIFBQC9UMHdQBT1EowuQE+JVWWiORHrezo1qOpq6+WjRA/h8t26SvB5Fiib2
-	 V7RXOKeAKgqPyBzJX6vDUCgzXKAY+sjM+CidqT5M=
+	b=riTmnaeRqPgA8Lmk6dUdsusRMI0XcL7/qfF6iebzbNbxcI85hchZUX9jwhR7XUeyn
+	 Wbg6kyumdEcgIfik2K/yu8JndNAzDFfjdqq0EqHK0pXhhRLmabYV9XqpGcSaBuF1UJ
+	 Mqbz2G6JcvYe03Ue7b1VW2HevepnxbAkqcjNUPiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 163/699] media: uvcvideo: Fix buffer sequence in frame gaps
-Date: Tue, 21 Jul 2026 17:18:42 +0200
-Message-ID: <20260721152359.381123962@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH 5.10 164/699] serial: msm: Disable DMA for kernel console UART
+Date: Tue, 21 Jul 2026 17:18:43 +0200
+Message-ID: <20260721152359.403881248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,67 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 2f24ac8dd87983a55f0498898f34a5f2b735b802 upstream.
+commit 22dd2777e6c180e1c945b00f6d18550979436324 upstream.
 
-In UVC, the FID flips with every frame. For every FID flip, we increase
-the stream sequence number.
+At the moment, concurrent writes from userspace and the kernel to the
+console can trigger a race condition that results in an infinite loop of
+the same messages printed over and over again. This is most likely to
+happen during system startup or shutdown when the init system starts/stops
+a large number of system services that interact with various kernel code.
 
-Now, if a FID flips multiple times and there is no data transferred between
-the flips, the buffer sequence number will be set to the value of the
-stream sequence number after the first flip.
+When userspace writes to the TTY device, the driver initiates an
+asynchronous DMA transfer and releases the port lock. At the same moment,
+the kernel printk path might grab the port lock and re-configure the UART
+controller for PIO, without waiting for the DMA operation to complete. It
+seems like this collision results in zero progress being reported for the
+DMA engine, so the same text is printed to the console over and over again.
 
-Userspace uses the buffer sequence number to determine if there have been
-missing frames. With the current behaviour, userspace will think that the
-gap is in the wrong location.
+For the kernel console, we want a reliable output path that will be
+functional even during crashes etc. So rather than implementing complex
+code to synchronize the kernel console write routines with the userspace
+DMA write routines, simply disable DMA for the console UART instance.
 
-This patch modifies uvc_video_decode_start() to provide the correct buffer
-sequence number and timestamp.
+Similar checks exist in many other serial drivers, e.g. 8250_port.c,
+imx.c, sh-sci.c etc.
 
-Cc: stable@kernel.org
-Fixes: 650b95feee35 ("[media] uvcvideo: Generate discontinuous sequence numbers when frames are lost")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 3a878c430fd6 ("tty: serial: msm: Add TX DMA support")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260706-serial-msm-console-dma-collision-v1-1-3179b8cb1d89@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_video.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/tty/serial/msm_serial.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1096,6 +1096,19 @@ static int uvc_video_decode_start(struct
- 		stream->sequence++;
- 		if (stream->sequence)
- 			uvc_video_stats_update(stream);
-+
-+		/*
-+		 * On a FID flip initialize sequence number and timestamp.
-+		 *
-+		 * The driver already takes care of injecting FID flips for
-+		 * UVC_QUIRK_STREAM_NO_FID and UVC_QUIRK_MJPEG_NO_EOF.
-+		 */
-+		if (buf) {
-+			buf->buf.field = V4L2_FIELD_NONE;
-+			buf->buf.sequence = stream->sequence;
-+			buf->buf.vb2_buf.timestamp =
-+					ktime_to_ns(uvc_video_get_time());
-+		}
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -1216,7 +1216,8 @@ static int msm_startup(struct uart_port
+ 	data |= UART_MR1_AUTO_RFR_LEVEL0 & rfr_level;
+ 	msm_write(port, data, UART_MR1);
+ 
+-	if (msm_port->is_uartdm) {
++	/* Disable DMA for console to prevent PIO/DMA collisions */
++	if (msm_port->is_uartdm && !uart_console(port)) {
+ 		msm_request_tx_dma(msm_port, msm_port->uart.mapbase);
+ 		msm_request_rx_dma(msm_port, msm_port->uart.mapbase);
  	}
- 
- 	uvc_video_clock_decode(stream, buf, data, len);
-@@ -1134,10 +1147,6 @@ static int uvc_video_decode_start(struct
- 			return -ENODATA;
- 		}
- 
--		buf->buf.field = V4L2_FIELD_NONE;
--		buf->buf.sequence = stream->sequence;
--		buf->buf.vb2_buf.timestamp = ktime_to_ns(uvc_video_get_time());
--
- 		/* TODO: Handle PTS and SCR. */
- 		buf->state = UVC_BUF_STATE_ACTIVE;
- 		if (meta_buf)
 
 
