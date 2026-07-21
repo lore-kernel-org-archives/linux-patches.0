@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339AF3EDE79;
-	Tue, 21 Jul 2026 17:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DE22E62A9;
+	Tue, 21 Jul 2026 17:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654117; cv=none; b=q5q06GgDKgcg2vcqkg1Jpx2Can0VTKAQ/QT2PvAgOz2IKcQreLg/USEK5VdxbAo0hggtGFsq5xeK7BOjIDOXU5i6cruYJ0aT73xph0kP2wccaUFIcQvsogGllgpvyoFR7kYoK+imx+vzNfs29zaKI1PAe4jZ3RfQGMCrQ1dv/8M=
+	t=1784654119; cv=none; b=O4wy0T1GHXB6xHJbqX4vsof/3Z48VG0/ZyFu1J3NRPBcO7OCuXCmGqaOgwVzWr8px9QyTapce6ZrFZmt00Evz03Pq0WVAi5ejohclrg8Epx/Q53E0yO+Fjl0wtjP6B7th+aDpzMnOKz4MsP0+13M0KBiyVErf/nEREBnzOgSMjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654117; c=relaxed/simple;
-	bh=wVq8IET/h7Jy/xmeIc3cg/K+fx8Gn1GAlQ+cE1F/sKk=;
+	s=arc-20240116; t=1784654119; c=relaxed/simple;
+	bh=9PMxTOAlVM+8KQhGYuzg8GMjycYUsWulPnzOJn5EBqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ceXfZ+6TgWxK0SHJ06PZQk9RPIfI4t+B8Ef5l8QcCqw5Gq8AEl/qQfKvbPfkJN/eou5GCQVK/+YX7/Q/LIN08gu1yAi4YlOrLxOkR+leXATI29tdSo7YAKI2IHn+diC8Qn8sVuJRxxdW8WkQByLQxUKCdTdMHWpuCxbct1v/vb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dx5MN5l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fq9+aOTLQOGbcMoDNcXlWZdqqJVKV99OnFbCSDU+29e+pHtxmFpQ/EENGwniriOGI+WV+IKfyxPUEKhxz0WcMkKGpENI7WD0BMYfrak5xeyvB/WVb3xO+hfrwkgIoTqPoCeeBymqTC3GgukvEy/7IDLWIQAzD1rHije6FTFAgvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUMSElxt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dx5MN5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D721F000E9;
-	Tue, 21 Jul 2026 17:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUMSElxt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0789E1F000E9;
+	Tue, 21 Jul 2026 17:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654115;
-	bh=oLdnLEFZg6PNCQoypdAMWmwzoe6fzHeZxyymFQkTwq8=;
+	s=korg; t=1784654118;
+	bh=67ICudUq7MWt/+q9fIYuVJU826w0hYu+MIAHcAqhEc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0dx5MN5ltp8ueDBGdAteqpzRcs0S4LhO9T+z4jTi48avaQcbIU1pOLuh8yo+mihK9
-	 hFpHaNcb43UTCl2KIi6z7IzRjDdqs1Wc01FEfy7CyhYosjOq0ZgXEEnYthTdfCAAOE
-	 0vOePRNTSUZd8E1omHt6nSbCLcuakS+FP4P6kIsQ=
+	b=JUMSElxt2rmzAq/LcoIQLqpRjSYjsAnw3VjHE0L2sGDOCnUL8WNrb6NDLxHfBp2Mw
+	 euyfnqRrihw02eSu5qseLCsUsKpR70b7eVpDaJaP7NTUNH8idfW6r9bgH9rOr9iWIW
+	 UiuhYFHAFIlTyyV/XzjTDFTU72RahcWnu1+golSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.1 1584/2077] fbdev: radeon: fix potential memory leak in radeonfb_pci_register()
-Date: Tue, 21 Jul 2026 17:20:57 +0200
-Message-ID: <20260721152630.135552007@linuxfoundation.org>
+Subject: [PATCH 7.1 1585/2077] fbdev: i740fb: fix potential memory leak in i740fb_probe()
+Date: Tue, 21 Jul 2026 17:20:58 +0200
+Message-ID: <20260721152630.157795121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,31 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit df8c1101c9a08859da612b5d0a08d55d475522c6 upstream.
+commit 5936063409af230a2c88b8700c47b89a19fd70b5 upstream.
 
-The function radeonfb_pci_register() allocates memory for modelist
-(by calling radeon_check_modes() which calls fb_add_videomode()).
-The memory is appended to info->modelist, but is not freed in subsequent
-error paths. Fix this by calling fb_destroy_modelist().
+In i740fb_probe(), the memory allocated in fb_videomode_to_modelist()
+for modelist is not freed in the error paths. Fix that by calling
+fb_destroy_modelist().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 5350c65f4f15 ("Resurrect Intel740 driver: i740fb")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/aty/radeon_base.c |    1 +
+ drivers/video/fbdev/i740fb.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/aty/radeon_base.c
-+++ b/drivers/video/fbdev/aty/radeon_base.c
-@@ -2476,6 +2476,7 @@ static int radeonfb_pci_register(struct
- 	return 0;
- err_unmap_fb:
- 	iounmap(rinfo->fb_base);
+--- a/drivers/video/fbdev/i740fb.c
++++ b/drivers/video/fbdev/i740fb.c
+@@ -1152,6 +1152,7 @@ err_reg_framebuffer:
+ 	fb_dealloc_cmap(&info->cmap);
+ err_alloc_cmap:
+ err_find_mode:
 +	fb_destroy_modelist(&info->modelist);
- err_unmap_rom:
- 	kfree(rinfo->mon1_EDID);
- 	kfree(rinfo->mon2_EDID);
+ 	if (par->ddc_registered)
+ 		i2c_del_adapter(&par->ddc_adapter);
+ 	pci_iounmap(dev, par->regs);
 
 
