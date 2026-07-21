@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F4944AB6E;
-	Tue, 21 Jul 2026 21:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB313C1081;
+	Tue, 21 Jul 2026 21:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670819; cv=none; b=BQMayvSGnkXuvDQIER14q3JLAmAJwH1TRyE7Y+c/AO7t1GKFVYOBD+sbXgs7DevjDlREjZhvL4sSNO11YEl/iF1RjIrZgBmd8TUhISsZS9pKp9bGNd4Ww0nWIpA2d8L0vsftEXrSc+EJhcIhFTU1COlJvS1DMNpY7xVxxT0HYhs=
+	t=1784670821; cv=none; b=MBJGY+T0OGOjEqlbL/vkyB2qAFQ7F07RNp4EcuBzwZetdSA5UksHOLY7HkgqEQ+UryAlbSoLLkYAlQha0P+VeeH44VQzqucbxBe/bZhc7pUjhz3NmBtVNcED5y/htxLvS2Hp8aZSofU/fvOnq/4Bqvrn/qlX6717Ol9VJyrL9lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670819; c=relaxed/simple;
-	bh=6os/AFH27JKcKz9Yi7mXNcL6h8i9j1+v3DU+m++tqmA=;
+	s=arc-20240116; t=1784670821; c=relaxed/simple;
+	bh=bjI7W6lfynVRYAlO3pHVWC6+r30cK3jTfzfeV/rdCnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DefvyHB/dCcnVUlL2ON2RdM39mMrZH5gQgtgpcB/PJ3BCZmqDSY5MfSvg5inVzlgmM+HsBSvFUuinysKuwSepEKmOubqBp0viQMvMzLa+3V16Eo5FWnBjINfQCTJZvfCK40YPfKB7aNm32WC8j4X0ES8fxqtoIrw3SzlHrT+Rww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqynXpJa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UzkTez2AAt2pxox4NvpRTKKZ9mV8lU2KZRa5CHNht7RUnCDoo5WQazC8DxA3cfEaXV2yMpIdSPz4tKwWuQ1QVYfBWM7j1LPx0PsM3TF5VYziP74McQAGYlMn+BrTGAc21AyQZAGV8bSvJXZI4VDK0p45+lAEMlVNJKEeKSlunfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/oOW1qa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqynXpJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9096A1F00A3A;
-	Tue, 21 Jul 2026 21:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/oOW1qa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7CE1F000E9;
+	Tue, 21 Jul 2026 21:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670818;
-	bh=6uqbUOI3CFMdlkTbeYtQiHgjApHGKE7OcjFZslSdWcE=;
+	s=korg; t=1784670820;
+	bh=7XGpzNFhG2oTgtChcFc2vKNuoI3Sktcuj9tiLEZbGyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqynXpJaX9S9mAlDVZEuqWSInH+F7ciSHU5NdZWBrYKzM0cWXpbl/9B1AmihFl+uI
-	 Zr7prwot8VsOKbNngj1XMr2BH8ONrwf6QTDB78RupizQ52iNID6DA2RD/QmZEqc7j+
-	 dyw7zK8M0yN8bRYg3anz5qd7XOIw207nmBjCsx1w=
+	b=M/oOW1qaBoBqU+rFi6LsyX4uYxVyNKfZq5FAsLzQcv4ZV8+DongYM4dQJCTvcV0l1
+	 YuPDTp5PUZB6FXmldlnDumXCF+eHPvATWsLEVP/pWVkExH19ekPad3SCP11P1hZc9B
+	 Muj6Ym3RRaYu+2GFlEhyE297UV2smwX7yAgBWodQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/843] userfaultfd: gate must_wait writability check on pte_present()
-Date: Tue, 21 Jul 2026 17:14:00 +0200
-Message-ID: <20260721152406.075005274@linuxfoundation.org>
+Subject: [PATCH 5.15 014/843] nfsd: move name lookup out of nfsd4_list_rec_dir()
+Date: Tue, 21 Jul 2026 17:14:09 +0200
+Message-ID: <20260721152406.276701513@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -60,86 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau <kas@kernel.org>
+From: NeilBrown <neilb@ownmail.net>
 
-[ Upstream commit 8e80af52db652fbc41320eee45a4f73bc029faf2 ]
+[ Upstream commit 89bd77cf436bf25e448817a662ebf76515f22863 ]
 
-userfaultfd_must_wait() and userfaultfd_huge_must_wait() read the PTE
-without taking the page table lock and then apply pte_write() /
-huge_pte_write() to it.  Those accessors decode bits from the present
-encoding only; on a swap or migration entry they read the offset bits that
-happen to share the same position and return an undefined result.
+nfsd4_list_rec_dir() is called with two different callbacks.
+One of the callbacks uses vfs_rmdir() to remove the directory.
+The other doesn't use the dentry at all, just the name.
 
-The intent of the check is "is this fault still WP-blocked?".  A
-non-marker swap entry means the page is in transit -- the userfault
-context the original fault delivered against is no longer the same, and
-the swap-in or migration completion path will re-deliver a fresh fault if
-userspace still needs to handle it.  Worst case under the current code the
-garbage write bit says "wait", and the thread stays asleep until a
-UFFDIO_WAKE that may never arrive.
+As only one callback needs the dentry, this patch moves the lookup into
+that callback.  This prepares of changes to how directory operations
+are locked.
 
-Gate the writability check on pte_present() so the lockless re-check only
-inspects present-PTE bits when the entry is actually present.  The
-non-present, non-marker case returns "don't wait" and lets the fault path
-retry.
-
-Link: https://lore.kernel.org/20260529172331.356655-6-kas@kernel.org
-Fixes: 369cd2121be4 ("userfaultfd: hugetlbfs: userfaultfd_huge_must_wait for hugepmd ranges")
-Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-[ kas: apply to fs/userfaultfd.c and fold the pte_present()/
-  huge_pte_present() gate into the existing writability checks; this tree
-  predates the marker/return-style refactor of these functions ]
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 4552f4e3f2c9 ("nfsd: change nfs4_client_to_reclaim() to allocate data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/userfaultfd.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4recover.c | 55 ++++++++++++++++++++++---------------------
+ 1 file changed, 28 insertions(+), 27 deletions(-)
 
-diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
-index 868405f3cfa0c4..271ce399f6b6fd 100644
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -249,7 +249,12 @@ static inline bool userfaultfd_huge_must_wait(struct userfaultfd_ctx *ctx,
- 	 */
- 	if (huge_pte_none(pte))
- 		ret = true;
--	if (!huge_pte_write(pte) && (reason & VM_UFFD_WP))
-+	/*
-+	 * Gate the writability check on pte_present(): huge_pte_write() on a
-+	 * non-present migration entry decodes random offset bits. The
-+	 * migration completion path re-delivers the fault if still needed.
-+	 */
-+	if (pte_present(pte) && !huge_pte_write(pte) && (reason & VM_UFFD_WP))
- 		ret = true;
- out:
- 	return ret;
-@@ -330,7 +335,12 @@ static inline bool userfaultfd_must_wait(struct userfaultfd_ctx *ctx,
- 	 */
- 	if (pte_none(*pte))
- 		ret = true;
--	if (!pte_write(*pte) && (reason & VM_UFFD_WP))
-+	/*
-+	 * Gate the writability check on pte_present(): pte_write() on a
-+	 * non-present swap/migration entry decodes random offset bits. The
-+	 * page-in path re-delivers the fault if it still needs userspace.
-+	 */
-+	if (pte_present(*pte) && !pte_write(*pte) && (reason & VM_UFFD_WP))
- 		ret = true;
- 	pte_unmap(pte);
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index b8ea2bdfbcfbf5..52984348ba3995 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -254,7 +254,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
+ 	nfs4_reset_creds(original_cred);
+ }
  
+-typedef int (recdir_func)(struct dentry *, struct dentry *, struct nfsd_net *);
++typedef int (recdir_func)(struct dentry *, char *, struct nfsd_net *);
+ 
+ struct name_list {
+ 	char name[HEXDIR_LEN];
+@@ -308,23 +308,14 @@ nfsd4_list_rec_dir(recdir_func *f, struct nfsd_net *nn)
+ 	}
+ 
+ 	status = iterate_dir(nn->rec_file, &ctx.ctx);
+-	inode_lock_nested(d_inode(dir), I_MUTEX_PARENT);
+ 
+ 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
+-		if (!status) {
+-			struct dentry *dentry;
+-			dentry = lookup_one_len(entry->name, dir, HEXDIR_LEN-1);
+-			if (IS_ERR(dentry)) {
+-				status = PTR_ERR(dentry);
+-				break;
+-			}
+-			status = f(dir, dentry, nn);
+-			dput(dentry);
+-		}
++		if (!status)
++			status = f(dir, entry->name, nn);
++
+ 		list_del(&entry->list);
+ 		kfree(entry);
+ 	}
+-	inode_unlock(d_inode(dir));
+ 	nfs4_reset_creds(original_cred);
+ 
+ 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
+@@ -422,18 +413,19 @@ nfsd4_remove_clid_dir(struct nfs4_client *clp)
+ }
+ 
+ static int
+-purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
++purge_old(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ {
+ 	int status;
++	struct dentry *child;
+ 	struct xdr_netobj name;
+ 
+-	if (child->d_name.len != HEXDIR_LEN - 1) {
+-		printk("%s: illegal name %pd in recovery directory\n",
+-				__func__, child);
++	if (strlen(cname) != HEXDIR_LEN - 1) {
++		printk("%s: illegal name %s in recovery directory\n",
++				__func__, cname);
+ 		/* Keep trying; maybe the others are OK: */
+ 		return 0;
+ 	}
+-	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
++	name.data = kstrdup(cname, GFP_KERNEL);
+ 	if (!name.data) {
+ 		dprintk("%s: failed to allocate memory for name.data!\n",
+ 			__func__);
+@@ -443,10 +435,17 @@ purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
+ 	if (nfs4_has_reclaimed_state(name, nn))
+ 		goto out_free;
+ 
+-	status = vfs_rmdir(&init_user_ns, d_inode(parent), child);
+-	if (status)
+-		printk("failed to remove client recovery directory %pd\n",
+-				child);
++	inode_lock_nested(d_inode(parent), I_MUTEX_PARENT);
++	child = lookup_one_len(cname, parent, HEXDIR_LEN - 1);
++	if (!IS_ERR(child)) {
++		status = vfs_rmdir(&init_user_ns, d_inode(parent), child);
++		if (status)
++			printk("failed to remove client recovery directory %pd\n",
++			       child);
++		dput(child);
++	}
++	inode_unlock(d_inode(parent));
++
+ out_free:
+ 	kfree(name.data);
+ out:
+@@ -477,18 +476,18 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
+ }
+ 
+ static int
+-load_recdir(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
++load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ {
+ 	struct xdr_netobj name;
+ 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
+ 
+-	if (child->d_name.len != HEXDIR_LEN - 1) {
+-		printk("%s: illegal name %pd in recovery directory\n",
+-				__func__, child);
++	if (strlen(cname) != HEXDIR_LEN - 1) {
++		printk("%s: illegal name %s in recovery directory\n",
++				__func__, cname);
+ 		/* Keep trying; maybe the others are OK: */
+ 		return 0;
+ 	}
+-	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
++	name.data = kstrdup(cname, GFP_KERNEL);
+ 	if (!name.data) {
+ 		dprintk("%s: failed to allocate memory for name.data!\n",
+ 			__func__);
+@@ -843,11 +842,13 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 				return PTR_ERR(name.data);
+ 			name.len = namelen;
+ 		}
++#ifdef CONFIG_NFSD_V4
+ 		if (name.len > 5 && memcmp(name.data, "hash:", 5) == 0) {
+ 			name.len = name.len - 5;
+ 			memmove(name.data, name.data + 5, name.len);
+ 			cn->cn_has_legacy = true;
+ 		}
++#endif
+ 		if (!nfs4_client_to_reclaim(name, princhash, nn)) {
+ 			kfree(name.data);
+ 			kfree(princhash.data);
 -- 
 2.53.0
 
