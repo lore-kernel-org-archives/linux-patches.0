@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F453EEAC7;
-	Tue, 21 Jul 2026 19:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E5031716E;
+	Tue, 21 Jul 2026 19:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661530; cv=none; b=fx/sJbepH5FnCGJpBKJYrhEALqh853Av8CYoJvIovJiQyMbx2IkaSSdJfIpW+T1YBKMqeBmVINJob3Jo25JW2WrWs3e8K5OOGamGX8YkvDKmStSjT7C8hbWWca2zvcx3yCZocQByIdtj1i8ZJU01NMTjMqGe7kNJ6ki4nwvdGzc=
+	t=1784661533; cv=none; b=kRtVHc9tEuCY7oVR6WSFOB5yBid1OpHxmt5uNVuejlzZxLwjiln9Rl42Q+IVl3MLD3AYKp8lrePsA7vls2o1RH41ZTrV+bvfehpz6S93grMukEmCXi2xI9AIphG3GA19l52b/HLxYadpj57jOEiohaiFZQWdzfHCbT+2DtqkyQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661530; c=relaxed/simple;
-	bh=eK7YGQ2LGZx9ZPwpKCv8cCcE1AkCoL83YofzA1qrKzQ=;
+	s=arc-20240116; t=1784661533; c=relaxed/simple;
+	bh=5n+x4d8KdzhwPsLJSKs1IavKgNW1cqXG0BK8OfKVn94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIrZ7lL/CqGZ4MMWt8VWXIfUM5kMi6ZiucZmRQ9RMGMRsdyKy4Hp1kwsdEwDvzswsDsnHwWYnfIq57GpcKj2KffTjpsjXWYQI9HHfZYrL5IS47av50zBRnQ2csVUij3a3OnxYFQDtSxnVehRl0D8CCSsi4SlLARa4Eqm9suwd/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTaDwbaz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NdHcn5Vtmo6niD04QoaWnCPbStLZ8Lu4uVfsHykOwEM+4HVyPzxndXoiNTNGj77tEbPujYuTH6S1s8hoTKnQNK75Hlh8n1ZuX4uzWu8rx/W4MD5M4gEZV0DVnPxOsRETiVM2i0pCjLUXnD5eRrvh5DXEz7+Uu9/kPMzNVLdEx9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceoubJur; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTaDwbaz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B832A1F000E9;
-	Tue, 21 Jul 2026 19:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceoubJur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C8E1F000E9;
+	Tue, 21 Jul 2026 19:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661529;
-	bh=148ljArkhV59Z6NVzQdl3mtDU+KLZDzebTSWFKSjTgU=;
+	s=korg; t=1784661531;
+	bh=vhLr8Npg/EdJ9hkLL7h3QOWGFxcAgK7mef40P5KJ+MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uTaDwbazbkda2KoXUFkZLxvHjTJ77hr1AygY0qIOxXrMkqT1uyptCYz7UVu3IF1Gt
-	 5tMw+J0i9eM04IRw42/P4I6EJnXV4AZi2MHnpwuH171ZBEMGwPORJkicXwwaI/nbBD
-	 yowmfX+e3cKaKhtfNrk7cp5ihM0+4jlRqTS7V+ZQ=
+	b=ceoubJurtvIkyU4QvCTytx4/hXJ08VWeDepPmrusH9jTnCgI4CozzVqiAqOv7FA05
+	 s5V8O+E5/anmEBuR4Mmi0sVLgQCIMVfNygeh7uUilk9f5+kuWAgEieGNyTIanJc8yo
+	 hNsNIJw+HSfzGbbHpaRUY86P12Y4fKR2UaWY7ZXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0102/1276] nilfs2: fix backing_dev_info reference leak
-Date: Tue, 21 Jul 2026 17:09:05 +0200
-Message-ID: <20260721152448.377687848@linuxfoundation.org>
+Subject: [PATCH 6.12 0103/1276] media: qcom: camss: vfe: fix PIX subdev naming on VFE lite
+Date: Tue, 21 Jul 2026 17:09:06 +0200
+Message-ID: <20260721152448.400074748@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,45 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
 
-[ Upstream commit 665f192a2a11384cb7dc1be5f87d16438522a4ed ]
+[ Upstream commit c97e797a64cdfe4acecff831b4285418d2815893 ]
 
-setup_bdev_super() already initializes sb->s_bdev and takes a
-reference on the block device backing_dev_info when assigning sb->s_bdi.
+VFE lite hardware does not provide a functional PIX path, but after
+the per sub-device type resource changes the PIX subdev name is still
+assigned unconditionally.
 
-nilfs_fill_super() takes another reference to the same
-backing_dev_info and stores it in sb->s_bdi again. The extra
-reference is not paired with a matching bdi_put(), since
-generic_shutdown_super() releases sb->s_bdi only once.
+Only assign the PIX subdev name on non-lite VFE variants to avoid
+exposing a misleading device name.
 
-Drop the redundant bdi_get() in nilfs_fill_super(). The single
-reference taken by setup_bdev_super() is enough and is released
-during superblock shutdown.
-
-Fixes: c1e012ea9e83 ("nilfs2: use setup_bdev_super to de-duplicate the mount code")
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: ae44829a4a97 ("media: qcom: camss: Add per sub-device type resources")
+Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/super.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/super.c b/fs/nilfs2/super.c
-index eca79cca3803df..7ed64df82d1bde 100644
---- a/fs/nilfs2/super.c
-+++ b/fs/nilfs2/super.c
-@@ -1062,8 +1062,6 @@ nilfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	sb->s_time_gran = 1;
- 	sb->s_max_links = NILFS_LINK_MAX;
- 
--	sb->s_bdi = bdi_get(sb->s_bdev->bd_disk->bdi);
--
- 	err = load_nilfs(nilfs, sb);
- 	if (err)
- 		goto failed_nilfs;
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 8f6b0eccefb48f..76839898ace976 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -1740,7 +1740,7 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
+ 		v4l2_subdev_init(sd, &vfe_v4l2_ops);
+ 		sd->internal_ops = &vfe_v4l2_internal_ops;
+ 		sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
+-		if (i == VFE_LINE_PIX)
++		if (i == VFE_LINE_PIX && vfe->res->is_lite == false)
+ 			snprintf(sd->name, ARRAY_SIZE(sd->name), "%s%d_%s",
+ 				 MSM_VFE_NAME, vfe->id, "pix");
+ 		else
 -- 
 2.53.0
 
