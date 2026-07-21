@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6E1471250;
-	Tue, 21 Jul 2026 18:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749CE471250;
+	Tue, 21 Jul 2026 18:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657856; cv=none; b=av8WIGyBR1YyiYHGwklnvqQ79RpqU4ztF1LNRnSOVd1u1gwqxApGRppEpNPQmRUCvjx9Jm8VyvCJdOcPW63OjJm4yR0Otma8shXZbQl+fxiDmlaJ5X8Iu+qLiz0dJX6IxUJ9yY7RlqqprgVt+AzU3rA82JS0dntPF10bkPPPJCk=
+	t=1784657858; cv=none; b=qv8JqY98HKSFoYfWJympsyi5NyXKkm8j90BEGorZ3M/i+9siYNzsqhvnKqmn/SEvRr/4Fc++fICYdaCLGc0p5DRyqDTB/TQ6xdxzKAxJdzk7C2aKUy5xgu7AxMd92d8eQPsVm9z8sLpZIaV3eEBgtiG5Ji0Mt4I48n/AP17KxoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657856; c=relaxed/simple;
-	bh=9VkEUu0fdoCCsDl5kOsnGahGC0BkBQv6T0YaGBxnnfI=;
+	s=arc-20240116; t=1784657858; c=relaxed/simple;
+	bh=ebrWFSnhh5YY/Fb/yoOKiEt6GgUfYUdlTAxNbelnxwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrHc8+watINhoyAjhZ6hENcyz2wEj140DQExpw2MC/k05oUM4irzjAFxe8lHRJ+eQRyP5rsywcDoqFyZChWOAENuBU0e7o6cAkkdxQjasmpILO3EIUT8I5B5qfl2dpN1kWX5mGdST8PFSLoFSSCaS5WLxoIHwXUMU5uC10mFKb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNk52QpJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UVkZeN+RKo2dSV8qlLf1zukge/u9WQLvv1AIPXJsPAxO2Zw+0OjxM2RlNBsXQFrjQ+9VjfhBzvtTh0c1yz0haTutf/0HU1Hbmk61fPptk9YYA+r5tcCyamFrwd7nqkp+qU3Ko+kGwYps/wBJP8e2ci6hlNQ7GFwThjSwDixvT6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OixnQlTO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNk52QpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9A81F000E9;
-	Tue, 21 Jul 2026 18:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OixnQlTO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E9C1F000E9;
+	Tue, 21 Jul 2026 18:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657854;
-	bh=LMfVBBkouw8tUXy6u2YM6u8jfFUMxfnLdMFqXG1ZO6U=;
+	s=korg; t=1784657857;
+	bh=oXg8FoOWEUsmyNGshvplPY6IWiRiFUPykXsZFryqrbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SNk52QpJI3qK58Pg4RyHviDVDOkifWYf5JNzTbZ1qgevaga7Zk+LPKvRJU1+bE4Hb
-	 763fgGcwYwVDDtlsxqv72/xf3FUDLaU/SsPWFfyEQM0k0pH2YItZZWZ+jk0TA3OTzC
-	 gLWLMjruODHm2nE7uovzvh6PIC52CYegPN4J+J4g=
+	b=OixnQlTO/gAn9UPHz0UzoxwccXd8PlqMtGwf3a465F2X8k6J39l/OpM2lAsMRM94m
+	 IfE1cbnsJYCZGUINp40Wa9LWzORM/kYzZHQOtochpMcp1wutw1R4NMDivgIGLKuH0I
+	 iUx9s1hYs0uwnrXfqzaCQ53x0RxIpcDuzq3RdPSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0921/1611] ipv6: fix error handling in disable_policy sysctl
-Date: Tue, 21 Jul 2026 17:17:17 +0200
-Message-ID: <20260721152536.103028661@linuxfoundation.org>
+Subject: [PATCH 6.18 0922/1611] ipv6: fix state corruption during proxy_ndp sysctl restart
+Date: Tue, 21 Jul 2026 17:17:18 +0200
+Message-ID: <20260721152536.125522311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,40 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 3e0e51c0ee1d08cc9d48dc17f3248d5b31cf8066 ]
+[ Upstream commit 6a1b50e585f033f3e201f42a18b37f070095fb80 ]
 
-When writing to the disable_policy sysctl, if proc_dointvec() fails to
-parse the input, it returns a negative error code. The current
-implementation is resetting the position argument even if an error
-occurred during proc_dointvec() and not only during sysctl restart.
+When handling proxy_ndp, if rtnl_net_trylock() fails, the operation is
+retried but as the value was already modified by the initial
+proc_dointvec() call, the restarted syscall will read the newly modified
+value as the 'old' state.
 
-Fix this by checking the return value of proc_dointvec() and returning
-early on failure.
+Fix this by taking the RTNL lock before parsing the input value if the
+operation is a write.
 
-Fixes: df789fe75206 ("ipv6: Provide ipv6 version of "disable_policy" sysctl")
+Fixes: c92d5491a6d9 ("netconf: add support for IPv6 proxy_ndp")
 Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260622130857.5115-5-fmancera@suse.de
+Link: https://patch.msgid.link/20260622130857.5115-6-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/addrconf.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 3ea6b4c6192d10..b2a8a058f2d284 100644
+index b2a8a058f2d284..530c302beb4898 100644
 --- a/net/ipv6/addrconf.c
 +++ b/net/ipv6/addrconf.c
-@@ -6749,6 +6749,8 @@ static int addrconf_sysctl_disable_policy(const struct ctl_table *ctl, int write
- 	lctl = *ctl;
- 	lctl.data = &val;
- 	ret = proc_dointvec(&lctl, write, buffer, lenp, ppos);
-+	if (ret)
-+		return ret;
+@@ -6462,20 +6462,19 @@ static int addrconf_sysctl_disable(const struct ctl_table *ctl, int write,
+ static int addrconf_sysctl_proxy_ndp(const struct ctl_table *ctl, int write,
+ 		void *buffer, size_t *lenp, loff_t *ppos)
+ {
++	struct net *net = ctl->extra2;
+ 	int *valp = ctl->data;
+-	int ret;
+ 	int old, new;
++	int ret;
++
++	if (write && !rtnl_net_trylock(net))
++		return restart_syscall();
  
- 	if (write && (*valp != val))
- 		ret = addrconf_disable_policy(ctl, valp, val);
+ 	old = *valp;
+ 	ret = proc_dointvec(ctl, write, buffer, lenp, ppos);
+ 	new = *valp;
+ 
+ 	if (write && old != new) {
+-		struct net *net = ctl->extra2;
+-
+-		if (!rtnl_net_trylock(net))
+-			return restart_syscall();
+-
+ 		if (valp == &net->ipv6.devconf_dflt->proxy_ndp) {
+ 			inet6_netconf_notify_devconf(net, RTM_NEWNETCONF,
+ 						     NETCONFA_PROXY_NEIGH,
+@@ -6494,8 +6493,9 @@ static int addrconf_sysctl_proxy_ndp(const struct ctl_table *ctl, int write,
+ 						     idev->dev->ifindex,
+ 						     &idev->cnf);
+ 		}
+-		rtnl_net_unlock(net);
+ 	}
++	if (write)
++		rtnl_net_unlock(net);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
