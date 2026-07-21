@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4840941F7C3;
-	Tue, 21 Jul 2026 21:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B2141F7C3;
+	Tue, 21 Jul 2026 21:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670014; cv=none; b=Hk9tjyXqXoKAyqmcRk/vf8YIuIc0NlWz2okdi2JFQ1B0r2DqYJJostJ7AVEdHUoLJmunJF7/gAkLJWujyky5AEpepBAwECoM7TrlPqwTUWqKkKltvHJSbV1OSDHhlywBwuWHaMwOg1nzF34S9gRHOkQ96qdEx2K2Tw77YAI8mUU=
+	t=1784670017; cv=none; b=KSjOgA2Bd+5sp2DunQBeF4SFuz10K33ojw/S4g1NmeWqZZhl3zjEtV93aOlfPpcg8+IX4mrGK48/rWAO2HoZNEgEFZsO4AA2MCKkn6T0kNTqaYKcjpGJ60jJL/6Nx2Gfpjup1ED1QB4C5kjrCAbx2Kj/tqU3Eb/fo3S+AaqktMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670014; c=relaxed/simple;
-	bh=gC3Aey1Qma4TiEbMFLdiX6LFlK8wEI4vUJVQBs4+n+I=;
+	s=arc-20240116; t=1784670017; c=relaxed/simple;
+	bh=/9APQee8YysxVCOlkm39LOqIHInGPVILIoiIGv0cllE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ln1CEI8six1QPBNrt7o9J5vVYefIbFKnUGdIk0g4b1GAE8XwAzDNn3g+URFKsrNd5G+Y4/BvmdhKjjSxe9pg39bBC4QNYu5v2BM2zr4RdX9sg1d0E/cfvIcSNwnDsfVqckbkvwWd4EfVfF81oPkO8JVOxUQYkkR/kC9Y3j2TdQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vb6ihENv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ObtlbyrYFPacvRKu+bDuoN5JQ9HRNcnltUlljX3zeuAkhaMNJ4OeAIcVEaxqC3bCIDKolGkdZr8B4RSH91TpgulPFBfRcR+nuQzGOyt1sqZB/YrXGIlRT4dsIihLWi8SM0HEHRrFhR/VHObjaTyuBh/cw+aum+AJEQdRXDi/k1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKIIT3ug; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vb6ihENv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF291F000E9;
-	Tue, 21 Jul 2026 21:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKIIT3ug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573491F000E9;
+	Tue, 21 Jul 2026 21:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670013;
-	bh=/0fHxGupecRgWTHFDATdcSAKBmZ83gnT22WXJVWewLg=;
+	s=korg; t=1784670015;
+	bh=3uRhCEtw+V9g2DmHYJhyhMclMnLEWYgGaUMojvvFP98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vb6ihENvJZ0GDKsIUKNBiSqubVrO8OnKVeAYE5oiapeiqCmrCH4oKfBZz42yXaiAv
-	 q9xgkx76G1BwlfUmrIAWbUTujH9MBXBQAZRui6LDIenlJVpXhA8BMg8JiZIgCaND7W
-	 1clWr1t3c/0gyk0bgPs1gKHaJ+/qeyWuraQVTawM=
+	b=FKIIT3ugonRdygxHJ/GRn4GtjGB67gnblCbBJd1nVxpqUlA/DKuxzgLtd3tOZXukD
+	 45mOTiqvLnZzF1XxPG+JcdMvskAiAaQsfU95NKPuZ0iHRTnAl7QQB+B5Gsayb13ewZ
+	 tPuobf9qBovaKI/LcD4oiaer6a4tuCPxs7DAoLXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.1 0772/1067] batman-adv: tt: prevent TVLV OOB check overflow
-Date: Tue, 21 Jul 2026 17:22:53 +0200
-Message-ID: <20260721152441.840937649@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 0773/1067] mfd: tps6586x: Fix OF node refcount
+Date: Tue, 21 Jul 2026 17:22:54 +0200
+Message-ID: <20260721152441.863154955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -49,38 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 7a581d9aaba8c82bd6177fa36b2588eea77f6e2b upstream.
+commit 3001ed2b4e06da2276c42ace6551617065a5b1f9 upstream.
 
-A TT unicast TVLV contains the number of VLANs stored in it. This number is
-an u16 and gets multiplied by the size of the struct
-batadv_tvlv_tt_vlan_data (8 bytes). The size can therefore overflow the u16
-used to store the tt_vlan_len. All additional safety checks to prevent
-out-of-bounds access of the TVLV buffer are invalid due to this overflow.
-
-Using size_t prevents this overflow and ensures that the safety checks
-compare against the actual buffer requirements.
+Platform devices created with platform_device_alloc() call
+platform_device_release() when the last reference to the device's
+kobject is dropped. This function calls of_node_put() unconditionally.
+This works fine for devices created with platform_device_register_full()
+but users of the split approach (platform_device_alloc() +
+platform_device_add()) must bump the reference of the of_node they
+assign manually. Add the missing call to of_node_get().
 
 Cc: stable@vger.kernel.org
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: 62f6b0879304 ("tps6586x: Add device tree support")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260521-pdev-fwnode-ref-v1-1-88c324a1b8d2@oss.qualcomm.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mfd/tps6586x.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -4101,7 +4101,8 @@ static int batadv_tt_tvlv_unicast_handle
- 					     u16 tvlv_value_len)
- {
- 	struct batadv_tvlv_tt_data *tt_data;
--	u16 tt_vlan_len, tt_num_entries;
-+	u16 tt_num_entries;
-+	size_t tt_vlan_len;
- 	char tt_flag;
- 	bool ret;
+--- a/drivers/mfd/tps6586x.c
++++ b/drivers/mfd/tps6586x.c
+@@ -399,7 +399,7 @@ static int tps6586x_add_subdevs(struct t
  
+ 		pdev->dev.parent = tps6586x->dev;
+ 		pdev->dev.platform_data = subdev->platform_data;
+-		pdev->dev.of_node = subdev->of_node;
++		pdev->dev.of_node = of_node_get(subdev->of_node);
+ 
+ 		ret = platform_device_add(pdev);
+ 		if (ret) {
 
 
