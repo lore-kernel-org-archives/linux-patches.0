@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B87E471417;
-	Tue, 21 Jul 2026 20:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4870F471410;
+	Tue, 21 Jul 2026 20:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664135; cv=none; b=VSWi5XYDrzAeVEETkYp66oHXfu1LIMCcvmM/pm5HRrylBLGbeVoAXe7c9Ifj+xZHyiIjJadjxhPMsby7GGt0SxS4bPQVEdMaYdV5rD8BtdrN74E+0oLC1y5QAbdjuNxHZFg0VuHOT/AHUGmazV9gF3MTYZAO9LKH/s2KR2yuAoM=
+	t=1784664138; cv=none; b=BhtJy6qbX+T1CuvrHKxcMaQNgeWgVewI1+7VYHHV8gNJN7/2KBCz7m9QWMWehPLAdEM4KaJpXMBJ9zdKRmX2KEDKfELfXiLBJdJTABuqUhX5BM9ftYQUPIrKLvvKbcEW6tS3WNEvta8SITMsI/wqRGTwuF5i9179Ot2wQnxQCP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664135; c=relaxed/simple;
-	bh=e6LFVf2Ybgp3i1M101SmgsNy1KqIMRwjA0zzLqPX1p0=;
+	s=arc-20240116; t=1784664138; c=relaxed/simple;
+	bh=rDPNVtU1TrNqGIqtX1szJFXey7VP+6f+MPNGq61ZShc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNyCbV7feBHPvPM/S8j9CXt2MN84oK1ypu4LUzdlUg1HKFUurlE08cfbNSPcT0ynYASuEb93DWD2nsevMO5N+5P8conCXyQiMLpJQ06Fwnx3I1y9fX+2u4QNXhV1sl9NTkEZR1/NUULc4cqg4MePn/0F31RlqDjW4FP4zRwx7e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxHd9Y4K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oqj2LNscT4zzFwc73NQNESPRrV7DyIOCx4JpmsECJOZ5Z5soNDs+X6f5kAhRVsKNgle2LOunOmOt89jkd/PXElS7um52b5zD4W/aLYyyVMPmD5RTpikbu5nwUUxRt/Yd4PP0e9WvVuabqJDajNuMxC3zpxX9/ma6aV0VGLp8WYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGEnqC9T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxHd9Y4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4531F00A3A;
-	Tue, 21 Jul 2026 20:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGEnqC9T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CCF1F000E9;
+	Tue, 21 Jul 2026 20:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664133;
-	bh=byEmMTuo6xAK47hnrDZGNBpk2RMv7cc/rDgX7yJ9Egg=;
+	s=korg; t=1784664136;
+	bh=6hXgXaNGgK7KA6rzec3DwGvAurEuUtSjEO2Z9Lu2m+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yxHd9Y4KoUio+7j4+RMemhCd3UmUNdgcSzdKVhQoiQ+r6Uha99G4NSBKCDZ3FbhDz
-	 PpaJGeYQ6KQsHJqmAwh9O6j6wTopO8+x6NaVLJAbr7SSVOihchf0plSMaNfSq3wnpI
-	 wAC7cAoqym0ABzdcWCXMCptW77GOZsP7J8gig2+o=
+	b=SGEnqC9TVx93tuauJQlItAIEA3iVMiwahT1IGn00BtQDl7Mzxs4L7k7T4ikZeXRcx
+	 skggST9y2CNMlRaJlMM1fHQFSqOQNAEH9LOsDyMJLxjzA43g4LS+vIEl1SgL9/RzlA
+	 82HM4BTEijU0s28wUv7b1FwIUTOBG5/+rUv8W8CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.12 1085/1276] riscv: probes: save original sp in rethook trampoline
-Date: Tue, 21 Jul 2026 17:25:28 +0200
-Message-ID: <20260721152510.263118766@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Brendan Jackman <jackmanb@google.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 1086/1276] mm/compaction: handle free_pages_prepare() properly in compaction_free()
+Date: Tue, 21 Jul 2026 17:25:29 +0200
+Message-ID: <20260721152510.286333798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,59 +58,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Zi Yan <ziy@nvidia.com>
 
-commit bc7b086a45521a986a49045907f017e3e46c763e upstream.
+commit 7da7d599b8a83271c464adfd5ef160202b470570 upstream.
 
-Reading a word from the stack in a kretprobe crashes a risc-v kernel.
+free_pages_prepare() can fail but compaction_free() does not handle the
+failure case.  Failed pages should not be added back to cc->freepages for
+future use, since they can be either PageHWPoison or free_page_is_bad()
+and might cause data corruption.
 
-$ cd /sys/kernel/tracing/
-$ echo 'r n_tty_write $stack0' > dynamic_events
-$ echo 1 > events/kprobes/enable
-Unable to handle kernel paging request at virtual address 0000000200000128
-...
-[<ffffffff80016d16>] regs_get_kernel_stack_nth+0x26/0x38
-[<ffffffff80177196>] process_fetch_insn+0x3ee/0x760
-[<ffffffff80177836>] kretprobe_trace_func+0x116/0x1f0
-[<ffffffff8017795a>] kretprobe_dispatcher+0x4a/0x58
-[<ffffffff8013572e>] kretprobe_rethook_handler+0x5e/0x90
-[<ffffffff80180838>] rethook_trampoline_handler+0x70/0x108
-[<ffffffff8001ba32>] arch_rethook_trampoline_callback+0x12/0x1c
-[<ffffffff8001ba84>] arch_rethook_trampoline+0x48/0x94
-[<ffffffff8067872a>] tty_write+0x1a/0x30
-
-In regs_get_kernel_stack_nth, regs->sp contains an arbitrary value.
-
-arch_rethook_trampoline saves the registers from the probed function in a
-struct pt_regs. sp is not saved. Instead, sp is decremented for
-arch_rethook_trampoline's local stack.
-
-Fix this crash and save the original sp along with the other registers.
-Use a0 as a temporary register, it is overwritten anyway.
-
-Cc: stable@vger.kernel.org
-Fixes: c22b0bcb1dd02 ("riscv: Add kprobes supported")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://patch.msgid.link/20260630194010.1824039-1-martin@kaiser.cx
-[pjw@kernel.org: added Fixes tag; cc'ed stable]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Link: https://lore.kernel.org/20260622-handle_free_pages_prepare_in_compaction_free-v1-1-fcf3b14abcf7@nvidia.com
+Fixes: 733aea0b3a7b ("mm/compaction: add support for >0 order folio memory compaction.")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Jiaqi Yan <jiaqiyan@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/probes/rethook_trampoline.S |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/compaction.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/riscv/kernel/probes/rethook_trampoline.S
-+++ b/arch/riscv/kernel/probes/rethook_trampoline.S
-@@ -41,6 +41,9 @@
- 	REG_S x29, PT_T4(sp)
- 	REG_S x30, PT_T5(sp)
- 	REG_S x31, PT_T6(sp)
-+	/* save original sp */
-+	addi a0, sp, PT_SIZE_ON_STACK
-+	REG_S a0, PT_SP(sp)
- 	.endm
+--- a/mm/compaction.c
++++ b/mm/compaction.c
+@@ -1894,15 +1894,14 @@ static void compaction_free(struct folio
+ 	int order = folio_order(dst);
+ 	struct page *page = &dst->page;
  
- 	.macro restore_all_base_regs
+-	if (folio_put_testzero(dst)) {
+-		free_pages_prepare(page, order);
++	if (folio_put_testzero(dst) && free_pages_prepare(page, order)) {
+ 		list_add(&dst->lru, &cc->freepages[order]);
+ 		cc->nr_freepages += 1 << order;
+ 	}
+ 	cc->nr_migratepages += 1 << order;
+ 	/*
+-	 * someone else has referenced the page, we cannot take it back to our
+-	 * free list.
++	 * someone else has referenced the page or free_pages_prepare() fails,
++	 * we cannot take it back to our free list.
+ 	 */
+ }
+ 
 
 
