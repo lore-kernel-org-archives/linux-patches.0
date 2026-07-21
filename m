@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536EC471271;
-	Tue, 21 Jul 2026 18:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F218347125D;
+	Tue, 21 Jul 2026 18:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658149; cv=none; b=AqB8deUZ20kaLVm1uAKkU9Dvs+OTJwTggxYAjDEXbSar/n+eJuZ7pC2D/fimrf/ci+JTt1qgvz18GkN7UTfeRXQMuu3cVt+68DvMaek05oFNcbqayDDw/U65GdzNEGLc2fpItsg942UE5H1waMMxy0BaCBlPG51y/09RPWYbzzA=
+	t=1784658152; cv=none; b=lf2NAGH3HuyCJv3eFDjvrHk7S4agYXJdZ7vipELmEeIfmlhF+f/56xWaYMuft4CQmFBA+fAWwBmiatuiL3tPaBKZESrwFLT3pfOG3EHXSZaXoKp0pkHPmyG5WFKJjc8wb48J4BxpT5OXGq3NT0YWM4lpQuxqegty13NAZP2EozA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658149; c=relaxed/simple;
-	bh=bbpBg+8s+5ye2S4LLyNgzzLnn3PqFGM5/PUSjcaGlbU=;
+	s=arc-20240116; t=1784658152; c=relaxed/simple;
+	bh=cJcSxdAJcW4+rmsVXpBohYtN+HqGwGLv43sKwBla3qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WtBxy1n4vHgkB7CZlxaWUpDwHCBtd7Hx4TkZnmY8gPLkYdVm7B+rMKz5w9U2C4S4ztiKr0Zlg4S39ShDqXxLv72lg4joPjV+h6mGYkkit9AXMF/xfHS8381g+12Y6OU3gjUCZH2VsGxURJNzcVnBpiRFHXW6Eh6Sf90BjnvuISo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9UnBS/T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qZ0vxIpXHF0BmLXOCRV9aXhuQv5zUqw+xv8vN6dwJcwhim2bvjze1r/7XFqVBW0FV/LeN08LQCOqDnXvY4HU4rU4PVbZAOwPLoAfX3PMPNt48YJDcQ0plZariDBDkg1JVx2Dx6mnRaM5n8b+hpdrRhmXLNkqBSzGeKkGooeNt1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfvqbeVF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9UnBS/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8841F000E9;
-	Tue, 21 Jul 2026 18:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfvqbeVF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637B71F000E9;
+	Tue, 21 Jul 2026 18:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658148;
-	bh=MQiskqxIyDh3XhDCFIeKw7ThTcZYEIivWUYvMtrQYNE=;
+	s=korg; t=1784658150;
+	bh=6d6jhxx1HzZFbSvTq34uTGkaIBtmu+YCxe9Rx5qsXg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W9UnBS/T0AQMuBu4N7CMqGWKMhAEnudtOntt1UiiAKK9P1c/lO5bf6OMLvf8viAot
-	 yl9Icb3ok8sqIbCGkMX1eLiaFJ3KyDSKDDZue2aXl7IpoMUgqahT3N8r/VzHPCvsG/
-	 Rf/c4qS2ZopshLN5roZ2Q7yfknTBrDEaF7T2prjg=
+	b=MfvqbeVFq0O7eNNBLlgvIci7ifX5JXGiaVqwhDCvfl1QQXt3SdLpY7AY1kZ7sArkd
+	 +XmxVqYzCxRTK2mOA416DXvyTNRanuxcv2lBU+7sH4Piq7d0BE0yZIrr8+eUMPkQmS
+	 1/G0/bnudplVZja7S4xU0/mOdL6oZ5Ke2PL74m7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Guo <guobin@linux.alibaba.com>,
-	Jia He <justin.he@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1035/1611] arm64/sysreg: Fix BWE field encoding in ID_AA64DFR2_EL1
-Date: Tue, 21 Jul 2026 17:19:11 +0200
-Message-ID: <20260721152538.681899341@linuxfoundation.org>
+Subject: [PATCH 6.18 1036/1611] net: usb: net1080: validate packet_len before pad-byte access in rx_fixup
+Date: Tue, 21 Jul 2026 17:19:12 +0200
+Message-ID: <20260721152538.705114253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,48 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia He <justin.he@arm.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 6666336d8fe5f3f0cd3f8da2865ca78110a6e170 ]
+[ Upstream commit 03f384bc0cb8d4a1301d4f5b0baef2d980258383 ]
 
-Commit 93d7356e4b30 ("arm64: sysreg: Describe ID_AA64DFR2_EL1 fields")
-encodes the FEAT_BWE2 value of the BWE field as '0b0002'. Binary
-literals only accept the digits 0 and 1, so the intended value is 2,
-i.e. 0b0010.
+For an even packet_len, net1080_rx_fixup() reads the pad byte at
+skb->data[packet_len] before the skb->len != packet_len check further
+down, and packet_len is only bounded against NC_MAX_PACKET. A malicious
+NetChip 1080 device can send a short frame advertising a large even
+packet_len (e.g. 0x4000), so the pad-byte read lands past the end of the
+skb:
 
-The macro generated by gen-sysreg.awk currently expands to
-	#define ID_AA64DFR2_EL1_BWE_FEAT_BWE2 UL(0b0002)
-is not legal C and would fail to compile if any in-tree code referenced
-it. At present no caller uses this enum value, so the kernel still
-builds cleanly, but the bug is latent.
+  BUG: KASAN: slab-out-of-bounds in net1080_rx_fixup
+  Read of size 1 at addr ffff8880106c83c6 by task ksoftirqd/0/14
+   ...
+   net1080_rx_fixup (drivers/net/usb/net1080.c:384)
+   usbnet_bh (drivers/net/usb/usbnet.c:1589)
+   process_one_work (kernel/workqueue.c:3322)
+   bh_worker (kernel/workqueue.c:3708)
+   tasklet_action (kernel/softirq.c:965)
+   handle_softirqs (kernel/softirq.c:622)
+   ...
 
-Fix the typo by using the correct binary literal 0b0010.
+Reject the frame when packet_len >= skb->len before reading.
 
-Cc: Bin Guo <guobin@linux.alibaba.com>
-Fixes: 93d7356e4b30 ("arm64: sysreg: Describe ID_AA64DFR2_EL1 fields")
-Signed-off-by: Jia He <justin.he@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 904813cd8a0b ("[PATCH] USB: usbnet (4/9) module for net1080 cables")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260630045121.1565324-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/tools/sysreg | 2 +-
+ drivers/net/usb/net1080.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
-index 1c6cdf9d54bba3..de46df0e3b1157 100644
---- a/arch/arm64/tools/sysreg
-+++ b/arch/arm64/tools/sysreg
-@@ -1793,7 +1793,7 @@ Res0	15:8
- UnsignedEnum	7:4	BWE
- 	0b0000	NI
- 	0b0001	FEAT_BWE
--	0b0002	FEAT_BWE2
-+	0b0010	FEAT_BWE2
- EndEnum
- UnsignedEnum	3:0	STEP
- 	0b0000	NI
+diff --git a/drivers/net/usb/net1080.c b/drivers/net/usb/net1080.c
+index 5d4a1fd2b5244c..19f6e1222d9315 100644
+--- a/drivers/net/usb/net1080.c
++++ b/drivers/net/usb/net1080.c
+@@ -381,7 +381,7 @@ static int net1080_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 	skb_trim(skb, skb->len - sizeof *trailer);
+ 
+ 	if ((packet_len & 0x01) == 0) {
+-		if (skb->data [packet_len] != PAD_BYTE) {
++		if (packet_len >= skb->len || skb->data[packet_len] != PAD_BYTE) {
+ 			dev->net->stats.rx_frame_errors++;
+ 			netdev_dbg(dev->net, "bad pad\n");
+ 			return 0;
 -- 
 2.53.0
 
