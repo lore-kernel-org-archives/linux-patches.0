@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAE7471248;
-	Tue, 21 Jul 2026 18:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACA747125D;
+	Tue, 21 Jul 2026 18:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658067; cv=none; b=TjBQwfpoVhnDykQI1WXu2e3OQ24NTvCjqeHb83WjyJXl1m4AvddwPU/onRMoBmUH2D3LZvn4C8F+cBr7X96ZOEjeXFcijzR5UdmPzows5GeFerLYO61S2H7KPFMvAnXcKEgyCUJUzeRevFL2xyb5Bk2fsVUlubNhOo4bIZexnIc=
+	t=1784658070; cv=none; b=L+hUT3UJ6ahq+UNXazgiP/f2m6dLj9GMp19BAeMeqW7Y/KhSybHhM18g6OUCZf10b1Ea+kYyaMDwo9SJ5SqzHfc13Rp3Ma5dCuT7Ly6x1lxzPu4kr+VM6VTbJ7GFkbXynjh0MPnGz0ywKLq7lfkOPZyt1nm38qFHAqrbfIYh8jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658067; c=relaxed/simple;
-	bh=uy/p0//t06Ohhj3NRmBlk1WnDY9m9fo/mKjg+DoLlIM=;
+	s=arc-20240116; t=1784658070; c=relaxed/simple;
+	bh=Ek3dIxyUbDAO+Xxo1/OccVgwZ9kbBFbp2H1vdjAvWnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RbZg1QMSS5uuGEsX6ViMSWtwhm7L+2vf+Tgd9GD2s0dku2loRdoWzlP6Npr5ta9c71yeGV9CdsnRFpQCxr3yFTAl/8WJfH0uoEjUoz5tu4LZj/jeimool8BDzS6Tml4XC3DW60qRfh5wVXb4E1qLnB39eRuE1qbYz9cm+3+OA/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNhWaP0w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aUSKbPI+Vo+sST/PL32UfyCrVaeWW7RigUfDogxjes06ROE7Hq6Fc0SZF2dBqsTooSrMdNrZVyf0f5q1TqfmW6fYTLy3/KHFmdmllGF1RLHeDh5x7HPjTndk5XU/YjVW1ZlsjxoLsRyeTtAt9Nh50HZJOhx79pjBfceB5NKg+y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1Tiz6BM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNhWaP0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4231F000E9;
-	Tue, 21 Jul 2026 18:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1Tiz6BM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C461F00A3A;
+	Tue, 21 Jul 2026 18:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658066;
-	bh=wxdNmCNXjdag65qr8fY6teehUHr5vNCNNOsbXNxPI5g=;
+	s=korg; t=1784658069;
+	bh=8dzPTMJf64XptbFnzU/vToOKVqYPWXkCIegjJhv0ie4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNhWaP0wRZj41oUmeOHNNDMJcSMsnhGrRBjG3N/CxKFWvlBwHmEIfQ0t61URqkTy+
-	 dn8af9Z0iEmpYs2dnAfU1JnxG+nuP4oxzrV8y23Orx92FS3Zuk0eQJ9domgpREqJaS
-	 CmdhUGpi4wCPSE8AShPNckHAd7Tl/Ap1lDUn1hwo=
+	b=W1Tiz6BMeADaglNvtVXvY1uL6CVQKpZrXOsttNUwNJl/ebXfDfU6mmy1nUhc/mGTK
+	 fQ3YwGLb9LPjQ2LOX4ToKNmsip66WY6xtC7dM8SEJcCT2acJqb3XKhnKP5mGoo9SGl
+	 duMT+DV4j1b/Z9JBxufnuTkXi6PWhOdUjnfvbROQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Karunika Choo <karunika.choo@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0976/1611] drm/panthor: Dont overrule pending immediate ticks in sched_resume_tick()
-Date: Tue, 21 Jul 2026 17:18:12 +0200
-Message-ID: <20260721152537.345548970@linuxfoundation.org>
+Subject: [PATCH 6.18 1003/1611] afs: Fix bulk lookup malfunction due to change in dir_emit() API
+Date: Tue, 21 Jul 2026 17:18:39 +0200
+Message-ID: <20260721152537.955108323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,49 +54,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 6fec8b473497b7f32e604a6dd92b32b0889af3e8 ]
+[ Upstream commit 2f79d1b93c62470fe02dbdc24770f1ae5a9e1be6 ]
 
-We schedule immediate ticks when we need to process events on CSGs,
-but those immediate ticks don't change the resched_target because we
-want the other groups to stay scheduled for the remaining of the GPU
-timeslot they were given. Make sure these immediate ticks don't get
-overruled by a sched_queue_delayed_work() that would delay the tick
-execution.
+afs_do_lookup() and afs_do_lookup_one() use the same directory parsing code
+as afs_readdir() and were supplying alternative dir_context actors to
+retrieve dirents, but because lookup needs the vnode's uniquifier as part
+of the reference, but not the DT flags, the uniquifier was being passed in
+the dt flags argument to the lookup actors.
 
-Fixes: 99820b4b7e50 ("drm/panthor: Make sure we resume the tick when new jobs are submitted")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260625-panthor-signal-from-irq-v4-0-3d2908912afa@collabora.com?part=9
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Karunika Choo <karunika.choo@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260625-panthor-misc-fixes-v1-6-b67ed973fea6@collabora.com
+Unfortunately, commit c644bce62b9c, added to fix overlayfs with fuse, broke
+this by masking off part of the uniquifier.  This doesn't matter enough to
+be directly noticeable, instead causing bulk advance inode lookups to fail
+(which are retried later) and may cause dir revalidation to malfunction if
+the uniquifier is changed by masking.
+
+Fix this by making the afs directory parsing code take special ->actor
+values of AFS_LOOKUP or AFS_LOOKUP_ONE instead that tell it to call
+afs_lookup_filldir() or afs_lookup_one_filldir() directly rather than going
+through dir_emit().  dir_emit() is still used for readdir.
+
+Fixes: c644bce62b9c ("readdir: require opt-in for d_type flags")
+Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-11-dhowells@redhat.com
+cc: Amir Goldstein <amir73il@gmail.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/afs/dir.c | 40 +++++++++++++++++++++++++---------------
+ 1 file changed, 25 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 749fe34b06db28..ff6fb8e6c38e96 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -2588,7 +2588,14 @@ static void sched_resume_tick(struct panthor_device *ptdev)
- 	else
- 		delay_jiffies = 0;
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index fa84610e0b0d98..7c3cef0835a8bd 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -28,9 +28,11 @@ static int afs_d_revalidate(struct inode *dir, const struct qstr *name,
+ static int afs_d_delete(const struct dentry *dentry);
+ static void afs_d_iput(struct dentry *dentry, struct inode *inode);
+ static bool afs_lookup_one_filldir(struct dir_context *ctx, const char *name, int nlen,
+-				  loff_t fpos, u64 ino, unsigned dtype);
++				   u64 ino, u32 uniquifier);
++#define AFS_LOOKUP_ONE ((filldir_t)0x123UL)
+ static bool afs_lookup_filldir(struct dir_context *ctx, const char *name, int nlen,
+-			      loff_t fpos, u64 ino, unsigned dtype);
++			       u64 ino, u32 uniquifier);
++#define AFS_LOOKUP ((filldir_t)0x137UL)
+ static int afs_create(struct mnt_idmap *idmap, struct inode *dir,
+ 		      struct dentry *dentry, umode_t mode, bool excl);
+ static struct dentry *afs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+@@ -434,11 +436,18 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
+ 		}
  
--	sched_queue_delayed_work(sched, tick, delay_jiffies);
-+	/* We schedule immediate ticks when we need to process events on CSGs,
-+	 * but those don't change the resched_target because we want the other
-+	 * groups to stay scheduled for the remaining of the GPU timeslot they
-+	 * were given. Make sure those immediate ticks don't get overruled by
-+	 * a sched_queue_delayed_work() that would delay the tick execution.
-+	 */
-+	if (!delayed_work_pending(&sched->tick_work))
-+		sched_queue_delayed_work(sched, tick, delay_jiffies);
+ 		/* found the next entry */
+-		if (!dir_emit(ctx, dire->u.name, nlen,
+-			      ntohl(dire->u.vnode),
+-			      (ctx->actor == afs_lookup_filldir ||
+-			       ctx->actor == afs_lookup_one_filldir)?
+-			      ntohl(dire->u.unique) : DT_UNKNOWN)) {
++		if (ctx->actor == AFS_LOOKUP) {
++			if (!afs_lookup_filldir(ctx, dire->u.name, nlen,
++						ntohl(dire->u.vnode),
++						ntohl(dire->u.unique)))
++				return 0;
++		} else if (ctx->actor == AFS_LOOKUP_ONE) {
++			if (!afs_lookup_one_filldir(ctx, dire->u.name, nlen,
++						    ntohl(dire->u.vnode),
++						    ntohl(dire->u.unique)))
++				return 0;
++		} else if (!dir_emit(ctx, dire->u.name, nlen,
++				     ntohl(dire->u.vnode), DT_UNKNOWN)) {
+ 			_leave(" = 0 [full]");
+ 			return 0;
+ 		}
+@@ -558,6 +567,7 @@ static int afs_readdir(struct file *file, struct dir_context *ctx)
+ {
+ 	afs_dataversion_t dir_version;
+ 
++	ctx->dt_flags_mask = UINT_MAX;
+ 	return afs_dir_iterate(file_inode(file), ctx, file, &dir_version);
  }
  
- static void group_schedule_locked(struct panthor_group *group, u32 queue_mask)
+@@ -567,14 +577,14 @@ static int afs_readdir(struct file *file, struct dir_context *ctx)
+  *   uniquifier through dtype
+  */
+ static bool afs_lookup_one_filldir(struct dir_context *ctx, const char *name,
+-				  int nlen, loff_t fpos, u64 ino, unsigned dtype)
++				  int nlen, u64 ino, u32 uniquifier)
+ {
+ 	struct afs_lookup_one_cookie *cookie =
+ 		container_of(ctx, struct afs_lookup_one_cookie, ctx);
+ 
+ 	_enter("{%s,%u},%s,%u,,%llu,%u",
+ 	       cookie->name.name, cookie->name.len, name, nlen,
+-	       (unsigned long long) ino, dtype);
++	       (unsigned long long) ino, uniquifier);
+ 
+ 	/* insanity checks first */
+ 	BUILD_BUG_ON(sizeof(union afs_xdr_dir_block) != 2048);
+@@ -587,7 +597,7 @@ static bool afs_lookup_one_filldir(struct dir_context *ctx, const char *name,
+ 	}
+ 
+ 	cookie->fid.vnode = ino;
+-	cookie->fid.unique = dtype;
++	cookie->fid.unique = uniquifier;
+ 	cookie->found = 1;
+ 
+ 	_leave(" = false [found]");
+@@ -604,7 +614,7 @@ static int afs_do_lookup_one(struct inode *dir, const struct qstr *name,
+ {
+ 	struct afs_super_info *as = dir->i_sb->s_fs_info;
+ 	struct afs_lookup_one_cookie cookie = {
+-		.ctx.actor = afs_lookup_one_filldir,
++		.ctx.actor = AFS_LOOKUP_ONE,
+ 		.name = *name,
+ 		.fid.vid = as->volume->vid
+ 	};
+@@ -635,14 +645,14 @@ static int afs_do_lookup_one(struct inode *dir, const struct qstr *name,
+  *   uniquifier through dtype
+  */
+ static bool afs_lookup_filldir(struct dir_context *ctx, const char *name,
+-			      int nlen, loff_t fpos, u64 ino, unsigned dtype)
++			      int nlen, u64 ino, u32 uniquifier)
+ {
+ 	struct afs_lookup_cookie *cookie =
+ 		container_of(ctx, struct afs_lookup_cookie, ctx);
+ 
+ 	_enter("{%s,%u},%s,%u,,%llu,%u",
+ 	       cookie->name.name, cookie->name.len, name, nlen,
+-	       (unsigned long long) ino, dtype);
++	       (unsigned long long) ino, uniquifier);
+ 
+ 	/* insanity checks first */
+ 	BUILD_BUG_ON(sizeof(union afs_xdr_dir_block) != 2048);
+@@ -650,7 +660,7 @@ static bool afs_lookup_filldir(struct dir_context *ctx, const char *name,
+ 
+ 	if (cookie->nr_fids < 50) {
+ 		cookie->fids[cookie->nr_fids].vnode	= ino;
+-		cookie->fids[cookie->nr_fids].unique	= dtype;
++		cookie->fids[cookie->nr_fids].unique	= uniquifier;
+ 		cookie->nr_fids++;
+ 	}
+ 
+@@ -791,7 +801,7 @@ static struct inode *afs_do_lookup(struct inode *dir, struct dentry *dentry)
+ 
+ 	for (i = 0; i < ARRAY_SIZE(cookie->fids); i++)
+ 		cookie->fids[i].vid = dvnode->fid.vid;
+-	cookie->ctx.actor = afs_lookup_filldir;
++	cookie->ctx.actor = AFS_LOOKUP;
+ 	cookie->name = dentry->d_name;
+ 	cookie->nr_fids = 2; /* slot 1 is saved for the fid we actually want
+ 			      * and slot 0 for the directory */
 -- 
 2.53.0
 
