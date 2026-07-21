@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3A046E012;
-	Tue, 21 Jul 2026 18:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F0446EC80;
+	Tue, 21 Jul 2026 18:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659440; cv=none; b=HwZCzW46D6fXV6piF2Exk3ktT2DOFF3rbvxS+NCLNAL7RB6cbMnsr4lfuchTwqTjxrM7VboyUeGPIkETtkA7eZUQXaDwMhfTg5xbOJBZZeozYJJzkzYxmrVxFVr07ZkEJ3iW+Cure3Dep0p2YhoWi1+J0AjYEVB3HSrHx2FRxJ0=
+	t=1784659442; cv=none; b=TJiGAGpJX9X05WKfLqGlPhpd3DrUorjLaryi/7SnAzBtOFCgvLSlUktkCQeVxNuc1SAXj5nZiB36gPCubNuPN4T2KmssHJ5Kwap2Q0oPTyUrz4SjM3aKnr3NY2IvtjltNdPp256OQf7t2nuXW86hQbqHqc3tnJjz4X2KrA2WF7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659440; c=relaxed/simple;
-	bh=pnkQF4aSE11Kgenw26foykogUPMNvcvALLL/cBmXPWs=;
+	s=arc-20240116; t=1784659442; c=relaxed/simple;
+	bh=o0JSn56vwl51pJ1Kc/YCerZlaRGcNM+U9tE88QT9XVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CB7G1dmAxyzGlI0upYZ3Z1uE+TWaFLC3GUR3hgJIeilEMeqHCs7N49oRdHqwFB0ifq8ae0oVZaaDoorLRcHFeRfFQplMMtynoNDXhxpSUgxmRycXrN2uYUjriJRSmEZyg1XaGmuXgb6QkK1DUpdQLBUeaggvm9HRtgc8K46xydc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcq6hWyo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pyW6+v6yh3MN+etBSWsnuNhqPQtETuSFKFKn7adYlbibw62kwmQj0ouZYYxP1TMev7RolXSdY+LhQvMtvGc/Ehzpug9BCcYlWeH8g7DMT9mVY7S97TIe1fsrnkKtJwe8mRrdmfiuARk9KNfm0mA0V+5Lvnc8N95FNLK0IS7JXTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXu5mpoS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcq6hWyo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9321F00AC4;
-	Tue, 21 Jul 2026 18:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXu5mpoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75F81F00A3D;
+	Tue, 21 Jul 2026 18:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659438;
-	bh=9cYVZ0+LbFtLRELGowZb5VGRtkyYXe2gSIr3UNlY+Ao=;
+	s=korg; t=1784659441;
+	bh=hGoz1q+9oXaTYX9h1g6FlyOgnxjgn4OZ72zeUnIhVnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pcq6hWyo0m61jU3umG5gbGPIw4mFJANQulg3ApnatomSqp/rm7EC2HeZ2pMz7Q6f8
-	 PmRIdvcHsKR+H/2SiZrtwX20S3AotB7IoJ7rY6oqv3VNOrBH59mGsGYhTo0Rg+ACLA
-	 sjpQUlhboAicx7w5YoAVelRuENnbUIX5/h3Rp4WM=
+	b=kXu5mpoSeKMB8OwkNxZapFI0GOluXEm/exxlPibJt/DL4z4G4VPZZLE6RT91ksD+Q
+	 o7r5GdcNejlvXs5Ee3RbG3OI8J7zIZ74mn1eoFo/0MFtS5ZV9u6qxrrPmHjnUvLL6c
+	 3sQtTlblR26pTifbhXv+EEwSdBBOrQ8mOhm0xWZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1520/1611] ACPI: NFIT: core: Fix possible deadlock and missing notifications
-Date: Tue, 21 Jul 2026 17:27:16 +0200
-Message-ID: <20260721152549.633826593@linuxfoundation.org>
+Subject: [PATCH 6.18 1521/1611] iio: hid-sensor-rotation: Fix stale or zero output when reading raw values
+Date: Tue, 21 Jul 2026 17:27:17 +0200
+Message-ID: <20260721152549.656593222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,219 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit 18a00ed0e718473f5c3fcfa49df46c944575e60c ]
+[ Upstream commit 3ce8d099e0afc5a7da75a2007a67f67c4f5a4af1 ]
 
-After commit 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before
-getting NFIT table"), ACPI NFIT driver removal may deadlock if an ACPI
-notify on the NFIT device is triggered concurrently.  A similar deadlock
-may occur if an ACPI notify on the NFIT device is triggered during a
-failing driver probe.
+When reading the raw quaternion attribute (in_rot_quaternion_raw), the
+driver currently returns either all zeros (if the sensor was never enabled)
+or stale data (if the sensor was previously enabled) because it reads from
+the internal buffer without explicitly requesting a new sample from the
+sensor.
 
-The deadlock is possible because acpi_dev_remove_notify_handler() calls
-acpi_os_wait_events_complete() after removing the notify handler and the
-driver core invokes it under the NFIT platform device lock which is also
-acquired by acpi_nfit_notify().  Thus acpi_os_wait_events_complete() may
-be waiting for acpi_nfit_notify() to complete, but the latter may not be
-able to acquire the device lock which is being held by the driver core
-while the former is being executed.
+To fix this, power up the sensor, call sensor_hub_input_attr_read_values()
+to issue a synchronous GET_REPORT and receive the full quaternion data
+directly into a local buffer, then decode the four components.
 
-Moreover, after commit 03667e146f81 ("ACPI: NFIT: core: Convert the
-driver to a platform one"), there are no sysfs notifications regarding
-NVDIMM devices because __acpi_nvdimm_notify() always bails out after
-checking the driver data pointer of the device's parent.  That parent
-is the ACPI companion of the platform device used for driver binding,
-so its driver data pointer is always NULL after the commit in question
-which was overlooked by it.
-
-A remedy for the deadlock is to use a special separate lock for ACPI
-notify synchronization with driver probe and removal instead of the
-device lock of the NFIT device, while a remedy for the second issue
-is to populate the driver data pointer of the NFIT device's ACPI
-companion when the driver is ready to operate, so do both these things.
-However, since the new lock is not held across the entire teardown and
-acpi_nfit_notify() should do nothing when teardown is in progress, make
-it check the driver data pointer of the NFIT device's ACPI companion, in
-analogy with the existing check in __acpi_nvdimm_notify(), and bail out
-if that pointer is NULL.
-
-Fixes: 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before getting NFIT table")
-Fixes: 03667e146f81 ("ACPI: NFIT: core: Convert the driver to a platform one")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: All applicable <stable@vger.kernel.org> # 9995e4404ea4: ACPI: NFIT: core: Eliminate redundant local variable
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/3420096.aeNJFYEL58@rafael.j.wysocki
+Fixes: fc18dddc0625 ("iio: hid-sensors: Added device rotation support")
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/bus.c       |    6 +++-
- drivers/acpi/nfit/core.c |   62 +++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 54 insertions(+), 14 deletions(-)
+ drivers/iio/orientation/hid-sensor-rotation.c |   40 ++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -623,6 +623,7 @@ void acpi_dev_remove_notify_handler(stru
- EXPORT_SYMBOL_GPL(acpi_dev_remove_notify_handler);
- 
- struct acpi_notify_handler_devres {
-+	struct acpi_device *adev;
- 	acpi_notify_handler handler;
- 	u32 handler_type;
- };
-@@ -631,7 +632,7 @@ static void devm_acpi_notify_handler_rel
+--- a/drivers/iio/orientation/hid-sensor-rotation.c
++++ b/drivers/iio/orientation/hid-sensor-rotation.c
+@@ -74,6 +74,13 @@ static int dev_rot_read_raw(struct iio_d
+ 				long mask)
  {
- 	struct acpi_notify_handler_devres *dr = res;
+ 	struct dev_rot_state *rot_state = iio_priv(indio_dev);
++	struct hid_sensor_hub_device *hsdev = rot_state->common_attributes.hsdev;
++	struct hid_sensor_hub_attribute_info *info = &rot_state->quaternion;
++	u32 usage_id = HID_USAGE_SENSOR_ORIENT_QUATERNION;
++	union {
++		s16 val16[4];
++		s32 val32[4];
++	} raw_buf;
+ 	int ret_type;
+ 	int i;
  
--	acpi_dev_remove_notify_handler(ACPI_COMPANION(dev), dr->handler_type,
-+	acpi_dev_remove_notify_handler(dr->adev, dr->handler_type,
- 				       dr->handler);
- }
- 
-@@ -667,6 +668,8 @@ int devm_acpi_install_notify_handler(str
- 	int ret;
- 
- 	adev = ACPI_COMPANION(dev);
-+	if (!adev && dev->bus == &acpi_bus_type)
-+		adev = to_acpi_device(dev);
- 	if (!adev)
- 		return dev_err_probe(dev, -ENODEV, "No ACPI companion in %s()\n", __func__);
- 
-@@ -680,6 +683,7 @@ int devm_acpi_install_notify_handler(str
- 		return dev_err_probe(dev, ret, "Failed to install an ACPI notify handler\n");
- 	}
- 
-+	dr->adev = adev;
- 	dr->handler = handler;
- 	dr->handler_type = handler_type;
- 	devres_add(dev, dr);
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -55,6 +55,8 @@ MODULE_PARM_DESC(force_labels, "Opt-in t
- LIST_HEAD(acpi_descs);
- DEFINE_MUTEX(acpi_desc_lock);
- 
-+DEFINE_MUTEX(acpi_notify_lock);
+@@ -83,8 +90,37 @@ static int dev_rot_read_raw(struct iio_d
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+ 		if (size >= 4) {
+-			for (i = 0; i < 4; ++i)
+-				vals[i] = rot_state->scan.sampled_vals[i];
++			if (info->size <= 0 || info->size > sizeof(raw_buf))
++				return -EINVAL;
 +
- static struct workqueue_struct *nfit_wq;
- 
- struct nfit_table_prev {
-@@ -1702,9 +1704,15 @@ static void acpi_nvdimm_notify(acpi_hand
- 	struct acpi_device *adev = data;
- 	struct device *dev = &adev->dev;
- 
--	device_lock(dev->parent);
--	__acpi_nvdimm_notify(dev, event);
--	device_unlock(dev->parent);
-+	/*
-+	 * Locking is needed here for synchronization with driver probe and
-+	 * removal and the parent NFIT device's ACPI driver data pointer is
-+	 * NULL when teardown is in progress.
-+	 */
-+	guard(mutex)(&acpi_notify_lock);
++			hid_sensor_power_state(&rot_state->common_attributes, true);
 +
-+	if (acpi_driver_data(to_acpi_device(dev->parent)))
-+		__acpi_nvdimm_notify(dev, event);
- }
- 
- static bool acpi_nvdimm_has_method(struct acpi_device *adev, char *method)
-@@ -3150,11 +3158,10 @@ EXPORT_SYMBOL_GPL(acpi_nfit_init);
- static int acpi_nfit_flush_probe(struct nvdimm_bus_descriptor *nd_desc)
- {
- 	struct acpi_nfit_desc *acpi_desc = to_acpi_desc(nd_desc);
--	struct device *dev = acpi_desc->dev;
- 
--	/* Bounce the device lock to flush acpi_nfit_add / acpi_nfit_notify */
--	device_lock(dev);
--	device_unlock(dev);
-+	/* Bounce the notify lock to flush acpi_nfit_add / acpi_nfit_notify */
-+	mutex_lock(&acpi_notify_lock);
-+	mutex_unlock(&acpi_notify_lock);
- 
- 	/* Bounce the init_mutex to complete initial registration */
- 	mutex_lock(&acpi_desc->init_mutex);
-@@ -3286,10 +3293,17 @@ static void acpi_nfit_put_table(void *ta
- static void acpi_nfit_notify(acpi_handle handle, u32 event, void *data)
- {
- 	struct device *dev = data;
-+	struct acpi_device *adev = to_acpi_device(dev);
- 
--	device_lock(dev);
--	__acpi_nfit_notify(dev, handle, event);
--	device_unlock(dev);
-+	/*
-+	 * Locking is needed here for synchronization with driver probe and
-+	 * removal and the ACPI driver data pointer is NULL when teardown
-+	 * is in progress.
-+	 */
-+	guard(mutex)(&acpi_notify_lock);
++			ret_type = sensor_hub_input_attr_read_values(hsdev,
++								     hsdev->usage,
++								     usage_id,
++								     info->report_id,
++								     SENSOR_HUB_SYNC,
++								     info->size,
++								     (u8 *)&raw_buf);
 +
-+	if (acpi_driver_data(adev))
-+		__acpi_nfit_notify(dev, handle, event);
- }
- 
- void acpi_nfit_shutdown(void *data)
-@@ -3336,6 +3350,12 @@ static int acpi_nfit_add(struct acpi_dev
- 	acpi_size sz;
- 	int rc = 0;
- 
-+	/*
-+	 * Prevent acpi_nfit_notify() from progressing until the probe is
-+	 * complete in case there is a concurrent event to process.
-+	 */
-+	guard(mutex)(&acpi_notify_lock);
++			hid_sensor_power_state(&rot_state->common_attributes, false);
 +
- 	rc = devm_acpi_install_notify_handler(dev, ACPI_DEVICE_NOTIFY,
- 					      acpi_nfit_notify, dev);
- 	if (rc)
-@@ -3351,6 +3371,11 @@ static int acpi_nfit_add(struct acpi_dev
- 		 * data in the format of a series of NFIT Structures.
- 		 */
- 		dev_dbg(dev, "failed to find NFIT at startup\n");
-+		/*
-+		 * Let acpi_nfit_update_notify() run in case it will need to
-+		 * allocate the acpi_desc object.
-+		 */
-+		adev->driver_data = dev;
- 		return 0;
- 	}
- 
-@@ -3368,7 +3393,7 @@ static int acpi_nfit_add(struct acpi_dev
- 	acpi_desc->acpi_header = *tbl;
- 
- 	/* Evaluate _FIT and override with that if present */
--	status = acpi_evaluate_object(ACPI_HANDLE(dev), "_FIT", NULL, &buf);
-+	status = acpi_evaluate_object(adev->handle, "_FIT", NULL, &buf);
- 	if (ACPI_SUCCESS(status) && buf.length > 0) {
- 		union acpi_object *obj = buf.pointer;
- 
-@@ -3385,14 +3410,25 @@ static int acpi_nfit_add(struct acpi_dev
- 				+ sizeof(struct acpi_table_nfit),
- 				sz - sizeof(struct acpi_table_nfit));
- 
--	if (rc)
-+	if (rc) {
- 		acpi_nfit_shutdown(acpi_desc);
-+		return rc;
-+	}
- 
--	return rc;
-+	/*
-+	 * Let notify handlers operate (the actual value of the ACPI driver
-+	 * data pointer does not matter here so long as it is not NULL).
-+	 */
-+	adev->driver_data = dev;
-+	return 0;
- }
- 
- static void acpi_nfit_remove(struct acpi_device *adev)
- {
-+	guard(mutex)(&acpi_notify_lock);
++			if (ret_type < 0)
++				return ret_type;
 +
-+	/* Make notify handlers bail out early going forward. */
-+	adev->driver_data = NULL;
- 	acpi_nfit_shutdown(dev_get_drvdata(&adev->dev));
- }
- 
++			switch (info->size) {
++			case sizeof(raw_buf.val16):
++				for (i = 0; i < ARRAY_SIZE(raw_buf.val16); i++)
++					vals[i] = raw_buf.val16[i];
++				break;
++			case sizeof(raw_buf.val32):
++				for (i = 0; i < ARRAY_SIZE(raw_buf.val32); i++)
++					vals[i] = raw_buf.val32[i];
++				break;
++			default:
++				return -EINVAL;
++			}
++
+ 			ret_type = IIO_VAL_INT_MULTIPLE;
+ 			*val_len =  4;
+ 		} else
 
 
