@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5E53B6356;
-	Tue, 21 Jul 2026 21:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD50235C6A0;
+	Tue, 21 Jul 2026 21:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669338; cv=none; b=Et3OWxocCD/prMW0RLvevtIMW1syUfIaRf3lWa/OJw9MVYHQ8Bgr94KQZHZaQZSz0/P0PCiHmiZEMz0qVMOa/YmJMu2Lhz2jdUCMBSOrU+i3jIv0vR0Pi6Olyw9p5DGH0v2HSqsbLoDitPLGz6h/CqjoCSs4TN2CwSU/MO3MCfc=
+	t=1784669340; cv=none; b=qnuM/YxvWHgERpZ7A9J7vsaj6ZBFAFzF/mKpNzOxhjEH4O2+vo9jXeOTxi7JcCRqnshYIvvkvJQ4sxA/UyLvm8tTZqPPiFY4yC0NZPUZau1QCFeQebfl4RUuYlbVZ0KaNa5oTvolfMaBG+7gAeI/TU44JOcnjuSd6PNKAArxZos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669338; c=relaxed/simple;
-	bh=yEDj5Q7e9yR6XvDlL562W4U9k4nogUmNvC4M3bpiAr0=;
+	s=arc-20240116; t=1784669340; c=relaxed/simple;
+	bh=dCUBmSSgIRz5jq4pUtkZWw1mho7pSVsp5oUpB2Xrl0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDBuB62Il97oC6BRx7x6Mkdw8wXhScpZogS/jQqglNqJDfePyVjazIVG6jl+W2OOx8UsIijqsM465axecQETEBAosmqM6zn/zyO1pfQ/zY6FzGUWF788+bz5Ve99MpCMaNIdZZwXHt3Ry3b0tPhUNsUA8NFVyzNfDmBfgUVsBdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DC0Tt8M9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JA9YfeN/m6YnjRTilJLdF1RFVc0SyZ0Tpla4uGRiTtaeQlQAulz94wuhTo0nYmlpLRyZTQk/UL7J49u0iI3t7FvO0lrS/lgATQtM3cZuh2BBoWgdKn3hi60N8YlXWiIxLypcC3GGXD4Hh4aO2xkC3sDdZLbPA2bk7Bh/4s1omAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDMfDbCE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DC0Tt8M9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBF31F000E9;
-	Tue, 21 Jul 2026 21:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDMfDbCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6281F00A3A;
+	Tue, 21 Jul 2026 21:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669334;
-	bh=f7jmCjR9bEqiMem0GZuUts3xO0LkaqgCuhl+Ohgmi00=;
+	s=korg; t=1784669337;
+	bh=4xSujaihKgkgfr+c/MzgMP02xnqKXhmpMySB1U/P9Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DC0Tt8M9vx1sRvnKajt6dAQSNW3yLvdNs+hY/4t1vi31tKOVnS4PJmDSvafNjSLjY
-	 81wyPKkEmVoibRW0nWE7WvyfvbUxSmLc26VOKdXyMK9r8/h/ZUjfFbFZ4YnbGNSx08
-	 Xi9UcO8gVDQpE9R9KHvwUzh7DyAfg5ieTubOxNPo=
+	b=TDMfDbCESoyDPClVsB3J53nQI4bi94h9ZVwlOMfhcbqZWNO27tEBQSzR3NeUT7ArO
+	 xIneFIimWJxtv+h29nz00Cu3SOwFwWAtJLT03nM7p4EtkpyHoBE4DVv+6e54PYRI9l
+	 mJ2EoFoF3esejyBF3hJJlk+S500O2kwDg2nKc+6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yingchao Deng <yingchao.deng@oss.qualcomm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0514/1067] xprtrdma: Avoid 250 ms delay on backlog wakeup
-Date: Tue, 21 Jul 2026 17:18:35 +0200
-Message-ID: <20260721152436.110760260@linuxfoundation.org>
+Subject: [PATCH 6.1 0473/1067] coresight: cti: Fix DT filter signals silently ignored
+Date: Tue, 21 Jul 2026 17:17:54 +0200
+Message-ID: <20260721152435.197083908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,44 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
 
-[ Upstream commit 100142093e22b3f7741ac88e94878bb3694e306f ]
+[ Upstream commit 551bb2fd5e4ed63d33aa11f07102cce5179b7595 ]
 
-Commit a721035477fb ("SUNRPC/xprt: async tasks mustn't block waiting
-for memory") changed xprt_rdma_alloc_slot() to set tk_status to
--ENOMEM so that call_reserveresult() would sleep HZ/4 before
-retrying.  That rationale applies to xprt_dynamic_alloc_slot(),
-where an immediate retry under memory pressure wastes CPU, but not
-to the RDMA backlog path: a task woken from the backlog has a slot
-waiting for it, so the 250 ms rpc_delay adds latency without
-benefit.
+In cti_plat_process_filter_sigs(), after allocating a temporary
+cti_trig_grp struct via kzalloc_obj(), the code never assigns tg->nr_sigs
+= nr_filter_sigs. Since kzalloc zero-initialises the struct, tg->nr_sigs
+remains 0. cti_plat_read_trig_group() guards with:
+    if (!tgrp->nr_sigs)
+        return 0;
 
-This also aligns the code with the existing kernel-doc for
-xprt_rdma_alloc_slot(), which already documented %-EAGAIN.
+so it returns immediately without reading any signal indices from DT.
 
-Fixes: a721035477fb ("SUNRPC/xprt: async tasks mustn't block waiting for memory")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: e786233d2e0b ("xprtrdma: Decouple req recycling from RPC completion")
+Fix by assigning tg->nr_sigs before calling cti_plat_read_trig_group().
+
+Fixes: a5614770ab97 ("coresight: cti: Add device tree support for custom CTI")
+Signed-off-by: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260426-nr_sigs-v1-1-3b9df99dab97@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/transport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-cti-platform.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
-index 10bb2b929c6d70..80731cbb1365ee 100644
---- a/net/sunrpc/xprtrdma/transport.c
-+++ b/net/sunrpc/xprtrdma/transport.c
-@@ -520,7 +520,7 @@ xprt_rdma_alloc_slot(struct rpc_xprt *xprt, struct rpc_task *task)
- 	return;
+diff --git a/drivers/hwtracing/coresight/coresight-cti-platform.c b/drivers/hwtracing/coresight/coresight-cti-platform.c
+index ccef04f27f12fa..438f9c7ddccdc3 100644
+--- a/drivers/hwtracing/coresight/coresight-cti-platform.c
++++ b/drivers/hwtracing/coresight/coresight-cti-platform.c
+@@ -329,6 +329,7 @@ static int cti_plat_process_filter_sigs(struct cti_drvdata *drvdata,
+ 	if (!tg)
+ 		return -ENOMEM;
  
- out_sleep:
--	task->tk_status = -ENOMEM;
-+	task->tk_status = -EAGAIN;
- 	xprt_add_backlog(xprt, task);
- }
- 
++	tg->nr_sigs = nr_filter_sigs;
+ 	err = cti_plat_read_trig_group(tg, fwnode, CTI_DT_FILTER_OUT_SIGS);
+ 	if (!err)
+ 		drvdata->config.trig_out_filter |= tg->used_mask;
 -- 
 2.53.0
 
