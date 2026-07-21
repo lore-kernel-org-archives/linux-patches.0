@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1102A3BCD04;
-	Tue, 21 Jul 2026 21:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3833B6C1D;
+	Tue, 21 Jul 2026 21:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669474; cv=none; b=D5lwnc4lKYGSs7t6yx1lvJjoYIv5fvHvNswpbBd7eej1Sm1upJzKEcCSBZypHYbUiNWk2LtgDRlf6eeMmz93jVf/xvnXLbUvYvGTbNPzDpde00oUm+/Q8Sg/R93vEmfDKlyujay7Cf5OZW6Qny1YL870sK+VkVjxEkkQ1kAgCDM=
+	t=1784669479; cv=none; b=FmLL5ZsaSdEtLcIEnYt6KNwU9qNbtRtfPt11cRynN6lutwouCEOjJwD8NPnZBVwAxR1Q9FldVHi7D3yEYk0irktB1McjgKkbFrfUGmxCGawdBywaczqStAXqw6msFwAYVos1vih4bqSjSfVglvErk1dTrnIwHzQ3dGd0k41DF/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669474; c=relaxed/simple;
-	bh=0nb91AiPl4FJVfO6tGWmd4qSECHg9sPWNF43mMa1pNE=;
+	s=arc-20240116; t=1784669479; c=relaxed/simple;
+	bh=s5aQ7s+bv48VvKdmNobyMIXQR4iNVg/cCUTzpDK3bLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vj9Y6ZdaZ6JSkjZLtfdCf+5SSWRIkC0yZ0Yziz711l+XOkW3UZASfM+RPrCJFrzmh4tm+1rdLrRvU2B4l41AWUCtQt4P5W6Mnenp8MhQsm/Fdwq/vfDTX6gAtgSY6+05oMn9l2vak+iiaJsmiQK5kRnmt1cXOp6RJQXd1h8IOc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgxntcTX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VkVH3wKyGLhZyTPC57ioN4TAD40GBJ1qBHikNIxbfbHIjwS051zG9CBYscqW2oMEOWCySon7R17zaN0Xa/2HPFoZZiD8AohhzFpc5iq6ThPz+C8Iom5rGbLgJK1JzkFZ+ffO5P3U9qLhpow1Y18MEKIy6wMW2pwQAEcsMLV2ixg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o28Ro4ol; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgxntcTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776B91F000E9;
-	Tue, 21 Jul 2026 21:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o28Ro4ol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26DC1F00A3A;
+	Tue, 21 Jul 2026 21:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669473;
-	bh=y13/j7LsTiTyCymnCwjp67aDmN2ZxNm1e97r80qhIts=;
+	s=korg; t=1784669478;
+	bh=nsR4hO4NWX6kFyHQS5JIYFEJQ1wnnxf0l7WKKO573Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZgxntcTXrGCuCB1MnZguc2HBuZrbsAVatbERn6zM1yr3Yt6O1ulzMSGhmwNyfQp69
-	 u6zFtsztdxC40Zg3oPbJ0r4QGHzUZCa+8VLzZQB3oDCPH7sgsEVXIMdaJuDgxvTmaZ
-	 VH1gmAthQbGRfis+/LZ0V+IIQ/61ByIIabzjmVkU=
+	b=o28Ro4oluQnJ5dNtNwWaYYRDdbOKwN7KBsYNJTZfMGpvVa0VV//zDdE0JvKL9jTd7
+	 MLVrqmx2TlAKJkFkSXEHVAMC0CA/yvupWL/Sd2IzRWqzbuRxyh5ouR87HMIIyy3BqG
+	 41MuRLEwq4HqCu7LhKxLg9gAWy4KNbA9Xs08EeMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	syzbot+9383b1ff0df4b29ca5e6@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0515/1067] xprtrdma: Close lost-wakeup race in xprt_rdma_alloc_slot
-Date: Tue, 21 Jul 2026 17:18:36 +0200
-Message-ID: <20260721152436.131799207@linuxfoundation.org>
+Subject: [PATCH 6.1 0571/1067] xfrm: validate selector family and prefixlen during match
+Date: Tue, 21 Jul 2026 17:19:32 +0200
+Message-ID: <20260721152437.378373337@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,107 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 765bde47fe7f197dabeb12da76831f40d0b20377 ]
+[ Upstream commit 40f0b1047918539f0b0f795ac65e35336b4c2c78 ]
 
-xprt_rdma_alloc_slot() and xprt_rdma_free_slot() lack serialization
-between the buffer pool and the backlog queue.  A buffer freed
-after rpcrdma_buffer_get() finds the pool empty but before
-rpc_sleep_on() places the task on the backlog is returned to the
-pool with no waiter to wake, leaving the task stuck on the backlog
-indefinitely.
+syzbot reported a shift-out-of-bounds in xfrm_selector_match()
+due to AF_UNSPEC selector with large prefixlen (e.g. 128) matched
+against IPv4 flow (when XFRM_STATE_AF_UNSPEC is set).
 
-After joining the backlog, re-check the pool and route any
-recovered buffer through xprt_wake_up_backlog(), whose queue lock
-serializes with concurrent wakeups and avoids double-assignment
-of slots.
+Fix this by:
 
-Because xprt_rdma_free_slot() does not hold reserve_lock, the
-XPRT_CONGESTED double-check in xprt_throttle_congested() is
-ineffective: a task can join the backlog through that path after
-free_slot has already found it empty and cleared the bit.  Avoid
-this by using xprt_add_backlog_noncongested(), which queues the
-task without setting XPRT_CONGESTED, so every allocation reaches
-xprt_rdma_alloc_slot() and its post-sleep re-check.
+- Rejecting mismatched families in xfrm_selector_match.
+- Returning false in addr4_match if prefixlen > 32.
+- Returning false in addr_match if prefixlen > 128 (prevents overflow).
 
-Fixes: edb41e61a54e ("xprtrdma: Make rpc_rqst part of rpcrdma_req")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: e786233d2e0b ("xprtrdma: Decouple req recycling from RPC completion")
+Fixes: 3f0ab59e6537 ("xfrm: validate new SA's prefixlen using SA family when sel.family is unset")
+Reported-by: syzbot+9383b1ff0df4b29ca5e6@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a2fbe35.be3f099c.2836ae.0018.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/xprt.h     |  2 ++
- net/sunrpc/xprt.c               | 16 ++++++++++++++++
- net/sunrpc/xprtrdma/transport.c | 15 ++++++++++++++-
- 3 files changed, 32 insertions(+), 1 deletion(-)
+ include/net/xfrm.h     | 7 +++++++
+ net/xfrm/xfrm_policy.c | 3 +++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/include/linux/sunrpc/xprt.h b/include/linux/sunrpc/xprt.h
-index b9f59aabee53bf..3a50fdbb024d00 100644
---- a/include/linux/sunrpc/xprt.h
-+++ b/include/linux/sunrpc/xprt.h
-@@ -378,6 +378,8 @@ struct rpc_xprt *	xprt_alloc(struct net *net, size_t size,
- 				unsigned int max_req);
- void			xprt_free(struct rpc_xprt *);
- void			xprt_add_backlog(struct rpc_xprt *xprt, struct rpc_task *task);
-+void			xprt_add_backlog_noncongested(struct rpc_xprt *xprt,
-+					struct rpc_task *task);
- bool			xprt_wake_up_backlog(struct rpc_xprt *xprt, struct rpc_rqst *req);
- void			xprt_cleanup_ids(void);
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 74cb835e9c6d74..b189418cb9d056 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -825,6 +825,9 @@ static inline bool addr_match(const void *token1, const void *token2,
+ 	unsigned int pdw;
+ 	unsigned int pbi;
  
-diff --git a/net/sunrpc/xprt.c b/net/sunrpc/xprt.c
-index ab453ede54f0cd..562aa8beae0ecb 100644
---- a/net/sunrpc/xprt.c
-+++ b/net/sunrpc/xprt.c
-@@ -1651,6 +1651,22 @@ void xprt_add_backlog(struct rpc_xprt *xprt, struct rpc_task *task)
- }
- EXPORT_SYMBOL_GPL(xprt_add_backlog);
- 
-+/**
-+ * xprt_add_backlog_noncongested - queue task on backlog
-+ * @xprt: transport whose backlog queue receives the task
-+ * @task: task to queue
-+ *
-+ * Like xprt_add_backlog, but does not set XPRT_CONGESTED.
-+ * For transports whose free_slot path does not synchronize
-+ * with xprt_throttle_congested via reserve_lock.
-+ */
-+void xprt_add_backlog_noncongested(struct rpc_xprt *xprt,
-+				   struct rpc_task *task)
-+{
-+	rpc_sleep_on(&xprt->backlog, task, xprt_complete_request_init);
-+}
-+EXPORT_SYMBOL_GPL(xprt_add_backlog_noncongested);
++	if (prefixlen > 128)
++		return false;
 +
- static bool __xprt_set_rq(struct rpc_task *task, void *data)
+ 	pdw = prefixlen >> 5;	  /* num of whole u32 in prefix */
+ 	pbi = prefixlen &  0x1f;  /* num of bits in incomplete u32 in prefix */
+ 
+@@ -849,6 +852,10 @@ static inline bool addr4_match(__be32 a1, __be32 a2, u8 prefixlen)
+ 	/* C99 6.5.7 (3): u32 << 32 is undefined behaviour */
+ 	if (sizeof(long) == 4 && prefixlen == 0)
+ 		return true;
++
++	if (prefixlen > 32)
++		return false;
++
+ 	return !((a1 ^ a2) & htonl(~0UL << (32 - prefixlen)));
+ }
+ 
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 615a2f3d7bdae4..a780fb581388b0 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -223,6 +223,9 @@ __xfrm6_selector_match(const struct xfrm_selector *sel, const struct flowi *fl)
+ bool xfrm_selector_match(const struct xfrm_selector *sel, const struct flowi *fl,
+ 			 unsigned short family)
  {
- 	struct rpc_rqst *req = data;
-diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
-index 80731cbb1365ee..44e7cd14af70b5 100644
---- a/net/sunrpc/xprtrdma/transport.c
-+++ b/net/sunrpc/xprtrdma/transport.c
-@@ -521,7 +521,20 @@ xprt_rdma_alloc_slot(struct rpc_xprt *xprt, struct rpc_task *task)
- 
- out_sleep:
- 	task->tk_status = -EAGAIN;
--	xprt_add_backlog(xprt, task);
-+	xprt_add_backlog_noncongested(xprt, task);
-+	/* A buffer freed between buffer_get and rpc_sleep_on
-+	 * goes back to the pool with no waiter to wake.
-+	 * Re-check after joining the backlog to close that gap.
-+	 */
-+	req = rpcrdma_buffer_get(&r_xprt->rx_buf);
-+	if (req) {
-+		struct rpc_rqst *rqst = &req->rl_slot;
++	if (family != sel->family && sel->family != AF_UNSPEC)
++		return false;
 +
-+		if (!xprt_wake_up_backlog(xprt, rqst)) {
-+			memset(rqst, 0, sizeof(*rqst));
-+			rpcrdma_buffer_put(&r_xprt->rx_buf, req);
-+		}
-+	}
- }
- 
- /**
+ 	switch (family) {
+ 	case AF_INET:
+ 		return __xfrm4_selector_match(sel, fl);
 -- 
 2.53.0
 
