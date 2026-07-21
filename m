@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB804471269;
-	Tue, 21 Jul 2026 18:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4F9471259;
+	Tue, 21 Jul 2026 18:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657063; cv=none; b=hi7MNCOj2NnHhQsazcskCPM41tDtf+uYJRFHSh+MPeEMkQ73YGkmkcxeQ1IuDMGQguzCdkzRAsCjEGX5IhUO1sxcEvyXwVMfKfHwthzkUz5quVX4pllFUQCghZIKRVAu0FBhwuet87JNqYaziWxxqXaD8hFbPgzydXCjxkBpj80=
+	t=1784657064; cv=none; b=CVxcvArA3actAsX4hUoScRR0SRkt9cOHjXnrMeoN/lkd97QO8EOfd4pmPhyiAUDUlGtNTRed4KeC6IJPMTwfCPz9HuM9fWtAloziD0Bj7TySstjpA3vnx2G/2G7upZHzI3WOFKnXzw6E3DSIVvyhx1k6kjqsfr22/M3My2XRc3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657063; c=relaxed/simple;
-	bh=vzxl/OhBMQOCao2hlzJCKIylJFRzal7pid+L3KnvXoE=;
+	s=arc-20240116; t=1784657064; c=relaxed/simple;
+	bh=MjRwZ44QDFpmjT2zRyfwQumw7sHKbYJoFlOgany28kY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQUsb/G8s9hat2jwTWohErVanEdPq+onwTKWdCM7nPRpuu46RLqRY+y0ilwF/Mb0sSXNx8dF1ppd6slRlxhKvfTjUeGJupCFcnc/wvixDg8QHlahtKXASkQ1IdEMZlKa6K3Jl+7uLTAx/TIfiup/t8m+ZSz3ajIzrvcwl3JY5c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epb8zmiw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fGPH4XrH80b7Aq/E2oPqZJrb2ES6Tcn5WbHsaX/l7Mlj3jNwChmPhj4rtavDcODtpJy6p6BWcXDGDaYk+QEAAgQTcFwfSZjHYuOLVQNU4vLcp7qyeZ2vccUvgW10eS9z1JPr97bswWcqYzce4Gr3aj7LQX1vR4mRMzGApdt8m+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmSkaIUd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epb8zmiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E881F000E9;
-	Tue, 21 Jul 2026 18:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmSkaIUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06B31F00A3D;
+	Tue, 21 Jul 2026 18:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657060;
-	bh=HQVmV+TLS5H/9cnVn3F9EauxGxQezR2f9O/yYVuwXts=;
+	s=korg; t=1784657063;
+	bh=WLtPjXHbOS7rLwbGq1ftJ0i312HK+ZGE5hIkfspYgto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=epb8zmiwRc1TRbt44aRmrbZo0U5TwD/2aZkX9QNb5EQzP5s/CYqnmKrZwxLWOD4Ji
-	 Yu0uwFG3+xvHGF6yp3N/wqcXUl5zes/ta3ONPne9Pq8NBDSX84RdpDQbgQIp9qLBRn
-	 dlpZIh7l1oLBrAL6RpL+fPrQGL7TZQ3ABGkxsO38=
+	b=jmSkaIUdH/6Btvy8MiGeBS6pjvcJD+sUxyIfbtfiPvH3ZoXccXnKQ3RWmNXH9Usm2
+	 QsX4+EcICLCAKVLE2CjEZ6BEe8Z6MVZsdoXVmuWa1SeUbh5vpY7m5azBh95MqwEj8u
+	 EfzaXbac9GMyJ1a0POfDS64jGf5qJv7Ejy6TllMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Guilherme Ivo Bozi <guilherme.bozi@usp.br>,
+	Salih Erim <salih.erim@amd.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0605/1611] perf inject: Add --convert-callchain option
-Date: Tue, 21 Jul 2026 17:12:01 +0200
-Message-ID: <20260721152528.996832939@linuxfoundation.org>
+Subject: [PATCH 6.18 0623/1611] iio: adc: xilinx-ams: fix out-of-bounds channel lookup in event handling
+Date: Tue, 21 Jul 2026 17:12:19 +0200
+Message-ID: <20260721152529.400722743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -57,311 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Guilherme Ivo Bozi <guilherme.bozi@usp.br>
 
-[ Upstream commit 92ea788d2af4e65ad7a144ccfff50667e9a0d227 ]
+[ Upstream commit 947eb6f0a274f8b15a0248051a65b069effd5057 ]
 
-There are applications not built with frame pointers, so DWARF is needed
-to get the stack traces.
+ams_event_to_channel() may return a pointer past the end of
+dev->channels when no matching scan_index is found. This can lead
+to invalid memory access in ams_handle_event().
 
-`perf record --call-graph dwarf` saves the stack and register data for
-each sample to get the stacktrace offline.  But sometimes this data may
-have sensitive information and we don't want to keep them in the file.
+Add a bounds check in ams_event_to_channel() and return NULL when
+no channel is found. Also guard the caller to safely handle this
+case.
 
-This new 'perf inject --convert-callchain' option creates the callchains
-and discards the stack and register after that.
-
-This saves storage space and processing time for the new data file.
-
-Of course, users should remove the original data file to not keep
-sensitive data around.  :)
-
-The down side is that it cannot handle inlined callchain entries as they
-all have the same IPs.
-
-Maybe we can add an option to 'perf report' to look up inlined functions
-using DWARF - IIUC it doesn't require stack and register data.
-
-This is an example.
-
-  $ perf record --call-graph dwarf -- perf test -w noploop
-
-  $ perf report --stdio --no-children --percent-limit=0 > output-prev
-
-  $ perf inject -i perf.data --convert-callchain -o perf.data.out
-
-  $ perf report --stdio --no-children --percent-limit=0 -i perf.data.out > output-next
-
-  $ diff -u output-prev output-next
-  ...
-        0.23%  perf          ld-linux-x86-64.so.2  [.] _dl_relocate_object_no_relro
-               |
-  -            ---elf_dynamic_do_Rela (inlined)
-  -               _dl_relocate_object_no_relro
-  +            ---_dl_relocate_object_no_relro
-                  _dl_relocate_object
-                  dl_main
-                  _dl_sysdep_start
-  -               _dl_start_final (inlined)
-                  _dl_start
-                  _start
-
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 059e9100d82a ("perf event: Fix size of synthesized sample with branch stacks")
+Fixes: d5c70627a794 ("iio: adc: Add Xilinx AMS driver")
+Signed-off-by: Guilherme Ivo Bozi <guilherme.bozi@usp.br>
+Reviewed-by: Salih Erim <salih.erim@amd.com>
+Tested-by: Salih Erim <salih.erim@amd.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Documentation/perf-inject.txt |   5 +
- tools/perf/builtin-inject.c              | 152 +++++++++++++++++++++++
- 2 files changed, 157 insertions(+)
+ drivers/iio/adc/xilinx-ams.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/perf/Documentation/perf-inject.txt b/tools/perf/Documentation/perf-inject.txt
-index c972032f4ca0d2..95dfdf39666efe 100644
---- a/tools/perf/Documentation/perf-inject.txt
-+++ b/tools/perf/Documentation/perf-inject.txt
-@@ -109,6 +109,11 @@ include::itrace.txt[]
- 	should be used, and also --buildid-all and --switch-events may be
- 	useful.
+diff --git a/drivers/iio/adc/xilinx-ams.c b/drivers/iio/adc/xilinx-ams.c
+index 124470c9252978..6191cd1b29a510 100644
+--- a/drivers/iio/adc/xilinx-ams.c
++++ b/drivers/iio/adc/xilinx-ams.c
+@@ -871,6 +871,9 @@ static const struct iio_chan_spec *ams_event_to_channel(struct iio_dev *dev,
+ 		if (dev->channels[i].scan_index == scan_index)
+ 			break;
  
-+--convert-callchain::
-+	Parse DWARF callchains and convert them to usual callchains.  This also
-+	discards stack and register data from the samples.  This will lose
-+	inlined callchain entries.
++	if (i == dev->num_channels)
++		return NULL;
 +
- :GMEXAMPLECMD: inject
- :GMEXAMPLESUBCMD:
- include::guestmount.txt[]
-diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
-index a114b3fa1bea1d..9606b4bf109792 100644
---- a/tools/perf/builtin-inject.c
-+++ b/tools/perf/builtin-inject.c
-@@ -122,6 +122,7 @@ struct perf_inject {
- 	bool			in_place_update;
- 	bool			in_place_update_dry_run;
- 	bool			copy_kcore_dir;
-+	bool			convert_callchain;
- 	const char		*input_name;
- 	struct perf_data	output;
- 	u64			bytes_written;
-@@ -133,6 +134,7 @@ struct perf_inject {
- 	struct guest_session	guest_session;
- 	struct strlist		*known_build_ids;
- 	const struct evsel	*mmap_evsel;
-+	struct ip_callchain	*raw_callchain;
- };
- 
- struct event_entry {
-@@ -396,6 +398,90 @@ static int perf_event__repipe_sample(const struct perf_tool *tool,
- 	return perf_event__repipe_synth(tool, event);
+ 	return &dev->channels[i];
  }
  
-+static int perf_event__convert_sample_callchain(const struct perf_tool *tool,
-+						union perf_event *event,
-+						struct perf_sample *sample,
-+						struct evsel *evsel,
-+						struct machine *machine)
-+{
-+	struct perf_inject *inject = container_of(tool, struct perf_inject, tool);
-+	struct callchain_cursor *cursor = get_tls_callchain_cursor();
-+	union perf_event *event_copy = (void *)inject->event_copy;
-+	struct callchain_cursor_node *node;
-+	struct thread *thread;
-+	u64 sample_type = evsel->core.attr.sample_type;
-+	u32 sample_size = event->header.size;
-+	u64 i, k;
-+	int ret;
-+
-+	if (event_copy == NULL) {
-+		inject->event_copy = malloc(PERF_SAMPLE_MAX_SIZE);
-+		if (!inject->event_copy)
-+			return -ENOMEM;
-+
-+		event_copy = (void *)inject->event_copy;
-+	}
-+
-+	if (cursor == NULL)
-+		return -ENOMEM;
-+
-+	callchain_cursor_reset(cursor);
-+
-+	thread = machine__find_thread(machine, sample->tid, sample->pid);
-+	if (thread == NULL)
-+		goto out;
-+
-+	/* this will parse DWARF using stack and register data */
-+	ret = thread__resolve_callchain(thread, cursor, evsel, sample,
-+					/*parent=*/NULL, /*root_al=*/NULL,
-+					PERF_MAX_STACK_DEPTH);
-+	thread__put(thread);
-+	if (ret != 0)
-+		goto out;
-+
-+	/* copy kernel callchain and context entries */
-+	for (i = 0; i < sample->callchain->nr; i++) {
-+		inject->raw_callchain->ips[i] = sample->callchain->ips[i];
-+		if (sample->callchain->ips[i] == PERF_CONTEXT_USER) {
-+			i++;
-+			break;
-+		}
-+	}
-+	if (i == 0 || inject->raw_callchain->ips[i - 1] != PERF_CONTEXT_USER)
-+		inject->raw_callchain->ips[i++] = PERF_CONTEXT_USER;
-+
-+	node = cursor->first;
-+	for (k = 0; k < cursor->nr && i < PERF_MAX_STACK_DEPTH; k++) {
-+		if (machine__kernel_ip(machine, node->ip))
-+			/* kernel IPs were added already */;
-+		else if (node->ms.sym && node->ms.sym->inlined)
-+			/* we can't handle inlined callchains */;
-+		else
-+			inject->raw_callchain->ips[i++] = node->ip;
-+
-+		node = node->next;
-+	}
-+
-+	inject->raw_callchain->nr = i;
-+	sample->callchain = inject->raw_callchain;
-+
-+out:
-+	memcpy(event_copy, event, sizeof(event->header));
-+
-+	/* adjust sample size for stack and regs */
-+	sample_size -= sample->user_stack.size;
-+	sample_size -= (hweight64(evsel->core.attr.sample_regs_user) + 1) * sizeof(u64);
-+	sample_size += (sample->callchain->nr + 1) * sizeof(u64);
-+	event_copy->header.size = sample_size;
-+
-+	/* remove sample_type {STACK,REGS}_USER for synthesize */
-+	sample_type &= ~(PERF_SAMPLE_STACK_USER | PERF_SAMPLE_REGS_USER);
-+
-+	perf_event__synthesize_sample(event_copy, sample_type,
-+				      evsel->core.attr.read_format, sample);
-+	return perf_event__repipe_synth(tool, event_copy);
-+}
-+
- static struct dso *findnew_dso(int pid, int tid, const char *filename,
- 			       const struct dso_id *id, struct machine *machine)
- {
-@@ -2280,6 +2366,15 @@ static int __cmd_inject(struct perf_inject *inject)
- 		/* Allow space in the header for guest attributes */
- 		output_data_offset += gs->session->header.data_offset;
- 		output_data_offset = roundup(output_data_offset, 4096);
-+	} else if (inject->convert_callchain) {
-+		inject->tool.sample	= perf_event__convert_sample_callchain;
-+		inject->tool.fork	= perf_event__repipe_fork;
-+		inject->tool.comm	= perf_event__repipe_comm;
-+		inject->tool.exit	= perf_event__repipe_exit;
-+		inject->tool.mmap	= perf_event__repipe_mmap;
-+		inject->tool.mmap2	= perf_event__repipe_mmap2;
-+		inject->tool.ordered_events = true;
-+		inject->tool.ordering_requires_timestamps = true;
- 	}
+@@ -1012,6 +1015,8 @@ static void ams_handle_event(struct iio_dev *indio_dev, u32 event)
+ 	const struct iio_chan_spec *chan;
  
- 	if (!inject->itrace_synth_opts.set)
-@@ -2332,6 +2427,23 @@ static int __cmd_inject(struct perf_inject *inject)
- 				perf_header__set_feat(&session->header,
- 						      HEADER_BRANCH_STACK);
- 		}
-+
-+		/*
-+		 * The converted data file won't have stack and registers.
-+		 * Update the perf_event_attr to remove them before writing.
-+		 */
-+		if (inject->convert_callchain) {
-+			struct evsel *evsel;
-+
-+			evlist__for_each_entry(session->evlist, evsel) {
-+				evsel__reset_sample_bit(evsel, REGS_USER);
-+				evsel__reset_sample_bit(evsel, STACK_USER);
-+				evsel->core.attr.sample_regs_user = 0;
-+				evsel->core.attr.sample_stack_user = 0;
-+				evsel->core.attr.exclude_callchain_user = 0;
-+			}
-+		}
-+
- 		session->header.data_offset = output_data_offset;
- 		session->header.data_size = inject->bytes_written;
- 		perf_session__inject_header(session, session->evlist, fd, &inj_fc.fc,
-@@ -2356,6 +2468,18 @@ static int __cmd_inject(struct perf_inject *inject)
- 	return ret;
- }
+ 	chan = ams_event_to_channel(indio_dev, event);
++	if (!chan)
++		return;
  
-+static bool evsel__has_dwarf_callchain(struct evsel *evsel)
-+{
-+	struct perf_event_attr *attr = &evsel->core.attr;
-+	const u64 dwarf_callchain_flags =
-+		PERF_SAMPLE_STACK_USER | PERF_SAMPLE_REGS_USER | PERF_SAMPLE_CALLCHAIN;
-+
-+	if (!attr->exclude_callchain_user)
-+		return false;
-+
-+	return (attr->sample_type & dwarf_callchain_flags) == dwarf_callchain_flags;
-+}
-+
- int cmd_inject(int argc, const char **argv)
- {
- 	struct perf_inject inject = {
-@@ -2424,6 +2548,8 @@ int cmd_inject(int argc, const char **argv)
- 		OPT_STRING(0, "guestmount", &symbol_conf.guestmount, "directory",
- 			   "guest mount directory under which every guest os"
- 			   " instance has a subdir"),
-+		OPT_BOOLEAN(0, "convert-callchain", &inject.convert_callchain,
-+			    "Generate callchains using DWARF and drop register/stack data"),
- 		OPT_END()
- 	};
- 	const char * const inject_usage[] = {
-@@ -2439,6 +2565,9 @@ int cmd_inject(int argc, const char **argv)
- 
- #ifndef HAVE_JITDUMP
- 	set_option_nobuild(options, 'j', "jit", "NO_LIBELF=1", true);
-+#endif
-+#ifndef HAVE_LIBDW_SUPPORT
-+	set_option_nobuild(options, 0, "convert-callchain", "NO_LIBDW=1", true);
- #endif
- 	argc = parse_options(argc, argv, options, inject_usage, 0);
- 
-@@ -2597,6 +2726,28 @@ int cmd_inject(int argc, const char **argv)
- 		}
- 	}
- 
-+	if (inject.convert_callchain) {
-+		struct evsel *evsel;
-+
-+		if (inject.output.is_pipe || inject.session->data->is_pipe) {
-+			pr_err("--convert-callchain cannot work with pipe\n");
-+			goto out_delete;
-+		}
-+
-+		evlist__for_each_entry(inject.session->evlist, evsel) {
-+			if (!evsel__has_dwarf_callchain(evsel)) {
-+				pr_err("--convert-callchain requires DWARF call graph.\n");
-+				goto out_delete;
-+			}
-+		}
-+
-+		inject.raw_callchain = calloc(PERF_MAX_STACK_DEPTH, sizeof(u64));
-+		if (inject.raw_callchain == NULL) {
-+			pr_err("callchain allocation failed\n");
-+			goto out_delete;
-+		}
-+	}
-+
- #ifdef HAVE_JITDUMP
- 	if (inject.jit_mode) {
- 		inject.tool.mmap2	   = perf_event__repipe_mmap2;
-@@ -2627,5 +2778,6 @@ int cmd_inject(int argc, const char **argv)
- 	free(inject.itrace_synth_opts.vm_tm_corr_args);
- 	free(inject.event_copy);
- 	free(inject.guest_session.ev.event_buf);
-+	free(inject.raw_callchain);
- 	return ret;
- }
+ 	if (chan->type == IIO_TEMP) {
+ 		/*
 -- 
 2.53.0
 
