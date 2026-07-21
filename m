@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE633346A6;
-	Tue, 21 Jul 2026 17:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3F53672BA;
+	Tue, 21 Jul 2026 17:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655653; cv=none; b=tcLr4cMM9yCOJkOGdnpKDJdznrPzVpAjntbaEkKliaICr99yQtqBe4qAf67sqQaY0Q77I2P2PHaj9hjvva7uH5L1l7jPjwT+YqzQmq9yTKDWLGLKH7ZcqQTL2SVeM7BuSVf/kcrj5piABv0nN3Rmcx3jZUwnzJJTFNTYFbn3ofI=
+	t=1784655655; cv=none; b=UT1FJGx3E6ePTIIxFQqlG/i4S0BJ4Z9/+bVQTifqex3UIme9NAuBYfTU2oJF548wNtut8GfcmEVt5H3Th7FuH3xgfX7t+gCCWeBQ8iGPz4K+/rx8YKRYSs/0RYnl1XXx/xzdQtW+3onTf8wTuoZu852ORTVvPpUvP9uwGVoTQz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655653; c=relaxed/simple;
-	bh=VcV2Px2lnPp3+yXHHUzwZHrH8ZYhUpks73UfG/8mlPI=;
+	s=arc-20240116; t=1784655655; c=relaxed/simple;
+	bh=DmopRLFULzp5pl7om6PjNWzavker6/VZs+rAn/Lva5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akjF01ohZaUGO73LngK56lBBry9UYlNU8CbKziy7AX9hpzORtdrh6fRQlAjRcq2F7+0UnMjYm0ftyn2kfAPZtJbaSC1XJhopxIIltEOnTwr8SbGepCJc9AG4O3IsTcrZY6Mb/psTE3GrZQ6Cfi+oGzccp/mlMLtMc5+rTwtyX9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nny4ANZn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ASChoQb/fFa0Al2d/3oksA7apMuX16pNddu4IWvhho53vf40BmHbjQOApi6v6dz68pjQjeC0auAbNCYc1mw6IPd+Dn8rJ8wFcHKHCKyVCTi8VlU9YYEJnLypN8f6I9ThWcGIDC0oPhjQbz6Dl06ygiRs01xzz4gJzH7TBVXm0sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wN5odFuK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nny4ANZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D891F000E9;
-	Tue, 21 Jul 2026 17:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wN5odFuK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE461F000E9;
+	Tue, 21 Jul 2026 17:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655652;
-	bh=NOgsw0lg2h8rSGDzOvBAXW4vlTSsNTSZIdeliTdKwZA=;
+	s=korg; t=1784655654;
+	bh=Jh9TemLiD2UL+aalwpYmowcwLJMDiQE+yVnVzSu+VvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nny4ANZn4vuIFZLCdsi+BZd020o2SNWUHXqe/DKTdpHSL2fTMejwl4bLqqD7xt2gt
-	 4Wz8JLHhyRNn7LJkHmCK8juAA/nQUqCnb3N726LSarUuhiFDvAMCefjFCzDhf6t5A9
-	 GxS36wshuUhrgCMyiNfH07UHF1VDvUZAxyvBiVR0=
+	b=wN5odFuKFXgEFhgcqYMdqvHSmPJbZzK3BurfpGtR3wowG3MY7b/fwrlUoPsGXtckh
+	 NePtyUV2iT5tE1yGuw2md2BJ3rLYHMLMB14+0KvL9daxSm6z3cSHec7hdkUt+vlhmA
+	 qmqZ+uzQSOTy6IYa5xlgFw6vxFq+Rzp8P11K0BXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shin-Yi Lin <isaiah@realtek.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0088/1611] wifi: rtw89: Correct data type for scan index to avoid infinite loop
-Date: Tue, 21 Jul 2026 17:03:24 +0200
-Message-ID: <20260721152516.824313851@linuxfoundation.org>
+Subject: [PATCH 6.18 0089/1611] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
+Date: Tue, 21 Jul 2026 17:03:25 +0200
+Message-ID: <20260721152516.848063735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,78 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin-Yi Lin <isaiah@realtek.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 08fdcb529df6df3562dd2b0035f88dd5be8b3c68 ]
+[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
 
-A kernel soft lockup was observed during Wi-Fi scanning on the 6GHz band.
-The CPU becomes stuck in rtw89_hw_scan_add_chan_ax for over 20 seconds,
-leading to a system panic.
+In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
+descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
+firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
+causing an out-of-bounds read from the pre-allocated DMA buffer when
+skb_put_data copies new_len bytes. The USB transport already validates
+this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
+PCIe path does not.
 
-RIP points to 0f b6 c3 (movzbl %bl, %eax), which zero-extends
-the low 8 bits of RBX into RAX.
-RBX (the counter i) has reached a huge value: 0x137466a1.
+Add a check that new_len does not exceed the DMA buffer size.
 
-  watchdog: BUG: soft lockup - CPU#2 stuck for 26s! [kworker/u16:4:6124]
-  Workqueue: events_unbound cfg80211_wiphy_work [cfg80211]
-  RIP: 0010:rtw89_hw_scan_add_chan_ax+0xb3/0x6e0 [rtw89_core]
-  Code: a0 48 89 45 a8 44 89 6d 9c 44 89 75 98 eb 29 66 66 2e 0f 1f
-  84 00 00 00 00 00 66 66 2e 0f 1f 84 00 00 00 00 00 66 90 83 c3 01
-  <0f> b6 c3 41 3b 44 24 74 0f 83 0b 02 00 00 0f b6 c3 48 8d 14 80 49
-  RSP: 0018:ffffcb48cbaa39f8 EFLAGS: 00000202
-  RAX: 0000000000000005 RBX: 00000000137466a1 RCX: 0000000000000000
-  RDX: ffff89ffc9d851a8 RSI: 0000000000004f0d RDI: 0000000096af0130
-  RBP: ffffcb48cbaa3a60 R08: 0000000000000000 R09: ffff8a00b7502080
-  R10: ffff8a00b75ff600 R11: 0000000000000000 R12: ffff89ffc7553870
-  R13: ffff8a00b7ac8f19 R14: ffff8a00b75020d8 R15: ffff89ffc3d54d80
-  FS:  0000000000000000(0000) GS:ffff8a014f962000(0000)
-  knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007558d7f9f4c4 CR3: 0000000178040001 CR4: 00000000001706f0
-  Call Trace:
-   <TASK>
-   rtw89_hw_scan_prep_chan_list_ax+0x8a/0x400 [rtw89_core]
-   rtw89_hw_scan_start+0x546/0x8a0 [rtw89_core]
-   ? rtw89_fw_h2c_default_cmac_tbl+0x13c/0x1f0 [rtw89_core]
-   rtw89_ops_hw_scan+0xae/0x120 [rtw89_core]
-   drv_hw_scan+0xbb/0x180 [mac80211]
-   __ieee80211_start_scan+0x2fc/0x750 [mac80211]
-   ieee80211_request_scan+0xe/0x20 [mac80211]
-   ieee80211_scan+0x123/0x190 [mac80211]
-   rdev_scan+0x40/0x110 [cfg80211]
-   cfg80211_scan_6ghz+0x5a1/0xa30 [cfg80211]
-
-By objdump with source:
-
-	for (i = 0; i < req->n_6ghz_params; i++) {
-   5fbc0:	83 c3 01             	add    $0x1,%ebx --> i++
-   5fbc3:	0f b6 c3             	movzbl %bl,%eax  --> get counter
-   fbc6:	41 3b 44 24 74       	cmp    0x74(%r12),%eax
-
-   * RBX: 00000000137466a1 -> %bl = a1 -> EAX = 000000a1 (161)
-
-Fixes: c6aa9a9c4725 ("wifi: rtw89: add RNR support for 6 GHz scan")
-Signed-off-by: Shin-Yi Lin <isaiah@realtek.com>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260420034051.17666-7-pkshih@realtek.com
+Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/fw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index c9851aafe649e5..15ac357bbdbac0 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -7198,7 +7198,7 @@ static int rtw89_update_6ghz_rnr_chan_ax(struct rtw89_dev *rtwdev,
- 	struct sk_buff *skb;
- 	bool found;
- 	int ret = 0;
--	u8 i;
-+	u32 i;
- 
- 	if (!req->n_6ghz_params)
- 		return 0;
+diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
+index d6d8386f930a9a..eae54f50485c21 100644
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1076,6 +1076,11 @@ static u32 rtw_pci_rx_napi(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
+ 		 * discard the frame if none available
+ 		 */
+ 		new_len = pkt_stat.pkt_len + pkt_offset;
++		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
++			rtw_dbg(rtwdev, RTW_DBG_RX,
++				"oversized RX packet: %u\n", new_len);
++			goto next_rp;
++		}
+ 		new = dev_alloc_skb(new_len);
+ 		if (WARN_ONCE(!new, "rx routine starvation\n"))
+ 			goto next_rp;
 -- 
 2.53.0
 
