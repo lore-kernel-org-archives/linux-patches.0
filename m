@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4CD43E08B;
-	Tue, 21 Jul 2026 22:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1F74582CC;
+	Tue, 21 Jul 2026 22:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672496; cv=none; b=pT3ccOgIlt2HMU8irDVYMqbnOlHTwHj5UGtK0Iqgdg9zf7TV496wOFkEJlnd5cOEs11v5Ph+Pmez+SxSeXaIQjmRv1hLn6aEuJOy37eyok3kMkynCWrffKlKnZ4uCG334CpWu0yZukk0yEpj1RqcCYa3DgMyIU402zygAlnAPk4=
+	t=1784672499; cv=none; b=hEmkk/yt+tCKQP201zT0cTtFYR9PLE9pHF1LHJvvRzsZIjXAul2TTVN8YsOO3tZiQXWkWqjClTQsipXQJ/EQgY5bbmX7PbbqBgoX5Dbi5nkW5Ik4yEtKPYUCyN09M83fNELbKBltdcTHrhU4YtfSYbpo9xDXBAhZJHagEfsStOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672496; c=relaxed/simple;
-	bh=f/aXJH7l68s23bxyQxs4EymWA+Fi7exMp3EQRvtaspM=;
+	s=arc-20240116; t=1784672499; c=relaxed/simple;
+	bh=zEDW6TeeFWHVEkb+2DvA3+uPIaXEJqfC7GmMXyKbxz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LsXwRGO7LUV1oxPoY13tU9vQs0ZewV3zDm+mKSZUngvtZRt4fa9VHRdgOYWIFUYkqdz0FVvpP3ymiuNu5yfeSOFqgb3Iu7O4T3kGQ/7WFKBdrAcTfRrAh3/iajFM61tIl22GXE/96/wrN/B2GpPL70Bal0Mv9jmKSBOqGDV5OGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0sCwdHM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P/Yg1iNyvYOeqMsybPPp42IUkie4WwJGObj4EFnVNKDcj0R64816fQ4RIvofcJEDoxFmyR0GYVnIhX+QGPEmjj0YktD4s9XtOZVhKxNZ7waNnuheWyt5zhlSZI/T+cLcfhucCxDhgLSiBfh3C1VhtSj1lrgkLDLwdfvgderJYoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TS9ekGHK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0sCwdHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D651F000E9;
-	Tue, 21 Jul 2026 22:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TS9ekGHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AB51F00A3D;
+	Tue, 21 Jul 2026 22:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672491;
-	bh=/G7+mD5kjMUmUA0/hWDsFp6WkJYzQhDCclqT312doPw=;
+	s=korg; t=1784672497;
+	bh=DaHjaOoh5jngESg4D7B5metcT5Qx3ID1+yPRLrLYQik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F0sCwdHMJ+k2rmClxPIemDRDu5PJWlEEsBduMpHUHkG/DI3o043xQTrt8cSEDJpin
-	 AQH+8T2fBz9SDxHTEAHUCtu/L6H+bfez8KgMEZ29/G450/U8A9WqAHdxLrZDfqkXe8
-	 0Ni0PCSE0M4gIOJhzcZQcpVH+JV7siMMWNMcFEUk=
+	b=TS9ekGHKy2FPKT7BjJutcUnyu2iu4GfyO0YaUbZtklH8HUBEfI2qPbKYB4RjFmqnT
+	 Jjric8JlybmNQQVkR4Sw6L4B+CkP73Scy6OeOKPfgRJxL75PRy1axpxAfPhOL67IN1
+	 yCvtK4k0j3avaLvPF0T4O9dS3GyirQY9y5p6YJeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>
-Subject: [PATCH 5.15 646/843] nvmet-rdma: handle inline data with a nonzero offset
-Date: Tue, 21 Jul 2026 17:24:41 +0200
-Message-ID: <20260721152420.599256530@linuxfoundation.org>
+	Ginger <ginger.jzllee@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 648/843] can: bcm: fix lockless bound/ifindex race and silent RX_SETUP failure
+Date: Tue, 21 Jul 2026 17:24:43 +0200
+Message-ID: <20260721152420.645797540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,89 +52,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 48c0162f647bb47e6084ffbc71b8f213f5e2f4f8 upstream.
+commit d9b091d9d22fee81ec53fb55d2032951993ceadb upstream.
 
-nvmet_rdma_use_inline_sg() maps the host-controlled inline data offset
-into the per-command inline scatterlist.  The bounds check admits any
-offset with off + len <= inline_data_size, but the mapping still assumes
-the data begins in the first inline page:
+bcm_sendmsg() reads bo->ifindex and checks bo->bound before taking
+lock_sock(), while bcm_notify(), bcm_connect() and bcm_release() all
+mutate both fields under that same lock. Because the lockless reads
+and the locked writes are unordered with respect to each other, a
+racing bcm_notify() (device unregister) or bcm_connect() (concurrent
+bind on another thread sharing the socket) can make bcm_sendmsg()
+observe an inconsistent combination, e.g. a stale bound=1 together
+with the now-cleared ifindex=0, silently turning a socket bound to a
+specific CAN interface into one that also matches "any" interface.
 
-	sg->offset = off;
-	sg->length = min_t(int, len, PAGE_SIZE - off);
+Keep the lockless bo->bound check purely as a fast-path reject, and
+move the ifindex read (and a bo->bound re-check) into the locked
+section, where every writer already serializes. This removes the
+possibility of observing the two fields torn against each other,
+rather than trying to fix it with more READ_ONCE()/WRITE_ONCE() pairs
+on two independently updated fields. Annotate the now-purely-lockless
+bo->bound accesses consistently across all its write sites.
 
-When a port is configured with inline_data_size > PAGE_SIZE (settable up
-to max(SZ_16K, PAGE_SIZE)), an offset in (PAGE_SIZE, inline_data_size]
-makes "PAGE_SIZE - off" underflow, so sg->length is set to ~4 GiB and
-the block backend reads far past the first inline page.  num_pages(len)
-also ignores the offset, so an in-bounds offset whose [off, off+len)
-span crosses a page boundary under-counts the scatterlist.
+Also fix bcm_rx_setup() silently returning success when the target
+device disappears concurrently instead of reporting -ENODEV, so a
+broken RX op is no longer left registered as if it had succeeded.
 
-Map the offset properly: split it into a page index and an in-page
-offset, start the scatterlist at that page, and size the page count from
-page_off + len.  Because the request scatterlist may now start at
-inline_sg[page_idx] rather than inline_sg[0], generalize the inline-SGL
-identity test in nvmet_rdma_release_rsp() to a range test; otherwise the
-persistent inline scatterlist is mistaken for an allocated one and
-nvmet_req_free_sgls() frees an inline page (and warns in
-free_large_kmalloc()).
-
-Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
-Cc: stable@vger.kernel.org
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+Reported-by: Ginger <ginger.jzllee@gmail.com>
+Closes: https://lore.kernel.org/linux-can/CAGp+u1aBK8QVjsvAxM2Ldzep4rEbsP9x_pV3At4g=h1kVEtyhA@mail.gmail.com/
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-2-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/rdma.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ net/can/bcm.c |   65 +++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 51 insertions(+), 14 deletions(-)
 
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -665,7 +665,8 @@ static void nvmet_rdma_release_rsp(struc
- 	if (rsp->n_rdma)
- 		nvmet_rdma_rw_ctx_destroy(rsp);
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1251,6 +1251,11 @@ static int bcm_rx_setup(struct bcm_msg_h
  
--	if (rsp->req.sg != rsp->cmd->inline_sg)
-+	if (rsp->req.sg < rsp->cmd->inline_sg ||
-+	    rsp->req.sg >= rsp->cmd->inline_sg + queue->dev->inline_page_count)
- 		nvmet_req_free_sgls(&rsp->req);
+ 				op->rx_reg_dev = dev;
+ 				dev_put(dev);
++			} else {
++				/* the requested device is gone - do not
++				 * silently succeed without registering
++				 */
++				err = -ENODEV;
+ 			}
  
- 	if (unlikely(!list_empty_careful(&queue->rsp_wr_wait_list)))
-@@ -820,24 +821,25 @@ static void nvmet_rdma_write_data_done(s
- static void nvmet_rdma_use_inline_sg(struct nvmet_rdma_rsp *rsp, u32 len,
- 		u64 off)
+ 		} else
+@@ -1320,12 +1325,13 @@ static int bcm_sendmsg(struct socket *so
  {
--	int sg_count = num_pages(len);
-+	u64 page_off = off % PAGE_SIZE;
-+	u64 page_idx = off / PAGE_SIZE;
-+	int sg_count = num_pages(page_off + len);
- 	struct scatterlist *sg;
- 	int i;
+ 	struct sock *sk = sock->sk;
+ 	struct bcm_sock *bo = bcm_sk(sk);
+-	int ifindex = bo->ifindex; /* default ifindex for this bcm_op */
++	int ifindex;
+ 	struct bcm_msg_head msg_head;
+ 	int cfsiz;
+ 	int ret; /* read bytes or error codes as return value */
  
--	sg = rsp->cmd->inline_sg;
-+	sg = &rsp->cmd->inline_sg[page_idx];
- 	for (i = 0; i < sg_count; i++, sg++) {
- 		if (i < sg_count - 1)
- 			sg_unmark_end(sg);
- 		else
- 			sg_mark_end(sg);
--		sg->offset = off;
--		sg->length = min_t(int, len, PAGE_SIZE - off);
-+		sg->offset = page_off;
-+		sg->length = min_t(u64, len, PAGE_SIZE - page_off);
- 		len -= sg->length;
--		if (!i)
--			off = 0;
-+		page_off = 0;
+-	if (!bo->bound)
++	/* Lockless fast-path check for bound socket */
++	if (!READ_ONCE(bo->bound))
+ 		return -ENOTCONN;
+ 
+ 	/* check for valid message length from userspace */
+@@ -1341,17 +1347,38 @@ static int bcm_sendmsg(struct socket *so
+ 	if ((size - MHSIZ) % cfsiz)
+ 		return -EINVAL;
+ 
++	lock_sock(sk);
++
++	/* Re-validate under the socket lock: a concurrent bcm_notify()
++	 * may have unbound this socket (device removal) after the
++	 * lockless fast-path check above. bo->ifindex is only ever
++	 * mutated under lock_sock(), so reading it here - instead of
++	 * before taking the lock - guarantees it can't be observed
++	 * torn against bo->bound.
++	 */
++	if (!bo->bound) {
++		ret = -ENOTCONN;
++		goto out_release;
++	}
++
++	/* default ifindex for this bcm_op */
++	ifindex = bo->ifindex;
++
+ 	/* check for alternative ifindex for this bcm_op */
+ 
+ 	if (!ifindex && msg->msg_name) {
+ 		/* no bound device as default => check msg_name */
+ 		DECLARE_SOCKADDR(struct sockaddr_can *, addr, msg->msg_name);
+ 
+-		if (msg->msg_namelen < BCM_MIN_NAMELEN)
+-			return -EINVAL;
++		if (msg->msg_namelen < BCM_MIN_NAMELEN) {
++			ret = -EINVAL;
++			goto out_release;
++		}
+ 
+-		if (addr->can_family != AF_CAN)
+-			return -EINVAL;
++		if (addr->can_family != AF_CAN) {
++			ret = -EINVAL;
++			goto out_release;
++		}
+ 
+ 		/* ifindex from sendto() */
+ 		ifindex = addr->can_ifindex;
+@@ -1360,20 +1387,21 @@ static int bcm_sendmsg(struct socket *so
+ 			struct net_device *dev;
+ 
+ 			dev = dev_get_by_index(sock_net(sk), ifindex);
+-			if (!dev)
+-				return -ENODEV;
++			if (!dev) {
++				ret = -ENODEV;
++				goto out_release;
++			}
+ 
+ 			if (dev->type != ARPHRD_CAN) {
+ 				dev_put(dev);
+-				return -ENODEV;
++				ret = -ENODEV;
++				goto out_release;
+ 			}
+ 
+ 			dev_put(dev);
+ 		}
  	}
  
--	rsp->req.sg = rsp->cmd->inline_sg;
-+	rsp->req.sg = &rsp->cmd->inline_sg[page_idx];
- 	rsp->req.sg_cnt = sg_count;
- }
+-	lock_sock(sk);
+-
+ 	switch (msg_head.opcode) {
  
+ 	case TX_SETUP:
+@@ -1423,6 +1451,7 @@ static int bcm_sendmsg(struct socket *so
+ 		break;
+ 	}
+ 
++out_release:
+ 	release_sock(sk);
+ 
+ 	return ret;
+@@ -1459,7 +1488,12 @@ static void bcm_notify(struct bcm_sock *
+ 				bo->bcm_proc_read = NULL;
+ 			}
+ #endif
+-			bo->bound   = 0;
++			/* Paired with the lockless fast-path check in
++			 * bcm_sendmsg(); bo->ifindex itself is only ever
++			 * accessed under lock_sock() so it needs no
++			 * annotation.
++			 */
++			WRITE_ONCE(bo->bound, 0);
+ 			bo->ifindex = 0;
+ 			notify_enodev = 1;
+ 		}
+@@ -1600,7 +1634,7 @@ static int bcm_release(struct socket *so
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
+-		bo->bound   = 0;
++		WRITE_ONCE(bo->bound, 0);
+ 		bo->ifindex = 0;
+ 	}
+ 
+@@ -1669,7 +1703,10 @@ static int bcm_connect(struct socket *so
+ 	}
+ #endif /* CONFIG_PROC_FS */
+ 
+-	bo->bound = 1;
++	/* bo->ifindex above is fully assigned before this point; pairs
++	 * with the lockless fast-path check in bcm_sendmsg()
++	 */
++	WRITE_ONCE(bo->bound, 1);
+ 
+ fail:
+ 	release_sock(sk);
 
 
