@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F3A3B774D;
-	Tue, 21 Jul 2026 21:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0D043F4CF;
+	Tue, 21 Jul 2026 21:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668345; cv=none; b=DD/uSLJWee4TCMq45SDvSmVsIRPndTMH5CIAdgofkB3cJ4fpHdbp1pM5KeEoUjkoMHWbJA3WNqUYDkUm1ZELYWJiQV17UEo9yRd+ZOOqeT45ayxT3wmFja6gSIIncCpqk42ajb0/cipgp2vWsMOPrOKY6lri9AVUfCmfXW869vM=
+	t=1784668349; cv=none; b=GsKZFPGkxQ+X0zt5v9gG0re9g6ohwnM1vruLk9KfaoYakcQFFE/cLNLUsFBpfdkTQ3eUP1SOuWyon7zMVvhVfliBOAMPCIc7WIdV8ODfNmLWVh9WEf5yUwTl2kqOLFfEco78Fk+bcFueiGgzwVQbQUOF54K5+3z3/xthDaewJmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668345; c=relaxed/simple;
-	bh=hyYA8DOD0bPQcoSiAMXs05cxj+ocg4AbNX/tzf6iGuU=;
+	s=arc-20240116; t=1784668349; c=relaxed/simple;
+	bh=o6AHj4/mNJDHI03BinCpKjxsuqhJ7KLIXsMJbicLjdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VpiVoMFeIKXy7vFeoJ0kUHfYpuht3JrY5UIBlccXLPxpLSDsvG/T6v3Joq77OUejJAPEHMqybL/m7gzWeSdYCqPpYfhMEi5deRBu84g0jIiKvNeqX5L9eGhEepRbA52CCMk3dTc18zLuuN0YxLYHVztAOS9sAoZ+KMnYzavpNNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0p0atW9e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kJveuHYb63LYC7XKlrq9+lV8MZ0zuLMGg9MkhkzZhXZGn2gm20Wqev/d0apbhZxPzTYSluldZ03DrSLyLPp1p+k7me2x3DLbAXsc8lVMwMaKhZZQYLN8/jfSJ6n2yaC1fhE78zQj4zV9w1qDLWDnhKDspQHenF00a0+WhVWHOfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvGkm6lL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0p0atW9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1720F1F000E9;
-	Tue, 21 Jul 2026 21:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvGkm6lL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E371F000E9;
+	Tue, 21 Jul 2026 21:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668343;
-	bh=ofpzNFasWWljnITj19/lfOvUfQPrP0iRqRmHmfxayII=;
+	s=korg; t=1784668346;
+	bh=hff62jA9EaxeuH1RT8IMVba5hK5QFDl3+WE6ROOlsgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0p0atW9ewjxF31ab1j0qRc/xd/cthd2saXIcovLznP2fjzfnZh8cV3ttrTzZOj7yY
-	 nDGAtggObWUgFENxNykYnzoEtYQMliIcY+dMPonrfeaXLY3QZC1SkqWF6VId+V6Q43
-	 Vu1ZiJydDakUsjiqZ3bKY5WrVRXagG3pqCmykbaQ=
+	b=PvGkm6lLnZS6PYS5YGF1pzvtw/wlNbAaz8JsUQ813ZKe3IFP5gylXhKOkwTtmB3L8
+	 p/gCwFVAI9qWpmDsgjIt5tFzRJGY++TiS8ohyqqd1v6JStcgOfVsaW6h5kc9qChFyO
+	 u6I7lIqtmO6w36Dy0ewM3XAxRaXFDdy2qW8BLMVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Ornaghi <d.ornaghi97@gmail.com>,
+	Musaab Khan <musaab.khan@protonmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 0138/1067] ksmbd: fix UAF of struct file_lock in SMB2_LOCK deferred-lock cancellation
-Date: Tue, 21 Jul 2026 17:12:19 +0200
-Message-ID: <20260721152427.682231932@linuxfoundation.org>
+Subject: [PATCH 6.1 0139/1067] ksmbd: require source read access for duplicate extents
+Date: Tue, 21 Jul 2026 17:12:20 +0200
+Message-ID: <20260721152427.703769498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,86 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Ornaghi <d.ornaghi97@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit d20d1c8ba5765d1d12eefc0aee6385ab3f240e1e upstream.
+commit cedff600f1642aa982178503552f0d007bc829c8 upstream.
 
-When a blocking byte-range lock request is deferred in the
-FILE_LOCK_DEFERRED path, ksmbd registers the asynchronous work into
-the connection's async_requests list via setup_async_work(). The cancel
-callback smb2_remove_blocked_lock() holds a reference to the flock.
+FSCTL_DUPLICATE_EXTENTS_TO_FILE passes the source file directly to
+vfs_clone_file_range() or vfs_copy_file_range() without checking the SMB
+access mask granted to the source handle. A handle opened with attribute
+access can consequently be used to copy file contents into an
+attacker-readable destination.
 
-If the lock waiter is subsequently woken up but the work state is no
-longer KSMBD_WORK_ACTIVE (e.g., due to a concurrent cancellation), the
-cleanup path calls locks_free_lock(flock) without dequeuing the work from
-the async_requests list. Concurrently, smb2_cancel() walks the list
-under conn->request_lock and invokes the cancel callback, which then
-dereferences the already freed 'flock'. This leads to a slab-use-after-free
-inside __wake_up_common.
-
-Fix this by restructuring the cleanup logic after the worker returns
-from ksmbd_vfs_posix_lock_wait(). Move list_del(&smb_lock->llist) and
-release_async_work(work) to the top of the cleanup block. This guarantees
-that the async work is completely dequeued and serialized under
-conn->request_lock before locks_free_lock(flock) is called, rendering
-the flock unreachable for any concurrent smb2_cancel().
+Require FILE_READ_DATA on the source handle before either VFS operation,
+matching other ksmbd data-copy paths.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Davide Ornaghi <d.ornaghi97@gmail.com>
+Reported-by: Musaab Khan <musaab.khan@protonmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ fs/smb/server/smb2pdu.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -7229,29 +7229,27 @@ skip:
- 				list_del(&work->fp_entry);
- 				spin_unlock(&fp->f_lock);
+@@ -8051,6 +8051,10 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			ret = -EACCES;
+ 			goto dup_ext_out;
+ 		}
++		if (!(fp_in->daccess & FILE_READ_DATA_LE)) {
++			ret = -EACCES;
++			goto dup_ext_out;
++		}
  
--				if (work->state != KSMBD_WORK_ACTIVE) {
--					list_del(&smb_lock->llist);
--					locks_free_lock(flock);
-+				list_del(&smb_lock->llist);
-+				release_async_work(work);
-+
-+				if (work->state == KSMBD_WORK_ACTIVE)
-+					goto retry;
- 
--					if (work->state == KSMBD_WORK_CANCELLED) {
--						rsp->hdr.Status =
--							STATUS_CANCELLED;
--						kfree(smb_lock);
--						smb2_send_interim_resp(work,
--								       STATUS_CANCELLED);
--						work->send_no_response = 1;
--						goto out;
--					}
-+				locks_free_lock(flock);
- 
--					rsp->hdr.Status =
--						STATUS_RANGE_NOT_LOCKED;
-+				if (work->state == KSMBD_WORK_CANCELLED) {
-+					rsp->hdr.Status = STATUS_CANCELLED;
- 					kfree(smb_lock);
--					goto out2;
-+					smb2_send_interim_resp(work,
-+							STATUS_CANCELLED);
-+					work->send_no_response = 1;
-+					goto out;
- 				}
- 
--				list_del(&smb_lock->llist);
--				release_async_work(work);
--				goto retry;
-+				rsp->hdr.Status =
-+					STATUS_RANGE_NOT_LOCKED;
-+				kfree(smb_lock);
-+				goto out2;
- 			} else if (!rc) {
- 				list_add(&smb_lock->llist, &rollback_list);
- 				spin_lock(&work->conn->llist_lock);
+ 		src_off = le64_to_cpu(dup_ext->SourceFileOffset);
+ 		dst_off = le64_to_cpu(dup_ext->TargetFileOffset);
 
 
