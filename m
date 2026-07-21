@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689553770B;
-	Tue, 21 Jul 2026 20:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19F53770B;
+	Tue, 21 Jul 2026 20:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666352; cv=none; b=g0xEgCSr9jHniqsP04nOVIzZSNJs/axaTD1duOjWKndMydFIgIqsQA++/2s6uIz7dVj4cg18CDw0N6ie77ciUmLTLPA0tDxj9clR46l5lr0anJxN/AAzMPatWv5BxbDdqfSqLY4eQqPZnFY3jBfhBtipKzWl/X0u2l4FqmARz1w=
+	t=1784666355; cv=none; b=H3F4orKqzziD1oDFCXJ7Mt9D7WdjAlR/o5uzGxzfL3xceb5Iw1CNDwGQfiSwRhg34gNdQXbVls+2II4J7rbCKgblMn91aqJiEiKn0JUNFk030xqE4pBp7JN3uM9/qGzyLr0dpvHypyiFPPUgtCZFrxrJf/rUEJGTevohDMSex1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666352; c=relaxed/simple;
-	bh=HVk33YruvtH+o6YesLYtBHGEtkYLsEI9m3O3vGbzfrk=;
+	s=arc-20240116; t=1784666355; c=relaxed/simple;
+	bh=Jf+0zEJJEvbAzK4dS9Ohz9q6k+KTn/59umyQINoSkbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=knn0dfgxK4dVM6MbTaE2IU5cXhOYDbDskktzs8DiXVmIwIM8Js2BfwwQIqB+zp4RDPBvfcBzZWuvE878lCEzLivN0gmwiV86vOF/fNMiTymtMiStsqvBpi4iBPwFyiWLK3PHvtHoZRP/NTT8rcgdwTm5UvxS05ekY39TFzPhSuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nec+/Cyq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OnQlUD60hgtq0vmnFiMwN00aK8wjFGySt/qJNGfgoiQ8Ct3XPOEpZ/dzcoQfS8Zq6xBqY37N4p3qgn8MblBbjpRf4w65RQyAz/YhVcSVfWzUoPCHjDz4zd2HtUHOQ7S9/Jcq0mNc1Nwk5fVywza2fLtAAzYYFSdwswEWQCn2qHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2gBK/Ug; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nec+/Cyq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9221F000E9;
-	Tue, 21 Jul 2026 20:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2gBK/Ug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E691F000E9;
+	Tue, 21 Jul 2026 20:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666351;
-	bh=eHlxCWM9QTveP1W4CR5uQt+j2FsCB+jRJ8WMoMEirQw=;
+	s=korg; t=1784666353;
+	bh=KBuLdzyy1EVs0T/AQjqH8RiPymVQD1iP5n+4DcwEkjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nec+/CyqSavOGC/CPX6+bjTM8E3WMcoMnT++Do/vNvwViOwCrJhQO20nvuuAO2cXZ
-	 oASLgYsk6SVJWopLrWfm7WJvneansc03+t8hqswxJgHW7XX6nZRUNpX8e7omdvm1cE
-	 BC30iDGr5jmU/au0rjwj1v3o+yMyM+Gcbsj0J64A=
+	b=U2gBK/UgMtZEd3kuVt25FLX0W0FKIBzQO+pFqzb0zYsCQtZg+pX/66ExW00LA/oZi
+	 5Wc1pRJG/WFRpwkHli1A8oYSa1JfNa3HRXJsHjR8ui2jZcNEpSNckuwUfWz2v6fOWP
+	 w0wSis07YDz9yPfA+3bCnHsNTrtBukjYq2avgMzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0643/1266] perf sched: Replace BUG_ON and add NULL checks in replay event helpers
-Date: Tue, 21 Jul 2026 17:18:00 +0200
-Message-ID: <20260721152456.248668348@linuxfoundation.org>
+Subject: [PATCH 6.6 0652/1266] xprtrdma: Close lost-wakeup race in xprt_rdma_alloc_slot
+Date: Tue, 21 Jul 2026 17:18:09 +0200
+Message-ID: <20260721152456.445610035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,118 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 75eafe4a3a93a0143a20c0cc286bfb9008ac1478 ]
+[ Upstream commit 765bde47fe7f197dabeb12da76831f40d0b20377 ]
 
-get_new_event() has three issues:
+xprt_rdma_alloc_slot() and xprt_rdma_free_slot() lack serialization
+between the buffer pool and the backlog queue.  A buffer freed
+after rpcrdma_buffer_get() finds the pool empty but before
+rpc_sleep_on() places the task on the backlog is returned to the
+pool with no waiter to wake, leaving the task stuck on the backlog
+indefinitely.
 
-1. The zalloc() result is dereferenced without a NULL check, crashing
-   on allocation failure.
+After joining the backlog, re-check the pool and route any
+recovered buffer through xprt_wake_up_backlog(), whose queue lock
+serializes with concurrent wakeups and avoids double-assignment
+of slots.
 
-2. BUG_ON(!task->atoms) kills the process when realloc() fails.
-   Since perf.data is untrusted input, this should be a graceful error.
+Because xprt_rdma_free_slot() does not hold reserve_lock, the
+XPRT_CONGESTED double-check in xprt_throttle_congested() is
+ineffective: a task can join the backlog through that path after
+free_slot has already found it empty and cleared the bit.  Avoid
+this by using xprt_add_backlog_noncongested(), which queues the
+task without setting XPRT_CONGESTED, so every allocation reaches
+xprt_rdma_alloc_slot() and its post-sleep re-check.
 
-3. The realloc pattern assigns directly to task->atoms, losing the old
-   pointer on failure.  task->nr_events is also incremented before the
-   realloc, leaving corrupted state on failure.
-
-Fix get_new_event() to:
-  - Check the zalloc() result before dereferencing
-  - Use a temporary for realloc() to avoid losing the old pointer
-  - Increment nr_events only after successful realloc
-  - Return NULL instead of calling BUG_ON on failure
-
-Also fix add_sched_event_wakeup() where zalloc() for wait_sem is
-passed to sem_init() without a NULL check.
-
-Update all callers (add_sched_event_run, add_sched_event_wakeup,
-add_sched_event_sleep) to handle NULL returns by returning early.
-The replay may produce incomplete output on OOM but will not crash.
-
-Fixes: ec156764d424 ("perf sched: Import schedbench.c")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: edb41e61a54e ("xprtrdma: Make rpc_rqst part of rpcrdma_req")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: e786233d2e0b ("xprtrdma: Decouple req recycling from RPC completion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ include/linux/sunrpc/xprt.h     |  2 ++
+ net/sunrpc/xprt.c               | 16 ++++++++++++++++
+ net/sunrpc/xprtrdma/transport.c | 15 ++++++++++++++-
+ 3 files changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 0a1a58f33ae651..8b1573515c5781 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -363,14 +363,25 @@ get_new_event(struct task_desc *task, u64 timestamp)
- 	struct sched_atom *event = zalloc(sizeof(*event));
- 	unsigned long idx = task->nr_events;
- 	size_t size;
-+	struct sched_atom **atoms_p;
+diff --git a/include/linux/sunrpc/xprt.h b/include/linux/sunrpc/xprt.h
+index 4ecc89301eb74d..840f77ff83bf1a 100644
+--- a/include/linux/sunrpc/xprt.h
++++ b/include/linux/sunrpc/xprt.h
+@@ -398,6 +398,8 @@ struct rpc_xprt *	xprt_alloc(struct net *net, size_t size,
+ 				unsigned int max_req);
+ void			xprt_free(struct rpc_xprt *);
+ void			xprt_add_backlog(struct rpc_xprt *xprt, struct rpc_task *task);
++void			xprt_add_backlog_noncongested(struct rpc_xprt *xprt,
++					struct rpc_task *task);
+ bool			xprt_wake_up_backlog(struct rpc_xprt *xprt, struct rpc_rqst *req);
+ void			xprt_cleanup_ids(void);
+ 
+diff --git a/net/sunrpc/xprt.c b/net/sunrpc/xprt.c
+index ab453ede54f0cd..562aa8beae0ecb 100644
+--- a/net/sunrpc/xprt.c
++++ b/net/sunrpc/xprt.c
+@@ -1651,6 +1651,22 @@ void xprt_add_backlog(struct rpc_xprt *xprt, struct rpc_task *task)
+ }
+ EXPORT_SYMBOL_GPL(xprt_add_backlog);
+ 
++/**
++ * xprt_add_backlog_noncongested - queue task on backlog
++ * @xprt: transport whose backlog queue receives the task
++ * @task: task to queue
++ *
++ * Like xprt_add_backlog, but does not set XPRT_CONGESTED.
++ * For transports whose free_slot path does not synchronize
++ * with xprt_throttle_congested via reserve_lock.
++ */
++void xprt_add_backlog_noncongested(struct rpc_xprt *xprt,
++				   struct rpc_task *task)
++{
++	rpc_sleep_on(&xprt->backlog, task, xprt_complete_request_init);
++}
++EXPORT_SYMBOL_GPL(xprt_add_backlog_noncongested);
 +
-+	if (event == NULL) {
-+		pr_err("ERROR: sched: failed to allocate event\n");
-+		return NULL;
-+	}
- 
- 	event->timestamp = timestamp;
- 	event->nr = idx;
- 
-+	size = sizeof(struct sched_atom *) * (task->nr_events + 1);
-+	atoms_p = realloc(task->atoms, size);
-+	if (!atoms_p) {
-+		pr_err("ERROR: sched: failed to grow atoms array\n");
-+		free(event);
-+		return NULL;
-+	}
-+	task->atoms = atoms_p;
- 	task->nr_events++;
--	size = sizeof(struct sched_atom *) * task->nr_events;
--	task->atoms = realloc(task->atoms, size);
--	BUG_ON(!task->atoms);
- 
- 	task->atoms[idx] = event;
- 
-@@ -401,6 +412,8 @@ static void add_sched_event_run(struct perf_sched *sched, struct task_desc *task
- 	}
- 
- 	event = get_new_event(task, timestamp);
-+	if (event == NULL)
-+		return;
- 
- 	event->type = SCHED_EVENT_RUN;
- 	event->duration = duration;
-@@ -414,6 +427,8 @@ static void add_sched_event_wakeup(struct perf_sched *sched, struct task_desc *t
- 	struct sched_atom *event, *wakee_event;
- 
- 	event = get_new_event(task, timestamp);
-+	if (event == NULL)
-+		return;
- 	event->type = SCHED_EVENT_WAKEUP;
- 	event->wakee = wakee;
- 
-@@ -428,6 +443,10 @@ static void add_sched_event_wakeup(struct perf_sched *sched, struct task_desc *t
- 	}
- 
- 	wakee_event->wait_sem = zalloc(sizeof(*wakee_event->wait_sem));
-+	if (!wakee_event->wait_sem) {
-+		pr_err("ERROR: sched: failed to allocate semaphore\n");
-+		return;
-+	}
- 	sem_init(wakee_event->wait_sem, 0, 0);
- 	wakee_event->specific_wait = 1;
- 	event->wait_sem = wakee_event->wait_sem;
-@@ -440,6 +459,9 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
+ static bool __xprt_set_rq(struct rpc_task *task, void *data)
  {
- 	struct sched_atom *event = get_new_event(task, timestamp);
+ 	struct rpc_rqst *req = data;
+diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
+index b971776b55936c..cda0af267bd8c8 100644
+--- a/net/sunrpc/xprtrdma/transport.c
++++ b/net/sunrpc/xprtrdma/transport.c
+@@ -512,7 +512,20 @@ xprt_rdma_alloc_slot(struct rpc_xprt *xprt, struct rpc_task *task)
  
-+	if (event == NULL)
-+		return;
+ out_sleep:
+ 	task->tk_status = -EAGAIN;
+-	xprt_add_backlog(xprt, task);
++	xprt_add_backlog_noncongested(xprt, task);
++	/* A buffer freed between buffer_get and rpc_sleep_on
++	 * goes back to the pool with no waiter to wake.
++	 * Re-check after joining the backlog to close that gap.
++	 */
++	req = rpcrdma_buffer_get(&r_xprt->rx_buf);
++	if (req) {
++		struct rpc_rqst *rqst = &req->rl_slot;
 +
- 	event->type = SCHED_EVENT_SLEEP;
++		if (!xprt_wake_up_backlog(xprt, rqst)) {
++			memset(rqst, 0, sizeof(*rqst));
++			rpcrdma_buffer_put(&r_xprt->rx_buf, req);
++		}
++	}
+ }
  
- 	sched->nr_sleep_events++;
+ /**
 -- 
 2.53.0
 
