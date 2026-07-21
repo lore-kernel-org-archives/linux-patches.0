@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B9F436342;
-	Tue, 21 Jul 2026 20:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B7E24A078;
+	Tue, 21 Jul 2026 20:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665005; cv=none; b=Dbyp90o/W3c19s7TUDfOV65sL0CBNt5MKFa4rdeqPKeMzS6kUptlKwdnd0tEnwC5hmX6jEUsRYYqgDFm9Yr2c4utN7kU6mBdp3Sfe9Lga7oK0Maxngx4/5jzOO6cJs6ZoeLbij8XwriqHLSYJQN+6Ol3+L5/ld2q9jUEh14phNs=
+	t=1784665006; cv=none; b=YCvgA1H+5IEodGyQk0QMpljsOPBI2fDJgdW6dux3/bfiUAuWs/sOTSRc9pTRktML44z7DL+jmplgfidWWtaNS4moDlNwHD4D3VWkml5Rx8jH9nj7puQoWUdFQIuk6UubagbFCPRyYwmIXD2RV78TbDClRERqbuxeqAo8SOL1v+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665005; c=relaxed/simple;
-	bh=ndh+iXlgHyP0T5P7dxK04IbGdxuhpGhmdncWdmQiaLU=;
+	s=arc-20240116; t=1784665006; c=relaxed/simple;
+	bh=AscrVyeHjzeoTvvDErSlGi009u7iLF6mjT60rA+GAv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ia5UXnu5pmpwlnF3PQpKIRVekA/Oa6losRgdYAFcnpigz980Pz+lPkjOn1qYWoC6M1Ih//F5ub7KLQo+t/gollOEdZxAJAfzYQNMVzMfB2s189v0OO+HOgMdpRr6pk8HbLTHdOTKK4qenB2IfWeHIk2J1GBp88emYAgo9+cMUrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4iJZwpM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=frE7qFXrj3U2vFd0shAwLxMkujdSR+ecRPFJtw7WBEyItzIDjFdQpe6hwkLBjsNZcNSEl3fLMlWAz/mVVrc2cRkX/W0IkvpCT+Hix9ae1gwMRL6JSMuubkgGS/giB/OW/SWZ2nDP9Lc+cy9ofPZ/slqmB8OtodnOrMLqGPu1VW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SL0pYwTY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4iJZwpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAF21F000E9;
-	Tue, 21 Jul 2026 20:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SL0pYwTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77A91F00A3A;
+	Tue, 21 Jul 2026 20:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665002;
-	bh=Nyqsuw/KTVg/2pDi/90dZZlR7Ci5qzmNWTrrfMLv18A=;
+	s=korg; t=1784665005;
+	bh=Rl8qA02YCOSvx+DzWlxqi/VVLC0tP2d9d1h1C4tf0jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z4iJZwpM7WglXwLIj5Qmr5qKQe/93n4MxLLmYPydu2Z0/VJX18zmIBc658Ce5+HJx
-	 X95ZzdKqlBX5dgAuwXlKQATSCM6rwCuXonqsWUgmKGnB8jtIZR/Sjc6S59Rom5cNWS
-	 b6oFsWkwaWg0utR/yCTjxs916J0BtTUUp1Fk94Jw=
+	b=SL0pYwTY6AG1A2Sp0Z7X04dlDss/NBAJCfjAOJp/kl4LfIKZPv7gHedVJtRtbSUU0
+	 GtjqHNjpAGXPwOv5n0mP1SGjrx9/5PWoms/L9UTXkgRhsYADrPQbvO4ZQmFHkjAKvI
+	 geM8xR+eKy5jbzOZ4D901mxDZaS9zB0OxNaMCZ6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.6 0087/1266] iio: adc: ti-ads124s08: Return reset GPIO lookup errors
-Date: Tue, 21 Jul 2026 17:08:44 +0200
-Message-ID: <20260721152443.748981446@linuxfoundation.org>
+	Pawel Moll <pawel.moll@arm.com>,
+	Johan Hovold <johan@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.6 0134/1266] virtio-mmio: fix device release warning on module unload
+Date: Tue, 21 Jul 2026 17:09:31 +0200
+Message-ID: <20260721152444.805176422@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,43 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 7dc4de2aa6316f1d044cde21f5acfec5f3ec6b47 upstream.
+commit c687bc35694698ec4c7f92bf929c3d659f0cecb8 upstream.
 
-devm_gpiod_get_optional() returns NULL when the optional GPIO is absent,
-but returns an ERR_PTR when the GPIO provider lookup fails, including
-probe deferral.
+Driver core expects devices to be allocated dynamically and complains
+loudly when a device that lacks a release function is freed.
 
-Probe currently logs the ERR_PTR case as if the reset GPIO were simply
-absent and keeps the error pointer in reset_gpio. Later ads124s_reset()
-treats any non-NULL reset_gpio as a valid descriptor and passes it to
-gpiod_set_value_cansleep().
+Use __root_device_register() to allocate and register the root device
+instead of open coding using a static device.
 
-Return the lookup error instead of retaining the ERR_PTR.
+Note that root_device_register(), which also creates a link to the
+module, cannot be used as the device is registered when parsing the
+module parameters which happens before the module kobject has been set
+up.
 
-Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
-Cc: stable@vger.kernel.org
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 81a054ce0b46 ("virtio-mmio: Devices parameter parsing")
+Cc: stable@vger.kernel.org	# 3.5
+Cc: Pawel Moll <pawel.moll@arm.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260427143710.14702-1-johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-ads124s08.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_mmio.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/iio/adc/ti-ads124s08.c
-+++ b/drivers/iio/adc/ti-ads124s08.c
-@@ -322,7 +322,8 @@ static int ads124s_probe(struct spi_devi
- 	ads124s_priv->reset_gpio = devm_gpiod_get_optional(&spi->dev,
- 						   "reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(ads124s_priv->reset_gpio))
--		dev_info(&spi->dev, "Reset GPIO not defined\n");
-+		return dev_err_probe(&spi->dev, PTR_ERR(ads124s_priv->reset_gpio),
-+				     "Failed to get reset GPIO\n");
+--- a/drivers/virtio/virtio_mmio.c
++++ b/drivers/virtio/virtio_mmio.c
+@@ -710,9 +710,7 @@ static int virtio_mmio_remove(struct pla
  
- 	ads124s_priv->chip_info = &ads124s_chip_info_tbl[spi_id->driver_data];
+ #if defined(CONFIG_VIRTIO_MMIO_CMDLINE_DEVICES)
  
+-static struct device vm_cmdline_parent = {
+-	.init_name = "virtio-mmio-cmdline",
+-};
++static struct device *vm_cmdline_parent;
+ 
+ static int vm_cmdline_parent_registered;
+ static int vm_cmdline_id;
+@@ -720,7 +718,6 @@ static int vm_cmdline_id;
+ static int vm_cmdline_set(const char *device,
+ 		const struct kernel_param *kp)
+ {
+-	int err;
+ 	struct resource resources[2] = {};
+ 	char *str;
+ 	long long base, size;
+@@ -752,11 +749,10 @@ static int vm_cmdline_set(const char *de
+ 	resources[1].start = resources[1].end = irq;
+ 
+ 	if (!vm_cmdline_parent_registered) {
+-		err = device_register(&vm_cmdline_parent);
+-		if (err) {
+-			put_device(&vm_cmdline_parent);
++		vm_cmdline_parent = __root_device_register("virtio-mmio-cmdline", NULL);
++		if (IS_ERR(vm_cmdline_parent)) {
+ 			pr_err("Failed to register parent device!\n");
+-			return err;
++			return PTR_ERR(vm_cmdline_parent);
+ 		}
+ 		vm_cmdline_parent_registered = 1;
+ 	}
+@@ -767,7 +763,7 @@ static int vm_cmdline_set(const char *de
+ 		       (unsigned long long)resources[0].end,
+ 		       (int)resources[1].start);
+ 
+-	pdev = platform_device_register_resndata(&vm_cmdline_parent,
++	pdev = platform_device_register_resndata(vm_cmdline_parent,
+ 			"virtio-mmio", vm_cmdline_id++,
+ 			resources, ARRAY_SIZE(resources), NULL, 0);
+ 
+@@ -791,8 +787,12 @@ static int vm_cmdline_get_device(struct
+ static int vm_cmdline_get(char *buffer, const struct kernel_param *kp)
+ {
+ 	buffer[0] = '\0';
+-	device_for_each_child(&vm_cmdline_parent, buffer,
+-			vm_cmdline_get_device);
++
++	if (vm_cmdline_parent_registered) {
++		device_for_each_child(vm_cmdline_parent, buffer,
++				vm_cmdline_get_device);
++	}
++
+ 	return strlen(buffer) + 1;
+ }
+ 
+@@ -814,9 +814,9 @@ static int vm_unregister_cmdline_device(
+ static void vm_unregister_cmdline_devices(void)
+ {
+ 	if (vm_cmdline_parent_registered) {
+-		device_for_each_child(&vm_cmdline_parent, NULL,
++		device_for_each_child(vm_cmdline_parent, NULL,
+ 				vm_unregister_cmdline_device);
+-		device_unregister(&vm_cmdline_parent);
++		root_device_unregister(vm_cmdline_parent);
+ 		vm_cmdline_parent_registered = 0;
+ 	}
+ }
 
 
