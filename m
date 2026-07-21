@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576A644AB62;
-	Tue, 21 Jul 2026 21:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F062344AB6E;
+	Tue, 21 Jul 2026 21:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670742; cv=none; b=dEgBH0st/X1+ce+SUSnVFseTOTfKYf+U2uOklX4KqeI7uJrQ9gDu5TSBSaFu1tuqM/7R/bdCZ5IdmNcMKZoFm4fPQHtjpFQfqO3wKAwc/5BJBfWP9YeNge94o0rObYBGkWrKEHKRorG3XdWcKz9pLOghmC54JFABejPxVkXMDv4=
+	t=1784670745; cv=none; b=A+JIvHLPm0zjURComaa7a5fk4d3SxnKUX/rc12RemF1L4HhoHj4aj6ETXwAfIiyCTRM3G+wjwMC04JlRDl5S8xjrui6aF0gRPZRaFfXN9uxtuhl5ZZWTlj1TjrtyqoGS2xxbN7gF1QBxSi2kR/wgk/lV1K89/bHHNZg5aQdYL70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670742; c=relaxed/simple;
-	bh=6YHybxM6jH1BcHgFOh8MqYuBzGyjL4iXKJpT4KO2cDE=;
+	s=arc-20240116; t=1784670745; c=relaxed/simple;
+	bh=1FIKfbJ1Qp9uwZln/Z7I/SCF9eXOoIEGnlH7Zx5WXtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlSR7pwArQarRvIAR19hDS49iCXVPjc5E7WoPJxoPbkEMIQsNqikHVKvLEiGrsObPM54+AfbircLYJsyjMKUz4Ha23OcxsV2RHp86HO2+NoBmQMiSzOPxEmgJYEkuWHEPhQBDRn/S9NnuWJHZHPwHRcAnJckrPrjQ31PiiFsTDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5jqnUL2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mmELIsqZdlu9pqvy8S+drFwytUpbri0jh6Gq7ZBArpwJ/Tsd51vUtkB6S1ok/LWGjQODe5rhQzNFdkl0HxzZ+6ZKFh4BQ2CN+KTJNmY+JE1S8xRpBGMhb07PDbWNjlXTaJRdOqURAuLQn4Ciiurn5pfGFBo0YOgcObhO3bGDLn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Lh2D86M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5jqnUL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88221F000E9;
-	Tue, 21 Jul 2026 21:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Lh2D86M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C5D1F000E9;
+	Tue, 21 Jul 2026 21:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670741;
-	bh=OpOWLEorYJggsqvxjxmvKJwtET0q9+g6MwyHDfS9L+A=;
+	s=korg; t=1784670743;
+	bh=SgbTEPJ6KtL1ODQecPobQoMrzl2cdIF8kdT0knu/hlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M5jqnUL2EUYTunL1hEwkBxIF9vxg70OgqS0DCJrSEOmdOwI7StBWTcQ73Xp93QBmM
-	 z3GrXZ0tdeITwXltgcRhW30SOmKg1kk6DiJY4L7MSZE3tLZnbqHibqFgYF6KgiWnWZ
-	 102b3EeVwfqHSB4gGol7W/G9/voS5AQ206sGhiqU=
+	b=1Lh2D86MmeE0RsjjaPwhlw1UM3lStEqV+yivHiYo1Iizfw+klnGcshYnp8VsH6001
+	 Y3YQeDWm1p3T06iW0LluHOa/zeGcUaxqIe6giO3KZA6keWRtH6qTFxef7s88thFMVQ
+	 VNKKaGN4AbaEHc8SiPnsBT/IkRtt5L46ll1dXRSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.1 1047/1067] seqlock: fix scoped_seqlock_read kernel-doc
-Date: Tue, 21 Jul 2026 17:27:28 +0200
-Message-ID: <20260721152448.013213065@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Christian Eggers <ceggers@arri.de>
+Subject: [PATCH 6.1 1048/1067] Bluetooth: L2CAP: Fix regressions caused by reusing ident
+Date: Tue, 21 Jul 2026 17:27:29 +0200
+Message-ID: <20260721152448.033556900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,58 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit f88a31308db6a856229150039b0f56d59696ed31 upstream.
+commit 761fb8ec8778f0caf2bba5a41e3cff1ea86974f3 upstream.
 
-Eliminate all kernel-doc warnings in seqlock.h:
+This attempt to fix regressions caused by reusing ident which apparently
+is not handled well on certain stacks causing the stack to not respond to
+requests, so instead of simple returning the first unallocated id this
+stores the last used tx_ident and then attempt to use the next until all
+available ids are exausted and then cycle starting over to 1.
 
-- correct the macro to have "()" immediately following the macro name
-- don't include the macro parameters in the short description (first line)
-- make the parameter names in the comments match the actual macro
-  parameter names.
-- use "::" for the Example
-
-WARNING: include/linux/seqlock.h:1341 This comment starts with '/**', but isn't a kernel-doc comment.
- * scoped_seqlock_read (lock, ss_state) - execute the read side critical
-Documentation/locking/seqlock:242: include/linux/seqlock.h:1351: WARNING:
-  Definition list ends without a blank line; unexpected unindent. [docutils]
-Warning: include/linux/seqlock.h:1357 function parameter '_seqlock' not described in 'scoped_seqlock_read'
-Warning: include/linux/seqlock.h:1357 function parameter '_target' not described in 'scoped_seqlock_read'
-
-Fixes: cc39f3872c08 ("seqlock: Introduce scoped_seqlock_read()")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260123183749.3997533-1-rdunlap@infradead.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221120
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221177
+Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/seqlock.h |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ include/net/bluetooth/l2cap.h |    1 +
+ net/bluetooth/l2cap_core.c    |   29 ++++++++++++++++++++++++++---
+ 2 files changed, 27 insertions(+), 3 deletions(-)
 
---- a/include/linux/seqlock.h
-+++ b/include/linux/seqlock.h
-@@ -1357,15 +1357,14 @@ __scoped_seqlock_next(struct ss_tmp *sst
- 	     __scoped_seqlock_next(&_s, _seqlock, _target))
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -654,6 +654,7 @@ struct l2cap_conn {
+ 	struct sk_buff		*rx_skb;
+ 	__u32			rx_len;
+ 	struct ida		tx_ida;
++	__u8			tx_ident;
  
- /**
-- * scoped_seqlock_read (lock, ss_state) - execute the read side critical
-- *                                        section without manual sequence
-- *                                        counter handling or calls to other
-- *                                        helpers
-- * @lock: pointer to seqlock_t protecting the data
-- * @ss_state: one of {ss_lock, ss_lock_irqsave, ss_lockless} indicating
-- *            the type of critical read section
-+ * scoped_seqlock_read() - execute the read-side critical section
-+ *                         without manual sequence counter handling
-+ *                         or calls to other helpers
-+ * @_seqlock: pointer to seqlock_t protecting the data
-+ * @_target: an enum ss_state: one of {ss_lock, ss_lock_irqsave, ss_lockless}
-+ *           indicating the type of critical read section
-  *
-- * Example:
-+ * Example::
-  *
-  *     scoped_seqlock_read (&lock, ss_lock) {
-  *         // read-side critical section
+ 	struct sk_buff_head	pending_rx;
+ 	struct work_struct	pending_rx_work;
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -960,16 +960,39 @@ int l2cap_chan_check_security(struct l2c
+ 
+ static int l2cap_get_ident(struct l2cap_conn *conn)
+ {
++	u8 max;
++	int ident;
++
+ 	/* LE link does not support tools like l2ping so use the full range */
+ 	if (conn->hcon->type == LE_LINK)
+-		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
+-
++		max = 255;
+ 	/* Get next available identificator.
+ 	 *    1 - 128 are used by kernel.
+ 	 *  129 - 199 are reserved.
+ 	 *  200 - 254 are used by utilities like l2ping, etc.
+ 	 */
+-	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
++	else
++		max = 128;
++
++	/* Allocate ident using min as last used + 1 (cyclic) */
++	ident = ida_alloc_range(&conn->tx_ida, READ_ONCE(conn->tx_ident) + 1,
++				max, GFP_ATOMIC);
++	/* Force min 1 to start over */
++	if (ident <= 0) {
++		ident = ida_alloc_range(&conn->tx_ida, 1, max, GFP_ATOMIC);
++		if (ident <= 0) {
++			/* If all idents are in use, log an error, this is
++			 * extremely unlikely to happen and would indicate a bug
++			 * in the code that idents are not being freed properly.
++			 */
++			BT_ERR("Unable to allocate ident: %d", ident);
++			return 0;
++		}
++	}
++
++	WRITE_ONCE(conn->tx_ident, ident);
++
++	return ident;
+ }
+ 
+ static void l2cap_send_cmd(struct l2cap_conn *conn, u8 ident, u8 code, u16 len,
 
 
