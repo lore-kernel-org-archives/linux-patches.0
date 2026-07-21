@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFCF3B9D9D;
-	Tue, 21 Jul 2026 21:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8AA403EA5;
+	Tue, 21 Jul 2026 21:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669602; cv=none; b=aywRk8XTE7hpJCvsR3AeWKtr74CtcfYR/mFh3MJsOje9II3Lcm+LFI4RWBMh/QqEj5vE8cF/eM0W0VN4PVIcVKLOrgFf6ZJEdzegpUiU4B+KQXrCYmzlEdNUSf5bIIu/1oQSSNLDdh6gUAur+JR6csVHbitaOsnj/4LflqYJC9U=
+	t=1784669604; cv=none; b=MKi0nskqvkR0J9/GKObYHiXq0Xc6+AGMz69BpMCKrIdvXQfDvzMzFuwaNOa6V3x6POZaNdn0jwQIO42A0yKnSIVIba+2LNJho9Nr2Qj78pM8uq0xnxzi0grka/qsbyczuZEwFXlf6I/EidUYUVJHTRRUI3A8I2ncot1+rWlmE2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669602; c=relaxed/simple;
-	bh=ji0RUNOyGpaQD5R74BOnafRBnJtBNxUV5+WgusRKS10=;
+	s=arc-20240116; t=1784669604; c=relaxed/simple;
+	bh=Bc/sZHI4/BxiLF7szYLxqDAsX/4tqF4HCKQZf8sjTmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJ7Fu+xgrImf6oACLsiMxbOd47MqPvqr9ZPKVBzBze6a4vcmkUliu2D8tla8gjAQf0iHy0MQT5Xcgk5Axrup01daFvrbuTFI74X36WH5+SQRDq7JPyN8fIwwgAhvJ7GSCyoH6o2w0RRdpXF+u1CjTXVoXhEUp63I/KH0jT++gTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y41Ksfov; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kvEJQaTuPvCjED7OPgWGdeof8KIeNBM8Za+3KlvOZv5aWBRoRMhIvnVtMNoQQ9Jc5YlYZrZHxXKK2x0JyU3rZE7B5mejDlCkOO7hOpgEtn+kOSqtY4VieYyWTiflAUEN0qzuwV7X5wGyUgQHE9mpff2HCQ0uXyEk87zAGYwN6/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFHNfTW3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y41Ksfov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E764E1F000E9;
-	Tue, 21 Jul 2026 21:33:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFHNfTW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A701F000E9;
+	Tue, 21 Jul 2026 21:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669600;
-	bh=nRR39JE9pWvp1W5g9EqQMitFmkLoUEL7pmx5E2QLkNM=;
+	s=korg; t=1784669603;
+	bh=Cr7wec2h2Y0UtonUIqVs7eyQG3dZt5nY0hitBv4hSks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y41KsfovJS4U4N20C015yyTu5tVhahGJ18DxIlGXd0BIDaMQ4m9qnlcdL1xMhjphR
-	 DEAAbqPFGoBCrCz4H8abvAEcXO5wW1b4nYDj7HqdSx/IYstj8wy+NDW5TWE2rVE0cV
-	 MTXGBjgOmcb1Rlr/spU5r6sYYleq+h88zCmMvO2g=
+	b=oFHNfTW3sCcRwhiHI2uyVSHSy5EtfnWIOlB8VvSYhyEGMjZc54Sa32GhT5VLTORUk
+	 pIWoQnq0tQBKxZZzEntqD4uUvE7tlLPKg8CU19/q3SaXmfxcw5CYztWJ6vwG5OWp4e
+	 MXHHgxtLOtVq/RNCsAduZxf8wquvoTeP8HTgSeQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Czapnik <lukasz.czapnik@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.1 0617/1067] ice: fix AQ error code comparison in ice_set_pauseparam()
-Date: Tue, 21 Jul 2026 17:20:18 +0200
-Message-ID: <20260721152438.402418138@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0618/1067] rtc: msc313: fix NULL deref in shared IRQ handler at probe
+Date: Tue, 21 Jul 2026 17:20:19 +0200
+Message-ID: <20260721152438.426401903@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,81 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Czapnik <lukasz.czapnik@intel.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit 2bf7744bc3221a63b95c76c94eab1dad832fa401 ]
+[ Upstream commit a369f48be8de426a7d2bca18dbd46c2ad1138803 ]
 
-Fix unreachable code: the conditionals in ice_set_pauseparam() used
-the bitwise-AND operator suggesting aq_failures is a bitmap, but it
-is actually an enum, making the third condition logically unreachable.
+msc313_rtc_probe() calls devm_request_irq() with IRQF_SHARED and
+&pdev->dev as the cookie, but platform_set_drvdata() is only called
+later after the clock setup. With a shared IRQ line, another device
+on the same line can trigger the handler in that window. The
+handler does dev_get_drvdata() on the cookie, gets NULL, and
+dereferences priv->rtc_base in interrupt context.
 
-Replace the if-else ladder with a switch statement.  Also move the
-aq_failures initialization to the variable declaration and remove the
-redundant zeroing from ice_set_fc().
+Pass priv as the cookie directly so the handler reads it from
+dev_id without the lookup, removing the dependency on probe order.
 
-Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
-Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: be7d9c9161b9 ("rtc: Add support for the MSTAR MSC313 RTC")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Link: https://patch.msgid.link/20260511032703.48262-1-sozdayvek@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_common.c  |  1 -
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 12 ++++++++----
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/rtc/rtc-msc313.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
-index ea92a66c6c6669..b917cfba1f4ed5 100644
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -3347,7 +3347,6 @@ ice_set_fc(struct ice_port_info *pi, u8 *aq_failures, bool ena_auto_link_update)
- 	if (!pi || !aq_failures)
- 		return -EINVAL;
+diff --git a/drivers/rtc/rtc-msc313.c b/drivers/rtc/rtc-msc313.c
+index 8d7737e0e2e02c..6ef9c4efd7c92e 100644
+--- a/drivers/rtc/rtc-msc313.c
++++ b/drivers/rtc/rtc-msc313.c
+@@ -160,7 +160,7 @@ static const struct rtc_class_ops msc313_rtc_ops = {
  
--	*aq_failures = 0;
- 	hw = pi->hw;
+ static irqreturn_t msc313_rtc_interrupt(s32 irq, void *dev_id)
+ {
+-	struct msc313_rtc *priv = dev_get_drvdata(dev_id);
++	struct msc313_rtc *priv = dev_id;
+ 	u16 reg;
  
- 	pcaps = devm_kzalloc(ice_hw_to_dev(hw), sizeof(*pcaps), GFP_KERNEL);
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 7774292a5bdbe6..1ef57db5e6562e 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -3059,7 +3059,7 @@ ice_set_pauseparam(struct net_device *netdev, struct ethtool_pauseparam *pause)
- 	struct ice_vsi *vsi = np->vsi;
- 	struct ice_hw *hw = &pf->hw;
- 	struct ice_port_info *pi;
--	u8 aq_failures;
-+	u8 aq_failures = 0;
- 	bool link_up;
- 	u32 is_an;
- 	int err;
-@@ -3130,18 +3130,22 @@ ice_set_pauseparam(struct net_device *netdev, struct ethtool_pauseparam *pause)
- 	/* Set the FC mode and only restart AN if link is up */
- 	err = ice_set_fc(pi, &aq_failures, link_up);
+ 	reg = readw(priv->rtc_base + REG_RTC_STATUS_INT);
+@@ -206,7 +206,7 @@ static int msc313_rtc_probe(struct platform_device *pdev)
+ 	priv->rtc_dev->range_max = U32_MAX;
  
--	if (aq_failures & ICE_SET_FC_AQ_FAIL_GET) {
-+	switch (aq_failures) {
-+	case ICE_SET_FC_AQ_FAIL_GET:
- 		netdev_info(netdev, "Set fc failed on the get_phy_capabilities call with err %d aq_err %s\n",
- 			    err, ice_aq_str(hw->adminq.sq_last_status));
- 		err = -EAGAIN;
--	} else if (aq_failures & ICE_SET_FC_AQ_FAIL_SET) {
-+		break;
-+	case ICE_SET_FC_AQ_FAIL_SET:
- 		netdev_info(netdev, "Set fc failed on the set_phy_config call with err %d aq_err %s\n",
- 			    err, ice_aq_str(hw->adminq.sq_last_status));
- 		err = -EAGAIN;
--	} else if (aq_failures & ICE_SET_FC_AQ_FAIL_UPDATE) {
-+		break;
-+	case ICE_SET_FC_AQ_FAIL_UPDATE:
- 		netdev_info(netdev, "Set fc failed on the get_link_info call with err %d aq_err %s\n",
- 			    err, ice_aq_str(hw->adminq.sq_last_status));
- 		err = -EAGAIN;
-+		break;
- 	}
- 
- 	return err;
+ 	ret = devm_request_irq(dev, irq, msc313_rtc_interrupt, IRQF_SHARED,
+-			       dev_name(&pdev->dev), &pdev->dev);
++			       dev_name(&pdev->dev), priv);
+ 	if (ret) {
+ 		dev_err(dev, "Could not request IRQ\n");
+ 		return ret;
 -- 
 2.53.0
 
