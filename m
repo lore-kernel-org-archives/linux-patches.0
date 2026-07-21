@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18BC44AB9F;
-	Tue, 21 Jul 2026 22:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4D1431A4E;
+	Tue, 21 Jul 2026 22:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674406; cv=none; b=mUuyrrDK86slp3WVQ9UucsJbW4QF3WMDT/72Tzldru1xsQMvMq0zFZudJcBr4/aoqaajw6O5Z1+nq/Dh2owdedZvar/yyEBXUuPAs4B6vidMAY9GZqkAS5oK5VPCyDnwXmLP+MwCSA0sKq72jJu8JvPL3RpRWfyshngeXQR3cXI=
+	t=1784674409; cv=none; b=DdQpoHKmhKQ2e7RtX/LRdGke7dVxHy+6Cp8sADNOg3paTn9D6SyHjElRKzu/0W7A4iamroADsCWFBuVBiy79qFm1JN1hrU7a65J/UjqbNR637RzjrPFxzwtIoWzXUvxsi9sBACW8hLCWrLAi9FaZjzfJUKUHgx9nWjglqgJXR50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674406; c=relaxed/simple;
-	bh=MTed4CodgJaFEJqNx3hje86ztzc6fsAiMR0dNebgRgc=;
+	s=arc-20240116; t=1784674409; c=relaxed/simple;
+	bh=tXGY54ZF6LRdd7VfQoTlAZzga3rg3brsJwH+3dgvbdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9T3nM09zn9Wrzrx/bXGASUDQ/q0SpqFbbejFsViSifBnpTvxqPfEf4q/SoEXF8z+C7lZkHclWqooxWb7ohhEOVzdz69SQBwqiTDZ1qKmiPC3WOM0xdIx61Gglv9RsqcwId+OVarW4WFEw80szt2+e2PeF+hQCfP9my4BUxtj8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAe+Qgb5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KV0WZKwvVpXfzSd8yxRTidwVfMXHk46S3hEehSWQ2kv9cBYguRiF6SvKJ3LWZ1tQbKz90YIssvQKNjenMOvtRZ5f21ZZU86WgnUoUEjJ/a2dPpydBJLGDJjmFG6qrnE2cYlvh2eQqWPDTdM/3p1z5mYEDRNw6/1H5Tuw8UJIn14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAuwwKWk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAe+Qgb5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296231F000E9;
-	Tue, 21 Jul 2026 22:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAuwwKWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FDE1F000E9;
+	Tue, 21 Jul 2026 22:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674405;
-	bh=Kp5kr+xEFiNFGLAObPPOdP8Uyn4Usz7rTBa0ADB8Rsc=;
+	s=korg; t=1784674408;
+	bh=0XMRJd5GIBiIwL/lekeaFO/69x8BwDu3a+/o8w6e3fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DAe+Qgb5o1SNNq3s2/cXbX1ZXsov6Zk3TT9OoLAUmk9S/t/Qj70Wi9CI5HviKB2tj
-	 IHyI429ChtHODi4G4wG8a1rqttWA5eviWrfH7QlmsVqRMIOEfZTTojTvAg5NnzWvtI
-	 39Dt6dJSGsjzeMMLXE8j3ZbQeFRAtB/RK0k4lzpI=
+	b=JAuwwKWkvJsSjiOqGa3GHzI6gvuF3KmuUvV6nCHe4wHc1VOP2Wrzf9o4k4tJbmgu6
+	 3fATXZrSXYBAIlULNbC6946lnjNL9OLTIcUEXZow1eMLt+gPMTSym9jVyd3YUcosfx
+	 iNOzHRNyuxfyEoy67rsCiRyHQm7ya+Ecdlk/Ho1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 528/699] net: sit: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:24:47 +0200
-Message-ID: <20260721152407.606675260@linuxfoundation.org>
+Subject: [PATCH 5.10 529/699] net: ena: clean up XDP TX queues when regular TX setup fails
+Date: Tue, 21 Jul 2026 17:24:48 +0200
+Message-ID: <20260721152407.630182690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,46 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 27ccb68e7cccead5d8c611665a45d23032d468b3 upstream.
+commit 1bd6676254b4ab6acd44b662b5e92822c036463a upstream.
 
-ipip6_changelink() operates on at most two netns, dev_net(dev) and the
-tunnel link netns t->net. They differ once the device is created in or
-moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in t->net can rewrite a tunnel that
-lives in t->net.
+create_queues_with_size_backoff() creates XDP TX queues before setting
+up the regular TX path. If the subsequent allocation or creation of
+regular TX queues fails, the error handling paths omit the teardown of the
+XDP TX queues, leading to a resource leak.
 
-Gate ipip6_changelink() on rtnl_dev_link_net_capable() at its top,
-before any attribute is parsed. sit was the one tunnel type not covered
-by the recent series that added this check to the other changelink()
-handlers.
+Fix this by explicitly destroying the XDP TX queue subset at the two
+missing failure points.
 
-Fixes: 5e6700b3bf98 ("sit: add support of x-netns")
-Link: https://lore.kernel.org/netdev/20260612085941.3158249-1-maoyixie.tju@gmail.com/
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc7.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+an ENA device to test with, no runtime testing was able to be performed.
+
+Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260618070817.3378283-1-maoyixie.tju@gmail.com
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Arthur Kiyanovski <akiyano@amazon.com>
+Tested-by: Arthur Kiyanovski <akiyano@amazon.com>
+Link: https://patch.msgid.link/20260616142424.4005130-1-dawei.feng@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/sit.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1670,6 +1670,9 @@ static int ipip6_changelink(struct net_d
- 	__u32 fwmark = t->fwmark;
- 	int err;
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -1162,6 +1162,18 @@ static void ena_destroy_all_tx_queues(st
+ 	}
+ }
  
-+	if (!rtnl_dev_link_net_capable(dev, net))
-+		return -EPERM;
++static void ena_destroy_xdp_tx_queues(struct ena_adapter *adapter)
++{
++	u16 ena_qid;
++	int i;
 +
- 	if (dev == sitn->fb_tunnel_dev)
- 		return -EINVAL;
++	for (i = adapter->xdp_first_ring;
++	     i < adapter->xdp_first_ring + adapter->xdp_num_queues; i++) {
++		ena_qid = ENA_IO_TXQ_IDX(i);
++		ena_com_destroy_io_queue(adapter->ena_dev, ena_qid);
++	}
++}
++
+ static void ena_destroy_all_rx_queues(struct ena_adapter *adapter)
+ {
+ 	u16 ena_qid;
+@@ -2465,14 +2477,21 @@ static int create_queues_with_size_backo
+ 		rc = ena_setup_tx_resources_in_range(adapter,
+ 						     0,
+ 						     adapter->num_io_queues);
+-		if (rc)
++		if (rc) {
++			ena_destroy_xdp_tx_queues(adapter);
++			ena_free_all_io_tx_resources_in_range(adapter,
++							      adapter->xdp_first_ring,
++							      adapter->xdp_num_queues);
+ 			goto err_setup_tx;
++		}
  
+ 		rc = ena_create_io_tx_queues_in_range(adapter,
+ 						      0,
+ 						      adapter->num_io_queues);
+-		if (rc)
++		if (rc) {
++			ena_destroy_xdp_tx_queues(adapter);
+ 			goto err_create_tx_queues;
++		}
+ 
+ 		rc = ena_setup_all_rx_resources(adapter);
+ 		if (rc)
 
 
