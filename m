@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F11A436BC6;
-	Tue, 21 Jul 2026 19:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601E246C4BC;
+	Tue, 21 Jul 2026 19:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663881; cv=none; b=nFniviUWJbDNDz0ww8YmwRm2jTjKEPBaHVhmuyjjaBvltfEkMQmNh/inJ8nitb05FNQv36LNQcuPBMbjSMP0y4lo8fBReKADBpHUZenRko0m7pre2ApzK02UlPNk654bjUi9DKYXXN3PD+5gFC7IdelxhU/d3K7ItmSSD1onpX8=
+	t=1784663884; cv=none; b=Np3UERvEAzVKugZPjNVttekjuirJGyh0HJCnVDsdL9dtSfGOeE/qix/zFqG+VMripSpn6R6jhG0oXipA9MosB3v0xLLwqoKq8LCu2Ieva9MDhn2VdEhHTLhlLMdaUIXwHE2bBKD4Ovt9ay0YAC/AIXzEn2aAi3pqvKy+BSzlNDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663881; c=relaxed/simple;
-	bh=efKOGzO6Rw8ixRgTsKxOl+YOHp7uZMYgF6EHnD6AEUU=;
+	s=arc-20240116; t=1784663884; c=relaxed/simple;
+	bh=n5teEfF9++6U1B3Jf8qc7oNFGd3Qzm04cmYwxReuI4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXqUCx8mHTVo6Sf2lBtJIeVie5Q4v/T3iI48dfq/6rJvzk5bjCPO41+vxKyuqCUAjwg1Lb4YVTTj8rfgQpiKrQHjlLotYEI0JhxhjEEsCp9JoLCjdXerDVcAE7A8NiyM5ynV7J6leN1TqFMdaHjm9FtAY3/Z1XCZPu0Gh8KcmV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LWO41q5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J8hnv1LzNAm77UCiiAPlWOC59OipIE3uepPW/TZSqgdR0f4GEEha8OJmDqMKiSfZRVVqV3CtB8m1r6kMTz6cz+WJMuyd2ucVofVBKWIHTg7ZJQf1OelXCCctKKJdPw0J8u7j1HToEABs0ly+c27Fb60v9OZtUkIdlvoEfJ0bKns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIGC51cs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LWO41q5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F1C1F00A3D;
-	Tue, 21 Jul 2026 19:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIGC51cs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EA61F000E9;
+	Tue, 21 Jul 2026 19:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663879;
-	bh=Dd137DBq0DBH2zz6U6vonmherHS7f8zLU83fsioGM8Y=;
+	s=korg; t=1784663877;
+	bh=CbsQHsqQiKFQGJ4o0HbxF4LKTta0mnrwQt9skCsx7RQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2LWO41q59roJBGIOXUiG2wsRHgji2dlFlLp0oUhVNZ//2DB5i9KYI0Izn4opy19S2
-	 o8eIChSOdE2ov1KsS3rypIZxpwUOmIPsGtSL9RjpwnPozBvD4GvLmZPSGWqCf2T24X
-	 FlmAYi3ZwwdiPr1DfR78Be2HdxSjdvWu8SrWgxY8=
+	b=sIGC51csn2i/RnZ8NyesQfTyDaT42quhn1N6lVfXDHDuG/SAfRAw93890XMoZOf8s
+	 u0+KKIqkbMfEt2T6Vmq0sajAHZuS7/j+Z4Hh0lfVrwY1UG8JilixYjhL3QPClHVcY9
+	 uA6oPB6j9pqhWbunu/W/d557K88jEkzYZKCN+y3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Joe Damato <joe@dama.to>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 0990/1276] netdev-genl: report NAPI thread PID in the callers pid namespace
-Date: Tue, 21 Jul 2026 17:23:53 +0200
-Message-ID: <20260721152508.168084107@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>
+Subject: [PATCH 6.12 0989/1276] nvmet-rdma: handle inline data with a nonzero offset
+Date: Tue, 21 Jul 2026 17:23:52 +0200
+Message-ID: <20260721152508.146045400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,55 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 1f24c0d01db214c9e661915e9972404c96ca73c0 upstream.
+commit 48c0162f647bb47e6084ffbc71b8f213f5e2f4f8 upstream.
 
-netdev_nl_napi_fill_one() reports the NAPI kthread PID in NETDEV_A_NAPI_PID
-using task_pid_nr(), which returns the PID in the initial pid namespace.
+nvmet_rdma_use_inline_sg() maps the host-controlled inline data offset
+into the per-command inline scatterlist.  The bounds check admits any
+offset with off + len <= inline_data_size, but the mapping still assumes
+the data begins in the first inline page:
 
-NETDEV_CMD_NAPI_GET does not have GENL_ADMIN_PERM and the netdev genl family
-is netnsok, so a caller in a child pid namespace can issue it. That caller
-then sees the kthread's global PID, even though the kthread is not visible
-in its pid namespace, where the value should be 0.
+	sg->offset = off;
+	sg->length = min_t(int, len, PAGE_SIZE - off);
 
-Translate the PID through the caller's pid namespace, the same way commit
-3799c2570982 ("io_uring/fdinfo: translate SqThread PID through caller's
-pid_ns") did for the io_uring SQPOLL thread. The doit and dumpit paths both
-run synchronously in the caller's context, so task_active_pid_ns(current) is
-the caller's pid namespace.
+When a port is configured with inline_data_size > PAGE_SIZE (settable up
+to max(SZ_16K, PAGE_SIZE)), an offset in (PAGE_SIZE, inline_data_size]
+makes "PAGE_SIZE - off" underflow, so sg->length is set to ~4 GiB and
+the block backend reads far past the first inline page.  num_pages(len)
+also ignores the offset, so an in-bounds offset whose [off, off+len)
+span crosses a page boundary under-counts the scatterlist.
 
-Fixes: db4704f4e4df ("netdev-genl: Add PID for the NAPI thread")
+Map the offset properly: split it into a page index and an in-page
+offset, start the scatterlist at that page, and size the page count from
+page_off + len.  Because the request scatterlist may now start at
+inline_sg[page_idx] rather than inline_sg[0], generalize the inline-SGL
+identity test in nvmet_rdma_release_rsp() to a range test; otherwise the
+persistent inline scatterlist is mistaken for an allocated one and
+nvmet_req_free_sgls() frees an inline page (and warns in
+free_large_kmalloc()).
+
+Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Link: https://patch.msgid.link/20260615171736.1709318-1-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Keith Busch <kbusch@kernel.org>
+Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/netdev-genl.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/target/rdma.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -2,6 +2,7 @@
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -667,7 +667,8 @@ static void nvmet_rdma_release_rsp(struc
+ 	if (rsp->n_rdma)
+ 		nvmet_rdma_rw_ctx_destroy(rsp);
  
- #include <linux/netdevice.h>
- #include <linux/notifier.h>
-+#include <linux/pid_namespace.h>
- #include <linux/rtnetlink.h>
- #include <net/busy_poll.h>
- #include <net/net_namespace.h>
-@@ -181,7 +182,8 @@ netdev_nl_napi_fill_one(struct sk_buff *
- 		goto nla_put_failure;
+-	if (rsp->req.sg != rsp->cmd->inline_sg)
++	if (rsp->req.sg < rsp->cmd->inline_sg ||
++	    rsp->req.sg >= rsp->cmd->inline_sg + queue->dev->inline_page_count)
+ 		nvmet_req_free_sgls(&rsp->req);
  
- 	if (napi->thread) {
--		pid = task_pid_nr(napi->thread);
-+		pid = task_pid_nr_ns(napi->thread,
-+				     task_active_pid_ns(current));
- 		if (nla_put_u32(rsp, NETDEV_A_NAPI_PID, pid))
- 			goto nla_put_failure;
+ 	if (unlikely(!list_empty_careful(&queue->rsp_wr_wait_list)))
+@@ -822,24 +823,25 @@ static void nvmet_rdma_write_data_done(s
+ static void nvmet_rdma_use_inline_sg(struct nvmet_rdma_rsp *rsp, u32 len,
+ 		u64 off)
+ {
+-	int sg_count = num_pages(len);
++	u64 page_off = off % PAGE_SIZE;
++	u64 page_idx = off / PAGE_SIZE;
++	int sg_count = num_pages(page_off + len);
+ 	struct scatterlist *sg;
+ 	int i;
+ 
+-	sg = rsp->cmd->inline_sg;
++	sg = &rsp->cmd->inline_sg[page_idx];
+ 	for (i = 0; i < sg_count; i++, sg++) {
+ 		if (i < sg_count - 1)
+ 			sg_unmark_end(sg);
+ 		else
+ 			sg_mark_end(sg);
+-		sg->offset = off;
+-		sg->length = min_t(int, len, PAGE_SIZE - off);
++		sg->offset = page_off;
++		sg->length = min_t(u64, len, PAGE_SIZE - page_off);
+ 		len -= sg->length;
+-		if (!i)
+-			off = 0;
++		page_off = 0;
  	}
+ 
+-	rsp->req.sg = rsp->cmd->inline_sg;
++	rsp->req.sg = &rsp->cmd->inline_sg[page_idx];
+ 	rsp->req.sg_cnt = sg_count;
+ }
+ 
 
 
