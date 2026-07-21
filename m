@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8CC46C4BC;
-	Tue, 21 Jul 2026 17:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7AF46C4D8;
+	Tue, 21 Jul 2026 17:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655347; cv=none; b=md8MqlI8Pi3k6xOmYv9KYdDsU8pDl1eVqlcrgoidcnruVg342C7dP+qI344y3ZdZ7GxEAGIC0aNr2HAwFqEUi5CAViS3hENJVYLu4thujhAHa4bWVBYYN7eamKK66A2xt/6xHAqP/IKEKi6/lEzcaoNWhXPrJnR4EOP0S9uuLrk=
+	t=1784655350; cv=none; b=rPAynpg1SQsIzq8EdZPKCh6dVdaSc0wIQF8xyBAMyMtToYno+v1byKY1E20AfQb5794TaRBTbNbV4dUs/NbucTAFpuaH1cT1PwbZ8YumjPbNjQe4zTXxxT6VMJtNy9nTU16sbEZ+3O9+6OLAMN8Wcc8IZCVul1aqEdUFoCyeqls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655347; c=relaxed/simple;
-	bh=9ecjrrlg3NLvaEzxRzHk8yCNqkIe/kY5wJgfmMWZRjc=;
+	s=arc-20240116; t=1784655350; c=relaxed/simple;
+	bh=zy1ucU1f3nfOfjMDs1dap07qig6C5k5dsJat1HN82xE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AuCTNOGzbM2uMz1ROpYZweQu05Fe4Jbp8CMfs5LlGu35eqglb6eWU3Hgx81m1YT6kBFpliLbJKuUaPlWjO/oyaODuvXWxhl1L/15ORUsx9wSRpg5mrq/RY7y6Cy6WzCCwF/txadCQE9m8hR7yZDndesO8pqQDVZEE9YJaZZxWjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNrZ7x5g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XAZfkAGC1/eeORniI11Q7ejys9+2GuT1md5MexyH5zEDIUrNPoJK+snTDVfmpOgtC9hB7qlXFVLHNTZWFvGQ7GYRxLNbvWlO4R1EiS99BmhqU05kk5H0kcXJKwVYH9ea1Z3T3mYwUOH/MmKg78WJ7s9wP62XOrXahwf+nFVsHp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ln5/V2D4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNrZ7x5g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F8E1F000E9;
-	Tue, 21 Jul 2026 17:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ln5/V2D4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEBD1F000E9;
+	Tue, 21 Jul 2026 17:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655346;
-	bh=tTEU4etKnMj1Jqugfaxi7i5XaUanl1Fbvgux+cFP+NU=;
+	s=korg; t=1784655348;
+	bh=9TOYunOO2zIwaTqFNVjiN3zNc+9TO4AOi4XvLwvc3s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LNrZ7x5gnb/8ddjqM49IbGb6r5OtKkiYUP1EFg0gVcjRQU68k8fgW3e/KFUEPUd8O
-	 F/HsJ48NiAvrXjyGM0IPDII9npYIfcZ5rslizLmloimbbYHw7ZRqtXMwMaMUB19GOi
-	 on5YGvqKd9gzEYJAkMg50rmJrNKv97Y2lvR0uJZ8=
+	b=Ln5/V2D4urRts0Kli6/h+pfN6arT/hh5ulRESUCDA3DPQ5eWuc9SDwvNjRSaeFtKh
+	 f1kI8x2d52OzYCSUrSVz9G6JX6li2OjIm1aNSxTfLo6ZMBq/OqcH9Of3ZsXsZrflMz
+	 0Y3639m0jc7E7Hs8IKH3f+Amxi6gpLidJtak2X0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Ruipeng Qi <ruipengqi3@gmail.com>,
 	Chao Yu <chao@kernel.org>,
-	Chao Yu <chaseyu@google.com>,
+	Keshav Verma <iganschel@gmail.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 2049/2077] f2fs: fix potential deadlock in gc_merge path of f2fs_balance_fs()
-Date: Tue, 21 Jul 2026 17:28:42 +0200
-Message-ID: <20260721152641.028637768@linuxfoundation.org>
+Subject: [PATCH 7.1 2050/2077] f2fs: fix listxattr handling of corrupted xattr entries
+Date: Tue, 21 Jul 2026 17:28:43 +0200
+Message-ID: <20260721152641.054491929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,82 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Keshav Verma <iganschel@gmail.com>
 
-[ Upstream commit 8b4468ec023d0d1b4669dfb867588997cc03a06b ]
+[ Upstream commit 5ef5bc304f23c3fe255d4936472378dcb74d0e94 ]
 
-When we mount device w/ gc_merge mount option, we may suffer below
-potential deadlock:
+Validate the xattr entry before reading its fields in f2fs_listxattr().
+Return -EFSCORRUPTED when the entry is outside the valid xattr storage
+area instead of returning a successful partial result.
 
-Kworker					GC trehad			Truncator
-- f2fs_write_cache_pages
- - f2fs_write_single_data_page
-  - f2fs_do_write_data_page
-   - folio_start_writeback  --- set writeback flag on folio
-   - f2fs_outplace_write_data
-   : cached folio in internal bio cache
-  - f2fs_balance_fs
-   - wake_up(gc_thread)
-   : wake up gc thread to run foreground GC
-   - finish_wait(fggc_wq)
-   : wait on the waitqueue --- wait on GC thread to finish the work
-									- truncate_inode_pages_range
-									 - __filemap_get_folio(, FGP_LOCK)  --- lock folio
-									 - truncate_inode_partial_folio
-									  - folio_wait_writeback            --- wait on writeback being cleared
-					- do_garbage_collect
-					 - move_data_page
-					  - f2fs_get_lock_data_folio
-					   - lock on folio  --- blocked on folio's lock
-
-In order to avoid such deadlock, let's call below functions to commit
-cached bios in GC_MERGE path of f2fs_balance_fs() as the same as we did
-in NOGC_MERGE path.
-- f2fs_submit_merged_write(sbi, DATA);
-- f2fs_submit_all_merged_ipu_writes(sbi);
-
+Fixes: 688078e7f36c ("f2fs: fix to avoid memory leakage in f2fs_listxattr")
 Cc: stable@kernel.org
-Fixes: 351df4b20115 ("f2fs: add segment operations")
-Cc: Ruipeng Qi <ruipengqi3@gmail.com>
-Reported: Sandeep Dhavale <dhavale@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Chao Yu <chaseyu@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Keshav Verma <iganschel@gmail.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/segment.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/f2fs/xattr.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -444,6 +444,13 @@ void f2fs_balance_fs(struct f2fs_sb_info
- 	if (has_enough_free_secs(sbi, 0, 0))
- 		return;
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -581,8 +581,6 @@ ssize_t f2fs_listxattr(struct dentry *de
+ 		size_t prefix_len;
+ 		size_t size;
  
-+	/*
-+	 * Submit all cached OPU/IPU DATA bios before triggering
-+	 * foreground GC to avoid potential deadlocks.
-+	 */
-+	f2fs_submit_merged_write(sbi, DATA);
-+	f2fs_submit_all_merged_ipu_writes(sbi);
-+
- 	if (test_opt(sbi, GC_MERGE) && sbi->gc_thread &&
- 				sbi->gc_thread->f2fs_gc_task) {
- 		DEFINE_WAIT(wait);
-@@ -463,13 +470,6 @@ void f2fs_balance_fs(struct f2fs_sb_info
- 			.err_gc_skipped = false,
- 			.nr_free_secs = 1 };
- 
--		/*
--		 * Submit all cached OPU/IPU DATA bios before triggering
--		 * foreground GC to avoid potential deadlocks.
--		 */
--		f2fs_submit_merged_write(sbi, DATA);
--		f2fs_submit_all_merged_ipu_writes(sbi);
+-		prefix = f2fs_xattr_prefix(entry->e_name_index, dentry);
 -
- 		f2fs_down_write_trace(&sbi->gc_lock, &gc_control.lc);
- 		stat_inc_gc_call_count(sbi, FOREGROUND);
- 		f2fs_gc(sbi, &gc_control);
+ 		if ((void *)(entry) + sizeof(__u32) > last_base_addr ||
+ 			(void *)XATTR_NEXT_ENTRY(entry) > last_base_addr) {
+ 			f2fs_err(F2FS_I_SB(inode), "list inode (%llu) has corrupted xattr",
+@@ -590,9 +588,11 @@ ssize_t f2fs_listxattr(struct dentry *de
+ 			set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
+ 			f2fs_handle_error(F2FS_I_SB(inode),
+ 						ERROR_CORRUPTED_XATTR);
+-			break;
++			error = -EFSCORRUPTED;
++			goto cleanup;
+ 		}
+ 
++		prefix = f2fs_xattr_prefix(entry->e_name_index, dentry);
+ 		if (!prefix)
+ 			continue;
+ 
 
 
