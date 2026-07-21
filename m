@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1133E44AB9F;
-	Tue, 21 Jul 2026 22:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1259E43D503;
+	Tue, 21 Jul 2026 22:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674486; cv=none; b=VRjg95VriRVXfI3O8U+knvG8s+056aNeWYHEi5AvaCPsRwrY6SyYSJBR9qwNisFxvftOD/lxsKGIqcpm0/87ML4jonF3Dvr6deMfe8mU7V5x7eTrkufSs3B+C+0MEotju9JuRg191g4wW6wlAlrYlsfeiBWSP8FJZz0NO9XuLiU=
+	t=1784674489; cv=none; b=PVYIYvyzuWaAOBizVbZYunY8DZ5iEzJrgLk/ROCx4oPqcmVWnsYMQN0NIjqCN8k2TwrWqG4JsCvpoZgI6nATuuIFnYdKJAJd2dHFtRYT0xsO/IGNqiIQoYoSXJG/p7ChLZHre508RdHqiPuilKcCyUXqop6r2VlGF0k16I/zel0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674486; c=relaxed/simple;
-	bh=TMrzWCsVACgzuOkD4Pdl11VjLt806lxXTzodJktGKpo=;
+	s=arc-20240116; t=1784674489; c=relaxed/simple;
+	bh=w0QlzIe0nBB5VBzg3V4fLCROsreXxh8XJOh4iYY+L6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tS9WfxCeLq0K7vMldmBkwZr8AeiUF+Ry6mQtb4Ae3Q3Gfln6o2/OSoXVZK0xDe0wM+rFjhK4B2p/7/BAtFMRm1yN+o13Eqiu2EiTJ60xi7ZBm8haPLEINgF5Q88o85cvUhaj+pw3iBQbD7hup2NEk0nu14AP/vdkMR9aABGU8Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0/DWFUR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OjJrJh0OwFNu6nuL+3mL3YBmhR228p73X4bAJC/IVF95JQN2zCN6bfOsDJg6Ah4DGHcX573KuVJs27gBLWENpYUnQr1n/OR+Y0i0kDFuoSk0R7D4sdQOHT+zxbsMnqpsRxpWCmF/wLtjQHADpWrx+Qll+6AfEFa0P0Kp+eH8ucI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVJ+JHko; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0/DWFUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EE41F000E9;
-	Tue, 21 Jul 2026 22:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVJ+JHko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC4E1F000E9;
+	Tue, 21 Jul 2026 22:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674485;
-	bh=215/2i7em+c66SliEcICmn9+KaSYBrBp8oK4fKWIqL0=;
+	s=korg; t=1784674487;
+	bh=WCWtTUvdnbgBorrO7Y6UIJlocGgUadmKigNvMPYtSnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p0/DWFURXR0kCdqkVJHd4lhr265Z3yIbGd7md5Y1v1vfGRUD3oHNbBJCpwV9mZ+By
-	 WBkE0faPuuha9ZqJ985gumdaU5TiZXLSYq2uCBnMjKIchMc9Cq8K7y0P1hW6mbIovq
-	 5xp+UnoxULVOMZpW/7pXQTQHPgUileh5sqREkSUw=
+	b=eVJ+JHkomUdA0LtxJwa8F+KElu46MfeqRfw3acgZwd2LofFKYAEv6cwhgvGsJ8c1J
+	 wTcy5w5lOAhONbrZOT69wq9xSB82pbDsI3KNEf6noE/a4LBjhUS5XtBm/aS05XuKzl
+	 xuMcOC3lR6ya3PqOxSZjmlY/kXDZE7+XXGmWivGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 560/699] wifi: mac80211: fix memory leak in ieee80211_register_hw()
-Date: Tue, 21 Jul 2026 17:25:19 +0200
-Message-ID: <20260721152408.342547529@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 543/699] hwmon: (w83627hf) remove VID sysfs files on error and remove
+Date: Tue, 21 Jul 2026 17:25:02 +0200
+Message-ID: <20260721152407.952996332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,56 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 95fc02722edde02946d0d475221f2b2054d3d8ba upstream.
+commit 5264b389c4e02dec214a46c400eb3ab867a7749a upstream.
 
-If kmemdup() fails while copying supported band structures, the error
-path jumps to fail_rate. This skips rate_control_deinitialize() and
-leaks the initialized local->rate_ctrl.
+w83627hf_probe() creates cpu0_vid and vrm with device_create_file() when
+VID information is available.
 
-Fix this by adding a fail_band label that shares the rate-control cleanup
-path before falling through to the remaining teardown.
+The error path and remove callback only remove the common and optional
+attribute groups.  Those groups do not contain cpu0_vid or vrm, so the
+files can remain after a later probe failure or after device removal
+while their callbacks still expect live driver data.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still present in
-v7.1-rc7.
+Remove the standalone VID sysfs files from both the probe error path and
+the remove callback.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have a
-suitable mac80211 device/driver combination to test with, no runtime
-testing was able to be performed.
-
-Fixes: 09b4a4faf9d0 ("mac80211: introduce capability flags for VHT EXT NSS support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260615064732.48113-1-pengpeng@iscas.ac.cn
 Cc: stable@vger.kernel.org
-Reviewed-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://patch.msgid.link/20260706143507.146131-1-dawei.feng@seu.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/w83627hf.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -1279,7 +1279,7 @@ int ieee80211_register_hw(struct ieee802
- 		sband = kmemdup(sband, sizeof(*sband), GFP_KERNEL);
- 		if (!sband) {
- 			result = -ENOMEM;
--			goto fail_rate;
-+			goto fail_band;
- 		}
+--- a/drivers/hwmon/w83627hf.c
++++ b/drivers/hwmon/w83627hf.c
+@@ -1551,6 +1551,8 @@ static int w83627hf_probe(struct platfor
+ 	return 0;
  
- 		wiphy_dbg(hw->wiphy, "copying sband (band %d) due to VHT EXT NSS BW flag\n",
-@@ -1342,6 +1342,7 @@ int ieee80211_register_hw(struct ieee802
- #endif
- 	wiphy_unregister(local->hw.wiphy);
-  fail_wiphy_register:
-+ fail_band:
- 	rtnl_lock();
- 	rate_control_deinitialize(local);
- 	ieee80211_remove_interfaces(local);
+  error:
++	device_remove_file(dev, &dev_attr_vrm);
++	device_remove_file(dev, &dev_attr_cpu0_vid);
+ 	sysfs_remove_group(&dev->kobj, &w83627hf_group);
+ 	sysfs_remove_group(&dev->kobj, &w83627hf_group_opt);
+ 	return err;
+@@ -1562,6 +1564,8 @@ static int w83627hf_remove(struct platfo
+ 
+ 	hwmon_device_unregister(data->hwmon_dev);
+ 
++	device_remove_file(&pdev->dev, &dev_attr_vrm);
++	device_remove_file(&pdev->dev, &dev_attr_cpu0_vid);
+ 	sysfs_remove_group(&pdev->dev.kobj, &w83627hf_group);
+ 	sysfs_remove_group(&pdev->dev.kobj, &w83627hf_group_opt);
+ 
 
 
