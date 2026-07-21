@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A20E47010D;
-	Tue, 21 Jul 2026 20:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30C0470440;
+	Tue, 21 Jul 2026 20:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665492; cv=none; b=F4xrH3TbRhS3awEpwQivvgtIcaWb1CsKi/rXkKDvjyEaunt/3DgRjGKYISOGQ/7JtlvcJbToCA0zJu7Qz0ZVxSTTH1/WEGqQL3fHSsgRytdmt6awt9W8z3yZllBTLM1z6IoVeNL4ewezEC0F5ETJelMwjL+aqqdimuYhCCJLpTk=
+	t=1784665495; cv=none; b=o5eah58jUjEUWk7o9WAeu4XkAsDKXA6mw1zutBxo7fmVXXaPDImRTGCY2xTKwjOfjDsWf9zBbuvVvuj37ei9lrbKrPRUb5lFzpSugrEvzElfjBlPFMeoOHlqHlnqa4KqjPiIrOklrWe54NPwSoj78e+ZdQU8qDBZ9ATECds9EDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665492; c=relaxed/simple;
-	bh=2+k5LftYHltCiWkWT9jZ/uci22QsCJBVzKinMk7ZZC4=;
+	s=arc-20240116; t=1784665495; c=relaxed/simple;
+	bh=og2iVJVUBfob4aqgx6jrzS0CFXwv2enLIvZ2bLaN9tI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYNWFn5hl3NUKiq2lwOMq1YfpodWpv1UNjrQx+WDv5pOoS7on4PmFSy17H9WLYYaJAsFbUEEwBA+ymHZHEcxK0VtkO4LalVZV3ATOFhKn/omDHmYsBqZbbVoSfVnI8/25OBxqI9R3Xt8Hfl6PcMy1gsUv3zYNdBZtb8RR4/neCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff8AlHpQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GaqEZGZZqno8RNxXBHvOAm1gbEpGBNGnqlbGb/1DRjBZ672tSgc6C0MVwOMozaWjCitQtexSxJbiroRUjHBJpP0nVRs2OnnPfpxWMa0cDcEAR+3obv03NjfmUcDELaF8DkRVb7/Z7kRAfUv7m5TD/F7ZdWgA8WlTyNZWx6uRObU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPEn21IV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff8AlHpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B071F000E9;
-	Tue, 21 Jul 2026 20:24:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPEn21IV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444211F000E9;
+	Tue, 21 Jul 2026 20:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665491;
-	bh=qwgtsV0Fu1YfqmVov/srIDJnKpREXUfwfq1vMOfbvrs=;
+	s=korg; t=1784665493;
+	bh=ipY+DSE0thP/Ws3l95orFGUesq3ukhv/iM4ZLoD0TqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ff8AlHpQG16P0SzdWHniObo8RuLaHrOUiOG4lXQGsQ3cAHqxssnx/6Ijp6EnUJ2rz
-	 LxpP0UqGZqOf1HxXVthDIEhb/eyfU6IKG2HyFEcwYR7Mz1rxxsd57MbUdKvBnLSp2X
-	 ofhs2PsIK3ePZLAOnMRYjybzpaQeOZSUfmB5uJmg=
+	b=zPEn21IVYuv4brsL4WHwT7fAzSUYOLM0EEAR6VdQ3Dn/oSW2BMm+ai/WhJJz3p2ee
+	 6LT4IbD42DBTbod4IlBU3FdySqgrI3NiXjJct3BqO2/WojtThVD+N+5HGUPJFIzSJh
+	 aXE/tyotVhlCQATa1x658Ivp1U4R0KcVhFfw9QL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Louvel <paul.louvel@bootlin.com>,
+	Anastasia Tishchenko <sv3iry@gmail.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 0281/1266] crypto: talitos - move dma mapping code in talitos_submit() into a standalone dma_map_request() function
-Date: Tue, 21 Jul 2026 17:11:58 +0200
-Message-ID: <20260721152448.112785040@linuxfoundation.org>
+Subject: [PATCH 6.6 0272/1266] crypto: ecc - Fix carry overflow in vli multiplication
+Date: Tue, 21 Jul 2026 17:11:49 +0200
+Message-ID: <20260721152447.907605066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,121 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Louvel <paul.louvel@bootlin.com>
+From: Anastasia Tishchenko <sv3iry@gmail.com>
 
-commit 5c0aa8cad7745505297103f05dda3fa06e8ac670 upstream.
+commit 27b536a2ec8e2f85a0380c2d13c9ecbc7aaab406 upstream.
 
-Previously added code to talitos_submit() in order to map an entire
-descriptor chain.
+The carry flag calculation fails when r01.m_high is saturated
+(0xFFFFFFFFFFFFFFFF) and addition of lower bits overflows.
 
-Move that code into a standalone function to improve readability.
+The condition (r01.m_high < product.m_high) doesn't handle the case
+where r01.m_high == product.m_high and an additional carry exists
+from lower-bit overflow.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
+When commit 3c4b23901a0c ("crypto: ecdh - Add ECDH software support")
+introduced crypto/ecc.c, it split the muladd() function in the
+micro-ecc library into separate mul_64_64() and add_128_128() helpers.
+It seems the check got lost in translation.
+
+Add proper handling for this boundary by accounting for the carry
+from the lower addition.
+
+Fixes: 3c4b23901a0c ("crypto: ecdh - Add ECDH software support")
+Signed-off-by: Anastasia Tishchenko <sv3iry@gmail.com>
+Cc: stable@vger.kernel.org # v4.8+
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/talitos.c |   75 +++++++++++++++++++++++++----------------------
- 1 file changed, 41 insertions(+), 34 deletions(-)
+ crypto/ecc.c |   31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/drivers/crypto/talitos.c
-+++ b/drivers/crypto/talitos.c
-@@ -255,6 +255,46 @@ static int init_device(struct device *de
- 	return 0;
+--- a/crypto/ecc.c
++++ b/crypto/ecc.c
+@@ -400,14 +400,26 @@ static uint128_t mul_64_64(u64 left, u64
+ 	return result;
  }
  
-+static void dma_map_request(struct device *dev, struct talitos_request *request,
-+			    struct talitos_desc *desc, bool is_sec1)
-+{
-+	struct talitos_edesc *edesc =
-+		container_of(desc, struct talitos_edesc, desc);
-+	dma_addr_t dma_desc, prev_dma_desc;
-+	struct talitos_edesc *prev_edesc = NULL;
-+
-+	if (is_sec1) {
-+		while (edesc) {
-+			edesc->desc.hdr1 = edesc->desc.hdr;
-+
-+			dma_desc = dma_map_single(dev, &edesc->desc.hdr1,
-+						  TALITOS_DESC_SIZE,
-+						  DMA_BIDIRECTIONAL);
-+
-+			if (!prev_edesc) {
-+				request->dma_desc = dma_desc;
-+				goto next;
-+			}
-+
-+			/* Chain in any previous descriptors. */
-+
-+			prev_edesc->desc.next_desc = cpu_to_be32(dma_desc);
-+
-+			dma_sync_single_for_device(dev, prev_dma_desc,
-+						   TALITOS_DESC_SIZE,
-+						   DMA_TO_DEVICE);
-+
-+next:
-+			prev_edesc = edesc;
-+			prev_dma_desc = dma_desc;
-+			edesc = edesc->next_desc;
-+		}
-+	} else {
-+		request->dma_desc = dma_map_single(dev, desc, TALITOS_DESC_SIZE,
-+						   DMA_BIDIRECTIONAL);
-+	}
-+}
-+
- /**
-  * talitos_submit - submits a descriptor to the device for processing
-  * @dev:	the SEC device to be used
-@@ -273,10 +313,7 @@ static int talitos_submit(struct device
- 					   void *context, int error),
- 			  void *context)
+-static uint128_t add_128_128(uint128_t a, uint128_t b)
++/* Calculate addition with overflow checking. Returns true on wrap-around,
++ * false otherwise.
++ */
++static bool check_add_128_128_overflow(uint128_t *result, uint128_t a,
++				       uint128_t b)
  {
--	struct talitos_edesc *edesc = container_of(desc, struct talitos_edesc, desc);
- 	struct talitos_private *priv = dev_get_drvdata(dev);
--	dma_addr_t dma_desc, prev_dma_desc;
--	struct talitos_edesc *prev_edesc = NULL;
- 	struct talitos_request *request;
- 	unsigned long flags;
- 	int head;
-@@ -294,37 +331,7 @@ static int talitos_submit(struct device
- 	request = &priv->chan[ch].fifo[head];
+-	uint128_t result;
++	bool carry;
  
- 	/* map descriptor and save caller data */
--	if (is_sec1) {
--		while (edesc) {
--			edesc->desc.hdr1 = edesc->desc.hdr;
--
--			dma_desc = dma_map_single(dev, &edesc->desc.hdr1,
--						  TALITOS_DESC_SIZE,
--						  DMA_BIDIRECTIONAL);
--
--			if (!prev_edesc) {
--				request->dma_desc = dma_desc;
--				goto next;
--			}
--
--			/* Chain in any previous descriptors. */
--
--			prev_edesc->desc.next_desc = cpu_to_be32(dma_desc);
--
--			dma_sync_single_for_device(dev, prev_dma_desc,
--						   TALITOS_DESC_SIZE,
--						   DMA_TO_DEVICE);
--
--next:
--			prev_edesc = edesc;
--			prev_dma_desc = dma_desc;
--			edesc = edesc->next_desc;
--		}
--	} else {
--		request->dma_desc = dma_map_single(dev, desc,
--						   TALITOS_DESC_SIZE,
--						   DMA_BIDIRECTIONAL);
--	}
-+	dma_map_request(dev, request, desc, is_sec1);
- 	request->callback = callback;
- 	request->context = context;
+-	result.m_low = a.m_low + b.m_low;
+-	result.m_high = a.m_high + b.m_high + (result.m_low < a.m_low);
++	result->m_low = a.m_low + b.m_low;
++	carry = (result->m_low < a.m_low);
  
+-	return result;
++	result->m_high = a.m_high + b.m_high + carry;
++
++	/* Using constant-time bitwise arithmetic to prevent timing
++	 * side-channels.
++	 */
++	carry = (result->m_high < a.m_high) |
++		((result->m_high == a.m_high) & carry);
++
++	return carry;
+ }
+ 
+ static void vli_mult(u64 *result, const u64 *left, const u64 *right,
+@@ -432,9 +444,7 @@ static void vli_mult(u64 *result, const
+ 			uint128_t product;
+ 
+ 			product = mul_64_64(left[i], right[k - i]);
+-
+-			r01 = add_128_128(r01, product);
+-			r2 += (r01.m_high < product.m_high);
++			r2 += check_add_128_128_overflow(&r01, r01, product);
+ 		}
+ 
+ 		result[k] = r01.m_low;
+@@ -457,7 +467,7 @@ static void vli_umult(u64 *result, const
+ 		uint128_t product;
+ 
+ 		product = mul_64_64(left[k], right);
+-		r01 = add_128_128(r01, product);
++		check_add_128_128_overflow(&r01, r01, product);
+ 		/* no carry */
+ 		result[k] = r01.m_low;
+ 		r01.m_low = r01.m_high;
+@@ -494,8 +504,7 @@ static void vli_square(u64 *result, cons
+ 				product.m_low <<= 1;
+ 			}
+ 
+-			r01 = add_128_128(r01, product);
+-			r2 += (r01.m_high < product.m_high);
++			r2 += check_add_128_128_overflow(&r01, r01, product);
+ 		}
+ 
+ 		result[k] = r01.m_low;
 
 
