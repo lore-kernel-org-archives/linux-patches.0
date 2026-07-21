@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55163B6C17;
-	Tue, 21 Jul 2026 22:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F329442FC3;
+	Tue, 21 Jul 2026 22:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672966; cv=none; b=tlLzEqWvMdDOHeqBfy8MSaXnCWtCl8CEQeLhuvUw6HHI4g5ZWGLnaEoKPWyHTfcUA+1/W9sgNT9pL+8kElhMmnGgYEZf0Zq/FfoUyVXGj6yLqCfNw1NrsyzgSH4et2S5YeXPchyhKtAgzMhvP4XiJxOj2DSAeEgLMFd39Eeo/Fc=
+	t=1784672969; cv=none; b=Jv5MS+HOawPSX8/BZolAreQWV7wkn1R42ZntKvONXEq9o1gHyuDWfLaqPbXBE/5lYXxg4eQKa6wGKaRre8NkxiYSGviht1pWLHuIaKYezdtm+/T4iQ0CZoYetCwQqiSud118e00vA3tabp3hAoAta6R8/30v11VoYXXnR23TdTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672966; c=relaxed/simple;
-	bh=1iMSnfdfwMh4yCwxN4sSC7o+ijqYp/LrnoB2WE9xK9A=;
+	s=arc-20240116; t=1784672969; c=relaxed/simple;
+	bh=1VUVU3EtfZvcJpIzyImCcpy44vf0B2JZJSIrT0Np/+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n672WcQOp/CQOg/Ddiav0KjgfYivX/+dbOpUTb35FvK8nqyQafDVrQkV3AsAoOLDGs//V/aoEBr/1WPC2khk/azPX5c5no6J8G7EIZX/FeDvbucxHNiBfsVIYXu1NU7Cr2yWlOXOPmYM9AXBGrHrbBxUfGgmoaIPyi6weJiAlY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haL7yuwo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OSwGFAjDDhNNoQub7+UEjkFix68iPtiTGIyZjBxNGr+T3nUm3TOmvoOFrr1BJp0ROq2YRiOqMQmo4NcxSI/CadrblRBXx99MhdBj5tQ2zHwvvM3ZMk90Txf9e79UsGbuVoSPkVTVrnfl1vZFNr0NuMOBi88HtLffukXOC71Dgyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ii4ennHG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haL7yuwo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2745B1F000E9;
-	Tue, 21 Jul 2026 22:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ii4ennHG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07A31F000E9;
+	Tue, 21 Jul 2026 22:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672965;
-	bh=wq4iLn1d6qCVJd07OKJwSLAx7lTtPvwjY0pfB4GXKYQ=;
+	s=korg; t=1784672968;
+	bh=CRd11CrbsxGLr5mR061mDzWzopHHBuYeqU8e1AZfC+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=haL7yuwom7Zfc9y+wQCm18W+BkQudUE4wDsExiarJY2f5+SAnrimLsoKrVEMpLxwH
-	 HX6lCPU4VXIWF9gRFz8G+SlRPlC9IRMnKd7i87H44RNrmDiqkcMrFrPNTSo1n5X8HV
-	 NdOMggagV5Cmr9NpwQj8/d0Yvkf5EA9KieTndPaE=
+	b=Ii4ennHGsej2M9jQxEqPiz+1PL/+9e0gw3qmywm8l+tw+kDoL+PK79r4KonGr01Uv
+	 TYzXH4TAWe+uTMiY59qmZz39KiNXyfwAJR7kd+HKlCHAzg6wfHIqhzQIS0WrVQ99h0
+	 CKyfS8Let7AjrV3S97570RAX8rWWIpV4ppAoXjm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Neill Kapron <nkapron@google.com>,
+	Su Yue <glass.su@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 825/843] usb: gadget: f_fs: Tie read_buffer lifetime to ffs_epfile
-Date: Tue, 21 Jul 2026 17:27:40 +0200
-Message-ID: <20260721152424.635659922@linuxfoundation.org>
+Subject: [PATCH 5.15 826/843] btrfs: do not trim a device which is not writeable
+Date: Tue, 21 Jul 2026 17:27:41 +0200
+Message-ID: <20260721152424.658504739@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -45,59 +47,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 8bdcf96eb135aebacac319667f87db034fb38406 ]
+[ Upstream commit 1b1937eb08f51319bf71575484cde2b8c517aedc ]
 
-Currently, ffs_epfile_release unconditionally frees the endpoint's
-read_buffer when a file descriptor is closed. If userspace explicitly
-opens the endpoint multiple times and closes one, the read_buffer is
-destroyed. This can lead to silent data loss if other file descriptors
-are still actively reading from the endpoint.
+[BUG]
+There is a bug report that btrfs/242 can randomly fail with the
+following NULL pointer dereference:
 
-By tying the lifetime of the read_buffer to the ffs_epfile structure itself
-(which is destroyed when the functionfs instance is torn down in
-ffs_epfiles_destroy), we eliminate the brittle dependency on open/release
-calls while correctly matching the conceptual lifetime of unread data on
-the hardware endpoint.
+  run fstests btrfs/242 at 2026-06-01 10:25:08
+  BTRFS: device fsid d4d7f234-487c-4787-88e4-47a8b68c9874 devid 1 transid 9 /dev/sdc (8:32) scanned by mount (122609)
+  BTRFS info (device sdc): first mount of filesystem d4d7f234-487c-4787-88e4-47a8b68c9874
+  BTRFS info (device sdc): using crc32c checksum algorithm
+  BTRFS warning (device sdc): devid 2 uuid fbe72d72-3272-482d-80fb-ab88ed398192 is missing
+  BTRFS warning (device sdc): devid 2 uuid fbe72d72-3272-482d-80fb-ab88ed398192 is missing
+  BTRFS info (device sdc): allowing degraded mounts
+  BTRFS info (device sdc): turning on async discard
+  BTRFS info (device sdc): enabling free space tree
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
+  user pgtable: 4k pages, 48-bit VAs, pgdp=000000013fd6b000
+  CPU: 4 UID: 0 PID: 122625 Comm: fstrim Not tainted 7.0.10-2-default #1 PREEMPT(full) openSUSE Tumbleweed e9a5f6b24978fba3bf015a992f865837fdfff3dd
+  Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20250812-19.fc42 08/12/2025
+  pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : btrfs_trim_fs+0x34c/0xa00 [btrfs]
+  lr : btrfs_trim_fs+0x1f0/0xa00 [btrfs]
+  Call trace:
+   btrfs_trim_fs+0x34c/0xa00 [btrfs f02c1d570ceea621c69d302ba75dd61868083840] (P)
+   btrfs_ioctl_fitrim+0xe8/0x178 [btrfs f02c1d570ceea621c69d302ba75dd61868083840]
+   btrfs_ioctl+0xdd4/0x2bd8 [btrfs f02c1d570ceea621c69d302ba75dd61868083840]
+   __arm64_sys_ioctl+0xac/0x108
+   invoke_syscall.constprop.0+0x5c/0xd0
+   el0_svc_common.constprop.0+0x40/0xf0
+   do_el0_svc+0x24/0x40
+   el0_svc+0x40/0x1d0
+   el0t_64_sync_handler+0xa0/0xe8
+   el0t_64_sync+0x1b0/0x1b8
+  Code: 17ffff83 f94017e0 f9002be0 f9402ea0 (f9400c00)
+  ---[ end trace 0000000000000000  ]---
 
-Fixes: 9353afbbfa7b ("usb: gadget: f_fs: buffer data from ‘oversized’ OUT requests")
-Cc: stable <stable@kernel.org>
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://patch.msgid.link/20260619040609.4010746-3-nkapron@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adjusted context in ffs_epfiles_destroy() since 6.12 lacks the simple_remove_by_name() rework and still uses dentry-based cleanup ]
+Also the reporter is very kind to test the following ASSERT() added to
+btrfs_trim_free_extents_throttle():
+
+	ASSERT(device->bdev,
+	       "devid=%llu path=%s dev_state=0x%lx\n",
+	       device->devid, btrfs_dev_name(device), device->dev_state);
+
+And it shows the following output:
+
+  assertion failed: device->bdev, in extent-tree.c:6630 (devid=2 path=/dev/sdd dev_state=0x82)
+
+Which means the device->bdev is NULL, and the dev_state is
+BTRFS_DEV_STATE_IN_FS_METADATA | BTRFS_DEV_STATE_ITEM_FOUND, without
+BTRFS_DEV_STATE_WRITEABLE flag set.
+
+[CAUSE]
+The pc points to the following call chain:
+
+  btrfs_trim_fs()
+  |- btrfs_trim_free_extents()
+     |- btrfs_trim_free_extents_throttle()
+        |- bdev_max_discard_sectors(device->bdev)
+
+So the NULL pointer dereference is caused by device->bdev being NULL.
+
+This looks impossible by a quick glance, as just before calling
+btrfs_trim_free_extents_throttle(), we have skipped any device that has
+BTRFS_DEV_STATE_MISSING flag set.
+
+However in this particular case, there is a window where the missing
+device is later re-scanned, causing btrfs to remove the
+BTRFS_DEV_STATE_MISSING flag:
+
+  btrfs_control_ioctl()
+  |- btrfs_scan_one_device()
+     |- device_list_add()
+        |- rcu_assign_pointer(device->name, name);
+        |  This updates the missing device's path to the new good path.
+        |
+        |- clear_bit(BTRFS_DEV_STATE_MISSING, &device->dev_state)
+           This removes the BTRFS_DEV_STATE_MISSING flag.
+
+This allows the missing device to re-appear and clear the
+BTRFS_DEV_STATE_MISSING flag.  However the device still does not have
+the BTRFS_DEV_STATE_WRITEABLE flag set, nor is its bdev pointer updated.
+
+The bdev pointer remains NULL, triggering the crash later.
+
+[FIX]
+This is a big de-synchronization between BTRFS_DEV_STATE_MISSING and
+device->bdev pointer, and shows a gap in btrfs's re-appearing-device
+handling.
+
+The proper handling of re-appearing device will need quite some extra
+work, which is out of the context of this small fix.
+
+Thankfully the regular bbio submission path has already handled it well
+by checking if the device->bdev is NULL before submitting.
+
+So here we just fix the crash by checking if the device is writeable and
+has a bdev pointer before calling bdev_max_discard_sectors().
+
+Reported-by: Su Yue <glass.su@suse.com>
+Link: https://lore.kernel.org/linux-btrfs/wlwir19t.fsf@damenly.org/
+Fixes: 499f377f49f0 ("btrfs: iterate over unused chunk space in FITRIM")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/extent-tree.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1292,7 +1292,6 @@ ffs_epfile_release(struct inode *inode,
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -5994,12 +5994,16 @@ static int btrfs_trim_free_extents(struc
  
- 	ENTER();
+ 	*trimmed = 0;
  
--	__ffs_epfile_read_buffer_free(epfile);
- 	ffs_data_closed(epfile->ffs);
+-	/* Discard not supported = nothing to do. */
+-	if (!blk_queue_discard(bdev_get_queue(device->bdev)))
++	/*
++	 * The caller only filters out MISSING devices, but a device that was
++	 * missing at mount and later rescanned has MISSING cleared while bdev
++	 * is still NULL and WRITEABLE is still unset. Skip those here.
++	 */
++	if (!test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state) || !device->bdev)
+ 		return 0;
  
- 	return 0;
-@@ -1957,6 +1956,7 @@ static void ffs_epfiles_destroy(struct f
+-	/* Not writable = nothing to do. */
+-	if (!test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state))
++	/* Discard not supported = nothing to do. */
++	if (!blk_queue_discard(bdev_get_queue(device->bdev)))
+ 		return 0;
  
- 	for (; count; --count, ++epfile) {
- 		BUG_ON(mutex_is_locked(&epfile->mutex));
-+		__ffs_epfile_read_buffer_free(epfile);
- 		if (epfile->dentry) {
- 			d_delete(epfile->dentry);
- 			dput(epfile->dentry);
+ 	/* No free space = nothing to do. */
 
 
