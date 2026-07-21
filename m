@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1812946DFFF;
-	Tue, 21 Jul 2026 17:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35A346D091;
+	Tue, 21 Jul 2026 17:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656021; cv=none; b=ToGGLZeMznjbj3KxAQhHGS7DSfpKzELp4Ho84TrO/hoVoZ15zXo1kLb+GcF2Cp/TDWnpjRfEGttvqYpTSYGsRpw+MuYbWZCUQOusnP3wOc5LMbpU3xLBN64keNuoTiGPd1iceEkG69J92T1J0trXmfhoYBUF+lUvooAKfkIS/TU=
+	t=1784656024; cv=none; b=Y4/Es79ADoG3RE48G8vi3BqA7QMpgtiy6Oy7PSMEAneMLMmas5P2sZAi2tx23os0KOT5sGIg+yU3AnICpYEaMEV0p1wMCFGaCDjvCJKug+ZUJ8jeea2mI/ZswqYxsC/KZPq5jSrwhim/yx037tkgTJUMpryzVyTGLk48Yy1uKDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656021; c=relaxed/simple;
-	bh=dr133yYLqjkAv66Ix2wWQctUIY/Jf53OUPg4O3gYtcc=;
+	s=arc-20240116; t=1784656024; c=relaxed/simple;
+	bh=L9/lQAJnzEWn20GYNOeLIXs8QqxnWDF8OyFK8OvwLxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8FdhvJj4lC41OKyJEJQ2pVunNz94f6unBpVibQaf+gAG3sk7AxZrMjKigwzd/foH9R9W28W7BW3oetreaKac3PD+aTzGNqH9ZzO7PhP/U8gLrnOkPaiV9Dc60CTvmZN983s9fTghtJSSe7abZL+0s7W+fqQOzFmoK38qbsJcm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0gmkkz9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZhVJDc+N4Iy6LuOtwWnjEgTHWOAxu0JEurF2LncN087oGommhe9bMCJD7fkx/jzHCExhcoiCo5ItyoRwRiSofQayLFprWAUQneXMsPB3wuuU7H2BD5JajqjzpN9fb0XDNce/yRQE/apkh9G4QPDHXO4qLqIA2sdZVvwemSwsFTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOGryYyU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0gmkkz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDBE1F000E9;
-	Tue, 21 Jul 2026 17:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOGryYyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C241F000E9;
+	Tue, 21 Jul 2026 17:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656020;
-	bh=CaY0Vr4HS7FilOz7bjCjLuZqYfFl2WK3sUi8UvxEaYg=;
+	s=korg; t=1784656022;
+	bh=Z8XInptuDJqZeZzEVAM4oQENr8m/wCXIOOHBAyhNbVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0gmkkz9DO5yo8Yo9Vb+pytoH1O32Z6K+YrJdXSKDZ90ddAsg+xW1b4ohBQCYrnQn
-	 PhsDKIZjAoSFnJ9eG1re2G4MdJll2D1mjdLtl0lYzISNG7edR7BuTy6uQtdgWe4X5k
-	 NSMi4qrKqETNw9WfCoy6IZjDGpo2UqA5Oe2nnsSk=
+	b=MOGryYyU799VaZoYDfuOc93Na5rXogd3yBzJsln8H7DP5sSP3zpHAeNZMIu0kZmHm
+	 +cnOkBtjUaPcdetZhR4pH5buu0TgnJNlcXeQWWXWN6GTQbA4/amWBbmqwjTTfmUKhZ
+	 9YWvcOMKYEuvGXdsvfmjzg9PtrB//y85yyP2INrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ritesh Kumar <quic_riteshk@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0192/1611] arm64: dts: qcom: lemans: Add eDP ref clock for eDP PHYs
-Date: Tue, 21 Jul 2026 17:05:08 +0200
-Message-ID: <20260721152519.261267990@linuxfoundation.org>
+Subject: [PATCH 6.18 0228/1611] ALSA: xen-front: Connect event channel after stream prepare
+Date: Tue, 21 Jul 2026 17:05:44 +0200
+Message-ID: <20260721152520.135486786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,69 +45,166 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ritesh Kumar <quic_riteshk@quicinc.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 4bd073e00fd79c0aead74ad64ade48c904221245 ]
+[ Upstream commit 3624f0bd4af15a820b1bd88b489980fa9fd61b7a ]
 
-The eDP PHY nodes on lemans were missing the reference clock voting.
-This initially went unnoticed because the clock was implicitly enabled
-by the UFS PHY driver, and the eDP PHY happened to rely on that.
+The request channel must be connected from ALSA .open(), because hw-rule
+queries and the stream open request use it. The event channel is
+different: XENSND_EVT_CUR_POS handling uses ALSA runtime buffer and
+period geometry, and the corresponding Xen stream parameters are not
+submitted to the backend until .prepare() sends XENSND_OP_OPEN.
 
-After commit 77d2fa54a945 ("scsi: ufs: qcom : Refactor phy_power_on/off
-calls"), the UFS driver no longer keeps the reference clock enabled.
-As a result, the eDP PHY fails to power on.
+Currently .open() connects both channels. A backend current-position
+event, or a stale event queued for an earlier stream instance, can
+therefore reach xen_snd_front_alsa_handle_cur_pos() before
+runtime->buffer_size and runtime->period_size are valid.
 
-To fix this, add eDP reference clock for eDP PHYs on lemans chipset
-ensuring reference clock is enabled.
+Add a per-channel connection helper, connect only the request channel in
+.open(), connect the event channel after a successful stream prepare,
+and disconnect it before stream close/free. Re-check the event-channel
+state after taking ring_io_lock so disconnecting the event channel
+synchronizes against a threaded IRQ that passed the initial lockless
+state test. Keep defensive runtime geometry checks in the position
+handler.
 
-Fixes: e1e3e5673f8d7 ("arm64: dts: qcom: sa8775p: add DisplayPort device nodes")
-Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260128114853.2543416-3-quic_riteshk@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1cee559351a7 ("ALSA: xen-front: Implement ALSA virtual sound driver")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260526-alsa-xen-event-channel-fixes-v1-2-91d3a6a50778@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/lemans.dtsi | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ sound/xen/xen_snd_front_alsa.c    | 17 ++++++++++++-----
+ sound/xen/xen_snd_front_evtchnl.c | 20 +++++++++++++-------
+ sound/xen/xen_snd_front_evtchnl.h |  2 ++
+ 3 files changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-index 68c0fe6706cb85..5c00d2e89fb8c6 100644
---- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-@@ -5039,9 +5039,11 @@ mdss0_dp0_phy: phy@aec2a00 {
- 				      <0x0 0x0aec2000 0x0 0x1c8>;
+diff --git a/sound/xen/xen_snd_front_alsa.c b/sound/xen/xen_snd_front_alsa.c
+index b229eb6f70571d..293cc376e3ce69 100644
+--- a/sound/xen/xen_snd_front_alsa.c
++++ b/sound/xen/xen_snd_front_alsa.c
+@@ -378,7 +378,7 @@ static int alsa_open(struct snd_pcm_substream *substream)
  
- 				clocks = <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_AUX_CLK>,
--					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>;
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_EDP_REF_CLKREF_EN>;
- 				clock-names = "aux",
--					      "cfg_ahb";
-+					      "cfg_ahb",
-+					      "ref";
+ 	stream_clear(stream);
  
- 				#clock-cells = <1>;
- 				#phy-cells = <0>;
-@@ -5058,9 +5060,11 @@ mdss0_dp1_phy: phy@aec5a00 {
- 				      <0x0 0x0aec5000 0x0 0x1c8>;
+-	xen_snd_front_evtchnl_pair_set_connected(stream->evt_pair, true);
++	xen_snd_front_evtchnl_set_connected(&stream->evt_pair->req, true);
  
- 				clocks = <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_AUX_CLK>,
--					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>;
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_EDP_REF_CLKREF_EN>;
- 				clock-names = "aux",
--					      "cfg_ahb";
-+					      "cfg_ahb",
-+					      "ref";
+ 	ret = snd_pcm_hw_rule_add(runtime, 0, SNDRV_PCM_HW_PARAM_FORMAT,
+ 				  alsa_hw_rule, stream,
+@@ -499,6 +499,8 @@ static int alsa_hw_free(struct snd_pcm_substream *substream)
+ 	struct xen_snd_front_pcm_stream_info *stream = stream_get(substream);
+ 	int ret;
  
- 				#clock-cells = <1>;
- 				#phy-cells = <0>;
++	xen_snd_front_evtchnl_set_connected(&stream->evt_pair->evt, false);
++
+ 	ret = xen_snd_front_stream_close(&stream->evt_pair->req);
+ 	stream_free(stream);
+ 	return ret;
+@@ -533,6 +535,7 @@ static int alsa_prepare(struct snd_pcm_substream *substream)
+ 			return ret;
+ 
+ 		stream->is_open = true;
++		xen_snd_front_evtchnl_set_connected(&stream->evt_pair->evt, true);
+ 	}
+ 
+ 	return 0;
+@@ -572,20 +575,24 @@ void xen_snd_front_alsa_handle_cur_pos(struct xen_snd_front_evtchnl *evtchnl,
+ {
+ 	struct snd_pcm_substream *substream = evtchnl->u.evt.substream;
+ 	struct xen_snd_front_pcm_stream_info *stream = stream_get(substream);
++	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	snd_pcm_uframes_t delta, new_hw_ptr, cur_frame;
+ 
+-	cur_frame = bytes_to_frames(substream->runtime, pos_bytes);
++	if (!runtime->buffer_size || !runtime->period_size)
++		return;
++
++	cur_frame = bytes_to_frames(runtime, pos_bytes);
+ 
+ 	delta = cur_frame - stream->be_cur_frame;
+ 	stream->be_cur_frame = cur_frame;
+ 
+ 	new_hw_ptr = (snd_pcm_uframes_t)atomic_read(&stream->hw_ptr);
+-	new_hw_ptr = (new_hw_ptr + delta) % substream->runtime->buffer_size;
++	new_hw_ptr = (new_hw_ptr + delta) % runtime->buffer_size;
+ 	atomic_set(&stream->hw_ptr, (int)new_hw_ptr);
+ 
+ 	stream->out_frames += delta;
+-	if (stream->out_frames > substream->runtime->period_size) {
+-		stream->out_frames %= substream->runtime->period_size;
++	if (stream->out_frames > runtime->period_size) {
++		stream->out_frames %= runtime->period_size;
+ 		snd_pcm_period_elapsed(substream);
+ 	}
+ }
+diff --git a/sound/xen/xen_snd_front_evtchnl.c b/sound/xen/xen_snd_front_evtchnl.c
+index ff7f3cc5896fed..8e95273093a992 100644
+--- a/sound/xen/xen_snd_front_evtchnl.c
++++ b/sound/xen/xen_snd_front_evtchnl.c
+@@ -94,6 +94,9 @@ static irqreturn_t evtchnl_interrupt_evt(int irq, void *dev_id)
+ 
+ 	guard(mutex)(&channel->ring_io_lock);
+ 
++	if (unlikely(channel->state != EVTCHNL_STATE_CONNECTED))
++		return IRQ_HANDLED;
++
+ 	prod = page->in_prod;
+ 	/* Ensure we see ring contents up to prod. */
+ 	virt_rmb();
+@@ -431,8 +434,8 @@ int xen_snd_front_evtchnl_publish_all(struct xen_snd_front_info *front_info)
+ 	return ret;
+ }
+ 
+-void xen_snd_front_evtchnl_pair_set_connected(struct xen_snd_front_evtchnl_pair *evt_pair,
+-					      bool is_connected)
++void xen_snd_front_evtchnl_set_connected(struct xen_snd_front_evtchnl *channel,
++					 bool is_connected)
+ {
+ 	enum xen_snd_front_evtchnl_state state;
+ 
+@@ -441,13 +444,16 @@ void xen_snd_front_evtchnl_pair_set_connected(struct xen_snd_front_evtchnl_pair
+ 	else
+ 		state = EVTCHNL_STATE_DISCONNECTED;
+ 
+-	scoped_guard(mutex, &evt_pair->req.ring_io_lock) {
+-		evt_pair->req.state = state;
++	scoped_guard(mutex, &channel->ring_io_lock) {
++		channel->state = state;
+ 	}
++}
+ 
+-	scoped_guard(mutex, &evt_pair->evt.ring_io_lock) {
+-		evt_pair->evt.state = state;
+-	}
++void xen_snd_front_evtchnl_pair_set_connected(struct xen_snd_front_evtchnl_pair *evt_pair,
++					      bool is_connected)
++{
++	xen_snd_front_evtchnl_set_connected(&evt_pair->req, is_connected);
++	xen_snd_front_evtchnl_set_connected(&evt_pair->evt, is_connected);
+ }
+ 
+ void xen_snd_front_evtchnl_pair_clear(struct xen_snd_front_evtchnl_pair *evt_pair)
+diff --git a/sound/xen/xen_snd_front_evtchnl.h b/sound/xen/xen_snd_front_evtchnl.h
+index 8400261ac46601..f6ebdb09c0298c 100644
+--- a/sound/xen/xen_snd_front_evtchnl.h
++++ b/sound/xen/xen_snd_front_evtchnl.h
+@@ -77,6 +77,8 @@ void xen_snd_front_evtchnl_free_all(struct xen_snd_front_info *front_info);
+ int xen_snd_front_evtchnl_publish_all(struct xen_snd_front_info *front_info);
+ 
+ void xen_snd_front_evtchnl_flush(struct xen_snd_front_evtchnl *evtchnl);
++void xen_snd_front_evtchnl_set_connected(struct xen_snd_front_evtchnl *channel,
++					 bool is_connected);
+ 
+ void xen_snd_front_evtchnl_pair_set_connected(struct xen_snd_front_evtchnl_pair *evt_pair,
+ 					      bool is_connected);
 -- 
 2.53.0
 
