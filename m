@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E69C43C05F;
-	Tue, 21 Jul 2026 21:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E731439010;
+	Tue, 21 Jul 2026 21:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671121; cv=none; b=GO8kAkjQUzaooBFKMDyJw5WYTeLVdCj04E26VqBxtKw35d0+rRKQbQgiHBmbu2uJrccu3PbJLkr7bnkM9Wng5xAw37kw9NO/NgwhWDG59fwBlPDe4+ILPcbQhfOcBmfPbNbwQ2Cp6rLKMRIWPWsama/xEPPhqKDuXm0wz43Dyac=
+	t=1784671123; cv=none; b=UTyMzaT2jdQyNqwB0XrluMBCfLg7EJ+YAzc79aFgWtHoCr9PxeyhWY+mWNNjPx1kEXBorXuU+VAP3Z9f59MMXjIKqvmRb8pVQXhpxJKV96N3Mp7b7pkhmKwgeQtnRrddB8c4rAySqg7rcQdvail/RPdYdxod1GsJ7yNgmgody00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671121; c=relaxed/simple;
-	bh=phGCDCnQFiHfsjMDGtGe4m9iPYCz8NgN2Kd6w2ZtCxM=;
+	s=arc-20240116; t=1784671123; c=relaxed/simple;
+	bh=ZvfF0gRaLGf9DIgtahjHpMXGL0/7L4SLNvbS79wDoMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6KXjihxGy/BS++nyN6/Zo9HZQOvsikavYVo/0QRZRWdns+dw9GnbGyBA42LuSErOhnnXyXevSUvoA2kvA/5R9sdX5IKsYdLU7Ec/3Ghukju8zSrxmx+at7dBmg+3hVmfZjcIVqMCkEE8v2zldR1UEdthwWuykqM4GdoWOsQHyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYPZMtNz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BLsfqnUUclq1FPWajo56eGs4Eir1pbZaMV+9e63Et7QQKnNYeC2UJ7gBjW/MlDr6gfM7UtysXVt3NINA3sWWiHYKJ9R79+VAd24NdViLwkyT1SypOoBEWann3wGFUoTc/wW2B/BR/lVbY+/ax5x7VhVDD/jqyVOS4CB7Tx5ucmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEik7sCu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYPZMtNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F393E1F00A3D;
-	Tue, 21 Jul 2026 21:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEik7sCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996401F000E9;
+	Tue, 21 Jul 2026 21:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671119;
-	bh=9VoY6ZuVCFodF12qP4xk1rB3FjXKAZ66V95nZolIkN8=;
+	s=korg; t=1784671122;
+	bh=30ACZLMaKRbcy/9C7KYp3zJ+iysH1fwqm3BGVpWf8XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fYPZMtNzxij7JNaU+O0UiCSKuSXtnL92v0M+PBSKkZ5VYOof3d7RE/h6ocMQVSRZc
-	 iMDAcHimUrp++JtN8eotaZqC1jHkBP2eI36gau5UF7bFevMogeHAnpF5wyOd4+FvUj
-	 2M1JKne7aZXieRejwANa2vQl0CkdER8ogrda4FXQ=
+	b=qEik7sCu7P5i9i3lT5kutQ8czux7xqHbljxNfEQ2L1x50ssClgGMSCkFgMHQK4qW2
+	 UUxMfCWlVY+zYUecmAUpTTqp6zUnXj5a2lHIui/O/jECcCut/CR+xhMVOOVyx1tbSE
+	 JDHfPAQnK14JGny02rYfXZTV2VjZq9jhrOUGUAeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+217eb327242d08197efb@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>
-Subject: [PATCH 5.15 124/843] hfs/hfsplus: zero-initialize buffer in hfs_bnode_read
-Date: Tue, 21 Jul 2026 17:15:59 +0200
-Message-ID: <20260721152408.797720086@linuxfoundation.org>
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Vidya Sagar <vidyas@nvidia.com>
+Subject: [PATCH 5.15 083/843] PCI: host-common: Request bus reassignment when not probe-only
+Date: Tue, 21 Jul 2026 17:15:18 +0200
+Message-ID: <20260721152407.866681713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,58 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-commit d67aadee19ffdf3cc8520c5a4f4d5b2916d30baf upstream.
+commit fda8749ba73638f5bbca3ffb39bc6861eb3b23fa upstream.
 
-hfs_bnode_read() can return early without writing to the output buffer
-when is_bnode_offset_valid() fails or when check_and_correct_requested_
-length() corrects the length to zero.  Callers such as hfs_bnode_read_
-u16() and hfs_bnode_read_u8() pass stack-allocated buffers and use the
-result unconditionally, leading to KMSAN uninit-value reports.
+pci_host_common_init() is used by several generic ECAM host drivers.
+After PCI core changes around pci_flags and preserve_config, these hosts
+no longer opted into full bus number reassignment the way they did
+before, which broke enumeration of devices on a Marvell CN106XX board.
 
-Rather than initializing at each individual call site, zero the buffer
-at the start of hfs_bnode_read() before any validation checks.  This
-ensures all callers in both hfs and hfsplus get a deterministic zero
-value regardless of which early-return path is taken.
+When PCI_PROBE_ONLY is not set, add PCI_REASSIGN_ALL_BUS so
+pci_scan_bridge_extend() takes the reassignment path: bus numbers can be
+assigned from firmware EA data (e.g. pci_ea_fixed_busnrs()). Skip the
+flag in probe-only mode so existing assignments are not overridden.
 
-Reported-by: syzbot+217eb327242d08197efb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=217eb327242d08197efb
-Tested-by: syzbot+217eb327242d08197efb@syzkaller.appspotmail.com
-Fixes: a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")
+Fixes: 7246a4520b4b ("PCI: Use preserve_config in place of pci_flags")
+Closes: https://lore.kernel.org/all/abkqm_LCd9zAM8cW@rkannoth-OptiPlex-7090/
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+[mani: added stable tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: add problem report link]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260505111300.3592757-3-tristmd@gmail.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Cc: Vidya Sagar <vidyas@nvidia.com>
+Link: https://patch.msgid.link/20260414081730.3864372-1-rkannoth@marvell.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c     |    2 ++
- fs/hfsplus/bnode.c |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/pci/controller/pci-host-common.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -65,6 +65,8 @@ void hfs_bnode_read(struct hfs_bnode *no
- 	int bytes_to_read;
- 	void *vaddr;
+--- a/drivers/pci/controller/pci-host-common.c
++++ b/drivers/pci/controller/pci-host-common.c
+@@ -77,6 +77,10 @@ int pci_host_common_probe(struct platfor
+ 	if (!pci_has_flag(PCI_PROBE_ONLY))
+ 		pci_add_flags(PCI_REASSIGN_ALL_BUS);
  
-+	memset(buf, 0, len);
++	/* Do not reassign bus numbers if probe only */
++	if (!pci_has_flag(PCI_PROBE_ONLY))
++		pci_add_flags(PCI_REASSIGN_ALL_BUS);
 +
- 	if (!is_bnode_offset_valid(node, off))
- 		return;
- 
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -25,6 +25,8 @@ void hfs_bnode_read(struct hfs_bnode *no
- 	struct page **pagep;
- 	int l;
- 
-+	memset(buf, 0, len);
-+
- 	if (!is_bnode_offset_valid(node, off))
- 		return;
- 
+ 	bridge->sysdata = cfg;
+ 	bridge->ops = (struct pci_ops *)&ops->pci_ops;
+ 	bridge->msi_domain = true;
 
 
