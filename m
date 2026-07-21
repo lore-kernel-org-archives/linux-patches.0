@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B154C8FFA;
-	Tue, 21 Jul 2026 16:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75DF35836E;
+	Tue, 21 Jul 2026 16:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649701; cv=none; b=aPl1zApus5OzQAdL+fs4LuKMYJj/jbySbqOK7Ck5xEutpQxhXaOAVsA/DTtTpJtUOTEmSbWJmgqTtO46HMTNuzHk4IQ7Mhviht51pfTrOUh82ZFIfdcKuqCohaXK27x6rRLSPlsA8Je8/OmqFA3wgiuQ3x5ocVatGI0Awh0aO34=
+	t=1784649705; cv=none; b=eZI4GsJgghTMDeYKGYQ8YxXhsSg5eM/So4qLDd+/A//TSj8BLYVXPaMbVpabLTP+COVLN3RqzUhhiJhiHeBvbbucvJpFeU13A/g/KeAIpYweg3mThoyv45UTMagXLZHPiYZjtzigWibD0SB8aUDEoClSO5Zrp16agFZb2xwiIco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649701; c=relaxed/simple;
-	bh=n2q4l4xty2FuQavWSGFeG9wljBgWd4hfUoHfafdcnOU=;
+	s=arc-20240116; t=1784649705; c=relaxed/simple;
+	bh=qzv/jzsxIqHXg5nPeBOOIGIyZJOoqaxCttKk0RRfrNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VccCYeT9zMKEw7ZplNHl27SuFM00agNZ+Q+iXK9A6M3juSj11j08GP+ynk3AgSYedG+9zSrGnlq2gfYfwPWtg723kBLnPXNMbPWnYmA7Qkjznmil71Kcztd15fUMcTYwAKS7qwR2NREHHrOSD0asuWOACHSLbcnJ3NDEZ/wxwfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nji5aa4b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y6ZgT2yP9AWugW7tGcQPkeYWw7NezeoMb5nDhoxmZhPtnL0k4aqmaUkBGkRT0v3bEPmd5TBuETsRMa/nXoN4S68hZJE8P/grzSBmx8UkJE4EKPbcG66pWbLlLY7UnEmcekjfZ6C6gmWj5v3jP8qpb08BJ+xKpGSjJ87Gtm+8ywI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xh0zTZLd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nji5aa4b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99451F000E9;
-	Tue, 21 Jul 2026 16:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xh0zTZLd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC8A1F000E9;
+	Tue, 21 Jul 2026 16:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649700;
-	bh=iwYuhS8Bwq/60WuEKGk7GvjbFxSU9aUQ+WTo9Vssljs=;
+	s=korg; t=1784649702;
+	bh=J31eirRMC4711xRNtH9DeWR/zfEST/M4joTK28nEfSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nji5aa4brIPyaBYtalQY5ICoyKGr7QhkPyRcnAU+C+dKFpYLkUSV+Hlbq/JVnGaYd
-	 De1HBRhrRXXRl//+dj6r3Ioy2KgX+eV5LJAJTH/Y3P6WX+7aQuQBRYvqx9oN9WOdZu
-	 sdtDoGbDoOhA7676KTTvMWuHO33plP+mZs4RwNw8=
+	b=xh0zTZLd8KQQZPjOTcz0uKWaXm+yp+493T+rlejUspCBceB/fRFG4ZRDkAH4gNEhq
+	 ytvnlsyxD4bYVh8b9EgVDYlY4tN1iBJUhNBMu4qgm9GNCS0Fby/tKmNhpHBDPPfLbt
+	 pFItswXNbMCVJxutUwPCSblE5cSve6oateCCXMXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0674/2077] arm64: dts: allwinner: a523: Add missing GPIO interrupt
-Date: Tue, 21 Jul 2026 17:05:47 +0200
-Message-ID: <20260721152608.695420036@linuxfoundation.org>
+Subject: [PATCH 7.1 0675/2077] ASoC: cs35l56: Fix possible uninitialized value in cs35l56_spi_system_reset()
+Date: Tue, 21 Jul 2026 17:05:48 +0200
+Message-ID: <20260721152608.718430091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,44 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 6b81aa0c8a4f038712fa549e4d44d8279eeb0440 ]
+[ Upstream commit 007699d278a655871b07d45a1268761260d03124 ]
 
-Even though the Allwinner A523 SoC implements 10 GPIO banks, it has
-actually registers for 11 IRQ banks, and even an interrupt assigned to
-the first, non-implemented IRQ bank.
-Add that first interrupt to the list of GPIO interrupts, to correct the
-association between IRQs and GPIO banks.
+In cs35l56_spi_system_reset() initialize val to zero before using it in
+the read_poll_timeout(). This prevents testing an uninitialized value if
+the regmap_read_bypassed() returns an error.
 
-This fixes GPIO IRQ operation on boards with A523 SoCs, as seen by
-broken SD card detect functionality, for instance.
+Read errors are intentionally ignored during this loop because the
+device is resetting (though SPI can't really detect that so shouldn't
+fail because of that, it's safer to ignore errors and keep polling).
+Because of this, val must be initialized to something in case the first
+read fails. The polling loop is looking for a non-zero value, so
+initializing val to 0 will ensure that the loop continues until a valid
+state is read from the device or it times out.
 
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Fixes: 35ac96f79664 ("arm64: dts: allwinner: Add Allwinner A523 .dtsi file")
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260327113006.3135663-4-andre.przywara@arm.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 769c1b79295c ("ASoC: cs35l56: Prevent races when soft-resetting using SPI control")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260611132221.1100497-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/cs35l56-shared.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi b/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
-index 5afa8d92acbfbd..b71dc1d78987a6 100644
---- a/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
-@@ -128,7 +128,8 @@ gpu: gpu@1800000 {
- 		pio: pinctrl@2000000 {
- 			compatible = "allwinner,sun55i-a523-pinctrl";
- 			reg = <0x2000000 0x800>;
--			interrupts = <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts = <GIC_SPI 67 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 75 IRQ_TYPE_LEVEL_HIGH>,
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index e04b114a32b7f2..5405f70b7119d8 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -534,6 +534,7 @@ static void cs35l56_spi_system_reset(struct cs35l56_base *cs35l56_base)
+ 	 * The regmap must remain in cache-only until the chip has
+ 	 * booted, so use a bypassed read.
+ 	 */
++	val = 0;
+ 	ret = read_poll_timeout(regmap_read_bypassed, read_ret,
+ 				(val > 0) && (val < 0xffffffff),
+ 				CS35L56_HALO_STATE_POLL_US,
 -- 
 2.53.0
 
