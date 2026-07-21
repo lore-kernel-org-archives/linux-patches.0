@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBF944AB6E;
-	Tue, 21 Jul 2026 21:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50887171BB;
+	Tue, 21 Jul 2026 21:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668774; cv=none; b=OmfW4C7hdgmclWVNV/AgvOHBMJQYF/cHyn5clBVFsDb5GqAkUku/2WrKUUPiwX2yER5znVaSNIcBVYIXDREtN25uS1/1wLJK1r7ipa0uMCLCFQNiTYrEB8r7FP4bfcjvfM/WgNQdf571S1FnyeSXXhQLiM+03b/dtr8APht1Vz8=
+	t=1784668777; cv=none; b=Ueiqa9DUSS5puPGxil+JfQH+fVgDKorYoaOIV/FywFsOqvz04/EOD5lvH03upQcEnUz60WCpQUJTZBJtZcb+ql5+zYjECCnaL0iij98BljGkS/Ib+v88TqpXv3l1aUU0MfqpdxtISCJv114caqqOVFEdbaYAoXQtu2/rbatEsV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668774; c=relaxed/simple;
-	bh=OAj+mW6rlo/H/HWhcOkp6UaaQfqUfVXpAO5gFJ8HATA=;
+	s=arc-20240116; t=1784668777; c=relaxed/simple;
+	bh=Qv+XhsyXez+ten4Pekc4+PtQusaBICZPNSrpNMdkMXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SrGUommGMz1MNJmJp8DLax6uiYDsLQbsTh7XjrLPmAzAlVKJQq6u8k+CWvR8TpEpmcJXfpS20PcOm5baD8PtwpBGpAHYGDGv0hhEZzSUrHSmauLSGb9DC5VLtlcFkbmjBtshwiANlguO/V7zfdrrt8/EMKYcvP5SvwH/lGbIsME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5jDZoO3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oik+lEZU4FESW/7hQw5smn1s7sNi7ydQges8ztsOArWjUvlPZaOeXU9UCZqsy/GiKefT35Mq9W0hurNL4BEif5V/mi4UgpXrG5LCy0E+n27IV7XqDdVFuNhU1HEOq47zyia2idBl3gHbf4DgfL5vzAS4vOkTQ6Cpxlxe5TkeyVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrkCebqa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5jDZoO3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CAB61F000E9;
-	Tue, 21 Jul 2026 21:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrkCebqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D491F000E9;
+	Tue, 21 Jul 2026 21:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668773;
-	bh=oIiuEeuT5qUEpX/g775AsxIeJD1lN9Llu/QgKPp815Q=;
+	s=korg; t=1784668776;
+	bh=o5Ml7Nv5lg/PCvRDgBCb5JyxMDqWp4WpovqomuFDyzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y5jDZoO3+d9GuCsPHm7zBR/uaH0jdyqzv1oMzsaIK8ite1VwLFG1nNb7KIIUbpZ6d
-	 LbNr4kAjqSykBuXIrW7v96wsIryjTdbaIfQr7N77LtQv/ngVQpHFShphVvpe6Lf+WB
-	 2BeH2+rbvwjzeisWDcdJ5hyfdgKbvXLtciRS0698=
+	b=NrkCebqade+Wl+dgN2p5058/Kd22orcQ0F9H5hQEnSKu6Z6wumRFwWexOKkw3bJZ/
+	 mtiwihOUH4/q74gjE1YY6kBE9YaGxQovTPnfKVx1bletETJxIVWRiVM+TIwu5j3GJS
+	 RfYLvgHzExncXPmDn47mGeX9jpiBP03TVhEK+c5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Saravana Kannan <saravanak@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Lin He <helin52@huawei.com>,
+	Yongbang Shi <shiyongbang@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0286/1067] driver core: use READ_ONCE() for dev->driver in dev_has_sync_state()
-Date: Tue, 21 Jul 2026 17:14:47 +0200
-Message-ID: <20260721152430.999027711@linuxfoundation.org>
+Subject: [PATCH 6.1 0304/1067] drm/hisilicon/hibmc: use clock to look up the PLL value
+Date: Tue, 21 Jul 2026 17:15:05 +0200
+Message-ID: <20260721152431.396190836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,49 +52,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Lin He <helin52@huawei.com>
 
-[ Upstream commit e9506871a8ea304cde48ff4a57226df2aadddae3 ]
+[ Upstream commit 99ef3a4f1c1813cabd50bb3e8522e85e00838bb2 ]
 
-dev_has_sync_state() reads dev->driver twice without holding
-device_lock() -- once for the NULL check and once to dereference
-->sync_state. Some callers only hold device_links_write_lock, which
-doesn't prevent a concurrent unbind from clearing dev->driver via
-device_unbind_cleanup().
+In the past, we use width and height to look up our PLL value.
+But actually the actual clock check is also necessnary. There are
+some resolutions that width and height same, but its clock different.
+Add the clock check when using pll_table to determine the PLL value.
 
-Fix it by reading dev->driver exactly once with READ_ONCE(), pairing
-with the WRITE_ONCE() in device_set_driver().
-
-Link: https://lore.kernel.org/driver-core/DHW8QPU1VU1F.3P6PH69HLFBYC@kernel.org/
-Fixes: ac338acf514e ("driver core: Add dev_has_sync_state()")
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Saravana Kannan <saravanak@kernel.org>
-Link: https://patch.msgid.link/20260418162221.1121873-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
+Signed-off-by: Lin He <helin52@huawei.com>
+Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260509032302.2057227-5-shiyongbang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/device.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_de.c    | 80 +++++++++++--------
+ 1 file changed, 45 insertions(+), 35 deletions(-)
 
-diff --git a/include/linux/device.h b/include/linux/device.h
-index e642b366aa380f..eae657af3a0e51 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -914,9 +914,12 @@ static inline struct device_node *dev_of_node(struct device *dev)
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+index 89bed78f14666a..db7fce4e8cc344 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+@@ -32,26 +32,43 @@ struct hibmc_display_panel_pll {
+ struct hibmc_dislay_pll_config {
+ 	u64 hdisplay;
+ 	u64 vdisplay;
++	int clock;
+ 	u32 pll1_config_value;
+ 	u32 pll2_config_value;
+ };
  
- static inline bool dev_has_sync_state(struct device *dev)
- {
-+	struct device_driver *drv;
+ static const struct hibmc_dislay_pll_config hibmc_pll_table[] = {
+-	{640, 480, CRT_PLL1_HS_25MHZ, CRT_PLL2_HS_25MHZ},
+-	{800, 600, CRT_PLL1_HS_40MHZ, CRT_PLL2_HS_40MHZ},
+-	{1024, 768, CRT_PLL1_HS_65MHZ, CRT_PLL2_HS_65MHZ},
+-	{1152, 864, CRT_PLL1_HS_80MHZ_1152, CRT_PLL2_HS_80MHZ},
+-	{1280, 768, CRT_PLL1_HS_80MHZ, CRT_PLL2_HS_80MHZ},
+-	{1280, 720, CRT_PLL1_HS_74MHZ, CRT_PLL2_HS_74MHZ},
+-	{1280, 960, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
+-	{1280, 1024, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
+-	{1440, 900, CRT_PLL1_HS_106MHZ, CRT_PLL2_HS_106MHZ},
+-	{1600, 900, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
+-	{1600, 1200, CRT_PLL1_HS_162MHZ, CRT_PLL2_HS_162MHZ},
+-	{1920, 1080, CRT_PLL1_HS_148MHZ, CRT_PLL2_HS_148MHZ},
+-	{1920, 1200, CRT_PLL1_HS_193MHZ, CRT_PLL2_HS_193MHZ},
++	{640, 480, 25000, CRT_PLL1_HS_25MHZ, CRT_PLL2_HS_25MHZ},
++	{800, 600, 40000, CRT_PLL1_HS_40MHZ, CRT_PLL2_HS_40MHZ},
++	{1024, 768, 65000, CRT_PLL1_HS_65MHZ, CRT_PLL2_HS_65MHZ},
++	{1152, 864, 78750, CRT_PLL1_HS_80MHZ_1152, CRT_PLL2_HS_80MHZ},
++	{1280, 768, 80000, CRT_PLL1_HS_80MHZ, CRT_PLL2_HS_80MHZ},
++	{1280, 720, 74375, CRT_PLL1_HS_74MHZ, CRT_PLL2_HS_74MHZ},
++	{1280, 960, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
++	{1280, 1024, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
++	{1440, 900, 105952, CRT_PLL1_HS_106MHZ, CRT_PLL2_HS_106MHZ},
++	{1600, 900, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
++	{1600, 1200, 162500, CRT_PLL1_HS_162MHZ, CRT_PLL2_HS_162MHZ},
++	{1920, 1080, 148750, CRT_PLL1_HS_148MHZ, CRT_PLL2_HS_148MHZ},
++	{1920, 1200, 193750, CRT_PLL1_HS_193MHZ, CRT_PLL2_HS_193MHZ},
+ };
+ 
++static int hibmc_get_best_clock_idx(const struct drm_display_mode *mode)
++{
++	int i, diff;
 +
- 	if (!dev)
- 		return false;
--	if (dev->driver && dev->driver->sync_state)
-+	drv = READ_ONCE(dev->driver);
-+	if (drv && drv->sync_state)
- 		return true;
- 	if (dev->bus && dev->bus->sync_state)
- 		return true;
++	for (i = 0; i < ARRAY_SIZE(hibmc_pll_table); i++) {
++		if (hibmc_pll_table[i].hdisplay == mode->hdisplay &&
++		    hibmc_pll_table[i].vdisplay == mode->vdisplay) {
++			diff = abs(mode->clock - hibmc_pll_table[i].clock);
++			if (diff < mode->clock / 100) /* tolerance 1/100 */
++				return i;
++		}
++	}
++
++	return -MODE_CLOCK_RANGE;
++}
++
+ static int hibmc_plane_atomic_check(struct drm_plane *plane,
+ 				    struct drm_atomic_state *state)
+ {
+@@ -214,19 +231,15 @@ static enum drm_mode_status
+ hibmc_crtc_mode_valid(struct drm_crtc *crtc,
+ 		      const struct drm_display_mode *mode)
+ {
+-	size_t i = 0;
+ 	int vrefresh = drm_mode_vrefresh(mode);
+ 
+ 	if (vrefresh < 59 || vrefresh > 61)
+ 		return MODE_NOCLOCK;
+ 
+-	for (i = 0; i < ARRAY_SIZE(hibmc_pll_table); i++) {
+-		if (hibmc_pll_table[i].hdisplay == mode->hdisplay &&
+-		    hibmc_pll_table[i].vdisplay == mode->vdisplay)
+-			return MODE_OK;
+-	}
++	if (hibmc_get_best_clock_idx(mode) >= 0)
++		return MODE_OK;
+ 
+-	return MODE_BAD;
++	return MODE_CLOCK_RANGE;
+ }
+ 
+ static u32 format_pll_reg(void)
+@@ -281,23 +294,20 @@ static void set_vclock_hisilicon(struct drm_device *dev, u64 pll)
+ 	writel(val, priv->mmio + CRT_PLL1_HS);
+ }
+ 
+-static void get_pll_config(u64 x, u64 y, u32 *pll1, u32 *pll2)
++static void get_pll_config(struct drm_display_mode *mode, u32 *pll1, u32 *pll2)
+ {
+-	size_t i;
+-	size_t count = ARRAY_SIZE(hibmc_pll_table);
+-
+-	for (i = 0; i < count; i++) {
+-		if (hibmc_pll_table[i].hdisplay == x &&
+-		    hibmc_pll_table[i].vdisplay == y) {
+-			*pll1 = hibmc_pll_table[i].pll1_config_value;
+-			*pll2 = hibmc_pll_table[i].pll2_config_value;
+-			return;
+-		}
++	int idx;
++
++	idx = hibmc_get_best_clock_idx(mode);
++	if (idx < 0) {
++		/* if found none, we use default value */
++		*pll1 = CRT_PLL1_HS_25MHZ;
++		*pll2 = CRT_PLL2_HS_25MHZ;
++		return;
+ 	}
+ 
+-	/* if found none, we use default value */
+-	*pll1 = CRT_PLL1_HS_25MHZ;
+-	*pll2 = CRT_PLL2_HS_25MHZ;
++	*pll1 = hibmc_pll_table[idx].pll1_config_value;
++	*pll2 = hibmc_pll_table[idx].pll2_config_value;
+ }
+ 
+ /*
+@@ -319,7 +329,7 @@ static u32 display_ctrl_adjust(struct drm_device *dev,
+ 	x = mode->hdisplay;
+ 	y = mode->vdisplay;
+ 
+-	get_pll_config(x, y, &pll1, &pll2);
++	get_pll_config(mode, &pll1, &pll2);
+ 	writel(pll2, priv->mmio + CRT_PLL2_HS);
+ 	set_vclock_hisilicon(dev, pll1);
+ 
 -- 
 2.53.0
 
