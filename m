@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060E23C0617;
-	Tue, 21 Jul 2026 21:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC3C44AB99;
+	Tue, 21 Jul 2026 21:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669514; cv=none; b=BiKAR6CLAKzXQmmu4n/J/+uA5HfROaKf8+Yni7lZaWFkE6xO8vjbJjjggeAuk2YOUB27ib2GWhejJhk/ahIX5pottkUM/OnrMl0CFqZl7H1cQScR3MiM2og92a26Po2sLykEEqRqCd6mVl24FgCd9iAd3D8jIKTLZaxuKBl0hjk=
+	t=1784669516; cv=none; b=aiD3j09gTlFQkP34/fbh5GLxuQuua5K7to30buNxKWMfOk2EzDkvEjbyqjBz/LTp8qvrweIqA+7LntbzXLM1ume98JHlVS4WeJUxj8QEgfoGCuCJDMEDd7Z2jn38P+53nDhJD+Q1RPTMHoGtghT8VrsFSrzALcpW8D2h4Vy3F0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669514; c=relaxed/simple;
-	bh=Hn5C34P+5OOk2UqEmGdOKRZYBpYYl3XwN5LEp4K/I78=;
+	s=arc-20240116; t=1784669516; c=relaxed/simple;
+	bh=YG2ID6lnCjiREuDkgFp3248rEvpgqX9cVU+EFqegr5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pxENdgcjAb5JRhUpiLHyzhxGWAO9BkToPT3fOQ60KpJC5xfoabUhM3MIrRGGQuDzTw3pOcRc0yG7AEpRwvgNGc2RshcNJxhDMDxGAJYYAl3g7hr35KUyItmGjOgQNtjrFzvzzKydxiEf/BytbwqcY8Cssa/J1b8Di170BXvwMqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4zlXvHY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R3eeP8IZX8HkeuUDeM5I1dRzFB4SiPCozDt3MQJBbf/vCR/O4eDopZnV7Plr5r/DHm/9fz53LH7BJX1KU6X1mOLYZmfiPkr58Hba/5P/xRicF9FExioxfztyl7K0Kb9nqdHnQHX97Jm2Kau8chtBkAWN2o/OskG25s6lzx6l8HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahtazTSF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4zlXvHY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5CF1F000E9;
-	Tue, 21 Jul 2026 21:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahtazTSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C611F000E9;
+	Tue, 21 Jul 2026 21:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669512;
-	bh=rcvyfGnqoV2cu0Ui0X7ZqApn+mVIfzSAfW0e5lxvG1A=;
+	s=korg; t=1784669515;
+	bh=5Acw1kpYfX39pcvd6rKdrNWp6zhky7eTrSiRzwkbaPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4zlXvHYD+pbG0fe6P9J8Rbgf2r1uYnKz/VKc6kXDuisNlIRP3Tx81qx9x/uWbdkX
-	 3de1/+g3dWCVGcotCIOAIi/8X8MkI+y47yZoBA4IIOiJSN/r7y9oMXR01Ogd1ISzdV
-	 lrhHxBw4mEkY1Ce2c/KntrNELVatWaQXtkoAZRUc=
+	b=ahtazTSFaUaroT6+/ef0g7vFLraF1FUXmHVhvN+leoqwLdZUju9jWY/ceSJSXo9/h
+	 xUmOidS9V2eThXXNg6Tm2TqQy6bQ0g256Fk4jXHtufvdAf1WftYVJ8RTtzjrjRms6e
+	 v3idHdHLloSst5/pSW5sTZK3w7tpIW1LY+zYtkjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0583/1067] virtio_ring: introduce dma map api for virtqueue
-Date: Tue, 21 Jul 2026 17:19:44 +0200
-Message-ID: <20260721152437.647620080@linuxfoundation.org>
+Subject: [PATCH 6.1 0584/1067] virtio_ring: introduce dma sync api for virtqueue
+Date: Tue, 21 Jul 2026 17:19:45 +0200
+Message-ID: <20260721152437.669216384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,123 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
 
-[ Upstream commit b6253b4e21939f1bb54e8fdb84c23af9c3fb834a ]
+[ Upstream commit 8bd2f71054bd0bc997833e9825143672eb7e2801 ]
 
-Added virtqueue_dma_map_api* to map DMA addresses for virtual memory in
-advance. The purpose is to keep memory mapped across multiple add/get
-buf operations.
+These API has been introduced:
+
+* virtqueue_dma_need_sync
+* virtqueue_dma_sync_single_range_for_cpu
+* virtqueue_dma_sync_single_range_for_device
+
+These APIs can be used together with the premapped mechanism to sync the
+DMA address.
 
 Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Message-Id: <20230810123057.43407-11-xuanzhuo@linux.alibaba.com>
+Message-Id: <20230810123057.43407-12-xuanzhuo@linux.alibaba.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Stable-dep-of: 9e5ad06ea826 ("virtio-net: fix len check in receive_big()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 69 ++++++++++++++++++++++++++++++++++++
- include/linux/virtio.h       |  8 +++++
- 2 files changed, 77 insertions(+)
+ drivers/virtio/virtio_ring.c | 76 ++++++++++++++++++++++++++++++++++++
+ include/linux/virtio.h       |  8 ++++
+ 2 files changed, 84 insertions(+)
 
 diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index be657868d40482..25c9ecae60aaaf 100644
+index 25c9ecae60aaaf..c0534f01b459a9 100644
 --- a/drivers/virtio/virtio_ring.c
 +++ b/drivers/virtio/virtio_ring.c
-@@ -2926,4 +2926,73 @@ const struct vring *virtqueue_get_vring(struct virtqueue *vq)
+@@ -2995,4 +2995,80 @@ int virtqueue_dma_mapping_error(struct virtqueue *_vq, dma_addr_t addr)
  }
- EXPORT_SYMBOL_GPL(virtqueue_get_vring);
+ EXPORT_SYMBOL_GPL(virtqueue_dma_mapping_error);
  
 +/**
-+ * virtqueue_dma_map_single_attrs - map DMA for _vq
++ * virtqueue_dma_need_sync - check a dma address needs sync
 + * @_vq: the struct virtqueue we're talking about.
-+ * @ptr: the pointer of the buffer to do dma
-+ * @size: the size of the buffer to do dma
-+ * @dir: DMA direction
-+ * @attrs: DMA Attrs
++ * @addr: DMA address
 + *
-+ * The caller calls this to do dma mapping in advance. The DMA address can be
-+ * passed to this _vq when it is in pre-mapped mode.
++ * Check if the dma address mapped by the virtqueue_dma_map_* APIs needs to be
++ * synchronized
 + *
-+ * return DMA address. Caller should check that by virtqueue_dma_mapping_error().
++ * return bool
 + */
-+dma_addr_t virtqueue_dma_map_single_attrs(struct virtqueue *_vq, void *ptr,
-+					  size_t size,
-+					  enum dma_data_direction dir,
-+					  unsigned long attrs)
++bool virtqueue_dma_need_sync(struct virtqueue *_vq, dma_addr_t addr)
 +{
 +	struct vring_virtqueue *vq = to_vvq(_vq);
 +
 +	if (!vq->use_dma_api)
-+		return (dma_addr_t)virt_to_phys(ptr);
++		return false;
 +
-+	return dma_map_single_attrs(vring_dma_dev(vq), ptr, size, dir, attrs);
++	return dma_need_sync(vring_dma_dev(vq), addr);
 +}
-+EXPORT_SYMBOL_GPL(virtqueue_dma_map_single_attrs);
++EXPORT_SYMBOL_GPL(virtqueue_dma_need_sync);
 +
 +/**
-+ * virtqueue_dma_unmap_single_attrs - unmap DMA for _vq
++ * virtqueue_dma_sync_single_range_for_cpu - dma sync for cpu
 + * @_vq: the struct virtqueue we're talking about.
-+ * @addr: the dma address to unmap
-+ * @size: the size of the buffer
++ * @addr: DMA address
++ * @offset: DMA address offset
++ * @size: buf size for sync
 + * @dir: DMA direction
-+ * @attrs: DMA Attrs
 + *
-+ * Unmap the address that is mapped by the virtqueue_dma_map_* APIs.
++ * Before calling this function, use virtqueue_dma_need_sync() to confirm that
++ * the DMA address really needs to be synchronized
 + *
 + */
-+void virtqueue_dma_unmap_single_attrs(struct virtqueue *_vq, dma_addr_t addr,
-+				      size_t size, enum dma_data_direction dir,
-+				      unsigned long attrs)
++void virtqueue_dma_sync_single_range_for_cpu(struct virtqueue *_vq,
++					     dma_addr_t addr,
++					     unsigned long offset, size_t size,
++					     enum dma_data_direction dir)
 +{
 +	struct vring_virtqueue *vq = to_vvq(_vq);
++	struct device *dev = vring_dma_dev(vq);
 +
 +	if (!vq->use_dma_api)
 +		return;
 +
-+	dma_unmap_single_attrs(vring_dma_dev(vq), addr, size, dir, attrs);
++	dma_sync_single_range_for_cpu(dev, addr, offset, size,
++				      DMA_BIDIRECTIONAL);
 +}
-+EXPORT_SYMBOL_GPL(virtqueue_dma_unmap_single_attrs);
++EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_cpu);
 +
 +/**
-+ * virtqueue_dma_mapping_error - check dma address
++ * virtqueue_dma_sync_single_range_for_device - dma sync for device
 + * @_vq: the struct virtqueue we're talking about.
 + * @addr: DMA address
++ * @offset: DMA address offset
++ * @size: buf size for sync
++ * @dir: DMA direction
 + *
-+ * Returns 0 means dma valid. Other means invalid dma address.
++ * Before calling this function, use virtqueue_dma_need_sync() to confirm that
++ * the DMA address really needs to be synchronized
 + */
-+int virtqueue_dma_mapping_error(struct virtqueue *_vq, dma_addr_t addr)
++void virtqueue_dma_sync_single_range_for_device(struct virtqueue *_vq,
++						dma_addr_t addr,
++						unsigned long offset, size_t size,
++						enum dma_data_direction dir)
 +{
 +	struct vring_virtqueue *vq = to_vvq(_vq);
++	struct device *dev = vring_dma_dev(vq);
 +
 +	if (!vq->use_dma_api)
-+		return 0;
++		return;
 +
-+	return dma_mapping_error(vring_dma_dev(vq), addr);
++	dma_sync_single_range_for_device(dev, addr, offset, size,
++					 DMA_BIDIRECTIONAL);
 +}
-+EXPORT_SYMBOL_GPL(virtqueue_dma_mapping_error);
++EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_device);
 +
  MODULE_LICENSE("GPL");
 diff --git a/include/linux/virtio.h b/include/linux/virtio.h
-index 7281a7e02460b5..b16e77ff2b3e56 100644
+index b16e77ff2b3e56..82a29db54e7d17 100644
 --- a/include/linux/virtio.h
 +++ b/include/linux/virtio.h
-@@ -9,6 +9,7 @@
- #include <linux/device.h>
- #include <linux/mod_devicetable.h>
- #include <linux/gfp.h>
-+#include <linux/dma-mapping.h>
- 
- /**
-  * struct virtqueue - a queue to register buffers for sending or receiving.
-@@ -208,4 +209,11 @@ void unregister_virtio_driver(struct virtio_driver *drv);
- #define module_virtio_driver(__virtio_driver) \
- 	module_driver(__virtio_driver, register_virtio_driver, \
- 			unregister_virtio_driver)
+@@ -216,4 +216,12 @@ void virtqueue_dma_unmap_single_attrs(struct virtqueue *_vq, dma_addr_t addr,
+ 				      size_t size, enum dma_data_direction dir,
+ 				      unsigned long attrs);
+ int virtqueue_dma_mapping_error(struct virtqueue *_vq, dma_addr_t addr);
 +
-+dma_addr_t virtqueue_dma_map_single_attrs(struct virtqueue *_vq, void *ptr, size_t size,
-+					  enum dma_data_direction dir, unsigned long attrs);
-+void virtqueue_dma_unmap_single_attrs(struct virtqueue *_vq, dma_addr_t addr,
-+				      size_t size, enum dma_data_direction dir,
-+				      unsigned long attrs);
-+int virtqueue_dma_mapping_error(struct virtqueue *_vq, dma_addr_t addr);
++bool virtqueue_dma_need_sync(struct virtqueue *_vq, dma_addr_t addr);
++void virtqueue_dma_sync_single_range_for_cpu(struct virtqueue *_vq, dma_addr_t addr,
++					     unsigned long offset, size_t size,
++					     enum dma_data_direction dir);
++void virtqueue_dma_sync_single_range_for_device(struct virtqueue *_vq, dma_addr_t addr,
++						unsigned long offset, size_t size,
++						enum dma_data_direction dir);
  #endif /* _LINUX_VIRTIO_H */
 -- 
 2.53.0
