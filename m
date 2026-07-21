@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C1935C6A0;
-	Tue, 21 Jul 2026 21:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB8D35C682;
+	Tue, 21 Jul 2026 21:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668146; cv=none; b=au2yuzJfecbjRoenlLEx2bc2lqDkAAoRVwj58i8rgG/nEXljqzRWeBI8EAJVz570OZGqLV3pKWcMr32WBC8VNo0M2ZdX/YH0pt4Rg400zMM94asUjm8po/jI6Ud06Es3MKSKxSAXCjcclHgsWLP3bpIdRYRbZLlmoJG/rkalTzY=
+	t=1784668148; cv=none; b=Xtd213ZXVk/ybwUdsmc8gbfh4XxH0Y4k+2rOu7QzrkztYVlPyNkb4P84z48uz94qCprYfbqkj4R03XS9bRLkqvEfY9s+qlIJmC8HklqOlsf9JpSj1I58NnqtbBkDS7z8RDEhxwEuZYHwie0Gy218RGiV7EWfLnyBp8OZge3oMXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668146; c=relaxed/simple;
-	bh=o4fSAzBVMst5BWdp/sd7blAZDetdNw2KC6fY3YBJZn0=;
+	s=arc-20240116; t=1784668148; c=relaxed/simple;
+	bh=vZur591eILzyYVYovxc4i+II936UuauvXE3I+5DG1AY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CsLdBzA/r37RTZnXi/L82/yk4w0RV1SQiURQ2wvzSWw89IMLza82zCZb7M5M16mkz23ARwFaz+ixtjUbqZmPrbELPVVtNNeC56bibj/BwyJRFCf2g9EmzzXwAkJU60z2Nqlef8gzBkaAddy1GW82oytWvivT/Ng6HTF0/TSPhnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uutsqZHf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MiBsdPj/u/KjsHMH6YjORBcRaU7Y0mDEL0hH/pz574uD/PeSSPslrN5UTaqAwwc/Z0VxyymHKBZ9f/Z+OaeV3icftSIsZ55891LOyPAEe6V5MwTb3D6QiUaZHtAKHLKJGXzjBvrARxPeDbPyh21b1C6CW61HX6+FQ40ewnqzjDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdHN0Suh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uutsqZHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6973A1F000E9;
-	Tue, 21 Jul 2026 21:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdHN0Suh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8421F000E9;
+	Tue, 21 Jul 2026 21:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668144;
-	bh=ZSzn/7UOU8VLCdo28Cr7WtQWibnYyWBGc7QnELs1Yto=;
+	s=korg; t=1784668147;
+	bh=ZBnkqbfV66ih1vUXu3aUleF578cjE57N9wDhcUCjMpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uutsqZHflWZ3XBgbmahkt60sc+ocib4XfRmSRxJB6XdKNRC5lmL7Rdw7IaP2LQGwG
-	 T9/cMKWIgLP0hn7b8VbcZFWlDGxcOAcSti9MiXVFdMeufFVIN5wAgwFcfZD0sX20gU
-	 W3ybiMuhUObI08DvifJQTg6tylE5AZKrntcabVQo=
+	b=JdHN0Suhyic84tyxQkd7Ru05q5gq54bBS1sLbR9Joel5Yg/gULBQlA1kHKRlSPXl3
+	 EAP/13uSY7jiZODwiGnKuc2VjS1NUp0fcMhkITWWab4NZa3oj80Ad33yyWRPm+Q9Nu
+	 euLohDvtZyxt4mrlZk0+ABqUip0trM7gA13MgCQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biren Pandya <birenpandya@gmail.com>,
-	Stable@vger.kernel.org,
+	Sashiko <sashiko-bot@kernel.org>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.1 0066/1067] iio: light: gp2ap002: fix runtime PM leak on read error
-Date: Tue, 21 Jul 2026 17:11:07 +0200
-Message-ID: <20260721152426.046247658@linuxfoundation.org>
+Subject: [PATCH 6.1 0067/1067] iio: light: opt3001: fix missing state reset on timeout
+Date: Tue, 21 Jul 2026 17:11:08 +0200
+Message-ID: <20260721152426.069859024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-commit 38b72267b7e22768a1f26d9935de4e1752a1dc85 upstream.
+commit c123ca6ee26ad98f70a866ff428b08145c5a24fe upstream.
 
-gp2ap002_read_raw() calls pm_runtime_get_sync() before reading the
-lux value, but if gp2ap002_get_lux() fails, it returns directly. This
-skips the pm_runtime_put_autosuspend() call at the "out" label,
-permanently leaking a runtime PM reference and preventing the device
-from autosuspending.
+Currently in the function opt3001_get_processed(), there is a check
+that directly returns -ETIMEDOUT if the conversion IRQ times out,
+completely bypassing the err label, leaving ok_to_ignore_lock
+permanently true, potentially breaking the device's falling threshold
+interrupt detection.
 
-Replace the direct return with a "goto out" to ensure the reference
-is properly dropped on the error path.
+Assign -ETIMEDOUT to the return variable and jump to the error label
+to ensure ok_to_ignore_lock is properly reset.
 
-Fixes: f6dbf83c17cb ("iio: light: gp2ap002: Take runtime PM reference on light read")
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Cc: <Stable@vger.kernel.org>
+Fixes: 26d90b559057 ("iio: light: opt3001: Fixed timeout error when 0 lux")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260525-opt3001-cleanup-v4-0-65b36a174f78%40gmail.com?part=1
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/gp2ap002.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/opt3001.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/light/gp2ap002.c
-+++ b/drivers/iio/light/gp2ap002.c
-@@ -258,7 +258,7 @@ static int gp2ap002_read_raw(struct iio_
- 		case IIO_LIGHT:
- 			ret = gp2ap002_get_lux(gp2ap002);
- 			if (ret < 0)
--				return ret;
-+				goto out;
- 			*val = ret;
- 			ret = IIO_VAL_INT;
- 			goto out;
+--- a/drivers/iio/light/opt3001.c
++++ b/drivers/iio/light/opt3001.c
+@@ -280,8 +280,10 @@ static int opt3001_get_lux(struct opt300
+ 		ret = wait_event_timeout(opt->result_ready_queue,
+ 				opt->result_ready,
+ 				msecs_to_jiffies(OPT3001_RESULT_READY_LONG));
+-		if (ret == 0)
+-			return -ETIMEDOUT;
++		if (ret == 0) {
++			ret = -ETIMEDOUT;
++			goto err;
++		}
+ 	} else {
+ 		/* Sleep for result ready time */
+ 		timeout = (opt->int_time == OPT3001_INT_TIME_SHORT) ?
 
 
