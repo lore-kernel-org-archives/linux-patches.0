@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AC4282F31;
-	Tue, 21 Jul 2026 21:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549B944AB7F;
+	Tue, 21 Jul 2026 21:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668935; cv=none; b=bMdJGISSfQobF2vkJZ1fv0TJCbQPJvcljDZCqJmFx5yeDtgJnYlYAdENK+5UJpem9721dTrtr6bregY9y4hDW4dpJZgsGF7BG+JUBcdqENB8ai4dMsZS4myhqVBagq7VblvFIMe/VIpATZiZBV5va+g1b/iUDZiiiWBSRte08sQ=
+	t=1784668938; cv=none; b=MRtzj2NTcEc1XVJZPPoZukfnjMR1kBIojrlolQME0odbI5LdTPPojeh2qzrS4tyRlxWviiysRf5zvQFXu4MIOVXTMMvXBM3xEOAwLHgykQm2AIQu89SR9QYIRqpkOYUaflbIz4zId48RJTF0p++wc7cSGV8lgs1UdR4o/0AZkmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668935; c=relaxed/simple;
-	bh=E3FyAaxOZevaTgKHIOvarfRLuOypzXgdykgHCc6xHpI=;
+	s=arc-20240116; t=1784668938; c=relaxed/simple;
+	bh=BmnB0lpxv6CFsLLDilDUKPBQfBKzgHsfhsYbe20IZEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfS6lQLyDoPmOZOSIvFgDYwAzA0m648l51LzW2bWZ/BvlnhabTn3XAAlIsXajdJ7nGwfsJPD7mw5zp8o0SubbiUPxtAe/qYgmZ/mul1ASpYLYH86iGBxpC3AqgkfniULmuN/LTXL4o8+wtcDQoYC7rwvSrnpAD1YD6+RqemFWM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRugylMq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=scVNUQdDImp36MypPuvPIkhQUBpjk4Xeb8F2qZNDKmjz4PKCuI+wau8ZQboZEbYderfjbHDi4ejLxb6rRJOX0eMRuI5mB6+9Kxt1QArxvHqERoOwY3fjmx2E3WX6xSQ+4hNm5l0h+IlR4QppLEFBG6bgb13f8/ORYKUVF7zX4xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFhw5kfb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRugylMq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B2D1F000E9;
-	Tue, 21 Jul 2026 21:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFhw5kfb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8662F1F000E9;
+	Tue, 21 Jul 2026 21:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668934;
-	bh=mbXK36EfkmFDFFI3tD22HWeUvo++2vs4s9kkMVDzFq8=;
+	s=korg; t=1784668937;
+	bh=qElD4DxMncGf+zzWihZSe8sXjlW6qgFxUsBJm6DIzfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tRugylMq9Y45Sk3UtSB+xQJi0mXRQzsSCdw+ZRTf6vRZgixgUWXOgDKgKGVMgbsnB
-	 vZcHrt+e99sqZ6BaHpfoYvOnkejZt5IHHMRDMoT4bI5tNhSMRLGOeHO1tuPfRGMDx5
-	 bFNepARpV6JF7glQYWupUAiF2rd/8BLFX7pupx6A=
+	b=PFhw5kfbC0u8ZjDa8UrN6Dc45FebBOlF2e/HgguJrVjbSRDKrjdSBsZ7IFHW0GLw4
+	 1VjgTzk/yFJvpY6qJC6TnZI6fRuS6AKuLQPGtssubhfg5RgE7hQ/ags5wFqvF0m6u0
+	 bkop/TN5/eS64XHYrVngiL//KOie8R5Sugp1Lm28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0363/1067] ext4: fix LOGFLUSH shutdown ordering to allow ordered-mode data writeback
-Date: Tue, 21 Jul 2026 17:16:04 +0200
-Message-ID: <20260721152432.738253656@linuxfoundation.org>
+Subject: [PATCH 6.1 0364/1067] ARM: imx3: Fix CCM node reference leak
+Date: Tue, 21 Jul 2026 17:16:05 +0200
+Message-ID: <20260721152432.761243590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,63 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit d99748ef1695ce17eaf51c64b7a06952fa7cddab ]
+[ Upstream commit 36d46348eb5fc4bc505cd2290ddd70c25fbe6bb3 ]
 
-In EXT4_GOING_FLAGS_LOGFLUSH mode, the EXT4_FLAGS_SHUTDOWN flag was set
-before calling ext4_force_commit().  This caused ordered-mode data
-writeback (triggered by journal commit) to fail with -EIO, since
-ext4_do_writepages() checks for the shutdown flag.  The journal would
-then be aborted prematurely before the commit could succeed.
+of_find_compatible_node() returns a referenced device node. The i.MX31
+and i.MX35 early init paths use the node to map the CCM registers with
+of_iomap(), but never drop the node reference.
 
-Fix this by calling ext4_force_commit() first, then setting the
-shutdown flag, so that pending data can be written back correctly.
+Release the node after the mapping is created.
 
-Note that moving ext4_force_commit() before setting the shutdown flag
-creates a small window in which new writes may occur and generate new
-journal transactions.  When the journal is subsequently aborted, the
-new transactions will not be able to write to disk.  This is intentional
-because LOGFLUSH's semantics are to flush pre-existing journal entries
-before shutdown, not to guarantee atomicity for writes that race with
-the ioctl.
-
-Fixes: 783d94854499 ("ext4: add EXT4_IOC_GOINGDOWN ioctl")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260424104201.1930823-1-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 2cf98d12958c ("ARM: imx3: Retrieve the CCM base address from devicetree")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ioctl.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/arm/mach-imx/mm-imx3.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index 8447076eae676d..a6d5a4e37a2852 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -826,11 +826,17 @@ static int ext4_shutdown(struct super_block *sb, unsigned long arg)
- 		thaw_bdev(sb->s_bdev);
- 		break;
- 	case EXT4_GOING_FLAGS_LOGFLUSH:
-+		/*
-+		 * Call ext4_force_commit() before setting EXT4_FLAGS_SHUTDOWN.
-+		 * This is because in data=ordered mode, journal commit
-+		 * triggers data writeback which fails if shutdown is already
-+		 * set, causing the journal to be aborted prematurely before
-+		 * the commit succeeds.
-+		 */
-+		(void) ext4_force_commit(sb);
- 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
--		if (sbi->s_journal && !is_journal_aborted(sbi->s_journal)) {
--			(void) ext4_force_commit(sb);
-+		if (sbi->s_journal && !is_journal_aborted(sbi->s_journal))
- 			jbd2_journal_abort(sbi->s_journal, -ESHUTDOWN);
--		}
- 		break;
- 	case EXT4_GOING_FLAGS_NOLOGFLUSH:
- 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
+diff --git a/arch/arm/mach-imx/mm-imx3.c b/arch/arm/mach-imx/mm-imx3.c
+index 28db97289ee8ff..d333a8fdb7319a 100644
+--- a/arch/arm/mach-imx/mm-imx3.c
++++ b/arch/arm/mach-imx/mm-imx3.c
+@@ -107,6 +107,7 @@ void __init imx31_init_early(void)
+ 	arm_pm_idle = imx31_idle;
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-ccm");
+ 	mx3_ccm_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	BUG_ON(!mx3_ccm_base);
+ }
+ #endif /* ifdef CONFIG_SOC_IMX31 */
+@@ -144,6 +145,7 @@ void __init imx35_init_early(void)
+ 	arch_ioremap_caller = imx3_ioremap_caller;
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx35-ccm");
+ 	mx3_ccm_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	BUG_ON(!mx3_ccm_base);
+ }
+ #endif /* ifdef CONFIG_SOC_IMX35 */
 -- 
 2.53.0
 
