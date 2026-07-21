@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6268046A5ED;
-	Tue, 21 Jul 2026 15:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0440146D55F;
+	Tue, 21 Jul 2026 15:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648800; cv=none; b=ZhC1/XpQkU805SEp7cfBS3MkEEGdU0VzFRlxC6uw62/2R3vsxF1QYchMIh1PxJG+PIaaA1Kj5gJYulgnxvonHZO4BDUvAhfITw7dvnHqtRJfV8BT0dI/7++NrSFA6H0DjVbK4TJnh6mdA4hLlAtO8Pm/lkaymdJ+kEcZN1SXWXU=
+	t=1784648803; cv=none; b=MRZEP1ERn9uSg/oEHdJ6iXZtzPh8TRp3ubRXLaa6teAFXGY3FZj0eh/hQsja0Sy1TaJD2TpV2uEu/KHKH417+ieXLtBZFRuN0+ey39xNDaPi7oCJ2/aj1lSriByU3lq3LjD4CgXXRZSvAV0O0lwgVc3EbyvKqrci5kXlyjbfi2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648800; c=relaxed/simple;
-	bh=PfoDN4F8J8SrAoS83T7mI0OOB6H2unkY72mUCsDV2V8=;
+	s=arc-20240116; t=1784648803; c=relaxed/simple;
+	bh=J0a75rGPt3DHTTjIxbhu7PxqCiQ07snBx3JFMFXVa+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CoQpV87rW2Y9ifIVdD8D2KhMbEiBAfNPh2KjMV+glABON+fPjBow9pZzWsZs0HpVegoPNig1nzGarTIe64nFYvGyQN2RwZwdIaEXvzgNGTXt7eYda01nC8ImDrKg0UiBPbcEMVip9I7SGgdZVFDrbM3qi/baR8ADvJx9+wqkDCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXdmhlGD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oy0nwikYxGdZ2J22b/bKCXm4h/zcUSPJjGgUf7Y/qwjtHLfMbXsjSOrIzMSuTBl73vb1hdEism0Xra9avNc5U960eqb/ZVb5pX7JH0uI9TW2ifz0XPdlXEraG5sGuC901e/77EHQMhcLfxk7XGyZPnzK7sGzgDGOwg2rG2EteKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcRxHPuf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXdmhlGD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB631F000E9;
-	Tue, 21 Jul 2026 15:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcRxHPuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680E01F00A3A;
+	Tue, 21 Jul 2026 15:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648799;
-	bh=VOgXikVxOyGcycuFTdF7YWGyu6be2q63bHVBigbt+5I=;
+	s=korg; t=1784648801;
+	bh=aCS3+tn7lqjmodxQkVAZux9Ja0BI/+BnFeNiJsiVGjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nXdmhlGD9/nqDJns1dG+Ju0j5Xgx0dW5D1qgR8KtBiMu2DRnAyOcKcKaYyLO6DnIL
-	 QRHbU8nDPF3gQE2n40rF8nT8u4OoixHTAK3HgAhKZavxgiC2a0R6MH2PMIAYtqVmgx
-	 HVwBEbn+72TNuhIMQNTMvvXjqNGgkhMunUXNOOac=
+	b=zcRxHPuf/SavpNopXYBcRfNaROyPbaEuOhif1LCCVbZs3azJJ0jNKzt9r5uNgpSAT
+	 h1oHf+q5FPOLiKwk+YHHOcMj/gwoLXkzgrfYY4wOFZ/IpD5cL0HeD00X0UVmu7/6rU
+	 t5493e1PJy/uhhsXeeADIRFMvX8ssRFNLYthy2E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Suryaputra <ssuryaextr@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0336/2077] ipv6: guard against possible NULL deref in __in6_dev_stats_get()
-Date: Tue, 21 Jul 2026 17:00:09 +0200
-Message-ID: <20260721152600.608746613@linuxfoundation.org>
+Subject: [PATCH 7.1 0337/2077] net/sched: cls_bpf: prevent unbounded recursion in offload rollback
+Date: Tue, 21 Jul 2026 17:00:10 +0200
+Message-ID: <20260721152600.632052952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,43 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 507541c2a8eeb76c02bd2511958f73a8cfa3e1bc ]
+[ Upstream commit 27db54b90bcc7c37867fe664107fa25ea6a116e4 ]
 
-dev_get_by_index_rcu() could return NULL if the original physical
-device is unregistered.
+Quan Sun reported [1] a stack overflow in cls_bpf_offload_cmd().
 
-Found by Sashiko.
+Reproducer on netdevsim: add a skip_sw cls_bpf filter, set the
+bpf_tc_accept debugfs knob to 0, then `tc filter replace`. The replace
+calls tc_setup_cb_replace() which fails. cls_bpf_offload_cmd() then
+swaps prog/oldprog and recursively calls itself to roll back. But
+bpf_tc_accept=0 makes the rollback fail too, which triggers yet another
+rollback frame with the same arguments, and so on until the stack is
+exhausted.
 
-Fixes: e1ae5c2ea478 ("vrf: Increment Icmp6InMsgs on the original netdev")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Suryaputra <ssuryaextr@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260526145529.3587126-2-edumazet@google.com
+bpf_tc_accept is just a convenient knob for the reproducer. Any driver
+whose tc_setup_cb_replace() fails twice in a row can hit the same loop,
+so this is not a netdevsim-only issue.
+
+Two ways to fix it:
+
+  1) Have the rollback call tc_setup_cb_add() on oldprog instead of
+     re-entering cls_bpf_offload_cmd().
+  2) Mark the rollback frame with a flag and skip a second-level
+     rollback from inside it.
+
+Go with (2). It is the smaller change and keeps the original behaviour:
+the rollback still goes through tc_setup_cb_replace(), so the driver
+gets one real chance to restore its state. If that attempt also fails,
+we just return the original error instead of recursing.
+
+[1]: https://lore.kernel.org/bpf/ce5a6005-3c5e-4696-9e05-eba9461dc860@std.uestc.edu.cn/T/#u
+
+Fixes: 102740bd9436 ("cls_bpf: fix offload assumptions after callback conversion")
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260526025529.24382-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/addrconf.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sched/cls_bpf.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/addrconf.h b/include/net/addrconf.h
-index 9e96776945e5f6..539bbbe54b14e8 100644
---- a/include/net/addrconf.h
-+++ b/include/net/addrconf.h
-@@ -369,8 +369,11 @@ static inline struct inet6_dev *__in6_dev_get_rtnl_net(const struct net_device *
- static inline struct inet6_dev *__in6_dev_stats_get(const struct net_device *dev,
- 						    const struct sk_buff *skb)
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index 9a346b6221b359..001d8c4ebfedc1 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -142,7 +142,8 @@ static bool cls_bpf_is_ebpf(const struct cls_bpf_prog *prog)
+ 
+ static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 			       struct cls_bpf_prog *oldprog,
+-			       struct netlink_ext_ack *extack)
++			       struct netlink_ext_ack *extack,
++			       bool is_rollback)
  {
--	if (netif_is_l3_master(dev))
-+	if (netif_is_l3_master(dev)) {
- 		dev = dev_get_by_index_rcu(dev_net(dev), inet6_iif(skb));
-+		if (!dev)
-+			return NULL;
-+	}
- 	return __in6_dev_get(dev);
+ 	struct tcf_block *block = tp->chain->block;
+ 	struct tc_cls_bpf_offload cls_bpf = {};
+@@ -177,7 +178,8 @@ static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 					  &oldprog->in_hw_count, true);
+ 
+ 	if (prog && err) {
+-		cls_bpf_offload_cmd(tp, oldprog, prog, extack);
++		if (!is_rollback)
++			cls_bpf_offload_cmd(tp, oldprog, prog, extack, true);
+ 		return err;
+ 	}
+ 
+@@ -208,7 +210,7 @@ static int cls_bpf_offload(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 	if (!prog && !oldprog)
+ 		return 0;
+ 
+-	return cls_bpf_offload_cmd(tp, prog, oldprog, extack);
++	return cls_bpf_offload_cmd(tp, prog, oldprog, extack, false);
  }
  
+ static void cls_bpf_stop_offload(struct tcf_proto *tp,
+@@ -217,7 +219,7 @@ static void cls_bpf_stop_offload(struct tcf_proto *tp,
+ {
+ 	int err;
+ 
+-	err = cls_bpf_offload_cmd(tp, NULL, prog, extack);
++	err = cls_bpf_offload_cmd(tp, NULL, prog, extack, false);
+ 	if (err)
+ 		pr_err("Stopping hardware offload failed: %d\n", err);
+ }
 -- 
 2.53.0
 
