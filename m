@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E32E44AB60;
-	Tue, 21 Jul 2026 21:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282E629CE9;
+	Tue, 21 Jul 2026 21:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669043; cv=none; b=E2hGhcF8St2M5ai0GNLX8Y2k8laKa/0fZ7h1w2WZ8Fo22rzPI/WkJJoMF1r4/nl6uB+M+z5soN9F0ujyw5vx1bDeGmikxi3//bHL7PmQ8WMy58iBOyVGPbKZnckzN5uKfSvSLcGic8Qegg/tH+rOpA/xutsyosqZ4wiW1BnDtD0=
+	t=1784669046; cv=none; b=aVUFtsen0XHJHWSRbmnmMvrgDs1tcwKZAt6z+CrpLBXoP8ijujyhwWjldfV8nrOMgVcax17wmhZOOe6xHv5+qHZPzBHMBU3NS0981au1vntBbhmn0CCnuH3ifiiosjfSasOotz29o6UvIkx8nghTz9pS0ZRSLRtw4JHzEItvYLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669043; c=relaxed/simple;
-	bh=O6SL84AMK4BV/peYzEikEzNqG94J4LerHZMWrFYWdDE=;
+	s=arc-20240116; t=1784669046; c=relaxed/simple;
+	bh=rAdz/J0TyflNkr33lzBPsv0Oyt3o3KEuUBR1r2jASP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFtCFo/omInUwa9Yn2hKYi9zUVE0qI3Yig3Fyd4kXauw8judX1RyDjkurnPSe3tPQNpyGNa6dFrCFfFsMJ/HQFdDKuk+2JJz0SJBZAyn0xWmnKSrVgDjd9N7I3CWuRObrxY4RpMT+nT64N48rAFBrMG8p2IL4+jheFvIQmd9kbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=185DjwYz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GK5+XJrjp5evU1pAkuqaBij9tlP9P7pqpu0ddM35HJK8y70Ljtgu1QRAivzyw/YO+PIg/d/20UQyhZ/unjGEPumqDict0dw1HoO16Plj7+fxuJU5R7+GiVjLLhoENsD67eweLebIOtMNKPH36AUH5rnGKX+g9MVosbp8TyDh7bI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9MraCYD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="185DjwYz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5631F000E9;
-	Tue, 21 Jul 2026 21:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9MraCYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A241F000E9;
+	Tue, 21 Jul 2026 21:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669042;
-	bh=n4SHqhxdT2HIWnfESMbu0buVwZhU/8Qa4obXnOK68uc=;
+	s=korg; t=1784669045;
+	bh=qvo//ZFlpxYKIBZI6NltRiIchjWjR3pgcMp9C/QOEE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=185DjwYzlr60dmtMCOjCPd5QvlE0ZmCzcq0IayRia+v1VpKjCA7cUEEqCJdRLxSQW
-	 f5FhBAbNKn21s0wmR6RO9bxIL6Yn4YdXjbLQY4loaiOsSm6T0N+NiN7HoEaHmz9RQi
-	 LykBkxx8YFJCitHeNFAGHlxkWGEMRPMPTD8I2Mfo=
+	b=c9MraCYDXl+nh8ec0igwCT61TPrX37s90Ci454VqtHqjGrTiFc6Z7pgyc1todIS8W
+	 bkQtO2iVUMWE//u1fe2+piHOB38RORbk7C5dE4Ml+qZW8Z3A/d2hBAjWHdLUlLro2E
+	 nRNFezH7w/7Qs+ceA5zs3pMAeultrGCpcLyC7PiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0405/1067] pinctrl: mediatek: mt8167: Fix Schmitt trigger register offset of pins 34-39
-Date: Tue, 21 Jul 2026 17:16:46 +0200
-Message-ID: <20260721152433.691971708@linuxfoundation.org>
+Subject: [PATCH 6.1 0379/1067] ocfs2/dlm: require a ref for locking_state debugfs open
+Date: Tue, 21 Jul 2026 17:16:20 +0200
+Message-ID: <20260721152433.105356220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,34 +58,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 439bc91d20188901dac698bed4921caac76d9074 ]
+[ Upstream commit 03ad858ce8064861ea580021976dc19b7aabb549 ]
 
-The correct Schmitt trigger register offset for pins 34-39 is 0xA00. Value
-was verified with SoC data sheet.
+debug_lockres_open() copies inode->i_private into struct debug_lockres and
+debug_lockres_release() later drops that pointer with dlm_put().  That
+only works if open successfully pins the struct dlm_ctxt.
 
-Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
-Fixes: 82d70627e94a ("pinctrl: mediatek: Add MT8167 Pinctrl driver")
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Today open calls dlm_grab(dlm) but ignores its return value.  Once the
+last domain unregister has removed the context from dlm_domains,
+dlm_grab() returns NULL, yet open still stores the raw pointer and returns
+success.  The later release path is outside the debugfs removal barrier,
+so it can call dlm_put() after dlm_free_ctxt_mem() has freed the context.
+KASAN reports this as a slab-use-after-free in dlm_put() called from
+debug_lockres_release().
+
+Fail the open when dlm_grab() cannot acquire the reference and unwind the
+seq_file private state before returning.  That keeps locking_state from
+handing out a file descriptor whose release path does not own the
+dlm_ctxt.
+
+The buggy scenario involves two paths, with each column showing the order
+within that path:
+
+locking_state debugfs open:          last domain unregister:
+1. debug_lockres_open() reads        1. dlm_unregister_domain() calls
+   inode->i_private.                    dlm_complete_dlm_shutdown().
+2. debug_lockres_open() calls        2. shutdown removes the dlm_ctxt from
+   dlm_grab(dlm) and gets NULL.         dlm_domains.
+3. open still stores the raw dlm     3. final teardown reaches
+   pointer in dl->dl_ctxt and           dlm_free_ctxt_mem() and frees it.
+   returns success.
+4. debug_lockres_release() later
+   calls dlm_put(dl->dl_ctxt).
+
+Validation reproduced this kernel report:
+KASAN slab-use-after-free in dlm_put+0x82/0x200
+RIP: 0033:0x7f4d349bc9e0
+The buggy address belongs to the object at ffff888103a3c000 which belongs
+to the cache kmalloc-2k of size 2048
+The buggy address is located 816 bytes inside of freed 2048-byte region
+[ffff888103a3c000, ffff888103a3c800)
+Write of size 4
+Call trace:
+  dump_stack_lvl+0x66/0xa0 (?:?)
+  print_report+0xd0/0x630 (?:?)
+  dlm_put+0x82/0x200 (?:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x188/0x2f0 (?:?)
+  kasan_report+0xe4/0x120 (?:?)
+  kasan_check_range+0x105/0x1b0 (?:?)
+  debug_lockres_release+0x53/0x80 (fs/ocfs2/dlm/dlmdebug.c:587)
+  dlm_put+0x9/0x200 (?:?)
+  debug_lockres_release+0x5c/0x80 (fs/ocfs2/dlm/dlmdebug.c:587)
+  full_proxy_release+0x67/0x90 (?:?)
+  __fput+0x1df/0x4b0 (?:?)
+  do_raw_spin_lock+0x10f/0x1b0 (?:?)
+  fput_close_sync+0xd2/0x170 (?:?)
+  __x64_sys_close+0x55/0x90 (?:?)
+  do_syscall_64+0x10c/0x640 (arch/x86/entry/syscall_64.c:87)
+  irqentry_exit+0xac/0x6e0 (?:?)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+Freed by task stack:
+  kasan_save_stack+0x33/0x60 (?:?)
+  kasan_save_track+0x14/0x30 (?:?)
+  kasan_save_free_info+0x3b/0x60 (?:?)
+  __kasan_slab_free+0x5f/0x80 (?:?)
+  kfree+0x30f/0x580 (?:?)
+  dlm_put+0x1ce/0x200 (?:?)
+  dlm_unregister_domain+0xf6/0xb30 (?:?)
+  o2cb_cluster_disconnect+0x6b/0x90 (?:?)
+  ocfs2_cluster_disconnect+0x41/0x70 (?:?)
+  ocfs2_dlm_shutdown+0x1c4/0x220 (?:?)
+  ocfs2_dismount_volume+0x38a/0x550 (?:?)
+  generic_shutdown_super+0xc3/0x220 (?:?)
+  kill_block_super+0x29/0x60 (?:?)
+  deactivate_locked_super+0x66/0xe0 (?:?)
+  cleanup_mnt+0x13d/0x210 (?:?)
+  task_work_run+0xfa/0x170 (?:?)
+  exit_to_user_mode_loop+0xd6/0x430 (?:?)
+  do_syscall_64+0x3cb/0x640 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+
+Link: https://lore.kernel.org/20260531044714.1640172-1-rollkingzzc@gmail.com
+Fixes: 4e3d24ed1a12 ("ocfs2/dlm: Dumps the lockres' into a debugfs file")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mt8167.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/dlm/dlmdebug.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mt8167.c b/drivers/pinctrl/mediatek/pinctrl-mt8167.c
-index 866da2c4a890cd..37b270757de7cf 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mt8167.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mt8167.c
-@@ -245,7 +245,7 @@ static const struct mtk_pin_ies_smt_set mt8167_smt_set[] = {
- 	MTK_PIN_IES_SMT_SPEC(24, 25, 0xA00, 12),
- 	MTK_PIN_IES_SMT_SPEC(26, 30, 0xA00, 0),
- 	MTK_PIN_IES_SMT_SPEC(31, 33, 0xA00, 1),
--	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA900, 2),
-+	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA00, 2),
- 	MTK_PIN_IES_SMT_SPEC(40, 40, 0xA10, 11),
- 	MTK_PIN_IES_SMT_SPEC(41, 43, 0xA00, 10),
- 	MTK_PIN_IES_SMT_SPEC(44, 47, 0xA00, 11),
+diff --git a/fs/ocfs2/dlm/dlmdebug.c b/fs/ocfs2/dlm/dlmdebug.c
+index be5e9ed7da8d94..e62ed98df7de4b 100644
+--- a/fs/ocfs2/dlm/dlmdebug.c
++++ b/fs/ocfs2/dlm/dlmdebug.c
+@@ -612,6 +612,7 @@ static int debug_lockres_open(struct inode *inode, struct file *file)
+ 	struct dlm_ctxt *dlm = inode->i_private;
+ 	struct debug_lockres *dl;
+ 	void *buf;
++	int status = -ENOMEM;
+ 
+ 	buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
+ 	if (!buf)
+@@ -624,16 +625,23 @@ static int debug_lockres_open(struct inode *inode, struct file *file)
+ 	dl->dl_len = PAGE_SIZE;
+ 	dl->dl_buf = buf;
+ 
+-	dlm_grab(dlm);
+-	dl->dl_ctxt = dlm;
++	/* ->release uses dl_ctxt after open, so it needs a real pin. */
++	dl->dl_ctxt = dlm_grab(dlm);
++	if (!dl->dl_ctxt) {
++		status = -ENOENT;
++		goto bailseq;
++	}
+ 
+ 	return 0;
+ 
++bailseq:
++	seq_release_private(inode, file);
+ bailfree:
+ 	kfree(buf);
+ bail:
+-	mlog_errno(-ENOMEM);
+-	return -ENOMEM;
++	if (status != -ENOENT)
++		mlog_errno(status);
++	return status;
+ }
+ 
+ static int debug_lockres_release(struct inode *inode, struct file *file)
 -- 
 2.53.0
 
