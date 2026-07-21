@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD60842B32A;
-	Tue, 21 Jul 2026 19:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942D042B32A;
+	Tue, 21 Jul 2026 19:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661549; cv=none; b=SwHZeF6Sy8yr+Z38VnhDcyl7XyAXDfEne9BStXmazAwncFPTXuQ2DRgHa0AZed7cErbCc8nbhAZUEvleMkd46ujlmkuoXWUDIPk1s08Ib5XJhLOGh7yplgY/D5nxF1umlUajiYIK+O0d9UYHSjSfcoW5LAIYYk8y9okea/XWaOk=
+	t=1784661551; cv=none; b=nwC2vAFRZiZ5WensxliHGbbv0qghWgeyPveOH2FRmhbh3OdAL6EZYD10O9I7Ho6Qkf+NdSfI7A7OA0GEeDsTGjwvN2EiMjFEEtPrFoHVAmEcnbsXDu2StB1TKPJZMkiO4Po/ikYvGDIFIiWCauhik23p8bnkyTj0x/RJ/yPeV3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661549; c=relaxed/simple;
-	bh=nx+Nz97XTbjDwRhWa2Xz/7c0k7xV+ZVaf/RUtIiUVP8=;
+	s=arc-20240116; t=1784661551; c=relaxed/simple;
+	bh=n+twUS4wuQghuu7rlFmmcT17jVBJHNqrKPzFJ5F1yl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3KWZSQcApH9LxkHuuo2Soi7JLoKvIyY8qQ+DMO1OLXEALKU2YUmfzdX9On3lNLvHYq/e579AtMZY3+iY5R+yLND6XPByCAmiMWmzJq0JQsw0WuHHnV323xG3vpknsy2aD3GiK8WQt8zHqAE4Bn4imf567sQnLPUmRtR7BF+pdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4HXqTTP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XH0MS5TmkmOgvlpnq1wvKHSOpqCMPgBizFtsu0dgE5yVG5bpXQ1vvt/tPAmRUmjyL1FVvUNsinPMMatAIeMeFSuYqaLu7zFvRXlxEWfDoCGfLu009BLtymBeO2GEw1GzlshP6fg+8mDIqLoQDzSgbakyrZ8W9EgwDicoQO3Pd20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNzCB5Ki; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4HXqTTP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504451F000E9;
-	Tue, 21 Jul 2026 19:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNzCB5Ki"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDB41F00A3A;
+	Tue, 21 Jul 2026 19:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661547;
-	bh=c0I4Az0ohg1dQRwXNlXRqT5ntXG4GFF0+OVCZUIt8Ho=;
+	s=korg; t=1784661550;
+	bh=bIBLyKFVz3Sn5YjItOkV7JJfFMn0kKZ62rHGzriKBKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L4HXqTTPjLjN9DEMuErkBTQR+nVpBPn+co8AzJfyaR/PV7AR8N+Hd39505cUrmAvv
-	 oCI/o4jodIeeeuU3CyhhUVelTUnIu+3hb9tBKtY2PKGPZarjHbdzMmNGZ41VMOK+w/
-	 e05vtmWICvX+2fRpT1jHMVYjU1oimyESt8SQ4/ic=
+	b=vNzCB5KiLrROsfnVSpFJ7SpFpJ0+fqQrQD69Oj74Vq38sbO2mkqLU/m1m1+/GeE6M
+	 uSAj5Y4bEEbBcZhL+PhCEWr1m0svpMFMJBa9QbdL8znKTv30UfO8RVaa9vRrCdSPff
+	 x+s0MitovRcD07UMm5hK2SdqDVl4/EUOkzkRHgAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0091/1276] pinctrl: sunxi: fix regulator leak in sunxi_pmx_request() error path
-Date: Tue, 21 Jul 2026 17:08:54 +0200
-Message-ID: <20260721152448.133148315@linuxfoundation.org>
+Subject: [PATCH 6.12 0109/1276] arm64: dts: qcom: sm8450: Fix ICE reg size
+Date: Tue, 21 Jul 2026 17:09:12 +0200
+Message-ID: <20260721152448.536941835@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,38 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
 
-[ Upstream commit 334f7bcbdc79dc8e5b938ac3372453a5368221cf ]
+[ Upstream commit 7fb3d0512dacc0d09217eb45057357f00298203d ]
 
-In the error path of sunxi_pmx_request(), the code calls
-regulator_put(s_reg->regulator) to release the regulator. However,
-s_reg->regulator is only assigned after a successful regulator_enable().
-This causes a memory leak: the regulator obtained via regulator_get()
-is never properly released when regulator_enable() fails.
+The ICE register region size was originally described incorrectly when
+the ICE hardware was first introduced. The same value was later carried
+over unchanged when the ICE node was split out from the UFS node into
+its own DT entry.
 
-Fixes: dc1445584177 ("pinctrl: sunxi: Fix and simplify pin bank regulator handling")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Correct the register size to match the hardware specification.
+
+Fixes: 276ee34a40c1 ("arm64: dts: qcom: sm8450: add Inline Crypto Engine registers and clock")
+Signed-off-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Reviewed-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260402-ice_dt_reg_fix-v1-2-74e4c2129238@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunxi/pinctrl-sunxi.c | 2 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-index 8fbbdcc52debb1..ce811cb43651b7 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-@@ -880,7 +880,7 @@ static int sunxi_pmx_request(struct pinctrl_dev *pctldev, unsigned offset)
- 	return 0;
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index f5be69e3be997a..af53f0a88ee795 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -4543,7 +4543,7 @@ ufs_mem_phy: phy@1d87000 {
+ 		ice: crypto@1d88000 {
+ 			compatible = "qcom,sm8450-inline-crypto-engine",
+ 				     "qcom,inline-crypto-engine";
+-			reg = <0 0x01d88000 0 0x8000>;
++			reg = <0 0x01d88000 0 0x18000>;
+ 			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+ 		};
  
- out:
--	regulator_put(s_reg->regulator);
-+	regulator_put(reg);
- 
- 	return ret;
- }
 -- 
 2.53.0
 
