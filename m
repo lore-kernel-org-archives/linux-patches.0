@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABBA4028CE;
-	Tue, 21 Jul 2026 17:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF15F4028E9;
+	Tue, 21 Jul 2026 17:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654199; cv=none; b=F8VbZk3g0V+2/JqQS//BJC9KzrAU3EkfM8RssZTjuNBQl268pVdVEW1O70DFeWrKZHCrFYynSb6PbpaB25dzbdAL+ZH3kEdX2TrM1lrXjHVO/mFn5MWjQNdJm4mAErg+5FS//tyOjcDMk3zshFI8HYJXDsI8OHoCoyb84wb/0bQ=
+	t=1784654201; cv=none; b=mKaKQBn+lykzii1sVybgWM9XZmQoSmc5psJXsmyYdKCdl0GfQpq7iMvEFoCOpdp2V8LykJ6sM4df7eZDBPbxPFvBZLJZh9X0GpZudwCpzxT40TxhPz3bJ9pFRCqXuizNhzYcFRgudnsokyHbXCpzL5Pqz83QoKdY/Rmq/V5YfEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654199; c=relaxed/simple;
-	bh=lZulbunmtQizmFDnINNR4n5r0P62maoHjRY96Si404Y=;
+	s=arc-20240116; t=1784654201; c=relaxed/simple;
+	bh=chA4d20eKVR/aaNc94h/CY/5Ceqh/l77ir0ce5KxQ6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfHfwsbCyBmzoYKFZok+im24Ie7xPGHX4D/ELa8cItusgwCQTlAIhb1Yl9Re4TxNyrkAtkow1S8gmLyQp9LiY5HuWmV9CbfPxJKVSHW5IIEyMpVoqXE63yfaKaA2PsGaFey5MY+4RfX035OofnoC2oAKWvDSfenzhACEYlqaCdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZS8nTI4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K5xmXMYp00K/1KenpzUaTj5x4GzeITXaqGOrC6OjJKgm1xvwJDsc2T3zcwExq67VY4ENVGIH0GgpzThQyM2ky6NJkmlCJjO6b0wsFvH4ak0cTzQTLVF3Y7E59URXHkA4vot0cDYo+Ik+zqkcArV0X9y1VP244Sa8CR/TNHDr46k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYwae2jC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZS8nTI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEE41F000E9;
-	Tue, 21 Jul 2026 17:16:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYwae2jC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509141F000E9;
+	Tue, 21 Jul 2026 17:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654198;
-	bh=PPbMhEmbd2dxtI7tC3RoHP6AIanBpW3v8RLjgvyCBSI=;
+	s=korg; t=1784654200;
+	bh=S4aV9ZXvs9OX1D6kSaacZuYCsCYJoaiGE1mC3nqjaGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wZS8nTI4uHhXqWzNQW2uVMt6TTaWOHKK1wpfCK2yarttHfT5KIl6ZjBt8DRx7+p0B
-	 JApzgEGQ7k1JjMKGGv8HEyLI052CpplrM4Vl6PDdV+IRo7HhNV2xFT8yTSgArNILZe
-	 7e/iIM0hBdxpyBSTsi5uSimjbesEJ/uDXLGd9mS8=
+	b=YYwae2jCFkXd3qEO1hr4mFOAhwfluHLASi5P9vjP8fhejFEE3a/3Mc9vbbt4pOGQi
+	 izlEA3+Lt+fHnUpJzdgWxLhUbbGC7UF4+jRpALg3Kv/gfST/B7h79h+Dc5WedBN7Nw
+	 HhUjdD4Nfj9nT/6K1B0P5GYVpI+uSbXIJnHlpWjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oliver Upton <oupton@kernel.org>,
-	Wei-Lin Chang <weilin.chang@arm.com>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.1 1571/2077] KVM: arm64: Ensure level is always initialized when relaxing perms
-Date: Tue, 21 Jul 2026 17:20:44 +0200
-Message-ID: <20260721152629.834216211@linuxfoundation.org>
+Subject: [PATCH 7.1 1572/2077] KVM: arm64: nv: Drop bogus WARN for write to ZCR_EL2
+Date: Tue, 21 Jul 2026 17:20:45 +0200
+Message-ID: <20260721152629.857425174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,37 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Upton <oupton@kernel.org>
 
-commit 100baf0184896f859290a684f864b8200d8ac872 upstream.
+commit 9f1667098c6ae7ec81a9a56859cfdacb822aa0d0 upstream.
 
-stage2_update_leaf_attrs() returns early before writing to @level if the
-table walker returned an error. At the same time,
-kvm_pgtable_stage2_relax_perms() uses the level as a TLBI TTL hint when the
-error was EAGAIN, indicating the vCPU raced with a table update and the TLB
-entry it hit is now stale.
+It is entirely possible for a guest to write to the ZCR_EL2 sysreg alias
+while in a nested context, as it is expected if FEAT_NV2 is advertised
+to the L1 hypervisor.
 
-Fall back to an unknown TTL if none was provided by the walk.
+Get rid of the bogus WARN which, since the hyp vectors were installed at
+this point, has the effect of a hyp_panic...
 
 Cc: stable@vger.kernel.org
-Fixes: be097997a273 ("KVM: arm64: Always invalidate TLB for stage-2 permission faults")
+Fixes: 0cfc85b8f5cf ("KVM: arm64: nv: Load guest FP state for ZCR_EL2 trap")
 Signed-off-by: Oliver Upton <oupton@kernel.org>
-Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
-Link: https://patch.msgid.link/20260701231620.3300204-2-oupton@kernel.org
+Link: https://patch.msgid.link/20260615051324.830045-1-oupton@kernel.org
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/pgtable.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/hyp/include/hyp/switch.h |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -1358,7 +1358,7 @@ int kvm_pgtable_stage2_relax_perms(struc
- 				   enum kvm_pgtable_prot prot, enum kvm_pgtable_walk_flags flags)
- {
- 	kvm_pte_t xn = 0, set = 0, clr = 0;
--	s8 level;
-+	s8 level = TLBI_TTL_UNKNOWN;
- 	int ret;
- 
- 	if (prot & KVM_PTE_LEAF_ATTR_HI_SW)
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -601,8 +601,6 @@ static inline bool kvm_hyp_handle_fpsimd
+ 			return false;
+ 		break;
+ 	case ESR_ELx_EC_SYS64:
+-		if (WARN_ON_ONCE(!is_hyp_ctxt(vcpu)))
+-			return false;
+ 		fallthrough;
+ 	case ESR_ELx_EC_SVE:
+ 		if (!sve_guest)
 
 
