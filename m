@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB710372050;
-	Tue, 21 Jul 2026 15:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11212449B0B;
+	Tue, 21 Jul 2026 15:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649581; cv=none; b=Z2hq/A67SKyYGiIiAbGwDV8g8oV2nufXFo7FmR5e9jlzcrujOoKcJHkbKn3u6XjRcaYBC1DqBgwnqKgFEwO3nlyvpxRR9ghkWvV82DF2j77Y/UShNXQRK+QIQObfiLwAcOOkUqOWrl/ujTGXp/nDgaqZjE0F5Wbq0lKXuSdNYyk=
+	t=1784649584; cv=none; b=dtvDWbszj4OMCJ1gbdrsm080tZKRQV0F3bllyFjUhe8qOWqV9Ah4d9qicP4D7B2NL3Ehrra50Hlnldkg19DMR4IFNMZRvxvqKqEmO6cPr2HYx78vwX53KbhMyl3Hhm44XO4exJeE8laCCdYjCJPdeZqA8n3KoX4iMJCUw9x5n00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649581; c=relaxed/simple;
-	bh=+kA8PpnwwdZTt4NfL4sheKXlDM6I677ojrhiPfb3qys=;
+	s=arc-20240116; t=1784649584; c=relaxed/simple;
+	bh=79QBFeuB8YypdJA36QuWGCkV6VJhTlHi8E02+JID+mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBNapt6i9oAejHEO+gPE+2781LYAwBUGsQaxSRpD0HP7+r1cjpk8i0KX6ftf6mTqtSukaLxqa6j049f33k9jqkcfPBEmnHNTPcY5NHdUvecjFL42y56yoBoGlPY/Wgq8PUwVoL1V8aXmYl5TzIRFHAAblKljcRCTe5xjb6QyIL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iw4EbrXv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kwCvwGNr74OdFtXBe3zOt799D29Y207bpVunTpeBgWLxLDEWD+sLWJiADGNymDdxV9kVtvdJum1bnNl98E18PHD5CSpoB/IBaoW6jfz1A/NCcSIMIFXntY5Ejq425sZzazZvaHsXX8tIwyQLQMzStoclxJEwN+gpGjPOGDP/xgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUBOQCHq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iw4EbrXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44E91F000E9;
-	Tue, 21 Jul 2026 15:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUBOQCHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F68F1F000E9;
+	Tue, 21 Jul 2026 15:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649580;
-	bh=nG998MvClr0jLIXWGHsopsBUsElxaU8lvXGZPyMhaAg=;
+	s=korg; t=1784649583;
+	bh=NrbafVai5uVyP6eGs7j1Ism75+DjzLHhv73pQwIArHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iw4EbrXvMCUBxPRVGbANynpiHMkZl1pRfHvhR6Aazk6dK1KUxc5fJ7961kxp8FSLj
-	 cu2mzypFXCRJserXTVmjOS8uNqKJKz1JtJrmA1/RWK24V1SGgFlwuWy7cuwP9MFVXE
-	 wD4fCC1NIOfeQhK6emKbYXLlTd3jLH6vzKafGGoM=
+	b=eUBOQCHq3/3P9cpkyZKon3QNrbrfHOAr958e/Ph8r6m54DzqsIrReJkIGBKt0ig3s
+	 NRo5Y8Sgb49c46SIMAFv4SDKwLeAlc8a0rF5CnOletpi0/Y5Er0/Ro7M17u4klJmgb
+	 8trQJV2Nn9oCTwkBO1SsIEe3H1vVBxlU62grJT+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filip Hejsek <filip.hejsek@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Xie Yongji <xieyongji@bytedance.com>,
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Jason Wang <jasowang@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0631/2077] virtio_console: read size from config space during device init
-Date: Tue, 21 Jul 2026 17:05:04 +0200
-Message-ID: <20260721152607.692244399@linuxfoundation.org>
+Subject: [PATCH 7.1 0632/2077] vduse: Requeue failed read to send_list head
+Date: Tue, 21 Jul 2026 17:05:05 +0200
+Message-ID: <20260721152607.715879941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,106 +48,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filip Hejsek <filip.hejsek@gmail.com>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-[ Upstream commit b3592a32b34f37874dc94aa1a0d15c4334ed86ca ]
+[ Upstream commit 373ec43ded742b2f3aecf14731ffe1a57f438f38 ]
 
-Previously, the size was only read upon receiving the config interrupt.
-This interrupt is sent when the size changes. However, we also need to
-read the initial size.
+When copy_to_iter() fails in vduse_dev_read_iter(), put the message back
+at the head of send_list to preserve FIFO ordering and retry the oldest
+pending request first.
 
-Also make sure to only read the size from config if F_SIZE is enabled.
-
-Fixes: 9778829cffd4 ("virtio: console: Store each console's size in the console structure")
-Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
+Reported-by: Michael S. Tsirkin <mst@redhat.com>
+Suggested-by: Xie Yongji <xieyongji@bytedance.com>
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260223-virtio-console-fix-v1-1-0cf08303b428@gmail.com>
+Message-ID: <20260226115550.1814-2-zhangtianci.1997@bytedance.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/virtio_console.c | 52 +++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 21 deletions(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
-index 9a33217c68d9d8..198b9731416803 100644
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1771,32 +1771,40 @@ static void config_intr(struct virtio_device *vdev)
- 		schedule_work(&portdev->config_work);
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index d5c34260ed68dc..a479fef535ac61 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -221,6 +221,12 @@ static void vduse_enqueue_msg(struct list_head *head,
+ 	list_add_tail(&msg->list, head);
  }
  
--static void config_work_handler(struct work_struct *work)
-+static void update_size_from_config(struct ports_device *portdev)
- {
--	struct ports_device *portdev;
-+	struct virtio_device *vdev;
-+	struct port *port;
-+	u16 rows, cols;
- 
--	portdev = container_of(work, struct ports_device, config_work);
--	if (!use_multiport(portdev)) {
--		struct virtio_device *vdev;
--		struct port *port;
--		u16 rows, cols;
-+	vdev = portdev->vdev;
- 
--		vdev = portdev->vdev;
--		virtio_cread(vdev, struct virtio_console_config, cols, &cols);
--		virtio_cread(vdev, struct virtio_console_config, rows, &rows);
-+	/*
-+	 * We'll use this way of resizing only for legacy support.
-+	 * For multiport devices, use control messages to indicate
-+	 * console size changes so that it can be done per-port.
-+	 *
-+	 * Don't test F_SIZE at all if we're rproc: not a valid feature.
-+	 */
-+	if (is_rproc_serial(vdev) ||
-+	    use_multiport(portdev) ||
-+	    !virtio_has_feature(vdev, VIRTIO_CONSOLE_F_SIZE))
-+		return;
- 
--		port = find_port_by_id(portdev, 0);
--		set_console_size(port, rows, cols);
-+	virtio_cread(vdev, struct virtio_console_config, cols, &cols);
-+	virtio_cread(vdev, struct virtio_console_config, rows, &rows);
- 
--		/*
--		 * We'll use this way of resizing only for legacy
--		 * support.  For newer userspace
--		 * (VIRTIO_CONSOLE_F_MULTPORT+), use control messages
--		 * to indicate console size changes so that it can be
--		 * done per-port.
--		 */
--		resize_console(port);
--	}
-+	port = find_port_by_id(portdev, 0);
-+	set_console_size(port, rows, cols);
-+	resize_console(port);
++static void vduse_enqueue_msg_head(struct list_head *head,
++				   struct vduse_dev_msg *msg)
++{
++	list_add(&msg->list, head);
 +}
 +
-+static void config_work_handler(struct work_struct *work)
-+{
-+	struct ports_device *portdev;
-+
-+	portdev = container_of(work, struct ports_device, config_work);
-+	update_size_from_config(portdev);
- }
- 
- static int init_vqs(struct ports_device *portdev)
-@@ -2052,6 +2060,8 @@ static int virtcons_probe(struct virtio_device *vdev)
- 	__send_control_msg(portdev, VIRTIO_CONSOLE_BAD_ID,
- 			   VIRTIO_CONSOLE_DEVICE_READY, 1);
- 
-+	update_size_from_config(portdev);
-+
- 	return 0;
- 
- free_chrdev:
+ static void vduse_dev_broken(struct vduse_dev *dev)
+ {
+ 	struct vduse_dev_msg *msg, *tmp;
+@@ -387,7 +393,7 @@ static ssize_t vduse_dev_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	spin_lock(&dev->msg_lock);
+ 	if (ret != size) {
+ 		ret = -EFAULT;
+-		vduse_enqueue_msg(&dev->send_list, msg);
++		vduse_enqueue_msg_head(&dev->send_list, msg);
+ 		goto unlock;
+ 	}
+ 	vduse_enqueue_msg(&dev->recv_list, msg);
 -- 
 2.53.0
 
