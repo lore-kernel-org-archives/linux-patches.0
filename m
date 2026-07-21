@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249AB46DFF5;
-	Tue, 21 Jul 2026 19:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB4D403135;
+	Tue, 21 Jul 2026 19:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660744; cv=none; b=lwQTsNa4gKnaeyOAdyPUCtOR6JOPLWANrpoXMfnvTG43Z17yviImMAeFT7DKi9KJBEAZI7O+tY6MUokvaa22IVUZUxL/ArkwMX5wp6J4yioNyRfGh943z7YzxEMM4SXNYEAGmpzfcqBPnQ1A+UywqgYY0w4qORSzmnmscqTGW+I=
+	t=1784660746; cv=none; b=SFXk4nDSxXzVnOlsl48a8QfnI9g5FkqU1w9uFPxg26k98/zRaG/fLaxZA4RK+wg7uOH6eQzkEnedrHLX4ikYjXgr9pGrww7FSOGJ682i5m+1v+Na3PiJLxtrBnxpUiHnSoU0BTICgSuJTjkWVNpppD2oPrdcLhgkaUCJFAjNc8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660744; c=relaxed/simple;
-	bh=nTt13xQwZnooUwW+t/hKLS+oUcMIMA/eyAMPJ8S/SXI=;
+	s=arc-20240116; t=1784660746; c=relaxed/simple;
+	bh=RkqkIxrhLkoGsnEoL045lPzywinT9fbnmu4X4YNFvsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4Q6D8HvbSQC6IwSW02nvSe6FGXXrney7j4ZY8zNZgznbgJryp1YeElAA+jS6GvPsbjuG1YWTTjwBV+637T+uqFJGiyA5eI+nsn0z36mxLxzUIQmgV3r30vBSu0ZCirhe8r+7rqMKAIyAKPu8savfmdjUjUu+CeIgqowhHArP2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YytlT29O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IW3wdIAKTTsH/kQfKRnHrbqSjz/fdam7kIm8u0V5YAnI1iABnvPJ6YPACxQNr3NHj/vrSnxMMJRw1/Pl7KAs1dE/j6YHews21m/g7cpfvSnA7Pwnqz1J6D1j2Fmf1+8SqwqafuvsBgXJqdunMrzUHK+h63sdSi2UZuWvqCvfCdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlnNnfEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YytlT29O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7B51F000E9;
-	Tue, 21 Jul 2026 19:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlnNnfEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352941F00A3A;
+	Tue, 21 Jul 2026 19:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660743;
-	bh=foDQGy/5VZbTpk5UJkTfML8qvyqnvFNMmDMQuVBXkR0=;
+	s=korg; t=1784660745;
+	bh=lxDI/PcDxKJzTjEMh25H7/RT7YSBghm11ibV1KERcfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YytlT29OXF+0x1FxoQz6hCfqkTbwmmSPmNNdn60kyp4uBtn8TwldbCfqJardDvT8z
-	 LXgPN02c1eqTvgw75FtA5OGmE+E7/9dvcxAnVNr0x86xWyOzn2Y97FrMIqwO8+iHrD
-	 zGU8lRldCTSToE5c74w4HO5Lasu/DddcazuTmYcY=
+	b=WlnNnfEB1a4XVqr73UHgejTaavDKhYjDHfS/yltkK+nP5cIxXBoKTDc1POc9raqqf
+	 SkFrNP/TyvP1vQEq6V0+EZg32l2vaMNrBGdEMDdiTRLPIubnzcUMBQC5sOeWaXxEPI
+	 mQ6AWX7fLQyqGKRgyuyhszEyY30A63mlyPaRmAEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@arm.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Tor Jeremiassen <tor@ti.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1094/2077] perf machine: Use snprintf() for guestmount path construction
-Date: Tue, 21 Jul 2026 17:12:47 +0200
-Message-ID: <20260721152618.626636938@linuxfoundation.org>
+Subject: [PATCH 7.1 1095/2077] perf cs-etm: Validate num_cpu before metadata allocation
+Date: Tue, 21 Jul 2026 17:12:48 +0200
+Message-ID: <20260721152618.649259752@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,53 +57,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit fe63d3bca288c5bb983304efd5fc3a5ff3183403 ]
+[ Upstream commit 312d91329b8fc6989a916a3f9a12d0674167b7e4 ]
 
-machines__findnew() and machines__create_guest_kernel_maps() use
-sprintf() to build paths by prepending symbol_conf.guestmount.
-Both write into PATH_MAX stack buffers, but guestmount comes from
-user configuration and is not length-checked.  A guestmount path
-at or near PATH_MAX causes a stack buffer overflow.
+cs_etm__process_auxtrace_info_full() reads num_cpu from untrusted
+perf.data and uses it to allocate the metadata pointer array:
 
-Switch to snprintf() with sizeof() to prevent overflow.  The
-subsequent access()/fopen() calls will fail on a truncated path.
+  metadata = zalloc(sizeof(*metadata) * num_cpu);
 
-Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
+On 32-bit, sizeof(*metadata) is 4, so num_cpu = 0x40000000 overflows
+the multiplication to 0, causing zalloc(0) to return a valid zero-sized
+allocation followed by out-of-bounds writes in the population loop.
+
+Fix by computing priv_size early and using it to bound num_cpu: each
+CPU needs at least one u64 metadata entry, so num_cpu cannot exceed
+the total number of u64 entries in the event's private data area.
+
+Fixes: cd8bfd8c973eaff8 ("perf tools: Add processing of coresight metadata")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Tor Jeremiassen <tor@ti.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/perf/util/cs-etm.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index e8bce1b4fe7d50..d48d96e4b37dca 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -327,7 +327,7 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
- 	if ((pid != HOST_KERNEL_ID) &&
- 	    (pid != DEFAULT_GUEST_KERNEL_ID) &&
- 	    (symbol_conf.guestmount)) {
--		sprintf(path, "%s/%d", symbol_conf.guestmount, pid);
-+		snprintf(path, sizeof(path), "%s/%d", symbol_conf.guestmount, pid);
- 		if (access(path, R_OK)) {
- 			static struct strlist *seen;
- 
-@@ -1239,9 +1239,9 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 					 namelist[i]->d_name);
- 				continue;
- 			}
--			sprintf(path, "%s/%s/proc/kallsyms",
--				symbol_conf.guestmount,
--				namelist[i]->d_name);
-+			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
-+				 symbol_conf.guestmount,
-+				 namelist[i]->d_name);
- 			ret = access(path, R_OK);
- 			if (ret) {
- 				pr_debug("Can't access file %s\n", path);
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index c1169254fadb7b..2000a03657c845 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -3431,6 +3431,18 @@ int cs_etm__process_auxtrace_info_full(union perf_event *event,
+ 	/* First the global part */
+ 	ptr = (u64 *) auxtrace_info->priv;
+ 	num_cpu = ptr[CS_PMU_TYPE_CPUS] & 0xffffffff;
++
++	/*
++	 * Bound num_cpu by the event size: the global header consumes
++	 * CS_ETM_HEADER_SIZE bytes, and each CPU needs at least one u64
++	 * metadata entry after that.
++	 */
++	priv_size = total_size - event_header_size - INFO_HEADER_SIZE -
++		    CS_ETM_HEADER_SIZE;
++	if (num_cpu <= 0 || priv_size <= 0 ||
++	    num_cpu > priv_size / (int)sizeof(u64))
++		return -EINVAL;
++
+ 	metadata = zalloc(sizeof(*metadata) * num_cpu);
+ 	if (!metadata)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
