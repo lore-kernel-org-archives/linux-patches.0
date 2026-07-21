@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEE633A9FC;
-	Tue, 21 Jul 2026 22:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5501B37E310;
+	Tue, 21 Jul 2026 22:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673599; cv=none; b=aIVJ6hDtHFaBuiBQzAPPzAXoj3ghLQz3fBV/YkcFfyPO/3vKXCGQbakxAtt1ZZ5wR3x717160e3weounxc7dmOb27SdC65p2SDbtXnTDQS0FqqfQuQNWN9QRuXJNyoqGPJIotvsw4ehalPkc2NPbrJOBDNavxlmIbdIk3ns/6dY=
+	t=1784673602; cv=none; b=XptZplMnM59BpTQ5+HktTBPx+sNiRx6rlaVACJak8AUc7D4kDJbLy1482p5p6Znp273objatxFbGZr19r9RqCzjbDVdoSmUvQN2Sqpbon379m30zesyF81kRQkpX743IvNBKTvACFfxdacNUXTaWyf+Radhfc599LNzYcT1L5vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673599; c=relaxed/simple;
-	bh=4SZ5TqoGni6cmgS632Q2q5m9N1be+YthKGIz2zTjMLM=;
+	s=arc-20240116; t=1784673602; c=relaxed/simple;
+	bh=/3+vAxEP53IiMNOLNraq0DAgAkryEt3wt1N2fsWPLC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQ0LqKRhKvI5RMgeTlAvl8NPWkkoFfb2mLplCF759SISweT03mpT0z1fbWQB9OYb2YebLZ4KGBRycJey9D1wOoVeKji7JvTjyCieRPfCelsTFp5XEB51DumpCgfIakd9PEMYTsKUn4yehUtBCDAxXCBB0gX7JwT/WCSISr1i0cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reGmLYAx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pqcAI04BqeV3nbihQ4PD4OKmHfS5Aq45TWuzOKktjYMo3JNJJBekyJ1d/rOdneNM6GBeu35dcNjdvM+OUcsfRyEsXjTyxtAQxJWYY8hmisCubUwYB379S0ZdBvPtXRhDwU0A90L74c4zsMt2bJWnuKzdLCF32maLK+hZFaCmk+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVEb+7i2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reGmLYAx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BA11F000E9;
-	Tue, 21 Jul 2026 22:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVEb+7i2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF0B1F000E9;
+	Tue, 21 Jul 2026 22:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673598;
-	bh=20qunTeIVclUyez8Q4CUtk48eSvictQKGf+4O3hjYy4=;
+	s=korg; t=1784673601;
+	bh=CEySsfXIxd4eJUZGclkgGlBWNKc/fdnzV1GaAx9olgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=reGmLYAxABnWWtrveVn/JupDzUv0f+XsLP0tMN0M3NVrjXjWXk07TZXmCvk6N9jT8
-	 ZXkU1A9iXRXjRBCZI3Ylqag/RharulWhdlwdKvOrrhg8b31MYpIQVR/HscLThiyyLo
-	 y2nl62dNYu1S4SmTdUf+JSxmoAVyjAgm4G8HBTMo=
+	b=aVEb+7i2RQ7ELqcGXGf3KcsE4PVhv27VYNgM64wBk/K26RVNbl+bITiUtc7GxDyAf
+	 ryDr2yUjAJvflXA+LOQP1fMsGIijNbtJ3L8iufa//kspNZ6wXCGiNt9vw5lxuFKLIx
+	 EiOZ0QmdK08gXsd+1ZiIqz7MgFbiV5Dbo7X43Bes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Lothar Rubusch <l.rubusch@gmail.com>,
 	Thorsten Blum <thorsten.blum@linux.dev>,
+	Lukas Wunner <lukas@wunner.de>,
+	Vitaly Chikunov <vt@altlinux.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 179/699] crypto: atmel-sha204a - fix blocking and non-blocking rng logic
-Date: Tue, 21 Jul 2026 17:18:58 +0200
-Message-ID: <20260721152359.736987088@linuxfoundation.org>
+Subject: [PATCH 5.10 180/699] crypto: ecrdsa - fix unknown OID check in ecrdsa_param_curve
+Date: Tue, 21 Jul 2026 17:18:59 +0200
+Message-ID: <20260721152359.758153497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,64 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lothar Rubusch <l.rubusch@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 319400fc5ee15db5793aa45f854968141326effc ]
+[ Upstream commit 2d7b2cfc59998baf5e8622a24dc28f69a5212e06 ]
 
-The blocking and non-blocking paths were failing to provide valid entropy
-due to improper buffer management. Reading the buffer starting from byte 1,
-only fetch the 32 bytes of random data from the return message.
+The ->curve_oid check in ecrdsa_param_curve() rejects the valid enum
+value 0 (OID_id_dsa_with_sha1), but look_up_OID() returns OID__NR on
+lookup failure. Compare ->curve_oid with OID__NR instead to ensure that
+only unknown OIDs return -EINVAL.
 
-Tested on an Atmel SHA204A device.
-
-Before (here for blocking), tests showed repeatedly reading reduced bytes.
-$ head -c 32 /dev/hwrng | hexdump -C
-00000000  02 28 85 b3 47 40 f2 ee  00 00 00 00 00 00 00 00  |.(..G@..........|
-00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-00000020
-
-After, the result will be similar to the following:
-$ head -c 32 /dev/hwrng | hexdump -C
-00000000  5a fc 3f 13 14 68 fe 06  68 0a bd 04 83 6e 09 69  |Z.?..h..h....n.i|
-00000010  75 ff cf 87 10 84 3b c9  c1 df ae eb 45 53 4c c3  |u.....;.....ESL.|
-00000020
-
-Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Lothar Rubusch <l.rubusch@gmail.com>
-Tested-by: Thorsten Blum <thorsten.blum@linux.dev>
+Fixes: 0d7a78643f69 ("crypto: ecrdsa - add EC-RDSA (GOST 34.10) algorithm")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Vitaly Chikunov <vt@altlinux.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-sha204a.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ crypto/ecrdsa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/atmel-sha204a.c b/drivers/crypto/atmel-sha204a.c
-index 64d5ba13f4baf4..550f81ef48ddcf 100644
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -47,8 +47,8 @@ static int atmel_sha204a_rng_read_nonblocking(struct hwrng *rng, void *data,
+diff --git a/crypto/ecrdsa.c b/crypto/ecrdsa.c
+index 0a970261b107d9..bfb6dbfb4598f0 100644
+--- a/crypto/ecrdsa.c
++++ b/crypto/ecrdsa.c
+@@ -153,7 +153,7 @@ int ecrdsa_param_curve(void *context, size_t hdrlen, unsigned char tag,
+ 	struct ecrdsa_ctx *ctx = context;
  
- 	if (rng->priv) {
- 		work_data = (struct atmel_i2c_work_data *)rng->priv;
--		max = min(sizeof(work_data->cmd.data), max);
--		memcpy(data, &work_data->cmd.data, max);
-+		max = min(RANDOM_RSP_SIZE - CMD_OVERHEAD_SIZE, max);
-+		memcpy(data, &work_data->cmd.data[RSP_DATA_IDX], max);
- 		rng->priv = 0;
- 	} else {
- 		work_data = kmalloc(sizeof(*work_data), GFP_ATOMIC);
-@@ -86,8 +86,8 @@ static int atmel_sha204a_rng_read(struct hwrng *rng, void *data, size_t max,
- 	if (ret)
- 		return ret;
- 
--	max = min(sizeof(cmd.data), max);
--	memcpy(data, cmd.data, max);
-+	max = min(RANDOM_RSP_SIZE - CMD_OVERHEAD_SIZE, max);
-+	memcpy(data, &cmd.data[RSP_DATA_IDX], max);
- 
- 	return max;
- }
+ 	ctx->curve_oid = look_up_OID(value, vlen);
+-	if (!ctx->curve_oid)
++	if (ctx->curve_oid == OID__NR)
+ 		return -EINVAL;
+ 	ctx->curve = get_curve_by_oid(ctx->curve_oid);
+ 	return 0;
 -- 
 2.53.0
 
