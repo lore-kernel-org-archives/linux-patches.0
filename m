@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE3D24A078;
-	Tue, 21 Jul 2026 21:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBF944AB6E;
+	Tue, 21 Jul 2026 21:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668772; cv=none; b=eGoQzQEFosnftKDtwS/KmR+qhd1QOmPzYFdY4JUkkvuenIhhssPWq41CMgj70TR4c3cq7Cmu5Qx3s9kmjtIndGg8CHajGuIUTQ9okRN8FSoAKSpgk9EO+YyaoxWiFF72MUj3nCx5kkehx9Dxn/Xr5/R+VKauf+T2+I0PpBv0wSA=
+	t=1784668774; cv=none; b=OmfW4C7hdgmclWVNV/AgvOHBMJQYF/cHyn5clBVFsDb5GqAkUku/2WrKUUPiwX2yER5znVaSNIcBVYIXDREtN25uS1/1wLJK1r7ipa0uMCLCFQNiTYrEB8r7FP4bfcjvfM/WgNQdf571S1FnyeSXXhQLiM+03b/dtr8APht1Vz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668772; c=relaxed/simple;
-	bh=A1CiDkjO+12GxTF6JNqCbERh8IHMDf5vcCnWwbrqer4=;
+	s=arc-20240116; t=1784668774; c=relaxed/simple;
+	bh=OAj+mW6rlo/H/HWhcOkp6UaaQfqUfVXpAO5gFJ8HATA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQe/t6oVgbDHaETddUPpxSWYWq6lO2nptfeEXUvaLPphzr0N13e5NbLW7LyGr08PFnEZOhQ4KIWC0zRExd2I6A0eVmTv69dlYoyQHn3zWvfNns+XTZrRNkAC3fMJpRbeZIrzUKT+KC4rEprqWod9zajyDaeBThU254CNGjJ4IB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFG6/feT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SrGUommGMz1MNJmJp8DLax6uiYDsLQbsTh7XjrLPmAzAlVKJQq6u8k+CWvR8TpEpmcJXfpS20PcOm5baD8PtwpBGpAHYGDGv0hhEZzSUrHSmauLSGb9DC5VLtlcFkbmjBtshwiANlguO/V7zfdrrt8/EMKYcvP5SvwH/lGbIsME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5jDZoO3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFG6/feT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753BA1F000E9;
-	Tue, 21 Jul 2026 21:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5jDZoO3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CAB61F000E9;
+	Tue, 21 Jul 2026 21:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668771;
-	bh=vx5AuVdvxz4oMgPQuXZHq4ky7SO+nbE3BxnJXM6Zl0o=;
+	s=korg; t=1784668773;
+	bh=oIiuEeuT5qUEpX/g775AsxIeJD1lN9Llu/QgKPp815Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HFG6/feTPKHKB72VWcGmhXdnX9WGvvVgbwgAIDmHB1oV/RkV1RThf5MCF+7Zk4iZG
-	 y5/bUqOR6kzLILBeLAw8gaKMfdjcEud46UpzRz2GuO1YYP44SjuRCEoDSxiS1vQJNV
-	 0lXb/cWPDVJcA6K2rlb2/47HX5gAkN6WIInIwcMY=
+	b=Y5jDZoO3+d9GuCsPHm7zBR/uaH0jdyqzv1oMzsaIK8ite1VwLFG1nNb7KIIUbpZ6d
+	 LbNr4kAjqSykBuXIrW7v96wsIryjTdbaIfQr7N77LtQv/ngVQpHFShphVvpe6Lf+WB
+	 2BeH2+rbvwjzeisWDcdJ5hyfdgKbvXLtciRS0698=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin He <helin52@huawei.com>,
-	Yongbang Shi <shiyongbang@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0303/1067] drm/hisilicon/hibmc: move display contrl config to hibmc_probe()
-Date: Tue, 21 Jul 2026 17:15:04 +0200
-Message-ID: <20260721152431.374962304@linuxfoundation.org>
+Subject: [PATCH 6.1 0286/1067] driver core: use READ_ONCE() for dev->driver in dev_has_sync_state()
+Date: Tue, 21 Jul 2026 17:14:47 +0200
+Message-ID: <20260721152430.999027711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,98 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin He <helin52@huawei.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit de2a56c71f9b223922ea8fe0192d3c1fa2954608 ]
+[ Upstream commit e9506871a8ea304cde48ff4a57226df2aadddae3 ]
 
-If there's no VGA output, this encoder modeset won't be called, which
-will cause displaying data from GPU being cut off. It's actually a
-common display config for DP and VGA, so move the vdac encoder modeset
-to driver load stage.
+dev_has_sync_state() reads dev->driver twice without holding
+device_lock() -- once for the NULL check and once to dereference
+->sync_state. Some callers only hold device_links_write_lock, which
+doesn't prevent a concurrent unbind from clearing dev->driver via
+device_unbind_cleanup().
 
-Removed invalid bit configurations from `hibmc_display_ctrl`
+Fix it by reading dev->driver exactly once with READ_ONCE(), pairing
+with the WRITE_ONCE() in device_set_driver().
 
-Fixes: 5294967f4ae4 ("drm/hisilicon/hibmc: Add support for VDAC")
-Signed-off-by: Lin He <helin52@huawei.com>
-Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509032302.2057227-4-shiyongbang@huawei.com
+Link: https://lore.kernel.org/driver-core/DHW8QPU1VU1F.3P6PH69HLFBYC@kernel.org/
+Fixes: ac338acf514e ("driver core: Add dev_has_sync_state()")
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Saravana Kannan <saravanak@kernel.org>
+Link: https://patch.msgid.link/20260418162221.1121873-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   | 11 ++++++++++
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c  | 22 -------------------
- 2 files changed, 11 insertions(+), 22 deletions(-)
+ include/linux/device.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-index 20c2af66ee53f2..038b596b2fb281 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-@@ -175,6 +175,15 @@ void hibmc_set_current_gate(struct hibmc_drm_private *priv, unsigned int gate)
- 	writel(gate, mmio + gate_reg);
- }
+diff --git a/include/linux/device.h b/include/linux/device.h
+index e642b366aa380f..eae657af3a0e51 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -914,9 +914,12 @@ static inline struct device_node *dev_of_node(struct device *dev)
  
-+static void hibmc_display_ctrl(struct hibmc_drm_private *priv)
-+{
-+	u32 reg;
-+
-+	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
-+	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
-+	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
-+}
-+
- static void hibmc_hw_config(struct hibmc_drm_private *priv)
+ static inline bool dev_has_sync_state(struct device *dev)
  {
- 	u32 reg;
-@@ -206,6 +215,8 @@ static void hibmc_hw_config(struct hibmc_drm_private *priv)
- 	reg |= HIBMC_MSCCTL_LOCALMEM_RESET(1);
- 
- 	writel(reg, priv->mmio + HIBMC_MISC_CTRL);
++	struct device_driver *drv;
 +
-+	hibmc_display_ctrl(priv);
- }
- 
- static int hibmc_hw_map(struct hibmc_drm_private *priv)
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-index c228091fb0e6a4..532f5a0fcfcc70 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-@@ -64,26 +64,6 @@ static const struct drm_connector_funcs hibmc_connector_funcs = {
- 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
- };
- 
--static void hibmc_encoder_mode_set(struct drm_encoder *encoder,
--				   struct drm_display_mode *mode,
--				   struct drm_display_mode *adj_mode)
--{
--	u32 reg;
--	struct drm_device *dev = encoder->dev;
--	struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
--
--	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
--	reg |= HIBMC_DISPLAY_CONTROL_FPVDDEN(1);
--	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
--	reg |= HIBMC_DISPLAY_CONTROL_FPEN(1);
--	reg |= HIBMC_DISPLAY_CONTROL_VBIASEN(1);
--	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
--}
--
--static const struct drm_encoder_helper_funcs hibmc_encoder_helper_funcs = {
--	.mode_set = hibmc_encoder_mode_set,
--};
--
- int hibmc_vdac_init(struct hibmc_drm_private *priv)
- {
- 	struct drm_device *dev = &priv->dev;
-@@ -106,8 +86,6 @@ int hibmc_vdac_init(struct hibmc_drm_private *priv)
- 		return ret;
- 	}
- 
--	drm_encoder_helper_add(encoder, &hibmc_encoder_helper_funcs);
--
- 	ret = drm_connector_init_with_ddc(dev, connector,
- 					  &hibmc_connector_funcs,
- 					  DRM_MODE_CONNECTOR_VGA,
+ 	if (!dev)
+ 		return false;
+-	if (dev->driver && dev->driver->sync_state)
++	drv = READ_ONCE(dev->driver);
++	if (drv && drv->sync_state)
+ 		return true;
+ 	if (dev->bus && dev->bus->sync_state)
+ 		return true;
 -- 
 2.53.0
 
