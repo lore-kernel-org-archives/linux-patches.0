@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DC12E736D;
-	Tue, 21 Jul 2026 17:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85E13F825C;
+	Tue, 21 Jul 2026 17:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654579; cv=none; b=sOLEGpth4zXUolnTbkcZgjWrFXvpQLBeKO8Yi5itaheSt+b9dENsQbR6VUQO/0PBssOoaBNrw9N8V4DVS+eodq7M5T4xupmcnahp3Vrcj+aq7d86aqcL8ABrRnK0IdwX3HQWk054ssKBcW3HDSCnIejj+FoZn2TTGspSsf4qdSY=
+	t=1784654583; cv=none; b=L9QkT2zoWkktelrbcgTwMTbT5t60hC/DI2YhGSpoQ2tZMxzwzSR83LnohE/5lwCKqnrhJWjw9f5tmGL5PE71w0vpIAanMn7KT2NiH7su4kONLJV0ucgDvQzM3ekrKnhlpp7lhlAEzUMy/r1jfW3zGp0ot68kkEtF6a5YuiiP/4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654579; c=relaxed/simple;
-	bh=n+RAd1nTcJoL1CIoKQUIgYRgLjhCL2LlOfZiPIfgOu4=;
+	s=arc-20240116; t=1784654583; c=relaxed/simple;
+	bh=mfyegmyy17camLG8qkxTTn1qTeprFRLivbJbEh4QiZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SyHNJbDE7iYP8BjjgKnqqwrLpijjao5RW29t39naYoUfBOBCic0zNw39IE2G4EP8gB9gxK95Rw6sPjrTdYywDa6qBz+r5OymZVOT2MCpKI4vlohuC6y2HSQzAyGCS4YpsQeWtvb2RUHJEPpgchr3QPQYAAZaKXeRqy0nxVcxSyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiGAI5xI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=io2D7FKB/sBjyjQaM3rFEYaV4KvBjSlo5auvZBkgTfvWlAqyy05d6soJkCZT1E7PKlbxGX7HwjfojlEYq5OFUC+iVV0VjXTqp6JPfWDPHCrRPC2CUE/gFV1VJ6iyfWV4Gta8XKQMnZdhJT692aZk7jhG5vjvulQJv757MhNFSdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/qIVmkg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiGAI5xI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9401F000E9;
-	Tue, 21 Jul 2026 17:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/qIVmkg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470A11F000E9;
+	Tue, 21 Jul 2026 17:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654578;
-	bh=x3L7GVr+zdPwgS1kjYJSI5pz+sWZ+SqQi+V2PI5FekI=;
+	s=korg; t=1784654580;
+	bh=yom0AC55cM/vMLxJaw79v0nrnXBSmx3cs6I+uPVcEog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xiGAI5xIlVT6IdJwM15lxWmrEJw6jPO5282yWDT77cEI4SPtyKlALLYbt5WNPcGSz
-	 HdBxbbiqnYZPcQpkiQPYJd8htRBlQgbDzw4V0yWRb4sEwT8avVjKd2oNuphpMzff0S
-	 p+R4LTN1ADd7cGllajqacX5NTEdK7pmYuukvOAOM=
+	b=0/qIVmkg4U59bFXrLPeqUzZz8v8dwwZGWQ3fMEjzlUWckBSQb0gihQqL85vYKxrqB
+	 2b7YZ1iOKNKTzFbihrLoEbi0C/7stLtoPFPh3kKXeRx2RPEziz8UyTA5m2ZZJsWu+U
+	 dnjvTtaGMkYHKccm1Gy5Lfvh0+7VhqC63agOc3aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 7.1 1705/2077] fs/ntfs3: validate lcns_follow in log_replay conversion
-Date: Tue, 21 Jul 2026 17:22:58 +0200
-Message-ID: <20260721152632.974471394@linuxfoundation.org>
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 1752/2077] ocfs2: add journal NULL check in ocfs2_checkpoint_inode()
+Date: Tue, 21 Jul 2026 17:23:45 +0200
+Message-ID: <20260721152634.069067751@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,76 +57,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 6a4c53a2e26a865565bd6a460961e8d6fcb32329 upstream.
+commit a291c77c034b7a81849ce9b71cc9ecda9e587d89 upstream.
 
-log_replay() converts DIR_PAGE_ENTRY_32 records into DIR_PAGE_ENTRY
-records when replaying version 0 restart tables.
+During unmount, ocfs2_journal_shutdown() frees the journal and sets
+osb->journal to NULL. Later, when VFS evicts remaining cached inodes,
+ocfs2_evict_inode() -> ocfs2_clear_inode() -> ocfs2_checkpoint_inode()
+-> ocfs2_ci_fully_checkpointed() dereferences osb->journal, causing a
+NULL pointer dereference.
 
-During this conversion, the memmove() length is derived directly from
-the on-disk lcns_follow field:
+Fix this by adding a NULL check for osb->journal in
+ocfs2_checkpoint_inode(). If the journal is NULL, it has already been
+fully flushed and destroyed during shutdown, so there is nothing to
+checkpoint.
 
-	memmove(&dp->vcn, &dp0->vcn_low,
-		2 * sizeof(u64) +
-				le32_to_cpu(dp->lcns_follow) * sizeof(u64));
-
-check_rstbl() validates restart table structure, but does not constrain
-per-entry lcns_follow values relative to the entry size. A malformed
-filesystem image can provide an oversized lcns_follow value, causing
-the conversion memmove() to access memory beyond the bounds of the
-allocated restart table buffer.
-
-The same field is later used to bound iteration over page_lcns[],
-so validating lcns_follow during conversion also prevents downstream
-out-of-bounds access from the same malformed metadata.
-
-Compute the maximum valid lcns_follow from the already-validated
-restart table entry size and reject entries that exceed this bound.
-Reuse the existing t16/t32 scratch variables already declared in
-log_replay() to avoid introducing new declarations.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-[almaz.alexandrovich@paragon-software.com: fixed the conflicts]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Link: https://lore.kernel.org/20260531131645.3650299-1-joseph.qi@linux.alibaba.com
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Fixes: da5e7c87827e ("ocfs2: cleanup journal init and shutdown")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Tested-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/ocfs2/journal.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -4262,13 +4262,26 @@ check_dirty_page_table:
- 	if (rst->major_ver)
- 		goto end_conv_1; /* reduce tab pressure. */
+--- a/fs/ocfs2/journal.h
++++ b/fs/ocfs2/journal.h
+@@ -196,6 +196,9 @@ static inline void ocfs2_checkpoint_inod
+ 	if (ocfs2_mount_local(osb))
+ 		return;
  
-+	t16 = le16_to_cpu(dptbl->size);
-+	if (t16 < sizeof(struct DIR_PAGE_ENTRY)) {
-+		log->set_dirty = true;
-+		goto out;
-+	}
++	if (!osb->journal)
++		return;
 +
-+	t32 = (t16 - sizeof(struct DIR_PAGE_ENTRY)) / sizeof(u64);
-+
- 	dp = NULL;
- 	while ((dp = enum_rstbl(dptbl, dp))) {
- 		struct DIR_PAGE_ENTRY_32 *dp0 = (struct DIR_PAGE_ENTRY_32 *)dp;
--		// NOTE: Danger. Check for of boundary.
-+		u32 lcns = le32_to_cpu(dp->lcns_follow);
-+
-+		if (lcns > t32) {
-+			log->set_dirty = true;
-+			goto out;
-+		}
-+
- 		memmove(&dp->vcn, &dp0->vcn_low,
--			2 * sizeof(u64) +
--				le32_to_cpu(dp->lcns_follow) * sizeof(u64));
-+			2 * sizeof(u64) + lcns * sizeof(u64));
- 	}
- 
- end_conv_1:
+ 	if (!ocfs2_ci_fully_checkpointed(INODE_CACHE(inode))) {
+ 		/* WARNING: This only kicks off a single
+ 		 * checkpoint. If someone races you and adds more
 
 
