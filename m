@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B26D4D90C1;
-	Tue, 21 Jul 2026 21:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C4A471254;
+	Tue, 21 Jul 2026 21:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667828; cv=none; b=DfBjuVLchgoGvAAnJpfwMJLxbTVNN7LT3RupihnipCkVKE7CTOKaqMuP53NF7SUf3i8TAucz5JjmYTasDRQ3kdUv4xeNbdNBgcPnuWGxO/EQhTv6VSlYooUCmuRBx8zY38upgZiYLZJMt0orBNJihh6dPj2gQ0bvDY7zSMgy/IM=
+	t=1784667833; cv=none; b=n+TqYBx1Ze0BH1MMKkLLsmxxm7vCVvz1sc6hrujQW4OXbfvRAzZfG7GM0HTuw8WOFkWgrE0wfbtcOWZBCy9o/PGvcqYDMVodB3Go+33Dps2OYcElr6fW2e6ffWe1cv7r8UMtG9cFjw3OSUHRN7IYXcgKKh8sjzy7tdhbj9twxn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667828; c=relaxed/simple;
-	bh=8H/hDw7WcREGeC6pcT9PHBDUmEztflUDhUoLCn76+T0=;
+	s=arc-20240116; t=1784667833; c=relaxed/simple;
+	bh=p4peWU9K9nnv301dYxmvN5L0yDUPjs39rJHiuOQ+0xQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pLVlkRvgRp0pgzFQPbRlNNBd/W7aL0aVpa5S7zc01bNvwpS8Lq+a6V7SfmgCf4QfTEWWRyqBuPcvmeWie0AsbwbrYm99Fmhh62KSpH6dbkLHodHuAPjFnYPlgoofM8Hk5CP/A9/qvqQyTEstwm/T1157fYNr2Ak6cm8EPMfaAWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHJmekxQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=amyAMjjuB/tN8jfjNWj/PkcvB8K3IUyB8bYrfmomGrlPbDCa61eqTlvRchaXxUXe/swD0v5AL+YsIraS+k1V8bk3k1INoNlPQz+jAPORdz+pF+dfpz8l1ADh+TipiN9nvgXVBRqdLYoUvDJmhmWnO4xqdwhHOFQvRLfs8eNlDuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0qTV2t7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHJmekxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0731E1F00A3A;
-	Tue, 21 Jul 2026 21:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0qTV2t7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDBC1F00A3E;
+	Tue, 21 Jul 2026 21:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667816;
-	bh=SHUa+tWC/IfwpTnbtL9cmeM1A5SgJ7Hf9Z460AsLfWo=;
+	s=korg; t=1784667827;
+	bh=W15DywyFgmtI+mPu422fxjkRaxKqs7r/A3dB7ar10V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZHJmekxQRMRkYvCkeoNsZxQCMsZL6GAbqI01aNAYCMiJwtxMudW40uj083Ep4QQ/W
-	 w7UrnFQ1C/LK0mnyU4Zwxr1gACKNO3uvcZch6p2btZMwMegiWdcAPHM0hkyfc6omTw
-	 qfN+SHIahj4LbZbC/ym2+xBshptHObHwQYUU95/c=
+	b=a0qTV2t7eBkOVlBoMez1v+P0CBMc2/TQ59E/FWTn1rICXlhLsJIbSaOSagqRuXTeJ
+	 v+wONYRHiAWBt6MFySBEyA2X8PeNkE6A0McTNyxeSZUUP3jmM2RDyT/A47K7dJHAoQ
+	 b+LrMFX5sHetDIJzxDLxfERpKfE3XTZVdr34pDjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Jan Kara <jack@suse.cz>,
+	Trung Nguyen <trungnh@cystack.net>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1205/1266] writeback: Avoid contention on wb->list_lock when switching inodes
-Date: Tue, 21 Jul 2026 17:27:22 +0200
-Message-ID: <20260721152508.766360497@linuxfoundation.org>
+Subject: [PATCH 6.6 1209/1266] HID: multitouch: fix out-of-bounds bit access on mt_io_flags
+Date: Tue, 21 Jul 2026 17:27:26 +0200
+Message-ID: <20260721152508.855546854@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,291 +51,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Trung Nguyen <trungnh@cystack.net>
 
-[ Upstream commit e1b849cfa6b61f1c866a908c9e8dd9b5aaab820b ]
+[ Upstream commit 8813b0612275cc61fe9e6603d0ee019247ade6be ]
 
-There can be multiple inode switch works that are trying to switch
-inodes to / from the same wb. This can happen in particular if some
-cgroup exits which owns many (thousands) inodes and we need to switch
-them all. In this case several inode_switch_wbs_work_fn() instances will
-be just spinning on the same wb->list_lock while only one of them makes
-forward progress. This wastes CPU cycles and quickly leads to softlockup
-reports and unusable system.
+mt_io_flags is a single unsigned long, but mt_process_slot(),
+mt_release_pending_palms() and mt_release_contacts() use it as a
+per-slot bitmap indexed by the slot number. That slot number is only
+bounded by td->maxcontacts, which is taken from the device's
+ContactCountMaximum feature report and can be up to 255, not by
+BITS_PER_LONG.
 
-Instead of running several inode_switch_wbs_work_fn() instances in
-parallel switching to the same wb and contending on wb->list_lock, run
-just one work item per wb and manage a queue of isw items switching to
-this wb.
+As a result, a multitouch device that advertises a large contact count
+makes set_bit()/clear_bit() operate past the mt_io_flags word and
+corrupt the adjacent members of struct mt_device. The sticky-fingers
+release timer is the easiest way to reach this. mt_release_contacts()
+runs
 
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Stable-dep-of: cba38ec4cbd3 ("writeback: fix race between cgroup_writeback_umount() and inode_switch_wbs()")
+	for (i = 0; i < mt->num_slots; i++)
+		clear_bit(i, &td->mt_io_flags);
+
+with num_slots == maxcontacts. For maxcontacts around 250 the loop
+clears the bits that overlap td->applications.next, zeroing that list
+head, and the list_for_each_entry() that immediately follows then
+dereferences NULL. The kernel panics from timer (softirq) context. On a
+KASAN build this shows up as a general protection fault in
+mt_release_contacts() with a null-ptr-deref at offset 0x58, which is
+offsetof(struct mt_application, num_received).
+
+The state is reachable from an untrusted USB or Bluetooth HID
+multitouch device; no local privileges are required.
+
+Store the per-slot active state in a separately allocated bitmap sized
+for maxcontacts, the same pattern already used for pending_palm_slots,
+and keep only MT_IO_FLAGS_RUNNING in mt_io_flags. The two
+"mt_io_flags & MT_IO_SLOTS_MASK" arming checks become
+bitmap_empty(td->active_slots, td->maxcontacts).
+
+Move MT_IO_FLAGS_RUNNING back to bit 0. It was bumped to bit 32 by the
+same commit to leave the low byte for the slot bits; with the slot bits
+gone it fits in bit 0 again, which also keeps it within the unsigned
+long on 32-bit.
+
+Fixes: 46f781e0d151 ("HID: multitouch: fix sticky fingers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Trung Nguyen <trungnh@cystack.net>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c                |   99 ++++++++++++++++++++++++---------------
- include/linux/backing-dev-defs.h |    4 +
- include/linux/writeback.h        |    2 
- mm/backing-dev.c                 |    5 +
- 4 files changed, 74 insertions(+), 36 deletions(-)
+ drivers/hid/hid-multitouch.c |   32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -345,7 +345,8 @@ static struct bdi_writeback *inode_to_wb
- }
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -31,6 +31,7 @@
+  * [1] https://gitlab.freedesktop.org/libevdev/hid-tools
+  */
  
- struct inode_switch_wbs_context {
--	struct rcu_work		work;
-+	/* List of queued switching contexts for the wb */
-+	struct llist_node	list;
- 
- 	/*
- 	 * Multiple inodes can be switched at once.  The switching procedure
-@@ -355,7 +356,6 @@ struct inode_switch_wbs_context {
- 	 * array embedded into struct inode_switch_wbs_context.  Otherwise
- 	 * an inode could be left in a non-consistent state.
- 	 */
--	struct bdi_writeback	*new_wb;
- 	struct inode		*inodes[];
++#include <linux/bitmap.h>
+ #include <linux/device.h>
+ #include <linux/hid.h>
+ #include <linux/module.h>
+@@ -83,8 +84,7 @@ enum latency_mode {
+ 	HID_LATENCY_HIGH = 1,
  };
  
-@@ -464,13 +464,11 @@ skip_switch:
- 	return switched;
- }
+-#define MT_IO_SLOTS_MASK		GENMASK(7, 0) /* reserve first 8 bits for slot tracking */
+-#define MT_IO_FLAGS_RUNNING		32
++#define MT_IO_FLAGS_RUNNING		0
  
--static void inode_switch_wbs_work_fn(struct work_struct *work)
-+static void process_inode_switch_wbs(struct bdi_writeback *new_wb,
-+				     struct inode_switch_wbs_context *isw)
- {
--	struct inode_switch_wbs_context *isw =
--		container_of(to_rcu_work(work), struct inode_switch_wbs_context, work);
- 	struct backing_dev_info *bdi = inode_to_bdi(isw->inodes[0]);
- 	struct bdi_writeback *old_wb = isw->inodes[0]->i_wb;
--	struct bdi_writeback *new_wb = isw->new_wb;
- 	unsigned long nr_switched = 0;
- 	struct inode **inodep;
+ static const bool mtrue = true;		/* default for true */
+ static const bool mfalse;		/* default for false */
+@@ -160,10 +160,9 @@ struct mt_device {
+ 	struct mt_class mtclass;	/* our mt device class */
+ 	struct timer_list release_timer;	/* to release sticky fingers */
+ 	struct hid_device *hdev;	/* hid_device we're attached to */
+-	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING)
+-					 * first 8 bits are reserved for keeping the slot
+-					 * states, this is fine because we only support up
+-					 * to 250 slots (MT_MAX_MAXCONTACT)
++	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING) */
++	unsigned long *active_slots;	/* bitmap of slots with an active
++					 * contact, sized for maxcontacts
+ 					 */
+ 	__u8 inputmode_value;	/* InputMode HID feature value */
+ 	__u8 maxcontacts;
+@@ -947,7 +946,7 @@ static void mt_release_pending_palms(str
  
-@@ -530,6 +528,38 @@ relock:
- 	atomic_dec(&isw_nr_in_flight);
- }
+ 	for_each_set_bit(slotnum, app->pending_palm_slots, td->maxcontacts) {
+ 		clear_bit(slotnum, app->pending_palm_slots);
+-		clear_bit(slotnum, &td->mt_io_flags);
++		clear_bit(slotnum, td->active_slots);
  
-+void inode_switch_wbs_work_fn(struct work_struct *work)
-+{
-+	struct bdi_writeback *new_wb = container_of(work, struct bdi_writeback,
-+						    switch_work);
-+	struct inode_switch_wbs_context *isw, *next_isw;
-+	struct llist_node *list;
-+
-+	/*
-+	 * Grab out reference to wb so that it cannot get freed under us
-+	 * after we process all the isw items.
-+	 */
-+	wb_get(new_wb);
-+	while (1) {
-+		list = llist_del_all(&new_wb->switch_wbs_ctxs);
-+		/* Nothing to do? */
-+		if (!list)
-+			break;
-+		/*
-+		 * In addition to synchronizing among switchers, I_WB_SWITCH
-+		 * tells the RCU protected stat update paths to grab the i_page
-+		 * lock so that stat transfer can synchronize against them.
-+		 * Let's continue after I_WB_SWITCH is guaranteed to be
-+		 * visible.
-+		 */
-+		synchronize_rcu();
-+
-+		llist_for_each_entry_safe(isw, next_isw, list, list)
-+			process_inode_switch_wbs(new_wb, isw);
-+	}
-+	wb_put(new_wb);
-+}
-+
- static bool inode_prepare_wbs_switch(struct inode *inode,
- 				     struct bdi_writeback *new_wb)
- {
-@@ -559,6 +589,13 @@ static bool inode_prepare_wbs_switch(str
- 	return true;
- }
+ 		input_mt_slot(input, slotnum);
+ 		input_mt_report_slot_inactive(input);
+@@ -1153,9 +1152,9 @@ static int mt_process_slot(struct mt_dev
+ 		input_event(input, EV_ABS, ABS_MT_TOUCH_MAJOR, major);
+ 		input_event(input, EV_ABS, ABS_MT_TOUCH_MINOR, minor);
  
-+static void wb_queue_isw(struct bdi_writeback *wb,
-+			 struct inode_switch_wbs_context *isw)
-+{
-+	if (llist_add(&isw->list, &wb->switch_wbs_ctxs))
-+		queue_work(isw_wq, &wb->switch_work);
-+}
-+
- /**
-  * inode_switch_wbs - change the wb association of an inode
-  * @inode: target inode
-@@ -572,6 +609,7 @@ static void inode_switch_wbs(struct inod
- 	struct backing_dev_info *bdi = inode_to_bdi(inode);
- 	struct cgroup_subsys_state *memcg_css;
- 	struct inode_switch_wbs_context *isw;
-+	struct bdi_writeback *new_wb = NULL;
- 
- 	/* noop if seems to be already in progress */
- 	if (inode->i_state & I_WB_SWITCH)
-@@ -596,40 +634,34 @@ static void inode_switch_wbs(struct inod
- 	if (!memcg_css)
- 		goto out_free;
- 
--	isw->new_wb = wb_get_create(bdi, memcg_css, GFP_ATOMIC);
-+	new_wb = wb_get_create(bdi, memcg_css, GFP_ATOMIC);
- 	css_put(memcg_css);
--	if (!isw->new_wb)
-+	if (!new_wb)
- 		goto out_free;
- 
--	if (!inode_prepare_wbs_switch(inode, isw->new_wb))
-+	if (!inode_prepare_wbs_switch(inode, new_wb))
- 		goto out_free;
- 
- 	isw->inodes[0] = inode;
- 
--	/*
--	 * In addition to synchronizing among switchers, I_WB_SWITCH tells
--	 * the RCU protected stat update paths to grab the i_page
--	 * lock so that stat transfer can synchronize against them.
--	 * Let's continue after I_WB_SWITCH is guaranteed to be visible.
--	 */
--	INIT_RCU_WORK(&isw->work, inode_switch_wbs_work_fn);
--	queue_rcu_work(isw_wq, &isw->work);
-+	wb_queue_isw(new_wb, isw);
- 	return;
- 
- out_free:
- 	atomic_dec(&isw_nr_in_flight);
--	if (isw->new_wb)
--		wb_put(isw->new_wb);
-+	if (new_wb)
-+		wb_put(new_wb);
- 	kfree(isw);
- }
- 
--static bool isw_prepare_wbs_switch(struct inode_switch_wbs_context *isw,
-+static bool isw_prepare_wbs_switch(struct bdi_writeback *new_wb,
-+				   struct inode_switch_wbs_context *isw,
- 				   struct list_head *list, int *nr)
- {
- 	struct inode *inode;
- 
- 	list_for_each_entry(inode, list, i_io_list) {
--		if (!inode_prepare_wbs_switch(inode, isw->new_wb))
-+		if (!inode_prepare_wbs_switch(inode, new_wb))
- 			continue;
- 
- 		isw->inodes[*nr] = inode;
-@@ -653,6 +685,7 @@ bool cleanup_offline_cgwb(struct bdi_wri
- {
- 	struct cgroup_subsys_state *memcg_css;
- 	struct inode_switch_wbs_context *isw;
-+	struct bdi_writeback *new_wb;
- 	int nr;
- 	bool restart = false;
- 
-@@ -665,12 +698,12 @@ bool cleanup_offline_cgwb(struct bdi_wri
- 
- 	for (memcg_css = wb->memcg_css->parent; memcg_css;
- 	     memcg_css = memcg_css->parent) {
--		isw->new_wb = wb_get_create(wb->bdi, memcg_css, GFP_KERNEL);
--		if (isw->new_wb)
-+		new_wb = wb_get_create(wb->bdi, memcg_css, GFP_KERNEL);
-+		if (new_wb)
- 			break;
+-		set_bit(slotnum, &td->mt_io_flags);
++		set_bit(slotnum, td->active_slots);
+ 	} else {
+-		clear_bit(slotnum, &td->mt_io_flags);
++		clear_bit(slotnum, td->active_slots);
  	}
--	if (unlikely(!isw->new_wb))
--		isw->new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
-+	if (unlikely(!new_wb))
-+		new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
  
- 	nr = 0;
- 	spin_lock(&wb->list_lock);
-@@ -682,27 +715,21 @@ bool cleanup_offline_cgwb(struct bdi_wri
- 	 * bandwidth restrictions, as writeback of inode metadata is not
- 	 * accounted for.
+ 	return 0;
+@@ -1290,7 +1289,7 @@ static void mt_touch_report(struct hid_d
+ 	 * defect.
  	 */
--	restart = isw_prepare_wbs_switch(isw, &wb->b_attached, &nr);
-+	restart = isw_prepare_wbs_switch(new_wb, isw, &wb->b_attached, &nr);
- 	if (!restart)
--		restart = isw_prepare_wbs_switch(isw, &wb->b_dirty_time, &nr);
-+		restart = isw_prepare_wbs_switch(new_wb, isw, &wb->b_dirty_time,
-+						 &nr);
- 	spin_unlock(&wb->list_lock);
+ 	if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
+-		if (td->mt_io_flags & MT_IO_SLOTS_MASK)
++		if (!bitmap_empty(td->active_slots, td->maxcontacts))
+ 			mod_timer(&td->release_timer,
+ 				  jiffies + msecs_to_jiffies(100));
+ 		else
+@@ -1330,6 +1329,15 @@ static int mt_touch_input_configured(str
+ 	if (td->is_buttonpad)
+ 		__set_bit(INPUT_PROP_BUTTONPAD, input->propbit);
  
- 	/* no attached inodes? bail out */
- 	if (nr == 0) {
- 		atomic_dec(&isw_nr_in_flight);
--		wb_put(isw->new_wb);
-+		wb_put(new_wb);
- 		kfree(isw);
- 		return restart;
- 	}
- 
--	/*
--	 * In addition to synchronizing among switchers, I_WB_SWITCH tells
--	 * the RCU protected stat update paths to grab the i_page
--	 * lock so that stat transfer can synchronize against them.
--	 * Let's continue after I_WB_SWITCH is guaranteed to be visible.
--	 */
--	INIT_RCU_WORK(&isw->work, inode_switch_wbs_work_fn);
--	queue_rcu_work(isw_wq, &isw->work);
-+	wb_queue_isw(new_wb, isw);
- 
- 	return restart;
- }
---- a/include/linux/backing-dev-defs.h
-+++ b/include/linux/backing-dev-defs.h
-@@ -152,6 +152,10 @@ struct bdi_writeback {
- 	struct list_head blkcg_node;	/* anchored at blkcg->cgwb_list */
- 	struct list_head b_attached;	/* attached inodes, protected by list_lock */
- 	struct list_head offline_node;	/* anchored at offline_cgwbs */
-+	struct work_struct switch_work;	/* work used to perform inode switching
-+					 * to this wb */
-+	struct llist_head switch_wbs_ctxs;	/* queued contexts for
-+						 * writeback switching */
- 
- 	union {
- 		struct work_struct release_work;
---- a/include/linux/writeback.h
-+++ b/include/linux/writeback.h
-@@ -283,6 +283,8 @@ static inline void wbc_init_bio(struct w
- 		bio_associate_blkg_from_css(bio, wbc->wb->blkcg_css);
- }
- 
-+void inode_switch_wbs_work_fn(struct work_struct *work);
++	if (!td->active_slots) {
++		td->active_slots = devm_kcalloc(&td->hdev->dev,
++						BITS_TO_LONGS(td->maxcontacts),
++						sizeof(long),
++						GFP_KERNEL);
++		if (!td->active_slots)
++			return -ENOMEM;
++	}
 +
- #else	/* CONFIG_CGROUP_WRITEBACK */
- 
- static inline void inode_attach_wb(struct inode *inode, struct folio *folio)
---- a/mm/backing-dev.c
-+++ b/mm/backing-dev.c
-@@ -545,6 +545,7 @@ static void cgwb_release_workfn(struct w
- 	wb_exit(wb);
- 	bdi_put(bdi);
- 	WARN_ON_ONCE(!list_empty(&wb->b_attached));
-+	WARN_ON_ONCE(work_pending(&wb->switch_work));
- 	call_rcu(&wb->rcu, cgwb_free_rcu);
- }
- 
-@@ -621,6 +622,8 @@ static int cgwb_create(struct backing_de
- 	wb->memcg_css = memcg_css;
- 	wb->blkcg_css = blkcg_css;
- 	INIT_LIST_HEAD(&wb->b_attached);
-+	INIT_WORK(&wb->switch_work, inode_switch_wbs_work_fn);
-+	init_llist_head(&wb->switch_wbs_ctxs);
- 	INIT_WORK(&wb->release_work, cgwb_release_workfn);
- 	set_bit(WB_registered, &wb->state);
- 	bdi_get(bdi);
-@@ -751,6 +754,8 @@ static int cgwb_bdi_init(struct backing_
- 	if (!ret) {
- 		bdi->wb.memcg_css = &root_mem_cgroup->css;
- 		bdi->wb.blkcg_css = blkcg_root_css;
-+		INIT_WORK(&bdi->wb.switch_work, inode_switch_wbs_work_fn);
-+		init_llist_head(&bdi->wb.switch_wbs_ctxs);
- 	}
- 	return ret;
+ 	app->pending_palm_slots = devm_kcalloc(&hi->input->dev,
+ 					       BITS_TO_LONGS(td->maxcontacts),
+ 					       sizeof(long),
+@@ -1738,7 +1746,7 @@ static void mt_release_contacts(struct h
+ 			for (i = 0; i < mt->num_slots; i++) {
+ 				input_mt_slot(input_dev, i);
+ 				input_mt_report_slot_inactive(input_dev);
+-				clear_bit(i, &td->mt_io_flags);
++				clear_bit(i, td->active_slots);
+ 			}
+ 			input_mt_sync_frame(input_dev);
+ 			input_sync(input_dev);
+@@ -1761,7 +1769,7 @@ static void mt_expired_timeout(struct ti
+ 	 */
+ 	if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
+ 		return;
+-	if (td->mt_io_flags & MT_IO_SLOTS_MASK)
++	if (!bitmap_empty(td->active_slots, td->maxcontacts))
+ 		mt_release_contacts(hdev);
+ 	clear_bit_unlock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags);
  }
 
 
