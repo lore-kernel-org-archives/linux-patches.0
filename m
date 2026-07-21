@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110573DC4C2;
-	Tue, 21 Jul 2026 17:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8410434F279;
+	Tue, 21 Jul 2026 17:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653387; cv=none; b=NwDFPfCeiYX3CWREtm92d6DBZdrhbweDcKD0r4fTryJksdFcOD157khKe04q600pLJigPTZQxCOH8tvdrLIXqpQ6mXAX+bp3/6AHhECWNBQouTi0kslU1TDAgziDitrWSuqFCe+fzW/0UN9mqpc2Ds2j4n6tdRLrRkNFzSDGzHg=
+	t=1784653389; cv=none; b=CdO7mpFEqAC5Os1OupM26pMAf8AZP2rEKmE0lKN4VTAftVbiqB9sR3eQ0TYsDCOQZVvxp8uoKIIxknUNNuXnjLmCag4J/CzXzF6egukoxVsUC4DF1jUJJqjlbcryRUsXx7DHiQzuDIwRCy01d6Tfr2SGHXi0ak4tgD3GPYIKXCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653387; c=relaxed/simple;
-	bh=Cd5c1ttDjtax7KaM9q3gAMC4x8DQEgjCUDE/3/SIXAI=;
+	s=arc-20240116; t=1784653389; c=relaxed/simple;
+	bh=Ly0yXVl6iXN8wLM9LGnM09doizDaSa07NSjuGcSyRx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qzInJ/5f5l9SqiuMAx9/S/j1nYUpyPQN1WRo5L1Qu2vkeXy4rtBunF33dEI5BOWfVofna725mGzu+uN0iCVeSxT0eX2roE59qCCGnbeR5S/Hlbmem1oe28b+YwwDiv1ClfgniaCulcbN8GOjAzgt0MDNIKBi4DFLrDsCg1zPcyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1sQsqPv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ob9+eqLKmFY0N0Jo+OCEBJ6rJtbtiqxQOKqgaCJqIFpVnS+r4xhuIRqKgBWinHP2Barx92OldYLfG9B3NEBvYorYW0QrvesMEeYDsWELEKBUyHrQFoa+s5uh0ppJ5ggL35NN9c3j+6IMv+EXWUxryfa38AI0TdzWcjkDss6INFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CICgMxCt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1sQsqPv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054631F000E9;
-	Tue, 21 Jul 2026 17:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CICgMxCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD2A1F000E9;
+	Tue, 21 Jul 2026 17:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653385;
-	bh=P3FR4rSr22qO4IHwNvnpFrIj7F6JJ7Xen5gdPcFcxhY=;
+	s=korg; t=1784653388;
+	bh=2XR80XjZ/Ekz5CdP984fn9dRkjMGgLCuB9GUqzew6n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g1sQsqPvs2jwAVNoq8jg0Smm5iV1Kzb1plTaVifNaXXG23U/1gURC09QkyKNrtM7y
-	 VKqgAF/6dMuin4I6VqOO8/KxNyzWOhrDeJuS3yxerKLwBJW9lYyJsd1mwnnoA1FeZ2
-	 WRqQcQgHbTJKg+hreBODoZMHgc8oxNjavelmho1c=
+	b=CICgMxCt6pqUW+C/1NcZ9GyotA1iQU9VEkXf6QzyPxlAg2OTvZ22km6xq3j6/g7T+
+	 U8qAXVfhwXtTw0DPj014dbalXgYttp1zPY4FYD+AO3BAFPPCtnrU1iVSypCeG3zn2P
+	 DsCdeGdcO/FgDxkR7QDDcUhKNuHOd+CSAgfNgOIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Yicong Yang <yang.yicong@picoheart.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1290/2077] LoongArch: BPF: Fix off-by-one error in tail call
-Date: Tue, 21 Jul 2026 17:16:03 +0200
-Message-ID: <20260721152623.245618262@linuxfoundation.org>
+Subject: [PATCH 7.1 1308/2077] ACPI: RIMT: Only defer the IOMMU configuration in init stage
+Date: Tue, 21 Jul 2026 17:16:21 +0200
+Message-ID: <20260721152623.671643049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,80 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Yicong Yang <yang.yicong@picoheart.com>
 
-[ Upstream commit 0379d10f09bc21ba739636796669dfb4936172a3 ]
+[ Upstream commit b8f62414fa05144924257db283c5c35f74d21121 ]
 
-The current code updates the tail call counter (TCC) using a pre-increment
-approach, it stores the incremented value back to memory before performing
-any boundary or target validation checks.
+The IOMMU configuration will be deferred if the IOMMU driver
+isn't probed by the time. Make this deferral only in the
+initialization stage with driver_deferred_probe_check_state().
+Otherwise the devices depends on IOMMU will be deferred forever
+in case the IOMMU device probe failed or it doesn't appear in
+the ACPI namespace.
 
-This causes two major issues:
-1. When a tail call fails because the target program is NULL, the TCC is
-   incorrectly incremented and saved in memory anyway.
-2. This dummy increment implicitly consumes one slot of the allowed tail
-   call budget. As a result, the subsequent loop reaches the maximum limit
-   prematurely, leading to a test failure where the actual loop count is
-   32 instead of the expected 33.
-
-Fix this by deferring the counter update. Change the branch condition to
-BPF_JSGE (greater or equal) so that we check the boundary first. The TCC
-is only incremented and stored back to memory after the boundary check
-and the NULL-target check both pass.
-
-Before:
-
-  $ sudo ./test_progs -t tailcalls/tailcall_3
-  ...
-  test_tailcall_count:FAIL:tailcall count unexpected tailcall count: actual 32 != expected 33
-  ...
-  #465/3   tailcalls/tailcall_3:FAIL
-  #465     tailcalls:FAIL
-
-After:
-
-  $ sudo ./test_progs -t tailcalls/tailcall_3
-  #465/3   tailcalls/tailcall_3:OK
-  #465     tailcalls:OK
-  Summary: 1/1 PASSED, 0 SKIPPED, 0 FAILED
-
-Fixes: c0fcc955ff82 ("LoongArch: BPF: Fix the tailcall hierarchy")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 8f7729552582 ("ACPI: RISC-V: Add support for RIMT")
+Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+Link: https://patch.msgid.link/20260625094702.11558-1-yang.yicong@picoheart.com
+[pjw@kernel.org: added Fixes line]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/acpi/riscv/rimt.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index 64a7f7e60a01e8..e4966c178abc56 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -324,12 +324,12 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
- 	 */
- 	emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, tcc_ptr_off);
- 	emit_insn(ctx, ldd, t3, REG_TCC, 0);
--	emit_insn(ctx, addid, t3, t3, 1);
--	emit_insn(ctx, std, t3, REG_TCC, 0);
- 	emit_insn(ctx, addid, t2, LOONGARCH_GPR_ZERO, MAX_TAIL_CALL_CNT);
--	if (emit_tailcall_jmp(ctx, BPF_JSGT, t3, t2, jmp_offset) < 0)
-+	if (emit_tailcall_jmp(ctx, BPF_JSGE, t3, t2, jmp_offset) < 0)
- 		goto toofar;
+diff --git a/drivers/acpi/riscv/rimt.c b/drivers/acpi/riscv/rimt.c
+index 906282b0e63c0c..e4538fa6c2c822 100644
+--- a/drivers/acpi/riscv/rimt.c
++++ b/drivers/acpi/riscv/rimt.c
+@@ -9,6 +9,7 @@
  
-+	emit_insn(ctx, addid, t3, t3, 1);
-+
+ #include <linux/acpi.h>
+ #include <linux/acpi_rimt.h>
++#include <linux/device/driver.h>
+ #include <linux/iommu.h>
+ #include <linux/list.h>
+ #include <linux/pci.h>
+@@ -257,11 +258,11 @@ static int rimt_iommu_xlate(struct device *dev, struct acpi_rimt_node *node, u32
+ 	rimt_fwnode = rimt_get_fwnode(node);
+ 
  	/*
- 	 * prog = array->ptrs[index];
- 	 * if (!prog)
-@@ -342,6 +342,8 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
- 	if (emit_tailcall_jmp(ctx, BPF_JEQ, t2, LOONGARCH_GPR_ZERO, jmp_offset) < 0)
- 		goto toofar;
+-	 * The IOMMU drivers may not be probed yet.
+-	 * Defer the IOMMU configuration
++	 * The IOMMU drivers may not be probed yet. Defer the IOMMU
++	 * configuration if it's still in initialization stage.
+ 	 */
+ 	if (!rimt_fwnode)
+-		return -EPROBE_DEFER;
++		return driver_deferred_probe_check_state(dev);
  
-+	emit_insn(ctx, std, t3, REG_TCC, 0);
-+
- 	/* goto *(prog->bpf_func + 4); */
- 	off = offsetof(struct bpf_prog, bpf_func);
- 	emit_insn(ctx, ldd, t3, t2, off);
+ 	/*
+ 	 * EPROBE_DEFER ensures IOMMU is probed before the devices that
 -- 
 2.53.0
 
