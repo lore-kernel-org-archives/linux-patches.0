@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDC63F825F;
-	Tue, 21 Jul 2026 19:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F6D356A12;
+	Tue, 21 Jul 2026 19:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661392; cv=none; b=OVXREgAEwZ/7Yv3/vZvjPPjkNc/X+zOHpX8YNYFDjP5+14L9NB0SRHezCVHGek7Cmc85BciQ02a44sIV3lw865bqCByxPXoV7JpZakdHXQv+6IOzUAU/ekwmuf8Oq4Y3kXf1Yj2YGhjv87N1+y456e0cd+NyMmreeIr3aa1pn/I=
+	t=1784661396; cv=none; b=qg9kJc8mXXQakt6XzdcyiDNXVhBK5c3CD2cwwlbuL0kA9s0TYDEuMuP5AYBL8mTQCsPJ4+VH9jfDC5dIp7XWrEb8G3I1DVnrBMlw/KtLrDR2vJVHdYIHT0H2DH6REv59o5ZcaeE++XVSWDWCmPqgNdrXReUyXmbwTnaniaWp3vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661392; c=relaxed/simple;
-	bh=b5mTa4ObPI6X3kZSqnLR+aEPPb1qAFs9L3xgp/YzlmY=;
+	s=arc-20240116; t=1784661396; c=relaxed/simple;
+	bh=ML4OXKB7xgYhtzEWDyeXAI03vkgVwwgdc4ft++tf/FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzN+4gYqdgbV1c6OJJHjuZODPJeRL5yqP21x1SQhE+kNec7TXB4ENAWLKT8VnlQaEW2yf8F8xrjZCbtqzQYIw4hsJDM0rH/zFlzIjsTaSflM2Z2LzftnsYoKqmyW1K1jHNMOBAMLmhtgeD69WazrmojojoCPudo0ThDxro1+z10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7ARCa1E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W1OzXnAZx5Dsf8YpL77BJf6XnZWqx5ahcrUVv/EozNuiSbfKrwDZUvS4il4ATka6L4j4ASl2XHLK0alEq54IO73kdgEY1O+Q8Z6fPAYJdiLty/yK82J4zY6QAano65CbC28LtjYZ23n6i6fTtrbZYzigrx/1T0rrsChHD4Fe5Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02SN3APo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7ARCa1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C711F000E9;
-	Tue, 21 Jul 2026 19:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02SN3APo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8689A1F000E9;
+	Tue, 21 Jul 2026 19:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661391;
-	bh=J9yquLr5DPINNFV1BfLx6oCxNuWwMktSg9hP+aOnYFM=;
+	s=korg; t=1784661394;
+	bh=fZW07EQLH/NxOk/2Auix1FuS7reogL2MPVnay5ioM4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V7ARCa1EhrFoeb2WdlByTYw66izz39yIWnjJayz1tAvADYAmRsPFIw5AkCv9xSEuG
-	 qIBYS/KFTrImpF+/idjEhoyxWaBqR1dofCo9bTEMsPaHpQszvFB5pMYns+ev1Bqweg
-	 /LU0X8A9irHPMEK1rneGbi3BORAzhdBOwzWoIaKc=
+	b=02SN3APousQc8ab24l1+BpSs1PeCCW+o736Xx/45CjrkKIbTB9cmWOX3ObNlvfWQ+
+	 K1hRlwSIJvgB7n0EXOyKpZ50ZMs9r+1GtcCHFLaWeTO9x5h4EzItuobIN4KitGB6TF
+	 lZvmIFjvakG6DuLgysKC1v/y3qUYUWJ5trcVTKSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e809069bc15f26300526@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Heiko Stuebner <heiko.stuebner@cherry.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0003/1276] tcp: Add preempt_{disable,enable}_nested() in reqsk_queue_hash_req().
-Date: Tue, 21 Jul 2026 17:07:26 +0200
-Message-ID: <20260721152446.148482457@linuxfoundation.org>
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Yunke Cao <yunkec@google.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 0043/1276] media: uvcvideo: Fix dev_sof filtering in hw timestamp
+Date: Tue, 21 Jul 2026 17:08:06 +0200
+Message-ID: <20260721152447.051621332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,124 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit e10902df24488ca722303133acfc82490f7d59ad ]
+commit edc1917599c5339aedc83135cade66517e0a2972 upstream.
 
-syzbot reported a weird reqsk->rsk_refcnt underflow in
-__inet_csk_reqsk_queue_drop().
+To avoid filling the clock circular buffer with duplicated data we only
+add it if the new value sof is different than the last added sof.
 
-The captured reqsk_put() in __inet_csk_reqsk_queue_drop()
-is called only when it successfully removes reqsk from ehash.
+The issue is that we compare the unprocess sof with the processed sof.
+If there is a sof_offset, or UVC_QUIRK_INVALID_DEVICE_SOF is enabled,
+the comparison will not work as expected.
 
-Moreover, reqsk_timer_handler() calls another reqsk_put()
-after that.
+This patch moves the comparison to the right place.
 
-This indicates that the reqsk was missing both refcnts for
-ehash and the timer itself.
-
-Since all the syzbot reports had PREEMPT_RT enabled, the only
-possible scenario is that reqsk_queue_hash_req() is preempted
-after mod_timer() and before refcount_set(), and then the timer
-triggered after 1s aborts the reqsk due to its listener's close().
-
-Let's wrap mod_timer() and refcount_set() with
-preempt_disable_nested() and preempt_enable_nested().
-
-Note that inet_ehash_insert() holds the normal spin_lock()
-(mutex in PREEMPT_RT), so it must be called outside of
-preempt_disable_nested(), but this is fine.
-
-The lookup path just ignores 0 sk_refcnt entries in ehash
-and tries to create another reqsk, but this will fail at
-inet_ehash_insert().
-
-[0]:
-refcount_t: underflow; use-after-free.
-WARNING: lib/refcount.c:28 at refcount_warn_saturate+0xb2/0x110 lib/refcount.c:28, CPU#0: ktimers/0/16
-Modules linked in:
-CPU: 0 UID: 0 PID: 16 Comm: ktimers/0 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
-Tainted: [L]=SOFTLOCKUP
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
-RIP: 0010:refcount_warn_saturate+0xb2/0x110 lib/refcount.c:28
-Code: e4 7d d1 0a 67 48 0f b9 3a eb 4a e8 38 3d 23 fd 48 8d 3d e1 7d d1 0a 67 48 0f b9 3a eb 37 e8 25 3d 23 fd 48 8d 3d de 7d d1 0a <67> 48 0f b9 3a eb 24 e8 12 3d 23 fd 48 8d 3d db 7d d1 0a 67 48 0f
-RSP: 0000:ffffc90000157948 EFLAGS: 00010246
-RAX: ffffffff84a1301b RBX: 0000000000000003 RCX: ffff88801ca98000
-RDX: 0000000000000100 RSI: 0000000000000000 RDI: ffffffff8f72ae00
-RBP: ffffffff99ae3b01 R08: ffff88801ca98000 R09: 0000000000000005
-R10: 0000000000000100 R11: 0000000000000004 R12: ffff8880425ef568
-R13: ffff8880425ef4f8 R14: ffff8880425ef578 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff888126386000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f7b46710e9c CR3: 000000000dbb6000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __refcount_sub_and_test include/linux/refcount.h:400 [inline]
- __refcount_dec_and_test include/linux/refcount.h:432 [inline]
- refcount_dec_and_test include/linux/refcount.h:450 [inline]
- reqsk_put include/net/request_sock.h:136 [inline]
- __inet_csk_reqsk_queue_drop+0x3ce/0x440 net/ipv4/inet_connection_sock.c:1007
- reqsk_timer_handler+0x651/0xdf0 net/ipv4/inet_connection_sock.c:1137
- call_timer_fn+0x192/0x5e0 kernel/time/timer.c:1748
- expire_timers kernel/time/timer.c:1799 [inline]
- __run_timers kernel/time/timer.c:2374 [inline]
- __run_timer_base+0x6a3/0x9f0 kernel/time/timer.c:2386
- run_timer_base kernel/time/timer.c:2395 [inline]
- run_timer_softirq+0x67/0x170 kernel/time/timer.c:2403
- handle_softirqs+0x1de/0x6d0 kernel/softirq.c:622
- __do_softirq kernel/softirq.c:656 [inline]
- run_ktimerd+0x69/0x100 kernel/softirq.c:1151
- smpboot_thread_fn+0x541/0xa50 kernel/smpboot.c:160
- kthread+0x388/0x470 kernel/kthread.c:436
- ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-
-Fixes: d2d6422f8bd1 ("x86: Allow to enable PREEMPT_RT.")
-Reported-by: syzbot+e809069bc15f26300526@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a1a7bcf.0a9e871e.332604.000b.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260601182101.3183993-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[updated to not require timeout changes from
- commit 3ce5dd8161ec ("tcp: Remove timeout arg from reqsk_queue_hash_req()")
- DCCP was retired by commit 2a63dd0edf38 ("net: Retire DCCP socket.") after
- the release of 6.12, so the shared inet_csk_reqsk_queue_hash_add still
- requires the timout argument]
-Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 141270bd95d4 ("media: uvcvideo: Refactor clock circular buffer")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Tested-by: Yunke Cao <yunkec@google.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260513-uvc-hwtimestamp-v3-1-7a64838b0b02@chromium.org
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/usb/uvc/uvc_video.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index dd39cabb39001e..5ff45bc854422b 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1186,6 +1186,9 @@ static bool reqsk_queue_hash_req(struct request_sock *req,
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -578,16 +578,7 @@ uvc_video_clock_decode(struct uvc_stream
+ 	if (!has_scr)
+ 		return;
  
- 	/* The timer needs to be setup after a successful insertion. */
- 	timer_setup(&req->rsk_timer, reqsk_timer_handler, TIMER_PINNED);
-+
-+	preempt_disable_nested();
-+
- 	mod_timer(&req->rsk_timer, jiffies + timeout);
+-	/*
+-	 * To limit the amount of data, drop SCRs with an SOF identical to the
+-	 * previous one. This filtering is also needed to support UVC 1.5, where
+-	 * all the data packets of the same frame contains the same SOF. In that
+-	 * case only the first one will match the host_sof.
+-	 */
+ 	sample.dev_sof = get_unaligned_le16(&data[header_size - 2]);
+-	if (sample.dev_sof == stream->clock.last_sof)
+-		return;
+-
+ 	sample.dev_stc = get_unaligned_le32(&data[header_size - 6]);
  
- 	/* before letting lookups find us, make sure all req fields
-@@ -1193,6 +1196,9 @@ static bool reqsk_queue_hash_req(struct request_sock *req,
- 	 */
- 	smp_wmb();
- 	refcount_set(&req->rsk_refcnt, 2 + 1);
+ 	/*
+@@ -659,6 +650,16 @@ uvc_video_clock_decode(struct uvc_stream
+ 	}
+ 
+ 	sample.dev_sof = (sample.dev_sof + stream->clock.sof_offset) & 2047;
 +
-+	preempt_enable_nested();
++	/*
++	 * To limit the amount of data, drop SCRs with an SOF identical to the
++	 * previous one. This filtering is also needed to support UVC 1.5, where
++	 * all the data packets of the same frame contains the same SOF. In that
++	 * case only the first one will match the host_sof.
++	 */
++	if (sample.dev_sof == stream->clock.last_sof)
++		return;
 +
- 	return true;
+ 	uvc_video_clock_add_sample(&stream->clock, &sample);
+ 	stream->clock.last_sof = sample.dev_sof;
  }
- 
--- 
-2.53.0
-
 
 
