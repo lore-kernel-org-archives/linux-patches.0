@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99A346F495;
-	Tue, 21 Jul 2026 18:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E901346F49B;
+	Tue, 21 Jul 2026 18:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659451; cv=none; b=u8sJjO6/40c7LTHeUY4diWVr5mD1mS9IHCyp/97JM5AtVJ+g4UeIsKZ9YOnDLts2yMVGMXPWDc6DftGnmk04ZVUYqpBaNjsR36oLrtb04bqG1fF6cLgxcz9XFG2lJXM2kz7IwBzIe/vJWf1Lx8l/GtOyBbucUKo+ryOK3SmKijw=
+	t=1784659454; cv=none; b=kHruKlJyhrb0UBVBgA1O24JgdXnMSlhRbqVaBQmZVxyWgugVgiG0jOgcYR8+ZWqE2M/IsewmwKK1Jzap/Q6fXBlMeV1ofQaUEeihTTgEYgaFIhPJkJO1rvmcP8gDSsoBrqXYOjVpSBngWuz+g5il1lUoDlTd4XEet5yDUwPdOBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659451; c=relaxed/simple;
-	bh=x7/gbbAGG9S8rCyntYe/BzfVabCP1ebpfC0B6ChjbRk=;
+	s=arc-20240116; t=1784659454; c=relaxed/simple;
+	bh=5K9Q0my3ssPUvsB4aFeW+cHhUayev6zuXyIjUikxJdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tD/jSIQzyB6RNnWeBfGOksHadLv2iP8dxy8qiYvo6qmYPb02A3/SaHkgncE3cKKvTtJhkCylXaeqbOjBYlPnKqauSgJjpelMgtFv5XlfqlTkULo3gsGbnnF4GpB92u+S2istFOeVjQrTDTdbjKKdasSCzVBcaRjxofPFFGL0xSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voEeg6Tq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=M4JUkNkbaDdALK3eV0bvpFJsYg+TnKQa52jO591O1aQa6U3/wzNZ9zm9czkyPtMBDOcjWXYbaVwEU805xgcA3aj4KifsOxK3rTsPlVksjCTnC0OSfGSvX4tst4KBY6HvXcfW+JiWXYNFC1Y2yxDdwBtMre6KyBKYYY72Yir1jlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V45Dz/0P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voEeg6Tq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36E71F000E9;
-	Tue, 21 Jul 2026 18:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V45Dz/0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D6D1F000E9;
+	Tue, 21 Jul 2026 18:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659449;
-	bh=k4bM6M5MDP0y/wjsczIuzbGzZTBrmuf6xBseDRcU8D4=;
+	s=korg; t=1784659451;
+	bh=6z6isfaO6C895ykIIhl/62XKTYNu2nyQaKweOSSvztc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=voEeg6TqQmSoweeDmVGOt4YoitihuPl7vCZEInN84EUwuQR9o/AEGncY0riLEEPHQ
-	 JPf5pCVRpiFypJEEXpjRrPPcK0SMw0icQSPFBUL49EiQPQ7JiT0lEwNBOQH2xj98YD
-	 ORhYD8Yac8RKIZ5oeYl/JHos9/j5BXl/gfNwNe2Q=
+	b=V45Dz/0PkFPJ4etCmiAdNi5NoAbDcv01o36MF4qQe2bzemuMZ6cCP8xshLNDg5d+n
+	 FgcC8NRsxfHvrP3yeBtuExpuYwAIVOvTi+mDQ1wimS3vdFRYdzYx59ggq3MfexzXYv
+	 dQfh1cPRtCPxWVs3Di29HFSLRnjqza/OP4UuCbf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1523/1611] ALSA: scarlett2: Update offsets for 2i2 Gen 4 firmware 2417
-Date: Tue, 21 Jul 2026 17:27:19 +0200
-Message-ID: <20260721152549.702259310@linuxfoundation.org>
+Subject: [PATCH 6.18 1524/1611] firmware_loader: Add cancel helper for async requests
+Date: Tue, 21 Jul 2026 17:27:20 +0200
+Message-ID: <20260721152549.725585980@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,106 +46,184 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Geoffrey D. Bennett" <g@b4.vu>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 3ca15754b561483aa7a1bce51677d6389f8ff5bb ]
+[ Upstream commit b9bdd68b8b979c7e9de58b2e7d21e1d7d932c755 ]
 
-Firmware 2417 for the Scarlett 4th Gen 2i2 moved the direct monitor gain
-parameters, so add a second config_set with the shifted offset and
-select it for firmware versions >= 2417.
+request_firmware_nowait() keeps the callback module pinned and holds
+a device reference until the firmware work completes.
 
-Fixes: 4e809a299677 ("ALSA: scarlett2: Add support for Solo, 2i2, and 4i4 Gen 4")
-Cc: stable@vger.kernel.org # ALSA: scarlett2: Allow selecting config_set by firmware version
-Cc: stable@vger.kernel.org # ALSA: scarlett2: Fold min_firmware_version into config_sets
-Cc: stable@vger.kernel.org
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Callers still have no way to cancel or synchronize the queued callback
+before tearing down their driver-private state.
+
+Track scheduled async firmware work in an internal list and add
+request_firmware_nowait_cancel(). The helper cancels work matching the
+device, callback context and callback function. It cancels work that has
+not started yet and waits for an already-running callback to return. If
+the request has already completed, it is a no-op.
+
+Keep the existing request_firmware_nowait() lifetime model manual. A
+devres-managed variant can be layered on top separately if needed.
+
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/ad0fc5a131e76eb656a24e0e198382f7134068fe.1777151532.git.g@b4.vu
+Link: https://patch.msgid.link/20260505-alsa-hda-tas2781-fw-callback-teardown-v4-1-e7c4bf930dc8@gmail.com
+Stable-dep-of: 5367e2ad14f0 ("ALSA: hda/tas2781: Cancel async firmware request at unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett2.c |   58 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ drivers/base/firmware_loader/main.c |   68 +++++++++++++++++++++++++++++++++---
+ include/linux/firmware.h            |   10 +++++
+ 2 files changed, 74 insertions(+), 4 deletions(-)
 
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -937,6 +937,63 @@ static const struct scarlett2_config_set
- 	}
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -1141,6 +1141,7 @@ EXPORT_SYMBOL(release_firmware);
+ /* Async support */
+ struct firmware_work {
+ 	struct work_struct work;
++	struct list_head list;
+ 	struct module *module;
+ 	const char *name;
+ 	struct device *device;
+@@ -1149,6 +1150,17 @@ struct firmware_work {
+ 	u32 opt_flags;
  };
  
-+/* 2i2 Gen 4, firmware version 2417 and above
-+ *
-+ * Firmware 2417 shifted DIRECT_MONITOR_GAIN by 4 bytes; all other
-+ * offsets are unchanged from scarlett2_config_set_gen4_2i2.
-+ */
-+static const struct scarlett2_config_set scarlett2_config_set_gen4_2i2_2417 = {
-+	.notifications = scarlett4_2i2_notifications,
-+	.param_buf_addr = 0xfc,
-+	.input_gain_tlv = db_scale_gen4_gain,
-+	.autogain_status_texts = scarlett2_autogain_status_gen4,
-+	.items = {
-+		[SCARLETT2_CONFIG_MSD_SWITCH] = {
-+			.offset = 0x49, .size = 8, .activate = 4 },
++static LIST_HEAD(firmware_work_list);
++static DEFINE_SPINLOCK(firmware_work_lock);
 +
-+		[SCARLETT2_CONFIG_DIRECT_MONITOR] = {
-+			.offset = 0x14a, .size = 8, .activate = 16, .pbuf = 1 },
++static void firmware_work_free(struct firmware_work *fw_work)
++{
++	put_device(fw_work->device); /* taken in request_firmware_nowait() */
++	module_put(fw_work->module);
++	kfree_const(fw_work->name);
++	kfree(fw_work);
++}
 +
-+		[SCARLETT2_CONFIG_AUTOGAIN_SWITCH] = {
-+			.offset = 0x135, .size = 8, .activate = 10, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_AUTOGAIN_STATUS] = {
-+			.offset = 0x137, .size = 8 },
-+
-+		[SCARLETT2_CONFIG_AG_MEAN_TARGET] = {
-+			.offset = 0x131, .size = 8, .activate = 29, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_AG_PEAK_TARGET] = {
-+			.offset = 0x132, .size = 8, .activate = 30, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_PHANTOM_SWITCH] = {
-+			.offset = 0x48, .size = 8, .activate = 11, .pbuf = 1,
-+			.mute = 1 },
-+
-+		[SCARLETT2_CONFIG_INPUT_GAIN] = {
-+			.offset = 0x4b, .size = 8, .activate = 12, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_LEVEL_SWITCH] = {
-+			.offset = 0x3c, .size = 8, .activate = 13, .pbuf = 1,
-+			.mute = 1 },
-+
-+		[SCARLETT2_CONFIG_SAFE_SWITCH] = {
-+			.offset = 0x147, .size = 8, .activate = 14, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_AIR_SWITCH] = {
-+			.offset = 0x3e, .size = 8, .activate = 15, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_INPUT_SELECT_SWITCH] = {
-+			.offset = 0x14b, .size = 8, .activate = 17, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_INPUT_LINK_SWITCH] = {
-+			.offset = 0x14e, .size = 8, .activate = 18, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_DIRECT_MONITOR_GAIN] = {
-+			.offset = 0x2a4, .size = 16, .activate = 36 }
+ static void request_firmware_work_func(struct work_struct *work)
+ {
+ 	struct firmware_work *fw_work;
+@@ -1159,11 +1171,15 @@ static void request_firmware_work_func(s
+ 	_request_firmware(&fw, fw_work->name, fw_work->device, NULL, 0, 0,
+ 			  fw_work->opt_flags);
+ 	fw_work->cont(fw, fw_work->context);
+-	put_device(fw_work->device); /* taken in request_firmware_nowait() */
+ 
+-	module_put(fw_work->module);
+-	kfree_const(fw_work->name);
+-	kfree(fw_work);
++	spin_lock_irq(&firmware_work_lock);
++	if (!list_empty(&fw_work->list)) {
++		list_del_init(&fw_work->list);
++		spin_unlock_irq(&firmware_work_lock);
++		firmware_work_free(fw_work);
++		return;
 +	}
-+};
++	spin_unlock_irq(&firmware_work_lock);
+ }
+ 
+ 
+@@ -1173,6 +1189,7 @@ static int _request_firmware_nowait(
+ 	void (*cont)(const struct firmware *fw, void *context), bool nowarn)
+ {
+ 	struct firmware_work *fw_work;
++	unsigned long flags;
+ 
+ 	fw_work = kzalloc(sizeof(struct firmware_work), gfp);
+ 	if (!fw_work)
+@@ -1205,7 +1222,12 @@ static int _request_firmware_nowait(
+ 
+ 	get_device(fw_work->device);
+ 	INIT_WORK(&fw_work->work, request_firmware_work_func);
 +
- /* 4i4 Gen 4 */
- static const struct scarlett2_config_set scarlett2_config_set_gen4_4i4 = {
- 	.notifications = scarlett4_4i4_notifications,
-@@ -1999,6 +2056,7 @@ static const struct scarlett2_device_inf
- static const struct scarlett2_device_info s2i2_gen4_info = {
- 	.config_sets = (const struct scarlett2_config_set_entry[]) {
- 		{ 2115, &scarlett2_config_set_gen4_2i2 },
-+		{ 2417, &scarlett2_config_set_gen4_2i2_2417 },
- 		{ }
- 	},
- 	.min_firmware_version = 2115,
++	spin_lock_irqsave(&firmware_work_lock, flags);
++	list_add_tail(&fw_work->list, &firmware_work_list);
+ 	schedule_work(&fw_work->work);
++	spin_unlock_irqrestore(&firmware_work_lock, flags);
++
+ 	return 0;
+ }
+ 
+@@ -1268,6 +1290,44 @@ int firmware_request_nowait_nowarn(
+ }
+ EXPORT_SYMBOL_GPL(firmware_request_nowait_nowarn);
+ 
++/**
++ * request_firmware_nowait_cancel() - cancel an async firmware request
++ * @device: device for which the firmware is being loaded
++ * @context: context passed to request_firmware_nowait()
++ * @cont: callback passed to request_firmware_nowait()
++ *
++ * Cancel a pending request_firmware_nowait() request for @device, @context
++ * and @cont. If the associated work has already started, this function waits
++ * until the callback has returned. If the callback has already completed, this
++ * function does nothing.
++ *
++ * This function may sleep.
++ */
++void request_firmware_nowait_cancel(struct device *device, void *context,
++				    void (*cont)(const struct firmware *fw,
++						 void *context))
++{
++	struct firmware_work *fw_work = NULL;
++	struct firmware_work *tmp;
++
++	spin_lock_irq(&firmware_work_lock);
++	list_for_each_entry_reverse(tmp, &firmware_work_list, list) {
++		if (tmp->device == device && tmp->context == context &&
++		    tmp->cont == cont) {
++			fw_work = tmp;
++			list_del_init(&fw_work->list);
++			break;
++		}
++	}
++	spin_unlock_irq(&firmware_work_lock);
++
++	if (!fw_work)
++		return;
++	cancel_work_sync(&fw_work->work);
++	firmware_work_free(fw_work);
++}
++EXPORT_SYMBOL_GPL(request_firmware_nowait_cancel);
++
+ #ifdef CONFIG_FW_CACHE
+ static ASYNC_DOMAIN_EXCLUSIVE(fw_cache_domain);
+ 
+--- a/include/linux/firmware.h
++++ b/include/linux/firmware.h
+@@ -110,6 +110,9 @@ int request_firmware_nowait(
+ 	struct module *module, bool uevent,
+ 	const char *name, struct device *device, gfp_t gfp, void *context,
+ 	void (*cont)(const struct firmware *fw, void *context));
++void request_firmware_nowait_cancel(struct device *device, void *context,
++				    void (*cont)(const struct firmware *fw,
++						 void *context));
+ int request_firmware_direct(const struct firmware **fw, const char *name,
+ 			    struct device *device);
+ int request_firmware_into_buf(const struct firmware **firmware_p,
+@@ -157,6 +160,13 @@ static inline int request_firmware_nowai
+ 	return -EINVAL;
+ }
+ 
++static inline void request_firmware_nowait_cancel(struct device *device,
++						  void *context,
++						  void (*cont)(const struct firmware *fw,
++							       void *context))
++{
++}
++
+ static inline void release_firmware(const struct firmware *fw)
+ {
+ }
 
 
