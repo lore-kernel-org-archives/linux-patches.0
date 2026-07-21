@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17320394783;
-	Tue, 21 Jul 2026 20:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA047434E4E;
+	Tue, 21 Jul 2026 20:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665057; cv=none; b=UpJ3iZ2hpNNCyNVw1gbBiZUbMBXPL/P8T41uKlqwq2Tqa1C2KRCeUs8qYv/v1Q9Ipao0dVSsS5zD3JxDmygORs+J9SlreIzvMSiY/t/Z1bd1yPBUzrqX9NnVwcT85BWLPBLXF9dIF4ZumVZ19kv7/jI6RRO0BaczT+67B2aXQvQ=
+	t=1784665059; cv=none; b=h25MmOt3Ugr3tCxQlTBFgNKZw8VpKD20/q0fA0/fA6P2VFX8Qlo/L92CHIR5IvgPPEhlz4KRcJW7pNhUBm5mIWnsRoH1rRSAL+d1xvJQYn6aQFDYr29xbmArfknxGvA1eL/VTfr4Uw4zCc5TZR0Y3XOAD/9RjU8HQkWcK5mwOjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665057; c=relaxed/simple;
-	bh=LZfguFzfZBQzlqDjD8QuNFWy8LMEE2+cH9ua2115Dfo=;
+	s=arc-20240116; t=1784665059; c=relaxed/simple;
+	bh=aqP0ave4YlmUnizATjV+WMvuLmZACwoM8kbg06eyDrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JByPOWV5VrZfAr+YsvyZPFZDgqrqqkOYsLvnJYiTYHyhmDNSp2w0gVKZW/wGZJME/59icD62vVHv4AtQxQ5s/dj9XFLN4wxXlLPc8HLgXxWE+Omtw4vx/L+V9Jo1NikCvBbQezLu2fdME7hnh0agQdNSgzQWqL0c9If57vrsnu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1Be/NsM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JLWc8LncDzDVVWcE/LODhWEiP/Flp/1UHC5N/qWCrrXZPY9ZiQvoCRNfE+lvIJ2OOvym2yQVk28gdS7Ojxosf9hbvBxtX1ScqsFQTXDFkh5GL8Ctg1Qw8RFKJ3aFPqtYjajMR8/O0XLpQMeyhFlizWNfagTcvWVwgrLxA20S2tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFbq4VBe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1Be/NsM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA041F000E9;
-	Tue, 21 Jul 2026 20:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFbq4VBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2154A1F000E9;
+	Tue, 21 Jul 2026 20:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665056;
-	bh=oRC+fqGcasEsxPTQFJHX/sZillXt1GiNjGJt1f/K1u8=;
+	s=korg; t=1784665058;
+	bh=voQyt2l7auQaegt0mzDXwIJtqnB+NqszXisUd6q5tOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q1Be/NsM5BpLGHvw3pWSNGI6FE1KGliUIkiBWVXk1KpIf6WKfsgX61h4vy2x1PJYc
-	 TlBAcHL1Ij9K7sPDjlh/y6EARVkjEXvg6kc3znHy3J5+maTLWihQq4rsrehRYUIC2i
-	 PSgxAIi3OiPMLTVNjG/uIGy0qIEH03PIzHT09z74=
+	b=VFbq4VBe2RFQYjXlGSMkH4j7GcfXzbLaDkwPyeASIIimJITv/D48VqJ5GWhxdK/Ew
+	 BqoUANjlku+68ugqGNxgRa4v6IBny9/9qgggyX7gkh3RO2vwOZys92Iqx/HT4cC1Fm
+	 0cF9nh12dgftlF9I/03Qn9MBVe5Txej1qqF10GUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.6 0160/1266] NTB: epf: Avoid calling pci_irq_vector() from hardirq context
-Date: Tue, 21 Jul 2026 17:09:57 +0200
-Message-ID: <20260721152445.384526903@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.6 0161/1266] gpio: eic-sprd: use raw_spinlock_t in the irq startup path
+Date: Tue, 21 Jul 2026 17:09:58 +0200
+Message-ID: <20260721152445.408679601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,73 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 4dcddc1c794d1c65eda68f1f8dd04a0fecc0870f upstream.
+commit 90f0109019e6817eb40a486671b7722d1544ae29 upstream.
 
-ntb_epf_vec_isr() calls pci_irq_vector() in hardirq context to derive
-the vector number. pci_irq_vector() calls msi_get_virq() that takes a
-mutex and can therefore trigger "scheduling while atomic" splats:
+sprd_eic_irq_unmask() enables the GPIO IRQ and then updates controller
+state through sprd_eic_update(), which takes sprd_eic->lock with
+spin_lock_irqsave().  The callback can be reached from irq_startup()
+while setting up a requested IRQ.  That path is not sleepable, but on
+PREEMPT_RT a regular spinlock_t becomes a sleeping lock.
 
-  BUG: scheduling while atomic: kworker/u33:0/55/0x00010001
-  ...
-  Call trace:
-   ...
-   schedule+0x38/0x110
-   schedule_preempt_disabled+0x28/0x50
-   __mutex_lock.constprop.0+0x848/0x908
-   __mutex_lock_slowpath+0x18/0x30
-   mutex_lock+0x4c/0x60
-   msi_domain_get_virq+0xe8/0x138
-   pci_irq_vector+0x2c/0x60
-   ntb_epf_vec_isr+0x28/0x120 [ntb_hw_epf]
-   __handle_irq_event_percpu+0x70/0x3a8
-   handle_irq_event+0x48/0x100
-   handle_edge_irq+0x100/0x1c8
-   ...
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-Cache the Linux IRQ number for vector 0 when vectors are allocated and
-use it as a base in the ISR. Running the ISR in a threaded IRQ handler
-would also avoid the problem, but that would be unnecessary here.
+The grounded PoC kept the request_threaded_irq() -> __setup_irq() ->
+irq_startup() -> sprd_eic_irq_unmask() -> sprd_eic_update() carrier and
+used the original spin_lock_irqsave(&sprd_eic->lock) edge.  Lockdep
+reported:
 
-Fixes: 812ce2f8d14e ("NTB: Add support for EPF PCI Non-Transparent Bridge")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Cc: stable@vger.kernel.org # v5.12+
-Link: https://patch.msgid.link/20260304083028.1391068-3-den@valinux.co.jp
+  BUG: sleeping function called from invalid context
+  hardirqs last disabled at ... __setup_irq.constprop.0 ... [vuln_msv]
+  sprd_rt_spin_lock_irqsave+0x1c/0x30 [vuln_msv]
+  sprd_eic_update.constprop.0+0x48/0x90 [vuln_msv]
+  sprd_eic_irq_unmask.constprop.0+0x35/0x50 [vuln_msv]
+  __setup_irq.constprop.0+0xd/0x30 [vuln_msv]
+
+Convert the Spreadtrum EIC controller lock to raw_spinlock_t.  The
+locked section only serializes MMIO register updates and does not contain
+sleepable operations, so keeping it non-sleeping is appropriate for the
+irqchip callbacks.
+
+Fixes: 25518e024e3a ("gpio: Add Spreadtrum EIC driver support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20260617154035.1199948-3-runyu.xiao@seu.edu.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/hw/epf/ntb_hw_epf.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-eic-sprd.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/ntb/hw/epf/ntb_hw_epf.c
-+++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
-@@ -92,6 +92,7 @@ struct ntb_epf_dev {
- 
- 	int db_val;
- 	u64 db_valid_mask;
-+	int irq_base;
+--- a/drivers/gpio/gpio-eic-sprd.c
++++ b/drivers/gpio/gpio-eic-sprd.c
+@@ -93,7 +93,7 @@ struct sprd_eic {
+ 	struct gpio_chip chip;
+ 	void __iomem *base[SPRD_EIC_MAX_BANK];
+ 	enum sprd_eic_type type;
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ 	int irq;
  };
  
- #define ntb_ndev(__ntb) container_of(__ntb, struct ntb_epf_dev, ntb)
-@@ -318,7 +319,7 @@ static irqreturn_t ntb_epf_vec_isr(int i
- 	struct ntb_epf_dev *ndev = dev;
- 	int irq_no;
+@@ -145,7 +145,7 @@ static void sprd_eic_update(struct gpio_
+ 	unsigned long flags;
+ 	u32 tmp;
  
--	irq_no = irq - pci_irq_vector(ndev->ntb.pdev, 0);
-+	irq_no = irq - ndev->irq_base;
- 	ndev->db_val = irq_no + 1;
+-	spin_lock_irqsave(&sprd_eic->lock, flags);
++	raw_spin_lock_irqsave(&sprd_eic->lock, flags);
+ 	tmp = readl_relaxed(base + reg);
  
- 	if (irq_no == 0)
-@@ -350,6 +351,7 @@ static int ntb_epf_init_isr(struct ntb_e
- 		argument &= ~MSIX_ENABLE;
- 	}
+ 	if (val)
+@@ -154,7 +154,7 @@ static void sprd_eic_update(struct gpio_
+ 		tmp &= ~BIT(SPRD_EIC_BIT(offset));
  
-+	ndev->irq_base = pci_irq_vector(pdev, 0);
- 	for (i = 0; i < irq; i++) {
- 		ret = request_irq(pci_irq_vector(pdev, i), ntb_epf_vec_isr,
- 				  0, "ntb_epf", ndev);
+ 	writel_relaxed(tmp, base + reg);
+-	spin_unlock_irqrestore(&sprd_eic->lock, flags);
++	raw_spin_unlock_irqrestore(&sprd_eic->lock, flags);
+ }
+ 
+ static int sprd_eic_read(struct gpio_chip *chip, unsigned int offset, u16 reg)
+@@ -618,7 +618,7 @@ static int sprd_eic_probe(struct platfor
+ 	if (!sprd_eic)
+ 		return -ENOMEM;
+ 
+-	spin_lock_init(&sprd_eic->lock);
++	raw_spin_lock_init(&sprd_eic->lock);
+ 	sprd_eic->type = pdata->type;
+ 
+ 	sprd_eic->irq = platform_get_irq(pdev, 0);
 
 
