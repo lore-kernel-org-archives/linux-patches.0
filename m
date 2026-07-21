@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D702DF3EA;
-	Tue, 21 Jul 2026 18:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF75471264;
+	Tue, 21 Jul 2026 18:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659424; cv=none; b=MAwHyO1x4zqK9AroyDgZep91E3fdqDjL9IdfIE4XvngkjAPPIMv2M0U27KzxezJijJK0pL0ofqril8VbPJf3mU8hi+HGYnqeCinGh8XQqWjNGis7joNoc2ELzPlJcJ6cEfqFWAsZgE/+AlyMLyPyGAQR/hszqXf3G66c+3GkypM=
+	t=1784659427; cv=none; b=T/3WzW1YTf+TCiV5nNAHyuhPpizsYmepfebxj88/DK3lkFc4R3nl4MDKVcEdZldAg5crqHz0UZT0WnBZA+xCSXJmYgYZjRN5kmmREADvnaPQ8YjzUPjqx6M3kCVJP9i7V6XYWj47GhumCk61S6Yej4+NdtlCOj/UDaaOuJK51ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659424; c=relaxed/simple;
-	bh=icFDhjLDEdDAHR4TC/i3dGW3ol6m13DtU0PIj/KrxFk=;
+	s=arc-20240116; t=1784659427; c=relaxed/simple;
+	bh=4WZZWLxnW4F5dWjxMxAnHvk44B0Ma6C3WNVSimtaJ9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXA9r/6IReWIN1ZQZ2mu5+kVGGuXtRTn5MOvcLPKJuW+j2b/H/2fR0snrZs5UutnqMSYJbw4oqGdRJcfIgtfibpduHeXlezOdStQbKI8y56YyjzqF1yJ80IXSUWTZWSyPQK3RApQ9sL8/7R8SjbqnWyob+jxieJfyM+h34hycH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSwznOPS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AUQZKGxw3DXHK1Cnk9ITCE9waT+vCJ4rLD7XDr8XjFeAtfUIB8LeaOWm9zwQsJv8v7lKdpj3xEWUER9em8REGoTPPg+zyMHiMJy9Nv66nvc/+UmUFV660z6+hnuDm03h7g99Iw8VNw6yQOufWIss7e7tTU805F/j5K131vvdZVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxgUsc/M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSwznOPS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABAB1F000E9;
-	Tue, 21 Jul 2026 18:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxgUsc/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30E11F000E9;
+	Tue, 21 Jul 2026 18:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659422;
-	bh=RKuDh+KERWjn6nyUDQDOJZnM3NiGkAcpQNIac4zws+s=;
+	s=korg; t=1784659425;
+	bh=Kq3k/p9N1rLWpid77IpBt4+fWwTnGP7F7tDEPFGWguc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rSwznOPS2UELkFX5pnar5jNV6v0CCRmOxg7UKaLD3agMYV1XVsZvpHFeenhWlUi+W
-	 aWIhJ/TlwpGx9s+NqC1TcZGonenMGgK0vZno7z1VLBAPyNaBlCNH6zF+5PWlFHuIXy
-	 k4npN40ds6NoycKPKALfgMvEvtXplU2CatP8ItuQ=
+	b=dxgUsc/McFw5xmRDL8+efygv78ubfJiFHodu0nPOK/R34D5RrFDromU0vCQWLhynt
+	 0fOtaI0n1Gu3j7pxNaChJYiTFldL0Psx/8nSGZCk3/Q/UkFNd7eeuUau9CjkwWvYLD
+	 JHIrpr9MUOp3k0lP0+MoHlnW+cqPA6omdXg11LI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 1514/1611] mmc: sdhci-esdhc-imx: fix resume error handling
-Date: Tue, 21 Jul 2026 17:27:10 +0200
-Message-ID: <20260721152549.497661428@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 1515/1611] crypto: xilinx-trng - Remove crypto_rng interface
+Date: Tue, 21 Jul 2026 17:27:11 +0200
+Message-ID: <20260721152549.520005845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,63 +50,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit e27c946b589c53520409a0956b33d52ef7a0898f upstream.
+commit 32b4d29280ed2a991dc196d5845b892acedc63b8 upstream.
 
-Check pm_runtime_force_resume() return value in resume. If it fails
-(clock enable failure), return immediately since accessing hardware
-registers on an unclocked device would cause a kernel panic.
+Implementing the crypto_rng interface has no purpose, as it isn't used
+in practice.  It's being removed from other drivers too.  Just remove
+it.  This leaves hwrng, which is actually used.
 
-The early return intentionally skips enable_irq() and
-sdhci_disable_irq_wakeups() because the IRQ handler reads
-SDHCI_INT_STATUS, which would also fault without clocks. The PM runtime
-usage counter leak only affects this already-broken device instance and
-is an acceptable tradeoff to preserve system stability.
+Tagging with 'Cc stable' due to the bugs that this removes:
 
-Remove the return value check for mmc_gpio_set_cd_wake(host->mmc, false)
-since disable_irq_wake() called internally always returns 0.
+  - xtrng_trng_generate() sometimes returned success even when it didn't
+    fill in all the bytes.
 
-Also return 0 explicitly on the success path instead of propagating
-stale return values.
+  - It was possible for xtrng_trng_generate() and
+    xtrng_hwrng_trng_read() to run concurrently and interfere with each
+    other, as the locking code in xtrng_hwrng_trng_read() was broken.
 
-Fixes: 676a83855614 ("mmc: host: sdhci-esdhc-imx: refactor the system PM logic")
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Fixes: 8979744aca80 ("crypto: xilinx - Add TRNG driver for Versal")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/crypto/Kconfig              |    1 
+ drivers/crypto/xilinx/xilinx-trng.c |   75 ------------------------------------
+ 2 files changed, 1 insertion(+), 75 deletions(-)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -2100,12 +2100,12 @@ static int sdhci_esdhc_resume(struct dev
- 			dev_warn(dev, "Failed to restore pinctrl state\n");
- 	}
+--- a/drivers/crypto/Kconfig
++++ b/drivers/crypto/Kconfig
+@@ -728,7 +728,6 @@ config CRYPTO_DEV_TEGRA
+ config CRYPTO_DEV_XILINX_TRNG
+ 	tristate "Support for Xilinx True Random Generator"
+ 	depends on ZYNQMP_FIRMWARE || COMPILE_TEST
+-	select CRYPTO_RNG
+ 	select HW_RANDOM
+ 	help
+ 	  Xilinx Versal SoC driver provides kernel-side support for True Random Number
+--- a/drivers/crypto/xilinx/xilinx-trng.c
++++ b/drivers/crypto/xilinx/xilinx-trng.c
+@@ -6,7 +6,6 @@
  
--	pm_runtime_force_resume(dev);
+ #include <linux/bitfield.h>
+ #include <linux/clk.h>
+-#include <linux/crypto.h>
+ #include <linux/delay.h>
+ #include <linux/errno.h>
+ #include <linux/firmware/xlnx-zynqmp.h>
+@@ -15,12 +14,10 @@
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+-#include <linux/mutex.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
+ #include <linux/string.h>
+ #include <crypto/internal/cipher.h>
+-#include <crypto/internal/rng.h>
+ #include <crypto/aes.h>
+ 
+ /* TRNG Registers Offsets */
+@@ -59,16 +56,9 @@
+ struct xilinx_rng {
+ 	void __iomem *rng_base;
+ 	struct device *dev;
+-	struct mutex lock;	/* Protect access to TRNG device */
+ 	struct hwrng trng;
+ };
+ 
+-struct xilinx_rng_ctx {
+-	struct xilinx_rng *rng;
+-};
 -
--	ret = mmc_gpio_set_cd_wake(host->mmc, false);
-+	ret = pm_runtime_force_resume(dev);
- 	if (ret)
- 		return ret;
- 
-+	mmc_gpio_set_cd_wake(host->mmc, false);
-+
- 	/* re-initialize hw state in case it's lost in low power mode */
- 	sdhci_esdhc_imx_hwinit(host);
- 
-@@ -2132,7 +2132,7 @@ static int sdhci_esdhc_resume(struct dev
- 
- 	pm_runtime_put_autosuspend(dev);
- 
--	return ret;
-+	return 0;
+-static struct xilinx_rng *xilinx_rng_dev;
+-
+ static void xtrng_readwrite32(void __iomem *addr, u32 mask, u8 value)
+ {
+ 	u32 val;
+@@ -235,47 +225,6 @@ static int xtrng_random_bytes_generate(s
+ 	return nbytes;
  }
  
- static int sdhci_esdhc_runtime_suspend(struct device *dev)
+-static int xtrng_trng_generate(struct crypto_rng *tfm, const u8 *src, u32 slen,
+-			       u8 *dst, u32 dlen)
+-{
+-	struct xilinx_rng_ctx *ctx = crypto_rng_ctx(tfm);
+-	int ret;
+-
+-	mutex_lock(&ctx->rng->lock);
+-	ret = xtrng_random_bytes_generate(ctx->rng, dst, dlen, true);
+-	mutex_unlock(&ctx->rng->lock);
+-
+-	return ret < 0 ? ret : 0;
+-}
+-
+-static int xtrng_trng_seed(struct crypto_rng *tfm, const u8 *seed, unsigned int slen)
+-{
+-	return 0;
+-}
+-
+-static int xtrng_trng_init(struct crypto_tfm *rtfm)
+-{
+-	struct xilinx_rng_ctx *ctx = crypto_tfm_ctx(rtfm);
+-
+-	ctx->rng = xilinx_rng_dev;
+-
+-	return 0;
+-}
+-
+-static struct rng_alg xtrng_trng_alg = {
+-	.generate = xtrng_trng_generate,
+-	.seed = xtrng_trng_seed,
+-	.seedsize = 0,
+-	.base = {
+-		.cra_name = "stdrng",
+-		.cra_driver_name = "xilinx-trng",
+-		.cra_priority = 300,
+-		.cra_ctxsize = sizeof(struct xilinx_rng_ctx),
+-		.cra_module = THIS_MODULE,
+-		.cra_init = xtrng_trng_init,
+-	},
+-};
+-
+ static int xtrng_hwrng_trng_read(struct hwrng *hwrng, void *data, size_t max, bool wait)
+ {
+ 	u8 buf[TRNG_SEC_STRENGTH_BYTES];
+@@ -283,12 +232,6 @@ static int xtrng_hwrng_trng_read(struct
+ 	int ret = -EINVAL, i = 0;
+ 
+ 	rng = container_of(hwrng, struct xilinx_rng, trng);
+-	/* Return in case wait not set and lock not available. */
+-	if (!mutex_trylock(&rng->lock) && !wait)
+-		return 0;
+-	else if (!mutex_is_locked(&rng->lock) && wait)
+-		mutex_lock(&rng->lock);
+-
+ 	while (i < max) {
+ 		ret = xtrng_random_bytes_generate(rng, buf, TRNG_SEC_STRENGTH_BYTES, wait);
+ 		if (ret < 0)
+@@ -297,8 +240,6 @@ static int xtrng_hwrng_trng_read(struct
+ 		memcpy(data + i, buf, min_t(int, ret, (max - i)));
+ 		i += min_t(int, ret, (max - i));
+ 	}
+-	mutex_unlock(&rng->lock);
+-
+ 	return ret;
+ }
+ 
+@@ -344,26 +285,14 @@ static int xtrng_probe(struct platform_d
+ 		return ret;
+ 	}
+ 
+-	xilinx_rng_dev = rng;
+-	mutex_init(&rng->lock);
+-	ret = crypto_register_rng(&xtrng_trng_alg);
+-	if (ret) {
+-		dev_err(&pdev->dev, "Crypto Random device registration failed: %d\n", ret);
+-		return ret;
+-	}
+ 	ret = xtrng_hwrng_register(&rng->trng);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "HWRNG device registration failed: %d\n", ret);
+-		goto crypto_rng_free;
++		return ret;
+ 	}
+ 	platform_set_drvdata(pdev, rng);
+ 
+ 	return 0;
+-
+-crypto_rng_free:
+-	crypto_unregister_rng(&xtrng_trng_alg);
+-
+-	return ret;
+ }
+ 
+ static void xtrng_remove(struct platform_device *pdev)
+@@ -373,13 +302,11 @@ static void xtrng_remove(struct platform
+ 
+ 	rng = platform_get_drvdata(pdev);
+ 	xtrng_hwrng_unregister(&rng->trng);
+-	crypto_unregister_rng(&xtrng_trng_alg);
+ 	xtrng_write_multiple_registers(rng->rng_base + TRNG_EXT_SEED_OFFSET, zero,
+ 				       TRNG_NUM_INIT_REGS);
+ 	xtrng_write_multiple_registers(rng->rng_base + TRNG_PER_STRNG_OFFSET, zero,
+ 				       TRNG_NUM_INIT_REGS);
+ 	xtrng_hold_reset(rng->rng_base);
+-	xilinx_rng_dev = NULL;
+ }
+ 
+ static const struct of_device_id xtrng_of_match[] = {
 
 
