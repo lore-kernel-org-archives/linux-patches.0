@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF2442DFEC;
-	Tue, 21 Jul 2026 21:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B141E438FEE;
+	Tue, 21 Jul 2026 21:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670517; cv=none; b=WQjwVxm1pgWEhKwUkDSilwJWFZB1yWnplRV1kVi74UUmvcitSXe0BEHrH7qEHT2vwUpX+A6z7GjGCs0qEI+s3u+fsdLaZNFozXpXSbCy+ldfiTZaWjsklo8yJl65cp61cz5n1ZnnCwF/HAXMABLdOjMNn38ofnS86+K550ZIO7A=
+	t=1784670520; cv=none; b=jLqfFtcZ5GSRDBgMhJ/AHlyuCFjBdZ3PlFKIwYwZabpujaF0zOlQufKiGBpqaKxnE0tHOaux3is+TsPs4mFLzrsIeTbrFkwzTJ5hE+S2tPQSp6FXbVBOaT+MnXrAxLSfc2huGbAzOLDODJPWJN5nCFONzVb4/xllOrd5nxuFxsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670517; c=relaxed/simple;
-	bh=I0EF7fV3IXHySLwUSY8EGSeg8I35siXmhAAWu2K/vhs=;
+	s=arc-20240116; t=1784670520; c=relaxed/simple;
+	bh=JCbIrSA3tCJ1vUD7AmGVPpBlSjrvsif/GQc8Ja9OnVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XL0g/wTRyqyELdhiA0OQ2yfx/iOYROcCmxN7knv0ZqmAlWgc4enSoLgnH5/pvYXFIfRHOtQMBNyGzyiawQiRtZ2znzagITGjqf0/6BdVt/FDEt5Pg3DvipPS4E4Pt3bL9IbBHL48/7IXXNcl1MHI6q3ibMsBeONQ2AYoCAUGJOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6ZYPbzE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tj6Mj40E80mzIl9WtZZsSWBl4v0Xd4DmfJXn5YY90YA1Bn6EBsRW1OZFxXl8ObJ8i2sbUUGi9/kwCsGguMFT7eTm3rAS4C6+GucrFrFp3OBsI+7TLc4ffAe/+X3kS2LoNcEUPHh+mlRjTQQAkGKnQR9FnppJs9T0edEIwfOM7Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d70DyI0N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6ZYPbzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A70D1F000E9;
-	Tue, 21 Jul 2026 21:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d70DyI0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231671F000E9;
+	Tue, 21 Jul 2026 21:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670516;
-	bh=fPMLef+JuDKkd98MXnmKslIl4B8SIWeun5Ms/UdxTnE=;
+	s=korg; t=1784670518;
+	bh=PONPYMkBEwtyKOWzMPsJtQHv3xnxh8aPISFvSDjL8s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q6ZYPbzE8fNZ1FpWJXttzKZIuk2x0PvXh00iE1buo0nvm8uI3dB6TTjHfAimx9G0J
-	 5TOH9IPydIQwGcFUmkZCEpE+1ivWNFo1B6Zzb16ifq3pnYbp+k2hBtMaX+c/7A6vXM
-	 zENXOID8m9/v8znBN23GsVImoE/BRChOGSJi/MeQ=
+	b=d70DyI0NI6vKnhAeflOdZ2qETmuUHQTd7CTgU5tXqDUqMGVQTmVuNQaxBU47aSWlU
+	 0wwD3v+7kFGj6nDFFk9zIg/XJNmT1pTgYGibnFwydb4w6tqr9zY/ilVsgM5aUlPu+x
+	 DJpwH+yOCCh2FIkiojAo0KTxdcDI14L+GE6Hs12Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0961/1067] staging: rtl8723bs: fix heap buffer overflow in rtw_cfg80211_set_wpa_ie()
-Date: Tue, 21 Jul 2026 17:26:02 +0200
-Message-ID: <20260721152446.035040797@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.1 0962/1067] PCI: controller: Use dev_fwnode() instead of of_fwnode_handle()
+Date: Tue, 21 Jul 2026 17:26:03 +0200
+Message-ID: <20260721152446.057112514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,63 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
 
-[ Upstream commit 5a752a616e756844388a1a45404db9fc29fec655 ]
+[ Upstream commit a103d2dede5683dabbac2c3374bc24b6a9434478 ]
 
-supplicant_ie is a 256-byte array in struct security_priv. The WPA and
-WPA2 IE copy paths use:
+All irq_domain functions now accept fwnode instead of of_node. But many
+PCI controllers still extract dev to of_node and then of_node to fwnode.
 
-    memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen + 2);
+Instead, clean this up and simply use the dev_fwnode() helper to extract
+fwnode directly from dev. Internally, it still does dev => of_node =>
+fwnode steps, but it's now hidden from the users.
 
-where wpa_ielen is the raw IE length field (u8, 0-255). When a local user
-supplies a connect request via nl80211 with a crafted WPA IE of length 255,
-wpa_ielen + 2 equals 257, overflowing the 256-byte buffer by one byte into
-the adjacent last_mic_err_time field.
+In the case of altera, this also removes an unused 'node' variable that is
+only used when CONFIG_OF is enabled:
 
-rtw_parse_wpa_ie() does not prevent this: its length consistency check
-compares *(wpa_ie+1) against (u8)(wpa_ie_len-2), which is (u8)(255) == 255
-when wpa_ie_len = 257, so the check passes silently.
+  drivers/pci/controller/pcie-altera.c: In function 'altera_pcie_init_irq_domain':
+  drivers/pci/controller/pcie-altera.c:855:29: error: unused variable 'node' [-Werror=unused-variable]
+    855 |         struct device_node *node = dev->of_node;
 
-Add explicit bounds checks for both the WPA and WPA2 paths before the
-memcpy, rejecting any IE whose total size (wpa_ielen + 2) exceeds the
-supplicant_ie buffer.
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260522004531.1038924-4-hossu.alexandru@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>	# altera
+[bhelgaas: squash together, rebase to precede msi-parent]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250521163329.2137973-1-arnd@kernel.org
+Link: https://patch.msgid.link/20250611104348.192092-16-jirislaby@kernel.org
+Link: https://patch.msgid.link/20250723065907.1841758-1-jirislaby@kernel.org
+Stable-dep-of: f865a57896bd ("PCI: mediatek: Fix IRQ domain leak when port fails to enable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pci/controller/dwc/pcie-designware-host.c    |    2 +-
+ drivers/pci/controller/mobiveil/pcie-mobiveil-host.c |    8 +++-----
+ drivers/pci/controller/pcie-altera-msi.c             |    2 +-
+ drivers/pci/controller/pcie-altera.c                 |    3 +--
+ drivers/pci/controller/pcie-mediatek-gen3.c          |    4 ++--
+ drivers/pci/controller/pcie-mediatek.c               |    2 +-
+ drivers/pci/controller/pcie-xilinx-nwl.c             |    2 +-
+ 7 files changed, 10 insertions(+), 13 deletions(-)
 
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -1482,6 +1482,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -232,7 +232,7 @@ static const struct irq_domain_ops dw_pc
+ int dw_pcie_allocate_domains(struct dw_pcie_rp *pp)
+ {
+ 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(pci->dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(pci->dev);
  
- 	pwpa = rtw_get_wpa_ie(buf, &wpa_ielen, ielen);
- 	if (pwpa && wpa_ielen > 0) {
-+		if (wpa_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
-+			ret = -EINVAL;
-+			goto exit;
-+		}
- 		if (rtw_parse_wpa_ie(pwpa, wpa_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
- 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
- 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPAPSK;
-@@ -1491,6 +1495,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
+ 	pp->irq_domain = irq_domain_create_linear(fwnode, pp->num_vectors,
+ 					       &dw_pcie_msi_domain_ops, pp);
+--- a/drivers/pci/controller/mobiveil/pcie-mobiveil-host.c
++++ b/drivers/pci/controller/mobiveil/pcie-mobiveil-host.c
+@@ -445,7 +445,7 @@ static const struct irq_domain_ops msi_d
+ static int mobiveil_allocate_msi_domains(struct mobiveil_pcie *pcie)
+ {
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(dev);
+ 	struct mobiveil_msi *msi = &pcie->rp.msi;
  
- 	pwpa2 = rtw_get_wpa2_ie(buf, &wpa2_ielen, ielen);
- 	if (pwpa2 && wpa2_ielen > 0) {
-+		if (wpa2_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
-+			ret = -EINVAL;
-+			goto exit;
-+		}
- 		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
- 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
- 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPA2PSK;
+ 	mutex_init(&msi->lock);
+@@ -471,13 +471,11 @@ static int mobiveil_allocate_msi_domains
+ static int mobiveil_pcie_init_irq_domain(struct mobiveil_pcie *pcie)
+ {
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct device_node *node = dev->of_node;
+ 	struct mobiveil_root_port *rp = &pcie->rp;
+ 
+ 	/* setup INTx */
+-	rp->intx_domain = irq_domain_add_linear(node, PCI_NUM_INTX,
+-						&intx_domain_ops, pcie);
+-
++	rp->intx_domain = irq_domain_create_linear(dev_fwnode(dev), PCI_NUM_INTX, &intx_domain_ops,
++						   pcie);
+ 	if (!rp->intx_domain) {
+ 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
+ 		return -ENOMEM;
+--- a/drivers/pci/controller/pcie-altera-msi.c
++++ b/drivers/pci/controller/pcie-altera-msi.c
+@@ -171,7 +171,7 @@ static const struct irq_domain_ops msi_d
+ 
+ static int altera_allocate_domains(struct altera_msi *msi)
+ {
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(msi->pdev->dev.of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(&msi->pdev->dev);
+ 
+ 	msi->inner_domain = irq_domain_add_linear(NULL, msi->num_of_vectors,
+ 					     &msi_domain_ops, msi);
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -668,10 +668,9 @@ static void altera_pcie_isr(struct irq_d
+ static int altera_pcie_init_irq_domain(struct altera_pcie *pcie)
+ {
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct device_node *node = dev->of_node;
+ 
+ 	/* Setup INTx */
+-	pcie->irq_domain = irq_domain_add_linear(node, PCI_NUM_INTX,
++	pcie->irq_domain = irq_domain_create_linear(dev_fwnode(dev), PCI_NUM_INTX,
+ 					&intx_domain_ops, pcie);
+ 	if (!pcie->irq_domain) {
+ 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -661,8 +661,8 @@ static int mtk_pcie_init_irq_domains(str
+ 	/* Setup MSI */
+ 	mutex_init(&pcie->lock);
+ 
+-	pcie->msi_bottom_domain = irq_domain_add_linear(node, PCIE_MSI_IRQS_NUM,
+-				  &mtk_msi_bottom_domain_ops, pcie);
++	pcie->msi_bottom_domain = irq_domain_create_linear(dev_fwnode(dev), PCIE_MSI_IRQS_NUM,
++							   &mtk_msi_bottom_domain_ops, pcie);
+ 	if (!pcie->msi_bottom_domain) {
+ 		dev_err(dev, "failed to create MSI bottom domain\n");
+ 		ret = -ENODEV;
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -496,7 +496,7 @@ static struct msi_domain_info mtk_msi_do
+ 
+ static int mtk_pcie_allocate_msi_domains(struct mtk_pcie_port *port)
+ {
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(port->pcie->dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(port->pcie->dev);
+ 
+ 	mutex_init(&port->lock);
+ 
+--- a/drivers/pci/controller/pcie-xilinx-nwl.c
++++ b/drivers/pci/controller/pcie-xilinx-nwl.c
+@@ -503,7 +503,7 @@ static int nwl_pcie_init_msi_irq_domain(
+ {
+ #ifdef CONFIG_PCI_MSI
+ 	struct device *dev = pcie->dev;
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(dev);
+ 	struct nwl_msi *msi = &pcie->msi;
+ 
+ 	msi->dev_domain = irq_domain_add_linear(NULL, INT_PCI_MSI_NR,
 
 
