@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D384266BF;
-	Tue, 21 Jul 2026 22:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615113B9930;
+	Tue, 21 Jul 2026 22:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671723; cv=none; b=P6uIGkIYjQHpJMaQD6UvJflo63pvHewZ073wGMSJ+2phL2IBKtIoWgmysRflHbEscrDxTKYV5S/H+uN9BqLwT8Lq4pAVDnnwcMUD0yuKXgCXZ7XMYE3tLcOyDj+tfFYc39hAzOk8jnecTwynmmtyaAUTH4Jc989J45lIfeCrp9E=
+	t=1784671726; cv=none; b=GsoM6VRMEz6+zfUHybhcFWqLZAu2yLe7VRWafRwD7Lu1/hlUDTXt8iSJys7Xv3ujSJzWFaCUxEMTPokFybNLhN4SFEbOb5Xyd3ePqBVQ7EKlc7AiuObO72V7twEuKYGm72xyLXpACF44ECzn13cYGDXCzcut+zVSnUWg6kRNPDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671723; c=relaxed/simple;
-	bh=FnKQd0dMfAkA+MgUPos+elfE1h5tOxOBkdirLhjqtGE=;
+	s=arc-20240116; t=1784671726; c=relaxed/simple;
+	bh=S6uVqCDWucTUjVYj2YAvbK42qyPrBCStUr5Gc8TJXhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WqLgJh/vgxYy3Qbo1t885rJESk1fOsKAU0IIca7LMtwiIWT81GbI8GzfPbQXpP4aH127BiEwR/lsxewxVK1jl5ZXXtGTgftDEZwHRQXlY9xBjl1tVN7OFvo2rd6VHn0GgpQTh5CakgCMgjj0DbuiJA9Oc9Hc5aeMvpUZJHk5m2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v63lOCow; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lg/0m/MlORbwfDH+MBvGElUp7a8eNbR2r6m/jqexmFsGqE8Hm0TkdWOp8iYVE16zQQcwXoPM7E0MTCkIqvbvLKJfvK5AZ/jPL1CTjXmCoCVxaiNmdO5Z/UNO8ID7frN5Y5oRA4fZ2s4348at5y7s8ubfHUDo28q6nf8xK+S9ApA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyK1Vuda; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v63lOCow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F321F000E9;
-	Tue, 21 Jul 2026 22:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyK1Vuda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01671F000E9;
+	Tue, 21 Jul 2026 22:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671722;
-	bh=SFfrZ6/HFjGj7cSRXPfACadM6ybRvOOu2hAJ+GFmEds=;
+	s=korg; t=1784671725;
+	bh=uTlIay1dp5VS0Slg4VE8Z1Jr+6NafxceLfSXOvYqQjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v63lOCowbTYo00phGf0/Fp5Xk50d/aHEA71Y9Kne5SqW0hixxuGxRlFVrz5bZPfL3
-	 MJLQYatwygQglPfDm1irg+sbKkoKbiYqzeLFjpwkTYsSbPaBBnavYE2B1PUZjISXZ2
-	 WoBcGq/NYm1ZoFSded6rR7+0hXpqLcgeYYsbbFWA=
+	b=hyK1VudarPwLcu9y7c9JDVKAuLiw6rGovVUnIp7Q91QgaM//q+g8LXFrQtEQjWMYR
+	 jMDjxMJ8y6qEzATQ0AUqH7/agqlY64cL/oW1vhUgrOl2KmYQLXL5yPsQsv2EKFAqhX
+	 UV6+yM9jxbauSr3d1zp+ct5s0R8D/XfevZEToDks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Anirudh Gupta <anirudhrudr@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 352/843] ASoC: adau1372: Clear PLL_EN on failed PLL lock without reset GPIO
-Date: Tue, 21 Jul 2026 17:19:47 +0200
-Message-ID: <20260721152413.953494216@linuxfoundation.org>
+Subject: [PATCH 5.15 353/843] net/sched: sch_fq_codel: Do not call qdisc_tree_reduce_backlog during peek before restoring qlen
+Date: Tue, 21 Jul 2026 17:19:48 +0200
+Message-ID: <20260721152413.975212523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,48 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 69b4141b428bcf2cf7a863950c0d6e5c5ae89ac1 ]
+[ Upstream commit 097f6fc7b1ae362dd7a9444b2572162fda73b284 ]
 
-The PLL lock failure path in adau1372_set_power() unwinds by putting
-the regmap back in cache-only mode, asserting the optional power-down
-GPIO and disabling mclk.
+Whenever fq_codel drops packets during peek, it calls
+qdisc_tree_reduce_backlog. An issue arises because it calls
+qdisc_tree_reduce_backlog before it reincrements the qlen. If qlen drops
+to zero, but peek returns an skb, the parent's qlen_notify callback will be
+executed even though fq_codel still has 1 packet on the queue and, thus,
+will mistakenly deactivate the parent's class causing issues like a recent
+report [1] and a wild memory access in qfq:
 
-adau1372_enable_pll() enables CLK_CTRL.PLL_EN before polling the PLL
-lock bit. If the lock fails on a board without a power-down GPIO, the
-error path disables mclk and returns an error, but leaves PLL_EN set in
-the hardware register. The normal power-off path already handles the
-no-GPIO case by explicitly clearing PLL_EN.
+[   29.371146][  T360] Oops: general protection fault, probably for non-canonical address 0xfbd59c0000000024: 0000 [#1] SMP KASAN NOPTI
+[   29.371666][  T360] KASAN: maybe wild-memory-access in range [0xdead000000000120-0xdead000000000127]
+[   29.371987][  T360] CPU: 6 UID: 0 PID: 360 Comm: tc Not tainted 7.1.0-rc5-00285-gc530e5b2dbc6-dirty #82 PREEMPT(full)
+[   29.372384][  T360] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+[   29.372620][  T360] RIP: 0010:qfq_deactivate_agg (include/linux/list.h:1029 (discriminator 2) include/linux/list.h:1043 (discriminator 2) net/sched/sch_qfq.c:1369 (discriminator 2) net/sched/sch_qfq.c:1395 (discriminator 2)) sch_qfq
+[   29.373544][  T360] RSP: 0018:ffff888102417370 EFLAGS: 00010216
+[   29.373800][  T360] RAX: 0000000000000000 RBX: ffff88811224d568 RCX: dffffc0000000000
+[   29.374079][  T360] RDX: 1ffff11021fe1543 RSI: ffff88810ff0aa00 RDI: dffffc0000000000
+[   29.374368][  T360] RBP: ffff88811224c280 R08: dead000000000122 R09: 1bd5a00000000024
+[   29.374649][  T360] R10: fffffbfff7940329 R11: fffffbfff7940329 R12: 0000000000000000
+[   29.374926][  T360] R13: dead000000000100 R14: ffff88811224d580 R15: ffff88811224d578
+[   29.375207][  T360] FS:  00007f5b794e5780(0000) GS:ffff88815d1e9000(0000) knlGS:0000000000000000
+[   29.375545][  T360] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   29.375823][  T360] CR2: 000055ffb091f000 CR3: 000000010a305000 CR4: 0000000000750ef0
+[   29.376103][  T360] PKRU: 55555554
+[   29.376258][  T360] Call Trace:
+[   29.376401][  T360]  <TASK>
+...
+[   29.376885][  T360] qfq_reset_qdisc (net/sched/sch_qfq.c:357 net/sched/sch_qfq.c:1487) sch_qfq
+[   29.377074][  T360]  qdisc_reset (net/sched/sch_generic.c:1057)
+[   29.377414][  T360]  __qdisc_destroy (net/sched/sch_generic.c:1096)
+[   29.377600][  T360]  qdisc_graft (net/sched/sch_api.c:1062 net/sched/sch_api.c:1053 net/sched/sch_api.c:1159)
+[   29.378593][  T360]  tc_get_qdisc (net/sched/sch_api.c:1528 net/sched/sch_api.c:1556)
 
-Mirror that cleanup in the PLL lock failure path and clear PLL_EN while
-the regmap is still live, before switching it back to cache-only mode.
+Fix this by only calling qdisc_tree_reduce_backlog in peek after the
+qlen is restored.
 
-Fixes: bfe6a264effc ("ASoC: adau1372: Fix clock leak on PLL lock failure")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260604125520.1428905-1-lgs201920130244@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[1] http://lore.kernel.org/netdev/CAN2cbVe79oj0O9==m4+4x3v+O+qzRagA=2=wkrp9i9=CqYvyZA@mail.gmail.com/
+
+Fixes: 342debc12183 ("codel: remove sch->q.qlen check before qdisc_tree_reduce_backlog()")
+Reported-by: Anirudh Gupta <anirudhrudr@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAN2cbVe79oj0O9==m4+4x3v+O+qzRagA=2=wkrp9i9=CqYvyZA@mail.gmail.com/
+Tested-by: Anirudh Gupta <anirudhrudr@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260610192855.3121513-2-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/sched/sch_fq_codel.c | 41 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 39 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index e20145812f12b6..0dc5381cdc3966 100644
---- a/sound/soc/codecs/adau1372.c
-+++ b/sound/soc/codecs/adau1372.c
-@@ -812,6 +812,11 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 		if (adau1372->use_pll) {
- 			ret = adau1372_enable_pll(adau1372);
- 			if (ret) {
-+				if (!adau1372->pd_gpio)
-+					regmap_update_bits(adau1372->regmap,
-+							   ADAU1372_REG_CLK_CTRL,
-+							   ADAU1372_CLK_CTRL_PLL_EN,
-+							   0);
- 				regcache_cache_only(adau1372->regmap, true);
- 				if (adau1372->pd_gpio)
- 					gpiod_set_value(adau1372->pd_gpio, 1);
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index 5e773e59938508..d2fe36b454d075 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -278,7 +278,7 @@ static void drop_func(struct sk_buff *skb, void *ctx)
+ 	qdisc_qstats_drop(sch);
+ }
+ 
+-static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
++static struct sk_buff *__fq_codel_dequeue(struct Qdisc *sch)
+ {
+ 	struct fq_codel_sched_data *q = qdisc_priv(sch);
+ 	struct sk_buff *skb;
+@@ -315,12 +315,49 @@ static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
+ 	qdisc_bstats_update(sch, skb);
+ 	flow->deficit -= qdisc_pkt_len(skb);
+ 
++	return skb;
++}
++
++static void fq_codel_dequeue_drop(struct Qdisc *sch)
++{
++	struct fq_codel_sched_data *q = qdisc_priv(sch);
++
+ 	if (q->cstats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->cstats.drop_count,
+ 					  q->cstats.drop_len);
+ 		q->cstats.drop_count = 0;
+ 		q->cstats.drop_len = 0;
+ 	}
++}
++
++static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
++{
++	struct sk_buff *skb;
++
++	skb =  __fq_codel_dequeue(sch);
++
++	fq_codel_dequeue_drop(sch);
++
++	return skb;
++}
++
++static struct sk_buff *fq_codel_peek(struct Qdisc *sch)
++{
++	struct sk_buff *skb = skb_peek(&sch->gso_skb);
++
++	if (!skb) {
++		skb = __fq_codel_dequeue(sch);
++
++		if (skb) {
++			__skb_queue_head(&sch->gso_skb, skb);
++			/* it's still part of the queue */
++			qdisc_qstats_backlog_inc(sch, skb);
++			sch->q.qlen++;
++		}
++
++		fq_codel_dequeue_drop(sch);
++	}
++
+ 	return skb;
+ }
+ 
+@@ -702,7 +739,7 @@ static struct Qdisc_ops fq_codel_qdisc_ops __read_mostly = {
+ 	.priv_size	=	sizeof(struct fq_codel_sched_data),
+ 	.enqueue	=	fq_codel_enqueue,
+ 	.dequeue	=	fq_codel_dequeue,
+-	.peek		=	qdisc_peek_dequeued,
++	.peek		=	fq_codel_peek,
+ 	.init		=	fq_codel_init,
+ 	.reset		=	fq_codel_reset,
+ 	.destroy	=	fq_codel_destroy,
 -- 
 2.53.0
 
