@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C2935836E;
-	Tue, 21 Jul 2026 16:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB0046A611;
+	Tue, 21 Jul 2026 16:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649706; cv=none; b=EhlfZc75OtT4hskESx2B7TF3BGO2A3ru/zuT2mcLCbroOlaTTsyO3GH35CWa4OWEhDaB9T2DCRdJOrJ6hmbJSsei4/dnetU0MK09N37t/ukuHxRHMhpTXQvQyrDHsvg47NKHfuXerFnrXmidFiW1mbp9BME2tgVzMWKB84Zsk+Q=
+	t=1784649709; cv=none; b=d15vcoHaTzw+Z/KzRsli+6gC/jVHhvSc0itm384qYX6VzLxKT9lR3R4dGwn8u1AP/M/D8qkBOYfol9b+3FP39iU40weamuSnmZvQzbG4JiIUXs9cAY521Cix1ctyZZZpei/2BtwmWf4B8PT5rg4NgO7Q7QpD2QlXdVLAebcFH3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649706; c=relaxed/simple;
-	bh=wJH8xcKt+fjoueS6kt65s8el3FWgh0qYepTi9JYsy88=;
+	s=arc-20240116; t=1784649709; c=relaxed/simple;
+	bh=yud2988m4cI87kFBYxTHWvr0fCDByG7VPw6kluaCm98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usqOw0nfn4ttssOirY3nRXq/lKevJx3F1v3oGHhtsv4Fbwru328KFzuF0z0/zNd0twCuQJOZyGwAIb6fsehZoRGDV6t33Fg+NLzYgp/ogQ0qktEWeDmD6//j2WLmYHo8AMaSFjPShlESfztPbe7vVaqEQUwQQYo27gnV306//08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FR+dqFbM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PnsllRzmi+1FdVXwK5igfglVEtun3qCR7KYv2qp3BpLlNKJ/AdFNheTmRt+ZtHurVjOG/bycVguSYrD0Ay15iZzZFZhv2AQZu9y33tM+yeQ29C49h2AlarGLjTBGSERMkVYo19lOypcZ25UeRmNCP2srHQMDECKzILAyMUWhGCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXf7Nq6B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FR+dqFbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE9B1F00A3D;
-	Tue, 21 Jul 2026 16:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXf7Nq6B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913FE1F00A3A;
+	Tue, 21 Jul 2026 16:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649705;
-	bh=H8dgKwUJTrMAAxVhogGhOQWpof4mtJ0wdEfWuiP1AcE=;
+	s=korg; t=1784649708;
+	bh=V2uRvpEy6+HfyWEjQkEhwSFVo/cY7fUoGq80RVyLqQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FR+dqFbMlQT3LjwK9+YtFAqSiJPSraX40fuAWrCRUuH34Vm69dkytWEcv3as/wTZ9
-	 Wr4NGbw79liA0cap/3RRa7qp78BqjbgllL8SciV7eBtyRawML8IvBZSZnN2S0JZD78
-	 97DVWY8j0qBukYm5mhjhyoAmj6cBOLRjDu5d9w5o=
+	b=lXf7Nq6BIqeCfiZ+eVFUTy8riIG0Nxmb3FEWRnHr6UghKzQ3/5gmoLTsLLrhDntIx
+	 KWqIziXYaSJdgxhfYzIxx2+0eqD8ulSzvNdomaqRdEukchq5LaJ/OsjBJ6SSmbUanJ
+	 AGrat0mQfMOuLqsEJWJbeMv7/obIb2gZ7697HUAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0676/2077] s390/process: Fix kernel thread function pointer type
-Date: Tue, 21 Jul 2026 17:05:49 +0200
-Message-ID: <20260721152608.741364011@linuxfoundation.org>
+Subject: [PATCH 7.1 0677/2077] Bluetooth: hci_qca: fix NULL pointer dereference in qca_setup() for non-serdev device
+Date: Tue, 21 Jul 2026 17:05:50 +0200
+Message-ID: <20260721152608.765246104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,36 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit d0478f5d3cba1095bfdeb43a9b063c10cdebef14 ]
+[ Upstream commit 3ec629fee178d429f01ae843e4ea888de93012bf ]
 
-In case of a kernel thread __ret_from_fork() calls the specified function
-indirectly. Fix the kernel thread function pointer, since kernel threads
-return an int instead of void.
+hu->serdev is NULL for hci_uart attached via non-serdev paths, but
+qca_setup() unconditionally calls serdev_device_get_drvdata(hu->serdev)
+and dereferences the result, causing a NULL pointer dereference.
 
-Fixes: 56e62a737028 ("s390: convert to generic entry")
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fix by guarding the dereference with a NULL check, consistent with the
+rest of qca_setup().
+
+Fixes: 22d893eec0d5 ("Bluetooth: hci_qca: Refactor HFP hardware offload capability handling")
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/process.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_qca.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/kernel/process.c b/arch/s390/kernel/process.c
-index 0df95dcb210120..e4bd273e31f4e5 100644
---- a/arch/s390/kernel/process.c
-+++ b/arch/s390/kernel/process.c
-@@ -50,7 +50,7 @@ void ret_from_fork(void) asm("ret_from_fork");
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 34500137df2c10..cc7b34a61fa783 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1916,9 +1916,12 @@ static int qca_setup(struct hci_uart *hu)
+ 	const char *rampatch_name = qca_get_rampatch_name(hu);
+ 	int ret;
+ 	struct qca_btsoc_version ver;
+-	struct qca_serdev *qcadev = serdev_device_get_drvdata(hu->serdev);
++	struct qca_serdev *qcadev = NULL;
+ 	const char *soc_name;
  
- void __ret_from_fork(struct task_struct *prev, struct pt_regs *regs)
- {
--	void (*func)(void *arg);
-+	int (*func)(void *arg);
++	if (hu->serdev)
++		qcadev = serdev_device_get_drvdata(hu->serdev);
++
+ 	ret = qca_check_speeds(hu);
+ 	if (ret)
+ 		return ret;
+@@ -1980,7 +1983,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
+ 	case QCA_WCN7850:
+-		if (qcadev->bdaddr_property_broken)
++		if (qcadev && qcadev->bdaddr_property_broken)
+ 			hci_set_quirk(hdev, HCI_QUIRK_BDADDR_PROPERTY_BROKEN);
  
- 	schedule_tail(prev);
+ 		hci_set_aosp_capable(hdev);
+@@ -2073,7 +2076,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	else
+ 		hu->hdev->set_bdaddr = qca_set_bdaddr;
  
+-	if (qcadev->support_hfp_hw_offload)
++	if (qcadev && qcadev->support_hfp_hw_offload)
+ 		qca_configure_hfp_offload(hdev);
+ 
+ 	qca->fw_version = le16_to_cpu(ver.patch_ver);
 -- 
 2.53.0
 
