@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838DD2DBF75;
-	Tue, 21 Jul 2026 18:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B2438910F;
+	Tue, 21 Jul 2026 18:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659909; cv=none; b=iC3jrq3jTmXtB7U9c8CDZmOfIm6Mp83qFTrUpLiMOW8ieb9m4EiktqV4i4FFvwGkyNI1XHF6feqgv4cqGjXJBvCtdLzgF3cqKwnTPB/ljubH0M+g0ecsHSgOrGNBFolSaMofM5M2e6m+S2pDmu6gBH4/YR777sGfut2mRGqsT7A=
+	t=1784659912; cv=none; b=aFrrRAfmDUd2DAK/51Ub6DObhX7k9tEvCJiR+upIwoY97gvjJuAWyM3+ykYo787iD11EkDviHn5GVeHeQ3hloNWuTaA+xSKwXJezi7baVzUHpUhSWJZxTFhzbzudMOpZSs9Y3lLEfk+QGQ51FscCmf+wjO9+o4LOF1ydXwrKa+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659909; c=relaxed/simple;
-	bh=nhkcZYjtFzee47wNsLFqd3V73uuLEFtLj+WAK5np9Is=;
+	s=arc-20240116; t=1784659912; c=relaxed/simple;
+	bh=zA7uY+a/Bi7Dntewt6Sfoy/Md5V+cKlRyO2WTZlOucU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfBdMhrAoUyKP7f8OM+oiVqq2R2I/wL46WHLtpvAZtPuEP5Yadx8KRowFHM8fwYq5NN3jU6ErPXR/mZlrzVz+LcCmFdy8FieSUQlaE2xvRiQkpP26c8aQVfGa7cBCKgD6xqRlOt9AWBKtuB4LkjdtIqp7vWOnwE58vsnR7xiJZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQnjkIQy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A4UESIhAfe2TB/pNwfPHwl/fta+tMH/dYEm96yc6FMBEQFU3PD+Kf6X0ESu5DRXan0gWX4gFpKwSHeCi/Zd+rbqzRXS8Zs+5arR8EkAA6sxYDdV8hbpZWLGLioHl8GFvpvV06alLBpOQn3O3LCL1iau+WE7dN0HBgWSIOokQCz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZgpp9vc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQnjkIQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADD11F000E9;
-	Tue, 21 Jul 2026 18:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZgpp9vc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F041F000E9;
+	Tue, 21 Jul 2026 18:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659908;
-	bh=5iZr5vdTsEetZwe/jidW7IOGl+Fy9ZgFQf70S4qNfSE=;
+	s=korg; t=1784659911;
+	bh=qxlm0LhtUIUQsXlFbNFOSt933MCKCeJ0NZTWh3FDKsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fQnjkIQyfxOOsrLPXI5UO+/6OUEGCj36FxX7/TfeDVIgsfIPxBIGQ6xvZeWO4oBEH
-	 6WuhRj4uruu/SW9yx38RWTa5poYuPkodl1/7lJ74FYAlqyPI201LH/KugqRLDhKEHT
-	 /BRU6J+pYh8V+pYrQl5ASbbL/fnjFRpJuS0zIgJk=
+	b=cZgpp9vcinXst+e2mEF7JEmmqeRmK/ECWdhF2iVJmWIsLChz3P6CUOfXN0HTNI35c
+	 v8tbczVuigaOGKP0seHpTzQAd8suE1OV/Q+mg7qsrEejbSbqXRSXnsZOOqOkSFBU4i
+	 IlRUhkr70Rgh7AUFDQQoV0roqffarsC7Z17l9XtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhang <zhangjian496@huawei.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0777/2077] cifs: remove all cifs files before kill super
-Date: Tue, 21 Jul 2026 17:07:30 +0200
-Message-ID: <20260721152611.124874436@linuxfoundation.org>
+Subject: [PATCH 7.1 0778/2077] smb/client: always return a value for FS_IOC_GETFLAGS
+Date: Tue, 21 Jul 2026 17:07:31 +0200
+Message-ID: <20260721152611.148401326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,74 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Zhang <zhangjian496@huawei.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 6d9a4aaaa8b2612b5ef9d581e2f286a458b71ee1 ]
+[ Upstream commit 7acbaa16b99edaf8ef432229d4b7a6f3b666767d ]
 
-Cifs files may be put into fileinfo_put_wq during umounting cifs.
-After umount done, cifsFileInfo_put_final is called, which cause
-following BUG:
+Currently, repeated lsattr calls on a regular CIFS file without the
+compressed attribute may show random flags:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-...
-[  134.222152]  list_lru_add+0x64/0x1a0
-[  134.222399]  ? cifs_put_tcon+0x171/0x340 [cifs]
-[  134.222772]  d_lru_add+0x44/0x60
-[  134.222997]  dput+0x1fc/0x210
-[  134.223213]  cifsFileInfo_put_final+0x11a/0x140 [cifs]
-[  134.223576]  process_one_work+0x17c/0x320
-[  134.223843]  worker_thread+0x188/0x280
-[  134.224084]  ? __pfx_worker_thread+0x10/0x10
-[  134.224366]  kthread+0xcc/0x100
-[  134.224576]  ? __pfx_kthread+0x10/0x10
-[  134.224827]  ret_from_fork+0x30/0x50
-[  134.225063]  ? __pfx_kthread+0x10/0x10
-[  134.225328]  ret_from_fork_asm+0x1b/0x30
+	$ touch test.bin
+	$ lsattr test.bin
+	s-S-ia-A-EjI---------m test.bin
+	$ lsattr test.bin
+	------d-cEjI---------m test.bin
 
-This can be reproduce by following:
-unshare -n bash -c "
-mkdir -p ${CIFS_MNT}
-ip netns attach root 1
-ip link add eth0 type veth peer veth0 netns root
-ip link set eth0 up
-ip -n root link set veth0 up
-ip addr add 192.168.0.2/24 dev eth0
-ip -n root addr add 192.168.0.1/24 dev veth0
-ip route add default via 192.168.0.1 dev eth0
-ip netns exec root sysctl net.ipv4.ip_forward=1
-ip netns exec root iptables -t nat -A POSTROUTING -s 192.168.0.2 -o
-${DEV} -j MASQUERADE
-mount -t cifs ${CIFS_PATH} ${CIFS_MNT} -o
-vers=3.0,sec=ntlmssp,credentials=${CIFS_CRED},rsize=65536,wsize=65536,cache=none,echo_interval=1
-touch ${CIFS_MNT}/a.txt
-ip netns exec root iptables -t nat -D POSTROUTING -s 192.168.0.2 -o
-${DEV} -j MASQUERADE
-"
-umount ${CIFS_MNT}
+The lsattr reproducer depends on the previous contents of its userspace
+buffer, so it may not reproduce on every setup. A deterministic
+reproducer is to initialize the ioctl argument before FS_IOC_GETFLAGS
+on a file without the compressed attribute:
 
-Fixes: 340cea84f691 ("cifs: open files should not hold ref on superblock")
+        int flags = 0x7fffffff;
+        ioctl(fd, FS_IOC_GETFLAGS, &flags);
 
-Signed-off-by: Jian Zhang <zhangjian496@huawei.com>
+On an affected kernel, flags remains 0x7fffffff. With the fix, it is
+set to 0.
+
+This happens because when the cached inode does not have the compressed
+bit set, the CIFS fallback path in FS_IOC_GETFLAGS returns success
+without calling put_user() to write the zero flags value into the user
+buffer. As a result, the caller observes stale contents from its own
+buffer.
+
+Fix this by always writing the visible flags value back to the user
+buffer before returning success, even when the value is zero.
+
+Fixes: 64a5cfa6db94 ("Allow setting per-file compression via SMB2/3")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/client/ioctl.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index dcde25da468dfb..cbeb5637eeb925 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -3996,6 +3996,9 @@ cifs_umount(struct cifs_sb_info *cifs_sb)
- 	}
- 	spin_unlock(&cifs_sb->tlink_tree_lock);
- 
-+	flush_workqueue(serverclose_wq);
-+	flush_workqueue(fileinfo_put_wq);
+diff --git a/fs/smb/client/ioctl.c b/fs/smb/client/ioctl.c
+index 17408bb8ab65bf..746d70091f3d1d 100644
+--- a/fs/smb/client/ioctl.c
++++ b/fs/smb/client/ioctl.c
+@@ -392,13 +392,11 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
+ 			}
+ #endif /* CONFIG_CIFS_ALLOW_INSECURE_LEGACY */
+ #endif /* CONFIG_CIFS_POSIX */
+-			rc = 0;
+-			if (CIFS_I(inode)->cifsAttrs & ATTR_COMPRESSED) {
+-				/* add in the compressed bit */
+-				ExtAttrBits = FS_COMPR_FL;
+-				rc = put_user(ExtAttrBits & FS_FL_USER_VISIBLE,
+-					      (int __user *)arg);
+-			}
++			if (CIFS_I(inode)->cifsAttrs & FILE_ATTRIBUTE_COMPRESSED)
++				ExtAttrBits |= FS_COMPR_FL;
 +
- 	kfree(cifs_sb->prepath);
- 	call_rcu(&cifs_sb->rcu, delayed_free);
- }
++			rc = put_user(ExtAttrBits & FS_FL_USER_VISIBLE,
++				      (int __user *)arg);
+ 			break;
+ 		case FS_IOC_SETFLAGS:
+ 			if (pSMBFile == NULL)
 -- 
 2.53.0
 
