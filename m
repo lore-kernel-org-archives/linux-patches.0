@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AAC385D67;
-	Tue, 21 Jul 2026 19:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB94471252;
+	Tue, 21 Jul 2026 19:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660818; cv=none; b=nZfIYQwh+bRR4bdqZQDCPbvvChL5gzJocOl9Ak7aurrauM0+3qj1ONQZacd2YN+Wbtcj77XuFeSEZyZz0ts3DtfDNLB8XRVwVe8hQXnazPUG0OAbGgjfIyp3fklz2KKoI2fzkoxBxY+DRP+TW7AAoMtm8bHv701246fG2RHHqSw=
+	t=1784660821; cv=none; b=pOuAZQGjte4Kwf9sM9m2ysaYi1lNXExGDcwwkgeg5xN5xD8yQw+1TTWZ4Xkf55lBGXwbLPjr3AiQ16zNNHo2c3lK/B9g2r5uHSTiMwut7TQIxZG2elMpF+TVDPRDP3Ld31ol90uQnpY+IuPVHAUjtFsaVJQo0Fr7Xrr9XQH/Fh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660818; c=relaxed/simple;
-	bh=scXiamANRYPdc82mUanxT2yt73dzr5D5EIqhUP5jsGE=;
+	s=arc-20240116; t=1784660821; c=relaxed/simple;
+	bh=8Grzw7aYO+H96xs1xRraSYBrwcLe4FzgPOtp4nhDJKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7EgNhN9FjMIVh+EWLTlZfyqgoPzzrWzRmYBYqc3VfpTOsPWyaZFgUXXz3gFRH8jxMccSB5RmeQDuD7wND9qKSfC4zKyynYKuGahnN7bxek3t2QnpRy/36cWkJ0j32qv0IBpFvi28P+UQ4NeuWRgDYSn58v3LeXfT2VUhrprPn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MifXfKJe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lxSpYnlVM01o4TqJ6hkiDCT+baycAmcfWYpvLf3Nls9RmoZ/wqfdnr3v+ZQ/0vIrFcRWQ524BiIrhJllY9UfUdNpQ4hvYEQ6UyLJYVHHfM01UFBguf8EaSyfpuV2sxNrXfiW6to+fhiKbFAvLVZ70WHvzQzZ9iQ+E4anpQLp5/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2+6p1aw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MifXfKJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583851F000E9;
-	Tue, 21 Jul 2026 19:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2+6p1aw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F182B1F000E9;
+	Tue, 21 Jul 2026 19:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660816;
-	bh=JVRCLybeAMkbmk3P49pgrKbtt+kgenis09WhC5nuh+8=;
+	s=korg; t=1784660819;
+	bh=y2XxAoY8uvMFiWhVbuU0HqSFM/sNCdms+vnv/2MdtuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MifXfKJelksXKZGXuiXsVnJUQpvvTNacZ6eaFnQfAt7IFBowUXGr4VlnS5+EcaT+3
-	 I9vOR8W9EYxiVvY7CxqkEx/MtAjqUPEu/sueK9KfO8MVBtAWrWs+x08/AztnyFzhgP
-	 7a6Ria39/81p7V0+G757lgpxBFiuptUMFGos5JVk=
+	b=T2+6p1awMX9mZpjk7MyOK3n5N9CaRUax4+y9IkAi8RqZhb+FkzsL3qZrPwSxyFsIe
+	 lTOANvkC62Z2v4q+PKoX4r9vai/hc5PzxqHbVczS0jDQZ76MadsN/VpYnvO41W50Yg
+	 qgruG9+zHE16xBm5aolmAeeDxB3IN03L99XFzmmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayen Yan <win847@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Lukasz Raczylo <lukasz@raczylo.com>,
+	Steffen Jaeckel <sjaeckel@suse.de>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1123/2077] net: airoha: fix foe_check_time allocation size
-Date: Tue, 21 Jul 2026 17:13:16 +0200
-Message-ID: <20260721152619.307990561@linuxfoundation.org>
+Subject: [PATCH 7.1 1124/2077] net: macb: add TX stall timeout callback to recover from lost TSTART write
+Date: Tue, 21 Jul 2026 17:13:17 +0200
+Message-ID: <20260721152619.331589579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,47 +49,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayen Yan <win847@gmail.com>
+From: Lukasz Raczylo <lukasz@raczylo.com>
 
-[ Upstream commit 5c121ee635680c93d7074becf14cfbaac140f80d ]
+[ Upstream commit e438ec3e9e95cd3f49a8120e5f63ae3f9606e6fa ]
 
-foe_check_time is declared as u16 pointer but was allocated with
-only ppe_num_entries bytes instead of ppe_num_entries * sizeof(u16).
+The MACB found in the Raspberry Pi RP1 suffers from sporadic stalls on
+the TX queue.
+While the exact root cause is not yet fully understood, it is likely
+related to a hardware issue where a TSTART write to the NCR register
+is missed, preventing the transmission from being kicked off.
 
-When airoha_ppe_foe_verify_entry() is called with hash >= ppe_num_entries/2,
-it writes beyond the allocated buffer, causing heap buffer overflow and
-potential kernel crash.
+Implement a timeout callback to handle TX queue stalls, triggering the
+existing restart mechanism to recover.
 
-Fixes: 6d5b601d52a2 ("net: airoha: ppe: Dynamically allocate foe_check_time array in airoha_ppe struct")
-Signed-off-by: Wayen Yan <win847@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/178161119471.2163752.14373384830691569758@gmail.com
+Link: https://lore.kernel.org/all/20260514215459.36109-1-lukasz@raczylo.com/
+Fixes: dc110d1b23564 ("net: cadence: macb: Add support for Raspberry Pi RP1 ethernet controller")
+Signed-off-by: Lukasz Raczylo <lukasz@raczylo.com>
+Co-developed-by: Steffen Jaeckel <sjaeckel@suse.de>
+Signed-off-by: Steffen Jaeckel <sjaeckel@suse.de>
+Co-developed-by: Andrea della Porta <andrea.porta@suse.com>
+Signed-off-by: Andrea della Porta <andrea.porta@suse.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://patch.msgid.link/468f480454a314303bac6a54780b153f689f2267.1781598350.git.andrea.porta@suse.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_ppe.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cadence/macb_main.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
-index a124f15345a916..a1f9939c21f20a 100644
---- a/drivers/net/ethernet/airoha/airoha_ppe.c
-+++ b/drivers/net/ethernet/airoha/airoha_ppe.c
-@@ -1578,7 +1578,8 @@ int airoha_ppe_init(struct airoha_eth *eth)
- 			return -ENOMEM;
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index a12aa21244e83b..fd282a1700fb98 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -4522,6 +4522,13 @@ static int macb_setup_tc(struct net_device *dev, enum tc_setup_type type,
  	}
+ }
  
--	ppe->foe_check_time = devm_kzalloc(eth->dev, ppe_num_entries,
-+	ppe->foe_check_time = devm_kzalloc(eth->dev,
-+					   ppe_num_entries * sizeof(*ppe->foe_check_time),
- 					   GFP_KERNEL);
- 	if (!ppe->foe_check_time)
- 		return -ENOMEM;
++static void macb_tx_timeout(struct net_device *dev, unsigned int q)
++{
++	struct macb *bp = netdev_priv(dev);
++
++	macb_tx_restart(&bp->queues[q]);
++}
++
+ static const struct net_device_ops macb_netdev_ops = {
+ 	.ndo_open		= macb_open,
+ 	.ndo_stop		= macb_close,
+@@ -4540,6 +4547,7 @@ static const struct net_device_ops macb_netdev_ops = {
+ 	.ndo_hwtstamp_set	= macb_hwtstamp_set,
+ 	.ndo_hwtstamp_get	= macb_hwtstamp_get,
+ 	.ndo_setup_tc		= macb_setup_tc,
++	.ndo_tx_timeout		= macb_tx_timeout,
+ };
+ 
+ /* Configure peripheral capabilities according to device tree
 -- 
 2.53.0
 
