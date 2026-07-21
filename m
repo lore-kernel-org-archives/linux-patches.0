@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF054028FB;
-	Tue, 21 Jul 2026 17:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999BF402453;
+	Tue, 21 Jul 2026 17:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654340; cv=none; b=k9ltrRi6gV2OS7dh+YeOJ4NX8190pzkgeVmBGMncURdFe3uZHaUv5XseUZOmjlmUapqKd7toWUh5m6paSH/gKTDLP8Aa7kGr6SDgMLAfzraPjGp/4nQKeLrVFOEK9/pMTzF3HF0JHVKRWKn8uBVkpjg4UZjb4RQsM4k41N16qfc=
+	t=1784654342; cv=none; b=m2BYHhxownBywYB5v7Wbs3ts6awyXDLVNE4XBfjOPPIsgMyTHNGGdzsmh4Ncu357ovMcWv0ClBYkIeNRrHahkaxKl6Y5ntqdQn/F/lwwymqvxhQV5eJJtAUCCEhORiAocRugUq2KrY3u6D09ynbYVIYKii5qUTiNAN8mxhvDH9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654340; c=relaxed/simple;
-	bh=8yTUexVzkUBcZ91so5lFqR4ahf2o6bKOJbbPbt0B0sE=;
+	s=arc-20240116; t=1784654342; c=relaxed/simple;
+	bh=m4THy4cDQWWJ22FQPirdBvCmNkJ11PTJ2BUDhYM0L8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+gHEAkDNfEN19qtq6kGBfoNsJNBY2YgaMGd6c0jhkh+62MpD1/VUXnls3YWNbadGUrAVyJqCaot6gofBw+kwrWB3w+iKaC/vNRtKV+gTnwJGsY4Kz+Smloq0aiaO2YLjUOzH8PLUaI3n/wyZ4lvoPn//qJ3TVRJzBU6bb0tNHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0rkVyC3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tqY7wFezySPgMR9YXEYdp8JiQ8zrqO91y4Heh1WTQtaIayfknTum5rW1y88eWNmbB5p1midHkENBO2pwMRws5IPzherMVLjxO7DyGGj6zHQvJO//IqamOl7jSghymeK+kdPzJcTh6cPQWqvHeMfu8oPeiAb4MZzsO2y2EvHngbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3oMvc9t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0rkVyC3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69EC11F00A3E;
-	Tue, 21 Jul 2026 17:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3oMvc9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068631F00AC4;
+	Tue, 21 Jul 2026 17:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654335;
-	bh=o6y0IXs0+8iEtmrFGYt/FyO9i/XZ9tLaOmw03FvidzY=;
+	s=korg; t=1784654338;
+	bh=mgbgvLZ4NPIVLFIvgjSDgdqNuM/oidhX1J01B8iOYRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u0rkVyC3vD6t+C1GVRuPR1OYzMPDJyZV0xsftWV98DHr03pUdGKoXMT3Hw6KxfVak
-	 bPHHjDASo/vnOIFvm/yOLtwkz+I11I1hKdRcJglcBHGy0etOT6zN0wgLFjUvDs/PVC
-	 UGkTCj/cMuGFFFkdtmf5lUEQSgy46b3pF0M25vRQ=
+	b=R3oMvc9tp8U/F1g7BgGScyXsD6lp/HyWAxRTE3KwL0Tub/jxvuUAjihEHmCLn5el+
+	 Csg173zoZ6jablD5HhZrfe2KQNEnyrY1076VvbGaTPSm6GVH9pLQxdz4R4gu5bcghP
+	 P9PiOTji4KumtoQE2V+EXyaBdj4x9P3H5PyZgAJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 1612/2077] netfilter: nf_conncount: fix zone comparison in tuple dedup
-Date: Tue, 21 Jul 2026 17:21:25 +0200
-Message-ID: <20260721152630.786141785@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 7.1 1660/2077] pinctrl: renesas: rzg2l: Use -ENOTSUPP instead of -EOPNOTSUPP
+Date: Tue, 21 Jul 2026 17:22:13 +0200
+Message-ID: <20260721152631.899314967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,82 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit f62c41b4910e65da396ec9a8c40c1fe7fe82e449 upstream.
+commit c1492da3939c89372929e062d731f328f7693f1e upstream.
 
-The "already exists" dedup logic in __nf_conncount_add() decides
-whether a connection has already been counted and can be skipped instead
-of incrementing the connlimit count.  It compares the conntrack zone of a
-list entry with the zone of the connection being added using
-nf_ct_zone_id() and nf_ct_zone_equal(), passing conn->zone.dir or
-zone->dir as the direction argument.
+The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
+code.  One such example is gpio_set_config_with_argument_optional(),
+which returns success when gpio_set_config_with_argument() returns
+-ENOTSUPP, but reports failure for all other error codes.
 
-Those helpers take enum ip_conntrack_dir values: IP_CT_DIR_ORIGINAL is 0
-and IP_CT_DIR_REPLY is 1.  However, zone->dir is a u8 bitmask:
-NF_CT_ZONE_DIR_ORIG is 1, NF_CT_ZONE_DIR_REPL is 2 and
-NF_CT_DEFAULT_ZONE_DIR is 3.  Passing that bitmask as the enum direction
-shifts the meaning of every non-zero value.  An ORIG-only zone passes 1
-and is tested as REPLY, while REPL-only and default zones pass 2 or 3 and
-test bits beyond the valid direction range.  In those cases
-nf_ct_zone_id() can fall back to NF_CT_DEFAULT_ZONE_ID instead of using
-the real zone id, so different zones can be treated as equal and dedup
-collapses to tuple equality alone.
+Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
+operation may lead to boot failures when pinctrl drivers implements
+struct gpio_chip::set_config, the system uses GPIO hogs, and the
+struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
+unsupported operations.
 
-nf_conncount stores and compares the original-direction tuple for a
-connection.  If an skb already has an attached conntrack entry,
-get_ct_or_tuple_from_skb() explicitly copies
-ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple, regardless of the packet's
-ctinfo.  Therefore the zone comparison in the tuple dedup path must use
-IP_CT_DIR_ORIGINAL as well; the zone direction bitmask describes where a
-zone id applies, not which direction this conncount tuple represents.
+Return -ENOTSUPP for the unsupported pinctrl operation.
 
-Fix the two dedup comparisons by passing IP_CT_DIR_ORIGINAL directly.
-Do not special-case NF_CT_DEFAULT_ZONE_DIR and do not compare raw zone
-ids: using the existing helpers with IP_CT_DIR_ORIGINAL preserves the
-direction-aware NF_CT_DEFAULT_ZONE_ID fallback.  A default bidirectional
-zone contains the ORIG bit, so it naturally returns the real zone id;
-reply-only zones continue to fall back for original-direction tuple
-comparisons.
-
-Fixes: 21ba8847f857 ("netfilter: nf_conncount: Fix garbage collection with zones")
-Fixes: b36e4523d4d5 ("netfilter: nf_conncount: fix garbage collection confirm race")
+Fixes: 560c633d378a ("pinctrl: renesas: rzg2l: Drop oen_read and oen_write callbacks")
+Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude-Code:GLM-5.2
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260515124008.2947838-2-claudiu.beznea@kernel.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conncount.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -207,8 +207,8 @@ check_connections:
- 			/* Not found, but might be about to be confirmed */
- 			if (PTR_ERR(found) == -EAGAIN) {
- 				if (nf_ct_tuple_equal(&conn->tuple, &tuple) &&
--				    nf_ct_zone_id(&conn->zone, conn->zone.dir) ==
--				    nf_ct_zone_id(zone, zone->dir))
-+				    nf_ct_zone_id(&conn->zone, IP_CT_DIR_ORIGINAL) ==
-+				    nf_ct_zone_id(zone, IP_CT_DIR_ORIGINAL))
- 					goto out_put; /* already exists */
- 			} else {
- 				collect++;
-@@ -219,7 +219,7 @@ check_connections:
- 		found_ct = nf_ct_tuplehash_to_ctrack(found);
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -1103,7 +1103,7 @@ static int rzg2l_read_oen(struct rzg2l_p
+ 	int bit;
  
- 		if (nf_ct_tuple_equal(&conn->tuple, &tuple) &&
--		    nf_ct_zone_equal(found_ct, zone, zone->dir)) {
-+		    nf_ct_zone_equal(found_ct, zone, IP_CT_DIR_ORIGINAL)) {
- 			/*
- 			 * We should not see tuples twice unless someone hooks
- 			 * this into a table without "-p tcp --syn".
+ 	if (!pctrl->data->pin_to_oen_bit)
+-		return -EOPNOTSUPP;
++		return -ENOTSUPP;
+ 
+ 	bit = pctrl->data->pin_to_oen_bit(pctrl, _pin);
+ 	if (bit < 0)
+@@ -1145,7 +1145,7 @@ static int rzg2l_write_oen(struct rzg2l_
+ 	u8 val;
+ 
+ 	if (!pctrl->data->pin_to_oen_bit)
+-		return -EOPNOTSUPP;
++		return -ENOTSUPP;
+ 
+ 	bit = pctrl->data->pin_to_oen_bit(pctrl, _pin);
+ 	if (bit < 0)
+@@ -1576,7 +1576,7 @@ static int rzg2l_pinctrl_pinconf_set(str
+ 			break;
+ 
+ 		default:
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 		}
+ 	}
+ 
+@@ -1658,7 +1658,7 @@ static int rzg2l_pinctrl_pinconf_group_g
+ 
+ 		/* Check config matching between to pin  */
+ 		if (i && prev_config != *config)
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 
+ 		prev_config = *config;
+ 	}
 
 
