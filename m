@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AE044AB9E;
-	Tue, 21 Jul 2026 21:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0610343B3C6;
+	Tue, 21 Jul 2026 21:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669843; cv=none; b=sNmRAQdBDpMhvSqoHT/L8mD24Xqhy6f/VpYuZt84dkLLP2Lgv/vV5B0HZf9qo8Y4ppqcMjXfISUzyvZArqPB03bjOnynmmQnXT9ABPrgFnlhJoZLkxVhC8BHptqc/vb7ahOU3fx7aWRRX5BM80WVrB6g2qD0ZOub18yO2JEfer8=
+	t=1784669845; cv=none; b=WFyfNO7oZc83NNEnXTjkNMCOELMEex7r4BvlnZh0VbQQLhRoqp9pwPUF1Lb0pSvgDP3GMrdkht7aD9oZafX1ec9Ma3eC3PdFp7yocWXsXd1cZMCZ9fB4nst48tGfbuXK7YkTOLGalE29Uo1PqDxIxpHa93HbGOBNC6Lu4PDamOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669843; c=relaxed/simple;
-	bh=5LVAjcO6LyeO4l3YY7DEM8Wjk7+V2gk3Eynj4f913yQ=;
+	s=arc-20240116; t=1784669845; c=relaxed/simple;
+	bh=MuS5pnWDSsL8vX91bjWlkX87WyR7pxdKLgDFoGi+074=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kEj2HOjxNvJoYhqn53MS60ld2jWOTJRTwuNgz9i0oYn6Ch15Ghh3VD3t4wn2Twefe/BpTiH8YdiwNMh61tVRK2oUQSNOv5qo+Rpj+sgd/g/nCpksep05yZimhYsAkywQE/Vu6B9DbCnBYIkKfrChEpfNp6eDcLouwX8cLaiJ3zU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WnSpZJ7a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JxCMCysJhm8FF+E57MISsFhj5nNxlab8QzCpEpZtf/h5ketClvn6h6EwCXtZ9R/QrFh28ADpuu5MeTUMn+JORRopq7F4oz9mMFWFa144pMlTGnIQCPSDG7MBeEwL0AvZZ8NpEucLlUjdiYco5U6GOfRFr8pRKZPQy6yH8JRZGxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3TOdXZj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WnSpZJ7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C607D1F000E9;
-	Tue, 21 Jul 2026 21:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3TOdXZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C43B1F00A3A;
+	Tue, 21 Jul 2026 21:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669841;
-	bh=D4K/dEZDuc5VH3N0SARZrBXYLlo4246XdbfFiBTnaxc=;
+	s=korg; t=1784669843;
+	bh=IUqhNajWnyq8dXpzHnl7LQxvp7Lee71z0437MzT0fPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WnSpZJ7aMUj67dKz9ePvr8qcyzSiIbedT3nXf6pPBy2FOtTj5wqQFxxE3yfCiUMAC
-	 9zeJJDFhdpT/3bEriuoE+eF8jimd5eIMm7199DTS/604qfge3EauD1kcu53tk8TrnQ
-	 BtJS2CGWk57z2ARy3An6GpP87rcfjwZNP6DgkgMo=
+	b=P3TOdXZj3HkexfjtbnQOBWUEZ/9KZTNk2evO3SN1jOk+/Exd9RNN2HBIORRTdYT9K
+	 IVRIs+wmCNe1+h4l6upcVEgo7/SMHaKPvsh55mgqnkzE69YtvwRGCbKceAXjuf3Bms
+	 weZBrcLnKfttp/g7hz2y6W24GuKZ78OQF045nCCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cao Guanghui <caoguanghui@kylinos.cn>,
+	Su Yue <glass.su@suse.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0700/1067] net/sched: cake: reject overhead values that underflow length
-Date: Tue, 21 Jul 2026 17:21:41 +0200
-Message-ID: <20260721152440.252221696@linuxfoundation.org>
+Subject: [PATCH 6.1 0709/1067] dm era: fix NULL pointer dereference in metadata_open()
+Date: Tue, 21 Jul 2026 17:21:50 +0200
+Message-ID: <20260721152440.453164715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -46,57 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Cao Guanghui <caoguanghui@kylinos.cn>
 
-[ Upstream commit b7f97cae7ec1b6c3c32843c42be218690d310467 ]
+[ Upstream commit 9ae672606c17891d90b282e3490b817620549599 ]
 
-CAKE accepts signed overhead values and stores them in an s16, but the
-adjusted packet length calculation uses unsigned arithmetic.  A negative
-effective length can therefore wrap to a large value.
+metadata_open() returns NULL when kzalloc_obj() fails, but the
+caller era_ctr() only checks IS_ERR(md).  Since IS_ERR(NULL)
+returns false, the NULL pointer is treated as a valid result
+and later assigned to era->md, leading to a NULL pointer
+dereference when the metadata is accessed.
 
-Such configurations make rate accounting depend on integer wraparound
-rather than on the packet size userspace intended to model.  A static
-netlink lower bound is not enough because packets reaching CAKE can be
-smaller than any reasonable manual-overhead allowance.
+Fix this by returning ERR_PTR(-ENOMEM) on allocation failure,
+consistent with dm-cache-metadata.c, dm-thin-metadata.c, and
+dm-clone-metadata.c which all use ERR_PTR(-ENOMEM) for the
+same pattern.
 
-Fold the signed overhead adjustment into the existing datapath MPU clamp
-so negative adjusted lengths are clamped before link-layer framing
-adjustments.
-
-Fixes: a729b7f0bd5b ("sch_cake: Add overhead compensation support to the rate shaper")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260702000758.297407.e5c888d9d99d.cake-overhead-underflow@trailofbits.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: eec40579d848 ("dm: add era target")
+Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
+Reviewed-by: Su Yue <glass.su@suse.com>
+Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/md/dm-era-target.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index c6c03f758d0d7c..e210a676dc340b 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1381,10 +1381,7 @@ static u32 cake_calc_overhead(struct cake_sched_data *q, u32 len, u32 off)
- 	if (q->min_netlen > len)
- 		q->min_netlen = len;
+diff --git a/drivers/md/dm-era-target.c b/drivers/md/dm-era-target.c
+index a96290103cca89..8e4e3b46dae00a 100644
+--- a/drivers/md/dm-era-target.c
++++ b/drivers/md/dm-era-target.c
+@@ -795,8 +795,10 @@ static struct era_metadata *metadata_open(struct block_device *bdev,
+ 	int r;
+ 	struct era_metadata *md = kzalloc(sizeof(*md), GFP_KERNEL);
  
--	len += q->rate_overhead;
--
--	if (len < q->rate_mpu)
--		len = q->rate_mpu;
-+	len = max((s32)len + q->rate_overhead, (s32)q->rate_mpu);
+-	if (!md)
+-		return NULL;
++	if (!md) {
++		DMERR("could not allocate metadata struct");
++		return ERR_PTR(-ENOMEM);
++	}
  
- 	if (q->atm_mode == CAKE_ATM_ATM) {
- 		len += 47;
+ 	md->bdev = bdev;
+ 	md->block_size = block_size;
 -- 
 2.53.0
 
