@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9397A47125C;
-	Tue, 21 Jul 2026 18:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305D7471255;
+	Tue, 21 Jul 2026 18:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657679; cv=none; b=nsCrSxUAupl2w9yJPIpxw8Ok3LlDXJ9gUKHB8h+6ky3ofDPWAHuSHZ8LzFvRqHzou7/HxhJ1Ec5PLNtBI58dSNr5npURYbZk/MrVRrwPJ/AYkiHS8Ca/pCEwZc5Fc7xW6fDdLTY6KqGPTCfRCb/dRP6dQKmWQChRGKnCqexrofw=
+	t=1784657682; cv=none; b=KxeCz9XVNr70fPNVL8XFcFIf0EyPqHnmUWuY2tvqZZUdg4FUSAKXThOySIIQQllf4BrW7UwgJhgFySRZA2VPYi23hbCPZMVNnHEaDqDod0FsbP0ItdKiq+YQY3/g1Qe6hPGNynsZx7eqASWyTIvZ3VYJzlk6i5Eaiz73l4dvzu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657679; c=relaxed/simple;
-	bh=pglT3Oqajc6ZMAh0j3NcNrsH4FIcTKoiwbg2DkCN33A=;
+	s=arc-20240116; t=1784657682; c=relaxed/simple;
+	bh=y0S4evg+QgDxIocv4N1cLsY6+8+nii91n99Pz4tvo/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nV9YKArEq+Z0cvqVKnobfmra9KsJXv68/FHfMyfO727JAuzQW+oYp5tmYodgOxGtgs2BiDE0u+8LO7nIkuYufzTzBc+p/eKJBDT7lRBColthNOA/IxLtlGtvXx+NRrRFSMMWD0xYCnQ62OFmcn2MwVjsuWROgiqAWZmzXFm8Ppg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Xx+BIdK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZtwGgL4nraTxjTyARjAQb+9ItXb0AAcXjZU34Y3dbJBvKiQ8xR+gO7aFjP+zyLivVTZ9whPIRxHMKUUVF2DgZeszgM0LYdlnXr6Wgr4wAI/lDUgcVNGh4JHUNdNHNn7WaIT2EM9no5szQD7W35NA/9WhUtzJL7vd53WtewrmTPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQfcslKd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Xx+BIdK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF201F000E9;
-	Tue, 21 Jul 2026 18:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQfcslKd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899091F000E9;
+	Tue, 21 Jul 2026 18:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657678;
-	bh=HVjDZbqBj1nFPuU8Z2Vgci4GTA2zJ4dBN36+12WP7SI=;
+	s=korg; t=1784657681;
+	bh=POqLdCqfofu6WKsjhj1SnP0OB87tFmA3AxQEikJ3PpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Xx+BIdKRq/gjxJ9+ge6eGaFFlWvzvZkSj1sH/fjfWqLODm8xUo59qXffc9LQ8eK1
-	 kVwN9T0YG4Zd/tDb51IUBXQJgiUurfSvRx9GdUczZtMyIKjjyru7RDHtOBiOZbYMqo
-	 Vm4pFTVJQDqc0wl8BEI/t3wQ+Qn0yx4D57791TJM=
+	b=oQfcslKdmwrcMUzv045jlsh0XX9cfjaRYQDoPgZFtbtfeAxfoBrpnUGIYOE7eTJRJ
+	 uor/HDkgva+LK+c90i+BF1UN23l/w39r2esqlgPsSAu2MFI3BKluySqXqPN1ymc85b
+	 5UbNNymqzFJaiLxGQY+iUEc4iwl6cqi74ub7a7CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sayali Patil <sayalip@linux.ibm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Dev Jain <dev.jain@arm.com>,
 	Liam Howlett <liam.howlett@oracle.com>,
 	Miaohe Lin <linmiaohe@huawei.com>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0856/1611] selftest/mm: register existing mapping with userfaultfd in hugetlb-mremap
-Date: Tue, 21 Jul 2026 17:16:12 +0200
-Message-ID: <20260721152534.645392494@linuxfoundation.org>
+Subject: [PATCH 6.18 0857/1611] selftests/mm: ensure destination is hugetlb-backed in hugetlb-mremap
+Date: Tue, 21 Jul 2026 17:16:13 +0200
+Message-ID: <20260721152534.667651502@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -63,61 +63,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit 1df31d5ef58dc6bdf0f2a8b809152d835c60b28e ]
+[ Upstream commit f20ca8972e83f111c4300c60d74314568c8964bc ]
 
-Previously, register_region_with_uffd() created a new anonymous mapping
-and overwrote the address supplied by the caller before registering the
-range with userfaultfd.
+The hugetlb-mremap selftest reserves the destination address using a
+anonymous base-page mapping before calling mremap() with MREMAP_FIXED,
+while the source region is hugetlb-backed.
 
-As a result, userfaultfd was applied to an unrelated anonymous mapping
-instead of the hugetlb region used by the test.
+When remapping a hugetlb mapping into a base-page VMA may fail with:
 
-Remove the extra mmap() and register the caller-provided address range
-directly using UFFDIO_REGISTER_MODE_MISSING, so that faults are generated
-for the hugetlb mapping used by the test.
+    mremap: Device or resource busy
 
-This ensures userfaultfd operates on the actual hugetlb test region and
-validates the expected fault handling.
+This is observed on powerpc hash MMU systems where slice constraints and
+page size incompatibilities prevent the remap.
 
-Before patch:
- running ./hugetlb-mremap
- -------------------------
- TAP version 13
- 1..1
-  Map haddr: Returned address is 0x7eaa40000000
-  Map daddr: Returned address is 0x7daa40000000
-  Map vaddr: Returned address is 0x7faa40000000
-  Address returned by mmap() = 0x7fff9d000000
-  Mremap: Returned address is 0x7faa40000000
-  First hex is 0
-  First hex is 3020100
- ok 1 Read same data
- Totals: pass:1 fail:0 xfail:0 xpass:0 skip:0 error:0
- [PASS]
- ok 1 hugetlb-mremap
+Ensure the destination region is created using MAP_HUGETLB so that both
+source and destination VMAs are hugetlb-backed and compatible.
 
-After patch:
- running ./hugetb-mremap
- -------------------------
- TAP version 13
- 1..1
-  Map haddr: Returned address is 0x7eaa40000000
-  Map daddr: Returned address is 0x7daa40000000
-  Map vaddr: Returned address is 0x7faa40000000
-  Registered memory at address 0x7eaa40000000 with userfaultfd
-  Mremap: Returned address is 0x7faa40000000
-  First hex is 0
-  First hex is 3020100
- ok 1 Read same data
- Totals: pass:1 fail:0 xfail:0 xpass:0 skip:0 error:0
- [PASS]
- ok 1 hugetlb-mremap
+Update the FLAGS macro to include MAP_HUGETLB | MAP_SHARED so that both
+mappings are hugetlb-backed and compatible.  Also use the macro for the
+mmap() calls to avoid repeating the flag combination.
 
-Link: https://lore.kernel.org/13845da872ed174316173e8996dbb5f181994017.1779296493.git.sayalip@linux.ibm.com
+This ensures the test reliably exercises hugetlb mremap instead of failing
+due to VMA type mismatch.
+
+Link: https://lore.kernel.org/367644df45c65098f23e3945c6a80f4b8a8964a6.1779296493.git.sayalip@linux.ibm.com
 Fixes: 12b613206474 ("mm, hugepages: add hugetlb vma mremap() test")
 Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Cc: David Hildenbrand (Arm) <david@kernel.org>
 Cc: Dev Jain <dev.jain@arm.com>
 Cc: Liam Howlett <liam.howlett@oracle.com>
 Cc: Miaohe Lin <linmiaohe@huawei.com>
@@ -129,44 +102,49 @@ Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/hugepage-mremap.c | 21 +++++---------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+ tools/testing/selftests/mm/hugepage-mremap.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/tools/testing/selftests/mm/hugepage-mremap.c b/tools/testing/selftests/mm/hugepage-mremap.c
-index 2bd1dac75c3f1d..cd862a619471e7 100644
+index cd862a619471e7..928c1045e29548 100644
 --- a/tools/testing/selftests/mm/hugepage-mremap.c
 +++ b/tools/testing/selftests/mm/hugepage-mremap.c
-@@ -85,25 +85,14 @@ static void register_region_with_uffd(char *addr, size_t len)
- 	if (ioctl(uffd, UFFDIO_API, &uffdio_api) == -1)
- 		ksft_exit_fail_msg("ioctl-UFFDIO_API: %s\n", strerror(errno));
+@@ -31,7 +31,7 @@
+ #define MB_TO_BYTES(x) (x * 1024 * 1024)
  
--	/* Create a private anonymous mapping. The memory will be
--	 * demand-zero paged--that is, not yet allocated. When we
--	 * actually touch the memory, it will be allocated via
--	 * the userfaultfd.
--	 */
--
--	addr = mmap(NULL, len, PROT_READ | PROT_WRITE,
--		    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
--	if (addr == MAP_FAILED)
--		ksft_exit_fail_msg("mmap: %s\n", strerror(errno));
--
--	ksft_print_msg("Address returned by mmap() = %p\n", addr);
--
--	/* Register the memory range of the mapping we just created for
--	 * handling by the userfaultfd object. In mode, we request to track
--	 * missing pages (i.e., pages that have not yet been faulted in).
-+	/* Register the passed memory range for handling by the userfaultfd object.
-+	 * In mode, we request to track missing pages
-+	 * (i.e., pages that have not yet been faulted in).
- 	 */
- 	if (uffd_register(uffd, addr, len, true, false, false))
- 		ksft_exit_fail_msg("ioctl-UFFDIO_REGISTER: %s\n", strerror(errno));
-+
-+	ksft_print_msg("Registered memory at address %p with userfaultfd\n", addr);
- }
+ #define PROTECTION (PROT_READ | PROT_WRITE | PROT_EXEC)
+-#define FLAGS (MAP_SHARED | MAP_ANONYMOUS)
++#define FLAGS (MAP_HUGETLB | MAP_SHARED)
  
- int main(int argc, char *argv[])
+ static void check_bytes(char *addr)
+ {
+@@ -121,23 +121,20 @@ int main(int argc, char *argv[])
+ 
+ 	/* mmap to a PUD aligned address to hopefully trigger pmd sharing. */
+ 	unsigned long suggested_addr = 0x7eaa40000000;
+-	void *haddr = mmap((void *)suggested_addr, length, PROTECTION,
+-			   MAP_HUGETLB | MAP_SHARED | MAP_POPULATE, fd, 0);
++	void *haddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
+ 	ksft_print_msg("Map haddr: Returned address is %p\n", haddr);
+ 	if (haddr == MAP_FAILED)
+ 		ksft_exit_fail_msg("mmap1: %s\n", strerror(errno));
+ 
+ 	/* mmap again to a dummy address to hopefully trigger pmd sharing. */
+ 	suggested_addr = 0x7daa40000000;
+-	void *daddr = mmap((void *)suggested_addr, length, PROTECTION,
+-			   MAP_HUGETLB | MAP_SHARED | MAP_POPULATE, fd, 0);
++	void *daddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
+ 	ksft_print_msg("Map daddr: Returned address is %p\n", daddr);
+ 	if (daddr == MAP_FAILED)
+ 		ksft_exit_fail_msg("mmap3: %s\n", strerror(errno));
+ 
+ 	suggested_addr = 0x7faa40000000;
+-	void *vaddr =
+-		mmap((void *)suggested_addr, length, PROTECTION, FLAGS, -1, 0);
++	void *vaddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
+ 	ksft_print_msg("Map vaddr: Returned address is %p\n", vaddr);
+ 	if (vaddr == MAP_FAILED)
+ 		ksft_exit_fail_msg("mmap2: %s\n", strerror(errno));
 -- 
 2.53.0
 
