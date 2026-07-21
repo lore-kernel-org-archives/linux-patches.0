@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B2F43B48C;
-	Tue, 21 Jul 2026 21:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CDE43F4B8;
+	Tue, 21 Jul 2026 21:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671197; cv=none; b=Rg36lHkNGzfj8wPsr45HjaI43+mQwcS+EuJmPwqoXKJA8Sy8Pc64KSqj3xnYfuUZuxhZSt14VWtpTH9+rF2tPJOEEPoLz7CsB92ehwA99Z5JrbbXpcpVqzxM3ubzANDfPdFd0epREyRVNCCCrqlR88T9bSaI5bWEy92I+3C/Obo=
+	t=1784671200; cv=none; b=AyT9EqdPUgTosgjYk0XILTcCiCzJn+HDs+vBZQIoFCEDRGC3ELF96ufreguS2/YgGOdYSEureaqQdMpipabk7ghai+XFnnMzbEEHrZDhT+b216SP0fLa+CztBKZUj2/GO5WD+fxsUQC1YJK2Zrcsl12LtCt3bmUyUPrqbWK8cxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671197; c=relaxed/simple;
-	bh=JUKqkzYyqgMWomfG44RsoPeYmogBy5FAhMisOruDmdk=;
+	s=arc-20240116; t=1784671200; c=relaxed/simple;
+	bh=cN9+KaLudCbHvzxCcoogjzwFddzIfLPpJHo6chwXvxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrRkxpPbXekEtEG96bCaqfbM3wpyITj3BoLXwVpruCFuKyWOIqKcDFBhqQQ46JRqjhOtEIRFdGNJsobnXtQTaKGhT3Euc8rlznIyxqx//M/LyoL7zDZuavVapOZfyjMtR3D7C6l+Q8HwkeNe/08iQq6Nn3VZmY9gkhJWGdfAqkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zoeI87sL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lq4J2fP6U24mahQM9wTzkdM9x+9fqf1R8ImSoFR7luL/XKDq66/P47bGZ960sonWzwnqmAISoBQEacE7wU3hEvOiwfRuRjvMsJkfg5YN5OHsZja1OH9ltnJaRvvLYPQdUGlx+BP3FRQ+n+IG9YlwKvKkybxOAYoEU57lhe8hNJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Br7Be5nD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoeI87sL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97991F000E9;
-	Tue, 21 Jul 2026 21:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Br7Be5nD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626FC1F000E9;
+	Tue, 21 Jul 2026 21:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671196;
-	bh=O7cWXsBlfPzm/nnqBkaX/q+fTsszKtkxXb/UA+Rd87E=;
+	s=korg; t=1784671198;
+	bh=BRo2erlaiXkBSFRYOb/nVYrTldg0/b6unKtAkgwiIfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zoeI87sL5jKVYCKHEbPij+36SFOpekktFOLeOnuMP2xILsvKmvAws4y+q3JyK3vIB
-	 XlSw8MTODh52fK1/VHwiBaXPV+FZzr8ifsVpoKetufPK69tNxF7KaqwXEM8G9S75bZ
-	 mURa5imk5ljL3NEMvYByFN5GGZFs5MM31U/Xzw1M=
+	b=Br7Be5nDXvwblX9vxY9ubFi7iAS71adMSNyUBXwCjgDENLoqkwn+LJC2nUCJsgma3
+	 Wj+y4Txrhe/c0+brs3i60hqnAuWc6zP/Cs+kSumU59ezGMnkj70NKTY4UXHNYzyD1+
+	 bQlEo9ZaSmfwNnLV1i1UBWA8YC17sqE9Vr/c2Tvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared Baldridge <jrb@expunge.us>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 128/843] usb: cdc_acm: Add quirk for Uniden BC125AT scanner
-Date: Tue, 21 Jul 2026 17:16:03 +0200
-Message-ID: <20260721152408.890439834@linuxfoundation.org>
+	Liviu Stan <liviu.stan@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 155/843] iio: temperature: ltc2983: Fix n_wires default bypassing rotation check
+Date: Tue, 21 Jul 2026 17:16:30 +0200
+Message-ID: <20260721152409.500173368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,124 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared Baldridge <jrb@expunge.us>
+From: Liviu Stan <liviu.stan@analog.com>
 
-commit 6eba58568f6cc3ff8515a00b05e258d8cfb72b72 upstream.
+[ Upstream commit 434c150752675f44dc52c384a7fa22e5176bc35a ]
 
-Uniden BC125AT radio scanner has a USB interface which fails to work
-with the cdc_acm driver:
- usb 1-1: new full-speed USB device number 2 using uhci_hcd
- cdc_acm 1-1:1.0: Zero length descriptor references
- cdc_acm 1-1:1.0: probe with driver cdc_acm failed with error -22
- usbcore: registered new interface driver cdc_acm
+When adi,number-of-wires is absent, n_wires is left at 0. The binding
+documents a default of 2 wires, matching the hardware default. However
+the current-rotate validation checks n_wires == 2 || n_wires == 3, so
+with n_wires = 0 the guard is bypassed and adi,current-rotate is accepted
+for a 2-wire RTD.
 
-Adding the NO_UNION_NORMAL quirk for the device fixes the issue:
+Initialize n_wires = 2 to match the binding default and ensure the
+rotation check fires correctly when the property is absent.
 
- usb 1-1: new full-speed USB device number 2 using uhci_hcd
- cdc_acm 1-1:1.0: ttyACM0: USB ACM device
- usbcore: registered new interface driver cdc_acm
-
-`lsusb -v` of the device:
-
- Bus 001 Device 002: ID 1965:0017 Uniden Corporation BC125AT
- Negotiated speed: Full Speed (12Mbps)
- Device Descriptor:
-   bLength                18
-   bDescriptorType         1
-   bcdUSB               2.00
-   bDeviceClass            2 Communications
-   bDeviceSubClass         0 [unknown]
-   bDeviceProtocol         0
-   bMaxPacketSize0        64
-   idVendor           0x1965 Uniden Corporation
-   idProduct          0x0017 BC125AT
-   bcdDevice            0.01
-   iManufacturer           1 Uniden America Corp.
-   iProduct                2 BC125AT
-   iSerial                 3 0001
-   bNumConfigurations      1
-   Configuration Descriptor:
-     bLength                 9
-     bDescriptorType         2
-     wTotalLength       0x0030
-     bNumInterfaces          2
-     bConfigurationValue     1
-     iConfiguration          0
-     bmAttributes         0x80
-       (Bus Powered)
-     MaxPower              500mA
-     Interface Descriptor:
-       bLength                 9
-       bDescriptorType         4
-       bInterfaceNumber        0
-       bAlternateSetting       0
-       bNumEndpoints           1
-       bInterfaceClass         2 Communications
-       bInterfaceSubClass      2 Abstract (modem)
-       bInterfaceProtocol      0
-       iInterface              0
-       Endpoint Descriptor:
-         bLength                 7
-         bDescriptorType         5
-         bEndpointAddress     0x87  EP 7 IN
-         bmAttributes            3
-           Transfer Type            Interrupt
-           Synch Type               None
-           Usage Type               Data
-         wMaxPacketSize     0x0008  1x 8 bytes
-         bInterval              10
-     Interface Descriptor:
-       bLength                 9
-       bDescriptorType         4
-       bInterfaceNumber        1
-       bAlternateSetting       0
-       bNumEndpoints           2
-       bInterfaceClass        10 CDC Data
-       bInterfaceSubClass      0 [unknown]
-       bInterfaceProtocol      0
-       iInterface              0
-       Endpoint Descriptor:
-         bLength                 7
-         bDescriptorType         5
-         bEndpointAddress     0x81  EP 1 IN
-         bmAttributes            2
-           Transfer Type            Bulk
-           Synch Type               None
-           Usage Type               Data
-         wMaxPacketSize     0x0040  1x 64 bytes
-         bInterval               0
-       Endpoint Descriptor:
-         bLength                 7
-         bDescriptorType         5
-         bEndpointAddress     0x02  EP 2 OUT
-         bmAttributes            2
-           Transfer Type            Bulk
-           Synch Type               None
-           Usage Type               Data
-         wMaxPacketSize     0x0040  1x 64 bytes
-         bInterval               0
- Device Status:     0x0000
-   (Bus Powered)
-
-Signed-off-by: Jared Baldridge <jrb@expunge.us>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260530221959.612526-1-jrb@expunge.us
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
+Signed-off-by: Liviu Stan <liviu.stan@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Liviu Stan <liviu.stan@analog.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-acm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/temperature/ltc2983.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -1772,6 +1772,9 @@ static const struct usb_device_id acm_id
- 	{ USB_DEVICE(0x1901, 0x0006), /* GE Healthcare Patient Monitor UI Controller */
- 	.driver_info = DISABLE_ECHO, /* DISABLE ECHO in termios flag */
- 	},
-+	{ USB_DEVICE(0x1965, 0x0017), /* Uniden BC125AT */
-+	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
-+	},
- 	{ USB_DEVICE(0x1965, 0x0018), /* Uniden UBC125XLT */
- 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
- 	},
+diff --git a/drivers/iio/temperature/ltc2983.c b/drivers/iio/temperature/ltc2983.c
+index ecc8b2e129b896..c6748cfc5d5ce2 100644
+--- a/drivers/iio/temperature/ltc2983.c
++++ b/drivers/iio/temperature/ltc2983.c
+@@ -697,7 +697,7 @@ static struct ltc2983_sensor *ltc2983_rtd_new(const struct device_node *child,
+ 	int ret = 0;
+ 	struct device *dev = &st->spi->dev;
+ 	struct device_node *phandle;
+-	u32 excitation_current = 0, n_wires = 0;
++	u32 excitation_current = 0, n_wires = 2;
+ 
+ 	rtd = devm_kzalloc(dev, sizeof(*rtd), GFP_KERNEL);
+ 	if (!rtd)
+-- 
+2.53.0
+
 
 
