@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B1743C06B;
-	Tue, 21 Jul 2026 21:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D115943B3DA;
+	Tue, 21 Jul 2026 21:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669977; cv=none; b=SJZWeYAg9pvvoEgDb7cceKmfbwSDmx5dBQ7EDvZeliu/pVAeuX4RRr37N3nKVr67Ky74F2JBschMCt18lMWMdqYTXfqu8V+RrVnTuiuiHrQXfU0T0r5iUilFF06lWlr3p0nAWoLaD8n5pNBwfs3y78HUu5buOt5L07aOd0LVuaE=
+	t=1784669980; cv=none; b=CJX9EYCwFhc1xczsDMWcY4V8NqC7RqA8A7hL4nozmiOfxroBuUvNM+mOszY9SI2bp8ykusSBsT6akdmzQp3aRTG/9uoD6whzy/3CEnFI9Qy4Aevgjlq0iv7oTl916cbjd8BEtP3DVDNLxbvGVTAR259Nc3Ybej6fk6AJsoAL8mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669977; c=relaxed/simple;
-	bh=NlHlPsnmBKCP5yYlqMEKGL7AtoqwNhhXsuMWvRxumQs=;
+	s=arc-20240116; t=1784669980; c=relaxed/simple;
+	bh=vQR515EpRZmNBgXgDtfF6AXKwMpcz4wG47lYe6pmGOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uUrclYGC6cb3EnkAN8GWs2iu/z9inpaSOmFLv8JRZb2jw6C5/rUCaP4sbIeqOUClfvUHTbmf+jrl4JCSgjoTlfPhoNknGx2WPim+nT7xqYqIldlNzh0tLUfzXmVorGBBjBYRzwjeKZP9KjdKiFhOyv4OdIzVW9P60FaQEaEB2eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImCRwCAM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mazwDs+nAIGJvyxlhug+lWhqDYGkZd28zRwyONE3DKkFS0zrzD1/U6F8Zm+iiuBATYrmfM0xycmBMCs1acngP7ErXiBkpplgEla7NoXT3u1wf5knqYcyRg/Vq9ZJDmSRkFQTvF2iGcWbTfm9r6dxiArVAT2kHifAEWxWRgPpn+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imOgY0/7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImCRwCAM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3671F000E9;
-	Tue, 21 Jul 2026 21:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imOgY0/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423CD1F000E9;
+	Tue, 21 Jul 2026 21:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669976;
-	bh=6x43ghtTmO1rT1biFbXQbnWm++W2wn7Nwlk9BDWXEcs=;
+	s=korg; t=1784669978;
+	bh=63ETewHmnQXsf7d5j/L1HTOWsMtltOLTZ6lJ31cKmfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ImCRwCAMHej1xhxYHNPOQdGQO1yt30qtb32WinuXJORrglZmP6SILIzXwYZfPVfRn
-	 3ooLtsF5WGCEwBl37Tte2aHub8zjgGjV+s3xsqHCMMUizcqr93UfKSk6LY3uMh0UYk
-	 XHCtMa+BK5iDS8kh3+m1ufIKCJ4Sq4hczKsS7Xgg=
+	b=imOgY0/7gnvoLAfU2H+axUgtpoT7m7XuesS2cKwTYuZBcA9tOKkIDz0yPH56wdfP/
+	 sPRVuT90sXpRlUfbNd1b3Dnv3Q7/s2198t19TW/Ykf8AwBRWxwLPGWG6tAI6axhHOZ
+	 tLwtft/0seT4/cDejT1gZKxDHVcIM7gof8t/zAuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thorsten Blum <thorsten.blum@linux.dev>,
-	Ingo Molnar <mingo@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>
-Subject: [PATCH 6.1 0759/1067] x86/boot: Validate console=uart8250 baud rate to fix early boot hang
-Date: Tue, 21 Jul 2026 17:22:40 +0200
-Message-ID: <20260721152441.549103516@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 0760/1067] x86/boot: Reject too long acpi_rsdp= values
+Date: Tue, 21 Jul 2026 17:22:41 +0200
+Message-ID: <20260721152441.570899950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,53 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit ffa0aa5b625fe0bed7463ac613f8b06676ff4542 upstream.
+commit d130041a7b96f79cd4c7079a6c2431a6db4c9619 upstream.
 
-When the baud rate is empty, 0, invalid, or overflows to 0 when stored
-as an int, the system will hang during early boot because of a division
-by zero in early_serial_init().
+cmdline_find_option() returns the full length of the parsed acpi_rsdp=
+value. get_cmdline_acpi_rsdp() then silently truncates values which do
+not fit in the val[] buffer.
 
-Fall back to DEFAULT_BAUD when the resulting baud rate is 0 to prevent
-an early system hang.
+Prevent boot_kstrtoul() from parsing a truncated value and then the
+kernel from silently using the wrong RSDP address, see discussion in
+Link:.
 
-Fixes: ce0aa5dd20e4 ("x86, setup: Make the setup code also accept console=uart8250")
+Issue a warning so that the user is aware that s/he supplied a malformed
+value and can get feedback instead of silent crashes.
+
+  [ bp: Make commit message more precise. ]
+
+Fixes: 3c98e71b42a7 ("x86/boot: Add "acpi_rsdp=" early parsing")
 Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260713194924.126472-3-thorsten.blum@linux.dev
+Link: https://lore.kernel.org/all/20260617130417.36651-4-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/early_serial_console.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/x86/boot/compressed/acpi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/x86/boot/early_serial_console.c
-+++ b/arch/x86/boot/early_serial_console.c
-@@ -117,7 +117,7 @@ static unsigned int probe_baud(int port)
- static void parse_console_uart8250(void)
- {
- 	char optstr[64], *options;
--	int baud = DEFAULT_BAUD;
-+	int baud;
- 	int port = 0;
+--- a/arch/x86/boot/compressed/acpi.c
++++ b/arch/x86/boot/compressed/acpi.c
+@@ -182,10 +182,15 @@ static unsigned long get_cmdline_acpi_rs
+ 	char val[MAX_ADDR_LEN] = { };
+ 	int ret;
  
- 	/*
-@@ -136,10 +136,13 @@ static void parse_console_uart8250(void)
- 	else
- 		return;
+-	ret = cmdline_find_option("acpi_rsdp", val, MAX_ADDR_LEN);
++	ret = cmdline_find_option("acpi_rsdp", val, sizeof(val));
+ 	if (ret < 0)
+ 		return 0;
  
--	if (options && (options[0] == ','))
--		baud = simple_strtoull(options + 1, &options, 0);
--	else
-+	if (options && (options[0] == ',')) {
-+		baud = simple_strtoull(options + 1, NULL, 0);
-+		if (!baud)
-+			baud = DEFAULT_BAUD;
-+	} else {
- 		baud = probe_baud(port);
++	if (ret >= sizeof(val)) {
++		warn("acpi_rsdp= value too long; ignoring");
++		return 0;
 +	}
- 
- 	if (port)
- 		early_serial_init(port, baud);
++
+ 	if (boot_kstrtoul(val, 16, &addr))
+ 		return 0;
+ #endif
 
 
