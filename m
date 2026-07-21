@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D286D38C2A0;
-	Tue, 21 Jul 2026 20:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446A538C2A0;
+	Tue, 21 Jul 2026 20:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667597; cv=none; b=t8JUQit9Ehr/2H5uTmEVlQfgVy3UT14+mC/VIx3fOcUhD6j/8dqrXbgCvBzwD+Wmw18t8DzcpgCSi+3jtbV/XC38N3EkDrVpk4lIgT1bTGca6QmhvccAfmP/CQ0CRki/xBdarueERToCEpDTNOdFEgpChn3xTyJlX3gM1FC73+Y=
+	t=1784667600; cv=none; b=dsFONxKPiPQodS7rLEbDTOabO9mJYKMED+fXgMXDucyBRdPS4JThCEoyoFJH5athxACLBoMsknTy1+9Z+hPJY7i9h12rGGuxli4a9QJF5eQ0HvrscuoDefDTty83AEkwRP/TBlSApoR4LH4HIR6vVhFh7cVUjA7xGqTZ3J8HZqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667597; c=relaxed/simple;
-	bh=6p8zcpesYJHO71mS5PR/BlXbII7JHiRcTtBg++n1q6U=;
+	s=arc-20240116; t=1784667600; c=relaxed/simple;
+	bh=T/5wfewYTophPrDDbPQ2H/t3bgPAZmgo14xK/YJcKGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOVrIrNT434DkG7hFZtUMVc2XBiB+q+Gvo0A1oS0TEjPxP05UKGY/pxC+Bearx3y/sLJGVTS5kl5AwwDg4fiYeyeIqY+o6nLse5axn8Fwob73I0fcfS/YAG//0Is5QpHayc8hH8MRo7I4z1UBa3jc9Na8C/PkZmZQb1PvpO+D2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFgfaGbH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G4MvbdoaMzd0g2F/c5Z81BvtA3bWm5MqzyaYajUx2eYMSb8N9lFpLLN26GUpqUwgIgaengAISuZaJtxs6V0rGwVysyqVIe6kwSkFb2qDYF+wfct9ZeSkkZJMYT06D7smXnY4KDi0X1xbgIP1bO6sxvPBtuug96Jokv3z259Q1hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxEsctZ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFgfaGbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A291F000E9;
-	Tue, 21 Jul 2026 20:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxEsctZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA12B1F000E9;
+	Tue, 21 Jul 2026 20:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667596;
-	bh=3jiYHGsBKya7qpejQi8zkhJt6JjjBjTVGn36TcGS0+o=;
+	s=korg; t=1784667599;
+	bh=QthZun2RwboafNYqd9smFj5d6gCF8PX6KNV7JmarM4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uFgfaGbHkKkNI1JkSnr4WeAIVwcLw3U7hp4yOcRwiXCjzLEUHA0mg3G1x7yi0nVKP
-	 FrvYzcWzIyW3dNV6zcMV5ep5ur22uM5YCPLHrPXSLkGSZhpD5drRjPMyvQ53oclPjR
-	 N7e2APq5+ZbU7OoAR9EhZiKc1vmvVX9URibG8ZJM=
+	b=vxEsctZ9co8rzv9I6MVVZrKerIcAdOkCErAiiFr20Nvsl9COk5VqoWG2EUIOVKsYl
+	 D5MNkgdYCw7xVMcNZ7+7RhFLOglw9nGss34lUBVj9LJXOG4hchiIYz81LFHRdtXD+Y
+	 r+fQm5TO+ewMEdXJ0wWRLkVAxNtfje9kGbzteZ80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Nutty Liu <nutty.liu@hotmail.com>,
-	Tao Liu <ltao@redhat.com>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.6 1122/1266] riscv: Prevent NULL pointer dereference in machine_kexec_prepare()
-Date: Tue, 21 Jul 2026 17:25:59 +0200
-Message-ID: <20260721152506.905424490@linuxfoundation.org>
+	stable@kernel.org,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Breno Leitao <leitao@debian.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 1105/1266] fsl/fman: Free init resources on KeyGen failure in fman_init()
+Date: Tue, 21 Jul 2026 17:25:42 +0200
+Message-ID: <20260721152506.530362326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,53 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Liu <ltao@redhat.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 81bbcff0c053c4f5c711c31a9b72fc492bd96c3f upstream.
+commit d288efa2b94abc2e45a061fceb156b4f4e5b37be upstream.
 
-A NULL pointer dereference issue is noticed in riscv's
-machine_kexec_prepare(), where image->segment[i].buf might be NULL and
-copied unchecked.
+fman_muram_alloc() allocates initialization resources before
+initializing the KeyGen block. If keygen_init() fails, the
+function returns -EINVAL directly and leaves those resources
+allocated. Free the initialization resources before returning
+from the KeyGen failure path.
 
-The NULL buf comes from ima_add_kexec_buffer(), where kbuf is added by
-kexec_add_buffer(), but kbuf.buffer is NULL, then it is copied without
-a check in machine_kexec_prepare():
-
-  kexec_file_load
-    -> kimage_file_alloc_init()
-       -> kimage_file_prepare_segments()
-          -> ima_add_kexec_buffer()
-             -> kexec_add_buffer()
-    -> machine_kexec_prepare()
-       -> memcpy()
-
-Address this by adding a check before the data copy attempt.
-
-Fixes: b7fb4d78a6ad ("RISC-V: use memcpy for kexec_file mode")
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/kexec/CAO7dBbVftLUhd2qrh7hmijTB3PEPfZAhykCGqEfrPoOcSrrj-w@mail.gmail.com/
-Acked-by: Baoquan He <bhe@redhat.com>
-Acked-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Signed-off-by: Tao Liu <ltao@redhat.com>
-Link: https://patch.msgid.link/20260705232706.30265-2-ltao@redhat.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 7472f4f281d0 ("fsl/fman: enable FMan Keygen")
+Cc: stable@kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260625004834.3394389-1-haoxiang_li2024@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/machine_kexec.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/freescale/fman/fman.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/machine_kexec.c
-+++ b/arch/riscv/kernel/machine_kexec.c
-@@ -67,6 +67,9 @@ machine_kexec_prepare(struct kimage *ima
- 		if (image->segment[i].memsz <= sizeof(fdt))
- 			continue;
+--- a/drivers/net/ethernet/freescale/fman/fman.c
++++ b/drivers/net/ethernet/freescale/fman/fman.c
+@@ -1995,8 +1995,10 @@ static int fman_init(struct fman *fman)
  
-+		if (!image->segment[i].buf)
-+			continue;
-+
- 		if (image->file_mode)
- 			memcpy(&fdt, image->segment[i].buf, sizeof(fdt));
- 		else if (copy_from_user(&fdt, image->segment[i].buf, sizeof(fdt)))
+ 	/* Init KeyGen */
+ 	fman->keygen = keygen_init(fman->kg_regs);
+-	if (!fman->keygen)
++	if (!fman->keygen) {
++		free_init_resources(fman);
+ 		return -EINVAL;
++	}
+ 
+ 	err = enable(fman, cfg);
+ 	if (err != 0)
 
 
