@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3EA400DE1;
-	Tue, 21 Jul 2026 20:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A353C435A96;
+	Tue, 21 Jul 2026 20:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665248; cv=none; b=fN2xsJ0J1DmMv2BbPGzmWRv/u0rs+AxJZJQRw0sLXX2D0dKuFL6A0fRmqVLbFGLeG4Mp53xYxDBlVGgP57ZB4zhcjG1wP50MBH/FUyRYvym4NwflMafcsBDr2wmQ7yT3ml+yiVXAQrSBOzf0RTsKF/mm/PtL2ZNLOz2EDL+olyE=
+	t=1784665250; cv=none; b=fcqaDa4k241V2q5LXrxryts/ZKzAmhsxN0+o1K2IfWkJGSRwJuztv/yln2oapuwzgt2/ikj622hsIev0j+WnEO6MDmTthwRgQZY2TZDumvDbH6lkC0xeUqf0+9gViSXDQ4cS+yPx3fO3oyeufxaaQ2NsuW1FrbsV0ThaQ+yqhPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665248; c=relaxed/simple;
-	bh=lFPLTblBREeXzN7b3P2ewKCYkUjsJ+/6o+Dnett5QHc=;
+	s=arc-20240116; t=1784665250; c=relaxed/simple;
+	bh=BtZ8+OsLV2Tx5zfCpSCry7cZSv1TCl/xAm13SIhK5Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPm+mcrVosSQG+BBG9U/mMpYM/NPmR2SPMUU0muApzjJB+TP0XAt7fG6ovHVu+DqRO80z572IIKDt09tk4QVQ8UXNT/amqNfVpOy7FwJb7ITVm1vhZUR6pqMIeKtE7hA6r2oHNx0pL6s12cym+djqAfLE8gll7/dCqEM0KkMPx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KZIRXXl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NIx10G8EPHLbqKFWDs8OYxRy4/b69BDC45VMrz1+Qhd9SiMADtUPqHH2F+kAHy59jkXh3CDnZETb1it1yRh4j47/+DH0PBsyKJoEaVjRmPHaPvoK2QZb1pFQ1q2rX3oSpxxe6WV9xLmOZCYpgEHPz+4J/t53yh8Y60hq0PuRo5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygAKnyUF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KZIRXXl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D611F000E9;
-	Tue, 21 Jul 2026 20:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygAKnyUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AD51F000E9;
+	Tue, 21 Jul 2026 20:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665246;
-	bh=bFpX8Iz2u+VZsz6P7lJkl3hg+fnzVlnF2q8hX79/7/4=;
+	s=korg; t=1784665249;
+	bh=ilMckJcawzHyJ4Cgd4N0i2O1pIeS3bsjLqffuXwka5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0KZIRXXlLyYxiC57OLf1Qiy7sOsS+dV/Qa8sqIGv83bYwhKJrwZOOJTpruk0Hi4yF
-	 jqW6ztRBqlAYW2MZ5fpCSYF+N5AVQXbRxrwDxB1vIwSyl5UnARn+B9v3Y1KI1yXb/0
-	 Ngal9eGT3CDI/z5Ln1q2z2b1Z6Bu/mkPSWl9ZIRw=
+	b=ygAKnyUFO8xjTwaWA6s1t6lweBVCU99UEo0QVybLva7fBRaLwZ2YaDc9V7UtxDmS/
+	 O+0NG0Wx2pzucU2mkJgmVLLk9LfDqFbP4Y2lx9lu98tgQKMDkyXQBPzSLQh2xxp6bi
+	 4bZ+co4dadGGTDvjtRZNJ+Cg+zpGHvfmniviggwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 0188/1266] ksmbd: enforce FILE_READ_ATTRIBUTES on SMB_FIND_FILE_POSIX_INFORMATION
-Date: Tue, 21 Jul 2026 17:10:25 +0200
-Message-ID: <20260721152446.012163532@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 6.6 0179/1266] coresight: ultrasoc-smb: Fix OOB write in smb_sync_perf_buffer()
+Date: Tue, 21 Jul 2026 17:10:16 +0200
+Message-ID: <20260721152445.812876847@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 20c8442dc1003f9f7bb522d3dcd81d09ea59a79e upstream.
+commit 98495b5a4d77dd22e106f462b76e1093a55b29a7 upstream.
 
-find_file_posix_info() in smb2_query_info() returns file metadata (owner
-uid, group gid, mode, inode, size, allocation size, hard-link count and all
-four timestamps) but performs no per-handle access check. Every sibling
-query handler gates on the handle's granted access first --
-get_file_basic_info(), get_file_all_info(), get_file_network_open_info()
-and get_file_attribute_tag_info() all reject a handle lacking
-FILE_READ_ATTRIBUTES_LE with -EACCES. The POSIX handler is gated only by
-the connection-scoped tcon->posix_extensions flag, which is not a
-per-handle authorization, so a handle opened with only FILE_WRITE_DATA is
-correctly denied FileBasicInformation yet is allowed the strict-superset
-POSIX info. Mirror the FILE_READ_ATTRIBUTES_LE gate the sibling info
-handlers already use.
+When the SMB sink is used as a perf AUX sink, smb_update_buffer() calls
+smb_sync_perf_buffer() to copy hardware trace data into the perf AUX ring
+buffer pages. It derives pg_idx = head >> PAGE_SHIFT from @head, which is
+handle->head, and indexes dst_pages[pg_idx]. The pg_idx %= nr_pages
+normalization is only applied after the first loop iteration.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+This leaves the initial page index underived from the buffer size, which
+can result in an out-of-bounds write past dst_pages[] when head exceeds
+the AUX buffer size.
+
+Normalize head modulo the AUX buffer size before deriving the page index
+and offset, mirroring tmc_etr_sync_perf_buffer().
+
+Fixes: 06f5c2926aaa ("drivers/coresight: Add UltraSoc System Memory Buffer driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/SYBPR01MB788156B3380A36835DB22290AF102@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hwtracing/coresight/ultrasoc-smb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5290,6 +5290,12 @@ static int find_file_posix_info(struct s
- 	int out_buf_len = sizeof(struct smb311_posix_qinfo) + 32;
- 	int ret;
+--- a/drivers/hwtracing/coresight/ultrasoc-smb.c
++++ b/drivers/hwtracing/coresight/ultrasoc-smb.c
+@@ -361,6 +361,7 @@ static void smb_sync_perf_buffer(struct
+ 	unsigned long to_copy;
+ 	long pg_idx, pg_offset;
  
-+	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
-+		pr_err("no right to read the attributes : 0x%x\n",
-+		       fp->daccess);
-+		return -EACCES;
-+	}
-+
- 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
- 			  AT_STATX_SYNC_AS_STAT);
- 	if (ret)
++	head %= (unsigned long)buf->nr_pages << PAGE_SHIFT;
+ 	pg_idx = head >> PAGE_SHIFT;
+ 	pg_offset = head & (PAGE_SIZE - 1);
+ 
 
 
