@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B4F3B4EAC;
-	Tue, 21 Jul 2026 18:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0B37DE97;
+	Tue, 21 Jul 2026 18:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657808; cv=none; b=EHNx0nIRx0qx+4jVmOLPFmj3J43We+dFIN2v7ThqwQr6uT7h3TGm+Bh81ndhAgjxprr/T6toS8mVhWCrafvQUomFXHdUBEP64DEYL+OnY/xZyoXtgF1tKog2eVVQ3tt4EcdK6SzcNk7Mc9xhA5RhQpjc7zinkse9ug2LCV/fR5c=
+	t=1784657811; cv=none; b=miU1CaICyS7fAh9/KBtZ7RIB9o0009Sexq1B1SmL6mWD/vogU9fVGHxh8POfWcWC29k35R6II79vemwWLw/ycxC0S9eSu8Hnmf5YHIB5WcmhZ3AAhsRmkXQqPc7s0J//E3Cp/tGy9SBKad4wfHwY+1XkkKws7IWM2Yd2OpxA8xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657808; c=relaxed/simple;
-	bh=+ldyIAgtSDpj98fIuYmOrWG8hVDCxQ6l/aSVn+Txm3g=;
+	s=arc-20240116; t=1784657811; c=relaxed/simple;
+	bh=lfBV3OsLRQerQ9bmjYHVM4G7N3Y6/DAqQC4/T7LvSms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CBDE9+NNp7XBCbbRZkchirPTdSa5QUkSeS7OwxB1d4JEXfIQhw4YEw67pYz02GFj21NxN1p3zhO2zEwFZ3p9cCPAW4Rgzmd0S2F0cGiVOgxkpfWYAlo+jv8VwS4zJAKcA0FdoPTOjq4Az4nUAeSjwH5p1D52c8GR8ZKxpjMlV4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEV4DP/F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e86FzdahaGKlTJX61M4Ud6S1rF6OwDKdRoVsqZiRiffadoJg4sjFfKSdMAqHtPsZxJWp+hsyoiw4I/lkWwmFM6k6tmwhhXdKNUyQIRSXkPy6QZUPH+qT3fv/p4pIab8i0XOvJmVJmhS0CIpLkHzg1IMI4UiBcH1dRe454e/7qB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJAgMOPR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEV4DP/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D079C1F00A3E;
-	Tue, 21 Jul 2026 18:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJAgMOPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0A61F00A3A;
+	Tue, 21 Jul 2026 18:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657807;
-	bh=bKOd7JVfaeXb+G++t1Wpln8hP3++4dvQmWRl0qpKhzQ=;
+	s=korg; t=1784657809;
+	bh=O15cWDyF8o3FthSNHECgorawkc0RaUOdZ7wc+p+6gc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DEV4DP/FBLKDsv+nEEZ6YqVfNK7nJaeWC3tk7QWFSxjwshXvt/2wwSsb5QalNWdv/
-	 on8S9IRSS7beQCZTLRWZHUR1K2Es2TXb1WN98u4fFAe4tirCy8y0wjHIUh/LP7LFNx
-	 w4Op/23sGEI5hlxxXfK83HQarwZWo/3OCXnKaszQ=
+	b=UJAgMOPR5wX1VBb80GXS4rgf2uvB/FSZXhbmQxXCWkWLWDjDaM2CMSMWSDzWPTYPt
+	 Rsq8JhSvfUZTrPq4Q8UvleQvgNaLtsYd1ZSgKUc5+Efk/dT3O3Xq8QHM0OhRveWJff
+	 +zrIRG1cH362srGHBN/FlW7m8ki3Qzl6/RAYH8VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0905/1611] netfilter: nft_compat: ebtables emulation must reject non-bridge targets
-Date: Tue, 21 Jul 2026 17:17:01 +0200
-Message-ID: <20260721152535.746754619@linuxfoundation.org>
+Subject: [PATCH 6.18 0906/1611] gpio: davinci: fix IRQ domain leak on devm_kzalloc failure
+Date: Tue, 21 Jul 2026 17:17:02 +0200
+Message-ID: <20260721152535.769058264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -58,80 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-[ Upstream commit 9dbba7e694ec045f21ede2f892fb42b81b4e1692 ]
+[ Upstream commit 4e8eb6952aa6749726c6c3763ae0032a6332c24f ]
 
-xtables targets return netfilter verdicts: NF_ACCEPT, NF_DROP, and so
-on.  ebtables targets return incompatible verdicts: EBT_ACCEPT,
-EBT_DROP, ...   We cannot allow fallback to NFPROTO_UNSPEC.
+In davinci_gpio_irq_setup(), after successfully creating an IRQ domain
+with irq_domain_create_legacy(), a subsequent devm_kzalloc() failure
+in the bank loop causes the function to return -ENOMEM without
+removing the IRQ domain.
 
-ebtables doesn't permit this since
-11ff7288beb2 ("netfilter: ebtables: reject non-bridge targets")
-but that commit missed the nft_compat layer.
+Unlike devm-managed resources, irq_domain_create_legacy() does not
+auto-clean up on probe failure, so the domain is leaked.
 
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Reported-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix by calling irq_domain_remove() before returning on allocation
+failure.
+
+Fixes: b5cf3fd827d2 ("gpio: davinci: Redesign driver to accommodate ngpios in one gpio chip")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
+Link: https://patch.msgid.link/20260623023106.117229-1-fffsqian@163.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_compat.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-davinci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
-index 08f620311b03f1..a77ffe2fcea75e 100644
---- a/net/netfilter/nft_compat.c
-+++ b/net/netfilter/nft_compat.c
-@@ -389,6 +389,22 @@ static int nft_target_validate(const struct nft_ctx *ctx,
- 	return 0;
- }
+diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
+index 538f27209ce718..5de42f1143dab6 100644
+--- a/drivers/gpio/gpio-davinci.c
++++ b/drivers/gpio/gpio-davinci.c
+@@ -550,8 +550,10 @@ static int davinci_gpio_irq_setup(struct platform_device *pdev)
+ 				       sizeof(struct
+ 					      davinci_gpio_irq_data),
+ 					      GFP_KERNEL);
+-		if (!irqdata)
++		if (!irqdata) {
++			irq_domain_remove(chips->irq_domain);
+ 			return -ENOMEM;
++		}
  
-+static int nft_target_bridge_validate(const struct nft_ctx *ctx,
-+				      const struct nft_expr *expr)
-+{
-+	struct xt_target *target = expr->ops->data;
-+
-+	/* Do not allow UNSPEC to stand-in for NFPROTO_BRIDGE
-+	 * targets: they are incompatible.  ebtables targets return
-+	 * EBT_ACCEPT, DROP and so on which are not compatible with
-+	 * NF_ACCEPT, NF_DROP and so on.
-+	 */
-+	if (target->family != NFPROTO_BRIDGE)
-+		return -ENOENT;
-+
-+	return nft_target_validate(ctx, expr);
-+}
-+
- static void __nft_match_eval(const struct nft_expr *expr,
- 			     struct nft_regs *regs,
- 			     const struct nft_pktinfo *pkt,
-@@ -916,14 +932,16 @@ nft_target_select_ops(const struct nft_ctx *ctx,
- 	ops->init = nft_target_init;
- 	ops->destroy = nft_target_destroy;
- 	ops->dump = nft_target_dump;
--	ops->validate = nft_target_validate;
- 	ops->data = target;
- 	ops->reduce = NFT_REDUCE_READONLY;
- 
--	if (family == NFPROTO_BRIDGE)
-+	if (family == NFPROTO_BRIDGE) {
- 		ops->eval = nft_target_eval_bridge;
--	else
-+		ops->validate = nft_target_bridge_validate;
-+	} else {
- 		ops->eval = nft_target_eval_xt;
-+		ops->validate = nft_target_validate;
-+	}
- 
- 	return ops;
- err:
+ 		irqdata->regs = g;
+ 		irqdata->bank_num = bank;
 -- 
 2.53.0
 
