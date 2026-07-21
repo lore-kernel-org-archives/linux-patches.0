@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B20843E071;
-	Tue, 21 Jul 2026 22:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7A435C694;
+	Tue, 21 Jul 2026 22:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672907; cv=none; b=jfrSA3c4DWKwmdjX1fHsn5u5WKdg3cDQAPHggIMgNFPIactLqPzxvzGLESEMtLSp28tdkr+eV/6dqWTwYlXF8v9KUTIB/Nj02UuCA/DqudkMy6TiVBRhlpOohlIQ8VHawZe2LXYusrk2fszLTMas6HTHDkgvqnHo1DoHDFuDsAA=
+	t=1784672910; cv=none; b=Ak/4f9pdOZbF+d6gNh1hG0Z7PGLAm3tKmfC3qul45v+cJKjsNYa7SCMfC9Tkk5KmGvpLmI45UvrqxQe6gIjPNF1XCj5WfXBOzUh64B+kCVlwmFA+SMKrkFu7Bg0fjnz9q9MsC/CTPtELt67Yjcuvyprz7b7Jp9hc9LieYYYhDxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672907; c=relaxed/simple;
-	bh=SnGm9kK4KD07znpIDns024YXt7x2EGiog01KwalBJBw=;
+	s=arc-20240116; t=1784672910; c=relaxed/simple;
+	bh=36eiHvAhi3wM+ktdooO68KYE5PwogdYtIWRRkmggXMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ds9+ccbc7fOOtsxUPORr0WgsFONBqCiVWgbTBj3sQJDdZdgK5UHik3IHOzMpaEFtuOkzMyJGipZEw54CAPJckxTxj3md83JR2SSqoNpnNTQc3IMe0ok2NZiio4GvfUVlFscGiJIETQf8WpPf/4TsguzbcC0aMDoMoTzXKc312kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EswWUQdm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jFvJCE6/BMcNEpzSvC0ethQ7sscWJYp0T+53zUdXSX0+acMrQJXZri4Jz6gdgKRmqRu21PwWkw6a4VKBVJ3mLVwRxGdHXIpMAx5pbDqRiLjqG+nQmwXGotQN+0ei+rg2esVnTbN2K00MLdEFFxTYKNAjFJJYoR41JYkp8cHaR+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aY6kSWgc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EswWUQdm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8600A1F000E9;
-	Tue, 21 Jul 2026 22:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aY6kSWgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA6E1F00A3A;
+	Tue, 21 Jul 2026 22:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672899;
-	bh=28iGLy4Htpb7HsXZMjM+KR3NDsiTsfvVAKUJnOU6YpM=;
+	s=korg; t=1784672901;
+	bh=Rt5AHgVZlP1vkXVmJaZr2EnipR1Bc6SYEwxUvEVW1x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EswWUQdmkTzRySkAiSwcFxH08n2J2tdQhYXpCB5rAlWGuJuQjOFJSMaznhUM2/r4g
-	 mHij9y/6biVOCVDk+qJCs7XugA5Ipha7GR2aPmHC4d4Hrddi28utgw2xi5hpceTC2/
-	 ielsDAyaM24vHueu6ZvTTSFOIHAcN9UpuqEc8u5Q=
+	b=aY6kSWgcvcCRES3jAhwtOKWz6YWRzZqFfn156hG6XvrZ+0y36+xLtg/3ELSiGmJaw
+	 gmWNy9ETQ7NDqMYQhmWlmPNIDTyXro8o8GsBFUuq7h3009wHhqi2RKpSVAbl+Q8PHR
+	 0Cq+33lwi/cVBlnSccDx48PW30mjoVttpRdFQurI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 772/843] gpio: sch: use new GPIO line value setter callbacks
-Date: Tue, 21 Jul 2026 17:26:47 +0200
-Message-ID: <20260721152423.420940424@linuxfoundation.org>
+Subject: [PATCH 5.15 799/843] treewide: Switch/rename to timer_delete[_sync]()
+Date: Tue, 21 Jul 2026 17:27:14 +0200
+Message-ID: <20260721152424.040719126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,62 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 883c7eb2c4a9e143b2662ba754f9c16fb31adced ]
+[ Upstream commit 8fa7292fee5c5240402371ea89ab285ec856c916 ]
 
-struct gpio_chip now has callbacks for setting line values that return
-an integer, allowing to indicate failures. Convert the driver to using
-them.
+timer_delete[_sync]() replaces del_timer[_sync](). Convert the whole tree
+over and remove the historical wrapper inlines.
 
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250625-gpiochip-set-rv-gpio-round2-v1-3-bc110a3b52ff@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: 286533cb14a3 ("gpio: sch: use raw_spinlock_t in the irq startup path")
+Conversion was done with coccinelle plus manual fixups where necessary.
+
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Stable-dep-of: 75fe87e19d8a ("HID: appleir: fix UAF on pending key_up_timer in remove()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-sch.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/hid/hid-appleir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-sch.c
-+++ b/drivers/gpio/gpio-sch.c
-@@ -116,7 +116,7 @@ static int sch_gpio_get(struct gpio_chip
- 	return sch_gpio_reg_get(sch, gpio_num, GLV);
- }
- 
--static void sch_gpio_set(struct gpio_chip *gc, unsigned int gpio_num, int val)
-+static int sch_gpio_set(struct gpio_chip *gc, unsigned int gpio_num, int val)
+--- a/drivers/hid/hid-appleir.c
++++ b/drivers/hid/hid-appleir.c
+@@ -319,7 +319,7 @@ static void appleir_remove(struct hid_de
  {
- 	struct sch_gpio *sch = gpiochip_get_data(gc);
- 	unsigned long flags;
-@@ -124,6 +124,8 @@ static void sch_gpio_set(struct gpio_chi
- 	spin_lock_irqsave(&sch->lock, flags);
- 	sch_gpio_reg_set(sch, gpio_num, GLV, val);
- 	spin_unlock_irqrestore(&sch->lock, flags);
-+
-+	return 0;
+ 	struct appleir *appleir = hid_get_drvdata(hid);
+ 	hid_hw_stop(hid);
+-	del_timer_sync(&appleir->key_up_timer);
++	timer_delete_sync(&appleir->key_up_timer);
  }
  
- static int sch_gpio_direction_out(struct gpio_chip *gc, unsigned int gpio_num,
-@@ -145,8 +147,7 @@ static int sch_gpio_direction_out(struct
- 	 * But we cannot prevent a short low pulse if direction is set to high
- 	 * and an external pull-up is connected.
- 	 */
--	sch_gpio_set(gc, gpio_num, val);
--	return 0;
-+	return sch_gpio_set(gc, gpio_num, val);
- }
- 
- static int sch_gpio_get_direction(struct gpio_chip *gc, unsigned int gpio_num)
-@@ -165,7 +166,7 @@ static const struct gpio_chip sch_gpio_c
- 	.direction_input	= sch_gpio_direction_in,
- 	.get			= sch_gpio_get,
- 	.direction_output	= sch_gpio_direction_out,
--	.set			= sch_gpio_set,
-+	.set_rv			= sch_gpio_set,
- 	.get_direction		= sch_gpio_get_direction,
- };
- 
+ static const struct hid_device_id appleir_devices[] = {
 
 
