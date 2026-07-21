@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A45F44AB7B;
-	Tue, 21 Jul 2026 22:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E37E44AB7B;
+	Tue, 21 Jul 2026 22:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671818; cv=none; b=udobs4jY+zkY4ttfKFNLUj0/IB0LGp0FHbvFkvKmOat5NB0G4lH8I/XFPn+d1X+/EWrJ2Pu9L/ccJP2uFDHkWUF9CBPyFoy/p32cjH5d0TOdXRjqJOo2EY6s/X/Cjy7o64P/Rnwu+Uz3iwhhAmKlBs9qlmXhkGJl72JNudCMdgw=
+	t=1784671821; cv=none; b=lb622G/nCb0/XwlWWXMf7Kd8ACawt6knahr+nz/4Qkg8DwyEp+io4LEphXP6daHhEsTagrHuCzRE+FcQWDgDGC/enMQ6TpPv1peGe+01mue1cHcDsXK3ZIJjl3SHI4mMTIRhBTpLd1Lilz83ZggWZo9tt5Y2Cly/DAjTSMvD7GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671818; c=relaxed/simple;
-	bh=z0b1G8KZrtTgtqcYQtrZK3WYdCFMdUqy9KLmj9l6+zo=;
+	s=arc-20240116; t=1784671821; c=relaxed/simple;
+	bh=+wkoaEtD1lnUvw0QCTNVivPeBNL9Lf2gvT4rFqzo5OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=otTzcnLqfzSZ8/M4r46jKgL78p1yiwhHZyfnrYhHXUsBZE/q3ttwMH3ob5SaDt6YP9JZe3z6hxH0al6ca8vf3RIyCfZqDiTjMedGlUX4eiaQSG6j+GH9leerfM9QnAcxulLkXtD8Z793f77FPkDVw9KTev+P+mU265+O+78F5sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUzlINRV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Du7+c/LNuikY4+LqMPrGyym8pipcPrN8bHowmggnNIqM8Gm3Q2CAmPvcUPLt40fVtOYoTtkk+JkSKqXvaCdHoyLzgdDp9WloNT//YzsZhbKteLwgzIPP8hlLb1l/d4lhs21xlOQ+PuTQHxJXKoCJ3AYP5KhsXKJ86JOoTz/zEaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTWhrx20; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUzlINRV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B54B1F000E9;
-	Tue, 21 Jul 2026 22:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTWhrx20"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C29B1F000E9;
+	Tue, 21 Jul 2026 22:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671817;
-	bh=Y0gm39UAm8VrxJ1VWSdb6C51+I9dlx5obTq5DdnhBMA=;
+	s=korg; t=1784671819;
+	bh=o86trRllgbMMZUJhmnWcWWB3XISP4COxC+A0kl7SPTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUzlINRVC7ROiw3F2LMViEZxu4JMIH/nhh+gfqiTk6sg4tmLSFD9BCgVJWIypqYlE
-	 8VA+HR4v64bvVQkmMLcjDQeA/TatMcjLbMe6md5V3rP46BrTQ/zdoh36NhE94UO3Sj
-	 dFOLbzBfOaKr6d02nyT8/NCSPzC/L4e8TOEJ1J/w=
+	b=aTWhrx20Oy+SHVMoYDQ5pjwsjmzeGzgaCy8F5oP9t2dsEpT3twozXDh3/r2NQ3t20
+	 QIeUofbvcxu22ETckNK10CLjbXJa6ryacBW4UDeekn7PaITRSA0pZ3DsuFYXxZtJRa
+	 UuQVEgtfF/1j2hyChVtQoo1a1t5OvcPpX7DvzzSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 389/843] HID: logitech-hidpp: remove excess kernel-doc member in hidpp_scroll_counter
-Date: Tue, 21 Jul 2026 17:20:24 +0200
-Message-ID: <20260721152414.788492582@linuxfoundation.org>
+Subject: [PATCH 5.15 390/843] drm/amd/display: Add missing kdoc for ALLM parameters
+Date: Tue, 21 Jul 2026 17:20:25 +0200
+Message-ID: <20260721152414.810439332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,35 +58,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit f22a5db8a7d38152556f230d6d68e59dbc27971b ]
+[ Upstream commit d4c6ec729fb7a8bf8a27b19bd70a1b945ad93dac ]
 
-The @dev member described in the kernel-doc does not exist in the
-struct. Remove the stale entry.
+Add descriptions for the missing parameters for ALLMEnabled and
+ALLMValue  to keep the function documentation synchronized with the
+function prototype mod_build_hf_vsif_infopacket().
 
-Fixes: 0610430e3dea ("HID: logitech-hidpp: add input_device ptr to struct hidpp_device")
-Assisted-by: opencode:big-pickle
+Fixes the below with gcc W=1:
+../display/modules/info_packet/info_packet.c:507 function parameter 'ALLMEnabled' not described in 'mod_build_hf_vsif_infopacket'
+../display/modules/info_packet/info_packet.c:507 function parameter 'ALLMValue' not described in 'mod_build_hf_vsif_infopacket'
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: 3c2381b92cba ("drm/amd/display: add support for VSIP info packet")
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Wayne Lin <Wayne.Lin@amd.com>
+Cc: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Cc: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 812ed660c55575..495d486f540347 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -155,7 +155,6 @@ struct hidpp_battery {
- /**
-  * struct hidpp_scroll_counter - Utility class for processing high-resolution
-  *                             scroll events.
-- * @dev: the input device for which events should be reported.
-  * @wheel_multiplier: the scalar multiplier to be applied to each wheel event
-  * @remainder: counts the number of high-resolution units moved since the last
-  *             low-resolution event (REL_WHEEL or REL_HWHEEL) was sent. Should
+diff --git a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+index 4e075b01d48bb4..c09e86523e291e 100644
+--- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
++++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+@@ -415,6 +415,8 @@ void mod_build_vsc_infopacket(const struct dc_stream_state *stream,
+  *
+  *  @stream:      contains data we may need to construct VSIF (i.e. timing_3d_format, etc.)
+  *  @info_packet: output structure where to store VSIF
++ *  @ALLMEnabled: indicates whether ALLM HF-VSIF should be generated
++ *  @ALLMValue:   ALLM bit value to advertise in HF-VSIF
+  */
+ void mod_build_hf_vsif_infopacket(const struct dc_stream_state *stream,
+ 		struct dc_info_packet *info_packet)
 -- 
 2.53.0
 
