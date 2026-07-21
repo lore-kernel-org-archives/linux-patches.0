@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD34407CDA;
-	Tue, 21 Jul 2026 22:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703D03B42CB;
+	Tue, 21 Jul 2026 22:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672024; cv=none; b=Q7+pYQoIlP829C3pcZV4LEGUSicA1gCq8xid/9E5nnUVgtrYdVCzetCGBrDNBGdgFJLasOLWRfZPPgDgX4wjughHB/XUguY+0qY1RuoXUbqbv+/QWb2MBNk9P9mpplRenSPMsf6DPI7ydr6AQPD7tJ3/+BAMupLyiVX4jV62zz8=
+	t=1784672027; cv=none; b=sp1HlC+awbfNdjxph28LCOkxeceWsTk8QEA3For7eJeEmilhbDyRp00PipGzZZMxwib+hsfsWAn0lRzVk0oWD0zh/1oudouEy+sUgiQAZ9/XmNJJO+l5B/EjeIq4uH2fs1eLLrMfv3QGcYvYsTjE70QxDIAxyY6O3Fz2xGzozxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672024; c=relaxed/simple;
-	bh=Kypfy4dipugO/DlzziykubOyWE5uJvxdUqcsVPqv3SY=;
+	s=arc-20240116; t=1784672027; c=relaxed/simple;
+	bh=7gKLNc9yORe++I4fW3NGc5dcPLlZO5KKRC5EGtZiH9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LqSjfDpsXLkf7j6Nu2CBW1aTq8fPlNpHaE2IkrOATgpBbUAUxZBf3yuLgpNBENUc+WXnHuWpzPLOTp1mbNosoG2LN1dRcanIvcpRvOwxoRle2Baf/JcVNs38WE6Wpn/GDzOCFPU+4OecxOntqdGcaIPRpnU+l1FpLrLsRt+u12U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZwThA/b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VLrwmjURI1n2FrUGJYk1iRDIsxczdI2CGZ0fuvDzCF44pRI03qYyQqQ+99zh2dt3qtRWMqoQbuYLLAI2cZhndvdGuwOGKG72An76RAeuNfk5tgmnUkcggoGaFFzivEapjzIv5UzMDxziIES7Y6hiyogbO6A0YBvmYpKBoOKKOkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3RD+71Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZwThA/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FECB1F000E9;
-	Tue, 21 Jul 2026 22:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3RD+71Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA751F000E9;
+	Tue, 21 Jul 2026 22:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672023;
-	bh=o1JtztosFhrfGoyQIMBTOYJvC0bwsi9jkHki5rLWUR4=;
+	s=korg; t=1784672026;
+	bh=S1solwS4Xl+vEIiAJLjrKp4y4ad/mEF8gFwhYevTOEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZwThA/bhB0uSU6whRKISnxU2Rnfjp7Kw2HIS3BZgSPm6auqzX9Fgr77ybiiC05qi
-	 V/VjlvgckTiQ9FRdkQJEyXUXLsr+5fdrmAOiMO2T1K0pugeDxLYAbgCXLVZCjges9/
-	 HmZV5rVfYDh75qIsqifCEAdOSf4r4XcjFXbqfeHs=
+	b=S3RD+71YGQDWCVJevM/HPnq+jMuOe9qxsXykxUlqt/ba13tSsnart/gVZ3IKQ76p1
+	 xMBrzWoD1uqJ0TXg+nAuhJf0MEPk19IAtkEHZrSxet9Fqdob2BXP/vnc/P6vVCZITK
+	 /qdSeFx9hctAhXH1/fsexSgWTg4Yo5R8dbCdAF9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 468/843] netfilter: nft_synproxy: stop bypassing the priv->info snapshot
-Date: Tue, 21 Jul 2026 17:21:43 +0200
-Message-ID: <20260721152416.566577344@linuxfoundation.org>
+Subject: [PATCH 5.15 469/843] NTB: epf: Make db_valid_mask cover only real doorbell bits
+Date: Tue, 21 Jul 2026 17:21:44 +0200
+Message-ID: <20260721152416.587374569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,71 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 11d4bc4e26fb66040a5b5d95e9abf37deac2b1fc ]
+[ Upstream commit 6eb7e28f1f24a28234add38755687a7ed8bc2654 ]
 
-nft_synproxy_eval_v4() and nft_synproxy_eval_v6() already take a
-whole-object READ_ONCE() snapshot of the shared priv->info state before
-building the SYNACK reply, but nft_synproxy_tcp_options() still masks
-opts->options with priv->info.options from the live shared object.
+ndev->db_count includes an unused doorbell slot due to the legacy extra
+offset in the peer doorbell path. db_valid_mask must cover only the real
+doorbell bits and exclude the unused slot.
 
-When a named synproxy object is updated concurrently with SYN traffic,
-the eval path can then mix mss and timestamp handling from the local
-snapshot with an options mask taken from a newer configuration, so one
-SYNACK no longer reflects a coherent synproxy configuration.
+Set db_valid_mask to BIT_ULL(db_count - 1) - 1.
 
-Use info->options so nft_synproxy_tcp_options() stays on the same local
-snapshot that the eval path already copied from priv->info.
-
-Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 812ce2f8d14e ("NTB: Add support for EPF PCI Non-Transparent Bridge")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260513024923.451765-10-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_synproxy.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/ntb/hw/epf/ntb_hw_epf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
-index 46d2eefb0b2182..aaba34ed0f7179 100644
---- a/net/netfilter/nft_synproxy.c
-+++ b/net/netfilter/nft_synproxy.c
-@@ -23,14 +23,13 @@ static const struct nla_policy nft_synproxy_policy[NFTA_SYNPROXY_MAX + 1] = {
- static void nft_synproxy_tcp_options(struct synproxy_options *opts,
- 				     const struct tcphdr *tcp,
- 				     struct synproxy_net *snet,
--				     struct nf_synproxy_info *info,
--				     const struct nft_synproxy *priv)
-+				     struct nf_synproxy_info *info)
- {
- 	this_cpu_inc(snet->stats->syn_received);
- 	if (tcp->ece && tcp->cwr)
- 		opts->options |= NF_SYNPROXY_OPT_ECN;
+diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
+index febe548ed47690..9c26f405c3382a 100644
+--- a/drivers/ntb/hw/epf/ntb_hw_epf.c
++++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
+@@ -554,7 +554,11 @@ static int ntb_epf_init_dev(struct ntb_epf_dev *ndev)
+ 		return ret;
+ 	}
  
--	opts->options &= priv->info.options;
-+	opts->options &= info->options;
- 	opts->mss_encode = opts->mss_option;
- 	opts->mss_option = info->mss;
- 	if (opts->options & NF_SYNPROXY_OPT_TIMESTAMP)
-@@ -55,7 +54,7 @@ static void nft_synproxy_eval_v4(const struct nft_synproxy *priv,
+-	ndev->db_valid_mask = BIT_ULL(ndev->db_count) - 1;
++	/*
++	 * ndev->db_count includes an extra skipped slot due to the legacy
++	 * doorbell layout, hence -1.
++	 */
++	ndev->db_valid_mask = BIT_ULL(ndev->db_count - 1) - 1;
+ 	ndev->mw_count = readl(ndev->ctrl_reg + NTB_EPF_MW_COUNT);
+ 	ndev->spad_count = readl(ndev->ctrl_reg + NTB_EPF_SPAD_COUNT);
  
- 	if (tcp->syn) {
- 		/* Initial SYN from client */
--		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
-+		nft_synproxy_tcp_options(opts, tcp, snet, &info);
- 		synproxy_send_client_synack(net, skb, tcp, opts);
- 		consume_skb(skb);
- 		regs->verdict.code = NF_STOLEN;
-@@ -86,7 +85,7 @@ static void nft_synproxy_eval_v6(const struct nft_synproxy *priv,
- 
- 	if (tcp->syn) {
- 		/* Initial SYN from client */
--		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
-+		nft_synproxy_tcp_options(opts, tcp, snet, &info);
- 		synproxy_send_client_synack_ipv6(net, skb, tcp, opts);
- 		consume_skb(skb);
- 		regs->verdict.code = NF_STOLEN;
 -- 
 2.53.0
 
