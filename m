@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF39543E9C9;
-	Tue, 21 Jul 2026 20:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6785043E066;
+	Tue, 21 Jul 2026 20:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667446; cv=none; b=ov2CezT/YnBsOSMi7qI+6Z6hRJGs8+n4ob6fYxlakqosJNNChrY4TLjIktfz/t7bsGb6uE2BjUDUcYdyBD5OcLUx1T5T6FKdDK2zM7K7XqsTyNBjY8UHmujy05+VNNwrK1R0N/ntiq3xe8l0EloeFz00zG2a3RvEnr9F/onPVM0=
+	t=1784667448; cv=none; b=oG5i1m9b1041NcBtlgHeQthOC50uMlbxKC2xk2ruXh2fRwSa0xsykBMo4lubOmSnQ9jvQX02/p+ElHO5yUe0LTZtMqIRvtQ/JNcTdKhShSODnHK4iZ8m3UGYVnURJGv/vNING3V5P97Y+wJ/5j0YOrSoZ9rq2zLIu9tfXzbfU2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667446; c=relaxed/simple;
-	bh=rkQjtteYWJX+3u9MpzONfitLP3pxRgwwZYPFD4X7XlQ=;
+	s=arc-20240116; t=1784667448; c=relaxed/simple;
+	bh=m7DfH8+2j8plkeq5O0Y2YVwSxXqwI9XNDwo95u/6g7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hFg9q/64+TbOeJWLszs5+mUwZjvbVviRqTCIVUlVcy1Wmy/ZM6SjZaJc8MxUzFeBhoLf8AeCHBtRp5I7P4WoG15PnjD1opHmaqkhB12pNLuTY6jhxXGj1+dF7ZGfqLd+GPa8IleZRysoXchL13EFbjAX7zwKk2oNabG27ofwjSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgEHDYef; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sjasDTXhxweikeC8cFZxuCKMDNlH1Gt3/cwsyz3eLK6GqlQnRS9+raKbdy3xjfpCAj3DKI3gZnqKJU8/YUn7HQvWM4KZ3IsPEV8z/2ltlR3KNZ+lpZBfbLHT2c9+Rg8FOxvla4v/xFM7ZTCo/7ru3sas3fLiHN/emA5Qf/WVS+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1K0DIkD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgEHDYef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651F61F00A3A;
-	Tue, 21 Jul 2026 20:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1K0DIkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAEF1F00A3D;
+	Tue, 21 Jul 2026 20:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667442;
-	bh=o2Qy3TF3r+Sy5RghkCqHmIk7pxdSD6JdshIztVEx4C0=;
+	s=korg; t=1784667445;
+	bh=BwEwTm/1a6JzPl5/9aOEKUHrvzlajd760biCAiaOhDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MgEHDYefyw0kYyzvBV5LQVgihwphyH1u5EPqIzVVmKWFKu8EJKgRX+fZUYvT1qlP2
-	 uF2WWUfo8ePXLV+/2OW2rvgsv0Ew+mZeADopiksULjzTddlfrBapwDh73o/ZNYrOiR
-	 ShDuWnZHuT47vXwPtkoyLmROKkS2+sN9NPwYPZOA=
+	b=Y1K0DIkDzOYeXl7FJaDBeOaFQLtmJPe79XRDDFnmG55m6iLfqjgSRpINIrGheQAYQ
+	 Hpu2KHSPeSIP1qz8rTpTAypBvALIbPTzXObHRsvaztRGmdWsT5nXbEvTGn3Wv5RPKa
+	 q9Le8YQ1fv9o2Ed+8kyvgBrC4Y2alutlL8rAAnfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Daniel Gibson <daniel@gibson.sh>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 1020/1266] platform/x86/amd/pmc: Add delay_suspend module parameter
-Date: Tue, 21 Jul 2026 17:24:17 +0200
-Message-ID: <20260721152504.653512550@linuxfoundation.org>
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 1021/1266] smb: client: use kvzalloc() for megabyte buffer in simple fallocate
+Date: Tue, 21 Jul 2026 17:24:18 +0200
+Message-ID: <20260721152504.674793761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,97 +44,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Gibson <daniel@gibson.sh>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 428b9fd2dce50b4dc5cd9ade10b92efcf57ce7aa upstream.
+commit 806c00c23e3ce8eae397a40ced536ef88ae4e012 upstream.
 
-Enabling the new delay_suspend module parameter delays suspend for
-2.5 seconds which is known to help for some AMD-based Lenovo Laptops
-that otherwise failed to send/receive events for key presses or the
-lid switch after s2idle. Apparently the EC needs to do some things
-in the background before suspend or it gets into a bad state.
+Currently in smb3_simple_fallocate_range(), a 1 MB buffer is allocated
+using kzalloc(). Under heavy memory fragmentation, a contiguous 1 MB block
+of physical memory (an order-8 allocation) may not be available,
+causing the allocation to fail.
 
-There are many reports of AMD-based laptops (mostly but not exclusively
-IdeaPads) about similar issues on the web; this parameter gives
-affected users an easy way to try out if their issues have the same
-root cause and to work around them until their specific device is added
-to the quirks list.
+This failure was observed during xfstests generic/013 on a 4GB RAM
+test machine running fsstress:
 
-The parameter description has a note encouraging users to report
-their device so it can be added to the quirks list, inspired by a
-similar request in parameter descriptions of the ideapad-laptop module.
+fsstress: page allocation failure: order:8,
+mode:0x40dc0(GFP_KERNEL|__GFP_ZERO|__GFP_COMP),
+nodemask=(null),cpuset=/,mems_allowed=0
 
-The module parameter can be set to "1" to explicitly enable it,
-"0" to disable it even on devices that are assumed to be affected,
-or -1 (the default) to enable it if the device is assumed to be affected
-(according to fwbug_list[])
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5d/0x80
+ warn_alloc+0x163/0x190
+ __alloc_pages_slowpath.constprop.0+0x71b/0x12f0
+ __alloc_frozen_pages_noprof+0x2f6/0x340
+ alloc_pages_mpol+0xb6/0x170
+ ___kmalloc_large_node+0xb3/0xd0
+ __kmalloc_large_noprof+0x1e/0xc0
+ smb3_simple_falloc.isra.0+0x62b/0x960
+ cifs_fallocate+0xed/0x180
+ vfs_fallocate+0x165/0x3c0
+ __x64_sys_fallocate+0x48/0xa0
+ do_syscall_64+0xe1/0x640
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ </TASK>
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221383
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Daniel Gibson <daniel@gibson.sh>
+Node 0 Normal: 3375*4kB ... 7*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB
+
+Since this scratch buffer does not require physically contiguous memory,
+switch the allocation to kvzalloc(). This retains the performance
+benefits of kmalloc() under normal conditions, while gracefully falling
+back to virtually contiguous memory when physical allocation fails.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260611150426.3683372-4-daniel@gibson.sh
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Tested-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c |   25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -16,6 +16,7 @@
- #include <linux/bits.h>
- #include <linux/debugfs.h>
- #include <linux/delay.h>
-+#include <linux/dmi.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/limits.h>
-@@ -147,6 +148,11 @@ static bool disable_workarounds;
- module_param(disable_workarounds, bool, 0644);
- MODULE_PARM_DESC(disable_workarounds, "Disable workarounds for platform bugs");
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3431,7 +3431,7 @@ static int smb3_simple_fallocate_range(u
+ 	if (rc)
+ 		goto out;
  
-+static int delay_suspend = -1;
-+module_param(delay_suspend, int, 0644);
-+MODULE_PARM_DESC(delay_suspend,
-+		 "Delays s2idle by 2.5 seconds to work around buggy ECs, often causing keyboard issues after suspend. 0: don't delay, 1: do delay, -1 (default): let amd_pmc decide. If you need this please report this to: platform-driver-x86@vger.kernel.org");
-+
- static struct amd_pmc_dev pmc;
- static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, u32 arg, u32 *data, u8 msg, bool ret);
- static int amd_pmc_read_stb(struct amd_pmc_dev *dev, u32 *buf);
-@@ -817,8 +823,23 @@ static bool amd_pmc_want_suspend_delay(s
- 	 *
- 	 * See https://bugzilla.kernel.org/show_bug.cgi?id=221383
- 	 */
--	if (!disable_workarounds && amd_pmc_quirk_need_suspend_delay(pdev)) {
--		dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
-+	if (amd_pmc_quirk_need_suspend_delay(pdev)) {
-+		/*
-+		 * delay_suspend=1 force-enables this, otherwise it can be
-+		 * disabled with disable_workarounds or delay_suspend=0
-+		 */
-+		if (delay_suspend == 1 || (delay_suspend == -1 && !disable_workarounds)) {
-+			dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
-+			return true;
-+		}
-+		dev_info(pdev->dev, "Not delaying suspend because of module parameter, even though your device is assumed to need it!\n");
-+	} else if (delay_suspend == 1) {
-+		dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
-+			 dmi_get_system_info(DMI_SYS_VENDOR),
-+			 dmi_get_system_info(DMI_PRODUCT_NAME),
-+			 dmi_get_system_info(DMI_PRODUCT_FAMILY),
-+			 dmi_get_system_info(DMI_BOARD_VENDOR),
-+			 dmi_get_system_info(DMI_BOARD_NAME));
- 		return true;
- 	}
- 	return false;
+-	buf = kzalloc(1024 * 1024, GFP_KERNEL);
++	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
+@@ -3488,7 +3488,7 @@ static int smb3_simple_fallocate_range(u
+ 
+  out:
+ 	kfree(out_data);
+-	kfree(buf);
++	kvfree(buf);
+ 	return rc;
+ }
+ 
 
 
