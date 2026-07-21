@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3064582DB;
-	Tue, 21 Jul 2026 21:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9C54582CE;
+	Tue, 21 Jul 2026 21:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667793; cv=none; b=gcGNdqqNrM9NtjkECdt9VHxIApauiHcrDUlCGA/NLWzTp6XFROvx0w4VTvg0EU/NweTN+MF6p1qyWn4Zvpf/QYsNgBPgPQvS2+u1A79czpHREpW4OWd1A6Ipcrgtvl7MHN94vTGBt/VkRmzK4shtSmxHnpnPCCIB7X/E27Mqxn4=
+	t=1784667795; cv=none; b=CxHpPmV7Ykc7qSwfufZ/TX0JBwwEIQhttfIz8O26bp/OBznVMReIhT8pD78qXXMlYT+MGQD/3DGBkjlvBIBGis3UeOismH/zhF7DRF1HJaWIyMejTX4lLoeMpu5Tpf9WLGJPA44Yg8uMd04m2iHG1UfOd1hSgh9Xx6OcTAVfRQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667793; c=relaxed/simple;
-	bh=jOesk/5Y5ZO41W+3/eSTrFZ/USlttyZEWrY4XQIDBss=;
+	s=arc-20240116; t=1784667795; c=relaxed/simple;
+	bh=eztsUGIeLJX1zf8tjkp+caA3o4FBjALd5ytLUjpgqtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iz+1hnWNsdbl2sMXtRZG1w1eEuirmGw2T/xBqLM7cC2Pa3hgKeZpyNq+/1d/UoTi7YmyqerYOqPQg4qnW9SgHPo5z8u5OITBZnMV4mY886LcNu+kPUopPLjBC1Xs3qYKRYS4o5AOo/lUTYEtECgZ3gTA0j3ImhxtTo4R9WaNKqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cblu90t2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1KbEc30O+SH6mTefQ32XMbbeUczxy2MXtxJwe3eUxdq8fvQVTUCsW2mex/z2Pj2FnzlpNy+DEORL8bacYC5pnKYXJixfIq6BLJognlEL4ZrryfNm+nNuiZJg6AD+zNjSHCR5x677X7Gjbu9qJ31vMYLgvpdvBO1Jt+vuY24urE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cdv29jdw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cblu90t2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB6B1F000E9;
-	Tue, 21 Jul 2026 21:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cdv29jdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B7B1F00A3A;
+	Tue, 21 Jul 2026 21:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667790;
-	bh=zpG4uyyUBuRHaT92X1ie9u5hcj7Tw3c5l7K3tzJR6tc=;
+	s=korg; t=1784667792;
+	bh=uSox84SpKmuZvIBioCkH3f8hBY50+27/CyWU5HGMDs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cblu90t2gWbrEHpgQM/vD9C8c5KKXulhUKGeGOqSCmbe6pT6K/dj7vSaKTywmP9cb
-	 BBJ2ab3md4Q2MLdEPG6Jl86Tgcs0kiG3+1HL5YPOf9CKAzxqIuIa1gP2UKWQpUtvTp
-	 ZcxoQgkdoqjD0QumucR3P82PeR6eEBUhoz/p3lPE=
+	b=Cdv29jdwAICF7Yp5WDPVTc/5645KmTB9l/QtzIT0iOGbcKGivcqjW7sKgZwuPpFLB
+	 CgkxVtOXZk0jeEJjfU/BGa8kx1H6HMZaGa+IB7Lxv4rrOniyezNjkFPWr2Oy4Ggre+
+	 snXfiE/gsZHA3twg1KXxlAHkH9L7wzvUEGL5E0u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1192/1266] Bluetooth: L2CAP: cancel pending_rx_work before taking conn->lock
-Date: Tue, 21 Jul 2026 17:27:09 +0200
-Message-ID: <20260721152508.469503849@linuxfoundation.org>
+Subject: [PATCH 6.6 1193/1266] Bluetooth: 6lowpan: fix cyclic locking warning on netdev unregister
+Date: Tue, 21 Jul 2026 17:27:10 +0200
+Message-ID: <20260721152508.492574505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,67 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 2641a9e0a1dd4af2e21995470a21d55dd35e5203 ]
+[ Upstream commit 9707a015fe8f3ba8ec7c270f3b2b8efb38823d6b ]
 
-l2cap_conn_del() takes conn->lock and then calls cancel_work_sync() for
-pending_rx_work.  process_pending_rx() takes the same mutex, so teardown
-can deadlock against the worker it is flushing.
+6lowpan.c has theoretically conflicting lock orderings, which lockdep
+complains about:
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+    a) rtnl_lock > hdev->workqueue
 
-The grounded PoC kept the l2cap_conn_ready() -> queue_work(...,
-&conn->pending_rx_work) submit path, the l2cap_conn_del() ->
-cancel_work_sync(&conn->pending_rx_work) teardown path, and the
-process_pending_rx() -> mutex_lock(&conn->lock) worker edge.  Lockdep
-reported:
+    from 6lowpan.c:delete_netdev -> rtnl_lock -> device_del
+    -> put_device(parent) -> hci_release_dev -> destroy_workqueue
 
-  WARNING: possible circular locking dependency detected
-  process_pending_rx+0x21/0x2a [vuln_msv]
-  l2cap_conn_del.constprop.0+0x3f/0x4e [vuln_msv]
-  *** DEADLOCK ***
+    b) hdev->workqueue > l2cap_conn->lock > chan->lock > rtnl_lock
 
-Cancel pending_rx_work before taking conn->lock, matching the existing
-lock-before-drain ordering used for the two delayed works in the same
-teardown path.  The pending_rx queue is still purged after the work has
-been cancelled and conn->lock has been acquired.
+    from hci_rx_work -> 6lowpan.c:chan_ready_cb
+    -> lowpan_register_netdev, ifup -> rtnl_lock
 
-Fixes: 7ab56c3a6ecc ("Bluetooth: Fix deadlock in l2cap_conn_del()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Actual deadlock appears not possible, as hci_rx_work is disabled and
+l2cap_conn flushed already on hdev unregister. Hence, do minimal thing
+to make lockdep happy by breaking chain a) by holding hdev refcount
+until after netdev put in 6lowpan.c.
+
+Fixes the lockdep complaint:
+WARNING: possible circular locking dependency detected.
+kworker/0:1/11 is trying to acquire lock:
+ffff8880023b3940 ((wq_completion)hci0#2){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x8b/0x130
+but task is already holding lock:
+ffffffff95e4f9c0 (rtnl_mutex){+.+.}-{4:4}, at: lowpan_unregister_netdev+0xd/0x30
+Workqueue: events delete_netdev
+
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ adjusted context for 6.6 lacking the disable_delayed_work_sync() conversion and the ida_destroy(&conn->tx_ida) line from the tx_ident IDA dependency ]
+Stable-dep-of: 6fef032af009 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ net/bluetooth/6lowpan.c |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1760,19 +1760,13 @@ static void l2cap_conn_del(struct hci_co
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -759,13 +759,33 @@ static inline struct l2cap_chan *chan_ne
+ 	return chan;
+ }
  
- 	BT_DBG("hcon %p conn %p, err %d", hcon, conn, err);
- 
-+	cancel_work_sync(&conn->pending_rx_work);
++static void unregister_dev(struct lowpan_btle_dev *dev)
++{
++	struct hci_dev *hdev = READ_ONCE(dev->hdev);
 +
- 	mutex_lock(&conn->lock);
++	/* If netdev holds last reference to hci_dev (its parent device), this
++	 * leads to theoretical cyclic locking on lowpan_unregister_netdev:
++	 *
++	 * rtnl_lock -> put_device(parent) -> hci_release_dev ->
++	 * destroy_workqueue -> hci_rx_work -> l2cap_recv_acldata ->
++	 * chan_ready_cb -> ifup -> rtnl_lock
++	 *
++	 * However, hci_rx_work is disabled in hci_unregister_dev, so this
++	 * should not occur. Make lockdep happy by postponing hdev release after
++	 * netdev put.
++	 */
++	hci_dev_hold(hdev);
++	lowpan_unregister_netdev(dev->netdev);
++	hci_dev_put(hdev);
++}
++
+ static void delete_netdev(struct work_struct *work)
+ {
+ 	struct lowpan_btle_dev *entry = container_of(work,
+ 						     struct lowpan_btle_dev,
+ 						     delete_netdev);
  
- 	kfree_skb(conn->rx_skb);
+-	lowpan_unregister_netdev(entry->netdev);
++	unregister_dev(entry);
  
- 	skb_queue_purge(&conn->pending_rx);
--
--	/* We can not call flush_work(&conn->pending_rx_work) here since we
--	 * might block if we are running on a worker from the same workqueue
--	 * pending_rx_work is waiting on.
--	 */
--	if (work_pending(&conn->pending_rx_work))
--		cancel_work_sync(&conn->pending_rx_work);
--
- 	cancel_delayed_work_sync(&conn->id_addr_timer);
+ 	/* The entry pointer is deleted by the netdev destructor. */
+ }
+@@ -1254,6 +1274,7 @@ static void disconnect_devices(void)
+ 			break;
  
- 	l2cap_unregister_all_users(conn);
+ 		new_dev->netdev = entry->netdev;
++		new_dev->hdev = entry->hdev;
+ 		INIT_LIST_HEAD(&new_dev->list);
+ 
+ 		list_add_rcu(&new_dev->list, &devices);
+@@ -1265,7 +1286,7 @@ static void disconnect_devices(void)
+ 		ifdown(entry->netdev);
+ 		BT_DBG("Unregistering netdev %s %p",
+ 		       entry->netdev->name, entry->netdev);
+-		lowpan_unregister_netdev(entry->netdev);
++		unregister_dev(entry);
+ 		kfree(entry);
+ 	}
+ }
 
 
