@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703133B1034;
-	Tue, 21 Jul 2026 20:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141542EBB8D;
+	Tue, 21 Jul 2026 20:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666017; cv=none; b=UBECYNfW2NnToo+VKBLZ66BqyulCXxyZOdvgMy8xQ3fy6HBqPMdqRLYNn3khCDFDH/KPgg2Gy0ADK8kjJbIvSoCpKhGd/2FDJdhXE5PdlddyRM6ox3cMg9aI92NTgB4xkO+uSVufI4t30L/o9Js76apbkHDtScQm5NPNjs3gAgo=
+	t=1784666020; cv=none; b=h3U2XVXcr5fLyvqgtt5/bgrTXYvpuyIVPP1aWTKBfbbpznifh0b3b5X+oyOF+2w0pYrGs2qvH2+/4L+/GJTnhpdpalzper740EO42HNBnp5HqhRISSo0waRdjXs7p/tnTD2H2htOBZVc3rgnrvOodZNUvqwkKwJZJesV58t+thk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666017; c=relaxed/simple;
-	bh=c4kgRvEYW4toTDc/EddOQrqFvF6ate+gt2OInQweCMU=;
+	s=arc-20240116; t=1784666020; c=relaxed/simple;
+	bh=OpghRHRRalz8Dx65TuSC8lha7cUKYxj5RkGgafHh++E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jexn6F6UMFInVc/bpNz14TYIoPvvNsIdVAH5zPaeB9mWuOtUHYTrb7kh70+E163qOHP4mcLqlT6p8aVSK3KsQ/uqvrUpvDQSwAV+P+HWjypoRt6Pekk2/W+Knf67LBpLezvmZZ0ybhob2Zy6Iw7ieoch0+muJlcydwVgxFUxvG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLr5hU7t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gQuojopNh1BY3wuf8nmFH5Mpe4ON1JQiY44fUKvUsJnhe/k+4Og/InY1WZF97PRkOfaIykE7pOcNwN0cMmr0fniWFeiMpuBHeKmMSnYEHi0GTAUkwmCd8HUX6t3BeysSbiVLORWfz+9hx57eAJ6UZLMYXc0Tp20OLRhoR0cmp/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpO1XTwe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLr5hU7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C121F000E9;
-	Tue, 21 Jul 2026 20:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpO1XTwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2681F000E9;
+	Tue, 21 Jul 2026 20:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666016;
-	bh=/fEiYeu2Rig4YxUhAcPrxaXxZGi6A/uRiuDw7XF7XHU=;
+	s=korg; t=1784666019;
+	bh=5qFSvAa/HjO3/nIQTg0Z84R+cog+skOkgBBWLpXq9ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLr5hU7t4SfQaPyoxJQRoCMc8tmlSL7bkbJIxERA1/PidO3viY2J29PM8F/1rXcdL
-	 axaQUPTjlQvRj7gyTLBEQHADVo4xpYJpwszsHss/nBmV9up7MHaaVJfRE41deFett/
-	 G7bqbXTaOm7yLPwd3b0ItbVZUp1YgUx7qRGQybzo=
+	b=wpO1XTweGWJB+QJywThKk3Wu7obmxWSWETV8bc0TdLb9RA3BSTuh020Hs5lVPCtHD
+	 4FYTQtPuHn/RJHxtav+biyuKVRy4g0qFxr+mFHZpeVLkupfTrSnrdZR2Eo1XVMJL9+
+	 1aiCBn9q/NX1SuOZQZen50H3rkUstXpQRfERkxJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xia <hongyan.xia@transsion.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Bjoern A. Zeeb" <bz@FreeBSD.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0523/1266] sched/fair: Fix cpu_util runnable_avg arithmetic
-Date: Tue, 21 Jul 2026 17:16:00 +0200
-Message-ID: <20260721152453.556217250@linuxfoundation.org>
+Subject: [PATCH 6.6 0524/1266] wifi: mt76: fix argument to ieee80211_is_first_frag()
+Date: Tue, 21 Jul 2026 17:16:01 +0200
+Message-ID: <20260721152453.578791441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,73 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xia <hongyan.xia@transsion.com>
+From: Bjoern A. Zeeb <bz@FreeBSD.org>
 
-[ Upstream commit 29922fdfc2a4008d66418bedd0ebf5038fc54efa ]
+[ Upstream commit 5832743279da8c6ae72f715bad2f7141eca6f4b8 ]
 
-If we take runnable_avg in max(runnable_avg, util_avg) in cpu_util(), we
-should then add or subtract task runnable_avg, but the arithmetic below
-is still with task util_avg. This mixes runnable_avg with util_avg which
-is incorrect.
+ieee80211_is_first_frag() operates on the seq_ctrl not the frame_control
+header field. Pass the correct one in; otherwise the results may vary.
 
-Fix by always doing arithmetic with runnable_avg and only take
-max(runnable_avg, util_avg) at the last step.
-
-Fixes: 7d0583cf9ec7 ("sched/fair, cpufreq: Introduce 'runnable boosting'")
-Signed-off-by: Hongyan Xia <hongyan.xia@transsion.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://patch.msgid.link/20260605094318.37931-1-hongyan.xia@transsion.com
+Sponsored by: The FreeBSD Foundation
+Fixes: 30ce7f4456ae4 ("mt76: validate rx CCMP PN")
+Link: https://cgit.freebsd.org/src/commit/sys/contrib/dev/mediatek/mt76/mac80211.c?id=c67fd35e58c6ee1e19877a7fe5998885683abedc
+Signed-off-by: Bjoern A. Zeeb <bz@FreeBSD.org>
+Link: https://patch.msgid.link/83s4psnr-popo-8789-757o-npr2n9n7rs2o@SerrOFQ.bet
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 2fc9fe94d3f1f4..c3a6b66b836c00 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -7711,25 +7711,32 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- static unsigned long
- cpu_util(int cpu, struct task_struct *p, int dst_cpu, int boost)
- {
-+	bool add_task = p && task_cpu(p) != cpu && dst_cpu == cpu;
-+	bool sub_task = p && task_cpu(p) == cpu && dst_cpu != cpu;
- 	struct cfs_rq *cfs_rq = &cpu_rq(cpu)->cfs;
- 	unsigned long util = READ_ONCE(cfs_rq->avg.util_avg);
- 	unsigned long runnable;
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index bf4541e76ba228..61543ab7c2560f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -1137,7 +1137,7 @@ mt76_check_ccmp_pn(struct sk_buff *skb)
+ 		 * All further fragments will be validated by mac80211 only.
+ 		 */
+ 		if (ieee80211_is_frag(hdr) &&
+-		    !ieee80211_is_first_frag(hdr->frame_control))
++		    !ieee80211_is_first_frag(hdr->seq_ctrl))
+ 			return;
+ 	}
  
--	if (boost) {
--		runnable = READ_ONCE(cfs_rq->avg.runnable_avg);
--		util = max(util, runnable);
--	}
--
- 	/*
- 	 * If @dst_cpu is -1 or @p migrates from @cpu to @dst_cpu remove its
- 	 * contribution. If @p migrates from another CPU to @cpu add its
- 	 * contribution. In all the other cases @cpu is not impacted by the
- 	 * migration so its util_avg is already correct.
- 	 */
--	if (p && task_cpu(p) == cpu && dst_cpu != cpu)
--		lsub_positive(&util, task_util(p));
--	else if (p && task_cpu(p) != cpu && dst_cpu == cpu)
-+	if (add_task)
- 		util += task_util(p);
-+	else if (sub_task)
-+		lsub_positive(&util, task_util(p));
-+
-+	if (boost) {
-+		runnable = READ_ONCE(cfs_rq->avg.runnable_avg);
-+		if (add_task)
-+			runnable += READ_ONCE(p->se.avg.runnable_avg);
-+		else if (sub_task)
-+			lsub_positive(&runnable,
-+				      READ_ONCE(p->se.avg.runnable_avg));
-+		util = max(util, runnable);
-+	}
- 
- 	if (sched_feat(UTIL_EST)) {
- 		unsigned long util_est;
 -- 
 2.53.0
 
