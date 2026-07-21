@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EB62F25E4;
-	Tue, 21 Jul 2026 20:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82ED12DA76C;
+	Tue, 21 Jul 2026 20:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665126; cv=none; b=M4jcVSCdgpuvH2/UfuIkjiwcjMaoct0UyaFB7imJaEfvFaUF/STMfB8iVRNAHkXHbJ6zXLIoUF2mAg96JqBXElH7t/Ir1LDTXOrTRe+pzTF43kHlsHyGhMnYJdF1kjSTR7FDnvcgbajLQipBHvL/Os6Uhbw3Bfsmp7C6T9WhGkU=
+	t=1784665128; cv=none; b=UUl+Mux7bX9SFXVmJzcWJEzHJ8NryN+jXDxTOHGg3L9u8jmr1fTqhkxfRect5Aaozy0ZwSPqmtcEVsAO53EAPdrOMb4aiTv5E0BA6uLhDNw2fGHRG2GGPSxEKJcM2kgC6mkXMiJ8UTqLX8yTLJfHbeseoRbiR8S7BzbN2Vd9Oto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665126; c=relaxed/simple;
-	bh=tFoDQchoYEVh/SyHvzEI0EpWniSOAcQGxYpM47aUkwI=;
+	s=arc-20240116; t=1784665128; c=relaxed/simple;
+	bh=+j0IVcSMMu/TMRfdXl9166CPtXwambhIxji4nRYvuAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YYOrnFDyFJZL7jBsS9+RxHVEhQxIbC7U/PYaPvTK29O4FbF3/nj7GzfU+p4JPhe7wofHwzehgYzQYVyj/c2wTUaOdTBzlbUTBRBYlEvHJ5qcsRim9pQLPCJAVkjScrZ7YJwBde9MVsoKYKIM669zWKE+kDUnKQEulllvB55PTKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esYzP31O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WCjl0wSsuj7Yc6jzJVFywAsOPC9pX3JpmlM+dXDnh27vKqXKeXe3Me2yJ3+TWO8btwWZWttL9t0/XJyX3DwIvY1hgAZXxkwPN0M8CucEFYtjex+3SpnUiKyS2yHFKOevLizMONvM419mfd5e/y3U1y56i7ceJq5dws2sKYlhToA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/L1XE9Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esYzP31O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A39B1F000E9;
-	Tue, 21 Jul 2026 20:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/L1XE9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77621F00A3D;
+	Tue, 21 Jul 2026 20:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665124;
-	bh=QqpkaDQLu9Go+Oz46uDMDzvqk2o8kaeOzw4jEDakrNs=;
+	s=korg; t=1784665127;
+	bh=FRZnI6brvHObs5WrnTjvTvfgOM3MEw8PqZlXHi7bRDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=esYzP31OOTmtfehtqldwekR11iGZyEZzrqwVLTvV4ea/rvnXC6QHkCAR8SzE9GrpH
-	 RWdjLrzGaF8eI2TYJbI/TyA4feTB8aLLeJRlcE9GJ4FjNegnodJgcZ0UFDgODoZnZP
-	 nvVHnHzkweoTqy9TbmaP/DnxWIBLAZ1PC29wyDQI=
+	b=H/L1XE9YhAEhEbh3wtPt0DA30VOJyjKX1L3rYEjLxgdLIny9lhEpv6n7+Swys00U7
+	 ACrvyfUYZK+O/3TszPPJDH2KM4VztknDD7ZDjSQxIO07MwtzcBLEgkGsxZ69qa2a31
+	 5Fp1SBMykJWWEZm42UdZIOA4toAllWrO8Zmb1oZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.6 0133/1266] netfilter: ipset: fix race between dump and ip_set_list resize
-Date: Tue, 21 Jul 2026 17:09:30 +0200
-Message-ID: <20260721152444.782927259@linuxfoundation.org>
+	stable@kernel.org,
+	Dan Carpenter <error27@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 0180/1266] smb/client: Fix error code in smb2_aead_req_alloc()
+Date: Tue, 21 Jul 2026 17:10:17 +0200
+Message-ID: <20260721152445.834159991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,77 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Dan Carpenter <error27@gmail.com>
 
-commit 7cd9103283b26b917360ec99d7d2f2d761bcf1ab upstream.
+commit 61f28012e5650c619223decdb7970e0d3162e949 upstream.
 
-The release path of ip_set_dump_do() and ip_set_dump_done() read
-inst->ip_set_list via ip_set_ref_netlink(), a plain rcu_dereference_raw()
-of the array pointer. These run from netlink_recvmsg() without the nfnl
-mutex and without an RCU read-side critical section.
+The "*num_sgs" variable is a u32 so "ERR_PTR(*num_sgs)" doesn't work.
+We would have to do something similar to the previous line where it's
+cast to int and then long.  However, it's simpler to store the return in
+an int ret variable.
 
-A concurrent ip_set_create() can grow the array: it publishes the new
-array, calls synchronize_net() and then kvfree()s the old one. Since the
-dump paths read the array outside any RCU reader, synchronize_net() does
-not wait for them and the old array can be freed while they still index
-into it, causing a use-after-free.
+This bug would eventually result in a crash when dereference the invalid
+error pointer.
 
-The dumped set itself stays pinned via set->ref_netlink, so only the
-array load needs protecting. Take rcu_read_lock() around it, matching
-ip_set_get_byname() and __ip_set_put_byindex().
-
-  BUG: KASAN: slab-use-after-free in ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
-  Read of size 8 at addr ffff88800b5c4018 by task exploit/150
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
-   netlink_dump (net/netlink/af_netlink.c:2325)
-   netlink_recvmsg (net/netlink/af_netlink.c:1976)
-   sock_recvmsg (net/socket.c:1159)
-   __sys_recvfrom (net/socket.c:2315)
-   ...
-  Oops: general protection fault, probably for non-canonical address ... KASAN NOPTI
-  KASAN: maybe wild-memory-access in range [0x02d6...d0-0x02d6...d7]
-  RIP: 0010:ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1698)
-  Kernel panic - not syncing: Fatal exception
-
-Fixes: 8a02bdd50b2e ("netfilter: ipset: Fix calling ip_set() macro at dumping")
-Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
+Cc: stable@kernel.org
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_core.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -1480,7 +1480,11 @@ ip_set_dump_done(struct netlink_callback
- 		struct ip_set_net *inst =
- 			(struct ip_set_net *)cb->args[IPSET_CB_NET];
- 		ip_set_id_t index = (ip_set_id_t)cb->args[IPSET_CB_INDEX];
--		struct ip_set *set = ip_set_ref_netlink(inst, index);
-+		struct ip_set *set;
-+
-+		rcu_read_lock();
-+		set = ip_set_ref_netlink(inst, index);
-+		rcu_read_unlock();
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4182,11 +4182,13 @@ static void *smb2_aead_req_alloc(struct
+ 	unsigned int req_size = sizeof(**req) + crypto_aead_reqsize(tfm);
+ 	unsigned int iv_size = crypto_aead_ivsize(tfm);
+ 	unsigned int len;
++	int ret;
+ 	u8 *p;
  
- 		if (set->variant->uref)
- 			set->variant->uref(set, cb, false);
-@@ -1685,7 +1689,9 @@ next_set:
- release_refcount:
- 	/* If there was an error or set is done, release set */
- 	if (ret || !cb->args[IPSET_CB_ARG0]) {
-+		rcu_read_lock();
- 		set = ip_set_ref_netlink(inst, index);
-+		rcu_read_unlock();
- 		if (set->variant->uref)
- 			set->variant->uref(set, cb, false);
- 		pr_debug("release set %s\n", set->name);
+-	*num_sgs = cifs_get_num_sgs(rqst, num_rqst, sig);
+-	if (IS_ERR_VALUE((long)(int)*num_sgs))
+-		return ERR_PTR(*num_sgs);
++	ret = cifs_get_num_sgs(rqst, num_rqst, sig);
++	if (ret < 0)
++		return ERR_PTR(ret);
++	*num_sgs = ret;
+ 
+ 	len = iv_size;
+ 	len += crypto_aead_alignmask(tfm) & ~(crypto_tfm_ctx_alignment() - 1);
 
 
