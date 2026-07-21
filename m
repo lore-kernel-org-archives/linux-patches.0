@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D2644AB62;
-	Tue, 21 Jul 2026 21:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49A04189DA;
+	Tue, 21 Jul 2026 21:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670612; cv=none; b=ajMup+ICH/zRA6l+YGVo4JqPgHSJnJjYxo/jzplVjkZNGy+49ApDqVv5hNnHFJZU0llzliQPQS2n2oqzVTBqHMN6lyqYYKqmXozTHMp5mKElt35kak8HuivtbiGXQ5Fp0lhCa9MhLyLwLZQMzrYaYbM7XIENtv9lQp0cB6cxzdI=
+	t=1784670616; cv=none; b=VfAvhOGejA5XbbPU1twVTynu3gHNeM/dQA48+un1wpDetyTtlYRTFIvLBLVh2pvEJ+IBE4971SbG8nrU2GG6bf3Qdight7N+IoTiLE2MWqd9/B/oTDPlBPuExGMICmxmi4p8D96llzlYzIEi7TzOSYNNCw7VAQC9EFaZWqlrmYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670612; c=relaxed/simple;
-	bh=EcXSfBGViuU+TKJEjegxgboDp8QC29ct7hiH+fmAQKQ=;
+	s=arc-20240116; t=1784670616; c=relaxed/simple;
+	bh=/iPcGUEArn3KqJWX1IApaDd7MKm0PhGPZTWakacA5pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzAuNOcRHI1q6lyV9Gbyx3IcGHsCveCBpRdBi6ExNgSitQJLYf1qEy7EZGR+gec6t7Tu/s8pYO8mB6CrVV3A1U+OxWkSRb1mJDPWN4Hk0CV1pEl4P/UkN94gdkyuj4uq8JMhh+h3kK2jtn7BDF+d36NBaIonY3OQVO/5d8U11z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLFrDsMw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S1hmCts9h1SfDpcxlEO2JeYKsgn4D+c5UM+808QELMc+xM1hDZtuuovoG0uO2aASYWLIvqKFdietuMzH6YQrZauFnaMvkd1ay/tcM7oOsu8Eus08tBlQajtRYbAN9GXDPxtWSJCQIrILDMNVb0RyPuQReNkIbrbuDA+KIY2nyRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrQ/NnI7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLFrDsMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E611F00A3A;
-	Tue, 21 Jul 2026 21:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrQ/NnI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1140C1F000E9;
+	Tue, 21 Jul 2026 21:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670610;
-	bh=SKkE0yh73XNPLATtU5K5nK57ILEAf+vovUWRJjmwwMU=;
+	s=korg; t=1784670613;
+	bh=uHE8jwr4yE3UGZG2pbj4p5uCDNDDaX2oA2uhnmeCuYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SLFrDsMw+2xPBfL/TQO8XiX9+KrWdsny/m1xfwhK/d3mRW5tOSY8lsAHtlfGR9T+c
-	 A497LgP4RoTApyuSKJDG1f2okWOP8FE3YT3P6AhIPB3KhR8RxVFQdZtuZy3zd6azuO
-	 MUDwOw7eJwTrsMuQ2vLtNRt/0dhCdqQmjVi8rNg8=
+	b=MrQ/NnI7YGA9CnYYdYbM0vChFIWobSRDHlxWkV7wo9Zp1ZY/OspQuJZltUA0bNR2V
+	 N1tO7ac16Ewi/F5TAmdZbKd+RVLb6bH2+Wyi6eVceS5CjvJDwstYtmq9bD2NeJWoW5
+	 uSAm34bQTho2twZYL1fDehbiWRD53Jj9iNth679M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Musaab Khan <musaab.khan@protonmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0998/1067] ksmbd: use opener credentials for FSCTL mutations
-Date: Tue, 21 Jul 2026 17:26:39 +0200
-Message-ID: <20260721152446.886959293@linuxfoundation.org>
+Subject: [PATCH 6.1 0999/1067] smb: move some duplicate definitions to common/cifsglob.h
+Date: Tue, 21 Jul 2026 17:26:40 +0200
+Message-ID: <20260721152446.909614646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,83 +52,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit c6394bcaf254c5baf9aff43376020be5db6d3316 ]
+[ Upstream commit d877470b59910b5c50383d634dda3782386bba51 ]
 
-SET_SPARSE, SET_ZERO_DATA and SET_COMPRESSION operate on an open SMB
-handle but call VFS xattr, fallocate or fileattr helpers with the current
-ksmbd worker credentials. Those helpers can revalidate inode permissions,
-ownership and LSM policy independently of the SMB handle access mask.
+In order to maintain the code more easily, move duplicate definitions to
+new common header file.
 
-Run each operation with the credentials captured in the target file when
-the handle was opened. Keep credential handling local to these single-file
-FSCTLs rather than applying session credentials to the complete IOCTL
-handler, which also contains handle-less and multi-handle operations.
-
-Cc: stable@vger.kernel.org
-Reported-by: Musaab Khan <musaab.khan@protonmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Co-developed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
 Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: c1016dd1d8b2 ("ksmbd: track the connection owning a byte-range lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    3 +++
- fs/smb/server/vfs.c     |   20 +++++++++++++-------
- 2 files changed, 16 insertions(+), 7 deletions(-)
+ fs/smb/client/cifsglob.h   |   19 +------------------
+ fs/smb/common/cifsglob.h   |   30 ++++++++++++++++++++++++++++++
+ fs/smb/server/smb_common.h |   14 +-------------
+ 3 files changed, 32 insertions(+), 31 deletions(-)
+ create mode 100644 fs/smb/common/cifsglob.h
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -7739,6 +7739,7 @@ static inline int fsctl_set_sparse(struc
- 	if (fp->f_ci->m_fattr != old_fattr &&
- 	    test_share_config_flag(work->tcon->share_conf,
- 				   KSMBD_SHARE_FLAG_STORE_DOS_ATTRS)) {
-+		const struct cred *saved_cred;
- 		struct xattr_dos_attrib da;
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -26,6 +26,7 @@
+ #include <crypto/internal/hash.h>
+ #include <linux/scatterlist.h>
+ #include <uapi/linux/cifs/cifs_mount.h>
++#include "../common/cifsglob.h"
+ #include "../common/smb2pdu.h"
+ #include "smb2pdu.h"
  
- 		ret = ksmbd_vfs_get_dos_attrib_xattr(user_ns,
-@@ -7747,9 +7748,11 @@ static inline int fsctl_set_sparse(struc
- 			goto out;
- 
- 		da.attr = le32_to_cpu(fp->f_ci->m_fattr);
-+		saved_cred = override_creds(fp->filp->f_cred);
- 		ret = ksmbd_vfs_set_dos_attrib_xattr(user_ns,
- 						     &fp->filp->f_path,
- 						     &da, true);
-+		revert_creds(saved_cred);
- 		if (ret)
- 			fp->f_ci->m_fattr = old_fattr;
- 	}
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -991,15 +991,21 @@ void ksmbd_vfs_set_fadvise(struct file *
- int ksmbd_vfs_zero_data(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			loff_t off, loff_t len)
- {
-+	const struct cred *saved_cred;
-+	int err;
-+
- 	smb_break_all_levII_oplock(work, fp, 1);
-+	saved_cred = override_creds(fp->filp->f_cred);
- 	if (fp->f_ci->m_fattr & FILE_ATTRIBUTE_SPARSE_FILE_LE)
--		return vfs_fallocate(fp->filp,
--				     FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
--				     off, len);
--
--	return vfs_fallocate(fp->filp,
--			     FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE,
--			     off, len);
-+		err = vfs_fallocate(fp->filp,
-+				    FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
-+				    off, len);
-+	else
-+		err = vfs_fallocate(fp->filp,
-+				    FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE,
-+				    off, len);
-+	revert_creds(saved_cred);
-+	return err;
+@@ -606,12 +607,6 @@ get_rfc1002_length(void *buf)
+ 	return be32_to_cpu(*((__be32 *)buf)) & 0xffffff;
  }
  
- int ksmbd_vfs_fqar_lseek(struct ksmbd_file *fp, loff_t start, loff_t length,
+-static inline void
+-inc_rfc1001_len(void *buf, int count)
+-{
+-	be32_add_cpu((__be32 *)buf, count);
+-}
+-
+ struct TCP_Server_Info {
+ 	struct list_head tcp_ses_list;
+ 	struct list_head smb_ses_list;
+@@ -913,8 +908,6 @@ compare_mid(__u16 mid, const struct smb_
+ #define CIFS_MAX_RFC1002_WSIZE ((1<<17) - 1 - sizeof(WRITE_REQ) + 4)
+ #define CIFS_MAX_RFC1002_RSIZE ((1<<17) - 1 - sizeof(READ_RSP) + 4)
+ 
+-#define CIFS_DEFAULT_IOSIZE (1024 * 1024)
+-
+ /*
+  * Windows only supports a max of 60kb reads and 65535 byte writes. Default to
+  * those values when posix extensions aren't in force. In actuality here, we
+@@ -2022,30 +2015,20 @@ extern __u32 cifs_lock_secret;
+ extern mempool_t *cifs_mid_poolp;
+ 
+ /* Operations for different SMB versions */
+-#define SMB1_VERSION_STRING	"1.0"
+-#define SMB20_VERSION_STRING    "2.0"
+ #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
+ extern struct smb_version_operations smb1_operations;
+ extern struct smb_version_values smb1_values;
+ extern struct smb_version_operations smb20_operations;
+ extern struct smb_version_values smb20_values;
+ #endif /* CIFS_ALLOW_INSECURE_LEGACY */
+-#define SMB21_VERSION_STRING	"2.1"
+ extern struct smb_version_operations smb21_operations;
+ extern struct smb_version_values smb21_values;
+-#define SMBDEFAULT_VERSION_STRING "default"
+ extern struct smb_version_values smbdefault_values;
+-#define SMB3ANY_VERSION_STRING "3"
+ extern struct smb_version_values smb3any_values;
+-#define SMB30_VERSION_STRING	"3.0"
+ extern struct smb_version_operations smb30_operations;
+ extern struct smb_version_values smb30_values;
+-#define SMB302_VERSION_STRING	"3.02"
+-#define ALT_SMB302_VERSION_STRING "3.0.2"
+ /*extern struct smb_version_operations smb302_operations;*/ /* not needed yet */
+ extern struct smb_version_values smb302_values;
+-#define SMB311_VERSION_STRING	"3.1.1"
+-#define ALT_SMB311_VERSION_STRING "3.11"
+ extern struct smb_version_operations smb311_operations;
+ extern struct smb_version_values smb311_values;
+ 
+--- /dev/null
++++ b/fs/smb/common/cifsglob.h
+@@ -0,0 +1,30 @@
++/* SPDX-License-Identifier: LGPL-2.1 */
++/*
++ *
++ *   Copyright (C) International Business Machines  Corp., 2002,2008
++ *   Author(s): Steve French (sfrench@us.ibm.com)
++ *              Jeremy Allison (jra@samba.org)
++ *
++ */
++#ifndef _COMMON_CIFS_GLOB_H
++#define _COMMON_CIFS_GLOB_H
++
++static inline void inc_rfc1001_len(void *buf, int count)
++{
++	be32_add_cpu((__be32 *)buf, count);
++}
++
++#define SMB1_VERSION_STRING	"1.0"
++#define SMB20_VERSION_STRING    "2.0"
++#define SMB21_VERSION_STRING	"2.1"
++#define SMBDEFAULT_VERSION_STRING "default"
++#define SMB3ANY_VERSION_STRING "3"
++#define SMB30_VERSION_STRING	"3.0"
++#define SMB302_VERSION_STRING	"3.02"
++#define ALT_SMB302_VERSION_STRING "3.0.2"
++#define SMB311_VERSION_STRING	"3.1.1"
++#define ALT_SMB311_VERSION_STRING "3.11"
++
++#define CIFS_DEFAULT_IOSIZE (1024 * 1024)
++
++#endif	/* _COMMON_CIFS_GLOB_H */
+--- a/fs/smb/server/smb_common.h
++++ b/fs/smb/server/smb_common.h
+@@ -10,6 +10,7 @@
+ 
+ #include "glob.h"
+ #include "nterr.h"
++#include "../common/cifsglob.h"
+ #include "../common/smb2pdu.h"
+ #include "smb2pdu.h"
+ 
+@@ -26,16 +27,8 @@
+ #define SMB311_PROT		6
+ #define BAD_PROT		0xFFFF
+ 
+-#define SMB1_VERSION_STRING	"1.0"
+-#define SMB20_VERSION_STRING	"2.0"
+-#define SMB21_VERSION_STRING	"2.1"
+-#define SMB30_VERSION_STRING	"3.0"
+-#define SMB302_VERSION_STRING	"3.02"
+-#define SMB311_VERSION_STRING	"3.1.1"
+-
+ #define SMB_ECHO_INTERVAL	(60 * HZ)
+ 
+-#define CIFS_DEFAULT_IOSIZE	(64 * 1024)
+ #define MAX_CIFS_SMALL_BUFFER_SIZE 448 /* big enough for most */
+ 
+ #define MAX_STREAM_PROT_LEN	0x00FFFFFF
+@@ -462,9 +455,4 @@ static inline unsigned int get_rfc1002_l
+ {
+ 	return be32_to_cpu(*((__be32 *)buf)) & 0xffffff;
+ }
+-
+-static inline void inc_rfc1001_len(void *buf, int count)
+-{
+-	be32_add_cpu((__be32 *)buf, count);
+-}
+ #endif /* __SMB_COMMON_H__ */
 
 
