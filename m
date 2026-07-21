@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93977403AFB;
-	Tue, 21 Jul 2026 17:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35380403AFB;
+	Tue, 21 Jul 2026 17:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655228; cv=none; b=la13jv2sGFxNx/mwsmV1MeT8rqR64vVlI9hS0S/+/n4uVFlaWiTO5Ykyrvr83Z2pP3KrpgXefKwm4mxt80nATgBrnjP7NbMRRUp1Koav0Ey++hbJoWxnIH8TnqvQ4cNCpx4UAlh+bCO2FU9kz77fRYHinlo4c0rK3+UP+PCO7jA=
+	t=1784655231; cv=none; b=Zh3lecMXjD3lUe8oX/NZYL7tvMiWl2QhT/lhkdqvbO7Fj2dOjKuRfqD1D821gQuRYF8oBNnw8K+PnYgDwFW0S0ZcL2BDuczWNgLVeBYaJ3v0ERZFrtXDqj2xrLUd2A14XnqiMfLF5Qv5uzBcUtqUd1kvhhKmkmMOoKownbE86hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655228; c=relaxed/simple;
-	bh=UwoM6f0UkjIcd+33VN+l5uHDhGwiOaUTbDwfp9Azopw=;
+	s=arc-20240116; t=1784655231; c=relaxed/simple;
+	bh=L3hou97p4E6vUW/DRDvehwjcNAxXcO3vYc11Xt/dvSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZ/p4uJkvuRX0KhsRzEbyceqeJt04OjFaRY7c7eJhjzeQJtAvJPfY4aJmwL3uetErdHoBYPdTQduTIvGOqeqWGZGwDSAozaeiKV2AplFC09MkC+PXrAIEsDr83G7Zl9JqdrJvivQ1KIAsncZw8f1pcg/W3ceR6MK9V0O7247UIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oDXHXSD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qDErIzjzZ6GsermjJG6Gb+6X48r8VbKU+R6EIpESIoTr9m/xMyt+wuc4FCe9OIxhb8FQqpFasHlmxAXIhrIaqbXHISlhK/W21QTT3RJdPFn+VTt/fkw71xoE0QU0LCyBCdzsJ38xS00IW81D5vP9M+StJ1ReOo0Q+ASpzlDxQVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4ffpF6C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oDXHXSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0602D1F000E9;
-	Tue, 21 Jul 2026 17:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4ffpF6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D31F1F000E9;
+	Tue, 21 Jul 2026 17:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655227;
-	bh=zyhYwokdKa/qjQSyLtoT25lmxjJx1llk90gBhOQ3ayQ=;
+	s=korg; t=1784655230;
+	bh=utR5mbpg7YRFkHjJAOLEo+OML5WPtU0X/WR76CSAUyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0oDXHXSDCmHx7Hr5NpMVEwZito1jdM5M3QHizn2MfxsV4cQ+JSSOmYZjBtYB98yUH
-	 wM2YJHRxF2iOa/OM3HRaaBF0sR/Y3EDIY8nr4gqLENPNAu2sMIy41gGL/l1IjqlZaa
-	 bN/gYV025ApBKJsclJuK/9F4PPhhMLwhJMm1fC9k=
+	b=H4ffpF6CE3npfH7KbzG7ekA1nk9ruV1z8K7XopjoJ1YPHDi0AFTGZ6U/rWxff64gc
+	 gyPZJDAOTD4buz1cCzZOQAJ+1U9P1+lzpVv1NDHRiNkHE5bjCYMVfEqSqzhyXNm2/H
+	 7NSjQrZfkbjpC6pOkCJ0ntFZy4KBog5Hqm0NmdqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.1 2004/2077] wifi: mwifiex: fix roaming to different channel in host_mlme mode
-Date: Tue, 21 Jul 2026 17:27:57 +0200
-Message-ID: <20260721152639.979851005@linuxfoundation.org>
+Subject: [PATCH 7.1 2005/2077] wifi: mac80211: fix memory leak in ieee80211_register_hw()
+Date: Tue, 21 Jul 2026 17:27:58 +0200
+Message-ID: <20260721152640.001857113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,70 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit a707e4127c0f893c7a7703500ab56297a5bd2d51 upstream.
+commit 95fc02722edde02946d0d475221f2b2054d3d8ba upstream.
 
-When host MLME is enabled, mwifiex_cfg80211_authenticate() transmits the
-authentication frame on a remain-on-channel (ROC) reservation so that the
-frame is sent on the target BSS's channel. The ROC is only configured
-when priv->auth_flag is zero.
+If kmemdup() fails while copying supported band structures, the error
+path jumps to fail_rate. This skips rate_control_deinitialize() and
+leaks the initialized local->rate_ctrl.
 
-priv->auth_flag is set to HOST_MLME_AUTH_PENDING when the auth frame is
-queued and advances to HOST_MLME_AUTH_DONE once authentication
-completes. It is only cleared back to zero on a disconnect, deauth or
-timeout path; nothing clears it when an association succeeds. It therefore
-stays at HOST_MLME_AUTH_DONE for the whole connected session.
+Fix this by adding a fail_band label that shares the rate-control cleanup
+path before falling through to the remaining teardown.
 
-When the station later roams to a BSS on a different channel, the next
-authentication finds auth_flag != 0, skips the ROC setup, and the auth
-frame is transmitted on the currently-associated channel instead of the
-target's channel. Authentication times out on the new AP and the device
-stays connected to the original AP.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still present in
+v7.1-rc7.
 
-Gate the ROC setup on HOST_MLME_AUTH_PENDING instead of on auth_flag
-being completely clear. This re-arms the remain-on-channel for every new
-authentication attempt, while still suppressing a redundant ROC during
-the multi-frame SAE exchange, where auth_flag stays PENDING between the
-commit and confirm frames.
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+suitable mac80211 device/driver combination to test with, no runtime
+testing was able to be performed.
 
-This change was tested in 3 different devices:
-Verdin AM62 (IW412 SD-UART) - (16.92.21.p142)
-Verdin iMX8MM (W8997 SD-SD) - (16.68.1.p197)
-Verdin iMX8MP (W8997 SD-UART) - (16.92.21.p137)
-
-There following loop tests were performed:
-1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
-SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
-between iterations.
-2) force a disconnection to AP 1 and a connection to AP 2, test
-scan. Use wpa_cli to trigger the connection changes, sleep 2s
-between iterations.
-
-Each test ran in each device for at least 3 hours.
-
-Fixes: 36995892c271 ("wifi: mwifiex: add host mlme for client mode")
+Fixes: 09b4a4faf9d0 ("mac80211: introduce capability flags for VHT EXT NSS support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260610150021.1018611-1-rafael@beims.me
+Reviewed-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://patch.msgid.link/20260706143507.146131-1-dawei.feng@seu.edu.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -4333,7 +4333,7 @@ mwifiex_cfg80211_authenticate(struct wip
- 		return -EOPNOTSUPP;
- 	}
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1599,7 +1599,7 @@ int ieee80211_register_hw(struct ieee802
+ 		sband = kmemdup(sband, sizeof(*sband), GFP_KERNEL);
+ 		if (!sband) {
+ 			result = -ENOMEM;
+-			goto fail_rate;
++			goto fail_band;
+ 		}
  
--	if (!priv->auth_flag) {
-+	if (!(priv->auth_flag & HOST_MLME_AUTH_PENDING)) {
- 		ret = mwifiex_remain_on_chan_cfg(priv, HostCmd_ACT_GEN_SET,
- 						 req->bss->channel,
- 						 AUTH_TX_DEFAULT_WAIT_TIME);
+ 		wiphy_dbg(hw->wiphy, "copying sband (band %d) due to VHT EXT NSS BW flag\n",
+@@ -1675,6 +1675,7 @@ int ieee80211_register_hw(struct ieee802
+ #endif
+ 	wiphy_unregister(local->hw.wiphy);
+  fail_wiphy_register:
++ fail_band:
+ 	rtnl_lock();
+ 	rate_control_deinitialize(local);
+ 	ieee80211_remove_interfaces(local);
 
 
