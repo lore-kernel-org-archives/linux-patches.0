@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3732D441621;
-	Tue, 21 Jul 2026 21:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D1D443303;
+	Tue, 21 Jul 2026 21:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671050; cv=none; b=eIH+P6X/lZR7xU0wWSg7bd7FqOwzBB0+sMId/hsxm89UZuiqVpUM5LqCYpLW5WT58Laia4KHtqpgKpFE3hF5u0HDjyp9b7dCk/ey9fqnie830HVBhPmhW/hKiOfMJR0OkdJiZdP3xsIky0v8K/m57JG3X3MD1m99GA8ZFPTkKao=
+	t=1784671052; cv=none; b=djrLuYpovS2toAYQRxXbhCIYJNwRtkZJioyTZx2bc6P2ydPLY+MqtDOJKlC3GDSPhUCxzklGkbm/QVPRH37ns0MjLSwS04+SRa8D5BnoVWZD2N7eZrdRhMw4qO1/yI0P+TGK+Ey79NH3wcvoShcaLjdHKsUkqyX1A+GDsoaFzBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671050; c=relaxed/simple;
-	bh=nKHrNMcFFOvTGI8Q08w3aOLqc6CUn/r/nUKMxZRvtpA=;
+	s=arc-20240116; t=1784671052; c=relaxed/simple;
+	bh=Wk1u5srxZy5BEOn0WLkQzsiUcr3qlQUcqKGueFQDHfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+IbEWaIQyayg5snZBTTFsUaYxRMlYiQ03LSzzuVXAuPxnuzOII65mAgw7vWWhSDprGThzYiYH+1v3rVSlnZhmcgd7iEqYEIChM0w9qZrWrRiDK0AsLA9WTpBWIifXZegX9iq8yCECb7z+TZB5Ox88b5HbH5xtIi7XwfO6sFIAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXUHr74i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NaBEFYIX9mMgLn0HcnSWyy0LD4tWIt0wxuzdIaIeC280SJvcL4HTg4eUSb+kEBV4wS60in3WiOuFLlKDEL7+XUkqtD2DAToe3kjRNmAb2u44Gin0NUZjwVVakhc2+bVvn1mR05mV3v25NJzIigYoIX/Yqlaynku0pYCa02PBTb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiAgHobn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXUHr74i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764C21F000E9;
-	Tue, 21 Jul 2026 21:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiAgHobn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209CE1F00A3A;
+	Tue, 21 Jul 2026 21:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671048;
-	bh=oIXQ5MWiv8L82tQmIEq78CRqZBagfflnfmtuYKG+UoA=;
+	s=korg; t=1784671050;
+	bh=o1PoxLN5hSq7LGS6C4uVWy7m29w+Fhxu3ebQ2rwyduE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXUHr74ieoKHNWdv4cQZ0cVEPuZ+wqEGHtu6U7g8U7L51I96h0soX/OGak6PdXZYi
-	 fnq9YPpsIHGmXKgp92kYEfPPAMX+SRtbZMSciXpqRz8+d2IPNUq/L9nLMR80YW1n7k
-	 zoF4HIxFMB9aBK6lPFHVxIapjOr6l+OPgkd/4d5A=
+	b=hiAgHobn73gDWA0H3hvqyEgejSk/0DWgL920RMoZAbbpn0RH9+uj1qOK7fmV4ROcB
+	 DbtQDyRs5NyfivX4BgMvoMhzPq17xw6sc8DDzI3RrpnN63hvrOHAXko4FcK+LyP5Sq
+	 HVx/bcohBHKACw2jQflVOymj2j4thPuH8vLke8nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 099/843] crypto: amlogic - avoid double cleanup in meson_crypto_probe()
-Date: Tue, 21 Jul 2026 17:15:34 +0200
-Message-ID: <20260721152408.227553681@linuxfoundation.org>
+	Zijing Yin <yzjaurora@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 5.15 100/843] net: af_key: initialize alg_key_len for IPComp states
+Date: Tue, 21 Jul 2026 17:15:35 +0200
+Message-ID: <20260721152408.248456896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,137 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Zijing Yin <yzjaurora@gmail.com>
 
-commit 6d827ade51a24e18d81afb9f32756d339520a14c upstream.
+commit d129c3177d7b1138fd5066fcc63a698b3ba415b0 upstream.
 
-When meson_allocate_chanlist() fails after a partial allocation, it already
-unwinds the allocated chanlist state through its local error path.
-meson_crypto_probe() then jump to error_flow and calls
-meson_free_chanlist() again, causing the same per-flow resources to be torn
-down twice. In the reproduced failure path, the second teardown
-re-entered crypto_engine_exit() on an already destroyed worker and KASAN
-reported a slab-use-after-free in kthread_destroy_worker().
+pfkey_msg2xfrm_state() handles the IPComp (SADB_X_SATYPE_IPCOMP) case by
+allocating x->calg and copying only the algorithm name:
 
-Prevent double-free by handling partial allocation failures locally within
-meson_allocate_chanlist() and skipping the outer cleanup path.
+	x->calg = kmalloc_obj(*x->calg);
+	if (!x->calg) {
+		err = -ENOMEM;
+		goto out;
+	}
+	strcpy(x->calg->alg_name, a->name);
+	x->props.calgo = sa->sadb_sa_encrypt;
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available.
+Unlike the authentication (x->aalg) and encryption (x->ealg) branches of
+the same function, the compression branch never initializes
+calg->alg_key_len.  IPComp carries no key and the allocation only
+reserves sizeof(struct xfrm_algo) (i.e. no room for a key), so the field
+is left containing uninitialized slab data.
 
-The bug was reproduced in a QEMU x86_64 guest booted with KASAN on v7.1,
-using the reproducer under tools/testing/meson_crypto_probe. The reproducer
-forces the second dma_alloc_attrs() call in the gxl-crypto probe path to
-return NULL, making meson_allocate_chanlist() fail after partial
-initialization. On the unpatched kernel this reliably triggered a
-slab-use-after-free. With this fix applied, the same reproducer no longer
-emits any KASAN report and the probe fails cleanly with -ENOMEM.
+calg->alg_key_len is later used as a length by xfrm_algo_clone() when an
+IPComp state is cloned during XFRM_MSG_MIGRATE:
 
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in kthread_destroy_worker+0xb2/0xd0
-    Read of size 8 at addr ff1100010c057a68 by task insmod/265
+	xfrm_state_migrate()
+	  xfrm_state_clone_and_setup()
+	    x->calg = xfrm_algo_clone(orig->calg);
+	      kmemdup(orig, xfrm_alg_len(orig));
 
-    CPU: 1 UID: 0 PID: 265 Comm: insmod Tainted: G           O        7.1.0-rc2-00376-g810af9adc907-dirty #10 PREEMPT(lazy)
-    Tainted: [O]=OOT_MODULE
-    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x68/0xa0
-     print_report+0xcb/0x5e0
-     ? __virt_addr_valid+0x21d/0x3f0
-     ? kthread_destroy_worker+0xb2/0xd0
-     ? kthread_destroy_worker+0xb2/0xd0
-     kasan_report+0xca/0x100
-     ? kthread_destroy_worker+0xb2/0xd0
-     kthread_destroy_worker+0xb2/0xd0
-     meson_crypto_probe+0x4d0/0xc10 [amlogic_gxl_crypto]
-     platform_probe+0x99/0x140
-     really_probe+0x1c6/0x6a0
-     ? __pfx___device_attach_driver+0x10/0x10
-     __driver_probe_device+0x248/0x310
-     ? acpi_driver_match_device+0xb0/0x100
-     driver_probe_device+0x48/0x210
-     ? __pfx___device_attach_driver+0x10/0x10
-     __device_attach_driver+0x160/0x320
-     bus_for_each_drv+0x104/0x190
-     ? __pfx_bus_for_each_drv+0x10/0x10
-     ? _raw_spin_unlock_irqrestore+0x2c/0x50
-     __device_attach+0x19d/0x3b0
-     ? __pfx___device_attach+0x10/0x10
-     ? do_raw_spin_unlock+0x53/0x220
-     device_initial_probe+0x78/0xa0
-     bus_probe_device+0x5b/0x130
-     device_add+0xcfd/0x1430
-     ? __pfx_device_add+0x10/0x10
-     ? insert_resource+0x34/0x50
-     ? lock_release+0xc9/0x290
-     platform_device_add+0x24e/0x590
-     ? __pfx_meson_crypto_probe_repro_init+0x10/0x10 [meson_crypto_probe_repro]
-     meson_crypto_probe_repro_init+0x330/0xff0 [meson_crypto_probe_repro]
-     do_one_initcall+0xc0/0x450
-     ? __pfx_do_one_initcall+0x10/0x10
-     ? _raw_spin_unlock_irqrestore+0x2c/0x50
-     ? __create_object+0x59/0x80
-     ? kasan_unpoison+0x27/0x60
-     do_init_module+0x27b/0x7d0
-     ? __pfx_do_init_module+0x10/0x10
-     ? kasan_quarantine_put+0x84/0x1d0
-     ? kfree+0x32c/0x510
-     ? load_module+0x561e/0x5ff0
-     load_module+0x54fe/0x5ff0
-     ? __pfx_load_module+0x10/0x10
-     ? security_file_permission+0x20/0x40
-     ? kernel_read_file+0x23d/0x6e0
-     ? mmap_region+0x235/0x4a0
-     ? __pfx_kernel_read_file+0x10/0x10
-     ? __file_has_perm+0x2c0/0x3e0
-     init_module_from_file+0x158/0x180
-     ? __pfx_init_module_from_file+0x10/0x10
-     ? __lock_acquire+0x45a/0x1ba0
-     ? idempotent_init_module+0x315/0x610
-     ? lock_release+0xc9/0x290
-     ? lockdep_init_map_type+0x4b/0x220
-     ? do_raw_spin_unlock+0x53/0x220
-     idempotent_init_module+0x330/0x610
-     ? __pfx_idempotent_init_module+0x10/0x10
-     ? __pfx_cred_has_capability.isra.0+0x10/0x10
-     ? ksys_mmap_pgoff+0x385/0x520
-     __x64_sys_finit_module+0xbe/0x120
-     do_syscall_64+0x115/0x690
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f7d6d31690d
-    Code: 5b 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d f3 b4 0f 00 f7 d8 >
-    RSP: 002b:00007fffc027ac68 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-    RAX: ffffffffffffffda RBX: 000055f7b81967c0 RCX: 00007f7d6d31690d
-    RDX: 0000000000000000 RSI: 000055f79a0d6cd2 RDI: 0000000000000003
-    RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000003 R11: 0000000000000246 R12: 000055f79a0d6cd2
-    R13: 000055f7b8196790 R14: 000055f79a0d5888 R15: 000055f7b81968e0
-     </TASK>
+where xfrm_alg_len() returns sizeof(*alg) + (alg_key_len + 7) / 8.  With
+a non-zero garbage alg_key_len, kmemdup() reads past the end of the
+68-byte calg object.  Adding an IPComp SA via PF_KEY and then migrating
+it triggers (net-next, KASAN, init_on_alloc=0):
 
-Fixes: 48fe583fe541 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
+  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x44/0x60
+  Read of size 4164 at addr ff11000025a74980 by task diag2/9287
+  CPU: 3 UID: 0 PID: 9287 Comm: diag2 7.1.0-rc6-g903db046d557 #1
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x10e/0x1f0
+   print_report+0xf7/0x600
+   kasan_report+0xe4/0x120
+   kasan_check_range+0x105/0x1b0
+   __asan_memcpy+0x23/0x60
+   kmemdup_noprof+0x44/0x60
+   xfrm_state_migrate+0x70a/0x1da0
+   xfrm_migrate+0x753/0x18a0
+   xfrm_do_migrate+0xb47/0xf10
+   xfrm_user_rcv_msg+0x411/0xb50
+   netlink_rcv_skb+0x158/0x420
+   xfrm_netlink_rcv+0x71/0x90
+   netlink_unicast+0x584/0x850
+   netlink_sendmsg+0x8b0/0xdc0
+   ____sys_sendmsg+0x9f7/0xb90
+   ___sys_sendmsg+0x134/0x1d0
+   __sys_sendmsg+0x16d/0x220
+   do_syscall_64+0x116/0x7d0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+
+  Allocated by task 9287:
+   kasan_save_stack+0x33/0x60
+   kasan_save_track+0x14/0x30
+   __kasan_kmalloc+0xaa/0xb0
+   pfkey_add+0x2652/0x2ea0
+   pfkey_process+0x6d0/0x830
+   pfkey_sendmsg+0x42c/0x850
+   __sys_sendto+0x461/0x4b0
+   __x64_sys_sendto+0xe0/0x1c0
+   do_syscall_64+0x116/0x7d0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  The buggy address belongs to the object at ff11000025a74980
+   which belongs to the cache kmalloc-96 of size 96
+  The buggy address is located 0 bytes inside of
+   allocated 68-byte region [ff11000025a74980, ff11000025a749c4)
+
+Depending on the uninitialized value the same field can instead request
+an oversized kmemdup() allocation and make the migration clone fail.
+
+The XFRM netlink path is not affected: verify_one_alg() rejects an
+XFRMA_ALG_COMP attribute shorter than xfrm_alg_len(), so a calg added via
+XFRM_MSG_NEWSA is always self-consistent.
+
+Initialize calg->alg_key_len to 0, matching the aalg/ealg branches.
+
+Fixes: 80c9abaabf42 ("[XFRM]: Extension for dynamic update of endpoint address(es)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/amlogic/amlogic-gxl-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/key/af_key.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/amlogic/amlogic-gxl-core.c
-+++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
-@@ -272,8 +272,8 @@ static int meson_crypto_probe(struct pla
- 	return 0;
- error_alg:
- 	meson_unregister_algs(mc);
--error_flow:
- 	meson_free_chanlist(mc, MAXFLOW - 1);
-+error_flow:
- 	clk_disable_unprepare(mc->busclk);
- 	return err;
- }
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -1202,6 +1202,7 @@ static struct xfrm_state * pfkey_msg2xfr
+ 				goto out;
+ 			}
+ 			strcpy(x->calg->alg_name, a->name);
++			x->calg->alg_key_len = 0;
+ 			x->props.calgo = sa->sadb_sa_encrypt;
+ 		} else {
+ 			int keysize = 0;
 
 
