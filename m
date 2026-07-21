@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033A544AB73;
-	Tue, 21 Jul 2026 22:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7604189DA;
+	Tue, 21 Jul 2026 22:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671758; cv=none; b=cN+UNwhB0YhIDbdsEa4AZPevq9o5ZbyetSNGu4F/Hb535UmIhW+UE70gaUvG/2WHGw3CVaXdgdKYpY/lQUrJZUkNdKM8UUf6u4Pf7ppb01cSQ2eKuTSOSfMHrctb3RSANYJQPyW8mODnl5mPaqVrypRBz3zg9ddYe2nyg08/lso=
+	t=1784671760; cv=none; b=eLU7DZ/JsN4JKhtECu6yeztqYfONpTIb8QGl1+EdviYLfwqsxnHhwCkGKICpSMZfBksPEgkXMPtjdvK5aQIaYTjCGEMBDi6JpQMgC2u7dpJO1RbRiH91+4CbxDA52SPNcJL33dcmapWem5ffObiCcHaxJj3huueH6D8v6eoupIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671758; c=relaxed/simple;
-	bh=c/7VmsvilK3ZoEfzhZ5kQf4QVSY7PDUMlAy+rQmf3fE=;
+	s=arc-20240116; t=1784671760; c=relaxed/simple;
+	bh=mAxcAXUdPlJ+grr3OyOf9o3i4k8v5Ra42O/KfqmA9c0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/mJvOFI0TVUV8EEM/EDtLqnIPTB8K9SMPWSxoR8Mpguh+dRDJmRFiz+msB9eeK2FhEylOORaccbD612yzuQQICoihqT1f1blXFGKsqyWjgVxteeVTCQjCI6y/csbaB6Ik2nbJWvcfqJyZKsFsSzQlHE1HqaE+Dn69GddA7ktFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CE919VOq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VpDY/n90wY/onGa5l2rVkX6Po6nL7tkMXhTxV9cqHac6baZ/N2rAK2YgfY699jT8vKlkyqaWNsMX2FtGB8wVb+D1KNfU8nGabOkoq78JMQVJ6GfaMlxQeZ+R1uhtO/+lSZD1OL3DSyO9L/n+UugoRb8/EiZZbflp7naDOxHJCpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2HKGegw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CE919VOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A64D1F000E9;
-	Tue, 21 Jul 2026 22:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2HKGegw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD641F000E9;
+	Tue, 21 Jul 2026 22:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671756;
-	bh=UNZeT38bjg9xte8G77dnkAyu3yeir70FeYcDW+LRGcU=;
+	s=korg; t=1784671759;
+	bh=4pK5PwVUU0R8cd1yK6pZyiDE8GLN55sggDxMKmQdJXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CE919VOqVBhOQQ8jDT6pnvPWfCXlEM+Z3RDeEHBbZkdQo/6wU2E6U4wU++olH+QEE
-	 TKk5FJrBD2XfysWSsTX6ulg3siK96jdHiyvrV+bBSt2WY4UZG4whlkyfETIZ9Eu1+d
-	 QGs8sFUoh+dzAmvZRL08DHpsM5rXm2jYV9UGlfC0=
+	b=D2HKGegwoDaQuN4ZuAV4/WIKkj5mE5Q3qpcH2VF65JsP/SHhPiulJMvNZo0sTiF7U
+	 gcXKqsfIln8zDDVxTlOcr+zzr98pogwpB/CCZGaimnT4ae6WKJCXmrPe2eV29r0Hzu
+	 6DT9389xp0FWPzSqgIDtAl/UTLa/nJhxk9IS+fVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+64ec81389cbad56a8c35@syzkaller.appspotmail.com,
+	syzbot+ebdb22d461c904fc3cb2@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
-	Jon Maloy <jmaloy@redhat.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 368/843] tipc: fix UAF in tipc_l2_send_msg()
-Date: Tue, 21 Jul 2026 17:20:03 +0200
-Message-ID: <20260721152414.309607607@linuxfoundation.org>
+Subject: [PATCH 5.15 369/843] tcp: ipv6: clamp default adverting MSS to avoid GSO_BY_FRAGS (0xFFFF)
+Date: Tue, 21 Jul 2026 17:20:04 +0200
+Message-ID: <20260721152414.332599044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -56,51 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f4c3d89fc986b0da196ddfc6cfe0ea5d5d08bec6 ]
+[ Upstream commit 2bf43d0e2e6a27d52a7d624e2d6b9116972e8a22 ]
 
-Syzbot reported a slab-use-after-free in ipvlan_hard_header() when
-called from tipc_l2_send_msg().
+When MTU is large, ip6_default_advmss() can return IPV6_MAXPLEN (65535).
+This is interpreted by TCP as mss_clamp, allowing the MSS to reach 65535.
 
-The root cause is that tipc_disable_l2_media() calls synchronize_net()
-while b->media_ptr is still valid. This allows concurrent RCU readers
-to obtain the device pointer after synchronize_net() has finished.
-The pointer is cleared later in bearer_disable(), but without any
-subsequent synchronization, allowing the device to be freed while
-still in use by readers.
+However, 0xFFFF is also used as a magic value GSO_BY_FRAGS in the kernel.
+If a TCP packet with gso_size=0xFFFF is passed to skb_segment(), it will
+be mistakenly treated as GSO_BY_FRAGS, leading to a NULL pointer
+dereference because local TCP packets do not use frag_list.
 
-Fix this by clearing b->media_ptr in tipc_disable_l2_media() before
-calling synchronize_net().
+Fix this by returning min(IPV6_MAXPLEN, GSO_BY_FRAGS - 1) (65534) from
+ip6_default_advmss() when MTU is large.
 
-This is safe to do now because the call order in bearer_disable()
-was reversed in 0d051bf93c06 ("tipc: make bearer packet filtering generic")
-to call tipc_node_delete_links() (which needs the pointer) before
-disable_media().
+Also update the stale comment in ip6_default_advmss() which suggested
+that IPV6_MAXPLEN is returned to mean "any MSS".
 
-Fixes: 282b3a056225 ("tipc: send out RESET immediately when link goes down")
-https: //lore.kernel.org/netdev/6a2c1007.428ffe26.258b27.015d.GAE@google.com/T/#u
-Reported-by: syzbot+64ec81389cbad56a8c35@syzkaller.appspotmail.com
+Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
+Reported-by: syzbot+ebdb22d461c904fc3cb2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a2c3193.8812e0fc.3c3fa4.0001.GAE@google.com/T/#u
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jon Maloy <jmaloy@redhat.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260612135949.4010482-1-edumazet@google.com
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260612162517.83394-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/route.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index 8c2793181ee7b0..986b1fd8885447 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -484,6 +484,7 @@ void tipc_disable_l2_media(struct tipc_bearer *b)
- 	dev = (struct net_device *)rtnl_dereference(b->media_ptr);
- 	dev_remove_pack(&b->pt);
- 	RCU_INIT_POINTER(dev->tipc_ptr, NULL);
-+	RCU_INIT_POINTER(b->media_ptr, NULL);
- 	synchronize_net();
- 	dev_put(dev);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 52e8e77df69a1c..907b3282924678 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3200,11 +3200,11 @@ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ 	/*
+ 	 * Maximal non-jumbo IPv6 payload is IPV6_MAXPLEN and
+ 	 * corresponding MSS is IPV6_MAXPLEN - tcp_header_size.
+-	 * IPV6_MAXPLEN is also valid and means: "any MSS,
+-	 * rely only on pmtu discovery"
++	 * Limit the default MSS to GSO_BY_FRAGS - 1 to avoid
++	 * collision with the GSO_BY_FRAGS magic value (0xFFFF).
+ 	 */
+ 	if (mtu > IPV6_MAXPLEN - sizeof(struct tcphdr))
+-		mtu = IPV6_MAXPLEN;
++		mtu = min_t(unsigned int, IPV6_MAXPLEN, GSO_BY_FRAGS - 1);
+ 	return mtu;
  }
+ 
 -- 
 2.53.0
 
