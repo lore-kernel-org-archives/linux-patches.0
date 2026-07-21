@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944AF46D08C;
-	Tue, 21 Jul 2026 19:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED9544607D;
+	Tue, 21 Jul 2026 19:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663322; cv=none; b=dvcf0pGdPH0cMtedsozqwGRIbNPU/ABg1TReRHawaQUoA6jY4aiDBgdAZuQ3E8gHM72F8Wv8MGMO2NWB74tl80MdeFkMJVB4rrFp5+DFXXlNQByPIqZJBUt7QI3y2nse9UrUkD3x9nuU3RKcTYzqfqqdam5Z32ukb3J8Ah55lP0=
+	t=1784663325; cv=none; b=To7AUoXepHlKkGVYIrEKtQSznyWKUbE/v7K+tqhYMJ0Ksgpb6KvUOGEoBHx1KxvYHjGiQP/1xbGiPHTqHMHJgHRkSIYXgmgFI+ZyRobkgWB4D393C2PqUOTuwjmYrW/zcJ6hEvg/Q4kwYi2KUcJOlP9S/JKm4YQolfE4xARPIS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663322; c=relaxed/simple;
-	bh=CIlAdMOcfFWDWK9bWdVF65IyJoe0HUVaNQBKzp+sMgM=;
+	s=arc-20240116; t=1784663325; c=relaxed/simple;
+	bh=ITpI1PuoCymTgn4uR/nLoP+AjPDkv5rcw0Ca/gRnHSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MG25IDLCvZtgJzm27V8G51um+6fpcy1PoCXL8LA0ZQt1DkWd2lca3cS3iKmyA7ex39waOoGwAFJwQ/UUPGSmE0Oa9HImMfqBmfkYu1PpiYORI6pPfFWagWD+f3fK0DbcQRM6Mt/yeXWdK9zGC6rc1xqH/dU2EjNjxr+Zn2cUyJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3Kmj9GW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OqPwh4c/1zfl2ydN8UsdvmpqxXAfUCX1r35omGhDSE4LncTxLPyLUA7Ego2W2Gs/+bKDJ4RJ9Vin9A37IoAFc5CjxVbFhc9SzmWbLJI0Tru4Rim8ND7BKvYqFpv2lnQVnHzAj1fJ9atGng6oZDRBQb0ngE0l5ATISdZJp3+qTZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJU9iZfl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3Kmj9GW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0562F1F000E9;
-	Tue, 21 Jul 2026 19:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJU9iZfl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F21B1F000E9;
+	Tue, 21 Jul 2026 19:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663321;
-	bh=km9gWwXBtUkJQvF6RWxhtLk+o8XD4htNjc5559G+k2U=;
+	s=korg; t=1784663324;
+	bh=0+ZuaBb1vS46rfKHs7JGtIrrm/0TemxhtSCZ6vMgqBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U3Kmj9GW44NRbbFbKlRWQRl9zqvPjRWCdJuhBC5J/i5iedR4nEtVQMVz2xasnKV8l
-	 98EwUfbSu+w5CsgnQLrWt4i+AI6liPtvKJuoQ3pbYuOjG/fh185bRe2Dqm/0XyIAfv
-	 ClpGTdmvCLUcVZCK/zXaGzBiPp6brZIBWASzSqlo=
+	b=GJU9iZfljJNE7M8v32EAEQF8X/bXmZMkGuBeIoslcm+zzgGzCmLFa6x7bGYEGP8bW
+	 ZXL0CqQIrHSS28x5939DntRKwxQvJERI+WX44kPEmqQUA99Ce4QhjmUgGcft31EK+I
+	 MhT8w8PbqLfg7SMzauvnEh0Xtg5ObLkwNTNoTwQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hui Wang <hui.wang@canonical.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0777/1276] Bluetooth: bpa10x: avoid OOB read of revision string in bpa10x_setup()
-Date: Tue, 21 Jul 2026 17:20:20 +0200
-Message-ID: <20260721152503.464575975@linuxfoundation.org>
+Subject: [PATCH 6.12 0778/1276] ring-buffer: Fix event length with forced 8-byte alignment
+Date: Tue, 21 Jul 2026 17:20:21 +0200
+Message-ID: <20260721152503.487754422@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,59 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit dd068ef044128db655f48323a4acfd5907e04903 ]
+[ Upstream commit c37e0a4b79a6bbb96ce5ffe279d7c001e20529e0 ]
 
-bpa10x_setup() sends the vendor command 0xfc0e and passes the response
-to bt_dev_info() and hci_set_fw_info() as a "%s" string starting at
-skb->data + 1, without checking the length:
+When RB_FORCE_8BYTE_ALIGNMENT is true, rb_calculate_event_length()
+reserves the space of event->array[0] for placing the data length and
+rb_update_event() stores the data length in event->array[0]
+accordingly. As a result the whole event length will add extra 4 bytes
+for sizeof(event.array[0]) unconditionally.
 
-	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
-	hci_set_fw_info(hdev, "%s", skb->data + 1);
+But ring_buffer_event_length() only subtracts the
+sizeof(event->array[0]) for events larger than RB_MAX_SMALL_DATA +
+sizeof(event->array[0]). As a result, small events on architectures
+with RB_FORCE_8BYTE_ALIGNMENT=true report a data length that is 4
+bytes larger than expected.
 
-A device that returns a one-byte response (status only) leaves
-skb->data + 1 past the end of the data, and the %s walk reads adjacent
-slab memory until it meets a NUL. The same happens when the payload is
-not NUL-terminated within skb->len. The out-of-bounds bytes end up in
-the kernel log and the firmware-info debugfs file.
+To fix it, add the RB_FORCE_8BYTE_ALIGNMENT as a condition to subtract
+the size of that length field whenever RB_FORCE_8BYTE_ALIGNMENT is
+true.
 
-Print the revision string with a bounded "%.*s" limited to skb->len - 1
-instead. This keeps the string readable for well-behaved devices while
-never reading past the received data, and does not fail setup, so a
-device returning a short or unterminated response keeps working.
+This issue is observed in a riscv64 kernel with
+CONFIG_HAVE_64BIT_ALIGNED_ACCESS set to y, when we run ftrace selftest
+trace_marker_raw.tc, we get the weird log: for cases where the id is
+1..100, the number of data field is 8*N, but once id exceeds 100, the
+number of data field becomes 8*N+4:
+ # 1 buf: 58 00 00 00 80 5e d1 63 (number of data field is 8*1)
+ ...
+ # a buf: 58 ...                  (number of data field is 8*2)
+ ...
+ # 64 buf: 58 ...                 (number of data field is 8*13)
+ # 65 buf: 58 ...                 (number of data field is 8*13+4)
 
-Fixes: ddd68ec8f484 ("Bluetooth: bpa10x: Read revision information in setup stage")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+After applying this change, the number of data field keeps being 8*N+4
+consistently.
+
+Link: https://patch.msgid.link/20260607072431.125633-2-hui.wang@canonical.com
+Fixes: 2271048d1b3b ("ring-buffer: Do 8 byte alignment for 64 bit that can not handle 4 byte align")
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/bpa10x.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/bpa10x.c b/drivers/bluetooth/bpa10x.c
-index 1fa58c059cbf5c..8942ebd0d0b9f6 100644
---- a/drivers/bluetooth/bpa10x.c
-+++ b/drivers/bluetooth/bpa10x.c
-@@ -254,9 +254,13 @@ static int bpa10x_setup(struct hci_dev *hdev)
- 	if (IS_ERR(skb))
- 		return PTR_ERR(skb);
- 
--	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
-+	/* Bounded print: the device controls skb->len. */
-+	if (skb->len > 1) {
-+		int len = skb->len - 1;
- 
--	hci_set_fw_info(hdev, "%s", skb->data + 1);
-+		bt_dev_info(hdev, "%.*s", len, (char *)(skb->data + 1));
-+		hci_set_fw_info(hdev, "%.*s", len, skb->data + 1);
-+	}
- 
- 	kfree_skb(skb);
- 	return 0;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 4deeb613c556a7..fcd2363d1296b6 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -277,7 +277,8 @@ unsigned ring_buffer_event_length(struct ring_buffer_event *event)
+ 	if (event->type_len > RINGBUF_TYPE_DATA_TYPE_LEN_MAX)
+ 		return length;
+ 	length -= RB_EVNT_HDR_SIZE;
+-	if (length > RB_MAX_SMALL_DATA + sizeof(event->array[0]))
++	if (length > RB_MAX_SMALL_DATA + sizeof(event->array[0]) ||
++	    RB_FORCE_8BYTE_ALIGNMENT)
+                 length -= sizeof(event->array[0]);
+ 	return length;
+ }
 -- 
 2.53.0
 
