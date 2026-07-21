@@ -1,37 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5F7430CDC;
-	Tue, 21 Jul 2026 19:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883C73644B3;
+	Tue, 21 Jul 2026 19:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663678; cv=none; b=KbPwCgp4sQghHsttxxIoQNd3Q2HPwhg0GNPSSyY1Rq7qbJbfd9SfOjK6t4tch0lQMRgHOPD1BrUSJaG+k0fL2QMPAYXAkDaHpUjEJorGOt5BRkpo3qzWWa3w1QZp/Ymu8l73ie3Z5ryhJCuJprCIwbK3aIh9z7jQeMKCqXW77h4=
+	t=1784663680; cv=none; b=r57pZNwNzcY6L/A0k8JSTYhIQ5bHJXmMRiXj9+I2OhVLzCa7uJLZo5u5WZIQv9TQCzbjNz0wZRnv5Goq+18mkTcnZQAqv4kM1PrJc3F7/JDaQj+YJ453wGCSkswFbDKN4HJXfYAedZ9H8wmT+4bH/eVTx8MfKTyUeT2GOKcP83I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663678; c=relaxed/simple;
-	bh=2NtXjB4spBh3oJB97Aj36rsOwGyR+ST79Tp6csLHt6Y=;
+	s=arc-20240116; t=1784663680; c=relaxed/simple;
+	bh=RaggwaGUKjnbzLhDPxzV5jAhlxqk/ePY9xvKn2IMtVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JTgsAYtgWMPq//v72WiDf/XO3KEqmpfHMlTaPwvZjFqsikL/m0GwkXvh7SYJWyTv85mCtRo6fEOpW2x7MZX3WqgwBwUs2OZA7OZxfJ2JehNw2GtXycnKPkrp0HdHQnmFvWssp8MVdMPJdvr3RGnRHYBBsnhkoUrBxesSkoBXGvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VfSEJKn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k7RuLmgLVhwBy/7v2o75z71ngtxpOUaS2qrX/tEFu5fNJAYHO+M7jOtGuItb90XmlIp8lApdbPhaeGzjq2z9QnaKXrREdKmRGebkyLWT3VaV4Xl4sCHuIPToPalH9u0dUsmRyqayC3EY6pd7aGlDSuPyygt9kNr5IEmXNZVkhjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfjOuv87; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VfSEJKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CC01F000E9;
-	Tue, 21 Jul 2026 19:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfjOuv87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC7D1F000E9;
+	Tue, 21 Jul 2026 19:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663676;
-	bh=Tx7WFcWJBC2jVTJZDlSYRRQ6TC0bIQUPE56dUOja2EA=;
+	s=korg; t=1784663679;
+	bh=MGbvm2forfIRvjIIdYVBWVMIpvZ7cUAp+r6UH6bS1/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1VfSEJKnVgNRCM2lyeEnCvL2MRGcigcY+JeOCQ53Y+dPksVh8UURDJfnp0Q+X1743
-	 goR61o5v0sz8oVKXL+I0NVX8RDHsDFSTCtCisInKRRMbF4XJPtehcxftPVoxqprlSM
-	 EcZOdZCmkGmw9t2yRFyE5ly5TZCEbfjNKI6zi844=
+	b=DfjOuv87UBXe7EYoSs5LynomkHzEsEv83W4faiPvZkP3RWboiyQoC0BbGNnUB9/PM
+	 ADAV+XidnCLX/bxrpJdXy8TypSNWuWOVxXjR1Icx6UnaP0o+EPmL9Y7i7hhrsa99xU
+	 V7rQoaAYqvMNBj5Db2YL2T3B7EE43SMaJMAWYzrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 0912/1276] power: supply: cpcap-battery: Fix missing nvmem_device_put() causing reference leak
-Date: Tue, 21 Jul 2026 17:22:35 +0200
-Message-ID: <20260721152506.444280967@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Georgi Djakov <georgi.djakov@oss.qualcomm.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 0913/1276] mm/memory_hotplug: fix incorrect altmap passing in error path
+Date: Tue, 21 Jul 2026 17:22:36 +0200
+Message-ID: <20260721152506.466517411@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -44,55 +58,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit a2c14ff63e0e02e3c832385e523e9cc81301171c upstream.
+commit 2fac4afa0e2e68841334c78c1821e49f74fbc66a upstream.
 
-In cpcap_battery_detect_battery_type(), the reference to an nvmem
-device obtained via nvmem_device_find() is not released with
-nvmem_device_put() on the success or read-failure paths, causing a
-permanent reference leak. The driver’s retry logic on subsequent
-battery property reads can compound this leak, preventing the nvmem
-device from ever being freed.
+In create_altmaps_and_memory_blocks(), when arch_add_memory() succeeds
+with memmap_on_memory enabled, the vmemmap pages are allocated from
+params.altmap.  If create_memory_block_devices() subsequently fails, the
+error path calls arch_remove_memory() with a NULL altmap instead of
+params.altmap.
 
-Found by code review.
+This is a bug that could lead to memory corruption.  Since altmap is NULL,
+vmemmap_free() falls back to freeing the vmemmap pages into the system
+buddy allocator via free_pages() instead of the altmap.
+arch_remove_memory() then immediately destroys the physical linear mapping
+for this memory.  This injects unowned pages into the buddy allocator,
+causing machine checks or memory corruption if the system later attempts
+to allocate and use those freed pages.
 
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Cc: stable@vger.kernel.org
-Fixes: fd46821e85de ("power: supply: cpcap-battery: Add battery type auto detection for mapphone devices")
-Link: https://patch.msgid.link/20260424011013.879639-1-make24@iscas.ac.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fix this by passing params.altmap to arch_remove_memory() in the error
+path.
+
+Link: https://lore.kernel.org/20260428081855.1249045-3-songmuchun@bytedance.com
+Fixes: 6b8f0798b85a ("mm/memory_hotplug: split memmap_on_memory requests across memblocks")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Reviewed-by: Georgi Djakov <georgi.djakov@oss.qualcomm.com>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/cpcap-battery.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ mm/memory_hotplug.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/cpcap-battery.c
-+++ b/drivers/power/supply/cpcap-battery.c
-@@ -415,10 +415,13 @@ static void cpcap_battery_detect_battery
- 	if (IS_ERR_OR_NULL(nvmem)) {
- 		ddata->check_nvmem = true;
- 		dev_info_once(ddata->dev, "Can not find battery nvmem device. Assuming generic lipo battery\n");
--	} else if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
--		battery_id = 0;
--		ddata->check_nvmem = true;
--		dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
-+	} else {
-+		if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
-+			battery_id = 0;
-+			ddata->check_nvmem = true;
-+			dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
-+		}
-+		nvmem_device_put(nvmem);
- 	}
- 
- 	switch (battery_id) {
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1456,7 +1456,7 @@ static int create_altmaps_and_memory_blo
+ 		ret = create_memory_block_devices(cur_start, memblock_size,
+ 						  params.altmap, group);
+ 		if (ret) {
+-			arch_remove_memory(cur_start, memblock_size, NULL);
++			arch_remove_memory(cur_start, memblock_size, params.altmap);
+ 			kfree(params.altmap);
+ 			goto out;
+ 		}
 
 
