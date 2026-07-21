@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7633B7B6B;
-	Tue, 21 Jul 2026 20:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD533B95E0;
+	Tue, 21 Jul 2026 20:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667343; cv=none; b=g+x6jDWj48R+lLru5f0OsE21QTg7+DoGf0BIcpA8ZMwBV/aATJuJkrt/YlQXeoM6LNNe5uAiEgX1mU6y972qCqVL2pJaLObkmFuFdKzrED0O7A6qErPOFOyLoubxrAGYaohKN0Nd/t2nuj32evvGtiVYcnHWl5umt8AdHhfG01w=
+	t=1784667346; cv=none; b=mqETtAjrBdUDheTi9dIp77qb0R6oNsGZ4lq/RIxMJos/HF0+IKvooz6M/0yktiTF6DEuYfQRzD3OOKlY8mjgPB1KSbbyMl6/gr+Uyi3s2sTOs5kvU3MK5T9j2Ki3nGjslwqR8z4AAzSEp+fYXmApVF+xeP1gXTRH3IqV4g5OrcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667343; c=relaxed/simple;
-	bh=hppVtncOrfJC+m3bDZBkjBFVOlhrKPZ0ZmLchUuPPmg=;
+	s=arc-20240116; t=1784667346; c=relaxed/simple;
+	bh=mIn0nZJBQNZ5/I9rKMo5J38FiwD3S1jeVgx6QkTYS6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P36PCjfOPldfIX8fE3hqJtiXtNA8qWkp1N91fopcOPDK0p4JsCtXK1u1bJdLtShqrqrICFnaqEBKRk/jmhCJWjF92INMNmFSl31yzjF/rkxdq0Tmg6uBEGQmu0+VtJ+U2+plhYrHMnwMzAj4XZ5tMK59n5YQifdvX0ZB0AB/q4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmfoFdCd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UMm59Xwf6XkqxFh/2cguRq6GwujztJTvA91yxP+OOcaF0nz0zXGYhJtPGH0evlNWDuU90dG1Nx53+BhTSb2AmClW51LNonUwLEH5mLQsUIXFnzT7gb+pqPc0VTPT3j4z6/e5M+rNByNX/1epG+qbnKYBmlCvVldKEm9X73H2+Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+Wdrtvm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmfoFdCd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834681F000E9;
-	Tue, 21 Jul 2026 20:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+Wdrtvm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3301F000E9;
+	Tue, 21 Jul 2026 20:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667342;
-	bh=+QNsP0lNzZ8ycZyoJMCMpmWqwxo+lmBegc4jhE6LzEc=;
+	s=korg; t=1784667344;
+	bh=yfyPlZ5EF/CnnygcVeTFKDNb+dUOMVEiEdDXXL7WfHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VmfoFdCdhReNOzxOPCwQEb37G8qfcWXex5L39uMwe8Qml01pVs5aWUsNmY5FpTU9z
-	 vNPVEGEJ8fjY0oPlw8O+hwGA9NG+/uaxoQwWZmwp453OZcifpjZ+fyD9HuuGo7LeeC
-	 lJNQlmpRNgyeIG0G3y456cZOQrMjQDRsuGOCEBPE=
+	b=Q+WdrtvmhXHu7EwERQKdJpK908fYwrHIK0bbryt37JDaVmmvQGGQTMDa99ewKg74T
+	 mXW+yTq6wVhUpSbTCEGUtj+zCNUCnhuBqGMoO2Pj9xXVofAbn8Z0qgCZYkXpzax4lr
+	 Vu96K8Ifx8r5PZZ54BuvAtN6BTmDsvOKLy31/pfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.6 1026/1266] ice: fix ice_init_link() error return preventing probe
-Date: Tue, 21 Jul 2026 17:24:23 +0200
-Message-ID: <20260721152504.785522742@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.6 1027/1266] xen/gntdev: fix error handling in ioctl
+Date: Tue, 21 Jul 2026 17:24:24 +0200
+Message-ID: <20260721152504.807409631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,91 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Greenwalt <paul.greenwalt@intel.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit eb509638686b0f8a98a0dd9c809f6a8db4d73a45 upstream.
+commit 45ca1afe2fd14c04e37227e79d3f8455831d8408 upstream.
 
-ice_init_link() can return an error status from ice_update_link_info()
-or ice_init_phy_user_cfg(), causing probe to fail.
+When gntdev_ioctl_map_grant_ref() fails to copy the operation result
+back to userspace after successfully adding the mapping to the list,
+the error path returns -EFAULT without releasing the reference
+acquired by gntdev_alloc_map(). The mapping remains in priv->maps
+with a refcount of 1, causing a memory leak and a dangling list
+entry.
 
-An incorrect NVM update procedure can result in link/PHY errors, and
-the recommended resolution is to update the NVM using the correct
-procedure. If the driver fails probe due to link errors, the user
-cannot update the NVM to recover. The link/PHY errors logged are
-non-fatal: they are already annotated as 'not a fatal error if this
-fails'.
+Additionally, gntdev_add_map() may modify map->index to avoid overlap
+with existing mappings. Therefore, the index returned to userspace
+must be obtained after gntdev_add_map() completes.
 
-Since none of the errors inside ice_init_link() should prevent probe
-from completing, convert it to void and remove the error check in the
-caller. All failures are already logged; callers have no meaningful
-recovery path for link init errors.
+Fix this by holding the mutex across gntdev_add_map(), retrieving
+the correct index, and copy_to_user(). If copy_to_user() fails,
+remove the mapping from the list and release the reference while
+still holding the lock.
 
-Fixes: 5b246e533d01 ("ice: split probe into smaller functions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+
+Fix these issues by properly handling all error cases.
+
+Fixes: 1401c00e59ea ("xen/gntdev: convert priv->lock to a mutex")
+Fixes: 68b025c813c2 ("xen-gntdev: Add reference counting to maps")
+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260622112541.38194-1-vulab@iscas.ac.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |   16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/xen/gntdev.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -4763,16 +4763,14 @@ static void ice_init_wakeup(struct ice_p
- 	device_set_wakeup_enable(ice_pf_to_dev(pf), false);
- }
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -678,11 +678,15 @@ static long gntdev_ioctl_map_grant_ref(s
+ 	mutex_lock(&priv->lock);
+ 	gntdev_add_map(priv, map);
+ 	op.index = map->index << PAGE_SHIFT;
+-	mutex_unlock(&priv->lock);
  
--static int ice_init_link(struct ice_pf *pf)
-+static void ice_init_link(struct ice_pf *pf)
- {
- 	struct device *dev = ice_pf_to_dev(pf);
- 	int err;
+-	if (copy_to_user(u, &op, sizeof(op)) != 0)
++	if (copy_to_user(u, &op, sizeof(op)) != 0) {
++		list_del(&map->next);
++		mutex_unlock(&priv->lock);
++		gntdev_put_map(priv, map);
+ 		return -EFAULT;
++	}
  
- 	err = ice_init_link_events(pf->hw.port_info);
--	if (err) {
-+	if (err)
- 		dev_err(dev, "ice_init_link_events failed: %d\n", err);
--		return err;
--	}
- 
- 	/* not a fatal error if this fails */
- 	err = ice_init_nvm_phy_type(pf->hw.port_info);
-@@ -4806,8 +4804,6 @@ static int ice_init_link(struct ice_pf *
- 	} else {
- 		set_bit(ICE_FLAG_NO_MEDIA, pf->flags);
- 	}
--
--	return err;
- }
- 
- static int ice_init_pf_sw(struct ice_pf *pf)
-@@ -4939,13 +4935,11 @@ static int ice_init(struct ice_pf *pf)
- 
- 	ice_init_wakeup(pf);
- 
--	err = ice_init_link(pf);
--	if (err)
--		goto err_init_link;
-+	ice_init_link(pf);
- 
- 	err = ice_send_version(pf);
- 	if (err)
--		goto err_init_link;
-+		goto err_deinit_pf_sw;
- 
- 	ice_verify_cacheline_size(pf);
- 
-@@ -4964,7 +4958,7 @@ static int ice_init(struct ice_pf *pf)
- 
++	mutex_unlock(&priv->lock);
  	return 0;
+ }
  
--err_init_link:
-+err_deinit_pf_sw:
- 	ice_deinit_pf_sw(pf);
- err_init_pf_sw:
- 	ice_dealloc_vsis(pf);
 
 
