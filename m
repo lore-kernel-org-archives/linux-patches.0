@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B9F397E80;
-	Tue, 21 Jul 2026 20:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DB53B83FC;
+	Tue, 21 Jul 2026 20:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666857; cv=none; b=FkZhwGvyiMH56BCfyrLTgUbOVxuQbVCTJS3bvrme/VW+O93qXeTgNOISGbAGtDXN/vpBSxUrrLweg1oSKCc2sN5ez1yCAcTUYc1bcMVPN+m1F0kO7QhgqLndrQiMRHYDcjg9k5zKya1eEclbD+pJPMjbCbUdf0T3wUjrlRagL2g=
+	t=1784666859; cv=none; b=slicTta/lCfEW1FXSlJu6FQrrryrfPFf2AwYqhs/iKU5XjFIMB7vrh/TdA0QalTAsZ6E+QmjEUGpFNNzFFHSWC30snedGMYrJoVxIiagy3n/Bm61kD/3bTori1UMYGxIRqVoDUlFwJQBNMSIIdFja2w4suKEdJSs1PerefsH3NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666857; c=relaxed/simple;
-	bh=famqY/oLawrp5R6cMqhlgAT84MTqB0LpfDrsJLpe+z8=;
+	s=arc-20240116; t=1784666859; c=relaxed/simple;
+	bh=BGPFbFJL9M+GinBgcQNDHVWvlXYXHwBk535BT39aziU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hacM9K6Vdn8bpw7XBUT6ppWE4jYXM9Y4jlT+W8X21HCbNx7VElextTgTovEo7+ksRJ65fHVO/jEUMGvwzmwHsafCOO/dSxfOvkkQTGxox6KgkXNFh6+3d3kTlz9Z8nreSGtANxttnfBPNvKttnnS2oQZ7CvyKQLRfLABVt5vLRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmmxTVfr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q9dsudmGEiCoUDSLOch9++It+XsJhSROseE0Ta1O06P7s3EdbweIVrrd/nSR6UtiDTR/tXrVxJlIZfyIzavhYYiBmBjD9hZfqDXwOhNCqjq0a+v+1DRLVsxb7BtM5IuKGH4QujI5kNgUXqZimo1n2alui7aSmmXXHAoj/mQ/c2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcqYkICg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmmxTVfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2885D1F000E9;
-	Tue, 21 Jul 2026 20:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcqYkICg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7BF1F000E9;
+	Tue, 21 Jul 2026 20:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666855;
-	bh=UlWSfx0TpGUbawCrp6gpwE1G+iuz6cVWinKyWiupWCE=;
+	s=korg; t=1784666858;
+	bh=yYlotP1Yc+4+id37gFwD/7hXQcS5FPhkSN29Jpk4qYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmmxTVfrzE6GaYfAlodfLoAmlsfYJ+aaf4I8eAqaeDS+/aFRpq4xKikVf5i/8YMQ5
-	 1zw2qdLVMDoqfctVra0LF4Wjq780TW1hi/b8q06IyWJAnfwNVC3/sQ6r1bESe0HAGW
-	 0eOQ63XUMqMcRzSG07jJWeJSX3bc89UPxcVHA14o=
+	b=FcqYkICgoKmQA3Jd981t1dEA0+LzTmawspTaWKdT6farbGUvIA5dMGOaUiHr7pGWU
+	 cIG+yYWFk6rGEvgngVcSvVfuizTAgfrDg0c2tqeQ+XogtknY6pEwmdk7ZOo4ernixi
+	 Ska/Crhx+n/cyTLs2SHqGp6mzhpHLKIwUQNPzqFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0842/1266] arm64/mm: Optimize TLB flush in unmap_hotplug_[pmd|pud]_range()
-Date: Tue, 21 Jul 2026 17:21:19 +0200
-Message-ID: <20260721152500.696984038@linuxfoundation.org>
+	Justin Stitt <justinstitt@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>
+Subject: [PATCH 6.6 0843/1266] selftests/hid: ensure we can compile the tests on kernels pre-6.3
+Date: Tue, 21 Jul 2026 17:21:20 +0200
+Message-ID: <20260721152500.718809716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -57,67 +52,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit ff4c5a0de1f2ef7737a8688a86e19301e567020d ]
+[ Upstream commit ae7487d112cf9f310d32f27d5956f53d9f143fea ]
 
-Commit 48478b9f7913 ("arm64/mm: Enable batched TLB flush in
-unmap_hotplug_range") inadvertently introduced redundant TLB
-invalidation when clearing a block entry, resulting in unnecessary
-broadcast invalidation on CPUs without support for range-based
-invalidation.
+For the hid-bpf tests to compile, we need to have the definition of
+struct hid_bpf_ctx. This definition is an internal one from the kernel
+and it is supposed to be defined in the generated vmlinux.h.
 
-Re-introduce the old behaviour, along with some expanded comments to
-help people working in this area next time around.
+This vmlinux.h header is generated based on the currently running kernel
+or if the kernel was already compiled in the tree. If you just compile
+the selftests without compiling the kernel beforehand and you are running
+on a 6.2 kernel, you'll end up with a vmlinux.h without the hid_bpf_ctx
+definition.
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Closes: https://lore.kernel.org/all/b0d5836032ce3135bfc473f6bff791306d086925.camel@decadent.org.uk/
-Fixes: 48478b9f7913 ("arm64/mm: Enable batched TLB flush in unmap_hotplug_range()")
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-[will: Reword comments and commit message]
-Signed-off-by: Will Deacon <will@kernel.org>
+Use the clever trick from tools/testing/selftests/bpf/progs/bpf_iter.h
+to force the definition of that symbol in case we don't find it in the
+BTF and also add __attribute__((preserve_access_index)) to further
+support CO-RE functionality for these tests.
+
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com> # Build
+Tested-by: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/r/20230825-wip-selftests-v3-1-639963c54109@kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Stable-dep-of: eebbef7c468a ("selftests/hid: Cover hid_bpf_get_data() size overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/testing/selftests/hid/progs/hid.c       |  3 -
+ .../selftests/hid/progs/hid_bpf_helpers.h     | 77 +++++++++++++++++++
+ 2 files changed, 77 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index fcc9b965aa7e68..e075792d722575 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -901,7 +901,13 @@ static void unmap_hotplug_pmd_range(pud_t *pudp, unsigned long addr,
- 			if (free_mapped) {
- 				/* CONT blocks are not supported in the vmemmap */
- 				WARN_ON(pmd_cont(pmd));
--				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
-+				/*
-+				 * Invalidating a block entry requires just
-+				 * a single overlapping TLB invalidation,
-+				 * so limit the range of the flush to a single
-+				 * page.
-+				 */
-+				flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
- 				free_hotplug_page_range(pmd_page(pmd),
- 							PMD_SIZE, altmap);
- 			}
-@@ -931,7 +937,8 @@ static void unmap_hotplug_pud_range(p4d_t *p4dp, unsigned long addr,
- 		if (pud_sect(pud)) {
- 			pud_clear(pudp);
- 			if (free_mapped) {
--				flush_tlb_kernel_range(addr, addr + PUD_SIZE);
-+				/* See comment in unmap_hotplug_pmd_range(). */
-+				flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
- 				free_hotplug_page_range(pud_page(pud),
- 							PUD_SIZE, altmap);
- 			}
+diff --git a/tools/testing/selftests/hid/progs/hid.c b/tools/testing/selftests/hid/progs/hid.c
+index 88c593f753b529..1e558826b809e1 100644
+--- a/tools/testing/selftests/hid/progs/hid.c
++++ b/tools/testing/selftests/hid/progs/hid.c
+@@ -1,8 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright (c) 2022 Red hat */
+-#include "vmlinux.h"
+-#include <bpf/bpf_helpers.h>
+-#include <bpf/bpf_tracing.h>
+ #include "hid_bpf_helpers.h"
+ 
+ char _license[] SEC("license") = "GPL";
+diff --git a/tools/testing/selftests/hid/progs/hid_bpf_helpers.h b/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
+index 4fff31dbe0e74b..65e657ac11985d 100644
+--- a/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
++++ b/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
+@@ -5,6 +5,83 @@
+ #ifndef __HID_BPF_HELPERS_H
+ #define __HID_BPF_HELPERS_H
+ 
++/* "undefine" structs and enums in vmlinux.h, because we "override" them below */
++#define hid_bpf_ctx hid_bpf_ctx___not_used
++#define hid_report_type hid_report_type___not_used
++#define hid_class_request hid_class_request___not_used
++#define hid_bpf_attach_flags hid_bpf_attach_flags___not_used
++#define HID_INPUT_REPORT         HID_INPUT_REPORT___not_used
++#define HID_OUTPUT_REPORT        HID_OUTPUT_REPORT___not_used
++#define HID_FEATURE_REPORT       HID_FEATURE_REPORT___not_used
++#define HID_REPORT_TYPES         HID_REPORT_TYPES___not_used
++#define HID_REQ_GET_REPORT       HID_REQ_GET_REPORT___not_used
++#define HID_REQ_GET_IDLE         HID_REQ_GET_IDLE___not_used
++#define HID_REQ_GET_PROTOCOL     HID_REQ_GET_PROTOCOL___not_used
++#define HID_REQ_SET_REPORT       HID_REQ_SET_REPORT___not_used
++#define HID_REQ_SET_IDLE         HID_REQ_SET_IDLE___not_used
++#define HID_REQ_SET_PROTOCOL     HID_REQ_SET_PROTOCOL___not_used
++#define HID_BPF_FLAG_NONE        HID_BPF_FLAG_NONE___not_used
++#define HID_BPF_FLAG_INSERT_HEAD HID_BPF_FLAG_INSERT_HEAD___not_used
++#define HID_BPF_FLAG_MAX         HID_BPF_FLAG_MAX___not_used
++
++#include "vmlinux.h"
++
++#undef hid_bpf_ctx
++#undef hid_report_type
++#undef hid_class_request
++#undef hid_bpf_attach_flags
++#undef HID_INPUT_REPORT
++#undef HID_OUTPUT_REPORT
++#undef HID_FEATURE_REPORT
++#undef HID_REPORT_TYPES
++#undef HID_REQ_GET_REPORT
++#undef HID_REQ_GET_IDLE
++#undef HID_REQ_GET_PROTOCOL
++#undef HID_REQ_SET_REPORT
++#undef HID_REQ_SET_IDLE
++#undef HID_REQ_SET_PROTOCOL
++#undef HID_BPF_FLAG_NONE
++#undef HID_BPF_FLAG_INSERT_HEAD
++#undef HID_BPF_FLAG_MAX
++
++#include <bpf/bpf_helpers.h>
++#include <bpf/bpf_tracing.h>
++#include <linux/const.h>
++
++enum hid_report_type {
++	HID_INPUT_REPORT		= 0,
++	HID_OUTPUT_REPORT		= 1,
++	HID_FEATURE_REPORT		= 2,
++
++	HID_REPORT_TYPES,
++};
++
++struct hid_bpf_ctx {
++	__u32 index;
++	const struct hid_device *hid;
++	__u32 allocated_size;
++	enum hid_report_type report_type;
++	union {
++		__s32 retval;
++		__s32 size;
++	};
++} __attribute__((preserve_access_index));
++
++enum hid_class_request {
++	HID_REQ_GET_REPORT		= 0x01,
++	HID_REQ_GET_IDLE		= 0x02,
++	HID_REQ_GET_PROTOCOL		= 0x03,
++	HID_REQ_SET_REPORT		= 0x09,
++	HID_REQ_SET_IDLE		= 0x0A,
++	HID_REQ_SET_PROTOCOL		= 0x0B,
++};
++
++enum hid_bpf_attach_flags {
++	HID_BPF_FLAG_NONE = 0,
++	HID_BPF_FLAG_INSERT_HEAD = _BITUL(0),
++	HID_BPF_FLAG_MAX,
++};
++
+ /* following are kfuncs exported by HID for HID-BPF */
+ extern __u8 *hid_bpf_get_data(struct hid_bpf_ctx *ctx,
+ 			      unsigned int offset,
 -- 
 2.53.0
 
