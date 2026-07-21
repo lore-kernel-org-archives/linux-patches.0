@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697F73B47D3;
-	Tue, 21 Jul 2026 20:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D72C199920;
+	Tue, 21 Jul 2026 20:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665915; cv=none; b=hXEVSJkFtjLxcFHIMnlSKCXhq5OS4hLvKRW0mxU038ZF5hvvrFFDUAuD6DrJr8sgR0KTVceZPuEHIfPXT6ktY1Qakqngh+GPSRCl6fPc45WVm7wHR34NmOVrLcZL4j8IOiylcltrCSLJJwxc++Wmrf13YgX0/Zoed+3UdoZ2Quw=
+	t=1784665918; cv=none; b=CxI3ZhzFcgLJozGby+nO0JbbySJubqpIDwt+BBmTHTT7aqeL2eZ3A7wBLYTeGQXFHFPp1a7RvnHtHpRjLo7zCT95UDjuTpFtaow/k3rpI3Ma2dFaEr3G7wgSWJD06v/WiSGsf1ezdh4sl80EhTEHFHnKS8OVsnTWYJQuU7bBNgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665915; c=relaxed/simple;
-	bh=eVPreAiMHKkksRRBTPh9buvU8w6mHAE8MQS28oNRMe0=;
+	s=arc-20240116; t=1784665918; c=relaxed/simple;
+	bh=64abZfRqB7e2heXOUJHOZIO2+rbodnsTJliDVEGlgPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bmyf5JGZ2EIM8Y329FZ8bAh6uLJc0E+md3iNsDe1wSuTXwqeCZGeUN4jXpFaEs9aymAc7B/JG/s1gSgeoEE6PQsvLHJLMlJeaRmNq1tHanuGJcK/1C/ggdsC/gHIhjQqGBBZZzC84va/J4gsIkBFrt+yDqg7aDzHKPM8Gw7eYPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wO73JYn9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iAqXdvXWwcTRK53i6Dg6erBvkPZsi3oeoGDrXXkcZoVtaXwCnNWofTsVDgMxVJSiCeQOQPDPMj8b5aarE40LxAYv78jpE/1dy79L1OQ+yiwww/CvxmjrHSOD051jy6hX1vd6/dzqj92t4VFn3qzg/L/1cdOT2PGd0I5q43UjjnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izBJhI8x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wO73JYn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF2B1F000E9;
-	Tue, 21 Jul 2026 20:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izBJhI8x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A7C1F000E9;
+	Tue, 21 Jul 2026 20:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665914;
-	bh=oIA/QCQ6Al1GXWfo1KAH8mW3bqM2FmSB1aWbOslTsis=;
+	s=korg; t=1784665916;
+	bh=4rqaweYWyA+I9Vk9INqNSy/gxoLRA01brXl9/+99quo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wO73JYn9lHpyj+xJiY82KWj2QyoRt1oS8+Rt1ATh7ieUaw+GfqBxLGXQ6jWW+oWjC
-	 rpT018stvVRrDJQxR9VosHhsmwDXBmGI3COQVoUo7lLEGu2CDEzuP7NJfwarFCC21x
-	 RCtfPIWbNyvUS+CN73s4I+zqrGguAtmlNrOCCE+8=
+	b=izBJhI8xiNNsFuNv7LylJsP9pXpg1fnKtmrnpVACCdkfeiVcvvwEknKWFqxuE+eOQ
+	 m9WllCHQt249Qx6yxWnmGsEx+8LPRPaa6JG7O74gagSCM1YF9Lww+LS1QVpBMT2dFC
+	 xFGSliiJkKlKWluwl47tD0GJrSLnSa9rhksHiZcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Breno Leitao <leitao@debian.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0484/1266] configfs_lookup(): dont leave ->s_dentry dangling on failure
-Date: Tue, 21 Jul 2026 17:15:21 +0200
-Message-ID: <20260721152452.671615480@linuxfoundation.org>
+Subject: [PATCH 6.6 0485/1266] drm/amdgpu: set sub_block_index for mca ras sub-blocks
+Date: Tue, 21 Jul 2026 17:15:22 +0200
+Message-ID: <20260721152452.694202780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,56 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit 10da12d352b7b2bb330a8609fdda9a58bf0e9856 ]
+[ Upstream commit baa286df5fb366e4aee5b747443dfc7194fdaa59 ]
 
-Normally ->s_dentry is cleared when dentry it's pointing to becomes
-negative (on eviction, realistically).  However, that only happens
-if dentry gets to be positive in the first place; in case of inode
-allocation failure dentry never becomes positive, so ->d_iput()
-is not called at all.
+The mca ras sub-blocks (mp0, mp1, mpio) all share the
+AMDGPU_RAS_BLOCK__MCA block id and are distinguished only by
+sub_block_index. The ras manager object for an mca block is selected
+with:
 
-We do part of what normally would've been done by configfs_d_iput()
-(dropping the reference to configfs_dirent) manually, but we do
-not clear ->s_dentry there.  Sloppy as it is, it does not matter in
-case of configfs_create_{dir,link}() - there configfs_dirent does
-not survive dropping the sole reference to it.
+	con->objs[AMDGPU_RAS_BLOCK__LAST + head->sub_block_index]
 
-However, for configfs_lookup() it *does* survive, with a dangling
-pointer to soon to be freed dentry sitting it its ->s_dentry.
+Since the rework in commit 7f544c5488cf ("drm/amdgpu: Rework mca ras
+sw_init") moved the ras_comm setup into amdgpu_mca_mp*_ras_sw_init() but
+left sub_block_index unset, mp0/mp1/mpio all default to index 0 and
+collide on the same object slot. mp0 grabs the slot and creates its
+sysfs node first; mp1 (and mpio) then find the slot already in use, so
+amdgpu_ras_block_late_init() -> amdgpu_ras_sysfs_create() returns
+-EINVAL:
 
-Subsequent getdents(2) in that directory will end up dereferencing
-that pointer in order to pick the inode number.  Use after free...
+  amdgpu: mca.mp1 failed to execute ras_block_late_init_default! ret:-22
+  amdgpu: amdgpu_ras_late_init failed -22
+  amdgpu: amdgpu_device_ip_late_init failed
+  amdgpu: Fatal error during GPU init
 
-This is the minimal fix; the right approach is to set the linkage
-between dentry and configfs_dirent only after we know that we have
-an inode, but that takes more surgery and the bug had been there
-since 2006, so...
+The error is currently masked because amdgpu_ras_late_init() does not
+check the return value of amdgpu_ras_block_late_init_default(), but it
+already leaves mp1/mpio without their sysfs nodes and becomes a fatal
+init failure as soon as that return value is honored.
 
-Fixes: 3d0f89bb1694 ("configfs: Add permission and ownership to configfs objects") # 2.6.16-rc3
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Restore the per-sub-block sub_block_index assignment so each mca
+sub-block maps to its own object slot.
+
+Fixes: 7f544c5488cf ("drm/amdgpu: Rework mca ras sw_init")
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 3 +++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index 2df99cd1034d4e..c3fac94f66f212 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -462,6 +462,9 @@ static struct dentry * configfs_lookup(struct inode *dir,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
+index 8d9ff9e151de1a..9a7f7d2b2767a5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
+@@ -89,6 +89,7 @@ int amdgpu_mca_mp0_ras_sw_init(struct amdgpu_device *adev)
  
- 			inode = configfs_create(dentry, mode);
- 			if (IS_ERR(inode)) {
-+				spin_lock(&configfs_dirent_lock);
-+				sd->s_dentry = NULL;
-+				spin_unlock(&configfs_dirent_lock);
- 				configfs_put(sd);
- 				return ERR_CAST(inode);
- 			}
+ 	strcpy(ras->ras_block.ras_comm.name, "mca.mp0");
+ 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
++	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MP0;
+ 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
+ 	adev->mca.mp0.ras_if = &ras->ras_block.ras_comm;
+ 
+@@ -113,6 +114,7 @@ int amdgpu_mca_mp1_ras_sw_init(struct amdgpu_device *adev)
+ 
+ 	strcpy(ras->ras_block.ras_comm.name, "mca.mp1");
+ 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
++	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MP1;
+ 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
+ 	adev->mca.mp1.ras_if = &ras->ras_block.ras_comm;
+ 
+@@ -137,6 +139,7 @@ int amdgpu_mca_mpio_ras_sw_init(struct amdgpu_device *adev)
+ 
+ 	strcpy(ras->ras_block.ras_comm.name, "mca.mpio");
+ 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
++	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MPIO;
+ 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
+ 	adev->mca.mpio.ras_if = &ras->ras_block.ras_comm;
+ 
 -- 
 2.53.0
 
