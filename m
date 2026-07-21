@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C81D3C10AB;
-	Tue, 21 Jul 2026 22:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EF93C10AB;
+	Tue, 21 Jul 2026 22:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674031; cv=none; b=RCpALS7pd5JANVzOyPHbAXRkm/QtbrDG5Cz/JCYv2dUNFUF5vbfehL0XUDypfltlgFPb5KEPig6GWkMBOLIBZ6MJ/IhkhdOYmijEbxkvKYQEGsSePUw2v147OJbwBGsp811VM1qTtTLI5EEXMb/G9SDImWAzPanPp5D794m9Zsw=
+	t=1784674034; cv=none; b=lJ/VJ04oYgb7pW2TL81d4ohGnCPa7VbMYiB9TjdN+HzkU2tyenUmEyGZGj6GsJsmAda3/dRg1SX4Tz4ozTzaSF6v65jJd0Sk7WkrpMM3VWPAhr2a65suXbe2outb7wb0Nppjqo0rmiURM+A5Yu+4Pu6gycXGtih6WVXW47sg/2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674031; c=relaxed/simple;
-	bh=HSBxoWH35hE4W3Ivq5B+KnVOcjr7H35nqg+1m/kovAU=;
+	s=arc-20240116; t=1784674034; c=relaxed/simple;
+	bh=Yi4o//SQpnLgyH/rRHMKZZf/dg5QJZPPvZn8j7IcOm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ScAqJRpVJbdg0w397FC7361PlfuHkVfVV7vKYmB2AmmBhihJu2cgvnkG2EW9TQiopCv2ANtvZGj8F9Z3zlcLSRqXH6XmZGmhON8CYn2zm7TnvWNNeI2PMtwj8r01td+DmW2DcOCehgYP9T+qZczWK5aG8M3+W8KZ68c9rEoMgTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzmtaL4M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LVlKSsFOcWWrh8kvOgxEfl9vT2W7hOfMSdpJ0Ex4QhB9u4L6pJjG+ex1PRbCXHkZXTVtBB7pZ2VC7P31+UPQCK51Eupbw2/uvCtA0dUPdRJqMMwFDKDXjUbQcWDxnQqmArqZiOSFNnfIaLn4byr5f0WbfKaNJVl0d7ZOzJvIDgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HrC+HNq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzmtaL4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52F31F000E9;
-	Tue, 21 Jul 2026 22:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HrC+HNq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DCF1F000E9;
+	Tue, 21 Jul 2026 22:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674030;
-	bh=L/H24EHLB3dexi4/hpq0lr+4PlcBSCTnBJQAAYdDeDw=;
+	s=korg; t=1784674033;
+	bh=SG96vNo2NYSi4Zz5FP2omOOlMVCOQERYLnXlxqeybwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fzmtaL4Msth7r/kwUhPLkCB/LhfnKagBr/XtY+5IsOkGJSoDW7AP7hqC0ylXwdto1
-	 hGdbp6CdWopo+9k09BrpTlgGU3ryQdoYWQyT85tm99uGKhRpICdmbKMSAgdXeqHJQB
-	 lmgHrwpb42OR+xJklLSayY1xLdYcI+IYv1DPHTMA=
+	b=2HrC+HNqB0zCbgm3wrOJ0JqP2RZAXU64hJsDxw7hyJrLSXsbfZzD4nMOmXzmWwQFd
+	 hrlKPJMTWB8fTJjSFdEavCZcKVUO+HXdenpt/YG4+nXDD10EdOz/R+3Fqk/F4xyoa0
+	 z/GdiM0DTb969vK3UguUykAnjDO3WI/Xdn8K62w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 360/699] alpha/PCI: Add security_locked_down() check to pci_mmap_resource()
-Date: Tue, 21 Jul 2026 17:21:59 +0200
-Message-ID: <20260721152403.812346924@linuxfoundation.org>
+Subject: [PATCH 5.10 387/699] afs: Fix unchecked-length string display in debug statement
+Date: Tue, 21 Jul 2026 17:22:26 +0200
+Message-ID: <20260721152404.422188441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -48,65 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 78a228f0aa0e9eba31955950c8a40a9945e2c8bb ]
+[ Upstream commit 903d37c97228258da71e092f8b4ab260ce81497d ]
 
-Currently, Alpha's pci_mmap_resource() does not check
-security_locked_down(LOCKDOWN_PCI_ACCESS) before allowing userspace to mmap
-PCI BARs.
+Fix afs_extract_vlserver_list() to limit the length of the displayed
+string in a debug statement().
 
-The generic version has had this check since commit eb627e17727e ("PCI:
-Lock down BAR access when the kernel is locked down") to prevent DMA
-attacks when the kernel is locked down.
-
-Add the same check to Alpha's pci_mmap_resource().
-
-Fixes: eb627e17727e ("PCI: Lock down BAR access when the kernel is locked down")
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://patch.msgid.link/20260508043543.217179-12-kwilczynski@kernel.org
+Fixes: 0a5143f2f89c ("afs: Implement VL server rotation")
+Closes: https://sashiko.dev/#/patchset/20260618074903.2374756-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-22-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/pci-sysfs.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/afs/vl_list.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/alpha/kernel/pci-sysfs.c b/arch/alpha/kernel/pci-sysfs.c
-index 0021580d79adbd..f1fd9543067424 100644
---- a/arch/alpha/kernel/pci-sysfs.c
-+++ b/arch/alpha/kernel/pci-sysfs.c
-@@ -11,6 +11,7 @@
-  */
+diff --git a/fs/afs/vl_list.c b/fs/afs/vl_list.c
+index 8508d225509bb0..d7199ed4838be9 100644
+--- a/fs/afs/vl_list.c
++++ b/fs/afs/vl_list.c
+@@ -199,6 +199,8 @@ struct afs_vlserver_list *afs_extract_vlserver_list(struct afs_cell *cell,
  
- #include <linux/sched.h>
-+#include <linux/security.h>
- #include <linux/stat.h>
- #include <linux/slab.h>
- #include <linux/pci.h>
-@@ -69,7 +70,11 @@ static int pci_mmap_resource(struct kobject *kobj,
- 	struct resource *res = attr->private;
- 	enum pci_mmap_state mmap_type;
- 	struct pci_bus_region bar;
--	int i;
-+	int i, ret;
+ 	b += sizeof(*hdr);
+ 	while (end - b >= sizeof(bs)) {
++		int nlen;
 +
-+	ret = security_locked_down(LOCKDOWN_PCI_ACCESS);
-+	if (ret)
-+		return ret;
+ 		bs.name_len	= afs_extract_le16(&b);
+ 		bs.priority	= afs_extract_le16(&b);
+ 		bs.weight	= afs_extract_le16(&b);
+@@ -208,10 +210,12 @@ struct afs_vlserver_list *afs_extract_vlserver_list(struct afs_cell *cell,
+ 		bs.protocol	= *b++;
+ 		bs.nr_addrs	= *b++;
  
- 	for (i = 0; i < PCI_STD_NUM_BARS; i++)
- 		if (res == &pdev->resource[i])
++		nlen = min3(bs.name_len, end - b, 255);
++
+ 		_debug("extract %u %u %u %u %u %u %*.*s",
+ 		       bs.name_len, bs.priority, bs.weight,
+ 		       bs.port, bs.protocol, bs.nr_addrs,
+-		       bs.name_len, bs.name_len, b);
++		       bs.name_len, nlen, b);
+ 
+ 		if (end - b < bs.name_len)
+ 			break;
 -- 
 2.53.0
 
