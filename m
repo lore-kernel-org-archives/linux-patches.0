@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03873E5A03;
-	Tue, 21 Jul 2026 22:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D014418DB;
+	Tue, 21 Jul 2026 22:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672614; cv=none; b=ByicyKd4J/4/J06V/oyaORpEEDy4NTOEScAqxu8MYIlzPT9eRRGp5mw6zIqe6vB59kvAbjGPgEffO+Jgij/8NmdjsMn6By0F0HGagqFqpDQZiZ42GTnJkY0vFBQJO5RqG8/cw1ldN32hblg3ypyA9PB/yyuBJ40pk3SoIjlvaCA=
+	t=1784672617; cv=none; b=stHz/foYuWaQEU1Mp/kToUa0+CR0WTEq34kgeGO54LrldHweIzl5mClopJ/0fVSMFxhc80m2dbg0V9lRR2N79emuUO5LIGKQ/8tmPQUgsqfB3a9cHB1kIDxiFKzFXzwDZvl6wGOat4/HeKVL8L3vIZy3cOnwmUN0gclfbSD8eX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672614; c=relaxed/simple;
-	bh=synmGRgk+zuMKy9growh306Wa2aH8fAtZymyZ958c6Q=;
+	s=arc-20240116; t=1784672617; c=relaxed/simple;
+	bh=0OM3Cm0Lv+pqGurUdveRmVNDp8G0pmPf/prt3A742qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1u6d4j+3VE75OIQbLK1Lxcw851goyP3LgXnPot//iq8Ug07lK9SRUPyYa97py/eoSv+cMJTdVV30bKf+NWsfFznJ0+r50wJeub5XqTTW1LClY3TYM0jBBEE56URA3xuwA8XxqTvfrON82nnggKxjNPJZAppgQBGt1xAL4Qh05o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcto1Xhu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tThJpEvSvSPBXqZGFVesXB0Kn4CvYJrFAWrUhtKSP2Gf1llvPV37qSLKxTZSmMTt+uhe8Qwrap3ZmtSIDPY6WJoJ+PBQk+Ks/duN80Thnrf4y3xfoAqGUWOYA/3UooC5TIJKQo5Ry9RSGyJMwuDHXuVSZ2ozUf5UQaiCUF12zQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgwPVDOB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcto1Xhu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082E31F000E9;
-	Tue, 21 Jul 2026 22:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgwPVDOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17F21F000E9;
+	Tue, 21 Jul 2026 22:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672613;
-	bh=FgTAw7cphx/RR6wfMnzG9kLyxc4pJMjbdCI5FHizkHw=;
+	s=korg; t=1784672616;
+	bh=7r+GrH7KAUChSKsimXHgbILOgn45A15Y8XRMaFFIawE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zcto1Xhu9lZfE3yvDoSu5RLo5IkgyL14j4h73hskISfekvPvrD04PDTrt9ULrCVR2
-	 2pomPUQwMI79ZFSerdheNWAqspsQhHpi0LE9+JJe1JG+rcDbtdHGsWqNdiYAC6O2m0
-	 TYpRuwhNuigyQj6/U4Wn65EdRV/xf9zbe1J5PLcc=
+	b=zgwPVDOBD3rvQ3cd3MMpLHhSsYS0ciQch10gEdOk42XxU7PJbkdHJFBVwa3V7Ce/O
+	 kYSF7L+1oIluTw9YB8hKwJXCfi8yzuYjf0lqvg7IGsw0XHzzDURQe1kTAi8pdkyaot
+	 GQyr2eAUIyAAR9fM9LXxoj7sAOnfM2h9010Qkmnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 692/843] bnx2x: fix potential memory leak in bnx2x_alloc_mem_bp()
-Date: Tue, 21 Jul 2026 17:25:27 +0200
-Message-ID: <20260721152421.620832908@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 693/843] hwmon: (w83627hf) remove VID sysfs files on error and remove
+Date: Tue, 21 Jul 2026 17:25:28 +0200
+Message-ID: <20260721152421.643252056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,43 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit a986fde914d88af47eb78fd29c5d1af7952c3500 upstream.
+commit 5264b389c4e02dec214a46c400eb3ab867a7749a upstream.
 
-If the allocation of fp[i].tpa_info fails, the error path will not free
-the struct bnx2x_fastpath allocated earlier, as it is not linked to the
-bp structure yet. Fix that by linking it immediately after allocation.
+w83627hf_probe() creates cpu0_vid and vrm with device_create_file() when
+VID information is available.
 
+The error path and remove callback only remove the common and optional
+attribute groups.  Those groups do not contain cpu0_vid or vrm, so the
+files can remain after a later probe failure or after device removal
+while their callbacks still expect live driver data.
+
+Remove the standalone VID sysfs files from both the probe error path and
+the remove callback.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260615064732.48113-1-pengpeng@iscas.ac.cn
 Cc: stable@vger.kernel.org
-Fixes: 15192a8cf8a8 ("bnx2x: Split the FP structure")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260620062402.89549-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/hwmon/w83627hf.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-@@ -4740,6 +4740,7 @@ int bnx2x_alloc_mem_bp(struct bnx2x *bp)
- 	fp = kcalloc(bp->fp_array_size, sizeof(*fp), GFP_KERNEL);
- 	if (!fp)
- 		goto alloc_err;
-+	bp->fp = fp;
- 	for (i = 0; i < bp->fp_array_size; i++) {
- 		fp[i].tpa_info =
- 			kcalloc(ETH_MAX_AGGREGATION_QUEUES_E1H_E2,
-@@ -4748,8 +4749,6 @@ int bnx2x_alloc_mem_bp(struct bnx2x *bp)
- 			goto alloc_err;
- 	}
+--- a/drivers/hwmon/w83627hf.c
++++ b/drivers/hwmon/w83627hf.c
+@@ -1551,6 +1551,8 @@ static int w83627hf_probe(struct platfor
+ 	return 0;
  
--	bp->fp = fp;
--
- 	/* allocate sp objs */
- 	bp->sp_objs = kcalloc(bp->fp_array_size, sizeof(struct bnx2x_sp_objs),
- 			      GFP_KERNEL);
+  error:
++	device_remove_file(dev, &dev_attr_vrm);
++	device_remove_file(dev, &dev_attr_cpu0_vid);
+ 	sysfs_remove_group(&dev->kobj, &w83627hf_group);
+ 	sysfs_remove_group(&dev->kobj, &w83627hf_group_opt);
+ 	return err;
+@@ -1562,6 +1564,8 @@ static int w83627hf_remove(struct platfo
+ 
+ 	hwmon_device_unregister(data->hwmon_dev);
+ 
++	device_remove_file(&pdev->dev, &dev_attr_vrm);
++	device_remove_file(&pdev->dev, &dev_attr_cpu0_vid);
+ 	sysfs_remove_group(&pdev->dev.kobj, &w83627hf_group);
+ 	sysfs_remove_group(&pdev->dev.kobj, &w83627hf_group_opt);
+ 
 
 
