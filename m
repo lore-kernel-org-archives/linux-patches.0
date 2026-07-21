@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFC3437111;
-	Tue, 21 Jul 2026 22:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8EE3B9930;
+	Tue, 21 Jul 2026 22:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671834; cv=none; b=hAjNoEX5rqne8nnZKE9DN0BohjstxvJQSbWJkgWh3W8CrP0EaCAgoI4/50uDTqtzb1tXJYXuwtVf4GhillECMJuzTJjg90b4VBRGNmAQD7rFP9ToarKAftIyWnuQSCFAPQaYWaH92e5Nku0Tj/7lM+mGA3QNVjmWBcSyrpc068c=
+	t=1784671836; cv=none; b=jHal5VV1l/KYSO2Vf2CM4LBDkRt5ks6ALJF5wnt/KaUFSYv9GQgH9+7Tma58N6p8XFy7Qt/1l52sw7KV2Q5TAJkjXxACyWOu6R87oYRfwewrv5uVhdLW0WFSCkid3Fcvomtx6tiRIAnEJW4TMJNBM/Zo9hWJ2+cyeXJGFfOQ0aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671834; c=relaxed/simple;
-	bh=hDS084RcWAO9L3nPVV9ihv1P+gsQcYHvOQylxfKD5mU=;
+	s=arc-20240116; t=1784671836; c=relaxed/simple;
+	bh=tTNf4w7DcCeCUKDYqeFLNXKnGkJyNLgeOHPlBjPzAIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OInCrrkj9cqCPrZR2EzP51RCmuXE4aprPXT9fdkNkV3zVdpVkjx0KWkvJsVR5ZV8FLUg6C8yhP4IWpUAi4KVztEz6LKl1xyC0f/hEF7kxjJUqoCkwD3LA0uCTe3+nSmSLQC8+i82FHYDzGcM5HlD+8vP6f6Do7jb7UPV7B0pqjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdCLe+3q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=no7HGwPR0yfEXtssmY++4eIc4EIKe8rv66DrB0dbtMJT8nEpxAyaGynTD+hgRFdx98oX5wiAUiBYEE+qdG6dhRlTIfBEOF3X1ugBVTI6fkTjtvtJCHqz/G1vu7aNEwHveD+GemKlDMszXAUkX4E2Lvj98tI9mIE0eDuHzlTQc2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0G4jkgI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdCLe+3q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FF11F000E9;
-	Tue, 21 Jul 2026 22:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0G4jkgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF971F000E9;
+	Tue, 21 Jul 2026 22:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671833;
-	bh=PToHKlqWkqQ5IaUnZZRWHbhrEZlNiXQY/9Yc22LVFmQ=;
+	s=korg; t=1784671835;
+	bh=mlsgEGhdpCg+6LYJMPaa2EZOmZwxsoFOB+Uu14ayly4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vdCLe+3qQS1jynDUjHfIj/W5sxfS11pigI+8R0Fp+edLTA6U00GGeIAjiksYffnuQ
-	 CZk8uZaFkVuQiE10WM7rsq7/0YapVnQsScvhe4Vl/pzVsVTmdPnz6PjMqqQ8skEhyW
-	 YEzWusw/0KvcI49Mo4zUj6r17KZYmbuwlP/zsMVw=
+	b=H0G4jkgII04tw6R0jwySS+dURkuigzTLbyXC6ndnpRDoweixbKwG0YfIFKX1nqCOK
+	 TxYVKgU2NNX6gtLs+IlFUrBzkhABqi4GC1Y8OXbLMCcWkqStdDFztsiQsUuEhd+96K
+	 pJAEty27B98DQyjEkheIFsNZ8wMdNZrhIDhI35Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Alexey Budankov <alexey.budankov@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 359/843] netfilter: nf_conncount: callers must hold rcu read lock
-Date: Tue, 21 Jul 2026 17:19:54 +0200
-Message-ID: <20260721152414.106172019@linuxfoundation.org>
+Subject: [PATCH 5.15 395/843] perf mmap: Fix NULL deref in aio cleanup on alloc failure
+Date: Tue, 21 Jul 2026 17:20:30 +0200
+Message-ID: <20260721152414.926109314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,71 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 64d7d5abe2160bba369b4a8f06bdf5630573bab0 ]
+[ Upstream commit 25627346b10e6a564610ea2c49dc6dd54812226d ]
 
-rcu_derefence_raw() should not have been used here, it concealed this bug.
-Its used because struct rb_node lacks __rcu annotated pointers, so plain
-rcu_derefence causes sparse warnings.
+perf_mmap__aio_mmap() sets map->aio.nr_cblocks before allocating the
+data array.  If calloc() for aiocb or cblocks fails before the data
+array is allocated, the return -1 path leads to perf_mmap__aio_munmap()
+which loops nr_cblocks times calling perf_mmap__aio_free().  Both
+versions of perf_mmap__aio_free() (NUMA and non-NUMA) dereference
+map->aio.data[idx] without checking if data is NULL, causing a NULL
+pointer dereference.
 
-The major tradeoff is that rcu_derefence_raw() doesn't warn when the caller
-isn't in a rcu read section.
+Add NULL checks for map->aio.data at the top of both
+perf_mmap__aio_free() variants so the cleanup path is safe when
+allocation fails partway through perf_mmap__aio_mmap().
 
-Extend the rcu read lock scope accordingly and cause sparse warnings,
-those warnings are the lesser evil.
-
-Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
-Closes: https://sashiko.dev/#/patchset/20260603230610.7900-1-fw%40strlen.de
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: d3d1af6f011a553a ("perf record: Enable asynchronous trace writing")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Alexey Budankov <alexey.budankov@linux.intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 6 +++---
- net/openvswitch/conntrack.c  | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ tools/perf/util/mmap.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index ae9ad439449fa5..b9265a8cdb2bc4 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -499,7 +499,7 @@ count_tree(struct net *net,
- 	hash = jhash2(key, data->keylen, conncount_rnd) % CONNCOUNT_SLOTS;
- 	root = &data->root[hash];
+diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
+index f642018a8926c0..ff637d5ce900e2 100644
+--- a/tools/perf/util/mmap.c
++++ b/tools/perf/util/mmap.c
+@@ -88,10 +88,10 @@ static int perf_mmap__aio_alloc(struct mmap *map, int idx)
  
--	parent = rcu_dereference_raw(root->rb_node);
-+	parent = rcu_dereference(root->rb_node);
- 	while (parent) {
- 		int diff;
+ static void perf_mmap__aio_free(struct mmap *map, int idx)
+ {
+-	if (map->aio.data[idx]) {
+-		munmap(map->aio.data[idx], mmap__mmap_len(map));
+-		map->aio.data[idx] = NULL;
+-	}
++	if (!map->aio.data || !map->aio.data[idx])
++		return;
++	munmap(map->aio.data[idx], mmap__mmap_len(map));
++	map->aio.data[idx] = NULL;
+ }
  
-@@ -507,9 +507,9 @@ count_tree(struct net *net,
+ static int perf_mmap__aio_bind(struct mmap *map, int idx, int cpu, int affinity)
+@@ -140,6 +140,8 @@ static int perf_mmap__aio_alloc(struct mmap *map, int idx)
  
- 		diff = key_diff(key, rbconn->key, data->keylen);
- 		if (diff < 0) {
--			parent = rcu_dereference_raw(parent->rb_left);
-+			parent = rcu_dereference(parent->rb_left);
- 		} else if (diff > 0) {
--			parent = rcu_dereference_raw(parent->rb_right);
-+			parent = rcu_dereference(parent->rb_right);
- 		} else {
- 			int ret;
+ static void perf_mmap__aio_free(struct mmap *map, int idx)
+ {
++	if (!map->aio.data)
++		return;
+ 	zfree(&(map->aio.data[idx]));
+ }
  
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 4c5480a345c9f6..527a181c842c67 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -2088,10 +2088,10 @@ static int ovs_ct_limit_get_zone_limit(struct net *net,
- 		} else {
- 			rcu_read_lock();
- 			limit = ct_limit_get(info, zone);
--			rcu_read_unlock();
- 
- 			err = __ovs_ct_limit_get_zone_limit(
- 				net, info->data, zone, limit, reply);
-+			rcu_read_unlock();
- 			if (err)
- 				return err;
- 		}
 -- 
 2.53.0
 
