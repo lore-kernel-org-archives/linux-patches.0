@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22463B6BEB;
-	Tue, 21 Jul 2026 21:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81ED038C2D8;
+	Tue, 21 Jul 2026 21:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667629; cv=none; b=KcOP6OGuwLDWED1tgdgHkRYeK1RyRQdnwn5hmD8kcCtEmq9Ihpf45yQnbz0KI95u+VkBbWofKgDSizK+6HazH6UVmPfgkrveow+vyGfeYIWdRdjzUX9EUs041QKpp1U38O5+qPYNWXYs+eS/Eeuq9UoA/ILgAlAZjCTFlnWNeWU=
+	t=1784667632; cv=none; b=q0LsvpEUDsgoQbdQYfK/nfcgzcBf53FYDYPv4AfSM+a1ItXiO4cyvc3OuRbUzJdP529lHn69clBI5CQImXFZh0fGIuDKuz4dtIKv1MDqmPCZh6FImAnxXrHs86Tbo8XL4l/SrG07fjT0jmp/TflVRj/CNoa+Pgs9N2MX8zCF0yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667629; c=relaxed/simple;
-	bh=QqD0jWQTfs2y/nBqFqSHP9QZ0xZAb7lIn9n6gg1IgXk=;
+	s=arc-20240116; t=1784667632; c=relaxed/simple;
+	bh=q00YJaAdK8aRZpWXUrqVeAslgzkwuQIgGotRjh+6Hpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aaBF/zYK0kKyUYboYEHRSfkzJCEyckwgI9vvUMFygxyCfAjqAsf/SyZ/blWQWeX2Ek3thKSzb2gWwyLzYyiEpxdahNct1tMc2YUJ7nPlomerPdulF/2TkY85iJlBSk2RkwTJ77ZHs94065wPBqZ5nettEsDZqFQidvU5bE73rJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrcyMaPs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bDeHslSROWrm1gItb5Nrcvf9umojMmbye8wRMq9cpjWRqL/70oLMNUFstssgqHk5/8pcQmhZQuBURFAbAWujt/1hBmosjncWUHJsE6q14qyQ7mMAKY6TnaPvedLmAZspR321XRU00G2emtcA20Ba/zbZbXljsi6Fcsw8Ewiv5nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqflMlEy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrcyMaPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184BA1F000E9;
-	Tue, 21 Jul 2026 21:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqflMlEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29E81F000E9;
+	Tue, 21 Jul 2026 21:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667628;
-	bh=k9sSrF2TMPMNvfvG38cydo1sijsdYZ3SGDqevt+0LJU=;
+	s=korg; t=1784667631;
+	bh=8Owl8QQMx6sU9Vph0eQNNYN5BQcAGZfBR5TU/fAQGBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VrcyMaPskVj+8V49rtKfPddxyAK+6osXJV1XHBeSYt6JzQMMDiFtgRvXxgJ986Ozz
-	 kzRTKsM2jPC+CLkr532pgoQgMOo3cKGTIueVSrvk1lWywPM/YoEY+8Emb0COrlQg1k
-	 MMChPhgi4oL+qgnXxLHEd93Xh0L0chK7wESbAqTM=
+	b=lqflMlEyL3BnRg3rMzBN69UJcTFPMX2jesfPashiyufZJgcbE9ITWzb3WSr3Ox5bj
+	 qwizhygEDxsVa73b00lpD07ZP7myx9/FCNRRl4LAVCa+qqrhzXipXhHr5GRIf/DTnQ
+	 BXIa63ZmWvLMq7n44jrwUgbU6irHKO9Z9iHDd7Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Thangaraj Samynathan <Thangaraj.s@microchip.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 1106/1266] net: lan743x: Initialize eth_syslock spinlock before use
-Date: Tue, 21 Jul 2026 17:25:43 +0200
-Message-ID: <20260721152506.551921254@linuxfoundation.org>
+Subject: [PATCH 6.6 1133/1266] llc: fix SAP refcount leak when creating incoming sockets
+Date: Tue, 21 Jul 2026 17:26:10 +0200
+Message-ID: <20260721152507.149014228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,46 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit 39139b1c1c2b614096519b526112c726adb12ff0 upstream.
+commit 2c72eb6286347d05a885412fb076993bd5286b53 upstream.
 
-lan743x_hardware_init() calls pci11x1x_strap_get_status() during the
-PCI11x1x probe sequence. That helper acquires the Ethernet subsystem
-hardware lock via lan743x_hs_syslock_acquire(), which relies on
-adapter->eth_syslock_spinlock to serialize access.
+llc_sap_add_socket() takes a SAP reference for each socket added to a SAP,
+and llc_sap_remove_socket() releases it. llc_create_incoming_sock() takes
+an additional SAP reference after adding the child socket.
 
-The spinlock is currently initialized only after the strap status is
-read. With CONFIG_DEBUG_SPINLOCK enabled, taking the zeroed initialized
-spinlock can trip the spinlock debug check.
+This extra reference was balanced by an explicit llc_sap_put() in
+llc_ui_release() until commit 3100aa9d74db ("llc: fix SAP reference
+counting w.r.t. socket handling") removed that put. The corresponding hold
+in the accept path was left behind.
 
-Fix by initializing adapter->eth_syslock_spinlock before reading the
-strap status so the probe path never attempts to lock an uninitialized
-spinlock.
+When such a child socket is removed, only the reference taken by
+llc_sap_add_socket() is released. The extra reference keeps the SAP alive
+after its last socket is removed. Remove the obsolete hold.
 
-Fixes: 46b777ad9a8c ("net: lan743x: Add support to SGMII 1G and 2.5G")
-Cc: stable@vger.kernel.org # v6.0+
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Thangaraj Samynathan<Thangaraj.s@microchip.com>
-Link: https://patch.msgid.link/20260626163218.3591486-1-arighi@nvidia.com
+Fixes: 3100aa9d74db ("llc: fix SAP reference counting w.r.t. socket handling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260712130343.518797-1-xuanqiang.luo@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/llc/llc_conn.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -3299,8 +3299,8 @@ static int lan743x_hardware_init(struct
- 		adapter->max_tx_channels = PCI11X1X_MAX_TX_CHANNELS;
- 		adapter->used_tx_channels = PCI11X1X_USED_TX_CHANNELS;
- 		adapter->max_vector_count = PCI11X1X_MAX_VECTOR_COUNT;
--		pci11x1x_strap_get_status(adapter);
- 		spin_lock_init(&adapter->eth_syslock_spinlock);
-+		pci11x1x_strap_get_status(adapter);
- 		mutex_init(&adapter->sgmii_rw_lock);
- 		pci11x1x_set_rfe_rd_fifo_threshold(adapter);
- 		sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
+--- a/net/llc/llc_conn.c
++++ b/net/llc/llc_conn.c
+@@ -773,7 +773,6 @@ static struct sock *llc_create_incoming_
+ 	newllc->dev = dev;
+ 	dev_hold(dev);
+ 	llc_sap_add_socket(llc->sap, newsk);
+-	llc_sap_hold(llc->sap);
+ out:
+ 	return newsk;
+ }
 
 
