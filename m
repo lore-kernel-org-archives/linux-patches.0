@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46A73B9930;
-	Tue, 21 Jul 2026 22:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4420E44AB7B;
+	Tue, 21 Jul 2026 22:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671546; cv=none; b=PoSAzYwabEMSwVqLE9Cr9Ed2f78NyD65hegnnLNwtxiwnugrjxoW29wmiYFADpABkl45PJcgiTzoYvduM+0t3Aqs1mG+gL5imlGpuGgeGZyO9tnizBZ2AhCnzfTKhyYsajpP1mwej4M8P4uc2s3z4A03mOnLBmhj9F8bsOIjdWY=
+	t=1784671549; cv=none; b=DFBD9TJdCOktrmEW02ruoMvm+WpaYdlTkYU0fFe0vWUbXu12+JbS1oHjgSSEJaO8Ke3JqPrmn/2Pllygr1WjYEBueekxpMpxFwpFeRj7MwXQDKQVc9dbROprXdYnuwXvou+CVv+6W9/+yxwERb17K4UC9Vd5Vk7ZqUJdgS3OrDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671546; c=relaxed/simple;
-	bh=U/maiAw3VQswtMjQMZZmg8A31xd9jigob0SWHnO6L98=;
+	s=arc-20240116; t=1784671549; c=relaxed/simple;
+	bh=ElC3kURFcpIV76Mn53R2kKNMD8yQJQ0uhepC3CtKGT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZvTRR2Iz7Ek3f/ujSuypaL6u1g+RNjEaay7LQEtesxRnvDFvnY5wP9t4Q2GmMI5ILN5/ExJgLgPbpNM282hSUkVnOBZVoNZ2qYYiCd1MMxdL0gDekPwcLh5UhRBwKEzyrl6Oq3SGTG7N2TkV0cDb6llcqvzVB7Qc9Q54wRgUfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/LG4TYY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oKIb4IcXGCsghcZFp7HJ9kWwCwRoolxMCbH866Nw8JQsE9elrYlpSUNUUWKlm+EjiJyv0kJcQSa/X1N800lufNfcUIqOn6yxI/7ONmRlnf0dK1GmpOErLsaJLFBk9khQkTvvGNtjXuF2BJw5W1jQHJjLYIQTjagyfZoWTSFqsU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJQBBN3F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/LG4TYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250531F000E9;
-	Tue, 21 Jul 2026 22:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJQBBN3F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB441F000E9;
+	Tue, 21 Jul 2026 22:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671545;
-	bh=O57rY3SqZ4jpZsroXgvnNIoMymU2NyKen5ZIlRdP+7Q=;
+	s=korg; t=1784671548;
+	bh=XpHUKeI7SmlQxQQQDML8YZFAdnSpHtAyGVTCMjR7lTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/LG4TYYU1Yv+/uFZOBUfh+6f5Vvb2RXVL6IHMhEF6il+ZxTfc/tThEWBJOVbMBiV
-	 qZN3sHkjxHPaxdFs4XioAR6iwbjpRsgUNxzumXbxJm3RLhRVeP0VYS7g5n9sGeQGuE
-	 WIm6zp4558UtfgSkjYhyjZUeZhkc6evrqk4sAg3s=
+	b=QJQBBN3F33i1wS36seuP4yyu42YyKm45zqbC9tYYxo6YGNQOO1k1uDW2rhiDaMnCB
+	 HLi58Jp9TIQKatKsAQBBqLeKUkNeWL6QWKm6AuuZG90alDo0ueay8nCnFoEFrGj13H
+	 i9vK+zTqFXWCF8HgBl2IFg7uwarTnTICTqNkydos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Martin Wilck <martin.wilck@suse.com>,
+	Don Brace <don.brace@microchip.com>,
+	storagedev@microchip.com,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	mpi3mr-linuxdrv.pdl@broadcom.com,
+	MPT-FusionLinux.pdl@broadcom.com,
+	Yihang Li <liyihang9@h-partners.c>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 287/843] ARM: imx31: Fix IIM mapping leak in revision check
-Date: Tue, 21 Jul 2026 17:18:42 +0200
-Message-ID: <20260721152412.485905891@linuxfoundation.org>
+Subject: [PATCH 5.15 288/843] scsi: Revert "scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans"
+Date: Tue, 21 Jul 2026 17:18:43 +0200
+Message-ID: <20260721152412.507998279@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,56 +61,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Martin Wilck <martin.wilck@suse.com>
 
-[ Upstream commit ccb4b54b8ecf1ebafef96d538cd6c5c8455bb390 ]
+[ Upstream commit 8c292e89bd831c8a13e92f3429ef66bbe0b83677 ]
 
-mx31_read_cpu_rev() maps the IIM registers with of_iomap() to read the
-silicon revision, but returns without unmapping the MMIO mapping.
+This reverts commit 37c4e72b0651e7697eb338cd1fb09feef472cc1a.
 
-Keep the normalized revision value in a local variable and route the
-return path through iounmap() after the revision register has been read.
+Said commit causes excessive resource usage and even system freeze with
+some controllers, e.g. smartpqi and hisi_sas. The justification provided
+by the patch authors [1] was supporting a special mode of the mpi3mr and
+mpt3sas, so-called "Tri-mode", in which NVMe drives are exposed as SCSI
+devices on a separate channel. While that's useful for these drivers, it
+seems wrong to cause major breakage for other drivers for the sake of
+this feature.
 
-Fixes: 3172225d45bd ("ARM: imx31: Retrieve the IIM base address from devicetree")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+[1] https://lore.kernel.org/linux-scsi/CAFdVvOwjy+2ORJ6uJkspiLTPF05481U7gcS4QohFOFGPqAs8ig@mail.gmail.com/
+
+Fixes: 37c4e72b0651 ("scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans")
+Signed-off-by: Martin Wilck <martin.wilck@suse.com>
+Cc: Don Brace <don.brace@microchip.com>
+Cc: storagedev@microchip.com
+Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Cc: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Cc: Kashyap Desai <kashyap.desai@broadcom.com>
+Cc: Sumit Saxena <sumit.saxena@broadcom.com>
+Cc: mpi3mr-linuxdrv.pdl@broadcom.com
+Cc: MPT-FusionLinux.pdl@broadcom.com
+Cc: Yihang Li <liyihang9@h-partners.c>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260513174236.430465-3-mwilck@suse.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/cpu-imx31.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_scan.c          |  2 +-
+ drivers/scsi/scsi_transport_sas.c | 60 +++++++------------------------
+ 2 files changed, 13 insertions(+), 49 deletions(-)
 
-diff --git a/arch/arm/mach-imx/cpu-imx31.c b/arch/arm/mach-imx/cpu-imx31.c
-index 35c544924e5095..e81ef9e36a1fab 100644
---- a/arch/arm/mach-imx/cpu-imx31.c
-+++ b/arch/arm/mach-imx/cpu-imx31.c
-@@ -36,6 +36,7 @@ static int mx31_read_cpu_rev(void)
- 	void __iomem *iim_base;
- 	struct device_node *np;
- 	u32 i, srev;
-+	int rev = IMX_CHIP_REVISION_UNKNOWN;
+diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
+index 518aa152849efc..8bbfa51c50b403 100644
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -1763,7 +1763,7 @@ int scsi_scan_host_selected(struct Scsi_Host *shost, unsigned int channel,
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-iim");
- 	iim_base = of_iomap(np, 0);
-@@ -48,13 +49,17 @@ static int mx31_read_cpu_rev(void)
- 
- 	for (i = 0; i < ARRAY_SIZE(mx31_cpu_type); i++)
- 		if (srev == mx31_cpu_type[i].srev) {
-+			rev = mx31_cpu_type[i].rev;
- 			imx_print_silicon_rev(mx31_cpu_type[i].name,
- 						mx31_cpu_type[i].rev);
--			return mx31_cpu_type[i].rev;
-+			goto out;
- 		}
- 
- 	imx_print_silicon_rev("i.MX31", IMX_CHIP_REVISION_UNKNOWN);
--	return IMX_CHIP_REVISION_UNKNOWN;
+ 	return 0;
+ }
+-EXPORT_SYMBOL(scsi_scan_host_selected);
 +
-+out:
-+	iounmap(iim_base);
-+	return rev;
+ static void scsi_sysfs_add_devices(struct Scsi_Host *shost)
+ {
+ 	struct scsi_device *sdev;
+diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
+index ecb2e8aed93bb1..8649608faec2c7 100644
+--- a/drivers/scsi/scsi_transport_sas.c
++++ b/drivers/scsi/scsi_transport_sas.c
+@@ -41,8 +41,6 @@
+ #include <scsi/scsi_transport_sas.h>
+ 
+ #include "scsi_sas_internal.h"
+-#include "scsi_priv.h"
+-
+ struct sas_host_attrs {
+ 	struct list_head rphy_list;
+ 	struct mutex lock;
+@@ -1683,22 +1681,6 @@ int scsi_is_sas_rphy(const struct device *dev)
+ }
+ EXPORT_SYMBOL(scsi_is_sas_rphy);
+ 
+-static void scan_channel_zero(struct Scsi_Host *shost, uint id, u64 lun)
+-{
+-	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
+-	struct sas_rphy *rphy;
+-
+-	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
+-		if (rphy->identify.device_type != SAS_END_DEVICE ||
+-		    rphy->scsi_target_id == -1)
+-			continue;
+-
+-		if (id == SCAN_WILD_CARD || id == rphy->scsi_target_id) {
+-			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
+-					 lun, SCSI_SCAN_MANUAL);
+-		}
+-	}
+-}
+ 
+ /*
+  * SCSI scan helper
+@@ -1708,41 +1690,23 @@ static int sas_user_scan(struct Scsi_Host *shost, uint channel,
+ 		uint id, u64 lun)
+ {
+ 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
+-	int res = 0;
+-	int i;
+-
+-	switch (channel) {
+-	case 0:
+-		mutex_lock(&sas_host->lock);
+-		scan_channel_zero(shost, id, lun);
+-		mutex_unlock(&sas_host->lock);
+-		break;
+-
+-	case SCAN_WILD_CARD:
+-		mutex_lock(&sas_host->lock);
+-		scan_channel_zero(shost, id, lun);
+-		mutex_unlock(&sas_host->lock);
++	struct sas_rphy *rphy;
+ 
+-		for (i = 1; i <= shost->max_channel; i++) {
+-			res = scsi_scan_host_selected(shost, i, id, lun,
+-						      SCSI_SCAN_MANUAL);
+-			if (res)
+-				goto exit_scan;
+-		}
+-		break;
++	mutex_lock(&sas_host->lock);
++	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
++		if (rphy->identify.device_type != SAS_END_DEVICE ||
++		    rphy->scsi_target_id == -1)
++			continue;
+ 
+-	default:
+-		if (channel <= shost->max_channel) {
+-			res = scsi_scan_host_selected(shost, channel, id, lun,
+-						      SCSI_SCAN_MANUAL);
+-		} else {
+-			res = -EINVAL;
++		if ((channel == SCAN_WILD_CARD || channel == 0) &&
++		    (id == SCAN_WILD_CARD || id == rphy->scsi_target_id)) {
++			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
++					 lun, SCSI_SCAN_MANUAL);
+ 		}
+-		break;
+ 	}
++	mutex_unlock(&sas_host->lock);
+ 
+-exit_scan:
+-	return res;
++	return 0;
  }
  
- int mx31_revision(void)
+ 
 -- 
 2.53.0
 
