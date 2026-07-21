@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C344746A5;
-	Tue, 21 Jul 2026 21:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA65C473C6D;
+	Tue, 21 Jul 2026 21:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667934; cv=none; b=bkYi2nzsbtDci7pzifxpzwM5XcRGwU27lABXZrGsmCmYrslqXtaf245q3rX6mUfvXWf7kgiQ0bys0HbkQ4Ft25JKT7p7fJfAfKCrCamQ+q3QrPctM6PPkgt1g/NiVUs0fCPfo42vO06Jk657S/WcouPbHrpuq4bbAYZ64elWgT0=
+	t=1784667937; cv=none; b=VZ4X4EtkunkofARgz/WTpjBHDW1GmUUaSNczUQZmQWnymW7zfhWR9XVLZ6z0qSNeWPCKNidL7uH9VZzl7rNVImbkLu9zp8oRdBPZCAyVM9MaPUiZt9CjiRP8hMDZup0gvGWS9nwyyC+vyH79Dmk8Q+83Q2MbfrI1T/A+zqen9l8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667934; c=relaxed/simple;
-	bh=BcgCQlPb69/dDMWcL7Dnx2mRsV72q57RgZEk/N54E+c=;
+	s=arc-20240116; t=1784667937; c=relaxed/simple;
+	bh=NDEADqSTyuK0GrJRgbMj0RD2Sy482lhpp8f8bMnuhsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFsaEbR3IrvvfM1ktRfaHcA/7f7WoRyp/Az/jahM47kjnoHYcxD/F9Nc95FilzI/Ln7pVppzGGaRsu5TSJ/x1o/ULXaELRUO5RYG7B+oaTtlzZi/D6S/9KhOKzvNddfRyrcAZ3wHyeo4sPKAnGF53qu/zeUwGqPBU0sKph80LMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j63E73/Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zg9RmytT75SoJ1Z3ZqJ3VrKgS0ONfhNFVEeHMYcNZ4TP6LNYNhYYzCsl/H/YaL/VEFBJaAwKkggOk2Jp6vnmTnOBl2nBfQhiUIeCqrnOhv7zBK9OdT/x8CC6OPeuBaRF79+ZonHUZCI2CbBup9aF+X4bZ1wHdu0qFFTR5+nsG7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdKuzS8Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j63E73/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E2D1F000E9;
-	Tue, 21 Jul 2026 21:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdKuzS8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCD31F000E9;
+	Tue, 21 Jul 2026 21:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667932;
-	bh=AV1m/i4ZUk2x87nZHoYOrANYMVhZczxGfe2wMBbqFVw=;
+	s=korg; t=1784667935;
+	bh=vQ+aK8vpQlwF9ymm/QnX8R4yUxf0MVFJSbS5Ukioyis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j63E73/ZxS+hDXQSsPRgNGm6fabUwtKM7M+UNn9roPAMKk7/vwFfmQMaICsKYfKRm
-	 p1wLpbn+aykr/KBS47G5sB7nk0sckTnOc8hpoQOI6DaBm70yF5QXlQ+QmquV+o/0+J
-	 T75XO4OeRJ3AQr3D8ZbyfKQYzTgwyLrGUPIL3lf4=
+	b=VdKuzS8Zp9QAl90xIV996QAB3cMoLoPaQdct18MC6RGsqUKmMJuVEG9POU7nx+FUf
+	 H9f0dtVnxz7BaguT1lW/IA1mEWEY1Cj6wcnmScx+kVAZSdu8ptEA53KqSvzbzxc8rK
+	 +rOtbiG9fPIvbA/IjhyMowSGM0FPPkisKOGccx40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Aoyama Wataru <wataru.aoyama@sony.com>,
+	Daniel Palmer <daniel.palmer@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1194/1266] Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()
-Date: Tue, 21 Jul 2026 17:27:11 +0200
-Message-ID: <20260721152508.514896607@linuxfoundation.org>
+Subject: [PATCH 6.6 1242/1266] exfat: add exfat_get_dentry_set_by_ei() helper
+Date: Tue, 21 Jul 2026 17:27:59 +0200
+Message-ID: <20260721152509.611652042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,539 +54,312 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit 6fef032af0092ed5ccb767239a9ac1bc38c08a40 ]
+[ Upstream commit ac844e91364a03c35838fd488437605fbe56f8c3 ]
 
-l2cap_sock_new_connection_cb() returned l2cap_pi(sk)->chan after
-release_sock(parent). Once the parent lock is dropped the newly
-enqueued child socket sk is reachable via the accept queue, so another
-task can accept and free it before the callback dereferences sk,
-resulting in a use-after-free.
+This helper gets the directory entry set of the file for the exfat
+inode which has been created.
 
-Rework the ->new_connection() op so the core, rather than the callback,
-owns the child channel's lifetime. The op now receives a pre-allocated
-new_chan and returns an errno instead of allocating and returning a
-channel. l2cap_new_connection() allocates the child channel and links
-it into the conn list via __l2cap_chan_add() before invoking the
-callback, so the conn-list reference keeps the channel alive once
-release_sock(parent) exposes the socket to other tasks.
+It's used to remove all the instances of the pattern it replaces
+making the code cleaner, it's also a preparation for changing ->dir
+to record the cluster where the directory entry set is located and
+changing ->entry to record the index of the directory entry within
+the cluster.
 
-Channel configuration that was duplicated in l2cap_sock_init() and the
-various new_connection callbacks is consolidated into
-l2cap_chan_set_defaults(), which now inherits from the parent channel
-when one is supplied.
-
-Fixes: 8ffb929098a5 ("Bluetooth: Remove parent socket usage from l2cap_core.c")
-Cc: stable@kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
+Reviewed-by: Daniel Palmer <daniel.palmer@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 942296784b2a ("exfat: preserve benign secondary entries during rename and move")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/l2cap.h |   10 ++--
- net/bluetooth/6lowpan.c       |   18 -------
- net/bluetooth/l2cap_core.c    |   78 ++++++++++++++++++++++++++-----
- net/bluetooth/l2cap_sock.c    |  103 +++++++++++++++++++-----------------------
- net/bluetooth/smp.c           |   27 ++---------
- 5 files changed, 127 insertions(+), 109 deletions(-)
+ fs/exfat/exfat_fs.h |    2 +
+ fs/exfat/inode.c    |    2 -
+ fs/exfat/namei.c    |   82 ++++++++++++++++++++++------------------------------
+ 3 files changed, 38 insertions(+), 48 deletions(-)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -614,7 +614,8 @@ struct l2cap_chan {
- struct l2cap_ops {
- 	char			*name;
+--- a/fs/exfat/exfat_fs.h
++++ b/fs/exfat/exfat_fs.h
+@@ -498,6 +498,8 @@ struct exfat_dentry *exfat_get_dentry_ca
+ int exfat_get_dentry_set(struct exfat_entry_set_cache *es,
+ 		struct super_block *sb, struct exfat_chain *p_dir, int entry,
+ 		unsigned int type);
++#define exfat_get_dentry_set_by_ei(es, sb, ei)		\
++	exfat_get_dentry_set(es, sb, &(ei)->dir, (ei)->entry, ES_ALL_ENTRIES)
+ int exfat_put_dentry_set(struct exfat_entry_set_cache *es, int sync);
+ int exfat_count_dir_entries(struct super_block *sb, struct exfat_chain *p_dir);
  
--	struct l2cap_chan	*(*new_connection) (struct l2cap_chan *chan);
-+	int			(*new_connection)(struct l2cap_chan *chan,
-+						  struct l2cap_chan *new_chan);
- 	int			(*recv) (struct l2cap_chan * chan,
- 					 struct sk_buff *skb);
- 	void			(*teardown) (struct l2cap_chan *chan, int err);
-@@ -879,9 +880,10 @@ static inline __u16 __next_seq(struct l2
- 	return (seq + 1) % (chan->tx_win_max + 1);
- }
+--- a/fs/exfat/inode.c
++++ b/fs/exfat/inode.c
+@@ -42,7 +42,7 @@ int __exfat_write_inode(struct inode *in
+ 	exfat_set_volume_dirty(sb);
  
--static inline struct l2cap_chan *l2cap_chan_no_new_connection(struct l2cap_chan *chan)
-+static inline int l2cap_chan_no_new_connection(struct l2cap_chan *chan,
-+					       struct l2cap_chan *new_chan)
+ 	/* get the directory entry of given file or directory */
+-	if (exfat_get_dentry_set(&es, sb, &(ei->dir), ei->entry, ES_ALL_ENTRIES))
++	if (exfat_get_dentry_set_by_ei(&es, sb, ei))
+ 		return -EIO;
+ 	ep = exfat_get_dentry_cached(&es, ES_IDX_FILE);
+ 	ep2 = exfat_get_dentry_cached(&es, ES_IDX_STREAM);
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -786,29 +786,26 @@ unlock:
+ /* remove an entry, BUT don't truncate */
+ static int exfat_unlink(struct inode *dir, struct dentry *dentry)
  {
--	return NULL;
-+	return -EOPNOTSUPP;
- }
+-	struct exfat_chain cdir;
+ 	struct exfat_dentry *ep;
+ 	struct super_block *sb = dir->i_sb;
+ 	struct inode *inode = dentry->d_inode;
+ 	struct exfat_inode_info *ei = EXFAT_I(inode);
+ 	struct buffer_head *bh;
+-	int num_entries, entry, err = 0;
++	int num_entries, err = 0;
  
- static inline int l2cap_chan_no_recv(struct l2cap_chan *chan, struct sk_buff *skb)
-@@ -957,7 +959,7 @@ int l2cap_chan_send(struct l2cap_chan *c
- void l2cap_chan_busy(struct l2cap_chan *chan, int busy);
- void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail);
- int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator);
--void l2cap_chan_set_defaults(struct l2cap_chan *chan);
-+void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan);
- int l2cap_ertm_init(struct l2cap_chan *chan);
- void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
- void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -631,7 +631,7 @@ static struct l2cap_chan *chan_create(vo
- 	if (!chan)
- 		return NULL;
- 
--	l2cap_chan_set_defaults(chan);
-+	l2cap_chan_set_defaults(chan, NULL);
- 
- 	chan->chan_type = L2CAP_CHAN_CONN_ORIENTED;
- 	chan->mode = L2CAP_MODE_LE_FLOWCTL;
-@@ -744,21 +744,6 @@ static inline void chan_ready_cb(struct
- 	ifup(dev->netdev);
- }
- 
--static inline struct l2cap_chan *chan_new_conn_cb(struct l2cap_chan *pchan)
--{
--	struct l2cap_chan *chan;
--
--	chan = chan_create();
--	if (!chan)
--		return NULL;
--
--	chan->ops = pchan->ops;
--
--	BT_DBG("chan %p pchan %p", chan, pchan);
--
--	return chan;
--}
--
- static void unregister_dev(struct lowpan_btle_dev *dev)
- {
- 	struct hci_dev *hdev = READ_ONCE(dev->hdev);
-@@ -900,7 +885,6 @@ static long chan_get_sndtimeo_cb(struct
- 
- static const struct l2cap_ops bt_6lowpan_chan_ops = {
- 	.name			= "L2CAP 6LoWPAN channel",
--	.new_connection		= chan_new_conn_cb,
- 	.recv			= chan_recv_cb,
- 	.close			= chan_close_cb,
- 	.state_change		= chan_state_change_cb,
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -525,7 +525,10 @@ void l2cap_chan_put(struct l2cap_chan *c
- }
- EXPORT_SYMBOL_GPL(l2cap_chan_put);
- 
--void l2cap_chan_set_defaults(struct l2cap_chan *chan)
-+/* Initialise @chan with default values, inheriting from the parent channel
-+ * @pchan when it is given.
-+ */
-+void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan)
- {
- 	chan->fcs  = L2CAP_FCS_CRC16;
- 	chan->max_tx = L2CAP_DEFAULT_MAX_TX;
-@@ -539,6 +542,31 @@ void l2cap_chan_set_defaults(struct l2ca
- 	chan->retrans_timeout = L2CAP_DEFAULT_RETRANS_TO;
- 	chan->monitor_timeout = L2CAP_DEFAULT_MONITOR_TO;
- 
-+	if (pchan) {
-+		BT_DBG("chan %p pchan %p", chan, pchan);
-+
-+		chan->chan_type = pchan->chan_type;
-+		chan->imtu = pchan->imtu;
-+		chan->omtu = pchan->omtu;
-+		chan->mode = pchan->mode;
-+		chan->fcs = pchan->fcs;
-+		chan->max_tx = pchan->max_tx;
-+		chan->tx_win = pchan->tx_win;
-+		chan->tx_win_max = pchan->tx_win_max;
-+		chan->sec_level = pchan->sec_level;
-+		chan->conf_state = pchan->conf_state;
-+		chan->flags = pchan->flags;
-+		chan->tx_credits = pchan->tx_credits;
-+		chan->rx_credits = pchan->rx_credits;
-+
-+		if (chan->chan_type == L2CAP_CHAN_FIXED) {
-+			chan->scid = pchan->scid;
-+			chan->dcid = pchan->scid;
-+		}
-+
-+		return;
-+	}
-+
- 	chan->conf_state = 0;
- 	set_bit(CONF_NOT_COMPLETE, &chan->conf_state);
- 
-@@ -3975,6 +4003,38 @@ static inline int l2cap_command_rej(stru
- 	return 0;
- }
- 
-+/* Allocate and initialise a channel for an incoming connection.
-+ *
-+ * The channel inherits its configuration from @pchan and is linked into @conn
-+ * before ->new_connection() runs, so the conn list reference keeps it alive if
-+ * the callback exposes it (e.g. via the socket accept queue) before this
-+ * returns. The l2cap_chan_create() reference is taken over by the subsystem on
-+ * success and dropped here on failure.
-+ */
-+static struct l2cap_chan *l2cap_new_connection(struct l2cap_conn *conn,
-+					       struct l2cap_chan *pchan)
-+{
-+	struct l2cap_chan *chan;
-+
-+	chan = l2cap_chan_create();
-+	if (!chan)
-+		return NULL;
-+
-+	l2cap_chan_set_defaults(chan, pchan);
-+	chan->ops = pchan->ops;
-+
-+	__l2cap_chan_add(conn, chan);
-+
-+	if (pchan->ops->new_connection &&
-+	    pchan->ops->new_connection(pchan, chan) < 0) {
-+		l2cap_chan_del(chan, 0);
-+		l2cap_chan_put(chan);
-+		return NULL;
-+	}
-+
-+	return chan;
-+}
-+
- static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
- 			  u8 *data, u8 rsp_code)
- {
-@@ -4021,7 +4081,7 @@ static void l2cap_connect(struct l2cap_c
- 		goto response;
+ 	mutex_lock(&EXFAT_SB(sb)->s_lock);
+-	exfat_chain_dup(&cdir, &ei->dir);
+-	entry = ei->entry;
+ 	if (ei->dir.dir == DIR_DELETED) {
+ 		exfat_err(sb, "abnormal access to deleted dentry");
+ 		err = -ENOENT;
+ 		goto unlock;
  	}
  
--	chan = pchan->ops->new_connection(pchan);
-+	chan = l2cap_new_connection(conn, pchan);
- 	if (!chan)
- 		goto response;
+-	ep = exfat_get_dentry(sb, &cdir, entry, &bh);
++	ep = exfat_get_dentry(sb, &ei->dir, ei->entry, &bh);
+ 	if (!ep) {
+ 		err = -EIO;
+ 		goto unlock;
+ 	}
+-	num_entries = exfat_count_ext_entries(sb, &cdir, entry, ep);
++	num_entries = exfat_count_ext_entries(sb, &ei->dir, ei->entry, ep);
+ 	if (num_entries < 0) {
+ 		err = -EIO;
+ 		brelse(bh);
+@@ -819,7 +816,7 @@ static int exfat_unlink(struct inode *di
  
-@@ -4039,8 +4099,6 @@ static void l2cap_connect(struct l2cap_c
- 	chan->psm  = psm;
- 	chan->dcid = scid;
+ 	exfat_set_volume_dirty(sb);
+ 	/* update the directory entry */
+-	if (exfat_remove_entries(dir, &cdir, entry, 0, num_entries)) {
++	if (exfat_remove_entries(dir, &ei->dir, ei->entry, 0, num_entries)) {
+ 		err = -EIO;
+ 		goto unlock;
+ 	}
+@@ -944,18 +941,15 @@ static int exfat_rmdir(struct inode *dir
+ {
+ 	struct inode *inode = dentry->d_inode;
+ 	struct exfat_dentry *ep;
+-	struct exfat_chain cdir, clu_to_free;
++	struct exfat_chain clu_to_free;
+ 	struct super_block *sb = inode->i_sb;
+ 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
+ 	struct exfat_inode_info *ei = EXFAT_I(inode);
+ 	struct buffer_head *bh;
+-	int num_entries, entry, err;
++	int num_entries, err;
  
--	__l2cap_chan_add(conn, chan);
+ 	mutex_lock(&EXFAT_SB(inode->i_sb)->s_lock);
+ 
+-	exfat_chain_dup(&cdir, &ei->dir);
+-	entry = ei->entry;
 -
- 	dcid = chan->scid;
- 
- 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
-@@ -4909,7 +4967,7 @@ static int l2cap_le_connect_req(struct l
- 		goto response_unlock;
+ 	if (ei->dir.dir == DIR_DELETED) {
+ 		exfat_err(sb, "abnormal access to deleted dentry");
+ 		err = -ENOENT;
+@@ -973,13 +967,13 @@ static int exfat_rmdir(struct inode *dir
+ 		goto unlock;
  	}
  
--	chan = pchan->ops->new_connection(pchan);
-+	chan = l2cap_new_connection(conn, pchan);
- 	if (!chan) {
- 		result = L2CAP_CR_LE_NO_MEM;
- 		goto response_unlock;
-@@ -4924,8 +4982,6 @@ static int l2cap_le_connect_req(struct l
- 	chan->omtu = mtu;
- 	chan->remote_mps = mps;
+-	ep = exfat_get_dentry(sb, &cdir, entry, &bh);
++	ep = exfat_get_dentry(sb, &ei->dir, ei->entry, &bh);
+ 	if (!ep) {
+ 		err = -EIO;
+ 		goto unlock;
+ 	}
  
--	__l2cap_chan_add(conn, chan);
--
- 	l2cap_le_flowctl_init(chan, __le16_to_cpu(req->credits));
+-	num_entries = exfat_count_ext_entries(sb, &cdir, entry, ep);
++	num_entries = exfat_count_ext_entries(sb, &ei->dir, ei->entry, ep);
+ 	if (num_entries < 0) {
+ 		err = -EIO;
+ 		brelse(bh);
+@@ -989,7 +983,7 @@ static int exfat_rmdir(struct inode *dir
+ 	brelse(bh);
  
- 	dcid = chan->scid;
-@@ -5134,7 +5190,7 @@ static inline int l2cap_ecred_conn_req(s
- 			continue;
- 		}
- 
--		chan = pchan->ops->new_connection(pchan);
-+		chan = l2cap_new_connection(conn, pchan);
- 		if (!chan) {
- 			result = L2CAP_CR_LE_NO_MEM;
- 			continue;
-@@ -5149,8 +5205,6 @@ static inline int l2cap_ecred_conn_req(s
- 		chan->omtu = mtu;
- 		chan->remote_mps = mps;
- 
--		__l2cap_chan_add(conn, chan);
--
- 		l2cap_ecred_init(chan, __le16_to_cpu(req->credits));
- 
- 		/* Init response */
-@@ -7421,14 +7475,12 @@ static void l2cap_connect_cfm(struct hci
- 			goto next;
- 
- 		l2cap_chan_lock(pchan);
--		chan = pchan->ops->new_connection(pchan);
-+		chan = l2cap_new_connection(conn, pchan);
- 		if (chan) {
- 			bacpy(&chan->src, &hcon->src);
- 			bacpy(&chan->dst, &hcon->dst);
- 			chan->src_type = bdaddr_src_type(hcon);
- 			chan->dst_type = dst_type;
--
--			__l2cap_chan_add(conn, chan);
- 		}
- 
- 		l2cap_chan_unlock(pchan);
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -45,7 +45,8 @@ static struct bt_sock_list l2cap_sk_list
- static const struct proto_ops l2cap_sock_ops;
- static void l2cap_sock_init(struct sock *sk, struct sock *parent);
- static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
--				     int proto, gfp_t prio, int kern);
-+				     int proto, gfp_t prio, int kern,
-+				     struct l2cap_chan *chan);
- static void l2cap_sock_cleanup_listen(struct sock *parent);
- 
- bool l2cap_is_socket(struct socket *sock)
-@@ -1240,6 +1241,23 @@ done:
+ 	exfat_set_volume_dirty(sb);
+-	err = exfat_remove_entries(dir, &cdir, entry, 0, num_entries);
++	err = exfat_remove_entries(dir, &ei->dir, ei->entry, 0, num_entries);
+ 	if (err) {
+ 		exfat_err(sb, "failed to exfat_remove_entries : err(%d)", err);
+ 		goto unlock;
+@@ -1015,8 +1009,8 @@ unlock:
  	return err;
  }
  
-+/* Release the sock's ref on chan and clear the pointer so that the ref is
-+ * dropped exactly once even if both l2cap_sock_kill() and
-+ * l2cap_sock_destruct() run. Setting chan->data to NULL first stops any other
-+ * task from dereferencing the now-dead sock pointer.
-+ */
-+static void l2cap_sock_put_chan(struct sock *sk)
-+{
-+	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+
-+	if (!chan)
-+		return;
-+
-+	chan->data = NULL;
-+	l2cap_pi(sk)->chan = NULL;
-+	l2cap_chan_put(chan);
-+}
-+
- /* Kill socket (only if zapped and orphan)
-  * Must be called on unlocked socket, with l2cap channel lock.
-  */
-@@ -1250,13 +1268,9 @@ static void l2cap_sock_kill(struct sock
- 
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
- 
--	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
--	 * sock pointer.
--	 */
--	l2cap_pi(sk)->chan->data = NULL;
--	/* Kill poor orphan */
-+	l2cap_sock_put_chan(sk);
- 
--	l2cap_chan_put(l2cap_pi(sk)->chan);
-+	/* Kill poor orphan */
- 	sock_set_flag(sk, SOCK_DEAD);
- 	sock_put(sk);
- }
-@@ -1499,12 +1513,13 @@ static void l2cap_sock_cleanup_listen(st
- 	}
- }
- 
--static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
-+static int l2cap_sock_new_connection_cb(struct l2cap_chan *chan,
-+					struct l2cap_chan *new_chan)
+-static int exfat_rename_file(struct inode *parent_inode, struct exfat_chain *p_dir,
+-		int oldentry, struct exfat_uni_name *p_uniname,
++static int exfat_rename_file(struct inode *parent_inode,
++		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
+ 		struct exfat_inode_info *ei)
  {
- 	struct sock *sk, *parent = chan->data;
+ 	int ret, num_old_entries, num_new_entries;
+@@ -1025,11 +1019,12 @@ static int exfat_rename_file(struct inod
+ 	struct buffer_head *new_bh, *old_bh;
+ 	int sync = IS_DIRSYNC(parent_inode);
  
- 	if (!parent)
--		return NULL;
-+		return -EINVAL;
+-	epold = exfat_get_dentry(sb, p_dir, oldentry, &old_bh);
++	epold = exfat_get_dentry(sb, &ei->dir, ei->entry, &old_bh);
+ 	if (!epold)
+ 		return -EIO;
  
- 	lock_sock(parent);
+-	num_old_entries = exfat_count_ext_entries(sb, p_dir, oldentry, epold);
++	num_old_entries = exfat_count_ext_entries(sb, &ei->dir, ei->entry,
++		epold);
+ 	if (num_old_entries < 0)
+ 		return -EIO;
+ 	num_old_entries++;
+@@ -1059,7 +1054,7 @@ static int exfat_rename_file(struct inod
+ 		brelse(old_bh);
+ 		brelse(new_bh);
  
-@@ -1512,25 +1527,28 @@ static struct l2cap_chan *l2cap_sock_new
- 	if (sk_acceptq_is_full(parent)) {
- 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
- 		release_sock(parent);
--		return NULL;
-+		return -ENOBUFS;
- 	}
+-		epold = exfat_get_dentry(sb, p_dir, oldentry + 1, &old_bh);
++		epold = exfat_get_dentry(sb, &ei->dir, ei->entry + 1, &old_bh);
+ 		if (!epold)
+ 			return -EIO;
+ 		epnew = exfat_get_dentry(sb, p_dir, newentry + 1, &new_bh);
+@@ -1078,7 +1073,7 @@ static int exfat_rename_file(struct inod
+ 		if (ret)
+ 			return ret;
  
- 	sk = l2cap_sock_alloc(sock_net(parent), NULL, BTPROTO_L2CAP,
--			      GFP_ATOMIC, 0);
-+			      GFP_ATOMIC, 0, new_chan);
- 	if (!sk) {
- 		release_sock(parent);
--		return NULL;
--        }
-+		return -ENOMEM;
-+	}
+-		exfat_remove_entries(parent_inode, p_dir, oldentry, 0,
++		exfat_remove_entries(parent_inode, &ei->dir, ei->entry, 0,
+ 			num_old_entries);
+ 		ei->dir = *p_dir;
+ 		ei->entry = newentry;
+@@ -1090,10 +1085,10 @@ static int exfat_rename_file(struct inod
+ 		exfat_update_bh(old_bh, sync);
+ 		brelse(old_bh);
  
- 	bt_sock_reclassify_lock(sk, BTPROTO_L2CAP);
+-		exfat_remove_entries(parent_inode, p_dir, oldentry,
++		exfat_remove_entries(parent_inode, &ei->dir, ei->entry,
+ 			ES_IDX_FIRST_FILENAME + 1, num_old_entries);
  
- 	l2cap_sock_init(sk, parent);
- 
-+	/* The conn list reference taken by l2cap_new_connection() keeps new_chan
-+	 * alive once release_sock() lets another task free this socket.
-+	 */
- 	bt_accept_enqueue(parent, sk, false);
- 
- 	release_sock(parent);
- 
--	return l2cap_pi(sk)->chan;
-+	return 0;
+-		ret = exfat_init_ext_entry(parent_inode, p_dir, oldentry,
++		ret = exfat_init_ext_entry(parent_inode, &ei->dir, ei->entry,
+ 			num_new_entries, p_uniname);
+ 		if (ret)
+ 			return ret;
+@@ -1101,20 +1096,20 @@ static int exfat_rename_file(struct inod
+ 	return 0;
  }
  
- static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
-@@ -1828,10 +1846,7 @@ static void l2cap_sock_destruct(struct s
+-static int exfat_move_file(struct inode *parent_inode, struct exfat_chain *p_olddir,
+-		int oldentry, struct exfat_chain *p_newdir,
+-		struct exfat_uni_name *p_uniname, struct exfat_inode_info *ei)
++static int exfat_move_file(struct inode *parent_inode,
++		struct exfat_chain *p_newdir, struct exfat_uni_name *p_uniname,
++		struct exfat_inode_info *ei)
+ {
+ 	int ret, newentry, num_new_entries, num_old_entries;
+ 	struct exfat_dentry *epmov, *epnew;
+ 	struct super_block *sb = parent_inode->i_sb;
+ 	struct buffer_head *mov_bh, *new_bh;
  
- 	BT_DBG("sk %p", sk);
+-	epmov = exfat_get_dentry(sb, p_olddir, oldentry, &mov_bh);
++	epmov = exfat_get_dentry(sb, &ei->dir, ei->entry, &mov_bh);
+ 	if (!epmov)
+ 		return -EIO;
  
--	if (l2cap_pi(sk)->chan) {
--		l2cap_pi(sk)->chan->data = NULL;
--		l2cap_chan_put(l2cap_pi(sk)->chan);
--	}
-+	l2cap_sock_put_chan(sk);
+-	num_old_entries = exfat_count_ext_entries(sb, p_olddir, oldentry,
++	num_old_entries = exfat_count_ext_entries(sb, &ei->dir, ei->entry,
+ 		epmov);
+ 	if (num_old_entries < 0)
+ 		return -EIO;
+@@ -1142,7 +1137,7 @@ static int exfat_move_file(struct inode
+ 	brelse(mov_bh);
+ 	brelse(new_bh);
  
- 	list_for_each_entry_safe(rx_busy, next, &l2cap_pi(sk)->rx_busy, list) {
- 		kfree_skb(rx_busy->skb);
-@@ -1863,30 +1878,12 @@ static void l2cap_sock_init(struct sock
- 	BT_DBG("sk %p", sk);
+-	epmov = exfat_get_dentry(sb, p_olddir, oldentry + 1, &mov_bh);
++	epmov = exfat_get_dentry(sb, &ei->dir, ei->entry + 1, &mov_bh);
+ 	if (!epmov)
+ 		return -EIO;
+ 	epnew = exfat_get_dentry(sb, p_newdir, newentry + 1, &new_bh);
+@@ -1161,7 +1156,7 @@ static int exfat_move_file(struct inode
+ 	if (ret)
+ 		return ret;
  
- 	if (parent) {
--		struct l2cap_chan *pchan = l2cap_pi(parent)->chan;
+-	exfat_remove_entries(parent_inode, p_olddir, oldentry, 0,
++	exfat_remove_entries(parent_inode, &ei->dir, ei->entry, 0,
+ 		num_old_entries);
+ 
+ 	exfat_chain_set(&ei->dir, p_newdir->dir, p_newdir->size,
+@@ -1177,8 +1172,7 @@ static int __exfat_rename(struct inode *
+ 		struct dentry *new_dentry)
+ {
+ 	int ret;
+-	int dentry;
+-	struct exfat_chain olddir, newdir;
++	struct exfat_chain newdir;
+ 	struct exfat_uni_name uni_name;
+ 	struct super_block *sb = old_parent_inode->i_sb;
+ 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
+@@ -1196,11 +1190,6 @@ static int __exfat_rename(struct inode *
+ 		return -ENOENT;
+ 	}
+ 
+-	exfat_chain_set(&olddir, EXFAT_I(old_parent_inode)->start_clu,
+-		EXFAT_B_TO_CLU_ROUND_UP(i_size_read(old_parent_inode), sbi),
+-		EXFAT_I(old_parent_inode)->flags);
+-	dentry = ei->entry;
 -
- 		sk->sk_type = parent->sk_type;
- 		bt_sk(sk)->flags = bt_sk(parent)->flags;
+ 	/* check whether new dir is existing directory and empty */
+ 	if (new_inode) {
+ 		ret = -EIO;
+@@ -1235,35 +1224,34 @@ static int __exfat_rename(struct inode *
  
--		chan->chan_type = pchan->chan_type;
--		chan->imtu = pchan->imtu;
--		chan->omtu = pchan->omtu;
--		chan->conf_state = pchan->conf_state;
--		chan->mode = pchan->mode;
--		chan->fcs  = pchan->fcs;
--		chan->max_tx = pchan->max_tx;
--		chan->tx_win = pchan->tx_win;
--		chan->tx_win_max = pchan->tx_win_max;
--		chan->sec_level = pchan->sec_level;
--		chan->flags = pchan->flags;
--		chan->tx_credits = pchan->tx_credits;
--		chan->rx_credits = pchan->rx_credits;
--
--		if (chan->chan_type == L2CAP_CHAN_FIXED) {
--			chan->scid = pchan->scid;
--			chan->dcid = pchan->scid;
--		}
--
-+		/* Channel configuration is inherited from the parent by
-+		 * l2cap_new_connection().
-+		 */
- 		security_sk_clone(parent, sk);
- 	} else {
- 		switch (sk->sk_type) {
-@@ -1912,7 +1909,7 @@ static void l2cap_sock_init(struct sock
- 			chan->mode = L2CAP_MODE_BASIC;
+ 	exfat_set_volume_dirty(sb);
+ 
+-	if (olddir.dir == newdir.dir)
+-		ret = exfat_rename_file(new_parent_inode, &olddir, dentry,
++	if (new_parent_inode == old_parent_inode)
++		ret = exfat_rename_file(new_parent_inode, &newdir,
+ 				&uni_name, ei);
+ 	else
+-		ret = exfat_move_file(new_parent_inode, &olddir, dentry,
+-				&newdir, &uni_name, ei);
++		ret = exfat_move_file(new_parent_inode, &newdir,
++				&uni_name, ei);
+ 
+ 	if (!ret && new_inode) {
+-		struct exfat_chain *p_dir = &(new_ei->dir);
+-		int new_entry = new_ei->entry;
+ 		struct exfat_dentry *ep;
+ 		struct buffer_head *new_bh = NULL;
+ 
+ 		/* delete entries of new_dir */
+-		ep = exfat_get_dentry(sb, p_dir, new_entry, &new_bh);
++		ep = exfat_get_dentry(sb, &new_ei->dir, new_ei->entry, &new_bh);
+ 		if (!ep) {
+ 			ret = -EIO;
+ 			goto del_out;
  		}
  
--		l2cap_chan_set_defaults(chan);
-+		l2cap_chan_set_defaults(chan, NULL);
- 	}
+-		num_entries = exfat_count_ext_entries(sb, p_dir, new_entry, ep);
++		num_entries = exfat_count_ext_entries(sb, &new_ei->dir,
++			new_ei->entry, ep);
+ 		if (num_entries < 0) {
+ 			ret = -EIO;
+ 			goto del_out;
+ 		}
+ 		brelse(new_bh);
  
- 	/* Default config options */
-@@ -1931,10 +1928,10 @@ static struct proto l2cap_proto = {
- };
- 
- static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
--				     int proto, gfp_t prio, int kern)
-+				     int proto, gfp_t prio, int kern,
-+				     struct l2cap_chan *chan)
- {
- 	struct sock *sk;
--	struct l2cap_chan *chan;
- 
- 	sk = bt_sock_alloc(net, sock, &l2cap_proto, proto, prio, kern);
- 	if (!sk)
-@@ -1945,16 +1942,7 @@ static struct sock *l2cap_sock_alloc(str
- 
- 	INIT_LIST_HEAD(&l2cap_pi(sk)->rx_busy);
- 
--	chan = l2cap_chan_create();
--	if (!chan) {
--		sk_free(sk);
--		if (sock)
--			sock->sk = NULL;
--		return NULL;
--	}
--
--	l2cap_chan_hold(chan);
--
-+	/* The sock takes ownership of the caller's reference on chan. */
- 	l2cap_pi(sk)->chan = chan;
- 
- 	return sk;
-@@ -1964,6 +1952,7 @@ static int l2cap_sock_create(struct net
- 			     int kern)
- {
- 	struct sock *sk;
-+	struct l2cap_chan *chan;
- 
- 	BT_DBG("sock %p", sock);
- 
-@@ -1978,10 +1967,16 @@ static int l2cap_sock_create(struct net
- 
- 	sock->ops = &l2cap_sock_ops;
- 
--	sk = l2cap_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern);
--	if (!sk)
-+	chan = l2cap_chan_create();
-+	if (!chan)
- 		return -ENOMEM;
- 
-+	sk = l2cap_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern, chan);
-+	if (!sk) {
-+		l2cap_chan_put(chan);
-+		return -ENOMEM;
-+	}
-+
- 	l2cap_sock_init(sk, NULL);
- 	bt_sock_link(&l2cap_sk_list, sk);
- 	return 0;
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -3235,34 +3235,19 @@ static const struct l2cap_ops smp_chan_o
- 	.get_sndtimeo		= l2cap_chan_no_get_sndtimeo,
- };
- 
--static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan *pchan)
-+static inline int smp_new_conn_cb(struct l2cap_chan *chan,
-+				  struct l2cap_chan *new_chan)
- {
--	struct l2cap_chan *chan;
--
--	BT_DBG("pchan %p", pchan);
--
--	chan = l2cap_chan_create();
--	if (!chan)
--		return NULL;
--
--	chan->chan_type	= pchan->chan_type;
--	chan->ops	= &smp_chan_ops;
--	chan->scid	= pchan->scid;
--	chan->dcid	= chan->scid;
--	chan->imtu	= pchan->imtu;
--	chan->omtu	= pchan->omtu;
--	chan->mode	= pchan->mode;
-+	new_chan->ops = &smp_chan_ops;
- 
- 	/* Other L2CAP channels may request SMP routines in order to
- 	 * change the security level. This means that the SMP channel
- 	 * lock must be considered in its own category to avoid lockdep
- 	 * warnings.
- 	 */
--	atomic_set(&chan->nesting, L2CAP_NESTING_SMP);
--
--	BT_DBG("created chan %p", chan);
-+	atomic_set(&new_chan->nesting, L2CAP_NESTING_SMP);
- 
--	return chan;
-+	return 0;
- }
- 
- static const struct l2cap_ops smp_root_chan_ops = {
-@@ -3333,7 +3318,7 @@ create_chan:
- 
- 	l2cap_add_scid(chan, cid);
- 
--	l2cap_chan_set_defaults(chan);
-+	l2cap_chan_set_defaults(chan, NULL);
- 
- 	if (cid == L2CAP_CID_SMP) {
- 		u8 bdaddr_type;
+-		if (exfat_remove_entries(new_inode, p_dir, new_entry, 0,
+-				num_entries + 1)) {
++		if (exfat_remove_entries(new_inode, &new_ei->dir, new_ei->entry,
++				0, num_entries + 1)) {
+ 			ret = -EIO;
+ 			goto del_out;
+ 		}
 
 
