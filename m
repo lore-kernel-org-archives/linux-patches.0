@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7593401A29;
-	Tue, 21 Jul 2026 17:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8003401494;
+	Tue, 21 Jul 2026 17:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654323; cv=none; b=e2Lh/Pd2gLnXruQSDFo308brarxBOs/qeeuTAjRx8MJIVaI5/OBbI7Cux71HsB+6cgBFS8CfS2FcTYlQwNxoahVoJEyAMJfWDK/uSx4umZl1iosPyLK6zqyMafoIkc5+0468VUhyA/NilHfKJp6rrZLIZHe3nSMIDrwlbb1a3t8=
+	t=1784654328; cv=none; b=X1QDzNZzXnNGI0LN3Rrg4eAjkWPHIsjh4Sdrbfltg3FPo5chq3WdYIK5O7UekL7AOo8lLYSckEAn1fyIslV3PPYvHwUolNuC2oxN5aZHG4llU1rebcAthxXTdnIMbgzLRRKzze+MKO3NzXwk+95FRaruNCNQeGCGDPu2vCt5D0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654323; c=relaxed/simple;
-	bh=+1pvZZdmabvxagnDn1aOBb85WUa9pg8x4iY97PeQSr8=;
+	s=arc-20240116; t=1784654328; c=relaxed/simple;
+	bh=4QNn4yJ1vuuqKORWuGkyToJZ13akXRcgk2Paz+sOSR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdc8OyZRZpmFlhSrfowS4TylBfaPulxYAPddWvDVga9fSqkj4SpNyDrXvC10hEhOrCODo2Ul5BfsV1iGAJCCuwkSAGKuuZHtArSjzL5GKFSviJs6bSnDTM62oCEDIiK9UMy6Va+xOe0nzoLgLCKelUlnlZVUz/3YdGyNRrHj1J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFmqb/JI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZKcowsdOdk7yUPzMbUvO3r7HCsWPgqTufB52eRiz5JbRg9sT7VOKYvf7/71cYQSNf0UeMfjgW+t1jRAkn61yC9Pas/YZ1M1u09y2Wmrvh52iugDXO+jdj40I9vhZB/E9spUIaDTpBD1ddMKqPJ1x5wKTl9j/TmIhBFfAWjdUboM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A77hqaKO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFmqb/JI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB5E1F000E9;
-	Tue, 21 Jul 2026 17:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A77hqaKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFBC1F000E9;
+	Tue, 21 Jul 2026 17:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654322;
-	bh=expeNyuLfvYnlTlqQgU8+ge0YR5FlwXyNe6J8nFhG6Q=;
+	s=korg; t=1784654325;
+	bh=Iqvibahc/KdLkdvjnmPWgrA3LM2ZJch02SJT2gIney0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PFmqb/JIAEBB2ybta8wfXhLHDh8Fu5P7rWRLApbYjJHdgfaRgoxdhZF3QEKnycFR4
-	 DSZz+rPW7j3Ss6eFE4Pgj5hHVla/LKTro0SiTRDGnwlEtLcLI2FDgg+epj+8WohqmC
-	 Wwj7dG0SChwyGLnEr+euJyMI7u79/RufoJbzab9I=
+	b=A77hqaKOQZKctByR4ZijDmRSi4IUGljlB0YUZ6o0H/X1kuJM4LHi/s4SnU9nw5P4Y
+	 HkXBxFo7zXrF5UM7CHmKiHJ2bYe4aYS2/U37l5YVOnbVNUuENca/tJDGzE2g8rG5fr
+	 nIBBP8haX/NEcuh52FEl19ppc9Abo0Fu2dKlDlA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 1617/2077] netfilter: flowtable: use correct direction to set up tunnel route
-Date: Tue, 21 Jul 2026 17:21:30 +0200
-Message-ID: <20260721152630.901679619@linuxfoundation.org>
+	Eliot Courtney <ecourtney@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Gary Guo <gary@garyguo.net>
+Subject: [PATCH 7.1 1618/2077] gpu: nova-core: simplify and_then with condition to filter
+Date: Tue, 21 Jul 2026 17:21:31 +0200
+Message-ID: <20260721152630.923478437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,54 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Eliot Courtney <ecourtney@nvidia.com>
 
-commit 90941d9c925d66a482c9121919ec3546a6988c16 upstream.
+commit 16df3873c80388a71c4695909a51be0c809b889c upstream.
 
-The layer 2 encapsulation and layer 3 tunnel information in the xmit
-path is taken from the other tuple, because the tunnel information that
-is included in the tuple for hashtable lookups is also used to perform
-the egress encapsulation in the transmit path.
+This code is more simply expressed using Option::filter instead of the
+and_then with conditional.
 
-This patch uses the correct direction when setting up the tunnel, the
-original proposed patch to address this fix uses the reversed direction.
+This fixes the following warning with latest nightly Rust clippy build:
 
-While at it, remove the redundant check to call dst_release() to drop
-the reference on the dst that was obtained from the forward path, which
-is not useful in the direct xmit path unless tunneling is performed.
+warning: manual implementation of `Option::filter`
+   --> drivers/gpu/nova-core/firmware.rs:391:14
+    |
+391 |               .and_then(|hdr| {
+    |  ______________^
+392 | |                 if hdr.bin_magic == BIN_MAGIC {
+393 | |                     Some(hdr)
+394 | |                 } else {
+...   |
+397 | |             })
+    | |______________^ help: try: `filter(|hdr| hdr.bin_magic == BIN_MAGIC)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_filter
+    = note: `-D clippy::manual-filter` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_filter)]`
 
-Fixes: fa7395c02d95 ("netfilter: flowtable: support IPIP tunnel with direct xmit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: d6cb7319e64e ("gpu: nova-core: firmware: add support for common firmware header")
+Signed-off-by: Eliot Courtney <ecourtney@nvidia.com>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260423-fix-filter-v1-1-b3b197c65daf@nvidia.com
+[aliceryhl: add Fixes: tag and quote the warning it fixes]
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_flow_table_core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/nova-core/firmware.rs |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -127,18 +127,18 @@ static int flow_offload_fill_route(struc
- 
- 	switch (route->tuple[dir].xmit_type) {
- 	case FLOW_OFFLOAD_XMIT_DIRECT:
--		if (flow_tuple->tun_num) {
-+		if (route->tuple[!dir].in.num_tuns) {
- 			flow_tuple->dst_cache = dst;
- 			flow_tuple->dst_cookie =
- 				flow_offload_dst_cookie(flow_tuple);
-+		} else {
-+			dst_release(dst);
- 		}
- 		memcpy(flow_tuple->out.h_dest, route->tuple[dir].out.h_dest,
- 		       ETH_ALEN);
- 		memcpy(flow_tuple->out.h_source, route->tuple[dir].out.h_source,
- 		       ETH_ALEN);
- 		flow_tuple->out.ifidx = route->tuple[dir].out.ifindex;
--		if (!flow_tuple->tun_num)
--			dst_release(dst);
- 		break;
- 	case FLOW_OFFLOAD_XMIT_XFRM:
- 	case FLOW_OFFLOAD_XMIT_NEIGH:
+--- a/drivers/gpu/nova-core/firmware.rs
++++ b/drivers/gpu/nova-core/firmware.rs
+@@ -388,13 +388,7 @@ impl<'a> BinFirmware<'a> {
+             // Extract header.
+             .and_then(BinHdr::from_bytes_copy)
+             // Validate header.
+-            .and_then(|hdr| {
+-                if hdr.bin_magic == BIN_MAGIC {
+-                    Some(hdr)
+-                } else {
+-                    None
+-                }
+-            })
++            .filter(|hdr| hdr.bin_magic == BIN_MAGIC)
+             .map(|hdr| Self { hdr, fw })
+             .ok_or(EINVAL)
+     }
 
 
