@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E1C404BC7;
-	Tue, 21 Jul 2026 17:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0273859EE;
+	Tue, 21 Jul 2026 17:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656549; cv=none; b=UessoMvU/0o+Xf8HSNtSyX+3+fM+bbFT2ZDcb3bm99WfyOCmSdetOV24s36a2yqIXJNvTTgmZZgwHzTblZAI7yFmEV3l0FQUBRUnMypgZD0d7WWyXY4c9rdSCgvLP3nFMuGyoj5n8stPH/nCv0+/KxHdKK0GZfj0o1meLXcJFk4=
+	t=1784656551; cv=none; b=Spp9X7mxxnwv5PU9y0vnxBgh3/Ixsr+UKxqoBGrcIfAWYsrfXBJ2xTugZlrp/5lSTN9SRH6otkhA4382UR+R6vIDTz78w6VApzlgCet/StLxnSJ93v+FEqLEwNNcSqqnG1m+0k6vP1aiWz1A5zCSV0JS4oIxWlpvEJwZHtwD/A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656549; c=relaxed/simple;
-	bh=r1oW4xrG2X6hhzuycyRmkrjWD2lTRkcf546e5nS0FEs=;
+	s=arc-20240116; t=1784656551; c=relaxed/simple;
+	bh=YW72PIfgr9Qz4/ARfTJWHMV+jnxGa3+8IOBtyDKatn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DCmWPqHoJTDeN6UAnmMUEjj/FLi0tcdPmyAZGLVx/ZGFaS82J7Fdf70DY09gT2tRZxAhyxSO9tq1hSEtD4U0IbLu2PU4S+fLDGUmo1n25feSF2asp1JuAyR9OV3oJr2NvgnlP/Yd1RFSio/ULWcj+iiANYxz7vd4cwCgggLf9wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRoKM/Ia; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KdOmEYMt8ZsKpDTY5bKPBTpdmM8NdnqYlB0DK15Uam841B6pUNZm4VlCOB3eZZtBx30ThQZJLJT2PGTKjQOsuoLyDwvQCFRksxpldy7uQ9TmvxSWXrlo8LVcNXBtSUF7pYxadXp9Gunwo3ONC4lie+dX2RlNU10u53WulzdyNqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Mq43ImZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRoKM/Ia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A361F000E9;
-	Tue, 21 Jul 2026 17:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Mq43ImZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D15E1F000E9;
+	Tue, 21 Jul 2026 17:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656548;
-	bh=rw+FRVSEryhav2vHz+Gqq1E2qz+EIBpW3ILOArvnbwM=;
+	s=korg; t=1784656550;
+	bh=f/CSsHjT/Tp8eO6GVsnkqWCdIYcbWmkjf7JijVKqw6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRoKM/IaRzt3tIl7x4CngEohtJ37iuS7etv/adPsb5NOUuJGRO5Scp/IElP9+D0Hb
-	 hOFCYM0XORIuK+jTNjN02x2MfQCe8+2JUWhoLara4fwxR/97TH/BKghgpmDaBNgpH5
-	 RFwU27Xdo5Z06jXXXVI9xbtqfBBgktge4yqzMutY=
+	b=0Mq43ImZXVqBEQg9qz64tBPUp9QTcr3IHfLXoLWRHXjs24J3YUMGFD8Oh+RTndRAn
+	 31gLX1tU/eyKY1A0Y5qyqeCN1PSToq+b2YsknSux1KU9Ypcx4yU42M2+IaGyEZZrTv
+	 0xPmWAYjWktmBQ/YYo41G/M89Oq3o/171iM63Bwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0430/1611] IB/mlx4: Fill in the access_flags if IB_MR_REREG_ACCESS is not specified
-Date: Tue, 21 Jul 2026 17:09:06 +0200
-Message-ID: <20260721152524.947932191@linuxfoundation.org>
+Subject: [PATCH 6.18 0431/1611] NFSD: Handle layout stid in nfsd4_drop_revoked_stid()
+Date: Tue, 21 Jul 2026 17:09:07 +0200
+Message-ID: <20260721152524.971877539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,77 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit bade9a3150d44ed20b8c6484c4c8a943b7289abb ]
+[ Upstream commit 86b9898920a6d02b4149f4fef9efd77b8aa3b9ca ]
 
-Sashiko noticed mlx4 was using whatever random access flags were provided
-when IB_MR_REREG_ACCESS is not used. Since IB_MR_REREG_TRANS needs
-access_flags it used the random ones which means it doesn't work sensibly
-if userspace provides only IB_MR_REREG_TRANS.
+nfsd4_drop_revoked_stid() has no SC_TYPE_LAYOUT case, so when a
+client sends FREE_STATEID for an admin-revoked layout stid, the
+default branch releases cl_lock and returns without unhashing or
+releasing the stid.  The stid remains in the IDR and on the
+per-client list until the client is destroyed.
 
-Keep track of the current access_flag of the MR and use it if the user
-does not specify one.
+Remove the layout stid from the per-client list and call
+nfs4_put_stid() to drop the creation reference.  When the
+refcount reaches zero, nfsd4_free_layout_stateid() handles the
+remaining cleanup: cancelling the fence worker, removing from
+the per-file list, and freeing the slab object.
 
-Also fixup a little confusion around mmr.access, it is the HW access flags
-so the convert_access() was missing. But nothing reads this by the time
-rereg_mr can happen.
-
-Fixes: 9376932d0c26 ("IB/mlx4_ib: Add support for user MR re-registration")
-Link: https://patch.msgid.link/r/0-v1-29ca7a402625+ddd6-mlx4_rereg_flags_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 1e33e1414bec ("nfsd: allow layout state to be admin-revoked.")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/mlx4_ib.h | 1 +
- drivers/infiniband/hw/mlx4/mr.c      | 9 +++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx4/mlx4_ib.h b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-index 5df5b955114eef..44ef41aa7df9e4 100644
---- a/drivers/infiniband/hw/mlx4/mlx4_ib.h
-+++ b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-@@ -137,6 +137,7 @@ struct mlx4_ib_mr {
- 	dma_addr_t		page_map;
- 	u32			npages;
- 	u32			max_pages;
-+	int			access_flags;
- 	struct mlx4_mr		mmr;
- 	struct ib_umem	       *umem;
- 	size_t			page_map_size;
-diff --git a/drivers/infiniband/hw/mlx4/mr.c b/drivers/infiniband/hw/mlx4/mr.c
-index 56ff98a7ea03c7..62485337aed6b4 100644
---- a/drivers/infiniband/hw/mlx4/mr.c
-+++ b/drivers/infiniband/hw/mlx4/mr.c
-@@ -181,6 +181,7 @@ struct ib_mr *mlx4_ib_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
- 	if (err)
- 		goto err_mr;
- 
-+	mr->access_flags = access_flags;
- 	mr->ibmr.rkey = mr->ibmr.lkey = mr->mmr.key;
- 	mr->ibmr.page_size = 1U << shift;
- 
-@@ -241,6 +242,8 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
- 
- 		if (err)
- 			goto release_mpt_entry;
-+	} else {
-+		mr_access_flags = mmr->access_flags;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index efa7e103cf190f..c9d9a7d46e7b23 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -5049,6 +5049,7 @@ static void nfsd4_drop_revoked_stid(struct nfs4_stid *s)
+ {
+ 	struct nfs4_client *cl = s->sc_client;
+ 	LIST_HEAD(reaplist);
++	struct nfs4_layout_stateid *ls;
+ 	struct nfs4_ol_stateid *stp;
+ 	struct nfs4_delegation *dp;
+ 	bool unhashed;
+@@ -5074,6 +5075,12 @@ static void nfsd4_drop_revoked_stid(struct nfs4_stid *s)
+ 		spin_unlock(&cl->cl_lock);
+ 		nfs4_put_stid(s);
+ 		break;
++	case SC_TYPE_LAYOUT:
++		ls = layoutstateid(s);
++		list_del_init(&ls->ls_perclnt);
++		spin_unlock(&cl->cl_lock);
++		nfs4_put_stid(s);
++		break;
+ 	default:
+ 		spin_unlock(&cl->cl_lock);
  	}
- 
- 	if (flags & IB_MR_REREG_TRANS) {
-@@ -282,8 +285,10 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
- 	 * return a failure. But dereg_mr will free the resources.
- 	 */
- 	err = mlx4_mr_hw_write_mpt(dev->dev, &mmr->mmr, pmpt_entry);
--	if (!err && flags & IB_MR_REREG_ACCESS)
--		mmr->mmr.access = mr_access_flags;
-+	if (!err && flags & IB_MR_REREG_ACCESS) {
-+		mmr->access_flags = mr_access_flags;
-+		mmr->mmr.access = convert_access(mr_access_flags);
-+	}
- 
- release_mpt_entry:
- 	mlx4_mr_hw_put_mpt(dev->dev, pmpt_entry);
 -- 
 2.53.0
 
