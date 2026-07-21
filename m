@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FAE336888;
-	Tue, 21 Jul 2026 17:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725C63E49FB;
+	Tue, 21 Jul 2026 17:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653616; cv=none; b=aXgsZ+eKup1LT39AqwHAw4eslnUGXPNI61UKJDxFXHM3kCpdj0yBQ3t7XMclCs0hBaP5DuN54Kewp+9dljK9GCa3PiDQHif2zaQlXO6Mk350r1KkxZxFdXW7C+JnJyI8m/x3zGFEYU1uC0OA7AsbIvc4OlTv6i+FkJ93gF98NB4=
+	t=1784653619; cv=none; b=bo/Fzp9syeL3KtTDQxcWQg/nhs79tpx9XrwahW8vnMwgwASUzuWjcGGGxxYBknSun5I2sjeyaROKmogykHMPHBORIqX62AwdlL4klswo0J2uC8SDSX13ObabnPuRIMzu7TSX+0F02zpA9nTbXIZSwx9fL6wgKnU+HFuo+eyvsE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653616; c=relaxed/simple;
-	bh=1IG/vOCyOSx/d36ERT+F5WYU7jVMH1EKEP/ZoWAqSwE=;
+	s=arc-20240116; t=1784653619; c=relaxed/simple;
+	bh=lXEnvGbIAGwcXYj8yxLnuXK112rLd7HiFUdrhE1xUk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPUdAVBN9AeLcuMl+7xS8CUSuM6dFgTCFZZIHjLwGtJl0gQRggpdZy5OnM0EASKx4cjTeYOu5z4j1JQWrq7KZtJmFKEzTyhZFhGCFGzmU7cprsV8vgBuFtALNc8oxcpW8akJpE+h5lR8xTakPvpGYKhqFS1UzAAsLyX8AsQim/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUXkEkKP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NywQD8SnRHVlrrwGvOsOptODP/vbR/Wh3lkVCpPguzXLrRZIg0DcFVZz5HEHU/YI5S0BO3acKPVHqAzLyCsVBGzBACoo2KP9PJPiCKZAbhijbhW+E/YL+OTbc1V+pybVB0tQty1fGmyL+MDTJT4sN6OSzvZAX8nDoVaOc434U60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmMbLQan; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUXkEkKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4727A1F000E9;
-	Tue, 21 Jul 2026 17:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmMbLQan"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF5A1F000E9;
+	Tue, 21 Jul 2026 17:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653615;
-	bh=ir/iR24qIy/XOdiinAoj6Rx70Uj2AIkjiWFme0eELzE=;
+	s=korg; t=1784653618;
+	bh=oEIpxZCa7077+bsMpnJqPPP3488DowPxGkTaWTGOdKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qUXkEkKP26Xz3WPFzKlAsD4R1heb6VoaO1eODwN4bxKC30T3gfLWnv8algCRXxQFE
-	 umtGtoX6Z5FG5EFnpqUB4DbdE81sY5+262tMC4wF0gGLwQ9GlKpWz/rjOEWREAcPs+
-	 5UEOTkLFbsEKR4C0p0KKgyADKPkhQqeKSa7ms7Ro=
+	b=EmMbLQan7Wx3rX6TbxoO90vcAvOvXS1wVNV8OA9pekdNef7YnVtfT8qeykXFlgz95
+	 f2xFyGKHC9nR9XssazO75FarEN6VFPxEtwtTck/xOxADBvm90GaTBME3FuG8IeQr7g
+	 Z4xQZ6+tKrBTdx6x9GXb4q0xzrDZ6h1CM03zYL6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
+	Matthew Wilcox <willy@infradead.org>,
 	netfs@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1395/2077] netfs: Fix writethrough to use collection offload
-Date: Tue, 21 Jul 2026 17:17:48 +0200
-Message-ID: <20260721152625.715768925@linuxfoundation.org>
+Subject: [PATCH 7.1 1396/2077] netfs: Fix writeback error handling
+Date: Tue, 21 Jul 2026 17:17:49 +0200
+Message-ID: <20260721152625.737989325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,37 +57,56 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit ba6a9f6533c77c628eef0c0c5c19cd316e2be1b4 ]
+[ Upstream commit ac5f95ac5d6d0f4c567b8b642825705a2bf0d79e ]
 
-Fix writethrough write to set NETFS_RREQ_OFFLOAD_COLLECTION on the request
-so that collection is processed asynchronously rather than only right at
-the end - and also so that asynchronous O_SYNC writes get collected at all.
+Fix the error handling in writeback_iter() loop.  If an error occurs,
+writeback_iter() needs to be called again with *error set to the error so
+that it can clean up iteration state.  Further, the current folio needs
+unlocking and redirtying.
 
 Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Closes: https://sashiko.dev/#/patchset/20260616100821.2062304-1-dhowells%40redhat.com
+Link: https://sashiko.dev/#/patchset/20260619140646.2633762-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260625140640.3116900-13-dhowells@redhat.com
+Link: https://patch.msgid.link/20260625140640.3116900-14-dhowells@redhat.com
 cc: Paulo Alcantara <pc@manguebit.org>
+cc: Matthew Wilcox <willy@infradead.org>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/write_issue.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/netfs/write_issue.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
-index 4f55228f0fd497..de7a5684b6091e 100644
+index de7a5684b6091e..cd0c8b3297ee0a 100644
 --- a/fs/netfs/write_issue.c
 +++ b/fs/netfs/write_issue.c
-@@ -628,6 +628,7 @@ struct netfs_io_request *netfs_begin_writethrough(struct kiocb *iocb, size_t len
- 	}
+@@ -588,8 +588,6 @@ int netfs_writepages(struct address_space *mapping,
+ 		}
  
- 	wreq->io_streams[0].avail = true;
-+	__set_bit(NETFS_RREQ_OFFLOAD_COLLECTION, &wreq->flags);
- 	trace_netfs_write(wreq, netfs_write_trace_writethrough);
- 	return wreq;
- }
+ 		error = netfs_write_folio(wreq, wbc, folio);
+-		if (error < 0)
+-			break;
+ 	} while ((folio = writeback_iter(mapping, wbc, folio, &error)));
+ 
+ 	netfs_end_issue_write(wreq);
+@@ -602,7 +600,14 @@ int netfs_writepages(struct address_space *mapping,
+ 	return error;
+ 
+ couldnt_start:
+-	netfs_kill_dirty_pages(mapping, wbc, folio);
++	if (error == -ENOMEM) {
++		folio_redirty_for_writepage(wbc, folio);
++		folio_unlock(folio);
++		folio = writeback_iter(mapping, wbc, folio, &error);
++		WARN_ON_ONCE(folio != NULL);
++	} else {
++		netfs_kill_dirty_pages(mapping, wbc, folio);
++	}
+ out:
+ 	mutex_unlock(&ictx->wb_lock);
+ 	_leave(" = %d", error);
 -- 
 2.53.0
 
