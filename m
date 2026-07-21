@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B90721FF2E;
-	Tue, 21 Jul 2026 22:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E15C3B47E3;
+	Tue, 21 Jul 2026 22:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672929; cv=none; b=C6AjRScrWhQC0cuV5qK+CPszzKlJ4NWc0BL7rWaYqC9jo5MihTZKruR7DALEfg1wXrxiC6HrXH8mdQeLGfsmqcdgOPpE9TSbToMzQS00kE2W0w8CC7ZTHWnAng+6l9KuDdjYZVD0B2oKXou+VX39rD2GxrR2zufOa0iU5DD3YVM=
+	t=1784672930; cv=none; b=je4WQ0M8IQkS+XSFZz8TYRp5U6rIYhVwAnfwqlbVlkk8NtkoSyP7pHKk0EQIstNbbPQKCG7+zTAqBzPPr1VuAKlnfD0AAWn/dV3DVoVuDY+aMsP0mrRZpXK32lCgvRIA62KHzqR6nnFeaIzboSMLaKFNfn0ko1Hr2XvPFHgi0Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672929; c=relaxed/simple;
-	bh=r9k9+11sX/NJL8yscpCjuRsAEZibhzDVeaj09ofAIFk=;
+	s=arc-20240116; t=1784672930; c=relaxed/simple;
+	bh=jhElBNk5tw97JVV5fc4Adk04DsUlPudZGP5mZAUSVAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GsoSkHdzkPK59VivzibX9spgnzZd3De/vHNz5zPihfITYfW38rPWa0IqkKTTEC88wDhS9ziOnXgWJ84JDM1aXpWa5NeWwLYYPMpb7CflBG8a9NJCQXoOt5GU/biMHXTaB4jaRPJLg/B3p5GlxPWvmhzCjxZ95e6YrAaWQyUFQvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usdqbnas; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ScNhL62vdTM21LCxmu/La96MhYffkpRrKiPcAC9GRXXmvy+u9Jm5GTE+NA2cjzEP0Dii6qiQ1z11Jsvi76b2e/p9CIgjFydpyRcae+u/B6Vw/+cKypq00GidKw8cwPSXZ3V1vodh1YyoT6heVehd/TCMjuKOcdFBqUB+4hxrlJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NLY85rn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usdqbnas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EF31F00A3A;
-	Tue, 21 Jul 2026 22:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NLY85rn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79871F00A3E;
+	Tue, 21 Jul 2026 22:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672925;
-	bh=GTgpZtIslrg+mnQKuSDmYuiuXJYGSN+V/lovm0ARRH4=;
+	s=korg; t=1784672928;
+	bh=fzqoTsaC/90XhPQKeuQj/ZKSEEt4DSbQfC+YZVwd95c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=usdqbnas2FRWRgoWJtMQjOjzIQGXJiA1d1P6pYpoUzDVlQg3/Hht098e/9SnvMr37
-	 6Tplb/1ODd5jAqzON1YUI0lilgZc+VXspTbyVhwCzuGc0YkM+1m7peZRLM46ne/DbY
-	 dSpfxddslv/q3BCJUym4t0D4Inq4nyjEW3h3Knac=
+	b=0NLY85rnG7JEoGLA7AV3wGgIzSSv0KzPELhqHdnuaEojnJWsPfSYRVjVGgmwpP1z/
+	 aVh1RoilvIJFgE+lPeQy/HbKswAeXKt27AB0MKvF4+1Q19k8+VimIGULoH3l/Igswz
+	 SlwyPjFJEClRyEEL5QroPcYWFklVZrn5TrxyLCP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Toke Hoiland-Jorgensen <toke@redhat.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jesper Dangaard Brouer <brouer@redhat.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 808/843] xdp: introduce flags field in xdp_buff/xdp_frame
-Date: Tue, 21 Jul 2026 17:27:23 +0200
-Message-ID: <20260721152424.246690558@linuxfoundation.org>
+Subject: [PATCH 5.15 773/843] gpio: sch: use raw_spinlock_t in the irq startup path
+Date: Tue, 21 Jul 2026 17:26:48 +0200
+Message-ID: <20260721152423.444822376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,106 +53,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 2e88d4ff03013937028f5397268b21e10cf68713 ]
+[ Upstream commit 286533cb14a3c8a8bd39ff64ea2fc8e1aa0f638b ]
 
-Introduce flags field in xdp_frame and xdp_buffer data structures
-to define additional buffer features. At the moment the only
-supported buffer feature is frags bit (XDP_FLAGS_HAS_FRAGS).
-frags bit is used to specify if this is a linear buffer
-(XDP_FLAGS_HAS_FRAGS not set) or a frags frame (XDP_FLAGS_HAS_FRAGS
-set). In the latter case the driver is expected to initialize the
-skb_shared_info structure at the end of the first buffer to link together
-subsequent buffers belonging to the same frame.
+sch_irq_unmask() enables the GPIO IRQ and then updates the controller
+state through sch_irq_mask_unmask(), which takes sch->lock with
+spin_lock_irqsave().  The callback can be reached from irq_startup()
+while setting up a requested IRQ.  That path is not sleepable, but on
+PREEMPT_RT a regular spinlock_t becomes a sleeping lock.
 
-Acked-by: Toke Hoiland-Jorgensen <toke@redhat.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Jesper Dangaard Brouer <brouer@redhat.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://lore.kernel.org/r/e389f14f3a162c0a5bc6a2e1aa8dd01a90be117d.1642758637.git.lorenzo@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: aa496720618f ("bpf: Reject fragmented frames in devmap")
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
+
+The grounded PoC kept the request_threaded_irq() -> __setup_irq() ->
+irq_startup() -> sch_irq_unmask() -> sch_irq_mask_unmask() carrier and
+used the original spin_lock_irqsave(&sch->lock) edge.  Lockdep reported:
+
+  BUG: sleeping function called from invalid context
+  hardirqs last disabled at ... __setup_irq.constprop.0 ... [vuln_msv]
+  sch_rt_spin_lock_irqsave+0x1c/0x30 [vuln_msv]
+  sch_irq_mask_unmask.constprop.0+0x31/0x70 [vuln_msv]
+  __setup_irq.constprop.0+0xd/0x30 [vuln_msv]
+
+Convert the SCH controller lock to raw_spinlock_t.  The same lock is
+also used by the GPIO direction and value callbacks, but those critical
+sections only update MMIO-backed GPIO registers and do not contain
+sleepable operations.  Keeping this register lock non-sleeping is
+therefore appropriate for the irqchip callbacks and does not change the
+GPIO-side locking contract.
+
+Fixes: 7a81638485c1 ("gpio: sch: Add edge event support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/20260617154035.1199948-2-runyu.xiao@seu.edu.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/xdp.h |   29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/gpio/gpio-sch.c |   41 ++++++++++++++++++++---------------------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
 
---- a/include/net/xdp.h
-+++ b/include/net/xdp.h
-@@ -66,6 +66,10 @@ struct xdp_txq_info {
- 	struct net_device *dev;
- };
+--- a/drivers/gpio/gpio-sch.c
++++ b/drivers/gpio/gpio-sch.c
+@@ -39,7 +39,7 @@
+ struct sch_gpio {
+ 	struct gpio_chip chip;
+ 	struct irq_chip irqchip;
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ 	unsigned short iobase;
+ 	unsigned short resume_base;
  
-+enum xdp_buff_flags {
-+	XDP_FLAGS_HAS_FRAGS	= BIT(0), /* non-linear xdp buff */
-+};
-+
- struct xdp_buff {
- 	void *data;
- 	void *data_end;
-@@ -74,13 +78,30 @@ struct xdp_buff {
- 	struct xdp_rxq_info *rxq;
- 	struct xdp_txq_info *txq;
- 	u32 frame_sz; /* frame size to deduce data_hard_end/reserved tailroom*/
-+	u32 flags; /* supported values defined in xdp_buff_flags */
- };
+@@ -103,9 +103,9 @@ static int sch_gpio_direction_in(struct
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
  
-+static __always_inline bool xdp_buff_has_frags(struct xdp_buff *xdp)
-+{
-+	return !!(xdp->flags & XDP_FLAGS_HAS_FRAGS);
-+}
-+
-+static __always_inline void xdp_buff_set_frags_flag(struct xdp_buff *xdp)
-+{
-+	xdp->flags |= XDP_FLAGS_HAS_FRAGS;
-+}
-+
-+static __always_inline void xdp_buff_clear_frags_flag(struct xdp_buff *xdp)
-+{
-+	xdp->flags &= ~XDP_FLAGS_HAS_FRAGS;
-+}
-+
- static __always_inline void
- xdp_init_buff(struct xdp_buff *xdp, u32 frame_sz, struct xdp_rxq_info *rxq)
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GIO, 1);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 	return 0;
+ }
+ 
+@@ -116,16 +116,14 @@ static int sch_gpio_get(struct gpio_chip
+ 	return sch_gpio_reg_get(sch, gpio_num, GLV);
+ }
+ 
+-static int sch_gpio_set(struct gpio_chip *gc, unsigned int gpio_num, int val)
++static void sch_gpio_set(struct gpio_chip *gc, unsigned int gpio_num, int val)
  {
- 	xdp->frame_sz = frame_sz;
- 	xdp->rxq = rxq;
-+	xdp->flags = 0;
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GLV, val);
+-	spin_unlock_irqrestore(&sch->lock, flags);
+-
+-	return 0;
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
  }
  
- static __always_inline void
-@@ -122,8 +143,14 @@ struct xdp_frame {
+ static int sch_gpio_direction_out(struct gpio_chip *gc, unsigned int gpio_num,
+@@ -134,9 +132,9 @@ static int sch_gpio_direction_out(struct
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GIO, 0);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 
+ 	/*
+ 	 * according to the datasheet, writing to the level register has no
+@@ -147,7 +145,8 @@ static int sch_gpio_direction_out(struct
+ 	 * But we cannot prevent a short low pulse if direction is set to high
+ 	 * and an external pull-up is connected.
  	 */
- 	struct xdp_mem_info mem;
- 	struct net_device *dev_rx; /* used by cpumap */
-+	u32 flags; /* supported values defined in xdp_buff_flags */
+-	return sch_gpio_set(gc, gpio_num, val);
++	sch_gpio_set(gc, gpio_num, val);
++	return 0;
+ }
+ 
+ static int sch_gpio_get_direction(struct gpio_chip *gc, unsigned int gpio_num)
+@@ -166,7 +165,7 @@ static const struct gpio_chip sch_gpio_c
+ 	.direction_input	= sch_gpio_direction_in,
+ 	.get			= sch_gpio_get,
+ 	.direction_output	= sch_gpio_direction_out,
+-	.set_rv			= sch_gpio_set,
++	.set			= sch_gpio_set,
+ 	.get_direction		= sch_gpio_get_direction,
  };
  
-+static __always_inline bool xdp_frame_has_frags(struct xdp_frame *frame)
-+{
-+	return !!(frame->flags & XDP_FLAGS_HAS_FRAGS);
-+}
-+
- #define XDP_BULK_QUEUE_SIZE	16
- struct xdp_frame_bulk {
- 	int count;
-@@ -180,6 +207,7 @@ void xdp_convert_frame_to_buff(struct xd
- 	xdp->data_end = frame->data + frame->len;
- 	xdp->data_meta = frame->data - frame->metasize;
- 	xdp->frame_sz = frame->frame_sz;
-+	xdp->flags = frame->flags;
- }
+@@ -195,14 +194,14 @@ static int sch_irq_type(struct irq_data
+ 		return -EINVAL;
+ 	}
  
- static inline
-@@ -206,6 +234,7 @@ int xdp_update_frame_from_buff(struct xd
- 	xdp_frame->headroom = headroom - sizeof(*xdp_frame);
- 	xdp_frame->metasize = metasize;
- 	xdp_frame->frame_sz = xdp->frame_sz;
-+	xdp_frame->flags = xdp->flags;
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 
+ 	sch_gpio_reg_set(sch, gpio_num, GTPE, rising);
+ 	sch_gpio_reg_set(sch, gpio_num, GTNE, falling);
+ 
+ 	irq_set_handler_locked(d, handle_edge_irq);
+ 
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
  
  	return 0;
  }
+@@ -214,9 +213,9 @@ static void sch_irq_ack(struct irq_data
+ 	irq_hw_number_t gpio_num = irqd_to_hwirq(d);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GTS, 1);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ }
+ 
+ static void sch_irq_mask_unmask(struct irq_data *d, int val)
+@@ -226,9 +225,9 @@ static void sch_irq_mask_unmask(struct i
+ 	irq_hw_number_t gpio_num = irqd_to_hwirq(d);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GGPE, val);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ }
+ 
+ static void sch_irq_mask(struct irq_data *d)
+@@ -251,12 +250,12 @@ static u32 sch_gpio_gpe_handler(acpi_han
+ 	int offset;
+ 	u32 ret;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 
+ 	core_status = inl(sch->iobase + CORE_BANK_OFFSET + GTS);
+ 	resume_status = inl(sch->iobase + RESUME_BANK_OFFSET + GTS);
+ 
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 
+ 	pending = (resume_status << sch->resume_base) | core_status;
+ 	for_each_set_bit(offset, &pending, sch->chip.ngpio)
+@@ -322,7 +321,7 @@ static int sch_gpio_probe(struct platfor
+ 				 pdev->name))
+ 		return -EBUSY;
+ 
+-	spin_lock_init(&sch->lock);
++	raw_spin_lock_init(&sch->lock);
+ 	sch->iobase = res->start;
+ 	sch->chip = sch_gpio_chip;
+ 	sch->chip.label = dev_name(&pdev->dev);
 
 
