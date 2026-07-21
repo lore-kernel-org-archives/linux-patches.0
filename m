@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573BD44AB9F;
-	Tue, 21 Jul 2026 22:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF20347BC6;
+	Tue, 21 Jul 2026 22:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674417; cv=none; b=kvuCXBtmUVBzi9C6yClJu1Doz5RvZBBNPQQnleSasdB8GnMJEkkVFG82k9Q/d4aODsxLy/duDE0uHR6UVC88Emiio6qdjlK3eTYXJ+GeOttYG0pG9Y6w1/1PcyFPJbelEYJkKqp5o/MJk4COoPWUDzG0OI/jCUVW7Aia32pj7XY=
+	t=1784674419; cv=none; b=KhOMKloE6naavyKPw2nxT/Wo1cAtx98vA0zDLw0scAKZzFcSoQEH9rCCJbT0YOxPlXkLJHK4A5plAqF+AJTbKbCsQTCsFDtuIYZCmZoak0gPlm5phRnSgr5Mpc20WKDtY7kArvYTi6EQxTeQ67Nt8CBXQ3mjuH/bp2KyteJyqpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674417; c=relaxed/simple;
-	bh=1MAoBCalB9+wqWN8JFfFgRKwVjzDdZz4sB+nUnzv+t0=;
+	s=arc-20240116; t=1784674419; c=relaxed/simple;
+	bh=DiPfHx5E8DWM5UxqqYP+lh/zuYcqkc2sTrMAmrdaqU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQDW3JBGvgC1ojXF6mI7sVVEjdz/0vc7idZ5k26LU4KFGm/79NODaGDDXulof9Ov39TEgWQnWeQu+FdoWpuUIlLhpf1KKLqPepuw15eMTVgpYcO5JcA4C80tymMkRpuKf94goLYNyHuBQxfIPe5eCcNUYz+zhEitqP8w+X+sKT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb1LqWx1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nI2bLEtSOaDN1UpIoxqam1/zkiGRl8N/5BX0bJCMabzvYu3E7/M0X/qFOIk9iIPyZiZwAHAi4KG73YxFn430RaxxThvhj+bYdnEK6YUxNak81aHJhqdZD9Ccqt1Ho7+8aaN6IKc2Vg09YYGlLDkgNcYJbH1aW+EL9V/TcbxO63U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqQ7ooiu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb1LqWx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC5A1F000E9;
-	Tue, 21 Jul 2026 22:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqQ7ooiu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7A11F000E9;
+	Tue, 21 Jul 2026 22:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674416;
-	bh=6vItsPjrUwLrqDPrbhU5dMNP8b1KpRUEoy5t8vD8RfM=;
+	s=korg; t=1784674418;
+	bh=yk9VCBgHIJFsctJYLh9/dkK8z8z3GA8MBx3fKkar8Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cb1LqWx1/jHi27nz96GxkfEUk4V/V5222R4wAI60ceWIbaEKZBjVseitbhrc7q52b
-	 DjArfvJHVbRme4cPbGezsYL0DDhX+R3niFSkIaDgjd4Da5mlp4JRTSnEnz5tiRdzlp
-	 sZpGlYA2HteWtGKEiSHODV4g05M1Jn5Rd/hfeC44=
+	b=rqQ7ooiuXjta4lpZUaBNrQJMotNstLRKBKE8rAODGv1sUTJeY/0nzUDNZofZV1TWh
+	 DOXi2cPwrc63+etGm+8+Mim9N9/HW2UfL0Khyh0xfjAw9uJFRXD+v6euN9J3RYY4fF
+	 ItkkxPhvGH4MkCZG1Xtkjv0DHeFowHYXzDujvCwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 532/699] net: ip6_gre: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:24:51 +0200
-Message-ID: <20260721152407.701095918@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 5.10 533/699] ieee802154: admin-gate legacy LLSEC dump operations
+Date: Tue, 21 Jul 2026 17:24:52 +0200
+Message-ID: <20260721152407.722692392@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,54 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit f00a50876d2818bd6dc86fa98b3ef360884c53c8 upstream.
+commit 9c1e0b6d49471a712511d23fc9d06901561135e8 upstream.
 
-ip6gre_changelink() and ip6erspan_changelink() operate on at most two
-netns, dev_net(dev) and the tunnel link netns t->net. They differ once
-the device is created in or moved to a netns other than the one the
-request runs in. The rtnl changelink path checks CAP_NET_ADMIN only
-against dev_net(dev), so a caller privileged there but not in t->net can
-rewrite a tunnel that lives in t->net.
+In net/ieee802154/netlink.c, the legacy IEEE802154_NL family ops table
+builds the LLSEC dump entries (LLSEC_LIST_KEY, LLSEC_LIST_DEV,
+LLSEC_LIST_DEVKEY, LLSEC_LIST_SECLEVEL) with IEEE802154_DUMP() which
+sets no .flags, so generic netlink runs them ungated. The modern
+nl802154 family admin-gates the equivalent reads via
+NL802154_CMD_GET_SEC_KEY and friends with .flags = GENL_ADMIN_PERM.
 
-Gate both ops on rtnl_dev_link_net_capable() at their top, before any
-attribute is parsed.
+Any local uid that can open AF_NETLINK / NETLINK_GENERIC can resolve
+the "802.15.4 MAC" family and dump LLSEC_LIST_KEY on any wpan netdev
+that has an LLSEC key installed; the dump handler writes the raw
+16-byte AES-128 key bytes (IEEE802154_ATTR_LLSEC_KEY_BYTES, copied
+verbatim from struct ieee802154_llsec_key.key) into the reply.
+Recovering the AES key compromises 802.15.4 LLSEC link confidentiality
+and authenticity, since LLSEC uses CCM* and the same key authenticates
+and encrypts frames.
 
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: 690afc165bb3 ("net: ip6_gre: fix moving ip6gre between namespaces")
+Impact: any local uid with no capabilities can read the raw 16-byte
+AES-128 LLSEC key from the kernel keytable on any wpan netdev that has
+an administrator-installed LLSEC key, by issuing an LLSEC_LIST_KEY
+dump on the legacy IEEE802154_NL generic-netlink family.
+
+Introduce IEEE802154_DUMP_PRIV() mirroring IEEE802154_DUMP() but
+setting .flags = GENL_ADMIN_PERM, and use it for the four LLSEC dump
+entries. LIST_PHY and LIST_IFACE retain IEEE802154_DUMP() because the
+modern nl802154 family exposes their equivalents to unprivileged
+readers by design (NL802154_CMD_GET_WPAN_PHY and
+NL802154_CMD_GET_INTERFACE carry "can be retrieved by unprivileged
+users" annotations).
+
+Fixes: 3e9c156e2c21 ("ieee802154: add netlink interfaces for llsec")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-6-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://lore.kernel.org/20260520141640.1149513-2-michael.bommarito@gmail.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_gre.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ieee802154/ieee802154.h |    8 ++++++++
+ net/ieee802154/netlink.c    |   16 ++++++++--------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -2090,6 +2090,9 @@ static int ip6gre_changelink(struct net_
- 	struct ip6gre_net *ign = net_generic(t->net, ip6gre_net_id);
- 	struct __ip6_tnl_parm p;
+--- a/net/ieee802154/ieee802154.h
++++ b/net/ieee802154/ieee802154.h
+@@ -23,6 +23,14 @@ void ieee802154_nl_exit(void);
+ 		.dumpit	= _dump,			\
+ 	}
  
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
++#define IEEE802154_DUMP_PRIV(_cmd, _func, _dump)	\
++	{						\
++		.cmd	= _cmd,				\
++		.doit	= _func,			\
++		.dumpit	= _dump,			\
++		.flags	= GENL_ADMIN_PERM,		\
++	}
 +
- 	t = ip6gre_changelink_common(dev, tb, data, &p, extack);
- 	if (IS_ERR(t))
- 		return PTR_ERR(t);
-@@ -2304,6 +2307,9 @@ static int ip6erspan_changelink(struct n
- 	struct __ip6_tnl_parm p;
- 	struct ip6gre_net *ign;
+ struct genl_info;
  
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
-+
- 	ign = net_generic(t->net, ip6gre_net_id);
- 	t = ip6gre_changelink_common(dev, tb, data, &p, extack);
- 	if (IS_ERR(t))
+ struct sk_buff *ieee802154_nl_create(int flags, u8 req);
+--- a/net/ieee802154/netlink.c
++++ b/net/ieee802154/netlink.c
+@@ -98,20 +98,20 @@ static const struct genl_small_ops ieee8
+ 	IEEE802154_OP(IEEE802154_SET_MACPARAMS, ieee802154_set_macparams),
+ 	IEEE802154_OP(IEEE802154_LLSEC_GETPARAMS, ieee802154_llsec_getparams),
+ 	IEEE802154_OP(IEEE802154_LLSEC_SETPARAMS, ieee802154_llsec_setparams),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_KEY, NULL,
+-			ieee802154_llsec_dump_keys),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_KEY, NULL,
++			     ieee802154_llsec_dump_keys),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_KEY, ieee802154_llsec_add_key),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_KEY, ieee802154_llsec_del_key),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEV, NULL,
+-			ieee802154_llsec_dump_devs),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEV, NULL,
++			     ieee802154_llsec_dump_devs),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEV, ieee802154_llsec_add_dev),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEV, ieee802154_llsec_del_dev),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
+-			ieee802154_llsec_dump_devkeys),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
++			     ieee802154_llsec_dump_devkeys),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEVKEY, ieee802154_llsec_add_devkey),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEVKEY, ieee802154_llsec_del_devkey),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
+-			ieee802154_llsec_dump_seclevels),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
++			     ieee802154_llsec_dump_seclevels),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_SECLEVEL,
+ 		      ieee802154_llsec_add_seclevel),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_SECLEVEL,
 
 
