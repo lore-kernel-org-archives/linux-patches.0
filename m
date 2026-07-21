@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E293B95E7;
-	Tue, 21 Jul 2026 20:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649B2366816;
+	Tue, 21 Jul 2026 20:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667026; cv=none; b=JFkEwlpBzr1+aZtAAgyZU74D9l9X+F8xRcZHEb8PcDYaHgJwXS1MyorsdMRqA3q5UcLLvlPvtMS+CYEFYYfp1b5b4FZJpgT7C7moGe6J/6wQD2I+mSACY3cJNBnQyTQatZGmFW94hL9WM3RBLXgFWfu1QW+JtNpAYYFlHd7KitM=
+	t=1784667029; cv=none; b=VSUh+rGseaIHqAhHx2WAmmiaWnWbZkgruSck+Rlmbhe6W+mdRPTp3IgnvaNiZ7aif+pGInhEyCNL4YMbcVb+cRpTj7PWIJFDmsfi761tghxa8t1LNmGQC3Yy4vQXt3gpLFJClnh6mgKeqXhMwQa1mDgM7GlDgqNfKiylOm3aBHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667026; c=relaxed/simple;
-	bh=qF2g+76dJxe7r00fJuaMjPeL30k/3N/wCBoFyvUCn+E=;
+	s=arc-20240116; t=1784667029; c=relaxed/simple;
+	bh=Yb0VL3KD87lbTUIG440Q2y9oVKYV3js7ukTr3EMyUE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p49/zftcaj7R9Ezxgm3g/41XGHMlbuen4fld7BW/eWZz6I2BS6eVlrXoLDea2KVuj/gy6eIQ00nHjY3Ed3Vj6byStt+gTNEOVm4gBFhDfRpkNnqGtzkSDoBtY78pwvJ6Z4EMYKT0vxJnhQJ2uzo+Onh/rY44KR1uyCU8qzZZsqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUGc9C0S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cyzoUTjZkRzxvDaS7Q89Gu5RxL64Pe0z8BWY/V/vPFvVhFJElVjq1Lrr7lbkLlqvnbrDjfDHF2mXMVGz4M/Igp+vcMrfAvhGG20NGPY/3WgEOMzm17rwnPbvBICAVEJQDHYUXFaJiO/brgrj2JJCNlY5NBEPyAxdxfTfkJekMPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDKMmjwv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUGc9C0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75FD1F000E9;
-	Tue, 21 Jul 2026 20:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDKMmjwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806C81F000E9;
+	Tue, 21 Jul 2026 20:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667025;
-	bh=ErspvGeyU5DkhwhXiTVMMHUTsrsIGZZcvL2kUl1ZITQ=;
+	s=korg; t=1784667028;
+	bh=/whbeRwuQr2RWpa1wkrZ3qynOSFIC3+JM02oA7+F9rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUGc9C0Sof2brwj59hv16pNVCYNLsSr8PtTULVOZdNCR0qKDpZMfjFzEt894Xb0YH
-	 L80jnGX0RFBnVItSCwZUd5kblErW3FjFD2+1KjTrUBnb+LB7VSrwxKLT9AAGSC3+T6
-	 N1A0ZACbSpjpVxpE2shUKViF8AHaUwP0SNsO+wI8=
+	b=uDKMmjwvMoUh7jKFyVhZW2qhuzLFpsVyTJjwq/piNZk+JBfWl43uJu1i+oiIUoF0g
+	 Upj7RdKN/na6y5EKCMh4Km5P42N5/Bq1tA/VGRNhBuFbJ+tFkentWR2dSUM1u+LyHM
+	 7/0Wv/3vzPKMBX9rx9YA677xGKJlnWJeWnPhphxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 0904/1266] KVM: x86: Ignore pending PV EOI if the vCPU has since disabled PV EOIs
-Date: Tue, 21 Jul 2026 17:22:21 +0200
-Message-ID: <20260721152502.074100598@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 0905/1266] fbdev: metronomefb: fix potential memory leak in metronomefb_probe()
+Date: Tue, 21 Jul 2026 17:22:22 +0200
+Message-ID: <20260721152502.095973907@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,65 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 9285e4070df2c40585c3d7ec9571faa7a2b97e17 upstream.
+commit 894632b862a39b3fe1cb5de06fbae86225ea64de upstream.
 
-Ignore KVM's internal "service pending PV EOI" request if the vCPU has
-disabled PV EOIs since the request was made.  Asserting that PV EOIs are
-enabled can fail if reading guest memory in pv_eoi_get_user() fails, i.e.
-if pv_eoi_test_and_clr_pending() bails early, *and* the vCPU also disables
-PV EOIs.
+The memory allocated for pagerefs in fb_deferred_io_init() is not freed
+on the error path. Fix it by calling fb_deferred_io_cleanup().
 
-  kernel BUG at arch/x86/kvm/lapic.c:3338!
-  Oops: invalid opcode: 0000 [#1] SMP
-  CPU: 4 UID: 1000 PID: 890 Comm: pv_eoi_test Not tainted 7.0.0-d585aa5894d8-vm #337 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:kvm_lapic_sync_from_vapic+0x12b/0x140 [kvm]
-  Call Trace:
-   <TASK>
-   kvm_arch_vcpu_ioctl_run+0x1075/0x1c30 [kvm]
-   kvm_vcpu_ioctl+0x2d5/0x980 [kvm]
-   __x64_sys_ioctl+0x8a/0xd0
-   do_syscall_64+0xb5/0xb40
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  Modules linked in: kvm_intel kvm irqbypass
-  ---[ end trace 0000000000000000 ]---
-
-Fixes: ae7a2a3fb6f8 ("KVM: host side for eoi optimization")
+Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
 Cc: stable@vger.kernel.org
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20260624220516.3033391-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    8 ++++++--
+ drivers/video/fbdev/metronomefb.c |    8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -3138,6 +3138,12 @@ static void apic_sync_pv_eoi_from_guest(
- 					struct kvm_lapic *apic)
- {
- 	int vector;
-+
-+	if (unlikely(!pv_eoi_enabled(vcpu))) {
-+		__clear_bit(KVM_APIC_PV_EOI_PENDING, &vcpu->arch.apic_attention);
-+		return;
-+	}
-+
- 	/*
- 	 * PV EOI state is derived from KVM_APIC_PV_EOI_PENDING in host
- 	 * and KVM_PV_EOI_ENABLED in guest memory as follows:
-@@ -3149,8 +3155,6 @@ static void apic_sync_pv_eoi_from_guest(
- 	 * KVM_APIC_PV_EOI_PENDING is set, KVM_PV_EOI_ENABLED is unset:
- 	 * 	-> host enabled PV EOI, guest executed EOI.
- 	 */
--	BUG_ON(!pv_eoi_enabled(vcpu));
--
- 	if (pv_eoi_test_and_clr_pending(vcpu))
- 		return;
- 	vector = apic_set_eoi(apic);
+--- a/drivers/video/fbdev/metronomefb.c
++++ b/drivers/video/fbdev/metronomefb.c
+@@ -645,12 +645,14 @@ static int metronomefb_probe(struct plat
+ 	info->flags = FBINFO_VIRTFB;
+ 
+ 	info->fbdefio = &metronomefb_defio;
+-	fb_deferred_io_init(info);
++	retval = fb_deferred_io_init(info);
++	if (retval)
++		goto err_free_irq;
+ 
+ 	retval = fb_alloc_cmap(&info->cmap, 8, 0);
+ 	if (retval < 0) {
+ 		dev_err(&dev->dev, "Failed to allocate colormap\n");
+-		goto err_free_irq;
++		goto err_fbdefio;
+ 	}
+ 
+ 	/* set cmap */
+@@ -673,6 +675,8 @@ static int metronomefb_probe(struct plat
+ 
+ err_cmap:
+ 	fb_dealloc_cmap(&info->cmap);
++err_fbdefio:
++	fb_deferred_io_cleanup(info);
+ err_free_irq:
+ 	board->cleanup(par);
+ err_csum_table:
 
 
