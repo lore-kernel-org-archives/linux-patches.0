@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB9D30EF9A;
-	Tue, 21 Jul 2026 19:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C4B30EF9A;
+	Tue, 21 Jul 2026 19:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662426; cv=none; b=X+xmAN2ffE6QHDwC3kWwUHxiE+9Fpz4Zxnhe7LIdEOLBTb7lszX+svc/J7oG1LLkJzRhbztn4ya2h2M5Js8yLysAztWG/U9wxak58CPGyd8WBn8JXUlKomMh5RhkVWv7PX6yJ/SsJIUvdXijzGnM0OFHJiaB5UniqhSzAD643xo=
+	t=1784662429; cv=none; b=TNWDprDOdgDaA06eCx1SOTWNrJ3PS+4ps1vOXx+bU6/mx492exeF3OPjF0scgMTKQwE4+vNmEG6JdDMZif5OWw3iXrL1pZAsutcmq/5cerpwcgeqkH8W3NFSvudH/PdA1db5Rqtw9GfNf47oo8L77KbCNuq2lGcAcfxWiEQGZUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662426; c=relaxed/simple;
-	bh=BQ+2Q/HNOxSB/jX76vh+dT9nW12ccCAw65RVu5HkAY0=;
+	s=arc-20240116; t=1784662429; c=relaxed/simple;
+	bh=4zru547EVyA/nTx54Ea9U9sUQjIKnpvDXH1b0Bp8VYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIQMkM9lfShY5/R7rVA2jtses8eLlRxmk3r6dZqoZsbYt4tflt+0jpuW0BEl3eoen9tX8QT1XsGMGiq7rB/LKu6KvTPZBiDl1E0RI4Hm+BdnAUW5a8BCbu4+XXtA4ui2sl66ATkyRWAa4DlhbChztEDXp+FZCaE55qj/KmOlqf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKZZ6lCL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Na1zJ97SrNyiASunO5tK/dbuuy3qbMJzY/QfyYQyVPXAQzqSwWu3PrkHPKdFe4uzf3amXTdY3buc3YuBdD4kZJqssP1DGfZmnAQuHj/UbFo/sN44cNgJZU0lt2fueVwOLk73c77qF5G7UfevtLohUEq6g3XDRXoa1HvVaXBX8SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez4KnZpj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKZZ6lCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F301F000E9;
-	Tue, 21 Jul 2026 19:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez4KnZpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FECD1F000E9;
+	Tue, 21 Jul 2026 19:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662425;
-	bh=NK2BwOO/Kzte6k0b3uzSTE9quhpHEr4NXPJzM8Xjmrc=;
+	s=korg; t=1784662428;
+	bh=U+mYS3ij1Y/P20DC0UcPoPNo9X8qsAWmlHWMF72TngI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XKZZ6lCLOsr9AaG+lzsfvum8Nn31Caj1m1wUTFslSo4E0pLvKj19+Snq9fGTRYWQ4
-	 8E0FlBai5qpJehkcppiqQB8ZO+HVQJb5AYjttzr2Q80iuWtxH/7i4uvUXZpMS8D7fd
-	 l04mXHtf6BRvn32mjBoRLdQJzO61WkK5OU/X40bQ=
+	b=ez4KnZpjLTfsjB+R2oBgb0ZFxgETZZrLXUCw26ZuRGLF3rMZqjeTKqP+v87szTlpn
+	 V3GlyaZHFSscwUOAKP9N5I+gT2/PR39xMd6ektFZ2lr5/UvCCFE6Kw/nwHjLBmwTyB
+	 oLsm1aN2m8/w5aCK5xCJ5GewkPTDBG6hx3whoUD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Seungjin Bae <eeodqql09@gmail.com>,
+	James Kim <james010kim@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0440/1276] usb: host: max3421: Reject hub port requests for non-existent ports
-Date: Tue, 21 Jul 2026 17:14:43 +0200
-Message-ID: <20260721152455.947604870@linuxfoundation.org>
+Subject: [PATCH 6.12 0441/1276] char: tlclk: fix use-after-free in tlclk_cleanup()
+Date: Tue, 21 Jul 2026 17:14:44 +0200
+Message-ID: <20260721152455.969416337@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,52 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: James Kim <james010kim@gmail.com>
 
-[ Upstream commit 11b5c101e2fd206104b05bc92554d356989423a8 ]
+[ Upstream commit bbf003b7794d6ad6f939fdd29f1f1bde8ac554c1 ]
 
-The `max3421_hub_control()` function handles USB hub class requests
-to the virtual root hub. The `GetPortStatus` case correctly rejects
-requests with `index != 1`, since the virtual root hub has only a
-single port. However, the `ClearPortFeature` and `SetPortFeature`
-cases lack the same check.
+This patch improves the module cleanup process in the tlclk driver to
+prevent potential use-after-free and race conditions.
 
-Fix this by extending the `index != 1` rejection to both cases,
-matching the existing behavior of `GetPortStatus`.
+Currently, the file_operations structure does not specify the .owner
+field, which could allow the module to be unloaded while user-space
+processes are still interacting with the device. Additionally, the
+tlclk_cleanup() function frees the alarm_events memory before ensuring
+that blocked processes in the waitqueue are fully awakened and that the
+switchover_timer has completed.
 
-Fixes: 2d53139f3162 ("Add support for using a MAX3421E chip as a host driver.")
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Link: https://patch.msgid.link/20260518224901.1887013-3-eeodqql09@gmail.com
+To address these cases, this patch:
+- Sets '.owner = THIS_MODULE' in tlclk_fops to safely defer module
+  unloading while the device is in use.
+- Updates tlclk_cleanup() to explicitly wake up all blocked readers
+  (wake_up_all), properly release hardware I/O regions, and safely
+  delete the timer (timer_delete_sync) prior to freeing memory.
+
+Fixes: 1a80ba882730 ("[PATCH] Telecom Clock Driver for MPCBL0010 ATCA computer blade")
+Signed-off-by: James Kim <james010kim@gmail.com>
+Link: https://patch.msgid.link/20260503101131.64219-1-james010kim@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/max3421-hcd.c | 4 ++++
+ drivers/char/tlclk.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
-index 823dc61d31e86b..8fbbf9e195b0a4 100644
---- a/drivers/usb/host/max3421-hcd.c
-+++ b/drivers/usb/host/max3421-hcd.c
-@@ -1685,6 +1685,8 @@ max3421_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value, u16 index,
- 	case ClearHubFeature:
- 		break;
- 	case ClearPortFeature:
-+		if (index != 1)
-+			goto error;
- 		switch (value) {
- 		case USB_PORT_FEAT_SUSPEND:
- 			break;
-@@ -1728,6 +1730,8 @@ max3421_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value, u16 index,
- 		break;
+diff --git a/drivers/char/tlclk.c b/drivers/char/tlclk.c
+index 377bebf6c925da..103127c2aeabcd 100644
+--- a/drivers/char/tlclk.c
++++ b/drivers/char/tlclk.c
+@@ -264,6 +264,7 @@ static ssize_t tlclk_read(struct file *filp, char __user *buf, size_t count,
+ }
  
- 	case SetPortFeature:
-+		if (index != 1)
-+			goto error;
- 		switch (value) {
- 		case USB_PORT_FEAT_LINK_STATE:
- 		case USB_PORT_FEAT_U1_TIMEOUT:
+ static const struct file_operations tlclk_fops = {
++	.owner = THIS_MODULE,
+ 	.read = tlclk_read,
+ 	.open = tlclk_open,
+ 	.release = tlclk_release,
+@@ -853,6 +854,9 @@ static void __exit tlclk_cleanup(void)
+ 	misc_deregister(&tlclk_miscdev);
+ 	unregister_chrdev(tlclk_major, "telco_clock");
+ 
++	got_event = 1;
++	wake_up_all(&wq);
++
+ 	release_region(TLCLK_BASE, 8);
+ 	del_timer_sync(&switchover_timer);
+ 	kfree(alarm_events);
 -- 
 2.53.0
 
