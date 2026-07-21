@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E20C438FEE;
-	Tue, 21 Jul 2026 20:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1F4439325;
+	Tue, 21 Jul 2026 20:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666987; cv=none; b=i/siS8UgI0EPmniSC3EoW1usUmOJwjLOGvpfz4wzOjfgz0Y6aXsWOLA5KNRzmrK8jyRj+M9MiahY5m0V6t7aEdujJMZWn+1PGcI/xe/W4bP1DvuPz+r/mNT9h0k166gI2aCCPcKUQ+iAXl0NKYiPZPi+WEJj+ErwLthJ4wc4iwo=
+	t=1784666990; cv=none; b=N/20DTH1lmbYaDvIhZD8lV+BXMdKg1cpWsym9HFpCJUaGVInrORWym/pyZcthuzCu+2ngpPQgIkS5AleD44TaWa+ofeXHRkAppAEJFyIII25WFQRK2dHXC8ghw60CuPqyWTaYYqUs+GhfLuzxdD8P+Iv7nyH+TJSAq/KteVuNQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666987; c=relaxed/simple;
-	bh=i2Nc82TruJJw+5N6aTnL8dpoc1bU1RTwAWdwFs780Es=;
+	s=arc-20240116; t=1784666990; c=relaxed/simple;
+	bh=923el3Gwdx3voseEQzW5foUMvVmGs2f+NBF2/3Cl0IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pEDUbhLI6PmJ1/ip9CgyulpLrEaQig8WMFrMEkrup+5mBS0ayZqYY6/DxRTD7mfZQJa1rIoaiz0KCejFf2xcjlKsD2rK+ljZnV4uDCdgkKb1tOlWm6hr2bJgqUWWXFT5qQ7Ad6GX/H5EvUqXPZhUBqq7xyphphUh07Qg+fcSbYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcIYYgAB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gz1+OlotRjcMIN6wJV/jkDnITYJJs6NSF2hXF0H4xiuOwThcEamquHEq1FlIFmg/Jscvmacghq1l4cfAp6yQqe8L76UJgPq75+KwtSDIDEbQM4YtSH6y7nrCpYY/PKaMu9jhuNhj2g22v8+dPTXeIonLB0ybwL/7JGjzLXxT+/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htkSkyzR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcIYYgAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B68B1F000E9;
-	Tue, 21 Jul 2026 20:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htkSkyzR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CC61F00A3A;
+	Tue, 21 Jul 2026 20:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666983;
-	bh=umE3IjriutHWzF2f3R2/QZxcIY9YRu3KjoTJBRygFVM=;
+	s=korg; t=1784666985;
+	bh=/H1xkaOz/WOFBw+ceeNnHRmIzwfw/1U8Hd5dqHGsDkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VcIYYgABJTR2/9Q1tRqjh55vHJphWQoadOQryWuHGPESu8bBy1yRMXHpyAhox5Ug8
-	 AuCEx89lQKvcB52TwRQX9cKHm+rEoqZJ+Nd8fyMvSbKJsahTINtkAa4XFzpiuIMJQB
-	 Nj8nLZNfhZl9QYgzWvvsICPoiLjJjuHYYq0wmBI4=
+	b=htkSkyzRzmUqMhfHRIxQkj7wL8HTfJ1gGypeU7vrLQy6tpwKbuJfs9MICnWrgRGIp
+	 GXeNbTd2a6YunipduAvcjR08H+Z4pbaeh3TjXbC5gscMV5zC0oQuwrImKl5OzQeLYt
+	 L49n/lY2a64vInrFqWmi9+eVcH0krUekKo2zFSrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0890/1266] mlxsw: fix refcount leak in mlxsw_sp_vrs_lpm_tree_replace()
-Date: Tue, 21 Jul 2026 17:22:07 +0200
-Message-ID: <20260721152501.763773435@linuxfoundation.org>
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Xie Yongji <xieyongji@bytedance.com>,
+	Jason Wang <jasowang@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.6 0891/1266] vduse: Fix race in vduse_dev_msg_sync and vduse_dev_read_iter
+Date: Tue, 21 Jul 2026 17:22:08 +0200
+Message-ID: <20260721152501.785551822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,53 +47,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-commit 21cf8dc478a49e8de039c2739b1646a774cb1944 upstream.
+commit ae9c13b6fd79087cc5a216ee1649b6f012c2a238 upstream.
 
-When mlxsw_sp_vrs_lpm_tree_replace() fails after replacing some VRs,
-the error rollback loop does not correctly revert the preceding
-replacements. The loop decrements the index but fails to update the
-vr pointer, which still points to the VR that caused the failure. As
-a result, the condition and the rollback call always operate on the
-same VR, potentially calling mlxsw_sp_vr_lpm_tree_replace() multiple
-times on it while never rolling back the earlier VRs. Those VRs
-continue to hold a reference to new_tree acquired via
-mlxsw_sp_lpm_tree_hold(), leaking the reference count of new_tree.
+There is one race case in vduse_dev_msg_sync and vduse_dev_read_iter:
 
-Fix by reinitializing vr inside the error loop with the updated index:
+vduse_dev_read_iter():
+    lock(msg_lock);
+    dequeue_msg(send_list);
+    unlock(msg_lock);
+vduse_dev_msg_sync():
+    wait_timeout() finish
+    lock(msg_lock);
+    check msg->complete is false
+        list_del(msg);   <- double list_del() crash!
 
-	vr = &mlxsw_sp->router->vrs[i];
+To fix this case, we shall ensure vduse_msg is on send_list or recv_list
+outside the msg_lock critical section.
 
-so that the loop correctly iterates over all VRs that were actually
-replaced.
-
+Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
 Cc: stable@vger.kernel.org
-Fixes: fc922bb0dd94 ("mlxsw: spectrum_router: Use one LPM tree for all virtual routers")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260609084730.215732-1-vulab@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260226115550.1814-3-zhangtianci.1997@bytedance.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/vdpa/vdpa_user/vduse_dev.c |   37 +++++++++++++++++++++++++++----------
+ 1 file changed, 27 insertions(+), 10 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-@@ -1018,6 +1018,7 @@ static int mlxsw_sp_vrs_lpm_tree_replace
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -330,6 +330,7 @@ static ssize_t vduse_dev_read_iter(struc
+ 	struct file *file = iocb->ki_filp;
+ 	struct vduse_dev *dev = file->private_data;
+ 	struct vduse_dev_msg *msg;
++	struct vduse_dev_request req;
+ 	int size = sizeof(struct vduse_dev_request);
+ 	ssize_t ret;
  
- err_tree_replace:
- 	for (i--; i >= 0; i--) {
-+		vr = &mlxsw_sp->router->vrs[i];
- 		if (!mlxsw_sp_vr_lpm_tree_should_replace(vr, proto, new_id))
- 			continue;
- 		mlxsw_sp_vr_lpm_tree_replace(mlxsw_sp,
+@@ -341,12 +342,11 @@ static ssize_t vduse_dev_read_iter(struc
+ 		msg = vduse_dequeue_msg(&dev->send_list);
+ 		if (msg)
+ 			break;
++		spin_unlock(&dev->msg_lock);
+ 
+-		ret = -EAGAIN;
+ 		if (file->f_flags & O_NONBLOCK)
+-			goto unlock;
++			return -EAGAIN;
+ 
+-		spin_unlock(&dev->msg_lock);
+ 		ret = wait_event_interruptible_exclusive(dev->waitq,
+ 					!list_empty(&dev->send_list));
+ 		if (ret)
+@@ -354,17 +354,34 @@ static ssize_t vduse_dev_read_iter(struc
+ 
+ 		spin_lock(&dev->msg_lock);
+ 	}
++
++	memcpy(&req, &msg->req, sizeof(req));
++	/*
++	 * We must ensure vduse_msg is on send_list or recv_list before unlock
++	 * dev->msg_lock. Because vduse_dev_msg_sync() may be timeout when we
++	 * copy data to userspace, and will call list_del() for this msg.
++	 */
++	vduse_enqueue_msg(&dev->recv_list, msg);
+ 	spin_unlock(&dev->msg_lock);
+-	ret = copy_to_iter(&msg->req, size, to);
+-	spin_lock(&dev->msg_lock);
++
++	ret = copy_to_iter(&req, size, to);
+ 	if (ret != size) {
++		/*
++		 * Roll back: move msg back to send_list if still pending.
++		 *
++		 * NOTE:
++		 * vduse_find_msg() must use req.request_id instead of `msg`.
++		 * A malicious userspace may reply to this request, and wake up
++		 * the caller, after which `msg` will have already been freed.
++		 * And here vduse_find_msg() will return NULL then do nothing.
++		 */
++		spin_lock(&dev->msg_lock);
++		msg = vduse_find_msg(&dev->recv_list, req.request_id);
++		if (msg)
++			vduse_enqueue_msg_head(&dev->send_list, msg);
++		spin_unlock(&dev->msg_lock);
+ 		ret = -EFAULT;
+-		vduse_enqueue_msg_head(&dev->send_list, msg);
+-		goto unlock;
+ 	}
+-	vduse_enqueue_msg(&dev->recv_list, msg);
+-unlock:
+-	spin_unlock(&dev->msg_lock);
+ 
+ 	return ret;
+ }
 
 
