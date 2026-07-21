@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7546146D56D;
-	Tue, 21 Jul 2026 20:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB4747141D;
+	Tue, 21 Jul 2026 20:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664203; cv=none; b=uGlWE2hj/nf8ivhz0OI4hf93WL20VbsfPB6vNWFHEb3D0wWhQ+Twg0AXJtEmLxqW/FKf5/kTwe1XVXxgF4dOMNyGN0BbCDdSLEaeqzT7b2NNC+WMyOlfzqJG5pvLwx/ieD6VbKo/8wPgCldg8m+pGBPgP1v9Snzzi1mPKNwW1Vs=
+	t=1784664205; cv=none; b=V59ReBNKhelRhUqxV4UutVbIDSqAaB4rDXZbQj1HBVANjzZ/XJ9STAp7794YySNeoMElH7HB4mX/HamBmiDPu++Dp/wvmMrkt4ya9duJoREGHlXqHgkS/xVo3+SCrzENqI9zgfV7nT9Nx3o1My5sjDGlIblqEqcsQieM6qK7c6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664203; c=relaxed/simple;
-	bh=sagncijI/h2nfvXaw1rl1NryLyPXOWSIipPsSGoomp8=;
+	s=arc-20240116; t=1784664205; c=relaxed/simple;
+	bh=RD3E70IeITBw7n6E2WPIXHr+otvIK/Z5czIgF90PhSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkFx1iUNlK/gIpI2SEdurIavLKPArV+kVEEQ/3wk3SE7hrWe66aJpQTy18g6w3UAcQQDGVI/8dEjb4DN+qADUlAVZ3qpOkZBkE0MpGClohP64uYO9NUp6R2MzTG4OrhWOP0VdQ8csnl79gGCLTiM7TaabinT/iApfHcpMgqSb6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOrnai6m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kzJkHlP4zJIWyDMFBAA0VuQRgbu4V4tD4sjjR20c8hO58uXzuGg+jfNI/JI826JyJy5lqei2pM+uDTCUoIyUwVScNeCMCgFNXFQKBT9WQLcKnXJFz9GylJLhHX1HY5J07yF+bnlTMP/b8FCbIj0SEb6IREo0g709psF9mAmKaIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Al8FlyGs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOrnai6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188A91F000E9;
-	Tue, 21 Jul 2026 20:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Al8FlyGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A801F00A3A;
+	Tue, 21 Jul 2026 20:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664199;
-	bh=d8KAiu4rIGJkly6qx9ygitnX8d/LGKr6gtwL7ID/XLs=;
+	s=korg; t=1784664202;
+	bh=5PHC9ZohLsYG7w7byzbnJRejljLnCw0xrQM5daaXAJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SOrnai6mm3rkislpQqbz7t/zt/gsbnMdNDPO1RiH4KJ5HWnxPiPeM2m7b9yEEstOF
-	 W/aJWU0GK0wPaPJyvxMFblLFHb63CFqgffxzhpD6Ad8MXvmIrKVxWNVHgNxgqjq1LW
-	 pr6W1/xUrcv2h/eBzqq+IMn1SXWq7amceE28YWeE=
+	b=Al8FlyGsC9Aye11Q95SAUN9Bj3u/vSmKXYVSeCEAB29e1kl+4rsffR8YGihTUBRLx
+	 8CwZ99S27y7d4DN8uYRae6D3OuIJDINliLUQaNVgvWOXR0zViKX+sOBiyKOdkOk/Ii
+	 je3ooBhFTQUsJ33/+G+Zy5ArFSXs01FIxqf7KcAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Esau <aaron1esau@gmail.com>,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.12 1067/1276] espintcp: use sk_msg_free_partial to fix partial send
-Date: Tue, 21 Jul 2026 17:25:10 +0200
-Message-ID: <20260721152509.863000459@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 1068/1276] bnx2x: fix potential memory leak in bnx2x_alloc_mem_bp()
+Date: Tue, 21 Jul 2026 17:25:11 +0200
+Message-ID: <20260721152509.886069231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,78 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 007800408002d871f5699bdb944f985896730b8f upstream.
+commit a986fde914d88af47eb78fd29c5d1af7952c3500 upstream.
 
-sk_msg_free_partial() ensures consistency of the skmsg at every
-iteration, without having to manually handle uncharges and offsets.
-This simplifies the code, and fixes some bugs in skmsg accounting when
-we don't send the full contents.
+If the allocation of fp[i].tpa_info fails, the error path will not free
+the struct bnx2x_fastpath allocated earlier, as it is not linked to the
+bp structure yet. Fix that by linking it immediately after allocation.
 
 Cc: stable@vger.kernel.org
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Reported-by: Aaron Esau <aaron1esau@gmail.com>
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 15192a8cf8a8 ("bnx2x: Split the FP structure")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260620062402.89549-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/espintcp.c |   34 +++++++---------------------------
- 1 file changed, 7 insertions(+), 27 deletions(-)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -215,43 +215,23 @@ static int espintcp_sendskmsg_locked(str
- 	struct sk_msg *skmsg = &emsg->skmsg;
- 	bool more = flags & MSG_MORE;
- 	struct scatterlist *sg;
--	int done = 0;
- 	int ret;
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
+@@ -4750,6 +4750,7 @@ int bnx2x_alloc_mem_bp(struct bnx2x *bp)
+ 	fp = kcalloc(bp->fp_array_size, sizeof(*fp), GFP_KERNEL);
+ 	if (!fp)
+ 		goto alloc_err;
++	bp->fp = fp;
+ 	for (i = 0; i < bp->fp_array_size; i++) {
+ 		fp[i].tpa_info =
+ 			kcalloc(ETH_MAX_AGGREGATION_QUEUES_E1H_E2,
+@@ -4758,8 +4759,6 @@ int bnx2x_alloc_mem_bp(struct bnx2x *bp)
+ 			goto alloc_err;
+ 	}
  
--	sg = &skmsg->sg.data[skmsg->sg.start];
- 	do {
- 		struct bio_vec bvec;
--		size_t size = sg->length - emsg->offset;
--		int offset = sg->offset + emsg->offset;
--		struct page *p;
+-	bp->fp = fp;
 -
--		emsg->offset = 0;
- 
-+		sg = &skmsg->sg.data[skmsg->sg.start];
- 		if (sg_is_last(sg) && !more)
- 			msghdr.msg_flags &= ~MSG_MORE;
- 
--		p = sg_page(sg);
--retry:
--		bvec_set_page(&bvec, p, size, offset);
--		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, size);
--		ret = tcp_sendmsg_locked(sk, &msghdr, size);
--		if (ret < 0) {
--			emsg->offset = offset - sg->offset;
--			skmsg->sg.start += done;
-+		bvec_set_page(&bvec, sg_page(sg), sg->length, sg->offset);
-+		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, sg->length);
-+		ret = tcp_sendmsg_locked(sk, &msghdr, sg->length);
-+		if (ret < 0)
- 			return ret;
--		}
- 
--		if (ret != size) {
--			offset += ret;
--			size -= ret;
--			goto retry;
--		}
--
--		done++;
--		put_page(p);
--		sk_mem_uncharge(sk, sg->length);
--		sg = sg_next(sg);
--	} while (sg);
-+		sk_msg_free_partial(sk, skmsg, ret);
-+	} while (skmsg->sg.size);
- 
- 	memset(emsg, 0, sizeof(*emsg));
- 
+ 	/* allocate sp objs */
+ 	bp->sp_objs = kcalloc(bp->fp_array_size, sizeof(struct bnx2x_sp_objs),
+ 			      GFP_KERNEL);
 
 
