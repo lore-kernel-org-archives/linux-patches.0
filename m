@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976843B42F9;
-	Tue, 21 Jul 2026 20:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496B23B42EF;
+	Tue, 21 Jul 2026 20:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666394; cv=none; b=H/Kbv0yQxHtyKbk7ffbiU8WnCuHzenzNyd+we+nhySJK0yepFJ3Y78mTVLeGsCFk3sIL4oPTSdmqXPiGZlkRrz84Lv94gc+bwBtp7BeymgSt/D7DOKStd3sj3MHZdyPO26jMBf8tW8X2mB5AwDuGfS6H1eYomxLlAsbj3mQ2Yy8=
+	t=1784666397; cv=none; b=cs6/BxmBF5GsLaoOPL2eGjvX+tSxH2uAhvQuTuOg9GgUXXJKIqLzdynucLG20Y+JR+ej/PlTfnnh6r+oRTo1wFE7d+epMjQuBOKdQfZBb5VfPWZRXIie4W79VoJf5HnpUuW2YyGboH5VamMUza6oAykpcDA8UyHPLSnM/Y1g8Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666394; c=relaxed/simple;
-	bh=kcbOdQnDx4++Rr9iq94E3+XHJLbyMNOm4QTcZetvdpo=;
+	s=arc-20240116; t=1784666397; c=relaxed/simple;
+	bh=4iTIm6GbhTKeBYxJMqham4xIhaBWVmcQkpvCsylJKUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QSSWzS2Cs/DT4f5w8iXYpeIjJg610DO6OufJTAqZrL5hlqSBood38YYpG+DgppwB2hrWoBPPdIQ7eKVJ3QOpp1VBgkY7OLTgBnX3HKUuqQkxexLcknDO8p0q4aRVE5tChQasvQ30lYXlOtn1LJrOCrJVFc9FpTpRiLiL+7B/qsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGsyOk0M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FftCojFmbaLFoPkg7uNJJJqFQYM+x/93mowvnjlvEowVKSKIFZrP5S0yiQgzKsgTSgwy2i6iwUd4HdieygWOumFjLVPaTeBValrAj1OBpTwdkETWoIKLh6qvFA2gv8jr7D2YJcr1hzZECxrebJvraOO7YRDDHNVA+pDy5pOhQ+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nt1Htzjh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGsyOk0M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36151F000E9;
-	Tue, 21 Jul 2026 20:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nt1Htzjh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1651F000E9;
+	Tue, 21 Jul 2026 20:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666393;
-	bh=VhT2/k/YK9OCAzZcECIUJxPoa4MpDBTIi7IlKcgIOBE=;
+	s=korg; t=1784666395;
+	bh=A/jKXnSF+XEognwDuIUTpDLS9J9757oLGUrxGpEyhUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eGsyOk0MNQyjh1xSvHhRL5JA3AlJXpGVLpvRYEz6G51KpVG+INE76XiSnRLScfE6U
-	 btcZP7QqfLnQXtqxWhI2SS1F3cC4a1fqGNmZffRN9uk/DbpfgXtUc0crCdObFgdObg
-	 0Vv3vNjhUmA4eH9h+veFm0PG8MTRGzBYDMmdJewA=
+	b=Nt1Htzjh3URUMYdjbnTh2osB/GTvtl1VrfGpQzvdtVRsMz02/h6qDnMlRjt480ChQ
+	 4WpLfD04OVm0uWxKZzG4V9GHwWoYBaoohatP/Fc74eo5vsXwPYQFFKKlxoJXGJrZLe
+	 VuWncu+pZSbAvrDzgLsyPk565WVbpJYJi6A4vR2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0666/1266] PCI: rcar-host: Remove unused LIST_HEAD(res)
-Date: Tue, 21 Jul 2026 17:18:23 +0200
-Message-ID: <20260721152456.761540653@linuxfoundation.org>
+Subject: [PATCH 6.6 0667/1266] perf sched: Fix idle-hist callchain display using wrong rb_first variant
+Date: Tue, 21 Jul 2026 17:18:24 +0200
+Message-ID: <20260721152456.784422025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -47,49 +48,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 6ba90ce2069ae923b0ec787aebdf2d786e5d2a58 ]
+[ Upstream commit d9b99dc8148e0c1f5da3942131b47e0d21187a32 ]
 
-Remove the unused LIST_HEAD(res) declaration from rcar_pcie_hw_enable().
+timehist_print_idlehist_callchain() calls rb_first_cached() on
+sorted_root, but the sort function (callchain_param.sort) populates it
+via rb_insert_color() on the plain rb_root member — not the cached
+variant.  This means rb_leftmost is never set, so rb_first_cached()
+always returns NULL and the entire callchain summary is silently
+dropped from --idle-hist output.
 
-The macro instantiation defines an unused 'struct list_head res' variable,
-which conflicts with a valid resource loop-local 'struct resource *res'
-declaration further down in the function, triggering a compiler variable
-shadowing warning:
+The original code in ba957ebb54893aca ("perf sched timehist: Show
+callchains for idle stat") was correct — it used struct rb_root and
+rb_first().  The bug was introduced when sorted_root was converted to
+rb_root_cached without converting the sort insertion path to use
+rb_insert_color_cached().
 
- drivers/pci/controller/pcie-rcar-host.c:357:34: warning: declaration of 'res' shadows a previous local [-Wshadow]
- 357 |                  struct resource *res = win->res;
+Use rb_first(&root->rb_root) to match how the tree was populated.
 
-Fixes: ce351636c67f75a9 ("PCI: rcar: Add suspend/resume")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://patch.msgid.link/20260521091256.15737-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Fixes: cb4c13a5137766c3 ("perf sched: Use cached rbtrees")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rcar-host.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/perf/builtin-sched.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-rcar-host.c b/drivers/pci/controller/pcie-rcar-host.c
-index 77f6366e7db107..2054492e109768 100644
---- a/drivers/pci/controller/pcie-rcar-host.c
-+++ b/drivers/pci/controller/pcie-rcar-host.c
-@@ -344,7 +344,6 @@ static void rcar_pcie_hw_enable(struct rcar_pcie_host *host)
- 	struct rcar_pcie *pcie = &host->pcie;
- 	struct pci_host_bridge *bridge = pci_host_bridge_from_priv(host);
- 	struct resource_entry *win;
--	LIST_HEAD(res);
- 	int i = 0;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 8b1573515c5781..db4ceebab8d8ad 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2906,7 +2906,8 @@ static size_t timehist_print_idlehist_callchain(struct rb_root_cached *root)
+ 	size_t ret = 0;
+ 	FILE *fp = stdout;
+ 	struct callchain_node *chain;
+-	struct rb_node *rb_node = rb_first_cached(root);
++	/* sort() uses rb_insert_color() on rb_root, not rb_root_cached */
++	struct rb_node *rb_node = rb_first(&root->rb_root);
  
- 	/* Try setting 5 GT/s link speed */
+ 	printf("  %16s  %8s  %s\n", "Idle time (msec)", "Count", "Callchains");
+ 	printf("  %.16s  %.8s  %.50s\n", graph_dotted_line, graph_dotted_line,
 -- 
 2.53.0
 
