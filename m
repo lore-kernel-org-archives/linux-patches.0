@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E5034B1A6;
-	Tue, 21 Jul 2026 21:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8589C34B1A6;
+	Tue, 21 Jul 2026 21:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670591; cv=none; b=VorxMK4B3DIvXzeDp5/a0CFWUZgO+bEXKIyfC0lGWX1Aj6cRAG+kBoiMcNflekgRt1jfgfvBvxEQuzaBGaK0uZtSIXk7T3yJjPWdNGUar+hkngJzTSmvGPRSKMg3kmUZBos0vmT/MAI4NArr0VoMOgnXrAxhsDh4KovABSPJ8sM=
+	t=1784670593; cv=none; b=neYwuHlwYvBJLnRG08bTyh2dpALs2PfoKoPbONbmvrSwpVWZZ0HMr7LQMHbvVHd31Nqrqpj9HFn3qZ1Rx9l48/0UodynLCYD/627U3auJS/KHACAnIunrmNIV5oA13fHpHaCBSwojAWBtYKO/6zdQ0yWCAfhmOnP96opkWr1vZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670591; c=relaxed/simple;
-	bh=nrxypfCbI0svr3SsEGM6sNRXlcidWNg9eO0HNoOCnVs=;
+	s=arc-20240116; t=1784670593; c=relaxed/simple;
+	bh=71tuTfWaNIBdIaKbClaNzjbb7JW0RL4eTXqMjsxsR0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSzqBOrEjdgTbCCM4nyoNuafciL6FIYvTwoaQ3TCrv/btNEtVLegI6FO6BBvXB0SUfIeg9W1TOVZVVNX9wzdCkOua+SQ3sLZid8UNdRPl+7R5DG5p9zAlAhwhEjNkK5E9eCrT4KjHA3ElNV1acvLz5T6DebmtzGIrbdYaLGD2VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jg772aNN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PgVLnUoq/Yfsjpg8Szw4To3ZxPxN7g/ngFOu5CEpg+VVotufS4OItPOD7CCfb2D8+Wwe/1AEa/af8iqt1h5y7zJV1eYcW54/Ci5czKumWjLL4o2fSXATzaknmEmVlJkB9vRqaWJHiGu3SFbFIhDdtOTsREsB027Q8Q3W9RjBne4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLvQlG5v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jg772aNN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3B31F000E9;
-	Tue, 21 Jul 2026 21:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLvQlG5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC99A1F000E9;
+	Tue, 21 Jul 2026 21:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670589;
-	bh=1e7406QbpfjrSXNDuwYrzea8FbkaRkLAH3d7hvG/13o=;
+	s=korg; t=1784670592;
+	bh=ot+z8NF+rOIqqKa2cMnEr2pu3p8RT17WBUFw02wbT1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jg772aNNiAVPT2L9mllljKG+zW79mqMfBoSdzqaoyv0cAcFvoN7xHrcRGZUvb5Uwj
-	 BQd5piOg8iAtRN7SPoiS2iRCzi3sl/veQU84u0RAvLkPTgmJFz/wimt5WNdWVkTrd+
-	 AXHxsYkR6V7ZJtltB+V9+stj9BZ/4bz6OihaHA3w=
+	b=VLvQlG5vNFHpE5tl6n7AtX92yI08ibi2sQTLQVJYdR8x+MIWbtYSj4DLs0Skyz3s+
+	 LVtfcuICocCNJjBSHtqh1RzmJkMsEte7EG8qw11zYlBB0o+P1zmQa4PJnAfIK2Bb0Q
+	 hQb2XK8PM75tE1MyllkYE34prtq7aI1M/BYnA0wM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0991/1067] Bluetooth: L2CAP: cancel pending_rx_work before taking conn->lock
-Date: Tue, 21 Jul 2026 17:26:32 +0200
-Message-ID: <20260721152446.728472237@linuxfoundation.org>
+Subject: [PATCH 6.1 0992/1067] Bluetooth: hci_core: Enable buffer flow control for SCO/eSCO
+Date: Tue, 21 Jul 2026 17:26:33 +0200
+Message-ID: <20260721152446.750911815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,64 +51,268 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 2641a9e0a1dd4af2e21995470a21d55dd35e5203 ]
+[ Upstream commit 13218453521d75916dfed55efb8e809bfc03cb4b ]
 
-l2cap_conn_del() takes conn->lock and then calls cancel_work_sync() for
-pending_rx_work.  process_pending_rx() takes the same mutex, so teardown
-can deadlock against the worker it is flushing.
+This enables buffer flow control for SCO/eSCO
+(see: Bluetooth Core 6.0 spec: 6.22. Synchronous Flow Control Enable),
+recently this has caused the following problem and is actually a nice
+addition for the likes of Socket TX complete:
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+< HCI Command: Read Buffer Size (0x04|0x0005) plen 0
+> HCI Event: Command Complete (0x0e) plen 11
+      Read Buffer Size (0x04|0x0005) ncmd 1
+        Status: Success (0x00)
+        ACL MTU: 1021 ACL max packet: 5
+        SCO MTU: 240  SCO max packet: 8
+...
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+> HCI Event: Hardware Error (0x10) plen 1
+        Code: 0x0a
 
-The grounded PoC kept the l2cap_conn_ready() -> queue_work(...,
-&conn->pending_rx_work) submit path, the l2cap_conn_del() ->
-cancel_work_sync(&conn->pending_rx_work) teardown path, and the
-process_pending_rx() -> mutex_lock(&conn->lock) worker edge.  Lockdep
-reported:
+To fix the code will now attempt to enable buffer flow control when
+HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED is set by the driver:
 
-  WARNING: possible circular locking dependency detected
-  process_pending_rx+0x21/0x2a [vuln_msv]
-  l2cap_conn_del.constprop.0+0x3f/0x4e [vuln_msv]
-  *** DEADLOCK ***
+< HCI Command: Write Sync Fl.. (0x03|0x002f) plen 1
+        Flow control: Enabled (0x01)
+> HCI Event: Command Complete (0x0e) plen 4
+      Write Sync Flow Control Enable (0x03|0x002f) ncmd 1
+        Status: Success (0x00)
 
-Cancel pending_rx_work before taking conn->lock, matching the existing
-lock-before-drain ordering used for the two delayed works in the same
-teardown path.  The pending_rx queue is still purged after the work has
-been cancelled and conn->lock has been acquired.
+On success then HCI_SCO_FLOWCTL would be set which indicates sco_cnt
+shall be used for flow contro.
 
-Fixes: 7ab56c3a6ecc ("Bluetooth: Fix deadlock in l2cap_conn_del()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Fixes: 7fedd3bb6b77 ("Bluetooth: Prioritize SCO traffic")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Pauli Virtanen <pav@iki.fi>
+Stable-dep-of: 12917f591cea ("Bluetooth: hci_conn: Fix null ptr deref in hci_abort_conn()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ include/net/bluetooth/hci.h      |   13 ++++++++
+ include/net/bluetooth/hci_core.h |    1 
+ net/bluetooth/hci_core.c         |   62 +++++++++++++++++----------------------
+ net/bluetooth/hci_event.c        |    2 +
+ net/bluetooth/hci_sync.c         |   24 +++++++++++++++
+ 5 files changed, 68 insertions(+), 34 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1785,17 +1785,11 @@ static void l2cap_conn_del(struct hci_co
- 	cancel_delayed_work_sync(&conn->info_timer);
- 	cancel_work_sync(&conn->id_addr_update_work);
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -228,6 +228,13 @@ enum {
+ 	 */
+ 	HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED,
  
-+	cancel_work_sync(&conn->pending_rx_work);
++	/* When this quirk is set consider Sync Flow Control as supported by
++	 * the driver.
++	 *
++	 * This quirk must be set before hci_register_dev is called.
++	 */
++	HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED,
 +
- 	kfree_skb(conn->rx_skb);
+ 	/* When this quirk is set, the controller has validated that
+ 	 * LE states reported through the HCI_LE_READ_SUPPORTED_STATES are
+ 	 * valid.  This mechanism is necessary as many controllers have
+@@ -396,6 +403,7 @@ enum {
+ 	HCI_WIDEBAND_SPEECH_ENABLED,
+ 	HCI_EVENT_FILTER_CONFIGURED,
+ 	HCI_PA_SYNC,
++	HCI_SCO_FLOWCTL,
  
- 	skb_queue_purge(&conn->pending_rx);
--
--	/* We can not call flush_work(&conn->pending_rx_work) here since we
--	 * might block if we are running on a worker from the same workqueue
--	 * pending_rx_work is waiting on.
--	 */
--	if (work_pending(&conn->pending_rx_work))
--		cancel_work_sync(&conn->pending_rx_work);
--
- 	ida_destroy(&conn->tx_ida);
+ 	HCI_DUT_MODE,
+ 	HCI_VENDOR_DIAG,
+@@ -1538,6 +1546,11 @@ struct hci_rp_read_tx_power {
+ 	__s8     tx_power;
+ } __packed;
  
- 	l2cap_unregister_all_users(conn);
++#define HCI_OP_WRITE_SYNC_FLOWCTL	0x0c2f
++struct hci_cp_write_sync_flowctl {
++	__u8     enable;
++} __packed;
++
+ #define HCI_OP_READ_PAGE_SCAN_TYPE	0x0c46
+ struct hci_rp_read_page_scan_type {
+ 	__u8     status;
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1659,6 +1659,7 @@ void hci_conn_del_sysfs(struct hci_conn
+ #define lmp_hold_capable(dev)      ((dev)->features[0][0] & LMP_HOLD)
+ #define lmp_sniff_capable(dev)     ((dev)->features[0][0] & LMP_SNIFF)
+ #define lmp_park_capable(dev)      ((dev)->features[0][1] & LMP_PARK)
++#define lmp_sco_capable(dev)       ((dev)->features[0][1] & LMP_SCO)
+ #define lmp_inq_rssi_capable(dev)  ((dev)->features[0][3] & LMP_RSSI_INQ)
+ #define lmp_esco_capable(dev)      ((dev)->features[0][3] & LMP_ESCO)
+ #define lmp_bredr_capable(dev)     (!((dev)->features[0][4] & LMP_NO_BREDR))
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3586,42 +3586,27 @@ static void __check_timeout(struct hci_d
+ }
+ 
+ /* Schedule SCO */
+-static void hci_sched_sco(struct hci_dev *hdev)
++static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
+ {
+ 	struct hci_conn *conn;
+ 	struct sk_buff *skb;
+-	int quote;
++	int quote, *cnt;
++	unsigned int pkts = hdev->sco_pkts;
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "type %u", type);
+ 
+-	if (!hci_conn_num(hdev, SCO_LINK))
++	if (!hci_conn_num(hdev, type) || !pkts)
+ 		return;
+ 
+-	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, SCO_LINK, &quote))) {
+-		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
+-			BT_DBG("skb %p len %d", skb, skb->len);
+-			hci_send_frame(hdev, skb);
+-
+-			conn->sent++;
+-			if (conn->sent == ~0)
+-				conn->sent = 0;
+-		}
+-	}
+-}
+-
+-static void hci_sched_esco(struct hci_dev *hdev)
+-{
+-	struct hci_conn *conn;
+-	struct sk_buff *skb;
+-	int quote;
+-
+-	BT_DBG("%s", hdev->name);
+-
+-	if (!hci_conn_num(hdev, ESCO_LINK))
+-		return;
++	/* Use sco_pkts if flow control has not been enabled which will limit
++	 * the amount of buffer sent in a row.
++	 */
++	if (!hci_dev_test_flag(hdev, HCI_SCO_FLOWCTL))
++		cnt = &pkts;
++	else
++		cnt = &hdev->sco_cnt;
+ 
+-	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, ESCO_LINK,
+-						     &quote))) {
++	while (*cnt && (conn = hci_low_sent(hdev, type, &quote))) {
+ 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
+ 			BT_DBG("skb %p len %d", skb, skb->len);
+ 			hci_send_frame(hdev, skb);
+@@ -3629,8 +3614,17 @@ static void hci_sched_esco(struct hci_de
+ 			conn->sent++;
+ 			if (conn->sent == ~0)
+ 				conn->sent = 0;
++			(*cnt)--;
+ 		}
+ 	}
++
++	/* Rescheduled if all packets were sent and flow control is not enabled
++	 * as there could be more packets queued that could not be sent and
++	 * since no HCI_EV_NUM_COMP_PKTS event will be generated the reschedule
++	 * needs to be forced.
++	 */
++	if (!pkts && !hci_dev_test_flag(hdev, HCI_SCO_FLOWCTL))
++		queue_work(hdev->workqueue, &hdev->tx_work);
+ }
+ 
+ static void hci_sched_acl_pkt(struct hci_dev *hdev)
+@@ -3666,8 +3660,8 @@ static void hci_sched_acl_pkt(struct hci
+ 			chan->conn->sent++;
+ 
+ 			/* Send pending SCO packets right away */
+-			hci_sched_sco(hdev);
+-			hci_sched_esco(hdev);
++			hci_sched_sco(hdev, SCO_LINK);
++			hci_sched_sco(hdev, ESCO_LINK);
+ 		}
+ 	}
+ 
+@@ -3788,8 +3782,8 @@ static void hci_sched_le(struct hci_dev
+ 			chan->conn->sent++;
+ 
+ 			/* Send pending SCO packets right away */
+-			hci_sched_sco(hdev);
+-			hci_sched_esco(hdev);
++			hci_sched_sco(hdev, SCO_LINK);
++			hci_sched_sco(hdev, ESCO_LINK);
+ 		}
+ 	}
+ 
+@@ -3834,8 +3828,8 @@ static void hci_tx_work(struct work_stru
+ 
+ 	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
+ 		/* Schedule queues and send stuff to HCI driver */
+-		hci_sched_sco(hdev);
+-		hci_sched_esco(hdev);
++		hci_sched_sco(hdev, SCO_LINK);
++		hci_sched_sco(hdev, ESCO_LINK);
+ 		hci_sched_iso(hdev);
+ 		hci_sched_acl(hdev);
+ 		hci_sched_le(hdev);
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4463,9 +4463,11 @@ static void hci_num_comp_pkts_evt(struct
+ 			break;
+ 
+ 		case SCO_LINK:
++		case ESCO_LINK:
+ 			hdev->sco_cnt += count;
+ 			if (hdev->sco_cnt > hdev->sco_pkts)
+ 				hdev->sco_cnt = hdev->sco_pkts;
++
+ 			break;
+ 
+ 		case ISO_LINK:
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -3854,6 +3854,28 @@ static int hci_write_ca_timeout_sync(str
+ 				     sizeof(param), &param, HCI_CMD_TIMEOUT);
+ }
+ 
++/* Enable SCO flow control if supported */
++static int hci_write_sync_flowctl_sync(struct hci_dev *hdev)
++{
++	struct hci_cp_write_sync_flowctl cp;
++	int err;
++
++	/* Check if the controller supports SCO and HCI_OP_WRITE_SYNC_FLOWCTL */
++	if (!lmp_sco_capable(hdev) || !(hdev->commands[10] & BIT(4)) ||
++	    !test_bit(HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED, &hdev->quirks))
++		return 0;
++
++	memset(&cp, 0, sizeof(cp));
++	cp.enable = 0x01;
++
++	err = __hci_cmd_sync_status(hdev, HCI_OP_WRITE_SYNC_FLOWCTL,
++				    sizeof(cp), &cp, HCI_CMD_TIMEOUT);
++	if (!err)
++		hci_dev_set_flag(hdev, HCI_SCO_FLOWCTL);
++
++	return err;
++}
++
+ /* BR Controller init stage 2 command sequence */
+ static const struct hci_init_stage br_init2[] = {
+ 	/* HCI_OP_READ_BUFFER_SIZE */
+@@ -3872,6 +3894,8 @@ static const struct hci_init_stage br_in
+ 	HCI_INIT(hci_clear_event_filter_sync),
+ 	/* HCI_OP_WRITE_CA_TIMEOUT */
+ 	HCI_INIT(hci_write_ca_timeout_sync),
++	/* HCI_OP_WRITE_SYNC_FLOWCTL */
++	HCI_INIT(hci_write_sync_flowctl_sync),
+ 	{}
+ };
+ 
 
 
