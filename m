@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463B13770B;
-	Tue, 21 Jul 2026 15:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF54446D556;
+	Tue, 21 Jul 2026 15:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649077; cv=none; b=I9B3zfasIdcFYtS5GAJyk9wfo/0eoCH4vHD2648j35sQxHpmEz9ADnWSGoqZTXF7hIw2lzSoC3AKb0Me8V8JkJJNXIuYX5sVHmFmomW2beN4nvxKwfKIBCR5Pobm13X5R4B6un79T1sNkDPLLeeUUt9E9wbX32r0nyoZVbkpg7s=
+	t=1784649079; cv=none; b=WuMWMDOzZAw4YEwlofw09O88N0MmDvrOdU4BnC3h9YiFhFSVNyDuqX2T5Hs1f0OAGSUvjn2M33JRI+JJq6BszXP5QAGrcRSKAuSsS5MwjETaQPWXDw+JjX65d9i+RhbFiCHhm84oxvaQhGoodDulNtSPHHR5kIAabY+XlIsi7J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649077; c=relaxed/simple;
-	bh=Srbeeg95/vYsYGoZdyFgwV/iv1c7NALIqkhWYsE9ilI=;
+	s=arc-20240116; t=1784649079; c=relaxed/simple;
+	bh=uGYWFMZT3EEdaV6OkIyqXccuahflRcLtrxa8Gavm3fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4glLCK7zHLC3aS6CLc6l9X6Zzp1tLVL8LdPcHgoKJsoIMeSWIRCpIX8fSGSCi6LFKzUv6xjkU5IYpqZm22e7uOv5yisNz6CNFnn+51JqjTUH6BJlLrgiV2pfwwPL/HWom5DsuymcQSmzqwN2/KRGM49PvjXFd+u0BrIm813RDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgZJhPBL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RtW5QM03/0QkeNWjgwcHioHyH83XDCFfTXwQVJU0oYqRbkryuDkgRje8H0GXWmUwEplB0Uk/sloYyLU/cFcL5z8gRgM3W31t55W9giTeXFssOwTvW0V0hNWsbBWd8U51jeyaiMZx++/w+je1qGuFIuy/QJOyYGhzu0p3irKaRv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnCtWj+R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgZJhPBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB801F000E9;
-	Tue, 21 Jul 2026 15:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnCtWj+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BA91F000E9;
+	Tue, 21 Jul 2026 15:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649076;
-	bh=mo02pKajC6lJezb2s9ntx288U3/G1UMJotwb2dzR0ro=;
+	s=korg; t=1784649078;
+	bh=+2qeb6z5oXEzsi8/7H0T5Mpmy0Vn3fOBVg8mEOAfJlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TgZJhPBLvyQYK5be7afzWzTRoWTBFC7rpS11OJtRzTcHHv03ZiTzIIB4t00p9R8ch
-	 KZJzDhpJZ72dlkOWBlN+jC6YXMdgCxTSaRhmYLDe72GsW+NVfuGTulNEuXEiRB0uQU
-	 lk57QCBW1S3IAfLQReUQsitZsLi9HRBb9/d2m2nY=
+	b=FnCtWj+RA2bPm6LqawgBVWxqTqxES+14gEQohbYONrA7xxAFr9ak9ETTbPs3B8aDY
+	 ayAkmHoAWAP9SdhHk1fzqMA6mOVLGIARXOW2lllZXW/iDMwuZ5Xu7clYgUPKbMU2FP
+	 wpBzzgo8vuHIKLs+ijHuH/t8q1mmdo36vDuvxo4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0440/2077] driver core: Use system_percpu_wq instead of system_wq
-Date: Tue, 21 Jul 2026 17:01:53 +0200
-Message-ID: <20260721152603.139330945@linuxfoundation.org>
+Subject: [PATCH 7.1 0441/2077] bpf: Reject exclusive maps for bpf_map_elem iterators
+Date: Tue, 21 Jul 2026 17:01:54 +0200
+Message-ID: <20260721152603.164445416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit fda8355f13ea3c0f9499acdeff3024995b474948 ]
+[ Upstream commit 3c56ee343f9412d81918635c3e25e22a5dd6d87e ]
 
-Commit 1137838865bf ("driver core: Use mod_delayed_work to prevent lost
-deferred probe work") added a use of system_wq, which is deprecated in
-favor of system_percpu_wq added by commit 128ea9f6ccfb ("workqueue: Add
-system_percpu_wq and system_dfl_wq"). An upcoming warning in the
-workqueue tree flags this with:
+Exclusive maps (aka excl_prog_hash) are meant to be reachable only
+from the single program whose hash matches. This is enforced by
+check_map_prog_compatibility() when the map is referenced from a
+program such as signed BPF loaders.
 
-  workqueue: work func deferred_probe_timeout_work_func enqueued on deprecated workqueue. Use system_{percpu|dfl}_wq instead.
+A bpf_map_elem iterator, however, binds its target map at attach
+time in bpf_iter_attach_map() instead of referencing it from the
+program, so the exclusivity check is never reached. On top of that,
+the iterator exposes the map value as a writable buffer.
 
-Switch to system_percpu_wq to clear up the warning.
-
-Fixes: 1137838865bf ("driver core: Use mod_delayed_work to prevent lost deferred probe work")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Link: https://patch.msgid.link/20260601-driver-core-fix-system_wq-warning-v1-1-f9001a70ee25@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: baefdbdf6812 ("bpf: Implement exclusive map creation")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260602133052.423725-2-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/dd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/map_iter.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index f64175afefc915..51c7132e98a07c 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -324,7 +324,7 @@ void deferred_probe_extend_timeout(void)
- 	 * start a new one.
- 	 */
- 	if (delayed_work_pending(&deferred_probe_timeout_work) &&
--	    mod_delayed_work(system_wq, &deferred_probe_timeout_work,
-+	    mod_delayed_work(system_percpu_wq, &deferred_probe_timeout_work,
- 			     secs_to_jiffies(driver_deferred_probe_timeout)))
- 		pr_debug("Extended deferred probe timeout by %d secs\n",
- 					driver_deferred_probe_timeout);
+diff --git a/kernel/bpf/map_iter.c b/kernel/bpf/map_iter.c
+index 261a03ea73d349..ae0741a09c6dee 100644
+--- a/kernel/bpf/map_iter.c
++++ b/kernel/bpf/map_iter.c
+@@ -112,6 +112,10 @@ static int bpf_iter_attach_map(struct bpf_prog *prog,
+ 	map = bpf_map_get_with_uref(linfo->map.map_fd);
+ 	if (IS_ERR(map))
+ 		return PTR_ERR(map);
++	if (map->excl_prog_sha) {
++		err = -EPERM;
++		goto put_map;
++	}
+ 
+ 	if (map->map_type == BPF_MAP_TYPE_PERCPU_HASH ||
+ 	    map->map_type == BPF_MAP_TYPE_LRU_PERCPU_HASH ||
 -- 
 2.53.0
 
