@@ -1,37 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4306B366816;
-	Tue, 21 Jul 2026 20:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6F53B47DF;
+	Tue, 21 Jul 2026 20:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667256; cv=none; b=NEAJ96GKxobBLapXH3T1JSpVQxgUmGT6I0vHqpRcHgX1C7zPZxW94nGG0LNt6/xpww2qHI/r2VUNk1ukYBcw7VxJ2ZPtzZGpX9TM9/KAxEYEubJraaq3OheMPEoURGc7pBZgYD7GYz7Gglfg6CBUUKpVSE36SisODGOTpmvCLZg=
+	t=1784667259; cv=none; b=cRx8jb0bknVGWPqUCoAd5yliIEdy98iRY5TuIu3XcWcxC2oa5O+xJVQMONKVH+Y1WWm7O8tN1OPZOhiTKrSug+qE6936iQpe+MPvNrP3QS94TYgPt96fet0Ei7DXxDvoZL2qFj5r0fFyCtknOsPpfm0AJHpXqCzqrY2DJlPmqvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667256; c=relaxed/simple;
-	bh=RPq3OEcV9QoFBYgz0nTBF+rVgpMNv0MDodDer3GHs5U=;
+	s=arc-20240116; t=1784667259; c=relaxed/simple;
+	bh=9mcxlXnYEPKo3auXnB/QNfSR7gpzosrLjN/gyh8GPBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oE1WevHtaJhbNPi3rjU+WZ9jwsIt7kWaM08TBlNgTVtlC2b02BnjguEJGXvbFKeKBG0CnoTW7yMiIBuTNSr0owTCZfz4cd1+zAzNwYcyy83VrtjGnQsEWUG8z7FJZ2cZ+wJup4OBz/Z4ocdnywrxem8NsFzEeRpn6o6tjgxz11s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkf4CJzy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WalT7XTcZ1GDMEhc3C7AaGaSR31u+tcSsrTMTwndxxNgxQ1VzCLPMWeWRq63NelX0+Hh5tBSP4VHPbVjT+QIqne4kLn8pE8Ij0UxoQvj/MQDdA06CsnZdJi757JptndyeytF2Cv/UDUQ/k/uc5Ka+ry+qWIpdNbBswt6ar54448=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDhUfnf4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkf4CJzy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37731F000E9;
-	Tue, 21 Jul 2026 20:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDhUfnf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26ECA1F000E9;
+	Tue, 21 Jul 2026 20:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667255;
-	bh=NsYXCC3sV0RMM5ADKs4c9irVvEpRhCdSpz0Xo1iTriU=;
+	s=korg; t=1784667257;
+	bh=k+AVQGbYKyYwvVIygGiBJ3qoEQIoAO1Vv5euEkIyFEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dkf4CJzyBmj/IZWHFLpjBj8iOuzX7lGlBP5l7cgRkZXlHDxQWFrMd3vtA/HsGLZ05
-	 pZJSXIwRwKnuyLvHk5Sf4g5jVuamLn1ErhCu9vPPtOfnk56SfjJ1tNEBHgZt+rfE6P
-	 idiFctqJ3lFMPE0rqTR5Tdi7H3WcMR1VNBaRFOkc=
+	b=xDhUfnf4JzIFywe0/UlsKxsE9LAkk/ygcHJPXOfyggc5TaRXPAlj1Q55noqWY/ZIh
+	 nmL4IJurULf4RHT0woNFWS4n3SWKY8mq0P9vWKIOKSzTzfDN5jdthDEkLe+upKOP59
+	 x/q8I+o9fcPyQm+MTf8Rra1A8FZhl/oUEvlND8hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 0992/1266] proc: only bump parent nlink when registering directories
-Date: Tue, 21 Jul 2026 17:23:49 +0200
-Message-ID: <20260721152504.031133056@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0993/1266] mm/mm_init: fix uninitialized struct pages for ZONE_DEVICE
+Date: Tue, 21 Jul 2026 17:23:50 +0200
+Message-ID: <20260721152504.053394788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -44,94 +57,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 16b02eb4b9b272c221255c20d34ccd5db53a3ed3 upstream.
+commit cd681403a87085562499d60325b7b45d3be11217 upstream.
 
-proc_register() increments the parent directory's link count for every
-entry it registers, while remove_proc_entry() and remove_proc_subtree()
-decrement it only when the removed entry is a directory.  Regular files
-thus inflate the parent's count while they exist, and leak one link
-permanently on every create and remove cycle.
+If DAX memory is hotplugged into an unoccupied subsection of an early
+section, section_activate() reuses the unoptimized boot memmap.  However,
+compound_nr_pages() still assumes that vmemmap optimization is in effect
+and initializes only the reduced number of struct pages.  As a result, the
+remaining tail struct pages are left uninitialized, which can later lead
+to unexpected behavior or crashes.
 
-For example, /proc/bus/pci/00 with twenty-two device files and no
-subdirectories reports nlink 24 instead of 2, and SR-IOV VF enable
-and disable cycles, each creating and removing the VF config space
-entries under /proc/bus/pci/<bus>, inflate the link count of that
-directory without bound.
+Fix this by treating early sections as unoptimized when calculating how
+many struct pages to initialize.
 
-Before commit e06689bf5701 ("proc: change ->nlink under
-proc_subdir_lock"), the increment lived in proc_mkdir_data() and
-proc_create_mount_point(), and was therefore applied only to
-directories.  Moving it into proc_register() to bring it under
-proc_subdir_lock dropped the S_ISDIR check.
-
-Thus, move the nlink accounting into pde_subdir_insert() and
-pde_erase(), only updating it for directories in both, so the link
-count is always changed together with the directory entry itself.
-
-Fixes: e06689bf5701 ("proc: change ->nlink under proc_subdir_lock")
-Cc: stable@vger.kernel.org # v5.5+
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Link: https://patch.msgid.link/20260613211005.921692-1-kwilczynski@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://lore.kernel.org/20260428081855.1249045-7-songmuchun@bytedance.com
+Fixes: 6fd3620b3428 ("mm/page_alloc: reuse tail struct pages for compound devmaps")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/generic.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ mm/mm_init.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -112,6 +112,8 @@ static bool pde_subdir_insert(struct pro
- 	/* Add new node and rebalance tree. */
- 	rb_link_node(&de->subdir_node, parent, new);
- 	rb_insert_color(&de->subdir_node, root);
-+	if (S_ISDIR(de->mode))
-+		dir->nlink++;
- 	return true;
- }
- 
-@@ -399,7 +401,6 @@ struct proc_dir_entry *proc_register(str
- 		write_unlock(&proc_subdir_lock);
- 		goto out_free_inum;
- 	}
--	dir->nlink++;
- 	write_unlock(&proc_subdir_lock);
- 
- 	return dp;
-@@ -698,6 +699,8 @@ static void pde_erase(struct proc_dir_en
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -1024,10 +1024,17 @@ static void __ref __init_zone_device_pag
+  * of how the sparse_vmemmap internals handle compound pages in the lack
+  * of an altmap. See vmemmap_populate_compound_pages().
+  */
+-static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
++static inline unsigned long compound_nr_pages(unsigned long pfn,
++					      struct vmem_altmap *altmap,
+ 					      struct dev_pagemap *pgmap)
  {
- 	rb_erase(&pde->subdir_node, &parent->subdir);
- 	RB_CLEAR_NODE(&pde->subdir_node);
-+	if (S_ISDIR(pde->mode))
-+		parent->nlink--;
- }
+-	if (!vmemmap_can_optimize(altmap, pgmap))
++	/*
++	 * If DAX memory is hot-plugged into an unoccupied subsection
++	 * of an early section, the unoptimized boot memmap is reused.
++	 * See section_activate().
++	 */
++	if (early_section(__pfn_to_section(pfn)) ||
++	    !vmemmap_can_optimize(altmap, pgmap))
+ 		return pgmap_vmemmap_nr(pgmap);
  
- /*
-@@ -723,8 +726,6 @@ void remove_proc_entry(const char *name,
- 			de = NULL;
- 		} else {
- 			pde_erase(de, parent);
--			if (S_ISDIR(de->mode))
--				parent->nlink--;
- 		}
- 	}
- 	write_unlock(&proc_subdir_lock);
-@@ -783,8 +784,6 @@ int remove_proc_subtree(const char *name
+ 	return VMEMMAP_RESERVE_NR * (PAGE_SIZE / sizeof(struct page));
+@@ -1095,7 +1102,7 @@ void __ref memmap_init_zone_device(struc
  			continue;
- 		}
- 		next = de->parent;
--		if (S_ISDIR(de->mode))
--			next->nlink--;
- 		write_unlock(&proc_subdir_lock);
  
- 		proc_entry_rundown(de);
+ 		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
+-				     compound_nr_pages(altmap, pgmap));
++				     compound_nr_pages(pfn, altmap, pgmap));
+ 	}
+ 
+ 	pr_debug("%s initialised %lu pages in %ums\n", __func__,
 
 
