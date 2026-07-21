@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D2A46D0A4;
-	Tue, 21 Jul 2026 18:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4203E39A7FD;
+	Tue, 21 Jul 2026 18:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658526; cv=none; b=m0PnXXFmCamq6F4pR1tIgdzbJnEl0HC3vAvKQfzaWeNXK4cjnqHxzK058v+H5VRP7ASuGrui0mk030PXvcjh7TPPLMUylTxzfdM0zQZb2Tg/K9H2GVj6V2PUMvr6UTxoOpSy2lo0b/WkIIrNMSHORbVZGpfpavqOkfXg8lk5f6k=
+	t=1784658526; cv=none; b=lmKLBnCl64eX78qdblLRSFUNYd1hgAAPWZLLGySBr0SfEHCBqrXwMj/iYQlZio5rqORJ3lrR1QPmiPSnoLMWmFQJNgKOLs1tB2hTiGk9Zkvync3eyDWeSO7xBKg1abaLY98cNh3Imx9AUR/uCAALUO4XqIrEcT7L8pp07JaIuxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784658526; c=relaxed/simple;
-	bh=b0GFSHNbta/LSMxT79uF8jIvAOc+pyREPgd06TljAsQ=;
+	bh=gBJwL+EoCHDK5c9cc5PoMWn7dqS2zXLen7OoYsUPHl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EWaiJ0RVHKqBxW5LNu8kgdRr9DCT4Kt0sO/as6am/NCb+UtAQoWTygWNLSvU9SfziI28WtefJBf5w2wtMGwUg2+QC5XIO+uvMJTce7cuFC2yB7OmIlXfttVJdCAZJqggGPTWHHS4dhX8HSXNRD0ktpLP9msXYTihWmsmK1UYtYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ymcuvcmb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AMyoeAkOi2uA6KEutQ92hNDCtsMK1oZumui99l0IT4nWADs/qHICdP8YqNctX8+HcgW0VOjb7D0VAm+yMQvn4lkoFf9EJsRG/8tmBjNo3onyEgFPf46Qh3AgZbsVC2EmILm4zIM3mrK13ZYFbJbAr4Eusfub7PZ8DYV6AOCe0UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWuYv0SJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ymcuvcmb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24871F00A3A;
-	Tue, 21 Jul 2026 18:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWuYv0SJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC151F00A3D;
+	Tue, 21 Jul 2026 18:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658521;
-	bh=jJZqZ7spdRiv9SfcLqLIRRvI1ZcqPjLLXwHWQfS64yU=;
+	s=korg; t=1784658524;
+	bh=EA7NoCLmAumiuIsNh/BZ3Pxqy5uZvVNcf0H2nZaCn9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YmcuvcmbYK/DhJcIMajUu9riN8KAbneK9gxyyJTxW7wfjuvA/0lpTAOT3EQfJBWQx
-	 d/YIEQOV66EWkDSBVZGT6Z5V1kBclFxcvKunjPjavVgsr2mhT2Gb07EOwsjTy8e9D0
-	 XoGonkrHP5f+RpzmjF7erfcUGaCcGjLbHKSAn/t8=
+	b=cWuYv0SJJW29fGftYmKJTwMP1r92rEY5z68Vvb8Yi6ZUmuplzUSa3CqKP1LSv7VNp
+	 nyW/wPMDJdAZPFvzwQ0ppIW/BKWStmrWh/1Gpi6HOFaOHOTf6ctapJ6dDthX+glO/e
+	 aSP9LJNzpk5fVFbkmoDGUdGBXIYA5irwFq19Lil4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliot Courtney <ecourtney@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>
-Subject: [PATCH 6.18 1176/1611] gpu: nova-core: simplify and_then with condition to filter
-Date: Tue, 21 Jul 2026 17:21:32 +0200
-Message-ID: <20260721152541.883236996@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.18 1177/1611] gpu: host1x: Fix device reference leak in host1x_device_parse_dt() error path
+Date: Tue, 21 Jul 2026 17:21:33 +0200
+Message-ID: <20260721152541.906977436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,61 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eliot Courtney <ecourtney@nvidia.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 16df3873c80388a71c4695909a51be0c809b889c upstream.
+commit e75717f9aec04355777be41070890c6a815c76df upstream.
 
-This code is more simply expressed using Option::filter instead of the
-and_then with conditional.
+After device_initialize(), the embedded struct device in struct
+host1x_device should be released through the device core with
+put_device().
 
-This fixes the following warning with latest nightly Rust clippy build:
+In host1x_device_add(), if host1x_device_parse_dt() fails, the current
+error path frees the object directly with kfree(device). That bypasses
+the normal device lifetime handling and leaks the reference held on the
+embedded struct device.
 
-warning: manual implementation of `Option::filter`
-   --> drivers/gpu/nova-core/firmware.rs:391:14
-    |
-391 |               .and_then(|hdr| {
-    |  ______________^
-392 | |                 if hdr.bin_magic == BIN_MAGIC {
-393 | |                     Some(hdr)
-394 | |                 } else {
-...   |
-397 | |             })
-    | |______________^ help: try: `filter(|hdr| hdr.bin_magic == BIN_MAGIC)`
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_filter
-    = note: `-D clippy::manual-filter` implied by `-D warnings`
-    = help: to override `-D warnings` add `#[allow(clippy::manual_filter)]`
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
+Fix this by using put_device() in the host1x_device_parse_dt() failure
+path.
+
+Fixes: f4c5cf88fbd50 ("gpu: host1x: Provide a proper struct bus_type")
 Cc: stable@vger.kernel.org
-Fixes: d6cb7319e64e ("gpu: nova-core: firmware: add support for common firmware header")
-Signed-off-by: Eliot Courtney <ecourtney@nvidia.com>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260423-fix-filter-v1-1-b3b197c65daf@nvidia.com
-[aliceryhl: add Fixes: tag and quote the warning it fixes]
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260413141526.2961841-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/nova-core/firmware.rs |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/gpu/host1x/bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/nova-core/firmware.rs
-+++ b/drivers/gpu/nova-core/firmware.rs
-@@ -176,13 +176,7 @@ impl<'a> BinFirmware<'a> {
-             // Extract header.
-             .and_then(BinHdr::from_bytes_copy)
-             // Validate header.
--            .and_then(|hdr| {
--                if hdr.bin_magic == BIN_MAGIC {
--                    Some(hdr)
--                } else {
--                    None
--                }
--            })
-+            .filter(|hdr| hdr.bin_magic == BIN_MAGIC)
-             .map(|hdr| Self { hdr, fw })
-             .ok_or(EINVAL)
-     }
+--- a/drivers/gpu/host1x/bus.c
++++ b/drivers/gpu/host1x/bus.c
+@@ -452,7 +452,7 @@ static int host1x_device_add(struct host
+ 
+ 	err = host1x_device_parse_dt(device, driver);
+ 	if (err < 0) {
+-		kfree(device);
++		put_device(&device->dev);
+ 		return err;
+ 	}
+ 
 
 
