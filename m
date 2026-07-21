@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C811C43D51D;
-	Tue, 21 Jul 2026 21:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2C343E06C;
+	Tue, 21 Jul 2026 21:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669873; cv=none; b=kNQwOmBD9i4ewsxxWPNkDC9MyGGconz76tWcXGJ9tQKylmsOpBNJl7yTpqGZo0BoKkbp31ekPHsBz8Oozzfeb1XAAKA41oYCW8Ed6b4cFNpYQ2e5Lv9OL62t5RrjGSNToJEZKVQ11tUwaKceFgPTCbi6DqOY5GGft5ORgnXeSoo=
+	t=1784669876; cv=none; b=k5Wh3BA03mkKK+Eb/aiA2qPEElWZik5xio4RdCRlqI7KWoC6I2L9EfOnScrwz0wGfTdpPjCBeYsFUblvs9ps2TPoGdnJzIVcfdND/krgbh8U5hyaiPpD6QCf0WDyfBdILq8Kw/sIltKiFqpOp3e3wMC2aEVv4ne1vtrbRrHKf0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669873; c=relaxed/simple;
-	bh=DM/PE+SxSc3M+fUhEKoB4Hw6RkZSpu7HiHsqiQA2Qu8=;
+	s=arc-20240116; t=1784669876; c=relaxed/simple;
+	bh=ez1bAHfSEQrwp329s6V9nXsrPgocDoAN6I9pWISiS2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Br2N/UgzjpZSkt81iMI8D7IxJm0KQwVFNm3jmpewERhJ6i9as/Row2w9AughyDPvmg5jrAqGUVPBKV4+MONTTwDm0W7XEegOO4x1TUiQzVyTP+NFE+Z6PHyvwY88p9YSutCU2qpAm1N67goCE6UglPA2rPdymmXgS1joWF/rNJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7tWvEIB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dfw2n6gwiEvo53mSp9kSSWkj4JS+eQyqAHNnrEE7WSdLQLjTsuCwoOiu+Txeo03eskcIN+vEGkZ+ZvKLTYO1Tur4jZ5iGGZcZAbgd9BGEUDyms0iX/XTdhGvV+j2lJD/DbV17hEr2A7TTE7s4Y9aHJd/NAiB++aOWnmmeB4IdOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDGFpMSF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7tWvEIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80D61F00A3A;
-	Tue, 21 Jul 2026 21:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDGFpMSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B35A1F000E9;
+	Tue, 21 Jul 2026 21:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669870;
-	bh=MwPIS/8AaOktvSQBnBGqXR/hpbLXh5KLTf7kzKnC0II=;
+	s=korg; t=1784669873;
+	bh=gHnn2ZeYc7TCyV0pMPSRvFSa8r7YfuhCwcoSFK4LBZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W7tWvEIBUrZ6ShD1PjM1tB4f0hBDJ5F3c7zh/QqVMibnHBgHxmIpZ+vJmxdtF78Rx
-	 ZfmnpcMleSpmGXzJkbuVyMD8BzrLx6Vo/dK/nRaspGXbUAQEHbU8ZBdt1+pofhcTDJ
-	 Q90hyxsMmSSsD1kJKVrH+GVSqJiKNvFeopuoU+gs=
+	b=CDGFpMSF55f1S5ohifaB7rY6v3IDkZcMFR2dVrNek+EpUuyPurUyT37TrKgK1LEOJ
+	 8JTBEJxhB5mjVw8wO6y/gtFv9mUAKvHQUpj66JW5ybiCOgoPkGCklOJ22GUjQRz9rS
+	 wSHaWVSY0CXxDA/ev43zmpl9F1q431qdEFav646w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Nitin Shetty J <nshettyj@marvell.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0701/1067] octeontx2-pf: check DMAC extraction support before filtering
-Date: Tue, 21 Jul 2026 17:21:42 +0200
-Message-ID: <20260721152440.272940013@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 0719/1067] net: qrtr: fix 32-bit integer overflow in qrtr_endpoint_post()
+Date: Tue, 21 Jul 2026 17:22:00 +0200
+Message-ID: <20260721152440.672879172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,100 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 235acadd310533ba386ae61ad155b72bee381559 ]
+commit 20054869770c7df060c5ecee3e8bbf9029c47191 upstream.
 
-Currently, configuring a VF MAC address via the PF (e.g., 'ip link
-set <pf> vf 0 mac <mac>') blindly attempts to install a DMAC-based
-hardware filter. However, the hardware parser profile might not
-support DMAC extraction.
+qrtr_endpoint_post() validates an incoming packet with
 
-Check if the hardware parsing profile supports DMAC extraction
-before adding the filter. Additionally, emit a warning message
-to inform the operator if the MAC filter installation fails due
-to missing DMAC extraction support. Update config->mac only
-after hardware programming succeeds in otx2_set_vf_mac().
+	if (!size || len != ALIGN(size, 4) + hdrlen)
+		goto err;
 
-Fixes: f0c2982aaf98 ("octeontx2-pf: Add support for SR-IOV management functions")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/20260702033451.2969880-1-nshettyj@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+where size comes from the wire. On 32-bit, size_t is 32 bits and
+ALIGN(size, 4) wraps to 0 for size >= 0xfffffffd, so the check
+passes and skb_put_data(skb, data + hdrlen, size) writes past the
+hdrlen-sized skb and oopses the kernel. 64-bit is unaffected.
+
+This is the 32-bit residual of ad9d24c9429e2 ("net: qrtr: fix OOB
+Read in qrtr_endpoint_post"), which fixed only the 64-bit case.
+
+Reject any size that cannot fit the buffer before the ALIGN.
+
+Fixes: ad9d24c9429e2 ("net: qrtr: fix OOB Read in qrtr_endpoint_post")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260611125455.2352279-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 43 ++++++++++++++++---
- 1 file changed, 37 insertions(+), 6 deletions(-)
+ net/qrtr/af_qrtr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 6a18159851d47c..49f21c7f5c1fd1 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -2296,10 +2296,42 @@ EXPORT_SYMBOL(otx2_ioctl);
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -491,7 +491,7 @@ int qrtr_endpoint_post(struct qrtr_endpo
+ 		goto err;
+ 	}
  
- static int otx2_do_set_vf_mac(struct otx2_nic *pf, int vf, const u8 *mac)
- {
-+	struct npc_get_field_status_req *freq;
-+	struct npc_get_field_status_rsp *frsp;
- 	struct npc_install_flow_req *req;
- 	int err;
+-	if (!size || len != ALIGN(size, 4) + hdrlen)
++	if (!size || size > len || len != ALIGN(size, 4) + hdrlen)
+ 		goto err;
  
- 	mutex_lock(&pf->mbox.lock);
-+
-+	/* Skip installing the DMAC filter if the hardware parser profile
-+	 * does not support DMAC extraction.
-+	 */
-+	freq = otx2_mbox_alloc_msg_npc_get_field_status(&pf->mbox);
-+	if (!freq) {
-+		err = -ENOMEM;
-+		goto out;
-+	}
-+
-+	freq->field = NPC_DMAC;
-+	err = otx2_sync_mbox_msg(&pf->mbox);
-+	if (err)
-+		goto out;
-+
-+	frsp = (struct npc_get_field_status_rsp *)otx2_mbox_get_rsp
-+	       (&pf->mbox.mbox, 0, &freq->hdr);
-+	if (IS_ERR(frsp)) {
-+		err = PTR_ERR(frsp);
-+		goto out;
-+	}
-+
-+	if (!frsp->enable) {
-+		netdev_warn(pf->netdev,
-+			    "VF %d MAC filter not installed: DMAC extraction not supported by parser profile\n",
-+			    vf);
-+		err = -EOPNOTSUPP;
-+		goto out;
-+	}
-+
- 	req = otx2_mbox_alloc_msg_npc_install_flow(&pf->mbox);
- 	if (!req) {
- 		err = -ENOMEM;
-@@ -2338,13 +2370,12 @@ static int otx2_set_vf_mac(struct net_device *netdev, int vf, u8 *mac)
- 	if (!is_valid_ether_addr(mac))
- 		return -EINVAL;
- 
--	config = &pf->vf_configs[vf];
--	ether_addr_copy(config->mac, mac);
--
- 	ret = otx2_do_set_vf_mac(pf, vf, mac);
--	if (ret == 0)
--		dev_info(&pdev->dev,
--			 "Load/Reload VF driver\n");
-+	if (ret == 0) {
-+		config = &pf->vf_configs[vf];
-+		ether_addr_copy(config->mac, mac);
-+		dev_info(&pdev->dev, "Load/Reload VF driver\n");
-+	}
- 
- 	return ret;
- }
--- 
-2.53.0
-
+ 	if ((cb->type == QRTR_TYPE_NEW_SERVER ||
 
 
