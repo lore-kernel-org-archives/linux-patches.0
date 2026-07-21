@@ -1,48 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA66D3C09F3;
-	Tue, 21 Jul 2026 21:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2723BCD29;
+	Tue, 21 Jul 2026 21:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669570; cv=none; b=gMDWJPb53bl/NZ5RmLYm1wolQ8zJwnwZ4YFYNjWdd5/UaAkOaJfFhGY6tL1/Eh6qvEvhARgHhQrG26CR21HUWTL2Tgt9TIjGsw67LVZaqub8Wu6b92YDyZIC/E5gRn0kdiCkTQoQOZ/u/XxnpqK5drusPgJ6xGswJIrrGgFEPoQ=
+	t=1784669573; cv=none; b=VdZl8F9rIOeVoXbMSruJUjzC6ENXs9muUOcEtHN6ITDrN8kfxhAzD9x05q4c70ZkxRdwjS1Chgh7ELGBJN+IQVFKsOssF0Xk2ANuE2NbU1Eq/Hwd+LLqJKAHURNRX5kJnMB9dWfztVM3omjjjebutzrgm1K0I1t/GDEocIY3XVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669570; c=relaxed/simple;
-	bh=wk/i9OKZ/RcVS+Tff/G9Lb+YD8RApBGnrpyzO2+NnB4=;
+	s=arc-20240116; t=1784669573; c=relaxed/simple;
+	bh=UNHqVCiu9aygU5y9ZNIVTDdMzDh7s68+siXQyPCr2rA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnq0eDwo7IkbbQPV/v0VCAqK2t6o+H9R2OPZhO2rqNpNgOplhyLD2OnF3nUqhZy8VURe3pTs9ok0NPSZ6ZGryfOBPmVvdm7e3W+8H/trWbneX4cRXpHIEh8ZJze5EUXcZZg+D8W8eO3av/gOzHMCcZz0iT/nLnfjYI5VhM4PLUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPIgYIai; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QiUHP4sWMEB0JdpqatFCpQFIE+Yq+fss+HN6fLANdsqZPpmYmbE82ljgAPsdjY0wCGlYLpwnKCgTs3XxnYbedTdbfitBDfKZ6YO9a8s04xDE0/8XXc5i2OWNVeGgMNuH/v3OHRklsfqD1HrdK714aN7dtssJ4oPmIzr7ikGHKU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxAeaQVO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPIgYIai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2128A1F000E9;
-	Tue, 21 Jul 2026 21:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxAeaQVO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6F11F000E9;
+	Tue, 21 Jul 2026 21:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669568;
-	bh=WNyB/Wmsx5MchiHzi6UslV6zLTY1C0DXEioiQsJ8pUA=;
+	s=korg; t=1784669571;
+	bh=IX9oOXz8nhym0hdFdxv7zyx5Uby6dscjaTWI2bZIb6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QPIgYIaiqgcEQT0Wc4bO4/7NjIbV99S0MxEHbRRBE6M1ux61zKQhdRZG8SsQlFJws
-	 yEI5DTEyzcp3+kiYrWAvdvqu0rZDbzaAefnQDuaDrChazyeN5qfaX4aipZCJrRPbxU
-	 5Qb2Nx7nLQPXJ6WRpsh0jx6+R6F488x2aJwBN7L0=
+	b=GxAeaQVOUaketU/+2KMstknGz3qmhHpk5FCSdc0bRyrIONI9QCIBSuI73IWlom64Q
+	 npWGyFsAWMNzucn55WLEFupoUeVM7ulsxp+JLZdPVQRJMMO0AXSNpp1W76QVd3C+vY
+	 Is7yZrBfE4N6Tez+vgkXgeq3NLbRGbNuqXZLVnRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sayali Patil <sayalip@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Alex Sierra <alex.sierra@amd.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Leon Romanovsky <leon@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Ralph Campbell <rcampbell@nvidia.com>,
 	Shuah Khan <shuah@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0602/1067] selftests/mm: clarify alternate unmapping in compaction_test
-Date: Tue, 21 Jul 2026 17:20:03 +0200
-Message-ID: <20260721152438.068432959@linuxfoundation.org>
+Subject: [PATCH 6.1 0603/1067] selftests/mm: allow PUD-level entries in compound testcase of hmm tests
+Date: Tue, 21 Jul 2026 17:20:04 +0200
+Message-ID: <20260721152438.090907600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -63,45 +70,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit 69ba1d76d93ab818245333cf400928477ba72053 ]
+[ Upstream commit 224ed0e019b122d08580362abe57574a78f2b5fa ]
 
-Add a comment explaining that every other entry in the list is unmapped to
-intentionally create fragmentation with locked pages before invoking
-check_compaction().
+Patch series "selftests/mm: assorted fixes for hmm-tests", v3.
 
-Link: https://lore.kernel.org/da5e0a8d5152e54152c0d2f456aac2fac35af291.1779296493.git.sayalip@linux.ibm.com
-Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
+This series fixes a few issues in hmm-tests that show up when page-size
+and huge-page configuration differ from the hardcoded assumptions the
+tests were written for (PMD/THP sizing, default hugepage size, and related
+cases).
+
+It also includes a fix to exclusive_cow: the test ignored the return value
+of fork(), so both parent and child ran the same teardown path.
+
+This patch (of 3):
+
+The HMM compound testcase currently assumes only PMD-level mappings and
+fails on systems where default_hugepagesz=1G is set, because the region is
+then reported by the device at PUD level.
+
+Determine the mapping level (PMD or PUD) the device reports for the first
+page of the range and require every page to match that level exactly via
+ASSERT_EQ().  This accepts PUD-level mappings while preserving the
+expected/observed protection values printed on failure, and rejects a
+fragmented mapping that mixes PMD- and PUD-level entries within the same
+range (which a per-page OR check would have let pass).
+
+Link: https://lore.kernel.org/20260611034102.1030738-1-aboorvad@linux.ibm.com
+Link: https://lore.kernel.org/20260611034102.1030738-2-aboorvad@linux.ibm.com
+Fixes: e478425bec93 ("mm/hmm: add tests for hmm_pfn_to_map_order()")
 Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Cc: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Co-developed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Cc: Alex Sierra <alex.sierra@amd.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Balbir Singh <balbirs@nvidia.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
 Cc: Shuah Khan <shuah@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vm/compaction_test.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/vm/hmm-tests.c | 32 +++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/vm/compaction_test.c b/tools/testing/selftests/vm/compaction_test.c
-index 38fec412206b9a..e74622e023cadf 100644
---- a/tools/testing/selftests/vm/compaction_test.c
-+++ b/tools/testing/selftests/vm/compaction_test.c
-@@ -234,6 +234,9 @@ int main(int argc, char **argv)
- 		mem_fragmentable_MB -= MAP_SIZE_MB;
- 	}
+diff --git a/tools/testing/selftests/vm/hmm-tests.c b/tools/testing/selftests/vm/hmm-tests.c
+index cf86094a3027af..5a535d2f0cbb8f 100644
+--- a/tools/testing/selftests/vm/hmm-tests.c
++++ b/tools/testing/selftests/vm/hmm-tests.c
+@@ -1607,8 +1607,8 @@ TEST_F(hmm2, snapshot)
+ }
  
-+	/* Unmap every other entry in the list to create fragmentation with
-+	 * locked pages before invoking check_compaction().
+ /*
+- * Test the hmm_range_fault() HMM_PFN_PMD flag for large pages that
+- * should be mapped by a large page table entry.
++ * Test the hmm_range_fault() handling of large pages (PMD or PUD)
++ * that should be mapped by a large page table entry.
+  */
+ TEST_F(hmm, compound)
+ {
+@@ -1618,6 +1618,7 @@ TEST_F(hmm, compound)
+ 	unsigned long default_hsize;
+ 	int *ptr;
+ 	unsigned char *m;
++	unsigned char prot;
+ 	int ret;
+ 	unsigned long i;
+ 
+@@ -1656,11 +1657,20 @@ TEST_F(hmm, compound)
+ 	ASSERT_EQ(ret, 0);
+ 	ASSERT_EQ(buffer->cpages, npages);
+ 
+-	/* Check what the device saw. */
++	/*
++	 * Check what the device saw.  The region is backed by a single huge
++	 * page that the device reports either at PMD or at PUD level depending
++	 * on the configured default hugepage size.  Determine that level from
++	 * the first page and require every page in the range to match it
++	 * exactly, so that a fragmented mapping mixing levels (or a missing
++	 * large-page bit) is still caught and reported with its actual value.
 +	 */
- 	for (entry = list; entry != NULL; entry = entry->next) {
- 		munmap(entry->map, MAP_SIZE);
- 		if (!entry->next)
+ 	m = buffer->mirror;
++	prot = HMM_DMIRROR_PROT_WRITE |
++	       ((m[0] & HMM_DMIRROR_PROT_PUD) ? HMM_DMIRROR_PROT_PUD :
++						HMM_DMIRROR_PROT_PMD);
+ 	for (i = 0; i < npages; ++i)
+-		ASSERT_EQ(m[i], HMM_DMIRROR_PROT_WRITE |
+-				HMM_DMIRROR_PROT_PMD);
++		ASSERT_EQ(m[i], prot);
+ 
+ 	/* Make the region read-only. */
+ 	ret = mprotect(buffer->ptr, size, PROT_READ);
+@@ -1671,11 +1681,17 @@ TEST_F(hmm, compound)
+ 	ASSERT_EQ(ret, 0);
+ 	ASSERT_EQ(buffer->cpages, npages);
+ 
+-	/* Check what the device saw. */
++	/*
++	 * Check what the device saw after mprotect(PROT_READ).  Same
++	 * approach as above: determine the mapping level from the first
++	 * page and require every page to match it exactly.
++	 */
+ 	m = buffer->mirror;
++	prot = HMM_DMIRROR_PROT_READ |
++	       ((m[0] & HMM_DMIRROR_PROT_PUD) ? HMM_DMIRROR_PROT_PUD :
++						HMM_DMIRROR_PROT_PMD);
+ 	for (i = 0; i < npages; ++i)
+-		ASSERT_EQ(m[i], HMM_DMIRROR_PROT_READ |
+-				HMM_DMIRROR_PROT_PMD);
++		ASSERT_EQ(m[i], prot);
+ 
+ 	munmap(buffer->ptr, buffer->size);
+ 	buffer->ptr = NULL;
 -- 
 2.53.0
 
