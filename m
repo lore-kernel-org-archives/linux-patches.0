@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EED47253D;
-	Tue, 21 Jul 2026 20:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAF4472F60;
+	Tue, 21 Jul 2026 20:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664187; cv=none; b=hGWorlpwe0H39m1itkBHaemtYuk8onoIBFEm44b/n2eEaHBfdzR5q4QggV21BP3J4WM5GF2b3js1IJ1hs028Qn7t/9exUs+JQRdj3AmRRsU/wLuOYIwfbB/b0rVlgOV9mTTQijwuzwj14MSx0Ij9AGx6Fd/E5rqFXzGAp6rjo6U=
+	t=1784664193; cv=none; b=iHVBePJb61qUHmmTF7TVfWQlsVU2PSRpugH2EfdB1AET01u9ykTkkJQ0NI2hcZtgvoGkrhcvUx1lCrE88QhrV0MN8P69K1Ze+JYSxK0ViKvCMuFlpzycAE0+Sk4/tZ520AUo+CKIetBroTyPa/zG1LdXHMshj+ByWHw9CL+eQvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664187; c=relaxed/simple;
-	bh=6TFztDX3pLpEo62caM7q6Uky6cmNFTgqmMciurHH0aY=;
+	s=arc-20240116; t=1784664193; c=relaxed/simple;
+	bh=7/fLkW1jOvBCTCEPaA/b9Y6gUTG3740f5VAhhMaeb/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qngxfm7DQU/QkDCmmPmvT+zDJr+as5T8njG/Rl+7wGhALADABS5qmDuQgnUiYmLUgePxGyw2HCfTgiMgkqKGhMkKJ8MgAMScj9JtdFukb/BppyVLFNJZgTnp5MqWn10Rw9a+zxI1LCuHcolNsRXfhhRGRqvIn1zIc3sNDEf9Rhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypBv+xKm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WmRkSoqUIH2n9gcv9V/yhp9z5F8DH7TFC1K0y8xr6L0uGvGlvzbw9Jp3brOeiQdXAjAuURXG6S8y4HNhjGZ81+Ew7FGTln+9g4dTM99DSouwWA12XJwG5hgfbd4Z87m+4u5Hgp4GSuNTODMkmrZV17IVKkZLnFYxVfAdAF4Sj5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dh8f5s03; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypBv+xKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4A51F000E9;
-	Tue, 21 Jul 2026 20:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dh8f5s03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909B21F000E9;
+	Tue, 21 Jul 2026 20:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664186;
-	bh=WQgSzUKnj4aXYXdtZJ2HOqF7Bpo5236na3GqZf0LGcA=;
+	s=korg; t=1784664189;
+	bh=eOE+mCuRzY5fQruYMAWzJRqDWMmfSseHnhAtSkmF2H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ypBv+xKmrtlz9eZ1zMJE63KQaoPyFpBaxemtTiHxk3k2Pb0ymZPyXPGM9aEG4qKUz
-	 mgLQIxs0A0H038FzhCarWBPzxmGhrzotE/x+qfnsKMBsJGFCwBhMZ7QI+fqIuDfTUB
-	 dSugooQ0MQ8yhPDxYFMAJTzs+O+sCpzaNtHVZ4G8=
+	b=dh8f5s03z9CRAstDtnPBHxasVJho80zZt3N8X12cqBCyGHNFfcqyxOEcNsECP6Gja
+	 xpydRgAAzfAJc12IN9B46aIlSCnPAoYW5lbSUcrUCuGbBRPYrkVv22LKq2GzYTVH33
+	 UXjjCli27LyWzgj6lcHwo2xFtnViqI+ZA3kjWqzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 1103/1276] pmdomain: imx: Fix i.MX8MP VC8000E power up sequence
-Date: Tue, 21 Jul 2026 17:25:46 +0200
-Message-ID: <20260721152510.674593117@linuxfoundation.org>
+	Thomas Huth <thuth@redhat.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.12 1104/1276] selftests/landlock: Skip scoped_signal subtest with MSG_OOB if not available
+Date: Tue, 21 Jul 2026 17:25:47 +0200
+Message-ID: <20260721152510.695897383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,91 +44,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Thomas Huth <thuth@redhat.com>
 
-commit 25e252bcf1593b420b12a7231d9dd64b885a2ae2 upstream.
+commit 5ab1dc6d110db6bee167a32fd94c53ea0e7ad6d2 upstream.
 
-Per errata[1]:
-ERR050531: VPU_NOC power down handshake may hang during VC8000E/VPUMIX
-power up/down cycling.
-Description: VC8000E reset de-assertion edge and AXI clock may have a
-timing issue.
-Workaround: Set bit2 (vc8000e_clk_en) of BLK_CLK_EN_CSR to 0 to gate off
-both AXI clock and VC8000E clock sent to VC8000E and AXI clock sent to
-VPU_NOC m_v_2 interface during VC8000E power up(VC8000E reset is
-de-asserted by HW)
+MSG_OOB might be disabled in the kernel for unix sockets (by not
+selecting CONFIG_AF_UNIX_OOB), and in this case the related tests
+of the scoped_signal_test are currently failing.  Add a runtime
+probe using socketpair() to detect MSG_OOB support and skip the
+test gracefully if it is unavailable.
 
-Add a bool variable is_errata_err050531 in
-'struct imx8m_blk_ctrl_domain_data' to represent whether the workaround
-is needed. If is_errata_err050531 is true, first clear the clk before
-powering up gpc, then enable the clk after powering up gpc.
-
-[1] https://www.nxp.com/webapp/Download?colCode=IMX8MP_1P33A
-
-Fixes: a1a5f15f7f6cb ("soc: imx: imx8m-blk-ctrl: add i.MX8MP VPU blk ctrl")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Link: https://patch.msgid.link/20260710081642.405916-1-thuth@redhat.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: f34e9ce5f479 ("selftests/landlock: Test signal created by out-of-bound message")
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/imx8m-blk-ctrl.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ .../selftests/landlock/scoped_signal_test.c   | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-@@ -54,6 +54,15 @@ struct imx8m_blk_ctrl_domain_data {
- 	 * register.
- 	 */
- 	u32 mipi_phy_rst_mask;
+diff --git a/tools/testing/selftests/landlock/scoped_signal_test.c b/tools/testing/selftests/landlock/scoped_signal_test.c
+index 3f0cd42a2afe..2d37d0c06c06 100644
+--- a/tools/testing/selftests/landlock/scoped_signal_test.c
++++ b/tools/testing/selftests/landlock/scoped_signal_test.c
+@@ -400,6 +400,24 @@ static int setup_signal_handler(int signal)
+ 	return sigaction(SIGURG, &sa, NULL);
+ }
+ 
++/*
++ * MSG_OOB might be disabled in the kernel via the CONFIG_AF_UNIX_OOB
++ * switch, so this function can be used for probing for its availability.
++ */
++static bool has_af_unix_oob(void)
++{
++	bool available = false;
++	int sp[2];
 +
-+	/*
-+	 * VC8000E reset de-assertion edge and AXI clock may have a timing issue.
-+	 * Workaround: Set bit2 (vc8000e_clk_en) of BLK_CLK_EN_CSR to 0 to gate off
-+	 * both AXI clock and VC8000E clock sent to VC8000E and AXI clock sent to
-+	 * VPU_NOC m_v_2 interface during VC8000E power up(VC8000E reset is
-+	 * de-asserted by HW)
-+	 */
-+	bool is_errata_err050531;
- };
- 
- #define DOMAIN_MAX_CLKS 4
-@@ -108,7 +117,11 @@ static int imx8m_blk_ctrl_power_on(struc
- 		dev_err(bc->dev, "failed to enable clocks\n");
- 		goto bus_put;
- 	}
--	regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
++	if (socketpair(AF_UNIX, SOCK_STREAM, 0, sp) == 0) {
++		available = (send(sp[0], ".", 1, MSG_OOB) == 1);
++		close(sp[0]);
++		close(sp[1]);
++	}
 +
-+	if (data->is_errata_err050531)
-+		regmap_clear_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
-+	else
-+		regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
- 
- 	/* power up upstream GPC domain */
- 	ret = pm_runtime_get_sync(domain->power_dev);
-@@ -117,6 +130,9 @@ static int imx8m_blk_ctrl_power_on(struc
- 		goto clk_disable;
- 	}
- 
-+	if (data->is_errata_err050531)
-+		regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
++	return available;
++}
 +
- 	/* wait for reset to propagate */
- 	udelay(5);
+ /* clang-format off */
+ FIXTURE(fown) {};
+ /* clang-format on */
+@@ -462,6 +480,9 @@ TEST_F(fown, sigurg_socket)
+ 	int pipe_parent[2], pipe_child[2];
+ 	pid_t child;
  
-@@ -511,6 +527,7 @@ static const struct imx8m_blk_ctrl_domai
- 		.clk_mask = BIT(2),
- 		.path_names = (const char *[]){"vc8000e"},
- 		.num_paths = 1,
-+		.is_errata_err050531 = true,
- 	},
- };
++	if (!has_af_unix_oob())
++		SKIP(return, "CONFIG_AF_UNIX_OOB / MSG_OOB not available");
++
+ 	memset(&server_address, 0, sizeof(server_address));
+ 	set_unix_address(&server_address, 0);
  
+-- 
+2.55.0
+
 
 
