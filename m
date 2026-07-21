@@ -1,121 +1,100 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5E5415F18
-	for <patches@lists.linux.dev>; Tue, 21 Jul 2026 17:54:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14F8470421;
+	Tue, 21 Jul 2026 17:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656464; cv=none; b=EsPut4Xsjkx9xnkB+BqRPepf8eBzM8ecs06W1s3nKvo/VdojZevcLtVusWkKhG+y/9qTARk1Snnf75YHT1nTkPBn2+A56rDbgFvfgUjWO5Dn4kkMB9i4SCjT3yJFqL0cCDZQI9+9VySSyUNl7seFsyw+V77y2Fcz53XHe31K0hI=
+	t=1784656464; cv=none; b=b9d/brgSMlHje1EZR3OpmtewYTWjoNGk/KxHf6MqFnAuDUp8gPMeGJ7xBYETAaNyVVxz2JVQ6TTCqGQnc2owNc0/35+dw2H3XXRrF373VDFFKS6+neLUUkmTBwfFUs6BVk4bb2bj9On5MEwkvk9/8jluPId/8Z63BAL0OfJ+Y3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784656464; c=relaxed/simple;
-	bh=d8T2drburGT8ZRqsnjGbeWFfC1IVmLbpFKZf5s8uS18=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tU463uVy0I6feYA+wrTmaniYjxe0xLnmY/bhaWZujotzOUlbiYNw5G15PZA5IiZ0H7awQpFuOX27qKb/DFEz/FIU9OpbHNfA4NAS8StUFNQmcDFFwyzyG1updAPXQom+dt5CkktFGBsTVWMUKPePO77M/ur0v1XvV1Kuecub9A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jTO1feRO; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	bh=zOuMPaFs5J6CI5I+en/VBd4qGss/aYymPl98Pxx3kcg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GpBelHVajCFlFOnJHoyiKkIgWnZ5Hg1HXQbwAvidp0z+lRo0EMBSmH3VlDqwqYLJYhZJo2vzbCRVTECS7YCaHiIZIYcWhUvLuLYhO6uC7eSQ/SrQ2oAcRg/celrXNGJO32teWYoV40GNOmuhPX/VSOeM6oyXBkK9rxcEUAdnaFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiUknVoB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jTO1feRO"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-92e602d2c0fso473945985a.0
-        for <patches@lists.linux.dev>; Tue, 21 Jul 2026 10:54:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784656462; x=1785261262; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CahcOb8/acligSm7Jfk6afmhEu+yqZFrtttA/Gjj7RI=;
-        b=jTO1feROICeG4sad57isJF50FUeEIBf5QVmUXdRP955mh92BgX8u0IBdDRaroM0jUP
-         gFlgsI1HrjUVaCZkHoWDcCEuIMO4oG2uWCzxuNnFvNBvi2ZkMr2IFGZyQNUSfWGCReng
-         hi2/LY6rTJ8ctF+fuiDGLfpE5AdDKyqmld1jbHEiiL2p55oqIyqtm3wpCQImieegHSBS
-         pWqAG9b90xsiUeiUtuavtf+J+gkxjwmz+Srn1MxcYz/Qj/0CbL6ycWEksThjiic0JMCg
-         dqGrOqQRhijY7cAJ8LB7aTK3ZQEZcdlEGsJlS1ZZXSgoIn4nfn0ZtM6SChbx8HlOE36f
-         HEcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784656462; x=1785261262;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=CahcOb8/acligSm7Jfk6afmhEu+yqZFrtttA/Gjj7RI=;
-        b=tJzasnrmWBvdX6bpM0Zdfzy+V0aDWVle1MqnaRQtZ530fpHb2mTr5o04wL5sRUPSXa
-         /TLc8sm/uV72uILBmqTc9I4Nwp2+dlFEDlZPmkiutkVz3YJFc+WcRLbZX9C8ksSOjDJN
-         1OMewJacRuUo6CaPI88DuRKl10jeqIRQTzDtP05tH4r62Hx/mPNpJL2Lt+AOu2CCB+sI
-         Kumy61ArO2TjFMW2WNI0ikm+ROC8uxnluYiXc/JXI1A1ysRvD5XCPalqxhEfV3RUpZ+Q
-         xwvFjQn6GchuHmMOa6xAHIle//LlcHXv0C/2ZxBaQg/sHuP5MZBHu93FSecktGVeVuGN
-         Pc3g==
-X-Gm-Message-State: AOJu0Yxun/kaHkuqRHVqI5OCm1esdeOuGwVfplDVcoJIu1pw1YoSe6ss
-	XO7x8Fm3pa8oyPqWuoxWId9Z2UfJTK7q9W6k1wSvLMMc1KTEnqLzc0C4
-X-Gm-Gg: AfdE7cnzWSOlWp+DMN6SSbhvsMkOEb5NKhmyVcg1cn5Xz9F6LxnvFtK6TIyqPjyPtGm
-	SulhG9J2O4BqeFK2ntfL7yRmi7lWZcmfnO1WT24vuXKy9DAwMFZpJhBPlyuaO338yOpSpc+/tec
-	pe5whjtsm+BUZYFoihUd+IPa/AbseqwLnFwN/KYHUItYwhv73TouqYBCffdP00XhLddl+AYZkKm
-	hqEZB3SsyMg7NxV/gP3sa7yOygD1tJTRiayXg7VNqIivYNMGgnmWWtUJ3/FtBp4f3Wm6vOa+dnQ
-	eoWL8Zidmg/5UkwhNTk7oG70wA5Jgx9ozRY5vw/3NQC5+mwbE9WCc1RRcqhD+KeivtBbaaTwjOF
-	CQbbqVKXAwp0ABcf+a+OVWksCEIurnYVF0IYr5KjPJIVBQcxaPPxWaWHt/I6lxHJFnT/amgeQsI
-	UnHm63AlLASPlye7MqPS6ebrV2KpGn
-X-Received: by 2002:a05:620a:8130:b0:92e:c0ac:aeb7 with SMTP id af79cd13be357-930f3021f9fmr64808985a.41.1784656462322;
-        Tue, 21 Jul 2026 10:54:22 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b5493cb0sm1171228585a.42.2026.07.21.10.54.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jul 2026 10:54:21 -0700 (PDT)
-Message-ID: <b7e241f0-2604-4609-ac21-483b95757e10@gmail.com>
-Date: Tue, 21 Jul 2026 10:54:18 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiUknVoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E861F000E9;
+	Tue, 21 Jul 2026 17:54:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784656463;
+	bh=c0ZtDBdftEK49dFotET/bP4o5FTH6SNy+KZ9J7fojQ4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=hiUknVoBSOgfElKWJAz69K1fIT9t8V4p0XrRFZNjLBkpReOe0OlsW1OC7zyHFMaL/
+	 X++5rFmQqWw4QCpGiaEawNuiAHJajm0wBNwFmqTjNHV+ee0PdLtsPDgMiScq1SOcdN
+	 sdpwhAeWM+MjFLzuxV0Kt60YFaEbYK46L9lhvjKQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0397/1611] hwspinlock: qcom: avoid uninitialized struct members
+Date: Tue, 21 Jul 2026 17:08:33 +0200
+Message-ID: <20260721152524.158634024@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
+References: <20260721152514.750365251@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.1 0000/2077] 7.1.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260721152552.646164743@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 7/21/26 07:54, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.1.5 release.
-> There are 2077 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 23 Jul 2026 15:23:00 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-perf fails to build with:
+------------------
 
-In file included from builtin-sched.c:28:
-builtin-sched.c: In function 'latency_switch_event':
-builtin-sched.c:1196:34: error: 'struct perf_sample' has no member named 
-'file_offset'
-  1196 |                            sample->file_offset, cpu);
-       |                                  ^~
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
+[ Upstream commit 8752c396ce3b2136b3d4c906fe103f6efb6782d9 ]
 
-which is due to 6018a2a9ff1baa45426f7a52f8ec4f7d32fedfce ("perf sched: 
-Replace BUG_ON on invalid CPU with graceful skip"), we need to backport 
-a490187f22b4bfae7ef752edbe3fb13017ca11c ("perf sample: Add file_offset 
-field to struct perf_sample")
+The reg_field is allocated on stack, so using the REG_FIELD macro will
+ensure that unused members do not have uninitialized values.
+
+Fixes: 19a0f61224d2 ("hwspinlock: qcom: Add support for Qualcomm HW Mutex block")
+Link: https://sashiko.dev/#/patchset/20260319105947.6237-1-wsa%2Brenesas%40sang-engineering.com
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260512091339.31085-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/hwspinlock/qcom_hwspinlock.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
+index 0390979fd765d0..712003a4640cc1 100644
+--- a/drivers/hwspinlock/qcom_hwspinlock.c
++++ b/drivers/hwspinlock/qcom_hwspinlock.c
+@@ -202,7 +202,6 @@ static struct regmap *qcom_hwspinlock_probe_mmio(struct platform_device *pdev,
+ static int qcom_hwspinlock_probe(struct platform_device *pdev)
+ {
+ 	struct hwspinlock_device *bank;
+-	struct reg_field field;
+ 	struct regmap *regmap;
+ 	size_t array_size;
+ 	u32 stride;
+@@ -224,9 +223,7 @@ static int qcom_hwspinlock_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, bank);
+ 
+ 	for (i = 0; i < QCOM_MUTEX_NUM_LOCKS; i++) {
+-		field.reg = base + i * stride;
+-		field.lsb = 0;
+-		field.msb = 31;
++		struct reg_field field = REG_FIELD(base + i * stride, 0, 31);
+ 
+ 		bank->lock[i].priv = devm_regmap_field_alloc(&pdev->dev,
+ 							     regmap, field);
 -- 
-Florian
+2.53.0
+
+
+
