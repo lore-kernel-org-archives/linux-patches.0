@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1861C35C68A;
-	Tue, 21 Jul 2026 21:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AB444AB61;
+	Tue, 21 Jul 2026 21:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669162; cv=none; b=EkWY+9y/jnnyEPg/ZQfTSQ/CAkrbxol7O0mRGx8gKoY1r10IbsjjWX+R6G7WRPxE54SnQnZOtoXHjSooQwat8CdrnSodXZB/OleQbPWi7yxhnaH7wXfQPaVXnj0999+oQ4d8KrIpPTzy/jmaJGRyjdXJIPyALRM5dHFPVZPFi6E=
+	t=1784669164; cv=none; b=fZAsUHltDhRV2RfgjHl65mk8MVB2zC3AMvCxUWCEbCb+BmKQZGkxo8Q+Gc5NY/QcPsszzrnB1+CSpyjHBgs2iw610ka1N/cVAWulg7gtpKZcZXRpPsCQKz7V4YFNGOTj0AX9keXCvT1oPWnzErUjRsRNXhcH0xHxmADTGEiX848=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669162; c=relaxed/simple;
-	bh=7WmT6cv5QRiWdg+r6ldYmqPxSNybSAFvSPsCA8Jdrik=;
+	s=arc-20240116; t=1784669164; c=relaxed/simple;
+	bh=iQ3dbV/ZdQ3/idtPfmrD6PNTbYDyrXxlKqO7IylsMQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oyWkMGd6OCTW6N2qY2O/BsCvvE7h0/pZT4OF/jeVxrwUfUv8z3NZ9p71WdT2NkYrQiMTFJS/Aq5xDYGThqDEGgAwyKU6LU3HTsODUouYQ0bpO3PvSA1L9dxg46wTJniYDGQYW13O/enf5roWQIegzT2wXvvptmmSIEvB+IwUQqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvbWbu9+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iM28oca/TmXaQBEkqb9RzbbNmgk8JnMjcyfawczHdTom/X+RBErxsSj5dsLCd9xNhRNE7TiKp14NEufpgkI+Sya3zqoN3W8nTyxyhwxN4isFVUmRAvDgsjaigeOnk+GzSuVu3uXYAYWeSpda0F0GMshENMY4djuOTXNa5nSsGbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKec7rR8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvbWbu9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7D41F000E9;
-	Tue, 21 Jul 2026 21:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKec7rR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFE11F000E9;
+	Tue, 21 Jul 2026 21:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669161;
-	bh=ic2UJ0q+chuipyRQtPZKtV09u5qzgZgpIsLb1hVF4Ac=;
+	s=korg; t=1784669163;
+	bh=QXK5ltXD6M9UN1Sol73KD379/2fKQbUe7nOD1VLElYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MvbWbu9+lSA47NxpRQMXrp6eLb7NR4tgSnudhD/weQDgxd1Eo2SyVkfaOwIuUS9xh
-	 AkwO+qvNGwcfq85Fxk8xGo7ISVak1pPplhlZOPkuLtWiQQSkZVMOVxA3uyiVg+to4B
-	 cTzF935iiudEvSS61p2znC/PRSUaZRXuWla+wrh4=
+	b=lKec7rR8/fq895wMo1x9ejSZnBDIY1RTXqMZnAPVOO9dEe0qvGHumyDj/2KIXQo95
+	 rWuaZB6xx/x5aGebk478OtBbNsENZSoiX7ONxV2OFFEk5Yyf1pIovFiSs3AuS2d0fB
+	 y+pdAfIgCKoZfxu4KDIu9jCHpvns9nX1x6Piu4Yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya@linux.microsoft.com>,
-	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0450/1067] net: mana: guard TX wq object destroy with INVALID_MANA_HANDLE check
-Date: Tue, 21 Jul 2026 17:17:31 +0200
-Message-ID: <20260721152434.686239034@linuxfoundation.org>
+Subject: [PATCH 6.1 0451/1067] bpf: Run generic devmap egress prog on private skb
+Date: Tue, 21 Jul 2026 17:17:32 +0200
+Message-ID: <20260721152434.706914998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -47,50 +48,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aditya Garg <gargaditya@linux.microsoft.com>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-[ Upstream commit f8fd56977eeea3d6939b1a9cd8bd36f1779b3ad0 ]
+[ Upstream commit 6001896f00984d317fb75160ba05c4a885fbe2a0 ]
 
-mana_create_txq() has several error paths (after mana_alloc_queues() or
-mana_create_wq_obj() failure) where tx_qp[i].tx_object stays as the
-INVALID_MANA_HANDLE sentinel set at allocation. mana_destroy_txq() then
-unconditionally calls mana_destroy_wq_obj() with (u64)-1, which firmware
-rejects and logs an error.
+Generic XDP devmap multi redirect uses skb_clone() for intermediate
+destinations and sends the last destination with the original skb. This
+can leave multiple destinations sharing the same packet data.
 
-Mirror the RX-side pattern in mana_destroy_rxq() and skip the destroy
-when the handle is still INVALID_MANA_HANDLE.
+This becomes visible after generic devmap egress-program support was
+added: a devmap egress program may mutate packet data, and another
+destination sharing the same data can observe that mutation.
 
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Signed-off-by: Aditya Garg <gargaditya@linux.microsoft.com>
-Reviewed-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Link: https://patch.msgid.link/20260608101345.2267320-3-gargaditya@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Native XDP broadcast redirect does not have this issue because
+xdpf_clone() copies the frame data for each destination. Generic XDP
+should provide the same per-destination isolation before running a
+devmap egress program.
+
+Fix this by making cloned skbs private before running the generic devmap
+egress program. Use skb_copy() instead of skb_unshare() so allocation
+failure does not consume the skb and the existing caller error paths keep
+their ownership semantics.
+
+Fixes: 2ea5eabaf04a ("bpf: devmap: Implement devmap prog execution for generic XDP")
+Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://lore.kernel.org/r/20260612114032.244616-2-sun.jian.kdev@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/devmap.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index 0f84cc4586f02e..db1b8f965eeca4 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1413,7 +1413,8 @@ static void mana_destroy_txq(struct mana_port_context *apc)
- 			netif_napi_del(napi);
- 			apc->tx_qp[i].txq.napi_initialized = false;
- 		}
--		mana_destroy_wq_obj(apc, GDMA_SQ, apc->tx_qp[i].tx_object);
-+		if (apc->tx_qp[i].tx_object != INVALID_MANA_HANDLE)
-+			mana_destroy_wq_obj(apc, GDMA_SQ, apc->tx_qp[i].tx_object);
+diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
+index fac0773fe9a0c4..f4e28ad6c920dd 100644
+--- a/kernel/bpf/devmap.c
++++ b/kernel/bpf/devmap.c
+@@ -681,6 +681,18 @@ int dev_map_generic_redirect(struct bpf_dtab_netdev *dst, struct sk_buff *skb,
+ 	if (unlikely(err))
+ 		return err;
  
- 		mana_deinit_cq(apc, &apc->tx_qp[i].tx_cq);
- 
++	if (dst->xdp_prog && skb_cloned(skb)) {
++		struct sk_buff *nskb;
++
++		nskb = skb_copy(skb, GFP_ATOMIC);
++		if (!nskb)
++			return -ENOMEM;
++
++		nskb->mac_len = skb->mac_len;
++		consume_skb(skb);
++		skb = nskb;
++	}
++
+ 	/* Redirect has already succeeded semantically at this point, so we just
+ 	 * return 0 even if packet is dropped. Helper below takes care of
+ 	 * freeing skb.
 -- 
 2.53.0
 
