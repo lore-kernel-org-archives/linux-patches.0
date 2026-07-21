@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935C1470444;
-	Tue, 21 Jul 2026 19:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0AC265606;
+	Tue, 21 Jul 2026 19:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663537; cv=none; b=eQe75HjVsgYuLEQOwKeoCqDkx/lwoc9BGdWGWT3BgoJTycygbUFlE/RRqdvHMvBlcWxv42B94Ict8ypQHjOO2nQWYKdllosuODYUU/dRBpaeq5uqpMTFNfzwrDZz1zafOD1yulrZmQpcACg4Dxs3tZXYren5IhqNiVIV3fS1IxM=
+	t=1784663540; cv=none; b=QgDVKy9isvwawD7i6Y8b7CRTmPr6eIZOZ1JXiQv0DxRj5kCupbaziDT5cDmhm4bofnzn/JR88xLSQOEs2MO/onysbl15QCF5HaZgkZe/11WeY+3i1h0tuzgY5NH/gKbnuYHISZja0Vcqfijtgd9l8n4JIPrKQzYu9c1NsgRhxLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663537; c=relaxed/simple;
-	bh=vmyy5eMRc9rD1qXbkYwCM/9Ur4iDSUv6wzTGEM72EbA=;
+	s=arc-20240116; t=1784663540; c=relaxed/simple;
+	bh=It6JIimqpxBzCdv78doZXmNqDqIRdZukNfK/hUlEtj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=coTh21MAnCYqsdfNL7pXFLMGhin5R6mBQF/zALKelShznVfIN4/HchePGwQWVbipTM9ZS0lbzHRlbE3rJwU2at7dmPCzCstWGmRjNeyHfMmA7VjZnJw1hlhirjFwIPQcaf3IU4ctySpvsjwlMo4KMKTkRidnuN09ehdVkPSN0dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwJQhSnN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jI7x6DZpidFyGHn8szQZRLDd5L6tkPh7ZXxfawYUP6I2MCeTOX6EFQWMRoYmojZso9qLnu4FqH92MinD+MxWYzCZA4Pu8AkYut25Om5zySP6I1C4P8NGzEc77ir9ZKE91+lioqN3q0BjZLK9pWhfuTIb6DTaKHREL6sqKNhX/LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0SH61iP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwJQhSnN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2901F000E9;
-	Tue, 21 Jul 2026 19:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0SH61iP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23301F000E9;
+	Tue, 21 Jul 2026 19:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663536;
-	bh=6fuSfHPK1godQc6rsewC5w8NwX1R01lmoAhOccX00w4=;
+	s=korg; t=1784663539;
+	bh=uBtCiwqJlPnADUHdNoWrjBgOd5atTwVRSraoMxtcSw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qwJQhSnNY0zzWqsT68pM1P5HZMDTOv7wuCDtSCy25jODqQ+40FP8SgKouirS78y02
-	 WW+lGNTHwW7ZS9AfDN2fY4IGs0uo2ujrTIQSkQN/SO07V1lVjOgakmjgc4AXxPCwUt
-	 d5rilv3Ks2Jc4JfKiV9YAhobotJN9Fdg4mMbT3ss=
+	b=U0SH61iPNbO4nlYUacbJuiuez7C9TUSq9gh7Itunf2LhNcTXz/jmklnt0IPnOY/Sm
+	 i7bYo6FQxEHb5oUQJy14BSWHSOZsSkhLJ6pJV2+zUB5gESgAvkHj8vUiE0lFdHqdzS
+	 JaGRsy6fnO938f/QuImKCMIShG5Nh3hhqYo0/UN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Yuan Tan <yuantan098@gmail.com>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Haoze Xie <royenheart@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 0859/1276] netfilter: xt_cluster: reject template conntracks in hash match
-Date: Tue, 21 Jul 2026 17:21:42 +0200
-Message-ID: <20260721152505.273094817@linuxfoundation.org>
+Subject: [PATCH 6.12 0860/1276] netfilter: nf_queue: pin bridge device while NFQUEUE holds fake dst
+Date: Tue, 21 Jul 2026 17:21:43 +0200
+Message-ID: <20260721152505.295918823@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -56,49 +56,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Haoze Xie <royenheart@gmail.com>
 
-commit 5feba91006ec92da57acc1cc2e34df623b98541e upstream.
+commit c9c9b37f8c5505224e8d206184df3bb668ee00cf upstream.
 
-xt_cluster_mt() treats any non-NULL nf_ct_get() result as a fully
-initialized conntrack and passes it to xt_cluster_hash().
+The br_netfilter fake rtable is embedded in struct net_bridge and is
+attached to bridged packets with skb_dst_set_noref(). If such a packet is
+queued to NFQUEUE, __nf_queue() upgrades that fake dst with
+skb_dst_force().
 
-This causes a state confusion bug when the raw table CT target attaches
-a template conntrack to skb->_nfct before normal conntrack processing.
-Templates carry IPS_TEMPLATE status but do not have a valid tuple for
-hashing yet, so xt_cluster_hash() can hit its WARN_ON() path on the
-zeroed l3num field.
+At that point the queued skb can hold a real dst reference after bridge
+teardown has started. The problem is not that every bridged packet needs
+its own dst reference. The problem is that NFQUEUE can keep the bridge
+private fake dst alive after unregister begins.
 
-Reject template conntracks before hashing them. This matches existing
-netfilter handling for template objects and avoids hashing incomplete
-conntrack state.
+Fix this by keeping the bridge fake dst model unchanged and pinning the
+bridge master device only while the packet sits in NFQUEUE. Record the
+bridge device in nf_queue_entry when the queued skb carries a bridge fake
+dst, take a device reference for the queue lifetime, and drop it when the
+queue entry is freed.
 
-Fixes: 0269ea493734 ("netfilter: xtables: add cluster match")
-Cc: stable@vger.kernel.org
+Also make sure queued entries are reaped when that bridge device goes
+down, and drop the redundant nf_bridge_info_exists() test from the fake
+dst detection.
+
+This keeps netdev_priv(br->dev) alive until verdict completion, so the
+embedded fake rtable and its metrics backing storage cannot be freed out
+from under dst_release(). It also avoids the constant refcount bump and
+avoids using ipv4-specific dst helpers for IPv6 bridge traffic.
+
+Fixes: 34666d467cbf ("netfilter: bridge: move br_netfilter out of the core")
+Cc: stable@kernel.org
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Haoze Xie <royenheart@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_cluster.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netfilter/nf_queue.h |    1 +
+ net/netfilter/nf_queue.c         |   14 ++++++++++++++
+ net/netfilter/nfnetlink_queue.c  |    3 +++
+ 3 files changed, 18 insertions(+)
 
---- a/net/netfilter/xt_cluster.c
-+++ b/net/netfilter/xt_cluster.c
-@@ -107,7 +107,7 @@ xt_cluster_mt(const struct sk_buff *skb,
+--- a/include/net/netfilter/nf_queue.h
++++ b/include/net/netfilter/nf_queue.h
+@@ -18,6 +18,7 @@ struct nf_queue_entry {
+ 	unsigned int		id;
+ 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++	struct net_device	*bridge_dev;
+ 	struct net_device	*physin;
+ 	struct net_device	*physout;
+ #endif
+--- a/net/netfilter/nf_queue.c
++++ b/net/netfilter/nf_queue.c
+@@ -67,6 +67,7 @@ static void nf_queue_entry_release_refs(
+ 		nf_queue_sock_put(state->sk);
+ 
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++	dev_put(entry->bridge_dev);
+ 	dev_put(entry->physin);
+ 	dev_put(entry->physout);
+ #endif
+@@ -83,6 +84,8 @@ static void __nf_queue_entry_init_physde
+ {
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
+ 	const struct sk_buff *skb = entry->skb;
++	struct dst_entry *dst = skb_dst(skb);
++	struct net_device *dev = NULL;
+ 
+ 	if (nf_bridge_info_exists(skb)) {
+ 		entry->physin = nf_bridge_get_physindev(skb, entry->state.net);
+@@ -91,6 +94,16 @@ static void __nf_queue_entry_init_physde
+ 		entry->physin = NULL;
+ 		entry->physout = NULL;
  	}
++
++	if (entry->state.pf == NFPROTO_BRIDGE &&
++	    dst && (dst->flags & DST_FAKE_RTABLE))
++		dev = dst_dev_rcu(dst);
++
++	/* Must hold a reference on the bridge device: dst_hold() protects
++	 * the dst itself, but the fake rtable is embedded in bridge-private
++	 * storage that netdevice teardown can free independently.
++	 */
++	entry->bridge_dev = dev;
+ #endif
+ }
  
- 	ct = nf_ct_get(skb, &ctinfo);
--	if (ct == NULL)
-+	if (!ct || nf_ct_is_template(ct))
- 		return false;
+@@ -107,6 +120,7 @@ bool nf_queue_entry_get_refs(struct nf_q
+ 	dev_hold(state->out);
  
- 	if (ct->master)
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++	dev_hold(entry->bridge_dev);
+ 	dev_hold(entry->physin);
+ 	dev_hold(entry->physout);
+ #endif
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -1251,6 +1251,9 @@ dev_cmp(struct nf_queue_entry *entry, un
+ 
+ 	if (physinif == ifindex || physoutif == ifindex)
+ 		return 1;
++
++	if (entry->bridge_dev && entry->bridge_dev->ifindex == ifindex)
++		return 1;
+ #endif
+ 	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
+ 		return 1;
 
 
