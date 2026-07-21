@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AAA37A821;
-	Tue, 21 Jul 2026 17:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D4C375AC3;
+	Tue, 21 Jul 2026 17:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653796; cv=none; b=oWYQGG0phhJjDcl5QuAgS4HiYiUvbNBWno8oGgDvOfNHruQLf3rNZrW5xOuDuxIFPKy1FZTtg3aMiWpnan5xXwy7D2AaHo+EqWdj+YSyV+zlFLGfgUtaFYh5NncbneylQXAAAVnnIKdLc5GyML6oHuzSrZWgzYbBztnsPGFw25k=
+	t=1784653802; cv=none; b=mJnSiwHmktqoXsxZTr1/3SNm6+btoxHl1ITscgQCrEmMk0RANBtSdQd1fPnA0GEt7VImMRQfMbbAG/xHC+4Zz3pUFI3kj/8qRUsqBIvRveVoCpqh3h9Zb3BsgsjvN39OsF3IRB695mFB/dHwc1UGYStIJqTbatBayTBTIz1a5nU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653796; c=relaxed/simple;
-	bh=12i8JXvim1JI2raSFqA/k3UGLV82KHnn4/VLndMt8lg=;
+	s=arc-20240116; t=1784653802; c=relaxed/simple;
+	bh=IUFruknAli6BVFAsvFwOov7PbEjp95xLXru59VDyjkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvIwol3vu4J9yN5D3vCGODH4KR5ngqXkxjx8FCQDmOz/NE1QfXxzkrNPZFZBDj1TIM56uIsigsXbx0r69PdJPaz6HkC8Whboou17biPwBHtC0N8Zikeq39y/fuvT+JF4IY3voPk+15M4YQ6oAlbvgh7LUulFXr85NmbHWmpbf8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhIAis8A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OH1g3rKtJSUzP3AUEdqux67dj3QMdW/XOUAqwlaPui+RwdWw8+sOnjN9eXXEjZ4o7PAh8zBHdXi4i9BkmqBKTArnjABB0S+KY/eBxiE6ZHLNhGgj06zZ2ZGvZeNV9LtwE7Twqi+HzGMzneuAcWtQOnS2hPTZA6phAYRMATRsPr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntRO61gt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhIAis8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E471F000E9;
-	Tue, 21 Jul 2026 17:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntRO61gt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101031F00A3D;
+	Tue, 21 Jul 2026 17:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653795;
-	bh=OEx6J8ad4p/TOF6a/4/jg3zfYjU1DdUjMvstRqIUOJA=;
+	s=korg; t=1784653800;
+	bh=dHvlid/U+CsuxOYE+eEVULOqPNEc+5kwErZ9sJcXICE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lhIAis8A7N2YAbBs+aXYDhrkkdUuLL0lrS8ih4c/TZR3P8+DU6WZa0P3hBKIXzb0x
-	 6PrpC9JlA3kp1LY5XbMZwTb5VMuM3Gs4nwHUmOgYdXXfThBjXFc6RN77sxxxCc83sK
-	 b5S6voaszmgmn8AdZ/nQKepmu5WMOoXTWSXk7my0=
+	b=ntRO61gtyXjBMMqsOacoXldxpFT3r23xzmaflngjPDX/DpTVLf4DmBPwkU0Y3y9BZ
+	 y1AUsvY0ve3p+QcEmjADZSy8kKuU2ympWZDyI0ua1AsLeOgv0lEFj8kh5LLQUkTgek
+	 4u7f06Ni3UMzXwBZ3yjBeajcR62oSLgd1rwzR83g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravindra <ravindra@intel.com>,
-	Kiran K <kiran.k@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1461/2077] Bluetooth: btintel_pcie: Separate coredump work from RX work
-Date: Tue, 21 Jul 2026 17:18:54 +0200
-Message-ID: <20260721152627.257682887@linuxfoundation.org>
+Subject: [PATCH 7.1 1463/2077] Bluetooth: ISO: fix malformed ISO_END/CONT handling
+Date: Tue, 21 Jul 2026 17:18:56 +0200
+Message-ID: <20260721152627.304860302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,308 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravindra <ravindra@intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit f70f7f2512c6b9113dc78f6a25361166afd1412e ]
+[ Upstream commit e054c1a6ae7310d2815778fddb87da616e11c255 ]
 
-Sharing a single workqueue between coredump processing and RX
-delays evacuation of RX events while a coredump is in progress.
-The firmware's RX buffers can overflow during that window, leading
-to dropped events. The issue was observed in HID use cases where
-HID reports arrive in bursts and quickly fill the RX path while a
-coredump is being collected.
+Core specification (Part C vol 4 sec 5.4.5) does not exclude empty
+ISO_CONT, ISO_END packets.  We currently reject them if they are last.
 
-Move coredump processing to a dedicated ordered coredump_workqueue
-with its own coredump_work, so coredumps run independently of RX.
-All four coredump trigger sources (FW assert, HW exception, user
-sysfs trigger, and resume-error detection) are switched to this new
-workqueue. Ordering serialises concurrent triggers without blocking
-RX.
+If controller sends malformed sequence
 
-Signed-off-by: Ravindra <ravindra@intel.com>
-Signed-off-by: Kiran K <kiran.k@intel.com>
+    ISO_START -> rx_len = 4, ISO_CONT skb->len 4, ISO_START
+
+that ends payload in ISO_CONT, we leak conn->rx_skb. If controller sends
+too long ISO_END, we panic on skb_put. If controller sends too short
+ISO_END we accept it.
+
+Fix by marking unfinished ISO_START via conn->rx_skb != NULL.  Check
+skb->len properly before skb_put.  Combine the ISO_CONT/END code paths
+as they require the same initial checks. Reject too short ISO_END
+packets.
+
+Fixes: 84c24fb151fc ("Bluetooth: ISO: drop ISO_END frames received without prior ISO_START")
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 9c36951474d8 ("Bluetooth: btintel_pcie: Refactor FLR to use device_reprobe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 102 +++++++++++++++++++++++++------
- drivers/bluetooth/btintel_pcie.h |   5 ++
- 2 files changed, 87 insertions(+), 20 deletions(-)
+ net/bluetooth/iso.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index bd984751cc1a11..fd1b2045aa2c7b 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1444,7 +1444,7 @@ static void btintel_pcie_msix_fw_trigger_handler(struct btintel_pcie_data *data)
- 	if (!test_and_set_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags))
- 		data->dmp_hdr.trigger_reason = BTINTEL_PCIE_TRIGGER_REASON_FW_ASSERT;
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 7186e8d88c757a..1d5ce87e6496ef 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -2539,7 +2539,7 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
+ 	switch (pb) {
+ 	case ISO_START:
+ 	case ISO_SINGLE:
+-		if (conn->rx_len) {
++		if (conn->rx_skb || conn->rx_len) {
+ 			BT_ERR("Unexpected start frame (len %d)", skb->len);
+ 			kfree_skb(conn->rx_skb);
+ 			conn->rx_skb = NULL;
+@@ -2620,12 +2620,14 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
+ 		break;
  
--	queue_work(data->workqueue, &data->rx_work);
-+	queue_work(data->coredump_workqueue, &data->coredump_work);
- }
+ 	case ISO_CONT:
+-		BT_DBG("Cont: frag len %d (expecting %d)", skb->len,
++	case ISO_END:
++		BT_DBG("%s: frag len %d (expecting %d)",
++		       (pb == ISO_END) ? "End" : "Cont", skb->len,
+ 		       conn->rx_len);
  
- static void btintel_pcie_msix_hw_exp_handler(struct btintel_pcie_data *data)
-@@ -1461,16 +1461,21 @@ static void btintel_pcie_msix_hw_exp_handler(struct btintel_pcie_data *data)
- 	if (!test_and_set_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags))
- 		data->dmp_hdr.trigger_reason = BTINTEL_PCIE_TRIGGER_REASON_FW_ASSERT;
- 
--	queue_work(data->workqueue, &data->rx_work);
-+	queue_work(data->coredump_workqueue, &data->coredump_work);
- }
- 
--static void btintel_pcie_rx_work(struct work_struct *work)
-+static void btintel_pcie_coredump_worker(struct work_struct *work)
- {
- 	struct btintel_pcie_data *data = container_of(work,
--					struct btintel_pcie_data, rx_work);
--	struct sk_buff *skb;
-+					struct btintel_pcie_data, coredump_work);
- 	int err;
- 
-+	/* hdev is NULL until setup_hdev() succeeds, and is cleared on
-+	 * teardown after disable_work_sync() drains us; bail in that case.
-+	 */
-+	if (!data->hdev)
-+		return;
-+
- 	if (test_bit(BTINTEL_PCIE_FWTRIGGER_DUMP_INPROGRESS, &data->flags)) {
- 		err = btintel_pcie_dump_fwtrigger_event(data);
- 		if (err)
-@@ -1494,6 +1499,13 @@ static void btintel_pcie_rx_work(struct work_struct *work)
- 		btintel_pcie_read_hwexp(data);
- 		clear_bit(BTINTEL_PCIE_HWEXP_INPROGRESS, &data->flags);
- 	}
-+}
-+
-+static void btintel_pcie_rx_work(struct work_struct *work)
-+{
-+	struct btintel_pcie_data *data = container_of(work,
-+					struct btintel_pcie_data, rx_work);
-+	struct sk_buff *skb;
- 
- 	/* Process the sk_buf in queue and send to the HCI layer */
- 	while ((skb = skb_dequeue(&data->rx_skb_q))) {
-@@ -2168,9 +2180,11 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
- 
- static void btintel_pcie_release_hdev(struct btintel_pcie_data *data)
- {
--	struct hci_dev *hdev;
-+	struct hci_dev *hdev = data->hdev;
-+
-+	if (!hdev)
-+		return;
- 
--	hdev = data->hdev;
- 	hci_unregister_dev(hdev);
- 	hci_free_dev(hdev);
- 	data->hdev = NULL;
-@@ -2588,6 +2602,10 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
- 	btintel_pcie_synchronize_irqs(data);
- 
- 	flush_work(&data->rx_work);
-+	/* Drain any in-flight coredump and block new ones across reset.
-+	 * Safe from self-deadlock: coredump_work runs on a separate wq.
-+	 */
-+	disable_work_sync(&data->coredump_work);
- 
- 	bt_dev_dbg(data->hdev, "Release bluetooth interface");
- 	if (data->reset_type == BTINTEL_PCIE_IOSF_PRR_PLDR) {
-@@ -2595,16 +2613,27 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
- 		 * pci_rescan_remove_lock. This mutex serializes against PCI device
- 		 * addition/removal (hotplug), so no device can be added to or
- 		 * removed from the bus list while this code runs.
-+		 *
-+		 * device_reprobe() inside btintel_pcie_perform_pldr() destroys
-+		 * 'data' via .remove(); a fresh probe re-INIT_WORKs the
-+		 * coredump_work with disable count 0, so we must not call
-+		 * enable_work() on this path.
- 		 */
- 		btintel_pcie_perform_pldr(data);
- 		goto out;
- 	}
- 	btintel_pcie_release_hdev(data);
- 
--	err = pci_reset_function(pdev);
-+	/* Use pci_try_reset_function() rather than pci_reset_function() to
-+	 * avoid an ABBA deadlock against btintel_pcie_remove(): the PCI core
-+	 * calls .remove() with device_lock held, and remove() then waits for
-+	 * this work via cancel_work_sync(); pci_reset_function() would in
-+	 * turn try to acquire the same device_lock, deadlocking both paths.
-+	 */
-+	err = pci_try_reset_function(pdev);
- 	if (err) {
- 		BT_ERR("Failed resetting the pcie device (%d)", err);
--		goto out;
-+		goto out_enable;
- 	}
- 
- 	btintel_pcie_enable_interrupts(data);
-@@ -2614,7 +2643,7 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
- 	if (err) {
- 		BT_ERR("Failed to enable bluetooth hardware after reset (%d)",
- 		       err);
--		goto out;
-+		goto out_enable;
- 	}
- 
- 	btintel_pcie_reset_ia(data);
-@@ -2624,8 +2653,15 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
- 	err = btintel_pcie_setup_hdev(data);
- 	if (err) {
- 		BT_ERR("Failed registering hdev (%d)", err);
--		goto out;
-+		goto out_enable;
- 	}
-+
-+out_enable:
-+	/* Balance disable_work_sync() above on every exit. Leaving the
-+	 * counter incremented on a failed reset would permanently disable
-+	 * coredump_work even after a later successful reset.
-+	 */
-+	enable_work(&data->coredump_work);
- out:
- 	pci_dev_put(pdev);
- 	pci_unlock_rescan_remove();
-@@ -2759,7 +2795,6 @@ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
- 	hdev->bus = HCI_PCI;
- 	hci_set_drvdata(hdev, data);
- 
--	data->hdev = hdev;
- 	SET_HCIDEV_DEV(hdev, &data->pdev->dev);
- 
- 	hdev->manufacturer = 2;
-@@ -2778,15 +2813,17 @@ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
- 	err = hci_register_dev(hdev);
- 	if (err < 0) {
- 		BT_ERR("Failed to register to hdev (%d)", err);
--		goto exit_error;
-+		hci_free_dev(hdev);
-+		return err;
- 	}
- 
-+	/* Publish hdev only after successful registration; the coredump
-+	 * worker bails on !data->hdev, so it never observes a half-set-up
-+	 * device.
-+	 */
-+	data->hdev = hdev;
- 	data->dmp_hdr.driver_name = KBUILD_MODNAME;
- 	return 0;
--
--exit_error:
--	hci_free_dev(hdev);
--	return err;
- }
- 
- static int btintel_pcie_probe(struct pci_dev *pdev,
-@@ -2817,9 +2854,16 @@ static int btintel_pcie_probe(struct pci_dev *pdev,
- 	if (!data->workqueue)
- 		return -ENOMEM;
- 
-+	data->coredump_workqueue = alloc_ordered_workqueue(KBUILD_MODNAME "_cd", 0);
-+	if (!data->coredump_workqueue) {
-+		destroy_workqueue(data->workqueue);
-+		return -ENOMEM;
-+	}
-+
- 	skb_queue_head_init(&data->rx_skb_q);
- 	INIT_WORK(&data->rx_work, btintel_pcie_rx_work);
- 	INIT_WORK(&data->reset_work, btintel_pcie_reset_work);
-+	INIT_WORK(&data->coredump_work, btintel_pcie_coredump_worker);
- 
- 	data->boot_stage_cache = 0x00;
- 	data->img_resp_cache = 0x00;
-@@ -2862,6 +2906,8 @@ static int btintel_pcie_probe(struct pci_dev *pdev,
- 	/* reset device before exit */
- 	btintel_pcie_reset_bt(data);
- 
-+	destroy_workqueue(data->coredump_workqueue);
-+
- 	pci_clear_master(pdev);
- 
- 	pci_set_drvdata(pdev, NULL);
-@@ -2879,13 +2925,20 @@ static void btintel_pcie_remove(struct pci_dev *pdev)
- 		return;
- 	}
- 
-+	/* Permanently block coredump triggers and drain the worker before
-+	 * tearing down. Must run before cancel_work_sync(&reset_work) so
-+	 * the disable counter stays >= 1 even after reset_work()'s
-+	 * balanced enable_work() (counter 2 -> 1, never reaching 0).
-+	 */
-+	disable_work_sync(&data->coredump_work);
-+
- 	/* Cancel pending reset work. Skip only when remove() is called from
- 	 * within the reset work itself (PLDR device_reprobe path) to avoid
- 	 * deadlock. current_work() returns the work_struct of the caller if
- 	 * we are in a workqueue context.
- 	 */
- 	if (current_work() != &data->reset_work)
--		cancel_work_sync(&data->reset_work);
-+		disable_work_sync(&data->reset_work);
- 
- 	btintel_pcie_disable_interrupts(data);
- 
-@@ -2905,6 +2958,7 @@ static void btintel_pcie_remove(struct pci_dev *pdev)
- 
- 	btintel_pcie_release_hdev(data);
- 
-+	destroy_workqueue(data->coredump_workqueue);
- 	destroy_workqueue(data->workqueue);
- 
- 	btintel_pcie_free(data);
-@@ -2920,11 +2974,19 @@ static void btintel_pcie_coredump(struct device *dev)
- 	struct  pci_dev *pdev = to_pci_dev(dev);
- 	struct btintel_pcie_data *data = pci_get_drvdata(pdev);
- 
-+	if (!data)
-+		return;
-+
- 	if (test_and_set_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags))
- 		return;
- 
- 	data->dmp_hdr.trigger_reason  = BTINTEL_PCIE_TRIGGER_REASON_USER_TRIGGER;
--	queue_work(data->workqueue, &data->rx_work);
-+	/* queue_work() returns false if the work is disabled (reset or
-+	 * remove in progress); clear the in-progress bit so a later
-+	 * trigger can succeed once the work is re-enabled.
-+	 */
-+	if (!queue_work(data->coredump_workqueue, &data->coredump_work))
-+		clear_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags);
- }
- #endif
- 
-@@ -3065,7 +3127,7 @@ static int btintel_pcie_resume(struct device *dev)
- 				      &data->flags)) {
- 			data->dmp_hdr.trigger_reason =
- 				BTINTEL_PCIE_TRIGGER_REASON_FW_ASSERT;
--			queue_work(data->workqueue, &data->rx_work);
-+			queue_work(data->coredump_workqueue, &data->coredump_work);
+-		if (!conn->rx_len) {
+-			BT_ERR("Unexpected continuation frame (len %d)",
+-			       skb->len);
++		if (!conn->rx_skb) {
++			BT_ERR("Unexpected ISO %s frame (len %d)",
++			       (pb == ISO_END) ? "End" : "Cont", skb->len);
+ 			goto drop;
  		}
- 		set_bit(BTINTEL_PCIE_CORE_HALTED, &data->flags);
- 		btintel_pcie_reset(data->hdev);
-diff --git a/drivers/bluetooth/btintel_pcie.h b/drivers/bluetooth/btintel_pcie.h
-index e4a8fa47918880..7caee093e3164a 100644
---- a/drivers/bluetooth/btintel_pcie.h
-+++ b/drivers/bluetooth/btintel_pcie.h
-@@ -466,6 +466,8 @@ struct btintel_pcie_dump_header {
-  * @workqueue: workqueue for RX work
-  * @rx_skb_q: SKB queue for RX packet
-  * @rx_work: RX work struct to process the RX packet in @rx_skb_q
-+ * @coredump_workqueue: dedicated workqueue for coredump collection
-+ * @coredump_work: work struct for coredump trace collection
-  * @dma_pool: DMA pool for descriptors, index array and ci
-  * @dma_p_addr: DMA address for pool
-  * @dma_v_addr: address of pool
-@@ -514,6 +516,9 @@ struct btintel_pcie_data {
- 	struct work_struct	rx_work;
- 	struct work_struct      reset_work;
  
-+	struct workqueue_struct	*coredump_workqueue;
-+	struct work_struct	coredump_work;
-+
- 	struct dma_pool	*dma_pool;
- 	dma_addr_t	dma_p_addr;
- 	void		*dma_v_addr;
+@@ -2641,17 +2643,9 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
+ 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
+ 					  skb->len);
+ 		conn->rx_len -= skb->len;
+-		break;
+ 
+-	case ISO_END:
+-		if (!conn->rx_len) {
+-			BT_ERR("Unexpected end frame (len %d)", skb->len);
+-			goto drop;
+-		}
+-
+-		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
+-					  skb->len);
+-		conn->rx_len -= skb->len;
++		if (pb == ISO_CONT)
++			break;
+ 
+ 		if (!conn->rx_len) {
+ 			struct sk_buff *rx_skb = conn->rx_skb;
+@@ -2662,6 +2656,13 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
+ 			 */
+ 			conn->rx_skb = NULL;
+ 			iso_recv_frame(conn, rx_skb);
++		} else {
++			BT_ERR("ISO fragment incomplete (len %d, expected %d)",
++			       skb->len, conn->rx_len);
++			kfree_skb(conn->rx_skb);
++			conn->rx_skb = NULL;
++			conn->rx_len = 0;
++			goto drop;
+ 		}
+ 		break;
+ 	}
 -- 
 2.53.0
 
