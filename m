@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7AF46C4D8;
-	Tue, 21 Jul 2026 17:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C8B46D094;
+	Tue, 21 Jul 2026 17:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655350; cv=none; b=rPAynpg1SQsIzq8EdZPKCh6dVdaSc0wIQF8xyBAMyMtToYno+v1byKY1E20AfQb5794TaRBTbNbV4dUs/NbucTAFpuaH1cT1PwbZ8YumjPbNjQe4zTXxxT6VMJtNy9nTU16sbEZ+3O9+6OLAMN8Wcc8IZCVul1aqEdUFoCyeqls=
+	t=1784655352; cv=none; b=QEA2W06Af44vVLj9OJod+nPQdasc7oxVp4OaoD1lVGTcoNwerbn+USBdIi4kNtPki9i4jbCaqeneWLs0czQPTLFsN4Z17G6OXiS5ptRfGEGHwBUfQMs4sE8d1uRi8/KJYBtP5ylGoOSXyhxNtar/oopZZC5lYwq8k4HI0pQmy4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655350; c=relaxed/simple;
-	bh=zy1ucU1f3nfOfjMDs1dap07qig6C5k5dsJat1HN82xE=;
+	s=arc-20240116; t=1784655352; c=relaxed/simple;
+	bh=41dfTiJES00QfYsxma2lievrl/4pqumgfHJ6TnjZE5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAZfkAGC1/eeORniI11Q7ejys9+2GuT1md5MexyH5zEDIUrNPoJK+snTDVfmpOgtC9hB7qlXFVLHNTZWFvGQ7GYRxLNbvWlO4R1EiS99BmhqU05kk5H0kcXJKwVYH9ea1Z3T3mYwUOH/MmKg78WJ7s9wP62XOrXahwf+nFVsHp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ln5/V2D4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c6TPLzdqvRHINP3KvxPfpdOQ73ZuliK9ywXc4JgpfSMT2YK6lBDozNy8Gs2CWIUwNfr/qdyruc1Ad9MrA8b/ducKlrrfcgHaxkqLweDX6TuO6Wu87Pqjcss3iG7p8jwoyLN8IY2HP9Tx84NPPmPtLlZMBnxJBuidZJJLRMSEcAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ki9PSLDm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ln5/V2D4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEBD1F000E9;
-	Tue, 21 Jul 2026 17:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ki9PSLDm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0402A1F000E9;
+	Tue, 21 Jul 2026 17:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655348;
-	bh=9TOYunOO2zIwaTqFNVjiN3zNc+9TO4AOi4XvLwvc3s4=;
+	s=korg; t=1784655351;
+	bh=hDuPcWqS02UuP/TxVmHzNjVTbbfFe361dahtWWzHpv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ln5/V2D4urRts0Kli6/h+pfN6arT/hh5ulRESUCDA3DPQ5eWuc9SDwvNjRSaeFtKh
-	 f1kI8x2d52OzYCSUrSVz9G6JX6li2OjIm1aNSxTfLo6ZMBq/OqcH9Of3ZsXsZrflMz
-	 0Y3639m0jc7E7Hs8IKH3f+Amxi6gpLidJtak2X0o=
+	b=Ki9PSLDma72YlvyXqL+ST4azAoiZo3seK/DEVSeFPQklp5Sw77O73OHQo4DQFRcEu
+	 UJtIW7bDvjbYXufLG+zuDzp2X7SgofivlL67JxXKETxtStwT7SCteaGcBZm15aGfyN
+	 ByW9pn7mceAiWzLsh2XdpRtREiAiNY/PvHAReJe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Keshav Verma <iganschel@gmail.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 2050/2077] f2fs: fix listxattr handling of corrupted xattr entries
-Date: Tue, 21 Jul 2026 17:28:43 +0200
-Message-ID: <20260721152641.054491929@linuxfoundation.org>
+Subject: [PATCH 7.1 2051/2077] iio: hid-sensor-rotation: Fix stale or zero output when reading raw values
+Date: Tue, 21 Jul 2026 17:28:44 +0200
+Message-ID: <20260721152641.078652889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,48 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keshav Verma <iganschel@gmail.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit 5ef5bc304f23c3fe255d4936472378dcb74d0e94 ]
+[ Upstream commit 3ce8d099e0afc5a7da75a2007a67f67c4f5a4af1 ]
 
-Validate the xattr entry before reading its fields in f2fs_listxattr().
-Return -EFSCORRUPTED when the entry is outside the valid xattr storage
-area instead of returning a successful partial result.
+When reading the raw quaternion attribute (in_rot_quaternion_raw), the
+driver currently returns either all zeros (if the sensor was never enabled)
+or stale data (if the sensor was previously enabled) because it reads from
+the internal buffer without explicitly requesting a new sample from the
+sensor.
 
-Fixes: 688078e7f36c ("f2fs: fix to avoid memory leakage in f2fs_listxattr")
-Cc: stable@kernel.org
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Keshav Verma <iganschel@gmail.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+To fix this, power up the sensor, call sensor_hub_input_attr_read_values()
+to issue a synchronous GET_REPORT and receive the full quaternion data
+directly into a local buffer, then decode the four components.
+
+Fixes: fc18dddc0625 ("iio: hid-sensors: Added device rotation support")
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/xattr.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/orientation/hid-sensor-rotation.c |   40 ++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -581,8 +581,6 @@ ssize_t f2fs_listxattr(struct dentry *de
- 		size_t prefix_len;
- 		size_t size;
+--- a/drivers/iio/orientation/hid-sensor-rotation.c
++++ b/drivers/iio/orientation/hid-sensor-rotation.c
+@@ -74,6 +74,13 @@ static int dev_rot_read_raw(struct iio_d
+ 				long mask)
+ {
+ 	struct dev_rot_state *rot_state = iio_priv(indio_dev);
++	struct hid_sensor_hub_device *hsdev = rot_state->common_attributes.hsdev;
++	struct hid_sensor_hub_attribute_info *info = &rot_state->quaternion;
++	u32 usage_id = HID_USAGE_SENSOR_ORIENT_QUATERNION;
++	union {
++		s16 val16[4];
++		s32 val32[4];
++	} raw_buf;
+ 	int ret_type;
+ 	int i;
  
--		prefix = f2fs_xattr_prefix(entry->e_name_index, dentry);
--
- 		if ((void *)(entry) + sizeof(__u32) > last_base_addr ||
- 			(void *)XATTR_NEXT_ENTRY(entry) > last_base_addr) {
- 			f2fs_err(F2FS_I_SB(inode), "list inode (%llu) has corrupted xattr",
-@@ -590,9 +588,11 @@ ssize_t f2fs_listxattr(struct dentry *de
- 			set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
- 			f2fs_handle_error(F2FS_I_SB(inode),
- 						ERROR_CORRUPTED_XATTR);
--			break;
-+			error = -EFSCORRUPTED;
-+			goto cleanup;
- 		}
- 
-+		prefix = f2fs_xattr_prefix(entry->e_name_index, dentry);
- 		if (!prefix)
- 			continue;
- 
+@@ -83,8 +90,37 @@ static int dev_rot_read_raw(struct iio_d
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+ 		if (size >= 4) {
+-			for (i = 0; i < 4; ++i)
+-				vals[i] = rot_state->scan.sampled_vals[i];
++			if (info->size <= 0 || info->size > sizeof(raw_buf))
++				return -EINVAL;
++
++			hid_sensor_power_state(&rot_state->common_attributes, true);
++
++			ret_type = sensor_hub_input_attr_read_values(hsdev,
++								     hsdev->usage,
++								     usage_id,
++								     info->report_id,
++								     SENSOR_HUB_SYNC,
++								     info->size,
++								     (u8 *)&raw_buf);
++
++			hid_sensor_power_state(&rot_state->common_attributes, false);
++
++			if (ret_type < 0)
++				return ret_type;
++
++			switch (info->size) {
++			case sizeof(raw_buf.val16):
++				for (i = 0; i < ARRAY_SIZE(raw_buf.val16); i++)
++					vals[i] = raw_buf.val16[i];
++				break;
++			case sizeof(raw_buf.val32):
++				for (i = 0; i < ARRAY_SIZE(raw_buf.val32); i++)
++					vals[i] = raw_buf.val32[i];
++				break;
++			default:
++				return -EINVAL;
++			}
++
+ 			ret_type = IIO_VAL_INT_MULTIPLE;
+ 			*val_len =  4;
+ 		} else
 
 
