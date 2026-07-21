@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6911F40B117;
-	Tue, 21 Jul 2026 15:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CB345BD4E;
+	Tue, 21 Jul 2026 15:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648816; cv=none; b=G+veye3EOSEFgLNH6Xy6DQ9AiZsJQnJ6+3v64zgPMfp1hGWnSI5kPjy4/KqUS1jT5v/8Ojlmmg1oYZ/1tGmEfPVE4PO8eE+W4BFMkQpaM8HO2dKzXC+c+pQjVQiqaI3YmRBCn75kbvitXjWs3ECCcaf+mfNqm3A8TwcfyRjESSI=
+	t=1784648819; cv=none; b=qPVJWrv7yZMgAulIoqQW/HgNWGKja1QyAN7Z5QmvdK4A8T9fD7mZRcFA4q2BAuhf/mkN93CfOPoBdQ4fvBKwVC01wtH3/4tKvQ/fjtHCBGyb9+YIhTSe5wS/q0BiT5d4B5HFe3xEBLHsG4cPdJlnUWzZ3e+tvbRaaWvBPbhyBes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648816; c=relaxed/simple;
-	bh=UShCjWR6z8Lu5wnKSjowoQIPPpIm4EhKjUTo5HkVct8=;
+	s=arc-20240116; t=1784648819; c=relaxed/simple;
+	bh=bWJ1hiIgb1xDVMlxLFZik+Pt5OMryokt8Jbu0AE4pLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N7hN/3dBWDdaJ/l+cfNngeNtRFI0/f9+CL+4CR5jsDXN7DNlIhVX1vrKRKdPeNUulOZ9c5F3IoN0cGMXCOOo1+oSaDMpBjJqhyKQYRnmFogRcQX/soKhdGhCFo52K2mV2MKCoG6JMp4wdjvWk7Bmux3LoSX967kN7zUAMjE7dLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUY4ZqBG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G0C65L4RF4hwwUmT41M+L5VAi99XS07caBndDfraVabn/YuPDml9tVXBGuPheWQYPPzKIdEsSxpoh0i5TQwpafXFvnmoAbhY1Pway6/jKctF6uwECGrIgwHUMW/XQHgGmv5yeYUPpMj/bUgwf3VzgWCNcsXDLI0jt1jBKAhjks0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1+ihoyz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUY4ZqBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9141F000E9;
-	Tue, 21 Jul 2026 15:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1+ihoyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E121F000E9;
+	Tue, 21 Jul 2026 15:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648815;
-	bh=b2VPfyPyGTu6s/Sji0+j8SAy3JQRIQj97berKYU5UWU=;
+	s=korg; t=1784648818;
+	bh=G0HF0MpjbklmvXftLvz5fPq0pwefoF0PqJfON7Vka9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUY4ZqBGY3PL0XrjFVxjS4wm1tHAqTOGDMK2YoTjks8Gz1p1uCT/doJAM78B+/d9R
-	 X5z5RgXP5g3oAI8bE3JDLCrawGNIEhlAEIysG5NkBv/8eqBd3ifhLL6GlXAWi9kPlo
-	 GUz3hAjp+/3ZiT5bJoJV0atIqaJ32k2uhcli/KPk=
+	b=r1+ihoyziY2ail87wLYAedu5L4Q08LCGdH5BLiTNqCgfEv4IOuVSHSjWhmhvFXcyV
+	 YRU6DxjxecAWpd8U+ChhTwYaQHni0zpPAblLhFT+dzMvnt7ZqNrTsfDy4uJiB0VM4i
+	 wttYGIPOU0MDyiGJU7MfXfx2qeAxPLKfkw4NBrfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikko Perttunen <mperttunen@nvidia.com>,
+	Ion Agorria <ion@agorria.com>,
 	Svyatoslav Ryhel <clamor95@gmail.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0342/2077] drm/tegra: gr2d/gr3d: Initialize address register map before HOST1X client is registered
-Date: Tue, 21 Jul 2026 17:00:15 +0200
-Message-ID: <20260721152600.750892308@linuxfoundation.org>
+Subject: [PATCH 7.1 0343/2077] drm/tegra: gr2d/gr3d: Contain PM in the gr*d_probe/gr*d_remove
+Date: Tue, 21 Jul 2026 17:00:16 +0200
+Message-ID: <20260721152600.776839808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,78 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Ion Agorria <ion@agorria.com>
 
-[ Upstream commit c4ef5ba1131346159e31f4ef858525cf377380a6 ]
+[ Upstream commit ace01e2af3871343d700fb60c6f64d8f8e3180e1 ]
 
-The host1x_client_register() function is called just prior to register map
-initialization loop, making the device available to userspace. This may
-result in userspace attempting to submits a job before the register map is
-initialized. Address this by moving register initialization before host1x
-client registration.
+The current power management configuration causes GR2G/GR3D to malfunction
+after resume. Reconfigure all PM actions to be handled within the GR*D
+probe and remove operations to address this.
 
+Fixes: 62fa0a985e2c ("drm/tegra: Enable runtime PM during probe")
 Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Ion Agorria <ion@agorria.com>
 Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260517091450.46728-2-clamor95@gmail.com
-Stable-dep-of: ace01e2af387 ("drm/tegra: gr2d/gr3d: Contain PM in the gr*d_probe/gr*d_remove")
+Link: https://patch.msgid.link/20260517091450.46728-3-clamor95@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/gr2d.c | 8 ++++----
- drivers/gpu/drm/tegra/gr3d.c | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/tegra/gr2d.c | 13 ++++++-------
+ drivers/gpu/drm/tegra/gr3d.c | 13 ++++++-------
+ 2 files changed, 12 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/gpu/drm/tegra/gr2d.c b/drivers/gpu/drm/tegra/gr2d.c
-index 21f4dd0fa6aff7..e4148b034af745 100644
+index e4148b034af745..892e3450b281e4 100644
 --- a/drivers/gpu/drm/tegra/gr2d.c
 +++ b/drivers/gpu/drm/tegra/gr2d.c
-@@ -276,16 +276,16 @@ static int gr2d_probe(struct platform_device *pdev)
- 	if (err)
+@@ -100,9 +100,6 @@ static int gr2d_exit(struct host1x_client *client)
+ 	if (err < 0)
  		return err;
  
-+	/* initialize address register map */
-+	for (i = 0; i < ARRAY_SIZE(gr2d_addr_regs); i++)
-+		set_bit(gr2d_addr_regs[i], gr2d->addr_regs);
+-	pm_runtime_dont_use_autosuspend(client->dev);
+-	pm_runtime_force_suspend(client->dev);
+-
+ 	host1x_client_iommu_detach(client);
+ 	host1x_syncpt_put(client->syncpts[0]);
+ 	host1x_channel_put(gr2d->channel);
+@@ -280,12 +277,18 @@ static int gr2d_probe(struct platform_device *pdev)
+ 	for (i = 0; i < ARRAY_SIZE(gr2d_addr_regs); i++)
+ 		set_bit(gr2d_addr_regs[i], gr2d->addr_regs);
+ 
++	pm_runtime_enable(dev);
 +
  	err = host1x_client_register(&gr2d->client.base);
  	if (err < 0) {
++		pm_runtime_disable(dev);
  		dev_err(dev, "failed to register host1x client: %d\n", err);
  		return err;
  	}
  
--	/* initialize address register map */
--	for (i = 0; i < ARRAY_SIZE(gr2d_addr_regs); i++)
--		set_bit(gr2d_addr_regs[i], gr2d->addr_regs);
--
++	pm_runtime_use_autosuspend(dev);
++	pm_runtime_set_autosuspend_delay(dev, 500);
++
  	return 0;
  }
  
+@@ -367,10 +370,6 @@ static int __maybe_unused gr2d_runtime_resume(struct device *dev)
+ 		goto disable_clk;
+ 	}
+ 
+-	pm_runtime_enable(dev);
+-	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_set_autosuspend_delay(dev, 500);
+-
+ 	return 0;
+ 
+ disable_clk:
 diff --git a/drivers/gpu/drm/tegra/gr3d.c b/drivers/gpu/drm/tegra/gr3d.c
-index 42e9656ab80c91..47b0c6c56bfd08 100644
+index 47b0c6c56bfd08..388e47943d5ec6 100644
 --- a/drivers/gpu/drm/tegra/gr3d.c
 +++ b/drivers/gpu/drm/tegra/gr3d.c
-@@ -506,6 +506,10 @@ static int gr3d_probe(struct platform_device *pdev)
- 	if (err)
+@@ -109,9 +109,6 @@ static int gr3d_exit(struct host1x_client *client)
+ 	if (err < 0)
  		return err;
  
-+	/* initialize address register map */
-+	for (i = 0; i < ARRAY_SIZE(gr3d_addr_regs); i++)
-+		set_bit(gr3d_addr_regs[i], gr3d->addr_regs);
+-	pm_runtime_dont_use_autosuspend(client->dev);
+-	pm_runtime_force_suspend(client->dev);
+-
+ 	host1x_client_iommu_detach(client);
+ 	host1x_syncpt_put(client->syncpts[0]);
+ 	host1x_channel_put(gr3d->channel);
+@@ -510,13 +507,19 @@ static int gr3d_probe(struct platform_device *pdev)
+ 	for (i = 0; i < ARRAY_SIZE(gr3d_addr_regs); i++)
+ 		set_bit(gr3d_addr_regs[i], gr3d->addr_regs);
+ 
++	pm_runtime_enable(&pdev->dev);
 +
  	err = host1x_client_register(&gr3d->client.base);
  	if (err < 0) {
++		pm_runtime_disable(&pdev->dev);
  		dev_err(&pdev->dev, "failed to register host1x client: %d\n",
-@@ -513,10 +517,6 @@ static int gr3d_probe(struct platform_device *pdev)
+ 			err);
  		return err;
  	}
  
--	/* initialize address register map */
--	for (i = 0; i < ARRAY_SIZE(gr3d_addr_regs); i++)
--		set_bit(gr3d_addr_regs[i], gr3d->addr_regs);
--
++	pm_runtime_use_autosuspend(&pdev->dev);
++	pm_runtime_set_autosuspend_delay(&pdev->dev, 500);
++
  	return 0;
  }
  
+@@ -578,10 +581,6 @@ static int __maybe_unused gr3d_runtime_resume(struct device *dev)
+ 		goto disable_clk;
+ 	}
+ 
+-	pm_runtime_enable(dev);
+-	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_set_autosuspend_delay(dev, 500);
+-
+ 	return 0;
+ 
+ disable_clk:
 -- 
 2.53.0
 
