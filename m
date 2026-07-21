@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF44B175A74;
-	Tue, 21 Jul 2026 17:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0EE46D2DA;
+	Tue, 21 Jul 2026 17:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655553; cv=none; b=A1OhbYDb0tpY4HYl49RPAt5wdA0qtSKHOKFb/r0tMVa1Y0StiLEqsxTBDykCElNQULonHP+oNLZmm0tTLoO/IYJ9BdLNxW0myq/vOrZlkRdDDQHT2WlPq+DFArOO03vvvQCr2sA8uUD1EmSYOOJtrkybZyi/AiNACKm6ha4XrNU=
+	t=1784655555; cv=none; b=dQqSMXb+hzdX+44zqe/pF8dmGzUXed7F3bBoR5LODGAF5ZmCODD3ichImVk+Hj70jYJxN4IJzUAv6m7+T3qdDC3GkdI9ebK7lPoK7BVNtVaxW6IDpmq6m0UArAtMAOwYy6j/eZKcrK5MppnQaIfH4zdIYWWL2akPm2cKoo85a+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655553; c=relaxed/simple;
-	bh=HsbHC28rBbaQvtqyOujFzYMFVvctjgpvKLLX3nyH+yE=;
+	s=arc-20240116; t=1784655555; c=relaxed/simple;
+	bh=d+q49HI5Ht1AgHsGz6EsbgK25hr5/P+VT9tLHSlC3+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPUVHYMnkjb1mDxSn7gbAw6z941K01sdsmRN/4O38C/ZemhnhCg+xUiNF+lp8pLeRXOpmA5HAiwA7cV1sxs4Wn+cBurh8znVkZiWpb4Z7CDTqzwCo1ymK0f1FR8euw+9nmeuKMVC01OGiRmXM2x39HkDtS65uu7kWqZbuYcWktA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKVMDjof; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ro+Xx+NKdVxD6Fq/BeYx2MepGMTnztGfmUTmOhg+G0cRMYfmlnFszhwp4RC1Y0XIm7ssrbGozQ49eyNfJen6d3ABSiSbaTW1rbZ6C/7l599dkioHls6JJ5CXQSc72NeYiMbQgm9kAtEhWMY+2le7QzKBFV7qbGhUPiUefM3eSig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0zHwJ5C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKVMDjof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6768D1F000E9;
-	Tue, 21 Jul 2026 17:39:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0zHwJ5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2E81F000E9;
+	Tue, 21 Jul 2026 17:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655551;
-	bh=QTQKXDy571mOPrMlUHFbKZQAbC0eJnADZnoM1C+3lJs=;
+	s=korg; t=1784655554;
+	bh=BQQ86jaKJOFbbpmNYrDxsX06Q1iY9OZAsXWi4AODdt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rKVMDjofBxgMCAnDA+hEszS5lCvoTZTReKwutU6aDFCdq3UdD08T4CryE6E0pONTT
-	 d2qw6j2xNq+u4vDwl9C+YEW4Hrbh2KtkIo+pOQLXDljq8u/zJzmw2XE/l3DXQD8WWe
-	 Xu7ZP2bHbatEGy3Hg/QLEMU/BhPO4QI+v7iHnpmA=
+	b=f0zHwJ5CMLWeKqzhaLk6NQJk/+2jN2ui2lsnq78K7oEyS/YbgL2wyG9X2Fw16GzrY
+	 VSB7e4l+72hQjGEx3uEslZAJQpmB+NRGzvpoj+emKABfjlEtS76mvQcGeH1jBOneQ5
+	 ijMWBaWa6sTXFyUFAtCtTQHwTAkJkjacFQKU/wRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0010/1611] media: uvcvideo: Fix deadlock if uvc_status_stop is called from async_ctrl.work
-Date: Tue, 21 Jul 2026 17:02:06 +0200
-Message-ID: <20260721152515.016593096@linuxfoundation.org>
+Subject: [PATCH 6.18 0011/1611] selftests: bpf: Add test for multiple syncs from linked register
+Date: Tue, 21 Jul 2026 17:02:07 +0200
+Message-ID: <20260721152515.038407136@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,97 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit 6d27f92c54ce28cfbd2a8a479a96d6f4a781b7d2 ]
+commit 086c99fbe45070d02851427eab5ae26fe7d0f3c0 upstream.
 
-If a UVC camera has an asynchronous control, uvc_status_stop may be
-called from async_ctrl.work:
+Before the last commit, sync_linked_regs() corrupted the register whose
+bounds are being updated by copying known_reg's id to it. The ids are
+the same in value but known_reg has the BPF_ADD_CONST flag which is
+wrongly copied to reg.
 
-uvc_ctrl_status_event_work()
-    uvc_ctrl_status_event()
-        uvc_ctrl_clear_handle()
-	    uvc_pm_put()
-	        uvc_status_put()
-		    uvc_status_stop()
-		        cancel_work_sync()
+This later causes issues when creating new links to this reg.
+assign_scalar_id_before_mov() sees this BPF_ADD_CONST and gives a new id
+to this register and breaks the old links. This is exposed by the added
+selftest.
 
-This will cause a deadlock, since cancel_work_sync will wait for
-uvc_ctrl_status_event_work to complete before returning.
-
-Fix this by returning early from uvc_status_stop if we are currently in
-the work function. flush_status now remains false until uvc_status_start
-is called again, ensuring that uvc_ctrl_status_event_work won't resubmit
-the URB.
-
-Fixes: a32d9c41bdb8 ("media: uvcvideo: Make power management granular")
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/6733bdfb-3e88-479f-8956-ab09c04c433e@linux.dev/
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20260316155823.1855434-1-sean.anderson@linux.dev
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Tested-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Tested-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260115151143.1344724-3-puranjay@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_status.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ .../bpf/progs/verifier_linked_scalars.c       | 33 +++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_status.c b/drivers/media/usb/uvc/uvc_status.c
-index 231cfee8e7c2c4..7de074006c6a96 100644
---- a/drivers/media/usb/uvc/uvc_status.c
-+++ b/drivers/media/usb/uvc/uvc_status.c
-@@ -316,6 +316,16 @@ static int uvc_status_start(struct uvc_device *dev, gfp_t flags)
- 	if (!dev->int_urb)
- 		return 0;
- 
-+	/*
-+	 * If the previous uvc_status_stop() call was from the async work,
-+	 * the work may still be running. Wait for it to finish before we submit
-+	 * the urb.
-+	 */
-+	flush_work(&dev->async_ctrl.work);
-+
-+	/* Clear the flush status if we were previously stopped. */
-+	smp_store_release(&dev->flush_status, false);
-+
- 	return usb_submit_urb(dev->int_urb, flags);
+diff --git a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+index 8f755d2464cf5e..5f41bbb730a713 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
++++ b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+@@ -31,4 +31,37 @@ l1:						\
+ "	::: __clobber_all);
  }
  
-@@ -336,6 +346,15 @@ static void uvc_status_stop(struct uvc_device *dev)
- 	 */
- 	smp_store_release(&dev->flush_status, true);
- 
-+	/*
-+	 * If we are called from the event work function, the URB is guaranteed
-+	 * to not be in flight as it has completed and has not been resubmitted.
-+	 * There's no need to cancel the work (which would deadlock), or to kill
-+	 * the URB.
-+	 */
-+	if (current_work() == &w->work)
-+		return;
++/*
++ * Test that sync_linked_regs() preserves register IDs.
++ *
++ * The sync_linked_regs() function copies bounds from known_reg to linked
++ * registers. When doing so, it must preserve each register's original id
++ * to allow subsequent syncs from the same source to work correctly.
++ *
++ */
++SEC("socket")
++__success
++__naked void sync_linked_regs_preserves_id(void)
++{
++	asm volatile ("						\
++	call %[bpf_get_prandom_u32];				\
++	r0 &= 0xff;	/* r0 in [0, 255] */			\
++	r1 = r0;	/* r0, r1 linked with id 1 */		\
++	r1 += 4;	/* r1 has id=1 and off=4 in [4, 259] */ \
++	if r1 < 10 goto l0_%=;					\
++	/* r1 in [10, 259], r0 synced to [6, 255] */		\
++	r2 = r0;	/* r2 has id=1 and in [6, 255] */	\
++	if r1 < 14 goto l0_%=;					\
++	/* r1 in [14, 259], r0 synced to [10, 255] */		\
++	if r0 >= 10 goto l0_%=;					\
++	/* Never executed */					\
++	r0 /= 0;						\
++l0_%=:								\
++	r0 = 0;							\
++	exit;							\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
 +
- 	/*
- 	 * Cancel any pending asynchronous work. If any status event was queued,
- 	 * process it synchronously.
-@@ -354,15 +373,6 @@ static void uvc_status_stop(struct uvc_device *dev)
- 	 */
- 	if (cancel_work_sync(&w->work))
- 		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
--
--	/*
--	 * From this point, there are no events on the queue and the status URB
--	 * is dead. No events will be queued until uvc_status_start() is called.
--	 * The barrier is needed to make sure that flush_status is visible to
--	 * uvc_ctrl_status_event_work() when uvc_status_start() will be called
--	 * again.
--	 */
--	smp_store_release(&dev->flush_status, false);
- }
- 
- int uvc_status_resume(struct uvc_device *dev)
+ char _license[] SEC("license") = "GPL";
 -- 
 2.53.0
 
