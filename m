@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD6E3FC5BD;
-	Tue, 21 Jul 2026 18:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E06471262;
+	Tue, 21 Jul 2026 18:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659331; cv=none; b=lXwRUE3RL5iaqFOOUqInmGtNzfZwDl7JofoZ3ndU4XqeXiyZ2LMyYjJFJX5jbr2HPX2qL/+4ggNs7h/iq4PexIS8lE6a0VAW7TAqmUpwMu6mIADIcP2z0z7IELAWfHgKP/xmr8BOVW5MZGlXKPdYQjfDAGppmludmkaB5zWBUUA=
+	t=1784659333; cv=none; b=OH9SAlSGwgGQkhFic9mEnDWlfrkqwfTIef39G4wLaAirc5k0gxPCPNcoTFPWMOi0pjGHfYFw3DEtP4n86ae+EKWlv1a1AbvCFT0OHxdo8YKowffalCetyCYuL7eriE6sK0aX+tyDvOonk8d4qins3au5zZ1ltk8VxjlC4CZ2bwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659331; c=relaxed/simple;
-	bh=nsB8hWPDFSiy7QLoPfn8g+ZfaYDxcGtm8tMp30xTWZw=;
+	s=arc-20240116; t=1784659333; c=relaxed/simple;
+	bh=Mkn7bU2WLEGDZTyeFeWUVVwrPIjHej5Xtky5kxrBm9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZVTVX2XOYvhXoARbPa/WJXVC6VXGyNlgnSVQ6nIPlQSTLz1cjPba7+ocPOovGWyHmlJLGfhqQNpXInS4l31d9l+wSX8HQmaBTrKVUEiL5h0eDsEcZEn3HBZK17O681krUyEN3SzFMu9HTu1wKay0S/lBYKljRHgNbI7SXs1s7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMpMpKXJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6fv5cp1DUKgIE5eKY7P0K2nWKBws2LkS/QmgdVUw57KuGaFD7lInYYJKDTN4SbA1PyR6kYVHIxdu+CJ49RmOQDwUxTkosyOd6CmM7NxzDd6Rx7p5iMMDMDV0nzDxvrlarxEbzfXLxtezaHX0Y5FUvv+0mgyqH5ghCb+AmLnjfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXUgXmsz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMpMpKXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857DB1F00A3A;
-	Tue, 21 Jul 2026 18:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXUgXmsz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFFC1F000E9;
+	Tue, 21 Jul 2026 18:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659330;
-	bh=5KPCCfe3M0Np+INBgHBbo3DbCBpGiDE5A8tHkZ8NrUU=;
+	s=korg; t=1784659332;
+	bh=l2L0smBdygEonleqEsaHXfhYtSikWDHI1m13/l2q/+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oMpMpKXJi4y6ObgBO03kBbJyvU+mstuMv+WqbtgECJ5Ie6AtB9mBc0/skDAjv5nTi
-	 FomH6/h3cE8uyARY2QoJ1OYvQ7KW+tKbLV3tXNayh3f2YJ9sF/cmaQ7Xq8ApwDIN8w
-	 i73Zi3rmDpIohjOk9+Wd3jV67zkcJP52+7v7tZPc=
+	b=mXUgXmszxQ2ZYHKb41xe7SUebp9mQb1PqVNqTgHMd5BHrIe+26K/YOL9QWUDRME24
+	 bCXMOC03nthxhqPRrokqUM943vP1Yu41iOHMU3d+OfY747a7f5r0bHompSNDzeFS+u
+	 Hg52XfvsEWFLOdLas+RNSzZUs3lXcCkWzwT7hmzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 1478/1611] powerpc/pseries: fix memory leak on krealloc failure in papr_init
-Date: Tue, 21 Jul 2026 17:26:34 +0200
-Message-ID: <20260721152548.691320888@linuxfoundation.org>
+	Michael Gur <michaelgur@nvidia.com>,
+	Zhiping Zhang <zhipingz@meta.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 1479/1611] net/mlx5: free mlx5_st_idx_data on final dealloc
+Date: Tue, 21 Jul 2026 17:26:35 +0200
+Message-ID: <20260721152548.713141869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,38 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Zhiping Zhang <zhipingz@meta.com>
 
-commit bd83c98b988d2c560531084e296dbfb530aff829 upstream.
+commit df6134b527a88b3e65ba6ae5073664af091d5fd2 upstream.
 
-When krealloc() fails, free the original esi_buf before returning to
-avoid a memory leak.
+Workloads that repeatedly allocate and release mkeys carrying TPH
+steering-tag hints (e.g. churning RDMA MRs) leak one
+struct mlx5_st_idx_data per cycle; kmemleak flags it as unreferenced
+and the kmalloc slab grows over time.
 
-Fixes: 3c14b73454cf ("powerpc/pseries: Interface to represent PAPR firmware attributes")
+When the last reference to an ST table entry is dropped,
+mlx5_st_dealloc_index() removed the entry from idx_xa but the backing
+mlx5_st_idx_data allocation was never freed.
+
+Free idx_data after the xa_erase() so the lifetime of the bookkeeping
+struct matches the lifetime of the ST entry it tracks.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260614142356.658212-2-thorsten.blum@linux.dev
+Fixes: 888a7776f4fb ("net/mlx5: Add support for device steering tag")
+Reviewed-by: Michael Gur <michaelgur@nvidia.com>
+Signed-off-by: Zhiping Zhang <zhipingz@meta.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260702222507.1234467-1-zhipingz@meta.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/papr_platform_attributes.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/st.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/powerpc/platforms/pseries/papr_platform_attributes.c
-+++ b/arch/powerpc/platforms/pseries/papr_platform_attributes.c
-@@ -271,11 +271,9 @@ retry:
- 		esi_buf_size = ESI_HDR_SIZE + (CURR_MAX_ESI_ATTRS * max_esi_attrs);
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/st.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/st.c
+@@ -154,6 +154,7 @@ int mlx5_st_dealloc_index(struct mlx5_co
  
- 		temp_esi_buf = krealloc(esi_buf, esi_buf_size, GFP_KERNEL);
--		if (temp_esi_buf)
--			esi_buf = temp_esi_buf;
--		else
--			return -ENOMEM;
--
-+		if (!temp_esi_buf)
-+			goto out_free_esi_buf;
-+		esi_buf = temp_esi_buf;
- 		goto retry;
+ 	if (refcount_dec_and_test(&idx_data->usecount)) {
+ 		xa_erase(&st->idx_xa, st_index);
++		kfree(idx_data);
+ 		/* We leave PCI config space as was before, no mkey will refer to it */
  	}
  
 
