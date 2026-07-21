@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E1D3FE650;
-	Tue, 21 Jul 2026 17:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FE6449B2A;
+	Tue, 21 Jul 2026 17:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655051; cv=none; b=OC2Y7hnK2xx2hhun9T2kn+RxIENFRQcJQthoF5/KdQChTYBNoQr8pWDgGCnlsk7Y9hWB0dwfMkcJz6TMIoHoCWgtTgV9MsgGNPJjTha0cHW1qhEkPojVrGeK0tGNkvyViTLOx18DvTy14g1jh5NlNO7IZ8TqboIGGeLZULyHdzg=
+	t=1784655054; cv=none; b=rWSEijrzHf2tznzZb2kuKy8QvlF4dq5LFc097tMOF/nwQBrEgjqU0B02Wg399dzTzJCcXvltaSgz5fuf5lkd8R5dNQOKZveCtOk481EwBaWlkiwyXRrTwH0eYiCN8FWYjRa4cx796Nef/q9SqGwH5FFCbAMinDeuKG5m95p85ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655051; c=relaxed/simple;
-	bh=Bbn64iRBT2bHyx9Z1QO9A+hzb5P8hUISphd0BBYb8jc=;
+	s=arc-20240116; t=1784655054; c=relaxed/simple;
+	bh=HgEIrNU90d3JjGlfeh7yqCAxcQa1LnlWzNDT76yn1Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRuKpVxhGpMkNYpUY/rlxnTNywVz9Vr/Fu941dv82HATGdLhnGOF8XHHxS80z/1LKEzop8kn2c653OSF6ow7PlTU/GLtWMNOcs4CBIrSYaPNTJOC+80OzejuSq5BXwZQBP7FuxDREN1jrID7nw3tGSEIDEcuB+Gt2WDqrDKNhUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FN/+mwad; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AWWoRZbNIm9O0eoR3pjiWaTH1KHAIm+WPVWjiziPm26EAh1WRiOCX5NSgF+gNcaoR9Jb3AOmCrpgut6KscjKnDKqkE+UpThJQ4NuAE0YDYIqnIJNkIbP9iTxdoPAJQ4tNeftSyU5IyDWVut0z+iZPzXm9IK1PYTSSjclZITXEYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kg8x7vfY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FN/+mwad"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29CD1F000E9;
-	Tue, 21 Jul 2026 17:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kg8x7vfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF321F000E9;
+	Tue, 21 Jul 2026 17:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655050;
-	bh=lyfvqPXfIsbz8UIBwu/yxkPUlIBe95mLWl5UlFUCIa8=;
+	s=korg; t=1784655052;
+	bh=crnmLFOFJ7pTiZSeEnHBLbuVa0NFZSACj8TYxt8n8Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FN/+mwad1NzDg8mM4IVVMoUu1uJ7dP4xatOjO7TG/0ObFIKoFmziNPXNbBboMeHQ6
-	 w6b1px+n8bxcvyes0uOoUjK/Cv2IsSjuoQouUheuIWpJrvvg90y54xqk+2i4iXktvz
-	 IgJsz0OSTxuaLskuewscOLJDVB3DS46L1+DIY83M=
+	b=Kg8x7vfY+YU94ywyWql+KUiydxY+jF3PV3fL6TLNFZmFE76fuPxeXaAiHThvSj6rX
+	 aiJ94Kcz0MzQwHKKHGj35jrppFa0ULmSQAnHcHhA7vUBYDzHTTjQbRAaFjzabRo4Ma
+	 4JGv6807qlpl55b7rfYAo+82daGzyDN657TZ9FJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.1 1935/2077] KVM: arm64: Fix propagation of TLBI level in kvm_pgtable_stage2_relax_perms()
-Date: Tue, 21 Jul 2026 17:26:48 +0200
-Message-ID: <20260721152638.349490856@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.1 1895/2077] wifi: libertas_tf: fix use-after-free in lbtf_free_adapter()
+Date: Tue, 21 Jul 2026 17:26:08 +0200
+Message-ID: <20260721152637.416357590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,45 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 8d187d4b33c262c0f3e44842553521151d8629e8 upstream.
+commit aa6dcd5c8dd9ba1d7d0f60093bcda41c0d6d438d upstream.
 
-Assigning the invalidation level (an s8 value) with TLBI_TTL_UNKNOWN
-(a 32bit signed value) is not ideal, to say the least. Instead of
-this, only pass TLBI_TTL_UNKNOWN to __kvm_tlb_flush_vmid_ipa_nsh()
-when we know for sure that we don't have a provided level.
+lbtf_free_adapter() calls timer_delete(&priv->command_timer), which does
+not wait for a running command_timer_fn() callback. lbtf_free_adapter()
+runs on the teardown path right before ieee80211_free_hw() frees priv,
+both in lbtf_remove_card() and in the probe error path. command_timer is
+armed by mod_timer() in lbtf_cmd() whenever a firmware command is sent.
+command_timer_fn() dereferences priv. If a command times out as the
+device is removed, command_timer_fn() runs concurrently with teardown and
+dereferences priv after it has been freed.
 
-Fixes: 100baf0184896 ("KVM: arm64: Ensure level is always initialized when relaxing perms")
-Reported-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Link: https://lore.kernel.org/r/akztC7H2IsEKaq4i@sirena.org.uk
-Link: https://patch.msgid.link/20260707162935.1900874-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+This is the same use-after-free that commit 03cc8f90d053 ("wifi: libertas:
+fix use-after-free in lbs_free_adapter()") fixed in the sibling libertas
+driver. The libertas_tf variant has the identical pattern and was left
+unchanged. Use timer_delete_sync() so any in-flight callback completes
+before priv is freed.
+
+Fixes: 06b16ae53192 ("libertas_tf: main.c, data paths and mac80211 handlers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Link: https://patch.msgid.link/178211481807.2212567.8773346114561900100@maoyixie.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/pgtable.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/libertas_tf/main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -1358,7 +1358,7 @@ int kvm_pgtable_stage2_relax_perms(struc
- 				   enum kvm_pgtable_prot prot, enum kvm_pgtable_walk_flags flags)
+--- a/drivers/net/wireless/marvell/libertas_tf/main.c
++++ b/drivers/net/wireless/marvell/libertas_tf/main.c
+@@ -174,7 +174,7 @@ static void lbtf_free_adapter(struct lbt
  {
- 	kvm_pte_t xn = 0, set = 0, clr = 0;
--	s8 level = TLBI_TTL_UNKNOWN;
-+	s8 level;
- 	int ret;
- 
- 	if (prot & KVM_PTE_LEAF_ATTR_HI_SW)
-@@ -1379,7 +1379,8 @@ int kvm_pgtable_stage2_relax_perms(struc
- 
- 	ret = stage2_update_leaf_attrs(pgt, addr, 1, set, clr, NULL, &level, flags);
- 	if (!ret || ret == -EAGAIN)
--		kvm_call_hyp(__kvm_tlb_flush_vmid_ipa_nsh, pgt->mmu, addr, level);
-+		kvm_call_hyp(__kvm_tlb_flush_vmid_ipa_nsh, pgt->mmu, addr,
-+			     (ret == -EAGAIN) ? TLBI_TTL_UNKNOWN : level);
- 	return ret;
+ 	lbtf_deb_enter(LBTF_DEB_MAIN);
+ 	lbtf_free_cmd_buffer(priv);
+-	timer_delete(&priv->command_timer);
++	timer_delete_sync(&priv->command_timer);
+ 	lbtf_deb_leave(LBTF_DEB_MAIN);
  }
  
 
