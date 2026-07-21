@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CC3403E9B;
-	Tue, 21 Jul 2026 18:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A8846EC9A;
+	Tue, 21 Jul 2026 18:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659098; cv=none; b=fOWbO7ndhLLJZBxE/6WRJgqMMebK3ggi9ifm65QlwJ/TYmqHXU/7a3LY8FG+FRFRdplmCRINfDt06jD36XEK0GqFHsLM8f3d60jl4OeuAMLFpPD8A2ajJx451cbTd6sQSPycmNFsG4hnwhh7Qsvp8bSOoPxlCGlKBHxslbsHRn8=
+	t=1784659099; cv=none; b=tYqWMq5Dc9Fd6/gOMTofpFtcetNgn39RHcv+WaKZCJD7nEs1brFeh75TddaQPC4DpPZFgdpZuwbfGWViWqqIqBwGyPFiJSKBgg/B0j9TlwIUauM3tFFpKjX/s7YDgM3PcOP1+umwC1JL8Q/N4bT55TG+eSaFo7QEPS/oJAYWmD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659098; c=relaxed/simple;
-	bh=MlCCldVmMhYx9/R96xryDboWY4vIFezEIQnbrrARdwQ=;
+	s=arc-20240116; t=1784659099; c=relaxed/simple;
+	bh=FPYPffXghRZwEv3ThLiIkehs1wmzwZMQwIIYCHVeFEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYd2t/BBpES6N5F1Z5+3W/cErlPGnxsbgliODmIIbHggExoRd9UEM2oyKYMdnVYZOcurn2sKODqJKHjYDx7Zn+impCXUcA8Uqy3pQxfAzy+7BNJeLLgANHLx+4u3tAV5P2GYDwKg5V8EH+PKLN0pC3Hqks82nau/zLYcn7pyjl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMsy81mu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a87STqPw8U4c5QA4C6ZGQv+aygcjD88l6d42AyBTjf7ENYb15rX4SiFQKaIxFgzdnPz1t/qmSd3GzxIqkobnaqOYEWUocVsVhcFr42ekF7uv42QHoTvucDOITRzzOr//q+2mEKFxooh9U829++ZWMOiMjwFIQqxkbK4cd82c+1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCkpzRXJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMsy81mu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D921F00A3D;
-	Tue, 21 Jul 2026 18:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCkpzRXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AD81F00A3A;
+	Tue, 21 Jul 2026 18:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659094;
-	bh=r9jVX5QrvvjB+ovnDNdOb0P7pPf4bOHu+iEjtiuvyoA=;
+	s=korg; t=1784659091;
+	bh=KJa6ILkH8aEZXpCgnaDp26cT5D6HB5nFBIZM8tAG6fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uMsy81mupevrcNosLqjgp7tcYUmLX4PuZ7vpNo/UsH9m8a20XagPJ+m6T69r4p6/P
-	 SJk6MZBGQ/CrPWQK87FUJi760ffUC2Wn/tGDFNBh0FJumze5kYYTuHYain5+ulv69V
-	 wKeNqRMAWG9VVVtUVBUzC3UeJm2/olXgtDywep5s=
+	b=WCkpzRXJungOBFW+epRh1cqTeCeb9HeIChD0Hy9XETl7LgYJ7OUWc/D7yjuYuQdzi
+	 iaaBTXd4PI6cidOt3VKBcvIg3GfMLFFPyKulW5k75QHDwYZy5oc8SGf2rcM1ZP82fz
+	 Rvy5iDVthEaCiof5jQpSCJneB35PUWOq9V3dScqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.18 1389/1611] posix-cpu-timers: Use u64 multiplication in update_rlimit_cpu()
-Date: Tue, 21 Jul 2026 17:25:05 +0200
-Message-ID: <20260721152546.685362562@linuxfoundation.org>
+	syzbot+000c800a02097aaa10ed@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.18 1388/1611] locking/rt: Fix the incorrect RCU protection in rt_spin_unlock()
+Date: Tue, 21 Jul 2026 17:25:04 +0200
+Message-ID: <20260721152546.662843414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,53 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit 26aff38fefb1d6cd87e22525f41cc8f1aa61b24f upstream.
+commit 89038cc87d80c77e7aa6f42a64b2573b74af339f upstream.
 
-update_rlimit_cpu() converts the RLIMIT_CPU value to nanoseconds with
+rt_spin_unlock() releases the RCU protection before unlocking the
+lock. That opens the door for the following UAF scenario:
 
-        u64 nsecs = rlim_new * NSEC_PER_SEC;
+ T1					T2
+ spin_lock(&p->lock);		rcu_read_lock();
+ invalidate(p);			p = rcu_dereference(ptr);
+ rcu_assign_pointer(ptr, NULL);	if (!p) return;
+ spin_unlock(&p->lock);		spin_lock(&p->lock)
+ 				   lock(&lock->lock);
+				   rcu_read_lock();
+ kfree_rcu(p);			rcu_read_unlock();
+				....
+				spin_unlock(&p->lock)
+				  rcu_read_unlock(); // Ends grace period
+ rcu_do_batch()
+   kfree(p);
+			    UAF ->	  rt_mutex_cmpxchg_release(&lock->lock...)
 
-On 32-bit kernels both rlim_new (unsigned long) and NSEC_PER_SEC
-(1000000000L) are 32-bit, so the multiplication is performed in unsigned
-long and truncated for rlim_new > 4 seconds before being widened to u64.
+Regular spinlocks keep preemption disabled accross the unlock operation,
+which provides full RCU protection, but the RT substitution fails to
+resemble that. Same applies for the rwlock substitution.
 
-The same file already casts to u64 for the matching computation in
-check_process_timers():
+Move the rcu_read_unlock() invocation past the unlock operations to match
+the non-RT semantics. This makes it asymmetric vs. rt_xxx_lock(), but
+that's harmless as the caller needs to hold RCU read lock across the lock
+operation. The migrate_enable() call stays before the unlock operation
+because there is no per CPU operation in the unlock path which would
+require migration to be kept disabled.
 
-        u64 softns = (u64)soft * NSEC_PER_SEC;
-
-As a result, the truncated value is installed into the CPUCLOCK_PROF
-expiry cache (nextevt), causing the process CPU timer to be programmed
-to fire prematurely for any RLIMIT_CPU soft limit >= 5 seconds. The
-actual SIGXCPU/SIGKILL decision in check_process_timers() already casts
-to u64 and is therefore correct, so limit enforcement is not broken;
-only the expiry-cache programming is wrong. Apply the same cast here so
-both paths convert rlim_cur identically.
-
-64-bit kernels are unaffected.
-
-Fixes: 858cf3a8c599 ("timers/itimer: Convert internal cputime_t units to nsec")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Fixes: 0f383b6dc96e ("locking/spinlock: Provide RT variant")
+Reported-by: syzbot+000c800a02097aaa10ed@syzkaller.appspotmail.com
+Decoded-by: Jann Horn <jannh@google.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Al Viro <viro@zeniv.linux.org.uk>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616112017.1681372-1-zhanxusheng@xiaomi.com
+Link: https://patch.msgid.link/87jyrud75z.ffs@fw13
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/posix-cpu-timers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/locking/spinlock_rt.c |   27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
---- a/kernel/time/posix-cpu-timers.c
-+++ b/kernel/time/posix-cpu-timers.c
-@@ -41,7 +41,7 @@ void posix_cputimers_group_init(struct p
-  */
- int update_rlimit_cpu(struct task_struct *task, unsigned long rlim_new)
+--- a/kernel/locking/spinlock_rt.c
++++ b/kernel/locking/spinlock_rt.c
+@@ -79,10 +79,27 @@ void __sched rt_spin_unlock(spinlock_t *
  {
--	u64 nsecs = rlim_new * NSEC_PER_SEC;
-+	u64 nsecs = (u64)rlim_new * NSEC_PER_SEC;
- 	unsigned long irq_fl;
+ 	spin_release(&lock->dep_map, _RET_IP_);
+ 	migrate_enable();
+-	rcu_read_unlock();
  
- 	if (!lock_task_sighand(task, &irq_fl))
+ 	if (unlikely(!rt_mutex_cmpxchg_release(&lock->lock, current, NULL)))
+ 		rt_mutex_slowunlock(&lock->lock);
++
++	/*
++	 * This must be last to prevent the following UAF:
++	 *
++	 * T1					T2
++	 * spin_lock(&p->lock);			rcu_read_lock();
++	 * invalidate(p);			p = rcu_dereference(ptr);
++	 * rcu_assign_pointer(ptr, NULL);	if (!p) return;
++	 * spin_unlock(&p->lock);		spin_lock(&p->lock);
++	 * kfree_rcu(p);			rcu_read_unlock();
++	 *					....
++	 *					spin_unlock(&p->lock)
++	 *					  rcu_read_unlock(); // Ends grace period
++	 * rcu_do_batch()
++	 *   kfree(p);
++	 *			    UAF ->	  rt_mutex_cmpxchg_release(&p->lock.lock...)
++	 */
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(rt_spin_unlock);
+ 
+@@ -262,17 +279,21 @@ void __sched rt_read_unlock(rwlock_t *rw
+ {
+ 	rwlock_release(&rwlock->dep_map, _RET_IP_);
+ 	migrate_enable();
+-	rcu_read_unlock();
+ 	rwbase_read_unlock(&rwlock->rwbase, TASK_RTLOCK_WAIT);
++
++	/* This must be last. See comment in rt_spin_unlock() */
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(rt_read_unlock);
+ 
+ void __sched rt_write_unlock(rwlock_t *rwlock) __releases(RCU)
+ {
+ 	rwlock_release(&rwlock->dep_map, _RET_IP_);
+-	rcu_read_unlock();
+ 	migrate_enable();
+ 	rwbase_write_unlock(&rwlock->rwbase);
++
++	/* This must be last. See comment in rt_spin_unlock() */
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(rt_write_unlock);
+ 
 
 
