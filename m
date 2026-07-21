@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AD646C4B0;
-	Tue, 21 Jul 2026 15:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F4B46C4B0;
+	Tue, 21 Jul 2026 15:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648769; cv=none; b=m0FyObzU9TW6GoN2CsZqUZuzg3hJhQSciHIMTQYH21+4eFg3jf3a5e8zGdF+CSuPqoiAa/b4WfwWBViDuqvrYUo8vO5BW6L8BzcXy/E0hQw4NwNV7nbrhskc3xxaAdRdeAK15cJCF41i/gYH5OhG7i27PRQPRY8H27juMTTm4kE=
+	t=1784648771; cv=none; b=VXB2E/xdCDcuPxnf2lTG6ywhIy8jx2Hnek89uGYlFwQqYsXvY6Sy3pEd41qqZdG3Y3rkSNLCYeL5Ge2xJXyjZJOLgYA5Jv6Qd/8G34PEEsrf/jG4GsV/4TMo4fZHlUM8S39CpNmOS85hMiVshXvTR06qXbkSGvcsebDf+7muriM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648769; c=relaxed/simple;
-	bh=8n7col9cUBzJWTxpNR37GxmJ0KZ7H9D7YfuyHq3tyqE=;
+	s=arc-20240116; t=1784648771; c=relaxed/simple;
+	bh=El0TU1+hT5NN+QPr/Y3VBsU44IRndFbLr5VeHwzgBPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ODramof4UKmwnrqtWbXS/avDTPng/FfHU2XYDE9EtboEpIBiFpUcsWjHMwWoLqC6hU7SFF480NgSrtGWqD0aLHqSXQE8pTqAg8Sde28I8n8QlXg9O8PAKxCCX/OFr78ThkkB8HQBthGWR1x0sNkvj0c/IkBalgvmU1qiBlxowAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=js/cNXiy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MDLXpn0CsAxnoWvvDlBxgK01P3kA2gyDxFBnhk2ga437V6faaOJmRjYUN5ttNr0HEjpO+rebHoLvuRGGFsnpD3XGuzShx15zLoH2JKzYU6LB2ZR+3y9pOCn88msTSVXrXKXAT7sHDRiQarnepdlBV6IQwC9QYcXuBtCcbb+UwVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VehwgKWL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="js/cNXiy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA791F000E9;
-	Tue, 21 Jul 2026 15:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VehwgKWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7DD1F000E9;
+	Tue, 21 Jul 2026 15:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648767;
-	bh=WjPvS+DwKwBRrW2SyO8hwmB4WrA2kg1IVOXPHNC1vxA=;
+	s=korg; t=1784648770;
+	bh=nBOYJrr1DaaNiG+5qz3bvlpXtcUNXLDt+SbC5s0vq2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=js/cNXiy2H3nsAK0ITAL7sNlQcqkXzOKICvBfR9Nqz3IGxKkbMaWcs7WPhWJK2+/7
-	 ivTXpIq+k/TvKVzSzg43hu7H/d7Z3mH+Sj1FJq/Kltwb3nul70RFnP+gLuxjvK0OmE
-	 uCjUBwLLyUsXsgyaaIYAKYgFazh0GZuqo78O1qsc=
+	b=VehwgKWLcaO5Vk3itTOTwegjnLgmUp/rQyKnP7TwjhaWg3j0MAPVVvY/A6wjAOkw2
+	 wUIeoiBK4mrpfjTf4TD8r/uHsmxHERVPhEuLcw0lKudUQtSmaX6MIw3uYteAMskoNH
+	 5vpxfRn3tXLlyhS2U0C76tUn15XAn1MSSxzQABWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Florian Schmaus <flo@geekplace.eu>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0325/2077] ALSA: seq: midi: Serialize output teardown with event_input
-Date: Tue, 21 Jul 2026 16:59:58 +0200
-Message-ID: <20260721152600.346443555@linuxfoundation.org>
+Subject: [PATCH 7.1 0326/2077] selftests: Fix Makefile target for nsfs
+Date: Tue, 21 Jul 2026 16:59:59 +0200
+Message-ID: <20260721152600.370103344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,195 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Florian Schmaus <flo@geekplace.eu>
 
-[ Upstream commit ef7607ab1c8adc6258fb1b27d08e26aecdc18a58 ]
+[ Upstream commit 77d1a2d2318fa96f8a662c9ad6647abedcd22734 ]
 
-event_process_midi() borrows msynth->output_rfile.output and then
-passes the substream to dump_midi() and snd_rawmidi_kernel_write()
-without synchronizing with the output open/close transition.
-midisynth_use() also publishes output_rfile before
-snd_rawmidi_output_params() has finished.
+The kselftests for nsfs where moved under filesystem/ with
+commit cae73d3bdce5 ("seltests: move nsfs into filesystems
+subfolder"). However, the kselftest TARGETS declaration was not
+adjusted.
 
-The last midisynth_unuse() can therefore release the same rawmidi file
-and free substream->runtime before snd_rawmidi_kernel_write1() takes
-its runtime buffer reference. That leaves the event_input path using a
-stale substream or runtime and can end in a NULL-deref or use-after-free.
+Since the kselftest Makefile ignores errors unless no target builds,
+the invalid target declaration can easily be missed.
 
-Fix this with two pieces of synchronization. Keep a short IRQ-safe
-spinlock only for publishing or clearing output_rfile and for pairing
-the output snapshot with an snd_use_lock_t reference. Once
-event_process_midi() has taken that in-flight reference, it drops the
-spinlock before calling snd_seq_dump_var_event(), dump_midi(), or
-snd_rawmidi_kernel_write(). midisynth_unuse() now detaches the visible
-rawmidi file under the same spinlock, waits for the in-flight writers
-to drain, and only then drains and releases the saved file.
-midisynth_use() likewise opens into a local snd_rawmidi_file and
-publishes it only after snd_rawmidi_output_params() succeeds.
+Fix this by adjusting the TARGETS accordingly.
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
-
-event_input path:                     last unuse path:
-1. event_process_midi() snapshots    1. midisynth_unuse() starts
-   output_rfile.output.                 tearing down output_rfile.
-2. dump_midi() reaches               2. snd_rawmidi_kernel_release()
-   snd_rawmidi_kernel_write()           closes the output file.
-   before runtime is pinned.         3. close_substream() frees
-3. The callback keeps using             substream->runtime.
-   the borrowed substream.
-
-Validation reproduced this kernel report:
-KASAN null-ptr-deref in snd_rawmidi_kernel_write1+0x56/0x360
-RIP: 0033:0x7fde7dd0837f
-RIP: 0010:snd_rawmidi_kernel_write1+0x56/0x360
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Link: https://patch.msgid.link/20260527062948.3614025-1-rollkingzzc@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: cae73d3bdce5 ("seltests: move nsfs into filesystems subfolder")
+Signed-off-by: Florian Schmaus <flo@geekplace.eu>
+Link: https://patch.msgid.link/20260526-kselftest-nsfs-v1-1-7b042ebe42d6@geekplace.eu
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_midi.c | 55 +++++++++++++++++++++++++++++----------
- 1 file changed, 41 insertions(+), 14 deletions(-)
+ tools/testing/selftests/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
-index ca3f5fc309927b..2eb12199c92f90 100644
---- a/sound/core/seq/seq_midi.c
-+++ b/sound/core/seq/seq_midi.c
-@@ -24,6 +24,7 @@ Possible options for midisynth module:
- #include <sound/seq_device.h>
- #include <sound/seq_midi_event.h>
- #include <sound/initval.h>
-+#include "seq_lock.h"
- 
- MODULE_AUTHOR("Frank van de Pol <fvdpol@coil.demon.nl>, Jaroslav Kysela <perex@perex.cz>");
- MODULE_DESCRIPTION("Advanced Linux Sound Architecture sequencer MIDI synth.");
-@@ -42,6 +43,8 @@ struct seq_midisynth {
- 	int device;
- 	int subdevice;
- 	struct snd_rawmidi_file input_rfile;
-+	spinlock_t output_lock;		/* protects output_rfile publication */
-+	snd_use_lock_t output_use_lock;	/* in-flight event_input users */
- 	struct snd_rawmidi_file output_rfile;
- 	int seq_client;
- 	int seq_port;
-@@ -125,31 +128,42 @@ static int event_process_midi(struct snd_seq_event *ev, int direct,
- 	struct seq_midisynth *msynth = private_data;
- 	unsigned char msg[10];	/* buffer for constructing midi messages */
- 	struct snd_rawmidi_substream *substream;
-+	int err = 0;
- 	int len;
- 
- 	if (snd_BUG_ON(!msynth))
- 		return -EINVAL;
--	substream = msynth->output_rfile.output;
--	if (substream == NULL)
--		return -ENODEV;
-+
-+	scoped_guard(spinlock_irqsave, &msynth->output_lock) {
-+		substream = msynth->output_rfile.output;
-+		if (!substream)
-+			return -ENODEV;
-+		snd_use_lock_use(&msynth->output_use_lock);
-+	}
-+
- 	if (ev->type == SNDRV_SEQ_EVENT_SYSEX) {	/* special case, to save space */
- 		if ((ev->flags & SNDRV_SEQ_EVENT_LENGTH_MASK) != SNDRV_SEQ_EVENT_LENGTH_VARIABLE) {
- 			/* invalid event */
- 			pr_debug("ALSA: seq_midi: invalid sysex event flags = 0x%x\n", ev->flags);
--			return 0;
-+			goto out;
- 		}
- 		snd_seq_dump_var_event(ev, __dump_midi, substream);
- 		snd_midi_event_reset_decode(msynth->parser);
- 	} else {
--		if (msynth->parser == NULL)
--			return -EIO;
-+		if (!msynth->parser) {
-+			err = -EIO;
-+			goto out;
-+		}
- 		len = snd_midi_event_decode(msynth->parser, msg, sizeof(msg), ev);
- 		if (len < 0)
--			return 0;
-+			goto out;
- 		if (dump_midi(substream, msg, len) < 0)
- 			snd_midi_event_reset_decode(msynth->parser);
- 	}
--	return 0;
-+
-+out:
-+	snd_use_lock_free(&msynth->output_use_lock);
-+	return err;
- }
- 
- 
-@@ -163,6 +177,8 @@ static int snd_seq_midisynth_new(struct seq_midisynth *msynth,
- 	msynth->card = card;
- 	msynth->device = device;
- 	msynth->subdevice = subdevice;
-+	spin_lock_init(&msynth->output_lock);
-+	snd_use_lock_init(&msynth->output_use_lock);
- 	return 0;
- }
- 
-@@ -215,12 +231,13 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
- {
- 	int err;
- 	struct seq_midisynth *msynth = private_data;
-+	struct snd_rawmidi_file rfile = {};
- 	struct snd_rawmidi_params params;
- 
- 	/* open midi port */
- 	err = snd_rawmidi_kernel_open(msynth->rmidi, msynth->subdevice,
- 				      SNDRV_RAWMIDI_LFLG_OUTPUT,
--				      &msynth->output_rfile);
-+				      &rfile);
- 	if (err < 0) {
- 		pr_debug("ALSA: seq_midi: midi output open failed!!!\n");
- 		return err;
-@@ -229,12 +246,14 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
- 	params.avail_min = 1;
- 	params.buffer_size = output_buffer_size;
- 	params.no_active_sensing = 1;
--	err = snd_rawmidi_output_params(msynth->output_rfile.output, &params);
-+	err = snd_rawmidi_output_params(rfile.output, &params);
- 	if (err < 0) {
--		snd_rawmidi_kernel_release(&msynth->output_rfile);
-+		snd_rawmidi_kernel_release(&rfile);
- 		return err;
- 	}
- 	snd_midi_event_reset_decode(msynth->parser);
-+	scoped_guard(spinlock_irqsave, &msynth->output_lock)
-+		msynth->output_rfile = rfile;
- 	return 0;
- }
- 
-@@ -242,11 +261,19 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
- static int midisynth_unuse(void *private_data, struct snd_seq_port_subscribe *info)
- {
- 	struct seq_midisynth *msynth = private_data;
-+	struct snd_rawmidi_file rfile = {};
- 
--	if (snd_BUG_ON(!msynth->output_rfile.output))
-+	scoped_guard(spinlock_irqsave, &msynth->output_lock) {
-+		rfile = msynth->output_rfile;
-+		msynth->output_rfile = (struct snd_rawmidi_file){};
-+	}
-+
-+	if (snd_BUG_ON(!rfile.output))
- 		return -EINVAL;
--	snd_rawmidi_drain_output(msynth->output_rfile.output);
--	return snd_rawmidi_kernel_release(&msynth->output_rfile);
-+
-+	snd_use_lock_sync(&msynth->output_use_lock);
-+	snd_rawmidi_drain_output(rfile.output);
-+	return snd_rawmidi_kernel_release(&rfile);
- }
- 
- /* delete given midi synth port */
+diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
+index 6e59b8f63e4163..641a180fb35f41 100644
+--- a/tools/testing/selftests/Makefile
++++ b/tools/testing/selftests/Makefile
+@@ -37,6 +37,7 @@ TARGETS += filesystems/fat
+ TARGETS += filesystems/overlayfs
+ TARGETS += filesystems/statmount
+ TARGETS += filesystems/mount-notify
++TARGETS += filesystems/nsfs
+ TARGETS += filesystems/fuse
+ TARGETS += filesystems/move_mount
+ TARGETS += filesystems/empty_mntns
+@@ -85,7 +86,6 @@ TARGETS += net/ppp
+ TARGETS += net/rds
+ TARGETS += net/tcp_ao
+ TARGETS += nolibc
+-TARGETS += nsfs
+ TARGETS += pci_endpoint
+ TARGETS += pcie_bwctrl
+ TARGETS += perf_events
 -- 
 2.53.0
 
