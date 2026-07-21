@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2146315D53;
-	Tue, 21 Jul 2026 18:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9324D3F2101;
+	Tue, 21 Jul 2026 18:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659370; cv=none; b=DCZy3x9ouj2DbPZt+hAUa/xMoxZPLCdq27EO+PSQXTkOildT06cXqlQHOQWLCvWGObZxq0d3iB4lEMiUv8uFfWjTkJUnxQpgSPMRp9rS1a03wMDe8P8Lpo1GqzUd8ZBINM97rwgXIzPFjdRCTaf8ZyLsy2ciCDGC1gad/2NW+9o=
+	t=1784659373; cv=none; b=ErgJBGx8SQ/QDoZzmoysxAxvyJrWv2FJCjBgpeSRy2JMWZQXumWqIXnIxCYCnWLi84HFN16tDNtUx9FUXff7eLC2V+RceCQsuwSwLPDSUBmHauvLQGkyRrdS/L7jNyVYhP9f04DW1OOQgD8fx+kdDf7hxAYx1ItsyyIJWXZRFDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659370; c=relaxed/simple;
-	bh=xHj0t9QyLdLO2ZIXmyrcFEyoVi8ZkT+Y9sv6YAeYvXs=;
+	s=arc-20240116; t=1784659373; c=relaxed/simple;
+	bh=/KHcrS58xs9gF/3BdBFqOzCwvLwvj23GRK6Z4QcG1wY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j0h/DNB6Tbe25/q/dCVXcbh6GqIOMw3Wx0DIf1i7dgeSQmaQpRN8dSY6jh1ruCmlkmpjqxQjdQoVojl/P9WTA53Z3VrA3xhU5GqD3tDGlCDKaVZyC3IqFbm1CEDoVGi9bYqJhgXJFRh5v+JTb8ukAnfiA5WahSI3EP6RwrgoKOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2E0OxIM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=psyOCZuqszRacs2UKYguVuDU3785k6vKG92C0SWOKfDp8DiLqEPFnHKxj4vKdevCos0tJSn0mobYcUP9Q0be6LOuAdmPiDK3/HpNkAGp3knWOCKymgs25qclbU8OLQ5eHXncl46k7y2b1IH7sBAea76+wAyltd8Ipw+kncRu+vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIvXMsKv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2E0OxIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441B41F000E9;
-	Tue, 21 Jul 2026 18:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIvXMsKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D3D1F000E9;
+	Tue, 21 Jul 2026 18:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659369;
-	bh=7rL9Enksv+2kW7e7wQB+e3deVefextUH4LfsbV0OLnU=;
+	s=korg; t=1784659372;
+	bh=CqMoThfVHBRmLI3USo2HJg+sUC0/xObDmCB05tHYVrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n2E0OxIMyeND0iHAC7Mx4uvqjQAexPiLaxTWmLAGUIRxdaYTelqasEMylXC9yUst9
-	 hWHoJzY006/flC6tbwz+6MhKvQB4IXTFBuQ/Mdj3JH/q/5BNjT4UB2/QntAWGJfnq3
-	 bBZ9PWZS3m5lBQ7di+iEEzdqzhcvF1Gd9tOyuCs0=
+	b=qIvXMsKv/a9DOcy16kUblpnZL5vy8eGu0u8Ox5efFXpEcf9E8RY93p7Q+TPfXRX41
+	 tfz9CTCLq3Z/CEuDxJvkpRm5l88jmQ2uXQ7uaJ7EvL9GK6bKLaQH/pnFORZCXkg9e2
+	 IFN0jyYL0nGMo2Yp5lc2HWDVW3iVaIgfskUXZoSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 1496/1611] wifi: cfg80211: validate EHT MLE before MLD ID read
-Date: Tue, 21 Jul 2026 17:26:52 +0200
-Message-ID: <20260721152549.092082170@linuxfoundation.org>
+Subject: [PATCH 6.18 1497/1611] wifi: ieee80211: validate MLE common info length
+Date: Tue, 21 Jul 2026 17:26:53 +0200
+Message-ID: <20260721152549.113853506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,54 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haofeng Li <lihaofeng@kylinos.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 74e27cd1d98b546fdb276008a83708d062339661 upstream.
+commit 293baeae9b2434a3e432629d7720b5603db2d77e upstream.
 
-cfg80211_gen_new_ie() copies ML probe response elements from
-the parent frame when the parent EHT multi-link element has an
-MLD ID matching the nontransmitted BSSID index.
+ieee80211_mle_common_size() uses the first common-info octet as the
+common information length for all known MLE types. However,
+ieee80211_mle_size_ok() only validates that octet for Basic, Probe
+Request, and TDLS MLEs.
 
-The code only checked that the extension element had more than
-one byte before calling ieee80211_mle_get_mld_id(). That helper
-assumes a BASIC MLE with enough common info and documents that
-callers must first use ieee80211_mle_type_ok().
+Reconfiguration MLEs also skipped the length octet when calculating the
+minimum common size, and Priority Access MLEs skipped validation of the
+advertised common information length.
 
-Attack chain:
-malicious AP sends a short EHT MLE in an MBSSID beacon.
-cfg80211_inform_bss_frame_data() stores the copied IE buffer.
-cfg80211_parse_mbssid_data() builds the nontransmitted BSS IE.
-cfg80211_gen_new_ie() sees the EHT MLE in the parent frame.
-ieee80211_mle_get_mld_id() then reads past the IE boundary.
+Account for the Reconfiguration common-info length octet and validate
+the advertised common information length for all known MLE types. Keep
+unknown-type handling unchanged.
 
-Validate the MLE type and size before reading the MLD ID. This
-matches the contract required by the MLE helper and rejects the
-short element before any internal MLE fields are accessed.
-
+Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
 Cc: stable@vger.kernel.org
-Fixes: 61dcfa8c2a8f ("wifi: cfg80211: copy multi-link element from the multi-link probe request's frame body to the generated elements")
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Link: https://patch.msgid.link/20260701093327.2680709-1-lihaofeng@kylinos.cn
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260611173506.36838-2-enderaoelyther@gmail.com
+[remove now misleading comment]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/ieee80211-eht.h |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -326,8 +326,11 @@ cfg80211_gen_new_ie(const u8 *ie, size_t
- 		/* For ML probe response, match the MLE in the frame body with
- 		 * MLD id being 'bssid_index'
- 		 */
--		if (parent->id == WLAN_EID_EXTENSION && parent->datalen > 1 &&
-+		if (parent->id == WLAN_EID_EXTENSION &&
- 		    parent->data[0] == WLAN_EID_EXT_EHT_MULTI_LINK &&
-+		    ieee80211_mle_type_ok(parent->data + 1,
-+					  IEEE80211_ML_CONTROL_TYPE_BASIC,
-+					  parent->datalen - 1) &&
- 		    bssid_index == ieee80211_mle_get_mld_id(parent->data + 1)) {
- 			if (!cfg80211_copy_elem_with_frags(parent,
- 							   ie, ielen,
+--- a/include/linux/ieee80211-eht.h
++++ b/include/linux/ieee80211-eht.h
+@@ -833,7 +833,7 @@ static inline bool ieee80211_mle_size_ok
+ 	const struct ieee80211_multi_link_elem *mle = (const void *)data;
+ 	u8 fixed = sizeof(*mle);
+ 	u8 common = 0;
+-	bool check_common_len = false;
++	u8 common_len;
+ 	u16 control;
+ 
+ 	if (!data || len < fixed)
+@@ -844,7 +844,6 @@ static inline bool ieee80211_mle_size_ok
+ 	switch (u16_get_bits(control, IEEE80211_ML_CONTROL_TYPE)) {
+ 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
+ 		common += sizeof(struct ieee80211_mle_basic_common_info);
+-		check_common_len = true;
+ 		if (control & IEEE80211_MLC_BASIC_PRES_LINK_ID)
+ 			common += 1;
+ 		if (control & IEEE80211_MLC_BASIC_PRES_BSS_PARAM_CH_CNT)
+@@ -864,9 +863,9 @@ static inline bool ieee80211_mle_size_ok
+ 		common += sizeof(struct ieee80211_mle_preq_common_info);
+ 		if (control & IEEE80211_MLC_PREQ_PRES_MLD_ID)
+ 			common += 1;
+-		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_RECONF:
++		common += 1;
+ 		if (control & IEEE80211_MLC_RECONF_PRES_MLD_MAC_ADDR)
+ 			common += ETH_ALEN;
+ 		if (control & IEEE80211_MLC_RECONF_PRES_EML_CAPA)
+@@ -878,7 +877,6 @@ static inline bool ieee80211_mle_size_ok
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
+ 		common += sizeof(struct ieee80211_mle_tdls_common_info);
+-		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+ 		common = ETH_ALEN + 1;
+@@ -891,11 +889,9 @@ static inline bool ieee80211_mle_size_ok
+ 	if (len < fixed + common)
+ 		return false;
+ 
+-	if (!check_common_len)
+-		return true;
++	common_len = mle->variable[0];
+ 
+-	/* if present, common length is the first octet there */
+-	return mle->variable[0] >= common;
++	return common_len >= common && common_len <= len - fixed;
+ }
+ 
+ /**
 
 
