@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89250346771;
-	Tue, 21 Jul 2026 22:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBFA43D4E2;
+	Tue, 21 Jul 2026 22:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672106; cv=none; b=sUqu9MlAOxEXOOq1P1Bzpe15P77gZk6XyRQs3Xx3qVtUj5kjhNCxQnFpH9VYDqdyyuPWpGBbhmdhzZ8mH6foVwnnO2+PTdzplOJbcRGXjCksif3imdiQuamxf3Vt+cFCFfHY0OfApu9Fgn5zQISDa56OSKMmY3ZwH+FgG0bhFro=
+	t=1784672109; cv=none; b=UHKe/LobR8VNid8vVDC4Pd7Ai1lzF8iJWQuZOnEKdAqQrSOCQLT3HrgdYoxTUTo+cYmPd9PBBEiFlM8Lo248mhp0pfyEg78ktb6EnU7ZPcOM54ZVTndy1l186wdG4PRH9fN+8s2C1kT/e2z2VLbUAhvvpWoUuCslmOSmQ54BoCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672106; c=relaxed/simple;
-	bh=lvcQ5t3mLdtcJ4nLR5z3XlJc3vKQQIry3GIXit0Aabk=;
+	s=arc-20240116; t=1784672109; c=relaxed/simple;
+	bh=GB/IFBc2kBe2kp5Gr+AnmiTwj2Z4hyz9q46YWFLMtnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MaN6RqwEK6RFR9ZZQtkNiv+Uv9yk+h2FTd85zZMHMTkYjUYeWuV1NCKW8D0H+rILZsNpl9jdwPb9ZdfQOxNaXPoQIDYok3fEtDf5S1d1yLPm/3CL6BZnYiZ3/dtCP29CUcbMfSPShtNVgd6kmivP/sVxweCujkbCO/u1jqfsf/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8NgBQbK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AiTE6CmjW+jgayNXK0Lz5VVxkkjTVDNzqie2t6YQQjqVI6B33NzBY8Nu6rhRAyBsUI2Gtd+Ttj+uwapoIy+F1DeLePapRjnQGA9ixtchcoTOoM+WkZot9fHJAD/z19+pzt/9pzoBsDscjxbOZyozB/Jw2KjPYhVsACvBfFo35Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVESWYf7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8NgBQbK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4491F00A3A;
-	Tue, 21 Jul 2026 22:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVESWYf7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931911F00A3A;
+	Tue, 21 Jul 2026 22:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672105;
-	bh=YuJVjnKxGFrB8N7zu8TOoAHEYNKiocGW/d9dpiaoERs=;
+	s=korg; t=1784672108;
+	bh=h/bW4MunhgMkFsx29rwg183QwSGB5or28jXkNK1N9kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8NgBQbKoXigXlp6+P1drZiHiy0CXenNiySj3d3jkuR4nrgJPLvCqyNqFjXa6fLU8
-	 a/3A9p6PEUXOcqJe5rrnNI8OdvWIT6wSfYwwYUmhO1Ja+FGTIaQz7dU9SuXKaDhME1
-	 3Mynb8uaMZBjW6t8kG4pC5Ci/pUH39TMWj/oueVU=
+	b=kVESWYf7LoNfusU48OUd1jDPRw81CUw1Bv/qAlni5mWkWeoTNLD8aX5eq1o5CiIgM
+	 wysUAR4eUShCfVi3Z857B+dTkv2xgBVMO7nYeFOv6p8qeurR6sVWtnj3IIZuihF/P+
+	 PB7PbuLAkRe+cvFc72hqBJ/T7dSJGacwcVXCaSJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 447/843] ACPI: resource: Amend kernel-doc style
-Date: Tue, 21 Jul 2026 17:21:22 +0200
-Message-ID: <20260721152416.083623686@linuxfoundation.org>
+Subject: [PATCH 5.15 493/843] rtnetlink: add RTNL_FLAG_DUMP_UNLOCKED flag
+Date: Tue, 21 Jul 2026 17:22:08 +0200
+Message-ID: <20260721152417.122774025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,54 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 78ad5c7722b7bed9d35ffc5b45eb0f12e2c22fee ]
+[ Upstream commit 386520e0ecc01004d3a29c70c5a77d4bbf8a8420 ]
 
-The functions are referred as func() in the kernel-doc. The % (percent)
-character makes the rendering for constants as described in the respective
-documentation. Amend all these.
+Similarly to RTNL_FLAG_DOIT_UNLOCKED, this new flag
+allows dump operations registered via rtnl_register()
+or rtnl_register_module() to opt-out from RTNL protection.
 
-Fixes: 8e345c991c8c ("ACPI: Centralized processing of ACPI device resources")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260617090555.2648709-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 9facb861dc6b ("ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/netlink.h  | 2 ++
+ include/net/rtnetlink.h  | 1 +
+ net/core/rtnetlink.c     | 2 ++
+ net/netlink/af_netlink.c | 3 +++
+ 4 files changed, 8 insertions(+)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 7c08cf69ca3119..88221d67cfbd3f 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -808,7 +808,7 @@ bool acpi_dev_resource_interrupt(struct acpi_resource *ares, int index,
- EXPORT_SYMBOL_GPL(acpi_dev_resource_interrupt);
+diff --git a/include/linux/netlink.h b/include/linux/netlink.h
+index 61b1c7fcc401ee..a27e5e17836bdd 100644
+--- a/include/linux/netlink.h
++++ b/include/linux/netlink.h
+@@ -216,6 +216,7 @@ struct netlink_callback {
+ 	u16			answer_flags;
+ 	u32			min_dump_alloc;
+ 	unsigned int		prev_seq, seq;
++	int			flags;
+ 	bool			strict_check;
+ 	union {
+ 		u8		ctx[48];
+@@ -243,6 +244,7 @@ struct netlink_dump_control {
+ 	void *data;
+ 	struct module *module;
+ 	u32 min_dump_alloc;
++	int flags;
+ };
  
- /**
-- * acpi_dev_free_resource_list - Free resource from %acpi_dev_get_resources().
-+ * acpi_dev_free_resource_list - Free resource from acpi_dev_get_resources().
-  * @list: The head of the resource list to free.
-  */
- void acpi_dev_free_resource_list(struct list_head *list)
-@@ -928,7 +928,7 @@ static int __acpi_dev_get_resources(struct acpi_device *adev,
-  *
-  * The resultant struct resource objects are put on the list pointed to by
-  * @list, that must be empty initially, as members of struct resource_entry
-- * objects.  Callers of this routine should use %acpi_dev_free_resource_list() to
-+ * objects.  Callers of this routine should use acpi_dev_free_resource_list() to
-  * free that list.
-  *
-  * The number of resources in the output list is returned on success, an error
-@@ -966,7 +966,7 @@ static int is_memory(struct acpi_resource *ares, void *not_used)
-  * The resultant struct resource objects are put on the list pointed to
-  * by @list, that must be empty initially, as members of struct
-  * resource_entry objects.  Callers of this routine should use
-- * %acpi_dev_free_resource_list() to free that list.
-+ * acpi_dev_free_resource_list() to free that list.
-  *
-  * The number of resources in the output list is returned on success,
-  * an error code reflecting the error condition is returned otherwise.
+ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index 649d4f88a3da5d..8aac46eb818811 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -12,6 +12,7 @@ typedef int (*rtnl_dumpit_func)(struct sk_buff *, struct netlink_callback *);
+ enum rtnl_link_flags {
+ 	RTNL_FLAG_DOIT_UNLOCKED		= BIT(0),
+ 	RTNL_FLAG_BULK_DEL_SUPPORTED	= BIT(1),
++	RTNL_FLAG_DUMP_UNLOCKED		= BIT(2),
+ };
+ 
+ enum rtnl_kinds {
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index ac9dd385d80f9e..dd121a3eddff69 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -5631,6 +5631,7 @@ static int rtnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		}
+ 		owner = link->owner;
+ 		dumpit = link->dumpit;
++		flags = link->flags;
+ 
+ 		if (type == RTM_GETLINK - RTM_BASE)
+ 			min_dump_alloc = rtnl_calcit(skb, nlh);
+@@ -5648,6 +5649,7 @@ static int rtnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 				.dump		= dumpit,
+ 				.min_dump_alloc	= min_dump_alloc,
+ 				.module		= owner,
++				.flags		= flags,
+ 			};
+ 			err = netlink_dump_start(rtnl, skb, nlh, &c);
+ 			/* netlink_dump_start() will keep a reference on
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 2b9dbf003abd11..1029c87ea913c7 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2284,6 +2284,8 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
+ 
+ 		cb->extack = &extack;
+ 
++		if (cb->flags & RTNL_FLAG_DUMP_UNLOCKED)
++			extra_mutex = NULL;
+ 		if (extra_mutex)
+ 			mutex_lock(extra_mutex);
+ 		nlk->dump_done_errno = cb->dump(skb, cb);
+@@ -2378,6 +2380,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
+ 	cb->data = control->data;
+ 	cb->module = control->module;
+ 	cb->min_dump_alloc = control->min_dump_alloc;
++	cb->flags = control->flags;
+ 	cb->skb = skb;
+ 
+ 	nlk2 = nlk_sk(NETLINK_CB(skb).sk);
 -- 
 2.53.0
 
