@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AF4443AAD;
-	Tue, 21 Jul 2026 22:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0ED743C7AE;
+	Tue, 21 Jul 2026 22:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673112; cv=none; b=D/BMIF1YyLp5H4txkk7MbOxEJAZdX4cc4u1gfYlqx9JhpTNT7QtqjAOT2uG/HUIbJsEfxdCS9P3jApt9vZghEnmMXLPRaIfzp0uXjU9cs2RViUuHZ4awVhuYMALcNH1f4YTtbihpJ1Qifw+t5b8N6LddI3+qtQNKAPfTNBHXqV8=
+	t=1784673115; cv=none; b=XeR9ZJT2rvUoL4aszOT5akVPK/faNTG2Sa9A5/X7TCw9fIvFzluQRg0c1VOy/fby/03xViSBFBdTYmwkE53R5gsC1R38bZ4bwoIr3AsEHGGDIsIPou2H6qZJqgyrNh75cPAf3zT/kw17Ya/YRk91pZd/a1/6jMMJxtLQvY4lhmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673112; c=relaxed/simple;
-	bh=Ifp9VtVNSxcYOksMYq2TjTUFPYuWL5PAHoIwfqCagkw=;
+	s=arc-20240116; t=1784673115; c=relaxed/simple;
+	bh=yWJH6M248amYe0nwtSW2YV8H3Y//QPn7MzMH7rMET6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LTrUhTb4ONk9g65RmFXHTbw8HmDLuos1wP7UfS/jUHTUzzcj8BYL09bljbZQsQduyjIBoVROuO5FZMmBpFJAch+kz0fdItDdnlclTHMgFuBAG4zWgGHaVD7P4kqB3dwn/L+AbNPNgppeg+AozJuptvFYjFpIWpga0puGJHI4Xqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAWOWEGw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qKLO3SJmAqOOPVdRmqs7t9t8fTUQ4ts462qcgWACCuH8OzcRk0z31DEpq9ciMKPHKYkvp23BLQHMhDRx1RYMag1MyOUhS7GIcdKQaQpgh03B9Cg9b5cFE2wkahB1Io6aZ+EhhauCiiTn6H+5a2sXsKarP7G+Djx2cynxkWsa5H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaWf2ihW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAWOWEGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5E41F000E9;
-	Tue, 21 Jul 2026 22:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaWf2ihW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF1F1F000E9;
+	Tue, 21 Jul 2026 22:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673111;
-	bh=/fjysGECZdRkySs0vU60Zo4wl5a8NKKI72cn0dYY3tc=;
+	s=korg; t=1784673113;
+	bh=ojn3woICQArIZ/1Ho8yOMsV3itSRcMD47AAjY0yJ9fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oAWOWEGwXvSxe1csw7mUDj5x4HNilS7k0Iu/1FOg301F1hB0BeDqRCEAgqw7ovvR9
-	 7ldkoOtOuA1CnrqP/EzbCiy8LRsKrwfmoz5uopjvSxbT6ch+1sW+bLAk/WqyI4sSRh
-	 RPVMTrHW5jF9CaBhDZcL7RXD0nsEDwPIgJ0Cgz9o=
+	b=oaWf2ihWnsl+ixn+xjgWxKs+ESp+VoFX6RybtbqlsUpnfa0A1aYybS+A8gNp3Npq0
+	 h4Y1LJqJCAzgOoeLMDru7zuf/vKtG8jT/juTM8GjpBpM8w9YLHmoSSP7QPncLou4jY
+	 Ka3wSm4PzolI85SF7fLdiSad8kFIgAmw9E+B+Ue0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/699] skmsg: convert struct sk_msg_sg::copy to a bitmap
-Date: Tue, 21 Jul 2026 17:16:12 +0200
-Message-ID: <20260721152355.983308736@linuxfoundation.org>
+Subject: [PATCH 5.10 004/699] userfaultfd: gate must_wait writability check on pte_present()
+Date: Tue, 21 Jul 2026 17:16:03 +0200
+Message-ID: <20260721152355.774366859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,93 +60,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kiryl Shutsemau <kas@kernel.org>
 
-[ Upstream commit 5a8fb33e530512ee67a11b30f3451a4f030f4b01 ]
+[ Upstream commit 8e80af52db652fbc41320eee45a4f73bc029faf2 ]
 
-We have plans for increasing MAX_SKB_FRAGS, but sk_msg_sg::copy
-is currently an unsigned long, limiting MAX_SKB_FRAGS to 30 on 32bit arches.
+userfaultfd_must_wait() and userfaultfd_huge_must_wait() read the PTE
+without taking the page table lock and then apply pte_write() /
+huge_pte_write() to it.  Those accessors decode bits from the present
+encoding only; on a swap or migration entry they read the offset bits that
+happen to share the same position and return an undefined result.
 
-Convert it to a bitmap, as Jakub suggested.
+The intent of the check is "is this fault still WP-blocked?".  A
+non-marker swap entry means the page is in transit -- the userfault
+context the original fault delivered against is no longer the same, and
+the swap-in or migration completion path will re-deliver a fresh fault if
+userspace still needs to handle it.  Worst case under the current code the
+garbage write bit says "wait", and the thread stays asleep until a
+UFFDIO_WAKE that may never arrive.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 406e8a651a7b ("net: skmsg: preserve sg.copy across SG transforms")
+Gate the writability check on pte_present() so the lockless re-check only
+inspects present-PTE bits when the entry is actually present.  The
+non-present, non-marker case returns "don't wait" and lets the fault path
+retry.
+
+Link: https://lore.kernel.org/20260529172331.356655-6-kas@kernel.org
+Fixes: 369cd2121be4 ("userfaultfd: hugetlbfs: userfaultfd_huge_must_wait for hugepmd ranges")
+Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Balbir Singh <balbirs@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+
+[ kas: apply to fs/userfaultfd.c and fold the pte_present()/
+  huge_pte_present() gate into the existing writability checks; this tree
+  predates the marker/return-style refactor of these functions ]
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/skmsg.h |   11 +++++------
- net/core/filter.c     |    4 ++--
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ fs/userfaultfd.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -29,7 +29,7 @@ struct sk_msg_sg {
- 	u32				end;
- 	u32				size;
- 	u32				copybreak;
--	unsigned long			copy;
-+	DECLARE_BITMAP(copy, MAX_MSG_FRAGS + 2);
- 	/* The extra two elements:
- 	 * 1) used for chaining the front and sections when the list becomes
- 	 *    partitioned (e.g. end < start). The crypto APIs require the
-@@ -38,7 +38,6 @@ struct sk_msg_sg {
+diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+index 0d6c00e9b49316..6773227fbe889e 100644
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -251,7 +251,12 @@ static inline bool userfaultfd_huge_must_wait(struct userfaultfd_ctx *ctx,
  	 */
- 	struct scatterlist		data[MAX_MSG_FRAGS + 2];
- };
--static_assert(BITS_PER_LONG >= NR_MSG_FRAG_IDS);
- 
- /* UAPI in filter.c depends on struct sk_msg_sg being first element. */
- struct sk_msg {
-@@ -235,7 +234,7 @@ static inline void sk_msg_compute_data_p
- {
- 	struct scatterlist *sge = sk_msg_elem(msg, msg->sg.start);
- 
--	if (test_bit(msg->sg.start, &msg->sg.copy)) {
-+	if (test_bit(msg->sg.start, msg->sg.copy)) {
- 		msg->data = NULL;
- 		msg->data_end = NULL;
- 	} else {
-@@ -254,7 +253,7 @@ static inline void sk_msg_page_add(struc
- 	sg_set_page(sge, page, len, offset);
- 	sg_unmark_end(sge);
- 
--	__set_bit(msg->sg.end, &msg->sg.copy);
-+	__set_bit(msg->sg.end, msg->sg.copy);
- 	msg->sg.size += len;
- 	sk_msg_iter_next(msg, end);
- }
-@@ -263,9 +262,9 @@ static inline void sk_msg_sg_copy(struct
- {
- 	do {
- 		if (copy_state)
--			__set_bit(i, &msg->sg.copy);
-+			__set_bit(i, msg->sg.copy);
- 		else
--			__clear_bit(i, &msg->sg.copy);
-+			__clear_bit(i, msg->sg.copy);
- 		sk_msg_iter_var_next(i);
- 		if (i == msg->sg.end)
- 			break;
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2677,7 +2677,7 @@ BPF_CALL_4(bpf_msg_pull_data, struct sk_
- 	 * account for the headroom.
+ 	if (huge_pte_none(pte))
+ 		ret = true;
+-	if (!huge_pte_write(pte) && (reason & VM_UFFD_WP))
++	/*
++	 * Gate the writability check on pte_present(): huge_pte_write() on a
++	 * non-present migration entry decodes random offset bits. The
++	 * migration completion path re-delivers the fault if still needed.
++	 */
++	if (pte_present(pte) && !huge_pte_write(pte) && (reason & VM_UFFD_WP))
+ 		ret = true;
+ out:
+ 	return ret;
+@@ -332,7 +337,12 @@ static inline bool userfaultfd_must_wait(struct userfaultfd_ctx *ctx,
  	 */
- 	bytes_sg_total = start - offset + bytes;
--	if (!test_bit(i, &msg->sg.copy) && bytes_sg_total <= len)
-+	if (!test_bit(i, msg->sg.copy) && bytes_sg_total <= len)
- 		goto out;
+ 	if (pte_none(*pte))
+ 		ret = true;
+-	if (!pte_write(*pte) && (reason & VM_UFFD_WP))
++	/*
++	 * Gate the writability check on pte_present(): pte_write() on a
++	 * non-present swap/migration entry decodes random offset bits. The
++	 * page-in path re-delivers the fault if it still needs userspace.
++	 */
++	if (pte_present(*pte) && !pte_write(*pte) && (reason & VM_UFFD_WP))
+ 		ret = true;
+ 	pte_unmap(pte);
  
- 	/* At this point we need to linearize multiple scatterlist
-@@ -2900,7 +2900,7 @@ place_new:
- 	/* Place newly allocated data buffer */
- 	sk_mem_charge(msg->sk, len);
- 	msg->sg.size += len;
--	__clear_bit(new, &msg->sg.copy);
-+	__clear_bit(new, msg->sg.copy);
- 	sg_set_page(&msg->sg.data[new], page, len + copy, 0);
- 	if (rsge.length) {
- 		get_page(sg_page(&rsge));
+-- 
+2.53.0
+
 
 
