@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7552DEA74;
-	Tue, 21 Jul 2026 18:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977A02DEA74;
+	Tue, 21 Jul 2026 18:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660376; cv=none; b=n7PoCjRTsswJ0JXdD4Btbg0ncOTEZyoiIQlX4DdqjhQjFuqlJvlZcB5yd5KZXXeXgNo1nBaYTN7zBO0h1dMEnUOmgJPiLMou4GJpGR3qEa+3/Du5nwF6fNiXKOH5iQINsBwl3hXzw3p3p8MdfDQa0zTrZY/OZwv5yMavPdZOrYQ=
+	t=1784660378; cv=none; b=B+6WN/7Jwg9PaOBIv6HC7nqiruV5kgMlvgTFMWiacttaM+V52oBHyQMHR0h1lEFm/2RHzqQRdkpHjHQA4i+uBgoEWumHOPVf1iwrPVJRSK48vKPihgVH7E7A8sqlXFb0XbBwGrpmYIpjyQ5TLRR+3BwVR9cXRr58ytF1etEXyCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660376; c=relaxed/simple;
-	bh=Quoqd6e8OH5USLRa5j4QlC7BNjkF+IrALC+BtxNUK3g=;
+	s=arc-20240116; t=1784660378; c=relaxed/simple;
+	bh=tWGYu+fdFLGF1gV3L+5a/gvphTZcfVtgYtfSiEiI+os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rk0yCggI7G5LR8IsAiwpaVjg6cXybUZ+2VVZD6j/S66ugSRQo9hpdZ7vu63aiZ1IGlkmXP7JHT5Q+/dpEarZ5e/eFV6vmclsW21EEUAlXxN3Z7FcIv4th6kMRY7ziEWqQvdZ7ra07+iDmo9ylNGfCc2DQnYy3XkNsdS2YzGxNBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEPMJ2BM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ld/fdabUvO8XcPSofV3BzqouY+U3K/lSfUjDWvSvGqSTW1z9pn3lfTBc/h6hRINMizn9adpPFh+dNFVPddv1tAMcDWoo6ct1MBlUHlu9+uMkRCuDBXZ5W16b5p1mHf4a3POgJ1l5zWzfTkuET8E0SYi/aWfUVSOG4ExnxzcI8Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yu2gxpa6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEPMJ2BM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FEE11F000E9;
-	Tue, 21 Jul 2026 18:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yu2gxpa6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088D41F000E9;
+	Tue, 21 Jul 2026 18:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660374;
-	bh=TgMB2jRw2lKABaLtA4F0f+LQGRObTTQNxjplZox/GOE=;
+	s=korg; t=1784660377;
+	bh=hwmEQ1HGeCHLhI/innuFmCF2JThu5glY3N5D/emd8cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MEPMJ2BMtz9KTw3YVSKj3kRUwCJl8NrVDlyZvXHGtB9HCEExn5Z3ajwQw6qCVHAMp
-	 13w9+o4gLjxA6YAtEeHWM4vSdYt3ilC4fdOLF+oIUbF0PX1MuwgC/6ZyImAIbxI7fF
-	 Qe/bGuWgNqKEx0jwBEUfAlukVb2QgBva/MTfufCU=
+	b=yu2gxpa6LJDDcyUS4pR1ChKpgjFkNXpNt5BBvfEKFUPjRJrV/b6goiGk2hI5p565A
+	 HfipuMPo6abn2J4J6rp6XyB/9V4vyKI6xPaYWj+NqyXk8aAUzMo5YPj/9c7+LdxvIf
+	 n1+cmQ4W1dDncrBXnySx+ElcJdwUT5fmrbD4MwMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0955/2077] clk: qcom: camcc-x1e80100: Add support for camera QDSS debug clocks
-Date: Tue, 21 Jul 2026 17:10:28 +0200
-Message-ID: <20260721152615.345953797@linuxfoundation.org>
+Subject: [PATCH 7.1 0956/2077] docs: memfd_preservation: fix rendering of ABI documentation
+Date: Tue, 21 Jul 2026 17:10:29 +0200
+Message-ID: <20260721152615.368872855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,115 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+From: Pratyush Yadav (Google) <pratyush@kernel.org>
 
-[ Upstream commit 1e6ae74ac6f28ace7a0eb84897c6e17bb044e5de ]
+[ Upstream commit 3a358c78093f98a70d84c934b7054f636bc846f2 ]
 
-Add support for camera QDSS debug clocks on X1E80100 platform which
-are required to be voted for camera icp and cpas usecases. This change
-aligns the camcc driver to the new ABI exposed from X1E80100 camcc
-bindings that supports these camcc QDSS debug clocks.
+The "memfd Live Update ABI" section in include/linux/kho/abi/memfd.h
+currently does not render in the exported documentation. This is because
+it should not include the "DOC:" in its reference. Drop it to ensure
+correct rendering. Tested by running make htmldocs.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-Link: https://lore.kernel.org/r/20260507-purwa-videocc-camcc-v5-4-fc3af4130282@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 15fc11bb2cb6 ("docs: add documentation for memfd preservation via LUO")
+Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://patch.msgid.link/20260605160645.3650271-1-pratyush@kernel.org
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-x1e80100.c | 64 +++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+ Documentation/mm/memfd_preservation.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
-index 81f579ff699334..c12994af42cfc4 100644
---- a/drivers/clk/qcom/camcc-x1e80100.c
-+++ b/drivers/clk/qcom/camcc-x1e80100.c
-@@ -1052,6 +1052,31 @@ static struct clk_rcg2 cam_cc_mclk7_clk_src = {
- 	},
- };
+diff --git a/Documentation/mm/memfd_preservation.rst b/Documentation/mm/memfd_preservation.rst
+index a8a5b476afd306..c908a12dffa7c0 100644
+--- a/Documentation/mm/memfd_preservation.rst
++++ b/Documentation/mm/memfd_preservation.rst
+@@ -11,7 +11,7 @@ Memfd Preservation ABI
+ ======================
  
-+static const struct freq_tbl ftbl_cam_cc_qdss_debug_clk_src[] = {
-+	F(19200000, P_BI_TCXO, 1, 0, 0),
-+	F(60000000, P_CAM_CC_PLL8_OUT_EVEN, 8, 0, 0),
-+	F(75000000, P_CAM_CC_PLL0_OUT_EVEN, 8, 0, 0),
-+	F(150000000, P_CAM_CC_PLL0_OUT_EVEN, 4, 0, 0),
-+	F(300000000, P_CAM_CC_PLL0_OUT_MAIN, 4, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 cam_cc_qdss_debug_clk_src = {
-+	.cmd_rcgr = 0x13938,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = cam_cc_parent_map_0,
-+	.freq_tbl = ftbl_cam_cc_qdss_debug_clk_src,
-+	.hw_clk_ctrl = true,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "cam_cc_qdss_debug_clk_src",
-+		.parent_data = cam_cc_parent_data_0,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_rcg2_shared_ops,
-+	},
-+};
-+
- static const struct freq_tbl ftbl_cam_cc_sfe_0_clk_src[] = {
- 	F(345600000, P_CAM_CC_PLL6_OUT_EVEN, 1, 0, 0),
- 	F(432000000, P_CAM_CC_PLL6_OUT_EVEN, 1, 0, 0),
-@@ -2182,6 +2207,42 @@ static struct clk_branch cam_cc_mclk7_clk = {
- 	},
- };
+ .. kernel-doc:: include/linux/kho/abi/memfd.h
+-   :doc: DOC: memfd Live Update ABI
++   :doc: memfd Live Update ABI
  
-+static struct clk_branch cam_cc_qdss_debug_clk = {
-+	.halt_reg = 0x13a64,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x13a64,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "cam_cc_qdss_debug_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&cam_cc_qdss_debug_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch cam_cc_qdss_debug_xo_clk = {
-+	.halt_reg = 0x13a68,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x13a68,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "cam_cc_qdss_debug_xo_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&cam_cc_xo_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch cam_cc_sfe_0_clk = {
- 	.halt_reg = 0x133c0,
- 	.halt_check = BRANCH_HALT,
-@@ -2398,6 +2459,9 @@ static struct clk_regmap *cam_cc_x1e80100_clocks[] = {
- 	[CAM_CC_PLL6_OUT_EVEN] = &cam_cc_pll6_out_even.clkr,
- 	[CAM_CC_PLL8] = &cam_cc_pll8.clkr,
- 	[CAM_CC_PLL8_OUT_EVEN] = &cam_cc_pll8_out_even.clkr,
-+	[CAM_CC_QDSS_DEBUG_CLK] = &cam_cc_qdss_debug_clk.clkr,
-+	[CAM_CC_QDSS_DEBUG_CLK_SRC] = &cam_cc_qdss_debug_clk_src.clkr,
-+	[CAM_CC_QDSS_DEBUG_XO_CLK] = &cam_cc_qdss_debug_xo_clk.clkr,
- 	[CAM_CC_SFE_0_CLK] = &cam_cc_sfe_0_clk.clkr,
- 	[CAM_CC_SFE_0_CLK_SRC] = &cam_cc_sfe_0_clk_src.clkr,
- 	[CAM_CC_SFE_0_FAST_AHB_CLK] = &cam_cc_sfe_0_fast_ahb_clk.clkr,
+ .. kernel-doc:: include/linux/kho/abi/memfd.h
+    :internal:
 -- 
 2.53.0
 
