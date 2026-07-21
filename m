@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E66C403EA1;
-	Tue, 21 Jul 2026 22:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F51339733E;
+	Tue, 21 Jul 2026 22:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674746; cv=none; b=tcEQQKVeM41y06wj87jrvwoeC+4qW1BurycQXnQ/027WXxlwwH2+9znPlAeVQORg3qs/P65uiRmQGkJFw+j2Ij9a81XMfVfWJquoFs46na1E8xVGP8S9H6MJOgtVNH9RPjKQVCOPO3v/tPJp1J15zUwqa+gVf1D6Z3Q1IY5Y/1s=
+	t=1784674750; cv=none; b=QKwBEKbIE6KhFOfaP4xhZn/IG+unnZac9sv7CxvsAfXN3yk0zxYpqvGkIom4RPis1EzweB9YW/Gzp/1ar5rIAMzOSvkwDZ/S6yHRU0aTNJ5jOkM/5QJ4CUb6GCIt7Lx2rRRN6tyh6rRRz6LfFXxPP8rGj+Qgc/7GbsDDRey+u7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674746; c=relaxed/simple;
-	bh=z/oQ4IuyHlwjTMU959xvE0ynztrLa5T0AEQ2/DCLhcc=;
+	s=arc-20240116; t=1784674750; c=relaxed/simple;
+	bh=wFXvHpa2c5MqBZ4xCPppFgpAvyAyV2AlHfex4xPb1Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6XUcCFGtJanRlA723E4+MB+n0J4uCXqxYP7DHhLGVolOPuLHtsdgOH7cXsjI4zweF9spcfWXoBTSBZK0if/1cXvZyHoAeqAIW8jfjaeWOWOSzt0zcan27pnpZXF5rJeJdynHZwxhfhxjQHHGU/GRIJFcs1wsAKuwyEDw2flUQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsLw2RAq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oTWrnQu1JhjASXsfSkwXTO1RaHRcMoMsQ0hGXhA5mSrQGiQG+Y6tZUAOLPeM+ToK5CmvnHg2dTFm+S6XGa9VkiMyab2KdYnThiEv2lnrrFh23LKdFymxkTvO5aEkQhH62lMJek0yb+Iua5MFkjbYxWz/Q/Jcc6sjIwHMlcLkFnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPujEIT1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsLw2RAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6531F000E9;
-	Tue, 21 Jul 2026 22:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPujEIT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786D41F00A3A;
+	Tue, 21 Jul 2026 22:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674745;
-	bh=iWckzcw2Fynn3IxgpnllM5w+Rt/XCVNiTGU9/0mLEKs=;
+	s=korg; t=1784674748;
+	bh=3/jwLjpTc1MiSIMsv/7MHUXjU9QIviyAWQoCuuycLRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FsLw2RAqBGDlJp/2FkMknSVt2jTF37MeSMgJNeUoljN2hKPZTma8Non/ER1fiuYg7
-	 y9YO+zUDla7lIKUSCYQh/goiw+VPojiMA45nsHV33lL+6ay1Q7te/guY3U44x4yVKQ
-	 ZzNHmTTJh2J1hGeUOFwC39XuLazILqd9rR3/496g=
+	b=qPujEIT1pJYFjKY1pCoO/rBlXG1xMlUufB+3HSSvZq3JwLpLn4jZPKLYCr0JMTV8a
+	 c1cTiVBcOEbXxcB9jAkPPBsH/xR2iRr7BIl3Tqlp2qMDfLmmD4v71EoF43INu5mJOy
+	 ql0Y8sLMwm6ort90Oqz+E4f1zHtTi8y/XmJw4/sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	micas-opensource <zjianan156@gmail.com>,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 657/699] serial: 8250_mid: Disable DMA for selected platforms
-Date: Tue, 21 Jul 2026 17:26:56 +0200
-Message-ID: <20260721152410.583601032@linuxfoundation.org>
+Subject: [PATCH 5.10 658/699] xfs: reflect sb features in xfs_mount
+Date: Tue, 21 Jul 2026 17:26:57 +0200
+Message-ID: <20260721152410.606978508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,61 +52,267 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit b1b4efea05a56c0995e4702a86d6624b4fdff32f ]
+[ Upstream commit a1d86e8dec8c1325d301c9d5594bb794bc428fc3 ]
 
-In accordance with Errata (specification updates)
-HSUART May Stop Functioning when DMA is Active.
+Currently on-disk feature checks require decoding the superblock
+fileds and so can be non-trivial. We have almost 400 hundred
+individual feature checks in the XFS code, so this is a significant
+amount of code. To reduce runtime check overhead, pre-process all
+the version flags into a features field in the xfs_mount at mount
+time so we can convert all the feature checks to a simple flag
+check.
 
-- Denverton document #572409, rev 3.4, DNV60
-- Ice Lake Xeon D document #714070, ICXD65
-- Snowridge document #731931, SNR44
+There is also a need to convert the dynamic feature flags to update
+the m_features field. This is required for attr, attr2 and quota
+features. New xfs_mount based wrappers are added for this.
 
-For a quick fix just disable the respective callbacks during the device probe.
-Depending on the future development we might remove them completely.
-
-Reported-by: micas-opensource <zjianan156@gmail.com>
-Closes: https://lore.kernel.org/linux-serial/20250625031409.2404219-1-opensource@ruijie.com.cn/
-Fixes: 6ede6dcd87aa ("serial: 8250_mid: add support for DMA engine handling from UART MMIO")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260626094937.561776-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Stable-dep-of: 03866d130ed3 ("xfs: fix unreachable BIGTIME check in dquot flush validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mid.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/xfs/libxfs/xfs_format.h |    2 -
+ fs/xfs/libxfs/xfs_sb.c     |   64 ++++++++++++++++++++++++++++++++++++++
+ fs/xfs/libxfs/xfs_sb.h     |    1 
+ fs/xfs/xfs_dquot.c         |    2 -
+ fs/xfs/xfs_log_recover.c   |    1 
+ fs/xfs/xfs_mount.c         |    1 
+ fs/xfs/xfs_mount.h         |   75 +++++++++++++++++++++++++++++++++++++++++++++
+ fs/xfs/xfs_rtalloc.c       |    3 +
+ 8 files changed, 147 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/pci.h>
- #include <linux/rational.h>
-+#include <linux/util_macros.h>
+--- a/fs/xfs/libxfs/xfs_format.h
++++ b/fs/xfs/libxfs/xfs_format.h
+@@ -412,7 +412,7 @@ static inline bool xfs_sb_version_haspro
+ 		(sbp->sb_features2 & XFS_SB_VERSION2_PROJID32BIT));
+ }
  
- #include <linux/dma/hsu.h>
+-static inline void xfs_sb_version_addprojid32bit(struct xfs_sb *sbp)
++static inline void xfs_sb_version_addprojid32(struct xfs_sb *sbp)
+ {
+ 	sbp->sb_versionnum |= XFS_SB_VERSION_MOREBITSBIT;
+ 	sbp->sb_features2 |= XFS_SB_VERSION2_PROJID32BIT;
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -91,6 +91,70 @@ xfs_perag_put(
+ 	trace_xfs_perag_put(pag->pag_mount, pag->pag_agno, ref, _RET_IP_);
+ }
  
-@@ -371,8 +372,16 @@ static const struct mid8250_board dnv_bo
- 	.freq = 133333333,
- 	.base_baud = 115200,
- 	.bar = 1,
--	.setup = dnv_setup,
--	.exit = dnv_exit,
-+	/*
-+	 * Errata:
-+	 * HSUART May Stop Functioning when DMA is Active.
-+	 *
-+	 * - Denverton document #572409, rev 3.4, DNV60
-+	 * - Ice Lake Xeon D document #714070, ICXD65
-+	 * - Snowridge document #731931, SNR44
-+	 */
-+	.setup = PTR_IF(false, dnv_setup),
-+	.exit = PTR_IF(false, dnv_exit),
- };
++uint64_t
++xfs_sb_version_to_features(
++	struct xfs_sb	*sbp)
++{
++	uint64_t	features = 0;
++
++	/* optional V4 features */
++	if (sbp->sb_rblocks > 0)
++		features |= XFS_FEAT_REALTIME;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_ATTRBIT)
++		features |= XFS_FEAT_ATTR;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_QUOTABIT)
++		features |= XFS_FEAT_QUOTA;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_ALIGNBIT)
++		features |= XFS_FEAT_ALIGN;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_LOGV2BIT)
++		features |= XFS_FEAT_LOGV2;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_DALIGNBIT)
++		features |= XFS_FEAT_DALIGN;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_EXTFLGBIT)
++		features |= XFS_FEAT_EXTFLG;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_SECTORBIT)
++		features |= XFS_FEAT_SECTOR;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_BORGBIT)
++		features |= XFS_FEAT_ASCIICI;
++	if (sbp->sb_versionnum & XFS_SB_VERSION_MOREBITSBIT) {
++		if (sbp->sb_features2 & XFS_SB_VERSION2_LAZYSBCOUNTBIT)
++			features |= XFS_FEAT_LAZYSBCOUNT;
++		if (sbp->sb_features2 & XFS_SB_VERSION2_ATTR2BIT)
++			features |= XFS_FEAT_ATTR2;
++		if (sbp->sb_features2 & XFS_SB_VERSION2_PROJID32BIT)
++			features |= XFS_FEAT_PROJID32;
++		if (sbp->sb_features2 & XFS_SB_VERSION2_FTYPE)
++			features |= XFS_FEAT_FTYPE;
++	}
++
++	if (XFS_SB_VERSION_NUM(sbp) != XFS_SB_VERSION_5)
++		return features;
++
++	/* Always on V5 features */
++	features |= XFS_FEAT_ALIGN | XFS_FEAT_LOGV2 | XFS_FEAT_EXTFLG |
++		    XFS_FEAT_LAZYSBCOUNT | XFS_FEAT_ATTR2 | XFS_FEAT_PROJID32 |
++		    XFS_FEAT_V3INODES | XFS_FEAT_CRC | XFS_FEAT_PQUOTINO;
++
++	/* Optional V5 features */
++	if (sbp->sb_features_ro_compat & XFS_SB_FEAT_RO_COMPAT_FINOBT)
++		features |= XFS_FEAT_FINOBT;
++	if (sbp->sb_features_ro_compat & XFS_SB_FEAT_RO_COMPAT_RMAPBT)
++		features |= XFS_FEAT_RMAPBT;
++	if (sbp->sb_features_ro_compat & XFS_SB_FEAT_RO_COMPAT_REFLINK)
++		features |= XFS_FEAT_REFLINK;
++	if (sbp->sb_features_ro_compat & XFS_SB_FEAT_RO_COMPAT_INOBTCNT)
++		features |= XFS_FEAT_INOBTCNT;
++	if (sbp->sb_features_incompat & XFS_SB_FEAT_INCOMPAT_FTYPE)
++		features |= XFS_FEAT_FTYPE;
++	if (sbp->sb_features_incompat & XFS_SB_FEAT_INCOMPAT_SPINODES)
++		features |= XFS_FEAT_SPINODES;
++	if (sbp->sb_features_incompat & XFS_SB_FEAT_INCOMPAT_META_UUID)
++		features |= XFS_FEAT_META_UUID;
++	if (sbp->sb_features_incompat & XFS_SB_FEAT_INCOMPAT_BIGTIME)
++		features |= XFS_FEAT_BIGTIME;
++	return features;
++}
++
+ /* Check all the superblock fields we care about when reading one in. */
+ STATIC int
+ xfs_validate_sb_read(
+--- a/fs/xfs/libxfs/xfs_sb.h
++++ b/fs/xfs/libxfs/xfs_sb.h
+@@ -29,6 +29,7 @@ extern void	xfs_sb_mount_common(struct x
+ extern void	xfs_sb_from_disk(struct xfs_sb *to, struct xfs_dsb *from);
+ extern void	xfs_sb_to_disk(struct xfs_dsb *to, struct xfs_sb *from);
+ extern void	xfs_sb_quota_from_disk(struct xfs_sb *sbp);
++extern uint64_t	xfs_sb_version_to_features(struct xfs_sb *sbp);
  
- #define MID_DEVICE(id, board) { PCI_VDEVICE(INTEL, id), (kernel_ulong_t)&board }
+ extern int	xfs_update_secondary_sbs(struct xfs_mount *mp);
+ 
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -1218,7 +1218,7 @@ xfs_qm_dqflush_check(
+ 
+ 	/* bigtime flag should never be set on root dquots */
+ 	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
+-		if (!xfs_sb_version_hasbigtime(&dqp->q_mount->m_sb))
++		if (!xfs_has_bigtime(dqp->q_mount))
+ 			return __this_address;
+ 		if (dqp->q_id == 0)
+ 			return __this_address;
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -3325,6 +3325,7 @@ xlog_do_recover(
+ 	xfs_buf_relse(bp);
+ 
+ 	/* re-initialise in-core superblock and geometry structures */
++	mp->m_features |= xfs_sb_version_to_features(sbp);
+ 	xfs_reinit_percpu_counters(mp);
+ 	error = xfs_initialize_perag(mp, sbp->sb_agcount, &mp->m_maxagi);
+ 	if (error) {
+--- a/fs/xfs/xfs_mount.c
++++ b/fs/xfs/xfs_mount.c
+@@ -345,6 +345,7 @@ reread:
+ 		goto reread;
+ 	}
+ 
++	mp->m_features |= xfs_sb_version_to_features(sbp);
+ 	xfs_reinit_percpu_counters(mp);
+ 
+ 	/* no need to be quiet anymore, so reset the buf ops */
+--- a/fs/xfs/xfs_mount.h
++++ b/fs/xfs/xfs_mount.h
+@@ -131,6 +131,7 @@ typedef struct xfs_mount {
+ 	int			m_fixedfsid[2];	/* unchanged for life of FS */
+ 	uint			m_qflags;	/* quota status flags */
+ 	uint64_t		m_flags;	/* global mount flags */
++	uint64_t		m_features;	/* active filesystem features */
+ 	int64_t			m_low_space[XFS_LOWSP_MAX];
+ 	struct xfs_ino_geometry	m_ino_geo;	/* inode geometry */
+ 	struct xfs_trans_resv	m_resv;		/* precomputed res values */
+@@ -222,6 +223,80 @@ typedef struct xfs_mount {
+ #define M_IGEO(mp)		(&(mp)->m_ino_geo)
+ 
+ /*
++ * Flags for m_features.
++ *
++ * These are all the active features in the filesystem, regardless of how
++ * they are configured.
++ */
++#define XFS_FEAT_ATTR		(1ULL << 0)	/* xattrs present in fs */
++#define XFS_FEAT_NLINK		(1ULL << 1)	/* 32 bit link counts */
++#define XFS_FEAT_QUOTA		(1ULL << 2)	/* quota active */
++#define XFS_FEAT_ALIGN		(1ULL << 3)	/* inode alignment */
++#define XFS_FEAT_DALIGN		(1ULL << 4)	/* data alignment */
++#define XFS_FEAT_LOGV2		(1ULL << 5)	/* version 2 logs */
++#define XFS_FEAT_SECTOR		(1ULL << 6)	/* sector size > 512 bytes */
++#define XFS_FEAT_EXTFLG		(1ULL << 7)	/* unwritten extents */
++#define XFS_FEAT_ASCIICI	(1ULL << 8)	/* ASCII only case-insens. */
++#define XFS_FEAT_LAZYSBCOUNT	(1ULL << 9)	/* Superblk counters */
++#define XFS_FEAT_ATTR2		(1ULL << 10)	/* dynamic attr fork */
++#define XFS_FEAT_PARENT		(1ULL << 11)	/* parent pointers */
++#define XFS_FEAT_PROJID32	(1ULL << 12)	/* 32 bit project id */
++#define XFS_FEAT_CRC		(1ULL << 13)	/* metadata CRCs */
++#define XFS_FEAT_V3INODES	(1ULL << 14)	/* Version 3 inodes */
++#define XFS_FEAT_PQUOTINO	(1ULL << 15)	/* non-shared proj/grp quotas */
++#define XFS_FEAT_FTYPE		(1ULL << 16)	/* inode type in dir */
++#define XFS_FEAT_FINOBT		(1ULL << 17)	/* free inode btree */
++#define XFS_FEAT_RMAPBT		(1ULL << 18)	/* reverse map btree */
++#define XFS_FEAT_REFLINK	(1ULL << 19)	/* reflinked files */
++#define XFS_FEAT_SPINODES	(1ULL << 20)	/* sparse inode chunks */
++#define XFS_FEAT_META_UUID	(1ULL << 21)	/* metadata UUID */
++#define XFS_FEAT_REALTIME	(1ULL << 22)	/* realtime device present */
++#define XFS_FEAT_INOBTCNT	(1ULL << 23)	/* inobt block counts */
++#define XFS_FEAT_BIGTIME	(1ULL << 24)	/* large timestamps */
++#define XFS_FEAT_NEEDSREPAIR	(1ULL << 25)	/* needs xfs_repair */
++
++#define __XFS_HAS_FEAT(name, NAME) \
++static inline bool xfs_has_ ## name (struct xfs_mount *mp) \
++{ \
++	return mp->m_features & XFS_FEAT_ ## NAME; \
++}
++
++/* Some features can be added dynamically so they need a set wrapper, too. */
++#define __XFS_ADD_FEAT(name, NAME) \
++	__XFS_HAS_FEAT(name, NAME); \
++static inline void xfs_add_ ## name (struct xfs_mount *mp) \
++{ \
++	mp->m_features |= XFS_FEAT_ ## NAME; \
++	xfs_sb_version_add ## name(&mp->m_sb); \
++}
++
++__XFS_HAS_FEAT(nlink, NLINK)
++__XFS_ADD_FEAT(quota, QUOTA)
++__XFS_HAS_FEAT(align, ALIGN)
++__XFS_HAS_FEAT(dalign, DALIGN)
++__XFS_HAS_FEAT(logv2, LOGV2)
++__XFS_HAS_FEAT(sector, SECTOR)
++__XFS_HAS_FEAT(extflg, EXTFLG)
++__XFS_HAS_FEAT(asciici, ASCIICI)
++__XFS_HAS_FEAT(lazysbcount, LAZYSBCOUNT)
++__XFS_ADD_FEAT(attr2, ATTR2)
++__XFS_HAS_FEAT(parent, PARENT)
++__XFS_ADD_FEAT(projid32, PROJID32)
++__XFS_HAS_FEAT(crc, CRC)
++__XFS_HAS_FEAT(v3inodes, V3INODES)
++__XFS_HAS_FEAT(pquotino, PQUOTINO)
++__XFS_HAS_FEAT(ftype, FTYPE)
++__XFS_HAS_FEAT(finobt, FINOBT)
++__XFS_HAS_FEAT(rmapbt, RMAPBT)
++__XFS_HAS_FEAT(reflink, REFLINK)
++__XFS_HAS_FEAT(sparseinodes, SPINODES)
++__XFS_HAS_FEAT(metauuid, META_UUID)
++__XFS_HAS_FEAT(realtime, REALTIME)
++__XFS_HAS_FEAT(inobtcounts, INOBTCNT)
++__XFS_HAS_FEAT(bigtime, BIGTIME)
++__XFS_HAS_FEAT(needsrepair, NEEDSREPAIR)
++
++/*
+  * Flags for m_flags.
+  */
+ #define XFS_MOUNT_WSYNC		(1ULL << 0)	/* for nfs - all metadata ops
+--- a/fs/xfs/xfs_rtalloc.c
++++ b/fs/xfs/xfs_rtalloc.c
+@@ -1101,6 +1101,9 @@ error_cancel:
+ 		error = xfs_trans_commit(tp);
+ 		if (error)
+ 			break;
++
++		/* Ensure the mount RT feature flag is now set. */
++		mp->m_features |= XFS_FEAT_REALTIME;
+ 	}
+ 	if (error)
+ 		goto out_free;
 
 
