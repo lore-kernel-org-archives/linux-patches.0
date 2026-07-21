@@ -1,50 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED6F471438;
-	Tue, 21 Jul 2026 18:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898AC471438;
+	Tue, 21 Jul 2026 18:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658664; cv=none; b=Iv0BqLaYCjmq31WK60m7spYC15/tAknqInPSg+E1Yn9rxWpkdY0xmCX/SBfc0hkRGCrzooIJJfxbyyxBTa7y9CPpMlyWbg6TBBbmbezR34GdYWmh9+N1Gup9LJKPrc+h89HrezZsg1C0VCjQgndYN2Kr1iMl834KQR52U69BIwc=
+	t=1784658666; cv=none; b=OWFmWJcgnoVCgDn10vBXX1xy6PbXMqVN6MQ0zex4YJgZg5PSwrj44m3X4ZoF5zN5NvxW0wOf7HQ2t/ACqBpfDzeirW9gQ4aqF3EgrvLn76h8uaQmjcCp73gngucUOtnd8MmDY7QKUB8MT3MKeJ3QmN1+rR6dbbaEoSPtQNhddGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658664; c=relaxed/simple;
-	bh=GPSEiWyoncm6fXtE3THCIbWg6eH94UCEIX6DYJhTTEM=;
+	s=arc-20240116; t=1784658666; c=relaxed/simple;
+	bh=d9UnaZ5H+OsmopZ8s9iP7F8VHW8BA+aFtbryhUanAmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGrv0pR6V5lOzGKkxgM6bptTgNGbAt8jpdUwot9p7S0JkE49Odcpw/j+G1ITK7M5bjdZnyUH2PGoj+GsxiN3yyqUcB5hGATeD5oAPToESPQqVBXf1r5TR5XTA6BiF7yBjfEE3vTR8tkIifBw1kcoxP3LlHFoOXq9+GZI3pYFNro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07Yn4bPs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qO++27JrCeuS8BuggYbZRDkAB+4e3n3gqg870kiTB2WtqvWXkh5PWKcy5uAW6FyYoU0TrZPdr1AgEfemyj43MQAq0DtXRk/gRZ/1zXK+NmVfYR+c3N5U5rbNgUKGM9tiON+83LqZAzYRcO68ldYO52340Jv8DXrZOpcXUvAXSmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAaQ5bT3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07Yn4bPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F97E1F00A3A;
-	Tue, 21 Jul 2026 18:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAaQ5bT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FB21F000E9;
+	Tue, 21 Jul 2026 18:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658662;
-	bh=4wixW7payja0vckWlui86jW/5kHgFEKil1LKa1l24v4=;
+	s=korg; t=1784658665;
+	bh=Yb7tqXCCshpCXmeQmeUbDFb5fuCNUQNg3WVm/TQZYvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=07Yn4bPsKSBlUxvPxNse8YWad9DbHebMtyoHkK9v8WmLeOkjqrId1FoPt5VfCw7ku
-	 pLhO5N8OiLif9wWrplORYgrFRzY3+WBlXJ8eo8tBf9MOWW5oyzEdGmswSVx6xUq/pd
-	 V1KEL2IdQ71Csdcij8JCyo1u4KQAC+jcCm6NSmQk=
+	b=qAaQ5bT30iggbA1ohv+jMs387KW4U2h/pGOpnACtODrsQB5+vXmEHnlFI8+HlmE21
+	 QW1lE8X3mmHyQfCsKtSCP8ilDlbfwGmTMrBIYid0l0HGujAIswDaB7+yYJjqpW1CfP
+	 sDy13oJkG2nsPC6StVqrggXK8qIyzcvDixMeKKPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Hocko <mhocko@suse.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 1228/1611] mm/mm_init: fix pageblock migratetype for ZONE_DEVICE compound pages
-Date: Tue, 21 Jul 2026 17:22:24 +0200
-Message-ID: <20260721152543.059462154@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.18 1229/1611] power: supply: cpcap-battery: Fix missing nvmem_device_put() causing reference leak
+Date: Tue, 21 Jul 2026 17:22:25 +0200
+Message-ID: <20260721152543.083153741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -57,117 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 94405c6136839f7c462249c8b4b957bcb9527a9d upstream.
+commit a2c14ff63e0e02e3c832385e523e9cc81301171c upstream.
 
-The memmap_init_zone_device() function only initializes the migratetype of
-the first pageblock of a compound page.  If the compound page size exceeds
-pageblock_nr_pages (e.g., 1GB hugepages with 2MB pageblocks), subsequent
-pageblocks in the compound page remain uninitialized.
+In cpcap_battery_detect_battery_type(), the reference to an nvmem
+device obtained via nvmem_device_find() is not released with
+nvmem_device_put() on the success or read-failure paths, causing a
+permanent reference leak. The driver’s retry logic on subsequent
+battery property reads can compound this leak, preventing the nvmem
+device from ever being freed.
 
-Move the migratetype initialization out of __init_zone_device_page() and
-into a separate pageblock_migratetype_init_range() function.  This
-iterates over the entire PFN range of the memory, ensuring that all
-pageblocks are correctly initialized.
+Found by code review.
 
-Also remove the stale confusing comment about MEMINIT_HOTPLUG above the
-migratetype setting since it is an obsolete relic from commit 966cf44f637e
-("mm: defer ZONE_DEVICE page initialization to the point where we init
-pgmap") and no longer makes sense here.
-
-Link: https://lore.kernel.org/20260428081855.1249045-6-songmuchun@bytedance.com
-Fixes: c4386bd8ee3a ("mm/memremap: add ZONE_DEVICE support for compound pages")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Liam R. Howlett <liam@infradead.org>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Cc: stable@vger.kernel.org
+Fixes: fd46821e85de ("power: supply: cpcap-battery: Add battery type auto detection for mapphone devices")
+Link: https://patch.msgid.link/20260424011013.879639-1-make24@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mm_init.c |   34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ drivers/power/supply/cpcap-battery.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -666,6 +666,20 @@ static inline void fixup_hashdist(void)
- static inline void fixup_hashdist(void) {}
- #endif /* CONFIG_NUMA */
- 
-+#ifdef CONFIG_ZONE_DEVICE
-+static __meminit void pageblock_migratetype_init_range(unsigned long pfn,
-+		unsigned long nr_pages, int migratetype)
-+{
-+	const unsigned long end = pfn + nr_pages;
-+
-+	for (pfn = pageblock_align(pfn); pfn < end; pfn += pageblock_nr_pages) {
-+		init_pageblock_migratetype(pfn_to_page(pfn), migratetype, false);
-+		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
-+			cond_resched();
-+	}
-+}
-+#endif
-+
- /*
-  * Initialize a reserved page unconditionally, finding its zone first.
-  */
-@@ -1029,21 +1043,6 @@ static void __ref __init_zone_device_pag
- 	page->zone_device_data = NULL;
- 
- 	/*
--	 * Mark the block movable so that blocks are reserved for
--	 * movable at startup. This will force kernel allocations
--	 * to reserve their blocks rather than leaking throughout
--	 * the address space during boot when many long-lived
--	 * kernel allocations are made.
--	 *
--	 * Please note that MEMINIT_HOTPLUG path doesn't clear memmap
--	 * because this is done early in section_activate()
--	 */
--	if (pageblock_aligned(pfn)) {
--		init_pageblock_migratetype(page, MIGRATE_MOVABLE, false);
--		cond_resched();
--	}
--
--	/*
- 	 * ZONE_DEVICE pages other than MEMORY_TYPE_GENERIC are released
- 	 * directly to the driver page allocator which will set the page count
- 	 * to 1 when allocating the page.
-@@ -1139,6 +1138,9 @@ void __ref memmap_init_zone_device(struc
- 
- 		__init_zone_device_page(page, pfn, zone_idx, nid, pgmap);
- 
-+		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
-+			cond_resched();
-+
- 		if (pfns_per_compound == 1)
- 			continue;
- 
-@@ -1146,6 +1148,8 @@ void __ref memmap_init_zone_device(struc
- 				     compound_nr_pages(altmap, pgmap));
+--- a/drivers/power/supply/cpcap-battery.c
++++ b/drivers/power/supply/cpcap-battery.c
+@@ -415,10 +415,13 @@ static void cpcap_battery_detect_battery
+ 	if (IS_ERR_OR_NULL(nvmem)) {
+ 		ddata->check_nvmem = true;
+ 		dev_info_once(ddata->dev, "Can not find battery nvmem device. Assuming generic lipo battery\n");
+-	} else if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
+-		battery_id = 0;
+-		ddata->check_nvmem = true;
+-		dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
++	} else {
++		if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
++			battery_id = 0;
++			ddata->check_nvmem = true;
++			dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
++		}
++		nvmem_device_put(nvmem);
  	}
  
-+	pageblock_migratetype_init_range(start_pfn, nr_pages, MIGRATE_MOVABLE);
-+
- 	pr_debug("%s initialised %lu pages in %ums\n", __func__,
- 		nr_pages, jiffies_to_msecs(jiffies - start));
- }
+ 	switch (battery_id) {
 
 
