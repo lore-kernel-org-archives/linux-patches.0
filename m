@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F5A46D2DA;
-	Tue, 21 Jul 2026 17:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A747C3C276E;
+	Tue, 21 Jul 2026 17:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655445; cv=none; b=dReouE2BjgiMmili4/Ljz4Fkb9BYteGCNcKdo610OrYw0L8yfPZYRv0+SwfpwjtR3N6eM/KBq5BbmjQNDFGQ2mBfohGqZCLU3yEXLbFMXGp8W5r7S6GJ3DQO8eFsfL7ZesyptyawYYAv5DQ+oLD5tyuTO/Mu/Tr2kAnDhlLcLzk=
+	t=1784655447; cv=none; b=UKv4j8e9mCIaS+D794y5nhHMzrrqUDrOjpDlPJtG0AOemsydIZ0db/LWEzkZadT6Y0sBeKiIOjkKRvP4qmdN8bpA0yxm3pOWPJy2BnEITAjBYZXjIAXUl0YkzEibWjC7VYP3zV+sXgKHOh6tr5eMsjtWfjAHGa/goXbjBjQooFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655445; c=relaxed/simple;
-	bh=IVzoMM9lTvbVEscCa7pFETyVqUeZosnGt/3/myljpHw=;
+	s=arc-20240116; t=1784655447; c=relaxed/simple;
+	bh=K2Hzr8FP6+UaLkvJJKiT5cTCwE9wGvSahP0pHl1SNNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q3GfWi/Na0w/7di40Bu7lBxIDyvdgLqX6YkF7U6cYuL1LpuUPMIVS+CYtRYi0h09gVDocDXH1uXmSB5GGkSqxKRD6Hn6uig685Cq9UOwUuT3swdOJaGZJUQvUW7nlAmDuPRwksPStYPK3DQ8vtgGCaps6J8dwXPKEDl7jqUXV20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ye6RIlwX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PZL72WNUdC6KnwiexiT92a9RJnTgJ2z2/fqRPEFKrfpthAhm07VOwPaDSYcpGnjuLH6LTKPEG/XB/qlUwYFl62y65X74HGPz0JlbyydsRbZ/Z/7AfddoTVolnEHVaU46q03LuzG8XPeUiStossNFOJquQTYqcwM+w0h6key7+HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKVlI/Tz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ye6RIlwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782BB1F000E9;
-	Tue, 21 Jul 2026 17:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKVlI/Tz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB8B1F000E9;
+	Tue, 21 Jul 2026 17:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655444;
-	bh=sHjqdYsTIonCDKGeK7cFSwguGcbQDSbRDxEs4rADLPA=;
+	s=korg; t=1784655446;
+	bh=FsR08TNJ0ErZTCg3WQEipWr0APjR7VoOxsHC7kD7rrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ye6RIlwXd2+4dscz3eMnzYqm/LVT1jNai4leWzZVug0OmNSR6CCwIxWqm1I7MC1ys
-	 VVK3ALSJpKQfwjiq5d9RsIlL7sCLedy6mKj+31gpoBKJhJqrWsVx4ermrmqDA8KHd2
-	 ycAHItu/7G5eNIV7L9o89ybZJlktwcQzDKF32KfA=
+	b=CKVlI/Tz8QNz9A6SISohYmUtu0Dv3KJ3gLHqC4oLnQzMgcCb5Tf5g50eQJpSel/6F
+	 ONkXtHHhBr0S1jvAiZMN5k0xQuvJPK4C/82Vz/3bn1vWoOWPrnw+4TUCDhiLhwBq6+
+	 KxAuRgoV0VShQf3y2RgjcTFwY5FSBZyT8JNEsmdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Muhammet=20Kaan=20KILIN=C3=87?= <muhammetkaankilinc@gmail.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0004/1611] crypto: algif_skcipher - force synchronous processing
-Date: Tue, 21 Jul 2026 17:02:00 +0200
-Message-ID: <20260721152514.869742324@linuxfoundation.org>
+Subject: [PATCH 6.18 0013/1611] selftests/bpf: Add a test cases for sync_linked_regs regarding zext propagation
+Date: Tue, 21 Jul 2026 17:02:09 +0200
+Message-ID: <20260721152515.085784311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,161 +48,193 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-The AIO/async path in skcipher_recvmsg() passes the socket-wide ctx->iv
-directly into the skcipher request. After io_submit() the socket lock is
-dropped and the request is processed asynchronously by a worker (e.g.
-cryptd), which dereferences ctx->iv only later.
+commit 4a04d13576fd69149b91672b5f1dc62eca272fa5 upstream.
 
-A concurrent sendmsg(ALG_SET_IV) on the same socket can overwrite ctx->iv
-inside this window, so the in-flight request runs under an
-attacker-controlled IV. For CTR and other stream modes this causes
-IV/keystream reuse and allows an unprivileged user to recover the
-plaintext of a concurrent operation.
+Add multiple test cases for linked register tracking with alu32 ops:
 
-Snapshotting ctx->iv into per-request storage for the async path is not
-sufficient here. For ciphers with statesize == 0 - which includes cbc
-and ctr - skcipher_prepare_alg() installs skcipher_noimport()/
-skcipher_noexport(), so ctx->state carries nothing and the MSG_MORE
-inter-chunk IV chaining is carried solely by the in-place req->iv
-writeback. A snapshot redirects that writeback into per-request memory
-that af_alg_free_resources() releases on completion, so AIO + MSG_MORE
-with cbc/ctr would silently produce wrong output. Writing the IV back
-from the completion callback instead is not possible either: that would
-require lock_sock() there, but the callback can run in softirq/atomic
-context, so it must not sleep.
+  - Add a test that checks sync_linked_regs() regarding reg->id (the linked
+    target register) for BPF_ADD_CONST32 rather than known_reg->id (the
+    branch register).
 
-Make the operation synchronous instead. ctx->iv is then only ever
-dereferenced under the socket lock held by recvmsg(), which removes the
-race, and the req->iv writeback lands in ctx->iv as before, which keeps
-MSG_MORE chaining intact for statesize == 0 ciphers. The ctx->state
-import/export path is unchanged for ciphers that do have state.
+  - Add a test case for linked register tracking that exposes the cross-type
+    sync_linked_regs() bug. One register uses alu32 (w7 += 1, BPF_ADD_CONST32)
+    and another uses alu64 (r8 += 2, BPF_ADD_CONST64), both linked to the
+    same base register.
 
-This is equivalent to the upstream resolution: commit fcc77d33a34c
-("net: Remove support for AIO on sockets") removed the AIO socket path
-across net/ entirely, producing the same end state for this file -
-algif_skcipher never processes an AIO request asynchronously. After this
-patch, _skcipher_recvmsg() matches mainline's crypto/algif_skcipher.c as
-it stands today, including the same now-dead -EIOCBQUEUED check. This
-patch deviates from that commit deliberately: rather than removing AIO
-socket support tree-wide, which would be far too invasive for stable, it
-removes only the AIO branch in crypto/algif_skcipher.c. io_submit() now
-completes synchronously, which is valid for the AIO interface; AF_ALG
-async is rarely used in practice.
+  - Add a test case that exercises regsafe() path pruning when two execution
+    paths reach the same program point with linked registers carrying
+    different ADD_CONST flags (BPF_ADD_CONST32 from alu32 vs BPF_ADD_CONST64
+    from alu64). This particular test passes with and without the fix since
+    the pruning will fail due to different ranges, but it would still be
+    useful to carry this one as a regression test for the unreachable div
+    by zero.
 
-The -EIOCBQUEUED check in skcipher_recvmsg() is now dead but harmless,
-and is left alone to keep the fix minimal.
+With the fix applied all the tests pass:
 
-Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
-Cc: <stable@vger.kernel.org>
-Reported-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
-Signed-off-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
+  # LDLIBS=-static PKG_CONFIG='pkg-config --static' ./vmtest.sh -- ./test_progs -t verifier_linked_scalars
+  [...]
+  ./test_progs -t verifier_linked_scalars
+  #602/1   verifier_linked_scalars/scalars: find linked scalars:OK
+  #602/2   verifier_linked_scalars/sync_linked_regs_preserves_id:OK
+  #602/3   verifier_linked_scalars/scalars_neg:OK
+  #602/4   verifier_linked_scalars/scalars_neg_sub:OK
+  #602/5   verifier_linked_scalars/scalars_neg_alu32_add:OK
+  #602/6   verifier_linked_scalars/scalars_neg_alu32_sub:OK
+  #602/7   verifier_linked_scalars/scalars_pos:OK
+  #602/8   verifier_linked_scalars/scalars_sub_neg_imm:OK
+  #602/9   verifier_linked_scalars/scalars_double_add:OK
+  #602/10  verifier_linked_scalars/scalars_sync_delta_overflow:OK
+  #602/11  verifier_linked_scalars/scalars_sync_delta_overflow_large_range:OK
+  #602/12  verifier_linked_scalars/scalars_alu32_big_offset:OK
+  #602/13  verifier_linked_scalars/scalars_alu32_basic:OK
+  #602/14  verifier_linked_scalars/scalars_alu32_wrap:OK
+  #602/15  verifier_linked_scalars/scalars_alu32_zext_linked_reg:OK
+  #602/16  verifier_linked_scalars/scalars_alu32_alu64_cross_type:OK
+  #602/17  verifier_linked_scalars/scalars_alu32_alu64_regsafe_pruning:OK
+  #602/18  verifier_linked_scalars/alu32_negative_offset:OK
+  #602/19  verifier_linked_scalars/spurious_precision_marks:OK
+  #602     verifier_linked_scalars:OK
+  Summary: 1/19 PASSED, 0 SKIPPED, 0 FAILED
+
+Co-developed-by: Puranjay Mohan <puranjay@kernel.org>
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260319211507.213816-2-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algif_skcipher.c | 75 +++++++++++++----------------------------
- 1 file changed, 24 insertions(+), 51 deletions(-)
+ .../bpf/progs/verifier_linked_scalars.c       | 108 ++++++++++++++++++
+ 1 file changed, 108 insertions(+)
 
-diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
-index ba0a17fd95aca2..35ebc3e0201b04 100644
---- a/crypto/algif_skcipher.c
-+++ b/crypto/algif_skcipher.c
-@@ -79,20 +79,6 @@ static int algif_skcipher_export(struct sock *sk, struct skcipher_request *req)
- 	return err;
+diff --git a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+index 2ef346c827c25b..87930b5e7b784f 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
++++ b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+@@ -348,6 +348,114 @@ l0_%=:							\
+ 	: __clobber_all);
  }
  
--static void algif_skcipher_done(void *data, int err)
--{
--	struct af_alg_async_req *areq = data;
--	struct sock *sk = areq->sk;
--
--	if (err)
--		goto out;
--
--	err = algif_skcipher_export(sk, &areq->cra_u.skcipher_req);
--
--out:
--	af_alg_async_cb(data, err);
--}
--
- static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
- 			     size_t ignored, int flags)
- {
-@@ -171,43 +157,30 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
- 		cflags |= CRYPTO_SKCIPHER_REQ_CONT;
- 	}
- 
--	if (msg->msg_iocb && !is_sync_kiocb(msg->msg_iocb)) {
--		/* AIO operation */
--		sock_hold(sk);
--		areq->iocb = msg->msg_iocb;
--
--		/* Remember output size that will be generated. */
--		areq->outlen = len;
--
--		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
--					      cflags |
--					      CRYPTO_TFM_REQ_MAY_SLEEP,
--					      algif_skcipher_done, areq);
--		err = ctx->enc ?
--			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
--			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req);
--
--		/* AIO operation in progress */
--		if (err == -EINPROGRESS)
--			return -EIOCBQUEUED;
--
--		sock_put(sk);
--	} else {
--		/* Synchronous operation */
--		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
--					      cflags |
--					      CRYPTO_TFM_REQ_MAY_SLEEP |
--					      CRYPTO_TFM_REQ_MAY_BACKLOG,
--					      crypto_req_done, &ctx->wait);
--		err = crypto_wait_req(ctx->enc ?
--			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
--			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
--						 &ctx->wait);
--
--		if (!err)
--			err = algif_skcipher_export(
--				sk, &areq->cra_u.skcipher_req);
--	}
-+	/*
-+	 * Force synchronous processing.  The async (AIO) path passed the
-+	 * socket-wide ctx->iv into the request, which the worker
-+	 * dereferenced after the socket lock had been dropped, letting a
-+	 * concurrent sendmsg(ALG_SET_IV) inject an attacker IV.  Mainline
-+	 * removed the AIO socket path in commit fcc77d33a34c ("net: Remove
-+	 * support for AIO on sockets"); the minimal stable fix is to always
-+	 * complete synchronously, so ctx->iv is only ever dereferenced under
-+	 * the socket lock.  This also keeps the IV chaining intact: for
-+	 * ciphers with statesize == 0 (e.g. ctr, cbc) the chained IV is
-+	 * carried by the req->iv writeback into ctx->iv, which is only
-+	 * consistent on the synchronous path.
-+	 */
-+	skcipher_request_set_callback(&areq->cra_u.skcipher_req,
-+				      cflags |
-+				      CRYPTO_TFM_REQ_MAY_SLEEP |
-+				      CRYPTO_TFM_REQ_MAY_BACKLOG,
-+				      crypto_req_done, &ctx->wait);
-+	err = crypto_wait_req(ctx->enc ?
-+		crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
-+		crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
-+				 &ctx->wait);
-+	if (!err)
-+		err = algif_skcipher_export(sk, &areq->cra_u.skcipher_req);
- 
- free:
- 	af_alg_free_resources(areq);
++/*
++ * Test that sync_linked_regs() checks reg->id (the linked target register)
++ * for BPF_ADD_CONST32 rather than known_reg->id (the branch register).
++ */
++SEC("socket")
++__success
++__naked void scalars_alu32_zext_linked_reg(void)
++{
++	asm volatile ("						\
++	call %[bpf_get_prandom_u32];				\
++	w6 = w0;		/* r6 in [0, 0xFFFFFFFF] */	\
++	r7 = r6;		/* linked: same id as r6 */	\
++	w7 += 1;		/* alu32: r7.id |= BPF_ADD_CONST32 */ \
++	r8 = 0xFFFFffff ll;					\
++	if r6 < r8 goto l0_%=;					\
++	/* r6 in [0xFFFFFFFF, 0xFFFFFFFF] */			\
++	/* sync_linked_regs: known_reg=r6, reg=r7 */		\
++	/* CPU: w7 = (u32)(0xFFFFFFFF + 1) = 0, zext -> r7 = 0 */ \
++	/* With fix: r7 64-bit = [0, 0] (zext applied) */	\
++	/* Without fix: r7 64-bit = [0x100000000] (no zext) */	\
++	r7 >>= 32;						\
++	if r7 == 0 goto l0_%=;					\
++	r0 /= 0;		/* unreachable with fix */	\
++l0_%=:								\
++	r0 = 0;							\
++	exit;							\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/*
++ * Test that sync_linked_regs() skips propagation when one register used
++ * alu32 (BPF_ADD_CONST32) and the other used alu64 (BPF_ADD_CONST64).
++ * The delta relationship doesn't hold across different ALU widths.
++ */
++SEC("socket")
++__failure __msg("div by zero")
++__naked void scalars_alu32_alu64_cross_type(void)
++{
++	asm volatile ("						\
++	call %[bpf_get_prandom_u32];				\
++	w6 = w0;		/* r6 in [0, 0xFFFFFFFF] */	\
++	r7 = r6;		/* linked: same id as r6 */	\
++	w7 += 1;		/* alu32: BPF_ADD_CONST32, delta = 1 */ \
++	r8 = r6;		/* linked: same id as r6 */	\
++	r8 += 2;		/* alu64: BPF_ADD_CONST64, delta = 2 */ \
++	r9 = 0xFFFFffff ll;					\
++	if r7 < r9 goto l0_%=;					\
++	/* r7 = 0xFFFFFFFF */					\
++	/* sync: known_reg=r7 (ADD_CONST32), reg=r8 (ADD_CONST64) */ \
++	/* Without fix: r8 = zext(0xFFFFFFFF + 1) = 0 */	\
++	/* With fix: r8 stays [2, 0x100000001] (r8 >= 2) */	\
++	if r8 > 0 goto l1_%=;					\
++	goto l0_%=;						\
++l1_%=:								\
++	r0 /= 0;		/* div by zero */		\
++l0_%=:								\
++	r0 = 0;						\
++	exit;							\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/*
++ * Test that regsafe() prevents pruning when two paths reach the same program
++ * point with linked registers carrying different ADD_CONST flags (one
++ * BPF_ADD_CONST32 from alu32, another BPF_ADD_CONST64 from alu64).
++ */
++SEC("socket")
++__failure __msg("div by zero")
++__flag(BPF_F_TEST_STATE_FREQ)
++__naked void scalars_alu32_alu64_regsafe_pruning(void)
++{
++	asm volatile ("						\
++	call %[bpf_get_prandom_u32];				\
++	w6 = w0;		/* r6 in [0, 0xFFFFFFFF] */	\
++	r7 = r6;		/* linked: same id as r6 */	\
++	/* Get another random value for the path branch */	\
++	call %[bpf_get_prandom_u32];				\
++	if r0 > 0 goto l_pathb_%=;				\
++	/* Path A: alu32 */					\
++	w7 += 1;		/* BPF_ADD_CONST32, delta = 1 */\
++	goto l_merge_%=;					\
++l_pathb_%=:							\
++	/* Path B: alu64 */					\
++	r7 += 1;		/* BPF_ADD_CONST64, delta = 1 */\
++l_merge_%=:							\
++	/* Merge point: regsafe() compares path B against cached path A. */ \
++	/* Narrow r6 to trigger sync_linked_regs for r7 */	\
++	r9 = 0xFFFFffff ll;					\
++	if r6 < r9 goto l0_%=;					\
++	/* r6 = 0xFFFFFFFF */					\
++	/* sync: r7 = 0xFFFFFFFF + 1 = 0x100000000 */		\
++	/* Path A: zext -> r7 = 0 */				\
++	/* Path B: no zext -> r7 = 0x100000000 */		\
++	r7 >>= 32;						\
++	if r7 == 0 goto l0_%=;					\
++	r0 /= 0;		/* div by zero on path B */	\
++l0_%=:								\
++	r0 = 0;						\
++	exit;							\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
+ SEC("socket")
+ __success
+ void alu32_negative_offset(void)
 -- 
 2.53.0
 
