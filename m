@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EBE42F704;
-	Tue, 21 Jul 2026 20:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92AA1D7E5C;
+	Tue, 21 Jul 2026 20:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665725; cv=none; b=iIGCmStgeYH1aregPvtYvAi9Qa2SInwWDtH0YuHuNnWHp1+IpW7SCbz7ga4M+D/hsc7kBx2ocvz+xqK87qQN8YQumDjEz9BvpFIUEyOVMiEcptD7s1s13J6ldLhKp5xC58gYCaqokWhN+tUjgJKHUCRHciOXkPNCvOlQSz90M+0=
+	t=1784665727; cv=none; b=DFP4YbNSAruJBtPUo5MUMFHX3fMTKYPjgktIix6yJqm2Xv8ZJDzCb4IibEEZD+tiadrizOX9zxh0HbkUh20m7MOhOQi1BcYKdft/a3HNded+0EKzvQUcSBFkFLUoh016gCKM8PjhggaX7F8urYT1RMEx1VEPd3nUp4M4UGC6Hxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665725; c=relaxed/simple;
-	bh=/f9Vhy7ZsH0+OJ8GCkfdwWYh/qfsnT0yeJkfrpUpcQA=;
+	s=arc-20240116; t=1784665727; c=relaxed/simple;
+	bh=Qf0t4NmVahVKTZsGMcDQP/GnIiORMRTAZy3Qz7aRthM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VYYMy9i7z93qZef/eljX+rTPDhPZopMd0+XqbCkrBRWf+47Kt3PpY5hlItMI7M8nXIUbtYnmy0FoKb2AONCI7ashKnNcQWmLDBIisOdgXJfDTfMj6jP7fPHoWxjUfVJLAD3xkItvAWLcnfDCf+hzwx2izxEueILw3/qH5G+qrMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUhTTbYs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JVLR/l8ZcY7qaf2oAtmax8KLFtmhii/mVTzA+Y/Vcw2N4SeGpW2f9RAMMDA7Olu0gH+AfoU64PmkE4eEbIre7oUe4MnsBZKmxoTNaduqYBIyy/XL9nGyvgvoKAmN/7RBfFs4OmYrRj6x7tHnKoiU72w0L/gBEDQW2tSl5JB5Fog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqEYKQVI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUhTTbYs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2221F000E9;
-	Tue, 21 Jul 2026 20:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqEYKQVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C03D1F000E9;
+	Tue, 21 Jul 2026 20:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665724;
-	bh=SYYTa/KdoaqFdXF/M/LorPZD+TwxGLWGHH0tjk5YtZ8=;
+	s=korg; t=1784665726;
+	bh=7/zOEm3cF9mEPVbRbiDThNSCMWuFLRmlTjOVr+7p4gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JUhTTbYsIu2WhGQiENcfDVX7l2syOspscg4jk6GLei1FL9cIk1ErOyYc/Yvnennqp
-	 KM/jFUgk5DRamWxPb2DpCjrnUJ5ugvOfu+7xjq32xhdKXOrfCA4j7jFNheNeRavnts
-	 qSH28clnrb2E55p5JMeQmUVTyhA2E8hkJbnu4G/Q=
+	b=ZqEYKQVIsaU9CnsQR47zVdUl7zRyr+klBFUPx8z+fp5gurR/jQV+T+QEA/6aXGMWU
+	 Im5J5LZ8qUwk3zxC7G7tZMa4HvIjz3o17B7t2S+7QbirdTCKpWiHB/aLvZcixGHW9a
+	 QpwK2b+2XK3NonJz6xn2tEI3/dT6LcZI7j72RpSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
-	Sara Venkatesh <sarajvenkatesh@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0410/1266] RDMA/srpt: fix integer overflow in immediate data length check
-Date: Tue, 21 Jul 2026 17:14:07 +0200
-Message-ID: <20260721152451.012673840@linuxfoundation.org>
+Subject: [PATCH 6.6 0369/1266] arm64: tegra: Fix Tegra234 MGBE PTP clock
+Date: Tue, 21 Jul 2026 17:13:26 +0200
+Message-ID: <20260721152450.083163197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,47 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sara Venkatesh <sarajvenkatesh@gmail.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit eb4ecdf631fe00e8020bf461503cb9b7017ed796 ]
+[ Upstream commit 8f0cc929a4bad534c5a860a53d88912cf16d9c9c ]
 
-imm_buf->len is a user-controlled uint32_t received from the network.
-Adding it to imm_data_offset without overflow checking allows a
-malicious initiator to send len=0xFFFFFFFF, causing req_size to wrap
-around to a small value, bypassing the bounds check, and subsequently
-passing a ~4GB length to sg_init_one().
+The Tegra MGBE PTP clock is incorrectly named as 'ptp-ref' and not
+'ptp_ref' and this causing the initialisation of the PTP clock to fail.
+The device-tree binding doc for the device and the Tegra MGBE driver
+have been updated to use the correct name and so update the device-tree
+for Tegra234 as well.
 
-Use check_add_overflow() to detect wrapping before the comparison.
-
-Fixes: 5dabcd0456d7 ("RDMA/srpt: Add support for immediate data")
-Reported-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Signed-off-by: Sara Venkatesh <sarajvenkatesh@gmail.com>
-Link: https://patch.msgid.link/20260504080036.3482415-1-sarajvenkatesh@gmail.com
-Reviewed-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 610cdf3186bc ("arm64: tegra: Add MGBE nodes on Tegra234")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 4bebc34a2929b1..13e1fc5e2759ad 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -1129,9 +1129,10 @@ static int srpt_get_desc_tbl(struct srpt_recv_ioctx *recv_ioctx,
- 		struct srp_imm_buf *imm_buf = srpt_get_desc_buf(srp_cmd);
- 		void *data = (void *)srp_cmd + imm_data_offset;
- 		uint32_t len = be32_to_cpu(imm_buf->len);
--		uint32_t req_size = imm_data_offset + len;
-+		uint32_t req_size;
- 
--		if (req_size > srp_max_req_size) {
-+		if (check_add_overflow((uint32_t)imm_data_offset, len, &req_size) ||
-+		    req_size > srp_max_req_size) {
- 			pr_err("Immediate data (length %d + %d) exceeds request size %d\n",
- 			       imm_data_offset, len, srp_max_req_size);
- 			return -EINVAL;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index bcc36055ef97e6..d1d7f6a50e11f2 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -1447,7 +1447,7 @@ ethernet@6800000 {
+ 				 <&bpmp TEGRA234_CLK_MGBE0_RX_PCS_M>,
+ 				 <&bpmp TEGRA234_CLK_MGBE0_RX_PCS>,
+ 				 <&bpmp TEGRA234_CLK_MGBE0_TX_PCS>;
+-			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+ 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+ 				      "rx-pcs", "tx-pcs";
+ 			resets = <&bpmp TEGRA234_RESET_MGBE0_MAC>,
+@@ -1481,7 +1481,7 @@ ethernet@6900000 {
+ 				 <&bpmp TEGRA234_CLK_MGBE1_RX_PCS_M>,
+ 				 <&bpmp TEGRA234_CLK_MGBE1_RX_PCS>,
+ 				 <&bpmp TEGRA234_CLK_MGBE1_TX_PCS>;
+-			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+ 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+ 				      "rx-pcs", "tx-pcs";
+ 			resets = <&bpmp TEGRA234_RESET_MGBE1_MAC>,
+@@ -1515,7 +1515,7 @@ ethernet@6a00000 {
+ 				 <&bpmp TEGRA234_CLK_MGBE2_RX_PCS_M>,
+ 				 <&bpmp TEGRA234_CLK_MGBE2_RX_PCS>,
+ 				 <&bpmp TEGRA234_CLK_MGBE2_TX_PCS>;
+-			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+ 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+ 				      "rx-pcs", "tx-pcs";
+ 			resets = <&bpmp TEGRA234_RESET_MGBE2_MAC>,
+@@ -1549,7 +1549,7 @@ ethernet@6b00000 {
+ 				 <&bpmp TEGRA234_CLK_MGBE3_RX_PCS_M>,
+ 				 <&bpmp TEGRA234_CLK_MGBE3_RX_PCS>,
+ 				 <&bpmp TEGRA234_CLK_MGBE3_TX_PCS>;
+-			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+ 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+ 				      "rx-pcs", "tx-pcs";
+ 			resets = <&bpmp TEGRA234_RESET_MGBE3_MAC>,
 -- 
 2.53.0
 
