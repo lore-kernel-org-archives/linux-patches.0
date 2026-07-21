@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75FF356A12;
-	Tue, 21 Jul 2026 20:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1E32EBB8D;
+	Tue, 21 Jul 2026 20:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666597; cv=none; b=EWhGUXLD2wHOFs/QSuxb/fb5kH5WximSEs6aOy95jGlRNVSxT88WY0QfZN2bJ6Ic6XoovMjiBr0beLdetK30xX0Qk7UcOjnhaWX1Q2D3vXmgpGi1ie/IYV30oyfxRIw1qkY1bzaFxqR9mvfYvbDh6Sgr3yRD8fJQJRV9ArNCwhc=
+	t=1784666600; cv=none; b=oD10hRkOOglqjMqpiYjFaTw43zJnj+PgRAvWXovtBOPlkOp+1MBwFbFhHuFffGKW/FxqS+ymhqekPSZxtafwSIx4lLyDZH+fWx4Q8YBKt4INt66GDOSHQ0MAlcar3kmzRAVRve+M2u5y3Jz0n40Rq8JVQXFGzZgdPvS/9rA8rUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666597; c=relaxed/simple;
-	bh=hB0ofe5LGklVE0l3jnR/O1RCMtJrqDxceGKq3sJk/iM=;
+	s=arc-20240116; t=1784666600; c=relaxed/simple;
+	bh=lM3emk4paP9qxDKTgPpLdXuVQe7GzdX70zts3wRAVK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhfMWAuOUnIcHcLkIratkVXK83qeafYcbnPjpEoIBkSQ94RMea8aNXqow9eQ+ZurAmjuwgcfljouukS7hyxK7ghRrkBllcplVosWl+kwDefNnnp8dNTwZY6A4J9DHkPM9ExrLXUB41hsjpj2e1INQ0EvMCI3dNhtx1cRrBpRNcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBUfPwKs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mki1XgaWfPuC5MiV1Pl/+O4ZKHOz/rgiRiHxv3pBI8VRDzejgmrM9fr5oY7Fbc/arz2gkX4Ef906LBR47YiQ6V6p8e+XUdNjcRXMvECITwVUgZ1CvHe32rLXz/fYvwHRtB9fHrffQbb+RVjTdVKZ4XpJN2wmS4qr5llWN4ZKDO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCyaaVNk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBUfPwKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D041F000E9;
-	Tue, 21 Jul 2026 20:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCyaaVNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43681F000E9;
+	Tue, 21 Jul 2026 20:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666596;
-	bh=prqFeqhAkz1qHIImVE2poMIbDct0qIsgkHxKifLy9To=;
+	s=korg; t=1784666599;
+	bh=g0NWfzM314MtLZhpfP+GBAiSr/mQSC1PyjUpYz1x/xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BBUfPwKsvyw9ZK8kcghiY/fSBEF5Pir9Q8ZSwZuCBavpVeFBakGTsM0YM5+defLdT
-	 NIY16fKByr7umFM4rlHI+8AEorzAfWYxdjGE5/kqJ4M5OsgXKNYaQVuhFZ3jT5tvYh
-	 YY0X4TcfF3D2BcVYkiG72UB9sU/CHBnKQczhLb3g=
+	b=gCyaaVNkBCs0kQJgy6Zz/61gI8WgkKCQvhjrSUOCCgLtEmiS7OAqcJSGmOwufPLku
+	 FLBbS6pj3pF0gj+aTfkMi8lQYditpU88VEFrwTqgYse9VtuN8d4SN67P/SauOnZu4M
+	 EOceIvtiuBo+Pjo1rxpn5X0YjMIBz6KEm6TMArM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0744/1266] netfilter: ipset: fix order of kfree_rcu() and rcu_assign_pointer()
-Date: Tue, 21 Jul 2026 17:19:41 +0200
-Message-ID: <20260721152458.520750343@linuxfoundation.org>
+Subject: [PATCH 6.6 0745/1266] netfilter: nf_reject: skip iphdr options when looking for icmp header
+Date: Tue, 21 Jul 2026 17:19:42 +0200
+Message-ID: <20260721152458.541764924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,46 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3ca9982a8882470aa0ac4e8bb9a552b181d1efcd ]
+[ Upstream commit af8d6ae09c0a5f8b8a0d5680203c74b3c1daa85b ]
 
-Sashiko pointed out that kfree_rcu() was called before
-rcu_assign_pointer() in handling the comment extension.
-Fix the order so that rcu_assign_pointer() called first.
+Not a big deal but this hould have used the real ip header length and not the
+base header size.  As-is, if there are options then
+nf_skb_is_icmp_unreach() result will be random.
 
-Fixes: b57b2d1fa53f ("netfilter: ipset: Prepare the ipset core to use RCU at set level")
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Fixes: db99b2f2b3e2 ("netfilter: nf_reject: don't reply to icmp error messages")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/netfilter/nf_reject_ipv4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 94157104d85a95..f51a1af31513cd 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -351,8 +351,8 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index 2064b401304129..1632cedcd348ca 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -80,7 +80,7 @@ static bool nf_skb_is_icmp_unreach(const struct sk_buff *skb)
+ 	if (iph->protocol != IPPROTO_ICMP)
+ 		return false;
  
- 	if (unlikely(c)) {
- 		set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
--		kfree_rcu(c, rcu);
- 		rcu_assign_pointer(comment->c, NULL);
-+		kfree_rcu(c, rcu);
- 	}
- 	if (!len)
- 		return;
-@@ -393,8 +393,8 @@ ip_set_comment_free(struct ip_set *set, void *ptr)
- 	if (unlikely(!c))
- 		return;
- 	set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
--	kfree_rcu(c, rcu);
- 	rcu_assign_pointer(comment->c, NULL);
-+	kfree_rcu(c, rcu);
- }
+-	thoff = skb_network_offset(skb) + sizeof(*iph);
++	thoff = skb_network_offset(skb) + ip_hdrlen(skb);
  
- typedef void (*destroyer)(struct ip_set *, void *);
+ 	tp = skb_header_pointer(skb,
+ 				thoff + offsetof(struct icmphdr, type),
 -- 
 2.53.0
 
