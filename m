@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9540367B63;
-	Tue, 21 Jul 2026 22:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B71B35C6AC;
+	Tue, 21 Jul 2026 22:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673612; cv=none; b=GHpQWdbfqd8iKja3gUj0o6qGzzdPtHGNq1p1Dr60mCTymzh/5pK/VQQzLQqs9PadH59+pezhWek//4CEoyGTdLeDem9EZvvZlixKeXBsAyruabpUxT2HSfck1nPTwm6KlV/IvoqFd3ShHmWoMptA9FX157F9r9tgU8kziX2LoeU=
+	t=1784673615; cv=none; b=P+1aary5om++YPBkxe+fOucb3oL1CWN2U9z1/tvPDrclOmxd8h/4YPctGgW0E/uicsIN0YrXnC1uq9tv/qsd4/xEBFPCMxv0d9pU3r66Cq3IcGMc9MFQTvd4C/Z3wHGkWBM13d4Gl73dgEMV4mI1WCaMsenXEjwrlWE0wRENAug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673612; c=relaxed/simple;
-	bh=2xRd80r7xgfo7ayvgcujt9/pa8UCSY6aLBzPS/WBzHs=;
+	s=arc-20240116; t=1784673615; c=relaxed/simple;
+	bh=jBl9cX2hNHHt8iYnPtkH57YRbvlgARUKkWXFXgUUbTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HowDdXSNNxy64SAg2lxvmMjzeQ0ZU+d7nsk51iDw8Q+GvnkIvwN1XAaLVFFi3PrFIWP+v+9abqNKe+OhcIjQPN1+QWUxLl120wd8OtCZkFXpgku4wkGVluOydViiKnqrUZM3GxzJlgWzcB9EbqjLugPMSBTNu+I5UzJtbHeiheU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSoLYGHv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hmSs2TCKg6kZ4Inyzrgc6BN5Nc1gNekfDdVHuwW0zBiTcDDxE4Jl3G1FA9eQz14RZ56DL4fGDKM5jpxpv47zncXV68CyUzWc8x2baWoe/0PNY91HL4sk8gnMqR0CpiIOjIvgVvWs4Ktj3E+Cf8WOr+dSiTwRJnH4oFfU4hp/XhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKcD581+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSoLYGHv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4248E1F000E9;
-	Tue, 21 Jul 2026 22:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKcD581+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAFD1F000E9;
+	Tue, 21 Jul 2026 22:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673611;
-	bh=7FPfJKH9P3017mHQJ6ZlM3w/XrqsTJITqCYBcgukpT8=;
+	s=korg; t=1784673614;
+	bh=pf5qbhw4K4Ekyyvz6XvHUx5JGrwAk7r+H6spyCWC8XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VSoLYGHvWImdNQ3T+jGIZDBBfWw9FBxMQ4nCbJLV4IBO+xyWHZqv5dzEUB3c4smFY
-	 1X7rJRdVwAEtz8HPWS2Wr9/OhPQrN2MXv6v3SZTUni08T+eiNAEhR49FyVB2syKyvl
-	 7eVBniljct0qIr9RJsj/+EJoN7bKU6p3au8MsYPc=
+	b=CKcD581+hEQsO89HYfGNjmbPmanJMwXJWdWELylHNH7ZFR/EfKlcH/AdpImMrqhOa
+	 XZGXkgjetdIaPGHJlG8BNQBgL6OtJPJcJiTgJhSfbOy0bM7t3pu1v6nfCMKnI42cZE
+	 svHF2mfF1Xi41UMje6S6MWYBKK1OMTnhErgyym+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 229/699] ocfs2: reject FITRIM ranges shorter than a cluster
-Date: Tue, 21 Jul 2026 17:19:48 +0200
-Message-ID: <20260721152400.864919868@linuxfoundation.org>
+Subject: [PATCH 5.10 230/699] ocfs2/dlm: require a ref for locking_state debugfs open
+Date: Tue, 21 Jul 2026 17:19:49 +0200
+Message-ID: <20260721152400.887529883@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -60,23 +60,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit ca1afd88f5eaaff9168e1466e5401385edf59543 ]
+[ Upstream commit 03ad858ce8064861ea580021976dc19b7aabb549 ]
 
-ocfs2_trim_mainbm() trims the global bitmap in cluster units, but its
-too-short range validation only checks sb->s_blocksize.
+debug_lockres_open() copies inode->i_private into struct debug_lockres and
+debug_lockres_release() later drops that pointer with dlm_put().  That
+only works if open successfully pins the struct dlm_ctxt.
 
-On filesystems with a cluster size larger than the block size, a FITRIM
-range that is at least one block but shorter than one cluster is accepted
-and shifted down to len == 0.  The later start + len - 1 and len -= ...
-arithmetic then underflows and can drive trimming past the requested
-range.
+Today open calls dlm_grab(dlm) but ignores its return value.  Once the
+last domain unregister has removed the context from dlm_domains,
+dlm_grab() returns NULL, yet open still stores the raw pointer and returns
+success.  The later release path is outside the debugfs removal barrier,
+so it can call dlm_put() after dlm_free_ctxt_mem() has freed the context.
+KASAN reports this as a slab-use-after-free in dlm_put() called from
+debug_lockres_release().
 
-Reject ranges shorter than s_clustersize instead.  That preserves the
-existing -EINVAL behavior for requests that cannot discard even one
-allocation unit and keeps zero-cluster trims out of the group walk.
+Fail the open when dlm_grab() cannot acquire the reference and unwind the
+seq_file private state before returning.  That keeps locking_state from
+handing out a file descriptor whose release path does not own the
+dlm_ctxt.
 
-Link: https://lore.kernel.org/20260528151247.361854-1-rollkingzzc@gmail.com
-Fixes: aa89762c5480 ("ocfs2: return EINVAL if the given range to discard is less than block size")
+The buggy scenario involves two paths, with each column showing the order
+within that path:
+
+locking_state debugfs open:          last domain unregister:
+1. debug_lockres_open() reads        1. dlm_unregister_domain() calls
+   inode->i_private.                    dlm_complete_dlm_shutdown().
+2. debug_lockres_open() calls        2. shutdown removes the dlm_ctxt from
+   dlm_grab(dlm) and gets NULL.         dlm_domains.
+3. open still stores the raw dlm     3. final teardown reaches
+   pointer in dl->dl_ctxt and           dlm_free_ctxt_mem() and frees it.
+   returns success.
+4. debug_lockres_release() later
+   calls dlm_put(dl->dl_ctxt).
+
+Validation reproduced this kernel report:
+KASAN slab-use-after-free in dlm_put+0x82/0x200
+RIP: 0033:0x7f4d349bc9e0
+The buggy address belongs to the object at ffff888103a3c000 which belongs
+to the cache kmalloc-2k of size 2048
+The buggy address is located 816 bytes inside of freed 2048-byte region
+[ffff888103a3c000, ffff888103a3c800)
+Write of size 4
+Call trace:
+  dump_stack_lvl+0x66/0xa0 (?:?)
+  print_report+0xd0/0x630 (?:?)
+  dlm_put+0x82/0x200 (?:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x188/0x2f0 (?:?)
+  kasan_report+0xe4/0x120 (?:?)
+  kasan_check_range+0x105/0x1b0 (?:?)
+  debug_lockres_release+0x53/0x80 (fs/ocfs2/dlm/dlmdebug.c:587)
+  dlm_put+0x9/0x200 (?:?)
+  debug_lockres_release+0x5c/0x80 (fs/ocfs2/dlm/dlmdebug.c:587)
+  full_proxy_release+0x67/0x90 (?:?)
+  __fput+0x1df/0x4b0 (?:?)
+  do_raw_spin_lock+0x10f/0x1b0 (?:?)
+  fput_close_sync+0xd2/0x170 (?:?)
+  __x64_sys_close+0x55/0x90 (?:?)
+  do_syscall_64+0x10c/0x640 (arch/x86/entry/syscall_64.c:87)
+  irqentry_exit+0xac/0x6e0 (?:?)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+Freed by task stack:
+  kasan_save_stack+0x33/0x60 (?:?)
+  kasan_save_track+0x14/0x30 (?:?)
+  kasan_save_free_info+0x3b/0x60 (?:?)
+  __kasan_slab_free+0x5f/0x80 (?:?)
+  kfree+0x30f/0x580 (?:?)
+  dlm_put+0x1ce/0x200 (?:?)
+  dlm_unregister_domain+0xf6/0xb30 (?:?)
+  o2cb_cluster_disconnect+0x6b/0x90 (?:?)
+  ocfs2_cluster_disconnect+0x41/0x70 (?:?)
+  ocfs2_dlm_shutdown+0x1c4/0x220 (?:?)
+  ocfs2_dismount_volume+0x38a/0x550 (?:?)
+  generic_shutdown_super+0xc3/0x220 (?:?)
+  kill_block_super+0x29/0x60 (?:?)
+  deactivate_locked_super+0x66/0xe0 (?:?)
+  cleanup_mnt+0x13d/0x210 (?:?)
+  task_work_run+0xfa/0x170 (?:?)
+  exit_to_user_mode_loop+0xd6/0x430 (?:?)
+  do_syscall_64+0x3cb/0x640 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+
+Link: https://lore.kernel.org/20260531044714.1640172-1-rollkingzzc@gmail.com
+Fixes: 4e3d24ed1a12 ("ocfs2/dlm: Dumps the lockres' into a debugfs file")
 Assisted-by: Codex:gpt-5.5
 Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
@@ -89,22 +155,49 @@ Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/alloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/dlm/dlmdebug.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
-index 82593871c4e1fd..a1c50a44961a6f 100644
---- a/fs/ocfs2/alloc.c
-+++ b/fs/ocfs2/alloc.c
-@@ -7541,7 +7541,7 @@ int ocfs2_trim_mainbm(struct super_block *sb, struct fstrim_range *range)
- 	len = range->len >> osb->s_clustersize_bits;
- 	minlen = range->minlen >> osb->s_clustersize_bits;
+diff --git a/fs/ocfs2/dlm/dlmdebug.c b/fs/ocfs2/dlm/dlmdebug.c
+index 4b8b41d23e91d5..bdda2e6b4e731b 100644
+--- a/fs/ocfs2/dlm/dlmdebug.c
++++ b/fs/ocfs2/dlm/dlmdebug.c
+@@ -614,6 +614,7 @@ static int debug_lockres_open(struct inode *inode, struct file *file)
+ 	struct dlm_ctxt *dlm = inode->i_private;
+ 	struct debug_lockres *dl;
+ 	void *buf;
++	int status = -ENOMEM;
  
--	if (minlen >= osb->bitmap_cpg || range->len < sb->s_blocksize)
-+	if (minlen >= osb->bitmap_cpg || range->len < osb->s_clustersize)
- 		return -EINVAL;
+ 	buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
+ 	if (!buf)
+@@ -626,16 +627,23 @@ static int debug_lockres_open(struct inode *inode, struct file *file)
+ 	dl->dl_len = PAGE_SIZE;
+ 	dl->dl_buf = buf;
  
- 	trace_ocfs2_trim_mainbm(start, len, minlen);
+-	dlm_grab(dlm);
+-	dl->dl_ctxt = dlm;
++	/* ->release uses dl_ctxt after open, so it needs a real pin. */
++	dl->dl_ctxt = dlm_grab(dlm);
++	if (!dl->dl_ctxt) {
++		status = -ENOENT;
++		goto bailseq;
++	}
+ 
+ 	return 0;
+ 
++bailseq:
++	seq_release_private(inode, file);
+ bailfree:
+ 	kfree(buf);
+ bail:
+-	mlog_errno(-ENOMEM);
+-	return -ENOMEM;
++	if (status != -ENOENT)
++		mlog_errno(status);
++	return status;
+ }
+ 
+ static int debug_lockres_release(struct inode *inode, struct file *file)
 -- 
 2.53.0
 
