@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4601846AA97;
-	Tue, 21 Jul 2026 15:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A250246AA94;
+	Tue, 21 Jul 2026 15:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647959; cv=none; b=qP57Yye1z8xJX2WuZTt9l0HTlF95ml+0A8cwzEa+rYo6bwUhuu91RYRc2t9mw/5lVEJw2ynOa1bP5Qtbg1N4NUNr63krAXOwGh11Jj7H6KF+hc//387f5hRXsS8EDXORWBTwt5Pcb/K5nWxs7qEiaMd2jWbHAagBnAOX6q/Yd5A=
+	t=1784647961; cv=none; b=IHI1W//vv5rw/Ir/ZIfRw/tUqupN37k0dYiym/+2folUmwEvlLZ3m5SAQ3w4OKJSu90Y9SV67cntewqIKEasqrmc8gKJJWcaCUjfJR9A7OzeU0bz+YWEQZUIiOAeGC4ElYQpwxhHvhICP2/KfnIB//C18eJzTTfoIo+wcOqQlF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647959; c=relaxed/simple;
-	bh=bwixzhwnzF35SxosQD9tTzi2+AFa1R3VKSBf3l3q+Sg=;
+	s=arc-20240116; t=1784647961; c=relaxed/simple;
+	bh=Ha3efbUHId/ZtCohAr1BiqGLU4c8ejD0LPvw8VwGkTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xl8RSLII2wmcFlwBgIcexO+yPAM45E0aWriVx9MT/dpkoneIqd/N0hi/pl0SrvawC4nnQ4cl+iKCYq+K43qxekWuMrUD38OrS8a8f1JmCqRwUn9ps3hfdNbjbnyCv9xbrmYDKilpUTYiUnei0W5eX/xc2bAt9ehK1osTHvyiTWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KY3MQdow; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bDPte9cCjM0hfkmnSvu+cnZDV0bX+SJjXJHayzjlHUTTOdc0ObMqguKfEjnEdO3I7ioKhVtnOP0Il6lMrzGbMMak3weV8RGOCOSXb5duHypErpDW5rLpS6mSKM84fWLhqts86rQG1LATRfaVnY9vhPqjqQ9mcW0guvsCxvAIkas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xV9+t1Tq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KY3MQdow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E38C1F000E9;
-	Tue, 21 Jul 2026 15:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xV9+t1Tq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146581F000E9;
+	Tue, 21 Jul 2026 15:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647957;
-	bh=J03VA+wuvSB91EdZ6KZ4UyTe+Ci3C7ufWiB8Q9wPKe4=;
+	s=korg; t=1784647960;
+	bh=iNWgTBNfz1Q/9aGSvFhFk67FRtWv3l9LsDNaH3cdkPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KY3MQdowMuIf7GLjiSq4PyN3EajDeE/Xynr/03x2gqAb3Uo20NQ76NrizSTfcPGff
-	 RCmllTcx29qgY/CHrujxHoVLwl9ijaqeTgAcKqQUWLKeymlTJop+Jv1S3jcfrPD9X+
-	 mEd7VwzOuax6Vqv8qyOzwl+bN3JIcvBFqqP2CjDk=
+	b=xV9+t1Tq39zQ/mpYgUeg/De9tRDtEwhl758FcMJVuT0MdmPaZfz9RfxEgwZNuKepv
+	 nJz4w3cmE6Ozqu03NDT8HxC3BIRt6gm2fUdV7uNrfZB8sWD8KFOlHBvDDyNOp3+Mnc
+	 QRe1Voz6e/rsJwZuOu8L7sfc7sSdV8ca7lnjpjBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Tapio Reijonen <tapio.reijonen@vaisala.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 7.1 0019/2077] serial: max310x: implement gpio_chip::get_direction()
-Date: Tue, 21 Jul 2026 16:54:52 +0200
-Message-ID: <20260721152553.121675978@linuxfoundation.org>
+	Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>,
+	Moteen Shah <m-shah@ti.com>
+Subject: [PATCH 7.1 0020/2077] serial: 8250_omap: clear rx_running on zero-length DMA completes
+Date: Tue, 21 Jul 2026 16:54:53 +0200
+Message-ID: <20260721152553.145201285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,59 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tapio Reijonen <tapio.reijonen@vaisala.com>
+From: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
 
-commit a483b1a91b33b7533280e7c3efd2bc1275caef18 upstream.
+commit 061b627ba534230a18ec4d7251562af12325d06a upstream.
 
-It's strongly recommended for GPIO drivers to always implement the
-.get_direction() callback - even when the direction is tracked in
-software. The GPIO core emits a warning when the callback is missing
-and a user reads the direction of a line, e.g. via
-/sys/kernel/debug/gpio.
+On AM33xx RX DMA only triggers when the FIFO reaches the
+configured threshold (typically 48 bytes). For smaller bursts
+no DMA request is issued and the FIFO is drained by RX timeout.
 
-The MAX310X keeps the GPIO direction in the GPIOCFG register (a set bit
-selects output), which the existing direction_input/output callbacks
-already program, so the current direction can be read back directly.
+In this case __dma_rx_do_complete() can legitimately see count == 0.
 
-Fixes: f65444187a66 ("serial: New serial driver MAX310X")
+The current code exits early in this case and does not clear
+dma->rx_running, leaving the DMA state inconsistent. This can
+prevent RX DMA from restarting and may cause
+omap_8250_rx_dma_flush() to fail, marking DMA as broken.
+
+Fix this by clearing dma->rx_running once the DMA transfer has
+completed or been terminated, even if no data was transferred.
+
+Fixes: a5fd8945a478 ("serial: 8250: 8250_omap.c: Clear DMA RX running status only after DMA termination is done")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://patch.msgid.link/20260615-b4-serial-max310x-gpio-get-direction-v2-1-4704ba2b181a@vaisala.com
+Signed-off-by: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
+Reviewed-by: Moteen Shah <m-shah@ti.com>
+Link: https://patch.msgid.link/BE3P281MB55155F2F5795E411F5A65282EE0B2@BE3P281MB5515.DEUP281.PROD.OUTLOOK.COM
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/tty/serial/8250/8250_omap.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -1212,6 +1212,17 @@ static int max310x_gpio_set(struct gpio_
- 	return 0;
- }
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -944,11 +944,12 @@ static void __dma_rx_do_complete(struct
+ 				dev_err(p->port.dev, "teardown incomplete\n");
+ 		}
+ 	}
++
++	dma->rx_running = 0;
+ 	if (!count)
+ 		goto out;
+ 	ret = tty_insert_flip_string(tty_port, dma->rx_buf, count);
  
-+static int max310x_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
-+{
-+	struct max310x_port *s = gpiochip_get_data(chip);
-+	struct uart_port *port = &s->p[offset / 4].port;
-+	unsigned int val;
-+
-+	val = max310x_port_read(port, MAX310X_GPIOCFG_REG);
-+
-+	return val & BIT(offset % 4) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
-+}
-+
- static int max310x_gpio_direction_input(struct gpio_chip *chip, unsigned int offset)
- {
- 	struct max310x_port *s = gpiochip_get_data(chip);
-@@ -1421,6 +1432,7 @@ static int max310x_probe(struct device *
- 	s->gpio.owner		= THIS_MODULE;
- 	s->gpio.parent		= dev;
- 	s->gpio.label		= devtype->name;
-+	s->gpio.get_direction	= max310x_gpio_get_direction;
- 	s->gpio.direction_input	= max310x_gpio_direction_input;
- 	s->gpio.get		= max310x_gpio_get;
- 	s->gpio.direction_output= max310x_gpio_direction_output;
+-	dma->rx_running = 0;
+ 	p->port.icount.rx += ret;
+ 	p->port.icount.buf_overrun += count - ret;
+ out:
 
 
