@@ -1,63 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E209446AA93;
-	Tue, 21 Jul 2026 15:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDBE46AA9D;
+	Tue, 21 Jul 2026 15:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648398; cv=none; b=J1R3W/yANAG6/PycjsUvMiNJuk2nOZwZLZZwH7GkRjrZEGjXZuEmfWFerQRLyJ5Sy+4V+nFPyGiHrZ9/8eFXTHY5zemqIyQVAkp6IlJQcB6cnBKIgTn0ysTvDwefo8c4667vjNorzsxkzyfN1yi1M+WvKWbAILrFUeFWtPC19BA=
+	t=1784648401; cv=none; b=NEYxvKFrnFrM3JFfYiCOsd9XrTASRuQN77PPPqr5Gm868SbwDmGuqZsQFtESBA1qogC+GeLIfLX8+SAF20T3PRaSC5NTfoznWwfADwocAHjX7XNaYDxk9uGswjOCRDNAIzsfVkaSL1A1X/ToEUsFIQvdi/0avs3s1+HhYht+zIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648398; c=relaxed/simple;
-	bh=yetQ53dELWRJINn29v7eetvLe1tM/VWTfka+ZAVmpDg=;
+	s=arc-20240116; t=1784648401; c=relaxed/simple;
+	bh=78In+HEJn2qDd8i0cqgoCcLZv1VD69sSN0i0G1uEGJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ClL20CVj6PMWQof69H4KMSrb5I8xzmnnUNH3XLr/aYr+W9EiFsD/hUmF6ORXbcikNGxgfduAK5sAdGKW+apsyWYeZrLbC6KVaRzVwj1+5DKiPPrvagrByd2JgsjxSHwP9XlFaQKdXlWry1MNdKK8Otcl4VXGCQZMHsAeNhkD1xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gT22enfO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WOeVEBgT+mb10muors2+/9osiLktk51pAFZFQUA9mETfUU0kmUQffGi/q9eIA4XNxuiobKbgx4hpAKsRJASnpGdIHazJavna63/NT5iJO1zaw4HYHCu/sH8VKhsF81PI1hNKyj3mXAPUgvwOICXK7wTaEn7Lqok1YtBwHh4qHXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFt64HNG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gT22enfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5238C1F000E9;
-	Tue, 21 Jul 2026 15:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFt64HNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9F71F000E9;
+	Tue, 21 Jul 2026 15:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648396;
-	bh=PDbcKYJ2dts9E8rmBpMaJS2oKdH/H1ecsS872g4HAMo=;
+	s=korg; t=1784648399;
+	bh=RaBYH14B6IcXaw5UM+YhXJ5/yMKasUio79ZC9KCJn0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gT22enfOzixYhiVY9rvl+GbZP0du3BnZesIKu/dYNInWsHP8/T+4eZwQuZ5w3HXHt
-	 /781bTcXBnGa7L7bwScCeDXk8FHiJG9lV+LTvMCR5/JngGfsKlTldTBgyvKwsILM5b
-	 j1euTEw8QK1g2xCkru2QTdPTWYL39kGQAFimMDGM=
+	b=DFt64HNGFeBOyyivdHuPOYbFZWe/6AvkaJIk2uMFEv1VehwwzYXL0n1tFax2BLBko
+	 XmpMvsRFARlrM0xphOOse6IBnWJuCkMTvp/oQ5ZJ67RpRZng64Wm9vi1/mwZWaeS7k
+	 POT4pcov9A57Sx4jmlbKQuW2oQ4u+u+tTK+AS+fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
-	Dmitry Safonov <dima@arista.com>,
-	Francesco Ruggeri <fruggeri@arista.com>,
-	Salam Noureddine <noureddine@arista.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Michal Luczaj <mhal@rbox.co>,
-	David Wei <dw@davidwei.uk>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	netdev@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Aleksa Sarai <aleksa@amutable.com>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0185/2077] sockptr: fix usize check in copy_struct_from_sockptr() for user pointers
-Date: Tue, 21 Jul 2026 16:57:38 +0200
-Message-ID: <20260721152557.048001055@linuxfoundation.org>
+Subject: [PATCH 7.1 0186/2077] arm64: dts: mediatek: mt7988a-bpi-r4pro: rework pcie gpio-hog handling
+Date: Tue, 21 Jul 2026 16:57:39 +0200
+Message-ID: <20260721152557.071016117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -76,74 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Frank Wunderlich <frank-w@public-files.de>
 
-[ Upstream commit db0493512931fe1e5a71612e6a358df1aa22d80c ]
+[ Upstream commit e309fa232d12b969afac43a4b7d83dee025cfe63 ]
 
-copy_struct_from_user will never hit the check_zeroed_user() call
-and will never return -E2BIG if new userspace passed new bits in a
-larger structure than the current kernel structure.
+The active-high property in base-dt cannot be overwritten and must be
+set in separate overlay.
 
-As far as I can there are no critical/related uapi changes in
-
-- include/net/bluetooth/bluetooth.h and net/bluetooth/sco.c
-  after the use of copy_struct_from_sockptr in v6.13-rc3
-- include/uapi/linux/tcp.h and net/ipv4/tcp_ao.c
-  after the use of copy_struct_from_sockptr in v6.6-rc1
-
-So that new callers will get the correct behavior from the start.
-
-Fixes: 4954f17ddefc ("net/tcp: Introduce TCP_AO setsockopt()s")
-Fixes: ef84703a911f ("net/tcp: Add TCP-AO getsockopt()s")
-Fixes: faadfaba5e01 ("net/tcp: Add TCP_AO_REPAIR")
-Fixes: 3e643e4efa1e ("Bluetooth: Improve setsockopt() handling of malformed user input")
-Cc: Dmitry Safonov <0x7f454c46@gmail.com>
-Cc: Dmitry Safonov <dima@arista.com>
-Cc: Francesco Ruggeri <fruggeri@arista.com>
-Cc: Salam Noureddine <noureddine@arista.com>
-Cc: David Ahern <dsahern@kernel.org>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Michal Luczaj <mhal@rbox.co>
-Cc: David Wei <dw@davidwei.uk>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: Xin Long <lucien.xin@gmail.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Kuniyuki Iwashima <kuniyu@google.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Cc: Neal Cardwell <ncardwell@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Aleksa Sarai <cyphar@cyphar.com>
-Cc: Christian Brauner <brauner@kernel.org>
-CC: Kees Cook <keescook@chromium.org>
-Cc: netdev@vger.kernel.org
-Cc: linux-bluetooth@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Link: https://patch.msgid.link/cfaedbc33ae9d36adaabf04fa79424f30ff1efdd.1775576651.git.metze@samba.org
-Reviewed-by: Aleksa Sarai <aleksa@amutable.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: f397471a6a8c ("arm64: dts: mediatek: mt7988: Add devicetree for BananaPi R4 Pro")
+Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sockptr.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/Makefile         |  8 ++++++++
+ .../mt7988a-bananapi-bpi-r4-pro-cn13.dtso     | 20 +++++++++++++++++++
+ .../mt7988a-bananapi-bpi-r4-pro-cn14.dtso     | 20 +++++++++++++++++++
+ .../mediatek/mt7988a-bananapi-bpi-r4-pro.dtsi |  2 --
+ 4 files changed, 48 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro-cn13.dtso
+ create mode 100644 arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro-cn14.dtso
 
-diff --git a/include/linux/sockptr.h b/include/linux/sockptr.h
-index 3e6c8e9d67aef6..ba88f4d78c1b16 100644
---- a/include/linux/sockptr.h
-+++ b/include/linux/sockptr.h
-@@ -91,7 +91,7 @@ static inline int copy_struct_from_sockptr(void *dst, size_t ksize,
- 	size_t rest = max(ksize, usize) - size;
+diff --git a/arch/arm64/boot/dts/mediatek/Makefile b/arch/arm64/boot/dts/mediatek/Makefile
+index 387faa9c2a09b5..a86fb313b1a9db 100644
+--- a/arch/arm64/boot/dts/mediatek/Makefile
++++ b/arch/arm64/boot/dts/mediatek/Makefile
+@@ -47,6 +47,8 @@ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-2g5.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-emmc.dtbo
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-4e.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-8x.dtb
++dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-cn13.dtbo
++dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-cn14.dtbo
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-cn15.dtbo
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-cn18.dtbo
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-emmc.dtbo
+@@ -70,18 +72,24 @@ mt7988a-bananapi-bpi-r4-2g5-sd-dtbs := \
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-2g5-sd.dtb
+ mt7988a-bananapi-bpi-r4-pro-8x-emmc-dtbs := \
+ 	mt7988a-bananapi-bpi-r4-pro-8x.dtb \
++	mt7988a-bananapi-bpi-r4-pro-cn13.dtbo \
++	mt7988a-bananapi-bpi-r4-pro-cn14.dtbo \
+ 	mt7988a-bananapi-bpi-r4-pro-emmc.dtbo
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-8x-emmc.dtb
+ mt7988a-bananapi-bpi-r4-pro-8x-sd-dtbs := \
+ 	mt7988a-bananapi-bpi-r4-pro-8x.dtb \
++	mt7988a-bananapi-bpi-r4-pro-cn13.dtbo \
++	mt7988a-bananapi-bpi-r4-pro-cn14.dtbo \
+ 	mt7988a-bananapi-bpi-r4-pro-sd.dtbo
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-8x-sd.dtb
+ mt7988a-bananapi-bpi-r4-pro-8x-sd-cn15-dtbs := \
+ 	mt7988a-bananapi-bpi-r4-pro-8x-sd.dtb \
++	mt7988a-bananapi-bpi-r4-pro-cn14.dtbo \
+ 	mt7988a-bananapi-bpi-r4-pro-cn15.dtbo
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-8x-sd-cn15.dtb
+ mt7988a-bananapi-bpi-r4-pro-8x-sd-cn18-dtbs := \
+ 	mt7988a-bananapi-bpi-r4-pro-8x-sd.dtb \
++	mt7988a-bananapi-bpi-r4-pro-cn13.dtbo \
+ 	mt7988a-bananapi-bpi-r4-pro-cn18.dtbo
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt7988a-bananapi-bpi-r4-pro-8x-sd-cn18.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt8167-pumpkin.dtb
+diff --git a/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro-cn13.dtso b/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro-cn13.dtso
+new file mode 100644
+index 00000000000000..973b76ba0cbfba
+--- /dev/null
++++ b/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro-cn13.dtso
+@@ -0,0 +1,20 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++/*
++ * Copyright (C) 2025 MediaTek Inc.
++ * Author: Frank Wunderlich <frank-w@public-files.de>
++ */
++
++/* This enables key-m slot CN13 on pcie2(11280000 1L0) on BPI-R4-Pro */
++
++/dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++
++/ {
++	compatible = "bananapi,bpi-r4-pro", "mediatek,mt7988a";
++};
++
++&{/soc/pinctrl@1001f000/pcie-2-hog} {
++	output-high;
++};
+diff --git a/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro-cn14.dtso b/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro-cn14.dtso
+new file mode 100644
+index 00000000000000..90b2a64459c316
+--- /dev/null
++++ b/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro-cn14.dtso
+@@ -0,0 +1,20 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++/*
++ * Copyright (C) 2025 MediaTek Inc.
++ * Author: Frank Wunderlich <frank-w@public-files.de>
++ */
++
++/* This enables key-m slot CN14 on pcie3(11290000 1L1) on BPI-R4-Pro */
++
++/dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++
++/ {
++	compatible = "bananapi,bpi-r4-pro", "mediatek,mt7988a";
++};
++
++&{/soc/pinctrl@1001f000/pcie-3-hog} {
++	output-high;
++};
+diff --git a/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro.dtsi b/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro.dtsi
+index a48132f0941143..ff778e8305d5be 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-pro.dtsi
+@@ -437,14 +437,12 @@ mux {
+ 	pcie-2-hog {
+ 		gpio-hog;
+ 		gpios = <79 GPIO_ACTIVE_HIGH>;
+-		output-high;
+ 	};
  
- 	if (!sockptr_is_kernel(src))
--		return copy_struct_from_user(dst, ksize, src.user, size);
-+		return copy_struct_from_user(dst, ksize, src.user, usize);
+ 	/* 1L1 0=key-b (CN18), 1=key-m (CN14) */
+ 	pcie-3-hog {
+ 		gpio-hog;
+ 		gpios = <63 GPIO_ACTIVE_HIGH>;
+-		output-high;
+ 	};
  
- 	if (usize < ksize) {
- 		memset(dst + size, 0, rest);
+ 	pwm0_pins: pwm0-pins {
 -- 
 2.53.0
 
