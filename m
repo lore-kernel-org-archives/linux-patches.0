@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B56415F1C;
-	Tue, 21 Jul 2026 21:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ABA3C7DF5;
+	Tue, 21 Jul 2026 21:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670411; cv=none; b=aSu8l559keSK+2RuuIpl1s3xP4VvPuxim43E4slL7El5kPpvxSlYeABSZzKla8ZIRXssGfsN5eDw2OODziXygdewgm/edjM0sFwORvKsM6IGpcxQbKtWgz4iW5GO9yHLdL2LQBD7nX+68qdTHXnUGK6xKX5MEUo0y+/SirwME3M=
+	t=1784670414; cv=none; b=YMj1VQ3M6BT5p+PqGz0681p5gH+QDf8PGMQ4JzREphHVkp/o3gtFn/XkjX9F116PRpaEt08N9VFjAPKsFHoxyDjy0XFC1Hub0hwJDwpP3JWdktquoiB3nttnDbf6q4ypdfTufXvH83/ow0umrrxRyPnnYXWs9v2QdaqrMh5ffs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670411; c=relaxed/simple;
-	bh=Bui706ih7rmiMaa9OYKv/Jk0ZaEKOsiO2wycCTUD6UI=;
+	s=arc-20240116; t=1784670414; c=relaxed/simple;
+	bh=KMIlkgU0F18ScIAohwaZQL2jKP1hUYXb2JzT4qFYP/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UasQDuir4SZmngm8tfD2ErOfGRWWZ818Z5+X8A+brCUiiLoxZtpt3XBP2aIfuqcZ6Q6D7lS7D2iF8bI1m7qCjSJ2WXS8zbSnevTHEMzQgT+LNEQY6mTeteajrsE7oG7tQQNmg3pvGHT/ovULiWicYVc4VAnXsMZNezy9enUl6jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shjRGYn/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jBQgjfOx9SceT1JqrurDfpxKkS6129dOoivsz6Kdyb4qR7MU6bJFHZFCB55N8+M36UXXU9ov1UZjx5l9b4gCfcXAkJNi1nGf5soGQeUQp58jTkDxgYDguar/vBkmfcfSS9972bNXZ88TsxBVziPsC9S7mC7o8r3JBWOyhna2a7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKT5Q9Hv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shjRGYn/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688EC1F000E9;
-	Tue, 21 Jul 2026 21:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKT5Q9Hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F01C1F000E9;
+	Tue, 21 Jul 2026 21:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670409;
-	bh=NqqWFZQFT9cuDRBsjNYlm38gZgVqDhcmjlUMcHtTisY=;
+	s=korg; t=1784670412;
+	bh=4E5oCyxh6Q/0DaClk2JiK4qnXp8gPHV068EpLfWsjLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=shjRGYn/D2hL61VQKr/furC4PEk/+4bn3ypxI7IHqNJuJvF9e10I3GCFSIPGOi/DI
-	 Tka57iFotS9TLU90sa3FX4cXQ3x/PqsT4RQkVQWb6IZamgMYVmzkxGOlbJqDTrqQm9
-	 HX26rcSc0wyw4Papzkx/Zn+/udo9NvvlsYUEw1eA=
+	b=DKT5Q9HvaKdpibGATFax+/e1AyWgEtVkeApjp3cn72sn0+h6JboVj4l5zRav932fa
+	 9M78tjReMjs1qHuHmcdJFBwQfIK2VBdjD9tGGY+RxixvvyfscIJQ3ezmGXd6W4EEoI
+	 VoL0xASZJUK449loE3uAiMIAuaQxBmDHJnMal2mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 0921/1067] net: openvswitch: reject oversized nested action attrs
-Date: Tue, 21 Jul 2026 17:25:22 +0200
-Message-ID: <20260721152445.136868211@linuxfoundation.org>
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 0922/1067] Bluetooth: btrtl: validate firmware patch bounds
+Date: Tue, 21 Jul 2026 17:25:23 +0200
+Message-ID: <20260721152445.160338947@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,393 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-commit 3f1f755366687d051174739fb99f7d560202f60b upstream.
+commit 609c5b04a28dc1b0f3af6a7bc93055135b2d2059 upstream.
 
-Open vSwitch stores generated flow actions as nlattrs, whose nla_len
-field is u16. Commit a1e64addf3ff ("net: openvswitch: remove
-misbehaving actions length check") allowed the total sw_flow_actions
-stream to grow beyond 64 KiB, which is valid, but also removed the last
-guard preventing a generated nested action attribute from exceeding
-U16_MAX.
+rtlbt_parse_firmware() copies patch_length - 4 bytes before appending the
+firmware version. A malformed firmware patch shorter than the version field
+can make this subtraction underflow and turn the copy into an oversized
+read and write during Bluetooth setup.
 
-An oversized generated container can thus be closed with a truncated
-nla_len. A later dump or teardown then walks a structurally different
-stream than the one that was validated. In particular, an oversized
-nested CLONE/CT action may cause subsequent bytes in the generated
-stream to be interpreted as independent actions.
+The existing patch_offset + patch_length check can also wrap on 32-bit
+architectures. Validate the patch length and range without arithmetic
+overflow before allocating or copying the patch.
 
-Keep the larger total-action-stream behavior, but make nested action
-close reject generated containers that do not fit in nla_len, and return
-the error through all callers. For recursive SAMPLE, CLONE, DEC_TTL, and
-CHECK_PKT_LEN builders, trim resource-owning action-list tails in reverse
-construction order before discarding failed wrappers, so resources copied
-into the rejected tails are released before the wrappers are removed.
-
-Most failed outer wrappers are discarded by truncating actions_len after
-child resources have been released. CHECK_PKT_LEN also trims its parent
-after branch resources are gone. SET/TUNNEL close failures unwind their
-known tun_dst ownership directly, and SET_TO_MASKED has no external
-ownership and truncates on close failure.
-
-Fixes: a1e64addf3ff ("net: openvswitch: remove misbehaving actions length check")
+Fixes: db33c77dddc2 ("Bluetooth: btrtl: Create separate module for Realtek BT driver")
 Cc: stable@vger.kernel.org
-Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260706094336.38639-1-manizada@pm.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow_netlink.c |  201 ++++++++++++++++++++++++++++++++---------
- 1 file changed, 157 insertions(+), 44 deletions(-)
+ drivers/bluetooth/btrtl.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2481,13 +2481,56 @@ static inline int add_nested_action_star
- 	return used;
- }
- 
--static inline void add_nested_action_end(struct sw_flow_actions *sfa,
--					 int st_offset)
-+static inline int add_nested_action_end(struct sw_flow_actions *sfa,
-+					int st_offset)
- {
--	struct nlattr *a = (struct nlattr *) ((unsigned char *)sfa->actions +
--							       st_offset);
-+	struct nlattr *a;
-+	u32 attr_len;
-+
-+	if (WARN_ON_ONCE(st_offset < 0 ||
-+			 (u32)st_offset > sfa->actions_len))
-+		return -EINVAL;
-+
-+	attr_len = sfa->actions_len - (u32)st_offset;
-+	if (WARN_ON_ONCE(attr_len < NLA_HDRLEN))
-+		return -EINVAL;
-+
-+	if (attr_len > U16_MAX)
-+		return -EMSGSIZE;
-+
-+	a = (struct nlattr *)((u8 *)sfa->actions + st_offset);
-+	a->nla_len = attr_len;
-+	return 0;
-+}
-+
-+/* Free the generated action-list tail at @start and truncate it.
-+ * If @nested, @start points to its containing nlattr header.
-+ */
-+static void ovs_nla_trim(struct sw_flow_actions *sfa, int start, bool nested)
-+{
-+	const struct nlattr *actions;
-+	u32 len;
-+
-+	if (start < 0)
-+		return;
-+
-+	if (WARN_ON_ONCE((u32)start > sfa->actions_len))
-+		return;
- 
--	a->nla_len = sfa->actions_len - st_offset;
-+	actions = (const struct nlattr *)((u8 *)sfa->actions + start);
-+	len = sfa->actions_len - (u32)start;
-+
-+	if (nested) {
-+		if (len < NLA_HDRLEN)
-+			goto out;
-+
-+		actions = (const struct nlattr *)((u8 *)actions + NLA_HDRLEN);
-+		len -= NLA_HDRLEN;
-+	}
-+
-+	ovs_nla_free_nested_actions(actions, len);
-+out:
-+	sfa->actions_len = start;
- }
- 
- static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
-@@ -2507,6 +2550,7 @@ static int validate_and_copy_sample(stru
- 	const struct nlattr *attrs[OVS_SAMPLE_ATTR_MAX + 1];
- 	const struct nlattr *probability, *actions;
- 	const struct nlattr *a;
-+	int actions_start;
- 	int rem, start, err;
- 	struct sample_arg arg;
- 
-@@ -2550,18 +2594,27 @@ static int validate_and_copy_sample(stru
- 	err = ovs_nla_add_action(sfa, OVS_SAMPLE_ATTR_ARG, &arg, sizeof(arg),
- 				 log);
- 	if (err)
--		return err;
-+		goto err;
- 
-+	actions_start = (*sfa)->actions_len;
- 	err = __ovs_nla_copy_actions(net, actions, key, sfa,
- 				     eth_type, vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, start);
-+	if (err)
-+		goto err_free;
- 
- 	return 0;
-+
-+err_free:
-+	ovs_nla_trim(*sfa, actions_start, false);
-+err:
-+	(*sfa)->actions_len = start;
-+	return err;
- }
- 
- static int validate_and_copy_dec_ttl(struct net *net,
-@@ -2609,18 +2662,31 @@ static int validate_and_copy_dec_ttl(str
- 		return start;
- 
- 	action_start = add_nested_action_start(sfa, OVS_DEC_TTL_ATTR_ACTION, log);
--	if (action_start < 0)
--		return action_start;
-+	if (action_start < 0) {
-+		err = action_start;
-+		goto err;
-+	}
- 
- 	err = __ovs_nla_copy_actions(net, actions, key, sfa, eth_type,
- 				     vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, action_start);
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, action_start);
-+	if (err)
-+		goto err_free;
-+
-+	err = add_nested_action_end(*sfa, start);
-+	if (err)
-+		goto err_free;
- 	return 0;
-+
-+err_free:
-+	ovs_nla_trim(*sfa, action_start, true);
-+err:
-+	(*sfa)->actions_len = start;
-+	return err;
- }
- 
- static int validate_and_copy_clone(struct net *net,
-@@ -2631,6 +2697,7 @@ static int validate_and_copy_clone(struc
- 				   u32 mpls_label_count, bool log, bool last,
- 				   u32 depth)
- {
-+	int actions_start;
- 	int start, err;
- 	u32 exec;
- 
-@@ -2646,17 +2713,26 @@ static int validate_and_copy_clone(struc
- 	err = ovs_nla_add_action(sfa, OVS_CLONE_ATTR_EXEC, &exec,
- 				 sizeof(exec), log);
- 	if (err)
--		return err;
-+		goto err;
- 
-+	actions_start = (*sfa)->actions_len;
- 	err = __ovs_nla_copy_actions(net, attr, key, sfa,
- 				     eth_type, vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, start);
-+	if (err)
-+		goto err_free;
- 
- 	return 0;
-+
-+err_free:
-+	ovs_nla_trim(*sfa, actions_start, false);
-+err:
-+	(*sfa)->actions_len = start;
-+	return err;
- }
- 
- void ovs_match_init(struct sw_flow_match *match,
-@@ -2747,20 +2823,20 @@ static int validate_and_copy_set_tun(con
- 	tun_dst = metadata_dst_alloc(key.tun_opts_len, METADATA_IP_TUNNEL,
- 				     GFP_KERNEL);
- 
--	if (!tun_dst)
--		return -ENOMEM;
-+	if (!tun_dst) {
-+		err = -ENOMEM;
-+		goto err;
-+	}
- 
- 	err = dst_cache_init(&tun_dst->u.tun_info.dst_cache, GFP_KERNEL);
--	if (err) {
--		dst_release((struct dst_entry *)tun_dst);
--		return err;
--	}
-+	if (err)
-+		goto err_free_tun_dst;
- 
- 	a = __add_action(sfa, OVS_KEY_ATTR_TUNNEL_INFO, NULL,
- 			 sizeof(*ovs_tun), log);
- 	if (IS_ERR(a)) {
--		dst_release((struct dst_entry *)tun_dst);
--		return PTR_ERR(a);
-+		err = PTR_ERR(a);
-+		goto err_free_tun_dst;
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -479,8 +479,9 @@ static int rtlbt_parse_firmware(struct h
  	}
  
- 	ovs_tun = nla_data(a);
-@@ -2781,8 +2857,16 @@ static int validate_and_copy_set_tun(con
- 	ip_tunnel_info_opts_set(tun_info,
- 				TUN_METADATA_OPTS(&key, key.tun_opts_len),
- 				key.tun_opts_len, dst_opt_type);
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, start);
-+	if (WARN_ON_ONCE(err))
-+		goto err_free_tun_dst;
-+
-+	return 0;
+ 	BT_DBG("length=%x offset=%x index %d", patch_length, patch_offset, i);
+-	min_size = patch_offset + patch_length;
+-	if (btrtl_dev->fw_len < min_size)
++	if (patch_length < sizeof(epatch_info->fw_version) ||
++	    patch_offset > btrtl_dev->fw_len ||
++	    patch_length > btrtl_dev->fw_len - patch_offset)
+ 		return -EINVAL;
  
-+err_free_tun_dst:
-+	dst_release((struct dst_entry *)tun_dst);
-+err:
-+	(*sfa)->actions_len = start;
- 	return err;
- }
- 
-@@ -2955,7 +3039,7 @@ static int validate_set(const struct nla
- 
- 	/* Convert non-masked non-tunnel set actions to masked set actions. */
- 	if (!masked && key_type != OVS_KEY_ATTR_TUNNEL) {
--		int start, len = key_len * 2;
-+		int err, start, len = key_len * 2;
- 		struct nlattr *at;
- 
- 		*skip_copy = true;
-@@ -2967,8 +3051,11 @@ static int validate_set(const struct nla
- 			return start;
- 
- 		at = __add_action(sfa, key_type, NULL, len, log);
--		if (IS_ERR(at))
--			return PTR_ERR(at);
-+		if (IS_ERR(at)) {
-+			err = PTR_ERR(at);
-+			(*sfa)->actions_len = start;
-+			return err;
-+		}
- 
- 		memcpy(nla_data(at), nla_data(ovs_key), key_len); /* Key. */
- 		memset(nla_data(at) + key_len, 0xff, key_len);    /* Mask. */
-@@ -2978,7 +3065,11 @@ static int validate_set(const struct nla
- 
- 			mask->ipv6_label &= htonl(0x000FFFFF);
- 		}
--		add_nested_action_end(*sfa, start);
-+		err = add_nested_action_end(*sfa, start);
-+		if (WARN_ON_ONCE(err)) {
-+			(*sfa)->actions_len = start;
-+			return err;
-+		}
- 	}
- 
- 	return 0;
-@@ -3023,7 +3114,8 @@ static int validate_and_copy_check_pkt_l
- 	const struct nlattr *acts_if_greater, *acts_if_lesser_eq;
- 	struct nlattr *a[OVS_CHECK_PKT_LEN_ATTR_MAX + 1];
- 	struct check_pkt_len_arg arg;
--	int nested_acts_start;
-+	int greater_acts_start = -1;
-+	int lesser_acts_start = -1;
- 	int start, err;
- 
- 	err = nla_parse_deprecated_strict(a, OVS_CHECK_PKT_LEN_ATTR_MAX,
-@@ -3058,37 +3150,58 @@ static int validate_and_copy_check_pkt_l
- 	err = ovs_nla_add_action(sfa, OVS_CHECK_PKT_LEN_ATTR_ARG, &arg,
- 				 sizeof(arg), log);
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	nested_acts_start = add_nested_action_start(sfa,
--		OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_LESS_EQUAL, log);
--	if (nested_acts_start < 0)
--		return nested_acts_start;
-+	lesser_acts_start =
-+		add_nested_action_start(sfa,
-+					OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_LESS_EQUAL,
-+					log);
-+	if (lesser_acts_start < 0) {
-+		err = lesser_acts_start;
-+		goto err_free;
-+	}
- 
- 	err = __ovs_nla_copy_actions(net, acts_if_lesser_eq, key, sfa,
- 				     eth_type, vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, nested_acts_start);
-+	err = add_nested_action_end(*sfa, lesser_acts_start);
-+	if (err)
-+		goto err_free;
- 
--	nested_acts_start = add_nested_action_start(sfa,
--		OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_GREATER, log);
--	if (nested_acts_start < 0)
--		return nested_acts_start;
-+	greater_acts_start =
-+		add_nested_action_start(sfa,
-+					OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_GREATER,
-+					log);
-+	if (greater_acts_start < 0) {
-+		err = greater_acts_start;
-+		goto err_free;
-+	}
- 
- 	err = __ovs_nla_copy_actions(net, acts_if_greater, key, sfa,
- 				     eth_type, vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 
- 	if (err)
--		return err;
-+		goto err_free;
-+
-+	err = add_nested_action_end(*sfa, greater_acts_start);
-+	if (err)
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, nested_acts_start);
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, start);
-+	if (err)
-+		goto err_free;
- 	return 0;
-+
-+err_free:
-+	ovs_nla_trim(*sfa, greater_acts_start, true);
-+	ovs_nla_trim(*sfa, lesser_acts_start, true);
-+	ovs_nla_trim(*sfa, start, false);
-+	return err;
- }
- 
- static int copy_action(const struct nlattr *from,
+ 	/* Copy the firmware into a new buffer and write the version at
 
 
