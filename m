@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DAE3FE67B;
-	Tue, 21 Jul 2026 17:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599E746A5FA;
+	Tue, 21 Jul 2026 17:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655519; cv=none; b=Uck5fu+FNa8RlQkAC0R+z+l4YND6mKf7MeFU46uUTsrF+Lll8VUFqd6srj+P4E3nIZbezCZ3tKB6W1rjFD8AwoIE4bzjFt4cw6nEvClX7OPolcUW9WWn0dFTu6+uh4MFmUpdVyfTIQvkrRERT0wjp/qiy7sM3VtUbiWA+xWVPyU=
+	t=1784655522; cv=none; b=Or50HyCi9eKkgunwy0nTYI+gVmRjIKMhnznW4qJfhe8NkvE+XoifXOTaY1TK2GEgxux5Ijp0CYYREchJ9VeBjmc1ItDm7mqEHrt6aVCifcdZFlxrdqErCrAVUoKJOlD5/GprrpAR0EpjI4n2ZEDAQqYRldO+oa8impc+BncAUP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655519; c=relaxed/simple;
-	bh=Y5B4+vz2tsI5BFiQAKPtg2mTj0uxLVPegjJA7UWjFIo=;
+	s=arc-20240116; t=1784655522; c=relaxed/simple;
+	bh=mWekh1V6qRR3lJAqhKeOJtARmEsZP2HkM378fMC1WYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KO7Tgp5c1OWWrRKu12f+ksjCBLmDFKbi4mIy6M36JiOJMtg8CeMmUxJEljchX1wJOSK0gVgT6xhK3haIXcjdAoudNFtA28TF93bpna12RlN+IECkHu8maYO7ue0FfGavrhcPEjP5cWT2PdZDBbz94JmtgB7QqvWrONq08uiXfo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bl8XIcaU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m6JbInfkTXOe9Hl/r9QfkRlMJg4ZVukgBjdCkMrNYk8vVNsfmJiUdJOU53egvjt/LY3XmPuj53UFzEgyxMlieXBd/twwwJz6lECfUpV5Rm/9XSuJ+dm3eYh0IOHogjp+msJMIgUr0M9ptFgliMQ2T2yXnq+6obAbLkcWgHqRiLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRdawd8T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bl8XIcaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7691F000E9;
-	Tue, 21 Jul 2026 17:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRdawd8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63271F000E9;
+	Tue, 21 Jul 2026 17:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655517;
-	bh=Ms6e9DjdzJi34tM54VhfDy9pykKs8a0hNYUPqeRBFYw=;
+	s=korg; t=1784655520;
+	bh=zT3k9jyhKvtv8iruqrvW47JtOJrwvX4RbMePIqRKylQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bl8XIcaU/TJgA/yWSiqgXebXrs9NDS8A11Tnxnfb6HpkZUmOe/Y1oeLhV3W06W75p
-	 QeLC1NLBeIfOdmX+3cqjcAVW3NusYd/BD6CbXKr1LB/2CbPFPUUeMJ+g+ntZ+JAUtH
-	 LRqXaWfKHcGl1ZRikE2R40k25O5XaHrQ1RiRaft0=
+	b=uRdawd8TyPv0bkCyzHagAXpUZIHed0DAmxdLNPcFjVMdf8hhJbUWtcSwSJ9WM7FyE
+	 H62h0ce12ObG9cxawNr9AwVpBQqAZIHxBhJWpZ9eq8H2TGdbXjT56SXEt+lE2hYop1
+	 8VA4sTHoZbHsSpPnZ3TQSmO0xU4GowSxJm/CupcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <simon.horman@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	David Howells <dhowells@redhat.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 0038/1611] rxrpc: rxrpc_verify_data ensure rx_dec_buffer alloc
-Date: Tue, 21 Jul 2026 17:02:34 +0200
-Message-ID: <20260721152515.676974601@linuxfoundation.org>
+Subject: [PATCH 6.18 0039/1611] rxrpc: Dont move a peeked OOB message onto the pending queue
+Date: Tue, 21 Jul 2026 17:02:35 +0200
+Message-ID: <20260721152515.699587841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -56,52 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffrey Altman <jaltman@auristor.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 16c8ae9735c5bd7e54dd7478d6348e0fc860842d upstream.
+commit 5801cff7d5d7b4e9d877dfb627b23eb63167f02c upstream.
 
-rxrpc_recvmsg_data() calls rxrpc_verify_data() whenever the
-rxrpc_call.rx_dec_buffer is unallocated and assumes that upon
-successful return that rx_dec_buffer must be allocated.
-However, rxrpc_verify_data() does not request an allocation if
-the rxrpc_skb_priv.len is zero.
+rxrpc_recvmsg_oob() takes a received oob message off recvmsg_oobq and,
+if a response is needed, moves it onto the pending_oobq tree. However,
+only the unlink from recvmsg_oobq is guarded by MSG_PEEK; the move onto
+pending_oobq always runs.
 
-In addition, failure to allocate rx_dec_buffer will result in a
-call to skb_copy_bits() with a NULL destination which can
-trigger a NULL pointer dereference.
+As a result, reading a challenge with MSG_PEEK leaves the skb on
+recvmsg_oobq while also adding it to pending_oobq. Since struct
+sk_buff's rbnode shares storage with its next and prev pointers,
+rb_insert_color() overwrites the list linkage, and the skb, which holds
+a single reference, becomes reachable from both queues at once.
 
-To prevent these issues rxrpc_verify_data() is modified to
-always attempt to allocate the rxrpc_call.rx_dec_buffer if it
-is NULL.
+When the socket is closed both queues are drained in turn. While
+draining recvmsg_oobq, __skb_unlink() follows the next and prev
+pointers that rbnode has overwritten and writes to a bad address. Also,
+as the skb holds a single reference but is freed from each queue, both
+the skb and the connection reference it holds are released twice. This
+leads to memory corruption and to a use-after-free caused by the
+connection refcount underflow.
 
-This issue was identified with assistance of a private
-sashiko instance.
+MSG_PEEK does not consume the message from the queue, so only unlink it
+from recvmsg_oobq and then move it onto pending_oobq or free it when
+the message is actually consumed.
 
-Fixes: d2bc90cf6c75cb ("rxrpc: Fix DATA decrypt vs splice() by copying data to buffer in recvmsg")
-Reported-by: Simon Horman <simon.horman@redhat.com>
-Signed-off-by: Jeffrey Altman <jaltman@auristor.com>
+Fixes: 5800b1cf3fd8 ("rxrpc: Allow CHALLENGEs to the passed to the app for a RESPONSE")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Jiayuan Chen <jiayuan.chen@linux.dev>
 cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260609140911.838677-2-dhowells@redhat.com
+Link: https://patch.msgid.link/20260609140911.838677-3-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/recvmsg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rxrpc/recvmsg.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
+diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
+index a3cf5358f16e..82614cbdb60f 100644
 --- a/net/rxrpc/recvmsg.c
 +++ b/net/rxrpc/recvmsg.c
-@@ -161,7 +161,7 @@ static int rxrpc_verify_data(struct rxrp
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
- 	int ret;
+@@ -262,12 +262,13 @@ static int rxrpc_recvmsg_oob(struct socket *sock, struct msghdr *msg,
+ 		break;
+ 	}
  
--	if (sp->len > call->rx_dec_bsize) {
-+	if (sp->len > call->rx_dec_bsize || !call->rx_dec_buffer) {
- 		/* Make sure we can hold a 1412-byte jumbo subpacket and make
- 		 * sure that the buffer size is aligned to a crypto blocksize.
- 		 */
+-	if (!(flags & MSG_PEEK))
++	if (!(flags & MSG_PEEK)) {
+ 		skb_unlink(skb, &rx->recvmsg_oobq);
+-	if (need_response)
+-		rxrpc_add_pending_oob(rx, skb);
+-	else
+-		rxrpc_free_skb(skb, rxrpc_skb_put_oob);
++		if (need_response)
++			rxrpc_add_pending_oob(rx, skb);
++		else
++			rxrpc_free_skb(skb, rxrpc_skb_put_oob);
++	}
+ 	return ret;
+ }
+ 
+-- 
+2.55.0
+
 
 
