@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50887171BB;
-	Tue, 21 Jul 2026 21:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E749A44AB6E;
+	Tue, 21 Jul 2026 21:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668777; cv=none; b=Ueiqa9DUSS5puPGxil+JfQH+fVgDKorYoaOIV/FywFsOqvz04/EOD5lvH03upQcEnUz60WCpQUJTZBJtZcb+ql5+zYjECCnaL0iij98BljGkS/Ib+v88TqpXv3l1aUU0MfqpdxtISCJv114caqqOVFEdbaYAoXQtu2/rbatEsV0=
+	t=1784668780; cv=none; b=sVnJFrRnH/G8S2grU1CZa5duwo9LFW3XbAjAijeff/+Sp9K/PsxoDj9PXi3WlaFazcGKg3F+drNMp4BMw01LXTqOKTccUMn7b1/jXzRE5T6EcPZBTdRaBIzu35YQkMvBrh556kwwpjd20Gxp2dR4p6O9qE02VTfGZgkVhhHQvvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668777; c=relaxed/simple;
-	bh=Qv+XhsyXez+ten4Pekc4+PtQusaBICZPNSrpNMdkMXY=;
+	s=arc-20240116; t=1784668780; c=relaxed/simple;
+	bh=iGqcc3pCmi1TvxlIH7u8iQ2JboD6pIbu0G8I+Fp6sx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oik+lEZU4FESW/7hQw5smn1s7sNi7ydQges8ztsOArWjUvlPZaOeXU9UCZqsy/GiKefT35Mq9W0hurNL4BEif5V/mi4UgpXrG5LCy0E+n27IV7XqDdVFuNhU1HEOq47zyia2idBl3gHbf4DgfL5vzAS4vOkTQ6Cpxlxe5TkeyVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrkCebqa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=InLsReCVZmYaRArocBPSuBWXP8E/0XaZtTvxKBmUR+9Z6myyleY9X+mJqedXpb+ptkVim3eyR0FOPiihHE4YZri36Yc63elA+lBxnLSinWMcBQjcq6LB7lMlND48VYW0CKszjnwjk/CZVXKB46xr6z4Tgt8FVIwiVQ2CUN75B94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEJl6w81; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrkCebqa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D491F000E9;
-	Tue, 21 Jul 2026 21:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEJl6w81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A221F000E9;
+	Tue, 21 Jul 2026 21:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668776;
-	bh=o5Ml7Nv5lg/PCvRDgBCb5JyxMDqWp4WpovqomuFDyzs=;
+	s=korg; t=1784668778;
+	bh=BZlKtqU/sRiR5dGaVEV4IkfH/kdPXJfsksvu++EzH8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NrkCebqade+Wl+dgN2p5058/Kd22orcQ0F9H5hQEnSKu6Z6wumRFwWexOKkw3bJZ/
-	 mtiwihOUH4/q74gjE1YY6kBE9YaGxQovTPnfKVx1bletETJxIVWRiVM+TIwu5j3GJS
-	 RfYLvgHzExncXPmDn47mGeX9jpiBP03TVhEK+c5w=
+	b=BEJl6w81sbEbY252Uo54lgektLm4Q+OXj+I7VyuefQhGbVQXhCHh7Qtjc88pljaUr
+	 U8XeRjHVN4mIT5rgM0a6x3DRoxXqDjTuM6jIU7dQDjMwt8W4uebsRrBKBbdfLUlmkB
+	 oSK+gVmlL4OHYntmRjw9TZCfMCjkeTVbdXJblKcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin He <helin52@huawei.com>,
-	Yongbang Shi <shiyongbang@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0304/1067] drm/hisilicon/hibmc: use clock to look up the PLL value
-Date: Tue, 21 Jul 2026 17:15:05 +0200
-Message-ID: <20260721152431.396190836@linuxfoundation.org>
+Subject: [PATCH 6.1 0305/1067] evm: terminate and bound the evm_xattrs read buffer
+Date: Tue, 21 Jul 2026 17:15:06 +0200
+Message-ID: <20260721152431.418709583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,153 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin He <helin52@huawei.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 99ef3a4f1c1813cabd50bb3e8522e85e00838bb2 ]
+[ Upstream commit 11143a19f5b8dc8f414deab87571134f9f447313 ]
 
-In the past, we use width and height to look up our PLL value.
-But actually the actual clock check is also necessnary. There are
-some resolutions that width and height same, but its clock different.
-Add the clock check when using pll_table to determine the PLL value.
+evm_read_xattrs() allocates size + 1 bytes, fills them from the list of
+enabled xattrs, and then passes strlen(temp) to
+simple_read_from_buffer(). When no configured xattrs are enabled, the
+fill loop stores nothing and temp[0] remains uninitialized, so strlen()
+reads beyond initialized memory.
 
-Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
-Signed-off-by: Lin He <helin52@huawei.com>
-Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509032302.2057227-5-shiyongbang@huawei.com
+Explicitly terminate the buffer after allocation, use snprintf() for
+each formatted line, and pass the accumulated length, without risk of
+truncation, to simple_read_from_buffer().
+
+Fixes: fa516b66a1bf ("EVM: Allow runtime modification of the set of verified xattrs")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_de.c    | 80 +++++++++++--------
- 1 file changed, 45 insertions(+), 35 deletions(-)
+ security/integrity/evm/evm_secfs.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-index 89bed78f14666a..db7fce4e8cc344 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-@@ -32,26 +32,43 @@ struct hibmc_display_panel_pll {
- struct hibmc_dislay_pll_config {
- 	u64 hdisplay;
- 	u64 vdisplay;
-+	int clock;
- 	u32 pll1_config_value;
- 	u32 pll2_config_value;
- };
- 
- static const struct hibmc_dislay_pll_config hibmc_pll_table[] = {
--	{640, 480, CRT_PLL1_HS_25MHZ, CRT_PLL2_HS_25MHZ},
--	{800, 600, CRT_PLL1_HS_40MHZ, CRT_PLL2_HS_40MHZ},
--	{1024, 768, CRT_PLL1_HS_65MHZ, CRT_PLL2_HS_65MHZ},
--	{1152, 864, CRT_PLL1_HS_80MHZ_1152, CRT_PLL2_HS_80MHZ},
--	{1280, 768, CRT_PLL1_HS_80MHZ, CRT_PLL2_HS_80MHZ},
--	{1280, 720, CRT_PLL1_HS_74MHZ, CRT_PLL2_HS_74MHZ},
--	{1280, 960, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
--	{1280, 1024, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
--	{1440, 900, CRT_PLL1_HS_106MHZ, CRT_PLL2_HS_106MHZ},
--	{1600, 900, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
--	{1600, 1200, CRT_PLL1_HS_162MHZ, CRT_PLL2_HS_162MHZ},
--	{1920, 1080, CRT_PLL1_HS_148MHZ, CRT_PLL2_HS_148MHZ},
--	{1920, 1200, CRT_PLL1_HS_193MHZ, CRT_PLL2_HS_193MHZ},
-+	{640, 480, 25000, CRT_PLL1_HS_25MHZ, CRT_PLL2_HS_25MHZ},
-+	{800, 600, 40000, CRT_PLL1_HS_40MHZ, CRT_PLL2_HS_40MHZ},
-+	{1024, 768, 65000, CRT_PLL1_HS_65MHZ, CRT_PLL2_HS_65MHZ},
-+	{1152, 864, 78750, CRT_PLL1_HS_80MHZ_1152, CRT_PLL2_HS_80MHZ},
-+	{1280, 768, 80000, CRT_PLL1_HS_80MHZ, CRT_PLL2_HS_80MHZ},
-+	{1280, 720, 74375, CRT_PLL1_HS_74MHZ, CRT_PLL2_HS_74MHZ},
-+	{1280, 960, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
-+	{1280, 1024, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
-+	{1440, 900, 105952, CRT_PLL1_HS_106MHZ, CRT_PLL2_HS_106MHZ},
-+	{1600, 900, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
-+	{1600, 1200, 162500, CRT_PLL1_HS_162MHZ, CRT_PLL2_HS_162MHZ},
-+	{1920, 1080, 148750, CRT_PLL1_HS_148MHZ, CRT_PLL2_HS_148MHZ},
-+	{1920, 1200, 193750, CRT_PLL1_HS_193MHZ, CRT_PLL2_HS_193MHZ},
- };
- 
-+static int hibmc_get_best_clock_idx(const struct drm_display_mode *mode)
-+{
-+	int i, diff;
-+
-+	for (i = 0; i < ARRAY_SIZE(hibmc_pll_table); i++) {
-+		if (hibmc_pll_table[i].hdisplay == mode->hdisplay &&
-+		    hibmc_pll_table[i].vdisplay == mode->vdisplay) {
-+			diff = abs(mode->clock - hibmc_pll_table[i].clock);
-+			if (diff < mode->clock / 100) /* tolerance 1/100 */
-+				return i;
-+		}
-+	}
-+
-+	return -MODE_CLOCK_RANGE;
-+}
-+
- static int hibmc_plane_atomic_check(struct drm_plane *plane,
- 				    struct drm_atomic_state *state)
+diff --git a/security/integrity/evm/evm_secfs.c b/security/integrity/evm/evm_secfs.c
+index 8a9db7dfca7efe..93a0d8d554a87e 100644
+--- a/security/integrity/evm/evm_secfs.c
++++ b/security/integrity/evm/evm_secfs.c
+@@ -128,8 +128,8 @@ static ssize_t evm_read_xattrs(struct file *filp, char __user *buf,
+ 			       size_t count, loff_t *ppos)
  {
-@@ -214,19 +231,15 @@ static enum drm_mode_status
- hibmc_crtc_mode_valid(struct drm_crtc *crtc,
- 		      const struct drm_display_mode *mode)
- {
--	size_t i = 0;
- 	int vrefresh = drm_mode_vrefresh(mode);
+ 	char *temp;
+-	int offset = 0;
+-	ssize_t rc, size = 0;
++	size_t offset = 0, size = 0;
++	ssize_t rc;
+ 	struct xattr_list *xattr;
  
- 	if (vrefresh < 59 || vrefresh > 61)
- 		return MODE_NOCLOCK;
- 
--	for (i = 0; i < ARRAY_SIZE(hibmc_pll_table); i++) {
--		if (hibmc_pll_table[i].hdisplay == mode->hdisplay &&
--		    hibmc_pll_table[i].vdisplay == mode->vdisplay)
--			return MODE_OK;
--	}
-+	if (hibmc_get_best_clock_idx(mode) >= 0)
-+		return MODE_OK;
- 
--	return MODE_BAD;
-+	return MODE_CLOCK_RANGE;
- }
- 
- static u32 format_pll_reg(void)
-@@ -281,23 +294,20 @@ static void set_vclock_hisilicon(struct drm_device *dev, u64 pll)
- 	writel(val, priv->mmio + CRT_PLL1_HS);
- }
- 
--static void get_pll_config(u64 x, u64 y, u32 *pll1, u32 *pll2)
-+static void get_pll_config(struct drm_display_mode *mode, u32 *pll1, u32 *pll2)
- {
--	size_t i;
--	size_t count = ARRAY_SIZE(hibmc_pll_table);
--
--	for (i = 0; i < count; i++) {
--		if (hibmc_pll_table[i].hdisplay == x &&
--		    hibmc_pll_table[i].vdisplay == y) {
--			*pll1 = hibmc_pll_table[i].pll1_config_value;
--			*pll2 = hibmc_pll_table[i].pll2_config_value;
--			return;
--		}
-+	int idx;
-+
-+	idx = hibmc_get_best_clock_idx(mode);
-+	if (idx < 0) {
-+		/* if found none, we use default value */
-+		*pll1 = CRT_PLL1_HS_25MHZ;
-+		*pll2 = CRT_PLL2_HS_25MHZ;
-+		return;
+ 	if (*ppos != 0)
+@@ -152,16 +152,22 @@ static ssize_t evm_read_xattrs(struct file *filp, char __user *buf,
+ 		return -ENOMEM;
  	}
  
--	/* if found none, we use default value */
--	*pll1 = CRT_PLL1_HS_25MHZ;
--	*pll2 = CRT_PLL2_HS_25MHZ;
-+	*pll1 = hibmc_pll_table[idx].pll1_config_value;
-+	*pll2 = hibmc_pll_table[idx].pll2_config_value;
- }
++	temp[size] = '\0';
++
++	/*
++	 * No truncation possible: size is computed over the same enabled
++	 * xattrs under xattr_list_mutex, so offset never exceeds size.
++	 */
+ 	list_for_each_entry(xattr, &evm_config_xattrnames, list) {
+ 		if (!xattr->enabled)
+ 			continue;
  
- /*
-@@ -319,7 +329,7 @@ static u32 display_ctrl_adjust(struct drm_device *dev,
- 	x = mode->hdisplay;
- 	y = mode->vdisplay;
+-		sprintf(temp + offset, "%s\n", xattr->name);
+-		offset += strlen(xattr->name) + 1;
++		offset += snprintf(temp + offset, size + 1 - offset, "%s\n",
++				   xattr->name);
+ 	}
  
--	get_pll_config(x, y, &pll1, &pll2);
-+	get_pll_config(mode, &pll1, &pll2);
- 	writel(pll2, priv->mmio + CRT_PLL2_HS);
- 	set_vclock_hisilicon(dev, pll1);
+ 	mutex_unlock(&xattr_list_mutex);
+-	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
++	rc = simple_read_from_buffer(buf, count, ppos, temp, offset);
+ 
+ 	kfree(temp);
  
 -- 
 2.53.0
