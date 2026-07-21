@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C96B3B9D9D;
-	Tue, 21 Jul 2026 22:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C666C439322;
+	Tue, 21 Jul 2026 22:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671763; cv=none; b=I1Y5gkLirV+ptDpIvi0uaJUP3/kJtft0zZRxHnpPSoyOTuYbV/2filNQueXItRf09OPnz6Md/9rsfR/XjQ+dWNpRc+cpWG3wKQMTwHDI5NCnjLULFVmNKYqo1fCj2NgVjQsZqAt6PQeZFmabvIFcnfv+Nf7yXp26uGSEoJstZOc=
+	t=1784671766; cv=none; b=u6Ls7t0Znyju4ksVip2qw/gHHBPsQSccFo5C3njHalDav6TfQeH7bX2KbRjGqS8WiyQDV9mgljmhHDxjLkevc0fJk/a7q6E3EQHB18G5hrAzvDHwlvcW4iUlO9g715Y62VzxmyPLQEl4dD8aWul5wBqwq/ADTgOQYCxOjQc5qKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671763; c=relaxed/simple;
-	bh=brZ9CxziyYc+HIUFv8bB1kv7uvLnIv9PCtpRyC/Rnas=;
+	s=arc-20240116; t=1784671766; c=relaxed/simple;
+	bh=VN996BNP+7vYFfpj1T/X6gJC8ah8/ht/s/o2RNwLIDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIdpsyoPbNNxS7enl+fEXd/xLlnkgybC9SlYzr9FncxVabj9ur+oMFqjWRBZnRsd3SnWl3Mdo99WpJRji28lM+qCliVtCgT26PLzOFhAh8NhMyxxCMTjkM2/D8Nmhl3v6bgy3SvsnUjYd+4m8idVZiR5fxZ7RIxOsXt36LieC2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTX7fcVO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S2POJ4awTno0YDYABxM2pI65b+N2YYlqHRRBOsjsjG2KRcpdQPXb5O+YvkVOrbIs/IcUcb9Ge+MvhIjM9b95cpzkXQbpVn5Lh7GUuzq/HwKYV7wmWnmODFA/Ojn6tvrx2Yv/u7eq1BgIYNpkA5mr75iOO034PjEiF+krpYPiknM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxIOx1x6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTX7fcVO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6821F000E9;
-	Tue, 21 Jul 2026 22:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxIOx1x6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408CF1F000E9;
+	Tue, 21 Jul 2026 22:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671762;
-	bh=Gc2k8cWBoxgryTOxpanvElxE/crtyy30TsfqU6IBeeM=;
+	s=korg; t=1784671764;
+	bh=J71HeJKVV4y/i+Y0fMdpCtK0rN6PEhA8kjONTnoi3rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTX7fcVOCW0w8A7FXx4ifrV2qRCMEJil68MkVWFGcfdVecp9nuhkIm6HX/tSdGpUe
-	 QTqIxh1MvY00o5KGCvRIKYOf/GInvv0MoG5P9dyp1cV14//NYY2BDQ0gq0yVYLTbwJ
-	 aVbLtu8wfYbhlVKnsuaLWqwfK3t5m0/nQICN5d1M=
+	b=BxIOx1x6WO2k6b0Cf4ASz/2T6T8gnsA9PGQ6wV20/RCBO8yh4oYGOUlsV9cJB1/t+
+	 5SLmx5BFcvBTlEkVX1glDRyqExFFmtNFsujPi0uypK5AbnA+LFwvOnOmkvzQKUEBm4
+	 NlYUZ/3l4CJmlDfkEEELxt1zFCBzUxnmGQ8shKDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+b225d4dfce6219600c42@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Joseph Qi <jiangqi903@gmail.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 370/843] ksmbd: fix use-after-free in same_client_has_lease()
-Date: Tue, 21 Jul 2026 17:20:05 +0200
-Message-ID: <20260721152414.356563460@linuxfoundation.org>
+Subject: [PATCH 5.15 371/843] ocfs2: fix circular locking dependency in ocfs2_dio_end_io_write
+Date: Tue, 21 Jul 2026 17:20:06 +0200
+Message-ID: <20260721152414.379512472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,56 +59,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit 65b655f65c3ca1ab5d598d3832bb0ff531725858 ]
+[ Upstream commit ff6f26c58421614b02694ac9d219ac61d924bc68 ]
 
-same_client_has_lease() returns an opinfo pointer from ci->m_op_list
-after dropping ci->m_lock without taking a reference.
+A circular locking dependency involves INODE_ALLOC_SYSTEM_INODE,
+EXTENT_ALLOC_SYSTEM_INODE, and ORPHAN_DIR_SYSTEM_INODE.
 
-smb_grant_oplock() then dereferences that pointer in copy_lease() and
-when checking breaking_cnt. A concurrent close can remove the old lease
-from ci->m_op_list and drop the last reference before the caller uses
-the returned pointer, leading to a use-after-free.
+1. ocfs2_mknod() acquires INODE_ALLOC then EXTENT_ALLOC.
 
-Take a reference when same_client_has_lease() selects an existing lease,
-drop any previous match while scanning, and release the returned
-reference in smb_grant_oplock() after copying the lease state.
+2. ocfs2_dio_end_io_write() acquires EXTENT_ALLOC for unwritten
+   extents, then ORPHAN_DIR via ocfs2_del_inode_from_orphan() while still
+   holding EXTENT_ALLOC.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+3. ocfs2_wipe_inode() acquires ORPHAN_DIR then INODE_ALLOC via
+   ocfs2_remove_inode.
+
+Break the cycle in ocfs2_dio_end_io_write() by freeing the allocation
+contexts (releasing EXTENT_ALLOC) before acquiring ORPHAN_DIR.
+
+WARNING: possible circular locking dependency detected
+------------------------------------------------------
+is trying to acquire lock:
+ffff8881e78b33a0
+(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}, at:
+ocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299
+
+but task is already holding lock:
+ffff8881e78b4fa0
+(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}, at:
+ocfs2_evict_inode+0xe97/0x43b0 fs/ocfs2/inode.c:1299
+
+the existing dependency chain (in reverse order) is:
+
+-> #2 (&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}:
+       inode_lock include/linux/fs.h:1029 [inline]
+       ocfs2_del_inode_from_orphan+0x12e/0x7a0 fs/ocfs2/namei.c:2728
+       ocfs2_dio_end_io+0xf9c/0x1370 fs/ocfs2/aops.c:2418
+       dio_complete+0x25b/0x790 fs/direct-io.c:281
+
+-> #1 (&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:
+       inode_lock include/linux/fs.h:1029 [inline]
+       ocfs2_reserve_suballoc_bits+0x16d/0x4840 fs/ocfs2/suballoc.c:882
+       ocfs2_reserve_new_metadata_blocks+0x415/0x9a0
+       fs/ocfs2/suballoc.c:1078
+       ocfs2_mknod+0x10f3/0x2260 fs/ocfs2/namei.c:351
+
+-> #0 (&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:
+       __lock_acquire+0x15a5/0x2cf0 kernel/locking/lockdep.c:5237
+       lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5868
+       down_write+0x96/0x200 kernel/locking/rwsem.c:1625
+       inode_lock include/linux/fs.h:1029 [inline]
+       ocfs2_remove_inode fs/ocfs2/inode.c:733 [inline]
+       ocfs2_wipe_inode fs/ocfs2/inode.c:896 [inline]
+       ocfs2_delete_inode fs/ocfs2/inode.c:1157 [inline]
+       ocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299
+
+Chain exists of:
+  &ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE] -->
+  &ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE] -->
+  &ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);
+                               lock(&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]);
+                               lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);
+  lock(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]);
+
+ *** DEADLOCK ***
+
+Link: https://lore.kernel.org/97c902a6-3bcf-43ea-9b70-f1f136a6c3f2@mail.kernel.org
+Fixes: d647c5b2fbf8 ("ocfs2: split transactions in dio completion to avoid credit exhaustion")
+Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
+Reported-by: syzbot+b225d4dfce6219600c42@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b225d4dfce6219600c42
+Link: https://syzkaller.appspot.com/ai_job?id=0b53ce1e-2972-4192-aa85-8097a702762c
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Joseph Qi <jiangqi903@gmail.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/oplock.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ocfs2/aops.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ksmbd/oplock.c b/fs/ksmbd/oplock.c
-index 9fcdcea0e6bd84..84c4f656eedbd0 100644
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -534,7 +534,12 @@ static struct oplock_info *same_client_has_lease(struct ksmbd_inode *ci,
+diff --git a/fs/ocfs2/aops.c b/fs/ocfs2/aops.c
+index 275e03c86537f9..ac2d47c3632f25 100644
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -2400,6 +2400,15 @@ static int ocfs2_dio_end_io_write(struct inode *inode,
+ unlock:
+ 	up_write(&oi->ip_alloc_sem);
  
- 		ret = compare_guid_key(opinfo, client_guid, lctx->lease_key);
- 		if (ret) {
-+			if (!atomic_inc_not_zero(&opinfo->refcount))
-+				continue;
-+			if (m_opinfo)
-+				opinfo_put(m_opinfo);
- 			m_opinfo = opinfo;
++	if (data_ac) {
++		ocfs2_free_alloc_context(data_ac);
++		data_ac = NULL;
++	}
++	if (meta_ac) {
++		ocfs2_free_alloc_context(meta_ac);
++		meta_ac = NULL;
++	}
 +
- 			/* skip upgrading lease about breaking lease */
- 			if (atomic_read(&opinfo->breaking_cnt)) {
- 				read_lock(&ci->m_lock);
-@@ -1237,6 +1242,7 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
- 			if (atomic_read(&m_opinfo->breaking_cnt))
- 				opinfo->o_lease->flags =
- 					SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE;
-+			opinfo_put(m_opinfo);
- 			goto out;
- 		}
- 	}
+ 	/* everything looks good, let's start the cleanup */
+ 	if (!ret && dwc->dw_orphaned) {
+ 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
+@@ -2411,10 +2420,6 @@ static int ocfs2_dio_end_io_write(struct inode *inode,
+ 	ocfs2_inode_unlock(inode, 1);
+ 	brelse(di_bh);
+ out:
+-	if (data_ac)
+-		ocfs2_free_alloc_context(data_ac);
+-	if (meta_ac)
+-		ocfs2_free_alloc_context(meta_ac);
+ 	ocfs2_run_deallocs(osb, &dealloc);
+ 	ocfs2_dio_free_write_ctx(inode, dwc);
+ 
 -- 
 2.53.0
 
