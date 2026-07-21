@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FD63D0907;
-	Tue, 21 Jul 2026 18:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C53415F1B;
+	Tue, 21 Jul 2026 18:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657098; cv=none; b=dGTr7xUpaCUUdtHB2fa20HdETlYjTMPHaZYWSFDuelHZt1cj4tLRrP6xnZGzTtdU4XIQf94Ws2Ca3+qrzg2ondF14Ch8DmC6+Oan1D566UGDdwF23aUyNpQuGIXB/IVgKENxxus5iriTDQptw3AfiT15xbxUMjOEMcNi4SFXHVk=
+	t=1784657101; cv=none; b=oRH+FY+QlAUjXRt6REGcnA6PCg1+EkA3l6w+Iz3UIkLSYQ2FDolETp5wpx5WUt0pAtkP++vs/+aHHhyzWN4nTpQQU1/juqFK7ubVifBhoMJ7mR+CjjjP/vTzXVLM9yIM07DAI5Ot1wUEn93YF/f2+Fb3qG+KKs2PjBmlGlgmksg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657098; c=relaxed/simple;
-	bh=Dw/dnlPf2iAuyp0GHmawhgrpCS3/gQzPPljARPLeZBU=;
+	s=arc-20240116; t=1784657101; c=relaxed/simple;
+	bh=1OWLZ30L0wp2VWvEcn1qZy90qpTGrpM6Ii+vuA88qEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKB0VwnifFZxafzGtLNR3N/INWm4ojUj+0i5ztbQ3+//61g6b/hq+VUrKAr+urlPAh2/FAPKFZP77OQDjaG4EKSqihCmryY/fIDIdw0x1ZKRCoY8dxq2xVSm0pO6t/inyPjBUdlTnUFpOrswhDAqHITjgz0+FUJH4aGoS7GXAS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5c4Uwja; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cSzrGxlExaF3lHDMX4jb/IhNhKKdbtPj1oEhADbmdq2Pu285u9OHvBZaGMOfU6A2AfQU1vI7msk7UEzL3Rqir6QDic7dxiTRRLC9uLeATDuWKHbhZoHnc9kFPnwJOrkH0flHIBEYMX+KR2kFZesGFaGJyJzuD38ry9SCKn8Xq8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIpOvHLA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5c4Uwja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC041F000E9;
-	Tue, 21 Jul 2026 18:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIpOvHLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368141F000E9;
+	Tue, 21 Jul 2026 18:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657097;
-	bh=xgkzS2H+LFQRfAjO48nha6iVtBZloUc4cI1DT1V22MU=;
+	s=korg; t=1784657099;
+	bh=DHZh8WTcgZBEtlQr5mwpUsEaN6ZWt9IAz4IOqHbNNXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x5c4UwjaCkY9Us+3i2llKzhz4o+iszRVO+GjlMMk8/oMnF2jdxZUAKKd8425QZvjt
-	 2XKPPV32JE/gFr0Uwf/CmmIOyigZ3rlY2IqweSg7GfAgLi8Av+mMRKtTMliSu8Qnye
-	 OJF64ZQrcOYjUzVTKcHM50ZOi1iNozDk83WcmL7I=
+	b=hIpOvHLAv7KR6lNu+eqB/tN8f3yd2c5MmrRK5ExVsMfH2oxnraGj82I1YA0E7sNWq
+	 DfrD/kHHeQ2BNYEKx922JDu/pvXQkBxuZqlBpAsLlh4uSY2/krgwkBzcg6Y6OjzSeG
+	 nrAwY8mQvDigQyhTrcVQzv54Mvr+WOmPa2EzU2yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Anton Blanchard <anton@samba.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0635/1611] perf annotate: Fix crashes on empty annotate windows
-Date: Tue, 21 Jul 2026 17:12:31 +0200
-Message-ID: <20260721152529.671411570@linuxfoundation.org>
+Subject: [PATCH 6.18 0636/1611] perf tools: Guard test_bit from out-of-bounds sample CPU
+Date: Tue, 21 Jul 2026 17:12:32 +0200
+Message-ID: <20260721152529.695709115@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -59,80 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 74802634e4a7e556429417963a8cbda27dd8b4b3 ]
+[ Upstream commit a5498ccf8079fc91c938f122ff9697b0c526b2fd ]
 
-Annotate can open with an empty window if the disassembly tool fails.
-After the linked change, the TUI started assuming there was a current
-annotation line and could assert or segfault in the seek, refresh, and
-source-toggle paths.
+When PERF_SAMPLE_CPU is absent from a perf.data file, sample->cpu is
+initialized to (u32)-1 by evsel__parse_sample().  Five call sites pass
+this value directly to test_bit(sample->cpu, cpu_bitmap), reading
+massively out of bounds past the DECLARE_BITMAP(..., MAX_NR_CPUS)
+allocation of 4096 bits.
 
-Handle empty annotate windows explicitly: set the asm entry count before
-resetting the browser, return early when refreshing an empty list, and
-ignore source line toggle when there is no current annotation line.
+Add a sample->cpu >= MAX_NR_CPUS guard before each test_bit() call,
+matching the existing safe pattern in builtin-kwork.c.  This catches
+both the (u32)-1 sentinel and any corrupted CPU value exceeding the
+bitmap size.
 
-Fixes the following when opening an annotation:
-
-  perf: ui/browser.c:125: ui_browser__list_head_seek: Assertion `pos != NULL' failed.
-  Aborted
-
-Fixes: e201757f7a0a901e ("perf annotate: Fix source code annotate with objdump")
-Assisted-by: GitHub Copilot:GPT-5.4
-Signed-off-by: James Clark <james.clark@linaro.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Fixes: 5d67be97f890 ("perf report/annotate/script: Add option to specify a CPU range")
+Cc: Anton Blanchard <anton@samba.org>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browser.c           | 3 +++
- tools/perf/ui/browsers/annotate.c | 5 ++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/builtin-annotate.c | 3 ++-
+ tools/perf/builtin-diff.c     | 3 ++-
+ tools/perf/builtin-report.c   | 3 ++-
+ tools/perf/builtin-sched.c    | 6 ++++--
+ 4 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
-index dc88427b4ae5af..321187b204d38d 100644
---- a/tools/perf/ui/browser.c
-+++ b/tools/perf/ui/browser.c
-@@ -513,6 +513,9 @@ unsigned int ui_browser__list_head_refresh(struct ui_browser *browser)
- 	struct list_head *head = browser->entries;
- 	int row = 0;
+diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
+index 646f43b0f7c4c9..0485bddb024644 100644
+--- a/tools/perf/builtin-annotate.c
++++ b/tools/perf/builtin-annotate.c
+@@ -299,7 +299,8 @@ static int process_sample_event(const struct perf_tool *tool,
+ 		goto out_put;
+ 	}
  
-+	if (browser->nr_entries == 0)
-+		return 0;
-+
- 	if (browser->top == NULL || browser->top == browser->entries)
-                 browser->top = ui_browser__list_head_filter_entries(browser, head->next);
+-	if (ann->cpu_list && !test_bit(sample->cpu, ann->cpu_bitmap))
++	if (ann->cpu_list && (sample->cpu >= MAX_NR_CPUS ||
++			     !test_bit(sample->cpu, ann->cpu_bitmap)))
+ 		goto out_put;
  
-diff --git a/tools/perf/ui/browsers/annotate.c b/tools/perf/ui/browsers/annotate.c
-index 8fe699f985423e..97f92512f136d1 100644
---- a/tools/perf/ui/browsers/annotate.c
-+++ b/tools/perf/ui/browsers/annotate.c
-@@ -449,6 +449,9 @@ static bool annotate_browser__toggle_source(struct annotate_browser *browser,
- 	struct annotation_line *al;
- 	off_t offset = browser->b.index - browser->b.top_idx;
+ 	if (!al.filtered &&
+diff --git a/tools/perf/builtin-diff.c b/tools/perf/builtin-diff.c
+index 53d5ea4a6a4f7b..a41568b0b8d812 100644
+--- a/tools/perf/builtin-diff.c
++++ b/tools/perf/builtin-diff.c
+@@ -418,7 +418,8 @@ static int diff__process_sample_event(const struct perf_tool *tool,
+ 		goto out;
+ 	}
  
-+	if (browser->b.nr_entries == 0)
-+		return false;
-+
- 	browser->b.seek(&browser->b, offset, SEEK_CUR);
- 	al = list_entry(browser->b.top, struct annotation_line, node);
+-	if (cpu_list && !test_bit(sample->cpu, cpu_bitmap)) {
++	if (cpu_list && (sample->cpu >= MAX_NR_CPUS ||
++			!test_bit(sample->cpu, cpu_bitmap))) {
+ 		ret = 0;
+ 		goto out;
+ 	}
+diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
+index 35df04dad2fd08..fd5bd3d9768626 100644
+--- a/tools/perf/builtin-report.c
++++ b/tools/perf/builtin-report.c
+@@ -303,7 +303,8 @@ static int process_sample_event(const struct perf_tool *tool,
+ 	if (symbol_conf.hide_unresolved && al.sym == NULL)
+ 		goto out_put;
  
-@@ -542,8 +545,8 @@ static void annotate_browser__show_full_location(struct ui_browser *browser)
- static void ui_browser__init_asm_mode(struct ui_browser *browser)
- {
- 	struct annotation *notes = browser__annotation(browser);
--	ui_browser__reset_index(browser);
- 	browser->nr_entries = notes->src->nr_asm_entries;
-+	ui_browser__reset_index(browser);
- }
+-	if (rep->cpu_list && !test_bit(sample->cpu, rep->cpu_bitmap))
++	if (rep->cpu_list && (sample->cpu >= MAX_NR_CPUS ||
++			     !test_bit(sample->cpu, rep->cpu_bitmap)))
+ 		goto out_put;
  
- static int sym_title(struct symbol *sym, struct map *map, char *title,
+ 	if (sort__mode == SORT_MODE__BRANCH) {
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index ce0858f309e164..8310aa23cbb3c5 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2168,7 +2168,8 @@ static void timehist_print_sample(struct perf_sched *sched,
+ 	char nstr[30];
+ 	u64 wait_time;
+ 
+-	if (cpu_list && !test_bit(sample->cpu, cpu_bitmap))
++	if (cpu_list && (sample->cpu >= MAX_NR_CPUS ||
++			!test_bit(sample->cpu, cpu_bitmap)))
+ 		return;
+ 
+ 	timestamp__scnprintf_usec(t, tstr, sizeof(tstr));
+@@ -2850,7 +2851,8 @@ static int timehist_sched_change_event(const struct perf_tool *tool,
+ 	}
+ 
+ 	if (!sched->idle_hist || thread__tid(thread) == 0) {
+-		if (!cpu_list || test_bit(sample->cpu, cpu_bitmap))
++		if (!cpu_list || (sample->cpu < MAX_NR_CPUS &&
++				 test_bit(sample->cpu, cpu_bitmap)))
+ 			timehist_update_runtime_stats(tr, t, tprev);
+ 
+ 		if (sched->idle_hist) {
 -- 
 2.53.0
 
