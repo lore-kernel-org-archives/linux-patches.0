@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CBD476CF2;
-	Tue, 21 Jul 2026 21:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7519B476CFB;
+	Tue, 21 Jul 2026 21:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667717; cv=none; b=UeMu1xc2zqvsb3TcJK1+si4jBUuNFWaXcUYadcqcZC9CEKoWiuXVwZuAi1TZWJlX0A2H2VHcFODTWbfnZxhKBKS4XDE2UULsgA93o5MpytazS3xp/N4R5LYm18eU8SFsYTZt3rXov2GX6gl28ZO9sNvzEqKMpppEEJ/1UmkCJZE=
+	t=1784667722; cv=none; b=hOUoFIGn3igmZxrFzF5qR2qyLqedO16px60203At+y91jb6LAtSbr64GZJu1DR3fejVzgmfLK32aCAp+J1MmXr1lzQ6PPWBzAwNX4JF00mXHhDrEBIky+oJeBg22tyFhDh6dzJ9IOPALAMnhnPgZncLzgjrd6pzqJCShbdsQxfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667717; c=relaxed/simple;
-	bh=VkyYh4m6SY1BSY+T1S7tvyJpDKiF0119E8hgfzjzsN8=;
+	s=arc-20240116; t=1784667722; c=relaxed/simple;
+	bh=Ze0raBVpfNACqGtVA1XU7032vCdZHvsQKfrrxk4A5iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exjh2kr2ikS92YnmXzfN4oI4f0x3AXHq9eBqZaaClIBlplSR0T/B1jAYXjQqHR5xR3Wh5bFmsN/qO/VxQA2yue6H4Qnv6OJHtrgQ9dRvJ3WkDbZ8QdnLpKIEEetFQbi7v18YGJXANUxNzgZA+9aX59+6lUD3o7cfoamhwzswLEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWXg3ixR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HnbHm/zMTJL9XB1e5/ffegHglxZ47tlHjc6a/JOv/XMIoQ6rY3StuxO3Y33XdgP00yZhMZ+np/BbReQgmzH3o1s/mFywr93UIC0WyUbbPGBJk4rdklFWSAWN1wjOpsrg1OLSrHhI89n9Bt4Wag8Ol4JA4pGOoy7NQ9SWabgrYCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q08S6r1K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWXg3ixR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF391F000E9;
-	Tue, 21 Jul 2026 21:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q08S6r1K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1284F1F00A3A;
+	Tue, 21 Jul 2026 21:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667715;
-	bh=LvNZWVS/+K3Wtkdc05ciRvwRvpJHZHJxhaJW9R5l+Dg=;
+	s=korg; t=1784667718;
+	bh=5CE0qvTqZCDm/sp/Gu/Mxkreizmnc3YWbkLXjGJA4ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LWXg3ixRlCWeZV5OmZuiQy0h0a9byXGsJ9K7dRo0Bjx0PkboNs+kXb4+vQ76e+Jvk
-	 OkiDdDMsGLmQNBYuktaVtMmgNe3DFYV1ktRojOQkX7SFOCTQXRxWyPOHdBIu4rF3nf
-	 4xAGjU+auz/gIcX9CBGUg3XwyDa7rNmNL/v8wqIc=
+	b=Q08S6r1KYXKPt5RAlMLwlR55B+e0ssCjDuz0x9DPRCMC8VsWJX+DfaUIQq500TVSy
+	 y7hc876aIo/2uL9lvFxOaC+UGDxvBtdVn1gMiACMlGzNtIZtgy+HffHLLSNnf3XJzy
+	 z7S9ccICCdlUyNA9uLYYiXa+pZHfeNqxlWwuFvhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1167/1266] PCI: imx6: Fix IMX6SX_GPR12_PCIE_TEST_POWERDOWN handling
-Date: Tue, 21 Jul 2026 17:26:44 +0200
-Message-ID: <20260721152507.899055471@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.6 1168/1266] PCI: controller: Use dev_fwnode() instead of of_fwnode_handle()
+Date: Tue, 21 Jul 2026 17:26:45 +0200
+Message-ID: <20260721152507.920202631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,51 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
 
-[ Upstream commit aad953fb4eed0df5486cd54ccad80ac197678e01 ]
+[ Upstream commit a103d2dede5683dabbac2c3374bc24b6a9434478 ]
 
-The IMX6SX_GPR12_PCIE_TEST_POWERDOWN bit does not control the PCIe
-reference clock on i.MX6SX. Instead, it is part of i.MX6SX PCIe core
-reset sequence.
+All irq_domain functions now accept fwnode instead of of_node. But many
+PCI controllers still extract dev to of_node and then of_node to fwnode.
 
-Move the IMX6SX_GPR12_PCIE_TEST_POWERDOWN assertion/deassertion into
-the core reset functions to properly reflect its purpose. Remove the
-.enable_ref_clk() callback for i.MX6SX since it was incorrectly
-manipulating this bit.
+Instead, clean this up and simply use the dev_fwnode() helper to extract
+fwnode directly from dev. Internally, it still does dev => of_node =>
+fwnode steps, but it's now hidden from the users.
 
-Fixes: e3c06cd063d6 ("PCI: imx6: Add initial imx6sx support")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+In the case of altera, this also removes an unused 'node' variable that is
+only used when CONFIG_OF is enabled:
+
+  drivers/pci/controller/pcie-altera.c: In function 'altera_pcie_init_irq_domain':
+  drivers/pci/controller/pcie-altera.c:855:29: error: unused variable 'node' [-Werror=unused-variable]
+    855 |         struct device_node *node = dev->of_node;
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>	# altera
+[bhelgaas: squash together, rebase to precede msi-parent]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260319090844.444987-1-hongxing.zhu@nxp.com
+Link: https://patch.msgid.link/20250521163329.2137973-1-arnd@kernel.org
+Link: https://patch.msgid.link/20250611104348.192092-16-jirislaby@kernel.org
+Link: https://patch.msgid.link/20250723065907.1841758-1-jirislaby@kernel.org
+Stable-dep-of: f865a57896bd ("PCI: mediatek: Fix IRQ domain leak when port fails to enable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-host.c    |    2 +-
+ drivers/pci/controller/mobiveil/pcie-mobiveil-host.c |    8 +++-----
+ drivers/pci/controller/pcie-altera-msi.c             |    2 +-
+ drivers/pci/controller/pcie-altera.c                 |    3 +--
+ drivers/pci/controller/pcie-mediatek-gen3.c          |    4 ++--
+ drivers/pci/controller/pcie-mediatek.c               |    2 +-
+ drivers/pci/controller/pcie-xilinx-nwl.c             |    2 +-
+ 7 files changed, 10 insertions(+), 13 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -560,8 +560,6 @@ static int imx6_pcie_enable_ref_clk(stru
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -233,7 +233,7 @@ static const struct irq_domain_ops dw_pc
+ int dw_pcie_allocate_domains(struct dw_pcie_rp *pp)
+ {
+ 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(pci->dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(pci->dev);
  
- 	switch (imx6_pcie->drvdata->variant) {
- 	case IMX6SX:
--		regmap_update_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR12,
--				   IMX6SX_GPR12_PCIE_TEST_POWERDOWN, 0);
- 		break;
- 	case IMX6QP:
- 	case IMX6Q:
-@@ -733,6 +731,8 @@ static int imx6_pcie_deassert_core_reset
- 		imx7d_pcie_wait_for_phy_pll_lock(imx6_pcie);
- 		break;
- 	case IMX6SX:
-+		regmap_clear_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR12,
-+				  IMX6SX_GPR12_PCIE_TEST_POWERDOWN);
- 		regmap_update_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR5,
- 				   IMX6SX_GPR5_PCIE_BTNRST_RESET, 0);
- 		break;
+ 	pp->irq_domain = irq_domain_create_linear(fwnode, pp->num_vectors,
+ 					       &dw_pcie_msi_domain_ops, pp);
+--- a/drivers/pci/controller/mobiveil/pcie-mobiveil-host.c
++++ b/drivers/pci/controller/mobiveil/pcie-mobiveil-host.c
+@@ -442,7 +442,7 @@ static const struct irq_domain_ops msi_d
+ static int mobiveil_allocate_msi_domains(struct mobiveil_pcie *pcie)
+ {
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(dev);
+ 	struct mobiveil_msi *msi = &pcie->rp.msi;
+ 
+ 	mutex_init(&msi->lock);
+@@ -468,13 +468,11 @@ static int mobiveil_allocate_msi_domains
+ static int mobiveil_pcie_init_irq_domain(struct mobiveil_pcie *pcie)
+ {
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct device_node *node = dev->of_node;
+ 	struct mobiveil_root_port *rp = &pcie->rp;
+ 
+ 	/* setup INTx */
+-	rp->intx_domain = irq_domain_add_linear(node, PCI_NUM_INTX,
+-						&intx_domain_ops, pcie);
+-
++	rp->intx_domain = irq_domain_create_linear(dev_fwnode(dev), PCI_NUM_INTX, &intx_domain_ops,
++						   pcie);
+ 	if (!rp->intx_domain) {
+ 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
+ 		return -ENOMEM;
+--- a/drivers/pci/controller/pcie-altera-msi.c
++++ b/drivers/pci/controller/pcie-altera-msi.c
+@@ -171,7 +171,7 @@ static const struct irq_domain_ops msi_d
+ 
+ static int altera_allocate_domains(struct altera_msi *msi)
+ {
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(msi->pdev->dev.of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(&msi->pdev->dev);
+ 
+ 	msi->inner_domain = irq_domain_add_linear(NULL, msi->num_of_vectors,
+ 					     &msi_domain_ops, msi);
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -667,10 +667,9 @@ static void altera_pcie_isr(struct irq_d
+ static int altera_pcie_init_irq_domain(struct altera_pcie *pcie)
+ {
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct device_node *node = dev->of_node;
+ 
+ 	/* Setup INTx */
+-	pcie->irq_domain = irq_domain_add_linear(node, PCI_NUM_INTX,
++	pcie->irq_domain = irq_domain_create_linear(dev_fwnode(dev), PCI_NUM_INTX,
+ 					&intx_domain_ops, pcie);
+ 	if (!pcie->irq_domain) {
+ 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -661,8 +661,8 @@ static int mtk_pcie_init_irq_domains(str
+ 	/* Setup MSI */
+ 	mutex_init(&pcie->lock);
+ 
+-	pcie->msi_bottom_domain = irq_domain_add_linear(node, PCIE_MSI_IRQS_NUM,
+-				  &mtk_msi_bottom_domain_ops, pcie);
++	pcie->msi_bottom_domain = irq_domain_create_linear(dev_fwnode(dev), PCIE_MSI_IRQS_NUM,
++							   &mtk_msi_bottom_domain_ops, pcie);
+ 	if (!pcie->msi_bottom_domain) {
+ 		dev_err(dev, "failed to create MSI bottom domain\n");
+ 		ret = -ENODEV;
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -496,7 +496,7 @@ static struct msi_domain_info mtk_msi_do
+ 
+ static int mtk_pcie_allocate_msi_domains(struct mtk_pcie_port *port)
+ {
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(port->pcie->dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(port->pcie->dev);
+ 
+ 	mutex_init(&port->lock);
+ 
+--- a/drivers/pci/controller/pcie-xilinx-nwl.c
++++ b/drivers/pci/controller/pcie-xilinx-nwl.c
+@@ -502,7 +502,7 @@ static int nwl_pcie_init_msi_irq_domain(
+ {
+ #ifdef CONFIG_PCI_MSI
+ 	struct device *dev = pcie->dev;
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(dev);
+ 	struct nwl_msi *msi = &pcie->msi;
+ 
+ 	msi->dev_domain = irq_domain_add_linear(NULL, INT_PCI_MSI_NR,
 
 
