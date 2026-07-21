@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4876F471248;
-	Tue, 21 Jul 2026 18:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E0E471248;
+	Tue, 21 Jul 2026 18:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658112; cv=none; b=Iu+3fQt7ZBLsS4ILRz90HnYHKe8mE+rEnmf/XZQ/vuRIehp4t8B6qroU47S1FgFW6tfXcD2U+hga2oA/CFoXrAImf4iE4vYkXXPBOQl9S0arY5laoJei/FZRU53IBr5LMpLt7dpi+y6qAJPmxKZFmjTtsAhfGgbiAMV2XEFPDaU=
+	t=1784658115; cv=none; b=hy8D++BN8kKqcLqyKHp9x1zZ+OE3klL1iVn6Yc8R7XjYRWTFYxNG2/ZEWz6fMaQhiizE0JbQ9G2NjsG/2O62S2Iz+32BL1ZXshOjlQxf1gugCUpcmGnDfdkWdcGZuKSyOMi0cIfiAuh5JyMdiOLw45h0846nRg8glyZG9JKWuGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658112; c=relaxed/simple;
-	bh=Q2MfkRiHPG8bu09+FVLaS7osnc7dWXrHA6nGERDXZ2o=;
+	s=arc-20240116; t=1784658115; c=relaxed/simple;
+	bh=rMlXsQVFARwzJedZz4F2XgglMr/4Q5u24TlRSennEXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOw9Ke4sSK0LuRb2+7rUIf1QVxBnBoq+qBK1ivWkooNgUcpvSwmV5Yly1AluvW2fUBKenG/VnYHFCgPJCozVbzP75B4qXIXACufxy0oYxi+4R2kMBNuVBaPYzD8Eutc9TyHO+4kjUacAhk5nPPEQ/vJ2kaBkXfJb0SVMqm10QTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqTf0z/k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IV3egzQzHPjASCV3li7nkle7K9cbXl+9fEo/l7jO4V1x5yPQYbEqvhS1/EllREhyg+vlsGJN3dzFWKZUEKvArcBwV3IyVSlYRgW4O7s7XYqNaT9OaRnoRfwve80AE7hSlbNWLjw2S0APExsw9a10Z6mau9JPtD3QbzjrjM2XNtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpkITSw0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqTf0z/k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DCC1F000E9;
-	Tue, 21 Jul 2026 18:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpkITSw0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692771F000E9;
+	Tue, 21 Jul 2026 18:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658111;
-	bh=wxkU6WBYg5FX2maNZzJh0OM1VDrr+3v+GMm1z4kmhP0=;
+	s=korg; t=1784658113;
+	bh=bofQlL5hYA2ZfOgenontz37JNh1EQBbFsF6vLY5ANZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BqTf0z/kQinPVcDXOk8Bli5X+v5VYB7MzMT0Kns59PDoisUeWsC78CXqP4JdYKULp
-	 MTF6HZnxtPxYDGOQVWFqKiMK4X96cmgBHDL44hW85TDTR8FpV1uDht3xAMdzdj60vW
-	 g72BNpQcPoTCV8AIOkO+lPxzYZaPjfTSaNSBr4uE=
+	b=KpkITSw03sT5RDrU1DvdMIWVKLcU7F17Hu0N5kR+SY4d6J/3ZKsCREugEWOfu5haH
+	 36L42xhVBWvs16Q13RbCG0ufwSiFaDygXB2QkEmt+NPjCElqLqaBc2vtNCxvK13Nl6
+	 IjBmpfOOhL5B1dFAW0rwVhTbHhozeCo0KS61DkQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	sashiko-bot@kernel.org,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1018/1611] netfs: Fix writeback error handling
-Date: Tue, 21 Jul 2026 17:18:54 +0200
-Message-ID: <20260721152538.290981675@linuxfoundation.org>
+Subject: [PATCH 6.18 0978/1611] drm/panthor: Interrupt group start/resumption if group_bind_locked() fails
+Date: Tue, 21 Jul 2026 17:18:14 +0200
+Message-ID: <20260721152537.390398353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,58 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit ac5f95ac5d6d0f4c567b8b642825705a2bf0d79e ]
+[ Upstream commit 1f27cef1f41dac0bd254d8741766f189936c9880 ]
 
-Fix the error handling in writeback_iter() loop.  If an error occurs,
-writeback_iter() needs to be called again with *error set to the error so
-that it can clean up iteration state.  Further, the current folio needs
-unlocking and redirtying.
+group_bind_locked() can fail if the MMU block is stuck. This is normally
+a reset situation, but by the time we reset the GPU, we might have
+tried to resume a group that's not resident, which will probably trip
+out the FW. So let's avoid that by bailing out when group_bind_locked()
+returns an error. We don't even try to start more groups because the
+GPU will be reset anyway.
 
-Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Link: https://sashiko.dev/#/patchset/20260619140646.2633762-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260625140640.3116900-14-dhowells@redhat.com
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260623-panthor-signal-from-irq-v3-0-2ece396f8ee0@collabora.com?part=7
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260625-panthor-misc-fixes-v1-10-b67ed973fea6@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/write_issue.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
-index 79b4085590fdb8..08bcdd0a871246 100644
---- a/fs/netfs/write_issue.c
-+++ b/fs/netfs/write_issue.c
-@@ -587,8 +587,6 @@ int netfs_writepages(struct address_space *mapping,
- 		}
+diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
+index e329e1a4fc0b98..85e24ca474484f 100644
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -2289,7 +2289,13 @@ tick_ctx_apply(struct panthor_scheduler *sched, struct panthor_sched_tick_ctx *c
  
- 		error = netfs_write_folio(wreq, wbc, folio);
--		if (error < 0)
--			break;
- 	} while ((folio = writeback_iter(mapping, wbc, folio, &error)));
- 
- 	netfs_end_issue_write(wreq);
-@@ -601,7 +599,14 @@ int netfs_writepages(struct address_space *mapping,
- 	return error;
- 
- couldnt_start:
--	netfs_kill_dirty_pages(mapping, wbc, folio);
-+	if (error == -ENOMEM) {
-+		folio_redirty_for_writepage(wbc, folio);
-+		folio_unlock(folio);
-+		folio = writeback_iter(mapping, wbc, folio, &error);
-+		WARN_ON_ONCE(folio != NULL);
-+	} else {
-+		netfs_kill_dirty_pages(mapping, wbc, folio);
-+	}
- out:
- 	mutex_unlock(&ictx->wb_lock);
- 	_leave(" = %d", error);
+ 			csg_iface = panthor_fw_get_csg_iface(ptdev, csg_id);
+ 			csg_slot = &sched->csg_slots[csg_id];
+-			group_bind_locked(group, csg_id);
++			ret = group_bind_locked(group, csg_id);
++			if (ret) {
++				panthor_device_schedule_reset(ptdev);
++				ctx->csg_upd_failed_mask |= BIT(csg_id);
++				return;
++			}
++
+ 			csg_slot_prog_locked(ptdev, csg_id, new_csg_prio--);
+ 			csgs_upd_ctx_queue_reqs(ptdev, &upd_ctx, csg_id,
+ 						group->state == PANTHOR_CS_GROUP_SUSPENDED ?
 -- 
 2.53.0
 
