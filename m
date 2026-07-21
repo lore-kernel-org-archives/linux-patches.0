@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B84133A9D6;
-	Tue, 21 Jul 2026 20:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4D2471423;
+	Tue, 21 Jul 2026 20:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664763; cv=none; b=WawlgZgmJ3Q9HAAnLhv0k7Nmb5VQkXMcIGma/tx0yLQ9s/R56SSB7xULaff0cIUFHn3iH2BCRSImUu8L4yIlpj0EhO8FiKjiwL4kPXf1QHbIgvmFw35FuubJ+f6bvrR9DLfHz3rIdiBaO3AJxNwK2QQjFEckPeL6m6dfDPnCSdo=
+	t=1784664766; cv=none; b=sVLTZCKWnw9LN2ZcQw1ISxmFv5m34pRrSIPZXQVUKNvi540FZV/pudDje52R3m9Ok+S5JC0RN1JbLnvNlBaxNKbgO7nF4aaOXuvmRo3acDoj1OKHDe6+liTgc9OnYdYWkEOw1HNWh36rDoPkd/S9mZbq34hAqqD46TGuqyeU7vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664763; c=relaxed/simple;
-	bh=gf6NsxuU6bPpVFRQkUw3Tr4LlUikRLJ3Vw83ZWco96k=;
+	s=arc-20240116; t=1784664766; c=relaxed/simple;
+	bh=JL5A/aC8BHAGCLmL+o1NCzUY5U+PFnkBUTtkVo6+KmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhGIxzpkiWJorCmfB0xQmYfaKoPcxe5lfp8lufSL2l4VRJHopm35aF/f1yHCuvVfMnJGJV7dBi6lF/32JnYRbqekEedHLXSNhgsbmfduIaQXy3Y42WSac1vA8EubaZ2zuzsmEOBD7HWN24mJQCKJTpQ9c//5wk3o6nN61RuuJ58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nd2qmFxj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=slcd3IcMe6O+IFTgc9aLfkX58NUjxmjNB4neOQQqhhmTlGRlayRdzS4dg5OJr34DDhYATRnBex8gwX9ON9ctEdQHY/vqf9B6iOcafi87lbPSmqrP6NsOKmhRRhcwUiL2DIgzARuhwOSaOcODxqD/QjiGNuWgQnekWz5NSXHMqcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzx66dg5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nd2qmFxj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8220C1F000E9;
-	Tue, 21 Jul 2026 20:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzx66dg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259621F000E9;
+	Tue, 21 Jul 2026 20:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664762;
-	bh=xwdQ3Z81q7pl5Dh4ZmPvZl94jpnbobV1w83o5Wu2jbI=;
+	s=korg; t=1784664764;
+	bh=M5hLsXRkwD5kemVIjd2fsbJcHoaL88psdo/75aeXX+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nd2qmFxjciDttNj1v6BT8Og3ZqqUAj40meRECNdDubRXM2KxxuGUkf9YFrmUgi/Ec
-	 TgVqt3EuRrD7hEc5/TayMQX77jGxEUUNcPLN3LGJOyW/4rndHQxNBhAsBv5yZ3NoqV
-	 hc77dbZ6GtFVxe1rYXDlYB+UIa0qLExkVIqqxP/Y=
+	b=mzx66dg5sXHFOLcoFYAvbtEpnL7LWTy/XSRQdk2cMz79Cv3ZtBBhbAA7EZFBu2mut
+	 +Wfx26rEI2FKi4JsNMsGu1N3h33HNq+Wu+qjYqnWU5MaKzd+YSanMVgg5pkb2HusXQ
+	 FuU8Km6hrV/tnZ6SiHNYF3/zlPwzz18j9XFA9iNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0050/1266] bonding: fix xfrm offload feature setup on active-backup mode
-Date: Tue, 21 Jul 2026 17:08:07 +0200
-Message-ID: <20260721152442.921738633@linuxfoundation.org>
+Subject: [PATCH 6.6 0051/1266] bonding: fix type confusion in bond_setup_by_slave()
+Date: Tue, 21 Jul 2026 17:08:08 +0200
+Message-ID: <20260721152442.943276680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,92 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 5b66169f6be4847008c0aea50885ff0632151479 ]
+[ Upstream commit 950803f7254721c1c15858fbbfae3deaaeeecb11 ]
 
-The active-backup bonding mode supports XFRM ESP offload. However, when
-a bond is added using command like `ip link add bond0 type bond mode 1
-miimon 100`, the `ethtool -k` command shows that the XFRM ESP offload is
-disabled. This occurs because, in bond_newlink(), we change bond link
-first and register bond device later. So the XFRM feature update in
-bond_option_mode_set() is not called as the bond device is not yet
-registered, leading to the offload feature not being set successfully.
+kernel BUG at net/core/skbuff.c:2306!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+RIP: 0010:pskb_expand_head+0xa08/0xfe0 net/core/skbuff.c:2306
+RSP: 0018:ffffc90004aff760 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffff88807e3c8780 RCX: ffffffff89593e0e
+RDX: ffff88807b7c4900 RSI: ffffffff89594747 RDI: ffff88807b7c4900
+RBP: 0000000000000820 R08: 0000000000000005 R09: 0000000000000000
+R10: 00000000961a63e0 R11: 0000000000000000 R12: ffff88807e3c8780
+R13: 00000000961a6560 R14: dffffc0000000000 R15: 00000000961a63e0
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fe1a0ed8df0 CR3: 000000002d816000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ ipgre_header+0xdd/0x540 net/ipv4/ip_gre.c:900
+ dev_hard_header include/linux/netdevice.h:3439 [inline]
+ packet_snd net/packet/af_packet.c:3028 [inline]
+ packet_sendmsg+0x3ae5/0x53c0 net/packet/af_packet.c:3108
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg net/socket.c:742 [inline]
+ ____sys_sendmsg+0xa54/0xc30 net/socket.c:2592
+ ___sys_sendmsg+0x190/0x1e0 net/socket.c:2646
+ __sys_sendmsg+0x170/0x220 net/socket.c:2678
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x106/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe1a0e6c1a9
 
-To resolve this issue, we can modify the code order in bond_newlink() to
-ensure that the bond device is registered first before changing the bond
-link parameters. This change will allow the XFRM ESP offload feature to be
-correctly enabled.
+When a non-Ethernet device (e.g. GRE tunnel) is enslaved to a bond,
+bond_setup_by_slave() directly copies the slave's header_ops to the
+bond device:
 
-Fixes: 007ab5345545 ("bonding: fix feature flag setting at init time")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20250925023304.472186-1-liuhangbin@gmail.com
+    bond_dev->header_ops = slave_dev->header_ops;
+
+This causes a type confusion when dev_hard_header() is later called
+on the bond device. Functions like ipgre_header(), ip6gre_header(),all use
+netdev_priv(dev) to access their device-specific private data. When
+called with the bond device, netdev_priv() returns the bond's private
+data (struct bonding) instead of the expected type (e.g. struct
+ip_tunnel), leading to garbage values being read and kernel crashes.
+
+Fix this by introducing bond_header_ops with wrapper functions that
+delegate to the active slave's header_ops using the slave's own
+device. This ensures netdev_priv() in the slave's header functions
+always receives the correct device.
+
+The fix is placed in the bonding driver rather than individual device
+drivers, as the root cause is bond blindly inheriting header_ops from
+the slave without considering that these callbacks expect a specific
+netdev_priv() layout.
+
+The type confusion can be observed by adding a printk in
+ipgre_header() and running the following commands:
+
+    ip link add dummy0 type dummy
+    ip addr add 10.0.0.1/24 dev dummy0
+    ip link set dummy0 up
+    ip link add gre1 type gre local 10.0.0.1
+    ip link add bond1 type bond mode active-backup
+    ip link set gre1 master bond1
+    ip link set gre1 up
+    ip link set bond1 up
+    ip addr add fe80::1/64 dev bond1
+
+Fixes: 1284cd3a2b74 ("bonding: two small fixes for IPoIB support")
+Suggested-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260306021508.222062-1-jiayuan.chen@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c    |  2 +-
- drivers/net/bonding/bond_netlink.c | 16 +++++++++-------
- include/net/bonding.h              |  1 +
- 3 files changed, 11 insertions(+), 8 deletions(-)
+ drivers/net/bonding/bond_main.c | 47 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 46 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 4f2c03f52a310b..8c156f71c70667 100644
+index 8c156f71c70667..af8cdc8d26c91d 100644
 --- a/drivers/net/bonding/bond_main.c
 +++ b/drivers/net/bonding/bond_main.c
-@@ -4260,7 +4260,7 @@ void bond_work_init_all(struct bonding *bond)
- 	INIT_DELAYED_WORK(&bond->slave_arr_work, bond_slave_arr_handler);
+@@ -1468,6 +1468,50 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
+ 	return features;
  }
  
--static void bond_work_cancel_all(struct bonding *bond)
-+void bond_work_cancel_all(struct bonding *bond)
- {
- 	cancel_delayed_work_sync(&bond->mii_work);
- 	cancel_delayed_work_sync(&bond->arp_work);
-diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
-index 0eaf4b0e06ffb2..f771d569524f3e 100644
---- a/drivers/net/bonding/bond_netlink.c
-+++ b/drivers/net/bonding/bond_netlink.c
-@@ -596,18 +596,20 @@ static int bond_newlink(struct net *src_net, struct net_device *bond_dev,
- 			struct nlattr *tb[], struct nlattr *data[],
- 			struct netlink_ext_ack *extack)
- {
++static int bond_header_create(struct sk_buff *skb, struct net_device *bond_dev,
++			      unsigned short type, const void *daddr,
++			      const void *saddr, unsigned int len)
++{
 +	struct bonding *bond = netdev_priv(bond_dev);
- 	int err;
++	const struct header_ops *slave_ops;
++	struct slave *slave;
++	int ret = 0;
++
++	rcu_read_lock();
++	slave = rcu_dereference(bond->curr_active_slave);
++	if (slave) {
++		slave_ops = READ_ONCE(slave->dev->header_ops);
++		if (slave_ops && slave_ops->create)
++			ret = slave_ops->create(skb, slave->dev,
++						type, daddr, saddr, len);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static int bond_header_parse(const struct sk_buff *skb, unsigned char *haddr)
++{
++	struct bonding *bond = netdev_priv(skb->dev);
++	const struct header_ops *slave_ops;
++	struct slave *slave;
++	int ret = 0;
++
++	rcu_read_lock();
++	slave = rcu_dereference(bond->curr_active_slave);
++	if (slave) {
++		slave_ops = READ_ONCE(slave->dev->header_ops);
++		if (slave_ops && slave_ops->parse)
++			ret = slave_ops->parse(skb, haddr);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static const struct header_ops bond_header_ops = {
++	.create	= bond_header_create,
++	.parse	= bond_header_parse,
++};
++
+ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 				struct net_device *slave_dev)
+ {
+@@ -1475,7 +1519,8 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
  
--	err = bond_changelink(bond_dev, tb, data, extack);
--	if (err < 0)
-+	err = register_netdevice(bond_dev);
-+	if (err)
- 		return err;
+ 	dev_close(bond_dev);
  
--	err = register_netdevice(bond_dev);
--	if (!err) {
--		struct bonding *bond = netdev_priv(bond_dev);
-+	netif_carrier_off(bond_dev);
-+	bond_work_init_all(bond);
+-	bond_dev->header_ops	    = slave_dev->header_ops;
++	bond_dev->header_ops	    = slave_dev->header_ops ?
++				      &bond_header_ops : NULL;
  
--		netif_carrier_off(bond_dev);
--		bond_work_init_all(bond);
-+	err = bond_changelink(bond_dev, tb, data, extack);
-+	if (err) {
-+		bond_work_cancel_all(bond);
-+		unregister_netdevice(bond_dev);
- 	}
- 
- 	return err;
-diff --git a/include/net/bonding.h b/include/net/bonding.h
-index 0d9c1eb40d12b6..8f5507ef5c0dac 100644
---- a/include/net/bonding.h
-+++ b/include/net/bonding.h
-@@ -713,6 +713,7 @@ struct bond_vlan_tag *bond_verify_device_path(struct net_device *start_dev,
- int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave);
- void bond_slave_arr_work_rearm(struct bonding *bond, unsigned long delay);
- void bond_work_init_all(struct bonding *bond);
-+void bond_work_cancel_all(struct bonding *bond);
- 
- #ifdef CONFIG_PROC_FS
- void bond_create_proc_entry(struct bonding *bond);
+ 	bond_dev->type		    = slave_dev->type;
+ 	bond_dev->hard_header_len   = slave_dev->hard_header_len;
 -- 
 2.53.0
 
