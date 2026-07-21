@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4044143FD1E;
-	Tue, 21 Jul 2026 22:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFB9442100;
+	Tue, 21 Jul 2026 22:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673091; cv=none; b=LTcFJBfSXOXuDKcpyEVUmFPikWSsrJkN7EcEN27kJZ0T3WnyIJc0HOrSq9yYKyuUMrACQ13oUW1pIQV2zRVpDZCNo6sEZwnqV5CGw+ZzuYeoTdyyILzoNOhiYSOhCzxHRpowiFEQU72CBD9OqYjr0Sjl8ViQi9/iY0P4nQCrPWA=
+	t=1784673094; cv=none; b=EDzlAeDPhkOPZ5BmzEWQZ+220yhZ24J8rHceaQeaWtTsrw89lkOCrP82+0ClOyjh2DKb2R5lb3O237MXvDtizkN2BqtNtWYp/77vrI2yIw9meXWmQMQRYoEd6aRzhL9nlQaULGGMIpCfuUji//pluDPcjMCuSoz9iyzu0Mxd0q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673091; c=relaxed/simple;
-	bh=L32VJ0l8uHYoE9DxZngYhRlMeVdYyfHvD8rFA2d3hqM=;
+	s=arc-20240116; t=1784673094; c=relaxed/simple;
+	bh=2Hh5pjxWHQVw4rMyxoiqs1ta8wbcnMOhAenc9iYDa8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bZoROmBMdxezgqzt24pIqjZx8fKV3Xbockg3AH1Cix7eeqtlPNshpsrtFnrDRt72zlBSG7UN1pDU8TazqGpCnffs/5euGVIsuHCRdOqZ+bJLR7iKUkxVaf+oIsjhswzs3ay1l7D+YrQDzULFLHIfz8DPdRAMANMrILUXJ9Xa1GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psWxshb4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sh5kUrnOYuHC2OGLKCpPUgkfubzsrP920PvK96+eAqwFQm6pVu4mmW0KP48eR50bE2oVqO0Pukmz86QKBI79L8Vw3XIjzhvp3EtuCFUdEudSD3cpKu7t9Kp9Ho6FljNnri85wK53WKZTCY8ReWcmwz1MQBY7ZASK9RiiC7resSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABC6yqNC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psWxshb4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A555B1F000E9;
-	Tue, 21 Jul 2026 22:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABC6yqNC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E47C1F000E9;
+	Tue, 21 Jul 2026 22:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673090;
-	bh=4sf7WPvEygmS7vSCF8n9CA0O+01tom1W0qvQ55kZdQ0=;
+	s=korg; t=1784673092;
+	bh=M0EY5tucay+TWLqQ3ji8xtsK3GMun2Yeirk9bvIcytA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=psWxshb4uvDqXSJIfi9PLdZcZiXZ4lunLvUAQO1eWhoZ8LkpFmoUdrP4L1hgYRbbt
-	 sR52JT6BXueO5VtM5dmsANnHBmtfPdX66HUggY2J6cPJRm2mX5+qXOF4lsDEgW3st+
-	 vr/U1cN6OclB7GX3onH6HCriSNO8Qka2QSNVW1wQ=
+	b=ABC6yqNCLIPvikEadhwwwG/7SS0dQS/HXPngF9a2/9TZBjR2A96neQhfkhVU2omjM
+	 0ZJEwR3CY75XQcu1QI3AnZQZNtbCoXV/2AzHpDHzwnLPj3sxZTTekMWp7p+3fLHT9Q
+	 6KVTuCHEV4/e69/cHipfu9nYbofiaRI8nHDyy2DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michal Kosiorek <mkosiorek121@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Mark Bundschuh <mkbund@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 031/699] hdlc_ppp: sync per-proto timers before freeing hdlc state
-Date: Tue, 21 Jul 2026 17:16:30 +0200
-Message-ID: <20260721152356.407707764@linuxfoundation.org>
+Subject: [PATCH 5.10 032/699] xfrm: defensively unhash xfrm_state lists in __xfrm_state_delete
+Date: Tue, 21 Jul 2026 17:16:31 +0200
+Message-ID: <20260721152356.431866572@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,111 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Michal Kosiorek <mkosiorek121@gmail.com>
 
-[ Upstream commit c78a4e41ab5ead6193ad8a2dd92e8906bae659fa ]
+[ Upstream commit 14acf9652e5690de3c7486c6db5fb8dafd0a32a3 ]
 
-Each PPP control protocol (LCP/IPCP/IPV6CP) embedded in struct ppp
-registers a timer via timer_setup(). That struct ppp is the
-hdlc->state allocation, which detach_hdlc_protocol() frees with kfree()
-in both teardown paths: unregister_hdlc_device() and the re-attach inside
-attach_hdlc_protocol().
+KASAN reproduces a slab-use-after-free in __xfrm_state_delete()'s
+hlist_del_rcu calls under syzkaller load on linux-6.12.y stable
+(reproduced on 6.12.47, also reachable via the same code path on
+torvalds/master and on the ipsec tree). Nine unique signatures cluster
+in the xfrm_state lifecycle, the load-bearing one being:
 
-The ppp proto never registered a .detach callback, so
-detach_hdlc_protocol() performs no timer synchronization before the
-kfree(). The only cancel, timer_delete(&proto->timer) in ppp_cp_event(),
-is partial (it does not wait for a running callback) and only runs on the
-->CLOSED transition; ppp_stop()/ppp_close() do not sync either. A
-ppp_timer callback already executing (blocked on ppp->lock) survives the
-kfree and then dereferences proto->state / ppp->lock in freed memory,
-leading to a use-after-free.
+  BUG: KASAN: slab-use-after-free in __hlist_del include/linux/list.h:990 [inline]
+  BUG: KASAN: slab-use-after-free in hlist_del_rcu include/linux/rculist.h:516 [inline]
+  BUG: KASAN: slab-use-after-free in __xfrm_state_delete net/xfrm/xfrm_state.c
+  Write of size 8 at addr ffff8881198bcb70 by task kworker/u8:9/435
 
-Fix this by adding a .detach helper that calls timer_shutdown_sync() on
-every per-proto timer. detach_hdlc_protocol() invokes proto->detach(dev)
-before kfree(hdlc->state), so timer_shutdown_sync()
-now runs on both free paths.
-timer_shutdown_sync() is used instead of timer_delete_sync() because the
-keepalive path re-arms the timer through add_timer()/mod_timer() and
-shutdown blocks any re-activation during teardown.
+  Workqueue: netns cleanup_net
+  Call Trace:
+   __hlist_del / hlist_del_rcu
+   __xfrm_state_delete
+   xfrm_state_delete
+   xfrm_state_flush
+   xfrm_state_fini
+   ops_exit_list
+   cleanup_net
 
-Initialize the per-protocol timers in ppp_ioctl() when the protocol is
-attached, and remove the now-redundant timer_setup() from ppp_start(), so
-that the timers are initialized exactly once at attach time and
-ppp_timer_release() never operates on uninitialized timer_list
-structures. attach_hdlc_protocol() uses kmalloc() (not kzalloc), so
-struct ppp's protos[i].timer is uninitialized garbage until the first
-timer_setup(); without this init-at-attach, attaching the PPP protocol
-without ever bringing the device up would leave timer_shutdown_sync()
-operating on uninitialized memory in .detach. Moving the init out of
-ppp_start() (which only runs on NETDEV_UP) into the attach path makes the
-initialization unconditional and avoids initializing the same timer_list
-twice.
+The other observed signatures hit the same slab object from
+__xfrm_state_lookup, xfrm_alloc_spi, __xfrm_state_insert and an OOB
+write variant of __xfrm_state_delete, all on the byseq/byspi
+hash chains.
 
-This bug was found by static analysis.
+__xfrm_state_delete() guards its byseq and byspi unhashes with
+value-based predicates:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+	if (x->km.seq)
+		hlist_del_rcu(&x->byseq);
+	if (x->id.spi)
+		hlist_del_rcu(&x->byspi);
+
+while everywhere else in the file (e.g. state_cache, state_cache_input)
+the safer hlist_unhashed() check is used. xfrm_alloc_spi() sets
+x->id.spi = newspi inside xfrm_state_lock and then immediately inserts
+into byspi, but a path that observes x->id.spi != 0 outside of
+xfrm_state_lock can still skip-or-hit the byspi unhash inconsistently
+with whether x is actually on the list. The same holds for x->km.seq
+versus byseq, and the bydst/bysrc unhashes have no predicate at all,
+so a second __xfrm_state_delete() on the same object writes through
+LIST_POISON pprev.
+
+The defensive change here:
+
+  - Use hlist_del_init_rcu() instead of hlist_del_rcu() on bydst,
+    bysrc, byseq and byspi so a second deletion is a no-op rather
+    than a write through LIST_POISON pprev. The byseq/byspi nodes
+    are already initialised in xfrm_state_alloc().
+  - Test hlist_unhashed() rather than the value predicate for
+    byseq/byspi, so the unhash decision tracks list state rather than
+    mutable scalar fields.
+
+Empirical verification: applied this patch on top of v6.12.47, rebuilt,
+and re-ran the same syzkaller harness for 1h16m on a previously-crashy
+configuration that produced ~100 hits each of slab-use-after-free
+Read in xfrm_alloc_spi / Read in __xfrm_state_lookup / Write in
+__xfrm_state_delete. After the patch, 7.1M execs across 32 VMs at
+~1550 exec/sec produced zero xfrm_state UAF/OOB hits. /proc/slabinfo
+confirms the xfrm_state slab is actively allocated and freed during
+the run (~143 KiB resident), so the fuzzer is still exercising those
+code paths -- they just no longer crash.
+
+Reproduction:
+
+  - Linux 6.12.47 x86_64 + KASAN_GENERIC + KASAN_INLINE + KCOV
+  - syzkaller @ 746545b8b1e4c3a128db8652b340d3df90ce61db
+  - 32 QEMU/KVM VMs x 2 vCPU on AWS c5.metal bare metal
+  - 9 unique signatures collected in ~9h, all within xfrm_state
+    lifecycle
+
+Fixes: fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
+Fixes: 7b4dc3600e48 ("[XFRM]: Do not add a state whose SPI is zero to the SPI hash.")
+Reported-by: Michal Kosiorek <mkosiorek121@gmail.com>
+Tested-by: Michal Kosiorek <mkosiorek121@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260617020518.116319-1-fanwu01@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ replaced timer_shutdown_sync() with del_timer_sync() since timer_shutdown_sync() is not available in 5.10 ]
+Signed-off-by: Michal Kosiorek <mkosiorek121@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+[ 5.10: drop state_cache{,_input} lines from context because 81a331a
+("xfrm: Add an inbound percpu state cache.") does not exist yet, drop
+xfrm_nat_keepalive_state_updated line from context because f531d13
+("xfrm: support sending NAT keepalives in ESP in UDP states") does not
+exist yet, and remove byseq since that optimization in fe9f1d8 ("xfrm:
+add state hashtable keyed by seq") does not exist yet ]
+Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/hdlc_ppp.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_state.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wan/hdlc_ppp.c
-+++ b/drivers/net/wan/hdlc_ppp.c
-@@ -624,7 +624,6 @@ static void ppp_start(struct net_device
- 	for (i = 0; i < IDX_COUNT; i++) {
- 		struct proto *proto = &ppp->protos[i];
- 		proto->dev = dev;
--		timer_setup(&proto->timer, ppp_timer, 0);
- 		proto->state = CLOSED;
- 	}
- 	ppp->protos[IDX_LCP].pid = PID_LCP;
-@@ -644,6 +643,15 @@ static void ppp_close(struct net_device
- 	ppp_tx_flush();
- }
- 
-+static void ppp_timer_release(struct net_device *dev)
-+{
-+	struct ppp *ppp = get_ppp(dev);
-+	int i;
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 61a0a5b843d9e7..8c742258952b8a 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -659,10 +659,11 @@ int __xfrm_state_delete(struct xfrm_state *x)
+ 		x->km.state = XFRM_STATE_DEAD;
+ 		spin_lock(&net->xfrm.xfrm_state_lock);
+ 		list_del(&x->km.all);
+-		hlist_del_rcu(&x->bydst);
+-		hlist_del_rcu(&x->bysrc);
+-		if (x->id.spi)
+-			hlist_del_rcu(&x->byspi);
++		hlist_del_init_rcu(&x->bydst);
++		hlist_del_init_rcu(&x->bysrc);
 +
-+	for (i = 0; i < IDX_COUNT; i++)
-+		del_timer_sync(&ppp->protos[i].timer);
-+}
-+
- static struct hdlc_proto proto = {
- 	.start		= ppp_start,
- 	.stop		= ppp_stop,
-@@ -652,6 +660,7 @@ static struct hdlc_proto proto = {
- 	.ioctl		= ppp_ioctl,
- 	.netif_rx	= ppp_rx,
- 	.module		= THIS_MODULE,
-+	.detach		= ppp_timer_release,
- };
++		if (!hlist_unhashed(&x->byspi))
++			hlist_del_init_rcu(&x->byspi);
+ 		net->xfrm.state_num--;
+ 		spin_unlock(&net->xfrm.xfrm_state_lock);
  
- static const struct header_ops ppp_header_ops = {
-@@ -662,7 +671,7 @@ static int ppp_ioctl(struct net_device *
- {
- 	hdlc_device *hdlc = dev_to_hdlc(dev);
- 	struct ppp *ppp;
--	int result;
-+	int i, result;
- 
- 	switch (ifr->ifr_settings.type) {
- 	case IF_GET_PROTO:
-@@ -689,6 +698,8 @@ static int ppp_ioctl(struct net_device *
- 			return result;
- 
- 		ppp = get_ppp(dev);
-+		for (i = 0; i < IDX_COUNT; i++)
-+			timer_setup(&ppp->protos[i].timer, ppp_timer, 0);
- 		spin_lock_init(&ppp->lock);
- 		ppp->req_timeout = 2;
- 		ppp->cr_retries = 10;
+-- 
+2.53.0
+
 
 
