@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A69645DF57;
-	Tue, 21 Jul 2026 22:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28186443AA0;
+	Tue, 21 Jul 2026 22:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672630; cv=none; b=YfpyLg+y5cFzoL9Ps5++VwG80JDdbUrOOOToyIg/i90bioNX6ryN6jcKSgSXu3+6MZJIw/LM5Ey9siny0f0TCUJFSrqRENf+8NkA7pq/bUOKkPKIts8pIzrzwIfFEv037K3fRMXLCqqoy2hUFKhqDHViT8NjB/H4jhvwZjI8Iv0=
+	t=1784672633; cv=none; b=NqYbUv/Gy3Gtk01fOhb7y5jveUC6g191rCA2Pt3G7gKdKQTxuNPe4vithmJe0xv48XRx4nSnHxjcFpSs5QzigSF0DbJZ+GBfgK4HHZ7wEmCtLiwQlXZGToCB1DmRbbucrflNuiDdpnase3rkXeT+Wa8ZnkIzGPUBCdJdZqxsjBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672630; c=relaxed/simple;
-	bh=Qk6GjnNM7yqCrpdBe/OlLmGiz2hsq5olhpO924hVQvQ=;
+	s=arc-20240116; t=1784672633; c=relaxed/simple;
+	bh=Me1lQ8itqQcagsKXOLyOkEiifzbklsgYHAhi10TNkuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5tRb6BiQ8fyZU4xyisDasml7Vxz1BDhuvKa3ftoIuGkgDNIIJ1G4nbEG+2DQ98b+sSSyonG6a5NQGo4tFHExZYF7UepW5QGoN1MAZ3cJmhBdgLYAMjU9BPdBlPO5Rm0Uil1Z8A6a8Afx34Rmih81FXYH/f5keGbYM4xpey87Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTzoBIv/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XbVyQi5/5BZjMl5eLh5fhgEvbjSIM1NPoQI+ts2ArMXYdnyakPA8nZExs/+b+fX6Km1mzVJXP6I1sVGN3riSgXxoQIrv91n86ZbC99MOA0hRc/APmW8RTw0EZuQM1hPFEWbNlSyIi3UXE1h6VNF6ua33d8xzmEzk0HSjxP2fZBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUPHtpSK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTzoBIv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E151F000E9;
-	Tue, 21 Jul 2026 22:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUPHtpSK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E39E1F000E9;
+	Tue, 21 Jul 2026 22:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672629;
-	bh=I3Gyc5FZXFv6espyNcLMyyJ5dDGv3gyNUsg4FSSO52U=;
+	s=korg; t=1784672632;
+	bh=MC33nqje6vVwFEhKofQyU040wB++lLK/6PtG4lNRu1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WTzoBIv/ds5oSPbiWgpW3EBZIMvcSi4vFaIc1Gg7SRJ9QhKlC9mO2a/mHM/QX/aJU
-	 mC7LSZCn5agj1UNsSW2kFsF8tW+DdNwXRjEEE2QQSwucWYBBBFM5Ft0RFEqfltQvkZ
-	 Xim8e6L2eMfEgYLne2Xf18Yb4WqdK+wyPgD8wGmc=
+	b=uUPHtpSKVEuQS36BbKceeU7OD2AR4FkhnT4Vbe0qiNTO67A050GQMTO0eMnBFOgx+
+	 lfFNRDmCcIKgzT+JdYCn/NMOxdSTtTPB6irvdTj2Ce3J5PrFW2M1vZOprSW+KtOt3k
+	 k2coqvom8nczbq66pufp22kIiVbUl6QtofAuRcS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 697/843] net/sched: sch_multiq: Replace direct dequeue call with peek and qdisc_dequeue_peeked
-Date: Tue, 21 Jul 2026 17:25:32 +0200
-Message-ID: <20260721152421.731649971@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 698/843] tracing/probes: Fix double addition of offset for @+FOFFSET
+Date: Tue, 21 Jul 2026 17:25:33 +0200
+Message-ID: <20260721152421.753959064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,44 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 54f6b0c843e228d499eb4b6bbb89df68cad9ad5d upstream.
+commit 9a667b7750dda88cbf1cca96a53a2163b2ee71f7 upstream.
 
-multiq_dequeue() takes a packet from a band's child with a direct
-->dequeue() call after multiq_peek() peeked it. When the child is
-non-work-conserving the peek stashes the skb in the child's gso_skb, so
-the direct dequeue returns a different skb and orphans the stash,
-desyncing the child's qlen/backlog. With a qfq child reached through a
-peeking parent (e.g. tbf) this re-enters the child on an emptied list and
-dereferences NULL, panicking the kernel from softirq on ordinary egress.
+Since commit 533059281ee5 ("tracing: probeevent: Introduce new argument
+ fetching code") wrongly use @offset local variable during the parsing,
+the offset value is added twice when dereferencing.
+Reset the @offset after setting it in FETCH_OP_FOFFS.
 
-Take the packet through qdisc_dequeue_peeked(), as sch_prio already does
-and as sch_red and sch_sfb were just fixed to do. The helper is a no-op
-when the child has no stash, so a work-conserving child is unaffected.
+Link: https://lore.kernel.org/all/178217905962.643090.1978577464942171332.stgit@devnote2/
 
-Fixes: 77be155cba4e ("pkt_sched: Add peek emulation for non-work-conserving qdiscs.")
+Fixes: 533059281ee5 ("tracing: probeevent: Introduce new argument fetching code")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-2-85c40b83c529@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_multiq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_probe.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sched/sch_multiq.c
-+++ b/net/sched/sch_multiq.c
-@@ -103,7 +103,7 @@ static struct sk_buff *multiq_dequeue(st
- 		if (!netif_xmit_stopped(
- 		    netdev_get_tx_queue(qdisc_dev(sch), q->curband))) {
- 			qdisc = q->queues[q->curband];
--			skb = qdisc->dequeue(qdisc);
-+			skb = qdisc_dequeue_peeked(qdisc);
- 			if (skb) {
- 				qdisc_bstats_update(sch, skb);
- 				sch->q.qlen--;
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -429,6 +429,7 @@ parse_probe_arg(char *arg, const struct
+ 
+ 			code->op = FETCH_OP_FOFFS;
+ 			code->immediate = (unsigned long)offset;  // imm64?
++			offset = 0;
+ 		} else {
+ 			/* uprobes don't support symbols */
+ 			if (!(flags & TPARG_FL_KERNEL)) {
 
 
