@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD11B46EF95;
-	Tue, 21 Jul 2026 20:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A2146EF7B;
+	Tue, 21 Jul 2026 20:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665683; cv=none; b=ia8F+1EqxuWmoJymkjOGAqL051K9Gslw0aJXheYJHOVB/mlcUZLegDT7Etk95DBp84Rc6eCx7ytMwfIbVfuhE1D9krCIkV8pMzSSdRkS8zhhdHfz4F6qTGeCqeDOy5XdV4/xb0jv2yp67/HnquuUv2JsuUGp+6Fe5Uhsx5LnWRs=
+	t=1784665686; cv=none; b=aDp4Vio6KEtq45ehV66hbgsnRdJZV5WyhaCW0TQhOiYXC1IdrY08BwfS11mLB8esC9gx5NuexOc/CXwtFXAjrXfj5UWHhjSE2hQ0GxgXBUbH0QQIYZQ1FUoISZEDcNHl6EVWz1KxxJMYob1u3df5jYko+9FJUY6RErCDP4OjLeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665683; c=relaxed/simple;
-	bh=OlbefpG6fEN/zKiaLo404PigAupO8ppZG1XBAg5LibQ=;
+	s=arc-20240116; t=1784665686; c=relaxed/simple;
+	bh=W9KpcewKpa2uP1qSsVU4YFlhdKeeJI3pYPajJce32og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O21ndsfPMFprCAQyFKZrDAX70+zRED+j+5AUPot4jc1wfDL+z4K0OvCMJanbnyKpml0DRCKOeVTbUgk/7tqQwRj7YUbHYRtDLJpZdXPbCCviAUz0yQx2XaQsWyXflEfoMG6WxjiNou6X8bIPJPmIEBsoC5KslmJRhdG6/Ohz774=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bguC2JbA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cd1CljLaWPyvfofKENBfuo/XeBu7637XCWGyjB8dAzLv9vf2rjn+SsNduIqZCfsiKOl2OwFes3lzbKsTa0f2P5w0kWOevl0UN1HWiKYTB6txczVnYH6+M5hB75LRVVSCGCjuRbXGmK1e/MV6uaJn1860P6tS8a7+Kjz69o4KJIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=US0ZOTvE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bguC2JbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4481F000E9;
-	Tue, 21 Jul 2026 20:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="US0ZOTvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80F51F000E9;
+	Tue, 21 Jul 2026 20:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665681;
-	bh=KDr5juxPxbGwVY4FX2NskFpolz2/i3YJ1PdWj0i/XZ8=;
+	s=korg; t=1784665684;
+	bh=JwRGYym8GEWcN0r9n+La1oNEj8KIPwEpAu2q9MuMIOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bguC2JbA0/7ibFxYmD2rd8MV3YPkPo6F/NZEzXEHu6Qvin1v5JyUAZH1GUZHJ1+09
-	 gQmahNpp4VDVoFfOhMOh2zmNqjtuRipMoQBGsa/t3AqGpAvhTLh//s+tt/sycTROgQ
-	 aVgeJZ7OZ9/eOgChtq+Y2oVpTbSBfvDm5nRAhDrU=
+	b=US0ZOTvESnK6/1zrqVPXd2MXDQx/ohYGF7u1UsuGuECyD+b3d/1VVeeOxY76hqN63
+	 N2gis5TxVHs3/VzuMuMLELBqrOzUkLt3wHCqlFjqWj0SvYcvtZErPFrl/qBtMGted7
+	 dckHgtz8CUjEK6K9yXTDOm3ZgPEJzrTAJuowNPHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Lin He <helin52@huawei.com>,
+	Yongbang Shi <shiyongbang@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0395/1266] arm64: dts: qcom: sm8450: Fix ICE reg size
-Date: Tue, 21 Jul 2026 17:13:52 +0200
-Message-ID: <20260721152450.667046487@linuxfoundation.org>
+Subject: [PATCH 6.6 0396/1266] drm/hisilicon/hibmc: move display contrl config to hibmc_probe()
+Date: Tue, 21 Jul 2026 17:13:53 +0200
+Message-ID: <20260721152450.690515651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,41 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+From: Lin He <helin52@huawei.com>
 
-[ Upstream commit 7fb3d0512dacc0d09217eb45057357f00298203d ]
+[ Upstream commit de2a56c71f9b223922ea8fe0192d3c1fa2954608 ]
 
-The ICE register region size was originally described incorrectly when
-the ICE hardware was first introduced. The same value was later carried
-over unchanged when the ICE node was split out from the UFS node into
-its own DT entry.
+If there's no VGA output, this encoder modeset won't be called, which
+will cause displaying data from GPU being cut off. It's actually a
+common display config for DP and VGA, so move the vdac encoder modeset
+to driver load stage.
 
-Correct the register size to match the hardware specification.
+Removed invalid bit configurations from `hibmc_display_ctrl`
 
-Fixes: 276ee34a40c1 ("arm64: dts: qcom: sm8450: add Inline Crypto Engine registers and clock")
-Signed-off-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Reviewed-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260402-ice_dt_reg_fix-v1-2-74e4c2129238@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 5294967f4ae4 ("drm/hisilicon/hibmc: Add support for VDAC")
+Signed-off-by: Lin He <helin52@huawei.com>
+Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260509032302.2057227-4-shiyongbang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   | 11 ++++++++++
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c  | 22 -------------------
+ 2 files changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index c1c62c6d34bd1d..e6c6db754abb62 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -4223,7 +4223,7 @@ ufs_mem_phy_lanes: phy@1d87400 {
- 		ice: crypto@1d88000 {
- 			compatible = "qcom,sm8450-inline-crypto-engine",
- 				     "qcom,inline-crypto-engine";
--			reg = <0 0x01d88000 0 0x8000>;
-+			reg = <0 0x01d88000 0 0x18000>;
- 			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
- 		};
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+index 96f960bcfd82d3..e36cc8593df85b 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+@@ -174,6 +174,15 @@ void hibmc_set_current_gate(struct hibmc_drm_private *priv, unsigned int gate)
+ 	writel(gate, mmio + gate_reg);
+ }
  
++static void hibmc_display_ctrl(struct hibmc_drm_private *priv)
++{
++	u32 reg;
++
++	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
++	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
++	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
++}
++
+ static void hibmc_hw_config(struct hibmc_drm_private *priv)
+ {
+ 	u32 reg;
+@@ -205,6 +214,8 @@ static void hibmc_hw_config(struct hibmc_drm_private *priv)
+ 	reg |= HIBMC_MSCCTL_LOCALMEM_RESET(1);
+ 
+ 	writel(reg, priv->mmio + HIBMC_MISC_CTRL);
++
++	hibmc_display_ctrl(priv);
+ }
+ 
+ static int hibmc_hw_map(struct hibmc_drm_private *priv)
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
+index 8c6d2ea2a4729f..6dc5a9fc429fff 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
+@@ -66,26 +66,6 @@ static const struct drm_connector_funcs hibmc_connector_funcs = {
+ 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+ };
+ 
+-static void hibmc_encoder_mode_set(struct drm_encoder *encoder,
+-				   struct drm_display_mode *mode,
+-				   struct drm_display_mode *adj_mode)
+-{
+-	u32 reg;
+-	struct drm_device *dev = encoder->dev;
+-	struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
+-
+-	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
+-	reg |= HIBMC_DISPLAY_CONTROL_FPVDDEN(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_FPEN(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_VBIASEN(1);
+-	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
+-}
+-
+-static const struct drm_encoder_helper_funcs hibmc_encoder_helper_funcs = {
+-	.mode_set = hibmc_encoder_mode_set,
+-};
+-
+ int hibmc_vdac_init(struct hibmc_drm_private *priv)
+ {
+ 	struct drm_device *dev = &priv->dev;
+@@ -108,8 +88,6 @@ int hibmc_vdac_init(struct hibmc_drm_private *priv)
+ 		return ret;
+ 	}
+ 
+-	drm_encoder_helper_add(encoder, &hibmc_encoder_helper_funcs);
+-
+ 	ret = drm_connector_init_with_ddc(dev, connector,
+ 					  &hibmc_connector_funcs,
+ 					  DRM_MODE_CONNECTOR_VGA,
 -- 
 2.53.0
 
