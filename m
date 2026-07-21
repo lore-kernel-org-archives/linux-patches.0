@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96283358C6;
-	Tue, 21 Jul 2026 18:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801463358C6;
+	Tue, 21 Jul 2026 18:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657652; cv=none; b=tsam4AOKeFbDzLRLkarwazSZuiJnNhoNv1QrjwJdF+9YVrfZ0zVP9DEOxHNINpXVCAP9aeVTdFtqXvImAyQFLxe4IN4RXLcOaKcCd/aAoCBXERQl4NkvCDZQ4/iyKWK9anF0p/aSieGYsKyvIVVwiGKFkXUkV3AO9IqI/q5oeBc=
+	t=1784657654; cv=none; b=ChFdfvMybwwImqayhgFoSTFrMcBMQsmmcLomrPsOY7f6CCPbhdQD+aEmjRKhSJvqvFJrfRuLb/i1DmGvB7UOE69LBqrn9EvVxPAhxMskAe8ofMgT8vhMi9lnERVxp+eDQy0A529HxU5hn48H1surW8Wq+Moik0XpcrKjzOratYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657652; c=relaxed/simple;
-	bh=wBhFPY9vKrPKDVw4XrPKKFPLtMABnkRqTl9y5G6pyEA=;
+	s=arc-20240116; t=1784657654; c=relaxed/simple;
+	bh=D9Llx6kye9OiPsgQ7x9BrqmtglXFA0xXJowhQRkAp98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFzpcUuiN+1R1sQTFlIa0l6Ttmqb3GOlpxCKdEzJC9i3jUa6T9QefLwk9+DKKE/p4IzJsyLBwuKp7vwygGX7+vXDL/jdzpJDBMhJuJhUyecNJlyX2K4HYkvAcb7MEbTU0jXtVAPo88lmLlUOPfa6nvTLfNKXNuXog2nNPEIkjvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmaF4jcl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WtSPTK7Wru/I6WVahyLWvbW5VyIsuJI3vm7P/s2L4gF/SBumyLNmvYo7HQrkBdDxPyhhiug+Aa7V1ma9zH84uLjY5FNg2lsmUlEj57So11vbaCwdIaeW5HHpouP1eMfIAT7UaKqglutnFzK132zSFcQSCAL7ccsgQ0ffnYfu7sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKjaodxO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmaF4jcl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463301F000E9;
-	Tue, 21 Jul 2026 18:14:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKjaodxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D3F1F000E9;
+	Tue, 21 Jul 2026 18:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657650;
-	bh=SD44OvV0BsOkAaR1sYjNWYJTREv8d1OD9kgvN6n9caY=;
+	s=korg; t=1784657653;
+	bh=4kMzu0Wu9XENt2M+wy1MIwlTJLODEgGbcm9ZASHA9ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dmaF4jclpBUS+D4hOKdy91GFYrYOvh0EDu9VZfLor8jsmc2kmABLuTwylNY/wSJ2P
-	 RbKPsYMHhB3CVnoo9Lg5mn1kCii2nVYMAwdN7gtYiTdZNYyqImGdUkOZzlJBwAhqqZ
-	 UULbX/5I9k1dlw6lzauslV69g+KfNZUfid8PcSWY=
+	b=qKjaodxO5B6Ti+rtaxINkdHPLc3XqaPqE0fYYgdracJEQ8gFeZ0JBSTj9wAhG1sDx
+	 9lTGbKekgvmH5fG36ZqISkAzE0HUy2RImIltAIJOSPIoImXBaWvcp/MTMjm4Yocpic
+	 helb/zdGeje9hjs/ePhI/Z3ex+k9d6oZpocCTUKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0846/1611] netfilter: nft_meta_bridge: fix NFT_META_BRI_IIFPVID stack leak
-Date: Tue, 21 Jul 2026 17:16:02 +0200
-Message-ID: <20260721152534.414976125@linuxfoundation.org>
+Subject: [PATCH 6.18 0847/1611] mailbox: imx: Forward the timeout/ error in imx_mu_generic_tx()
+Date: Tue, 21 Jul 2026 17:16:03 +0200
+Message-ID: <20260721152534.437008233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,36 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 27dd2997746d54ebc079bb13161cc1bdd401d4a6 ]
+[ Upstream commit 82ef9a635d7130ca27ec9dd88c16afc39c83a4e8 ]
 
-This needs to test for nonzero retval.
+imx_mu_generic_tx() for the IMX_MU_TYPE_TXDB_V2 type polls on a register
+which may timeout and is recognized as an error. This error is siltently
+dropped and not dropped to the caller.
 
-Fixes: c54c7c685494 ("netfilter: nft_meta_bridge: add NFT_META_BRI_IIFPVID support")
-Closes: https://sashiko.dev/#/patchset/20260618061631.21919-1-fw%40strlen.de
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Forward the error to the caller.
+
+Fixes: b5ef17917f3a7 ("mailbox: imx: fix TXDB_V2 channel race condition")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/nft_meta_bridge.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mailbox/imx-mailbox.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/nft_meta_bridge.c b/net/bridge/netfilter/nft_meta_bridge.c
-index 2e24696c33b3cd..a3d0c8a82d8656 100644
---- a/net/bridge/netfilter/nft_meta_bridge.c
-+++ b/net/bridge/netfilter/nft_meta_bridge.c
-@@ -44,7 +44,9 @@ static void nft_meta_bridge_get_eval(const struct nft_expr *expr,
- 		if (!br_dev || !br_vlan_enabled(br_dev))
- 			goto err;
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index 003f9236c35e09..a80cb2c9df6ee9 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -229,6 +229,7 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
+ 	u32 val;
+ 	int ret, count;
  
--		br_vlan_get_pvid_rcu(in, &p_pvid);
-+		if (br_vlan_get_pvid_rcu(in, &p_pvid))
-+			goto err;
-+
- 		nft_reg_store16(dest, p_pvid);
- 		return;
++	ret = 0;
+ 	switch (cp->type) {
+ 	case IMX_MU_TYPE_TX:
+ 		imx_mu_write(priv, *arg, priv->dcfg->xTR + cp->idx * 4);
+@@ -261,7 +262,7 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
+ 		return -EINVAL;
  	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int imx_mu_generic_rx(struct imx_mu_priv *priv,
 -- 
 2.53.0
 
