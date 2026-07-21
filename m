@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7BE199920;
-	Tue, 21 Jul 2026 20:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401A1386C1C;
+	Tue, 21 Jul 2026 20:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665894; cv=none; b=dGaXkfnFUdbcJmKgeZxyNPpauYbjUiLgD+oaHA4wcobLl+5B2lIsQm+d7twtaubKGe47e4a7fqmDCKIaEHeXwBbagx3hWep2DeOx0G28tcfnN+FRYTg3WFUj66tcYrTcoUcmpKsa4rDMAoYKUYmSt57G6fEx3L9qs5V9RjTIXgY=
+	t=1784665897; cv=none; b=cO8jmZLc6aXsdIfd4dhzLUm4C4gjiUqw1lrbdafjpnNHoU2ulq7IBbsR7uDUkmo81a+EM8uHRtof5AyNaa4CmCu1icJNvdxEL4Hq6kML2BWra46KdujQ0aGeAIrZ0M4soHYTtLOBZwlgqGdKXsfDo4SdNUWS+f1B1aZDV7nU/Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665894; c=relaxed/simple;
-	bh=pcEurd5858hBN1GM/Ii6HGPM07DeMDqcq+zWHBWwk5U=;
+	s=arc-20240116; t=1784665897; c=relaxed/simple;
+	bh=4nz/ScEVslze7QoPNKeBRgZIqZAhf1K0eLGnkrsi05g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M9Z5gtxQCUt8XyB0K+WXsvPUY3TaPDTIQKiGTQ9JbwvKbwJyobTAXG2vgNL4X/nuI2oY2GFyCliKvio+bIoL2naM2VZavPIkf4YTyhzt5jGDRwLCukzMLiIZCo20kUhB9m0Gqihu9jJ3GIaT246+qiheIsrYzNqCatANOMfT5iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSPu2A/h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lulRSrVqZF0pUWmqhiDr2yl4aAhKUZagFZa3OHG1Yuto61ldV8SbkS9mJSGS15661l3eF0D4JD8TH3NZupRhAspgGDXwAPpfGWSeYIZyRikp5jx0PFFMWn3Txt44N4XigSfW6/KSyux6U1hBN3PrugIOaI/VEuq0bIfCocCSnQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBSrCVb0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSPu2A/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E681F000E9;
-	Tue, 21 Jul 2026 20:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBSrCVb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7C81F00A3D;
+	Tue, 21 Jul 2026 20:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665893;
-	bh=xyYmNlTqD88UnwmmKoR7eZsG2t1WO3UsNJA5URn9XOA=;
+	s=korg; t=1784665895;
+	bh=jJ4T7Fi+6Y33bNeNeTMtkW9iHcHtOD2Ywt6jCI5c3f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OSPu2A/hyA77N8eUPoYdnZT+EykxQcOMoOUhMoj/zOjsJ1e4qAwM/KD5s1vZBv56A
-	 ARj5Sbt5vv+tZFS3xOH2gQ/zeOIilekmYhO50Ij47atTtYok2Nnple8NPfdKoLWBpD
-	 EUYt/+L30e7V6k8xxNWdNd/x/lFwOtE3Hzhb4hCg=
+	b=YBSrCVb0mYNVNo0trhNdUjmawh+JackRslsIntCsZ8SgXa4e0pRRbrRT8bJhq0mOq
+	 bYEljvkSzK4qC1gGvSkkm/Mx+ylrhWq5e5ArHVxQjpwBqJI7lUTs0PVyLgrSWWW6Gs
+	 nAELmhV4GZcqC5J4OeM29OH8d0bvPWnmk1VQ3w7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Val Packett <val@packett.cool>,
-	Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Subject: [PATCH 6.6 0459/1266] drm/msm/dp: fix HPD state status bit shift value
-Date: Tue, 21 Jul 2026 17:14:56 +0200
-Message-ID: <20260721152452.104909065@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0477/1266] scsi: pm8001: Fix error code in non_fatal_log_show()
+Date: Tue, 21 Jul 2026 17:15:14 +0200
+Message-ID: <20260721152452.510514252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,44 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 2e6c2e81d81251623c458a60e2a57447dcbc988e ]
+[ Upstream commit 1b6f03b7ae9ee27054c55bb55a69d05555a78516 ]
 
-The HPD state status is the 3 most significant bits, not 4 bits of the
-HPD_INT_STATUS register.
+The non_fatal_log_show() function is supposed to return negative error
+codes on failure.  But because the error codes are saved in a u32 and
+then cast to signed long, they end up being high positive values instead
+of negative.  Remove the intermediary u32 variable to fix this bug.
 
-Fix the bit shift macro so that the correct bits are returned in
-msm_dp_aux_is_link_connected().
-
-Fixes: 19e52bcb27c2 ("drm/msm/dp: return correct connection status after suspend")
-Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
-Tested-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com> # Hamoa IOT EVK, QCS8300 Ride
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/727611/
-Link: https://lore.kernel.org/r/20260524-hpd-refactor-v6-1-cf3ab488dd7b@oss.qualcomm.com
+Fixes: dba2cc03b9db ("scsi: pm80xx: sysfs attribute for non fatal dump")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Link: https://patch.msgid.link/ahs-bEsBJH0KhnsX@stanley.mountain
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_reg.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/pm8001/pm8001_ctl.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
-index 78785ed4b40c49..df9df1250a7e5d 100644
---- a/drivers/gpu/drm/msm/dp/dp_reg.h
-+++ b/drivers/gpu/drm/msm/dp/dp_reg.h
-@@ -46,8 +46,8 @@
- #define DP_DP_IRQ_HPD_INT_ACK			(0x00000002)
- #define DP_DP_HPD_REPLUG_INT_ACK		(0x00000004)
- #define DP_DP_HPD_UNPLUG_INT_ACK		(0x00000008)
--#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x0000000F)
--#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1C)
-+#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x00000007)
-+#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1D)
+diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
+index d3ff212d28b2e1..49e60976a61afe 100644
+--- a/drivers/scsi/pm8001/pm8001_ctl.c
++++ b/drivers/scsi/pm8001/pm8001_ctl.c
+@@ -588,10 +588,7 @@ static DEVICE_ATTR(fatal_log, S_IRUGO, pm8001_ctl_fatal_log_show, NULL);
+ static ssize_t non_fatal_log_show(struct device *cdev,
+ 	struct device_attribute *attr, char *buf)
+ {
+-	u32 count;
+-
+-	count = pm80xx_get_non_fatal_dump(cdev, attr, buf);
+-	return count;
++	return pm80xx_get_non_fatal_dump(cdev, attr, buf);
+ }
+ static DEVICE_ATTR_RO(non_fatal_log);
  
- #define REG_DP_DP_HPD_INT_MASK			(0x0000000C)
- #define DP_DP_HPD_PLUG_INT_MASK			(0x00000001)
 -- 
 2.53.0
 
