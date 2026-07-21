@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A593F46A5E1;
-	Tue, 21 Jul 2026 15:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5302646C4A6;
+	Tue, 21 Jul 2026 15:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648564; cv=none; b=Rgi5NLu8zerfcQ9evQTVY9tI8OZ0f0Uiq5Dg3ont0zcsra4CFrkONrXmBWnHZpGUiEgp524Kjs3gnIu/S3e/1SyYwoNiivAsGmV1+5hnWRsmQoDY+omcJ74/lo39sDeE5PFMTUdY6HJvnt1OZV00Rwi+8EAB0/9sy4vaonGOjSY=
+	t=1784648567; cv=none; b=d1h8dCWWqtqeaAO3r9AMG3/8od9OWXtLX6IWvKz7C22kmHdhnX6fd0BLLJXT+PrJwgj1udal/RbMP7lpjnCwOTya+en7tA/XkYul7r62P0B07gtPzVf9QhVXoepiKRGpb9S+mS5B+K6mZsZvekbIdasx0GHnbTP6/D7ga2JeBYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648564; c=relaxed/simple;
-	bh=HD/8XXsTzkCYeGjDaUirzPXH6AEXLS26r5NccKzWtoM=;
+	s=arc-20240116; t=1784648567; c=relaxed/simple;
+	bh=zKu142VcnHW60J3gg9RUmlTw6/KUuXsEOAarXegmT2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFZRH51agdOZbVlE9ZqI6Yg92hm87qLV9YqAQfkAv+Cu03+sCzVdCz5XDPZxnv1WmhLkL74+s14h76iPUmDNjE6iBBUjyh8rABQ/aFG/Pzwh27gOEi8IUMvE4sZSgOu4NMibQjBeUMDbqvd5uLLKC2geWFKAp2tsOt7CJp5EGQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtLlggYp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ELfQqoyrYnWD+600cvvg/XSS6rM1r00LzAjMacSfJQe0fxHcNonk7FYtvZMCgqJhagZClrA9mJ1cQCpjnUDuNOWSbha3HosjrekxOQ40UmrUI7SemYz5A3n5v+P5jKQqlPrzAH7rS2ZQqI+mT2vYyZxAFuKHa/vmTSzy4yR2jD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wc2r38w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtLlggYp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2511F000E9;
-	Tue, 21 Jul 2026 15:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wc2r38w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788431F00ACA;
+	Tue, 21 Jul 2026 15:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648563;
-	bh=kHPu57xry/1U3M81C+nPyCW8zWbQtX9KUjjJDLFocjU=;
+	s=korg; t=1784648566;
+	bh=ZioUON/QZn21IH1u2WTJ7wj+6EZaalrfn5QRpyXs9+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RtLlggYpmDaIzqo6oXNcK8/iquow794Y3Lko6vp+k7FmyfjFsI4hcBJTvb5jq34/3
-	 zL40W11ta4RiJr81U4PUGsgVCYaHhjXadPN7ES85tOow78Zq2IiUgmN0zbC36INFWZ
-	 41RWu2xtMAXuIhau+WO70GRVj6lKpcVT2A6Ik21I=
+	b=1wc2r38w9XR+RbodiImLsZWHUPvVWb9xNZybQ8/HlESPm12kja7jFRFxx57vgaHbo
+	 Bn5L/pkufxN75mq5zWckqkBTqymv6/OZgq13YbJ7mM6KFs2X5/Yd7izzPZ8YEz09z9
+	 J37fZvV4ISQEFhlQJjr3NQcaq0gEYMlu3cohGyKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Yixun Lan <dlan@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0247/2077] riscv: dts: spacemit: fix uboot partition offset on Milk-V Jupiter
-Date: Tue, 21 Jul 2026 16:58:40 +0200
-Message-ID: <20260721152558.505534889@linuxfoundation.org>
+Subject: [PATCH 7.1 0248/2077] firmware: smccc: Fix Arm SMCCC SOC_ID name call
+Date: Tue, 21 Jul 2026 16:58:41 +0200
+Message-ID: <20260721152558.530844763@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,35 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 6edd9a0d32e1ef81133b8cb5b3bb3157a44da4d1 ]
+[ Upstream commit 70492cfce2a4d41e87bf46989028a90f4bc6b38f ]
 
-Correct the uboot partition node name to match its actual offset.
+Commit 5f9c23abc477 ("firmware: smccc: Support optional Arm SMCCC SOC_ID
+name") introduced the SOC_ID name string call, which reports a human
+readable string describing the SoC, as returned by firmware.
 
-Fixes: 2829823956f0 ("riscv: dts: spacemit: enable QSPI and add SPI NOR on Milk-V Jupiter")
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://patch.msgid.link/20260519041458.3287843-6-aurelien@aurel32.net
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+The SMCCC spec v1.6 describes this feature as AArch64 only, since we rely
+on 8 characters to be transmitted per register. Consequently the SMCCC
+call must use the AArch64 calling convention, which requires bit 30 of
+the FID to be set. The spec is a bit confusing here, since it mentions
+that in the parameter description ("2: SoC name (optionally implemented for
+SMC64 calls, ..."), but still prints the FID explicitly as 0x80000002.
+
+But as this FID is using the SMC32 calling convention (correct for the
+other two calls), it will not match what any SMCCC conformant firmware is
+expecting, so any call would return NOT_SUPPORTED.
+
+Add a 64-bit version of the ARCH_SOC_ID FID macro, and use that for the
+SoC name version of the call to fix the issue.
+
+Fixes: 5f9c23abc477 ("firmware: smccc: Support optional Arm SMCCC SOC_ID name")
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20250902172053.304911-1-andre.przywara@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/smccc/soc_id.c | 2 +-
+ include/linux/arm-smccc.h       | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-index db98dbfadf00ff..c47bfb1597306d 100644
---- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-@@ -367,7 +367,7 @@ env@60000 {
- 			opensbi@70000 {
- 				reg = <0x70000 0x30000>;
- 			};
--			uboot@a00000 {
-+			uboot@a0000 {
- 				reg = <0xa0000 0x760000>;
- 			};
- 		};
+diff --git a/drivers/firmware/smccc/soc_id.c b/drivers/firmware/smccc/soc_id.c
+index 2f7475e66b3ca9..a909d5e6dee509 100644
+--- a/drivers/firmware/smccc/soc_id.c
++++ b/drivers/firmware/smccc/soc_id.c
+@@ -60,7 +60,7 @@ static char __init *smccc_soc_name_init(void)
+ 	 * to the ARM_SMCCC_ARCH_SOC_ID function.  Fetch it if
+ 	 * available.
+ 	 */
+-	args.a0 = ARM_SMCCC_ARCH_SOC_ID;
++	args.a0 = ARM_SMCCC_ARCH_SOC_ID64;
+ 	args.a1 = 2;    /* SOC_ID name */
+ 	arm_smccc_1_2_invoke(&args, &res);
+ 
+diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
+index e7195750d21bb4..4de81848fe2eec 100644
+--- a/include/linux/arm-smccc.h
++++ b/include/linux/arm-smccc.h
+@@ -90,6 +90,11 @@
+ 			   ARM_SMCCC_SMC_32,				\
+ 			   0, 2)
+ 
++#define ARM_SMCCC_ARCH_SOC_ID64						\
++	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
++			   ARM_SMCCC_SMC_64,				\
++			   0, 2)
++
+ #define ARM_SMCCC_ARCH_WORKAROUND_1					\
+ 	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
+ 			   ARM_SMCCC_SMC_32,				\
 -- 
 2.53.0
 
