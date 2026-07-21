@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A95223708;
-	Tue, 21 Jul 2026 17:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02203E49D4;
+	Tue, 21 Jul 2026 17:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653852; cv=none; b=m3EyphVDNoUvFaLE5U3kgLMwiuQglCTVk1eg2Vnz0JvDTk32oGP6Du6FO0hbbsKzTZVk0sdMdNVQopO2LA/fOXWJm8vpUINDNScywJlsBnyPv7nzabjHiQKp+1wGDsb889ArH39G1MpUvsYBj5HbYZa6OB6VQS+Or0HyISi5IaU=
+	t=1784653854; cv=none; b=eNx+NVHW1s3VYEThx2a6UyxgSQHfmtIkYaidWZc2ZEJElkx2zpBpUcr7fsDi37EPABELT/Gay2v9JxeLwPQZBS51366tNVfPBPnTzfdkT8kn0J8z5XXnDTZ50VGZQL6MVfLD5/mQu2XWlT4+Nwc1pxF5xiaaL+WOlcGBP0GD1DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653852; c=relaxed/simple;
-	bh=wtjf2ZJodKYhan0fW6AbeIv4ppdYTvrJFZo2UGbMtGU=;
+	s=arc-20240116; t=1784653854; c=relaxed/simple;
+	bh=iITelDixSf95LZYZNTWhbbdg56pelW9BsG9IPe2bV0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KtUttZCeKx5GNKhBuvLHO/Roi/gZt2eNTmSszw+KM0LNz0Bma0/Gu2UplxLhNqmdw/RqkUsO6AVeryi2mpcT2K0v3AALrOSEzXyGeSVCFX3GN/e49RwGNtq4DDOa3h34x+YPduCwgT6TuX4CjWqagDy2LNlHvVemsnT85mUEZ4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeB/FugB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HK5mvKTQ+zaBxYj6qdgbZoJbLcGQDcK1TCv4xaOAWeD08xhPyntkZrvtPEjePLgzrn9UyUfEu8yIkKxqXrHn7b5+W1hRY7WCpIIKh1hWgOi1vhJnrxToWFCT8b7pc+mWLhvw1UM+rAMVSPTr28yxlJzpyQPVZ3gu+PDtmrvYzZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMjq725d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeB/FugB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7861F000E9;
-	Tue, 21 Jul 2026 17:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMjq725d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C2D1F000E9;
+	Tue, 21 Jul 2026 17:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653851;
-	bh=bWhsZdwAK7lr+KsLJcw87CWzBUcAN5I4OdZulES+YN8=;
+	s=korg; t=1784653853;
+	bh=Gy2zVFdiju6uk/N3YFzLNojKXRWfmTmhZ9b1I8TjXo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BeB/FugBfermLNlWHzPgyeyDJ6HWYJkL9/5bA128bgrTTxjMLvdpzV7XHCinM8VoT
-	 gme2DMkcK+xcVYl3IYEjGrFp05pUHK7KRM0pFtPGU4DdZPknoY600xLR9DiESoIZOP
-	 eQ95aqhw+kdJMau7TBJoqbRuhI0rEmXgZRMWDnJg=
+	b=cMjq725dgIfN3YF/XV9n/jzgk1gcLnLfw7Ie39Gsymxota1BRcok+4QGv14u3SV7X
+	 6YtlHvMlHfgdxEvGDtjYk/wpyOtEa1anwaWBFaRGFTXvYSMBVbD/x1tugpe7hCIMyE
+	 RU5ymdp+fWwv8fQTqvbO4opuC27B+kLRs72vuecc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1484/2077] perf/x86/amd/core: Avoid enabling BRS from the SVM reload path
-Date: Tue, 21 Jul 2026 17:19:17 +0200
-Message-ID: <20260721152627.803734060@linuxfoundation.org>
+Subject: [PATCH 7.1 1485/2077] gpio: mvebu: free generic chips on unbind
+Date: Tue, 21 Jul 2026 17:19:18 +0200
+Message-ID: <20260721152627.825746097@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,101 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 07c60dda9c059c09f83d42a3ebda2e7cc1cf3bc2 ]
+[ Upstream commit b11c513ad943f35cf5e8007d3a56279c79b7ed4b ]
 
-Branch Sampling (BRS) and Last Branch Record (LBR) are mutually
-exclusive hardware features, and users of both are tracked via
-cpuc->lbr_users.
+irq_alloc_domain_generic_chips() allocates generic chip data that must
+be freed via irq_domain_remove_generic_chips(). The devres action
+mvebu_gpio_remove_irq_domain() only called irq_domain_remove(), which
+only frees the generic chips if IRQ_DOMAIN_FLAG_DESTROY_GC is set.
+Call irq_domain_remove_generic_chips() explicitly before
+irq_domain_remove() instead.
 
-When SVM is toggled on a CPU, the host perf events are reprogrammed to
-update the HostOnly filter bit (set when virtualization is enabled,
-cleared when it is disabled). On PerfMonV2-capable processors, this
-reprogramming is performed by calling amd_pmu_enable_all() to rewrite
-the event selectors. However, amd_pmu_enable_all() also calls
-amd_brs_enable_all(), which enables BRS whenever cpuc->lbr_users > 0.
-Having active LBR events satisfies this gating on processors that have
-LBR but not BRS. The kernel then tries to set the BRS enable bit in
-DebugExtnCfg (MSR 0xc000010f). Since that bit is deprecated on such
-hardware, the write results in a #GP:
-
-  Call Trace:
-   <IRQ>
-   amd_pmu_enable_all+0x1d/0x90
-   amd_pmu_disable_virt+0x62/0xb0
-   kvm_arch_disable_virtualization_cpu+0xa/0x40 [kvm]
-   hardware_disable_nolock+0x1a/0x30 [kvm]
-   __flush_smp_call_function_queue+0x9b/0x410
-   __sysvec_call_function+0x18/0xc0
-   sysvec_call_function+0x69/0x90
-   </IRQ>
-   <TASK>
-   asm_sysvec_call_function+0x16/0x20
-  RIP: 0010:cpuidle_enter_state+0xc4/0x450
-   ? cpuidle_enter_state+0xb7/0x450
-   cpuidle_enter+0x29/0x40
-   cpuidle_idle_call+0xf5/0x160
-   do_idle+0x7b/0xe0
-   cpu_startup_entry+0x26/0x30
-   start_secondary+0x115/0x140
-   secondary_startup_64_no_verify+0x194/0x19b
-   </TASK>
-
-Fix this by ensuring that BRS is not enabled from the event selector
-reprogramming path even when cpuc->lbr_users > 0.
-
-Fixes: bae19fdd7e9e ("perf/x86/amd/core: Fix reloading events for SVM")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://patch.msgid.link/702fa204d574b03d14e3664c7d4b201db048bbfd.1783506528.git.sandipan.das@amd.com
+Fixes: 812d47889a8e ("gpio/mvebu: Use irq_domain_add_linear")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20260707232358.1218077-1-rosenp@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/core.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-mvebu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
-index abc84a92cd5902..4b34975dcfc580 100644
---- a/arch/x86/events/amd/core.c
-+++ b/arch/x86/events/amd/core.c
-@@ -752,13 +752,11 @@ static void amd_pmu_enable_event(struct perf_event *event)
- 	x86_pmu_enable_event(event);
+diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
+index 689dc6354c2d78..a010604e5ff795 100644
+--- a/drivers/gpio/gpio-mvebu.c
++++ b/drivers/gpio/gpio-mvebu.c
+@@ -1110,6 +1110,7 @@ static void mvebu_gpio_remove_irq_domain(void *data)
+ {
+ 	struct irq_domain *domain = data;
+ 
++	irq_domain_remove_generic_chips(domain);
+ 	irq_domain_remove(domain);
  }
  
--static void amd_pmu_enable_all(int added)
-+static void __amd_pmu_enable_all(void)
- {
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
- 	int idx;
- 
--	amd_brs_enable_all();
--
- 	for_each_set_bit(idx, x86_pmu.cntr_mask, X86_PMC_IDX_MAX) {
- 		/* only activate events which are marked as active */
- 		if (!test_bit(idx, cpuc->active_mask))
-@@ -773,6 +771,12 @@ static void amd_pmu_enable_all(int added)
- 	}
- }
- 
-+static void amd_pmu_enable_all(int added)
-+{
-+	amd_brs_enable_all();
-+	__amd_pmu_enable_all();
-+}
-+
- static void amd_pmu_v2_enable_event(struct perf_event *event)
- {
- 	struct hw_perf_event *hwc = &event->hw;
-@@ -1559,7 +1563,7 @@ static inline void amd_pmu_reload_virt(void)
- 		 * set global enable bits once again
- 		 */
- 		amd_pmu_v2_disable_all();
--		amd_pmu_enable_all(0);
-+		__amd_pmu_enable_all();
- 		amd_pmu_v2_enable_all(0);
- 		return;
- 	}
 -- 
 2.53.0
 
