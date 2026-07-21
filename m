@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDB340B101;
-	Tue, 21 Jul 2026 15:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A29045BD4E;
+	Tue, 21 Jul 2026 15:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648992; cv=none; b=L94LVNL31umzpagt1pbPNho9QDDHjZ2fkQvQNxSqC+kajx7JLzJqMZo8L7JNakVkP+Buosw9/voRXCyNOreAgSkq23tN++MFtINE4jIjhXTDyTZUgdG5yJ6VXRLFPQmM37v7ZGdEYQuHepZLHP6JltxV8dJClbFKhQAZP9uKUKQ=
+	t=1784648995; cv=none; b=a5cqHE/evpchPovQf5pTUAwYpHoVhr7U/FxU9ASbB+KtTNbvIB73ZxJ5iyi4qGu3rUJtKvQQQxAbacUXKdx5mOzeGa36lFqTnrSD+2q3NL/vFcpHvifQJN94b4bP5PIg/Gx6eO1K2JtzzjIVkOVaX8vvHtOxDHDlzYPtwMCBEBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648992; c=relaxed/simple;
-	bh=AuxxasNn02NGvumV4CM85af2lmkFhr9eZK4YjI+ogOU=;
+	s=arc-20240116; t=1784648995; c=relaxed/simple;
+	bh=Qj3/ns8D9/h2sPp4i4t+eV3/Ob5G6dC1v5Q3Pg6CqB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXs91Qv8T8QSRJO63uUSE2FIdT2LmmLbxGJLKhiAG2DPL5AzhRdCyFb8vm+gor9Qd0zQ494Vyq13fB/V/dDYvW4ws/DzCW+vrMZ7Cf0MPisc5QOm+c3TTLnRLa6QfL/a1mL3pjaPDFaA9sL0byh6IMlkLZ7APADlIo8Fe/6J/nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udRaKR9l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VzsBGvNZ8Nh4slwtlxdFfOYDE1679226GmHfU3IBHdjrPaCILhrbQJqEqVk09T/HeEJeJ4hBImc6Tugm608YVfpxAZBupDCh6frE1wMqBoqnXVNW7FK5Wbp4g2715CMEEnFHeVtkb/bMUIZ/Q+oQ6wkSI88XhbXtAegwzqtVZ9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNiytMrr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udRaKR9l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A02E1F000E9;
-	Tue, 21 Jul 2026 15:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNiytMrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1C01F00A3E;
+	Tue, 21 Jul 2026 15:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648991;
-	bh=kH3+Zky0tfOkW6LeRDgvGh7f1jkgb95r16PhsJOoo/s=;
+	s=korg; t=1784648994;
+	bh=KGpKeov3N/ZgKKqJGzVktxUmutTWD2RcXUBEM3Tsgrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=udRaKR9lZuQgMCQKt6eLAAywXuY5JVzlSUsud4O0g5j3bH3sB8ctmhmuT7F1p1L/A
-	 wdYzY81z19AfHdf5blUsEnI0l0ghYIsCSkAr1Dq+1F1Fnh9wzqRtwq+0jGkmSn6M/S
-	 Eb6t4W9bCWoK3nk6hCNzVlOYtNNB33gA/z3BDL1k=
+	b=DNiytMrrRKQ9gjFJ4kPYiiVQ/+fPqey5wHRaCIZNlTuHDbIOz4FskIz63ZJqBmqV0
+	 VAnjy9ZhRtisaDgTr9mrh5pusj/jcUZNtr6lUHiOH4SQIlVftmsOQTp8G4GLwsVtoQ
+	 W+g+X40waGLMg4mPdoMz8vxcGXeZEK2p6cJrNv2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0366/2077] crypto: inside-secure/eip93 - Add check for devm_request_threaded_irq
-Date: Tue, 21 Jul 2026 17:00:39 +0200
-Message-ID: <20260721152601.320442749@linuxfoundation.org>
+	Vladislav Dronov <vdronov@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Patrick Talbert <ptalbert@redhat.com>
+Subject: [PATCH 7.1 0367/2077] crypto: tegra - Fix dma_free_coherent size error
+Date: Tue, 21 Jul 2026 17:00:40 +0200
+Message-ID: <20260721152601.345607986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,35 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 85a61bf9145d4097c740ffcf3aa832d930a8913b ]
+[ Upstream commit 03215b8457784540acc741e6331e355b62c6c8ab ]
 
-As the potential failure of the devm_request_threaded_irq(),
-it should be better to check the return value and return
-error if fails.
+When freeing a coherent DMA buffer, the size must match the value
+that was used during the allocation.
 
-Fixes: 9739f5f93b78 ("crypto: eip93 - Add Inside Secure SafeXcel EIP-93 crypto engine support")
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Unfortunately the size field in the tegra driver gets overwritten
+by this point so it no longer matches and creates a warning.
+
+Fix this by saving a copy of the size on the stack.
+
+Note that the ccm function actually mixes up the inbuf and outbuf
+sizes, but it doesn't matter because the two sizes are actually
+equal.
+
+Fixes: 1cb328da4e8f ("crypto: tegra - Do not use fixed size buffers")
+Reporeted-by: Patrick Talbert <ptalbert@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Vladislav Dronov <vdronov@redhat.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/inside-secure/eip93/eip93-main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/tegra/tegra-se-aes.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/crypto/inside-secure/eip93/eip93-main.c b/drivers/crypto/inside-secure/eip93/eip93-main.c
-index 7dccfdeb7b11c0..276839e1a515fc 100644
---- a/drivers/crypto/inside-secure/eip93/eip93-main.c
-+++ b/drivers/crypto/inside-secure/eip93/eip93-main.c
-@@ -433,6 +433,8 @@ static int eip93_crypto_probe(struct platform_device *pdev)
- 	ret = devm_request_threaded_irq(eip93->dev, eip93->irq, eip93_irq_handler,
- 					NULL, IRQF_ONESHOT,
- 					dev_name(eip93->dev), eip93);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
+index 30c78afe3dea63..5086e7f140c303 100644
+--- a/drivers/crypto/tegra/tegra-se-aes.c
++++ b/drivers/crypto/tegra/tegra-se-aes.c
+@@ -1201,6 +1201,7 @@ static int tegra_ccm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+ 	struct tegra_aead_ctx *ctx = crypto_aead_ctx(tfm);
+ 	struct tegra_se *se = ctx->se;
++	unsigned int bufsize;
+ 	int ret;
  
- 	eip93->ring = devm_kcalloc(eip93->dev, 1, sizeof(*eip93->ring), GFP_KERNEL);
- 	if (!eip93->ring)
+ 	ret = tegra_ccm_crypt_init(req, se, rctx);
+@@ -1210,14 +1211,15 @@ static int tegra_ccm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	rctx->key_id = ctx->key_id;
+ 
+ 	/* Allocate buffers required */
+-	rctx->inbuf.size = rctx->assoclen + rctx->authsize + rctx->cryptlen + 100;
+-	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->inbuf.size,
++	bufsize = rctx->assoclen + rctx->authsize + rctx->cryptlen + 100;
++	rctx->inbuf.size = bufsize;
++	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, bufsize,
+ 					     &rctx->inbuf.addr, GFP_KERNEL);
+ 	if (!rctx->inbuf.buf)
+ 		goto out_finalize;
+ 
+-	rctx->outbuf.size = rctx->assoclen + rctx->authsize + rctx->cryptlen + 100;
+-	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->outbuf.size,
++	rctx->outbuf.size = bufsize;
++	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, bufsize,
+ 					      &rctx->outbuf.addr, GFP_KERNEL);
+ 	if (!rctx->outbuf.buf) {
+ 		ret = -ENOMEM;
+@@ -1254,11 +1256,11 @@ static int tegra_ccm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	}
+ 
+ out:
+-	dma_free_coherent(ctx->se->dev, rctx->inbuf.size,
++	dma_free_coherent(ctx->se->dev, bufsize,
+ 			  rctx->outbuf.buf, rctx->outbuf.addr);
+ 
+ out_free_inbuf:
+-	dma_free_coherent(ctx->se->dev, rctx->outbuf.size,
++	dma_free_coherent(ctx->se->dev, bufsize,
+ 			  rctx->inbuf.buf, rctx->inbuf.addr);
+ 
+ 	if (tegra_key_is_reserved(rctx->key_id))
+@@ -1278,6 +1280,7 @@ static int tegra_gcm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+ 	struct tegra_aead_ctx *ctx = crypto_aead_ctx(tfm);
+ 	struct tegra_aead_reqctx *rctx = aead_request_ctx(req);
++	unsigned int bufsize;
+ 	int ret;
+ 
+ 	rctx->src_sg = req->src;
+@@ -1296,16 +1299,17 @@ static int tegra_gcm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	rctx->key_id = ctx->key_id;
+ 
+ 	/* Allocate buffers required */
+-	rctx->inbuf.size = rctx->assoclen + rctx->authsize + rctx->cryptlen;
+-	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->inbuf.size,
++	bufsize = rctx->assoclen + rctx->authsize + rctx->cryptlen;
++	rctx->inbuf.size = bufsize;
++	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, bufsize,
+ 					     &rctx->inbuf.addr, GFP_KERNEL);
+ 	if (!rctx->inbuf.buf) {
+ 		ret = -ENOMEM;
+ 		goto out_finalize;
+ 	}
+ 
+-	rctx->outbuf.size = rctx->assoclen + rctx->authsize + rctx->cryptlen;
+-	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->outbuf.size,
++	rctx->outbuf.size = bufsize;
++	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, bufsize,
+ 					      &rctx->outbuf.addr, GFP_KERNEL);
+ 	if (!rctx->outbuf.buf) {
+ 		ret = -ENOMEM;
+@@ -1342,11 +1346,11 @@ static int tegra_gcm_do_one_req(struct crypto_engine *engine, void *areq)
+ 		ret = tegra_gcm_do_verify(ctx->se, rctx);
+ 
+ out:
+-	dma_free_coherent(ctx->se->dev, rctx->outbuf.size,
++	dma_free_coherent(ctx->se->dev, bufsize,
+ 			  rctx->outbuf.buf, rctx->outbuf.addr);
+ 
+ out_free_inbuf:
+-	dma_free_coherent(ctx->se->dev, rctx->inbuf.size,
++	dma_free_coherent(ctx->se->dev, bufsize,
+ 			  rctx->inbuf.buf, rctx->inbuf.addr);
+ 
+ 	if (tegra_key_is_reserved(rctx->key_id))
 -- 
 2.53.0
 
