@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896A639733E;
-	Tue, 21 Jul 2026 22:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CD03C73F6;
+	Tue, 21 Jul 2026 22:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674520; cv=none; b=J0RnarHaZu+9AgXnjs1x8LUWyUNKAUOM7LlLnfNlPBaRd45r/ty3nwewncZZfkCM28WQYu1yzBuS6SijwYjAEpW8/2c9SIs3/gCjgbdWYsA+csE3KmGjYdSACcRcmA5FXo2kncmKNtNd0tXP1LrVNn6wPvuS7cTAi88xjwSiTgU=
+	t=1784674523; cv=none; b=svHwCBpPQBAb5LCI9BbKoMupqki8s4z3F0OeLGDDv5QjnUlsaePii+2sr5Tm2rhfSOHFiSNgDHp7PMX5Y+K3nszW1r63JR4uEWFoj4CbvMqDLaNMmIfMSh7NY54gc0fZD3SpYIKOL+zrqgp9S2UEbPURG1/YznWjdKel4DkKrXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674520; c=relaxed/simple;
-	bh=nQ4Kmjoh094E68O+g6k/6tmxmWpM6KTIL0pjuD47ibI=;
+	s=arc-20240116; t=1784674523; c=relaxed/simple;
+	bh=l65DT4XA2OXGUuSN+my+XuDu5jk2z7tQtyIxVsfdyvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHJsV7sBvFXKKE/7aPnBGtUrVYttRfd+wSEtoplOxDPjdk9kbyH4ZoymLFYKpWReCVrVmojptb0B4KogGSU7VXXnaTZSDT9cSR1FMa8UWrLhAGYfpSIB5ijZhRFOFR04nNDOzHYnJ1gi7SsgiRXBt9GvHS1KQe6aKn5h7FlqUTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaboVuKO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mInkvoB6CyWUL9fZqmaVTd4oaV3AvOe6Edr2G5AU8pirgmYLEfz2F7CiiMr3x8e4O0Izsik4NTClbacRVOMREDwgbomewrzlzzmNlRu+eNGWHlTKdTf8rbP2y8js6v6z/+3jJGtGkR4TEA5hR1rwWFttbwtUs74MDvfthzdfus4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+NZcOs7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaboVuKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BF71F000E9;
-	Tue, 21 Jul 2026 22:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+NZcOs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0671F000E9;
+	Tue, 21 Jul 2026 22:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674519;
-	bh=5hddoxesf8xXAh6kz2WGZ6D+/Z4OfsoT4k9a3ymH6Rc=;
+	s=korg; t=1784674521;
+	bh=qJAIw0ceIZ30t0k7k8kUIJxuIT3ktPJIaEX2TiS7a6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WaboVuKOTxZt67YTbnXPfcLVJk67I5gXpnmVvukL5arh7i/LWmuSAJciqV3ijJ1FG
-	 hR0l4lgBvz3JkLz9iX5OGZJHeFjK1SofLu6fbkupYnpV4VrnIlPm23/tMqLK+CcuIA
-	 xAeDr159a1sgZTMWf/7WNJvKvhQB8neb/MX+2Fos=
+	b=B+NZcOs7M6Nec5xxHKzEf/w4baz+Dksdtsxxl9lLjkHu1AGqs6DN6IVF5sNlNKxFe
+	 jTNz6ELnvSBB5POeaRF33NFrECDUG4kgFIJXQkyYmJodNtmW/WlJoRJ34Pp5mysIEH
+	 wxL+wTS8lkLbPBpEj8x1Dy3ZjbKGj+cSGDIfpYys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Jeff Chen <jeff.chen_1@nxp.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 571/699] wifi: mwifiex: fix permanently busy scans after multiple roam iterations
-Date: Tue, 21 Jul 2026 17:25:30 +0200
-Message-ID: <20260721152408.589936596@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 572/699] mtd: onenand: samsung: report DMA completion timeouts
+Date: Tue, 21 Jul 2026 17:25:31 +0200
+Message-ID: <20260721152408.612890987@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,87 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit d78a407bad6f500884a8606aea1a5a9207be4030 upstream.
+commit d03a19bd6c7f86b99ca8fb61a6ec2345cee1d9d6 upstream.
 
-In order for the firmware to sleep, the driver has to confirm a
-previously received sleep request. The normal sequence of evets goes
-like this:
-EVENT_SLEEP -> adapter->ps_state = PS_STATE_PRE_SLEEP -> sleep-confirm
--> SLEEP -> EVENT_AWAKE -> AWAKE.
-Before sending the sleep-confirm command, the driver must make sure
-there are no commands either running or waiting to be completed.
+The S5PC110 OneNAND DMA helpers have bounded waits for transfer
+completion. The polling helper falls out of its timeout loop and returns
+success, and the IRQ helper ignores wait_for_completion_timeout().
 
-mwifiex_ret_802_11_associate() unconditionally sets
-ps_state = PS_STATE_AWAKE when it processes the association command
-response, outside of the normal powersave management flow. If
-EVENT_SLEEP arrives while the association command is in flight,
-ps_state is PRE_SLEEP when the association command response is parsed,
-and the forced AWAKE overwrites it. The deferred sleep-confirm is
-never sent.
+Return -ETIMEDOUT when the DMA transfer-done bit or completion does not
+arrive before the timeout so callers can treat the buffer transfer as
+failed.
 
-A subsequent scan_start command is correctly acknowledged, but the
-firmware doesn't generate scan_result events. The scan request never
-finishes, and additional requests from userspace fail with -EBUSY.
-
-After testing on both IW412 and W8997, I could only trigger the bug on
-the IW412 and observed the firmwares behave differently. On the IW412
-the firmware still sends EVENT_SLEEP while the authentication /
-association process is ongoing. A W8997 under the same
-conditions seems to suppress power-save for the duration of the
-association, so PRE_SLEEP never coincided with the association response
-even after extended periods of testing using the loops
-described below (>12hours).
-
-On the IW412, the delay between commands that triggers an EVENT_SLEEP
-was empirically determined to be ~20ms. This delay can naturally occur
-when the driver is outputting debugging information
-(debug_mask = 0x00000037), in which situation the busy scans issue is
-repeatable while running "test 1)" as described below. If the delay
-between commands is less than ~20ms, the firmware stays awake and
-the issue was not reproducible running the same test.
-
-The host_mlme=false path also behaves differently. In this case, the
-entire authentication / association transaction is executed by one
-command (HostCmd_CMD_802_11_ASSOCIATE), and the firmware doesn't emit
-EVENT_SLEEP while the command is running.
-
-Remove the assignment so the ps_state is only manipulated in the paths
-that are related to powersave event handling and on the main workqueue
-for correct sleep confirmation.
-
-The following loop tests were performed (with debugging output enabled):
-1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
-SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
-between iterations.
-2) force a disconnection to AP 1 and a connection to AP 2, test
-scan. Use wpa_cli to trigger the connection changes, sleep 2s
-between iterations.
-
-Each test ran in each device for at least 3 hours.
-
-Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
+Fixes: e23abf4b7743 ("mtd: OneNAND: S5PC110: Implement DMA interrupt method")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
-Link: https://patch.msgid.link/20260612122547.1586872-2-rafael@beims.me
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/join.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/mtd/nand/onenand/onenand_samsung.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/join.c
-+++ b/drivers/net/wireless/marvell/mwifiex/join.c
-@@ -702,7 +702,6 @@ int mwifiex_ret_802_11_associate(struct
- 	/* Send a Media Connected event, according to the Spec */
- 	priv->media_connected = true;
+--- a/drivers/mtd/nand/onenand/onenand_samsung.c
++++ b/drivers/mtd/nand/onenand/onenand_samsung.c
+@@ -553,6 +553,9 @@ static int s5pc110_dma_poll(dma_addr_t d
+ 	} while (!(status & S5PC110_DMA_TRANS_STATUS_TD) &&
+ 		time_before(jiffies, timeout));
  
--	priv->adapter->ps_state = PS_STATE_AWAKE;
- 	priv->adapter->pps_uapsd_mode = false;
- 	priv->adapter->tx_lock_flag = false;
++	if (!(status & S5PC110_DMA_TRANS_STATUS_TD))
++		return -ETIMEDOUT;
++
+ 	writel(S5PC110_DMA_TRANS_CMD_TDC, base + S5PC110_DMA_TRANS_CMD);
  
+ 	return 0;
+@@ -607,7 +610,9 @@ static int s5pc110_dma_irq(dma_addr_t ds
+ 
+ 	writel(S5PC110_DMA_TRANS_CMD_TR, base + S5PC110_DMA_TRANS_CMD);
+ 
+-	wait_for_completion_timeout(&onenand->complete, msecs_to_jiffies(20));
++	if (!wait_for_completion_timeout(&onenand->complete,
++					 msecs_to_jiffies(20)))
++		return -ETIMEDOUT;
+ 
+ 	return 0;
+ }
 
 
