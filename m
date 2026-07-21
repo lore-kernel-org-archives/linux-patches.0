@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCBF35C69D;
-	Tue, 21 Jul 2026 21:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E743D3CE4;
+	Tue, 21 Jul 2026 21:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669729; cv=none; b=Wyh8UYPNwqwRrBvxDLgisXq6gP9sHihwPdUr2PtmlthlZelozmbLixZv0Nn3tZuwGd75RuaPu/PV5jC0q4AYagy1iapp/4wOH6EkxYNVs+7YQf+8ETzAO4o1hjlsm+BobzjFFs0Rek/SeksAI5LnZiFPenk2LCknL+GU8bO0oxw=
+	t=1784669731; cv=none; b=MpDbtdUPpgihZiFKdsGztACSQRqL1LKuXvXbv3aXiX9/eKD43+Q5qTD2xzIoAbUkRCEDfItWZOKx4z7ljoKWmqfuamkZzn5K0LgiKoMt1JvirooHOoEYR9E1UKvHCajHzh8IlDdP9rralsnNsyoA5bZTMeUFSlz1glRds77boww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669729; c=relaxed/simple;
-	bh=zJTQGMTJdJ4kqa+VM+fRAuqj1xGZy6Mqd0jar0PEX8o=;
+	s=arc-20240116; t=1784669731; c=relaxed/simple;
+	bh=x0Ht9xGiwDhz+Q2a8uJwg3WwGjJMnh8OmwFz8Q3/A8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g72G+mkMEaQhIJ4Ye8Zno/Ad0niFkU7s0QsheHYeXiwcDLtqCdtDsM+dsgw70Z5sggk9iCMKHO6sTpCZg8TTvK7g1Y42xm9rWQqkR2FyX9Lj8vLQGr4AAahtD/G/XxZe0UF8aJ7i+Wd9ctCnHNAoIex48gsctr8REx3+8hi5Ukw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnu2YMzh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KQop2KVxwiCBbLH9e+QzO9vJEuSrH7f+BNZBWbYUIeR/t5bENY7qhrCh+Yodfyf77blW0RpeDD9SDsuX7cFI6TzCUunyUYljJj3YjsoEoGIqbHT351w2DDa8/caarrxC0lf14I2FMVdxizOOr+JqzDEQmsU75/JuTDkm+e564Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFcsiTJ3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnu2YMzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84F71F000E9;
-	Tue, 21 Jul 2026 21:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFcsiTJ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7771F000E9;
+	Tue, 21 Jul 2026 21:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669727;
-	bh=7+t3KpR7BUiEto8Il7xxqwIlD5eG1yP2UMSWDrjv/J4=;
+	s=korg; t=1784669729;
+	bh=/R66MaUkmnDQbKNIZ87ILbCpQEohhmQXF1RjnRpYzfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vnu2YMzhkWhuSwhRFSgT1or/NPjMv41HgJNNALY053HsOh5FuM1to46OTQHBvg7At
-	 5vMqvwcirb2D+vgXEYBm7juG2qomve+PWNNYBfr+nNimiZmS+y7SSzSJ1wT4TCAhFL
-	 ubpXHxKVlBygcSf3fSBWDRExmAKM843LR8l3F5SI=
+	b=lFcsiTJ3SjuM0NnbeIQqy6VIpunCmBI//dTYooWakhHvLIVEN7G2HW7IGWrOyTW6o
+	 4QFj8e+dW/Ib0CaFjPwkCAW44+v3ujyh3/rz+6CsVYSP9ajQ+GBJCAvk+sVrZ5RgeU
+	 GqZcIGFUCv2c0TjhvGchRmU2aT7v2DjdMN/rUhFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gleb Markov <markov.gi@npc-ksb.ru>,
-	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	Amery Hung <ameryhung@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0665/1067] cxgb4: Fix decode strings dump for T6 adapters
-Date: Tue, 21 Jul 2026 17:21:06 +0200
-Message-ID: <20260721152439.475037740@linuxfoundation.org>
+Subject: [PATCH 6.1 0666/1067] net/sched: act_bpf: use rcu_dereference_bh() to read the filter
+Date: Tue, 21 Jul 2026 17:21:07 +0200
+Message-ID: <20260721152439.496431790@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,52 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gleb Markov <markov.gi@npc-ksb.ru>
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-[ Upstream commit 5d6dc22d62682d93f5f55f145ad792f2891de911 ]
+[ Upstream commit adc49c7ba690c9b33b8392ec27397456b65d0893 ]
 
-Depending on the value of chip_version, the correct decode set is selected.
-However, the subsequent matching with the t4 encoding type in the if-else
-block results in a reassignment, which leads to the loss of support for
-t6_decode as well as reinitializing of values t4_decode and t5_decode.
+tcf_bpf_act() can run from the tc egress path, which holds only
+rcu_read_lock_bh(), but reads prog->filter with rcu_dereference() and
+trips lockdep:
 
-The component history shows that the if-else block previously used for
-this purpose, as well as the execution order, was not affected by the
-change.
-Furthermore, it is suggested by the execution order that the scenario with
-overwriting and loss of support will be implemented.
+  WARNING: suspicious RCU usage
+  net/sched/act_bpf.c:47 suspicious rcu_dereference_check() usage!
+  1 lock held by syz.2.1588/12756:
+   #0: (rcu_read_lock_bh){....}-{1:3}, at: __dev_queue_xmit net/core/dev.c:4792
+   tcf_bpf_act+0x6ae/0x940 net/sched/act_bpf.c:47
+   tcf_classify+0x6e4/0x1080 net/sched/cls_api.c:1860
+   sch_handle_egress net/core/dev.c:4545 [inline]
+   __dev_queue_xmit+0x2185/0x2c00 net/core/dev.c:4808
+   packet_sendmsg+0x3dfa/0x5120 net/packet/af_packet.c:3114
 
-Delete the if-else block.
+The other tc actions and cls_bpf already use rcu_dereference_bh() here.
+Do the same.
 
-Fixes: 6df397539cb0 ("cxgb4: Update correct encoding of SGE Ingress DMA States for T6 adapter")
-Signed-off-by: Gleb Markov <markov.gi@npc-ksb.ru>
-Reviewed-by: Potnuri Bharat Teja <bharat@chelsio.com>
-Link: https://patch.msgid.link/20260629130856.1168-1-markov.gi@npc-ksb.ru
+Fixes: 1f211a1b929c ("net, sched: add clsact qdisc")
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://patch.msgid.link/20260629154112.1164986-1-rhkrqnwk98@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/t4_hw.c | 8 --------
- 1 file changed, 8 deletions(-)
+ net/sched/act_bpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
-index 175bf9b1305888..1b8247bd9e9bf6 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
-@@ -6737,14 +6737,6 @@ void t4_sge_decode_idma_state(struct adapter *adapter, int state)
- 		return;
- 	}
+diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
+index e33a6be877defd..c000a62b1bdae3 100644
+--- a/net/sched/act_bpf.c
++++ b/net/sched/act_bpf.c
+@@ -42,7 +42,7 @@ static int tcf_bpf_act(struct sk_buff *skb, const struct tc_action *act,
+ 	tcf_lastuse_update(&prog->tcf_tm);
+ 	bstats_update(this_cpu_ptr(prog->common.cpu_bstats), skb);
  
--	if (is_t4(adapter->params.chip)) {
--		sge_idma_decode = (const char **)t4_decode;
--		sge_idma_decode_nstates = ARRAY_SIZE(t4_decode);
--	} else {
--		sge_idma_decode = (const char **)t5_decode;
--		sge_idma_decode_nstates = ARRAY_SIZE(t5_decode);
--	}
--
- 	if (state < sge_idma_decode_nstates)
- 		CH_WARN(adapter, "idma state %s\n", sge_idma_decode[state]);
- 	else
+-	filter = rcu_dereference(prog->filter);
++	filter = rcu_dereference_bh(prog->filter);
+ 	if (at_ingress) {
+ 		__skb_push(skb, skb->mac_len);
+ 		filter_res = bpf_prog_run_data_pointers(filter, skb);
 -- 
 2.53.0
 
