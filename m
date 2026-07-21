@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1CB43B4A2;
-	Tue, 21 Jul 2026 21:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE1D43CEF9;
+	Tue, 21 Jul 2026 21:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671084; cv=none; b=pBvmlNY1BXSSBq64feklRVGt5XY9izfyUAcdS9j4xyB7LTgKVjrOwrddWOlx6TnvmpzFYHQI6QJ66FviBoHJr3FPEqYPvEp+z5tWZb50UnjpEg2RVAjdNIvDgg4RCAS04ajMNA/TtQ1ZyjQBVkUsQXeb+t7C+hTeK6qPyikD9NA=
+	t=1784671089; cv=none; b=YSBYRAN2U4UMelcnc15Q48zY7n4M4CN8S1wNryQNAl+N5bKYGdKGtbsPWZH5mbRLi+3Mhy4g0k1AFxr1I2WQdXAfQvdOmClCwzezvDr0K0DauWSqCd8no3BeW9zGRL+v+KfkT5gKU3pTSIsAfXa+JdVYfE3D5DJf3g/JfIvZYTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671084; c=relaxed/simple;
-	bh=NS8AQWoKjGwNbAgAhRrV0uFhPAkPARc9h9ewTZsip/k=;
+	s=arc-20240116; t=1784671089; c=relaxed/simple;
+	bh=U8I+qGFWmkJNQ5SBEe8Dybhfm4d+NXOBNLzXkJsbvus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZrmeZerEWunRBACC0qJq00Yr4RrTlm6IVCkA1RHZpQG+QR1hBRl2rO1TqTk1Cahg4y1zYNyHVUyBP8h/K+QEwC7AB+bIcquC6npfEQVEOEjMllk3nXE2cFUiJrsuLSW7CrOMcvMJ30Gw3jMVT0+mLd0thboCC1wetKHOPnKLFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMeKn6Nq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MxeKG+XJ70rPj0aIm0fVvgmzkFFTOtLA9XsuswPL2smHo/vZXT7ft1+91Y5s2p1hPVbVNzEpOQxYJBeVoitdsQNTehwGQ8wtafH7NXX0W9U4L81+cVzqo+0xYtnfFKLW34kXzGWlGQiVK89vLqGQBl5mUwvwGxJQZgRXpMjjuvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4ysHH+O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMeKn6Nq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44161F00A3A;
-	Tue, 21 Jul 2026 21:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4ysHH+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD291F000E9;
+	Tue, 21 Jul 2026 21:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671082;
-	bh=rmJZNJyrN81a37THZpK8rTz2y1a8rHRq2srt2UMehSA=;
+	s=korg; t=1784671084;
+	bh=FfaExltcBpfNOO+XCYAAyNSqb2gXk5hvl21NVG8hWKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qMeKn6NqclBo5qMZKVClNxCKPq6UuMtra4rvrePhduaPXpWMIUTa6Gf1DQ9hcWCup
-	 GLESb+F7tbQf4DRYq1ffwjHmqt7e81gnH4E5RNXRkGDltOJMn4m/G6wZ8PPpdAWmUB
-	 YeAvxsGpbImCoS6IVuhgxPLiCfwOHJfkmw5N5+F8=
+	b=h4ysHH+OltUHzy3DmHWlXcsl5TINbvxBVUwSUFVLYHONUJRrOLrrck0dfBx4m/aK+
+	 N/rF2dw74iGQDmWVlAR8zv+7K9xnxm95cVMDCw69N1kxnI5JK6u/1hFAI4hcDR768H
+	 ToHhPmiG7fdjrB4JoS4WMAoBoGoLyEZ035TqGwwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.15 111/843] netfilter: ebtables: terminate table name before find_table_lock()
-Date: Tue, 21 Jul 2026 17:15:46 +0200
-Message-ID: <20260721152408.498334325@linuxfoundation.org>
+	syzbot+fed5dce4553262f3b35c@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 112/843] Bluetooth: bnep: pin L2CAP connection during netdev registration
+Date: Tue, 21 Jul 2026 17:15:47 +0200
+Message-ID: <20260721152408.522276768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,77 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-commit a622d2e9608c9dff47fc2e5759ac7aa3a836b45d upstream.
+commit bb067a99a0356196c0b89a95721985485ebce5a5 upstream.
 
-update_counters() and compat_update_counters() forward a user-supplied
-32-byte table name to find_table_lock() without NUL-terminating it. On a
-lookup miss, find_inlist_lock() calls try_then_request_module(..., "%s%s",
-"ebtable_", name), and vsnprintf() reads past the name field and the
-stack object until it hits a zero byte.
+bnep_add_connection() reads the L2CAP connection without holding the
+channel lock, then passes its HCI device to register_netdev(). Controller
+teardown can clear and release that connection concurrently, leaving the
+network device registration path to dereference a freed parent device.
 
-  BUG: KASAN: stack-out-of-bounds in string (lib/vsprintf.c:648 lib/vsprintf.c:730)
-  Read of size 1 at addr ffff8880119dfb20 by task exploit/147
-  Call Trace:
-  ...
-   string (lib/vsprintf.c:648 lib/vsprintf.c:730)
-   vsnprintf (lib/vsprintf.c:2945)
-   __request_module (kernel/module/kmod.c:150)
-   do_update_counters.isra.0 (net/bridge/netfilter/ebtables.c:371 net/bridge/netfilter/ebtables.c:380)
-   update_counters (net/bridge/netfilter/ebtables.c:1440)
-   do_ebt_set_ctl (net/bridge/netfilter/ebtables.c:2573)
-   nf_setsockopt (net/netfilter/nf_sockopt.c:101)
-   ip_setsockopt (net/ipv4/ip_sockglue.c:1424)
-   raw_setsockopt (net/ipv4/raw.c:847)
-   __sys_setsockopt (net/socket.c:2393)
-  ...
+Take a reference to the L2CAP connection while holding the channel lock.
+Retain it until register_netdev() has taken the parent device reference.
 
-compat_do_replace() shares the same unterminated name via
-compat_copy_ebt_replace_from_user(); terminate it there too so all
-find_table_lock() callers behave alike. The other callers already
-terminate the name after the copy.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
+Fixes: 65f53e9802db ("Bluetooth: Access BNEP session addresses through L2CAP channel")
+Reported-by: syzbot+fed5dce4553262f3b35c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fed5dce4553262f3b35c
 Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/bluetooth/bnep/core.c |   27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1432,6 +1432,8 @@ static int update_counters(struct net *n
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -562,14 +562,18 @@ static int bnep_session(void *arg)
+ 	return 0;
+ }
  
-+	hlp.name[sizeof(hlp.name) - 1] = '\0';
+-static struct device *bnep_get_device(struct bnep_session *session)
++static struct l2cap_conn *bnep_get_conn(struct bnep_session *session)
+ {
+-	struct l2cap_conn *conn = l2cap_pi(session->sock->sk)->chan->conn;
++	struct l2cap_chan *chan = l2cap_pi(session->sock->sk)->chan;
++	struct l2cap_conn *conn;
+ 
+-	if (!conn || !conn->hcon)
+-		return NULL;
++	l2cap_chan_lock(chan);
++	conn = chan->conn;
++	if (conn)
++		l2cap_conn_get(conn);
++	l2cap_chan_unlock(chan);
+ 
+-	return &conn->hcon->dev;
++	return conn;
+ }
+ 
+ static struct device_type bnep_type = {
+@@ -581,6 +585,7 @@ int bnep_add_connection(struct bnep_conn
+ 	u32 valid_flags = BIT(BNEP_SETUP_RESPONSE);
+ 	struct net_device *dev;
+ 	struct bnep_session *s, *ss;
++	struct l2cap_conn *conn = NULL;
+ 	u8 dst[ETH_ALEN], src[ETH_ALEN];
+ 	int err;
+ 
+@@ -640,10 +645,18 @@ int bnep_add_connection(struct bnep_conn
+ 	bnep_set_default_proto_filter(s);
+ #endif
+ 
+-	SET_NETDEV_DEV(dev, bnep_get_device(s));
++	conn = bnep_get_conn(s);
++	if (!conn) {
++		err = -ENOTCONN;
++		goto failed;
++	}
 +
- 	if (len != sizeof(hlp) + hlp.num_counters * sizeof(struct ebt_counter))
- 		return -EINVAL;
++	SET_NETDEV_DEV(dev, &conn->hcon->dev);
+ 	SET_NETDEV_DEVTYPE(dev, &bnep_type);
  
-@@ -2271,6 +2273,8 @@ static int compat_copy_ebt_replace_from_
+ 	err = register_netdev(dev);
++	l2cap_conn_put(conn);
++	conn = NULL;
+ 	if (err)
+ 		goto failed;
  
- 	memcpy(repl, &tmp, offsetof(struct ebt_replace, hook_entry));
+@@ -665,6 +678,8 @@ int bnep_add_connection(struct bnep_conn
+ 	return 0;
  
-+	repl->name[sizeof(repl->name) - 1] = '\0';
-+
- 	/* starting with hook_entry, 32 vs. 64 bit structures are different */
- 	for (i = 0; i < NF_BR_NUMHOOKS; i++)
- 		repl->hook_entry[i] = compat_ptr(tmp.hook_entry[i]);
-@@ -2393,6 +2397,8 @@ static int compat_update_counters(struct
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
- 
-+	hlp.name[sizeof(hlp.name) - 1] = '\0';
-+
- 	/* try real handler in case userland supplied needed padding */
- 	if (len != sizeof(hlp) + hlp.num_counters * sizeof(struct ebt_counter))
- 		return update_counters(net, arg, len);
+ failed:
++	if (conn)
++		l2cap_conn_put(conn);
+ 	up_write(&bnep_session_sem);
+ 	free_netdev(dev);
+ 	return err;
 
 
