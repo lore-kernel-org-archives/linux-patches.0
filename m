@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B91429CDF;
-	Tue, 21 Jul 2026 19:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73AD436BC6;
+	Tue, 21 Jul 2026 19:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661464; cv=none; b=aFdjNIcFO9rrOP5u7xuezCAsLd/WWOqn0U8dr+6Ut3wmkiFSV++NsBum/wjY4QTtA9i80WGKaWki/bk2Clz5zX5WVJ+ZYYfBwVbIKVF+oE8vHWtBiRHY+qN4x/xRzwnh5zVI4C9ElIIbC7qhDWRiBrK59m6oHc/NzUb8PAnTycg=
+	t=1784661467; cv=none; b=Nu/EgRXMqPJtKLLzgBQYJp/zIagkXRvdufHv+zRRlOnIp2OrnJI37gz/xWpPyc+EaudJBBsTlwlz1HvQ3Q9XxuQso352au7Z1qa0YQIaedHBKQhTocifzT01gIzVP8SmVpU/ooKeHBrVxzZSYoENnlIzjn6Kea6lcc3pdcprLVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661464; c=relaxed/simple;
-	bh=Zt812k1JgMhe/aFM1Z4ov2JBIF8i17FdajN4OeP2JZY=;
+	s=arc-20240116; t=1784661467; c=relaxed/simple;
+	bh=3z7x1ENI0dsxWEGzH85R1faneoZeu/WGtBFQXyuAw1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+xOc0aiWc/l+3XJQErDVd3KzJRzzBfBTfaNJldn9sokA5OcIoenvCuDBwh/AlbaZUoLxDL2GttTSFT+IX9lUWXTwpME5La9f9wMmCqabHV2solzY2agiWXhu8i48+VWTaq4F/buEB0+1W8I7CblX9U2YusrntEvg38uilsbgAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCGi9RGB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qb/EZTVhaDZhfvF+bFlhb84JJbt+2v7ZfknvW/Lh5CVVQDmQ0RJHOm8AmuLAWLGz1SdmQu7ItOYr4AkaCRTmJtm/ImPNGA1tWWkkSnCA4eOeLUD/NCFF8bjfxlJuueErlOqh2ordOFZbqxoFui/kfQe2bx6K25P4NhOE4V6w+p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=085CohOA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCGi9RGB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703661F000E9;
-	Tue, 21 Jul 2026 19:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="085CohOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7071F00A3D;
+	Tue, 21 Jul 2026 19:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661463;
-	bh=A6OZqDxDkDXjG4lVfNyA/F4r6ykpRcBmWEkD1apigms=;
+	s=korg; t=1784661465;
+	bh=JyH9ARrAMQlKQZ2QuMQsff3MflwYHkdEcuvSImETkqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jCGi9RGBwPUXMLDJVpiPx3Y5RYOcbh3iTIV3CH7WgRV4V1A8//l9rJYynGkpMoBIF
-	 J8bVZjoHdFw/dWoXVRUpJukJySdk6Ir2CchGtRmhtZSM/Gj8DYr+1v8Apk9nn+9t+K
-	 Hh0Jvf/dl3q3Uvnc5z1qWLBbhbEBlsbFl0bqEKsM=
+	b=085CohOAm2WzczvYXAyVDbHLb4Ur92tjabWCpK9mXSm8d0+jPdQOOwb+WjNqBhIij
+	 /IlBYUgtK+nhqgdiyogEmocCNF/JypjTdFOUE/hPTxrJgGeTcpVL769ncGXGF/YqVz
+	 /3SJnAsQGGDh64l/tVPlbsiIDfyTGAtE++IDOEMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	David Yat Sin <david.yatsin@amd.com>,
+	Rajneesh Bhardwaj <rajneesh.bhardwaj@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0075/1276] dt-bindings: pinctrl: nvidia,tegra234: Add missing required block
-Date: Tue, 21 Jul 2026 17:08:38 +0200
-Message-ID: <20260721152447.773844859@linuxfoundation.org>
+Subject: [PATCH 6.12 0076/1276] drm/amdkfd: Validate CRIU-restored IDs before idr_alloc
+Date: Tue, 21 Jul 2026 17:08:39 +0200
+Message-ID: <20260721152447.795911829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,55 +55,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 61b5deb5a968f7a82124f9b2591a6a151ed7273a ]
+[ Upstream commit 85043dd49c2f51a37b22618168e3ae59ab92f0d6 ]
 
-Binding should require 'reg' property, because address space cannot be
-missing in the hardware and is already needed by the Linux drivers.
-Require also 'compatible' by convention, although it is not strictly
-necessary.
+The KFD CRIU restore flow restores previously saved object IDs from
+userspace.
 
-Fixes: 857982138b79 ("dt-bindings: pinctrl: Document Tegra234 pin controllers")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+For event restore:
+
+  kfd_criu_restore_event()
+      -> create_signal_event() / create_other_event()
+          -> allocate_event_notification_slot()
+              -> idr_alloc(..., *restore_id, *restore_id + 1, ...)
+
+For BO restore:
+
+  criu_restore_memory_of_gpu()
+      -> idr_alloc(..., bo_priv->idr_handle, ...)
+
+In both cases, the restored ID comes from userspace-provided CRIU data.
+
+idr_alloc() expects the ID range values to fit within signed int
+limits. If a restored ID is larger than INT_MAX, it can trigger a WARN
+in the IDR layer.
+
+A kernel WARN is undesirable because it prints a warning trace and may
+cause a panic or reboot on systems with panic_on_warn enabled.
+
+Smatch reported these paths as allowing unchecked userspace values to
+reach idr_alloc().
+
+Add INT_MAX validation before using restored IDs in:
+
+- kfd_criu_restore_event()
+- criu_restore_memory_of_gpu()
+
+If the restored ID is invalid, return -EINVAL.
+
+This prevents invalid restore data from reaching the IDR layer and
+avoids WARN-triggering paths, while keeping valid restore behavior
+unchanged.
+
+Fixes: 40e8a766a761 ("drm/amdkfd: CRIU checkpoint and restore events")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Cc: David Yat Sin <david.yatsin@amd.com>
+Cc: Rajneesh Bhardwaj <rajneesh.bhardwaj@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: David Yat Sin <david.yatsin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml          | 4 ++++
- .../devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml   | 4 ++++
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 3 +++
+ drivers/gpu/drm/amd/amdkfd/kfd_events.c  | 5 +++++
  2 files changed, 8 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml b/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml
-index db8224dfba2c1b..56fb9cf763ef7f 100644
---- a/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml
-@@ -58,6 +58,10 @@ patternProperties:
-                     drive_soc_gpio27_pee6, drive_ao_retention_n_pee2,
-                     drive_vcomp_alert_pee1, drive_hdmi_cec_pgg0 ]
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 6bca87b99f7c32..e75ca4dfc6a9ac 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -2322,6 +2322,9 @@ static int criu_restore_memory_of_gpu(struct kfd_process_device *pdd,
+ 	const bool criu_resume = true;
+ 	u64 offset;
  
-+required:
-+  - compatible
-+  - reg
++	if (bo_priv->idr_handle > INT_MAX)
++		return -EINVAL;
 +
- unevaluatedProperties: false
+ 	if (bo_bucket->alloc_flags & KFD_IOC_ALLOC_MEM_FLAGS_DOORBELL) {
+ 		if (bo_bucket->size !=
+ 				kfd_doorbell_process_slice(pdd->dev->kfd))
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+index 4e5ae565628388..0b5f1e574afeee 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+@@ -480,6 +480,11 @@ int kfd_criu_restore_event(struct file *devkfd,
+ 	}
+ 	*priv_data_offset += sizeof(*ev_priv);
  
- examples:
-diff --git a/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml b/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml
-index f5a3a881dec4f0..bd305a34eee2b2 100644
---- a/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml
-@@ -115,6 +115,10 @@ patternProperties:
-                     drive_sdmmc1_dat2_pj4, drive_sdmmc1_dat1_pj3,
-                     drive_sdmmc1_dat0_pj2 ]
- 
-+required:
-+  - compatible
-+  - reg
++	if (ev_priv->event_id > INT_MAX) {
++		ret = -EINVAL;
++		goto exit;
++	}
 +
- unevaluatedProperties: false
- 
- examples:
+ 	if (ev_priv->user_handle) {
+ 		ret = kfd_kmap_event_page(p, ev_priv->user_handle);
+ 		if (ret)
 -- 
 2.53.0
 
