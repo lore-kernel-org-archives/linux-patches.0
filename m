@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7E846D2C1;
-	Tue, 21 Jul 2026 19:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABF046E004;
+	Tue, 21 Jul 2026 19:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661059; cv=none; b=KSdx91hs6j0uLMAcZ8bDmsOKGu8rxv8mWhY+ylfPhFY182MzcHXWkMx7b+qd7z6qipC5b9sgNTxVbQOenVmEm46UfG/FtvXfHojEJXaIk1QuiRLce0S6zfMVPQb8R+yS+rhyumCtpCcZgIRBxY5SSXPhlecsUqfXgzpdKbsgOMk=
+	t=1784661061; cv=none; b=n+jjvwfY/r+VF6lcRJcX7TSjo33gtJunt2wBeaKUJi9M2gN2IRUPxX1BfbDb+8svknUXDlc0MI8I+jU51z7lMuwJ+nsdCTJSIiqHIWEZFi/KeF4zTK9iyHg7+1MZYm1oB4hD6wdc93Bo9s4VP52xb5MZsKJAQUg0lH8TLUfN1L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661059; c=relaxed/simple;
-	bh=mlE9pUcm9omthWClEVUGTmRFDhOWVQUynYAPn0eOHjM=;
+	s=arc-20240116; t=1784661061; c=relaxed/simple;
+	bh=K76ZH9b4hxxFa98c+N7g494BIebEtrmrUp5qG/lGcEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YumQULwRRzquqUlvoS5KJQXSSR1BJuQigMm8xXF2mvJ6uzk7cQlOzEnXXG99y7QpdCnnVp2bHTyfHSzVrSOl3jYmP5zF/k21fLyZRjXofMYIFte/wKEHBfjxyQ2h00ql6/REwwFS+chBrEXHDyGW0l+5gNvfyqL53GaJLZSXTq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdYYxXdA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VbFh0sXAH/odDBC9gRbcWfAhA9TmJi+PtpFJZpJuBTwoCxxwbwL1QZoNRTnGLRGBUmzYIZrSU9p0Fl7hzhe8UbRZV9HTeunRLs3UTIFP9r8n3KMTjNV6YjQblAjJxEK0E8fHUrVeIRE9O5xOyyz+T6SqGqKD2DPkxBYZDOYdwj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nwx9WR/X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdYYxXdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6909B1F000E9;
-	Tue, 21 Jul 2026 19:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nwx9WR/X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0596C1F000E9;
+	Tue, 21 Jul 2026 19:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661057;
-	bh=TG1jmZ8bIz/eg0hfQsJFzfXwCbZLP2WlRzr2bHAGQ2k=;
+	s=korg; t=1784661060;
+	bh=UChVStfWC/Q3ApnFLpJDSFA9XqQKMbAH9xExmuuIYPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdYYxXdABL011wbY8lMBCkGCx10sS3lzYDBhUyku4smBoifzK4kUG8ZUY3GMJ72D6
-	 TaSnGt7IHk12gNt1fAYE2G76kQA1g528LJuCBT+0pNZ8PGQG0/GnUvOUAHHeIur7ri
-	 2zvTE2oUzubqgqNwTQDLtXIVziliC2qhc/znoDIY=
+	b=Nwx9WR/XuXar5J1j0ugAbVa3LJLL0VN3Ug5I0ZJjjGReuQOfldBZ7IBg9a/OK9s8n
+	 Ch5XIil1c3SfrGFu5D9eoVEpTxra3NIltKaw5RhKuLV4l7iHSwWejJ5tzMcWh1vxyY
+	 G1NRWqdvUj31oVQW+a6i6dtVUHOAGb+HPFTwGlBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dima Ruinskiy <dima.ruinskiy@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Moriya Kadosh <moriyax.kadosh@intel.com>,
-	Todd Brandt <todd.e.brandt@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1215/2077] e1000e: Reconfigure PLL clock gate timeout and re-enable K1 on Meteor Lake
-Date: Tue, 21 Jul 2026 17:14:48 +0200
-Message-ID: <20260721152621.472653461@linuxfoundation.org>
+Subject: [PATCH 7.1 1216/2077] rtc: msc313: fix NULL deref in shared IRQ handler at probe
+Date: Tue, 21 Jul 2026 17:14:49 +0200
+Message-ID: <20260721152621.495279359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,93 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dima Ruinskiy <dima.ruinskiy@intel.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit 578294b8b60d2c630991f221838f9ec61ae89df0 ]
+[ Upstream commit a369f48be8de426a7d2bca18dbd46c2ad1138803 ]
 
-Commit 3c7bf5af21960 ("e1000e: Introduce private flag to disable K1")
-disabled K1 by default on Meteor Lake and newer systems due to packet
-loss observed on various platforms. However, disabling K1 caused an
-increase in power consumption.
+msc313_rtc_probe() calls devm_request_irq() with IRQF_SHARED and
+&pdev->dev as the cookie, but platform_set_drvdata() is only called
+later after the clock setup. With a shared IRQ line, another device
+on the same line can trigger the handler in that window. The
+handler does dev_get_drvdata() on the cookie, gets NULL, and
+dereferences priv->rtc_base in interrupt context.
 
-To mitigate this, reconfigure the PLL clock gate value so that K1 can
-remain enabled without incurring the additional power consumption.
-Re-enable K1 by default, but keep the private flag to support disabling
-it via ethtool. Additionally, introduce a DMI quirk table, so that K1 may
-be disabled by default on known problematic systems. Currently, this
-includes the Dell Pro 16 Plus, where the issue has been reported to persist
-despite the changes to the PLL lock timeout.
+Pass priv as the cookie directly so the handler reads it from
+dev_id without the lookup, removing the dependency on probe order.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220954
-Link: https://lists.osuosl.org/pipermail/intel-wired-lan/Week-of-Mon-20250623/048860.html
-Link: https://lists.osuosl.org/pipermail/intel-wired-lan/Week-of-Mon-20260330/054059.html
-Signed-off-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Co-developed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Fixes: 3c7bf5af21960 ("e1000e: Introduce private flag to disable K1")
-Tested-by: Moriya Kadosh <moriyax.kadosh@intel.com>
-Tested-by: Todd Brandt <todd.e.brandt@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: be7d9c9161b9 ("rtc: Add support for the MSTAR MSC313 RTC")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Link: https://patch.msgid.link/20260511032703.48262-1-sozdayvek@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/ich8lan.c |  3 +++
- drivers/net/ethernet/intel/e1000e/netdev.c  | 15 ++++++++++++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-msc313.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-index dea208db1be5bf..aa90e0ce8acaf8 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -1594,6 +1594,9 @@ static s32 e1000_check_for_copper_link_ich8lan(struct e1000_hw *hw)
- 			phy_reg &= ~I217_PLL_CLOCK_GATE_MASK;
- 			if (speed == SPEED_100 || speed == SPEED_10)
- 				phy_reg |= 0x3E8;
-+			else if (hw->mac.type == e1000_pch_mtp ||
-+				 hw->mac.type == e1000_pch_ptp)
-+				phy_reg |= 0x1D5;
- 			else
- 				phy_reg |= 0xFA;
- 			e1e_wphy_locked(hw, I217_PLL_CLOCK_GATE_REG, phy_reg);
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 7ce0cc8ab8f4c7..7612ddd066fe54 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -25,6 +25,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/prefetch.h>
- #include <linux/suspend.h>
-+#include <linux/dmi.h>
+diff --git a/drivers/rtc/rtc-msc313.c b/drivers/rtc/rtc-msc313.c
+index 8d7737e0e2e02c..6ef9c4efd7c92e 100644
+--- a/drivers/rtc/rtc-msc313.c
++++ b/drivers/rtc/rtc-msc313.c
+@@ -160,7 +160,7 @@ static const struct rtc_class_ops msc313_rtc_ops = {
  
- #include "e1000.h"
- #define CREATE_TRACE_POINTS
-@@ -58,6 +59,17 @@ static const struct e1000_info *e1000_info_tbl[] = {
- 	[board_pch_ptp]		= &e1000_pch_ptp_info,
- };
+ static irqreturn_t msc313_rtc_interrupt(s32 irq, void *dev_id)
+ {
+-	struct msc313_rtc *priv = dev_get_drvdata(dev_id);
++	struct msc313_rtc *priv = dev_id;
+ 	u16 reg;
  
-+static const struct dmi_system_id disable_k1_list[] = {
-+	{
-+		.ident = "Dell Pro 16 Plus PB16250",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Dell Pro 16 Plus PB16250"),
-+		},
-+	},
-+	{}
-+};
-+
- struct e1000_reg_info {
- 	u32 ofs;
- 	char *name;
-@@ -7670,7 +7682,8 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	/* init PTP hardware clock */
- 	e1000e_ptp_init(adapter);
+ 	reg = readw(priv->rtc_base + REG_RTC_STATUS_INT);
+@@ -206,7 +206,7 @@ static int msc313_rtc_probe(struct platform_device *pdev)
+ 	priv->rtc_dev->range_max = U32_MAX;
  
--	if (hw->mac.type >= e1000_pch_mtp)
-+	/* disable K1 by default on known problematic systems */
-+	if (hw->mac.type >= e1000_pch_mtp && dmi_check_system(disable_k1_list))
- 		adapter->flags2 |= FLAG2_DISABLE_K1;
- 
- 	/* reset the hardware with the new settings */
+ 	ret = devm_request_irq(dev, irq, msc313_rtc_interrupt, IRQF_SHARED,
+-			       dev_name(&pdev->dev), &pdev->dev);
++			       dev_name(&pdev->dev), priv);
+ 	if (ret) {
+ 		dev_err(dev, "Could not request IRQ\n");
+ 		return ret;
 -- 
 2.53.0
 
