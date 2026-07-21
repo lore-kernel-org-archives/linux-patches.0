@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23026375F81;
-	Tue, 21 Jul 2026 22:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB153B6C17;
+	Tue, 21 Jul 2026 22:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673215; cv=none; b=Qq9eY5W9mxEGNseW6JkXM5nkDYyWGQDdVYkbz+vFTuf/MfmljyUs/JKKA0Y5jOwet1szxvzkBtdJUaDabJa7M40KZJsXyIes0gHTvKWZBBPZfSxxgh0J5C7XEme5MhlCj/nsIAIszHHwXRSyWjt0EsMdkUA8+Vd8NMEEMvpS39c=
+	t=1784673217; cv=none; b=XmbUm/OsC+LAGfZDtRfUUS18HobqbQ0Rq1q7jjdnzUU8JI345ZVN2YyD4EPxuN7Oo+RyQ/0SS6l4jxTkFE+CzESItXr8C/3XclbZrn0OzvBMoDl7Szs0bsgrxyHOvZuwmhRwQtzpY0FhKR0HlYT9NBHeLBKo9H+hR3o7PhAPvZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673215; c=relaxed/simple;
-	bh=DtlQ571hUWz9YISBn4MUI2TkMy7Or6tWR1da6VEjyNo=;
+	s=arc-20240116; t=1784673217; c=relaxed/simple;
+	bh=GguAaybMruDdAQmw1CdK1pDFSPWijLRpBztN6zvX6ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dwah1JDuExGq6Z5D3WZKdMTHQEoIeXoFteYreX4oSQml0SOIuOIelnQFiWUzAZh/BVfDXZoIQ+7DAnmn8aKaAqE8fJWwhCkozrQAgfgaPIj+0gEwqfQ6Mi1EuBdcBpw04U4VFwNFltaU51s8/YwJdtXutolwo9dnvjrcnG+G03s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agWU6wQ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=azBQC4ZDe8RAM+T2JolNi41M9gW58ELshWR7DYc6X1gOsHd51oJc/fXXIZX5nfhw5EBQwhhpqayx6+EAKCL09oR3tGc+h1Wv1xjH1QkJ0afCzc5wbH0FKcDuUeyAduIv8nuO8mKRjIXb+HsS15qj/UKx4ZO4IAbr4FDiOVuIT48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ncsrd31; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agWU6wQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D951F000E9;
-	Tue, 21 Jul 2026 22:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ncsrd31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD191F000E9;
+	Tue, 21 Jul 2026 22:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673214;
-	bh=vcKlhRfzot11+ckssz4qAxjN7K00/wy5cm9Bg737jdQ=;
+	s=korg; t=1784673216;
+	bh=+zdyBdRWxJU5wqr7Jvkkch2am/z8ArrsNR2q+oAo4LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=agWU6wQ17fEUpm4Wasnruhh67QNiRYIfEIKLNErZIxT8aL5lDF8oA9n8898m2MM/L
-	 hpyU1wlQR0oM5TprqH5OXWk9vdQo2QW8ZS8p6g8pE9pPl6Xexw5tC3E+V6hk1NjQvw
-	 XbxWrcFc8qQR8hRWTfzBgA+iW52WB0XVy2QEoOmo=
+	b=1ncsrd31S8MsdshIpo7Ktb8dwNTM5hiPaQJ7OMmzSCOyF3mHcW6KMI6FI+M58UvVa
+	 ACo4CONIQPgRc8d/ZH1mNIgimWSlfW8EcYmiKq7G099V1SGKeahwc3zTNyYetYzU/z
+	 ZQmX7YUOjxH+f7ZBJ6hKp5MJzj1v5hb5ucY5y/3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 5.10 076/699] gpio: eic-sprd: use raw_spinlock_t in the irq startup path
-Date: Tue, 21 Jul 2026 17:17:15 +0200
-Message-ID: <20260721152357.420305815@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 077/699] io_uring/io-wq: re-check IO_WQ_BIT_EXIT for each linked work item
+Date: Tue, 21 Jul 2026 17:17:16 +0200
+Message-ID: <20260721152357.443947327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,82 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 90f0109019e6817eb40a486671b7722d1544ae29 upstream.
+commit 29bef9934b2521f787bb15dd1985d4c0d12ae02a upstream.
 
-sprd_eic_irq_unmask() enables the GPIO IRQ and then updates controller
-state through sprd_eic_update(), which takes sprd_eic->lock with
-spin_lock_irqsave().  The callback can be reached from irq_startup()
-while setting up a requested IRQ.  That path is not sleepable, but on
-PREEMPT_RT a regular spinlock_t becomes a sleeping lock.
+commit 10dc95939817 ("io_uring/io-wq: check IO_WQ_BIT_EXIT inside work
+run loop") fixed the obvious case where io_worker_handle_work() took one
+exit-bit snapshot before draining pending work, but the fix stops one
+level too early.
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+io_worker_handle_work() now re-checks IO_WQ_BIT_EXIT in its outer work
+run loop, yet it still snapshots that bit once before processing a whole
+dependent linked-work chain. If io_wq_exit_start() sets IO_WQ_BIT_EXIT
+after the first linked item has started, the remaining linked items can
+still reuse stale do_kill = false, skip IO_WQ_WORK_CANCEL, and continue
+running after exit has begun.
 
-The grounded PoC kept the request_threaded_irq() -> __setup_irq() ->
-irq_startup() -> sprd_eic_irq_unmask() -> sprd_eic_update() carrier and
-used the original spin_lock_irqsave(&sprd_eic->lock) edge.  Lockdep
-reported:
+Move the check further inside, so it covers linked items too. Note: this
+is a syzbot special as it loves setting up tons of slow linked work on
+weird devices like msr that take forever to read, and immediately close
+the ring. Exit then takes a long time.
 
-  BUG: sleeping function called from invalid context
-  hardirqs last disabled at ... __setup_irq.constprop.0 ... [vuln_msv]
-  sprd_rt_spin_lock_irqsave+0x1c/0x30 [vuln_msv]
-  sprd_eic_update.constprop.0+0x48/0x90 [vuln_msv]
-  sprd_eic_irq_unmask.constprop.0+0x35/0x50 [vuln_msv]
-  __setup_irq.constprop.0+0xd/0x30 [vuln_msv]
-
-Convert the Spreadtrum EIC controller lock to raw_spinlock_t.  The
-locked section only serializes MMIO register updates and does not contain
-sleepable operations, so keeping it non-sleeping is appropriate for the
-irqchip callbacks.
-
-Fixes: 25518e024e3a ("gpio: Add Spreadtrum EIC driver support")
+Fixes: 10dc95939817 ("io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop")
 Cc: stable@vger.kernel.org
 Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260617154035.1199948-3-runyu.xiao@seu.edu.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260527172203.2043962-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-eic-sprd.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ io_uring/io-wq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-eic-sprd.c
-+++ b/drivers/gpio/gpio-eic-sprd.c
-@@ -94,7 +94,7 @@ struct sprd_eic {
- 	struct irq_chip intc;
- 	void __iomem *base[SPRD_EIC_MAX_BANK];
- 	enum sprd_eic_type type;
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- 	int irq;
- };
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -556,7 +556,6 @@ static void io_worker_handle_work(struct
+ 	struct io_wq *wq = wqe->wq;
  
-@@ -146,7 +146,7 @@ static void sprd_eic_update(struct gpio_
- 	unsigned long flags;
- 	u32 tmp;
+ 	do {
+-		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 		struct io_wq_work *work;
+ get_next:
+ 		/*
+@@ -578,6 +577,7 @@ get_next:
  
--	spin_lock_irqsave(&sprd_eic->lock, flags);
-+	raw_spin_lock_irqsave(&sprd_eic->lock, flags);
- 	tmp = readl_relaxed(base + reg);
+ 		/* handle a whole dependent link */
+ 		do {
++			bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 			struct io_wq_work *next_hashed, *linked;
+ 			unsigned int hash = io_get_work_hash(work);
  
- 	if (val)
-@@ -155,7 +155,7 @@ static void sprd_eic_update(struct gpio_
- 		tmp &= ~BIT(SPRD_EIC_BIT(offset));
- 
- 	writel_relaxed(tmp, base + reg);
--	spin_unlock_irqrestore(&sprd_eic->lock, flags);
-+	raw_spin_unlock_irqrestore(&sprd_eic->lock, flags);
- }
- 
- static int sprd_eic_read(struct gpio_chip *chip, unsigned int offset, u16 reg)
-@@ -606,7 +606,7 @@ static int sprd_eic_probe(struct platfor
- 	if (!sprd_eic)
- 		return -ENOMEM;
- 
--	spin_lock_init(&sprd_eic->lock);
-+	raw_spin_lock_init(&sprd_eic->lock);
- 	sprd_eic->type = pdata->type;
- 
- 	sprd_eic->irq = platform_get_irq(pdev, 0);
 
 
