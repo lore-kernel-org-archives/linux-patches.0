@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B8E44AB62;
-	Tue, 21 Jul 2026 21:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF1644AB62;
+	Tue, 21 Jul 2026 21:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670737; cv=none; b=EacAYNp/k8H52i8Ufjbr1E+b3rpVJbEBgb+1NqmGmLFG97Whubtn5sS/9aln4ddhMYi8YH6rRhSFKjpostiD5s5ymqyARh5XCZdfOKoIQiM94LknXatzMqaokSU0/xPSRG5pQHDvBycjFEz0RfGq0CO7rH0VgpGogMR6/Yhx1+Q=
+	t=1784670739; cv=none; b=TjiVKNVtMKh6xk2kdqXpLuP0YyZM4Pfqy4876k4XjhHZEaKCsp65KPKdf/1qi3JfEqONanniQro6+GgBauRGJj4+vPPqxeSp5aK0CO9O053uabR3//AmXoW+nMHB8SR8P69WWFL5gkhH/AgQ/HV9JJkviyW53kyOooXmF6MXWM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670737; c=relaxed/simple;
-	bh=ZWx9TpiInU3/+qW1v/WL/Y+zz1u8TSUIdHBt9QoRubA=;
+	s=arc-20240116; t=1784670739; c=relaxed/simple;
+	bh=3RnDhJs/oekE0T9tJQ2TGa0w27Nin8avcq4/NbjGCR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uew/Y8pkXmsIGjzNS/qQQarLktSY/mjwWtt2WrerXngoRPJDSWuRZ8XR/nzagaeWkPu6KSUqGU9PpfAKY2/ehCZutQgS5dTFJeahQio892BhP62TpxlZcbc81W55L98ioxGE2Qbdrw3JCN4KD/f2zohV5cMGqZc+FrzniUYRdCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKp8sIMx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ug138YsNeAOt2Oegwlwo6rcxzZb4tU7TpzPozU5WhH30M440WwPNqWA0lcC0gUv+uQzeOTN24PlWHG1uhQG7eBreanvnKG4bxqg1v24gNFtwkY7Y8LS4raFYtzblJcvDSvwy74CZXknxn5I/gV8MnKf+9rkYVHcDquABU/VFMjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxLQyN+k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKp8sIMx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6705C1F000E9;
-	Tue, 21 Jul 2026 21:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxLQyN+k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C96D1F000E9;
+	Tue, 21 Jul 2026 21:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670735;
-	bh=5faTtcQuWoQ5pB0epXWIR3rqt60K2rhZjiO4/6b7UPo=;
+	s=korg; t=1784670738;
+	bh=6QHBU3XrHAuI3ygeivS6jHg/lP2dQlpg7nAYQZBNkrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZKp8sIMxnMf06s+aT9mXeqvZawm5b7Dcf8751ijJcNgGqUTZIDwHj86I60nmBF/j0
-	 syXD71oZ4UsEv/J3Z83KsY4pp70I6D43NrZy1azcJMBzbrG4hbTD9eSR6PficM2itH
-	 HdjA3oYzKY9vxuMjK9PEpJhlTn5XMVpAT54f3eus=
+	b=jxLQyN+kNU7nycfxQQRVZ/bM6dkKfiu8nekw31s+xnJ4uZxeHzgWSJOWrnXbZPVp/
+	 +/TM/TeYsicw4DRyYhotMo9U8W1+n0dc3VRmvDO2nmWUuRat7UltsIVMiOK0Jdyv9D
+	 5Nov+e3vkFop9ASm1RowusV+VNMkNZXyZjR0utAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 1045/1067] mm/damon/sysfs-schemes: fix dir put orders in access_pattern_add_dirs()
-Date: Tue, 21 Jul 2026 17:27:26 +0200
-Message-ID: <20260721152447.969569601@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.1 1046/1067] KVM: Move kvm_io_bus_get_dev() locking responsibilities to callers
+Date: Tue, 21 Jul 2026 17:27:27 +0200
+Message-ID: <20260721152447.992025965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,67 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 
-commit d58fdbe37a829fd2e5803dd4e5a72992dd8c5368 upstream.
+commit 3a07249981629ace483ebbef81ef6b34c2d2afec upstream.
 
-Patch series "mm/damon/sysfs-schemes: fix wrong directories put orders in
-error paths".
+kvm_io_bus_get_dev() returns a device that is only matched by the
+address, and nothing else. This can cause a lifetime issue if
+the matched device is not the expected type, as by the time
+the caller can introspect the object, it might be gone (the srcu
+lock having been dropped).
 
-Error paths of damon_sysfs_access_pattern_add_dirs() and
-damon_sysfs_scheme_add_dirs() functions put references to directories in
-wrong orders.  As a result, uninitialized memory dereference and/or
-memory leak can happen.  Fix those.
+Given that there is only a single user of this helper, the simplest
+option is to move the locking responsibility to the caller, which
+can keep the srcu lock held for as long as it wants.
 
+Note that this aligns with other kvm_io_bus*() helpers, which
+already require the srcu lock to be held by the callers.
 
-This patch (of 2):
-
-In access_pattern_add_dirs(), error handling path puts references starting
-from setup failed directories.  If the failure happpened from the initial
-allication in the setup functions, uninitialized memory dereference
-happen.  The allocation failures will not commonly happen, but the
-consequence is quite bad.  Fix the wrong reference put orders.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260618005650.83868-2-sj@kernel.org
-Link: https://lore.kernel.org/20260617060005.86852-1-sj@kernel.org [1]
-Fixes: 7e84b1f8212a ("mm/damon/sysfs: support DAMON-based Operation Schemes")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Will Deacon <will@kernel.org>
+Fixes: 8a39d00670f07 ("KVM: kvm_io_bus: Add kvm_io_bus_get_dev() call")
+Link: https://lore.kernel.org/all/20260626111344.802555-1-maz@kernel.org
+Cc: stable@vger.kernel.org
+Reviewed-by: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260627105105.1005990-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c |    2 ++
+ virt/kvm/kvm_main.c            |   16 +++++-----------
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -679,22 +679,19 @@ static int damon_sysfs_access_pattern_ad
- 	err = damon_sysfs_access_pattern_add_range_dir(access_pattern,
- 			&access_pattern->sz, "sz");
- 	if (err)
--		goto put_sz_out;
-+		return err;
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -713,6 +713,8 @@ struct vgic_its *vgic_msi_to_its(struct
  
- 	err = damon_sysfs_access_pattern_add_range_dir(access_pattern,
- 			&access_pattern->nr_accesses, "nr_accesses");
- 	if (err)
--		goto put_nr_accesses_sz_out;
-+		goto put_sz_out;
+ 	address = (u64)msi->address_hi << 32 | msi->address_lo;
  
- 	err = damon_sysfs_access_pattern_add_range_dir(access_pattern,
- 			&access_pattern->age, "age");
- 	if (err)
--		goto put_age_nr_accesses_sz_out;
-+		goto put_nr_accesses_sz_out;
- 	return 0;
++	guard(srcu)(&kvm->srcu);
++
+ 	kvm_io_dev = kvm_io_bus_get_dev(kvm, KVM_MMIO_BUS, address);
+ 	if (!kvm_io_dev)
+ 		return ERR_PTR(-EINVAL);
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -5465,25 +5465,19 @@ struct kvm_io_device *kvm_io_bus_get_dev
+ 					 gpa_t addr)
+ {
+ 	struct kvm_io_bus *bus;
+-	int dev_idx, srcu_idx;
+-	struct kvm_io_device *iodev = NULL;
++	int dev_idx;
  
--put_age_nr_accesses_sz_out:
--	kobject_put(&access_pattern->age->kobj);
--	access_pattern->age = NULL;
- put_nr_accesses_sz_out:
- 	kobject_put(&access_pattern->nr_accesses->kobj);
- 	access_pattern->nr_accesses = NULL;
+-	srcu_idx = srcu_read_lock(&kvm->srcu);
++	lockdep_assert_held(&kvm->srcu);
+ 
+ 	bus = srcu_dereference(kvm->buses[bus_idx], &kvm->srcu);
+ 	if (!bus)
+-		goto out_unlock;
++		return NULL;
+ 
+ 	dev_idx = kvm_io_bus_get_first_dev(bus, addr, 1);
+ 	if (dev_idx < 0)
+-		goto out_unlock;
++		return NULL;
+ 
+-	iodev = bus->range[dev_idx].dev;
+-
+-out_unlock:
+-	srcu_read_unlock(&kvm->srcu, srcu_idx);
+-
+-	return iodev;
++	return bus->range[dev_idx].dev;
+ }
+ EXPORT_SYMBOL_GPL(kvm_io_bus_get_dev);
+ 
 
 
