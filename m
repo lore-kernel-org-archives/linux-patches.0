@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD7846D2D9;
-	Tue, 21 Jul 2026 18:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A4046D2D9;
+	Tue, 21 Jul 2026 18:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658709; cv=none; b=CxwWhfYrnyFuekVBmLKby6Hsc99IiC3fZp/olSLquuAxSFfmoGysvlxQ7z/tMuwKxv2Ay5eNdDusLkZOVAxguntQtSXxMxgHUM1ABohZCjl/w4v/Cad2RRVC6FQ49j3UPzhey/V4O4RRNycFNHB2OFGdeoJ3+o/xWGkC9uc8MGI=
+	t=1784658711; cv=none; b=KRoe5XazuwsUrLd+k65Wey261evZyddGQVkYk7lDNDU+mPXBOW5n0MsRMwvnelfZhOx1vcw9JNNXQIrWkD1kQB9LJxDRLJTPw+JdClDGwbPDkNTVRz7Iv90PDkkqsd6bNOyoynvTTqx83+K2cVeSsgGku5SUhwxl9PK3OvBXIx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658709; c=relaxed/simple;
-	bh=qJWrZOHmaFkuhnunAwXm9YfSpmedepJoFRKxosy7cGM=;
+	s=arc-20240116; t=1784658711; c=relaxed/simple;
+	bh=IYdP7uMLeNpfeqg+xrs7Sz9gQzmZ8mdWHXV0yqfNiOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zm0TIv2uyir7DWCeltiSXmiKwj+3BqjjvXMuqtCRTTwlJC3OoNq8WG/MlJmi0qxyclCL52wB+yKVBoR9QlGuOEjWXlDboMljt9WQe2l6VVGOnXBoqCi3svWQcGDMfgFrYICVKrXR5zQv3m4e9W+c3ilQDAdsd1ArIP2WeXxROWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOXwQ8NS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bV1dI7kcF0GKd8Zk+jFdQhUojs/Gnf0FWUdHcsmjGYvaT1mVVT2Cj5owHC1MONHFbDcgANxftPwQ1/KvgNR/y1pmJlczsSG0u4zkB9DotGfZzGC0PinzQ/5hNb0UTpStnlCJ/EsfEoGdBMSrS3Q0bACdFr2jO9c8hDWUwnmweXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTyKxmDK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOXwQ8NS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B68E1F000E9;
-	Tue, 21 Jul 2026 18:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTyKxmDK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99C71F000E9;
+	Tue, 21 Jul 2026 18:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658707;
-	bh=7z4vH1yQZvC/Sem19fEiqJiEaPbT5HKb8XYrpwnXxO0=;
+	s=korg; t=1784658710;
+	bh=tYb3tOOoEVzlhr4wYz1bFa5+JeVRRkiqM9GZWft54do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uOXwQ8NS8Y/7hbG6Tiy/jX4yfxZonPH9xF93xXqLOnBms93jRH7Kx80FWa0bZhqE5
-	 KXc40FCW9DnbS8LJpg5sfTWhE4KKBcJKAKu3NSue9jmzBpgycfHhumbvh7WPNK25SK
-	 ExaiGrgsWqH1j28GdngTUoqtTNMt/Tc3FrW0Mn3Y=
+	b=dTyKxmDK6RsTDj6lP9PqKKFWum5UkQIwql6RXEAr2RzC0XXwbec2vMGn9mtogeGeJ
+	 kEjnZM1wSNITU/9vGVv2cAyod1CHITvmicFXRj1jFf59Kdw+9QjeZLTNxQxb11bncD
+	 5k7S/NhDYPVIFTQiTpaIqINvlMxIxtHoLEbG7H0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 1208/1611] batman-adv: tt: prevent TVLV OOB check overflow
-Date: Tue, 21 Jul 2026 17:22:04 +0200
-Message-ID: <20260721152542.605666051@linuxfoundation.org>
+	syzbot+39b2fb0f2638669008ec@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.18 1244/1611] ntfs3: fix out-of-bounds read in decompress_lznt
+Date: Tue, 21 Jul 2026 17:22:40 +0200
+Message-ID: <20260721152543.423918860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -49,38 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 7a581d9aaba8c82bd6177fa36b2588eea77f6e2b upstream.
+commit 7160a57192fb16d7a6fa9b7f5c7ac341d2444a89 upstream.
 
-A TT unicast TVLV contains the number of VLANs stored in it. This number is
-an u16 and gets multiplied by the size of the struct
-batadv_tvlv_tt_vlan_data (8 bytes). The size can therefore overflow the u16
-used to store the tt_vlan_len. All additional safety checks to prevent
-out-of-bounds access of the TVLV buffer are invalid due to this overflow.
+decompress_lznt() does not validate array index bounds before accessing
+the decompression table. A corrupted NTFS3 image with invalid compressed
+data can trigger an out-of-bounds read.
 
-Using size_t prevents this overflow and ensures that the safety checks
-compare against the actual buffer requirements.
+Add index bounds checking to prevent the OOB access.
 
+Reported-by: syzbot+39b2fb0f2638669008ec@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ntfs3/lznt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -4025,7 +4025,8 @@ static int batadv_tt_tvlv_unicast_handle
- 					     u16 tvlv_value_len)
- {
- 	struct batadv_tvlv_tt_data *tt_data;
--	u16 tt_vlan_len, tt_num_entries;
-+	u16 tt_num_entries;
-+	size_t tt_vlan_len;
- 	char tt_flag;
- 	bool ret;
+--- a/fs/ntfs3/lznt.c
++++ b/fs/ntfs3/lznt.c
+@@ -240,7 +240,7 @@ static inline ssize_t decompress_chunk(u
+ 		if (up - unc > LZNT_CHUNK_SIZE)
+ 			return -EINVAL;
+ 		/* Correct index */
+-		while (unc + s_max_off[index] < up)
++		while (index < ARRAY_SIZE(s_max_off) - 1 && unc + s_max_off[index] < up)
+ 			index += 1;
  
+ 		/* Check the current flag for zero. */
 
 
