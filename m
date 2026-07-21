@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BDA434E2C;
-	Tue, 21 Jul 2026 20:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFBC395D8E;
+	Tue, 21 Jul 2026 20:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664571; cv=none; b=kBwrvbfEO+2ec3burxl9KHcF814A8/xuv0Kray0EP6iLudYC+wYPBrDzKkl1kA21U/rL74p6Z2uHKL3FNOZQmvY2Wqhg35y4eZF1uyaN1f2aO4zIX5pEB1n6/B4/JFcNb5cjq7H9sPtkT/3E/AkXsem7yuJ948bTjGSfNcGvi1M=
+	t=1784664574; cv=none; b=se7n2fT1bX10b7TuRNUP7rRZfx3eiynPCwH/uZ5yQxtWXPGgyjcCGtt48hfQyvffYS9vL4nE4ThV9UERmx0WVwLEP3twZCCY4iqMzHTeHZod/FMcEec7NDlomIiqu4voafWaMhyPbvwnhnWCgV9ZgeQjCqc4gGIeaZhYkwdq1PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664571; c=relaxed/simple;
-	bh=35mBG5eiuxffVF8HgKddvbpQDVKlnKkTM4oDQ+zvEYk=;
+	s=arc-20240116; t=1784664574; c=relaxed/simple;
+	bh=8JQ/VXy7sJsgkRbNm3aGVw9bV7WG6ihbnOLXwdC1iVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XeLhedbD18cboQxgic4LuYiWuMzcvKcDHbAvX7ozrrwWwWNBfFG+BiQmpsiNKuVi6FiW2rQ0XXp5R+cvnajvmTTULHqxS5vhozJjeZYAcySZBjlhrCm6uGow8f9e7aqx3fr3FwVJZd9DfuHQFTq16AgrxlPkW526Z3uNka2KygA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAomdlRi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IDa8gVqrBidwRJro+CiFTbKV9CcmTrdpyjSKcbtwJ3pm23+Dryjx9IehlucazSequP7Ohb/K+PoEy50V1duL9087UIiKjA0H4G6lQsUheOXgDrVoA/dsbaqzfLU4ch6lH0tHZgS9Bn9LvRe1NdxJJx1WDV3Z+ZR88Zk3dfex+YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJaPjWJc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAomdlRi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875D51F000E9;
-	Tue, 21 Jul 2026 20:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJaPjWJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D91D1F000E9;
+	Tue, 21 Jul 2026 20:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664570;
-	bh=EETM7v3ka/9zlTyLAQsZY6coplZgj4uMsc5z574QNdc=;
+	s=korg; t=1784664572;
+	bh=75HLcm5Nxr/95/diMSKcNz7hDhQp1dyvutbjxQehJTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YAomdlRiPsFFgG98pZm1B4N2QiKCC2e9ryVtu26GW7ZjWqWkC2+9IPhjmGAH3ZTmg
-	 orym5rZ1mCsaBmdk7HmuvZegsk0MqVdnQ0uBh8InNxgb3oHqmfILRABpbETezPrURG
-	 vbXePu3sOWv7tWmkJI2GI4riiBsZ682nns5ipXZk=
+	b=YJaPjWJcnkBNMyTlT9BzrXHWBOmOxZEvGmxuXf3v5NJvEAcfohCnp5Eg16Iw7p4rH
+	 a+OMubm98fOmjKTFhpelCr3tY2ThkTjtrHx7JlL48DGh+i37/Z2s8p2UlLBEizFbK0
+	 XJq98hwOfLwf0YsAW/AK0vCOZbNepbnvVcwrQFrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yue Sun <samsun1006219@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1207/1276] USB: iowarrior: fix use-after-free on disconnect race
-Date: Tue, 21 Jul 2026 17:27:30 +0200
-Message-ID: <20260721152513.076837502@linuxfoundation.org>
+Subject: [PATCH 6.12 1198/1276] HID: pidff: Rework pidff_upload_effect
+Date: Tue, 21 Jul 2026 17:27:21 +0200
+Message-ID: <20260721152512.867845910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,162 +45,416 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit c602254ba4c10f60a73cd99d147874f86a3f485c ]
+[ Upstream commit 7fbaa031b94182a9c9e58310935a2f74265ef78d ]
 
-mutex_unlock() may access the mutex structure after releasing the lock
-and therefore cannot be used to manage lifetime of objects directly
-(unlike spinlocks and refcounts). [1][2]
+One of the more complicated functions. Expunge some of the logic to
+separate functions (FF -> PID id conversion)
 
-Use a kref to release the driver data to avoid use-after-free in
-mutex_unlock() when release() races with disconnect().
+Add a macro for envelope check to make it more readable in the upload
+function.
 
-[1] a51749ab34d9 ("locking/mutex: Document that mutex_unlock() is non-atomic")
-[2] 2b9d9e0a9ba0 ("locking/mutex: Clarify that mutex_unlock(), and most
-                   other sleeping locks, can still use the lock object
-                   after it's unlocked")
+All this made it possible to to expunge common code from the big switch
+statement and reduce the overall function size considerably. Now it can
+fit on one screen.
 
-Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
-Cc: stable <stable@kernel.org>
-Reported-by: Yue Sun <samsun1006219@gmail.com>
-Link: https://lore.kernel.org/r/20260618080204.38322-1-samsun1006219@gmail.com
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260622152612.116422-2-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Move the effect_cout logic from report functions to upload/erase
+functions.
+
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: b251598b8bf3 ("HID: pidff: Use correct effect type in effect update")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/iowarrior.c |   57 ++++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 33 deletions(-)
+ drivers/hid/usbhid/hid-pidff.c |  243 +++++++++++++++++++----------------------
+ 1 file changed, 115 insertions(+), 128 deletions(-)
 
---- a/drivers/usb/misc/iowarrior.c
-+++ b/drivers/usb/misc/iowarrior.c
-@@ -71,6 +71,7 @@ static struct usb_driver iowarrior_drive
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -141,7 +141,7 @@ static const u8 pidff_effect_types[] = {
+ #define PID_BLOCK_LOAD_SUCCESS	0
+ #define PID_BLOCK_LOAD_FULL	1
+ #define PID_BLOCK_LOAD_ERROR	2
+-static const u8 pidff_block_load_status[] = { 0x8c, 0x8d, 0x8e};
++static const u8 pidff_block_load_status[] = { 0x8c, 0x8d, 0x8e };
  
- /* Structure to hold all of our device specific stuff */
- struct iowarrior {
-+	struct kref kref;
- 	struct mutex mutex;			/* locks this structure */
- 	struct usb_device *udev;		/* save off the usb device pointer */
- 	struct usb_interface *interface;	/* the interface for this device */
-@@ -243,8 +244,10 @@ static void iowarrior_write_callback(str
+ #define PID_EFFECT_START	0
+ #define PID_EFFECT_STOP		1
+@@ -214,6 +214,62 @@ static int pidff_is_effect_conditional(s
+ }
+ 
  /*
-  *	iowarrior_delete
++ * Get PID effect index from FF effect type.
++ * Return 0 if invalid.
++ */
++static int pidff_effect_ff_to_pid(struct ff_effect *effect)
++{
++	switch (effect->type) {
++	case FF_CONSTANT:
++		return PID_CONSTANT;
++	case FF_RAMP:
++		return PID_RAMP;
++	case FF_SPRING:
++		return PID_SPRING;
++	case FF_DAMPER:
++		return PID_DAMPER;
++	case FF_INERTIA:
++		return PID_INERTIA;
++	case FF_FRICTION:
++		return PID_FRICTION;
++	case FF_PERIODIC:
++		switch (effect->u.periodic.waveform) {
++		case FF_SQUARE:
++			return PID_SQUARE;
++		case FF_TRIANGLE:
++			return PID_TRIANGLE;
++		case FF_SINE:
++			return PID_SINE;
++		case FF_SAW_UP:
++			return PID_SAW_UP;
++		case FF_SAW_DOWN:
++			return PID_SAW_DOWN;
++		}
++	}
++	pr_err("invalid effect type\n");
++	return -EINVAL;
++}
++
++/*
++ * Get effect id in the device descriptor.
++ * Return 0 if invalid.
++ */
++static int pidff_get_effect_type_id(struct pidff_device *pidff,
++				    struct ff_effect *effect)
++{
++	int id = pidff_effect_ff_to_pid(effect);
++
++	if (id < 0)
++		return 0;
++
++	if (effect->type == FF_PERIODIC &&
++	    pidff->quirks & HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY)
++		id = PID_SINE;
++
++	return pidff->type_id[id];
++}
++
++/*
+  * Clamp value for a given field
   */
--static inline void iowarrior_delete(struct iowarrior *dev)
-+static inline void iowarrior_delete(struct kref *kref)
+ static s32 pidff_clamp(s32 i, struct hid_field *field)
+@@ -335,16 +391,16 @@ static void pidff_set_envelope_report(st
+ 			pidff->set_envelope[PID_FADE_LEVEL].field);
+ 
+ 	pidff_set_time(&pidff->set_envelope[PID_ATTACK_TIME],
+-			envelope->attack_length);
++		       envelope->attack_length);
+ 	pidff_set_time(&pidff->set_envelope[PID_FADE_TIME],
+-			envelope->fade_length);
++		       envelope->fade_length);
+ 
+ 	hid_dbg(pidff->hid, "attack %u => %d\n",
+ 		envelope->attack_level,
+ 		pidff->set_envelope[PID_ATTACK_LEVEL].value[0]);
+ 
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_ENVELOPE],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ }
+ 
+ /*
+@@ -353,7 +409,7 @@ static void pidff_set_envelope_report(st
+ static int pidff_needs_set_envelope(struct ff_envelope *envelope,
+ 				    struct ff_envelope *old)
  {
-+	struct iowarrior *dev = container_of(kref, struct iowarrior, kref);
-+
- 	kfree(dev->int_in_buffer);
- 	usb_free_urb(dev->int_in_urb);
- 	kfree(dev->read_queue);
-@@ -640,6 +643,9 @@ static int iowarrior_open(struct inode *
+-	bool needs_new_envelope;
++	int needs_new_envelope;
+ 
+ 	needs_new_envelope = envelope->attack_level  != 0 ||
+ 			     envelope->fade_level    != 0 ||
+@@ -361,8 +417,7 @@ static int pidff_needs_set_envelope(stru
+ 			     envelope->fade_length   != 0;
+ 
+ 	if (!needs_new_envelope)
+-		return false;
+-
++		return 0;
+ 	if (!old)
+ 		return needs_new_envelope;
+ 
+@@ -375,8 +430,8 @@ static int pidff_needs_set_envelope(stru
+ /*
+  * Send constant force report to the device
+  */
+-static void pidff_set_constant_force_report(struct pidff_device *pidff,
+-					    struct ff_effect *effect)
++static void pidff_set_constant_report(struct pidff_device *pidff,
++				      struct ff_effect *effect)
+ {
+ 	pidff->set_constant[PID_EFFECT_BLOCK_INDEX].value[0] =
+ 		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
+@@ -384,7 +439,7 @@ static void pidff_set_constant_force_rep
+ 			 effect->u.constant.level);
+ 
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_CONSTANT],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ }
+ 
+ /*
+@@ -536,8 +591,8 @@ static int pidff_needs_set_condition(str
+ /*
+  * Send ramp force report to the device
+  */
+-static void pidff_set_ramp_force_report(struct pidff_device *pidff,
+-					struct ff_effect *effect)
++static void pidff_set_ramp_report(struct pidff_device *pidff,
++				  struct ff_effect *effect)
+ {
+ 	pidff->set_ramp[PID_EFFECT_BLOCK_INDEX].value[0] =
+ 		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
+@@ -546,7 +601,7 @@ static void pidff_set_ramp_force_report(
+ 	pidff_set_signed(&pidff->set_ramp[PID_RAMP_END],
+ 			 effect->u.ramp.end_level);
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_RAMP],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ }
+ 
+ /*
+@@ -664,9 +719,6 @@ static int pidff_request_effect_upload(s
+ {
+ 	int j;
+ 
+-	if (!pidff->effect_count)
+-		pidff_reset(pidff);
+-
+ 	pidff->create_new_effect_type->value[0] = efnum;
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_CREATE_NEW_EFFECT],
+ 			HID_REQ_SET_REPORT);
+@@ -686,8 +738,6 @@ static int pidff_request_effect_upload(s
+ 			hid_dbg(pidff->hid, "device reported free memory: %d bytes\n",
+ 				 pidff->block_load[PID_RAM_POOL_AVAILABLE].value ?
+ 				 pidff->block_load[PID_RAM_POOL_AVAILABLE].value[0] : -1);
+-
+-			pidff->effect_count++;
+ 			return 0;
+ 		}
+ 		if (pidff->block_load_status->value[0] ==
+@@ -725,7 +775,7 @@ static void pidff_playback_pid(struct pi
  	}
- 	/* increment our usage count for the driver */
- 	++dev->opened;
-+
-+	kref_get(&dev->kref);
-+
- 	/* save our object in the file's private structure */
- 	file->private_data = dev;
- 	retval = 0;
-@@ -655,7 +661,6 @@ out:
- static int iowarrior_release(struct inode *inode, struct file *file)
+ 
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_EFFECT_OPERATION],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ }
+ 
+ /*
+@@ -747,10 +797,7 @@ static void pidff_erase_pid(struct pidff
  {
- 	struct iowarrior *dev;
--	int retval = 0;
+ 	pidff->block_free[PID_EFFECT_BLOCK_INDEX].value[0] = pid_id;
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_BLOCK_FREE],
+-			HID_REQ_SET_REPORT);
+-
+-	if (pidff->effect_count > 0)
+-		pidff->effect_count--;
++		       HID_REQ_SET_REPORT);
+ }
  
- 	dev = file->private_data;
- 	if (!dev)
-@@ -663,29 +668,18 @@ static int iowarrior_release(struct inod
+ /*
+@@ -772,139 +819,79 @@ static int pidff_erase_effect(struct inp
+ 	pidff_playback_pid(pidff, pid_id, 0);
+ 	pidff_erase_pid(pidff, pid_id);
  
- 	/* lock our device */
- 	mutex_lock(&dev->mutex);
-+	dev->opened = 0;	/* we're closing now */
++	if (pidff->effect_count > 0)
++		pidff->effect_count--;
++
++	hid_dbg(pidff->hid, "current effect count: %d", pidff->effect_count);
+ 	return 0;
+ }
  
--	if (dev->opened <= 0) {
--		retval = -ENODEV;	/* close called more than once */
--		mutex_unlock(&dev->mutex);
--	} else {
--		dev->opened = 0;	/* we're closing now */
--		retval = 0;
--		if (dev->present) {
--			/*
--			   The device is still connected so we only shutdown
--			   pending read-/write-ops.
--			 */
--			usb_kill_urb(dev->int_in_urb);
--			wake_up_interruptible(&dev->read_wait);
--			wake_up_interruptible(&dev->write_wait);
--			mutex_unlock(&dev->mutex);
--		} else {
--			/* The device was unplugged, cleanup resources */
--			mutex_unlock(&dev->mutex);
--			iowarrior_delete(dev);
++#define PIDFF_SET_REPORT_IF_NEEDED(type, effect, old) \
++	({ if (!old || pidff_needs_set_## type(effect, old)) \
++		pidff_set_ ##type## _report(pidff, effect); })
++
++#define PIDFF_SET_ENVELOPE_IF_NEEDED(type, effect, old) \
++	({ if (pidff_needs_set_envelope(&effect->u.type.envelope, \
++	       old ? &old->u.type.envelope : NULL)) \
++		pidff_set_envelope_report(pidff, &effect->u.type.envelope); })
++
+ /*
+  * Effect upload handler
+  */
+-static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *effect,
++static int pidff_upload_effect(struct input_dev *dev, struct ff_effect *new,
+ 			       struct ff_effect *old)
+ {
+ 	struct pidff_device *pidff = dev->ff->private;
+-	int type_id;
+-	int error;
++	const int type_id = pidff_get_effect_type_id(pidff, new);
+ 
+-	pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0] = 0;
+-	if (old) {
+-		pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0] =
+-			pidff->pid_id[effect->id];
++	if (!type_id) {
++		hid_err(pidff->hid, "effect type not supported\n");
++		return -EINVAL;
+ 	}
+ 
+-	switch (effect->type) {
++	if (!pidff->effect_count)
++		pidff_reset(pidff);
++
++	if (!old) {
++		int error = pidff_request_effect_upload(pidff, type_id);
++
++		if (error)
++			return error;
++
++		pidff->effect_count++;
++		hid_dbg(pidff->hid, "current effect count: %d", pidff->effect_count);
++		pidff->pid_id[new->id] =
++			pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
++	}
++
++	pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0] =
++		pidff->pid_id[new->id];
++
++	PIDFF_SET_REPORT_IF_NEEDED(effect, new, old);
++	switch (new->type) {
+ 	case FF_CONSTANT:
+-		if (!old) {
+-			error = pidff_request_effect_upload(pidff,
+-					pidff->type_id[PID_CONSTANT]);
+-			if (error)
+-				return error;
 -		}
-+	if (dev->present) {
-+		usb_kill_urb(dev->int_in_urb);
-+		wake_up_interruptible(&dev->read_wait);
-+		wake_up_interruptible(&dev->write_wait);
+-		if (!old || pidff_needs_set_effect(effect, old))
+-			pidff_set_effect_report(pidff, effect);
+-		if (!old || pidff_needs_set_constant(effect, old))
+-			pidff_set_constant_force_report(pidff, effect);
+-		if (pidff_needs_set_envelope(&effect->u.constant.envelope,
+-					old ? &old->u.constant.envelope : NULL))
+-			pidff_set_envelope_report(pidff, &effect->u.constant.envelope);
++		PIDFF_SET_REPORT_IF_NEEDED(constant, new, old);
++		PIDFF_SET_ENVELOPE_IF_NEEDED(constant, new, old);
+ 		break;
+ 
+ 	case FF_PERIODIC:
+-		if (!old) {
+-			switch (effect->u.periodic.waveform) {
+-			case FF_SQUARE:
+-				type_id = PID_SQUARE;
+-				break;
+-			case FF_TRIANGLE:
+-				type_id = PID_TRIANGLE;
+-				break;
+-			case FF_SINE:
+-				type_id = PID_SINE;
+-				break;
+-			case FF_SAW_UP:
+-				type_id = PID_SAW_UP;
+-				break;
+-			case FF_SAW_DOWN:
+-				type_id = PID_SAW_DOWN;
+-				break;
+-			default:
+-				hid_err(pidff->hid, "invalid waveform\n");
+-				return -EINVAL;
+-			}
+-
+-			if (pidff->quirks & HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY)
+-				type_id = PID_SINE;
+-
+-			error = pidff_request_effect_upload(pidff,
+-					pidff->type_id[type_id]);
+-			if (error)
+-				return error;
+-		}
+-		if (!old || pidff_needs_set_effect(effect, old))
+-			pidff_set_effect_report(pidff, effect);
+-		if (!old || pidff_needs_set_periodic(effect, old))
+-			pidff_set_periodic_report(pidff, effect);
+-		if (pidff_needs_set_envelope(&effect->u.periodic.envelope,
+-					old ? &old->u.periodic.envelope : NULL))
+-			pidff_set_envelope_report(pidff, &effect->u.periodic.envelope);
++		PIDFF_SET_REPORT_IF_NEEDED(periodic, new, old);
++		PIDFF_SET_ENVELOPE_IF_NEEDED(periodic, new, old);
+ 		break;
+ 
+ 	case FF_RAMP:
+-		if (!old) {
+-			error = pidff_request_effect_upload(pidff,
+-					pidff->type_id[PID_RAMP]);
+-			if (error)
+-				return error;
+-		}
+-		if (!old || pidff_needs_set_effect(effect, old))
+-			pidff_set_effect_report(pidff, effect);
+-		if (!old || pidff_needs_set_ramp(effect, old))
+-			pidff_set_ramp_force_report(pidff, effect);
+-		if (pidff_needs_set_envelope(&effect->u.ramp.envelope,
+-					old ? &old->u.ramp.envelope : NULL))
+-			pidff_set_envelope_report(pidff, &effect->u.ramp.envelope);
++		PIDFF_SET_REPORT_IF_NEEDED(ramp, new, old);
++		PIDFF_SET_ENVELOPE_IF_NEEDED(ramp, new, old);
+ 		break;
+ 
+ 	case FF_SPRING:
+ 	case FF_DAMPER:
+ 	case FF_INERTIA:
+ 	case FF_FRICTION:
+-		if (!old) {
+-			switch (effect->type) {
+-			case FF_SPRING:
+-				type_id = PID_SPRING;
+-				break;
+-			case FF_DAMPER:
+-				type_id = PID_DAMPER;
+-				break;
+-			case FF_INERTIA:
+-				type_id = PID_INERTIA;
+-				break;
+-			case FF_FRICTION:
+-				type_id = PID_FRICTION;
+-				break;
+-			}
+-			error = pidff_request_effect_upload(pidff,
+-					pidff->type_id[type_id]);
+-			if (error)
+-				return error;
+-		}
+-		if (!old || pidff_needs_set_effect(effect, old))
+-			pidff_set_effect_report(pidff, effect);
+-		if (!old || pidff_needs_set_condition(effect, old))
+-			pidff_set_condition_report(pidff, effect);
++		PIDFF_SET_REPORT_IF_NEEDED(condition, new, old);
+ 		break;
+-
+-	default:
+-		hid_err(pidff->hid, "invalid type\n");
+-		return -EINVAL;
  	}
--	return retval;
-+	mutex_unlock(&dev->mutex);
-+
-+	kref_put(&dev->kref, iowarrior_delete);
-+
-+	return 0;
+-
+-	if (!old)
+-		pidff->pid_id[effect->id] =
+-		    pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0];
+-
+ 	hid_dbg(pidff->hid, "uploaded\n");
+-
+ 	return 0;
  }
  
- static __poll_t iowarrior_poll(struct file *file, poll_table * wait)
-@@ -770,6 +764,7 @@ static int iowarrior_probe(struct usb_in
- 	if (!dev)
- 		return retval;
- 
-+	kref_init(&dev->kref);
- 	mutex_init(&dev->mutex);
- 
- 	atomic_set(&dev->intr_idx, 0);
-@@ -888,7 +883,8 @@ static int iowarrior_probe(struct usb_in
- 	return retval;
- 
- error:
--	iowarrior_delete(dev);
-+	kref_put(&dev->kref, iowarrior_delete);
-+
- 	return retval;
- }
- 
-@@ -912,19 +908,14 @@ static void iowarrior_disconnect(struct
- 	usb_kill_anchored_urbs(&dev->submitted);
- 
- 	if (dev->opened) {
--		/* There is a process that holds a filedescriptor to the device ,
--		   so we only shutdown read-/write-ops going on.
--		   Deleting the device is postponed until close() was called.
--		 */
- 		usb_kill_urb(dev->int_in_urb);
- 		wake_up_interruptible(&dev->read_wait);
- 		wake_up_interruptible(&dev->write_wait);
--		mutex_unlock(&dev->mutex);
--	} else {
--		/* no process is using the device, cleanup now */
--		mutex_unlock(&dev->mutex);
--		iowarrior_delete(dev);
- 	}
-+
-+	mutex_unlock(&dev->mutex);
-+
-+	kref_put(&dev->kref, iowarrior_delete);
- }
- 
- /* usb specific object needed to register this driver with the usb subsystem */
 
 
