@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AA8265606;
-	Tue, 21 Jul 2026 19:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F8830EF7E;
+	Tue, 21 Jul 2026 19:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663775; cv=none; b=TXxg9YFRU6+fH2lmkIqpNegMY4Y+KJTcDw543irsju9AmExq1zuYFYvF/Xt8XESz2SdxFpqS6s1LMtflfsMHdkKdmCJ5NoX/kM1Nyeu8Gf98kLppFhT6dtL1CGHv+QmlyNxO+h+nhxxynmKyorAHwW4wHv9l4aRshpdPmbbY2+I=
+	t=1784663778; cv=none; b=FMhIzIcr0IkCuVAUVVDz3n1YTv5n8YwWmhTfbqKeIC45NFhmn8zDlwSaWE67Y0PDhZU4jvmZg2t9/agcEong3gV8o+8U9WYbK6eNhqYL9zwkrIZcO9jMwyD1wiCGqfBs9FYLfr0gORqWU7QkMN/QfShoDgSwi6e4hoChVjYBNZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663775; c=relaxed/simple;
-	bh=2pzQz4ReN0/8JyrPUGW1pI84zEXb1e0qYGr6d8O4XLk=;
+	s=arc-20240116; t=1784663778; c=relaxed/simple;
+	bh=3/L8mdgqk31kVJz9+1iY3YNNMgJWSVLVxnvpEy2+ihU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyU9DrNdLXK1iJfRv9zq+lco7Hylbn/6tHUUCFcdrpg7u5YKpg6IEA67TpNdBeppvMkG+6OKo8KUEzLedhXgUPhdAe23NrpshuSk0S0dtQHrta5OsLH5YJ5i/rfonOpAbZnCvAfIu+56bZ9UtksDHMiq56jutWmwphg5Jp1QS5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpygCCUz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jB4uEucPC+ZxmMoOaPqU/VrQ/tffBSim+AsVe2ehI3yAInG2trQoVj01QY0tIyLzxJ2xbr5clIi93XNWBGXriQq5SPbMPvFYKTLTI2CL2sy1B0CGvwyd68UxcVGzamPIvgdeKxVRezoRvw3cpPI0sBeYnu+3jQXYN7AtV8KYG5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nl4O8weu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpygCCUz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F69B1F000E9;
-	Tue, 21 Jul 2026 19:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nl4O8weu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFD51F000E9;
+	Tue, 21 Jul 2026 19:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663774;
-	bh=wLd06cnzcR9UyqI2zuSVyhIIFQYy/zxYAV6s5vSdJQs=;
+	s=korg; t=1784663776;
+	bh=7Zfkzb21Gl6EsQpWhtt6lnwitG+dZALsymLFOTtgbhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XpygCCUzupKX5Esi1nh0UGfx2j23eEzWMTP96LsfFBhT1c6tX4uRZVD6b0ajsPtZA
-	 2T4aBNHIXkSirAaWfKbr+h5oTCNxFwhzPOiEz2MKWJjxQ182D9aI28viqi3E2E0JZa
-	 wJiyxw1PiQ4gcSp7wlbMrk0klPEz6PBMZ1T5x0wU=
+	b=nl4O8weuB3Wk4J4m4Ocmrd1QeeXe6RO73cN7/Cxvuu84wsUewjchSuxCUVm+JxnCd
+	 nj92eOZNnDibwv5EbADKV0ZTau+USn2wvlxy+14cuQdf7eynLNwcQ6jMtYuu794hUh
+	 n5vi5kQSZNZn9QnrqLT4jboX1Ab/l+UuP7ECqe+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 0950/1276] ocfs2: reject non-inline dinodes with i_size and zero i_clusters
-Date: Tue, 21 Jul 2026 17:23:13 +0200
-Message-ID: <20260721152507.289095186@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.12 0924/1276] ntfs3: validate split-point offset in indx_insert_into_buffer
+Date: Tue, 21 Jul 2026 17:22:47 +0200
+Message-ID: <20260721152506.710794740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -59,133 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 7ebc672fab7a76e1e47e0f2fc1ee48118d27fde4 upstream.
+commit f1df9d771df47aa40de6d70949c28720ae1e430d upstream.
 
-On a volume mounted without OCFS2_FEATURE_INCOMPAT_SPARSE_ALLOC, a
-non-inline regular file with non-zero i_size and zero i_clusters is
-structurally malformed: the extent map declares no allocated clusters yet
-the size header claims content exists.  Keep rejecting that shape, but
-express it through a shared predicate so the same invariant is available
-to normal inode reads and online filecheck.
+indx_insert_into_buffer() computes
 
-The same zero-cluster shape is also malformed for non-inline directories.
-ocfs2 directory growth allocates backing storage before advancing i_size,
-and ocfs2_dir_foreach_blk_el() later walks until ctx->pos reaches
-i_size_read(inode).  A forged directory dinode with a huge i_size and no
-clusters would repeatedly fail on holes while advancing through the
-claimed size.
+    used = used1 - to_copy - sp_size;
+    memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
 
-Sparse regular files remain exempt: on sparse-alloc volumes, truncate can
-legitimately grow i_size without allocating clusters.  System inodes and
-inline-data dinodes also retain their separate storage rules.
+where sp and sp_size come from hdr_find_split().  hdr_find_split()
+walks entries by le16_to_cpu(e->size) without validating that each
+step stays within hdr->used or that the size field is at least
+sizeof(struct NTFS_DE).  index_hdr_check(), the on-load gatekeeper,
+only validates header-level fields (used, total, de_off) and does
+not walk per-entry sizes.
 
-Mirror the check in ocfs2_filecheck_validate_inode_block() as well.
-filecheck reports through its own error namespace, so malformed
-size/cluster state is logged as a filecheck invalid-inode result rather
-than via ocfs2_error(), but it must not proceed into
-ocfs2_populate_inode().
+A crafted NTFS image whose leaf INDEX_HDR reports used == total but
+contains one interior NTFS_DE with size = 0xFFF0 therefore passes
+validation, descends to indx_insert_into_buffer() through the
+ntfs_create() -> indx_insert_entry() path, and makes hdr_find_split()
+return an sp whose sp_size (0xFFF0) greatly exceeds the remaining
+bytes in the buffer.  The u32 subtraction underflows and the memmove
+count becomes a near-4-GiB value, producing an out-of-bounds kernel
+write that corrupts adjacent allocations and panics the kernel.
 
-Link: https://lore.kernel.org/20260519110404.1803902-4-michael.bommarito@gmail.com
-Fixes: b657c95c1108 ("ocfs2: Wrap inode block reads in a dedicated function.")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://sashiko.dev/#/patchset/20260517111015.3187935-1-michael.bommarito%40gmail.com
+Reproduced on 7.0.0-rc7 with UML + KASAN via a crafted image and a
+single 'touch' inside the mounted directory; crash site resolves to
+fs/ntfs3/index.c at the memmove.  Trigger requires only local mount
+of an attacker-supplied filesystem image (USB, loopback, or removable
+media auto-mount).
+
+Reject the split whenever the chosen sp plus its declared size
+already extends past hdr1->used.  This is the minimal fix; it
+preserves the existing hdr_find_split() contract and relies on the
+same out: cleanup path as the pre-existing error returns.
+
+A prior OOB read in the very same indx_insert_into_buffer() memmove
+was fixed in commit b8c44949044e ("fs/ntfs3: Fix OOB read in
+indx_insert_into_buffer") by tightening hdr_find_e(), but that fix
+does not cover the split-point size field path addressed here: sp is
+returned by hdr_find_split(), not hdr_find_e(), and the underflow is
+driven by sp->size rather than hdr->used exceeding hdr->total.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Cc: stable@vger.kernel.org
+Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
 Assisted-by: Claude:claude-opus-4-7
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/inode.c |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ fs/ntfs3/index.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -83,6 +83,24 @@ static bool ocfs2_dinode_has_unexpected_
- 	return !S_ISCHR(mode) && !S_ISBLK(mode) && di->id1.dev1.i_rdev != 0;
- }
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1863,6 +1863,20 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	memcpy(up_e, sp, sp_size);
  
-+static bool ocfs2_dinode_has_size_without_clusters(struct super_block *sb,
-+						   struct ocfs2_dinode *di)
-+{
-+	umode_t mode = le16_to_cpu(di->i_mode);
+ 	used1 = le32_to_cpu(hdr1->used);
 +
-+	if (le32_to_cpu(di->i_flags) & OCFS2_SYSTEM_FL)
-+		return false;
-+	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL)
-+		return false;
-+	if (!le64_to_cpu(di->i_size) || le32_to_cpu(di->i_clusters))
-+		return false;
-+
-+	if (S_ISDIR(mode))
-+		return true;
-+
-+	return !ocfs2_sparse_alloc(OCFS2_SB(sb)) && S_ISREG(mode);
-+}
-+
- void ocfs2_set_inode_flags(struct inode *inode)
- {
- 	unsigned int flags = OCFS2_I(inode)->ip_attr;
-@@ -1487,6 +1505,33 @@ int ocfs2_validate_inode_block(struct su
- 		goto bail;
- 	}
- 
 +	/*
-+	 * Non-inline directories must not have i_size without allocated
-+	 * clusters: directory growth adds storage before advancing i_size,
-+	 * and readdir walks i_size block-by-block.  A forged directory
-+	 * with zero clusters and a huge i_size would repeatedly fault on
-+	 * holes while advancing through the claimed size.
-+	 *
-+	 * Non-inline regular files have the same invariant on non-sparse
-+	 * volumes.  Sparse regular files are different: truncate can
-+	 * legitimately grow i_size without allocating clusters, so keep
-+	 * the sparse-alloc carveout for S_IFREG only.  System inodes and
-+	 * inline-data dinodes have their own storage rules.
++	 * hdr_find_split does not validate per-entry sizes, so a crafted
++	 * NTFS_DE whose le16 size field is out of range can place sp such
++	 * that (PtrOffset(hdr1, sp) + sp_size) exceeds used1. Without this
++	 * guard the u32 'used = used1 - to_copy - sp_size' underflows and
++	 * the subsequent memmove count becomes a near-4-GiB value,
++	 * triggering an out-of-bounds kernel write.
 +	 */
-+	if (ocfs2_dinode_has_size_without_clusters(sb, di)) {
-+		if (S_ISDIR(le16_to_cpu(di->i_mode)))
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: directory i_size %llu with i_clusters 0 and no inline-data flag\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)le64_to_cpu(di->i_size));
-+		else
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: regular file i_size %llu with i_clusters 0 and no inline-data flag on non-sparse volume\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)le64_to_cpu(di->i_size));
-+		goto bail;
++	if (PtrOffset(hdr1, sp) + sp_size > used1) {
++		err = -EINVAL;
++		goto out;
 +	}
 +
- 	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
- 		struct ocfs2_inline_data *data = &di->id2.i_data;
- 
-@@ -1602,6 +1647,21 @@ static int ocfs2_filecheck_validate_inod
- 		     le16_to_cpu(di->i_mode),
- 		     (unsigned long long)le64_to_cpu(di->id1.dev1.i_rdev));
- 		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
-+		goto bail;
-+	}
-+
-+	if (ocfs2_dinode_has_size_without_clusters(sb, di)) {
-+		if (S_ISDIR(le16_to_cpu(di->i_mode)))
-+			mlog(ML_ERROR,
-+			     "Filecheck: invalid dinode #%llu: directory i_size %llu with i_clusters 0 and no inline-data flag\n",
-+			     (unsigned long long)bh->b_blocknr,
-+			     (unsigned long long)le64_to_cpu(di->i_size));
-+		else
-+			mlog(ML_ERROR,
-+			     "Filecheck: invalid dinode #%llu: regular file i_size %llu with i_clusters 0 and no inline-data flag on non-sparse volume\n",
-+			     (unsigned long long)bh->b_blocknr,
-+			     (unsigned long long)le64_to_cpu(di->i_size));
-+		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
- 	}
- 
- bail:
+ 	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
+ 	if (!hdr1_saved) {
+ 		err = -ENOMEM;
 
 
