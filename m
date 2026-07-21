@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A82946C4B9;
-	Tue, 21 Jul 2026 19:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089744248DC;
+	Tue, 21 Jul 2026 19:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661302; cv=none; b=YpQ5EylAfgKQJoD3jA5UoHMlROMir8t4sTZ2WW9TftUEZwKD5etv4QDLs2+5Jbw64td43BOgJYyBUtPlJ2ZIFT8nCquNcbm20W7UuOb7HmwYmw0yKIwmesxAQuR2XR+q0+T+oRfBOlBWtTAH4qwo5JhTqX7hZFh8hf7RexYLzRY=
+	t=1784661305; cv=none; b=YDFW1nsPxSo5TfrigGzCkXKgrL1qTPh+0d+7siS8qTJkvKWFrE1UdXowyHLU1CWV8MZbw4IlkpwCHm+Fm3P35xxGYFOR7Sj7hkz2pNHSN6hX/TXFBTanbEmqaXOxNHUU/2vNaBKzkkZ1s4HC1DBv3vWp6inT/NyALs3QkAnoRBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661302; c=relaxed/simple;
-	bh=1VEHgQA3LtLIX6eqIjZLTsuyf1laspQeRzmjyTwTFDg=;
+	s=arc-20240116; t=1784661305; c=relaxed/simple;
+	bh=XDhxH9SxRrn4fy0k1izFSp83PQbKgSleg+finH14fMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5zRWJB9L8ai6j/4dyeAKYw8FfH9zt6GyoB7aU2yLh1xRQ59sBs9C0JyZ1+PvU0gZKonngjHCSpgov10D+F8Ifohp1EfEAyqRO8kHTU2M3o/GkF6W3kg72y81fhPLHov+IpxjMp1zY1X6V9OA2M4Z6y3SKpROXMp3mzCr0lBYL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxKqwU9S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ulYRahqo+yh6damwXf+Yg2frxcSJsvWn66VQS8L2L5zDKfxKw3pU1JEowngeocQk6NABTc12oFrOPYuyBxhSCgiQfct1XcQd614aJpS2V8eA+zgc7ifXiSHil57fBDa9Sgl8c6fu53qrRzYjxW6MWOA6uN4LzQAythHwr+MiP58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrAYbjMt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxKqwU9S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C581F000E9;
-	Tue, 21 Jul 2026 19:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrAYbjMt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4B81F000E9;
+	Tue, 21 Jul 2026 19:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661301;
-	bh=PuG7vkXdySFgEWEN/wQUTKk0S3ad5Ltnx0UHYzoVJJU=;
+	s=korg; t=1784661303;
+	bh=ta8oNNMZzUuYZ2gietjuIkRnDWTFmALB9qz/k0xZUNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HxKqwU9SSq3Wox2X6RqR8BNWDSYLdpkm0X8Jq6bitUlAvyrWn7osyck1KlJyGrLAX
-	 36FFv0zae3/w5/j1dNzu+z1cJUXWBgtDmXWAJ+nWU6XZjFUvKJJW8XreVvF6yRifq/
-	 5nunp6sRj8dtz1EBHLKdFkZuHH+wsmYjAlAbOL/Y=
+	b=HrAYbjMtzSVPQCD/+D7Lm7nEEhHE5rT1V49x9n1sdnu5zEzpSAoM+6D+Fa6YRmQ68
+	 utZGpt9Ut2UrmOdIDgeRKSkyzlJCy2iJMvbNVytjdo5dpNIPFkIkA2vI1APsFRxklb
+	 5pr2aCgRmyYMJpN0XWvguAYzVsLwN4skD2iP8WdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0016/1276] iommu/vt-d: Clear Present bit before tearing down scalable-mode context entry
-Date: Tue, 21 Jul 2026 17:07:39 +0200
-Message-ID: <20260721152446.442437722@linuxfoundation.org>
+Subject: [PATCH 6.12 0017/1276] timekeeping: Register default clocksource before taking tk_core.lock
+Date: Tue, 21 Jul 2026 17:07:40 +0200
+Message-ID: <20260721152446.465331292@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,62 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-[ Upstream commit f46452c3df7a8d8a5addc0926e76ef19ea7da0a0 ]
+[ Upstream commit 8fa30821180a9a19e78e9f4df1c0ba710252801e ]
 
-device_pasid_table_teardown() zeroes the 128-bit scalable-mode context
-entry with context_clear_entry() while the Present bit is still set. This
-creates a window where the hardware can fetch a torn entry, with some
-fields already zeroed while Present is still set, leading to unpredictable
-behavior or spurious faults. The context-cache invalidation is issued only
-after the entry has been zeroed, and intel_pasid_free_table() then frees
-the PASID directory pages, so the IOMMU can keep walking a stale Present=1
-entry that points at freed memory.
+Commit f24df84cbe05 ("time/jiffies: Register jiffies clocksource before
+usage") moved the jiffies clocksource registration into
+clocksource_default_clock(), so that it is registered lazily on the first
+call. __clocksource_register() acquires clocksource_mutex, but the first
+caller is timekeeping_init(), which invokes clocksource_default_clock()
+while holding tk_core.lock, a raw spinlock.
 
-While x86 provides strong write ordering, the compiler may reorder the two
-64-bit writes to the entry, and the hardware fetch is not guaranteed to be
-atomic with respect to multiple CPU writes.
+Acquiring a sleeping mutex while holding a raw spinlock is invalid.
 
-Commit c1e4f1dccbe9d ("iommu/vt-d: Clear Present bit before tearing down
-context entry") fixed this exact pattern in domain_context_clear_one() and
-the copied-context path, but device_pasid_table_teardown() was not
-converted.
+The default clocksource only has to be registered before
+tk_setup_internals() consumes its mult/shift/maxadj. Neither
+clocksource_default_clock(), the ->enable() callback, nor the registration
+itself need tk_core.lock, so fetch and enable the clock before acquiring
+the lock. This preserves the "register before usage" ordering while
+keeping clocksource_mutex out of the raw spinlock section.
 
-Align it with the "Guidance to Software for Invalidations" in the VT-d
-spec, Section 6.5.3.3, using the same ownership handshake as the sibling
-fix: clear only the Present bit, flush it to the IOMMU, perform the
-context-cache invalidation, and only then zero the rest of the entry.
+clocksource_default_clock() has a second caller,
+clocksource_done_booting(), which invokes it with clocksource_mutex already
+held. That path avoids a recursive lock because timekeeping_init() has
+already run and set cs_jiffies_registered, so the registration is skipped
+there. This change does not alter that; it only fixes the invalid wait
+context in timekeeping_init().
 
-Fixes: 81e921fd32161 ("iommu/vt-d: Fix NULL domain on device release")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Link: https://lore.kernel.org/r/20260528025557.3209367-1-michael.bommarito@gmail.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: f24df84cbe05 ("time/jiffies: Register jiffies clocksource before usage")
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reported-by: Breno Leitao <leitao@debian.org>
+Reported-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260616070914.65818-1-mikhail.v.gavrilov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/time/timekeeping.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 0e0c6cf2d3f4d3..93e9b9243d5fdb 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -714,10 +714,12 @@ static void device_pasid_table_teardown(struct device *dev, u8 bus, u8 devfn)
- 	}
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index e3896b2be45321..b99171e71e0ac5 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -1685,13 +1685,14 @@ void __init timekeeping_init(void)
+ 	 */
+ 	wall_to_mono = timespec64_sub(boot_offset, wall_time);
  
- 	did = context_domain_id(context);
--	context_clear_entry(context);
-+	context_clear_present(context);
- 	__iommu_flush_cache(iommu, context, sizeof(*context));
- 	spin_unlock(&iommu->lock);
- 	intel_context_flush_no_pasid(info, context, did);
-+	context_clear_entry(context);
-+	__iommu_flush_cache(iommu, context, sizeof(*context));
- }
++	clock = clocksource_default_clock();
++	if (clock->enable)
++		clock->enable(clock);
++
+ 	raw_spin_lock_irqsave(&timekeeper_lock, flags);
+ 	write_seqcount_begin(&tk_core.seq);
+ 	ntp_init();
  
- static int pci_pasid_table_teardown(struct pci_dev *pdev, u16 alias, void *data)
+-	clock = clocksource_default_clock();
+-	if (clock->enable)
+-		clock->enable(clock);
+ 	tk_setup_internals(tk, clock);
+ 
+ 	tk_set_xtime(tk, &wall_time);
 -- 
 2.53.0
 
