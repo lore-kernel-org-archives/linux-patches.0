@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3669E395266;
-	Tue, 21 Jul 2026 18:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2146315D53;
+	Tue, 21 Jul 2026 18:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659368; cv=none; b=ZUku5O3BwilAke5viGwSeIx/1FGEAvGNZS5vuSbLtKVJRqePgx7lUyKK7ljKMR4nbixshaEBx5upgsDHtKAMoeMCAO8MOxZNaieFB/YPvaov/3Hhk6Q8SPGfLODxVAHyflhGArtvBjs1hAl1QsnlEqPz0TivqASDW9UHe/EYZ1I=
+	t=1784659370; cv=none; b=DCZy3x9ouj2DbPZt+hAUa/xMoxZPLCdq27EO+PSQXTkOildT06cXqlQHOQWLCvWGObZxq0d3iB4lEMiUv8uFfWjTkJUnxQpgSPMRp9rS1a03wMDe8P8Lpo1GqzUd8ZBINM97rwgXIzPFjdRCTaf8ZyLsy2ciCDGC1gad/2NW+9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659368; c=relaxed/simple;
-	bh=qP4bssJBCfh272BDMnY3L2ye/uSuO5sOZ2OLS0M9dGs=;
+	s=arc-20240116; t=1784659370; c=relaxed/simple;
+	bh=xHj0t9QyLdLO2ZIXmyrcFEyoVi8ZkT+Y9sv6YAeYvXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AyWnRK/LbapvLyj5HQOh3kkjgpZ//cYKVeEXvN2RCEQJw67eYdbHwrEPJQbJrMuUM0JWfrV5hvcliKVPWwkfO5368NM75epUo4/BM14zQ2XodZsKa4UnWJXQ1h6Q7NILT4hVEB09VZyBcAgtox0/Ed+Pkz5EZgGd1640B98n/Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJ63Gvqw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j0h/DNB6Tbe25/q/dCVXcbh6GqIOMw3Wx0DIf1i7dgeSQmaQpRN8dSY6jh1ruCmlkmpjqxQjdQoVojl/P9WTA53Z3VrA3xhU5GqD3tDGlCDKaVZyC3IqFbm1CEDoVGi9bYqJhgXJFRh5v+JTb8ukAnfiA5WahSI3EP6RwrgoKOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2E0OxIM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJ63Gvqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6661F000E9;
-	Tue, 21 Jul 2026 18:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2E0OxIM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441B41F000E9;
+	Tue, 21 Jul 2026 18:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659367;
-	bh=CsVygQdKt7o8bXOHgvRhiHfIcxF69OnSxbAhNOQo6iE=;
+	s=korg; t=1784659369;
+	bh=7rL9Enksv+2kW7e7wQB+e3deVefextUH4LfsbV0OLnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJ63GvqwgyN1Hn95LE4ZZaXOSr0N4gpBLW0y1JZlDFK9FE//sFjWtLMC+K/i3gXTV
-	 FyJNBYdV8IfjrL/VnJkojRDVwLVVPYYhpg3Ke8tqEvtcNjjeJ8yr4gYS0vgMM5Z5Nf
-	 CZvHeeRAqPkWvvbG/4sC3VO9S/WmcNN8OshJUBcM=
+	b=n2E0OxIMyeND0iHAC7Mx4uvqjQAexPiLaxTWmLAGUIRxdaYTelqasEMylXC9yUst9
+	 hWHoJzY006/flC6tbwz+6MhKvQB4IXTFBuQ/Mdj3JH/q/5BNjT4UB2/QntAWGJfnq3
+	 bBZ9PWZS3m5lBQ7di+iEEzdqzhcvF1Gd9tOyuCs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 1495/1611] powerpc/spufs: fix out-of-bounds access in spufs_mem_mmap_access()
-Date: Tue, 21 Jul 2026 17:26:51 +0200
-Message-ID: <20260721152549.069912566@linuxfoundation.org>
+	Haofeng Li <lihaofeng@kylinos.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 1496/1611] wifi: cfg80211: validate EHT MLE before MLD ID read
+Date: Tue, 21 Jul 2026 17:26:52 +0200
+Message-ID: <20260721152549.092082170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,47 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Haofeng Li <lihaofeng@kylinos.cn>
 
-commit 47b87f469a35b5ffc81c16eee6b13a9b6c8d55c6 upstream.
+commit 74e27cd1d98b546fdb276008a83708d062339661 upstream.
 
-spufs_mem_mmap_access() computes the local store offset as
-address - vma->vm_start, but bounds-checks it against vma->vm_end
-instead of the local store size. On 64-bit, offset is always well
-below vma->vm_end, so the clamp never fires and len stays unbounded
-against the LS_SIZE buffer returned by ctx->ops->get_ls().
+cfg80211_gen_new_ie() copies ML probe response elements from
+the parent frame when the parent EHT multi-link element has an
+MLD ID matching the nontransmitted BSSID index.
 
-Reject offsets at or beyond LS_SIZE and clamp len to the remaining
-space, mirroring the guard already used by spufs_mem_mmap_fault() and
-spufs_ps_fault().
+The code only checked that the extension element had more than
+one byte before calling ieee80211_mle_get_mld_id(). That helper
+assumes a BASIC MLE with enough common info and documents that
+callers must first use ieee80211_mle_type_ok().
 
-Fixes: a352894d0705 ("spufs: use new vm_ops->access to allow local state access from gdb")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Attack chain:
+malicious AP sends a short EHT MLE in an MBSSID beacon.
+cfg80211_inform_bss_frame_data() stores the copied IE buffer.
+cfg80211_parse_mbssid_data() builds the nontransmitted BSS IE.
+cfg80211_gen_new_ie() sees the EHT MLE in the parent frame.
+ieee80211_mle_get_mld_id() then reads past the IE boundary.
+
+Validate the MLE type and size before reading the MLD ID. This
+matches the contract required by the MLE helper and rejects the
+short element before any internal MLE fields are accessed.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/SYBPR01MB7881EE775E8B51C09F5A29E7AF152@SYBPR01MB7881.ausprd01.prod.outlook.com
+Fixes: 61dcfa8c2a8f ("wifi: cfg80211: copy multi-link element from the multi-link probe request's frame body to the generated elements")
+Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
+Link: https://patch.msgid.link/20260701093327.2680709-1-lihaofeng@kylinos.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/cell/spufs/file.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/wireless/scan.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/cell/spufs/file.c
-+++ b/arch/powerpc/platforms/cell/spufs/file.c
-@@ -268,10 +268,12 @@ static int spufs_mem_mmap_access(struct
- 
- 	if (write && !(vma->vm_flags & VM_WRITE))
- 		return -EACCES;
-+	if (offset >= LS_SIZE)
-+		return -EFAULT;
- 	if (spu_acquire(ctx))
- 		return -EINTR;
--	if ((offset + len) > vma->vm_end)
--		len = vma->vm_end - offset;
-+	if ((offset + len) > LS_SIZE)
-+		len = LS_SIZE - offset;
- 	local_store = ctx->ops->get_ls(ctx);
- 	if (write)
- 		memcpy_toio(local_store + offset, buf, len);
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -326,8 +326,11 @@ cfg80211_gen_new_ie(const u8 *ie, size_t
+ 		/* For ML probe response, match the MLE in the frame body with
+ 		 * MLD id being 'bssid_index'
+ 		 */
+-		if (parent->id == WLAN_EID_EXTENSION && parent->datalen > 1 &&
++		if (parent->id == WLAN_EID_EXTENSION &&
+ 		    parent->data[0] == WLAN_EID_EXT_EHT_MULTI_LINK &&
++		    ieee80211_mle_type_ok(parent->data + 1,
++					  IEEE80211_ML_CONTROL_TYPE_BASIC,
++					  parent->datalen - 1) &&
+ 		    bssid_index == ieee80211_mle_get_mld_id(parent->data + 1)) {
+ 			if (!cfg80211_copy_elem_with_frags(parent,
+ 							   ie, ielen,
 
 
