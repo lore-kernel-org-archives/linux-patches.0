@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BEA442118;
-	Tue, 21 Jul 2026 22:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171CE44AB8E;
+	Tue, 21 Jul 2026 22:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672593; cv=none; b=OKgz5z8yK5rVO+maUISfcdFxw1JcX01yalp7h9GO7uxNQ9VK8m2uF8rftVnTUshXdX0ISSw23+lgR+WnjPUAdeVkH7VDBkTkLqVgmSBQGi63vROnHNM91jQ8y1DVtArr2p87ht/j1PEO7XSI//B0LTixmuMNVejxdHSBvjL7t6o=
+	t=1784672597; cv=none; b=pP4iB65wXBJ2Gzu+dOJI6qtE1LJqv1nz0njjXTT5e9vFR1NL20ph6GxtxR94DoyfMq/6sGa82ss0h1uTERZ/BMPqgkR0ySGgW2LvFdVOkn3gaeoLV6q8KdcXR6NX1kvS3nzUsFSF6plTbgn1HQauW2cAhKHVHBaXKBXl2Jf+JIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672593; c=relaxed/simple;
-	bh=THvvgjkqLHoCFZTIuabm2EcDuIJOwq+UcKNfM4d7Kl4=;
+	s=arc-20240116; t=1784672597; c=relaxed/simple;
+	bh=b5pfcfn0Xl/yxiVY2Wn33bVGQcJjt45VFYjyx7/jGoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9gO1d6FqhafSvX9UIeCp1p4RL/KwFgBexdt8K6Po0SzURtLO7gT7YNx2TB+6VJsICVTIW1lo16hAKkyLJPcg2lW6M91WjsxonC6cX4v0gjvwyvjlbZQTrOa4TQ8iTNtEi5aDWm6yfI9IDGadelN+NiC4SfGDagkMDk6UoGm2jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5BD5lCz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sP+xIf9qG6uFGG2UShZQLcnJCiRTl0jaXgdbOKHV0fUW2VIb0umzkz/8EbxpTQ+oG+TzCpBRWIJrPDIqJNl6ihkb1knBXnTZTFvL20OUwFlDyxD4+0Pyv7/dSZqaEuD7472UsjYUi3jxXBG4oMdCtesVMPs01eOJ7I/2Cf3EM58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7OM++Ax; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5BD5lCz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7FB1F000E9;
-	Tue, 21 Jul 2026 22:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7OM++Ax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813571F000E9;
+	Tue, 21 Jul 2026 22:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672592;
-	bh=gacTYZUib5ZIKofKOmGw6P5uZbsHv75VlRij8omj+zI=;
+	s=korg; t=1784672595;
+	bh=WTOCC+KGwheUSLc7o24L+gjh7AMyCunbTmxh4WF0dFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U5BD5lCzLSzVDRQDKhrd0hmzv/U9pzGhvIszpG7VYO6/Um/RvbgNQ5IjxFPR+2Geb
-	 BPciLOOIkX3LNnVHZIva4IyPlTdeJmHbnxR8EQ84PUMifph7JhlZI2LQXIDwL1bH9R
-	 Gy17EWqX5i8tw2v6LkJLk97ravSQkMxss2pfOr2A=
+	b=I7OM++AxCeG24lKLn90NBV5f+vI4Aai73LWVQDagzLqd1rIubsB+cS9aQ7nsfK9Hz
+	 2aByKQIJk6U9+rVDmiZRQzAz7n0R4cOMcnFaZsOVi6teXjtmp9JANR0GRvrg5V21yM
+	 rlM6x2NVwwn3NFt9u2Tpxzwj8iYjasYXjf5XIays=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 5.15 639/843] xfrm: use compat translator only for u64 alignment mismatch
-Date: Tue, 21 Jul 2026 17:24:34 +0200
-Message-ID: <20260721152420.441749583@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 630/843] ocfs2: reject dinodes with non-canonical i_mode type
+Date: Tue, 21 Jul 2026 17:24:25 +0200
+Message-ID: <20260721152420.235258402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,88 +57,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 355fbcbdc2539cca7890b0d0914d4ce0f985ad74 upstream.
+commit 5366a017099c6a3c443be908a05f26fd72af12a1 upstream.
 
-The XFRM compat layer (CONFIG_XFRM_USER_COMPAT) translates 32-bit xfrm
-netlink and setsockopt messages into the native 64-bit layout. It is
-only needed on architectures where the 32-bit and 64-bit ABIs disagree
-on u64 alignment, which the kernel encodes as COMPAT_FOR_U64_ALIGNMENT.
+Patch series "ocfs2: harden inode validators against forged metadata", v2.
 
-That symbol is defined only by arch/x86. XFRM_USER_COMPAT depends on it,
-so the translator can never be built on any other architecture,
-including arm64, which still provides a 32-bit compat ABI (CONFIG_COMPAT)
-for AArch32 EL0 userspace. On arm64 the AArch32 EABI already aligns u64
-to 8 bytes, identical to the AArch64 ABI, so no translation is required
-and the native code path is correct for 32-bit tasks.
+This series adds three structural checks to OCFS2 dinode validation so
+malformed on-disk fields are rejected before ocfs2_populate_inode() copies
+them into the in-core inode.
 
-However, xfrm_user_rcv_msg() and xfrm_user_policy() gate on
-in_compat_syscall() alone and then call xfrm_get_translator(), which
-returns NULL when no translator is registered. On arm64 that is always
-the case, so every xfrm netlink message and the XFRM_POLICY setsockopt
-issued by a 32-bit task returns -EOPNOTSUPP. A 32-bit userspace process
-on arm64 (and on any other arch with CONFIG_COMPAT but without
-COMPAT_FOR_U64_ALIGNMENT) therefore cannot configure XFRM state or
-policy through the XFRM_USER netlink API, and cannot use the XFRM_POLICY
-setsockopt path, because both fail before reaching the native parser.
+The checks cover:
 
-The translator series replaced the blanket compat rejection with a
-translator lookup. That made the path usable on x86 when the translator
-is available, but left architectures that cannot build the translator
-permanently rejected even when their compat layout already matches the
-native layout. Let those architectures use the native parser instead.
+  - i_mode values whose type bits do not name a canonical POSIX file
+    type;
+  - non-device dinodes whose id1.dev1.i_rdev field is non-zero; and
+  - non-inline dinodes that claim non-zero i_size while i_clusters is
+    zero, covering directories unconditionally and regular files on
+    non-sparse volumes.
 
-Gate the translator requirement on COMPAT_FOR_U64_ALIGNMENT instead of
-on in_compat_syscall() alone. Gating on the ABI property rather than on
-CONFIG_XFRM_USER_COMPAT is deliberate: on x86 with IA32_EMULATION=y but
-XFRM_USER_COMPAT=n, a 32-bit task must still be rejected rather than
-routed through the native parser, which would misread genuinely
-4-byte-aligned x86-32 messages. COMPAT_FOR_U64_ALIGNMENT is the ABI
-property that makes the XFRM translator mandatory.
+The normal read path reports these through ocfs2_error(), matching the
+existing suballoc-slot, inline-data, chain-list, and refcount checks.  The
+online filecheck path uses the same structural predicates but keeps its
+own reporting contract, returning OCFS2_FILECHECK_ERR_INVALIDINO instead
+of calling ocfs2_error().
 
-Only the receive/input direction needs the guard. The send, dump and
-notification paths already call the translator as "if (xtr) { ... }"
-with no error on NULL, so on arches without a translator they no-op and
-the kernel emits native 64-bit-layout messages, which is what an AArch32
-task expects.
 
-Tested on Juniper SRX hardware: with the fix, 32-bit IPsec userspace
-netlink and XFRM_POLICY setsockopt operations that previously failed
-with -EOPNOTSUPP now succeed; x86 behaviour is unchanged by inspection.
+This patch (of 3):
 
-Fixes: 5106f4a8acff ("xfrm/compat: Add 32=>64-bit messages translator")
-Fixes: 96392ee5a13b ("xfrm/compat: Translate 32-bit user_policy from sockptr")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+ocfs2_validate_inode_block() currently accepts any non-zero i_mode value.
+ocfs2_populate_inode() then copies that mode verbatim into inode->i_mode
+and dispatches on i_mode & S_IFMT to the file/dir/symlink/special_file
+iops; an unrecognised type falls through to ocfs2_special_file_iops and
+init_special_inode().
+
+Reject dinodes whose type bits do not name one of the seven canonical
+POSIX file types.  Use fs_umode_to_ftype(), the same generic file-type
+conversion helper OCFS2 already uses for directory entries, so the
+accepted inode type set matches the kernel file-type vocabulary instead of
+open-coding a local switch.
+
+Apply the same structural check to the online filecheck read path.
+filecheck keeps its own error namespace, so it reports malformed i_mode
+through the filecheck logger and OCFS2_FILECHECK_ERR_INVALIDINO instead of
+calling ocfs2_error(), but it must not allow a malformed dinode to proceed
+into ocfs2_populate_inode().
+
+Link: https://lore.kernel.org/20260519110404.1803902-1-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/20260519110404.1803902-2-michael.bommarito@gmail.com
+Fixes: b657c95c1108 ("ocfs2: Wrap inode block reads in a dedicated function.")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://sashiko.dev/#/patchset/20260517111015.3187935-1-michael.bommarito%40gmail.com
+Assisted-by: Claude:claude-opus-4-7
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_state.c |    2 +-
- net/xfrm/xfrm_user.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/ocfs2/inode.c |   35 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 33 insertions(+), 2 deletions(-)
 
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2441,7 +2441,7 @@ int xfrm_user_policy(struct sock *sk, in
- 	if (IS_ERR(data))
- 		return PTR_ERR(data);
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -66,7 +66,12 @@ static int ocfs2_filecheck_read_inode_bl
+ static int ocfs2_filecheck_validate_inode_block(struct super_block *sb,
+ 						struct buffer_head *bh);
+ static int ocfs2_filecheck_repair_inode_block(struct super_block *sb,
+-					      struct buffer_head *bh);
++						      struct buffer_head *bh);
++
++static bool ocfs2_valid_inode_mode(umode_t mode)
++{
++	return fs_umode_to_ftype(mode) != FT_UNKNOWN;
++}
  
--	if (in_compat_syscall()) {
-+	if (IS_ENABLED(CONFIG_COMPAT_FOR_U64_ALIGNMENT) && in_compat_syscall()) {
- 		struct xfrm_translator *xtr = xfrm_get_translator();
+ void ocfs2_set_inode_flags(struct inode *inode)
+ {
+@@ -1416,6 +1421,24 @@ int ocfs2_validate_inode_block(struct su
+ 		goto bail;
+ 	}
  
- 		if (!xtr) {
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2932,7 +2932,7 @@ static int xfrm_user_rcv_msg(struct sk_b
- 	if (!netlink_net_capable(skb, CAP_NET_ADMIN))
- 		return -EPERM;
++	/*
++	 * Reject dinodes whose i_mode does not name one of the seven
++	 * canonical POSIX file types.  ocfs2_populate_inode() copies
++	 * i_mode verbatim into inode->i_mode and then dispatches via
++	 * switch (mode & S_IFMT) to file/dir/symlink/special_file iops;
++	 * an unrecognised type falls into ocfs2_special_file_iops with
++	 * init_special_inode(), which interprets i_rdev.  Constrain the
++	 * type here so the dispatch only ever sees a value mkfs.ocfs2 /
++	 * VFS can produce.
++	 */
++	if (!ocfs2_valid_inode_mode(le16_to_cpu(di->i_mode))) {
++		rc = ocfs2_error(sb,
++				 "Invalid dinode #%llu: mode 0%o has unknown file type\n",
++				 (unsigned long long)bh->b_blocknr,
++				 le16_to_cpu(di->i_mode));
++		goto bail;
++	}
++
+ 	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
+ 		struct ocfs2_inline_data *data = &di->id2.i_data;
  
--	if (in_compat_syscall()) {
-+	if (IS_ENABLED(CONFIG_COMPAT_FOR_U64_ALIGNMENT) && in_compat_syscall()) {
- 		struct xfrm_translator *xtr = xfrm_get_translator();
+@@ -1512,6 +1535,15 @@ static int ocfs2_filecheck_validate_inod
+ 		     (unsigned long long)bh->b_blocknr,
+ 		     le32_to_cpu(di->i_fs_generation));
+ 		rc = -OCFS2_FILECHECK_ERR_GENERATION;
++		goto bail;
++	}
++
++	if (!ocfs2_valid_inode_mode(le16_to_cpu(di->i_mode))) {
++		mlog(ML_ERROR,
++		     "Filecheck: invalid dinode #%llu: mode 0%o has unknown file type\n",
++		     (unsigned long long)bh->b_blocknr,
++		     le16_to_cpu(di->i_mode));
++		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
+ 	}
  
- 		if (!xtr)
+ bail:
+@@ -1687,4 +1719,3 @@ const struct ocfs2_caching_operations oc
+ 	.co_io_lock		= ocfs2_inode_cache_io_lock,
+ 	.co_io_unlock		= ocfs2_inode_cache_io_unlock,
+ };
+-
 
 
