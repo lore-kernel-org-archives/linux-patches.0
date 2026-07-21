@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F1F3EE1EE;
-	Tue, 21 Jul 2026 17:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C7D3E49C6;
+	Tue, 21 Jul 2026 17:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653659; cv=none; b=G8BvSGblBv/UlALdtEqQkny3EbYjG+67DpjDWLVabBCG5Nwhsrxq7WIgC82tjSk/YA/aI7WjJO6sMQCKI+FmnG/hTSeaLwTAy/AwQIzO2HkAMTGqKZT1WAPuRVgQtYf8WRpFV5sTZeZdyfdAYw+QazDQCi26ObdSvECF9iqR/8Y=
+	t=1784653661; cv=none; b=Ad5nTgcLWbOQVl2Rdl121TKRklIxevITvshFUybFa7v0HQxMXxHyj2A3O9AjF6Olnz9Bw8ZpJ6P3sPZ/KD4UnPe2uI8SsVKTbz/6elpoMdvDaAySwwgUCfNEPw8lHWOdxxvanZd9BUHZN55M/OzDd90v04zOVOsdZ16D/nBBcLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653659; c=relaxed/simple;
-	bh=cr4OzNUcusx1sQSangiX8zYq3Ep6OUBGzFonicoE01U=;
+	s=arc-20240116; t=1784653661; c=relaxed/simple;
+	bh=VFrVPDDicJmFil4cijh9y0zlBxsdZvQ82qokhaGNw9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFoH2pBWBGjC4D+tCgjAvoQxxNYttXqmEeArzzI3Wft4AE5jitXx5pWK9Zfvf+eIXbYYG3VseM2vAZnt9ZGj9a2eA4gEcglkUo2s5RliHmwYMS+4WN0RNojcxoBRWHSvV6NQqFI+EVL/lAxefqZDFFevsYf5R5TwF5xyod92SLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6lMuZfl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uPDc8J6MMI42GmgpZZk+5tnFv08GxxDPkeuD4INaCumSFgolQ7vvAfQc09CYnpPgVGQm0toW5AYx0dkCNhFbw2MY3zgHHKob+tlzQoBkzO5L7C3kbu37n8H3o0EZUbYEunMn9qp/TPoXsvaxuenIDThqNyY4c/XVkXzsLOv7O7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJelcoiV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6lMuZfl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0E61F000E9;
-	Tue, 21 Jul 2026 17:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJelcoiV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A4D1F000E9;
+	Tue, 21 Jul 2026 17:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653658;
-	bh=XDphVSB3PI9CjIbvbb5ZCg3PkDYlt3QKUmVnBSFg1iY=;
+	s=korg; t=1784653660;
+	bh=+bKJ2CAK/zhNsKbJPrO91GyVuDKRNgA9V2AqEVGhUIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6lMuZflXX8JJD4CFqpfY/ZhtRCcvLYAx/hpWjIj1v2FGtlO6LjePb5gGP3nUZymP
-	 XLMaFBF3shY87k9WUrs8LZ6td7pbbDgy688GpSeOGVbDfLkDJkW6B+o+HvMqhQD//h
-	 qucBhH87rW3Jx2WQAAom7CjM9Azl3wZBu1n2+hKw=
+	b=NJelcoiVJl6uLJHs6HBhLsKAFHQkR9NeytAUGzEgyph1QQ3CCaaNloe7qjUZLgiWR
+	 dq4LCwHbWETCsZ1cTOPsTwzKJVwIu39L/Jw8bJS7TGVtls07k+uab1qj0y76QAJeVn
+	 W1aVrjZuLIENxJQEFVeeUlN3qKqDt4fKTk2dbxBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karuna Ramkumar <rkaruna@google.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1410/2077] ata: libata-scsi: limit simulated SCSI command copy to response length
-Date: Tue, 21 Jul 2026 17:18:03 +0200
-Message-ID: <20260721152626.064786833@linuxfoundation.org>
+Subject: [PATCH 7.1 1384/2077] afs: Fix lack of locking around modifications of net->cells_dyn_ino
+Date: Tue, 21 Jul 2026 17:17:37 +0200
+Message-ID: <20260721152625.460406388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,63 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karuna Ramkumar <rkaruna@google.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit cd64be0ecd399fa2b1ab60b3aaf2b2b744243467 ]
+[ Upstream commit 55e841836c6f4646490f7b0347192b7a92d431ba ]
 
-The function ata_scsi_rbuf_fill() is used to copy the response of
-emulated SCSI commands from ata_scsi_rbuf to the SCSI command's
-scatterlist.
+Fix the lack of locking around modifications of net->cells_dyn_ino by
+taking net->cells_lock exclusively.  This also requires to cell to be
+removed from net->cells_dyn_ino in afs_destroy_cell_work() rather than in
+afs_cell_destroy() as the latter runs in RCU cleanup context and sleeping
+locks cannot be taken there.
 
-Currently, sg_copy_from_buffer() is called with the size argument
-set to ATA_SCSI_RBUF_SIZE (2048 bytes). Since ata_scsi_rbuf is
-zeroed out before the simulation actor is invoked, copying the
-full buffer size causes the remainder of the SCSI command's
-transfer buffer (beyond the actual response length 'len') to be
-overwritten with zeroes. This clobbers any pre-existing sentinel
-values or data in the caller's buffer tail, even though the
-correct residual count is reported via scsi_set_resid().
-
-Fix this by passing the actual response length 'len' as the copy
-size to sg_copy_from_buffer(), ensuring that the tail of the
-caller's buffer remains untouched. Also, add a defensive check
-to ensure that the actor does not return a length exceeding the
-static buffer capacity. If this occurs, trigger a WARN_ON(),
-fail the command with an aborted command error, and return
-immediately without copying any data.
-
-The fix was tested by invoking an SCSI SG_IO INQUIRY on
-an ATA disk on vanilla build, and build with the fix. Confirmed
-that the input buffer's tail end remains unmodified with the fix.
-
-Fixes: 5251ae224d8d ("ata: libata-scsi: Return residual for emulated SCSI commands")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Karuna Ramkumar <rkaruna@google.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 1d0b929fc070 ("afs: Change dynroot to create contents on demand")
+Closes: https://sashiko.dev/#/patchset/20260618074903.2374756-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-19-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/afs/cell.c    | 8 +++++++-
+ fs/afs/dynroot.c | 2 +-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index d43207c6e4679d..a4e0407c7481d0 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1931,8 +1931,13 @@ static void ata_scsi_rbuf_fill(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
- 	len = actor(dev, cmd, ata_scsi_rbuf);
- 	if (len) {
-+		if (WARN_ON(len > ATA_SCSI_RBUF_SIZE)) {
-+			ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0, 0);
-+			spin_unlock_irqrestore(&ata_scsi_rbuf_lock, flags);
-+			return;
-+		}
- 		sg_copy_from_buffer(scsi_sglist(cmd), scsi_sg_count(cmd),
--				    ata_scsi_rbuf, ATA_SCSI_RBUF_SIZE);
-+				    ata_scsi_rbuf, len);
- 		cmd->result = SAM_STAT_GOOD;
- 		if (scsi_bufflen(cmd) > len)
- 			scsi_set_resid(cmd, scsi_bufflen(cmd) - len);
+diff --git a/fs/afs/cell.c b/fs/afs/cell.c
+index fbb8a43aa7cd9a..9d8937ae24e219 100644
+--- a/fs/afs/cell.c
++++ b/fs/afs/cell.c
+@@ -205,8 +205,10 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
+ 	cell->dns_source = vllist->source;
+ 	cell->dns_status = vllist->status;
+ 	smp_store_release(&cell->dns_lookup_count, 1); /* vs source/status */
++	down_write(&net->cells_lock);
+ 	ret = idr_alloc_cyclic(&net->cells_dyn_ino, cell,
+ 			       2, INT_MAX / 2, GFP_KERNEL);
++	up_write(&net->cells_lock);
+ 	if (ret < 0)
+ 		goto error;
+ 	atomic_inc(&net->cells_outstanding);
+@@ -579,7 +581,6 @@ static void afs_cell_destroy(struct rcu_head *rcu)
+ 	afs_put_vlserverlist(net, rcu_access_pointer(cell->vl_servers));
+ 	afs_unuse_cell(cell->alias_of, afs_cell_trace_unuse_alias);
+ 	key_put(cell->anonymous_key);
+-	idr_remove(&net->cells_dyn_ino, cell->dynroot_ino);
+ 	kfree(cell->name - 1);
+ 	kfree(cell);
+ 
+@@ -594,6 +595,11 @@ static void afs_destroy_cell_work(struct work_struct *work)
+ 	afs_see_cell(cell, afs_cell_trace_destroy);
+ 	timer_delete_sync(&cell->management_timer);
+ 	cancel_work_sync(&cell->manager);
++
++	down_write(&cell->net->cells_lock);
++	idr_remove(&cell->net->cells_dyn_ino, cell->dynroot_ino);
++	up_write(&cell->net->cells_lock);
++
+ 	call_rcu(&cell->rcu, afs_cell_destroy);
+ }
+ 
+diff --git a/fs/afs/dynroot.c b/fs/afs/dynroot.c
+index 1d5e33bc750224..6e3c8c691ba97f 100644
+--- a/fs/afs/dynroot.c
++++ b/fs/afs/dynroot.c
+@@ -278,7 +278,7 @@ static struct dentry *afs_lookup_atcell(struct inode *dir, struct dentry *dentry
+ }
+ 
+ /*
+- * Transcribe the cell database into readdir content under the RCU read lock.
++ * Transcribe the cell database into readdir content under net->cells_lock.
+  * Each cell produces two entries, one prefixed with a dot and one not.
+  */
+ static int afs_dynroot_readdir_cells(struct afs_net *net, struct dir_context *ctx)
 -- 
 2.53.0
 
