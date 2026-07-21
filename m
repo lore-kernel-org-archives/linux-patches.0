@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9851F44AB6D;
-	Tue, 21 Jul 2026 21:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4038C44AB62;
+	Tue, 21 Jul 2026 21:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669217; cv=none; b=smMMtYU27B+WyntMHjTAKFKDZ+j3MMQx5dAIBpGmHhKrb3uzYv45Nwvaa8SR755/clnC8snpfAIBqm3KS6gjLVPccSqfSuOHwUJdjcg3lHhdadQrYjvHu1OQ4fsIA7Kj3JRFfbaZXR01TKMfRmxg++q/fcAGCaqeBgDYOnQt8iE=
+	t=1784669220; cv=none; b=c6beNfZFdrn2oueb7zAOskMXCi0QLuiAbRZ+WbJslm3GAzdDN0i6nX2TEY8XYYekXBlv2eQuxP6DmizE4iw4ghn1EOe+BMTl+hesiGGxVIFak7edngwU+JdQKy080lNgdN8CNZjfELQ8/IDxQhUVPT9WsmLUpxumoG4G4W6CWLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669217; c=relaxed/simple;
-	bh=2E6zHaPFhjAlc/HkTrBGh6E2tjeUmZ73QxAmny2gFIQ=;
+	s=arc-20240116; t=1784669220; c=relaxed/simple;
+	bh=ZRf3S/+vTJb8U8Qshu6Y/D2AArzHIoCQCuzOar1Fl1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pvPUJfEHm8aHpA6YskQyoHmDhj9fXuL1cb/QcpHM1xkf4XOqwsLWLqcLN5p9P7jpGsywwyOQjqQSdsb8Ud2a/GjtCRPpmCeKy/0Ll1uUdKltrvlaGdDa+WbRtVrAq25Rgr+UvMM+w9NHI9dz8D2xyPAJk6nTcGFHTUz4yPpqRQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARlopKVN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m3VnIqZm8fs784DxwuOXyOcwXOBlKNJHKkyEri1XvXohRZttNkcMc3bF/g/gpBmwpcrqXBMaNuMgPjyvs9DcR7Ykrq30X9lCT9b9h3bFF1Qmb8iaSoioHyibkYZ5x1R1te3Lb1flx9e9aM6pAwYHZnoiahTjMIXQQGP6Y9sW2xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otnKJAYL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARlopKVN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C431F000E9;
-	Tue, 21 Jul 2026 21:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otnKJAYL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E521F000E9;
+	Tue, 21 Jul 2026 21:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669216;
-	bh=uJWTfkx6dhDk4I8rxjbOhdUsQ5JbSx8fYCQICgbaODw=;
+	s=korg; t=1784669219;
+	bh=ba7rh+WRGMFhIVdoOaK/3YonNRrvfT3GTHQyBlIkFqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ARlopKVNbexWmXLSlp2ZJwYYarybehn66J4TYDrcpPh0VdNN3Wya7HPGGfsJCsEH2
-	 ZGSQz6MFSR+rtc4TFsuZ+NpDfDztnJO/Ii+8J5+oTNC8DY/IdvzRtAwMDii1W8pyZ/
-	 /e8jvv9ylj3RPgoTDQ8Zm/GG4zMXb+YVEJ58Gyh0=
+	b=otnKJAYLLQfOQ6WXT3cXnFhBvqlTp4t5lnj9koDCf88IEbHWk5pS/jUmvUDUAPjU3
+	 1/ebuwAqB2twonTMZR7ZKKKVmmK2GOvRtEB1jTyhhuWjVYc9DJZCYep3ycMYw1gQfW
+	 +n8a0iZhxjYsmEk2LgACcGmPQQb4gmA/nOQvl/Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0428/1067] =?UTF-8?q?RDMA/mlx5:=20Release=20the=20HW=E2=80=91provided=20UAR?= =?UTF-8?q?=20index=20rather=20than=20the=20SW=20one?=
-Date: Tue, 21 Jul 2026 17:17:09 +0200
-Message-ID: <20260721152434.194712827@linuxfoundation.org>
+Subject: [PATCH 6.1 0429/1067] ASoC: codecs: hdac_hdmi: Validate written enum value
+Date: Tue, 21 Jul 2026 17:17:10 +0200
+Message-ID: <20260721152434.216853948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,34 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 449ae7927152e46acbe5f19f97eafdae6d3a96b1 ]
+[ Upstream commit 0b08baeccdcf52fad328ad645f5b4fbee04eea34 ]
 
-Free the UAR index returned by the hardware.
+hdac_hdmi_set_pin_port_mux() uses the written enum value to index the
+texts array before calling snd_soc_dapm_put_enum_double(), which validates
+that the value is within the enum item range.
 
-Fixes: 4ed131d0bb15 ("IB/mlx5: Expose dynamic mmap allocation")
-Link: https://patch.msgid.link/r/20260611-fix-uar-release-v1-1-f5464d845dbf@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+An out-of-range value can therefore make the driver read past the texts
+array before the helper rejects the write. Move the lookup after the helper
+has accepted the value.
+
+Fixes: 4a3478debf36 ("ASoC: hdac_hdmi: Add jack reporting")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260609124317.38046-2-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/hdac_hdmi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 45a414e8d35faf..7102c3a78ee9d3 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -2229,7 +2229,7 @@ static int uar_mmap(struct mlx5_ib_dev *dev, enum mlx5_ib_mmap_cmd cmd,
- 	if (!dyn_uar)
- 		return err;
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 90baca4c2b4dbc..b9e2e5a9601396 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -906,12 +906,14 @@ static int hdac_hdmi_set_pin_port_mux(struct snd_kcontrol *kcontrol,
+ 	struct hdac_device *hdev = dev_to_hdac_dev(dapm->dev);
+ 	struct hdac_hdmi_priv *hdmi = hdev_to_hdmi_priv(hdev);
+ 	struct hdac_hdmi_pcm *pcm;
+-	const char *cvt_name =  e->texts[ucontrol->value.enumerated.item[0]];
++	const char *cvt_name;
  
--	mlx5_cmd_uar_dealloc(dev->mdev, idx, context->devx_uid);
-+	mlx5_cmd_uar_dealloc(dev->mdev, uar_index, context->devx_uid);
+ 	ret = snd_soc_dapm_put_enum_double(kcontrol, ucontrol);
+ 	if (ret < 0)
+ 		return ret;
  
- free_bfreg:
- 	mlx5_ib_free_bfreg(dev, bfregi, bfreg_dyn_idx);
++	cvt_name = e->texts[ucontrol->value.enumerated.item[0]];
++
+ 	if (port == NULL)
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
