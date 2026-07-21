@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5052546D54A;
-	Tue, 21 Jul 2026 15:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A2246D55E;
+	Tue, 21 Jul 2026 15:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648673; cv=none; b=rC0RggbcQWS/kN4sjbsztJGCeW4EzJJprhsfZGFupTAu9Hdn0FVIOC6G+oa9fEqtjzQbcrw+G65iC57k3yGsjz12xCpt+5uS8DtYeIwDfE8nj6FoxenFu/VQ4TJrLMsMx5GdCgWs/Wl1ny+buHvVlnQby43LAeelfDnTAGey8KI=
+	t=1784648676; cv=none; b=G6K3+oGbxlJwyVMoPOVUHAJ5wahI2hjJ5AlI7WVvBFV4EjY1qbBhXO6/y1eMANXH/MGty44t6QVfwPwqVvAztmCdjhdVyCA162/ANmoCCcuu/L3XrjfGVLY318pyfTy5LY5Lz+tXFEa3sv8EPxKoABf0WkuvAMyP37FuCig/PTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648673; c=relaxed/simple;
-	bh=Z046ZXCOaq3VV/dDBfKNoYE/ysabR1JNpT2ERgRnL/c=;
+	s=arc-20240116; t=1784648676; c=relaxed/simple;
+	bh=LQzNTnKlZ/0gD9eZpacGJL0PgvAfConj34eRW2fYLtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PyzrvmOuTA5Y9pLQpz3U7uWQHuDKmOPQEw4FrdQxRpvOZRy1K6apXcjv56U72MqbMyIVedeMstpS9t9uUS7cGuviNT57w/9XXCoE5Fr03nk7evzepHoFkqOZtfSmo71jprXY38J4gfAPNHL/xLKMx5/0Y+N62pN3BoVgvQbpvg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxzQjfe5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M7SjRXYIYBFjMvwqDlnemb4Tm+rCfkUf7TOvUQPSRxw9uZ8XW1hc3ovNbLa94AvEQvuqAW/1AJYSLtFWEpw0pBw3B89Q11Jj9VTpUErcVQk9VDGyCkoCREmfFYYPRNdglDzbmZJzc1J6J4rMEyVCsic5umqaDUropUpYXD+9arI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZxksdg7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxzQjfe5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81D71F000E9;
-	Tue, 21 Jul 2026 15:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZxksdg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7DA1F00A3A;
+	Tue, 21 Jul 2026 15:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648672;
-	bh=dmagP7h0djXlZOMXkJxliWZdBiqPnc54WmNsYUIzzBs=;
+	s=korg; t=1784648674;
+	bh=cF9CDcG3LTvv5bu0sPqz0N5h8qv2dVOlgK87wLcT7MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dxzQjfe5l+4Rawf2Ezrdrs3Zy9TYTDSpMU5mnu7pHTkbxkXs+AwFyMVPG0HB9D4EE
-	 azYnzHPHJY3WMs8pExVpUlBdqs0C4ycF5IHL+ROEQkplnYZ4oCCU0OEhfuSLnUTpwa
-	 Anoc+JEkQB9WnX7ZOdwNjjVUPzzOkpfSIYgcLcDA=
+	b=lZxksdg7AzjYWyVssJXZI8A3AKcmODgnaMJ6cnYdbq8J8amArU1urpSBxsw+wLEFV
+	 utXYE8M2Gx8YdeedoTTS6ZnUTn1WAmmBmrrn7nb+9YixmSZt1mVi+hUZ0LOTWtg+Op
+	 0+UQdOLkslcZCoNhU7kQL+CmCKbHnURLIHmA76bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronaldo Nunez <rnunez@baylibre.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Shiraz Saleem <shirazsaleem@microsoft.com>,
+	Konstantin Taranov <kotaranov@microsoft.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0288/2077] pwm: imx27: Fix variable truncation in .apply()
-Date: Tue, 21 Jul 2026 16:59:21 +0200
-Message-ID: <20260721152559.470736487@linuxfoundation.org>
+Subject: [PATCH 7.1 0289/2077] RDMA/mana_ib: Use ib_get_eth_speed for reporting port speed
+Date: Tue, 21 Jul 2026 16:59:22 +0200
+Message-ID: <20260721152559.495255605@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,68 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ronaldo Nunez <rnunez@baylibre.com>
+From: Shiraz Saleem <shirazsaleem@microsoft.com>
 
-[ Upstream commit dc9e08fdbcc3eb08a1d2b868b535081c44425e27 ]
+[ Upstream commit d28654518c8db5d06d27bd3211c0e9a70c18f7c2 ]
 
-Fix a variable truncation when calculating period in microseconds as
-part of the solution for the ERR051198 in .apply() callback.
+Replace hardcoded IB_WIDTH_4X/IB_SPEED_EDR with ib_get_eth_speed()
+to report the actual link speed in mana_ib_query_port().
 
-Example scenario:
- - Period of 3us (PWMPR = 196 and prescaler = 1)
- - Expected value in tmp: 198000000000 (NSEC_PER_SEC * (196 + 2) * 1)
- - Actual value is 431504384 (truncation to u32)
-
-Signed-off-by: Ronaldo Nunez <rnunez@baylibre.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260522191348.6227-1-rnunez@baylibre.com
-Fixes: a25351e4c774 ("pwm: imx27: Workaround of the pwm output bug when decrease the duty cycle")
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 4bda1d5332ec ("RDMA/mana_ib: Implement port parameters")
+Link: https://patch.msgid.link/r/20260512094056.264827-1-kotaranov@linux.microsoft.com
+Signed-off-by: Shiraz Saleem <shirazsaleem@microsoft.com>
+Signed-off-by: Konstantin Taranov <kotaranov@microsoft.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-imx27.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mana/main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-imx27.c b/drivers/pwm/pwm-imx27.c
-index 3d34cdc4a3a51b..c8b801fcb5251f 100644
---- a/drivers/pwm/pwm-imx27.c
-+++ b/drivers/pwm/pwm-imx27.c
-@@ -200,7 +200,7 @@ static void pwm_imx27_wait_fifo_slot(struct pwm_chip *chip,
- static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 			   const struct pwm_state *state)
- {
--	unsigned long period_cycles, duty_cycles, prescale, period_us, tmp;
-+	unsigned long period_cycles, duty_cycles, prescale, period_us;
- 	struct pwm_imx27_chip *imx = to_pwm_imx27_chip(chip);
- 	unsigned long long c;
- 	unsigned long long clkrate;
-@@ -208,6 +208,7 @@ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	int val;
- 	int ret;
- 	u32 cr;
-+	u64 tmp;
+diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
+index afc2fc124fee30..307ae01bf26f34 100644
+--- a/drivers/infiniband/hw/mana/main.c
++++ b/drivers/infiniband/hw/mana/main.c
+@@ -600,8 +600,7 @@ int mana_ib_query_port(struct ib_device *ibdev, u32 port,
+ 		props->phys_state = IB_PORT_PHYS_STATE_DISABLED;
+ 	}
  
- 	clkrate = clk_get_rate(imx->clks[PWM_IMX27_PER].clk);
- 	c = clkrate * state->period;
-@@ -249,6 +250,11 @@ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	val = readl(imx->mmio_base + MX3_PWMPR);
- 	val = val >= MX3_PWMPR_MAX ? MX3_PWMPR_MAX : val;
- 	cr = readl(imx->mmio_base + MX3_PWMCR);
-+
-+	/*
-+	 * tmp stores period in nanoseconds. Result fits in u64 since
-+	 * val <= 0xfffe and prescaler in [1, 0x1000].
-+	 */
- 	tmp = NSEC_PER_SEC * (u64)(val + 2) * MX3_PWMCR_PRESCALER_GET(cr);
- 	tmp = DIV_ROUND_UP_ULL(tmp, clkrate);
- 	period_us = DIV_ROUND_UP_ULL(tmp, 1000);
+-	props->active_width = IB_WIDTH_4X;
+-	props->active_speed = IB_SPEED_EDR;
++	ib_get_eth_speed(ibdev, port, &props->active_speed, &props->active_width);
+ 	props->pkey_tbl_len = 1;
+ 	if (mana_ib_is_rnic(dev)) {
+ 		props->gid_tbl_len = 16;
 -- 
 2.53.0
 
