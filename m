@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B18246EF9A;
-	Tue, 21 Jul 2026 19:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AAD470126;
+	Tue, 21 Jul 2026 19:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663066; cv=none; b=TIToZeiPRf3+IP7JWfPo7CYkg2699W44IWHpXmAQ/TPDgkOO+Iud/7iB3hi74diflWQEF/oKTb7jMNNOA/6ufigYmqapd9o4cC0pk3bipoRkWslizL7Xe2LWD/Y/aSaOtrzlLM/SgHPmvcCLcVdGr2q+9y3xcHuVT8HgWufRiPw=
+	t=1784663069; cv=none; b=F+ca5Rtk89GKKesuYhPxlcfHEUrlOY8fZzjka/WsqIltDMWIqeW646ZcozqaI8CBYNJ4HNQE7GhMuncXrn3/UaTd5dPfRDa53j3519OAy4RluQse2YOJWGwxC6VwBjLbDuXNqttHTa6TfeGE4uI8JbSTlTSyN5HpDCn5JSRtKUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663066; c=relaxed/simple;
-	bh=5y0lty78MsHuonfXmfR3rbN065W9WqW3Z5JJO35LBso=;
+	s=arc-20240116; t=1784663069; c=relaxed/simple;
+	bh=JprdJEaOttFIU7oh9Ezg7Mp8VVJp3CMFiMkgOtn08zU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s546+jxQvODIltfVzzEHH5ayQDL8iWzGE+grWxNNAq5W3IlRt6r2AN/p7Np+dfXmA2oZHeY52iHkjAtcxM/NsG2MudOm2QYtQz2rkIjgdZlWnRyIj/9joBCL2ArC9Ph8Sm4kbXJy4Nuof8oIV4So7w+QIA2q805cMONwlgcvFwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmOb7MhL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKm4GMZLMWtBdp5Qqs8m46B7YugIb7i2P9w2GdjTuZlrIdDo2FINhVbPNH1RmJ4R35KiEZ+iZWAGBwRBQNKK4/A8JmXRp/s3YHxBYCtG55j67SA3iXdTdaB404w5ztAK3qn8zZE8xO1aeaJ1qHmSYXtyzfdYDdqkawkHxLTX4GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PiKuyHg2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmOb7MhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5C31F000E9;
-	Tue, 21 Jul 2026 19:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PiKuyHg2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7A51F00A3A;
+	Tue, 21 Jul 2026 19:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663065;
-	bh=NakR473Si/nAPCLx2PBK6CjfijIkH3thntfcg0VfVjo=;
+	s=korg; t=1784663067;
+	bh=0piWEGGmyVmcss4i9W6/fkIq37mBlaOvpNdoeQw5WVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vmOb7MhLI1laEuLjmm7uvNIPGJijYtV93TtPhxapq7IQEBMRPPCTNaetTGLqRHKOl
-	 kIu+CX1Q1DRcQtQ1ARJ66iJzAJrFgKNhMDon/ZLFE4bRzA1Kv53pWlokfNuUEra49t
-	 Hcga5sHV2icP+AN70Rj0Hs+FgThTGZsxqLiLceJY=
+	b=PiKuyHg2ML4WWj2FDBrlEPqBOrZKQG832niESUmm/VD7eJ592CuXG5NreO9bLGJnm
+	 lxohqddRZgN0KR67y2+W39TogN7eQFkqlGPYsRAlcC8GbtOwVonQKFJcsIyud1fScj
+	 5CjNPlO0JOrBg4WETqx329f3ILT86wQuY0+wtavc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Jian Shen <shenjian15@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0681/1276] net: hisilicon: hns3: use ethtool string helpers
-Date: Tue, 21 Jul 2026 17:18:44 +0200
-Message-ID: <20260721152501.337376230@linuxfoundation.org>
+Subject: [PATCH 6.12 0682/1276] net: hns3: use string choices helper
+Date: Tue, 21 Jul 2026 17:18:45 +0200
+Message-ID: <20260721152501.358514226@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,300 +53,317 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 4ea3e221907aeee77c2f92953045121ddc9f5660 ]
+[ Upstream commit 9e3285040514cafee035e1be24502097d3d0b75f ]
 
-The latter is the preferred way to copy ethtool strings.
+Use string choices helper for better readability.
 
-Avoids manually incrementing the pointer. Cleans up the code quite well.
-
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Tested-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20241104204823.297277-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250307113733.819448-1-shaojijie@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: c711f6d1cee9 ("net: hns3: fix permanent link down deadlock after reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hnae3.h   |  2 +-
- .../hns3/hns3_common/hclge_comm_tqp_stats.c   | 11 ++--
- .../hns3/hns3_common/hclge_comm_tqp_stats.h   |  2 +-
- .../ethernet/hisilicon/hns3/hns3_ethtool.c    | 54 ++++++-------------
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 50 +++++++----------
- .../hisilicon/hns3/hns3vf/hclgevf_main.c      |  6 +--
- 6 files changed, 44 insertions(+), 81 deletions(-)
+ .../ethernet/hisilicon/hns3/hns3_debugfs.c    | 24 ++++---
+ .../ethernet/hisilicon/hns3/hns3_ethtool.c    |  3 +-
+ .../hisilicon/hns3/hns3pf/hclge_debugfs.c     | 63 +++++++++----------
+ .../hisilicon/hns3/hns3pf/hclge_main.c        | 10 +--
+ .../hisilicon/hns3/hns3pf/hclge_ptp.c         |  3 +-
+ 5 files changed, 54 insertions(+), 49 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.h b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-index 388c70331a55b5..4e44f28288f902 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-@@ -677,7 +677,7 @@ struct hnae3_ae_ops {
- 	void (*get_mac_stats)(struct hnae3_handle *handle,
- 			      struct hns3_mac_stats *mac_stats);
- 	void (*get_strings)(struct hnae3_handle *handle,
--			    u32 stringset, u8 *data);
-+			    u32 stringset, u8 **data);
- 	int (*get_sset_count)(struct hnae3_handle *handle, int stringset);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+index 3d70c97a0bedf6..4e5d8bc39a1bf3 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+@@ -3,6 +3,7 @@
  
- 	void (*get_regs)(struct hnae3_handle *handle, u32 *version,
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
-index 2b31188ff55586..f9a3d6fc4416cb 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
-@@ -36,27 +36,22 @@ int hclge_comm_tqps_get_sset_count(struct hnae3_handle *handle)
- }
- EXPORT_SYMBOL_GPL(hclge_comm_tqps_get_sset_count);
+ #include <linux/debugfs.h>
+ #include <linux/device.h>
++#include <linux/string_choices.h>
  
--u8 *hclge_comm_tqps_get_strings(struct hnae3_handle *handle, u8 *data)
-+void hclge_comm_tqps_get_strings(struct hnae3_handle *handle, u8 **data)
+ #include "hnae3.h"
+ #include "hns3_debugfs.h"
+@@ -661,12 +662,14 @@ static void hns3_dump_rx_queue_info(struct hns3_enet_ring *ring,
+ 		HNS3_RING_RX_RING_PKTNUM_RECORD_REG));
+ 	sprintf(result[j++], "%u", ring->rx_copybreak);
+ 
+-	sprintf(result[j++], "%s", readl_relaxed(ring->tqp->io_base +
+-		HNS3_RING_EN_REG) ? "on" : "off");
++	sprintf(result[j++], "%s",
++		str_on_off(readl_relaxed(ring->tqp->io_base +
++					 HNS3_RING_EN_REG)));
+ 
+ 	if (hnae3_ae_dev_tqp_txrx_indep_supported(ae_dev))
+-		sprintf(result[j++], "%s", readl_relaxed(ring->tqp->io_base +
+-			HNS3_RING_RX_EN_REG) ? "on" : "off");
++		sprintf(result[j++], "%s",
++			str_on_off(readl_relaxed(ring->tqp->io_base +
++						 HNS3_RING_RX_EN_REG)));
+ 	else
+ 		sprintf(result[j++], "%s", "NA");
+ 
+@@ -764,12 +767,14 @@ static void hns3_dump_tx_queue_info(struct hns3_enet_ring *ring,
+ 	sprintf(result[j++], "%u", readl_relaxed(ring->tqp->io_base +
+ 		HNS3_RING_TX_RING_PKTNUM_RECORD_REG));
+ 
+-	sprintf(result[j++], "%s", readl_relaxed(ring->tqp->io_base +
+-		HNS3_RING_EN_REG) ? "on" : "off");
++	sprintf(result[j++], "%s",
++		str_on_off(readl_relaxed(ring->tqp->io_base +
++					 HNS3_RING_EN_REG)));
+ 
+ 	if (hnae3_ae_dev_tqp_txrx_indep_supported(ae_dev))
+-		sprintf(result[j++], "%s", readl_relaxed(ring->tqp->io_base +
+-			HNS3_RING_TX_EN_REG) ? "on" : "off");
++		sprintf(result[j++], "%s",
++			str_on_off(readl_relaxed(ring->tqp->io_base +
++						 HNS3_RING_TX_EN_REG)));
+ 	else
+ 		sprintf(result[j++], "%s", "NA");
+ 
+@@ -1030,7 +1035,6 @@ static void
+ hns3_dbg_dev_caps(struct hnae3_handle *h, char *buf, int len, int *pos)
  {
- 	struct hnae3_knic_private_info *kinfo = &handle->kinfo;
--	u8 *buff = data;
- 	u16 i;
+ 	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
+-	const char * const str[] = {"no", "yes"};
+ 	unsigned long *caps = ae_dev->caps;
+ 	u32 i, state;
  
- 	for (i = 0; i < kinfo->num_tqps; i++) {
- 		struct hclge_comm_tqp *tqp =
- 			container_of(kinfo->tqp[i], struct hclge_comm_tqp, q);
--		snprintf(buff, ETH_GSTRING_LEN, "txq%u_pktnum_rcd", tqp->index);
--		buff += ETH_GSTRING_LEN;
-+		ethtool_sprintf(data, "txq%u_pktnum_rcd", tqp->index);
+@@ -1039,7 +1043,7 @@ hns3_dbg_dev_caps(struct hnae3_handle *h, char *buf, int len, int *pos)
+ 	for (i = 0; i < ARRAY_SIZE(hns3_dbg_cap); i++) {
+ 		state = test_bit(hns3_dbg_cap[i].cap_bit, caps);
+ 		*pos += scnprintf(buf + *pos, len - *pos, "%s: %s\n",
+-				  hns3_dbg_cap[i].name, str[state]);
++				  hns3_dbg_cap[i].name, str_yes_no(state));
  	}
  
- 	for (i = 0; i < kinfo->num_tqps; i++) {
- 		struct hclge_comm_tqp *tqp =
- 			container_of(kinfo->tqp[i], struct hclge_comm_tqp, q);
--		snprintf(buff, ETH_GSTRING_LEN, "rxq%u_pktnum_rcd", tqp->index);
--		buff += ETH_GSTRING_LEN;
-+		ethtool_sprintf(data, "rxq%u_pktnum_rcd", tqp->index);
- 	}
--
--	return buff;
- }
- EXPORT_SYMBOL_GPL(hclge_comm_tqps_get_strings);
- 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.h b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.h
-index a46350162ee8db..b9ff424c0bc28f 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.h
-@@ -32,7 +32,7 @@ struct hclge_comm_tqp {
- 
- u64 *hclge_comm_tqps_get_stats(struct hnae3_handle *handle, u64 *data);
- int hclge_comm_tqps_get_sset_count(struct hnae3_handle *handle);
--u8 *hclge_comm_tqps_get_strings(struct hnae3_handle *handle, u8 *data);
-+void hclge_comm_tqps_get_strings(struct hnae3_handle *handle, u8 **data);
- void hclge_comm_reset_tqp_stats(struct hnae3_handle *handle);
- int hclge_comm_tqps_update_stats(struct hnae3_handle *handle,
- 				 struct hclge_comm_hw *hw);
+ 	*pos += scnprintf(buf + *pos, len - *pos, "\n");
 diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
-index b1e98834734769..b771a2daba4360 100644
+index b771a2daba4360..6715222aeb661e 100644
 --- a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
 +++ b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
-@@ -509,54 +509,37 @@ static int hns3_get_sset_count(struct net_device *netdev, int stringset)
+@@ -3,6 +3,7 @@
+ 
+ #include <linux/etherdevice.h>
+ #include <linux/string.h>
++#include <linux/string_choices.h>
+ #include <linux/phy.h>
+ #include <linux/sfp.h>
+ 
+@@ -1198,7 +1199,7 @@ static int hns3_set_tx_push(struct net_device *netdev, u32 tx_push)
+ 		return 0;
+ 
+ 	netdev_dbg(netdev, "Changing tx push from %s to %s\n",
+-		   old_state ? "on" : "off", tx_push ? "on" : "off");
++		   str_on_off(old_state), str_on_off(tx_push));
+ 
+ 	if (tx_push)
+ 		set_bit(HNS3_NIC_STATE_TX_PUSH_ENABLE, &priv->state);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+index debf143e994014..c4649069359465 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
+@@ -3,6 +3,7 @@
+ 
+ #include <linux/device.h>
+ #include <linux/sched/clock.h>
++#include <linux/string_choices.h>
+ 
+ #include "hclge_debugfs.h"
+ #include "hclge_err.h"
+@@ -11,7 +12,6 @@
+ #include "hclge_tm.h"
+ #include "hnae3.h"
+ 
+-static const char * const state_str[] = { "off", "on" };
+ static const char * const hclge_mac_state_str[] = {
+ 	"TO_ADD", "TO_DEL", "ACTIVE"
+ };
+@@ -2573,7 +2573,7 @@ static int hclge_dbg_dump_loopback(struct hclge_dev *hdev, char *buf, int len)
+ 	loopback_en = hnae3_get_bit(le32_to_cpu(req_app->txrx_pad_fcs_loop_en),
+ 				    HCLGE_MAC_APP_LP_B);
+ 	pos += scnprintf(buf + pos, len - pos, "app loopback: %s\n",
+-			 state_str[loopback_en]);
++			 str_on_off(loopback_en));
+ 
+ 	hclge_cmd_setup_basic_desc(&desc, HCLGE_OPC_COMMON_LOOPBACK, true);
+ 	ret = hclge_cmd_send(&hdev->hw, &desc, 1);
+@@ -2586,22 +2586,22 @@ static int hclge_dbg_dump_loopback(struct hclge_dev *hdev, char *buf, int len)
+ 
+ 	loopback_en = req_common->enable & HCLGE_CMD_SERDES_SERIAL_INNER_LOOP_B;
+ 	pos += scnprintf(buf + pos, len - pos, "serdes serial loopback: %s\n",
+-			 state_str[loopback_en]);
++			 str_on_off(loopback_en));
+ 
+ 	loopback_en = req_common->enable &
+ 			HCLGE_CMD_SERDES_PARALLEL_INNER_LOOP_B ? 1 : 0;
+ 	pos += scnprintf(buf + pos, len - pos, "serdes parallel loopback: %s\n",
+-			 state_str[loopback_en]);
++			 str_on_off(loopback_en));
+ 
+ 	if (phydev) {
+ 		loopback_en = phydev->loopback_enabled;
+ 		pos += scnprintf(buf + pos, len - pos, "phy loopback: %s\n",
+-				 state_str[loopback_en]);
++				 str_on_off(loopback_en));
+ 	} else if (hnae3_dev_phy_imp_supported(hdev)) {
+ 		loopback_en = req_common->enable &
+ 			      HCLGE_CMD_GE_PHY_INNER_LOOP_B;
+ 		pos += scnprintf(buf + pos, len - pos, "phy loopback: %s\n",
+-				 state_str[loopback_en]);
++				 str_on_off(loopback_en));
  	}
- }
  
--static void *hns3_update_strings(u8 *data, const struct hns3_stats *stats,
--		u32 stat_count, u32 num_tqps, const char *prefix)
-+static void hns3_update_strings(u8 **data, const struct hns3_stats *stats,
-+				u32 stat_count, u32 num_tqps,
-+				const char *prefix)
- {
--#define MAX_PREFIX_SIZE (6 + 4)
--	u32 size_left;
- 	u32 i, j;
--	u32 n1;
+ 	return 0;
+@@ -2894,9 +2894,9 @@ static int hclge_dbg_dump_vlan_filter_config(struct hclge_dev *hdev, char *buf,
+ 	egress = vlan_fe & HCLGE_FILTER_FE_NIC_EGRESS_B ? 1 : 0;
  
--	for (i = 0; i < num_tqps; i++) {
--		for (j = 0; j < stat_count; j++) {
--			data[ETH_GSTRING_LEN - 1] = '\0';
--
--			/* first, prepend the prefix string */
--			n1 = scnprintf(data, MAX_PREFIX_SIZE, "%s%u_",
--				       prefix, i);
--			size_left = (ETH_GSTRING_LEN - 1) - n1;
--
--			/* now, concatenate the stats string to it */
--			strncat(data, stats[j].stats_string, size_left);
--			data += ETH_GSTRING_LEN;
--		}
--	}
--
--	return data;
-+	for (i = 0; i < num_tqps; i++)
-+		for (j = 0; j < stat_count; j++)
-+			ethtool_sprintf(data, "%s%u_%s", prefix, i,
-+					stats[j].stats_string);
- }
+ 	*pos += scnprintf(buf, len, "I_PORT_VLAN_FILTER: %s\n",
+-			  state_str[ingress]);
++			  str_on_off(ingress));
+ 	*pos += scnprintf(buf + *pos, len - *pos, "E_PORT_VLAN_FILTER: %s\n",
+-			  state_str[egress]);
++			  str_on_off(egress));
  
--static u8 *hns3_get_strings_tqps(struct hnae3_handle *handle, u8 *data)
-+static void hns3_get_strings_tqps(struct hnae3_handle *handle, u8 **data)
- {
- 	struct hnae3_knic_private_info *kinfo = &handle->kinfo;
- 	const char tx_prefix[] = "txq";
- 	const char rx_prefix[] = "rxq";
+ 	hclge_dbg_fill_content(content, sizeof(content), vlan_filter_items,
+ 			       NULL, ARRAY_SIZE(vlan_filter_items));
+@@ -2915,11 +2915,11 @@ static int hclge_dbg_dump_vlan_filter_config(struct hclge_dev *hdev, char *buf,
+ 			return ret;
+ 		j = 0;
+ 		result[j++] = hclge_dbg_get_func_id_str(str_id, i);
+-		result[j++] = state_str[ingress];
+-		result[j++] = state_str[egress];
+-		result[j++] =
+-			test_bit(HNAE3_DEV_SUPPORT_PORT_VLAN_BYPASS_B,
+-				 hdev->ae_dev->caps) ? state_str[bypass] : "NA";
++		result[j++] = str_on_off(ingress);
++		result[j++] = str_on_off(egress);
++		result[j++] = test_bit(HNAE3_DEV_SUPPORT_PORT_VLAN_BYPASS_B,
++				       hdev->ae_dev->caps) ?
++			      str_on_off(bypass) : "NA";
+ 		hclge_dbg_fill_content(content, sizeof(content),
+ 				       vlan_filter_items, result,
+ 				       ARRAY_SIZE(vlan_filter_items));
+@@ -2958,19 +2958,19 @@ static int hclge_dbg_dump_vlan_offload_config(struct hclge_dev *hdev, char *buf,
+ 		j = 0;
+ 		result[j++] = hclge_dbg_get_func_id_str(str_id, i);
+ 		result[j++] = str_pvid;
+-		result[j++] = state_str[vlan_cfg.accept_tag1];
+-		result[j++] = state_str[vlan_cfg.accept_tag2];
+-		result[j++] = state_str[vlan_cfg.accept_untag1];
+-		result[j++] = state_str[vlan_cfg.accept_untag2];
+-		result[j++] = state_str[vlan_cfg.insert_tag1];
+-		result[j++] = state_str[vlan_cfg.insert_tag2];
+-		result[j++] = state_str[vlan_cfg.shift_tag];
+-		result[j++] = state_str[vlan_cfg.strip_tag1];
+-		result[j++] = state_str[vlan_cfg.strip_tag2];
+-		result[j++] = state_str[vlan_cfg.drop_tag1];
+-		result[j++] = state_str[vlan_cfg.drop_tag2];
+-		result[j++] = state_str[vlan_cfg.pri_only1];
+-		result[j++] = state_str[vlan_cfg.pri_only2];
++		result[j++] = str_on_off(vlan_cfg.accept_tag1);
++		result[j++] = str_on_off(vlan_cfg.accept_tag2);
++		result[j++] = str_on_off(vlan_cfg.accept_untag1);
++		result[j++] = str_on_off(vlan_cfg.accept_untag2);
++		result[j++] = str_on_off(vlan_cfg.insert_tag1);
++		result[j++] = str_on_off(vlan_cfg.insert_tag2);
++		result[j++] = str_on_off(vlan_cfg.shift_tag);
++		result[j++] = str_on_off(vlan_cfg.strip_tag1);
++		result[j++] = str_on_off(vlan_cfg.strip_tag2);
++		result[j++] = str_on_off(vlan_cfg.drop_tag1);
++		result[j++] = str_on_off(vlan_cfg.drop_tag2);
++		result[j++] = str_on_off(vlan_cfg.pri_only1);
++		result[j++] = str_on_off(vlan_cfg.pri_only2);
  
- 	/* get strings for Tx */
--	data = hns3_update_strings(data, hns3_txq_stats, HNS3_TXQ_STATS_COUNT,
--				   kinfo->num_tqps, tx_prefix);
-+	hns3_update_strings(data, hns3_txq_stats, HNS3_TXQ_STATS_COUNT,
-+			    kinfo->num_tqps, tx_prefix);
+ 		hclge_dbg_fill_content(content, sizeof(content),
+ 				       vlan_offload_items, result,
+@@ -3007,14 +3007,13 @@ static int hclge_dbg_dump_ptp_info(struct hclge_dev *hdev, char *buf, int len)
+ 	pos += scnprintf(buf + pos, len - pos, "phc %s's debug info:\n",
+ 			 ptp->info.name);
+ 	pos += scnprintf(buf + pos, len - pos, "ptp enable: %s\n",
+-			 test_bit(HCLGE_PTP_FLAG_EN, &ptp->flags) ?
+-			 "yes" : "no");
++			 str_yes_no(test_bit(HCLGE_PTP_FLAG_EN, &ptp->flags)));
+ 	pos += scnprintf(buf + pos, len - pos, "ptp tx enable: %s\n",
+-			 test_bit(HCLGE_PTP_FLAG_TX_EN, &ptp->flags) ?
+-			 "yes" : "no");
++			 str_yes_no(test_bit(HCLGE_PTP_FLAG_TX_EN,
++					     &ptp->flags)));
+ 	pos += scnprintf(buf + pos, len - pos, "ptp rx enable: %s\n",
+-			 test_bit(HCLGE_PTP_FLAG_RX_EN, &ptp->flags) ?
+-			 "yes" : "no");
++			 str_yes_no(test_bit(HCLGE_PTP_FLAG_RX_EN,
++					     &ptp->flags)));
  
- 	/* get strings for Rx */
--	data = hns3_update_strings(data, hns3_rxq_stats, HNS3_RXQ_STATS_COUNT,
--				   kinfo->num_tqps, rx_prefix);
--
--	return data;
-+	hns3_update_strings(data, hns3_rxq_stats, HNS3_RXQ_STATS_COUNT,
-+			    kinfo->num_tqps, rx_prefix);
- }
- 
- static void hns3_get_strings(struct net_device *netdev, u32 stringset, u8 *data)
- {
- 	struct hnae3_handle *h = hns3_get_handle(netdev);
- 	const struct hnae3_ae_ops *ops = h->ae_algo->ops;
--	char *buff = (char *)data;
- 	int i;
- 
- 	if (!ops->get_strings)
-@@ -564,18 +547,15 @@ static void hns3_get_strings(struct net_device *netdev, u32 stringset, u8 *data)
- 
- 	switch (stringset) {
- 	case ETH_SS_STATS:
--		buff = hns3_get_strings_tqps(h, buff);
--		ops->get_strings(h, stringset, (u8 *)buff);
-+		hns3_get_strings_tqps(h, &data);
-+		ops->get_strings(h, stringset, &data);
- 		break;
- 	case ETH_SS_TEST:
--		ops->get_strings(h, stringset, data);
-+		ops->get_strings(h, stringset, &data);
- 		break;
- 	case ETH_SS_PRIV_FLAGS:
--		for (i = 0; i < HNS3_PRIV_FLAGS_LEN; i++) {
--			snprintf(buff, ETH_GSTRING_LEN, "%s",
--				 hns3_priv_flags[i].name);
--			buff += ETH_GSTRING_LEN;
--		}
-+		for (i = 0; i < HNS3_PRIV_FLAGS_LEN; i++)
-+			ethtool_puts(&data, hns3_priv_flags[i].name);
- 		break;
- 	default:
- 		break;
+ 	last_rx = jiffies_to_msecs(ptp->last_rx);
+ 	pos += scnprintf(buf + pos, len - pos, "last rx time: %lu.%lu\n",
 diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 434f40ce3062b2..aca96cf9d9684b 100644
+index aca96cf9d9684b..8be2c1c71fc49f 100644
 --- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
 +++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -595,25 +595,21 @@ static u64 *hclge_comm_get_stats(struct hclge_dev *hdev,
- 	return buf;
+@@ -8002,7 +8002,7 @@ static int hclge_set_loopback(struct hnae3_handle *handle,
+ 	ret = hclge_tqp_enable(handle, en);
+ 	if (ret)
+ 		dev_err(&hdev->pdev->dev, "failed to %s tqp in loopback, ret = %d\n",
+-			en ? "enable" : "disable", ret);
++			str_enable_disable(en), ret);
+ 
+ 	return ret;
  }
+@@ -11210,9 +11210,9 @@ static void hclge_info_show(struct hclge_dev *hdev)
+ 	dev_info(dev, "This is %s PF\n",
+ 		 hdev->flag & HCLGE_FLAG_MAIN ? "main" : "not main");
+ 	dev_info(dev, "DCB %s\n",
+-		 handle->kinfo.tc_info.dcb_ets_active ? "enable" : "disable");
++		 str_enable_disable(handle->kinfo.tc_info.dcb_ets_active));
+ 	dev_info(dev, "MQPRIO %s\n",
+-		 handle->kinfo.tc_info.mqprio_active ? "enable" : "disable");
++		 str_enable_disable(handle->kinfo.tc_info.mqprio_active));
+ 	dev_info(dev, "Default tx spare buffer size: %u\n",
+ 		 hdev->tx_spare_buf_size);
  
--static u8 *hclge_comm_get_strings(struct hclge_dev *hdev, u32 stringset,
--				  const struct hclge_comm_stats_str strs[],
--				  int size, u8 *data)
-+static void hclge_comm_get_strings(struct hclge_dev *hdev, u32 stringset,
-+				   const struct hclge_comm_stats_str strs[],
-+				   int size, u8 **data)
- {
--	char *buff = (char *)data;
- 	u32 i;
- 
- 	if (stringset != ETH_SS_STATS)
--		return buff;
-+		return;
- 
- 	for (i = 0; i < size; i++) {
- 		if (strs[i].stats_num > hdev->ae_dev->dev_specs.mac_stats_num)
- 			continue;
- 
--		snprintf(buff, ETH_GSTRING_LEN, "%s", strs[i].desc);
--		buff = buff + ETH_GSTRING_LEN;
-+		ethtool_puts(data, strs[i].desc);
+@@ -11986,7 +11986,7 @@ static int hclge_set_vf_spoofchk_hw(struct hclge_dev *hdev, int vf, bool enable)
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"Set vf %d mac spoof check %s failed, ret=%d\n",
+-			vf, enable ? "on" : "off", ret);
++			vf, str_on_off(enable), ret);
+ 		return ret;
  	}
--
--	return (u8 *)buff;
- }
  
- static void hclge_update_stats_for_all(struct hclge_dev *hdev)
-@@ -718,44 +714,38 @@ static int hclge_get_sset_count(struct hnae3_handle *handle, int stringset)
- }
+@@ -11994,7 +11994,7 @@ static int hclge_set_vf_spoofchk_hw(struct hclge_dev *hdev, int vf, bool enable)
+ 	if (ret)
+ 		dev_err(&hdev->pdev->dev,
+ 			"Set vf %d vlan spoof check %s failed, ret=%d\n",
+-			vf, enable ? "on" : "off", ret);
++			vf, str_on_off(enable), ret);
  
- static void hclge_get_strings(struct hnae3_handle *handle, u32 stringset,
--			      u8 *data)
-+			      u8 **data)
- {
- 	struct hclge_vport *vport = hclge_get_vport(handle);
- 	struct hclge_dev *hdev = vport->back;
--	u8 *p = (char *)data;
-+	const char *str;
- 	int size;
- 
- 	if (stringset == ETH_SS_STATS) {
- 		size = ARRAY_SIZE(g_mac_stats_string);
--		p = hclge_comm_get_strings(hdev, stringset, g_mac_stats_string,
--					   size, p);
--		p = hclge_comm_tqps_get_strings(handle, p);
-+		hclge_comm_get_strings(hdev, stringset, g_mac_stats_string,
-+				       size, data);
-+		hclge_comm_tqps_get_strings(handle, data);
- 	} else if (stringset == ETH_SS_TEST) {
- 		if (handle->flags & HNAE3_SUPPORT_EXTERNAL_LOOPBACK) {
--			memcpy(p, hns3_nic_test_strs[HNAE3_LOOP_EXTERNAL],
--			       ETH_GSTRING_LEN);
--			p += ETH_GSTRING_LEN;
-+			str = hns3_nic_test_strs[HNAE3_LOOP_EXTERNAL];
-+			ethtool_puts(data, str);
- 		}
- 		if (handle->flags & HNAE3_SUPPORT_APP_LOOPBACK) {
--			memcpy(p, hns3_nic_test_strs[HNAE3_LOOP_APP],
--			       ETH_GSTRING_LEN);
--			p += ETH_GSTRING_LEN;
-+			str = hns3_nic_test_strs[HNAE3_LOOP_APP];
-+			ethtool_puts(data, str);
- 		}
- 		if (handle->flags & HNAE3_SUPPORT_SERDES_SERIAL_LOOPBACK) {
--			memcpy(p, hns3_nic_test_strs[HNAE3_LOOP_SERIAL_SERDES],
--			       ETH_GSTRING_LEN);
--			p += ETH_GSTRING_LEN;
-+			str = hns3_nic_test_strs[HNAE3_LOOP_SERIAL_SERDES];
-+			ethtool_puts(data, str);
- 		}
- 		if (handle->flags & HNAE3_SUPPORT_SERDES_PARALLEL_LOOPBACK) {
--			memcpy(p,
--			       hns3_nic_test_strs[HNAE3_LOOP_PARALLEL_SERDES],
--			       ETH_GSTRING_LEN);
--			p += ETH_GSTRING_LEN;
-+			str = hns3_nic_test_strs[HNAE3_LOOP_PARALLEL_SERDES];
-+			ethtool_puts(data, str);
- 		}
- 		if (handle->flags & HNAE3_SUPPORT_PHY_LOOPBACK) {
--			memcpy(p, hns3_nic_test_strs[HNAE3_LOOP_PHY],
--			       ETH_GSTRING_LEN);
--			p += ETH_GSTRING_LEN;
-+			str = hns3_nic_test_strs[HNAE3_LOOP_PHY];
-+			ethtool_puts(data, str);
- 		}
- 	}
+ 	return ret;
  }
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 0bf8fc7e6b3a85..3c64d929c041e4 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -130,12 +130,10 @@ static int hclgevf_get_sset_count(struct hnae3_handle *handle, int strset)
- }
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+index 16ef5a584af36b..4bd52eab391452 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+@@ -2,6 +2,7 @@
+ // Copyright (c) 2021 Hisilicon Limited.
  
- static void hclgevf_get_strings(struct hnae3_handle *handle, u32 strset,
--				u8 *data)
-+				u8 **data)
- {
--	u8 *p = (char *)data;
--
- 	if (strset == ETH_SS_STATS)
--		p = hclge_comm_tqps_get_strings(handle, p);
-+		hclge_comm_tqps_get_strings(handle, data);
- }
+ #include <linux/skbuff.h>
++#include <linux/string_choices.h>
+ #include "hclge_main.h"
+ #include "hnae3.h"
  
- static void hclgevf_get_stats(struct hnae3_handle *handle, u64 *data)
+@@ -226,7 +227,7 @@ static int hclge_ptp_int_en(struct hclge_dev *hdev, bool en)
+ 	if (ret)
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to %s ptp interrupt, ret = %d\n",
+-			en ? "enable" : "disable", ret);
++			str_enable_disable(en), ret);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
