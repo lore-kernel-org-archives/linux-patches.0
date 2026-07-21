@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A554415F10;
-	Tue, 21 Jul 2026 21:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE6944AB9E;
+	Tue, 21 Jul 2026 21:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670059; cv=none; b=tZuPJaUl+fmYr85swq9+vxJMq0Bd0+LkFvpmrElbYe/EwLfdA8cV9Nr8pxbX1qV3p3iwa1bqqPSt/52+OfVJEUm05NvTp0fkfA7qYUzO5TZ3Y7dQi0/4xLW8pSSXtdGsu27phxJhF6B55CPkRUoMX0rnXEC5hjMrIHsdQIOif38=
+	t=1784670062; cv=none; b=tCUsSd0HLmCQRkS16AjVzwwgK3XwxzEcxJYtOwL5zjehdgVDVX2vnIJd8bkZmuECdOHNmzyU4os3OsDKwpp23PpbieLRQ8UtwYPS4temIiQrtyShxgIB2aOMMM/V+juaOSVmxqcBKeO2vwlB35pDBHS3caT4dbJ+K4KAXKOMtgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670059; c=relaxed/simple;
-	bh=Zpy8Al1HB/9WeNbu8QZ6QLWjcFVQ5aNQ8yXnJS5PRkg=;
+	s=arc-20240116; t=1784670062; c=relaxed/simple;
+	bh=+ULjG3LK0MMZYB14qv/8NqHK/+kMfP4qaI8EA39M+iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRacx1vIbb908qXzQLklRJvKR2eJCc96leT1zgh8KW5htpmesGx1IIccYYzH91BaeCpJ7hacEe+r7MW/akDyTGEVZPSULMdNXjBADFyASwXPAy3CV5l2+XjkKEkCi4jQt8TOdaEpqY+LioOwsCUxMGvTqD93tOisi5GQw14hQgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0Yyerup; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f/zaf//eMu5UUeCpAo+i1z9izxQE77fFS7HaZp5B1faO2F6TFQaZeVa8W/3QfD1FKaCIXFvixwQTxj2PSNcrJ6diOheHWzbpUfWCja8TxGDZGfkInyrbzVB4RyS3ETNXh8GZq7iFFhFyOMAC4djcbf7Y/DJklYddaBXz7DcMkTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ivu5mat6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0Yyerup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5E41F000E9;
-	Tue, 21 Jul 2026 21:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ivu5mat6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4990B1F000E9;
+	Tue, 21 Jul 2026 21:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670058;
-	bh=XuI6t+m7XlQY8WMONBIk5D5qBvbjUOIvivzz45FVfDI=;
+	s=korg; t=1784670060;
+	bh=3pZxDTVbfksuJuDz3bpAtrQf5ZvT9faZHIGo1O9EA6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q0Yyerup6dzKH3a9mgZnDZP1DbBSNREX6M3CvwpBr79w1VSki4uzRMFAHDX24+h9P
-	 ypdoJ3Ur3DRXTr2yGo4dUDe4BECYAN0Exu7vW9Rrj+ZFqHAAtsubL/LEDRBu4YY+UU
-	 LUbBDv667xgyB0m6xAAyA0/P517B9RM3xDCAi6rU=
+	b=Ivu5mat6RSvE1FSgCg7aPgV82uZowZkjQjvXpBhcEJrh4vW4ugcVgaUjXN++Y50Po
+	 5zeV8jpWZAwV+XiszHB7CW+CmZ2UpjgRYDq6RAuCQRstvgq/BLI3KNF+o5psKH7vEi
+	 HTVrGJDyOrP73RIJj3nHTaTQbO0T024/UBtFZfDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 0787/1067] fs/ntfs3: bound DeleteIndexEntryAllocation memmove length
-Date: Tue, 21 Jul 2026 17:23:08 +0200
-Message-ID: <20260721152442.172173575@linuxfoundation.org>
+Subject: [PATCH 6.1 0788/1067] fs/ntfs3: bound copy_lcns dp->page_lcns[] index in analysis pass
+Date: Tue, 21 Jul 2026 17:23:09 +0200
+Message-ID: <20260721152442.193081977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,74 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit fc4626bb3656362de8b0ecd56605d47a19ec3518 upstream.
+commit 5e7b598660cfa8e5af172cf4c65cffc126333307 upstream.
 
-In do_action()'s DeleteIndexEntryAllocation case, e->size comes
-from an on-disk INDEX_BUFFER entry.  When e->size makes
-e + e->size point past hdr + hdr->used,
-PtrOffset(e1, Add2Ptr(hdr, used)) returns a negative ptrdiff_t
-that is silently cast to a quasi-infinite size_t when passed
-to memmove().  The memmove then walks past the destination
-buffer.
+In log_replay()'s analysis pass, after find_dp() returns a
+valid DIR_PAGE_ENTRY for the (target_attr, target_vcn) tuple,
+the copy_lcns block walks lrh->lcns_follow further entries:
 
-The sibling DeleteIndexEntryRoot case at fslog.c:3540-3543
-already carries the corresponding guard:
-
-	if (PtrOffset(e1, Add2Ptr(hdr, used)) < esize ||
-	    Add2Ptr(e, esize) > Add2Ptr(lrh, rec_len) ||
-	    used + esize > le32_to_cpu(hdr->total)) {
-		goto dirty_vol;
+	t16 = le16_to_cpu(lrh->lcns_follow);
+	for (i = 0; i < t16; i++) {
+	    size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
+	                        le64_to_cpu(dp->vcn));
+	    dp->page_lcns[j + i] = lrh->page_lcns[i];
 	}
 
-Apply the same shape to the allocation-path case.  Also reject
-esize == 0: memmove(e, e, ...) is a no-op and leaves
-hdr->used unchanged, hiding a malformed entry from the
-existing check_index_header() walk.
+find_dp() only validates that target_vcn falls within
+[dp->vcn, dp->vcn + dp->lcns_follow), i.e., that the FIRST
+cluster is covered.  The walk through the further entries is
+not bounded against dp->lcns_follow.  For a malformed LRH
+where target_vcn = dp->vcn + dp->lcns_follow - 1 and
+lrh->lcns_follow > 1, the i > 0 writes overflow the dp's
+allocated page_lcns[] array.
 
-Reproduced under UML+KASAN on mainline 8d90b09e6741 by
-mounting a crafted NTFS image: the unguarded memmove takes a
-length of 0xffffffffffffff00 and the kernel oopses in
-memmove+0x81/0x1a0 on the do_action+0x36a2 frame.
+Add the missing j + lrh->lcns_follow <= dp->lcns_follow guard.
+
+Reproduced under UML+KASAN on mainline 8d90b09e6741 as a
+slab-out-of-bounds write of size 8 from log_replay+0x68d4 on
+the mount path.
+
+This is distinct from Pavitra Jha's 2026-05-02 patch
+("fs/ntfs3: validate lcns_follow in log_replay conversion",
+<20260502154252.164586-1-jhapavitra98@gmail.com>) which
+addresses the separate version-0 dirty-page-table conversion
+path's memmove(&dp->vcn, ...) call.  The two fixes are
+complementary; both should land.
 
 Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-[almaz.alexandrovich@paragon-software.com: clang-formatted the changes]
+[almaz.alexandrovich@paragon-software.com: clang-formatted the changes,
+fixed conflicts]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ fs/ntfs3/fslog.c |   46 +++++++++++++++++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
 --- a/fs/ntfs3/fslog.c
 +++ b/fs/ntfs3/fslog.c
-@@ -3577,9 +3577,23 @@ move_data:
+@@ -3368,8 +3368,8 @@ move_data:
+ 
+ 		if (run_get_highest_vcn(le64_to_cpu(attr->nres.svcn),
+ 					attr_run(attr),
+-				        le32_to_cpu(attr->size) - 
+-				                le16_to_cpu(attr->nres.run_off),	
++					le32_to_cpu(attr->size) -
++						le16_to_cpu(attr->nres.run_off),
+ 					&t64)) {
+ 			goto dirty_vol;
  		}
- 
- 		e1 = Add2Ptr(e, esize);
--		nsize = esize;
- 		used = le32_to_cpu(hdr->used);
- 
+@@ -4563,22 +4563,34 @@ copy_lcns:
+ 		 * whole routine a loop, case Lcns do not fit below.
+ 		 */
+ 		t16 = le16_to_cpu(lrh->lcns_follow);
+-                t32 = le32_to_cpu(dp->lcns_follow);
+-                if (le64_to_cpu(lrh->target_vcn) < le64_to_cpu(dp->vcn)) {
+-                        err = -EINVAL;
+-                        goto out;
+-                }
+-
+-                for (i = 0; i < t16; i++) {
+-                        size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
+-                                            le64_to_cpu(dp->vcn));
+-                        if (j >= t32 || i >= t32 - j) {
+-                                err = -EINVAL;
+-                                goto out;
+-                        }
+-                        dp->page_lcns[j + i] = lrh->page_lcns[i];
+-                }
++		t32 = le32_to_cpu(dp->lcns_follow);
++		if (le64_to_cpu(lrh->target_vcn) < le64_to_cpu(dp->vcn)) {
++			err = -EINVAL;
++			goto out;
++		}
++
 +		/*
-+		 * Reject crafted entries whose e->size makes e + esize
-+		 * point past the INDEX_HDR's used boundary.  Without this,
-+		 * PtrOffset(e1, hdr + used) underflows to a quasi-infinite
-+		 * size_t when fed to the memmove() below.
-+		 *
-+		 * Also reject esize == 0: memmove(e, e, ...) is a no-op and
-+		 * leaves hdr->used unchanged, masking the crafted entry.
-+		 */
-+		if (!esize || Add2Ptr(e, esize) > Add2Ptr(hdr, used) ||
-+		    PtrOffset(e1, Add2Ptr(hdr, used)) < esize)
-+			goto dirty_vol;
-+
-+		nsize = esize;
-+
- 		memmove(e, e1, PtrOffset(e1, Add2Ptr(hdr, used)));
++         * find_dp() only validates that target_vcn is the first
++         * cluster covered by dp.  The walk through lrh->lcns_follow
++         * further entries must stay within the allocated
++         * dp->page_lcns[] array, which is sized by dp->lcns_follow.
++         */
++		if (le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn) + t16 >
++		    le32_to_cpu(dp->lcns_follow)) {
++			err = -EINVAL;
++			log->set_dirty = true;
++			goto out;
++		}
  
- 		hdr->used = cpu_to_le32(used - nsize);
++		for (i = 0; i < t16; i++) {
++			size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
++					    le64_to_cpu(dp->vcn));
++			if (j >= t32 || i >= t32 - j) {
++				err = -EINVAL;
++				goto out;
++			}
++			dp->page_lcns[j + i] = lrh->page_lcns[i];
++		}
+ 		goto next_log_record_analyze;
+ 
+ 	case DeleteDirtyClusters: {
 
 
