@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB171471402;
-	Tue, 21 Jul 2026 19:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1DED472528;
+	Tue, 21 Jul 2026 19:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663352; cv=none; b=XiGf8SPo1y/H7VRmZVMiO72hhVJKXI/WbpKxD1kk0iXIbDzBHjH3zoh3/GbFIenXTwysPmZOCGwMFybguzorlKI2jiEhEsJrYCxvGbGP6j4tHf0XIEj/jD+FGKLJlY6qM5FfTKz+2SAT9T3fhGYScoY0g95IfQLT99GZztKXqnU=
+	t=1784663355; cv=none; b=AOZYBSWRH0qlYc1Hhfv8cXW8P2jYVsDFpbMnAMBJVy8wZ/D3HFcSrcH0UuQa6aUiMAMAEqGX01v6uunPsVU6Nrnv+3BaUOCwVi0sF69r9Zr0K9NgMQF31uQwIOgtduoDCiMtjK3BrrgO85Ma7h8dMDT6iuQgxDVVa93qd+eXrE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663352; c=relaxed/simple;
-	bh=Pmzeni4ax/PycPifGjWgWBFDTVSfd+Ot/cFDvuIPqrQ=;
+	s=arc-20240116; t=1784663355; c=relaxed/simple;
+	bh=9iaYk6HfKU35gszH3UV2OHjTb8jboSvzY/0n25+pcC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ak9PEfliD1r9XXEE95D9GxXmHPXRLkPx1//U7Yll1fq5Y16RDWlnJY+uaRmo9Yum1r/vZN5XslhQe8xZrhViXZAEyGqEL//1aobhcm54R105K2XM/6lGIGnhnEHTJ7p3CgdbP1Pjpb4EWMl68F2NZyU2kyIq7cjoexYobVFunpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxUjyYpz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZFt8M1/Zquuhte53b2e+GXwZ21Nd8rz1TeKhOeEZUUR6GeX24b5uPoInSLefMp1CzNkNsdrRhV1n3VtVJlvn5/1vwiZpqz8SCYFwEU4RdzmV/lgH49nx19jmkGuzoMElJAHtk78btPINcxxA+cjyje09Mw8bEjCXiX7clltdKWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJweXDBW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxUjyYpz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216BE1F00A3A;
-	Tue, 21 Jul 2026 19:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJweXDBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC281F00A3D;
+	Tue, 21 Jul 2026 19:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663350;
-	bh=FRPfu6Txvrn0ON21oGkUo4kmdcdxAZ0ovNiHBNlmy0Y=;
+	s=korg; t=1784663353;
+	bh=k12CiHyH7sHmAbsaZwKcOi2NTc26LDamuw+DKQTb6Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lxUjyYpz3DmP/9MBkXL2DNtx1gq+1LU+xHkWpcknsLi3PEbJU+Z3BSU9xiNfh4zn4
-	 SEfk3qlDKNfmW5Z4r9QZ/f+oOQqh9i/cT/r26MqvEu2TRbYJM4spoV1IDQ2hKRlvbk
-	 YeM0qOr0w9T7wqvkoXFoSZoEWuFLUFWlVxSF3Oi0=
+	b=QJweXDBWFbUlFAaIhZULqRZDIvnOUCtPOwPJs1bnPohSwfIvXWpu54TwyNvMQOPBU
+	 oBM0gGj3uBuYisgctHnBo4ur8ywlhtybV+qsv9jsvc9c32zMXLQj5RYws27UC5oKsR
+	 oeuzTfJTUBnbFxkVExIEtyri1Vxf6ujAeDF/q27A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0783/1276] net/sched: cake: reject overhead values that underflow length
-Date: Tue, 21 Jul 2026 17:20:26 +0200
-Message-ID: <20260721152503.600911635@linuxfoundation.org>
+Subject: [PATCH 6.12 0792/1276] ipvs: use parsed transport offset in TCP state lookup
+Date: Tue, 21 Jul 2026 17:20:35 +0200
+Message-ID: <20260721152503.799282967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,57 +51,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit b7f97cae7ec1b6c3c32843c42be218690d310467 ]
+[ Upstream commit 2500fa3958b1ba51c2b065e39db1b04dfa7e23a2 ]
 
-CAKE accepts signed overhead values and stores them in an s16, but the
-adjusted packet length calculation uses unsigned arithmetic.  A negative
-effective length can therefore wrap to a large value.
+TCP state handling reparses the skb to find the TCP header. For IPv6 it
+uses sizeof(struct ipv6hdr), while the surrounding IPVS code already
+parsed the packet with ip_vs_fill_iph_skb() and has the real
+transport-header offset in iph.len.
 
-Such configurations make rate accounting depend on integer wraparound
-rather than on the packet size userspace intended to model.  A static
-netlink lower bound is not enough because packets reaching CAKE can be
-smaller than any reasonable manual-overhead allowance.
+This makes TCP state handling look at the wrong bytes when an IPv6
+packet carries extension headers. Use the parsed transport offset passed
+down from ip_vs_set_state() when reading the TCP header.
 
-Fold the signed overhead adjustment into the existing datapath MPU clamp
-so negative adjusted lengths are clamped before link-layer framing
-adjustments.
+For IPv4 and for IPv6 packets without extension headers, the passed
+offset matches the previous value.
 
-Fixes: a729b7f0bd5b ("sch_cake: Add overhead compensation support to the rate shaper")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260702000758.297407.e5c888d9d99d.cake-overhead-underflow@trailofbits.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0bbdd42b7efa6 ("IPVS: Extend protocol DNAT/SNAT and state handlers")
+Link: https://lore.kernel.org/netdev/20260705125659.37744-1-zhaoyz24@mails.tsinghua.edu.cn/
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude Code:GLM-5.2
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto_tcp.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index ba1a5c15e6cabb..2f33739036bb1b 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1365,10 +1365,7 @@ static u32 cake_calc_overhead(struct cake_sched_data *q, u32 len, u32 off)
- 	if (q->min_netlen > len)
- 		q->min_netlen = len;
+diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+index dc8394383c148e..b382810156b2c6 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+@@ -585,13 +585,7 @@ tcp_state_transition(struct ip_vs_conn *cp, int direction,
+ {
+ 	struct tcphdr _tcph, *th;
  
--	len += q->rate_overhead;
+-#ifdef CONFIG_IP_VS_IPV6
+-	int ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
+-#else
+-	int ihl = ip_hdrlen(skb);
+-#endif
 -
--	if (len < q->rate_mpu)
--		len = q->rate_mpu;
-+	len = max((s32)len + q->rate_overhead, (s32)q->rate_mpu);
+-	th = skb_header_pointer(skb, ihl, sizeof(_tcph), &_tcph);
++	th = skb_header_pointer(skb, iph_len, sizeof(_tcph), &_tcph);
+ 	if (th == NULL)
+ 		return;
  
- 	if (q->atm_mode == CAKE_ATM_ATM) {
- 		len += 47;
 -- 
 2.53.0
 
