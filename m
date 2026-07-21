@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29ADE46D54F;
-	Tue, 21 Jul 2026 15:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C571046D54F;
+	Tue, 21 Jul 2026 15:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648629; cv=none; b=g6yQv49d5budamYmR8Fbz2uM6H1FzTXiib/NH9AV1deSCpV614FLOG67H/EyCZEmy6lPbCtgUrHWoakpYicQtMODNJSIJpNfn35jcnnx/6f8RdiW7YkRuzI+bmNjzmm+9YNUbl7MEzRqCbwqUtLytcaDfcVa3Mg2uPNMldD/fAw=
+	t=1784648630; cv=none; b=mjbyfY05vQ/LQ1lqwcxY9c596ScsBKpoLHoayNIXb04t5XxJWpfjHxdHcmiMNPlSwH7CKfr2HTuXMgUPS+CTzd9HMWn0Ko5fM7Y9vP4Qy8V0KXbrvXCuOQihkdtFG0JM/a+sK40xJi4v4Dc3l5Oz//gjHYJr2Sjd4f55/TdMmVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648629; c=relaxed/simple;
-	bh=4zrUpSnoVtLG63mdbciPx06wCcitUqzh3zeLGNwiMiI=;
+	s=arc-20240116; t=1784648630; c=relaxed/simple;
+	bh=Fj1nEucQM5zc0VmbmFUe2wW+fPsDY2PqaZy4OyOZOTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MS5ZrWsY4+AZ5GPLnoXCTOaMeQrff3OztMx82vneRqh2tQiRPq7qPWDL59hFpaQ1mN9iXh1JUmwCoqOvdSi7CaIHqZdfacgMADj10N+enD9osr9qLhmLQJ8tETNaoxxdrMY71Lp6jhyvAf+shi9eyGxvpeZavlUhBv99WSTTBgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qnn09p/h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LZ4gr3M0QW/gUha7sQlUNMrjCDpktdKFaf9bdnnobd1TbP9sQZYSJsSTGhiTJ9q69lQmToLbmM9PUq5ypQ4hRTU6m8gmSA35PGF6SJLTNXyV0aOpjXEUBK7QIFuNF8YVhfCZ+zzPtTvlD5R4qxNbbd0jeoQ5Va+9errDXxYj4rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KN4S3lXX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qnn09p/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9E01F000E9;
-	Tue, 21 Jul 2026 15:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KN4S3lXX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3719D1F00A3A;
+	Tue, 21 Jul 2026 15:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648627;
-	bh=r2ZDy1HhEnsGRN+vh+ci4IbAaOw2lz2dGf2czBygX54=;
+	s=korg; t=1784648629;
+	bh=NUqnXSY3BCiQGmJdJa58dKiayUCOd4Jr0d1syZKWeqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qnn09p/hzXbRPq78OOVgLCDxM95yFRNxFsUScZUk60Gc8/cT3E3xrQ/7Zrko8TUtL
-	 7AiojwHNlXwFZWbCdj6P41ncbafAapr/uc7L9r1eETIU8zL7gxjohaLZJSn+8pLI5D
-	 5snzscNcUDAyDsP2l3imZYHQJucl5IKD5UJi7dSQ=
+	b=KN4S3lXXyqISzoHdPNrs0j8uTYxt5/gN2dVkjQsKM7sboxOxOpGhpD5/hqDaF4QIp
+	 w9nPwoVz3XDRio+dasCdJlLNQy+f+v2fDiURuDGFUgO/Gkl0cxFbHd4I+8/xzE1u2n
+	 nZNLfCqz0SNF7H2IuIbL1XAfIzFLe6PK9phSprbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Costa Shulyupin <costa.shul@redhat.com>,
+	Crystal Wood <crwood@redhat.com>,
 	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0227/2077] tools/rtla: Fix --dump-tasks usage in timerlat
-Date: Tue, 21 Jul 2026 16:58:20 +0200
-Message-ID: <20260721152558.033452337@linuxfoundation.org>
+Subject: [PATCH 7.1 0228/2077] rtla: Stop the record trace on interrupt
+Date: Tue, 21 Jul 2026 16:58:21 +0200
+Message-ID: <20260721152558.056404194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,62 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Costa Shulyupin <costa.shul@redhat.com>
+From: Crystal Wood <crwood@redhat.com>
 
-[ Upstream commit 704fe8f3d97bba842f5f357e317116f1b88169e8 ]
+[ Upstream commit f03a59f949176ce4312cb466245d1243aaf40389 ]
 
-Fix --dump-task to --dump-tasks in timerlat_hist usage string
-and getopt_long table for consistency with timerlat_top.
+Before, when rtla got a signal, it stopped the main trace but not the
+record trace.  With "--on-end trace", this can lead to
+save_trace_to_file() failing to keep up, especially on a debug kernel.
+Plus, it adds post-stoppage noise to the trace file.
 
-Add missing --dump-tasks to timerlat_top usage synopsis.
-
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Costa Shulyupin <costa.shul@redhat.com>
-Fixes: 2091336b9a8b ("rtla/timerlat_hist: Add auto-analysis support")
-Link: https://lore.kernel.org/r/20260414185223.65353-1-costa.shul@redhat.com
+Signed-off-by: Crystal Wood <crwood@redhat.com>
+Fixes: c73cab9dbed0 ("rtla/timerlat_hist: Stop timerlat tracer on signal")
+Fixes: a4dfce7559d7 ("rtla/timerlat_top: Stop timerlat tracer on signal")
+Fixes: 3aadb65db5d6 ("rtla/timerlat: Add action on end feature")
+Link: https://lore.kernel.org/r/20260512173731.2151841-1-crwood@redhat.com
 Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/timerlat_hist.c | 4 ++--
- tools/tracing/rtla/src/timerlat_top.c  | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ tools/tracing/rtla/src/common.c   | 19 +++++++++++--------
+ tools/tracing/rtla/src/common.h   |  1 -
+ tools/tracing/rtla/src/timerlat.c |  2 +-
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/tools/tracing/rtla/src/timerlat_hist.c b/tools/tracing/rtla/src/timerlat_hist.c
-index 4b6708e333b8f4..d52fd59195cd1f 100644
---- a/tools/tracing/rtla/src/timerlat_hist.c
-+++ b/tools/tracing/rtla/src/timerlat_hist.c
-@@ -694,7 +694,7 @@ static void timerlat_hist_usage(void)
- 		"[-d s] [-D] [-n] [-a us] [-p us] [-i us] [-T us] [-s us] \\",
- 		"         [-t [file]] [-e sys[:event]] [--filter <filter>] [--trigger <trigger>] [-c cpu-list] [-H cpu-list]\\",
- 		"	  [-P priority] [-E N] [-b N] [--no-irq] [--no-thread] [--no-header] [--no-summary] \\",
--		"	  [--no-index] [--with-zeros] [--dma-latency us] [-C [cgroup_name]] [--no-aa] [--dump-task] [-u|-k]",
-+		"	  [--no-index] [--with-zeros] [--dma-latency us] [-C [cgroup_name]] [--no-aa] [--dump-tasks] [-u|-k]",
- 		"	  [--warm-up s] [--deepest-idle-state n]",
- 		NULL,
- 	};
-@@ -809,7 +809,7 @@ static struct common_params
- 			{"filter",		required_argument,	0, '7'},
- 			{"dma-latency",		required_argument,	0, '8'},
- 			{"no-aa",		no_argument,		0, '9'},
--			{"dump-task",		no_argument,		0, '\1'},
-+			{"dump-tasks",		no_argument,		0, '\1'},
- 			{"warm-up",		required_argument,	0, '\2'},
- 			{"trace-buffer-size",	required_argument,	0, '\3'},
- 			{"deepest-idle-state",	required_argument,	0, '\4'},
-diff --git a/tools/tracing/rtla/src/timerlat_top.c b/tools/tracing/rtla/src/timerlat_top.c
-index 91f88bbebad9eb..035abf01dbe631 100644
---- a/tools/tracing/rtla/src/timerlat_top.c
-+++ b/tools/tracing/rtla/src/timerlat_top.c
-@@ -467,7 +467,8 @@ static void timerlat_top_usage(void)
- 	static const char *const msg_start[] = {
- 		"[-q] [-a us] [-d s] [-D] [-n] [-p us] [-i us] [-T us] [-s us] \\",
- 		"	  [[-t [file]] [-e sys[:event]] [--filter <filter>] [--trigger <trigger>] [-c cpu-list] [-H cpu-list]\\",
--		"	  [-P priority] [--dma-latency us] [--aa-only us] [-C [cgroup_name]] [-u|-k] [--warm-up s] [--deepest-idle-state n]",
-+		"	  [-P priority] [--dma-latency us] [--aa-only us] [-C [cgroup_name]] [--dump-tasks] [-u|-k] [--warm-up s]\\",
-+		"	  [--deepest-idle-state n]",
- 		NULL,
- 	};
+diff --git a/tools/tracing/rtla/src/common.c b/tools/tracing/rtla/src/common.c
+index bc9d01ddd10295..bfeccc6222e5bc 100644
+--- a/tools/tracing/rtla/src/common.c
++++ b/tools/tracing/rtla/src/common.c
+@@ -10,7 +10,7 @@
  
+ #include "common.h"
+ 
+-struct trace_instance *trace_inst;
++struct osnoise_tool *trace_tool;
+ volatile int stop_tracing;
+ int nr_cpus;
+ 
+@@ -21,12 +21,16 @@ static void stop_trace(int sig)
+ 		 * Stop requested twice in a row; abort event processing and
+ 		 * exit immediately
+ 		 */
+-		tracefs_iterate_stop(trace_inst->inst);
++		if (trace_tool)
++			tracefs_iterate_stop(trace_tool->trace.inst);
+ 		return;
+ 	}
+ 	stop_tracing = 1;
+-	if (trace_inst)
+-		trace_instance_stop(trace_inst);
++	if (trace_tool) {
++		trace_instance_stop(&trace_tool->trace);
++		if (trace_tool->record)
++			trace_instance_stop(&trace_tool->record->trace);
++	}
+ }
+ 
+ /*
+@@ -255,11 +259,10 @@ int run_tool(struct tool_ops *ops, int argc, char *argv[])
+ 	tool->params = params;
+ 
+ 	/*
+-	 * Save trace instance into global variable so that SIGINT can stop
+-	 * the timerlat tracer.
++	 * Expose the tool to signal handlers so they can stop the trace.
+ 	 * Otherwise, rtla could loop indefinitely when overloaded.
+ 	 */
+-	trace_inst = &tool->trace;
++	trace_tool = tool;
+ 
+ 	retval = ops->apply_config(tool);
+ 	if (retval) {
+@@ -267,7 +270,7 @@ int run_tool(struct tool_ops *ops, int argc, char *argv[])
+ 		goto out_free;
+ 	}
+ 
+-	retval = enable_tracer_by_name(trace_inst->inst, ops->tracer);
++	retval = enable_tracer_by_name(tool->trace.inst, ops->tracer);
+ 	if (retval) {
+ 		err_msg("Failed to enable %s tracer\n", ops->tracer);
+ 		goto out_free;
+diff --git a/tools/tracing/rtla/src/common.h b/tools/tracing/rtla/src/common.h
+index 8921807bda988c..505babf386373b 100644
+--- a/tools/tracing/rtla/src/common.h
++++ b/tools/tracing/rtla/src/common.h
+@@ -54,7 +54,6 @@ struct osnoise_context {
+ 	int			opt_workload;
+ };
+ 
+-extern struct trace_instance *trace_inst;
+ extern volatile int stop_tracing;
+ 
+ struct hist_params {
+diff --git a/tools/tracing/rtla/src/timerlat.c b/tools/tracing/rtla/src/timerlat.c
+index f8c057518d2237..637f68d684f5f5 100644
+--- a/tools/tracing/rtla/src/timerlat.c
++++ b/tools/tracing/rtla/src/timerlat.c
+@@ -202,7 +202,7 @@ void timerlat_analyze(struct osnoise_tool *tool, bool stopped)
+ 		 * If the trace did not stop with --aa-only, at least print
+ 		 * the max known latency.
+ 		 */
+-		max_lat = tracefs_instance_file_read(trace_inst->inst, "tracing_max_latency", NULL);
++		max_lat = tracefs_instance_file_read(tool->trace.inst, "tracing_max_latency", NULL);
+ 		if (max_lat) {
+ 			printf("  Max latency was %s\n", max_lat);
+ 			free(max_lat);
 -- 
 2.53.0
 
