@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44122356A12;
-	Tue, 21 Jul 2026 19:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5011A41DE0E;
+	Tue, 21 Jul 2026 19:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662184; cv=none; b=HbbTOk4yyKQb+o+DkiyQGboISkY3R+dBgmJYbo7HhSX7dPMvWphASFDUy/CyukgesXiMQ2CGxAwu4GUNQSrKu5w4BYcIL2nbip1G3rCrtyqoBotwuzlMiaDntXCGqgpQ46t8Dq3qBneoOGozakdE2VGNJpwcYL701r3ldYiG2dI=
+	t=1784662186; cv=none; b=F4p/ZZ6z5rTrIk+LmvqnYniwICc32Kckmp3DrYVVzQ9ytmGBD2j+4VqHHVEMWiiHlqpPgm9Dbnvaul3F2pRux+JIx5l0FI+9h+Y9xZ4z7C1m8de4A6o1olnCafxAZRmfDbOc3xkq38hvu3PJc23bm7nfrDVqzZ8e+h70MYFLCYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662184; c=relaxed/simple;
-	bh=fybo8rj9JN2jPdb9pkwNOZ8FCKzJY4k9t6BiXoF1dwY=;
+	s=arc-20240116; t=1784662186; c=relaxed/simple;
+	bh=fmWaGc6EL4aoA1yuqtYkdGWDRHCiI0MLD1dEsNXCNls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xn30qn+cgA0vpk4NW3RV+zw7eU7rDOnef3eRv6d0mZ48z1E0VxvFqH8G4ANJhC+AOhL9GRyW7PcCz+3LX78FzFXDVspmr69vgMWde17DlKD2jRT7OSQ/X0ZNzI2LUmL/HtdBaoAL5Sn92nMZcSQCkWDZpUu0/SKeWvz3nUzZ3ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IM/p+jeO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GJqsfGXzLVsqMuppC+4V8WLJfNJAH9Gpt+UtnRvCm1xe5Oy6H04ap8HOdWuNfhOefwrdSQeOMmvF7Ntfh/QcSgBh26nc5ZLpccVN3yIkA7zR51sLpycz3gbIKlW5UJ4PN93irriJcJJ1UUmdH+JMOoNfWdbWX1LEpvrunaBhmDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKf40ZXz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IM/p+jeO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA7B1F000E9;
-	Tue, 21 Jul 2026 19:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKf40ZXz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69731F000E9;
+	Tue, 21 Jul 2026 19:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662182;
-	bh=5I9r0HBewTJAEfGiHNbXbwqxNXj7daRujNaR2z9NUOk=;
+	s=korg; t=1784662185;
+	bh=+M5IHjz8forxm9nxjUEiZimczpu3GAMg0UxYWgZAzDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IM/p+jeOsCNVnclnixfkq/H4WYPBcXAhIb9OWk1WtVkulNqpiU3zbrxcmk2FrjTTJ
-	 kpteSnJCjYs1wiqZrQ5VZkxbczpz3efiAWR6rdV6dqpz7Ul8w3Lc/kadDAil/XyXif
-	 HU1HyQ+Hl5bBfFBt69dOjhFBQKUVLGNT9QGWjf90=
+	b=MKf40ZXzzhCh8VuNpR0UcFe+Jq95GBUyOJ4pEu4mSTSx2EHx0yVh0mUEj8f58Isk6
+	 a6npTxJi/jqVbP56cL6XMiOZrYziUpBFqt6zyvUKjyWBOCtOcT2YqDA2SQTtoGZuWS
+	 xAOImnkhzaTRCLMY3Pa2wOfZSA4TtjRgezEUTrXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lars=20P=C3=B6schel?= <lars.poeschel@edag.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0348/1276] spi: xilinx: use FIFO occupancy register to determine buffer size
-Date: Tue, 21 Jul 2026 17:13:11 +0200
-Message-ID: <20260721152453.901007577@linuxfoundation.org>
+Subject: [PATCH 6.12 0349/1276] ASoC: adau1372: Clear PLL_EN on failed PLL lock without reset GPIO
+Date: Tue, 21 Jul 2026 17:13:12 +0200
+Message-ID: <20260721152453.923897641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,84 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lars Pöschel <lars.poeschel@edag.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 47f3b5365536e8c38f264824ab15fdb74454e066 ]
+[ Upstream commit 69b4141b428bcf2cf7a863950c0d6e5c5ae89ac1 ]
 
-The method the driver uses to determine the size of the FIFO has a
-problem. What it currently does is this:
-It stops the SPI hardware and writes to the TX FIFO register until TX
-FIFO FULL asserts in the status register. But the hardware does not only
-have the FIFO, it also has a shift register which can hold a byte. This
-can be seen, when writing a byte to the FIFO (while the SPI hardware is
-stopped,) the TX FIFO EMPTY is still empty. So, if we have a FIFO size
-of 16 for example, the current method returns a 17.
-This is a problem, at least when using the driver in irq mode. The same
-size determined for the TX FIFO is also assumed for the RX FIFO. When a
-SPI transaction wants to write the amount of the FIFO size or more
-bytes, the following happens, for example with 16 bytes FIFO size:
-The driver stops the SPI hardware and writes 17 bytes to the TX FIFO and
-starts the SPI hardware and goes sleep.
-The hardware then shifts out 17 bytes (FIFO + shift register) and
-simultaneously reads bytes into the RX FIFO, but it only has 16 places,
-so it looses one byte. Then TX FIFO empty asserts, wakes the driver
-again, which has a fast path and reads 16 bytes from the RX FIFO, but
-before reading the last 17th byte (which is lost) it does this:
+The PLL lock failure path in adau1372_set_power() unwinds by putting
+the regmap back in cache-only mode, asserting the optional power-down
+GPIO and disabling mclk.
 
-	sr = xspi->read_fn(xspi->regs + XSPI_SR_OFFSET);
-	if (!(sr & XSPI_SR_RX_EMPTY_MASK)) {
-		xilinx_spi_rx(xspi);
-		rx_words--;
-	}
+adau1372_enable_pll() enables CLK_CTRL.PLL_EN before polling the PLL
+lock bit. If the lock fails on a board without a power-down GPIO, the
+error path disables mclk and returns an error, but leaves PLL_EN set in
+the hardware register. The normal power-off path already handles the
+no-GPIO case by explicitly clearing PLL_EN.
 
-It reads the status register and checks if the RX FIFO is not empty.
-But it is empty in our case. So this check spins in a while loop
-forever locking the driver.
+Mirror that cleanup in the PLL lock failure path and clear PLL_EN while
+the regmap is still live, before switching it back to cache-only mode.
 
-This patch fixes the logic to determine the FIFO size.
-
-Fixes: 4c9a761402d7 ("spi/xilinx: Simplify spi_fill_tx_fifo")
-Signed-off-by: Lars Pöschel <lars.poeschel@edag.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260612105244.9076-1-lars.poeschel.linux@edag.com
+Fixes: bfe6a264effc ("ASoC: adau1372: Fix clock leak on PLL lock failure")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260604125520.1428905-1-lgs201920130244@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-xilinx.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/soc/codecs/adau1372.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-xilinx.c b/drivers/spi/spi-xilinx.c
-index f5e41813b9582a..9eef5688dff22b 100644
---- a/drivers/spi/spi-xilinx.c
-+++ b/drivers/spi/spi-xilinx.c
-@@ -370,11 +370,18 @@ static int xilinx_spi_find_buffer_size(struct xilinx_spi *xspi)
- 		xspi->regs + XIPIF_V123B_RESETR_OFFSET);
- 
- 	/* Fill the Tx FIFO with as many words as possible */
--	do {
-+	while (1) {
- 		xspi->write_fn(0, xspi->regs + XSPI_TXD_OFFSET);
- 		sr = xspi->read_fn(xspi->regs + XSPI_SR_OFFSET);
-+		if (sr & XSPI_SR_TX_FULL_MASK)
-+			break;
-+
- 		n_words++;
--	} while (!(sr & XSPI_SR_TX_FULL_MASK));
-+	}
-+
-+	/* Handle the NO FIFO case separately */
-+	if (!n_words)
-+		return 1;
- 
- 	return n_words;
- }
+diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
+index 25f123110b5be4..7dc0b5c79e3998 100644
+--- a/sound/soc/codecs/adau1372.c
++++ b/sound/soc/codecs/adau1372.c
+@@ -812,6 +812,11 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 		if (adau1372->use_pll) {
+ 			ret = adau1372_enable_pll(adau1372);
+ 			if (ret) {
++				if (!adau1372->pd_gpio)
++					regmap_update_bits(adau1372->regmap,
++							   ADAU1372_REG_CLK_CTRL,
++							   ADAU1372_CLK_CTRL_PLL_EN,
++							   0);
+ 				regcache_cache_only(adau1372->regmap, true);
+ 				if (adau1372->pd_gpio)
+ 					gpiod_set_value(adau1372->pd_gpio, 1);
 -- 
 2.53.0
 
