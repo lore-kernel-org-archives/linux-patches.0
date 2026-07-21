@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F99930F80C;
-	Tue, 21 Jul 2026 17:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6046430F80C;
+	Tue, 21 Jul 2026 17:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655706; cv=none; b=nqwTZSbi3/vt2HFUkKmesqlakmJkr12QkkNBoiEZ/woVeORLej54ySz8rMr85e3dpcfCNOXxaem1/1pK2SHKBMe36uH/94gYQl1OxR/29toFTe5Q4d+mDsBnmkT/RJWOGvZUmpGgd43+sGNf0Z/Dnz80qpSzTlGkFEJo63JRFZE=
+	t=1784655708; cv=none; b=WPc6Asnct3Fv7vOzCMUPOf8y+DF5XjHEr/BmUMo9uxMM/I5GuK7rh0qcBPSyYPEuDvnJ3lcSEyNTEh1awRoFEMDh9QgyDHhkcOtDkJ7p3qBqpxVoPq9aCfyJbsWYt5Tp6t5i2k7g7OvFPCYWPyrF3in+K6kgRawXKZcShsOv1ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655706; c=relaxed/simple;
-	bh=yRkJuF+mcyqvOeEYi5pBp8i/Loc/ytaJZfB1kX2dK/E=;
+	s=arc-20240116; t=1784655708; c=relaxed/simple;
+	bh=GW911QXLDApkLz2dBEebs2+hyYbykb3DhICENqKVGXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hv4NKqUCDhw+b5dmB2MkRmg2+NMJOdNVK/Q5wxOll2SV03y4F53jpB/1UviFj4+oE084mi42ettINzurrwDeuZ3jvDIRIluaV7c852xvQN0aNse/s/cPd8Mkdy33tpBQ1IIo5hEp6zzxUeZaS0yRIgUUrtTcPBH680vJOLe+j38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G62ktEPr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZFBoxHrrzSd1eJJ/yYgygMwxknjUr/hNE37tgahol+dWpymEtApJNrzKz7aqUDhpcCoq+bJyQPk37PYNT19hDq126z45coZ9VZFuInLfduqhGRDA6GWNPRZE0PR5XRIqkvj1CaCwmNTUvA/iVvaZkqQ8leDhwEc1jwebEBtdj7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2ZfBuYU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G62ktEPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251251F000E9;
-	Tue, 21 Jul 2026 17:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2ZfBuYU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE43D1F000E9;
+	Tue, 21 Jul 2026 17:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655704;
-	bh=EMDPxppnp5K5FEtnu7GhjEIlhKdvPhJQ09CfkwG724I=;
+	s=korg; t=1784655707;
+	bh=RjChu42GdFg8wxVFbnTsT1w2kF8Dc152NsdzEpDgpSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G62ktEPri6o5szeeswO/X45/WoejkMwQqymapf4IQMKwnOtdUWiqUyu75RJeyR3bX
-	 X5DTshASYwJnFzs/TBmRIuUEAt+43+YZoj4EJ527mXU2Xhw7mWSRyujoqA7bWCnVW/
-	 a56eBdAZNwEGEBBtb9QhuZ9EhT5G+xn93tMUK4aI=
+	b=B2ZfBuYU5IC9hlI072YIpDEswpp7cSYI3V4mI11qTcIXlQx3KiHGAB1pQY0KnFhAL
+	 xVgC0vCe5EZdQYvmUEHr1QU7nvcvDvPuk64BMdLnvXEKeiRnwMK46sp8pkIbg64U/K
+	 oVDWRQv2oBQ/Q6jGzXHtJNrk12cV2Tu9p4fshaiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	Weixin Guo <2298701336@qq.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0111/1611] arm64: dts: rockchip: Add #{address,size}-cells to Chromium-based /firmware
-Date: Tue, 21 Jul 2026 17:03:47 +0200
-Message-ID: <20260721152517.348817623@linuxfoundation.org>
+Subject: [PATCH 6.18 0112/1611] arm64: dts: rockchip: fix rk809 interrupt pin on rk3566-roc-pc
+Date: Tue, 21 Jul 2026 17:03:48 +0200
+Message-ID: <20260721152517.371181859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,93 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Norris <briannorris@chromium.org>
+From: Weixin Guo <2298701336@qq.com>
 
-[ Upstream commit 0b74f1a037672980c477bbe6b3848fb5341eb4f1 ]
+[ Upstream commit 460bac478c5fe69054ffc60d607bba03bcaf909b ]
 
-Chromium/Depthcharge bootloaders may dynamically add a few device nodes
-to a system's DTB under a /firmware node. A typical DT looks something
-like the following:
+The RK809 PMIC interrupt pin on the Firefly ROC-RK3566-PC (Station M2)
+is physically connected to GPIO0_A3 (RK_PA3) according to the board's
+schematic.
 
-  ## From a RK3399 Gru/Kevin Chromebook:
-  # find /sys/firmware/devicetree/base/firmware
-  /sys/firmware/devicetree/base/firmware
-  /sys/firmware/devicetree/base/firmware/coreboot
-  /sys/firmware/devicetree/base/firmware/coreboot/ram-code
-  /sys/firmware/devicetree/base/firmware/coreboot/compatible
-  /sys/firmware/devicetree/base/firmware/coreboot/board-id
-  /sys/firmware/devicetree/base/firmware/coreboot/reg
-  /sys/firmware/devicetree/base/firmware/coreboot/name
-  /sys/firmware/devicetree/base/firmware/chromeos
-  /sys/firmware/devicetree/base/firmware/chromeos/readonly-firmware-version
-  /sys/firmware/devicetree/base/firmware/chromeos/active-ec-firmware
-  /sys/firmware/devicetree/base/firmware/chromeos/firmware-version
-  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-storage
-  /sys/firmware/devicetree/base/firmware/chromeos/vboot-shared-data
-  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-size
-  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-offset
-  /sys/firmware/devicetree/base/firmware/chromeos/hardware-id
-  /sys/firmware/devicetree/base/firmware/chromeos/compatible
-  /sys/firmware/devicetree/base/firmware/chromeos/firmware-type
-  /sys/firmware/devicetree/base/firmware/chromeos/fmap-offset
-  /sys/firmware/devicetree/base/firmware/chromeos/name
-  /sys/firmware/devicetree/base/firmware/ranges
-  /sys/firmware/devicetree/base/firmware/name
+Currently, the PMIC node incorrectly specifies RK_PA7 for the interrupt,
+which prevents the PMIC from correctly signaling interrupts. (Note that
+the pinctrl node 'pmic_int' correctly configures RK_PA3).
 
-The /firmware node has an empty 'ranges', but does not have
-address/size-cells.
+Fix this by updating the interrupts property to use RK_PA3.
 
-Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
-non-translatable addresses") started requiring #address-cells for a
-device's parent if we want to use the reg resource in a device node.
-This leads to errors like the following:
-
-[    7.763870] coreboot_table firmware:coreboot: probe with driver coreboot_table failed with error -22
-
-Add appropriate #{address,size}-cells to work around the problem.
-
-Note that Google has also patched the Depthcharge bootloader source to
-add {address,size}-cells [1], but bootloader updates are typically
-delivered only via Google OS updates. Not all users install Google
-software updates, and even if they do, Google may not produce updated
-binaries for all/older devices.
-
-[1] https://lore.kernel.org/all/20241209092809.GA3246424@google.com/
-    https://crrev.com/c/6051580 ("coreboot: Insert #address-cells and
-    #size-cells for firmware node")
-
-Closes: https://lore.kernel.org/all/aeKlYzTiL0OB1y3g@google.com/
-Fixes: 6e5773d52f4a ("of/address: Fix WARN when attempting translating non-translatable addresses")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-[On RK3399-based Chromebooks there is no real other way than to load the
- DTB  together with its kernel when running a mainline kernel and as the
- whole line is EOL, there also won't be any updates to the bootloader that
- could fix that issue there.]
-Link: https://patch.msgid.link/20260428200712.2660635-2-briannorris@chromium.org
+Fixes: 30ac9b4e25d8 ("arm64: dts: rockchip: add dts for Firefly Station M2 rk3566")
+Signed-off-by: Weixin Guo <2298701336@qq.com>
+Link: https://patch.msgid.link/tencent_5035EEE630C845B1B51DEA4284DE23DCCE06@qq.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
-index 7eca1da78cffab..2f9e39671efc05 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
-@@ -18,6 +18,11 @@ chosen {
- 		stdout-path = "serial2:115200n8";
- 	};
- 
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	/*
- 	 * Power Tree
- 	 *
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
+index 7e499064e03579..985770e3a5e2cc 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
+@@ -245,7 +245,7 @@ rk809: pmic@20 {
+ 		compatible = "rockchip,rk809";
+ 		reg = <0x20>;
+ 		interrupt-parent = <&gpio0>;
+-		interrupts = <RK_PA7 IRQ_TYPE_LEVEL_LOW>;
++		interrupts = <RK_PA3 IRQ_TYPE_LEVEL_LOW>;
+ 		clock-output-names = "rk808-clkout1", "rk808-clkout2";
+ 		assigned-clocks = <&cru I2S1_MCLKOUT_TX>;
+ 		assigned-clock-parents = <&cru CLK_I2S1_8CH_TX>;
 -- 
 2.53.0
 
