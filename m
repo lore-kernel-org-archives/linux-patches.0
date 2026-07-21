@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3833B6C1D;
-	Tue, 21 Jul 2026 21:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C381B35C6B8;
+	Tue, 21 Jul 2026 21:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669479; cv=none; b=FmLL5ZsaSdEtLcIEnYt6KNwU9qNbtRtfPt11cRynN6lutwouCEOjJwD8NPnZBVwAxR1Q9FldVHi7D3yEYk0irktB1McjgKkbFrfUGmxCGawdBywaczqStAXqw6msFwAYVos1vih4bqSjSfVglvErk1dTrnIwHzQ3dGd0k41DF/U=
+	t=1784669480; cv=none; b=G+wxap3cL4p3gxl828vj4HgsaWwejcg7y20NcoSeda1jNpNIY3llb91d8D3Xa+i8Xi0jTaY3e5x6RZdW3ZZ1vz6BRu9zYpKqu5LhK3D9tGAPFoGUuxz+6F6lmfr4Hw+9isENCWCwA/Uw7sa/88SMwqS++jFhhJ5sQe6kD8iPbwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669479; c=relaxed/simple;
-	bh=s5aQ7s+bv48VvKdmNobyMIXQR4iNVg/cCUTzpDK3bLs=;
+	s=arc-20240116; t=1784669480; c=relaxed/simple;
+	bh=5S4vzVd8SqgIAxpr45ioy13lIzshuoDrtUcup3cXy4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkVH3wKyGLhZyTPC57ioN4TAD40GBJ1qBHikNIxbfbHIjwS051zG9CBYscqW2oMEOWCySon7R17zaN0Xa/2HPFoZZiD8AohhzFpc5iq6ThPz+C8Iom5rGbLgJK1JzkFZ+ffO5P3U9qLhpow1Y18MEKIy6wMW2pwQAEcsMLV2ixg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o28Ro4ol; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GznWjWdSAHZUF+rdgW4csefRywk4k+qvuVs7vLvx6OExGO99MiaxyLPjIFo7wUmSmlsbnryPFpGSU3Skwf3zAJCQkMv/sxF98mYtYLGDjoiSdfGAKgJnHtuU0r6AgzDuGylMqIDUEf0NqaNlTALFH+1a1RlLDfrReQfmfSgrRPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVLFE5pr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o28Ro4ol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26DC1F00A3A;
-	Tue, 21 Jul 2026 21:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVLFE5pr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB4D1F000E9;
+	Tue, 21 Jul 2026 21:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669478;
-	bh=nsR4hO4NWX6kFyHQS5JIYFEJQ1wnnxf0l7WKKO573Kc=;
+	s=korg; t=1784669475;
+	bh=oKSKY2rF7aODx936aqPGrDSN5B7RhrAgZodOOwIXk+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o28Ro4oluQnJ5dNtNwWaYYRDdbOKwN7KBsYNJTZfMGpvVa0VV//zDdE0JvKL9jTd7
-	 MLVrqmx2TlAKJkFkSXEHVAMC0CA/yvupWL/Sd2IzRWqzbuRxyh5ouR87HMIIyy3BqG
-	 41MuRLEwq4HqCu7LhKxLg9gAWy4KNbA9Xs08EeMw=
+	b=pVLFE5proeRGsSO3PPeRH5tmMlJew2cH92xoJ9X1BqiUpuoARd1tE44lPtCD2KeEH
+	 4kTNn0kKAKC1unBpB1zHlHaKzJlWV85Rgbm4Z5ZKXq0jZzBypi1sfpto5iM+bQ/bOU
+	 C3wXgojAnCA5fU3R1TIBS3TnSUSnsBcek/FzY8wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9383b1ff0df4b29ca5e6@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0571/1067] xfrm: validate selector family and prefixlen during match
-Date: Tue, 21 Jul 2026 17:19:32 +0200
-Message-ID: <20260721152437.378373337@linuxfoundation.org>
+Subject: [PATCH 6.1 0562/1067] perf symbols: Break infinite loop on zero-filled notes in sysfs__read_build_id()
+Date: Tue, 21 Jul 2026 17:19:23 +0200
+Message-ID: <20260721152437.176904489@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -46,76 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 40f0b1047918539f0b0f795ac65e35336b4c2c78 ]
+[ Upstream commit 063c647b24f640657d6d9e2e90d620ea3ee19ae6 ]
 
-syzbot reported a shift-out-of-bounds in xfrm_selector_match()
-due to AF_UNSPEC selector with large prefixlen (e.g. 128) matched
-against IPv4 flow (when XFRM_STATE_AF_UNSPEC is set).
+sysfs__read_build_id() iterates ELF note headers from sysfs files in a
+while(1) loop.  If the file contains a zero-filled note header (both
+n_namesz and n_descsz are 0), the code computes n = namesz + descsz = 0
+and calls read(fd, bf, 0).  read() with count 0 returns 0, which
+matches the expected (ssize_t)n value, so the error check passes and
+the loop repeats — reading the same zero bytes and spinning forever.
 
-Fix this by:
+This can happen with corrupted or zero-padded sysfs pseudo-files.
 
-- Rejecting mismatched families in xfrm_selector_match.
-- Returning false in addr4_match if prefixlen > 32.
-- Returning false in addr_match if prefixlen > 128 (prevents overflow).
+Add a check for n == 0 before the read, since no valid ELF note has
+both name and description of zero length.
 
-Fixes: 3f0ab59e6537 ("xfrm: validate new SA's prefixlen using SA family when sel.family is unset")
-Reported-by: syzbot+9383b1ff0df4b29ca5e6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a2fbe35.be3f099c.2836ae.0018.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Fixes: f1617b40596cb341 ("perf symbols: Record the build_ids of kernel modules too")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h     | 7 +++++++
- net/xfrm/xfrm_policy.c | 3 +++
- 2 files changed, 10 insertions(+)
+ tools/perf/util/symbol-elf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 74cb835e9c6d74..b189418cb9d056 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -825,6 +825,9 @@ static inline bool addr_match(const void *token1, const void *token2,
- 	unsigned int pdw;
- 	unsigned int pbi;
- 
-+	if (prefixlen > 128)
-+		return false;
-+
- 	pdw = prefixlen >> 5;	  /* num of whole u32 in prefix */
- 	pbi = prefixlen &  0x1f;  /* num of bits in incomplete u32 in prefix */
- 
-@@ -849,6 +852,10 @@ static inline bool addr4_match(__be32 a1, __be32 a2, u8 prefixlen)
- 	/* C99 6.5.7 (3): u32 << 32 is undefined behaviour */
- 	if (sizeof(long) == 4 && prefixlen == 0)
- 		return true;
-+
-+	if (prefixlen > 32)
-+		return false;
-+
- 	return !((a1 ^ a2) & htonl(~0UL << (32 - prefixlen)));
- }
- 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 615a2f3d7bdae4..a780fb581388b0 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -223,6 +223,9 @@ __xfrm6_selector_match(const struct xfrm_selector *sel, const struct flowi *fl)
- bool xfrm_selector_match(const struct xfrm_selector *sel, const struct flowi *fl,
- 			 unsigned short family)
- {
-+	if (family != sel->family && sel->family != AF_UNSPEC)
-+		return false;
-+
- 	switch (family) {
- 	case AF_INET:
- 		return __xfrm4_selector_match(sel, fl);
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 0b8956740fd8ac..7e1b62388f0b72 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -723,6 +723,9 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
+ 			} else {
+ 				n = namesz + descsz;
+ 			}
++			/* no valid note has both namesz and descsz zero */
++			if (n == 0)
++				break;
+ 			if (read(fd, bf, n) != (ssize_t)n)
+ 				break;
+ 		}
 -- 
 2.53.0
 
