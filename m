@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BD438399A;
-	Tue, 21 Jul 2026 17:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC121F3D56;
+	Tue, 21 Jul 2026 17:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654034; cv=none; b=X61DCdvWPzbdYybnRaoWUS8TV0y95cYHOYvD6XEUokBOSxu55hWlztac+1fatSbkygeidX4HcqhI9a2G1WcbYVVbZ21NDB2+b3u8kwLazC2pvpIvsbKfFqvRmGLFm/9RahdFWFcBrVFcQGDd9QHxxzfLnXjkxBeIbMSYv9pf3qM=
+	t=1784654037; cv=none; b=YsrFbS9/bjvpH3U2z9OqbP5YnYi/1CRVWTdNU81Y1sr0gyVSBsxDZ3x3abQXVASy+0OGbIV3/0I5RuexTfVQBs2frtwpaMFj29G2l9cenzVRG5aUPM3R/WJKfVn2HFcTz2OGzBIXpwMjvV86RmBVI+fV7xYNNWZzOFMly+s/ENs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654034; c=relaxed/simple;
-	bh=dLmeNg+xnGRmqkRSwE1VP598pUeaBe9gttY3+B6Zmb8=;
+	s=arc-20240116; t=1784654037; c=relaxed/simple;
+	bh=wdJx7yNZ1fKwkqqDNP0w46Ag8IXPvYlCySyi8WJfOR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEjvMEpZtz25pMBRYqZn9F/UhG29nAYJhhIB12Zy3Q4eus2LxPeiHofMybyEDLnq2OhPViN7+hOXk7l/oADSHFwAiggPuRcwzSnehDBgDcmZBZtPZ3Fmm+4Tf9x8O1fJAoZPeU0gODjtfNM6nGPeXJTfAfhpNPSCNAjqKkN4APo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdAOYhpv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gM9uoUyQMGgveVZ0PK/BZSXHtjacIapMoe/PPfzgRVW+ktZCCsaq9uKIRqL05jV3AU1rFJ33XFf1cwwNgFy52vV7ed3R5sr3cHv7Yeg+/TC8ovYIrQS9L/ciTajI/1LzH5AMncnLj9a4bS158Dpep2axoiIGLbllVIgVtlDcLl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXkRfzip; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdAOYhpv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494651F000E9;
-	Tue, 21 Jul 2026 17:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXkRfzip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C721F00A3A;
+	Tue, 21 Jul 2026 17:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654033;
-	bh=wOWpdgy9CRTAPs4zOnh/dA6GyoMOCylWTefIbxft7iQ=;
+	s=korg; t=1784654036;
+	bh=xvjDgyu9BY/7b0dh1Ej5XeJAWeLCcC8uMZ7YEvbzHzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mdAOYhpvuzZonHcOT6rn108jDnHjg3dp/mkhk7W6lB/8PW1SaY9VAvJk1p8kAyfWo
-	 pK96LzVBB+Hmwe+LoApcw/DsDLmCOnoQ18kwbj4uNKCclrMexyOCT2oZ03bsro3e5h
-	 P4r/5z40d2hApogfQS1F4RKYz90Z0LvWI5dNwze4=
+	b=EXkRfzipV2Lv/h3zNJlRbGShTD6whdKT+Ncoj0G4TShqzNybL5gXDx5Y1MqlhQtlN
+	 4huRwb4H6fF8XNI52ud6TEBa0h5BPirmyDL+VAPRpsDaFv3WyrsiEK2O9wjbHk/OLu
+	 /3zdmmpwW4AFJsuYA5CydAait3gW4cBza0LjlXtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Qiang Ma <maqianga@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.1 1551/2077] LoongArch: KVM: Return full old CSR value from kvm_emu_xchg_csr()
-Date: Tue, 21 Jul 2026 17:20:24 +0200
-Message-ID: <20260721152629.358581551@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 7.1 1552/2077] KVM: s390: vsie: Fix allocation of struct vsie_rmap
+Date: Tue, 21 Jul 2026 17:20:25 +0200
+Message-ID: <20260721152629.381488561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,38 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-commit ebd50de14f1a06b7e0206083904bcc62b9ba65be upstream.
+commit 505fcce0c64957f475f9b11fb1403821b7f33e7e upstream.
 
-The LoongArch CSRXCHG instruction returns the full old CSR value in rd
-after applying the masked update. kvm_emu_xchg_csr() currently masks
-the saved value before returning it to the guest, so rd receives only
-the bits selected by the write mask.
+The allocation size for struct vsie_rmap in kvm_s390_mmu_cache_topup()
+was wrong due to a copy-paste error.
 
-That breaks the architectural behavior and makes a zero mask return 0
-instead of the previous CSR value. So, keep the masked CSR update, but
-return the unmodified old CSR value.
+Fix it by using the type name.
 
-Cc: stable@vger.kernel.org
-Fixes: da50f5a693ff ("LoongArch: KVM: Implement handle csr exception")
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 12f2f61a9e1a ("KVM: s390: KVM page table management functions: allocation")
+CC: stable@vger.kernel.org # 7.1
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260611104850.110313-4-imbrenda@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/exit.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/s390/kvm/dat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kvm/exit.c
-+++ b/arch/loongarch/kvm/exit.c
-@@ -103,7 +103,6 @@ static unsigned long kvm_emu_xchg_csr(st
- 		old = kvm_read_sw_gcsr(csr, csrid);
- 		val = (old & ~csr_mask) | (val & csr_mask);
- 		kvm_write_sw_gcsr(csr, csrid, val);
--		old = old & csr_mask;
- 	} else
- 		pr_warn_once("Unsupported csrxchg 0x%x with pc %lx\n", csrid, vcpu->arch.pc);
- 
+diff --git a/arch/s390/kvm/dat.c b/arch/s390/kvm/dat.c
+index 4a41c0247ffa..a4fe664f65ee 100644
+--- a/arch/s390/kvm/dat.c
++++ b/arch/s390/kvm/dat.c
+@@ -45,7 +45,7 @@ int kvm_s390_mmu_cache_topup(struct kvm_s390_mmu_cache *mc)
+ 		mc->pts[mc->n_pts] = o;
+ 	}
+ 	for ( ; mc->n_rmaps < KVM_S390_MMU_CACHE_N_RMAPS; mc->n_rmaps++) {
+-		o = kzalloc_obj(*mc->rmaps[0], GFP_KERNEL_ACCOUNT);
++		o = kzalloc_obj(struct vsie_rmap, GFP_KERNEL_ACCOUNT);
+ 		if (!o)
+ 			return -ENOMEM;
+ 		mc->rmaps[mc->n_rmaps] = o;
+-- 
+2.55.0
+
 
 
