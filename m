@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C3D2DBF75;
-	Tue, 21 Jul 2026 18:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3267038910F;
+	Tue, 21 Jul 2026 18:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660088; cv=none; b=QLg11joNbd8Rtqe+JOSK/KX8qMu7iJiPBD4SJf6oU1b8gv66ngMtoPPPbN5BC4js9sgcl8Teg6IdHSGI/HgGN1K10UR5hPl9CqUz0xVB5JlWtTUlpZs7KHv2f2CE+8qtFmcwKIm1JBxdF0Tx24ts5rFQcfLp9Sshu9V1bGUIJv0=
+	t=1784660091; cv=none; b=kQYLE7pgYAP2cGWcH/tcifi+YElLXZwR2dYQQKie0VMh2Gsygs6YDyMXl5wpqJ0J6fTtxjUq5WXh+wdS7Xt5fja8JUG64B9JYl5o2jQVbRfZGVNRBEi19WNmZR1pFY0PdfKVp3SzYRE41tMO4iOfCfomj9ABbkJ/KtNf34AMcaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660088; c=relaxed/simple;
-	bh=N1UiXBJYbrKnTmX++T/gWVZUnLq/z7UKwHRLxaQoXpE=;
+	s=arc-20240116; t=1784660091; c=relaxed/simple;
+	bh=x5tAfXq9cthqAR9XrN1yx++XHwcqdS6YiM8NljU5AOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQQaSsRQwg/qmCy43871AiHzd5smZUoT44y99qkGsu6+ys6feLubY2Gdf6mMxtX8KUBxkiRHI5xsh7FAjuquEataXHWwy1w9cUt/M7tVBlXIhl6Gwqt+TKckrj81gaWgC0JIbAP4YxH2z/yC7+PSZ+liFGLsKNUvIYh2G7J4sx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8fvNfTE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aqnIeXOAi1aygVKWqyx6l9ssfzyzFqInqJutoCWz4+D/B/+jU+LnkoB80zassd/0pZSJz3JuvqmTQjbJizX9O6M8iOg2uLnKhq2jaWRh6oQMqyYZDls478x0nHxMFovQUiu6kTqCiC5GlCAR9Eo2NaG7BgXG02ZnfksSVR9D2Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUka6JbN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8fvNfTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2371F000E9;
-	Tue, 21 Jul 2026 18:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUka6JbN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EDF1F000E9;
+	Tue, 21 Jul 2026 18:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660087;
-	bh=+jvsIRvqp5Da4P4U4xIjq63YpBKB7ol0aKPeHeHadBE=;
+	s=korg; t=1784660090;
+	bh=SCt6uN8ucqVCZ0DbnAKKFC2d314BBKT1QIXmxdLj/mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V8fvNfTE9zngkmH850PXg3X4/JYbcDpHXPVsYCAEeQBqhqdAL6P2xoa2AFdWJG+78
-	 2IaZRjtHHx7tLUJH/OSibiCoAdmdcjWNx05y/r6NmaBGEhBqpWeYyq9Z8oYw2acQID
-	 Lfc7oIeGsmVyh9IqI32ZFF+3SSmnaRono5KbK7TE=
+	b=qUka6JbNo2jvT+MmgLTTIBCul1Er68DQhpSkFS9QnIc5D83mXkDkTF/zi+Y8erlhu
+	 3xFq5GrjI8CsmJ/1RYS41GncQwPO8gN/+H5b4GJiraKLcoyOwuKMzYC9viM1AbueVE
+	 0HSbUhtj7cIEagi2koqYocA5IebnBJmFMjngaprA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0847/2077] coresight: etm4x: Correct TRCVMIDCCTLR1 save and restore
-Date: Tue, 21 Jul 2026 17:08:40 +0200
-Message-ID: <20260721152612.769865320@linuxfoundation.org>
+Subject: [PATCH 7.1 0848/2077] PCI/ASPM: Dont reconfigure ASPM entering low-power state
+Date: Tue, 21 Jul 2026 17:08:41 +0200
+Message-ID: <20260721152612.793153432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,44 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Carlos Bilbao <carlos.bilbao@kernel.org>
 
-[ Upstream commit 0ec0a8785d21f63db520bd9d2a67c55e855d36a8 ]
+[ Upstream commit c855c9921da72e535c24737c748f603a52d03f7e ]
 
-It is a typo to use trcvmidcctlr0 to save and restore TRCVMIDCCTLR1.
-Use trcvmidcctlr1 instead.
+Reconfiguring ASPM when a device transitions to low-power state can enable
+L1.1/L1.2 substates on the PCIe link at a time when the device is sleeping
+and may be unable to exit them. ASPM should be reconfigured on D0 entry
+(resume), not on the way down.
 
-Fixes: f5bd523690d2 ("coresight: etm4x: Convert all register accesses")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260408-arm_cs_fix_trcvmidcctlr1_typo-v1-1-6a5695363b46@arm.com
+pci_set_low_power_state() calls pcie_aspm_pm_state_change() after writing
+D3hot to PCI_PM_CTRL. pcie_aspm_pm_state_change() resets link->aspm_capable
+to link->aspm_support and then calls pcie_config_aspm_path(), which can
+enable ASPM L1.1/L1.2 substates on the PCIe link. If the device cannot
+recover the link from L1.2 while in D3hot, subsequent config space reads
+return 0xFFFF ("device inaccessible") and pci_power_up() fails with
+messages like:
+
+  vfio-pci 0000:5d:00.0: Unable to change power state from D3hot to D0, device inaccessible
+
+This was observed on NVIDIA H100 SXM5 GPUs bound to vfio-pci when Linux
+runtime PM suspends them to D3hot: the GPU becomes permanently inaccessible
+and disappears from the PCIe bus.
+
+The call to pcie_aspm_pm_state_change() in pci_set_low_power_state() was
+restored by f93e71aea6c6 ("Revert "PCI/ASPM: Remove
+pcie_aspm_pm_state_change()""), which reverted 08d0cc5f3426 ("PCI/ASPM:
+Remove pcie_aspm_pm_state_change()").  The revert was necessary because the
+removal broke suspend/resume on certain platforms that required ASPM to be
+reconfigured on D0 entry. However, the revert restored the call in both
+pci_set_full_power_state() (D0 entry) and pci_set_low_power_state()
+(low-power entry).
+
+Only the D0-entry call is needed to fix the suspend/resume regression. The
+low-power-entry call is harmful: reconfiguring ASPM immediately after
+putting a device into D3hot can enable link substates that the device or
+platform cannot exit while the device is sleeping.
+
+Remove the pcie_aspm_pm_state_change() call from pci_set_low_power_state().
+ASPM will still be reconfigured correctly when the device returns to D0 via
+pci_set_full_power_state().
+
+Fixes: f93e71aea6c6 ("Revert "PCI/ASPM: Remove pcie_aspm_pm_state_change()"")
+Signed-off-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260428040104.78524-1-carlos.bilbao@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/pci.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 591dfe0bc63505..a251375db24b17 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1983,7 +1983,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index d34266651ad09f..0ee01d99e3275c 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1514,9 +1514,6 @@ static int pci_set_low_power_state(struct pci_dev *dev, pci_power_t state, bool
+ 				     pci_power_name(dev->current_state),
+ 				     pci_power_name(state));
  
- 	state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR0);
- 	if (drvdata->numvmidc > 4)
--		state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR1);
-+		state->trcvmidcctlr1 = etm4x_read32(csa, TRCVMIDCCTLR1);
- 
- 	state->trcclaimset = etm4x_read32(csa, TRCCLAIMCLR);
- 
-@@ -2106,7 +2106,7 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
- 
- 	etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR0);
- 	if (drvdata->numvmidc > 4)
--		etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR1);
-+		etm4x_relaxed_write32(csa, state->trcvmidcctlr1, TRCVMIDCCTLR1);
- 
- 	etm4x_relaxed_write32(csa, state->trcclaimset, TRCCLAIMSET);
+-	if (dev->bus->self)
+-		pcie_aspm_pm_state_change(dev->bus->self, locked);
+-
+ 	return 0;
+ }
  
 -- 
 2.53.0
