@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DE7357CEB;
-	Tue, 21 Jul 2026 21:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A103244AB9A;
+	Tue, 21 Jul 2026 21:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669702; cv=none; b=SXEkqXxo0mNNN+z6Zw5SlmOwvJg5Ec58f3QAd8tyKQ8rzbmH/6mtcrKUdKhaEyANXTY+uAhwpoo67U15k0RO7DZ0MqX4jMVx1Eszp8NDxozCTtvTgOfgVerUvk6doK2zFUJAkO+fPL4xOhjnZ0Pafz1+gKeQogA9vZrdYsPLtiY=
+	t=1784669704; cv=none; b=eQJj2iUhaRsUhBtI97DOMLYwtVRzQ1vY41jpZyRnX4PhoT7b03SQchIAPyXaSFrqEvhQii340AZD4h9Yx1PvQKhdvQn3qakGLTvMXlYSDLmY2ZRkX0DYBMIYgnIo2zCVkc1/sUFfX68sp8QM6W0U742Nt8DQlWjtbz8aybKz4rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669702; c=relaxed/simple;
-	bh=xO7gRm4IbcwXm4MaVE9dmzWnxJs4mcNC9NhbmPto3O4=;
+	s=arc-20240116; t=1784669704; c=relaxed/simple;
+	bh=6uN46qYPD77vEO78UXfCAPN4ByKidJmReH6057g+F4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEvJOveOgxh/YaIW1mkGuXKXR3aFaOPDPRpJsp2WLFf8A+TTfSINtfcGp4Xy+vO0ZiT/XanUnbKpDHhNu7ioqDLyJ14MyAIFENPOPNpIH84iNfh52wKEHISz4IZ1chP8VhcCpSXuTmhEQNjd3jMixz7/uCcI2sTBAVv3XToiQGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTlwS207; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aiRDUNR/CJvwbPVLjoG8AojWCb1U7ZEiG8pfQIKUFoC23NCa4Z03nQSMMWbsK1kewwUZ2JWyNuqbNBTzm9kxtrSKsh+zzZTJpeIeO7tfVUi+ntmgZ1DbQiFjtTBnLzq54rkYyauTkpvQMOtRXxPiRwmgi4LcHv/J2+cJtc8ndQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEgbMZKn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTlwS207"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954351F000E9;
-	Tue, 21 Jul 2026 21:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEgbMZKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F4A1F000E9;
+	Tue, 21 Jul 2026 21:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669700;
-	bh=mMFKRYsXFaZR/PkXF+VK+G+1++6dIjKuTwiPfyM4DLw=;
+	s=korg; t=1784669703;
+	bh=kingh4XbF3ii+wFSVvKNNAYokoGUtTmgoD1qE7Forfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTlwS207PEccBZMCECMR/fZKlXx05Ht1E+c7Ql3lBvKoZQycK7mkwhSNZu2xyEl7B
-	 kgFVS0lB534ksFWNqG6EioMLB0EAi5/HDROaKDef6/VJraxhTz8DzTNiFGnTwjWf1s
-	 JYUeeHkSKa3rGyHmaPmMs6UlO3+ZFdyxW45ENoFI=
+	b=kEgbMZKnnUkCsaA2IPa1OYg+ic9aqXtprEjoONzWgNpmr9nhjh4+N+MPXD+HRs7CN
+	 Yc09OFFEde7b8Eeo6rtR/KW4ml12Acqa1WWjmtLxU0Wfxrg+5jQJNnxrQDsY/fu7EQ
+	 mUEXGL477pUKIeZWHonlOYBAZapUMqqzPR3wzl1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matvey Kovalev <matvey.kovalev@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Avinash Duduskar <avinash.duduskar@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0652/1067] qede: fix out-of-bounds check for cqe->len_list[]
-Date: Tue, 21 Jul 2026 17:20:53 +0200
-Message-ID: <20260721152439.177342485@linuxfoundation.org>
+Subject: [PATCH 6.1 0612/1067] bpf: zero-initialize the fib lookup flow struct
+Date: Tue, 21 Jul 2026 17:20:13 +0200
+Message-ID: <20260721152438.290154505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,49 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matvey Kovalev <matvey.kovalev@ispras.ru>
+From: Avinash Duduskar <avinash.duduskar@gmail.com>
 
-[ Upstream commit f9ba47fce5932c15891c89c60e76dfaca919cb8d ]
+[ Upstream commit 0dfcb68a6a5ac517b22dff6a1f01cb4f126dfc57 ]
 
-Move index check before element access.
+bpf_ipv4_fib_lookup() and bpf_ipv6_fib_lookup() build the flow key on
+the stack with a bare "struct flowi4 fl4;" / "struct flowi6 fl6;" and
+fill it field by field, but never set flowi4_l3mdev / flowi6_l3mdev.
 
-Fixes: 896f1a2493b5 ("net: qlogic/qede: fix potential out-of-bounds read in qede_tpa_cont() and qede_tpa_end()")
-Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
-Link: https://patch.msgid.link/20260623144602.3521-1-matvey.kovalev@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+On the non-DIRECT path the lookup goes through the fib rules whenever the
+netns has custom rules, which a VRF installs:
+
+	bpf_ipv4_fib_lookup() -> fib_lookup() -> __fib_lookup()
+	  -> l3mdev_update_flow()   reads !fl->flowi_l3mdev
+	  -> fib_rules_lookup() -> fib_rule_match()
+	       -> l3mdev_fib_rule_match()   uses fl->flowi_l3mdev
+
+l3mdev_update_flow() resolves the l3mdev master from the ingress device
+only while the field is still zero. Left at a nonzero stack value the
+resolution is skipped, and l3mdev_fib_rule_match() then tests that value
+as an ifindex, so the VRF master is not resolved and the rule fails to
+match: an ingress enslaved to a VRF can fail to select its table. FIB
+rules matching on an L3 master device (l3mdev_fib_rule_iif_match()/
+_oif_match()) read the same value, so an "ip rule iif/oif <vrf>"
+mismatches the same way.
+
+Zero-initialize the whole flow struct rather than adding one more
+field assignment, so any flowi field added later is covered too.
+ip_route_input_slow() likewise zeroes the field before its input lookup.
+
+CONFIG_INIT_STACK_ALL_ZERO masks this by default, but it depends on
+compiler support (CC_HAS_AUTO_VAR_INIT_ZERO), so INIT_STACK_NONE builds,
+including older toolchains that fall back to it, are exposed. Built with
+INIT_STACK_ALL_PATTERN, a plain bpf_fib_lookup (no VLAN, no DIRECT) over a
+VRF slave whose destination is routed only in the VRF table returns
+BPF_FIB_LKUP_RET_NOT_FWDED, and resolves with this patch. On the default
+config the lookup succeeds either way, so ordinary testing does not catch
+the bug.
+
+Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
+Signed-off-by: Avinash Duduskar <avinash.duduskar@gmail.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/20260617224719.1428599-1-avinash.duduskar@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_fp.c | 4 ++--
+ net/core/filter.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-index 273dae622c4113..1de8611a27f238 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-@@ -961,7 +961,7 @@ static inline void qede_tpa_cont(struct qede_dev *edev,
- {
- 	int i;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 94a2dcf3aa08e3..75b3362c85e777 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -5865,7 +5865,7 @@ static int bpf_ipv4_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
+ 	struct neighbour *neigh;
+ 	struct net_device *dev;
+ 	struct fib_result res;
+-	struct flowi4 fl4;
++	struct flowi4 fl4 = {};
+ 	u32 mtu = 0;
+ 	int err;
  
--	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
-+	for (i = 0; i < ARRAY_SIZE(cqe->len_list) && cqe->len_list[i]; i++)
- 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
- 				   le16_to_cpu(cqe->len_list[i]));
- 
-@@ -986,7 +986,7 @@ static int qede_tpa_end(struct qede_dev *edev,
- 		dma_unmap_page(rxq->dev, tpa_info->buffer.mapping,
- 			       PAGE_SIZE, rxq->data_direction);
- 
--	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
-+	for (i = 0; i < ARRAY_SIZE(cqe->len_list) && cqe->len_list[i]; i++)
- 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
- 				   le16_to_cpu(cqe->len_list[i]));
- 	if (unlikely(i > 1))
+@@ -6002,7 +6002,7 @@ static int bpf_ipv6_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
+ 	struct neighbour *neigh;
+ 	struct net_device *dev;
+ 	struct inet6_dev *idev;
+-	struct flowi6 fl6;
++	struct flowi6 fl6 = {};
+ 	int strict = 0;
+ 	int oif, err;
+ 	u32 mtu = 0;
 -- 
 2.53.0
 
