@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AD8439336;
-	Tue, 21 Jul 2026 21:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EDB434409;
+	Tue, 21 Jul 2026 21:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669893; cv=none; b=EXcFDTepPaxs8yoNpdM04PH3aJ/wheCUHZSEZDQIkJbQlhHIU7Iqst4gvJwxA7bfv7bI6oscVqXOUhOvLX+bEgftl6eq38VN++yg1BQtpK8YiHVHHhGd2jvQorLdbjb6NY2JBDKBRaFvWVYnTFW9mUN9RJvkM+lPonVcvccCLdk=
+	t=1784669895; cv=none; b=TVUq+5NMVHcroGOd3bOtFqbABHwQbQFOsyyWW+63V3S8ZEmVWo2rz2sfG+UZEDVK3gdy34LC1Z1uS3YE+Jz2c10xb09ucOBhPU7Ot5Cs4jQdjUstT8tu+gXBzRHrHVijkZh7v30Ump9uAsE2AijUHXd9UDjlrmoeZzT4MHQn6GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669893; c=relaxed/simple;
-	bh=hz5AHbONJ1ZKJ2aeufdd45RFkvB3Ef78X7GiX5arBBg=;
+	s=arc-20240116; t=1784669895; c=relaxed/simple;
+	bh=NAFaJ/iCHqgDm2vgdY7fZ1depxIlSF4dzsfy3czKeic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OfDJWmHjk4Ata2XTP1GJfrk3c+q19Jhrqkhh6cwkrO6Nd2KwNkN3gIb/SfMpzyd6PoIZIu65FvNU3KvJuYC8GIX8c4aOsmIgxwe9yKfQSkfK0a9UlS1Y5ciDxLlZH+gwD+/4WkziyLbRBRmn8ocRI6SxtjS3RxckMmd3uTF2kTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/rxcoSf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kz9fUX8Iewccu3EsuijXRTX9+4uHBnK/MQkW8zf+dz1G2SeToQKmZvA+dmNgDkld5Kv3cuoLuNxUscVVuvdwSvPsWh953CMbZq6PwrJx8IqGM4kUR52Fffs6ljfWwJ2x07R9k4AwJFvy7MZLny/Q20VfNuNCHeZphI56LEDv6QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcBaI6e8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/rxcoSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205DC1F00A3A;
-	Tue, 21 Jul 2026 21:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcBaI6e8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0801F000E9;
+	Tue, 21 Jul 2026 21:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669891;
-	bh=4rb8EBDQPGHnn5Zy0wDbd+e/2np3jRTcBXkn1+RM9Bg=;
+	s=korg; t=1784669894;
+	bh=eKCOkAUxdObB+WLryeBSDZfREuxrf2LyUB2hqJ0Tqks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h/rxcoSfgpPE4nfvDQZVfv1pXU1z17MRW4XkbNZAwZ54LRhtVNTtI6fw/CBtztaw/
-	 TI1gjAhdtsr3XcVxcm0wicB85SDJ/J8+aSQ3oh02sm9OEVhK4LAl7PXD9a6Z74Er76
-	 JnDFlAHu54E5b6LNhOBCi+Gu3mDsE9xId9YzcbXs=
+	b=lcBaI6e8GBXIMwOiwB9at06wQqQvCtlgoRhBTuru/Q0Z7VuplOsz2XidxMXgICg6d
+	 ltF+pgy7QoVBkkoNVFGW5dDDcQhZRTkL/A0XjLIzMX30uk+bffoB1PVhRcW4lRC+xR
+	 YICAQsR7x9aG/UwXG3uLE03/UAEydVczd5PjMwIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.1 0726/1067] KVM: s390: pci: Fix handling of AIF enable without AISB
-Date: Tue, 21 Jul 2026 17:22:07 +0200
-Message-ID: <20260721152440.829577044@linuxfoundation.org>
+	Kai Huang <kai.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 0727/1067] KVM: x86: Ignore pending PV EOI if the vCPU has since disabled PV EOIs
+Date: Tue, 21 Jul 2026 17:22:08 +0200
+Message-ID: <20260721152440.851188801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,43 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 3e3aa6da87d30a0064a17b836685cd43c90a3572 upstream.
+commit 9285e4070df2c40585c3d7ec9571faa7a2b97e17 upstream.
 
-When a guest seeks to register IRQs without a summary bit specified,
-ensure that the associated GAITE then stores 0 for the guest AISB
-location instead of virt_to_phys(page_address(NULL)).
+Ignore KVM's internal "service pending PV EOI" request if the vCPU has
+disabled PV EOIs since the request was made.  Asserting that PV EOIs are
+enabled can fail if reading guest memory in pv_eoi_get_user() fails, i.e.
+if pv_eoi_test_and_clr_pending() bails early, *and* the vCPU also disables
+PV EOIs.
 
-Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+  kernel BUG at arch/x86/kvm/lapic.c:3338!
+  Oops: invalid opcode: 0000 [#1] SMP
+  CPU: 4 UID: 1000 PID: 890 Comm: pv_eoi_test Not tainted 7.0.0-d585aa5894d8-vm #337 PREEMPT
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:kvm_lapic_sync_from_vapic+0x12b/0x140 [kvm]
+  Call Trace:
+   <TASK>
+   kvm_arch_vcpu_ioctl_run+0x1075/0x1c30 [kvm]
+   kvm_vcpu_ioctl+0x2d5/0x980 [kvm]
+   __x64_sys_ioctl+0x8a/0xd0
+   do_syscall_64+0xb5/0xb40
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  Modules linked in: kvm_intel kvm irqbypass
+  ---[ end trace 0000000000000000 ]---
+
+Fixes: ae7a2a3fb6f8 ("KVM: host side for eoi optimization")
 Cc: stable@vger.kernel.org
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20260624220516.3033391-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/pci.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/kvm/lapic.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kvm/pci.c
-+++ b/arch/s390/kvm/pci.c
-@@ -302,9 +302,14 @@ static int kvm_s390_pci_aif_enable(struc
- 
- 	gaite->gisc = fib->fmt0.isc;
- 	gaite->count++;
--	gaite->aisbo = fib->fmt0.aisbo;
--	gaite->aisb = virt_to_phys(page_address(aisb_page) + (fib->fmt0.aisb &
--							      ~PAGE_MASK));
-+	if (fib->fmt0.sum == 1) {
-+		gaite->aisbo = fib->fmt0.aisbo;
-+		gaite->aisb = virt_to_phys(page_address(aisb_page) +
-+					   (fib->fmt0.aisb & ~PAGE_MASK));
-+	} else {
-+		gaite->aisbo = 0;
-+		gaite->aisb = 0;
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2913,6 +2913,12 @@ static void apic_sync_pv_eoi_from_guest(
+ 					struct kvm_lapic *apic)
+ {
+ 	int vector;
++
++	if (unlikely(!pv_eoi_enabled(vcpu))) {
++		__clear_bit(KVM_APIC_PV_EOI_PENDING, &vcpu->arch.apic_attention);
++		return;
 +	}
- 	aift->kzdev[zdev->aisb] = zdev->kzdev;
- 	spin_unlock_irq(&aift->gait_lock);
- 
++
+ 	/*
+ 	 * PV EOI state is derived from KVM_APIC_PV_EOI_PENDING in host
+ 	 * and KVM_PV_EOI_ENABLED in guest memory as follows:
+@@ -2924,8 +2930,6 @@ static void apic_sync_pv_eoi_from_guest(
+ 	 * KVM_APIC_PV_EOI_PENDING is set, KVM_PV_EOI_ENABLED is unset:
+ 	 * 	-> host enabled PV EOI, guest executed EOI.
+ 	 */
+-	BUG_ON(!pv_eoi_enabled(vcpu));
+-
+ 	if (pv_eoi_test_and_clr_pending(vcpu))
+ 		return;
+ 	vector = apic_set_eoi(apic);
 
 
