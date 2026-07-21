@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDB6472F8F;
-	Tue, 21 Jul 2026 20:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5B2471268;
+	Tue, 21 Jul 2026 20:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664845; cv=none; b=G9/UvXQT/J79z9d5CBYTXvOAK+YwXPdxtJCq2+NIBN+2e1WyDKNF0qT9wQqUESpwumHJeo6N9ax4kaICO6KykCLZEHMay4p4FXAcHUhIavTfhasAV9lyLkKLSY0AwjAlFJDBeD+HAZP9J8gPeA85BHnh8MqQs27MU1Bn6cpO2ac=
+	t=1784664847; cv=none; b=gkTp6u/aqpedyXiYf2HQFQKj8383rzLG5uJFXL3+D3AXSHY8FMnJKh8EWVizvFKibyWdxq5zWm40noUFJhcqE2U1RXkVwbr38oWwZkf6ObCSmWI8H1DXT067bmSyL9pBGIVeJc9ypaFLOggoRLad1uAAV0kyuN3VfwqE1hogZMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664845; c=relaxed/simple;
-	bh=d/xrYpUnYHCQpiNaOBNinizTqnJap0PQp/L2YoMwtko=;
+	s=arc-20240116; t=1784664847; c=relaxed/simple;
+	bh=ZODaadn2Hgt7qVd0RBJRO45nZA2/PDVJYGskGXiP/p8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0ThsZWoHU+/l1SB9++8Zl8kZWv2cYQLMpZ2ehmo/nBUUfvAfAeSvYFt3FZEhlKhWXIkSN0BrbrU/0zVUCDYn538lM+tk37nOoSeSIHGezveP4tOI5aPUlzreU7wXmCXICz9JOMNVDOxhRcPP2eJvF2b2FsQoiZiGz91gG1tZ7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLFpoSLQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qgk7g8YFJhVTMc5GUVJ7qdT8ij7rwPJyeWkTZvI63ZF0X6OpQyKQcbbbLgmUl2D6GfVIZuLrIscv8XgqOJQclfjWubsymb+5ecf4eIeuAwpJQzdRBtRtQ+N3iH7kfjZbj56u17NKGhEVN6OQF2rwL4hDYtL8VGKZaq05Uxg8zTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjvhmqJD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLFpoSLQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248FD1F000E9;
-	Tue, 21 Jul 2026 20:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjvhmqJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FC21F00A3A;
+	Tue, 21 Jul 2026 20:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664843;
-	bh=zkinOTI+EPQ6t2mT2bICWnTuOkFOjcNGvD/3t8crsag=;
+	s=korg; t=1784664846;
+	bh=pt1DP9QKKbZSew1ZMiZrlJdpDkqxsep19gSpgedcFIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wLFpoSLQ3TT0Rv3HIKW7Z2jcoFLwi8iwejZuDnasjJ+0pt6q4oGyzhsmbtedzr46W
-	 nhB94ntbWEIzq96TKDsUGG8xy4eod3PaP6yZsG3WFAztBWsyyOIHyPvuXeeTy+IqsJ
-	 mlEq2odsuC6HypbkMDRXIsZ3I//LrRokF/eL4QwM=
+	b=SjvhmqJDHIevgAEseRAiske2h7VKYE4YZuotNCNkiV9dbm7wCUr2EHqyWy4D6N6wF
+	 5M9qrR6LYerSInQEn1axuUCAfL07kwoW/6xYhvwkUiO5nfzmIqvM7p+tEP740JISeW
+	 4Cu46rIrvr5dT7BrlGOhNdIYYR22KuBWXk3go4zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Willem de Bruijn <willemb@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@idosch.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Philo Lu <lulie@linux.alibaba.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0079/1266] net: Drop the lock in skb_may_tx_timestamp()
-Date: Tue, 21 Jul 2026 17:08:36 +0200
-Message-ID: <20260721152443.568113399@linuxfoundation.org>
+Subject: [PATCH 6.6 0044/1266] net, team, bonding: Add netdev_base_features helper
+Date: Tue, 21 Jul 2026 17:08:01 +0200
+Message-ID: <20260721152442.788184946@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,116 +56,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 983512f3a87fd8dc4c94dfa6b596b6e57df5aad7 upstream.
+[ Upstream commit d2516c3a53705f783bb6868df0f4a2b977898a71 ]
 
-skb_may_tx_timestamp() may acquire sock::sk_callback_lock. The lock must
-not be taken in IRQ context, only softirq is okay. A few drivers receive
-the timestamp via a dedicated interrupt and complete the TX timestamp
-from that handler. This will lead to a deadlock if the lock is already
-write-locked on the same CPU.
+Both bonding and team driver have logic to derive the base feature
+flags before iterating over their slave devices to refine the set
+via netdev_increment_features().
 
-Taking the lock can be avoided. The socket (pointed by the skb) will
-remain valid until the skb is released. The ->sk_socket and ->file
-member will be set to NULL once the user closes the socket which may
-happen before the timestamp arrives.
-If we happen to observe the pointer while the socket is closing but
-before the pointer is set to NULL then we may use it because both
-pointer (and the file's cred member) are RCU freed.
+Add a small helper netdev_base_features() so this can be reused
+instead of having it open-coded multiple times.
 
-Drop the lock. Use READ_ONCE() to obtain the individual pointer. Add a
-matching WRITE_ONCE() where the pointer are cleared.
-
-Link: https://lore.kernel.org/all/20260205145104.iWinkXHv@linutronix.de
-Fixes: b245be1f4db1a ("net-timestamp: no-payload only sysctl")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260220183858.N4ERjFW6@linutronix.de
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Ido Schimmel <idosch@idosch.org>
+Cc: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20241210141245.327886-1-daniel@iogearbox.net
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ adapted sk_set_socket() in include/net/sock.h to fix the conflict from
- not having commit 5d6b58c932ec ("net: lockless sock_i_ino()") and the
- additional previous changes required by it.
- It comes down to just now having the lines of
-    if (sock) {
-            WRITE_ONCE(sk->sk_uid, SOCK_INODE(sock)->i_uid);
-            WRITE_ONCE(sk->sk_ino, SOCK_INODE(sock)->i_ino);
-    }
- below the changed line. ]
-Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Stable-dep-of: d064ea7fe2a2 ("bonding: Fix initial {vlan,mpls}_feature set in bond_compute_features")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h |  2 +-
- net/core/skbuff.c  | 23 ++++++++++++++++++-----
- net/socket.c       |  2 +-
- 3 files changed, 20 insertions(+), 7 deletions(-)
+ drivers/net/bonding/bond_main.c | 4 +---
+ drivers/net/team/team_core.c    | 3 +--
+ include/linux/netdev_features.h | 7 +++++++
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index a6944844553afe..c1f129a532b200 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2155,7 +2155,7 @@ static inline int sk_rx_queue_get(const struct sock *sk)
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index e57e1296da3740..36277bcefe2908 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1456,9 +1456,7 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
+ 	struct slave *slave;
  
- static inline void sk_set_socket(struct sock *sk, struct socket *sock)
- {
--	sk->sk_socket = sock;
-+	WRITE_ONCE(sk->sk_socket, sock);
- }
+ 	mask = features;
+-
+-	features &= ~NETIF_F_ONE_FOR_ALL;
+-	features |= NETIF_F_ALL_FOR_ALL;
++	features = netdev_base_features(features);
  
- static inline wait_queue_head_t *sk_sleep(struct sock *sk)
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index c5e2ae6d0406bd..732204d99822a2 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -5258,15 +5258,28 @@ static void __skb_complete_tx_timestamp(struct sk_buff *skb,
+ 	bond_for_each_slave(bond, slave, iter) {
+ 		features = netdev_increment_features(features,
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index deb6eb3a240a03..5cd1807e11f797 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -2026,8 +2026,7 @@ static netdev_features_t team_fix_features(struct net_device *dev,
+ 	netdev_features_t mask;
  
- static bool skb_may_tx_timestamp(struct sock *sk, bool tsonly)
- {
--	bool ret;
-+	struct socket *sock;
-+	struct file *file;
-+	bool ret = false;
+ 	mask = features;
+-	features &= ~NETIF_F_ONE_FOR_ALL;
+-	features |= NETIF_F_ALL_FOR_ALL;
++	features = netdev_base_features(features);
  
- 	if (likely(READ_ONCE(sysctl_tstamp_allow_data) || tsonly))
- 		return true;
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(port, &team->port_list, list) {
+diff --git a/include/linux/netdev_features.h b/include/linux/netdev_features.h
+index 7c2d77d75a888c..1b5ad57e7cbf5a 100644
+--- a/include/linux/netdev_features.h
++++ b/include/linux/netdev_features.h
+@@ -261,4 +261,11 @@ static inline int find_next_netdev_feature(u64 feature, unsigned long start)
+ 				 NETIF_F_GSO_UDP_TUNNEL |		\
+ 				 NETIF_F_GSO_UDP_TUNNEL_CSUM)
  
--	read_lock_bh(&sk->sk_callback_lock);
--	ret = sk->sk_socket && sk->sk_socket->file &&
--	      file_ns_capable(sk->sk_socket->file, &init_user_ns, CAP_NET_RAW);
--	read_unlock_bh(&sk->sk_callback_lock);
-+	/* The sk pointer remains valid as long as the skb is. The sk_socket and
-+	 * file pointer may become NULL if the socket is closed. Both structures
-+	 * (including file->cred) are RCU freed which means they can be accessed
-+	 * within a RCU read section.
-+	 */
-+	rcu_read_lock();
-+	sock = READ_ONCE(sk->sk_socket);
-+	if (!sock)
-+		goto out;
-+	file = READ_ONCE(sock->file);
-+	if (!file)
-+		goto out;
-+	ret = file_ns_capable(file, &init_user_ns, CAP_NET_RAW);
-+out:
-+	rcu_read_unlock();
- 	return ret;
- }
- 
-diff --git a/net/socket.c b/net/socket.c
-index fa242d7e51c791..ae31c54664632c 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -671,7 +671,7 @@ static void __sock_release(struct socket *sock, struct inode *inode)
- 		iput(SOCK_INODE(sock));
- 		return;
- 	}
--	sock->file = NULL;
-+	WRITE_ONCE(sock->file, NULL);
- }
- 
- /**
++static inline netdev_features_t netdev_base_features(netdev_features_t features)
++{
++	features &= ~NETIF_F_ONE_FOR_ALL;
++	features |= NETIF_F_ALL_FOR_ALL;
++	return features;
++}
++
+ #endif	/* _LINUX_NETDEV_FEATURES_H */
 -- 
 2.53.0
 
