@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18F0231829;
-	Tue, 21 Jul 2026 17:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109183E49CA;
+	Tue, 21 Jul 2026 17:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655957; cv=none; b=VLP4BtozrVJnxptINtxJcxY5w5jDTyGaSfgsTAqchZk5XqZmsk6ggjvQ9sXg7XpCnTUv1exZgEoon8u1YC+m7OIIYjoWDrpP7rn57DipZBfad26cAN4gwENCoej33uwFSHrYb0v7fcPnafcMXNKoVQYis8X5oo3kxcaloy27BO8=
+	t=1784655960; cv=none; b=HRaSUKu9G8WaF5iWK7TqmW88uCRy/VllnTEqvnHoqF/fhSb9QHrxjqGJJ4WN2i8D/+iMpbiYK3kWEyrxOTVHSFKiT61zA7b9CzdjGVddEEvXL/6xWrm1rFSGbF1Uzqg528qVL3U+4wUSkJk7QSQxTgdqLEZvm/+gu8ho1b4RTcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655957; c=relaxed/simple;
-	bh=d9FnbLYJIPg5UhsIRX2Lcy280J2g79ey5zZo1x6rIPM=;
+	s=arc-20240116; t=1784655960; c=relaxed/simple;
+	bh=8IzS3aHCW0wI15OvUnZ1HyL8pHfQG0CgzhNMrbnh6kM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rrdwLiZnVnb4vPH2FuD47BtxxQprHRUq+bseNC1iM6dEY5G1EIDTeRgaI1SfHC2mQHsHQ7I+5ZMw1aGXxP0avPSk9tcPhzkaRZTJpYfYlX6zspwywUlWQzYAqqzFWB3vx6PIukqODIMmhnYYoPfyxZrGVn5B/U7XWUhcH0qqAms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBqx/HuJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HZ/FA43IV2QOA6ty+wkZ0GyEZWwHqaRP55adgbcSEsOKGfSpqTyAIsmhLRah0YSGAQou6aqLujHwOynBL0aaVfKngOkoTH1Dh6d7fqsdanz7YYsMg/AkbqiGoG3Lg+73eCmkG5riUI6hKefC5NdnlXKNd2B/ofv5fyi26aKa/pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iKWavu1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBqx/HuJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E531F000E9;
-	Tue, 21 Jul 2026 17:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iKWavu1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779351F000E9;
+	Tue, 21 Jul 2026 17:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655956;
-	bh=G5P9NYol7Ckg/lydMtx3jaKKjmReFBt2EmjgVoPC7Nk=;
+	s=korg; t=1784655959;
+	bh=ZSDVxSO95A1G59Er3Oc3zwgmjv3mcbE647dhhMOF/Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBqx/HuJWs1ZD9z3TfADy1prjNTUKv9OPZZ53JKVBJl0AJXFTRCDpsskrVP3tOcmv
-	 vPlfEwJJWi5ycjeW7o8tRTvkB3VAu1h1MCSravNU2IVrBdIFgvHxueL4AnmzOxfhUY
-	 bsrrHMU2FFVf0dovI1IvdqMapprsrbpv9vWJhOuo=
+	b=2iKWavu19xhzwvoXcrwTX5+LEda/yWdGQpmBuFCoAKgmWDHqysJ2MxrIiTaCSRsp7
+	 U2koIJh++5iCOwBNXpM4qw20Ds08RkEsNi2Zif1KpRT6736SkE3IoKkVm1SpMUUfKe
+	 a59cmqoK9A8h7azExPt0oVt/3/+gHQ/Kiqvcuo0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
+	nasm <n4sm@protonmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0206/1611] RDMA/irdma: Fix out-of-bounds write in irdma_copy_user_pgaddrs
-Date: Tue, 21 Jul 2026 17:05:22 +0200
-Message-ID: <20260721152519.601079829@linuxfoundation.org>
+Subject: [PATCH 6.18 0207/1611] RDMA/rxe: Fix a use-after-free problem in rxe_mmap
+Date: Tue, 21 Jul 2026 17:05:23 +0200
+Message-ID: <20260721152519.624068171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,108 +46,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 5ebb3ed757be3e04cf803026004aa0beaeb13e9b ]
+[ Upstream commit 35744ab3d03c5fca8c1752f53fc8fc674e14c561 ]
 
-The irdma_copy_user_pgaddrs function loops through all of the umem DMA
-blocks to populate the PBLEs and will stop when either the last DMA
-block is reached or palloc->total_cnt is reached. The issue is that
-the logic for checking palloc->total_cnt would only work for non-zero
-values.
+rxe_mmap() removes a rxe_mmap_info struct from the pending_mmaps list
+and releases pending_lock while the struct's kref is still at 1:
 
-When irdma_setup_pbles is called with lvl==0, it
-calls irdma_copy_user_pgaddrs with palloc->total_cnt==0, which means
-the only way to break out of the loop is to reach the last umem DMA
-block, which means it could end up going beyond the fixed size of 4
-iwmr->pgaddrmem array that is used in the lvl==0 case.
+   list_del_init(&ip->pending_mmaps);
+   spin_unlock_bh(&rxe->pending_lock);   /* ref == 1, no lock held */
+   ret = remap_vmalloc_range(vma, ip->obj, 0);  /* walks PTEs */
+   [...]
+   rxe_vma_open(vma);                    /* kref_get, ref → 2 */
+   remap_vmalloc_range_partial() walks PTEs without any lock.
 
-In the case of QP/CQ/SRQ rings, the value of lvl is determined by a
-separate input (for example, req.cq_pages in the case of a CQ). So,
-we must perform explicit checking to ensure we don't overflow the
-pgaddrmem array if the user provides a umem that consists of more
-blocks than their provided req.cq_pages.
+A concurrent DESTROY_CQ ioctl on another CPU calls:
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://patch.msgid.link/r/20260512183852.614045-1-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
+    kref_put(&q->ip->ref, rxe_mmap_release)   /* ref 1→0 */
+    vfree(ip->obj)   /* clears vmalloc PTEs mid-walk */
+    kfree(ip)        /* frees rxe_mmap_info */
+
+This yields:
+
+   1. Kernel crash, vmalloc_to_page() returns NULL when vfree wins the
+   per-PTE race -> vm_insert_page(NULL) → GPF in validate_page_before_insert
+
+   2. Page UAF, vmalloc_to_page() reads a stale PTE before vfree clears
+   it. User VMA holds a PTE to a free'd page which might eventually get
+   reallocated later by vmalloc which allows the attacker to get a clean
+   page-level UAF.
+
+   It is worth noting that even though a page-level UAF is possible given
+   the strong primitive, it is statistically very difficult to achieve
+   given the very short time window (after the last insert_page and before
+   the kref_get).
+
+The call trace are as below:
+
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  CPU: 0 UID: 1000 PID: 413 Comm: poc Not tainted 7.0.0-rc5-dirty #28 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  RIP: 0010:validate_page_before_insert+0x32/0x300
+  Code: e5 41 57 41 56 49 89 fe 41 55 41 54 53 48 89 f3 e8 93 b5 a3 ff 48 8d 7b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 7b 02 00 00 4c 8b 63 08 31 ff 4d 89 e5 41 83 e5
+  RSP: 0018:ffff88811b15f2f0 EFLAGS: 00000202
+  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+  RDX: 0000000000000001 RSI: 0000000000000000 RDI: 0000000000000008
+  RBP: ffff88811b15f318 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000000 R12: ffff8881181eee00
+  R13: 0000000000000000 R14: ffff8881181eee00 R15: ffff8881181eee20
+  FS:  00007b1e000f76c0(0000) GS:ffff8884268e0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007b1e00a24ac0 CR3: 0000000116eb3000 CR4: 00000000000006f0
+  Call Trace:
+   <TASK>
+   insert_page+0x8f/0x190
+   ? __pfx_insert_page+0x10/0x10
+   ? kasan_save_alloc_info+0x38/0x60
+   vm_insert_page+0x2e7/0x400
+   remap_vmalloc_range_partial+0x212/0x3e0
+   remap_vmalloc_range+0x6e/0xb0
+   ? __kasan_check_write+0x14/0x30
+   rxe_mmap+0x2e9/0x5d0
+   ib_uverbs_mmap+0x1ad/0x2c0
+   __mmap_region+0x12c2/0x2ad0
+   ? __pfx___mmap_region+0x10/0x10
+   ? __sanitizer_cov_trace_switch+0x58/0xb0
+   ? mas_prev_slot+0x360/0x39c0
+   ? __sanitizer_cov_trace_switch+0x58/0xb0
+   ? mas_next_slot+0x1e5b/0x2f40
+   ? __sanitizer_cov_trace_cmp8+0x18/0x30
+   ? unmapped_area_topdown+0x4dd/0x610
+   ? kfree+0x1b1/0x440
+   ? free_cpumask_var+0x16/0x30
+   ? __kasan_slab_free+0x7d/0xa0
+   ? __sanitizer_cov_trace_cmp8+0x18/0x30
+   mmap_region+0x2e6/0x3c0
+   do_mmap+0xa3e/0x12a0
+   ? __pfx_do_mmap+0x10/0x10
+   ? __kasan_check_write+0x14/0x30
+   ? down_write_killable+0xba/0x160
+   ? __pfx_down_write_killable+0x10/0x10
+   ? __sanitizer_cov_trace_cmp4+0x16/0x30
+   vm_mmap_pgoff+0x2d4/0x4a0
+   ? __pfx_vm_mmap_pgoff+0x10/0x10
+   ? fget+0x1bf/0x270
+   ksys_mmap_pgoff+0x40c/0x690
+   ? __sanitizer_cov_trace_const_cmp4+0x16/0x30
+   ? __pfx_ksys_mmap_pgoff+0x10/0x10
+   ? __kasan_check_write+0x14/0x30
+   ? _raw_spin_trylock+0xbb/0x130
+   ? __pfx__raw_spin_trylock+0x10/0x10
+   __x64_sys_mmap+0x135/0x1e0
+   x64_sys_call+0x1c14/0x2790
+   do_syscall_64+0xd2/0x1050
+   ? rcu_core+0x352/0x7d0
+   ? rcu_core_si+0xe/0x20
+   ? handle_softirqs+0x1aa/0x650
+   ? __sanitizer_cov_trace_cmp4+0x16/0x30
+   ? fpregs_assert_state_consistent+0xe1/0x160
+   ? irqentry_exit+0xb1/0x670
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Link: https://patch.msgid.link/r/20260515002537.6209-1-yanjun.zhu@linux.dev
+Reported-and-tested-by: nasm <n4sm@protonmail.com>
+Suggested-by: nasm <n4sm@protonmail.com>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_mmap.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index ebf328c9ba92dc..6c9925f175711f 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2766,10 +2766,11 @@ static inline u64 *irdma_next_pbl_addr(u64 *pbl, struct irdma_pble_info **pinfo,
-  * irdma_copy_user_pgaddrs - copy user page address to pble's os locally
-  * @iwmr: iwmr for IB's user page addresses
-  * @pbl: ple pointer to save 1 level or 0 level pble
-+ * @pbl_len: Max number of PBL entries to populate
-  * @level: indicated level 0, 1 or 2
-  */
- static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
--				    enum irdma_pble_level level)
-+				    u32 pbl_len, enum irdma_pble_level level)
- {
- 	struct ib_umem *region = iwmr->region;
- 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
-@@ -2777,7 +2778,9 @@ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
- 	struct irdma_pble_info *pinfo;
- 	struct ib_block_iter biter;
- 	u32 idx = 0;
--	u32 pbl_cnt = 0;
+diff --git a/drivers/infiniband/sw/rxe/rxe_mmap.c b/drivers/infiniband/sw/rxe/rxe_mmap.c
+index 6b7f2bd6987991..466ab6dbe9af6f 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mmap.c
++++ b/drivers/infiniband/sw/rxe/rxe_mmap.c
+@@ -93,18 +93,31 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 	goto done;
+ 
+ found_it:
++	/*
++	 * Increment refcount and check whether it is being freed atm while
++	 * holding lock to prevent UAF
++	 */
++	if (!kref_get_unless_zero(&ip->ref)) {
++		spin_unlock_bh(&rxe->pending_lock);
++		ret = -ENXIO;
++		goto done;
++	}
 +
-+	if (!pbl_len)
-+		return;
+ 	list_del_init(&ip->pending_mmaps);
+ 	spin_unlock_bh(&rxe->pending_lock);
  
- 	pinfo = (level == PBLE_LEVEL_1) ? NULL : palloc->level2.leaf;
- 
-@@ -2786,7 +2789,7 @@ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
- 
- 	rdma_umem_for_each_dma_block(region, &biter, iwmr->page_size) {
- 		*pbl = rdma_block_iter_dma_address(&biter);
--		if (++pbl_cnt == palloc->total_cnt)
-+		if (!--pbl_len)
- 			break;
- 		pbl = irdma_next_pbl_addr(pbl, &pinfo, &idx);
- 	}
-@@ -2862,6 +2865,7 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
- 	u64 *pbl;
- 	int status;
- 	enum irdma_pble_level level = PBLE_LEVEL_1;
-+	u32 pbl_len;
- 
- 	if (lvl) {
- 		status = irdma_get_pble(rf->pble_rsrc, palloc, iwmr->page_cnt,
-@@ -2869,16 +2873,18 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
- 		if (status)
- 			return status;
- 
-+		pbl_len = palloc->total_cnt;
- 		iwpbl->pbl_allocated = true;
- 		level = palloc->level;
- 		pinfo = (level == PBLE_LEVEL_1) ? &palloc->level1 :
- 						  palloc->level2.leaf;
- 		pbl = pinfo->addr;
- 	} else {
-+		pbl_len = IRDMA_MAX_SAVED_PHY_PGADDR;
- 		pbl = iwmr->pgaddrmem;
++	vma->vm_ops = &rxe_vm_ops;
++	vma->vm_private_data = ip;
++
+ 	ret = remap_vmalloc_range(vma, ip->obj, 0);
+ 	if (ret) {
++		vma->vm_private_data = NULL;
++		vma->vm_ops = NULL;
++		kref_put(&ip->ref, rxe_mmap_release);
+ 		rxe_dbg_dev(rxe, "err %d from remap_vmalloc_range\n", ret);
+ 		goto done;
  	}
  
--	irdma_copy_user_pgaddrs(iwmr, pbl, level);
-+	irdma_copy_user_pgaddrs(iwmr, pbl, pbl_len, level);
- 
- 	if (lvl)
- 		iwmr->pgaddrmem[0] = *pbl;
+-	vma->vm_ops = &rxe_vm_ops;
+-	vma->vm_private_data = ip;
+-	rxe_vma_open(vma);
+ done:
+ 	return ret;
+ }
 -- 
 2.53.0
 
