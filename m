@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC5541A575;
-	Tue, 21 Jul 2026 19:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1E047011A;
+	Tue, 21 Jul 2026 19:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662997; cv=none; b=AskNjc+vvb6EUMrcY+RkjTpzWX25y1/ZAgQryI4YxEk9LmapMcnq+kr4vO7eOTunffmdxVrgihXUHYGKRGk2eW1PFqIPfum4Nsifz0/wI68H+oS9rq1AVzk2Nbw4kXbhE9TAlmVY9d5ktLS48la1vpzpE89ndGkaOjtf6q+McKk=
+	t=1784662999; cv=none; b=DlVxb4ZK8xgy+a1JItcmOGrZGXPYf1cXSyXe0VDWg60yaLO72XnL4mAgVphgMRUsS/TbCEuskB/KwPtakHujeOKew7nVHpfp6WuCXFt/rsYmbWQ9zMT+CteEPx6xgVeggQ+xhOpKNMyHWioGFbPn1LbWhTgdhWgLf+DnFhSpUk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662997; c=relaxed/simple;
-	bh=KanKkeyXR71ZB7BZmD32VILEMH7soJLhnxD0cux/P5w=;
+	s=arc-20240116; t=1784662999; c=relaxed/simple;
+	bh=cMju9YiFw1gx1+RSmlSYHMUXaDUS39HHD12SD1LwAEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wa9DtnGCxEY+F4aa9mj6f1sbuKijPar0P5pcg29bRnMawUUi8NVfjhhN5MOQG4gG+3k2y7Gr6P1aXKIB/zGze7DvcFqwq4JRkblNfa3fCbY6TJNI1Pqq6o+4zwWoK4bLRPJKSZhUMcHYyNsjwJ12JRrp1lH484kMboN7E0NaaPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AX8XIjm+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RdaPmSjT1MqJzXxEbMy5vmaTzDm69CmG2UaNPvcRycNggcpXml98ZSOTE0WLBzPmNNN897qJoAYWcr5dv44ZKqNWMe2GNTKyv0HlW3VoxRZngWRex+yqLNDsFIZB7bsHsWmPaic39ogoRpuWMc5c4BE9cxcz/pkrnohgmAlnUIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c72qIVNT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AX8XIjm+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8841F000E9;
-	Tue, 21 Jul 2026 19:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c72qIVNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1321F000E9;
+	Tue, 21 Jul 2026 19:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662995;
-	bh=2FQvUFMgGThEb68AelgWyzV3Veb6eRq6epkVcNCWVkE=;
+	s=korg; t=1784662998;
+	bh=McY28KQk11gwQwAp+A6gcSREmsji6eX+UyfG3f6zxWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AX8XIjm+hzdpASYuYotHm0rq+3jpDXc/66jatvk/M5USIGLKZhecwI7DyCj6q7Ggr
-	 UpXa9jpwGDFtc7C8imgvJYKz0bbRz3ElLTclIP3izI/Ztkw+SbiAKjFGkYrC5Klqjk
-	 7pCtblBk/6pHaHhiT/UK2TkG08j4+MEn7tJT7LDM=
+	b=c72qIVNTiY55G1GWPjy5VxDOCvL1rkPMaEJqN572qFxA84BnKXr5/PrY0OGvgrJqF
+	 VtQTXCfyu5hdVlk3SkSX1Sxc4VQ6DZClVnfdvi04gKJO8GeewglQr3X6MQUZa4zokZ
+	 8EY3byskpQ7Tf6HQkcRS84Y/8XKWRBIv7ZPUCcqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0657/1276] ipv6: fix error handling in disable_ipv6 sysctl
-Date: Tue, 21 Jul 2026 17:18:20 +0200
-Message-ID: <20260721152500.810931686@linuxfoundation.org>
+Subject: [PATCH 6.12 0658/1276] ipv6: fix error handling in ignore_routes_with_linkdown sysctl
+Date: Tue, 21 Jul 2026 17:18:21 +0200
+Message-ID: <20260721152500.833171075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,11 +55,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit c779441e5070e2268bdfe77f6e2e0de926c431e3 ]
+[ Upstream commit cf4f2b14401f29ccac56393ca9e4b42a2505f540 ]
 
-When writing to the disable_ipv6 sysctl, if proc_dointvec() fails to
-parse the input, it returns a negative error code. The current
-implementation is overwriting that error for write operations.
+When writing to the ignore_routes_with_linkdown sysctl, if
+proc_dointvec() fails to parse the input, it returns a negative error
+code. The current implementation is overwriting that error for write
+operations.
 
 This results in a silent failure, it returns a successful write although
 the configuration was not modified at all. When modifying the "all"
@@ -69,11 +70,11 @@ the wrong value.
 Fix this by checking the return value of proc_dointvec() and returning
 early on failure.
 
-Fixes: 56d417b12e57 ("IPv6: Add 'autoconf' and 'disable_ipv6' module parameters")
+Fixes: 35103d11173b ("net: ipv6 sysctl option to ignore routes when nexthop link is down")
 Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260622130857.5115-2-fmancera@suse.de
+Link: https://patch.msgid.link/20260622130857.5115-3-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -81,10 +82,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 522b05201c3e98..b8fb9f429fc50a 100644
+index b8fb9f429fc50a..d9684be8ec0753 100644
 --- a/net/ipv6/addrconf.c
 +++ b/net/ipv6/addrconf.c
-@@ -6458,6 +6458,8 @@ static int addrconf_sysctl_disable(const struct ctl_table *ctl, int write,
+@@ -6658,6 +6658,8 @@ int addrconf_sysctl_ignore_routes_with_linkdown(const struct ctl_table *ctl,
  	lctl.data = &val;
  
  	ret = proc_dointvec(&lctl, write, buffer, lenp, ppos);
@@ -92,7 +93,7 @@ index 522b05201c3e98..b8fb9f429fc50a 100644
 +		return ret;
  
  	if (write)
- 		ret = addrconf_disable_ipv6(ctl, valp, val);
+ 		ret = addrconf_fixup_linkdown(ctl, valp, val);
 -- 
 2.53.0
 
