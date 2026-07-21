@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D284C9579;
-	Tue, 21 Jul 2026 17:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F50A46D0B9;
+	Tue, 21 Jul 2026 17:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656110; cv=none; b=lDHEURQH+gV1h6clsvnIezW8U/ltHlsG3LDiHN6HWCd/uHfnXClH0PHAX67Gpw7N1+Af8560mUWb+nDCnAVzioFxyVMiz2RN+V1jApqw1C1BWYEqSqZSuq5fyy8AgmKT2f3oVHgBZvvtufKS+8NvIO8pl6lIfeKnu5jBF94+RvA=
+	t=1784656113; cv=none; b=QH3apBt4a8yqbmy5qDCjvB+nc0CXt/vceAuIcdiUxAyIexwXXojoZ3f0H9gbaVy5ZPjfUARKxTAnslF/+mFPIfJmz4juisJ7jRNhmkCod4Pea4meRpHNShwoC60W2vqvNn0Djm8vxxWEMsjlbEVpGtCl73s0rwnsqvGqf7HrZZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656110; c=relaxed/simple;
-	bh=9Yqw8ZtGUeJZehP95UrJjnKEJchAcOHJjgPLRGh6xis=;
+	s=arc-20240116; t=1784656113; c=relaxed/simple;
+	bh=yjfeDTlWyfwLFUncnqO4m/7wPyFJmRYyxnjEqJaHENg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G08CnztVfJw5a1Q2VeJTN0eLMKYSRjMmz1Gjf6AT1duKFjTsL7CilQw/t9oYxWTMqR4+pE9F5ChVLsBHmsPJNOAOITNaeJVIdkBASYlfrRpWd42hi4W0V6NsX3uC8juyRGGfrfJGYtK4kEtQmEC2r06Tl1OlrMGDQcUBvIID/tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GA8RaxUn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P25JuX2OsTo/YkI2f+gds1xTBUpe+rIlfFxKpsrRMKa/ubzwgUQG0iQIsQzrdNntpfbwYiI4EBv5jO+QExDJGTtBTPyYJO2M1FYY54PyHF9oX3aPBKWaZrNPrwchpvnMuaJ2uEl/QvQiW3L20VUjgVjEqWivLoRzYktn1tXh8uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWQUPWXS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GA8RaxUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD40D1F000E9;
-	Tue, 21 Jul 2026 17:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWQUPWXS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748041F00A3A;
+	Tue, 21 Jul 2026 17:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656109;
-	bh=YIVKklnglRtay9bI4JEGBqkF4zap3MJ9A6kAIxklvw0=;
+	s=korg; t=1784656112;
+	bh=QB0iZiuaxrCBop5N8FhW7JRNYb60bUkZnh5CNYamZ5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GA8RaxUnsjy4dlRQP1DvRwN4BajsDaqMdHZSitV15Q6S7oOiwVBeh7nxIZgnYsvav
-	 1/dyBTCWsXJhdiVIfAGW2fjBVALUgN6IRJNBmAzMKNjRuocqtxBXyOC5YBApjtJ0Bv
-	 aTnD7TxFgq2G/leQQiYOozd+kkV6SqdJ3fyNNXTY=
+	b=oWQUPWXSZ3zn8xsOO3gN0kQAXFh1Ly8BqBZ5PnnDk67XLbltj7Lck8IUZJN1bvJ61
+	 RPz1AlG6nhrk4z1gW6Pt/0TaFztfP8USk6gx9JeAhGdMrCSl91AF1mxUi6Zn5SAnYy
+	 MhY+hwwj0hCSguUznpaSQHiIFubq/qsvhNiRjucY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Hannes Reinecke <hare@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0263/1611] crypto: inside-secure/eip93 - Add check for devm_request_threaded_irq
-Date: Tue, 21 Jul 2026 17:06:19 +0200
-Message-ID: <20260721152520.960560716@linuxfoundation.org>
+Subject: [PATCH 6.18 0237/1611] nvmet-tcp: check return value of nvmet_tcp_set_queue_sock
+Date: Tue, 21 Jul 2026 17:05:53 +0200
+Message-ID: <20260721152520.344953691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,35 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 85a61bf9145d4097c740ffcf3aa832d930a8913b ]
+[ Upstream commit 7ef789703e2b91775dcb36b2efa46325be31a2a0 ]
 
-As the potential failure of the devm_request_threaded_irq(),
-it should be better to check the return value and return
-error if fails.
+The return value of nvmet_tcp_set_queue_sock() is currently ignored in
+nvmet_tcp_tls_handshake_done(). If it fails (e.g., due to the socket
+not being in TCP_ESTABLISHED state), the socket callbacks will not be
+properly set, leading to queue and socket leakage.
 
-Fixes: 9739f5f93b78 ("crypto: eip93 - Add Inside Secure SafeXcel EIP-93 crypto engine support")
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix this by capturing the return value and calling
+nvmet_tcp_schedule_release_queue() on failure to ensure proper cleanup.
+
+Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/inside-secure/eip93/eip93-main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/tcp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/inside-secure/eip93/eip93-main.c b/drivers/crypto/inside-secure/eip93/eip93-main.c
-index 76858bb4fcc22b..59b19e6ea4df7b 100644
---- a/drivers/crypto/inside-secure/eip93/eip93-main.c
-+++ b/drivers/crypto/inside-secure/eip93/eip93-main.c
-@@ -433,6 +433,8 @@ static int eip93_crypto_probe(struct platform_device *pdev)
- 	ret = devm_request_threaded_irq(eip93->dev, eip93->irq, eip93_irq_handler,
- 					NULL, IRQF_ONESHOT,
- 					dev_name(eip93->dev), eip93);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index f5cb2dd0def332..0b8cfa3dbab12f 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1868,10 +1868,11 @@ static void nvmet_tcp_tls_handshake_done(void *data, int status,
+ 	if (!status)
+ 		status = nvmet_tcp_tls_key_lookup(queue, peerid);
  
- 	eip93->ring = devm_kcalloc(eip93->dev, 1, sizeof(*eip93->ring), GFP_KERNEL);
- 	if (!eip93->ring)
++	if (!status)
++		status = nvmet_tcp_set_queue_sock(queue);
++
+ 	if (status)
+ 		nvmet_tcp_schedule_release_queue(queue);
+-	else
+-		nvmet_tcp_set_queue_sock(queue);
+ 	kref_put(&queue->kref, nvmet_tcp_release_queue);
+ }
+ 
 -- 
 2.53.0
 
