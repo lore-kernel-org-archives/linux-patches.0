@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A051544AB77;
-	Tue, 21 Jul 2026 21:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABEE44AB84;
+	Tue, 21 Jul 2026 21:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667803; cv=none; b=YhKi5nB6YAmkYLB3rbK6S8OcxVkg4ykMD5bcFGs5HI/9q2Mq86pMRbzPWcO4VqPGuX1jiO6uNuDZrsGWyNPKzVqJFHlepf2hULNh6p9UeiIQLO6lTmAcE/HyZLLpgKWuEfHAMTohuy204y8OK1IE4KPraWmW2ooQu0WrallSNOA=
+	t=1784667806; cv=none; b=pFV1RQPcKJGPECxJERrKI1MSXcAa4svyXuITzqnqIRrsZX+vOnQE4tityFtPfN0sWadv0eupQuexVa/d3qBXZdL9dyujJmYOqarp2BGQ0hdQv4yDpIyXAodJIyYSkymdZf8rv4FGItnO5HY3BvfeYa5q+dBZ2aSFid41oHUJLCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667803; c=relaxed/simple;
-	bh=jEVYfgkjK7ciuB2Esk4Rzce+IRmVPzTMKx6oKRIweig=;
+	s=arc-20240116; t=1784667806; c=relaxed/simple;
+	bh=kM+Ud+gROYiZ+9fFdst+0tmKY6RxMEgQB36w7kIORto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nxpe3vkrbI461TeJXXwcOGA/sqGxfomCeDZeP6DFXQqH/j0Yd4uOw8XPSGCPwsyZzjyTxz8PqhTT1Yd7frMOwq5GFbFATpRbsZ/s6UQXOzo72ukLst0FEF17uswL7x4x4X12/VtgQxOAlBrL/EsfC0K7ie8JxjWF/5mvAsObzWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMbstE7A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d1L9+7Wz3zPCB6+MZu57BqjGXUqRySNhKZk/JvCkYuWb7He10X+XF3SZXRAeuUdDZr3kg5yJwcR2eDFNE3ly/BMtTMW68MHcIuvyLcBJbBxbnHlLhieBzK7VjQ/tIj8mqqa3HKB3tgSigO50l97EkHjQCwCR/ln86b7LTkNpwOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=re5F2NYk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMbstE7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CED51F000E9;
-	Tue, 21 Jul 2026 21:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="re5F2NYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EAF1F00A3A;
+	Tue, 21 Jul 2026 21:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667800;
-	bh=j/5lBcGqLlEAUsVRMn6kPlyTY3yk4WvQDqJSMz6opC0=;
+	s=korg; t=1784667803;
+	bh=u7poSlr1hcJwXZ4Jsr55c592MYZo1w1rRlCGoVCP80Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kMbstE7AFo+K1vIIephfrbr8At41y+/HMQdjWR0Q44BeHMI+8S+kCqCvgqHvg4HwA
-	 nZWAUAhvqXWIEfSr7twNHPa+3qBBsYg2rUZ8Dk/7KAGFHIAMmVj/ii2Obg5AAKfI+t
-	 +OdHgDDi2WF2AvgVTBNLEK34wBjo6fSwWy0ZRH7o=
+	b=re5F2NYkwRY26yNqhISbYmWrE3u5Z55W9Z6LrO0OAaB0yuR6Gm375aWxRzzSapGui
+	 0U9gniJYI5oI5Pxqpm2orsRQ8/zbyuTS+uERwrbb8hAb/zWbhTyAr0ouFI4B+pLhLk
+	 6OywFx2yfp6pgJEEYGVwBCSag4V1HxmZwxobvlEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1156/1266] iio: hid-sensor-rotation: Fix stale or zero output when reading raw values
-Date: Tue, 21 Jul 2026 17:26:33 +0200
-Message-ID: <20260721152507.650229609@linuxfoundation.org>
+Subject: [PATCH 6.6 1157/1266] iio: invensense: remove redundant initialization of variable period
+Date: Tue, 21 Jul 2026 17:26:34 +0200
+Message-ID: <20260721152507.673680144@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,86 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 3ce8d099e0afc5a7da75a2007a67f67c4f5a4af1 ]
+[ Upstream commit b58b13f156c00c2457035b7071eaaac105fe6836 ]
 
-When reading the raw quaternion attribute (in_rot_quaternion_raw), the
-driver currently returns either all zeros (if the sensor was never enabled)
-or stale data (if the sensor was previously enabled) because it reads from
-the internal buffer without explicitly requesting a new sample from the
-sensor.
+The variable period is being initialized with a value that is never
+read, it is being re-assigned a new value later on before it is read.
+The initialization is redundant and can be removed.
 
-To fix this, power up the sensor, call sensor_hub_input_attr_read_values()
-to issue a synchronous GET_REPORT and receive the full quaternion data
-directly into a local buffer, then decode the four components.
+Cleans up clang scan build warning:
+Value stored to 'period' during its initialization is never
+read [deadcode.DeadStores]
 
-Fixes: fc18dddc0625 ("iio: hid-sensors: Added device rotation support")
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Link: https://lore.kernel.org/r/20240106153202.54861-1-colin.i.king@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: affe3f077d7a ("iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/orientation/hid-sensor-rotation.c |   40 ++++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 2 deletions(-)
+ drivers/iio/common/inv_sensors/inv_sensors_timestamp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/orientation/hid-sensor-rotation.c
-+++ b/drivers/iio/orientation/hid-sensor-rotation.c
-@@ -69,6 +69,13 @@ static int dev_rot_read_raw(struct iio_d
- 				long mask)
- {
- 	struct dev_rot_state *rot_state = iio_priv(indio_dev);
-+	struct hid_sensor_hub_device *hsdev = rot_state->common_attributes.hsdev;
-+	struct hid_sensor_hub_attribute_info *info = &rot_state->quaternion;
-+	u32 usage_id = HID_USAGE_SENSOR_ORIENT_QUATERNION;
-+	union {
-+		s16 val16[4];
-+		s32 val32[4];
-+	} raw_buf;
- 	int ret_type;
- 	int i;
+--- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
++++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+@@ -139,7 +139,7 @@ void inv_sensors_timestamp_interrupt(str
+ 	struct inv_sensors_timestamp_interval *it;
+ 	int64_t delta, interval;
+ 	const uint32_t fifo_mult = fifo_period / ts->chip.clock_period;
+-	uint32_t period = ts->period;
++	uint32_t period;
+ 	bool valid = false;
  
-@@ -78,8 +85,37 @@ static int dev_rot_read_raw(struct iio_d
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
- 		if (size >= 4) {
--			for (i = 0; i < 4; ++i)
--				vals[i] = rot_state->scan.sampled_vals[i];
-+			if (info->size <= 0 || info->size > sizeof(raw_buf))
-+				return -EINVAL;
-+
-+			hid_sensor_power_state(&rot_state->common_attributes, true);
-+
-+			ret_type = sensor_hub_input_attr_read_values(hsdev,
-+								     hsdev->usage,
-+								     usage_id,
-+								     info->report_id,
-+								     SENSOR_HUB_SYNC,
-+								     info->size,
-+								     (u8 *)&raw_buf);
-+
-+			hid_sensor_power_state(&rot_state->common_attributes, false);
-+
-+			if (ret_type < 0)
-+				return ret_type;
-+
-+			switch (info->size) {
-+			case sizeof(raw_buf.val16):
-+				for (i = 0; i < ARRAY_SIZE(raw_buf.val16); i++)
-+					vals[i] = raw_buf.val16[i];
-+				break;
-+			case sizeof(raw_buf.val32):
-+				for (i = 0; i < ARRAY_SIZE(raw_buf.val32); i++)
-+					vals[i] = raw_buf.val32[i];
-+				break;
-+			default:
-+				return -EINVAL;
-+			}
-+
- 			ret_type = IIO_VAL_INT_MULTIPLE;
- 			*val_len =  4;
- 		} else
+ 	if (fifo_nb == 0)
 
 
