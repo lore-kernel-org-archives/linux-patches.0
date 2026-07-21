@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C174D990C;
-	Tue, 21 Jul 2026 15:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4AD46C4AE;
+	Tue, 21 Jul 2026 15:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649140; cv=none; b=EcjCd5tHaWTEHlSYBsM1Z96JOGEzvveisyogt4Qhijp7PTN8OkJFci+JkgU109h4X6Qqzaf6ov2Qrd5NSUi2Bv6vV2vomTzp5eUfSJP4W/xNj78Ne4cH5cIZIJ3zyEmLPW+2hmOK4sAO3l6f7Y/nhZ6GVCsMhJ1l2/BUfWHk8Oc=
+	t=1784649143; cv=none; b=Vcia7vqIKq+y3LB06oNbtE2hjrA3RmGecJOlOuLVNQrH8z+YuhVWXLyxdmtVkYOd4YtMBc+k1kYdaKL6LPR5T3E6pmkts51EAQ//GgnnkVho+5haGjRDZ0moaV2iM5hGfj8Q/wwiXGE6/oW4nCOKiVR1CTpUNjwyZNWM8e8CerE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649140; c=relaxed/simple;
-	bh=u6xm65v8CsboDM33m5GM+XNCVnZW70PKFVPBwY+zEs0=;
+	s=arc-20240116; t=1784649143; c=relaxed/simple;
+	bh=7OWQ2w69+kqSB32Zf4dIXUziW+ERMy7ntHbcvwdpWs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gj7zL23XjQf1so78J7MIFYIY11Kp72AWi6zQH4nHkStvO0WuQRfwS9SNek5ylLFunHak31ZhNUsFjuzFN4b86Qccer5d+xXoixmFuFQcb9ODoY3Dfy0UfgfqnJklUupq/YQhZdT7e5dnEfHE/zBc1FWUHn2NdjJpdfV9X7/8YzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhQnHn6U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kidU3+giQkiTSkdPSm4ZAgDDiB2u32hfOzHzJ7TgdJAfzhBqmWfXw2GRk0LmKGd/FTU6tVj3iBoDO2yfIilYxqkYqnVBziuK4NTBxHXnOYGxcj3Hdpe8580HB+ZVqCUl+YvRkXV/TUN+fyFVMy/rblytL6Mlrab1QDErpVq/lXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uOKXtiY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhQnHn6U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EAE1F000E9;
-	Tue, 21 Jul 2026 15:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uOKXtiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BBB1F000E9;
+	Tue, 21 Jul 2026 15:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649139;
-	bh=8ptvy/NM79gp2/dS1fHANLlZSQypAOHaC42sVTqvgxQ=;
+	s=korg; t=1784649142;
+	bh=U5o/hf/Vx3R4baocxz9bBSkEKl8MeOgUpP58pFf182s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WhQnHn6Ub/3cL/UdevovELfLhFaP/BTvMjWY2nQF5ZsNqHjRRdhuVTfVpm5gxCvQG
-	 Q4XgrTtMmXBybzoNk8Na95cGqtl3jNoovG6dCDzbi26WE9rXow7WQFv2AP+RngZUBp
-	 oJ5ktI9Vz1fW6Oaeiec0t/8dmzMDhrWF+RSwUUwY=
+	b=2uOKXtiYXJdlNZRjEqDIpa11ij0Qkhtd3GKKlX9ErhyoFSMIGGCcpRRsOiZ598fyx
+	 dEkQQGAUSXFVPZI06PI0abIewHDfCa02wK/QRyaK9QjyySCvlzEV1AwmxbDryfxbnc
+	 ab1Q7t/Ky1eolJsMNnV/uaODpcTlqP2eVHUSzNEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Antony Antony <antony.antony@secunet.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0466/2077] perf/x86/amd/uncore: Use Node ID to identify DF and UMC domains
-Date: Tue, 21 Jul 2026 17:02:19 +0200
-Message-ID: <20260721152603.784842546@linuxfoundation.org>
+Subject: [PATCH 7.1 0467/2077] xfrm: fix NAT-related field inheritance in SA migration
+Date: Tue, 21 Jul 2026 17:02:20 +0200
+Message-ID: <20260721152603.807788254@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,57 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Antony Antony <antony.antony@secunet.com>
 
-[ Upstream commit 67d27727854def4a7e2b386429941f5c4741ccc4 ]
+[ Upstream commit 364e165e0b63e8142e76de83e96ae8e36c3b955a ]
 
-For DF and UMC PMUs, a single context is shared across all CPUs that
-are connected to the same Data Fabric (DF) instance. Currently, the
-Package ID, which also happens to be the Socket ID, is used to identify
-DF instances. This approach works for configurations having a single IO
-Die (IOD) but fails in the following cases.
-  * Older Zen 1 processors, where each chiplet has its own DF instance.
-  * Any configurations with multiple DF instances or multiple IODs in
-    the same package.
+During SA migration via xfrm_state_clone_and_setup(),
+nat_keepalive_interval was silently dropped and never copied to the new
+SA. mapping_maxage was unconditionally copied even when migrating to a
+non-encapsulated SA.
 
-The correct way to identify DF instances is through the Node ID (not to
-be confused with NUMA Node ID). This is available in ECX[7:0] of CPUID
-leaf 0x8000001e and returned via topology_amd_node_id(). Hence, replace
-usage of topology_logical_package_id() with topology_amd_node_id().
+Both fields are only meaningful when UDP encapsulation (NAT-T) is in
+use. Move mapping_maxage and add nat_keepalive_interval inside the
+existing if (encap) block, so both are inherited when migrating with
+encapsulation and correctly absent when migrating without it.
 
-Fixes: 07888daa056e ("perf/x86/amd/uncore: Move discovery and registration")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/e7a71a727c6a7b118c23d3e469929c538c4665aa.1780315832.git.sandipan.das@amd.com
+Fixes: f531d13bdfe3 ("xfrm: support sending NAT keepalives in ESP in UDP states")
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Antony Antony <antony.antony@secunet.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_state.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index dd956cfcadefad..a0364ca2f91737 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -700,7 +700,7 @@ void amd_uncore_df_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
- 	info.split.aux_data = 0;
- 	info.split.num_pmcs = NUM_COUNTERS_NB;
- 	info.split.gid = 0;
--	info.split.cid = topology_logical_package_id(cpu);
-+	info.split.cid = topology_amd_node_id(cpu);
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 589c3b6e467913..4c7eed689cd444 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2020,6 +2020,8 @@ static struct xfrm_state *xfrm_state_clone_and_setup(struct xfrm_state *orig,
  
- 	if (pmu_version >= 2) {
- 		ebx.full = cpuid_ebx(EXT_PERFMON_DEBUG_FEATURES);
-@@ -999,8 +999,8 @@ void amd_uncore_umc_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
- 	cpuid(EXT_PERFMON_DEBUG_FEATURES, &eax, &ebx.full, &ecx, &edx);
- 	info.split.aux_data = ecx;	/* stash active mask */
- 	info.split.num_pmcs = ebx.split.num_umc_pmc;
--	info.split.gid = topology_logical_package_id(cpu);
--	info.split.cid = topology_logical_package_id(cpu);
-+	info.split.gid = topology_amd_node_id(cpu);
-+	info.split.cid = topology_amd_node_id(cpu);
- 	*per_cpu_ptr(uncore->info, cpu) = info;
- }
+ 		if (!x->encap)
+ 			goto error;
++		x->mapping_maxage = orig->mapping_maxage;
++		x->nat_keepalive_interval = orig->nat_keepalive_interval;
+ 	}
  
+ 	if (orig->security)
+@@ -2054,7 +2056,6 @@ static struct xfrm_state *xfrm_state_clone_and_setup(struct xfrm_state *orig,
+ 	x->km.seq = orig->km.seq;
+ 	x->replay = orig->replay;
+ 	x->preplay = orig->preplay;
+-	x->mapping_maxage = orig->mapping_maxage;
+ 	x->lastused = orig->lastused;
+ 	x->new_mapping = 0;
+ 	x->new_mapping_sport = 0;
 -- 
 2.53.0
 
