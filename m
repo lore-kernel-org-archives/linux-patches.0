@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF443B637F;
-	Tue, 21 Jul 2026 20:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396003B2D00;
+	Tue, 21 Jul 2026 20:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666047; cv=none; b=A6cihQ1PhfKEim3kyX/2e23tlogTatbf50mU8HLou6vT6LW//ZJYSg1aHPDl5nfArWbmnBzJqWzLfoqrZifFyT04ewDgcvIfdof2TZY7QkP9/7TSWmcaWicuHgm+srh/c98MSVMtnsxDTgjgbbwOjbnJ/GlyqmtSvhPVb5K3Gt0=
+	t=1784666049; cv=none; b=bwSeWRyIrAN31Rf8Vi8lHQEJ41vmSsssN2lLDeWrNCIpu0ckh469IL8I1eAL2VUE/Zh74A34GlB8GIugKZO7ThdftHRdZNf3206DGXnRlfcZRAbyY4KiyJY8gX65pGscxcYvPcbmBt8BSyeLfm4FU/qyg3wGu6viqtLGLoH4okQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666047; c=relaxed/simple;
-	bh=b0Mjs9ci11T49yAV3dO+4+yJ+Qbe9zMahfZ0KEjV9ns=;
+	s=arc-20240116; t=1784666049; c=relaxed/simple;
+	bh=GLsM5RnD3uj20IokXRi2GWpa0r+8y7BepzFSiOkflzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siPvtjIFgNJENb6CinyxSwCW61/RjzBFhNUhlvfm0CV0s+9SjP8pa0Q+FikUOuwaGj3utnj1JV2DMMg1ZQ6W8U+dhaqKMziFtm6czF2YJ/5HzSBst8Dyus5iSeepNp1l0Y894Et6+JFfXV3TkH848ItoLBLPYsBU/u6CEJTTxQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tv2iwEjC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pXBupCMcEH6uDLk+MgBj0XxsLKob3yxAXiQwFyWA9MwaLJ2abC9c37lbGm8m+MX1UnYESpskfEWyYTgNxMEPRlQunwfmqGGQMaPWxRCIPnXowpWWdfnJjk+43prxY95EO67+6eRQ4AraBJ80U3y/PnvK4dIJ2w+x7PSJbP4ylhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PFGX3Le; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tv2iwEjC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34701F000E9;
-	Tue, 21 Jul 2026 20:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PFGX3Le"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E3D1F00A3A;
+	Tue, 21 Jul 2026 20:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666045;
-	bh=L1zWhaWUqSJOHSbnHEOf2LfKo/6ue5KiwmDiZPGq57I=;
+	s=korg; t=1784666048;
+	bh=oiwqNk2yd8frZvDraXwE0xOhRZ7RDjroht5JRQXk28Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tv2iwEjCKe7o512Cvf3bHbMW6VjthdahgMFiRlrwhhBGPk4ACavxoTF/3Iv9/PMFZ
-	 Pl8A8Ap82AOf1vOUMXsY1zP0KXVj5+xR3+Nm7TqP1rQqggG1GhdEvRflxEGXIDNSUG
-	 5Pfbo0f70NviLsp8Jo3cBeEtb6aVOCx/pHttnM1o=
+	b=1PFGX3Le+VsujqnRv94KKzeWeApjeg+ejkoDm4OC6I566GDE8Dnk1izpPu88NRWbY
+	 4iXes8MMGIT8q36GogE05MVKFuQexEm/jy9tOmq3Xrh85QmROl+L4QBhOFwNU6xKas
+	 +nyBaRQ/k84Z81wc/qXZJbf9TZky7O54aXSypcWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Mark Brown <broonie@kernel.org>,
+	Qihang Tang <q.h.hack.winter@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0533/1266] ASoC: codecs: aw88261: fix incorrect masks for boost regs
-Date: Tue, 21 Jul 2026 17:16:10 +0200
-Message-ID: <20260721152453.785735842@linuxfoundation.org>
+Subject: [PATCH 6.6 0534/1266] vduse: hold vduse_lock across IDR lookup in open path
+Date: Tue, 21 Jul 2026 17:16:11 +0200
+Message-ID: <20260721152453.810210123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,58 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Qihang Tang <q.h.hack.winter@gmail.com>
 
-[ Upstream commit 79c053a1ff9d3ab31cefbc791e8d7816ba830491 ]
+[ Upstream commit e440e077748939839d9f76e24383b76b785f80ce ]
 
-The boost-related register fields used in aw88261_reg_force_set use the
-exact same definitions as the rest of the fields, where the mask must be
-inverted when passing it to regmap_update_bits, but they weren't
-inverted here.
+vduse_dev_open() looks up struct vduse_dev through the IDR and then
+acquires dev->lock only after vduse_lock has been dropped.
 
-Fixes: 028a2ae25691 ("ASoC: codecs: Add aw88261 amplifier driver")
-Signed-off-by: Val Packett <val@packett.cool>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://patch.msgid.link/20260529200550.529719-7-val@packett.cool
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This leaves a window where a concurrent VDUSE_DESTROY_DEV can remove the
+same object from the IDR and free it before the open path locks the
+device, leading to a use-after-free.
+
+Close this race by keeping vduse_lock held until dev->lock has been
+acquired in the open path, matching the lock ordering already used by
+the destroy path.
+
+Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
+Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260508094659.94647-1-q.h.hack.winter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/aw88261.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/codecs/aw88261.c b/sound/soc/codecs/aw88261.c
-index f2a9c33ff4a649..eed05b2508dd79 100644
---- a/sound/soc/codecs/aw88261.c
-+++ b/sound/soc/codecs/aw88261.c
-@@ -284,22 +284,22 @@ static void aw88261_reg_force_set(struct aw88261 *aw88261)
- 	if (aw88261->frcset_en == AW88261_FRCSET_ENABLE) {
- 		/* set FORCE_PWM */
- 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL3_REG,
--				AW88261_FORCE_PWM_MASK, AW88261_FORCE_PWM_FORCEMINUS_PWM_VALUE);
-+				~AW88261_FORCE_PWM_MASK, AW88261_FORCE_PWM_FORCEMINUS_PWM_VALUE);
- 		/* set BOOST_OS_WIDTH */
- 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL5_REG,
--				AW88261_BST_OS_WIDTH_MASK, AW88261_BST_OS_WIDTH_50NS_VALUE);
-+				~AW88261_BST_OS_WIDTH_MASK, AW88261_BST_OS_WIDTH_50NS_VALUE);
- 		/* set BURST_LOOPR */
- 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL6_REG,
--				AW88261_BST_LOOPR_MASK, AW88261_BST_LOOPR_340K_VALUE);
-+				~AW88261_BST_LOOPR_MASK, AW88261_BST_LOOPR_340K_VALUE);
- 		/* set RSQN_DLY */
- 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL7_REG,
--				AW88261_RSQN_DLY_MASK, AW88261_RSQN_DLY_35NS_VALUE);
-+				~AW88261_RSQN_DLY_MASK, AW88261_RSQN_DLY_35NS_VALUE);
- 		/* set BURST_SSMODE */
- 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL8_REG,
--				AW88261_BURST_SSMODE_MASK, AW88261_BURST_SSMODE_FAST_VALUE);
-+				~AW88261_BURST_SSMODE_MASK, AW88261_BURST_SSMODE_FAST_VALUE);
- 		/* set BST_BURST */
- 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL9_REG,
--				AW88261_BST_BURST_MASK, AW88261_BST_BURST_30MA_VALUE);
-+				~AW88261_BST_BURST_MASK, AW88261_BST_BURST_30MA_VALUE);
- 	} else {
- 		dev_dbg(aw88261->aw_pa->dev, "needn't set reg value");
- 	}
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index d7bda179ef79f8..96edccd80663e1 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -1395,26 +1395,18 @@ static int vduse_dev_release(struct inode *inode, struct file *file)
+ 	return 0;
+ }
+ 
+-static struct vduse_dev *vduse_dev_get_from_minor(int minor)
++static int vduse_dev_open(struct inode *inode, struct file *file)
+ {
++	int ret = -EBUSY;
+ 	struct vduse_dev *dev;
+ 
+ 	mutex_lock(&vduse_lock);
+-	dev = idr_find(&vduse_idr, minor);
+-	mutex_unlock(&vduse_lock);
+-
+-	return dev;
+-}
+-
+-static int vduse_dev_open(struct inode *inode, struct file *file)
+-{
+-	int ret;
+-	struct vduse_dev *dev = vduse_dev_get_from_minor(iminor(inode));
+-
+-	if (!dev)
++	dev = idr_find(&vduse_idr, iminor(inode));
++	if (!dev) {
++		mutex_unlock(&vduse_lock);
+ 		return -ENODEV;
++	}
+ 
+-	ret = -EBUSY;
+ 	mutex_lock(&dev->lock);
+ 	if (dev->connected)
+ 		goto unlock;
+@@ -1424,6 +1416,7 @@ static int vduse_dev_open(struct inode *inode, struct file *file)
+ 	file->private_data = dev;
+ unlock:
+ 	mutex_unlock(&dev->lock);
++	mutex_unlock(&vduse_lock);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
