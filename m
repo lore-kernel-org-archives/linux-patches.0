@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106E03B52FF;
-	Tue, 21 Jul 2026 22:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79AC407CDA;
+	Tue, 21 Jul 2026 22:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672808; cv=none; b=QKtLtdt+X+9SiKlQHereZxWlb9Ggv+p2V8MtDSuWO5yXlqsS6n7OGg64bKTTlIc134jFR1VNiSLd+adgo0I++GwALLv1W3v6L8lgK5onQ7ThaDkvIRKbNYJsYVfTn5CNW3QAJXT236E/p2AO9KCaOJPmzJAMtga5UFZvNiq+KEQ=
+	t=1784672810; cv=none; b=WENhXlBwyAoEP01XAMMTdBRbnLkZeWK040pCMZaaOWExxyU17UpuHTkXOucHhFA8XuBEuknwTcewrc4nQDMJZIvjMXlqlwhrD6JDkbP9uszDQK6RhquHLCX2+lFFe0StB3uxUs9uLcIonoTUNHLwi/qPmbZ4gC5M0HBiZQbJOQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672808; c=relaxed/simple;
-	bh=xMnuhMN1CcYRTguKiaI8igmiD4455MedNN00svxfZ1g=;
+	s=arc-20240116; t=1784672810; c=relaxed/simple;
+	bh=kmfTGK7PQurZim4X82XR/HYineQGTynf5bUecJ4pCMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuD1FvIpYxhsY4pfaV9p+GB6o/qKL8K1Tvv/48u5llE6sl0Azwc4C/Y4SfEWhOuvSxEVlkL5iA3aEGQfZP1hPre4nX9N7UHGIpP2g+YioJ29R8Qzo3mHAu1p7j0wkPQH4Wt23/KCzj4+jmpgiCLavsEXTZbBPDWH/vbjMjw2rOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdWIk6sW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ayZxvr2eZQu4GWIuVw1NRNf465vDQiyC/gftBGu9+FQbuMNBzzqoNz1GADiPtxmljG3z5gkIjjyzC9XFZSh9iExIWsOsdbYNqSPyljv0crLeol97GZsqb/7pWTN3bxRR1BlquR9xe35jEtRoizF4HNSlzYiNWOZeZGDB481Pk/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWuK5Jsn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdWIk6sW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749F11F000E9;
-	Tue, 21 Jul 2026 22:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWuK5Jsn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4151F000E9;
+	Tue, 21 Jul 2026 22:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672807;
-	bh=9V3higYKrcIyuuVJP1Jgayf7W+JzSeJJyuogM6aTN28=;
+	s=korg; t=1784672809;
+	bh=soI0STBigD0rKCSsi4RDHnOCn+xBVq8UNdpbx/bOtLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NdWIk6sWzNsZIEcAgeBXsB8FlEwvgO+RdSGGPYRvmQtghG7yIg87m5/sG3BxvUIW1
-	 tql+mWK7cpiBo1rVGgdIdL4olXwTZ5JCOrLTRyuxw7+26GplnfbZ2pHr9iV8YWIyUx
-	 UR2iKS3vHKjj9hkQTlhWh7m8JWFf6S0m8p9aL7/k=
+	b=MWuK5JsncU+VBbR9gXGpmES+lQXsRpUvGDoeV2eoFiAB3OVbqfHpdXgcHDBGrmML4
+	 TBuKE8ezzn/mMDYPpmVSfRhqeX+2S5oKnpHYNHkna8XLApuuLi5DwCIijtADgabEJE
+	 hYFTO1grO5ceMsbwdx7U/qAGZ7aG5CQSVmJa8KuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 727/843] mtd: rawnand: fsl_ifc: return errors for failed page reads
-Date: Tue, 21 Jul 2026 17:26:02 +0200
-Message-ID: <20260721152422.396146569@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 763/843] staging: rtl8723bs: fix OOB reads in rtw_get_sec_ie(), rtw_get_wapi_ie(), and rtw_get_wps_attr()
+Date: Tue, 21 Jul 2026 17:26:38 +0200
+Message-ID: <20260721152423.216773959@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,46 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit f9a13e05a327080c3a1c8165adf9e678fb68fef2 upstream.
+[ Upstream commit 1463ca3ec6601cbb097d8d87dbf5dcf1cb86a344 ]
 
-fsl_ifc_run_command() logs controller timeout and other non-OPC
-completion states in ctrl->nand_stat. fsl_ifc_read_page() then only
-increments the ECC failure counter for non-OPC status and still returns
-max_bitflips, which can be zero.
+Three IE/attribute parsing functions have missing bounds checks.
 
-Return -ETIMEDOUT when the command did not complete at all and -EIO for
-other non-OPC read completions so the NAND core does not treat a failed
-page read as a clean page.
+rtw_get_sec_ie() and rtw_get_wapi_ie() iterate over a raw IE buffer
+without verifying that the header bytes (tag + length) are within the
+remaining buffer before reading them.  Additionally, rtw_get_sec_ie()
+compares the 4-byte WPA OUI at cnt+2 without checking that at least
+6 bytes remain, and rtw_get_wapi_ie() compares a 4-byte WAPI OUI at
+cnt+6 without checking that at least 10 bytes remain.
 
-Fixes: 82771882d960 ("NAND Machine support for Integrated Flash Controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+rtw_get_wps_attr() reads wps_ie[0] and wps_ie+2 unconditionally at
+entry, before verifying that wps_ielen is large enough to contain
+the 6-byte WPS IE header (element_id + length + 4-byte OUI).  Inside
+the attribute loop, get_unaligned_be16() is called on attr_ptr and
+attr_ptr+2 without checking that 4 bytes remain in the buffer.
+
+Add a cnt+2 bounds check before each loop body in rtw_get_sec_ie()
+and rtw_get_wapi_ie(), guard each multi-byte comparison with a minimum
+IE length requirement, add a wps_ielen < 6 early return in
+rtw_get_wps_attr(), and add a 4-byte bounds check in its inner loop.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Link: https://patch.msgid.link/20260522004531.1038924-8-hossu.alexandru@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/fsl_ifc_nand.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/mtd/nand/raw/fsl_ifc_nand.c
-+++ b/drivers/mtd/nand/raw/fsl_ifc_nand.c
-@@ -682,8 +682,15 @@ static int fsl_ifc_read_page(struct nand
- 		return check_erased_page(chip, buf);
- 	}
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -583,9 +583,14 @@ int rtw_get_wapi_ie(u8 *in_ie, uint in_l
+ 	cnt = (_TIMESTAMP_ + _BEACON_ITERVAL_ + _CAPABILITY_);
  
--	if (ctrl->nand_stat != IFC_NAND_EVTER_STAT_OPC)
-+	if (!ctrl->nand_stat) {
- 		mtd->ecc_stats.failed++;
-+		return -ETIMEDOUT;
-+	}
+ 	while (cnt < in_len) {
++		if (cnt + 2 > in_len)
++			break;
++		if (cnt + 2 + in_ie[cnt + 1] > in_len)
++			break;
+ 		authmode = in_ie[cnt];
+ 
+ 		if (authmode == WLAN_EID_BSS_AC_ACCESS_DELAY &&
++		    in_ie[cnt + 1] >= 8 &&
+ 		    (!memcmp(&in_ie[cnt + 6], wapi_oui1, 4) ||
+ 		     !memcmp(&in_ie[cnt + 6], wapi_oui2, 4))) {
+ 			if (wapi_ie)
+@@ -618,9 +623,14 @@ void rtw_get_sec_ie(u8 *in_ie, uint in_l
+ 	cnt = (_TIMESTAMP_ + _BEACON_ITERVAL_ + _CAPABILITY_);
+ 
+ 	while (cnt < in_len) {
++		if (cnt + 2 > in_len)
++			break;
++		if (cnt + 2 + in_ie[cnt + 1] > in_len)
++			break;
+ 		authmode = in_ie[cnt];
+ 
+ 		if ((authmode == WLAN_EID_VENDOR_SPECIFIC) &&
++		    in_ie[cnt + 1] >= 4 &&
+ 		    (!memcmp(&in_ie[cnt + 2], &wpa_oui[0], 4))) {
+ 			if (wpa_ie)
+ 				memcpy(wpa_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+@@ -722,6 +732,9 @@ u8 *rtw_get_wps_attr(u8 *wps_ie, uint wp
+ 	if (len_attr)
+ 		*len_attr = 0;
+ 
++	if (wps_ielen < 6)
++		return attr_ptr;
 +
-+	if (ctrl->nand_stat != IFC_NAND_EVTER_STAT_OPC) {
-+		mtd->ecc_stats.failed++;
-+		return -EIO;
-+	}
+ 	if ((wps_ie[0] != WLAN_EID_VENDOR_SPECIFIC) ||
+ 		(memcmp(wps_ie + 2, wps_oui, 4))) {
+ 		return attr_ptr;
+@@ -736,6 +749,9 @@ u8 *rtw_get_wps_attr(u8 *wps_ie, uint wp
+ 		u16 attr_data_len = get_unaligned_be16(attr_ptr + 2);
+ 		u16 attr_len = attr_data_len + 4;
  
- 	return nctrl->max_bitflips;
- }
++		if (attr_ptr + 4 > wps_ie + wps_ielen)
++			break;
++
+ 		if (attr_id == target_attr_id) {
+ 			target_attr_ptr = attr_ptr;
+ 
 
 
