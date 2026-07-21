@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FE43ACEFE;
-	Tue, 21 Jul 2026 21:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6B83B9930;
+	Tue, 21 Jul 2026 21:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670392; cv=none; b=PDjXf4vug3LnBGm5+vLTsQ6Cr4J8xmXbbTwK1nV1reaJ3ANCaJeQGcXdcCcQAkshKFvvtj2AnyRqmXDBv0oKQFS+5z8ZAVhWUKNH7P73gyMdKgyZA3WZyGtHlxvNEfn/Cz/HKWrmv6arMGVTYBEkG/ss4Nrm3u+OnkpOXWlW++4=
+	t=1784670395; cv=none; b=fT2OWPwEExsBlZ5nJ9pphITpwLJg7FSjSgmZzCatUB9YMa44S/QQ6Yn61bUug7ya9B4cwkAlrwIdfe1Bw1r5FNgk38YCltiI3Hc4cqP9o4gppgJOG6bFAqTIzYySNClusRY+icsCqO/HxoUAoDfSh5nX4kxnUySLritdtKiOPbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670392; c=relaxed/simple;
-	bh=GV8YLJlIXElEIYxVwEgoEy/GNkvi/GVJo89VdAUUPqI=;
+	s=arc-20240116; t=1784670395; c=relaxed/simple;
+	bh=LLd7Vv21R5KV59lyYudosS1mk3zQScy3xbUU70OEhMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AsIO1TJf1aLaPqLuAYWv6YcuQe6qJEbBJwuUwwNiAsCuDPafbn7tr1nPl2Me7eKdKelF1cp1HtQj64Fob3czzLNjZjakFpNFVu1ONRo5VTMHwwixsfxn9z1Q/Cb2ONKqfUhf7iAjXCHZMw+yNpVgmlTEIe2fy4gdSXHNFm0yI+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjGgFI01; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gcQd2r2Wb2YjV3KkTzwKWwd6ADNEL8x9rxyr7WpIuF3lrbn3qPTWVT8A/wHLXOOl3isfshNqMWXULA3gpwnwZYRpEBHKsfQBA7RMmdX2COD2ctNOir1d8NG97OQencxQyBf8HTaB3Qi0HT20d8JgEp/QMy2QRGTzFpvK8fiDhvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGuCOaha; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjGgFI01"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72641F000E9;
-	Tue, 21 Jul 2026 21:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGuCOaha"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBBC1F000E9;
+	Tue, 21 Jul 2026 21:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670391;
-	bh=3EACPtutOViuzal+AghHgQ3pKR0MRicRqk5qDX5s6Zs=;
+	s=korg; t=1784670394;
+	bh=IvTMjvPryn9pHfzaNvtOKZOZ8QXlS5uWvqgnOyZdRoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xjGgFI01qzJJYC+x+Rw8jYwUYyjsk9BfTuZ3scinVBpwfzYzuIfD5gRlWmpD16J5A
-	 Ochmfo2XWaft996xGsC4iCb6wTLMolgOGMkDYBJ/XVFJ1csgr/UDXxjgPOVEjeZaw+
-	 k9wYz9NhdioS53qryyqbje4vpe0I/8mgOf0iENWY=
+	b=xGuCOahaGezpICpyC5fCSENCZed6Jqo6PUDptfp77vaIGXdfetRhMliSeX8B2vBl/
+	 T9LzhGV87wFDQmNX8npk8qCHVuGRf5Y70y2VZ8DjiWHPoJW/RPVomi7xVyy3uqCaHT
+	 xu8zRKqi4jOfRrNy8S954vp9dKrZJxh7Hiw2K5oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 0914/1067] drbd: reject data replies with an out-of-range payload size
-Date: Tue, 21 Jul 2026 17:25:15 +0200
-Message-ID: <20260721152444.981226002@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Nutty Liu <nutty.liu@hotmail.com>,
+	Tao Liu <ltao@redhat.com>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.1 0915/1067] riscv: Prevent NULL pointer dereference in machine_kexec_prepare()
+Date: Tue, 21 Jul 2026 17:25:16 +0200
+Message-ID: <20260721152445.004214524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,67 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Tao Liu <ltao@redhat.com>
 
-commit bd910a7660d280595ef94cb6d193951d855d330f upstream.
+commit 81bbcff0c053c4f5c711c31a9b72fc492bd96c3f upstream.
 
-recv_dless_read() receives a P_DATA_REPLY from a peer into the bio of an
-outstanding read request. The peer-supplied payload length reaches it as
-the signed int data_size, and two peer-controlled inputs can make it
-negative. With a negotiated data-integrity-alg the digest length is
-subtracted first, so a reply whose payload is smaller than the digest
-underflows data_size. With no integrity algorithm (the default) data_size
-is assigned from the unsigned h95/h100 wire length and drbdd() never
-bounds it for a payload-carrying command, so a length above INT_MAX casts
-it negative; this path needs no non-default feature. The bio receive loop
-then computes expect = min_t(int, data_size, bv_len), which is negative,
-and drbd_recv_all_warn(mapped, expect) receives with a size_t of SIZE_MAX
-into the first mapped page.
+A NULL pointer dereference issue is noticed in riscv's
+machine_kexec_prepare(), where image->segment[i].buf might be NULL and
+copied unchecked.
 
-The sibling receive path read_in_block() is not affected: it uses an
-unsigned size and rejects it against DRBD_MAX_BIO_SIZE before receiving.
-Reject a data reply whose size is negative after the optional digest
-subtraction, covering both triggers.
+The NULL buf comes from ima_add_kexec_buffer(), where kbuf is added by
+kexec_add_buffer(), but kbuf.buffer is NULL, then it is copied without
+a check in machine_kexec_prepare():
 
-Impact: a malicious or man-in-the-middle DRBD peer copies attacker-chosen
-bytes past a bio page in the receiver, corrupting kernel memory. A node
-that reads from its peer (a diskless node, or read-balancing to the peer)
-is exposed in the default configuration; data-integrity-alg is not
-required.
+  kexec_file_load
+    -> kimage_file_alloc_init()
+       -> kimage_file_prepare_segments()
+          -> ima_add_kexec_buffer()
+             -> kexec_add_buffer()
+    -> machine_kexec_prepare()
+       -> memcpy()
 
-Fixes: b411b3637fa7 ("The DRBD driver")
+Address this by adding a check before the data copy attempt.
+
+Fixes: b7fb4d78a6ad ("RISC-V: use memcpy for kexec_file mode")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-5-xhigh
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Link: https://patch.msgid.link/20260710022837.3738461-1-michael.bommarito@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Closes: https://lore.kernel.org/kexec/CAO7dBbVftLUhd2qrh7hmijTB3PEPfZAhykCGqEfrPoOcSrrj-w@mail.gmail.com/
+Acked-by: Baoquan He <bhe@redhat.com>
+Acked-by: Pratyush Yadav <pratyush@kernel.org>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Signed-off-by: Tao Liu <ltao@redhat.com>
+Link: https://patch.msgid.link/20260705232706.30265-2-ltao@redhat.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/drbd/drbd_receiver.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/riscv/kernel/machine_kexec.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/block/drbd/drbd_receiver.c
-+++ b/drivers/block/drbd/drbd_receiver.c
-@@ -1976,6 +1976,11 @@ static int recv_dless_read(struct drbd_p
- 		data_size -= digest_size;
- 	}
+--- a/arch/riscv/kernel/machine_kexec.c
++++ b/arch/riscv/kernel/machine_kexec.c
+@@ -67,6 +67,9 @@ machine_kexec_prepare(struct kimage *ima
+ 		if (image->segment[i].memsz <= sizeof(fdt))
+ 			continue;
  
-+	if (data_size < 0) {
-+		drbd_err(peer_device, "Invalid data reply size\n");
-+		return -EIO;
-+	}
++		if (!image->segment[i].buf)
++			continue;
 +
- 	/* optimistically update recv_cnt.  if receiving fails below,
- 	 * we disconnect anyways, and counters will be reset. */
- 	peer_device->device->recv_cnt += data_size>>9;
+ 		if (image->file_mode)
+ 			memcpy(&fdt, image->segment[i].buf, sizeof(fdt));
+ 		else if (copy_from_user(&fdt, image->segment[i].buf, sizeof(fdt)))
 
 
