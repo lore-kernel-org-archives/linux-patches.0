@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C392F25E4;
-	Tue, 21 Jul 2026 20:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4D22F25E4;
+	Tue, 21 Jul 2026 20:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665096; cv=none; b=opmSBnQrurJv7pqrEJL+TDTPk8Ykdl5u1/OttlEMji0T3cKL0TY1y/nP5HilxgX5iXXGroMBvF4EmNVzqcQAZ8MQxkrf/WRq90Az67z99Fzb4yf6GKY01qJIoGlRT7Q2biuGYc0Vbv/KXmitfI4ju2juCxrQnIEsLkR/yGkJkV8=
+	t=1784665099; cv=none; b=YdZKAxBCspy2z+hbDI3bpnVO5/Vwskinf9hIMwFLg5uGStghAJGmD7qvYHDMpqc416oKMoHHSe95nB2njvcdap2YkLAzESVvmmwDhw+oQbVMwpHaMfD9bQFq9RPE8qt/UlmyvAaMByDcRNCPH7Rh2QEaj4Mhbwn31Ap0Eaj2ARk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665096; c=relaxed/simple;
-	bh=qsHKJLbJi90uFvuB8FhvW4W5h3Y1gtZ74WjI+rZq+VE=;
+	s=arc-20240116; t=1784665099; c=relaxed/simple;
+	bh=kKbI/NtZAdEwkndOMPgW7Pkbwx+oKyoOPEu3/elUbTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbWmq0z7n9+fC1B9hNLs/ZJxzo9avF9YReQbtSaAxxzEH0l7uC+Zww8mBm4FB4k972/Um7qxivhv+sSgbDmIgamQVU1yeDtbZmdC0bGJvy7+nnIN8fZ6WU32Gg54xllF6vM3s3jtkmpLv5sL91WL/eHLGcxunOD+x5ecbtwexeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfbEtaQw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cd0uBjTusX61BYuaOzM+B1qwqy+hfMA/+6vXP2Oazi+8AmFQCweymImQbFQ2qKl9tnBiYzt0aTp75M2L+OxpRVQ1vlsi7iMvHjDUSd+KZTrUASA/o81flMrroac9S8/X5yL3wiFkZH5cJLllYrPKoaV2F1p71YUocT+HyiDs0SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJqPuwai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfbEtaQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A63A1F00A3A;
-	Tue, 21 Jul 2026 20:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJqPuwai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46531F000E9;
+	Tue, 21 Jul 2026 20:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665095;
-	bh=ASWJCH53WTEvmTPH1Nbo+AvZoFlGoY4B1hoBWsPUdNM=;
+	s=korg; t=1784665098;
+	bh=PecbNVuz8gOFXZxylzKOFSMmsd33qnuSP/GIUJca3z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pfbEtaQwQMNTnRduEGwvnOjr8ckEoVTDdcPaYEnV5chfW8Op5ycjxtYZei37duF2h
-	 HWssxFu8IAnZRz+BuNes1UTC2eqg8Lou6qb9bOl7Hs1v6v96z7GP7vIMRcSbNzCn1r
-	 RQtTtzd4nJxNjFJMkFQ+76yvhH47OMZZB/sAqNCo=
+	b=IJqPuwaiYVs5M17h0SivqDAvIX6/Bl++9E12FqleawA4pEfEIjKotxET4ejRvaCm1
+	 VX9+WRJuR4JWWGYDBuDcLPovrFv5FmVwzWlyF/nCFVxiqgZmYzIk3hZaTO6BZmX4eH
+	 cQ8sEc25H9E7D+1gjY6vw+9U2eMGT1n77G7wL94M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+674ff7e4d7fdfd572afc@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0173/1266] Bluetooth: fix UAF in bt_accept_dequeue()
-Date: Tue, 21 Jul 2026 17:10:10 +0200
-Message-ID: <20260721152445.677001117@linuxfoundation.org>
+Subject: [PATCH 6.6 0174/1266] Bluetooth: L2CAP: validate option length before reading conf opt value
+Date: Tue, 21 Jul 2026 17:10:11 +0200
+Message-ID: <20260721152445.700627956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,97 +50,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 4bd0b274054f2679f28b70222b607bb0afc3ab9a upstream.
+commit 687617555cedfb74c9e3cb85d759b908dcb17856 upstream.
 
-bt_accept_get() takes a temporary reference before dropping the accept
-queue lock. bt_accept_dequeue() currently drops that reference before
-bt_accept_unlink(), leaving only the queue reference.
+l2cap_get_conf_opt() derives the option length from the
+attacker-controlled opt->len field and immediately dereferences
+opt->val (as u8, get_unaligned_le16() or get_unaligned_le32(), or a
+raw pointer for the default case) before any caller has confirmed
+that opt->len bytes are present in the buffer. The callers
+(l2cap_parse_conf_req(), l2cap_parse_conf_rsp() and
+l2cap_conf_rfc_get()) only detect a malformed option afterwards, once
+the running length has gone negative, by which point the
+out-of-bounds read has already executed.
 
-bt_accept_unlink() drops the queue reference. The subsequent
-sock_hold() therefore accesses freed memory if it was the final
-reference, as observed by KASAN during listening L2CAP socket cleanup.
+An existing post-hoc length check keeps the garbage value from being
+consumed, so this is not a data leak in the current control flow. It
+is still a validate-after-use ordering bug: up to 4 bytes are read
+past the end of the buffer before it is known to contain them, and it
+is fragile to future changes in the callers.
 
-Retain the temporary queue-walk reference through unlink and hand it to
-the caller on success. Drop it explicitly on the closed and
-not-yet-connected paths.
+Fix it at the source. Pass the end of the buffer into
+l2cap_get_conf_opt() and refuse to touch opt->val unless the full
+option (header + value) fits. Each caller computes an end pointer
+once before the loop and checks the return value directly instead of
+inferring the error from a negative length.
 
-Fixes: ab1513597c6c ("Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()")
-Reported-by: syzbot+674ff7e4d7fdfd572afc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=674ff7e4d7fdfd572afc
+Fixes: 7c9cbd0b5e38 ("Bluetooth: Verify that l2cap_get_conf_opt provides large enough buffer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/af_bluetooth.c |   17 +++--------------
- net/bluetooth/l2cap_sock.c   |    4 ++--
- 2 files changed, 5 insertions(+), 16 deletions(-)
+ net/bluetooth/l2cap_core.c |   36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -305,7 +305,7 @@ struct sock *bt_accept_dequeue(struct so
- 
- restart:
- 	for (sk = bt_accept_get(parent, NULL); sk; sk = next) {
--		/* Prevent early freeing of sk due to unlink and sock_kill */
-+		/* The reference from bt_accept_get() keeps sk alive. */
- 		lock_sock(sk);
- 
- 		/* Check sk has not already been unlinked via
-@@ -321,13 +321,11 @@ restart:
- 
- 		next = bt_accept_get(parent, sk);
- 
--		/* sk is safely in the parent list so reduce reference count */
--		sock_put(sk);
--
- 		/* FIXME: Is this check still needed */
- 		if (sk->sk_state == BT_CLOSED) {
- 			bt_accept_unlink(sk);
- 			release_sock(sk);
-+			sock_put(sk);
- 			continue;
- 		}
- 
-@@ -337,16 +335,6 @@ restart:
- 			if (newsock)
- 				sock_graft(sk, newsock);
- 
--			/* Hand the caller a reference taken while sk is
--			 * still locked.  bt_accept_unlink() just dropped
--			 * the accept-queue reference; without this hold a
--			 * concurrent teardown (e.g. l2cap_conn_del() ->
--			 * l2cap_sock_kill()) could free sk between
--			 * release_sock() and the caller using it.  Every
--			 * caller drops this with sock_put() when done.
--			 */
--			sock_hold(sk);
--
- 			release_sock(sk);
- 			if (next)
- 				sock_put(next);
-@@ -354,6 +342,7 @@ restart:
- 		}
- 
- 		release_sock(sk);
-+		sock_put(sk);
- 	}
- 
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3002,13 +3002,24 @@ fail:
  	return NULL;
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1448,8 +1448,8 @@ static void l2cap_sock_cleanup_listen(st
+ }
  
- 	/* Close not yet accepted channels.
- 	 *
--	 * bt_accept_dequeue() now returns sk with an extra reference held
--	 * (taken while sk was still locked) so a concurrent l2cap_conn_del()
-+	 * bt_accept_dequeue() returns sk with its temporary queue-walk
-+	 * reference held, so a concurrent l2cap_conn_del()
- 	 * -> l2cap_sock_kill() cannot free sk under us.
- 	 *
- 	 * cleanup_listen() runs under the parent sk lock, so unlike
+-static inline int l2cap_get_conf_opt(void **ptr, int *type, int *olen,
+-				     unsigned long *val)
++static inline int l2cap_get_conf_opt(void **ptr, void *end, int *type,
++				     int *olen, unsigned long *val)
+ {
+ 	struct l2cap_conf_opt *opt = *ptr;
+ 	int len;
+ 
++	/* opt->len is attacker-controlled. Validate that the full option
++	 * (header + value) actually fits in the buffer before touching
++	 * opt->val, otherwise the switch below reads past the end of the
++	 * caller's buffer.
++	 */
++	if (end - *ptr < L2CAP_CONF_OPT_SIZE)
++		return -EINVAL;
++
+ 	len = L2CAP_CONF_OPT_SIZE + opt->len;
++	if (end - *ptr < len)
++		return -EINVAL;
++
+ 	*ptr += len;
+ 
+ 	*type = opt->type;
+@@ -3376,6 +3387,7 @@ static int l2cap_parse_conf_req(struct l
+ 	void *ptr = rsp->data;
+ 	void *endptr = data + data_size;
+ 	void *req = chan->conf_req;
++	void *req_end = req + chan->conf_len;
+ 	int len = chan->conf_len;
+ 	int type, hint, olen;
+ 	unsigned long val;
+@@ -3389,9 +3401,11 @@ static int l2cap_parse_conf_req(struct l
+ 	BT_DBG("chan %p", chan);
+ 
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&req, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&req, req_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		hint  = type & L2CAP_CONF_HINT;
+ 		type &= L2CAP_CONF_MASK;
+@@ -3619,6 +3633,7 @@ static int l2cap_parse_conf_rsp(struct l
+ 	struct l2cap_conf_req *req = data;
+ 	void *ptr = req->data;
+ 	void *endptr = data + size;
++	void *rsp_end = rsp + len;
+ 	int type, olen;
+ 	unsigned long val;
+ 	struct l2cap_conf_rfc rfc = { .mode = L2CAP_MODE_BASIC };
+@@ -3627,9 +3642,11 @@ static int l2cap_parse_conf_rsp(struct l
+ 	BT_DBG("chan %p, rsp %p, len %d, req %p", chan, rsp, len, data);
+ 
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		switch (type) {
+ 		case L2CAP_CONF_MTU:
+@@ -3878,6 +3895,7 @@ static void l2cap_conf_rfc_get(struct l2
+ {
+ 	int type, olen;
+ 	unsigned long val;
++	void *rsp_end = rsp + len;
+ 	/* Use sane default values in case a misbehaving remote device
+ 	 * did not send an RFC or extended window size option.
+ 	 */
+@@ -3896,9 +3914,11 @@ static void l2cap_conf_rfc_get(struct l2
+ 		return;
+ 
+ 	while (len >= L2CAP_CONF_OPT_SIZE) {
+-		len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
+-		if (len < 0)
++		int ret = l2cap_get_conf_opt(&rsp, rsp_end, &type, &olen, &val);
++
++		if (ret < 0)
+ 			break;
++		len -= ret;
+ 
+ 		switch (type) {
+ 		case L2CAP_CONF_RFC:
 
 
