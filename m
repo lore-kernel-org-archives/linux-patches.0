@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E16B46A61C;
-	Tue, 21 Jul 2026 17:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E3B3CF1E0;
+	Tue, 21 Jul 2026 17:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655339; cv=none; b=aahNmmBTbhiv+MJu+YY/LHuFp7PFBw2NTPOOjDHdA+BEpyX4v0tBMYMMp+xORMMgEG58QyvJ0QBsnFkhS2xUg3zKQDyFUHQEYSUGsl5Zd0Dqt7NKxgnZ7Nq8fZRUwekxTBX++FdNMqBFrzeNdsQZP/jMigYaSg9q4orPhALq+1s=
+	t=1784655342; cv=none; b=k9P/B2kObyIZwadM45s6GwBhMmcDY1CdHFD0dJ6S3ty7J5XhP/0FlpHQpI9XO2DTg1BZqiv4YeSMDRUegBAVCir4syiaH7rdf93GSXTnUoCGAUJJM0Iq9ihLvKyJIRBExIVgsXtAyHqQkh//v0agKIdJWoqEtPMGGzXErp3gFzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655339; c=relaxed/simple;
-	bh=2QsgEFWOxqy7rHmWibbj1YPA7XG1eZ/95oq5GZliFPA=;
+	s=arc-20240116; t=1784655342; c=relaxed/simple;
+	bh=Em9e/sox1fUGHXO6ToWye5v/QwsbOeQt6JRHRIXjedo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DL5g101dgDuaQCDy4/kqPVdvGafuEgzAZcZx9ci++WHQ7kLb63a4RCiS2LQbXHETyu5VmN3FQFv5BFL+qUohtzGbCpxRpihl2su1o94Z8vNfPJ37qvq/kLDXeKo/1FdzOJdhzsvQk2ucxe4suQprNXPKjDlpNad0MBxXEG22X+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZNsbM5n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+b+DJGZub8VQzfZNnWNvLCqD9ZnNlJIkhqI5fSjZSVytkCn5rA6Q2CL8DbcHinAySoVnhf5Aw8BilMBlQPrFm/ppGOzLB+HDERuYH+WJBsNxHJQB7grlKENvgRNBDeo3jSZqQHISL2RU409Oew1YWZ/QGllHqntraZPMAedGdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxiRHu38; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZNsbM5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90171F000E9;
-	Tue, 21 Jul 2026 17:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxiRHu38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E89C1F000E9;
+	Tue, 21 Jul 2026 17:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655338;
-	bh=sVlsDbaagfH1BaLW16fMqTa6OxDQapR/LQ7GmKRiKKk=;
+	s=korg; t=1784655340;
+	bh=AMcsfF4L7yPg3+AeeYWAdotUen0mAiIyBSC0mvqRzco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LZNsbM5nZqLl91RdlHtYnVp9p7NfB5egBEwhm/PKIDf2NM2XzpjdZVbuGHDUU7CRz
-	 6xCS2+RKedFg/lQHDAYKjm4mbKopyS9Uj8+N4H1J1r3UxQjWKoTXnZvaYcs6xiPoMG
-	 hHHLuBrGxROrc63N6eIW5yvHCmalI0yuYqRm4Kd4=
+	b=qxiRHu38/dxN7yV2yhsNnOTzmI8F9CRlbrBB6hBrTOESol2xwhKNxxbhnwdKixef/
+	 m745ZpEITSwctnuyCoARqviIFSgVBKc762Nk/oHCuxshusfh11nzlkZDYpLfi90Fj5
+	 AFXlw0Jy0tbw4uYFrN+AZgVOv7pwrTcSJ4lhkEkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 2047/2077] device property: initialize the remaining fields of fwnode_handle in fwnode_init()
-Date: Tue, 21 Jul 2026 17:28:40 +0200
-Message-ID: <20260721152640.978462907@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.1 2030/2077] mmc: vub300: defer reset until cmd_mutex is unlocked
+Date: Tue, 21 Jul 2026 17:28:23 +0200
+Message-ID: <20260721152640.576955626@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,46 +50,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 7eba000621fff223dd7bab484d48918c7c77a307 ]
+commit ee5fb641c4ccac8406c668d3e947eb20ce44f233 upstream.
 
-If a firmware node is allocated on the stack (for instance: temporary
-software node whose life-time we control) or on the heap - but using a
-non-zeroing allocation function - and initialized using fwnode_init(),
-its secondary pointer will contain uninitialized memory which likely
-will be neither NULL nor IS_ERR() and so may end up being dereferenced
-(for example: in dev_to_swnode()). Set fwnode->secondary to NULL on
-initialization. While at it: initialize the remaining fields of struct
-fwnode_handle too just to be sure.
+vub300_cmndwork_thread() holds cmd_mutex while it sends a command and
+waits for the command response.  If the response wait times out,
+__vub300_command_response() kills the command URBs and then synchronously
+resets the USB device through usb_reset_device().
 
+That reset path re-enters the driver through vub300_pre_reset(), which
+also takes cmd_mutex.  The worker therefore tries to acquire the same
+mutex recursively while it is still holding it from the command path.
+
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
+
+The grounded PoC kept the real worker and timeout/reset carrier:
+
+  vub300_cmndwork_thread()
+  __vub300_command_response()
+  usb_lock_device_for_reset()
+  usb_reset_device()
+  vub300_pre_reset()
+
+Lockdep reported the same-task recursive acquisition on cmd_mutex:
+
+  WARNING: possible recursive locking detected
+  ... (&test_vub300.cmd_mutex) ... at: usb_reset_device... [vuln_msv]
+  ... (&test_vub300.cmd_mutex) ... at: vub300_cmndwork_thread+0x12/0x20 [vuln_msv]
+  Workqueue: vub300_cmd_wq vub300_cmndwork_thread [vuln_msv]
+  *** DEADLOCK ***
+
+Return a flag from __vub300_command_response() when the timeout path needs
+a device reset, then perform the reset after vub300_cmndwork_thread() has
+cleared the in-flight command state and dropped cmd_mutex.  The reset is
+still attempted before mmc_request_done(), preserving the existing request
+completion ordering while avoiding the recursive lock.
+
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
 Cc: stable@vger.kernel.org
-Fixes: 01bb86b380a3 ("driver core: Add fwnode_init()")
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260511074927.9473-1-bartosz.golaszewski@oss.qualcomm.com
-[ Fix typo in commit message. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fwnode.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/vub300.c |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/include/linux/fwnode.h
-+++ b/include/linux/fwnode.h
-@@ -210,8 +210,10 @@ static inline void fwnode_init(struct fw
- {
- 	fwnode->secondary = NULL;
- 	fwnode->ops = ops;
-+	fwnode->dev = NULL;
- 	INIT_LIST_HEAD(&fwnode->consumers);
- 	INIT_LIST_HEAD(&fwnode->suppliers);
-+	fwnode->flags = 0;
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -1586,7 +1586,7 @@ static int __command_write_data(struct v
+ 	return linear_length;
  }
  
- static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
+-static void __vub300_command_response(struct vub300_mmc_host *vub300,
++static bool __vub300_command_response(struct vub300_mmc_host *vub300,
+ 				      struct mmc_command *cmd,
+ 				      struct mmc_data *data, int data_length)
+ {
+@@ -1598,17 +1598,11 @@ static void __vub300_command_response(st
+ 					    msecs_to_jiffies(msec_timeout));
+ 	if (respretval == 0) { /* TIMED OUT */
+ 		/* we don't know which of "out" and "res" if any failed */
+-		int result;
+ 		vub300->usb_timed_out = 1;
+ 		usb_kill_urb(vub300->command_out_urb);
+ 		usb_kill_urb(vub300->command_res_urb);
+ 		cmd->error = -ETIMEDOUT;
+-		result = usb_lock_device_for_reset(vub300->udev,
+-						   vub300->interface);
+-		if (result == 0) {
+-			result = usb_reset_device(vub300->udev);
+-			usb_unlock_device(vub300->udev);
+-		}
++		return true;
+ 	} else if (respretval < 0) {
+ 		/* we don't know which of "out" and "res" if any failed */
+ 		usb_kill_urb(vub300->command_out_urb);
+@@ -1704,6 +1698,8 @@ static void __vub300_command_response(st
+ 	} else {
+ 		cmd->error = -EINVAL;
+ 	}
++
++	return false;
+ }
+ 
+ static void construct_request_response(struct vub300_mmc_host *vub300,
+@@ -1749,6 +1745,7 @@ static void vub300_cmndwork_thread(struc
+ 		struct mmc_request *req = vub300->req;
+ 		struct mmc_command *cmd = vub300->cmd;
+ 		struct mmc_data *data = vub300->data;
++		bool reset_device;
+ 		int data_length;
+ 		mutex_lock(&vub300->cmd_mutex);
+ 		init_completion(&vub300->command_complete);
+@@ -1771,7 +1768,8 @@ static void vub300_cmndwork_thread(struc
+ 			data_length = __command_read_data(vub300, cmd, data);
+ 		else
+ 			data_length = __command_write_data(vub300, cmd, data);
+-		__vub300_command_response(vub300, cmd, data, data_length);
++		reset_device = __vub300_command_response(vub300, cmd,
++							 data, data_length);
+ 		vub300->req = NULL;
+ 		vub300->cmd = NULL;
+ 		vub300->data = NULL;
+@@ -1779,6 +1777,16 @@ static void vub300_cmndwork_thread(struc
+ 			if (cmd->error == -ENOMEDIUM)
+ 				check_vub300_port_status(vub300);
+ 			mutex_unlock(&vub300->cmd_mutex);
++			if (reset_device) {
++				int result;
++
++				result = usb_lock_device_for_reset(vub300->udev,
++								   vub300->interface);
++				if (result == 0) {
++					result = usb_reset_device(vub300->udev);
++					usb_unlock_device(vub300->udev);
++				}
++			}
+ 			mmc_request_done(vub300->mmc, req);
+ 			kref_put(&vub300->kref, vub300_delete);
+ 			return;
 
 
