@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B47F3A4F4B;
-	Tue, 21 Jul 2026 19:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1E5415F15;
+	Tue, 21 Jul 2026 19:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663328; cv=none; b=QHTn36zeYHPMFMpNpJsR0K+MYzRJwHAk5HFTV5ZoFbRE+2MiAytMfuuRqtqMS7Mgm/Ej7yJG9t53s4kwkBBecWR/PhhUke6HwJo5sK6SSpTcOYNG5y7DQ9AUOS3Ln3ROd/IjJ4Zkumav1EvQJ1ajDbm/puSjujSO3ZjiPQ7v7+I=
+	t=1784663330; cv=none; b=Bf5r6rGrzQ7HwjYwdnpFwTDHLlHGvSdKuLgPi1aKqrOT5heX8q2guyMk7GQIPmBFwZySbzov6yc7ELOxTkwXxDYxcXNUY8JlxQVbC+z3rdZ82DMvCuvj0B/2oxJ7WqYntMAuuPJ8rOWpemwTNkteOuF19OUgEM3tlhMlnqanyNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663328; c=relaxed/simple;
-	bh=eFwaLvrtpG4+tc8qSzR2nwN5KgQ454Vfg/eyzl2cbnw=;
+	s=arc-20240116; t=1784663330; c=relaxed/simple;
+	bh=dhXHm5CMdOoqhElCdHfN2dclCExNKJjUmPLcDniOQH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9B3cwgCOLDfV+kUJLnJK8sZ+IDzu0qRFn+o1OLwuy9VjGmVuXidY2M6bkYWnpTzGLgH1Iq5Vr+DTxeX5z+t4w3/3VXgYgcXUk9gT6oGMvFRx6LLbxoy3r7RaX1j6sRPo5ayKgy8xGtCd/qnSH4KajzwGtWodBw69TMa8FhOXdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuZcEj3M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bbGaEQUlq0Zq/puUwnFpAy7nKwl/L1vKuxqasgsDvu2eAcnqZLx6mjXGeAvlGJ/asOQwV7XnjGAwSuHYPbP8NY3aVQjpY2SPkbjIxNfNA9FLbwFWVxIp7KdMAfoolfrcEwpQIs2iN+nP567HQh3TPl1jAP/Vrbhcl2jX3qcGqOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XshYBiKY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuZcEj3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8771F000E9;
-	Tue, 21 Jul 2026 19:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XshYBiKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E596A1F000E9;
+	Tue, 21 Jul 2026 19:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663326;
-	bh=EN221SazqPa67IwtHkLxGNJfNzKNrKwX41em3zGBwoE=;
+	s=korg; t=1784663329;
+	bh=2K8tGfNuB86zqooWbRbRePt55FI86yLzIHncr3BuHlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uuZcEj3M8uhdh0rAy4GdkO2yhYdQ15L/oAI+qoElikEdBUGcxC1TOt9HWzZfryiu5
-	 kNoo+f5gF+HWphifXubdo7bbt3lkl4MHfF8Gh1WC2GkkITyXQE/4FG5JZ220lMKcF2
-	 1OdLQ9ruJOj6z+CECGMOgJJ6zZAheYkCFWlNGd7s=
+	b=XshYBiKYkq4h8biL9kalgFiIY3+sSj/cvg6V0PFYLsdH/nmBA0B8SQEebykKdS/Bn
+	 NTvaYH9d6H0243WDmIvmuwhmJGILKBs6yUdbn1Cf/vCjuk6zgtE3D80UCBmOu5uf1A
+	 OOR05QNhuTaKPuPKZl3H6i917IXJxNZL9MKHjo54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0779/1276] net/tls: Consume empty data records in tls_sw_read_sock()
-Date: Tue, 21 Jul 2026 17:20:22 +0200
-Message-ID: <20260721152503.509944397@linuxfoundation.org>
+Subject: [PATCH 6.12 0780/1276] net: usb: lan78xx: move functions to avoid forward definitions
+Date: Tue, 21 Jul 2026 17:20:23 +0200
+Message-ID: <20260721152503.531147441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,58 +52,353 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 3be28e2c9cd0230cb51fd4967df095273afd3848 ]
+[ Upstream commit 39aa1d620d10cdd276f4728da50f136dbe939643 ]
 
-A peer may send a zero-length TLS application_data record; TLS 1.3
-explicitly permits these as a traffic-analysis countermeasure (RFC
-8446, Section 5.1). After decryption such a record has full_len ==
-0. tls_sw_read_sock() hands it to the read_actor, which has no
-payload to consume and returns zero. The loop treats a zero return
-as backpressure (used <= 0), requeues the skb at the head of
-rx_list, and stops. rx_list is serviced head-first on the next
-call, so the empty record is dequeued, fails the same way, and is
-requeued again; every later record on the connection is blocked
-behind it.
+Move following functions to avoid forward declarations in the code:
+- lan78xx_start_hw()
+- lan78xx_stop_hw()
+- lan78xx_flush_fifo()
+- lan78xx_start_tx_path()
+- lan78xx_stop_tx_path()
+- lan78xx_flush_tx_fifo()
+- lan78xx_start_rx_path()
+- lan78xx_stop_rx_path()
+- lan78xx_flush_rx_fifo()
 
-tls_sw_recvmsg() does not stall on this: a zero-length data record
-copies nothing and falls through to consume_skb(). Mirror that in
-the read_sock() path by recognizing an empty data record before
-the actor runs, consuming it, and continuing.
+These functions will be used in an upcoming PHYlink migration patch.
 
-Fixes: 662fbcec32f4 ("net/tls: implement ->read_sock()")
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260630191551.875664-1-cel@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+No modifications to the functionality of the code are made.
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20241204084142.1152696-4-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 60444706aa17 ("net: usb: lan78xx: disable VLAN filter in promiscuous mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/usb/lan78xx.c | 300 +++++++++++++++++++-------------------
+ 1 file changed, 150 insertions(+), 150 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index d3eab47b47ea65..2b875369d52326 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2391,6 +2391,17 @@ int tls_sw_read_sock(struct sock *sk, read_descriptor_t *desc,
- 			goto read_sock_requeue;
- 		}
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 8647980df0059b..66907819b1d14b 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -812,6 +812,156 @@ static void lan78xx_update_stats(struct lan78xx_net *dev)
+ 	usb_autopm_put_interface(dev->intf);
+ }
  
-+		/* An empty data record (legal in TLS 1.3) gives a zero
-+		 * read_actor return, indistinguishable from the consumer
-+		 * stalling; the used <= 0 path would requeue it at the
-+		 * head of rx_list and block all later records. Consume it
-+		 * here instead.
-+		 */
-+		if (rxm->full_len == 0) {
-+			consume_skb(skb);
-+			continue;
-+		}
++static int lan78xx_start_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enable)
++{
++	return lan78xx_update_reg(dev, reg, hw_enable, hw_enable);
++}
 +
- 		used = read_actor(desc, skb, rxm->offset, rxm->full_len);
- 		if (used <= 0) {
- 			if (!copied)
++static int lan78xx_stop_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enabled,
++			   u32 hw_disabled)
++{
++	unsigned long timeout;
++	bool stopped = true;
++	int ret;
++	u32 buf;
++
++	/* Stop the h/w block (if not already stopped) */
++
++	ret = lan78xx_read_reg(dev, reg, &buf);
++	if (ret < 0)
++		return ret;
++
++	if (buf & hw_enabled) {
++		buf &= ~hw_enabled;
++
++		ret = lan78xx_write_reg(dev, reg, buf);
++		if (ret < 0)
++			return ret;
++
++		stopped = false;
++		timeout = jiffies + HW_DISABLE_TIMEOUT;
++		do  {
++			ret = lan78xx_read_reg(dev, reg, &buf);
++			if (ret < 0)
++				return ret;
++
++			if (buf & hw_disabled)
++				stopped = true;
++			else
++				msleep(HW_DISABLE_DELAY_MS);
++		} while (!stopped && !time_after(jiffies, timeout));
++	}
++
++	ret = stopped ? 0 : -ETIME;
++
++	return ret;
++}
++
++static int lan78xx_flush_fifo(struct lan78xx_net *dev, u32 reg, u32 fifo_flush)
++{
++	return lan78xx_update_reg(dev, reg, fifo_flush, fifo_flush);
++}
++
++static int lan78xx_start_tx_path(struct lan78xx_net *dev)
++{
++	int ret;
++
++	netif_dbg(dev, drv, dev->net, "start tx path");
++
++	/* Start the MAC transmitter */
++
++	ret = lan78xx_start_hw(dev, MAC_TX, MAC_TX_TXEN_);
++	if (ret < 0)
++		return ret;
++
++	/* Start the Tx FIFO */
++
++	ret = lan78xx_start_hw(dev, FCT_TX_CTL, FCT_TX_CTL_EN_);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
++static int lan78xx_stop_tx_path(struct lan78xx_net *dev)
++{
++	int ret;
++
++	netif_dbg(dev, drv, dev->net, "stop tx path");
++
++	/* Stop the Tx FIFO */
++
++	ret = lan78xx_stop_hw(dev, FCT_TX_CTL, FCT_TX_CTL_EN_, FCT_TX_CTL_DIS_);
++	if (ret < 0)
++		return ret;
++
++	/* Stop the MAC transmitter */
++
++	ret = lan78xx_stop_hw(dev, MAC_TX, MAC_TX_TXEN_, MAC_TX_TXD_);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
++/* The caller must ensure the Tx path is stopped before calling
++ * lan78xx_flush_tx_fifo().
++ */
++static int lan78xx_flush_tx_fifo(struct lan78xx_net *dev)
++{
++	return lan78xx_flush_fifo(dev, FCT_TX_CTL, FCT_TX_CTL_RST_);
++}
++
++static int lan78xx_start_rx_path(struct lan78xx_net *dev)
++{
++	int ret;
++
++	netif_dbg(dev, drv, dev->net, "start rx path");
++
++	/* Start the Rx FIFO */
++
++	ret = lan78xx_start_hw(dev, FCT_RX_CTL, FCT_RX_CTL_EN_);
++	if (ret < 0)
++		return ret;
++
++	/* Start the MAC receiver*/
++
++	ret = lan78xx_start_hw(dev, MAC_RX, MAC_RX_RXEN_);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
++static int lan78xx_stop_rx_path(struct lan78xx_net *dev)
++{
++	int ret;
++
++	netif_dbg(dev, drv, dev->net, "stop rx path");
++
++	/* Stop the MAC receiver */
++
++	ret = lan78xx_stop_hw(dev, MAC_RX, MAC_RX_RXEN_, MAC_RX_RXD_);
++	if (ret < 0)
++		return ret;
++
++	/* Stop the Rx FIFO */
++
++	ret = lan78xx_stop_hw(dev, FCT_RX_CTL, FCT_RX_CTL_EN_, FCT_RX_CTL_DIS_);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
++/* The caller must ensure the Rx path is stopped before calling
++ * lan78xx_flush_rx_fifo().
++ */
++static int lan78xx_flush_rx_fifo(struct lan78xx_net *dev)
++{
++	return lan78xx_flush_fifo(dev, FCT_RX_CTL, FCT_RX_CTL_RST_);
++}
++
+ /* Loop until the read is completed with timeout called with phy_mutex held */
+ static int lan78xx_phy_wait_not_busy(struct lan78xx_net *dev)
+ {
+@@ -2742,156 +2892,6 @@ static int lan78xx_urb_config_init(struct lan78xx_net *dev)
+ 	return result;
+ }
+ 
+-static int lan78xx_start_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enable)
+-{
+-	return lan78xx_update_reg(dev, reg, hw_enable, hw_enable);
+-}
+-
+-static int lan78xx_stop_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enabled,
+-			   u32 hw_disabled)
+-{
+-	unsigned long timeout;
+-	bool stopped = true;
+-	int ret;
+-	u32 buf;
+-
+-	/* Stop the h/w block (if not already stopped) */
+-
+-	ret = lan78xx_read_reg(dev, reg, &buf);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (buf & hw_enabled) {
+-		buf &= ~hw_enabled;
+-
+-		ret = lan78xx_write_reg(dev, reg, buf);
+-		if (ret < 0)
+-			return ret;
+-
+-		stopped = false;
+-		timeout = jiffies + HW_DISABLE_TIMEOUT;
+-		do  {
+-			ret = lan78xx_read_reg(dev, reg, &buf);
+-			if (ret < 0)
+-				return ret;
+-
+-			if (buf & hw_disabled)
+-				stopped = true;
+-			else
+-				msleep(HW_DISABLE_DELAY_MS);
+-		} while (!stopped && !time_after(jiffies, timeout));
+-	}
+-
+-	ret = stopped ? 0 : -ETIME;
+-
+-	return ret;
+-}
+-
+-static int lan78xx_flush_fifo(struct lan78xx_net *dev, u32 reg, u32 fifo_flush)
+-{
+-	return lan78xx_update_reg(dev, reg, fifo_flush, fifo_flush);
+-}
+-
+-static int lan78xx_start_tx_path(struct lan78xx_net *dev)
+-{
+-	int ret;
+-
+-	netif_dbg(dev, drv, dev->net, "start tx path");
+-
+-	/* Start the MAC transmitter */
+-
+-	ret = lan78xx_start_hw(dev, MAC_TX, MAC_TX_TXEN_);
+-	if (ret < 0)
+-		return ret;
+-
+-	/* Start the Tx FIFO */
+-
+-	ret = lan78xx_start_hw(dev, FCT_TX_CTL, FCT_TX_CTL_EN_);
+-	if (ret < 0)
+-		return ret;
+-
+-	return 0;
+-}
+-
+-static int lan78xx_stop_tx_path(struct lan78xx_net *dev)
+-{
+-	int ret;
+-
+-	netif_dbg(dev, drv, dev->net, "stop tx path");
+-
+-	/* Stop the Tx FIFO */
+-
+-	ret = lan78xx_stop_hw(dev, FCT_TX_CTL, FCT_TX_CTL_EN_, FCT_TX_CTL_DIS_);
+-	if (ret < 0)
+-		return ret;
+-
+-	/* Stop the MAC transmitter */
+-
+-	ret = lan78xx_stop_hw(dev, MAC_TX, MAC_TX_TXEN_, MAC_TX_TXD_);
+-	if (ret < 0)
+-		return ret;
+-
+-	return 0;
+-}
+-
+-/* The caller must ensure the Tx path is stopped before calling
+- * lan78xx_flush_tx_fifo().
+- */
+-static int lan78xx_flush_tx_fifo(struct lan78xx_net *dev)
+-{
+-	return lan78xx_flush_fifo(dev, FCT_TX_CTL, FCT_TX_CTL_RST_);
+-}
+-
+-static int lan78xx_start_rx_path(struct lan78xx_net *dev)
+-{
+-	int ret;
+-
+-	netif_dbg(dev, drv, dev->net, "start rx path");
+-
+-	/* Start the Rx FIFO */
+-
+-	ret = lan78xx_start_hw(dev, FCT_RX_CTL, FCT_RX_CTL_EN_);
+-	if (ret < 0)
+-		return ret;
+-
+-	/* Start the MAC receiver*/
+-
+-	ret = lan78xx_start_hw(dev, MAC_RX, MAC_RX_RXEN_);
+-	if (ret < 0)
+-		return ret;
+-
+-	return 0;
+-}
+-
+-static int lan78xx_stop_rx_path(struct lan78xx_net *dev)
+-{
+-	int ret;
+-
+-	netif_dbg(dev, drv, dev->net, "stop rx path");
+-
+-	/* Stop the MAC receiver */
+-
+-	ret = lan78xx_stop_hw(dev, MAC_RX, MAC_RX_RXEN_, MAC_RX_RXD_);
+-	if (ret < 0)
+-		return ret;
+-
+-	/* Stop the Rx FIFO */
+-
+-	ret = lan78xx_stop_hw(dev, FCT_RX_CTL, FCT_RX_CTL_EN_, FCT_RX_CTL_DIS_);
+-	if (ret < 0)
+-		return ret;
+-
+-	return 0;
+-}
+-
+-/* The caller must ensure the Rx path is stopped before calling
+- * lan78xx_flush_rx_fifo().
+- */
+-static int lan78xx_flush_rx_fifo(struct lan78xx_net *dev)
+-{
+-	return lan78xx_flush_fifo(dev, FCT_RX_CTL, FCT_RX_CTL_RST_);
+-}
+-
+ static int lan78xx_reset(struct lan78xx_net *dev)
+ {
+ 	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
 -- 
 2.53.0
 
