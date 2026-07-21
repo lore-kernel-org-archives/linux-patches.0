@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C8147010B;
-	Tue, 21 Jul 2026 19:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48DC470123;
+	Tue, 21 Jul 2026 19:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663362; cv=none; b=ONaQhA2at34AqahIR6ErTWLB/D8VNHkj+6ByE6i7bJLUmV8yIWOyti6bMyQC4h4xWAPpBnef6WNDnOfcogCpPzlnBDGNwqNl83jQLsNKgrYGsd9kYwIhmzyYU7xFuyvUV0KzE0CW1+kEraxWkGCxikZgJXm2vQyLXufBe+htQtg=
+	t=1784663364; cv=none; b=RfE5OUWhJ1dEefvatgKkWm483qytKOVgJA65nuxfGFO+Mx9kE9cR/JOGwwzrZSiIKT9PA+hgFojTKAyD9jfO6ULYRAqSmgcjaVmrN3p8uAIbC/+tyK0t9D6gVTu6AeGrcSY4AgqNT/pdIduXFPBdrkOPT2whJxPdjtKVVG+Xj0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663362; c=relaxed/simple;
-	bh=Lf0ebW+ttYStJSr7Xe2elIN1+YD2m5g3TqwqzTIgpJ4=;
+	s=arc-20240116; t=1784663364; c=relaxed/simple;
+	bh=9CeRqqVNYKGUB5LH9eOJ4F9okHjnj/SrLlOzt68UuHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DIyXDgWUmrWsayOqB8Dkl1FOXVCxgAZjA6pWFS2H11kgFo+vjrN+RxTjd6YTjs+2yJ4wyLhIImdOYJoz8J2c+3X2i+OEnd2mBoTzAXpNCaADVExaPBsZEYUAIsPBNedJU8vXLpyN6pRdKPc9jLLlNlb2O7rGFQabNz4LT6wnRm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iw6fd3GC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oBBlYoUlw1sgb2hm6dRM2qUVQ6f12y7DHGOCOM1V80bqhxlujIDX5LTXNn+SxtdqR//qE8APeTXKGvaeQIUgnMuPtKA+4DUfeHg7TxbAym4fsNknEgCgF0EuYrLLYo/gthMkYVQI7bbEPVh3CNlv8fm1qtFATCkEDZzREqfhPQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1WOvya/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iw6fd3GC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4601F000E9;
-	Tue, 21 Jul 2026 19:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1WOvya/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460E51F00A3A;
+	Tue, 21 Jul 2026 19:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663361;
-	bh=/uvugjIy2eUqOH5Z700uaJVj+/X611l2DyoMpGz0YNE=;
+	s=korg; t=1784663363;
+	bh=fqnsa8ZMOgjvKRWny8EohcviF5DbdWm3bP4nvuSX4uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iw6fd3GCiEeQxbrWUxuTygvfBTgb1CkEwsRhmXfotdcteOUoGmc3a/3iWRg2jK4EF
-	 SipgRFcQlTJwpOamQxZmMMoFD2YaLbsYf6wUCZEWolL2xrDHDNJeRXOMB5+/uWgPIt
-	 FfR/vbsMSKjg7JxOZN88PB0Y4/NLeiHaB3EDpTNA=
+	b=v1WOvya/6C59ah0/ivPkdEEFMXtGyJwd5uwz/q3n2Mywf308MwtQvcBUjA+NQ9q59
+	 ueLqtylYfNfba7r54I4shxelfv2TsnUayKeSzk+aolabhs3bm2Bkd8J1LdEWNKcdhW
+	 SImng/JZkXArAz8s09H/EHtknCNx02EvJx8hIiuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rongguang Wei <weirongguang@kylinos.cn>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0795/1276] s390/zcrypt: Remove the empty file
-Date: Tue, 21 Jul 2026 17:20:38 +0200
-Message-ID: <20260721152503.864958959@linuxfoundation.org>
+Subject: [PATCH 6.12 0796/1276] cifs: validate DFS referral string offsets
+Date: Tue, 21 Jul 2026 17:20:39 +0200
+Message-ID: <20260721152503.885815734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,41 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rongguang Wei <weirongguang@kylinos.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 575f87b9d4882b0d621192fdd754d7e09dbd5789 ]
+[ Upstream commit 027a84ac6b50c12ef767c15abfc58aa865820e9e ]
 
-The files has no real user because CEX2 and CEX3 device drivers
-are removed, also remove these empty files.
+parse_dfs_referrals() validates that the response header and referral
+array fit in the received buffer, but each referral also contains string
+offsets supplied by the server.
 
-Fixes: 5ac8c72462cd ("s390/zcrypt: remove CEX2 and CEX3 device drivers")
-Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Those offsets are used to compute the DfsPath and NetworkAddress string
+pointers without checking whether they still point inside the response
+buffer. A malformed referral can therefore make the computed pointer
+exceed the end of the buffer. The resulting negative max_len is then
+passed to cifs_strndup_from_utf16(), and the non-Unicode path forwards it
+to kstrndup() as a size_t, allowing strnlen() to read out of bounds.
+
+Validate each string offset before deriving the string pointer.
+
+Fixes: 4ecce920e13a ("CIFS: move DFS response parsing out of SMB1 code")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_cex2a.c | 0
- drivers/s390/crypto/zcrypt_cex2a.h | 0
- drivers/s390/crypto/zcrypt_cex2c.c | 0
- drivers/s390/crypto/zcrypt_cex2c.h | 0
- 4 files changed, 0 insertions(+), 0 deletions(-)
- delete mode 100644 drivers/s390/crypto/zcrypt_cex2a.c
- delete mode 100644 drivers/s390/crypto/zcrypt_cex2a.h
- delete mode 100644 drivers/s390/crypto/zcrypt_cex2c.c
- delete mode 100644 drivers/s390/crypto/zcrypt_cex2c.h
+ fs/smb/client/misc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/s390/crypto/zcrypt_cex2a.c b/drivers/s390/crypto/zcrypt_cex2a.c
-deleted file mode 100644
-index e69de29bb2d1d6..00000000000000
-diff --git a/drivers/s390/crypto/zcrypt_cex2a.h b/drivers/s390/crypto/zcrypt_cex2a.h
-deleted file mode 100644
-index e69de29bb2d1d6..00000000000000
-diff --git a/drivers/s390/crypto/zcrypt_cex2c.c b/drivers/s390/crypto/zcrypt_cex2c.c
-deleted file mode 100644
-index e69de29bb2d1d6..00000000000000
-diff --git a/drivers/s390/crypto/zcrypt_cex2c.h b/drivers/s390/crypto/zcrypt_cex2c.h
-deleted file mode 100644
-index e69de29bb2d1d6..00000000000000
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 6abfa22f4c176e..713b95a2361145 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -1029,6 +1029,10 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
+ 		node->ref_flag = le16_to_cpu(ref->ReferralEntryFlags);
+ 
+ 		/* copy DfsPath */
++		if (le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
++			rc = -EINVAL;
++			goto parse_DFS_referrals_exit;
++		}
+ 		temp = (char *)ref + le16_to_cpu(ref->DfsPathOffset);
+ 		max_len = data_end - temp;
+ 		node->path_name = cifs_strndup_from_utf16(temp, max_len,
+@@ -1039,6 +1043,10 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
+ 		}
+ 
+ 		/* copy link target UNC */
++		if (le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
++			rc = -EINVAL;
++			goto parse_DFS_referrals_exit;
++		}
+ 		temp = (char *)ref + le16_to_cpu(ref->NetworkAddressOffset);
+ 		max_len = data_end - temp;
+ 		node->node_name = cifs_strndup_from_utf16(temp, max_len,
 -- 
 2.53.0
 
