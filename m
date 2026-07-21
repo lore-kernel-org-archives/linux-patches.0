@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245EB3CB2E0;
-	Tue, 21 Jul 2026 22:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B8644AB60;
+	Tue, 21 Jul 2026 22:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673918; cv=none; b=FsKyGB9xkszIFWFluG8RMidgxQM/3Y1hgAG5gV+9R08jgq2ncV4WJ8THLTP0wogC3h9xJj88Iecnic+whZq+lAmK9vkcJuZ/BEmEG5Dp5VCsv0ntkMRa/qbIk3IbfKLRzVAuVjo0I1KqIuYoDgDPdmDsW1/eMZfhGqrBroHB+0w=
+	t=1784673920; cv=none; b=s3fKBSD58DQvy5NK3tJ7+udjxq29qzatyESZA/bZCS0LSK2kLdxJ+jdKCXL2aKqGfn2DrFKnGNmTDi5IhgJzprG24pMQ8ovxGL0xoWLXNnU0cj/iEpQVIh7NBn4CuPgPRQoN+1JPgMuu98Y5Tm/vEQmtksAWsEd4acw1AUlUVfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673918; c=relaxed/simple;
-	bh=/ha7l34h5C1gpkSWo2TF06wte3Zivoeve3lG6qPFnK8=;
+	s=arc-20240116; t=1784673920; c=relaxed/simple;
+	bh=yZ2A4SkAF+CTzJU1Q3AnhSFD/3XtgdfhKePt/mWuLXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8BysYDgl81kA1O7p19epHnu2GZrdRk3LYltF+1ocAPFWGYDNlRSzUGbZ0xMMFS1CoWs2F8s7auyUoASg3xWu3Jx/N0mb0KynF1nJ26JRCo5hhypBPjp3yg7T6n83UV/eSig+LNwnv4PUsoIM3nlW3ULnF7KnRz4MdwIWNVLboQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZhcYSEo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n9drmd07er/H4OBdYokCoyyP9vjzMNom/Epms0QbWM1hjRwuDlbaQQt6iCpPZX/jJASidEVOxS0TlohBgqNQkeVyBMUnPdl9LSplyZwtD0Rg9y1flnx2oBjZ0a6J1FBfgYXYPp9EoN01eap7OUfr1Pgy1jFhsiYcFyXGpUrglRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xD2pgLRu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZhcYSEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898091F000E9;
-	Tue, 21 Jul 2026 22:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xD2pgLRu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433D21F000E9;
+	Tue, 21 Jul 2026 22:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673917;
-	bh=8zUH0G49PYzDFnYmvE0JBx8Y2ELYWhqgCcc/OPf+keo=;
+	s=korg; t=1784673919;
+	bh=+CRKQeQNBJAmEJDh4uF5rnCFd90M+9u20wxI9wR6ubU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZhcYSEo+9GW7VSFaa9OEiZEGlwu5nDsSR2KrRZ+kpgJCLogVcNv2c8jIEYmWtFYx
-	 Fm4oWjjZiSCDLTNtZtWelZx/j0cBEN5ZvmE5xc2fBS/v6ziY8SWejvWT990CBWkp9X
-	 RCmddDq8uGcoDF27JmDBL33NQl/Kr2xkNyhdHx8I=
+	b=xD2pgLRu8BqRGYd/faviM/LB+clP/DDtE1avVA7GhnGhLbGPzdQhwr+i3Mtxa8CsA
+	 ZC1TQza+92en0ZnDcI9eFBq6r8TYtK4real3O7bkltXdQErmoRI3v9MNJ3Llcpl7Xh
+	 8LlxN10zFYBCRyn6mua1DHrcB0uKvuUgnNo3yViM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 343/699] thermal: intel: Fix dangling resources on thermal_throttle_online() failure
-Date: Tue, 21 Jul 2026 17:21:42 +0200
-Message-ID: <20260721152403.429792332@linuxfoundation.org>
+Subject: [PATCH 5.10 344/699] ACPI: resource: Amend kernel-doc style
+Date: Tue, 21 Jul 2026 17:21:43 +0200
+Message-ID: <20260721152403.452135025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,55 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit b91d287fa7a1ba0727eed5823c6ee4924ee5fa31 ]
+[ Upstream commit 78ad5c7722b7bed9d35ffc5b45eb0f12e2c22fee ]
 
-The function thermal_throttle_add_dev() may fail and abort a CPU hotplug
-online operation. Since the failure occurs within the online callback,
-thermal_throttle_online(), the CPU hotplug framework does not invoke the
-corresponding offline callback. As a result, the hardware and software
-resources set up during the failed operation are not torn down.
+The functions are referred as func() in the kernel-doc. The % (percent)
+character makes the rendering for constants as described in the respective
+documentation. Amend all these.
 
-Since only thermal_throttle_add_dev() can fail, call it before setting up
-the rest of the resources.
-
-Fixes: f6656208f04e ("x86/mce/therm_throt: Optimize notifications of thermal throttle")
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Link: https://patch.msgid.link/20260613-rneri-directed-therm-intr-v3-1-3a26d1e47fc8@linux.intel.com
+Fixes: 8e345c991c8c ("ACPI: Centralized processing of ACPI device resources")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260617090555.2648709-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/therm_throt.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/acpi/resource.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/therm_throt.c b/arch/x86/kernel/cpu/mce/therm_throt.c
-index a7cd2d203ceda6..52c9269dd3a820 100644
---- a/arch/x86/kernel/cpu/mce/therm_throt.c
-+++ b/arch/x86/kernel/cpu/mce/therm_throt.c
-@@ -467,8 +467,13 @@ static int thermal_throttle_online(unsigned int cpu)
- {
- 	struct thermal_state *state = &per_cpu(thermal_state, cpu);
- 	struct device *dev = get_cpu_device(cpu);
-+	int err;
- 	u32 l;
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index 14898b4fadf099..11ec469653a81b 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -688,7 +688,7 @@ bool acpi_dev_resource_interrupt(struct acpi_resource *ares, int index,
+ EXPORT_SYMBOL_GPL(acpi_dev_resource_interrupt);
  
-+	err = thermal_throttle_add_dev(dev, cpu);
-+	if (err)
-+		return err;
-+
- 	state->package_throttle.level = PACKAGE_LEVEL;
- 	state->core_throttle.level = CORE_LEVEL;
- 
-@@ -479,7 +484,7 @@ static int thermal_throttle_online(unsigned int cpu)
- 	l = apic_read(APIC_LVTTHMR);
- 	apic_write(APIC_LVTTHMR, l & ~APIC_LVT_MASKED);
- 
--	return thermal_throttle_add_dev(dev, cpu);
-+	return err;
- }
- 
- static int thermal_throttle_offline(unsigned int cpu)
+ /**
+- * acpi_dev_free_resource_list - Free resource from %acpi_dev_get_resources().
++ * acpi_dev_free_resource_list - Free resource from acpi_dev_get_resources().
+  * @list: The head of the resource list to free.
+  */
+ void acpi_dev_free_resource_list(struct list_head *list)
+@@ -808,7 +808,7 @@ static int __acpi_dev_get_resources(struct acpi_device *adev,
+  *
+  * The resultant struct resource objects are put on the list pointed to by
+  * @list, that must be empty initially, as members of struct resource_entry
+- * objects.  Callers of this routine should use %acpi_dev_free_resource_list() to
++ * objects.  Callers of this routine should use acpi_dev_free_resource_list() to
+  * free that list.
+  *
+  * The number of resources in the output list is returned on success, an error
+@@ -846,7 +846,7 @@ static int is_memory(struct acpi_resource *ares, void *not_used)
+  * The resultant struct resource objects are put on the list pointed to
+  * by @list, that must be empty initially, as members of struct
+  * resource_entry objects.  Callers of this routine should use
+- * %acpi_dev_free_resource_list() to free that list.
++ * acpi_dev_free_resource_list() to free that list.
+  *
+  * The number of resources in the output list is returned on success,
+  * an error code reflecting the error condition is returned otherwise.
 -- 
 2.53.0
 
