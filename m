@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5556246EC65;
-	Tue, 21 Jul 2026 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFB746EF62;
+	Tue, 21 Jul 2026 18:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659580; cv=none; b=mjOxTGxGNDsqfpUCtvFLkUYUchtBEPsqM4n9mGHSKo38WTvewlRDOoSE0wC2YEbFVeE3QTiySe/JU5vsRTkNL0GWgp5IXb8LNK5Mu+fTdKDuVDeTryN7qWWtkPL+iywpqOj0EPk5ukAR0uJH7fP29kvtB/8wgS3DKLHSWexqiOI=
+	t=1784659583; cv=none; b=jQoICgzupgER5gISRZVV6D4rlDmKcfdLM9m0QBWGyXbksXF+uFTG+dwFbJzmmmSIXcWXjguEuKIZFLY9KyXUXsfUmJ9rpqnw2eoyAXP9yWbpi4bypjQ15IG3NPoZ9pOMWN8icENdaoSYTAYQZNpiZI8yE5i6nnl72pM4mvmFboo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659580; c=relaxed/simple;
-	bh=SSSko2WMXRt8g1B9Ih+g/13CGk8KCENBeoOA/dkRRYg=;
+	s=arc-20240116; t=1784659583; c=relaxed/simple;
+	bh=uo4p7JuZCtws/7Vqct0www5AObBP0STlXYNBg+aWN5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgxOPAFsbMvC690UhwG8eTzzWEUsBAAJ4FFEHNLV/fIdTxHPMoqMgFfsOP546g8IPOcqIZaTNG0pNJWlE6F4+zzRcCeyBVpcBDQqz3PD9qI8vfoMmdWMj9QkOUD0S9kgLvuUDn7UWMbKwDwS2KHiamTajDOPuAFXbVzX7BnvBH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opz4hpyU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Du8Z0Auxp/BkD+l3OzhSQWsZ4CJZ5r6OnnzngYTVm3Izl5i9BiW61jsdJ+K4m79bFG6neijQvJIoOejMY1IzCKvZT+9C/6sU/pALewGLtgnimTlAWJb113YWw5MwiR9Ntyi1y5E2sXtpvp01QNt6S5I5+W5Oy97Z2DgTeAvYMrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZO9LRRQD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opz4hpyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5231F000E9;
-	Tue, 21 Jul 2026 18:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZO9LRRQD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6041C1F000E9;
+	Tue, 21 Jul 2026 18:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659579;
-	bh=CIu2z6z3Z7cV03fjMQJgx6adyA1EJL3bCmV1e60LFzk=;
+	s=korg; t=1784659581;
+	bh=cvXOljCJsBimiRslrXQvtmlZEHLbuRCV7e9nzPWY9FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=opz4hpyUQhQhU4bEYxgHlUWWgXWSxqngeRBR4F/gE1XkB4mUDAwHPyJ/M6XKqXmoP
-	 vNd3dEP4QoaAQQxf2HN1D9n17kzj10zzMAH53udVllLJ3v4IWhJjWFCLDcmd/X4cwy
-	 NR696+0UaPfFsR5XPfkOZI1pbke34kDs3xhaa5c4=
+	b=ZO9LRRQDQN+wRComcfk6OfuAlFFwbdrjCTtjeBIL0G8EngGQBzuyOFRg69+ZKtQtU
+	 2RMcu1JdW0l3CQ/E7DekAuHOvQX/LF/H6lSanf9kWGRkoTnePXmVAp4+TUfkW5ntDk
+	 5HK+k5YHQPz2rrecJNvo3X9oYTBw7Ha0DZw2f85I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hans Holmberg <hans.holmberg@wdc.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Ingo Rohloff <ingo.rohloff@lauterbach.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1572/1611] xfs: use bio_reuse in the zone GC code
-Date: Tue, 21 Jul 2026 17:28:08 +0200
-Message-ID: <20260721152550.826895185@linuxfoundation.org>
+Subject: [PATCH 6.18 1573/1611] usb: dwc3: Support USB3340x ULPI PHY high-speed negotiation.
+Date: Tue, 21 Jul 2026 17:28:09 +0200
+Message-ID: <20260721152550.851115775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,54 +51,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Ingo Rohloff <ingo.rohloff@lauterbach.com>
 
-[ Upstream commit 0506d32f7c52e41f6e8db7c337e0ce6374c6ffbb ]
+[ Upstream commit a28de63356575612954d4e5d5f48a2488f50e16d ]
 
-Replace our somewhat fragile code to reuse the bio, which caused a
-regression in the past with the block layer bio_reuse helper.
+The Microchip USB3340x ULPI PHY requires a delay when switching to the
+high-speed transmitter. See:
+    http://ww1.microchip.com/downloads/en/DeviceDoc/80000645A.pdf
+    Module 2 "Device Enumeration Failure with Link IP Systems"
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hans Holmberg <hans.holmberg@wdc.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: open-coded the bio_reuse logic at the call site as 6.18 lacks
-  commit 7ca44303f9f6 ("block: add a bio_reuse helper") ]
-Stable-dep-of: ae3692c7f440 ("xfs: add newly added RTGs to the free pool in growfs")
+For details on the behavior and fix, refer to the AMD (formerly Xilinx)
+forum post: "USB stuck in full speed mode with USB3340 ULPI PHY, ZynqMP."
+
+This patch uses the USB PHY Vendor-ID and Product-ID to detect the
+USB3340 PHY and then applies the necessary fix if this PHY is found.
+
+Signed-off-by: Ingo Rohloff <ingo.rohloff@lauterbach.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260305121452.54082-2-ingo.rohloff@lauterbach.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e0f844d9d742 ("usb: dwc3: fix dwc3_readl() and dwc3_writel() calls in dwc3_ulpi_setup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_zone_gc.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/core.c |   20 ++++++++++++++++++++
+ drivers/usb/dwc3/core.h |    4 ++++
+ drivers/usb/dwc3/ulpi.c |   25 +++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+)
 
---- a/fs/xfs/xfs_zone_gc.c
-+++ b/fs/xfs/xfs_zone_gc.c
-@@ -812,9 +812,8 @@ xfs_zone_gc_write_chunk(
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -781,6 +781,24 @@ static int dwc3_hs_phy_setup(struct dwc3
+ 	return 0;
+ }
+ 
++static void dwc3_ulpi_setup(struct dwc3 *dwc)
++{
++	int index;
++	u32 reg;
++
++	/* Don't do anything if there is no ULPI PHY */
++	if (!dwc->ulpi)
++		return;
++
++	if (dwc->enable_usb2_transceiver_delay) {
++		for (index = 0; index < dwc->num_usb2_ports; index++) {
++			reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(index));
++			reg |= DWC3_GUSB2PHYCFG_XCVRDLY;
++			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(index), reg);
++		}
++	}
++}
++
+ /**
+  * dwc3_phy_setup - Configure USB PHY Interface of DWC3 Core
+  * @dwc: Pointer to our controller context structure
+@@ -1355,6 +1373,8 @@ static int dwc3_core_init(struct dwc3 *d
+ 		dwc->ulpi_ready = true;
+ 	}
+ 
++	dwc3_ulpi_setup(dwc);
++
+ 	if (!dwc->phys_ready) {
+ 		ret = dwc3_core_get_phy(dwc);
+ 		if (ret)
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -302,6 +302,7 @@
+ #define DWC3_GUSB2PHYCFG_SUSPHY		BIT(6)
+ #define DWC3_GUSB2PHYCFG_ULPI_UTMI	BIT(4)
+ #define DWC3_GUSB2PHYCFG_ENBLSLPM	BIT(8)
++#define DWC3_GUSB2PHYCFG_XCVRDLY	BIT(9)
+ #define DWC3_GUSB2PHYCFG_PHYIF(n)	(n << 3)
+ #define DWC3_GUSB2PHYCFG_PHYIF_MASK	DWC3_GUSB2PHYCFG_PHYIF(1)
+ #define DWC3_GUSB2PHYCFG_USBTRDTIM(n)	(n << 10)
+@@ -1161,6 +1162,8 @@ struct dwc3_glue_ops {
+  *	3	- Reserved
+  * @dis_metastability_quirk: set to disable metastability quirk.
+  * @dis_split_quirk: set to disable split boundary.
++ * @enable_usb2_transceiver_delay: Set to insert a delay before the
++ *			assertion of the TxValid signal during a HS Chirp.
+  * @sys_wakeup: set if the device may do system wakeup.
+  * @wakeup_configured: set if the device is configured for remote wakeup.
+  * @suspended: set to track suspend event due to U3/L2.
+@@ -1403,6 +1406,7 @@ struct dwc3 {
+ 	unsigned		dis_metastability_quirk:1;
+ 
+ 	unsigned		dis_split_quirk:1;
++	unsigned		enable_usb2_transceiver_delay:1;
+ 	unsigned		async_callbacks:1;
+ 	unsigned		sys_wakeup:1;
+ 	unsigned		wakeup_configured:1;
+--- a/drivers/usb/dwc3/ulpi.c
++++ b/drivers/usb/dwc3/ulpi.c
+@@ -10,10 +10,13 @@
+ #include <linux/delay.h>
+ #include <linux/time64.h>
+ #include <linux/ulpi/regs.h>
++#include <linux/ulpi/driver.h>
+ 
+ #include "core.h"
+ #include "io.h"
+ 
++#define USB_VENDOR_MICROCHIP 0x0424
++
+ #define DWC3_ULPI_ADDR(a) \
+ 		((a >= ULPI_EXT_VENDOR_SPECIFIC) ? \
+ 		DWC3_GUSB2PHYACC_ADDR(ULPI_ACCESS_EXTENDED) | \
+@@ -83,6 +86,26 @@ static const struct ulpi_ops dwc3_ulpi_o
+ 	.write = dwc3_ulpi_write,
+ };
+ 
++static void dwc3_ulpi_detect_config(struct dwc3 *dwc)
++{
++	struct ulpi *ulpi = dwc->ulpi;
++
++	switch (ulpi->id.vendor) {
++	case USB_VENDOR_MICROCHIP:
++		switch (ulpi->id.product) {
++		case 0x0009:
++			/* Microchip USB3340 ULPI PHY */
++			dwc->enable_usb2_transceiver_delay = true;
++			break;
++		default:
++			break;
++		}
++		break;
++	default:
++		break;
++	}
++}
++
+ int dwc3_ulpi_init(struct dwc3 *dwc)
  {
- 	struct xfs_zone_gc_data	*data = chunk->data;
- 	struct xfs_mount	*mp = chunk->ip->i_mount;
--	phys_addr_t		bvec_paddr =
--		bvec_phys(bio_first_bvec_all(&chunk->bio));
- 	struct xfs_gc_bio	*split_chunk;
-+	unsigned short		vcnt, i;
+ 	/* Register the interface */
+@@ -92,6 +115,8 @@ int dwc3_ulpi_init(struct dwc3 *dwc)
+ 		return PTR_ERR(dwc->ulpi);
+ 	}
  
- 	if (chunk->bio.bi_status)
- 		xfs_force_shutdown(mp, SHUTDOWN_META_IO_ERROR);
-@@ -826,10 +825,11 @@ xfs_zone_gc_write_chunk(
- 	WRITE_ONCE(chunk->state, XFS_GC_BIO_NEW);
- 	list_move_tail(&chunk->entry, &data->writing);
++	dwc3_ulpi_detect_config(dwc);
++
+ 	return 0;
+ }
  
-+	vcnt = chunk->bio.bi_vcnt;
- 	bio_reset(&chunk->bio, mp->m_rtdev_targp->bt_bdev, REQ_OP_WRITE);
--	bio_add_folio_nofail(&chunk->bio, chunk->scratch->folio, chunk->len,
--			offset_in_folio(chunk->scratch->folio, bvec_paddr));
--
-+	for (i = 0; i < vcnt; i++)
-+		chunk->bio.bi_iter.bi_size += chunk->bio.bi_io_vec[i].bv_len;
-+	chunk->bio.bi_vcnt = vcnt;
- 	while ((split_chunk = xfs_zone_gc_split_write(data, chunk)))
- 		xfs_zone_gc_submit_write(data, split_chunk);
- 	xfs_zone_gc_submit_write(data, chunk);
 
 
