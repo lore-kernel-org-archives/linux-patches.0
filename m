@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D1130EF9A;
-	Tue, 21 Jul 2026 22:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A39C43B4AB;
+	Tue, 21 Jul 2026 22:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672861; cv=none; b=AIv2EPoQLSEh/Om2oEpbKJd3GPDsReqWLKm3dvDh2RLaAK7lIIo8GG/Jbd8PoUGKEpvSZnflqZwVF/dlzbbyuGVnLYXRMnEZBcDoP0rxSuJWH2Eo2gsDr/XlGSqFCDI30CTrZIywO3O1wCMWsRo9KGbj7SzoSfOaB6NS8APkBuE=
+	t=1784672863; cv=none; b=T8tQDUbfMZFw5bB6TJAHTeR2HwWIUsU/eclb0+pSyn2swZRJECJJtAIcaS5Xu+ShdTGoY5FdAGs798cckDBnysFkZ7WLEuaSiEIw6JohCwH/Wg+g09Ouhbh6EucmspafqY0T8pog6jYNxfWK2TmlofbXmZ7jw+XD12AMC+qs3e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672861; c=relaxed/simple;
-	bh=I8OlI5FyyvoNXT8ncOSbBsVisKjB8r4aIbtTPe4coSU=;
+	s=arc-20240116; t=1784672863; c=relaxed/simple;
+	bh=dyK+VBmkJw7LSukkFaW1Nxm0vyUx/k5uxmngXp/Y1AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKqInL1d/ryHrjTofz3t6QipBNQXMwzWdNrcpCfMXFonx+BhbWjSY529jStKublOW/YK8lK7FTIWSaxlQ+QY9JhIk+kC2JLSoCbGa0EHvah99Q0FYzhVPuDVGAK/EkfcknalwPIvxJJsgmfPF+Vp43ZUsPQO7EiN9hsT9eUGD8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvk1H9Vj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a5fQ5oM/PzVPCQWDoIYou+aTkycibLeShUb6UdDLAJ0MAtcDLcCrXPy5/9/NEpUnoEQNbH3XfpyFwPXYALzSSvwzA4LZIGP1FzArW9iNvCtCYMgzDUhECnxgZQ9Uf2eBZGJemYgfVOKntVtzwWDSUXHYIiiaZUT3MBtcsHtmuUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPCUL4s1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvk1H9Vj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222021F000E9;
-	Tue, 21 Jul 2026 22:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPCUL4s1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA8E1F00A3A;
+	Tue, 21 Jul 2026 22:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672859;
-	bh=Q9XuaFndJPH+Qo0zwxolU9QVhx9Vt/JxYUFF9KEcFz8=;
+	s=korg; t=1784672862;
+	bh=Of6Db9Ku1hSVriEYp4NiwvX1+Th8UIoKoyvuaZBW0cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kvk1H9Vj+DVmKpfS2Jrxx5sS/f+RUpyui252g8m9IpiG2LosRgxZHeoIowwLuj+D5
-	 5z2N/SVQzC/IrbQPRD3R5xf9pT9V/uq3HhH07oCjv6H32LEO0KQGkMLl4d3MlJvg0r
-	 HbALyfjHnEmojkT6sx4wLM3LWNzV9j5VQBRhVgyU=
+	b=BPCUL4s1V4j4CcwIdLq4P1KSam4Op9PNjwUj+8fWyHkKS9lJNIJx2mnxx03IZZHTS
+	 il4VB0wcaqebfNuo0yT36rb8MCwjbWwtUkdASzJ9Xhry6NinQdDLbjwuBqhPrzpUsl
+	 f+9Mkt0ZrqlrR1r2Me8x/nE3vmROGZ/qKHU31XMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	munan Huang <munanevil@gmail.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	stable@kernel.org,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 785/843] ksmbd: fix use-after-free in __ksmbd_close_fd() via durable scavenger
-Date: Tue, 21 Jul 2026 17:27:00 +0200
-Message-ID: <20260721152423.721419064@linuxfoundation.org>
+Subject: [PATCH 5.15 786/843] ksmbd: fix mechToken leak when SPNEGO decode fails after token alloc
+Date: Tue, 21 Jul 2026 17:27:01 +0200
+Message-ID: <20260721152423.744843981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,64 +56,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 235e32320a470fcd3998fb3774f2290a0eb302a1 ]
+[ Upstream commit ad0057fb91218914d6c98268718ceb9d59b388e1 ]
 
-When a durable file handle survives session disconnect (TCP close without
-SMB2_LOGOFF), session_fd_check() sets fp->conn = NULL to preserve the
-handle for later reconnection. However, it did not clean up the byte-range
-locks on fp->lock_list.
+The kernel ASN.1 BER decoder calls action callbacks incrementally as it
+walks the input.  When ksmbd_decode_negTokenInit() reaches the mechToken
+[2] OCTET STRING element, ksmbd_neg_token_alloc() allocates
+conn->mechToken immediately via kmemdup_nul().  If a later element in
+the same blob is malformed, then the decoder will return nonzero after
+the allocation is already live.  This could happen if mechListMIC [3]
+overrunse the enclosing SEQUENCE.
 
-Later, when the durable scavenger thread times out and calls
-__ksmbd_close_fd(NULL, fp), the lock cleanup loop did:
+decode_negotiation_token() then sets conn->use_spnego = false because
+both the negTokenInit and negTokenTarg grammars failed.  The cleanup at
+the bottom of smb2_sess_setup() is gated on use_spnego:
 
-    spin_lock(&fp->conn->llist_lock);
+	if (conn->use_spnego && conn->mechToken) {
+		kfree(conn->mechToken);
+		conn->mechToken = NULL;
+	}
 
-This caused a slab use-after-free because fp->conn was NULL and the
-original connection object had already been freed by
-ksmbd_tcp_disconnect().
+so the kfree is skipped, causing the mechToken to never be freed.
 
-The root cause is asymmetric cleanup: lock entries (smb_lock->clist) were
-left dangling on the freed conn->lock_list while fp->conn was nulled out.
+This codepath is reachable pre-authentication, so untrusted clients can
+cause slow memory leaks on a server without even being properly
+authenticated.
 
-To fix this issue properly, we need to handle the lifetime of
-smb_lock->clist across three paths:
- - Safely skip clist deletion when list is empty and fp->conn is NULL.
- - Remove the lock from the old connection's lock_list in
-   session_fd_check()
- - Re-add the lock to the new connection's lock_list in
-   ksmbd_reopen_durable_fd().
+Fix this up by not checking check for use_spnego, as it's not required,
+so the memory will always be properly freed.  At the same time, always
+free the memory in ksmbd_conn_free() incase some other failure path
+forgot to free it.
 
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Co-developed-by: munan Huang <munanevil@gmail.com>
-Signed-off-by: munan Huang <munanevil@gmail.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: c1016dd1d8b2 ("ksmbd: track the connection owning a byte-range lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/vfs_cache.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/ksmbd/connection.c |    1 +
+ fs/ksmbd/smb2pdu.c    |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ksmbd/vfs_cache.c
-+++ b/fs/ksmbd/vfs_cache.c
-@@ -317,9 +317,11 @@ static void __ksmbd_close_fd(struct ksmb
- 	 * there are not accesses to fp->lock_list.
- 	 */
- 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
--		spin_lock(&fp->conn->llist_lock);
--		list_del(&smb_lock->clist);
--		spin_unlock(&fp->conn->llist_lock);
-+		if (!list_empty(&smb_lock->clist) && fp->conn) {
-+			spin_lock(&fp->conn->llist_lock);
-+			list_del(&smb_lock->clist);
-+			spin_unlock(&fp->conn->llist_lock);
-+		}
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -39,6 +39,7 @@ void ksmbd_conn_free(struct ksmbd_conn *
+ 	xa_destroy(&conn->sessions);
+ 	kvfree(conn->request_buf);
+ 	kfree(conn->preauth_info);
++	kfree(conn->mechToken);
+ 	kfree(conn);
+ }
  
- 		list_del(&smb_lock->flist);
- 		locks_free_lock(smb_lock->fl);
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -1920,7 +1920,7 @@ out_err:
+ 	else if (rc)
+ 		rsp->hdr.Status = STATUS_LOGON_FAILURE;
+ 
+-	if (conn->use_spnego && conn->mechToken) {
++	if (conn->mechToken) {
+ 		kfree(conn->mechToken);
+ 		conn->mechToken = NULL;
+ 	}
 
 
