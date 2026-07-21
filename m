@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CA4435A96;
-	Tue, 21 Jul 2026 20:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED8441735B;
+	Tue, 21 Jul 2026 20:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665229; cv=none; b=frNCdkv3ULwyNYDpXy08eyOa03r+M/+sfvBOV9psluIyaYmlHMQtxaBywKI6mVjx1DKOgQAP+uOtFm/b2FJ/+eX7YZfd+20y1X6b4B5fRj66CQyDO68jKuIILRjhMx0iq0jkl19EOM3MTnkzy4z8K853ZmmLfYmxA4fPDYX6C9g=
+	t=1784665232; cv=none; b=btz64kSG3JRobh/psUVPzhQJHoUge+OZOw1eBQi6NRKxOeisQtC3iu3oGTni+lqdGNhOiH2BAy/tcKaewoc3aaHddDGnnNWkZyhYzThgiReoUxYwTP2CgyWyuv8PoeKH6H4gwmEKwXf06zjH69Ca0D2OucE1LlCtK6ryHFH4H6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665229; c=relaxed/simple;
-	bh=JIVpi8aKvn6LtWCdeobde7CmTwQKqAsYK/a7ULXwnok=;
+	s=arc-20240116; t=1784665232; c=relaxed/simple;
+	bh=hiMzSh4qhnhFJ3tTm8+qK1pmGsPvzwhWBw8zZ/qVo3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FU7vx3CXwtCxM4hwYzbQLMrlh9cmGv8VYsrfvXwhgkRpNvSd0uuXgec5/ZG7zkfIGe7JwRSJbEr63OPPYpQIiu50poUblhWtn+ke3MgYXy+2nnAJHyWuh0brvTn/LM5KsGlg01QhePGMVbYDOup0Spn/rfhkM0ryOtKe8tL3/dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS4k/xXg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K4LJjmw/3c1zfai8jLghFdOx/IDShnaVnvqRDQ+go8Uq2axQLztJNwYpQxmCNDGPMvxCvhAXKoTOg7Zr66phIubsKdYxkW+zxFMWhi87riErtVHefHKag3la/iU2ndvWpgfnn/OraugepYYGVyu1SP6fCZRgg3AJuKMA66UB3/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9lS+O3F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS4k/xXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77C51F000E9;
-	Tue, 21 Jul 2026 20:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9lS+O3F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA1E1F000E9;
+	Tue, 21 Jul 2026 20:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665228;
-	bh=iYU5/FfVENadYBC47J7BjQXv7o+pX7REp4n8YYzziPk=;
+	s=korg; t=1784665231;
+	bh=pcClcet34O/RM7QJQ8FoNtXEdeKZm2adVgQvVhlGZeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YS4k/xXgXUaZGNRT87Rgv4yw4bggKHyKkcH+V0Hos6D1HBjYVSHD4HCl3gt329lL0
-	 CKtEBd57nDgkZLeRIZ96AsNS331WaJt6ZxQLt0TkUW8SdW4wLHAGvjhuED4/TdHKu7
-	 MNTvZ3xRQ9vc2BveIXH1JxfaLppsKMn0Uyv1uWog=
+	b=b9lS+O3FHwsAwrmuwNieoZL5w7QbH0m/72IhNaKDqAZ+4E4Js5rWLlsiMZvwB2I3K
+	 4BkK5M9tkwXKQUqdkuMd51KLJmnyAw8VLCDWkY9hxzjiczRRtwV0nhhKX5xO1rbrRe
+	 FmtNzDLeO91vVflgnF9ubZ+5/0Klvf5BJl8whKS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 0223/1266] bpf: Restore sysctl new-value from 1 to 0
-Date: Tue, 21 Jul 2026 17:11:00 +0200
-Message-ID: <20260721152446.807593817@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0224/1266] net: usb: kalmia: bound RX frame length in kalmia_rx_fixup()
+Date: Tue, 21 Jul 2026 17:11:01 +0200
+Message-ID: <20260721152446.830786916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,52 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 2566c3b24219c5b30e35205cba029ff34ff7c78b upstream.
+commit 47b6bcef6e679593d2e86e04ee72c46a4e2f7139 upstream.
 
-Commit 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value
-helpers") changed the success return value to 0, but failed to update the
-corresponding check in __cgroup_bpf_run_filter_sysctl(). Since
-bpf_prog_run_array_cg() now returns 0 on success, the legacy ret == 1
-condition is never satisfied. As a result, the modified value is ignored,
-and bpf_sysctl_set_new_value() fails to replace the write buffer.
+kalmia_rx_fixup() computes usb_packet_length = skb->len - (2 *
+KALMIA_HEADER_LENGTH) as a u16, guarded only by a pre-loop check that
+skb->len is at least KALMIA_HEADER_LENGTH, which is 6. A device can
+deliver a short bulk-IN frame with skb->len in the 6 to 11 range, or
+leave a short trailing remainder on a later loop iteration. Either case
+underflows usb_packet_length to about 65530.
 
-Fix this by checking for a return value of 0 instead, so cgroup/sysctl
-programs can correctly replace the pending sysctl buffer.
+That bypasses the usb_packet_length < ether_packet_length truncation path.
+The device-supplied ether_packet_length, a le16 up to 65535 read from
+header_start[2], then drives a memcmp() and the following skb_trim() and
+skb_pull() past the end of the rx buffer. The rx buffer is hard_mtu * 10,
+which is 14000 bytes. That is an out of bounds read.
 
-This bug was discovered during a manual code review. Tested via a
-cgroup/sysctl BPF reproducer overriding writes to a target sysctl.
-Pre-fix, bpf_sysctl_set_new_value("foo") was silently ignored: the write
-returned 8192 and the value remained "600". Post-fix, the BPF replacement
-buffer properly propagates: the write returns 3 and the value updates to
-"foo".
+Require both the start and end framing headers to be present before
+subtracting them, on every loop iteration.
 
-Fixes: f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err instead of allow boolean")
+Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
 Cc: stable@vger.kernel.org
-
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/20260603105317.944304-4-dawei.feng@seu.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/178211531778.2216480.12637613349790980750@maoyixie.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/cgroup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/kalmia.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1775,7 +1775,7 @@ int __cgroup_bpf_run_filter_sysctl(struc
+--- a/drivers/net/usb/kalmia.c
++++ b/drivers/net/usb/kalmia.c
+@@ -276,6 +276,14 @@ kalmia_rx_fixup(struct usbnet *dev, stru
+ 				"Received header: %6phC. Package length: %i\n",
+ 				header_start, skb->len - KALMIA_HEADER_LENGTH);
  
- 	kfree(ctx.cur_val);
- 
--	if (ret == 1 && ctx.new_updated) {
-+	if (!ret && ctx.new_updated) {
- 		kvfree(*buf);
- 		*buf = ctx.new_val;
- 		*pcount = ctx.new_len;
++		/* both framing headers must be present before we subtract
++		 * them, otherwise usb_packet_length underflows and the
++		 * device-supplied ether_packet_length drives an out of bounds
++		 * access below
++		 */
++		if (skb->len < 2 * KALMIA_HEADER_LENGTH)
++			return 0;
++
+ 		/* subtract start header and end header */
+ 		usb_packet_length = skb->len - (2 * KALMIA_HEADER_LENGTH);
+ 		ether_packet_length = get_unaligned_le16(&header_start[2]);
 
 
