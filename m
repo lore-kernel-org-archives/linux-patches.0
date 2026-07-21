@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B04A386C1C;
-	Tue, 21 Jul 2026 20:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2ADC2EBB8D;
+	Tue, 21 Jul 2026 20:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667248; cv=none; b=GQD1t/LBhtJwYGq/CrQ3QhxAli6Ipc1QB6+wg9BESPrg7LfzcBDarKun9tY+s2kF+ZEY8/6jpl3RLx9Ua+Ykh5I6Kj0tYUtbqoTIYMpLFlc6Q8cZrUf2O1apVPVF9awulovTVA9UmHVL59aCyzLqZ0Gq0gr2Xa7cg/gTDPI6ONo=
+	t=1784667251; cv=none; b=SzzCZDClLstI65Q/MlzchSUtTIO5nX02IduDqstloW+OHyStoLeanyuDGqFhNRh1XJ60sUWbKju8ODXJrFbjeX5/PfunPBQavQ/fA6udurAX7x2COCMJwhvdrJ4gwn+yKojA7LGI7js8NHaq1g/H1YCuXK9RDEa11Vj9XWKKVOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667248; c=relaxed/simple;
-	bh=ayBPE9GxJbENZ3XtrCarAO0AotfNAG7qAPVopJWP/3E=;
+	s=arc-20240116; t=1784667251; c=relaxed/simple;
+	bh=uVfcyBEmw2u78JG3/dxoTApsAlCFRwAuP/1CbjdI8yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJQOHEJxICqWo1Z7n9XhsVAGqX//nZKjWbtuxZzhECqKE7K2wM/p89/ZTLWd5E06CIDTj7GqlfZhDkzR8XkytFUDK6GAIEr7SBc1nfcNe/WmwuLK/4GZZXF02pp6mAODY8fg9rreyGgK6PL79TAZDjQIT8Gz2nUOyKwXvg9sKp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srODm3qj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MOFHPqJqjsJvJt0PoPgKf4mJuoEXakisZw+QzT4mniAVjIoJAbjToP1UdvXl0AEog2asinhkNcpqZA/LEtCJsB88bG9D7Yt7ZzQDRr+X9n4Pzo4iAiQ5gDMvlLQ7A0h7fRCzA/2GLivHK7X2yE5uWnno6x+g7RNhawVvaKKOFQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlCtnRC+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srODm3qj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07651F000E9;
-	Tue, 21 Jul 2026 20:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlCtnRC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545111F000E9;
+	Tue, 21 Jul 2026 20:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667247;
-	bh=QEwnK3D8qW104WJdahxgFwqEilbASXlIVxOSD/gJ5gM=;
+	s=korg; t=1784667249;
+	bh=nIOJw6uBW5vB4A3VhjTZRXFTmw0AaUCA/z+TPVRV6mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srODm3qjf10hOZDR2AdgOy4ACdW74+CNgRHCvxOzTZ3PyriooRjtUo68bNRLHMKvy
-	 v7UiSLRBN/DQpCKUhjSX3tCGjrC7D9zTmSgTpJ2Gt2Klp3jEBDEgnuAmjkgb1oEWP/
-	 cIazae379psZwlD4CUZAuQbrYLz/avZkhEiRV4yo=
+	b=WlCtnRC+NxOC4j/Mr7DTB2DhYZUs6F7pMW35hlN+g0jBu48rdZm2GfyhTUN4G/42I
+	 Lw4IUjjl/NkEH9olCNGihB6VxSnRCGktSNvgo8T26ShNzeihZ8BUYhuf+8l2iN2pXG
+	 Q32iA2f1fGA38/FxyiSPe1GmYfkgHxclVo/gdS5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zishun Yi <vulab@iscas.ac.cn>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.6 0989/1266] riscv: cacheinfo: Fix node reference leak in populate_cache_leaves
-Date: Tue, 21 Jul 2026 17:23:46 +0200
-Message-ID: <20260721152503.965606718@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0990/1266] mm/damon/sysfs-schemes: fix dir put orders in access_pattern_add_dirs()
+Date: Tue, 21 Jul 2026 17:23:47 +0200
+Message-ID: <20260721152503.987239737@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,41 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zishun Yi <vulab@iscas.ac.cn>
+From: SeongJae Park <sj@kernel.org>
 
-commit bf4a195f063b0a0805c1417f6aad1dd32ea48f0f upstream.
+commit d58fdbe37a829fd2e5803dd4e5a72992dd8c5368 upstream.
 
-Currently, the while loop drops the reference to prev in each iteration.
-If the loop terminates early due to a break, the final of_node_put(np)
-correctly drops the reference to the current node.
+Patch series "mm/damon/sysfs-schemes: fix wrong directories put orders in
+error paths".
 
-However, if the loop terminates naturally because np == NULL, calling
-of_node_put(np) is a no-op. This leaves the last valid node stored in
-prev without its reference dropped, resulting in a node reference leak.
+Error paths of damon_sysfs_access_pattern_add_dirs() and
+damon_sysfs_scheme_add_dirs() functions put references to directories in
+wrong orders.  As a result, uninitialized memory dereference and/or
+memory leak can happen.  Fix those.
 
-Fix this by changing the final `of_node_put(np)` to `of_node_put(prev)`.
 
-Fixes: 94f9bf118f1e ("RISC-V: Fix of_node_* refcount")
-Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260509074040.1747800-1-vulab@iscas.ac.cn
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+This patch (of 2):
+
+In access_pattern_add_dirs(), error handling path puts references starting
+from setup failed directories.  If the failure happpened from the initial
+allication in the setup functions, uninitialized memory dereference
+happen.  The allocation failures will not commonly happen, but the
+consequence is quite bad.  Fix the wrong reference put orders.
+
+The issue was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260618005650.83868-2-sj@kernel.org
+Link: https://lore.kernel.org/20260617060005.86852-1-sj@kernel.org [1]
+Fixes: 7e84b1f8212a ("mm/damon/sysfs: support DAMON-based Operation Schemes")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.18.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/cacheinfo.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/sysfs-schemes.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/arch/riscv/kernel/cacheinfo.c
-+++ b/arch/riscv/kernel/cacheinfo.c
-@@ -128,7 +128,7 @@ int populate_cache_leaves(unsigned int c
- 			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
- 		levels = level;
- 	}
--	of_node_put(np);
-+	of_node_put(prev);
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1077,22 +1077,19 @@ static int damon_sysfs_access_pattern_ad
+ 	err = damon_sysfs_access_pattern_add_range_dir(access_pattern,
+ 			&access_pattern->sz, "sz");
+ 	if (err)
+-		goto put_sz_out;
++		return err;
  
+ 	err = damon_sysfs_access_pattern_add_range_dir(access_pattern,
+ 			&access_pattern->nr_accesses, "nr_accesses");
+ 	if (err)
+-		goto put_nr_accesses_sz_out;
++		goto put_sz_out;
+ 
+ 	err = damon_sysfs_access_pattern_add_range_dir(access_pattern,
+ 			&access_pattern->age, "age");
+ 	if (err)
+-		goto put_age_nr_accesses_sz_out;
++		goto put_nr_accesses_sz_out;
  	return 0;
- }
+ 
+-put_age_nr_accesses_sz_out:
+-	kobject_put(&access_pattern->age->kobj);
+-	access_pattern->age = NULL;
+ put_nr_accesses_sz_out:
+ 	kobject_put(&access_pattern->nr_accesses->kobj);
+ 	access_pattern->nr_accesses = NULL;
 
 
