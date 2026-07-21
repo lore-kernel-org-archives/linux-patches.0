@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB6A29CE9;
-	Tue, 21 Jul 2026 21:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A47144AB7F;
+	Tue, 21 Jul 2026 21:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668985; cv=none; b=YQEeaW00s07cQnRcytJ2nHa6VzCPLf6f3v9BT9XStseSLKZG2La+DKPRvlmbo9fsZH6IfK1fBgGmZppMVHnfuZpTL6aGHnLulRXHvmqQDIJ0utD11YQoPsgruuPAOXHC11Xpglz+Fq06O9UaSGyK8YcKfGTWHDgDJnzkmb7jbVg=
+	t=1784668988; cv=none; b=s0VBsHLlroJZrjzY6HRHMDR/sYn3e5ZDxuYh6+u1vL142NtJArxya3nV1N0yGY7sL+hjPGcYOWTTJoT9JQH9LbgM5ZCfdWdZy4hLimNnR/vvZUAlXnsNZTEA4G0xfNWFa3ZD5ZFfYUD5ECK8kK3mF8nEGia82OJi1B10IkhJc+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668985; c=relaxed/simple;
-	bh=UlxMMWcLzpL1vni3oB+K+Rd1DvSZD6vDviNXGhUFyek=;
+	s=arc-20240116; t=1784668988; c=relaxed/simple;
+	bh=shJDDkz9gwXthT/1R6YGVO4qj9IaYFh0oL1TMe25Ays=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IIPy4J+4O0IVh6oVx8zd7Y7npxwELqc0ynAyuaRC+c/wdhzNQOd1eO1R8Cqb+RH3071aWWBN4xjrpN4YsQciBz+mVkaicnF07MameI+DGlFaQnkdjR4KjmLBLxMZrQx24fwQCb+fwqEVmLQ1EnGHnDHR/ClI1+kP+s1sXPhhhYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMyaYh4J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q3WOq7GwdWS9+bYv7r2wmxKKoRXLTQ92qCwml9I14Uu5fZO25bQP0v8bTpBLPyQlP5PhawzpjxVUmOptDtd1LZwOfAjJifXvkyISJhDkywiMfEsImRVAtWq6GwVckWTBzPI2S7rUUHncDSH0scQmtwq3Xsx5mglAUGKOLeMh2I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unj5VrpT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMyaYh4J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F481F000E9;
-	Tue, 21 Jul 2026 21:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unj5VrpT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA601F000E9;
+	Tue, 21 Jul 2026 21:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668984;
-	bh=XuWKD0jfCC5uM2fz1gVAgtLTDjbWtlciMatdKGpOY44=;
+	s=korg; t=1784668987;
+	bh=cGbQqANJjaXCvwJz4iFRHhtBnKPF39ZenGlHBbopsJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oMyaYh4Jg0Iwkf5LVduHTrXfGWEuSOy/Z8D3L6PXaWzNio8+XZZArnbr7YRjVsupD
-	 f3iuy66E5VGBwyVfxtlmkA33LbDmshP1431xNggiENVJmCyr1kqQnGTVsXVM3YL4e5
-	 neY3OwxNL0tJ/awJU94oO5ZI8rkeI4LDVF7iBoKI=
+	b=unj5VrpTKXUnenAG8BjxcKpsn8e2zSWpoo23NFnIidMZ7vs79Jly7ALMuW/cS6p0T
+	 Rpi2vQk0w/XW4WhQcSzZcNGYdGqWOHsC8I5acsKFFADZs+Gbrsne3GsP1Jc87fwdhi
+	 ZvDAXgG7T/WQ8YDzw3QCK8Ao6xYcBTY7qmTFxpR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0330/1067] RDMA/counter: Fix incorrect port index in rdma_counter_init() error cleanup
-Date: Tue, 21 Jul 2026 17:15:31 +0200
-Message-ID: <20260721152431.977717591@linuxfoundation.org>
+Subject: [PATCH 6.1 0377/1067] ocfs2: fix buffer head management in ocfs2_read_blocks()
+Date: Tue, 21 Jul 2026 17:16:18 +0200
+Message-ID: <20260721152433.060886797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,37 +59,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit b86fd95805a7bd4c5b9465c9e7f75e45bbe7eb6f ]
+[ Upstream commit 6371a07148ee979af22a9d6f4c277462953a9a4a ]
 
-The error cleanup loop in rdma_counter_init() iterates with variable
-'i' but accesses dev->port_data[port] instead of dev->port_data[i].
-This causes the failed port's hstats to be freed multiple times while
-leaking hstats of previously initialized ports.
+In ocfs2_read_blocks(), caller should't assume that buffer head returned
+by 'sb_getblk()' is exclusively owned and so 'put_bh()' always drops
+b_count from 1 to 0.  If it is not so, buffer head remains on hold and
+likely to be returned by the next call to 'sb_getblk()' unchanged - that
+is, with BH_Uptodate bit set even if it has failed validation previously,
+thus allowing to insert that buffer head into OCFS2 metadata cache and
+submit it to upper layers.  To avoid such a scenario, BH_Uptodate should
+be cleared immediately after 'validate()' callback has detected some data
+inconsistency.
 
-Fixes: 56594ae1d250 ("RDMA/core: Annotate destroy of mutex to ensure that it is released as unlocked")
-Link: https://patch.msgid.link/r/20260520104546.1776253-3-cuitao@kylinos.cn
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/20260529094128.494293-1-dmantipov@yandex.ru
+Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=caacd220635a9cc3bac9
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/counters.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/buffer_head_io.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
-index af59486fe41852..d41af5ab6403ab 100644
---- a/drivers/infiniband/core/counters.c
-+++ b/drivers/infiniband/core/counters.c
-@@ -649,7 +649,7 @@ void rdma_counter_init(struct ib_device *dev)
+diff --git a/fs/ocfs2/buffer_head_io.c b/fs/ocfs2/buffer_head_io.c
+index 45ca3cb7c0974c..71f3787bf82f07 100644
+--- a/fs/ocfs2/buffer_head_io.c
++++ b/fs/ocfs2/buffer_head_io.c
+@@ -350,8 +350,6 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
+ 						wait_on_buffer(bh);
+ 					put_bh(bh);
+ 					bhs[i] = NULL;
+-				} else if (bh && buffer_uptodate(bh)) {
+-					clear_buffer_uptodate(bh);
+ 				}
+ 				continue;
+ 			}
+@@ -380,8 +378,11 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
+ 				BUG_ON(buffer_jbd(bh));
+ 				clear_buffer_needs_validate(bh);
+ 				status = validate(sb, bh);
+-				if (status)
++				if (status) {
++					if (buffer_uptodate(bh))
++						clear_buffer_uptodate(bh);
+ 					goto read_failure;
++				}
+ 			}
+ 		}
  
- fail:
- 	for (i = port; i >= rdma_start_port(dev); i--) {
--		port_counter = &dev->port_data[port].port_counter;
-+		port_counter = &dev->port_data[i].port_counter;
- 		rdma_free_hw_stats_struct(port_counter->hstats);
- 		port_counter->hstats = NULL;
- 		mutex_destroy(&port_counter->lock);
 -- 
 2.53.0
 
