@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D8846AA91;
-	Tue, 21 Jul 2026 15:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF1746A5E4;
+	Tue, 21 Jul 2026 15:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648231; cv=none; b=Q7EDs7xVMCBtVW5MvVLUJ2zDcxmb1Ph2vCAZ8IUW4GQRuylAM3lOBfte8cGRQrSbduZqiIJFTaPQFWvUflGx7DY8dHynmzODY/7BVuJqhdKupcjgti5h3JgW53MwkfhjVcyvzjAx3WSVbjx+WC66JFETwgn8Bc6H7/0IqvBR/mc=
+	t=1784648234; cv=none; b=p7wjVMvQ3qvS0BM+w25oyzOArPPxSz+QDZu4WWxy5niwUoaGGs4DwTDDgx07Y0kGrz+/lCpzLGztIqbK1NZdMe1esu+qXG0VY7P22BF/5nMmGWUOH6PrHjsZeRtB8xp+bOtO+7aBcheSuJCwiqV/Dd++ZoDjEsoYOjnwcECJzP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648231; c=relaxed/simple;
-	bh=YpDXhOOXOITTMFQUbgvVCAt4vqgVPEsPSk7ZXOMbft4=;
+	s=arc-20240116; t=1784648234; c=relaxed/simple;
+	bh=NjPJUbojGpnIwhBxQJN6epbEatsWVSd9GNjMIFrOx8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jhhb19M97C8giai+v67lxB+Ic1VidkLwICN+i/5oRhExbNdtCs4DHDDkuerzv9AbXkpqAlGeYn4/v+aTyqlGSZCz3fuEalfNB4D0EJ3u18b1JB92i9Hmj9FMZAmo0XtD0BpEew2vx9P8EcJxO4Pcl5CrIr0hNZCdt/ASWqyZyxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHxrNcoH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rVew+wQnK6/sA8IiTrtBQCY708OTYlOD61aPFHvtHG1EdS2bNUlOXhdsvOcCen5GMR1kiKJ5eLirwoarqdeKdwumQODKAlbaeekf1MnqtNEVw+0hBv1gC6A5Z9xOvZFCwkY6M0xpIVZf83G24B6ImgblFdRWKF/Tz1LdTJj15Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOtNfRoQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHxrNcoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0231F00A3A;
-	Tue, 21 Jul 2026 15:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOtNfRoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579351F000E9;
+	Tue, 21 Jul 2026 15:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648230;
-	bh=1HYLlc/X82PUbjL4eR2/PzQT4h5uRWOnJvSs/ha58cU=;
+	s=korg; t=1784648232;
+	bh=9B2+9DFX7g0Tm8F/S5U8QO/H91pK0AT9LkZrunSLpoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eHxrNcoHhXJ2n2eFiv+87TH5A9Gm5imWWAe6aJgYw9Sp3d5qYVmC7LlDjSmOftTPD
-	 KSBTpsw8rJzNN8cOflwijXvIP5b4HcpVgxb1yYdX4jUfYpzs0/ML9f3xu6hSZkQL5q
-	 vSJyDRoxNe3+Rbv7KEtGkJZkuMassjb2AUXNMJbk=
+	b=DOtNfRoQJT/dQJHSpRmBfbLA8T7LOfnhXqHviGKvTeAQHVUBMgElNWatiL4wAOjAy
+	 yOtB88gccTq+r8I1ydGthi4eKU9OHUAyjajN2I7N5vSpHIaGxxo2e4DhEDM/i4EhQL
+	 j3rBIY6JPjXmstrZBUXvS+ciBGFiZqPHpWti3V4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashish Mhetre <amhetre@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Song Liu <song@kernel.org>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0120/2077] memory: tegra: Wire up system sleep PM ops
-Date: Tue, 21 Jul 2026 16:56:33 +0200
-Message-ID: <20260721152555.529502706@linuxfoundation.org>
+Subject: [PATCH 7.1 0121/2077] objtool/klp: Fix is_uncorrelated_static_local() for Clang
+Date: Tue, 21 Jul 2026 16:56:34 +0200
+Message-ID: <20260721152555.553295876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,69 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Mhetre <amhetre@nvidia.com>
+From: Joe Lawrence <joe.lawrence@redhat.com>
 
-[ Upstream commit 2411c8d1e3e09910e94bab0d0a2c071fbc8a9e7b ]
+[ Upstream commit 84c304a534b844703d3437811e8f072166e3f116 ]
 
-The tegra-mc platform driver does not register any dev_pm_ops, so the
-SoC-specific ->resume() is never invoked (e.g. tegra186_mc_resume) on
-system wake. On Tegra186 and later this means MC client Stream-ID
-override registers are not reprogrammed, and clients behind the ARM
-SMMU fault on the first DMA after resume.
+For naming function-local static locals, GCC uses <var>.<id>, e.g.
+__already_done.15, while Clang uses <func>.<var> with optional .<id>,
+e.g. create_worker.__already_done.111
 
-Register a dev_pm_ops on the tegra-mc driver and route the system
-resume callback into mc->soc->ops->resume() so the existing SID
-restore path runs again on wake.
+The existing is_uncorrelated_static_local() check only matches the GCC
+convention where the variable name is a prefix.  Handle both cases by
+checking for a prefix match (GCC) and by checking after the first dot
+separator (Clang).
 
-No suspend callback is needed as the resume path reprograms all MC
-state from the static SoC tables, so there is nothing to save.
-
-Fixes: fe3b082a6eb8 ("memory: tegra: Add SID override programming for MC clients")
-Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260430095202.1167651-3-amhetre@nvidia.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: dd590d4d57eb ("objtool/klp: Introduce klp diff subcommand for diffing object files")
+Signed-off-by: Joe Lawrence <joe.lawrence@redhat.com>
+Acked-by: Song Liu <song@kernel.org>
+Reviewed-by: Miroslav Benes <mbenes@suse.cz>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/tegra/mc.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ tools/objtool/klp-diff.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
-index d620660da3311c..64e41338cdf2d1 100644
---- a/drivers/memory/tegra/mc.c
-+++ b/drivers/memory/tegra/mc.c
-@@ -13,6 +13,7 @@
- #include <linux/of.h>
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
-+#include <linux/pm.h>
- #include <linux/slab.h>
- #include <linux/sort.h>
- #include <linux/tegra-icc.h>
-@@ -1010,10 +1011,23 @@ static void tegra_mc_sync_state(struct device *dev)
- 		icc_sync_state(dev);
- }
+diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
+index 0b0d1503851ff9..b1b068e9b4c708 100644
+--- a/tools/objtool/klp-diff.c
++++ b/tools/objtool/klp-diff.c
+@@ -242,16 +242,17 @@ static struct symbol *next_file_symbol(struct elf *elf, struct symbol *sym)
+ static bool is_uncorrelated_static_local(struct symbol *sym)
+ {
+ 	static const char * const vars[] = {
+-		"__already_done.",
+-		"__func__.",
+-		"__key.",
+-		"__warned.",
+-		"_entry.",
+-		"_entry_ptr.",
+-		"_rs.",
+-		"descriptor.",
+-		"CSWTCH.",
++		"__already_done",
++		"__func__",
++		"__key",
++		"__warned",
++		"_entry",
++		"_entry_ptr",
++		"_rs",
++		"descriptor",
++		"CSWTCH",
+ 	};
++	const char *dot;
  
-+static int tegra_mc_resume(struct device *dev)
-+{
-+	struct tegra_mc *mc = dev_get_drvdata(dev);
+ 	if (!is_object_sym(sym) || !is_local_sym(sym))
+ 		return false;
+@@ -259,8 +260,20 @@ static bool is_uncorrelated_static_local(struct symbol *sym)
+ 	if (!strcmp(sym->sec->name, ".data.once"))
+ 		return true;
+ 
++	dot = strchr(sym->name, '.');
++	if (!dot)
++		return false;
 +
-+	if (mc->soc->ops && mc->soc->ops->resume)
-+		mc->soc->ops->resume(mc);
+ 	for (int i = 0; i < ARRAY_SIZE(vars); i++) {
+-		if (strstarts(sym->name, vars[i]))
++		size_t len = strlen(vars[i]);
 +
-+	return 0;
-+}
++		/* GCC: <var>.<id> */
++		if (strstarts(sym->name, vars[i]) && (sym->name[len] == '.'))
++			return true;
 +
-+static DEFINE_SIMPLE_DEV_PM_OPS(tegra_mc_pm_ops, NULL, tegra_mc_resume);
-+
- static struct platform_driver tegra_mc_driver = {
- 	.driver = {
- 		.name = "tegra-mc",
- 		.of_match_table = tegra_mc_of_match,
-+		.pm = pm_sleep_ptr(&tegra_mc_pm_ops),
- 		.suppress_bind_attrs = true,
- 		.sync_state = tegra_mc_sync_state,
- 	},
++		/* Clang: <func>.<var>[.<id>] */
++		if (strstarts(dot + 1, vars[i]) &&
++		    (dot[1 + len] == '.' || dot[1 + len] == '\0'))
+ 			return true;
+ 	}
+ 
 -- 
 2.53.0
 
