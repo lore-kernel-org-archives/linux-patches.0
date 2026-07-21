@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C383E49CF;
-	Tue, 21 Jul 2026 22:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F1D3D6CCA;
+	Tue, 21 Jul 2026 22:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673419; cv=none; b=CVepXkxVio5vpm9NZymI3Mj3sgGsmkju6mxnL0au96xRKiFSWAqtNTBFiO1HD9nG0L9LapsAszRSjg2MZyDbhiJAN2iWqLbnsveU3WhbDZdVBLljUgTdiuMIh8xF+pmR5ycaUkHG2oN7fSE+B23luJkksK4X387raLP6Dvo8MGY=
+	t=1784673422; cv=none; b=RvEgXB9EbQBRZauJl29TWr5GvimnyGuW4aS/Y47i7XX8DCVvw3sZh1s9r8/3gmyoIb4960io+lQZmb+mlVYiXA0a0r3CpvG2+RhJiengPzEKvbGIUzbia19ohxPdIW48Nrddd4UYNMypkF5ueCwEAcXymFhD2FvK3XJoSAJCl/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673419; c=relaxed/simple;
-	bh=ZMDlCJJK7/t/39UatUGzMyw+z8FoOLY+ZtZ+/zjUoMQ=;
+	s=arc-20240116; t=1784673422; c=relaxed/simple;
+	bh=rLR7G+wOV7fP0Ck4+wIJi8LlwpgKE0XJWyZGR650qDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbB/9zOkA+rlGZyZX524jKmldKJlBfHoR2Cq0qyJd7Ir/gKkddecC0AdoS7ZQvDoU83F5oB4vjSF3nGgodYtfZ6DMIzWtR3QyqR7VGEtHBCZdOwTE31oHoWwjk7SCHiIVZZuzjG17MUxsAL0m0P2QD05Y93Wue7P0AUnhzsbIkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/b79fSD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GAJdbIYvcqWq8ZKfZumxa392NRipAoNyPyFGR+VCgsTIo9IMlLO5RPOAe6xlJ6Fsqy9MXSQiH4d71pDPYbKjh1OUfX4JSwW2OCPqLEqqocMQqecEbLDSiMZuRY6kQf2dBqmtx0c3dNTZXWf9truzcZFj6dQLad7G8NAXFP2D6l8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1T69B6O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/b79fSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641981F000E9;
-	Tue, 21 Jul 2026 22:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1T69B6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D70F1F000E9;
+	Tue, 21 Jul 2026 22:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673417;
-	bh=L0XnIHS5lOrVV0MqSxIMJPfieb6xqDkf94hiBDCbqP8=;
+	s=korg; t=1784673420;
+	bh=hl/LPxZh5C1pQvHAkItOJkugwLo5nEdwlG0vu3QYX+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s/b79fSD/xJSl6tmWE9chKJ3u5Bj/V1eY7TNtheON3WZB441K4bNN5DliVwBW2Q5S
-	 BzwBV8/xxhukZEjXxsoM73WKgkp1QZgYyU9o0Xw1JyyD4cy+21tWKN+M8LBn9ValvC
-	 eh3c89hikum88X8qJo1fmDyAST5aKbILMbIky4r4=
+	b=B1T69B6OZoz+O5nwXUjf/SWM1rECvx1MpvrIFo6GNCCDP91aPW6chg4iV4/ygzCBR
+	 Hl2oesWDqND2u09OjOF+JmewP0pZMjQQd4ETrehmmaDCIQiqCmS3iM0VdpFSo9zhEZ
+	 mkY6/9YakMkvYSOBWrkqhHtWAKiNVAD9bV0hocSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.10 155/699] RDMA/siw: bound Read Response placement to the RREAD length
-Date: Tue, 21 Jul 2026 17:18:34 +0200
-Message-ID: <20260721152359.198125119@linuxfoundation.org>
+	Anastasia Tishchenko <sv3iry@gmail.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 129/699] crypto: ecc - Fix carry overflow in vli multiplication
+Date: Tue, 21 Jul 2026 17:18:08 +0200
+Message-ID: <20260721152358.617416421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,65 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Anastasia Tishchenko <sv3iry@gmail.com>
 
-commit 7d29f7e9dbd844cae4d3e559cf78324b9642fd6b upstream.
+commit 27b536a2ec8e2f85a0380c2d13c9ecbc7aaab406 upstream.
 
-In drivers/infiniband/sw/siw/siw_qp_rx.c, siw_proc_rresp() places each
-inbound Read Response DDP segment at sge->laddr + wqe->processed and then
-accumulates wqe->processed, but it never checks the running total against
-the sink buffer length on continuation segments. siw_check_sge() resolves
-and validates the sink memory only on the first fragment (the if (!*mem)
-branch), and siw_rresp_check_ntoh() compares the cumulative length against
-wqe->bytes only on the final segment (the !frx->more_ddp_segs guard).
+The carry flag calculation fails when r01.m_high is saturated
+(0xFFFFFFFFFFFFFFFF) and addition of lower bits overflows.
 
-A connected siw peer that answers an outstanding RREAD with Read Response
-segments that keep the DDP Last flag clear, carrying more total payload
-than the RREAD requested, drives wqe->processed past the validated sink
-buffer; the next siw_rx_data() call writes out of bounds at
-sge->laddr + wqe->processed. siw runs iWARP over ordinary routable TCP,
-so the peer is the remote end of an established RDMA connection and needs
-no local privilege.
+The condition (r01.m_high < product.m_high) doesn't handle the case
+where r01.m_high == product.m_high and an additional carry exists
+from lower-bit overflow.
 
-Bound every segment before placement, exactly as siw_proc_send() and
-siw_proc_write() already do for their tagged and untagged paths, and
-terminate the connection with a base-or-bounds DDP error when the
-Read Response would overrun the sink buffer.
+When commit 3c4b23901a0c ("crypto: ecdh - Add ECDH software support")
+introduced crypto/ecc.c, it split the muladd() function in the
+micro-ecc library into separate mul_64_64() and add_128_128() helpers.
+It seems the check got lost in translation.
 
-This is the second receive-path length fix for this file. A separate
-change rejects an MPA FPDU length that underflows the per-fragment
-remainder in the header decode; that guard does not cover this case,
-because here each individual segment length is self-consistent and only
-the accumulated placement offset overruns the buffer.
+Add proper handling for this boundary by accounting for the carry
+from the lower addition.
 
-Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
-Link: https://patch.msgid.link/r/20260602194700.2273758-1-michael.bommarito@gmail.com
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 3c4b23901a0c ("crypto: ecdh - Add ECDH software support")
+Signed-off-by: Anastasia Tishchenko <sv3iry@gmail.com>
+Cc: stable@vger.kernel.org # v4.8+
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ crypto/ecc.c |   31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -848,6 +848,15 @@ int siw_proc_rresp(struct siw_qp *qp)
- 	}
- 	mem_p = *mem;
+--- a/crypto/ecc.c
++++ b/crypto/ecc.c
+@@ -364,14 +364,26 @@ static uint128_t mul_64_64(u64 left, u64
+ 	return result;
+ }
  
-+	if (unlikely(wqe->processed + srx->fpdu_part_rem > wqe->bytes)) {
-+		siw_dbg_qp(qp, "rresp len: %d + %d > %d\n",
-+			   wqe->processed, srx->fpdu_part_rem, wqe->bytes);
-+		wqe->wc_status = SIW_WC_LOC_LEN_ERR;
-+		siw_init_terminate(qp, TERM_ERROR_LAYER_DDP,
-+				   DDP_ETYPE_TAGGED_BUF,
-+				   DDP_ECODE_T_BASE_BOUNDS, 0);
-+		return -EINVAL;
-+	}
- 	bytes = min(srx->fpdu_part_rem, srx->skb_new);
+-static uint128_t add_128_128(uint128_t a, uint128_t b)
++/* Calculate addition with overflow checking. Returns true on wrap-around,
++ * false otherwise.
++ */
++static bool check_add_128_128_overflow(uint128_t *result, uint128_t a,
++				       uint128_t b)
+ {
+-	uint128_t result;
++	bool carry;
  
- 	if (mem_p->mem_obj == NULL)
+-	result.m_low = a.m_low + b.m_low;
+-	result.m_high = a.m_high + b.m_high + (result.m_low < a.m_low);
++	result->m_low = a.m_low + b.m_low;
++	carry = (result->m_low < a.m_low);
+ 
+-	return result;
++	result->m_high = a.m_high + b.m_high + carry;
++
++	/* Using constant-time bitwise arithmetic to prevent timing
++	 * side-channels.
++	 */
++	carry = (result->m_high < a.m_high) |
++		((result->m_high == a.m_high) & carry);
++
++	return carry;
+ }
+ 
+ static void vli_mult(u64 *result, const u64 *left, const u64 *right,
+@@ -396,9 +408,7 @@ static void vli_mult(u64 *result, const
+ 			uint128_t product;
+ 
+ 			product = mul_64_64(left[i], right[k - i]);
+-
+-			r01 = add_128_128(r01, product);
+-			r2 += (r01.m_high < product.m_high);
++			r2 += check_add_128_128_overflow(&r01, r01, product);
+ 		}
+ 
+ 		result[k] = r01.m_low;
+@@ -421,7 +431,7 @@ static void vli_umult(u64 *result, const
+ 		uint128_t product;
+ 
+ 		product = mul_64_64(left[k], right);
+-		r01 = add_128_128(r01, product);
++		check_add_128_128_overflow(&r01, r01, product);
+ 		/* no carry */
+ 		result[k] = r01.m_low;
+ 		r01.m_low = r01.m_high;
+@@ -458,8 +468,7 @@ static void vli_square(u64 *result, cons
+ 				product.m_low <<= 1;
+ 			}
+ 
+-			r01 = add_128_128(r01, product);
+-			r2 += (r01.m_high < product.m_high);
++			r2 += check_add_128_128_overflow(&r01, r01, product);
+ 		}
+ 
+ 		result[k] = r01.m_low;
 
 
