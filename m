@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40B746D570;
-	Tue, 21 Jul 2026 18:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6843846D570;
+	Tue, 21 Jul 2026 18:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656959; cv=none; b=g7F18d31ZK9+ZESAH8hSFWejVmi5FKNSLToBG4SxM9FG6QRaLrKHg+egY47qvUPFhjPXDZSNuNog49FtsKRDTyjW5kmfN1Q3/P9WtE2B4IhSIEqE5+Kofcj2DShtUEvLBj8FVkIduEwtz6DQH5NqE87xt5fQe93Eh2bv12Gc3fs=
+	t=1784656961; cv=none; b=K5jE+KbIkiX+VV8dbaO0JgKVfBzfFJhciHhK9UyHDM+Oi/PQtTi+iYQPmNdf6YqbN2MaGS7a4XSbr07AoCqBcRqMOZVcMwV/eEbAmjjXQFzNybJXA64+EQy3OCip8i2Dzl6e8vUPTdErw5UWivHeasYJdlOCA4xACfgUbvxzB7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656959; c=relaxed/simple;
-	bh=pXbz9iM4F9uYBCEIQC+pskw3j+RjkSX0rKV36BgxUgI=;
+	s=arc-20240116; t=1784656961; c=relaxed/simple;
+	bh=zjs4RKx9KDLLcZmQcn3r0qdV75ZPHsyBpL0/zDBXmpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ky8A6K1dMoSpRRT6R4GG2vZKDFcBgPiOptfbAIToQ+Uc1Ln7vZThWwiPKocW6th2v3s4ihm+DarvLxGvgt1XPMLaib5hffFkHUolJwNNSDh0Abu/2+P72GZ9UEHuOwOjIkKQ6TXaR01rcPzsucIAwq6tHI8WvUtUj2XlpyvFIS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfOSISj4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=td2Xe+QmgJmufNPD6Eg2Brf4NnDWzMahodbUNsZywp8JgfJBpKG7dZ0qnUncIKCRuIm+zJ5bGOtB/cTD+90kdKtgR7PEntEffTCpRIGBIhDvPrdnTUQF+4RuqT7sILOnZp+1PAJTOGi2DlDXovRZTllMLU4D110M215NE51Q4jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlrUZBQm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfOSISj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AB61F000E9;
-	Tue, 21 Jul 2026 18:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlrUZBQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2661F000E9;
+	Tue, 21 Jul 2026 18:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656957;
-	bh=oUmfj3+ugUHkc3lYLXnnG+KRl1TxoX8RIzECdCAelHU=;
+	s=korg; t=1784656960;
+	bh=WkOu4drC0L4HQQdEVLrPJgJs32jwRf6veIQDld8bync=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PfOSISj4UYAw2tBpKnjoCMAr7TSazIX17vjNZtPWQhOcuz7F0UrZiiD/1p0q1jdAu
-	 MJQo449Jx5lgYT+gqHBMQJ2l4WKbXLQEa+4lTxsdpMOhpk7YjoOclfvLLhLi0W+1Dm
-	 HOKIctxuIJbZ6D7/C0ifNN/NtuwpN15P41BwHOn4=
+	b=qlrUZBQmPUIiMyHzO0sgWDfeCYm38eeBUGcLbnljlg2XrGU96cmgGG14ZupK9rHw3
+	 dQwmCib0/4HlVvcGcK9+ac3q4/ydrPxoYHF8Gw3A82UH4QN8DCagTWPigCSKmIZ4EM
+	 7TQ5UsDHfniKPLZ30IImQuoNW2DDV765nTEfKUV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
 	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0583/1611] coresight: ete: Always save state on power down
-Date: Tue, 21 Jul 2026 17:11:39 +0200
-Message-ID: <20260721152528.491616187@linuxfoundation.org>
+Subject: [PATCH 6.18 0584/1611] coresight: etm4x: Correct TRCVMIDCCTLR1 save and restore
+Date: Tue, 21 Jul 2026 17:11:40 +0200
+Message-ID: <20260721152528.514861484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,141 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 2ab4645fe4206c142a5f1491e191c906279686cf ]
+[ Upstream commit 0ec0a8785d21f63db520bd9d2a67c55e855d36a8 ]
 
-System register ETMs and ETE are unlikely to be preserved on CPU power
-down. The ETE DT binding also never documented
-"arm,coresight-loses-context-with-cpu" so nobody would have legitimately
-been able to use that binding to fix it and ACPI has no such binding at
-all.
+It is a typo to use trcvmidcctlr0 to save and restore TRCVMIDCCTLR1.
+Use trcvmidcctlr1 instead.
 
-Fix it by hard coding the setting for sysreg ETMs (ETE is always sysreg)
-or ACPI boots. Use a local variable when setting up save_state so that
-it's immune to concurrent probing when devices have different
-configurations which is an issue with modifying the global.
-
-This fixes the following error when using Coresight with ACPI on the FVP
-which supports CPU PM:
-
-  coresight ete0: External agent took claim tag
-  WARNING: drivers/hwtracing/coresight/coresight-core.c:248 at coresight_disclaim_device_unlocked+0xe0/0xe8, CPU#0: perf/117
-
-Fixes: 35e1c9163e02 ("coresight: ete: Add support for ETE tracing")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Leo Yan <leo.yan@arm.com>
+Fixes: f5bd523690d2 ("coresight: etm4x: Convert all register accesses")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260505-james-cs-ete-pm_save_enable-v3-1-485d21dd79b8@linaro.org
+Link: https://lore.kernel.org/r/20260408-arm_cs_fix_trcvmidcctlr1_typo-v1-1-6a5695363b46@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm4x-core.c          | 48 +++++++++++++------
- 1 file changed, 34 insertions(+), 14 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 36bf1eecb2a4bb..97fab4b3ca284d 100644
+index 97fab4b3ca284d..2271f5ea812148 100644
 --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
 +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -55,10 +55,14 @@ MODULE_PARM_DESC(boot_enable, "Enable tracing on boot");
- #define PARAM_PM_SAVE_NEVER	  1 /* never save any state */
- #define PARAM_PM_SAVE_SELF_HOSTED 2 /* save self-hosted state only */
+@@ -1941,7 +1941,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
  
-+/*
-+ * Save option for ETM4. ETE, sysreg ETM4s and ACPI boots ignore this option and
-+ * will always save.
-+ */
- static int pm_save_enable = PARAM_PM_SAVE_FIRMWARE;
- module_param(pm_save_enable, int, 0444);
- MODULE_PARM_DESC(pm_save_enable,
--	"Save/restore state on power down: 1 = never, 2 = self-hosted");
-+	"Save/restore state on power down: 1 = never, 2 = self-hosted. MMIO and DT only.");
+ 	state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR0);
+ 	if (drvdata->numvmidc > 4)
+-		state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR1);
++		state->trcvmidcctlr1 = etm4x_read32(csa, TRCVMIDCCTLR1);
  
- static struct etmv4_drvdata *etmdrvdata[NR_CPUS];
- static void etm4_set_default_config(struct etmv4_config *config);
-@@ -1970,7 +1974,7 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
- {
- 	int ret = 0;
+ 	state->trcclaimset = etm4x_read32(csa, TRCCLAIMCLR);
  
--	if (pm_save_enable != PARAM_PM_SAVE_SELF_HOSTED)
-+	if (!drvdata->save_state)
- 		return 0;
+@@ -2064,7 +2064,7 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
  
- 	/*
-@@ -2085,7 +2089,7 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ 	etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR0);
+ 	if (drvdata->numvmidc > 4)
+-		etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR1);
++		etm4x_relaxed_write32(csa, state->trcvmidcctlr1, TRCVMIDCCTLR1);
  
- static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
- {
--	if (pm_save_enable != PARAM_PM_SAVE_SELF_HOSTED)
-+	if (!drvdata->save_state)
- 		return;
+ 	etm4x_relaxed_write32(csa, state->trcclaimset, TRCCLAIMSET);
  
- 	if (coresight_get_mode(drvdata->csdev))
-@@ -2170,6 +2174,17 @@ static void etm4_pm_clear(void)
- 	}
- }
- 
-+static bool etm4x_always_pm_save(struct device *dev, struct csdev_access *csa)
-+{
-+	/*
-+	 * Only IO mem ETM devices will benefit from skipping PM save and only
-+	 * DT has the option to control it, not ACPI. Otherwise system register
-+	 * based ETMs and ETEs will always lose context on CPU power down, so
-+	 * always save.
-+	 */
-+	return !csa->io_mem || is_acpi_device_node(dev_fwnode(dev));
-+}
-+
- static int etm4_add_coresight_dev(struct etm4_init_arg *init_arg)
- {
- 	int ret;
-@@ -2179,6 +2194,7 @@ static int etm4_add_coresight_dev(struct etm4_init_arg *init_arg)
- 	struct coresight_desc desc = { 0 };
- 	u8 major, minor;
- 	char *type_name;
-+	bool pm_save;
- 
- 	if (!drvdata)
- 		return -EINVAL;
-@@ -2206,6 +2222,21 @@ static int etm4_add_coresight_dev(struct etm4_init_arg *init_arg)
- 
- 	etm4_set_default(&drvdata->config);
- 
-+	if (etm4x_always_pm_save(dev, init_arg->csa))
-+		pm_save = true;
-+	else if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
-+		pm_save = coresight_loses_context_with_cpu(dev);
-+	else
-+		pm_save = pm_save_enable != PARAM_PM_SAVE_NEVER;
-+
-+	if (pm_save) {
-+		drvdata->save_state = devm_kmalloc(dev,
-+						   sizeof(struct etmv4_save_state),
-+						   GFP_KERNEL);
-+		if (!drvdata->save_state)
-+			return -ENOMEM;
-+	}
-+
- 	pdata = coresight_get_platform_data(dev);
- 	if (IS_ERR(pdata))
- 		return PTR_ERR(pdata);
-@@ -2263,17 +2294,6 @@ static int etm4_probe(struct device *dev)
- 	if (ret)
- 		return ret;
- 
--	if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
--		pm_save_enable = coresight_loses_context_with_cpu(dev) ?
--			       PARAM_PM_SAVE_SELF_HOSTED : PARAM_PM_SAVE_NEVER;
--
--	if (pm_save_enable != PARAM_PM_SAVE_NEVER) {
--		drvdata->save_state = devm_kmalloc(dev,
--				sizeof(struct etmv4_save_state), GFP_KERNEL);
--		if (!drvdata->save_state)
--			return -ENOMEM;
--	}
--
- 	raw_spin_lock_init(&drvdata->spinlock);
- 
- 	drvdata->cpu = coresight_get_cpu(dev);
 -- 
 2.53.0
 
