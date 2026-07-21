@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F103C36DA1D;
-	Tue, 21 Jul 2026 21:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B37B3803DF;
+	Tue, 21 Jul 2026 21:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668448; cv=none; b=h0Pv6wzUM65mVvC3/3p9NcZTV1WtVOAJvymZ6ktWdfmObV/wt/yb4MN8lHoiDmSnWOpdahNRcnGH/SGZwGWHH7lt3yf81IXrdyk3KxB6DpUXadMp1vTNOBFc9RJl/ZCg+n85h/3hrf5c9wHpis5ar+3IcEXHBw6jSzUFjhfXBzc=
+	t=1784668450; cv=none; b=NE+2xpF1Oyqs+71X36a2KH9p/8354SOEU3BTzZaFfd2o9ILMTwojeXQyTH+kbbL2HGYOltKpeTdKUgsqmBEZI7QifeShWtNsELSgVdMeGQ39lV7/5YrxtkGVTIFb9nXcv2B3ulSJBoXD732WgGxeAUfL0L+nqxCCP4w1cHejJwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668448; c=relaxed/simple;
-	bh=5FQmvV08YZSRShzgI+b7CgSmAu/GRWd6oOD1fzTkMEk=;
+	s=arc-20240116; t=1784668450; c=relaxed/simple;
+	bh=HP0g1U00s8iCs4/2AAsyjuQnfQHsNg+ml/Wwa9XBjhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MxINbXIoNqIKVvtaioCWY2lFqgsUnJaX4h6xee4VRpqSdM1sJs89AZJt/MZLLEDI+tTkANQIbbnYHArzhGrd+MRM0uOZOsCd/r3txnmUj9WQ2HzJQj/siQQZ8KUUGe4k3gdxnErjRKA50cx6wxye7kNeDc0U3vM+sFm/eXg4sbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONiZ6MoK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iANOUAZagDNgG0lHEDLs47mut8q9f6a0GSlonClUbe1xV2vEsw/YIYvTnHkj0eHXeST8zj4djf0IKcq5PbDbY3NDRnGCcfmt240uSlCBVJ1PtBJ4BaiKPC0oRYwRyxcfLY0UiO/+MXaEryJbKO+5yvQ8pEcp2e5FjipXayr1Wmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTiKyzX+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONiZ6MoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FFA1F00A3D;
-	Tue, 21 Jul 2026 21:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTiKyzX+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF3C1F000E9;
+	Tue, 21 Jul 2026 21:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668446;
-	bh=GDcUj1KIZeW5AD5tU6WDtgayTOUY1+o4kjlLjr+rBYc=;
+	s=korg; t=1784668449;
+	bh=EapRw9kmEVhCd2RUtt5upfGLBmzJsAMRPDJaPejzTpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ONiZ6MoK7n7huuEDE1jYl6mbf4nWqXzW6uD6uBTBZVLD8XtWnIAdoxvgC4vziNbu7
-	 GiGA04k51DZKnyHoPIP1BhALTrG8I0rIowSZaxijhViGEoefTCbR3Lw0yhOx2slwa9
-	 VpqplUkM9fFqqfCi1TKVtOYp4i2J8HA1d/DfuO1s=
+	b=PTiKyzX+/sSlC5S9Q7bgfnKpSx4LwwEOkBftzXn6b5ICC24ccKTw8NwFHXUOewrBE
+	 MOQIaaiJWKTMPDZApsElgGq25+LXAe7QTs7JLWS+NMcnTcRGK2QDW7T79pYpjbVqF2
+	 Td2YrHgTD50RhM99HSewUhrQFlDjP150dg96DsZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Xu Rao <raoxu@uniontech.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 0178/1067] USB: storage: include US_FL_NO_SAME in quirks mask
-Date: Tue, 21 Jul 2026 17:12:59 +0200
-Message-ID: <20260721152428.572473141@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH 6.1 0179/1067] USB: misc: uss720: unregister parport on probe failure
+Date: Tue, 21 Jul 2026 17:13:00 +0200
+Message-ID: <20260721152428.594110056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,45 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 2c00e09e3f9f06f8434f5ea2ee6179ce46692ee6 upstream.
+commit b4ecbdc4f8830f5586c4a5cfc384c00f20f8f8b3 upstream.
 
-usb_stor_adjust_quirks() parses the usb-storage.quirks module
-parameter into a new flag set and then applies it with the quirk
-mask to override built-in flags.
+uss720_probe() registers a parport before reading the 1284 register used
+to detect unsupported Belkin F5U002 adapters. If get_1284_register()
+fails, the error path drops the driver private data and the USB device
+reference, but leaves the parport device registered.
 
-The mask is meant to cover the flags that can be overridden by
-the module parameter. The 'k' quirk character sets US_FL_NO_SAME,
-but US_FL_NO_SAME is not included in the mask.
+Leaving the port registered is more than a private allocation leak:
+parport_register_port() has already reserved a parport number and
+registered the parport bus device, while pp->private_data still points at
+the private data that the common error path is about to release.
 
-As a result, the module parameter can set US_FL_NO_SAME, but it
-cannot clear a built-in US_FL_NO_SAME flag by providing an override
-entry that omits 'k'.
+Undo the pre-announce registration in the get_1284_register() failure
+branch before jumping to the common private-data cleanup path. Clear
+priv->pp first, matching the disconnect path and avoiding a stale pointer
+in the private data.
 
-Add US_FL_NO_SAME to the mask so that the module parameter can
-override it in the same way as the other supported flags.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fixes: 8010622c86ca ("USB: UAS: introduce a quirk to set no_write_same")
+Fixes: 3295f1b866bf ("usb: misc: uss720: check for incompatible versions of the Belkin F5U002")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/3BCE5880F9A45C2E+20260602053842.2920137-1-raoxu@uniontech.com
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Alex Henrie <alexhenrie24@gmail.com>
+Link: https://patch.msgid.link/20260706151049.63470-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/usb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/misc/uss720.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/storage/usb.c
-+++ b/drivers/usb/storage/usb.c
-@@ -488,7 +488,7 @@ void usb_stor_adjust_quirks(struct usb_d
- 			US_FL_INITIAL_READ10 | US_FL_WRITE_CACHE |
- 			US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES |
- 			US_FL_MAX_SECTORS_240 | US_FL_NO_REPORT_LUNS |
--			US_FL_ALWAYS_SYNC);
-+			US_FL_ALWAYS_SYNC | US_FL_NO_SAME);
+--- a/drivers/usb/misc/uss720.c
++++ b/drivers/usb/misc/uss720.c
+@@ -732,8 +732,11 @@ static int uss720_probe(struct usb_inter
+ 	 * here. */
+ 	ret = get_1284_register(pp, 0, &reg, GFP_KERNEL);
+ 	dev_dbg(&intf->dev, "reg: %7ph\n", priv->reg);
+-	if (ret < 0)
++	if (ret < 0) {
++		priv->pp = NULL;
++		parport_del_port(pp);
+ 		goto probe_abort;
++	}
  
- 	p = quirks;
- 	while (*p) {
+ 	ret = usb_find_last_int_in_endpoint(interface, &epd);
+ 	if (!ret) {
 
 
