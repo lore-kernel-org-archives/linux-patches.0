@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3C942F704;
-	Tue, 21 Jul 2026 20:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F79346D0A0;
+	Tue, 21 Jul 2026 20:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665717; cv=none; b=b3p3Cdxz11xPM3Eiu3Y/mYtU+9NdEnlqYFR4+nYITUXcCLTi3XtvLxdfzyUnb3WWI9J0K3tK6IbtmZdzEpEFQ07OFieq1E5ufk0Rz10jvvDQ3I1nMdqlHbJcUbKiwiRu8nY7812TTJNHR/nHuzu01nM48aOqhECZPdkEGvkj3+Y=
+	t=1784665720; cv=none; b=s9GY3BhnSWBHioq5AGSz3mkLDo1AXb6PW3HFA4ejciyXIV9VkiLqZU6LOvQ3kbeXiK2ozRvPvwwDnSw6CQT7sJtD60+ODRukH5ysU3IXgZKaRbCVgaGWJUBbYZ9aqZD0ZCW9fCHc860s7Z3mj6CE8VA/bOY53h4PSLiElhznz6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665717; c=relaxed/simple;
-	bh=iQaAcR4TSge12XA9qMX6/z9Im6MVlqkgoOkfhKhyqSU=;
+	s=arc-20240116; t=1784665720; c=relaxed/simple;
+	bh=5gPCJk6KJKUl2Y4WZUR+rfmvc0h7zAmxOZnXtypIQao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1IJe/CFiNXYC9n7/AE5wtDX59PLY0JAeEaI9jRPiCL5fCen9iMYctwKW6gKPoWJO9ElUo+zPHNZ+BfL5Fp/pE36aNX8lmiWv1v5Hn/BDNFAm+YOxmbHWd4uQRPaU/CinXIMsww3uTFoLz8CMIlIEHtIWzreYBIgNOf3VpVKilw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJ4DU6di; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O4rJJKxYu5o9jSuiUSHofJejMsw+kP68dnb8fECTJ3SwAkYBFHqNb/8SPMxBrOWrY9ghwqbLbEkv316JQ6N8Tpn3tuLbJXnZc92z7dW2I/Qj1Zqe8iT5UxLW9XfuURwDvc0cIRXX0+G524AEWmvL5MNl0CVRaZRfvc55QgO4tl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUc+ajVt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJ4DU6di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2C01F000E9;
-	Tue, 21 Jul 2026 20:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUc+ajVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A711F000E9;
+	Tue, 21 Jul 2026 20:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665716;
-	bh=Su/pxp9qNxY2zhNr7t0XuwXSA3pLdmMFQe4Pd0PeiUQ=;
+	s=korg; t=1784665718;
+	bh=o5TSXTcjzK1vb0RQLOKz+T78R0bmEOuI6vOgKYN1Bok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJ4DU6diRJUxxyteiCtGEpSrsTqjdwj1dhYNar0uiFYCIypBAQOQlqzy4Fqy+7j9x
-	 3kr0MAOXAg+OHzzxUV2gaAohEXunVzSUnEoO7T1lW8/nuVwq9d2ao2LQfygi0e9c8K
-	 PeTB5rQq3B7gHNPw5ylhMWxtr6UE1qU1SgHHIcOU=
+	b=sUc+ajVtyanmcmTYe4H+k/ijG+dwl71+KZCLMo5RJCbW2h8QF9tQyUI86ASeksT9m
+	 K0UiPBoroOIMEJgU8Jk2IYHdorSI+nMn9AxTmB9rLZJo8ic/NumaLMYv95mzG5B1fx
+	 L9IZ8/GNg1CP6RiZLMBcdTLHe91WCi7Qv99dPie8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0407/1266] IB/mlx5: Fix transport-domain rollback and initialize lb mutex earlier
-Date: Tue, 21 Jul 2026 17:14:04 +0200
-Message-ID: <20260721152450.944431658@linuxfoundation.org>
+Subject: [PATCH 6.6 0408/1266] RDMA/hns: Fix arithmetic overflow in calc_hem_config()
+Date: Tue, 21 Jul 2026 17:14:05 +0200
+Message-ID: <20260721152450.968094812@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,66 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
 
-[ Upstream commit e79389115b9d27287ff6230a9750675106ed7668 ]
+[ Upstream commit a38e4410af9ad8b7ad2217254da06cd4dc21f0ed ]
 
-mlx5_ib_alloc_transport_domain() allocates a transport domain and then
-may fail in mlx5_ib_enable_lb(). In that case, the allocated TD is leaked.
+If bt_num is 3 or 2, then the expressions like
+l0_idx * chunk_ba_num + l1_idx are computed in 32-bit
+arithmetic before being assigned to a u64 index field,
+which can lead to overflow.
 
-Fix this by deallocating the TD when mlx5_ib_enable_lb() returns an
-error. Also return 0 explicitly in the no-loopback-capability success
-branch, and move dev->lb.mutex initialization to mlx5_ib_stage_init_init().
+Cast the first operand to u64 to ensure the arithmetic
+is performed in 64-bit.
 
-Fixes: 146d2f1af324 ("IB/mlx5: Allocate a Transport Domain for each ucontext")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 2f49de21f3e9 ("RDMA/hns: Optimize mhop get flow for multi-hop addressing")
+Signed-off-by: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
+Link: https://patch.msgid.link/20260413091527.39990-1-Alexander.Chesnokov@kaspersky.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 5408ee2b33ec3c..d523bc9052ede3 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1785,9 +1785,13 @@ static int mlx5_ib_alloc_transport_domain(struct mlx5_ib_dev *dev, u32 *tdn,
- 	if ((MLX5_CAP_GEN(dev->mdev, port_type) != MLX5_CAP_PORT_TYPE_ETH) ||
- 	    (!MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) &&
- 	     !MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
--		return err;
-+		return 0;
-+
-+	err = mlx5_ib_enable_lb(dev, true, false);
-+	if (err)
-+		mlx5_cmd_dealloc_transport_domain(dev->mdev, *tdn, uid);
- 
--	return mlx5_ib_enable_lb(dev, true, false);
-+	return err;
- }
- 
- static void mlx5_ib_dealloc_transport_domain(struct mlx5_ib_dev *dev, u32 tdn,
-@@ -3791,6 +3795,8 @@ static int mlx5_ib_stage_init_init(struct mlx5_ib_dev *dev)
- 		dev->port[i].roce.last_port_state = IB_PORT_DOWN;
- 	}
- 
-+	mutex_init(&dev->lb.mutex);
-+
- 	err = mlx5r_cmd_query_special_mkeys(dev);
- 	if (err)
- 		return err;
-@@ -4006,11 +4012,6 @@ static int mlx5_ib_stage_caps_init(struct mlx5_ib_dev *dev)
- 	if (err)
- 		return err;
- 
--	if ((MLX5_CAP_GEN(dev->mdev, port_type) == MLX5_CAP_PORT_TYPE_ETH) &&
--	    (MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) ||
--	     MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
--		mutex_init(&dev->lb.mutex);
--
- 	if (MLX5_CAP_GEN_64(dev->mdev, general_obj_types) &
- 			MLX5_GENERAL_OBJ_TYPES_CAP_VIRTIO_NET_Q) {
- 		err = mlx5_ib_init_var_table(dev);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index f13016dc8016a5..d6fcb1a4bd4fca 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -355,14 +355,14 @@ static int calc_hem_config(struct hns_roce_dev *hr_dev,
+ 	bt_num = hns_roce_get_bt_num(table->type, mhop->hop_num);
+ 	switch (bt_num) {
+ 	case 3:
+-		index->l1 = l0_idx * chunk_ba_num + l1_idx;
++		index->l1 = (u64)l0_idx * chunk_ba_num + l1_idx;
+ 		index->l0 = l0_idx;
+-		index->buf = l0_idx * chunk_ba_num * chunk_ba_num +
+-			     l1_idx * chunk_ba_num + l2_idx;
++		index->buf = (u64)l0_idx * chunk_ba_num * chunk_ba_num +
++					 (u64)l1_idx * chunk_ba_num + l2_idx;
+ 		break;
+ 	case 2:
+ 		index->l0 = l0_idx;
+-		index->buf = l0_idx * chunk_ba_num + l1_idx;
++		index->buf = (u64)l0_idx * chunk_ba_num + l1_idx;
+ 		break;
+ 	case 1:
+ 		index->buf = l0_idx;
 -- 
 2.53.0
 
