@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A8444AB96;
-	Tue, 21 Jul 2026 21:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3438244AB97;
+	Tue, 21 Jul 2026 21:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668719; cv=none; b=YtyyU8PpLS08VLs/56iEoBFUOcJdh2p1s11ge8a04O9O3Y8CJeXv3+tlRyJmbGDdC3eIYKNR/D/RPIDTmice3pi3e1O7qhvuwu8DwxB3waJrQ1pu2hLO64//hATzTOBjHMY38K6t0CrKZaHSq6NYG4lP5mq2mhgVG6PlApw8wk4=
+	t=1784668722; cv=none; b=ALJYa1kaFwxeU35Shzpjdv22QF/wWi1OrzwZ4UE9yjxuH5xtvw4mOwyZ4MytKP2MfzP02lmDvL/tspEzS3UIEa21sPJL5pGnLr+ABGnB/eKYsJpuehHF0LB/YeGiHno7kxT8egIbgN7KMeexRQwUSQzN59LC/L3imP8iSfHZAxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668719; c=relaxed/simple;
-	bh=VtgwsC1PT61ppPYc//ZoPh3qUiuq5O6gmgWs4D1zAew=;
+	s=arc-20240116; t=1784668722; c=relaxed/simple;
+	bh=pVnMinjSeJciINQpdUNwIvSCtGlJohUXRS15UUUJ2Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ge5vismAsJX8cV8fXaH7O7CtfzOM/AWGJVP5PXY/lQWGgsUBdaiXltuAsBaho9nM8XcSHfxKV51ZgEUEVAqFcTzyKCdrCqGZ30+WUkksH/3/asykGJ4nkLYBelrW/8Ch13mG4MasSEIZ+2ODDtZEMEdBr5/nqEo2RGu/oS9jmhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQs9SMo2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FBzPAsKjCxZGRpwuYbtjlYOVw2nnuh5VOpHXJrKMjAyofyylwbj/N960xPfrNyK5ODvuDxEEMQsn7Jrd79PLCjsf5w8NGWpx3XrPSy7UN7bgpPH64imZmyq/qzjuUH+bjooJk/JPnd4tj+itkHgAefYGUzmslZmO8Y7vvl2p4Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7rZ7zgH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQs9SMo2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FD61F00A3A;
-	Tue, 21 Jul 2026 21:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7rZ7zgH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A89C1F000E9;
+	Tue, 21 Jul 2026 21:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668718;
-	bh=gu6U3KC8FyhwSxgJRTAMkN/zO85ou5lCJ/R7QNh1qO4=;
+	s=korg; t=1784668721;
+	bh=Rw4LiBtGdTEnXWi1Cda72REsZq6A/dPm+cS/D3WnRfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fQs9SMo2xCGzt5iG+q72AZ7wTQc2fX79BQYFXsM+HlCMhcDYs3SpQO662YhfABbmL
-	 pQiUD7cCz1AfpEK6vkVm6AAm80VvmT6pwbK0OCGKPPopK+58vpBRhXW/OVGilDA39h
-	 VgQt5P+HCON7YOo+kQ89Q9fhQvMJT7tOBAcrzb2M=
+	b=h7rZ7zgHDC0nFD1jPrlHZWLnNODtekTdIb6KkIwZW89Zyn3ahzXC4/+q5TKdbaA8o
+	 LSCee+ncs+NNnNm3xBcL7EDqSV3kSR+ID/zPpZciiPaB33O64sNrGnSfBIOrUIiKap
+	 EYGiy+thco2vkhsskm+RtsejKlKkDCLWoi/Wp5+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0280/1067] drm/radeon: fix memory leak in radeon_ring_restore() on lock failure
-Date: Tue, 21 Jul 2026 17:14:41 +0200
-Message-ID: <20260721152430.865193413@linuxfoundation.org>
+Subject: [PATCH 6.1 0281/1067] libbpf: Report error when a negative kprobe offset is specified
+Date: Tue, 21 Jul 2026 17:14:42 +0200
+Message-ID: <20260721152430.887225621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,46 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Aaron Tomlin <atomlin@atomlin.com>
 
-[ Upstream commit 82f1d6042611d45b8b9de423bbcb4e0ced9ec62b ]
+[ Upstream commit ad35d8018669fd2eea76e3f74eb050fd3d2fb690 ]
 
-radeon_ring_restore() takes ownership of the data buffer allocated by
-radeon_ring_backup(). The caller (radeon_gpu_reset()) only frees it in
-the non-restore branch; in the restore branch it relies on
-radeon_ring_restore() to free it.
+In attach_kprobe(), the parsing logic uses sscanf() to extract the
+target function name and offset from the section definition. Currently,
+if a user specifies a negative offset (e.g., SEC("kprobe/func+-100")),
+the input is not explicitly caught and reported as an error.
 
-If radeon_ring_lock() fails, the function returned early without calling
-kvfree(data), leaking the ring backup buffer on every GPU reset that
-fails at the lock stage. During repeated GPU resets this causes
-cumulative kernel memory exhaustion.
+This commit updates the logic to explicitly notify the user when a
+negative integer is provided. To facilitate this check, the offset
+variable is changed from unsigned long to long so that sscanf()
+can accurately capture a negative input for evaluation.
 
-Free data before returning the error.
+If a negative offset is detected, the loader will now print an
+informative warning stating that the offset must be non-negative,
+and return -EINVAL.
 
-Fixes: 55d7c22192be ("drm/radeon: implement ring saving on reset v4")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Additionally, free(func) is called in this new error path to prevent
+a memory leak, as the function name string is dynamically allocated
+by sscanf().
+
+Fixes: e3f9bc35ea7e9 ("libbpf: Allow decimal offset for kprobes")
+Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
+Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
+Link: https://lore.kernel.org/bpf/20260419030944.1423642-1-atomlin@atomlin.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_ring.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/lib/bpf/libbpf.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_ring.c b/drivers/gpu/drm/radeon/radeon_ring.c
-index 7e207276df374f..e009ee1559c8ed 100644
---- a/drivers/gpu/drm/radeon/radeon_ring.c
-+++ b/drivers/gpu/drm/radeon/radeon_ring.c
-@@ -354,8 +354,10 @@ int radeon_ring_restore(struct radeon_device *rdev, struct radeon_ring *ring,
- 
- 	/* restore the saved ring content */
- 	r = radeon_ring_lock(rdev, ring, size);
--	if (r)
-+	if (r) {
-+		kvfree(data);
- 		return r;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 7bd6aff6e260ee..c3de45c739e948 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -10350,7 +10350,7 @@ bpf_program__attach_kprobe_multi_opts(const struct bpf_program *prog,
+ static int attach_kprobe(const struct bpf_program *prog, long cookie, struct bpf_link **link)
+ {
+ 	DECLARE_LIBBPF_OPTS(bpf_kprobe_opts, opts);
+-	unsigned long offset = 0;
++	long offset = 0;
+ 	const char *func_name;
+ 	char *func;
+ 	int n;
+@@ -10372,6 +10372,13 @@ static int attach_kprobe(const struct bpf_program *prog, long cookie, struct bpf
+ 		pr_warn("kprobe name is invalid: %s\n", func_name);
+ 		return -EINVAL;
+ 	}
++
++	if (offset < 0) {
++		free(func);
++		pr_warn("kprobe offset must be a non-negative integer: %li\n", offset);
++		return -EINVAL;
 +	}
- 
- 	for (i = 0; i < size; ++i) {
- 		radeon_ring_write(ring, data[i]);
++
+ 	if (opts.retprobe && offset != 0) {
+ 		free(func);
+ 		pr_warn("kretprobes do not support offset specification\n");
 -- 
 2.53.0
 
