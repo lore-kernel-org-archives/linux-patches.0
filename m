@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFBD231829;
-	Tue, 21 Jul 2026 18:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B694269D18;
+	Tue, 21 Jul 2026 18:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660081; cv=none; b=A1a5ubSuaV2qqpOmXSkeDJxhH+5V8jukrEu9QO9ux/vDBxEuVpPt9J5xRjg1nXrTu70buu0UwIpIKIeNpp5T2JFExiYgmrbChlVSqQTEcjOit7gf8bpmI7OzVp8w272F75P2VKNhGwkqAV2fPDNaw1mQegECwJ7ytsXRCggstLo=
+	t=1784660083; cv=none; b=nvhLAcKHPqUPlGAxulB/q1IfVyPoIf3fb2sP+c/siLt2mBOFQyDkuu664qsS6Bvxv+Q5UtcbaSwxW+/8Y41+7HqpAvswRaQXiAATh9SCOpfOD+EC0w997sWyidG+45p1zmUKPXyX9hPzZ1ZQvwTFGqBx07mOPuLLjvDm7Z22fQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660081; c=relaxed/simple;
-	bh=JC47vTjmpY35a5vfs0Nzv5EPwGBkwb8PUHgq87+iJhM=;
+	s=arc-20240116; t=1784660083; c=relaxed/simple;
+	bh=9V66dMarWmmmk3CXUmbzMsZfnZs14IYoJ3k7CrFdY7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HydLb8J1foU+OziHvwfiWTLRiYVcTJ8LgMlyzzR1E/lGIk5hjdAIpbu47SUbhgKVfqrtinD+KsNxh2CI+kmcWE8wJhahWFJhN80aqzTuK3EV1R+ah3CNjszdVo+l9PhTFNBku6zMzLl04kjGFMgQJKIwURFEhOr+zp8r/EkB/tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUuqvtPz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NCtn057ljn6qmKXV38PVNj+T06k+gqb1gyFI+1dTJuxKuFrytfYqK1lxBourZc9ppETQ8HpncFOLhty/F0Z0Bb8K4kRsdYdT8VZRR0iavv3fL+HI9X75VACBheB39BEEeruKIshBFzXaETMVjcRWPuCZTOf9rDB3q+lFc7e667A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocCdLj4/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUuqvtPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512801F000E9;
-	Tue, 21 Jul 2026 18:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocCdLj4/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B2A1F00A3A;
+	Tue, 21 Jul 2026 18:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660076;
-	bh=9BT+NB3MXOMo0Rd+eAKZ5n8GbAyxwGXoOFxWli16sZk=;
+	s=korg; t=1784660082;
+	bh=KEP7ydDu/dhglAn012KGHIQOKcdgukxSNHaW5DgI9QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TUuqvtPzpzbWMyvSiEGqM95gby0KiCL8Fsy+NEkhVIrA5fZFaOQc1kNTutOzqUhH0
-	 AD827zlpqQZucHihOKmLG5ZRM58dsI+LFF9D5ZnWtvEGRODo3C/i9zK6o9LYs9Ly9c
-	 qbG71Cwno4REyAiPyV2yxq/kh5N10nGEtWYoBlUQ=
+	b=ocCdLj4/UjpFcaEPFRVbm8lRHHir45p+/cMEksv5RKik/Y0CB7b3RpPIZKDEHZdw1
+	 qaUGEr1vLhoc42yxtjPv1q34fyXkmR1RaLgVrqjTsOKDSaWWHXBwbFD8ncDcRQG3EX
+	 GK2ELLkzeAgEDrbYzysOOydyJAFYAHfq0nMrqSxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Baoli.Zhang" <baoli.zhang@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Michiel van Tol <michiel.vantol@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0844/2077] soundwire: fix bug in sdw_add_element_group_count found by syzkaller
-Date: Tue, 21 Jul 2026 17:08:37 +0200
-Message-ID: <20260721152612.698708457@linuxfoundation.org>
+Subject: [PATCH 7.1 0845/2077] coresight: tmc: Fix overflow when calculating is bigger than 2GiB
+Date: Tue, 21 Jul 2026 17:08:38 +0200
+Message-ID: <20260721152612.722389328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,100 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoli.Zhang <baoli.zhang@linux.intel.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit f772ff5a0e6758fd412803c09e03ba3bca5f5878 ]
+[ Upstream commit f195d54deef1bc6dd3326394975baff02c7ae487 ]
 
-The original implementation caused an out-of-bounds memory access
-in the sdw_add_element_group_count for-loop when i == num.
+When specifying a 2GB AUX buffer, the ETR driver ends up allocating only
+a 1MB buffer instead:
 
-for (i = 0; i <= num; i++) {
-    if (rate == group->rates[i] && lane == group->lanes[i])
-        ...
+  # echo 'file coresight-tmc-etr.c +p' > \
+	/sys/kernel/debug/dynamic_debug/control
+  # perf record -e cs_etm/@tmc_etr0,timestamp=0/u -C 0 -m ,2G -- test
+  coresight tmc_etr0: allocated buffer of size 1024KB in mode 0
 
-To fix this error, the function now checks for existing rate/lane
-entries in the group(a function parameter) using a for-loop before
-adding them.
+The page index is an 'int' type, and shifting it by PAGE_SHIFT overflows
+when the resulting value exceeds 2GB.  This produces a negative value,
+causing the driver to fall back to the minimum buffer size (1MB).
 
-No functional changes apart from this fix.
+Cast the page index to a wider type to accommodate large buffer sizes.
+Also fix a similar issue in the buffer offset calculation.
 
-Fixes: 9026118f20e2 ("soundwire: Add generic bandwidth allocation algorithm")
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Baoli.Zhang <baoli.zhang@linux.intel.com>
-Link: https://patch.msgid.link/20260506055039.3751028-2-baoli.zhang@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reported-by: Michiel van Tol <michiel.vantol@arm.com>
+Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
+Fixes: eebe8dbd8630 ("coresight: tmc: Decouple the perf buffer allocation from sysfs mode")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260217-arm_coresight_fix_big_buffer_size-v1-1-774e893d8e3f@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../soundwire/generic_bandwidth_allocation.c  | 47 +++++++++----------
- 1 file changed, 22 insertions(+), 25 deletions(-)
+ drivers/hwtracing/coresight/coresight-tmc-etr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/generic_bandwidth_allocation.c b/drivers/soundwire/generic_bandwidth_allocation.c
-index fb3970e12dac9c..f016ad088a1db0 100644
---- a/drivers/soundwire/generic_bandwidth_allocation.c
-+++ b/drivers/soundwire/generic_bandwidth_allocation.c
-@@ -299,39 +299,36 @@ static int sdw_add_element_group_count(struct sdw_group *group,
- 	int num = group->count;
- 	int i;
- 
--	for (i = 0; i <= num; i++) {
-+	for (i = 0; i < num; i++) {
- 		if (rate == group->rates[i] && lane == group->lanes[i])
--			break;
--
--		if (i != num)
--			continue;
--
--		if (group->count >= group->max_size) {
--			unsigned int *rates;
--			unsigned int *lanes;
-+			return 0;
-+	}
- 
--			group->max_size += 1;
--			rates = krealloc(group->rates,
--					 (sizeof(int) * group->max_size),
--					 GFP_KERNEL);
--			if (!rates)
--				return -ENOMEM;
-+	if (group->count >= group->max_size) {
-+		unsigned int *rates;
-+		unsigned int *lanes;
- 
--			group->rates = rates;
-+		group->max_size += 1;
-+		rates = krealloc(group->rates,
-+				 (sizeof(int) * group->max_size),
-+				 GFP_KERNEL);
-+		if (!rates)
-+			return -ENOMEM;
- 
--			lanes = krealloc(group->lanes,
--					 (sizeof(int) * group->max_size),
--					 GFP_KERNEL);
--			if (!lanes)
--				return -ENOMEM;
-+		group->rates = rates;
- 
--			group->lanes = lanes;
--		}
-+		lanes = krealloc(group->lanes,
-+				 (sizeof(int) * group->max_size),
-+				 GFP_KERNEL);
-+		if (!lanes)
-+			return -ENOMEM;
- 
--		group->rates[group->count] = rate;
--		group->lanes[group->count++] = lane;
-+		group->lanes = lanes;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+index 4dc1defe27a5f7..361a433e6f0c55 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+@@ -154,7 +154,7 @@ tmc_pages_get_offset(struct tmc_pages *tmc_pages, dma_addr_t addr)
+ 	for (i = 0; i < tmc_pages->nr_pages; i++) {
+ 		page_start = tmc_pages->daddrs[i];
+ 		if (addr >= page_start && addr < (page_start + PAGE_SIZE))
+-			return i * PAGE_SIZE + (addr - page_start);
++			return (long)i * PAGE_SIZE + (addr - page_start);
  	}
  
-+	group->rates[group->count] = rate;
-+	group->lanes[group->count++] = lane;
-+
- 	return 0;
- }
+ 	return -EINVAL;
+@@ -1379,7 +1379,7 @@ alloc_etr_buf(struct tmc_drvdata *drvdata, struct perf_event *event,
+ 	node = (event->cpu == -1) ? NUMA_NO_NODE : cpu_to_node(event->cpu);
  
+ 	/* Use the minimum limit if the required size is smaller */
+-	size = nr_pages << PAGE_SHIFT;
++	size = (ssize_t)nr_pages << PAGE_SHIFT;
+ 	size = max_t(ssize_t, size, TMC_ETR_PERF_MIN_BUF_SIZE);
+ 
+ 	/*
 -- 
 2.53.0
 
