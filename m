@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2783E49E7;
-	Tue, 21 Jul 2026 17:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EED62E736D;
+	Tue, 21 Jul 2026 17:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654427; cv=none; b=Ykg6zvqOEqw17zSy11JK/cma0q6Wm6XQ6XosmOvN8va4EgPp3d0aBMSRq+ibYxDTm+CKxOowQnE8R/dKaeSsruGWwRnUy3aCPthEP2wUNKhtUA4l6YcANyjgqkU2TNy+mMWA/HMViqKLmfEX+HZFqxIx6C0/Z23kgL1f2pUEmhA=
+	t=1784654430; cv=none; b=hii5KXI/sdpPMwmnOtM7SM/kBm1lAFS/QiAC7QSyUYwK5baqMRmzeRzdxDa09Zqyx3PMnq78lCoOchSFLnD3wBYAasNMOZW+KOLn4SFWXfq5BubZRVitXbce5mHUwYv3+MII8kXSJSwfBktTeykVcX7hxim+yR8jsphotvhQtKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654427; c=relaxed/simple;
-	bh=9Tqn5RDjpvQyHIU/RiHioRC00ytRw/8hsyxj1uPNQ0U=;
+	s=arc-20240116; t=1784654430; c=relaxed/simple;
+	bh=OMLYkfkwzyRF5F1D3HSP9oPTus5w98vRrE2sZwJiYGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYS6Fogv4/IPeyTUJI/WMLTGWWTE6Wl1D6XisqL4nlul70jE8hF8RYAYhzEpbEHUYmnIHEyXugztb3GbqZa4gfU9vk+uXU4ofIE2n7MgMWVJhTJMbEnFx52N5a3ful4YC48tUydT4/fUtXyGb94nzzpVYlksrKM1gFh5A0UlorE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XI452NIv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gPFE6y4LqOag7hJ7xPRYXIPFzcO558/pSsj/6L+/Iejfbn1xWtnB3ND42kiVhcjK1p2kxGqfQHA+yoie8hhEQoi+EW3G5IBQOFiTM16IhxS68SBFeLd2z3DKKcRY8sLJ5Qc1nCFmlGPBQrF+KHk8LKw4CK4SXIT2Rp74ltwjmdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCWztSwy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI452NIv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1231F000E9;
-	Tue, 21 Jul 2026 17:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCWztSwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D87E1F000E9;
+	Tue, 21 Jul 2026 17:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654426;
-	bh=jvwZBdsuP37+qQrIthaHSRh2boGc3aE8k/bLIBTdFog=;
+	s=korg; t=1784654428;
+	bh=4+TSTdt/yyBXA3vd++9fRjkByQenmRBJsKY5DlM0fJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XI452NIvAzGxzxeP1gYZO6EnPUwrPmaoMSSnTqZOphj+sAg+NC0BeswcoR9tzxabm
-	 nJPjfNouprQPGswox0GqeKdjZGegLpEOHZJVo7LFI9N/u/mKukpnI6Ldzsp0zgfa1r
-	 QIHfGyLw2wmf/Mm9pcF6X9ShgQIaYy1v2dOPIuSY=
+	b=TCWztSwynxOsCTMF1f4SIgHfEKwdZIWNcd4I1R2CZDlXfFX985rJ0bMA0ELgY4aN1
+	 3t6lKZn4k0mfpufFSopr9V/sAYg5/y9YMM9Mgm33NZhUIH1EJgtwkaZ/GPRuqwW8Na
+	 bIOVnBvS6PPSFj9FTRhvO1EmoxdLFmfjjgocIXek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Chuck Lever <cel@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.1 1663/2077] sunrpc: harden rq_procinfo lifecycle to prevent double-free
-Date: Tue, 21 Jul 2026 17:22:16 +0200
-Message-ID: <20260721152631.970147053@linuxfoundation.org>
+	DaeMyung Kang <charsyam@gmail.com>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.1 1699/2077] ntfs: validate resident index root values on lookup
+Date: Tue, 21 Jul 2026 17:22:52 +0200
+Message-ID: <20260721152632.833568002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -57,76 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-commit 18d216788bef06332ff8901670ecf1ed8f6eb614 upstream.
+commit fcf5bf0e8570798970e3ae8c95d04765ba2c5b97 upstream.
 
-The svc_release_rqst() function executes the callback inside
-rqstp->rq_procinfo->pc_release. However, if a worker thread begins
-processing a new request and encounters an early error path (e.g.,
-unsupported protocol, short frame, or bad auth) before a valid
-rq_procinfo is installed, a stale release hook can be re-triggered
-against reused state from the previous RPC, resulting in a double-free
-or use-after-free vulnerability.
+Resident $INDEX_ROOT values carry index header fields that callers
+consume after lookup. Some callers already validate parts of the layout
+before walking entries, but those checks are scattered and do not cover
+all root header invariants, such as entries_offset alignment and lower
+bound, index_length, and allocated_size consistency.
 
-Harden the lifecycle of rq_procinfo by:
-1. Ensuring svc_release_rqst() always clears rq_procinfo after the
-   optional pc_release() call, regardless of whether the hook exists.
-2. Explicitly clearing rq_procinfo at request entry in svc_process()
-   before any early decode or drop paths.
-3. Ensuring svc_process_bc() does the same at backchannel entry.
+The resident root resize paths now keep these header fields consistent
+while the value size changes: ntfs_ir_truncate() lowers
+index.allocated_size before shrinking the resident value, and
+ntfs_ir_reparent() grows the resident value before publishing a larger
+root header. Lookup-time validation can therefore cover these invariants
+without tripping over the driver's own resize paths.
 
-This guarantees that error flows will not encounter a non-NULL stale
-rq_procinfo pointer when there is nothing to release.
+Add $INDEX_ROOT to the minimum resident value size table and validate the
+resident index header fields before returning the attribute from lookup.
+Require 8-byte aligned index header fields, a sane entries_offset, an
+index_length within allocated_size, allocated_size within the resident
+value, and enough entry space for at least an index entry header.
 
-Fixes: d9adbb6e10bf ("sunrpc: delay pc_release callback until after the reply is sent")
-Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Chuck Lever <cel@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+The shared validator already rejects non-resident records for
+resident-only attribute types, including $INDEX_ROOT.
+
+Cc: stable@vger.kernel.org # v7.1
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ntfs/attrib.c |   31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1598,6 +1598,12 @@ static void svc_release_rqst(struct svc_
- 
- 	if (procp && procp->pc_release)
- 		procp->pc_release(rqstp);
-+
-+	/*
-+	 * A subsequent svc_release_rqst() on this rqstp must not
-+	 * re-invoke pc_release against released state.
-+	 */
-+	rqstp->rq_procinfo = NULL;
+--- a/fs/ntfs/attrib.c
++++ b/fs/ntfs/attrib.c
+@@ -588,6 +588,8 @@ static u32 ntfs_resident_attr_min_value_
+ 			sizeof(__le16) * 1;
+ 	case AT_VOLUME_INFORMATION:
+ 		return sizeof(struct volume_information);
++	case AT_INDEX_ROOT:
++		return sizeof(struct index_root);
+ 	case AT_EA_INFORMATION:
+ 		return sizeof(struct ea_information);
+ 	default:
+@@ -615,6 +617,31 @@ static bool ntfs_volume_name_attr_value_
+ 	return value_length <= NTFS_MAX_LABEL_LEN * sizeof(__le16);
  }
  
- /**
-@@ -1616,6 +1622,9 @@ void svc_process(struct svc_rqst *rqstp)
- 		svc_xprt_deferred_close(rqstp->rq_xprt);
- #endif
- 
-+	/* Discard a stale release hook from a previous RPC. */
-+	rqstp->rq_procinfo = NULL;
++static bool ntfs_index_root_attr_value_is_valid(const u8 *value, const u32 value_length)
++{
++	const struct index_root *ir;
++	u32 index_size;
++	u32 entries_offset;
++	u32 index_length;
++	u32 allocated_size;
 +
- 	/*
- 	 * Setup response xdr_buf.
- 	 * Initially it has just one page
-@@ -1672,6 +1681,7 @@ void svc_process_bc(struct rpc_rqst *req
- 	int proc_error;
++	ir = (const struct index_root *)value;
++	index_size = value_length - offsetof(struct index_root, index);
++	entries_offset = le32_to_cpu(ir->index.entries_offset);
++	index_length = le32_to_cpu(ir->index.index_length);
++	allocated_size = le32_to_cpu(ir->index.allocated_size);
++
++	if ((entries_offset | index_length | allocated_size) & 7 ||
++	    entries_offset < sizeof(struct index_header) ||
++	    entries_offset > index_length ||
++	    index_length > allocated_size ||
++	    allocated_size > index_size ||
++	    index_length - entries_offset < sizeof(struct index_entry_header))
++		return false;
++
++	return true;
++}
++
+ struct ntfs_resident_attr_value {
+ 	const u8 *data;
+ 	u32 len;
+@@ -688,6 +715,10 @@ static bool ntfs_attr_value_is_valid(str
+ 		if (!ntfs_volume_name_attr_value_is_valid(value.len))
+ 			goto corrupt;
+ 		break;
++	case AT_INDEX_ROOT:
++		if (!ntfs_index_root_attr_value_is_valid(value.data, value.len))
++			goto corrupt;
++		break;
+ 	}
+ 	return true;
  
- 	/* Build the svc_rqst used by the common processing routine */
-+	rqstp->rq_procinfo = NULL;
- 	rqstp->rq_xid = req->rq_xid;
- 	rqstp->rq_prot = req->rq_xprt->prot;
- 	rqstp->rq_bc_net = req->rq_xprt->xprt_net;
 
 
