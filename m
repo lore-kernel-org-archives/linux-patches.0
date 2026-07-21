@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E7039A7FD;
-	Tue, 21 Jul 2026 18:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2418746C4C0;
+	Tue, 21 Jul 2026 18:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658583; cv=none; b=o8dd9SP+LkyNY2gWLrPmCRlNl1NxhuLbQY4FEIzaNPe/HtpDPwVKRUOllt61jWUzBmXSUorTNc8x/2wF3Pw1U7f74eR/CnOsZX9SCzRS4W0fGN1rDrkVyhgBranJepy5jM4i3YjHGDJN7/yggplem6QebnhZmjRFQoaAyNlqDYY=
+	t=1784658586; cv=none; b=bfQdfvPc1B5drBgsYi9545HwM5M6pkI+HXA5L2VHnQi3GE2ippN2JspDfAD5/c+nNOQGdEY+wLXSMQftIV6w5Mzf+jH7S4Im1FfkJIq/8Z6AuvZPsfmtuNm0YFdzflIdI+owBM4NLL6GCRwtcWFwohtv2hsGUoYp7lEiBgPK9yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658583; c=relaxed/simple;
-	bh=FfmPg263g9bwJaE5ZtcZKB1IXQiWES4ppwS+rwBzzto=;
+	s=arc-20240116; t=1784658586; c=relaxed/simple;
+	bh=SLTgopwXJQmTV43DZSxzIi5E7CI1kOIFb21g2aWDFQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMBRLzcnQoE9HN9JYMYyZTH9nx9LwUgwbPD0+A5It+TWEmme87eSq7uHFdnO6K5ojYFSh4FR9YzzuKLUNrR8KXqblrpgTgGRC5jA1xJ0uIXXZjxhzeReo4tMkBSUntAW+D8577KexLwETZNX4SdIKqakQhy0GjcbYn06S1XJx8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQ66RyK5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r8hdOZGU8l/Pmls2KfmYCiShKreF5KU85nfC67JqUXa/ppIahBOZvMTHeCSpkGXVd0nJL6oxX/WW4LyGMv5aPXmSJ+K9p8853T86sHBxN155wYhOxrhVSPK5VAY/UVrUV1XPKY2aEQnDQOscxsQ8C21VfSGlxtGjTDGZYIquM5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JylfBmFS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQ66RyK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FCA1F000E9;
-	Tue, 21 Jul 2026 18:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JylfBmFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CFB1F000E9;
+	Tue, 21 Jul 2026 18:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658582;
-	bh=l0xZN4sbkaE7WXVztj91Cq/xqPoYd41zxuAtOSw+5Ns=;
+	s=korg; t=1784658585;
+	bh=scMPC2OkKyFRknW14o5txc3Q/u5hFlsr0n0dd/FdhOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQ66RyK5B1oMj7EvyLR2fetH3kqG9bFhhO88vGDXBgkazS/nW9O0hDX5pp/xSf9ds
-	 7byV5dVAjfTpBl+uH7ySTYgIDBugy3x5m8kGaRcb0D56B1HAk0Ara0emqG6q3hntj3
-	 Lux6P6yHm6g/ugjZYWPNthKcjk4wj0+ro6clSjVc=
+	b=JylfBmFSqy78A1P8REJZns4IQNwvFSYq69rEgxgJLdqzbGv+bdvo7BK/2qpyxqDni
+	 zI1PYlnDuw26nIh7DuJKSjURsiIOtoDhT1DqAnuGrlBRi+O1qK7o45BRybykLgdoqD
+	 JVh49YAl1+Jsscd6yE10qyu/ZuxEoqLrCB8k8rQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 1197/1611] batman-adv: dat: acquire ARP hw source only after skb realloc
-Date: Tue, 21 Jul 2026 17:21:53 +0200
-Message-ID: <20260721152542.354974601@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 1162/1611] ASoC: mediatek: mt8183: Check runtime resume during probe
+Date: Tue, 21 Jul 2026 17:21:18 +0200
+Message-ID: <20260721152541.560347751@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -43,49 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 48067b2ae4504500a7093d9e1e16b42e70330480 upstream.
+commit f0334fbfd107682d0c95f3f71e25f6127038e2b9 upstream.
 
-The pskb_may_pull() called by batadv_get_vid() could reallocate the buffer
-behind the skb. Variables which were pointing to the old buffer need to be
-reassigned to avoid an use-after-free.
+The MT8183 AFE probe uses pm_runtime_get_sync() before reading hardware
+defaults into the regmap cache, but does not check whether runtime resume
+failed. If regmap_reinit_cache() then fails, the temporary runtime PM
+usage count is also not released.
 
+Use pm_runtime_resume_and_get() so resume failures abort probe without
+leaking a usage count, and release the temporary reference before
+handling the regmap cache result.
+
+Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
 Cc: stable@vger.kernel.org
-Fixes: b61ec31c8575 ("batman-adv: Snoop DHCPACKs for DAT")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260527-asoc-mt8183-probe-cleanup-v1-2-4f4f5593c8d1@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/distributed-arp-table.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/mt8183/mt8183-afe-pcm.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -1747,6 +1747,7 @@ void batadv_dat_snoop_incoming_dhcp_ack(
- 	struct ethhdr *ethhdr;
- 	__be32 ip_src, yiaddr;
- 	unsigned short vid;
-+	int hdr_size_tmp;
- 	__be16 proto;
- 	u8 *hw_src;
+--- a/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
++++ b/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
+@@ -833,17 +833,21 @@ static int mt8183_afe_pcm_dev_probe(stru
  
-@@ -1763,8 +1764,10 @@ void batadv_dat_snoop_incoming_dhcp_ack(
- 	if (!batadv_dat_check_dhcp_ack(skb, proto, &ip_src, chaddr, &yiaddr))
- 		return;
+ 	/* enable clock for regcache get default value from hw */
+ 	afe_priv->pm_runtime_bypass_reg_ctl = true;
+-	pm_runtime_get_sync(dev);
+-
+-	ret = regmap_reinit_cache(afe->regmap, &mt8183_afe_regmap_config);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret) {
+-		dev_err(dev, "regmap_reinit_cache fail, ret %d\n", ret);
++		afe_priv->pm_runtime_bypass_reg_ctl = false;
+ 		goto err_pm_disable;
+ 	}
  
-+	hdr_size_tmp = hdr_size;
-+	vid = batadv_dat_get_vid(skb, &hdr_size_tmp);
-+	ethhdr = (struct ethhdr *)(skb->data + hdr_size);
- 	hw_src = ethhdr->h_source;
--	vid = batadv_dat_get_vid(skb, &hdr_size);
++	ret = regmap_reinit_cache(afe->regmap, &mt8183_afe_regmap_config);
+ 	pm_runtime_put_sync(dev);
+ 	afe_priv->pm_runtime_bypass_reg_ctl = false;
  
- 	batadv_dat_entry_add(bat_priv, yiaddr, chaddr, vid);
- 	batadv_dat_entry_add(bat_priv, ip_src, hw_src, vid);
++	if (ret) {
++		dev_err(dev, "regmap_reinit_cache fail, ret %d\n", ret);
++		goto err_pm_disable;
++	}
++
+ 	regcache_cache_only(afe->regmap, true);
+ 	regcache_mark_dirty(afe->regmap);
+ 
 
 
