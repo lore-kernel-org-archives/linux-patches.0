@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE86A22B8DF;
-	Tue, 21 Jul 2026 18:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3641E2DF3EA;
+	Tue, 21 Jul 2026 18:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660188; cv=none; b=qMsce2ACdBjH6K4Ync58ryqJNTnrATzZtaEEQZ9b0V+W0O74PYXGSX+i2kRhZ11sHflQvwl8Wdg4OUCoh0cNh82jesDdrCsmRJ/ChpjV/OFQJeOf1quqmv0429hbXEqDii6ERQRnU2Sj442iT0rcG/tje06fZzBay0ig7BXnB40=
+	t=1784660192; cv=none; b=L/0kA0LOcznhVSD3vwr44MMpvU9Rsb7Odf8ysulYd3WBhLy6K9Ap2Mmjb9mrR/paAQb9I0u5VeX0q3419DMOGW/9wgqV4D5mmqbaEKQK2k6KHyK0vCYecYvFASK+uENGTteKTx2lXHyps+nqCjUYuo+z9w27W6tM9rehM/MwXs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660188; c=relaxed/simple;
-	bh=v+D45MczdG8BwbsH/n8MEh7UoVEA5GBr3+P8PJy3xGo=;
+	s=arc-20240116; t=1784660192; c=relaxed/simple;
+	bh=7SGy/vrKR+ySgitJpj0QgVkDsBvwP66SHeNxTn/hEeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pqsiov0jiyYd+d1XWy5+9hV4Fl5y0plEkBm+fDycVyN5+pAmkRTPjIWFtTBw7oOx1uEklqkz1mL67xVhwgKbSARlXSvn9XeN2dtnfuX63ryGtw+zV5OV6cipqdH4lsNuiVwQ0dPz8QFU0iN5nGjHTG2YApueLth5Ww/B3bb90/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTiS8cR+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjYm5tYKhWLbjQSm0QdN/Nnyf6N54ifYF7K20nb2LvwOAUQOv//beyVf+z7OcQpD6uyYyK3j4qkGgi8uBHNUcu34gVCnKI23cO31O2kREh/4im65mw96fgMntdiq+RW5yUaejAzDySRzVxkKWuu6jRpgxy9O9q8d1cEcNSuqa08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLfSvmY6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTiS8cR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A97E1F000E9;
-	Tue, 21 Jul 2026 18:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLfSvmY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41F51F000E9;
+	Tue, 21 Jul 2026 18:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660187;
-	bh=X8xnn3PX68ZK50XFaLeB8H1L7wGT6QTEXpRP4XxO6/8=;
+	s=korg; t=1784660190;
+	bh=seEoA2kYjIsYI7R1Q5YLXvSpTkjJ17qMGspsRKP0q4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTiS8cR+WSoMV2BgfXN4Gso4fdz1JRxZnvoxJEaquvcQ92kJcuDGQ7RdZdFnuYH3M
-	 q9IDrYeInZqw0hK9CPd7nibf3ikoWyYHtYfesSSkDrCkX4dy6ODfE3yqdCW9mxs6Cw
-	 uS7Njd3Z/SWkqaFbMIQq8+Kf0YMlZ/wQDlDOIQ78=
+	b=aLfSvmY6JxuXljhVL8LY/MmkWuZ1RZJF1Opa0iR1x3/o0eI5QUamAuQFW6sANCFrM
+	 DuPjhbdDTxSwEYPitqm0pC5oBoE33xhtdcATOtaQ78hN5C8ZgiuxYNFyJBIQtb1WLg
+	 kBY3BtNnfdUElkCm5/+rXnOvFJvjQ4R/sN0lGsCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Petlan <mpetlan@redhat.com>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linux.dev>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Thomas Falcon <thomas.falcon@intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0886/2077] perf build-id: Fix off-by-one bug when printing kernel/module build-id
-Date: Tue, 21 Jul 2026 17:09:19 +0200
-Message-ID: <20260721152613.706215051@linuxfoundation.org>
+Subject: [PATCH 7.1 0887/2077] perf event: Fix size of synthesized sample with branch stacks
+Date: Tue, 21 Jul 2026 17:09:20 +0200
+Message-ID: <20260721152613.733219667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,63 +61,385 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Petlan <mpetlan@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 017bca78e4d72b1ff027d368c20a1b2c654edaf7 ]
+[ Upstream commit 059e9100d82aae2254f1b06835a55755936b1417 ]
 
-When changing sprintf functions to snprintf, one byte got lost. Since
-snprintf ones do not handle the '\0' terminating character, the number
-of printed characters is 40, while sizeof(sbuild_id) is 41, including
-the terminating '\0' character.
+Synthesizing branch stacks for Intel-PT highlighted an issue where
+PERF_SAMPLE_BRANCH_HW_INDEX was assumed to always be set in the
+perf_event_attr branch_sample_type. This caused an incorrect size
+calculation.
 
-This makes the later check fail so that nothing is printed.
+Fix the writing of the nr and hw_idx values during sample event
+synthesis by passing the branch_sample_type into the sample size
+and synthesis functions. Also update hardware tracers (Intel PT,
+ARM SPE, CS-ETM) to retrieve and pass their branch_sample_type
+dynamically to prevent payload misalignment.
 
-Fix that.
-
-Before:
-
-    [Michael@Carbon ~]$ perf buildid-list -k
-    [Michael@Carbon ~]$
-
-After:
-
-    [Michael@Carbon ~]$ perf buildid-list -k
-    a527806324d543c4bc3ff2f9c9519d494fed5f68
-    [Michael@Carbon ~]$
-
-Fixes: fccaaf6fbbc59910 ("perf build-id: Change sprintf functions to snprintf")
-Signed-off-by: Michael Petlan <mpetlan@redhat.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Fixes: d3f85437ad6a5511 ("perf evsel: Support PERF_SAMPLE_BRANCH_HW_INDEX")
+Assisted-by: Gemini:gemini-3.1-pro-preview
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linux.dev>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Thomas Falcon <thomas.falcon@intel.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-buildid-list.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/bench/inject-buildid.c  |  9 ++++++---
+ tools/perf/builtin-inject.c        | 12 +++++++++---
+ tools/perf/tests/dlfilter-test.c   |  8 ++++++--
+ tools/perf/tests/sample-parsing.c  |  5 +++--
+ tools/perf/util/arm-spe.c          | 28 ++++++++++++++++++++++++----
+ tools/perf/util/cs-etm.c           | 28 +++++++++++++++++++++++-----
+ tools/perf/util/intel-bts.c        |  3 ++-
+ tools/perf/util/intel-pt.c         | 27 +++++++++++++++++++++++----
+ tools/perf/util/synthetic-events.c | 25 ++++++++++++++++++-------
+ tools/perf/util/synthetic-events.h |  6 ++++--
+ 10 files changed, 118 insertions(+), 33 deletions(-)
 
-diff --git a/tools/perf/builtin-buildid-list.c b/tools/perf/builtin-buildid-list.c
-index a91bbb34ac9463..e0881b0ac38ff2 100644
---- a/tools/perf/builtin-buildid-list.c
-+++ b/tools/perf/builtin-buildid-list.c
-@@ -61,7 +61,7 @@ static int sysfs__fprintf_build_id(FILE *fp)
+diff --git a/tools/perf/bench/inject-buildid.c b/tools/perf/bench/inject-buildid.c
+index aad572a78d7fcf..bfd2c5ec9488e0 100644
+--- a/tools/perf/bench/inject-buildid.c
++++ b/tools/perf/bench/inject-buildid.c
+@@ -228,9 +228,12 @@ static ssize_t synthesize_sample(struct bench_data *data, struct bench_dso *dso,
+ 
+ 	event.header.type = PERF_RECORD_SAMPLE;
+ 	event.header.misc = PERF_RECORD_MISC_USER;
+-	event.header.size = perf_event__sample_event_size(&sample, bench_sample_type, 0);
+-
+-	perf_event__synthesize_sample(&event, bench_sample_type, 0, &sample);
++	event.header.size = perf_event__sample_event_size(&sample, bench_sample_type,
++							   /*read_format=*/0,
++							   /*branch_sample_type=*/0);
++	perf_event__synthesize_sample(&event, bench_sample_type,
++				      /*read_format=*/0,
++				      /*branch_sample_type=*/0, &sample);
+ 
+ 	return writen(data->input_pipe[1], &event, event.header.size);
+ }
+diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
+index a2493f1097df97..2f20e782c7f272 100644
+--- a/tools/perf/builtin-inject.c
++++ b/tools/perf/builtin-inject.c
+@@ -465,8 +465,13 @@ static int perf_event__convert_sample_callchain(const struct perf_tool *tool,
+ 	/* remove sample_type {STACK,REGS}_USER for synthesize */
+ 	sample_type &= ~(PERF_SAMPLE_STACK_USER | PERF_SAMPLE_REGS_USER);
+ 
+-	perf_event__synthesize_sample(event_copy, sample_type,
+-				      evsel->core.attr.read_format, sample);
++	ret = perf_event__synthesize_sample(event_copy, sample_type,
++					    evsel->core.attr.read_format,
++					    evsel->core.attr.branch_sample_type, sample);
++	if (ret) {
++		pr_err("Failed to synthesize sample\n");
++		return ret;
++	}
+ 	return perf_event__repipe_synth(tool, event_copy);
+ }
+ 
+@@ -1102,7 +1107,8 @@ static int perf_inject__sched_stat(const struct perf_tool *tool,
+ 	sample_sw.period = sample->period;
+ 	sample_sw.time	 = sample->time;
+ 	perf_event__synthesize_sample(event_sw, evsel->core.attr.sample_type,
+-				      evsel->core.attr.read_format, &sample_sw);
++				      evsel->core.attr.read_format,
++				      evsel->core.attr.branch_sample_type, &sample_sw);
+ 	build_id__mark_dso_hit(tool, event_sw, &sample_sw, evsel, machine);
+ 	ret = perf_event__repipe(tool, event_sw, &sample_sw, machine);
+ 	perf_sample__exit(&sample_sw);
+diff --git a/tools/perf/tests/dlfilter-test.c b/tools/perf/tests/dlfilter-test.c
+index e63790c61d53a0..204663571943cb 100644
+--- a/tools/perf/tests/dlfilter-test.c
++++ b/tools/perf/tests/dlfilter-test.c
+@@ -188,8 +188,12 @@ static int write_sample(struct test_data *td, u64 sample_type, u64 id, pid_t pid
+ 
+ 	event->header.type = PERF_RECORD_SAMPLE;
+ 	event->header.misc = PERF_RECORD_MISC_USER;
+-	event->header.size = perf_event__sample_event_size(&sample, sample_type, 0);
+-	err = perf_event__synthesize_sample(event, sample_type, 0, &sample);
++	event->header.size = perf_event__sample_event_size(&sample, sample_type,
++							   /*read_format=*/0,
++							   /*branch_sample_type=*/0);
++	err = perf_event__synthesize_sample(event, sample_type,
++					    /*read_format=*/0,
++					    /*branch_sample_type=*/0, &sample);
+ 	if (err)
+ 		return test_result("perf_event__synthesize_sample() failed", TEST_FAIL);
+ 
+diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
+index a7327c942ca209..55f0b73ca20e05 100644
+--- a/tools/perf/tests/sample-parsing.c
++++ b/tools/perf/tests/sample-parsing.c
+@@ -310,7 +310,8 @@ static int do_test(u64 sample_type, u64 sample_regs, u64 read_format)
+ 		sample.read.one.lost  = 1;
+ 	}
+ 
+-	sz = perf_event__sample_event_size(&sample, sample_type, read_format);
++	sz = perf_event__sample_event_size(&sample, sample_type, read_format,
++					   evsel.core.attr.branch_sample_type);
+ 	bufsz = sz + 4096; /* Add a bit for overrun checking */
+ 	event = malloc(bufsz);
+ 	if (!event) {
+@@ -324,7 +325,7 @@ static int do_test(u64 sample_type, u64 sample_regs, u64 read_format)
+ 	event->header.size = sz;
+ 
+ 	err = perf_event__synthesize_sample(event, sample_type, read_format,
+-					    &sample);
++					    evsel.core.attr.branch_sample_type, &sample);
+ 	if (err) {
+ 		pr_debug("%s failed for sample_type %#"PRIx64", error %d\n",
+ 			 "perf_event__synthesize_sample", sample_type, err);
+diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
+index e5835042acdf76..3e54ed41653bdc 100644
+--- a/tools/perf/util/arm-spe.c
++++ b/tools/perf/util/arm-spe.c
+@@ -482,10 +482,30 @@ static void arm_spe__prep_branch_stack(struct arm_spe_queue *speq)
+ 	bstack->hw_idx = -1ULL;
+ }
+ 
+-static int arm_spe__inject_event(union perf_event *event, struct perf_sample *sample, u64 type)
++static int arm_spe__inject_event(struct arm_spe *spe, union perf_event *event,
++				 struct perf_sample *sample, u64 type)
+ {
+-	event->header.size = perf_event__sample_event_size(sample, type, 0);
+-	return perf_event__synthesize_sample(event, type, 0, sample);
++	struct evsel *evsel = sample->evsel;
++	u64 branch_sample_type = 0;
++	size_t sz;
++
++	if (!evsel && spe->session && spe->session->evlist)
++		evsel = evlist__id2evsel(spe->session->evlist, sample->id);
++
++	if (evsel)
++		branch_sample_type = evsel->core.attr.branch_sample_type;
++
++	event->header.type = PERF_RECORD_SAMPLE;
++	sz = perf_event__sample_event_size(sample, type, /*read_format=*/0,
++					   branch_sample_type);
++	if (sz >= PERF_SAMPLE_MAX_SIZE) {
++		pr_err("Sample size %zu exceeds max size %d\n", sz, PERF_SAMPLE_MAX_SIZE);
++		return -EFAULT;
++	}
++	event->header.size = sz;
++
++	return perf_event__synthesize_sample(event, type, /*read_format=*/0,
++					     branch_sample_type, sample);
+ }
+ 
+ static inline int
+@@ -497,7 +517,7 @@ arm_spe_deliver_synth_event(struct arm_spe *spe,
  	int ret;
  
- 	ret = sysfs__snprintf_build_id("/", sbuild_id, sizeof(sbuild_id));
--	if (ret != sizeof(sbuild_id))
-+	if (ret + 1 != sizeof(sbuild_id))
- 		return ret < 0 ? ret : -EINVAL;
+ 	if (spe->synth_opts.inject) {
+-		ret = arm_spe__inject_event(event, sample, spe->sample_type);
++		ret = arm_spe__inject_event(spe, event, sample, spe->sample_type);
+ 		if (ret)
+ 			return ret;
+ 	}
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index 8a639d2e51a4c5..6ec48de2944101 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -1422,11 +1422,29 @@ static void cs_etm__update_last_branch_rb(struct cs_etm_queue *etmq,
+ 		bs->nr += 1;
+ }
  
- 	return fprintf(fp, "%s\n", sbuild_id);
-@@ -73,7 +73,7 @@ static int filename__fprintf_build_id(const char *name, FILE *fp)
- 	int ret;
+-static int cs_etm__inject_event(union perf_event *event,
++static int cs_etm__inject_event(struct cs_etm_auxtrace *etm, union perf_event *event,
+ 			       struct perf_sample *sample, u64 type)
+ {
+-	event->header.size = perf_event__sample_event_size(sample, type, 0);
+-	return perf_event__synthesize_sample(event, type, 0, sample);
++	struct evsel *evsel = sample->evsel;
++	u64 branch_sample_type = 0;
++	size_t sz;
++
++	if (!evsel && etm->session && etm->session->evlist)
++		evsel = evlist__id2evsel(etm->session->evlist, sample->id);
++
++	if (evsel)
++		branch_sample_type = evsel->core.attr.branch_sample_type;
++
++	sz = perf_event__sample_event_size(sample, type, /*read_format=*/0,
++					   branch_sample_type);
++	if (sz >= PERF_SAMPLE_MAX_SIZE) {
++		pr_err("Sample size %zu exceeds max size %d\n", sz, PERF_SAMPLE_MAX_SIZE);
++		return -EFAULT;
++	}
++	event->header.size = sz;
++
++	return perf_event__synthesize_sample(event, type, /*read_format=*/0,
++					     branch_sample_type, sample);
+ }
  
- 	ret = filename__snprintf_build_id(name, sbuild_id, sizeof(sbuild_id));
--	if (ret != sizeof(sbuild_id))
-+	if (ret + 1 != sizeof(sbuild_id))
- 		return ret < 0 ? ret : -EINVAL;
  
- 	return fprintf(fp, "%s\n", sbuild_id);
+@@ -1592,7 +1610,7 @@ static int cs_etm__synth_instruction_sample(struct cs_etm_queue *etmq,
+ 		sample.branch_stack = tidq->last_branch;
+ 
+ 	if (etm->synth_opts.inject) {
+-		ret = cs_etm__inject_event(event, &sample,
++		ret = cs_etm__inject_event(etm, event, &sample,
+ 					   etm->instructions_sample_type);
+ 		if (ret)
+ 			return ret;
+@@ -1667,7 +1685,7 @@ static int cs_etm__synth_branch_sample(struct cs_etm_queue *etmq,
+ 	}
+ 
+ 	if (etm->synth_opts.inject) {
+-		ret = cs_etm__inject_event(event, &sample,
++		ret = cs_etm__inject_event(etm, event, &sample,
+ 					   etm->branches_sample_type);
+ 		if (ret)
+ 			return ret;
+diff --git a/tools/perf/util/intel-bts.c b/tools/perf/util/intel-bts.c
+index 382255393fb3bf..0b18ebd13f7c84 100644
+--- a/tools/perf/util/intel-bts.c
++++ b/tools/perf/util/intel-bts.c
+@@ -303,7 +303,8 @@ static int intel_bts_synth_branch_sample(struct intel_bts_queue *btsq,
+ 		event.sample.header.size = bts->branches_event_size;
+ 		ret = perf_event__synthesize_sample(&event,
+ 						    bts->branches_sample_type,
+-						    0, &sample);
++						    /*read_format=*/0, /*branch_sample_type=*/0,
++						    &sample);
+ 		if (ret)
+ 			return ret;
+ 	}
+diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
+index fc9eec8b54b824..dd2637678b405c 100644
+--- a/tools/perf/util/intel-pt.c
++++ b/tools/perf/util/intel-pt.c
+@@ -1728,11 +1728,30 @@ static void intel_pt_prep_b_sample(struct intel_pt *pt,
+ 	event->sample.header.misc = sample->cpumode;
+ }
+ 
+-static int intel_pt_inject_event(union perf_event *event,
++static int intel_pt_inject_event(struct intel_pt *pt, union perf_event *event,
+ 				 struct perf_sample *sample, u64 type)
+ {
+-	event->header.size = perf_event__sample_event_size(sample, type, 0);
+-	return perf_event__synthesize_sample(event, type, 0, sample);
++	struct evsel *evsel = sample->evsel;
++	u64 branch_sample_type = 0;
++	size_t sz;
++
++	if (!evsel && pt->session && pt->session->evlist)
++		evsel = evlist__id2evsel(pt->session->evlist, sample->id);
++
++	if (evsel)
++		branch_sample_type = evsel->core.attr.branch_sample_type;
++
++	event->header.type = PERF_RECORD_SAMPLE;
++	sz = perf_event__sample_event_size(sample, type, /*read_format=*/0,
++					   branch_sample_type);
++	if (sz >= PERF_SAMPLE_MAX_SIZE) {
++		pr_err("Sample size %zu exceeds max size %d\n", sz, PERF_SAMPLE_MAX_SIZE);
++		return -EFAULT;
++	}
++	event->header.size = sz;
++
++	return perf_event__synthesize_sample(event, type, /*read_format=*/0,
++					     branch_sample_type, sample);
+ }
+ 
+ static inline int intel_pt_opt_inject(struct intel_pt *pt,
+@@ -1742,7 +1761,7 @@ static inline int intel_pt_opt_inject(struct intel_pt *pt,
+ 	if (!pt->synth_opts.inject)
+ 		return 0;
+ 
+-	return intel_pt_inject_event(event, sample, type);
++	return intel_pt_inject_event(pt, event, sample, type);
+ }
+ 
+ static int intel_pt_deliver_synth_event(struct intel_pt *pt,
+diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
+index 85bee747f4cd2a..2461f25a4d7dc2 100644
+--- a/tools/perf/util/synthetic-events.c
++++ b/tools/perf/util/synthetic-events.c
+@@ -1455,7 +1455,8 @@ int perf_event__synthesize_stat_round(const struct perf_tool *tool,
+ 	return process(tool, (union perf_event *) &event, NULL, machine);
+ }
+ 
+-size_t perf_event__sample_event_size(const struct perf_sample *sample, u64 type, u64 read_format)
++size_t perf_event__sample_event_size(const struct perf_sample *sample, u64 type, u64 read_format,
++				     u64 branch_sample_type)
+ {
+ 	size_t sz, result = sizeof(struct perf_record_sample);
+ 
+@@ -1515,8 +1516,10 @@ size_t perf_event__sample_event_size(const struct perf_sample *sample, u64 type,
+ 
+ 	if (type & PERF_SAMPLE_BRANCH_STACK) {
+ 		sz = sample->branch_stack->nr * sizeof(struct branch_entry);
+-		/* nr, hw_idx */
+-		sz += 2 * sizeof(u64);
++		/* nr */
++		sz += sizeof(u64);
++		if (branch_sample_type & PERF_SAMPLE_BRANCH_HW_INDEX)
++			sz += sizeof(u64);
+ 		result += sz;
+ 	}
+ 
+@@ -1605,7 +1608,7 @@ static __u64 *copy_read_group_values(__u64 *array, __u64 read_format,
+ }
+ 
+ int perf_event__synthesize_sample(union perf_event *event, u64 type, u64 read_format,
+-				  const struct perf_sample *sample)
++				  u64 branch_sample_type, const struct perf_sample *sample)
+ {
+ 	__u64 *array;
+ 	size_t sz;
+@@ -1719,9 +1722,17 @@ int perf_event__synthesize_sample(union perf_event *event, u64 type, u64 read_fo
+ 
+ 	if (type & PERF_SAMPLE_BRANCH_STACK) {
+ 		sz = sample->branch_stack->nr * sizeof(struct branch_entry);
+-		/* nr, hw_idx */
+-		sz += 2 * sizeof(u64);
+-		memcpy(array, sample->branch_stack, sz);
++
++		*array++ = sample->branch_stack->nr;
++
++		if (branch_sample_type & PERF_SAMPLE_BRANCH_HW_INDEX) {
++			if (sample->no_hw_idx)
++				*array++ = 0;
++			else
++				*array++ = sample->branch_stack->hw_idx;
++		}
++
++		memcpy(array, perf_sample__branch_entries((struct perf_sample *)sample), sz);
+ 		array = (void *)array + sz;
+ 	}
+ 
+diff --git a/tools/perf/util/synthetic-events.h b/tools/perf/util/synthetic-events.h
+index b0edad0c310010..8c7f49f9ccf54a 100644
+--- a/tools/perf/util/synthetic-events.h
++++ b/tools/perf/util/synthetic-events.h
+@@ -81,7 +81,8 @@ int perf_event__synthesize_mmap_events(const struct perf_tool *tool, union perf_
+ int perf_event__synthesize_modules(const struct perf_tool *tool, perf_event__handler_t process, struct machine *machine);
+ int perf_event__synthesize_namespaces(const struct perf_tool *tool, union perf_event *event, pid_t pid, pid_t tgid, perf_event__handler_t process, struct machine *machine);
+ int perf_event__synthesize_cgroups(const struct perf_tool *tool, perf_event__handler_t process, struct machine *machine);
+-int perf_event__synthesize_sample(union perf_event *event, u64 type, u64 read_format, const struct perf_sample *sample);
++int perf_event__synthesize_sample(union perf_event *event, u64 type, u64 read_format,
++				  u64 branch_sample_type, const struct perf_sample *sample);
+ int perf_event__synthesize_stat_config(const struct perf_tool *tool, struct perf_stat_config *config, perf_event__handler_t process, struct machine *machine);
+ int perf_event__synthesize_stat_events(struct perf_stat_config *config, const struct perf_tool *tool, struct evlist *evlist, perf_event__handler_t process, bool attrs);
+ int perf_event__synthesize_stat_round(const struct perf_tool *tool, u64 time, u64 type, perf_event__handler_t process, struct machine *machine);
+@@ -97,7 +98,8 @@ void perf_event__synthesize_final_bpf_metadata(struct perf_session *session,
+ 
+ int perf_tool__process_synth_event(const struct perf_tool *tool, union perf_event *event, struct machine *machine, perf_event__handler_t process);
+ 
+-size_t perf_event__sample_event_size(const struct perf_sample *sample, u64 type, u64 read_format);
++size_t perf_event__sample_event_size(const struct perf_sample *sample, u64 type,
++				     u64 read_format, u64 branch_sample_type);
+ 
+ int __machine__synthesize_threads(struct machine *machine, const struct perf_tool *tool,
+ 				  struct target *target, struct perf_thread_map *threads,
 -- 
 2.53.0
 
