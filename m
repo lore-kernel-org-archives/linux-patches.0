@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA80F1CAA6D;
-	Tue, 21 Jul 2026 18:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9D0471255;
+	Tue, 21 Jul 2026 18:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657458; cv=none; b=IymjwoCzQZkXijo+7vkIqb/AojfW+fWGfNEN6AqSi3CQnn6Cpq4a6PBxlJ86ds31xojFNCggVPuQIQJNM0NCclDIKEYOxt0xPZ9dqAAgbQNIqIy+YVpIsywfOTcnR7Wwk8tRMrW1KrYYVcxegIW8LQtFV6b22EM0zW0tMQ6DsrA=
+	t=1784657462; cv=none; b=WNqFcxEdVHrO8aiW8zrt3kqcSxOG+XVzGwGpfSJqjYRMooFexZOv+G9zKKl8Q47+fOK5em4dC6YFINyN/G1fczQlotjLTCGCVsTDBS97oDdCzAE1MtyhGDpnhzGLzrHpsaP2RmsIRgoyGRcnbH0OO+ZjYDyCperLTx+9Icw6Av0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657458; c=relaxed/simple;
-	bh=HwK6Ar1zDEy0yBK2ISOCTvScXiRUyilB758m/0Z1cnE=;
+	s=arc-20240116; t=1784657462; c=relaxed/simple;
+	bh=sl4KYrGOdIelRxgTNlBYgpQtT/R5MTxt0sZEPYG4HV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uuzikqjHtZrznxntzf+uLSUEqjaBV46GCkpyDhWkxE2/vlLXkAwAWfi3CTDzr8BPFB+qQXTiwOdcnG61chdPWmBpIjnLIRPltoABAykeiC4E0hRDhPCgUgqqyz83nbjTqx9Z4aabzHGnP/NalM95tPW3CoBQp7ysgovVViegvMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjtYbqtN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YrIQe/fdVqPYuEiRKqynJLJfI8gKb5yj8pt9P6Stf/nfyBQ9CF6k4HAAI2BJQPkO7TYIj8lIH05xofjTy98loQG/6wcZEkss2xn1JCStiYXjz9uQYdxu2xD8NKEP1IGgzjWX2ZBSkO0UIcPImZSWuJCx9WQ/l+XhEAOxCMNGz/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dbhm0A59; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjtYbqtN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7651F000E9;
-	Tue, 21 Jul 2026 18:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dbhm0A59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD611F00A3A;
+	Tue, 21 Jul 2026 18:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657457;
-	bh=dHeMx7WOMVC9CF/xFhmkkqEqD/gFW8bkrjQxMqbnU8E=;
+	s=korg; t=1784657460;
+	bh=0hYQ4GZrqMRyMRMQPVI18knZf4L9IBj9USDu8DjwG30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjtYbqtNw7aBoY63ZsfEFnZ7lW+Q8oVwjWG1OF1wxWGBcoPIwBLwrR56uphweW1jz
-	 14vbzaxdRjfyEevwq/Fe4Ahiulg9B3tnJujW2/2UrmJcrxc6gtTdy67dSlxqHfIrEY
-	 howRDuX+vaai8AspeTqUp2QRk4f4BU4hgGsAe2mw=
+	b=Dbhm0A59i9Q/4ACHaFTeMffgXwuqnQoVyiBZNZgXKRaXsv97WjLEEvV3P4vKSSCiY
+	 YJdksWLaAhXs976HY8dIFm/PZYT7BKGEeP6ehuyzJv1cywGDlmo2lF4LjzOIg345dU
+	 yHfOfz8OZlOiCyUpD+saJvJwGiTKvA1+5tmdmiZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Lee <ryan.lee@canonical.com>,
-	Zygmunt Krynicki <me@zygoon.pl>,
-	John Johansen <john.johansen@canonical.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0745/1611] apparmor: fail policy unpack on accept2 allocation failure
-Date: Tue, 21 Jul 2026 17:14:21 +0200
-Message-ID: <20260721152532.131859359@linuxfoundation.org>
+Subject: [PATCH 6.18 0772/1611] perf tools: Dont read build-ids from non-regular files
+Date: Tue, 21 Jul 2026 17:14:48 +0200
+Message-ID: <20260721152532.750157500@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,48 +51,400 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zygmunt Krynicki <me@zygoon.pl>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 45cf568241048e560a81aa2053f06a62069f5640 ]
+[ Upstream commit 834ebb5678d75d844f5d4f44ede78724d8c96630 ]
 
-unpack_pdb() may need to allocate a missing ACCEPT2 table for older policy
-data. If that allocation failed, it set an error message but jumped to the
-success path, returning a policydb with the required table missing.
+Simplify the build ID reading code by removing the non-blocking option.
+Having to pass the correct option to this function was fragile and a
+mistake would result in a hang, see the linked fix. Furthermore,
+compressed files are always opened blocking anyway, ignoring the
+non-blocking option.
 
-Return -ENOMEM through the normal failure path when the ACCEPT2 allocation
-fails. Remove the now-unused out label.
+We also don't expect to read build IDs from non-regular files. The only
+hits to this function that are non-regular are devices that won't be elf
+files with build IDs, for example "/dev/dri/renderD129".
 
-Fixes: 2e12c5f06017 ("apparmor: add additional flags to extended permission.")
-Reviewed-by: Ryan Lee <ryan.lee@canonical.com>
-Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Now instead of opening these as non-blocking and failing to read, we
+skip them. Even if something like a pipe or character device did have a
+build ID, I don't think it would have worked because you need to call
+read() in a loop, check for -EAGAIN and handle timeouts to make
+non-blocking reads work.
+
+Link: https://lore.kernel.org/linux-perf-users/20251022-james-perf-fix-dso-block-v1-1-c4faab150546@linaro.org/
+Signed-off-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: f973e52a9977 ("perf dso: Fix heap overflow in dso__get_filename() on decompressed path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/bench/inject-buildid.c  |  2 +-
+ tools/perf/builtin-buildid-cache.c |  8 ++++----
+ tools/perf/builtin-inject.c        |  4 ++--
+ tools/perf/tests/pe-file-parsing.c |  4 ++--
+ tools/perf/tests/sdt.c             |  2 +-
+ tools/perf/util/build-id.c         |  4 ++--
+ tools/perf/util/debuginfo.c        |  2 +-
+ tools/perf/util/dsos.c             |  4 ++--
+ tools/perf/util/libbfd.c           |  9 +++++++--
+ tools/perf/util/libbfd.h           |  5 ++---
+ tools/perf/util/symbol-elf.c       | 13 +++++++------
+ tools/perf/util/symbol-minimal.c   | 11 ++++++++---
+ tools/perf/util/symbol.c           |  5 ++---
+ tools/perf/util/symbol.h           |  2 +-
+ tools/perf/util/synthetic-events.c |  2 +-
+ 15 files changed, 43 insertions(+), 34 deletions(-)
 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index 3ae58f476c0817..1e1792d3ff5a46 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -813,7 +813,8 @@ static int unpack_pdb(struct aa_ext *e, struct aa_policydb **policy,
- 		pdb->dfa->tables[YYTD_ID_ACCEPT2] = kvzalloc(tsize, GFP_KERNEL);
- 		if (!pdb->dfa->tables[YYTD_ID_ACCEPT2]) {
- 			*info = "failed to alloc dfa flags table";
--			goto out;
-+			error = -ENOMEM;
-+			goto fail;
- 		}
- 		pdb->dfa->tables[YYTD_ID_ACCEPT2]->td_lolen = noents;
- 		pdb->dfa->tables[YYTD_ID_ACCEPT2]->td_flags = tdflags;
-@@ -837,7 +838,6 @@ static int unpack_pdb(struct aa_ext *e, struct aa_policydb **policy,
- 	 * - move free of unneeded trans table here, has to be done
- 	 *   after perm mapping.
- 	 */
--out:
- 	*policy = pdb;
- 	return 0;
+diff --git a/tools/perf/bench/inject-buildid.c b/tools/perf/bench/inject-buildid.c
+index 44c471682c3c4c..bfd2c5ec9488e0 100644
+--- a/tools/perf/bench/inject-buildid.c
++++ b/tools/perf/bench/inject-buildid.c
+@@ -85,7 +85,7 @@ static int add_dso(const char *fpath, const struct stat *sb __maybe_unused,
+ 	if (typeflag == FTW_D || typeflag == FTW_SL)
+ 		return 0;
  
+-	if (filename__read_build_id(fpath, &bid, /*block=*/true) < 0)
++	if (filename__read_build_id(fpath, &bid) < 0)
+ 		return 0;
+ 
+ 	dso->name = realpath(fpath, NULL);
+diff --git a/tools/perf/builtin-buildid-cache.c b/tools/perf/builtin-buildid-cache.c
+index 2e0f2004696ae9..c98104481c8a19 100644
+--- a/tools/perf/builtin-buildid-cache.c
++++ b/tools/perf/builtin-buildid-cache.c
+@@ -180,7 +180,7 @@ static int build_id_cache__add_file(const char *filename, struct nsinfo *nsi)
+ 	struct nscookie nsc;
+ 
+ 	nsinfo__mountns_enter(nsi, &nsc);
+-	err = filename__read_build_id(filename, &bid, /*block=*/true);
++	err = filename__read_build_id(filename, &bid);
+ 	nsinfo__mountns_exit(&nsc);
+ 	if (err < 0) {
+ 		pr_debug("Couldn't read a build-id in %s\n", filename);
+@@ -204,7 +204,7 @@ static int build_id_cache__remove_file(const char *filename, struct nsinfo *nsi)
+ 	int err;
+ 
+ 	nsinfo__mountns_enter(nsi, &nsc);
+-	err = filename__read_build_id(filename, &bid, /*block=*/true);
++	err = filename__read_build_id(filename, &bid);
+ 	nsinfo__mountns_exit(&nsc);
+ 	if (err < 0) {
+ 		pr_debug("Couldn't read a build-id in %s\n", filename);
+@@ -280,7 +280,7 @@ static bool dso__missing_buildid_cache(struct dso *dso, int parm __maybe_unused)
+ 	if (!dso__build_id_filename(dso, filename, sizeof(filename), false))
+ 		return true;
+ 
+-	if (filename__read_build_id(filename, &bid, /*block=*/true) == -1) {
++	if (filename__read_build_id(filename, &bid) == -1) {
+ 		if (errno == ENOENT)
+ 			return false;
+ 
+@@ -309,7 +309,7 @@ static int build_id_cache__update_file(const char *filename, struct nsinfo *nsi)
+ 	int err;
+ 
+ 	nsinfo__mountns_enter(nsi, &nsc);
+-	err = filename__read_build_id(filename, &bid, /*block=*/true);
++	err = filename__read_build_id(filename, &bid);
+ 	nsinfo__mountns_exit(&nsc);
+ 	if (err < 0) {
+ 		pr_debug("Couldn't read a build-id in %s\n", filename);
+diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
+index 015c9e6865dd97..0eb52982bef11b 100644
+--- a/tools/perf/builtin-inject.c
++++ b/tools/perf/builtin-inject.c
+@@ -877,12 +877,12 @@ static int dso__read_build_id(struct dso *dso)
+ 
+ 	mutex_lock(dso__lock(dso));
+ 	nsinfo__mountns_enter(dso__nsinfo(dso), &nsc);
+-	if (filename__read_build_id(dso__long_name(dso), &bid, /*block=*/true) > 0)
++	if (filename__read_build_id(dso__long_name(dso), &bid) > 0)
+ 		dso__set_build_id(dso, &bid);
+ 	else if (dso__nsinfo(dso)) {
+ 		char *new_name = dso__filename_with_chroot(dso, dso__long_name(dso));
+ 
+-		if (new_name && filename__read_build_id(new_name, &bid, /*block=*/true) > 0)
++		if (new_name && filename__read_build_id(new_name, &bid) > 0)
+ 			dso__set_build_id(dso, &bid);
+ 		free(new_name);
+ 	}
+diff --git a/tools/perf/tests/pe-file-parsing.c b/tools/perf/tests/pe-file-parsing.c
+index 8b31d1d05f905f..30c7da79e109b4 100644
+--- a/tools/perf/tests/pe-file-parsing.c
++++ b/tools/perf/tests/pe-file-parsing.c
+@@ -37,7 +37,7 @@ static int run_dir(const char *d)
+ 	size_t idx;
+ 
+ 	scnprintf(filename, PATH_MAX, "%s/pe-file.exe", d);
+-	ret = filename__read_build_id(filename, &bid, /*block=*/true);
++	ret = filename__read_build_id(filename, &bid);
+ 	TEST_ASSERT_VAL("Failed to read build_id",
+ 			ret == sizeof(expect_build_id));
+ 	TEST_ASSERT_VAL("Wrong build_id", !memcmp(bid.data, expect_build_id,
+@@ -49,7 +49,7 @@ static int run_dir(const char *d)
+ 			!strcmp(debuglink, expect_debuglink));
+ 
+ 	scnprintf(debugfile, PATH_MAX, "%s/%s", d, debuglink);
+-	ret = filename__read_build_id(debugfile, &bid, /*block=*/true);
++	ret = filename__read_build_id(debugfile, &bid);
+ 	TEST_ASSERT_VAL("Failed to read debug file build_id",
+ 			ret == sizeof(expect_build_id));
+ 	TEST_ASSERT_VAL("Wrong build_id", !memcmp(bid.data, expect_build_id,
+diff --git a/tools/perf/tests/sdt.c b/tools/perf/tests/sdt.c
+index 6132f1af3e22d3..93baee2eae42ab 100644
+--- a/tools/perf/tests/sdt.c
++++ b/tools/perf/tests/sdt.c
+@@ -31,7 +31,7 @@ static int build_id_cache__add_file(const char *filename)
+ 	struct build_id bid = { .size = 0, };
+ 	int err;
+ 
+-	err = filename__read_build_id(filename, &bid, /*block=*/true);
++	err = filename__read_build_id(filename, &bid);
+ 	if (err < 0) {
+ 		pr_debug("Failed to read build id of %s\n", filename);
+ 		return err;
+diff --git a/tools/perf/util/build-id.c b/tools/perf/util/build-id.c
+index 35505a1ffd1117..fdb35133fde43a 100644
+--- a/tools/perf/util/build-id.c
++++ b/tools/perf/util/build-id.c
+@@ -122,7 +122,7 @@ int filename__snprintf_build_id(const char *pathname, char *sbuild_id, size_t sb
+ 	struct build_id bid = { .size = 0, };
+ 	int ret;
+ 
+-	ret = filename__read_build_id(pathname, &bid, /*block=*/true);
++	ret = filename__read_build_id(pathname, &bid);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -848,7 +848,7 @@ static int filename__read_build_id_ns(const char *filename,
+ 	int ret;
+ 
+ 	nsinfo__mountns_enter(nsi, &nsc);
+-	ret = filename__read_build_id(filename, bid, /*block=*/true);
++	ret = filename__read_build_id(filename, bid);
+ 	nsinfo__mountns_exit(&nsc);
+ 
+ 	return ret;
+diff --git a/tools/perf/util/debuginfo.c b/tools/perf/util/debuginfo.c
+index 07099b50f21926..46fecb7b17e147 100644
+--- a/tools/perf/util/debuginfo.c
++++ b/tools/perf/util/debuginfo.c
+@@ -118,7 +118,7 @@ struct debuginfo *debuginfo__new(const char *path)
+ 	 * incase the path isn't for a regular file.
+ 	 */
+ 	assert(!dso__has_build_id(dso));
+-	if (filename__read_build_id(path, &bid, /*block=*/false) > 0)
++	if (filename__read_build_id(path, &bid) > 0)
+ 		dso__set_build_id(dso, &bid);
+ 
+ 	for (type = distro_dwarf_types;
+diff --git a/tools/perf/util/dsos.c b/tools/perf/util/dsos.c
+index 64c1d65b014961..0a7645c7fae7d3 100644
+--- a/tools/perf/util/dsos.c
++++ b/tools/perf/util/dsos.c
+@@ -81,13 +81,13 @@ static int dsos__read_build_ids_cb(struct dso *dso, void *data)
+ 		return 0;
+ 	}
+ 	nsinfo__mountns_enter(dso__nsinfo(dso), &nsc);
+-	if (filename__read_build_id(dso__long_name(dso), &bid, /*block=*/true) > 0) {
++	if (filename__read_build_id(dso__long_name(dso), &bid) > 0) {
+ 		dso__set_build_id(dso, &bid);
+ 		args->have_build_id = true;
+ 	} else if (errno == ENOENT && dso__nsinfo(dso)) {
+ 		char *new_name = dso__filename_with_chroot(dso, dso__long_name(dso));
+ 
+-		if (new_name && filename__read_build_id(new_name, &bid, /*block=*/true) > 0) {
++		if (new_name && filename__read_build_id(new_name, &bid) > 0) {
+ 			dso__set_build_id(dso, &bid);
+ 			args->have_build_id = true;
+ 		}
+diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
+index 2324f6846d510d..d9effc3ada9954 100644
+--- a/tools/perf/util/libbfd.c
++++ b/tools/perf/util/libbfd.c
+@@ -418,13 +418,18 @@ int dso__load_bfd_symbols(struct dso *dso, const char *debugfile)
+ 	return err;
+ }
+ 
+-int libbfd__read_build_id(const char *filename, struct build_id *bid, bool block)
++int libbfd__read_build_id(const char *filename, struct build_id *bid)
+ {
+ 	size_t size = sizeof(bid->data);
+ 	int err = -1, fd;
+ 	bfd *abfd;
+ 
+-	fd = open(filename, block ? O_RDONLY : (O_RDONLY | O_NONBLOCK));
++	if (!filename)
++		return -EFAULT;
++	if (!is_regular_file(filename))
++		return -EWOULDBLOCK;
++
++	fd = open(filename, O_RDONLY);
+ 	if (fd < 0)
+ 		return -1;
+ 
+diff --git a/tools/perf/util/libbfd.h b/tools/perf/util/libbfd.h
+index e300f171d1bd70..953886f3d62f37 100644
+--- a/tools/perf/util/libbfd.h
++++ b/tools/perf/util/libbfd.h
+@@ -25,7 +25,7 @@ void dso__free_a2l_libbfd(struct dso *dso);
+ int symbol__disassemble_libbfd(const char *filename, struct symbol *sym,
+ 			     struct annotate_args *args);
+ 
+-int libbfd__read_build_id(const char *filename, struct build_id *bid, bool block);
++int libbfd__read_build_id(const char *filename, struct build_id *bid);
+ 
+ int libbfd_filename__read_debuglink(const char *filename, char *debuglink, size_t size);
+ 
+@@ -59,8 +59,7 @@ static inline int symbol__disassemble_libbfd(const char *filename __always_unuse
+ }
+ 
+ static inline int libbfd__read_build_id(const char *filename __always_unused,
+-					struct build_id *bid __always_unused,
+-					bool block __always_unused)
++					struct build_id *bid __always_unused)
+ {
+ 	return -1;
+ }
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 108b91844a2dee..26c842ddaf235b 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -874,20 +874,20 @@ static int elf_read_build_id(Elf *elf, void *bf, size_t size)
+ 	return err;
+ }
+ 
+-static int read_build_id(const char *filename, struct build_id *bid, bool block)
++static int read_build_id(const char *filename, struct build_id *bid)
+ {
+ 	size_t size = sizeof(bid->data);
+ 	int fd, err;
+ 	Elf *elf;
+ 
+-	err = libbfd__read_build_id(filename, bid, block);
++	err = libbfd__read_build_id(filename, bid);
+ 	if (err >= 0)
+ 		goto out;
+ 
+ 	if (size < BUILD_ID_SIZE)
+ 		goto out;
+ 
+-	fd = open(filename, block ? O_RDONLY : (O_RDONLY | O_NONBLOCK));
++	fd = open(filename, O_RDONLY);
+ 	if (fd < 0)
+ 		goto out;
+ 
+@@ -908,7 +908,7 @@ static int read_build_id(const char *filename, struct build_id *bid, bool block)
+ 	return err;
+ }
+ 
+-int filename__read_build_id(const char *filename, struct build_id *bid, bool block)
++int filename__read_build_id(const char *filename, struct build_id *bid)
+ {
+ 	struct kmod_path m = { .name = NULL, };
+ 	char path[PATH_MAX];
+@@ -916,6 +916,8 @@ int filename__read_build_id(const char *filename, struct build_id *bid, bool blo
+ 
+ 	if (!filename)
+ 		return -EFAULT;
++	if (!is_regular_file(filename))
++		return -EWOULDBLOCK;
+ 
+ 	err = kmod_path__parse(&m, filename);
+ 	if (err)
+@@ -932,10 +934,9 @@ int filename__read_build_id(const char *filename, struct build_id *bid, bool blo
+ 		}
+ 		close(fd);
+ 		filename = path;
+-		block = true;
+ 	}
+ 
+-	err = read_build_id(filename, bid, block);
++	err = read_build_id(filename, bid);
+ 
+ 	if (m.comp)
+ 		unlink(filename);
+diff --git a/tools/perf/util/symbol-minimal.c b/tools/perf/util/symbol-minimal.c
+index aa931a0015c10b..2102ed36f2dc2d 100644
+--- a/tools/perf/util/symbol-minimal.c
++++ b/tools/perf/util/symbol-minimal.c
+@@ -94,7 +94,7 @@ int filename__read_debuglink(const char *filename __maybe_unused,
+ /*
+  * Just try PT_NOTE header otherwise fails
+  */
+-int filename__read_build_id(const char *filename, struct build_id *bid, bool block)
++int filename__read_build_id(const char *filename, struct build_id *bid)
+ {
+ 	int fd, ret = -1;
+ 	bool need_swap = false, elf32;
+@@ -111,7 +111,12 @@ int filename__read_build_id(const char *filename, struct build_id *bid, bool blo
+ 	void *phdr, *buf = NULL;
+ 	ssize_t phdr_size, ehdr_size, buf_size = 0;
+ 
+-	fd = open(filename, block ? O_RDONLY : (O_RDONLY | O_NONBLOCK));
++	if (!filename)
++		return -EFAULT;
++	if (!is_regular_file(filename))
++		return -EWOULDBLOCK;
++
++	fd = open(filename, O_RDONLY);
+ 	if (fd < 0)
+ 		return -1;
+ 
+@@ -335,7 +340,7 @@ int dso__load_sym(struct dso *dso, struct map *map __maybe_unused,
+ 	if (ret >= 0)
+ 		RC_CHK_ACCESS(dso)->is_64_bit = ret;
+ 
+-	if (filename__read_build_id(ss->name, &bid, /*block=*/true) > 0)
++	if (filename__read_build_id(ss->name, &bid) > 0)
+ 		dso__set_build_id(dso, &bid);
+ 	return 0;
+ }
+diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
+index f4abe5dbf1a4c5..7535a78b7fd235 100644
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -1755,14 +1755,13 @@ int dso__load(struct dso *dso, struct map *map)
+ 
+ 	/*
+ 	 * Read the build id if possible. This is required for
+-	 * DSO_BINARY_TYPE__BUILDID_DEBUGINFO to work. Don't block in case path
+-	 * isn't for a regular file.
++	 * DSO_BINARY_TYPE__BUILDID_DEBUGINFO to work.
+ 	 */
+ 	if (!dso__has_build_id(dso)) {
+ 		struct build_id bid = { .size = 0, };
+ 
+ 		__symbol__join_symfs(name, PATH_MAX, dso__long_name(dso));
+-		if (filename__read_build_id(name, &bid, /*block=*/false) > 0)
++		if (filename__read_build_id(name, &bid) > 0)
+ 			dso__set_build_id(dso, &bid);
+ 	}
+ 
+diff --git a/tools/perf/util/symbol.h b/tools/perf/util/symbol.h
+index 3471062187992a..3fb5d146d9b15b 100644
+--- a/tools/perf/util/symbol.h
++++ b/tools/perf/util/symbol.h
+@@ -140,7 +140,7 @@ struct symbol *dso__next_symbol(struct symbol *sym);
+ 
+ enum dso_type dso__type_fd(int fd);
+ 
+-int filename__read_build_id(const char *filename, struct build_id *id, bool block);
++int filename__read_build_id(const char *filename, struct build_id *id);
+ int sysfs__read_build_id(const char *filename, struct build_id *bid);
+ int modules__parse(const char *filename, void *arg,
+ 		   int (*process_module)(void *arg, const char *name,
+diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
+index 12f268032b492b..e08f2fcad42d9f 100644
+--- a/tools/perf/util/synthetic-events.c
++++ b/tools/perf/util/synthetic-events.c
+@@ -401,7 +401,7 @@ static void perf_record_mmap2__read_build_id(struct perf_record_mmap2 *event,
+ 	nsi = nsinfo__new(event->pid);
+ 	nsinfo__mountns_enter(nsi, &nc);
+ 
+-	rc = filename__read_build_id(event->filename, &bid, /*block=*/false) > 0 ? 0 : -1;
++	rc = filename__read_build_id(event->filename, &bid) > 0 ? 0 : -1;
+ 
+ 	nsinfo__mountns_exit(&nc);
+ 	nsinfo__put(nsi);
 -- 
 2.53.0
 
