@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF0643E088;
-	Tue, 21 Jul 2026 21:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F8D43C077;
+	Tue, 21 Jul 2026 21:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667990; cv=none; b=PZI0arD/i/Ho5R4J6LSCE7Or6wflr3N4hfNbQvHrDrpaMFFIkXTsO+gV6f+ThF8RNqHjh8GQYCSMes9J5y3wSG5YJ5GksPAvKtdv5/TN5SZfuwM1zsDs6MCo2D2XprmtbScHt9i3ntfWvuyP3g89ceTbwKiPLJkExVdVifVwxWU=
+	t=1784667992; cv=none; b=oijqvyTE4UKmPT9biFQBw7IlHSgaczpox9yJsdPXOwfjoFARDed2ZyREbRygpDJk+0MRweEh+vae95IqRp8KJB6FpjGz2w1Xs3uA39JBnsRDXlRdKVHckmZfmdCb0gIXcpXVxXrTdTRp6+sZMg0s5CDx4E+DAojV5H5aDbVoQ60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667990; c=relaxed/simple;
-	bh=H2Fahv9czsm1nckJtjrhc4j/yziGhkM+jFq8qUpq3X4=;
+	s=arc-20240116; t=1784667992; c=relaxed/simple;
+	bh=ysAQYMYM5BXkCvEaKl1CdoUkC0vlT9jLLWfaBs+YdIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+9NJM1LDOr5J8LiPorv+m/ehpe8Yk6fCEMiILP1w7oMPSD/lXjw2sZxrPK1u1lLukoQ1wJFWmAPVR3Wfv4AEn9PBQr0rJuZNWEQVQ1Tae2stg6Sq3aKrf5M28SECUOWg6lFwO2MMCrdvqOC1Wk5SW1wOW4W3Me6STBpcxqrs2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhEQcoFd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fPLjRJUIObuaSS9c5SIEZ7sdZ60siSFIHJf1lzhITp4O6p6HaYAKaetEOUmx0S2RCOyCB+K4wMjmFrFj2xpTUahC83lrWZyYXLfEB8TfOGjst5ZTMrCiMAf3RbqFL3dj2+sSfRYg+0M93QaaGjvh2B3CRb+Fax3m9GQ6ZlmZI7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yW2vz7yF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhEQcoFd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0D81F000E9;
-	Tue, 21 Jul 2026 21:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yW2vz7yF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8185B1F000E9;
+	Tue, 21 Jul 2026 21:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667988;
-	bh=OssRd45UzOVS3grCZF9yNuXTi8Ca+3jxWCMsEopCt+4=;
+	s=korg; t=1784667991;
+	bh=rzktUMaiLsTGSELbgpSWL3/KcU35D0i2okl2Z+xB5Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhEQcoFdLPG7StwEjZCol4B8h1V5uEKt5fkJj2VLY37szNoW/gm9HxwtGCsayCoIq
-	 33iaitEzOsYT0ZKYkU8BXD+xnNtVprUQth4+WedYFlSMPc5rjxas/5nF4xLMPkjJjW
-	 qV26AqC6Zd1zYPXh8wP/khPuJa7Brm/fLddwvokk=
+	b=yW2vz7yFk+3Iyj7gcumXObWrqBkNy7HLjrtRvH4hbu4K7Q1YcuwfLdiPqEs5Gp/PS
+	 oUR/1iD4Pr43J5HH6Wk7plmd2TGuSdspnn5V9IwmfCKRRTxGhin7GcobMR8AlwEaOF
+	 8i/8Qj+kjxh0q3EXqO3z5Oiy2Dx6pgXzm1d9nhCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1246/1266] btrfs: fix incorrect buffered IO fallback for append direct writes
-Date: Tue, 21 Jul 2026 17:28:03 +0200
-Message-ID: <20260721152509.702263617@linuxfoundation.org>
+Subject: [PATCH 6.6 1247/1266] Bluetooth: hci_core: Enable buffer flow control for SCO/eSCO
+Date: Tue, 21 Jul 2026 17:28:04 +0200
+Message-ID: <20260721152509.724146691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,197 +51,268 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit ff66fe6662330226b3f486014c375538d91c44aa ]
+[ Upstream commit 13218453521d75916dfed55efb8e809bfc03cb4b ]
 
-[BUG]
-With the previous bug of short direct writes fixed, test case
-generic/362 (*) still fails with the following error with nodatasum
-mount option:
+This enables buffer flow control for SCO/eSCO
+(see: Bluetooth Core 6.0 spec: 6.22. Synchronous Flow Control Enable),
+recently this has caused the following problem and is actually a nice
+addition for the likes of Socket TX complete:
 
-# generic/362  0s ... - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
-# - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
-#    --- tests/generic/362.out	2024-08-24 15:31:37.200000000 +0930
-#    +++ /home/adam/xfstests/results//generic/362.out.bad	2026-05-27 10:13:09.072485767 +0930
-#    @@ -1,2 +1,3 @@
-#     QA output created by 362
-#    +Wrong file size after first write, got 8192 expected 4096
-#     Silence is golden
-#    ...
+< HCI Command: Read Buffer Size (0x04|0x0005) plen 0
+> HCI Event: Command Complete (0x0e) plen 11
+      Read Buffer Size (0x04|0x0005) ncmd 1
+        Status: Success (0x00)
+        ACL MTU: 1021 ACL max packet: 5
+        SCO MTU: 240  SCO max packet: 8
+...
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+< SCO Data TX: Handle 257 flags 0x00 dlen 120
+> HCI Event: Hardware Error (0x10) plen 1
+        Code: 0x0a
 
-*: If the test case has been executed before with default data checksum,
-the failure will not reproduce. Need the following fix to make it
-reliably reproducible:
-https://lore.kernel.org/linux-btrfs/20260528111659.87113-1-wqu@suse.com/
+To fix the code will now attempt to enable buffer flow control when
+HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED is set by the driver:
 
-[CAUSE]
-Inside btrfs_dio_iomap_begin() for a direct write, we increase the isize
-if it's beyond the current isize.
+< HCI Command: Write Sync Fl.. (0x03|0x002f) plen 1
+        Flow control: Enabled (0x01)
+> HCI Event: Command Complete (0x0e) plen 4
+      Write Sync Flow Control Enable (0x03|0x002f) ncmd 1
+        Status: Success (0x00)
 
-But if the direct io finished short, we do not revert the isize to the
-previous value nor to the short write end.
+On success then HCI_SCO_FLOWCTL would be set which indicates sco_cnt
+shall be used for flow contro.
 
-Then if we need to fall back to buffered writes, and the write has
-IOCB_APPEND flag, then the buffered write will be positioned at the
-incorrect isize.
-
-The call chain looks like this:
-
- btrfs_direct_write(pos=0, length=4K)
- |- __iomap_dio_rw()
- |  |- iomap_iter()
- |  |  |- btrfs_dio_iomap_begin()
- |  |     |- btrfs_get_blocks_direct_write()
- |  |        |- i_size_write()
- |  |           Which updates the isize to the write end (4K).
- |  |
- |  |- iomap_dio_iter()
- |  |  Failed with -EFAULT on the first page.
- |  |
- |  |- iomap_iter()
- |  |  |- btrfs_dio_iomap_end()
- |  |     Detects a short write, return -ENOTBLK
- |  |- if (ret == -ENOTBLK) { ret = 0;}
- |     Which resets the return value.
- |
- |- ret = iomap_dio_complet()
- |  Which returns 0.
- |
- |- btrfs_buffered_write(iocb, from);
-    |- generic_write_checks()
-       |- iocb->ki_pos = i_size_read()
-          Which is still the new size (4K), other than the original
-	  isize 0.
-
-[FIX]
-Introduce the following btrfs_dio_data members:
-
-- old_isize
-
-- updated_isize
-  If the direct write has enlarged the isize.
-
-Then if we got a short write, and btrfs_dio_data::updated_isize is set,
-revert to the correct isize based on old_isize and current file
-position.
-
-And here we call i_size_write() without holding an extent lock, which is
-a very special case that we're safe to do:
-
- - Only a single writer can be enlarging isize
-   Enlarging isize will take the exclusive inode lock.
-
- - Buffered readers need to wait for the OE we're holding
-   Buffered readers will lock extent and wait for OE of the folio range.
-   Sometimes we can skip the OE wait, but since all page cache is
-   invalidated, the OE wait can not be skipped.
-
-But I do not think this is the most elegant solution, nor covers all
-cases. E.g. if the bio is submitted but IO failed, we are unable to do
-the revert.
-
-I believe the more elegant one would be extend the EXTENT_DIO_LOCKED
-lifespan for direct writes, so that we can update the isize when a
-write beyond EOF finished successfully.
-
-However that change is too huge for a small bug fix.
-So only implement the minimal partial fix for now.
-
-[REASON FOR NO FIXES TAG]
-The bug is again very old, before commit f85781fb505e ("btrfs: switch to
-iomap for direct IO") we are already increasing isize without a
-proper rollback for short writes.
-
-Thus only a CC to stable.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 7fedd3bb6b77 ("Bluetooth: Prioritize SCO traffic")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Pauli Virtanen <pav@iki.fi>
+Stable-dep-of: 12917f591cea ("Bluetooth: hci_conn: Fix null ptr deref in hci_abort_conn()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   43 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 42 insertions(+), 1 deletion(-)
+ include/net/bluetooth/hci.h      |   13 ++++++++
+ include/net/bluetooth/hci_core.h |    1 
+ net/bluetooth/hci_core.c         |   62 +++++++++++++++++----------------------
+ net/bluetooth/hci_event.c        |    2 +
+ net/bluetooth/hci_sync.c         |   24 +++++++++++++++
+ 5 files changed, 68 insertions(+), 34 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -80,10 +80,12 @@ struct btrfs_iget_args {
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -206,6 +206,13 @@ enum {
+ 	 */
+ 	HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED,
  
- struct btrfs_dio_data {
- 	ssize_t submitted;
-+	loff_t old_isize;
- 	struct extent_changeset *data_reserved;
- 	struct btrfs_ordered_extent *ordered;
- 	bool data_space_reserved;
- 	bool nocow_done;
-+	bool updated_isize;
++	/* When this quirk is set consider Sync Flow Control as supported by
++	 * the driver.
++	 *
++	 * This quirk must be set before hci_register_dev is called.
++	 */
++	HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED,
++
+ 	/* When this quirk is set, the controller has validated that
+ 	 * LE states reported through the HCI_LE_READ_SUPPORTED_STATES are
+ 	 * valid.  This mechanism is necessary as many controllers have
+@@ -416,6 +423,7 @@ enum {
+ 	HCI_WIDEBAND_SPEECH_ENABLED,
+ 	HCI_EVENT_FILTER_CONFIGURED,
+ 	HCI_PA_SYNC,
++	HCI_SCO_FLOWCTL,
+ 
+ 	HCI_DUT_MODE,
+ 	HCI_VENDOR_DIAG,
+@@ -1513,6 +1521,11 @@ struct hci_rp_read_tx_power {
+ 	__s8     tx_power;
+ } __packed;
+ 
++#define HCI_OP_WRITE_SYNC_FLOWCTL	0x0c2f
++struct hci_cp_write_sync_flowctl {
++	__u8     enable;
++} __packed;
++
+ #define HCI_OP_READ_PAGE_SCAN_TYPE	0x0c46
+ struct hci_rp_read_page_scan_type {
+ 	__u8     status;
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1824,6 +1824,7 @@ void hci_conn_del_sysfs(struct hci_conn
+ #define lmp_hold_capable(dev)      ((dev)->features[0][0] & LMP_HOLD)
+ #define lmp_sniff_capable(dev)     ((dev)->features[0][0] & LMP_SNIFF)
+ #define lmp_park_capable(dev)      ((dev)->features[0][1] & LMP_PARK)
++#define lmp_sco_capable(dev)       ((dev)->features[0][1] & LMP_SCO)
+ #define lmp_inq_rssi_capable(dev)  ((dev)->features[0][3] & LMP_RSSI_INQ)
+ #define lmp_esco_capable(dev)      ((dev)->features[0][3] & LMP_ESCO)
+ #define lmp_bredr_capable(dev)     (!((dev)->features[0][4] & LMP_NO_BREDR))
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3556,42 +3556,27 @@ static void __check_timeout(struct hci_d
+ }
+ 
+ /* Schedule SCO */
+-static void hci_sched_sco(struct hci_dev *hdev)
++static void hci_sched_sco(struct hci_dev *hdev, __u8 type)
+ {
+ 	struct hci_conn *conn;
+ 	struct sk_buff *skb;
+-	int quote;
++	int quote, *cnt;
++	unsigned int pkts = hdev->sco_pkts;
+ 
+-	BT_DBG("%s", hdev->name);
++	bt_dev_dbg(hdev, "type %u", type);
+ 
+-	if (!hci_conn_num(hdev, SCO_LINK))
++	if (!hci_conn_num(hdev, type) || !pkts)
+ 		return;
+ 
+-	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, SCO_LINK, &quote))) {
+-		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
+-			BT_DBG("skb %p len %d", skb, skb->len);
+-			hci_send_frame(hdev, skb);
+-
+-			conn->sent++;
+-			if (conn->sent == ~0)
+-				conn->sent = 0;
+-		}
+-	}
+-}
+-
+-static void hci_sched_esco(struct hci_dev *hdev)
+-{
+-	struct hci_conn *conn;
+-	struct sk_buff *skb;
+-	int quote;
+-
+-	BT_DBG("%s", hdev->name);
+-
+-	if (!hci_conn_num(hdev, ESCO_LINK))
+-		return;
++	/* Use sco_pkts if flow control has not been enabled which will limit
++	 * the amount of buffer sent in a row.
++	 */
++	if (!hci_dev_test_flag(hdev, HCI_SCO_FLOWCTL))
++		cnt = &pkts;
++	else
++		cnt = &hdev->sco_cnt;
+ 
+-	while (hdev->sco_cnt && (conn = hci_low_sent(hdev, ESCO_LINK,
+-						     &quote))) {
++	while (*cnt && (conn = hci_low_sent(hdev, type, &quote))) {
+ 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
+ 			BT_DBG("skb %p len %d", skb, skb->len);
+ 			hci_send_frame(hdev, skb);
+@@ -3599,8 +3584,17 @@ static void hci_sched_esco(struct hci_de
+ 			conn->sent++;
+ 			if (conn->sent == ~0)
+ 				conn->sent = 0;
++			(*cnt)--;
+ 		}
+ 	}
++
++	/* Rescheduled if all packets were sent and flow control is not enabled
++	 * as there could be more packets queued that could not be sent and
++	 * since no HCI_EV_NUM_COMP_PKTS event will be generated the reschedule
++	 * needs to be forced.
++	 */
++	if (!pkts && !hci_dev_test_flag(hdev, HCI_SCO_FLOWCTL))
++		queue_work(hdev->workqueue, &hdev->tx_work);
+ }
+ 
+ static void hci_sched_acl_pkt(struct hci_dev *hdev)
+@@ -3636,8 +3630,8 @@ static void hci_sched_acl_pkt(struct hci
+ 			chan->conn->sent++;
+ 
+ 			/* Send pending SCO packets right away */
+-			hci_sched_sco(hdev);
+-			hci_sched_esco(hdev);
++			hci_sched_sco(hdev, SCO_LINK);
++			hci_sched_sco(hdev, ESCO_LINK);
+ 		}
+ 	}
+ 
+@@ -3692,8 +3686,8 @@ static void hci_sched_le(struct hci_dev
+ 			chan->conn->sent++;
+ 
+ 			/* Send pending SCO packets right away */
+-			hci_sched_sco(hdev);
+-			hci_sched_esco(hdev);
++			hci_sched_sco(hdev, SCO_LINK);
++			hci_sched_sco(hdev, ESCO_LINK);
+ 		}
+ 	}
+ 
+@@ -3738,8 +3732,8 @@ static void hci_tx_work(struct work_stru
+ 
+ 	if (!hci_dev_test_flag(hdev, HCI_USER_CHANNEL)) {
+ 		/* Schedule queues and send stuff to HCI driver */
+-		hci_sched_sco(hdev);
+-		hci_sched_esco(hdev);
++		hci_sched_sco(hdev, SCO_LINK);
++		hci_sched_sco(hdev, ESCO_LINK);
+ 		hci_sched_iso(hdev);
+ 		hci_sched_acl(hdev);
+ 		hci_sched_le(hdev);
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4445,9 +4445,11 @@ static void hci_num_comp_pkts_evt(struct
+ 			break;
+ 
+ 		case SCO_LINK:
++		case ESCO_LINK:
+ 			hdev->sco_cnt += count;
+ 			if (hdev->sco_cnt > hdev->sco_pkts)
+ 				hdev->sco_cnt = hdev->sco_pkts;
++
+ 			break;
+ 
+ 		case ISO_LINK:
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -3877,6 +3877,28 @@ static int hci_write_ca_timeout_sync(str
+ 				     sizeof(param), &param, HCI_CMD_TIMEOUT);
+ }
+ 
++/* Enable SCO flow control if supported */
++static int hci_write_sync_flowctl_sync(struct hci_dev *hdev)
++{
++	struct hci_cp_write_sync_flowctl cp;
++	int err;
++
++	/* Check if the controller supports SCO and HCI_OP_WRITE_SYNC_FLOWCTL */
++	if (!lmp_sco_capable(hdev) || !(hdev->commands[10] & BIT(4)) ||
++	    !test_bit(HCI_QUIRK_SYNC_FLOWCTL_SUPPORTED, &hdev->quirks))
++		return 0;
++
++	memset(&cp, 0, sizeof(cp));
++	cp.enable = 0x01;
++
++	err = __hci_cmd_sync_status(hdev, HCI_OP_WRITE_SYNC_FLOWCTL,
++				    sizeof(cp), &cp, HCI_CMD_TIMEOUT);
++	if (!err)
++		hci_dev_set_flag(hdev, HCI_SCO_FLOWCTL);
++
++	return err;
++}
++
+ /* BR Controller init stage 2 command sequence */
+ static const struct hci_init_stage br_init2[] = {
+ 	/* HCI_OP_READ_BUFFER_SIZE */
+@@ -3895,6 +3917,8 @@ static const struct hci_init_stage br_in
+ 	HCI_INIT(hci_clear_event_filter_sync),
+ 	/* HCI_OP_WRITE_CA_TIMEOUT */
+ 	HCI_INIT(hci_write_ca_timeout_sync),
++	/* HCI_OP_WRITE_SYNC_FLOWCTL */
++	HCI_INIT(hci_write_sync_flowctl_sync),
+ 	{}
  };
  
- struct btrfs_dio_private {
-@@ -7405,6 +7407,7 @@ static int btrfs_get_blocks_direct_write
- 	bool space_reserved = false;
- 	u64 len = *lenp;
- 	u64 prev_len;
-+	loff_t old_isize;
- 	int ret = 0;
- 
- 	/*
-@@ -7520,8 +7523,14 @@ static int btrfs_get_blocks_direct_write
- 	 * Need to update the i_size under the extent lock so buffered
- 	 * readers will get the updated i_size when we unlock.
- 	 */
--	if (start + len > i_size_read(inode))
-+	old_isize = i_size_read(inode);
-+	if (start + len > old_isize) {
-+		if (!dio_data->updated_isize) {
-+			dio_data->old_isize = old_isize;
-+			dio_data->updated_isize = true;
-+		}
- 		i_size_write(inode, start + len);
-+	}
- out:
- 	if (ret && space_reserved) {
- 		btrfs_delalloc_release_extents(BTRFS_I(inode), len);
-@@ -7799,6 +7808,38 @@ static int btrfs_dio_iomap_end(struct in
- 		length -= submitted;
- 		if (write) {
- 			/*
-+			 * Got a short write and have updated the isize, need to
-+			 * revert the isize change.
-+			 *
-+			 * Normally we need to update isize with extent lock hold,
-+			 * but we're safe due to the following factors:
-+			 *
-+			 * - Only a single writer can be enlarging isize
-+			 *   Enlarging isize will take the exclusive inode lock.
-+			 *
-+			 * - Buffered readers need to wait for the OE we're holding
-+			 *   Buffered readers will lock extent and wait for OE
-+			 *   of the folio range, and since page cache is invalidated
-+			 *   the OE wait can not be skipped.
-+			 *
-+			 * So here we are safe to revert the isize before
-+			 * finishing the OE, and no reader of the remaining range
-+			 * can see the enlarged size.
-+			 *
-+			 * TODO: Extend the DIO_LOCKED lifespan for direct writes,
-+			 * and only enlarge isize after a successful write.
-+			 */
-+			if (dio_data->updated_isize) {
-+				u64 new_isize;
-+
-+				if (submitted == 0)
-+					new_isize = dio_data->old_isize;
-+				else
-+					new_isize = max(dio_data->old_isize, pos);
-+				i_size_write(inode, new_isize);
-+				dio_data->updated_isize = false;
-+			}
-+			/*
- 			 * We have a short write, if there is any range
- 			 * that is submitted properly, that part will have
- 			 * its own OE split from the original one.
 
 
