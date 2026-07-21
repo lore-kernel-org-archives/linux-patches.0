@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB8246AA73;
-	Tue, 21 Jul 2026 15:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D4B46AA60;
+	Tue, 21 Jul 2026 15:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648085; cv=none; b=dsqCAPVp2GsW7qybx0jAe0RZ5QOAsJPlBxGUBudpYRQOz7Raei7YpQ5Aj2AYG2ftkPbwrVoDC34H1QhRAFd60oztWQ3xUss1wfcU+JCtnuxYC0CZrOy2ag0T/4sPJnXFlFO+t/9oIzIg5Pv3XU2V3izomMDKtxesKOjfohF1Cqc=
+	t=1784648088; cv=none; b=f26q0O2uPp2puTgByHeD6QkhN1ySiIuDRUhAfVm1Rze5rW1lJmx+7DPscFS5XUtovIQv8OcF/5QWl7rDYJJtff5faeiLZSAKLydiXpHAlvtxHJ4sV1C/Srx1/+YNK8ITUJCe5Au36anrz/uTFflioRauZerg2eZKWz09MWADyA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648085; c=relaxed/simple;
-	bh=2IQyqZgCg8G4nISLc1EOARU1zSm+xdoxyuoxRjUxzgg=;
+	s=arc-20240116; t=1784648088; c=relaxed/simple;
+	bh=69cVB5kCI4Ui496vAgDBBGa68+9H3Y6mDlreCvcXYLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsMsouAHzN0QjOo8Ts6u7aBzAVnR5IwMjW1o4+0vBCv8v+9pcAI1rjfrTRfs3VzmL1008/7rLuVf9EN/OTCAz3xeSpzA9Yt8f4ImXZ6sxEtr/ECqcWy6bA31BptPviB36IFd1/7gXXWhonr6WVPep1VMB0vIZk4gbQdHu6giBpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2iLp6Dc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bMCHMgUOxWH/Czi2DinVQ0dPzpy0aLtuCqRMCLvbVoWKzmG37ov6626aev0Gdw+rfUVg+4fKieHgZpcdiYKZsEaCo6YfZOHluV0JijA7NBNin++LlnuKueI4bXY8sweoGQ7bYQKV2hGfdmnjaVHexy61S2gyNA0JMQkG50w4JCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHvQUuHS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2iLp6Dc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9921E1F00A3A;
-	Tue, 21 Jul 2026 15:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHvQUuHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B91A1F000E9;
+	Tue, 21 Jul 2026 15:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648084;
-	bh=jbHXPvTZPLipXoiHjh/E+cLkr7oVFiZOhDDeTTQQ+2k=;
+	s=korg; t=1784648086;
+	bh=Y9cifEmUvFla2cmiswdLMpop2RZ5CsiEwHn0qe9g1JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S2iLp6Dcmc4u9vjxj7d6lQvXfXMiAoI/KWMjyKRuhPG78QpDeuDykDMoeGSgBw/ri
-	 kTqZtbIreia+4MFnHwg9OlUUWv56fV3Nqq2bLsPDqieFLH6XED46ocQjTi7OyISSTX
-	 qOVJe6GHchy9DiX1XwpEkMBFgUtCZHPS/1Wh1uUM=
+	b=UHvQUuHSWcJ6YAbRXA4Y3ESh87R/WJG5JppfU3FrUKKhDqxvoajFlOU0us9BSu8Rj
+	 T9/q0KHi3ZsME+6Zwpi2za6LqYswC0RuYN7cbsN571O4RhiP718QIrbVlrw1XEm0gG
+	 B8EXUEOa2PzCrVea7WsgRb9oGJMi3Dlie1IW2c98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0065/2077] libbpf: Report error when a negative kprobe offset is specified
-Date: Tue, 21 Jul 2026 16:55:38 +0200
-Message-ID: <20260721152554.227239365@linuxfoundation.org>
+Subject: [PATCH 7.1 0066/2077] selftests/bpf: Fix off-by-one in bpf_cpumask_populate related selftest
+Date: Tue, 21 Jul 2026 16:55:39 +0200
+Message-ID: <20260721152554.249157121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,65 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-[ Upstream commit ad35d8018669fd2eea76e3f74eb050fd3d2fb690 ]
+[ Upstream commit 0aa6378695b8c67146130812f635f07c4898f171 ]
 
-In attach_kprobe(), the parsing logic uses sscanf() to extract the
-target function name and offset from the section definition. Currently,
-if a user specifies a negative offset (e.g., SEC("kprobe/func+-100")),
-the input is not explicitly caught and reported as an error.
+The test_populate test uses >= instead of > when checking if the
+runtime nr_cpus exceeds the bit capacity of a cpumask_t.
 
-This commit updates the logic to explicitly notify the user when a
-negative integer is provided. To facilitate this check, the offset
-variable is changed from unsigned long to long so that sscanf()
-can accurately capture a negative input for evaluation.
+On a system where the physical CPU core count perfectly matches the
+CONFIG_NR_CPUS upper bound (e.g. nr_cpus = 512 and CONFIG_NR_CPUS =
+512), the condition nr_cpus >= CPUMASK_TEST_MASKLEN * 8 evaluates to
+true (512 >= 512). This incorrectly causes the test to fail with an
+error value of 3.
 
-If a negative offset is detected, the loader will now print an
-informative warning stating that the offset must be non-negative,
-and return -EINVAL.
+A 512-bit cpumask_t provides enough bits (indices 0 through 511) to
+represent 512 CPUs. The subsequent bpf_for(i, 0, nr_cpus) loop
+iterates up to nr_cpus - 1 (511), which perfectly aligns with the
+maximum valid index of the bitmask.
 
-Additionally, free(func) is called in this new error path to prevent
-a memory leak, as the function name string is dynamically allocated
-by sscanf().
+Change the condition to nr_cpus > CPUMASK_TEST_MASKLEN * 8 to fix the
+false positive failure on these systems.
 
-Fixes: e3f9bc35ea7e9 ("libbpf: Allow decimal offset for kprobes")
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://lore.kernel.org/bpf/20260419030944.1423642-1-atomlin@atomlin.com
+Fixes: 918ba2636d4e ("selftests: bpf: add bpf_cpumask_populate selftests")
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/bpf/20260420093734.2400330-1-mattbobrowski@google.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/progs/cpumask_success.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 3a80a018fc7d50..83aae7a39d36de 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -12280,7 +12280,7 @@ bpf_program__attach_kprobe_multi_opts(const struct bpf_program *prog,
- static int attach_kprobe(const struct bpf_program *prog, long cookie, struct bpf_link **link)
- {
- 	DECLARE_LIBBPF_OPTS(bpf_kprobe_opts, opts);
--	unsigned long offset = 0;
-+	long offset = 0;
- 	const char *func_name;
- 	char *func;
- 	int n;
-@@ -12302,6 +12302,13 @@ static int attach_kprobe(const struct bpf_program *prog, long cookie, struct bpf
- 		pr_warn("kprobe name is invalid: %s\n", func_name);
- 		return -EINVAL;
+diff --git a/tools/testing/selftests/bpf/progs/cpumask_success.c b/tools/testing/selftests/bpf/progs/cpumask_success.c
+index 0e04c31b91c0c0..774706e7b058b9 100644
+--- a/tools/testing/selftests/bpf/progs/cpumask_success.c
++++ b/tools/testing/selftests/bpf/progs/cpumask_success.c
+@@ -866,7 +866,7 @@ int BPF_PROG(test_populate, struct task_struct *task, u64 clone_flags)
+ 	 * access NR_CPUS, the upper bound for nr_cpus, so we infer
+ 	 * it from the size of cpumask_t.
+ 	 */
+-	if (nr_cpus < 0 || nr_cpus >= CPUMASK_TEST_MASKLEN * 8) {
++	if (nr_cpus < 0 || nr_cpus > CPUMASK_TEST_MASKLEN * 8) {
+ 		err = 3;
+ 		goto out;
  	}
-+
-+	if (offset < 0) {
-+		free(func);
-+		pr_warn("kprobe offset must be a non-negative integer: %li\n", offset);
-+		return -EINVAL;
-+	}
-+
- 	if (opts.retprobe && offset != 0) {
- 		free(func);
- 		pr_warn("kretprobes do not support offset specification\n");
 -- 
 2.53.0
 
