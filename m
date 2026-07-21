@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D01F44AB9E;
-	Tue, 21 Jul 2026 21:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27DF44AB8A;
+	Tue, 21 Jul 2026 21:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670068; cv=none; b=WcAeSNsvrDa/yRPLk6GIoIDHIhfj7sMXsXv13FeBlPBfvfbs4S2/9vJ9y7Nd7ZU24WgW8M3dwXUe46dUxRQ06pRrtOgQvhaoCkLaGEv4jFqJ7MfUX6cV7ucmNejko3H4gcq3ViE67Bk7s8WPbSNcv5E8T6gkqFy7COQkA9S1iyo=
+	t=1784670070; cv=none; b=bdh9ZTq5ijGQ3yUUjDQkB5J0GjvB47Jsm4VHPyd5flJ0UHPdDC0+gd9rMCnzPH6WLlFOhAL4d1azC8YR+k8Bd4RYzg41X4iM8BLIl1kx7u15ZGOhJs87em1sfAO9XOhvAQccTuR2HUivr9y+ijb1q4j0nOyQjEHtNndQCjm0YZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670068; c=relaxed/simple;
-	bh=35iWDvtyvs914o8+J3NJX9WoQP11A9flkCDy4XtYtGs=;
+	s=arc-20240116; t=1784670070; c=relaxed/simple;
+	bh=I6zEYsPfhbNfgPw5ON+HlEtOjck4jrCIMnxCt5ncHjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNc5yZHCQLOdVM3LRBcnVaQGgnc+LKROTTk4kqLMZxlVeZ5k3yPUDJC2T10MKUnLVREmKRz30MOEywaWuEKXbKWQXfIKXekZy6PAR+A5Pq5hD16ceyhcrdEj4xLesMugAXMKXgdp2ibFPAVRq6T5gBg9P3wLEWmYo80vTgSBdzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAsWcMue; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MZkD5iLrugNJsHpInGW5AomqI3jqc+FEP69XsQT9EtfV3i8L3kiehGTghlGdHx7UBiwzYlWpQmqeZvJb3tZqlxRnaLtPNixTxAR3ZEHwbqsijVl8VMAyIKo++gWw9wzwWuiPmeJtgO67z4fpB3tViCK34Xxa1Y3YPg/ZsEjbZd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrLWH70Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAsWcMue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A121F000E9;
-	Tue, 21 Jul 2026 21:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrLWH70Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C4A1F00A3A;
+	Tue, 21 Jul 2026 21:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670066;
-	bh=AoW3OGvdP4eQK63zfjmIs+BQzAx0Pa2DQeYi0AZmt7I=;
+	s=korg; t=1784670068;
+	bh=bU/D8rn0EYfbia2T23h+MKPikQvS/jcq2TgtTORhpHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rAsWcMue7vtm6frgVkRfWJ25nfMMxruGLDO4bj2icFTRjvpPkESciFM5hMPYy10ts
-	 lLYHfpGkplC5S/A0+U/SESNG/SA9QmSbUzVyn7z5CZ0wXedDq+fmsBARCpMm1WeDYu
-	 WXq9TA0oer1KXCSZRe/uN/lnodZuiHDW4FsAlb5Q=
+	b=ZrLWH70ZNGEfu0EuqwBrHrlOsI//iodsGuK9CD1Dos6tODrPzjyM4MzyIZrMx2Ol8
+	 1dwvKEG1cn3RVbNVN/SgvCW5HW4TuKR9Z3u1PcN5+VeHO4bBSX9OjGXZcAtKry0uVU
+	 d/xfEjKmnU+LlUR6D5uuv8K2dvO5Vx9cjAfKrJyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 0790/1067] fs/ntfs3: validate lcns_follow in log_replay conversion
-Date: Tue, 21 Jul 2026 17:23:11 +0200
-Message-ID: <20260721152442.236491650@linuxfoundation.org>
+Subject: [PATCH 6.1 0791/1067] fs/ntfs3: add depth limit to indx_find_buffer to prevent stack overflow
+Date: Tue, 21 Jul 2026 17:23:12 +0200
+Message-ID: <20260721152442.257632761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,76 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 6a4c53a2e26a865565bd6a460961e8d6fcb32329 upstream.
+commit 1ebd684b8f627f75bc3e03f8b2ad8400fd1f02cd upstream.
 
-log_replay() converts DIR_PAGE_ENTRY_32 records into DIR_PAGE_ENTRY
-records when replaying version 0 restart tables.
+indx_find_buffer() recursively descends the B+ tree index with no depth
+limit.  A crafted NTFS image with circular index node references causes
+unbounded recursion, overflowing the kernel stack and panicking the
+system.
 
-During this conversion, the memmove() length is derived directly from
-the on-disk lcns_follow field:
+This is reachable by mounting a malicious NTFS filesystem (e.g. from a
+USB drive via desktop automount) and deleting a file whose index entry
+triggers the rebalancing fallback path in indx_delete_entry().
 
-	memmove(&dp->vcn, &dp0->vcn_low,
-		2 * sizeof(u64) +
-				le32_to_cpu(dp->lcns_follow) * sizeof(u64));
+Add a depth parameter and bail out with -EINVAL when it reaches the
+fnd->nodes array bound, matching the constraint already enforced by
+fnd_push() in indx_find().
 
-check_rstbl() validates restart table structure, but does not constrain
-per-entry lcns_follow values relative to the entry size. A malformed
-filesystem image can provide an oversized lcns_follow value, causing
-the conversion memmove() to access memory beyond the bounds of the
-allocated restart table buffer.
+The related function indx_find() was previously patched for a similar
+infinite-loop issue (commit 1732053c8a6b), but indx_find_buffer() was
+missed.
 
-The same field is later used to bound iteration over page_lcns[],
-so validating lcns_follow during conversion also prevents downstream
-out-of-bounds access from the same malformed metadata.
-
-Compute the maximum valid lcns_follow from the already-validated
-restart table entry size and reject entries that exceed this bound.
-Reuse the existing t16/t32 scratch variables already declared in
-log_replay() to avoid introducing new declarations.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-[almaz.alexandrovich@paragon-software.com: fixed the conflicts]
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/ntfs3/index.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -4265,13 +4265,26 @@ check_dirty_page_table:
- 	if (rst->major_ver)
- 		goto end_conv_1;
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1991,13 +1991,21 @@ out1:
+ static struct indx_node *indx_find_buffer(struct ntfs_index *indx,
+ 					  struct ntfs_inode *ni,
+ 					  const struct INDEX_ROOT *root,
+-					  __le64 vbn, struct indx_node *n)
++					  __le64 vbn, struct indx_node *n,
++					  int depth)
+ {
+ 	int err;
+ 	const struct NTFS_DE *e;
+ 	struct indx_node *r;
+ 	const struct INDEX_HDR *hdr = n ? &n->index->ihdr : &root->ihdr;
  
-+	t16 = le16_to_cpu(dptbl->size);
-+	if (t16 < sizeof(struct DIR_PAGE_ENTRY)) {
-+		log->set_dirty = true;
-+		goto out;
-+	}
++	/*
++	 * Limit recursion depth to prevent stack overflow from crafted
++	 * images.  Use the same bound as the fnd->nodes array (20).
++	 */
++	if (depth > ARRAY_SIZE(((struct ntfs_fnd *)NULL)->nodes))
++		return ERR_PTR(-EINVAL);
 +
-+	t32 = (t16 - sizeof(struct DIR_PAGE_ENTRY)) / sizeof(u64);
-+
- 	dp = NULL;
- 	while ((dp = enum_rstbl(dptbl, dp))) {
- 		struct DIR_PAGE_ENTRY_32 *dp0 = (struct DIR_PAGE_ENTRY_32 *)dp;
--		// NOTE: Danger. Check for of boundary.
-+		u32 lcns = le32_to_cpu(dp->lcns_follow);
-+
-+		if (lcns > t32) {
-+			log->set_dirty = true;
-+			goto out;
-+		}
-+
- 		memmove(&dp->vcn, &dp0->vcn_low,
--			2 * sizeof(u64) +
--				le32_to_cpu(dp->lcns_follow) * sizeof(u64));
-+			2 * sizeof(u64) + lcns * sizeof(u64));
- 	}
+ 	/* Step 1: Scan one level. */
+ 	for (e = hdr_first_de(hdr);; e = hdr_next_de(hdr, e)) {
+ 		if (!e)
+@@ -2018,7 +2026,8 @@ static struct indx_node *indx_find_buffe
+ 			if (err)
+ 				return ERR_PTR(err);
  
- end_conv_1:
+-			r = indx_find_buffer(indx, ni, root, vbn, n);
++			r = indx_find_buffer(indx, ni, root, vbn, n,
++					     depth + 1);
+ 			if (r)
+ 				return r;
+ 		}
+@@ -2419,7 +2428,7 @@ int indx_delete_entry(struct ntfs_index
+ 
+ 		fnd_clear(fnd);
+ 
+-		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL);
++		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL, 0);
+ 		if (IS_ERR(in)) {
+ 			err = PTR_ERR(in);
+ 			goto out;
 
 
