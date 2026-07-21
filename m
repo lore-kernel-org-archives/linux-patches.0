@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB8E395D8E;
-	Tue, 21 Jul 2026 19:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F011C40803B;
+	Tue, 21 Jul 2026 19:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660728; cv=none; b=rDMZlstT+mwMMJjRYI1+ZAco9EOldqkSufo8Anr0nFpByONf7UuuzFwvs4JJpo8u7s/dHKqzquazvEM+WeCvREmFEzQ0FB8UoqWnjYJVUuQZCL1DkcqbwO8CAnfaJVWfXp7OTVX1gCISPZUJol5ykL297DYb+QUUeJB9vMsLXVA=
+	t=1784660731; cv=none; b=lICIk2Yu6sRDt6m8Mjd3PbYgPupFu6cmn92ybdEM7YyPP93WQ9DTJPhxJ1aw5fC000F33h23a32Ye5lsIS6zZSD3dOlS7YaLGjsASwofYuv/SbON5+doqzPtjmEzAdi5oCdeRc0HuOliTNOVBmdIkwaNNQ9qVzCbRJtq7ueE3Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660728; c=relaxed/simple;
-	bh=bcv2nf9Nqt/80cxiNwX+Y2YhEs20Nltg2KigtaMG6iA=;
+	s=arc-20240116; t=1784660731; c=relaxed/simple;
+	bh=A+s7m4Hji2YyiKCOWRpQ9JXavVLKQI8QVPGjAG0TOVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFcm3SpFqKmhm6/bmwZKQOTKx2M5J8CRUDzfu7lrp8LiudP/OeyNJSwgvwX+VuvJedmwG0s/L/+r9s5w2XjcEjno6eyAoAF9FqH4wAis2c8CFZVvOFODXsttjXzns76HNWpBuJmh3AiTETFpBCvTihgzTyZ9lAkU+ouTZsVYPe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8wS9MJa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JQOSoCbze67iGpxjn08+06fI+YM0Q8nNcfIOjSaVIt7woBmWaJy+ktQKX1YPasodersEwqmyFuj9q5Jaj6w5AEm3vZICHLof4p1ipDsSYnwLEzDEiSFAHCAqQiem9NKpIJMh+f/OC7q1PECskaXRsA4FqNr1mBhWH4yGXPp6bJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnlCTelH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8wS9MJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18B71F000E9;
-	Tue, 21 Jul 2026 19:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnlCTelH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C78B1F000E9;
+	Tue, 21 Jul 2026 19:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660727;
-	bh=J2/A011pAXlELXVN6PztaRxZrAe4SLUJ1VBNjSTm4q8=;
+	s=korg; t=1784660729;
+	bh=mgalsuU1BQzAPph5645nzgNaZaW3twXuCAwvPGtxx6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8wS9MJatL9nn77asgLfwawB0xTbMUC9ScKr0s4T2e2V7fV38V9rq+W6XytDLrSyJ
-	 vMyNLOD0NGvalohlly0AnEZwVWCBiSs0sLmNTfqzwk+X8KfeyjgK1NFKxJG2UNPIos
-	 viKgjhVfQ4Ty8AfFYydgBnN2MS/pukzNdoF+GLaM=
+	b=JnlCTelH1RBRcAHtH/M/f9X/5GnF31wrLOExRh7G5INN3uO9FfqJGkyJgOjeXjabx
+	 lT+M5aZ9h07L+MuTrfn7/g+oQxZogAaPqvnsOz2t+36helvNRXLsxqIRZyOAUT4ZdS
+	 qyFVs7yaxwd0fUViegN8fdAeDVQucQDkXeKzv9CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1088/2077] i3c: master: Add missing runtime PM get in dev_nack_retry_count_store()
-Date: Tue, 21 Jul 2026 17:12:41 +0200
-Message-ID: <20260721152618.485471033@linuxfoundation.org>
+Subject: [PATCH 7.1 1089/2077] erofs: call erofs_exit_ishare() before rcu_barrier()
+Date: Tue, 21 Jul 2026 17:12:42 +0200
+Message-ID: <20260721152618.509388168@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 79ce29e100ab3de0cad66eb48d32a7de4043e2ae ]
+[ Upstream commit 289cf458a69ccda4a4aee2b0274d233d415814ca ]
 
-Ensure the device is runtime resumed while updating the retry
-configuration to avoid accessing the controller while suspended.
+Ensure all inode free callbacks have completed before
+destroying the inode slab cache.
 
-Call i3c_master_rpm_get() before accessing the controller in
-dev_nack_retry_count_store() and release it with
-i3c_master_rpm_put() afterwards.
-
-Fixes: 990c149c61ee4 ("i3c: master: Introduce optional Runtime PM support")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260616113752.196140-3-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 5ef3208e3be5 ("erofs: introduce the page cache share feature")
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/erofs/super.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 4d8e1d724c52ef..74c04e19f86c59 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -765,12 +765,18 @@ static ssize_t dev_nack_retry_count_store(struct device *dev,
- 	if (ret)
- 		return ret;
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 802add6652fda6..579443e6acfeb6 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -1048,11 +1048,11 @@ static int __init erofs_module_init(void)
+ static void __exit erofs_module_exit(void)
+ {
+ 	unregister_filesystem(&erofs_fs_type);
++	erofs_exit_ishare();
  
-+	ret = i3c_master_rpm_get(master);
-+	if (ret)
-+		return ret;
-+
- 	i3c_bus_maintenance_lock(i3cbus);
- 	ret = master->ops->set_dev_nack_retry(master, val);
- 	if (!ret)
- 		master->dev_nack_retry_count = val;
- 	i3c_bus_maintenance_unlock(i3cbus);
+-	/* Ensure all RCU free inodes / pclusters are safe to be destroyed. */
++	/* ensure all delayed rcu free inodes & pclusters are flushed */
+ 	rcu_barrier();
  
-+	i3c_master_rpm_put(master);
-+
- 	return ret ?: count;
- }
- 
+-	erofs_exit_ishare();
+ 	erofs_exit_sysfs();
+ 	z_erofs_exit_subsystem();
+ 	erofs_exit_shrinker();
 -- 
 2.53.0
 
