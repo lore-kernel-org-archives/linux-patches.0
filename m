@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A34546D08F;
-	Tue, 21 Jul 2026 18:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006E547127A;
+	Tue, 21 Jul 2026 18:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659787; cv=none; b=GIKDEoxH6BiDWRxjMSr6zCCFtPZV4gj2Oc5gH8uy0S1FzbgOtDolGqN+DFDGlNru7AM1mmguYp3EFQTkNQKqFynkBuSYz93SZcyVeKLerACFsd/s2pZQSZRxqz9POa3VTW/Em0qX6xnvRKnHqUmAwZIabMZNoc3R+yiIOtzXXcI=
+	t=1784659790; cv=none; b=Ww0j0N9RewTCb9JMkFgq96pEJw0Dye1MebhgEnY1wlhf/0r3XPHeLeko0j6YIoNoyi21CAJbJ1NWAGITAYaiXBPidlG5ZdQImCYZQkdDcWfUal2PkcgbQOfEDs5FwYlaij66W7IYCKUhCl6IG2nP5UH1gqTdl3AfK3ZRpP5l2TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659787; c=relaxed/simple;
-	bh=0LRRKoSKEuz0K0ByHVUFfUVStZwtncSdSWOddF/4/zU=;
+	s=arc-20240116; t=1784659790; c=relaxed/simple;
+	bh=Bee/3cErJnD+XYSk/Rz8MM11SWMv3znOZiHju8f+aRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q101VnLz5lQ4tZKDg9b0W53ECZRgT6kgmD4I3wCXSYqQQyxNVZRz6DMwOZpo6k/1RvC5+NwukyFMgi5V0aERiJV5wbdoqKjQJyFtUc1p17yiRC1m9D2zE1TS9Yc7tp/2BSqMw/zdCXLqSlgzn2YrOb1NNwo8l0H5kveBgjwPnbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFSwo7d3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BCg9Fd/RQTSzjvKzIWjqwfmJr7qqKLZPt6k1qer0r13JuUKaGcKBILgW3u1vf3IpVZ/tVEaHQu4lNeZJhicKz36VLM/83kpk9S7oOtFVLDZW8JKyByI9KYZ3BIg5BIz3PxynPutiHhaP54yFYC97VtotPTPR6HNJbudLVnxwKOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4+4B0VH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFSwo7d3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5AB51F000E9;
-	Tue, 21 Jul 2026 18:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4+4B0VH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5498F1F000E9;
+	Tue, 21 Jul 2026 18:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659786;
-	bh=u+1zr3k/SmqHRiTlD8/0SYA7SxmOw7fpHKNGgxEp4gU=;
+	s=korg; t=1784659788;
+	bh=1e2ZMnyDVDZ17u7oBuKtEn2fzWP4aexX7yRCLfXT5UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFSwo7d3mo855Ru7hnW+grZxc+04viUiUJ3iBe4y6J/EQO39CP/WPFm9v2vLZTzeG
-	 OcfYkdQ20nyODMlE+zCsaQPpGlIsnuUGgDlyoMhgQg+OVokOSntODPUQ8Vc/ifm6ye
-	 Jw2t+rw5auy0ONMmZBU8zswZgGxv8mk//9EZv3kA=
+	b=M4+4B0VHMHt8vW01J6oL02CJldmYLyxkgyni5zRgkW15RBV/612DO4TDh8DALTzSv
+	 QuQRNoDflndWXSJoOtk9SVp488WZooVbWMASZqR2sNIuyKA5a0T9KN6/bIrEXRI5yD
+	 k3Qu3ZUlp5TUj6XBLOgQGHtaR3zgbZVZP2J9dTQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0731/2077] ASoC: sdw_utils: fix missing component_name for cs42l43 part_id 0x2A3B
-Date: Tue, 21 Jul 2026 17:06:44 +0200
-Message-ID: <20260721152610.039424539@linuxfoundation.org>
+Subject: [PATCH 7.1 0691/2077] RDMA/core: Avoid NULL dereference on FRMR bad usage
+Date: Tue, 21 Jul 2026 17:06:04 +0200
+Message-ID: <20260721152609.088830122@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,57 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit c429fbea6174a7dd40c4215288589a50e8a33ff6 ]
+[ Upstream commit 3937243095b5cfed6556bd1ea170790223f3eeb0 ]
 
-commit 87a3f5c8ac20 ("ASoC: sdw_utils: cs42l43: allow spk component names
-to be combined") moved spk:cs42l43-spk generation from rtd_init() into
-the asoc_sdw_rtd_init() generic path by adding component_name to
-codec_info_list entries. However, only the 0x4243 cs42l43 entry was
-updated; the 0x2A3B entry (vendor_id 0x01fa, Cirrus Logic cs42l43 with
-sidecar bridge) was missed.
+In case a driver calls FRMR pop operation without a successful init,
+return after triggering a warning to avoid the NULL dereference.
 
-Without component_name on the 0x2A3B dp6 DAI, asoc_sdw_rtd_init() never
-accumulates spk_components and never appends 'spk:cs42l43-spk' (or its
-sidecar alias 'spk:cs35l56-bridge') to card->components. The sof-soundwire
-UCM regex ' spk:([a-z0-9]+...)' then fails to match, causing WirePlumber
-to mark all HiFi profiles as unavailable=no and fall back to the Off
-profile — resulting in Dummy Output in GNOME.
-
-The existing sidecar redirect in asoc_sdw_rtd_init() already handles the
-SOC_SDW_SIDECAR_AMPS case: when component_name is 'cs42l43-spk' and
-sidecar amps are active, it substitutes 'cs35l56-bridge' into
-card->components, which matches the existing cs35l56-bridge.conf UCM file.
-
-Fixes: 87a3f5c8ac20 ("ASoC: sdw_utils: cs42l43: allow spk component names to be combined")
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Link: https://patch.msgid.link/20260610041753.1151088-1-acelan.kao@canonical.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ce5df0b891ed ("IB/core: Introduce FRMR pools")
+Link: https://patch.msgid.link/r/20260610000145.820592-7-michaelgur@nvidia.com
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdw_utils/soc_sdw_utils.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/frmr_pools.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
-index e440c23271001c..4e8646d231c4ff 100644
---- a/sound/soc/sdw_utils/soc_sdw_utils.c
-+++ b/sound/soc/sdw_utils/soc_sdw_utils.c
-@@ -818,6 +818,7 @@ struct asoc_sdw_codec_info codec_info_list[] = {
- 			{
- 				.direction = {true, false},
- 				.codec_name = "cs42l43-codec",
-+				.component_name = "cs42l43-spk",
- 				.dai_name = "cs42l43-dp6",
- 				.dai_type = SOC_SDW_DAI_TYPE_AMP,
- 				.dailink = {SOC_SDW_AMP_OUT_DAI_ID, SOC_SDW_UNUSED_DAI_ID},
+diff --git a/drivers/infiniband/core/frmr_pools.c b/drivers/infiniband/core/frmr_pools.c
+index 1cfdddc3fcdaf6..892aedfe03bed4 100644
+--- a/drivers/infiniband/core/frmr_pools.c
++++ b/drivers/infiniband/core/frmr_pools.c
+@@ -529,7 +529,9 @@ int ib_frmr_pool_pop(struct ib_device *device, struct ib_mr *mr)
+ 	struct ib_frmr_pools *pools = device->frmr_pools;
+ 	struct ib_frmr_pool *pool;
+ 
+-	WARN_ON_ONCE(!device->frmr_pools);
++	if (WARN_ON_ONCE(!pools))
++		return -EINVAL;
++
+ 	pool = ib_frmr_pool_find(pools, &mr->frmr.key);
+ 	if (!pool) {
+ 		pool = create_frmr_pool(device, &mr->frmr.key);
 -- 
 2.53.0
 
