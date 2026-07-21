@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802BB400DE1;
-	Tue, 21 Jul 2026 20:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75114347512;
+	Tue, 21 Jul 2026 20:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665261; cv=none; b=nx2GsjpV3UqOMHfarAFXTdW5aXXlDFTHJMetc7A6Lu+ffr6bm6lW/O150KxnJlqQ6xbyuDNln5+rZ5r773dJQi5MlVicnyVALCjwnhigrqGbpaOQaQSJQqu9OnaMWSXmOy697XicPzVxDku0ypTU7DFCGz5NQa3M/lcru3GPldU=
+	t=1784665266; cv=none; b=NgRYeb/lxlmkQ5wbgXPTixIlR+KT5DuokpRkpj39JTsLBJ/wGwKeNU/KDrfG4mDL5jzItk009skLuv17YPoXCmuEI8QCgsFcA0vfPHQ1O5p1aUGx3E/ytGbFef7iLUpxRrijQrIvF7TLWDli3hM7hxhcwr6v20GYmN4n0ivdZk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665261; c=relaxed/simple;
-	bh=GLbLz79QKz/hloscuXtZjIgVNW6JFp6mHLANBWXzUoA=;
+	s=arc-20240116; t=1784665266; c=relaxed/simple;
+	bh=HIlsegvY7yUHz3VBDoKgjRbkq5zdZRrcNz3uOukEPZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Epv33pU6FfK8unV6ksZfjNjq9KBUg1Hh4/JX6bjREWLgbmaI8VIvqTp6di/oE3I4X7uITje9RYMhHZ6TqQeqQQqwdmztkR1E6Qnb3TWW9yL8hJhgG/ZyQ3n8/NAV/kc10Ua4ZSHKERPhtpjVEzp5khTzeCiZR5UNSQZqimH4ZW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBUGRC+w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N8yrO24DWL8menN2KATOIiXvGr+1zFWbYM9UrJB4iC+RPu11+S007MPc/RudgQiNk4/0utQjJu7T90iN91p9qpeizzgvzw9TAhsJtiucnqsW0CbKg45v5Z/FbE3ZpbKPO/E93XX3CDi/ijiP15lNH0ZimYLm5eqagx7TcXZc8cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGU/EMir; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBUGRC+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2B51F000E9;
-	Tue, 21 Jul 2026 20:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGU/EMir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2591F00A3A;
+	Tue, 21 Jul 2026 20:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665260;
-	bh=PF29uCw/c/bdHXVA65RozlMvk3tHdBUO2ea4tnarOlM=;
+	s=korg; t=1784665265;
+	bh=UBMfYkhsaMduzw+xFZdDBXrHNehNsDruoH2KngDVtnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jBUGRC+wldkbjzKPEAf37RB68824N57jHYQO2zKXvS3jEjfOPw3Y3iOL7ehaXgFT3
-	 z4SL4B7bcJa4Lfd2aFuYIj65oHBkeXA2+DFeo6HqXpVwWmSaSxJhwJNtPVBFF2PjUX
-	 nE+G//Cm66XEosZ64nlNS0AmN3p36tsLjZQCG0go=
+	b=cGU/EMir/Iq77xK4C0sJOFkV+Ok1AeLJI1al5MjRfsAGVwBXkhVpJg32p/TjNpewo
+	 A/zWWw1pPtd0Q+fpHltTI9tI54lZiC1wxG/om7koaFxZBuEbBn8SebJGRxE5mPQXZb
+	 zw6fpoRXvMj918oRKhecLkpbpOYpT914pKYEhiXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>
-Subject: [PATCH 6.6 0238/1266] usb: sl811-hcd: disable controller wakeup on remove
-Date: Tue, 21 Jul 2026 17:11:15 +0200
-Message-ID: <20260721152447.144286658@linuxfoundation.org>
+	Myeonghun Pak <mhun512@gmail.com>,
+	Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH 6.6 0240/1266] USB: misc: uss720: unregister parport on probe failure
+Date: Tue, 21 Jul 2026 17:11:17 +0200
+Message-ID: <20260721152447.187716301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,39 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 4e8ba83ac4d311992e6a4c21de5dd705010df06e upstream.
+commit b4ecbdc4f8830f5586c4a5cfc384c00f20f8f8b3 upstream.
 
-sl811h_probe() enables the HCD controller device as a wakeup source after
-usb_add_hcd() succeeds, but sl811h_remove() removes the HCD and releases
-the driver resources without disabling that wakeup source.
+uss720_probe() registers a parport before reading the 1284 register used
+to detect unsupported Belkin F5U002 adapters. If get_1284_register()
+fails, the error path drops the driver private data and the USB device
+reference, but leaves the parport device registered.
 
-Disable controller wakeup after usb_remove_hcd() and before usb_put_hcd()
-so the wakeup source object is detached while the controller device pointer
-is still available.
+Leaving the port registered is more than a private allocation leak:
+parport_register_port() has already reserved a parport number and
+registered the parport bus device, while pp->private_data still points at
+the private data that the common error path is about to release.
+
+Undo the pre-announce registration in the get_1284_register() failure
+branch before jumping to the common private-data cleanup path. Clear
+priv->pp first, matching the disconnect path and avoiding a stale pointer
+in the private data.
 
 This issue was identified during our ongoing static-analysis research while
 reviewing kernel code.
 
-Fixes: 3c9740a117d4 ("usb: hcd: move controller wakeup setting initialization to individual driver")
+Fixes: 3295f1b866bf ("usb: misc: uss720: check for incompatible versions of the Belkin F5U002")
 Cc: stable <stable@kernel.org>
 Co-developed-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260701121625.96815-1-mhun512@gmail.com
+Reviewed-by: Alex Henrie <alexhenrie24@gmail.com>
+Link: https://patch.msgid.link/20260706151049.63470-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/sl811-hcd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/misc/uss720.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/sl811-hcd.c
-+++ b/drivers/usb/host/sl811-hcd.c
-@@ -1590,6 +1590,7 @@ sl811h_remove(struct platform_device *de
+--- a/drivers/usb/misc/uss720.c
++++ b/drivers/usb/misc/uss720.c
+@@ -732,8 +732,11 @@ static int uss720_probe(struct usb_inter
+ 	 * here. */
+ 	ret = get_1284_register(pp, 0, &reg, GFP_KERNEL);
+ 	dev_dbg(&intf->dev, "reg: %7ph\n", priv->reg);
+-	if (ret < 0)
++	if (ret < 0) {
++		priv->pp = NULL;
++		parport_del_port(pp);
+ 		goto probe_abort;
++	}
  
- 	remove_debug_file(sl811);
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
- 
- 	/* some platforms may use IORESOURCE_IO */
- 	res = platform_get_resource(dev, IORESOURCE_MEM, 1);
+ 	ret = usb_find_last_int_in_endpoint(interface, &epd);
+ 	if (!ret) {
 
 
