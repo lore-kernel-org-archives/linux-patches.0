@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10A446E016;
-	Tue, 21 Jul 2026 18:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB34471262;
+	Tue, 21 Jul 2026 18:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657308; cv=none; b=ZlWlu/+XpzNeyIYT/6mULgcA8+nqvJPz+ckesnfLCK2nhqW/Bz9PdZaKwZSsYzzdmvRkbH05n/gEXSDaFPZu4XFG97Dz94vLiQmG4aPnWB/vpjuWl/5TPaoXDRsm8W7Ek8pJIclFV+SXSYZSTeCU2L0TEdpsYlNzEtY4xq1RT6k=
+	t=1784657309; cv=none; b=HkRYmnk79YMsqN1eAqsP7If5/43VeKu+y/aLp+IPhD09r+6tHkQwDaYxj0EtE3/GimxF9vPFUFOp60g09jOqIIpW//5M/8uYVRgIWJwnG844ogvp263nm3C2Ldt9XqoPCrqYi+mWwXmrzrqNQoG4jIoHPJqthk22kcyS7dQy6A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657308; c=relaxed/simple;
-	bh=2yd99keFSGr+zS5KrSTiNCSRciiiOYnIJjh46tDOWIA=;
+	s=arc-20240116; t=1784657309; c=relaxed/simple;
+	bh=kLp8zfmfnPJ5GXQqUFgDprptF6IzGazqENrhFbMAREI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NrFGbxIaGGFqGuCyE6RIGyplkJ0qrtONOT19EBhqAak1wW0tQRvzoVo6VZHGVNiVacJmF761cxBmOQm1qwW8ZNVVdtNOSKokik7OsJ72O82+M0QH6g27LP/4FK47OnWn2uY3ubC4woPZ6ljOO2Vy1nscmcHqoS3YrE+k/WVbSWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KC5kuM22; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n6dgTGMTif1hkPccB2QnjZUo+B49xktA5hs+HE6X/pO9tTSMHIdINAYJgAzUbc7TPSmrwtHKqmjraAmVrVcUxkSN+vOe0/5U89S0UPvN79DZm4S6fIUerFAFovYTb6Ilw/QU8vUhkNte0pF2gv84yZQY2VoIrjqI4Agm8kMht1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+Z2/8Q7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KC5kuM22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8479C1F00A3A;
-	Tue, 21 Jul 2026 18:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+Z2/8Q7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338C51F000E9;
+	Tue, 21 Jul 2026 18:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657304;
-	bh=a+yLV1YC7tKMGzs61sKU3aSfMyw/V3w8OnykgjOZTbA=;
+	s=korg; t=1784657306;
+	bh=3/iHj7KX6IY9CDto8IHqT1ODVTMm+wMg7VqBZ90XFX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KC5kuM22T2rwww4Tr4NzuIQ5XJYbR964bL77itRW1oXqF/Holwr8qoObvxefKz4vd
-	 o0QuUwQQLkFD1WZ1PRHjgTzOz0LjgJBpvVap8rXB3LaHM3otehrA6NMd0fDbQIVMER
-	 mf989eAcJYjo3Cc1U4usaS7v3o3ARSJR0Z/lCyNU=
+	b=d+Z2/8Q7epu0ac4+Ecb9fJtN/Nqn40iNchktecutQH6c4520i7v+zvrNCiJUqe8Wi
+	 Y/jHIxP/xsvBJjVLuXyBBc1MUh0Klgh+GivDrB/aM+0kjyVFm/zOViGirS+3XMeqY6
+	 RxpAKGNf78WSlnzKwRkix2ChzgvdskNL6UZkEPPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0715/1611] perf hwmon: Use scnprintf() in hwmon_pmu__for_each_event()
-Date: Tue, 21 Jul 2026 17:13:51 +0200
-Message-ID: <20260721152531.462975981@linuxfoundation.org>
+Subject: [PATCH 6.18 0698/1611] xprtrdma: Check frwr_wp_create() during connect
+Date: Tue, 21 Jul 2026 17:13:34 +0200
+Message-ID: <20260721152531.080907337@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,56 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit ae75956c166fe169b8c137bf375305fc97820a62 ]
+[ Upstream commit 0f13fc7c7d2e0427517e63c739277a4cd338b0c5 ]
 
-hwmon_pmu__for_each_event() formats description strings via:
+frwr_wp_create() creates the singleton Memory Region used to encode
+padding for Write chunks whose payload length is not XDR-aligned. Its
+failure paths return a negative errno and leave ep->re_write_pad_mr set
+to NULL.
 
-    len = snprintf(desc_buf, sizeof(desc_buf), "%s in unit %s named %s.", ...);
-    len += hwmon_pmu__describe_items(hwm, desc_buf + len, sizeof(desc_buf) - len, ...);
+rpcrdma_xprt_connect() currently ignores that return value. If
+frwr_wp_create() fails after the rest of the connection setup succeeds,
+xprt_rdma_connect_worker() treats the connection attempt as successful
+and sets XPRT_CONNECTED. A later NFS/RDMA read with a non-4-byte-aligned
+receive page length reaches rpcrdma_encode_write_list(), passes the NULL
+write-pad MR to encode_rdma_segment(), and dereferences it.
 
-If value->label is long enough to cause snprintf() to truncate, it
-returns the would-have-been-written count, making len exceed
-sizeof(desc_buf).  The subsequent sizeof(desc_buf) - len underflows
-to a huge size_t value, disabling bounds checking in
-hwmon_pmu__describe_items().
+This is locally triggerable on an NFS/RDMA client after a connect or
+reconnect hits a local MR allocation, DMA-map, MR-map, or post-send
+failure; a remote peer alone cannot force the local MR setup failure.
 
-The alias_buf snprintf has the same issue.  Switch both to scnprintf()
-which returns actual bytes written.
+Check the return value and fail the connect as -ENOTCONN, matching the
+adjacent setup failures. This keeps XPRT_CONNECTED clear and lets the
+normal reconnect path retry.
 
-Fixes: 53cc0b351ec99278 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 21037b8c2258 ("xprtrdma: Provide a buffer to pad Write chunks of unaligned length")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hwmon_pmu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtrdma/verbs.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
-index c4efeaae2607ec..5df5ed2aa0ecd9 100644
---- a/tools/perf/util/hwmon_pmu.c
-+++ b/tools/perf/util/hwmon_pmu.c
-@@ -514,14 +514,14 @@ int hwmon_pmu__for_each_event(struct perf_pmu *pmu, void *state, pmu_event_callb
- 		int ret;
- 		size_t len;
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index dc8629bf294dc4..09fa25a83ce122 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -549,7 +549,17 @@ int rpcrdma_xprt_connect(struct rpcrdma_xprt *r_xprt)
+ 		goto out;
+ 	}
+ 	rpcrdma_mrs_create(r_xprt);
+-	frwr_wp_create(r_xprt);
++
++	/*
++	 * rpcrdma_encode_write_list() dereferences the write-pad
++	 * MR with no NULL check, so fail the connect rather than
++	 * publish a transport whose write-pad MR is NULL.
++	 */
++	rc = frwr_wp_create(r_xprt);
++	if (rc) {
++		rc = -ENOTCONN;
++		goto out;
++	}
  
--		len = snprintf(alias_buf, sizeof(alias_buf), "%s%d",
--			       hwmon_type_strs[key.type], key.num);
-+		scnprintf(alias_buf, sizeof(alias_buf), "%s%d",
-+			  hwmon_type_strs[key.type], key.num);
- 		if (!info.name) {
- 			info.name = info.alias;
- 			info.alias = NULL;
- 		}
- 
--		len = snprintf(desc_buf, sizeof(desc_buf), "%s in unit %s named %s.",
-+		len = scnprintf(desc_buf, sizeof(desc_buf), "%s in unit %s named %s.",
- 			hwmon_desc[key.type],
- 			pmu->name + 6,
- 			value->label ?: info.name);
+ out:
+ 	trace_xprtrdma_connect(r_xprt, rc);
 -- 
 2.53.0
 
