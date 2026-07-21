@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A268747141D;
-	Tue, 21 Jul 2026 20:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F2B415F04;
+	Tue, 21 Jul 2026 20:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664422; cv=none; b=mweDph1ULQs1L7Wd6BAuWTH1N+cPQkcg9N6T1pkucyNf+YcloAOh1Jdxd47hPas0+2EJ2EzEeik/L5iVVHyaJW5dM9j6D5w4Asqfth9ke/pU2pUfEyb6TdX4Jd4H7eBrTzyB2FTunhoQ8hSj8+EvYtzTfxT1cFRFKat+3rbyEgk=
+	t=1784664425; cv=none; b=N0UTA1U0gwGaOUtNcTUnZhFDeGS4+XjlsthNhZnnNveFPgtNMKtKmVF51+/aGKrtxc+XFlxjeYpVYDwZxXJILNB2OAnAj008akPBQ87ZIM9FylyDHOBaotTEeeIeb1e6CDaYoK59moUTyqI80/60bhuOMcV8Cf8Zq5hPp7ukCjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664422; c=relaxed/simple;
-	bh=P0zqhv/kON3Hu5tvVfoemTll2y56iiffna2QW6w3bB0=;
+	s=arc-20240116; t=1784664425; c=relaxed/simple;
+	bh=cpITjKmyBeN5h4jWR36DBpWXSYvLmCh1y/Sz2RBPaWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UlMSKv2zHuQjxTUBwPKBi2buseClVvu/0cPnWTuxPGzHCrDv/zLVsubA7yqvs5GyXh+DW/ZRPB+s1JV4k/Dq/QeHipC8sFIXrtL17pmeQ5CurlXUEaS62ihZZFZG6Z8xp8VrsEMGExV0ER9fWUspGhBy/jHuJLthM8emPg3HViQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TzNm00y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AahUoj2ZRwoRXnCXgZNMgkP74++pAztD5+REQbKvcH30kBaSxDAL3nqEtvorxNK/Wd1ZR0ozC/YiqObb6q4TTnbid8Z+/rO5WqcRkjtlqTuvKssgnv82IaCOxDDTOdHK1ob1YisOCdWZNjchIIShxOrlLwZZk4yqICIV268silA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKb/avCj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TzNm00y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0738B1F00A3A;
-	Tue, 21 Jul 2026 20:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKb/avCj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96171F000E9;
+	Tue, 21 Jul 2026 20:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664421;
-	bh=PjJa13l/jbJ3hWaOoIyD+s3ZaN75DDWu44DdhwHiqZA=;
+	s=korg; t=1784664424;
+	bh=Gh8BjeFRZgn4ojnRJOlNYOQ9ft4lBFE/7X+8nxXTjmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2TzNm00yIVfnBufiqxdcGqAa7fee0h828HXwj9Ua5NRXrK8IExer56fOWN4AXKPdh
-	 WE6NZPjOEIqo5QSKSJwvW6dsYB4yPcihmr8QVEU8NZ21Xxls8TTYuuVyezOdP42YBK
-	 W7pZh88u7vNZ2I82whgpxzdGmwxrkr0sFi103qvI=
+	b=jKb/avCjoMx+vuMXmDKbE6PcTqv5oqfr5IMNCT9wgQYb173qWU+4PYgJhqueoc/SC
+	 OOY0MSlRy9nFSI+yDpc05Q417McsteneCK0mZmRhTICf9XmhP6u2qhymFWehpqN1DL
+	 DUdf4Kl6Y7qTo1693RWJ0Xtn8GmSpq2mleh5wGY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Jann Horn <jannh@google.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1192/1276] seqlock: Change do_task_stat() to use scoped_seqlock_read()
-Date: Tue, 21 Jul 2026 17:27:15 +0200
-Message-ID: <20260721152512.725665112@linuxfoundation.org>
+Subject: [PATCH 6.12 1193/1276] proc: protect ptrace_may_access() with exec_update_lock (part 1)
+Date: Tue, 21 Jul 2026 17:27:16 +0200
+Message-ID: <20260721152512.749048497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,53 +51,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit b76f72bea2c601afec81829ea427fc0d20f83216 ]
+[ Upstream commit 6650527444dadc63d84aa939d14ecba4fadb2f69 ]
 
-To simplify the code and make it more readable.
+Fix the easy cases where procfs currently calls ptrace_may_access() without
+exec_update_lock protection, where the fix is to simply add the extra lock
+or use mm_access():
 
-[peterz: change to new interface]
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Stable-dep-of: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
+ - do_task_stat(): grab exec_update_lock
+ - proc_pid_wchan(): grab exec_update_lock
+ - proc_map_files_lookup(): use mm_access() instead of get_task_mm()
+ - proc_map_files_readdir(): use mm_access() instead of get_task_mm()
+ - proc_ns_get_link(): grab exec_update_lock
+ - proc_ns_readlink(): grab exec_update_lock
+
+Fixes: f83ce3e6b02d ("proc: avoid information leaks to non-privileged processes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260518-procfs-lockfix-part1-v1-1-5c3d20e0ac33@google.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/array.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ fs/proc/array.c      |    6 ++++++
+ fs/proc/base.c       |   41 ++++++++++++++++++++++-------------------
+ fs/proc/namespaces.c |   12 ++++++++++++
+ 3 files changed, 40 insertions(+), 19 deletions(-)
 
 --- a/fs/proc/array.c
 +++ b/fs/proc/array.c
-@@ -483,7 +483,6 @@ static int do_task_stat(struct seq_file
+@@ -483,6 +483,11 @@ static int do_task_stat(struct seq_file
  	unsigned long flags;
  	int exit_code = task->exit_code;
  	struct signal_struct *sig = task->signal;
--	unsigned int seq = 1;
++	int ret;
++
++	ret = down_read_killable(&task->signal->exec_update_lock);
++	if (ret)
++		return ret;
  
  	state = *get_task_state(task);
  	vsize = eip = esp = 0;
-@@ -540,10 +539,7 @@ static int do_task_stat(struct seq_file
- 	if (permitted && (!whole || num_threads < 2))
- 		wchan = !task_is_running(task);
+@@ -658,6 +663,7 @@ static int do_task_stat(struct seq_file
+ 		seq_puts(m, " 0");
  
--	do {
--		seq++; /* 2 on the 1st/lockless path, otherwise odd */
--		flags = read_seqbegin_or_lock_irqsave(&sig->stats_lock, &seq);
+ 	seq_putc(m, '\n');
++	up_read(&task->signal->exec_update_lock);
+ 	if (mm)
+ 		mmput(mm);
+ 	return 0;
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -414,18 +414,24 @@ static int proc_pid_wchan(struct seq_fil
+ {
+ 	unsigned long wchan;
+ 	char symname[KSYM_NAME_LEN];
++	int err;
+ 
++	err = down_read_killable(&task->signal->exec_update_lock);
++	if (err)
++		return err;
+ 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+ 		goto print0;
+ 
+ 	wchan = get_wchan(task);
+ 	if (wchan && !lookup_symbol_name(wchan, symname)) {
+ 		seq_puts(m, symname);
++		up_read(&task->signal->exec_update_lock);
+ 		return 0;
+ 	}
+ 
+ print0:
+ 	seq_putc(m, '0');
++	up_read(&task->signal->exec_update_lock);
+ 	return 0;
+ }
+ #endif /* CONFIG_KALLSYMS */
+@@ -2331,17 +2337,15 @@ static struct dentry *proc_map_files_loo
+ 	if (!task)
+ 		goto out;
+ 
+-	result = ERR_PTR(-EACCES);
+-	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+-		goto out_put_task;
 -
-+	scoped_seqlock_read (&sig->stats_lock, ss_lock_irqsave) {
- 		cmin_flt = sig->cmin_flt;
- 		cmaj_flt = sig->cmaj_flt;
- 		cutime = sig->cutime;
-@@ -565,8 +561,7 @@ static int do_task_stat(struct seq_file
- 			}
- 			rcu_read_unlock();
- 		}
--	} while (need_seqretry(&sig->stats_lock, seq));
--	done_seqretry_irqrestore(&sig->stats_lock, seq, flags);
+ 	result = ERR_PTR(-ENOENT);
+ 	if (dname_to_vma_addr(dentry, &vm_start, &vm_end))
+ 		goto out_put_task;
+ 
+-	mm = get_task_mm(task);
+-	if (!mm)
++	mm = mm_access(task, PTRACE_MODE_READ_FSCREDS);
++	if (IS_ERR(mm)) {
++		result = ERR_CAST(mm);
+ 		goto out_put_task;
 +	}
  
- 	if (whole) {
- 		thread_group_cputime_adjusted(task, &utime, &stime);
+ 	result = ERR_PTR(-EINTR);
+ 	if (mmap_read_lock_killable(mm))
+@@ -2391,23 +2395,22 @@ proc_map_files_readdir(struct file *file
+ 	if (!task)
+ 		goto out;
+ 
+-	ret = -EACCES;
+-	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+-		goto out_put_task;
+-
+ 	ret = 0;
+ 	if (!dir_emit_dots(file, ctx))
+ 		goto out_put_task;
+ 
+-	mm = get_task_mm(task);
+-	if (!mm)
++	mm = mm_access(task, PTRACE_MODE_READ_FSCREDS);
++	if (IS_ERR(mm)) {
++		ret = PTR_ERR(mm);
++		/* if the task has no mm, the directory should just be empty */
++		if (ret == -ESRCH)
++			ret = 0;
+ 		goto out_put_task;
++	}
+ 
+ 	ret = mmap_read_lock_killable(mm);
+-	if (ret) {
+-		mmput(mm);
+-		goto out_put_task;
+-	}
++	if (ret)
++		goto out_put_mm;
+ 
+ 	nr_files = 0;
+ 
+@@ -2433,8 +2436,7 @@ proc_map_files_readdir(struct file *file
+ 		if (!p) {
+ 			ret = -ENOMEM;
+ 			mmap_read_unlock(mm);
+-			mmput(mm);
+-			goto out_put_task;
++			goto out_put_mm;
+ 		}
+ 
+ 		p->start = vma->vm_start;
+@@ -2442,7 +2444,6 @@ proc_map_files_readdir(struct file *file
+ 		p->mode = vma->vm_file->f_mode;
+ 	}
+ 	mmap_read_unlock(mm);
+-	mmput(mm);
+ 
+ 	for (i = 0; i < nr_files; i++) {
+ 		char buf[4 * sizeof(long) + 2];	/* max: %lx-%lx\0 */
+@@ -2459,6 +2460,8 @@ proc_map_files_readdir(struct file *file
+ 		ctx->pos++;
+ 	}
+ 
++out_put_mm:
++	mmput(mm);
+ out_put_task:
+ 	put_task_struct(task);
+ out:
+--- a/fs/proc/namespaces.c
++++ b/fs/proc/namespaces.c
+@@ -55,6 +55,10 @@ static const char *proc_ns_get_link(stru
+ 	if (!task)
+ 		return ERR_PTR(-EACCES);
+ 
++	error = down_read_killable(&task->signal->exec_update_lock);
++	if (error)
++		goto out_put_task;
++
+ 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+ 		goto out;
+ 
+@@ -64,6 +68,8 @@ static const char *proc_ns_get_link(stru
+ 
+ 	error = nd_jump_link(&ns_path);
+ out:
++	up_read(&task->signal->exec_update_lock);
++out_put_task:
+ 	put_task_struct(task);
+ 	return ERR_PTR(error);
+ }
+@@ -80,11 +86,17 @@ static int proc_ns_readlink(struct dentr
+ 	if (!task)
+ 		return res;
+ 
++	res = down_read_killable(&task->signal->exec_update_lock);
++	if (res)
++		goto out_put_task;
++
+ 	if (ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
+ 		res = ns_get_name(name, sizeof(name), task, ns_ops);
+ 		if (res >= 0)
+ 			res = readlink_copy(buffer, buflen, name);
+ 	}
++	up_read(&task->signal->exec_update_lock);
++out_put_task:
+ 	put_task_struct(task);
+ 	return res;
+ }
 
 
