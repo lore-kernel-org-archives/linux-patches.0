@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749C447125E;
-	Tue, 21 Jul 2026 18:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4083471267;
+	Tue, 21 Jul 2026 18:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657339; cv=none; b=BYszONrp/xgQHyouuIZice+wX8KIF+foV3Trgilmgf0utTjoV30d/l8cGNHsF00VuWnT4vaC47MEqrj9djjzozeerluGzpJGCaHZMKYfTgmOmahnaEDmIfNlEYziDvIflkKykhPtF1olTj2BzGqZGQapJbDD0mZFAl9GyZBpvcg=
+	t=1784657342; cv=none; b=Msml9o+abkBThE9t5dYwNfMB83VnRNZR1cyAUb6B6XX5uTOJA8ONXXLpyW5IkalcLNHvuV2x7Njo/93T8sgl+CHUl6I6x4qbfiLxsR2nGuLQhIx09ZwcX2ACJlcmIDcunGvMLhBJrZT1yB/ruwtcuNSocsVEPVZ84uaZV4XCs5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657339; c=relaxed/simple;
-	bh=NFEfet7hrhsg553jDchc/EUiW2lsv7ENEoH+lx/PtTM=;
+	s=arc-20240116; t=1784657342; c=relaxed/simple;
+	bh=kwrVvzBBBlpuXYvxOFdflvOEcE7VqTFwfvv0tvcHvnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAv7E7kumUqGJw919Kl9I3kE447QkPUdmQb8IApUOFZ2d+sZnINL6lGxcGaqBOO75C+dvq/ioi25f+dXgMpOX0RkW7rYuFY3rcZ+KDQOZXk6z3Pm0LI/py9iIDVwt1K4AGCTmXWkzJa4nuGURxOwYY42RmHKUlKGbpFez5DIJeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUD+Z13x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UD0WFE0DTol3rPs01Mk4ecbAYNDBdBgrCEoLQmbAFpqRt9kr+PmFCSL81hX29QV2xvLnjyaMX9gx5nRAShUWP/ed/vLThCv1f8fZwwYDBAnELLQSfgWX6DodgoaDTh6D6PNdTI9wivW3g0mM3IpV+7xqw/Gz+UR7mZ/oLLoVWEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3gDRXL0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUD+Z13x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6391F00A3A;
-	Tue, 21 Jul 2026 18:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3gDRXL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB321F000E9;
+	Tue, 21 Jul 2026 18:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657338;
-	bh=vkJT30Ks3Vt2OQtQwj+z1ykswF0ACcd/cW19N6SZEBQ=;
+	s=korg; t=1784657340;
+	bh=jAqdKa3UxhnoJo4aEWmampLRHHf/+MPaF8O9H++DXLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WUD+Z13xnfbp8YlkstqUtS6dJBiFF5PPd2YNagSxQZI1oDRzxIE70ADVago2mcK56
-	 bhsTCJ9CybFzPrEm2BE3itdlw/aM/EdvdMHz1eFIRs1KAqPXenMKwTkgTCRKIs/CFP
-	 9zCJf6EDF3wr3VmcESgbCKcTs8LY1gYNP9AtIGXo=
+	b=V3gDRXL0jjNeb71isHmGQn2moqmjg7BvzFUJseQmc6bnYe5SvA9ATNY+HjeEIEMAm
+	 KoTb8BDq5K/bKVvnmxoTJHXqxE2yTp8Els5dMtu4gZm8Uy+SGScwl9Tq8zQ5OGGnTN
+	 XvIvu4JfIeJeVdnkY5vivkEmARmX1qLFveVyw9oQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0726/1611] perf symbols: Add bounds checks to read_build_id() note iteration in minimal build
-Date: Tue, 21 Jul 2026 17:14:02 +0200
-Message-ID: <20260721152531.712788904@linuxfoundation.org>
+Subject: [PATCH 6.18 0727/1611] dt-bindings: phy: sc8280xp-qmp-pcie: Disallow bifurcation register on Purwa
+Date: Tue, 21 Jul 2026 17:14:03 +0200
+Message-ID: <20260721152531.734335082@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,64 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 52e582e316c48c53bb3082c29f7862ebc554087e ]
+[ Upstream commit b3ee497970c63cea37976aeaa84bac39611fe0eb ]
 
-symbol-minimal.c's read_build_id() iterates ELF notes with the same
-pattern as symbol-elf.c's elf_read_build_id(): pointer arithmetic
-driven by n_namesz and n_descsz from 32-bit note header fields,
-without validating that the name and desc fit within the note section
-data.  A malformed ELF file with oversized note sizes causes
-out-of-bounds reads past the section data buffer.
+Neither of the two Gen4x4 PHYs found on Purwa supports bifurcation.
+The PHY is however physically laid out as if it were to, since there
+are two separate ports (A/B).
 
-Add the same bounds check as the libelf path: validate namesz and
-descsz individually against remaining data before advancing the
-pointer, avoiding size_t overflow on 32-bit.
+Split out a new if-then block to un-require the bifurcation register
+handle to squash this warning:
 
-Fixes: b691f64360ecec49 ("perf symbols: Implement poor man's ELF parser")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+purwa-iot-evk.dtb: phy@1bd4000 (qcom,x1p42100-qmp-gen4x4-pcie-phy): 'qcom,4ln-config-sel' is a required property
+
+Fixes: 2e1ffd4c1805 ("dt-bindings: phy: qcom,qmp-pcie: Add X1P42100 PCIe Gen4x4 PHY")
+Reported-by: Rob Herring <robh@kernel.org>
+Closes: https://lore.kernel.org/linux-arm-msm/176857775469.1631885.16133311938753588148.robh@kernel.org/
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20260610-topic-purwa_phy_shutup_warning-v2-1-951c1fbfe9b2@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-minimal.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml    | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/symbol-minimal.c b/tools/perf/util/symbol-minimal.c
-index aeb2532488953a..6080d85047e339 100644
---- a/tools/perf/util/symbol-minimal.c
-+++ b/tools/perf/util/symbol-minimal.c
-@@ -1,3 +1,4 @@
-+#include "debug.h"
- #include "dso.h"
- #include "symbol.h"
- #include "symsrc.h"
-@@ -44,7 +45,7 @@ static int read_build_id(void *note_data, size_t note_len, struct build_id *bid,
- 	ptr = note_data;
- 	while ((ptr + sizeof(*nhdr)) < (note_data + note_len)) {
- 		const char *name;
--		size_t namesz, descsz;
-+		size_t namesz, descsz, remaining;
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+index 119b4ff36dbd66..19d7de3ce7a967 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+@@ -134,13 +134,22 @@ allOf:
+           items:
+             - description: port a
+             - description: port b
+-      required:
+-        - qcom,4ln-config-sel
+     else:
+       properties:
+         reg:
+           maxItems: 1
  
- 		nhdr = ptr;
- 		if (need_swap) {
-@@ -56,6 +57,14 @@ static int read_build_id(void *note_data, size_t note_len, struct build_id *bid,
- 		namesz = NOTE_ALIGN(nhdr->n_namesz);
- 		descsz = NOTE_ALIGN(nhdr->n_descsz);
- 
-+		/* validate individually to avoid size_t overflow on 32-bit */
-+		remaining = note_data + note_len - ptr - sizeof(*nhdr);
-+		if (namesz > remaining || descsz > remaining - namesz) {
-+			pr_warning("%s: oversized note: n_namesz=%u, n_descsz=%u\n",
-+				   __func__, nhdr->n_namesz, nhdr->n_descsz);
-+			break;
-+		}
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc8280xp-qmp-gen3x4-pcie-phy
++              - qcom,x1e80100-qmp-gen4x4-pcie-phy
++    then:
++      required:
++        - qcom,4ln-config-sel
 +
- 		ptr += sizeof(*nhdr);
- 		name = ptr;
- 		ptr += namesz;
+   - if:
+       properties:
+         compatible:
 -- 
 2.53.0
 
