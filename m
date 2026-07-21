@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F308E435A96;
-	Tue, 21 Jul 2026 20:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E0B434E5D;
+	Tue, 21 Jul 2026 20:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665309; cv=none; b=DS2aWHRDRgG1b+k7gA2ixjpbEfD3W0vzIJ234harkomyfH8pBmrK5SsirMbNFZopAhemva992q0cWl+upqbxjG2fBrUtNH93O4INII6yRazTL31r8vq9nDLpLVYuxVZlHK1JmoMSLQNDPcZcDTdRHH/CBrQnoiB0qcXsm9FscC4=
+	t=1784665311; cv=none; b=jby6vRcRnFdd7/QQ22NWCosMCayPzEdZx6v/x+1GMYZf3rrrIQ3EZc0K7VrLgRED9TQGOfER1+rXP3LoNtgVSW+oYb5ioI+mYqOhu7RNj7AervjFQ2NEp4958c+cBxy7tXhTBnSTgRz1DRtlDlP48oZLRRLE2ygeaLAGPybaSkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665309; c=relaxed/simple;
-	bh=Ts/OouKjsU90p8hT8kSe3Kaw0RNJ2p3qcAP4f09ukTM=;
+	s=arc-20240116; t=1784665311; c=relaxed/simple;
+	bh=X0iKxHg1d3zahqgVbof0uUSBPblx/lk5JhedSZBIJd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3IEFcTKgetg2HRQHDWFawXeXoPJexIBDd4787cAqCGi0OYwdsscEKtiSJVGGZDVoPZdBezxoF4hXRPbR+ClK9VxSH14tRqthpoIOWPDKrsrSCgzaMrc+5AejKCbgqpqz0/+upyu/mBb5znvDwdFvfK01Ak0s0ZYmrCIT/SEUvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qb5irUsj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cye2q2ZzTT3sFYXy0UvqDuXzeoa40VyEaBVi98tjcFTzZ+KX+KqhyhO/0BuucpeW91Z+KsblVak6mD1kgFtJbP3mzYmDCiAq10iy0WwgUlJ/lSlfPAE/zbxjk7jPVM6JNLjAm38lHjZVlUV/u1ae+1AGO1dupYE+PW6ac2g4RJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6k32bq8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qb5irUsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C6D1F000E9;
-	Tue, 21 Jul 2026 20:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6k32bq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2B11F000E9;
+	Tue, 21 Jul 2026 20:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665307;
-	bh=3y2NHVyf834AReZseQBIhOOGRfl0X25sdRgmeewhku4=;
+	s=korg; t=1784665310;
+	bh=0crbV2O3svL6+9pFN7yDPXtOnksbSbHoGTr+j6bLHTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qb5irUsj1l17kP3xWaqNXvd8Dm0+/92dUUL66hnenc1aevAOD+tsg9YHCVToEB1rJ
-	 0J7Qanp13847DfxthfpUgx9ZoM2OHAea8qF1mNBWB77sbjfAz86hfmqAyFAt86JS+l
-	 vv6U99k9Fq/eFjrWjHm+MdKpmqXw6q2TILQ6OsTI=
+	b=J6k32bq8eP91Bd4uS8KKS4jrJptfhqFI5lv7aAvu7ooZhQ/BObK86hkINFU97outu
+	 X/sL4SD0m5WdcQgwAU+T/dbGnpzwCq4J0HkXH0doKV8dU7gHKSj2eQRBpQ2blV4CQz
+	 EPs2WjtEJ628GEV6S0ClfPIeMdqYA3O80vB5QG8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Madhu M <madhu.m@intel.com>,
-	Jameson Thies <jthies@google.com>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 0255/1266] usb: typec: ucsi: Pass full DP config payload in SET_NEW_CAM for DP alt mode
-Date: Tue, 21 Jul 2026 17:11:32 +0200
-Message-ID: <20260721152447.519150874@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.6 0229/1266] usb: free iso schedules on failed submit
+Date: Tue, 21 Jul 2026 17:11:06 +0200
+Message-ID: <20260721152446.941049126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,48 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhu M <madhu.m@intel.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 735a461d060d4eeb2f9732aba1295bc32a3982e2 upstream.
+commit b9399d25fbb34a05bbe76eeedd730f62ff2670e9 upstream.
 
-In the UCSI Specification Revision 3.1 RC1, bits 32-63 of the SET_NEW_CAM
-command hold the 32-bit Alternate Mode Specific (AMSpecific) field.
+EHCI and FOTG210 isochronous submits build an ehci_iso_sched before
+linking the URB to the endpoint queue, and keep the staged schedule in
+urb->hcpriv until iso_stream_schedule() and the link helpers consume it.
+If the controller is no longer accessible, or usb_hcd_link_urb_to_ep()
+fails, submit jumps to done_not_linked before that handoff happens and
+leaks the staged schedule still attached to urb->hcpriv.
 
-For DisplayPort Alternate Mode, this field must contain the full
-32-bit DisplayPort configuration VDO payload that the OPM wants the
-connector to operate in, rather than just the pin assignment value.
-This AMSpecific value follows the DisplayPort Configurations defined
-in the DisplayPort Alt Mode on USB Type-C Specification v2.1a,
-Table 5-13: SOP DisplayPort Configurations.
+Free the staged schedule from done_not_linked when submit fails before
+the URB is linked and clear urb->hcpriv after the free.
 
-Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have an
+EHCI host controller with a USB isochronous device to test with, no
+runtime testing was able to be performed.
+
+Fixes: 8de98402652c ("[PATCH] USB: Fix USB suspend/resume crasher (#2)")
+Fixes: e9df41c5c589 ("USB: make HCDs responsible for managing endpoint queues")
+Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Madhu M <madhu.m@intel.com>
-Reviewed-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260619153311.3526083-1-madhu.m@intel.com
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260630071419.349161-1-dawei.feng@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/displayport.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/fotg210/fotg210-hcd.c |    6 ++++--
+ drivers/usb/host/ehci-sched.c     |   11 +++++++++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/typec/ucsi/displayport.c
-+++ b/drivers/usb/typec/ucsi/displayport.c
-@@ -185,13 +185,12 @@ static int ucsi_displayport_status_updat
+--- a/drivers/usb/fotg210/fotg210-hcd.c
++++ b/drivers/usb/fotg210/fotg210-hcd.c
+@@ -4271,8 +4271,6 @@ static int iso_stream_schedule(struct fo
+ 	return 0;
  
- static int ucsi_displayport_configure(struct ucsi_dp *dp)
- {
--	u32 pins = DP_CONF_GET_PIN_ASSIGN(dp->data.conf);
- 	u64 command;
- 
- 	if (!dp->override)
- 		return 0;
- 
--	command = UCSI_CMD_SET_NEW_CAM(dp->con->num, 1, dp->offset, pins);
-+	command = UCSI_CMD_SET_NEW_CAM(dp->con->num, 1, dp->offset, dp->data.conf);
- 
- 	return ucsi_send_command(dp->con->ucsi, command, NULL, 0);
+ fail:
+-	iso_sched_free(stream, sched);
+-	urb->hcpriv = NULL;
+ 	return status;
  }
+ 
+@@ -4566,6 +4564,10 @@ static int itd_submit(struct fotg210_hcd
+ 	else
+ 		usb_hcd_unlink_urb_from_ep(fotg210_to_hcd(fotg210), urb);
+ done_not_linked:
++	if (status < 0) {
++		iso_sched_free(stream, urb->hcpriv);
++		urb->hcpriv = NULL;
++	}
+ 	spin_unlock_irqrestore(&fotg210->lock, flags);
+ done:
+ 	return status;
+--- a/drivers/usb/host/ehci-sched.c
++++ b/drivers/usb/host/ehci-sched.c
+@@ -1624,6 +1624,7 @@ iso_stream_schedule(
+ 			status = 1;	/* and give it back immediately */
+ 			iso_sched_free(stream, sched);
+ 			sched = NULL;
++			urb->hcpriv = NULL;
+ 		}
+ 	}
+ 	urb->error_count = skip / period;
+@@ -1654,8 +1655,6 @@ iso_stream_schedule(
+ 	return status;
+ 
+  fail:
+-	iso_sched_free(stream, sched);
+-	urb->hcpriv = NULL;
+ 	return status;
+ }
+ 
+@@ -1967,6 +1966,10 @@ static int itd_submit(struct ehci_hcd *e
+ 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
+ 	}
+  done_not_linked:
++	if (status < 0) {
++		iso_sched_free(stream, urb->hcpriv);
++		urb->hcpriv = NULL;
++	}
+ 	spin_unlock_irqrestore(&ehci->lock, flags);
+  done:
+ 	return status;
+@@ -2344,6 +2347,10 @@ static int sitd_submit(struct ehci_hcd *
+ 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
+ 	}
+  done_not_linked:
++	if (status < 0) {
++		iso_sched_free(stream, urb->hcpriv);
++		urb->hcpriv = NULL;
++	}
+ 	spin_unlock_irqrestore(&ehci->lock, flags);
+  done:
+ 	return status;
 
 
