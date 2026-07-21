@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA15446AA82;
-	Tue, 21 Jul 2026 15:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003B946AA82;
+	Tue, 21 Jul 2026 15:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648345; cv=none; b=MkYgoIVWap4dB6MowljkIU0CPBAEJF+1GT5YYuBLX8Tg4bpvAQmhSKZUD0+/RukGQV+3XYb8sTcuf2kQUYjOomN5eCM0S6p0JAjVDOVM2jc0kH4/uRqPNEGffs0L5wEtJRkStn1wJPR04MOoWmHnj63bpSZPt7eF0MARt6IlEAg=
+	t=1784648348; cv=none; b=CKJzNosqdYDYors5t0X1/319T1LL+USmjYuNzBTdwr25pyLdR3cIcLztEYthG5O6I0p7p+anwfkym8bd8hgUeXcKOUunb5obW7J3txSRY3Z4uiZk81Cz95nKdpMQdgiMWd33Bue3Z6kYLGkioipDO8YzVLUm3oz0qb+P1JI7mi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648345; c=relaxed/simple;
-	bh=1M2lbsf/Jaspse5XWAphvbRNcTiChjPyQcnPxFSNwtA=;
+	s=arc-20240116; t=1784648348; c=relaxed/simple;
+	bh=plD/NylS/pG3oL0OuKkbY3CoZTyGizxiEL/+CrUCNPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdURFdQ2UF98ig1aE5+bE4IKqZUPjAxznav/ztG+Z8s9v6Q4C+7y87Z1M6kgLRQwgHvxN3zNAg0smCc8ih+ZHli6uUng7+zxwZGWYxJGw1dG+OhtygvK0ALo1PAutCeQxaGt3vLQ5z3ZdAXLuWmx6QNvaDVaBpMbbxdVUxSaHi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtH0Jsmu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BAGLnNS2oU6ICQRuXVunnOjK6kXKVzvjae1aizlJ8q76YWpeFpSyebRmBJYvQoeCh9fOeBXHqxKxfs1Uhe4yzmgAyma3UNKaO1M5/9f/ehA/GQ8mpGwiN/VECwG4S3g2a7E1J4Dk7JKUEh58xOJ00cvQn8pJ0IZXINTyW0CQGWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opJYg7E4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtH0Jsmu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76341F000E9;
-	Tue, 21 Jul 2026 15:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opJYg7E4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676C71F000E9;
+	Tue, 21 Jul 2026 15:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648344;
-	bh=6UdncqtCZYoRC4sv5lS1BZbOKaZHJGq5bEFtrsvymQg=;
+	s=korg; t=1784648346;
+	bh=HAyDtnZ0Ol3VD2XBv0LYka5oumXGeiF4agbEG/Zey+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qtH0Jsmu/D+QioHb9Oi5ivroQd01a3VlCHWFRUaoLY/2hzj4TaTXyCK0DQE0sJ+8u
-	 FZVamYJ+b6FoWr0rSUihptrtRy749uBywEZ6iAZKe9vXV8B2lU9XWepqZjWxSzF6Fl
-	 RSQPgYnrQFZ9uHyEAEPQVtVgb5MSNYqw904suv9Q=
+	b=opJYg7E41WRy00OKKdfTPqkkIcVYNwKiIfK4FXijC5sgaJYzpORbCsvB2Nrp9nz8k
+	 WKC2X5F9osB0mEcVP7mGmhUefMMPPcexc8cIMvthwnioX9G+JrN/Q54/845mWAsQtA
+	 7kWPKbuWsPCn9OQbsdBsehYRhq9uy4FUJ4lespCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Tycho Andersen (AMD)" <tycho@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0163/2077] crypto: ccp - Check for page allocation failure correctly in TIO
-Date: Tue, 21 Jul 2026 16:57:16 +0200
-Message-ID: <20260721152556.530616442@linuxfoundation.org>
+Subject: [PATCH 7.1 0164/2077] crypto: ccp - Initialize data during __sev_snp_init_locked()
+Date: Tue, 21 Jul 2026 16:57:17 +0200
+Message-ID: <20260721152556.558053727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,21 +53,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Tycho Andersen (AMD) <tycho@kernel.org>
 
-[ Upstream commit a8d5370eef00eca132a292b1901c9914c817e385 ]
+[ Upstream commit fed613c1230277105bb512bce6e1fda8f316d178 ]
 
 Sashiko notes:
 
-> if __snp_alloc_firmware_pages() returns NULL under memory pressure, is it
-> safe to pass it directly to page_address()?
->
-> On architectures without HASHED_PAGE_VIRTUAL, page_address(NULL) might
-> compute a deterministic but invalid, non-zero virtual address. The
-> subsequent if (tio_status) check would then evaluate to true, and
-> sev_tsm_init_locked() would dereference the invalid pointer.
+> is the stack variable data left uninitialized when taking the else branch?
+> Since data.tio_en is later evaluated unconditionally, could stack garbage
+> cause it to evaluate to true, leading to erroneous attempts to allocate
+> pages and initialize SEV-TIO on unsupported hardware?
 
-Indeed, page_address(NULL) will return non-NULL garbage here. Fix this by
-checking the page allocation itself for NULL, not the resulting virtual
-address.
+If the firmware is too old to support SEV_INIT_EX, data is left
+uninitialized but used in the debug logging about whether TIO is enabled or
+not.
 
 Fixes: 4be423572da1 ("crypto/ccp: Implement SEV-TIO PCIe IDE (phase1)")
 Reported-by: Sashiko
@@ -77,41 +74,31 @@ Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/crypto/ccp/sev-dev.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index b0290f8491f59a..3991d4b355e606 100644
+index 3991d4b355e606..14df519ae7eea7 100644
 --- a/drivers/crypto/ccp/sev-dev.c
 +++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1488,6 +1488,8 @@ static int __sev_snp_init_locked(int *error, unsigned int max_snp_asid)
- 				       &snp_panic_notifier);
- 
- 	if (data.tio_en) {
-+		struct page *page;
-+
- 		/*
- 		 * This executes with the sev_cmd_mutex held so down the stack
- 		 * snp_reclaim_pages(locked=false) might be needed (which is extremely
-@@ -1495,12 +1497,14 @@ static int __sev_snp_init_locked(int *error, unsigned int max_snp_asid)
- 		 * Instead of exporting __snp_alloc_firmware_pages(), allocate a page
- 		 * for this one call here.
+@@ -1356,7 +1356,7 @@ static int __sev_snp_init_locked(int *error, unsigned int max_snp_asid)
+ {
+ 	struct sev_data_range_list *snp_range_list __free(kfree) = NULL;
+ 	struct psp_device *psp = psp_master;
+-	struct sev_data_snp_init_ex data;
++	struct sev_data_snp_init_ex data = {};
+ 	struct sev_device *sev;
+ 	void *arg = &data;
+ 	int cmd, rc = 0;
+@@ -1420,8 +1420,6 @@ static int __sev_snp_init_locked(int *error, unsigned int max_snp_asid)
  		 */
--		void *tio_status = page_address(__snp_alloc_firmware_pages(
--			GFP_KERNEL_ACCOUNT | __GFP_ZERO, 0, true));
-+		page = __snp_alloc_firmware_pages(GFP_KERNEL_ACCOUNT | __GFP_ZERO,
-+						  0, true);
-+		if (page) {
-+			void *tio_status = page_address(page);
+ 		snp_add_hv_fixed_pages(sev, snp_range_list);
  
--		if (tio_status) {
- 			sev_tsm_init_locked(sev, tio_status);
--			__snp_free_firmware_pages(virt_to_page(tio_status), 0, true);
-+
-+			__snp_free_firmware_pages(page, 0, true);
- 		}
- 	}
- 
+-		memset(&data, 0, sizeof(data));
+-
+ 		if (max_snp_asid) {
+ 			data.ciphertext_hiding_en = 1;
+ 			data.max_snp_asid = max_snp_asid;
 -- 
 2.53.0
 
