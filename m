@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A45384CC4;
-	Tue, 21 Jul 2026 19:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FED846D098;
+	Tue, 21 Jul 2026 19:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662054; cv=none; b=mTHmo0rIFHdzAIRG8h/o47dNKNt+N4pSlPbQ8ySLJlLBR9wuhNrY9pTYvrM0LnEczm9jXlgqlISzDKKWGhKYnd0b9+DkibgzZ2YZ8H9WEbPBMj8Sb9cwm9VCLfQXUkDuxzZhsKLBaleJalTudMe2gmVM5c6td7z0Vzkaba09j5o=
+	t=1784662058; cv=none; b=jAdk3EG/VIeY01idOPK5Agj42XmHhA25wZAT3myeN0kKA/OewfDNBMGnWYTlpwJERNp0Gz8XVvUD7ogO0tPiT9TJCOX7Vbj4/ofS1PH+PmvsxqdoKD4r5xOeqGH0NNigXxRX0/jd5dF8mP4LA0UML+jNnQRgN70J7F2fgPhmp3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662054; c=relaxed/simple;
-	bh=+usS0jrwe4sk2SFpaG4Osd1EJIYAL0M/WFOSMHlIOYg=;
+	s=arc-20240116; t=1784662058; c=relaxed/simple;
+	bh=Q6odDrlqLzR6Ec/c4nvqJQPTNnqOskL3KAKYiH9NDOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gq9VF1xVf/RRtshb7e/DlIGwTz1/9TZ569Ef4SiT1p+/gpu2PmO8kCfvaAI+GvvzCL10YnSxblecf54uyL3Xz3FyJ8nHrUdTS1A39KLC8Ra4eIYOPz2pfANpwuXIXDBDUSyjI9pBCd8JbU/7NIZ0fdaGj3Ihq1LF+jBSdXk9pnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ITx+8b0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JRI6zcNtJiZENexDuJVbIZ6Y+vtN5IxNM2OCs2sXMROFHAtTFKkFoGts/pD9urvlJrg7ug6jUKG9CrX6+iByyRbEkuzhMaUGCLgPU2yiyLOpadq77AM8SuWR/uscH+bBlHGnRx3DlGS7+1XDFsEgOzO7P1YydAYv/CR71npwIFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCaICrfA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ITx+8b0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3671F000E9;
-	Tue, 21 Jul 2026 19:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCaICrfA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EB81F000E9;
+	Tue, 21 Jul 2026 19:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662053;
-	bh=/A++5+Hbo0S2EEdXRu5MS+hEdjhV7CbSaDiL0yDNbFM=;
+	s=korg; t=1784662056;
+	bh=xkLJ7OonKainav+xlM3tE+UfuUfrA4S/DgUWbGn+f/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ITx+8b0pItg/AI2yvn4Z2PeBSGtUXwir2zySzksVsCuspvkOhJp/aeWSOSCpxYVu
-	 KkeVrxaQAnOsHS9/7xUB3hURGC25VE0pCVDRZHeI0uLwlSYyNlIu5MHcu2a3vuYYV3
-	 Ov4Vtufo28zQgY8gWzqR9ekuaKsgM/9RuTfGByj8=
+	b=WCaICrfA86Ky4p0M6lAbk2qlNpfUV3LA/11flkvrpUMuVB7iRlDaFPrkdfuoEDMwu
+	 70tuXuE5HvctvXF7A9Oq+3upQ8HWC2KMgzwxG2e8WxrKxQ2kOxqBafmCS1sHySpcwC
+	 xeYZhAN+r9L1R0GUvp1GhGs46z5NUn0AnOekP0Ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Filip Hejsek <filip.hejsek@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Qihang Tang <q.h.hack.winter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0299/1276] vhost/vdpa: validate virtqueue index in mmap and fault paths
-Date: Tue, 21 Jul 2026 17:12:22 +0200
-Message-ID: <20260721152452.785818842@linuxfoundation.org>
+Subject: [PATCH 6.12 0300/1276] virtio_console: read size from config space during device init
+Date: Tue, 21 Jul 2026 17:12:23 +0200
+Message-ID: <20260721152452.808861696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,107 +45,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qihang Tang <q.h.hack.winter@gmail.com>
+From: Filip Hejsek <filip.hejsek@gmail.com>
 
-[ Upstream commit 929e4f044621c8cc30b612fb74e1410bef09e41b ]
+[ Upstream commit b3592a32b34f37874dc94aa1a0d15c4334ed86ca ]
 
-vhost_vdpa_mmap() and vhost_vdpa_fault() use vma->vm_pgoff as a
-virtqueue index for get_vq_notification(), but they do not validate
-that the index is smaller than v->nvqs.
+Previously, the size was only read upon receiving the config interrupt.
+This interrupt is sent when the size changes. However, we also need to
+read the initial size.
 
-The ioctl path already performs both a bounds check and
-array_index_nospec(), but the mmap/fault path only checks that the
-index fits in u16. This allows an out-of-range queue index to reach
-driver-specific get_vq_notification() callbacks.
+Also make sure to only read the size from config if F_SIZE is enabled.
 
-Fix this by extracting a unified vhost_vdpa_get_vq_notification()
-helper that validates the queue index against v->nvqs and applies
-array_index_nospec() before calling the driver callback. Both the
-mmap and fault paths use this helper, and the bounds checking is
-consolidated into a single location.
-
->From source inspection, the most defensible impact is out-of-bounds
-access in the callback path, potentially leading to invalid PFN
-remaps and crash/DoS.
-
-Fixes: ddd89d0a059d ("vhost_vdpa: support doorbell mapping via mmap")
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Fixes: 9778829cffd4 ("virtio: console: Store each console's size in the console structure")
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260508075821.92656-1-q.h.hack.winter@gmail.com>
+Message-ID: <20260223-virtio-console-fix-v1-1-0cf08303b428@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ drivers/char/virtio_console.c | 52 +++++++++++++++++++++--------------
+ 1 file changed, 31 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 0ba5237980bbf9..2464c9de677125 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -1480,16 +1480,32 @@ static int vhost_vdpa_release(struct inode *inode, struct file *filep)
+diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
+index 8c4e2b1e3de0ed..8765e8fcb68a7e 100644
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1774,32 +1774,40 @@ static void config_intr(struct virtio_device *vdev)
+ 		schedule_work(&portdev->config_work);
  }
  
- #ifdef CONFIG_MMU
--static vm_fault_t vhost_vdpa_fault(struct vm_fault *vmf)
-+static int
-+vhost_vdpa_get_vq_notification(struct vhost_vdpa *v, unsigned long index,
-+			       struct vdpa_notification_area *notify)
+-static void config_work_handler(struct work_struct *work)
++static void update_size_from_config(struct ports_device *portdev)
  {
--	struct vhost_vdpa *v = vmf->vma->vm_file->private_data;
- 	struct vdpa_device *vdpa = v->vdpa;
- 	const struct vdpa_config_ops *ops = vdpa->config;
-+
-+	if (index > 65535 || index >= v->nvqs)
-+		return -EINVAL;
-+
-+	index = array_index_nospec(index, v->nvqs);
-+
-+	*notify = ops->get_vq_notification(vdpa, index);
-+
-+	return 0;
+-	struct ports_device *portdev;
++	struct virtio_device *vdev;
++	struct port *port;
++	u16 rows, cols;
+ 
+-	portdev = container_of(work, struct ports_device, config_work);
+-	if (!use_multiport(portdev)) {
+-		struct virtio_device *vdev;
+-		struct port *port;
+-		u16 rows, cols;
++	vdev = portdev->vdev;
+ 
+-		vdev = portdev->vdev;
+-		virtio_cread(vdev, struct virtio_console_config, cols, &cols);
+-		virtio_cread(vdev, struct virtio_console_config, rows, &rows);
++	/*
++	 * We'll use this way of resizing only for legacy support.
++	 * For multiport devices, use control messages to indicate
++	 * console size changes so that it can be done per-port.
++	 *
++	 * Don't test F_SIZE at all if we're rproc: not a valid feature.
++	 */
++	if (is_rproc_serial(vdev) ||
++	    use_multiport(portdev) ||
++	    !virtio_has_feature(vdev, VIRTIO_CONSOLE_F_SIZE))
++		return;
+ 
+-		port = find_port_by_id(portdev, 0);
+-		set_console_size(port, rows, cols);
++	virtio_cread(vdev, struct virtio_console_config, cols, &cols);
++	virtio_cread(vdev, struct virtio_console_config, rows, &rows);
+ 
+-		/*
+-		 * We'll use this way of resizing only for legacy
+-		 * support.  For newer userspace
+-		 * (VIRTIO_CONSOLE_F_MULTPORT+), use control messages
+-		 * to indicate console size changes so that it can be
+-		 * done per-port.
+-		 */
+-		resize_console(port);
+-	}
++	port = find_port_by_id(portdev, 0);
++	set_console_size(port, rows, cols);
++	resize_console(port);
 +}
 +
-+static vm_fault_t vhost_vdpa_fault(struct vm_fault *vmf)
++static void config_work_handler(struct work_struct *work)
 +{
-+	struct vhost_vdpa *v = vmf->vma->vm_file->private_data;
- 	struct vdpa_notification_area notify;
- 	struct vm_area_struct *vma = vmf->vma;
--	u16 index = vma->vm_pgoff;
-+	unsigned long index = vma->vm_pgoff;
- 
--	notify = ops->get_vq_notification(vdpa, index);
-+	if (vhost_vdpa_get_vq_notification(v, index, &notify))
-+		return VM_FAULT_SIGBUS;
- 
- 	return vmf_insert_pfn(vma, vmf->address & PAGE_MASK, PFN_DOWN(notify.addr));
++	struct ports_device *portdev;
++
++	portdev = container_of(work, struct ports_device, config_work);
++	update_size_from_config(portdev);
  }
-@@ -1512,8 +1528,6 @@ static int vhost_vdpa_mmap(struct file *file, struct vm_area_struct *vma)
- 		return -EINVAL;
- 	if (vma->vm_flags & VM_READ)
- 		return -EINVAL;
--	if (index > 65535)
--		return -EINVAL;
- 	if (!ops->get_vq_notification)
- 		return -ENOTSUPP;
  
-@@ -1521,7 +1535,8 @@ static int vhost_vdpa_mmap(struct file *file, struct vm_area_struct *vma)
- 	 * support the doorbell which sits on the page boundary and
- 	 * does not share the page with other registers.
- 	 */
--	notify = ops->get_vq_notification(vdpa, index);
-+	if (vhost_vdpa_get_vq_notification(v, index, &notify))
-+		return -EINVAL;
- 	if (notify.addr & (PAGE_SIZE - 1))
- 		return -EINVAL;
- 	if (vma->vm_end - vma->vm_start != notify.size)
+ static int init_vqs(struct ports_device *portdev)
+@@ -2057,6 +2065,8 @@ static int virtcons_probe(struct virtio_device *vdev)
+ 	__send_control_msg(portdev, VIRTIO_CONSOLE_BAD_ID,
+ 			   VIRTIO_CONSOLE_DEVICE_READY, 1);
+ 
++	update_size_from_config(portdev);
++
+ 	return 0;
+ 
+ free_chrdev:
 -- 
 2.53.0
 
