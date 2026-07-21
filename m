@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6CD46C4DD;
-	Tue, 21 Jul 2026 18:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024E54071E3;
+	Tue, 21 Jul 2026 18:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660292; cv=none; b=OuzaOmWFkCeQ00z70Bi5YdYQM4v9X1oWxxF8qR6W7u3LWcFeypopp23QOVU84Pwj3UcwkoJCpPl1W8450r0hjUY7aC/NSFQtM6BqzGgpO5oFvBVdE6W+uOB9M9OIJ1S9jA5BQgBx7tFF4qPtE9t3y7T52YukCpSScCu28Gqp3+A=
+	t=1784660294; cv=none; b=iQYkl8cXr+CbIUf6vblJO7i94Lq4kB5q0THi8HTLgDaGTMIUz+Kzz+FimSkgM67Cgqae+8FEDV782bmD3mpvNvVwPyA1fKOtKhbWN6nafNW4ZIIXGM8R3oyA7WEYvideKYa03WlFGAQ6w1aViLXQw/JMU+A6mb3WtMxdTOCpoHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660292; c=relaxed/simple;
-	bh=Lhx8JUMe6aQrpkBpC7eDwwez7TMgyQ2rZ9nJHSmkSfg=;
+	s=arc-20240116; t=1784660294; c=relaxed/simple;
+	bh=WQ3Gdqw6rqoIjWkQMc/ZzTHthl2d11JcPG8OBeiPZ20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxeupZ6hAqgwli+r26qs+3gI82250kgRc6mQcLLC982b1TS4m4LEi3TVToBwLdS0Y5sjFGDKvCVK5pfI6BcsmCoKlLuTrkYHG/SCcjzrHBXxdMTDnsXo5Z/0jPRJo7NnaF+NXhpCv3khtlbkjJnkAVxWuX24bBjNb+ufeasrzQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zx3hsk3S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HGsgUxn3cMiWwv1+S5s/WP6GSt4EK9N3kMVJDmG96KsAta+BOclJAH+wVJCCY5Dqt5UfkiUk3FaKqHN75Gx4qMMYfKKp5bsHUhIlvenlrw/jhy+gdKDCQmqNp6wnkfNWbMVdgoBGabimC0/WVScE7ZEGnd4ABh7om77XzKk5ufk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3txCWBP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zx3hsk3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C582C1F000E9;
-	Tue, 21 Jul 2026 18:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3txCWBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288F01F00A3A;
+	Tue, 21 Jul 2026 18:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660290;
-	bh=LgLNdwME5xW7+YflJeKzvS7rsvJHq3L5kXp+FI63GKM=;
+	s=korg; t=1784660287;
+	bh=aj0BHO3kHX8E7IrN7ZBbNbLVZGzLuT4yG0/XwwmAYGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zx3hsk3Sha6mC7h7FrKZ+f5w24UFp6oUM67ej+bABbV7CQJadUiDKe0Oia3PCPIJS
-	 wHeqAsUjqFedtOvAHGiBD+EZmF2s5vk0+/52MqgJmUq87ERPLfH0VdWRJwWT0JxntZ
-	 5N0ol0392JOfhHdd5bOUNPzFN+l0u2cyfYW8QtOg=
+	b=w3txCWBPzu+iPTnTbq9Qv5hj2hYuiH5RVzoVbLrKJ07ZH+X//BbCfE1wqxYKngtWQ
+	 vXIfXce55T9GO04OoAFZldKinTRaid4Y7keQWYJsLSolfK0aqrVlu53Yjbi30Ob3Q/
+	 dlC02w11vR2U6czBXMGDp1zGXsLg7vvQu1cs9J6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mihai Sain <mihai.sain@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0871/2077] clk: at91: sam9x7: Fix gmac_gclk clock definition
-Date: Tue, 21 Jul 2026 17:09:04 +0200
-Message-ID: <20260721152613.336714530@linuxfoundation.org>
+Subject: [PATCH 7.1 0880/2077] PCI/pwrctrl: Lock device when calling device_is_bound()
+Date: Tue, 21 Jul 2026 17:09:13 +0200
+Message-ID: <20260721152613.554828315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,62 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mihai Sain <mihai.sain@microchip.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit b6f6ebb0fb57ae6da622fb8fd4ebdc9ba1ae5756 ]
+[ Upstream commit 548f3d287d92bcbc908b02db57fb889f8a8276a0 ]
 
-According to the datasheet (see link section), table 12.1, instance ID 24
-is used for the GMAC generic clock, while instance ID 67 is reserved. Add
-the correct gmac_gclk entry at ID 24, aligned with the SoC clock layout,
-and remove the old misplaced entry at ID 67.
+The kerneldoc for device_is_bound() states that it must be called with
+the device lock taken. Synchronize the two calls in pwrctrl core.
 
-Link: https://ww1.microchip.com/downloads/aemDocuments/documents/MPU32/ProductDocuments/DataSheets/SAM9X75-SIP-Series-Data-Sheet-DS60001827.pdf
-Fixes: 33013b43e271 ("clk: at91: sam9x7: add sam9x7 pmc driver")
-Signed-off-by: Mihai Sain <mihai.sain@microchip.com>
-Link: https://lore.kernel.org/r/20260309075329.1528-4-mihai.sain@microchip.com
-[claudiu.beznea: massaged the patch description]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: b35cf3b6aa1e ("PCI/pwrctrl: Add APIs to power on/off pwrctrl devices")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260518100700.47581-1-bartosz.golaszewski@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/sam9x7.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/pci/pwrctrl/core.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/at91/sam9x7.c b/drivers/clk/at91/sam9x7.c
-index 89868a0aeaba93..6b330c3e6bca84 100644
---- a/drivers/clk/at91/sam9x7.c
-+++ b/drivers/clk/at91/sam9x7.c
-@@ -569,6 +569,15 @@ static const struct {
- 		.pp_chg_id = INT_MIN,
- 	},
+diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
+index 97cff5b8ca8852..cd08d590483b86 100644
+--- a/drivers/pci/pwrctrl/core.c
++++ b/drivers/pci/pwrctrl/core.c
+@@ -161,10 +161,12 @@ static void pci_pwrctrl_power_off_device(struct device_node *np)
+ 	if (!pdev)
+ 		return;
  
-+	{
-+		.n = "gmac_gclk",
-+		.id = 24,
-+		.pp = { "audiopll_divpmcck", "plla_div2pmcck", },
-+		.pp_mux_table = { 6, 8, },
-+		.pp_count = 2,
-+		.pp_chg_id = INT_MIN,
-+	},
-+
- 	{
- 		.n = "lcd_gclk",
- 		.id = 25,
-@@ -702,15 +711,6 @@ static const struct {
- 		.pp_count = 1,
- 		.pp_chg_id = INT_MIN,
- 	},
--
--	{
--		.n = "gmac_gclk",
--		.id = 67,
--		.pp = { "audiopll_divpmcck", "plla_div2pmcck", },
--		.pp_mux_table = { 6, 8, },
--		.pp_count = 2,
--		.pp_chg_id = INT_MIN,
--	},
- };
+-	if (device_is_bound(&pdev->dev)) {
+-		ret = __pci_pwrctrl_power_off_device(&pdev->dev);
+-		if (ret)
+-			dev_err(&pdev->dev, "Failed to power off device: %d", ret);
++	scoped_guard(device, &pdev->dev) {
++		if (device_is_bound(&pdev->dev)) {
++			ret = __pci_pwrctrl_power_off_device(&pdev->dev);
++			if (ret)
++				dev_err(&pdev->dev, "Failed to power off device: %d", ret);
++		}
+ 	}
  
- static void __init sam9x7_pmc_setup(struct device_node *np)
+ 	platform_device_put(pdev);
+@@ -205,7 +207,7 @@ static int __pci_pwrctrl_power_on_device(struct device *dev)
+ static int pci_pwrctrl_power_on_device(struct device_node *np)
+ {
+ 	struct platform_device *pdev;
+-	int ret;
++	int ret = 0;
+ 
+ 	for_each_available_child_of_node_scoped(np, child) {
+ 		ret = pci_pwrctrl_power_on_device(child);
+@@ -217,12 +219,14 @@ static int pci_pwrctrl_power_on_device(struct device_node *np)
+ 	if (!pdev)
+ 		return 0;
+ 
+-	if (device_is_bound(&pdev->dev)) {
+-		ret = __pci_pwrctrl_power_on_device(&pdev->dev);
+-	} else {
+-		/* FIXME: Use blocking wait instead of probe deferral */
+-		dev_dbg(&pdev->dev, "driver is not bound\n");
+-		ret = -EPROBE_DEFER;
++	scoped_guard(device, &pdev->dev) {
++		if (device_is_bound(&pdev->dev)) {
++			ret = __pci_pwrctrl_power_on_device(&pdev->dev);
++		} else {
++			/* FIXME: Use blocking wait instead of probe deferral */
++			dev_dbg(&pdev->dev, "driver is not bound\n");
++			ret = -EPROBE_DEFER;
++		}
+ 	}
+ 
+ 	platform_device_put(pdev);
 -- 
 2.53.0
 
