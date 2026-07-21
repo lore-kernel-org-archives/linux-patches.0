@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4016E32B132;
-	Tue, 21 Jul 2026 19:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BBA408039;
+	Tue, 21 Jul 2026 19:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661933; cv=none; b=KADxkWGayNIq5s8VtTifnBydw1yiG/3OcdLQnOwtBI3vMByvJr+Gbo4IXFlD2g+rE3wDp+Asa0jabRG5FV3TqJFYZ4zvQaOLloOJORwqwJ5OBEe8gndm3cZIMojBrg/DMZs+ht5g7o8liptbRiDUgsyAhOlmnG2gwguva4SU8hM=
+	t=1784661935; cv=none; b=XMuOE0Apb8ymWJzE8Yu0JYM3a/LLrM7ER+dEMBjPDqY/pq+wsvvXFDqDIQzKVkq6sU5X5vFsZceyGutXxLokLKAIj6HmyP9lFY0Yb8D75xqQS9sfzcVgondUqMLKCHrQGPiPnx86McTIOukvWD2qY7Cm3gOW0Jw/WNnQ/v5r6b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661933; c=relaxed/simple;
-	bh=umi9hLiuuhIfkmwxZmU6We88qDsxO5t4QtrCoLlH/Tw=;
+	s=arc-20240116; t=1784661935; c=relaxed/simple;
+	bh=3IYmYC7OcVRHhyEPVFk4D7Dz/uvDf/LSKst2oF3WFb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pEqmvMl8XpiywIYVCZD8S13ZPP6teyapIew5NNvO7719jq291GwpPgPcYVT3epIcHvn1g7z/J/vHZ/GChq1MNHupcH26HGUIDCpOcapLFr1wtHe5flx4oKqjKFZrSUDshIVcqCY5jCTaaTfPVGh9YWvtAGKe3YdPdV6IQ7hrX1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmmJ8xbA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RAoeGUxB7ee2+ybjurDbMFbD92Sff35NPvtkt6UUqJOcvYWLrJ2ezl7c2NkZXx4IpPjijOgT9hQZRUFmkxPc9msuDh05wtZXmddv2C++7SNPyT7IXmchkG9baYKxh7phfx5ROHWiqDm7ouRtwNvb55StxFIqU4yeExcliZ79T94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCtUvhWG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmmJ8xbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68291F000E9;
-	Tue, 21 Jul 2026 19:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCtUvhWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4968C1F000E9;
+	Tue, 21 Jul 2026 19:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661932;
-	bh=Toty82aJ0PpCvREQFeXcDbcjWC3SWjJ5cFLSueNR2w4=;
+	s=korg; t=1784661934;
+	bh=wecDWpVvQrB3A+t8JziywcR9MIDh9r/r6ojQ6KZ5OrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jmmJ8xbA9BqSH6McQ21+7/pcVh25tj6UmGEtCZ9UHGODayCBgjyyjmN9stPwNFNYo
-	 UCj2PbdCa+vlDYgmRpo/Yb97/kCSYOVaFeJwPpDPo+LkUs6YSmDpZE2fuO6wHwUNpP
-	 nZss+feCh9+OWcQRblAb+WYc4OJa2fJvT9rtk6a0=
+	b=BCtUvhWG6kYwY3wju0aAFqZj+VDLVR8jNZ7sIhU3Y2vhCulV1vUCLb4T/Skjo41Dk
+	 7inXp0x4Kl2Qo0mnS/dEWSZPqBXELKAhOYWJy5v+sMcLMOmxrzdDpMm4lMgff+ej7+
+	 rhIcJ6ndrC2/23Nyj4HSCmvi7lVhtIGYCtpfwEtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0253/1276] RDMA/siw: Fix endpoint/socket association handling
-Date: Tue, 21 Jul 2026 17:11:36 +0200
-Message-ID: <20260721152451.748610846@linuxfoundation.org>
+Subject: [PATCH 6.12 0254/1276] bpf: Check tail zero of bpf_prog_info
+Date: Tue, 21 Jul 2026 17:11:37 +0200
+Message-ID: <20260721152451.769940570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,129 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Metzler <bernard.metzler@linux.dev>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit ea4f6f6c53577fb3f05dbd78b15e586772d49831 ]
+[ Upstream commit 786be2b05980a5828e67fc564ad7517e2adbe9bd ]
 
-Disassociating a socket from an endpoint via siw_socket_disassoc() may
-release the last reference on that endpoint and free it. Therefore, don't
-clear the endpoints socket pointer after calling that function, but
-within.
+Since there're 4 bytes padding at the end of struct bpf_prog_info, they
+won't be checked by bpf_check_uarg_tail_zero().
 
-This fixes a:
+pahole -C bpf_prog_info ./vmlinux
+struct bpf_prog_info {
+	...
+	__u32                      attach_btf_obj_id;    /*   220     4 */
+	__u32                      attach_btf_id;        /*   224     4 */
 
-  BUG: KASAN: slab-use-after-free in siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1053 drivers/infiniband/sw/siw/siw_cm.c:1075)
+	/* size: 232, cachelines: 4, members: 38 */
+	/* sum members: 224 */
+	/* sum bitfield members: 1 bits, bit holes: 1, sum bit holes: 31 bits */
+	/* padding: 4 */
+	/* forced alignments: 9 */
+	/* last cacheline: 40 bytes */
+} __attribute__((__aligned__(8)));
 
-which occurred after processing a malformed MPA request during connection
-establishment, causing the new endpoint to be closed.
+If a future kernel extension adds a new 4-byte field, older userspace
+programs allocating this structure on the stack might inadvertently pass
+uninitialized stack garbage into the new field, permanently breaking
+backward compatibility. -- sashiko [1]
 
-Fixes: 6c52fdc244b5c ("rdma/siw: connection management")
-Link: https://patch.msgid.link/r/20260604160808.30948-1-bernard.metzler@linux.dev
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fix it by changing sizeof(info) to
+offsetofend(struct bpf_prog_info, attach_btf_id).
+
+And, add "__u32 :32" to the tail of struct bpf_prog_info.
+
+[1] https://lore.kernel.org/bpf/20260513224823.6494FC19425@smtp.kernel.org/
+
+Fixes: aba64c7da983 ("bpf: Add verified_insns to bpf_prog_info and fdinfo")
+Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/r/20260605155249.20772-3-leon.hwang@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ include/uapi/linux/bpf.h       | 1 +
+ kernel/bpf/syscall.c           | 5 +++--
+ tools/include/uapi/linux/bpf.h | 1 +
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index 708b13993fdfd3..49ff121f77fe44 100644
---- a/drivers/infiniband/sw/siw/siw_cm.c
-+++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -89,6 +89,7 @@ static void siw_socket_disassoc(struct socket *s)
- 		cep = sk_to_cep(sk);
- 		if (cep) {
- 			siw_sk_restore_upcalls(sk, cep);
-+			cep->sock = NULL;
- 			siw_cep_put(cep);
- 		} else {
- 			pr_warn("siw: cannot restore sk callbacks: no ep\n");
-@@ -369,10 +370,11 @@ static void siw_free_cm_id(struct siw_cep *cep)
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index 5a5cdb4539358a..c8fb6abfeca988 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -6592,6 +6592,7 @@ struct bpf_prog_info {
+ 	__u32 verified_insns;
+ 	__u32 attach_btf_obj_id;
+ 	__u32 attach_btf_id;
++	__u32 :32;
+ } __attribute__((aligned(8)));
  
- static void siw_destroy_cep_sock(struct siw_cep *cep)
- {
--	if (cep->sock) {
--		siw_socket_disassoc(cep->sock);
--		sock_release(cep->sock);
--		cep->sock = NULL;
-+	struct socket *s = cep->sock;
-+
-+	if (s) {
-+		siw_socket_disassoc(s);
-+		sock_release(s);
- 	}
- }
+ struct bpf_map_info {
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 04c8755c0b9516..3bdfac9b4418a9 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -4568,10 +4568,11 @@ static int bpf_prog_get_info_by_fd(struct file *file,
+ 	u32 info_len = attr->info.info_len;
+ 	struct bpf_prog_kstats stats;
+ 	char __user *uinsns;
+-	u32 ulen;
++	u32 ulen, len;
+ 	int err;
  
-@@ -1001,7 +1003,6 @@ static void siw_accept_newconn(struct siw_cep *cep)
- 	if (new_s) {
- 		siw_socket_disassoc(new_s);
- 		sock_release(new_s);
--		new_cep->sock = NULL;
- 	}
- 	siw_dbg_cep(cep, "error %d\n", rv);
- }
-@@ -1153,6 +1154,8 @@ static void siw_cm_work_handler(struct work_struct *w)
- 		WARN(1, "Undefined CM work type: %d\n", work->type);
- 	}
- 	if (release_cep) {
-+		struct socket *s = cep->sock;
-+
- 		siw_dbg_cep(cep,
- 			    "release: timer=%s, QP[%u]\n",
- 			    cep->mpa_timer ? "y" : "n",
-@@ -1178,10 +1181,9 @@ static void siw_cm_work_handler(struct work_struct *w)
- 			cep->qp = NULL;
- 			siw_qp_put(qp);
- 		}
--		if (cep->sock) {
--			siw_socket_disassoc(cep->sock);
--			sock_release(cep->sock);
--			cep->sock = NULL;
-+		if (s) {
-+			siw_socket_disassoc(s);
-+			sock_release(s);
- 		}
- 		if (cep->cm_id) {
- 			siw_free_cm_id(cep);
-@@ -1511,7 +1513,6 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	if (cep) {
- 		siw_socket_disassoc(s);
- 		sock_release(s);
--		cep->sock = NULL;
+-	err = bpf_check_uarg_tail_zero(USER_BPFPTR(uinfo), sizeof(info), info_len);
++	len = offsetofend(struct bpf_prog_info, attach_btf_id);
++	err = bpf_check_uarg_tail_zero(USER_BPFPTR(uinfo), len, info_len);
+ 	if (err)
+ 		return err;
+ 	info_len = min_t(u32, sizeof(info), info_len);
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index 5a5cdb4539358a..c8fb6abfeca988 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -6592,6 +6592,7 @@ struct bpf_prog_info {
+ 	__u32 verified_insns;
+ 	__u32 attach_btf_obj_id;
+ 	__u32 attach_btf_id;
++	__u32 :32;
+ } __attribute__((aligned(8)));
  
- 		cep->qp = NULL;
- 
-@@ -1886,7 +1887,6 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- 		siw_cep_set_inuse(cep);
- 
- 		siw_free_cm_id(cep);
--		cep->sock = NULL;
- 		siw_socket_disassoc(s);
- 		cep->state = SIW_EPSTATE_CLOSED;
- 
-@@ -1908,6 +1908,7 @@ static void siw_drop_listeners(struct iw_cm_id *id)
- 	 */
- 	list_for_each_safe(p, tmp, (struct list_head *)id->provider_data) {
- 		struct siw_cep *cep = list_entry(p, struct siw_cep, listenq);
-+		struct socket *s = cep->sock;
- 
- 		list_del(p);
- 
-@@ -1916,10 +1917,9 @@ static void siw_drop_listeners(struct iw_cm_id *id)
- 		siw_cep_set_inuse(cep);
- 
- 		siw_free_cm_id(cep);
--		if (cep->sock) {
--			siw_socket_disassoc(cep->sock);
--			sock_release(cep->sock);
--			cep->sock = NULL;
-+		if (s) {
-+			siw_socket_disassoc(s);
-+			sock_release(s);
- 		}
- 		cep->state = SIW_EPSTATE_CLOSED;
- 		siw_cep_set_free_and_put(cep);
+ struct bpf_map_info {
 -- 
 2.53.0
 
