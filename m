@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E493FFFAF;
-	Tue, 21 Jul 2026 18:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF552471257;
+	Tue, 21 Jul 2026 18:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657641; cv=none; b=azBzSHiCr7CFJGvxFCeHIu6BzThY+dr0+AKEOwQgzUSjgzIbhlCAzyCzXKNxXak7QhhMFa+DEfFx6o/AjO9Ta0JptOWvhIe6q6UXH2dPckcJ0LmyC06wmsDr8WJEWwrSiDi09LYdM+i1PeEyS01PP4j3bQ1HyZ9LocTEzC1WxPM=
+	t=1784657644; cv=none; b=IE0R89Nga2yVqNObnTMl11rAZbrEpbODwYESHtsN/C0LozlJBUds9rQ6SgwRp3ze+3LuEMHOnplHq6rBjL+9fl/ODz7Tt2BLBa4g54ssyq4hOGfRAZR+jydrWiTjws2fREyLNo4VletqJDF2fKWpUixL7g3U3UsFk5OQnySJ0JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657641; c=relaxed/simple;
-	bh=w1uZ2cfnap0bvWFJkzYHtj5o/ucaVLuajckpdt4StkA=;
+	s=arc-20240116; t=1784657644; c=relaxed/simple;
+	bh=vuQs5haASml9BEGlsxgt3G2QS2pGfArBsxXHCXn1lIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIA4ywNW681W+AEWZVq3d5CgEkW0YFDkaG41pKMwd9G3SZflYKW8LtMAKPBVgGojHzz2tZUF6U3Lt9lEK4O4tL7PNW57pFr8mrfTO4kuVZ4hJgfq1KEoH8GiO5agBeSTNWwzJMbEOimlaLcdE0qo+PC7SqzYo219MEv6g0zmrFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xd0qj4sM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T5XnEhKrqHHrSBvSQq66sTB9K7oL9H1dy+eykW8B4Kn0Eou6nXBILe4m+qTv/wTMxSl1dyuTlrweg9Uf57t4xeoEofXv/P9TlJwL3JT5zcHjHzAIhIECFtRK3yARRFXzLEP888FSwdUfhjEjj/6Sch5RpgvpHFk20MHGBEtD70c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWa82VO+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xd0qj4sM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A211F00A3A;
-	Tue, 21 Jul 2026 18:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWa82VO+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509E31F000E9;
+	Tue, 21 Jul 2026 18:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657640;
-	bh=8gLRYPfNc0ReXYQx6TB1LuWqow5Vkc9sOVDhEmRA/Ok=;
+	s=korg; t=1784657642;
+	bh=xPcezCXNu5Th1mRMdU5/Eo7ipVf0dsQt76SZY/WPqN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xd0qj4sMkNk6auQpgTPXKP+UohlgZ1myTkhL44vKaQ9hg19tQKnaF3/s+mnymt0y7
-	 EYLXFn5HywD/8j9dRgJAKQleSW6g9nvdn8K35ljfbxSgGzKOw7y4JAaeU+Xn759yQL
-	 4IJqJYzDYO8ZDv0FoY6/R6o2kald6B7Bp0KgNSG0=
+	b=JWa82VO+QsGxx1V0OxhQkO+37LwEJ+mMVe7KeA03i8lze68fCG7s+BTc2IXLGOMaH
+	 JhOzASBjTCOFhfE34g1DflUimXwYXhWtWifnhGSJ1qIHdiKvRMyqnzln7Is8uhreSS
+	 rA9QIt2o2vwmdpE4lphuHHdAYpqJiHKUH8y4Z8iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@arm.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0797/1611] perf cs-etm: Require full global header in auxtrace_info size check
-Date: Tue, 21 Jul 2026 17:15:13 +0200
-Message-ID: <20260721152533.314290105@linuxfoundation.org>
+Subject: [PATCH 6.18 0788/1611] spi: dw: fix wrong BAUDR setting after resume
+Date: Tue, 21 Jul 2026 17:15:04 +0200
+Message-ID: <20260721152533.114188067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,47 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 78d8ba680126f3545e8d0fba667e12d79fd4353b ]
+[ Upstream commit 66b6605bcea7af7aca3d1d858b9c5f14903f9f9a ]
 
-cs_etm__process_auxtrace_info() checks that header.size covers
-event_header_size + INFO_HEADER_SIZE (16 bytes total), but then
-accesses ptr[CS_PMU_TYPE_CPUS] at offset 24 from the start of the
-event.  A crafted 16-byte auxtrace_info event passes the size check
-but reads out-of-bounds.
+After resuming from suspend to ram, spi transfer stops working. Further
+debugging shows that the BAUDR register isn't correctly set, this is
+due to dws->current_freq doesn't match the HW BAUDR setting,
+specifically, the dws->current_freq equals to speed_hz, but BAUDR is 0.
+so the dw_spi_set_clk() in below code won't be called:
 
-Include CS_ETM_HEADER_SIZE in the minimum size check so that the
-global header entries (version, pmu_type_cpus, snapshot) are
-guaranteed to fit within the event.
+        if (dws->current_freq != speed_hz) {
+                dw_spi_set_clk(dws, clk_div);
+                dws->current_freq = speed_hz;
+        }
 
-Fixes: 55c1de9973d66516 ("perf cs-etm: Print auxtrace info even if OpenCSD isn't linked")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+The mismatch comes from dw_spi_shutdown_chip() when suspending.
+Fix this mismatch by setting dws->current_freq to 0 as well when
+clearing BAUDR reg in dw_spi_shutdown_chip().
+
+Fixes: e24c74527207 ("spi: controller driver for Designware SPI core")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260612002835.5240-1-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm-base.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-dw.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/cs-etm-base.c b/tools/perf/util/cs-etm-base.c
-index 4abe416e3febd2..aebef71d3a0a1d 100644
---- a/tools/perf/util/cs-etm-base.c
-+++ b/tools/perf/util/cs-etm-base.c
-@@ -170,7 +170,9 @@ int cs_etm__process_auxtrace_info(union perf_event *event,
- 	u64 *ptr = NULL;
- 	u64 hdr_version;
+diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
+index fc267c6437ae09..8a3c085c85e078 100644
+--- a/drivers/spi/spi-dw.h
++++ b/drivers/spi/spi-dw.h
+@@ -282,6 +282,7 @@ static inline void dw_spi_shutdown_chip(struct dw_spi *dws)
+ {
+ 	dw_spi_enable_chip(dws, 0);
+ 	dw_spi_set_clk(dws, 0);
++	dws->current_freq = 0;
+ }
  
--	if (auxtrace_info->header.size < (event_header_size + INFO_HEADER_SIZE))
-+	/* Ensure priv[] is large enough for the global header entries */
-+	if (auxtrace_info->header.size < (event_header_size + INFO_HEADER_SIZE +
-+					  CS_ETM_HEADER_SIZE))
- 		return -EINVAL;
- 
- 	/* First the global part */
+ extern void dw_spi_set_cs(struct spi_device *spi, bool enable);
 -- 
 2.53.0
 
