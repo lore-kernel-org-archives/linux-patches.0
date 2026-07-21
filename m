@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070F133A9FC;
-	Tue, 21 Jul 2026 20:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF613B1ECC;
+	Tue, 21 Jul 2026 20:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666653; cv=none; b=EjPwsxDCQ5j/DcQPruZg+mRcv2ECxlR74gDWLP+VsV4Fr2gRT4m83uYmkdzidmkvpqBlUOzw6R9B1rFXymq/FytcKF6XyxUZ/qKxeWHCECmmHB1sirUyOz4KVL73WTnQe62nl6qrOMjjKNL2aKq/+ZHNMfRPc3E40NhSadouYaU=
+	t=1784666657; cv=none; b=qM4XfC5/m/Il9F7OIovjVpqdWEJgLZ/8nGR6lUr8VoDY1/Kfn7tM8eU+RD4O/TNmyVkMNzwQZ20S52l5GADFuFFY1UjTLQIwVOkX0L2he2D919EYJPj+dKPHSCSaTap/xdq/HWOIlIvbfEbhU1LwV/xGw+dYzx3tXtotglDRLWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666653; c=relaxed/simple;
-	bh=N1Dd5CYAMzivGC3fmaIGihWykTHL2snyrA/xp2rJJAc=;
+	s=arc-20240116; t=1784666657; c=relaxed/simple;
+	bh=UBFgLdw+fCORuHEBoK11krRpMGy+rqiB8V9X8Q1Kh3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XPfcBIJN8RKr1l0X5+awBkTtN2ovHZ5vHfdZmU3ORSA5ClWD4B5SHSicoRW9Ke9Q7C55kX2BpaXfD5qLm+rmG56D0nX+bigHGSuEmIUNmlgSgxN8fBNcvNrH99mvOAJb3hswgTUfQHePq27XYETehYdMANQo93yGWxkKkx4hfss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RobS8MvJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=loYqqpnuGhEMaRDIXJcpuZE3ygMS9Ih/N/aE9ecCKe1l5gGspacTjmkRrFcyrboGSFZbcZ7tGRNoWmTl0KL4G8EFtaxIHv54IaGhIOitcR3+OWb5hEd/XrAkKR5ET6khfOOds8QHVq6RKXNooil2L2jC6z74oHEuX7Zrdp2TANU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KukmEnNf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RobS8MvJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8F31F000E9;
-	Tue, 21 Jul 2026 20:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KukmEnNf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED411F000E9;
+	Tue, 21 Jul 2026 20:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666651;
-	bh=6MNhAyN47F5TplqXWchOKLYJqGLKkvIJG68nKBVprhI=;
+	s=korg; t=1784666654;
+	bh=mKW+iRlf8j7yg5ZU1EL2EnS1N1pC1dfGOnYsgHwM+Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RobS8MvJpBKbysO8L9QnwqmlUyOgs8nTe3YLMS4vjFC9B/spwwupNgT7NvC/xBoiI
-	 nDsr8suVOtl5lb+6c/Yjdf5iLZj74XPYXSF/yIn7eGLs0edqES/kwEtRM3DuG2gEwu
-	 9KoBSDPvuhCTeqakyj/fvI7OB++QLPaxGGfB63jQ=
+	b=KukmEnNf87D+rNNtrUvRU5qUry4rmuUucvFHdGdP7O5/VK4KGXFVjwg/Pch3wMbjg
+	 SiJter+D8orpajfo8cjXJbKSxOTIr75A5pS+P9KY3nixECw6Y/8Mb91Gq/r1+cNq5l
+	 c6rQLnZKwR0Nk7+tffJjelqRk7FXOnYOloWys61k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0737/1266] ACPI: IPMI: Fix inverted interface check in ipmi_bmc_gone()
-Date: Tue, 21 Jul 2026 17:19:34 +0200
-Message-ID: <20260721152458.365729285@linuxfoundation.org>
+Subject: [PATCH 6.6 0764/1266] PCI: endpoint: pci-epf-ntb: Add check to detect db_count value of 0
+Date: Tue, 21 Jul 2026 17:20:01 +0200
+Message-ID: <20260721152458.959878233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,59 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 71b57aca295d61276a60e131d8f62b0cc7cf1a35 ]
+[ Upstream commit d1db6d7c2485ee475a04d8354fbb5b26ea10d978 ]
 
-Before commit a1a69b297e47 ("ACPI / IPMI: Fix race caused by the
-unprotected ACPI IPMI user"), ipmi_bmc_gone() skipped entries whose
-interface number did not match the SMI being removed, then killed the
-matching entry:
+epf_ntb->db_count value should be within 1 to MAX_DB_COUNT. Current code
+only checks for the upper bound, while the lower bound is unchecked. This
+can cause a lot of issues in the driver if the user passes 'db_count' as 0.
 
-	if (ipmi_device->ipmi_ifnum != iface)
-		continue;
+Add a check for 0 also. While at it, remove the redundant 'db_count'
+variable from epf_ntb_configure_interrupt().
 
-	__ipmi_dev_kill(ipmi_device);
-
-That commit folded the removal block into the existing non-match test
-while converting the object lifetime handling, but left the comparison
-unchanged. The old != meant "continue past this entry"; after the
-refactor it meant "kill this entry".
-
-As a result, a single ACPI IPMI interface is never removed when its SMI
-disappears. If multiple interfaces are tracked, the first interface
-whose number differs from iface is removed instead, while the interface
-that actually disappeared remains on driver_data.ipmi_devices. The
-stale entry is not marked dead and can continue to be selected for ACPI
-IPMI transactions. It can also prevent the same ACPI handle from being
-registered again.
-
-Change the comparison to == so ipmi_bmc_gone() removes exactly the
-interface reported as gone by the SMI watcher. This restores the
-pre-a1a69b297e47 behavior and is the correct interface matching logic.
-
-Fixes: a1a69b297e47 ("ACPI / IPMI: Fix race caused by the unprotected ACPI IPMI user")
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/B486593E06E6F6E0+20260616093621.1039943-1-raoxu@uniontech.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 8b821cf76150 ("PCI: endpoint: Add EP function driver to provide NTB functionality")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260407124421.282766-3-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_ipmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/endpoint/functions/pci-epf-ntb.c | 21 ++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/acpi/acpi_ipmi.c b/drivers/acpi/acpi_ipmi.c
-index 148d9486106cad..acecb7f86fd976 100644
---- a/drivers/acpi/acpi_ipmi.c
-+++ b/drivers/acpi/acpi_ipmi.c
-@@ -485,7 +485,7 @@ static void ipmi_bmc_gone(int iface)
- 	mutex_lock(&driver_data.ipmi_lock);
- 	list_for_each_entry_safe(iter, temp,
- 				 &driver_data.ipmi_devices, head) {
--		if (iter->ipmi_ifnum != iface) {
-+		if (iter->ipmi_ifnum == iface) {
- 			ipmi_device = iter;
- 			__ipmi_dev_kill(iter);
- 			break;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-ntb.c b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+index b759b4e0bfb598..cba6bab067b61d 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+@@ -559,12 +559,15 @@ static int epf_ntb_configure_db(struct epf_ntb *ntb,
+ 	struct pci_epc *epc;
+ 	int ret;
+ 
+-	if (db_count > MAX_DB_COUNT)
+-		return -EINVAL;
+-
+ 	ntb_epc = ntb->epc[type];
+ 	epc = ntb_epc->epc;
+ 
++	if (!db_count || db_count > MAX_DB_COUNT) {
++		dev_err(&epc->dev, "DB count %d out of range (1 - %d)\n",
++			db_count, MAX_DB_COUNT);
++		return -EINVAL;
++	}
++
+ 	if (msix)
+ 		ret = epf_ntb_configure_msix(ntb, type, db_count);
+ 	else
+@@ -1278,7 +1281,6 @@ static int epf_ntb_configure_interrupt(struct epf_ntb *ntb,
+ 	u8 func_no, vfunc_no;
+ 	struct pci_epc *epc;
+ 	struct device *dev;
+-	u32 db_count;
+ 	int ret;
+ 
+ 	ntb_epc = ntb->epc[type];
+@@ -1296,17 +1298,16 @@ static int epf_ntb_configure_interrupt(struct epf_ntb *ntb,
+ 	func_no = ntb_epc->func_no;
+ 	vfunc_no = ntb_epc->vfunc_no;
+ 
+-	db_count = ntb->db_count;
+-	if (db_count > MAX_DB_COUNT) {
+-		dev_err(dev, "DB count cannot be more than %d\n", MAX_DB_COUNT);
++	if (!ntb->db_count || ntb->db_count > MAX_DB_COUNT) {
++		dev_err(dev, "DB count %d out of range (1 - %d)\n",
++			ntb->db_count, MAX_DB_COUNT);
+ 		return -EINVAL;
+ 	}
+ 
+-	ntb->db_count = db_count;
+ 	epc = ntb_epc->epc;
+ 
+ 	if (msi_capable) {
+-		ret = pci_epc_set_msi(epc, func_no, vfunc_no, db_count);
++		ret = pci_epc_set_msi(epc, func_no, vfunc_no, ntb->db_count);
+ 		if (ret) {
+ 			dev_err(dev, "%s intf: MSI configuration failed\n",
+ 				pci_epc_interface_string(type));
+@@ -1315,7 +1316,7 @@ static int epf_ntb_configure_interrupt(struct epf_ntb *ntb,
+ 	}
+ 
+ 	if (msix_capable) {
+-		ret = pci_epc_set_msix(epc, func_no, vfunc_no, db_count,
++		ret = pci_epc_set_msix(epc, func_no, vfunc_no, ntb->db_count,
+ 				       ntb_epc->msix_bar,
+ 				       ntb_epc->msix_table_offset);
+ 		if (ret) {
 -- 
 2.53.0
 
