@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98AC4582DD;
-	Tue, 21 Jul 2026 22:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509864582DE;
+	Tue, 21 Jul 2026 22:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672437; cv=none; b=cY43ow/0qzg1QFgsW8gMCmEYan0yGH1J/qvnh3nPGiLi6UhwQEDTzk2ui2yqRvbnGSS+pIcLRheOrEJ6A8iulM53vteUf5dMp7hzarS5SXEFTBZ0mwIGB+qb0cVjQkeupoZQIT/9ilmfCBHvxU+S/EA4RPdbl6oO+O6lZIMnynU=
+	t=1784672440; cv=none; b=LA6pzSevomkfQDnFjePX1aNU/NVpJ5oDH3i7a/+faKMwlZPpSGbT9o/95gXwPO+ucLSgSWgGVA09pLhaeAGy1RTrDPGr9LRNdCoQuFDzd1ptu50z/mbvygHD2uk36Lrvn/HWhkwYWbwIzzAw/7NHWteIUU70RTEZV+6rE5Y4hf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672437; c=relaxed/simple;
-	bh=pJWiw3ByGuPU+KW8iS3GAFhunL6k1eygzq7+ShBR45w=;
+	s=arc-20240116; t=1784672440; c=relaxed/simple;
+	bh=tYeU8bzWMnOkJ6NnQ1QfSy/rhAS783sdnDr3Md3cVG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eckkmq0AWBoFfTzNo3IaOspm2ZiZ4S1pQSxL3469mB4nzYr/ILoelfObkljk3reURHA69/EdDbVx1WCSSmkQOT3ceMg8959evDNneUn6+G2EFjfeEqyTdydycUK4YKy+1+wxFN6Wkr0hEDbOe1ZC8xWREc4rrizuq+MZyp5s7Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZS3Hii1d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ByiMU9040NY1ci/n+hnFrocLiynKroLNzPJYdlYrwPGehywQIcDE0FYdS64D7zopGGwn7GrWqZc0agAxsJMdOnI+0UvB38H9CPAwcPrsaLO5i54ilR71D4YFcxwiBq+kCyzvz3xZcGTyk2m1Emejhg0PSn6w7PEnf39blTqY25A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3YlpdkP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZS3Hii1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9191F000E9;
-	Tue, 21 Jul 2026 22:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3YlpdkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D8E1F000E9;
+	Tue, 21 Jul 2026 22:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672436;
-	bh=abr1NZ7yd89aanHmb2CLtKA6xp94ruvRiYcLc6FqEag=;
+	s=korg; t=1784672439;
+	bh=KBlAfI9uNmqN08m2yYQC3NfurAkrLMS/lQNqcVCnREw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZS3Hii1dUpmh+mx6QoP7ctu2kNntvSXIh52Og4JiodV63O2n5hqhbih2B79erhRiJ
-	 SGudu+sEY1P2XNxeXNnx+BQ9b8mUi7qJ1FxeotbFZmawK5YuNqNZ+Td138XO99nzIV
-	 J2tgKt0BlGbKR1GuNPli1Z2vqJ8bz3pnQzSzwxRs=
+	b=E3YlpdkPycQ9+H5gRb1CwBi+kdavQO5uCOqKPA8GhsNGCxzpPEygnvBaOsCWeurNO
+	 Y7/DJ5hrjm7dfNtfNi5X4EgwM3xdkI6it2ccb00EVmvF+hGE+p3M8+7hjJYy6dJLTO
+	 8eDhRDDC5Vi5trHgs2WryyRoeAaNJBmEvDmZzpTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <martin.wilck@suse.com>,
-	Don Brace <don.brace@microchip.com>,
-	storagedev@microchip.com,
-	Hannes Reinecke <hare@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 623/843] scsi: smartpqi: Use shost_to_hba() in pqi_scan_finished()
-Date: Tue, 21 Jul 2026 17:24:18 +0200
-Message-ID: <20260721152420.074669743@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 5.15 588/843] batman-adv: access unicast_ttvn skb->data only after skb realloc
+Date: Tue, 21 Jul 2026 17:23:43 +0200
+Message-ID: <20260721152419.278905677@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -55,41 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <martin.wilck@suse.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 57db1307afb1f83d45f5ff53b93f8d040100d13e upstream.
+commit 7141990add3f75436f2933cb310654cad3b1e3e9 upstream.
 
-shost_to_hba() is used everywhere except to obtain pqi_ctrl_info from
-shosti, except in pqi_scan_finished(), where shost_priv() is used.  This
-causes one pointer dereference to be missed, as shost->hostdata is a
-pointer in smartpqi. Fix it.
+The pskb_may_pull() called by batadv_get_vid() could reallocate the buffer
+behind the skb. Variables which were pointing to the old buffer need to be
+reassigned to avoid an use-after-free.
 
-Fixes: 6c223761eb54 ("smartpqi: initial commit of Microsemi smartpqi driver")
-Signed-off-by: Martin Wilck <martin.wilck@suse.com>
-Reviewed-by: Don Brace <don.brace@microchip.com>
-Cc: Don Brace <don.brace@microchip.com>
-Cc: storagedev@microchip.com
+This was done correctly for the ethernet header but missed for the
+unicast_packet pointer.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260513174236.430465-2-mwilck@suse.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: c018ad3de61a ("batman-adv: add the VLAN ID attribute to the TT entry")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c |    2 +-
+ net/batman-adv/routing.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -2401,7 +2401,7 @@ static int pqi_scan_finished(struct Scsi
- {
- 	struct pqi_ctrl_info *ctrl_info;
+--- a/net/batman-adv/routing.c
++++ b/net/batman-adv/routing.c
+@@ -854,8 +854,8 @@ static bool batadv_check_unicast_ttvn(st
+ 	if (skb_cow(skb, sizeof(*unicast_packet)) < 0)
+ 		return false;
  
--	ctrl_info = shost_priv(shost);
-+	ctrl_info = shost_to_hba(shost);
+-	unicast_packet = (struct batadv_unicast_packet *)skb->data;
+ 	vid = batadv_get_vid(skb, hdr_len);
++	unicast_packet = (struct batadv_unicast_packet *)skb->data;
+ 	ethhdr = (struct ethhdr *)(skb->data + hdr_len);
  
- 	return !mutex_is_locked(&ctrl_info->scan_mutex);
- }
+ 	/* do not reroute multicast frames in a unicast header */
 
 
