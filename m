@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E433A43B483;
-	Tue, 21 Jul 2026 21:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D33F3B9930;
+	Tue, 21 Jul 2026 21:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671130; cv=none; b=dvTIxxAIIycsz0MiL4u5gOrWXKRlDJeJ3TmJovUf1aHcaZMgs9C3urGiTyRAzEf/xVL7ODgwhehuA/DmD35YTMCViT+DQRRgD285oBKHPCr9NziuCda4RicqKAq57dz5SdQOXM6LzMx3UdjZMR5ho5JW1Lty2EirzYSiD5IDSCM=
+	t=1784671131; cv=none; b=rwaD06n8zKetzIxU/T3buTB/Bw+HXhFRMjECvd5epg5xm3I1lwcWYEAGBX97CGe7742QqoSTkOov4A5ARnY6q7gx4cbxkgP0KZOL2dy7ykxwc+eR811IHJcMyTCgRYquEb86M6ElRINosR2nRkN1p25vTWtG0PTVG1mE2p8V9TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671130; c=relaxed/simple;
-	bh=Huc5/8T8q4xidP+l33q/fJQQR8i/PiZbXKzZ0Uq3J04=;
+	s=arc-20240116; t=1784671131; c=relaxed/simple;
+	bh=CLaorfVbJPS3Zkms4LTXkKP+bCSkztgH/7oX7rP+EwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XF7yevjneEXQfZXhCJrkP7nuLnObXV5DFhX4LSo9e3NeLQHdOwiY9EBSUXBIuKHspiFI3brwgK+l44QC+Wof48C1xeDxAJ1uW1Tk3FZRgxn6Ci3ARaqAbMfpqNx/0VvAP8+Vxo6P8z15HUhzdwr4hSBfc0YaecqBCUGZe0C3j8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sk0kXYRQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qSZYlZfA855Xq3pIdzQsrmo1aELPC7j3yBDld0AdsVd0+7xh55zVBNXdLfC/s+f9f8TLuRz+hkQDmWZy33vB2RPQfpSLxsBGUvNJ8VOlfie70zEKi4WbzeQuB9t8y3+MBvTYRAlKS1wdRgpjprMYESyEp8hD+jLyN3izCI1ATQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fACiLsyu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sk0kXYRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB76B1F000E9;
-	Tue, 21 Jul 2026 21:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fACiLsyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BDA1F00A3A;
+	Tue, 21 Jul 2026 21:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671127;
-	bh=u1pGnfj5kgAY0N07K9e8ynS8kwMSGlRb8JRYwa1YpKQ=;
+	s=korg; t=1784671130;
+	bh=tDwEgGc/OWcpBbhp+ldF2jt8IiWfquXdKo9KhQfbuGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sk0kXYRQJL38jxQULusWo5wXwJEy3XmK2ur2pB31fQw/6Lul5jMIlHo4ZtTMYFhHo
-	 jBc43KRsMPM5IcHtoqeGHyuSH/ZeOJdK8zmd1bQGKxRjPUx05cl8gX69mDAYGPfbx7
-	 dskUr1WQzBH2iKnBqsntpeqD6qLY3mMWsnQbZcDs=
+	b=fACiLsyuu82DWZ1Lqt/j0Go68dR2bgXlulTLZ0L7foTtE5Qig9Kr8jnK5jfGTBAlN
+	 TiUFlyY0zundpSE9mK3LVeVj5fN+CMFl0MO5K218fEM5xAhC/oAXp+SiSVbr42DEqy
+	 jDH4uru0DBcBZAkWmxo2S/piwLPwvnko5zUuAHN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Moll <pawel.moll@arm.com>,
-	Johan Hovold <johan@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 5.15 085/843] virtio-mmio: fix device release warning on module unload
-Date: Tue, 21 Jul 2026 17:15:20 +0200
-Message-ID: <20260721152407.911115592@linuxfoundation.org>
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>
+Subject: [PATCH 5.15 086/843] hwrng: virtio: clamp device-reported used.len at copy_data()
+Date: Tue, 21 Jul 2026 17:15:21 +0200
+Message-ID: <20260721152407.934464745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,103 +50,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit c687bc35694698ec4c7f92bf929c3d659f0cecb8 upstream.
+commit e3046eeada299f917a8ad883af4434bfb86556b1 upstream.
 
-Driver core expects devices to be allocated dynamically and complains
-loudly when a device that lacks a release function is freed.
+random_recv_done() stores the device-reported used.len directly into
+vi->data_avail.  copy_data() then indexes vi->data[] using
+vi->data_idx (advanced by previous copy_data() calls) and issues a
+memcpy() without re-validating either value against the posted
+buffer size sizeof(vi->data) (SMP_CACHE_BYTES bytes, typically 32
+or 64).
 
-Use __root_device_register() to allocate and register the root device
-instead of open coding using a static device.
+A malicious or buggy virtio-rng backend can set used.len beyond
+sizeof(vi->data), steering the memcpy() past the end of the inline
+array into adjacent kmalloc-1k slab bytes.  hwrng_fillfn() mixes
+those bytes into the guest RNG, and guest root can also observe
+them directly via /dev/hwrng.
 
-Note that root_device_register(), which also creates a link to the
-module, cannot be used as the device is registered when parsing the
-module parameters which happens before the module kobject has been set
-up.
+Concrete impact is inside the guest:
 
-Fixes: 81a054ce0b46 ("virtio-mmio: Devices parameter parsing")
-Cc: stable@vger.kernel.org	# 3.5
-Cc: Pawel Moll <pawel.moll@arm.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+ - Memory-safety / hardening: any virtio-rng backend that
+   over-reports used.len causes the driver to read past vi->data
+   into unrelated slab contents.  hwrng_fillfn() is a kernel thread
+   that runs as soon as the device is probed; no guest userspace
+   interaction is required to first-trigger the OOB.
+
+ - Cross-boundary leak (confidential-compute threat model): a
+   malicious hypervisor cooperating with a malicious or compromised
+   guest root userspace can use /dev/hwrng as a leak channel for
+   guest-kernel heap data.  The host sets a large used.len, guest
+   root reads /dev/hwrng, and the returned bytes contain guest
+   kernel slab contents that were adjacent to vi->data.  In
+   practice, confidential-compute guests (SEV-SNP, TDX) usually
+   disable virtio-rng entirely, so this path is narrow, but the
+   fix is still worth carrying because the underlying
+   memory-safety bug contaminates the guest RNG on any host.
+
+KASAN confirms the OOB on a 7.1-rc4 guest whose virtio-rng backend
+has been patched to report used.len = 0x10000:
+
+  BUG: KASAN: slab-out-of-bounds in virtio_read+0x394/0x5d0
+  Read of size 64 at addr ffff88800ae0ba20 by task hwrng/52
+  Call Trace:
+   __asan_memcpy+0x23/0x60
+   virtio_read+0x394/0x5d0
+   hwrng_fillfn+0xb2/0x470
+   kthread+0x2cc/0x3a0
+  Allocated by task 1:
+   probe_common+0xa5/0x660
+   virtio_dev_probe+0x549/0xbc0
+  The buggy address belongs to the object at ffff88800ae0b800
+   which belongs to the cache kmalloc-1k of size 1024
+  The buggy address is located 0 bytes to the right of
+   allocated 544-byte region [ffff88800ae0b800, ffff88800ae0ba20)
+
+Same class of bug as commit c04db81cd028 ("net/9p: Fix buffer
+overflow in USB transport layer"), which hardened
+usb9pfs_rx_complete() against unchecked device-reported length in
+the USB 9p transport.
+
+With the clamp at point of use and array_index_nospec() in place,
+the same harness boots cleanly: copy_data() returns zero for the
+bogus report, the device-supplied bytes after data_idx are
+discarded, and the driver issues a fresh request.
+
+Fixes: f7f510ec1957 ("virtio: An entropy device, as suggested by hpa.")
+Cc: stable@vger.kernel.org
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260427143710.14702-1-johan@kernel.org>
+Message-ID: <20260531142251.2792061-1-michael.bommarito@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_mmio.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/char/hw_random/virtio-rng.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/virtio/virtio_mmio.c
-+++ b/drivers/virtio/virtio_mmio.c
-@@ -675,9 +675,7 @@ static int virtio_mmio_remove(struct pla
- 
- #if defined(CONFIG_VIRTIO_MMIO_CMDLINE_DEVICES)
- 
--static struct device vm_cmdline_parent = {
--	.init_name = "virtio-mmio-cmdline",
--};
-+static struct device *vm_cmdline_parent;
- 
- static int vm_cmdline_parent_registered;
- static int vm_cmdline_id;
-@@ -685,7 +683,6 @@ static int vm_cmdline_id;
- static int vm_cmdline_set(const char *device,
- 		const struct kernel_param *kp)
+--- a/drivers/char/hw_random/virtio-rng.c
++++ b/drivers/char/hw_random/virtio-rng.c
+@@ -7,6 +7,7 @@
+ #include <asm/barrier.h>
+ #include <linux/err.h>
+ #include <linux/hw_random.h>
++#include <linux/nospec.h>
+ #include <linux/scatterlist.h>
+ #include <linux/spinlock.h>
+ #include <linux/virtio.h>
+@@ -66,8 +67,26 @@ static void request_entropy(struct virtr
+ static unsigned int copy_data(struct virtrng_info *vi, void *buf,
+ 			      unsigned int size)
  {
--	int err;
- 	struct resource resources[2] = {};
- 	char *str;
- 	long long int base, size;
-@@ -717,11 +714,10 @@ static int vm_cmdline_set(const char *de
- 	resources[1].start = resources[1].end = irq;
- 
- 	if (!vm_cmdline_parent_registered) {
--		err = device_register(&vm_cmdline_parent);
--		if (err) {
--			put_device(&vm_cmdline_parent);
-+		vm_cmdline_parent = __root_device_register("virtio-mmio-cmdline", NULL);
-+		if (IS_ERR(vm_cmdline_parent)) {
- 			pr_err("Failed to register parent device!\n");
--			return err;
-+			return PTR_ERR(vm_cmdline_parent);
- 		}
- 		vm_cmdline_parent_registered = 1;
- 	}
-@@ -732,7 +728,7 @@ static int vm_cmdline_set(const char *de
- 		       (unsigned long long)resources[0].end,
- 		       (int)resources[1].start);
- 
--	pdev = platform_device_register_resndata(&vm_cmdline_parent,
-+	pdev = platform_device_register_resndata(vm_cmdline_parent,
- 			"virtio-mmio", vm_cmdline_id++,
- 			resources, ARRAY_SIZE(resources), NULL, 0);
- 
-@@ -756,8 +752,12 @@ static int vm_cmdline_get_device(struct
- static int vm_cmdline_get(char *buffer, const struct kernel_param *kp)
- {
- 	buffer[0] = '\0';
--	device_for_each_child(&vm_cmdline_parent, buffer,
--			vm_cmdline_get_device);
+-	size = min_t(unsigned int, size, vi->data_avail);
+-	memcpy(buf, vi->data + vi->data_idx, size);
++	unsigned int idx, avail;
 +
-+	if (vm_cmdline_parent_registered) {
-+		device_for_each_child(vm_cmdline_parent, buffer,
-+				vm_cmdline_get_device);
++	/*
++	 * vi->data_avail was set from the device-reported used.len and
++	 * vi->data_idx was advanced by previous copy_data() calls.  A
++	 * malicious or buggy virtio-rng backend can drive either past
++	 * sizeof(vi->data).  Clamp at point of use and harden the index
++	 * with array_index_nospec() so the memcpy() below cannot be
++	 * steered into adjacent slab memory, including under
++	 * speculation.
++	 */
++	avail = min_t(unsigned int, vi->data_avail, sizeof(vi->data));
++	if (vi->data_idx >= avail) {
++		vi->data_avail = 0;
++		request_entropy(vi);
++		return 0;
 +	}
-+
- 	return strlen(buffer) + 1;
- }
- 
-@@ -779,9 +779,9 @@ static int vm_unregister_cmdline_device(
- static void vm_unregister_cmdline_devices(void)
- {
- 	if (vm_cmdline_parent_registered) {
--		device_for_each_child(&vm_cmdline_parent, NULL,
-+		device_for_each_child(vm_cmdline_parent, NULL,
- 				vm_unregister_cmdline_device);
--		device_unregister(&vm_cmdline_parent);
-+		root_device_unregister(vm_cmdline_parent);
- 		vm_cmdline_parent_registered = 0;
- 	}
- }
++	size = min_t(unsigned int, size, avail - vi->data_idx);
++	idx = array_index_nospec(vi->data_idx, sizeof(vi->data));
++	memcpy(buf, vi->data + idx, size);
+ 	vi->data_idx += size;
+ 	vi->data_avail -= size;
+ 	if (vi->data_avail == 0)
 
 
