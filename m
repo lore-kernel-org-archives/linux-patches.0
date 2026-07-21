@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7301B3E7141;
-	Tue, 21 Jul 2026 17:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014233E7141;
+	Tue, 21 Jul 2026 17:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655120; cv=none; b=pBYd19ql8Aj2aGvQpZDPUukSyrsqi0brRJmmBWdG4zrirLuf0PTjV1XpLLrjmw0CXlxoQawBN1XETpuoA/DXCU/MIHpGo48FKm8A0XgSlG+fMzY94FL6ITAd+hKjiXW787lJ7laMam+oSkGkAvg50pZrxBHRzS5XJKwlmukXzAg=
+	t=1784655123; cv=none; b=aVJof0czb1xGVE/PAWqneBC3okqqXoqln82U+MJ/An9DT2Xf8cBTxFSTMkVK5LBFCsFYPiQZ5i+ebOPXZ7Oqe1fN7TUddrYUv0rnHeEgmhR49zCLhas0fSLBF7R9aRvwDMOUR1YmFGw5U05hrr3xOeh5s7XUZ4K2YlRBhl8+2bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655120; c=relaxed/simple;
-	bh=P2eC+1SuOgzFE8YL74s7i72XB9wXeWj+pPuei5H/vc8=;
+	s=arc-20240116; t=1784655123; c=relaxed/simple;
+	bh=CHRf5myeXqNhHu3Ng5jpB8lPTozPNKC8Yw0FElGXpT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/plNZrqPQIC0b09PjunoaS4Tgu7v3pQS9gi/U06epHP73mVD65DmEfvTDjwVHMdg+Z/hh9TmOk06ggQ2AZPp8B4//anDPNX//nWz1M3UEdzvMaSd8qghz4ue+nYZahlhU+J953FGYI/GnRXbygrZzbX4dvQl+XNxzw+klDUmPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdM09gLC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ho7nnx3VwzerR2vxEthVyEzoBCP1X5CA5LOzpNsXdRvO3eaC8Z9nv+ih252tLtE+65sTlZOb+xDPXKniNH4DB38vVuTUss9fPoiTmLEmNr/BoRSSILCYjglZLz5QlozdrhdYgRFaIRwqeqPZZf7rYnM57zs4HFHi5sHESg/yWpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ4fXPhN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdM09gLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C871F00A3A;
-	Tue, 21 Jul 2026 17:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ4fXPhN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DCB1F000E9;
+	Tue, 21 Jul 2026 17:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655119;
-	bh=Qe6fP1ojUoP7gnDfM9TkHC3J8NQgfCLMdp1z8lybzgw=;
+	s=korg; t=1784655121;
+	bh=o4WDVlscneP/XyXiafPPWvRMXkUJeboQdsmCTbM/6yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jdM09gLCGp7pWUceYPM05Z2q/1lELkREgGAEhbxddCGuXl2bMfeI8LUwmIB6OCW0h
-	 esXF1hQ/x5WFJdVzKEtQsw9D3/RsN0QmPu+BA7wIcjV8Vrn+Uy5lodw9Dl4PEnsTW2
-	 C6hhxWfR//sNQKse/cfPeOLiTe+/glihnGGn4c/g=
+	b=XZ4fXPhNJur2VBT87D59uPwYN1EurtTRo3FisWx5c/dVlQ1+hn45tOj3CoxI/5SqZ
+	 9b+IwqQXEaCVPM2GHKH+6akV0+/egutw6FYf26t+l6VkXB0RxJLVgmG6TtyYTGih/I
+	 C0JwkYcR2GMFhazQvqUBUnGjD0SxrkxJ4LIHdFpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 7.1 1963/2077] ata: libata-core: Reject an invalid concurrent positioning ranges count
-Date: Tue, 21 Jul 2026 17:27:16 +0200
-Message-ID: <20260721152639.007433403@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 1964/2077] net: wwan: iosm: bound device offsets in the MUX downlink decoder
+Date: Tue, 21 Jul 2026 17:27:17 +0200
+Message-ID: <20260721152639.030644479@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,95 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 533a0b940f901c15e5cbbd4b5d66e871c209e8ce upstream.
+commit 526b8ef54668780c8f69e0211c342763d5dcbad1 upstream.
 
-ata_dev_config_cpr() takes the number of range descriptors from buf[0]
-of the concurrent positioning ranges log (up to 255), which the device
-reports independently of the log size in the GPL directory. The count is
-then walked at a fixed 32-byte stride in two places with no bound: the
-log read here, and the INQUIRY VPD page B9h emitter, which writes one
-descriptor per range into the fixed 2048-byte ata_scsi_rbuf. A device
-reporting a count larger than its own log overflows the read buffer (up
-to 7704 bytes past a 512-byte slab), and a count above 62 overflows the
-response buffer on the emit side.
+mux_dl_adb_decode() walks a chain of aggregated datagram tables using
+offsets and lengths taken from the modem. first_table_index,
+next_table_index, table_length, datagram_index and datagram_length are
+all device supplied le values. Only first_table_index was checked, and
+only for being non zero. The decoder then formed adth = block +
+adth_index and read the table header and the datagram entries with no
+bound against the received skb. A modem that reports an index or a
+length past the downlink buffer makes the decoder read out of bounds.
 
-Bound the count once, on probe, against both the log the device returned
-and the number of descriptors the VPD B9h response buffer can hold
-(ATA_DEV_MAX_CPR, derived from the rbuf size). Reject an out-of-range
-count with a warning; this keeps the emitter in bounds with no separate
-change there.
+The buffer is IPC_MEM_MAX_DL_MUX_LITE_BUF_SIZE and skb->len is at most
+that, so skb->len is the real limit, but none of these in band offsets
+were checked against it.
 
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Fixes: fe22e1c2f705 ("libata: support concurrent positioning ranges log")
-Fixes: c745dfc541e7 ("libata: fix reading concurrent positioning ranges log")
+The table chain is also followed with no forward progress check. The loop
+takes the next table from adth->next_table_index and stops only when that
+reaches zero. A modem can stage two tables that point at each other, so
+the loop never ends. It runs in softirq and clones the skb on every pass.
+
+Validate every device offset and length against skb->len before use.
+The block header must fit. Each table header, on entry and after every
+next_table_index, must lie inside the skb. The datagram table must fit.
+Each datagram index and length must stay inside the skb. The header
+padding must not exceed the datagram length so the receive length does
+not wrap. Require each next_table_index to move forward so the chain
+cannot cycle.
+
+This was reproduced under KASAN as a slab out of bounds read on a normal
+downlink receive once the iosm net device is up.
+
+Fixes: 1f52d7b62285 ("net: wwan: iosm: Enable M.2 7360 WWAN card support")
+Suggested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/178236824878.3259367.5389624724479864947@maoyixie.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |   18 ++++++++++++++++++
- drivers/ata/libata-scsi.c |    2 --
- drivers/ata/libata.h      |    9 +++++++++
- 3 files changed, 27 insertions(+), 2 deletions(-)
+ drivers/net/wwan/iosm/iosm_ipc_mux_codec.c |   40 +++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -2847,6 +2847,24 @@ static void ata_dev_config_cpr(struct at
- 	if (!nr_cpr)
- 		goto out;
+--- a/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
+@@ -553,19 +553,21 @@ static int mux_dl_process_dg(struct iosm
+ 	u32 packet_offset, i, rc, dg_len;
  
-+	/*
-+	 * The device reports the number of CPR descriptors independently of the
-+	 * log size, and that count is also used to emit VPD page B9h into the
-+	 * fixed-size rbuf. Reject a count larger than what that buffer can hold
-+	 * (ATA_DEV_MAX_CPR) or larger than the log the device actually returned.
-+	 */
-+	if (nr_cpr > ATA_DEV_MAX_CPR) {
-+		ata_dev_warn(dev,
-+			     "Too many concurrent positioning ranges\n");
-+		goto out;
-+	}
+ 	for (i = 0; i < nr_of_dg; i++, dg++) {
+-		if (le32_to_cpu(dg->datagram_index)
+-				< sizeof(struct mux_adbh))
++		u32 dg_index = le32_to_cpu(dg->datagram_index);
 +
-+	if (buf_len < 64 + (size_t)nr_cpr * 32) {
-+		ata_dev_warn(dev,
-+			     "Invalid number of concurrent positioning ranges\n");
-+		goto out;
-+	}
++		dg_len = le16_to_cpu(dg->datagram_length);
 +
- 	cpr_log = kzalloc_flex(*cpr_log, cpr, nr_cpr);
- 	if (!cpr_log)
- 		goto out;
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -37,8 +37,6 @@
- #include "libata.h"
- #include "libata-transport.h"
++		if (dg_index < sizeof(struct mux_adbh))
+ 			goto dg_error;
  
--#define ATA_SCSI_RBUF_SIZE	2048
--
- static DEFINE_SPINLOCK(ata_scsi_rbuf_lock);
- static u8 ata_scsi_rbuf[ATA_SCSI_RBUF_SIZE];
+-		/* Is the packet inside of the ADB */
+-		if (le32_to_cpu(dg->datagram_index) >=
+-					le32_to_cpu(adbh->block_length)) {
++		/* Is the packet inside of the ADB and the received skb ? */
++		if (dg_index >= le32_to_cpu(adbh->block_length) ||
++		    dg_index >= skb->len ||
++		    dg_len > skb->len - dg_index ||
++		    dl_head_pad_len >= dg_len) {
+ 			goto dg_error;
+ 		} else {
+-			packet_offset =
+-				le32_to_cpu(dg->datagram_index) +
+-				dl_head_pad_len;
+-			dg_len = le16_to_cpu(dg->datagram_length);
++			packet_offset = dg_index + dl_head_pad_len;
+ 			/* Pass the packet to the netif layer. */
+ 			rc = ipc_mux_net_receive(ipc_mux, if_id, ipc_mux->wwan,
+ 						 packet_offset,
+@@ -589,12 +591,16 @@ static void mux_dl_adb_decode(struct ios
+ 	struct mux_adbh *adbh;
+ 	struct mux_adth *adth;
+ 	int nr_of_dg, if_id;
+-	u32 adth_index;
++	u32 adth_index, prev_index = 0;
+ 	u8 *block;
  
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -148,6 +148,15 @@ static inline bool ata_acpi_dev_manage_r
- #endif
+ 	block = skb->data;
+ 	adbh = (struct mux_adbh *)block;
  
- /* libata-scsi.c */
-+#define ATA_SCSI_RBUF_SIZE	2048
++	/* The block header itself must fit in the received skb. */
++	if (skb->len < sizeof(struct mux_adbh))
++		goto adb_decode_err;
 +
-+/*
-+ * Maximum number of concurrent positioning ranges (CPR) supported. The ACS
-+ * specifications allow up to 255, but we limit this to the number of CPR
-+ * descriptors that fit in the rbuf buffer used to emit VPD page B9h.
-+ */
-+#define ATA_DEV_MAX_CPR		min(255, ((ATA_SCSI_RBUF_SIZE - 64) / 32))
+ 	/* Process the aggregated datagram tables. */
+ 	adth_index = le32_to_cpu(adbh->first_table_index);
+ 
+@@ -606,6 +612,16 @@ static void mux_dl_adb_decode(struct ios
+ 
+ 	/* Loop through mixed session tables. */
+ 	while (adth_index) {
++		/* The table header must lie within the received skb, and the
++		 * chain must move forward so a modem cannot make the loop
++		 * cycle between two tables.
++		 */
++		if (adth_index <= prev_index ||
++		    adth_index < sizeof(struct mux_adbh) ||
++		    adth_index > skb->len - sizeof(struct mux_adth))
++			goto adb_decode_err;
++		prev_index = adth_index;
 +
- extern struct ata_device *ata_scsi_find_dev(struct ata_port *ap,
- 					    const struct scsi_device *scsidev);
- extern int ata_scsi_add_hosts(struct ata_host *host,
+ 		/* Get the reference to the table header. */
+ 		adth = (struct mux_adth *)(block + adth_index);
+ 
+@@ -629,6 +645,10 @@ static void mux_dl_adb_decode(struct ios
+ 		if (le16_to_cpu(adth->table_length) < sizeof(struct mux_adth))
+ 			goto adb_decode_err;
+ 
++		/* The whole datagram table must fit in the received skb. */
++		if (le16_to_cpu(adth->table_length) > skb->len - adth_index)
++			goto adb_decode_err;
++
+ 		/* Calculate the number of datagrams. */
+ 		nr_of_dg = (le16_to_cpu(adth->table_length) -
+ 					sizeof(struct mux_adth)) /
 
 
