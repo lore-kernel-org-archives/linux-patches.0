@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1671034B1A6;
-	Tue, 21 Jul 2026 21:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01E33B9930;
+	Tue, 21 Jul 2026 21:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670512; cv=none; b=I44Hkt2DXHUHgMbs+brEEpekDXyOKs+etD2ulr7kjyNhoHYk8awEAAzXhPBEu51jN2xcBRFo1qeDwg8J1QU4sgRKt0GaNc3HNBrkeJbB4WcBXuYrKSVIOZjdiXodGRc+yTurtmonBGcGi4rcTv6d27y/Yc9mkz8Y14PEVyS/q0o=
+	t=1784670515; cv=none; b=IJ3VwKezM1RL7TxbA03jqqmDjK3O75ikU4JTWNxkyFTB5RWVtISPlspEgYK7RoYgrhqpISjY/zCvGJc9sGuYs22mLPARIyjHhO11Oxq/dQbD9GGckNJbJn9jeXUmrG9Do+4lw/P9lU6FrQRUhNB41vpPjq5LM5Ux/qQh2KjaZP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670512; c=relaxed/simple;
-	bh=NJUT5bRUoEkNSu/LjrjpT9nSuIkUM1RBbjbZEZoj5mk=;
+	s=arc-20240116; t=1784670515; c=relaxed/simple;
+	bh=ORP/5Z3HYFhJ9wC/BDSRd1SOxpz+bm9EzbMDw+/Tb5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EHj2xK6pWpaVTdl5PgMFJp57nXXSqKKsJfBxWhwH4EHHSl4+OXj4zke7sCBVP61Xbeo1cIxIfL1VH0VfZqtfmSuI/YubfekyP+M5fUXUe3mpHc6W8ekMjlxgQ8lUiLPy5t2B3ka6yUu5zoT/7hG0ne1WSx57MKLEzP3b62j1opo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFuOH92M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mrYwXBJ75AckKbVqAS0hFQyKiJbeB8vo3DjPuV6AQkkLZWEryPWQfr5wXrwXkjaW1iBuYu9XGgjtzaywLAEKNMXy8MSDJamtPNQ2gQENQ7+HDGfmeL6BLyXCdP0t5r9iphdISqtuvGGdbRD98cY+Ovtr+4CnfjktQrCDawM/AN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY+/9x1y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFuOH92M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402271F000E9;
-	Tue, 21 Jul 2026 21:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY+/9x1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54AF1F000E9;
+	Tue, 21 Jul 2026 21:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670510;
-	bh=5SA0gAu5WE+8vmpmXrtP60GcMXMLwqxgYnqpXK5JqtM=;
+	s=korg; t=1784670513;
+	bh=n1PXAk0xlt8EkZJRBtPNBfd68SdkFgZWcSM+Ei+aSQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eFuOH92MGxaRw/BWdCsNrOYS2Pus9zzzMBn+onq6J2C0cbQpnYCaIYFzk58KfnBuG
-	 qf7Bk0oKHycjnHIlCA4ZhbuE9ocptH06I9rIF++qZ+wnX5cRvqrNFX6yKKJ7VT2LBu
-	 jI+Oe5vtUlrFYk1+MdxTKMhm/Doh1KUqC0bwt/Fg=
+	b=QY+/9x1yyiJMTwtRu63bEMGI7jux2eNErxr5N2tmyZUTFoyr74ux6iUdKHHfYQ7Ri
+	 IcWB4OuU7+5qgZ6ngpP+Mq4v2IiOFkvsLv4ToxjxdnPN7GAnsUH+6NDlSx5Ae6R2we
+	 iwWARCp9CSMfAF1uq2NY7w6XeG6sqHhME/fN5FqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Franziska Naepelt <franziska.naepelt@googlemail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0960/1067] staging: rtl8723bs: Fix space issues
-Date: Tue, 21 Jul 2026 17:26:01 +0200
-Message-ID: <20260721152446.014548219@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.1 0934/1067] mmc: vub300: defer reset until cmd_mutex is unlocked
+Date: Tue, 21 Jul 2026 17:25:35 +0200
+Message-ID: <20260721152445.427070768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,252 +50,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Franziska Naepelt <franziska.naepelt@googlemail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit c4b811b9361b0d7ea167a79587f5ec0a13fd8863 ]
+commit ee5fb641c4ccac8406c668d3e947eb20ce44f233 upstream.
 
-Fix the following checkpatch space issues:
-- CHECK: spaces preferred around that '*' (ctx:VxV)
-- CHECK: spaces preferred around that '+' (ctx:VxV)
-- CHECK: spaces preferred around that '-' (ctx:VxV)
-- CHECK: spaces preferred around that '|' (ctx:VxV)
-- CHECK: No space is necessary after a cast
-- WARNING: please, no spaces at the start of a line
+vub300_cmndwork_thread() holds cmd_mutex while it sends a command and
+waits for the command response.  If the response wait times out,
+__vub300_command_response() kills the command URBs and then synchronously
+resets the USB device through usb_reset_device().
 
-Signed-off-by: Franziska Naepelt <franziska.naepelt@googlemail.com>
-Link: https://lore.kernel.org/r/20230701102538.5359-1-franziska.naepelt@googlemail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 5a752a616e75 ("staging: rtl8723bs: fix heap buffer overflow in rtw_cfg80211_set_wpa_ie()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That reset path re-enters the driver through vub300_pre_reset(), which
+also takes cmd_mutex.  The worker therefore tries to acquire the same
+mutex recursively while it is still holding it from the command path.
+
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
+
+The grounded PoC kept the real worker and timeout/reset carrier:
+
+  vub300_cmndwork_thread()
+  __vub300_command_response()
+  usb_lock_device_for_reset()
+  usb_reset_device()
+  vub300_pre_reset()
+
+Lockdep reported the same-task recursive acquisition on cmd_mutex:
+
+  WARNING: possible recursive locking detected
+  ... (&test_vub300.cmd_mutex) ... at: usb_reset_device... [vuln_msv]
+  ... (&test_vub300.cmd_mutex) ... at: vub300_cmndwork_thread+0x12/0x20 [vuln_msv]
+  Workqueue: vub300_cmd_wq vub300_cmndwork_thread [vuln_msv]
+  *** DEADLOCK ***
+
+Return a flag from __vub300_command_response() when the timeout path needs
+a device reset, then perform the reset after vub300_cmndwork_thread() has
+cleared the in-flight command state and dropped cmd_mutex.  The reset is
+still attempted before mmc_request_done(), preserving the existing request
+completion ordering while avoiding the recursive lock.
+
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |   76 +++++++++++-----------
- 1 file changed, 38 insertions(+), 38 deletions(-)
+ drivers/mmc/host/vub300.c |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -95,14 +95,14 @@ static struct ieee80211_channel rtw_2ghz
- static void rtw_2g_channels_init(struct ieee80211_channel *channels)
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -1587,7 +1587,7 @@ static int __command_write_data(struct v
+ 	return linear_length;
+ }
+ 
+-static void __vub300_command_response(struct vub300_mmc_host *vub300,
++static bool __vub300_command_response(struct vub300_mmc_host *vub300,
+ 				      struct mmc_command *cmd,
+ 				      struct mmc_data *data, int data_length)
  {
- 	memcpy((void *)channels, (void *)rtw_2ghz_channels,
--		sizeof(struct ieee80211_channel)*RTW_2G_CHANNELS_NUM
-+		sizeof(struct ieee80211_channel) * RTW_2G_CHANNELS_NUM
- 	);
+@@ -1599,17 +1599,11 @@ static void __vub300_command_response(st
+ 					    msecs_to_jiffies(msec_timeout));
+ 	if (respretval == 0) { /* TIMED OUT */
+ 		/* we don't know which of "out" and "res" if any failed */
+-		int result;
+ 		vub300->usb_timed_out = 1;
+ 		usb_kill_urb(vub300->command_out_urb);
+ 		usb_kill_urb(vub300->command_res_urb);
+ 		cmd->error = -ETIMEDOUT;
+-		result = usb_lock_device_for_reset(vub300->udev,
+-						   vub300->interface);
+-		if (result == 0) {
+-			result = usb_reset_device(vub300->udev);
+-			usb_unlock_device(vub300->udev);
+-		}
++		return true;
+ 	} else if (respretval < 0) {
+ 		/* we don't know which of "out" and "res" if any failed */
+ 		usb_kill_urb(vub300->command_out_urb);
+@@ -1705,6 +1699,8 @@ static void __vub300_command_response(st
+ 	} else {
+ 		cmd->error = -EINVAL;
+ 	}
++
++	return false;
  }
  
- static void rtw_2g_rates_init(struct ieee80211_rate *rates)
- {
- 	memcpy(rates, rtw_g_rates,
--		sizeof(struct ieee80211_rate)*RTW_G_RATES_NUM
-+		sizeof(struct ieee80211_rate) * RTW_G_RATES_NUM
- 	);
- }
- 
-@@ -126,8 +126,8 @@ static struct ieee80211_supported_band *
- 	if (!spt_band)
- 		goto exit;
- 
--	spt_band->channels = (struct ieee80211_channel *)(((u8 *)spt_band)+sizeof(struct ieee80211_supported_band));
--	spt_band->bitrates = (struct ieee80211_rate *)(((u8 *)spt_band->channels)+sizeof(struct ieee80211_channel)*n_channels);
-+	spt_band->channels = (struct ieee80211_channel *)(((u8 *)spt_band) + sizeof(struct ieee80211_supported_band));
-+	spt_band->bitrates = (struct ieee80211_rate *)(((u8 *)spt_band->channels) + sizeof(struct ieee80211_channel) * n_channels);
- 	spt_band->band = band;
- 	spt_band->n_channels = n_channels;
- 	spt_band->n_bitrates = n_bitrates;
-@@ -247,10 +247,10 @@ struct cfg80211_bss *rtw_cfg80211_inform
- 		u32 wpsielen = 0;
- 		u8 *wpsie = NULL;
- 
--		wpsie = rtw_get_wps_ie(pnetwork->network.ies+_FIXED_IE_LENGTH_, pnetwork->network.ie_length-_FIXED_IE_LENGTH_, NULL, &wpsielen);
-+		wpsie = rtw_get_wps_ie(pnetwork->network.ies + _FIXED_IE_LENGTH_, pnetwork->network.ie_length - _FIXED_IE_LENGTH_, NULL, &wpsielen);
- 
- 		if (wpsie && wpsielen > 0)
--			psr = rtw_get_wps_attr_content(wpsie,  wpsielen, WPS_ATTR_SELECTED_REGISTRAR, (u8 *)(&sr), NULL);
-+			psr = rtw_get_wps_attr_content(wpsie, wpsielen, WPS_ATTR_SELECTED_REGISTRAR, (u8 *)(&sr), NULL);
- 
- 		if (sr != 0) {
- 			/* it means under processing WPS */
-@@ -277,9 +277,9 @@ struct cfg80211_bss *rtw_cfg80211_inform
- 	/* We've set wiphy's signal_type as CFG80211_SIGNAL_TYPE_MBM: signal strength in mBm (100*dBm) */
- 	if (check_fwstate(pmlmepriv, _FW_LINKED) == true &&
- 		is_same_network(&pmlmepriv->cur_network.network, &pnetwork->network, 0)) {
--		notify_signal = 100*translate_percentage_to_dbm(padapter->recvpriv.signal_strength);/* dbm */
-+		notify_signal = 100 * translate_percentage_to_dbm(padapter->recvpriv.signal_strength);/* dbm */
- 	} else {
--		notify_signal = 100*translate_percentage_to_dbm(pnetwork->network.phy_info.signal_strength);/* dbm */
-+		notify_signal = 100 * translate_percentage_to_dbm(pnetwork->network.phy_info.signal_strength);/* dbm */
- 	}
- 
- 	buf = kzalloc(MAX_BSSINFO_LEN, GFP_ATOMIC);
-@@ -453,20 +453,20 @@ check_bss:
- 		roam_info.links[0].channel = notify_channel;
- 		roam_info.links[0].bssid = cur_network->network.mac_address;
- 		roam_info.req_ie =
--			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
-+			pmlmepriv->assoc_req + sizeof(struct ieee80211_hdr_3addr) + 2;
- 		roam_info.req_ie_len =
--			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
-+			pmlmepriv->assoc_req_len - sizeof(struct ieee80211_hdr_3addr) - 2;
- 		roam_info.resp_ie =
--			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
-+			pmlmepriv->assoc_rsp + sizeof(struct ieee80211_hdr_3addr) + 6;
- 		roam_info.resp_ie_len =
--			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
-+			pmlmepriv->assoc_rsp_len - sizeof(struct ieee80211_hdr_3addr) - 6;
- 		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
- 	} else {
- 		cfg80211_connect_result(padapter->pnetdev, cur_network->network.mac_address
--			, pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2
--			, pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2
--			, pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6
--			, pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6
-+			, pmlmepriv->assoc_req + sizeof(struct ieee80211_hdr_3addr) + 2
-+			, pmlmepriv->assoc_req_len - sizeof(struct ieee80211_hdr_3addr) - 2
-+			, pmlmepriv->assoc_rsp + sizeof(struct ieee80211_hdr_3addr) + 6
-+			, pmlmepriv->assoc_rsp_len - sizeof(struct ieee80211_hdr_3addr) - 6
- 			, WLAN_STATUS_SUCCESS, GFP_ATOMIC);
- 	}
- }
-@@ -721,7 +721,7 @@ static int rtw_cfg80211_set_encryption(s
- 	param->u.crypt.err = 0;
- 	param->u.crypt.alg[IEEE_CRYPT_ALG_NAME_LEN - 1] = '\0';
- 
--	if (param_len < (u32) ((u8 *) param->u.crypt.key - (u8 *) param) + param->u.crypt.key_len) {
-+	if (param_len < (u32)((u8 *)param->u.crypt.key - (u8 *)param) + param->u.crypt.key_len) {
- 		ret =  -EINVAL;
- 		goto exit;
- 	}
-@@ -1036,10 +1036,10 @@ static int cfg80211_rtw_get_station(stru
- 	}
- 
- 	/* for Ad-Hoc/AP mode */
--	if ((check_fwstate(pmlmepriv, WIFI_ADHOC_STATE)
-- || check_fwstate(pmlmepriv, WIFI_ADHOC_MASTER_STATE)
-- || check_fwstate(pmlmepriv, WIFI_AP_STATE))
--		&& check_fwstate(pmlmepriv, _FW_LINKED)) {
-+	if ((check_fwstate(pmlmepriv, WIFI_ADHOC_STATE) ||
-+	     check_fwstate(pmlmepriv, WIFI_ADHOC_MASTER_STATE) ||
-+	     check_fwstate(pmlmepriv, WIFI_AP_STATE)) &&
-+	    check_fwstate(pmlmepriv, _FW_LINKED)) {
- 		/* TODO: should acquire station info... */
- 	}
- 
-@@ -1238,7 +1238,7 @@ static int cfg80211_rtw_scan(struct wiph
- 	spin_unlock_bh(&pwdev_priv->scan_req_lock);
- 
- 	if (check_fwstate(pmlmepriv, WIFI_AP_STATE) == true) {
--		if (check_fwstate(pmlmepriv, WIFI_UNDER_WPS|_FW_UNDER_SURVEY|_FW_UNDER_LINKING) == true) {
-+		if (check_fwstate(pmlmepriv, WIFI_UNDER_WPS | _FW_UNDER_SURVEY | _FW_UNDER_LINKING) == true) {
- 			need_indicate_scan_done = true;
- 			goto check_need_indicate_scan_done;
- 		}
-@@ -1292,7 +1292,7 @@ static int cfg80211_rtw_scan(struct wiph
- 	}
- 
- 	/* parsing channels, n_channels */
--	memset(ch, 0, sizeof(struct rtw_ieee80211_channel)*RTW_CHANNEL_SCAN_AMOUNT);
-+	memset(ch, 0, sizeof(struct rtw_ieee80211_channel) * RTW_CHANNEL_SCAN_AMOUNT);
- 	for (i = 0; i < request->n_channels && i < RTW_CHANNEL_SCAN_AMOUNT; i++) {
- 		ch[i].hw_value = request->channels[i]->hw_value;
- 		ch[i].flags = request->channels[i]->flags;
-@@ -1306,7 +1306,7 @@ static int cfg80211_rtw_scan(struct wiph
- 	} else if (request->n_channels <= 4) {
- 		for (j = request->n_channels - 1; j >= 0; j--)
- 			for (i = 0; i < survey_times; i++)
--				memcpy(&ch[j*survey_times+i], &ch[j], sizeof(struct rtw_ieee80211_channel));
-+				memcpy(&ch[j * survey_times + i], &ch[j], sizeof(struct rtw_ieee80211_channel));
- 		_status = rtw_sitesurvey_cmd(padapter, ssid, RTW_SSID_SCAN_AMOUNT, ch, survey_times * request->n_channels);
- 	} else {
- 		_status = rtw_sitesurvey_cmd(padapter, ssid, RTW_SSID_SCAN_AMOUNT, NULL, 0);
-@@ -1462,7 +1462,7 @@ static int rtw_cfg80211_set_wpa_ie(struc
- 		goto exit;
- 	}
- 
--	if (ielen > MAX_WPA_IE_LEN+MAX_WPS_IE_LEN+MAX_P2P_IE_LEN) {
-+	if (ielen > MAX_WPA_IE_LEN + MAX_WPS_IE_LEN + MAX_P2P_IE_LEN) {
- 		ret = -EINVAL;
- 		goto exit;
- 	}
-@@ -1482,19 +1482,19 @@ static int rtw_cfg80211_set_wpa_ie(struc
- 
- 	pwpa = rtw_get_wpa_ie(buf, &wpa_ielen, ielen);
- 	if (pwpa && wpa_ielen > 0) {
--		if (rtw_parse_wpa_ie(pwpa, wpa_ielen+2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
-+		if (rtw_parse_wpa_ie(pwpa, wpa_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
- 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
- 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPAPSK;
--			memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen+2);
-+			memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen + 2);
- 		}
- 	}
- 
- 	pwpa2 = rtw_get_wpa2_ie(buf, &wpa2_ielen, ielen);
- 	if (pwpa2 && wpa2_ielen > 0) {
--		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen+2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
-+		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
- 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
- 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPA2PSK;
--			memcpy(padapter->securitypriv.supplicant_ie, &pwpa2[0], wpa2_ielen+2);
-+			memcpy(padapter->securitypriv.supplicant_ie, &pwpa2[0], wpa2_ielen + 2);
- 		}
- 	}
- 
-@@ -1893,7 +1893,7 @@ static int cfg80211_rtw_set_pmksa(struct
- 
- 			memcpy(psecuritypriv->PMKIDList[index].PMKID, (u8 *)pmksa->pmkid, WLAN_PMKID_LEN);
- 			psecuritypriv->PMKIDList[index].bUsed = true;
--			psecuritypriv->PMKIDIndex = index+1;
-+			psecuritypriv->PMKIDIndex = index + 1;
- 			blInserted = true;
- 			break;
- 		}
-@@ -2095,8 +2095,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
- 		_rtw_xmit_entry(skb, padapter->pnetdev);
- 		return NETDEV_TX_OK;
- 
--	} else if ((frame_control & (IEEE80211_FCTL_FTYPE|IEEE80211_FCTL_STYPE)) ==
--		   (IEEE80211_FTYPE_MGMT|IEEE80211_STYPE_ACTION)) {
-+	} else if ((frame_control & (IEEE80211_FCTL_FTYPE | IEEE80211_FCTL_STYPE)) ==
-+		   (IEEE80211_FTYPE_MGMT | IEEE80211_STYPE_ACTION)) {
- 		/* only for action frames */
- 		struct xmit_frame		*pmgntframe;
- 		struct pkt_attrib	*pattrib;
-@@ -2210,7 +2210,7 @@ static int rtw_cfg80211_add_monitor_if(s
- 		goto out;
- 
- 	*ndev = pwdev_priv->pmon_ndev = mon_ndev;
--	memcpy(pwdev_priv->ifname_mon, name, IFNAMSIZ+1);
-+	memcpy(pwdev_priv->ifname_mon, name, IFNAMSIZ + 1);
- 
- out:
- 	if (ret && mon_wdev) {
-@@ -2304,14 +2304,14 @@ static int rtw_add_beacon(struct adapter
- 	if (head_len < 24)
- 		return -EINVAL;
- 
--	pbuf = rtw_zmalloc(head_len+tail_len);
-+	pbuf = rtw_zmalloc(head_len + tail_len);
- 	if (!pbuf)
- 		return -ENOMEM;
- 
--	memcpy(pbuf, (void *)head+24, head_len-24);/*  24 =beacon header len. */
--	memcpy(pbuf+head_len-24, (void *)tail, tail_len);
-+	memcpy(pbuf, (void *)head + 24, head_len - 24);/*  24 =beacon header len. */
-+	memcpy(pbuf + head_len - 24, (void *)tail, tail_len);
- 
--	len = head_len+tail_len-24;
-+	len = head_len + tail_len - 24;
- 
- 	/* check wps ie if inclued */
- 	rtw_get_wps_ie(pbuf + _FIXED_IE_LENGTH_, len - _FIXED_IE_LENGTH_, NULL, &wps_ielen);
-@@ -2601,7 +2601,7 @@ static int cfg80211_rtw_mgmt_tx(struct w
- 	pwdev_priv = adapter_wdev_data(padapter);
- 
- 	/* cookie generation */
--	*cookie = (unsigned long) buf;
-+	*cookie = (unsigned long)buf;
- 
- 	/* indicate ack before issue frame to avoid racing with rsp frame */
- 	rtw_cfg80211_mgmt_tx_status(padapter, *cookie, buf, len, ack, GFP_KERNEL);
+ static void construct_request_response(struct vub300_mmc_host *vub300,
+@@ -1750,6 +1746,7 @@ static void vub300_cmndwork_thread(struc
+ 		struct mmc_request *req = vub300->req;
+ 		struct mmc_command *cmd = vub300->cmd;
+ 		struct mmc_data *data = vub300->data;
++		bool reset_device;
+ 		int data_length;
+ 		mutex_lock(&vub300->cmd_mutex);
+ 		init_completion(&vub300->command_complete);
+@@ -1772,7 +1769,8 @@ static void vub300_cmndwork_thread(struc
+ 			data_length = __command_read_data(vub300, cmd, data);
+ 		else
+ 			data_length = __command_write_data(vub300, cmd, data);
+-		__vub300_command_response(vub300, cmd, data, data_length);
++		reset_device = __vub300_command_response(vub300, cmd,
++							 data, data_length);
+ 		vub300->req = NULL;
+ 		vub300->cmd = NULL;
+ 		vub300->data = NULL;
+@@ -1780,6 +1778,16 @@ static void vub300_cmndwork_thread(struc
+ 			if (cmd->error == -ENOMEDIUM)
+ 				check_vub300_port_status(vub300);
+ 			mutex_unlock(&vub300->cmd_mutex);
++			if (reset_device) {
++				int result;
++
++				result = usb_lock_device_for_reset(vub300->udev,
++								   vub300->interface);
++				if (result == 0) {
++					result = usb_reset_device(vub300->udev);
++					usb_unlock_device(vub300->udev);
++				}
++			}
+ 			mmc_request_done(vub300->mmc, req);
+ 			kref_put(&vub300->kref, vub300_delete);
+ 			return;
 
 
