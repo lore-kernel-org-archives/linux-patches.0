@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366393E49C8;
-	Tue, 21 Jul 2026 17:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36173E49C8;
+	Tue, 21 Jul 2026 17:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654223; cv=none; b=MQDbq2YDRAzGW/qSRlD4IhO/aJMjei4Zx8dILUvNSST5lANG81WM9RQhSE/NGYRmfzoXNl27MlqOe4R3fDcEgavASN+Gg+eX0mLKv8KGpqMiC0mryxgTnnCfBxOtf8vc3JVuR/hiWqCbwIOMDVG5ZRfKstbP0QrcTvvlp7NpQV4=
+	t=1784654226; cv=none; b=t9SAztOkeCRCfTVDCe6BFXnPXpqYRcwOIGfyiscUaBvmxjEB5OCyeAzMTO+m1q6qqUd+tD+n+IhVg/MVZGELNjmGDN8iTiStXV04N+9qXt7j5U0ivRVah8WM2HTX4XIEBTWd1QLARfVSNxq+l5bvxMUGehF/fvg8AYxKnNLRvTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654223; c=relaxed/simple;
-	bh=VztE9qWl9u9GJktqz0nOCj6/kBzIwVQT6lGcJsDCph4=;
+	s=arc-20240116; t=1784654226; c=relaxed/simple;
+	bh=DgRgXeVQKdsnieGw+kE8uiFaFKn9T9sqH5x50tlzc2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNwEg6d4cxyVNjVr4KtKA5A2VYHpJQ4kwEqZ1ZMFFjkRYY80IB30bIMIYhAAfhWsDIugIdIciv1QpwVmMAuX96AhH+6+P6Mt3rjY2XyFORxuYGyTocpgnfL2SSokpt4ELapSKyYhS0H8UrU59smbnGVouVqNb1LmKbIEgINlwFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJzuZ33F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e+MJPxHxkWdZ8cdM7/qr3pRsxnxYDO2vP57zKdZyxH0gFtyA3c5VXJjCePFTXi92/4FLjc9lIW064iL+3uJ/uwsN048d8XuelfepK2ltLh7f0ZYIyMprOiYVdZ2yBSTfrNkfZVZNMG+oxL6mYlU8cKR/GGNbP0MSpjDUjCa6bWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJCZc6GR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJzuZ33F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BFC1F000E9;
-	Tue, 21 Jul 2026 17:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJCZc6GR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460631F000E9;
+	Tue, 21 Jul 2026 17:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654222;
-	bh=myGYoTpSZFZkHaUu0RwBtLvlnngbx2CIY6FMPm2qdgQ=;
+	s=korg; t=1784654224;
+	bh=WA26tlEroiM6Bp3Ii/+wlfH4EHyjOQE8uNeW74wkF0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VJzuZ33Fk+DaUnSF73P/3rYgb6xyVpO2H+VWigLLde119zJFvnBKiZUED+ll2sbBB
-	 DPZkDP4iIFXYQ5ZBBWi0wwS0FmayUVwJYzbFmP9BjUEe+HswB9raUehTIpiH3ORYWf
-	 lF0H3qaoyrH7GF1ATWFh8rykvWl0iED5/KmsCqAM=
+	b=iJCZc6GRwaRjScsogXisGog9y7oMZ/PL4/nOuUzcaidmYictddxZcEpW29imtUsM9
+	 0m8IJXZiCYQQZyx6HBHdgZd0XBwg+RXwo/GmyRSq9nPfTHBJnEo2ePpGuhg6jYpI7l
+	 08jm2eOmZZVVF6PMHh5+coNqW3Bg12xGMjqModkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ondrej Mosnacek <omosnace@redhat.com>,
 	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Tristan Madani <tristan@talencesecurity.com>,
 	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.1 1624/2077] selinux: avoid sk_socket dereference in selinux_sctp_bind_connect()
-Date: Tue, 21 Jul 2026 17:21:37 +0200
-Message-ID: <20260721152631.063404052@linuxfoundation.org>
+Subject: [PATCH 7.1 1625/2077] selinux: fix incorrect execmem checks on overlayfs
+Date: Tue, 21 Jul 2026 17:21:38 +0200
+Message-ID: <20260721152631.086053015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,108 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-commit 56acfeb10019e200ab6787d01f8d7cbe0f01526f upstream.
+commit 9fe595fad54d4ac6a402edb3f60bec859d52cea6 upstream.
 
-selinux_sctp_bind_connect() dereferences sk->sk_socket to pass a
-struct socket * to selinux_socket_bind() and
-selinux_socket_connect_helper().  However, when the hook is invoked
-from the ASCONF softirq path (sctp_process_asconf), there is no file
-reference guaranteeing that sk->sk_socket is non-NULL.  The setsockopt
-callers (bindx, connectx, set_primary, sendmsg connect) hold a file
-reference and are not affected.
+The commit fixing the overlayfs mmap() and mprotect() access checks
+failed to skip the execmem check in __file_map_prot_check() for the case
+where the "mounter check" is being performed. This check should be
+performed only against the credentials of the task that is calling
+mmap()/mprotect(), since it doesn't pertain to the file itself, but
+rather just gates the ability of the calling task to get an executable
+memory mapping in general.
 
-Both selinux_socket_bind() and selinux_socket_connect_helper()
-immediately resolve sock->sk, never using the struct socket * for
-anything else.  Refactor the inner logic into helpers that take a
-struct sock * directly so that selinux_sctp_bind_connect() never needs
-to touch sk->sk_socket at all.
+The purpose of the "mounter check" is to guard against using an
+overlayfs mount to gain file access that would otherwise be denied to
+the mounter. For execmem this is not relevant, as there is no further
+file access granted based on it (notice that the file's context is not
+used as the target in the check), so checking it also against the
+mounter credentials would be incorrect.
+
+Fix this by passing a boolean to [__]file_map_prot_check() and
+selinux_mmap_file_common() that indicates if we are doing the "mounter
+check" and skiping the execmem check in that case. Since this boolean
+also indicates if we use current_cred() or the mounter cred as the
+subject, also remove the "cred" argument from these functions and
+determine it based on the boolean and the file struct.
 
 Cc: stable@vger.kernel.org
-Fixes: d452930fd3b9 ("selinux: Add SCTP support")
-Suggested-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Fixes: 82544d36b172 ("selinux: fix overlayfs mmap() and mprotect() access checks")
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
 Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Tested-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ security/selinux/hooks.c |   42 ++++++++++++++++++++++++------------------
+ 1 file changed, 24 insertions(+), 18 deletions(-)
 
 --- a/security/selinux/hooks.c
 +++ b/security/selinux/hooks.c
-@@ -4998,9 +4998,8 @@ static int selinux_socket_socketpair(str
-    Need to determine whether we should perform a name_bind
-    permission check between the socket and the port number. */
+@@ -3973,9 +3973,9 @@ static int selinux_file_ioctl_compat(str
  
--static int selinux_socket_bind(struct socket *sock, struct sockaddr *address, int addrlen)
-+static int __selinux_socket_bind(struct sock *sk, struct sockaddr *address, int addrlen)
+ static int default_noexec __ro_after_init;
+ 
+-static int __file_map_prot_check(const struct cred *cred,
+-				 const struct file *file, unsigned long prot,
+-				 bool shared, bool bf_user_file)
++static int __file_map_prot_check(const struct file *file, unsigned long prot,
++				 bool shared, bool mounter_check,
++				 bool bf_user_file)
  {
--	struct sock *sk = sock->sk;
- 	struct sk_security_struct *sksec = selinux_sock(sk);
- 	u16 family;
- 	int err;
-@@ -5130,13 +5129,17 @@ err_af:
- 	return -EAFNOSUPPORT;
+ 	struct inode *inode = NULL;
+ 	bool prot_exec = prot & PROT_EXEC;
+@@ -3988,10 +3988,10 @@ static int __file_map_prot_check(const s
+ 			inode = file_inode(file);
+ 	}
+ 
+-	if (default_noexec && prot_exec &&
++	if (!mounter_check && default_noexec && prot_exec &&
+ 	    (!file || IS_PRIVATE(inode) || (!shared && prot_write))) {
+ 		int rc;
+-		u32 sid = cred_sid(cred);
++		u32 sid = current_sid();
+ 
+ 		/*
+ 		 * We are making executable an anonymous mapping or a private
+@@ -4004,6 +4004,8 @@ static int __file_map_prot_check(const s
+ 	}
+ 
+ 	if (file) {
++		const struct cred *cred = mounter_check ?
++				file->f_cred : current_cred();
+ 		/* "read" always possible, "write" only if shared */
+ 		u32 av = FILE__READ;
+ 		if (shared && prot_write)
+@@ -4017,11 +4019,11 @@ static int __file_map_prot_check(const s
+ 	return 0;
  }
  
-+static int selinux_socket_bind(struct socket *sock, struct sockaddr *address, int addrlen)
-+{
-+	return __selinux_socket_bind(sock->sk, address, addrlen);
-+}
-+
- /* This supports connect(2) and SCTP connect services such as sctp_connectx(3)
-  * and sctp_sendmsg(3) as described in Documentation/security/SCTP.rst
-  */
--static int selinux_socket_connect_helper(struct socket *sock,
-+static int selinux_socket_connect_helper(struct sock *sk,
- 					 struct sockaddr *address, int addrlen)
+-static inline int file_map_prot_check(const struct cred *cred,
+-				      const struct file *file,
+-				      unsigned long prot, bool shared)
++static inline int file_map_prot_check(const struct file *file,
++				      unsigned long prot, bool shared,
++				      bool mounter_check)
  {
--	struct sock *sk = sock->sk;
- 	struct sk_security_struct *sksec = selinux_sock(sk);
- 	int err;
+-	return __file_map_prot_check(cred, file, prot, shared, false);
++	return __file_map_prot_check(file, prot, shared, mounter_check, false);
+ }
  
-@@ -5225,7 +5228,7 @@ static int selinux_socket_connect(struct
- 	int err;
- 	struct sock *sk = sock->sk;
+ static int selinux_mmap_addr(unsigned long addr)
+@@ -4037,12 +4039,14 @@ static int selinux_mmap_addr(unsigned lo
+ 	return rc;
+ }
  
--	err = selinux_socket_connect_helper(sock, address, addrlen);
-+	err = selinux_socket_connect_helper(sk, address, addrlen);
- 	if (err)
- 		return err;
+-static int selinux_mmap_file_common(const struct cred *cred, struct file *file,
+-				    unsigned long prot, bool shared)
++static int selinux_mmap_file_common(struct file *file, unsigned long prot,
++				    bool shared, bool mounter_check)
+ {
+ 	if (file) {
+ 		int rc;
+ 		struct common_audit_data ad;
++		const struct cred *cred = mounter_check ?
++				file->f_cred : current_cred();
  
-@@ -5727,13 +5730,11 @@ static int selinux_sctp_bind_connect(str
- 	int len, err = 0, walk_size = 0;
- 	void *addr_buf;
- 	struct sockaddr *addr;
--	struct socket *sock;
+ 		ad.type = LSM_AUDIT_DATA_FILE;
+ 		ad.u.file = file;
+@@ -4051,15 +4055,16 @@ static int selinux_mmap_file_common(cons
+ 			return rc;
+ 	}
  
- 	if (!selinux_policycap_extsockclass())
- 		return 0;
+-	return file_map_prot_check(cred, file, prot, shared);
++	return file_map_prot_check(file, prot, shared, mounter_check);
+ }
  
- 	/* Process one or more addresses that may be IPv4 or IPv6 */
--	sock = sk->sk_socket;
- 	addr_buf = address;
+ static int selinux_mmap_file(struct file *file,
+ 			     unsigned long reqprot __always_unused,
+ 			     unsigned long prot, unsigned long flags)
+ {
+-	return selinux_mmap_file_common(current_cred(), file, prot,
+-					(flags & MAP_TYPE) == MAP_SHARED);
++	return selinux_mmap_file_common(file, prot,
++					(flags & MAP_TYPE) == MAP_SHARED,
++					false);
+ }
  
- 	while (walk_size < addrlen) {
-@@ -5762,14 +5763,14 @@ static int selinux_sctp_bind_connect(str
- 		case SCTP_PRIMARY_ADDR:
- 		case SCTP_SET_PEER_PRIMARY_ADDR:
- 		case SCTP_SOCKOPT_BINDX_ADD:
--			err = selinux_socket_bind(sock, addr, len);
-+			err = __selinux_socket_bind(sk, addr, len);
- 			break;
- 		/* Connect checks */
- 		case SCTP_SOCKOPT_CONNECTX:
- 		case SCTP_PARAM_SET_PRIMARY:
- 		case SCTP_PARAM_ADD_IP:
- 		case SCTP_SENDMSG_CONNECT:
--			err = selinux_socket_connect_helper(sock, addr, len);
-+			err = selinux_socket_connect_helper(sk, addr, len);
- 			if (err)
- 				return err;
+ /**
+@@ -4091,8 +4096,9 @@ static int selinux_mmap_backing_file(str
+ 	if (vma->vm_flags & VM_EXEC)
+ 		prot |= PROT_EXEC;
  
+-	return selinux_mmap_file_common(backing_file->f_cred, backing_file,
+-					prot, vma->vm_flags & VM_SHARED);
++	return selinux_mmap_file_common(backing_file, prot,
++					vma->vm_flags & VM_SHARED,
++					true);
+ }
+ 
+ static int selinux_file_mprotect(struct vm_area_struct *vma,
+@@ -4153,11 +4159,11 @@ static int selinux_file_mprotect(struct
+ 		}
+ 	}
+ 
+-	rc = __file_map_prot_check(cred, file, prot, shared, backing_file);
++	rc = __file_map_prot_check(file, prot, shared, false, backing_file);
+ 	if (rc)
+ 		return rc;
+ 	if (backing_file) {
+-		rc = file_map_prot_check(file->f_cred, file, prot, shared);
++		rc = file_map_prot_check(file, prot, shared, true);
+ 		if (rc)
+ 			return rc;
+ 	}
 
 
