@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64BF46EF73;
-	Tue, 21 Jul 2026 19:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6522E436BC6;
+	Tue, 21 Jul 2026 19:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661488; cv=none; b=Vhb8voJrif4S4thckIjxb+ApNRrt07bw2i2okkzOX7qGVJnH6kI34Inx2aTPwMdV86FV4jjaG9wevvz1ixPANbTNt6FAsr3fDWdZg5BhmN70CbKWbCLM+a6jqc14OXqu+/EUEB5RjET62crG2KVOUXgiKA/gX6s70Quh2xVyY2U=
+	t=1784661490; cv=none; b=CosJNoZkG6WhrOkQCrjNMkoEkiTx1CHy59GPlF1ZNg8uSGg94QGiFV3MoaS3UaibrPDWVq/vegcmkl9PEGEDOsIajV4noi3OWBBF5Kcvy+O/T4V87zhLnLFgGPBG9iiXjNcvrbvpFBc5bjYazFfdur/+T8S3gVmN8gCFFQnIo7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661488; c=relaxed/simple;
-	bh=G8ru5+/hJwXSJrRYlGiLwoHetilxD1WGrDtdNCd5Ank=;
+	s=arc-20240116; t=1784661490; c=relaxed/simple;
+	bh=Hb1XR0AFrCkJCj6HzK0X9Y3OkFPuesmU7Em9WqHkvc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JdgadxnnPn2qmMFyWmncjdWn+W5n+Rek++IUvZ2bXsXYfwk7TIHbyu+D5fJI0W8PLbVI90IeHp1T03WEhO9RKoKQUOHDqDW7ztFkh+DbICO2N7I43Wae57YmBCcqNJiNBec+712095phovwcGyBh7kF5ICCkvzI1WdjLtUDDZV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NukqjIj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dnINOmYsJH99jOA3Gp/h97UvpQyGsDN2kqmZ4WvvDGahHbQWTphoLuWJYA2Ph1Ugc/rrSisyF3ibU+/aDzJ3leLxUH917yPSTWAItzrsmE083PkeBHTL0OoGA5bqyy7Y6+h/Uym8C804VaFpMiYnwQqodRwglcLULXXf2AUVzGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uK1l+4C+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NukqjIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDAF1F000E9;
-	Tue, 21 Jul 2026 19:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uK1l+4C+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6091F000E9;
+	Tue, 21 Jul 2026 19:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661486;
-	bh=5ZCJvB7QCfmWj6MfmdTvKSZXg5gj93vHgAp4dgAoEJg=;
+	s=korg; t=1784661489;
+	bh=zdD+2Zp5adcgAmHlRPljYUp6R4dUbnL7zqafhTPXS14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2NukqjIjR1XERcpGmdMX+YmjJiSb0guF9f9MCFW+cvXspqsa+qt7qZubjOSQNKIa5
-	 p5uyJFSQJtF4H+IcrLQ74h+SXmxWV99oKShbO6Nefrj2IXy8I50EbrUjcBjERVyC0h
-	 uiTnNYj2bKLrp5kxci+ffa8OVY72NhmNy/xXOjRc=
+	b=uK1l+4C+5xMFQQu/P7Tvb/MiTR3jXyccgJeE5CVjTODmySxluKnqpJAJExPFvceFw
+	 Unyvs6+7r8SMewqH/9MF2ElGuO0mZAdcMek3/kUNNSXs9NejWE9CizM5JZnxR6hJ7b
+	 u78nFRLzs6UIYZx3iJElf/jZzKAXtc51ECv6Ueew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	"Kevin Hilman (TI)" <khilman@baylibre.com>,
+	Yingjie Gao <gaoyingjie@uniontech.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0083/1276] ARM: dts: am335x-sl50: Fix audio bitclock and frame master endpoint
-Date: Tue, 21 Jul 2026 17:08:46 +0200
-Message-ID: <20260721152447.952952055@linuxfoundation.org>
+Subject: [PATCH 6.12 0084/1276] watchdog: sp5100_tco: Use EFCH MMIO for newer Hygon FCH
+Date: Tue, 21 Jul 2026 17:08:47 +0200
+Message-ID: <20260721152447.974905985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,48 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Yingjie Gao <gaoyingjie@uniontech.com>
 
-[ Upstream commit 2bc564f46b00dc4f4331fc337277ff3f5fac8a4e ]
+[ Upstream commit 4f675f036cd5e9cfbe6df5f24f8338158af96a4b ]
 
-The cpu_endpoint in mcasp0 specifies the TLV320AIC3106 codec as the
-bitclock and frame master, but the phandles point to the codec's port
-node (codec_port) rather than its endpoint node (codec_endpoint).
+Commit 009637de1f65 ("watchdog: sp5100_tco: support Hygon FCH/SCH
+(Server Controller Hub)") added Hygon vendor matching to the efch
+layout selection, but newer Hygon 0x790b SMBus devices still need the
+efch_mmio path.
 
-audio-graph-card calls simple_util_parse_daifmt() with ep_codec set to
-the endpoint node (codec_endpoint). The function resolves the
-bitclock-master phandle and checks whether it equals ep_codec. Since
-codec_port is the parent of codec_endpoint, not the endpoint itself, the
-comparison always evaluates to false. This causes the mcasp0 CPU side to
-be silently configured as bitclock and frame master instead of the codec,
-which is the opposite of the intended configuration.
+The efch_mmio path enables EFCH_PM_DECODEEN_WDT_TMREN before probing the
+watchdog MMIO block. If firmware leaves that bit clear and the driver
+picks the legacy efch path instead, probe falls back to the alternate
+window and fails with "Watchdog hardware is disabled".
 
-Fix by pointing bitclock-master and frame-master to codec_endpoint.
+Select efch_mmio for Hygon 0x790b devices with revision 0x51 or later,
+matching the equivalent AMD behavior and allowing the watchdog to
+initialize on those systems.
 
-Fixes: e5f89dbdebc5 ("ARM: dts: am335x-sl50: use audio-graph-card for sound")
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Link: https://patch.msgid.link/20260325223411.123666-1-jihed.chaibi.dev@gmail.com
-Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
+Fixes: 009637de1f65 ("watchdog: sp5100_tco: support Hygon FCH/SCH (Server Controller Hub)")
+Signed-off-by: Yingjie Gao <gaoyingjie@uniontech.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20260402071617.634563-2-gaoyingjie@uniontech.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/am335x-sl50.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/watchdog/sp5100_tco.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/ti/omap/am335x-sl50.dts b/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
-index 757ebd96b3f0b5..ccbde00d719c7c 100644
---- a/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
-+++ b/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
-@@ -558,8 +558,8 @@ cpu_endpoint: endpoint {
- 			remote-endpoint = <&codec_endpoint>;
- 
- 			dai-format = "dsp_b";
--			bitclock-master = <&codec_port>;
--			frame-master = <&codec_port>;
-+			bitclock-master = <&codec_endpoint>;
-+			frame-master = <&codec_endpoint>;
- 			bitclock-inversion;
- 			clocks = <&audio_mclk>;
- 		};
+diff --git a/drivers/watchdog/sp5100_tco.c b/drivers/watchdog/sp5100_tco.c
+index 2bd3dc25cb0304..7e99c3b1f3676b 100644
+--- a/drivers/watchdog/sp5100_tco.c
++++ b/drivers/watchdog/sp5100_tco.c
+@@ -92,7 +92,8 @@ static enum tco_reg_layout tco_reg_layout(struct pci_dev *dev)
+ 	    dev->device == PCI_DEVICE_ID_ATI_SBX00_SMBUS &&
+ 	    dev->revision < 0x40) {
+ 		return sp5100;
+-	} else if (dev->vendor == PCI_VENDOR_ID_AMD &&
++	} else if ((dev->vendor == PCI_VENDOR_ID_AMD ||
++		    dev->vendor == PCI_VENDOR_ID_HYGON) &&
+ 	    sp5100_tco_pci->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS &&
+ 	    sp5100_tco_pci->revision >= AMD_ZEN_SMBUS_PCI_REV) {
+ 		return efch_mmio;
 -- 
 2.53.0
 
