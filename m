@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A5543D510;
-	Tue, 21 Jul 2026 22:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB64B430CE3;
+	Tue, 21 Jul 2026 22:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674695; cv=none; b=sVBRGE4kETX3XBz39ljU2r7YULKTf0hAPPZhEWpLSwWWKewqoKwjnG2Y5/hI2UoquGV+PJT1A9FX4VCfdtWdwofX3ZZ4VQol0vy6jvR612CDKSemjrZyXULat2Y6lxJ4konzuN4Apcec6Cz6FkZbenZ/vGSqY6T+v1qMnujzF98=
+	t=1784674696; cv=none; b=r1C06vKESWFnirhT3obSojcFtKMcw2MSQcDe/A1uRDQ9prTuLdCJEjb8a7sA/xFylxkFAgjy0dpdkmjERfTFEya2oEyNNxI5SEk7Boslp4Hf8NoN68ywZqAzEiwj874qN/kM3pqWenBb2P3CHl64TzxROhUORNVwX53l1N7HSgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674695; c=relaxed/simple;
-	bh=egoCYlryAwkyREP+gUwB7iuwUfdxsJ5qxmMDujKxrus=;
+	s=arc-20240116; t=1784674696; c=relaxed/simple;
+	bh=Mp2nntqGKheRM/KAf3H6W1mRZD+ts+of5fmJMrikhEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UN5xfbdVK3Yv7eF3hdJh8vK0YBJZSnv9lg3Yi0kHtnd0yTXEOJmSLdslnfLxksKnmyB1uOMl0hc5hf466RhRIlfXWHPR3WUXpdaIhxFT3+PvqYFH5LolwIlW9cJ+ULNSln8B4wkYN+cveqvl3ofe4hXr2ZopQ0D9RV+UhvoI+gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzS0r5Dj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aeBpMr+cqlc0Fynf+mUZ4RkoD/RcYugRHNAWRTJ+/8KyVSScQ8WumeQV3dQ6MNn+FQPMWdTuxjWYfKbLQpPFHoTNyKX0v/TIRYsnt0i8OnOpeiVtcAsWVtmC9Gf2ESIvlZh144JP8yVgxjn5X0q2p7OLPe3NqGOSXHR+PHptH9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtbgOsi/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzS0r5Dj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505D81F00A3A;
-	Tue, 21 Jul 2026 22:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtbgOsi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84491F000E9;
+	Tue, 21 Jul 2026 22:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674692;
-	bh=QUTYmwZRq/lXEURWwWAIqilWOIoAzqnYM/A/9YKlmwE=;
+	s=korg; t=1784674690;
+	bh=NthhqASC1yP9iOtJOEuZeXVUa6eawyAJqUmVIFCAI2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yzS0r5DjhrYnA7Ze9ro8pvUqhDLYZWbV8YlwaQ+E8SjntoJBAVkN6tU5BZhvDRnZq
-	 KyXvWga/eT2tTIYv2IYZ9OIHoypSqiIRlRrhoHA7CaoZeHnoLD9mYVYbEZFuEx41Qa
-	 sN4uqu3yK2nr/Upn3H/l48sJmrmLuL+LpU9KOaxg=
+	b=gtbgOsi/W2RzxLpz2gzHelnZEYGkZaw0YrcQxc6bnCG8+1IjShszccl9XYGce7O3U
+	 0F6wRtHE+ZhG474WslhENc6oI9yfiPLMv8SgcTNPlTBsX9uSTgg7uenzZ8pi4xVFU5
+	 406Kdi6xFNMjhuMXpPNjgq4XjB9hQrOwZTHdjxqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 595/699] Bluetooth: btintel: Fix offset calculation boot address parameter
-Date: Tue, 21 Jul 2026 17:25:54 +0200
-Message-ID: <20260721152409.153109211@linuxfoundation.org>
+Subject: [PATCH 5.10 594/699] ALSA: aoa: check snd_ctl_new1() return value
+Date: Tue, 21 Jul 2026 17:25:53 +0200
+Message-ID: <20260721152409.130988621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,33 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-[ Upstream commit d00745da644d42c2f97293eb3fe19cfd5c0b073c ]
+[ Upstream commit 8df560fefe6fed6a20b7e06720eeaeccec349ac0 ]
 
-Boot address parameter was not getting updated properly
-due to wrong offset
+snd_ctl_new1() can return NULL when memory allocation fails. In
+layout.c, the function does not check the return value before
+dereferencing ctl->id.name or passing to aoa_snd_ctl_add(), which can
+lead to a NULL pointer dereference.
 
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Stable-dep-of: c5b600a3c05b ("Bluetooth: btusb: fix use-after-free on marvell probe failure")
+Add NULL checks after snd_ctl_new1() calls and return early if any
+fails.
+
+Assisted-by: Opencode:DeepSeek-V4-Flash
+Cc: stable@vger.kernel.org
+Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Link: https://patch.msgid.link/tencent_35F3A25FEEBF190A2E15ED787754C57E3708@qq.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btintel.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/aoa/fabrics/layout.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -863,7 +863,8 @@ static int btintel_download_firmware_pay
- 			/* The boot parameter is the first 32-bit value
- 			 * and rest of 3 octets are reserved.
- 			 */
--			*boot_param = get_unaligned_le32(fw_ptr + sizeof(*cmd));
-+			*boot_param = get_unaligned_le32(fw_ptr + frag_len +
-+							 sizeof(*cmd));
- 
- 			bt_dev_dbg(hdev, "boot_param=0x%x", *boot_param);
- 		}
+--- a/sound/aoa/fabrics/layout.c
++++ b/sound/aoa/fabrics/layout.c
+@@ -947,6 +947,8 @@ static void layout_attached_codec(struct
+ 			if (lineout == 1)
+ 				ldev->gpio.methods->set_lineout(codec->gpio, 1);
+ 			ctl = snd_ctl_new1(&lineout_ctl, codec->gpio);
++			if (!ctl)
++				return;
+ 			if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 				strlcpy(ctl->id.name,
+ 					"Headphone Switch", sizeof(ctl->id.name));
+@@ -961,6 +963,8 @@ static void layout_attached_codec(struct
+ 			if (ldev->have_lineout_detect) {
+ 				ctl = snd_ctl_new1(&lineout_detect_choice,
+ 						   ldev);
++				if (!ctl)
++					return;
+ 				if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 					strlcpy(ctl->id.name,
+ 						"Headphone Detect Autoswitch",
+@@ -968,6 +972,8 @@ static void layout_attached_codec(struct
+ 				aoa_snd_ctl_add(ctl);
+ 				ctl = snd_ctl_new1(&lineout_detected,
+ 						   ldev);
++				if (!ctl)
++					return;
+ 				if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 					strlcpy(ctl->id.name,
+ 						"Headphone Detected",
 
 
