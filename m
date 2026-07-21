@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5E0403E9B;
-	Tue, 21 Jul 2026 18:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E7039A7FD;
+	Tue, 21 Jul 2026 18:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658580; cv=none; b=e5atlRTS/1Kji+UtSestE4X8XZ6YMAjiPFH1lJiigp8LCy5y6BSwJo8sb1KMHYpyiDj4WcV8WOJmsr3uPfg0yy3wgEZMXTaa3ArwJxzPEFFyrBsoAgVRAnnUKA3YyLne8SX+AWRqRDDkUFWfjBgQdzLC4RupT588U5g3SLjHwRo=
+	t=1784658583; cv=none; b=o8dd9SP+LkyNY2gWLrPmCRlNl1NxhuLbQY4FEIzaNPe/HtpDPwVKRUOllt61jWUzBmXSUorTNc8x/2wF3Pw1U7f74eR/CnOsZX9SCzRS4W0fGN1rDrkVyhgBranJepy5jM4i3YjHGDJN7/yggplem6QebnhZmjRFQoaAyNlqDYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658580; c=relaxed/simple;
-	bh=sxTRJrwgbORwI4UzSDB5GbGCqfiYwWzC0ZbuU4CkZ6g=;
+	s=arc-20240116; t=1784658583; c=relaxed/simple;
+	bh=FfmPg263g9bwJaE5ZtcZKB1IXQiWES4ppwS+rwBzzto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vA1W1Xb2QyGIrmt772nBWPL4JKwY056Q5QggfdbK488b5w6b01GVp4XC93swzqP5hivVtc9+R+U5/8hcLFN4QL0WxaKYrvRT/JyOBPfk2yr5AdaoSk9bb+Nc7oNDajFXCUrSuUk2OwVOPBOVLvIta+/yNgldqRaLqtYgpJg0kXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4hHFWH4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jMBRLzcnQoE9HN9JYMYyZTH9nx9LwUgwbPD0+A5It+TWEmme87eSq7uHFdnO6K5ojYFSh4FR9YzzuKLUNrR8KXqblrpgTgGRC5jA1xJ0uIXXZjxhzeReo4tMkBSUntAW+D8577KexLwETZNX4SdIKqakQhy0GjcbYn06S1XJx8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQ66RyK5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4hHFWH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0471F000E9;
-	Tue, 21 Jul 2026 18:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQ66RyK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FCA1F000E9;
+	Tue, 21 Jul 2026 18:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658579;
-	bh=QuVEmjR07pUpWuhZ8rjwVHSZvPkLil0yZyScTl3dkuQ=;
+	s=korg; t=1784658582;
+	bh=l0xZN4sbkaE7WXVztj91Cq/xqPoYd41zxuAtOSw+5Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n4hHFWH4wk8YyO7xRZ6CmchV4QJRNUbmq47cxzA94udwS/FlNvY2W5lqo/1HE4RPT
-	 kTW8A8IsI9mhwVauF3QuQv5pJZco4IH9QEwthSPuNtSUL8kjaEvXNDn/HCl+YC99A6
-	 uF7vYyAXIGrSk8Q/ssb6bIDgYVTbZZc8sLg847v8=
+	b=eQ66RyK5B1oMj7EvyLR2fetH3kqG9bFhhO88vGDXBgkazS/nW9O0hDX5pp/xSf9ds
+	 7byV5dVAjfTpBl+uH7ySTYgIDBugy3x5m8kGaRcb0D56B1HAk0Ara0emqG6q3hntj3
+	 Lux6P6yHm6g/ugjZYWPNthKcjk4wj0+ro6clSjVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 1196/1611] batman-adv: access unicast_ttvn skb->data only after skb realloc
-Date: Tue, 21 Jul 2026 17:21:52 +0200
-Message-ID: <20260721152542.333350245@linuxfoundation.org>
+Subject: [PATCH 6.18 1197/1611] batman-adv: dat: acquire ARP hw source only after skb realloc
+Date: Tue, 21 Jul 2026 17:21:53 +0200
+Message-ID: <20260721152542.354974601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,35 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 7141990add3f75436f2933cb310654cad3b1e3e9 upstream.
+commit 48067b2ae4504500a7093d9e1e16b42e70330480 upstream.
 
 The pskb_may_pull() called by batadv_get_vid() could reallocate the buffer
 behind the skb. Variables which were pointing to the old buffer need to be
 reassigned to avoid an use-after-free.
 
-This was done correctly for the ethernet header but missed for the
-unicast_packet pointer.
-
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: c018ad3de61a ("batman-adv: add the VLAN ID attribute to the TT entry")
+Fixes: b61ec31c8575 ("batman-adv: Snoop DHCPACKs for DAT")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/routing.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/distributed-arp-table.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/batman-adv/routing.c
-+++ b/net/batman-adv/routing.c
-@@ -855,8 +855,8 @@ static bool batadv_check_unicast_ttvn(st
- 	if (skb_cow(skb, sizeof(*unicast_packet)) < 0)
- 		return false;
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -1747,6 +1747,7 @@ void batadv_dat_snoop_incoming_dhcp_ack(
+ 	struct ethhdr *ethhdr;
+ 	__be32 ip_src, yiaddr;
+ 	unsigned short vid;
++	int hdr_size_tmp;
+ 	__be16 proto;
+ 	u8 *hw_src;
  
--	unicast_packet = (struct batadv_unicast_packet *)skb->data;
- 	vid = batadv_get_vid(skb, hdr_len);
-+	unicast_packet = (struct batadv_unicast_packet *)skb->data;
- 	ethhdr = (struct ethhdr *)(skb->data + hdr_len);
+@@ -1763,8 +1764,10 @@ void batadv_dat_snoop_incoming_dhcp_ack(
+ 	if (!batadv_dat_check_dhcp_ack(skb, proto, &ip_src, chaddr, &yiaddr))
+ 		return;
  
- 	/* do not reroute multicast frames in a unicast header */
++	hdr_size_tmp = hdr_size;
++	vid = batadv_dat_get_vid(skb, &hdr_size_tmp);
++	ethhdr = (struct ethhdr *)(skb->data + hdr_size);
+ 	hw_src = ethhdr->h_source;
+-	vid = batadv_dat_get_vid(skb, &hdr_size);
+ 
+ 	batadv_dat_entry_add(bat_priv, yiaddr, chaddr, vid);
+ 	batadv_dat_entry_add(bat_priv, ip_src, hw_src, vid);
 
 
