@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EC437E310;
-	Tue, 21 Jul 2026 22:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155763BB680;
+	Tue, 21 Jul 2026 22:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673649; cv=none; b=CUlKO4mEEkeP5DRIaOAAN7cGJZPphnlkXj3abTlUzChU03X2/xZ01ot8MBiXH9FizDlSKWNEUwTVwTacW8rE7RpREzJ7tLtCppl8juyKp7bqtzHdgsRnlIvTZilR1x9QsKvy1RroSePd/zRTanwikitLTNbid+wuzqiiUsm8d6c=
+	t=1784673652; cv=none; b=epDWuNN/4aLcGWuIF0Ig3s4LAgGlKRXbT1IM+oPLHAGSh8WEnPOs8A2e7PxXlJ78tkDOH+27+Bsww5fRjCV8qR2du3xXdxd9Ih1acrnL2zXT8Q/C+F2v7D1qCJRyKOrHmQ4qWw6BDSWNa6vVNsK/bwrtbPsi9rKDfiAEwFsPzAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673649; c=relaxed/simple;
-	bh=ZmIaKthB19AZ2T40+XqP5Z9k+fcLvctAPzwWzFhoLoA=;
+	s=arc-20240116; t=1784673652; c=relaxed/simple;
+	bh=/zTmBzs2IiqJV2H2AWPqQvdIVCEBcgfKvxIEpqMZwZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2NIo8jn43aXSsnIPyOyn5/pLvaAPoLhLvvKfzBOV4J95uEEZSZts9HYo0dPf5bOkS0i85S4PSQGRto0YcwDV5HdmvSk7UCrKim+JfZZxgnq/ZkSE2BHnQ33zbgzE8yLXyiMeutVMGc0oWYkhAw1xaPefOONi4MnX+DwFepkG/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmCP6Zyz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mt2ii1laDkYpnyRWXluxgJvghJmK7+3uS255DwEUC+mXZt0tg5d4XW/63ERCqsC/BwO1E3HmoJWx3PT43WTGMcrEIsA99RzIyaKSmfDqqyyBVhItoKNXwvY//b2o10QwAUbvBRjI/Ib758zwuPYfpsKliTA575Nj2K0CXtjj/7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+CGyTIj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmCP6Zyz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6171F000E9;
-	Tue, 21 Jul 2026 22:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+CGyTIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A2D1F000E9;
+	Tue, 21 Jul 2026 22:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673648;
-	bh=BRCmZUje3FxTN8zW2qR1hPBGXLjbpJpj0I+CaC7xH0g=;
+	s=korg; t=1784673650;
+	bh=ujg7A9P8ExEOu2ykHTiJtz3JtpuxshmVTEbUdoefo7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OmCP6ZyzF4Ci83TVJFNbWIq1szIe0nKkqA+6DTln8MSQ++QC0kpJq4wo/gQpmoXwM
-	 iUeJjAO3aJTXF90FuXGPw3ALsoovdVqfzkG2rVwOC4KC0ZqgqqFXXVBqqseKUVnvy/
-	 mABSVFJNe1aSl5l7YIIuJOe+1pzlcAjvLvMmxAww=
+	b=r+CGyTIjH1WNTxdKQj77KADGBI+SBuSa/jOq2aVzSL4KMVR+gURESwv1Ti25WvtDX
+	 7wFGODKmHw9q0aubSCHjox9zMQhD1NRXWUsfzZNTJIaP3HaHBF8/aGj5vfmYdi74FB
+	 2TD0rC39HV7KOwswLHD4R4y7gUMsnnu5iCCCzlr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 242/699] configfs: fix lockless traversals of ->s_children
-Date: Tue, 21 Jul 2026 17:20:01 +0200
-Message-ID: <20260721152401.157673061@linuxfoundation.org>
+Subject: [PATCH 5.10 243/699] pinctrl: mediatek: mt8516: Fix Schmitt trigger register offset of pins 34-39
+Date: Tue, 21 Jul 2026 17:20:02 +0200
+Message-ID: <20260721152401.178881483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,152 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit 9b9e8bb81c41fd27e7b57a1c936fde140548535f ]
+[ Upstream commit 1c3044cab23a056ea28da47da1cdd667a39df0b8 ]
 
-Having the parent directory locked protects entries from removal
-by another thread, but it does *not* protect cursors from being
-moved around by lseek() - or freed, for that matter.
+The correct Schmitt trigger register offset for pins 34-39 is 0xA00.
 
-Fixes: 6f6107640625 ("configfs: Introduce configfs_dirent_lock")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+Fixes: 264667112ef0 ("pinctrl: mediatek: Add MT8516 Pinctrl driver")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 54 +++++++++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 13 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-mt8516.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index fcacee2b3c0f2e..ef86e4510c1c5b 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -227,15 +227,16 @@ static int configfs_dirent_exists(struct configfs_dirent *parent_sd,
- {
- 	struct configfs_dirent * sd;
- 
-+	spin_lock(&configfs_dirent_lock);
- 	list_for_each_entry(sd, &parent_sd->s_children, s_sibling) {
- 		if (sd->s_element) {
--			const unsigned char *existing = configfs_get_name(sd);
--			if (strcmp(existing, new))
--				continue;
--			else
-+			if (strcmp(configfs_get_name(sd), new) == 0) {
-+				spin_unlock(&configfs_dirent_lock);
- 				return -EEXIST;
-+			}
- 		}
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	return 0;
- }
-@@ -574,11 +575,28 @@ static void configfs_detach_rollback(struct dentry *dentry)
- 			configfs_detach_rollback(sd->s_dentry);
- }
- 
-+/*
-+ * Find the next non-cursor.  configfs_dirent_lock held by caller.
-+ */
-+static struct configfs_dirent *next_dirent(struct configfs_dirent *parent,
-+					   struct configfs_dirent *last)
-+{
-+	struct configfs_dirent *s;
-+
-+	s = list_prepare_entry(last, &parent->s_children, s_sibling);
-+
-+	list_for_each_entry_continue(s, &parent->s_children, s_sibling) {
-+		if (s->s_element)
-+			return s;
-+	}
-+	return NULL;
-+}
-+
- static void detach_attrs(struct config_item * item)
- {
- 	struct dentry * dentry = dget(item->ci_dentry);
--	struct configfs_dirent * parent_sd;
--	struct configfs_dirent * sd, * tmp;
-+	struct configfs_dirent *parent_sd;
-+	struct configfs_dirent *sd, *next;
- 
- 	if (!dentry)
- 		return;
-@@ -587,15 +605,19 @@ static void detach_attrs(struct config_item * item)
- 		 dentry->d_name.name);
- 
- 	parent_sd = dentry->d_fsdata;
--	list_for_each_entry_safe(sd, tmp, &parent_sd->s_children, s_sibling) {
--		if (!sd->s_element || !(sd->s_type & CONFIGFS_NOT_PINNED))
-+
-+	spin_lock(&configfs_dirent_lock);
-+	for (sd = next_dirent(parent_sd, NULL); sd; sd = next) {
-+		next = next_dirent(parent_sd, sd);
-+		if (!(sd->s_type & CONFIGFS_NOT_PINNED))
- 			continue;
--		spin_lock(&configfs_dirent_lock);
- 		list_del_init(&sd->s_sibling);
- 		spin_unlock(&configfs_dirent_lock);
- 		configfs_drop_dentry(sd, dentry);
- 		configfs_put(sd);
-+		spin_lock(&configfs_dirent_lock);
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	/**
- 	 * Drop reference from dget() on entrance.
-@@ -644,18 +666,20 @@ static void detach_groups(struct config_group *group)
- 	struct dentry * dentry = dget(group->cg_item.ci_dentry);
- 	struct dentry *child;
- 	struct configfs_dirent *parent_sd;
--	struct configfs_dirent *sd, *tmp;
-+	struct configfs_dirent *sd, *next;
- 
- 	if (!dentry)
- 		return;
- 
- 	parent_sd = dentry->d_fsdata;
--	list_for_each_entry_safe(sd, tmp, &parent_sd->s_children, s_sibling) {
--		if (!sd->s_element ||
--		    !(sd->s_type & CONFIGFS_USET_DEFAULT))
-+	spin_lock(&configfs_dirent_lock);
-+	for (sd = next_dirent(parent_sd, NULL); sd; sd = next) {
-+		next = next_dirent(parent_sd, sd);
-+		if (!(sd->s_type & CONFIGFS_USET_DEFAULT))
- 			continue;
- 
- 		child = sd->s_dentry;
-+		spin_unlock(&configfs_dirent_lock);
- 
- 		inode_lock(d_inode(child));
- 
-@@ -667,7 +691,9 @@ static void detach_groups(struct config_group *group)
- 
- 		d_delete(child);
- 		dput(child);
-+		spin_lock(&configfs_dirent_lock);
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	/**
- 	 * Drop reference from dget() on entrance.
-@@ -1119,6 +1145,7 @@ configfs_find_subsys_dentry(struct configfs_dirent *root_sd,
- 	struct configfs_dirent *p;
- 	struct configfs_dirent *ret = NULL;
- 
-+	spin_lock(&configfs_dirent_lock);
- 	list_for_each_entry(p, &root_sd->s_children, s_sibling) {
- 		if (p->s_type & CONFIGFS_DIR &&
- 		    p->s_element == subsys_item) {
-@@ -1126,6 +1153,7 @@ configfs_find_subsys_dentry(struct configfs_dirent *root_sd,
- 			break;
- 		}
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	return ret;
- }
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mt8516.c b/drivers/pinctrl/mediatek/pinctrl-mt8516.c
+index b375426aa61e41..9e0f447bb35089 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mt8516.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mt8516.c
+@@ -252,7 +252,7 @@ static const struct mtk_pin_ies_smt_set mt8516_smt_set[] = {
+ 	MTK_PIN_IES_SMT_SPEC(24, 25, 0xA00, 12),
+ 	MTK_PIN_IES_SMT_SPEC(26, 30, 0xA00, 0),
+ 	MTK_PIN_IES_SMT_SPEC(31, 33, 0xA00, 1),
+-	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA900, 2),
++	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA00, 2),
+ 	MTK_PIN_IES_SMT_SPEC(40, 40, 0xA10, 11),
+ 	MTK_PIN_IES_SMT_SPEC(41, 43, 0xA00, 10),
+ 	MTK_PIN_IES_SMT_SPEC(44, 47, 0xA00, 11),
 -- 
 2.53.0
 
