@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B3B248F57;
-	Tue, 21 Jul 2026 15:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018153793D2;
+	Tue, 21 Jul 2026 15:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649232; cv=none; b=RCHIgDWXQAiYCV5WgLYK7LWLcOYj+XcIYP4jt4umT1OFDW+03nRzHyFJWBQBgNcvVc2S92EMBpNrrHRN2arTmSmiE3+0Zxc8fsXZFOZkH3wsi9KTn3VCW30PdZwJgzM5t80lg7KlZFdx2Wr2LCVc4tI0Blm45AxkqC1IfZgF5vU=
+	t=1784649235; cv=none; b=t/DEmrgpxM3/zjESSjUHdJkIQneZxgr57uoDBNH6r3nIYmCyLuWYu0YLmrAMc9wYNHGLB5UKmKu/kovu1OSvTNqKWOy561aOOIsZ1Ani+vrOF9NFzCA8YY2g+WK++GWtKG/QHVYBnzwjQvYN8w1rgEsuAABOZBZzS9Idb8QYP8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649232; c=relaxed/simple;
-	bh=nr7UzEKnuIcW5lLQFbOzJYUryDgk6WFZsS3MJZ525tI=;
+	s=arc-20240116; t=1784649235; c=relaxed/simple;
+	bh=7AFudpNFAnE5Vu/Gk86cRUBwb98RhCHxN5N7ZKAOsi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5ZehjuL7JHcXPTqeMQNJ4YsN3kjDpKENvVohng8c3EZM40I5tyL6Bmf2VurJ+MKQUuulc0zm6O0VJ+zTTYROYzCuoIkFtZayYUrmOqo8tIF8XALgtczYWdWKWcOpnEwTAJdB3iS02bcZhmhX+WFuksKqzVgVcLeoiwqKg92rqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h98OZRoi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LH/uhN+YzTjwGhYSrM+z4b1Ii/n9ELIPon5XG64+ot5J4t0ZC6Hsq1bacaMMHWMwOEjgjq6tRAtBBxFsqkQCVrJ9deRKazWmM0lpGsF03UDt1ZRajaYbC6lHWfaaxMTj6rADej8JHdrYXIVld4t2ZuP/PebfCkW8zGmjeIVGPQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2jHELfg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h98OZRoi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08251F000E9;
-	Tue, 21 Jul 2026 15:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2jHELfg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674FE1F00A3A;
+	Tue, 21 Jul 2026 15:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649231;
-	bh=tq4JyND/D5gt1pz7ZKmaxYAtq1e+eMN+H5l9+ueSCR0=;
+	s=korg; t=1784649233;
+	bh=leyAcQYPeL0pLoVUIywWk6g8Pz3Gf5P35DQqn6I4L+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h98OZRoiH5WsbBJQfgf2G4UPv6q809sn2kcvs5XklJ0ZkGoO6jGudPw/EgXb+yGDc
-	 1fs+F2PDzWv8RHImrrOZHiBi/pi05Rpl17r4X1+r+/Ya44rznoU1VTwN3XF/FyZDaw
-	 IZdXN/SDeuKhEIkUkfj2rjm4DPX/F0zF4rRDDlNs=
+	b=A2jHELfgS5YnEzDyhP9WhC9MkcjVYKtbCv/XLIQLPfWvlTNGT0JGZI9nYorwx+6ji
+	 cVoCXemNbOc9QB4Jb+aJcFP/7z8Zrbz8WqGmC71sYlbbzZ0rM+WbARRM+S+fLZsU8F
+	 mapcuxhEjO/TIf5Q+c6T0XHs9xr4E6OTClsfkleA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0498/2077] IB/cm: Fix av cm device leak on an error path in cm_init_av_by_path()
-Date: Tue, 21 Jul 2026 17:02:51 +0200
-Message-ID: <20260721152604.558725040@linuxfoundation.org>
+Subject: [PATCH 7.1 0499/2077] ALSA: hda: fix Kconfig dependency of HD Audio PCI
+Date: Tue, 21 Jul 2026 17:02:52 +0200
+Message-ID: <20260721152604.583697808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,85 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 9b2207bc5cdb955bdae34b3eec80f04979e17081 ]
+[ Upstream commit 1516134cb65526aba5319bb446c296fc8a192f84 ]
 
-Codex pointed out that cm_init_av_by_path() can call cm_set_av_port()
-which takes a reference on the cm device, but then can immediately return
-error if ib_init_ah_attr_from_path() fails.
+With commit 2d9223d2d64c ("ALSA: hda: Move controller drivers into
+sound/hda/controllers directory") the HD Audio drivers have been moved
+from linux/sound/pci/hda to linux/sound/hda.
 
-Since callers like ib_send_cm_req() put the av on the stack this leaks
-that cm device reference.
+But the Kconfig dependency for SND_HDA_INTEL stayed on SND_PCI instead of
+depending on PCI directly. To make the "HD Audio PCI" configuration entry
+visible it is currently needed to enable "PCI sound devices" although
+no PCI device in the submenu needs to be selected.
 
-Re-order cm_init_av_by_path() so it doesn't touch the av until it has done
-all its failable work, and then update the av in one shot so it is either
-left alone or fully init'd.
+Make SND_HDA_INTEL directly depending on hardware/architecture like the
+other entries in this Kconfig.
 
-Sashiko also pointed out that the cm_destroy_av() prior to
-cm_init_av_by_path() is harmful as it leaves the AV broken in the error
-case and thus the REJ won't send. Since cm_init_av_by_path() is now atomic
-it is safe to delete the cm_destroy_av(). On succees the av from
-cm_init_av_for_response() is cleaned up by cm_init_av_by_path(), on
-failure the 'goto rejected' guarentees the av is destroyed during
-ib_destroy_cm_id().
-
-Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
-Link: https://patch.msgid.link/r/0-v1-38292501f539+14f-ib_cm_av_leak_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 2d9223d2d64c ("ALSA: hda: Move controller drivers into sound/hda/controllers directory")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260529-hda-kconfig-v1-1-4a2c6a0efd56@hartkopp.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cm.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ sound/hda/controllers/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
-index 6ab9a0aee1ec60..1a2c2775b14d56 100644
---- a/drivers/infiniband/core/cm.c
-+++ b/drivers/infiniband/core/cm.c
-@@ -530,6 +530,7 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
- 	struct rdma_ah_attr new_ah_attr;
- 	struct cm_device *cm_dev;
- 	struct cm_port *port;
-+	u16 pkey_index;
- 	int ret;
- 
- 	port = get_cm_port_from_path(path, sgid_attr);
-@@ -538,12 +539,10 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
- 	cm_dev = port->cm_dev;
- 
- 	ret = ib_find_cached_pkey(cm_dev->ib_device, port->port_num,
--				  be16_to_cpu(path->pkey), &av->pkey_index);
-+				  be16_to_cpu(path->pkey), &pkey_index);
- 	if (ret)
- 		return ret;
- 
--	cm_set_av_port(av, port);
--
- 	/*
- 	 * av->ah_attr might be initialized based on wc or during
- 	 * request processing time which might have reference to sgid_attr.
-@@ -558,6 +557,8 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
- 	if (ret)
- 		return ret;
- 
-+	av->pkey_index = pkey_index;
-+	cm_set_av_port(av, port);
- 	av->timeout = path->packet_life_time + 1;
- 	rdma_move_ah_attr(&av->ah_attr, &new_ah_attr);
- 	return 0;
-@@ -2184,8 +2185,10 @@ static int cm_req_handler(struct cm_work *work)
- 				 cm_id_priv->av.ah_attr.roce.dmac);
- 	work->path[0].hop_limit = grh->hop_limit;
- 
--	/* This destroy call is needed to pair with cm_init_av_for_response */
--	cm_destroy_av(&cm_id_priv->av);
-+	/*
-+	 * cm_init_av_by_path() will internally pair with the above
-+	 * cm_init_av_for_response() if it succeeds.
-+	 */
- 	ret = cm_init_av_by_path(&work->path[0], gid_attr, &cm_id_priv->av);
- 	if (ret) {
- 		int err;
+diff --git a/sound/hda/controllers/Kconfig b/sound/hda/controllers/Kconfig
+index 72855f2df45148..5d6a77e68588e7 100644
+--- a/sound/hda/controllers/Kconfig
++++ b/sound/hda/controllers/Kconfig
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ config SND_HDA_INTEL
+ 	tristate "HD Audio PCI"
+-	depends on SND_PCI
++	depends on PCI
+ 	select SND_HDA
+ 	select SND_INTEL_DSP_CONFIG
+ 	help
 -- 
 2.53.0
 
