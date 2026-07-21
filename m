@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F544DB57B;
-	Tue, 21 Jul 2026 15:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F79B4F7978;
+	Tue, 21 Jul 2026 15:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648503; cv=none; b=Dvf0JIwIUNhoz1rdQZ8lxIrhqeOyeIimPwl35MkpVBXm2sUtILQ4ePRRnlu7xOEJ0jFHKjlxJM7UfCpRT+mKhCTikwdg2sVlVJZImJyUWeOHaX6SyqWkaNemGBTNNlvKaqbBqQJuoEiQpYFO/SNKdgklsbu40LHzGgZfnnk8pSI=
+	t=1784648507; cv=none; b=QfNdZiwdaeH9RaAJ/9D+FYDKVbvD3ETrR6WR9aaumJAWVm08fbX1kWsr2mO5kEzBxw4YW8NYTbtQNDm5+rGcsl2bhA0QDBrb8hJB7nBqJRG95RtpFe/DASN3DqmD83gjyRbvs0b5tVVSihZU5ZBlBZo7fhRL6rwV9md2ZE4JdiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648503; c=relaxed/simple;
-	bh=cZ9uVZc7r4PbYaNuy7lmMYYpUwcDhnw1XAbdkWWgDXo=;
+	s=arc-20240116; t=1784648507; c=relaxed/simple;
+	bh=/aRuwHxLfR0a2sa3DdfoKmz6c7ALJeLCpro9wI0lBf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qu/XR6YI5enqkGjNzUEjgdxGAVPkKvi9uXdEXDPTOQJHiTBSJAR/5XUh0noWZgK0j/y0cgxZVOP9Y7JGQl7rMEpHboMXU6+1H3dCOFDupnwU9RV7pjQ3hvyvm02LUivrdNMMcXlAvn5QqiUGUXJfE1LjpIA6aPvYFqsa2nrjfGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UI6EcF5a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BzqzGE3/N3saN6cssurdl0Z2SVPUieq/C6yS/iGYVi+UqDFHyu4Vfl5a6W7J4h0qGSxUwb6O6ogenNAHlQ2cN+TGZdmXjgmpVPjQ/ciSz7wIwjHyETaRBK3/gwRj3fyp5jlcGqeClJUUMFAL6mM8Kw0Fm32SxSY4ci+fAfu1xcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsVdmRjh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UI6EcF5a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473A41F00A3A;
-	Tue, 21 Jul 2026 15:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsVdmRjh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBEB1F000E9;
+	Tue, 21 Jul 2026 15:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648502;
-	bh=iTj+tdC87w4WPUO7dnBht9HW80loCmUUtEGq/hOxzXk=;
+	s=korg; t=1784648505;
+	bh=P7IQziOiBFOAJP+3pEavShJDl/a8EMTZPJnSSzVZCLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UI6EcF5aomeA1doiZermoAjf36RtpB8ldRaZy2GncBK/t0Ef/YRLSTnn0CXDE7x3p
-	 HVDSwpRBBPtY/H9vCTMTx9gBCh0z1RwoPAO9KE57b0kWkN3e9qbBbGTmvtEYwVfd4l
-	 hGVMTCc+WDAFy49zF+xF23fcbBDR4O3tbHtnvPcA=
+	b=NsVdmRjh4yQt9DBpYT1Lja8wAH8rAh1dWmS6UUL0iA1WmJwuVMstfV7kzMSVV9Bae
+	 q+sgWPQmNNCodMvcIqGpre/pJ/uzL+/3hwAgEOpFHJ+UlWfnrcDyPU4BtJgj/19Qv9
+	 2J3xON9hb/gKcZRZhzCP60XwFJjk1+9JCoFq+WOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Wei Wang <wei.w.wang@hotmail.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0181/2077] iommu/amd: Fix a stale comment about which legacy mode is user visible
-Date: Tue, 21 Jul 2026 16:57:34 +0200
-Message-ID: <20260721152556.952197332@linuxfoundation.org>
+Subject: [PATCH 7.1 0182/2077] soc: mediatek: mtk-mmsys: Restore MT8167 routing masks lost during merge
+Date: Tue, 21 Jul 2026 16:57:35 +0200
+Message-ID: <20260721152556.976530071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,46 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit 4bf53c2d0c08bbdaa32f2114281f1ddab61902bf ]
+[ Upstream commit 7d462de9f65b002b439b1b168bf3b5579b0de48b ]
 
-Update a stale comment about which of the legacy modes is visible to the
-user, i.e. can be forced via amd_iommu_intr=legacy.
+The original patch that was sent to the mailing lists included the values
+for the route masks, but they got lost during merge: add back the full
+register masks where missing.
 
-Fixes: b74aa02d7a30 ("iommu/amd: Fix legacy interrupt remapping for x2APIC-enabled system")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 060f7875bd23 ("soc: mediatek: mmsys: Add support for MT8167 SoC")
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/soc/mediatek/mt8167-mmsys.h | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index f9f71808789303..c726d115939a6b 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -948,12 +948,13 @@ static inline int get_hpet_devid(int id)
- }
+diff --git a/drivers/soc/mediatek/mt8167-mmsys.h b/drivers/soc/mediatek/mt8167-mmsys.h
+index c468926561b475..eef14083c47b5a 100644
+--- a/drivers/soc/mediatek/mt8167-mmsys.h
++++ b/drivers/soc/mediatek/mt8167-mmsys.h
+@@ -10,24 +10,29 @@
+ #define MT8167_DISP_REG_CONFIG_DISP_RDMA0_SOUT_SEL_IN	0x06c
  
- enum amd_iommu_intr_mode_type {
--	AMD_IOMMU_GUEST_IR_LEGACY,
--
--	/* This mode is not visible to users. It is used when
--	 * we cannot fully enable vAPIC and fallback to only support
--	 * legacy interrupt remapping via 128-bit IRTE.
-+	/*
-+	 * The legacy format mode is not visible to users to prevent the user
-+	 * from crashing x2APIC systems, which for all intents and purposes
-+	 * require 128-bit IRTEs.   The legacy format will be forced as needed
-+	 * when hardware doesn't support 128-bit IRTEs.
- 	 */
-+	AMD_IOMMU_GUEST_IR_LEGACY,
- 	AMD_IOMMU_GUEST_IR_LEGACY_GA,
- 	AMD_IOMMU_GUEST_IR_VAPIC,
+ #define MT8167_DITHER_MOUT_EN_RDMA0			0x1
++#define MT8167_DITHER_MOUT_EN_MASK			0x7
++
+ #define MT8167_RDMA0_SOUT_DSI0				0x2
++#define MT8167_RDMA0_SOUT_MASK				0x3
++
+ #define MT8167_DSI0_SEL_IN_RDMA0			0x1
++#define MT8167_DSI0_SEL_IN_MASK				0x3
+ 
+ static const struct mtk_mmsys_routes mt8167_mmsys_routing_table[] = {
+ 	MMSYS_ROUTE(OVL0, COLOR0,
+ 		    MT8167_DISP_REG_CONFIG_DISP_OVL0_MOUT_EN, OVL0_MOUT_EN_COLOR0,
+ 		    OVL0_MOUT_EN_COLOR0),
+ 	MMSYS_ROUTE(DITHER0, RDMA0,
+-		    MT8167_DISP_REG_CONFIG_DISP_DITHER_MOUT_EN, MT8167_DITHER_MOUT_EN_RDMA0,
++		    MT8167_DISP_REG_CONFIG_DISP_DITHER_MOUT_EN, MT8167_DITHER_MOUT_EN_MASK,
+ 		    MT8167_DITHER_MOUT_EN_RDMA0),
+ 	MMSYS_ROUTE(OVL0, COLOR0,
+ 		    MT8167_DISP_REG_CONFIG_DISP_COLOR0_SEL_IN, COLOR0_SEL_IN_OVL0,
+ 		    COLOR0_SEL_IN_OVL0),
+ 	MMSYS_ROUTE(RDMA0, DSI0,
+-		    MT8167_DISP_REG_CONFIG_DISP_DSI0_SEL_IN, MT8167_DSI0_SEL_IN_RDMA0,
++		    MT8167_DISP_REG_CONFIG_DISP_DSI0_SEL_IN, MT8167_DSI0_SEL_IN_MASK,
+ 		    MT8167_DSI0_SEL_IN_RDMA0),
+ 	MMSYS_ROUTE(RDMA0, DSI0,
+-		    MT8167_DISP_REG_CONFIG_DISP_RDMA0_SOUT_SEL_IN, MT8167_RDMA0_SOUT_DSI0,
++		    MT8167_DISP_REG_CONFIG_DISP_RDMA0_SOUT_SEL_IN, MT8167_RDMA0_SOUT_MASK,
+ 		    MT8167_RDMA0_SOUT_DSI0),
  };
+ 
 -- 
 2.53.0
 
