@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3235E415F17;
-	Tue, 21 Jul 2026 18:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEED522B8DF;
+	Tue, 21 Jul 2026 18:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660178; cv=none; b=iKuGNtkU0gKV40r3w8dZ5Efgxtx/D7H0vDyWudTwFRPQKyIPKWrRm+McsCBuXeKxayWmOaFg1Zh0/givtWkKkbIYVM1Yx75CZ1nhtRIfqxGrBEMH4Mc53PObUNZaCu79B9iy878oXbbpotAxxp/4PIFVRWMOldNWnqa44R0uvQg=
+	t=1784660180; cv=none; b=RFnjg7VWMHbOVTVOzdEnu++i0uljtB3frR2KPU25O+vZIa1RiKjd7t4jsJlMJY4b2LBK0cU0n2Kpi6tyvmfr1PvbvbWKUl92EmFluvdmL+DBiCG5hvhf67WybcIJkL3u+cn7zpHSpXRFzdjHUcxfNH86B4frCvM3Vi4wNDNuCTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660178; c=relaxed/simple;
-	bh=ToOLMBYCIBguHWZ/PwrNFZTvk4FiZcEGvPfpRa+Lt30=;
+	s=arc-20240116; t=1784660180; c=relaxed/simple;
+	bh=DTuCihMeS5j2NBsSztMb+tOaiinJE8G6U3KjavUZLVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocJUZajLkV3U5v4thGDeLjr/ORAW+sm9cUBvZtpnueS1g/qs8EbRGEmv2oj2x3aVYDtQida8cyOxjDgptwlhS+V+VYAaQhg7oOVXTumZMI8mJWt58knPPK54AwwvN/WSWrR1S4DsMtXajs2OxAiL07kJ2zcOEtYjQEacAt7Ullk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3cB6QnI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nG/t9AERLDUaeXuP6U9AV3C0DvmmNZuxODzF8w60T6FiJXkVkJdYuCeNhyhEFtLtTxxz0TJYjxXZ+WCwWTfbwoJGkmQtdEBmXyBF1oopgvwPxL4QNKF5nhdeyzM6jtiPkgEY9tUEHOR7CSxkBKUVmqGUw+wGPY7txtIKf4oYFlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmQAEj1C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3cB6QnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB261F000E9;
-	Tue, 21 Jul 2026 18:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmQAEj1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E251F000E9;
+	Tue, 21 Jul 2026 18:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660177;
-	bh=eALqQUurzd3QqODYa4mwuJbB7QkQUIkcCaGQfu6ZYjE=;
+	s=korg; t=1784660179;
+	bh=Ry36cZp90RIRF3Ta3+e0VqDiJHB7AD9HL/niOhvhzZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H3cB6QnIp6VQlsz3pmUELA57MFq2ytrDgoK02Zhd3fQiKF2Jw8H6FxFPi7vmaAmbd
-	 vdMW9hpGyZnmA2Fp9uhzceQn4yuZ9PFdHrOIJiqIIUYa5wrsJnSkM9fMWEx/Ljm4+g
-	 AdSakQlGFVnmmZG2DJ9WOWNUTzkYRZycYXtTtkjs=
+	b=MmQAEj1CRZHnQzAeul15ZQTwg3yAamdmw1UDSTjhtlkNu6LZe9r6KL5HiHgy8p+Fw
+	 qu5D4IpeskneHHvYQmr9kP5kiAHLb8OgT1JbYs3rb5K5d2DJBS+PyMxF4Gk1+Nv3ml
+	 mjw3Z15hpvfRNI+jMaR7D7WRnaW41xkzfrYqOtGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dan Carpenter <error27@gmail.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Hans Zhang <18255117159@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0882/2077] PCI: dwc: Fix signedness bug in fault injection test code
-Date: Tue, 21 Jul 2026 17:09:15 +0200
-Message-ID: <20260721152613.607783506@linuxfoundation.org>
+Subject: [PATCH 7.1 0883/2077] PCI: mediatek-gen3: Fix incorrectly skipped pwrctrl error message
+Date: Tue, 21 Jul 2026 17:09:16 +0200
+Message-ID: <20260721152613.631179089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,53 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 94ac934d2c054fba4a22d8dc84749094c5fa0ec0 ]
+[ Upstream commit 8ba433753d9b131c2e43b1ff7ba8c5730cef8231 ]
 
-The kstrtou32() function returns negative error code or zero on success.
-However, in this case "val" is a u32 and the function returns signed long,
-so negative error codes from kstrtou32() are returned as high positive
-values.
+When pwrctrl integration was added, the error message for
+pci_pwrctrl_create_devices() failure was incorrectly added after the goto
+statement, causing it to be skipped.
 
-Store the error code in an int instead.
+Move the goto statement after the dev_err_probe() call so that the
+error message actually gets printed (or saved if probe is deferred).
 
-Fixes: d20ee8e2dbd6 ("PCI: dwc: Add debugfs based Error Injection support for DWC")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
+Fixes: 1a152e21940a ("PCI: mediatek-gen3: Integrate new pwrctrl API")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/all/adjNaKB5KGpl6qIp@stanley.mountain/
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Reviewed-by: Hans Zhang <18255117159@163.com>
-Link: https://patch.msgid.link/agL-Uwfn26SI4Gb0@stanley.mountain
+Link: https://patch.msgid.link/20260512103347.1751080-1-wenst@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-debugfs.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/controller/pcie-mediatek-gen3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-debugfs.c b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-index d0884253be97e4..4bfc1748f2d737 100644
---- a/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-@@ -306,6 +306,7 @@ static ssize_t err_inj_write(struct file *file, const char __user *buf,
- 	u32 val, counter, vc_num, err_group, type_mask;
- 	int val_diff = 0;
- 	char *kern_buf;
-+	int ret;
+diff --git a/drivers/pci/controller/pcie-mediatek-gen3.c b/drivers/pci/controller/pcie-mediatek-gen3.c
+index e6acca7e79a0ff..88e3fdcb74c062 100644
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -1222,8 +1222,8 @@ static int mtk_pcie_probe(struct platform_device *pdev)
  
- 	err_group = err_inj_list[pdata->idx].err_inj_group;
- 	type_mask = err_inj_type_mask[err_group];
-@@ -327,10 +328,10 @@ static ssize_t err_inj_write(struct file *file, const char __user *buf,
- 			return -EINVAL;
- 		}
- 	} else {
--		val = kstrtou32(kern_buf, 0, &counter);
--		if (val) {
-+		ret = kstrtou32(kern_buf, 0, &counter);
-+		if (ret) {
- 			kfree(kern_buf);
--			return val;
-+			return ret;
- 		}
+ 	err = pci_pwrctrl_create_devices(pcie->dev);
+ 	if (err) {
+-		goto err_tear_down_irq;
+ 		dev_err_probe(dev, err, "failed to create pwrctrl devices\n");
++		goto err_tear_down_irq;
  	}
  
+ 	err = mtk_pcie_setup(pcie);
 -- 
 2.53.0
 
