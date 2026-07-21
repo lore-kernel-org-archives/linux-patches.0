@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3229C46A5EE;
-	Tue, 21 Jul 2026 17:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138344C8FE4;
+	Tue, 21 Jul 2026 17:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656475; cv=none; b=bL4wlqkYlb9usm2oWjuAupfzJDMvAd2wTtHcP+dFGJk8XyLgNCZm2MHVgN+OEMxBnipAutpN7FRt08+leCcD4qVd5BJZghuPUTOLPS5Y3cTOZylXmrBVsXeX/JYVv9QBBsIbgaSfBoDCWoTkYuZNFr0auqf1N0Pa4mFtHXxgirU=
+	t=1784656479; cv=none; b=F+1euaSAFssiq54RzJwUM35QCPYM02/wEQsbgcAfRpyPvKjXyt4gAg6GFr3qr2tC8ZHjcLuE4kUpbw3KFd+bFDc7yGnNEwhTxUN/lLPMxkZk3QorVI4UA1GSHYQwS/NWTVakOP+tSDw+asANfhoOq5bL+ydxfqpEzONknaGRx7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656475; c=relaxed/simple;
-	bh=x01i+i3YgKAdaFnlclTfpPZ/o2aCHvBMHC0qcGl0UFQ=;
+	s=arc-20240116; t=1784656479; c=relaxed/simple;
+	bh=x1Mt+m/Ts0IZ01rKrpbpcL9BK9OOkKLel/8lcQzWnfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MISAG1PuPzLK0HE5RoOQoeJ476ftXMc2vrRtakJpmin1B8zBV3a/IUSfX4Cp4NpJgLUVNSA+SpLGPutmEPISs24F6XvDFf816JKU3K/WB7KOFVgpyEyIB3JxN4tySbMCFP6jhJ7UHl0Ooq5Pw1g42S6ecIEjf3FJvIPEb2U7kPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnLqL/U3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J3do0Bh8/qAggqk2P8DPyECZQxGrpvoMROlbB7eXCp3qRXI1z5jadmnOsrfsBuuaE0cntKygoLUD5BVCl/WuVVc7zhmOL/ABi6hNXuwn5TaYual3xl7BEibnmegUHFV3ymbqw1fNwQMVICGUiq+ZFoIytWK/Pmuh+8flc3Fsw+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha87rJ2J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnLqL/U3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B351F000E9;
-	Tue, 21 Jul 2026 17:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha87rJ2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550021F000E9;
+	Tue, 21 Jul 2026 17:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656474;
-	bh=Kqv6VABzTrSEXKwGPY1K4KHpvhZuvmigvedIIajKIFA=;
+	s=korg; t=1784656476;
+	bh=QXnY3PkBFEvI1ofTVZmCap0IV1bSQvF3ryQj37RXHns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FnLqL/U3UwSHIoA8KpGV4/B85X47d61GvtQeexpVfUreHimX48GBWhU0AtttquNJb
-	 IeHBLGGuSwUfBNRSx7pt8wiz0oB+FHpucEDcv5FIzbEvR/wRfJcH0FjkuPb/QbqAA/
-	 9+2xP0mDEYeK58GbhPTuZ7hpju+mdii0lCUpuIvk=
+	b=ha87rJ2J5BC3Jw9uH7zxwaYQ/R5NMsj9B6bVJ7tGYMcvISM99pD40FWZgoR+dBeQr
+	 OwGCp8pwdE2MqWEUf1VjA7/IS1HZBznOzI9TZSzqFk6VszpH/0OSpXWdN7MFTGTtro
+	 MrJj4f2wWC2p2ESJ4hxvNclKZpXVoTB+25C5o0pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Gupta <rajat.gupta@oss.qualcomm.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0401/1611] wifi: mt76: use kfree_rcu for offchannel link in mt76_put_vif_phy_link
-Date: Tue, 21 Jul 2026 17:08:37 +0200
-Message-ID: <20260721152524.254910677@linuxfoundation.org>
+Subject: [PATCH 6.18 0375/1611] bpf: Fix NULL pointer dereference in bpf_task_from_vpid()
+Date: Tue, 21 Jul 2026 17:08:11 +0200
+Message-ID: <20260721152523.619027037@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,49 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-[ Upstream commit 7fae097aa9a56c30febf539d72ef3773165d3aa3 ]
+[ Upstream commit 50dff00615522f3ec03449680ca23beb4cfc549c ]
 
-mt76_put_vif_phy_link() frees the offchannel mlink with plain kfree()
-after rcu_assign_pointer(NULL). However, rcu_assign_pointer only prevents
-future RCU readers from obtaining the pointer -- it does not wait for
-existing readers that already hold it via rcu_dereference.
+bpf_task_from_vpid() looks up a task in the pid namespace of the
+current task, via find_task_by_vpid():
 
-The TX datapath (e.g. mt7996_mac_write_txwi) dereferences mlink->wcid
-and mlink->idx under rcu_read_lock. If a TX softirq obtained the pointer
-via rcu_dereference just before the NULL assignment, it will dereference
-freed memory after the kfree.
+  find_task_by_vpid(vpid)
+    find_task_by_pid_ns(vpid, task_active_pid_ns(current))
+      find_pid_ns(nr, ns) -> idr_find(&ns->idr, nr)
 
-struct mt76_vif_link already contains an rcu_head field that is unused at
-this free site -- a developer oversight, since the adjacent
-kfree_rcu_mightsleep call for rx_sc in the same function shows the
-pattern was understood.
+cgroup_skb programs run in softirq, which may interrupt a task that is
+itself in do_exit(). Once that task has passed
+exit_notify() -> release_task() -> __unhash_process(), its thread_pid is
+cleared, so task_active_pid_ns(current) returns NULL and find_pid_ns()
+dereferences &NULL->idr:
 
-Replace kfree(mlink) with kfree_rcu(mlink, rcu_head).
+  BUG: kernel NULL pointer dereference, address: 0000000000000050
+  RIP: 0010:idr_find+0x11/0x30 lib/idr.c:176
+  Call Trace:
+   <IRQ>
+   find_pid_ns kernel/pid.c:370 [inline]
+   find_task_by_pid_ns+0x3b/0xe0 kernel/pid.c:485
+   bpf_task_from_vpid+0x5b/0x200 kernel/bpf/helpers.c:2916
+   bpf_prog_run_array_cg+0x17e/0x530 kernel/bpf/cgroup.c:81
+   __cgroup_bpf_run_filter_skb+0x12b/0x250 kernel/bpf/cgroup.c:1612
+   sk_filter_trim_cap+0x1dc/0x4c0 net/core/filter.c:148
+   tcp_v4_rcv+0x18d1/0x2200 net/ipv4/tcp_ipv4.c:2223
+   </IRQ>
+   <TASK>
+   do_exit+0xa63/0x1270 kernel/exit.c:1010
+   get_signal+0x141c/0x1530 kernel/signal.c:3037
 
-Fixes: a8f424c1287c ("wifi: mt76: add multi-radio remain_on_channel functions")
-Signed-off-by: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260507043531.492-1-rajat.gupta@oss.qualcomm.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Bail out when current has no pid namespace.
+
+Fixes: 675c3596ff32 ("bpf: Add bpf_task_from_vpid() kfunc")
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/bpf/20260608050001.2545245-1-rhkrqnwk98@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/channel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/helpers.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
-index eccaee1fd434fe..6adaeaf63e46af 100644
---- a/drivers/net/wireless/mediatek/mt76/channel.c
-+++ b/drivers/net/wireless/mediatek/mt76/channel.c
-@@ -311,7 +311,7 @@ void mt76_put_vif_phy_link(struct mt76_phy *phy, struct ieee80211_vif *vif,
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index a62cbdf5a3cde5..7357ddc1fc9283 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -2672,11 +2672,13 @@ __bpf_kfunc struct task_struct *bpf_task_from_vpid(s32 vpid)
+ {
+ 	struct task_struct *p;
  
- 	rcu_assign_pointer(mvif->offchannel_link, NULL);
- 	dev->drv->vif_link_remove(phy, vif, &vif->bss_conf, mlink);
--	kfree(mlink);
-+	kfree_rcu(mlink, rcu_head);
+-	rcu_read_lock();
++	guard(rcu)();
++	if (!task_active_pid_ns(current))
++		return NULL;
++
+ 	p = find_task_by_vpid(vpid);
+ 	if (p)
+ 		p = bpf_task_acquire(p);
+-	rcu_read_unlock();
+ 
+ 	return p;
  }
- 
- void mt76_roc_complete(struct mt76_phy *phy)
 -- 
 2.53.0
 
