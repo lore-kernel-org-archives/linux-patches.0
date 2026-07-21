@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E8C436342;
-	Tue, 21 Jul 2026 20:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AD1435A86;
+	Tue, 21 Jul 2026 20:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665090; cv=none; b=sQ3tjle1i4v9HSBpxdloB9yXpMGT51lPh0IfBSkVILgzNzANBTvzBvUkHFDIEdjcOWxdkm9g7n9Xe8KOoFWYgLPgT1sD5DWrOVvfgqw2m94KKJXhIbH5bJ8+FHZYTKEKoYPuQMY+FXI4XIsDtJYzChRxQ+hsY8Kz5qncgDpV7GY=
+	t=1784665093; cv=none; b=fCQR8DW2Oa9z+XwScJWg+91fL4nds2ZUP0pH+bl5TDKJkvyHs+vRm7ZguybGSmTGm0oPJb5qcllw7vmG0MCVrhBwcHbhrR3jLWPHIAqGbBn1ZHVDy14lO9vJB44G0BVwXuS1gYgkhDJrfo1Jl3P5AylCeiq/V/e2m9XONWzMyFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665090; c=relaxed/simple;
-	bh=qQDOkEyU9iWjhG8ysQGK4dyDw0G7MF+ANDGR61E5dSo=;
+	s=arc-20240116; t=1784665093; c=relaxed/simple;
+	bh=qCKpYJDJeLhhCvI8OQOl08I8kP63XGsW69iQPhwIC+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGVyi93Ak44AxiD3vTDVYhFCBKO2UtDquo6BLNgrDtvWiCb5OOJU2YTpxd3dc1axTPuXGwB6CE7TwPhM0PTGv2vjbB636DLxmJCsLC5fEryzgTJJF+RKYY83IWph0HkYQafa6JHljVcETG3XOMYg5jlmXP1smnOFwyNOF/ylLCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mq6Lh96p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQvo6R271ELR039u9C4d5+OgSZyNcrj+RMbeZi1fSZdDGvXybkU5w4nA6IhNizU0m49RnRyTM6GwQw+Pmm1bVYxGktMjvZCp3utsTe3UWxIL5HKVWKq0NODPVCCxLmqVyU5E2dwAPNXhY3GdOXXwCDpvuOlpH5oYqY0u7/ySIbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVuvP3KM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mq6Lh96p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413851F000E9;
-	Tue, 21 Jul 2026 20:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVuvP3KM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1AC1F00A3A;
+	Tue, 21 Jul 2026 20:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665087;
-	bh=fa3teA7HBjL9qp9S2M6VYE3kZtS0qHJhoPPvpWggr98=;
+	s=korg; t=1784665090;
+	bh=rXpGNjJp5d00vuuzsPfqRMqIl+hdiKvrhRa4j4GeVBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mq6Lh96pRL9ecjV74Q4ARv/blrnso/xa1RyQ9CqRki791lKgGYqS68PcWNV/TJkcG
-	 lyzP7ak5hCNKSG9AlRBfv470Z7xEx3Gwnn2gYGaGy1GVPkBdJRtFPYsOqfo46/R3AE
-	 WJHou+9ZsT8m6oIR7sSWXnhqv7B59zE/OIEmX3tM=
+	b=YVuvP3KMI3talgdWPmyasKcLuxv7GsF4PkxKoaplAZa6CKRsmUUDaLifnC61dh9ai
+	 v0X54atLU9au2sQieJZNIT0jz2jTAEVSIao8emTIraIVQ49O2qzy1OR+fU+Cy1031b
+	 CdfnLJ9kfKLZxs9+1htAzqw/jEVnuPOKsd66LtbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fed5dce4553262f3b35c@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0171/1266] Bluetooth: bnep: pin L2CAP connection during netdev registration
-Date: Tue, 21 Jul 2026 17:10:08 +0200
-Message-ID: <20260721152445.633026095@linuxfoundation.org>
+Subject: [PATCH 6.6 0172/1266] Bluetooth: btnxpuart: Fix out-of-bounds firmware read in nxp_recv_fw_req_v3()
+Date: Tue, 21 Jul 2026 17:10:09 +0200
+Message-ID: <20260721152445.655545384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,91 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit bb067a99a0356196c0b89a95721985485ebce5a5 upstream.
+commit badff6c3bed8923a1257a853f137d447976eec30 upstream.
 
-bnep_add_connection() reads the L2CAP connection without holding the
-channel lock, then passes its HCI device to register_netdev(). Controller
-teardown can clear and release that connection concurrently, leaving the
-network device registration path to dereference a freed parent device.
+During the v3 firmware download the controller sends a v3_data_req with a
+32 bit offset and a 16 bit len. nxp_recv_fw_req_v3() checks only the lower
+bound of the offset and then sends firmware from that offset.
 
-Take a reference to the L2CAP connection while holding the channel lock.
-Retain it until register_netdev() has taken the parent device reference.
+  nxpdev->fw_dnld_v3_offset = offset - nxpdev->fw_v3_offset_correction;
+  serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data +
+                          nxpdev->fw_dnld_v3_offset, len);
 
-Fixes: 65f53e9802db ("Bluetooth: Access BNEP session addresses through L2CAP channel")
-Reported-by: syzbot+fed5dce4553262f3b35c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fed5dce4553262f3b35c
+Nothing checks that fw_dnld_v3_offset + len stays within nxpdev->fw->size,
+so a controller that asks for an offset or length past the firmware image
+makes the driver read past the end of nxpdev->fw->data and send that
+memory back over UART.
+
+nxp_recv_fw_req_v1() already bounds the same write. Add the equivalent
+check to the v3 path, reject the request when it falls outside the firmware
+image, and zero len on the error path so the fw_v3_prev_sent bookkeeping at
+free_skb stays consistent.
+
+Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
+Suggested-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Reviewed-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/bnep/core.c |   27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/bluetooth/btnxpuart.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -562,14 +562,18 @@ static int bnep_session(void *arg)
- 	return 0;
- }
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -1030,6 +1030,12 @@ static int nxp_recv_fw_req_v3(struct hci
+ 	}
  
--static struct device *bnep_get_device(struct bnep_session *session)
-+static struct l2cap_conn *bnep_get_conn(struct bnep_session *session)
- {
--	struct l2cap_conn *conn = l2cap_pi(session->sock->sk)->chan->conn;
-+	struct l2cap_chan *chan = l2cap_pi(session->sock->sk)->chan;
-+	struct l2cap_conn *conn;
- 
--	if (!conn || !conn->hcon)
--		return NULL;
-+	l2cap_chan_lock(chan);
-+	conn = chan->conn;
-+	if (conn)
-+		l2cap_conn_get(conn);
-+	l2cap_chan_unlock(chan);
- 
--	return &conn->hcon->dev;
-+	return conn;
- }
- 
- static struct device_type bnep_type = {
-@@ -581,6 +585,7 @@ int bnep_add_connection(struct bnep_conn
- 	u32 valid_flags = BIT(BNEP_SETUP_RESPONSE);
- 	struct net_device *dev;
- 	struct bnep_session *s, *ss;
-+	struct l2cap_conn *conn = NULL;
- 	u8 dst[ETH_ALEN], src[ETH_ALEN];
- 	int err;
- 
-@@ -640,10 +645,18 @@ int bnep_add_connection(struct bnep_conn
- 	bnep_set_default_proto_filter(s);
- #endif
- 
--	SET_NETDEV_DEV(dev, bnep_get_device(s));
-+	conn = bnep_get_conn(s);
-+	if (!conn) {
-+		err = -ENOTCONN;
-+		goto failed;
+ 	nxpdev->fw_dnld_v3_offset = offset - nxpdev->fw_v3_offset_correction;
++	if (nxpdev->fw_dnld_v3_offset >= nxpdev->fw->size ||
++	    len > nxpdev->fw->size - nxpdev->fw_dnld_v3_offset) {
++		bt_dev_err(hdev, "FW download out of bounds, ignoring request");
++		len = 0;
++		goto free_skb;
 +	}
-+
-+	SET_NETDEV_DEV(dev, &conn->hcon->dev);
- 	SET_NETDEV_DEVTYPE(dev, &bnep_type);
+ 	serdev_device_write_buf(nxpdev->serdev, nxpdev->fw->data +
+ 				nxpdev->fw_dnld_v3_offset, len);
  
- 	err = register_netdev(dev);
-+	l2cap_conn_put(conn);
-+	conn = NULL;
- 	if (err)
- 		goto failed;
- 
-@@ -665,6 +678,8 @@ int bnep_add_connection(struct bnep_conn
- 	return 0;
- 
- failed:
-+	if (conn)
-+		l2cap_conn_put(conn);
- 	up_write(&bnep_session_sem);
- 	free_netdev(dev);
- 	return err;
 
 
