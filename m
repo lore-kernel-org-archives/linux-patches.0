@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A88F40803B;
-	Tue, 21 Jul 2026 18:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865EC46D08F;
+	Tue, 21 Jul 2026 18:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659753; cv=none; b=MUhUQ4wBJap9bVEB8iVIpKPYIjsuI1fyzueEYvemuZ8jI3iVHJfMjlx/PIxyG1sJuaaKo2uG2fJjLvhk3o2LON2WxEVKZ7kbm/uremqCeLFkLFgvdbWXFJYbCEPjr88Ud+apbMHd86vZv66F2p0oQIh5vwFDAWdB2ePylhLaGCU=
+	t=1784659756; cv=none; b=VeEYz/SwHjpNhA07lEO8TzRHc3Wx7chQM3v1AbYI0s6FhqpyzCuhLbv0MBtYUUklPlUw/hxlR5VFccfRLxe/wfxGH32yOldNpbkVAboZqJns82P7nlMdP6Odpl/e9xSk4djEaCnbqPS+ktY7/+V7ojIW6kXmG64ZskrHOz6nHAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659753; c=relaxed/simple;
-	bh=T5KUf3qRGEFe9hZZUR+V13lHFC7hGCNok7uDKGr69qA=;
+	s=arc-20240116; t=1784659756; c=relaxed/simple;
+	bh=CE8dKCzj6R9C63gN1L/QzDzEmbnkGKIt+Kuuloytfx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpYpXa9+O1TQSiY3FK+RamC0Idgg7SVv2cD+UrbO4X2NpXEHL0+elCmqZEcrvkoUo+S3Ule9iKSDQFDsDB771iioNzcRCW1mBnG9OZTlQgB3IJnH800kamr6E8hVDbuXGPwuidl2QGTwWObsFJCgVECgTYcD/uiov34tIS2IRtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jq+XQYmJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FtnXK2B5uIu1SGjFK5ZK8DjM5B2pBktslzbSYOLeuwQY2tDOIOH7SdbDoplXKVPwfWMcnG0piwenn9j0mNR075nFEsjnLeWbEcXADaw5wpUkeCQZ7YuxygfswplQlbmQDd1ex00uxjdYmKXAx+yLjsZDLmHnwqnwEhfz5+/5dYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGyKRn10; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jq+XQYmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5154E1F00A3D;
-	Tue, 21 Jul 2026 18:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGyKRn10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5F61F000E9;
+	Tue, 21 Jul 2026 18:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659751;
-	bh=yUctspTy4w3WMxR7lMpHnlYJpCb+QEwVLBqD7reXvD0=;
+	s=korg; t=1784659754;
+	bh=LysgT4RV1WnOm9jkg5YFTOHECaKQqoyW19GuJUjRK60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jq+XQYmJ+cEibYpo6AwuN3u18ONXHyArvi+gYswMp8hzWGMDc3IcnG9KxRwNlaVxd
-	 MTYEoEsMwCwjSEU2FmoVLlqA3WDz+ahBHKBBhmJI9oNQsmY1Vj2DAWDWrsJEdHfzgg
-	 f5QEaO7DoyByGpzjRg6CZlO3M9nXR7qX6mds4lZQ=
+	b=tGyKRn10K+jseSnXs9eug4nkLi2CdLPQFdnd6xw2BhgH+nE1B9PSLKCVXv2WqGNu2
+	 6elpSupOzWeqKd/2GPsrHc78mpek2VjOgfcI8nmajUp3IBSgBgnzu5klA/PQmN8lCb
+	 Tf2HhRT67rCNqz5wcWD7UVOK+0vXi0wZtOT+TCIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0719/2077] tipc: reject inverted service ranges from peer bindings
-Date: Tue, 21 Jul 2026 17:06:32 +0200
-Message-ID: <20260721152609.762903414@linuxfoundation.org>
+Subject: [PATCH 7.1 0720/2077] cxl/test: Unregister cxl_acpi in cxl_test_init() error path
+Date: Tue, 21 Jul 2026 17:06:33 +0200
+Message-ID: <20260721152609.785628411@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,64 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 2afb648f7b99216c687db1f89739c995e1144153 ]
+[ Upstream commit 50cc34be04a0ea7522b739c9c7a71367cfbc489c ]
 
-tipc_update_nametbl() inserts a binding advertised by a peer node using
-the lower and upper service-range bounds taken directly from the wire,
-without checking that lower <= upper. The local bind path validates the
-ordering (tipc_uaddr_valid()), but the name-distribution path does not.
+In cxl_test_init(), Once cxl_mock_platform_device_add() succeeds, all
+error paths after needs to call platform_device_unregister() instead of
+platform_device_put() to clean up.
 
-A binding with lower > upper is inserted at the far end of the
-service-range rbtree (keyed on lower) where no lookup or withdrawal can
-ever match it (service_range_foreach_match() requires sr->lower <= end).
-The publication, its service_range node and the augmented rbtree entry
-are then leaked for the lifetime of the namespace, and there is no
-per-peer cap equivalent to TIPC_MAX_PUBL on locally created bindings.
-
-Reject inverted ranges in the network path as well. A peer node can
-otherwise leak unbounded binding-table memory by sending PUBLICATION
-items with lower > upper.
-
-Fixes: 37922ea4a310 ("tipc: permit overlapping service ranges in name table")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260610124003.3831170-4-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 67dcdd4d3b83 ("tools/testing/cxl: Introduce a mocked-up CXL port hierarchy")
+Reported-by: sashiko-bot
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260611230355.198912-1-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/name_distr.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ tools/testing/cxl/test/cxl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/name_distr.c b/net/tipc/name_distr.c
-index 190b49c5cbc3ec..ba4f4906e13b70 100644
---- a/net/tipc/name_distr.c
-+++ b/net/tipc/name_distr.c
-@@ -280,12 +280,21 @@ static bool tipc_update_nametbl(struct net *net, struct distr_item *i,
- 				u32 node, u32 dtype)
- {
- 	struct publication *p = NULL;
-+	u32 lower = ntohl(i->lower);
-+	u32 upper = ntohl(i->upper);
- 	struct tipc_socket_addr sk;
--	struct tipc_uaddr ua;
- 	u32 key = ntohl(i->key);
-+	struct tipc_uaddr ua;
-+
-+	/* A peer-advertised binding with lower > upper can never be matched
-+	 * or withdrawn and would leak the publication; the local bind path
-+	 * rejects such ranges, so reject ranges learned from the network too.
-+	 */
-+	if (lower > upper)
-+		return false;
- 
- 	tipc_uaddr(&ua, TIPC_SERVICE_RANGE, TIPC_CLUSTER_SCOPE,
--		   ntohl(i->type), ntohl(i->lower), ntohl(i->upper));
-+		   ntohl(i->type), lower, upper);
- 	sk.ref = ntohl(i->port);
- 	sk.node = node;
- 
+diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
+index 296516eecfd6af..fd6ff00541dced 100644
+--- a/tools/testing/cxl/test/cxl.c
++++ b/tools/testing/cxl/test/cxl.c
+@@ -1951,7 +1951,7 @@ static __init int cxl_test_init(void)
+ err_mem:
+ 	cxl_mem_exit();
+ err_root:
+-	platform_device_put(cxl_acpi);
++	platform_device_unregister(cxl_acpi);
+ err_rch:
+ 	cxl_rch_topo_exit();
+ err_single:
 -- 
 2.53.0
 
