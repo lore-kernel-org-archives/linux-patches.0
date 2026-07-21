@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5E743E06B;
-	Tue, 21 Jul 2026 21:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1984043E4B9;
+	Tue, 21 Jul 2026 21:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669891; cv=none; b=OipiAn92cK/x/Uh1YSftOFpAz9croZSC+wnv7+JBjrHtyuOzv8MYxznpEMT7Z3jdEYC623hw4duphkNGa6o6CD+PkSDe2aAeGIObd+w1/4yHwZeLYtw6E8WEjRxBC0vuc/rtX4auCz1xo4LFtMXNHwHR6w/5qUb2YCdfE6sj7JI=
+	t=1784669891; cv=none; b=INQR1OiUZEAYOdfxnwRg5xEVW5JwtZxS6+kvyEppQlEPZYT+UMeuXhB6CCT6ISypN91jLB1IEZxrDBZ9SIVCVydEgl0DuP5de6zVWJmiOBbEMxKHr2XpmwIlpz+BMkQvEm3H4BcyfJL8RBD4c5qJnEglZW5VqiA/0sP915I/D4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784669891; c=relaxed/simple;
-	bh=180h+D9v0b1n/hUI5TpWPJtDQs6BNFjcQYOOim+S66U=;
+	bh=+cdu2HlU+aQClvTK3eFkrZdPA2XcsYXmI89Yve/FmMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZClAbf43yOy1cCUOMWW+uoHiWozT4F8wh4UthaHuXrTPzbUoy/Y5LDI6siOd2kv8C+5OCmfgjGW+t1N9Xa1QBb++cL1ItCjdhCt1omoDWBR1l8nXvfu6XCYhUngY3LbhxdJtdcpLMg384Fnx2jU8BH01XcQfxoTG+QA+mGkZDvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRmB1cGZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uYfAO4h5TAFh4yl1e2NEFETcKeEjV+WlCECM2pwd0Kt3/Msgm9O7iWSN3opkPxBc+LQvJuK85QUdmvZdnVMXVMQ5zIZ60cYHvTu0GE0TLaMW+GeKTsENiNarEZWBQxm1TaqW7H1HEnItZxahMmi2KpoVj41AIzYSYVddVVW3jsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aT0YsRNh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRmB1cGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D845A1F00A3D;
-	Tue, 21 Jul 2026 21:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aT0YsRNh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A711F000E9;
+	Tue, 21 Jul 2026 21:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669886;
-	bh=wW1wf9xoL47gTwRKfQGPMcw6YQ/lX5U5YAPKPPqOFis=;
+	s=korg; t=1784669889;
+	bh=GDtgzz4L19KGAJyatZwpMrhiaMXe3zam3T77mLX3JME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wRmB1cGZYHjnq1Ipk9+qEfV9y3py7LVW1Niu9OFE6M5Y7nODyQ3Jaj+RYiOZo9Hgz
-	 zHlGZhjTQ0cb64oeijOIjIchY/K9bczIAMqaoE9QCuEF2spO0AWCCpt548q7MVBIUN
-	 H9BjZMAyx97sTTOv75CutB5LNuoDtzCN0GG/TmMA=
+	b=aT0YsRNhSBHXuKhpzT6WGwC1s4c6JnPBal4bVB7xx+/ieO7TgQToV0IYeNBbejG9a
+	 76ym0T41pfqoDedTkHOr1yXum/o+/KRgCX8EFi5S3T4MMUpLiz/ia9V4B/0nBAjnAG
+	 u6MLxqgfp4LIaWRcrdKba/qgi20dAvNbJMGyIgK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.1 0724/1067] KVM: s390: pci: Fix GISC refcount leak on AIF enable failure
-Date: Tue, 21 Jul 2026 17:22:05 +0200
-Message-ID: <20260721152440.784124046@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.1 0725/1067] KVM: arm64: vgic: Check the interrupt is still ours before migrating it
+Date: Tue, 21 Jul 2026 17:22:06 +0200
+Message-ID: <20260721152440.807383104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,41 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 7b69729046a4c58f4cb457184e5ac4aaa179bff4 upstream.
+commit 0074b82cdfcb5fd13710a0ac308ade68ac6f6fbe upstream.
 
-kvm_s390_gisc_register() registers the guest ISC before pinning
-the guest interrupt forwarding pages and allocating the AISB bit.
-If any of the later setup steps fails, the function unwinds the
-pinned pages and other local state, but does not unregister the
-GISC reference. Add the missing kvm_s390_gisc_unregister() to the
-error unwind path.
+vgic_prune_ap_list() drops both ap_list_lock and irq_lock while migrating
+an interrupt to another vCPU. After reacquiring the locks it only checks
+that the affinity is unchanged (target_vcpu == vgic_target_oracle(irq))
+before moving the interrupt, which assumes that an interrupt whose affinity
+is preserved is still queued on this vCPU's ap_list.
 
-Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+That assumption no longer holds if the interrupt is taken off the ap_list
+while the locks are dropped. vgic_flush_pending_lpis() removes the
+interrupt from the list and sets irq->vcpu to NULL, but leaves
+enabled/pending/target_vcpu untouched. As the interrupt is still enabled
+and pending, vgic_target_oracle() returns the same target_vcpu, so the
+affinity check passes and list_del() is run a second time on an entry that
+has already been removed.
+
+Also check that the interrupt is still assigned to this vCPU
+(irq->vcpu == vcpu) before moving it.
+
+Fixes: 0919e84c0fc1 ("KVM: arm/arm64: vgic-new: Add IRQ sync/flush framework")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://patch.msgid.link/aiHnI1mu6SGQrgnz@v4bel
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260624061910.2794734-1-haoxiang_li2024@163.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/pci.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kvm/vgic/vgic.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/arch/s390/kvm/pci.c
-+++ b/arch/s390/kvm/pci.c
-@@ -330,6 +330,7 @@ unpin2:
- unpin1:
- 	unpin_user_page(aibv_page);
- out:
-+	kvm_s390_gisc_unregister(kvm, fib->fmt0.isc);
- 	return rc;
- }
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -686,15 +686,16 @@ retry:
+ 		raw_spin_lock(&irq->irq_lock);
  
+ 		/*
+-		 * If the affinity has been preserved, move the
+-		 * interrupt around. Otherwise, it means things have
+-		 * changed while the interrupt was unlocked, and we
+-		 * need to replay this.
++		 * If the interrupt is still ours and its affinity has
++		 * been preserved, move it around. Otherwise, it means
++		 * things have changed while the interrupt was unlocked
++		 * (it may even have been taken off the list with its
++		 * affinity left untouched), and we need to replay this.
+ 		 *
+ 		 * In all cases, we cannot trust the list not to have
+ 		 * changed, so we restart from the beginning.
+ 		 */
+-		if (target_vcpu == vgic_target_oracle(irq)) {
++		if (irq->vcpu == vcpu && target_vcpu == vgic_target_oracle(irq)) {
+ 			struct vgic_cpu *new_cpu = &target_vcpu->arch.vgic_cpu;
+ 
+ 			list_del(&irq->ap_list);
 
 
