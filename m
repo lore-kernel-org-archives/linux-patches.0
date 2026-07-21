@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33023644B3;
-	Tue, 21 Jul 2026 19:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5CF30EF7E;
+	Tue, 21 Jul 2026 19:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663664; cv=none; b=ht+jSFyqxvLKAU4yTYEBPMcbSgZ8NJZjpSd8pW0csdL6gmtUn2atCdjtclxMtoprFh4cDVR4uoCYa6bA0Cc1Cmiki48tDsi0Ljk/cJCWC5kBOAfIveEOiIq925XUlBEeRWWo72yLsSOPAWvHCoHQtgVfE4AAwIsWlxL47xP1dA0=
+	t=1784663667; cv=none; b=WdAKymvuYzTqvYxK/TF9KrJIYDLR1bKLgu/WVwy72ik/NmyOyM8O2zYeTeml8p3K2Ly8DyJrTSXrh7OUFwnALO5rhNb7Bl5/m0P/Yd72frQb5Dbofx84znrgAF1Y06p2TMqIFVt0DaSEEMIWM/5Lcp9L6Hnp1IXHt5KRzp4MS7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663664; c=relaxed/simple;
-	bh=6RfT6x5Q1GosUm3jXvLk9l+mB2m8l8Y8iZCQsAxGupc=;
+	s=arc-20240116; t=1784663667; c=relaxed/simple;
+	bh=9btxYlRlLtKpDQD/QcnXlby/YM/SjlZjQVw4gwCc7QM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxB0n46k3gf+8MJQMVpAhfSyOu91j7YdrE+gPx73qbKd1KvhxAPCMYxoPSLMAN+Ngom0PMsZp88sc9A5Fx3qbf/HaKKlpIBz/oRleEdoSi9nU5k8mYo/PVP5RGgcXs8gBAJcfJRUbjO+gbxF9fR/B1wC8WF62I5+PvpDHIcrCxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lICONOQh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UehdjzHGRq8Wonwm30rB0Vc5RrEp1Et4KqbybRDYXtSKG5jNPUC/gv2abQtaTd3scGQhRVSgCEBLDkiPJLnnx7hChPQn1+pbTz8V7bcSbC7rnPS1ksrnYmxZUbzsxgjxpRFIonutlDoB1N3+GALxx3i4lgVzj7ecJquI78ixfeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8Ij+MjQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lICONOQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159C21F000E9;
-	Tue, 21 Jul 2026 19:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8Ij+MjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D131F00A3D;
+	Tue, 21 Jul 2026 19:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663663;
-	bh=2C9jYkB7oFAfT3woF2NEhKVqa1PtXVDWeMXzgBVIE3c=;
+	s=korg; t=1784663666;
+	bh=9q9LEkpKmHayA2PJL+/ZL13Cr8ezdj4WfHB2vpxPIME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lICONOQhcp/sYwoPW+yF/ZTXp9DZmUTg0YRXKzHBtLCK+qgXf1Hvr8QJ8ocMzfkXo
-	 XkRjhApp7Kxyx+S8/uW0qUq9CAVf5E9SfaK+D0x+gs8lWUs6LEZiMmyRwkjzRbW6IV
-	 xKfrxO0Y9vxVf2KenQQpnP+XPS5vp/Jki4Y23MAE=
+	b=s8Ij+MjQ01r3Wz9349xUOxYs/GPlx/eEoqgWDNWR6Unqd2TVZVy91LmROFck/JcVT
+	 8Ya0KG0uBncm+erEF5QxnHTSc0LjWA9qpF/mfnZk1llUBt0UBAIO2+BpWEH7/TTwGc
+	 1P7t9vYsfAyo3V3TgOzVfbHzzw62kbzOxG7HlFkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 0907/1276] remoteproc: qcom: Fix leak when custom dump_segments addition fails
-Date: Tue, 21 Jul 2026 17:22:30 +0200
-Message-ID: <20260721152506.332630113@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 0908/1276] MIPS: ip22-gio: fix gio device memory leak
+Date: Tue, 21 Jul 2026 17:22:31 +0200
+Message-ID: <20260721152506.354143262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,63 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit ecf9fc18e62c58eae1ceb65dab2bccb8a724de2d upstream.
+commit 7de9a1b45f5a95b58145653c525c8fb80292d9ab upstream.
 
-Free allocated minidump_region 'name' in qcom_add_minidump_segments()
-when failing before adding the region to 'dump_segments'. Otherwise,
-the 'name' is not tracked and is never freed by qcom_minidump_cleanup().
+The gio device release callback was never wired up so gio devices are
+not freed when the last reference is dropped.
 
-Return error when adding to 'dump_segments' fails.
-
-Cc: stable@vger.kernel.org # v5.11
-Fixes: 8ed8485c4f05 ("remoteproc: qcom: Add capability to collect minidumps")
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260318-rproc-memleak-v2-1-ade70ab858f2@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
+Cc: stable@vger.kernel.org	# 3.3
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/qcom_common.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ arch/mips/sgi-ip22/ip22-gio.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/remoteproc/qcom_common.c
-+++ b/drivers/remoteproc/qcom_common.c
-@@ -110,6 +110,7 @@ static int qcom_add_minidump_segments(st
- 	struct minidump_region __iomem *ptr;
- 	struct minidump_region region;
- 	int seg_cnt, i;
-+	int ret = 0;
- 	dma_addr_t da;
- 	size_t size;
- 	char *name;
-@@ -130,17 +131,22 @@ static int qcom_add_minidump_segments(st
- 		if (le32_to_cpu(region.valid) == MINIDUMP_REGION_VALID) {
- 			name = kstrndup(region.name, MAX_REGION_NAME_LENGTH - 1, GFP_KERNEL);
- 			if (!name) {
--				iounmap(ptr);
--				return -ENOMEM;
-+				ret = -ENOMEM;
-+				break;
- 			}
- 			da = le64_to_cpu(region.address);
- 			size = le64_to_cpu(region.size);
--			rproc_coredump_add_custom_segment(rproc, da, size, rproc_dumpfn_t, name);
-+			ret = rproc_coredump_add_custom_segment(rproc, da, size, rproc_dumpfn_t,
-+								name);
-+			if (ret) {
-+				kfree(name);
-+				break;
-+			}
- 		}
- 	}
- 
- 	iounmap(ptr);
--	return 0;
-+	return ret;
+--- a/arch/mips/sgi-ip22/ip22-gio.c
++++ b/arch/mips/sgi-ip22/ip22-gio.c
+@@ -101,6 +101,8 @@ int gio_device_register(struct gio_devic
+ {
+ 	giodev->dev.bus = &gio_bus_type;
+ 	giodev->dev.parent = &gio_bus;
++	giodev->dev.release = gio_release_dev;
++
+ 	return device_register(&giodev->dev);
  }
- 
- void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
+ EXPORT_SYMBOL_GPL(gio_device_register);
 
 
