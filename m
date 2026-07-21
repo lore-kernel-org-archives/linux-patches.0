@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEF742DFEC;
-	Tue, 21 Jul 2026 21:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96D9415F10;
+	Tue, 21 Jul 2026 21:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670468; cv=none; b=U8KuEOrahkFmsFv4amZLDhO2ac6gD8eGLmTMCQJaNbWwhzOiO3Sr+OFDjCH8m+Cd0A8ArqgZ8FvxKku4bjXzUyEObCJBD0T4B06bkfBJ7x2aeGO6iyfmWT60hJvkkV95s2mFy2USaPiG+kT3i4ozj/amc7QxkahcW6hPuDX+f4k=
+	t=1784670470; cv=none; b=KbhW8d4rgctLGR5SaA3WgpEuIjDlszzwzhro84MX7Jc6Wwc15wpPhdzYUHqjeAZqsZJ5//YYXvAAKK7p168ozRyKtfiVF/14ABjpN90uhFRbgTrICFQRHpXOzBhEntCNr1Ewf5t/50fy0gs35soT79oPE10xe++HbuWKFceC3Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670468; c=relaxed/simple;
-	bh=EirPGIJKwOjXoUnrfLiDBRNOldFf1GHqJJvEUhxltqw=;
+	s=arc-20240116; t=1784670470; c=relaxed/simple;
+	bh=Gbb1GCSsCBuQ4LM+WR4edRYREs+R2DZoitWtDM5Nr/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJKj/xkBJytbo6tRVBJWHJH70Ms0FGlf2qAahSD7eOetK10VGT2qU9ZixeYraIN222qig0ZAvroFgxwierMi1cCFM4tR38vKZJGJwk4vHpiUTVuCX8cjhufrAvmjJ79uR2+e9wdgSKWqbfhJXTji/kfDrwa8PH8eyAip3yza5Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfYY7tkq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t1/r2fnBeQ6H334J4R9tZbmhf2U8Uf4yRlhXmh1uUtdnlIxDc6qIw9VqK2W1fwCRrY+OSq29/rF+Aqsp5I/cVSDXX+pUQFgCZ2wKpkHnlaJwq6iIp6FWHxT0yvtBRqpuTaeUq7kGi8zW28wsJECjXVqKjX4WH8xw9mrT9ru0PDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciwpHIv8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfYY7tkq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7497B1F00A3A;
-	Tue, 21 Jul 2026 21:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciwpHIv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3FC1F000E9;
+	Tue, 21 Jul 2026 21:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670466;
-	bh=bwuClM2YJ4RzTdFnrkbz9MkzUBGz9Z/m/EkUoq4FCgc=;
+	s=korg; t=1784670468;
+	bh=9vBd6kz6zGPsOfO8WVDi7anPe21vWLSke6D9kqFC4QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UfYY7tkqy8Gu0V2++8B3XHCDisP7PYfrTwczfCRMESU0RNiIKzceM8+zO15BSGGML
-	 BalcMRWmuQjSNKuVy3KZwl7hy7X1PyQE6vTv6p6Ww1Yqw8wR/0Eprxz/9/jyH7usWl
-	 XX2RIycwRCFow/zUCi5/6wDuie0RPzYqqNsC0JXQ=
+	b=ciwpHIv8HXj0G0tc7mOvwzDCnZR3a/MnuvsAexpCMHWLebSbvnS5DtGbuww634V/a
+	 W0+6wOd4bKaaECBu4Z1DXRsnWxPUOdi3M6+Aj9Ys+4kES1rhhuYEd12wGZ6FkDZ0TU
+	 Qp/dgCeIg8id61glU8D2OkWdNRlJW4KlAqmdB+qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0944/1067] iio: make invensense timestamp module generic
-Date: Tue, 21 Jul 2026 17:25:45 +0200
-Message-ID: <20260721152445.653409660@linuxfoundation.org>
+Subject: [PATCH 6.1 0945/1067] iio: imu: inv_mpu6050: use the common inv_sensors timestamp module
+Date: Tue, 21 Jul 2026 17:25:46 +0200
+Message-ID: <20260721152445.675998523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,957 +54,302 @@ Content-Transfer-Encoding: 8bit
 
 From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit 0ecc363ccea71eda6a2cceade120489259bcdb33 ]
+[ Upstream commit 111e1abd00455971f6a568900f033cbddec9d4e5 ]
 
-Rename common module to inv_sensors_timestamp, add configuration
-at init (chip internal clock, acceptable jitter, ...) and update
-inv_icm42600 driver integration.
+Replace timestamping by the new common inv_sensors timestamp
+module. The principle behind is the same but the implementation in
+the new module is far better providing less jitter and a better
+estimation.
 
 Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/20230606162147.79667-4-inv.git-commit@tdk.com
+Link: https://lore.kernel.org/r/20230606162147.79667-5-inv.git-commit@tdk.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Stable-dep-of: affe3f077d7a ("iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/inv_sensors/Makefile                 |    2 
- drivers/iio/common/inv_sensors/inv_icm42600_timestamp.c |  192 ----------------
- drivers/iio/common/inv_sensors/inv_sensors_timestamp.c  |  191 +++++++++++++++
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c       |   32 +-
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c      |   34 +-
- drivers/iio/imu/inv_icm42600/inv_icm42600_core.c        |   10 
- drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c        |   32 +-
- include/linux/iio/common/inv_icm42600_timestamp.h       |   79 ------
- include/linux/iio/common/inv_sensors_timestamp.h        |   95 +++++++
- 9 files changed, 349 insertions(+), 318 deletions(-)
- rename drivers/iio/common/inv_sensors/{inv_icm42600_timestamp.c => inv_sensors_timestamp.c} (61%)
- delete mode 100644 include/linux/iio/common/inv_icm42600_timestamp.h
- create mode 100644 include/linux/iio/common/inv_sensors_timestamp.h
+ drivers/iio/imu/inv_mpu6050/Kconfig           |    1 
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c    |   30 +++++++--
+ drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h     |   18 ++---
+ drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c    |   83 ++------------------------
+ drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c |    6 +
+ 5 files changed, 45 insertions(+), 93 deletions(-)
 
---- a/drivers/iio/common/inv_sensors/Makefile
-+++ b/drivers/iio/common/inv_sensors/Makefile
-@@ -3,4 +3,4 @@
- # Makefile for TDK-InvenSense sensors module.
- #
+--- a/drivers/iio/imu/inv_mpu6050/Kconfig
++++ b/drivers/iio/imu/inv_mpu6050/Kconfig
+@@ -7,6 +7,7 @@ config INV_MPU6050_IIO
+ 	tristate
+ 	select IIO_BUFFER
+ 	select IIO_TRIGGERED_BUFFER
++	select IIO_INV_SENSORS_TIMESTAMP
  
--obj-$(CONFIG_IIO_INV_SENSORS_TIMESTAMP) += inv_icm42600_timestamp.o
-+obj-$(CONFIG_IIO_INV_SENSORS_TIMESTAMP) += inv_sensors_timestamp.o
---- a/drivers/iio/common/inv_sensors/inv_icm42600_timestamp.c
-+++ /dev/null
-@@ -1,192 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-or-later
--/*
-- * Copyright (C) 2020 Invensense, Inc.
-- */
--
--#include <linux/errno.h>
--#include <linux/kernel.h>
--#include <linux/math64.h>
--#include <linux/module.h>
--
--#include <linux/iio/common/inv_icm42600_timestamp.h>
--
--/* internal chip period is 32kHz, 31250ns */
--#define INV_ICM42600_TIMESTAMP_PERIOD		31250
--/* allow a jitter of +/- 2% */
--#define INV_ICM42600_TIMESTAMP_JITTER		2
--/* compute min and max periods accepted */
--#define INV_ICM42600_TIMESTAMP_MIN_PERIOD(_p)		\
--	(((_p) * (100 - INV_ICM42600_TIMESTAMP_JITTER)) / 100)
--#define INV_ICM42600_TIMESTAMP_MAX_PERIOD(_p)		\
--	(((_p) * (100 + INV_ICM42600_TIMESTAMP_JITTER)) / 100)
--
--/* Add a new value inside an accumulator and update the estimate value */
--static void inv_update_acc(struct inv_icm42600_timestamp_acc *acc, uint32_t val)
--{
--	uint64_t sum = 0;
--	size_t i;
--
--	acc->values[acc->idx++] = val;
--	if (acc->idx >= ARRAY_SIZE(acc->values))
--		acc->idx = 0;
--
--	/* compute the mean of all stored values, use 0 as empty slot */
--	for (i = 0; i < ARRAY_SIZE(acc->values); ++i) {
--		if (acc->values[i] == 0)
--			break;
--		sum += acc->values[i];
--	}
--
--	acc->val = div_u64(sum, i);
--}
--
--void inv_icm42600_timestamp_init(struct inv_icm42600_timestamp *ts,
--				 uint32_t period)
--{
--	/* initial odr for sensor after reset is 1kHz */
--	const uint32_t default_period = 1000000;
--
--	/* current multiplier and period values after reset */
--	ts->mult = default_period / INV_ICM42600_TIMESTAMP_PERIOD;
--	ts->period = default_period;
--	/* new set multiplier is the one from chip initialization */
--	ts->new_mult = period / INV_ICM42600_TIMESTAMP_PERIOD;
--
--	/* use theoretical value for chip period */
--	inv_update_acc(&ts->chip_period, INV_ICM42600_TIMESTAMP_PERIOD);
--}
--EXPORT_SYMBOL_NS_GPL(inv_icm42600_timestamp_init, IIO_INV_SENSORS_TIMESTAMP);
--
--int inv_icm42600_timestamp_update_odr(struct inv_icm42600_timestamp *ts,
--				      uint32_t period, bool fifo)
--{
--	/* when FIFO is on, prevent odr change if one is already pending */
--	if (fifo && ts->new_mult != 0)
--		return -EAGAIN;
--
--	ts->new_mult = period / INV_ICM42600_TIMESTAMP_PERIOD;
--
--	return 0;
--}
--EXPORT_SYMBOL_NS_GPL(inv_icm42600_timestamp_update_odr, IIO_INV_SENSORS_TIMESTAMP);
--
--static bool inv_validate_period(uint32_t period, uint32_t mult)
--{
--	const uint32_t chip_period = INV_ICM42600_TIMESTAMP_PERIOD;
--	uint32_t period_min, period_max;
--
--	/* check that period is acceptable */
--	period_min = INV_ICM42600_TIMESTAMP_MIN_PERIOD(chip_period) * mult;
--	period_max = INV_ICM42600_TIMESTAMP_MAX_PERIOD(chip_period) * mult;
--	if (period > period_min && period < period_max)
--		return true;
--	else
--		return false;
--}
--
--static bool inv_compute_chip_period(struct inv_icm42600_timestamp *ts,
--				    uint32_t mult, uint32_t period)
--{
--	uint32_t new_chip_period;
--
--	if (!inv_validate_period(period, mult))
--		return false;
--
--	/* update chip internal period estimation */
--	new_chip_period = period / mult;
--	inv_update_acc(&ts->chip_period, new_chip_period);
--
--	return true;
--}
--
--void inv_icm42600_timestamp_interrupt(struct inv_icm42600_timestamp *ts,
--				      uint32_t fifo_period, size_t fifo_nb,
--				      size_t sensor_nb, int64_t timestamp)
--{
--	struct inv_icm42600_timestamp_interval *it;
--	int64_t delta, interval;
--	const uint32_t fifo_mult = fifo_period / INV_ICM42600_TIMESTAMP_PERIOD;
--	uint32_t period = ts->period;
--	int32_t m;
--	bool valid = false;
--
--	if (fifo_nb == 0)
--		return;
--
--	/* update interrupt timestamp and compute chip and sensor periods */
--	it = &ts->it;
--	it->lo = it->up;
--	it->up = timestamp;
--	delta = it->up - it->lo;
--	if (it->lo != 0) {
--		/* compute period: delta time divided by number of samples */
--		period = div_s64(delta, fifo_nb);
--		valid = inv_compute_chip_period(ts, fifo_mult, period);
--		/* update sensor period if chip internal period is updated */
--		if (valid)
--			ts->period = ts->mult * ts->chip_period.val;
--	}
--
--	/* no previous data, compute theoritical value from interrupt */
--	if (ts->timestamp == 0) {
--		/* elapsed time: sensor period * sensor samples number */
--		interval = (int64_t)ts->period * (int64_t)sensor_nb;
--		ts->timestamp = it->up - interval;
--		return;
--	}
--
--	/* if interrupt interval is valid, sync with interrupt timestamp */
--	if (valid) {
--		/* compute measured fifo_period */
--		fifo_period = fifo_mult * ts->chip_period.val;
--		/* delta time between last sample and last interrupt */
--		delta = it->lo - ts->timestamp;
--		/* if there are multiple samples, go back to first one */
--		while (delta >= (fifo_period * 3 / 2))
--			delta -= fifo_period;
--		/* compute maximal adjustment value */
--		m = INV_ICM42600_TIMESTAMP_MAX_PERIOD(ts->period) - ts->period;
--		if (delta > m)
--			delta = m;
--		else if (delta < -m)
--			delta = -m;
--		ts->timestamp += delta;
--	}
--}
--EXPORT_SYMBOL_NS_GPL(inv_icm42600_timestamp_interrupt, IIO_INV_SENSORS_TIMESTAMP);
--
--void inv_icm42600_timestamp_apply_odr(struct inv_icm42600_timestamp *ts,
--				      uint32_t fifo_period, size_t fifo_nb,
--				      unsigned int fifo_no)
--{
--	int64_t interval;
--	uint32_t fifo_mult;
--
--	if (ts->new_mult == 0)
--		return;
--
--	/* update to new multiplier and update period */
--	ts->mult = ts->new_mult;
--	ts->new_mult = 0;
--	ts->period = ts->mult * ts->chip_period.val;
--
+ config INV_MPU6050_I2C
+ 	tristate "Invensense MPU6050 devices (I2C)"
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -12,12 +12,15 @@
+ #include <linux/jiffies.h>
+ #include <linux/irq.h>
+ #include <linux/interrupt.h>
+-#include <linux/iio/iio.h>
+ #include <linux/acpi.h>
+ #include <linux/platform_device.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/pm.h>
+ #include <linux/pm_runtime.h>
++
++#include <linux/iio/common/inv_sensors_timestamp.h>
++#include <linux/iio/iio.h>
++
+ #include "inv_mpu_iio.h"
+ #include "inv_mpu_magn.h"
+ 
+@@ -512,6 +515,7 @@ static int inv_mpu6050_init_config(struc
+ 	int result;
+ 	u8 d;
+ 	struct inv_mpu6050_state *st = iio_priv(indio_dev);
++	struct inv_sensors_timestamp_chip timestamp;
+ 
+ 	result = inv_mpu6050_set_gyro_fsr(st, st->chip_config.fsr);
+ 	if (result)
+@@ -535,12 +539,12 @@ static int inv_mpu6050_init_config(struc
+ 	if (result)
+ 		return result;
+ 
 -	/*
--	 * After ODR change the time interval with the previous sample is
--	 * undertermined (depends when the change occures). So we compute the
--	 * timestamp from the current interrupt using the new FIFO period, the
--	 * total number of samples and the current sample numero.
+-	 * Internal chip period is 1ms (1kHz).
+-	 * Let's use at the beginning the theorical value before measuring
+-	 * with interrupt timestamps.
 -	 */
--	if (ts->timestamp != 0) {
--		/* compute measured fifo period */
--		fifo_mult = fifo_period / INV_ICM42600_TIMESTAMP_PERIOD;
--		fifo_period = fifo_mult * ts->chip_period.val;
--		/* computes time interval between interrupt and this sample */
--		interval = (int64_t)(fifo_nb - fifo_no) * (int64_t)fifo_period;
--		ts->timestamp = ts->it.up - interval;
--	}
--}
--EXPORT_SYMBOL_NS_GPL(inv_icm42600_timestamp_apply_odr, IIO_INV_SENSORS_TIMESTAMP);
--
--MODULE_AUTHOR("InvenSense, Inc.");
--MODULE_DESCRIPTION("InvenSense sensors timestamp module");
--MODULE_LICENSE("GPL");
---- /dev/null
-+++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
-@@ -0,0 +1,191 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Copyright (C) 2020 Invensense, Inc.
-+ */
-+
-+#include <linux/errno.h>
-+#include <linux/kernel.h>
-+#include <linux/math64.h>
-+#include <linux/module.h>
-+
-+#include <linux/iio/common/inv_sensors_timestamp.h>
-+
-+/* compute jitter, min and max following jitter in per mille */
-+#define INV_SENSORS_TIMESTAMP_JITTER(_val, _jitter)		\
-+	(div_s64((_val) * (_jitter), 1000))
-+#define INV_SENSORS_TIMESTAMP_MIN(_val, _jitter)		\
-+	(((_val) * (1000 - (_jitter))) / 1000)
-+#define INV_SENSORS_TIMESTAMP_MAX(_val, _jitter)		\
-+	(((_val) * (1000 + (_jitter))) / 1000)
-+
-+/* Add a new value inside an accumulator and update the estimate value */
-+static void inv_update_acc(struct inv_sensors_timestamp_acc *acc, uint32_t val)
-+{
-+	uint64_t sum = 0;
-+	size_t i;
-+
-+	acc->values[acc->idx++] = val;
-+	if (acc->idx >= ARRAY_SIZE(acc->values))
-+		acc->idx = 0;
-+
-+	/* compute the mean of all stored values, use 0 as empty slot */
-+	for (i = 0; i < ARRAY_SIZE(acc->values); ++i) {
-+		if (acc->values[i] == 0)
-+			break;
-+		sum += acc->values[i];
-+	}
-+
-+	acc->val = div_u64(sum, i);
-+}
-+
-+void inv_sensors_timestamp_init(struct inv_sensors_timestamp *ts,
-+				const struct inv_sensors_timestamp_chip *chip)
-+{
-+	memset(ts, 0, sizeof(*ts));
-+
-+	/* save chip parameters and compute min and max clock period */
-+	ts->chip = *chip;
-+	ts->min_period = INV_SENSORS_TIMESTAMP_MIN(chip->clock_period, chip->jitter);
-+	ts->max_period = INV_SENSORS_TIMESTAMP_MAX(chip->clock_period, chip->jitter);
-+
-+	/* current multiplier and period values after reset */
-+	ts->mult = chip->init_period / chip->clock_period;
-+	ts->period = chip->init_period;
-+
-+	/* use theoretical value for chip period */
-+	inv_update_acc(&ts->chip_period, chip->clock_period);
-+}
-+EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_init, IIO_INV_SENSORS_TIMESTAMP);
-+
-+int inv_sensors_timestamp_update_odr(struct inv_sensors_timestamp *ts,
-+				     uint32_t period, bool fifo)
-+{
-+	/* when FIFO is on, prevent odr change if one is already pending */
-+	if (fifo && ts->new_mult != 0)
-+		return -EAGAIN;
-+
-+	ts->new_mult = period / ts->chip.clock_period;
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_update_odr, IIO_INV_SENSORS_TIMESTAMP);
-+
-+static bool inv_validate_period(struct inv_sensors_timestamp *ts, uint32_t period, uint32_t mult)
-+{
-+	uint32_t period_min, period_max;
-+
-+	/* check that period is acceptable */
-+	period_min = ts->min_period * mult;
-+	period_max = ts->max_period * mult;
-+	if (period > period_min && period < period_max)
-+		return true;
-+	else
-+		return false;
-+}
-+
-+static bool inv_compute_chip_period(struct inv_sensors_timestamp *ts,
-+				    uint32_t mult, uint32_t period)
-+{
-+	uint32_t new_chip_period;
-+
-+	if (!inv_validate_period(ts, period, mult))
-+		return false;
-+
-+	/* update chip internal period estimation */
-+	new_chip_period = period / mult;
-+	inv_update_acc(&ts->chip_period, new_chip_period);
-+
-+	return true;
-+}
-+
-+void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
-+				      uint32_t fifo_period, size_t fifo_nb,
-+				      size_t sensor_nb, int64_t timestamp)
-+{
-+	struct inv_sensors_timestamp_interval *it;
-+	int64_t delta, interval;
-+	const uint32_t fifo_mult = fifo_period / ts->chip.clock_period;
-+	uint32_t period = ts->period;
-+	int32_t m;
-+	bool valid = false;
-+
-+	if (fifo_nb == 0)
-+		return;
-+
-+	/* update interrupt timestamp and compute chip and sensor periods */
-+	it = &ts->it;
-+	it->lo = it->up;
-+	it->up = timestamp;
-+	delta = it->up - it->lo;
-+	if (it->lo != 0) {
-+		/* compute period: delta time divided by number of samples */
-+		period = div_s64(delta, fifo_nb);
-+		valid = inv_compute_chip_period(ts, fifo_mult, period);
-+		/* update sensor period if chip internal period is updated */
-+		if (valid)
-+			ts->period = ts->mult * ts->chip_period.val;
-+	}
-+
-+	/* no previous data, compute theoritical value from interrupt */
-+	if (ts->timestamp == 0) {
-+		/* elapsed time: sensor period * sensor samples number */
-+		interval = (int64_t)ts->period * (int64_t)sensor_nb;
-+		ts->timestamp = it->up - interval;
-+		return;
-+	}
-+
-+	/* if interrupt interval is valid, sync with interrupt timestamp */
-+	if (valid) {
-+		/* compute measured fifo_period */
-+		fifo_period = fifo_mult * ts->chip_period.val;
-+		/* delta time between last sample and last interrupt */
-+		delta = it->lo - ts->timestamp;
-+		/* if there are multiple samples, go back to first one */
-+		while (delta >= (fifo_period * 3 / 2))
-+			delta -= fifo_period;
-+		/* compute maximal adjustment value */
-+		m = INV_SENSORS_TIMESTAMP_JITTER((int64_t)ts->period, ts->chip.jitter);
-+		if (delta > m)
-+			delta = m;
-+		else if (delta < -m)
-+			delta = -m;
-+		ts->timestamp += delta;
-+	}
-+}
-+EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_interrupt, IIO_INV_SENSORS_TIMESTAMP);
-+
-+void inv_sensors_timestamp_apply_odr(struct inv_sensors_timestamp *ts,
-+				     uint32_t fifo_period, size_t fifo_nb,
-+				     unsigned int fifo_no)
-+{
-+	int64_t interval;
-+	uint32_t fifo_mult;
-+
-+	if (ts->new_mult == 0)
-+		return;
-+
-+	/* update to new multiplier and update period */
-+	ts->mult = ts->new_mult;
-+	ts->new_mult = 0;
-+	ts->period = ts->mult * ts->chip_period.val;
-+
-+	/*
-+	 * After ODR change the time interval with the previous sample is
-+	 * undertermined (depends when the change occures). So we compute the
-+	 * timestamp from the current interrupt using the new FIFO period, the
-+	 * total number of samples and the current sample numero.
-+	 */
-+	if (ts->timestamp != 0) {
-+		/* compute measured fifo period */
-+		fifo_mult = fifo_period / ts->chip.clock_period;
-+		fifo_period = fifo_mult * ts->chip_period.val;
-+		/* computes time interval between interrupt and this sample */
-+		interval = (int64_t)(fifo_nb - fifo_no) * (int64_t)fifo_period;
-+		ts->timestamp = ts->it.up - interval;
-+	}
-+}
-+EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_apply_odr, IIO_INV_SENSORS_TIMESTAMP);
-+
-+MODULE_AUTHOR("InvenSense, Inc.");
-+MODULE_DESCRIPTION("InvenSense sensors timestamp module");
-+MODULE_LICENSE("GPL");
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -12,7 +12,7 @@
- #include <linux/math64.h>
+-	st->chip_period = NSEC_PER_MSEC;
++	/* clock jitter is +/- 2% */
++	timestamp.clock_period = NSEC_PER_SEC / INV_MPU6050_INTERNAL_FREQ_HZ;
++	timestamp.jitter = 20;
++	timestamp.init_period =
++			NSEC_PER_SEC / INV_MPU6050_DIVIDER_TO_FIFO_RATE(st->chip_config.divider);
++	inv_sensors_timestamp_init(&st->timestamp, &timestamp);
  
- #include <linux/iio/buffer.h>
--#include <linux/iio/common/inv_icm42600_timestamp.h>
-+#include <linux/iio/common/inv_sensors_timestamp.h>
- #include <linux/iio/iio.h>
- #include <linux/iio/kfifo_buf.h>
- 
-@@ -99,7 +99,7 @@ static int inv_icm42600_accel_update_sca
- 					       const unsigned long *scan_mask)
+ 	/* magn chip init, noop if not present in the chip */
+ 	result = inv_mpu_magn_probe(st);
+@@ -927,6 +931,8 @@ inv_mpu6050_fifo_rate_store(struct devic
+ 			    const char *buf, size_t count)
  {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
--	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = iio_priv(indio_dev);
- 	struct inv_icm42600_sensor_conf conf = INV_ICM42600_SENSOR_CONF_INIT;
- 	unsigned int fifo_en = 0;
- 	unsigned int sleep_temp = 0;
-@@ -127,7 +127,7 @@ static int inv_icm42600_accel_update_sca
+ 	int fifo_rate;
++	u32 fifo_period;
++	bool fifo_on;
+ 	u8 d;
+ 	int result;
+ 	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
+@@ -943,12 +949,21 @@ inv_mpu6050_fifo_rate_store(struct devic
+ 	d = INV_MPU6050_FIFO_RATE_TO_DIVIDER(fifo_rate);
+ 	/* compute back the fifo rate to handle truncation cases */
+ 	fifo_rate = INV_MPU6050_DIVIDER_TO_FIFO_RATE(d);
++	fifo_period = NSEC_PER_SEC / fifo_rate;
+ 
+ 	mutex_lock(&st->lock);
+ 	if (d == st->chip_config.divider) {
+ 		result = 0;
+ 		goto fifo_rate_fail_unlock;
  	}
- 
- 	/* update data FIFO write */
--	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
-+	inv_sensors_timestamp_apply_odr(ts, 0, 0, 0);
- 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
- 
- out_unlock:
-@@ -308,7 +308,7 @@ static int inv_icm42600_accel_write_odr(
- 					int val, int val2)
- {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
--	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = iio_priv(indio_dev);
- 	struct device *dev = regmap_get_device(st->map);
- 	unsigned int idx;
- 	struct inv_icm42600_sensor_conf conf = INV_ICM42600_SENSOR_CONF_INIT;
-@@ -329,8 +329,8 @@ static int inv_icm42600_accel_write_odr(
- 	pm_runtime_get_sync(dev);
- 	mutex_lock(&st->lock);
- 
--	ret = inv_icm42600_timestamp_update_odr(ts, inv_icm42600_odr_to_period(conf.odr),
--						iio_buffer_enabled(indio_dev));
-+	ret = inv_sensors_timestamp_update_odr(ts, inv_icm42600_odr_to_period(conf.odr),
-+					       iio_buffer_enabled(indio_dev));
- 	if (ret)
- 		goto out_unlock;
- 
-@@ -706,7 +706,8 @@ struct iio_dev *inv_icm42600_accel_init(
- {
- 	struct device *dev = regmap_get_device(st->map);
- 	const char *name;
--	struct inv_icm42600_timestamp *ts;
-+	struct inv_sensors_timestamp_chip ts_chip;
-+	struct inv_sensors_timestamp *ts;
- 	struct iio_dev *indio_dev;
- 	int ret;
- 
-@@ -718,8 +719,15 @@ struct iio_dev *inv_icm42600_accel_init(
- 	if (!indio_dev)
- 		return ERR_PTR(-ENOMEM);
- 
-+	/*
-+	 * clock period is 32kHz (31250ns)
-+	 * jitter is +/- 2% (20 per mille)
-+	 */
-+	ts_chip.clock_period = 31250;
-+	ts_chip.jitter = 20;
-+	ts_chip.init_period = inv_icm42600_odr_to_period(st->conf.accel.odr);
- 	ts = iio_priv(indio_dev);
--	inv_icm42600_timestamp_init(ts, inv_icm42600_odr_to_period(st->conf.accel.odr));
-+	inv_sensors_timestamp_init(ts, &ts_chip);
- 
- 	iio_device_set_drvdata(indio_dev, st);
- 	indio_dev->name = name;
-@@ -744,7 +752,7 @@ struct iio_dev *inv_icm42600_accel_init(
- int inv_icm42600_accel_parse_fifo(struct iio_dev *indio_dev)
- {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
--	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = iio_priv(indio_dev);
- 	ssize_t i, size;
- 	unsigned int no;
- 	const void *accel, *gyro, *timestamp;
-@@ -768,13 +776,13 @@ int inv_icm42600_accel_parse_fifo(struct
- 
- 		/* update odr */
- 		if (odr & INV_ICM42600_SENSOR_ACCEL)
--			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
--							 st->fifo.nb.total, no);
-+			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
-+							st->fifo.nb.total, no);
- 
- 		memcpy(&buffer.accel, accel, sizeof(buffer.accel));
- 		/* convert 8 bits FIFO temperature in high resolution format */
- 		buffer.temp = temp ? (*temp * 64) : 0;
--		ts_val = inv_icm42600_timestamp_pop(ts);
-+		ts_val = inv_sensors_timestamp_pop(ts);
- 		iio_push_to_buffers_with_timestamp(indio_dev, &buffer, ts_val);
- 	}
- 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -11,7 +11,7 @@
- #include <linux/delay.h>
- 
- #include <linux/iio/buffer.h>
--#include <linux/iio/common/inv_icm42600_timestamp.h>
-+#include <linux/iio/common/inv_sensors_timestamp.h>
- #include <linux/iio/iio.h>
- 
- #include "inv_icm42600.h"
-@@ -276,12 +276,12 @@ static int inv_icm42600_buffer_preenable
- {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
- 	struct device *dev = regmap_get_device(st->map);
--	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = iio_priv(indio_dev);
- 
- 	pm_runtime_get_sync(dev);
- 
- 	mutex_lock(&st->lock);
--	inv_icm42600_timestamp_reset(ts);
-+	inv_sensors_timestamp_reset(ts);
- 	mutex_unlock(&st->lock);
- 
- 	return 0;
-@@ -378,7 +378,7 @@ out_unlock:
- static int inv_icm42600_buffer_postdisable(struct iio_dev *indio_dev)
- {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
--	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = iio_priv(indio_dev);
- 	struct device *dev = regmap_get_device(st->map);
- 	unsigned int sensor;
- 	unsigned int *watermark;
-@@ -400,7 +400,7 @@ static int inv_icm42600_buffer_postdisab
- 
- 	mutex_lock(&st->lock);
- 
--	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
-+	inv_sensors_timestamp_apply_odr(ts, 0, 0, 0);
- 
- 	ret = inv_icm42600_buffer_set_fifo_en(st, st->fifo.en & ~sensor);
- 	if (ret)
-@@ -508,7 +508,7 @@ int inv_icm42600_buffer_fifo_read(struct
- 
- int inv_icm42600_buffer_fifo_parse(struct inv_icm42600_state *st)
- {
--	struct inv_icm42600_timestamp *ts;
-+	struct inv_sensors_timestamp *ts;
- 	int ret;
- 
- 	if (st->fifo.nb.total == 0)
-@@ -516,8 +516,8 @@ int inv_icm42600_buffer_fifo_parse(struc
- 
- 	/* handle gyroscope timestamp and FIFO data parsing */
- 	ts = iio_priv(st->indio_gyro);
--	inv_icm42600_timestamp_interrupt(ts, st->fifo.period, st->fifo.nb.total,
--					 st->fifo.nb.gyro, st->timestamp.gyro);
-+	inv_sensors_timestamp_interrupt(ts, st->fifo.period, st->fifo.nb.total,
-+					st->fifo.nb.gyro, st->timestamp.gyro);
- 	if (st->fifo.nb.gyro > 0) {
- 		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
- 		if (ret)
-@@ -526,8 +526,8 @@ int inv_icm42600_buffer_fifo_parse(struc
- 
- 	/* handle accelerometer timestamp and FIFO data parsing */
- 	ts = iio_priv(st->indio_accel);
--	inv_icm42600_timestamp_interrupt(ts, st->fifo.period, st->fifo.nb.total,
--					 st->fifo.nb.accel, st->timestamp.accel);
-+	inv_sensors_timestamp_interrupt(ts, st->fifo.period, st->fifo.nb.total,
-+					st->fifo.nb.accel, st->timestamp.accel);
- 	if (st->fifo.nb.accel > 0) {
- 		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
- 		if (ret)
-@@ -540,7 +540,7 @@ int inv_icm42600_buffer_fifo_parse(struc
- int inv_icm42600_buffer_hwfifo_flush(struct inv_icm42600_state *st,
- 				     unsigned int count)
- {
--	struct inv_icm42600_timestamp *ts;
-+	struct inv_sensors_timestamp *ts;
- 	int64_t gyro_ts, accel_ts;
- 	int ret;
- 
-@@ -556,9 +556,9 @@ int inv_icm42600_buffer_hwfifo_flush(str
- 
- 	if (st->fifo.nb.gyro > 0) {
- 		ts = iio_priv(st->indio_gyro);
--		inv_icm42600_timestamp_interrupt(ts, st->fifo.period,
--						 st->fifo.nb.total, st->fifo.nb.gyro,
--						 gyro_ts);
-+		inv_sensors_timestamp_interrupt(ts, st->fifo.period,
-+						st->fifo.nb.total, st->fifo.nb.gyro,
-+						gyro_ts);
- 		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
- 		if (ret)
- 			return ret;
-@@ -566,9 +566,9 @@ int inv_icm42600_buffer_hwfifo_flush(str
- 
- 	if (st->fifo.nb.accel > 0) {
- 		ts = iio_priv(st->indio_accel);
--		inv_icm42600_timestamp_interrupt(ts, st->fifo.period,
--						 st->fifo.nb.total, st->fifo.nb.accel,
--						 accel_ts);
-+		inv_sensors_timestamp_interrupt(ts, st->fifo.period,
-+						st->fifo.nb.total, st->fifo.nb.accel,
-+						accel_ts);
- 		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
- 		if (ret)
- 			return ret;
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-@@ -16,7 +16,7 @@
- #include <linux/property.h>
++
++	fifo_on = st->chip_config.accl_fifo_enable ||
++		  st->chip_config.gyro_fifo_enable ||
++		  st->chip_config.magn_fifo_enable;
++	result = inv_sensors_timestamp_update_odr(&st->timestamp, fifo_period, fifo_on);
++	if (result)
++		goto fifo_rate_fail_unlock;
++
+ 	result = pm_runtime_resume_and_get(pdev);
+ 	if (result)
+ 		goto fifo_rate_fail_unlock;
+@@ -1776,3 +1791,4 @@ EXPORT_SYMBOL_GPL(inv_mpu_pmops);
+ MODULE_AUTHOR("Invensense Corporation");
+ MODULE_DESCRIPTION("Invensense device MPU6050 driver");
+ MODULE_LICENSE("GPL");
++MODULE_IMPORT_NS(IIO_INV_SENSORS_TIMESTAMP);
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+@@ -9,15 +9,17 @@
+ #include <linux/i2c.h>
+ #include <linux/i2c-mux.h>
+ #include <linux/mutex.h>
+-#include <linux/iio/iio.h>
+-#include <linux/iio/buffer.h>
++#include <linux/platform_data/invensense_mpu6050.h>
  #include <linux/regmap.h>
- 
--#include <linux/iio/common/inv_icm42600_timestamp.h>
+-#include <linux/iio/sysfs.h>
++
++#include <linux/iio/buffer.h>
 +#include <linux/iio/common/inv_sensors_timestamp.h>
- #include <linux/iio/iio.h>
- 
- #include "inv_icm42600.h"
-@@ -720,8 +720,8 @@ out_unlock:
- static int __maybe_unused inv_icm42600_resume(struct device *dev)
- {
- 	struct inv_icm42600_state *st = dev_get_drvdata(dev);
--	struct inv_icm42600_timestamp *gyro_ts = iio_priv(st->indio_gyro);
--	struct inv_icm42600_timestamp *accel_ts = iio_priv(st->indio_accel);
-+	struct inv_sensors_timestamp *gyro_ts = iio_priv(st->indio_gyro);
-+	struct inv_sensors_timestamp *accel_ts = iio_priv(st->indio_accel);
- 	int ret = 0;
- 
- 	mutex_lock(&st->lock);
-@@ -742,8 +742,8 @@ static int __maybe_unused inv_icm42600_r
- 
- 	/* restore FIFO data streaming */
- 	if (st->fifo.on) {
--		inv_icm42600_timestamp_reset(gyro_ts);
--		inv_icm42600_timestamp_reset(accel_ts);
-+		inv_sensors_timestamp_reset(gyro_ts);
-+		inv_sensors_timestamp_reset(accel_ts);
- 		ret = regmap_write(st->map, INV_ICM42600_REG_FIFO_CONFIG,
- 				   INV_ICM42600_FIFO_CONFIG_STREAM);
- 	}
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-@@ -12,7 +12,7 @@
- #include <linux/math64.h>
- 
- #include <linux/iio/buffer.h>
--#include <linux/iio/common/inv_icm42600_timestamp.h>
-+#include <linux/iio/common/inv_sensors_timestamp.h>
- #include <linux/iio/iio.h>
++#include <linux/iio/iio.h>
  #include <linux/iio/kfifo_buf.h>
+ #include <linux/iio/trigger.h>
+ #include <linux/iio/triggered_buffer.h>
+ #include <linux/iio/trigger_consumer.h>
+-#include <linux/platform_data/invensense_mpu6050.h>
++#include <linux/iio/sysfs.h>
  
-@@ -99,7 +99,7 @@ static int inv_icm42600_gyro_update_scan
- 					      const unsigned long *scan_mask)
+ /**
+  *  struct inv_mpu6050_reg_map - Notable registers.
+@@ -169,9 +171,7 @@ struct inv_mpu6050_hw {
+  *  @map		regmap pointer.
+  *  @irq		interrupt number.
+  *  @irq_mask		the int_pin_cfg mask to configure interrupt type.
+- *  @chip_period:	chip internal period estimation (~1kHz).
+- *  @it_timestamp:	timestamp from previous interrupt.
+- *  @data_timestamp:	timestamp for next data sample.
++ *  @timestamp:		timestamping module
+  *  @vdd_supply:	VDD voltage regulator for the chip.
+  *  @vddio_supply	I/O voltage regulator for the chip.
+  *  @magn_disabled:     magnetometer disabled for backward compatibility reason.
+@@ -195,9 +195,7 @@ struct inv_mpu6050_state {
+ 	int irq;
+ 	u8 irq_mask;
+ 	unsigned skip_samples;
+-	s64 chip_period;
+-	s64 it_timestamp;
+-	s64 data_timestamp;
++	struct inv_sensors_timestamp timestamp;
+ 	struct regulator *vdd_supply;
+ 	struct regulator *vddio_supply;
+ 	bool magn_disabled;
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
+@@ -13,81 +13,10 @@
+ #include <linux/interrupt.h>
+ #include <linux/poll.h>
+ #include <linux/math64.h>
+-#include "inv_mpu_iio.h"
+-
+-/**
+- *  inv_mpu6050_update_period() - Update chip internal period estimation
+- *
+- *  @st:		driver state
+- *  @timestamp:		the interrupt timestamp
+- *  @nb:		number of data set in the fifo
+- *
+- *  This function uses interrupt timestamps to estimate the chip period and
+- *  to choose the data timestamp to come.
+- */
+-static void inv_mpu6050_update_period(struct inv_mpu6050_state *st,
+-				      s64 timestamp, size_t nb)
+-{
+-	/* Period boundaries for accepting timestamp */
+-	const s64 period_min =
+-		(NSEC_PER_MSEC * (100 - INV_MPU6050_TS_PERIOD_JITTER)) / 100;
+-	const s64 period_max =
+-		(NSEC_PER_MSEC * (100 + INV_MPU6050_TS_PERIOD_JITTER)) / 100;
+-	const s32 divider = INV_MPU6050_FREQ_DIVIDER(st);
+-	s64 delta, interval;
+-	bool use_it_timestamp = false;
+-
+-	if (st->it_timestamp == 0) {
+-		/* not initialized, forced to use it_timestamp */
+-		use_it_timestamp = true;
+-	} else if (nb == 1) {
+-		/*
+-		 * Validate the use of it timestamp by checking if interrupt
+-		 * has been delayed.
+-		 * nb > 1 means interrupt was delayed for more than 1 sample,
+-		 * so it's obviously not good.
+-		 * Compute the chip period between 2 interrupts for validating.
+-		 */
+-		delta = div_s64(timestamp - st->it_timestamp, divider);
+-		if (delta > period_min && delta < period_max) {
+-			/* update chip period and use it timestamp */
+-			st->chip_period = (st->chip_period + delta) / 2;
+-			use_it_timestamp = true;
+-		}
+-	}
+ 
+-	if (use_it_timestamp) {
+-		/*
+-		 * Manage case of multiple samples in the fifo (nb > 1):
+-		 * compute timestamp corresponding to the first sample using
+-		 * estimated chip period.
+-		 */
+-		interval = (nb - 1) * st->chip_period * divider;
+-		st->data_timestamp = timestamp - interval;
+-	}
++#include <linux/iio/common/inv_sensors_timestamp.h>
+ 
+-	/* save it timestamp */
+-	st->it_timestamp = timestamp;
+-}
+-
+-/**
+- *  inv_mpu6050_get_timestamp() - Return the current data timestamp
+- *
+- *  @st:		driver state
+- *  @return:		current data timestamp
+- *
+- *  This function returns the current data timestamp and prepares for next one.
+- */
+-static s64 inv_mpu6050_get_timestamp(struct inv_mpu6050_state *st)
+-{
+-	s64 ts;
+-
+-	/* return current data timestamp and increment */
+-	ts = st->data_timestamp;
+-	st->data_timestamp += st->chip_period * INV_MPU6050_FREQ_DIVIDER(st);
+-
+-	return ts;
+-}
++#include "inv_mpu_iio.h"
+ 
+ static int inv_reset_fifo(struct iio_dev *indio_dev)
  {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
--	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = iio_priv(indio_dev);
- 	struct inv_icm42600_sensor_conf conf = INV_ICM42600_SENSOR_CONF_INIT;
- 	unsigned int fifo_en = 0;
- 	unsigned int sleep_gyro = 0;
-@@ -127,7 +127,7 @@ static int inv_icm42600_gyro_update_scan
+@@ -121,6 +50,7 @@ irqreturn_t inv_mpu6050_read_fifo(int ir
+ 	size_t bytes_per_datum;
+ 	int result;
+ 	u16 fifo_count;
++	u32 fifo_period;
+ 	s64 timestamp;
+ 	int int_status;
+ 	size_t i, nb;
+@@ -177,7 +107,10 @@ irqreturn_t inv_mpu6050_read_fifo(int ir
+ 
+ 	/* compute and process all complete datum */
+ 	nb = fifo_count / bytes_per_datum;
+-	inv_mpu6050_update_period(st, pf->timestamp, nb);
++	/* Each FIFO data contains all sensors, so same number for FIFO and sensor data */
++	fifo_period = NSEC_PER_SEC / INV_MPU6050_DIVIDER_TO_FIFO_RATE(st->chip_config.divider);
++	inv_sensors_timestamp_interrupt(&st->timestamp, fifo_period, nb, nb, pf->timestamp);
++	inv_sensors_timestamp_apply_odr(&st->timestamp, fifo_period, nb, 0);
+ 	for (i = 0; i < nb; ++i) {
+ 		result = regmap_noinc_read(st->map, st->reg->fifo_r_w,
+ 					   st->data, bytes_per_datum);
+@@ -188,7 +121,7 @@ irqreturn_t inv_mpu6050_read_fifo(int ir
+ 			st->skip_samples--;
+ 			continue;
+ 		}
+-		timestamp = inv_mpu6050_get_timestamp(st);
++		timestamp = inv_sensors_timestamp_pop(&st->timestamp);
+ 		iio_push_to_buffers_with_timestamp(indio_dev, st->data, timestamp);
  	}
  
- 	/* update data FIFO write */
--	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
-+	inv_sensors_timestamp_apply_odr(ts, 0, 0, 0);
- 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+@@ -4,6 +4,9 @@
+ */
  
- out_unlock:
-@@ -320,7 +320,7 @@ static int inv_icm42600_gyro_write_odr(s
- 				       int val, int val2)
- {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
--	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = iio_priv(indio_dev);
- 	struct device *dev = regmap_get_device(st->map);
- 	unsigned int idx;
- 	struct inv_icm42600_sensor_conf conf = INV_ICM42600_SENSOR_CONF_INIT;
-@@ -341,8 +341,8 @@ static int inv_icm42600_gyro_write_odr(s
- 	pm_runtime_get_sync(dev);
- 	mutex_lock(&st->lock);
+ #include <linux/pm_runtime.h>
++
++#include <linux/iio/common/inv_sensors_timestamp.h>
++
+ #include "inv_mpu_iio.h"
  
--	ret = inv_icm42600_timestamp_update_odr(ts, inv_icm42600_odr_to_period(conf.odr),
--						iio_buffer_enabled(indio_dev));
-+	ret = inv_sensors_timestamp_update_odr(ts, inv_icm42600_odr_to_period(conf.odr),
-+					       iio_buffer_enabled(indio_dev));
- 	if (ret)
- 		goto out_unlock;
- 
-@@ -717,7 +717,8 @@ struct iio_dev *inv_icm42600_gyro_init(s
- {
- 	struct device *dev = regmap_get_device(st->map);
- 	const char *name;
--	struct inv_icm42600_timestamp *ts;
-+	struct inv_sensors_timestamp_chip ts_chip;
-+	struct inv_sensors_timestamp *ts;
- 	struct iio_dev *indio_dev;
+ static unsigned int inv_scan_query_mpu6050(struct iio_dev *indio_dev)
+@@ -106,7 +109,8 @@ int inv_mpu6050_prepare_fifo(struct inv_
  	int ret;
  
-@@ -729,8 +730,15 @@ struct iio_dev *inv_icm42600_gyro_init(s
- 	if (!indio_dev)
- 		return ERR_PTR(-ENOMEM);
- 
-+	/*
-+	 * clock period is 32kHz (31250ns)
-+	 * jitter is +/- 2% (20 per mille)
-+	 */
-+	ts_chip.clock_period = 31250;
-+	ts_chip.jitter = 20;
-+	ts_chip.init_period = inv_icm42600_odr_to_period(st->conf.accel.odr);
- 	ts = iio_priv(indio_dev);
--	inv_icm42600_timestamp_init(ts, inv_icm42600_odr_to_period(st->conf.gyro.odr));
-+	inv_sensors_timestamp_init(ts, &ts_chip);
- 
- 	iio_device_set_drvdata(indio_dev, st);
- 	indio_dev->name = name;
-@@ -756,7 +764,7 @@ struct iio_dev *inv_icm42600_gyro_init(s
- int inv_icm42600_gyro_parse_fifo(struct iio_dev *indio_dev)
- {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
--	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = iio_priv(indio_dev);
- 	ssize_t i, size;
- 	unsigned int no;
- 	const void *accel, *gyro, *timestamp;
-@@ -780,13 +788,13 @@ int inv_icm42600_gyro_parse_fifo(struct
- 
- 		/* update odr */
- 		if (odr & INV_ICM42600_SENSOR_GYRO)
--			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
--							 st->fifo.nb.total, no);
-+			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
-+							st->fifo.nb.total, no);
- 
- 		memcpy(&buffer.gyro, gyro, sizeof(buffer.gyro));
- 		/* convert 8 bits FIFO temperature in high resolution format */
- 		buffer.temp = temp ? (*temp * 64) : 0;
--		ts_val = inv_icm42600_timestamp_pop(ts);
-+		ts_val = inv_sensors_timestamp_pop(ts);
- 		iio_push_to_buffers_with_timestamp(indio_dev, &buffer, ts_val);
- 	}
- 
---- a/include/linux/iio/common/inv_icm42600_timestamp.h
-+++ /dev/null
-@@ -1,79 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-or-later */
--/*
-- * Copyright (C) 2020 Invensense, Inc.
-- */
--
--#ifndef INV_ICM42600_TIMESTAMP_H_
--#define INV_ICM42600_TIMESTAMP_H_
--
--/**
-- * struct inv_icm42600_timestamp_interval - timestamps interval
-- * @lo:	interval lower bound
-- * @up:	interval upper bound
-- */
--struct inv_icm42600_timestamp_interval {
--	int64_t lo;
--	int64_t up;
--};
--
--/**
-- * struct inv_icm42600_timestamp_acc - accumulator for computing an estimation
-- * @val:	current estimation of the value, the mean of all values
-- * @idx:	current index of the next free place in values table
-- * @values:	table of all measured values, use for computing the mean
-- */
--struct inv_icm42600_timestamp_acc {
--	uint32_t val;
--	size_t idx;
--	uint32_t values[32];
--};
--
--/**
-- * struct inv_icm42600_timestamp - timestamp management states
-- * @it:			interrupts interval timestamps
-- * @timestamp:		store last timestamp for computing next data timestamp
-- * @mult:		current internal period multiplier
-- * @new_mult:		new set internal period multiplier (not yet effective)
-- * @period:		measured current period of the sensor
-- * @chip_period:	accumulator for computing internal chip period
-- */
--struct inv_icm42600_timestamp {
--	struct inv_icm42600_timestamp_interval it;
--	int64_t timestamp;
--	uint32_t mult;
--	uint32_t new_mult;
--	uint32_t period;
--	struct inv_icm42600_timestamp_acc chip_period;
--};
--
--void inv_icm42600_timestamp_init(struct inv_icm42600_timestamp *ts,
--				 uint32_t period);
--
--int inv_icm42600_timestamp_update_odr(struct inv_icm42600_timestamp *ts,
--				      uint32_t period, bool fifo);
--
--void inv_icm42600_timestamp_interrupt(struct inv_icm42600_timestamp *ts,
--				      uint32_t fifo_period, size_t fifo_nb,
--				      size_t sensor_nb, int64_t timestamp);
--
--static inline int64_t
--inv_icm42600_timestamp_pop(struct inv_icm42600_timestamp *ts)
--{
--	ts->timestamp += ts->period;
--	return ts->timestamp;
--}
--
--void inv_icm42600_timestamp_apply_odr(struct inv_icm42600_timestamp *ts,
--				      uint32_t fifo_period, size_t fifo_nb,
--				      unsigned int fifo_no);
--
--static inline void
--inv_icm42600_timestamp_reset(struct inv_icm42600_timestamp *ts)
--{
--	const struct inv_icm42600_timestamp_interval interval_init = {0LL, 0LL};
--
--	ts->it = interval_init;
--	ts->timestamp = 0;
--}
--
--#endif
---- /dev/null
-+++ b/include/linux/iio/common/inv_sensors_timestamp.h
-@@ -0,0 +1,95 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Copyright (C) 2020 Invensense, Inc.
-+ */
-+
-+#ifndef INV_SENSORS_TIMESTAMP_H_
-+#define INV_SENSORS_TIMESTAMP_H_
-+
-+/**
-+ * struct inv_sensors_timestamp_chip - chip internal properties
-+ * @clock_period:	internal clock period in ns
-+ * @jitter:		acceptable jitter in per-mille
-+ * @init_period:	chip initial period at reset in ns
-+ */
-+struct inv_sensors_timestamp_chip {
-+	uint32_t clock_period;
-+	uint32_t jitter;
-+	uint32_t init_period;
-+};
-+
-+/**
-+ * struct inv_sensors_timestamp_interval - timestamps interval
-+ * @lo:	interval lower bound
-+ * @up:	interval upper bound
-+ */
-+struct inv_sensors_timestamp_interval {
-+	int64_t lo;
-+	int64_t up;
-+};
-+
-+/**
-+ * struct inv_sensors_timestamp_acc - accumulator for computing an estimation
-+ * @val:	current estimation of the value, the mean of all values
-+ * @idx:	current index of the next free place in values table
-+ * @values:	table of all measured values, use for computing the mean
-+ */
-+struct inv_sensors_timestamp_acc {
-+	uint32_t val;
-+	size_t idx;
-+	uint32_t values[32];
-+};
-+
-+/**
-+ * struct inv_sensors_timestamp - timestamp management states
-+ * @chip:		chip internal characteristics
-+ * @min_period:		minimal acceptable clock period
-+ * @max_period:		maximal acceptable clock period
-+ * @it:			interrupts interval timestamps
-+ * @timestamp:		store last timestamp for computing next data timestamp
-+ * @mult:		current internal period multiplier
-+ * @new_mult:		new set internal period multiplier (not yet effective)
-+ * @period:		measured current period of the sensor
-+ * @chip_period:	accumulator for computing internal chip period
-+ */
-+struct inv_sensors_timestamp {
-+	struct inv_sensors_timestamp_chip chip;
-+	uint32_t min_period;
-+	uint32_t max_period;
-+	struct inv_sensors_timestamp_interval it;
-+	int64_t timestamp;
-+	uint32_t mult;
-+	uint32_t new_mult;
-+	uint32_t period;
-+	struct inv_sensors_timestamp_acc chip_period;
-+};
-+
-+void inv_sensors_timestamp_init(struct inv_sensors_timestamp *ts,
-+				const struct inv_sensors_timestamp_chip *chip);
-+
-+int inv_sensors_timestamp_update_odr(struct inv_sensors_timestamp *ts,
-+				     uint32_t period, bool fifo);
-+
-+void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
-+				     uint32_t fifo_period, size_t fifo_nb,
-+				     size_t sensor_nb, int64_t timestamp);
-+
-+static inline int64_t inv_sensors_timestamp_pop(struct inv_sensors_timestamp *ts)
-+{
-+	ts->timestamp += ts->period;
-+	return ts->timestamp;
-+}
-+
-+void inv_sensors_timestamp_apply_odr(struct inv_sensors_timestamp *ts,
-+				     uint32_t fifo_period, size_t fifo_nb,
-+				     unsigned int fifo_no);
-+
-+static inline void inv_sensors_timestamp_reset(struct inv_sensors_timestamp *ts)
-+{
-+	const struct inv_sensors_timestamp_interval interval_init = {0LL, 0LL};
-+
-+	ts->it = interval_init;
-+	ts->timestamp = 0;
-+}
-+
-+#endif
+ 	if (enable) {
+-		st->it_timestamp = 0;
++		/* reset timestamping */
++		inv_sensors_timestamp_reset(&st->timestamp);
+ 		/* reset FIFO */
+ 		d = st->chip_config.user_ctrl | INV_MPU6050_BIT_FIFO_RST;
+ 		ret = regmap_write(st->map, st->reg->user_ctrl, d);
 
 
