@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCD346D2CC;
-	Tue, 21 Jul 2026 18:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D9E315D53;
+	Tue, 21 Jul 2026 18:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659145; cv=none; b=mipd8BF8QAIaM8WXKw05BzNMIr+AnW0ASM2unGOijgvvuKjvgK9fGGPjwKIORux7mX8doEnwY0+MczdyBZLj6wZw7aql9zBt+FcJ3w+AkjD/rFZvbAJh4t4knsDvtBy1T63ik3RcUZmdfe5C6thzFTAODLo13XJMnIqr03bCWI8=
+	t=1784659148; cv=none; b=IU2GOkysbdnSbWSglPDdFfMr79ac326T0BzDrvDlucCMsHtkjOdgM2cg5zpcKEaVCbqcX115vPZX8eQC/Axhdx4ZeE5ZcqrjaNoYz4t7QZLo/r3qRnN6fslxdiVpVdBQiyHaTVO2YS09uVmeBFiSGtpaxclftMhanjBEul6quf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659145; c=relaxed/simple;
-	bh=cgE/obKyX74vKGgzbdw+AJ7nwnjfr+fK7LzJ00bgqaM=;
+	s=arc-20240116; t=1784659148; c=relaxed/simple;
+	bh=HF9n6IG08J/BTtqn9lbuw7BFTBkEQnOswYtzft1BQtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1Xh7A6xoEB715iH3ZiZM8eHM4K2ETisVXTiUeqkvEOLP+pdlGTXlbp9y0Amn7vFVTkojYekJRYD9rs0WW2FlEyDv81Xc6wBEYeKW+aMqEHmfgSRAwVgKKTiBWatblma96InrJB7D5qyoLQGuHYZZhbIE1tyOV2VpHjfYUD7Khs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LER7sEDr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a/uVAi9AL8Oih7ERWZpyV+nCfp9rewNcyep2E3GJ28VJQqw28LeNokSd9yu9lAg6D039Zk2ZFfU1btZ4G1SO2T4QnqepoJLsZ7TnZsi1jrnFRZQ24P22d8U5cKXYInPWNcEFV8LnZqf8PR6Z/nZ/pbAUvZcnwyhKJgISuSMa/8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlMGobu8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LER7sEDr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44661F000E9;
-	Tue, 21 Jul 2026 18:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlMGobu8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B591F000E9;
+	Tue, 21 Jul 2026 18:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659144;
-	bh=q0v1vjo5NvR6EbmK+RAU01u45QJHQ/vv9GnIZ/QYdMk=;
+	s=korg; t=1784659146;
+	bh=M9caWIMpdV4KGdYG/2bZFZ1Fm0FPW3JkMAt58Yjg9nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LER7sEDrzUWopnh9h+xnESGO+Q6t85JBOv5SPRVtCswRZsbhSv2AUa5lBkDFgIVp8
-	 FEzVDBAPh2J5Ufxz7lynwSleYNehnGqUnhXtMjLh6hIOTRj4fP4ilATZaGsT8+G+13
-	 kycC81E15R3M06J1asi+omN8tJDFS4G4iYu4sXNQ=
+	b=ZlMGobu82TSU487/QFcDoaqTxCJLNIfiK+gLGXIZFKapgl53H8gXCYJ9khoX1LjBJ
+	 oWcBEEFBeU9THEvmiLmJb0gun+ZZqk7cO6fxgzLd03V72d96St+DYF/Nbd6sntJTHu
+	 TEbXxFJOAjxjMWxg1nsJLaeR97O5+Taeu0B9bc3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1410/1611] net: ip6_tunnel: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:25:26 +0200
-Message-ID: <20260721152547.156552695@linuxfoundation.org>
+Subject: [PATCH 6.18 1411/1611] octeontx2-af: Free BPID bitmap on setup failure
+Date: Tue, 21 Jul 2026 17:25:27 +0200
+Message-ID: <20260721152547.178842930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,44 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 2496fa0b7d180b3ad356b514e7ff93bb14e6140a upstream.
+commit 36323f54cd323122a1be89ab2c316a6e55a94e30 upstream.
 
-ip6_tnl_changelink() operates on at most two netns, dev_net(dev) and the
-tunnel link netns t->net. They differ once the device is created in or
-moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in t->net can rewrite a tunnel that
-lives in t->net.
+nix_setup_bpids() allocates bp->bpids with rvu_alloc_bitmap(), which uses
+a plain kcalloc(). If any of the following devm_kcalloc() allocations for
+the BPID mapping arrays fails, the function returns without freeing the
+bitmap. Free the BPID bitmap before returning from those error paths.
 
-Gate ip6_tnl_changelink() on rtnl_dev_link_net_capable() at its top,
-before any attribute is parsed.
-
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: 0bd8762824e7 ("ip6tnl: add x-netns support")
+Fixes: d6212d2e41a0 ("octeontx2-af: Create BPIDs free pool")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-5-maoyixie.tju@gmail.com
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260623114316.2182271-1-haoxiang_li2024@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_tunnel.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -2068,6 +2068,9 @@ static int ip6_tnl_changelink(struct net
- 	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
- 	struct ip_tunnel_encap ipencap;
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -527,19 +527,24 @@ static int nix_setup_bpids(struct rvu *r
+ 	bp->fn_map = devm_kcalloc(rvu->dev, bp->bpids.max,
+ 				  sizeof(u16), GFP_KERNEL);
+ 	if (!bp->fn_map)
+-		return -ENOMEM;
++		goto free_bpids;
  
-+	if (!rtnl_dev_link_net_capable(dev, net))
-+		return -EPERM;
+ 	bp->intf_map = devm_kcalloc(rvu->dev, bp->bpids.max,
+ 				    sizeof(u8), GFP_KERNEL);
+ 	if (!bp->intf_map)
+-		return -ENOMEM;
++		goto free_bpids;
+ 
+ 	bp->ref_cnt = devm_kcalloc(rvu->dev, bp->bpids.max,
+ 				   sizeof(u8), GFP_KERNEL);
+ 	if (!bp->ref_cnt)
+-		return -ENOMEM;
++		goto free_bpids;
+ 
+ 	return 0;
 +
- 	if (dev == ip6n->fb_tnl_dev) {
- 		if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
- 			/* iproute2 always sets TUNNEL_ENCAP_FLAG_CSUM6, so
++free_bpids:
++	rvu_free_bitmap(&bp->bpids);
++	bp->bpids.bmap = NULL;
++	return -ENOMEM;
+ }
+ 
+ void rvu_nix_flr_free_bpids(struct rvu *rvu, u16 pcifunc)
 
 
