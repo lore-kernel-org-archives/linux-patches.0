@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C8546EC77;
-	Tue, 21 Jul 2026 19:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F0B46C4D9;
+	Tue, 21 Jul 2026 19:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661233; cv=none; b=RAwOrD5tEuqDtprEvBBScJ7b3ujtsiw1KttZWs+zItgCM3gV9kUr13v4yYy6PZX64bAQ/6/AeidNxm4oNYpOJ0T+7oPCdnTSnStqki5TVYDucVuMO1GUVTxFZZquPsRz3XfVR8pfo9Wj7jlFwdvxYcXYjtyg2fjOTqhJRrYjnM8=
+	t=1784661237; cv=none; b=eLSytolkYN3u9GujCkv2WTbSQeF4NdjJWHx3Cl7kWF+6AYGzedO6zo41voyO8I1HZhiDHkQ0WORQGHWGarEr6u3k2t4fTpm1mms8YZ/iqwFI90mhebhASx3UCvGL9EkosPovkSb+PcgbZVD43Hzjx8PAukbYQt0EMRbqGKr3lD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661233; c=relaxed/simple;
-	bh=05Oz9lpd4VZ97YOf4Do/ZfLoxPRl7JEckY91pjD1Esk=;
+	s=arc-20240116; t=1784661237; c=relaxed/simple;
+	bh=kqgHDf9mYyeyrK+gbsujMndhYTSCc3UYdlPKxKt9B/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uU5dz40nzJWyXXnTOf803KL4bEsKODtn2FLTco1SW8PCZFSXrubIdpr6kxRd80/W6k9jMBTb80zrryW6uWryQdhV2XrEtM7SmD3sMuSjXK8ge/Q3gwCKLTVn0DjAhTT8KieMIEGFQfCKQ4jH+g3HxEd2hX8hkDeqKS5PWxVLDaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFfvl2Uk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kpnnbzjhoxd6rKUOCp3OjGlSDLeTwTi/UFsDtCfZNVFr/tGgRIO9fvTI1GvT6KN2pceoayNvA1PZ2Ou2BuNQ1baPW6G4qbr5IeXk6w8/mwapLDWPSfosWgUxAZmyivCFlbHWjKLyoZMj1prFRV9gBEgQypdBbXZb+BKKewA9qzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTMEoaom; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFfvl2Uk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150D31F000E9;
-	Tue, 21 Jul 2026 19:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTMEoaom"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1F11F000E9;
+	Tue, 21 Jul 2026 19:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661232;
-	bh=i7oAYqeEEP1WrCNm7u9IJjSmc0AF91yFZKs/rrAUeps=;
+	s=korg; t=1784661235;
+	bh=23Uc26gH1MqrWVRHYRLXNiycXLucoyMnl/nqOz4JJSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CFfvl2UkdjmGE5dh4ooXkYzBgF26wHi28ZkkLWjl1AfuJACIlUyReVYK1WHBqSKkU
-	 V5UmSM1dmFPxp/I/bxdolwT4OOtxTrmPQRWmMyFW8jeh0aYAaszJoNMU4mYoqU8dQx
-	 hPFY1I9U91E+YNpeNl5GjcI2sLMDoekgpX3xwymM=
+	b=NTMEoaomF93m35K2ezo46J7vZfOTUVVjVcJ52UdNwbMNcL7EOFH/Pu6SbTbEe7JRu
+	 /HnY8r5sPIaHNuaYM2WUrLIgcYgaYO7sqspsyaW8kFoC2pBvEHPUxMbNmey3aVIMHl
+	 zhR8KkvPCIwuKu3B8YwyNLB7f+ygIxbaWlPiuu+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1280/2077] net: mvneta: re-enable percpu interrupt on resume
-Date: Tue, 21 Jul 2026 17:15:53 +0200
-Message-ID: <20260721152623.007863807@linuxfoundation.org>
+Subject: [PATCH 7.1 1281/2077] geneve: gate GRO hint in geneve_gro_complete() on gs->gro_hint
+Date: Tue, 21 Jul 2026 17:15:54 +0200
+Message-ID: <20260721152623.030752209@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,66 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit fd398d6480987e4c84fff0aaab6b9d6642a93343 ]
+[ Upstream commit 2651c174445884ac9e85622aeade9c1f7b98d8e5 ]
 
-On Marvell MPIC platforms (Armada 370/XP/38x), mvneta uses a percpu
-IRQ disable/enable scheme for NAPI: the ISR (mvneta_percpu_isr) calls
-disable_percpu_irq() to mask the MPIC per-CPU interrupt and schedules
-NAPI poll, which calls enable_percpu_irq() on completion to unmask.
+geneve_gro_receive() reads the GRO hint through geneve_sk_gro_hint_off(),
+which honours it only when the socket enabled IFLA_GENEVE_GRO_HINT
+(gs->gro_hint). geneve_gro_complete() instead calls the low-level
+geneve_opt_gro_hint_off() and acts on the hint unconditionally.
 
-If suspend occurs while NAPI poll is pending (between
-disable_percpu_irq in the ISR and enable_percpu_irq in poll
-completion), the interrupt is never re-enabled:
+On a tunnel without the hint, receive aggregates the frames as plain
+ETH_P_TEB while complete still honours an attacker-supplied hint option: it
+inflates gh_len by gro_hint->nested_hdr_len (u8) and redirects the dispatch
+type, so the inner gro_complete handler runs at nhoff + gh_len, an offset
+receive never pulled nor validated, reading out of bounds of the skb head:
 
-  1. mvneta_percpu_isr: disable_percpu_irq() + napi_schedule()
-     => MPIC masked, percpu_enabled cpumask bit cleared
-  2. NAPI poll does not complete before suspend proceeds
-     (on PREEMPT_RT this is highly likely since softirqs run in
-     ksoftirqd which gets frozen; on non-RT it can happen when
-     softirq processing is deferred to ksoftirqd)
-  3. mvneta_stop_dev => napi_disable(): cancels the pending poll
-     without executing the completion path
-  4. suspend_device_irqs => IRQCHIP_MASK_ON_SUSPEND: masks MPIC
-     (already masked, but records IRQS_SUSPENDED)
-  5. Resume: mpic_resume checks irq_percpu_is_enabled() => false
-     (bit was cleared in step 1) => skips unmask
-  6. mvneta_start_dev only restores device-level INTR_NEW_MASK,
-     does not touch the MPIC per-CPU mask
+  BUG: KASAN: slab-out-of-bounds in ipv6_gro_complete (net/ipv6/ip6_offload.c:196)
+  Read of size 1 at addr ffff88800fe91980 by task exploit/153
+   ipv6_gro_complete (net/ipv6/ip6_offload.c:196)
+   geneve_gro_complete (drivers/net/geneve.c:965)
+   udp_gro_complete (net/ipv4/udp_offload.c:940)
+   inet_gro_complete (net/ipv4/af_inet.c:1621)
+   __gro_flush (net/core/gro.c:306)
 
-Result: MPIC per-CPU interrupt stays masked permanently. The NIC
-generates interrupts (INTR_NEW_CAUSE != 0) but the CPU never
-receives them, causing complete loss of network connectivity.
+Gate the complete path on gs->gro_hint too via geneve_sk_gro_hint_off(), so
+both paths agree. Tunnels that enable the hint are unaffected.
 
-Fix by calling on_each_cpu(mvneta_percpu_enable) in the resume path
-to unconditionally unmask the MPIC per-CPU interrupt regardless of
-pre-suspend state.
-
-Fixes: 12bb03b436da ("net: mvneta: Handle per-cpu interrupts")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260622074350.1666290-1-yun.zhou@windriver.com
+Fixes: fd0dd796576e ("geneve: use GRO hint option in the RX path")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260618032622.484720-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/geneve.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 0c061fb0ed072a..744d6585a949d1 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -5900,6 +5900,9 @@ static int mvneta_resume(struct device *device)
- 	rtnl_unlock();
- 	mvneta_set_rx_mode(dev);
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index b2e74e815e5778..a48f6c52f12695 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -948,13 +948,13 @@ static int geneve_gro_complete(struct sock *sk, struct sk_buff *skb,
+ 	struct genevehdr *gh;
+ 	struct packet_offload *ptype;
+ 	__be16 type;
+-	int gh_len;
++	unsigned int gh_len;
+ 	int err = -ENOSYS;
  
-+	if (!pp->neta_armada3700)
-+		on_each_cpu(mvneta_percpu_enable, pp, true);
-+
- 	return 0;
- }
- #endif
+ 	gh = (struct genevehdr *)(skb->data + nhoff);
+ 	gh_len = geneve_hlen(gh);
+ 	type = gh->proto_type;
+-	geneve_opt_gro_hint_off(gh, &type, &gh_len);
++	geneve_sk_gro_hint_off(sk, gh, &type, &gh_len);
+ 
+ 	/* since skb->encapsulation is set, eth_gro_complete() sets the inner mac header */
+ 	if (likely(type == htons(ETH_P_TEB)))
 -- 
 2.53.0
 
