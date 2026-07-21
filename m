@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476BB44AB61;
-	Tue, 21 Jul 2026 21:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E194344AB88;
+	Tue, 21 Jul 2026 21:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668669; cv=none; b=boB1Bl0CjvFKiohXPmegrppM3v8K/4n85gLyNqAjiH4JSesC2olODBRQPgylRGYLBnFyT6PmhWT/KPpJoyG27t3Qf3WoRPHVhVJ85xYgmwvOLxwU3TM7dqsv2spgjBq+yL0LAJlSqZLeQlEeiSWymu0NOa65byg8zkc3a7opoAs=
+	t=1784668672; cv=none; b=tkyqtqCinCuUMmL2oi0aMC0lra7eCFzc6tQbM8TbTuF5RJYzyi0XA99pi2x5at9p32mBraI4KM+k0a5lFFuTau2lpcsoPHEskDeM/2hcFEOu3tHIig4fgC5qjSxsF6P0SH18QrYMCFJH9je4MZOxooe02/789FM8G3ug211GBWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668669; c=relaxed/simple;
-	bh=MJ/y56/HeqAMK23msF1+zoGe19VEHqS6JtcUFOekZTU=;
+	s=arc-20240116; t=1784668672; c=relaxed/simple;
+	bh=/DkBXjGNO+rKQNLkndRMkI2sDtqxD+C2zqV7NnRqO0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocB+T4L/xs0WgMOYCugJsO9Xl+k9GVBlIt6xuUFWAl0BMNhOVzqW2ByIv9urzFZV4YdfcJiUHPC2czlx+xwkCxlWSgV0GXGKhOeTS03axnE7CRcZNfHqc/MlwyHeUCAyVBQp1fCvxvtqBeL7M4p1/i8dCBdz/KGs2Dj6lJS8wek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmdmx1ge; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CwKBFDzMUIV/0v9+XBU+5WPYbKx698MuFv8LQlEqT6I2WCqrfk14a/X2eliDUbxbITIf54Oa2+xyV0244wEEU4uBaaGDAG//PtY/oWThBQkJan6NdsZkVdsLYkKf8Madu5E2OPZU6Yce++m6ogkEZGGwmla38qvVOQ/pBFPJZNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTfp8xSN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmdmx1ge"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3FE1F000E9;
-	Tue, 21 Jul 2026 21:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTfp8xSN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532781F000E9;
+	Tue, 21 Jul 2026 21:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668668;
-	bh=rEfI5mLbPeiLbSgCIxOapokpttpWqVkDVvdeWzc2ot8=;
+	s=korg; t=1784668670;
+	bh=2ZqkadpyQ7foF/6Fmxjc+W33ZPbGAuCwLxyptnVfwcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nmdmx1geqefnmqcCr5dyLK1/rUwr3H178lbRnhNHCeOONpicy8aChqsyyhYdzjp/q
-	 nKZACqZqFf7rNxeRNUuxyY5IbeJrtOFP/gZMn817MLozOUTbz8kxQeg+rkTFUGIOE1
-	 wCOTPV7DZmPAzedcjokLjp9fttuG+OEVSkH3V9dQ=
+	b=GTfp8xSNf5UU4f3eql/P0Dkdspno/4BmfCzks3vNgR+G2WVA06VerQ5Jh6hGCTzmp
+	 aCEbWMbbo0NubVYfdVaSYcYGWxRdyTG5hIDj3dmqLILUXkFUA/jB3f0ZffIFj2yU03
+	 nHYWtalF1YK+gPPE8zDf/hozLaplFSFyxFYJuHLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@intel.com>,
-	Seth Forshee <sforshee@kernel.org>,
-	Eric Hagberg <ehagberg@janestreet.com>,
-	Stephen Dolan <sdolan@janestreet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0263/1067] x86/mm: Fix check/use ordering in switch_mm_irqs_off()
-Date: Tue, 21 Jul 2026 17:14:24 +0200
-Message-ID: <20260721152430.479739502@linuxfoundation.org>
+Subject: [PATCH 6.1 0264/1067] crypto: crypto4xx - Remove ahash-related code
+Date: Tue, 21 Jul 2026 17:14:25 +0200
+Message-ID: <20260721152430.501403858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,95 +51,264 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Dolan <sdolan@janestreet.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-This is a stable-specific fix. There is no single upstream commit to
-cherry-pick; the equivalent mainline fix is commit 83b0177a6c48
-("x86/mm: Fix SMP ordering in switch_mm_irqs_off()"), which is in
-v6.18 but does not apply to these trees because the surrounding code
-was refactored.
+commit 97855e7f1ccf4917f305baab199edb9f2595ff5b upstream.
 
-The backports of commit fea4e317f9e7 ("x86/mm: Eliminate window where
-TLB flushes may be inadvertently skipped") -- the fix for
-CVE-2025-37964 -- to the 6.1, 6.6 and 6.12 trees ended up with two
-code blocks in the wrong order relative to mainline. The fix depends
-on setting cpu_tlbstate.loaded_mm to LOADED_MM_SWITCHING *before*
-reading tlb_gen, so that a concurrent TLB shootdown either sees
-LOADED_MM_SWITCHING and sends the IPI, or the switching CPU sees the
-updated tlb_gen. In the stable trees the write of LOADED_MM_SWITCHING
-was placed after the tlb_gen read, so the race window fea4e317f9e7 was
-meant to close is still open and CVE-2025-37964 is unfixed there:
-a process can be left running with stale TLB entries, which typically
-manifests as rare, hard-to-bisect memory corruption or segfaults.
+The hash implementation in crypto4xx has been disabled since 2009.
+As nobody has tried to fix this remove all the dead code.
 
-This has been confirmed by several independent parties:
-
-  - reproduced on 6.1.y/6.6.y/6.12.y with the test program in [1],
-    and confirmed fixed by this patch
-  - Seth Forshee saw segfaults on 6.12.y within ~30 minutes of running
-    a test workload; with this patch it ran 18 hours cleanly [2]
-  - Greg Thelen reports 6.6.y- and 6.12.y-based test failures fixed by
-    this patch [3]
-
-Dave Hansen acked the patch [4] and has no objection to it going into
-stable [5].
-
-The patch below is against 6.12.y; the identical change applies to
-6.1.y and 6.6.y. (The cpumask_test_cpu()/smp_mb() portion of the
-mainline fix is not needed here because commit 209954cbc7d0
-("x86/mm/tlb: Update mm_cpumask lazily") was never backported to these
-trees.)
-
-[1] https://lore.kernel.org/lkml/CAHDw0oGd0B4=uuv8NGqbUQ_ZVmSheU2bN70e4QhFXWvuAZdt2w@mail.gmail.com/
-[2] https://lore.kernel.org/lkml/aZYWXe739XUJrBld@do-x1carbon/
-[3] https://lore.kernel.org/lkml/CAHH2K0brx9omC9QYyB6Lio3t_1Lf8v=VaFoiaG23UgQ-aec89Q@mail.gmail.com/
-[4] https://lore.kernel.org/lkml/281e8018-5506-4a79-8775-e0de7e58b95f@intel.com/
-[5] https://lore.kernel.org/lkml/86421ee5-5332-46c2-bb48-d40310b818be@intel.com/
-
-Fixes: fea4e317f9e7 ("x86/mm: Eliminate window where TLB flushes may be inadvertently skipped")  # 6.1.y/6.6.y/6.12.y backports
-Acked-by: Dave Hansen <dave.hansen@intel.com>
-Tested-by: Seth Forshee <sforshee@kernel.org>
-Tested-by: Eric Hagberg <ehagberg@janestreet.com>
-Signed-off-by: Stephen Dolan <sdolan@janestreet.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/tlb.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/crypto/amcc/crypto4xx_alg.c  | 106 ---------------------------
+ drivers/crypto/amcc/crypto4xx_core.c |  43 +----------
+ drivers/crypto/amcc/crypto4xx_core.h |   7 --
+ 3 files changed, 1 insertion(+), 155 deletions(-)
 
-diff --git a/arch/x86/mm/tlb.c b/arch/x86/mm/tlb.c
-index 4918268d20074d..63620648f92d74 100644
---- a/arch/x86/mm/tlb.c
-+++ b/arch/x86/mm/tlb.c
-@@ -597,6 +597,14 @@ void switch_mm_irqs_off(struct mm_struct *prev, struct mm_struct *next,
- 		 */
- 		cond_mitigation(tsk);
- 
-+		/*
-+		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
-+		 * and others are sensitive to the window where mm_cpumask(),
-+		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
-+		 */
-+		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
-+		barrier();
-+
- 		/*
- 		 * Stop remote flushes for the previous mm.
- 		 * Skip kernel threads; we never send init_mm TLB flushing IPIs,
-@@ -616,14 +624,6 @@ void switch_mm_irqs_off(struct mm_struct *prev, struct mm_struct *next,
- 		next_tlb_gen = atomic64_read(&next->context.tlb_gen);
- 
- 		choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
+diff --git a/drivers/crypto/amcc/crypto4xx_alg.c b/drivers/crypto/amcc/crypto4xx_alg.c
+index ded73224273295..91cecec729f25e 100644
+--- a/drivers/crypto/amcc/crypto4xx_alg.c
++++ b/drivers/crypto/amcc/crypto4xx_alg.c
+@@ -12,9 +12,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/spinlock_types.h>
+ #include <linux/scatterlist.h>
+-#include <linux/crypto.h>
+-#include <linux/hash.h>
+-#include <crypto/internal/hash.h>
+ #include <linux/dma-mapping.h>
+ #include <crypto/algapi.h>
+ #include <crypto/aead.h>
+@@ -616,106 +613,3 @@ int crypto4xx_decrypt_aes_gcm(struct aead_request *req)
+ {
+ 	return crypto4xx_crypt_aes_gcm(req, true);
+ }
 -
--		/*
--		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
--		 * and others are sensitive to the window where mm_cpumask(),
--		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
-- 		 */
--		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
--		barrier();
+-/*
+- * HASH SHA1 Functions
+- */
+-static int crypto4xx_hash_alg_init(struct crypto_tfm *tfm,
+-				   unsigned int sa_len,
+-				   unsigned char ha,
+-				   unsigned char hm)
+-{
+-	struct crypto_alg *alg = tfm->__crt_alg;
+-	struct crypto4xx_alg *my_alg;
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(tfm);
+-	struct dynamic_sa_hash160 *sa;
+-	int rc;
+-
+-	my_alg = container_of(__crypto_ahash_alg(alg), struct crypto4xx_alg,
+-			      alg.u.hash);
+-	ctx->dev   = my_alg->dev;
+-
+-	/* Create SA */
+-	if (ctx->sa_in || ctx->sa_out)
+-		crypto4xx_free_sa(ctx);
+-
+-	rc = crypto4xx_alloc_sa(ctx, sa_len);
+-	if (rc)
+-		return rc;
+-
+-	crypto_ahash_set_reqsize(__crypto_ahash_cast(tfm),
+-				 sizeof(struct crypto4xx_ctx));
+-	sa = (struct dynamic_sa_hash160 *)ctx->sa_in;
+-	set_dynamic_sa_command_0(&sa->ctrl, SA_SAVE_HASH, SA_NOT_SAVE_IV,
+-				 SA_NOT_LOAD_HASH, SA_LOAD_IV_FROM_SA,
+-				 SA_NO_HEADER_PROC, ha, SA_CIPHER_ALG_NULL,
+-				 SA_PAD_TYPE_ZERO, SA_OP_GROUP_BASIC,
+-				 SA_OPCODE_HASH, DIR_INBOUND);
+-	set_dynamic_sa_command_1(&sa->ctrl, 0, SA_HASH_MODE_HASH,
+-				 CRYPTO_FEEDBACK_MODE_NO_FB, SA_EXTENDED_SN_OFF,
+-				 SA_SEQ_MASK_OFF, SA_MC_ENABLE,
+-				 SA_NOT_COPY_PAD, SA_NOT_COPY_PAYLOAD,
+-				 SA_NOT_COPY_HDR);
+-	/* Need to zero hash digest in SA */
+-	memset(sa->inner_digest, 0, sizeof(sa->inner_digest));
+-	memset(sa->outer_digest, 0, sizeof(sa->outer_digest));
+-
+-	return 0;
+-}
+-
+-int crypto4xx_hash_init(struct ahash_request *req)
+-{
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	int ds;
+-	struct dynamic_sa_ctl *sa;
+-
+-	sa = ctx->sa_in;
+-	ds = crypto_ahash_digestsize(
+-			__crypto_ahash_cast(req->base.tfm));
+-	sa->sa_command_0.bf.digest_len = ds >> 2;
+-	sa->sa_command_0.bf.load_hash_state = SA_LOAD_HASH_FROM_SA;
+-
+-	return 0;
+-}
+-
+-int crypto4xx_hash_update(struct ahash_request *req)
+-{
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	struct scatterlist dst;
+-	unsigned int ds = crypto_ahash_digestsize(ahash);
+-
+-	sg_init_one(&dst, req->result, ds);
+-
+-	return crypto4xx_build_pd(&req->base, ctx, req->src, &dst,
+-				  req->nbytes, NULL, 0, ctx->sa_in,
+-				  ctx->sa_len, 0, NULL);
+-}
+-
+-int crypto4xx_hash_final(struct ahash_request *req)
+-{
+-	return 0;
+-}
+-
+-int crypto4xx_hash_digest(struct ahash_request *req)
+-{
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	struct scatterlist dst;
+-	unsigned int ds = crypto_ahash_digestsize(ahash);
+-
+-	sg_init_one(&dst, req->result, ds);
+-
+-	return crypto4xx_build_pd(&req->base, ctx, req->src, &dst,
+-				  req->nbytes, NULL, 0, ctx->sa_in,
+-				  ctx->sa_len, 0, NULL);
+-}
+-
+-/*
+- * SHA1 Algorithm
+- */
+-int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm)
+-{
+-	return crypto4xx_hash_alg_init(tfm, SA_HASH160_LEN, SA_HASH_ALG_SHA1,
+-				       SA_HASH_MODE_HASH);
+-}
+diff --git a/drivers/crypto/amcc/crypto4xx_core.c b/drivers/crypto/amcc/crypto4xx_core.c
+index 50dc783821b699..2b8052a7e44923 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.c
++++ b/drivers/crypto/amcc/crypto4xx_core.c
+@@ -485,18 +485,6 @@ static void crypto4xx_copy_pkt_to_dst(struct crypto4xx_device *dev,
+ 	}
+ }
+ 
+-static void crypto4xx_copy_digest_to_dst(void *dst,
+-					struct pd_uinfo *pd_uinfo,
+-					struct crypto4xx_ctx *ctx)
+-{
+-	struct dynamic_sa_ctl *sa = (struct dynamic_sa_ctl *) ctx->sa_in;
+-
+-	if (sa->sa_command_0.bf.hash_alg == SA_HASH_ALG_SHA1) {
+-		memcpy(dst, pd_uinfo->sr_va->save_digest,
+-		       SA_HASH_ALG_SHA1_DIGEST_SIZE);
+-	}
+-}
+-
+ static void crypto4xx_ret_sg_desc(struct crypto4xx_device *dev,
+ 				  struct pd_uinfo *pd_uinfo)
+ {
+@@ -549,23 +537,6 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
+ 	skcipher_request_complete(req, 0);
+ }
+ 
+-static void crypto4xx_ahash_done(struct crypto4xx_device *dev,
+-				struct pd_uinfo *pd_uinfo)
+-{
+-	struct crypto4xx_ctx *ctx;
+-	struct ahash_request *ahash_req;
+-
+-	ahash_req = ahash_request_cast(pd_uinfo->async_req);
+-	ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(ahash_req));
+-
+-	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo, ctx);
+-	crypto4xx_ret_sg_desc(dev, pd_uinfo);
+-
+-	if (pd_uinfo->state & PD_ENTRY_BUSY)
+-		ahash_request_complete(ahash_req, -EINPROGRESS);
+-	ahash_request_complete(ahash_req, 0);
+-}
+-
+ static void crypto4xx_aead_done(struct crypto4xx_device *dev,
+ 				struct pd_uinfo *pd_uinfo,
+ 				struct ce_pd *pd)
+@@ -642,9 +613,6 @@ static void crypto4xx_pd_done(struct crypto4xx_device *dev, u32 idx)
+ 	case CRYPTO_ALG_TYPE_AEAD:
+ 		crypto4xx_aead_done(dev, pd_uinfo, pd);
+ 		break;
+-	case CRYPTO_ALG_TYPE_AHASH:
+-		crypto4xx_ahash_done(dev, pd_uinfo);
+-		break;
+ 	}
+ }
+ 
+@@ -915,8 +883,7 @@ int crypto4xx_build_pd(struct crypto_async_request *req,
  	}
  
- 	if (need_flush) {
+ 	pd->pd_ctl.w = PD_CTL_HOST_READY |
+-		((crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AHASH) ||
+-		 (crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AEAD) ?
++		((crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AEAD) ?
+ 			PD_CTL_HASH_FINAL : 0);
+ 	pd->pd_ctl_len.w = 0x00400000 | (assoclen + datalen);
+ 	pd_uinfo->state = PD_ENTRY_INUSE | (is_busy ? PD_ENTRY_BUSY : 0);
+@@ -1022,10 +989,6 @@ static int crypto4xx_register_alg(struct crypto4xx_device *sec_dev,
+ 			rc = crypto_register_aead(&alg->alg.u.aead);
+ 			break;
+ 
+-		case CRYPTO_ALG_TYPE_AHASH:
+-			rc = crypto_register_ahash(&alg->alg.u.hash);
+-			break;
+-
+ 		case CRYPTO_ALG_TYPE_RNG:
+ 			rc = crypto_register_rng(&alg->alg.u.rng);
+ 			break;
+@@ -1051,10 +1014,6 @@ static void crypto4xx_unregister_alg(struct crypto4xx_device *sec_dev)
+ 	list_for_each_entry_safe(alg, tmp, &sec_dev->alg_list, entry) {
+ 		list_del(&alg->entry);
+ 		switch (alg->alg.type) {
+-		case CRYPTO_ALG_TYPE_AHASH:
+-			crypto_unregister_ahash(&alg->alg.u.hash);
+-			break;
+-
+ 		case CRYPTO_ALG_TYPE_AEAD:
+ 			crypto_unregister_aead(&alg->alg.u.aead);
+ 			break;
+diff --git a/drivers/crypto/amcc/crypto4xx_core.h b/drivers/crypto/amcc/crypto4xx_core.h
+index 56c10668c0ab0a..0d83cde84cca9a 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.h
++++ b/drivers/crypto/amcc/crypto4xx_core.h
+@@ -16,7 +16,6 @@
+ #include <linux/ratelimit.h>
+ #include <linux/mutex.h>
+ #include <linux/scatterlist.h>
+-#include <crypto/internal/hash.h>
+ #include <crypto/internal/aead.h>
+ #include <crypto/internal/rng.h>
+ #include <crypto/internal/skcipher.h>
+@@ -135,7 +134,6 @@ struct crypto4xx_alg_common {
+ 	u32 type;
+ 	union {
+ 		struct skcipher_alg cipher;
+-		struct ahash_alg hash;
+ 		struct aead_alg aead;
+ 		struct rng_alg rng;
+ 	} u;
+@@ -182,11 +180,6 @@ int crypto4xx_encrypt_noiv_block(struct skcipher_request *req);
+ int crypto4xx_decrypt_noiv_block(struct skcipher_request *req);
+ int crypto4xx_rfc3686_encrypt(struct skcipher_request *req);
+ int crypto4xx_rfc3686_decrypt(struct skcipher_request *req);
+-int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm);
+-int crypto4xx_hash_digest(struct ahash_request *req);
+-int crypto4xx_hash_final(struct ahash_request *req);
+-int crypto4xx_hash_update(struct ahash_request *req);
+-int crypto4xx_hash_init(struct ahash_request *req);
+ 
+ /*
+  * Note: Only use this function to copy items that is word aligned.
 -- 
 2.53.0
 
