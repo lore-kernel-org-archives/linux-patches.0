@@ -1,66 +1,66 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92822DA75A
-	for <patches@lists.linux.dev>; Tue, 21 Jul 2026 16:32:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1E331F98B
+	for <patches@lists.linux.dev>; Tue, 21 Jul 2026 16:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784651571; cv=none; b=RfjS+LF/oWbMZmYzsQbQH/49ZzkvM9qQhS6z900lQOXZkpzGK3gEoDwHKoxR/GZJPXhq2rFLJfyOEpiKLcnYghag1DRKwJ4pyQbIqRmmBVyH1UzqR97LRRLPdZvusZbAdIJFO5pQn8rNxN6gDmKsoirGi/Zl/U9z9bPsFwCeqWQ=
+	t=1784651734; cv=none; b=huBsRgiGDVAEt6A4x2dPvd3aVSzoQKlrhvNrgQ94uD+8tpaF+33p46GEPL/G6IoOwsUGp8HZZXcy1CkXMrOG+qbiK6XCAQlXxa4scmecYKqDdViFY8AByZmKMHPLLhA0Ck41Hj/s/GDyiO3iv5350VgJ4LTaM82ibponwDCWjSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784651571; c=relaxed/simple;
-	bh=HmWR9QEkurh9by8p+XQNBkuAhyZ6c/KcKvYRTvnDJGE=;
+	s=arc-20240116; t=1784651734; c=relaxed/simple;
+	bh=BtQTtCtTSpbowSHyQsXFphn7z4W725woAyiCJc/xTJk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QXsPWqbldP0gdXO7+Fdrp8YmSDorkDrd1vs4MEjfafQzL0dJfayNKY2fQbSDPtg9q97McV1RnDHikKst7bqNtApFqHmS8GyQHcd7u/6Pk0O06teLJESvRZeIpA7Inhz7YBU834KZ21inZC7Mt9GlF5hpl0Gnvp1NUCPAlGWNlxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g/+fonE+; arc=none smtp.client-ip=209.85.215.180
+	 In-Reply-To:Content-Type; b=PucvUf1qofWANw448mP7uKstiE0G5NB31RybB3lshJHcqxHkmU7e3w9DtnQ2o3hzIsKZVDxuYiFAd0vUUtkzDmeIopbKUz6mzT7H+RDdcfKTRUypgD7zgwgGf5ZUCpKj3Dg32CuJWQXzJLXfTM0sCFiswMzCS3rG67FYn2xPo18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jqox0o3j; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g/+fonE+"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c96c92c0980so5405601a12.3
-        for <patches@lists.linux.dev>; Tue, 21 Jul 2026 09:32:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jqox0o3j"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38dcbade417so9787231a91.1
+        for <patches@lists.linux.dev>; Tue, 21 Jul 2026 09:35:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784651570; x=1785256370; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784651732; x=1785256532; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=rojvLStlOa8TuKO/DtD3fsmX3MSIIpt1yWUNLbmNaiQ=;
-        b=g/+fonE+Rf6+KWUUGOtEOBg1JHbFBult7RiUupEhS60KU0Qd/B1gcJcw3F2mVxnoi5
-         owdK/oY8e4Up35XIwoa+kZMwCIr0wqtZgS0TLBzqiMKPjk/UEmFDp63I+t2ftHCy8r7Y
-         kPkQjICS+2SP+ZTpacrGh+t8Kg5rqfs/GllLfTtEh7IhH7/FGMkjOtAvoGk/OcnbnvOI
-         6dspZk1ZJBRRjeGD36a1oM4vFNJeNeEzCzd0MhuGysPaZ0JukWQtgJ5rtr2iDLFtyAzI
-         fL3JsFqIdWQrtO04FdjYlu4uq+hmEwrIH2WHX2hj7vNvDFjWWvs7ZkV8dX4inHvKAzF0
-         3JkQ==
+        bh=AuhxLdZkUAzj+3fp5sM4PbGIsm6IR7y62dQzuPnM91s=;
+        b=Jqox0o3j+jTlbAEgM0637jAidZrS6QkRX8IGzimKt1y6mLrRLNDnFw3on69mGEfDVt
+         ZQiFY8WVL/YWv+2lnZtQT3g95okedkvpQiffniNnSgIH8rNXYRftGs3v4AsCAlY+ENYM
+         G7B34g8VYfvZuVwhVcf8fThKna02FvFxwLrDncml566ZzKcbJ0o19PwT/MxC9AUNRyQ3
+         NnL7dZzVq4C04r99fuBzKl0GOvzirOdPkvyKGneBE3TgYASskc080yP+pDRgJzGgEeQq
+         4eGUOu/dvJIlqJK+wO1dJnR0MgOVzb0/KunKkPXxpNSHM84ApNeXgwgOBRC7vxMcmm0V
+         SgWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784651570; x=1785256370;
+        d=1e100.net; s=20251104; t=1784651732; x=1785256532;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=rojvLStlOa8TuKO/DtD3fsmX3MSIIpt1yWUNLbmNaiQ=;
-        b=ITFaxddr5CcuE81VnT7Dkh5A4zND1Lgb0RHz9eZu/RXT2uyyzhEpDwExClR5KSvEsO
-         ch9Q304HmVHfOHkIYMUMhe4bppr0TMnNcs1l3VCbOqfs0J26EiI77ilD6RZtzDdqEFWJ
-         wiNnZeiSzRuh3JMnr7zZOy+X44hxhivOJbrfDhSDbUlm3EUgPpILbahI/ivMMypBv0bh
-         +BDPCwHSgYeT45osczdN6DY0m1rmbUwJfGON3v4ujZrQ7gYOaO7UtelTYojO00lg6abt
-         /gR4+SYvvl1JcjI57jQ5tdRyYn5yaqrfGMXmWMugHEtjZKYoo/EEqmQSCztWE09yT7SX
-         YLQQ==
-X-Gm-Message-State: AOJu0Yy4u9IxfITS218xvvA3i5uagjArvq0mnETYcQBtbwK73wLriYNS
-	brOl8qzUcrOrqAwc6UzES+4j4izueCDUuVKLnqadJl1abXIvREbe4LNG
-X-Gm-Gg: AfdE7cmUo4w/onxdVrinMt4Kb79f+YlZVKMzDl+FmJqPtqKFlwxkaFvClJAi2gvLE5u
-	bSxFXnfQnxqQwTYjnQv+3XaT7SJM0W9smFDZF6g+U6PCM4lt/PtDI6tGn722BsacutBmGxYG+7P
-	9dfhXoM1SpEhxhNW8brqguBpqKuVHrZFwwWyS84QUAopZTZN4idetEARihwNjXgxuUxqaj5v6kQ
-	L1YwBrRmSbyrk0JFxD7ChZcNAKJ1qZIoN3qrPCsXfETBk/EX86obpTkM2gaB+ALupHunkwifdf0
-	Es5C7neLyZMt+P1y9FG+4bNjU+rnY9COnH5jJQ1kNRPd/CjEFOQOx/ux7WDAbtjuFitkn9S/Obs
-	0SWHZOQ7D3bKXn9qBLx3fD7jlVQnTRytrVsGvtibCyYXY3E2edg1xnM9zalJiGKvx5xxa266EQk
-	gQHtx0S0HKddY48OLk0fwDeyoR5Ptv
-X-Received: by 2002:a05:6300:7105:b0:3c4:1c9f:d91 with SMTP id adf61e73a8af0-3c41c9f2e52mr1788962637.59.1784651569833;
-        Tue, 21 Jul 2026 09:32:49 -0700 (PDT)
+        bh=AuhxLdZkUAzj+3fp5sM4PbGIsm6IR7y62dQzuPnM91s=;
+        b=GINumTeAmdp9Sxafo64xdNRZnv0lNsVlHsdDp3pIFSnYoobOaRfizUH+Pj5hWyVZ8t
+         79beM/v7uEfBYE9tatRE1au1sYq/caAJtJbpAhUhWLs01H18en+mwRxuX6xmT9htKooi
+         Vwm4+DykhAbuv/OKKQT6Q2TafWysaTZSvIppyE1I+sBKOheDs3ZqIuW5uuwYbtit/3jb
+         V9Yzx1yHQJq1UpAST2DYqq1KOJ8QFd05fiTBJ1Akh//8+t1oOmLosAANQaoEZM157ZwI
+         ea6ybBPBRPxehIw57fBwkbvGsuo8UklSUxVByxthQLkfVa47kFvBVI8Ow1OKSdCXVZKC
+         7CyA==
+X-Gm-Message-State: AOJu0YyML9xHwNhyeNMZomXzBNUe/ezievRePkNbzamsVVDO3jGZZ3D8
+	5BG357xLI3Wj7gwKfF6cHzp1XDmounx7xdaRdpbpUCs5ccKpcADLmdpR
+X-Gm-Gg: AR+sD13Zhz67y03Ph0wwz78aTlyiHusEGIxINfzYAqqj1ql9UKaAV+Q9ontSHmNL1uh
+	xNMzSnE+7Ic84iXJUS4JyqLJcEneP8c4l6DmwOMCfHc5VOJXWIJiMAhwaxk7mHTGEwx7uXHE2Tm
+	pdmqnH98/6xiECfNgNFWyTUFLCsQgz7OIXP3bfNbfKdZWkyfw324lr3W/3JHAt29ETbrXYAD5ix
+	fzwGnylQ4bqdeHYK6hUpbz5nRvyy1yGm0V43x+PagnE5p1AGWAlIV/erTSauSSwwHPggSQkloNw
+	/kVnT3noyLOeCyUC6kqXy1E8csGWDYo5b7a5blv2uwXSzzkCzEJMZlbHGyKKF005e3xm7oTZYr5
+	mjWQj6PBfZYzhjONhPSh2OTRwrPxop4eHZgLEUiGxSDtRYwx9nhWys7udeaOJPeAWbmCGIFYN5/
+	34YnQhgEZqld4DPRaQjHEIUmRlHr72
+X-Received: by 2002:a17:90b:5806:b0:381:f7a:2e0d with SMTP id 98e67ed59e1d1-38e4b585280mr18042303a91.33.1784651732574;
+        Tue, 21 Jul 2026 09:35:32 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13ce29ffb13sm42467604c88.6.2026.07.21.09.32.48
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13ce2cbb7c5sm41304921c88.10.2026.07.21.09.35.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jul 2026 09:32:48 -0700 (PDT)
-Message-ID: <c0138a17-5653-48ec-87c2-4da1d3354306@gmail.com>
-Date: Tue, 21 Jul 2026 09:32:47 -0700
+        Tue, 21 Jul 2026 09:35:31 -0700 (PDT)
+Message-ID: <245b6733-128b-487a-bbe6-d4e6ec4c3490@gmail.com>
+Date: Tue, 21 Jul 2026 09:35:29 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,7 +68,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/699] 5.10.261-rc1 review
+Subject: Re: [PATCH 5.15 000/843] 5.15.212-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -77,16 +77,16 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
  hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
  sr@sladewatkins.com
-References: <20260721152355.667394603@linuxfoundation.org>
+References: <20260721152405.946368001@linuxfoundation.org>
 Content-Language: en-US, fr-FR
 From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
+In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/21/26 08:15, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.261 release.
-> There are 699 patches in this series, all will be posted as a response
+On 7/21/26 08:13, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.212 release.
+> There are 843 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -94,54 +94,45 @@ On 7/21/26 08:15, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.261-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.212-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
+Same "perf" build issue with 5.15.212-rc1 here with the following signature:
 
-perf fails to build with this error:
-
+   CC 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/symbol_fprintf.o
 util/event.c: In function 'machine__resolve':
-util/event.c:668:32: warning: implicit declaration of function 
+util/event.c:700:32: warning: implicit declaration of function 
 'perf_env__get_cpu_topology'; did you mean 
 'perf_env__read_cpu_topology_map'? [-Wimplicit-function-declaration]
-   668 |                         topo = perf_env__get_cpu_topology(env, 
+   700 |                         topo = perf_env__get_cpu_topology(env, 
 (struct perf_cpu){ al->cpu });
        |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~
        |                                perf_env__read_cpu_topology_map
-util/event.c:668:83: warning: excess elements in struct initializer
-   668 |                         topo = perf_env__get_cpu_topology(env, 
+util/event.c:700:83: warning: excess elements in struct initializer
+   700 |                         topo = perf_env__get_cpu_topology(env, 
 (struct perf_cpu){ al->cpu });
        | 
                    ^~
-util/event.c:668:83: note: (near initialization for '(anonymous)')
-util/event.c:668:81: error: invalid use of undefined type 'struct perf_cpu'
-   668 |                         topo = perf_env__get_cpu_topology(env, 
+util/event.c:700:83: note: (near initialization for '(anonymous)')
+util/event.c:700:81: error: invalid use of undefined type 'struct perf_cpu'
+   700 |                         topo = perf_env__get_cpu_topology(env, 
 (struct perf_cpu){ al->cpu });
        | 
                  ^
+   CC 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/color_config.o
 make[6]: *** 
 [/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/build/Makefile.build:97: 
 /local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/event.o] 
 Error 1
 make[6]: *** Waiting for unfinished jobs....
 
-which is due to commit 07511f3c23cdaf1dbb44802f026fcc476351dfe2 ("perf 
-tools: Use perf_env__get_cpu_topology() in machine__resolve()"), it 
-looks like we need to also backport those commits:
-
-751835c57632006232bf30405cd7201dceb0b8e0 ("perf stat: Introduce 
-perf_env__get_cpu_topology() to guard NULL env->cpu")
-
-6d18804b963b78dcd53851f11e9080408b3d85c2 ("perf cpumap: Give CPUs their 
-own type")
-
-c760174401f605cf63314d3817069a40945f0e0b ("perf cpumap: Reduce cpu size 
-from int to int16_t")
 -- 
 Florian
